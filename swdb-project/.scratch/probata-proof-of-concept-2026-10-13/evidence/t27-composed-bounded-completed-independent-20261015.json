@@ -1,0 +1,3455 @@
+{
+  "created": "2026-10-15 ET",
+  "scope": "retained fixture outcomes and physical-byte audit only",
+  "run": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded",
+  "source_commit": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+  "shard": "bounded",
+  "selection": "/data1/yanruj/venvs/swdb-test/bin/python -m pytest tests/test_proof_semantics.py::test_a_safe_unit_proves_pins_the_proof_semantics_and_lists_it_and_the_reduction_as_assumptions tests/test_proof_semantics.py::test_moving_any_one_tile_read_before_its_wait_is_refuted_at_that_reads_probe_on_both_forms tests/test_proof_semantics.py::test_get_tile_size_before_the_covering_wait_is_refuted_and_after_it_proves tests/test_proof_semantics.py::test_a_cpu_write_into_a_tile_an_uncovered_command_reads_is_refuted_and_a_read_is_not tests/test_proof_semantics.py::test_the_wait_rule_as_gem5_runs_it_proves tests/test_proof_semantics.py::test_reads_the_wait_rule_does_not_cover_are_refuted tests/test_proof_semantics.py::test_values_at_issue_prove_and_a_wrong_value_is_refuted tests/test_proof_semantics.py::test_an_address_in_an_uncovered_gathers_footprint_is_a_member_and_one_outside_is_not tests/test_proof_semantics.py::test_a_record_that_pins_an_older_proof_semantics_version_stops_counting tests/test_proof_semantics.py::test_the_bfs_proof_semantics_entry_validates_with_a_version_and_one_contract_per_inventory_call tests/test_proof_semantics.py::test_framac_type_checks_the_ghost_state_logic_and_every_call_contract tests/test_proof_semantics.py::test_without_framac_the_contracts_are_reported_unchecked_never_valid tests/test_proof_semantics.py::test_the_call_inventory_is_read_from_the_read_offload_lowerings_and_tdstepmaa tests/test_proof_semantics.py::test_each_proof_semantics_check_is_shown_by_its_control tests/test_proof_semantics.py::test_a_ghost_array_declared_again_in_the_c_model_is_refused tests/test_proof_semantics.py::test_a_ghost_capacity_outside_the_command_mask_width_is_rejected_before_tools tests/test_proof_semantics_native.py --maxfail=1 --junitxml=/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/junit.xml",
+  "exit_code": "0",
+  "pytest_call_outcomes": {
+    "passed": 35
+  },
+  "records": [
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/pytest/test_a_cpu_write_into_a_tile_a0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t220017z.59960940.yaml",
+      "sha256": "310692d2a00cf50a5944e07d0b254f2abb25e7e987de901096b69c593ed303a7",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t220017z.59960940",
+      "test": "test_a_cpu_write_into_a_tile_a0",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_cpu_write"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 2
+      },
+      "adapter": "cbmc",
+      "verdict": "proven",
+      "failure_class": null,
+      "evidence_kind": "contract_fixture",
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "verdict_reading": null,
+      "pins": {
+        "code": {
+          "id": "dx100-fixtures.candidate-1",
+          "sha256": "8a1f26596a62c9aa392745237ccf16359765f996ed790e2502806df4021d2c1a"
+        },
+        "contract": {
+          "id": "contract.fixture_dx_cpu_write",
+          "sha256": "f940b1caef3b77d870712d7203c38860c0a1499422292bb22f7d8033c1b97030"
+        },
+        "baseline_function": {
+          "id": "test-source",
+          "function": "dxf_cpu_write",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "id": "semantics.dx100_bfs_0_1",
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "dc6ff76cba59f5112d308c99c6ad7194c0500fe5c63bd1eaf596a3b7c7929380"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "build_constants": [],
+        "c_lowering": {
+          "id": "dxf_cpu_write.c",
+          "sha256": "f77a94b70847993d6ff7a1ea49b6168c6415a940ef099e41ae8fb9bee28485f3"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "translator": {
+          "id": "swdb-cbmc-translator-4",
+          "sha256": "b67a4fc23c70a1d39269de563ade63a3d655665d3ba3394dd12d5eb4650eff63"
+        }
+      },
+      "tools": [
+        "swdb-c-lowering-9",
+        "clang-22.1.8",
+        "swdb-cbmc-translator-4",
+        "cbmc-6.11.0",
+        "cadical-in-cbmc-6.11.0"
+      ],
+      "initialized_goals": 0,
+      "rte_goals": 0,
+      "assumption_kinds": [
+        "assumed_clause",
+        "proof_semantics",
+        "reduction",
+        "trusted_tool"
+      ],
+      "flags": [
+        "-DSWDB_CBMC",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--sat-solver",
+        "cadical",
+        "--unwindset",
+        "dx_tile_of.0:33,swdb_dx_init.0:33,swdb_dx_init.1:33,swdb_dx_init.2:33,swdb_dx_check_exit.0:33,swdb_dx_check_exit.1:33,dx_counted.0:33,dx_naming.0:33,dx_reg_users.0:33,dx_closure.0:33,dx_closure.1:33,dx_cover.0:33,dx_cover.1:33,dx_cover.2:33,dx_dispatch.0:33,dx_dispatch.1:33,dx_dispatch.2:33,dx_dispatch.3:33,dx_dispatch.4:33,dx_dispatch.5:33,get_new_tile.0:33,get_new_reg.0:33,add_mem_region.0:33,maa_const.0:33,wait_ready.0:33,get_tile_size.0:33,get_tile_size.1:33,get_cacheable_tile_pointer.0:33,maa_stream_load.0:33,maa_stream_load.1:33,maa_stream_load.2:33,maa_indirect_load.0:33,maa_indirect_load.1:33,maa_range_loop.0:33,maa_range_loop.1:33,maa_range_loop.2:33,maa_range_loop.3:33,maa_range_loop.4:33,maa_alu_scalar.0:33,maa_alu_scalar.1:33,maa_indirect_store_vector.0:33,maa_indirect_store_vector.1:33,maa_indirect_store_vector.2:33,swdb_dx_in_footprint.0:33,swdb_dx_in_footprint.1:33"
+      ],
+      "verifier_launched": true,
+      "build_constants": [],
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "counterexample": null,
+      "job": {
+        "adapter": "cbmc",
+        "host": "swdb-fixture-host",
+        "worker_core": "unpinned",
+        "wall_seconds": 10.395833,
+        "cpu_seconds": 10.694311,
+        "batch_load": {
+          "start": 3.936,
+          "end": 3.933
+        },
+        "peak_rss_bytes": 60854272,
+        "batch": "batch.proof.dx100-fixtures.candidate-1.20261015t220017z.59960940",
+        "position": 1
+      },
+      "artifacts": 6,
+      "raw_goal_statuses": {
+        "success": 963,
+        "failure": 1
+      },
+      "semantic_failed_goals": [],
+      "reachability_sentinel_failures": 1,
+      "errors": []
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/pytest/test_a_cpu_write_into_a_tile_a0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t220034z.cca4b54b.yaml",
+      "sha256": "5b20f9f7f53a36450a7ed11a5b3639ffd105d19a5e73c565399964f304cd48d9",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t220034z.cca4b54b",
+      "test": "test_a_cpu_write_into_a_tile_a0",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_cpu_write"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 2
+      },
+      "adapter": "cbmc",
+      "verdict": "refuted",
+      "failure_class": null,
+      "evidence_kind": "contract_fixture",
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "verdict_reading": null,
+      "pins": {
+        "code": {
+          "id": "dx100-fixtures.candidate-1",
+          "sha256": "8a1f26596a62c9aa392745237ccf16359765f996ed790e2502806df4021d2c1a"
+        },
+        "contract": {
+          "id": "contract.fixture_dx_cpu_write",
+          "sha256": "f940b1caef3b77d870712d7203c38860c0a1499422292bb22f7d8033c1b97030"
+        },
+        "baseline_function": {
+          "id": "test-source",
+          "function": "dxf_cpu_write",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "id": "semantics.dx100_bfs_0_1",
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "dc6ff76cba59f5112d308c99c6ad7194c0500fe5c63bd1eaf596a3b7c7929380"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "build_constants": [
+          {
+            "name": "SWDB_CPU_WRITE",
+            "value": "1"
+          }
+        ],
+        "c_lowering": {
+          "id": "dxf_cpu_write.c",
+          "sha256": "8116bc9151ddba3bb15ebb2e015b8594ffe5ad177a92344ecd5b8a30adc82915"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "translator": {
+          "id": "swdb-cbmc-translator-4",
+          "sha256": "b67a4fc23c70a1d39269de563ade63a3d655665d3ba3394dd12d5eb4650eff63"
+        }
+      },
+      "tools": [
+        "swdb-c-lowering-9",
+        "clang-22.1.8",
+        "swdb-cbmc-translator-4",
+        "cbmc-6.11.0",
+        "cadical-in-cbmc-6.11.0"
+      ],
+      "initialized_goals": 0,
+      "rte_goals": 0,
+      "assumption_kinds": [
+        "assumed_clause",
+        "proof_semantics",
+        "reduction",
+        "trusted_tool"
+      ],
+      "flags": [
+        "-DSWDB_CBMC",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--sat-solver",
+        "cadical",
+        "--unwindset",
+        "dx_tile_of.0:33,swdb_dx_init.0:33,swdb_dx_init.1:33,swdb_dx_init.2:33,swdb_dx_check_exit.0:33,swdb_dx_check_exit.1:33,dx_counted.0:33,dx_naming.0:33,dx_reg_users.0:33,dx_closure.0:33,dx_closure.1:33,dx_cover.0:33,dx_cover.1:33,dx_cover.2:33,dx_dispatch.0:33,dx_dispatch.1:33,dx_dispatch.2:33,dx_dispatch.3:33,dx_dispatch.4:33,dx_dispatch.5:33,get_new_tile.0:33,get_new_reg.0:33,add_mem_region.0:33,maa_const.0:33,wait_ready.0:33,get_tile_size.0:33,get_tile_size.1:33,get_cacheable_tile_pointer.0:33,maa_stream_load.0:33,maa_stream_load.1:33,maa_stream_load.2:33,maa_indirect_load.0:33,maa_indirect_load.1:33,maa_range_loop.0:33,maa_range_loop.1:33,maa_range_loop.2:33,maa_range_loop.3:33,maa_range_loop.4:33,maa_alu_scalar.0:33,maa_alu_scalar.1:33,maa_indirect_store_vector.0:33,maa_indirect_store_vector.1:33,maa_indirect_store_vector.2:33,swdb_dx_in_footprint.0:33,swdb_dx_in_footprint.1:33"
+      ],
+      "verifier_launched": true,
+      "build_constants": [
+        "SWDB_CPU_WRITE"
+      ],
+      "forms": {
+        "c_lowering": "refuted",
+        "cxx": "refuted (counterexample replayed)"
+      },
+      "counterexample": {
+        "property": "semantics.dx100_bfs_0_1#cpu_write_overlap@dxf_cpu_write.probe2",
+        "replayed": true
+      },
+      "job": {
+        "adapter": "cbmc",
+        "host": "swdb-fixture-host",
+        "worker_core": "unpinned",
+        "wall_seconds": 13.022294,
+        "cpu_seconds": 13.328289,
+        "batch_load": {
+          "start": 3.796,
+          "end": 3.895
+        },
+        "peak_rss_bytes": 59322368,
+        "batch": "batch.proof.dx100-fixtures.candidate-1.20261015t220034z.cca4b54b",
+        "position": 1
+      },
+      "artifacts": 7,
+      "raw_goal_statuses": {
+        "success": 986,
+        "failure": 1
+      },
+      "semantic_failed_goals": [
+        {
+          "goal": "dxf_cpu_write.assertion.2",
+          "property": "semantics.dx100_bfs_0_1#cpu_write_overlap@dxf_cpu_write.probe2",
+          "function": "dxf_cpu_write",
+          "status": "failure",
+          "solver": null,
+          "seconds": null
+        }
+      ],
+      "reachability_sentinel_failures": 0,
+      "errors": []
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/pytest/test_a_record_that_pins_an_old0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t220526z.a04a4b8f.yaml",
+      "sha256": "864a02826dd6c5fddd5ad031648d9ea77f73cb33850c71db5b2dfeba98a53fc8",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t220526z.a04a4b8f",
+      "test": "test_a_record_that_pins_an_old0",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_three_reads"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 2
+      },
+      "adapter": "cbmc",
+      "verdict": "proven",
+      "failure_class": null,
+      "evidence_kind": "contract_fixture",
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "verdict_reading": null,
+      "pins": {
+        "code": {
+          "id": "dx100-fixtures.candidate-1",
+          "sha256": "8a1f26596a62c9aa392745237ccf16359765f996ed790e2502806df4021d2c1a"
+        },
+        "contract": {
+          "id": "contract.fixture_dx_three_reads",
+          "sha256": "59a51855b21f38f7f800f10cde2b40cf6076e68262d37d84535cfd702b78ae4f"
+        },
+        "baseline_function": {
+          "id": "test-source",
+          "function": "dxf_three_reads",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "id": "semantics.dx100_bfs_0_1",
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "dc6ff76cba59f5112d308c99c6ad7194c0500fe5c63bd1eaf596a3b7c7929380"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "build_constants": [],
+        "c_lowering": {
+          "id": "dxf_three_reads.c",
+          "sha256": "159ae2a4ed52566dd572f362ade5c7a14c464112017a7292326790fe962f73bf"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "translator": {
+          "id": "swdb-cbmc-translator-4",
+          "sha256": "b67a4fc23c70a1d39269de563ade63a3d655665d3ba3394dd12d5eb4650eff63"
+        }
+      },
+      "tools": [
+        "swdb-c-lowering-9",
+        "clang-22.1.8",
+        "swdb-cbmc-translator-4",
+        "cbmc-6.11.0",
+        "cadical-in-cbmc-6.11.0"
+      ],
+      "initialized_goals": 0,
+      "rte_goals": 0,
+      "assumption_kinds": [
+        "assumed_clause",
+        "proof_semantics",
+        "reduction",
+        "trusted_tool"
+      ],
+      "flags": [
+        "-DSWDB_CBMC",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--sat-solver",
+        "cadical",
+        "--unwindset",
+        "dx_tile_of.0:33,swdb_dx_init.0:33,swdb_dx_init.1:33,swdb_dx_init.2:33,swdb_dx_check_exit.0:33,swdb_dx_check_exit.1:33,dx_counted.0:33,dx_naming.0:33,dx_reg_users.0:33,dx_closure.0:33,dx_closure.1:33,dx_cover.0:33,dx_cover.1:33,dx_cover.2:33,dx_dispatch.0:33,dx_dispatch.1:33,dx_dispatch.2:33,dx_dispatch.3:33,dx_dispatch.4:33,dx_dispatch.5:33,get_new_tile.0:33,get_new_reg.0:33,add_mem_region.0:33,maa_const.0:33,wait_ready.0:33,get_tile_size.0:33,get_tile_size.1:33,get_cacheable_tile_pointer.0:33,maa_stream_load.0:33,maa_stream_load.1:33,maa_stream_load.2:33,maa_indirect_load.0:33,maa_indirect_load.1:33,maa_range_loop.0:33,maa_range_loop.1:33,maa_range_loop.2:33,maa_range_loop.3:33,maa_range_loop.4:33,maa_alu_scalar.0:33,maa_alu_scalar.1:33,maa_indirect_store_vector.0:33,maa_indirect_store_vector.1:33,maa_indirect_store_vector.2:33,swdb_dx_in_footprint.0:33,swdb_dx_in_footprint.1:33"
+      ],
+      "verifier_launched": true,
+      "build_constants": [],
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "counterexample": null,
+      "job": {
+        "adapter": "cbmc",
+        "host": "swdb-fixture-host",
+        "worker_core": "unpinned",
+        "wall_seconds": 10.951213,
+        "cpu_seconds": 11.304224,
+        "batch_load": {
+          "start": 2.879,
+          "end": 3.513
+        },
+        "peak_rss_bytes": 63852544,
+        "batch": "batch.proof.dx100-fixtures.candidate-1.20261015t220526z.a04a4b8f",
+        "position": 1
+      },
+      "artifacts": 6,
+      "raw_goal_statuses": {
+        "success": 1038,
+        "failure": 1
+      },
+      "semantic_failed_goals": [],
+      "reachability_sentinel_failures": 1,
+      "errors": []
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/pytest/test_a_safe_unit_proves_pins_t0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t215830z.4a92ae91.yaml",
+      "sha256": "4667d7549c85fabcc9da947463def31689026aefde161efc063d73eaa5af3edd",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t215830z.4a92ae91",
+      "test": "test_a_safe_unit_proves_pins_t0",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_three_reads"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 2
+      },
+      "adapter": "cbmc",
+      "verdict": "proven",
+      "failure_class": null,
+      "evidence_kind": "contract_fixture",
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "verdict_reading": null,
+      "pins": {
+        "code": {
+          "id": "dx100-fixtures.candidate-1",
+          "sha256": "8a1f26596a62c9aa392745237ccf16359765f996ed790e2502806df4021d2c1a"
+        },
+        "contract": {
+          "id": "contract.fixture_dx_three_reads",
+          "sha256": "59a51855b21f38f7f800f10cde2b40cf6076e68262d37d84535cfd702b78ae4f"
+        },
+        "baseline_function": {
+          "id": "test-source",
+          "function": "dxf_three_reads",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "id": "semantics.dx100_bfs_0_1",
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "dc6ff76cba59f5112d308c99c6ad7194c0500fe5c63bd1eaf596a3b7c7929380"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "build_constants": [],
+        "c_lowering": {
+          "id": "dxf_three_reads.c",
+          "sha256": "159ae2a4ed52566dd572f362ade5c7a14c464112017a7292326790fe962f73bf"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "translator": {
+          "id": "swdb-cbmc-translator-4",
+          "sha256": "b67a4fc23c70a1d39269de563ade63a3d655665d3ba3394dd12d5eb4650eff63"
+        }
+      },
+      "tools": [
+        "swdb-c-lowering-9",
+        "clang-22.1.8",
+        "swdb-cbmc-translator-4",
+        "cbmc-6.11.0",
+        "cadical-in-cbmc-6.11.0"
+      ],
+      "initialized_goals": 0,
+      "rte_goals": 0,
+      "assumption_kinds": [
+        "assumed_clause",
+        "proof_semantics",
+        "reduction",
+        "trusted_tool"
+      ],
+      "flags": [
+        "-DSWDB_CBMC",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--sat-solver",
+        "cadical",
+        "--unwindset",
+        "dx_tile_of.0:33,swdb_dx_init.0:33,swdb_dx_init.1:33,swdb_dx_init.2:33,swdb_dx_check_exit.0:33,swdb_dx_check_exit.1:33,dx_counted.0:33,dx_naming.0:33,dx_reg_users.0:33,dx_closure.0:33,dx_closure.1:33,dx_cover.0:33,dx_cover.1:33,dx_cover.2:33,dx_dispatch.0:33,dx_dispatch.1:33,dx_dispatch.2:33,dx_dispatch.3:33,dx_dispatch.4:33,dx_dispatch.5:33,get_new_tile.0:33,get_new_reg.0:33,add_mem_region.0:33,maa_const.0:33,wait_ready.0:33,get_tile_size.0:33,get_tile_size.1:33,get_cacheable_tile_pointer.0:33,maa_stream_load.0:33,maa_stream_load.1:33,maa_stream_load.2:33,maa_indirect_load.0:33,maa_indirect_load.1:33,maa_range_loop.0:33,maa_range_loop.1:33,maa_range_loop.2:33,maa_range_loop.3:33,maa_range_loop.4:33,maa_alu_scalar.0:33,maa_alu_scalar.1:33,maa_indirect_store_vector.0:33,maa_indirect_store_vector.1:33,maa_indirect_store_vector.2:33,swdb_dx_in_footprint.0:33,swdb_dx_in_footprint.1:33"
+      ],
+      "verifier_launched": true,
+      "build_constants": [],
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "counterexample": null,
+      "job": {
+        "adapter": "cbmc",
+        "host": "swdb-fixture-host",
+        "worker_core": "unpinned",
+        "wall_seconds": 10.671746,
+        "cpu_seconds": 11.014435,
+        "batch_load": {
+          "start": 2.844,
+          "end": 2.713
+        },
+        "peak_rss_bytes": 63602688,
+        "batch": "batch.proof.dx100-fixtures.candidate-1.20261015t215830z.4a92ae91",
+        "position": 1
+      },
+      "artifacts": 6,
+      "raw_goal_statuses": {
+        "success": 1038,
+        "failure": 1
+      },
+      "semantic_failed_goals": [],
+      "reachability_sentinel_failures": 1,
+      "errors": []
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/pytest/test_an_address_in_an_uncovere0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t220450z.e27920c7.yaml",
+      "sha256": "360f05e59a85b9921dd324bbdaf9ccd6dd13aad70475d6d16464e81200c9d493",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t220450z.e27920c7",
+      "test": "test_an_address_in_an_uncovere0",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_footprint"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 2
+      },
+      "adapter": "cbmc",
+      "verdict": "proven",
+      "failure_class": null,
+      "evidence_kind": "contract_fixture",
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "verdict_reading": null,
+      "pins": {
+        "code": {
+          "id": "dx100-fixtures.candidate-1",
+          "sha256": "8a1f26596a62c9aa392745237ccf16359765f996ed790e2502806df4021d2c1a"
+        },
+        "contract": {
+          "id": "contract.fixture_dx_footprint",
+          "sha256": "f303d428887d3606d6d0b49a53cc83b4f907dfe5979a2588acb80a9028a458b7"
+        },
+        "baseline_function": {
+          "id": "test-source",
+          "function": "dxf_footprint",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "id": "semantics.dx100_bfs_0_1",
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "dc6ff76cba59f5112d308c99c6ad7194c0500fe5c63bd1eaf596a3b7c7929380"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "build_constants": [],
+        "c_lowering": {
+          "id": "dxf_footprint.c",
+          "sha256": "6faf6279b77a1043596d9f5b13f68674ed208652be269dbfdfc71f1f63512b8a"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "translator": {
+          "id": "swdb-cbmc-translator-4",
+          "sha256": "b67a4fc23c70a1d39269de563ade63a3d655665d3ba3394dd12d5eb4650eff63"
+        }
+      },
+      "tools": [
+        "swdb-c-lowering-9",
+        "clang-22.1.8",
+        "swdb-cbmc-translator-4",
+        "cbmc-6.11.0",
+        "cadical-in-cbmc-6.11.0"
+      ],
+      "initialized_goals": 0,
+      "rte_goals": 0,
+      "assumption_kinds": [
+        "assumed_clause",
+        "proof_semantics",
+        "reduction",
+        "trusted_tool"
+      ],
+      "flags": [
+        "-DSWDB_CBMC",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--sat-solver",
+        "cadical",
+        "--unwindset",
+        "swdb_dx_init.0:33,swdb_dx_init.1:33,swdb_dx_init.2:33,swdb_dx_check_exit.0:33,swdb_dx_check_exit.1:33,dx_counted.0:33,dx_naming.0:33,dx_reg_users.0:33,dx_closure.0:33,dx_closure.1:33,dx_cover.0:33,dx_cover.1:33,dx_cover.2:33,dx_dispatch.0:33,dx_dispatch.1:33,dx_dispatch.2:33,dx_dispatch.3:33,dx_dispatch.4:33,dx_dispatch.5:33,get_new_tile.0:33,get_new_reg.0:33,add_mem_region.0:33,maa_const.0:33,wait_ready.0:33,get_tile_size.0:33,get_tile_size.1:33,get_cacheable_tile_pointer.0:33,maa_stream_load.0:33,maa_stream_load.1:33,maa_stream_load.2:33,maa_indirect_load.0:33,maa_indirect_load.1:33,maa_range_loop.0:33,maa_range_loop.1:33,maa_range_loop.2:33,maa_range_loop.3:33,maa_range_loop.4:33,maa_alu_scalar.0:33,maa_alu_scalar.1:33,maa_indirect_store_vector.0:33,maa_indirect_store_vector.1:33,maa_indirect_store_vector.2:33,swdb_dx_in_footprint.0:33,swdb_dx_in_footprint.1:33"
+      ],
+      "verifier_launched": true,
+      "build_constants": [],
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "counterexample": null,
+      "job": {
+        "adapter": "cbmc",
+        "host": "swdb-fixture-host",
+        "worker_core": "unpinned",
+        "wall_seconds": 10.415355,
+        "cpu_seconds": 10.69359,
+        "batch_load": {
+          "start": 3.075,
+          "end": 3.131
+        },
+        "peak_rss_bytes": 61575168,
+        "batch": "batch.proof.dx100-fixtures.candidate-1.20261015t220450z.e27920c7",
+        "position": 1
+      },
+      "artifacts": 6,
+      "raw_goal_statuses": {
+        "success": 940,
+        "failure": 1
+      },
+      "semantic_failed_goals": [],
+      "reachability_sentinel_failures": 1,
+      "errors": []
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/pytest/test_an_address_in_an_uncovere0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t220507z.24113409.yaml",
+      "sha256": "14f3c09925ebd86ced70f1c70ed19fb650bf68cd94a67c87752f12598adc5414",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t220507z.24113409",
+      "test": "test_an_address_in_an_uncovere0",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_footprint"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 2
+      },
+      "adapter": "cbmc",
+      "verdict": "refuted",
+      "failure_class": null,
+      "evidence_kind": "contract_fixture",
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "verdict_reading": null,
+      "pins": {
+        "code": {
+          "id": "dx100-fixtures.candidate-1",
+          "sha256": "8a1f26596a62c9aa392745237ccf16359765f996ed790e2502806df4021d2c1a"
+        },
+        "contract": {
+          "id": "contract.fixture_dx_footprint",
+          "sha256": "f303d428887d3606d6d0b49a53cc83b4f907dfe5979a2588acb80a9028a458b7"
+        },
+        "baseline_function": {
+          "id": "test-source",
+          "function": "dxf_footprint",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "id": "semantics.dx100_bfs_0_1",
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "dc6ff76cba59f5112d308c99c6ad7194c0500fe5c63bd1eaf596a3b7c7929380"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "build_constants": [
+          {
+            "name": "SWDB_OUTSIDE",
+            "value": "1"
+          }
+        ],
+        "c_lowering": {
+          "id": "dxf_footprint.c",
+          "sha256": "3a0334b7cb8ff7a46a02670a11fb8d3d1dc48eddb99054d45f6117b5097b20ba"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "translator": {
+          "id": "swdb-cbmc-translator-4",
+          "sha256": "b67a4fc23c70a1d39269de563ade63a3d655665d3ba3394dd12d5eb4650eff63"
+        }
+      },
+      "tools": [
+        "swdb-c-lowering-9",
+        "clang-22.1.8",
+        "swdb-cbmc-translator-4",
+        "cbmc-6.11.0",
+        "cadical-in-cbmc-6.11.0"
+      ],
+      "initialized_goals": 0,
+      "rte_goals": 0,
+      "assumption_kinds": [
+        "assumed_clause",
+        "proof_semantics",
+        "reduction",
+        "trusted_tool"
+      ],
+      "flags": [
+        "-DSWDB_CBMC",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--sat-solver",
+        "cadical",
+        "--unwindset",
+        "swdb_dx_init.0:33,swdb_dx_init.1:33,swdb_dx_init.2:33,swdb_dx_check_exit.0:33,swdb_dx_check_exit.1:33,dx_counted.0:33,dx_naming.0:33,dx_reg_users.0:33,dx_closure.0:33,dx_closure.1:33,dx_cover.0:33,dx_cover.1:33,dx_cover.2:33,dx_dispatch.0:33,dx_dispatch.1:33,dx_dispatch.2:33,dx_dispatch.3:33,dx_dispatch.4:33,dx_dispatch.5:33,get_new_tile.0:33,get_new_reg.0:33,add_mem_region.0:33,maa_const.0:33,wait_ready.0:33,get_tile_size.0:33,get_tile_size.1:33,get_cacheable_tile_pointer.0:33,maa_stream_load.0:33,maa_stream_load.1:33,maa_stream_load.2:33,maa_indirect_load.0:33,maa_indirect_load.1:33,maa_range_loop.0:33,maa_range_loop.1:33,maa_range_loop.2:33,maa_range_loop.3:33,maa_range_loop.4:33,maa_alu_scalar.0:33,maa_alu_scalar.1:33,maa_indirect_store_vector.0:33,maa_indirect_store_vector.1:33,maa_indirect_store_vector.2:33,swdb_dx_in_footprint.0:33,swdb_dx_in_footprint.1:33"
+      ],
+      "verifier_launched": true,
+      "build_constants": [
+        "SWDB_OUTSIDE"
+      ],
+      "forms": {
+        "c_lowering": "refuted",
+        "cxx": "refuted (counterexample replayed)"
+      },
+      "counterexample": {
+        "property": "contract.fixture_dx_footprint#post.ensures1",
+        "replayed": true
+      },
+      "job": {
+        "adapter": "cbmc",
+        "host": "swdb-fixture-host",
+        "worker_core": "unpinned",
+        "wall_seconds": 13.134053,
+        "cpu_seconds": 13.447893,
+        "batch_load": {
+          "start": 2.96,
+          "end": 2.956
+        },
+        "peak_rss_bytes": 63078400,
+        "batch": "batch.proof.dx100-fixtures.candidate-1.20261015t220507z.24113409",
+        "position": 1
+      },
+      "artifacts": 7,
+      "raw_goal_statuses": {
+        "success": 915,
+        "failure": 2
+      },
+      "semantic_failed_goals": [
+        {
+          "goal": "swdb_run.assertion.2",
+          "property": "contract.fixture_dx_footprint#post.ensures1",
+          "function": "swdb_run",
+          "status": "failure",
+          "solver": null,
+          "seconds": null
+        }
+      ],
+      "reachability_sentinel_failures": 1,
+      "errors": []
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/pytest/test_get_tile_size_before_the_0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t215944z.c23feeda.yaml",
+      "sha256": "7fc6341172e35f7bcb3b685428b2d333081a7123701b242ff6141df23389dfc8",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t215944z.c23feeda",
+      "test": "test_get_tile_size_before_the_0",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_size"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 2
+      },
+      "adapter": "cbmc",
+      "verdict": "proven",
+      "failure_class": null,
+      "evidence_kind": "contract_fixture",
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "verdict_reading": null,
+      "pins": {
+        "code": {
+          "id": "dx100-fixtures.candidate-1",
+          "sha256": "8a1f26596a62c9aa392745237ccf16359765f996ed790e2502806df4021d2c1a"
+        },
+        "contract": {
+          "id": "contract.fixture_dx_size",
+          "sha256": "677a1a894b985a7b8fc501c23e546d03abd17ca70209f58e1a5aadfe2db4c762"
+        },
+        "baseline_function": {
+          "id": "test-source",
+          "function": "dxf_size",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "id": "semantics.dx100_bfs_0_1",
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "dc6ff76cba59f5112d308c99c6ad7194c0500fe5c63bd1eaf596a3b7c7929380"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "build_constants": [],
+        "c_lowering": {
+          "id": "dxf_size.c",
+          "sha256": "bceed2b52fa79efa89ce426bf9501dfedfecb12218bd02456977bd808a56c8a1"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "translator": {
+          "id": "swdb-cbmc-translator-4",
+          "sha256": "b67a4fc23c70a1d39269de563ade63a3d655665d3ba3394dd12d5eb4650eff63"
+        }
+      },
+      "tools": [
+        "swdb-c-lowering-9",
+        "clang-22.1.8",
+        "swdb-cbmc-translator-4",
+        "cbmc-6.11.0",
+        "cadical-in-cbmc-6.11.0"
+      ],
+      "initialized_goals": 0,
+      "rte_goals": 0,
+      "assumption_kinds": [
+        "assumed_clause",
+        "proof_semantics",
+        "reduction",
+        "trusted_tool"
+      ],
+      "flags": [
+        "-DSWDB_CBMC",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--sat-solver",
+        "cadical",
+        "--unwindset",
+        "swdb_dx_init.0:33,swdb_dx_init.1:33,swdb_dx_init.2:33,swdb_dx_check_exit.0:33,swdb_dx_check_exit.1:33,dx_counted.0:33,dx_naming.0:33,dx_reg_users.0:33,dx_closure.0:33,dx_closure.1:33,dx_cover.0:33,dx_cover.1:33,dx_cover.2:33,dx_dispatch.0:33,dx_dispatch.1:33,dx_dispatch.2:33,dx_dispatch.3:33,dx_dispatch.4:33,dx_dispatch.5:33,get_new_tile.0:33,get_new_reg.0:33,add_mem_region.0:33,maa_const.0:33,wait_ready.0:33,get_tile_size.0:33,get_tile_size.1:33,get_cacheable_tile_pointer.0:33,maa_stream_load.0:33,maa_stream_load.1:33,maa_stream_load.2:33,maa_indirect_load.0:33,maa_indirect_load.1:33,maa_range_loop.0:33,maa_range_loop.1:33,maa_range_loop.2:33,maa_range_loop.3:33,maa_range_loop.4:33,maa_alu_scalar.0:33,maa_alu_scalar.1:33,maa_indirect_store_vector.0:33,maa_indirect_store_vector.1:33,maa_indirect_store_vector.2:33,swdb_dx_in_footprint.0:33,swdb_dx_in_footprint.1:33"
+      ],
+      "verifier_launched": true,
+      "build_constants": [],
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "counterexample": null,
+      "job": {
+        "adapter": "cbmc",
+        "host": "swdb-fixture-host",
+        "worker_core": "unpinned",
+        "wall_seconds": 9.067861,
+        "cpu_seconds": 9.32646,
+        "batch_load": {
+          "start": 3.624,
+          "end": 3.454
+        },
+        "peak_rss_bytes": 54554624,
+        "batch": "batch.proof.dx100-fixtures.candidate-1.20261015t215944z.c23feeda",
+        "position": 1
+      },
+      "artifacts": 6,
+      "raw_goal_statuses": {
+        "success": 879,
+        "failure": 1
+      },
+      "semantic_failed_goals": [],
+      "reachability_sentinel_failures": 1,
+      "errors": []
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/pytest/test_get_tile_size_before_the_0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t215959z.1a097e71.yaml",
+      "sha256": "a13d2f2b1e5da6a49a53b5cc0edbcc222e5116b72101b548a2a2b10a317654af",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t215959z.1a097e71",
+      "test": "test_get_tile_size_before_the_0",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_size"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 2
+      },
+      "adapter": "cbmc",
+      "verdict": "refuted",
+      "failure_class": null,
+      "evidence_kind": "contract_fixture",
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "verdict_reading": null,
+      "pins": {
+        "code": {
+          "id": "dx100-fixtures.candidate-1",
+          "sha256": "8a1f26596a62c9aa392745237ccf16359765f996ed790e2502806df4021d2c1a"
+        },
+        "contract": {
+          "id": "contract.fixture_dx_size",
+          "sha256": "677a1a894b985a7b8fc501c23e546d03abd17ca70209f58e1a5aadfe2db4c762"
+        },
+        "baseline_function": {
+          "id": "test-source",
+          "function": "dxf_size",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "id": "semantics.dx100_bfs_0_1",
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "dc6ff76cba59f5112d308c99c6ad7194c0500fe5c63bd1eaf596a3b7c7929380"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "build_constants": [
+          {
+            "name": "SWDB_EARLY_SIZE",
+            "value": "1"
+          }
+        ],
+        "c_lowering": {
+          "id": "dxf_size.c",
+          "sha256": "f1d2de69fff05430779f2c24ce2dda89b1fffb0a04d99fed723d7d7ab6693b73"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "translator": {
+          "id": "swdb-cbmc-translator-4",
+          "sha256": "b67a4fc23c70a1d39269de563ade63a3d655665d3ba3394dd12d5eb4650eff63"
+        }
+      },
+      "tools": [
+        "swdb-c-lowering-9",
+        "clang-22.1.8",
+        "swdb-cbmc-translator-4",
+        "cbmc-6.11.0",
+        "cadical-in-cbmc-6.11.0"
+      ],
+      "initialized_goals": 0,
+      "rte_goals": 0,
+      "assumption_kinds": [
+        "assumed_clause",
+        "proof_semantics",
+        "reduction",
+        "trusted_tool"
+      ],
+      "flags": [
+        "-DSWDB_CBMC",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--sat-solver",
+        "cadical",
+        "--unwindset",
+        "swdb_dx_init.0:33,swdb_dx_init.1:33,swdb_dx_init.2:33,swdb_dx_check_exit.0:33,swdb_dx_check_exit.1:33,dx_counted.0:33,dx_naming.0:33,dx_reg_users.0:33,dx_closure.0:33,dx_closure.1:33,dx_cover.0:33,dx_cover.1:33,dx_cover.2:33,dx_dispatch.0:33,dx_dispatch.1:33,dx_dispatch.2:33,dx_dispatch.3:33,dx_dispatch.4:33,dx_dispatch.5:33,get_new_tile.0:33,get_new_reg.0:33,add_mem_region.0:33,maa_const.0:33,wait_ready.0:33,get_tile_size.0:33,get_tile_size.1:33,get_cacheable_tile_pointer.0:33,maa_stream_load.0:33,maa_stream_load.1:33,maa_stream_load.2:33,maa_indirect_load.0:33,maa_indirect_load.1:33,maa_range_loop.0:33,maa_range_loop.1:33,maa_range_loop.2:33,maa_range_loop.3:33,maa_range_loop.4:33,maa_alu_scalar.0:33,maa_alu_scalar.1:33,maa_indirect_store_vector.0:33,maa_indirect_store_vector.1:33,maa_indirect_store_vector.2:33,swdb_dx_in_footprint.0:33,swdb_dx_in_footprint.1:33"
+      ],
+      "verifier_launched": true,
+      "build_constants": [
+        "SWDB_EARLY_SIZE"
+      ],
+      "forms": {
+        "c_lowering": "refuted",
+        "cxx": "refuted (counterexample replayed)"
+      },
+      "counterexample": {
+        "property": "semantics.dx100_bfs_0_1#unready_size_read",
+        "replayed": true
+      },
+      "job": {
+        "adapter": "cbmc",
+        "host": "swdb-fixture-host",
+        "worker_core": "unpinned",
+        "wall_seconds": 11.260754,
+        "cpu_seconds": 11.471267,
+        "batch_load": {
+          "start": 3.738,
+          "end": 4.105
+        },
+        "peak_rss_bytes": 61243392,
+        "batch": "batch.proof.dx100-fixtures.candidate-1.20261015t215959z.1a097e71",
+        "position": 1
+      },
+      "artifacts": 7,
+      "raw_goal_statuses": {
+        "success": 879,
+        "failure": 1
+      },
+      "semantic_failed_goals": [
+        {
+          "goal": "get_tile_size.assertion.2",
+          "property": "semantics.dx100_bfs_0_1#unready_size_read",
+          "function": "get_tile_size",
+          "status": "failure",
+          "solver": null,
+          "seconds": null
+        }
+      ],
+      "reachability_sentinel_failures": 0,
+      "errors": []
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/pytest/test_moving_any_one_tile_read_0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t215847z.3585a3dc.yaml",
+      "sha256": "cc7dc5cecbded7f16595be5bf82656595c3a95f7514de1c371a898c152d7cdbc",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t215847z.3585a3dc",
+      "test": "test_moving_any_one_tile_read_0",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_three_reads"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 2
+      },
+      "adapter": "cbmc",
+      "verdict": "refuted",
+      "failure_class": null,
+      "evidence_kind": "contract_fixture",
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "verdict_reading": null,
+      "pins": {
+        "code": {
+          "id": "dx100-fixtures.candidate-1",
+          "sha256": "8a1f26596a62c9aa392745237ccf16359765f996ed790e2502806df4021d2c1a"
+        },
+        "contract": {
+          "id": "contract.fixture_dx_three_reads",
+          "sha256": "59a51855b21f38f7f800f10cde2b40cf6076e68262d37d84535cfd702b78ae4f"
+        },
+        "baseline_function": {
+          "id": "test-source",
+          "function": "dxf_three_reads",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "id": "semantics.dx100_bfs_0_1",
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "dc6ff76cba59f5112d308c99c6ad7194c0500fe5c63bd1eaf596a3b7c7929380"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "build_constants": [
+          {
+            "name": "SWDB_EARLY_READ_1",
+            "value": "1"
+          }
+        ],
+        "c_lowering": {
+          "id": "dxf_three_reads.c",
+          "sha256": "0ecbeb11c82d1d141d8655fbfa6a1e6fcd6db75d9ebe3e84f1a9ced852f264bb"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "translator": {
+          "id": "swdb-cbmc-translator-4",
+          "sha256": "b67a4fc23c70a1d39269de563ade63a3d655665d3ba3394dd12d5eb4650eff63"
+        }
+      },
+      "tools": [
+        "swdb-c-lowering-9",
+        "clang-22.1.8",
+        "swdb-cbmc-translator-4",
+        "cbmc-6.11.0",
+        "cadical-in-cbmc-6.11.0"
+      ],
+      "initialized_goals": 0,
+      "rte_goals": 0,
+      "assumption_kinds": [
+        "assumed_clause",
+        "proof_semantics",
+        "reduction",
+        "trusted_tool"
+      ],
+      "flags": [
+        "-DSWDB_CBMC",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--sat-solver",
+        "cadical",
+        "--unwindset",
+        "dx_tile_of.0:33,swdb_dx_init.0:33,swdb_dx_init.1:33,swdb_dx_init.2:33,swdb_dx_check_exit.0:33,swdb_dx_check_exit.1:33,dx_counted.0:33,dx_naming.0:33,dx_reg_users.0:33,dx_closure.0:33,dx_closure.1:33,dx_cover.0:33,dx_cover.1:33,dx_cover.2:33,dx_dispatch.0:33,dx_dispatch.1:33,dx_dispatch.2:33,dx_dispatch.3:33,dx_dispatch.4:33,dx_dispatch.5:33,get_new_tile.0:33,get_new_reg.0:33,add_mem_region.0:33,maa_const.0:33,wait_ready.0:33,get_tile_size.0:33,get_tile_size.1:33,get_cacheable_tile_pointer.0:33,maa_stream_load.0:33,maa_stream_load.1:33,maa_stream_load.2:33,maa_indirect_load.0:33,maa_indirect_load.1:33,maa_range_loop.0:33,maa_range_loop.1:33,maa_range_loop.2:33,maa_range_loop.3:33,maa_range_loop.4:33,maa_alu_scalar.0:33,maa_alu_scalar.1:33,maa_indirect_store_vector.0:33,maa_indirect_store_vector.1:33,maa_indirect_store_vector.2:33,swdb_dx_in_footprint.0:33,swdb_dx_in_footprint.1:33"
+      ],
+      "verifier_launched": true,
+      "build_constants": [
+        "SWDB_EARLY_READ_1"
+      ],
+      "forms": {
+        "c_lowering": "refuted",
+        "cxx": "refuted (counterexample replayed)"
+      },
+      "counterexample": {
+        "property": "semantics.dx100_bfs_0_1#unready_read@dxf_three_reads.probe1",
+        "replayed": true
+      },
+      "job": {
+        "adapter": "cbmc",
+        "host": "swdb-fixture-host",
+        "worker_core": "unpinned",
+        "wall_seconds": 12.509808,
+        "cpu_seconds": 12.719428,
+        "batch_load": {
+          "start": 2.656,
+          "end": 2.51
+        },
+        "peak_rss_bytes": 57417728,
+        "batch": "batch.proof.dx100-fixtures.candidate-1.20261015t215847z.3585a3dc",
+        "position": 1
+      },
+      "artifacts": 7,
+      "raw_goal_statuses": {
+        "success": 1038,
+        "failure": 1
+      },
+      "semantic_failed_goals": [
+        {
+          "goal": "dxf_three_reads.assertion.1",
+          "property": "semantics.dx100_bfs_0_1#unready_read@dxf_three_reads.probe1",
+          "function": "dxf_three_reads",
+          "status": "failure",
+          "solver": null,
+          "seconds": null
+        }
+      ],
+      "reachability_sentinel_failures": 0,
+      "errors": []
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/pytest/test_moving_any_one_tile_read_1/records/proofs/proof.dx100-fixtures.candidate-1.20261015t215906z.104f93bd.yaml",
+      "sha256": "f38aab5d45ff7d88e705681a5b5e0deee34fecb93113165286956e7b7d98e399",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t215906z.104f93bd",
+      "test": "test_moving_any_one_tile_read_1",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_three_reads"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 2
+      },
+      "adapter": "cbmc",
+      "verdict": "refuted",
+      "failure_class": null,
+      "evidence_kind": "contract_fixture",
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "verdict_reading": null,
+      "pins": {
+        "code": {
+          "id": "dx100-fixtures.candidate-1",
+          "sha256": "8a1f26596a62c9aa392745237ccf16359765f996ed790e2502806df4021d2c1a"
+        },
+        "contract": {
+          "id": "contract.fixture_dx_three_reads",
+          "sha256": "59a51855b21f38f7f800f10cde2b40cf6076e68262d37d84535cfd702b78ae4f"
+        },
+        "baseline_function": {
+          "id": "test-source",
+          "function": "dxf_three_reads",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "id": "semantics.dx100_bfs_0_1",
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "dc6ff76cba59f5112d308c99c6ad7194c0500fe5c63bd1eaf596a3b7c7929380"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "build_constants": [
+          {
+            "name": "SWDB_EARLY_READ_2",
+            "value": "1"
+          }
+        ],
+        "c_lowering": {
+          "id": "dxf_three_reads.c",
+          "sha256": "9fd0c3de1487f781f0db1260c6f0e9fe901c3462e7509dd7f18051a1bd3c6a89"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "translator": {
+          "id": "swdb-cbmc-translator-4",
+          "sha256": "b67a4fc23c70a1d39269de563ade63a3d655665d3ba3394dd12d5eb4650eff63"
+        }
+      },
+      "tools": [
+        "swdb-c-lowering-9",
+        "clang-22.1.8",
+        "swdb-cbmc-translator-4",
+        "cbmc-6.11.0",
+        "cadical-in-cbmc-6.11.0"
+      ],
+      "initialized_goals": 0,
+      "rte_goals": 0,
+      "assumption_kinds": [
+        "assumed_clause",
+        "proof_semantics",
+        "reduction",
+        "trusted_tool"
+      ],
+      "flags": [
+        "-DSWDB_CBMC",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--sat-solver",
+        "cadical",
+        "--unwindset",
+        "dx_tile_of.0:33,swdb_dx_init.0:33,swdb_dx_init.1:33,swdb_dx_init.2:33,swdb_dx_check_exit.0:33,swdb_dx_check_exit.1:33,dx_counted.0:33,dx_naming.0:33,dx_reg_users.0:33,dx_closure.0:33,dx_closure.1:33,dx_cover.0:33,dx_cover.1:33,dx_cover.2:33,dx_dispatch.0:33,dx_dispatch.1:33,dx_dispatch.2:33,dx_dispatch.3:33,dx_dispatch.4:33,dx_dispatch.5:33,get_new_tile.0:33,get_new_reg.0:33,add_mem_region.0:33,maa_const.0:33,wait_ready.0:33,get_tile_size.0:33,get_tile_size.1:33,get_cacheable_tile_pointer.0:33,maa_stream_load.0:33,maa_stream_load.1:33,maa_stream_load.2:33,maa_indirect_load.0:33,maa_indirect_load.1:33,maa_range_loop.0:33,maa_range_loop.1:33,maa_range_loop.2:33,maa_range_loop.3:33,maa_range_loop.4:33,maa_alu_scalar.0:33,maa_alu_scalar.1:33,maa_indirect_store_vector.0:33,maa_indirect_store_vector.1:33,maa_indirect_store_vector.2:33,swdb_dx_in_footprint.0:33,swdb_dx_in_footprint.1:33"
+      ],
+      "verifier_launched": true,
+      "build_constants": [
+        "SWDB_EARLY_READ_2"
+      ],
+      "forms": {
+        "c_lowering": "refuted",
+        "cxx": "refuted (counterexample replayed)"
+      },
+      "counterexample": {
+        "property": "semantics.dx100_bfs_0_1#unready_read@dxf_three_reads.probe2",
+        "replayed": true
+      },
+      "job": {
+        "adapter": "cbmc",
+        "host": "swdb-fixture-host",
+        "worker_core": "unpinned",
+        "wall_seconds": 12.133993,
+        "cpu_seconds": 12.389852,
+        "batch_load": {
+          "start": 2.469,
+          "end": 2.593
+        },
+        "peak_rss_bytes": 60194816,
+        "batch": "batch.proof.dx100-fixtures.candidate-1.20261015t215906z.104f93bd",
+        "position": 1
+      },
+      "artifacts": 7,
+      "raw_goal_statuses": {
+        "success": 1038,
+        "failure": 1
+      },
+      "semantic_failed_goals": [
+        {
+          "goal": "dxf_three_reads.assertion.2",
+          "property": "semantics.dx100_bfs_0_1#unready_read@dxf_three_reads.probe2",
+          "function": "dxf_three_reads",
+          "status": "failure",
+          "solver": null,
+          "seconds": null
+        }
+      ],
+      "reachability_sentinel_failures": 0,
+      "errors": []
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/pytest/test_moving_any_one_tile_read_2/records/proofs/proof.dx100-fixtures.candidate-1.20261015t215924z.0b8bcc9c.yaml",
+      "sha256": "82b1871fb7d6003fdf536744d79ca289882d67df5acae212c18661c76a34b9db",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t215924z.0b8bcc9c",
+      "test": "test_moving_any_one_tile_read_2",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_three_reads"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 2
+      },
+      "adapter": "cbmc",
+      "verdict": "refuted",
+      "failure_class": null,
+      "evidence_kind": "contract_fixture",
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "verdict_reading": null,
+      "pins": {
+        "code": {
+          "id": "dx100-fixtures.candidate-1",
+          "sha256": "8a1f26596a62c9aa392745237ccf16359765f996ed790e2502806df4021d2c1a"
+        },
+        "contract": {
+          "id": "contract.fixture_dx_three_reads",
+          "sha256": "59a51855b21f38f7f800f10cde2b40cf6076e68262d37d84535cfd702b78ae4f"
+        },
+        "baseline_function": {
+          "id": "test-source",
+          "function": "dxf_three_reads",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "id": "semantics.dx100_bfs_0_1",
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "dc6ff76cba59f5112d308c99c6ad7194c0500fe5c63bd1eaf596a3b7c7929380"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "build_constants": [
+          {
+            "name": "SWDB_EARLY_READ_3",
+            "value": "1"
+          }
+        ],
+        "c_lowering": {
+          "id": "dxf_three_reads.c",
+          "sha256": "d5eaffcd31333a40960474657df45cda6482762f42e3c732e93e8b6a39c32f85"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "translator": {
+          "id": "swdb-cbmc-translator-4",
+          "sha256": "b67a4fc23c70a1d39269de563ade63a3d655665d3ba3394dd12d5eb4650eff63"
+        }
+      },
+      "tools": [
+        "swdb-c-lowering-9",
+        "clang-22.1.8",
+        "swdb-cbmc-translator-4",
+        "cbmc-6.11.0",
+        "cadical-in-cbmc-6.11.0"
+      ],
+      "initialized_goals": 0,
+      "rte_goals": 0,
+      "assumption_kinds": [
+        "assumed_clause",
+        "proof_semantics",
+        "reduction",
+        "trusted_tool"
+      ],
+      "flags": [
+        "-DSWDB_CBMC",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--sat-solver",
+        "cadical",
+        "--unwindset",
+        "dx_tile_of.0:33,swdb_dx_init.0:33,swdb_dx_init.1:33,swdb_dx_init.2:33,swdb_dx_check_exit.0:33,swdb_dx_check_exit.1:33,dx_counted.0:33,dx_naming.0:33,dx_reg_users.0:33,dx_closure.0:33,dx_closure.1:33,dx_cover.0:33,dx_cover.1:33,dx_cover.2:33,dx_dispatch.0:33,dx_dispatch.1:33,dx_dispatch.2:33,dx_dispatch.3:33,dx_dispatch.4:33,dx_dispatch.5:33,get_new_tile.0:33,get_new_reg.0:33,add_mem_region.0:33,maa_const.0:33,wait_ready.0:33,get_tile_size.0:33,get_tile_size.1:33,get_cacheable_tile_pointer.0:33,maa_stream_load.0:33,maa_stream_load.1:33,maa_stream_load.2:33,maa_indirect_load.0:33,maa_indirect_load.1:33,maa_range_loop.0:33,maa_range_loop.1:33,maa_range_loop.2:33,maa_range_loop.3:33,maa_range_loop.4:33,maa_alu_scalar.0:33,maa_alu_scalar.1:33,maa_indirect_store_vector.0:33,maa_indirect_store_vector.1:33,maa_indirect_store_vector.2:33,swdb_dx_in_footprint.0:33,swdb_dx_in_footprint.1:33"
+      ],
+      "verifier_launched": true,
+      "build_constants": [
+        "SWDB_EARLY_READ_3"
+      ],
+      "forms": {
+        "c_lowering": "refuted",
+        "cxx": "refuted (counterexample replayed)"
+      },
+      "counterexample": {
+        "property": "semantics.dx100_bfs_0_1#unready_read@dxf_three_reads.probe3",
+        "replayed": true
+      },
+      "job": {
+        "adapter": "cbmc",
+        "host": "swdb-fixture-host",
+        "worker_core": "unpinned",
+        "wall_seconds": 12.894866,
+        "cpu_seconds": 13.224018,
+        "batch_load": {
+          "start": 3.106,
+          "end": 3.097
+        },
+        "peak_rss_bytes": 62066688,
+        "batch": "batch.proof.dx100-fixtures.candidate-1.20261015t215924z.0b8bcc9c",
+        "position": 1
+      },
+      "artifacts": 7,
+      "raw_goal_statuses": {
+        "success": 1038,
+        "failure": 1
+      },
+      "semantic_failed_goals": [
+        {
+          "goal": "dxf_three_reads.assertion.3",
+          "property": "semantics.dx100_bfs_0_1#unready_read@dxf_three_reads.probe3",
+          "function": "dxf_three_reads",
+          "status": "failure",
+          "solver": null,
+          "seconds": null
+        }
+      ],
+      "reachability_sentinel_failures": 0,
+      "errors": []
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/pytest/test_reads_the_wait_rule_does_0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t220200z.fe6ca36d.yaml",
+      "sha256": "d1f396f983cf8d66f362fb3c9f2a03ed42c517077d55379b9dca1530623ed739",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t220200z.fe6ca36d",
+      "test": "test_reads_the_wait_rule_does_0",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_range_exception"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 3
+      },
+      "adapter": "cbmc",
+      "verdict": "refuted",
+      "failure_class": null,
+      "evidence_kind": "contract_fixture",
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "verdict_reading": null,
+      "pins": {
+        "code": {
+          "id": "dx100-fixtures.candidate-1",
+          "sha256": "8a1f26596a62c9aa392745237ccf16359765f996ed790e2502806df4021d2c1a"
+        },
+        "contract": {
+          "id": "contract.fixture_dx_range_exception",
+          "sha256": "f1f7821e5016ffeb52a66b400f5f23e1b5f40120d66de68cbf3e632361f09a25"
+        },
+        "baseline_function": {
+          "id": "test-source",
+          "function": "dxf_range_exception",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "id": "semantics.dx100_bfs_0_1",
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "dc6ff76cba59f5112d308c99c6ad7194c0500fe5c63bd1eaf596a3b7c7929380"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "build_constants": [],
+        "c_lowering": {
+          "id": "dxf_range_exception.c",
+          "sha256": "1df540fab81d70995f72601bc7e2c8fadeda2d6fa69db10b249c21b1ec5572fc"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "translator": {
+          "id": "swdb-cbmc-translator-4",
+          "sha256": "b67a4fc23c70a1d39269de563ade63a3d655665d3ba3394dd12d5eb4650eff63"
+        }
+      },
+      "tools": [
+        "swdb-c-lowering-9",
+        "clang-22.1.8",
+        "swdb-cbmc-translator-4",
+        "cbmc-6.11.0",
+        "cadical-in-cbmc-6.11.0"
+      ],
+      "initialized_goals": 0,
+      "rte_goals": 0,
+      "assumption_kinds": [
+        "assumed_clause",
+        "proof_semantics",
+        "reduction",
+        "trusted_tool"
+      ],
+      "flags": [
+        "-DSWDB_CBMC",
+        "--unwind",
+        "4",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--sat-solver",
+        "cadical",
+        "--unwindset",
+        "dx_tile_of.0:33,swdb_dx_init.0:33,swdb_dx_init.1:33,swdb_dx_init.2:33,swdb_dx_check_exit.0:33,swdb_dx_check_exit.1:33,dx_counted.0:33,dx_naming.0:33,dx_reg_users.0:33,dx_closure.0:33,dx_closure.1:33,dx_cover.0:33,dx_cover.1:33,dx_cover.2:33,dx_dispatch.0:33,dx_dispatch.1:33,dx_dispatch.2:33,dx_dispatch.3:33,dx_dispatch.4:33,dx_dispatch.5:33,get_new_tile.0:33,get_new_reg.0:33,add_mem_region.0:33,maa_const.0:33,wait_ready.0:33,get_tile_size.0:33,get_tile_size.1:33,get_cacheable_tile_pointer.0:33,maa_stream_load.0:33,maa_stream_load.1:33,maa_stream_load.2:33,maa_indirect_load.0:33,maa_indirect_load.1:33,maa_range_loop.0:33,maa_range_loop.1:33,maa_range_loop.2:33,maa_range_loop.3:33,maa_range_loop.4:33,maa_alu_scalar.0:33,maa_alu_scalar.1:33,maa_indirect_store_vector.0:33,maa_indirect_store_vector.1:33,maa_indirect_store_vector.2:33,swdb_dx_in_footprint.0:33,swdb_dx_in_footprint.1:33"
+      ],
+      "verifier_launched": true,
+      "build_constants": [],
+      "forms": {
+        "c_lowering": "refuted",
+        "cxx": "refuted (counterexample replayed)"
+      },
+      "counterexample": {
+        "property": "semantics.dx100_bfs_0_1#unready_read@dxf_range_exception.probe1",
+        "replayed": true
+      },
+      "job": {
+        "adapter": "cbmc",
+        "host": "swdb-fixture-host",
+        "worker_core": "unpinned",
+        "wall_seconds": 14.762182,
+        "cpu_seconds": 15.222785,
+        "batch_load": {
+          "start": 3.445,
+          "end": 3.205
+        },
+        "peak_rss_bytes": 86753280,
+        "batch": "batch.proof.dx100-fixtures.candidate-1.20261015t220200z.fe6ca36d",
+        "position": 1
+      },
+      "artifacts": 7,
+      "raw_goal_statuses": {
+        "success": 1009,
+        "failure": 1
+      },
+      "semantic_failed_goals": [
+        {
+          "goal": "dxf_range_exception.assertion.1",
+          "property": "semantics.dx100_bfs_0_1#unready_read@dxf_range_exception.probe1",
+          "function": "dxf_range_exception",
+          "status": "failure",
+          "solver": null,
+          "seconds": null
+        }
+      ],
+      "reachability_sentinel_failures": 0,
+      "errors": []
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/pytest/test_reads_the_wait_rule_does_1/records/proofs/proof.dx100-fixtures.candidate-1.20261015t220221z.686735f1.yaml",
+      "sha256": "5b7550b3788c22b5584e773da692c442f868635bf365236b10b6c0d408953bc6",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t220221z.686735f1",
+      "test": "test_reads_the_wait_rule_does_1",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_condition_wait"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 2
+      },
+      "adapter": "cbmc",
+      "verdict": "refuted",
+      "failure_class": null,
+      "evidence_kind": "contract_fixture",
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "verdict_reading": null,
+      "pins": {
+        "code": {
+          "id": "dx100-fixtures.candidate-1",
+          "sha256": "8a1f26596a62c9aa392745237ccf16359765f996ed790e2502806df4021d2c1a"
+        },
+        "contract": {
+          "id": "contract.fixture_dx_condition_wait",
+          "sha256": "2c42643ff3993f031a5a61e93b5b11ba6e821bdb05e97718761143a97bbb863d"
+        },
+        "baseline_function": {
+          "id": "test-source",
+          "function": "dxf_condition_wait",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "id": "semantics.dx100_bfs_0_1",
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "dc6ff76cba59f5112d308c99c6ad7194c0500fe5c63bd1eaf596a3b7c7929380"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "build_constants": [],
+        "c_lowering": {
+          "id": "dxf_condition_wait.c",
+          "sha256": "0d85ae954a4a9c3a939cf00c769e3fb6bc565e8efd9c2cc94813d2b8446a5600"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "translator": {
+          "id": "swdb-cbmc-translator-4",
+          "sha256": "b67a4fc23c70a1d39269de563ade63a3d655665d3ba3394dd12d5eb4650eff63"
+        }
+      },
+      "tools": [
+        "swdb-c-lowering-9",
+        "clang-22.1.8",
+        "swdb-cbmc-translator-4",
+        "cbmc-6.11.0",
+        "cadical-in-cbmc-6.11.0"
+      ],
+      "initialized_goals": 0,
+      "rte_goals": 0,
+      "assumption_kinds": [
+        "assumed_clause",
+        "proof_semantics",
+        "reduction",
+        "trusted_tool"
+      ],
+      "flags": [
+        "-DSWDB_CBMC",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--sat-solver",
+        "cadical",
+        "--unwindset",
+        "dx_tile_of.0:33,swdb_dx_init.0:33,swdb_dx_init.1:33,swdb_dx_init.2:33,swdb_dx_check_exit.0:33,swdb_dx_check_exit.1:33,dx_counted.0:33,dx_naming.0:33,dx_reg_users.0:33,dx_closure.0:33,dx_closure.1:33,dx_cover.0:33,dx_cover.1:33,dx_cover.2:33,dx_dispatch.0:33,dx_dispatch.1:33,dx_dispatch.2:33,dx_dispatch.3:33,dx_dispatch.4:33,dx_dispatch.5:33,get_new_tile.0:33,get_new_reg.0:33,add_mem_region.0:33,maa_const.0:33,wait_ready.0:33,get_tile_size.0:33,get_tile_size.1:33,get_cacheable_tile_pointer.0:33,maa_stream_load.0:33,maa_stream_load.1:33,maa_stream_load.2:33,maa_indirect_load.0:33,maa_indirect_load.1:33,maa_range_loop.0:33,maa_range_loop.1:33,maa_range_loop.2:33,maa_range_loop.3:33,maa_range_loop.4:33,maa_alu_scalar.0:33,maa_alu_scalar.1:33,maa_indirect_store_vector.0:33,maa_indirect_store_vector.1:33,maa_indirect_store_vector.2:33,swdb_dx_in_footprint.0:33,swdb_dx_in_footprint.1:33"
+      ],
+      "verifier_launched": true,
+      "build_constants": [],
+      "forms": {
+        "c_lowering": "refuted",
+        "cxx": "refuted (counterexample replayed)"
+      },
+      "counterexample": {
+        "property": "semantics.dx100_bfs_0_1#unready_read@dxf_condition_wait.probe1",
+        "replayed": true
+      },
+      "job": {
+        "adapter": "cbmc",
+        "host": "swdb-fixture-host",
+        "worker_core": "unpinned",
+        "wall_seconds": 14.476056,
+        "cpu_seconds": 14.909284,
+        "batch_load": {
+          "start": 3.269,
+          "end": 2.913
+        },
+        "peak_rss_bytes": 67215360,
+        "batch": "batch.proof.dx100-fixtures.candidate-1.20261015t220221z.686735f1",
+        "position": 1
+      },
+      "artifacts": 7,
+      "raw_goal_statuses": {
+        "success": 977,
+        "failure": 1
+      },
+      "semantic_failed_goals": [
+        {
+          "goal": "dxf_condition_wait.assertion.1",
+          "property": "semantics.dx100_bfs_0_1#unready_read@dxf_condition_wait.probe1",
+          "function": "dxf_condition_wait",
+          "status": "failure",
+          "solver": null,
+          "seconds": null
+        }
+      ],
+      "reachability_sentinel_failures": 0,
+      "errors": []
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/pytest/test_reads_the_wait_rule_does_2/records/proofs/proof.dx100-fixtures.candidate-1.20261015t220242z.ff7e5020.yaml",
+      "sha256": "3c6392a1073072cb28f64a01a24e6ec1897f83c55a96af273d7e01489f1e61f2",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t220242z.ff7e5020",
+      "test": "test_reads_the_wait_rule_does_2",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_unrelated_wait"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 2
+      },
+      "adapter": "cbmc",
+      "verdict": "refuted",
+      "failure_class": null,
+      "evidence_kind": "contract_fixture",
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "verdict_reading": null,
+      "pins": {
+        "code": {
+          "id": "dx100-fixtures.candidate-1",
+          "sha256": "8a1f26596a62c9aa392745237ccf16359765f996ed790e2502806df4021d2c1a"
+        },
+        "contract": {
+          "id": "contract.fixture_dx_unrelated_wait",
+          "sha256": "0b2fcae4b162ed86aa60e7e26cb361bcac70832ce95ec69fcc0321663185d975"
+        },
+        "baseline_function": {
+          "id": "test-source",
+          "function": "dxf_unrelated_wait",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "id": "semantics.dx100_bfs_0_1",
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "dc6ff76cba59f5112d308c99c6ad7194c0500fe5c63bd1eaf596a3b7c7929380"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "build_constants": [],
+        "c_lowering": {
+          "id": "dxf_unrelated_wait.c",
+          "sha256": "250bef12d177e34a2c9cdab3ab63aa5ba9cd65c839af390cf9981e4f265817ee"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "translator": {
+          "id": "swdb-cbmc-translator-4",
+          "sha256": "b67a4fc23c70a1d39269de563ade63a3d655665d3ba3394dd12d5eb4650eff63"
+        }
+      },
+      "tools": [
+        "swdb-c-lowering-9",
+        "clang-22.1.8",
+        "swdb-cbmc-translator-4",
+        "cbmc-6.11.0",
+        "cadical-in-cbmc-6.11.0"
+      ],
+      "initialized_goals": 0,
+      "rte_goals": 0,
+      "assumption_kinds": [
+        "assumed_clause",
+        "proof_semantics",
+        "reduction",
+        "trusted_tool"
+      ],
+      "flags": [
+        "-DSWDB_CBMC",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--sat-solver",
+        "cadical",
+        "--unwindset",
+        "dx_tile_of.0:33,swdb_dx_init.0:33,swdb_dx_init.1:33,swdb_dx_init.2:33,swdb_dx_check_exit.0:33,swdb_dx_check_exit.1:33,dx_counted.0:33,dx_naming.0:33,dx_reg_users.0:33,dx_closure.0:33,dx_closure.1:33,dx_cover.0:33,dx_cover.1:33,dx_cover.2:33,dx_dispatch.0:33,dx_dispatch.1:33,dx_dispatch.2:33,dx_dispatch.3:33,dx_dispatch.4:33,dx_dispatch.5:33,get_new_tile.0:33,get_new_reg.0:33,add_mem_region.0:33,maa_const.0:33,wait_ready.0:33,get_tile_size.0:33,get_tile_size.1:33,get_cacheable_tile_pointer.0:33,maa_stream_load.0:33,maa_stream_load.1:33,maa_stream_load.2:33,maa_indirect_load.0:33,maa_indirect_load.1:33,maa_range_loop.0:33,maa_range_loop.1:33,maa_range_loop.2:33,maa_range_loop.3:33,maa_range_loop.4:33,maa_alu_scalar.0:33,maa_alu_scalar.1:33,maa_indirect_store_vector.0:33,maa_indirect_store_vector.1:33,maa_indirect_store_vector.2:33,swdb_dx_in_footprint.0:33,swdb_dx_in_footprint.1:33"
+      ],
+      "verifier_launched": true,
+      "build_constants": [],
+      "forms": {
+        "c_lowering": "refuted",
+        "cxx": "refuted (counterexample replayed)"
+      },
+      "counterexample": {
+        "property": "semantics.dx100_bfs_0_1#unready_read@dxf_unrelated_wait.probe1",
+        "replayed": true
+      },
+      "job": {
+        "adapter": "cbmc",
+        "host": "swdb-fixture-host",
+        "worker_core": "unpinned",
+        "wall_seconds": 11.681674,
+        "cpu_seconds": 11.909324,
+        "batch_load": {
+          "start": 3.081,
+          "end": 3.333
+        },
+        "peak_rss_bytes": 56995840,
+        "batch": "batch.proof.dx100-fixtures.candidate-1.20261015t220242z.ff7e5020",
+        "position": 1
+      },
+      "artifacts": 7,
+      "raw_goal_statuses": {
+        "success": 945,
+        "failure": 1
+      },
+      "semantic_failed_goals": [
+        {
+          "goal": "dxf_unrelated_wait.assertion.1",
+          "property": "semantics.dx100_bfs_0_1#unready_read@dxf_unrelated_wait.probe1",
+          "function": "dxf_unrelated_wait",
+          "status": "failure",
+          "solver": null,
+          "seconds": null
+        }
+      ],
+      "reachability_sentinel_failures": 0,
+      "errors": []
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/pytest/test_the_wait_rule_as_gem5_run0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t220053z.3b4e3f7c.yaml",
+      "sha256": "67c3336d2b073d6e8a22f1790c7cc7695f8fec761ad82d44bae11288882608de",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t220053z.3b4e3f7c",
+      "test": "test_the_wait_rule_as_gem5_run0",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_store_source_wait"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 2
+      },
+      "adapter": "cbmc",
+      "verdict": "proven",
+      "failure_class": null,
+      "evidence_kind": "contract_fixture",
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "verdict_reading": null,
+      "pins": {
+        "code": {
+          "id": "dx100-fixtures.candidate-1",
+          "sha256": "8a1f26596a62c9aa392745237ccf16359765f996ed790e2502806df4021d2c1a"
+        },
+        "contract": {
+          "id": "contract.fixture_dx_store_source_wait",
+          "sha256": "d8914767b355e5309078b0a110cb6edb629a754cc5f73cb84e55816a53d6488d"
+        },
+        "baseline_function": {
+          "id": "test-source",
+          "function": "dxf_store_source_wait",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "id": "semantics.dx100_bfs_0_1",
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "dc6ff76cba59f5112d308c99c6ad7194c0500fe5c63bd1eaf596a3b7c7929380"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "build_constants": [],
+        "c_lowering": {
+          "id": "dxf_store_source_wait.c",
+          "sha256": "54f02c390befe576cf2a31c1c8d047f09c409cec39baf294b7fde6bf1b9872a8"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "translator": {
+          "id": "swdb-cbmc-translator-4",
+          "sha256": "b67a4fc23c70a1d39269de563ade63a3d655665d3ba3394dd12d5eb4650eff63"
+        }
+      },
+      "tools": [
+        "swdb-c-lowering-9",
+        "clang-22.1.8",
+        "swdb-cbmc-translator-4",
+        "cbmc-6.11.0",
+        "cadical-in-cbmc-6.11.0"
+      ],
+      "initialized_goals": 0,
+      "rte_goals": 0,
+      "assumption_kinds": [
+        "assumed_clause",
+        "proof_semantics",
+        "reduction",
+        "trusted_tool"
+      ],
+      "flags": [
+        "-DSWDB_CBMC",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--sat-solver",
+        "cadical",
+        "--unwindset",
+        "dx_tile_of.0:33,swdb_dx_init.0:33,swdb_dx_init.1:33,swdb_dx_init.2:33,swdb_dx_check_exit.0:33,swdb_dx_check_exit.1:33,dx_counted.0:33,dx_naming.0:33,dx_reg_users.0:33,dx_closure.0:33,dx_closure.1:33,dx_cover.0:33,dx_cover.1:33,dx_cover.2:33,dx_dispatch.0:33,dx_dispatch.1:33,dx_dispatch.2:33,dx_dispatch.3:33,dx_dispatch.4:33,dx_dispatch.5:33,get_new_tile.0:33,get_new_reg.0:33,add_mem_region.0:33,maa_const.0:33,wait_ready.0:33,get_tile_size.0:33,get_tile_size.1:33,get_cacheable_tile_pointer.0:33,maa_stream_load.0:33,maa_stream_load.1:33,maa_stream_load.2:33,maa_indirect_load.0:33,maa_indirect_load.1:33,maa_range_loop.0:33,maa_range_loop.1:33,maa_range_loop.2:33,maa_range_loop.3:33,maa_range_loop.4:33,maa_alu_scalar.0:33,maa_alu_scalar.1:33,maa_indirect_store_vector.0:33,maa_indirect_store_vector.1:33,maa_indirect_store_vector.2:33,swdb_dx_in_footprint.0:33,swdb_dx_in_footprint.1:33"
+      ],
+      "verifier_launched": true,
+      "build_constants": [],
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "counterexample": null,
+      "job": {
+        "adapter": "cbmc",
+        "host": "swdb-fixture-host",
+        "worker_core": "unpinned",
+        "wall_seconds": 10.501455,
+        "cpu_seconds": 10.847001,
+        "batch_load": {
+          "start": 4.164,
+          "end": 3.831
+        },
+        "peak_rss_bytes": 65830912,
+        "batch": "batch.proof.dx100-fixtures.candidate-1.20261015t220053z.3b4e3f7c",
+        "position": 1
+      },
+      "artifacts": 6,
+      "raw_goal_statuses": {
+        "success": 977,
+        "failure": 1
+      },
+      "semantic_failed_goals": [],
+      "reachability_sentinel_failures": 1,
+      "errors": []
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/pytest/test_the_wait_rule_as_gem5_run1/records/proofs/proof.dx100-fixtures.candidate-1.20261015t220110z.c9ee78c6.yaml",
+      "sha256": "c57abedb5853fd1c7dd402a52726fb96d053ef3d6b599275211c579ee5381918",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t220110z.c9ee78c6",
+      "test": "test_the_wait_rule_as_gem5_run1",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_transitive"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 2
+      },
+      "adapter": "cbmc",
+      "verdict": "proven",
+      "failure_class": null,
+      "evidence_kind": "contract_fixture",
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "verdict_reading": null,
+      "pins": {
+        "code": {
+          "id": "dx100-fixtures.candidate-1",
+          "sha256": "8a1f26596a62c9aa392745237ccf16359765f996ed790e2502806df4021d2c1a"
+        },
+        "contract": {
+          "id": "contract.fixture_dx_transitive",
+          "sha256": "a2bd5e3cc2987b5758fab5089cea0142fab8e6bf9846adf8d3bcadd9d60414ec"
+        },
+        "baseline_function": {
+          "id": "test-source",
+          "function": "dxf_transitive",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "id": "semantics.dx100_bfs_0_1",
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "dc6ff76cba59f5112d308c99c6ad7194c0500fe5c63bd1eaf596a3b7c7929380"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "build_constants": [],
+        "c_lowering": {
+          "id": "dxf_transitive.c",
+          "sha256": "98a8512beaa330f1c7fc585e668bb0fb4ce8da36d34711cdd45339922d09ef81"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "translator": {
+          "id": "swdb-cbmc-translator-4",
+          "sha256": "b67a4fc23c70a1d39269de563ade63a3d655665d3ba3394dd12d5eb4650eff63"
+        }
+      },
+      "tools": [
+        "swdb-c-lowering-9",
+        "clang-22.1.8",
+        "swdb-cbmc-translator-4",
+        "cbmc-6.11.0",
+        "cadical-in-cbmc-6.11.0"
+      ],
+      "initialized_goals": 0,
+      "rte_goals": 0,
+      "assumption_kinds": [
+        "assumed_clause",
+        "proof_semantics",
+        "reduction",
+        "trusted_tool"
+      ],
+      "flags": [
+        "-DSWDB_CBMC",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--sat-solver",
+        "cadical",
+        "--unwindset",
+        "dx_tile_of.0:33,swdb_dx_init.0:33,swdb_dx_init.1:33,swdb_dx_init.2:33,swdb_dx_check_exit.0:33,swdb_dx_check_exit.1:33,dx_counted.0:33,dx_naming.0:33,dx_reg_users.0:33,dx_closure.0:33,dx_closure.1:33,dx_cover.0:33,dx_cover.1:33,dx_cover.2:33,dx_dispatch.0:33,dx_dispatch.1:33,dx_dispatch.2:33,dx_dispatch.3:33,dx_dispatch.4:33,dx_dispatch.5:33,get_new_tile.0:33,get_new_reg.0:33,add_mem_region.0:33,maa_const.0:33,wait_ready.0:33,get_tile_size.0:33,get_tile_size.1:33,get_cacheable_tile_pointer.0:33,maa_stream_load.0:33,maa_stream_load.1:33,maa_stream_load.2:33,maa_indirect_load.0:33,maa_indirect_load.1:33,maa_range_loop.0:33,maa_range_loop.1:33,maa_range_loop.2:33,maa_range_loop.3:33,maa_range_loop.4:33,maa_alu_scalar.0:33,maa_alu_scalar.1:33,maa_indirect_store_vector.0:33,maa_indirect_store_vector.1:33,maa_indirect_store_vector.2:33,swdb_dx_in_footprint.0:33,swdb_dx_in_footprint.1:33"
+      ],
+      "verifier_launched": true,
+      "build_constants": [],
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "counterexample": null,
+      "job": {
+        "adapter": "cbmc",
+        "host": "swdb-fixture-host",
+        "worker_core": "unpinned",
+        "wall_seconds": 10.264441,
+        "cpu_seconds": 10.542782,
+        "batch_load": {
+          "start": 3.764,
+          "end": 3.492
+        },
+        "peak_rss_bytes": 61288448,
+        "batch": "batch.proof.dx100-fixtures.candidate-1.20261015t220110z.c9ee78c6",
+        "position": 1
+      },
+      "artifacts": 6,
+      "raw_goal_statuses": {
+        "success": 1007,
+        "failure": 1
+      },
+      "semantic_failed_goals": [],
+      "reachability_sentinel_failures": 1,
+      "errors": []
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/pytest/test_the_wait_rule_as_gem5_run2/records/proofs/proof.dx100-fixtures.candidate-1.20261015t220126z.1b7f042d.yaml",
+      "sha256": "fc461260aa858d6e4bb11484c377af076d4a2f024e7eb3c950b4a71c847543af",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t220126z.1b7f042d",
+      "test": "test_the_wait_rule_as_gem5_run2",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_stall_condition"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 2
+      },
+      "adapter": "cbmc",
+      "verdict": "proven",
+      "failure_class": null,
+      "evidence_kind": "contract_fixture",
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "verdict_reading": null,
+      "pins": {
+        "code": {
+          "id": "dx100-fixtures.candidate-1",
+          "sha256": "8a1f26596a62c9aa392745237ccf16359765f996ed790e2502806df4021d2c1a"
+        },
+        "contract": {
+          "id": "contract.fixture_dx_stall_condition",
+          "sha256": "a87143bc0a0e6a56e569506d25db08ff01c738fbc2945676a7e5de3cc38bff00"
+        },
+        "baseline_function": {
+          "id": "test-source",
+          "function": "dxf_stall_condition",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "id": "semantics.dx100_bfs_0_1",
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "dc6ff76cba59f5112d308c99c6ad7194c0500fe5c63bd1eaf596a3b7c7929380"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "build_constants": [],
+        "c_lowering": {
+          "id": "dxf_stall_condition.c",
+          "sha256": "a4171b75014eaf9df88ff7691c617c01bf5b5489c1301c1f66477c7f6ae33263"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "translator": {
+          "id": "swdb-cbmc-translator-4",
+          "sha256": "b67a4fc23c70a1d39269de563ade63a3d655665d3ba3394dd12d5eb4650eff63"
+        }
+      },
+      "tools": [
+        "swdb-c-lowering-9",
+        "clang-22.1.8",
+        "swdb-cbmc-translator-4",
+        "cbmc-6.11.0",
+        "cadical-in-cbmc-6.11.0"
+      ],
+      "initialized_goals": 0,
+      "rte_goals": 0,
+      "assumption_kinds": [
+        "assumed_clause",
+        "proof_semantics",
+        "reduction",
+        "trusted_tool"
+      ],
+      "flags": [
+        "-DSWDB_CBMC",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--sat-solver",
+        "cadical",
+        "--unwindset",
+        "dx_tile_of.0:33,swdb_dx_init.0:33,swdb_dx_init.1:33,swdb_dx_init.2:33,swdb_dx_check_exit.0:33,swdb_dx_check_exit.1:33,dx_counted.0:33,dx_naming.0:33,dx_reg_users.0:33,dx_closure.0:33,dx_closure.1:33,dx_cover.0:33,dx_cover.1:33,dx_cover.2:33,dx_dispatch.0:33,dx_dispatch.1:33,dx_dispatch.2:33,dx_dispatch.3:33,dx_dispatch.4:33,dx_dispatch.5:33,get_new_tile.0:33,get_new_reg.0:33,add_mem_region.0:33,maa_const.0:33,wait_ready.0:33,get_tile_size.0:33,get_tile_size.1:33,get_cacheable_tile_pointer.0:33,maa_stream_load.0:33,maa_stream_load.1:33,maa_stream_load.2:33,maa_indirect_load.0:33,maa_indirect_load.1:33,maa_range_loop.0:33,maa_range_loop.1:33,maa_range_loop.2:33,maa_range_loop.3:33,maa_range_loop.4:33,maa_alu_scalar.0:33,maa_alu_scalar.1:33,maa_indirect_store_vector.0:33,maa_indirect_store_vector.1:33,maa_indirect_store_vector.2:33,swdb_dx_in_footprint.0:33,swdb_dx_in_footprint.1:33"
+      ],
+      "verifier_launched": true,
+      "build_constants": [],
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "counterexample": null,
+      "job": {
+        "adapter": "cbmc",
+        "host": "swdb-fixture-host",
+        "worker_core": "unpinned",
+        "wall_seconds": 12.713758,
+        "cpu_seconds": 13.155926,
+        "batch_load": {
+          "start": 3.613,
+          "end": 3.255
+        },
+        "peak_rss_bytes": 69812224,
+        "batch": "batch.proof.dx100-fixtures.candidate-1.20261015t220126z.1b7f042d",
+        "position": 1
+      },
+      "artifacts": 6,
+      "raw_goal_statuses": {
+        "success": 993,
+        "failure": 1
+      },
+      "semantic_failed_goals": [],
+      "reachability_sentinel_failures": 1,
+      "errors": []
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/pytest/test_the_wait_rule_as_gem5_run3/records/proofs/proof.dx100-fixtures.candidate-1.20261015t220145z.4dfc827a.yaml",
+      "sha256": "ecc1fd11c848a9d7dd335afe5ec092a8aa7c728d265b00212a878e3b886ae1a5",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t220145z.4dfc827a",
+      "test": "test_the_wait_rule_as_gem5_run3",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_register_write"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 2
+      },
+      "adapter": "cbmc",
+      "verdict": "proven",
+      "failure_class": null,
+      "evidence_kind": "contract_fixture",
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "verdict_reading": null,
+      "pins": {
+        "code": {
+          "id": "dx100-fixtures.candidate-1",
+          "sha256": "8a1f26596a62c9aa392745237ccf16359765f996ed790e2502806df4021d2c1a"
+        },
+        "contract": {
+          "id": "contract.fixture_dx_register_write",
+          "sha256": "6504fcde61c77c01f276170f130d7903911f2f3762a08dc2d74a70e60fe03d94"
+        },
+        "baseline_function": {
+          "id": "test-source",
+          "function": "dxf_register_write",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "id": "semantics.dx100_bfs_0_1",
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "dc6ff76cba59f5112d308c99c6ad7194c0500fe5c63bd1eaf596a3b7c7929380"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "build_constants": [],
+        "c_lowering": {
+          "id": "dxf_register_write.c",
+          "sha256": "370883f68fd4b187b53449eaea658a74bbdcf6df3a175f5a26995aa5728efdca"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "translator": {
+          "id": "swdb-cbmc-translator-4",
+          "sha256": "b67a4fc23c70a1d39269de563ade63a3d655665d3ba3394dd12d5eb4650eff63"
+        }
+      },
+      "tools": [
+        "swdb-c-lowering-9",
+        "clang-22.1.8",
+        "swdb-cbmc-translator-4",
+        "cbmc-6.11.0",
+        "cadical-in-cbmc-6.11.0"
+      ],
+      "initialized_goals": 0,
+      "rte_goals": 0,
+      "assumption_kinds": [
+        "assumed_clause",
+        "proof_semantics",
+        "reduction",
+        "trusted_tool"
+      ],
+      "flags": [
+        "-DSWDB_CBMC",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--sat-solver",
+        "cadical",
+        "--unwindset",
+        "dx_tile_of.0:33,swdb_dx_init.0:33,swdb_dx_init.1:33,swdb_dx_init.2:33,swdb_dx_check_exit.0:33,swdb_dx_check_exit.1:33,dx_counted.0:33,dx_naming.0:33,dx_reg_users.0:33,dx_closure.0:33,dx_closure.1:33,dx_cover.0:33,dx_cover.1:33,dx_cover.2:33,dx_dispatch.0:33,dx_dispatch.1:33,dx_dispatch.2:33,dx_dispatch.3:33,dx_dispatch.4:33,dx_dispatch.5:33,get_new_tile.0:33,get_new_reg.0:33,add_mem_region.0:33,maa_const.0:33,wait_ready.0:33,get_tile_size.0:33,get_tile_size.1:33,get_cacheable_tile_pointer.0:33,maa_stream_load.0:33,maa_stream_load.1:33,maa_stream_load.2:33,maa_indirect_load.0:33,maa_indirect_load.1:33,maa_range_loop.0:33,maa_range_loop.1:33,maa_range_loop.2:33,maa_range_loop.3:33,maa_range_loop.4:33,maa_alu_scalar.0:33,maa_alu_scalar.1:33,maa_indirect_store_vector.0:33,maa_indirect_store_vector.1:33,maa_indirect_store_vector.2:33,swdb_dx_in_footprint.0:33,swdb_dx_in_footprint.1:33"
+      ],
+      "verifier_launched": true,
+      "build_constants": [],
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "counterexample": null,
+      "job": {
+        "adapter": "cbmc",
+        "host": "swdb-fixture-host",
+        "worker_core": "unpinned",
+        "wall_seconds": 8.199141,
+        "cpu_seconds": 8.423032,
+        "batch_load": {
+          "start": 3.556,
+          "end": 3.396
+        },
+        "peak_rss_bytes": 57884672,
+        "batch": "batch.proof.dx100-fixtures.candidate-1.20261015t220145z.4dfc827a",
+        "position": 1
+      },
+      "artifacts": 6,
+      "raw_goal_statuses": {
+        "success": 945,
+        "failure": 1
+      },
+      "semantic_failed_goals": [],
+      "reachability_sentinel_failures": 1,
+      "errors": []
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/pytest/test_values_at_issue_prove_and0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t220300z.5135caa9.yaml",
+      "sha256": "e008c8a0808af50a3c68c1fd7e126fa0c85e873e33ea1c9b212e16ec2d6a1c50",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t220300z.5135caa9",
+      "test": "test_values_at_issue_prove_and0",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_value_stream"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 2
+      },
+      "adapter": "cbmc",
+      "verdict": "proven",
+      "failure_class": null,
+      "evidence_kind": "contract_fixture",
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "verdict_reading": null,
+      "pins": {
+        "code": {
+          "id": "dx100-fixtures.candidate-1",
+          "sha256": "8a1f26596a62c9aa392745237ccf16359765f996ed790e2502806df4021d2c1a"
+        },
+        "contract": {
+          "id": "contract.fixture_dx_value_stream",
+          "sha256": "09e747fcd1aa205ecb03fb12908e7891498252fd9d7b385ad739de75dfe579f8"
+        },
+        "baseline_function": {
+          "id": "test-source",
+          "function": "dxf_value_stream",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "id": "semantics.dx100_bfs_0_1",
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "dc6ff76cba59f5112d308c99c6ad7194c0500fe5c63bd1eaf596a3b7c7929380"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "build_constants": [],
+        "c_lowering": {
+          "id": "dxf_value_stream.c",
+          "sha256": "6fc6b83b69ffae144fbd84559fa61c81bb718341ace172fb9557d05e97310b35"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "translator": {
+          "id": "swdb-cbmc-translator-4",
+          "sha256": "b67a4fc23c70a1d39269de563ade63a3d655665d3ba3394dd12d5eb4650eff63"
+        }
+      },
+      "tools": [
+        "swdb-c-lowering-9",
+        "clang-22.1.8",
+        "swdb-cbmc-translator-4",
+        "cbmc-6.11.0",
+        "cadical-in-cbmc-6.11.0"
+      ],
+      "initialized_goals": 0,
+      "rte_goals": 0,
+      "assumption_kinds": [
+        "assumed_clause",
+        "proof_semantics",
+        "reduction",
+        "trusted_tool"
+      ],
+      "flags": [
+        "-DSWDB_CBMC",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--sat-solver",
+        "cadical",
+        "--unwindset",
+        "dx_tile_of.0:33,swdb_dx_init.0:33,swdb_dx_init.1:33,swdb_dx_init.2:33,swdb_dx_check_exit.0:33,swdb_dx_check_exit.1:33,dx_counted.0:33,dx_naming.0:33,dx_reg_users.0:33,dx_closure.0:33,dx_closure.1:33,dx_cover.0:33,dx_cover.1:33,dx_cover.2:33,dx_dispatch.0:33,dx_dispatch.1:33,dx_dispatch.2:33,dx_dispatch.3:33,dx_dispatch.4:33,dx_dispatch.5:33,get_new_tile.0:33,get_new_reg.0:33,add_mem_region.0:33,maa_const.0:33,wait_ready.0:33,get_tile_size.0:33,get_tile_size.1:33,get_cacheable_tile_pointer.0:33,maa_stream_load.0:33,maa_stream_load.1:33,maa_stream_load.2:33,maa_indirect_load.0:33,maa_indirect_load.1:33,maa_range_loop.0:33,maa_range_loop.1:33,maa_range_loop.2:33,maa_range_loop.3:33,maa_range_loop.4:33,maa_alu_scalar.0:33,maa_alu_scalar.1:33,maa_indirect_store_vector.0:33,maa_indirect_store_vector.1:33,maa_indirect_store_vector.2:33,swdb_dx_in_footprint.0:33,swdb_dx_in_footprint.1:33"
+      ],
+      "verifier_launched": true,
+      "build_constants": [],
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "counterexample": null,
+      "job": {
+        "adapter": "cbmc",
+        "host": "swdb-fixture-host",
+        "worker_core": "unpinned",
+        "wall_seconds": 9.890266,
+        "cpu_seconds": 10.139303,
+        "batch_load": {
+          "start": 3.387,
+          "end": 3.167
+        },
+        "peak_rss_bytes": 60592128,
+        "batch": "batch.proof.dx100-fixtures.candidate-1.20261015t220300z.5135caa9",
+        "position": 1
+      },
+      "artifacts": 6,
+      "raw_goal_statuses": {
+        "success": 951,
+        "failure": 1
+      },
+      "semantic_failed_goals": [],
+      "reachability_sentinel_failures": 1,
+      "errors": []
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/pytest/test_values_at_issue_prove_and0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t220316z.55426c30.yaml",
+      "sha256": "251a7fd26504157f0f3b1adb16fd7cb4a416f0ebafd887693e27b4f5d4d295f2",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t220316z.55426c30",
+      "test": "test_values_at_issue_prove_and0",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_value_stream"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 2
+      },
+      "adapter": "cbmc",
+      "verdict": "refuted",
+      "failure_class": null,
+      "evidence_kind": "contract_fixture",
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "verdict_reading": null,
+      "pins": {
+        "code": {
+          "id": "dx100-fixtures.candidate-1",
+          "sha256": "8a1f26596a62c9aa392745237ccf16359765f996ed790e2502806df4021d2c1a"
+        },
+        "contract": {
+          "id": "contract.fixture_dx_value_stream",
+          "sha256": "09e747fcd1aa205ecb03fb12908e7891498252fd9d7b385ad739de75dfe579f8"
+        },
+        "baseline_function": {
+          "id": "test-source",
+          "function": "dxf_value_stream",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "id": "semantics.dx100_bfs_0_1",
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "dc6ff76cba59f5112d308c99c6ad7194c0500fe5c63bd1eaf596a3b7c7929380"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "build_constants": [
+          {
+            "name": "SWDB_WRONG_VALUE",
+            "value": "1"
+          }
+        ],
+        "c_lowering": {
+          "id": "dxf_value_stream.c",
+          "sha256": "c0037ae20c72f8d89efb27bd45314aa05b05557849ba8795ba36c79a01d7ad42"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "translator": {
+          "id": "swdb-cbmc-translator-4",
+          "sha256": "b67a4fc23c70a1d39269de563ade63a3d655665d3ba3394dd12d5eb4650eff63"
+        }
+      },
+      "tools": [
+        "swdb-c-lowering-9",
+        "clang-22.1.8",
+        "swdb-cbmc-translator-4",
+        "cbmc-6.11.0",
+        "cadical-in-cbmc-6.11.0"
+      ],
+      "initialized_goals": 0,
+      "rte_goals": 0,
+      "assumption_kinds": [
+        "assumed_clause",
+        "proof_semantics",
+        "reduction",
+        "trusted_tool"
+      ],
+      "flags": [
+        "-DSWDB_CBMC",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--sat-solver",
+        "cadical",
+        "--unwindset",
+        "dx_tile_of.0:33,swdb_dx_init.0:33,swdb_dx_init.1:33,swdb_dx_init.2:33,swdb_dx_check_exit.0:33,swdb_dx_check_exit.1:33,dx_counted.0:33,dx_naming.0:33,dx_reg_users.0:33,dx_closure.0:33,dx_closure.1:33,dx_cover.0:33,dx_cover.1:33,dx_cover.2:33,dx_dispatch.0:33,dx_dispatch.1:33,dx_dispatch.2:33,dx_dispatch.3:33,dx_dispatch.4:33,dx_dispatch.5:33,get_new_tile.0:33,get_new_reg.0:33,add_mem_region.0:33,maa_const.0:33,wait_ready.0:33,get_tile_size.0:33,get_tile_size.1:33,get_cacheable_tile_pointer.0:33,maa_stream_load.0:33,maa_stream_load.1:33,maa_stream_load.2:33,maa_indirect_load.0:33,maa_indirect_load.1:33,maa_range_loop.0:33,maa_range_loop.1:33,maa_range_loop.2:33,maa_range_loop.3:33,maa_range_loop.4:33,maa_alu_scalar.0:33,maa_alu_scalar.1:33,maa_indirect_store_vector.0:33,maa_indirect_store_vector.1:33,maa_indirect_store_vector.2:33,swdb_dx_in_footprint.0:33,swdb_dx_in_footprint.1:33"
+      ],
+      "verifier_launched": true,
+      "build_constants": [
+        "SWDB_WRONG_VALUE"
+      ],
+      "forms": {
+        "c_lowering": "refuted",
+        "cxx": "refuted (counterexample replayed)"
+      },
+      "counterexample": {
+        "property": "contract.fixture_dx_value_stream#post.ensures1",
+        "replayed": true
+      },
+      "job": {
+        "adapter": "cbmc",
+        "host": "swdb-fixture-host",
+        "worker_core": "unpinned",
+        "wall_seconds": 11.644002,
+        "cpu_seconds": 11.893113,
+        "batch_load": {
+          "start": 3.073,
+          "end": 2.916
+        },
+        "peak_rss_bytes": 61648896,
+        "batch": "batch.proof.dx100-fixtures.candidate-1.20261015t220316z.55426c30",
+        "position": 1
+      },
+      "artifacts": 7,
+      "raw_goal_statuses": {
+        "success": 950,
+        "failure": 2
+      },
+      "semantic_failed_goals": [
+        {
+          "goal": "swdb_run.assertion.2",
+          "property": "contract.fixture_dx_value_stream#post.ensures1",
+          "function": "swdb_run",
+          "status": "failure",
+          "solver": null,
+          "seconds": null
+        }
+      ],
+      "reachability_sentinel_failures": 1,
+      "errors": []
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/pytest/test_values_at_issue_prove_and1/records/proofs/proof.dx100-fixtures.candidate-1.20261015t220334z.615ac209.yaml",
+      "sha256": "51c1e240ff70eba8ba3788278700754bf446198d46e319e12b553a31193d3bcd",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t220334z.615ac209",
+      "test": "test_values_at_issue_prove_and1",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_value_gather"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 2
+      },
+      "adapter": "cbmc",
+      "verdict": "proven",
+      "failure_class": null,
+      "evidence_kind": "contract_fixture",
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "verdict_reading": null,
+      "pins": {
+        "code": {
+          "id": "dx100-fixtures.candidate-1",
+          "sha256": "8a1f26596a62c9aa392745237ccf16359765f996ed790e2502806df4021d2c1a"
+        },
+        "contract": {
+          "id": "contract.fixture_dx_value_gather",
+          "sha256": "b86807afbe81f66e35d08a4c8b0d41801b8f74a2bc68a91c4daf3b66d9272d4a"
+        },
+        "baseline_function": {
+          "id": "test-source",
+          "function": "dxf_value_gather",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "id": "semantics.dx100_bfs_0_1",
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "dc6ff76cba59f5112d308c99c6ad7194c0500fe5c63bd1eaf596a3b7c7929380"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "build_constants": [],
+        "c_lowering": {
+          "id": "dxf_value_gather.c",
+          "sha256": "48cf82529c86fbbe02b4c82e0afe3b15d0792a0a5a401569bd93676e3c85d408"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "translator": {
+          "id": "swdb-cbmc-translator-4",
+          "sha256": "b67a4fc23c70a1d39269de563ade63a3d655665d3ba3394dd12d5eb4650eff63"
+        }
+      },
+      "tools": [
+        "swdb-c-lowering-9",
+        "clang-22.1.8",
+        "swdb-cbmc-translator-4",
+        "cbmc-6.11.0",
+        "cadical-in-cbmc-6.11.0"
+      ],
+      "initialized_goals": 0,
+      "rte_goals": 0,
+      "assumption_kinds": [
+        "assumed_clause",
+        "proof_semantics",
+        "reduction",
+        "trusted_tool"
+      ],
+      "flags": [
+        "-DSWDB_CBMC",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--sat-solver",
+        "cadical",
+        "--unwindset",
+        "dx_tile_of.0:33,swdb_dx_init.0:33,swdb_dx_init.1:33,swdb_dx_init.2:33,swdb_dx_check_exit.0:33,swdb_dx_check_exit.1:33,dx_counted.0:33,dx_naming.0:33,dx_reg_users.0:33,dx_closure.0:33,dx_closure.1:33,dx_cover.0:33,dx_cover.1:33,dx_cover.2:33,dx_dispatch.0:33,dx_dispatch.1:33,dx_dispatch.2:33,dx_dispatch.3:33,dx_dispatch.4:33,dx_dispatch.5:33,get_new_tile.0:33,get_new_reg.0:33,add_mem_region.0:33,maa_const.0:33,wait_ready.0:33,get_tile_size.0:33,get_tile_size.1:33,get_cacheable_tile_pointer.0:33,maa_stream_load.0:33,maa_stream_load.1:33,maa_stream_load.2:33,maa_indirect_load.0:33,maa_indirect_load.1:33,maa_range_loop.0:33,maa_range_loop.1:33,maa_range_loop.2:33,maa_range_loop.3:33,maa_range_loop.4:33,maa_alu_scalar.0:33,maa_alu_scalar.1:33,maa_indirect_store_vector.0:33,maa_indirect_store_vector.1:33,maa_indirect_store_vector.2:33,swdb_dx_in_footprint.0:33,swdb_dx_in_footprint.1:33"
+      ],
+      "verifier_launched": true,
+      "build_constants": [],
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "counterexample": null,
+      "job": {
+        "adapter": "cbmc",
+        "host": "swdb-fixture-host",
+        "worker_core": "unpinned",
+        "wall_seconds": 10.468114,
+        "cpu_seconds": 10.768173,
+        "batch_load": {
+          "start": 3.083,
+          "end": 3.538
+        },
+        "peak_rss_bytes": 62197760,
+        "batch": "batch.proof.dx100-fixtures.candidate-1.20261015t220334z.615ac209",
+        "position": 1
+      },
+      "artifacts": 6,
+      "raw_goal_statuses": {
+        "success": 982,
+        "failure": 1
+      },
+      "semantic_failed_goals": [],
+      "reachability_sentinel_failures": 1,
+      "errors": []
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/pytest/test_values_at_issue_prove_and1/records/proofs/proof.dx100-fixtures.candidate-1.20261015t220351z.fb3801e2.yaml",
+      "sha256": "f639a0656318e308de9007dbd0c73d0fcd9efcf229ace6e66d9f1f7ecd80db82",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t220351z.fb3801e2",
+      "test": "test_values_at_issue_prove_and1",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_value_gather"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 2
+      },
+      "adapter": "cbmc",
+      "verdict": "refuted",
+      "failure_class": null,
+      "evidence_kind": "contract_fixture",
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "verdict_reading": null,
+      "pins": {
+        "code": {
+          "id": "dx100-fixtures.candidate-1",
+          "sha256": "8a1f26596a62c9aa392745237ccf16359765f996ed790e2502806df4021d2c1a"
+        },
+        "contract": {
+          "id": "contract.fixture_dx_value_gather",
+          "sha256": "b86807afbe81f66e35d08a4c8b0d41801b8f74a2bc68a91c4daf3b66d9272d4a"
+        },
+        "baseline_function": {
+          "id": "test-source",
+          "function": "dxf_value_gather",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "id": "semantics.dx100_bfs_0_1",
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "dc6ff76cba59f5112d308c99c6ad7194c0500fe5c63bd1eaf596a3b7c7929380"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "build_constants": [
+          {
+            "name": "SWDB_WRONG_VALUE",
+            "value": "1"
+          }
+        ],
+        "c_lowering": {
+          "id": "dxf_value_gather.c",
+          "sha256": "7e3edef4e052fc8b31fb71a47fd3eeeff12120f8682607c3cdb3ce48be6183c1"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "translator": {
+          "id": "swdb-cbmc-translator-4",
+          "sha256": "b67a4fc23c70a1d39269de563ade63a3d655665d3ba3394dd12d5eb4650eff63"
+        }
+      },
+      "tools": [
+        "swdb-c-lowering-9",
+        "clang-22.1.8",
+        "swdb-cbmc-translator-4",
+        "cbmc-6.11.0",
+        "cadical-in-cbmc-6.11.0"
+      ],
+      "initialized_goals": 0,
+      "rte_goals": 0,
+      "assumption_kinds": [
+        "assumed_clause",
+        "proof_semantics",
+        "reduction",
+        "trusted_tool"
+      ],
+      "flags": [
+        "-DSWDB_CBMC",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--sat-solver",
+        "cadical",
+        "--unwindset",
+        "dx_tile_of.0:33,swdb_dx_init.0:33,swdb_dx_init.1:33,swdb_dx_init.2:33,swdb_dx_check_exit.0:33,swdb_dx_check_exit.1:33,dx_counted.0:33,dx_naming.0:33,dx_reg_users.0:33,dx_closure.0:33,dx_closure.1:33,dx_cover.0:33,dx_cover.1:33,dx_cover.2:33,dx_dispatch.0:33,dx_dispatch.1:33,dx_dispatch.2:33,dx_dispatch.3:33,dx_dispatch.4:33,dx_dispatch.5:33,get_new_tile.0:33,get_new_reg.0:33,add_mem_region.0:33,maa_const.0:33,wait_ready.0:33,get_tile_size.0:33,get_tile_size.1:33,get_cacheable_tile_pointer.0:33,maa_stream_load.0:33,maa_stream_load.1:33,maa_stream_load.2:33,maa_indirect_load.0:33,maa_indirect_load.1:33,maa_range_loop.0:33,maa_range_loop.1:33,maa_range_loop.2:33,maa_range_loop.3:33,maa_range_loop.4:33,maa_alu_scalar.0:33,maa_alu_scalar.1:33,maa_indirect_store_vector.0:33,maa_indirect_store_vector.1:33,maa_indirect_store_vector.2:33,swdb_dx_in_footprint.0:33,swdb_dx_in_footprint.1:33"
+      ],
+      "verifier_launched": true,
+      "build_constants": [
+        "SWDB_WRONG_VALUE"
+      ],
+      "forms": {
+        "c_lowering": "refuted",
+        "cxx": "refuted (counterexample replayed)"
+      },
+      "counterexample": {
+        "property": "contract.fixture_dx_value_gather#post.ensures1",
+        "replayed": true
+      },
+      "job": {
+        "adapter": "cbmc",
+        "host": "swdb-fixture-host",
+        "worker_core": "unpinned",
+        "wall_seconds": 12.947508,
+        "cpu_seconds": 13.267903,
+        "batch_load": {
+          "start": 3.575,
+          "end": 3.152
+        },
+        "peak_rss_bytes": 64839680,
+        "batch": "batch.proof.dx100-fixtures.candidate-1.20261015t220351z.fb3801e2",
+        "position": 1
+      },
+      "artifacts": 7,
+      "raw_goal_statuses": {
+        "success": 981,
+        "failure": 2
+      },
+      "semantic_failed_goals": [
+        {
+          "goal": "swdb_run.assertion.2",
+          "property": "contract.fixture_dx_value_gather#post.ensures1",
+          "function": "swdb_run",
+          "status": "failure",
+          "solver": null,
+          "seconds": null
+        }
+      ],
+      "reachability_sentinel_failures": 1,
+      "errors": []
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/pytest/test_values_at_issue_prove_and2/records/proofs/proof.dx100-fixtures.candidate-1.20261015t220410z.eb4aba58.yaml",
+      "sha256": "f3fcee32f58d9617dda4673d8a190784b4c2327cf75f3f0cce174795ead82082",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t220410z.eb4aba58",
+      "test": "test_values_at_issue_prove_and2",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_value_range"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 3
+      },
+      "adapter": "cbmc",
+      "verdict": "proven",
+      "failure_class": null,
+      "evidence_kind": "contract_fixture",
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "verdict_reading": null,
+      "pins": {
+        "code": {
+          "id": "dx100-fixtures.candidate-1",
+          "sha256": "8a1f26596a62c9aa392745237ccf16359765f996ed790e2502806df4021d2c1a"
+        },
+        "contract": {
+          "id": "contract.fixture_dx_value_range",
+          "sha256": "5e67bb82304592b891f8faf2fd474aa6275c908b01c476ecb85dd56a2a8872f2"
+        },
+        "baseline_function": {
+          "id": "test-source",
+          "function": "dxf_value_range",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "id": "semantics.dx100_bfs_0_1",
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "dc6ff76cba59f5112d308c99c6ad7194c0500fe5c63bd1eaf596a3b7c7929380"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "build_constants": [],
+        "c_lowering": {
+          "id": "dxf_value_range.c",
+          "sha256": "e01201c6340d4a494cf606dde8b49eaaf3bda7c3635ccf8e57a47a27a42766a0"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "translator": {
+          "id": "swdb-cbmc-translator-4",
+          "sha256": "b67a4fc23c70a1d39269de563ade63a3d655665d3ba3394dd12d5eb4650eff63"
+        }
+      },
+      "tools": [
+        "swdb-c-lowering-9",
+        "clang-22.1.8",
+        "swdb-cbmc-translator-4",
+        "cbmc-6.11.0",
+        "cadical-in-cbmc-6.11.0"
+      ],
+      "initialized_goals": 0,
+      "rte_goals": 0,
+      "assumption_kinds": [
+        "assumed_clause",
+        "proof_semantics",
+        "reduction",
+        "trusted_tool"
+      ],
+      "flags": [
+        "-DSWDB_CBMC",
+        "--unwind",
+        "4",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--sat-solver",
+        "cadical",
+        "--unwindset",
+        "dx_tile_of.0:33,swdb_dx_init.0:33,swdb_dx_init.1:33,swdb_dx_init.2:33,swdb_dx_check_exit.0:33,swdb_dx_check_exit.1:33,dx_counted.0:33,dx_naming.0:33,dx_reg_users.0:33,dx_closure.0:33,dx_closure.1:33,dx_cover.0:33,dx_cover.1:33,dx_cover.2:33,dx_dispatch.0:33,dx_dispatch.1:33,dx_dispatch.2:33,dx_dispatch.3:33,dx_dispatch.4:33,dx_dispatch.5:33,get_new_tile.0:33,get_new_reg.0:33,add_mem_region.0:33,maa_const.0:33,wait_ready.0:33,get_tile_size.0:33,get_tile_size.1:33,get_cacheable_tile_pointer.0:33,maa_stream_load.0:33,maa_stream_load.1:33,maa_stream_load.2:33,maa_indirect_load.0:33,maa_indirect_load.1:33,maa_range_loop.0:33,maa_range_loop.1:33,maa_range_loop.2:33,maa_range_loop.3:33,maa_range_loop.4:33,maa_alu_scalar.0:33,maa_alu_scalar.1:33,maa_indirect_store_vector.0:33,maa_indirect_store_vector.1:33,maa_indirect_store_vector.2:33,swdb_dx_in_footprint.0:33,swdb_dx_in_footprint.1:33"
+      ],
+      "verifier_launched": true,
+      "build_constants": [],
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "counterexample": null,
+      "job": {
+        "adapter": "cbmc",
+        "host": "swdb-fixture-host",
+        "worker_core": "unpinned",
+        "wall_seconds": 12.845128,
+        "cpu_seconds": 13.307525,
+        "batch_load": {
+          "start": 3.22,
+          "end": 3.527
+        },
+        "peak_rss_bytes": 93618176,
+        "batch": "batch.proof.dx100-fixtures.candidate-1.20261015t220410z.eb4aba58",
+        "position": 1
+      },
+      "artifacts": 6,
+      "raw_goal_statuses": {
+        "success": 1055,
+        "failure": 1
+      },
+      "semantic_failed_goals": [],
+      "reachability_sentinel_failures": 1,
+      "errors": []
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/pytest/test_values_at_issue_prove_and2/records/proofs/proof.dx100-fixtures.candidate-1.20261015t220430z.88608e53.yaml",
+      "sha256": "9855311c76750793e607111a4b45dee0362d5395239ab1f0530fe08a04eaa0fb",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t220430z.88608e53",
+      "test": "test_values_at_issue_prove_and2",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_value_range"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 3
+      },
+      "adapter": "cbmc",
+      "verdict": "refuted",
+      "failure_class": null,
+      "evidence_kind": "contract_fixture",
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "verdict_reading": null,
+      "pins": {
+        "code": {
+          "id": "dx100-fixtures.candidate-1",
+          "sha256": "8a1f26596a62c9aa392745237ccf16359765f996ed790e2502806df4021d2c1a"
+        },
+        "contract": {
+          "id": "contract.fixture_dx_value_range",
+          "sha256": "5e67bb82304592b891f8faf2fd474aa6275c908b01c476ecb85dd56a2a8872f2"
+        },
+        "baseline_function": {
+          "id": "test-source",
+          "function": "dxf_value_range",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "id": "semantics.dx100_bfs_0_1",
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "dc6ff76cba59f5112d308c99c6ad7194c0500fe5c63bd1eaf596a3b7c7929380"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "build_constants": [
+          {
+            "name": "SWDB_WRONG_VALUE",
+            "value": "1"
+          }
+        ],
+        "c_lowering": {
+          "id": "dxf_value_range.c",
+          "sha256": "5791ea864e721a92e0c85e5062185be4c0413bbda4a9d7aa0d7605263491a407"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "translator": {
+          "id": "swdb-cbmc-translator-4",
+          "sha256": "b67a4fc23c70a1d39269de563ade63a3d655665d3ba3394dd12d5eb4650eff63"
+        }
+      },
+      "tools": [
+        "swdb-c-lowering-9",
+        "clang-22.1.8",
+        "swdb-cbmc-translator-4",
+        "cbmc-6.11.0",
+        "cadical-in-cbmc-6.11.0"
+      ],
+      "initialized_goals": 0,
+      "rte_goals": 0,
+      "assumption_kinds": [
+        "assumed_clause",
+        "proof_semantics",
+        "reduction",
+        "trusted_tool"
+      ],
+      "flags": [
+        "-DSWDB_CBMC",
+        "--unwind",
+        "4",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--sat-solver",
+        "cadical",
+        "--unwindset",
+        "dx_tile_of.0:33,swdb_dx_init.0:33,swdb_dx_init.1:33,swdb_dx_init.2:33,swdb_dx_check_exit.0:33,swdb_dx_check_exit.1:33,dx_counted.0:33,dx_naming.0:33,dx_reg_users.0:33,dx_closure.0:33,dx_closure.1:33,dx_cover.0:33,dx_cover.1:33,dx_cover.2:33,dx_dispatch.0:33,dx_dispatch.1:33,dx_dispatch.2:33,dx_dispatch.3:33,dx_dispatch.4:33,dx_dispatch.5:33,get_new_tile.0:33,get_new_reg.0:33,add_mem_region.0:33,maa_const.0:33,wait_ready.0:33,get_tile_size.0:33,get_tile_size.1:33,get_cacheable_tile_pointer.0:33,maa_stream_load.0:33,maa_stream_load.1:33,maa_stream_load.2:33,maa_indirect_load.0:33,maa_indirect_load.1:33,maa_range_loop.0:33,maa_range_loop.1:33,maa_range_loop.2:33,maa_range_loop.3:33,maa_range_loop.4:33,maa_alu_scalar.0:33,maa_alu_scalar.1:33,maa_indirect_store_vector.0:33,maa_indirect_store_vector.1:33,maa_indirect_store_vector.2:33,swdb_dx_in_footprint.0:33,swdb_dx_in_footprint.1:33"
+      ],
+      "verifier_launched": true,
+      "build_constants": [
+        "SWDB_WRONG_VALUE"
+      ],
+      "forms": {
+        "c_lowering": "refuted",
+        "cxx": "refuted (counterexample replayed)"
+      },
+      "counterexample": {
+        "property": "contract.fixture_dx_value_range#post.ensures1",
+        "replayed": true
+      },
+      "job": {
+        "adapter": "cbmc",
+        "host": "swdb-fixture-host",
+        "worker_core": "unpinned",
+        "wall_seconds": 14.459882,
+        "cpu_seconds": 14.920134,
+        "batch_load": {
+          "start": 3.485,
+          "end": 3.082
+        },
+        "peak_rss_bytes": 93708288,
+        "batch": "batch.proof.dx100-fixtures.candidate-1.20261015t220430z.88608e53",
+        "position": 1
+      },
+      "artifacts": 7,
+      "raw_goal_statuses": {
+        "success": 1055,
+        "failure": 2
+      },
+      "semantic_failed_goals": [
+        {
+          "goal": "swdb_run.assertion.2",
+          "property": "contract.fixture_dx_value_range#post.ensures1",
+          "function": "swdb_run",
+          "status": "failure",
+          "solver": null,
+          "seconds": null
+        }
+      ],
+      "reachability_sentinel_failures": 1,
+      "errors": []
+    }
+  ],
+  "physical_pins": {
+    "references": 180,
+    "unique_files": 204,
+    "mismatches": []
+  },
+  "metadata_audit": "passed",
+  "at_utc": "2026-10-15T22:10:58.081963+00:00",
+  "retained_files": {
+    "lane.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/lane.json",
+      "sha256": "237bcd46711cab71702cf46e413e22c55435e0f33289d49290b2209ddfba4f8b",
+      "content": {
+        "socket_lane": {
+          "aligned_cell_age_s": "",
+          "aligned_to": "no_gapbs_batch_running",
+          "command": [
+            "timeout",
+            "--signal=TERM",
+            "--kill-after=60",
+            "7320",
+            "bash",
+            "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/run.sh"
+          ],
+          "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+          "ended_utc": "2026-10-15T22:06:10Z",
+          "exit_code": 0,
+          "host": "mbit10",
+          "job": "probata-composed-0e7f2327-t27-bounded",
+          "lease_generation": 574,
+          "lease_name": "mbit10-evaluation-node0",
+          "load1_at_start": 1.71,
+          "load1_max": 32,
+          "node": 0,
+          "numa_memory_policy": "bind:0",
+          "numactl": "--cpunodebind=0 --membind=0",
+          "preregistration_sha256": null,
+          "started_utc": "2026-10-15T21:57:19Z"
+        }
+      }
+    },
+    "resources.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/resources.json",
+      "sha256": "b149e8046af9dcd1f56f93a2ced3c908410b148f74ec8c50065cf7c859d817fb",
+      "content": {
+        "cpu_seconds": 537.399184,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 369811456,
+        "timed_out": false,
+        "wall_seconds": 528.4022449711338
+      }
+    },
+    "outer-resources.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/outer-resources.json",
+      "sha256": "520e63dc39a415948692a0a3f44e3e50c09357a607c32bb3eee3cf42465eac34",
+      "content": {
+        "exit_code": 0,
+        "peak_rss_bytes": 421076992,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 530.425784685649,
+        "cpu_seconds": 647.125852
+      }
+    },
+    "junit.xml": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/junit.xml",
+      "sha256": "41a987c0fdc170818583341613d1ecd3247f069e72146f98929ff70a0c13eb35"
+    },
+    "source-after.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/source-after.json",
+      "sha256": "53a46be3c357337f05b0ffa45a1ddcedbb313414550758526ba87c2104ea2ad7",
+      "content": {
+        "commit": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+        "source_unchanged": true,
+        "tracked_changes": ""
+      }
+    },
+    "runtime-provenance.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/runtime-provenance.json",
+      "sha256": "42d8992de63d5fe69c5a35a3d819c5889ccac81aaf38aef7a5d95ed7e4eb4ef0",
+      "content": {
+        "lowering_identity": {
+          "c_lowering": {
+            "id": "swdb-c-lowering-9",
+            "sha256": "b1ddaa111bec5d19843b69fd7571530859acb1382947d96692894bfc29b0b993"
+          },
+          "clang": {
+            "id": "clang-22.1.8",
+            "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+          },
+          "naming_rules": {
+            "id": "kept-names.3",
+            "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+          }
+        },
+        "runtime": {
+          "check": {
+            "id": "swdb-stdlib-provenance-1",
+            "sha256": "4aee5a271a2f92fced7a94c04807cd2d94d36da24ea3d163f2364048bc79d937"
+          },
+          "command_executable": {
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+            "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+          },
+          "driver": {
+            "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang-22",
+            "sha256": "31a40dc31f3c15a47aa119aa148f339bf363d8f61202ddbdacbd3f24b71ba113"
+          },
+          "headers": {
+            "files": 1983,
+            "id": "llvm-standard-resource-headers",
+            "sha256": "d37aec646b1e6e1748d40690c60436f905f55852ee578e79c43a3199c4a16e23"
+          },
+          "parser": {
+            "id": "libclang-22.1.8",
+            "sha256": "8b03ee2c60f0699651869fea5135cb5a144777a10c6e4b9b7835283ac9ca3f7d"
+          }
+        },
+        "tool": {
+          "command": [
+            "clang++"
+          ],
+          "missing": "",
+          "version": "22.1.8"
+        }
+      }
+    }
+  },
+  "errors": [],
+  "record_verdicts": {
+    "proven": 12,
+    "refuted": 12
+  },
+  "boundary": "35-case bounded/native profile acceptance at exact source and explicit bounds; not unbounded WP or source-language/ACSL agreement.",
+  "audit_script": {
+    "path": "/private/tmp/probata-t27-audit-bounded.py",
+    "sha256": "3f651d913f0e3201858a536ea866da534601fd7629322a959130f2c706edfed4"
+  }
+}
