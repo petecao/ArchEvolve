@@ -598,14 +598,26 @@ def site(node, *, expression, base, statement, anchor, function, line, reason=""
 def access_site(node, *, expression, statement, anchor, function, line):
     """Pure access at a statement entry; legacy whole-object accesses keep RTE."""
     reason = ""
-    if statement is None or statement.get("kind") not in {"DeclStmt", "ReturnStmt", "BinaryOperator",
+    evaluated = statement
+    if statement is not None and statement.get("kind") == "IfStmt":
+        parts = [n for n in statement.get("inner", []) if isinstance(n, dict) and n.get("kind")]
+        # Only the condition executes before this statement's branch. Later body
+        # effects do not affect its pre-statement guard. An init declaration or
+        # condition variable is not live yet at that guard position.
+        if (len(parts) not in {2, 3} or any(statement.get(k) for k in ("hasInit", "hasVar", "isConstexpr"))
+                or node.get("id") not in {n.get("id") for n in _walk(parts[0])}):
+            reason = "entry-window if access needs the exact ordinary condition without an init binding"
+        else:
+            evaluated = parts[0]
+    if statement is None or statement.get("kind") not in {"DeclStmt", "ReturnStmt", "BinaryOperator", "IfStmt",
             "CStyleCastExpr", "CXXStaticCastExpr", "ParenExpr", "ImplicitCastExpr", "CompoundAssignOperator"}:
         reason = "entry-window access needs a precise statement check placement"
     if statement is not None:
-        nodes = list(_walk(statement))
+        nodes = list(_walk(evaluated))
         for n in nodes:
             kind, op = n.get("kind"), n.get("opcode")
-            if (kind in {"CallExpr", "CXXMemberCallExpr", "CXXOperatorCallExpr", "ConditionalOperator", "BinaryConditionalOperator"}
+            if (kind in {"CallExpr", "CXXMemberCallExpr", "CXXOperatorCallExpr", "AtomicExpr",
+                         "ConditionalOperator", "BinaryConditionalOperator"}
                     or kind == "CompoundAssignOperator" and n is not statement
                     or kind == "UnaryOperator" and op in {"++", "--"}
                     or kind == "BinaryOperator" and (op in {",", "&&", "||"} or op == "=" and n is not statement)

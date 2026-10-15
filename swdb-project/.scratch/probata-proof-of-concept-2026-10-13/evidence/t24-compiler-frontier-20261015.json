@@ -1,0 +1,194 @@
+{
+  "head": "c6636b0db5e5d861c243721f3eeef41a3d00051b",
+  "solver_jobs": 0,
+  "public_adapter_execution": false,
+  "scope": "Original per-group source/metadata compiler inventory only; imported proof-record eligibility and actual WP not executed",
+  "rows": [
+    {
+      "group": "classes",
+      "variant": "current_fixture_metadata",
+      "source": "tests/fixtures/proof/lowering/classes.cc",
+      "source_sha256": "c7fe7c1d2cc5bad67ea5816119a12a5b3be6f2573c68d7a1206b081baddc90a4",
+      "function": "swdb_class_unit",
+      "array_domains": {
+        "a": {
+          "extent": "n"
+        }
+      },
+      "models": [],
+      "terminal_certificate": false,
+      "all_admission_reasons": [],
+      "compiler_pointer_admission": "passed"
+    },
+    {
+      "group": "templates",
+      "variant": "current_fixture_metadata",
+      "source": "tests/fixtures/proof/lowering/templates.cc",
+      "source_sha256": "b0bb72f0d852ddf717fbfc7d693c7e386e198e12dfa379d6792a245eeb0d4aee",
+      "function": "swdb_template_unit",
+      "array_domains": null,
+      "models": [],
+      "terminal_certificate": false,
+      "all_admission_reasons": [
+        "pointer arithmetic/indexing needs a certified array-object origin; incoming pointer domains are unsupported",
+        "embedded or multidimensional array pointer needs an exact subobject extent policy"
+      ],
+      "compiler_pointer_admission": "refused",
+      "first_reason": "Ring_int_3_put:None: pointer arithmetic/indexing needs a certified array-object origin; incoming pointer domains are unsupported"
+    },
+    {
+      "group": "new_array",
+      "variant": "current_fixture_metadata",
+      "source": "tests/fixtures/proof/lowering/new_array.cc",
+      "source_sha256": "0bc45825da677544e3dd20bbc212b8595861d40e83e927a0b9aa41e88b57a598",
+      "function": "swdb_new_unit",
+      "array_domains": null,
+      "models": [
+        "swdb_alloc_new_array_int",
+        "swdb_alloc_delete_array_int"
+      ],
+      "terminal_certificate": true,
+      "all_admission_reasons": [],
+      "compiler_pointer_admission": "passed"
+    },
+    {
+      "group": "omp",
+      "variant": "current_fixture_metadata",
+      "source": "tests/fixtures/proof/lowering/omp_atomics.cc",
+      "source_sha256": "ad3178d12c82443d3ddbae50cd900926ab96cb95a8aead881c8cd6e682c38447",
+      "function": "swdb_omp_unit",
+      "array_domains": null,
+      "models": [],
+      "terminal_certificate": false,
+      "all_admission_reasons": [
+        "pointer arithmetic/indexing needs a certified array-object origin; incoming pointer domains are unsupported"
+      ],
+      "compiler_pointer_admission": "refused",
+      "first_reason": "swdb_omp_unit:None: pointer arithmetic/indexing needs a certified array-object origin; incoming pointer domains are unsupported"
+    },
+    {
+      "group": "omp",
+      "variant": "prospective_existing_requires_typed_domain",
+      "source": "tests/fixtures/proof/lowering/omp_atomics.cc",
+      "source_sha256": "ad3178d12c82443d3ddbae50cd900926ab96cb95a8aead881c8cd6e682c38447",
+      "function": "swdb_omp_unit",
+      "array_domains": {
+        "a": {
+          "extent": "n"
+        }
+      },
+      "models": [],
+      "terminal_certificate": false,
+      "all_admission_reasons": [
+        "entry-window access with side effects/conditional evaluation needs single-evaluation support"
+      ],
+      "compiler_pointer_admission": "refused",
+      "first_reason": "swdb_omp_unit:omp_atomics.cc line 13: entry-window access with side effects/conditional evaluation needs single-evaluation support"
+    },
+    {
+      "group": "atomics",
+      "variant": "current_fixture_metadata",
+      "source": "tests/fixtures/proof/lowering/omp_atomics.cc",
+      "source_sha256": "ad3178d12c82443d3ddbae50cd900926ab96cb95a8aead881c8cd6e682c38447",
+      "function": "swdb_atomics_unit",
+      "array_domains": null,
+      "models": [
+        "swdb_atomic_load_n_int",
+        "swdb_atomic_store_n_int",
+        "swdb_atomic_fetch_add_int",
+        "swdb_atomic_exchange_n_int",
+        "swdb_atomic_compare_exchange_n_int",
+        "swdb_sync_bool_compare_and_swap_int",
+        "swdb_sync_val_compare_and_swap_int",
+        "swdb_sync_fetch_and_add_int",
+        "swdb_sync_add_and_fetch_int"
+      ],
+      "terminal_certificate": false,
+      "all_admission_reasons": [],
+      "compiler_pointer_admission": "passed"
+    },
+    {
+      "group": "floats",
+      "variant": "current_fixture_metadata",
+      "source": "tests/fixtures/proof/lowering/floats.cc",
+      "source_sha256": "c41740bfaced1d9f04a499865b0f09b0f7a34c38756581ffa8d13a66a4870d8d",
+      "function": "swdb_float_unit",
+      "array_domains": null,
+      "models": [],
+      "terminal_certificate": false,
+      "all_admission_reasons": [
+        "pointer arithmetic/indexing needs a certified array-object origin; incoming pointer domains are unsupported"
+      ],
+      "compiler_pointer_admission": "refused",
+      "first_reason": "swdb_float_unit:None: pointer arithmetic/indexing needs a certified array-object origin; incoming pointer domains are unsupported"
+    },
+    {
+      "group": "floats",
+      "variant": "prospective_existing_requires_typed_domain",
+      "source": "tests/fixtures/proof/lowering/floats.cc",
+      "source_sha256": "c41740bfaced1d9f04a499865b0f09b0f7a34c38756581ffa8d13a66a4870d8d",
+      "function": "swdb_float_unit",
+      "array_domains": {
+        "a": {
+          "extent": "n"
+        }
+      },
+      "models": [],
+      "terminal_certificate": false,
+      "all_admission_reasons": [],
+      "compiler_pointer_admission": "passed"
+    },
+    {
+      "group": "std_models",
+      "variant": "current_fixture_metadata",
+      "source": "tests/fixtures/proof/lowering/std_models.cc",
+      "source_sha256": "6811db5464a89ea0650a590d9594a4b01a7b35091f47d3cf417542a204285669",
+      "function": "swdb_std_unit",
+      "array_domains": {
+        "a": {
+          "extent": "n"
+        },
+        "b": {
+          "extent": "n"
+        }
+      },
+      "models": [
+        "std_min_int",
+        "std_max_int",
+        "std_swap_int",
+        "std_copy_int",
+        "std_max_long"
+      ],
+      "terminal_certificate": false,
+      "all_admission_reasons": [
+        "entry-window access with side effects/conditional evaluation needs single-evaluation support"
+      ],
+      "compiler_pointer_admission": "refused",
+      "first_reason": "swdb_std_unit:std_models.cc line 11: entry-window access with side effects/conditional evaluation needs single-evaluation support"
+    },
+    {
+      "group": "dxc_summary",
+      "variant": "current_fixture_metadata",
+      "source": "tests/fixtures/proof/lowering/summaries.cc",
+      "source_sha256": "5a71ba2f6f7a53d96759edbfc3ff823d1073677450e08abeaa001c60f92ca7c0",
+      "function": "swdb_dxc_unit",
+      "array_domains": null,
+      "models": [],
+      "terminal_certificate": false,
+      "all_admission_reasons": [],
+      "compiler_pointer_admission": "passed"
+    },
+    {
+      "group": "maa_summary",
+      "variant": "current_fixture_metadata",
+      "source": "tests/fixtures/proof/lowering/summaries.cc",
+      "source_sha256": "5a71ba2f6f7a53d96759edbfc3ff823d1073677450e08abeaa001c60f92ca7c0",
+      "function": "swdb_maa_unit",
+      "array_domains": null,
+      "models": [],
+      "terminal_certificate": false,
+      "all_admission_reasons": [],
+      "compiler_pointer_admission": "passed"
+    }
+  ]
+}
