@@ -32,7 +32,7 @@ returns one level with its reason. Nothing is stored; a changed pin changes the 
 
 Bounds above the minimum are reported, never ranked.
 
-## The rule (`level-rule.3`)
+## The rule (`level-rule.4`)
 
 1. **A proof record counts** only while every pin in its content-hash set matches the current hash, no
    failed part voids what it pins, and every proof record it depends on still counts. A
