@@ -231,7 +231,7 @@ def recheck_source(lowering, plan):
     """Freshly parse the source/closure; no candidate-supplied certificate is loaded."""
     from swdb import c_lowering
     if not isinstance(plan, dict) or not (plan.get("kwargs", {}).get("array_domains") or
-            (lowering.pointer_bounds or {}).get("owner") or
+            (lowering.pointer_bounds or {}).get("owner") or (lowering.pointer_bounds or {}).get("member_windows") or
             any(row.get("kind") in {"call", "producer", "import", "standard_range_call"} for row in lowering.pointer_bounds.get("sites", []))):
         raise Refused("entry windows have no generator-owned source recheck plan")
     fresh = c_lowering.lower(Path(plan["source"]), lowering.function, **plan["kwargs"])
@@ -531,6 +531,8 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
                             access["window_guard"] = f'0 <= ({target}) {relation} ({origin["elements"]})'
                             if origin.get("field_guard"):
                                 access["window_guard"] = f'({origin["field_guard"]}) && ({access["window_guard"]})'
+                            if access.get("evaluation_path"):
+                                access["window_guard"] = f'({" && ".join(access["evaluation_path"])}) ==> ({access["window_guard"]})'
                             rows.append(access)
                         except Refused as exc:
                             reason = str(exc)
@@ -548,7 +550,7 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
                 while origin.get("kind") in {"ParenExpr", "ImplicitCastExpr"} and origin.get("inner"):
                     origin = origin["inner"][0]
                 qual = str((origin.get("type") or {}).get("qualType", ""))
-                if origin.get("kind") in {"ArraySubscriptExpr", "MemberExpr"} or qual.count("[") > 1:
+                if (origin.get("kind") in {"ArraySubscriptExpr", "MemberExpr"} or qual.count("[") > 1) and (function,origin.get('id')) not in (member_origins or {}):
                     reason = "embedded or multidimensional array pointer needs an exact subobject extent policy"
             if has_arithmetic and kind == "UnaryOperator" and node.get("opcode") == "&" and children:
                 origin = children[0]
@@ -595,9 +597,45 @@ def site(node, *, expression, base, statement, anchor, function, line, reason=""
             "normalized_expression": normalize(expression, base, offset, literal_offset) if not reason else None, "_ast_id": node.get("id")}
 
 
+def _conditional_path(statement, target):
+    """Exact pure return-expression branch path; no evaluation is moved in C.
+
+    The duplicated predicates use only signed primitive comparisons; their C
+    overflow and initialization checks remain ordinary RTE obligations.
+    """
+    def condition(n):
+        n = _strip_origin(n)
+        parts = [c for c in n.get('inner', []) if isinstance(c, dict) and c.get('kind')]
+        if n.get('kind') != 'BinaryOperator' or n.get('opcode') not in {'<', '<=', '>', '>=', '==', '!='} or len(parts) != 2:
+            raise Refused('conditional reads require a pure primitive comparison')
+        return f'({_scalar_math(parts[0])} {n["opcode"]} {_scalar_math(parts[1])})'
+    paths = []
+    def visit(n, path):
+        if n.get('id') == target.get('id'):
+            paths.append(path)
+        parts = [c for c in n.get('inner', []) if isinstance(c, dict) and c.get('kind')]
+        if n.get('kind') == 'ConditionalOperator':
+            if len(parts) != 3:
+                raise Refused('conditional read needs three exact source operands')
+            predicate = condition(parts[0])
+            visit(parts[0], path)
+            visit(parts[1], [*path, predicate])
+            visit(parts[2], [*path, f'!({predicate})'])
+        else:
+            for child in parts:
+                visit(child, path)
+    if statement.get('kind') != 'ReturnStmt':
+        raise Refused('conditional reads require an exact return statement')
+    visit(statement, [])
+    if len(paths) != 1:
+        raise Refused('conditional read has no unique original statement membership')
+    return paths[0]
+
+
 def access_site(node, *, expression, statement, anchor, function, line):
     """Pure access at a statement entry; legacy whole-object accesses keep RTE."""
     reason = ""
+    evaluation_path = []
     evaluated = statement
     if statement is not None and statement.get("kind") == "IfStmt":
         parts = [n for n in statement.get("inner", []) if isinstance(n, dict) and n.get("kind")]
@@ -614,10 +652,16 @@ def access_site(node, *, expression, statement, anchor, function, line):
         reason = "entry-window access needs a precise statement check placement"
     if statement is not None:
         nodes = list(_walk(evaluated))
+        conditional = any(n.get('kind') == 'ConditionalOperator' for n in nodes)
+        if conditional:
+            try:
+                evaluation_path = _conditional_path(evaluated, node)
+            except Refused as exc:
+                reason = str(exc)
         for n in nodes:
             kind, op = n.get("kind"), n.get("opcode")
             if (kind in {"CallExpr", "CXXMemberCallExpr", "CXXOperatorCallExpr", "AtomicExpr",
-                         "ConditionalOperator", "BinaryConditionalOperator"}
+                         "BinaryConditionalOperator"}
                     or kind == "CompoundAssignOperator" and n is not statement
                     or kind == "UnaryOperator" and op in {"++", "--"}
                     or kind == "BinaryOperator" and (op in {",", "&&", "||"} or op == "=" and n is not statement)
@@ -627,7 +671,7 @@ def access_site(node, *, expression, statement, anchor, function, line):
         if any((n.get("referencedDecl") or {}).get("id") in declared for n in _walk(node)):
             reason = "entry-window access depends on a declaration inside its statement"
     return {"function": function, "source_line": line, "source_statement": _statement_span(statement), "anchor": anchor, "kind": "access",
-            "expression": expression, "reason": reason, "_ast_id": node.get("id")}
+            "expression": expression, "reason": reason, "evaluation_path": evaluation_path, "_ast_id": node.get("id")}
 
 
 def normalize(expression, base, offset, literal_offset=None):

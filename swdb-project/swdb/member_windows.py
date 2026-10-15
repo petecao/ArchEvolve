@@ -214,6 +214,9 @@ def certify(definitions, classes, *, source, tool, includes, defines, entry, win
     A refusal is returned only for a prospective pointer-field context; unrelated
     ordinary units keep their existing policy.
     """
+    if any(n.get('kind') == 'FieldDecl' and '[' in _qual(n)
+           for record in classes.values() for n in _children(record)):
+        return _fixed_arrays(definitions, source=source, tool=tool, includes=includes, defines=defines, entry=entry)
     if not windows or not any(n.get('kind') == 'MemberExpr' and '*' in _qual(n)
                               for root in definitions.values() for n in _walk(root)):
         return None, {}
@@ -434,6 +437,164 @@ def certify(definitions, classes, *, source, tool, includes, defines, entry, win
                   'scalar_lifetimes': scalar.rows, 'input_premises_added': [], 'maximum_call_depth': depth, 'allowed_call_depth': 2, 'scope': 'selected entry after exact closed direct-callee inlining'}
         report['certificate_sha256'] = _hash(report)
         return report, origins
+    except TreeRefused as exc:
+        raise Refused(str(exc)) from None
+
+
+def _fixed_arrays(definitions, *, source, tool, includes, defines, entry):
+    """Closed automatic trivial records with exact one-dimensional subobjects.
+
+    The certificate grants structural array identity only. It grants no validity,
+    initializedness, index range or function contract. Those remain RTE/WP goals
+    after the exact closed call graph is inlined at its original entry.
+    """
+    from swdb.helper_windows import _Tree, _span, Refused as TreeRefused
+    from swdb.c_lowering import INTEGER_TYPES, FLOAT_TYPES
+    source = Path(source).resolve()
+    primitive = INTEGER_TYPES | FLOAT_TYPES
+    try:
+        tree = _Tree(source, tool, includes, defines)
+        keys = {_key(n, source): name for name,n in definitions.items()}
+        mangled = {n.get('mangledName') for n in definitions.values()}
+        full = {keys[_key(n,source)]: n for n in _walk(tree.root)
+                if n.get('kind') in {'FunctionDecl','CXXMethodDecl'} and n.get('mangledName') in mangled
+                and any(c.get('kind') == 'CompoundStmt' for c in _children(n))
+                and _key(n,source) in keys}
+        if set(full) != set(definitions) or entry not in full:
+            raise Refused('fixed member context requires every exact original definition')
+        by_id = {n['id']:name for name,n in full.items()}
+        records, owners, field_owners = {}, {}, {}
+        for record in _walk(tree.root):
+            if record.get('kind') not in {'CXXRecordDecl','ClassTemplateSpecializationDecl'} or not record.get('completeDefinition'):
+                continue
+            methods = [n for n in _children(record) if n.get('id') in by_id]
+            if not methods:
+                continue
+            data = record.get('definitionData',{})
+            fields = [n for n in _children(record) if n.get('kind') == 'FieldDecl']
+            if (record.get('tagUsed') == 'union' or record.get('bases') or not data.get('isTrivial') or
+                    not data.get('isStandardLayout') or any(n.get('kind','').endswith('Attr') or
+                    n.get('virtual') or n.get('isVirtual') or n.get('kind') == 'VarDecl' or
+                    n.get('kind') in {'CXXConstructorDecl','CXXDestructorDecl'} and not n.get('isImplicit')
+                    for n in _children(record))):
+                raise Refused('fixed member context needs trivial standard-layout records without hidden effects')
+            types = {_type(n) for method in methods for n in _walk(method) if n.get('kind') == 'CXXThisExpr'}
+            if len(types) != 1:
+                raise Refused('fixed member receiver has ambiguous instantiated type')
+            typename, = types
+            if typename in records:
+                raise Refused('fixed member receiver record is ambiguous')
+            arrays = {}
+            for field in fields:
+                match = re.fullmatch(r'(.+)\[(\d+)\]',_qual(field))
+                if match and match[1].strip() in primitive and int(match[2]) > 0:
+                    arrays[field['id']] = (match[1].strip(),int(match[2]))
+                elif _qual(field) not in primitive or _children(field):
+                    raise Refused('fixed member fields need plain scalars or exact one-dimensional primitive arrays')
+                field_owners[field['id']] = typename
+            if not arrays:
+                raise Refused('fixed member receiver has no exact primitive array')
+            records[typename] = {'record':record,'arrays':arrays}
+            owners.update((by_id[n['id']],typename) for n in methods)
+        if not records or entry in owners:
+            raise Refused('fixed member arrays need a separate closed automatic-object entry')
+        body, = [n for n in _children(full[entry]) if n.get('kind') == 'CompoundStmt']
+        objects, object_rows = {}, []
+        for stmt in _children(body):
+            for obj in _children(stmt) if stmt.get('kind') == 'DeclStmt' else []:
+                if _type(obj) not in records:
+                    continue
+                init = _children(obj)
+                if (_qual(obj) != _type(obj) or obj.get('storageClass') or obj.get('tls') or
+                        _children(stmt) != [obj] or len(init) != 1 or init[0].get('kind') != 'CXXConstructExpr' or
+                        init[0].get('constructionKind') != 'complete' or _children(init[0])):
+                    raise Refused('fixed member object needs direct trivial automatic construction without copy/alias')
+                objects[obj['id']] = _type(obj)
+                object_rows.append({'name':obj['name'],'type':_type(obj),'span':list(_span(obj,source))})
+        if set(objects.values()) != set(records):
+            raise Refused('fixed member records need exact automatic objects in the selected entry')
+        allowed, access_origins, calls = set(), {}, []
+        successors = {name:set() for name in full}
+        def receiver(node, function, expected):
+            node = _strip(node)
+            actual = objects.get(node.get('referencedDecl',{}).get('id')) if function == entry and node.get('kind') == 'DeclRefExpr' else (
+                owners.get(function) if node.get('kind') == 'CXXThisExpr' else None)
+            if actual != expected:
+                raise Refused('fixed member access/call needs an exact live automatic receiver')
+            allowed.add(node['id'])
+            return 'this->' if node.get('kind') == 'CXXThisExpr' else node['referencedDecl']['name']+'.'
+        for name, fn in full.items():
+            if _qual(fn).split(' (',1)[0] not in primitive | {'void'}:
+                raise Refused('fixed member helpers must return primitive values, never aliases')
+            parents = {n['id']:p for p in _walk(fn) for n in _children(p) if 'id' in n}
+            for node in _walk(fn):
+                kind, parts = node.get('kind'), _children(node)
+                if (kind.endswith('Attr') or 'volatile' in _qual(node) or
+                        kind in {'CXXNewExpr','CXXDeleteExpr','LambdaExpr','GotoStmt','CXXThrowExpr'} or
+                        kind == 'UnaryOperator' and node.get('opcode') == '&' or
+                        kind in {'ParmVarDecl','VarDecl'} and _qual(node) not in primitive and node.get('id') not in objects):
+                    raise Refused('fixed member context cannot admit aliases, opaque storage or lifetime effects')
+                if kind == 'CXXConstructExpr' and not (name == entry and any(_children(tree.nodes[oid]) == [node] for oid in objects)):
+                    raise Refused('fixed member context cannot admit copies or extra construction')
+                if kind == 'MemberExpr' and node.get('referencedMemberDecl') in field_owners:
+                    typename = field_owners[node['referencedMemberDecl']]
+                    prefix = receiver(parts[0],name,typename)
+                    shape = records[typename]['arrays'].get(node['referencedMemberDecl'])
+                    if shape:
+                        parent = parents.get(node['id'],{})
+                        use = parents.get(parent.get('id'),{})
+                        if (parent.get('kind') != 'ImplicitCastExpr' or parent.get('castKind') != 'ArrayToPointerDecay' or
+                                use.get('kind') != 'ArraySubscriptExpr' or _children(use)[0].get('id') != parent.get('id')):
+                            raise Refused('fixed member arrays may only be the direct indexed subobject base')
+                        access_origins[(name,_span(node,source))] = {'kind':'one_dimensional_array',
+                            'name':prefix+node['name'],'element_type':shape[0],'elements':shape[1],
+                            'subobject_type':typename,'subobject_field':node['name']}
+                if kind in {'CallExpr','CXXMemberCallExpr','CXXOperatorCallExpr'}:
+                    callee = _strip(parts[0])
+                    target = tree.nodes.get(callee.get('referencedMemberDecl') if kind == 'CXXMemberCallExpr' else
+                                            callee.get('referencedDecl',{}).get('id'),{})
+                    target_name = by_id.get(target.get('id'))
+                    if target_name is None or kind == 'CXXOperatorCallExpr':
+                        raise Refused('fixed member context requires exact closed direct callees')
+                    if target_name in owners:
+                        if kind != 'CXXMemberCallExpr':
+                            raise Refused('fixed member call needs direct receiver syntax')
+                        receiver(_children(callee)[0],name,owners[target_name])
+                    elif kind != 'CallExpr':
+                        raise Refused('fixed member callee owner differs from the original call')
+                    successors[name].add(target_name)
+                    calls.append({'caller':name,'callee':target_name,'span':list(_span(node,source)),
+                                  'mangled':target.get('mangledName')})
+            for node in _walk(fn):
+                if ((node.get('kind') == 'DeclRefExpr' and _type(node) in records) or node.get('kind') == 'CXXThisExpr') and node['id'] not in allowed:
+                    raise Refused('fixed member receiver copy, alias, escape or arbitrary input is unsupported')
+        heights, pending, visited = {}, set(), set()
+        def height(name):
+            if name in pending:
+                raise Refused('recursive fixed member context cannot be fully inlined')
+            if name not in heights:
+                pending.add(name); visited.add(name)
+                heights[name] = max((1+height(c) for c in successors[name]),default=0)
+                pending.remove(name)
+            return heights[name]
+        depth = height(entry)
+        if visited != set(full) or depth > 2:
+            raise Refused('fixed member context must be closed at the demonstrated two-level inline depth')
+        origins = {}
+        for name,fn in definitions.items():
+            for node in _walk(fn):
+                if node.get('kind') == 'MemberExpr' and (name,_span(node,source)) in access_origins:
+                    origins[(name,node['id'])] = access_origins[(name,_span(node,source))]
+        if len(origins) != len(access_origins):
+            raise Refused('fixed member original/printer subobject correspondence differs')
+        report = {'check':identity(),'protocol':'closed-automatic-fixed-member-arrays-1','entry':entry,
+                  'inline_functions':sorted(set(full)-{entry}),'source_sha256':_hash(source.read_bytes()),
+                  'receivers':object_rows,'calls':calls,'accesses':[{'function':name,'span':list(span),'origin':origin}
+                    for (name,span),origin in sorted(access_origins.items())],
+                  'input_premises_added':[],'maximum_call_depth':depth,'allowed_call_depth':2,
+                  'scope':'selected entry after exact closed direct-callee inlining'}
+        report['certificate_sha256'] = _hash(report)
+        return report,origins
     except TreeRefused as exc:
         raise Refused(str(exc)) from None
 
