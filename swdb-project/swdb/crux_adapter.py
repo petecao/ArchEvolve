@@ -312,6 +312,9 @@ class CruxAdapter:
         log.line(f"command: {shlex.join(map(str, command))}\nrss cap bytes: {cap}\nwall budget seconds: {wall}")
         context["settings"].update(flags=flags, float_mode=float_mode, rss_cap_bytes=cap, wall_budget_seconds=wall,
                                    iteration_bound={"value": iterations, "unwind": unwind, "rule": ITERATION_RULE})
+        from swdb import proof_setup
+        proof_setup.check_generated(job, self, context, [(source, text)], flags,
+                                    command=command, scratch=scratch, lowering=code.lowering)
         result = rss_watchdog.run(command, log=crux_log, cap_bytes=cap, timeout=wall + 5, cwd=scratch,
                                   env={**os.environ, "TMPDIR": str(scratch)})
         context["reports"].append(("crux_output", crux_log))

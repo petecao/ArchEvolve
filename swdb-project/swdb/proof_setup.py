@@ -19,6 +19,7 @@ from swdb.proof import AdapterError
 SETUP_VERSION = "1"
 READING_VERSION = "1"
 REPORT_MODULE = Path(__file__).with_name("proof_report.ml")
+_COMPILED_MODULES = {}
 _ASSUME = re.compile(r"\b(?:__CPROVER_assume|crucible_assume|llvm_assume|SWDB_ASSUME|assume)\s*\(")
 
 
@@ -51,6 +52,12 @@ def _no_assume(text, where):
 def _method(method):
     if method is not None and _sha(Path(method.path).read_bytes()) != method.sha256:
         _fail("method_version", f"method {method.id} changed after the job was planned")
+    if method is not None and method.data.get("evidence_kind") == "execution":
+        checks = method.data.get("checks") or {}
+        for name, current in identity().items():
+            frozen = checks.get(name)
+            if not isinstance(frozen, dict) or frozen.get("version") != current["version"] or frozen.get("sha256") != current["sha256"]:
+                _fail("method_version", f"{method.id} does not pin the installed {name} version and content hash")
 
 
 def begin(job, adapter, pins, method):
@@ -125,10 +132,19 @@ def _wp_flags(flags, scratch):
         values = _values(flags, name)
         if not values or any(v != expected for v in values):
             _fail("frozen_flags", f"requires only {name} {expected}, got {values}")
+    if any(str(flag).startswith("-wp-prop") for flag in flags):
+        _fail("property_selection", "WP may not suppress generated properties or global lemmas")
     if any("warn-key" in str(flag) for flag in flags):
         _fail("warning_defaults", "Frama-C warning keys must stay at their defaults")
-    if any(f.startswith(("-wp-session", "-wp-script", "-load", "-wp-cache-dir")) for f in flags):
-        _fail("fresh_session", "loading WP sessions, scripts, or caches is forbidden")
+    for index, flag in enumerate(flags):
+        if flag.startswith("-load"):
+            value = flags[index + 1] if index + 1 < len(flags) else ""
+            key = str(Path(value).resolve())
+            pinned = _COMPILED_MODULES.get(key)
+            if flag != "-load-module" or pinned is None or _sha(Path(value).read_bytes()) != pinned[0] or _sha(REPORT_MODULE.read_bytes()) != pinned[1]:
+                _fail("fresh_session", "only the checked, freshly compiled proof inventory module may be loaded")
+        if flag.startswith(("-wp-session", "-wp-script", "-wp-cache-dir")):
+            _fail("fresh_session", "loading WP sessions, scripts, or caches is forbidden")
     if any(p.name in ("wp", ".wp", "wp-session", "wp-cache") or "session" in p.name
            for p in Path(scratch).iterdir()):
         _fail("fresh_session", "the working folder contains an existing WP session")
@@ -143,7 +159,6 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
     """
     if not getattr(job, "setup", None):
         # Direct adapter usage outside prove still gets the same preflight.
-        from types import SimpleNamespace
         if getattr(job, "setup", None) is None:
             _fail("unplanned_job", "adapter invocation has no planned setup")
         method = getattr(adapter, "method", None)
@@ -159,7 +174,12 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
         fresh = Library(library_root)
         if fresh.content_sha256(job.unit.contract) != job.unit.contract_sha256:
             _fail("contract_hash", "the contract changed after planning")
-    hashes = {}
+    summary_pins = (context.get("pins") or {}).get("summaries", [])
+    if library_root is not None:
+        for summary in summary_pins:
+            if fresh.content_sha256(summary["id"]) != summary["sha256"]:
+                _fail("summary_hash", f"summary {summary['id']} differs from its pinned content")
+    hashes = {"summaries": _digest(summary_pins)}
     for path, expected in inputs:
         path = Path(path)
         actual = path.read_bytes()
@@ -172,12 +192,13 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
         pinned = (context.get("pins") or {}).get("c_lowering") or context.get("c_lowering")
         if pinned and pinned.get("sha256") != _sha(lowering.text):
             _fail("lowering_hash", "C lowering differs from its planned pin")
+        final_text = "\n".join(Path(path).read_text() for path, _expected in inputs)
         for probe in lowering.probes:
-            if f'"{probe["id"]}"' not in lowering.text:
+            if f'"{probe["id"]}"' not in lowering.text or f'"{probe["id"]}"' not in final_text:
                 _fail("hazard_probes", f"generator probe {probe['id']} is absent from C lowering")
         hashes["lowering"] = _sha(lowering.text)
     if adapter.name == "wp":
-        _wp_flags(flags, scratch or job.scratch)
+        _wp_flags(list(command) if command else flags, scratch or job.scratch)
     method = job.setup.get("method")
     tools = context.get("tools") or {}
     if method is not None:
@@ -193,10 +214,24 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
 def _lineup(method, adapter, tools, flags):
     lineup = {row["tool"]: row for row in method.data.get("lineup", [])}
     for name, identity_ in tools.get("identities", {}).items():
-        if name in lineup and str(identity_[2]) != lineup[name]["version"]:
+        installed = str(identity_[2])
+        pinned = (lineup.get(name) or {}).get("version")
+        matches = installed == pinned or (name == "cbmc" and pinned is not None and installed.startswith(pinned + "."))
+        if name in lineup and not matches:
             _fail("method_version", f"{name} version {identity_[2]} differs from method {lineup[name]['version']}")
     name = "frama-c-wp" if adapter.name == "wp" else adapter.name
     declared = (lineup.get(name) or {}).get("flags", [])
+    if adapter.name == "wp":
+        expected_provers = [row["tool"] for row in method.data.get("lineup", []) if row.get("role") == "solver"]
+        for key, value in (("-wp-timeout", str(method.data["budgets"]["wp_seconds_per_solver"])),
+                           ("-wp-par", "1")):
+            if _values(flags, key) != [value] and set(_values(flags, key)) != {value}:
+                _fail("method_version", f"{key} differs from the frozen method budget/settings")
+        selected = _values(flags, "-wp-prover")
+        if not selected or any(set(value.split(",")) != set(expected_provers) for value in selected):
+            _fail("method_version", "WP solver selection differs from the method lineup")
+        if "-wp-smoke-tests" not in flags:
+            _fail("smoke_tests", "the final WP run must generate smoke tests")
     # Every method flag occurs in its original order; derived bounds, property
     # selection and report destinations may be added but cannot override it.
     for i, flag in enumerate(declared):
@@ -254,10 +289,12 @@ def read_wp_reports(goals_json, properties_csv, inventory_path, extern_contracts
     for name, expected in generated.items():
         raw_goal = reported.get(name)
         if raw_goal is None:
+            direct = expected.get("passed") is True and (expected.get("smoke") or "valid" in expected.get("results", []))
             goal = {"goal": name, "property": expected.get("property"), "function": expected.get("function"),
-                    "status": "unknown", "solver": None, "seconds": None}
+                    "status": "valid" if direct else "unknown", "solver": None, "seconds": None}
             goals.append(goal)
-            unproven.append({"property": goal["property"], "goal": name, "status": "untried", "failure_class": "unknown"})
+            if not direct:
+                unproven.append({"property": goal["property"], "goal": name, "status": "untried", "failure_class": "unknown"})
             continue
         goal = _goal(raw_goal)
         goals.append(goal)
@@ -280,11 +317,34 @@ def read_wp_reports(goals_json, properties_csv, inventory_path, extern_contracts
             unproven.append({"property": goal["property"], "goal": name, "status": goal["status"], "failure_class": failure})
     # CSV catches failed call-site preconditions and termination properties that
     # are not captured by a locally Valid target. Global lemmas are never filtered.
+    def declared_unit_precondition(row):
+        # WP reports a proof unit's own requires as Ignored under -report-untried:
+        # it is the explicit condition of this conditional theorem, not a call-site
+        # obligation. Never apply this exception to Unknown or failing instances.
+        return row.get("status") == "Ignored" and row.get("property kind") == "precondition" and any(
+            prop.get("function") == row.get("function") and str(prop.get("line")) == str(row.get("line"))
+            and str(prop.get("description", "")).startswith("requires")
+            for prop in inventory.get("properties", []))
     invalid = [row for row in properties if row.get("status") != "Valid"
-               and row.get("status") != "Considered valid"
+               and row.get("status") != "Considered valid" and not declared_unit_precondition(row)
                and (not functions or row.get("function") in functions or not row.get("function"))]
-    if invalid and not unproven:
-        return outcome("not_proven", UNCLASSIFIED, "not-Valid properties have no classified failing goal", goals, invalid, assumptions)
+    classified_properties = []
+    for row in invalid:
+        matches = []
+        for failed in unproven:
+            origin = reported.get(failed["goal"]) or generated.get(failed["goal"], {})
+            same_function = origin.get("function") == (row.get("function") or None)
+            same_line = str(origin.get("line", "")) == str(row.get("line", ""))
+            same_name = failed.get("property") == row.get("property")
+            if same_name or (same_function and same_line):
+                matches.append(failed)
+        if not matches:
+            return outcome("not_proven", UNCLASSIFIED, "not-Valid property has no classified failing goal: " +
+                           str(row.get("property")), goals, classified_properties, assumptions)
+        classified_properties.append({"property": row.get("property"), "kind": row.get("property kind"),
+            "function": row.get("function"), "line": int(row["line"]) if str(row.get("line", "")).isdigit() else None,
+            "status": row.get("status"), "goal": matches[0]["goal"], "failure_class": matches[0]["failure_class"]})
+    unproven = classified_properties + unproven
     if unproven:
         return outcome("not_proven", unproven[0]["failure_class"], "one or more generated properties are not Valid",
                        goals, unproven, assumptions)
@@ -306,4 +366,5 @@ def compile_report_module(workdir):
                            "-o", str(out), str(source)], capture_output=True, text=True, timeout=120)
     if done.returncode:
         _fail("report_reader", f"cannot compile fresh inventory reader: {(done.stderr or done.stdout)[:800]}")
+    _COMPILED_MODULES[str(out.resolve())] = (_sha(out.read_bytes()), _sha(REPORT_MODULE.read_bytes()))
     return out

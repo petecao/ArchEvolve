@@ -280,7 +280,9 @@
         "properties": {
           "property": {"type": ["string", "null"]}, "kind": {"type": ["string", "null"]},
           "function": {"type": ["string", "null"]}, "line": {"type": ["integer", "null"]},
-          "status": {"type": ["string", "null"]}
+          "status": {"type": ["string", "null"]},
+          "goal": {"type": "string"},
+          "failure_class": {"type": "string", "x-vocab": "proof_failure_classes"}
         }
       }
     },

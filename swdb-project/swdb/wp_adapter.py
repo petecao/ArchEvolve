@@ -526,7 +526,7 @@ USER_ERROR = re.compile(r"User Error|annot-error|invalid user input|syntax error
 
 
 def read_outcome(result, log_text, goals_json, properties_csv, functions=None, *, inventory=None, extern_contracts=None):
-    """{verdict, failure_class, why, goals, unproven} from one WP run (minimal reading; 36 owns the full rule).
+    """{verdict, failure_class, why, goals, unproven} from one fresh WP run (ticket36 strict reading).
 
     `functions` (ticket 24): read only the properties and goals of these functions (the proof unit, its inlined
     callees included); C models and summaries in the same file are proven by their own records."""
@@ -545,29 +545,7 @@ def read_outcome(result, log_text, goals_json, properties_csv, functions=None, *
         return outcome("not_proven", "tool_crash", f"Frama-C exited {result.exit_code} without a user error")
     if goals_json is None or properties_csv is None:
         return outcome("not_proven", UNCLASSIFIED, "WP exited 0 but wrote no per-property or per-goal report")
-    if inventory is not None:
-        return proof_setup.read_wp_reports(goals_json, properties_csv, inventory, extern_contracts, functions)
-    goals = [_goal(g) for g in json.loads(goals_json.read_text() or "[]")]
-    with open(properties_csv, newline="") as handle:
-        properties = list(csv.DictReader(handle, delimiter="\t"))
-    if functions:
-        goals = [g for g in goals if g["function"] in functions]
-        properties = [row for row in properties if row.get("function") in functions]
-    unproven = [{"property": row.get("property"), "kind": row.get("property kind"), "function": row.get("function"),
-                 "line": int(row["line"]) if str(row.get("line", "")).isdigit() else None, "status": row.get("status")}
-                for row in properties if row.get("status") != "Valid"]
-    if not properties and not goals:
-        return outcome("not_proven", "vacuous_pass", "WP reported no property and no goal", goals, unproven)
-    failing = [g for g in goals if g["status"] != "valid"]
-    if not unproven and not failing:
-        return outcome("proven", None, "every property Valid and every goal passed", goals)
-    statuses = {g["status"] for g in failing}
-    for status, failure_class in (("failed", "solver_error"), ("timeout", "timeout"), ("stepout", "timeout"),
-                                  ("unknown", "unknown")):
-        if status in statuses:
-            return outcome("not_proven", failure_class, f"{len(failing)} goal(s) not proven ({status})", goals, unproven)
-    return outcome("not_proven", UNCLASSIFIED, f"properties not Valid with no failing goal: "
-                   f"{sorted({u['status'] for u in unproven})}", goals, unproven)
+    return proof_setup.read_wp_reports(goals_json, properties_csv, inventory, extern_contracts, functions)
 
 
 def _goal(raw):

@@ -134,7 +134,7 @@
       "additionalProperties": false,
       "required": ["version"],
       "x-required-reasons": {"version": "each check has its version"},
-      "properties": {"version": {"type": "string", "pattern": "\\S"}}
+      "properties": {"version": {"type": "string", "pattern": "\\S"}, "sha256": {"$ref": "#/$defs/sha256"}}
     },
     "budget": {"type": "integer", "minimum": 1, "x-reason": "a budget is a positive integer"}
   }
