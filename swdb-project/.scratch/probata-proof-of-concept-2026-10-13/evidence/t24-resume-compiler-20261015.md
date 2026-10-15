@@ -82,3 +82,22 @@ terminal safe/seeded pair both retain checked allocation certificates. This is
 [Compact inventory](t24-original-compiler-inventory-20261015.json) records each
 source/lowering hash; original combined sources remain at
 `/private/tmp/probata-t24-original-compiler-current/`.
+
+## Composed no-window prelaunch control
+
+After merging integration `71771f09` into this branch at `1e01cd2d`, the new
+public no-entry-window control replaces the generator's source-plan pointer
+with an altered Ring source after planning. Original pinned job input bytes
+remain untouched, so this specifically exercises the member-context source
+reparse trigger rather than the generic changed-input guard. Removing that
+single trigger produces RED: the fake verifier runs and writes a record;
+restoring the exact production bytes produces GREEN: prelaunch refuses
+`pointer_bounds` and writes no proof record. The temporary mutation was
+restored; no production code changed for this control.
+
+The composed fixed-array/conditional/terminal/static-model public profile
+passes **19/19 in 15.55 s**. It uses a fake verifier only. RED log:
+`/private/tmp/probata-t24-no-window-trigger-red.log`; GREEN output root:
+`/private/tmp/probata-t24-composed-compiler-public/`. Runtime `swdb/` bytes
+match frozen integration `71771f09` exactly. The remote actual Ring tracer
+is separately owned by the root coordinator; this test does not relabel it.

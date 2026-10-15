@@ -46,11 +46,11 @@ def test_changed_original_receiver_graph_fails_independent_source_reparse(tmp_pa
         wp_pointer_bounds.recheck_source(lowered,{'source':str(path),'kwargs':{}})
 
 
-def test_public_original_templates_keeps_closed_context_and_mandatory_rte_policy(tmp_path):
-    import hashlib,json,shutil,yaml
-    from conftest import FIXTURES,make_records,run_swdb
+def public_seed(tmp_path):
+    import hashlib,shutil,yaml
+    from conftest import FIXTURES,make_records
     from test_formal_frame import frame_contract,write_library
-    from test_wp_adapter import fake,method_version
+    from test_wp_adapter import method_version
     from test_wp_subset import GROUPS
     records = make_records(tmp_path)
     methods = tmp_path/'library/methods'; methods.mkdir(parents=True)
@@ -66,8 +66,16 @@ def test_public_original_templates_keeps_closed_context_and_mandatory_rte_policy
     entry['proof_unit'] = {'function':function,'source':{'root':'library','path':'proof_units/templates.cc',
         'sha256':hashlib.sha256(source.encode()).hexdigest()}}
     write_library(tmp_path/'library',{'proof_units/templates.cc':source,'rewrite_contracts/fixed.yaml':entry})
+    return records,method,entry['id']
+
+
+def test_public_original_templates_keeps_closed_context_and_mandatory_rte_policy(tmp_path):
+    import json,yaml
+    from conftest import run_swdb
+    from test_wp_adapter import fake
+    records,method,cid = public_seed(tmp_path)
     done = run_swdb('prove','--records',records.path,'--adapter','wp','--method-version',method['id'],
-        '--runs-dir',tmp_path/'runs','--summary',entry['id'],'--format','json',env=fake('unknown'))
+        '--runs-dir',tmp_path/'runs','--summary',cid,'--format','json',env=fake('unknown'))
     assert done.returncode == 0,done.stdout+done.stderr
     row = yaml.safe_load((records.path/json.loads(done.stdout)['path']).read_text())
     assert row['failure_class'] == 'unknown',row
@@ -75,3 +83,33 @@ def test_public_original_templates_keeps_closed_context_and_mandatory_rte_policy
     assert row['settings']['member_windows']['certificate']['input_premises_added'] == []
     assert '-wp-rte' in row['settings']['flags']
     assert '-wp-no-filter-init' in row['settings']['flags']
+
+
+def test_public_no_window_context_reparses_changed_source_plan_after_planning(tmp_path):
+    import os,subprocess,sys
+    from conftest import REPO
+    from test_wp_adapter import fake
+    records,method,cid = public_seed(tmp_path)
+    script = '''from pathlib import Path
+from swdb import proof,wp_adapter
+from swdb.cli import main
+original=wp_adapter.WpAdapter._wp
+def changed(self,job,path,context):
+    source=Path(context['pointer_source_plan']['source'])
+    text=source.read_text()
+    assert 'return r.get(1)' in text
+    changed_source=source.with_name('changed-source.cc')
+    changed_source.write_text(text.replace('return r.get(1)','return r.get(0)'))
+    context['pointer_source_plan']['source']=str(changed_source)
+    return original(self,job,path,context)
+wp_adapter.WpAdapter._wp=changed
+raise SystemExit(main())
+'''
+    done = subprocess.run([sys.executable,'-c',script,'prove','--records',str(records.path),
+        '--adapter','wp','--method-version',method['id'],'--runs-dir',str(tmp_path/'runs'),
+        '--summary',cid,'--format','json'],cwd=REPO,env={**os.environ,**fake('unknown')},
+        capture_output=True,text=True,timeout=120)
+    assert done.returncode == 1,done.stdout+done.stderr
+    assert 'proof setup check [pointer_bounds]' in done.stderr,done.stderr
+    assert 'changed after planning' in done.stderr,done.stderr
+    assert not list(records.path.glob('proofs/*.yaml'))
