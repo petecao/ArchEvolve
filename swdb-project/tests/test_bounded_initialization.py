@@ -25,6 +25,8 @@ CONTROLS = """
   int discarded = init_hidden();
 #elif defined(INIT_INITIALIZER_CALL)
   int u; int discarded = init_identity(u);
+#elif defined(INIT_DEFAULT_ARGUMENT)
+  int discarded = init_default_argument();
 #elif defined(INIT_GOOD_ALIAS)
   int u = 1; int *p = &u; int discarded = *p;
 #endif
@@ -37,6 +39,7 @@ def initialization_seed(tmp_path_factory):
     units = ("struct InitPair { int a; int b; };\n"
              "int init_hidden() { int u; int discarded = u; return 1; }\n"
              "int init_identity(int x) { return x; }\n" + cbmc.UNITS)
+    units = "int init_default_argument(int z = *(new int[1])) { return 0; }\n" + units
     units = units.replace("int smoke_main(int x) {", "int smoke_main(int x) {\n" + CONTROLS)
     units = units.replace("void swdb_fixture_fill(int *a, int n, int v) {", "void swdb_fixture_fill(int *a, int n, int v) {\n"
                           "#ifdef INIT_POINTER_REASSIGN\n int *p = a; p = a;\n#endif\n")
@@ -48,7 +51,7 @@ def initialization_seed(tmp_path_factory):
 
 @cbmc.needs_cbmc
 @pytest.mark.parametrize("control", ["LOCAL", "SELF", "ALIAS", "HEAP", "PARTIAL", "AGGREGATE", "CALLEE",
-                                     "INITIALIZER_CALL", "GOOD_ALIAS", "POINTER_REASSIGN"])
+                                     "INITIALIZER_CALL", "GOOD_ALIAS", "POINTER_REASSIGN", "DEFAULT_ARGUMENT"])
 def test_uncertain_initializedness_is_unsupported_before_execution(initialization_seed, control):
     seed = initialization_seed
     function, contract, bounds = (("swdb_fixture_fill", cbmc.FILL, {"threads": 1, "n": 2})

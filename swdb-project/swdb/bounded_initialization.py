@@ -152,6 +152,19 @@ def analyze(nodes, *, scalar_types, source_sha256, text, external_calls=()):
                 if typ == "pointer" and (op not in ("+", "-") or values.count("pointer") != 1):
                     refuse("pointer expression has no unique initialized-buffer origin", node)
                 return typ
+            allowed = {"CompoundStmt", "DeclStmt", "ReturnStmt", "ForStmt", "WhileStmt", "DoStmt", "IfStmt",
+                       "SwitchStmt", "CaseStmt", "DefaultStmt", "BreakStmt", "ContinueStmt", "NullStmt",
+                       "LabelStmt", "GotoStmt", "StaticAssertDecl", "EnumDecl", "EnumConstantDecl", "TypedefDecl",
+                       "TypeAliasDecl", "IntegerLiteral", "FloatingLiteral", "CXXBoolLiteralExpr", "CharacterLiteral",
+                       "StringLiteral", "CXXNullPtrLiteralExpr", "ImplicitCastExpr", "CStyleCastExpr",
+                       "CXXStaticCastExpr", "CXXReinterpretCastExpr", "CXXConstCastExpr", "ParenExpr",
+                       "ExprWithCleanups", "ConstantExpr", "SubstNonTypeTemplateParmExpr", "CXXDefaultArgExpr",
+                       "CXXDefaultInitExpr", "ConditionalOperator", "UnaryExprOrTypeTraitExpr", "CXXScalarValueInitExpr",
+                       "ImplicitValueInitExpr", "InitListExpr"}
+            if kind not in allowed and not kind.endswith("Attr"):
+                refuse(f"AST construct {kind} has no initializedness policy", node)
+            if kind in ("CXXDefaultArgExpr", "CXXDefaultInitExpr") and not children:
+                refuse("default initializer has not been expanded into checked argument syntax", node)
             values = [visit(child) for child in children]
             if kind.endswith("CastExpr") or kind == "ParenExpr":
                 if typ == "pointer":
@@ -189,6 +202,9 @@ def check(lowering, cap, *, library=None, model=None):
         raise ValueError("bounded initializedness metadata is absent, stale or differs from its generated lowering")
     report["certificate_sha256"] = digest
     report["harness_capacity"] = cap
+    if lowering.allocation:
+        report.update(verdict="refused", reason="generated heap allocation needs a precise initializedness check",
+                      function=report.get("function", lowering.function), source_line=report.get("source_line", 1))
     if report["verdict"] == "passed" and (report["model_obligations"] or model is not None):
         policy = _dx100_policy(library, model, lowering.defines)
         if policy is None or any(row["call"] not in policy["calls"] or
@@ -215,7 +231,7 @@ def check(lowering, cap, *, library=None, model=None):
 DX100_CONTENT = {
     "ghost": "5fa3f12850eba75ccb254b1c1e8ab5c143488046949fbe0e4c965b55ecdb48e9",
     "state": "b371131b4a3a7ef21ad654b0eaffac94b4c63252d63397ee8b67a6b017610701",
-    "c": "79c813065431e1128c5091554ce3df280e81f9b3e54639f8956e3287d2d6302a",
+    "c": "ad17837f8dc8aa61de019144f69d6aa6a68b49632caab8a9e48dabd73b6d7b34",
 }
 
 
@@ -238,7 +254,7 @@ def _dx100_policy(library, model, defines):
         return None
     return {"id": "dx100-initialized-inputs-1", "entry": model.entry, "entry_sha256": model.sha256,
             "components": actual, "generated_sha256": hashlib.sha256(model.c_text.encode()).hexdigest(),
-            "calls": sorted(set(model.calls) | set(model.queries))}
+            "calls": sorted((set(model.calls) | set(model.queries)) & set(model.functions))}
 
 
 def check_model_input(report, model, library, defines, text):
@@ -250,6 +266,8 @@ def check_model_input(report, model, library, defines, text):
         raise ValueError("model initializedness policy changed after planning")
     if "  swdb_dx_init();" not in text or model.c_text not in text:
         raise ValueError("initialized model setup or exact model body is missing from CBMC input")
+    if "  swdb_dx_check_exit();" not in text:
+        raise ValueError("checked model poststate boundary is missing from CBMC input")
     for draw in proof_semantics.state_draws(library, model.entry, defines):
         if f"  {draw} = (int) swdb_next();" not in text:
             raise ValueError(f"initialized model input draw is missing: {draw}")
