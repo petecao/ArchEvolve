@@ -7,6 +7,7 @@ import pytest
 import test_cbmc_adapter as cbmc
 import test_cbmc_equivalence as equiv
 import test_proof_semantics as dx
+import test_wp_adapter as wp
 
 
 @pytest.fixture(scope="module")
@@ -72,6 +73,7 @@ def test_both_equivalence_sides_check_pointer_formation(pointer_equivalence_seed
 def tile_seed(tmp_path_factory):
     root = tmp_path_factory.mktemp("bounded-tile-pointers")
     units = dx.UNITS + """
+struct PointerFields { int first; int second; int third; };
 int dxf_tile_extent(int n) {
   int *tile = get_cacheable_tile_pointer(0);
 #ifdef TILE_INIT_ROWS
@@ -106,6 +108,8 @@ int dxf_pointer_modes(int *p, int *q, int n) {
   (void)((short *)p + 1);
 #elif defined(WP_POINTER_SUBOBJECT)
   int a[2][2] = {{0, 0}, {0, 0}}; int *row = a[0]; (void)(row + 3);
+#elif defined(WP_POINTER_MEMBER)
+  PointerFields fields = {0, 0, 0}; int *member = &fields.first; (void)(member + 2);
 #else
   (void)(&p[n + 1]);
 #endif
@@ -177,14 +181,15 @@ def test_wp_discarded_pointer_formation_checks_bounds_and_allows_one_past(tile_s
 
 
 @dx.needs_wp
-@pytest.mark.parametrize("define", ["WP_POINTER_INCREMENT", "WP_POINTER_COMPOUND", "WP_POINTER_DIFFERENCE", "WP_POINTER_CAST", "WP_POINTER_SUBOBJECT", None])
+@pytest.mark.parametrize("define", ["WP_POINTER_INCREMENT", "WP_POINTER_COMPOUND", "WP_POINTER_DIFFERENCE", "WP_POINTER_CAST", "WP_POINTER_SUBOBJECT", "WP_POINTER_MEMBER", None])
 def test_wp_pointer_mutation_subtraction_and_indexed_address_cannot_bypass_checks(tile_seed, define):
     from conftest import run_swdb
     seed = tile_seed
     extra = ["--define", define] if define else []
     result = run_swdb("prove", "--records", seed.records, "--candidate", seed.candidates["safe"],
         "--function", "dxf_pointer_modes", "--contract", "contract.fixture_dx_pointer_modes", "--adapter", "wp",
-        "--runs-dir", seed.runs, "--format", "json", *extra, timeout=3600)
+        "--runs-dir", seed.runs, "--format", "json", *extra, timeout=3600,
+        env=wp.fake("unknown") if define == "WP_POINTER_MEMBER" else None)
     assert result.returncode == 0, result.stderr + result.stdout
     record = seed.read(json.loads(result.stdout))
     assert record["verdict"] == "not_proven", record

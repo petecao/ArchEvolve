@@ -325,3 +325,8 @@ exemption from a content hash. The copy model handles empty/null ranges without 
 and explicitly requires its nonnegative distance to fit `ptrdiff_t`; callers must prove that
 precondition. Before launch the setup check regenerates the complete model view or source assertions.
 The checker identity includes the pointer policy and proof-semantics generator bytes.
+
+The arithmetic boundary follows [C++17 N4659, additive operators](https://www.ece.uvic.ca/~frodo/cppdraft/n4659/html/expr.add),
+including its null-zero, same-array, element-type and representable-distance rules. The checks use
+[ACSL1.24 memory-block predicates](https://frama-c.com/download/frama-c-acsl-implementation.pdf)
+implemented by the pinned Frama-C33; block bounds alone do not establish a nested array's extent.

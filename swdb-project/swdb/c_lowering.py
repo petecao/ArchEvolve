@@ -2384,7 +2384,9 @@ def lower(source, function, includes=(), defines=(), summaries=None, semantics=N
                         scalar_types=INTEGER_TYPES | FLOAT_TYPES, source_sha256=_file_sha256(source), text=text,
                         external_calls=unit.summaries_used, standard_types=unit.std_types),
                     pointer_bounds=wp_pointer_bounds.inventory(
-                        wp_pointer_bounds.complete(unit.pointer_sites, definition_nodes, unit.pointer_nodes),
+                        wp_pointer_bounds.complete(unit.pointer_sites, definition_nodes, unit.pointer_nodes,
+                            external_calls=unit.summaries_used,
+                            known_pointer_calls=(semantics or {}).get("tile_pointer", ())),
                         source_sha256=_file_sha256(source), text=text),
                     terminal_release=certificate)
 

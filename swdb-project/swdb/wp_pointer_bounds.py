@@ -36,7 +36,7 @@ def _pointer(node):
                           str((node.get("type") or {}).get("qualType", ""))))
 
 
-def complete(sites, definitions, observed):
+def complete(sites, definitions, observed, *, external_calls=(), known_pointer_calls=()):
     """Refuse source operations omitted by printing and untracked subobject origins.
 
     The printer owns normalizations. This independent closure walk ensures that
@@ -44,6 +44,8 @@ def complete(sites, definitions, observed):
     casts and array subobjects need a typed extent policy beyond block bounds.
     """
     rows = list(sites)
+    has_arithmetic = bool(rows)
+    external = {row.get("name") if isinstance(row, dict) else row for row in external_calls}
     for function, root in definitions.items():
         for node in _walk(root):
             kind, children = node.get("kind"), node.get("inner", [])
@@ -67,6 +69,16 @@ def complete(sites, definitions, observed):
                 qual = str((origin.get("type") or {}).get("qualType", ""))
                 if origin.get("kind") in {"ArraySubscriptExpr", "MemberExpr"} or qual.count("[") > 1:
                     reason = "embedded or multidimensional array pointer needs an exact subobject extent policy"
+            if has_arithmetic and kind == "UnaryOperator" and node.get("opcode") == "&" and children:
+                origin = children[0]
+                while origin.get("kind") in {"ParenExpr", "ImplicitCastExpr"} and origin.get("inner"):
+                    origin = origin["inner"][0]
+                if origin.get("kind") == "MemberExpr":
+                    reason = "member-address pointer arithmetic needs an exact subobject extent policy"
+            if has_arithmetic and kind == "CallExpr" and _pointer(node) and children:
+                refs = [(n.get("referencedDecl") or {}).get("name") for n in _walk(children[0])]
+                if any(name in external and name not in known_pointer_calls for name in refs):
+                    reason = "opaque summary pointer results need a checked typed object-origin policy"
             if reason:
                 rows.append({"function": function, "source_line": (node.get("loc") or {}).get("line"),
                              "anchor": "", "base": "", "expression": "", "offset": None,
@@ -279,7 +291,10 @@ def model_view(text, scratch):
                 raise Refused("generated C model pointer operand is volatile")
             if arithmetic and len(operands) == 2:
                 left, right = (f"({expression(c)})" for c in children)
-                distance = f"((\\offset({left}) - \\offset({right})) / sizeof(*{left}))"
+                # ACSL's mathematical pointer difference is in elements of this
+                # exact C type. Byte-offset conversion in WP's typed model uses
+                # a separate layout abstraction and needlessly loses this link.
+                distance = f"({left} - {right})"
                 predicate = (f"{_in_object_or_one_past(left, left)} && {_in_object_or_one_past(right, left)} && "
                              f"PTRDIFF_MIN <= {distance} <= PTRDIFF_MAX")
             else:
