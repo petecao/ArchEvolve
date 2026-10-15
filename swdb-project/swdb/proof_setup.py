@@ -58,6 +58,7 @@ def check_semantics_hints(base, hints):
     are refused rather than inferred safe from their spelling.
     """
     existing = set(re.findall(r"\b[A-Za-z_]\w*\b", base))
+    macros = set(re.findall(r"^\s*#\s*define\s+([A-Za-z_]\w*)", base, re.M))
     owned = set()
     scalar = r"(?:(?:unsigned|signed)\s+)?(?:int|long|short|char|_Bool)"
     for hint in hints:
@@ -66,6 +67,8 @@ def check_semantics_hints(base, hints):
             continue
         if not text.startswith("ghost ") or not text.endswith(";"):
             _fail("semantics_ghost_ownership", "semantics ghost hints require scalar declarations or assignments")
+        if macros.intersection(re.findall(r"\b[A-Za-z_]\w*\b", text)):
+            _fail("semantics_ghost_ownership", "ghost witness text may not expand a preprocessor macro")
         for statement in text[6:].split(";")[:-1]:
             statement = statement.strip()
             declaration = re.fullmatch(rf"{scalar}\s+([A-Za-z_]\w*)(?:\s*=\s*(.+))?", statement, re.S)
