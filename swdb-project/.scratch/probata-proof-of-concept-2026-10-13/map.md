@@ -1,32 +1,30 @@
 # Map: Extensa Probata proof of concept
 
 Created: 2026-10-14 00:45 ET
-Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Integration branch: `probata-poc/integration`.
+Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Integration branch: `codex/probata-poc-integration` (resumed 2026-10-15).
 
 ## Current state (resume here)
 
 Updated: 2026-10-15 ET. Resumed under Yan-Ru's ongoing implementation, push and mbit10 approval.
 Current integration branch: `codex/probata-poc-integration`, based on `yanrujhou_main` at `150930b4`.
-Current dispatch, evidence and blockers: [resume.md](resume.md). The historical paused checklist below
-records the incoming checkpoint; ticket files and resume.md hold the resumed state.
+Current dispatch, evidence and blockers: [resume.md](resume.md).
 
-- **Resolved:** 33 of 63 (see Context pointers). Ticket files hold each status.
-- **Paused, claimed** (each has a "Progress (paused)" section; resume from it):
-  1. 24 — C++ subset widening: inheritance and `omp simd` outside the subset (Yan-Ru decides), read after
-     `delete[]` (WP 33 lacks deallocation), full rerun of `tests/test_wp_subset.py`.
-  2. 25 — vector/pair models: on its own pushed branch `probata-poc/t25` (not merged, conflicts). Merge the
-     integration tip, adopt 24's `--model`/`c_model`, delete `models.py`, settle WP allocation, regenerate draft-2.
-  3. 27 — proof semantics: CBMC half merged; port the WP adapter change from commit `84563b2e`.
-  4. 07 — spike (c): fail so far after runs 1-12; box open to ~2026-10-27. Decide one more run or end as fail.
-- **41 reopened, fix decided:** apply fix (a) (see the 41 ticket, last Decision), Codex rounds until clean,
-  then unblock 42 (`needs-info`, 122 lemmas Qed).
-- **Real-verifier tests need the Bash sandbox off** (Why3 uses a Unix socket).
-- **Verifier slots:** 2 on the Mac (`/tmp/claude/swdb-verifier.slots`); recreate the file after a reboot.
-- **Next action:** start ticket 41's fix (a) on a branch from `yanrujhou_main`.
+- **Resolved: 31 of 63**, recomputed from all ticket files on 2026-10-15. The incoming map's
+  count of 33 was stale. Partial implementations and checked auxiliary lemmas do not close tickets.
+- **Claimed:** 07, 24, 25, 27, 36, 42. Other `ready-for-agent` tickets still respect their blockers.
+- **41 repaired and resolved:** the strengthened statement preserves protected reads, sharing classes
+  and ownership lifetimes. Reconstructed approved hash `e23f37153fadb8c3307384b4ec074422e0af6ebc121ff673688b6d321485e513`.
+  The full composition theorem is still open in 42.
+- **Current blockers:** WP 33 lacks deallocation support (24/25); store-frame and strict-reader
+  acceptance are still running (27/36). Counted proof-hint run 13 is active (07).
+- **Next action:** finish these acceptance runs and the composition proof; regenerate a draft method
+  manifest only after checker and translator hashes settle. No method freeze is justified yet.
+- Real Mac verifier jobs use the shared two-slot policy and 8 GiB watchdog. Validation uses a frozen
+  worktree so concurrent integration merges cannot trigger checkout-integrity false alarms.
 
 ## Context pointers
 
-One line per resolved ticket: number, one-line result, commit.
+Historical results and current checkpoints. Ticket files, not the number of entries here, determine completion.
 
 - 01 — Guard refuses `PBFSMAA`, `BrandesMaa`, `PageRankPullMAA`, `DeltaStepMAA` (plus `TDStepMAA`, `DOBFSMAA`); dead names dropped; 18 per-name tests in `tests/test_provider_authors_guard.py`. `cffe20e1` (`probata-poc/t01`).
 - 02 — campaign entry links every certification record as `certification.records` (`{contract, record[, refusal]}` per contract, in order); fixture adapter writes one per contract; `campaign.certification_links` reads old entries; 4c77c651 (`probata-poc/t02`).

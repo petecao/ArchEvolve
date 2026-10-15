@@ -13,6 +13,7 @@ L = {"stream": "lowering.dxc_stream_load.dx100-mmio.1.0-e4fc4af", "gather": "low
 
 GHOST = ("dx_live, dx_kind[0 .. DX_K - 1], dx_dst1[0 .. DX_K - 1], dx_dst2[0 .. DX_K - 1], dx_src1[0 .. DX_K - 1], "
          "dx_src2[0 .. DX_K - 1], dx_cond[0 .. DX_K - 1], dx_regs_in[0 .. DX_K - 1], dx_regs_out[0 .. DX_K - 1], "
+         "dx_reg_a[0 .. DX_K - 1], dx_reg_b[0 .. DX_K - 1], dx_reg_c[0 .. DX_K - 1], "
          "dx_region[0 .. DX_K - 1], dx_base[0 .. DX_K - 1], dx_lo[0 .. DX_K - 1], dx_hi[0 .. DX_K - 1], "
          "dx_stride[0 .. DX_K - 1], dx_index[0 .. DX_K - 1], dx_deps[0 .. DX_K - 1], dx_writes_memory[0 .. DX_K - 1], "
          "dx_tile_writer[0 .. DX_NT - 1], dx_tile_readers[0 .. DX_NT - 1], dx_reg_writer[0 .. DX_NR - 1], "
@@ -23,7 +24,7 @@ def command(kind, d1, d2, s1, s2, c, regs=(), writes=()):
     """The common clauses of one issued command; `regs` the registers it names, `writes` those it writes."""
     r = list(regs) + ["-1"] * (3 - len(regs))
     w = list(writes) + ["-1"] * (2 - len(writes))
-    return (f"requires dx_issuable({r[0]}, {r[1]}, {r[2]}, {w[0]}, {w[1]});\n",
+    return (f"requires ghost_capacity: 0 <= dx_count < DX_K;\nrequires dx_issuable({r[0]}, {r[1]}, {r[2]}, {w[0]}, {w[1]});\n",
             f"ensures dx_new_slot({kind}, {d1}, {d2}, {s1}, {s2}, {c}, {r[0]}, {r[1]}, {r[2]});\n"
             f"ensures dx_stall_covers{{Pre, Post}}({d1}, {d2});\n"
             f"ensures dx_kept{{Pre, Post}}({d1}, {d2}, {s1}, {s2}, {c}, {r[0]}, {r[1]}, {r[2]}, {w[0]}, {w[1]}, 1);\n")
@@ -139,8 +140,8 @@ requires dx_tile_size[src_tile] == dx_tile_size[idx_tile] &&
   (cond_tile == -1 || dx_tile_size[cond_tile] == dx_tile_size[idx_tile]);
 {store_req}requires \\forall integer k; 0 <= k < dx_tile_size[idx_tile] && k < DX_TS &&
   (cond_tile == -1 || dx_tile_data[cond_tile][k] != 0) ==> \\valid(data + (unsigned int)dx_tile_data[idx_tile][k]);
-assigns *(data + {{ (unsigned int)dx_tile_data[idx_tile][k] | integer k;
-  0 <= k < dx_tile_size[idx_tile] && k < DX_TS && (cond_tile == -1 || dx_tile_data[cond_tile][k] != 0) }}),
+assigns data[(unsigned int)dx_tile_data[idx_tile][0 ..
+  (dx_tile_size[idx_tile] < DX_TS ? dx_tile_size[idx_tile] : DX_TS) - 1]],
   dx_tile_data[dst_tile][0 .. DX_TS - 1], dx_tile_size[dst_tile], {GHOST};
 {store_ens}ensures dx_base[dx_tile_writer[dst_tile]] == data && dx_index[dx_tile_writer[dst_tile]] == idx_tile;
 ensures dx_tile_size[dst_tile] == \\old(dx_tile_size[idx_tile]);

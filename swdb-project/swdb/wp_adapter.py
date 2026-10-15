@@ -39,7 +39,7 @@ import shutil
 import subprocess
 from pathlib import Path
 
-from swdb import c_lowering, framac, hint_check, paths, rss_watchdog, vocab
+from swdb import artifacts, c_lowering, framac, hint_check, paths, proof_semantics, proof_setup, rss_watchdog, std_models, vocab
 from swdb.proof import MODEL_PREFIX, AdapterError, Verdict
 
 NAME = "wp"
@@ -47,7 +47,7 @@ PROVERS = ("alt-ergo", "z3", "cvc5")
 WHY3_NAMES = {"Alt-Ergo": "alt-ergo", "Z3": "z3", "CVC5": "cvc5"}
 FROZEN = (("-wp-cache", "none"), ("-wp-model", "+real"))
 MACHDEP = ("-machdep", "x86_64")
-LEMMAS_OUT = ("-wp-prop=-@lemma",)    # ticket 26: logic-library lemmas are proven once, with the method (prove-logic)
+LEMMAS_OUT = ()    # ticket 26: logic-library lemmas are proven once, with the method (prove-logic)
 ALLOCATION_MODEL = "swdb_alloc_"   # ticket 24: new[] and delete[] rest on "allocation succeeds" (an assumption)
 DEFAULT_WALL_SECONDS = 3600
 DEFAULT_CAP_BYTES = 8 * 2**30                    # O9: the ~8 GB RSS watchdog
@@ -101,8 +101,14 @@ class WpAdapter:
             text = c_lowering.model_text(job.unit.function)
             if text is None:
                 raise AdapterError(f"the C lowering has no C model {job.unit.function}")
+            if job.unit.function.startswith(("std_vector_", "std_pair_")):
+                context["pins"]["std_models"] = std_models.identity()
+            if re.search(r"\b(?:allocates|frees)\b|\\(?:fresh|freeable)\b", text):
+                return self._not_proven("unsupported_construct",
+                    "WP 33.0 does not model allocation lifetime; this C model needs allocates/frees support", context)
             input_path = wp_dir / "wp_input.c"
-            input_path.write_text("\n".join([*c_lowering.HEADERS, text]) + "\n")
+            context["wp_expected_text"] = "\n".join([*c_lowering.HEADERS, text]) + "\n"
+            input_path.write_text(context["wp_expected_text"])
             context["reports"].append(("wp_input", input_path))
             context["extra_flags"] = [f"-wp-fct={job.unit.function}"]
             return self._wp(job, input_path, context)
@@ -112,30 +118,76 @@ class WpAdapter:
         source = _unit_source(Path(job.unit.tree), job.unit.function)
         log.line(f"source: {source.relative_to(job.unit.tree)}")
         summaries = self._summarized()
+        covered = proof_semantics.covered_names(self.library)
+        semantics_options = proof_semantics.lowering_options(self.library)
+        summaries.update(semantics_options.pop("summaries", {}))
+        context["covered"] = covered
         try:
             lowering = c_lowering.lower(source, job.unit.function, defines=self.defines,
-                                        summaries={f: e for f, e in summaries.items() if f != job.unit.function})
+                                        summaries={f: e for f, e in summaries.items() if f != job.unit.function},
+                                        **semantics_options)
         except c_lowering.Unsupported as exc:
             return self._not_proven("unsupported_construct", str(exc), context)
         except c_lowering.ParseError as exc:
             return self._not_proven("parse_error", str(exc), context)
         except c_lowering.LoweringError as exc:
             raise AdapterError(str(exc)) from None
+        problem = std_models.method_problem(self.method, lowering)
+        if problem:
+            raise AdapterError(problem)
+        lowering_tool = c_lowering.identity()["c_lowering"]
+        context["assumed"] = std_models.assumptions(lowering, tools["identities"]["clang"][2], lowering_tool)
+        context["pins"].update(std_models.pins(lowering))
+        if lowering.std_models:
+            probe = subprocess.run([*c_lowering.locate().command, "-dM", "-E", "-x", "c++",
+                                    "-std=gnu++17", "-include", "vector", "-"],
+                                   input="", capture_output=True, text=True, timeout=60)
+            if probe.returncode != 0 or not re.search(r"^#define _LIBCPP_VERSION 220108$", probe.stdout, re.M):
+                return self._not_proven("unsupported_construct",
+                    "the standard models require libc++ 22.1.8 (_LIBCPP_VERSION 220108); "
+                    "the selected clang uses an unmatched standard library", context)
+        if any(name == "swdb_free" or name.startswith("swdb_alloc_delete_array_") for name in lowering.models):
+            return self._not_proven("unsupported_construct",
+                "WP 33.0 does not model allocation lifetime; reachable free/delete or vector growth needs it", context)
         if unit.get("function") not in (None, job.unit.function):
             raise AdapterError(f"contract {self.contract} states the proof unit {unit.get('function')}, not "
                                f"{job.unit.function}")
         c_path, anchors_path = lowering.write(wp_dir)
         context["reports"] += [("c_lowering", c_path), ("anchors", anchors_path)]
         context["c_lowering"] = {"id": c_path.name, "sha256": lowering.sha256}
+        called = proof_semantics.called(lowering, covered)
+        if called:                                  # ticket 27: the WP form of the proof semantics
+            entries = sorted({covered[name] for name in called})
+            if len(entries) != 1:
+                raise AdapterError(f"{job.unit.function} calls into more than one proof semantics: {', '.join(entries)}")
+            sha = artifacts.file_hash(self.library.files[entries[0]])
+            context["semantics"] = {"id": entries[0], "sha256": sha, "calls": called}
+            context["semantics_settings"] = {
+                "id": entries[0], "calls": called,
+                "probes": [{k: p[k] for k in ("id", "function", "access", "line")} for p in lowering.probes]}
+            log.line(f"proof semantics: {entries[0]} (sha256 {sha}); calls {', '.join(called)}; "
+                     f"{len(lowering.probes)} hazard probe(s)")
         contracts = self._dependencies(lowering, context)
+        context["lowering"] = lowering
+        context["extern_contracts"] = {
+            used["name"]: {"id": used["summary"], "sha256": self.library.content_sha256(used["summary"])}
+            for used in lowering.summaries if used["name"] not in covered}
+        if context.get("semantics"):
+            semantics = context["semantics"]
+            pin = {k: semantics[k] for k in ("id", "sha256")}
+            context["extern_contracts"].update({name: dict(pin) for name in semantics["calls"]})
+            for probe in (self.library.get(semantics["id"]).get("wp") or {}).get("probes") or []:
+                name = re.match(r".*?\b(\w+)\s*\(", probe["prototype"]).group(1)
+                context["extern_contracts"][name] = dict(pin)
         callees = sorted({a["function"] for a in lowering.anchors if a["kind"] == "contract"} - {job.unit.function})
         context["extra_flags"] = [f"-wp-fct={job.unit.function}"] + \
             ([f"-inline-calls={','.join(callees)}"] if callees else [])
-        base = hint_check.wp_base(lowering.text, lowering.anchors, self._context(lowering, entry, summary_job))
+        base = hint_check.wp_base(lowering.text, lowering.anchors, self._context(lowering, entry, summary_job, context))
         base = self._with_contracts(base, contracts)
         accepted = self._hint_check(job, lowering, base, context) if self.hints_path else []
         text = hint_check.merge(base, lowering.anchors, self.hints, accepted).text
         input_path = wp_dir / "wp_input.c"
+        context["wp_expected_text"] = text
         input_path.write_text(text)
         context["reports"].append(("wp_input", input_path))
         context["hints_reaching_wp"] = len(accepted)
@@ -237,6 +289,8 @@ class WpAdapter:
         """{C name: ACSL text} of the summarized calls; pins every summary and C model to its proven record."""
         contracts, summaries, models, assumed = {}, [], [], []
         for used in lowering.summaries:
+            if used["name"] in context.get("covered", {}):
+                continue
             entry_id = used["summary"]
             data = self.library.get(entry_id) or {}
             sha = self.library.content_sha256(entry_id)
@@ -269,14 +323,14 @@ class WpAdapter:
             assumed.append({"kind": "summary", "reference": {"id": name, "sha256": sha},
                             "sentence": f"The C model {name} stands for the call it models (one thread); proof record "
                                         f"{record} proves its contract on its text."})
-        context["assumed"] = assumed
+        context.setdefault("assumed", []).extend(assumed)
         if summaries:
             context["pins"]["summaries"] = summaries
         if models:
             context["pins"]["models"] = models
         return contracts
 
-    def _context(self, lowering, entry, summary_job=False):
+    def _context(self, lowering, entry, summary_job=False, job_context=None):
         """What WP sees besides the hints, {anchor: [block]}: the contract's formal halves at the unit's contract
         anchor (`requires` first; per-candidate, or `once: self` for a summary job, ticket 24), the logic-library
         files they use at ghost.globals."""
@@ -287,6 +341,10 @@ class WpAdapter:
             raise AdapterError(f"contract {self.contract} has no {'once: self' if summary_job else 'per-candidate'} "
                                "formal half to prove")
         texts = [c["acsl"]["text"].strip() for c in clauses]
+        semantics = (job_context or {}).get("semantics")
+        prelude = []
+        if semantics:
+            texts, prelude = self._with_semantics(lowering, texts, semantics)
         texts = sorted(texts, key=lambda t: 0 if t.startswith("requires") else 1)
         uses = []
         for clause in clauses:
@@ -305,7 +363,7 @@ class WpAdapter:
                 inserts[anchor["id"]] = ["/*@ " + "\n    ".join("\n".join(ordered).splitlines()) + " */"]
                 for clause in summary:
                     uses += [u for u in clause["acsl"].get("uses", []) if u not in uses]
-        inserts["ghost.globals"] = [f"/*@\n{files[u].read_text()}\n*/" for u in uses]
+        inserts["ghost.globals"] = prelude + [f"/*@\n{files[u].read_text()}\n*/" for u in uses]
         return inserts
 
     def _summary_clauses(self, callee):
@@ -332,18 +390,47 @@ class WpAdapter:
         return "\n".join(out) + "\n"
 
 
+    def _with_semantics(self, lowering, texts, semantics):
+        """(formal-half texts with the semantics' preconditions and state locations, [the WP-form prelude])."""
+        entry_id = semantics["id"]
+        data = self.library.get(entry_id) or {}
+        wp = data.get("wp") or {}
+        locations = proof_semantics.wp_locations(self.library, entry_id, self.defines)
+        joined = ", ".join(locations)
+        rewritten = []
+        for text in texts:
+            text = re.sub(r"\bassigns\s+\\nothing\s*;", f"assigns {joined};", text)
+            text = re.sub(r"\bassigns\s+(?!" + re.escape(locations[0]) + r")([^;]+);",
+                          lambda m: f"assigns {m.group(1).strip()}, {joined};", text)
+            rewritten.append(text)
+        extra = []
+        if wp.get("unit_requires"):
+            extra.append(f"requires {wp['unit_requires']};")
+        for name, _ctype, pointer in lowering.parameters:
+            if not pointer:
+                continue
+            for array in wp.get("separate_from") or []:
+                dims = next((loc.count("[") for loc in locations if loc.split("[")[0] == array), 0)
+                extra.append(f"requires \\base_addr({name}) != \\base_addr(&{array}{'[0]' * dims});")
+        prelude = proof_semantics.wp_prelude(self.library, entry_id, semantics["calls"], self.defines)
+        return extra + rewritten, [prelude]
+
     def _wp(self, job, input_path, context):
         tools, log, wp_dir = context["tools"], context["log"], context["wp_dir"]
         scratch = Path(job.scratch)
         shutil.copyfile(input_path, scratch / "wp_input.c")
         (scratch / "tmp").mkdir(exist_ok=True)
         goals_json, properties_csv = scratch / "wp-goals.json", scratch / "wp-properties.csv"
+        inventory = scratch / "wp-inventory.json"
+        report_module = proof_setup.compile_report_module(scratch)
         settings_flags = [*tools["flags"], *MACHDEP, "-wp-prover", ",".join(PROVERS), "-wp-timeout",
-                          str(tools["seconds"]), "-wp-par", "1", *LEMMAS_OUT, *context.get("extra_flags", [])]
+                          str(tools["seconds"]), "-wp-par", "1", "-wp-smoke-tests", *LEMMAS_OUT, *context.get("extra_flags", [])]
         command = [*framac.locate().command, *settings_flags, "-wp-report-json", goals_json.name, "wp_input.c",
-                   "-then", "-report-csv", properties_csv.name]
-        removed = sorted(k for k in os.environ if k.startswith("FRAMAC_WP"))
-        env = {k: v for k, v in os.environ.items() if k not in removed}
+                   "-then", "-load-module", str(report_module), "-report", "-report-untried",
+                   "-report-csv", properties_csv.name]
+        removed = []
+        env = dict(os.environ)
+        env["SWDB_PROOF_REPORT_OUT"] = str(inventory)
         env["TMPDIR"] = str(scratch / "tmp")
         cap = int(os.environ.get("SWDB_VERIFIER_RSS_CAP_BYTES") or DEFAULT_CAP_BYTES)
         wall = job.budget_seconds or DEFAULT_WALL_SECONDS
@@ -355,17 +442,27 @@ class WpAdapter:
                                "warning_levels": "default", "machdep": "x86_64",
                                "wp_seconds_per_solver": tools["seconds"], "environment_removed": removed,
                                "rss_cap_bytes": cap, "hint_count": context.get("hints_reaching_wp", 0), "build_constants": list(self.defines)}
+        proof_setup.check_generated(job, self, context,
+            [(scratch / "wp_input.c", context["wp_expected_text"])], settings_flags, command=command, scratch=scratch)
         result = rss_watchdog.run(command, log=wp_log, cap_bytes=cap, timeout=wall, cwd=scratch, env=env)
         context["peak"] = result.peak_rss_bytes
         log.line(f"frama-c exit {result.exit_code}, wall {result.wall_seconds:.2f} s, peak rss {result.peak_rss_bytes}, "
                  f"out of memory {result.out_of_memory}, timed out {result.timed_out}")
-        for name, path in (("wp_goals", goals_json), ("wp_properties", properties_csv)):
+        for name, path in (("wp_goals", goals_json), ("wp_properties", properties_csv), ("wp_inventory", inventory)):
             if path.exists():
                 shutil.copyfile(path, wp_dir / path.name)
                 context["reports"].append((name, wp_dir / path.name))
         outcome = read_outcome(result, wp_log.read_text(errors="replace"),
                                goals_json if goals_json.exists() else None,
-                               properties_csv if properties_csv.exists() else None, context.get("functions"))
+                               properties_csv if properties_csv.exists() else None, context.get("functions"),
+                               inventory=inventory, extern_contracts=context.get("extern_contracts"))
+        context.setdefault("assumed", []).extend(outcome.get("assumptions", []))
+        context["verdict_reading"] = outcome.get("reading")
+        if context.get("semantics") and outcome["verdict"] == "not_proven" and any(
+                g.get("status") != "valid" and "ghost_capacity" in str(g.get("goal", ""))
+                for g in outcome["goals"]):
+            outcome["failure_class"] = "ghost_capacity"
+            outcome["why"] = "the named DX100 ghost-capacity obligation is not proven"
         context["goals"], context["unproven"] = outcome["goals"], outcome["unproven"]
         log.line(f"outcome: {outcome['verdict']} {outcome['failure_class'] or ''} ({outcome['why']})")
         if outcome["verdict"] == "proven":
@@ -391,7 +488,7 @@ class WpAdapter:
             tools.append(ident)
         assumptions += context.get("assumed", [])            # ticket 24: summaries, C models, allocation
         fields = {"goals": context.get("goals", [])}
-        for name in ("hint_set", "hint_check"):                   # ticket 35: the hint set and its check result
+        for name in ("hint_set", "hint_check", "verdict_reading"):                   # ticket 35: the hint set and its check result
             if context.get(name) is not None:
                 fields[name] = context[name]
         if verdict == "not_proven":
@@ -401,6 +498,21 @@ class WpAdapter:
         pins = {"c_lowering": context["c_lowering"], "naming_rules": c_lowering.naming_rules()} \
             if context.get("c_lowering") else {}
         pins.update(context.get("pins") or {})                 # ticket 24: summaries and C models
+        semantics = context.get("semantics")
+        if semantics:                               # ticket 27: as the CBMC adapter records it
+            pins["proof_semantics"] = {"id": semantics["id"], "sha256": semantics["sha256"]}
+            fields.setdefault("settings", {})["proof_semantics"] = context["semantics_settings"]
+            assumptions.append({"kind": "proof_semantics", "reference": {"id": semantics["id"],
+                                                                         "sha256": semantics["sha256"]},
+                                "sentence": f"The DX100 behaves as its proof semantics {semantics['id']} says: each "
+                                            "command's values as if it finished at issue, hazards as its rules state."})
+            reduction = Path(self.library.root) / "rocq" / "probata" / "Reduction.v"
+            if not reduction.is_file():
+                reduction = paths.HOME / "library" / "rocq" / "probata" / "Reduction.v"
+            assumptions.append({"kind": "reduction", "reference": {"id": "rocq.probata.dx100_reduction",
+                                                                   "sha256": artifacts.file_hash(reduction)},
+                                "sentence": "The DX100 reduction lemma (Reduction.v, statement only; proof: ticket "
+                                            "43): a hazard-free at-issue run matches every timing gem5 allows."})
         return Verdict(verdict=verdict, bounds={"threads": 1, "input_size": "unbounded"}, assumptions=assumptions,
                        failure_class=failure_class, tools=tuple(tools), peak_rss_bytes=context.get("peak"),
                        record_fields=fields, pins=pins, reports=tuple(context["reports"]))
@@ -412,7 +524,7 @@ CRASH = re.compile(r"Unexpected error|internal error|Fatal error|Stack overflow|
 USER_ERROR = re.compile(r"User Error|annot-error|invalid user input|syntax error|Ignoring")
 
 
-def read_outcome(result, log_text, goals_json, properties_csv, functions=None):
+def read_outcome(result, log_text, goals_json, properties_csv, functions=None, *, inventory=None, extern_contracts=None):
     """{verdict, failure_class, why, goals, unproven} from one WP run (minimal reading; 36 owns the full rule).
 
     `functions` (ticket 24): read only the properties and goals of these functions (the proof unit, its inlined
@@ -432,6 +544,8 @@ def read_outcome(result, log_text, goals_json, properties_csv, functions=None):
         return outcome("not_proven", "tool_crash", f"Frama-C exited {result.exit_code} without a user error")
     if goals_json is None or properties_csv is None:
         return outcome("not_proven", UNCLASSIFIED, "WP exited 0 but wrote no per-property or per-goal report")
+    if inventory is not None:
+        return proof_setup.read_wp_reports(goals_json, properties_csv, inventory, extern_contracts, functions)
     goals = [_goal(g) for g in json.loads(goals_json.read_text() or "[]")]
     with open(properties_csv, newline="") as handle:
         properties = list(csv.DictReader(handle, delimiter="\t"))
