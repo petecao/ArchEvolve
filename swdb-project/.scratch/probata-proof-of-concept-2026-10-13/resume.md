@@ -65,8 +65,8 @@ not substitute for reading incremental run artifacts.
 
 ## Validation and progress reporting
 
-The 2026-10-15 04:00 ET report covered every active ticket and both lanes; next report is
-due around 04:30 ET. Counted hint run 13 ended with 19 goals open and is not proven. Run 14
+The 2026-10-15 04:30 ET report covered every active ticket and both lanes; next report is
+due around 05:00 ET. Counted hint run 13 ended with 19 goals open and is not proven. Run 14
 has closed the unit goals while 14 hint obligations remain open at 43.94 counted minutes;
 this is still not proven. Both remote evaluation lanes await the final combined source.
 
