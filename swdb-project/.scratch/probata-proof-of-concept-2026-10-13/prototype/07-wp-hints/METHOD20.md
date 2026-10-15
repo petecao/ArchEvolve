@@ -1,8 +1,8 @@
 # Method20 prospective checkpoint
 
-Created: 2026-10-15 ET. Updated: 2026-10-15 ET. **Runs20/21 are harness-aborted,
-with no qualifying proof. The scoped tool-approval correction awaits independent
-review and a new prospective freeze.** At the earlier closeout checkpoint this
+Created: 2026-10-15 ET. Updated: 2026-10-15 ET. **Runs20/21/22 are harness-aborted,
+with no qualifying proof. The process-inspection revision awaits independent
+review, an actual seed-stage resource check and a new prospective freeze.** At the earlier closeout checkpoint this
 method was unlaunched. Historical method19 source `669df70f` stays unchanged.
 
 The new opt-in `--design-probes` requires the strict `--staged-induction`
@@ -122,3 +122,28 @@ BFS source, proof hints or verifier. A deterministic external-CLI argv control
 failed before the correction and passes for new/resumed method20 calls afterward;
 legacy calls acquire no new approval. Independent re-review precedes the next
 fresh freeze. The scientific acceptance criteria and budgets remain unchanged.
+
+
+## Run22 inspection abort and prospective retry boundary — 2026-10-15 ET
+
+Run22 at `703ff3d7` completed its fresh no-hint baseline, then failed closed during
+its seed-stage prover process after18seconds with `AccessDenied(pid44755)`.
+No provider was called. The historical summary did not identify the denied
+operation, so its exact cause remains unknown. [Aborted-run evidence](../../evidence/t07-method20-inspection-aborted-20261015.json)
+retains27 unchanged source checks, process reports and clean tool/lease audit.
+Neither baseline nor output is reusable for a counted run.
+
+The prospective guard retries each process observation three times, separated by
+10ms. After denial it independently checks fresh PID birth/status; only confirmed
+exit/zombie or changed identity is skipped. Persistent live or unknown denial
+still fails closed. Sanitized operation, PID, expected/observed birth, attempt,
+continuous/wall clock and supervision/cleanup stage are retained; no environment
+values are logged. Marker metadata is fetched explicitly so `process_iter`
+cannot silently substitute missing attributes. Discovery no longer duplicates
+RSS reads; the retained live identity union still accounts for sampled memory.
+Four actual private-child controls failed before the change and pass afterward,
+covering transient and persistent `children`/`memory_info` denial. The composed
+173 controls pass. Independent review and an actual fresh mechanical-seed
+parse/generation/prover/cleanup pipeline must pass before another counted freeze.
+This remains a sampled trusted-toolchain guard with a finite cleanup settlement,
+without a hard memory quota or hostile-process containment claim.

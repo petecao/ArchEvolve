@@ -1218,3 +1218,21 @@ pins the distinct prospective `method20-scoped-tool-approvals-v3` revision, the
 actual neutral routing check and unchanged proof/resource boundaries. Root review
 of the six-line runtime change found no additional issue. Fresh source/tool freeze,
 baseline and conversation remain required; no qualifying proof is claimed.
+
+
+### Run22 harness-aborted on process inspection — 2026-10-15 ET
+
+Clean `703ff3d7` completed its no-hint baseline and failed closed18seconds into
+seed-stage proving on `AccessDenied(pid44755)`, before any provider. The exact
+historical operation is unavailable; no cause is inferred. [Source/process/stop
+receipt](../evidence/t07-method20-inspection-aborted-20261015.json) preserves27
+source checks with zero mismatches and no remaining tools/shared leases.
+No baseline/output reuse, proof, final replay or negative-control success is claimed.
+
+Prospective observation retries now retain sanitized stage/operation/PID/birth/time
+metadata and independently recheck identity after denial. Only confirmed departed
+or replaced identities are skipped; persistent live or unknown denial fails closed.
+Four external process-boundary controls show RED/GREEN for transient and persistent
+ancestry/RSS denial;173 composed controls pass. Independent review and an actual
+fresh mechanical-seed verifier pipeline precede any fresh counted freeze. Scientific
+criteria and the existing claimed/shared-box status remain unchanged.

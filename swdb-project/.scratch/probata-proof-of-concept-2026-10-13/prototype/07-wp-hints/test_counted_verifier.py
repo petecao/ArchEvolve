@@ -284,3 +284,33 @@ def test_fork_during_final_marker_sweep_is_settled_before_lease_release(tmp_path
             if file.exists():
                 try:psutil.Process(int(file.read_text())).kill()
                 except psutil.NoSuchProcess:pass
+
+@pytest.mark.parametrize('operation', ['memory_info', 'children'])
+@pytest.mark.parametrize('persistent', [False, True])
+def test_owned_process_inspection_retries_transient_denial_and_reports_persistent_denial(tmp_path, operation, persistent):
+    """Inject a Darwin-style denial at the system boundary, with real child lifecycle."""
+    lock=tmp_path/'private.lock';output=tmp_path/'inspect.log';wrapper=tmp_path/'runner.py'
+    wrapper.write_text('import sys\n'+f'sys.path.insert(0,{str(RUNNER.parent)!r})\n'+
+        'import counted_verifier as V\n'+f'original=V.psutil.Process.{operation}\ncalls=[0]\n'+
+        'def inspect(self,*args,**kwargs):\n calls[0]+=1\n'+
+        f' if {persistent!r} or calls[0]==1: raise V.psutil.AccessDenied(self.pid)\n'+
+        ' return original(self,*args,**kwargs)\n'+
+        f'V.psutil.Process.{operation}=inspect\nraise SystemExit(V.main())\n')
+    result=subprocess.run([sys.executable,str(wrapper),'--lock',str(lock),'--log',str(output),
+        '--timeout','2','--',sys.executable,'-c','import time;time.sleep(.2)'],
+        capture_output=True,text=True,timeout=8)
+    summary=json.loads(Path(str(output)+'.summary.json').read_text())
+    assert (result.returncode!=0) if persistent else (result.returncode==0),result.stderr+result.stdout
+    events=summary['inspection_events']
+    assert events and events[0]['operation']==operation
+    assert events[0]['pid']>0 and events[0]['expected_birth'] is not None
+    assert events[0]['clock_s']>0 and events[0]['wall_unix_s']>0 and events[0]['stage']
+    assert events[0]['attempt']==1 and events[0]['exception_pid']==events[0]['pid']
+    if persistent:
+        assert summary['error'] or summary['unconfirmed_children']
+        assert summary['inspection_failure']['operation']==operation
+        assert summary['inspection_failure']['attempt']==3
+        assert any(event['outcome']=='denied' and event['attempt']==3 for event in events)
+    else:
+        assert any(event['outcome']=='recovered' for event in events)
+        assert not lock.exists() and summary['unconfirmed_children']==[]
