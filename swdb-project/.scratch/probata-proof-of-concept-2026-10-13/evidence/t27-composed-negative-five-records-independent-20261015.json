@@ -1,0 +1,192 @@
+{
+  "created_utc": "2026-10-15T22:06:35.034404+00:00",
+  "scope": "Independent read-only completed-record snapshot; not whole-profile/theorem acceptance.",
+  "source_commit": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+  "run": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative",
+  "profile": "wp-negative",
+  "pytest": {
+    "passed": 5
+  },
+  "records": [
+    {
+      "name": "three_reads",
+      "record": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/pytest/test_wp_leaves_every_unit_cbmc0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t211434z.dc9d8edf.yaml",
+      "sha256": "307379762508cffec749306119ed93c60b6e9f651c66900c450b447e3faa39f7",
+      "constants": [
+        "SWDB_EARLY_READ_1"
+      ],
+      "verdict": "not_proven",
+      "failure_class": "vacuous_pass",
+      "ordinary": {
+        "valid": 111,
+        "total": 112
+      },
+      "smoke": {
+        "valid": 15,
+        "total": 31
+      },
+      "ordinary_open": [
+        {
+          "goal": "typed_real_dxf_three_reads_call_swdb_tile_read_probe_requires",
+          "property": "swdb_tile_read_probe_requires_2",
+          "function": "dxf_three_reads",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open_count": 16,
+      "initialized_goals": 18,
+      "rte_goals": 27,
+      "errors": []
+    },
+    {
+      "name": "three_reads",
+      "record": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/pytest/test_wp_leaves_every_unit_cbmc1/records/proofs/proof.dx100-fixtures.candidate-1.20261015t212352z.983ae918.yaml",
+      "sha256": "52adbaeac42b98734dc0b54d16e4dd3454161e4c9cb3239e5cac63ca8c77b4ff",
+      "constants": [
+        "SWDB_EARLY_READ_2"
+      ],
+      "verdict": "not_proven",
+      "failure_class": "vacuous_pass",
+      "ordinary": {
+        "valid": 111,
+        "total": 112
+      },
+      "smoke": {
+        "valid": 21,
+        "total": 31
+      },
+      "ordinary_open": [
+        {
+          "goal": "typed_real_dxf_three_reads_call_swdb_tile_read_probe_2_requires",
+          "property": "swdb_tile_read_probe_requires_3",
+          "function": "dxf_three_reads",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open_count": 10,
+      "initialized_goals": 18,
+      "rte_goals": 27,
+      "errors": []
+    },
+    {
+      "name": "three_reads",
+      "record": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/pytest/test_wp_leaves_every_unit_cbmc2/records/proofs/proof.dx100-fixtures.candidate-1.20261015t213400z.7fb18b71.yaml",
+      "sha256": "21da101583c1196836a24a13cfbbf3c4e11ea93d2e021b5bd2f641ad4ee6ac8b",
+      "constants": [
+        "SWDB_EARLY_READ_3"
+      ],
+      "verdict": "not_proven",
+      "failure_class": "vacuous_pass",
+      "ordinary": {
+        "valid": 113,
+        "total": 114
+      },
+      "smoke": {
+        "valid": 27,
+        "total": 31
+      },
+      "ordinary_open": [
+        {
+          "goal": "typed_real_dxf_three_reads_call_swdb_tile_read_probe_3_requires",
+          "property": "swdb_tile_read_probe_requires_4",
+          "function": "dxf_three_reads",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open_count": 4,
+      "initialized_goals": 18,
+      "rte_goals": 27,
+      "errors": []
+    },
+    {
+      "name": "size",
+      "record": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/pytest/test_wp_leaves_every_unit_cbmc3/records/proofs/proof.dx100-fixtures.candidate-1.20261015t214443z.cd84b489.yaml",
+      "sha256": "6af7532ecb388587c114e726c839ae47e2275dd88e3096d9c65d96cda98c22b9",
+      "constants": [
+        "SWDB_EARLY_SIZE"
+      ],
+      "verdict": "not_proven",
+      "failure_class": "vacuous_pass",
+      "ordinary": {
+        "valid": 35,
+        "total": 36
+      },
+      "smoke": {
+        "valid": 9,
+        "total": 13
+      },
+      "ordinary_open": [
+        {
+          "goal": "typed_real_dxf_size_call_get_tile_size_requires_2",
+          "property": "get_tile_size_requires_4",
+          "function": "dxf_size",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open_count": 4,
+      "initialized_goals": 7,
+      "rte_goals": 4,
+      "errors": []
+    },
+    {
+      "name": "cpu_write",
+      "record": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/pytest/test_wp_leaves_every_unit_cbmc4/records/proofs/proof.dx100-fixtures.candidate-1.20261015t215013z.6df8753e.yaml",
+      "sha256": "1b6bfff8db05f0c26e60c75864dd22469dad14567f1ce14304f49afc14d14f4e",
+      "constants": [
+        "SWDB_CPU_WRITE"
+      ],
+      "verdict": "not_proven",
+      "failure_class": "timeout",
+      "ordinary": {
+        "valid": 64,
+        "total": 65
+      },
+      "smoke": {
+        "valid": 21,
+        "total": 21
+      },
+      "ordinary_open": [
+        {
+          "goal": "typed_real_dxf_cpu_write_call_swdb_tile_write_probe_requires",
+          "property": "swdb_tile_write_probe_requires_2",
+          "function": "dxf_cpu_write",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open_count": 0,
+      "initialized_goals": 11,
+      "rte_goals": 11,
+      "errors": []
+    }
+  ],
+  "physical_pins": {
+    "references": 6890,
+    "unique_files": 938,
+    "mismatches": []
+  },
+  "errors": [],
+  "audit_script": {
+    "path": "/private/tmp/probata-t27-audit-negative.py",
+    "sha256": "091423c4d1bb7ef270958dc4cdcc993d0fad0b5aa7a683e7c31c2f7f1f8bd6ed"
+  }
+}

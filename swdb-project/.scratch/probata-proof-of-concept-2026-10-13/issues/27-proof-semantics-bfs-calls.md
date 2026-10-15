@@ -625,3 +625,18 @@ it does not establish the new invariant or close capacity acceptance. Independen
 review and a real 32/33 rerun are still required. Exact retained failure,
 diagnosis and controls are in
 [`t27-capacity-hint-repair-20261015.json`](../evidence/t27-capacity-hint-repair-20261015.json).
+
+### Current bounded completion — 2026-10-15 ET
+
+The frozen `0e7f2327` bounded profile completed naturally: 35/35 passed, exit 0,
+with 12 positive CBMC records and 12 replayed source-property counterexamples.
+Independent read-only audit verified 180 physical references / 204 unique files,
+current pins, source cleanliness and guard exits with no mismatch. The expected
+failed completion sentinel is kept separate from semantic property failures.
+Exact bounds and records are retained in
+[`t27-composed-bounded-completed-independent-20261015.json`](../evidence/t27-composed-bounded-completed-independent-20261015.json).
+
+The separately running negative profile had 5/13 completed cases at 22:06:35 UTC;
+each retains its named ordinary timed-out hazard and explicit smoke outcome.
+This is an incremental checkpoint only. Ticket remains `claimed`: final safe,
+remaining negatives and reviewed capacity repair acceptance are still required.
