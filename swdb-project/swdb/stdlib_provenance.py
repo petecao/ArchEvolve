@@ -9,6 +9,8 @@ import json
 import os
 from pathlib import Path
 import re
+import shlex
+import shutil
 import subprocess
 
 ID = "swdb-stdlib-provenance-1"
@@ -134,6 +136,41 @@ def _command(tool, source, includes, defines):
             *[f"-D{d}" for d in defines], str(source)]
 
 
+
+def _effective(tool, command, defines):
+    """Resolve executable wrappers to one exact frontend job, never guess their flags."""
+    trace = subprocess.run([*command[:-1], "-###", command[-1]], input="", capture_output=True,
+                           text=True, timeout=120)
+    jobs = []
+    for line in trace.stderr.splitlines():
+        try:
+            args = shlex.split(line)
+        except ValueError:
+            continue
+        if len(args) > 1 and args[1] == "-cc1":
+            jobs.append(args)
+    if trace.returncode or len(jobs) != 1:
+        raise Refused("the lowering driver does not expose exactly one frontend job")
+    job = jobs[0]
+    if job[-1] != str(command[-1]):
+        raise Refused("the effective frontend changed the source input")
+    # Unadvertised macro/header injections are not a library-selection wrapper.
+    macros = [job[i + 1] for i, arg in enumerate(job[:-1]) if arg == "-D"]
+    if macros != list(defines) or "-U" in job:
+        raise Refused("the effective compiler injects undeclared preprocessor definitions")
+    if any(a.startswith(("-include", "-imacros", "-fmodule", "-ivfsoverlay")) for a in job):
+        raise Refused("the effective compiler injects an unmodeled header/module context")
+    wrapper = Path(shutil.which(tool.command[0]) or tool.command[0]).resolve()
+    binary = Path(job[0]).resolve()
+    if not binary.is_file():
+        raise Refused("the effective frontend binary cannot be pinned")
+    context = {"frontend": job, "driver": {"path": str(binary), "sha256": _sha(binary)},
+               "command_executable": {"path": str(wrapper), "sha256": _sha(wrapper)}}
+    # Libclang's public parser accepts driver arguments, not direct cc1 arguments.
+    # Forward every resolved frontend argument verbatim, after normal driver defaults.
+    arguments = [job[0], *[v for arg in job[2:-1] for v in ("-Xclang", arg)]]
+    return arguments, context
+
 def certify(tool, source, *, includes=(), defines=(), models=()):
     """Return a passed/refused original-TU certificate, never an inferred library premise.
 
@@ -166,7 +203,8 @@ def certify(tool, source, *, includes=(), defines=(), models=()):
             raise Refused("the selected driver does not use its canonical libc++ vector header")
         report["baseline"] = [{"path": p, "sha256": _sha(p)} for p in sorted(baseline_files)]
         command = _command(tool, source, includes, defines)
-        tu = parser.translation_unit(command[:-1], source)
+        effective, report["effective"] = _effective(tool, command, defines)
+        tu = parser.translation_unit(effective, source)
         files = parser.closure(tu)
         macros = subprocess.run([*command[:-1], "-dM", "-E", command[-1]], capture_output=True,
                                 text=True, timeout=120)
@@ -220,7 +258,7 @@ def certify(tool, source, *, includes=(), defines=(), models=()):
                                          "definition": bool(parser.definition(cursor))})
                     if not trusted:
                         problems.append(f"noncanonical std::{name} declaration: {file}:{line}")
-                if kind == "FunctionDecl":
+                if kind in {"FunctionDecl", "CXXMethod", "FunctionTemplate"}:
                     mangled = parser.text(parser.mangling(cursor))
                     allocation = (name.startswith(("operator new", "operator delete")) or name in ALLOCATORS or
                                   mangled.lstrip("\x01").startswith(("_Zn", "_Zd")) or
@@ -228,7 +266,7 @@ def certify(tool, source, *, includes=(), defines=(), models=()):
                                   mangled.lstrip("\x01").startswith("_ZSt15set_new_handler"))
                     if allocation and file and not trusted and file not in baseline_files:
                         problems.append(f"source-defined allocation/deallocation hook: {file}:{line} ({name})")
-            if kind in {"CallExpr", "CXXNewExpr", "CXXDeleteExpr"} and file and file not in baseline_files:
+            if kind in {"CallExpr", "CXXNewExpr", "CXXDeleteExpr", "DeclRefExpr", "MemberRefExpr", "OverloadedDeclRef"} and file and file not in baseline_files:
                 callee = parser.referenced(cursor)
                 if callee.kind:
                     origin, origin_line, _ = parser.physical(callee)
@@ -274,7 +312,9 @@ def runtime_identity(tool):
     parser = None
     try:
         parser = _Clang(tool)
-        return {"check": identity(), "parser": {"id": "libclang-" + tool.version, "sha256": _sha(parser.path)}}
+        _, effective = _effective(tool, [*tool.command, "-x", "c++", "-fsyntax-only", "-"], ())
+        return {"check": identity(), "parser": {"id": "libclang-" + tool.version, "sha256": _sha(parser.path)},
+                "driver": effective["driver"], "command_executable": effective["command_executable"]}
     except (Refused, OSError, ValueError, AttributeError, subprocess.SubprocessError) as exc:
         return {"check": identity(), "unavailable": str(exc)}
     finally:
