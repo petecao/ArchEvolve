@@ -369,3 +369,15 @@ These are transformation checks, not WP or final proof acceptance. Ticket 36 sti
 original/view provenance split, fresh prelaunch source/lowering replays and the ordinary checked window
 assertions on the resulting view. Hints remain closed for this slice. The original three-read fixture also
 contains nested ordinary memory operands, which remain a separate unsupported frontier.
+
+
+### Independent helper capture review — 2026-10-15 ET
+
+The staged helper checker compares exact declaration identity across the source and independently
+parsed expanded view, including original file/offset and captured formal declaration IDs. Its
+recursive matcher checks every context; macro-only headers are included in dependency replay.
+Two additional controls hide a colliding global or generated-name macro in a header. Both refuse
+through the independent AST check, even though raw source token reservation cannot see the hidden
+name. Combined helper/DX/source-span controls pass **53/53 in 7.79s**. This standalone module
+remains staged: no adapter helper admission or new actual WP claim is added. Evidence:
+`evidence/helper-capture-merge-review-20261015.json`.

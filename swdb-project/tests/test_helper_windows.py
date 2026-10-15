@@ -115,6 +115,20 @@ def test_a_caller_local_cannot_capture_the_helpers_global_callee(tmp_path):
     assert "::maa_const" in view.text
 
 
+@pytest.mark.parametrize("header,unit,reason", [
+    ("int swdb_hw_0_arg_1 = 9;\n#define VALUE swdb_hw_0_arg_1\n",
+     UNIT.replace("load(q, n, 0)", "load(q, VALUE, 0)"), "unmapped generated declaration"),
+    ("#define swdb_hw_0_arg_0 hidden_capture\n", UNIT, "formal type, name"),
+])
+def test_header_hidden_names_cannot_change_capture_bindings(tmp_path, header, unit, reason):
+    from swdb import helper_windows
+    (tmp_path / "hidden.h").write_text(header)
+    path = tmp_path / "source.cc"
+    path.write_text('#include "hidden.h"\n' + DECLARATIONS + HELPER + unit)
+    with pytest.raises(helper_windows.Refused, match=reason):
+        helper_windows.prepare(path, "unit", imported_calls=IMPORTS, scratch=tmp_path / "scratch")
+
+
 def test_an_existing_source_without_a_defined_helper_needs_no_view(tmp_path):
     from swdb import helper_windows
     path = source(tmp_path, helper="", unit=UNIT.replace("load(q, n, 0);", "maa_stream_load(q,0,1,2,0,-1);"))
