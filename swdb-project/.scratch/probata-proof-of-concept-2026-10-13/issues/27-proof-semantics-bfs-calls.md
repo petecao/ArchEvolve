@@ -640,3 +640,16 @@ The separately running negative profile had 5/13 completed cases at 22:06:35 UTC
 each retains its named ordinary timed-out hazard and explicit smoke outcome.
 This is an incremental checkpoint only. Ticket remains `claimed`: final safe,
 remaining negatives and reviewed capacity repair acceptance are still required.
+
+### Independent capacity-hint admission — 2026-10-15 ET
+
+The exact test-only repair `0e71d962` passes independent source/retained-control
+review. Old hint and acceptance ASTs remain identical apart from the helper
+extraction and new ordinary invariant. All 15 local artifact pins rehash without
+error. Production runtime, library and original fixture bytes remain at `0e7f2327`;
+no new premise, assumption or capacity success is claimed. The reviewer did not
+rehash remote raw failure artifacts or launch any job.
+[Independent review and boundaries](../evidence/t27-capacity-hint-independent-review-20261015.md),
+[exact compact receipt](../evidence/t27-capacity-hint-independent-review-20261015.json).
+Actual WP32 establishment/preservation, WP33 ghost-capacity failure and original
+CBMC32/33 agreement remain pending; status stays **claimed**.

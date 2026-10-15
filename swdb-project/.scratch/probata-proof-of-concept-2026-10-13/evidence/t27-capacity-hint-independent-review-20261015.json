@@ -1,0 +1,153 @@
+{
+  "created": "2026-10-15 ET",
+  "reviewed_commit": "0e71d962b2c1a2f5e148264e14bfd486262873eb",
+  "verdict": "ACCEPT_FOR_MERGE_AND_ACTUAL_CAPACITY_RERUN",
+  "blockers": [],
+  "old_hint_call_ast_identical": true,
+  "acceptance_function_ast_identical_except_helper_extraction": true,
+  "runtime_library_original_fixture_changes_from_0e7f": [],
+  "changed_files": [
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t27-capacity-hint-repair-20261015.json",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t27-capacity-hint-repair-20261015.md",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/issues/27-proof-semantics-bfs-calls.md",
+    "swdb-project/tests/fixtures/proof/regression_corpus/wp-capacity-stream-writer-history.yaml",
+    "swdb-project/tests/test_capacity_memory_hints.py",
+    "swdb-project/tests/test_proof_semantics.py"
+  ],
+  "local_physical_pin_checks": [
+    {
+      "path": "/private/tmp/probata-t27-capacity-hints-red/command.json",
+      "expected": "51eb6f6015b03aa517d37328bb5f89dd100094964dcee33a80a8a7c14c04044f",
+      "sha256": "51eb6f6015b03aa517d37328bb5f89dd100094964dcee33a80a8a7c14c04044f",
+      "matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t27-capacity-hints-red/compiler.log",
+      "expected": "1a5fb53f003b5b0f1f77ab5ca3a51b867450f4a663e7eb1c326675c8758a1377",
+      "sha256": "1a5fb53f003b5b0f1f77ab5ca3a51b867450f4a663e7eb1c326675c8758a1377",
+      "matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t27-capacity-hints-red/resources.json",
+      "expected": "66cd36aa79ee76806efcb88cf60d8bbe9d954b5fe249f00f71a2a234b7111833",
+      "sha256": "66cd36aa79ee76806efcb88cf60d8bbe9d954b5fe249f00f71a2a234b7111833",
+      "matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t27-capacity-hints-green/command.json",
+      "expected": "7bec2e0a24e6bdbb90102cfcb4f819a09dc910fe5e3ce15f8fa7f14e1502cabf",
+      "sha256": "7bec2e0a24e6bdbb90102cfcb4f819a09dc910fe5e3ce15f8fa7f14e1502cabf",
+      "matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t27-capacity-hints-green/compiler.log",
+      "expected": "8a5d3f8c1b452931de963c4bdff9775f7404361fdf3f79b4d740fb5a4f7e6e92",
+      "sha256": "8a5d3f8c1b452931de963c4bdff9775f7404361fdf3f79b4d740fb5a4f7e6e92",
+      "matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t27-capacity-hints-green/resources.json",
+      "expected": "8fbf388a90ec45f050c1be04552c18971b198b6ba4f7c4106a56a3a96d635189",
+      "sha256": "8fbf388a90ec45f050c1be04552c18971b198b6ba4f7c4106a56a3a96d635189",
+      "matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t27-capacity-hints-final-green/command.json",
+      "expected": "07ae3636299dc7007e3da74fc2ec71aceb7f13e6bc7c38936bd33f8988644e26",
+      "sha256": "07ae3636299dc7007e3da74fc2ec71aceb7f13e6bc7c38936bd33f8988644e26",
+      "matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t27-capacity-hints-final-green/compiler.log",
+      "expected": "1ab9905d8b0f34f6d791ff7da4efa2de0f7f3e282a078758cc0496cc0230c0f0",
+      "sha256": "1ab9905d8b0f34f6d791ff7da4efa2de0f7f3e282a078758cc0496cc0230c0f0",
+      "matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t27-capacity-hints-final-green/resources.json",
+      "expected": "3ac8925040b2169fee36cdf203eac16db3bf1801607e799ad8a44395e57c7765",
+      "sha256": "3ac8925040b2169fee36cdf203eac16db3bf1801607e799ad8a44395e57c7765",
+      "matches": true
+    },
+    {
+      "path": "/private/tmp/probata-resume-t27/swdb-project/tests/test_proof_semantics.py",
+      "expected": "50b7aee7ba9c71d93adb88ae45d38ff416bd8503e430f245e7775b24b83af8c5",
+      "sha256": "50b7aee7ba9c71d93adb88ae45d38ff416bd8503e430f245e7775b24b83af8c5",
+      "matches": true
+    },
+    {
+      "path": "/private/tmp/probata-resume-t27/swdb-project/tests/test_capacity_memory_hints.py",
+      "expected": "03d21cc527fe60608c0be8fd1fae4593ec1f110148ddc4108365372301b22244",
+      "sha256": "03d21cc527fe60608c0be8fd1fae4593ec1f110148ddc4108365372301b22244",
+      "matches": true
+    },
+    {
+      "path": "/private/tmp/probata-resume-t27/swdb-project/tests/fixtures/proof/regression_corpus/wp-capacity-stream-writer-history.yaml",
+      "expected": "1f422ba67c9436408d1d79a08357b99caeeec934ae8e9f629ec7215ae5864d6c",
+      "sha256": "1f422ba67c9436408d1d79a08357b99caeeec934ae8e9f629ec7215ae5864d6c",
+      "matches": true
+    },
+    {
+      "path": "/private/tmp/probata-resume-t27/swdb-project/tests/fixtures/proof/dx100/fixture_units.cc",
+      "expected": "9efbb35205bf4ec93920659e1193dc78f59196d17e2c1fcc5188d87cf58ff0b2",
+      "sha256": "9efbb35205bf4ec93920659e1193dc78f59196d17e2c1fcc5188d87cf58ff0b2",
+      "matches": true
+    },
+    {
+      "path": "/private/tmp/probata-resume-t27/swdb-project/library/proof_semantics/dx100_bfs/logic.acsl",
+      "expected": "34c9971965b53e04cf5ef2dd66abeaecd4d8772660f47def86158bc47624351d",
+      "sha256": "34c9971965b53e04cf5ef2dd66abeaecd4d8772660f47def86158bc47624351d",
+      "matches": true
+    },
+    {
+      "path": "/private/tmp/probata-resume-t27/swdb-project/library/proof_semantics/dx100_bfs_0_1.yaml",
+      "expected": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f",
+      "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f",
+      "matches": true
+    }
+  ],
+  "local_mismatches": [],
+  "additional_physical_hashes": {
+    "/private/tmp/probata-resume-t27/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t27-capacity-hint-repair-20261015.json": "0cc9be69b295910e214bf5739c73eb519f16377e7e479ace26a50ad5e1c92a69",
+    "/private/tmp/probata-resume-t27/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t27-capacity-hint-repair-20261015.md": "4c86a3227c37c652c50b5fc2341236dfc62f9a39d5568b9db67eecbb5e8c5f8d",
+    "/private/tmp/probata-t27-capacity-failure-audit.json": "a9df0c256e7874bb73da7f2f01c445b4ed23605cd2886f7fbc2e81d0dacfe9bc",
+    "/private/tmp/probata-t27-audit-capacity.py": "5f796e6245348a762ab9fc882441ab48be65a7978b035be25180fd824ef5e4b7",
+    "/private/tmp/probata-resume-t27/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/issues/27-proof-semantics-bfs-calls.md": "0130423e59cfaaa499437a372a2c1077fbc2fe109ebc7b82d2297effb36259ee",
+    "/private/tmp/probata-resume-t27/swdb-project/tests/fixtures/proof/regression_corpus/wp-capacity-stream-writer-history.yaml": "1f422ba67c9436408d1d79a08357b99caeeec934ae8e9f629ec7215ae5864d6c",
+    "/private/tmp/probata-resume-t27/swdb-project/tests/test_capacity_memory_hints.py": "03d21cc527fe60608c0be8fd1fae4593ec1f110148ddc4108365372301b22244",
+    "/private/tmp/probata-resume-t27/swdb-project/tests/test_proof_semantics.py": "50b7aee7ba9c71d93adb88ae45d38ff416bd8503e430f245e7775b24b83af8c5"
+  },
+  "remote_pins_not_rehashed_by_this_review": [
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-capacity/pytest/test_wp_capacity_agrees_at_32_0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t214821z.d460cd76.yaml",
+      "sha256": "e358e61937fded3fd12f44b68f0e515580623a7d3c013e643b7ad58a4aa88bee"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-capacity/lane.json",
+      "sha256": "0a0ed1b13e1957644004aed15bd0c8183ba8ecf9eaff0fa617a933d703aade8c"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-capacity/resources.json",
+      "sha256": "e4eab8aa04c7cb1630b90866e312a5dacfd7c2dcac4cc516e0b34007d6b8fdd3"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-capacity/outer-resources.json",
+      "sha256": "a1cb53ae99f948e58934f2e3301d80517cbc23c243e8c3d56f83bcd2ba9ff740"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-capacity/junit.xml",
+      "sha256": "1965fe6c9ce1d0a0fe6bcf8966f8afcc55026c1a07af1e666e3f4925c2958033"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-capacity/source-after.json",
+      "sha256": "53a46be3c357337f05b0ffa45a1ddcedbb313414550758526ba87c2104ea2ad7"
+    }
+  ],
+  "remote_boundary": "Existing producer audit receipt inspected; no new SSH or remote raw rehash by this reviewer. Remote failure is historical, not repaired success.",
+  "required_remaining": [
+    "Actual WP32 proves all original and new establishment/preservation goals",
+    "Actual WP33 remains not_proven/ghost_capacity with no counterexample",
+    "CBMC32/33 original agreement case"
+  ],
+  "jobs_launched_by_this_review": []
+}
