@@ -876,3 +876,17 @@ between each row's tile offsets and its original frontier vertex's CSR bounds.
 `range_inputs` currently keeps bounds alone. This is a concrete induction
 experiment within the remaining shared box; it is not a prediction of success.
 No unchanged-method retry, new counted method, or new run was started here.
+
+### Run16 preparation — 2026-10-15 ET
+
+The next counted experiment uses fresh provider hints and adds only abstract
+processed-frontier/CSR induction guidance to the reviewed prompt. It exports no
+previous hint records, finite counterstates, tests or workload inputs. The unit,
+contracts and headers remain unchanged. The provider must establish every proposed
+base/preservation bridge; this guidance supplies no axiom or assumed invariant.
+
+Harness regression:11 passed0.09s, `/private/tmp/probata-t07-run16-harness.jsonl`.
+Frozen source worktree `/private/tmp/probata-t07-run16`; run output destination
+`/private/tmp/probata-t07-20261015-run16/` on the Mac data volume, planned2GiB budget
+and at least50GiB remaining. Readers:ticket07, ticket09 and implementation coordinator.
+The existing30-minute heartbeat remains active. This preparation is no proof result.
