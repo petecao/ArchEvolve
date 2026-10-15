@@ -255,7 +255,11 @@ class CbmcAdapter:
             context["settings"]["proof_semantics_admission"] = refusal
             context["settings"]["verifier_launched"] = False
             return self._not_proven("memory_domain", "opaque semantics dependency needs a checked memory boundary", context)
-        problem = self._differential(job, code, built, context)
+        from swdb import bounded_entry_windows
+        try:
+            problem = self._differential(job, code, built, context)
+        except bounded_entry_windows.Refused as exc:
+            return self._not_proven('unsupported_construct', str(exc), context)
         if problem:
             return problem
         return self._cbmc(job, code, built, context)
@@ -526,6 +530,7 @@ class CbmcAdapter:
         from swdb import proof_setup
         proof_setup.check_generated(job, self, context, [(scratch / "job.c", text)], flags,
                                     command=command, scratch=scratch, lowering=code.lowering)
+        context['settings']['verifier_launched'] = True
         result = rss_watchdog.run(command, log=cbmc_log, cap_bytes=cap, timeout=wall, cwd=scratch,
                                   env={**os.environ, "TMPDIR": str(scratch)})
         context["reports"].append(("cbmc_output", cbmc_log))

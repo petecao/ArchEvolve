@@ -7,7 +7,6 @@ helper-call or general source-language admission path.
 """
 import ast
 import hashlib
-import json
 import re
 from pathlib import Path
 
@@ -116,7 +115,7 @@ def prepare(lowering, source, planner, *, defines=()):
     body_start, body_end = _span(body)
     expected = {'begin': start, 'end': end, 'body_begin': body_start, 'body_end': body_end}
     source_map = (report.get('source_functions') or {}).get(lowering.function)
-    if source_map is not None and source_map != expected:
+    if source_map != expected:
         raise Refused('bounded window function source map is absent or stale')
     statements = [c for c in body.get('inner', []) if c.get('kind')]
     allowed = {'DeclStmt', 'ReturnStmt', 'CStyleCastExpr', 'ImplicitCastExpr', 'BinaryOperator', 'NullStmt'}
@@ -170,7 +169,7 @@ def prepare(lowering, source, planner, *, defines=()):
         position = _span(statements[ordinal - 1])
         span = {'begin': position[0], 'end': position[1]}
         declared_span = row.get('source_statement')
-        if (declared_span is not None and declared_span != span
+        if (declared_span != span
                 or position not in placements or row.get('anchor') != f'{lowering.function}.s{placements[position]}.before'):
             raise Refused('bounded operation is not at its exact direct source statement')
         guard = row.get('window_guard', '')

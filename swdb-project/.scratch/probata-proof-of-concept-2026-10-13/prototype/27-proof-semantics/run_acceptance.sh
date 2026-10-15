@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # Created: 2026-10-15 ET. Run inside a coordinated mbit10 socket lane; output is external to Git.
 set -euo pipefail
-# Usage: run_acceptance.sh <full frozen commit SHA> <safe|unsafe|constructs|native|entry-windows|owner> [extra pytest arguments...]
+# Usage: run_acceptance.sh <full frozen commit SHA> <safe|unsafe|constructs|native|entry-windows|bounded-windows|owner> [extra pytest arguments...]
 PROBATA_EXPECTED_COMMIT="${1:?pass the full frozen commit SHA}"
-PROBATA_SHARD="${2:?pass safe, unsafe, constructs, native, entry-windows, or owner}"
+PROBATA_SHARD="${2:?pass safe, unsafe, constructs, native, entry-windows, bounded-windows, or owner}"
 shift 2
 case "$PROBATA_EXPECTED_COMMIT" in *[!0-9a-f]*|'') exit 2 ;; esac
 [ "${#PROBATA_EXPECTED_COMMIT}" -eq 40 ] || exit 2
@@ -26,6 +26,9 @@ case "$PROBATA_SHARD" in
     PROBATA_SELECTION=(-k 'not cbmc') ;;
   entry-windows)
     PROBATA_TESTS=(tests/test_entry_array_domains.py)
+    PROBATA_SELECTION=() ;;
+  bounded-windows)
+    PROBATA_TESTS=(tests/test_bounded_entry_windows.py)
     PROBATA_SELECTION=() ;;
   owner)
     PROBATA_TESTS=(tests/test_vector_ownership_wp.py)
