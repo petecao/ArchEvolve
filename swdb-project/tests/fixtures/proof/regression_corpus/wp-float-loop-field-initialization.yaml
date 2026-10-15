@@ -1,0 +1,23 @@
+# Created: 2026-10-15 ET. Compiler/public merge test in test_t24_float_hints.py;
+# actual safe/seeded proofs remain in the original ticket24 matrix.
+id: wp-float-loop-field-initialization
+adapter: wp_subset_hints
+input:
+  group: floats
+  source: tests/fixtures/proof/lowering/floats.cc
+  function: swdb_float_unit
+  anchor: swdb_float_unit.loop1.head
+  initialized_fields: [value, weight]
+historical_failure_class: timeout
+historical_goals:
+  - typed_real_swdb_float_unit_assert_rte_initialization_2
+  - typed_real_swdb_float_unit_assert_rte_initialization_5
+  - typed_real_swdb_float_unit_assert_rte_initialization_7
+minimum_initialization_goals: 12
+cause: >-
+  Rank.value and Rank.weight are explicitly initialized before the loop in both
+  original C++ and ordinary C. Numerical bounds do not carry the separate WP
+  initializedness state through the loop abstraction. Add field-specific loop
+  invariants with ordinary establishment and preservation obligations; preserve
+  the original source, contracts, loop frame, numeric invariants and all RTE goals.
+  Do not assume initializedness or claim aggregate padding is initialized.
