@@ -159,6 +159,18 @@ equality is asserted at the end; no alignment hints (map 24).
   a time through `swdb/verifier_lock.py`; tests skip without CBMC or clang 22.1.8; records are
   `contract_fixture` and pass `swdb validate`.
 
+**Tests** (Mac; serial; no xdist; pytest outside the verifier lock, each CBMC job takes it through
+`swdb/verifier_lock.py`). Equivalence results (CBMC wall per job): split vs base proven (0.10-0.17 s);
+early-stop refuted (first difference `a[n-1]`); extra write refuted at `a[1]` (0.09 s); global write refuted at
+`swdb_fixture_threshold`; slow loop unwinding_bound_too_small at K = 4 (0.10 s), proven with
+`candidate:swdb_fixture_fill.0=7`. After merging integration `bedb57c7` and `12d44ea8`:
+`test_cbmc_equivalence.py` (14), `test_cbmc_adapter.py`, `test_format_doc.py`, `test_level_rule.py`,
+`test_proof_records.py`, `test_proof_method_version.py`: 262 passed, 1 failed by the lock-queue timeout (below),
+which then passed alone (`pytest-final2.log` sha256 `21c58eefc59bba6f`..., `pytest-final3.log` `7851a891dc47799f`...).
+After merging `2dff3f58` (ticket 24): `test_cbmc_equivalence.py`, `test_format_doc.py`, `test_level_rule.py`
+**113 passed** (`pytest-final4.log` `b0d13e8986b14ab1`..., `report-final4.jsonl` `46a608990a43349b`...). Runs:
+`/tmp/claude/probata-runs/t61/` (pytest temp folders deleted).
+
 **SAW to CBMC translations** (each an Assumption; not decided in the map beyond the main session's decision):
 
 - Assumption: "SAW runs both whole functions on the same symbolic inputs and compares every output" = CBMC on a

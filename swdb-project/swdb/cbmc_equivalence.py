@@ -195,7 +195,8 @@ class EquivalenceAdapter(CbmcAdapter):
         self._fault(codes, os.environ.get("SWDB_CBMC_LOWERING_FAULT"))
         cand, base = codes["candidate"], codes["baseline"]
         context["pins"] = {"c_lowering": {"id": f"{cand.lowering.function}.c", "sha256": cand.c_sha256},
-                           "baseline_c_lowering": {"id": f"{base.lowering.function}.c", "sha256": base.c_sha256}}
+                           "baseline_c_lowering": {"id": f"{base.lowering.function}.c", "sha256": base.c_sha256},
+                           "naming_rules": c_lowering.naming_rules()}           # ticket 24, as 22's adapter
         for side, code in codes.items():
             if TYPE_DEFINITION.search(code.text):
                 context["settings"]["untranslatable"] = f"the {side}'s C lowering defines a type"
