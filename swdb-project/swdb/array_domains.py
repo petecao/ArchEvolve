@@ -5,6 +5,7 @@ Proof admission must independently connect it to every operation and caller.
 """
 import ast
 import hashlib
+import json
 import re
 from pathlib import Path
 
@@ -50,13 +51,14 @@ def _extent(text):
         if isinstance(node, ast.Name) and node.id in originals:
             name = originals[node.id]
             names.add(name)
-            return f'((integer){name})', None
+            return {'kind': 'parameter', 'name': name}, None
         if isinstance(node, ast.Constant) and type(node.value) is int and 0 <= node.value <= 2**64 - 1:
-            return str(node.value), node.value
+            return {'kind': 'constant', 'value': node.value}, node.value
         if isinstance(node, ast.UnaryOp) and isinstance(node.op, (ast.UAdd, ast.USub)):
             value, constant = render(node.operand)
             sign = '+' if isinstance(node.op, ast.UAdd) else '-'
-            return f'({sign}{value})', None if constant is None else constant if sign == '+' else -constant
+            tree = value if sign == '+' else {'kind': 'sub', 'left': {'kind': 'constant', 'value': 0}, 'right': value}
+            return tree, None if constant is None else constant if sign == '+' else -constant
         if isinstance(node, ast.BinOp) and isinstance(node.op, (ast.Add, ast.Sub, ast.Mult)):
             left, lc = render(node.left)
             right, rc = render(node.right)
@@ -64,13 +66,72 @@ def _extent(text):
             constant = None
             if lc is not None and rc is not None:
                 constant = lc + rc if sign == '+' else lc - rc if sign == '-' else lc * rc
-            return f'({left} {sign} {right})', constant
+            return {'kind': {'+': 'add', '-': 'sub', '*': 'mul'}[sign], 'left': left, 'right': right}, constant
         raise Refused('extent allows only integer arithmetic: parameters, constants, +, - and *')
 
     rendered, constant = render(tree.body)
     if constant is not None and constant < 0:
         raise Refused('an array-window extent must be nonnegative')
     return rendered, names
+
+
+def _entry_acsl(tree):
+    kind = tree['kind']
+    if kind == 'constant':
+        return str(tree['value'])
+    if kind == 'parameter':
+        return f'\\at((integer){tree["name"]},Pre)'
+    operator = {'add': '+', 'sub': '-', 'mul': '*'}[kind]
+    return f'({_entry_acsl(tree["left"])} {operator} {_entry_acsl(tree["right"])})'
+
+
+def bind(declarations, parameters):
+    """Bind input windows to the lowered signature, without certifying origins.
+
+    Scalar leaves denote mathematical integers at function entry. A source
+    checker must still bind these names to actual parameter declarations and
+    reject shadowing or mutation of pointer bindings before using this result.
+    """
+    parameters = tuple(parameters)
+    found = problems(declarations, parameters)
+    if found:
+        raise Refused('; '.join(f'{where}: {reason}' for where, reason in found))
+    types = {name: ctype for name, ctype, _pointer in parameters}
+    windows = {}
+    for name, data in sorted(declarations.items()):
+        tree, names = _extent(data['extent'])
+        windows[name] = {'parameter': name, 'element_type': _plain(types[name].replace('*', '')),
+                         'extent_tree': tree, 'entry_acsl': _entry_acsl(tree), 'parameters': sorted(names)}
+    digest = hashlib.sha256(json.dumps(declarations, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+    return {'check': identity(), 'declarations_sha256': digest, 'windows': windows}
+
+
+def interval(tree, bounds):
+    """Conservative mathematical interval over all supplied integer draws.
+
+    Repeated leaves deliberately lose correlation. A larger interval can refuse
+    a valid plan, but cannot silently narrow a bounded experiment's inputs.
+    """
+    if not isinstance(tree, dict):
+        raise Refused('an extent interval needs a canonical expression tree')
+    kind = tree.get('kind')
+    if kind == 'constant' and set(tree) == {'kind', 'value'} and type(tree['value']) is int:
+        return tree['value'], tree['value']
+    if kind == 'parameter' and set(tree) == {'kind', 'name'}:
+        bound = bounds.get(tree['name'])
+        if (not isinstance(bound, (tuple, list)) or len(bound) != 2
+                or any(type(value) is not int for value in bound) or bound[0] > bound[1]):
+            raise Refused(f'{tree["name"]} needs ordered mathematical integer draw bounds')
+        return tuple(bound)
+    if kind not in {'add', 'sub', 'mul'} or set(tree) != {'kind', 'left', 'right'}:
+        raise Refused('an extent interval needs a canonical expression tree')
+    left, right = interval(tree['left'], bounds), interval(tree['right'], bounds)
+    if kind == 'add':
+        return left[0] + right[0], left[1] + right[1]
+    if kind == 'sub':
+        return left[0] - right[1], left[1] - right[0]
+    products = [a * b for a in left for b in right]
+    return min(products), max(products)
 
 
 def problems(declarations, parameters=None):
