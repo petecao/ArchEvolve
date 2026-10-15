@@ -38,6 +38,11 @@ case "$mode" in
     exec env -i HOME="$HOME" PATH="$PATH" TMPDIR="${TMPDIR:-/tmp}" SWDB_VERIFIER_RUN_TOKEN="${SWDB_VERIFIER_RUN_TOKEN-}" opam exec --switch=framac-33 -- frama-c "$@" \
       -wp -wp-cache none -wp-session session -wp-prover tip,alt-ergo,z3,cvc5 -wp-script dry -wp-timeout 30 -wp-par 12 \
       -wp-smoke-tests -wp-report-json goals.json -then -report -report-untried ;;
+  # Method21: full no-hint diagnostic baseline only. Final modes remain fixed at30s.
+  baseline-smoke10) rm -rf session && mkdir session
+    exec env -i HOME="$HOME" PATH="$PATH" TMPDIR="${TMPDIR:-/tmp}" SWDB_VERIFIER_RUN_TOKEN="${SWDB_VERIFIER_RUN_TOKEN-}" opam exec --switch=framac-33 -- frama-c "$@" \
+      -wp -wp-cache none -wp-session session -wp-prover alt-ergo,z3,cvc5 -wp-timeout 10 -wp-par 12 \
+      -wp-smoke-tests -wp-report-json goals.json -then -report -report-untried ;;
   # Method20: full generation with no prover, then an explicitly diagnostic class run.
   # No result from these modes is an incumbent or final verdict.
   probe-gen) rm -rf session && mkdir session
