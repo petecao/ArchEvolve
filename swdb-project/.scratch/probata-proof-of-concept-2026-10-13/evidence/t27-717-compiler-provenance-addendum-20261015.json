@@ -1,0 +1,47 @@
+{
+  "created": "2026-10-15 ET",
+  "scope": "Independent read-only addendum to t27-717-compiler-provenance-20261015.json; no compiler/verifier launch and no source/proof upgrade.",
+  "producer_receipt": {
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-t24-pending-9b75f4a2/historical-frontier-audit-exact-env.json",
+    "sha256": "85747d6c213409daf36094e59d339978c79555f452e10cb7cbb7afbf14238116",
+    "bytes": 49389,
+    "source_commit": "9b75f4a2c63d82ffa8417a487700e153948e39ef",
+    "integrity_errors": [],
+    "errors": []
+  },
+  "matching_aggregate": "5d9a246e9d803e56ade4d6b4bc5c30c8cbf42b4e5064153e652f2c05ffed732d",
+  "reader_context": {
+    "command": [
+      "clang++"
+    ],
+    "version": "22.1.8",
+    "missing": "",
+    "environment": "exact run.sh allowlist; env.sh sourced; CPLUS_INCLUDE_PATH unset",
+    "runtime_unavailable": false
+  },
+  "verified_runtime": {
+    "wrapper": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+      "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+    },
+    "driver": {
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang-22",
+      "sha256": "31a40dc31f3c15a47aa119aa148f339bf363d8f61202ddbdacbd3f24b71ba113"
+    },
+    "parser": {
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/libclang.so.22.1.8",
+      "sha256": "8b03ee2c60f0699651869fea5135cb5a144777a10c6e4b9b7835283ac9ca3f7d"
+    },
+    "headers": {
+      "files": 1983,
+      "sha256": "d37aec646b1e6e1748d40690c60436f905f55852ee578e79c43a3199c4a16e23",
+      "roots": [
+        "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/include/c++/v1",
+        "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/include"
+      ],
+      "independent_physical_rehash_matches": true
+    }
+  },
+  "resolution": "The exact-launch environment replay produces the full decomposed runtime identity and the same aggregate digest retained by the frozen717 proof record. This resolves the prior aggregate-versus-unavailable uncertainty. The earlier default SSH reader receipt is retained separately and its missing-clang environment mismatch does not replace exact launch provenance.",
+  "remaining_boundary": "Native link inputs and transitive shared objects are still outside runtime_identity hashing. Keep configured library paths and this explicit native-link boundary. Every actual final profile still needs the reviewed composed source."
+}
