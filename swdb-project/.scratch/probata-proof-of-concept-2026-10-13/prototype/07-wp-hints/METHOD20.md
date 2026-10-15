@@ -42,3 +42,28 @@ manifest from a clean composed checkout; recheck tools/slots/memory/disk; and
 retain the separate covering-wait negative after a qualifying final proof.
 The prototype still lacks production RTE/initializedness flags and makes no
 production UB/initializedness claim.
+
+## Resumed prelaunch review — 2026-10-15 ET
+
+The new session's independent review reproduced an exited-root race: after one
+successful ancestry sample, the root can create a new-session child and exit
+between polls. The old runner could release its lease while that unseen child
+was still alive. No counted method20 run was launched on those bytes.
+
+The scoped runner now assigns a fresh inherited `SWDB_VERIFIER_RUN_TOKEN` at
+launch and preserves only that additional nonsecret marker through each frozen
+`env -i` invocation. Cleanup inspects recent same-user process identities and
+matches the inherited marker, including reparented and detached children, before
+releasing its lease. It retains only matching PID/birth identities, never other
+process environment values. A persistent live inspection denial quarantines the
+lease; a bounded retry handles Darwin exec/exit inspection races. Kernel
+`NOTE_TRACK` is unavailable on Darwin (registration returns errno 45; Apple SDK
+headers document that it is unsupported).
+
+**Platform assumption:** this is trusted-toolchain cleanup, requiring descendants
+to preserve their inherited marker. It does not contain hostile environment
+scrubbing or replace process isolation. Polling remains the RSS sampling method;
+this change establishes no hard kernel memory quota. No proof criterion changes.
+The fresh method20 launch will omit `--examples`, so historical syntax/example
+fragments are also excluded from its provider workspace. Independent re-review
+and the clean source/method freeze still precede launch.

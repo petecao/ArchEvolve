@@ -1,7 +1,7 @@
 # 07 — Spike (c): WP with agent hints
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-15 ET (method19 ended unproven; method20 preserved as unlaunched prospective work); 2026-10-14 22:50 ET (continuation 3: runs 10-12 fail, verdict fail so far, effort paused); 2026-10-14 17:10 ET (continuation 2: runs 7-9 fail, verdict fail so far); 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-15 ET (resumed method20 prelaunch review and cleanup repair; no new proof yet); 2026-10-14 22:50 ET (continuation 3: runs 10-12 fail, verdict fail so far, effort paused); 2026-10-14 17:10 ET (continuation 2: runs 7-9 fail, verdict fail so far); 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 03
@@ -1141,3 +1141,28 @@ Remaining: a fresh reviewed counted run meeting every goal, final smoke and
 covering-wait negative criteria, with the required source/method freeze.
 See [method19 audit](../evidence/t07-method19-negative-20261015.json) and
 [prospective method20](../evidence/t07-method20-prospective-20261015.json).
+
+### Resumed independent method20 review — 2026-10-15 ET
+
+The current user instruction resumes the ticket within its existing shared box.
+Independent review first refused launch after reproducing a process cleanup race:
+a previously sampled root could spawn an unseen new-session child and exit before
+the next poll, leaving that child alive while its verifier lease was released.
+The public CLI regression reproduced the failure before implementation changed.
+
+The scoped runner now retains a fresh inherited run marker across every frozen
+WP `env -i` mode and inspects matching recent same-user process identities during
+cleanup. Persistent live inspection denial quarantines the lease; bounded retries
+handle transient Darwin inspection refusal. No unrelated environment values are
+printed or retained. Assumption: the trusted toolchain preserves this marker;
+hostile environment scrubbing is outside this resource guard. The original proof
+criteria, exact four historical source/model pins and provider pin are unchanged.
+The fresh provider argv omits `--examples` as well as all historical hints,
+counterstates, local controls and evaluator artifacts. Review controls alone are
+not a BFS proof. A clean prospective freeze and fresh counted run remain required.
+
+Independent re-review passed **163 controls** (162 repository controls plus an
+independently authored CLI regression), and all 11 WP mode values preserved the
+marker while scrubbing unrelated environment. [Reviewed source and artifact pins](../evidence/t07-method20-prelaunch-review-20261015.json)
+retain RED/GREEN, review and exact source hashes. No provider or real verifier
+was called by those controls.
