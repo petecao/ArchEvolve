@@ -394,7 +394,7 @@ def codex_call(out, r, prompt, resume=None, turn=0, keep_session=False, mcp_stat
     return res
 
 
-def precheck(out, name, standin, hint_set, record):
+def precheck(out, name, standin, hint_set, record, remaining_s=None):
     """Proof hint check: vocabulary and anchors, erase-and-diff, Frama-C parse and type check."""
     bad = H.check(standin, hint_set)
     if bad:
@@ -405,7 +405,10 @@ def precheck(out, name, standin, hint_set, record):
         record.update(outcome="rejected (erase-and-diff)", rejections=[{"id": "*", "rule": "erase_diff"}])
         return None
     d = run_dir(out, name, merged)
-    plog, ps = verifier(out, d, "parse", timeout=600)
+    if remaining_s is not None and remaining_s() <= 0:
+        record.update(outcome="rejected (search deadline)")
+        return None
+    plog, ps = verifier(out, d, "parse", timeout=min(600, remaining_s()) if remaining_s else 600)
     record["parse"] = {"exit": ps["exit_code"], "wall_s": ps["wall_s"]}
     if ps["exit_code"] != 0:
         err = plog.read_text(errors="replace")
@@ -414,7 +417,10 @@ def precheck(out, name, standin, hint_set, record):
         record.update(outcome="rejected (Frama-C parse/type check)", parse_error=err,
                       blame=[{**b, "hints": [by_id[i] for i in b["ids"] if i in by_id]} for b in bl])
         return None
-    glog, gs = verifier(out, d, "wp-gen", timeout=900)
+    if remaining_s is not None and remaining_s() <= 0:
+        record.update(outcome="rejected (search deadline)")
+        return None
+    glog, gs = verifier(out, d, "wp-gen", timeout=min(900, remaining_s()) if remaining_s else 900)
     record["wp_gen"] = {"exit": gs["exit_code"], "wall_s": gs["wall_s"]}
     gtxt = glog.read_text(errors="replace")
     if gs["exit_code"] != 0 or "User Error" in gtxt or "aborted" in gtxt:
@@ -437,13 +443,22 @@ def blame_text(rec):
     return "\n".join(out)
 
 
-def wp_round(out, name, standin, hint_set, record, mode="wp-smoke", timeout=7200, d=None):
+def wp_round(out, name, standin, hint_set, record, mode="wp-smoke", timeout=7200, d=None, remaining_s=None):
     if d is None:
-        d = precheck(out, name, standin, hint_set, record)
+        d = precheck(out, name, standin, hint_set, record,
+                     **({"remaining_s": remaining_s} if remaining_s else {}))
         if d is None:
             return None
+    if remaining_s is not None:
+        if remaining_s() <= 0:
+            record.update(proven=False, outcome="not proven (counted deadline)")
+            return None
+        timeout = min(timeout, remaining_s())
     wlog, ws = verifier(out, d, mode, timeout=timeout)
     a = assess(d, wlog)
+    completed_in_time = remaining_s is None or remaining_s() > 0
+    if not completed_in_time:
+        a = {**a, "ok": False}
     if ws["exit_code"] != 0 or a["n_goals"] == 0:
         record.update(wp={"exit": ws["exit_code"], "wall_s": ws["wall_s"], "log": str(wlog),
                           "log_sha256": ws["log_sha256"], "timed_out": ws.get("timed_out")},
@@ -460,6 +475,8 @@ def wp_round(out, name, standin, hint_set, record, mode="wp-smoke", timeout=7200
                   smoke_failures=a["smoke_failures"], proven=a["ok"],
                   outcome="proven" if a["ok"] else f"not proven ({len(a['failing_goals'])} failing goals, "
                                                     f"{len(a['problems'])} report properties not Valid)")
+    if not completed_in_time:
+        record.update(proven=False, outcome="not proven (counted deadline after completion)")
     return a
 
 

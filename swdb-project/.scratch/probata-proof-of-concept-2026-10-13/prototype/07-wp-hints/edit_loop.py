@@ -37,6 +37,8 @@ OPS_SCHEMA = {"type": "object", "additionalProperties": False, "required": ["ops
 
 # Generic, unit-independent (method, provenance "seed"): every `assigns`/`loop assigns` goal that the
 # three provers do not prove on the full context is retried after WP's own Wp.filter tactic.
+FROZEN_WP_FLAGS = ["-wp-no-filter-init"]  # method18: every mode, including generation and fresh smoke
+
 FRAME_FILTER = [
     ("strategy", "\\wp::strategy SeedFrameProvers: \\prover(\"alt-ergo\", \"z3\", \"cvc5\");"),
     ("strategy", "\\wp::strategy SeedFrameFilter: \\tactic(\"Wp.filter\", \\children(SeedFrameProvers));"),
@@ -62,36 +64,39 @@ discovered vertices, not for every vertex. Check empty frontiers and previsited 
 unreachable vertices before spending prover time on a stronger assertion. Correct
 or remove an invalid cut even when other goals become easy when it is assumed.
 
-Induction guidance (method revision, 2026-10-15): establish an algorithmic progress
-relationship at each loop cutpoint, not only safety and queue bookkeeping. Relate
-new visitation to reachability through the already processed original-frontier
-prefix, clamped at the original frontier end. Refine that relationship inside each
-range/batch loop by its actual processed cursor. Preserve the connection between
-each tile row and the CSR bounds of the original frontier vertex it represents;
-numeric range bounds alone lose this connection. Derive base and preservation
-cases before relying on such a cut to close the final reachability postcondition.
-This is abstract proof-method guidance; no previous hints or concrete cases are
-supplied. Every proposed invariant and bridge must pass its own checked WP goals.
+Bridge-first induction (method18 revision, 2026-10-15): first inspect the exact
+range-continuation, gather old-base and CAS contracts and state a cutpoint plan.
+Build small checked bridges bottom-up. Use stmt:after_neighbor_gather to establish
+vertex-index facts before the parent gather, retaining them across the intervening
+frontier gather through its frame. Then derive the batch hint/current-parent
+relationship from gather and parent updates, so either exact-CAS branch leaves a
+consumed vertex visited, including duplicates. Queue membership holds after enqueue,
+not in the transient interval after CAS and before push; prove buffered/flushed
+queue transfers separately. Never assume parent validity or CAS success.
 
-Consumed-prefix construction (method revision, 2026-10-15): distinguish issuing a
-range batch from consuming its emitted pairs. The issue call advances continuation
-registers before the CPU processes that batch. Capture the pre-issue cursor with
-fresh scalar ghost witnesses; a post-issue cursor alone cannot denote consumed
-work. At the range-loop head relate prior chunks and fully consumed CSR pairs to
-visitation. Inside the batch loop refine this by completed batches and positions
-already consumed. Carry the row/column-to-frontier-edge-to-vertex relationship.
-The scalar fallback needs the corresponding completed-row and current-edge prefix.
-Construct and prove those base/preservation steps before final reachability cuts.
-Moving a postcondition into an unproved assertion only moves the proof burden.
+Only then build scalar edge -> row and batch position -> range -> chunk progress.
+Separate issued from consumed pairs: snapshot the pre-issue cursor; use range
+coverage to advance consumed progress only after all emitted positions are handled.
+Connect empty batches to exhaustion through the contract. Clamp original-frontier
+prefixes at the actual end, including a final partial chunk. Safety and queue
+bookkeeping alone do not establish visitation completeness. Every bridge retains
+its own proof obligations; moving a postcondition into an assertion does not prove it.
 
-HOW THIS LOOP WORKS (monotone, local editing):
-- The loop keeps ONE best hint set. It starts with mechanically generated frame seeds (ids "seed*": every
+Scalar ghost syntax: use one fresh scalar declaration per hint, then separate simple
+assignments at anchors where operands are in scope, for example `ghost int snap;`
+then `ghost snap = scalar_in_scope;` (illustrative names, not supplied proof hints).
+Comma-separated initialized declarations, calls, pointer ghosts, macros and writes
+to trusted model ghost state are refused. Scope and frame obligations still apply.
+
+HOW THIS LOOP WORKS (local editing with a checked incumbent):
+- The loop keeps ONE checked incumbent; an explicitly enabled debt stage has a separate working set. It starts with mechanically generated frame seeds (ids "seed*": every
   loop's `loop assigns`, written from the code; they are fixed, you cannot change them or add `loop assigns`).
 - You change the best set only by EDITS: a list of 1-{max_ops} operations, each
   {{"op": "add"|"delete"|"edit", "goal": <name of an OPEN goal this operation targets>, "id": <hint id for
   delete/edit, else "">, "anchor": <anchor for add, else "">, "kind": <kind for add, else "">, "text": <hint
   text for add/edit, else "">}}. At most {max_text} characters of new text per edit.
-- propose_edit runs WP with best set + edit. {accept_rule} Otherwise it is REVERTED and the best set stays.
+- propose_edit runs WP with the active working set (otherwise incumbent) + edit. {accept_rule}
+  An edit outside the stated acceptance/staging rules is REVERTED and the incumbent stays.
   So: small, targeted steps; keep what works; never rewrite everything.
 - Your final JSON answer {{"ops": [...], "notes": "..."}} is one more edit (use an empty list when you have
   nothing more; when propose_edit says ALL goals proven, answer with an empty list at once).
@@ -149,6 +154,15 @@ PHASE2_RULE = ("\n  PHASE 2: once every unit goal is proven, the rule changes: a
                "  stays proven and the number of open hint goals does not rise. Then close your own hint goals: add\n"
                "  lemmas, asserts, invariants or strategies that support them, fix them, or delete hints that are not\n"
                "  needed. The tool and the open-goal list say which phase you are in.")
+
+DEBT_RULE = ("\n  METHOD18 BOUNDED DEBT: best.json remains the checked incumbent. A temporary working set may\n"
+             "  add at most 4 open hint goals without any increase in open unit goals. Repair it in at most\n"
+             "  4 further propose_edit attempts or 5 counted minutes; every attempt and rollback consumes the\n"
+             "  same 60-minute budget. A stage starts only with 5 search minutes before the final reserve.\n"
+             "  Failed checks also consume a repair attempt; check_edit/show_goal time consumes the clock.\n"
+             "  Promotion requires recovering the original incumbent acceptance rule, with no unit-goal\n"
+             "  regression. Otherwise roll back to that unchanged incumbent. Temporary debt never counts\n"
+             "  as best/proven; every final goal and fresh full smoke run must still pass.")
 
 SHOW_GOAL_NOTE = ("\n- show_goal(goal): one open goal as WP generates it after Qed simplification (hypotheses and the\n"
                   "  conclusion), so you can see what is missing. Up to a minute; changes nothing.")
@@ -259,7 +273,8 @@ def tool_state(out, r, a, t0, mode, allowed):
         "budget_min": a.budget_min, "final_reserve_min": a.final_reserve_min, "round_timeout": a.round_timeout,
         "round": r, "pin": L.PIN, "mode": mode, "allowed_kinds": sorted(allowed), "accept": E.ACCEPT[0], "hint_cap": E.CAP[0],
         "baseline_passed": sorted(L.BASELINE_PASSED), "two_phase": E.TWO_PHASE[0], "show_goal": a.show_goal,
-        "live_file": str(state / "lockwait_live.json") if a.budget_deadline else None}, indent=1))
+        "live_file": str(state / "lockwait_live.json") if (a.budget_deadline or a.bounded_debt) else None,
+        "bounded_debt": a.bounded_debt}, indent=1))
     return state
 
 
@@ -273,6 +288,7 @@ def read_tool(state):
             "propose_calls": sum(1 for s in subs if s["tool"] == "propose_edit"),
             "show_goal_calls": sum(1 for s in subs if s["tool"] == "show_goal"),
             "accepted": sum(1 for s in subs if str(s.get("result", "")).startswith("accepted")),
+            "staged": sum(1 for s in subs if str(s.get("result", "")).startswith("staged")),
             "reverted": sum(1 for s in subs if str(s.get("result", "")).startswith("reverted")),
             "rejected": sum(1 for s in subs if "rejected" in str(s.get("result", ""))),
             "trace": [[s["n"], s["tool"], s.get("result"), s.get("n_open_before"), s.get("n_open_after"),
@@ -288,7 +304,9 @@ def final_replay(out, r, best, a, t0, final_mode):
     d = L.run_dir(out, f"final-r{r}", (Path(best["dir"]) / L.UNIT).read_text())
     rec = {}
     L.wp_round(out, f"final-r{r}", (L.STANDIN_DIR / L.UNIT).read_text(), best["hints"], rec, mode=final_mode, d=d,
-               timeout=max(60, int(a.budget_min * 60 - budget_s(t0)) + 60))
+               timeout=(max(1, a.budget_min * 60 - budget_s(t0)) if a.bounded_debt else
+                        max(60, int(a.budget_min * 60 - budget_s(t0)) + 60)),
+               **({"remaining_s": lambda: a.budget_min * 60 - budget_s(t0)} if a.bounded_debt else {}))
     gj = d / "goals.json"
     fails = H.goal_positions(json.loads(gj.read_text()), (d / L.UNIT).read_text(), L.UNIT, L.headers_text()) \
         if gj.exists() else None
@@ -318,6 +336,7 @@ def main():
     ap.add_argument("--two-phase", action="store_true", help="t07e (b): hint-goal-only phase once unit goals are 0")
     ap.add_argument("--show-goal", action="store_true", help="t07e (c1): in-call show_goal tool")
     ap.add_argument("--tool-timeout-s", type=int, default=3600, help="t07e (c2): MCP tool timeout")
+    ap.add_argument("--bounded-debt", action="store_true", help="method18: +4 temporary hint goals, 4 repairs/5 counted minutes; incumbent remains separate")
     ap.add_argument("--owner", default="t07d")
     ap.add_argument("--dev-effort", help="DEV ONLY (never a counted run): override the pinned effort")
     ap.add_argument("--dev-no-codex", action="store_true", help="DEV ONLY: stop after the seed round")
@@ -327,12 +346,18 @@ def main():
     E.ACCEPT[0] = a.accept
     E.CAP[0] = a.hint_cap
     E.TWO_PHASE[0] = a.two_phase
+    E.DEBT[0] = a.bounded_debt
     TOOL_TIMEOUT_S[0] = a.tool_timeout_s
     L.OWNER[0] = a.owner
     if a.dev_effort:
         L.PIN["effort"] = a.dev_effort
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
+    if a.bounded_debt:
+        t0 = time.time()  # method18 counts baseline, seeds, search, rollback and final replay
+        L.LOCKWAIT[0] = 0.0
+        E.COUNTED_S[0] = lambda: budget_s(t0)
+        E.SEARCH_REMAINING_S[0] = lambda: (a.budget_min - a.final_reserve_min) * 60 - budget_s(t0)
     mode = "round-s" if (a.strategies or a.frame_filter) else "round"
     final_mode = "wp-smoke-s" if (a.strategies or a.frame_filter) else "wp-smoke"
     allowed = set(H.KINDS) - {"loop_assigns"} if a.seeds else set(H.KINDS)
@@ -344,7 +369,17 @@ def main():
     meta = {"started": L.now(), "pin": L.PIN,
             "codex_version": subprocess.run([L.CODEX, "--version"], capture_output=True, text=True).stdout.strip(),
             "ghost_hint_guard": H.GHOST_HINT_RULE,
-            "diagnostic_guidance": "consumed-prefix-cursor-snapshots-v4",
+            "frozen_wp_flags": FROZEN_WP_FLAGS,
+            "initialization_filtering": "disabled; all resulting obligations remain mandatory",
+            "diagnostic_guidance": "bridge-first-consumed-prefix-cas-v5",
+            "method18": {"id": "bridge-first-bounded-debt-v1", "added_anchor": "stmt:after_neighbor_gather",
+                         "bounded_debt": a.bounded_debt, "hint_debt": E.DEBT_HINTS,
+                         "repair_proposals": E.DEBT_REPAIRS, "counted_seconds": E.DEBT_SECONDS,
+                         "incumbent_file": "best.json", "working_file": "debt.json",
+                         "clock_includes_fresh_round0": a.bounded_debt,
+                         "provider_grace_seconds": 0 if a.bounded_debt else 120,
+                         "strict_completion_deadlines": a.bounded_debt,
+                         "no_unit_regression": True, "all_goal_fresh_smoke_acceptance_unchanged": True},
             "standin_sha256": {f: L.sha(L.STANDIN_DIR / f) for f in [L.UNIT] + L.HEADERS},
             "cpp_unit_sha256": L.sha(L.CPP_UNIT), "rounds": a.rounds, "budget_min": a.budget_min,
             "round_timeout_s": a.round_timeout, "final_reserve_min": a.final_reserve_min,
@@ -352,14 +387,15 @@ def main():
                                     "seeds": a.seeds, "frame_filter": a.frame_filter, "strategies": a.strategies,
                                     "examples": a.examples, "mode": mode, "final_mode": final_mode,
                                     "accept": a.accept, "hint_open_cap": a.hint_cap},
-            "method_changes_t07e": {"budget_clock_deadline": a.budget_deadline, "two_phase": a.two_phase,
+            "method_changes_t07e": {"budget_clock_deadline": a.budget_deadline or a.bounded_debt, "two_phase": a.two_phase,
                                     "show_goal": a.show_goal, "mcp_tool_timeout_s": a.tool_timeout_s,
                                     "wall_cap_s": WALL_CAP_S, "seed_frame_goals_are_unit_goals": True},
             "allowed_kinds": sorted(allowed), "harness_sha256": {f: L.sha(HERE / f) for f in files},
             "examples_sha256": {f.name: L.sha(f) for f in sorted(L.EXAMPLES.glob("*")) if f.is_file()} if a.examples else None,
             "dev": bool(a.dev_effort or a.dev_no_codex or a.dev_skip_round0)}
     (out / "meta.json").write_text(json.dumps(meta, indent=1))
-    # Round 0 (no hints, frozen flags, outside the budget, map 13 item 3): own run, or reused from an
+    # Round 0 is outside the legacy budget (map 13 item 3); method18 counts its fresh baseline too.
+    # Own run, or reused from an
     # earlier counted run on the same stand-in (hash checked).
     gj = None
     if a.dev_skip_round0:
@@ -380,8 +416,9 @@ def main():
     else:
         t_r0 = time.time()
         r0 = {"round": 0, "hints": [], "started": L.now()}
-        L.log(out, "round 0: WP with no hints (frozen flags), outside the budget")
-        L.wp_round(out, "round-0", standin, [], r0)
+        L.log(out, "round 0: WP with no hints (frozen flags), " + ("counted by method18" if a.bounded_debt else "outside the budget"))
+        L.wp_round(out, "round-0", standin, [], r0,
+                   **({"remaining_s": E.SEARCH_REMAINING_S[0]} if a.bounded_debt else {}))
         r0["elapsed_min"] = round((time.time() - t_r0) / 60, 2)
         r0.pop("failing_goals", None)
         history = [r0]
@@ -389,9 +426,12 @@ def main():
         L.log(out, f"round 0: {r0.get('outcome')} in {r0['elapsed_min']} min")
     if gj is not None:
         L.BASELINE_PASSED.update(g["goal"] for g in json.loads(gj.read_text()) if g.get("passed") and not g.get("smoke"))
-    # Budget clock starts at the seed round (seeds are part of the loop: map 13 items 3 and 9).
-    t0 = time.time()
-    L.LOCKWAIT[0] = 0.0
+    # Legacy clock starts at seeds. Method18 never resets its earlier all-work clock.
+    if not a.bounded_debt:
+        t0 = time.time()
+        L.LOCKWAIT[0] = 0.0
+    E.COUNTED_S[0] = lambda: budget_s(t0)
+    E.SEARCH_REMAINING_S[0] = lambda: (a.budget_min - a.final_reserve_min) * 60 - budget_s(t0)
     seeds = []
     if a.seeds:
         seeds = FS.seeds(L.STANDIN_DIR / L.UNIT)
@@ -399,16 +439,20 @@ def main():
         tag = hashlib.sha256((HERE / "edit_loop.py").read_bytes()).hexdigest()[:12]
         seeds += [{"id": f"seedF{i}", "anchor": "global", "kind": k, "text": t,
                    "provenance": f"seed: edit_loop.py FRAME_FILTER {tag} (generic)"} for i, (k, t) in enumerate(FRAME_FILTER, 1)]
-    L.log(out, f"seed round: {len(seeds)} seeds; budget clock at 0")
+    L.log(out, f"seed round: {len(seeds)} seeds; counted minutes {budget_s(t0) / 60:.2f}")
     rec = {"round": "seeds", "started": L.now(), "hints": seeds}
     chk = {}
-    d = L.precheck(out, "seeds", standin, seeds, chk)
+    d = L.precheck(out, "seeds", standin, seeds, chk,
+                   **({"remaining_s": E.SEARCH_REMAINING_S[0]} if a.bounded_debt else {}))
     if d is None:
         rec.update(outcome="seeds rejected by the proof hint check", check=chk)
         history.append(rec)
         (out / "history.json").write_text(json.dumps(history, indent=1))
         raise SystemExit("seed check failed: " + json.dumps(chk)[:2000])
-    wlog, ws = L.verifier(out, d, mode, timeout=3600, extra=(out / "round-cache", a.round_timeout))
+    if a.bounded_debt and E.SEARCH_REMAINING_S[0]() <= 0:
+        raise SystemExit("seed round exhausted search time; no provider launch")
+    wlog, ws = L.verifier(out, d, mode, timeout=(max(1, E.SEARCH_REMAINING_S[0]()) if a.bounded_debt else 3600),
+                          extra=(out / "round-cache", a.round_timeout))
     ar = L.assess_round(d, wlog)
     best = {"hints": seeds, "failing_goals": ar["failing_goals"], "n_open": len(ar["failing_goals"]),
             "n_goals": ar["n_goals"], "dir": str(d), "from": "seeds", "history": ["seeds"]}
@@ -433,47 +477,53 @@ def main():
             L.log(out, f"in-call budget spent at {used:.1f} min")
             break
         r += 1
-        best = E.load_best(out)
+        best = E.load_working(out, counted_s=budget_s(t0), remaining_s=tool_budget * 60) if a.bounded_debt else E.load_best(out)
         state = tool_state(out, r, a, t0, mode, allowed)
         if thread is None:
             prompt = PROMPT.format(
                 max_ops=E.MAX_OPS, max_text=E.MAX_TEXT, kinds=", ".join(sorted(allowed)),
-                accept_rule=ACCEPT_RULE[a.accept].format(cap=a.hint_cap) + (PHASE2_RULE if a.two_phase else ""),
+                accept_rule=ACCEPT_RULE[a.accept].format(cap=a.hint_cap) + (PHASE2_RULE if a.two_phase else "") + (DEBT_RULE if a.bounded_debt else ""),
                 tool_notes=SHOW_GOAL_NOTE if a.show_goal else "",
                 budget_clock_note=(" (time your tool calls wait for the shared verifier queue is not counted)"
-                                   if a.budget_deadline else ""),
+                                   if (a.budget_deadline or a.bounded_debt) else ""),
                 strategy_notes=STRATEGY_NOTES.format(tactics=tactics) if a.strategies else "",
                 round_timeout=a.round_timeout, tool_budget=tool_budget, round=r, rounds=a.rounds, minutes=used,
-                budget=a.budget_min, best=E.best_text(best), open=E.open_text(best), examples=examples,
+                budget=a.budget_min, best=E.working_text(out, best), open=E.open_text(best) + E.debt_text(out), examples=examples,
                 files=L.workspace_files(standin))
         else:
             prompt = (f"Round {r} of at most {a.rounds}; minutes used so far: {used:.1f} of {a.budget_min}; "
                       f"in-call budget for this call {tool_budget:.0f} min. The loop's state is unchanged since your last "
-                      f"tool result.\n{E.open_text(best)}\nContinue with the tools; answer with your final edit "
+                      f"tool result.\n{E.open_text(best)}{E.debt_text(out)}\nContinue with the tools; answer with your final edit "
                       "(JSON {\"ops\": [...], \"notes\": ...}) before the in-call budget ends.")
         L.log(out, f"round {r}: Codex call ({'resumed' if thread else 'new'} session, {len(prompt)} chars, best {best['n_open']} open)")
         lw0 = L.LOCKWAIT[0]
-        limit_s = (a.budget_min - a.final_reserve_min) * 60 + 120.0  # same 2-min grace as t07d
+        limit_s = (a.budget_min - a.final_reserve_min) * 60 + (0.0 if a.bounded_debt else 120.0)
+        # Method18 has no legacy provider grace: it cannot spend the final reserve.
 
         def budget_stop(state=state, lw0=lw0, limit_s=limit_s):
-            return time.time() - t0 - lw0 - live_lock_wait(state) > limit_s
+            elapsed = time.time() - t0 - lw0 - live_lock_wait(state)
+            return elapsed >= limit_s if a.bounded_debt else elapsed > limit_s
 
-        c = codex_call(out, r, prompt, thread, state, max(120.0, tool_budget * 60 + 120.0),
-                       budget_stop=budget_stop if a.budget_deadline else None)
+        c = codex_call(out, r, prompt, thread, state,
+                       max(1.0, tool_budget * 60) if a.bounded_debt else max(120.0, tool_budget * 60 + 120.0),
+                       budget_stop=budget_stop if (a.budget_deadline or a.bounded_debt) else None)
         thread = c.get("thread") or thread
         tool = read_tool(state)
         rec = {"round": r, "started": L.now(), "phase_at_start": E.phase_of(best),
                "codex": {k: c[k] for k in ("exit", "wall_s", "usage", "error", "killed_at_deadline", "stop_reason")}, "codex_notes": c.get("notes"), "codex_thread": thread, "tool": tool,
                "codex_calls": 1}
-        best = E.load_best(out)
+        best = E.load_working(out, counted_s=budget_s(t0), remaining_s=E.SEARCH_REMAINING_S[0]()) if a.bounded_debt else E.load_best(out)
         if c.get("ops") and best["n_open"] > 0 and (a.budget_min - a.final_reserve_min) - budget_s(t0) / 60 > 0.5:
             prov = f"codex {L.PIN['model']} {L.PIN['effort']} round {r} final answer"
             fr, nb = E.attempt(out, best, c["ops"], f"r{r}f", prov, mode, a.round_timeout, allowed,
-                               timeout_s=max(60, int((a.budget_min - budget_s(t0) / 60) * 60)))
-            rec["final_answer_edit"] = {k: fr.get(k) for k in ("result", "n_open_before", "n_open_after", "problems")}
+                               timeout_s=(max(1, int(E.SEARCH_REMAINING_S[0]())) if a.bounded_debt else
+                                          max(60, int((a.budget_min - budget_s(t0) / 60) * 60))))
+            rec["final_answer_edit"] = fr  # include checked time, artifacts and rollbacks, not only the score
             if nb is not None:
                 E.save_best(out, nb)
                 best = nb
+        best = E.load_best(out)  # authoritative incumbent only; staged hints never decide a verdict
+        rec["debt_status"] = E.debt_status(out) if a.bounded_debt else None
         rec["best_n_open"] = best["n_open"]
         rec["round_wp"] = {"n_failing": best["n_open"]}  # heartbeat compatibility
         if best["n_open"] == 0 and budget_s(t0) / 60 < a.budget_min:
@@ -489,6 +539,8 @@ def main():
         history.append(rec)
         (out / "history.json").write_text(json.dumps(history, indent=1))
         L.log(out, f"round {r}: {rec['outcome']} at {rec['elapsed_min']} min")
+    if a.bounded_debt:
+        E.rollback_debt(out, "run ended", counted_s=budget_s(t0))
     best = E.load_best(out)
     summary = {"proven": proven, "within_budget": proven and budget_s(t0) / 60 <= a.budget_min, "rounds": r,
                "codex_calls": r, "elapsed_min": round(budget_s(t0) / 60, 2),
@@ -497,9 +549,13 @@ def main():
                "tool_calls": sum((h.get("tool") or {}).get("calls", 0) for h in history[2:]),
                "show_goal_calls": sum((h.get("tool") or {}).get("show_goal_calls", 0) for h in history[2:]),
                "best_unit_hint_open": list(E.split_counts(best["failing_goals"])), "phase_at_end": E.phase_of(best),
-               "wp_attempts": sum((h.get("tool") or {}).get("propose_calls", 0) for h in history[2:]),
+               "wp_attempts": sum((h.get("tool") or {}).get("propose_calls", 0) for h in history[2:]) +
+                              sum("wp_wall_s" in (h.get("final_answer_edit") or {}) for h in history),
+               "proposal_attempts_including_final": sum((h.get("tool") or {}).get("propose_calls", 0) for h in history) +
+                              sum(bool(h.get("final_answer_edit")) for h in history),
                "tokens": {}, "final": {k: v for k, v in (final or {}).items() if k != "failing_goals"} or None,
-               "finished": L.now()}
+               "finished": L.now(), "bounded_debt": a.bounded_debt,
+               "debt_events_sha256": L.sha(out / "debt-events.jsonl") if (out / "debt-events.jsonl").exists() else None}
     for h in history:
         for k, v in ((h.get("codex") or {}).get("usage") or {}).items():
             summary["tokens"][k] = summary["tokens"].get(k, 0) + v
