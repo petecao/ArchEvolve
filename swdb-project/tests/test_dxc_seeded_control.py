@@ -6,6 +6,7 @@ semantics. Both language paths execute the unchanged summary_impls.cc body.
 from pathlib import Path
 import subprocess
 import pytest
+import yaml
 
 from swdb import c_lowering
 from test_wp_subset import SEEDED_BUGS, summary_id
@@ -15,10 +16,14 @@ FIXTURES = Path(__file__).parent/'fixtures/proof/lowering'
 
 
 def test_the_shared_dxc_seed_violates_the_original_postcondition_on_its_native_fixture_body(tmp_path):
+    case = yaml.safe_load((FIXTURES.parent/'regression_corpus/fixture-dxc-seed-did-not-violate-post.yaml').read_text())['input']
     source = (FIXTURES/'summaries.cc').read_text()
     implementation = (FIXTURES/'summary_impls.cc').read_text()
     before,after = next(pair for pair in SEEDED_BUGS if '__dxc_tile_size(tile)' in pair[0])
     assert source.count(before) == 1
+    assert (before, after) == (case['safe'], case['corrected_seed'])
+    assert case['rejected_seed'] == 'return __dxc_tile_size(tile) + 2;'
+    assert case['witness_tile'] == 0 and case['original_result_bounds'] == [1, 3]
     harness = '\n#include <stdio.h>\nint main(void) { printf("%d\\n", swdb_dxc_unit(0)); }\n'
     values = {}
     for label,text in [('safe',source),('seeded',source.replace(before,after,1))]:
