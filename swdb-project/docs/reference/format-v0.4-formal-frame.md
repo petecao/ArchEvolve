@@ -46,6 +46,10 @@ Validation binds the pointer and extent names to the actual lowered parameters.
 Extents use mathematical integer arithmetic over scalar integer parameters,
 constants, parentheses, `+`, `-` and `*`; calls, memory reads and implicit
 initializedness claims are refused. Constant extents must be nonnegative.
+The shared binder renders every scalar as its entry value in mathematical
+integer arithmetic. Bounded planners use conservative arbitrary-precision
+intervals; repeated variables may widen an interval but cannot narrow the
+requested input domain. These calculations do not supply an origin certificate.
 
 This declaration format is staged: proof jobs currently refuse a nonempty domain
 until a source-origin certificate can check operations and imported-summary calls.
