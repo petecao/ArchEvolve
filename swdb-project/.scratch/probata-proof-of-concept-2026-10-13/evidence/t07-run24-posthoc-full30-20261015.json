@@ -1,0 +1,585 @@
+{
+  "created": "2026-10-15 ET",
+  "scope": "uncounted posthoc diagnosis; no run24 upgrade/future provider history reuse",
+  "source_commit": "14c2a298f5692e273db8cf8c127f8248dc54714c",
+  "raw": "/private/tmp/probata-t07-20261015-run24-posthoc-full30",
+  "result": {
+    "finished": "2026-10-15 19:04:43 EDT",
+    "uncounted_posthoc": true,
+    "origin_run24_upgrade_permitted": false,
+    "future_provider_input_reuse_permitted": false,
+    "provider_called": false,
+    "source_commit": "14c2a298f5692e273db8cf8c127f8248dc54714c",
+    "manifest_sha256": "0c8cee474b471d5463d39caf47d095835bf5ab1c3213dbbee12f58c6e8af8ae0",
+    "wall_s": 710.4205160416896,
+    "within_posthoc_12min": true,
+    "guard_exit": 137,
+    "checked_complete": false,
+    "checked_inventory": null,
+    "completion_error": "method19 checked run refused: process failed, timed out, or cleanup is unconfirmed",
+    "assessment": null,
+    "posthoc_all_goals_proven": false,
+    "negative_control": "not run; posthoc result cannot qualify as counted positive",
+    "source_after_matches": true,
+    "tools_after_match": true,
+    "origin_manifest_summary_best_unchanged": true,
+    "reviewed_origin_bundle_after_unchanged": true,
+    "process_report": {
+      "path": "/private/tmp/probata-t07-20261015-run24-posthoc-full30/full30/wp-smoke-s.log.summary.json",
+      "sha256": "86aac7af903edd8ee607992e74ca14683876b32a03b4b281e4a105f6b5dd6cf5",
+      "bytes": 10656
+    },
+    "log": {
+      "path": "/private/tmp/probata-t07-20261015-run24-posthoc-full30/full30/wp-smoke-s.log",
+      "sha256": "d5368998a60cb2d1fcea6c4c321a1c9a5c4cf72425534e5b6ce1e1a663c60b0b",
+      "bytes": 3715
+    },
+    "goals": null
+  },
+  "guard_report": {
+    "cmd": [
+      "/private/tmp/probata-resume-t07-method21/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/wp_run.sh",
+      "wp-smoke-s",
+      "/private/tmp/probata-t07-20261015-run24-posthoc-full30/full30",
+      "tdstep_standin.c"
+    ],
+    "exit_code": 137,
+    "wall_s": 710.3790288332966,
+    "peak_rss_mb": 5616.21875,
+    "cap_gb": 8.0,
+    "killed_by_watchdog": false,
+    "timed_out": true,
+    "queue_timed_out": false,
+    "timeout_s": 710.0,
+    "queue_timeout_s": 1.0,
+    "lock_wait_s": 0.00041687500197440386,
+    "runner_pid": 9353,
+    "clock": "continuous_monotonic",
+    "clock_info": {
+      "kind": "continuous_monotonic",
+      "implementation": "mach_continuous_time",
+      "includes_sleep": true,
+      "numer": 125,
+      "denom": 3
+    },
+    "log": "/private/tmp/probata-t07-20261015-run24-posthoc-full30/full30/wp-smoke-s.log",
+    "inspection_events": [
+      {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 9424,
+        "exception_pid": 9424,
+        "expected_birth": 1792104778.908355,
+        "observed_birth": 1792104778.908355,
+        "identity_state": "live",
+        "attempt": 1,
+        "clock_s": 346919.4850374167,
+        "wall_unix_s": 1792104780.96674,
+        "outcome": "denied"
+      },
+      {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 9645,
+        "exception_pid": 9645,
+        "expected_birth": 1792104806.699683,
+        "observed_birth": 1792104806.699683,
+        "identity_state": "live",
+        "attempt": 1,
+        "clock_s": 346947.3385223333,
+        "wall_unix_s": 1792104808.820319,
+        "outcome": "denied"
+      },
+      {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 9716,
+        "exception_pid": 9716,
+        "expected_birth": 1792104815.721274,
+        "observed_birth": 1792104815.721274,
+        "identity_state": "live",
+        "attempt": 1,
+        "clock_s": 346956.3301516667,
+        "wall_unix_s": 1792104817.811973,
+        "outcome": "denied"
+      },
+      {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 9787,
+        "exception_pid": 9787,
+        "expected_birth": 1792104823.573987,
+        "observed_birth": 1792104823.573987,
+        "identity_state": "live",
+        "attempt": 1,
+        "clock_s": 346964.2291745,
+        "wall_unix_s": 1792104825.7110221,
+        "outcome": "denied"
+      },
+      {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 9791,
+        "exception_pid": 9791,
+        "expected_birth": 1792104823.897481,
+        "observed_birth": 1792104823.897481,
+        "identity_state": "live",
+        "attempt": 1,
+        "clock_s": 346964.428733,
+        "wall_unix_s": 1792104825.91058,
+        "outcome": "denied"
+      },
+      {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 9833,
+        "exception_pid": 9833,
+        "expected_birth": 1792104828.839813,
+        "observed_birth": 1792104828.839813,
+        "identity_state": "live",
+        "attempt": 1,
+        "clock_s": 346969.5392765,
+        "wall_unix_s": 1792104831.0211442,
+        "outcome": "denied"
+      },
+      {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 9853,
+        "exception_pid": 9853,
+        "expected_birth": 1792104832.116872,
+        "observed_birth": 1792104832.116872,
+        "identity_state": "live",
+        "attempt": 1,
+        "clock_s": 346972.646734875,
+        "wall_unix_s": 1792104834.128612,
+        "outcome": "denied"
+      },
+      {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 10134,
+        "exception_pid": 10134,
+        "expected_birth": 1792104840.240817,
+        "observed_birth": 1792104840.240817,
+        "identity_state": "live",
+        "attempt": 1,
+        "clock_s": 346982.367006875,
+        "wall_unix_s": 1792104843.848914,
+        "outcome": "denied"
+      },
+      {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 10345,
+        "exception_pid": 10345,
+        "expected_birth": 1792104848.04483,
+        "observed_birth": 1792104848.04483,
+        "identity_state": "live",
+        "attempt": 1,
+        "clock_s": 346988.5977774167,
+        "wall_unix_s": 1792104850.079705,
+        "outcome": "denied"
+      },
+      {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 10861,
+        "exception_pid": 10861,
+        "expected_birth": 1792104879.990805,
+        "observed_birth": 1792104879.990805,
+        "identity_state": "live",
+        "attempt": 1,
+        "clock_s": 347018.78170925,
+        "wall_unix_s": 1792104880.2637398,
+        "outcome": "denied"
+      },
+      {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 11037,
+        "exception_pid": 11037,
+        "expected_birth": 1792104941.470396,
+        "observed_birth": 1792104941.470396,
+        "identity_state": "live",
+        "attempt": 1,
+        "clock_s": 347110.0005617917,
+        "wall_unix_s": 1792104971.482887,
+        "outcome": "denied"
+      },
+      {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 11309,
+        "exception_pid": 11309,
+        "expected_birth": 1792105070.071132,
+        "observed_birth": 1792105070.071132,
+        "identity_state": "live",
+        "attempt": 1,
+        "clock_s": 347239.45853025,
+        "wall_unix_s": 1792105100.94128,
+        "outcome": "denied"
+      },
+      {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 11468,
+        "exception_pid": 11468,
+        "expected_birth": 1792105117.682186,
+        "observed_birth": 1792105117.682186,
+        "identity_state": "live",
+        "attempt": 1,
+        "clock_s": 347256.23311083333,
+        "wall_unix_s": 1792105117.715914,
+        "outcome": "denied"
+      },
+      {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 11834,
+        "exception_pid": 11834,
+        "expected_birth": 1792105168.567371,
+        "observed_birth": 1792105168.567371,
+        "identity_state": "live",
+        "attempt": 1,
+        "clock_s": 347338.19488983334,
+        "wall_unix_s": 1792105199.677959,
+        "outcome": "denied"
+      },
+      {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 11839,
+        "exception_pid": 11839,
+        "expected_birth": 1792105170.082057,
+        "observed_birth": 1792105170.082057,
+        "identity_state": "live",
+        "attempt": 1,
+        "clock_s": 347339.9396099167,
+        "wall_unix_s": 1792105201.4226859,
+        "outcome": "denied"
+      },
+      {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 11839,
+        "exception_pid": 11839,
+        "expected_birth": 1792105170.082057,
+        "observed_birth": 1792105170.082057,
+        "identity_state": "live",
+        "attempt": 2,
+        "clock_s": 347339.9537373333,
+        "wall_unix_s": 1792105201.436815,
+        "outcome": "denied"
+      },
+      {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 11937,
+        "exception_pid": 11937,
+        "expected_birth": 1792105219.757029,
+        "observed_birth": 1792105219.757029,
+        "identity_state": "live",
+        "attempt": 1,
+        "clock_s": 347389.66193575,
+        "wall_unix_s": 1792105251.145173,
+        "outcome": "denied"
+      },
+      {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 11946,
+        "exception_pid": 11946,
+        "expected_birth": 1792105224.496141,
+        "observed_birth": 1792105224.496141,
+        "identity_state": "live",
+        "attempt": 1,
+        "clock_s": 347393.03868975,
+        "wall_unix_s": 1792105254.5219378,
+        "outcome": "denied"
+      },
+      {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 12071,
+        "exception_pid": 12071,
+        "expected_birth": 1792105312.240884,
+        "observed_birth": 1792105312.240884,
+        "identity_state": "live",
+        "attempt": 1,
+        "clock_s": 347482.6216460833,
+        "wall_unix_s": 1792105344.105162,
+        "outcome": "denied"
+      },
+      {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 12259,
+        "exception_pid": 12259,
+        "expected_birth": 1792105352.528986,
+        "observed_birth": 1792105352.528986,
+        "identity_state": "live",
+        "attempt": 1,
+        "clock_s": 347521.9419452083,
+        "wall_unix_s": 1792105383.425586,
+        "outcome": "denied"
+      },
+      {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 12259,
+        "exception_pid": 12259,
+        "expected_birth": 1792105352.528986,
+        "observed_birth": 1792105352.528986,
+        "identity_state": "live",
+        "attempt": 2,
+        "clock_s": 347521.9571785833,
+        "wall_unix_s": 1792105383.440819,
+        "outcome": "denied"
+      },
+      {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 12791,
+        "exception_pid": 12791,
+        "expected_birth": 1792105437.925211,
+        "observed_birth": 1792105437.925211,
+        "identity_state": "gone",
+        "attempt": 1,
+        "clock_s": 347579.46028,
+        "wall_unix_s": 1792105440.944107,
+        "outcome": "confirmed-gone"
+      },
+      {
+        "stage": "cleanup",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 9354,
+        "exception_pid": 9354,
+        "expected_birth": 1792104772.581082,
+        "observed_birth": 1792104772.581082,
+        "identity_state": "live",
+        "attempt": 1,
+        "clock_s": 347621.207207875,
+        "wall_unix_s": 1792105482.691173,
+        "outcome": "denied"
+      },
+      {
+        "stage": "cleanup",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 9354,
+        "exception_pid": 9354,
+        "expected_birth": 1792104772.581082,
+        "observed_birth": 1792104772.581082,
+        "identity_state": "live",
+        "attempt": 2,
+        "clock_s": 347621.2224012083,
+        "wall_unix_s": 1792105482.706363,
+        "outcome": "denied"
+      },
+      {
+        "stage": "cleanup",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 9354,
+        "exception_pid": 9354,
+        "expected_birth": 1792104772.581082,
+        "observed_birth": 1792104772.581082,
+        "identity_state": "live",
+        "attempt": 3,
+        "clock_s": 347621.237594625,
+        "wall_unix_s": 1792105482.721555,
+        "outcome": "denied"
+      }
+    ],
+    "inspection_failure": null,
+    "inspection_retry_boundary": "three attempts separated by10ms; only independently confirmed gone/zombie or changed birth is skipped; persistent live or unknown denial fails closed",
+    "log_sha256": "d5368998a60cb2d1fcea6c4c321a1c9a5c4cf72425534e5b6ce1e1a663c60b0b",
+    "unconfirmed_children": [
+      "group-inspection-unconfirmed:AccessDenied:pid=9354"
+    ],
+    "error": null,
+    "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment",
+    "rss_scope": "live union of current ancestry, retained PID/birth identities and periodic inherited-marker matches; sampled, not a kernel quota",
+    "finished": "2026-10-15 19:04:42 EDT"
+  },
+  "scheduled_goals": 497,
+  "partial_nonvalid_status_lines": [
+    {
+      "status": "Timeout",
+      "goal": "typed_TDStep_call___dxc_range_loop_dxc_range_loop_requires_8"
+    },
+    {
+      "status": "Timeout",
+      "goal": "typed_TDStep_call___dxc_gather_4_dxc_gather_requires_3"
+    },
+    {
+      "status": "Unknown",
+      "goal": "typed_TDStep_ensures_dx100_idle_after"
+    },
+    {
+      "status": "Unknown",
+      "goal": "typed_TDStep_loop_invariant_3_preserved"
+    },
+    {
+      "status": "Unknown",
+      "goal": "typed_TDStep_loop_invariant_2_preserved"
+    },
+    {
+      "status": "Unknown",
+      "goal": "typed_TDStep_assert"
+    },
+    {
+      "status": "Unknown",
+      "goal": "typed_TDStep_loop_invariant_4_preserved"
+    },
+    {
+      "status": "Unknown",
+      "goal": "typed_TDStep_loop_invariant_8_preserved"
+    },
+    {
+      "status": "Unknown",
+      "goal": "typed_TDStep_assert_4"
+    },
+    {
+      "status": "Unknown",
+      "goal": "typed_TDStep_assert_3"
+    },
+    {
+      "status": "Unknown",
+      "goal": "typed_TDStep_loop_invariant_11_preserved"
+    },
+    {
+      "status": "Unknown",
+      "goal": "typed_TDStep_loop_invariant_11_established"
+    },
+    {
+      "status": "Unknown",
+      "goal": "typed_TDStep_assert_5"
+    },
+    {
+      "status": "Unknown",
+      "goal": "typed_TDStep_loop_invariant_15_established"
+    },
+    {
+      "status": "Unknown",
+      "goal": "typed_TDStep_assert_6"
+    },
+    {
+      "status": "Unknown",
+      "goal": "typed_TDStep_assert_7"
+    },
+    {
+      "status": "Unknown",
+      "goal": "typed_TDStep_loop_assigns_3_part11"
+    },
+    {
+      "status": "Unknown",
+      "goal": "typed_TDStep_loop_assigns_5_part11"
+    },
+    {
+      "status": "Unknown",
+      "goal": "typed_TDStep_loop_variant_2_positive"
+    },
+    {
+      "status": "Unknown",
+      "goal": "typed_TDStep_loop_variant_2_decrease"
+    },
+    {
+      "status": "Unknown",
+      "goal": "typed_TDStep_ensures_visited_iff_reachable"
+    },
+    {
+      "status": "Unknown",
+      "goal": "typed_TDStep_ensures_new_are_pushed"
+    },
+    {
+      "status": "Unknown",
+      "goal": "typed_TDStep_ensures_pushed_are_new"
+    },
+    {
+      "status": "Unknown",
+      "goal": "typed_TDStep_ensures_queue_kept"
+    },
+    {
+      "status": "Unknown",
+      "goal": "typed_TDStep_ensures_pushed_once"
+    },
+    {
+      "status": "Unknown",
+      "goal": "typed_TDStep_assigns_normal_part16"
+    }
+  ],
+  "partial_counts": {
+    "Unknown": 24,
+    "Timeout": 2
+  },
+  "inventory_boundary": "497 is scheduled full all-function+smoke goal count;259 is completed TDStep+lemmas diagnostic ordinary count. Delta238 cannot be partitioned into smoke/additional ordinary/splitting without missing goals.json. Baseline139smoke is not assumed stable after41annotations. No invented full inventory/statuses.",
+  "negative_control": "not run",
+  "artifacts": [
+    {
+      "path": "/private/tmp/probata-t07-20261015-run24-posthoc-full30/manifest.json",
+      "sha256": "0c8cee474b471d5463d39caf47d095835bf5ab1c3213dbbee12f58c6e8af8ae0",
+      "bytes": 11545
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run24-posthoc-full30/result.json",
+      "sha256": "1687a05ef3db90d10099748c83f09666dc60c0469aa0276098183371c8965016",
+      "bytes": 1358
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run24-posthoc-full30/full30/wp-smoke-s.log",
+      "sha256": "d5368998a60cb2d1fcea6c4c321a1c9a5c4cf72425534e5b6ce1e1a663c60b0b",
+      "bytes": 3715
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run24-posthoc-full30/full30/wp-smoke-s.log.summary.json",
+      "sha256": "86aac7af903edd8ee607992e74ca14683876b32a03b4b281e4a105f6b5dd6cf5",
+      "bytes": 10656
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run24-posthoc-full30/poststop-first.json",
+      "sha256": "03725ee6c32f1a2b43f342fa571dd86fc707a5e7d24aa68c810f3ff78e4ef49e",
+      "bytes": 445
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run24-posthoc-full30/poststop-marker-audit.json",
+      "sha256": "651e5b2ff2cc90e13bd5155f67ece3720258f62a4878527b1f6d2629c672c0ca",
+      "bytes": 668
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run24-posthoc-full30/manual-quarantine-release.json",
+      "sha256": "750af56ac8ccfdb9bb3fcd2472154440680ea0a136e87a3ee37b606da4ff6d61",
+      "bytes": 879
+    },
+    {
+      "path": "/private/tmp/probata-t07-run24-posthoc-full30-independent-release-audit.json",
+      "sha256": "c279295e7742bfe22fb7f1baadf70f6dda32d2fc2d32dfee92af7b8db872e9ca",
+      "bytes": 1454
+    }
+  ],
+  "scheduling_assessment": "710second positive replay censored with emitted nonvalid statuses;No evidence establishes complete positive plus same-strength negative fits12minutes. Longer scheduling alone has no evidence of all-goal proof. Prospective budget/structural method must be reviewed anew."
+}

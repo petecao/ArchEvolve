@@ -1,6 +1,6 @@
 # Method21: diagnostic baseline allocation
 
-Created: 2026-10-15 ET. **Prospective; no counted launch or scientific success.**
+Created: 2026-10-15 ET. **Completed run24: unproven; no scientific success or ticket acceptance.**
 Run23 remains frozen at `df19ff8a6342d24ca853624f1e97a6c6833cabcb`; its unproven
 result and raw artifacts are not changed or reused. Implementation uses a separate
 worktree. This plan changes scheduling only; it supplies no functional hint.
@@ -58,3 +58,22 @@ Before launch: RED/GREEN shell/driver/report controls, independent composed
 review, a clean source/method/tool freeze, fresh resource preflight and coordinated
 Mac actual slot. Controlled external executables in tests are not real proof or
 provider evidence. No unchanged method20 retry is authorized by this document.
+
+
+## Completed run24 — 2026-10-15 ET
+
+Clean14c2a298 ran17:52:17–18:44:19EDT,52.03counted minutes. The baseline took
+6.11minutes versus run23's14.97minutes: observed recovery8.86minutes, with the
+stated scheduling/pass-set confounds. Best41records (five mechanical,36Codex)
+left29/259round goals open (14unit/15hint); no final replay or negative control
+was reached. The7.97minute final reserve was unused, not a60minute overrun.
+[Run24 evidence](../../evidence/t07-counted-24-20261015.json) retains the frozen
+source, reports and complete cleanup audit. Missing CLI completed-turn usage is
+unknown; scoped partial counters cannot prove the interrupted tail complete.
+
+The [independent provenance review](../../evidence/t07-seed-provenance-acceptance-review-20261015.md)
+supersedes the earlier undecided seed-as-method interpretation for future ticket07
+acceptance. Historical origins remain mechanical, never relabelled Codex. Any
+future method22 must begin empty and trace Codex-authored frames like every other
+hint. Run24 and its later uncounted diagnostic remain immutable and ineligible for
+retrospective upgrade or future provider hint reuse.
