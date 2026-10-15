@@ -171,3 +171,28 @@ definition or hypothesis changed. The theorem itself remains open, so this is
 proof progress only and does not authorize a Rocq-checked method-part record.
 Next: critical-window clearing, including the RF-sensitive coverage side condition,
 then the global serialization and iteration-count assembly.
+
+### Statement blocker: ownership handoff — 2026-10-15 ET
+
+The approved statement admits a command reading a ThreadOwned location across an
+ownership transfer while its class remains ThreadOwned. Two source/cover constraints
+then force a foreign event inside a critical section. Ticket 41 is reopened for the
+coordinator-delegated ownership-lifetime repair; its new hash requires review. The
+checked A5 and window lemmas remain useful. The shared box is not restarted and no
+fallback or method-part proof record is claimed.
+
+### Resumed after ownership repair — 2026-10-15 ET
+
+The main session independently reviewed and approved ticket 41's ownership
+lifetime repair. The exact reconstruction is now `e23f3715…`; the changed-ownership
+negative control is refused. Three sanity controls are Qed and closed: rejecting
+the exact ownership-handoff witness, accepting prior-covered handoff, and accepting
+a static owner's barrier crossing. The original shared box and all checked A5/window
+proof progress remain intact; full composition proof work resumes.
+
+The repair's first use is also Qed: `t42_future_owned_source_impossible` proves that
+an outstanding ThreadOwned device read cannot source a future foreign owner's
+write, even across a barrier, under `reads_owner_stable`. Global/thread-local
+class-lifetime transport is Qed as `t42_read_class_stable_global`. Compile:
+`/tmp/probata-t42-resume/logs/owner-proof-1.log.summary.json`, exit 0, 3.73 s,
+peak 443.6 MB. These directly address the previously open RF-sensitive swap case.
