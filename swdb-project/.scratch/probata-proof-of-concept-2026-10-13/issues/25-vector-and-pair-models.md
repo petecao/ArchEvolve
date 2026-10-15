@@ -1,7 +1,7 @@
 # 25 — std::vector and std::pair models
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-15 ET (original vector/pair maximum workflow WP view accepted; member/bounded frontier remains open); 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 22, 24
@@ -341,6 +341,35 @@ pinned67dfd7a8 and is not relabeled as a postmerge proof. No active job remains.
 lowerer/adapter hook was added by this data slice; exact source binding stays delegated to
 model_domains and all existing source/view regeneration and helper pins remain in force.
 
+
+Whole vector workflow API staging — 2026-10-15 ET: next frontier is the existing exact
+swdb_fixture_vec_max input-copy/push loop, pair maximum, range-for, size/index scan and return.
+The new relation projects private storage to unchanged input values; allocation count is symbolic/
+unbounded, with no fixed pool or repeated private-address key. Exact full fixture source-token
+closure, target AST/signature/int templates and all12model-text pins reject source allocation
+hooks, handlers, custom allocators/elements, escapes and extra effects. The imported allocator
+frame (preexisting input unchanged) is explicit; successful return alone would not justify
+ignoring a handler with observable effects. Every transition lists its separate standalone C-body
+proof requirement and does not invent proof IDs. Array origin and input initialization are
+explicit in the new WP test's original contract; no view requires is injected. User source/native
+and ordinary lowered C remain retained. Helper source/view C AST inventory is implemented;
+public prelaunch remains RED until ticket36 forwards entry-window metadata and binds exact
+source copy-read/scalar append IDs. The first attempt used unsupported valid_read vocabulary and
+is excluded from the intended RED; corrected contract yields unsupported_construct. No actual
+WP acceptance, generic model-domain relaxation or ticket completion is claimed.
+Plan:/private/tmp/probata-vector-completion-plan.md.
+Evidence:[t25-vector-pipeline-api-20261015.json](../evidence/t25-vector-pipeline-api-20261015.json).
+
+
+Pipeline source-control baseline — 2026-10-15 ET: six public source/refusal controls pass
+16.26s before the positive core hook. Wrong append value, captured alias, mutation during range,
+comments-split operator-new override, extra global and absent typed window all refuse without WP.
+These must run again after the positive path is admitted; a coarse earlier refusal is not proof
+of full new checker coverage. Safe whole-workflow and bad-comparison actual tests are written;
+neither has been launched. Only the bad comparison is admitted as a second structural variant,
+preserving the changed source branch so WP must reject the original maximum specification.
+The allocation contract's existing no-preexisting-write frame has its own explicit pin/assumption;
+ambient callbacks are not ruled out merely because an allocation eventually succeeds.
 Standard provenance admission gap — 2026-10-15 ET: public owner-data source reaches stand-in WP
 when a candidate-local `vector` header includes genuine libc++ and adds a global-writing replacement
 operator new (original1RED5.84s, `/private/tmp/probata-header-provenance-red.jsonl`). This is an
@@ -384,3 +413,70 @@ manifest match. The audit resolves pytest symlink aliases before counting record
 [Actual evidence](../evidence/stdlib-source-provenance-actual-20261015.json).
 The gate's focused admission and actual pair are accepted; wider vector/member
 acceptance and the ticket remain open.
+
+
+### Original vector/pair workflow — 2026-10-15 ET
+
+The unchanged `tests/fixtures/proof/cbmc/vector_units.cc` maximum function now
+proves through the public WP seam under its explicit `a:n` typed input-window
+and initializedness contract. Its original push/copy loop, pair maximum,
+range-for, size/index scan and scalar result are retained by an exact checked
+private-storage projection. Growth/allocation count is symbolic; no fixed pool
+or repeated private-address key is used. The source and view both keep
+`assigns \nothing;`, and their contract hashes agree.
+
+On frozen `0cc88ffc`, the actual pair passed **2 tests in 182.53 seconds**, peak
+0.95 GiB under the 8 GiB watchdog and adapter-owned verifier lease:
+
+| Source | Ordinary goals | Smoke | Verdict |
+| --- | --- | --- | --- |
+| Unchanged maximum workflow | 77 Valid | 12 passed | proven |
+| Changed maximum comparison (`>`→`<`) | 76 Valid, one invariant-preservation timeout | 12 passed | not proven |
+
+Both jobs pass setup, strict fresh-cache reading and the full original-TU
+standard-header/declaration gate. The negative is an unproven ordinary obligation,
+not a refutation or an ignored smoke failure. [Compact evidence](../evidence/wp-vector-pipeline-20261015.json)
+independently checks 173 retained artifact hashes across 23 unique records and
+794 original-source/header pins. Pytest symlink aliases are resolved before counting.
+The current integration merge after the run changes only run18 documentation;
+current runtime identities still equal the actual preflight pins.
+
+The first actual checkpoint, `a876e3a6`, is retained as **not proven**: all 72
+ordinary safe-case goals passed, but strict smoke rejected the unreachable
+fallback arm of the final conditional. The checked view now normalizes only
+that exact pure, initialized integer selector into complementary Boolean products.
+Exactly one product is zero, so each product and their sum remain representable
+and preserve the original selected value. The original C++ and contract are
+unchanged; RTE, initializedness and smoke remain enabled. This rule does not admit
+effectful or potentially uninitialized conditional operands. Both fresh-pin fault
+controls (noncomplementary multipliers and changed fallback) refuse before WP.
+
+The full source-token closure, target AST, 12 model-text pins and all eight
+explicit/implicit standard member/iterator calls are certified. The generic
+origin pass exempts only their freshly bound AST identities and the exact source
+input read mapped to checked view guards. Every other source operation keeps its
+ordinary checks. Independent view checks cover declaration storage/TLS/attributes,
+exact local types, extra globals, all phase bodies, annotations and guard placement.
+Fifteen stand-in admission/source/renderer controls passed before the return
+normalization; its two new fault controls passed afterward. A rehashed static-pair
+renderer first reached stand-in WP (diagnosed admission RED, no actual false proof)
+and now refuses under the independent checker.
+
+This is an explicitly attributed source-to-view relation, not a proof of every
+original allocating C-model body. Records pin the pipeline checker and allocator,
+retain standard-library/allocation-success and fresh-frame premises, and mark every
+qualified member `standalone_body_proof: false`; no fabricated once-per-member
+proof dependencies are added. No immutable method file changed; these are
+`contract_fixture` records. Ticket25 stays **claimed**: general member-body proofs,
+wider protocols/types and matched bounded/native acceptance under the eventual
+combined method remain required.
+
+
+### Focused Linux owner acceptance — 2026-10-15 12:14 ET
+
+At frozen `d3a5dd48`, current-owner data safe proves 105 ordinary/11 smoke goals.
+The stale alias remains not_proven with 111 ordinary Valid, one alias_live_after
+timeout and 11 smoke goals passed. Both actual records correctly report attempted
+WP invocation. This repairs the earlier prelaunch parser failure without upgrading
+its historical5c record or closing wider vector/pair acceptance. Ticket stays claimed.
+[Audited source, records and reports](../evidence/focused-parser-owner-final-20261015.json).

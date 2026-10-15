@@ -132,11 +132,13 @@ def _public_seed(tmp_path):
     names = {'alt-ergo':'Alt-Ergo','z3':'Z3','cvc5':'CVC5'}
     why3.write_text(''.join(f'[prover]\nname = "{names[row["tool"]]}"\nversion = "{row["version"]}"\n'
                            'command = "/usr/bin/false"\n' for row in method['lineup'] if row['tool'] in names))
-    def prove(*args):
+    def prove(*args, ok=True):
         done = run_swdb('prove','--records',records.path,'--adapter','wp','--method-version',method['id'],
             '--runs-dir',tmp_path/'runs','--format','json',*args,env={
                 'SWDB_FRAMA_C':f'{sys.executable} {frama}','WHY3CONFIG':str(why3),
                 'SWDB_VERIFIER_LOCK':str(tmp_path/'standin-only.lock')})
+        if not ok:
+            return done
         assert done.returncode == 0, done.stdout + done.stderr
         return yaml.safe_load((records.path/json.loads(done.stdout)['path']).read_text())
     return library, prove, marker
@@ -164,7 +166,7 @@ def test_public_copy_model_records_typed_qualification_and_preserves_checks_befo
     assert record['proof_setup_check']['runs'][-1]['hashes']['standard_range_model']
 
 
-def test_public_caller_cannot_import_qualified_copy_model_without_typed_domain_discharge(tmp_path):
+def test_public_typed_caller_still_requires_a_current_qualified_model_proof(tmp_path):
     import hashlib
     import json
     from test_formal_frame import frame_contract, write_library
@@ -179,12 +181,10 @@ def test_public_caller_cannot_import_qualified_copy_model_without_typed_domain_d
     entry['proof_unit']={'function':'unit','source':{'root':'library','path':'proof_units/copy.cc',
         'sha256':hashlib.sha256(source.encode()).hexdigest()}}
     write_library(library,{'proof_units/copy.cc':source,'rewrite_contracts/copy.yaml':entry})
-    record = prove('--summary',entry['id'])
-    assert record['verdict']=='not_proven' and record['failure_class']=='unsupported_construct',record
+    done = prove('--summary',entry['id'],ok=False)
+    assert done.returncode != 0
+    assert 'std_copy_int' in done.stderr and 'no proven record at its current text' in done.stderr
     assert not marker.exists()
-    handler = next(r for r in record['evidence']['reports'] if r['name']=='handler')
-    reason = json.loads(Path(handler['path']).read_text())['why']
-    assert 'std_copy_int' in reason and 'caller typed-range discharge' in reason,reason
 
 
 @pytest.mark.parametrize('mutation', ['none','qualification_omitted','guard_removed','canonical_changed'])

@@ -621,3 +621,112 @@ Two focused existing regressions also pass at `18e7a7f0` (166.98 s, peak
 5,134,909,440 bytes): original three-read source without declared entry windows
 still refuses before WP, and the existing legal one-past entry-window fixture
 still proves. The manifest includes both records and their checked report hashes.
+
+
+### Nested initializer scope — 2026-10-15 11:21 ET
+
+Frozen `f9ace980` extends the checked nested-read view to one automatic plain-int
+initializer in a braced block. Fresh read captures precede the original declaration
+in that same block. Exact original declaration locations and later references are
+independently matched; static/TLS/type/root/sibling mutations refuse before WP.
+No source memory read or input premise is removed. The existing pure-return slice
+and all ordinary bounds/initializedness checks remain active.
+
+The corrected original-policy public control fails as unsupported (3.66s); its
+new stand-in reaches WP. Thirty-one public mutation/component controls pass in
+22.80s. Actual WP produces the four expected outcomes in130.33s: safe PROVEN
+(14 ordinary Valid +1 passing smoke); each missing inner/outer window and missing
+inner initializedness remains NOT_PROVEN on its independent obligation (13 ordinary
+Valid +1 timeout +1 passing smoke). Pytest reports3passed/1failed solely because
+the last assertion guessed a prover goal spelling; the corrected semantic
+initialization-property assertion passes against all four retained records. No
+successful actual job was repeated. Two earlier test-helper API errors are retained
+and excluded from semantic RED/GREEN evidence.
+
+All report hashes and runtime manifest entries match. Test-only assertion changes
+are explicit. [Evidence](../evidence/wp-nested-initializers-20261015.json).
+Helper/nested statement-anchor hints and the full store/capacity acceptance remain
+open; this checkpoint does not resolve the ticket.
+
+### Checked scalar assignment reads — 2026-10-15 ET
+
+At frozen `71382aff`, the original local int assignment keeps its destination and later use. The safe WP fixture proves (14 ordinary/1 smoke); removing source initializedness leaves its RTE initialization obligation open (13 ordinary Valid/1 timeout, 1 smoke passed). Both controls passed in 51.39s under the 8 GiB guard. Independent source checks reject memory destinations, parameter writes, inner effects and unbraced conditional placement. Component controls: 31 passed; public stand-in admission: one passed. [Compact evidence](../evidence/wp-nested-assignments-20261015.json). This is a bounded slice checkpoint; ticket status remains claimed.
+
+### Original-TU parser context repair — 2026-10-15 ET
+
+Linux's original 134-pass/1-failure native shard exposed a reconstructed CAPI
+header order mismatch: its implicit driver defaults preceded captured libc++
+paths. Suppressing those defaults fixes the original compatibility-header failure.
+Independent follow-up found a second, material CPATH/CPLUS_INCLUDE_PATH ordering
+gap: repeated environment search could hide an explicit-include allocation hook
+even with identical physical dependency sets. Its public lower control reproduced
+RED; no verifier was launched. The parser now runs in an isolated child with
+include environment variables removed. All original driver queries retain the
+original environment explicitly, and worker failures refuse.
+
+At `7e663aaf`, 13 targeted Mac controls pass (36.47 s), and six Linux public
+compiler/stand-in controls pass (87.005 s; peak 374,874,112 bytes under 8 GiB).
+The earlier header-only `b5855894` checkpoint separately passes three Linux
+controls. Both reserved node-0 leases released; the frozen primary remote source
+and concurrent node-1 job were untouched. These results do not upgrade historical
+proof pins or close ticket 36.
+[Compact evidence](../evidence/stdlib-parser-context-20261015.json).
+
+
+Merged runtime `77624eec` preserves the checked owner-call and standard-copy call
+sets together, as well as all checker/lowerer source identities. Fourteen focused
+combined compiler/stand-in controls pass (100.94s, peak450,658,304bytes under8GiB),
+including both positive source views, declaration/return fault refusals, exact
+callee/request coverage and worker failures. This is composition evidence only;
+new actual caller proofs remain coordinator-owned. Ticket36 stays claimed.
+
+
+### Final frozen Linux checkpoint audit — 2026-10-15 11:46 ET
+
+Frozen `5c2a` jobs finish with native134passed/1failed and entry19passed/1failed,
+both exit1. The original owner-data safe test has zero WP goals and no WP log:
+it stops before launch on the same CAPI libc++ compatibility-header context
+refusal repaired at `7e663aaf`. Its selected stale-alias successor is not reached
+because `--maxfail=1` stops the shard. This is a prelaunch failure, not a failed
+owner theorem. Twenty-three deduplicated proof YAMLs parse; all155 report
+references (153 unique files) and2,852 declared absolute file-pin references
+match retained bytes, with916 unique files hashed. No solver was rerun for audit.
+
+A prospective metadata correction remains necessary: some actual positive WP
+records retain `verifier_launched:false` despite WP logs and proof goals. These
+historical records stay immutable; current acceptance is traced to their artifacts.
+[Compact final audit](../evidence/source-gate-final-frozen-5c-20261015.json).
+
+
+### Prospective WP invocation metadata — 2026-10-15 ET
+
+`b4dc2748` sets `settings.verifier_launched:true` only after generated-input,
+source and pin checks pass, immediately before invoking the WP watchdog. True
+means attempted verifier invocation, not successful completion or proof. Real
+prelaunch source refusal retains false. The public stand-in regression first
+reproduces1failed/1passed; the correction gives2passed in47.06s under8GiB
+(peak408,092,672bytes), with no actual solver. Historical5c records are unchanged.
+[Evidence](../evidence/wp-launch-metadata-20261015.json). Ticket36 stays claimed.
+
+
+### Entry hints and original store proof — 2026-10-15 ET
+
+At frozen `593c35d6`, checked helper/nested views admit only original-unit entry assertions and ghost hints, retaining normal noninterference checks. Eight public/component controls passed (234.60s); all five stand-in records and 70 report references match. Independent review found no blocker. The original store-source-wait fixture, with explicit q/p:n windows and entry witness `dx_store_bound=n`, proves all 90 ordinary goals and passes 29 smoke checks. The shortened witness `n-1` stays not proven with one open `store_indices` obligation and 29 smoke tests passed. The old-source premature CPU read stops prelaunch because scalar assignment was not yet supported; its test failure is retained and a separate composed-source replay is required. All three records, 59 report references and 10 runtime pins match. [Compact evidence](../evidence/wp-source-view-entry-hints-20261015.json). Ticket remains claimed.
+
+
+Composed `aead7909` passes 37 component/public controls (56.55s). Its premature ordinary CPU read is intentionally refused before WP by the existing semantics0.1 policy; overlap hazards belong to ticket28. The new test incorrectly expected a WP result and failed on absent hint metadata. A test-only correction now checks that documented refusal, and strengthens the shortened-frame assertion to the specific open store_indices obligation. Offline assertions pass all three frozen593 records and the frozenaead refusal; runtime and historical artifacts are unchanged. No overlap theorem is claimed.
+
+
+### Focused Linux final setup audit — 2026-10-15 12:14 ET
+
+Frozen `d3a5dd48` finishes node 0 with 167 passing compiler/stand-in controls and
+node 1 with 20 passing owner/binding/copy controls, both exit0. Actual owner and
+qualified copy positives prove; stale alias, missing initialization and short
+capacity remain not_proven. Invocation metadata is true for attempts and false
+for prelaunch refusal. Historical5c failures and later entry/assignment pins stay
+separate; no whole-ticket or production-method claim is made.
+
+All 17 records, 90 report references plus 17 adapter logs (107 total), 19,946
+absolute file-pin references, 196 runtime source files per lane and 16 certificate
+self-hashes match. Both source-after checks remain clean atd3a. Ticket stays claimed.
+[Final audit](../evidence/focused-parser-owner-final-20261015.json).

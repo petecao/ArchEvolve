@@ -322,6 +322,27 @@ class _Plan:
         """Independent output AST matching against original bodies and bindings."""
         if Path(path).read_text() != self.output:
             raise Refused("generated helper text changed before AST certification")
+        # Independently authorize each edited byte span from the original unit.
+        # Matching only its body AST would miss changes to unused parameters,
+        # attributes, global declarations or preprocessing outside a clone.
+        expected_edits = []
+        for node in _walk(self.tree.body(self.entry)):
+            if node.get("kind") == "CallExpr" and self.tree.body(self.tree.binding(node)) is not None:
+                begin, end = _span(node, self.source)
+                suffix = re.match(rb'\s*;', self.raw[end:])
+                if not suffix:
+                    raise Refused("original helper call has no statement terminator")
+                expected_edits.append((begin, end + suffix.end()))
+        if sorted(expected_edits) != [(edit["begin"], edit["end"]) for edit in self.edits]:
+            raise Refused("helper edits do not match the original call statements")
+        output = self.output.encode("utf-8")
+        source_cursor = view_cursor = 0
+        for edit in self.edits:
+            if output[view_cursor:edit["view_begin"]] != self.raw[source_cursor:edit["begin"]]:
+                raise Refused("helper renderer changed source bytes outside a call statement")
+            source_cursor, view_cursor = edit["end"], edit["view_end"]
+        if output[view_cursor:] != self.raw[source_cursor:]:
+            raise Refused("helper renderer changed source bytes after its call statements")
         if _dependencies(self.source, self.tool, self.includes, self.defines) != self.dependencies:
             raise Refused("source dependency changed before AST certification")
         view_dependencies = _dependencies(path, self.tool, self.includes, self.defines)
@@ -330,6 +351,11 @@ class _Plan:
         if view_headers != original_headers:
             raise Refused("generated source changed include resolution")
         actual = _Tree(path, self.tool, self.includes, self.defines)
+        rewritten_entry = actual.entry(self.entry["name"])
+        if (_signature(self.entry) != _signature(rewritten_entry) or
+                [_signature(n) for n in _children(self.entry) if n.get("kind") == "ParmVarDecl"] !=
+                [_signature(n) for n in _children(rewritten_entry) if n.get("kind") == "ParmVarDecl"]):
+            raise Refused("helper view changed the original unit entry signature or parameter scope")
         contexts = iter(self.contexts)
         consumed = []
         def match(left, right, env=None):
@@ -367,7 +393,10 @@ class _Plan:
                 if statement.get("kind") != "DeclStmt" or len(declarations) != 1:
                     raise Refused("clone formal is not one ordinary value capture")
                 declaration, = declarations
-                if declaration.get("kind") != "VarDecl" or declaration.get("name") != name or declaration.get("type") != param.get("type") or len(_children(declaration)) != 1:
+                if (declaration.get("kind") != "VarDecl" or declaration.get("name") != name or
+                        declaration.get("type") != param.get("type") or len(_children(declaration)) != 1 or
+                        declaration.get("storageClass") or declaration.get("tls") or declaration.get("constexpr") or
+                        any(n.get("kind", "").endswith("Attr") for n in _children(declaration))):
                     raise Refused("clone formal type, name, or initialization drifted")
                 match(arg, _children(declaration)[0], outer)
                 env[param["id"]] = declaration["id"]

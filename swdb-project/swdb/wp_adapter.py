@@ -40,7 +40,7 @@ import subprocess
 from dataclasses import replace
 from pathlib import Path
 
-from swdb import artifacts, c_lowering, cpu_memory_admission, framac, helper_windows, nested_entry_reads, hint_check, paths, proof_semantics, proof_setup, rss_watchdog, standard_model_view, standard_range_model, std_models, terminal_release, vector_ownership, vocab, wp_pointer_bounds
+from swdb import artifacts, c_lowering, cpu_memory_admission, framac, helper_windows, nested_entry_reads, hint_check, paths, proof_semantics, proof_setup, rss_watchdog, standard_model_view, standard_range_calls, standard_range_model, std_models, terminal_release, vector_ownership, vocab, wp_pointer_bounds
 from swdb.proof import MODEL_PREFIX, AdapterError, Verdict
 
 NAME = "wp"
@@ -80,6 +80,11 @@ class WpAdapter:
             raise AdapterError(str(exc)) from None
         self.defines = tuple(defines)
         proof_semantics.check_defines(self.defines)
+
+    def _entry_view_hints(self, job):
+        """Entry scope is unchanged by the independently checked source views."""
+        return all(hint.get("anchor") == f"{job.unit.function}.entry" and
+                   hint.get("kind") in {"assert", "ghost"} for hint in self.hints)
 
     @classmethod
     def from_args(cls, args, script, *, library, contract, method):
@@ -203,8 +208,8 @@ class WpAdapter:
             has_helpers = any(a["kind"] == "contract" and a["function"] != job.unit.function
                               for a in lowering.anchors)
             if needs_origins and has_helpers and proof_semantics.called(lowering, covered):
-                if self.hints_path:
-                    raise helper_windows.Refused("source-anchored hints are outside the checked helper-view slice")
+                if self.hints_path and not self._entry_view_hints(job):
+                    raise helper_windows.Refused("helper views admit only assertions/ghost hints at the original unit entry")
                 imported = {name: {"id": policy["model"]["entry"],
                                    "sha256": policy["model"]["entry_sha256"]}
                             for name, policy in semantics_options["semantics"]["audited_imports"].items()}
@@ -239,8 +244,8 @@ class WpAdapter:
             except wp_pointer_bounds.Refused:
                 nested_needed = bool(unit.get("array_domains"))
             if nested_needed:
-                if self.hints_path:
-                    raise nested_entry_reads.Refused("source-anchored hints are outside the checked nested-read slice")
+                if self.hints_path and not self._entry_view_hints(job):
+                    raise nested_entry_reads.Refused("nested views admit only assertions/ghost hints at the original unit entry")
                 nested_source = context.get("helper_windows", {}).get("view")
                 nested_source = nested_source.path if nested_source else source
                 nested_kwargs = context.get("helper_windows", {}).get("effective_kwargs", source_kwargs)
@@ -272,7 +277,7 @@ class WpAdapter:
                         ("nested_view_source", nested_view.path), ("nested_entry_reads_certificate", certificate_path)]
                     context["pointer_source_plan"] = {"source": str(nested_view.path), "kwargs": effective_kwargs}
             if (unit.get("array_domains") or (lowering.pointer_bounds or {}).get("owner") or
-                    any(row.get("kind") in {"call", "producer", "import"} for row in lowering.pointer_bounds.get("sites", []))):
+                    any(row.get("kind") in {"call", "producer", "import", "standard_range_call"} for row in lowering.pointer_bounds.get("sites", []))):
                 context.setdefault("pointer_source_plan", {"source": str(source), "kwargs": source_kwargs})
         except (helper_windows.Refused, nested_entry_reads.Refused) as exc:
             context["settings"] = {"tool": "frama-c-wp", "flags": [], "verifier_launched": False,
@@ -442,8 +447,8 @@ class WpAdapter:
         """Recheck both source lowerings and the independent contextual AST relation."""
         helper = context["helper_windows"]
         view = helper["view"]
-        if self.hints_path:
-            raise helper_windows.Refused("source-anchored hints are outside the checked helper-view slice")
+        if self.hints_path and not self._entry_view_hints(job):
+            raise helper_windows.Refused("helper views admit only assertions/ghost hints at the original unit entry")
         helper_windows.check_view(helper["source"], job.unit.function, view, **helper["options"])
         try:
             original = c_lowering.lower(helper["source"], job.unit.function, **helper["original_kwargs"])
@@ -462,8 +467,8 @@ class WpAdapter:
     def check_nested_entry_reads(self, job, context):
         nested = context["nested_entry_reads"]
         view = nested["view"]
-        if self.hints_path:
-            raise nested_entry_reads.Refused("source-anchored hints are outside the checked nested-read slice")
+        if self.hints_path and not self._entry_view_hints(job):
+            raise nested_entry_reads.Refused("nested views admit only assertions/ghost hints at the original unit entry")
         nested_entry_reads.check_view(nested["source"], job.unit.function, view, **nested["options"])
         try:
             original = c_lowering.lower(nested["source"], job.unit.function, **nested["original_kwargs"])
@@ -647,12 +652,11 @@ class WpAdapter:
                             "sentence": f"The summary of {used['name']} (library entry {entry_id}) stands for its code "
                                         f"here; proof record {record} proves the summary on that code."})
         for name in lowering.models:
-            # A range-qualified proof cannot be imported by ACSL validity alone.
-            # Source-root/subobject and endpoint/destination discharge is a later
-            # checked caller relation; absence never falls back to old eligibility.
             if name == standard_range_model.NAME:
-                raise standard_range_model.Refused(
-                    "std_copy_int requires checked caller typed-range discharge before importing its qualified model proof")
+                try:
+                    caller_sha = standard_range_calls.check_caller(lowering)
+                except standard_range_calls.Refused as exc:
+                    raise standard_range_model.Refused(str(exc)) from None
             sha = hashlib.sha256((c_lowering.model_text(name) or "").encode()).hexdigest()
             if name.startswith(ALLOCATION_MODEL):
                 context.setdefault("allocation_contracts", {})[name] = {"id": name, "sha256": sha}
@@ -665,6 +669,14 @@ class WpAdapter:
             if record is None:
                 raise AdapterError(f"the C lowering calls the C model {name}, which has no proven record at its current "
                                    f"text: run `swdb prove --model {name} --adapter wp` first")
+            if name == standard_range_model.NAME:
+                try:
+                    dependency = standard_range_calls.bind_dependency(self,record,context["job"].scratch)
+                except (standard_range_calls.Refused,standard_range_model.Refused) as exc:
+                    raise standard_range_model.Refused(str(exc)) from None
+                context["standard_range_calls"] = {"caller_sha256":caller_sha,"dependency":dependency}
+                context["pins"]["standard_range_call_check"] = standard_range_calls.identity()
+                context.setdefault("settings",{})["standard_range_calls"] = context["standard_range_calls"]
             models.append({"id": name, "sha256": sha, "proof_record": record})
             assumed.append({"kind": "summary", "reference": {"id": name, "sha256": sha},
                             "sentence": f"The C model {name} stands for the call it models (one thread); proof record "
@@ -883,6 +895,7 @@ class WpAdapter:
                        (range_model["certificate_path"], range_model["certificate_text"])]
             context["settings"]["standard_range_model"] = view.certificate
         proof_setup.check_generated(job, self, context, inputs, settings_flags, command=command, scratch=scratch)
+        context["settings"]["verifier_launched"] = True
         result = rss_watchdog.run(command, log=wp_log, cap_bytes=cap, timeout=wall, cwd=scratch, env=env)
         context["peak"] = result.peak_rss_bytes
         log.line(f"frama-c exit {result.exit_code}, wall {result.wall_seconds:.2f} s, peak rss {result.peak_rss_bytes}, "
@@ -942,6 +955,12 @@ class WpAdapter:
             fields["unproven_properties"] = context.get("unproven", [])
         if context.get("settings"):
             fields["settings"] = context["settings"]
+        if self.hints and (context.get("helper_windows") or context.get("nested_entry_reads")):
+            source_view = context.get("nested_entry_reads") or context["helper_windows"]
+            fields.setdefault("settings", {})["source_view_hints"] = {
+                "policy": "original-unit-entry assertions and ghost hints only",
+                "anchor": f"{source_view['original_lowering'].function}.entry", "count": len(self.hints),
+                "scope": "unchanged original parameters; ordinary hint and semantics checks remain mandatory"}
         pins = {"c_lowering": context["c_lowering"], "naming_rules": c_lowering.naming_rules()} \
             if context.get("c_lowering") else {}
         pins.update(context.get("pins") or {})                 # ticket 24: summaries and C models

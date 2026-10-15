@@ -411,3 +411,40 @@ independent obligations. Final stricter storage/attribute policy `18e7a7f0` pass
 See [ticket 36's scoped checkpoint](36-proof-setup-check-and-verdict-reading.md#nested-entry-read-checkpoint--2026-10-15-et)
 and [the hash-checked manifest](../evidence/wp-nested-entry-reads-20261015.json).
 This does not close the remaining acceptance matrix or freeze production method 3.
+
+
+### Nested initializer scope — 2026-10-15 11:21 ET
+
+Frozen `f9ace980` extends the checked nested-read view to one automatic plain-int
+initializer in a braced block. Fresh read captures precede the original declaration
+in that same block. Exact original declaration locations and later references are
+independently matched; static/TLS/type/root/sibling mutations refuse before WP.
+No source memory read or input premise is removed. The existing pure-return slice
+and all ordinary bounds/initializedness checks remain active.
+
+The corrected original-policy public control fails as unsupported (3.66s); its
+new stand-in reaches WP. Thirty-one public mutation/component controls pass in
+22.80s. Actual WP produces the four expected outcomes in130.33s: safe PROVEN
+(14 ordinary Valid +1 passing smoke); each missing inner/outer window and missing
+inner initializedness remains NOT_PROVEN on its independent obligation (13 ordinary
+Valid +1 timeout +1 passing smoke). Pytest reports3passed/1failed solely because
+the last assertion guessed a prover goal spelling; the corrected semantic
+initialization-property assertion passes against all four retained records. No
+successful actual job was repeated. Two earlier test-helper API errors are retained
+and excluded from semantic RED/GREEN evidence.
+
+All report hashes and runtime manifest entries match. Test-only assertion changes
+are explicit. [Evidence](../evidence/wp-nested-initializers-20261015.json).
+Helper/nested statement-anchor hints and the full store/capacity acceptance remain
+open; this checkpoint does not resolve the ticket.
+
+### Entry hints and original store proof — 2026-10-15 ET
+
+At frozen `593c35d6`, checked helper/nested views admit only original-unit entry assertions and ghost hints, retaining normal noninterference checks. Eight public/component controls passed (234.60s); all five stand-in records and 70 report references match. Independent review found no blocker. The original store-source-wait fixture, with explicit q/p:n windows and entry witness `dx_store_bound=n`, proves all 90 ordinary goals and passes 29 smoke checks. The shortened witness `n-1` stays not proven with one open `store_indices` obligation and 29 smoke tests passed. The old-source premature CPU read stops prelaunch because scalar assignment was not yet supported; its test failure is retained and a separate composed-source replay is required. All three records, 59 report references and 10 runtime pins match. [Compact evidence](../evidence/wp-source-view-entry-hints-20261015.json). Ticket remains claimed.
+
+
+### Checked scalar assignment reads — 2026-10-15 ET
+
+At frozen `71382aff`, the original local int assignment keeps its destination and later use. The safe WP fixture proves (14 ordinary/1 smoke); removing source initializedness leaves its RTE initialization obligation open (13 ordinary Valid/1 timeout, 1 smoke passed). Both controls passed in 51.39s under the 8 GiB guard. Independent source checks reject memory destinations, parameter writes, inner effects and unbraced conditional placement. Component controls: 31 passed; public stand-in admission: one passed. [Compact evidence](../evidence/wp-nested-assignments-20261015.json). This is a bounded slice checkpoint; ticket status remains claimed.
+
+Composed `aead7909` passes 37 component/public controls (56.55s). Its premature ordinary CPU read is intentionally refused before WP by the existing semantics0.1 policy; overlap hazards belong to ticket28. The new test incorrectly expected a WP result and failed on absent hint metadata. A test-only correction now checks that documented refusal, and strengthens the shortened-frame assertion to the specific open store_indices obligation. Offline assertions pass all three frozen593 records and the frozenaead refusal; runtime and historical artifacts are unchanged. No overlap theorem is claimed.

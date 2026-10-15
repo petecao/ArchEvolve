@@ -117,3 +117,28 @@ def test_unit_closure_refuses_implicit_cleanup_callees(tmp_path):
     text = 'void cleanup(int*);\n' + SOURCE.replace('return base', 'int local __attribute__((cleanup(cleanup)))=0; return base')
     with pytest.raises(nested.Refused):
         make(tmp_path, text)
+
+
+def test_nested_scalar_assignment_preserves_destination_and_later_use(tmp_path):
+    text = 'int unit(int*q,int*base,int n){int value=0; value=base[q[0]]; return value;}'
+    source, view = make(tmp_path, text)
+    assert view is not None
+    assert len(view.certificate['captures']) == 1
+    assert 'value=base[swdb_nested_read_0];' in view.text
+    assert view.text.count('return value;') == 1
+    nested.check_view(source, 'unit', view, entry_windows=WINDOWS)
+
+
+@pytest.mark.parametrize('statement', ['base[n]=base[q[0]];', 'n=base[q[0]];',
+                                      'if(n) value=base[q[0]];', 'value=(n=base[q[0]]);'])
+def test_nested_assignment_does_not_duplicate_a_memory_lvalue_or_inner_effect(tmp_path, statement):
+    with pytest.raises(nested.Refused):
+        make(tmp_path, 'int unit(int*q,int*base,int n){int value=0;' + statement + 'return value;}')
+
+
+def test_rehashed_assignment_cannot_change_its_destination_binding(tmp_path, monkeypatch):
+    original = nested._render
+    monkeypatch.setattr(nested, '_render', lambda raw, edits:
+        original(raw, edits).replace('value=base[', 'n=base['))
+    with pytest.raises(nested.Refused):
+        make(tmp_path, 'int unit(int*q,int*base,int n){int value=0;value=base[q[0]];return value;}')

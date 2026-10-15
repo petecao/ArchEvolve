@@ -1,0 +1,890 @@
+{
+  "date": "2026-10-15 ET",
+  "source_commit": "0831b224192dfeb31e4854fed59a2f309a5495da",
+  "source_files_verified_unchanged_at_run_end": 200,
+  "selection": "tests/test_standard_range_caller_wp.py",
+  "pytest": {
+    "passed": 4,
+    "failed": 0,
+    "seconds": 228.73,
+    "log": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest.log",
+    "sha256": "766b723a13b130199b249a5c04155a9d79e27ac07f5bf833df50bb85b46c6204"
+  },
+  "manifest": {
+    "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/launch-manifest.json",
+    "sha256": "2b508ab0586dbe453336e7e6028a517912768054a402de9ad93ecb03305f67ee"
+  },
+  "audit": {
+    "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/audit.json",
+    "sha256": "eb6d87aaa34bf7c095808b96db2ccecd6e9085643cf52e2977640d1b44e4aa86",
+    "script": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/audit.py",
+    "script_sha256": "83687ad6829dc98d5e866933ad2fd4d691ba6afeeb7dd38014249478ea947d6d"
+  },
+  "resources": {
+    "pytest_workers": 1,
+    "shared_slots": 2,
+    "rss_cap_bytes": 8589934592,
+    "peak_recorded_rss_bytes": 519225344,
+    "lock": "Adapter-owned shared verifier lock; no outer lock."
+  },
+  "records": [
+    {
+      "id": "proof.contract.fixture_copy_capacity.20261015t155012z.cc86e37f",
+      "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/records/proofs/proof.contract.fixture_copy_capacity.20261015t155012z.cc86e37f.yaml",
+      "sha256": "26a1ce581ac919875474b9f914bf36673219b8b51293aa440703172630d07544",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.fixture_copy_capacity"
+      },
+      "verdict": "not_proven",
+      "failure_class": "vacuous_pass",
+      "ordinary": {
+        "timeout": 1,
+        "valid": 14
+      },
+      "smoke": {
+        "failed_smoke": 2,
+        "valid": 1
+      },
+      "open_goals": [
+        {
+          "goal": "typed_real_capacity_wp_smoke_dead_code_s25",
+          "property": "capacity_wp_smoke_dead_code_s25",
+          "function": "capacity",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_std_copy_int_wp_smoke_dead_call_s24",
+          "property": "std_copy_int_wp_smoke_dead_call_s24",
+          "function": "capacity",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_capacity_assert_swdb_window_copy_2",
+          "property": "capacity_assert_swdb_window_copy_2",
+          "function": "capacity",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "unproven_properties": [
+        {
+          "property": "assigns *(out + (0 .. 1));",
+          "kind": "assigns clause",
+          "function": "capacity",
+          "line": 28,
+          "status": "Partially proven",
+          "goal": "typed_real_capacity_assert_swdb_window_copy_2",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\result \u2261 0",
+          "kind": "postcondition",
+          "function": "capacity",
+          "line": 28,
+          "status": "Partially proven",
+          "goal": "typed_real_capacity_assert_swdb_window_copy_2",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\false",
+          "kind": "postcondition",
+          "function": "capacity",
+          "line": 29,
+          "status": "Partially proven",
+          "goal": "typed_real_capacity_assert_swdb_window_copy_2",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\true",
+          "kind": "termination clause",
+          "function": "capacity",
+          "line": 29,
+          "status": "Partially proven",
+          "goal": "typed_real_capacity_assert_swdb_window_copy_2",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "0 \u2264 0 \u2264 0 + 2 \u2264 2 \u2227 0 \u2264 (0 + 2) - 0 \u2264 9223372036854775807L \u2227 0 \u2264 0 \u2227 0 + ((0 + 2) - 0) \u2264 1",
+          "kind": "user assertion",
+          "function": "capacity",
+          "line": 37,
+          "status": "Unknown",
+          "goal": "typed_real_capacity_assert_swdb_window_copy_2",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\base_addr(first) \u2261 \\base_addr(last) \u2227 first \u2264 last",
+          "kind": "precondition of std_copy_int",
+          "function": "capacity",
+          "line": 38,
+          "status": "Partially proven",
+          "goal": "typed_real_std_copy_int_wp_smoke_dead_call_s24",
+          "failure_class": "vacuous_pass"
+        },
+        {
+          "property": "\\initialized(first + (0 .. (last - first) - 1))",
+          "kind": "precondition of std_copy_int",
+          "function": "capacity",
+          "line": 38,
+          "status": "Partially proven",
+          "goal": "typed_real_std_copy_int_wp_smoke_dead_call_s24",
+          "failure_class": "vacuous_pass"
+        },
+        {
+          "property": "\\separated(first + (0 .. (last - first) - 1), d_first + (0 .. (last - first) - 1))",
+          "kind": "precondition of std_copy_int",
+          "function": "capacity",
+          "line": 38,
+          "status": "Partially proven",
+          "goal": "typed_real_std_copy_int_wp_smoke_dead_call_s24",
+          "failure_class": "vacuous_pass"
+        },
+        {
+          "property": "\\valid(d_first + (0 .. (last - first) - 1))",
+          "kind": "precondition of std_copy_int",
+          "function": "capacity",
+          "line": 38,
+          "status": "Partially proven",
+          "goal": "typed_real_std_copy_int_wp_smoke_dead_call_s24",
+          "failure_class": "vacuous_pass"
+        },
+        {
+          "property": "\\valid_read(first + (0 .. (last - first) - 1))",
+          "kind": "precondition of std_copy_int",
+          "function": "capacity",
+          "line": 38,
+          "status": "Partially proven",
+          "goal": "typed_real_std_copy_int_wp_smoke_dead_call_s24",
+          "failure_class": "vacuous_pass"
+        },
+        {
+          "property": "last - first \u2264 9223372036854775807L",
+          "kind": "precondition of std_copy_int",
+          "function": "capacity",
+          "line": 38,
+          "status": "Partially proven",
+          "goal": "typed_real_std_copy_int_wp_smoke_dead_call_s24",
+          "failure_class": "vacuous_pass"
+        },
+        {
+          "property": "\\false",
+          "kind": "user assertion",
+          "function": "capacity",
+          "line": 41,
+          "status": "Invalid or unreachable",
+          "failure_class": "vacuous_pass"
+        },
+        {
+          "property": "capacity_wp_smoke_dead_code_s25",
+          "goal": "typed_real_capacity_wp_smoke_dead_code_s25",
+          "status": "failed smoke test",
+          "failure_class": "vacuous_pass"
+        },
+        {
+          "property": "std_copy_int_wp_smoke_dead_call_s24",
+          "goal": "typed_real_std_copy_int_wp_smoke_dead_call_s24",
+          "status": "failed smoke test",
+          "failure_class": "vacuous_pass"
+        },
+        {
+          "property": "capacity_assert_swdb_window_copy_2",
+          "goal": "typed_real_capacity_assert_swdb_window_copy_2",
+          "status": "timeout",
+          "failure_class": "timeout"
+        }
+      ],
+      "pins": {
+        "code": {
+          "id": "contract.fixture_copy_capacity",
+          "sha256": "76b8c2c9bd0801a06620bc53c34688aa82b8c08a35254cd27faa6288e393b816"
+        },
+        "contract": {
+          "id": "contract.fixture_copy_capacity",
+          "sha256": "76b8c2c9bd0801a06620bc53c34688aa82b8c08a35254cd27faa6288e393b816"
+        },
+        "baseline_function": {
+          "not_applicable": "A library summary is proven on the entry's own code."
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "not_applicable": "No proof-semantics version exists before ticket 27."
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "e83fe02edeae81bbca715e231275863fcaf61c29f00b7fd978dc6ea39b309ccc"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "A library summary has no predecessor."
+        },
+        "build_constants": [],
+        "c_lowering": {
+          "id": "capacity.c",
+          "sha256": "19966117c0fd680fcc32994f67d22e03776177cc93c7f05cdc6997fb36eefa17"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "standard_range_call_check": {
+          "id": "standard-range-calls-1",
+          "sha256": "0bbacc63269090dc8e8db0e997954545ce39cbe907fcbe8100d26bafd904d19f"
+        },
+        "models": [
+          {
+            "id": "std_copy_int",
+            "sha256": "efcf958c7433473e0478d53b60d2aab648124e87df8e04f13b41f1087c94da26",
+            "proof_record": "proof.model.std_copy_int.20261015t154721z.6863e187"
+          }
+        ]
+      },
+      "job": {
+        "adapter": "wp",
+        "host": "mac",
+        "worker_core": "unpinned",
+        "wall_seconds": 46.390779,
+        "cpu_seconds": 49.59281,
+        "batch_load": {
+          "start": 7.742,
+          "end": 7.831
+        },
+        "peak_rss_bytes": 361660416,
+        "batch": "batch.proof.contract.fixture_copy_capacity.20261015t155012z.cc86e37f",
+        "position": 1
+      },
+      "bounds": {
+        "threads": 1,
+        "input_size": "unbounded"
+      },
+      "reports": [
+        {
+          "name": "stdlib_provenance_unit",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_capacity.20261015t155012z.cc86e37f/wp/stdlib_provenance_unit.json",
+          "sha256": "8c2e752fcbc827837e312ca7862c7ef787dac1750047c5bed512e3e04a69c33a"
+        },
+        {
+          "name": "c_lowering",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_capacity.20261015t155012z.cc86e37f/wp/capacity.c",
+          "sha256": "19966117c0fd680fcc32994f67d22e03776177cc93c7f05cdc6997fb36eefa17"
+        },
+        {
+          "name": "anchors",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_capacity.20261015t155012z.cc86e37f/wp/capacity.anchors.json",
+          "sha256": "842d45f31c65b656b8e4b9ee19748a02b6d184accfa8db5e4fd5680107f7d3e7"
+        },
+        {
+          "name": "wp_input",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_capacity.20261015t155012z.cc86e37f/wp/wp_input.c",
+          "sha256": "53fc716377411c96330a79ce2292b29065074bf955d70de740dd67dcbf368d5a"
+        },
+        {
+          "name": "wp_log",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_capacity.20261015t155012z.cc86e37f/wp/frama-c.log",
+          "sha256": "67cee9100f2dd46a3ab4bcd4dfc7a2ea870ad244501ca4f9f2d9ff7afb04671b"
+        },
+        {
+          "name": "wp_goals",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_capacity.20261015t155012z.cc86e37f/wp/wp-goals.json",
+          "sha256": "f55870dd4f84068f32eeff7a0b30bbbc87feb40a21ea038499d62355ad49d2af"
+        },
+        {
+          "name": "wp_properties",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_capacity.20261015t155012z.cc86e37f/wp/wp-properties.csv",
+          "sha256": "4231f6139f749579d6b4f605d18ef0a8f33b80fd49d984394d1bc9464e133f1f"
+        },
+        {
+          "name": "wp_inventory",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_capacity.20261015t155012z.cc86e37f/wp/wp-inventory.json",
+          "sha256": "e19e7f9b475d3ae6c20e085863f715f021b2c6c5c98382bc870c30828db2b70c"
+        },
+        {
+          "name": "wp_normalized",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_capacity.20261015t155012z.cc86e37f/wp/wp-normalized.c",
+          "sha256": "82ca8e0f9cb3be4d4060744027c6a497d903174baae54b529846047d70863841"
+        },
+        {
+          "name": "handler",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_capacity.20261015t155012z.cc86e37f/wp/handler.json",
+          "sha256": "04ec59ba78a9b31048241e6ccb68e34c3f9abcd02498466db87a7e5f8048fddc"
+        }
+      ]
+    },
+    {
+      "id": "proof.contract.fixture_copy_empty.20261015t154840z.d027a0e2",
+      "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/records/proofs/proof.contract.fixture_copy_empty.20261015t154840z.d027a0e2.yaml",
+      "sha256": "37a53ff32fa79e08f410303259cc6f469e36426d5d3a1d2b92f859ac0e7fb09f",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.fixture_copy_empty"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "ordinary": {
+        "valid": 13
+      },
+      "smoke": {
+        "valid": 2
+      },
+      "open_goals": [],
+      "unproven_properties": [],
+      "pins": {
+        "code": {
+          "id": "contract.fixture_copy_empty",
+          "sha256": "0aae342b9de9a7974f3621161d47d1e3bdc1b8312428124eef08db5b9a3424aa"
+        },
+        "contract": {
+          "id": "contract.fixture_copy_empty",
+          "sha256": "0aae342b9de9a7974f3621161d47d1e3bdc1b8312428124eef08db5b9a3424aa"
+        },
+        "baseline_function": {
+          "not_applicable": "A library summary is proven on the entry's own code."
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "not_applicable": "No proof-semantics version exists before ticket 27."
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "e83fe02edeae81bbca715e231275863fcaf61c29f00b7fd978dc6ea39b309ccc"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "A library summary has no predecessor."
+        },
+        "build_constants": [],
+        "c_lowering": {
+          "id": "empty.c",
+          "sha256": "bee8003d5ecb99f896a5fe28c7a7d55cb472a7250d269f226d11bdae364cd4a8"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "standard_range_call_check": {
+          "id": "standard-range-calls-1",
+          "sha256": "0bbacc63269090dc8e8db0e997954545ce39cbe907fcbe8100d26bafd904d19f"
+        },
+        "models": [
+          {
+            "id": "std_copy_int",
+            "sha256": "efcf958c7433473e0478d53b60d2aab648124e87df8e04f13b41f1087c94da26",
+            "proof_record": "proof.model.std_copy_int.20261015t154721z.6863e187"
+          }
+        ]
+      },
+      "job": {
+        "adapter": "wp",
+        "host": "mac",
+        "worker_core": "unpinned",
+        "wall_seconds": 19.093343,
+        "cpu_seconds": 18.647114,
+        "batch_load": {
+          "start": 7.555,
+          "end": 7.152
+        },
+        "peak_rss_bytes": 343506944,
+        "batch": "batch.proof.contract.fixture_copy_empty.20261015t154840z.d027a0e2",
+        "position": 1
+      },
+      "bounds": {
+        "threads": 1,
+        "input_size": "unbounded"
+      },
+      "reports": [
+        {
+          "name": "stdlib_provenance_unit",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_empty.20261015t154840z.d027a0e2/wp/stdlib_provenance_unit.json",
+          "sha256": "dc63737434d340d4cc162519514db2d800f3d36a1e38cc39afd364bcb9d6ed2d"
+        },
+        {
+          "name": "c_lowering",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_empty.20261015t154840z.d027a0e2/wp/empty.c",
+          "sha256": "bee8003d5ecb99f896a5fe28c7a7d55cb472a7250d269f226d11bdae364cd4a8"
+        },
+        {
+          "name": "anchors",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_empty.20261015t154840z.d027a0e2/wp/empty.anchors.json",
+          "sha256": "9b9e295a273bbfe9509c8602d90230bf8ef9a595cb5b90ad1969a66e81c8d99c"
+        },
+        {
+          "name": "wp_input",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_empty.20261015t154840z.d027a0e2/wp/wp_input.c",
+          "sha256": "7c6fa8d41ecc891731d310fc4f241f3c159fb58430f0084a2909341e730b389f"
+        },
+        {
+          "name": "wp_log",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_empty.20261015t154840z.d027a0e2/wp/frama-c.log",
+          "sha256": "6d81e22f376058ea148f6357c996c020392f9f2e8f6e2de05c2a420daa97473e"
+        },
+        {
+          "name": "wp_goals",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_empty.20261015t154840z.d027a0e2/wp/wp-goals.json",
+          "sha256": "425868945c0c3a5b7a6d4b183817792fb5ae047379aeabd6ce7f63980c7ce57f"
+        },
+        {
+          "name": "wp_properties",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_empty.20261015t154840z.d027a0e2/wp/wp-properties.csv",
+          "sha256": "fd7d6f23226c52d7a319088a5dfdb3b32acde94a39eff1664835d4f1b42940e8"
+        },
+        {
+          "name": "wp_inventory",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_empty.20261015t154840z.d027a0e2/wp/wp-inventory.json",
+          "sha256": "06f3cd8ed44958e098914186e796ccb604fe734385b40aebcf24af1df2aea5f8"
+        },
+        {
+          "name": "wp_normalized",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_empty.20261015t154840z.d027a0e2/wp/wp-normalized.c",
+          "sha256": "6d3cc91f1ef95c4bb51e0ed4c225a5262da5cead090a5b84fdd46a02c8900784"
+        }
+      ]
+    },
+    {
+      "id": "proof.contract.fixture_copy_safe.20261015t154806z.d7445c68",
+      "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/records/proofs/proof.contract.fixture_copy_safe.20261015t154806z.d7445c68.yaml",
+      "sha256": "2157f689cd63ac05ac464076d9be247c30d7b6fb62203590f227511511d756d6",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.fixture_copy_safe"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "ordinary": {
+        "valid": 15
+      },
+      "smoke": {
+        "valid": 2
+      },
+      "open_goals": [],
+      "unproven_properties": [],
+      "pins": {
+        "code": {
+          "id": "contract.fixture_copy_safe",
+          "sha256": "91c2887d4a7d1c4d6a902273ad760b10602faf8baee3483a9575c6c9e0a61868"
+        },
+        "contract": {
+          "id": "contract.fixture_copy_safe",
+          "sha256": "91c2887d4a7d1c4d6a902273ad760b10602faf8baee3483a9575c6c9e0a61868"
+        },
+        "baseline_function": {
+          "not_applicable": "A library summary is proven on the entry's own code."
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "not_applicable": "No proof-semantics version exists before ticket 27."
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "e83fe02edeae81bbca715e231275863fcaf61c29f00b7fd978dc6ea39b309ccc"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "A library summary has no predecessor."
+        },
+        "build_constants": [],
+        "c_lowering": {
+          "id": "safe.c",
+          "sha256": "e5de45bb518aee69542d56f5a038f639b309e2ab1ea69ffc63dc34fbc935a433"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "standard_range_call_check": {
+          "id": "standard-range-calls-1",
+          "sha256": "0bbacc63269090dc8e8db0e997954545ce39cbe907fcbe8100d26bafd904d19f"
+        },
+        "models": [
+          {
+            "id": "std_copy_int",
+            "sha256": "efcf958c7433473e0478d53b60d2aab648124e87df8e04f13b41f1087c94da26",
+            "proof_record": "proof.model.std_copy_int.20261015t154721z.6863e187"
+          }
+        ]
+      },
+      "job": {
+        "adapter": "wp",
+        "host": "mac",
+        "worker_core": "unpinned",
+        "wall_seconds": 21.38851,
+        "cpu_seconds": 20.793962,
+        "batch_load": {
+          "start": 6.803,
+          "end": 6.82
+        },
+        "peak_rss_bytes": 324714496,
+        "batch": "batch.proof.contract.fixture_copy_safe.20261015t154806z.d7445c68",
+        "position": 1
+      },
+      "bounds": {
+        "threads": 1,
+        "input_size": "unbounded"
+      },
+      "reports": [
+        {
+          "name": "stdlib_provenance_unit",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_safe.20261015t154806z.d7445c68/wp/stdlib_provenance_unit.json",
+          "sha256": "321e67368b94d4172d8ab6765c45257fb60196645f07ee81b9d723c5aedac686"
+        },
+        {
+          "name": "c_lowering",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_safe.20261015t154806z.d7445c68/wp/safe.c",
+          "sha256": "e5de45bb518aee69542d56f5a038f639b309e2ab1ea69ffc63dc34fbc935a433"
+        },
+        {
+          "name": "anchors",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_safe.20261015t154806z.d7445c68/wp/safe.anchors.json",
+          "sha256": "59f96916d37119450478e92aea4ca0825a6bde27e0ee2f6b8d7ff650cdb12b1a"
+        },
+        {
+          "name": "wp_input",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_safe.20261015t154806z.d7445c68/wp/wp_input.c",
+          "sha256": "a77cbc554247780f721a6c67a50fa924ecbd774a6bc28355398b8638c2caa81c"
+        },
+        {
+          "name": "wp_log",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_safe.20261015t154806z.d7445c68/wp/frama-c.log",
+          "sha256": "c5eedc392275ec40a5f419be78859b58a7116528866d8f5e617c85c81fee9e4b"
+        },
+        {
+          "name": "wp_goals",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_safe.20261015t154806z.d7445c68/wp/wp-goals.json",
+          "sha256": "7fe93746d5e51e16ccb28bfd1db391ef54622f91cae0cb1a1573e86d05e0aee2"
+        },
+        {
+          "name": "wp_properties",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_safe.20261015t154806z.d7445c68/wp/wp-properties.csv",
+          "sha256": "5c2c39838bbb7e5cfbcd2a301ce83e7eecfff09aff24ab9837841ff8f8f013a6"
+        },
+        {
+          "name": "wp_inventory",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_safe.20261015t154806z.d7445c68/wp/wp-inventory.json",
+          "sha256": "f260da7f8f9519ccf9fdc968a8571518547577c0a36a743cbff338e80c389d1c"
+        },
+        {
+          "name": "wp_normalized",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_safe.20261015t154806z.d7445c68/wp/wp-normalized.c",
+          "sha256": "dca32f2107c8fe23b9ae02c1e6d32221bf0752ce358d34788d9c1c3ed9aa8ca9"
+        }
+      ]
+    },
+    {
+      "id": "proof.contract.fixture_copy_uninitialized.20261015t154912z.6420eaf9",
+      "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/records/proofs/proof.contract.fixture_copy_uninitialized.20261015t154912z.6420eaf9.yaml",
+      "sha256": "ffaec76d1906cde28900fce5ce23c0e5895f396d557ddaf40384bd17ec5d0009",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.fixture_copy_uninitialized"
+      },
+      "verdict": "not_proven",
+      "failure_class": "timeout",
+      "ordinary": {
+        "timeout": 1,
+        "valid": 13
+      },
+      "smoke": {
+        "valid": 2
+      },
+      "open_goals": [
+        {
+          "goal": "typed_real_uninitialized_call_std_copy_int_requires_4",
+          "property": "std_copy_int_requires_10",
+          "function": "uninitialized",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "unproven_properties": [
+        {
+          "property": "\\initialized(first + (0 .. (last - first) - 1))",
+          "kind": "precondition of std_copy_int",
+          "function": "uninitialized",
+          "line": 40,
+          "status": "Unknown",
+          "goal": "typed_real_uninitialized_call_std_copy_int_requires_4",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "std_copy_int_requires_10",
+          "goal": "typed_real_uninitialized_call_std_copy_int_requires_4",
+          "status": "timeout",
+          "failure_class": "timeout"
+        }
+      ],
+      "pins": {
+        "code": {
+          "id": "contract.fixture_copy_uninitialized",
+          "sha256": "709e7c515cd7e3052cd0625bbc24bfd17dd95defdfa4bc7d203ca1e5faf80fe6"
+        },
+        "contract": {
+          "id": "contract.fixture_copy_uninitialized",
+          "sha256": "709e7c515cd7e3052cd0625bbc24bfd17dd95defdfa4bc7d203ca1e5faf80fe6"
+        },
+        "baseline_function": {
+          "not_applicable": "A library summary is proven on the entry's own code."
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "not_applicable": "No proof-semantics version exists before ticket 27."
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "e83fe02edeae81bbca715e231275863fcaf61c29f00b7fd978dc6ea39b309ccc"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "A library summary has no predecessor."
+        },
+        "build_constants": [],
+        "c_lowering": {
+          "id": "uninitialized.c",
+          "sha256": "b4079e3f6d3f1b2720d6723d49deab920915d467ac398f07674d638be54393b3"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "standard_range_call_check": {
+          "id": "standard-range-calls-1",
+          "sha256": "0bbacc63269090dc8e8db0e997954545ce39cbe907fcbe8100d26bafd904d19f"
+        },
+        "models": [
+          {
+            "id": "std_copy_int",
+            "sha256": "efcf958c7433473e0478d53b60d2aab648124e87df8e04f13b41f1087c94da26",
+            "proof_record": "proof.model.std_copy_int.20261015t154721z.6863e187"
+          }
+        ]
+      },
+      "job": {
+        "adapter": "wp",
+        "host": "mac",
+        "worker_core": "unpinned",
+        "wall_seconds": 47.10837,
+        "cpu_seconds": 50.362696,
+        "batch_load": {
+          "start": 6.827,
+          "end": 7.45
+        },
+        "peak_rss_bytes": 519225344,
+        "batch": "batch.proof.contract.fixture_copy_uninitialized.20261015t154912z.6420eaf9",
+        "position": 1
+      },
+      "bounds": {
+        "threads": 1,
+        "input_size": "unbounded"
+      },
+      "reports": [
+        {
+          "name": "stdlib_provenance_unit",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_uninitialized.20261015t154912z.6420eaf9/wp/stdlib_provenance_unit.json",
+          "sha256": "2cbff0028b03b4550e77a5295c5e49881c135e18b8ae7484b9a9fac6c58ba119"
+        },
+        {
+          "name": "c_lowering",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_uninitialized.20261015t154912z.6420eaf9/wp/uninitialized.c",
+          "sha256": "b4079e3f6d3f1b2720d6723d49deab920915d467ac398f07674d638be54393b3"
+        },
+        {
+          "name": "anchors",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_uninitialized.20261015t154912z.6420eaf9/wp/uninitialized.anchors.json",
+          "sha256": "7365377528e8ab75c2e9d9bfc90ac51e749b13c3ea206e92fba1d4dd4158b4a6"
+        },
+        {
+          "name": "wp_input",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_uninitialized.20261015t154912z.6420eaf9/wp/wp_input.c",
+          "sha256": "e0ac105ea5906b0e7b6325bd965d0a58b4b6593134174f5ce789a23db495d77a"
+        },
+        {
+          "name": "wp_log",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_uninitialized.20261015t154912z.6420eaf9/wp/frama-c.log",
+          "sha256": "66290cdad60f7eae1426a9c3af22f5ec094d1d12d7879f5fa5a32e50d67312a8"
+        },
+        {
+          "name": "wp_goals",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_uninitialized.20261015t154912z.6420eaf9/wp/wp-goals.json",
+          "sha256": "ed8e5feb991f3c64a9461f07a1849f8f5664336aa0a79fe85e63a7142950f04a"
+        },
+        {
+          "name": "wp_properties",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_uninitialized.20261015t154912z.6420eaf9/wp/wp-properties.csv",
+          "sha256": "31daa024f680c35e51b36c8b512bedf5f4526e8bac35f0b6f0f47422cf901c52"
+        },
+        {
+          "name": "wp_inventory",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_uninitialized.20261015t154912z.6420eaf9/wp/wp-inventory.json",
+          "sha256": "133e20352154100b5831329ff37055e2fe3d82d9a9818f722c437ef70cbeff48"
+        },
+        {
+          "name": "wp_normalized",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_uninitialized.20261015t154912z.6420eaf9/wp/wp-normalized.c",
+          "sha256": "ed70c46931db904bf628d7ac2e764064dfe85c2be7b35ea9baa2bb75f8ebb85f"
+        },
+        {
+          "name": "handler",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.contract.fixture_copy_uninitialized.20261015t154912z.6420eaf9/wp/handler.json",
+          "sha256": "7460174ae344f9ecef62f9727ab84698241f1b2a4919f9d8812a33dc8f86fd28"
+        }
+      ]
+    },
+    {
+      "id": "proof.model.std_copy_int.20261015t154721z.6863e187",
+      "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/records/proofs/proof.model.std_copy_int.20261015t154721z.6863e187.yaml",
+      "sha256": "39a76a14e9295f4f7fa2260042a2cc206002dc6c129d247ea0aa52952766cb5d",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_copy_int"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "ordinary": {
+        "valid": 36
+      },
+      "smoke": {
+        "valid": 7
+      },
+      "open_goals": [],
+      "unproven_properties": [],
+      "pins": {
+        "code": {
+          "id": "std_copy_int",
+          "sha256": "efcf958c7433473e0478d53b60d2aab648124e87df8e04f13b41f1087c94da26"
+        },
+        "contract": {
+          "id": "std_copy_int",
+          "sha256": "efcf958c7433473e0478d53b60d2aab648124e87df8e04f13b41f1087c94da26"
+        },
+        "baseline_function": {
+          "not_applicable": "A C model is proven on its own text."
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "not_applicable": "A C model makes no DX100 call."
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "e83fe02edeae81bbca715e231275863fcaf61c29f00b7fd978dc6ea39b309ccc"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "A C model has no minimum bounds."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "A C model has no predecessor."
+        },
+        "build_constants": [],
+        "standard_range_model_check": {
+          "id": "standard-range-model-check-1",
+          "sha256": "5c8d385b2e506c77db69cfc664b5d33dc2514cd14d09ef79a8a1810f4c16084f"
+        },
+        "standard_range_model_certificate": {
+          "id": "standard-range-model-certificate-1",
+          "sha256": "7066f6486388c5fddf294cace66c5e504ea76ac30a91482f8c8930a968b803b5"
+        }
+      },
+      "job": {
+        "adapter": "wp",
+        "host": "mac",
+        "worker_core": "unpinned",
+        "wall_seconds": 33.099196,
+        "cpu_seconds": 31.010842,
+        "batch_load": {
+          "start": 6.172,
+          "end": 7.21
+        },
+        "peak_rss_bytes": 341278720,
+        "batch": "batch.proof.model.std_copy_int.20261015t154721z.6863e187",
+        "position": 1
+      },
+      "bounds": {
+        "threads": 1,
+        "input_size": "unbounded"
+      },
+      "reports": [
+        {
+          "name": "standard_range_original",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.model.std_copy_int.20261015t154721z.6863e187/wp/standard_range_original.c",
+          "sha256": "aa3c4cfaad8c29e47a76b32d361f99ebf1c608417e96e849999256a9c2275dba"
+        },
+        {
+          "name": "standard_range_model_certificate",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.model.std_copy_int.20261015t154721z.6863e187/wp/standard_range_model.json",
+          "sha256": "ef667b5071a8f7e8a4fd7cf6e97bd004027008c5521ba9484e3eb4bfc09c91f0"
+        },
+        {
+          "name": "wp_input",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.model.std_copy_int.20261015t154721z.6863e187/wp/wp_input.c",
+          "sha256": "b43b5a7688d7b4c780d3399f9f9d1a52fa09009c5d85934824927d06ee9d3a14"
+        },
+        {
+          "name": "wp_log",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.model.std_copy_int.20261015t154721z.6863e187/wp/frama-c.log",
+          "sha256": "4d1b2af13565581cd28a8197d0e8cee00cd26a6d65484185d64df6304eecd0a8"
+        },
+        {
+          "name": "wp_goals",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.model.std_copy_int.20261015t154721z.6863e187/wp/wp-goals.json",
+          "sha256": "4f4852d4ca7fd79115445f2e36e3f7ece5a17449368a66338440b999c8b92375"
+        },
+        {
+          "name": "wp_properties",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.model.std_copy_int.20261015t154721z.6863e187/wp/wp-properties.csv",
+          "sha256": "98b3c396e6ff102dae6a2d32509e2301bbd34b7f4cf35ede754e51ae059d0726"
+        },
+        {
+          "name": "wp_inventory",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.model.std_copy_int.20261015t154721z.6863e187/wp/wp-inventory.json",
+          "sha256": "7d6721dc65f19a7d022b80f00e45752d90290695622da5548f4590ea8989573d"
+        },
+        {
+          "name": "wp_normalized",
+          "path": "/private/tmp/probata-standard-range-caller-actual-v2-20261015/pytest/qualified-copy-callers0/runs/proof.model.std_copy_int.20261015t154721z.6863e187/wp/wp-normalized.c",
+          "sha256": "b3c61cff97e78f6322a30fcba0197350a78a3d5d4a2a7d165b662247f40ae8b4"
+        }
+      ]
+    }
+  ],
+  "boundary": "Qualified std_copy_int body and exact one-dimensional/entry-window caller slice at frozen 0831. Positive and empty calls prove all ordinary/smoke goals. Negative initialization/capacity goals remain unproved (timeouts); no solver proof that they are false is claimed. The capacity predicate is independently the concrete false bound 2 <= 1; its failed smoke checks are retained. Two-dimensional/member/global origins remain refused. Whole ticket 24 and broad construct acceptance remain open. Later d3a5dd48 changes launch metadata and is not relabeled as this frozen run.",
+  "prior_attempt": {
+    "commit": "c61af4234e4c65d877a543177cc837e51ef72b29",
+    "output": "/private/tmp/probata-standard-range-caller-actual-20261015",
+    "result": "Fresh model 43/43 Valid; first safe caller stopped at an ACSL array-decay parse error before goals. Source/record/artifact hashes were audited before the d6 source edit; original artifacts remain unchanged.",
+    "repair": "d6cf1e98 casts only certified one-dimensional array guard bases to their element pointer type. Original C, numerical obligations and input premises are preserved. Parser regression RED 3.55s to 14 GREEN in 39.35s, then 3 postmerge GREEN in 10.66s."
+  }
+}
