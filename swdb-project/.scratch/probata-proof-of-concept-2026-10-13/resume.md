@@ -4,7 +4,7 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 09:55 ET. Integration checkpoint `ab0c547e` includes checked helper merge `4d2fcc23` on
+Updated: 2026-10-15 10:00 ET. Integration checkpoint `1ece49b8` includes checked helper merge `4d2fcc23` on
 `codex/probata-poc-integration`, based on `yanrujhou_main` at `150930b4`.
 The source-bound summary fix is merged: fresh callee closure, current proof/method
 and evidence, finite call bounds and pointer-buffer alignment are checked before
@@ -22,10 +22,10 @@ These checks establish source admission/composition, not a new actual proof.
 | Ticket | Current evidence | Next action |
 |---|---|---|
 | 07 | Run17 unproven; run18 launched 09:50:53 ET at isolated `996bd62c`, reviewed 85 offline controls and strict initialization/deadline policy | Finish fresh baseline, counted hint search and final proof within 60 minutes; no success claimed |
-| 24 | Frozen `fddb1462` native replay132 passed/1 deselected on mbit10 | Finish current-policy construct-group proof acceptance |
+| 24 | Frozen `fddb1462` native replay 132 passed/1 deselected; current `1ece49b8` construct proofs running on node 0 | Diagnose the first failure before a broader rerun; retain positive acceptance |
 | 25 | Qualified at/data actual pairs pass; shadow-header prelaunch control exposes source-provenance gap | Check canonical full-TU declarations/allocation hooks, then wider vector/pair acceptance |
 | 27 | Direct DX controls pass; helper safe/initialization-negative actual pair retains `7f9e3621` evidence; checked helper view merged as `4d2fcc23` | Complete ordered nested-index reads; original three_reads still refused |
-| 36 | Frozen remote bounded/source-summary 17 checks pass;27 proof records audited with only intended mutation mismatch | Complete general setup/verdict acceptance as helper/model coverage grows |
+| 36 | Frozen remote bounded/source-summary 17 checks pass; 27 proof records audited with only intended mutation mismatch | Complete general setup/verdict acceptance as helper/model coverage grows |
 | 41 /42 | Resolved; approved composition statement and 209 production Rocq Qed | Preserve exact evidence boundary; no DX reduction claim |
 
 **32 of 63 resolved; five claimed.** Drafts 1/2 are immutable; draft 3 is not created.
@@ -38,6 +38,18 @@ acceptance, then create a new method draft after runtime
 identities settle. Last 30-minute status table 09:35 ET; next due 10:05 ET.
 
 ## Host coordination
+
+Latest live readback: 2026-10-15 09:58 ET. Current-policy acceptance started at
+09:57 ET on frozen clean detached `1ece49b8`: node 0 constructs, generation 556;
+node 1 entry windows plus the two actual helper initializedness controls,
+generation 597. Both leases held; legacy lease released. Load 3.28/1.11/0.69.
+Each job has one worker, an 8 GiB verifier cap, two-hour timeout and 2 GiB output
+budget. Constructs stops at its first failure for diagnosis. Raw output stays
+remote for ticket/coordinator/audit readers. No result is claimed yet.
+[Launch record](evidence/helper-construct-lanes-launch-20261015-0957.json).
+Recheck live leases, load and disks before another dispatch.
+
+Historical completed checkpoint:
 
 Latest audited readback: 2026-10-15 09:51 ET. Both socket leases and legacy lease
 released; load 0.02/0.25/0.52, 21 GiB free on `/data1`, 97 GiB on `/data`.
