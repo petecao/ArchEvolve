@@ -282,3 +282,20 @@ new input premises, and refusal after renderer guard deletion. Original safe/sta
 regenerate and recertify. The two actual at WP controls were excluded and remain pending; no
 generic member-domain admission or ticket closure is claimed. Evidence:
 `evidence/owner-at-source-binding-merge-20261015.json`.
+
+
+Qualified at actual checkpoint — 2026-10-15 ET: at frozen integration3f177e63, both actual
+public controls PASS188.77s. Safe-at PROVEN121ordinaryVALID+11smokePASS (132complete inventoried
+and reported goals). Original missing-bounds contract requires only n>=1 and ignores the selected
+value: NOT_PROVEN105/106ordinaryVALID+11smokePASS (117complete inventoried/reported goals).
+Its sole distinct open ordinary goal is owner_at_guard_1; downstream index/storage/initialization/
+read-validity properties are partially proven because they depend on that open assertion, not
+independent unconditional successes. No new requires was introduced. Both records pass the actual
+strict setup/reader, retain exact source/view/qualified-call certificates and have matching hashes
+for every checked report artifact. Raw smoke contradiction attempts time out and count as passing
+smoke. The negative is not a WP refutation or CEX. Original-frame projection is structural;
+WP proves the distinct private view frame. These are contract_fixture records, not standalone
+C-model proofs or general ticket25 acceptance. One local worker, shared2slotlock,8GiB RSS cap;
+source/HEAD remained frozen. Retained outputs are <5MiB on APFS with69GiB free at preflight.
+Evidence:[t25-qualified-owner-at-actual-20261015.json](../evidence/t25-qualified-owner-at-actual-20261015.json).
+Full selected metadata:/private/tmp/probata-owner-at-actual-3f177e63-audit.json. Status stays claimed.
