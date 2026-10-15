@@ -657,17 +657,30 @@ CBMC32/33 agreement remain pending; status stays **claimed**.
 ### Reviewed capacity completion — 2026-10-15 ET
 
 The reviewed `b9a34bbb` capacity profile completed naturally: 3/3 passed with four
-actual records. WP32 proves all49ordinary/11smoke goals; WP33 remains
-`not_proven/ghost_capacity` with47/49ordinary Valid and11/11smoke checks passed.
+actual records. WP32 proves all 49 ordinary / 11 smoke goals; WP33 remains
+`not_proven/ghost_capacity` with 47/49 ordinary Valid and 11/11 smoke checks passed.
 Its two open ordinary obligations are named capacity and `dx_issuable`, which
 includes the same count bound. Both establishment/preservation goals for the
 new invariant are Valid in both runs. CBMC agrees at explicit n=32/33, with the
 33-command ghost-capacity result carrying no source counterexample/refutation.
 
-Independent read-only closure checked40physical references/44files without
+Independent read-only closure checked 40 physical references / 44 files without
 mismatch, exact unchanged source/pins, original RTE/initialization/setup policy,
-and natural guard exits. The old failed32record remains preserved. Exact
+and natural guard exits. The old failed 32-command record remains preserved. Exact
 outcomes and resources are in
 [`t27-reviewed-capacity-completed-independent-20261015.json`](../evidence/t27-reviewed-capacity-completed-independent-20261015.json).
 Ticket remains `claimed`: fresh safe and remaining negatives are still required.
 The separately retained historical-weight two-lane safe plan is prospective only.
+
+### Current negative checkpoint: 12/13 — 2026-10-15 ET
+
+The exact `0e7f2327` negative profile has 12 completed passes; final shortened
+store-frame case remains active. Independent audit rehashed 16,368 references /
+1,062 files without mismatch. All three wrong-value cases retain their original
+ordinary ensures timeout. The outside-footprint result explicitly remains
+`not_proven/vacuous_pass`: 51/52 ordinary Valid with independent ensures timeout,
+17/18 smoke checks passed and `wp_smoke_dead_code_s20` failed. This preserves the
+existing generated-branch smoke failure and does not upgrade any theorem claim.
+Exact completed records are retained in
+[`t27-composed-negative-twelve-records-independent-20261015.json`](../evidence/t27-composed-negative-twelve-records-independent-20261015.json).
+Ticket remains `claimed`, pending natural negative closure and fresh safe shards.
