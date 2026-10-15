@@ -5,12 +5,12 @@ from swdb.library import Library
 from conftest import REPO
 
 
-def lower(tmp_path, source=None):
+def lower(tmp_path, source=None, *, library_root=None):
     source = source or '''int swdb_dx_in_footprint(int tile,const int *addr);
 int unit(int *base,int n) {int member=swdb_dx_in_footprint(1,base+n);return member;}
 '''
     path=tmp_path/'unit.cc';path.write_text(source)
-    library=Library(REPO/'library')
+    library=Library(library_root or REPO/'library')
     options=proof_semantics.lowering_options(library)
     options['semantics']['array_origins']=wp_pointer_bounds.semantic_origins(library)
     options['semantics']['array_call_policies']=proof_semantics.array_call_policies(library)
@@ -65,3 +65,31 @@ int unit(int *base,int *q,int n) {int member=swdb_dx_in_footprint(1,base+q[0]);r
     assert view.text.count('q[0]')==1
     assert view.text.index('= q[0]') < view.text.index('int member=')
     assert 'return member;' in view.text
+
+
+@pytest.mark.parametrize('replacement',[r'assigns addr[0];',r'assigns \everything;'])
+def test_a_changed_query_contract_cannot_borrow_read_only_pointer_trust(tmp_path,replacement):
+    import shutil,yaml
+    root=tmp_path/'library'
+    shutil.copytree(REPO/'library/proof_semantics',root/'proof_semantics')
+    path=root/'proof_semantics/dx100_bfs_0_1.yaml'
+    data=yaml.safe_load(path.read_text())
+    query=next(row for row in data['queries'] if row['query']=='swdb_dx_in_footprint')
+    assert r'assigns \nothing;' in query['contract']
+    query['contract']=query['contract'].replace(r'assigns \nothing;',replacement)
+    path.write_text(yaml.safe_dump(data,sort_keys=False))
+    with pytest.raises(wp_pointer_bounds.Refused,match='read-only'):
+        wp_pointer_bounds.check(lower(tmp_path,library_root=root))
+
+
+def test_a_query_capture_cannot_substitute_another_source_read(tmp_path,monkeypatch):
+    from swdb import array_domains,nested_entry_reads
+    path=tmp_path/'query.cc'
+    path.write_text('int swdb_dx_in_footprint(int,const int*); int unit(int *p,int *q,int n) '
+        '{int member=swdb_dx_in_footprint(1,p+q[0]);return member;}')
+    windows=array_domains.bind({'p':{'extent':'n'},'q':{'extent':'n'}},
+        [('p','int *',True),('q','int *',True),('n','int',False)])
+    render=nested_entry_reads._render
+    monkeypatch.setattr(nested_entry_reads,'_render',lambda raw,edits:render(raw,edits).replace('= q[0]','= p[0]'))
+    with pytest.raises(nested_entry_reads.Refused,match='binding|operation'):
+        nested_entry_reads.prepare(path,'unit',entry_windows=windows,scratch=tmp_path/'view')

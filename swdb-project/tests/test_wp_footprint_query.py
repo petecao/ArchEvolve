@@ -1,6 +1,7 @@
 """Public WP footprint-query source view, 2026-10-15 ET."""
 import json
 import yaml
+import pytest
 from conftest import run_swdb
 from test_proof_semantics import dx,dx_seed
 from test_wp_adapter import fake,needs_wp
@@ -28,3 +29,19 @@ def test_the_original_gather_footprint_query_reaches_wp_with_ordered_source_read
     assert nested['certificate']['captures'][0]['context']=='query_address'
     assert nested['input_premises_added']==[]
     assert row['settings']['helper_windows']['certificate']['context_count']==1
+
+
+@needs_wp
+@pytest.mark.parametrize('outside',[False,True])
+def test_actual_original_footprint_query_and_outside_value_control(dx,outside):
+    from test_proof_semantics import prove_wp
+    qualify(dx)
+    row=prove_wp(dx,'footprint',*(['SWDB_OUTSIDE'] if outside else []))
+    assert row['proof_setup_check']['verdict']=='passed'
+    assert row['verdict']==('not_proven' if outside else 'proven'),row.get('unproven_properties')
+    assert row['settings']['verifier_launched'] is True
+    assert all(g['status']=='valid' for g in row['goals'] if g.get('smoke'))
+    if outside:
+        assert any(g['status']!='valid' and 'ensures' in g['goal'] for g in row['goals']),row
+    else:
+        assert len(row['settings']['nested_entry_reads']['certificate']['captures'])==1
