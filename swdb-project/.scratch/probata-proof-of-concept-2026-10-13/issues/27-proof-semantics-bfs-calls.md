@@ -702,3 +702,16 @@ method/lowerer/semantics, clean unchanged source and natural guard exits.
 The bounded 35 and reviewed capacity 3 profiles are accepted separately; status
 remains `claimed` until all 11 fresh safe units complete under the selected
 nonoverlapping source-qualified subsets.
+
+### Fresh safe CPU admission: 1/11 — 2026-10-15 ET
+
+The chosen CPU-only safe profile at exact `0e7f2327` completed naturally 1/1,
+exit 0, with actual `proven` record: 58/58 ordinary Valid, 19/19 smoke passed,
+11 initializedness and 9 RTE goals. Independent strict read-only admission checked
+864 physical references / 865 files without mismatch, exact collector/source/pins,
+required setup/policy and natural guard exits. The record retains its explicit
+entry-contract/unit-requires premises; it does not close general CPU/device
+overlap or source-language/ACSL agreement.
+[Exact fresh safe CPU evidence](../evidence/t27-composed-safe-cpu-completed-independent-20261015.md).
+Status remains `claimed`: ten fresh safe units remain in the selected disjoint
+Arest4/B1three/B2three subsets; original A5/B6 remain unlaunched.
