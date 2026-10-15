@@ -228,3 +228,28 @@ def test_an_integer_header_shadow_cannot_borrow_the_clean_canonical_baseline(tmp
     certificate = json.loads((out / "unit.anchors.json").read_text())["stdlib_provenance"]
     assert certificate["verdict"] == "refused", certificate["reason"]
     assert "noncanonical standard header" in certificate["reason"], certificate["reason"]
+
+
+def test_a_canonical_iostream_guard_is_not_a_candidate_header_macro(tmp_path):
+    """2026-10-15 ET: original GAPBS includes more libc++ headers than the probe."""
+    source = tmp_path / "unit.cc"
+    source.write_text('#include <vector>\n#include <iostream>\n'
+        'int unit(int n) {std::vector<int> v(n,7); return v.size();}\n')
+    out = tmp_path / "out"
+    lower(source, "unit", out)
+    certificate = json.loads((out / "unit.anchors.json").read_text())["stdlib_provenance"]
+    assert certificate["verdict"] == "passed", certificate["reason"]
+    assert any(row["path"].endswith("/include/c++/v1/iostream") for row in certificate["headers"])
+
+
+def test_a_project_iostream_guard_cannot_borrow_canonical_header_macro_trust(tmp_path):
+    """2026-10-15 ET: a candidate-defined libc++ guard remains forbidden."""
+    source = tmp_path / "unit.cc"
+    source.write_text('#include <vector>\n#define _LIBCPP_IOSTREAM\n#include <iostream>\n'
+        'int unit(int n) {std::vector<int> v(n,7); return v.size();}\n')
+    out = tmp_path / "out"
+    lower(source, "unit", out)
+    certificate = json.loads((out / "unit.anchors.json").read_text())["stdlib_provenance"]
+    assert certificate["verdict"] == "refused", certificate["reason"]
+    assert "candidate macro can rewrite canonical standard headers" in certificate["reason"]
+    assert str(source) in certificate["reason"] and "(_LIBCPP_IOSTREAM)" in certificate["reason"]

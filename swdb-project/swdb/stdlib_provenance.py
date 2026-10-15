@@ -336,7 +336,7 @@ def _certify_in_process(tool, source, *, includes=(), defines=(), models=(),
             name = parser.text(parser.spelling(cursor))
             file, line, offset = parser.physical(cursor)
             trusted = bool(file and Path(file).is_relative_to(canonical))
-            if cursor.kind == 501 and file and file not in baseline_files:
+            if cursor.kind == 501 and file and not trusted and file not in baseline_files:
                 if name in canonical_words or name.startswith(("__", "_LIBCPP")):
                     problems.append(f"candidate macro can rewrite canonical standard headers: {file}:{line} ({name})")
             if parser.is_declaration(cursor.kind):
