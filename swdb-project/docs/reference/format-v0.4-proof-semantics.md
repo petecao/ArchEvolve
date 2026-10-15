@@ -1,6 +1,6 @@
 # The DX100 proof semantics (entries, checks, bounded jobs)
 
-Created: 2026-10-14 ET, Probata proof of concept ticket 27.
+Created: 2026-10-14 ET, Probata proof of concept ticket 27. Updated: 2026-10-15 ET.
 Spec: `.scratch/probata-proof-of-concept-2026-10-13/issues/27-proof-semantics-bfs-calls.md`; design:
 `.scratch/formal-verification-2026-10-09/spec.md` ("DX100 proof semantics"), map 12 items 1-5 and 11, map 14
 (the wait rule), map 16 item 10 (one ghost state), S3 (ghost capacity). Rocq: `library/rocq/probata/Reduction.v`.
@@ -83,8 +83,13 @@ operators, and they are trusted (an assumption entry), never executed by check m
   `dx_issuable` in `logic.acsl`): consequences of the C model, with no shifts or masks for the provers (Z3,
   Alt-Ergo and CVC5 time out on constant shift-and-mask facts). The transitive clause of a wait names tiles
   0-7 one by one; with more tiles it claims less, never more.
+- The store frame uses ACSL lifted array locations over the active index-tile slice. It conservatively includes
+  condition-disabled elements; every address the store can write remains in the frame. Command frames include
+  all three register-index arrays (`dx_reg_a`, `dx_reg_b`, `dx_reg_c`) that the C model writes.
 - A probe that WP cannot prove leaves the unit not proven; WP never refutes. Records pin and assume the proof
-  semantics as the CBMC adapter does. Loops need invariants (the hint loop), so the capacity fixture is CBMC only.
+  semantics as the CBMC adapter does. The capacity fixture supplies loop invariants through the checked hint
+  interface: 32 uncovered commands prove; an unproved named capacity precondition ends not proven with
+  failure class `ghost_capacity`, without a counterexample.
 
 ## For later tickets
 

@@ -101,6 +101,8 @@ class WpAdapter:
             text = c_lowering.model_text(job.unit.function)
             if text is None:
                 raise AdapterError(f"the C lowering has no C model {job.unit.function}")
+            if job.unit.function.startswith(("std_vector_", "std_pair_")):
+                context["pins"]["std_models"] = std_models.identity()
             if re.search(r"\b(?:allocates|frees)\b|\\(?:fresh|freeable)\b", text):
                 return self._not_proven("unsupported_construct",
                     "WP 33.0 does not model allocation lifetime; this C model needs allocates/frees support", context)
@@ -132,12 +134,12 @@ class WpAdapter:
         problem = std_models.method_problem(self.method, lowering)
         if problem:
             raise AdapterError(problem)
-        if any(name == "swdb_free" or name.startswith("swdb_alloc_delete_array_") for name in lowering.models):
-            return self._not_proven("unsupported_construct",
-                "WP 33.0 does not model allocation lifetime; reachable free/delete or vector growth needs it", context)
         lowering_tool = c_lowering.identity()["c_lowering"]
         context["assumed"] = std_models.assumptions(lowering, tools["identities"]["clang"][2], lowering_tool)
         context["pins"].update(std_models.pins(lowering))
+        if any(name == "swdb_free" or name.startswith("swdb_alloc_delete_array_") for name in lowering.models):
+            return self._not_proven("unsupported_construct",
+                "WP 33.0 does not model allocation lifetime; reachable free/delete or vector growth needs it", context)
         if unit.get("function") not in (None, job.unit.function):
             raise AdapterError(f"contract {self.contract} states the proof unit {unit.get('function')}, not "
                                f"{job.unit.function}")
@@ -157,6 +159,17 @@ class WpAdapter:
             log.line(f"proof semantics: {entries[0]} (sha256 {sha}); calls {', '.join(called)}; "
                      f"{len(lowering.probes)} hazard probe(s)")
         contracts = self._dependencies(lowering, context)
+        context["lowering"] = lowering
+        context["extern_contracts"] = {
+            used["name"]: {"id": used["summary"], "sha256": self.library.content_sha256(used["summary"])}
+            for used in lowering.summaries if used["name"] not in covered}
+        if context.get("semantics"):
+            semantics = context["semantics"]
+            pin = {k: semantics[k] for k in ("id", "sha256")}
+            context["extern_contracts"].update({name: dict(pin) for name in semantics["calls"]})
+            for probe in (self.library.get(semantics["id"]).get("wp") or {}).get("probes") or []:
+                name = re.match(r".*?\b(\w+)\s*\(", probe["prototype"]).group(1)
+                context["extern_contracts"][name] = dict(pin)
         callees = sorted({a["function"] for a in lowering.anchors if a["kind"] == "contract"} - {job.unit.function})
         context["extra_flags"] = [f"-wp-fct={job.unit.function}"] + \
             ([f"-inline-calls={','.join(callees)}"] if callees else [])
@@ -426,6 +439,11 @@ class WpAdapter:
         outcome = read_outcome(result, wp_log.read_text(errors="replace"),
                                goals_json if goals_json.exists() else None,
                                properties_csv if properties_csv.exists() else None, context.get("functions"))
+        if context.get("semantics") and outcome["verdict"] == "not_proven" and any(
+                g.get("status") != "valid" and "ghost_capacity" in str(g.get("goal", ""))
+                for g in outcome["goals"]):
+            outcome["failure_class"] = "ghost_capacity"
+            outcome["why"] = "the named DX100 ghost-capacity obligation is not proven"
         context["goals"], context["unproven"] = outcome["goals"], outcome["unproven"]
         log.line(f"outcome: {outcome['verdict']} {outcome['failure_class'] or ''} ({outcome['why']})")
         if outcome["verdict"] == "proven":

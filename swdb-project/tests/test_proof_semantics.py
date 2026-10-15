@@ -373,11 +373,15 @@ def test_32_uncovered_commands_prove_and_33_end_not_proven_ghost_capacity(dx):
     assert "counterexample" not in over
 
 
-def prove_wp(dx, name, *defines):
+def prove_wp(dx, name, *defines, hints=None):
     """One `swdb prove --adapter wp` job (the WP form of the proof semantics), allowing for the verifier lock."""
     import json
     function = FIXTURES[name][0]
     extra = [arg for define in defines for arg in ("--define", define)]
+    if hints:
+        hint_path = dx.root / "wp-hints.yaml"
+        hint_path.write_text(yaml.safe_dump({"hints": hints}, sort_keys=False))
+        extra += ["--hint-file", str(hint_path)]
     result = run_swdb("prove", "--records", dx.records, "--candidate", dx.candidates["dx"], "--function", function,
                       "--contract", f"contract.fixture_dx_{name}", "--adapter", "wp", "--runs-dir", dx.runs,
                       "--format", "json", *extra, timeout=3600)
@@ -431,6 +435,36 @@ def test_wp_leaves_every_unit_cbmc_refutes_not_proven_never_refuted(dx, name, de
     unproven = json.dumps(record.get("unproven_properties"))
     if call:                                                  # the probe's (or call's) precondition is the one
         assert call in unproven or "precondition" in unproven, unproven
+
+
+@needs_wp
+@pytest.mark.parametrize("commands", [32, 33])
+def test_wp_capacity_agrees_at_32_and_leaves_33_not_proven(dx, commands):
+    from swdb import proof_semantics
+    from swdb.library import Library
+    from test_wp_adapter import _hints
+    path = dx.root / "library" / "rewrite_contracts" / "fixture_dx_capacity.yaml"
+    contract = yaml.safe_load(path.read_text())
+    for clause in contract["clauses"]:
+        if clause.get("acsl"):
+            clause["acsl"]["text"] = clause["acsl"]["text"].replace("32 <= n <= 33", f"n == {commands}")
+    path.write_text(yaml.safe_dump(contract, sort_keys=False))
+    library = Library(dx.root / "library")
+    locations = proof_semantics.wp_locations(library, ENTRY)
+    hints = _hints("dxf_capacity.loop1.head",
+        "loop invariant 0 <= t <= n;",
+        "loop invariant 0 <= dx_count <= t;",
+        "loop invariant dx_reg_value[0] == 0 && dx_reg_value[1] == 1 && dx_reg_value[2] == 1;",
+        "loop invariant dx_reg_writer[0] == -1 && dx_reg_writer[1] == -1 && dx_reg_writer[2] == -1;",
+        "loop assigns t, " + ", ".join(locations) + ";",
+        "loop variant n - t;")
+    record = prove_wp(dx, "capacity", "DX_NT=40", "DX_TS=1", hints=hints)
+    assert record["hint_check"]["verdict"] == "accepted", record["hint_check"]
+    if commands == 32:
+        assert record["verdict"] == "proven", record.get("unproven_properties")
+    else:
+        assert record["verdict"] == "not_proven" and record["failure_class"] == "ghost_capacity"
+        assert "counterexample" not in record
 
 
 @needs_cbmc

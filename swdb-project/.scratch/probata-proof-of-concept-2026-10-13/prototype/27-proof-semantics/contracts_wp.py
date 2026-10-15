@@ -24,7 +24,7 @@ def command(kind, d1, d2, s1, s2, c, regs=(), writes=()):
     """The common clauses of one issued command; `regs` the registers it names, `writes` those it writes."""
     r = list(regs) + ["-1"] * (3 - len(regs))
     w = list(writes) + ["-1"] * (2 - len(writes))
-    return (f"requires dx_issuable({r[0]}, {r[1]}, {r[2]}, {w[0]}, {w[1]});\n",
+    return (f"requires ghost_capacity: 0 <= dx_count < DX_K;\nrequires dx_issuable({r[0]}, {r[1]}, {r[2]}, {w[0]}, {w[1]});\n",
             f"ensures dx_new_slot({kind}, {d1}, {d2}, {s1}, {s2}, {c}, {r[0]}, {r[1]}, {r[2]});\n"
             f"ensures dx_stall_covers{{Pre, Post}}({d1}, {d2});\n"
             f"ensures dx_kept{{Pre, Post}}({d1}, {d2}, {s1}, {s2}, {c}, {r[0]}, {r[1]}, {r[2]}, {w[0]}, {w[1]}, 1);\n")
