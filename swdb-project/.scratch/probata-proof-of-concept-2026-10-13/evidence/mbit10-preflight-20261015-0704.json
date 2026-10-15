@@ -1,0 +1,36 @@
+{
+  "observed_at": "2026-10-15 07:04:19 ET",
+  "kind": "live_host_snapshot_not_dispatch",
+  "leases": {
+    "node0": {
+      "state": "released",
+      "generation": 548
+    },
+    "node1": {
+      "state": "released",
+      "generation": 594
+    },
+    "legacy": {
+      "state": "released",
+      "generation": 77
+    }
+  },
+  "load_average": [
+    0.02,
+    0.06,
+    0.04
+  ],
+  "available_ram_gib": 117,
+  "free_disk_gib": {
+    "/data1": 21,
+    "/data": 97
+  },
+  "active_verifier_processes": 0,
+  "evaluation_worktree": {
+    "path": "/data1/yanruj/probata-t27",
+    "head": "dd975e721a054d08fc416e9abd556591d367ddf5",
+    "state": "clean detached"
+  },
+  "gpu": "NVML driver/library mismatch 595.99, CPU proof jobs unaffected",
+  "action": "No job dispatched; final domain/source pin pending. Refresh leases/processes/load/disks and fetch/compare wrapper before dispatch. Output goes to /data/yanruj/EvolveSWDB_runs/."
+}
