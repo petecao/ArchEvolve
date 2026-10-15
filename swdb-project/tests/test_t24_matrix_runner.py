@@ -60,3 +60,42 @@ def test_original_matrix_exact_control_filter_skips_completed_pairs(tmp_path, mo
     assert manifest['public_timeout_seconds']==1800
     matrix = json.loads((output/'matrix.json').read_text())
     assert [r['label'] for r in matrix['rows']]==calls
+
+
+def test_filtered_seeded_caller_still_proves_and_validates_current_dependencies(tmp_path, monkeypatch):
+    path = REPO/'.scratch/probata-proof-of-concept-2026-10-13/prototype/t24-original-matrix.py'
+    spec = importlib.util.spec_from_file_location('seeded_original_matrix',path)
+    runner = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(runner)
+    output = tmp_path/'fresh'
+    monkeypatch.setattr(sys,'argv',[str(path),'--expected-commit','frozen','--output',str(output),
+        '--groups','std_models','--cases','std_models:seeded'])
+    monkeypatch.setattr(runner,'git',lambda *args:'frozen' if args==('rev-parse','HEAD') else '')
+    monkeypatch.setattr(runner.c_lowering,'locate',lambda:SimpleNamespace(missing=()))
+    monkeypatch.setattr(runner.framac,'locate',lambda:SimpleNamespace(missing=()))
+    monkeypatch.setattr(runner,'build_subset_seed',lambda root:{'bug':'original-seed'})
+    models = runner.MODELS['std_models']
+    calls = []
+    class DependencySeed(runner.MatrixSeed):
+        def save(self, name, pins):
+            record = {'id':name,'pins':pins}
+            path = self.records/'proofs'/f'{name}.yaml'
+            path.parent.mkdir(parents=True,exist_ok=True)
+            path.write_text(json.dumps(record))
+            return record
+        def prove(self, *args, **kwargs):
+            assert args[0]=='--model'
+            name = args[1];calls.append(name)
+            return self.save('proof.'+name,{'code':{'sha256':'hash.'+name}})
+        def unit(self, group, **kwargs):
+            assert kwargs['candidate']=='bug'
+            calls.append(group+':seeded')
+            return self.save('seeded',{'models':[{'id':name,'sha256':'hash.'+name,
+                'proof_record':'wrong-proof'} for name in models]})
+    monkeypatch.setattr(runner,'MatrixSeed',DependencySeed)
+    monkeypatch.setattr(runner,'audit',lambda record,*args,**kwargs:dict(record,errors=[]))
+    assert runner.main()==1
+    assert calls==models+['std_models:seeded']
+    rows = json.loads((output/'matrix.json').read_text())['rows']
+    assert all(not r['errors'] for r in rows[:-1])
+    assert rows[-1]['label']=='std_models:seeded' and rows[-1]['errors']

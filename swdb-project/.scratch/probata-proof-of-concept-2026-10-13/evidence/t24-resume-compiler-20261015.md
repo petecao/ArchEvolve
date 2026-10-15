@@ -216,3 +216,11 @@ Dependency proofs remain mandatory whenever a selected caller requires them.
 The narrow retry is `--groups new_array --cases new_out_of_range,new_after_delete`
 plus the explicit remaining `new_<control>` labels desired by the coordinator;
 each fresh output still rebuilds the original candidate seed and checks source.
+
+A final dependency control selects only the seeded standard-model caller: all
+five required model jobs still run, and a caller that names stale proof IDs
+must fail acceptance. Omitting seeded dependency validation produces RED;
+applying the same ID/content checks to both caller variants produces GREEN.
+Summary callers also compare the pinned content hash with the newly proven
+summary record's code pin. The focused runner transport/selection/dependency
+profile passes **3/3 in 0.36 s**, using stand-ins only.

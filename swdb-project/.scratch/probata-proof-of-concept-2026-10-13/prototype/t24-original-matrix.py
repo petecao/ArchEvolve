@@ -199,7 +199,8 @@ def main():
             pinned = {p['id']:p for p in record['pins'].get('summaries',[])}
             assert set(pinned)=={summary_id(n) for n in entries},('summary closure',group,pinned)
             for name in entries:
-                assert pinned[summary_id(name)]['proof_record']==summaries[name]['id']
+                assert (pinned[summary_id(name)]['proof_record']==summaries[name]['id']
+                        and pinned[summary_id(name)]['sha256']==summaries[name]['pins']['code']['sha256'])
         run(group+':safe',lambda g=group:seed.unit(g),'proven',validate)
         goal = {'classes':'loop_invariant','templates':'ensures','new_array':'rte_mem_access',
                 # The unchanged original hints can carry the postcondition even
@@ -208,7 +209,7 @@ def main():
                 'omp':('loop_invariant','ensures'),'floats':('loop_invariant','ensures'),
                 'std_models':'ensures','atomics':'ensures',
                 'dxc_summary':'ensures','maa_summary':'ensures'}[group]
-        run(group+':seeded',lambda g=group:seed.unit(g,candidate='bug'),'not_proven',ordinary_open=goal)
+        run(group+':seeded',lambda g=group:seed.unit(g,candidate='bug'),'not_proven',validate,ordinary_open=goal)
         if group=='new_array':
             for negative in terminal_cases:
                 run(negative,lambda n=negative:seed.unit(n),'not_proven',actual=negative=='new_out_of_range',
