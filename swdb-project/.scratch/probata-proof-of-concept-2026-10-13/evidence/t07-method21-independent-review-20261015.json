@@ -1,0 +1,66 @@
+{
+  "created": "2026-10-15 ET",
+  "status": "independent prelaunch review PASS; fresh freeze/preflight pending; no counted proof or measured time recovery",
+  "reviewed_commit": "876accfaacb5ea93197f1be9f63f62cf1cc12886",
+  "implementation_commit": "404e718b",
+  "plan": "diagnostic-baseline10-v1",
+  "reviewed_source_files": 34,
+  "prototype_runtime_test_document_pins": 29,
+  "controls": {
+    "passed": 187,
+    "repository": 186,
+    "independent_cli": 1,
+    "wall_s": 16.43,
+    "real_prover_or_provider": false
+  },
+  "baseline_diagnostic_per_solver_s": 10,
+  "final_positive_smoke_per_solver_s": 30,
+  "same_hints_wait_negative_per_solver_s": 30,
+  "fresh_observed_pass_set_only": true,
+  "all_original_final_obligations_mandatory": true,
+  "conditional_negative_requires_exact_source_plan_tool_pins_and_qualifying_positive": true,
+  "historical_actual_component_boundary": "Four mechanism byte pins unchanged only; not full method21 pipeline source identity and no old outputs reusable.",
+  "scientific_success": false,
+  "artifacts": [
+    {
+      "path": "/private/tmp/probata-t07-method21-review.md",
+      "sha256": "47315eaa8ba278ce07da2caf6dcebbd1f3e96e09d7a11684b6cb9007f76a0489",
+      "bytes": 6425
+    },
+    {
+      "path": "/private/tmp/probata-t07-method21-review-manifest.json",
+      "sha256": "16a1427047dc22fe5e0a78c0922c1acec265a3e721d5fdaa348f58de4bfa7dbf",
+      "bytes": 14599
+    },
+    {
+      "path": "/private/tmp/probata-t07-method21-review-receipt.json",
+      "sha256": "57d696701f9ea3617b56a2a68bb4755de778fe46e13d6df0d6c1f0fd5519489c",
+      "bytes": 743
+    },
+    {
+      "path": "/private/tmp/probata-t07-method21-independent-tests.xml",
+      "sha256": "6c382891862bdcefdb8cf04706ba0df038fcb3e57503c234a42ea005f25a656d",
+      "bytes": 38051
+    },
+    {
+      "path": "/private/tmp/probata-t07-method21-independent-tests.txt",
+      "sha256": "e7bb3c0ec43baa6e8aac13de924b6c5441e1b257b0eac2fbf4626401fdf7149a",
+      "bytes": 261
+    },
+    {
+      "path": "/private/tmp/probata-t07-method21-independent-retained-report.json",
+      "sha256": "28801f7b1093b26c02b83a05baf4969666b5b3be79e98b55ed7fc071fe962ebc",
+      "bytes": 310
+    },
+    {
+      "path": "/private/tmp/probata-t07-freeze24.py",
+      "sha256": "c62a31a43c203189472e9f7e674a7b823b25d7897be094511bbb51b32c0c9bb3",
+      "bytes": 6066
+    },
+    {
+      "path": "/private/tmp/probata-t07-run24-coverwait-negative.py",
+      "sha256": "105e6e825f5ad963a73fcd33f9633d2a9febf876b1dcc6d2f2332598ea56a18f",
+      "bytes": 5097
+    }
+  ]
+}
