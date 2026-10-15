@@ -280,6 +280,9 @@ def main(argv=None):
     attribution.register_cli(commands)
     from swdb import proof     # Probata proof of concept ticket 04 (2026-10-14 ET): `swdb prove`
     proof.register_cli(commands)
+    from swdb import check_mode, summary_agreement     # Probata ticket 23 (2026-10-14 ET): check mode, summary forms
+    check_mode.register_cli(commands)
+    summary_agreement.register_cli(commands)
     from swdb import proof_lane     # Probata ticket 57 (2026-10-14 ET): `swdb prove-lane`
     proof_lane.register_cli(commands)
     from swdb import c_lowering     # Probata ticket 21 (2026-10-14 ET): `swdb lower`, the C lowering tool

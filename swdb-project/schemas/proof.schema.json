@@ -104,7 +104,9 @@
             "properties": {
               "id": {"type": "string", "minLength": 1},
               "sha256": {"$ref": "#/$defs/sha256"},
-              "proof_record": {"type": "string", "x-ref": "proof"}
+              "proof_record": {"type": "string", "x-ref": "proof"},
+              "assumes": {"type": "array", "items": {"type": "string", "minLength": 1},
+                          "description": "Ticket 23: the names of the assume statements the summary's generated stub emitted (one per ensures clause), each tagged in the stub with the entry and its sha256."}
             }
           }
         },

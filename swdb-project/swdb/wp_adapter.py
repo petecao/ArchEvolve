@@ -19,6 +19,9 @@ One job (`swdb prove --adapter wp`):
 5. Minimal verdict reader: proven only when every property of this run's per-property report
    (`-report-csv`) is `Valid` and every goal of its per-goal report (`-wp-report-json`) passed; WP's
    consolidated summary line is never read. Ticket 36 owns the full reading rule.
+   Ticket 23 (2026-10-14 ET): a callee that a library entry summarizes (its `proof_unit.function`, with
+   `once: self` formal halves) gets that entry's formal halves at its own `<callee>.contract` anchor: the ACSL
+   form of the summary, the third of the three summary forms (WP uses the contract at the call).
 6. Every outcome maps to a class of vocabulary `proof_failure_classes`, and that class's handler runs
    (`handler.json` in the runs folder). An outcome with no class reports `unclassified_wp_outcome`, which is
    not in the vocabulary, so `swdb prove` stops the batch. WP's "not proven" is never a refutation.
@@ -169,8 +172,19 @@ class WpAdapter:
             uses += [u for u in clause["acsl"].get("uses", []) if u not in uses]
         from swdb.formal_frame import logic_files
         files = logic_files(self.library.root)
-        inserts = {f"{lowering.function}.contract": ["/*@ " + "\n    ".join("\n".join(texts).splitlines()) + " */"],
-                   "ghost.globals": [f"/*@\n{files[u].read_text()}\n*/" for u in uses]}
+        inserts = {f"{lowering.function}.contract": ["/*@ " + "\n    ".join("\n".join(texts).splitlines()) + " */"]}
+        for anchor in lowering.anchors:                  # ticket 23: summarized callees carry their ACSL summary
+            callee = anchor.get("function")
+            if anchor["kind"] != "contract" or callee == lowering.function:
+                continue
+            summary = self._summary_clauses(callee)
+            if summary:
+                ordered = sorted((c["acsl"]["text"].strip() for c in summary),
+                                 key=lambda t: 0 if t.startswith("requires") else 1)
+                inserts[anchor["id"]] = ["/*@ " + "\n    ".join("\n".join(ordered).splitlines()) + " */"]
+                for clause in summary:
+                    uses += [u for u in clause["acsl"].get("uses", []) if u not in uses]
+        inserts["ghost.globals"] = [f"/*@\n{files[u].read_text()}\n*/" for u in uses]
         kinds = {a["id"]: a["kind"] for a in lowering.anchors}
         for hint in self.hints:
             anchor, text = hint["anchor"], hint["acsl"].strip()
@@ -192,6 +206,18 @@ class WpAdapter:
             else:
                 out.append(line)
         return "\n".join(out) + "\n"
+
+    def _summary_clauses(self, callee):
+        """The `once: self` formal halves of the library entry that summarizes `callee` (ticket 23), or []."""
+        found = [data for eid, data in sorted(self.library.entries.items())
+                 if eid != self.contract and isinstance(data.get("proof_unit"), dict)
+                 and data["proof_unit"].get("function") == callee]
+        for data in found:
+            clauses = [c for c in data.get("clauses") or [] if isinstance(c, dict) and c.get("acsl")
+                       and c.get("proof_placement") == {"once": "self"}]
+            if clauses:
+                return clauses
+        return []
 
     def _wp(self, job, input_path, context):
         tools, log, wp_dir = context["tools"], context["log"], context["wp_dir"]
