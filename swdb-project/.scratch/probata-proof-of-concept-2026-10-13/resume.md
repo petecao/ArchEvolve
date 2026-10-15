@@ -4,7 +4,7 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 17:11 ET. **Implementation is active under the user's ongoing approval.**
+Updated: 2026-10-15 17:15 ET. **Implementation is active under the user's ongoing approval.**
 Integration: `codex/probata-resume-20261015`, based on `yanrujhou_main` at `d94d629b`.
 Reviewed atomic/enum repair and float hints are published at `7c06e9ed`.
 Only `swdb/c_lowering.py` differs in production from `71771f09`; its reviewed SHA256
@@ -18,8 +18,8 @@ Drafts 1/2 remain immutable. Draft 3 and the final production freeze have not ha
 | Ticket / owner | Verified checkpoint | Active work |
 |---|---|---|
 | 07 / `ticket07` | Guard revision passes 183 controls and an actual mechanical component; runs 20–22 remain aborted. Run 23 baseline completed in 14.97 minutes: 254 ordinary goals, 103 timeouts, all 139 smoke checks passed. | Frozen `df19ff8a` run 23 started 16:41:25 ET. Fresh mechanical seed check completed; provider launched 16:58:55 ET. Independent actual prompt/argv/tool/source audit passes, and `record_design` works. Full clock remains counted; budget ends around 17:41 ET excluding recorded lock wait. No qualifying proof yet. |
-| 24 / `ticket24` | Historical Ring/allocation and corrected DXC/class/OMP pairs audited. Full finite native agreement accepted at its old source. Two field-init loop invariants pass compiler RED/GREEN and independent review. Atomic/enum refusal repair passes 86 compiler/native plus 29 public/corpus controls and independent review. | Freeze combined source for fresh full nine-group actual matrix, float first, with fresh model/summary dependencies and allocation/lifetime controls. Prior safe float failure remains three initialization timeouts, not an accepted positive. Fresh finite native agreement is also required. |
-| 27 / `ticket27` | Frozen `71771f09`: all 11 safe cases pass, 792 ordinary + 252 smoke goals Valid, including 143 initialization and 141 RTE goals. Final audit: 15,495 physical references / 1,039 files, zero mismatches. | Fresh combined-source negative, capacity, bounded/native and safe profiles remain. Dispatch negative profile first using the committed runner; no new comparison harness is needed. |
+| 24 / `ticket24` | Historical Ring/allocation and corrected DXC/class/OMP pairs audited. Full finite native agreement accepted at its old source. Two field-init loop invariants pass compiler RED/GREEN and independent review. Atomic/enum refusal repair passes 86 compiler/native plus 29 public/corpus controls and independent review. | Node 0 generation 572 started 17:13:08 ET at frozen `0e7f2327`: full nine-group matrix, float first, fresh dependencies and all allocation/lifetime controls. Candidate seed is building. Prior safe float failure remains three initialization timeouts, not an accepted positive. Fresh finite native agreement is also required. |
+| 27 / `ticket27` | Frozen `71771f09`: all 11 safe cases pass, 792 ordinary + 252 smoke goals Valid, including 143 initialization and 141 RTE goals. Final audit: 15,495 physical references / 1,039 files, zero mismatches. | Node 1 generation 603 started 17:13:08 ET at the same freeze: 13-test negative profile. Capacity, bounded/native and fresh safe profiles follow as lanes release. |
 | 36 / dependency-gated | Mandatory RTE, complete-command and mutation checks integrated; 122 compiler/scripted controls pass, 13 actual-WP cases excluded. | Waits on 27; no full setup acceptance or production method freeze. Read-only provenance fallback research remains prospective. |
 
 Accepted historical boundaries and reviewed changes:
@@ -35,8 +35,14 @@ Raw artifacts and frozen checkouts remain available for their readers:
 - Ticket 24 roots under `/data/yanruj/EvolveSWDB_runs/`: `probata-resume-t24-templates-71771f09`, `probata-resume-t24-remaining-71771f09`, and stopped `probata-resume-t24-pending-9b75f4a2`. Their source worktrees stay fixed for audit readers.
 - Ticket 27 completed root `probata-resume-t27-safe-71771f09` under the same remote parent. Generation 602 exited 0 at 16:52:28 ET after 6015.55 seconds, peak 4,503,920,640 bytes, no OOM/timeout, unchanged `71771f09`.
 
-Last lane readback: both socket generations 571/602 and legacy 77 are released;
-19 GiB free on `/data1`, 95 GiB on `/data`. Recheck leases/processes/disks before dispatch.
+Live 17:13 ET readback: node 0 generation 572 and node 1 generation 603 are held;
+legacy 77 is released. New clean worktree is `/data1/yanruj/probata-composed-0e7f2327`,
+exact `0e7f232762e4555aa9435a3a3622923fad8ee928`. Raw roots are
+`/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-{t24,t27-negative}`.
+18 GiB free on `/data1`, 95 GiB on `/data`. Both 197-module bootstrap manifests match
+physical files and committed blobs; full runtime provenance is present and equal
+across lanes. [Launch and envelope audit](evidence/composed-launch-0e7f2327-20261015.json).
+Recheck leases/processes/disks before further dispatch.
 New source uses Git and a separate frozen worktree; raw output uses `/data`, planned
 8 GiB per lane, monitored by the coordinator. Each lane has one worker and an 8 GiB
 worker-tree watchdog including provenance bootstrap. Trusted outer monitor overhead
@@ -44,14 +50,14 @@ is outside its own measurement. Wrapper bytes must match freshly fetched MemAcc
 `yanrujhou_main`; its default `main` lacks that script. CPU jobs do not use the GPU
 whose NVML driver/library diagnostic currently fails.
 
-Next: freeze the current integration head and launch node 0's complete original
+Next: audit the two active profiles at frozen `0e7f2327`: node 0's complete original
 matrix (float first; six-hour whole cap, 1800-second public-command limits) and node 1's
 negative profile (three-hour whole cap). RTE/init/smoke and per-goal limits remain
 unchanged. Follow with the remaining disjoint 27 profiles as lanes release. No
 current-source proof success is claimed before actual artifacts and independent audit.
 
 The coordinator owns merges, graph updates and remote dispatch. Mac actual verification
-belongs to 07; one additional guarded compiler/native worker is available. This chat's
+belongs to 07; one additional guarded native worker runs the fresh finite agreement in a separate clean Mac worktree. This chat's
 30-minute heartbeat remains active, old chat paused; last full table 16:51 ET, next due 17:21 ET.
 Research-only notes remain `/private/tmp/probata-ticket25-resume-exploration.md`,
 `/private/tmp/probata-ticket25-lifetime-capabilities.md`,

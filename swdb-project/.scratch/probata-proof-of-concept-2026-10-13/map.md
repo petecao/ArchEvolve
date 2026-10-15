@@ -5,9 +5,9 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-re
 
 ## Current state (resume here)
 
-Updated: 2026-10-15 17:11 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
+Updated: 2026-10-15 17:15 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
 Integration: `codex/probata-resume-20261015`; reviewed atomic/enum repair and float
-hints published at `7c06e9ed`. Fresh combined-source actual acceptance is next.
+hints published at `7c06e9ed`. Fresh actual jobs use frozen `0e7f2327`.
 Mac counted run 23 stays frozen at `df19ff8a`, provider active after fresh baseline/seeds.
 [Current resume and evidence](resume.md).
 
@@ -23,7 +23,8 @@ Mac counted run 23 stays frozen at `df19ff8a`, provider active after fresh basel
 - **36:** Still dependency-gated. 122 focused controls pass; 13 actual-WP cases
   excluded. Drafts 1/2, final method freeze and held-out gates remain.
 
-Both remote lanes are released at last readback; recheck live before dispatch.
+Both remote lanes started 17:13 ET: node 0 generation 572 full original matrix,
+node 1 generation 603 negative profile. [Launch audit](evidence/composed-launch-0e7f2327-20261015.json).
 No whole ticket closes from partial or historical results. This chat's 30-minute
 heartbeat remains active; old chat paused. [Ticket index](ticket-status-20261015.md).
 
