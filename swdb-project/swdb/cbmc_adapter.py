@@ -161,7 +161,7 @@ class CbmcAdapter:
         sizes = _sizes(job.bounds)
         context = {"job": job, "out": out, "log": log, "reports": [], "tools": tools, "bounds": dict(job.bounds),
                    "settings": {"tool": "cbmc", "flags": [], "translator": tools["translator"]["id"],
-                                "build_constants": list(self.defines)}}
+                                "build_constants": list(self.defines), "verifier_launched": False}}
         if summary_job:
             source = self.library.resolve((entry.get("proof_unit") or {}).get("source"))
         else:
@@ -244,6 +244,7 @@ class CbmcAdapter:
                 code.text, source_view, checked = bounded_entry_windows.prepare(
                     lowering, source, built['plan'].array_domains, defines=self.defines)
             except bounded_entry_windows.Refused as exc:
+                context['settings']['array_domains'] = dict(built['plan'].array_domains, refusal=str(exc))
                 return self._not_proven('unsupported_construct', str(exc), context)
             code.window_cxx[lowering.function] = source_view
             context['settings']['array_domains'] = checked
