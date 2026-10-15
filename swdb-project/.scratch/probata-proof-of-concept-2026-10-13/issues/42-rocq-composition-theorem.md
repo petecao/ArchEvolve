@@ -196,3 +196,62 @@ write, even across a barrier, under `reads_owner_stable`. Global/thread-local
 class-lifetime transport is Qed as `t42_read_class_stable_global`. Compile:
 `/tmp/probata-t42-resume/logs/owner-proof-1.log.summary.json`, exit 0, 3.73 s,
 peak 443.6 MB. These directly address the previously open RF-sensitive swap case.
+
+### Critical-window swap safety — 2026-10-15 02:10 ET
+
+Both conditions for clearing any foreign event leftward inside a critical window
+are now Qed: `t42_window_adjacent_indep` proves nonconflict and absence of new or
+old synchronization; `t42_window_device_safe` excludes the earlier RF-source/cover
+reversal. `t42_future_source_in_critical_forbidden` combines class lifetime,
+ownership lifetime, and protected-read quietness to close that case. The four
+core results print `Closed under the global context` (log sha256
+`f0532d0e8a885018e887fe9f2fc1415078fabe8f12825919a931ee3c625a3996`).
+Rocq compile: `owner-proof-6.log.summary.json`, exit 0, 5.36 s, peak 451.7 MB,
+8 GB watchdog. No approved statement edit. Remaining: finite constructive window
+partition, global serialization, and iteration-count/conclusion assembly. The
+main theorem is still open, so this remains checked progress only.
+
+### Conclusion assembly checked — 2026-10-15 02:20 ET
+
+`t42_iterations_once` is Qed: uniform worksharing reachability, per-thread chunk
+coverage/disjointness/NoDup, and OpenMP scheduling give each global iteration
+exactly once. `t42_serialization_suffices` is Qed and assembles every serial-outcome
+conjunct from a valid observational reordering with contiguous critical sections.
+`t42_reorder` has Qed reflexivity/transitivity and the checked critical-window
+adjacent-swap interpretation. Compile `iterations-3.log.summary.json`: exit 0,
+4.46 s, peak 476.6 MB, 8 GB watchdog. The outstanding mathematical step is now
+constructive global critical-section serialization. No fallback or completed
+method-part theorem record is claimed.
+
+### Full composition theorem Qed — 2026-10-15 02:34 ET
+
+`parallel_composition` is now **Qed** against exactly the approved `e23f3715…`
+statement. The finite construction partitions each critical window with safe
+adjacent swaps, scans a closed prefix, and recurses on a strictly shorter suffix;
+unmatched final Enter events contain no completed critical section. The coordinator's
+independently checked partition helper was specialized and kernel-checked inside
+the same development. Every other serial-outcome conjunct is assembled by the
+previously checked latest-read and iteration lemmas. Composition now contains 209
+Qed proofs and no admitted theorem or axiom.
+
+- Composition source sha256:
+  `3cdbe92ddd970808e34fa4a559119d73e1d4583fdc8faa9dffc9dcf411b15a0e`.
+- Rocq 9.3.0, `theorem-1.log.summary.json`: exit 0, 4.68 s, peak 490.5 MB,
+  8 GB watchdog; no kill or timeout. Every real job used the shared verifier lock.
+- `theorem-checks.log` exactly matches `statement.expected`, then prints
+  `Closed under the global context` for `parallel_composition`. Log sha256
+  `86941c9b85e238f6cc2b2d92d66ed8e3faa8e22afb4779ffc008d296d308952c`.
+- The exact guard accepts the approved statement, and rejects added Admitted and
+  Axiom copies in the proof block. The stale-history false theorem still fails at
+  its intended value-equality branch (exit 1).
+- Sanity compiles, exit 0, peak 436.7 MB, with its regression lemmas closed under
+  the global context (`theorem-sanity.log`).
+- Shared-box accounting: original start remains 2026-10-14 14:42 ET; this resumption
+  used about 50 minutes, bringing active proof effort to roughly 8.5 hours including
+  the previously recorded 7.7 hours. No written fallback was used.
+
+**Still claimed:** the coordinator owns the authorized `swdb prove` Rocq adapter,
+real method-part record, candidate-level on-read assumption removal tests, and
+record-level negative controls. This theorem proof does not substitute for those
+remaining ticket acceptance checks. Ticket 43 may use the checked composition
+result when the coordinator advances its frontier.
