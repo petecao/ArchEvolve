@@ -1,0 +1,190 @@
+{
+  "created": "2026-10-15 16:40:23 EDT",
+  "verdict": "independent source/private controls and real resource component PASS; fresh counted freeze permitted",
+  "boundary": "no scientific proof claim; no baseline/seed/provider/conversation/output/clock reuse from aborted or resource-component runs",
+  "controls": {
+    "repository": 182,
+    "independent_cli": 1,
+    "passed": 183,
+    "duration_s": 9.51
+  },
+  "resource_component_source": "79d6f338726092919a9c3984899d6c1669a6e7e8",
+  "resource_component_wall_s": 150.48259925004095,
+  "source_pin_count": 27,
+  "prototype_and_document_pin_count": 14,
+  "source_sha256": {
+    "edit_loop.py": "490a72193367e148f0bb4d3af2a9db593dbb8e8d6ee34649fe556064df22a2b6",
+    "edit_core.py": "d4168260e3eb866e8bd127b4de56d8070e5806b74d39b4910d52e16379800d4e",
+    "edit_tool_mcp.py": "7ee77c0238f687fec845042a10a1e862f561726f1975703980644c95a203034f",
+    "focused_probe.py": "9ad86e2c61530a19f95ebb4d5aff639d489ef5a0788a6a1e00ddbdf0bd7c05db",
+    "staged_search.py": "125e2562342e6ba684d1189ca29fb48476b73bee30d0fd368f7f7c6b4c6b2419",
+    "counted_verifier.py": "fe11e786ce3449178177208fe9291b135bf98e9c7ff511ac4644bcf9a64073c9",
+    "loop.py": "cb84fdca2b0d8dd0c77b286037513a4642835cd631ad9f87c74f0d736982d350",
+    "wp_run.sh": "69e952e3b65b18887a428fe964fec993f70aa3388024e56c675780cbe80b38b6",
+    "hints.py": "48bafc2eab6caf40bb921e773212dff3efbbbc652aa2d120d87da4704b021bca",
+    "frame_seeds.py": "7c8bec31b2be840218545a3370cafde8431ddd4699a363ebe3e391fb56c519c2",
+    "goal_print.py": "9494e8d457f0d28d055c109ea4fbaada278c15e3088466096dc2a407a89a358f",
+    "test_counted_verifier.py": "b5dbd068d40320738fe6f9b4a7a76e013ba402cb42376f3f1483f2aa8d1e676a",
+    "test_focused_probe.py": "0d01e57483b02a8480c1084e2b26783acc6ca4587964fa8a28cc2aa8ac60ded6",
+    "METHOD20.md": "7d04bbf72b938d6f8db3f4a993f8f707e27a7550c3c0289d1bbcd011ae5eda30"
+  },
+  "source_files": [
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py",
+      "sha256": "fe11e786ce3449178177208fe9291b135bf98e9c7ff511ac4644bcf9a64073c9",
+      "bytes": 19506
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/edit_core.py",
+      "sha256": "d4168260e3eb866e8bd127b4de56d8070e5806b74d39b4910d52e16379800d4e",
+      "bytes": 19711
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/edit_loop.py",
+      "sha256": "490a72193367e148f0bb4d3af2a9db593dbb8e8d6ee34649fe556064df22a2b6",
+      "bytes": 46784
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/edit_tool_mcp.py",
+      "sha256": "7ee77c0238f687fec845042a10a1e862f561726f1975703980644c95a203034f",
+      "bytes": 13284
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/focused_probe.py",
+      "sha256": "9ad86e2c61530a19f95ebb4d5aff639d489ef5a0788a6a1e00ddbdf0bd7c05db",
+      "bytes": 7894
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/frame_seeds.py",
+      "sha256": "7c8bec31b2be840218545a3370cafde8431ddd4699a363ebe3e391fb56c519c2",
+      "bytes": 12227
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/goal_print.py",
+      "sha256": "9494e8d457f0d28d055c109ea4fbaada278c15e3088466096dc2a407a89a358f",
+      "bytes": 6514
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/hint_tool_mcp.py",
+      "sha256": "a112d77899c122bd8e42c60abd8857b154047258230035c1dd2f58f2fe452211",
+      "bytes": 8105
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/hints.py",
+      "sha256": "48bafc2eab6caf40bb921e773212dff3efbbbc652aa2d120d87da4704b021bca",
+      "bytes": 16853
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/loop.py",
+      "sha256": "cb84fdca2b0d8dd0c77b286037513a4642835cd631ad9f87c74f0d736982d350",
+      "bytes": 45113
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/make_negctl.py",
+      "sha256": "d619ebd21ea62bb99ef1f3a089a2c9281067fb77c739d3de5e9c5e0dc76b1c78",
+      "bytes": 637
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/per_goal.py",
+      "sha256": "3a134524f8f0bad7d4e0a62c5f3dc3e6f7e7da909d77d14c12086698aa12e1d4",
+      "bytes": 1045
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/staged_search.py",
+      "sha256": "125e2562342e6ba684d1189ca29fb48476b73bee30d0fd368f7f7c6b4c6b2419",
+      "bytes": 8284
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_counted_verifier.py",
+      "sha256": "b5dbd068d40320738fe6f9b4a7a76e013ba402cb42376f3f1483f2aa8d1e676a",
+      "bytes": 22058
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_debt.py",
+      "sha256": "8bf8ccd58625ae289e082c0bb217543ebb34d8920ec7b94467a75fed36373721",
+      "bytes": 13009
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_edit_loop.py",
+      "sha256": "a764a499a35896c2172f719f134bc8b9c8746903102631e08ec94b19b730412b",
+      "bytes": 11166
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_focused_probe.py",
+      "sha256": "0d01e57483b02a8480c1084e2b26783acc6ca4587964fa8a28cc2aa8ac60ded6",
+      "bytes": 12246
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_hints.py",
+      "sha256": "3d055135a94e8d559729fb7e3e3d47262b4352b1948a9287f4c1c36b28d02369",
+      "bytes": 12608
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_loop_tool.py",
+      "sha256": "0f72c59bba2e20e8ef8b0aaf32d0df3c7fa72bffa1b19ddd26a8c9373aa276ff",
+      "bytes": 3231
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_staged_search.py",
+      "sha256": "db1cef2a96c7bf2c0d29a21476886b994ed6c11874a217feae707fb3da93b4b1",
+      "bytes": 17757
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/wp_run.sh",
+      "sha256": "69e952e3b65b18887a428fe964fec993f70aa3388024e56c675780cbe80b38b6",
+      "bytes": 6214
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/bfs_unit.h",
+      "sha256": "1bcbf4dac683d6a46269fcd5f896fefc2571adc49d059b46f93fb25eb0f7b235",
+      "bytes": 1941
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/dxc_summaries.h",
+      "sha256": "d708c0ef974e5ede1aaadd2b5e66dd785affa5e1dc6ef37419bf9e72517ae0d2",
+      "bytes": 10789
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/gapbs_models.h",
+      "sha256": "401d8ccfa8fdc1ef3734c97563a1c110d003d8847508aaa24ec3f300a33eed3e",
+      "bytes": 10157
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/tdstep_standin.c",
+      "sha256": "b4a820bd20b197eee293616af17da884bbc63ed92f9252e77f261092387024de",
+      "bytes": 11987
+    },
+    {
+      "path": "swdb-project/library/dx100/bfs_read_offload.inc",
+      "sha256": "3c5867a2b8919806f681603836bd0cff448f21634485abf84e49ed71f25515ef",
+      "bytes": 3157
+    },
+    {
+      "path": "swdb-project/swdb/provider_adapters.py",
+      "sha256": "5bf97c5bc4170e9a36cc853147bdc9f5c1ba43b22e51f6c11b8405101d26d5b8",
+      "bytes": 19362
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "/private/tmp/probata-t07-method20-inspection-review-v5-final.md",
+      "sha256": "8e69790c7a4638750ca43007bdedc056a273da2181008e4b26c618077cc739da",
+      "bytes": 3587
+    },
+    {
+      "path": "/private/tmp/probata-t07-method20-inspection-review-v5-final-manifest.json",
+      "sha256": "4395eb36ed2c08ed36d36ef50a1810b4fe249dbe94e322d6037fe1f4ab4a3ff7",
+      "bytes": 11957
+    },
+    {
+      "path": "/private/tmp/probata-t07-method20-inspection-review-v5-final-component-audit.json",
+      "sha256": "e4c3fdb7cbd3229bba5baab0125a85a3d0cd3b5c781022e65727b4387a33eac9",
+      "bytes": 1710
+    },
+    {
+      "path": "/private/tmp/probata-t07-method20-inspection-review-v5-final-process-audit.json",
+      "sha256": "e484ae4e484058f63d82f167aa7775901c190e7348468ff50508d778fa2a3a73",
+      "bytes": 291
+    }
+  ]
+}
