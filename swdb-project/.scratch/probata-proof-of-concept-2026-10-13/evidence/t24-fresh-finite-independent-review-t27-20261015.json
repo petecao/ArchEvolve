@@ -1,0 +1,335 @@
+{
+  "created": "2026-10-15 ET",
+  "kind": "independent_cold_retained_artifact_audit",
+  "new_native_or_formal_executions": false,
+  "manifest": {
+    "path": "/private/tmp/probata-agreement-0e7f2327-20261015/native/agreement.json",
+    "sha256": "0d037c05a4e8ffebea483750dafd3c40fddf5d4aec861f77802bcaf14bc28303"
+  },
+  "source_freeze": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+  "source_status_porcelain": "",
+  "physical_references": 15771,
+  "unique_resolved_paths": 1366,
+  "source_original_and_seed_reconstructed": true,
+  "rows": [
+    {
+      "group": "classes",
+      "case": "safe",
+      "defined_comparisons": 16658,
+      "precondition_excluded_runs": 3342,
+      "undefined_behavior_runs": 0,
+      "executed_runs_per_side": 20000,
+      "requested": 20000,
+      "sampled": true,
+      "independent_source_observations_matched": 16658,
+      "errors": [],
+      "mismatch_examples": []
+    },
+    {
+      "group": "classes",
+      "case": "seeded",
+      "defined_comparisons": 16658,
+      "precondition_excluded_runs": 3342,
+      "undefined_behavior_runs": 0,
+      "executed_runs_per_side": 20000,
+      "requested": 20000,
+      "sampled": true,
+      "independent_source_observations_matched": 16658,
+      "errors": [],
+      "mismatch_examples": []
+    },
+    {
+      "group": "templates",
+      "case": "safe",
+      "defined_comparisons": 25,
+      "precondition_excluded_runs": 24,
+      "undefined_behavior_runs": 0,
+      "executed_runs_per_side": 49,
+      "requested": 49,
+      "sampled": false,
+      "independent_source_observations_matched": 25,
+      "errors": [],
+      "mismatch_examples": []
+    },
+    {
+      "group": "templates",
+      "case": "seeded",
+      "defined_comparisons": 25,
+      "precondition_excluded_runs": 24,
+      "undefined_behavior_runs": 0,
+      "executed_runs_per_side": 49,
+      "requested": 49,
+      "sampled": false,
+      "independent_source_observations_matched": 25,
+      "errors": [],
+      "mismatch_examples": []
+    },
+    {
+      "group": "new_array",
+      "case": "safe",
+      "defined_comparisons": 500,
+      "precondition_excluded_runs": 214,
+      "undefined_behavior_runs": 0,
+      "executed_runs_per_side": 714,
+      "requested": 714,
+      "sampled": false,
+      "independent_source_observations_matched": 500,
+      "errors": [],
+      "mismatch_examples": []
+    },
+    {
+      "group": "new_array",
+      "case": "seeded",
+      "defined_comparisons": 0,
+      "precondition_excluded_runs": 214,
+      "undefined_behavior_runs": 500,
+      "executed_runs_per_side": 214,
+      "requested": 714,
+      "sampled": false,
+      "independent_source_observations_matched": 0,
+      "errors": [],
+      "mismatch_examples": []
+    },
+    {
+      "group": "std_models",
+      "case": "safe",
+      "defined_comparisons": 8360,
+      "precondition_excluded_runs": 11640,
+      "undefined_behavior_runs": 0,
+      "executed_runs_per_side": 20000,
+      "requested": 20000,
+      "sampled": true,
+      "independent_source_observations_matched": 8360,
+      "errors": [],
+      "mismatch_examples": []
+    },
+    {
+      "group": "std_models",
+      "case": "seeded",
+      "defined_comparisons": 6658,
+      "precondition_excluded_runs": 11640,
+      "undefined_behavior_runs": 1702,
+      "executed_runs_per_side": 18298,
+      "requested": 20000,
+      "sampled": true,
+      "independent_source_observations_matched": 6658,
+      "errors": [],
+      "mismatch_examples": []
+    },
+    {
+      "group": "omp",
+      "case": "safe",
+      "defined_comparisons": 19783,
+      "precondition_excluded_runs": 217,
+      "undefined_behavior_runs": 0,
+      "executed_runs_per_side": 20000,
+      "requested": 20000,
+      "sampled": true,
+      "independent_source_observations_matched": 19783,
+      "errors": [],
+      "mismatch_examples": []
+    },
+    {
+      "group": "omp",
+      "case": "seeded",
+      "defined_comparisons": 19783,
+      "precondition_excluded_runs": 217,
+      "undefined_behavior_runs": 0,
+      "executed_runs_per_side": 20000,
+      "requested": 20000,
+      "sampled": true,
+      "independent_source_observations_matched": 19783,
+      "errors": [],
+      "mismatch_examples": []
+    },
+    {
+      "group": "atomics",
+      "case": "safe",
+      "defined_comparisons": 125,
+      "precondition_excluded_runs": 50,
+      "undefined_behavior_runs": 0,
+      "executed_runs_per_side": 175,
+      "requested": 175,
+      "sampled": false,
+      "independent_source_observations_matched": 125,
+      "errors": [],
+      "mismatch_examples": []
+    },
+    {
+      "group": "atomics",
+      "case": "seeded",
+      "defined_comparisons": 125,
+      "precondition_excluded_runs": 50,
+      "undefined_behavior_runs": 0,
+      "executed_runs_per_side": 175,
+      "requested": 175,
+      "sampled": false,
+      "independent_source_observations_matched": 125,
+      "errors": [],
+      "mismatch_examples": []
+    },
+    {
+      "group": "floats",
+      "case": "safe",
+      "defined_comparisons": 11909,
+      "precondition_excluded_runs": 8091,
+      "undefined_behavior_runs": 0,
+      "executed_runs_per_side": 20000,
+      "requested": 20000,
+      "sampled": true,
+      "independent_source_observations_matched": 11909,
+      "errors": [],
+      "mismatch_examples": []
+    },
+    {
+      "group": "floats",
+      "case": "seeded",
+      "defined_comparisons": 11909,
+      "precondition_excluded_runs": 8091,
+      "undefined_behavior_runs": 0,
+      "executed_runs_per_side": 20000,
+      "requested": 20000,
+      "sampled": true,
+      "independent_source_observations_matched": 11909,
+      "errors": [],
+      "mismatch_examples": []
+    },
+    {
+      "group": "dxc_summary",
+      "case": "safe",
+      "defined_comparisons": 3,
+      "precondition_excluded_runs": 4,
+      "undefined_behavior_runs": 0,
+      "executed_runs_per_side": 7,
+      "requested": 7,
+      "sampled": false,
+      "independent_source_observations_matched": 3,
+      "errors": [],
+      "mismatch_examples": []
+    },
+    {
+      "group": "dxc_summary",
+      "case": "seeded",
+      "defined_comparisons": 3,
+      "precondition_excluded_runs": 4,
+      "undefined_behavior_runs": 0,
+      "executed_runs_per_side": 7,
+      "requested": 7,
+      "sampled": false,
+      "independent_source_observations_matched": 3,
+      "errors": [],
+      "mismatch_examples": []
+    },
+    {
+      "group": "maa_summary",
+      "case": "safe",
+      "defined_comparisons": 35,
+      "precondition_excluded_runs": 0,
+      "undefined_behavior_runs": 0,
+      "executed_runs_per_side": 35,
+      "requested": 35,
+      "sampled": false,
+      "independent_source_observations_matched": 35,
+      "errors": [],
+      "mismatch_examples": []
+    },
+    {
+      "group": "maa_summary",
+      "case": "seeded",
+      "defined_comparisons": 30,
+      "precondition_excluded_runs": 0,
+      "undefined_behavior_runs": 5,
+      "executed_runs_per_side": 30,
+      "requested": 35,
+      "sampled": false,
+      "independent_source_observations_matched": 30,
+      "errors": [],
+      "mismatch_examples": []
+    }
+  ],
+  "defined_total": 112589,
+  "independent_source_observations_matched": 112589,
+  "known_undefined_total": 2207,
+  "errors": [],
+  "accepted_scope": "finite native ordinary-C/C++ original-fixture agreement only",
+  "retained_resources": {
+    "created": "2026-10-15 ET",
+    "rss_scope": "whole worker including provenance bootstrap and native/compiler descendants; trusted monitor excluded",
+    "resources": {
+      "exit_code": 0,
+      "peak_rss_bytes": 1310572544,
+      "out_of_memory": false,
+      "timed_out": false,
+      "wall_seconds": 60.57013262499822,
+      "cpu_seconds": 51.149631
+    },
+    "output_monitor": {
+      "peak_retained_bytes": 349092253,
+      "budget_bytes": 2147483648,
+      "tripped": false
+    }
+  },
+  "whole_source_manifest_audit": {
+    "tracked_files": 8550,
+    "mismatches": []
+  },
+  "whole_run_pins": {
+    "source-manifest.json": {
+      "path": "/private/tmp/probata-agreement-0e7f2327-20261015/source-manifest.json",
+      "sha256": "b44194e504198ecb285c8226f6e9743d7ff785d6bbbd57fa0f0d04761164739c"
+    },
+    "runtime-provenance.json": {
+      "path": "/private/tmp/probata-agreement-0e7f2327-20261015/runtime-provenance.json",
+      "sha256": "3ba81e6c6bec0e647c7ae701ca8c9563a609c46ede05098a0d2b01d935b7b452"
+    },
+    "resources.json": {
+      "path": "/private/tmp/probata-agreement-0e7f2327-20261015/resources.json",
+      "sha256": "ac931b867d5d163563baaa438fee47e22c8e5b7a6866f0cb0cfd26c6498f0a67"
+    },
+    "source-after.json": {
+      "path": "/private/tmp/probata-agreement-0e7f2327-20261015/source-after.json",
+      "sha256": "987814a722462efd1380274bb3b973a02060d63ac4fd59f214ccd2f48d4cb8d6"
+    },
+    "command.json": {
+      "path": "/private/tmp/probata-agreement-0e7f2327-20261015/command.json",
+      "sha256": "8ab089e7486ef85f2a3b497e271bf79b24bb261019d483c0d22faafe181b3f1e"
+    },
+    "guard.py": {
+      "path": "/private/tmp/probata-agreement-0e7f2327-20261015/guard.py",
+      "sha256": "f846089e4981ba7cacd47e5523f06c9a56abfe8283a249d7bd9f24ee161ba35a"
+    },
+    "worker.py": {
+      "path": "/private/tmp/probata-agreement-0e7f2327-20261015/worker.py",
+      "sha256": "f0a4a22ec1b52742b6ce5863b1fb151593612d0ac340fd936565a7f9dbfac8c2"
+    }
+  },
+  "whole_run_resources": {
+    "created": "2026-10-15 ET",
+    "rss_scope": "whole worker including provenance bootstrap and native/compiler descendants; trusted monitor excluded",
+    "resources": {
+      "exit_code": 0,
+      "peak_rss_bytes": 1310572544,
+      "out_of_memory": false,
+      "timed_out": false,
+      "wall_seconds": 60.57013262499822,
+      "cpu_seconds": 51.149631
+    },
+    "output_monitor": {
+      "peak_retained_bytes": 349092253,
+      "budget_bytes": 2147483648,
+      "tripped": false
+    }
+  },
+  "retained_output_at_review": {
+    "files": 392,
+    "bytes": 349104337,
+    "budget_bytes": 2147483648
+  },
+  "precondition_excluded_total": 47164,
+  "runtime_provenance_full": true,
+  "reviewer_script": {
+    "path": "/private/tmp/probata-t27-agreement-0e7f-cold-audit.py",
+    "sha256": "619af3b843bf103734074268edbd592ae698378a26d79d914e1e8f7033f70942"
+  },
+  "remaining_boundary": "Finite observations only; known UB remains excluded separately, allocation seeded case has zero defined comparisons, no WP-view/general formal C++ theorem or proof verdict. Link inputs are hashed physical SDK/library files; dyld-cache runtime bytes are not independently hashed."
+}

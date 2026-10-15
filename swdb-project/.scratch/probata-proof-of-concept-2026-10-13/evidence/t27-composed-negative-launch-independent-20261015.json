@@ -1,0 +1,156 @@
+{
+  "created_utc": "2026-10-15T21:15:40.441422+00:00",
+  "scope": "Independent read-only launch snapshot; actual negative results and remaining final profiles pending.",
+  "source_commit": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+  "source_path": "/data1/yanruj/probata-composed-0e7f2327",
+  "run": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative",
+  "profile": "wp-negative",
+  "expected_cases": 13,
+  "launch": {
+    "created_utc": "2026-10-15T21:13:08.520930+00:00",
+    "source": "/data1/yanruj/probata-composed-0e7f2327",
+    "source_commit": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+    "node": 1,
+    "command": [
+      "bash",
+      "/data1/yanruj/probata-composed-0e7f2327/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/27-proof-semantics/run_acceptance.sh",
+      "0e7f232762e4555aa9435a3a3622923fad8ee928",
+      "wp-negative",
+      "--maxfail=1",
+      "--junitxml=/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/junit.xml"
+    ],
+    "timeout_seconds": 10800,
+    "rss_cap_bytes": 8589934592,
+    "workers": 1,
+    "rss_scope": "outer watchdog covers worker bootstrap, compiler provenance probes, inner monitor and proof process tree; trusted outer monitor excluded",
+    "planned_raw_budget_bytes": 8589934592,
+    "raw_budget_enforcement": "coordinator monitors; not a filesystem quota",
+    "readers": [
+      "root",
+      "ticket27"
+    ],
+    "log_name": "acceptance.log"
+  },
+  "immutable_launch_pins": [
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/launch.json",
+      "sha256": "1ee08fa60e2a1116cb7acadbc8b9b96b5ff5a2f3c43c500750532036b6f31da6"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/run.sh",
+      "sha256": "650f815cb7562767829d94e8868da56990c98301376b999af6c659fbe499fcf3"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/execute.py",
+      "sha256": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/watch.py",
+      "sha256": "4485ae66aa50c65f2b579f84836576aa67b54431978da71cac6eea6a68ecd07c"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/source-manifest.json",
+      "sha256": "2f4e30d04a99eaddd7cff2361f591ac065491dbe01b52e7025ba82e1c9d06f1d"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/runtime-provenance.json",
+      "sha256": "42d8992de63d5fe69c5a35a3d819c5889ccac81aaf38aef7a5d95ed7e4eb4ef0"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/dispatch-argv.json",
+      "sha256": "1c7596864d10fc28cec1cf532215bc7e9fb4165e017647e04bf22959514b668e"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/preflight.json",
+      "sha256": "6eea5d5a77ffe7fe9e75c251a616797442f6b442ddc505551c5408f31388a792"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/selection.txt",
+      "sha256": "5824b4fcb31950e0640921d3c4fcc4f1c9080e246c60e1757803c0a4f3d2c1ce"
+    }
+  ],
+  "source_checks": {
+    "HEAD": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+    "tracked_changes": "",
+    "module_count": 197,
+    "module_mismatches": [],
+    "runner_matches_blob": true,
+    "runner_sha256": "0d579f23bb0d275130a5503adf87c1e0353b935322406666e7768860faaf6c05"
+  },
+  "runtime_provenance": {
+    "lowering_identity": {
+      "c_lowering": {
+        "id": "swdb-c-lowering-9",
+        "sha256": "b1ddaa111bec5d19843b69fd7571530859acb1382947d96692894bfc29b0b993"
+      },
+      "clang": {
+        "id": "clang-22.1.8",
+        "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+      },
+      "naming_rules": {
+        "id": "kept-names.3",
+        "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+      }
+    },
+    "runtime": {
+      "check": {
+        "id": "swdb-stdlib-provenance-1",
+        "sha256": "4aee5a271a2f92fced7a94c04807cd2d94d36da24ea3d163f2364048bc79d937"
+      },
+      "command_executable": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+        "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+      },
+      "driver": {
+        "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang-22",
+        "sha256": "31a40dc31f3c15a47aa119aa148f339bf363d8f61202ddbdacbd3f24b71ba113"
+      },
+      "headers": {
+        "files": 1983,
+        "id": "llvm-standard-resource-headers",
+        "sha256": "d37aec646b1e6e1748d40690c60436f905f55852ee578e79c43a3199c4a16e23"
+      },
+      "parser": {
+        "id": "libclang-22.1.8",
+        "sha256": "8b03ee2c60f0699651869fea5135cb5a144777a10c6e4b9b7835283ac9ca3f7d"
+      }
+    },
+    "tool": {
+      "command": [
+        "clang++"
+      ],
+      "missing": "",
+      "version": "22.1.8"
+    }
+  },
+  "mutable_lane_snapshot": {
+    "socket_lane": {
+      "aligned_cell_age_s": "",
+      "aligned_to": "no_gapbs_batch_running",
+      "command": [
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=60",
+        "10920",
+        "bash",
+        "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/run.sh"
+      ],
+      "cpus_allowed_list": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63",
+      "ended_utc": "",
+      "exit_code": -1,
+      "host": "mbit10",
+      "job": "probata-composed-0e7f2327-t27-negative",
+      "lease_generation": 603,
+      "lease_name": "mbit10-evaluation-node1",
+      "load1_at_start": 0.52,
+      "load1_max": 32,
+      "node": 1,
+      "numa_memory_policy": "bind:1",
+      "numactl": "--cpunodebind=1 --membind=1",
+      "preregistration_sha256": null,
+      "started_utc": "2026-10-15T21:13:08Z"
+    }
+  },
+  "guard_review": "Outer watch wraps execute.py including compiler provenance bootstrap and inner RSS monitor/proof tree at8GiB/10800s; socket wrapper has10920s timeout with60s kill-after. Trusted outer monitor is excluded from its own measured tree.",
+  "boundary": "No compiler, test, evaluator, source or environment mutation during this audit. Lane and reports are still active; this snapshot is not a completed profile or ticket acceptance. Native link-DSO boundary remains explicit."
+}
