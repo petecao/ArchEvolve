@@ -123,8 +123,9 @@ fixture (2026-10-14, 10 s per solver) 309 of 327 goals prove; the 18 open goals 
 | `frees` (old buffer invalid after) | `dtor_ensures`, `grow_ensures_3` |
 
 Those diagnostic counts are historical evidence from 2026-10-14, not a current completion claim.
-No growing member and no unit that grows a vector proves in WP 33; CBMC (which runs the bodies) refutes and
-proves them. A ghost storage-pool encoding (ticket 07's note) is the known workaround, not built.
+WP units containing uncertified vector release remain unsupported. CBMC executes real allocation/free
+within its admitted bounded source protocol. A checked owner/liveness WP view remains research; a fixed
+finite pool would change the unbounded scope and cannot silently replace that acceptance.
 
 ## Not built yet
 
@@ -137,3 +138,30 @@ initialized representation plus the live element prefix. Spare capacity remains 
 These contracts accompany mandatory WP initialization checks; they make no additional lifetime claim.
 Model and summary dependencies must count under the caller's exact method and evidence boundary; a
 proof made before that policy cannot satisfy the new method merely because the code text matches.
+
+
+## Bounded initializedness admission (2026-10-15)
+
+Lowerer8 adds `standard_policy` inside generator-owned `bounded_initialization` metadata.
+`swdb/bounded_std_initialization.py` audits the exact model-version2 source hash, with its own source
+included in the checker and lowerer identities. A model-body change needs a new audit even when a
+method file pins that changed body. This policy adds no initializedness or lifetime assumption.
+
+The admitted protocol uses initialized local scalar-element vectors and pairs. It supports vector
+default/count/count-value construction, `push_back`, `size`, `empty`, `operator[]`, `at`, `data`,
+`begin`, `end`, automatic destruction and the canonical range-for with a scalar copied loop variable;
+pair default/value construction and `first`/`second` accesses are admitted. These exact model bodies
+initialize every live element. Access through the indexed member requires its executable index check;
+spare capacity is excluded. Pointer elements, copy/move construction, pair assignment, shrinking/clear,
+reserve/swap, aliases and other member protocols remain conservative refusals in this initial policy.
+
+Raw data/iterator reads require a literal index within a definite initialized live prefix at capture.
+Conditional or possibly zero-trip appends do not enlarge that prefix. Integer conversions never infer
+a larger prefix from the unconverted literal. Raw pointer arithmetic, casts, escaping calls, returned
+standard storage and reference range variables are refused. The real CBMC allocation and pointer
+checks still decide stale-pointer lifetime failures after growth; initialized ghost sizes do not stand
+in for liveness. The matched libc++22.1.8 differential requirement remains in force.
+
+The original maximum proof, stale-data and stale-iterator replayed refutations, unchecked `at`
+refutation and checked-`at` proof are retained. This bounded restoration does not satisfy the open
+unbounded WP vector-lifetime acceptance.

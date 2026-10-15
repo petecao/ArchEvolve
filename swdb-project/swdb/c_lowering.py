@@ -47,7 +47,7 @@ from pathlib import Path
 from swdb import bounded_initialization, cpu_effects, std_models, terminal_release
 
 TOOL_ID = "swdb-c-lowering"
-TOOL_VERSION = "7"                   # checked memberwise-copy initialized sources; names unchanged
+TOOL_VERSION = "8"                   # precise bounded scalar std-object initializedness; names unchanged
 NAMING_RULES = "kept-names.3"        # bump on any change to RULES
 RULES = (
     "A function, parameter, local, global or field keeps its C++ name.",
@@ -2318,7 +2318,7 @@ def lower(source, function, includes=(), defines=(), summaries=None, semantics=N
                                                     unit.summaries_used, INTEGER_TYPES | FLOAT_TYPES),
                     bounded_initialization=bounded_initialization.analyze(definition_nodes,
                         scalar_types=INTEGER_TYPES | FLOAT_TYPES, source_sha256=_file_sha256(source), text=text,
-                        external_calls=unit.summaries_used),
+                        external_calls=unit.summaries_used, standard_types=unit.std_types),
                     terminal_release=certificate)
 
 

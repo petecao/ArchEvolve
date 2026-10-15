@@ -99,8 +99,17 @@ def _model_assumptions(record):
 
 # --- the fixture unit: vector members and std::pair ---------------------------------------------------------
 
+@pytest.mark.parametrize("function", ["swdb_fixture_vec_max", "swdb_fixture_vec_stale_data",
+                                     "swdb_fixture_vec_stale_iterator", "swdb_fixture_vec_at",
+                                     "swdb_fixture_vec_at_checked"])
+def test_the_public_lowering_records_checked_standard_object_initialization(tmp_path, function):
+    from test_c_lowering import lower
+    result = lower(FIXTURES / "proof" / "cbmc" / "vector_units.cc", function, tmp_path)
+    report = result["bounded_initialization"]
+    assert report["verdict"] == "passed", report
+    assert report["standard_policy"]["id"] == "std-live-prefix-initialization-1"
+
 @needs_cbmc
-@pytest.mark.xfail(strict=True, reason="2026-10-15: ticket 25 precise bounded object/range initializedness policy pending")
 def test_a_unit_using_vector_members_and_pair_proves_and_its_c_and_cpp_agree_with_the_model_pinned(seed):
     from swdb import std_models
     record = seed.read(seed.prove("swdb_fixture_vec_max", MAX, {"threads": 1, "n": 3}))
@@ -123,7 +132,6 @@ def test_a_unit_using_vector_members_and_pair_proves_and_its_c_and_cpp_agree_wit
 # --- what the model catches ------------------------------------------------------------------------------------
 
 @needs_cbmc
-@pytest.mark.xfail(strict=True, reason="2026-10-15: ticket 25 precise bounded object/range initializedness policy pending")
 @pytest.mark.parametrize("function", ["swdb_fixture_vec_stale_data", "swdb_fixture_vec_stale_iterator"])
 def test_a_pointer_or_iterator_kept_across_a_growing_push_back_is_refuted_with_a_counterexample(seed, function):
     record = seed.read(seed.prove(function, STALE, {"threads": 1, "n": 1}))
@@ -136,7 +144,6 @@ def test_a_pointer_or_iterator_kept_across_a_growing_push_back_is_refuted_with_a
 
 
 @needs_cbmc
-@pytest.mark.xfail(strict=True, reason="2026-10-15: ticket 25 precise bounded object/range initializedness policy pending")
 def test_at_with_an_index_that_may_reach_size_is_refuted_and_the_same_call_behind_a_bounds_check_proves(seed):
     from swdb import std_models
     refuted = seed.read(seed.prove("swdb_fixture_vec_at", AT, {"threads": 1, "n": 2}))
@@ -149,19 +156,81 @@ def test_at_with_an_index_that_may_reach_size_is_refuted_and_the_same_call_behin
     assert seed.swdb("validate").returncode == 0
 
 
+# --- initialized live prefixes (2026-10-15) --------------------------------------------------------------------
+
+INITIALIZATION_CONTROLS = {
+    "PUSH": "int u; std::vector<int> init; init.push_back(u);",
+    "PAIR": "int u; std::pair<int,int> init(0,u);",
+    "COUNT": "int u; std::vector<int> init(2,u);",
+    "SPARE": "std::vector<int> init; init.push_back(7); init.push_back(8); init.push_back(9); "
+             "int *p=init.data(); int discarded=p[3];",
+    "EMPTY_ITERATOR": "std::vector<int> init; auto it=init.begin(); int discarded=*it;",
+    "BRANCH": "std::vector<int> init; if(n>0) init.push_back(7); int*p=init.data(); int discarded=*p;",
+    "LOOP": "std::vector<int> init; for(int j=0;j<n;++j) init.push_back(7); "
+            "int*p=init.data(); int discarded=*p;",
+    "SHORT_CIRCUIT": "std::vector<int> init; bool flag=n>0 && (init.push_back(7),true); "
+                     "int*p=init.data(); int discarded=*p;",
+    "ESCAPE": "std::vector<int> init; init.push_back(7); init.push_back(8); init.push_back(9); "
+              "int discarded=swdb_std_read_spare(init.data());",
+    "CAST": "std::vector<int> init; init.push_back(7); long*p=(long*)init.data(); int discarded=p[0];",
+    "REFERENCE_RANGE": "std::vector<int> init(1,7); for(int& x:init) { int discarded=x; }",
+    "MANUAL_HEAP": "int*p=new int[1]; int discarded=p[0]; delete[]p;",
+    "NARROWED_COUNT": "std::vector<int> init((unsigned char)256,7); init.push_back(7); init.push_back(8); "
+                      "init.push_back(9); int*p=init.data(); int discarded=p[3];",
+}
+
+
+@pytest.fixture(scope="module")
+def initialized_vector_seed(tmp_path_factory):
+    import sys
+    path = tmp_path_factory.mktemp("vector-initialization-seed")
+    controls = "\n".join(f"#ifdef INIT_STD_{name}\n{source}\n#endif" for name, source in INITIALIZATION_CONTROLS.items())
+    units = UNITS.replace("int swdb_fixture_vec_max(const int *a, int n) {",
+                          "int swdb_std_read_spare(int*p) { int discarded=p[3]; return 0; }\n"
+                          "int swdb_fixture_vec_max(const int *a, int n) {\n" + controls)
+    with pytest.MonkeyPatch.context() as patch:
+        patch.setattr(sys.modules[__name__], "UNITS", units)
+        candidates = build_vector_seed(path)
+    return Seed(path, candidates)
+
+
 @needs_cbmc
-@pytest.mark.parametrize("function,contract,bounds", [
-    ("swdb_fixture_vec_max", MAX, {"threads": 1, "n": 3}),
-    ("swdb_fixture_vec_stale_data", STALE, {"threads": 1, "n": 1}),
-    ("swdb_fixture_vec_stale_iterator", STALE, {"threads": 1, "n": 1}),
-    ("swdb_fixture_vec_at", AT, {"threads": 1, "n": 2}),
-    ("swdb_fixture_vec_at_checked", AT, {"threads": 1, "n": 2}),
-])
-def test_bounded_models_refuse_until_initialized_object_ranges_are_checked(seed, function, contract, bounds):
-    record = seed.read(seed.prove(function, contract, bounds))
-    assert record["verdict"] == "not_proven" and record["failure_class"] == "unsupported_construct"
+@pytest.mark.parametrize("control", sorted(INITIALIZATION_CONTROLS))
+def test_uninitialized_or_untracked_standard_storage_is_refused_before_execution(initialized_vector_seed, control):
+    seed = initialized_vector_seed
+    record = seed.read(seed.prove("swdb_fixture_vec_max", MAX, {"threads": 1, "n": 1},
+                                  "--define", "INIT_STD_" + control))
+    assert record["verdict"] == "not_proven" and record["failure_class"] == "unsupported_construct", record
     assert record["settings"]["bounded_initialization"]["verdict"] == "refused"
-    assert not any(r["name"].startswith(("cbmc_", "differential_")) for r in record["evidence"]["reports"])
+    assert not any(row["name"].startswith(("cbmc_", "differential_")) for row in record["evidence"]["reports"])
+
+
+def test_count_conversion_cannot_enlarge_the_checked_initialized_prefix(tmp_path):
+    from test_c_lowering import lower
+    source = tmp_path / "count.cc"
+    source.write_text("#include <vector>\nint swdb_count() { " + INITIALIZATION_CONTROLS["NARROWED_COUNT"] + " return 0; }\n")
+    report = lower(source, "swdb_count", tmp_path / "out")["bounded_initialization"]
+    assert report["verdict"] == "refused", report
+
+
+def test_a_changed_standard_model_body_needs_a_new_initializedness_audit(tmp_path):
+    import subprocess
+    import sys
+    changed = tmp_path / "changed-tool"
+    shutil.copytree(REPO / "swdb", changed / "swdb", ignore=shutil.ignore_patterns("__pycache__"))
+    models = changed / "swdb" / "std_models.py"
+    original = models.read_text()
+    mutated = original.replace("  this->data[this->size] = x;", "  /* element initialization removed */", 1)
+    assert mutated != original
+    models.write_text(mutated)
+    source = tmp_path / "audit.cc"
+    source.write_text("#include <vector>\nint swdb_audit() { std::vector<int> v; v.push_back(7); return 0; }\n")
+    done = subprocess.run([sys.executable, "-m", "swdb", "lower", "--source", str(source),
+                           "--function", "swdb_audit", "--out", str(tmp_path / "out"), "--format", "json"],
+                          cwd=changed, capture_output=True, text=True, timeout=60)
+    assert done.returncode == 0, done.stderr
+    report = json.loads(done.stdout)["bounded_initialization"]
+    assert report["verdict"] == "refused" and "exact-content" in report["reason"], report
 
 
 # --- assumption entries: units without the model -----------------------------------------------------------------
