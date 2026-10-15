@@ -277,3 +277,17 @@ strict-reading results remain in `/private/tmp/probata-t27-init-nofilter` and
 proof records. The finite expansion is therefore removed; the named initialization invariant, checked
 selected caller-memory initialization, and exact receiver normalization remain. The public CLI safe/negative
 pair and final combined remote acceptance still need the prospectively pinned filter policy.
+
+2026-10-15 06:43 ET public CLI checkpoint: the safe three-read unit and uninitialized-caller-input control
+both pass their test expectations at `2d2d12e6` (2 cases, 338.00 s). The safe record is `proven`: 100 ordinary
+goals and 31 smoke checks pass; the initialization-negative record is `not_proven`: 35 ordinary goals and
+15 smoke checks pass, with the single named `maa_stream_load_requires_source_initialized` goal timing out.
+Both setup checks pass and both use verdict-reader hash
+`597851262253a38e35ac6211eb5a89594c535fb3e98d0f3d64366e5aa28666df`. The safe WP process took 225.13 s and
+892,190,720-byte peak RSS. The method explicitly includes `-rte-initialized @all`, `-wp-no-filter-init`,
+`-wp-smoke-tests`, cache `none`, and the Z3/CVC5/Alt-Ergo serial portfolio. Raw records/reports remain under
+`/private/tmp/probata-t27-init-public-nofilter`, with report log at the matching `.jsonl` path.
+
+The finite expansion is absent. Final acceptance is still pending the combined ticket-36 pointer-origin
+admission update and prospective final method pin; this local checkpoint does not resolve ticket 27 or
+substitute for the coordinated remote safe/unsafe shards.
