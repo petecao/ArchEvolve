@@ -1,8 +1,8 @@
 # Method20 prospective checkpoint
 
 Created: 2026-10-15 ET. Updated: 2026-10-15 ET. **Runs20/21/22 are harness-aborted,
-with no qualifying proof. The reviewed process-inspection revision and fresh
-actual seed-stage resource check pass; a new counted experiment remains required.** At the earlier closeout checkpoint this
+with no qualifying proof. Fresh run23 completed unproven at52.02counted minutes
+with26open goals; final replay and negative acceptance were not reached.** At the earlier closeout checkpoint this
 method was unlaunched. Historical method19 source `669df70f` stays unchanged.
 
 The new opt-in `--design-probes` requires the strict `--staged-induction`
@@ -208,3 +208,42 @@ retains the aborted-run boundary and both actual component receipts. Components
 are not scientific proof or reusable counted inputs. A fresh full baseline,
 provider conversation/clock, all-goal positive, final cache-none smoke replay and
 separate covering-wait negative remain mandatory.
+
+
+## Run23 completed unproven — 2026-10-15 ET
+
+Fresh run23 at clean `df19ff8a6342d24ca853624f1e97a6c6833cabcb` ran from
+16:41:25 to17:33:26EDT. Its full no-hint baseline consumed14.97counted minutes:
+254ordinary goals,103timeouts,139/139smoke checks passed. Five fresh mechanical
+frames then left39/209ordinary goals open at17.50minutes. The independently
+audited provider received only the frozen allowed workspace and same-run outputs.
+Its first valid structured design was recorded; no focused probe was requested.
+
+**Fail / not proven:** the incumbent has36hints and254round-mode ordinary goals,
+228Valid and26timeouts (15unit +11hint). All nine postconditions remain open.
+Best JSON SHA256: `967300badab8e307c007bea3298d0e85030e46d83cf48c92776fa08066fe3d6b`.
+Exact hint vocabulary/merge/erase/header checks pass; five mechanical frame seeds
+and31provider records account for all hints. These round-mode goals differ from
+the full baseline inventory despite their coincident254ordinary total.
+
+The52.02counted minutes are a search-deadline stop, with the eight-minute final
+reserve unused because no zero-open incumbent qualified. `within_budget:false`
+requires a qualifying success; it does not mean an elapsed count above60minutes.
+No fresh final all-function smoke replay or covering-wait negative was run.
+Two provider calls shared one fresh conversation. The legacy `wp_attempts:12`
+means12proposal requests, including one edit-rule refusal:11candidate round-s
+processes ran,10completed and one was deadline-censored. Separate jobs are the
+seed round-s and full no-hint baseline. Two ordinary parser refusals were retained.
+
+All55guarded process reports have confirmed cleanup; no watchdog, queue timeout,
+terminal inspection error or unconfirmed child occurred. Sampled peak3729.05MiB;
+66transient inspection events retained sanitized diagnostics. The independent
+poststop audit found no tools or shared leases, and all six tool binaries matched
+the launch pins. The second provider turn ended at the search deadline before
+`turn.completed`; recorded tokens cover the first turn only and are a lower bound,
+with the second turn unknown. The frozen worktree and raw outputs remain retained.
+[Compact run23 evidence](../../evidence/t07-counted-23-20261015.json) pins the
+27-source zero-mismatch audit, reports and provider receipts. Ticket07 remains
+claimed in its shared box with no qualifying proof; no identical retry follows.
+A separately documented diagnostic-baseline allocation plan must precede any
+changed timeout. Final positive/smoke/negative criteria remain unchanged.
