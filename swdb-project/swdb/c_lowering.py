@@ -47,7 +47,7 @@ from pathlib import Path
 from swdb import bounded_initialization, cpu_effects, std_models, terminal_release
 
 TOOL_ID = "swdb-c-lowering"
-TOOL_VERSION = "8"                   # precise bounded scalar std-object initializedness; names unchanged
+TOOL_VERSION = "9"                   # checked WP pointer formation and integer model receiving slots
 NAMING_RULES = "kept-names.3"        # bump on any change to RULES
 RULES = (
     "A function, parameter, local, global or field keeps its C++ name.",
@@ -1176,6 +1176,11 @@ class _Printer:
             self.emit(f"{self.delete(node)};", indent)
         elif kind and (kind.endswith("Expr") or kind.endswith("Operator") or kind == "ExprWithCleanups"):
             text = self.expr(node, top=True)
+            if text.startswith(("(swdb_atomic_", "(swdb_sync_", "(std_min_", "(std_max_", "(omp_")) \
+                    and text.endswith(" + 0)"):
+                # The expression identity below initializes a WP call-result receiving slot. A
+                # discarded builtin result must remain warning-free under native -Wall -Werror.
+                text = f"(void){text}"
             if _strip(node).get("kind") in ("CallExpr", "CXXMemberCallExpr", "CXXOperatorCallExpr") and \
                     re.fullmatch(r"\(\*[A-Za-z_]\w*\(.*\)\)", text):
                 text = text[2:-1]               # ticket 25: a call returning a reference, as a statement: no `*`
@@ -1807,7 +1812,7 @@ class _Printer:
 
     def _omp_runtime(self, name):
         model, text = model_definition("omp", name, "int")
-        return f"{self.unit.model(model, text, self.line)}()"
+        return self._initialized_model_result(f"{self.unit.model(model, text, self.line)}()", "int")
 
     def _scalar(self, ctype, what):
         plain = ctype.replace("const ", "").replace("volatile ", "").strip()
@@ -1836,7 +1841,8 @@ class _Printer:
             model = unit.model(*model_definition("std", name, ctype), self.line)
             if name == "swap":
                 return f"{model}({self.address(args[0])}, {self.address(args[1])})", True
-            return f"{model}({self.expr(args[0], top=True)}, {self.expr(args[1], top=True)})", True
+            text = f"{model}({self.expr(args[0], top=True)}, {self.expr(args[1], top=True)})"
+            return self._initialized_model_result(text, ctype), True
         if name == "copy":
             if len(args) != 3:
                 raise Unsupported("std::copy with an execution policy", self.line)
@@ -1978,7 +1984,9 @@ class _Printer:
             values = [children[2]]                            # ptr, order, value
         model = self._atomic_model("atomic", op, ctype)
         texts = [self.expr(ptr, top=True)] + [self.expr(v, top=True) for v in values]
-        return f"{model}({', '.join(texts)})", True
+        text = f"{model}({', '.join(texts)})"
+        return self._initialized_model_result(text, ctype, boolean=op == "compare_exchange_n",
+                                              void=op == "store_n"), True
 
     def _sync(self, name, args):
         if name == "__sync_synchronize":
@@ -1988,7 +1996,18 @@ class _Printer:
             raise Unsupported(f"atomic builtin {name}", self.line)
         ctype = self._pointee(args[0], name)
         model = self._atomic_model("sync", op, ctype)
-        return f"{model}({', '.join(self.expr(a, top=True) for a in args)})", True
+        text = f"{model}({', '.join(self.expr(a, top=True) for a in args)})"
+        return self._initialized_model_result(text, ctype, boolean=op == "bool_compare_and_swap"), True
+
+    @staticmethod
+    def _initialized_model_result(text, ctype, *, boolean=False, void=False):
+        """Ordinary integer assignment after WP33's modular call; preserve one evaluation.
+
+        WP binds a returned value but leaves the receiving lvalue's initialized bit unknown.
+        Adding integer zero is an exact identity and makes the assignment ordinary. It is
+        deliberately excluded for pointers (including null) and floating-point results.
+        """
+        return f"({text} + 0)" if not void and (boolean or ctype in INTEGER_TYPES) else text
 
     def _atomic_model(self, family, op, ctype):
         try:

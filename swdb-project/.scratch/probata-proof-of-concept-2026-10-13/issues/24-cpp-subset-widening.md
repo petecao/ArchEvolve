@@ -382,3 +382,22 @@ nullable-pointer rule. The raw runs use three seconds per solver and are diagnos
 the production public workflow and full construct-suite acceptance are still required.
 Exact source, command, result and artifact hashes:
 [`t24-atomic-receiver-initialization-20261015.json`](../evidence/t24-atomic-receiver-initialization-20261015.json).
+
+### Checked integer model results — 2026-10-15 ET
+
+Lowerer9 makes known integer/bool model results ordinary expression assignments with `+ 0`.
+It evaluates each call once, preserves the one-thread atomic meaning, and excludes void,
+floating and arbitrary pointer results. Discarded normalized results use an explicit void
+cast so native C builds stay warning-free. No input initialization premise is generated.
+
+Focused public acceptance: exchange, fetch-add and bool compare-exchange callers all prove
+with separately proven model records (**3 passed,591.59s**); std::min proves with its pinned
+model (**1 passed,359.86s**). Removing only the caller's initialized-pointee premise leaves
+the actual model precondition unproved (**1 negative control passed,143.01s**). All smoke
+checks in these records pass. Native/lowering checks:90 existing cases plus4 new cases
+pass, including ASan/UBSan C++/C null/live pointer-return behavior. Raw std min/max/OpenMP
+result diagnostics also pass; they do not replace the full public construct suite.
+
+Exact source and record hashes, incremental reports and validation boundaries:
+[`t24-model-results-public-20261015.json`](../evidence/t24-model-results-public-20261015.json).
+Ticket24 remains claimed until combined-source acceptance completes.
