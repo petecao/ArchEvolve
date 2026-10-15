@@ -1,7 +1,7 @@
 # 25 — std::vector and std::pair models
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-15 ET (original vector/pair maximum workflow WP view accepted; member/bounded frontier remains open); 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 22, 24
@@ -413,3 +413,60 @@ manifest match. The audit resolves pytest symlink aliases before counting record
 [Actual evidence](../evidence/stdlib-source-provenance-actual-20261015.json).
 The gate's focused admission and actual pair are accepted; wider vector/member
 acceptance and the ticket remain open.
+
+
+### Original vector/pair workflow — 2026-10-15 ET
+
+The unchanged `tests/fixtures/proof/cbmc/vector_units.cc` maximum function now
+proves through the public WP seam under its explicit `a:n` typed input-window
+and initializedness contract. Its original push/copy loop, pair maximum,
+range-for, size/index scan and scalar result are retained by an exact checked
+private-storage projection. Growth/allocation count is symbolic; no fixed pool
+or repeated private-address key is used. The source and view both keep
+`assigns \nothing;`, and their contract hashes agree.
+
+On frozen `0cc88ffc`, the actual pair passed **2 tests in 182.53 seconds**, peak
+0.95 GiB under the 8 GiB watchdog and adapter-owned verifier lease:
+
+| Source | Ordinary goals | Smoke | Verdict |
+| --- | --- | --- | --- |
+| Unchanged maximum workflow | 77 Valid | 12 passed | proven |
+| Changed maximum comparison (`>`→`<`) | 76 Valid, one invariant-preservation timeout | 12 passed | not proven |
+
+Both jobs pass setup, strict fresh-cache reading and the full original-TU
+standard-header/declaration gate. The negative is an unproven ordinary obligation,
+not a refutation or an ignored smoke failure. [Compact evidence](../evidence/wp-vector-pipeline-20261015.json)
+independently checks 173 retained artifact hashes across 23 unique records and
+794 original-source/header pins. Pytest symlink aliases are resolved before counting.
+The current integration merge after the run changes only run18 documentation;
+current runtime identities still equal the actual preflight pins.
+
+The first actual checkpoint, `a876e3a6`, is retained as **not proven**: all 72
+ordinary safe-case goals passed, but strict smoke rejected the unreachable
+fallback arm of the final conditional. The checked view now normalizes only
+that exact pure, initialized integer selector into complementary Boolean products.
+Exactly one product is zero, so each product and their sum remain representable
+and preserve the original selected value. The original C++ and contract are
+unchanged; RTE, initializedness and smoke remain enabled. This rule does not admit
+effectful or potentially uninitialized conditional operands. Both fresh-pin fault
+controls (noncomplementary multipliers and changed fallback) refuse before WP.
+
+The full source-token closure, target AST, 12 model-text pins and all eight
+explicit/implicit standard member/iterator calls are certified. The generic
+origin pass exempts only their freshly bound AST identities and the exact source
+input read mapped to checked view guards. Every other source operation keeps its
+ordinary checks. Independent view checks cover declaration storage/TLS/attributes,
+exact local types, extra globals, all phase bodies, annotations and guard placement.
+Fifteen stand-in admission/source/renderer controls passed before the return
+normalization; its two new fault controls passed afterward. A rehashed static-pair
+renderer first reached stand-in WP (diagnosed admission RED, no actual false proof)
+and now refuses under the independent checker.
+
+This is an explicitly attributed source-to-view relation, not a proof of every
+original allocating C-model body. Records pin the pipeline checker and allocator,
+retain standard-library/allocation-success and fresh-frame premises, and mark every
+qualified member `standalone_body_proof: false`; no fabricated once-per-member
+proof dependencies are added. No immutable method file changed; these are
+`contract_fixture` records. Ticket25 stays **claimed**: general member-body proofs,
+wider protocols/types and matched bounded/native acceptance under the eventual
+combined method remain required.
