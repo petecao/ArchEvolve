@@ -399,3 +399,18 @@ class cases and approved reconstruction `e23f3715…` after the Qed sanity contr
 and guard negative test. No further counterexample was found; the theorem itself
 remains open. The table above explicitly assigns the new lifetime rule a two-thread
 ghost ownership discharge. This approval does not establish candidate compatibility.
+
+## Composition proof outcome — 2026-10-15 02:34 ET
+
+`parallel_composition` is Qed for approved reconstruction `e23f3715…`.
+Rocq 9.3.0 prints `Closed under the global context`: no axiom or admitted step.
+The 209 checked proofs derive class fit by prefix induction, latestness of
+nonracing reads, full critical-window swap safety, constructive window partition
+and finite global serialization, and exact iteration coverage. The final theorem
+assembles the stated serial twin without changing its approved hypotheses.
+The elaborated guard remains byte-identical to the approved fixture.
+
+The reduction theorem remains separate ticket 43 work. Candidate lowering and
+`cover_sound`, including the strengthened ownership lifetime discharge, remain
+conditional on ticket 45; this theorem proves the stated event model.
+The command adapter and method-part record acceptance are tracked in ticket 42.
