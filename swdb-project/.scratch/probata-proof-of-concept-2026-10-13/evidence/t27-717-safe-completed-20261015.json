@@ -1,0 +1,664 @@
+{
+  "created": "2026-10-15 ET",
+  "scope": "Completed historical frozen717 qualified WP safe fixture profile; fresh final-source profiles still required. No theorem upgrade from pytest or byte equality.",
+  "source_commit": "71771f097feb83338928430bdf78a4de8384e63b",
+  "run": "/data/yanruj/EvolveSWDB_runs/probata-resume-t27-safe-71771f09",
+  "profile": "wp-safe",
+  "selection": "/data1/yanruj/venvs/swdb-test/bin/python -m pytest tests/test_proof_semantics.py::test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics --maxfail=1 --junitxml=/data/yanruj/EvolveSWDB_runs/probata-resume-t27-safe-71771f09/junit.xml",
+  "exit_code": "0",
+  "pytest_call_outcomes": {
+    "passed": 11
+  },
+  "metadata_audit": "passed",
+  "physical_pins": {
+    "references": 15495,
+    "unique_files": 1039,
+    "mismatches": []
+  },
+  "producer_audit": {
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-t27-safe-71771f09/producer-audit-safe-final.json",
+    "sha256": "216291e31b513ffa9ab769083eeb1c15747c36e9480f0fc33b34279b2e8b97fd"
+  },
+  "records": [
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-t27-safe-71771f09/pytest/test_wp_proves_every_unit_cbmc0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t191331z.b843a970.yaml",
+      "sha256": "662e7c85aa75f90469c6b28eee1df39effb496adf62134091cc3253b07076476",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t191331z.b843a970",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_three_reads"
+      },
+      "adapter": "wp",
+      "verdict": "proven",
+      "failure_class": null,
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "ordinary": {
+        "valid": 112,
+        "total": 112
+      },
+      "smoke": {
+        "valid": 31,
+        "total": 31
+      },
+      "initialized_goals": 18,
+      "rte_goals": 27,
+      "flags": [
+        "-wp",
+        "-wp-rte",
+        "-wp-cache",
+        "none",
+        "-wp-model",
+        "+real",
+        "-wp-par",
+        "1",
+        "-machdep",
+        "x86_64",
+        "-rte-initialized",
+        "@all",
+        "-wp-no-filter-init",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-machdep",
+        "x86_64",
+        "-wp-timeout",
+        "30",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-fct=dxf_three_reads"
+      ],
+      "verifier_launched": true
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-t27-safe-71771f09/pytest/test_wp_proves_every_unit_cbmc1/records/proofs/proof.dx100-fixtures.candidate-1.20261015t192319z.bc30949c.yaml",
+      "sha256": "32ff85d18b710151b106c6848d9d1ed1e0a6316db7aabe5ff53139dfe5e2b795",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t192319z.bc30949c",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_size"
+      },
+      "adapter": "wp",
+      "verdict": "proven",
+      "failure_class": null,
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "ordinary": {
+        "valid": 38,
+        "total": 38
+      },
+      "smoke": {
+        "valid": 15,
+        "total": 15
+      },
+      "initialized_goals": 8,
+      "rte_goals": 4,
+      "flags": [
+        "-wp",
+        "-wp-rte",
+        "-wp-cache",
+        "none",
+        "-wp-model",
+        "+real",
+        "-wp-par",
+        "1",
+        "-machdep",
+        "x86_64",
+        "-rte-initialized",
+        "@all",
+        "-wp-no-filter-init",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-machdep",
+        "x86_64",
+        "-wp-timeout",
+        "30",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-fct=dxf_size"
+      ],
+      "verifier_launched": true
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-t27-safe-71771f09/pytest/test_wp_proves_every_unit_cbmc10/records/proofs/proof.dx100-fixtures.candidate-1.20261015t204504z.c30c59ca.yaml",
+      "sha256": "64841a8f25b8ba22cfa1f70657f674154e5fc04ceff0ea915ec578f1bb1118fd",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t204504z.c30c59ca",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_footprint"
+      },
+      "adapter": "wp",
+      "verdict": "proven",
+      "failure_class": null,
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "ordinary": {
+        "valid": 57,
+        "total": 57
+      },
+      "smoke": {
+        "valid": 18,
+        "total": 18
+      },
+      "initialized_goals": 9,
+      "rte_goals": 8,
+      "flags": [
+        "-wp",
+        "-wp-rte",
+        "-wp-cache",
+        "none",
+        "-wp-model",
+        "+real",
+        "-wp-par",
+        "1",
+        "-machdep",
+        "x86_64",
+        "-rte-initialized",
+        "@all",
+        "-wp-no-filter-init",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-machdep",
+        "x86_64",
+        "-wp-timeout",
+        "30",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-fct=dxf_footprint"
+      ],
+      "verifier_launched": true
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-t27-safe-71771f09/pytest/test_wp_proves_every_unit_cbmc2/records/proofs/proof.dx100-fixtures.candidate-1.20261015t192801z.05712a0f.yaml",
+      "sha256": "b25208e1c3a80ed19ba96412f2cb539efa9c204b554169c9443f2a13a10dc5b5",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t192801z.05712a0f",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_cpu_write"
+      },
+      "adapter": "wp",
+      "verdict": "proven",
+      "failure_class": null,
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "ordinary": {
+        "valid": 58,
+        "total": 58
+      },
+      "smoke": {
+        "valid": 19,
+        "total": 19
+      },
+      "initialized_goals": 11,
+      "rte_goals": 9,
+      "flags": [
+        "-wp",
+        "-wp-rte",
+        "-wp-cache",
+        "none",
+        "-wp-model",
+        "+real",
+        "-wp-par",
+        "1",
+        "-machdep",
+        "x86_64",
+        "-rte-initialized",
+        "@all",
+        "-wp-no-filter-init",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-machdep",
+        "x86_64",
+        "-wp-timeout",
+        "30",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-fct=dxf_cpu_write"
+      ],
+      "verifier_launched": true
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-t27-safe-71771f09/pytest/test_wp_proves_every_unit_cbmc3/records/proofs/proof.dx100-fixtures.candidate-1.20261015t193331z.f2e8fd05.yaml",
+      "sha256": "33d11270ae298f112698a567df22284d47abf3d846962b67d18a1ac282b1c878",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t193331z.f2e8fd05",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_store_source_wait"
+      },
+      "adapter": "wp",
+      "verdict": "proven",
+      "failure_class": null,
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "ordinary": {
+        "valid": 90,
+        "total": 90
+      },
+      "smoke": {
+        "valid": 29,
+        "total": 29
+      },
+      "initialized_goals": 17,
+      "rte_goals": 15,
+      "flags": [
+        "-wp",
+        "-wp-rte",
+        "-wp-cache",
+        "none",
+        "-wp-model",
+        "+real",
+        "-wp-par",
+        "1",
+        "-machdep",
+        "x86_64",
+        "-rte-initialized",
+        "@all",
+        "-wp-no-filter-init",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-machdep",
+        "x86_64",
+        "-wp-timeout",
+        "30",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-fct=dxf_store_source_wait"
+      ],
+      "verifier_launched": true
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-t27-safe-71771f09/pytest/test_wp_proves_every_unit_cbmc4/records/proofs/proof.dx100-fixtures.candidate-1.20261015t194539z.cb7cac33.yaml",
+      "sha256": "3e561810e9b31c2b9da635dbb14f0d1e63db112c7f564aa44111b7c5a248efa0",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t194539z.cb7cac33",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_stall_condition"
+      },
+      "adapter": "wp",
+      "verdict": "proven",
+      "failure_class": null,
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "ordinary": {
+        "valid": 111,
+        "total": 111
+      },
+      "smoke": {
+        "valid": 35,
+        "total": 35
+      },
+      "initialized_goals": 21,
+      "rte_goals": 16,
+      "flags": [
+        "-wp",
+        "-wp-rte",
+        "-wp-cache",
+        "none",
+        "-wp-model",
+        "+real",
+        "-wp-par",
+        "1",
+        "-machdep",
+        "x86_64",
+        "-rte-initialized",
+        "@all",
+        "-wp-no-filter-init",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-machdep",
+        "x86_64",
+        "-wp-timeout",
+        "30",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-fct=dxf_stall_condition"
+      ],
+      "verifier_launched": true
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-t27-safe-71771f09/pytest/test_wp_proves_every_unit_cbmc5/records/proofs/proof.dx100-fixtures.candidate-1.20261015t200431z.b96aa543.yaml",
+      "sha256": "f17a4d3bb5ff8b2f42f80fffe111e2c303aa6f44898598cc3ef285c5f671a1ae",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t200431z.b96aa543",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_transitive"
+      },
+      "adapter": "wp",
+      "verdict": "proven",
+      "failure_class": null,
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "ordinary": {
+        "valid": 72,
+        "total": 72
+      },
+      "smoke": {
+        "valid": 21,
+        "total": 21
+      },
+      "initialized_goals": 12,
+      "rte_goals": 16,
+      "flags": [
+        "-wp",
+        "-wp-rte",
+        "-wp-cache",
+        "none",
+        "-wp-model",
+        "+real",
+        "-wp-par",
+        "1",
+        "-machdep",
+        "x86_64",
+        "-rte-initialized",
+        "@all",
+        "-wp-no-filter-init",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-machdep",
+        "x86_64",
+        "-wp-timeout",
+        "30",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-fct=dxf_transitive"
+      ],
+      "verifier_launched": true
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-t27-safe-71771f09/pytest/test_wp_proves_every_unit_cbmc6/records/proofs/proof.dx100-fixtures.candidate-1.20261015t201308z.2277a650.yaml",
+      "sha256": "4888941b550eceb339a7334e507d7fc6311014491f6592c69a172a917dc2f31d",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t201308z.2277a650",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_register_write"
+      },
+      "adapter": "wp",
+      "verdict": "proven",
+      "failure_class": null,
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "ordinary": {
+        "valid": 43,
+        "total": 43
+      },
+      "smoke": {
+        "valid": 15,
+        "total": 15
+      },
+      "initialized_goals": 8,
+      "rte_goals": 8,
+      "flags": [
+        "-wp",
+        "-wp-rte",
+        "-wp-cache",
+        "none",
+        "-wp-model",
+        "+real",
+        "-wp-par",
+        "1",
+        "-machdep",
+        "x86_64",
+        "-rte-initialized",
+        "@all",
+        "-wp-no-filter-init",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-machdep",
+        "x86_64",
+        "-wp-timeout",
+        "30",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-fct=dxf_register_write"
+      ],
+      "verifier_launched": true
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-t27-safe-71771f09/pytest/test_wp_proves_every_unit_cbmc7/records/proofs/proof.dx100-fixtures.candidate-1.20261015t201737z.90cb7cb8.yaml",
+      "sha256": "ed5f33dfd8095c04ef0c059b42ac1252bf4b096528599851f4b252c8535350af",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t201737z.90cb7cb8",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_value_stream"
+      },
+      "adapter": "wp",
+      "verdict": "proven",
+      "failure_class": null,
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "ordinary": {
+        "valid": 45,
+        "total": 45
+      },
+      "smoke": {
+        "valid": 15,
+        "total": 15
+      },
+      "initialized_goals": 8,
+      "rte_goals": 10,
+      "flags": [
+        "-wp",
+        "-wp-rte",
+        "-wp-cache",
+        "none",
+        "-wp-model",
+        "+real",
+        "-wp-par",
+        "1",
+        "-machdep",
+        "x86_64",
+        "-rte-initialized",
+        "@all",
+        "-wp-no-filter-init",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-machdep",
+        "x86_64",
+        "-wp-timeout",
+        "30",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-fct=dxf_value_stream"
+      ],
+      "verifier_launched": true
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-t27-safe-71771f09/pytest/test_wp_proves_every_unit_cbmc8/records/proofs/proof.dx100-fixtures.candidate-1.20261015t202208z.e9e1018f.yaml",
+      "sha256": "e319bf0d45b7c9c400cea8e0b3a1b73f52476d628bf09b3ea8a380b444eb7398",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t202208z.e9e1018f",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_value_gather"
+      },
+      "adapter": "wp",
+      "verdict": "proven",
+      "failure_class": null,
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "ordinary": {
+        "valid": 60,
+        "total": 60
+      },
+      "smoke": {
+        "valid": 17,
+        "total": 17
+      },
+      "initialized_goals": 10,
+      "rte_goals": 13,
+      "flags": [
+        "-wp",
+        "-wp-rte",
+        "-wp-cache",
+        "none",
+        "-wp-model",
+        "+real",
+        "-wp-par",
+        "1",
+        "-machdep",
+        "x86_64",
+        "-rte-initialized",
+        "@all",
+        "-wp-no-filter-init",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-machdep",
+        "x86_64",
+        "-wp-timeout",
+        "30",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-fct=dxf_value_gather"
+      ],
+      "verifier_launched": true
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-t27-safe-71771f09/pytest/test_wp_proves_every_unit_cbmc9/records/proofs/proof.dx100-fixtures.candidate-1.20261015t202914z.820c6d17.yaml",
+      "sha256": "075e9736109c75f1486d67cdde60e401908474fd520e002c702337001eff92e3",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t202914z.820c6d17",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_value_range"
+      },
+      "adapter": "wp",
+      "verdict": "proven",
+      "failure_class": null,
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "ordinary": {
+        "valid": 106,
+        "total": 106
+      },
+      "smoke": {
+        "valid": 37,
+        "total": 37
+      },
+      "initialized_goals": 21,
+      "rte_goals": 15,
+      "flags": [
+        "-wp",
+        "-wp-rte",
+        "-wp-cache",
+        "none",
+        "-wp-model",
+        "+real",
+        "-wp-par",
+        "1",
+        "-machdep",
+        "x86_64",
+        "-rte-initialized",
+        "@all",
+        "-wp-no-filter-init",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-machdep",
+        "x86_64",
+        "-wp-timeout",
+        "30",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-fct=dxf_value_range"
+      ],
+      "verifier_launched": true
+    }
+  ],
+  "resources.json": {
+    "exit_code": 0,
+    "peak_rss_bytes": 4503920640,
+    "out_of_memory": false,
+    "timed_out": false,
+    "wall_seconds": 6015.5489445654675,
+    "cpu_seconds": 6445.455814
+  },
+  "source-after.json": {
+    "commit": "71771f097feb83338928430bdf78a4de8384e63b",
+    "tracked_changes": "",
+    "source_unchanged": true
+  }
+}
