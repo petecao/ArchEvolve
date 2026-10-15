@@ -228,3 +228,10 @@ After merging `2dff3f58` (ticket 24): `test_cbmc_equivalence.py`, `test_format_d
    nondeterministic without a relation, nondeterministic with one, and unstated are each refused with their
    reason; deterministic runs on equality, `settings.comparison`). **The relation form (and its fixture pair: two
    valid parents passing under the relation, failing under equality) is ticket 62's work.**
+
+Tests after the decisions (integration `fea82f24` merged): `test_cbmc_equivalence.py` (18),
+`test_format_doc.py`, `test_level_rule.py`, `test_archevolve_proof_path.py`, `test_two_winners_campaign.py`,
+`test_wp_phase_campaign.py`, `test_promotion_level_snapshot.py`: 162 passed, 8 errors, all in
+`test_promotion_level_snapshot.py` setup. They are not this ticket's: its fixture writes `library/proof_semantics/`
+files in the old format, and the same error occurs on integration `1672b48a` (as `test_level_rule.py` did before
+`9280a24c`). Log `pytest-final5.log` (sha256 `d7b243aca112248a`...).
