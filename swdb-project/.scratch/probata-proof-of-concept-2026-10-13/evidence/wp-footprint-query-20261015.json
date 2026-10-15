@@ -1,5 +1,5 @@
 {
-  "created": "2026-10-15 13:44 ET",
+  "created": "2026-10-15 13:42 ET",
   "source_commit": "8e37727424b72a2b0520e7ea14a95dc1e57b552b",
   "source_manifest": {
     "path": "/private/tmp/probata-query-final-source-manifest.json",
@@ -141,5 +141,15 @@
     "prototype/27-proof-semantics/checks/query-address-boundary-20261015/actual-audit.json": "d72c3ab7ae60daaa534fbc42c42c147abc01443ef2bb5835083efc8540721d67",
     "prototype/27-proof-semantics/checks/query-address-boundary-20261015/offline-test-assertions.json": "40120377083d33199fd322a2c3a82f0714df52990321b184a87ee66be27a083b"
   },
-  "acceptance_boundary": "Tickets27/36 remain claimed; no full model agreement, full pointer grammar, overlap theorem or final method freeze."
+  "acceptance_boundary": "Tickets27/36 remain claimed; no full model agreement, full pointer grammar, overlap theorem or final method freeze.",
+  "final_composition": {
+    "source_commit": "b60d5e3d8cdbc2dfd67131f4f1b84783f156ffce",
+    "result": "119 passed, 2 environment failures,3deselected in28.10s; only the two watchdog sysctl sandbox failures rerun under shared lock/escalated access:2passed in3.58s",
+    "runtime_changes_since_actual": "Native replay stdout flush only; no query runtime, contract or hints changed.",
+    "artifacts": {
+      "/private/tmp/probata-query-final-composition.xml": "db52f8ff82294586c1a4d1febef3113f74177ac16a429445fb3d2b1a162efd68",
+      "/private/tmp/probata-query-final-public-retry.xml": "7a6ae480fa7d05e68e7883d60b20e7964e0227fcaa0d5c7349f798b786683a19",
+      "/private/tmp/probata-query-final-public-retry.log.summary.json": "a5a3103b313f804a790d76ff7dbd9e72a1c32ed0b3136d7193a8ee2d8f181dc7"
+    }
+  }
 }
