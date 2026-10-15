@@ -100,3 +100,26 @@ Reports: `/private/tmp/probata-lifetime-research-2026-10-15/model-init-{red,gree
 and one goal-name-only assertion failure; all five actual model records were proven and the corrected
 artifact assertions passed for all five without repeating successful verifier runs. The level-rule
 regression passed97tests. Status stays **claimed** because general vector deallocation is unsupported.
+
+
+Aggregate-copy side finding — 2026-10-15 ET: the real WP public summary seam initially proved an
+ignored copy from an uninitialized ordinary aggregate. Lowerer7 now requires the exact source object
+valid and initialized before local/member implicit copy construction. The ignored negative fails
+its named user assertion; the initialized positive proves (2 tests,77.36s). Implicit assignment and
+unsupported expression contexts fail closed. This is a conservative declared subset while CWG2264
+remains under discussion, not a universal C++ UB classification. Reports:
+`/private/tmp/probata-aggregate-init-{red,green}.jsonl`. Ticket25 remains claimed; no new WP vector
+lifetime acceptance is established by this change.
+
+Final lowerer7 checkpoint: both ignored uninitialized local/member-copy records are `not_proven`
+on the generated initialized-source assertion; both initialized local/member copies prove. The
+member negative's first pytest assertion was overly specific about WP's truncated goal name; the
+corrected semantic assertion passed against both completed negative artifacts without rerunning
+those successful negative verifier jobs. Final positive pair:2passed21.33s. Focused lowering:86passed
+53.86s including the retained spike native differential;6additional public refusal/order controls
+passed1.75s. Reports: `/private/tmp/probata-aggregate-init-final.jsonl` (one test-name assertion failure),
+`/private/tmp/probata-aggregate-negative-artifact-assertions.json`,
+`/private/tmp/probata-aggregate-init-positive-final.jsonl`,
+`/private/tmp/probata-aggregate-lower-green3.jsonl`,
+`/private/tmp/probata-aggregate-lower-only-final.jsonl`. All source changes are hash pinned; the
+remaining bounded standard-object policy is separate follow-on work.

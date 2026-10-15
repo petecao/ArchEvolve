@@ -254,7 +254,7 @@ def test_each_construct_group_lowers_twice_to_identical_c_and_anchors_that_compi
     second = lower(LOWERING / fixture, function, tmp_path / "two", *extra)
     assert first["c_lowering"]["sha256"] == second["c_lowering"]["sha256"]
     assert first["anchors"]["sha256"] == second["anchors"]["sha256"]
-    assert first["tool"]["version"] == "6" and first["tool"]["naming_rules"] == "kept-names.3"
+    assert first["tool"]["version"] == "7" and first["tool"]["naming_rules"] == "kept-names.3"
     c_file = tmp_path / "one" / f"{function}.c"
     assert str(tmp_path) not in c_file.read_text()
     done = subprocess.run([_c_compiler(), "-std=c11", "-Wall", "-Werror", "-fsyntax-only", c_file],
