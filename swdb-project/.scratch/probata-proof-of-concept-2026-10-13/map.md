@@ -9,6 +9,14 @@ Updated: 2026-10-15 ET. Resumed under Yan-Ru's ongoing implementation, push and 
 Current integration branch: `codex/probata-poc-integration`, based on `yanrujhou_main` at `150930b4`.
 Current dispatch, evidence and blockers: [resume.md](resume.md).
 
+- **Checkpoint 2026-10-15 13:39 ET:** primary runtime `bc457086` preserves native
+  replay input metadata before sanitizer termination. Bounded maximum acceptance
+  remains pinned to `d874c4dc`; the one-case stale-data retry passes with recovered inputs and is under final hash audit.
+  Method19 ended unproven (27/237 open; 52.04 counted minutes). Original classes,
+  query and qualified-stall slices are being audited/packaged on their own frozen
+  branches. Counts remain **32 resolved / five claimed / 26 dependency-blocked**;
+  no unclaimed ticket is currently eligible. [Current resume](resume.md).
+
 - **Checkpoint 2026-10-15 10:49 ET:** frozen remote `1ece49b8` entry/helper shard
   passed 17 checks; constructs stopped at the opaque `std_copy_int` model
   (5 passed/1 failed). All artifact hashes match across 43 retained records.
