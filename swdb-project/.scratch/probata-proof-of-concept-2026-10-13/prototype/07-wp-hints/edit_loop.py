@@ -48,6 +48,13 @@ CVC5, x86_64 machdep). Your job: add ACSL proof hints so that WP proves every go
 below (its `ensures` clauses = the unit postcondition, the generated `check hazard_*` annotations, call-site
 preconditions, loop goals, termination, frame goals). You never edit code or contracts.
 
+Algorithmic boundary guidance (method revision, 2026-10-15): the chunk-loop cursor
+advances by a full chunk even after a partial final chunk. Reason about the processed
+frontier prefix within its actual end; never make a prefix include unprocessed storage
+or assume chunk divisibility. Keep range-loop cursor progress, gather source validity
+across calls, and queue-flush concatenation as separately checked obligations. No
+previous run's hints are supplied or pre-seeded.
+
 HOW THIS LOOP WORKS (monotone, local editing):
 - The loop keeps ONE best hint set. It starts with mechanically generated frame seeds (ids "seed*": every
   loop's `loop assigns`, written from the code; they are fixed, you cannot change them or add `loop assigns`).
@@ -308,6 +315,7 @@ def main():
     meta = {"started": L.now(), "pin": L.PIN,
             "codex_version": subprocess.run([L.CODEX, "--version"], capture_output=True, text=True).stdout.strip(),
             "ghost_hint_guard": H.GHOST_HINT_RULE,
+            "diagnostic_guidance": "partial-chunk-boundary-v1",
             "standin_sha256": {f: L.sha(L.STANDIN_DIR / f) for f in [L.UNIT] + L.HEADERS},
             "cpp_unit_sha256": L.sha(L.CPP_UNIT), "rounds": a.rounds, "budget_min": a.budget_min,
             "round_timeout_s": a.round_timeout, "final_reserve_min": a.final_reserve_min,
