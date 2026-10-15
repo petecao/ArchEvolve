@@ -101,3 +101,38 @@ passes **19/19 in 15.55 s**. It uses a fake verifier only. RED log:
 `/private/tmp/probata-t24-composed-compiler-public/`. Runtime `swdb/` bytes
 match frozen integration `71771f09` exactly. The remote actual Ring tracer
 is separately owned by the root coordinator; this test does not relabel it.
+
+## Original Ring actual pair accepted
+
+Frozen integration `71771f097feb83338928430bdf78a4de8384e63b` ran the original
+per-candidate template group under mbit10 node 0, lease generation 569. The
+original contract, original empty hints and all nine original seeded source
+substitutions were checked against the physical artifacts.
+
+| Original artifact | Actual result | Retained obligations |
+|---|---|---|
+| Safe Ring int/long | proven; 89 ordinary and 1 smoke Valid | 25 RTE initialization goals; zero residual Ring/twice calls in the normalized selected entry |
+| Seeded `r.get(0)` | not_proven; 88 ordinary Valid, one ordinary ensures timeout, 1 smoke Valid | Same 25 initialization goals; zero residual selected-entry calls |
+
+Public command times were 162.54 s / 197.10 s, including validation overhead.
+Counted proof-job wall times were 40.62 s / 72.80 s; peaks were 314,548,224 /
+649,666,560 bytes. The outer guarded worker and normal per-proof shared lock
+remained in effect. Timeout is not a solver counterexample. Independently worked
+source arithmetic at `a=0,b=0` gives the required result 2, the safe result 2 and
+the seeded result 0; this is labeled as worked arithmetic rather than native or
+solver counterexample evidence.
+
+[Compact independent pair audit](t24-original-template-pair-mbit10-20261015.json)
+checks both record hashes, all 22 report instances, 184 candidate/baseline
+artifact-file instances, physical method and canonical contract pins, naming/
+checker pins, unchanged clauses/hints, exact member policy/anchors/setup hashes,
+and all 980 frozen physical source files against both SHA-256 manifest and Git
+blob identities. No added premise or audit error remains. Raw records, logs,
+normalized C, candidate sources and manifests remain remote at
+`/data/yanruj/EvolveSWDB_runs/probata-resume-t24-templates-71771f09/`.
+The compact audit SHA-256 is
+`6485b774905802257c7064ea4c6493f9b2d3876122eaca70fbae97a4d7bb22f8`.
+
+This clears the original Ring/compiler-origin boundary only. The other eight
+construct groups, model/summary dependency closure and lifetime actuals remain
+required under the current method before ticket closure.

@@ -1,7 +1,7 @@
 # 24 — C++ subset widening
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-15 ET (original Bag/Counter scalar-lifetime checkpoint; whole construct acceptance remains open)
+Updated: 2026-10-15 ET (original Ring actual pair accepted; eight-group current-method matrix remains open)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 21
@@ -752,3 +752,33 @@ through the committed exact-source runner, after mandatory setup hardening is
 merged. Original all-goal/init/smoke safe+seeded acceptance and current dependency
 pins remain required. Status stays **claimed**.
 [Implementation assumptions, exact checkpoints and evidence](../evidence/t24-resume-compiler-20261015.md).
+
+### Original Ring per-candidate actual acceptance — 2026-10-15 ET
+
+Frozen `71771f09` passes the original template pair on mbit10 node0. Safe:
+**89 ordinary + 1 smoke Valid**. Seeded original `r.get(0)`: **not_proven,
+88 ordinary Valid, one ordinary ensures timeout, 1 smoke Valid**. Both retain
+**25 RTE initialization goals**, with zero residual Ring/twice calls in the
+normalized selected entry. No new validity/init/numeric requires or replacement
+fixture was used. All physical code/baseline/contract/method/checker/report pins,
+980 Git/source-manifest files and exact original source substitutions were
+independently checked. Raw evidence remains remote; compact audit is committed.
+This closes the original embedded-array compiler/proof gap, not the whole ticket.
+The remaining eight groups and lifetime/dependency actual matrix are pending;
+status remains **claimed**.
+[Exact pair audit](../evidence/t24-original-template-pair-mbit10-20261015.json).
+
+### Concrete dxc negative-control correction — 2026-10-15 ET
+
+The old `__dxc_tile_size(tile)+2` variant is not a concrete bug against the
+original stand-in: `tile&1` returns0/1, so the variant returns2/3 and still meets
+`1<=result<=3`. A modular ensures timeout from the looser proven summary
+`0<=result<=2` is a precision control, not genuine seeded semantic-bug acceptance.
+The root coordinator authorized changing only this seeded replacement to `+4`.
+Safe source, original contract, original summary and actual stand-in body remain
+unchanged. At in-domain `tile=0`, native C++ and its C lowering both return1 for
+safe,2 for the old seed and4 for the corrected seed. The public native negative
+control goes RED (old+2) to GREEN (corrected+4), 2.06s /1.71s. This is native
+fixture evidence, not a solver refutation or production DX100 semantics claim.
+Frozen717 records keep their exact old source identities; fresh corrected-seed
+actual acceptance remains required. [Native source/binary hashes and outcomes](../evidence/t24-dxc-native-negative-control-20261015.json).
