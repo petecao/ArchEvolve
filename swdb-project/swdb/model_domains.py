@@ -178,6 +178,34 @@ def closed_owner_view(text, protocol, source_certificate):
     raw = text.encode()
     expr = lambda n: raw[slice(*span(n))].decode()
     compact = lambda s: re.sub(r"\s+", "", s)
+    # Clang ignores ACSL. Independently close the annotation language as well as
+    # the C scaffold, before the adapter inserts the separately checked contract.
+    suffix = text[len(prefix):]
+    annotations = re.findall(r"/\*@\s*(.*?)\*/", suffix, re.S)
+    if "//@" in suffix or suffix.count("/*@") != len(annotations):
+        raise Refused("closed owner view has an untracked ACSL annotation")
+    loops = {
+        compact(f"""loop invariant 0 <= swdb_owner_k0 <= swdb_owner_bound0;
+            loop invariant swdb_owner_bound0 == {protocol['parameter']};
+            loop invariant \\initialized(&swdb_owner_fresh0);
+            loop invariant \\initialized(swdb_owner_fresh0+(0..swdb_owner_k0-1));
+            loop invariant \\forall integer j; 0 <= j < swdb_owner_k0 ==> swdb_owner_fresh0[j] == {protocol['fill']};
+            loop assigns swdb_owner_k0, swdb_owner_fresh0[0..swdb_owner_bound0-1];
+            loop variant swdb_owner_bound0-swdb_owner_k0;"""),
+        compact(f"""loop invariant 0 <= swdb_owner_k1 <= swdb_owner_v.size;
+            loop invariant swdb_owner_v.size == {protocol['parameter']};
+            loop invariant \\initialized(&swdb_owner_fresh1);
+            loop invariant \\initialized(swdb_owner_fresh1+(0..swdb_owner_k1-1));
+            loop invariant \\forall integer j; 0 <= j < swdb_owner_v.size ==> swdb_owner_v.data[j] == {protocol['fill']};
+            loop invariant \\forall integer j; 0 <= j < swdb_owner_k1 ==> swdb_owner_fresh1[j] == {protocol['fill']};
+            loop assigns swdb_owner_k1, swdb_owner_fresh1[0..swdb_owner_bound1-1];
+            loop variant swdb_owner_v.size-swdb_owner_k1;""")}
+    for annotation in annotations:
+        if (re.fullmatch(r"assert\s+\w+\s*:\s*[^;]+;\s*", annotation, re.S)
+                or compact(annotation) in loops
+                or compact(annotation) in {"ghostintswdb_owner_alias_live=1;", "ghostswdb_owner_alias_live=0;"}):
+            continue
+        raise Refused("closed owner view has an untracked ACSL annotation")
     windows = {}
 
     def place(node, low=None, high=None):

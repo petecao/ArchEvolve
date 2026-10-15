@@ -123,7 +123,8 @@ def test_the_closed_owner_view_reports_typed_origins_for_all_source_and_generate
 
 
 @needs_wp
-@pytest.mark.parametrize("fault", ["alias_offset", "liveness_guard", "range_guard_position"])
+@pytest.mark.parametrize("fault", ["alias_offset", "liveness_guard", "range_guard_position",
+                                 "unchecked_axiom", "unchecked_requires", "line_annotation"])
 def test_a_rehashed_renderer_cannot_hide_wrong_alias_origins_or_weakened_liveness(tmp_path, fault):
     from test_wp_adapter import fake
     seed = _ownership_seed(tmp_path)
@@ -131,7 +132,14 @@ def test_a_rehashed_renderer_cannot_hide_wrong_alias_origins_or_weakened_livenes
     shutil.copytree(REPO / "swdb", runtime / "swdb", ignore=shutil.ignore_patterns("__pycache__"))
     target = runtime / "swdb" / "vector_ownership.py"
     source = target.read_text()
-    if fault == "range_guard_position":
+    if fault in {"unchecked_axiom", "unchecked_requires", "line_annotation"}:
+        annotation = {"unchecked_axiom": "/*@ axiomatic Injected { axiom unproved: 1 == 0; } */",
+                      "unchecked_requires": "/*@ requires 1 == 0; */",
+                      "line_annotation": "//@ requires 1 == 0;"}[fault]
+        old = '    anchor(lowering.function + ".contract")'
+        assert source.count(old) == 1
+        source = source.replace(old, old + '\n    lines.append(' + repr(annotation) + ')')
+    elif fault == "range_guard_position":
         guard = "/*@ assert owner_initial_range: 0 <= swdb_owner_k0 < swdb_owner_bound0; */"
         old = 'f"  for(swdb_owner_k0=0;swdb_owner_k0<swdb_owner_bound0;++swdb_owner_k0) {{",'
         assert source.count(old) == source.count(guard) == 1
