@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ticket 42 (2026-10-14 ET): check that the proof keeps ticket 41's approved statement.
+"""Ticket 42 (updated 2026-10-15 ET): check that the proof keeps ticket 41's approved statement.
 
 Usage: check_approved.py <dir holding Vocabulary.v and Composition.v>
 
@@ -17,7 +17,7 @@ from pathlib import Path
 
 APPROVED = {
     "Vocabulary.v": "081b558de2d94a0b37200b094d39af38eddf51546686a575f97dac2e3a6a3a3d",
-    "Composition.v": "e30f62402164802aaf1bed224c6be0ac62fb787c43efe61190266e5a511dd01b",
+    "Composition.v": "ffb5bda714b9fce5a13927a4860f6c85438821cdcdf3b4f1560f26a91eefd4f4",
 }
 OPEN_BODY = ("  (* OPEN — ticket 42 proves this; it must prove exactly this approved text. *)\n"
              "Admitted.\n")

@@ -59,6 +59,8 @@ Print Composition.covered_between.
 Print Composition.crosses_sync.
 Print Composition.reads_loc.
 Print Composition.dead_after.
+Print Composition.reads_no_lock_protected.
+Print Composition.reads_class_stable.
 Print Composition.quiet_ok.
 Print Composition.obl_dx100_quiet.
 Print Composition.intervals_contiguous.

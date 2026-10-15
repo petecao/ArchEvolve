@@ -1,9 +1,9 @@
 # 41 — Rocq: composition theorem statement and definitions
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-14 23:10 ET (reopened: Codex round t41c-1 counterexample stands; fix (a) decided, not applied); 2026-10-14 22:40 ET (Composition.v second revision in progress, paused; see Progress (paused)); 2026-10-14 21:30 ET (`Reduction.v` revised under delegation: ticket 27 covers, see Later changes); 2026-10-14 14:40 ET (revised; approved by the main session under Yan-Ru's delegation; resolved); 2026-10-14 14:13 ET (Codex review: revise); 2026-10-14 14:07 ET (statements drafted); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-15 01:41 ET (fix (a) plus class-lifetime repair checked; approved under delegation; resolved); 2026-10-14 23:10 ET (reopened: Codex round t41c-1 counterexample stands; fix (a) decided, not applied); 2026-10-14 22:40 ET (Composition.v second revision in progress, paused; see Progress (paused)); 2026-10-14 21:30 ET (`Reduction.v` revised under delegation: ticket 27 covers, see Later changes); 2026-10-14 14:40 ET (revised; approved by the main session under Yan-Ru's delegation; resolved); 2026-10-14 14:13 ET (Codex review: revise); 2026-10-14 14:07 ET (statements drafted); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** resolved
 **Blocked by:** 09
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Concurrency" (composition theorem, shared-action kinds, memory model, OpenMP), "Formal-half language and the C++ subset" (sharing classes, YAML frame), "DX100 proof semantics" (reduction lemma, hazards), "Modules" (Rocq development), "What a proven verdict asserts" (assumption set, seven kinds), "Proof-of-concept plan" (Rocq side track), S9); decisions: [12](../../formal-verification-2026-10-09/issues/12-dx100-proof-semantics.md), [15](../../formal-verification-2026-10-09/issues/15-concurrency-proofs.md), [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md)
 **Time estimate:** about 4 days plus Yan-Ru's review
@@ -111,14 +111,17 @@ table, F1 candidate check and Codex dispositions:
   | File | sha256 |
   |---|---|
   | `Vocabulary.v` | `081b558de2d94a0b37200b094d39af38eddf51546686a575f97dac2e3a6a3a3d` |
-  | `Composition.v` | `e30f62402164802aaf1bed224c6be0ac62fb787c43efe61190266e5a511dd01b` |
+  | `Composition.v` (current, includes retained ticket 42 proof lemmas) | `c91507a4591d1ffbb81bde6e98ef26997578656bb85580a5a7dcd64cf1dc3abb` |
+  | `Composition.v` statement reconstructed by `check_approved.py` (current) | `ffb5bda714b9fce5a13927a4860f6c85438821cdcdf3b4f1560f26a91eefd4f4` |
+  | `Composition.v` (**superseded**, false) | `e30f62402164802aaf1bed224c6be0ac62fb787c43efe61190266e5a511dd01b` |
   | `Reduction.v` (current, revised 2026-10-14 21:30 ET, see Later changes) | `72f4a79fbf6005fc89990d5dcfed4b80118f9d02d8aac44b0bb9bc7b84968e53` |
   | `Reduction.v` (**superseded** 2026-10-14 21:30 ET) | `8a779482ff13c83a12d11fd15d34c0aadf1d8856052575e7ede38ab935188b7a` |
 
   Not part of the approval: `Sanity.v` (`8e73b9c3…`; now `8df1b4e7…`),
   `negative/HistoryReadIsLatest_FALSE.v` (`16aaf7db…`), `HYPOTHESES.md` (`a7b9759a…`; now
   `8da8a879…`). Any change to the three approved files needs a new approval; 42 and 43 check
-  these hashes. `Vocabulary.v` and `Composition.v` are unchanged by the revision.
+  these hashes. `Vocabulary.v` is unchanged; the 2026-10-15 revision supersedes the old
+  `Composition.v` hash (see the current approval below).
 
 ### What is stated
 
@@ -274,3 +277,44 @@ approved**, and the approval record above is unchanged (approved `Composition.v`
 - **Resume here:** branch from the integration tip (`probata-poc/t41c` is merged), apply (a) to
   `Composition.v` and `HYPOTHESES.md`, recompile, run Codex adversarial rounds until one finds no
   counterexample, record the new hash, then unblock 42.
+
+### Current answer and delegated approval — 2026-10-15 01:41 ET
+
+**Resolved.** The recorded fix (a) is applied, alongside the read-class lifetime repair
+identified by the coordinator's local adversarial review. A command crossing synchronization
+uncovered must have dead tile outputs and no protected reads; every command read retains
+its class until a covering event has completed. Both remain within `obl_dx100_quiet`.
+`HYPOTHESES.md` records the concrete counterexamples, the exact strengthening, and the
+conditional candidate-compatibility boundary for ticket 45.
+
+**Approval:** the main session approves the current statement under Yan-Ru's ongoing
+delegation, after independent local adversarial review on 2026-10-15 ET. This is agent
+approval; it does not assert that Yan-Ru personally read the revised text. That review found
+no further counterexample after the class-lifetime repair; it is not a proof of the theorem.
+The current hashes above cover the files, while ticket 42's guard hashes the reconstructed
+statement with only its allowed proof/import/lemma blocks removed. Reduction and Vocabulary
+retain their previous approvals. Ticket 42 is unblocked for proof work.
+
+**Evidence:** Rocq 9.3.0 (`rocq-9`), one real verifier at a time via the existing watchdog,
+8 GB cap. Vocabulary, Composition (including retained ticket 42 lemmas), Reduction, Sanity,
+and the elaborated guard harness compile. Peak RSS 427.4 MB; no watchdog kill or timeout.
+`Print Assumptions` lists exactly the two open theorems themselves and no other admitted
+step or axiom. All four new sanity results are Qed and closed under the global context:
+`locked_device_read_cannot_escape`, `changed_read_class_cannot_escape`,
+`readonly_to_locked_uncovered_rejected`, `readonly_to_owned_uncovered_rejected`.
+The regression proofs failed before their corresponding strengthening and pass afterward.
+The existing `HistoryReadIsLatest_FALSE.v` still fails (exit 1).
+
+Run evidence: `/tmp/claude/probata-runs/t41d/`; final checks log sha256
+`ad1431a478ddc59166df6c3b80331f1c66fe76e1cf819b5ea7a4d4f98123f93f`; sanity log
+`50a42f93a901ca30c1167e2e22f36739f962dc64ac817384ead7c2ae5cc11f2f`;
+assumptions log `f389c62cd9e334937072fdc2d664fc5a7d118abeaf7d030059badcacf8eced21`.
+The exact guard accepts the approved reconstruction and rejects a modified class-lifetime
+hypothesis before any proof record is written. Elaborated `statement.expected` sha256
+`96dd318a6208c10dc4e28d670525fd5180c2be8290521cacd999e34c3beda74c`.
+
+**Review limitation:** automatic approval review rejected both Codex CLI attempts because
+it judged transmission of repository source to the external Codex/OpenAI destination
+unauthorized. No external CLI review ran for this revision. Independent local coordinator
+review was used within the approved workspace; its first counterexample was accepted and
+repaired. The theorem proofs remain visibly open for tickets 42 and 43.

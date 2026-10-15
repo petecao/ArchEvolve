@@ -2,7 +2,8 @@
    Created 2026-10-14 ET (ticket 41).  Revised 2026-10-14 ET after Codex's adversarial review
    and the main session's decisions (F1, F2, M1-M10).  Revised 2026-10-14 ET by the main
    session under Yan-Ru's delegation (ticket 41, Later changes): omp_ok requires well-bracketed
-   critical sections (ticket 42's stray-Exit counterexample).  Proof: ticket 42.
+   critical sections (ticket 42's stray-Exit counterexample).  Revised 2026-10-15 ET:
+   F1 excludes commands reading lock-protected data (ticket 41 fix (a)). Proof: ticket 42.
    Review guide: HYPOTHESES.md.  Map decisions: 15 items 1-7; 16 item 4 and Later changes;
    26 item 4; 12 items 4, 7.
 
@@ -299,6 +300,7 @@ Definition obl_team_size : Prop := team_size = N.
        it was issued in, only if it writes tile elements only (no memory) and those tile
        elements are dead there: never read again before a later command overwrites them
        (12 item 7: a DX100 store inside critical finishes before the lock is released).
+       It must also read no LockProtected location: such reads must finish under the lock.
        The command must have outputs; that its reads reach nothing but those outputs is
        part of the lowering obligation cover_sound (HYPOTHESES.md). *)
 Definition conflicts (d e : event) : Prop :=
@@ -324,10 +326,25 @@ Definition dead_after (tr : list event) (c : nat) : Prop :=
     is_tile l /\
     forall r e, p < r -> nth_error tr r = Some e -> reads_loc e l ->
       exists w c' v', p < w < r /\ nth_error tr w = Some (DeviceWrite c' l v') /\ c' <> c.
+(* Sharing class is evaluated at each read's own barrier interval, just as in fits.
+   Group all element reads by command id, including multi-element commands. *)
+Definition reads_no_lock_protected (tr : list event) (c : nat) : Prop :=
+  forall p l v, nth_error tr p = Some (DeviceRead c l v) ->
+    cls (length (filter is_barrier (firstn p tr))) (array_of l) <> LockProtected.
+(* An asynchronous read retains its sharing class until a cover has completed.
+   The cover event itself is included: a class change at a barrier must wait for
+   the outstanding access before the new interval starts. This is lifetime safety,
+   not a promise that all arrays keep the same class for the whole region. *)
+Definition reads_class_stable (tr : list event) : Prop :=
+  forall p c l v q e, nth_error tr p = Some (DeviceRead c l v) ->
+    p < q -> nth_error tr q = Some e -> ~ covered_between tr c p q ->
+    cls (length (filter is_barrier (firstn q tr))) (array_of l) =
+    cls (length (filter is_barrier (firstn p tr))) (array_of l).
 Definition quiet_ok (tr : list event) : Prop :=
   (forall p d c, nth_error tr p = Some d -> device_cmd d = Some c ->
      forall m e, p < m -> nth_error tr m = Some e -> conflicts d e -> covered_between tr c p m) /\
-  (forall c, crosses_sync tr c -> dead_after tr c).
+  (forall c, crosses_sync tr c -> dead_after tr c /\ reads_no_lock_protected tr c) /\
+  reads_class_stable tr.
 Definition obl_dx100_quiet : Prop :=
   forall X rf t, model_run X rf -> complete X -> all_fit X -> t < N -> quiet_ok (proj X t).
 
