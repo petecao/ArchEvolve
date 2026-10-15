@@ -1,0 +1,29 @@
+{
+  "created": "2026-10-15",
+  "ticket": "07",
+  "kind": "worked_annotation_counterexample",
+  "best_set": {
+    "path": "/private/tmp/probata-t07-20261015/counted-13/best.json",
+    "sha256": "6a98b547d42c71ac5563e5b279d5acef2eb9aea114b3467703dba0205a66db98",
+    "hint_index_zero_based": 25,
+    "hint_id": "r1c18h1",
+    "anchor": "loop:chunk_loop",
+    "goal": "typed_TDStep_loop_invariant_chunk_semantics_preserved"
+  },
+  "artifacts": [
+    {
+      "path": "/private/tmp/probata-t07-guard-notes/remaining-goals.md",
+      "sha256": "2a3702b7d99bf1a0f5881682e9c714a2c27a5145d7351a2ed6cb026357acaadb"
+    },
+    {
+      "path": "/private/tmp/probata-t07-guard-notes/partial-chunk-counterexample.py",
+      "sha256": "16f715c847b8819fa3442f609670094227adcafcd69894f152696c7719e3efae"
+    }
+  ],
+  "outcome": {
+    "original_chunk_hint_preserved": false,
+    "clamped_chunk_hint_preserved_on_this_case": true,
+    "unit_frontier_equivalence_on_this_case": true
+  },
+  "boundary": "Finite evaluation diagnoses a false hint, not a universal proof or a TDStep contract counterexample."
+}

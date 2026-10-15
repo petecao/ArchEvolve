@@ -18,8 +18,10 @@ Current dispatch, evidence and blockers: [resume.md](resume.md).
   `proof.probata.composition.20261015-a1`.
 - **Current blockers:** WP 33 lacks deallocation support (24/25); store-frame and strict-reader
   acceptance and conservative CPU-memory admission are still running (27/36).
-  Counted proof-hint run 13 failed with 19 goals open (07).
-- **Next action:** finish these acceptance runs; create a new draft method after lowerer and policy
+  Counted proof-hint run 13 failed with 19 goals open; run 14 is active with a repaired
+  guard and corrected boundary guidance (07).
+- **Next action:** finish these acceptance runs and the bounded initializedness guard; create a new draft
+  method after lowerer and policy
   hashes settle. Draft 2 is immutable after the composition record pinned it. No method freeze is justified yet.
 - Real Mac verifier jobs use the shared two-slot policy and 8 GiB watchdog. Validation uses a frozen
   worktree so concurrent integration merges cannot trigger checkout-integrity false alarms.
