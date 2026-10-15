@@ -203,6 +203,15 @@ int dxf_direct_offset_gather(int *q, int *offs, int n) {
   wait_ready(1);
   return get_tile_size(1) == n;
 }
+int dxf_direct_growing_stream(int *q, int n) {
+  n = n + 1;
+  maa_const(0, 0);
+  maa_const(n, 1);
+  maa_const(1, 2);
+  maa_stream_load(q, 0, 1, 2, 0, -1);
+  wait_ready(0);
+  return get_tile_size(0) == n;
+}
 """
 UNITS = (DX / "fixture_units.cc").read_text() + DIRECT_UNITS
 BASE = ("requires 1 <= n <= 2 && \\valid(q + (0 .. n - 1)) && \\valid({arr} + (0 .. n - 1));\n"
@@ -220,6 +229,8 @@ FIXTURES = {
     "direct_offset_gather": ("dxf_direct_offset_gather", ["q", "offs"],
         "requires n == 2 && \\valid(q + (0 .. n - 1)) && \\valid(offs + (0 .. n - 1));\n"
         "requires \\forall integer k; 0 <= k < n ==> 0 <= q[k] < n - 1;", "\\nothing", 2),
+    "direct_growing_stream": ("dxf_direct_growing_stream", ["q"],
+        "requires n == 2 && \\valid(q + (0 .. 2)) && \\initialized(q + (0 .. 2));", "\\nothing", 2),
     "summary_wrapper": ("dxf_summary_wrapper", [], "requires 0 <= n <= 2;", "\\nothing", 2),
     "summary_caller": ("dxf_summary_caller", [], "requires 0 <= n <= 2;", "\\nothing", 2),
     "local_storage": ("dxf_local_storage", [], "requires 1 <= n <= 2;", "\\nothing", 2),
@@ -259,7 +270,7 @@ def _dx_contracts():
             ("pre", "legality", requires, "per_candidate"),
             ("post", "postcondition", f"assigns {assigns};\nensures \\result == 1;", "per_candidate")],
             [{"array": a, "shared_actions": [], "history_reads": False} for a in arrays])
-        if name in {"direct_stream", "direct_three_reads", "direct_offset_gather"}:
+        if name in {"direct_stream", "direct_three_reads", "direct_offset_gather", "direct_growing_stream"}:
             # An explicit typed input-window contract addition, independent of validity.
             data["proof_unit"]["array_domains"] = {array: {"extent": "n"} for array in arrays}
         if name == "summary_wrapper":
@@ -701,6 +712,16 @@ def test_wp_one_past_offset_formation_does_not_admit_a_gather_read_through_it(dx
     contract["proof_unit"]["array_domains"]["offs"]["extent"] = "n - 1"
     path.write_text(yaml.safe_dump(contract, sort_keys=False))
     record = prove_wp(dx, "direct_offset_gather")
+    assert record["verdict"] == "not_proven", record
+    assert any("swdb_window_call" in goal["goal"] and goal["status"] != "valid"
+               for goal in record["goals"]), record
+
+
+@needs_wp
+def test_wp_dx_call_state_cannot_enlarge_the_frozen_input_window(dx):
+    # The physical valid/initialized range has three cells, but the explicitly
+    # declared entry window is n==2. The call-state end register grows to three.
+    record = prove_wp(dx, "direct_growing_stream", "DX_TS=3")
     assert record["verdict"] == "not_proven", record
     assert any("swdb_window_call" in goal["goal"] and goal["status"] != "valid"
                for goal in record["goals"]), record
