@@ -9,6 +9,12 @@ Updated: 2026-10-15 ET. Resumed under Yan-Ru's ongoing implementation, push and 
 Current integration branch: `codex/probata-poc-integration`, based on `yanrujhou_main` at `150930b4`.
 Current dispatch, evidence and blockers: [resume.md](resume.md).
 
+- **Launch 2026-10-15 13:48 ET:** two original bounded member controls are active
+  at frozen `94769312`: stale iterator on node 0 generation 568 and at()/guarded-at
+  on node 1 generation 600. No final result is claimed. Reviewed stall fix
+  `9940b155` is separately frozen for one Mac rerun; method20 implementation is
+  offline with no provider launch. [Remote launch](evidence/t25-next-controls-launch-20261015.json).
+
 - **Query integration 2026-10-15 13:45 ET:** reviewed branch `904a2bab` composes
   the original class slice. The 134 compiler union controls pass; the earlier
   119-pass run retained two environment failures, and only those two passed their
