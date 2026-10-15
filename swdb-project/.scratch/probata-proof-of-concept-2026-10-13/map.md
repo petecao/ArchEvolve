@@ -5,13 +5,13 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-re
 
 ## Current state (resume here)
 
-Updated: 2026-10-15 15:49 ET. **Active implementation; 32 resolved / 28 ready-for-agent / 3 claimed.**
+Updated: 2026-10-15 15:52 ET. **Active implementation; 32 resolved / 28 ready-for-agent / 3 claimed.**
 Current owners:07,24,27. Integration is `codex/probata-resume-20261015`;
 current evaluation runtime is frozen at `71771f09`. [Live resume](resume.md).
 
-- 24: original Ring safe/seeded pair accepted; allocation safe passed, seeded
-  overrun and remaining original construct groups run on node0 generation570.
-- 27: current safe profile has3 confirmed passes; remaining safe cases, negatives,
+- 24: original Ring safe/seeded pair accepted; allocation safe/seeded passed;
+  separate out-of-range and remaining original construct groups run on node0 generation570.
+- 27: current safe profile has4 confirmed passes; remaining safe cases, negatives,
   capacity and bounded/native agreement remain open. Node1 generation602.
 - 07: run21 at `7408be92` stopped after baseline/seeds when the CLI refused
   design-tool approval. Scoped per-tool approval correction and fresh review/run
