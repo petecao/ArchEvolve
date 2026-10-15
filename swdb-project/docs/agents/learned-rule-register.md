@@ -1,12 +1,12 @@
 # Register of learned agent rules
 
-Updated: 2026-10-12 20:10 ET. Owner: Yan-Ru Jhou. Origin: the 2026-10-08–09 LANL
+Updated: 2026-10-15 14:46 ET. Owner: Yan-Ru Jhou. Origin: the 2026-10-08–09 LANL
 analytic-evaluator session and its retrospective; revised after the 2026-10-11–12
-LANL-shaped-db session retrospective.
+LANL-shaped-db and 2026-10-15 Probata session retrospectives.
 
 The executable instructions are in
-[learned-workflow.md](../../../.claude/rules/learned-workflow.md); their audit
-trigger is in [rule-maintenance.md](../../../.claude/rules/rule-maintenance.md).
+[learned-workflow.md](../../../.claude/rules/learned-workflow.md); audit them using
+the [procedure below](#audit-procedure).
 This register records why each lesson exists and how it can become unnecessary.
 It grants no execution, deletion, scope or scientific-admission permission.
 
@@ -26,20 +26,22 @@ permissions and scientific thresholds they point to.
 
 ## Review register
 
-Initial assessment: 2026-10-09 ET. Review after: 2026-10-16 ET; then weekly.
+Initial assessment: 2026-10-09 ET. Latest review: 2026-10-15 ET.
+Review after: 2026-10-22 ET; then weekly.
 The date prioritizes an audit, not automatic expiry. Update an entry's review
 date with a substantive decision; a healthy, unchanged audit needs no date-only
 commit. Scheduled audits may remain quiet.
 
 | ID | State | Evidence required to replace or retire the reminder |
 |---|---|---|
-| LR-01 | active | Later report tickets consistently close against their own criteria; the ticket/review workflow makes additional research scope explicit. |
+| LR-01 | active | Tickets close against their own criteria; claims bind exact source and retained evidence, distinguish actual runs from offline checks, and make additional research scope explicit. |
 | LR-02 | active | A mandatory launch check enforces the applicable pilot/admission requirement and rejects an ineligible pair; cite its regression and where it runs. |
-| LR-03 | active | Component fixtures select validated dependency closures by default, and tool preflight/setup diagnostics remove the observed failure mode. |
-| LR-04 | active | The recurring checks are wired into the normal commit/CI workflow; required checks and their navigation pointers cover this reminder. |
-| LR-05 | active | Current status and resume summaries have one authoritative update path; contradiction/staleness checks prevent older prose overriding current tickets. |
+| LR-03 | active | Test selection distinguishes component and real-verifier work; dependency-closed fixtures, relevant tool/watchdog preflight and cheap report-reader checks cover the observed failures. |
+| LR-04 | active | Recurring mechanical checks run in the normal workflow; failure diagnosis and selection make broad reruns depend on changed code or unresolved failures. |
+| LR-05 | active | Status and resume summaries derive from tickets; pause checks release unfinished claims, preserve resume commands and stop the effort's heartbeat. |
 | LR-06 | active | Output lifecycle tooling enforces destination capacity and verified disposable cleanup while preserving every required future reader. |
-| LR-07 | active | A committed full-suite runner enforces memory-sized workers, the machine-wide lock and incremental results, and long runs post scheduled status tables without manual queries. |
+| LR-07 | active | A committed runner enforces memory-sized workers, shared slots, RSS caps, timeouts and incremental structured results; independently checked long runs post scheduled status tables and report missed intervals. |
+| LR-08 | active | Normal integration and closeout checks enforce the remote-branch budget, keep worker branches local and retire eligible idle refs/worktrees under the existing recovery and reader checks. |
 
 Partial improvements justify narrowing an instruction; they do not automatically
 retire the entire lesson. New lessons need a concrete observed incident, a trigger,
@@ -89,6 +91,26 @@ it instead of adding another nearly identical rule.
     unnoticed for ~9 h because the session heartbeat did not fire; one run lost all
     results to a timeout; Yan-Ru had to ask for status repeatedly.
 
+- **2026-10-15 Probata session**:
+  - **LR-01/05:** the [closeout review](../../.scratch/probata-proof-of-concept-2026-10-13/evidence/closeout-code-review-20261015.md)
+    preserves incomplete acceptance criteria; the [handoff](../../.scratch/probata-proof-of-concept-2026-10-13/HANDOFF.md)
+    records the controlled pause and remaining frontier.
+  - **LR-03/04:** the [query composition evidence](../../.scratch/probata-proof-of-concept-2026-10-13/evidence/wp-footprint-query-20261015.json)
+    records two watchdog sandbox failures and their isolated retries. The
+    [member-lifetime evidence](../../.scratch/probata-proof-of-concept-2026-10-13/evidence/t24-member-lifetimes-mac-20261015.json)
+    preserves a test-only optional-field error and an offline assertion replay
+    against the unchanged proof record.
+  - **LR-07:** the [bounded validation receipt](../../.scratch/probata-proof-of-concept-2026-10-13/evidence/closeout-validation-20261015.json)
+    records resource-guarded controls. The shared launcher used in the session
+    remained under `/tmp`; this rule revision installs no committed launcher,
+    test profiles or tracker generator.
+  - **LR-08 (new):** the [completion receipt](../../.scratch/probata-proof-of-concept-2026-10-13/evidence/closeout-complete-20261015.json)
+    records removal of 30 remote branches, 53 local branches and 33 idle worktrees.
+    Yan-Ru requested minimal remote branches. The rule budgets published refs,
+    keeps ticket branches local and points to the existing cleanup policy;
+    [recovery procedures](../../.scratch/probata-proof-of-concept-2026-10-13/prototype/closeout/README.md)
+    retain historical source and required readers.
+
 ## Audit procedure
 
 1. Read current rule files, this register, repository instructions and Git status.
@@ -100,7 +122,7 @@ it instead of adding another nearly identical rule.
 3. Keep owner policy separate from session-derived reminders. Scheduled audits
    are read-only: report actionable proposals; do not edit files, commit, push,
    run scientific evaluations, clean disks or restart paused project work.
-4. For a user-requested update, apply only supported changes to the two learned-rule
+4. For a user-requested update, apply only supported changes to the learned-rule
    files and this register within the granted scope. Existing human/owner rule files
    require their own applicable authorization. Validate links and active IDs afterward.
 5. Keep the combined active rule files near their initial 450-word budget. This
@@ -121,3 +143,11 @@ date alone is not an actionable defect or permission to remove a rule.
   rerun), LR-06 (count output written outside temp folders); added LR-07 (long-running
   jobs: memory-sized workers, incremental results, 30-minute status tables). LR-02, LR-04
   and LR-05 kept unchanged.
+- 2026-10-15 ET (Yan-Ru approved): revised LR-01–07 for evidence boundaries,
+  relevant preflight, cheap report-reader checks, selective reruns, explicit pause
+  handling and guarded progress reporting; added LR-08 with zero new remote
+  branches by default and at most one additional integration branch per active
+  effort. Worker branches stay local. Existing owner cleanup policy and scientific
+  acceptance requirements remain in force. All lessons remain active; executable
+  enforcement is still required before marking them automated. Removed the stale
+  pointer to the absent `rule-maintenance.md`; the audit procedure remains here.
