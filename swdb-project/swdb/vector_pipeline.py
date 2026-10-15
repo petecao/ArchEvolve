@@ -14,6 +14,12 @@ from pathlib import Path
 from swdb import std_models
 
 PROTOCOL = "private-vector-copy-scan-1"
+RETURN_NORMALIZATION = {
+    "source": "checked==n?best.second:-1000",
+    "view": "(checked==n)*best.second+(checked!=n)*-1000",
+    "scope": "exact pure initialized int operands in this closed source grammar only",
+    "justification": "complementary Boolean multipliers are 0/1; exactly one product is zero, so both products and their sum remain representable and equal the selected int operand",
+}
 SOURCE_CLOSURE_SHA256 = "60cdfb05a7ed6b87dde1770e0def1e97bcdb7c8c59b25abb75de6914fe863a26"
 MODEL_SHA256 = "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
 MODELS = {"std_vector_int_ctor", "swdb_alloc_int", "swdb_free", "std_vector_int_dtor",
@@ -288,7 +294,7 @@ def _render(lowering, comparison):
         "  for(swdb_pipeline_index=0;swdb_pipeline_index<(size_t)n;++swdb_pipeline_index) {",
         "    /*@ assert pipeline_index_range: 0 <= swdb_pipeline_index < n; */",
         "    if(a[swdb_pipeline_index]<=best.second) ++checked; }",
-        "  return checked==n ? best.second : -1000;", "}", ""])
+        "  return (checked==n)*best.second+(checked!=n)*-1000;", "}", ""])
 
 
 def _view_check(text, protocol, directory):
@@ -350,7 +356,7 @@ def _view_check(text, protocol, directory):
         if (len(parts) != 4 or [expression(n) for n in parts[:3]] != [_tokens(variable+"=0"), _tokens(variable+"<"+stop), _tokens("++"+variable)]
                 or expression(parts[3]) != _tokens(expected_bodies[at])):
             raise Refused("pipeline view loop/branch no longer matches the source transition")
-    if expression(_children(top[-1])[0]) != _tokens("checked==n?best.second:-1000"):
+    if expression(_children(top[-1])[0]) != _tokens("(checked==n)*best.second+(checked!=n)*-1000"):
         raise Refused("pipeline result observation changed")
     if any(n.get("kind") == "CallExpr" for n in _walk(body)):
         raise Refused("pipeline view has an opaque call")
@@ -415,6 +421,7 @@ def _view_check(text, protocol, directory):
     if len(accesses) != 3:
         raise Refused("pipeline source/view reads differ")
     return {"check":identity(),"complete":True,"view_sha256":_sha(text),"view_accesses":accesses,
+            "return_normalization": RETURN_NORMALIZATION,
             "boundary":"exact private-copy phase relation; no generic field origin or C-model body proof"}
 
 
@@ -447,6 +454,7 @@ def wp_view(lowering, source, formal_texts, hints):
         "source_sha256":lowering.source_sha256,"original_c_sha256":lowering.sha256,
         "original_contract_sha256":_sha(formal),"view_contract_sha256":_sha(formal),
         "view_sha256":_sha(text),"source_frame":r"assigns \nothing;","view_frame":r"assigns \nothing;",
+        "return_normalization": RETURN_NORMALIZATION,
         "source_frame_preservation":"checked: input unchanged, pair/control local, vector writes fresh nonescaping storage",
         "model_eligibility":cert["model_eligibility"],"allocation_executions":cert["allocation_executions"],
         "input_premises_added":[],"projection":cert["projection"]}

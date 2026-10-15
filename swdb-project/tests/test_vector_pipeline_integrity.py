@@ -62,3 +62,16 @@ def test_a_rehashed_pipeline_renderer_cannot_change_declarations_or_storage(tmp_
     record = _fault_record(tmp_path, old, new)
     assert record["failure_class"] == "unsupported_construct", record
     assert not any(row["name"] == "wp_log" for row in record["evidence"]["reports"])
+
+
+@needs_wp
+@pytest.mark.parametrize("changed", [
+    "(checked==n)*best.second+(checked==n)*-1000",
+    "(checked==n)*best.second+(checked!=n)*-1001",
+], ids=["noncomplementary_multipliers", "changed_fallback"])
+def test_branchless_return_keeps_both_original_values_and_complementary_selection(tmp_path, changed):
+    record = _fault_record(tmp_path,
+        '"  return (checked==n)*best.second+(checked!=n)*-1000;",',
+        '"  return '+changed+';",')
+    assert record["failure_class"] == "unsupported_construct", record
+    assert not any(row["name"] == "wp_log" for row in record["evidence"]["reports"])

@@ -93,7 +93,10 @@ def test_the_original_whole_vector_workflow_proves_under_its_explicit_input_cont
     seed = pipeline_seed(tmp_path)
     record = seed.prove("--summary", CONTRACT)
     assert record["verdict"] == "proven", record
-    assert record["settings"]["vector_ownership"]["certificate"]["allocation_executions"].startswith("unbounded")
+    certificate = record["settings"]["vector_ownership"]["certificate"]
+    assert certificate["allocation_executions"].startswith("unbounded")
+    assert certificate["return_normalization"]["source"] == "checked==n?best.second:-1000"
+    assert certificate["return_normalization"]["view"] == "(checked==n)*best.second+(checked!=n)*-1000"
 
 
 @needs_wp
@@ -102,3 +105,4 @@ def test_the_wrong_maximum_comparison_cannot_prove_after_the_pipeline_transforma
     record = seed.prove("--summary", CONTRACT)
     assert record["verdict"] == "not_proven", record
     assert any(not row.get("smoke") and row["status"] != "valid" for row in record["goals"]), record
+    assert all(row["status"] == "valid" for row in record["goals"] if row.get("smoke")), record
