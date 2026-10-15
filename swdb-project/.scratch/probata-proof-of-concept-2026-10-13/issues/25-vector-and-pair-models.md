@@ -167,5 +167,19 @@ Answer above is the state at 20:05 ET; this section supersedes its "Not met" par
 - Map acceptance "proves in WP" for a growing unit: needs an encoding WP 33 accepts (a ghost storage pool, ticket
   07's note) or a decision that CBMC alone covers growth.
 
-**Next step**: decide between the ghost storage-pool encoding and accepting CBMC for growth; then finish the two
-unit WP runs (each takes over 10 min; run them outside the 600 s test limit) and regenerate draft 2.
+**Tests at pause** (branch tip 5ce3643a, integration 8132c92b merged earlier as fea82f24 + ticket 27/61): 200
+passed, 1 skipped (`test_c_lowering`, `test_cbmc_adapter`: 91; `test_wp_adapter`, `test_std_models`,
+`test_format_doc`, `test_proof_method_version`: 109 + 1 skipped). Report logs
+`/tmp/claude/probata-runs/t25/report-pc.jsonl`, `report-pw.jsonl`.
+
+**Not merged: integration tip 8132c92b** (ticket 24 merged as c218089d, plus 23). It conflicts in `c_lowering.py`,
+`cbmc_translator.py`, `proof.py`, `wp_adapter.py`, `test_cbmc_adapter.py` and two docs; merge aborted, branch left
+at the tested tip. Ticket 24 already built per-model proof records (`swdb prove --model NAME`, subject `c_model`,
+`pins.models`, `c_lowering.model_text`). Main session's decision: adopt it and drop this branch's
+`swdb/models.py` / `--summary model.<name>` path.
+
+**Next step**: (1) merge 8132c92b; resolve by taking 24's model mechanism, have `c_lowering.model_text` return the
+vector/pair texts (the generators in `swdb/std_models.py`), treat `swdb_alloc_*`/`swdb_free` as allocation models,
+and skip non-function names (`SWDB_MODEL_FAIL`, `*_valid`); remove `swdb/models.py` and its tests; rerun the
+targeted tests. (2) Decide between a ghost storage-pool encoding and accepting CBMC for growth. (3) Finish the two
+unit WP runs outside the 600 s test limit; regenerate draft 2.
