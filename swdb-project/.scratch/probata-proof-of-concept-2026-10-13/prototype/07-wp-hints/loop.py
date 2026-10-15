@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # PROTOTYPE (Probata PoC ticket 07), throwaway. Created 2026-10-14 ET.
+# Updated 2026-10-15 ET: fail-closed ghost-witness ownership guard.
 # The spike's proof-hint loop: no-hint WP run, then up to 10 rounds of (Codex call -> proof hint
 # check -> merge -> parse -> erase-and-diff -> fresh WP run), stopping when every property is
 # Valid (Extern only in summaries) and every smoke test passed, or when 60 minutes are spent.
@@ -602,7 +603,8 @@ def main():
     standin = Path(a.variant).read_text() if a.variant else (STANDIN_DIR / UNIT).read_text()
     if a.only_run:
         hs = json.loads(Path(a.only_run).read_text())
-        rec = {"round": "only", "hints": hs, "standin_sha256": hashlib.sha256(standin.encode()).hexdigest()}
+        rec = {"round": "only", "hints": hs, "ghost_hint_guard": H.GHOST_HINT_RULE,
+               "standin_sha256": hashlib.sha256(standin.encode()).hexdigest()}
         bad = H.check(standin, hs)
         if bad:
             rec.update(outcome="rejected", rejections=bad)
@@ -613,7 +615,8 @@ def main():
         return
     t_start = time.time()
     meta = {"started": now(), "pin": PIN, "codex_version": subprocess.run([CODEX, "--version"], capture_output=True,
-            text=True).stdout.strip(), "standin_sha256": {f: sha(STANDIN_DIR / f) for f in [UNIT] + HEADERS},
+            text=True).stdout.strip(), "ghost_hint_guard": H.GHOST_HINT_RULE,
+            "standin_sha256": {f: sha(STANDIN_DIR / f) for f in [UNIT] + HEADERS},
             "cpp_unit_sha256": sha(CPP_UNIT), "rounds": a.rounds, "budget_min": a.budget_min,
             "wp_flags": (HERE / "wp_run.sh").read_text(), "wp_run_sha256": sha(HERE / "wp_run.sh"),
             "repair_turns": a.repair_turns,

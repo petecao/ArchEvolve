@@ -1,4 +1,5 @@
 # PROTOTYPE (Probata PoC ticket 07, continuation t07c), throwaway. Created 2026-10-14 ET.
+# Updated 2026-10-15 ET: fail-closed ghost-witness ownership guard.
 # Seam: how the loop reads the in-call tool's submissions (method change d).
 import json
 
@@ -49,3 +50,17 @@ def test_a_returned_unproven_set_reuses_its_round_run_too(tmp_path):
     c2 = {"hints": H1, "error": None}
     L.pick_tool_result(tmp_path, 1, 0, c2)
     assert "proved_dir" not in c2
+
+
+def test_precheck_rejects_model_shadow_before_any_verifier_call(tmp_path, monkeypatch):
+    def forbidden_verifier(*args, **kwargs):
+        raise AssertionError("unsafe ghost hint reached a verifier")
+    monkeypatch.setattr(L, "verifier", forbidden_verifier)
+    standin = (L.STANDIN_DIR / L.UNIT).read_text()
+    hs = [{"id": "shadow", "anchor": "stmt:entry", "kind": "ghost",
+           "text": "ghost int dxc_pending = 0;"}]
+    record = {}
+    assert L.precheck(tmp_path, "unsafe", standin, hs, record) is None
+    assert record["outcome"] == "rejected (proof hint check)"
+    assert any(r["rule"] == "ghost_ownership" for r in record["rejections"])
+    assert not (tmp_path / "unsafe").exists()
