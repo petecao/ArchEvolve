@@ -19,6 +19,11 @@ from swdb.proof import AdapterError
 SETUP_VERSION = "1"
 READING_VERSION = "1"
 REPORT_MODULE = Path(__file__).with_name("proof_report.ml")
+# Named sources that generate/check domains or interpret execution evidence.
+# Translator, lowering, std-model and semantics bytes also have their own pins.
+CHECK_SOURCES = ("proof_setup.py", "proof_report.ml", "proof.py", "cbmc_adapter.py", "cbmc_equivalence.py",
+                 "cbmc_product.py", "wp_adapter.py", "crux_adapter.py", "rocq_adapter.py", "rss_watchdog.py",
+                 "vocab.py", "formal_frame.py", "acsl_subset.py", "framac.py", "hint_check.py", "hint_tree.ml")
 _COMPILED_MODULES = {}
 _ASSUME = re.compile(r"\b(?:llvm_assume|crucible_assume|__VERIFIER_assume)\b|\b(?:__CPROVER_assume|SWDB_ASSUME|assume)\s*\(")
 
@@ -32,7 +37,12 @@ def _digest(value):
 
 
 def identity():
-    sha = _sha(Path(__file__).read_bytes() + REPORT_MODULE.read_bytes())
+    from swdb import paths
+    folder = Path(__file__).parent
+    dependencies = [("swdb/" + name, folder / name) for name in CHECK_SOURCES]
+    dependencies.append(("vocab/proof_failure_classes.yaml", paths.VOCAB / "proof_failure_classes.yaml"))
+    # Frame each name and digest; concatenation must not blur dependency boundaries.
+    sha = _digest([{"path": name, "sha256": _sha(path.read_bytes())} for name, path in dependencies])
     return {"proof_setup_check": {"version": SETUP_VERSION, "sha256": sha},
             "verdict_reading": {"version": READING_VERSION, "sha256": sha}}
 

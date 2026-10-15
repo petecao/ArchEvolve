@@ -4,6 +4,7 @@ Created: 2026-10-14 16:10 ET, Probata proof of concept ticket 22 (Yan-Ru's 13:19
 ticket 21's C lowering replaces SAW as the bounded verifier).
 Updated: 2026-10-14 17:20 ET, ticket 61: [Whole-function equivalence](#whole-function-equivalence-ticket-61)
 (the bounded direct route and the no-contract baseline, CBMC on a product program).
+Updated: 2026-10-15 ET, ticket 36: pointer formation checks and distinct bounded tile objects.
 Spec: `.scratch/probata-proof-of-concept-2026-10-13/issues/22-saw-adapter-and-translator.md` (Later changes);
 design: `.scratch/formal-verification-2026-10-09/spec.md` ("Verifier lineup and order", "Bounds"), map 11
 items 1-4, 8, 9; 16 items 1, 3; 19 items 2, 8. Reference: `prototype/06c-cbmc/` and the shared note
@@ -54,6 +55,15 @@ swdb prove --summary <library entry> --adapter cbmc --runs-dir <outside the repo
   and only the audited tile-pointer producer may introduce a model buffer origin. Changed model bytes
   require a new audit and checker identity. This policy does not grant arbitrary opaque summaries an
   initializedness exemption.
+- **Pointer bounds.** Both proof and whole-function equivalence invocations retain
+  `--pointer-overflow-check`, including discarded pointer formation, as described by the
+  [CBMC memory model](https://diffblue.github.io/cbmc/cprover-manual/md_memory-primitives.html).
+  CBMC 6.11 already checks
+  unrelated-object subtraction. Disabling standard safety checks, filtering properties, or overriding
+  the generated entrypoint is refused. Each bounded DX100 tile is a separate static C array object,
+  accessed through an initialized pointer table; crossing into a neighboring tile cannot use the
+  enclosing two-dimensional allocation as a bounds justification. The admission certificate records
+  each generated object's extent. These checks do not establish general C++ undefined-behavior freedom.
 - **Unwinding.** `--unwind K --unwinding-assertions`, with K = the largest size bound + 1 (CBMC's K is
   iterations + 1). A loop that runs longer fails its unwinding assertion: not proven,
   `unwinding_bound_too_small`, never proven.
@@ -85,7 +95,7 @@ swdb prove --summary <library entry> --adapter cbmc --runs-dir <outside the repo
    {-2, -1, 0, 1, 2} (scalar values also INT_MIN and INT_MAX); at most 20 000 runs (a fixed-seed sample
    beyond). Any difference stops the batch: no record, the message names `c_lowering_disagreement` and the
    first differing input, and `cbmc/handler.json` plus `cbmc/reproduction/` hold both sources.
-4. CBMC on `job.c` (`-DSWDB_CBMC --unwind K --unwinding-assertions` plus the lineup's `cbmc` flags,
+4. CBMC on `job.c` (`-DSWDB_CBMC --unwind K --unwinding-assertions --pointer-overflow-check` plus the lineup's `cbmc` flags,
    `--json-ui`) in the job's scratch folder, under the RSS watchdog and the wall budget, inside the
    machine-wide verifier lock.
 5. Read every property and run the failure class's handler.
