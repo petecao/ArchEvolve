@@ -581,7 +581,7 @@ def test_terminal_delete_certificate_keeps_the_native_lowering_and_names_the_che
     certificate = record["terminal_release"]
     assert certificate["function"] == "swdb_new_unit" and certificate["owner"] == "buf"
     assert certificate["model"] == "swdb_alloc_delete_array_int"
-    assert certificate["checker"]["id"] == "terminal-release-check-1"
+    assert certificate["checker"]["id"] == "terminal-release-check-2"
     assert "swdb_alloc_delete_array_int(buf);" in (tmp_path / "swdb_new_unit.c").read_text()
     anchors = json.loads((tmp_path / "swdb_new_unit.anchors.json").read_text())
     assert anchors["terminal_release"] == certificate
