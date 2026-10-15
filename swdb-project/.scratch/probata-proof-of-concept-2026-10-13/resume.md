@@ -4,7 +4,7 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 19:34 ET. **Implementation is active under the user's ongoing approval.**
+Updated: 2026-10-15 19:50 ET. **Implementation is active under the user's ongoing approval.**
 Integration `codex/probata-resume-20261015` is based on `yanrujhou_main` at `d94d629b`.
 Audited run23 documentation is published at `6dc94905`; reviewed method21 prototype
 is published at `14c2a298`. Only `swdb/c_lowering.py`
@@ -18,9 +18,9 @@ Drafts 1/2 remain immutable. No draft 3 or final production freeze exists.
 
 | Ticket / owner | Verified checkpoint | Active work |
 |---|---|---|
-| 07 / `ticket07` | Run 24 remains unproven: 29 open, 52.03 counted minutes, 5 mechanical / 36 Codex records. Posthoc full-30-second replay timed out after 710.42s without a complete report; no verdict upgrade. | Temporary cleanup quarantine independently checked and released at 19:07 ET. Method 22 adds zero seeds, paged VC inspection and complete provider accounting; 33/36-minute search/return limits leave 24 minutes for final checks. TDD/review, no fresh actual. |
-| 24 / `ticket24` | Current float, atomic and qualified std pairs accepted; 14 models accepted. Qualified std safe has 47 ordinary + 13 smoke Valid; seed stays not_proven/vacuous_pass. Original std contract gap is retained. | Node 0 generation 580 runs reviewed continuation at `23933f8a`: 12 retained + 24 fresh rows. Exact no-op summary remains provisional until actual original-caller smoke witness. Six original groups pending. |
-| 27 / `ticket27` | Current negative 13/13, bounded/native 35/35 and repaired capacity 3/3 accepted. Fresh CPU safe proves 58 ordinary + 19 smoke goals; historical `717` evidence remains separate. | Node 1 generation 604 runs A-rest 4. B1/B2 groups of 3 are queued. Exact disjoint safe union 1 + 4 + 3 + 3 = 11; original A5/B6 unlaunched. Ten safe units pending. |
+| 07 / `ticket07` | Run 24 remains unproven: 29 open, 52.03 counted minutes, 5 mechanical / 36 Codex records. Posthoc full-30-second replay timed out after 710.42s without a complete report; no verdict upgrade. | Repaired method 22 at `c603c2ec` passes 216 controls; independent exact-byte rereview remains pending. Zero seeds, paged VC inspection, reverse whole-attempt provenance and post-persistence completion accounting; no fresh actual. |
+| 24 / `ticket24` | Current float, atomic and qualified std pairs accepted; 14 models accepted. Original MAA safe now proves 6 ordinary + 5 smoke goals, including both per-callee reachability witnesses; seed remains not_proven. Original std gap is retained. | Node 0 generation 580 continues at `23933f8a`: 12 reused + 5 fresh rows observed. The first 3 fresh MAA rows are independently audited; latest DXC summary/safe rows await the next batch audit. DXC seed active. |
+| 27 / `ticket27` | Current negative 13/13, bounded/native 35/35 and repaired capacity 3/3 accepted. Fresh CPU and store-source safe cases accepted, 2/11 safe units; historical `717` evidence remains separate. | Node 1 generation 604 runs remaining A-rest cases; stall-condition active. B1/B2 groups of 3 are queued. Exact disjoint safe union 1 + 4 + 3 + 3 = 11; original A5/B6 unlaunched. Nine safe units pending. |
 | 36 / dependency-gated | 122 compiler/scripted controls pass; 13 actual-WP cases excluded. | Waits on 27; runtime fallback research remains prospective. |
 
 At17:43:14 ET node0 generation572 released after the standard caller safe timeout;
@@ -187,8 +187,10 @@ planned raw output. Each launch passes 197 physical/Git module checks and its fu
 runtime dictionary equals the accepted `0e7` identity. No third job.
 [Continuation admission](evidence/reviewed-t24-continuation-launch-23933f8a-20261015.json).
 The retained 12 rows and fresh 24-row schedule use normal public dependency
-eligibility; the no-op exception is exact-source/contract/three-VC scoped and
-provisional until actual unchanged-caller dead-call/precondition smoke passes.
+eligibility. The exact-source/contract/three-VC no-op exception now has its required
+unchanged-caller dead-call/precondition smoke witness: original MAA safe proves
+all 6 ordinary and 5 smoke goals, independently audited at 19:43 ET. Its seeded
+partner has 6 ordinary Valid, 2 timeouts and 5 smoke Valid; it remains not_proven.
 No artificial postcondition or general zero-smoke waiver is introduced.
 
 B1/B2 each select three disjoint remaining original cases, with historical case
@@ -197,7 +199,10 @@ lanes after the active jobs; every launch still needs fresh all-lease/resource
 admission. Historical weights are not a fresh ETA or success guarantee.
 [Selected schedule and exact commands](evidence/t27-selected-safe-shard-schedule-20261015.json).
 No full ticket or method success is claimed from these checkpoints. This chat's
-30-minute heartbeat stays active; last full table 19:19 ET, next due 19:49 ET.
+30-minute heartbeat stays active; last full table 19:49 ET, next due 20:19 ET.
+Root live readback at 19:50 ET: both lanes held (580/604), exact detached source
+identities unchanged, active solver processes on both profiles, load 2.81 and
+12 GiB free on `/data1` / 94 GiB on `/data`. No third evaluation job.
 Research-only notes remain `/private/tmp/probata-ticket25-resume-exploration.md`,
 `/private/tmp/probata-ticket25-lifetime-capabilities.md`,
 `/private/tmp/probata-ticket25-heap-bridge-tcb-addendum.md`,

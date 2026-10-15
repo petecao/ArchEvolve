@@ -5,7 +5,7 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-re
 
 ## Current state (resume here)
 
-Updated: 2026-10-15 19:34 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
+Updated: 2026-10-15 19:50 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
 Integration: `codex/probata-resume-20261015`; audited run 23 is published at
 `6dc94905`; method21 prototype merged at `14c2a298`. Remote actual jobs retain
 exact `0e7f2327` and `23933f8a` source freezes; production lowerer SHA256
@@ -16,17 +16,20 @@ remains `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
   all five standard and nine atomic models accepted. Qualified std safe has 47
   ordinary + 13 smoke Valid; seed remains not_proven/vacuous_pass with four
   ordinary timeouts and two failed smoke checks. The original standard caller
-  gap stays unchanged. Reviewed no-op policy is provisional until unchanged MAA
-  caller reachability is observed. Continuation at `23933f8a` runs on node 0
+  gap stays unchanged. Reviewed no-op policy now has its independently audited
+  unchanged MAA caller witness (6 ordinary + 5 smoke Valid); seed remains not_proven.
+  Continuation at `23933f8a` runs on node 0
   generation 580: 12 retained rows + 24 fresh rows (15 WP / 9 deliberate refusals).
-  Six original groups remain pending. Finite native evidence stays finite.
+  Five fresh rows are observed; first three independently audited, latest DXC two
+  await batch audit. Full continuation remains pending. Finite native evidence stays finite.
   [Qualified std](evidence/t24-std-object-domain-v2-20261015.json),
   [continuation launch](evidence/reviewed-t24-continuation-launch-23933f8a-20261015.json).
 - **27:** Current negative profile accepted 13/13 at exact `0e7f2327`: all 13
   intended ordinary timeouts and 35 failed smoke checks remain explicit. Fresh
   bounded/native 35/35 and repaired capacity 3/3 remain accepted. First current
-  safe CPU case proves 58 ordinary + 19 smoke goals; ten safe units remain.
-  Four run on node 1 generation 604; the other six are queued as balanced 3 + 3
+  safe CPU case proves 58 ordinary + 19 smoke goals; store-source proves 90 ordinary
+  + 29 smoke. Nine safe units remain. A-rest continues on node 1 generation 604;
+  the other six are queued as balanced 3 + 3
   partitions. Original A5/B6 jobs are unlaunched; selected disjoint union is
   1 + 4 + 3 + 3 = 11. Historical `717` safe evidence is separate.
   [Final negatives](evidence/t27-composed-negative-completed-independent-20261015.json),
@@ -44,7 +47,9 @@ remains `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
   seeds to meet the literal every-hint-Codex criterion, only after TDD/review;
   the revised 33/36-minute search/return limits reserve up to 24 minutes for
   positive and identical-hints wait-negative verification within the same 60 minutes.
-  Allocation sufficiency is unmeasured; no fresh counted run or success is claimed.
+  Repaired method 22 at `c603c2ec` passes 216 controls; independent exact-byte
+  rereview is pending. Allocation sufficiency is unmeasured; no fresh counted run
+  or success is claimed.
 - **36:** Dependency-gated by 27. Its 122 focused controls exclude 13 actual-WP
   cases. Drafts 1/2 remain immutable; final method freeze and held-out gates remain.
 
