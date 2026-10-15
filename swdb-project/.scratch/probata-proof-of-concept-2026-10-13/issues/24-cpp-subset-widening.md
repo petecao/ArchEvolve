@@ -876,3 +876,25 @@ proof at this repaired translator is claimed yet. The finite agreement limb is
 accepted under ticket22's finite boundary; actual safe/seed/current-method and
 allocation/lifetime matrix obligations remain open. No shared map/resume or
 historical proof record was modified by this ticket update.
+
+### Fresh finite agreement at published 0e7f2327 — 2026-10-15 ET
+
+A new clean checkout of `0e7f232762e4555aa9435a3a3622923fad8ee928`
+completed the unchanged accepted ticket 22 native profile for all nine original
+construct groups, safe and seeded. All 18 case classifications are retained:
+17 agree on defined inputs; the allocation seed remains explicitly UB-only,
+with zero defined comparisons. **112,589 defined comparisons agree**. The
+**47,164 original precondition exclusions** and **2,207 known UB exclusions**
+remain separate; no runtime sanitizer UB or asymmetry was observed.
+
+The whole-worker 8 GiB/900 s guard exits 0 in 60.570 s, with peak
+1,310,572,544 B and approximately 349 MB retained under the monitored 2 GiB
+raw budget. Fresh frontend/parser/header/aggregate provenance is complete and
+all 8,550 tracked source files remain unchanged. The producer stays clean for
+current/final audit readers; this receipt is committed separately from it.
+Independent review rehashes 15,771 artifact references and all producer source
+files and reconstructs every defined source observation without discrepancies.
+This is finite ordinary C/C++ agreement only: no formal equivalence, WP checking-view agreement,
+device semantics theorem or fresh proof verdict is claimed. Actual WP pairs
+and dependency acceptance remain separate; **Status stays claimed**.
+[Fresh profile and exact pins](../evidence/t24-fresh-finite-agreement-0e7f2327-20261015.md).
