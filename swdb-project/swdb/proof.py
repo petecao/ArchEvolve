@@ -140,6 +140,15 @@ class ScriptedAdapter:
             raise Failure(f"adapter script {script} must be a YAML mapping")
         self.source = Path(script)
 
+    def prepare_setup(self, job):
+        """Fixture-only prepared files, e.g. a preexisting WP session negative control."""
+        for name, text in (self.script.get("setup") or {}).get("work_files", {}).items():
+            path = Path(job.scratch) / name
+            if Path(name).is_absolute() or not path.resolve().is_relative_to(Path(job.scratch).resolve()):
+                raise AdapterError("scripted setup work_files must stay inside the job scratch directory")
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(text)
+
     def run(self, job):
         (job.scratch / "scripted-work.txt").write_text(f"{job.unit.candidate} {job.unit.function}\n")
         bounds = self.script.get("bounds") or (dict(job.bounds) if job.bounds else None)
@@ -482,8 +491,18 @@ def _run_job(rid, unit, pins, adapter, runs, place, failure_classes, method=None
         try:
             with watch:
                 from swdb import proof_setup
+                if hasattr(adapter, "prepare_setup"):
+                    adapter.prepare_setup(job)
                 setup_check = proof_setup.begin(job, adapter, pins, method)
                 verdict = adapter.run(job)
+                if setup_check["check"] != proof_setup.identity()["proof_setup_check"]:
+                    raise AdapterError("proof setup check [check_changed]: the checker source changed during the run")
+                if getattr(adapter, "real", False) and verdict.verdict in ("proven", "refuted") and not setup_check["runs"]:
+                    raise AdapterError("proof setup check [missing_prelaunch]: a real verdict has no generated-input check")
+                if adapter.name == "wp" and verdict.verdict == "proven":
+                    reading = (verdict.record_fields or {}).get("verdict_reading") or {}
+                    if reading.get("check") != proof_setup.identity()["verdict_reading"] or reading.get("verdict") != "proven":
+                        raise AdapterError("verdict reading [missing_attestation]: a WP proof needs the current fresh-run reading")
         except AdapterError as exc:
             raise Failure(f"adapter {adapter.name}: {exc}. Adapter output: {job.log}") from None
         finally:

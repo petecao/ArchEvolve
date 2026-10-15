@@ -1,5 +1,7 @@
 # Method-version files (`library/methods/<version>.yaml`)
 
+Updated: 2026-10-15 ET, ticket 36: setup and verdict checks pin their content hashes.
+
 Created: 2026-10-14 (Eastern Time), Probata proof of concept ticket 11.
 Updated: 2026-10-14 15:43 ET (fix-21): lifecycle (current = frozen; drafts only by name), the first real
 draft `library/methods/probata-draft-1.yaml`.
@@ -61,7 +63,7 @@ proof record pins it by ID and file sha256.
 | `c_lowering` | `subset`, `translators`, `naming_rules` (references `{id, sha256}`) |
 | `acsl_version` | the ACSL language version |
 | `proof_hint_vocabulary` | the allowed proof-hint kinds |
-| `checks` | `proof_setup_check`, `proof_hint_check`, `verdict_reading`, each `{version}` |
+| `checks` | `proof_setup_check`, `proof_hint_check`, `verdict_reading`, each `{version, sha256?}`; execution setup and verdict checks require the content hash ([ticket 36](format-v0.4-proof-setup.md)) |
 | `budgets` | per candidate: `hint_rounds` (start 10), `hint_loop_wall_minutes` (60), `bounded_job_minutes` (15), `counterexample_repair_rounds` (5) (25 item 2); `wp_seconds_per_solver` (30; 13 item 11); `civl_k` (3, at least 2; 15 item 9, S8) |
 | `prompts` | the prompts, as references |
 | `shared_action_kinds` | the shared-action kinds |

@@ -314,7 +314,7 @@ class CruxAdapter:
                                    iteration_bound={"value": iterations, "unwind": unwind, "rule": ITERATION_RULE})
         from swdb import proof_setup
         proof_setup.check_generated(job, self, context, [(source, text)], flags,
-                                    command=command, scratch=scratch, lowering=code.lowering)
+                                    command=command, scratch=scratch, lowering=getattr(code, "lowering", None))
         result = rss_watchdog.run(command, log=crux_log, cap_bytes=cap, timeout=wall + 5, cwd=scratch,
                                   env={**os.environ, "TMPDIR": str(scratch)})
         context["reports"].append(("crux_output", crux_log))
