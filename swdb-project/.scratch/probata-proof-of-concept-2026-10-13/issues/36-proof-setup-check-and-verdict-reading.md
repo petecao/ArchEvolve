@@ -1,7 +1,7 @@
 # 36 — Proof setup check and verdict reading
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-15 ET (source-bound summary and remote replay checkpoint)
+Updated: 2026-10-15 ET (partial mandatory-RTE admission and post-plan mutation controls)
 **Type:** slice
 **Status:** ready-for-agent
 **Blocked by:** 11, 21, 27
@@ -772,3 +772,33 @@ independent RTE admission check with a public no-launch control for an otherwise
 self-consistent method/plan omitting -wp-rte, and retain initialization and
 per-property obligations. This closeout records the requirement only; no runtime
 flag policy is changed. See [review decisions](../evidence/final-review-closeout-20261015.md).
+
+### Resume prerequisite hardening — 2026-10-15 ET
+
+The inherited mandatory-RTE admission gap is fixed. The content-pinned setup
+policy requires exactly one positive `-wp-rte`, rejects `-wp-no-rte`, and rejects
+boolean `=value` variants and duplicate positive flags. Both production method
+admission and the last prelaunch check use the rule; the latter checks the whole
+actual command, including `SWDB_FRAMA_C` prefix arguments. A self-consistent
+execution method with current checker hashes cannot weaken this requirement.
+Initializedness filtering, ordinary property reporting and smoke checks remain
+required by the existing controls.
+
+Dedicated public `swdb prove --adapter wp` controls now mutate the actual contract
+or an admitted used summary after planning and dependency admission. An external
+report-compiler stand-in performs the mutation; the unchanged setup checks refuse
+the launch with `contract_hash` or `summary_hash`. The attempted job writes no new
+proof record. A synthetic helper dependency is created through the same CLI only
+for the control; no stand-in outcome is scientific proof evidence.
+
+The setup source-reparse trigger also includes member-window certificates, paired
+with ticket 24's adapter-side source-plan trigger. These are prerequisite repairs,
+not ticket acceptance: ticket 36 remains `ready-for-agent`, blocked by ticket 27
+and the final method/source freeze. Historical exact-source runs keep their
+original boundary. The checker content hash changes, so later acceptance runs
+must use a method pin matching the integrated source.
+
+See [scoped evidence](../evidence/setup-rte-postplan-controls-20261015.json) for
+the red/green controls, compiler/tool boundary and regression command. Validation:
+**86 passed, 13 real-WP cases deselected in 189.24 s**, serial on the Mac. No
+verifier was run. This includes 15 new controls at the authorized public CLI seam.

@@ -1,0 +1,61 @@
+{
+  "created": "2026-10-15 ET",
+  "scope": "Ticket 36 prerequisite review hardening only; ticket remains ready-for-agent and blocked by 27 plus final method/source freeze.",
+  "baseline_commit": "be4ee50d11ced94c7920a1559c94e8140aec4719",
+  "sources_sha256": {
+    "swdb/proof_setup.py": "3d53f3ad0a0ded06c2fe8a683d0a1250ed7e2e5938d1d3bab95d23fa1711922f",
+    "tests/test_proof_setup.py": "25c46113e523c5fdaddd2859cf0f8a672b42d737413ba3f83ecc75761876d6c9"
+  },
+  "observed_checker_identity": {
+    "version": "1",
+    "sha256": "c4941e2e262aa54147f4ac173cc94114d79945e9d1eca0845a787bce167013c8",
+    "boundary": "Composite checker identity on the tested setup-hardening branch. Integration changes to any checker dependency require a newly pinned method; this is not a frozen production-method claim."
+  },
+  "seam": "Public swdb prove CLI, including production --adapter wp; existing scripted adapter retained for isolated setup controls.",
+  "red": {
+    "test": "tests/test_proof_setup.py::test_wp_rte_cannot_be_missing_disabled_duplicated_or_boolean_overridden[flags0]",
+    "result": "Expected prelaunch refusal failed: baseline setup accepted absent -wp-rte and wrote a synthetic proven record.",
+    "passed": 0,
+    "failed": 1,
+    "wall_seconds": 11.30
+  },
+  "green_slices": [
+    {
+      "test": "test_wp_rte_cannot_be_missing_disabled_duplicated_or_boolean_overridden",
+      "passed": 6,
+      "wall_seconds": 20.39,
+      "controls": "Missing, disabled, positive+disabled, duplicated positive, positive boolean override, negative boolean override. No verifier stand-in command starts; no record is written."
+    },
+    {
+      "tests": [
+        "test_production_wp_refuses_weak_frozen_rte_method_before_launch",
+        "test_production_wp_checks_rte_in_complete_command_including_tool_prefix",
+        "test_production_wp_preserves_one_rte_switch_in_the_executed_command",
+        "test_post_plan_contract_or_used_summary_mutation_refuses_before_wp"
+      ],
+      "passed": 9,
+      "wall_seconds": 13.83,
+      "controls": "Current execution-method checker pins with weakened frozen RTE flags; actual tool-command prefix disable/boolean/duplicate; positive actual-command RTE count; actual contract/used-summary file mutations after planning and dependency admission."
+    }
+  ],
+  "regression": {
+    "command": "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest tests/test_proof_setup.py -k 'not real_wp_facts' -q",
+    "cwd": "swdb-project",
+    "passed": 86,
+    "deselected_actual_wp_cases": 13,
+    "failed": 0,
+    "wall_seconds": 189.24,
+    "parallel_workers": 1,
+    "includes": "All 15 new RTE, production-command and post-plan mutation controls, plus existing scripted setup, environment, source-identity and fresh property-reading controls."
+  },
+  "tool_boundary": {
+    "python": "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+    "clang": "22.1.8 on local ARM Mac; compilation/admission checks only",
+    "frama_c": "Production-control executable is a Python stand-in providing parse/version responses and synthetic fresh property reports; no actual WP or solver is run.",
+    "ocamlfind": "Python stand-in writes dummy reader bytes and optionally mutates the requested library file after planning. No actual OCaml compiler is run.",
+    "summary_dependency": "Synthetic helper record created via the public production adapter only to test admission and subsequent hash mutation. It establishes no scientific theorem.",
+    "watchdog": "The first positive stand-in control encountered sandbox-denied process-tree inspection. Replayed with existing authorized watchdog access; the test and safety policy were unchanged."
+  },
+  "member_window_source_reparse": "Added member_windows to the setup source-reparse trigger as requested by ticket 24; its paired adapter source-plan trigger and dedicated fixed-array controls belong to ticket 24.",
+  "acceptance_boundary": "No real verifier evaluation, remote run, whole-ticket closure, full-catalog validation or final method freeze is claimed. Existing historical proof records retain their original source pins."
+}
