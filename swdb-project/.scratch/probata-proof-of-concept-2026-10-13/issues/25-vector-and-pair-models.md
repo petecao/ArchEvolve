@@ -370,3 +370,46 @@ neither has been launched. Only the bad comparison is admitted as a second struc
 preserving the changed source branch so WP must reject the original maximum specification.
 The allocation contract's existing no-preexisting-write frame has its own explicit pin/assumption;
 ambient callbacks are not ruled out merely because an allocation eventually succeeds.
+Standard provenance admission gap — 2026-10-15 ET: public owner-data source reaches stand-in WP
+when a candidate-local `vector` header includes genuine libc++ and adds a global-writing replacement
+operator new (original1RED5.84s, `/private/tmp/probata-header-provenance-red.jsonl`). This is an
+admission gap, not an actual falseproof. The new `stdlib_provenance` helper checks the full original
+TU with matching pinned native libclang, compares exact-driver physical include closure, pins every
+transitive header and modeled declaration/binding, rejects std namespace injection, allocation hooks,
+handler registration (including global constructors/function pointers), and macro rewriting. Native
+parser and actual driver/wrapper bytes are explicit transitive identities. Effective `-###` frontend
+args are forwarded into libclang; undeclared wrapper definitions/header injections refuse rather than
+silently changing the interpretation. Ordinary project headers and GAPBS pvector diagnostic pass.
+Canonical include configuration, source declarations and header contents are rechecked before launch.
+Ambient callbacks outside the TU remain the explicit allocator frame premise; allocation success alone
+is insufficient, and no new source input requires is added. The reusable source seam covers all std
+model symbols (including min/max/copy/swap) and new[]; shared lower/report and both adapter consumers
+are being integrated separately by the coordinator. No universal repair or whole-vector acceptance is
+claimed before combined public replays. Outside design/evidence pointer:
+`/private/tmp/probata-stdlib-provenance-design.md`. Ticket25 remains claimed.
+
+
+### Original full-TU admission integration — 2026-10-15 10:49 ET
+
+The native libclang certificate is now bound through all standard-model consumer
+paths and replayed immediately before differential execution or solver launch.
+Twenty focused source/allocator/bounded-route controls and four stand-in prelaunch
+controls pass. Independent review's custom unqualified allocator and fallback
+coverage diagnostic findings are repaired. Actual WP current-owner/stale-alias
+acceptance is running at frozen `00b16733`; no new actual success is claimed here.
+[Focused evidence](../evidence/stdlib-source-provenance-20261015.json). General
+vector/member and whole-pipeline acceptance remain open.
+
+
+### Source gate actual acceptance — 2026-10-15 10:53 ET
+
+Frozen `00b16733` passed the actual current-owner/stale-alias pair: **2 passed in
+243.20s**, peak 651 MiB under the shared 8 GiB watchdog. The safe record has
+105 ordinary Valid goals and 11 passing smoke checks. The stale record retains
+one timed-out `alias_live_after` obligation (111 ordinary Valid plus 11 passing
+smoke checks), so it remains not proven. Both original-TU certificates and shared
+setup replays pass; all referenced artifact hashes and the prospective runtime
+manifest match. The audit resolves pytest symlink aliases before counting records.
+[Actual evidence](../evidence/stdlib-source-provenance-actual-20261015.json).
+The gate's focused admission and actual pair are accepted; wider vector/member
+acceptance and the ticket remain open.

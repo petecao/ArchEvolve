@@ -1,0 +1,93 @@
+{
+  "date": "2026-10-15 ET",
+  "runtime_commit": "d965e016",
+  "combined_checkpoint": "00b16733f57ca5ddf273d631357ae23ab7979c55",
+  "scope": "Original complete C++ translation-unit and effective compiler/header provenance for standard model/allocation substitution; repeated before native differential and verifier launch.",
+  "controls": [
+    {
+      "count": 20,
+      "passed": 20,
+      "seconds": 115.38,
+      "scope": "9 full-TU/header/compiler controls, 2 allocator-declaration controls, 9 bounded-route controls"
+    },
+    {
+      "count": 4,
+      "passed": 4,
+      "seconds": 114.39,
+      "scope": "Stand-in positive and three prelaunch source/certificate/artifact tamper controls"
+    }
+  ],
+  "boundaries": [
+    "Stand-in results do not establish functional proof acceptance.",
+    "Actual WP safe-owner positive and stale-alias negative both pass at frozen 00b16733; see stdlib-source-provenance-actual-20261015.json.",
+    "Generated C model-body proofs retain their separate pinned model boundary.",
+    "Runtime allocator freshness/success and no-preexisting-write frame remain explicit assumptions; this checker does not prove arbitrary linked runtime code."
+  ],
+  "review_fixes": [
+    "Unqualified custom allocator<T> can no longer qualify as std::allocator<T>; canonical qualified allocator control remains accepted.",
+    "Certificate model/type coverage mismatch explicitly marks the unit provenance refused, stopping bounded fallback; original certificate is retained separately."
+  ],
+  "artifacts": [
+    {
+      "path": "/private/tmp/probata-stdlib-final-offline.jsonl",
+      "sha256": "6453a0488f6b0375bfe1a0a89c32698a5ba02a8556006991024276f97444382d",
+      "bytes": 46188
+    },
+    {
+      "path": "/private/tmp/probata-stdlib-final-prelaunch.jsonl",
+      "sha256": "fba894cdffa95f3954f31d934a9d9a777f9250d95804fb69cd71704b32b83778",
+      "bytes": 8321
+    },
+    {
+      "path": "/private/tmp/probata-stdlib-final-prelaunch.log",
+      "sha256": "491e8fae161269c9fcb42eca88662a22838a0b9ee2f7fa85e17c308101b441fb",
+      "bytes": 191
+    },
+    {
+      "path": "/private/tmp/probata-stdlib-final-prelaunch.log.summary.json",
+      "sha256": "f9fb7ce0adfbabb3298dec011d6a0c6d99a8efbcc5bc9280dc3edb6f40d7274c",
+      "bytes": 690
+    },
+    {
+      "path": "/private/tmp/probata-stdlib-union.jsonl",
+      "sha256": "9188b89d173a5f357d8dc407ea239888b543926e3aa5db719fc8ae142ca1813e",
+      "bytes": 64164
+    },
+    {
+      "path": "/private/tmp/probata-stdlib-union-standin.jsonl",
+      "sha256": "d1b502c451cc691b73a18b9ec3f5c5f766452bd46cba3dabb12d859f2540dea8",
+      "bytes": 2304
+    },
+    {
+      "path": "/private/tmp/probata-stdlib-union-docs.jsonl",
+      "sha256": "99fc8656c49faaeab40ed5cabaf7aec73de92facc4663408090ab02eebc9be7e",
+      "bytes": 6775
+    }
+  ],
+  "actual_evidence": "stdlib-source-provenance-actual-20261015.json",
+  "union_validation": {
+    "source_commit": "b58d6cd2",
+    "distinct_cases_passed": 27,
+    "runs": [
+      {
+        "path": "/private/tmp/probata-stdlib-union.jsonl",
+        "passed": 22,
+        "failed": 1,
+        "seconds": 21.39,
+        "failure": "Known sandbox RSS sysctl EPERM in stand-in execution; no proof admitted."
+      },
+      {
+        "path": "/private/tmp/probata-stdlib-union-standin.jsonl",
+        "passed": 1,
+        "failed": 0,
+        "scope": "Only sandbox-blocked stand-in case rerun under shared 8 GiB guard; wrapper wall3.12s."
+      },
+      {
+        "path": "/private/tmp/probata-stdlib-union-docs.jsonl",
+        "passed": 4,
+        "failed": 0,
+        "seconds": 0.21
+      }
+    ]
+  }
+}

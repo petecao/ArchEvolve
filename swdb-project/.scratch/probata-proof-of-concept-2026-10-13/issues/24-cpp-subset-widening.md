@@ -482,6 +482,24 @@ is not accepted as a proof. Raw output remains remote for its readers; only comp
 metadata is exported. [Evidence](../evidence/summary-source-binding-mbit10-20261015.json).
 This checkpoint does not close the ticket's remaining acceptance criteria.
 
+
+## Checkpoint — 2026-10-15 10:49 ET: helper/construct remote audit
+
+Frozen `1ece49b8` ran in two socket lanes from 09:57 ET. Entry-window and actual
+helper controls passed **17/17 in 1428.35s** on node 1, generation 597. Constructs
+on node 0, generation 556, stopped at its first failure: **5 passed, 1 failed in
+1268.59s**. The failure is the standalone `std_copy_int` model's uncertified opaque
+pointer origin, before WP launch, with zero goals. It is not a failing numerical
+proof or full construct acceptance. A separate qualified model-body repair is under
+review; caller range discharge remains required.
+
+All referenced artifact hashes match across 43 retained records. Both socket leases
+and the legacy lease were released at the 10:49 ET live readback; load was
+0.32/0.07/0.30, `/data1` had 21 GiB and `/data` had 97 GiB free. Raw results remain
+remote for coordinator, ticket acceptance and independent audit readers.
+[Compact audit](../evidence/helper-construct-mbit10-20261015.json). This checkpoint
+does not resolve the ticket. Recheck live state before dispatch.
+
 Declaration-attribute sidefinding — 2026-10-15 ET: generic lowering accepted a local
 `__attribute__((cleanup(release_local)))` after its initializer and silently dropped its scope-exit
 callback. Public `swdb lower` RED1in0.60s; four retained-declaration RED controls in1.03s also exposed

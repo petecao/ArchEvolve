@@ -27,7 +27,7 @@ CHECK_SOURCES = ("proof_setup.py", "proof_report.ml", "proof.py", "cbmc_adapter.
                  "wp_pointer_bounds.py", "proof_semantics.py", "vector_ownership.py", "standard_model_view.py",
                  "array_domains.py", "model_domains.py", "dx_array_domains.py", "bounded_entry_windows.py",
                  "bounded_chain.py", "summary_bindings.py", "helper_windows.py", "standard_range_model.py",
-                 "nested_entry_reads.py")
+                 "nested_entry_reads.py", "stdlib_provenance.py", "stdlib_source_admission.py")
 REQUIRED_WP_SWITCHES = (("-wp-no-filter-init", "-wp-filter-init"),)
 _COMPILED_MODULES = {}
 _ASSUME = re.compile(r"\b(?:llvm_assume|crucible_assume|__VERIFIER_assume)\b|\b(?:__CPROVER_assume|SWDB_ASSUME|assume)\s*\(")
@@ -274,6 +274,12 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
             if fresh.content_sha256(summary["id"]) != summary["sha256"]:
                 _fail("summary_hash", f"summary {summary['id']} differs from its pinned content")
     hashes = {"summaries": _digest(summary_pins)}
+    if adapter.name in {'cbmc', 'wp', 'crux-llvm-c', 'crux-llvm-cxx'}:
+        from swdb import stdlib_source_admission
+        try:
+            hashes['stdlib_provenance'] = _digest(stdlib_source_admission.recheck(context, lowering))
+        except stdlib_source_admission.Refused as exc:
+            _fail('stdlib_provenance', str(exc))
     if adapter.name in {'cbmc', 'wp', 'crux-llvm-c', 'crux-llvm-cxx'}:
         from swdb import summary_bindings
         try:

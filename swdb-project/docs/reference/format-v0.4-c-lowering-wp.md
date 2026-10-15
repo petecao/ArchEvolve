@@ -410,6 +410,36 @@ original/view AST relation are freshly regenerated before WP. The source view pe
 the proof evidence. A declaration alone grants no origin permission to other helpers or models.
 
 The existing size fixture proves through this relation, while removing its original caller
+initializedness leaves the stream-load precondition unproved. Original three-read source
+`base[q[0]]` remains outside the supported scalar-offset grammar; helper certification does not
+waive that separate nested-read obligation.
+
+
+## Original standard-library source admission (2026-10-15)
+
+Standard-model and allocation substitutions retain an independent certificate for
+the complete original C++ translation unit, before helper or ownership views. The
+checker uses matching native libclang with the actual compiler driver's effective
+frontend options. It pins source, transitive headers, canonical libc++ and resource
+headers, parser and driver binaries. Project declarations that replace standard
+entities, custom allocators, allocation hooks, handler changes, shadow standard
+headers and unsupported option injection refuse admission. Ordinary project headers
+remain eligible. An explicit allocator must resolve through the admitted standard
+namespace; an unrelated global `allocator<T>` cannot stand in for `std::allocator<T>`.
+
+WP, CBMC, both Crux forms and the CBMC equivalence product bind this certificate to
+the original source. Native differential execution and the shared prelaunch check
+replay it. Changed source, header context, recorded certificate or retained report
+refuses the job. A certificate must cover the exact substituted model/type set, and
+a provenance refusal stops bounded fallback. The report is retained as
+`stdlib_provenance_unit` (or separate candidate/baseline reports for equivalence);
+settings and setup hashes preserve the binding. Generated C model-body proofs use
+their separate model-text boundary.
+
+This certifies the admitted source and compiler context. Allocation success, fresh
+storage and the stated frame for preexisting memory remain explicit premises;
+arbitrary linked runtime implementations are outside this check.
+
 initializedness leaves the stream-load precondition unproved.
 
 Nested entry reads (2026-10-15): a separate checked source view admits `base[q[k]]` in an
