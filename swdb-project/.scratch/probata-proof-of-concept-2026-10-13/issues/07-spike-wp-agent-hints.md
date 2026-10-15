@@ -1,7 +1,7 @@
 # 07 — Spike (c): WP with agent hints
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-15 ET (run 17 active with consumed-prefix guidance; run 16 remains unproven with final audit recorded); 2026-10-14 22:50 ET (continuation 3: runs 10-12 fail, verdict fail so far, effort paused); 2026-10-14 17:10 ET (continuation 2: runs 7-9 fail, verdict fail so far); 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-15 ET (run 18 completed unproven; frozen inputs and outcome audited); 2026-10-14 22:50 ET (continuation 3: runs 10-12 fail, verdict fail so far, effort paused); 2026-10-14 17:10 ET (continuation 2: runs 7-9 fail, verdict fail so far); 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 03
@@ -998,3 +998,50 @@ the rejected 970a921f preparation never launched. Output stays at
 `/private/tmp/probata-t07-20261015-run18/counted-18`, 2 GiB budget and at least 50 GiB
 free-space guard. Existing explicit approval covers scoped export to Codex/OpenAI.
 No proof success is claimed. [Launch pins](../evidence/t07-counted-18-launch.json).
+
+
+### Counted run18 completed and audited — 2026-10-15 ET
+
+**Fail / not proven.** Run18 ended at **10:43:07 EDT** on frozen
+`996bd62c1dd361845a7d6041167ca762e6d0ee32`, using 51.76 counted minutes
+(excluding 28.1 seconds of lock waiting). Final best has 37 hints and 252 ordinary
+goals: 232 Valid, **20 open = 13 unit + 7 hint**. Per-property classes are 19 unknown
+and one timeout. The 13 unit obligations are all nine postconditions plus four
+frame goals. One provider call made 28 tool calls, including eight goal inspections;
+12 WP attempts ran. No fresh final proof/smoke or covering-wait negative-control
+success was reached (`summary.final == null`). Baseline smoke is not final-hint
+smoke evidence. `within_budget:false` records absence of a qualifying success,
+not an elapsed count exceeding 60 minutes; the method reserves eight minutes for
+final replay.
+
+[Compact completed evidence](../evidence/t07-counted-18.json) records all 13
+source pins checked against both the clean frozen worktree and exact commit blobs,
+113 matching declared digest checks, and hashed artifacts. The full best-file
+SHA256 is `b3d2ba47467cfa8492703d2c2d5316170aacd2c14f4f7707d8a2a8f23faca6b9`.
+Hint vocabulary, exact merge and exact erase checks passed: five mechanical frame
+seeds and 32 provider records. The evidence pins the detailed outside audit at
+`/private/tmp/probata-t07-run18-audit.md` and its independent finite projections.
+Those projections describe gaps in selected named loop invariants, not reachable
+C executions, universal hint validity or false unit postconditions.
+
+The new post-neighbor-gather anchor was used, but its vertex-bound assertion
+remains unknown; Valid dependent gather goals can rely on that open cut. The final
+hints retain numerical bounds, frames and termination facts, with **no consumed-prefix
+snapshot/progress or parent/queue history invariant**. Temporary hint debt was
+enabled but never entered: the late 7→8 hint-goal proposal met the numerical debt
+allowance but had fewer than 300 search seconds remaining. It was refused by the
+frozen five-minute debt-entry guard, not evidence that staged progress failed.
+
+**Next decision:** do not retry the unchanged method. Close the local frame/range/
+readiness bridges first, then prove the exact-CAS/gathered-parent history step and
+queue phase, then build scalar/batch/range/chunk consumed-prefix induction. Keep
+safety and reachability completeness explicit. Any revised search or solver policy
+is a separately named prospective method with unchanged final all-goal, fresh-cache,
+smoke and negative-control acceptance. No later run is launched by this audit.
+
+Every prototype mode has `-wp-no-filter-init`, but lacks production
+`-wp-rte/-rte-initialized @all`. This remains throwaway functional-postcondition/
+hazard evidence, not production initializedness/UB-safety acceptance or a result
+for tickets 27/36/39. Ticket 07 stays **claimed** within the authorized shared
+two-week box; run18 does not satisfy its passing criteria or independently decide
+ticket 09's box-end stop condition.
