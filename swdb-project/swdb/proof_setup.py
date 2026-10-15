@@ -214,10 +214,24 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
 def _lineup(method, adapter, tools, flags):
     lineup = {row["tool"]: row for row in method.data.get("lineup", [])}
     for name, identity_ in tools.get("identities", {}).items():
-        if name in lineup and str(identity_[2]) != lineup[name]["version"]:
+        installed = str(identity_[2])
+        pinned = (lineup.get(name) or {}).get("version")
+        matches = installed == pinned or (name == "cbmc" and pinned is not None and installed.startswith(pinned + "."))
+        if name in lineup and not matches:
             _fail("method_version", f"{name} version {identity_[2]} differs from method {lineup[name]['version']}")
     name = "frama-c-wp" if adapter.name == "wp" else adapter.name
     declared = (lineup.get(name) or {}).get("flags", [])
+    if adapter.name == "wp":
+        expected_provers = [row["tool"] for row in method.data.get("lineup", []) if row.get("role") == "solver"]
+        for key, value in (("-wp-timeout", str(method.data["budgets"]["wp_seconds_per_solver"])),
+                           ("-wp-par", "1")):
+            if _values(flags, key) != [value] and set(_values(flags, key)) != {value}:
+                _fail("method_version", f"{key} differs from the frozen method budget/settings")
+        selected = _values(flags, "-wp-prover")
+        if not selected or any(set(value.split(",")) != set(expected_provers) for value in selected):
+            _fail("method_version", "WP solver selection differs from the method lineup")
+        if "-wp-smoke-tests" not in flags:
+            _fail("smoke_tests", "the final WP run must generate smoke tests")
     # Every method flag occurs in its original order; derived bounds, property
     # selection and report destinations may be added but cannot override it.
     for i, flag in enumerate(declared):
@@ -303,11 +317,34 @@ def read_wp_reports(goals_json, properties_csv, inventory_path, extern_contracts
             unproven.append({"property": goal["property"], "goal": name, "status": goal["status"], "failure_class": failure})
     # CSV catches failed call-site preconditions and termination properties that
     # are not captured by a locally Valid target. Global lemmas are never filtered.
+    def declared_unit_precondition(row):
+        # WP reports a proof unit's own requires as Ignored under -report-untried:
+        # it is the explicit condition of this conditional theorem, not a call-site
+        # obligation. Never apply this exception to Unknown or failing instances.
+        return row.get("status") == "Ignored" and row.get("property kind") == "precondition" and any(
+            prop.get("function") == row.get("function") and str(prop.get("line")) == str(row.get("line"))
+            and str(prop.get("description", "")).startswith("requires")
+            for prop in inventory.get("properties", []))
     invalid = [row for row in properties if row.get("status") != "Valid"
-               and row.get("status") != "Considered valid"
+               and row.get("status") != "Considered valid" and not declared_unit_precondition(row)
                and (not functions or row.get("function") in functions or not row.get("function"))]
-    if invalid and not unproven:
-        return outcome("not_proven", UNCLASSIFIED, "not-Valid properties have no classified failing goal", goals, invalid, assumptions)
+    classified_properties = []
+    for row in invalid:
+        matches = []
+        for failed in unproven:
+            origin = reported.get(failed["goal"]) or generated.get(failed["goal"], {})
+            same_function = origin.get("function") == (row.get("function") or None)
+            same_line = str(origin.get("line", "")) == str(row.get("line", ""))
+            same_name = failed.get("property") == row.get("property")
+            if same_name or (same_function and same_line):
+                matches.append(failed)
+        if not matches:
+            return outcome("not_proven", UNCLASSIFIED, "not-Valid property has no classified failing goal: " +
+                           str(row.get("property")), goals, classified_properties, assumptions)
+        classified_properties.append({"property": row.get("property"), "kind": row.get("property kind"),
+            "function": row.get("function"), "line": int(row["line"]) if str(row.get("line", "")).isdigit() else None,
+            "status": row.get("status"), "goal": matches[0]["goal"], "failure_class": matches[0]["failure_class"]})
+    unproven = classified_properties + unproven
     if unproven:
         return outcome("not_proven", unproven[0]["failure_class"], "one or more generated properties are not Valid",
                        goals, unproven, assumptions)

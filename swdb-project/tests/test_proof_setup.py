@@ -157,3 +157,11 @@ def test_real_wp_facts_read_fresh_goals_and_premises(seed, case, expected):
         assert record["verdict"] == ("not_proven" if expected == "vacuous_pass" else expected)
         if expected == "vacuous_pass":
             assert record["failure_class"] == expected
+
+
+def test_an_unclassified_property_cannot_hide_behind_an_unrelated_timeout(seed):
+    target = _valid()
+    failure = _valid("typed_f_other", passed=False, verdict="timeout")
+    reports = _reports(seed, [target, failure], properties=[("unclassified property", "Unknown")])
+    failed = seed.prove(seed.script(wp_reports=reports), ok=False)
+    assert "unclassified_wp_outcome" in failed.stderr

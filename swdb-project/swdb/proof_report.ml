@@ -33,11 +33,12 @@ let run () = match Sys.getenv_opt "SWDB_PROOF_REPORT_OUT" with
     let goals = ref [] in
     Wp.Wpo.iter_on_goals (fun w ->
         let p = Wp.Wpo.get_property w in
+        let _, line = loc p in
         let best = List.map (fun (_, (r : Wp.VCS.result)) -> verdict r.verdict) (Wp.Wpo.get_results w) in
         goals := Printf.sprintf
-            "{\"goal\":%s,\"property\":%s,\"function\":%s,\"smoke\":%s,\"passed\":%s,\"results\":[%s]}"
+            "{\"goal\":%s,\"property\":%s,\"function\":%s,\"line\":%d,\"smoke\":%s,\"passed\":%s,\"results\":[%s]}"
             (esc (Wp.Wpo.get_gid w)) (esc (Property.Names.get_prop_name_id p))
-            (function_of p) (bool (Wp.Wpo.is_smoke_test w)) (bool (Wp.Wpo.is_passed w))
+            (function_of p) line (bool (Wp.Wpo.is_smoke_test w)) (bool (Wp.Wpo.is_passed w))
             (String.concat "," (List.map esc best)) :: !goals);
     let properties = ref [] in
     Property_status.iter (fun p ->
