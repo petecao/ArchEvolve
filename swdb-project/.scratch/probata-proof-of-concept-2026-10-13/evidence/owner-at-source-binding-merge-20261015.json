@@ -1,0 +1,67 @@
+{
+  "date": "2026-10-15 ET",
+  "source_before_hook": "03a88c287da78482b666272eece4adb14a67721c",
+  "scope": "exact closed owner_at source-span/receiver hook; fake WP only",
+  "red": {
+    "public_test": "test_a_closed_at_call_records_its_qualified_live_domain_and_caller_discharge",
+    "failed": 1,
+    "wall_seconds": 2.19,
+    "reason": "closed-owner access has no unique source AST binding",
+    "junit": "/private/tmp/probata-owner-at-red.xml"
+  },
+  "green": {
+    "passed": 4,
+    "deselected_actual_wp": 2,
+    "wall_seconds": 22.83,
+    "junit": "/private/tmp/probata-owner-at-hook-green.xml"
+  },
+  "original_protocols": [
+    {
+      "case": "safe",
+      "source_accesses": 3,
+      "complete": true,
+      "actual_verifier": false
+    },
+    {
+      "case": "stale",
+      "source_accesses": 1,
+      "complete": true,
+      "actual_verifier": false
+    }
+  ],
+  "other_controls": {
+    "component_source_span_doc_math_passed": 33,
+    "wall_seconds": 1.84,
+    "junit": "/private/tmp/probata-dx-staging-merge.xml"
+  },
+  "binding": "Exact access kind and byte span, persistent receiver/alias declaration ID; owner_at additionally requires its fresh defensive-at model relation and matching qualified receiver. No generic member-call exemption.",
+  "lowering": {
+    "c_lowering": {
+      "id": "swdb-c-lowering-9",
+      "sha256": "a81eef6e6a5bc1829c69bd7ca6f26162e13bacfe9269ea80cc61e2f7029ad578"
+    },
+    "naming_rules": {
+      "id": "kept-names.3",
+      "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+    },
+    "clang": {
+      "id": "clang-22.1.8",
+      "sha256": "305697d3868243dca6e4aabf4f628df7de135d701eb4fd78f6a5d7528fef4395"
+    }
+  },
+  "checks": {
+    "proof_setup_check": {
+      "version": "1",
+      "sha256": "2f536f760d0497931199bb0a4ac24989895d3ba1466bb54ab0d15d3b9501ef59"
+    },
+    "verdict_reading": {
+      "version": "1",
+      "sha256": "2f536f760d0497931199bb0a4ac24989895d3ba1466bb54ab0d15d3b9501ef59"
+    }
+  },
+  "model_domains": {
+    "id": "closed-owner-model-domain-2",
+    "sha256": "075522b9bcecc950ea663ec5a221db5e7f6df969f0c4306966161bb26acbfefe"
+  },
+  "acceptance": "No actual new member proof is claimed; safe and out-of-range actual WP replay remains pending. DX actual validation and literal null-plus-zero cleanup remain separately owned by ticket36. Bounded branch remains unmerged."
+}

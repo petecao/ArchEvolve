@@ -77,6 +77,39 @@ def _at_relation():
             "pins": view.pins, "scope": "closed caller source-to-view relation; no standalone model proof"}
 
 
+def bind_source_access(root, certificate, access):
+    """Bind one recorded observation to its exact source kind, span and receiver."""
+    kind = {"alias_read": "UnaryOperator", "owner_index": "CXXOperatorCallExpr",
+            "owner_at": "CXXMemberCallExpr"}.get(access.get("kind"))
+    matches = [n for n in walk(root) if n.get("kind") == kind and
+               span(n) == (access["begin"], access["end"])]
+    if certificate.get("check") != identity() or len(matches) != 1:
+        raise Refused("closed-owner access has no unique current source AST binding")
+    node = matches[0]
+    declaration = certificate["declarations"][0] if access["kind"] == "alias_read" else certificate["owner"]
+    declarations = [n for n in walk(root) if n.get("kind") == "VarDecl" and
+                    n.get("name") == declaration["name"] and span(n) == (declaration["begin"], declaration["end"])]
+    if len(declarations) != 1:
+        raise Refused("closed-owner access has no unique persistent receiver declaration")
+    parts = children(node)
+    if access["kind"] == "alias_read":
+        receiver = parts[0] if len(parts) == 1 and node.get("opcode") == "*" else {}
+    elif access["kind"] == "owner_index":
+        receiver = parts[1] if len(parts) == 3 and reference(parts[0]) == "operator[]" else {}
+    else:
+        member = parts[0] if len(parts) == 2 else {}
+        receiver = children(member)[0] if (member.get("kind") == "MemberExpr" and member.get("name") == "at"
+                    and not member.get("isArrow") and len(children(member)) == 1) else {}
+        calls = [call for call in certificate["calls"] if call["begin"] == access["begin"] and
+                 call["end"] == access["end"] and call["model"] == "std_vector_int_at"]
+        if (len(calls) != 1 or calls[0].get("qualified_domain", {}).get("model_relation") != _at_relation()
+                or calls[0]["qualified_domain"].get("receiver") != certificate["owner"]):
+            raise Refused("closed at access lacks its exact audited model/receiver relation")
+    if (strip(receiver).get("referencedDecl") or {}).get("id") != declarations[0].get("id"):
+        raise Refused("closed-owner access observes a different source declaration")
+    return node
+
+
 def source_owner(node, protocol, *, source_sha256, lowering_sha256, models, anchors, owner_check, allocator):
     """Exact persistent declaration registry after the closed source grammar was checked."""
     from swdb import c_lowering

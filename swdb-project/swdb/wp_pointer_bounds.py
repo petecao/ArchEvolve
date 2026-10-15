@@ -334,10 +334,10 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
         if root is None:
             raise Refused("closed-owner source registry has no emitted source definition")
         for access in owner["source_accesses"]:
-            matches = [n for n in _walk(root) if n.get("kind") in {"UnaryOperator", "CXXOperatorCallExpr"}
-                       and model_domains.span(n) == (access["begin"], access["end"])]
-            if len(matches) != 1:
-                raise Refused("closed-owner access has no unique source AST binding")
+            try:
+                model_domains.bind_source_access(root, owner, access)
+            except model_domains.Refused as exc:
+                raise Refused(str(exc)) from None
             rows.append({"function": owner["function"], "source_line": None, "admission_only": True,
                          "reason": "", "owner_access": access,
                          "owner_certificate_sha256": owner["certificate_sha256"]})

@@ -288,6 +288,7 @@ def identity():
                             + here.with_name("array_domains.py").read_bytes()
                             + here.with_name("vector_ownership.py").read_bytes()
                             + here.with_name("model_domains.py").read_bytes()
+                            + here.with_name("standard_model_view.py").read_bytes()
                             + here.with_name("dx_array_domains.py").read_bytes()).hexdigest()
     found = {"c_lowering": {"id": f"{TOOL_ID}-{TOOL_VERSION}", "sha256": digest},
              "naming_rules": naming_rules()}
