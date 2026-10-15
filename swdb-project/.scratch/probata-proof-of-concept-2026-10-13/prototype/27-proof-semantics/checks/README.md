@@ -28,3 +28,16 @@ This is an initializedness and logical-preservation check. It does not prove
 the entire model's undefined-behavior or hazard contract, or replace ticket 29's
 independent three-form agreement. Entry-window qualifications remain explicit
 conditional input contracts. No source fixture or caller precondition changes.
+
+The checked consequence inputs use **DX_NT=8, DX_TS=2**. Their production
+postconditions are conditional on that exact geometry; other geometries retain
+the prior contracts. The 909 qualified stall replay discharged initializedness
+but remained unproved at its store memory-domain precondition.
+
+`memory_clear_eight.c` proves the production finite conjunction equivalent to
+the frozen original forall for arbitrary state and all integer arguments.
+`memory_clear_fallback40.c` checks the quantified fallback at NT40/TS1.
+`memory_clear_missing_row7.c` is a separate fault control: omitting index 7 leaves
+the equivalence unproved. These are pure logic lemmas with no input premises
+or C paths; they add no lemma to production. Commands and hashes are in
+[`t27-stall-memory-quantifier-20261015.json`](../../../evidence/t27-stall-memory-quantifier-20261015.json).

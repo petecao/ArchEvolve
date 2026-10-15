@@ -1,0 +1,558 @@
+{
+  "created": "2026-10-15 ET",
+  "status": "production equivalence checked; full qualified stall replay pending",
+  "boundary": "Equivalent finite hardware-slot expansion, no added requires/caller assertion/assumption. Entry-window qualifications remain explicit conditional contract premises. Neither this equivalence nor the kernel/effect checks establish whole-model UB/hazard correctness or ticket29 agreement.",
+  "production": {
+    "logic": {
+      "path": "/private/tmp/probata-owner-origins/swdb-project/library/proof_semantics/dx100_bfs/logic.acsl",
+      "sha256": "34c9971965b53e04cf5ef2dd66abeaecd4d8772660f47def86158bc47624351d"
+    },
+    "entry": {
+      "path": "/private/tmp/probata-owner-origins/swdb-project/library/proof_semantics/dx100_bfs_0_1.yaml",
+      "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+    },
+    "consequences_geometry": {
+      "DX_NT": 8,
+      "DX_TS": 2
+    },
+    "finite_expansion_geometry": "DX_NT == 8; original forall fallback for all other DX_NT values"
+  },
+  "historical_stall": {
+    "source": "909eb6cdd12585e7fee1e1a23f3bfca069030301",
+    "record": {
+      "path": "/private/tmp/probata-dx-stall-repaired/pytest/test_wp_proves_every_unit_cbmc0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t170857z.0d67e0bf.yaml",
+      "sha256": "61680ddd7de30963be3530b9391c5d57a46bcd32e8c8ab0a26e596dcf17a3bf0"
+    },
+    "verdict": "not_proven",
+    "failure_class": "memory_domain",
+    "ordinary_valid": 110,
+    "smoke_pass": 35,
+    "open": [
+      {
+        "property": "memory_domain: dx_memory_clear_after_stall(dst_tile, -1, 1)",
+        "kind": "precondition of maa_indirect_store_vector",
+        "function": "dxf_stall_condition",
+        "line": 544,
+        "status": "Unknown",
+        "goal": "typed_real_dxf_stall_condition_call_maa_indirect_store_vector_requires_memory_domain",
+        "failure_class": "timeout"
+      },
+      {
+        "property": "maa_indirect_store_vector_requires_memory_domain_2",
+        "goal": "typed_real_dxf_stall_condition_call_maa_indirect_store_vector_requires_memory_domain",
+        "status": "timeout",
+        "failure_class": "timeout"
+      }
+    ],
+    "process_manifest": {
+      "path": "/private/tmp/probata-dx-stall-repaired/manifest.json",
+      "sha256": "d7518933bb938d923677946a946721c24ee9436eea8da3f7aceee47ebb27687d"
+    },
+    "artifacts_verified": [
+      {
+        "path": "/private/tmp/probata-dx-stall-repaired/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t170857z.0d67e0bf/adapter.log",
+        "sha256": "55799612f9e6372b70662a6250823e13821f7d731c053a59035729724ede58b6"
+      },
+      {
+        "path": "/private/tmp/probata-dx-stall-repaired/pytest/dx-seed0/runs/dx100-fixtures/source/src/bfs.cc",
+        "sha256": "1548c3422a56f6a5ba1233436cc5e33a887f2e4ea0b16b4d05e36a0ebd33338c"
+      },
+      {
+        "path": "/private/tmp/probata-dx-stall-repaired/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t170857z.0d67e0bf/wp/helper-original/dxf_stall_condition.c",
+        "sha256": "a4171b75014eaf9df88ff7691c617c01bf5b5489c1301c1f66477c7f6ae33263"
+      },
+      {
+        "path": "/private/tmp/probata-dx-stall-repaired/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t170857z.0d67e0bf/wp/helper-original/dxf_stall_condition.anchors.json",
+        "sha256": "0164e626526b6c79a7d194580cb83ef278a0b3fa20978d85b8195d622b94d1e1"
+      },
+      {
+        "path": "/private/tmp/probata-dx-stall-repaired/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t170857z.0d67e0bf/wp/helper-source/helper-window-dhayymdz/source.cc",
+        "sha256": "9b0ee901fd6aa8759ec3b6a73f620c3fcc07da47e2d0b73a70a309762949cad9"
+      },
+      {
+        "path": "/private/tmp/probata-dx-stall-repaired/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t170857z.0d67e0bf/wp/helper_windows.json",
+        "sha256": "722f75bef2703bf2c299f3c3f66d88a54cae5d4f61fe1b03095016cafec141b2"
+      },
+      {
+        "path": "/private/tmp/probata-dx-stall-repaired/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t170857z.0d67e0bf/wp/helper-source/helper-window-dhayymdz/source.cc",
+        "sha256": "9b0ee901fd6aa8759ec3b6a73f620c3fcc07da47e2d0b73a70a309762949cad9"
+      },
+      {
+        "path": "/private/tmp/probata-dx-stall-repaired/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t170857z.0d67e0bf/wp/nested-original/dxf_stall_condition.c",
+        "sha256": "435ab8b94345f11c139d2dceacf7f045c5a90c19d30d4cdb722b548c79556f84"
+      },
+      {
+        "path": "/private/tmp/probata-dx-stall-repaired/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t170857z.0d67e0bf/wp/nested-original/dxf_stall_condition.anchors.json",
+        "sha256": "e161ba2111c40138b2392285a2d258cd37eb365acd7baf26316f7530684f9520"
+      },
+      {
+        "path": "/private/tmp/probata-dx-stall-repaired/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t170857z.0d67e0bf/wp/nested-source/nested-read-yy_8kk13/source.cc",
+        "sha256": "b6b7213b7782a8aa582786a2c77e5a561e4cf43bd07b75a64cad78adebaa1a65"
+      },
+      {
+        "path": "/private/tmp/probata-dx-stall-repaired/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t170857z.0d67e0bf/wp/nested_entry_reads.json",
+        "sha256": "3a8d5485762d49ef27103fc126217a785cc6d8f85dcfa1e4973e996165bd37d5"
+      },
+      {
+        "path": "/private/tmp/probata-dx-stall-repaired/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t170857z.0d67e0bf/wp/dxf_stall_condition.c",
+        "sha256": "98732124057de514ce5e259f77a95eba9cd2ff70b72c1e9d5a3f928388f306cd"
+      },
+      {
+        "path": "/private/tmp/probata-dx-stall-repaired/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t170857z.0d67e0bf/wp/dxf_stall_condition.anchors.json",
+        "sha256": "87bcdb76a10a968bc357da32cca038972f675c76998332538e5395e8b0277571"
+      },
+      {
+        "path": "/private/tmp/probata-dx-stall-repaired/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t170857z.0d67e0bf/wp/hints.yaml",
+        "sha256": "c39054515054db4a06b431e3fc6d8097c62fc272c71b5a3deb089569ff435bb6"
+      },
+      {
+        "path": "/private/tmp/probata-dx-stall-repaired/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t170857z.0d67e0bf/wp/hints_merged.c",
+        "sha256": "0695ce1ce4d07fdb08fb23b6a3b068718c76cbbcfc2303aac29dbbacc36c7f74"
+      },
+      {
+        "path": "/private/tmp/probata-dx-stall-repaired/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t170857z.0d67e0bf/wp/hint_check.json",
+        "sha256": "89159124ecce691998f350ba9a4d7817814312d4aa101454a9a274dbb787f9bc"
+      },
+      {
+        "path": "/private/tmp/probata-dx-stall-repaired/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t170857z.0d67e0bf/wp/wp_input.c",
+        "sha256": "0695ce1ce4d07fdb08fb23b6a3b068718c76cbbcfc2303aac29dbbacc36c7f74"
+      },
+      {
+        "path": "/private/tmp/probata-dx-stall-repaired/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t170857z.0d67e0bf/wp/frama-c.log",
+        "sha256": "56894699858b5d4376bc6b91fdb9d051f8b2f4b85f371b263e0d8ce0c3da46fe"
+      },
+      {
+        "path": "/private/tmp/probata-dx-stall-repaired/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t170857z.0d67e0bf/wp/wp-goals.json",
+        "sha256": "6df3031d82c82aac0668bf00ea3a93c3cf66bc23d73864e0af8630ce587ad285"
+      },
+      {
+        "path": "/private/tmp/probata-dx-stall-repaired/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t170857z.0d67e0bf/wp/wp-properties.csv",
+        "sha256": "2625802967a19163478787680a70023baf713289c553323e6347e8c08f8fb5cd"
+      },
+      {
+        "path": "/private/tmp/probata-dx-stall-repaired/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t170857z.0d67e0bf/wp/wp-inventory.json",
+        "sha256": "8f3e4be34b2a69e35bec3917818c6547b78e1dc74eb04c68dc96ed16509050de"
+      },
+      {
+        "path": "/private/tmp/probata-dx-stall-repaired/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t170857z.0d67e0bf/wp/wp-normalized.c",
+        "sha256": "3e65b1e45612df3caf4c23d4415e3d1367ff1811e62f0f907ba84d30f7a01b78"
+      },
+      {
+        "path": "/private/tmp/probata-dx-stall-repaired/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t170857z.0d67e0bf/wp/handler.json",
+        "sha256": "a997bb6290ea7e32757c141d9fc0136db46ef7e17ca00e60a1ac8da7450ecb6f"
+      }
+    ],
+    "interpretation": "Store/gather initializedness now Valid; only store memory-domain precondition timeout remains. No qualifying stall proof."
+  },
+  "prefix_diagnostic": {
+    "boundary": "Exact unchanged prefix stops immediately before ALU; original requires and all prefix call/RTE/hint goals retained. Diagnostic terminal writer/clear properties replace unit postconditions; not the original unit theorem.",
+    "result": "Result(exit_code=0, peak_rss_bytes=1049362432, out_of_memory=False, timed_out=False, wall_seconds=175.17533654201543, cpu_seconds=171.42233000000002)",
+    "goals": [
+      {
+        "goal": "typed_real_dxf_stall_condition_ensures_writer_0",
+        "property": "dxf_stall_condition_ensures_writer_0",
+        "function": "dxf_stall_condition",
+        "line": 463,
+        "smoke": false,
+        "passed": true,
+        "targets": [],
+        "results": [
+          "valid"
+        ]
+      },
+      {
+        "goal": "typed_real_dxf_stall_condition_ensures_writer_1",
+        "property": "dxf_stall_condition_ensures_writer_1",
+        "function": "dxf_stall_condition",
+        "line": 464,
+        "smoke": false,
+        "passed": true,
+        "targets": [],
+        "results": [
+          "timeout",
+          "timeout",
+          "valid"
+        ]
+      },
+      {
+        "goal": "typed_real_dxf_stall_condition_ensures_writer_2",
+        "property": "dxf_stall_condition_ensures_writer_2",
+        "function": "dxf_stall_condition",
+        "line": 465,
+        "smoke": false,
+        "passed": true,
+        "targets": [],
+        "results": [
+          "timeout",
+          "timeout",
+          "valid"
+        ]
+      },
+      {
+        "goal": "typed_real_dxf_stall_condition_ensures_writer_3",
+        "property": "dxf_stall_condition_ensures_writer_3",
+        "function": "dxf_stall_condition",
+        "line": 466,
+        "smoke": false,
+        "passed": true,
+        "targets": [],
+        "results": [
+          "valid"
+        ]
+      },
+      {
+        "goal": "typed_real_dxf_stall_condition_ensures_writer_4",
+        "property": "dxf_stall_condition_ensures_writer_4",
+        "function": "dxf_stall_condition",
+        "line": 467,
+        "smoke": false,
+        "passed": true,
+        "targets": [],
+        "results": [
+          "timeout",
+          "timeout",
+          "valid"
+        ]
+      },
+      {
+        "goal": "typed_real_dxf_stall_condition_ensures_writer_5",
+        "property": "dxf_stall_condition_ensures_writer_5",
+        "function": "dxf_stall_condition",
+        "line": 468,
+        "smoke": false,
+        "passed": true,
+        "targets": [],
+        "results": [
+          "timeout",
+          "timeout",
+          "valid"
+        ]
+      },
+      {
+        "goal": "typed_real_dxf_stall_condition_ensures_writer_6",
+        "property": "dxf_stall_condition_ensures_writer_6",
+        "function": "dxf_stall_condition",
+        "line": 469,
+        "smoke": false,
+        "passed": true,
+        "targets": [],
+        "results": [
+          "timeout",
+          "timeout",
+          "valid"
+        ]
+      },
+      {
+        "goal": "typed_real_dxf_stall_condition_ensures_writer_7",
+        "property": "dxf_stall_condition_ensures_writer_7",
+        "function": "dxf_stall_condition",
+        "line": 470,
+        "smoke": false,
+        "passed": true,
+        "targets": [],
+        "results": [
+          "timeout",
+          "timeout",
+          "valid"
+        ]
+      },
+      {
+        "goal": "typed_real_dxf_stall_condition_ensures_clear_before_alu",
+        "property": "dxf_stall_condition_ensures_clear_before_alu",
+        "function": "dxf_stall_condition",
+        "line": 471,
+        "smoke": false,
+        "passed": false,
+        "targets": [],
+        "results": [
+          "timeout",
+          "timeout",
+          "timeout"
+        ]
+      }
+    ],
+    "files": [
+      {
+        "path": "/private/tmp/probata-dx-stall-prefix-targets/manifest.json",
+        "sha256": "0fc4aec31d0aed042f4a03829b87d528c7486622d31fe9cde061a4fa9d9f4444"
+      },
+      {
+        "path": "/private/tmp/probata-dx-stall-prefix-targets/input.c",
+        "sha256": "86baac3ab9a98c84bd54614691f97429dc491e974497c66d912bf69b60c15816"
+      },
+      {
+        "path": "/private/tmp/probata-dx-stall-prefix-targets/frama.log",
+        "sha256": "aafbe8d1670b5550a14aaff9a28ba4254a5c344bf909d06b5420d29ad9142957"
+      },
+      {
+        "path": "/private/tmp/probata-dx-stall-prefix-targets/goals.json",
+        "sha256": "1d7a16d6fc920fcbf55d09979d2623e0f384b553feded12b54d7aa91dfb22d30"
+      },
+      {
+        "path": "/private/tmp/probata-dx-stall-prefix-targets/properties.csv",
+        "sha256": "d60a2728c35fc926204478bbb8ba20e01542ac1aac66b5d920e194aa0ce6ad89"
+      },
+      {
+        "path": "/private/tmp/probata-dx-stall-prefix-targets/inventory.json",
+        "sha256": "fb887b7a8d0d7fa02fdd695ac47d60cb5a0eb861ce70e0c8750972d2a3aa55a7"
+      }
+    ],
+    "interpretation": "Eight individual writer-free facts Valid, original quantified clear fact unknown. Focused ensures-only results are diagnostic, not a full unit verdict."
+  },
+  "equivalence_proofs": [
+    {
+      "name": "memory_clear_eight",
+      "geometry": {
+        "DX_K": 32,
+        "DX_NT": 8,
+        "DX_NR": 8,
+        "DX_NM": 8,
+        "DX_TS": 2
+      },
+      "verdict": "proven",
+      "goals": [
+        {
+          "goal": "typed_real_lemma_swdb_production_memory_equivalence",
+          "status": "valid",
+          "solver": "cvc5"
+        }
+      ],
+      "process_result": "Result(exit_code=0, peak_rss_bytes=177569792, out_of_memory=False, timed_out=False, wall_seconds=6.0518014170229435, cpu_seconds=5.389166)",
+      "command": [
+        "opam",
+        "exec",
+        "--switch=framac-33",
+        "--",
+        "frama-c",
+        "-machdep",
+        "x86_64",
+        "/private/tmp/probata-dx-production-memory-equivalence-eight/input.c",
+        "-wp",
+        "-wp-model",
+        "+real",
+        "-wp-no-filter-init",
+        "-wp-prop=@lemma",
+        "-wp-cache",
+        "none",
+        "-wp-session",
+        "/private/tmp/probata-dx-production-memory-equivalence-eight/session",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-wp-timeout",
+        "5",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-print",
+        "-wp-report-json",
+        "/private/tmp/probata-dx-production-memory-equivalence-eight/goals.json",
+        "-then",
+        "-load-module",
+        "/private/tmp/probata-dx-production-memory-equivalence-eight/proof_report.cmxs",
+        "-report",
+        "-report-untried",
+        "-report-csv",
+        "/private/tmp/probata-dx-production-memory-equivalence-eight/properties.csv"
+      ],
+      "boundary": "Production predicate versus frozen original forall over arbitrary ghost state and all integer arguments, no input premises; no C path exists for smoke checks.",
+      "frozen_input": "prototype/27-proof-semantics/checks/memory_clear_eight.c",
+      "files": [
+        {
+          "path": "/private/tmp/probata-dx-production-memory-equivalence-eight/manifest.json",
+          "sha256": "6ffafb6e580d29c76a576be83a44307ec9c6b7a8e4469b58e04e11f3a1edcba0"
+        },
+        {
+          "path": "/private/tmp/probata-dx-production-memory-equivalence-eight/input.c",
+          "sha256": "5545a5bc5ee2702c0160519118ac9c88c19f4f8f889c142420b4276ee3445f69"
+        },
+        {
+          "path": "/private/tmp/probata-dx-production-memory-equivalence-eight/frama.log",
+          "sha256": "86ffb286135ff7b6069f2c04a0949d9ec4b908f926258d7518fd941b5a8d4b4a"
+        },
+        {
+          "path": "/private/tmp/probata-dx-production-memory-equivalence-eight/goals.json",
+          "sha256": "1e5cd141ed052b0ac1cd4576233317ac8f97cb80e7c2ef98c49ee73429840f40"
+        },
+        {
+          "path": "/private/tmp/probata-dx-production-memory-equivalence-eight/properties.csv",
+          "sha256": "e80744db37896e1ca09718363ee8d52b497fb4614a19d542a94d10d9eb8f5653"
+        },
+        {
+          "path": "/private/tmp/probata-dx-production-memory-equivalence-eight/inventory.json",
+          "sha256": "8e62b56c29f696083b665671e62c204d7afc9f94c3ac24aba4bb9269dc45cb64"
+        }
+      ]
+    },
+    {
+      "name": "memory_clear_fallback40",
+      "geometry": {
+        "DX_K": 32,
+        "DX_NT": 40,
+        "DX_NR": 8,
+        "DX_NM": 8,
+        "DX_TS": 1
+      },
+      "verdict": "proven",
+      "goals": [
+        {
+          "goal": "typed_real_lemma_swdb_production_memory_equivalence",
+          "status": "valid",
+          "solver": "cvc5"
+        }
+      ],
+      "process_result": "Result(exit_code=0, peak_rss_bytes=439664640, out_of_memory=False, timed_out=False, wall_seconds=5.9184968750341795, cpu_seconds=5.398625999999999)",
+      "command": [
+        "opam",
+        "exec",
+        "--switch=framac-33",
+        "--",
+        "frama-c",
+        "-machdep",
+        "x86_64",
+        "/private/tmp/probata-dx-production-memory-equivalence-fallback40/input.c",
+        "-wp",
+        "-wp-model",
+        "+real",
+        "-wp-no-filter-init",
+        "-wp-prop=@lemma",
+        "-wp-cache",
+        "none",
+        "-wp-session",
+        "/private/tmp/probata-dx-production-memory-equivalence-fallback40/session",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-wp-timeout",
+        "5",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-print",
+        "-wp-report-json",
+        "/private/tmp/probata-dx-production-memory-equivalence-fallback40/goals.json",
+        "-then",
+        "-load-module",
+        "/private/tmp/probata-dx-production-memory-equivalence-fallback40/proof_report.cmxs",
+        "-report",
+        "-report-untried",
+        "-report-csv",
+        "/private/tmp/probata-dx-production-memory-equivalence-fallback40/properties.csv"
+      ],
+      "boundary": "Production predicate versus frozen original forall over arbitrary ghost state and all integer arguments, no input premises; no C path exists for smoke checks.",
+      "frozen_input": "prototype/27-proof-semantics/checks/memory_clear_fallback40.c",
+      "files": [
+        {
+          "path": "/private/tmp/probata-dx-production-memory-equivalence-fallback40/manifest.json",
+          "sha256": "ff93454e0b0e6e71feede5c4d5efef70a871cfd731932b946df8c8ed9bc06516"
+        },
+        {
+          "path": "/private/tmp/probata-dx-production-memory-equivalence-fallback40/input.c",
+          "sha256": "f4d887fcbc15fddd2af9069f1c6cae8ba43e92d110ae304616ce54f3a8acaa8c"
+        },
+        {
+          "path": "/private/tmp/probata-dx-production-memory-equivalence-fallback40/frama.log",
+          "sha256": "f6539c02762f115a8397d9a50062572c6da05c23801c629bc85980e02740062d"
+        },
+        {
+          "path": "/private/tmp/probata-dx-production-memory-equivalence-fallback40/goals.json",
+          "sha256": "7ee8ae4827ca291b52dc255b9bab6e1c719005e22533079ac01e02a3b3bef39c"
+        },
+        {
+          "path": "/private/tmp/probata-dx-production-memory-equivalence-fallback40/properties.csv",
+          "sha256": "e80744db37896e1ca09718363ee8d52b497fb4614a19d542a94d10d9eb8f5653"
+        },
+        {
+          "path": "/private/tmp/probata-dx-production-memory-equivalence-fallback40/inventory.json",
+          "sha256": "61ba355fe91ee066bb5e3d97523d98299cc41df61eb7003c8cc04cc464956e40"
+        }
+      ]
+    },
+    {
+      "name": "memory_clear_missing_row7",
+      "geometry": {
+        "DX_K": 32,
+        "DX_NT": 8,
+        "DX_NR": 8,
+        "DX_NM": 8,
+        "DX_TS": 2
+      },
+      "verdict": "not_proven",
+      "goals": [
+        {
+          "goal": "typed_real_lemma_swdb_diag_memory_equivalence",
+          "status": "timeout",
+          "solver": null
+        }
+      ],
+      "process_result": "Result(exit_code=0, peak_rss_bytes=263766016, out_of_memory=False, timed_out=False, wall_seconds=11.245969166979194, cpu_seconds=10.426869)",
+      "command": [
+        "opam",
+        "exec",
+        "--switch=framac-33",
+        "--",
+        "frama-c",
+        "-machdep",
+        "x86_64",
+        "/private/tmp/probata-dx-memory-equivalence-missing_seven/input.c",
+        "-wp",
+        "-wp-model",
+        "+real",
+        "-wp-no-filter-init",
+        "-wp-prop=@lemma",
+        "-wp-cache",
+        "none",
+        "-wp-session",
+        "/private/tmp/probata-dx-memory-equivalence-missing_seven/session",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-wp-timeout",
+        "5",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-print",
+        "-wp-report-json",
+        "/private/tmp/probata-dx-memory-equivalence-missing_seven/goals.json",
+        "-then",
+        "-load-module",
+        "/private/tmp/probata-dx-memory-equivalence-missing_seven/proof_report.cmxs",
+        "-report",
+        "-report-untried",
+        "-report-csv",
+        "/private/tmp/probata-dx-memory-equivalence-missing_seven/properties.csv"
+      ],
+      "boundary": "Pure equivalence lemma over arbitrary ghost state and all integer arguments; no input requires/model invariants. No C path exists for smoke checks. Missing-seventh-row variant is a separate expected-negative source.",
+      "frozen_input": "prototype/27-proof-semantics/checks/memory_clear_missing_row7.c",
+      "files": [
+        {
+          "path": "/private/tmp/probata-dx-memory-equivalence-missing_seven/manifest.json",
+          "sha256": "54e67701995fe9a617ac87b9730cd4ea616e4043b0946638aa0f0cad4347d7c7"
+        },
+        {
+          "path": "/private/tmp/probata-dx-memory-equivalence-missing_seven/input.c",
+          "sha256": "3aed0e43c0cb31e2611623ff840e6577113cd3e02be5a3a0d9608f9d8cf0502d"
+        },
+        {
+          "path": "/private/tmp/probata-dx-memory-equivalence-missing_seven/frama.log",
+          "sha256": "8390e7e652cde4eac57c9e57b6d4086abc1311907dff5cbfaa9e69ec3429787d"
+        },
+        {
+          "path": "/private/tmp/probata-dx-memory-equivalence-missing_seven/goals.json",
+          "sha256": "a0bd0bc8cd2d4d73702bea98ed6e86826c0d0a11e639047fed15849555e8503d"
+        },
+        {
+          "path": "/private/tmp/probata-dx-memory-equivalence-missing_seven/properties.csv",
+          "sha256": "e80744db37896e1ca09718363ee8d52b497fb4614a19d542a94d10d9eb8f5653"
+        },
+        {
+          "path": "/private/tmp/probata-dx-memory-equivalence-missing_seven/inventory.json",
+          "sha256": "c32095b703d8966fa9ac2bde9d603a6be090b21542c3530a75c579658759f77b"
+        }
+      ]
+    }
+  ],
+  "fault_control_boundary": "Omitting index7/eighth tile leaves equivalence not_proven, not a solver-produced counterexample/refutation.",
+  "contracts_unchanged_except": [
+    "Default-geometry guard on the two 909 checked consequences",
+    "Semantically equivalent memory-clear definition; model/body/source fixtures and every input requires remain unchanged"
+  ]
+}

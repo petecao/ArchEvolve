@@ -1,6 +1,6 @@
 {
   "created": "2026-10-15 ET",
-  "status": "checked consequences; original qualified stall replay pending",
+  "status": "checked default-geometry consequences; 909 full stall replay remains not_proven/memory_domain",
   "boundary": "No whole-model UB/hazard theorem or ticket29 three-form agreement. Explicit input windows remain conditional contract qualifications. C model, source fixture, preconditions and genuine old-value read initialization checks are unchanged.",
   "proofs": [
     {
@@ -629,5 +629,10 @@
     "/private/tmp/probata-dx-store-kernel-check",
     "/private/tmp/probata-dx-store-kernel-check-v2"
   ],
-  "retention": "Raw reports retained outside repository for root/merger review; frozen C theorem inputs and complete compact effect inventory retained here."
+  "retention": "Raw reports retained outside repository for root/merger review; frozen C theorem inputs and complete compact effect inventory retained here.",
+  "checked_geometry": {
+    "DX_NT": 8,
+    "DX_TS": 2
+  },
+  "production_scope": "New consequences are guarded by DX_NT==8 && DX_TS==2; other geometries retain the prior contracts."
 }

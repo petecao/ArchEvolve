@@ -1,0 +1,287 @@
+#define DX_K 32
+#define DX_NT 8
+#define DX_NR 8
+#define DX_NM 8
+#define DX_TS 2
+#include <stdint.h>
+/*@ ghost
+  unsigned int dx_live;
+  int dx_kind[DX_K];
+  int dx_dst1[DX_K];
+  int dx_dst2[DX_K];
+  int dx_src1[DX_K];
+  int dx_src2[DX_K];
+  int dx_cond[DX_K];
+  unsigned int dx_regs_in[DX_K];
+  unsigned int dx_regs_out[DX_K];
+  int dx_reg_a[DX_K];
+  int dx_reg_b[DX_K];
+  int dx_reg_c[DX_K];
+  int dx_region[DX_K];
+  int *dx_base[DX_K];
+  long long dx_lo[DX_K];
+  long long dx_hi[DX_K];
+  long long dx_stride[DX_K];
+  int dx_index[DX_K];
+  unsigned int dx_deps[DX_K];
+  int dx_writes_memory[DX_K];
+  int dx_tile_owner[DX_NT];
+  int dx_tile_writer[DX_NT];
+  unsigned int dx_tile_readers[DX_NT];
+  int dx_reg_owner[DX_NR];
+  int dx_reg_writer[DX_NR];
+  unsigned int dx_reg_named[DX_NR];
+  int dx_count;
+  int dx_store_bound;
+*/
+/* DX100 proof semantics 0.1 (semantics.dx100_bfs_0_1): command kinds and the device state (not ghost).
+   Created: 2026-10-14 ET (Probata proof of concept ticket 27). Read by the C model (model.h, the CBMC form)
+   and by the ACSL contracts (the WP form). Sizes (DX_K, DX_NT, DX_NR, DX_NM, DX_TS) come from the entry's
+   build-constant defaults or --define. */
+#define DX_STREAM_LOAD 1
+#define DX_GATHER 2
+#define DX_RANGE_LOOP 3
+#define DX_ALU_SCALAR 4
+#define DX_STORE_VECTOR 5
+#define DX_LT_OP 13
+
+static int swdb_dx_tile_row_0[DX_TS];
+static int swdb_dx_tile_row_1[DX_TS];
+static int swdb_dx_tile_row_2[DX_TS];
+static int swdb_dx_tile_row_3[DX_TS];
+static int swdb_dx_tile_row_4[DX_TS];
+static int swdb_dx_tile_row_5[DX_TS];
+static int swdb_dx_tile_row_6[DX_TS];
+static int swdb_dx_tile_row_7[DX_TS];
+int * const dx_tile_data[DX_NT] = {swdb_dx_tile_row_0, swdb_dx_tile_row_1, swdb_dx_tile_row_2, swdb_dx_tile_row_3, swdb_dx_tile_row_4, swdb_dx_tile_row_5, swdb_dx_tile_row_6, swdb_dx_tile_row_7};   /* tile elements, CPU-visible through get_cacheable_tile_pointer */
+int dx_tile_size[DX_NT];          /* tile sizes, read by get_tile_size */
+int dx_reg_value[DX_NR];          /* scalar registers */
+int dx_next_tile;                 /* allocation counters (get_new_tile, get_new_reg) */
+int dx_next_reg;
+int dx_regions;                   /* registered memory regions (add_mem_region; region rules: ticket 28) */
+
+/*@
+// DX100 proof semantics 0.1 (semantics.dx100_bfs_0_1): logic definitions over the ghost state (ghost.acsl)
+// and the device state (state.h) that the ACSL call contracts (the WP form) use.
+// Created: 2026-10-14 ET (Probata proof of concept ticket 27). Each definition mirrors the function of the
+// same name in model.h (the CBMC form); ticket 29 checks the forms agree. Masks are integers; bit s is slot s.
+
+predicate dx_has(integer m, integer s) = ((m >> s) & 1) != 0;
+
+// Updated: 2026-10-15 ET. A representation invariant, not a caller-buffer premise.
+// Static C storage starts initialized; model_for draws initialized tile values. Each
+// trusted device contract preserves this invariant and requires initialized source
+// cells before reading ordinary memory. Ticket 29 checks the contract/body agreement.
+predicate dx_state_initialized{L} =
+  (\forall integer t; 0 <= t < DX_NT ==>
+    \initialized(dx_tile_data[t] + (0 .. DX_TS - 1))) &&
+  \initialized(dx_tile_size + (0 .. DX_NT - 1)) &&
+  \initialized(dx_reg_value + (0 .. DX_NR - 1)) &&
+  \initialized(&dx_next_tile) && \initialized(&dx_next_reg) && \initialized(&dx_regions);
+
+// Live slots naming tile t in a counted role (src1, src2, dst1, dst2): what a wait on t covers directly.
+logic integer dx_counted{L}(integer t, integer n) =
+  n <= 0 ? 0 :
+  dx_counted(t, n - 1) |
+    ((dx_has(dx_live, n - 1) && (dx_dst1[n - 1] == t || dx_dst2[n - 1] == t || dx_src1[n - 1] == t ||
+                                 dx_src2[n - 1] == t)) ? (1 << (n - 1)) : 0);
+
+// Live slots naming tile t in any role, condition included: what a command with destination t stalls on.
+logic integer dx_naming{L}(integer t, integer n) =
+  n <= 0 ? 0 :
+  dx_naming(t, n - 1) |
+    ((dx_has(dx_live, n - 1) && (dx_dst1[n - 1] == t || dx_dst2[n - 1] == t || dx_src1[n - 1] == t ||
+                                 dx_src2[n - 1] == t || dx_cond[n - 1] == t)) ? (1 << (n - 1)) : 0);
+
+// Live slots naming register r: what a CPU write of r waits for.
+logic integer dx_reg_users{L}(integer r, integer n) =
+  n <= 0 ? 0 :
+  dx_reg_users(r, n - 1) |
+    ((dx_has(dx_live, n - 1) && dx_has(dx_regs_in[n - 1] | dx_regs_out[n - 1], r)) ? (1 << (n - 1)) : 0);
+
+// The producers of the commands in c, not through a range loop.
+logic integer dx_deps_of{L}(integer c, integer n) =
+  n <= 0 ? 0 :
+  dx_deps_of(c, n - 1) | ((dx_has(c, n - 1) && dx_kind[n - 1] != DX_RANGE_LOOP) ? dx_deps[n - 1] : 0);
+
+// c closed under producers (n rounds; DX_K rounds reach the fixpoint).
+logic integer dx_close{L}(integer c, integer n) =
+  n <= 0 ? (c & dx_live) : ((dx_close(c, n - 1) | dx_deps_of(dx_close(c, n - 1), DX_K)) & dx_live);
+
+// The live set left after covering what a command with destinations d1, d2 stalls on.
+logic integer dx_after_stall{L}(integer d1, integer d2) =
+  dx_live & ~dx_close((d1 >= 0 ? dx_naming(d1, DX_K) : 0) | (d2 >= 0 ? dx_naming(d2, DX_K) : 0), DX_K);
+
+// The ghost links are consistent: writers and readers are live slots, dependencies are live.
+predicate dx_ghost_ok{L} =
+  (\forall integer t; 0 <= t < DX_NT ==>
+     (dx_tile_writer[t] == -1 || (0 <= dx_tile_writer[t] < DX_K && dx_has(dx_live, dx_tile_writer[t]))) &&
+     (dx_tile_readers[t] & ~dx_live) == 0) &&
+  (\forall integer r; 0 <= r < DX_NR ==>
+     dx_reg_writer[r] == -1 || (0 <= dx_reg_writer[r] < DX_K && dx_has(dx_live, dx_reg_writer[r]))) &&
+  (\forall integer s; 0 <= s < DX_K ==> (dx_deps[s] & ~dx_live) == 0);
+
+// Between L1 and L2 only covering happened: the links of the slots still live are kept, the rest dropped.
+predicate dx_links_after_cover{L1, L2} =
+  (\forall integer t; 0 <= t < DX_NT ==>
+     \at(dx_tile_writer[t], L2) == ((\at(dx_tile_writer[t], L1) >= 0 &&
+                                     dx_has(\at(dx_live, L2), \at(dx_tile_writer[t], L1))) ?
+                                    \at(dx_tile_writer[t], L1) : -1) &&
+     \at(dx_tile_readers[t], L2) == (\at(dx_tile_readers[t], L1) & \at(dx_live, L2))) &&
+  (\forall integer r; 0 <= r < DX_NR ==>
+     \at(dx_reg_writer[r], L2) == ((\at(dx_reg_writer[r], L1) >= 0 &&
+                                    dx_has(\at(dx_live, L2), \at(dx_reg_writer[r], L1))) ?
+                                   \at(dx_reg_writer[r], L1) : -1)) &&
+  (\forall integer s; 0 <= s < DX_K ==> \at(dx_deps[s], L2) == (\at(dx_deps[s], L1) & \at(dx_live, L2)));
+
+// A command with these roles may issue now: no register overlap with a command left live (F6), and a
+// free slot (else ghost capacity).
+predicate dx_may_issue{L}(integer d1, integer d2, integer rin, integer rout) =
+  (\forall integer s; 0 <= s < DX_K && dx_has(dx_after_stall(d1, d2), s) ==>
+     ((rout & (dx_regs_in[s] | dx_regs_out[s])) | (rin & dx_regs_out[s])) == 0) &&
+  (\exists integer s; 0 <= s < DX_K && !dx_has(dx_after_stall(d1, d2), s));
+
+// Between L1 and L2 one command issued into a free slot after the dispatch stall, with these roles.
+predicate dx_issued{L1, L2}(integer kind, integer d1, integer d2, integer s1, integer s2, integer c,
+                             integer rin, integer rout) =
+  \exists integer slot; 0 <= slot < DX_K && !dx_has(dx_after_stall{L1}(d1, d2), slot) &&
+    \at(dx_live, L2) == (dx_after_stall{L1}(d1, d2) | (1 << slot)) &&
+    \at(dx_kind[slot], L2) == kind && \at(dx_dst1[slot], L2) == d1 && \at(dx_dst2[slot], L2) == d2 &&
+    \at(dx_src1[slot], L2) == s1 && \at(dx_src2[slot], L2) == s2 && \at(dx_cond[slot], L2) == c &&
+    \at(dx_regs_in[slot], L2) == rin && \at(dx_regs_out[slot], L2) == rout &&
+    (d1 >= 0 ==> \at(dx_tile_writer[d1], L2) == slot) && (d2 >= 0 ==> \at(dx_tile_writer[d2], L2) == slot);
+
+// A CPU read at addr inside tile t is ready; a CPU write is free of uncovered readers and writers.
+predicate dx_read_ready{L}(integer t) = dx_tile_writer[t] == -1;
+predicate dx_write_free{L}(integer t) = dx_tile_writer[t] == -1 && dx_tile_readers[t] == 0;
+
+// The footprint of slot s (no per-element copy): a stream's range, or the addresses its index tile names now.
+predicate dx_in_footprint{L}(integer s, int *addr) =
+  dx_base[s] != \null && \base_addr(addr) == \base_addr(dx_base[s]) &&
+  (dx_kind[s] == DX_STREAM_LOAD ?
+     (\exists integer k; 0 <= k < DX_TS && dx_lo[s] + k * dx_stride[s] < dx_hi[s] &&
+        addr == dx_base[s] + (dx_lo[s] + k * dx_stride[s])) :
+     (\exists integer k; 0 <= k < dx_tile_size[dx_index[s]] && k < DX_TS &&
+        addr == dx_base[s] + (unsigned int)dx_tile_data[dx_index[s]][k]));
+
+// ---- The per-tile view the WP contracts use (ticket 27, WP half). Every fact below follows from the C model;
+// the contracts state these consequences instead of the slot masks, so WP needs little bit reasoning. ----
+
+// The ghost state g0: nothing uncovered (the C model's swdb_dx_init).
+predicate dx_idle{L} =
+  (\forall integer t; 0 <= t < DX_NT ==> dx_tile_writer[t] == -1 && dx_tile_readers[t] == 0) &&
+  (\forall integer r; 0 <= r < DX_NR ==> dx_reg_writer[r] == -1 && dx_reg_named[r] == 0) && dx_count == 0;
+
+// Slot w names tile t in a counted role (src1, src2, dst1, dst2); in any role (condition too).
+predicate dx_counts{L}(integer w, integer t) =
+  0 <= w < DX_K && (dx_dst1[w] == t || dx_dst2[w] == t || dx_src1[w] == t || dx_src2[w] == t);
+predicate dx_names{L}(integer w, integer t) = dx_counts(w, t) || (0 <= w < DX_K && dx_cond[w] == t);
+// 2026-10-15 ET: conservative memory domain until ticket 28. A store needs every pending memory
+// command covered; a load needs every pending store covered. Direct destination-stall coverage is
+// sufficient here; ignoring additional transitive coverage is conservative. Every WP memory command
+// has a destination writer; the bounded model checks all live slots, including destination-less stores.
+predicate dx_memory_clear_after_stall{L}(integer d1, integer d2, integer writing) =
+  \forall integer t; 0 <= t < DX_NT && 0 <= dx_tile_writer[t] < DX_K &&
+    (dx_kind[dx_tile_writer[t]] == DX_STREAM_LOAD || dx_kind[dx_tile_writer[t]] == DX_GATHER ||
+     dx_kind[dx_tile_writer[t]] == DX_STORE_VECTOR) &&
+    !(d1 >= 0 && dx_names(dx_tile_writer[t], d1)) && !(d2 >= 0 && dx_names(dx_tile_writer[t], d2)) ==>
+    writing == 0 && dx_kind[dx_tile_writer[t]] != DX_STORE_VECTOR;
+// Slot w reads tile u as an input (not a range loop: coverage never passes through one).
+predicate dx_feeds{L}(integer w, integer u) =
+  0 <= w < DX_K && dx_kind[w] != DX_RANGE_LOOP && (dx_src1[w] == u || dx_src2[w] == u || dx_cond[w] == u);
+// Slot w names register r.
+predicate dx_uses_reg{L}(integer w, integer r) =
+  0 <= w < DX_K && 0 <= r && (dx_reg_a[w] == r || dx_reg_b[w] == r || dx_reg_c[w] == r);
+
+// A slot's fields are the same at L1 and L2.
+predicate dx_same_slot{L1, L2}(integer w) =
+  \at(dx_kind[w], L1) == \at(dx_kind[w], L2) && \at(dx_dst1[w], L1) == \at(dx_dst1[w], L2) &&
+  \at(dx_dst2[w], L1) == \at(dx_dst2[w], L2) && \at(dx_src1[w], L1) == \at(dx_src1[w], L2) &&
+  \at(dx_src2[w], L1) == \at(dx_src2[w], L2) && \at(dx_cond[w], L1) == \at(dx_cond[w], L2) &&
+  \at(dx_regs_in[w], L1) == \at(dx_regs_in[w], L2) && \at(dx_regs_out[w], L1) == \at(dx_regs_out[w], L2) &&
+  \at(dx_reg_a[w], L1) == \at(dx_reg_a[w], L2) && \at(dx_reg_b[w], L1) == \at(dx_reg_b[w], L2) &&
+  \at(dx_reg_c[w], L1) == \at(dx_reg_c[w], L2) &&
+  \at(dx_base[w], L1) == \at(dx_base[w], L2) && \at(dx_index[w], L1) == \at(dx_index[w], L2) &&
+  \at(dx_lo[w], L1) == \at(dx_lo[w], L2) && \at(dx_hi[w], L1) == \at(dx_hi[w], L2) &&
+  \at(dx_stride[w], L1) == \at(dx_stride[w], L2);
+
+// What survives any call: a free tile or register stays free unless the call names it; an uncovered writer
+// that stays the writer keeps its slot's fields; the count grows by at most `issued`.
+predicate dx_kept{L1, L2}(integer d1, integer d2, integer s1, integer s2, integer c, integer r1, integer r2,
+                          integer r3, integer w1, integer w2, integer issued) =
+  (\forall integer u; 0 <= u < DX_NT && \at(dx_tile_writer[u], L1) == -1 && u != d1 && u != d2 ==>
+     \at(dx_tile_writer[u], L2) == -1) &&
+  (\forall integer u; 0 <= u < DX_NT && \at(dx_tile_readers[u], L1) == 0 && u != s1 && u != s2 && u != c ==>
+     \at(dx_tile_readers[u], L2) == 0) &&
+  (\forall integer u; 0 <= u < DX_NT && \at(dx_tile_writer[u], L2) >= 0 && u != d1 && u != d2 ==>
+     \at(dx_tile_writer[u], L2) == \at(dx_tile_writer[u], L1) && dx_same_slot{L1, L2}(\at(dx_tile_writer[u], L1))) &&
+  (\forall integer r; 0 <= r < DX_NR && \at(dx_reg_writer[r], L1) == -1 && r != w1 && r != w2 ==>
+     \at(dx_reg_writer[r], L2) == -1) &&
+  (\forall integer r; 0 <= r < DX_NR && \at(dx_reg_named[r], L1) == 0 && r != r1 && r != r2 && r != r3 ==>
+     \at(dx_reg_named[r], L2) == 0) &&
+  0 <= \at(dx_count, L2) <= \at(dx_count, L1) + issued;
+
+// Tile u feeds the writer of tile v, and that writer names t in a counted role.
+predicate dx_fed_via{L}(integer u, integer t, integer v) =
+  0 <= v < DX_NT && dx_counts(dx_tile_writer[v], t) && dx_feeds(dx_tile_writer[v], u);
+
+// A wait on tile t covers the writers naming t in a counted role, and (one level) the writers they read from.
+// The second clause names tiles v = 0..7 one by one (no quantifier to instantiate); with more tiles it claims
+// less, never more.
+predicate dx_wait_covers{L1, L2}(integer t) =
+  (\forall integer u; 0 <= u < DX_NT && dx_counts{L1}(\at(dx_tile_writer[u], L1), t) ==>
+     \at(dx_tile_writer[u], L2) == -1) &&
+  (\forall integer u; 0 <= u < DX_NT &&
+     (dx_fed_via{L1}(u, t, 0) || dx_fed_via{L1}(u, t, 1) || dx_fed_via{L1}(u, t, 2) || dx_fed_via{L1}(u, t, 3) ||
+      dx_fed_via{L1}(u, t, 4) || dx_fed_via{L1}(u, t, 5) || dx_fed_via{L1}(u, t, 6) || dx_fed_via{L1}(u, t, 7)) ==>
+     \at(dx_tile_writer[u], L2) == -1);
+
+// Issuing a command with destinations d1, d2 first covers every writer naming them in any role.
+predicate dx_stall_covers{L1, L2}(integer d1, integer d2) =
+  \forall integer u; 0 <= u < DX_NT && u != d1 && u != d2 &&
+    (dx_names{L1}(\at(dx_tile_writer[u], L1), d1) || (d2 >= 0 && dx_names{L1}(\at(dx_tile_writer[u], L1), d2))) ==>
+    \at(dx_tile_writer[u], L2) == -1;
+
+// The new command's slot (the writer of d1) and its fields.
+predicate dx_new_slot{L}(integer kind, integer d1, integer d2, integer s1, integer s2, integer c, integer r1,
+                         integer r2, integer r3) =
+  0 <= dx_tile_writer[d1] < DX_K && (d2 >= 0 ==> dx_tile_writer[d2] == dx_tile_writer[d1]) &&
+  dx_kind[dx_tile_writer[d1]] == kind && dx_dst1[dx_tile_writer[d1]] == d1 && dx_dst2[dx_tile_writer[d1]] == d2 &&
+  dx_src1[dx_tile_writer[d1]] == s1 && dx_src2[dx_tile_writer[d1]] == s2 && dx_cond[dx_tile_writer[d1]] == c &&
+  (r1 >= 0 ==> dx_uses_reg(dx_tile_writer[d1], r1)) && (r2 >= 0 ==> dx_uses_reg(dx_tile_writer[d1], r2)) &&
+  (r3 >= 0 ==> dx_uses_reg(dx_tile_writer[d1], r3));
+
+// A command may issue: no register overlap with an uncovered command (F6: a read register has no uncovered
+// writer, a written one no uncovered user; -1: none), and a free slot.
+predicate dx_issuable{L}(integer r1, integer r2, integer r3, integer w1, integer w2) =
+  (r1 < 0 || dx_reg_writer[r1] == -1) && (r2 < 0 || dx_reg_writer[r2] == -1) && (r3 < 0 || dx_reg_writer[r3] == -1) &&
+  (w1 < 0 || dx_reg_named[w1] == 0) && (w2 < 0 || dx_reg_named[w2] == 0) && 0 <= dx_count < DX_K;
+
+// The probes: a tile element may be read only while its tile has no uncovered writer; written only while the
+// tile has neither an uncovered writer nor an uncovered reader.
+predicate dx_read_ok{L}(int *a) =
+  \forall integer t, k; 0 <= t < DX_NT && 0 <= k < DX_TS && a == &dx_tile_data[t][k] ==> dx_tile_writer[t] == -1;
+predicate dx_write_ok{L}(int *a) =
+  \forall integer t, k; 0 <= t < DX_NT && 0 <= k < DX_TS && a == &dx_tile_data[t][k] ==>
+    dx_tile_writer[t] == -1 && dx_tile_readers[t] == 0;
+
+predicate swdb_diag_memory_tile{L}(integer t, integer d1, integer d2, integer writing) =
+  0 <= t < DX_NT && 0 <= dx_tile_writer[t] < DX_K &&
+    (dx_kind[dx_tile_writer[t]] == DX_STREAM_LOAD || dx_kind[dx_tile_writer[t]] == DX_GATHER ||
+     dx_kind[dx_tile_writer[t]] == DX_STORE_VECTOR) &&
+    !(d1 >= 0 && dx_names(dx_tile_writer[t], d1)) && !(d2 >= 0 && dx_names(dx_tile_writer[t], d2)) ==>
+    writing == 0 && dx_kind[dx_tile_writer[t]] != DX_STORE_VECTOR;
+predicate swdb_diag_memory_finite{L}(integer d1, integer d2, integer writing) =
+  swdb_diag_memory_tile(0, d1, d2, writing) &&
+  swdb_diag_memory_tile(1, d1, d2, writing) &&
+  swdb_diag_memory_tile(2, d1, d2, writing) &&
+  swdb_diag_memory_tile(3, d1, d2, writing) &&
+  swdb_diag_memory_tile(4, d1, d2, writing) &&
+  swdb_diag_memory_tile(5, d1, d2, writing) &&
+  swdb_diag_memory_tile(6, d1, d2, writing);
+lemma swdb_diag_memory_equivalence{L}:
+  \forall integer d1, d2, writing;
+    dx_memory_clear_after_stall{L}(d1, d2, writing) <==>
+    swdb_diag_memory_finite{L}(d1, d2, writing);
+
+*/

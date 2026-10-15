@@ -79,7 +79,7 @@ model:
   logic:
     root: library
     path: proof_semantics/dx100_bfs/logic.acsl
-    sha256: 4f5d4780d7ed6f08ee24ff34391a1d1c8c5edf06c9e9deef014c217f579211d1
+    sha256: 34c9971965b53e04cf5ef2dd66abeaecd4d8772660f47def86158bc47624351d
 clauses: []
 rules:
 - id: operands
@@ -566,9 +566,9 @@ calls:
     \ Post}(dst_tile, -1);\nensures dx_kept{Pre, Post}(dst_tile, -1, src_tile, -1, -1, src_reg, -1, -1, -1, -1,\
     \ 1);\nensures dx_tile_size[dst_tile] == \\old(dx_tile_size[src_tile]);\nensures \\forall integer k; 0 <= k\
     \ < \\old(dx_tile_size[src_tile]) && k < DX_TS ==>\n  dx_tile_data[dst_tile][k] == (\\old(dx_tile_data[src_tile][k])\
-    \ < \\old(dx_reg_value[src_reg]) ? 1 : 0);\nensures memory_domain_preserved: \\forall integer d1, d2, writing;\n\
-    \  -1 <= d1 < DX_NT && -1 <= d2 < DX_NT && 0 <= writing <= 1 &&\n  \\at(dx_memory_clear_after_stall(d1, d2,\
-    \ writing), Pre) ==>\n  dx_memory_clear_after_stall(d1, d2, writing);\nensures dx_state_initialized;\nensures\
+    \ < \\old(dx_reg_value[src_reg]) ? 1 : 0);\nensures memory_domain_preserved: DX_NT == 8 && DX_TS == 2 ==> \\\
+    forall integer d1, d2, writing;\n  -1 <= d1 < DX_NT && -1 <= d2 < DX_NT && 0 <= writing <= 1 &&\n  \\at(dx_memory_clear_after_stall(d1,\
+    \ d2, writing), Pre) ==>\n  dx_memory_clear_after_stall(d1, d2, writing);\nensures dx_state_initialized;\nensures\
     \ \\initialized(dx_tile_data[dst_tile] + (0 .. DX_TS - 1));\n"
 - call: maa_indirect_store_vector
   prototype: void maa_indirect_store_vector(int *data, int idx_tile, int src_tile, int cond_tile, int dst_tile)
@@ -607,10 +607,11 @@ calls:
     ensures dx_kept{Pre, Post}(dst_tile, -1, idx_tile, src_tile, cond_tile, -1, -1, -1, -1, -1, 1);\nensures dx_base[dx_tile_writer[dst_tile]]\
     \ == data && dx_index[dx_tile_writer[dst_tile]] == idx_tile;\nensures dx_tile_size[dst_tile] == \\old(dx_tile_size[idx_tile]);\n\
     ensures \\forall integer k; 0 <= k < \\old(dx_store_bound) && \\at(\\initialized(data + k), Pre) ==>\n  \\initialized(data\
-    \ + k);\nensures host_initialized: \\forall int *cell;\n  \\at(\\valid_read(cell) && \\initialized(cell), Pre)\
-    \ ==> \\initialized(cell);\nensures \\old(dx_tile_size[idx_tile]) >= 1 && (cond_tile == -1 || \\old(dx_tile_data[cond_tile][0])\
-    \ != 0) ==>\n  dx_tile_data[dst_tile][0] == \\old(data[(unsigned int)dx_tile_data[idx_tile][0]]);\nensures dx_state_initialized;\n\
-    ensures \\initialized(dx_tile_data[dst_tile] + (0 .. DX_TS - 1));\n"
+    \ + k);\nensures host_initialized: DX_NT == 8 && DX_TS == 2 ==> \\forall int *cell;\n  \\at(\\valid_read(cell)\
+    \ && \\initialized(cell), Pre) ==> \\initialized(cell);\nensures \\old(dx_tile_size[idx_tile]) >= 1 && (cond_tile\
+    \ == -1 || \\old(dx_tile_data[cond_tile][0]) != 0) ==>\n  dx_tile_data[dst_tile][0] == \\old(data[(unsigned\
+    \ int)dx_tile_data[idx_tile][0]]);\nensures dx_state_initialized;\nensures \\initialized(dx_tile_data[dst_tile]\
+    \ + (0 .. DX_TS - 1));\n"
 queries:
 - query: swdb_dx_in_footprint
   prototype: int swdb_dx_in_footprint(int tile, const int *addr)

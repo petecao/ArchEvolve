@@ -137,7 +137,7 @@ requires op == DX_LT_OP && cond_tile == -1;
 {alu_ens}ensures dx_tile_size[dst_tile] == \\old(dx_tile_size[src_tile]);
 ensures \\forall integer k; 0 <= k < \\old(dx_tile_size[src_tile]) && k < DX_TS ==>
   dx_tile_data[dst_tile][k] == (\\old(dx_tile_data[src_tile][k]) < \\old(dx_reg_value[src_reg]) ? 1 : 0);
-ensures memory_domain_preserved: \\forall integer d1, d2, writing;
+ensures memory_domain_preserved: DX_NT == 8 && DX_TS == 2 ==> \\forall integer d1, d2, writing;
   -1 <= d1 < DX_NT && -1 <= d2 < DX_NT && 0 <= writing <= 1 &&
   \\at(dx_memory_clear_after_stall(d1, d2, writing), Pre) ==>
   dx_memory_clear_after_stall(d1, d2, writing);"""),
@@ -166,7 +166,7 @@ assigns data[0 .. dx_store_bound - 1],
 ensures dx_tile_size[dst_tile] == \\old(dx_tile_size[idx_tile]);
 ensures \\forall integer k; 0 <= k < \\old(dx_store_bound) && \\at(\\initialized(data + k), Pre) ==>
   \\initialized(data + k);
-ensures host_initialized: \\forall int *cell;
+ensures host_initialized: DX_NT == 8 && DX_TS == 2 ==> \\forall int *cell;
   \\at(\\valid_read(cell) && \\initialized(cell), Pre) ==> \\initialized(cell);
 ensures \\old(dx_tile_size[idx_tile]) >= 1 && (cond_tile == -1 || \\old(dx_tile_data[cond_tile][0]) != 0) ==>
   dx_tile_data[dst_tile][0] == \\old(data[(unsigned int)dx_tile_data[idx_tile][0]]);"""),
