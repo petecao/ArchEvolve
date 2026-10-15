@@ -1,7 +1,7 @@
 # 27 — Proof semantics for the BFS read-offload calls
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-15 ET (qualified transitive/stall acceptance; full matrix incomplete); 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-15 ET (resumed exact-source matrix; first diagnostic accepted; full matrix incomplete); 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 22
@@ -524,3 +524,52 @@ The full qualified safe/negative, values/register/range/footprint and capacity
 matrix, plus required verifier agreement, remains incomplete. No current partial
 result closes the ticket. See [accepted stall](../evidence/t27-stall-qualified-accepted-20261015.json)
 and [query evidence](../evidence/wp-footprint-query-20261015.json).
+
+
+## Resumed acceptance — 2026-10-15 ET
+
+Status remains `claimed`. The approved resumed integration is
+`codex/probata-resume-20261015`; ticket work stays isolated on
+`codex/probata-resume-t27` and is published only through the integration ref.
+
+The first original qualified three-read diagnostic at frozen `159d912e` passed:
+**112 ordinary goals Valid + 31 smoke checks passed**, including 18 explicitly
+named initializedness goals and 27 RTE goals. The actual public CLI case took
+595.41 seconds. Setup passed for its single launch. A producer-side readback
+verified 1,719 physical hash references to 868 producer files plus the immutable
+record, with no mismatch. Its proof record has no physical reference into the
+mutable producer checkout. This source precedes the resumed setup hardening;
+it does not close the current-source acceptance matrix.
+
+The coordinator stopped the owned process tree after that complete case while
+the next size case was preparing source. That is a controlled suite cancellation,
+not a suite pass. Raw records and outputs remain on mbit10; the exact outcome,
+source and pins are in
+[`t27-resumed-diagnostic-accepted-20261015.json`](../evidence/t27-resumed-diagnostic-accepted-20261015.json).
+
+The committed runner now defines an exact 62-case `matrix` and four disjoint
+final profiles: `wp-safe` (11), `wp-negative` (13, including the shortened store
+frame), `capacity` (3) and `bounded` (35). Its `first` profile stops naturally
+after the original qualified three-read case. Actual WP acceptance requires a
+launched verifier, passed setup, required RTE/initializedness/filter/cache/smoke
+flags, the semantics pin and rehashed reports. Each unsafe hazard must leave its
+named ordinary probe/call goal open; wrong-value cases must independently leave
+their original ensures open. The outside footprint query may also retain its
+historical failed generated-branch smoke; no negative record is upgraded.
+
+Eleven local citation/inventory/native compiler controls passed in 2.87 seconds.
+The public footprint-query stand-in passed in 202.47 seconds with watchdog
+process-tree access; a preceding sandbox-only sysctl refusal remains retained.
+Those are compiler/admission checks, not new theorem evidence. The revised safe
+and outside-query assertions also pass offline against both immutable historical
+query records, preserving the outside `not_proven/vacuous_pass` outcome.
+
+Assumption: the final matrix uses the composed compiler/setup source and the
+existing 30-second serial solver portfolio. The explicit `q:n`, `base:n` and
+other advertised WP entry windows remain conditional input-contract premises;
+no validity or initializedness fact invents one. General native/ACSL agreement
+and CPU/device memory overlap remain tickets 29 and 28 respectively.
+
+Next acceptance: run all four final profiles on the same frozen composed
+source, retain every ordinary and smoke outcome, audit the producer artifacts,
+then resolve only if every required positive/negative/capacity result is met.

@@ -1,0 +1,191 @@
+{
+  "created": "2026-10-15 ET",
+  "scope": "single actual original qualified three-read diagnostic; full ticket27 acceptance remains incomplete",
+  "source_commit": "159d912ea6688abe4d19dd2980fbf89e70aa5812",
+  "raw_output_retained_remote": "/data/yanruj/EvolveSWDB_runs/probata-resume-t27-diagnostic-20261015-1512",
+  "producer_audit": {
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-t27-diagnostic-20261015-1512/producer-audit.json",
+    "sha256": "44e848b81f3fc99c57191c950330016712ccc156f8aefa8faf92ed4fab55733a",
+    "verdict": "passed",
+    "physical_pins": {
+      "references": 1719,
+      "unique_files": 869,
+      "mismatches": []
+    }
+  },
+  "records": [
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-t27-diagnostic-20261015-1512/pytest/test_wp_proves_every_unit_cbmc0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t185956z.c84047ba.yaml",
+      "sha256": "ecce642b1ef067f61cb4f9b873e2f37c4f9d76fccaf91b0d3cd710e6aed9d4b3",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_three_reads"
+      },
+      "bounds": {
+        "threads": 1,
+        "input_size": "unbounded"
+      },
+      "adapter": "wp",
+      "verdict": "proven",
+      "failure_class": null,
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "fe7ac65b64d2c60d2bc03f08b1e702dee59b41d8079eb89e6cacaba6a43a4e72"
+        },
+        "runs": 1
+      },
+      "ordinary": {
+        "valid": 112,
+        "total": 112
+      },
+      "smoke": {
+        "valid": 31,
+        "total": 31
+      },
+      "open": [],
+      "pins": {
+        "code": {
+          "id": "dx100-fixtures.candidate-1",
+          "sha256": "8a1f26596a62c9aa392745237ccf16359765f996ed790e2502806df4021d2c1a"
+        },
+        "contract": {
+          "id": "contract.fixture_dx_three_reads",
+          "sha256": "b6b1bc797fc5a00e9495e481acebcdd9372a3d76125682d7a42d4bc6452fc4ad"
+        },
+        "baseline_function": {
+          "id": "test-source",
+          "function": "dxf_three_reads",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "id": "semantics.dx100_bfs_0_1",
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "54f6b40c0bde5088004527a9bc26422cc49ae11aaac528e6b2409d0471d7e5f7"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "build_constants": [],
+        "c_lowering": {
+          "id": "dxf_three_reads.c",
+          "sha256": "82707411a43ab6c243da1249617ea56bfef8e9b84395d181abbe8262c1f65597"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "helper_window_check": {
+          "id": "swdb-helper-windows-1",
+          "sha256": "6ab445ad4ac32a1b72899f6debcf445c8afb7cd29d21503f21a2ab4a4bc145d5"
+        },
+        "helper_window_certificate": {
+          "id": "swdb-helper-window-certificate-1",
+          "sha256": "2a0e2ebcba99b5433696e93e31dfb9d29c60c48544f506ce3b89e6a54d417cd0"
+        },
+        "helper_original_lowering": {
+          "id": "dxf_three_reads.c",
+          "sha256": "159ae2a4ed52566dd572f362ade5c7a14c464112017a7292326790fe962f73bf"
+        },
+        "helper_original_source": {
+          "id": "bfs.cc",
+          "sha256": "1548c3422a56f6a5ba1233436cc5e33a887f2e4ea0b16b4d05e36a0ebd33338c"
+        },
+        "helper_view_source": {
+          "id": "source.cc",
+          "sha256": "be49f8cab0e795887d887ca69ba22700c1b7aaacb02b586fcd90f04b6e4379c2"
+        },
+        "nested_read_check": {
+          "id": "swdb-nested-entry-reads-1",
+          "sha256": "f194cc302cb20b2a4c5881699d756e0a7c301ad937098e0f244d0b6048cfbc11"
+        },
+        "nested_read_certificate": {
+          "id": "swdb-nested-read-certificate-1",
+          "sha256": "eeb168a04837ca53708c9ffa5b5e97e783cac532c8835bef0b963d5ec9a9c5ac"
+        },
+        "nested_read_original_lowering": {
+          "id": "dxf_three_reads.c",
+          "sha256": "2e4b87b898b73a4e2616d1321664d81b8584472260c1ce7256525092d5861327"
+        },
+        "nested_read_original_source": {
+          "id": "source.cc",
+          "sha256": "be49f8cab0e795887d887ca69ba22700c1b7aaacb02b586fcd90f04b6e4379c2"
+        },
+        "nested_read_view_source": {
+          "id": "source.cc",
+          "sha256": "7dd2fd098830e9d505fbb285e8c46f1a425a8e6d5f12f13a29be0ae1cdc3931d"
+        }
+      },
+      "flags": [
+        "-wp",
+        "-wp-rte",
+        "-wp-cache",
+        "none",
+        "-wp-model",
+        "+real",
+        "-wp-par",
+        "1",
+        "-machdep",
+        "x86_64",
+        "-rte-initialized",
+        "@all",
+        "-wp-no-filter-init",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-machdep",
+        "x86_64",
+        "-wp-timeout",
+        "30",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-fct=dxf_three_reads"
+      ],
+      "initialized_goals": 18,
+      "rte_goals": 27,
+      "job": {
+        "adapter": "wp",
+        "host": "swdb-fixture-host",
+        "worker_core": "unpinned",
+        "wall_seconds": 573.194445,
+        "cpu_seconds": 608.292586,
+        "batch_load": {
+          "start": 1.844,
+          "end": 2.709
+        },
+        "peak_rss_bytes": 1757978624,
+        "batch": "batch.proof.dx100-fixtures.candidate-1.20261015t185956z.c84047ba",
+        "position": 1
+      }
+    }
+  ],
+  "boundary": "The159d912 source predates final setup hardening; no current-source acceptance, whole model agreement or ticket closure is claimed.",
+  "input_boundary": "q:n and base:n are explicit typed entry-window input-contract premises; ordinary RTE and initializedness remain obligations.",
+  "controlled_stop": {
+    "created": "2026-10-15 15:10 ET",
+    "reason": "completed first exact-source diagnostic; avoid continuing obsolete setup identity; resume full matrix at composed source71771f09",
+    "completed_tests": [
+      "tests/test_proof_semantics.py::test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics[three_reads]"
+    ],
+    "next_test_interrupted": "dxf_size source preparation",
+    "root_pid": 3640417,
+    "owned_pid_start_tokens": {
+      "3640417": "659264314",
+      "3640452": "659264325",
+      "3644934": "659330535"
+    },
+    "suite_outcome": "controlled cancellation, not suite success"
+  }
+}
