@@ -1,8 +1,8 @@
 # Method20 prospective checkpoint
 
-Created: 2026-10-15 ET. Updated: 2026-10-15 ET. **The resumed run20 aborted
-during its baseline before any provider call; resource-guard re-review and a new
-prospective freeze remain pending.** At the earlier closeout checkpoint this
+Created: 2026-10-15 ET. Updated: 2026-10-15 ET. **Runs20/21 are harness-aborted,
+with no qualifying proof. The scoped tool-approval correction awaits independent
+review and a new prospective freeze.** At the earlier closeout checkpoint this
 method was unlaunched. Historical method19 source `669df70f` stays unchanged.
 
 The new opt-in `--design-probes` requires the strict `--staged-induction`
@@ -93,3 +93,32 @@ it does not create atomic or hostile-process containment. Trusted descendants
 still must preserve their marker. Both newly added CLI controls failed before
 their respective fixes and pass afterward. Independent re-review must assess the
 composed revision before any fresh freeze or actual evaluation.
+
+## Run21 approval-route abort and scoped correction — 2026-10-15 ET
+
+Run21 started15:23:51ET on clean `7408be92`. Its fresh baseline completed in
+14.93counted minutes:254ordinary goals,103timeouts,139/139smoke checks passed.
+Five mechanical seeds then left39/209ordinary goals open at17.44minutes. The
+fresh provider prompt and live argv independently matched their approved inputs.
+The actual frame-seed parser was AppleClang21 from the driver PATH, pinned before
+seed use; it only extracts syntactic writes. WP independently checks every seed.
+This does not establish production LLVM22 lowering or compiler agreement.
+
+The CLI then refused `record_design` because it required approval under a
+never-prompt policy. No design record or promoted agent hint exists; existing
+read-only diagnostic calls did execute. The driver/provider were stopped and all
+owned processes/leases checked. Completed baseline/seeds and the refused calls
+remain in [separate aborted-run evidence](../../evidence/t07-method20-approval-aborted-20261015.json).
+That baseline, conversation and clock must not enter a new counted run.
+
+The prospective correction explicitly sets
+`mcp_servers.probata.tools.record_design.approval_mode="approve"` and the same
+scoped override for `focused_probe`, only when method20 is enabled. It retains
+truthful tool annotations, the read-only sandbox, disabled shell and all proof
+guards. This is the documented per-tool option in the
+[official Codex configuration reference](https://learn.chatgpt.com/docs/config-file/config-reference).
+A neutral actual CLI probe executed both toy tools with these settings; it had no
+BFS source, proof hints or verifier. A deterministic external-CLI argv control
+failed before the correction and passes for new/resumed method20 calls afterward;
+legacy calls acquire no new approval. Independent re-review precedes the next
+fresh freeze. The scientific acceptance criteria and budgets remain unchanged.
