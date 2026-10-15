@@ -283,3 +283,11 @@ confirm the option is separate from the default WP RTE checks.
 Raw CBMC initializedness checks are a separate ongoing audit; this WP fix establishes
 no initializedness guarantee for bounded proofs. Ticket 24 remains claimed until its
 full current-policy construct acceptance completes.
+
+Validation: the unused-local public control failed before the policy (WP reported
+proven), then passed after it. The complete focused policy/formal-frame/report suite
+passed **121 tests in 114.92 s**, two workers, isolated retained basetemp. Six actual
+WP controls include both initialized positives and all four uninitialized negatives.
+Logs and incremental report: `/private/tmp/probata-init-final.{log,jsonl}`; initial
+reproduction: `/private/tmp/probata-init-red.{log,jsonl}`. No full construct-group or
+full-catalog acceptance is inferred from this focused suite.
