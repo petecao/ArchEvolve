@@ -136,7 +136,17 @@ hints to fresh scalar witnesses and the checked `dx_store_bound` witness; direct
 model writes, pointer/indexed writes, shadowing, calls, mutation expressions and
 macro expansion fail closed before hint goal generation and before final WP.
 Non-semantics hint behavior is unchanged. The dedicated public CLI adversarial and
-accepted-witness controls are being completed before the final identity is pinned.
+accepted-witness controls passed: **12 passed in 95.52 s**, using the final checker
+identity below. The macro control first reproduced an accepted hint containing a
+model-state mutation; the guarded run refuses it before any WP process. The log is
+`/private/tmp/probata-t36-ghost-final.jsonl`. Ticket 27's prover-free hint-generation
+fix is integrated; the final WP portfolio remains unchanged.
+
+Both `proof_setup_check` and `verdict_reading` have version `1` and content hash
+`7a303ac2a9714010ea42f29964e81b62b7ae6a9bca0fb21318deb76974e6b9cc`.
+Integration was merged before handoff; no source changes followed the final guard
+validation. The earlier real fact controls exercised the same report reader; the
+subsequent checker changes only added the semantics hint guard.
 
 Status remains `claimed`: ticket 27's final real WP semantics acceptance is still a
 required dependency. This checkpoint does not assert that all ticket-27 units have
