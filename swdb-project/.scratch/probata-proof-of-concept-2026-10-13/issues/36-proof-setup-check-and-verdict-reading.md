@@ -368,3 +368,32 @@ new input premises, and refusal after renderer guard deletion. Original safe/sta
 regenerate and recertify. The two actual at WP controls were excluded and remain pending; no
 generic member-domain admission or ticket closure is claimed. Evidence:
 `evidence/owner-at-source-binding-merge-20261015.json`.
+
+### DX100 direct-call final hardening — 2026-10-15 ET
+
+The full original batch finished **13 passed / 1 failed in 1440.90s**. The failed legal offset-gather
+proof correctly remained `vacuous_pass`: generic normalization of literal `+1` introduced an
+`if (1 == 0)` branch and strict smoke detected it. The repair folds only exact AST integer literals:
+zero returns the base and nonzero retains the original arithmetic. All checked numerical bounds
+remain; no smoke result is waived.
+
+Every audited imported DX100 call now receives the same full-TU global binding, exact prototype and
+model-policy check, including scalar register commands. Templates and source-defined scalar commands
+cannot borrow the hardware contract. Retained source declarations in the reserved `dx_`/`DX_`
+proof-state namespace refuse before a generated guard can bind to shadow state. Host footprints,
+tile-pointer producers and every live policy are independently regenerated before launch.
+
+Final hardening passed **9/9 in 353.90s**, including the actual repaired offset-gather proof and
+eight prelaunch binding/alias/state-shadow refusals. The same final source then passed both actual
+stream and three-read proofs: **2/2 in 406.20s**, peak **3,417,423,872 bytes**, no timeout or OOM.
+The stream has 31 ordinary Valid goals and 13 passing smoke goals; three-read has 87 ordinary Valid
+goals and 31 passing smoke goals. The repaired gather has 45 ordinary Valid goals and 17 passing
+smoke goals. Component/source-span checks pass **19/19 in 1.28s**. All 25 preserved proof records'
+listed artifact hashes were independently checked while producing
+`evidence/wp-dx-call-windows-20261015.json`, which retains the original strict-smoke failure.
+
+This checkpoint covers direct audited calls under explicit typed entry-window input-contract
+premises. The original pointer-helper case still refuses; the separately staged checked contextual
+helper module has not been wired into the adapter. Pointer region/query calls without a checked
+footprint policy and generic imported domains remain unsupported. Ticket 36 remains **claimed**,
+with ticket 27 and final combined method/acceptance still open. Immutable method files are unchanged.
