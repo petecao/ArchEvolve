@@ -140,6 +140,15 @@ class ScriptedAdapter:
             raise Failure(f"adapter script {script} must be a YAML mapping")
         self.source = Path(script)
 
+    def prepare_setup(self, job):
+        """Fixture-only prepared files, e.g. a preexisting WP session negative control."""
+        for name, text in (self.script.get("setup") or {}).get("work_files", {}).items():
+            path = Path(job.scratch) / name
+            if Path(name).is_absolute() or not path.resolve().is_relative_to(Path(job.scratch).resolve()):
+                raise AdapterError("scripted setup work_files must stay inside the job scratch directory")
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(text)
+
     def run(self, job):
         (job.scratch / "scripted-work.txt").write_text(f"{job.unit.candidate} {job.unit.function}\n")
         bounds = self.script.get("bounds") or (dict(job.bounds) if job.bounds else None)
@@ -153,19 +162,30 @@ class ScriptedAdapter:
                     log.write(f"wall budget of {job.budget_seconds} s spent\n".encode())
                     return Verdict(verdict="not_proven", bounds=bounds, failure_class="timeout",
                                    assumptions=list(self.script.get("assumptions") or []))
-        outcome = None
+        outcome, report_files = None, []
         if self.script.get("wp_reports"):
             from swdb import proof_setup
-            reports = self.script["wp_reports"]
+            reports = dict(self.script["wp_reports"])
+            for key in ("goals", "properties", "inventory"):
+                if reports.get(key) and not Path(reports[key]).is_absolute():
+                    reports[key] = str(job.scratch / reports[key])
+            saved = Path(job.log).parent / "scripted-wp"
+            saved.mkdir(exist_ok=True)
+            for key in ("goals", "properties", "inventory"):
+                if reports.get(key) and Path(reports[key]).is_file():
+                    target = saved / Path(reports[key]).name
+                    shutil.copyfile(reports[key], target)
+                    reports[key] = str(target)
+                    report_files.append((f"wp_{key}", target))
             outcome = proof_setup.read_wp_reports(reports["goals"], reports["properties"], reports.get("inventory"),
                                                    reports.get("extern_contracts"), reports.get("functions"))
         verdict = Verdict(verdict=outcome["verdict"] if outcome else self.script.get("verdict"), bounds=bounds,
-                          assumptions=list(self.script.get("assumptions") or []),
+                          assumptions=list(self.script.get("assumptions") or []) + (outcome.get("assumptions", []) if outcome else []),
                           counterexample=self.script.get("counterexample"),
                           failure_class=outcome["failure_class"] if outcome else self.script.get("failure_class"),
                           unreplayed_counterexample=self.script.get("unreplayed_counterexample"),
                           tools=tuple(self.script.get("tools") or ()),
-                          peak_rss_bytes=self.script.get("peak_rss_bytes"),
+                          peak_rss_bytes=self.script.get("peak_rss_bytes"), reports=tuple(report_files),
                           record_fields={"goals": outcome["goals"], "verdict_reading": outcome["reading"],
                                          "unproven_properties": outcome["unproven"]} if outcome else None)
         with open(job.log, "a", encoding="utf-8") as log:
@@ -471,8 +491,18 @@ def _run_job(rid, unit, pins, adapter, runs, place, failure_classes, method=None
         try:
             with watch:
                 from swdb import proof_setup
+                if hasattr(adapter, "prepare_setup"):
+                    adapter.prepare_setup(job)
                 setup_check = proof_setup.begin(job, adapter, pins, method)
                 verdict = adapter.run(job)
+                if setup_check["check"] != proof_setup.identity()["proof_setup_check"]:
+                    raise AdapterError("proof setup check [check_changed]: the checker source changed during the run")
+                if getattr(adapter, "real", False) and verdict.verdict in ("proven", "refuted") and not setup_check["runs"]:
+                    raise AdapterError("proof setup check [missing_prelaunch]: a real verdict has no generated-input check")
+                if adapter.name == "wp" and verdict.verdict == "proven":
+                    reading = (verdict.record_fields or {}).get("verdict_reading") or {}
+                    if reading.get("check") != proof_setup.identity()["verdict_reading"] or reading.get("verdict") != "proven":
+                        raise AdapterError("verdict reading [missing_attestation]: a WP proof needs the current fresh-run reading")
         except AdapterError as exc:
             raise Failure(f"adapter {adapter.name}: {exc}. Adapter output: {job.log}") from None
         finally:

@@ -1,5 +1,7 @@
 # Proof records (`kind: proof`)
 
+Updated: 2026-10-15 ET, ticket 36: [proof setup and fresh WP verdict reading](format-v0.4-proof-setup.md).
+
 Created: 2026-10-14 (Eastern Time), Probata proof of concept ticket 04 (the proof record tracer).
 Updated: 2026-10-14 ET, ticket 11: batches, skips, the failure-class vocabulary, the method-version pin
 ([format-v0.4-method-version.md](format-v0.4-method-version.md)); 2026-10-14 02:15 ET, ticket 10: the
