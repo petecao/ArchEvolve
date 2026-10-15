@@ -80,6 +80,7 @@ class Job:
     scratch: Path = None
     log: Path = None
     bounds: dict = None            # ticket 14: the bounds the job runs at (the gate's minimum bounds), if named
+    setup: dict = field(default_factory=dict, compare=False)  # ticket 36: planned setup and prelaunch checks
     budget_seconds: float = None   # ticket 14: the job's wall budget; a job that runs out is not proven, timeout
 
 
@@ -152,13 +153,21 @@ class ScriptedAdapter:
                     log.write(f"wall budget of {job.budget_seconds} s spent\n".encode())
                     return Verdict(verdict="not_proven", bounds=bounds, failure_class="timeout",
                                    assumptions=list(self.script.get("assumptions") or []))
-        verdict = Verdict(verdict=self.script.get("verdict"), bounds=bounds,
+        outcome = None
+        if self.script.get("wp_reports"):
+            from swdb import proof_setup
+            reports = self.script["wp_reports"]
+            outcome = proof_setup.read_wp_reports(reports["goals"], reports["properties"], reports.get("inventory"),
+                                                   reports.get("extern_contracts"), reports.get("functions"))
+        verdict = Verdict(verdict=outcome["verdict"] if outcome else self.script.get("verdict"), bounds=bounds,
                           assumptions=list(self.script.get("assumptions") or []),
                           counterexample=self.script.get("counterexample"),
-                          failure_class=self.script.get("failure_class"),
+                          failure_class=outcome["failure_class"] if outcome else self.script.get("failure_class"),
                           unreplayed_counterexample=self.script.get("unreplayed_counterexample"),
                           tools=tuple(self.script.get("tools") or ()),
-                          peak_rss_bytes=self.script.get("peak_rss_bytes"))
+                          peak_rss_bytes=self.script.get("peak_rss_bytes"),
+                          record_fields={"goals": outcome["goals"], "verdict_reading": outcome["reading"],
+                                         "unproven_properties": outcome["unproven"]} if outcome else None)
         with open(job.log, "a", encoding="utf-8") as log:
             log.write(f"adapter: scripted\nscript: {self.source}\n"
                       f"unit: {job.unit.candidate} {job.unit.function}\n"
@@ -169,7 +178,7 @@ class ScriptedAdapter:
 
 ADAPTERS = {"scripted": ScriptedAdapter}
 RECORD_FIELDS = ("goals", "unproven_properties", "settings",     # ticket 21: what a real adapter may add
-                 "hint_set", "hint_check")                       # ticket 35: the hint set and its check result
+                 "hint_set", "hint_check", "verdict_reading")                       # ticket 35: the hint set and its check result
 
 
 # --- swdb prove -----------------------------------------------------------------------
@@ -461,6 +470,8 @@ def _run_job(rid, unit, pins, adapter, runs, place, failure_classes, method=None
         watch = _worker_watch()
         try:
             with watch:
+                from swdb import proof_setup
+                setup_check = proof_setup.begin(job, adapter, pins, method)
                 verdict = adapter.run(job)
         except AdapterError as exc:
             raise Failure(f"adapter {adapter.name}: {exc}. Adapter output: {job.log}") from None
@@ -486,6 +497,7 @@ def _run_job(rid, unit, pins, adapter, runs, place, failure_classes, method=None
                       f"Adapter output: {job.log}")
     record = _head(rid, unit, f"Written by swdb prove with the {adapter.name} adapter.")
     record["verdict"] = verdict.verdict
+    record["proof_setup_check"] = setup_check
     if verdict.counterexample:
         record["counterexample"] = verdict.counterexample
     if verdict.failure_class:

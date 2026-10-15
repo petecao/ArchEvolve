@@ -41,6 +41,58 @@
         }
       ]
     },
+    "proof_setup_check": {
+      "type": "object",
+      "description": "Ticket36 versioned prelaunch check, frozen method and input hashes.",
+      "required": [
+        "check",
+        "verdict",
+        "method_version",
+        "hashes",
+        "runs"
+      ],
+      "properties": {
+        "check": {
+          "type": "object"
+        },
+        "verdict": {
+          "const": "passed"
+        },
+        "method_version": {
+          "$ref": "#/$defs/pin"
+        },
+        "hashes": {
+          "type": "object"
+        },
+        "runs": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "verdict_reading": {
+      "type": "object",
+      "description": "Ticket36 fresh-run reader version and outcome.",
+      "required": [
+        "check",
+        "verdict"
+      ],
+      "properties": {
+        "check": {
+          "type": "object"
+        },
+        "verdict": {
+          "enum": [
+            "proven",
+            "not_proven"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "route": {
       "type": "string",
       "enum": ["route_1", "route_3", "bounded_direct"],
