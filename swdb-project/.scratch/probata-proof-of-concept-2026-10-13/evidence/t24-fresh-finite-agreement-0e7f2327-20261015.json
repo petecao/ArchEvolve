@@ -1,0 +1,390 @@
+{
+  "created": "2026-10-15 ET",
+  "kind": "fresh_finite_native_cpp_c_agreement",
+  "source_commit": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+  "formal_verifier_launched": false,
+  "scope": "finite observed IEEE/native outputs only; no formal C++ theorem, WP-view agreement or proof verdict",
+  "complete": true,
+  "success": true,
+  "accepted_engine_unchanged_since": "e48a302e0081ce46d8c2f865568951913833d276",
+  "engine": {
+    "path": "/Users/yanrujhou/.codex/worktrees/probata-t24-agreement-0e7f/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/t24-finite-agreement.py",
+    "sha256": "7948aefc4b5d9afbd07e65b90282630dd209edf0aba07f9c553efe7fa37a3f8e"
+  },
+  "native_language_modes": {
+    "c": "gnu11",
+    "cxx": "gnu++17"
+  },
+  "profile_native_policy": {
+    "flags": [
+      "-DSWDB_NATIVE",
+      "-DSWDB_DIFFERENTIAL",
+      "-O0",
+      "-fwrapv",
+      "-w",
+      "-fsanitize=address,undefined",
+      "-fno-sanitize-recover=all"
+    ],
+    "known_undefined": "explicit source-specific exclusions remain in requested domain",
+    "openmp_threads": 1,
+    "sampling": "ticket22 _domain seed22",
+    "signed_overflow": "-fwrapv retained from ticket22; known original overflow excluded",
+    "stubs": false,
+    "system_libraries": "link-time SDK stubs and physical libraries hashed; dyld-cache runtime bytes are not independently hashed"
+  },
+  "agreement_manifest": {
+    "path": "/private/tmp/probata-agreement-0e7f2327-20261015/native/agreement.json",
+    "sha256": "0d037c05a4e8ffebea483750dafd3c40fddf5d4aec861f77802bcaf14bc28303"
+  },
+  "runtime_provenance": {
+    "path": "/private/tmp/probata-agreement-0e7f2327-20261015/runtime-provenance.json",
+    "sha256": "3ba81e6c6bec0e647c7ae701ca8c9563a609c46ede05098a0d2b01d935b7b452"
+  },
+  "source_manifest": {
+    "path": "/private/tmp/probata-agreement-0e7f2327-20261015/source-manifest.json",
+    "sha256": "b44194e504198ecb285c8226f6e9743d7ff785d6bbbd57fa0f0d04761164739c",
+    "tracked_files": 8550
+  },
+  "source_after": {
+    "path": "/private/tmp/probata-agreement-0e7f2327-20261015/source-after.json",
+    "sha256": "987814a722462efd1380274bb3b973a02060d63ac4fd59f214ccd2f48d4cb8d6"
+  },
+  "command": {
+    "path": "/private/tmp/probata-agreement-0e7f2327-20261015/command.json",
+    "sha256": "8ab089e7486ef85f2a3b497e271bf79b24bb261019d483c0d22faafe181b3f1e"
+  },
+  "resources": {
+    "created": "2026-10-15 ET",
+    "rss_scope": "whole worker including provenance bootstrap and native/compiler descendants; trusted monitor excluded",
+    "resources": {
+      "exit_code": 0,
+      "peak_rss_bytes": 1310572544,
+      "out_of_memory": false,
+      "timed_out": false,
+      "wall_seconds": 60.57013262499822,
+      "cpu_seconds": 51.149631
+    },
+    "output_monitor": {
+      "peak_retained_bytes": 349092253,
+      "budget_bytes": 2147483648,
+      "tripped": false
+    }
+  },
+  "rows": [
+    {
+      "case": "safe",
+      "comparison": "agree_on_defined_inputs",
+      "defined_comparisons": 16658,
+      "executed_runs_per_side": 20000,
+      "group": "classes",
+      "known_undefined_exclusions": {
+        "reasons": [],
+        "runs": 0
+      },
+      "precondition_excluded_runs": 3342,
+      "sanitizer_asymmetry": [],
+      "undefined_behavior_runs": 0
+    },
+    {
+      "case": "seeded",
+      "comparison": "agree_on_defined_inputs",
+      "defined_comparisons": 16658,
+      "executed_runs_per_side": 20000,
+      "group": "classes",
+      "known_undefined_exclusions": {
+        "reasons": [],
+        "runs": 0
+      },
+      "precondition_excluded_runs": 3342,
+      "sanitizer_asymmetry": [],
+      "undefined_behavior_runs": 0
+    },
+    {
+      "case": "safe",
+      "comparison": "agree_on_defined_inputs",
+      "defined_comparisons": 25,
+      "executed_runs_per_side": 49,
+      "group": "templates",
+      "known_undefined_exclusions": {
+        "reasons": [],
+        "runs": 0
+      },
+      "precondition_excluded_runs": 24,
+      "sanitizer_asymmetry": [],
+      "undefined_behavior_runs": 0
+    },
+    {
+      "case": "seeded",
+      "comparison": "agree_on_defined_inputs",
+      "defined_comparisons": 25,
+      "executed_runs_per_side": 49,
+      "group": "templates",
+      "known_undefined_exclusions": {
+        "reasons": [],
+        "runs": 0
+      },
+      "precondition_excluded_runs": 24,
+      "sanitizer_asymmetry": [],
+      "undefined_behavior_runs": 0
+    },
+    {
+      "case": "safe",
+      "comparison": "agree_on_defined_inputs",
+      "defined_comparisons": 500,
+      "executed_runs_per_side": 714,
+      "group": "new_array",
+      "known_undefined_exclusions": {
+        "reasons": [],
+        "runs": 0
+      },
+      "precondition_excluded_runs": 214,
+      "sanitizer_asymmetry": [],
+      "undefined_behavior_runs": 0
+    },
+    {
+      "case": "seeded",
+      "comparison": "excluded_undefined_only",
+      "defined_comparisons": 0,
+      "executed_runs_per_side": 214,
+      "group": "new_array",
+      "known_undefined_exclusions": {
+        "reasons": [
+          "original seeded i<=n writes buf[n] outside new int[n]"
+        ],
+        "runs": 500
+      },
+      "precondition_excluded_runs": 214,
+      "sanitizer_asymmetry": [],
+      "undefined_behavior_runs": 500
+    },
+    {
+      "case": "safe",
+      "comparison": "agree_on_defined_inputs",
+      "defined_comparisons": 8360,
+      "executed_runs_per_side": 20000,
+      "group": "std_models",
+      "known_undefined_exclusions": {
+        "reasons": [],
+        "runs": 0
+      },
+      "precondition_excluded_runs": 11640,
+      "sanitizer_asymmetry": [],
+      "undefined_behavior_runs": 0
+    },
+    {
+      "case": "seeded",
+      "comparison": "agree_on_defined_inputs",
+      "defined_comparisons": 6658,
+      "executed_runs_per_side": 18298,
+      "group": "std_models",
+      "known_undefined_exclusions": {
+        "reasons": [
+          "original seeded std::copy forms a-1 outside its array object"
+        ],
+        "runs": 1702
+      },
+      "precondition_excluded_runs": 11640,
+      "sanitizer_asymmetry": [],
+      "undefined_behavior_runs": 1702
+    },
+    {
+      "case": "safe",
+      "comparison": "agree_on_defined_inputs",
+      "defined_comparisons": 19783,
+      "executed_runs_per_side": 20000,
+      "group": "omp",
+      "known_undefined_exclusions": {
+        "reasons": [],
+        "runs": 0
+      },
+      "precondition_excluded_runs": 217,
+      "sanitizer_asymmetry": [],
+      "undefined_behavior_runs": 0
+    },
+    {
+      "case": "seeded",
+      "comparison": "agree_on_defined_inputs",
+      "defined_comparisons": 19783,
+      "executed_runs_per_side": 20000,
+      "group": "omp",
+      "known_undefined_exclusions": {
+        "reasons": [],
+        "runs": 0
+      },
+      "precondition_excluded_runs": 217,
+      "sanitizer_asymmetry": [],
+      "undefined_behavior_runs": 0
+    },
+    {
+      "case": "safe",
+      "comparison": "agree_on_defined_inputs",
+      "defined_comparisons": 125,
+      "executed_runs_per_side": 175,
+      "group": "atomics",
+      "known_undefined_exclusions": {
+        "reasons": [],
+        "runs": 0
+      },
+      "precondition_excluded_runs": 50,
+      "sanitizer_asymmetry": [],
+      "undefined_behavior_runs": 0
+    },
+    {
+      "case": "seeded",
+      "comparison": "agree_on_defined_inputs",
+      "defined_comparisons": 125,
+      "executed_runs_per_side": 175,
+      "group": "atomics",
+      "known_undefined_exclusions": {
+        "reasons": [],
+        "runs": 0
+      },
+      "precondition_excluded_runs": 50,
+      "sanitizer_asymmetry": [],
+      "undefined_behavior_runs": 0
+    },
+    {
+      "case": "safe",
+      "comparison": "agree_on_defined_inputs",
+      "defined_comparisons": 11909,
+      "executed_runs_per_side": 20000,
+      "group": "floats",
+      "known_undefined_exclusions": {
+        "reasons": [],
+        "runs": 0
+      },
+      "precondition_excluded_runs": 8091,
+      "sanitizer_asymmetry": [],
+      "undefined_behavior_runs": 0
+    },
+    {
+      "case": "seeded",
+      "comparison": "agree_on_defined_inputs",
+      "defined_comparisons": 11909,
+      "executed_runs_per_side": 20000,
+      "group": "floats",
+      "known_undefined_exclusions": {
+        "reasons": [],
+        "runs": 0
+      },
+      "precondition_excluded_runs": 8091,
+      "sanitizer_asymmetry": [],
+      "undefined_behavior_runs": 0
+    },
+    {
+      "case": "safe",
+      "comparison": "agree_on_defined_inputs",
+      "defined_comparisons": 3,
+      "executed_runs_per_side": 7,
+      "group": "dxc_summary",
+      "known_undefined_exclusions": {
+        "reasons": [],
+        "runs": 0
+      },
+      "precondition_excluded_runs": 4,
+      "sanitizer_asymmetry": [],
+      "undefined_behavior_runs": 0
+    },
+    {
+      "case": "seeded",
+      "comparison": "agree_on_defined_inputs",
+      "defined_comparisons": 3,
+      "executed_runs_per_side": 7,
+      "group": "dxc_summary",
+      "known_undefined_exclusions": {
+        "reasons": [],
+        "runs": 0
+      },
+      "precondition_excluded_runs": 4,
+      "sanitizer_asymmetry": [],
+      "undefined_behavior_runs": 0
+    },
+    {
+      "case": "safe",
+      "comparison": "agree_on_defined_inputs",
+      "defined_comparisons": 35,
+      "executed_runs_per_side": 35,
+      "group": "maa_summary",
+      "known_undefined_exclusions": {
+        "reasons": [],
+        "runs": 0
+      },
+      "precondition_excluded_runs": 0,
+      "sanitizer_asymmetry": [],
+      "undefined_behavior_runs": 0
+    },
+    {
+      "case": "seeded",
+      "comparison": "agree_on_defined_inputs",
+      "defined_comparisons": 30,
+      "executed_runs_per_side": 30,
+      "group": "maa_summary",
+      "known_undefined_exclusions": {
+        "reasons": [
+          "original seeded n+1 overflows signed int (excluded despite -fwrapv)"
+        ],
+        "runs": 5
+      },
+      "precondition_excluded_runs": 0,
+      "sanitizer_asymmetry": [],
+      "undefined_behavior_runs": 5
+    }
+  ],
+  "totals": {
+    "defined_comparisons": 112589,
+    "precondition_excluded_runs": 47164,
+    "undefined_behavior_runs": 2207
+  },
+  "physical_reference_self_audit": {
+    "count": 15771,
+    "errors": []
+  },
+  "independent_validation": {
+    "verdict": "passed",
+    "reviewer": "ticket27 independent read-only reviewer",
+    "physical_references": 15771,
+    "unique_physical_files": 1366,
+    "whole_source_files_rehashed": 8550,
+    "defined_source_observations_independently_reconstructed": 112589,
+    "mismatches": 0,
+    "original_source_seed_contract_domain_exclusions_and_raw_output_reconstructed": true,
+    "review_receipt": {
+      "path": "/private/tmp/probata-resume-t27/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t24-fresh-finite-independent-review-t27-20261015.json",
+      "sha256": "e24797cda795fea9f46aa7e6f54380bea46d071cf412667d17d6f0fa7c7e08b5",
+      "commit": "88d5581aae0e6d1a891ff311300b9a5c9e0085e6",
+      "repository_path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t24-fresh-finite-independent-review-t27-20261015.json"
+    }
+  },
+  "raw_budget_bytes": 2147483648,
+  "not_claimed": [
+    "formal C++ equivalence",
+    "WP checking-view agreement",
+    "device semantics theorem",
+    "new verifier/proof verdict",
+    "fresh planted-control execution"
+  ],
+  "launcher_sources": [
+    {
+      "path": "/private/tmp/probata-agreement-0e7f2327-20261015/guard.py",
+      "sha256": "f846089e4981ba7cacd47e5523f06c9a56abfe8283a249d7bd9f24ee161ba35a"
+    },
+    {
+      "path": "/private/tmp/probata-agreement-0e7f2327-20261015/worker.py",
+      "sha256": "f0a4a22ec1b52742b6ce5863b1fb151593612d0ac340fd936565a7f9dbfac8c2"
+    }
+  ],
+  "resources_artifact": {
+    "path": "/private/tmp/probata-agreement-0e7f2327-20261015/resources.json",
+    "sha256": "ac931b867d5d163563baaa438fee47e22c8e5b7a6866f0cb0cfd26c6498f0a67"
+  },
+  "runner_log": {
+    "path": "/private/tmp/probata-agreement-0e7f2327-20261015/runner.log",
+    "sha256": "286c286500059d54fc3420f633e9eb100690822c5d28bd893528b802b9c90204"
+  },
+  "retained_raw_bytes_at_receipt": 349103253,
+  "historical_stream_consistency": {
+    "path": "/private/tmp/probata-agreement-0e7f2327-20261015/historical-stream-consistency.json",
+    "sha256": "b9473cc51d33d6acbdc16081cac6398c355f4e4835451da20e7ba8f22996bb34",
+    "independent_review": false
+  }
+}
