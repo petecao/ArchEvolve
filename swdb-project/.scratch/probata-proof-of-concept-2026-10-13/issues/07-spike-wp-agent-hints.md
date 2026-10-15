@@ -945,3 +945,21 @@ verifier lock and 8 GiB watchdog. The second slot was idle while vector acceptan
 waited on integration hooks; further vector proof checkpoints are planned for the
 two remote lanes. This is a launch record, not a result. Ticket 07 remains claimed.
 [Launch metadata](../evidence/t07-counted-17-launch.json).
+
+
+### Counted run 17 completed — 2026-10-15 08:25 ET
+
+Frozen source `af9a61b6`, fresh consumed-prefix/cursor-snapshot guidance, total-open-goal
+acceptance and no unit-first phase lock. The run ended **not proven** after 53.48 counted
+minutes, with 38 hints, 270 goals and 19 open obligations: 2 unit and 17 hint goals.
+The two unit goals are `visited_iff_reachable` and the parent gather precondition.
+One Codex call used 35 tools, including 6 goal inspections and 15 WP attempts; no lock
+wait was excluded. No final fresh-cache proof/smoke replay ran. The best file SHA256 is
+`2d2ddb4100be1498c284695ce8fc32424aa2d9612e7d140bbb275c639ed1c4e0`.
+
+The prospective preflight manifest exists; all 13 source-file pins were rechecked
+after completion against the clean frozen worktree. [Compact final evidence](../evidence/t07-counted-17.json).
+Original output remains outside Git for offline induction/hint audit. This checkpoint
+does not establish universal validity of its hints or production pointer/initializedness
+acceptance. Status stays `claimed`; the authorized timebox remains open. Audit this
+distinct method before choosing any later counted attempt.

@@ -9,6 +9,16 @@ Updated: 2026-10-15 ET. Resumed under Yan-Ru's ongoing implementation, push and 
 Current integration branch: `codex/probata-poc-integration`, based on `yanrujhou_main` at `150930b4`.
 Current dispatch, evidence and blockers: [resume.md](resume.md).
 
+- **Checkpoint 2026-10-15 08:38 ET:** primary `3f177e63` includes exact owner-at
+  source binding and staged checked helper expansion. Qualified `at()` actual safe
+  and missing-bounds controls pass at that source. Corrected primitive bounded
+  branch `07a9a299` passes five remote controls with matching evidence hashes;
+  two numerical failures replay on source C++. [Bounded evidence](evidence/bounded-entry-windows-mbit10-20261015.json).
+  The snapshot/global name collision was repaired and independently rechecked
+  before integration. Run 17 ended unproven with 2 unit and 17 hint obligations;
+  [final evidence](evidence/t07-counted-17.json). General helper/model/Crux domain
+  execution and whole-ticket acceptance remain open.
+
 - **Checkpoint 2026-10-15 08:03 ET:** frozen `b876dcb3` remote entry-window controls
   passed 15/15 and owner controls passed 16/16. Both socket leases released. Entry
   records show five positive proofs, five intended numerical negatives and five

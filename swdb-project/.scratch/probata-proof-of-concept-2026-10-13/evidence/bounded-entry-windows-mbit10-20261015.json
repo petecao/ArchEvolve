@@ -1,0 +1,759 @@
+{
+  "observed_at_utc": "2026-10-15T12:38:21.365761+00:00",
+  "source_commit": "07a9a2997592e0ae7cfb5bc240a6546b9a8ab1d9",
+  "output": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0835-node0",
+  "shard": "bounded-windows",
+  "launch_exit": "0",
+  "lane": {
+    "socket_lane": {
+      "aligned_cell_age_s": "",
+      "aligned_to": "no_gapbs_batch_running",
+      "command": [
+        "bash",
+        "-c",
+        "cd /data1/yanruj/probata-t27 && bash swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/27-proof-semantics/run_acceptance.sh 07a9a2997592e0ae7cfb5bc240a6546b9a8ab1d9 \"$1\" -o \"cache_dir=$PROBATA_OUTPUT/pytest-cache\"",
+        "bash",
+        "bounded-windows"
+      ],
+      "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+      "ended_utc": "2026-10-15T12:36:48Z",
+      "exit_code": 0,
+      "host": "mbit10",
+      "job": "probata-bounded-windows-20261015-0835",
+      "lease_generation": 554,
+      "lease_name": "mbit10-evaluation-node0",
+      "load1_at_start": 0.29,
+      "load1_max": 32,
+      "node": 0,
+      "numa_memory_policy": "bind:0",
+      "numactl": "--cpunodebind=0 --membind=0",
+      "preregistration_sha256": null,
+      "started_utc": "2026-10-15T12:33:38Z"
+    }
+  },
+  "records": [
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0835-node0/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t123514z.a56f6bd6.yaml",
+      "sha256": "fcbe83795c0893c9c76335d01f339887c7ac8bf38a6c5973a41586fe82a29a33",
+      "function": "window_form",
+      "verdict": "proven",
+      "setup": "passed",
+      "reading": null,
+      "nonreach_properties": {
+        "success": 44
+      },
+      "reachability": {
+        "failure": 1
+      },
+      "smoke": {},
+      "failed_nonreach_properties": [],
+      "entry_semantics": null,
+      "lowerer": {
+        "id": "swdb-c-lowering-9",
+        "sha256": "a81eef6e6a5bc1829c69bd7ca6f26162e13bacfe9269ea80cc61e2f7029ad578"
+      },
+      "pointer_check": null,
+      "artifact_count": 7,
+      "artifact_hash_mismatches": [],
+      "flags": [
+        "-DSWDB_CBMC",
+        "--unwind",
+        "5",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--sat-solver",
+        "cadical"
+      ],
+      "peak_rss_bytes": 44871680,
+      "array_domains": {
+        "check": {
+          "id": "swdb-array-domain-1",
+          "sha256": "4ce7f64892b3e63c8dba65ef3c4f532e47842a287c38e0f5cc5f69d27e7780bd"
+        },
+        "declarations_sha256": "40b019e7112ccacfad88d2ffce3acf97ece9ddd1899407e7172a712c758efe8b",
+        "windows": {
+          "p": {
+            "parameter": "p",
+            "element_type": "int",
+            "extent_tree": {
+              "kind": "parameter",
+              "name": "n"
+            },
+            "entry_acsl": "\\at((integer)n,Pre)",
+            "parameters": [
+              "n"
+            ],
+            "extent_interval": [
+              2,
+              2
+            ],
+            "physical_capacity": 4,
+            "allocated_elements": 4,
+            "nonnull": true
+          }
+        },
+        "planner": {
+          "id": "swdb-cbmc-translator-4",
+          "sha256": "6bd87667137100283979b46060ed2ab0f06408ba7bb91b1923c4573bfda0289e"
+        },
+        "scalar_intervals": {
+          "n": [
+            2,
+            2
+          ]
+        },
+        "scalar_provenance": {
+          "n": [
+            {
+              "kind": "type",
+              "interval": [
+                -2147483648,
+                2147483647
+              ]
+            },
+            {
+              "kind": "requested_size",
+              "upper": 4
+            },
+            {
+              "kind": "requires",
+              "clause": "contract.fixture_dx_window_form#pre.requires1",
+              "comparison": [
+                "n",
+                "==",
+                2
+              ]
+            }
+          ]
+        },
+        "admission": "checked_primitive_source_operations",
+        "source_operations_checked": true,
+        "integer_model": "checked signed __int128 representation of every mathematical intermediate",
+        "restriction": "nonnull bounded buffers; one straight-line primitive function; no imported domains or calls",
+        "operation_check": {
+          "id": "swdb-bounded-entry-windows-1",
+          "sha256": "39354107afc0c96e075dbc8e0c321b1caad3086887254f5bb404dd6eb875fa58"
+        },
+        "source_functions": {
+          "window_form": {
+            "begin": 15587,
+            "end": 15855,
+            "body_begin": 15618,
+            "body_end": 15855
+          }
+        },
+        "operations": [
+          {
+            "property": "swdb_window_formation_1",
+            "anchor": "window_form.s1.before",
+            "source_statement": {
+              "begin": 15820,
+              "end": 15833
+            },
+            "parameter": "p",
+            "relation": "<="
+          }
+        ],
+        "entry_window_semantics": {
+          "role": "explicit typed-window input-contract premise; not inferred from validity",
+          "checked": "entry extent/target capacity and every admitted formation/access numerical bound",
+          "representation": "nonnull physical harness buffers; logical extent can be smaller than capacity",
+          "caller_boundary": "no helper, imported summary, model or whole-function domain admission"
+        },
+        "source_sha256": "e4a62e0ed6714de83e97e7e04e704e98c52ca93d467d5403c41daf9ec1fbe503",
+        "c_view_sha256": "4476dbe4df6887dc302cce55d6e02e8a3f9ab32b6667b982bc80ee609e971456",
+        "cxx_function_sha256": "93f697c8b43d3f0c46862009bacc25179b33320b2afb022f7bf2c11d2f0c90cd"
+      },
+      "agreement": {
+        "runs": 3750,
+        "sampled": false,
+        "domain": {
+          "n": {
+            "role": "size",
+            "values": [
+              -1,
+              0,
+              1,
+              2,
+              3,
+              4
+            ]
+          },
+          "p": {
+            "role": "element",
+            "values": [
+              -2,
+              -1,
+              0,
+              1,
+              2
+            ]
+          }
+        },
+        "c_output_sha256": "afeaf8faa602a9a55f4d59d8739d8fa3daa26654fdacaabbe420689eb92e8a06",
+        "cxx_output_sha256": "afeaf8faa602a9a55f4d59d8739d8fa3daa26654fdacaabbe420689eb92e8a06",
+        "verdict": "agree"
+      },
+      "counterexample": null,
+      "failure_class": null,
+      "verifier_launched": true
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0835-node0/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t123544z.492a8dc5.yaml",
+      "sha256": "508ca230ffaf92a4ab992f8bc31501153a2fb1b179d8b9aa819908ade3f06edd",
+      "function": "window_read",
+      "verdict": "refuted",
+      "setup": "passed",
+      "reading": null,
+      "nonreach_properties": {
+        "success": 48,
+        "failure": 1
+      },
+      "reachability": {
+        "failure": 1
+      },
+      "smoke": {},
+      "failed_nonreach_properties": [
+        {
+          "goal": "window_read.assertion.2",
+          "property": "swdb_window_access_1",
+          "status": "failure"
+        }
+      ],
+      "entry_semantics": null,
+      "lowerer": {
+        "id": "swdb-c-lowering-9",
+        "sha256": "a81eef6e6a5bc1829c69bd7ca6f26162e13bacfe9269ea80cc61e2f7029ad578"
+      },
+      "pointer_check": null,
+      "artifact_count": 8,
+      "artifact_hash_mismatches": [],
+      "flags": [
+        "-DSWDB_CBMC",
+        "--unwind",
+        "5",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--sat-solver",
+        "cadical"
+      ],
+      "peak_rss_bytes": 44478464,
+      "array_domains": {
+        "check": {
+          "id": "swdb-array-domain-1",
+          "sha256": "4ce7f64892b3e63c8dba65ef3c4f532e47842a287c38e0f5cc5f69d27e7780bd"
+        },
+        "declarations_sha256": "40b019e7112ccacfad88d2ffce3acf97ece9ddd1899407e7172a712c758efe8b",
+        "windows": {
+          "p": {
+            "parameter": "p",
+            "element_type": "int",
+            "extent_tree": {
+              "kind": "parameter",
+              "name": "n"
+            },
+            "entry_acsl": "\\at((integer)n,Pre)",
+            "parameters": [
+              "n"
+            ],
+            "extent_interval": [
+              2,
+              2
+            ],
+            "physical_capacity": 4,
+            "allocated_elements": 4,
+            "nonnull": true
+          }
+        },
+        "planner": {
+          "id": "swdb-cbmc-translator-4",
+          "sha256": "6bd87667137100283979b46060ed2ab0f06408ba7bb91b1923c4573bfda0289e"
+        },
+        "scalar_intervals": {
+          "n": [
+            2,
+            2
+          ]
+        },
+        "scalar_provenance": {
+          "n": [
+            {
+              "kind": "type",
+              "interval": [
+                -2147483648,
+                2147483647
+              ]
+            },
+            {
+              "kind": "requested_size",
+              "upper": 4
+            },
+            {
+              "kind": "requires",
+              "clause": "contract.fixture_dx_window_read#pre.requires1",
+              "comparison": [
+                "n",
+                "==",
+                2
+              ]
+            }
+          ]
+        },
+        "admission": "checked_primitive_source_operations",
+        "source_operations_checked": true,
+        "integer_model": "checked signed __int128 representation of every mathematical intermediate",
+        "restriction": "nonnull bounded buffers; one straight-line primitive function; no imported domains or calls",
+        "operation_check": {
+          "id": "swdb-bounded-entry-windows-1",
+          "sha256": "39354107afc0c96e075dbc8e0c321b1caad3086887254f5bb404dd6eb875fa58"
+        },
+        "source_functions": {
+          "window_read": {
+            "begin": 15856,
+            "end": 16035,
+            "body_begin": 15887,
+            "body_end": 16035
+          }
+        },
+        "operations": [
+          {
+            "property": "swdb_window_access_1",
+            "anchor": "window_read.s1.before",
+            "source_statement": {
+              "begin": 15913,
+              "end": 15932
+            },
+            "parameter": "p",
+            "relation": "<"
+          }
+        ],
+        "entry_window_semantics": {
+          "role": "explicit typed-window input-contract premise; not inferred from validity",
+          "checked": "entry extent/target capacity and every admitted formation/access numerical bound",
+          "representation": "nonnull physical harness buffers; logical extent can be smaller than capacity",
+          "caller_boundary": "no helper, imported summary, model or whole-function domain admission"
+        },
+        "source_sha256": "e4a62e0ed6714de83e97e7e04e704e98c52ca93d467d5403c41daf9ec1fbe503",
+        "c_view_sha256": "efe477a531739c8a2c8be0c2b22d57b70719bd6aa3b55b7c56fd768933a79ae4",
+        "cxx_function_sha256": "ded31bf218041d3c334e4011106ef4e8b0e13471254cce6497eeb7c5e28829a5"
+      },
+      "agreement": {
+        "runs": 3750,
+        "sampled": false,
+        "domain": {
+          "n": {
+            "role": "size",
+            "values": [
+              -1,
+              0,
+              1,
+              2,
+              3,
+              4
+            ]
+          },
+          "p": {
+            "role": "element",
+            "values": [
+              -2,
+              -1,
+              0,
+              1,
+              2
+            ]
+          }
+        },
+        "c_output_sha256": "a9959ef0df4b9c60fdbbdf63cf8d7850182f558d9861b6869704455a8b5995a6",
+        "cxx_output_sha256": "a9959ef0df4b9c60fdbbdf63cf8d7850182f558d9861b6869704455a8b5995a6",
+        "verdict": "agree"
+      },
+      "counterexample": {
+        "property": "swdb_window_access_1",
+        "check": "window_read.assertion.2",
+        "function": "window_read",
+        "inputs": {
+          "n": 2,
+          "p": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "oracle": [
+          2,
+          0,
+          0,
+          0,
+          0
+        ],
+        "replay": {
+          "form": "cxx",
+          "replayed": true,
+          "failed": [
+            "swdb_window_access_1"
+          ],
+          "sanitizer": null,
+          "sanitizer_matches_check": null,
+          "end": "done"
+        }
+      },
+      "failure_class": null,
+      "verifier_launched": true
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0835-node0/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t123615z.2d2f8be2.yaml",
+      "sha256": "a4af981594fe227038c5e6bceacf172aa96664d2d23f9293d92efb642b74ebac",
+      "function": "window_form",
+      "verdict": "refuted",
+      "setup": "passed",
+      "reading": null,
+      "nonreach_properties": {
+        "success": 43,
+        "failure": 1
+      },
+      "reachability": {
+        "failure": 1
+      },
+      "smoke": {},
+      "failed_nonreach_properties": [
+        {
+          "goal": "window_form.assertion.2",
+          "property": "swdb_window_formation_1",
+          "status": "failure"
+        }
+      ],
+      "entry_semantics": null,
+      "lowerer": {
+        "id": "swdb-c-lowering-9",
+        "sha256": "a81eef6e6a5bc1829c69bd7ca6f26162e13bacfe9269ea80cc61e2f7029ad578"
+      },
+      "pointer_check": null,
+      "artifact_count": 8,
+      "artifact_hash_mismatches": [],
+      "flags": [
+        "-DSWDB_CBMC",
+        "--unwind",
+        "5",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--sat-solver",
+        "cadical"
+      ],
+      "peak_rss_bytes": 44515328,
+      "array_domains": {
+        "check": {
+          "id": "swdb-array-domain-1",
+          "sha256": "4ce7f64892b3e63c8dba65ef3c4f532e47842a287c38e0f5cc5f69d27e7780bd"
+        },
+        "declarations_sha256": "40b019e7112ccacfad88d2ffce3acf97ece9ddd1899407e7172a712c758efe8b",
+        "windows": {
+          "p": {
+            "parameter": "p",
+            "element_type": "int",
+            "extent_tree": {
+              "kind": "parameter",
+              "name": "n"
+            },
+            "entry_acsl": "\\at((integer)n,Pre)",
+            "parameters": [
+              "n"
+            ],
+            "extent_interval": [
+              2,
+              2
+            ],
+            "physical_capacity": 4,
+            "allocated_elements": 4,
+            "nonnull": true
+          }
+        },
+        "planner": {
+          "id": "swdb-cbmc-translator-4",
+          "sha256": "6bd87667137100283979b46060ed2ab0f06408ba7bb91b1923c4573bfda0289e"
+        },
+        "scalar_intervals": {
+          "n": [
+            2,
+            2
+          ]
+        },
+        "scalar_provenance": {
+          "n": [
+            {
+              "kind": "type",
+              "interval": [
+                -2147483648,
+                2147483647
+              ]
+            },
+            {
+              "kind": "requested_size",
+              "upper": 4
+            },
+            {
+              "kind": "requires",
+              "clause": "contract.fixture_dx_window_form#pre.requires1",
+              "comparison": [
+                "n",
+                "==",
+                2
+              ]
+            }
+          ]
+        },
+        "admission": "checked_primitive_source_operations",
+        "source_operations_checked": true,
+        "integer_model": "checked signed __int128 representation of every mathematical intermediate",
+        "restriction": "nonnull bounded buffers; one straight-line primitive function; no imported domains or calls",
+        "operation_check": {
+          "id": "swdb-bounded-entry-windows-1",
+          "sha256": "39354107afc0c96e075dbc8e0c321b1caad3086887254f5bb404dd6eb875fa58"
+        },
+        "source_functions": {
+          "window_form": {
+            "begin": 15587,
+            "end": 15855,
+            "body_begin": 15618,
+            "body_end": 15855
+          }
+        },
+        "operations": [
+          {
+            "property": "swdb_window_formation_1",
+            "anchor": "window_form.s2.before",
+            "source_statement": {
+              "begin": 15722,
+              "end": 15735
+            },
+            "parameter": "p",
+            "relation": "<="
+          }
+        ],
+        "entry_window_semantics": {
+          "role": "explicit typed-window input-contract premise; not inferred from validity",
+          "checked": "entry extent/target capacity and every admitted formation/access numerical bound",
+          "representation": "nonnull physical harness buffers; logical extent can be smaller than capacity",
+          "caller_boundary": "no helper, imported summary, model or whole-function domain admission"
+        },
+        "source_sha256": "e4a62e0ed6714de83e97e7e04e704e98c52ca93d467d5403c41daf9ec1fbe503",
+        "c_view_sha256": "d7f97fb8e37b33aea0c25def86548f68d1c0615af8b4a4e1d7f8f61fb91af932",
+        "cxx_function_sha256": "32f0ef799f4affc313702374600997deaee62a713d636fa18bcba286a8a79ca4"
+      },
+      "agreement": {
+        "runs": 3750,
+        "sampled": false,
+        "domain": {
+          "n": {
+            "role": "size",
+            "values": [
+              -1,
+              0,
+              1,
+              2,
+              3,
+              4
+            ]
+          },
+          "p": {
+            "role": "element",
+            "values": [
+              -2,
+              -1,
+              0,
+              1,
+              2
+            ]
+          }
+        },
+        "c_output_sha256": "c58b2e50d29a07925435027946699b3dca943d1559b0fb861e03439a8b545077",
+        "cxx_output_sha256": "c58b2e50d29a07925435027946699b3dca943d1559b0fb861e03439a8b545077",
+        "verdict": "agree"
+      },
+      "counterexample": {
+        "property": "swdb_window_formation_1",
+        "check": "window_form.assertion.2",
+        "function": "window_form",
+        "inputs": {
+          "n": 2,
+          "p": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "oracle": [
+          2,
+          0,
+          0,
+          0,
+          0
+        ],
+        "replay": {
+          "form": "cxx",
+          "replayed": true,
+          "failed": [
+            "swdb_window_formation_1"
+          ],
+          "sanitizer": null,
+          "sanitizer_matches_check": null,
+          "end": "done"
+        }
+      },
+      "failure_class": null,
+      "verifier_launched": true
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0835-node0/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t123645z.3dfe6afa.yaml",
+      "sha256": "c621e83905672c46c2bf6a4740bffdd71053e3367e8571034469d6fe0dabea19",
+      "function": "window_form",
+      "verdict": "not_proven",
+      "setup": "passed",
+      "reading": null,
+      "nonreach_properties": {},
+      "reachability": {},
+      "smoke": {},
+      "failed_nonreach_properties": [],
+      "entry_semantics": null,
+      "lowerer": {
+        "id": "swdb-c-lowering-9",
+        "sha256": "a81eef6e6a5bc1829c69bd7ca6f26162e13bacfe9269ea80cc61e2f7029ad578"
+      },
+      "pointer_check": null,
+      "artifact_count": 2,
+      "artifact_hash_mismatches": [],
+      "flags": [],
+      "peak_rss_bytes": 137363456,
+      "array_domains": {
+        "check": {
+          "id": "swdb-array-domain-1",
+          "sha256": "4ce7f64892b3e63c8dba65ef3c4f532e47842a287c38e0f5cc5f69d27e7780bd"
+        },
+        "declarations_sha256": "59d81a57133fe1d15bcd3a361e4019609a7383244d4fb1cdb679e354e4b22ffa",
+        "windows": {
+          "p": {
+            "parameter": "p",
+            "element_type": "int",
+            "extent_tree": {
+              "kind": "sub",
+              "left": {
+                "kind": "mul",
+                "left": {
+                  "kind": "constant",
+                  "value": 18446744073709552000
+                },
+                "right": {
+                  "kind": "constant",
+                  "value": 18446744073709552000
+                }
+              },
+              "right": {
+                "kind": "mul",
+                "left": {
+                  "kind": "constant",
+                  "value": 18446744073709552000
+                },
+                "right": {
+                  "kind": "constant",
+                  "value": 18446744073709552000
+                }
+              }
+            },
+            "entry_acsl": "((18446744073709551615 * 18446744073709551615) - (18446744073709551615 * 18446744073709551615))",
+            "parameters": [],
+            "extent_interval": [
+              0,
+              0
+            ],
+            "physical_capacity": 4,
+            "allocated_elements": 4,
+            "nonnull": true
+          }
+        },
+        "planner": {
+          "id": "swdb-cbmc-translator-4",
+          "sha256": "6bd87667137100283979b46060ed2ab0f06408ba7bb91b1923c4573bfda0289e"
+        },
+        "scalar_intervals": {},
+        "scalar_provenance": {},
+        "admission": "planner_only",
+        "source_operations_checked": false,
+        "integer_model": "LP64 primitive draws; mathematical extent arithmetic; no C extent renderer",
+        "restriction": "nonnull buffers; physical capacity does not certify declared-window accesses",
+        "refusal": "bounded window mathematical intermediate exceeds signed 128-bit representation"
+      },
+      "agreement": null,
+      "counterexample": null,
+      "failure_class": "unsupported_construct",
+      "verifier_launched": false
+    }
+  ],
+  "artifacts": {
+    "report.jsonl": {
+      "sha256": "14021b57487c97b8d77f4833ea51b9952e25264bb0a92e810258efbfd4957d42",
+      "bytes": 11395
+    },
+    "environment.txt": {
+      "sha256": "605741c58f881e7415c48eccdf070a59f05789c76b52826d775f52f3075e5cd7",
+      "bytes": 6233
+    },
+    "selection.txt": {
+      "sha256": "794493b8cf5e88f315794a0b23dfed8dbc6ec43690b53437bc71dabd64e5d0d9",
+      "bytes": 226
+    },
+    "retention.txt": {
+      "sha256": "d5a27cbbaf02df242805dfccc03184ab4b961087d1112d5074019df018df4521",
+      "bytes": 263
+    },
+    "source-commit.txt": {
+      "sha256": "d48f2f3375cd7d4991416ee95f158fdadd478e12a02293f90ee94451a35e73c2",
+      "bytes": 41
+    },
+    "finished-at.txt": {
+      "sha256": "be74a2cb241a4f497d9608bcf57e033171404be74e598e765c627ddcd5cb8837",
+      "bytes": 29
+    },
+    "launch.sh": {
+      "sha256": "58ca4c9dbd83a19bb80f03e83cc1f7d8d87fdbc1af8d1a79992eb5068ae028cb",
+      "bytes": 1430
+    },
+    "lane.json": {
+      "sha256": "6270c4bcd058820af5f93f70063c7bf84fcf1a323f26f4746639dc917d6b0974",
+      "bytes": 933
+    },
+    "pytest.log": {
+      "sha256": "d38ecc4d18fa4502eb0189e49d2578f57d2117768c281515181ab08ce5f795f4",
+      "bytes": 227
+    }
+  },
+  "test_outcomes": {
+    "passed": 5
+  },
+  "session_finished": true,
+  "host": {
+    "leases": [
+      {
+        "name": "mbit10-evaluation.meta.json",
+        "state": "released"
+      },
+      {
+        "name": "mbit10-evaluation-node1.meta.json",
+        "state": "released"
+      },
+      {
+        "name": "mbit10-evaluation-node0.meta.json",
+        "state": "released"
+      }
+    ],
+    "load": "0.38 0.68 0.61 1/1324 3541215",
+    "disk": "Filesystem      Size  Used Avail Use% Mounted on\n/dev/sdd1       1.8T  1.7T   21G  99% /data1\n/dev/sdb1       1.8T  1.7T   97G  95% /data\n"
+  },
+  "scope": "Nonnull bounded harness representation and straight-line primitive explicit entry-window controls only. No helper/model/imported-summary/general C++/Crux domain admission, production method3 or typed-domain realizability proof. Native agreement covers its recorded finite differential draws. CBMC reachability assertions must fail as nonvacuity witnesses; they are counted separately from safety/contract properties.",
+  "independent_source_review": {
+    "fixed_commit": "07a9a2997592e0ae7cfb5bc240a6546b9a8ab1d9",
+    "manifest": "/private/tmp/probata-bounded-entry-review/fixed-07a9/inputs.json",
+    "manifest_sha256": "f935d18f1623692ff6277ae349e9c10a1e531714c1ffe5341e68d84c304ccd9b",
+    "outcome": "global and hidden-header collisions, attributes, volatile operands and planned metadata disappearance refuse; clean positive prepares; CBMC callback removed from shared Crux differential"
+  }
+}

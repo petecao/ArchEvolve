@@ -368,3 +368,34 @@ new input premises, and refusal after renderer guard deletion. Original safe/sta
 regenerate and recertify. The two actual at WP controls were excluded and remain pending; no
 generic member-domain admission or ticket closure is claimed. Evidence:
 `evidence/owner-at-source-binding-merge-20261015.json`.
+
+
+### Primitive bounded entry-window checkpoint — 2026-10-15 ET
+
+Direct real CBMC now admits one straight-line primitive function with explicit entry
+windows, exact source statement/operation bindings and the existing initializedness
+gate. It inserts the same checked numerical bounds and immutable entry snapshots into
+lowered C and source C++ replay. Every mathematical intermediate must fit a checked
+signed 128-bit representation. Nonnull physical capacity is explicit and can exceed
+the logical window; helpers, models, imported domain summaries, whole-function, Crux,
+automatic bounded-chain and runtime-check domain paths remain closed.
+
+Frozen source `07a9a299`: five remote controls pass in 189.77 seconds, node 0 lease
+554, wrapper exit 0. The positive has 44 successful non-reachability properties and
+one expected failing reachability witness. The two numerical negatives have exactly
+one failing window property each and replay that same property on C++; oversized
+mathematical intermediates refuse before launch. All referenced evidence hashes match.
+[Compact remote evidence](../evidence/bounded-entry-windows-mbit10-20261015.json).
+
+Independent review found that the earlier snapshot name could shadow a source global
+in both generated views; native output changed 9 to 2 despite differential agreement.
+A regression reproduced the defect before the fix. Reserved source/reference names,
+including hidden header declarations, now refuse. The corrected source was independently
+reviewed and remotely replayed; 40 component checks and two source/header collision
+regressions pass. No old pre-fix admission is promoted. The checker bytes join translator
+and setup/reader identities. Native agreement is its recorded finite draw set, not
+exhaustive coverage of every machine-integer value.
+
+Crux fallback initializedness/source alignment is being fixed separately; its earlier
+CBMC-only differential callback regression was removed from the shared method. Method
+drafts 1/2 stay immutable, draft 3 remains pending, and this ticket remains `claimed`.
