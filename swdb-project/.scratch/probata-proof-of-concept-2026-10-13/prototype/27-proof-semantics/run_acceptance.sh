@@ -23,7 +23,7 @@ case "$PROBATA_SHARD" in
     # Compiler/differential checkpoint only; this shard does not run WP/CBMC.
     PROBATA_TESTS=(tests/test_c_lowering.py tests/test_proof_semantics_native.py
       tests/test_array_domain_math.py tests/test_array_domains.py)
-    PROBATA_SELECTION=() ;;
+    PROBATA_SELECTION=(-k 'not cbmc') ;;
   *) exit 2 ;;
 esac
 PROBATA_ACTUAL_COMMIT="$(git rev-parse HEAD)"
