@@ -528,3 +528,43 @@ The declaration-attribute guard retains its scoped boundary and native cleanup w
 this integration does not claim a complete startup/global/class-attribute model.
 Ticket24 remains claimed, with current-policy construct acceptance still coordinated
 separately. Later integration method identities do not upgrade either historical record.
+
+## Caller-range checkpoint — 2026-10-15 ET
+
+Exact `std_copy_int` caller admission now requires the original-TU standard-library
+certificate, a current qualified model proof, typed one-dimensional local or explicit
+entry-window origins, same-root input endpoints, checked ordered offsets, and checked
+destination capacity. Extents retain entry values; direct current offset arithmetic
+remains an ordinary obligation. Initialization, validity, separation and all RTE/smoke
+checks are preserved. Two-dimensional, member and global origins remain outside this
+slice. The std-model fixture gains only explicit `a:n`/`b:n` domain metadata matching
+its existing requirements; the initialized-copy fixture similarly declares `out:1`.
+
+Independent compiler controls also found a separate concrete lowering gap: a genuine
+standard call and a same-name/type project extern could both select the standard model.
+Every free min/max/copy/swap substitution now compares its exact physical CallExpr
+range against the full original-TU callee's mangled identity and declaration file.
+Same-line mismatches refuse before dependencies, native execution or verification in
+all four bounded routes. This is a compiler/admission regression, not a historical
+false-proof claim. Agent review covered the caller/request and isolated-parser union;
+no personal human review is implied.
+
+Frozen `0831b224` passed four public caller controls in **228.73s**, with one shared
+worker and an 8 GiB RSS cap (peak **519,225,344 bytes**). Its fresh model has 36 ordinary
+Valid plus seven smoke Valid goals. The initialized caller has 15 ordinary plus two
+smoke Valid; the empty range with uninitialized elements has 13 ordinary plus two smoke
+Valid. The uninitialized-source control remains not_proven with one ordinary requires
+timeout. The destination-window control remains not_proven with one numerical guard
+timeout and two failed smoke checks; its requested count two exceeds declared capacity
+one despite physical validity for two elements. Unproved negative goals are not claimed
+to have been proved false by a solver.
+
+The first frozen `c61af423` attempt proved the model but exposed an ACSL parse error in
+an existing generic array-base guard. Repair `d6cf1e98` adds an explicit typed pointer
+cast only to that guard's certified one-dimensional base, preserving C operations and
+obligations. Its parser regression went RED to GREEN; 14 caller/parser controls and
+three merged source/replay controls passed before the fresh actual run. All 200 frozen
+source/test hashes, five proof records and 46 evidence artifacts were checked. Later
+launch-metadata changes at `d3a5dd48` do not relabel this frozen evidence. Broader
+construct acceptance and ticket closure remain open.
+[Scoped caller evidence](../evidence/t24-std-copy-callers-mac-20261015.json).
