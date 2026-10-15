@@ -235,3 +235,24 @@ No generic field-origin exemption, standalone model-domain acceptance or general
 is claimed. Status stays **claimed**.
 
 Compact staging evidence:[t25-closed-owner-origins-20261015.json](../evidence/t25-closed-owner-origins-20261015.json).
+
+
+Closed-owner origin actual replay — 2026-10-15 ET: frozen b876dcb3 remote node1 shard completed
+16PASS/SessionFinish0. Actual safe record has119/119ordinaryVALID+11/11smokePASS; stale has
+104/105ordinaryVALID+11/11smokePASS, with only distinct open goal alias_live_after. Raw smoke
+contradiction attempts time out and are classified as passing smoke by the strict reader. Stale is
+NOT_PROVEN, not a WP counterexample. All checked artifact paths/hashes match in place. The fixture
+method declares legacy check placeholders; actual returned records separately pin/pass version1
+setup/reader. This is contract_fixture evidence for the closed two-site relation, not production
+method3 or generic vector/member acceptance. Source-frame projection remains checked structurally;
+WP proves the private view frame. Imported typed allocator/model separation is explicit trust.
+Evidence:[t25-closed-owner-remote-20261015.json](../evidence/t25-closed-owner-remote-20261015.json).
+Outside audit:/private/tmp/probata-owner-remote-b876dcb3-audit.md. Status stays claimed.
+
+Next read-only slice — 2026-10-15 ET: locally owned at() receives an exact per-call qualified domain
+with frozen growth extent/live prefix, persistent receiver declaration, producing append model pin,
+independent exact defensive-at C-AST audit and checked caller range guard. No user precondition is
+added, and standalone incoming-field models keep their conservative refusal. Public prelaunch RED
+reproduced unsupported_construct before implementation; after the new relation it reaches the
+explicit missing CXXMemberCallExpr source-binding hook (owned by ticket36). No actual new at() WP
+acceptance is claimed by this staging checkpoint; shared hook and fresh combined replay follow.
