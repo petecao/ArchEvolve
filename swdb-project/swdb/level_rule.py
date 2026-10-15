@@ -36,7 +36,7 @@ from zoneinfo import ZoneInfo
 
 from swdb import artifacts, yamlio
 
-VERSION = "level-rule.3"   # ticket 61 (main session, 2026-10-14): measurements, bounded_direct cap, candidate baseline pin
+VERSION = "level-rule.4"   # 2026-10-15: C-model content and dependency counting
 UNBOUNDED = "unbounded"
 ORDER = ("uncertified", "certified", "proven_within_bounds_threads_1", "proven_within_bounds_threads_k",
          "proven_unbounded")
@@ -148,6 +148,7 @@ class Rule:
             "reference_semantics": self.current_entry,
             "proof_semantics": lambda ident: self.current_version(PROOF_SEMANTICS_FOLDER, ident),
             "method_version": self.current_method,
+            "rocq_development": self.current_rocq,
             "minimum_bounds": self.current_record,
             "predecessor_snapshot": self.current_code,
         }
@@ -351,6 +352,15 @@ class Rule:
             self._current["method_version"] = method_version.counting(self.library_root)
         return self._current["method_version"].get(ident)
 
+    def current_rocq(self, ident):
+        from swdb.rocq_adapter import DEVELOPMENT_ID, development_identity
+        if ident != DEVELOPMENT_ID:
+            return None
+        try:
+            return development_identity(self.library_root / "rocq" / "probata")["sha256"]
+        except OSError:
+            return None
+
     def current_version(self, folder, ident):
         """The file sha256 of version `ident` in library/<folder>/ while it is current in its line, else None."""
         if folder not in self._current:
@@ -463,12 +473,32 @@ class Rule:
                 continue
             seen.add(rid)
             for entry in self.proofs[rid].get("assumptions") or []:
+                checked = self._checked_method_part(entry)
+                if checked is not None:
+                    pending.append(checked)
+                    continue
                 key = (entry.get("kind"), (entry.get("reference") or {}).get("id"),
                        (entry.get("reference") or {}).get("sha256"), entry.get("sentence"))
                 entries.setdefault(key, {**entry, "records": []})["records"].append(rid)
             for dependency in self.status(rid)["uses"]:
                 pending += [dependency["record"]] if "record" in dependency else list(dependency.get("records", []))
         return list(entries.values())
+
+    def _checked_method_part(self, entry):
+        """Discharge only an exact written-proof reference backed by a counting kernel check."""
+        if entry.get("kind") != "written_proof":
+            return None
+        reference = entry.get("reference") or {}
+        canonical = {"composition_theorem": "rocq.probata.composition", "reduction_lemma": "rocq.probata.reduction"}
+        for rid, record in sorted(self.proofs.items()):
+            subject = record.get("subject") or {}
+            pin = (record.get("pins") or {}).get("rocq_development") or {}
+            if (subject.get("kind") == "method_part" and subject.get("id") == canonical.get(subject.get("part"))
+                    and subject.get("id") == reference.get("id") and pin.get("sha256") == reference.get("sha256")
+                    and record.get("method_part_status") == "rocq_checked" and record.get("verdict") == "proven"
+                    and self.status(rid)["counts"]):
+                return rid
+        return None
 
 
 def is_baseline_measurement(record):

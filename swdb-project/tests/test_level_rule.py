@@ -134,7 +134,7 @@ def test_each_level_in_rank_order(seed, bounds, expected):
     level = seed.level()
     assert level["level"] == expected
     assert level["rank"] == RANK.index(expected)
-    assert level["level_rule"] == "level-rule.3"
+    assert level["level_rule"] == "level-rule.4"
 
 
 def test_uncertified_ranks_lowest(seed):
@@ -821,14 +821,14 @@ def test_the_snapshot_names_level_time_rule_version_and_counting_records(seed):
     level = seed.level()
     snapshot = level["snapshot"]
     assert set(snapshot) == {"level", "at", "level_rule", "records"}
-    assert snapshot["level"] == "proven_unbounded" and snapshot["level_rule"] == "level-rule.3"
+    assert snapshot["level"] == "proven_unbounded" and snapshot["level_rule"] == "level-rule.4"
     assert snapshot["records"] == ["proof.t10.unit"]
     assert re.fullmatch(r"\d{4}-\d{2}-\d{2} \d{2}:\d{2} ET", snapshot["at"])
 
 
 @pytest.mark.parametrize("field", ["level_rule", "level"])
 def test_validate_refuses_a_proof_record_that_holds_a_level_rule_field(seed, field):
-    seed.proof("unit", bounds=TOP, **{field: "level-rule.3"})
+    seed.proof("unit", bounds=TOP, **{field: "level-rule.4"})
     result = seed.validate()
     assert result.returncode == 1
     problem = [line for line in result.stderr.splitlines() if "proof.t10.unit" in line and field in line]

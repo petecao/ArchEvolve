@@ -178,6 +178,7 @@ FIXTURES = {
     "three_reads": ("dxf_three_reads", ["q", "base"], BASE.format(arr="base"), "\\nothing", 2),
     "size": ("dxf_size", ["q"], "requires 0 <= n <= 2 && \\valid(q + (0 .. n - 1));", "\\nothing", 2),
     "cpu_write": ("dxf_cpu_write", ["q", "base"], BASE.format(arr="base"), "\\nothing", 2),
+    "cpu_memory_overlap": ("dxf_cpu_memory_overlap", ["q", "base"], BASE.format(arr="base"), "base[0 .. n - 1]", 2),
     "store_source_wait": ("dxf_store_source_wait", ["q", "p"], BASE.format(arr="p"), "p[0 .. n - 1]", 2),
     "transitive": ("dxf_transitive", ["q", "base"], BASE.format(arr="base"), "\\nothing", 2),
     "stall_condition": ("dxf_stall_condition", ["q", "p", "base"],
@@ -532,6 +533,9 @@ def test_a_record_that_pins_an_older_proof_semantics_version_stops_counting(dx):
     "ghost dx_store_bound = wait_ready(0);",
     "ghost dx_store_bound = RESET;",
     "ghost dx_store_bound = (dx_count = 0);",
+    pytest.param("ghost dx_store_bound = (dx_count >>= 31);", id="ghost-shift-right"),
+    pytest.param("ghost dx_store_bound = (dx_count <<= 1);", id="ghost-shift-left"),
+    pytest.param("ghost dx_store_bound = (dx_count >>??/\n= 31);", id="ghost-trigraph-shift"),
     "ghost int witness = 0; witness++;",
     "ghost int witness = 0; witness = (*wait_ready)(0);",
 ])
@@ -558,7 +562,8 @@ def test_wp_refuses_hint_that_mutates_the_trusted_semantics_ghost_state(dx, text
 
 @needs_wp
 @pytest.mark.parametrize("text", ["ghost int hint_ready = 0; hint_ready = hint_ready + 1;",
-                                  "ghost dx_store_bound = n;"])
+                                  "ghost dx_store_bound = n;",
+                                  "ghost dx_store_bound = (n <= 0) ? 0 : n;"])
 def test_wp_allows_fresh_scalar_witnesses_without_trusting_them_as_model_updates(dx, text):
     from test_wp_adapter import fake
     hint_path = dx.root / "scalar-witness.yaml"

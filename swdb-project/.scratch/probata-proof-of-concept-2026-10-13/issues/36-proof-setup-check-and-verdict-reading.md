@@ -136,8 +136,48 @@ hints to fresh scalar witnesses and the checked `dx_store_bound` witness; direct
 model writes, pointer/indexed writes, shadowing, calls, mutation expressions and
 macro expansion fail closed before hint goal generation and before final WP.
 Non-semantics hint behavior is unchanged. The dedicated public CLI adversarial and
-accepted-witness controls are being completed before the final identity is pinned.
+accepted-witness controls passed: **12 passed in 95.52 s**, using the final checker
+identity below. The macro control first reproduced an accepted hint containing a
+model-state mutation; the guarded run refuses it before any WP process. The log is
+`/private/tmp/probata-t36-ghost-final.jsonl`. Ticket 27's prover-free hint-generation
+fix is integrated; the final WP portfolio remains unchanged.
+
+Both `proof_setup_check` and `verdict_reading` have version `1` and content hash
+`7a303ac2a9714010ea42f29964e81b62b7ae6a9bca0fb21318deb76974e6b9cc`.
+Integration was merged before handoff; no source changes followed the final guard
+validation. The earlier real fact controls exercised the same report reader; the
+subsequent checker changes only added the semantics hint guard.
 
 Status remains `claimed`: ticket 27's final real WP semantics acceptance is still a
 required dependency. This checkpoint does not assert that all ticket-27 units have
 passed, that Rocq composition is proved, or that a production campaign is proven.
+
+### Follow-up ghost expression guard — 2026-10-15 03:14 ET
+
+A public CLI negative control reproduced a shift-assignment bypass:
+`dx_store_bound = (dx_count >>= 31)` passed the old expression check and mutated
+trusted model state. The expression grammar now explicitly refuses both shift
+assignments and trigraph introducers (`??`), including line-spliced shift operators.
+Ordinary relational comparisons remain admitted. The right-shift control failed
+before the fix; the full final focus suite passed **16 tests in 205.88 s**.
+Logs: `/private/tmp/probata-ghost-shift-{red2,green}.{log,jsonl}`.
+Both check identities are now version `1`, sha256
+`5f5b3e343880fe65990a3aa47b335415cb2fee9cfa6e74fa8ceb7f80f9afe71f`.
+The production composition record in ticket 42 pins this exact checker through
+immutable `method.probata-draft-2`. Earlier checker identities above are historical.
+Ticket 27's remaining acceptance and CPU-memory admission work still block resolution.
+
+### Multiline property report repair — 2026-10-15 ET
+
+Frama-C's unquoted, indented continuation lines in libc complete/disjoint-behavior
+properties became synthetic rows with missing function/status under DictReader. A
+public scripted-report control reproduced the spurious unclassified outcome. The
+reader now reconstructs complete TSV rows and attaches only indented single-cell
+continuations to the preceding property; incomplete column rows and unindented
+fragments still stop the batch. It retains function, status and dependency scope;
+this is not a relaxation of Extern attribution or permission to ignore failed goals.
+The control is red before the fix and green after it. A real uninitialized new-array
+job now produces its expected not-proven record rather than an unclassified parser
+failure. All 121 focused policy/report/formal-frame tests pass in 114.92 s.
+Both check identities remain version `1`, content hash `48a828aa532aabaa24caffbbd2289464c28a0f0901e9c47528540bccb1afa092`.
+Draft 2's older pinned identity remains immutable; new jobs need a new method file.

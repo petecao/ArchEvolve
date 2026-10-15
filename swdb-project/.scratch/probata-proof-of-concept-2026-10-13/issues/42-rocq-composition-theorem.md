@@ -1,9 +1,9 @@
 # 42 — Rocq: composition theorem proof
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-15 01:41 ET (ticket 41 repaired and approved under delegation; proof may resume); 2026-10-14 22:30 ET (blocker: the approved statement is false; needs a statement decision); 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-14 00:15 ET (review fixes, round 4); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-15 03:14 ET (production record and read-time acceptance complete); 2026-10-15 01:41 ET (ticket 41 repaired and approved under delegation; proof may resume); 2026-10-14 22:30 ET (blocker: the approved statement is false; needs a statement decision); 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-14 00:15 ET (review fixes, round 4); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 10, 11, 12, 41
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Concurrency" (composition theorem: 2-week box, written fallback), "Records and levels" (subjects), "What a proven verdict asserts" (assumption set, cap rule), "Modules" (level rule: level computed on read), "Further Notes" (risk: the Rocq theorem does not fit 2 weeks), "Proof-of-concept plan" (Rocq side track, overrun rule), S1, S2, S8, S9); decisions: [15](../../formal-verification-2026-10-09/issues/15-concurrency-proofs.md), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md)
 **Time estimate:** one 2-week box, shared with 43 (S9)
@@ -255,3 +255,44 @@ real method-part record, candidate-level on-read assumption removal tests, and
 record-level negative controls. This theorem proof does not substitute for those
 remaining ticket acceptance checks. Ticket 43 may use the checked composition
 result when the coordinator advances its frontier.
+
+## Answer — 2026-10-15 03:14 ET
+
+**Rocq-checked.** The production command wrote
+`proof.probata.composition.20261015-a1`, preserved byte-for-byte in
+`records/proofs/proof.probata.composition.20261015-a1.yaml`. The record has
+`method_part_status: rocq_checked` and `evidence_kind: execution`. It pins immutable
+`method.probata-draft-2` (`74ebf58482ed07d4250b35e087b7012326de8afd52c3d3e9959a0cec4b792401`),
+the development (`80f8f8434ed6faf65dcdd65abf0b8913923c26c73c75935332ff42f6087b3f66`),
+and Rocq 9.3.0. The approved reconstruction remains
+`e23f37153fadb8c3307384b4ec074422e0af6ebc121ff673688b6d321485e513`.
+The final assumption listing is `Closed under the global context`.
+
+The new public `swdb prove --adapter rocq --method-part composition_theorem`
+runner performs fresh isolated compiles, verifies the approved content and exact
+elaborated statement, and refuses added axioms, admitted steps and changed
+hypotheses before writing a checked record. Three prelaunch attestations are in
+this record. Every compile holds the shared verifier lock under the 8 GiB watchdog;
+this job used 5.268038 s wall time, 6.154332 s CPU, and peak RSS 515063808 bytes.
+
+Read-time controls verify that only a matching canonical subject/part and exact
+method/development identity discharge the corresponding written-proof entry;
+a written record retains it, and changed inputs restore it without rewriting the
+original per-thread record. Rocq remains an explicit trusted-tool assumption.
+The targeted final integrated suite passed 9 tests in 25.71 s, including the real
+public CLI proof and negative controls; 103 level/snapshot regression tests passed.
+Logs: `/private/tmp/probata-rocq-integrated-final.{log,jsonl}`.
+
+The actual production run is retained at
+`/private/tmp/probata-t42-production-bounded-20261015/`. Public `swdb validate`
+and `swdb build` accepted its one-record store (build 0.03 s). This is bounded
+validation of the imported execution record, not a full 767-record catalog scan.
+The first full-catalog attempt was interrupted before compilation or record creation
+because metadata validation remained CPU-bound; no full-catalog pass is claimed.
+
+No written fallback was used. The original shared-box start remains
+2026-10-14 14:42 ET. Adapter and record acceptance add roughly 45 minutes to the
+previously recorded 8.5 hours of active work (about 9.2 hours total, approximate
+parallel effort). Ticket 43 inherits the same box and remains blocked by 29;
+its reduction lemma is not established by this record. The draft method is not
+frozen; the record's existing identities must remain immutable.

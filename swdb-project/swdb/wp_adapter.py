@@ -46,7 +46,7 @@ from swdb.proof import MODEL_PREFIX, AdapterError, Verdict
 NAME = "wp"
 PROVERS = ("z3", "cvc5", "alt-ergo")   # required tools; invocation order comes from the method
 WHY3_NAMES = {"Alt-Ergo": "alt-ergo", "Z3": "z3", "CVC5": "cvc5"}
-FROZEN = (("-wp-cache", "none"), ("-wp-model", "+real"))
+FROZEN = (("-wp-cache", "none"), ("-wp-model", "+real"), ("-rte-initialized", "@all"))
 MACHDEP = ("-machdep", "x86_64")
 ALLOCATION_MODEL = "swdb_alloc_"   # new[] success is assumed; an ordinary release still needs lifetime support
 DEFAULT_WALL_SECONDS = 3600
@@ -501,7 +501,14 @@ class WpAdapter:
             ["-wp-prover", ",".join(tools["provers"])]
         settings_flags = [*tools["flags"], *MACHDEP, *prover_flags, "-wp-timeout",
                           str(tools["seconds"]), "-wp-par", "1", "-wp-smoke-tests", *context.get("extra_flags", [])]
-        command = [*framac.locate().command, *settings_flags, "-wp-report-json", goals_json.name, "wp_input.c",
+        # RTE's function-set option resolves against an existing AST. Parse (and inline)
+        # first, then enable initialization checks for every body, including lowered callees.
+        # -wp-rte alone does not generate initialization assertions in Frama-C 33.
+        parse_flags = [f for f in context.get("extra_flags", []) if f.startswith("-inline-calls=")]
+        normalized = scratch / "wp-normalized.c"
+        command = [*framac.locate().command, *MACHDEP, *parse_flags, "wp_input.c",
+                   "-print", "-ocode", normalized.name, "-then",
+                   *settings_flags, "-wp-report-json", goals_json.name,
                    "-then", "-load-module", str(report_module), "-report", "-report-untried",
                    "-report-csv", properties_csv.name]
         removed = []
@@ -534,7 +541,8 @@ class WpAdapter:
         context["peak"] = result.peak_rss_bytes
         log.line(f"frama-c exit {result.exit_code}, wall {result.wall_seconds:.2f} s, peak rss {result.peak_rss_bytes}, "
                  f"out of memory {result.out_of_memory}, timed out {result.timed_out}")
-        for name, path in (("wp_goals", goals_json), ("wp_properties", properties_csv), ("wp_inventory", inventory)):
+        for name, path in (("wp_goals", goals_json), ("wp_properties", properties_csv), ("wp_inventory", inventory),
+                           ("wp_normalized", normalized)):
             if path.exists():
                 shutil.copyfile(path, wp_dir / path.name)
                 context["reports"].append((name, wp_dir / path.name))

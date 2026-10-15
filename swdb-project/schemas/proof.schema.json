@@ -96,6 +96,10 @@
       "description": "Optional proof route of a candidate proof unit (map spec, \"Proof routes\"). 61 fills bounded_direct; 62 fills route_1 and route_3 and makes it required."
     },
     "verdict": {"type": "string", "enum": ["proven", "refuted", "not_proven"]},
+    "method_part_status": {
+      "type": "string", "enum": ["rocq_checked", "written"],
+      "description": "Ticket 42: a checked theorem or its written fallback, separate from record lifecycle status."
+    },
     "skip_reason": {
       "type": "string",
       "x-vocab": "proof_failure_classes",
@@ -145,6 +149,7 @@
                                    "description": "The ownership checker used to omit a proven-unobservable final delete[] in the WP view; original C lowering and code remain pinned."},
         "terminal_release_certificate": {"$ref": "#/$defs/pin",
                                          "description": "Hash of the generator-owned AST ownership certificate for one nonescaping scalar-array owner and terminal delete[]."},
+        "rocq_development": {"$ref": "#/$defs/pin"},
         "minimum_bounds": {"$ref": "#/$defs/pin"},
         "predecessor_snapshot": {"$ref": "#/$defs/pin"},
         "summaries": {
@@ -417,6 +422,18 @@
   },
   "required": ["subject", "pins", "job", "evidence_kind"],
   "allOf": [
+    {
+      "if": {"required": ["method_part_status"]},
+      "then": {
+        "required": ["verdict"],
+        "properties": {
+          "subject": {"properties": {"kind": {"const": "method_part"},
+            "part": {"enum": ["composition_theorem", "reduction_lemma"]}}, "required": ["part"]},
+          "verdict": {"const": "proven"},
+          "pins": {"required": ["rocq_development"]}
+        }
+      }
+    },
     {
       "if": {"required": ["skip_reason"]},
       "then": {

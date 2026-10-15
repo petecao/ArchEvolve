@@ -4,30 +4,33 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Checkpoint: `codex/probata-poc-integration` starts at `150930b4` on `yanrujhou_main`;
-ticket 25 is merged at `cd610c86`, WP semantics are staged at `a41bcd39`, and the latest
-ownership-lifetime statement repair is merged at `3f559789`.
-The integration source is pushed through `3f559789`. User approval covers scoped implementation, commits,
-pushes, remote source synchronization and two mbit10 CPU lanes.
+Checkpoint: integration `codex/probata-poc-integration`, based on `yanrujhou_main`
+`150930b4`; production Rocq runner merged at `14a50bbf`, format follow-up at
+`8e05c78a`, counted run-13 metadata at `66c03f96`. The next checkpoint includes
+root ghost-expression hardening, immutable draft 2 and its actual composition record.
+User approval covers scoped implementation, commits, pushes, remote source sync and
+two mbit10 CPU lanes; the specific BFS-to-Codex/OpenAI export approval also covers 07.
 
 | Ticket | Current work | Evidence or next action |
 |---|---|---|
-| 07 | Coordinator; counted run 13 | Started 2026-10-15 01:45 ET, `/private/tmp/probata-t07-20261015`; unchanged run-10 method and pinned Codex, fresh hints, verified no-hint baseline reused. User explicitly approved this scoped BFS source export. |
-| 24 | Coordinator; reproduce construct-group WP acceptance | Node 1 baseline `r4` completed: 17 passed, 1 xfailed in 1823.04 s, source `150930b4`. New lifetime safety controls: 3 passed; positive safe-deallocation acceptance is still expected-failing. Keep inheritance and `omp simd` excluded as the declared subset requires. |
-| 25 | Model recovery merged; ticket remains claimed | 65 lowering tests, 6 bounded model tests, pair constructor WP proof, matching-library admission and mismatch refusal pass. WP lifetime modeling remains an acceptance gap. |
-| 27 | `codex/probata-t27`; restore WP semantics and store cases | Node 0 replays source `d45a63d8` with an explicit checked ghost frame bound. The exact-index frame and a checked index assertion timed out. Capacity and insufficient-bound controls run with the safe cases. Output `/data/yanruj/EvolveSWDB_runs/probata-t27-20261015/`. |
-| 36 | `codex/probata-t36`; proof setup checks | 48 setup/reader/doc controls, 2 execution-method pin controls and 3 bounded-route controls pass. The final check now rejects solver reordering and traces partial-property dependencies. A newly found ghost-state mutation gap is being closed before the hash is pinned. Resolution still depends on 27. |
-| 41 | Resolved; agent review and approval under delegation | Protected reads, read-class lifetime and ownership-handoff checks; regression lemmas and exact statement guard pass. The theorem remains open. |
-| 42 | `codex/probata-t42`; proof resumed; coordinator builds record runner | Approved reconstructed statement `e23f37153fadb8c3307384b4ec074422e0af6ebc121ff673688b6d321485e513`; latest-read, local window partition and iteration accounting checked. Global serialization remains open. The isolated runner worktree is `/private/tmp/probata-rocq-adapter`; admitted and changed statements are rejected before compilation. |
+| 07 | Counted run 13 failed; prototype hint guard repair | 44 best hints, 19 of 239 goals open; no record or final replay. 52.78 counted minutes. Next approach must address these goals and reject ghost mutations. |
+| 24 | Construct-group WP acceptance | Remote baseline 17 passed, 1 known UAF xfailed; three lifetime refusal controls pass. Positive safe deallocation remains expected-failing pending checked terminal-release integration. |
+| 25 | Narrow checked terminal release; general lifetime still open | Worktree `/private/tmp/probata-lifetime-narrow`. Public WP acceptance pending. General aliases, moves and dangling-pointer semantics remain unresolved; WP initializedness support exists but requires an additional RTE selector. |
+| 27 | Store/capacity acceptance and CPU-access admission | Node 0 frozen `dd975e72` targeted replay: three-read, source-wait and stall cases passed. Capacity 32/33 pair passed locally. Add conservative ordinary CPU read/write admission before final two-lane acceptance. |
+| 36 | Strict preflight and reader; waits for 27 | Root shift/trigraph gap closed: 16 controls passed, checker identity `5f5b3e34…`. Production draft 2 pins this hash. |
+| 41 | Resolved | Approved reconstruction `e23f3715…`, protected/class/ownership lifetime premises; exact guard and sanity controls pass. |
+| 42 | Resolved: production Rocq-checked theorem | `proof.probata.composition.20261015-a1`, 209 Qed, closed global context, actual record validate/build pass; 9 final integrated tests passed. About 491.2 MiB peak. |
 
-Blockers: WP 33 does not implement deallocation, so the old read-after-delete expected
-failure cannot support a completed ticket. Affected proofs must fail closed until a
-validated lifetime model exists. Ticket 41's revised statement has no counterexample from
-the final local review; Rocq type checking and sanity lemmas do not prove its theorem.
+Current count: **32 of 63 resolved**, five claimed. Draft 2 is immutable after an
+actual proof record pinned it; new lowerer or policy identities require draft 3.
+Ticket 43 remains blocked by 29. Ticket 28 research is available in
+`/private/tmp/probata-t28-research/PLAN.md`; it has not been claimed before 27 closes.
+Research identifies source-inferred full-cache-line interference and ready-query
+progress gaps, not a replayed gem5 counterexample. The adapter must refuse ordinary
+memory cases it cannot check rather than assume their preservation.
 
-Next action: finish the active acceptance runs and review, merge each verified change,
-then recompute the ready frontier from the ticket files. No held-out kernel work or
-method freeze is authorized by an incomplete acceptance run.
+Next: finish acceptance and conservative admission, merge verified changes, recompute
+frontier. No held-out kernel work or method freeze before its dependencies resolve.
 
 ## Host coordination
 
@@ -61,8 +64,8 @@ not substitute for reading incremental run artifacts.
 
 ## Validation and progress reporting
 
-The 2026-10-15 02:30 ET report covered every active ticket and both lanes; next report is
-due around 03:00 ET. Counted hint run 13 has 19 goals open and is not proven. Node 0 holds
+The 2026-10-15 03:00 ET report covered every active ticket and both lanes; next report is
+due around 03:30 ET. Counted hint run 13 ended with 19 goals open and is not proven. Node 0 holds
 the targeted semantics replay; node 1's generation 594 was released at 06:12:13 UTC.
 
 The early structural run disabled clang as well as WP/CBMC; four formal-frame assertions

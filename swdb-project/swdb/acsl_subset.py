@@ -39,11 +39,11 @@ _TOKEN = re.compile(r"""
 
 OPEN, CLOSE = '([{', ')]}'
 BINDERS = {'\\forall', '\\exists', '\\lambda', '\\let'}
-ALLOWED_BUILTINS = {'\\forall', '\\exists', '\\old', '\\at', '\\valid', '\\separated', '\\result',
+ALLOWED_BUILTINS = {'\\forall', '\\exists', '\\old', '\\at', '\\valid', '\\initialized', '\\separated', '\\result',
                     '\\true', '\\false', '\\null', '\\nothing'}
 EXTENDED_QUANTIFIERS = {'\\sum', '\\product', '\\numof', '\\max', '\\min'}
 MEMORY_BUILTINS = {'\\valid_read', '\\valid_function', '\\object_pointer', '\\base_addr', '\\block_length',
-                   '\\offset', '\\allocable', '\\freeable', '\\fresh', '\\initialized', '\\dangling',
+                   '\\offset', '\\allocable', '\\freeable', '\\fresh', '\\dangling',
                    '\\allocation', '\\pointer_comparable', '\\separated_from', '\\union', '\\inter',
                    '\\empty', '\\subset'}
 FLOAT_BUILTINS = {'\\round_float', '\\round_double', '\\is_finite', '\\is_infinite', '\\is_plus_infinity',
@@ -251,7 +251,7 @@ def check_expression(toks, *, formal_half=True):
         elif text in FLOAT_BUILTINS or (text.startswith('\\') and re.search(r'float|double|round|NaN|infinit', text)):
             reasons.append(f'floating-point logic built-in {text} is not allowed; use real arithmetic')
         elif text in MEMORY_BUILTINS:
-            reasons.append(f'memory built-in {text} is not allowed: only \\valid, \\separated and \\result')
+            reasons.append(f'memory built-in {text} is not allowed: only \\valid, \\initialized, \\separated and \\result')
         elif text == '\\everything':
             reasons.append('\\everything is not allowed; name the locations and index ranges')
         elif text == '\\let':

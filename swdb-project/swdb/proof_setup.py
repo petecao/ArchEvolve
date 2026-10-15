@@ -86,7 +86,8 @@ def check_semantics_hints(base, hints):
                 _fail("semantics_ghost_ownership", "only simple scalar ghost declarations and assignments are allowed")
             if expression is not None and (
                     not re.fullmatch(r"[A-Za-z_0-9\s()+*/%<>=!~^|?:.-]+", expression)
-                    or re.search(r"\b[A-Za-z_]\w*\s*\(|\)\s*\(|\+\+|--|(?<![<>=!])=(?!=)", expression)):
+                    or "??" in expression
+                    or re.search(r"\b[A-Za-z_]\w*\s*\(|\)\s*\(|\+\+|--|<<=|>>=|(?<![<>=!])=(?!=)", expression)):
                 _fail("semantics_ghost_ownership", "ghost witness expressions may not call, take addresses, or mutate state")
 
 
@@ -328,6 +329,31 @@ def _lineup(method, adapter, tools, flags):
             _fail("method_version", f"{name} flag {flag} is missing")
 
 
+def _property_rows(stream):
+    """Frama-C 33 leaves indented multiline property text unquoted in its TSV.
+
+    Attach only a single indented cell to a preceding complete row. An incomplete
+    row with columns, an unindented fragment, or a continuation before a row is malformed.
+    A continuation is text of the property, never a new property with a missing status.
+    """
+    reader = csv.reader(stream, delimiter="\t")
+    header = next(reader, [])
+    expected = ["directory", "file", "line", "function", "property kind", "status", "property"]
+    if header != expected:
+        raise ValueError("unexpected WP property report header")
+    rows = []
+    for values in reader:
+        if not values:
+            continue
+        if len(values) == len(header):
+            rows.append(dict(zip(header, values)))
+        elif len(values) == 1 and values[0][:1].isspace() and rows:
+            rows[-1]["property"] += "\n" + values[0]
+        else:
+            raise ValueError("incomplete WP property row")
+    return rows
+
+
 def read_wp_reports(goals_json, properties_csv, inventory_path, extern_contracts=None, functions=None):
     """Read a fresh WP run's two reports plus independent generated-goal inventory.
 
@@ -346,7 +372,7 @@ def read_wp_reports(goals_json, properties_csv, inventory_path, extern_contracts
         inventory = json.loads(Path(inventory_path).read_text())
         raw = json.loads(Path(goals_json).read_text())
         with open(properties_csv, newline="") as stream:
-            properties = list(csv.DictReader(stream, delimiter="\t"))
+            properties = _property_rows(stream)
     except (OSError, ValueError, TypeError) as exc:
         return outcome("not_proven", UNCLASSIFIED, f"malformed fresh report: {exc}")
     if not isinstance(inventory, dict) or inventory.get("complete") is not True or inventory.get("version") != "1":

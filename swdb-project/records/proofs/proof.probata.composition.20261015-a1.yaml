@@ -1,0 +1,137 @@
+kind: proof
+schema_version: '0.4'
+id: proof.probata.composition.20261015-a1
+status: draft
+created: '2026-10-15'
+updated: '2026-10-15'
+provenance:
+- id: prove
+  kind: agent_run
+  description: Written by swdb prove with the rocq adapter.
+  uri: null
+subject:
+  kind: method_part
+  id: rocq.probata.composition
+  part: composition_theorem
+verdict: proven
+proof_setup_check:
+  check:
+    version: '1'
+    sha256: 5f5b3e343880fe65990a3aa47b335415cb2fee9cfa6e74fa8ceb7f80f9afe71f
+  verdict: passed
+  method_version:
+    id: method.probata-draft-2
+    sha256: 74ebf58482ed07d4250b35e087b7012326de8afd52c3d3e9959a0cec4b792401
+  hashes:
+    contract: 80f8f8434ed6faf65dcdd65abf0b8913923c26c73c75935332ff42f6087b3f66
+    summaries: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    run_plan: 8a200edce2f114525c60b8168d233bef387067eb6db59aa05905361f14d6a19a
+    Vocabulary.v: 081b558de2d94a0b37200b094d39af38eddf51546686a575f97dac2e3a6a3a3d
+    Composition.v: 3cdbe92ddd970808e34fa4a559119d73e1d4583fdc8faa9dffc9dcf411b15a0e
+    Reduction.v: 72f4a79fbf6005fc89990d5dcfed4b80118f9d02d8aac44b0bb9bc7b84968e53
+    Sanity.v: cfcc4ad6ef918b37125b0cc56b2cc87a246b758bb850c4c0b0e47e696b30d58c
+    Checks.v: 77c0cfbb242cd375a50b96262825384834093de4593752819d99ba6dd98802ae
+    statement.expected: d5cd84e54159cc1403f5f04297caec6b3acb53c9567d42e646eb27143fe7453f
+  runs:
+  - verdict: passed
+    hashes:
+      summaries: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+      Vocabulary.v: 081b558de2d94a0b37200b094d39af38eddf51546686a575f97dac2e3a6a3a3d
+      Composition.v: 3cdbe92ddd970808e34fa4a559119d73e1d4583fdc8faa9dffc9dcf411b15a0e
+      Reduction.v: 72f4a79fbf6005fc89990d5dcfed4b80118f9d02d8aac44b0bb9bc7b84968e53
+      Sanity.v: cfcc4ad6ef918b37125b0cc56b2cc87a246b758bb850c4c0b0e47e696b30d58c
+      Checks.v: 77c0cfbb242cd375a50b96262825384834093de4593752819d99ba6dd98802ae
+      statement.expected: d5cd84e54159cc1403f5f04297caec6b3acb53c9567d42e646eb27143fe7453f
+    run_plan_sha256: 00d715a80d05dc770f28366a11eefe17a92b9b1dfba389b746388791114dd0e9
+    tool: rocq
+  - verdict: passed
+    hashes:
+      summaries: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+      Vocabulary.v: 081b558de2d94a0b37200b094d39af38eddf51546686a575f97dac2e3a6a3a3d
+      Composition.v: 3cdbe92ddd970808e34fa4a559119d73e1d4583fdc8faa9dffc9dcf411b15a0e
+      Reduction.v: 72f4a79fbf6005fc89990d5dcfed4b80118f9d02d8aac44b0bb9bc7b84968e53
+      Sanity.v: cfcc4ad6ef918b37125b0cc56b2cc87a246b758bb850c4c0b0e47e696b30d58c
+      Checks.v: 77c0cfbb242cd375a50b96262825384834093de4593752819d99ba6dd98802ae
+      statement.expected: d5cd84e54159cc1403f5f04297caec6b3acb53c9567d42e646eb27143fe7453f
+    run_plan_sha256: 4030c67bae33d5a3eb6f83d38f565fef8220303386e1d7450fd65fff5da64061
+    tool: rocq
+  - verdict: passed
+    hashes:
+      summaries: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+      Vocabulary.v: 081b558de2d94a0b37200b094d39af38eddf51546686a575f97dac2e3a6a3a3d
+      Composition.v: 3cdbe92ddd970808e34fa4a559119d73e1d4583fdc8faa9dffc9dcf411b15a0e
+      Reduction.v: 72f4a79fbf6005fc89990d5dcfed4b80118f9d02d8aac44b0bb9bc7b84968e53
+      Sanity.v: cfcc4ad6ef918b37125b0cc56b2cc87a246b758bb850c4c0b0e47e696b30d58c
+      Checks.v: 77c0cfbb242cd375a50b96262825384834093de4593752819d99ba6dd98802ae
+      statement.expected: d5cd84e54159cc1403f5f04297caec6b3acb53c9567d42e646eb27143fe7453f
+    run_plan_sha256: 8e6ec003f93ce8b158bf504c24afa92a3e37c91bd5d6f1f7762a9402993e46e6
+    tool: rocq
+tools: [rocq-9.3.0]
+settings:
+  tool: rocq
+  flags: []
+  session: fresh
+  development:
+    id: rocq.probata
+    sha256: 80f8f8434ed6faf65dcdd65abf0b8913923c26c73c75935332ff42f6087b3f66
+  statement_guard: approved_content_and_elaboration
+  rss_cap_bytes: 8589934592
+pins:
+  code:
+    not_applicable: A Rocq method-part check has no candidate code or contract.
+  contract:
+    not_applicable: A Rocq method-part check has no candidate code or contract.
+  baseline_function:
+    not_applicable: A Rocq method-part check has no candidate code or contract.
+  reference_semantics:
+    not_applicable: A Rocq method-part check has no candidate code or contract.
+  proof_semantics:
+    not_applicable: A Rocq method-part check has no candidate code or contract.
+  minimum_bounds:
+    not_applicable: A Rocq method-part check has no candidate code or contract.
+  predecessor_snapshot:
+    not_applicable: A Rocq method-part check has no candidate code or contract.
+  method_version:
+    id: method.probata-draft-2
+    sha256: 74ebf58482ed07d4250b35e087b7012326de8afd52c3d3e9959a0cec4b792401
+  summaries: []
+  build_constants: []
+  rocq_development:
+    id: rocq.probata
+    sha256: 80f8f8434ed6faf65dcdd65abf0b8913923c26c73c75935332ff42f6087b3f66
+bounds:
+  threads: unbounded
+assumptions:
+- kind: trusted_tool
+  reference:
+    id: rocq-9.3.0
+    sha256: 08ef77ac77b25b9881be62bb40d4d0c40a263bf449de799bf0008d16ccd3d51d
+  sentence: Rocq 9.3.0 correctly checks proof terms and reports their assumptions.
+job:
+  adapter: rocq
+  host: mac
+  worker_core: unpinned
+  wall_seconds: 5.268038
+  cpu_seconds: 6.154332
+  batch_load:
+    start: 1.747
+    end: 1.785
+  peak_rss_bytes: 515063808
+  batch: batch.proof.probata.composition.20261015-a1
+  position: 1
+evidence:
+  adapter_log:
+    path: /private/tmp/probata-t42-production-bounded-20261015/runs/proof.probata.composition.20261015-a1/adapter.log
+    sha256: 5bfdba7d0213d7af87e96c34f08bb490d253a1915150feae861c4db2c40b44ce
+  reports:
+  - name: Vocabulary
+    path: /private/tmp/probata-t42-production-bounded-20261015/runs/proof.probata.composition.20261015-a1/Vocabulary.log
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  - name: Composition
+    path: /private/tmp/probata-t42-production-bounded-20261015/runs/proof.probata.composition.20261015-a1/Composition.log
+    sha256: 5413023b688d1139a3436813e8a3d6536d481892c3f59e6d1143d37d54e11f0f
+  - name: Checks
+    path: /private/tmp/probata-t42-production-bounded-20261015/runs/proof.probata.composition.20261015-a1/Checks.log
+    sha256: 86941c9b85e238f6cc2b2d92d66ed8e3faa8e22afb4779ffc008d296d308952c
+evidence_kind: execution
+method_part_status: rocq_checked
