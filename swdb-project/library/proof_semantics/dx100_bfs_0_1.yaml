@@ -64,7 +64,7 @@ ghost:
   acsl:
     root: library
     path: proof_semantics/dx100_bfs/ghost.acsl
-    sha256: 6a579322ef6b48d857d4044c5d14c94625dcf2498affdcaf494827c42be33b29
+    sha256: 5fa3f12850eba75ccb254b1c1e8ab5c143488046949fbe0e4c965b55ecdb48e9
   capacity:
     commands: 32
 model:
@@ -507,23 +507,25 @@ calls:
   - dispatch_stall
   contract: "requires 0 <= idx_tile < DX_NT && 0 <= src_tile < DX_NT && (cond_tile == -1 || 0 <= cond_tile < DX_NT);\n\
     requires 0 <= dst_tile < DX_NT && dst_tile != idx_tile && dst_tile != src_tile && dst_tile != cond_tile;\nrequires\
-    \ dx_tile_size[src_tile] == dx_tile_size[idx_tile] &&\n  (cond_tile == -1 || dx_tile_size[cond_tile] == dx_tile_size[idx_tile]);\n\
-    requires ghost_capacity: 0 <= dx_count < DX_K;\nrequires dx_issuable(-1, -1, -1, -1, -1);\nrequires \\forall\
-    \ integer k; 0 <= k < dx_tile_size[idx_tile] && k < DX_TS &&\n  (cond_tile == -1 || dx_tile_data[cond_tile][k]\
-    \ != 0) ==> \\valid(data + (unsigned int)dx_tile_data[idx_tile][k]);\nassigns data[(unsigned int)dx_tile_data[idx_tile][0\
-    \ ..\n  (dx_tile_size[idx_tile] < DX_TS ? dx_tile_size[idx_tile] : DX_TS) - 1]],\n  dx_tile_data[dst_tile][0\
-    \ .. DX_TS - 1], dx_tile_size[dst_tile], dx_live, dx_kind[0 .. DX_K - 1], dx_dst1[0 .. DX_K - 1], dx_dst2[0\
-    \ .. DX_K - 1], dx_src1[0 .. DX_K - 1], dx_src2[0 .. DX_K - 1], dx_cond[0 .. DX_K - 1], dx_regs_in[0 .. DX_K\
-    \ - 1], dx_regs_out[0 .. DX_K - 1], dx_reg_a[0 .. DX_K - 1], dx_reg_b[0 .. DX_K - 1], dx_reg_c[0 .. DX_K - 1],\
-    \ dx_region[0 .. DX_K - 1], dx_base[0 .. DX_K - 1], dx_lo[0 .. DX_K - 1], dx_hi[0 .. DX_K - 1], dx_stride[0\
-    \ .. DX_K - 1], dx_index[0 .. DX_K - 1], dx_deps[0 .. DX_K - 1], dx_writes_memory[0 .. DX_K - 1], dx_tile_writer[0\
-    \ .. DX_NT - 1], dx_tile_readers[0 .. DX_NT - 1], dx_reg_writer[0 .. DX_NR - 1], dx_reg_named[0 .. DX_NR - 1],\
-    \ dx_count;\nensures dx_new_slot(DX_STORE_VECTOR, dst_tile, -1, idx_tile, src_tile, cond_tile, -1, -1, -1);\n\
-    ensures dx_stall_covers{Pre, Post}(dst_tile, -1);\nensures dx_kept{Pre, Post}(dst_tile, -1, idx_tile, src_tile,\
-    \ cond_tile, -1, -1, -1, -1, -1, 1);\nensures dx_base[dx_tile_writer[dst_tile]] == data && dx_index[dx_tile_writer[dst_tile]]\
-    \ == idx_tile;\nensures dx_tile_size[dst_tile] == \\old(dx_tile_size[idx_tile]);\nensures \\old(dx_tile_size[idx_tile])\
-    \ >= 1 && (cond_tile == -1 || \\old(dx_tile_data[cond_tile][0]) != 0) ==>\n  dx_tile_data[dst_tile][0] == \\\
-    old(data[(unsigned int)dx_tile_data[idx_tile][0]]);\n"
+    \ \\base_addr(data) != \\base_addr(&dx_tile_data[0][0]) &&\n  \\base_addr(data) != \\base_addr(&dx_tile_size[0])\
+    \ && \\base_addr(data) != \\base_addr(&dx_reg_value[0]);\nrequires dx_tile_size[src_tile] == dx_tile_size[idx_tile]\
+    \ &&\n  (cond_tile == -1 || dx_tile_size[cond_tile] == dx_tile_size[idx_tile]);\nrequires ghost_capacity: 0\
+    \ <= dx_count < DX_K;\nrequires dx_issuable(-1, -1, -1, -1, -1);\nrequires \\forall integer k; 0 <= k < dx_tile_size[idx_tile]\
+    \ && k < DX_TS &&\n  (cond_tile == -1 || dx_tile_data[cond_tile][k] != 0) ==> \\valid(data + (unsigned int)dx_tile_data[idx_tile][k]);\n\
+    requires store_frame_bound: 0 <= dx_store_bound;\nrequires store_indices: \\forall integer k; 0 <= k < dx_tile_size[idx_tile]\
+    \ && k < DX_TS &&\n  (cond_tile == -1 || dx_tile_data[cond_tile][k] != 0) ==>\n  0 <= (unsigned int)dx_tile_data[idx_tile][k]\
+    \ < dx_store_bound;\nassigns data[0 .. dx_store_bound - 1],\n  dx_tile_data[dst_tile][0 .. DX_TS - 1], dx_tile_size[dst_tile],\
+    \ dx_live, dx_kind[0 .. DX_K - 1], dx_dst1[0 .. DX_K - 1], dx_dst2[0 .. DX_K - 1], dx_src1[0 .. DX_K - 1], dx_src2[0\
+    \ .. DX_K - 1], dx_cond[0 .. DX_K - 1], dx_regs_in[0 .. DX_K - 1], dx_regs_out[0 .. DX_K - 1], dx_reg_a[0 ..\
+    \ DX_K - 1], dx_reg_b[0 .. DX_K - 1], dx_reg_c[0 .. DX_K - 1], dx_region[0 .. DX_K - 1], dx_base[0 .. DX_K -\
+    \ 1], dx_lo[0 .. DX_K - 1], dx_hi[0 .. DX_K - 1], dx_stride[0 .. DX_K - 1], dx_index[0 .. DX_K - 1], dx_deps[0\
+    \ .. DX_K - 1], dx_writes_memory[0 .. DX_K - 1], dx_tile_writer[0 .. DX_NT - 1], dx_tile_readers[0 .. DX_NT\
+    \ - 1], dx_reg_writer[0 .. DX_NR - 1], dx_reg_named[0 .. DX_NR - 1], dx_count;\nensures dx_new_slot(DX_STORE_VECTOR,\
+    \ dst_tile, -1, idx_tile, src_tile, cond_tile, -1, -1, -1);\nensures dx_stall_covers{Pre, Post}(dst_tile, -1);\n\
+    ensures dx_kept{Pre, Post}(dst_tile, -1, idx_tile, src_tile, cond_tile, -1, -1, -1, -1, -1, 1);\nensures dx_base[dx_tile_writer[dst_tile]]\
+    \ == data && dx_index[dx_tile_writer[dst_tile]] == idx_tile;\nensures dx_tile_size[dst_tile] == \\old(dx_tile_size[idx_tile]);\n\
+    ensures \\old(dx_tile_size[idx_tile]) >= 1 && (cond_tile == -1 || \\old(dx_tile_data[cond_tile][0]) != 0) ==>\n\
+    \  dx_tile_data[dst_tile][0] == \\old(data[(unsigned int)dx_tile_data[idx_tile][0]]);\n"
 queries:
 - query: swdb_dx_in_footprint
   prototype: int swdb_dx_in_footprint(int tile, const int *addr)

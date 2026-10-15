@@ -136,6 +136,7 @@ class CbmcAdapter:
         self.library, self.contract, self.method = library, contract, method
         self.records = Path(records) if records else None
         self.defines = tuple(sorted(defines))
+        proof_semantics.check_defines(self.defines)
 
     @classmethod
     def from_args(cls, args, script, *, library, contract, method):

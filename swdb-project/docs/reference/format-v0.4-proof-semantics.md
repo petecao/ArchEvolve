@@ -64,6 +64,8 @@ operators, and they are trusted (an assumption entry), never executed by check m
   `state.h`, `model.h`), the C lowering, the harness. The harness runs `swdb_dx_init()` and draws every tile
   element from the oracle (havoc) before the unit runs.
 - The model's loops get their own unwinding bound (`--unwindset`, from `cbmc --show-loops`).
+- A `DX_K` override outside `1..32` is rejected before any verifier: command masks have 32 bits. Other
+  recorded shape constants still support the synthetic capacity fixtures (`DX_NT=40`, `DX_TS=1`).
 - A failed `swdb.ghost_capacity` ends **not proven, `ghost_capacity`**, never refuted.
 - The record pins `pins.proof_semantics` `{id, sha256}` and lists two assumption entries: `proof_semantics`
   (the entry) and `reduction` (`rocq.probata.dx100_reduction`, sha256 of `Reduction.v`; proof: ticket 43).
@@ -83,9 +85,12 @@ operators, and they are trusted (an assumption entry), never executed by check m
   `dx_issuable` in `logic.acsl`): consequences of the C model, with no shifts or masks for the provers (Z3,
   Alt-Ergo and CVC5 time out on constant shift-and-mask facts). The transitive clause of a wait names tiles
   0-7 one by one; with more tiles it claims less, never more.
-- The store frame uses ACSL lifted array locations over the active index-tile slice. It conservatively includes
-  condition-disabled elements; every address the store can write remains in the frame. Command frames include
-  all three register-index arrays (`dx_reg_a`, `dx_reg_b`, `dx_reg_c`) that the C model writes.
+- The store's WP frame is `data[0 .. dx_store_bound - 1]`. The proof-only ghost scalar `dx_store_bound`
+  is a caller-selected frame witness: a checked ghost hint sets it, and the call requires every selected index
+  to be within it. It changes no device values or hazards; the bounded C model ignores it. The fixtures set
+  it to `n`, keeping their original `assigns p[0 .. n - 1]` contracts. An insufficient witness leaves a named
+  `store_indices` precondition unproved. This avoids WP's incomplete treatment of indirect assigns sets.
+  Command frames include all three register-index arrays (`dx_reg_a`, `dx_reg_b`, `dx_reg_c`) that the C model writes.
 - A probe that WP cannot prove leaves the unit not proven; WP never refutes. Records pin and assume the proof
   semantics as the CBMC adapter does. The capacity fixture supplies loop invariants through the checked hint
   interface: 32 uncovered commands prove; an unproved named capacity precondition ends not proven with

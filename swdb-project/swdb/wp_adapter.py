@@ -78,6 +78,7 @@ class WpAdapter:
         except hint_check.HintSetError as exc:
             raise AdapterError(str(exc)) from None
         self.defines = tuple(defines)
+        proof_semantics.check_defines(self.defines)
 
     @classmethod
     def from_args(cls, args, script, *, library, contract, method):
@@ -169,7 +170,7 @@ class WpAdapter:
         contracts = self._dependencies(lowering, context)
         context["lowering"] = lowering
         context["extern_contracts"] = {
-            used["name"]: {"id": used["summary"], "sha256": self.library.content_sha256(used["summary"])}
+            used["c_name"]: {"id": used["summary"], "sha256": self.library.content_sha256(used["summary"])}
             for used in lowering.summaries if used["name"] not in covered}
         for model in context["pins"].get("models", []):
             context["extern_contracts"][model["id"]] = {k: model[k] for k in ("id", "sha256")}
@@ -459,7 +460,8 @@ class WpAdapter:
                                inventory=inventory, extern_contracts=context.get("extern_contracts"))
         context.setdefault("assumed", []).extend(outcome.get("assumptions", []))
         context["verdict_reading"] = outcome.get("reading")
-        if context.get("semantics") and outcome["verdict"] == "not_proven" and any(
+        if context.get("semantics") and outcome["verdict"] == "not_proven" and \
+                outcome["failure_class"] in {"timeout", "unknown", "solver_error"} and any(
                 g.get("status") != "valid" and "ghost_capacity" in str(g.get("goal", ""))
                 for g in outcome["goals"]):
             outcome["failure_class"] = "ghost_capacity"
