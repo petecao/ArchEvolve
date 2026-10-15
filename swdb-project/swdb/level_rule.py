@@ -36,7 +36,7 @@ from zoneinfo import ZoneInfo
 
 from swdb import artifacts, yamlio
 
-VERSION = "level-rule.4"   # 2026-10-15: C-model content and dependency counting
+VERSION = "level-rule.4"   # 2026-10-15: checked method parts and recursive model-dependency counting
 UNBOUNDED = "unbounded"
 ORDER = ("uncertified", "certified", "proven_within_bounds_threads_1", "proven_within_bounds_threads_k",
          "proven_unbounded")

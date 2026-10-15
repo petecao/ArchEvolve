@@ -42,7 +42,7 @@ import shutil
 import subprocess
 from pathlib import Path
 
-from swdb import c_lowering, cbmc_translator as tr, paths, proof_semantics, rss_watchdog, std_models, vocab, yamlio
+from swdb import c_lowering, cbmc_translator as tr, cpu_memory_admission, paths, proof_semantics, rss_watchdog, std_models, vocab, yamlio
 from swdb.proof import AdapterError, Verdict
 
 NAME = "cbmc"
@@ -196,6 +196,7 @@ class CbmcAdapter:
             context["pins"]["proof_semantics"] = {"id": model.entry, "sha256": model.sha256}
             context["settings"]["proof_semantics"] = {
                 "id": model.entry, "calls": list(externals),
+                "exit_check": "no pending device store before formal poststate observations; pending reads allowed",
                 "probes": [{k: p[k] for k in ("id", "function", "access", "line")} for p in lowering.probes]}
             context["model"] = model
         problem = std_models.method_problem(self.method, lowering)
@@ -203,6 +204,16 @@ class CbmcAdapter:
             raise AdapterError(problem)
         context["pins"].update(std_models.pins(lowering))
         context["lowering"] = lowering
+        refusal = cpu_memory_admission.check(lowering, covered)
+        if refusal:
+            context["settings"]["proof_semantics_admission"] = refusal
+            return self._not_proven("unsupported_construct",
+                "ordinary CPU memory interference with DX100 commands needs ticket 28's memory-hazard probes", context)
+        from swdb import bounded_initialization
+        admission = bounded_initialization.check(lowering, max(sizes.values(), default=0), library=self.library, model=model)
+        context["settings"]["bounded_initialization"] = admission
+        if admission["verdict"] != "passed":
+            return self._not_proven("unsupported_construct", admission["reason"], context)
         if lowering.std_models:
             context["settings"]["std_models"] = list(lowering.std_models)
             # The concrete growth policy follows libc++ 22.1.8. Clang's version does not identify its STL:
@@ -221,6 +232,12 @@ class CbmcAdapter:
         except tr.Untranslatable as exc:
             context["settings"]["untranslatable"] = str(exc)
             return self._not_proven("unsupported_construct", f"the CBMC translator: {exc}", context)
+        refusal = cpu_memory_admission.summary_refusal(self.records, [
+            pin["proof_record"] for pin in context["pins"].get("summaries", [])])
+        if refusal:
+            context["settings"]["proof_semantics_admission"] = refusal
+            context["settings"]["verifier_launched"] = False
+            return self._not_proven("memory_domain", "opaque semantics dependency needs a checked memory boundary", context)
         problem = self._differential(job, code, built, context)
         if problem:
             return problem
@@ -289,12 +306,13 @@ class CbmcAdapter:
             raise AdapterError(f"{unit.function} takes arrays ({', '.join(p[0] for p in pointers)}): the bounds need a "
                                "size bound on an integer parameter")
         logic = logic_of(self.library)
-        setup, state = (), ()
+        setup, state, finish = (), (), ()
         if code.model is not None:                    # ticket 27: ghost state g0, then havoc the tile elements
             setup = ("swdb_dx_init();",)
             state = proof_semantics.state_draws(self.library, code.model.entry, self.defines)
+            finish = ("swdb_dx_check_exit();",)
         harness, plan = tr.harness(unit, clauses, sizes=sizes, cap=cap, knobs=knobs, logic=logic, setup=setup,
-                                   state=state)
+                                   state=state, finish=finish)
         drop = stub_fault()
         stubs, summaries = {}, []
         for callee in code.functions:
@@ -640,7 +658,7 @@ def read_outcome(result, text):
             return outcome("not_proven", "parse_error", joined[:400])
         return outcome("not_proven", UNCLASSIFIED, f"CBMC exited {result.exit_code} with no property results")
     goals, unproven, failures = [], [], []
-    reach_ok, unwind_failed, real_failed, capacity, ghost = True, [], [], False, False
+    reach_ok, unwind_failed, real_failed, capacity, ghost, memory_domain = True, [], [], False, False, False
     for row in results:
         prop, status = row.get("property", ""), str(row.get("status", "")).lower()
         description = row.get("description", "")
@@ -662,6 +680,8 @@ def read_outcome(result, text):
             capacity = True
         elif description == proof_semantics.CAPACITY:      # ticket 27: never a refutation (S3)
             ghost = True
+        elif description == proof_semantics.MEMORY_DOMAIN:
+            memory_domain = True
         elif status == "failure":
             builtin = ".assertion." not in prop
             failures.append({"check": prop, "property": description, "function": location.get("function"),
@@ -673,6 +693,10 @@ def read_outcome(result, text):
     if ghost:
         return outcome("not_proven", "ghost_capacity", f"more uncovered DX100 commands than the ghost capacity "
                        f"({proof_semantics.CAPACITY} failed)", goals, unproven)
+    if memory_domain:
+        return outcome("not_proven", "memory_domain",
+                       "device memory overlap or a pending store at unit exit needs coverage or more precise semantics",
+                       goals, unproven)
     if unwind_failed or capacity:
         why = f"unwinding assertions failed: {', '.join(unwind_failed)}" if unwind_failed else \
             "the oracle of the bounded encoding ran out (more havocked values than its capacity)"

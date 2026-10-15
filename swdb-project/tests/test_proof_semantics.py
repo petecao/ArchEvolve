@@ -175,10 +175,14 @@ RANGE = ("requires 2 <= n <= 3 && \\valid(q + (0 .. n - 1)) && \\valid(offs + (0
          "requires \\forall integer k; 0 <= k < n - 1 ==> offs[k] <= offs[k + 1];")
 #: contract name: (function, pointer parameters, requires, assigns, size bound of n)
 FIXTURES = {
+    "summary_wrapper": ("dxf_summary_wrapper", [], "requires 0 <= n <= 2;", "\\nothing", 2),
+    "summary_caller": ("dxf_summary_caller", [], "requires 0 <= n <= 2;", "\\nothing", 2),
     "three_reads": ("dxf_three_reads", ["q", "base"], BASE.format(arr="base"), "\\nothing", 2),
     "size": ("dxf_size", ["q"], "requires 0 <= n <= 2 && \\valid(q + (0 .. n - 1));", "\\nothing", 2),
     "cpu_write": ("dxf_cpu_write", ["q", "base"], BASE.format(arr="base"), "\\nothing", 2),
     "cpu_memory_overlap": ("dxf_cpu_memory_overlap", ["q", "base"], BASE.format(arr="base"), "base[0 .. n - 1]", 2),
+    "device_memory_overlap": ("dxf_device_memory_overlap", ["q", "p"], BASE.format(arr="p"), "p[0 .. n - 1]", 2),
+    "store_exit": ("dxf_store_exit", ["q", "p"], BASE.format(arr="p"), "p[0 .. n - 1]", 2),
     "store_source_wait": ("dxf_store_source_wait", ["q", "p"], BASE.format(arr="p"), "p[0 .. n - 1]", 2),
     "transitive": ("dxf_transitive", ["q", "base"], BASE.format(arr="base"), "\\nothing", 2),
     "stall_condition": ("dxf_stall_condition", ["q", "p", "base"],
@@ -201,10 +205,16 @@ def _dx_contracts():
     from test_cbmc_adapter import _contract
     found = {}
     for name, (function, arrays, requires, assigns, _bound) in FIXTURES.items():
+        # The fixture supplies initialized input buffers. State this premise explicitly for WP's
+        # initialization policy; the bounded harness must justify it from its actual buffer fill.
+        requires += "\n" + "\n".join(f"requires \\initialized({a} + (0 .. n - 1));" for a in arrays)
         data = _contract(f"contract.fixture_dx_{name}", function, [
             ("pre", "legality", requires, "per_candidate"),
             ("post", "postcondition", f"assigns {assigns};\nensures \\result == 1;", "per_candidate")],
             [{"array": a, "shared_actions": [], "history_reads": False} for a in arrays])
+        if name == "summary_wrapper":
+            for clause in data["clauses"]:
+                clause["proof_placement"] = {"once": "self"}
         data["proof_unit"]["source"] = {"root": "library", "path": "proof_units/dx100_fixture_units.cc",
                                         "sha256": hashlib.sha256(UNITS.encode()).hexdigest()}
         found[name] = data
@@ -496,6 +506,7 @@ def test_wp_capacity_agrees_at_32_and_leaves_33_not_proven(dx, commands):
     hints = _hints("dxf_capacity.loop1.head",
         "loop invariant 0 <= t <= n;",
         "loop invariant 0 <= dx_count <= t;",
+        "loop invariant dx_memory_clear_after_stall(-1, -1, 0);",
         "loop invariant dx_reg_value[0] == 0 && dx_reg_value[1] == 1 && dx_reg_value[2] == 1;",
         "loop invariant dx_reg_writer[0] == -1 && dx_reg_writer[1] == -1 && dx_reg_writer[2] == -1;",
         "loop assigns t, " + ", ".join(locations) + ";",

@@ -15,7 +15,9 @@
      the uncovered producers of their input tiles, transitively, except through a range loop. Issuing a
      command first covers every uncovered command that names one of its destination tiles in any role (the
      dispatch stall); a constant written to a register first covers every uncovered command naming it.
-   - Not modeled in 0.1 (ticket 28): memory overlap between CPU accesses and uncovered commands, the region
+   Updated: 2026-10-15 ET. Ordinary CPU effects are rejected at admission; concurrent device memory
+   accesses involving a store are outside this model's checked domain, after dispatch-stall coverage.
+   - Not modeled in 0.1 (ticket 28): permissive memory overlap between CPU accesses and uncovered commands, the region
      stall, tile ownership as an obligation, condition tiles of loads and ALU commands, other ALU ops.
    Needs before it (swdb.proof_semantics.model_for writes them): the harness prelude (SWDB_CHECK, swdb_failed,
    swdb_jump), the size constants, DX_RULE(r), the ghost globals generated from ghost.acsl, and state.h. */
@@ -66,6 +68,14 @@ static void swdb_dx_init(void) {
   for (int t = 0; t < DX_NT; ++t) { dx_tile_owner[t] = -1; dx_tile_writer[t] = -1; dx_tile_readers[t] = 0u; dx_tile_size[t] = 0; }
   for (int r = 0; r < DX_NR; ++r) { dx_reg_owner[r] = -1; dx_reg_writer[r] = -1; dx_reg_named[r] = 0u; dx_reg_value[r] = 0; }
   dx_next_tile = 0; dx_next_reg = 0; dx_regions = 0; dx_count = 0;
+}
+
+/* A logical at-issue poststate may stand for caller-visible memory only after every store is covered.
+ * Pending read commands remain explicit state for capacity/composition; this does not discharge a
+ * caller's later hazards or storage lifetime obligations. */
+static void swdb_dx_check_exit(void) {
+  for (int s = 0; s < DX_K; ++s)
+    DX_CHECK(!((dx_live >> s) & 1u) || dx_kind[s] != DX_STORE_VECTOR, "swdb.dx100_memory_domain");
 }
 
 /* Live slots naming tile t in a counted role (src1, src2, dst1, dst2; not cond): what a wait on t covers. */
@@ -132,9 +142,18 @@ static int dx_dispatch(int kind, int dst1, int dst2, int src1, int src2, int con
   if (dst2 >= 0) stall |= dx_naming(dst2);
   dx_cover(stall);
   for (int s = 0; s < DX_K; ++s)
-    if ((dx_live >> s) & 1u)
+    if ((dx_live >> s) & 1u) {
+      /* Indirect stores write back a whole 64-byte line (IndirectAccess.cc:898-940,1145-1158).
+         Until ticket 28 models memory interference, reject concurrent memory operations involving a
+         writer, even when their selected words differ. This is a model-domain check, not a refutation. */
+      int incoming_memory = kind == DX_STREAM_LOAD || kind == DX_GATHER || kind == DX_STORE_VECTOR;
+      int pending_memory = dx_kind[s] == DX_STREAM_LOAD || dx_kind[s] == DX_GATHER ||
+                           dx_kind[s] == DX_STORE_VECTOR;
+      DX_CHECK(!(incoming_memory && pending_memory &&
+                 (kind == DX_STORE_VECTOR || dx_kind[s] == DX_STORE_VECTOR)), "swdb.dx100_memory_domain");
       DX_CHECK(((regs_out & (dx_regs_in[s] | dx_regs_out[s])) | (regs_in & dx_regs_out[s])) == 0u,
                DX_RULE("register_overlap"));
+    }
   int slot = -1;
   for (int s = 0; s < DX_K; ++s)
     if (slot < 0 && !((dx_live >> s) & 1u)) slot = s;

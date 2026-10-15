@@ -6,6 +6,8 @@ Spec: `.scratch/probata-proof-of-concept-2026-10-13/issues/27-proof-semantics-bf
 (the wait rule), map 16 item 10 (one ghost state), S3 (ghost capacity). Rocq: `library/rocq/probata/Reduction.v`.
 Code: `swdb/proof_semantics.py`; hooks in `swdb/formal_frame.py`, `swdb/c_lowering.py` (probes),
 `swdb/cbmc_adapter.py` and `swdb/cbmc_translator.py` (the bounded job). Tests: `tests/test_proof_semantics.py`.
+Ordinary-memory admission: `swdb/cpu_effects.py`, `swdb/cpu_memory_admission.py`;
+controls: `tests/test_proof_semantics_admission.py`.
 
 **In one line:** a proof that calls DX100 trusts one versioned proof semantics: one ACSL contract and one C
 model per call, values as if each command finished at issue, and a hazard check (a generated probe) at every
@@ -51,8 +53,36 @@ operators, and they are trusted (an assumption entry), never executed by check m
   command naming its register.
 - **Hazards (named checks):** `#unready_read@<probe>`, `#cpu_write_overlap@<probe>`, `#unready_size_read`,
   `#register_overlap` (F6), the operand rules; `swdb.ghost_capacity` (more than K uncovered commands).
-- **Not in 0.1 (ticket 28):** CPU-versus-DX100 memory overlap, the region stall and unregistered accesses (F2),
+- **Not in 0.1 (ticket 28):** permissive CPU/device and device/device memory overlap, the region stall and unregistered accesses (F2),
   tile ownership as an obligation, conditions on loads and ALU commands, other ALU operations.
+
+### Checked memory domain until ticket 28
+
+An indirect store copies a whole line, changes selected words, and emits a whole-line `WritebackDirty`
+(`IndirectAccess.cc:898-940,1145-1158` at `e4fc4af`). Consequently, disjoint selected elements do not establish
+absence of interference. This is a source-derived reason for conservative admission; no gem5 replay of a
+lost-update schedule is claimed here. `dx_in_footprint` remains a selected-element query, not a cache-line
+interference proof.
+
+- A compiler-owned inventory covers every lowered function, ordinary memory read/write, atomic operation,
+  modeled call and opaque summary. Both adapters reject ordinary CPU writes and opaque effects before a
+  verifier runs, including writes after a wait. Tile accesses already covered by generated probes keep their
+  existing hazard checks. The anchors report retains the inventory; collector and admission-policy source
+  participate in the C lowering tool hash, alongside the separately pinned input source.
+- For a unit with a device store, ordinary CPU reads must be in its acyclic prefix before every store-issue
+  top-level statement. Reads in a callee, a loop-containing unit or the same statement as a store are refused.
+  This admits the fixture's `old0` read before issue and rejects an ordinary read after issue, even after a wait.
+- Device commands have a separate checked domain: after destination-stall coverage, a store requires no
+  uncovered memory command, and a load requires no uncovered store. The bounded model checks live slots;
+  WP checks the named `memory_domain` precondition using a conservative direct-stall predicate. Extra
+  transitive coverage may leave a safe unit not proven. No no-interference premise is assumed.
+- Both adapters check that no device store remains pending at unit exit, before formal poststate observations.
+  WP adds the named `memory_domain_exit` postcondition; the bounded harness checks all live slots after the
+  unit call. Pending reads remain explicit state for the capacity case; callers still need hazard and lifetime
+  checks when composing such units. This boundary is checked, never an assumed no-interference premise.
+- A checked domain failure ends `not_proven / memory_domain`, without a counterexample. WP retains
+  every failing obligation and never refutes. Ticket 28 can replace these restrictions with checked overlap
+  rules and ordinary-memory probes; these restrictions do not claim its full memory model is implemented.
 
 ## Bounded jobs (`swdb prove --adapter cbmc`)
 

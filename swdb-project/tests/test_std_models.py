@@ -100,6 +100,7 @@ def _model_assumptions(record):
 # --- the fixture unit: vector members and std::pair ---------------------------------------------------------
 
 @needs_cbmc
+@pytest.mark.xfail(strict=True, reason="2026-10-15: ticket 25 precise bounded object/range initializedness policy pending")
 def test_a_unit_using_vector_members_and_pair_proves_and_its_c_and_cpp_agree_with_the_model_pinned(seed):
     from swdb import std_models
     record = seed.read(seed.prove("swdb_fixture_vec_max", MAX, {"threads": 1, "n": 3}))
@@ -122,6 +123,7 @@ def test_a_unit_using_vector_members_and_pair_proves_and_its_c_and_cpp_agree_wit
 # --- what the model catches ------------------------------------------------------------------------------------
 
 @needs_cbmc
+@pytest.mark.xfail(strict=True, reason="2026-10-15: ticket 25 precise bounded object/range initializedness policy pending")
 @pytest.mark.parametrize("function", ["swdb_fixture_vec_stale_data", "swdb_fixture_vec_stale_iterator"])
 def test_a_pointer_or_iterator_kept_across_a_growing_push_back_is_refuted_with_a_counterexample(seed, function):
     record = seed.read(seed.prove(function, STALE, {"threads": 1, "n": 1}))
@@ -134,6 +136,7 @@ def test_a_pointer_or_iterator_kept_across_a_growing_push_back_is_refuted_with_a
 
 
 @needs_cbmc
+@pytest.mark.xfail(strict=True, reason="2026-10-15: ticket 25 precise bounded object/range initializedness policy pending")
 def test_at_with_an_index_that_may_reach_size_is_refuted_and_the_same_call_behind_a_bounds_check_proves(seed):
     from swdb import std_models
     refuted = seed.read(seed.prove("swdb_fixture_vec_at", AT, {"threads": 1, "n": 2}))
@@ -144,6 +147,21 @@ def test_at_with_an_index_that_may_reach_size_is_refuted_and_the_same_call_behin
     proven = seed.read(seed.prove("swdb_fixture_vec_at_checked", AT, {"threads": 1, "n": 2}))
     assert proven["verdict"] == "proven"
     assert seed.swdb("validate").returncode == 0
+
+
+@needs_cbmc
+@pytest.mark.parametrize("function,contract,bounds", [
+    ("swdb_fixture_vec_max", MAX, {"threads": 1, "n": 3}),
+    ("swdb_fixture_vec_stale_data", STALE, {"threads": 1, "n": 1}),
+    ("swdb_fixture_vec_stale_iterator", STALE, {"threads": 1, "n": 1}),
+    ("swdb_fixture_vec_at", AT, {"threads": 1, "n": 2}),
+    ("swdb_fixture_vec_at_checked", AT, {"threads": 1, "n": 2}),
+])
+def test_bounded_models_refuse_until_initialized_object_ranges_are_checked(seed, function, contract, bounds):
+    record = seed.read(seed.prove(function, contract, bounds))
+    assert record["verdict"] == "not_proven" and record["failure_class"] == "unsupported_construct"
+    assert record["settings"]["bounded_initialization"]["verdict"] == "refused"
+    assert not any(r["name"].startswith(("cbmc_", "differential_")) for r in record["evidence"]["reports"])
 
 
 # --- assumption entries: units without the model -----------------------------------------------------------------

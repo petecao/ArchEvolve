@@ -40,7 +40,7 @@ import subprocess
 from dataclasses import replace
 from pathlib import Path
 
-from swdb import artifacts, c_lowering, framac, hint_check, paths, proof_semantics, proof_setup, rss_watchdog, std_models, terminal_release, vocab
+from swdb import artifacts, c_lowering, cpu_memory_admission, framac, hint_check, paths, proof_semantics, proof_setup, rss_watchdog, std_models, terminal_release, vocab
 from swdb.proof import MODEL_PREFIX, AdapterError, Verdict
 
 NAME = "wp"
@@ -186,7 +186,19 @@ class WpAdapter:
                 "probes": [{k: p[k] for k in ("id", "function", "access", "line")} for p in lowering.probes]}
             log.line(f"proof semantics: {entries[0]} (sha256 {sha}); calls {', '.join(called)}; "
                      f"{len(lowering.probes)} hazard probe(s)")
+        refusal = cpu_memory_admission.check(lowering, covered)
+        if refusal:
+            context["settings"] = {"tool": "frama-c-wp", "flags": [], "verifier_launched": False,
+                                   "proof_semantics_admission": refusal}
+            return self._not_proven("unsupported_construct",
+                "ordinary CPU memory interference with DX100 commands needs ticket 28's memory-hazard probes", context)
         contracts = self._dependencies(dependency_lowering, context)
+        refusal = cpu_memory_admission.summary_refusal(self.records, [
+            pin["proof_record"] for group in ("summaries", "models") for pin in context["pins"].get(group, [])])
+        if refusal:
+            context["settings"] = {"tool": "frama-c-wp", "flags": [], "verifier_launched": False,
+                                   "proof_semantics_admission": refusal}
+            return self._not_proven("memory_domain", "opaque semantics dependency needs a checked memory boundary", context)
         context["lowering"] = lowering
         context["extern_contracts"] = {
             used["c_name"]: {"id": used["summary"], "sha256": self.library.content_sha256(used["summary"])}
@@ -486,6 +498,11 @@ class WpAdapter:
                 dims = next((loc.count("[") for loc in locations if loc.split("[")[0] == array), 0)
                 extra.append(f"requires \\base_addr({name}) != \\base_addr(&{array}{'[0]' * dims});")
         semantics["unit_requires"] = list(extra)
+        # Checked exit condition, never an assumed entry premise. Every admitted WP memory command
+        # has a destination writer; pending reads remain allowed across this unit boundary.
+        semantics["unit_ensures"] = (["ensures memory_domain_exit: dx_memory_clear_after_stall(-1, -1, 0);"]
+                                     if set(semantics["calls"]) & cpu_memory_admission.STORE_CALLS else [])
+        rewritten += semantics["unit_ensures"]
         prelude = proof_semantics.wp_prelude(self.library, entry_id, semantics["calls"], self.defines)
         return extra + rewritten, [prelude]
 
@@ -558,6 +575,12 @@ class WpAdapter:
                 for g in outcome["goals"]):
             outcome["failure_class"] = "ghost_capacity"
             outcome["why"] = "the named DX100 ghost-capacity obligation is not proven"
+        if context.get("semantics") and outcome["verdict"] == "not_proven" and \
+                outcome["failure_class"] in {"timeout", "unknown", "solver_error"} and any(
+                g.get("status") != "valid" and "memory_domain" in str(g.get("goal", ""))
+                for g in outcome["goals"]):
+            outcome["failure_class"] = "memory_domain"
+            outcome["why"] = "the checked DX100 device-memory domain is not proven; ticket 28 models overlap"
         context["goals"], context["unproven"] = outcome["goals"], outcome["unproven"]
         log.line(f"outcome: {outcome['verdict']} {outcome['failure_class'] or ''} ({outcome['why']})")
         if outcome["verdict"] == "proven":
@@ -597,7 +620,8 @@ class WpAdapter:
         if semantics:                               # ticket 27: as the CBMC adapter records it
             pins["proof_semantics"] = {"id": semantics["id"], "sha256": semantics["sha256"]}
             fields.setdefault("settings", {})["proof_semantics"] = {
-                **context["semantics_settings"], "unit_requires": semantics.get("unit_requires", [])}
+                **context["semantics_settings"], "unit_requires": semantics.get("unit_requires", []),
+                "unit_ensures": semantics.get("unit_ensures", [])}
             assumptions.append({"kind": "proof_semantics", "reference": {"id": semantics["id"],
                                                                          "sha256": semantics["sha256"]},
                                 "sentence": f"The DX100 behaves as its proof semantics {semantics['id']} says: each "
@@ -689,7 +713,7 @@ def run_handler(failure_class, why, context):
         for name, path in context["reports"]:
             if name in ("wp_input", "c_lowering", "hints"):
                 shutil.copyfile(path, reproduction / Path(path).name)
-        if context.get("settings"):
+        if (context.get("settings") or {}).get("flags"):
             (reproduction / "command.txt").write_text(" ".join(context["settings"]["flags"]) + " wp_input.c\n")
         action["minimal_reproduction"] = sorted(p.name for p in reproduction.iterdir())
         action["regression_corpus"] = "add the case (input, class, cause) to tests/fixtures/proof/regression_corpus/"
