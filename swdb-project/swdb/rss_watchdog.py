@@ -137,10 +137,12 @@ class Result:
 
 
 def run(command, *, log, cap_bytes=DEFAULT_CAP_BYTES, timeout=None, cwd=None, env=None, core=None,
-        address_space_cap=None):
+        address_space_cap=None, stdin=None):
     """Run `command` in its own session under the watchdog; stdout and stderr go to `log`.
 
-    `core`: pin the command to this one CPU (Linux). `address_space_cap`: an `ulimit -v` in bytes."""
+    `core`: pin the command to this one CPU (Linux). `address_space_cap`: an `ulimit -v` in bytes.
+    `stdin`: an open file the command reads. On timeout the whole session's process group is killed, then
+    any descendant that left it (code review 2026-10-14)."""
     def setup():
         if core is not None:
             os.sched_setaffinity(0, {core})
@@ -149,7 +151,7 @@ def run(command, *, log, cap_bytes=DEFAULT_CAP_BYTES, timeout=None, cwd=None, en
 
     with open(log, "wb") as out:
         start = time.perf_counter()
-        process = subprocess.Popen(command, stdout=out, stderr=subprocess.STDOUT, cwd=cwd, env=env,
+        process = subprocess.Popen(command, stdin=stdin, stdout=out, stderr=subprocess.STDOUT, cwd=cwd, env=env,
                                    start_new_session=True, preexec_fn=setup)
         timed_out, status, usage = False, None, None
         with TreeWatch(process.pid, cap_bytes) as watch:
@@ -160,7 +162,12 @@ def run(command, *, log, cap_bytes=DEFAULT_CAP_BYTES, timeout=None, cwd=None, en
                     break
                 if timeout is not None and time.perf_counter() - start > timeout and not timed_out:
                     timed_out = True
-                    watch._kill(tree(process.pid))
+                    stragglers = tree(process.pid)
+                    try:
+                        os.killpg(process.pid, signal.SIGKILL)   # the session leader's group: start_new_session
+                    except (ProcessLookupError, PermissionError):
+                        pass
+                    watch._kill(stragglers)
                 time.sleep(0.02)
         process.returncode = os.waitstatus_to_exitcode(status)
         wall = time.perf_counter() - start

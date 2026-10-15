@@ -1,9 +1,9 @@
 # 41 — Rocq: composition theorem statement and definitions
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-14 22:40 ET (Composition.v second revision in progress, paused; see Progress (paused)); 2026-10-14 21:30 ET (`Reduction.v` revised under delegation: ticket 27 covers, see Later changes); 2026-10-14 14:40 ET (revised; approved by the main session under Yan-Ru's delegation; resolved); 2026-10-14 14:13 ET (Codex review: revise); 2026-10-14 14:07 ET (statements drafted); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-14 23:10 ET (reopened: Codex round t41c-1 counterexample stands; fix (a) decided, not applied); 2026-10-14 22:40 ET (Composition.v second revision in progress, paused; see Progress (paused)); 2026-10-14 21:30 ET (`Reduction.v` revised under delegation: ticket 27 covers, see Later changes); 2026-10-14 14:40 ET (revised; approved by the main session under Yan-Ru's delegation; resolved); 2026-10-14 14:13 ET (Codex review: revise); 2026-10-14 14:07 ET (statements drafted); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** resolved
+**Status:** ready-for-agent
 **Blocked by:** 09
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Concurrency" (composition theorem, shared-action kinds, memory model, OpenMP), "Formal-half language and the C++ subset" (sharing classes, YAML frame), "DX100 proof semantics" (reduction lemma, hazards), "Modules" (Rocq development), "What a proven verdict asserts" (assumption set, seven kinds), "Proof-of-concept plan" (Rocq side track), S9); decisions: [12](../../formal-verification-2026-10-09/issues/12-dx100-proof-semantics.md), [15](../../formal-verification-2026-10-09/issues/15-concurrency-proofs.md), [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md)
 **Time estimate:** about 4 days plus Yan-Ru's review
@@ -265,3 +265,12 @@ approved**, and the approval record above is unchanged (approved `Composition.v`
   42's `check_approved.py` hash and `statement.expected`, and resume 42.
 - **Note for ticket 42:** stays `needs-info`. Rebase onto `probata-poc/t41c` when it is approved;
   the only lemma-block change is in `t42_omp_ok_swap`.
+- **Decision** (main session under Yan-Ru's delegation, 2026-10-14 23:10 ET): fix **(a)**. F1's
+  exemption no longer covers a command that reads `LockProtected` data: such a command must be
+  covered inside its critical section. Reason: it is the smallest change that closes the run Codex
+  found, and it matches OpenMP 5.2's rule that a read of lock-protected data outside the lock is a
+  data race. Not applied yet. Reopened (status `ready-for-agent`) because the approved statement is
+  known false until this lands.
+- **Resume here:** branch from the integration tip (`probata-poc/t41c` is merged), apply (a) to
+  `Composition.v` and `HYPOTHESES.md`, recompile, run Codex adversarial rounds until one finds no
+  counterexample, record the new hash, then unblock 42.

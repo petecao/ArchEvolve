@@ -182,6 +182,10 @@ WP never refutes: a not-proven record has no counterexample.
 - Inside the holder's process tree (tests run under `verifier_run.py`) a job takes the nested lock
   `<lock>/nested` instead, so jobs there still never overlap.
 - The RSS cap is `SWDB_VERIFIER_RSS_CAP_BYTES` (default 8 GiB).
+- Slots (2026-10-14, Yan-Ru approved two on the Mac): the policy file `<lock without .lock>.slots` (one
+  integer, default 1) sets how many jobs may run at once; slot k > 1 is `<name>.slot<k>.lock`. The queue stays FIFO.
+- Real WP jobs need Unix sockets (Why3's prover server in TMPDIR): inside the Claude Code Bash sandbox every
+  prover call fails with a connection error, so run real-verifier tests with the sandbox off.
 
 ## The regression corpus
 

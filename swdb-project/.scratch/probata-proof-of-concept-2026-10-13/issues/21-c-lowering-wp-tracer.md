@@ -211,3 +211,11 @@ units are outside the core subset (ticket 24). Branch `probata-poc/t21`. Interfa
   the current method version of test seeds. `tests/test_wp_adapter.py::method_version` takes its lineup
   from the committed draft.
 - The side finding is fixed: `test_level_rule.py`'s proof-semantics fixtures now write ticket 20 entries.
+
+**Later changes** (2026-10-14 23:20 ET, main session, code review of the integration branch)
+- The verifier lock has N slots (policy file `/tmp/claude/swdb-verifier.slots`, 2 on the Mac, Yan-Ru
+  approved 2026-10-14 ~20:10 ET); `tests/test_verifier_lock.py`. The WP non-overlap test now uses a private
+  one-slot lock.
+- Finding, not a code change: inside the Claude Code Bash sandbox Why3 cannot open its server socket, so
+  every prover call fails and a 13-goal fixture takes ~410 s. Outside the sandbox a 150-byte TMPDIR proves
+  15/15, so the socket-path length is not a problem. Run real-verifier tests with the sandbox off.

@@ -55,6 +55,20 @@ MAX_RUNS = 20000
 VALUES = (-2, -1, 0, 1, 2)
 SCALAR_EXTREMES = (-2147483648, 2147483647)
 SANITIZERS = ("-fsanitize=address,undefined", "-fno-sanitize-recover=all")
+REPLAY_SECONDS = 120
+
+# CBMC builtin check kinds and the sanitizer reports of the same kind of fault (code review 2026-10-14).
+_FAULTS = {"overflow": ("overflow",), "undefined-shift": ("shift",), "division-by-zero": ("division by zero",),
+           "pointer_dereference": ("AddressSanitizer", "null pointer", "misaligned", "out of bounds"),
+           "array_bounds": ("AddressSanitizer", "out of bounds"), "pointer": ("AddressSanitizer", "null pointer")}
+
+
+def _same_fault(check, report):
+    """Whether a sanitizer report is the kind of fault the CBMC check names (None: an unmapped check kind)."""
+    kinds = [k for k in _FAULTS if f".{k}." in check]
+    if not kinds:
+        return None
+    return any(word in report for word in _FAULTS[kinds[0]])
 SENTENCES = {
     "c_lowering": "The C lowering tool (swdb lower, version {version}) lowers the C++ proof unit to C that behaves the "
                   "same; CBMC checks the C lowering, not the C++ (the differential run on the bounded domain is the "
@@ -445,13 +459,27 @@ class CbmcAdapter:
         if problem:
             return self._not_proven("parse_error", f"the C++ replay does not compile: {problem}", context)
         tries = []
-        for failure in outcome["failures"]:
-            line = " ".join(str(v) for v in failure["oracle"]) + "\n"
-            done = subprocess.run([binary], input=line, capture_output=True, text=True, timeout=120,
-                                  env={**os.environ, "ASAN_OPTIONS": "detect_leaks=0"})
-            inputs = _inputs(done.stdout)
-            failed = re.findall(r" fail=(\S+)", done.stdout)
-            sanitizer = "runtime error" in done.stderr or "AddressSanitizer" in done.stderr
+        cap = int(os.environ.get("SWDB_VERIFIER_RSS_CAP_BYTES") or DEFAULT_CAP_BYTES)
+        for index, failure in enumerate(outcome["failures"]):
+            # Code review 2026-10-14: the replay runs under the RSS watchdog, and its timeout is a record.
+            given = scratch / f"replay_input_{index}.txt"
+            given.write_text(" ".join(str(v) for v in failure["oracle"]) + "\n")
+            replay_log = scratch / f"replay_{index}.log"
+            with open(given) as stdin:
+                done = rss_watchdog.run([str(binary)], log=replay_log, cap_bytes=cap, timeout=REPLAY_SECONDS,
+                                        cwd=scratch, env={**os.environ, "ASAN_OPTIONS": "detect_leaks=0"},
+                                        stdin=stdin)
+            text = replay_log.read_text(errors="replace")
+            if done.timed_out or done.out_of_memory:
+                return self._not_proven("timeout" if done.timed_out else "out_of_memory",
+                                        f"the C++ replay of {failure['check']} exceeded its "
+                                        f"{'time' if done.timed_out else 'memory'} budget", context)
+            inputs = _inputs(text)
+            failed = re.findall(r" fail=(\S+)", text)
+            reports = [ln for ln in text.splitlines() if "runtime error" in ln or "AddressSanitizer" in ln]
+            sanitizer = bool(reports)
+            # A sanitizer trap is a real counterexample to the candidate's safety whichever CBMC check
+            # reported the trace, so it refutes; whether it is the same kind of fault is recorded for repair.
             if failure["builtin"]:
                 replayed = sanitizer
             else:
@@ -459,11 +487,13 @@ class CbmcAdapter:
             counterexample = {"property": failure["property"], "check": failure["check"],
                               "function": failure["function"], "inputs": inputs, "oracle": failure["oracle"],
                               "replay": {"form": "cxx", "replayed": replayed, "failed": failed,
-                                         "sanitizer": done.stderr.strip().splitlines()[0][:300] if sanitizer else None,
-                                         "end": (re.findall(r" end=(\S+)", done.stdout) or ["none"])[0]}}
+                                         "sanitizer": reports[0].strip()[:300] if sanitizer else None,
+                                         "sanitizer_matches_check": (_same_fault(failure["check"], reports[0])
+                                                                     if sanitizer and failure["builtin"] else None),
+                                         "end": (re.findall(r" end=(\S+)", text) or ["none"])[0]}}
             tries.append(counterexample)
             context["log"].line(f"replay of {failure['check']} ({failure['property']}): "
-                                f"{'replayed' if replayed else 'did not replay'}; native {done.stdout.strip()[:300]}")
+                                f"{'replayed' if replayed else 'did not replay'}; native {text.strip()[:300]}")
             if replayed:
                 context["settings"]["forms"] = {"c_lowering": "refuted", "cxx": "refuted (counterexample replayed)"}
                 return self._verdict("refuted", context, counterexample=counterexample)

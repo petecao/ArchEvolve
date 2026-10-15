@@ -120,6 +120,8 @@ targeted set (`pytest-final3.log`); the full rerun then finished: **118 passed, 
 `test_wp_adapter.py::test_two_real_wp_jobs_started_together_never_overlap`: the two jobs' start and end times
 overlap. Ticket 23 does not touch the lock, but the merged tip changed `swdb/verifier_lock.py` (tickets 35/61). The
 failure is not diagnosed yet (open for the main session: rerun that test alone on the integration tip).
+**Diagnosed 2026-10-14 23:10 ET (main session):** the test held the machine lock, which now has two slots
+(Yan-Ru approved 2026-10-14 ~20:10 ET; ticket 21, Later changes); it now checks exclusion on a private one-slot lock. Not a ticket 23 defect.
 
 **SAW to CBMC translations** (each an Assumption; not decided in the map beyond 13:19 ET's change)
 

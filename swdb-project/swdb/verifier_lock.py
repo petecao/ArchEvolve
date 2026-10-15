@@ -56,8 +56,7 @@ def slot_paths(lock=None):
 
 
 def _queue(lock):
-    name = lock.name[:-len(".lock")] if lock.name.endswith(".lock") else lock.name
-    return lock.with_name(f"{name}.queue")
+    return lock.with_name(f"{_stem(lock)}.queue")
 
 
 def _owner_pid(lock):
@@ -145,11 +144,6 @@ def _live(queue):
         else:
             (queue / name).unlink(missing_ok=True)
     return live
-
-
-def _first_live(queue):
-    live = _live(queue)
-    return live[0] if live else None
 
 
 def _clear_if_stale(lock):

@@ -3,6 +3,24 @@
 Created: 2026-10-14 00:45 ET
 Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Integration branch: `probata-poc/integration`.
 
+## Current state (resume here)
+
+Updated: 2026-10-14 23:20 ET. Session paused by Yan-Ru; integration merged into `yanrujhou_main`.
+
+- **Resolved:** 33 of 63 (see Context pointers). Ticket files hold each status.
+- **Paused, claimed** (each has a "Progress (paused)" section; resume from it):
+  1. 24 — C++ subset widening: inheritance and `omp simd` outside the subset (Yan-Ru decides), read after
+     `delete[]` (WP 33 lacks deallocation), full rerun of `tests/test_wp_subset.py`.
+  2. 25 — vector/pair models: on its own pushed branch `probata-poc/t25` (not merged, conflicts). Merge the
+     integration tip, adopt 24's `--model`/`c_model`, delete `models.py`, settle WP allocation, regenerate draft-2.
+  3. 27 — proof semantics: CBMC half merged; port the WP adapter change from commit `84563b2e`.
+  4. 07 — spike (c): fail so far after runs 1-12; box open to ~2026-10-27. Decide one more run or end as fail.
+- **41 reopened, fix decided:** apply fix (a) (see the 41 ticket, last Decision), Codex rounds until clean,
+  then unblock 42 (`needs-info`, 122 lemmas Qed).
+- **Real-verifier tests need the Bash sandbox off** (Why3 uses a Unix socket).
+- **Verifier slots:** 2 on the Mac (`/tmp/claude/swdb-verifier.slots`); recreate the file after a reboot.
+- **Next action:** start ticket 41's fix (a) on a branch from `yanrujhou_main`.
+
 ## Context pointers
 
 One line per resolved ticket: number, one-line result, commit.
@@ -49,3 +67,5 @@ One line per resolved ticket: number, one-line result, commit.
 - 41 Later changes 2026-10-14 21:30 ET: `Reduction.v` issue-stall and register-write covers (`probata-poc/t41b`, sha256 `72f4a79f…`), Codex round 5 found no counterexample; open region/access-class item for 45 and 28.
 - 61 — Whole-function equivalence: `swdb/cbmc_equivalence.py`, `swdb/cbmc_product.py` (CBMC on a product of two C lowerings); doc `format-v0.4-cbmc.md` "Whole-function equivalence"; `level-rule.2`; equality only for deterministic outputs, relation form is 62's work. Commit `ebfdd03f` (`probata-poc/t61`).
 - 07 continuation 3 (2026-10-14): runs 10-12 fail; run 10 proves every unit goal but leaves 9 Codex hint goals open; verdict fail so far, box open to ~2026-10-27. Evidence `/tmp/claude/probata-runs/t07e/`. Branch `probata-poc/t07e`.
+- 23 — Stub translator, fallbacks and check mode: final evidence merged; its one failing test was the WP non-overlap test under two verifier slots (fixed in the review). Branch `probata-poc/t23`.
+- Code review 2026-10-14 (main session): replay under the RSS watchdog, process-group kill on timeout, WP non-overlap test on a one-slot lock; see ticket 21 Later changes.
