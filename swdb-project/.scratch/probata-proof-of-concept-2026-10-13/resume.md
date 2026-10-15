@@ -4,7 +4,7 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 18:32 ET. **Implementation is active under the user's ongoing approval.**
+Updated: 2026-10-15 18:47 ET. **Implementation is active under the user's ongoing approval.**
 Integration `codex/probata-resume-20261015` is based on `yanrujhou_main` at `d94d629b`.
 Audited run23 documentation is published at `6dc94905`; reviewed method21 prototype
 is published at `14c2a298`. Only `swdb/c_lowering.py`
@@ -18,9 +18,9 @@ Drafts 1/2 remain immutable. No draft 3 or final production freeze exists.
 
 | Ticket / owner | Verified checkpoint | Active work |
 |---|---|---|
-| 07 / `ticket07` | Run 23 at `df19ff8a` finished unproven: 26 open (15 unit / 11 hint), 52.02 counted minutes, no final replay or wait-negative. Method21 passes 187 controls and independent review. | Fresh run 24 at `14c2a298` started 17:52:17 ET. Full baseline: 6.11 minutes, 254 ordinary goals / 103 timeouts, all 139 smoke checks pass. Fresh seeds finish at 8.64 minutes; independent pre-candidate prompt audit passes. Latest incumbent: 29 open / 253 ordinary goals. Search continues; final checks stay 30s. |
-| 24 / `ticket24` | Fresh finite native agreement accepted for 112,589 comparisons. Current float pair accepted; all five standard models prove. Original standard caller retains its pointer-origin timeout (46 ordinary Valid, 13 smoke Valid). | The reviewed6221 profile stopped at public library validation (8 vocabulary errors), before WP or ordinary dependency selection. New writable-object contract passes13controls including publicvalidate; review/freshactual pending. Node0 now runs remainingseven originalgroups/lifetime controls; original gap unchanged. |
-| 27 / `ticket27` | Historical safe 11/11 at `71771f09`. Fresh bounded/native profile passes 35/35 at `0e7f2327`: 12 CBMC proofs + 12 refutations with replay. Current negative profile: 7/13 accepted. | Capacityrepair atb9a passes3/3; allfourrecords audited. Node1generation603 continuesnegative7/13; node0generation577 runs24remaininggroups, both0e7. Freshsafe11case profile queued; disjoint5+6shards are prospectively reviewed planning only. |
+| 07 / `ticket07` | Run 24 ended unproven at 18:44:19 ET: 52.03 counted minutes, 29 open (14 unit / 15 hint), 41 records (5 mechanical / 36 Codex). No final replay/wait-negative; interrupted provider usage unknown. | Mac slot released; final independent audit and one separately guarded posthoc 30-second diagnosis pending. Method 22 prospective terminal replay schedule in a new worktree; no actual counted launch. |
+| 24 / `ticket24` | Fresh finite 112,589 native comparisons accepted; current float pair and 5 standard models accepted. Original standard caller retains pointer-origin timeout; first qualified profile `6221` refused before WP. Writable v2 public validation + 13 controls + independent review pass at `bf7a`. | Node 0 generation 577 evaluates 7 remaining original groups/lifetime controls at `0e7`; first atomic model has 6 ordinary + 1 smoke Valid. Qualified v2 actual queued on next free lane. |
+| 27 / `ticket27` | Current bounded/native 35/35 and repaired capacity 3/3 accepted. Current negative 9/13 independently audited at `868eff7b`; ordinary open/failed-smoke evidence retained. Historical safe 11/11 remains `717` only. | Node 1 generation 603 continues remaining 4 negatives at `0e7`. Fresh safe 11 queued as disjoint 5 + 6 shards, about 50 minutes each by historical case weights, excluding setup and runtime drift. |
 | 36 / dependency-gated | 122 compiler/scripted controls pass; 13 actual-WP cases excluded. | Waits on 27; runtime fallback research remains prospective. |
 
 At17:43:14 ET node0 generation572 released after the standard caller safe timeout;
@@ -83,22 +83,29 @@ Accepted evidence and preserved boundaries:
 - [Historical matrix](evidence/t24-historical-frontier-9b75-mbit10-20261015.json): Ring/allocation/DXC/class/OMP results retain their historical source; no upgrade to current0e7. [717 compiler provenance](evidence/t27-717-compiler-provenance-addendum-20261015.json) retains full frontend hashes and explicit link-DSO boundary.
 - [Run23 audit](evidence/t07-counted-23-20261015.json): frozen df19 and raw `/private/tmp/probata-t07-20261015-run23` retained.55 guarded reports, no terminal resource/cleanup failure. Legacy12 proposal requests include one edit refusal;11 candidate proof attempts are10 complete+1censored. Interrupted second-call usage is unknown, totals lower bounds. No final-smoke/wait-negative success is claimed.
 
-The coordinator owns merges, graph updates and remote dispatch. Ticket07 owns the
-one actual Mac verifier slot; ticket24's current local compiler controls are finished.
-All producer worktrees remain frozen for audit readers. New method21 work is in
-`/private/tmp/probata-resume-t07-method21`, separate from df19. Run24 raw is `/private/tmp/probata-t07-20261015-run24`, source-manifest SHA256
-`f5fbbe1aa3a63580f57e579975edf5da9d875ac7d7baaa3265e4f1b260445886`.
-Preflight checked 34 review pins, 30 freeze source pins, exact tool hashes, no
-active verifier/lease and 90.8 GiB free. Driver89738 birth1792101137.389743;
-whole budget ends around18:52:17 ET excluding any recorded lock wait. Its baseline-only10s
-limit is an explicit newly named plan; the observed baseline recovered 8.86 minutes versus run 23 (6.11 vs 14.97),
-with the changed diagnostic timeout/pass set retained as a comparison confound.
+The coordinator owns merges, graph updates and remote dispatch. Both remote lanes
+remain occupied, checked 18:45:57 ET: node 0 generation 577 / node 1 generation 603,
+legacy released, source clean detached `0e7`. Load 3.13, 15 GiB free on `/data1` and 94 GiB on `/data`;
+CPU verifier processes advance on both sockets. No third evaluation is dispatched.
+
+Run 24 source remains frozen at `14c` in `/private/tmp/probata-resume-t07-method21`;
+raw `/private/tmp/probata-t07-20261015-run24`. Independent final audit is finishing.
+There were 63 guarded resource reports (62 exit 0, one normal search-deadline exit 137);
+no terminal resource or owned-process cleanup failure. Its first provider turn
+never returned `turn.completed`, so usage is unknown, not zero. The 259 ordinary entries
+include 230 passed / 25 unknown / 4 timeouts; 6 of 9 postconditions remain open. Passing
+individual goals under open hints is not a unit proof. The final 8-minute reserve
+was unused because method 21 required zero diagnostic-open goals before replay.
+A separate posthoc full-30-second diagnostic may assess this scheduling gate; it cannot
+upgrade run 24, and its concrete hints/results cannot seed another fresh provider.
+Method 22 design/TDD/review proceeds separately; no blind method 21 rerun.
 
 Qualified std at6221 stopped before WP: public formal-half vocabulary excludes
 valid_read/base_addr. Its zero-row failure and unchanged inputs remain retained;
 no ordinary model eligibility/semantic result is claimed. V2 uses only allowed
 null/valid/current-or-predecessor clauses, a disclosed narrower writable-object
-domain;13controls now include actual public validation. Review/fresh WP remains.
+domain;13controls now include actual public validation, and independent final
+review passes atbf7a. Fresh WP/model eligibility/same-base assertion remain.
 
 Node0 generation577 started the remaining original matrix at18:27 ET using
 the existing0e7 checkout. Groups: atomics,maa_summary,dxc_summary,templates,
@@ -114,7 +121,7 @@ negative/fresh-safe profiles. The prospective two-shard safe plan covers all11
 without overlap; historical weights project about50minutes each plus setup
 if two lanes are available. No fresh-safe success or ETA guarantee is claimed. No full ticket
 or final method success is claimed from these checkpoints. This chat's30-minute
-heartbeat stays active; last full table 18:20 ET, next due 18:50 ET.
+heartbeat stays active; last full table18:20 ET, next due18:50 ET.
 Research-only notes remain `/private/tmp/probata-ticket25-resume-exploration.md`,
 `/private/tmp/probata-ticket25-lifetime-capabilities.md`,
 `/private/tmp/probata-ticket25-heap-bridge-tcb-addendum.md`,

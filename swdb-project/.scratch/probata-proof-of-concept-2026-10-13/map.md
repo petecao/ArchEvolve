@@ -5,7 +5,7 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-re
 
 ## Current state (resume here)
 
-Updated: 2026-10-15 18:32 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
+Updated: 2026-10-15 18:47 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
 Integration: `codex/probata-resume-20261015`; audited run 23 is published at
 `6dc94905`; method21 prototype merged at `14c2a298`. Remote actual jobs retain
 frozen `0e7f2327`; production lowerer SHA256
@@ -18,12 +18,14 @@ remains `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
   (46 ordinary Valid, 13 smoke Valid). A distinct object-domain contract/profile
   at `6221dad7` passed local review but stopped at public library validation
   before WP (8 vocabulary errors, zero rows). A new writable-object domain passes
-  13 controls including public validate; independent review/fresh actual still pending.
-  Original gap stays unchanged; later seven groups/lifetime controls did not run. Fresh finite native agreement remains independently accepted for
+  13 controls including public validate and independent dispatch review. Fresh actual
+  remains queued. Original gap stays unchanged; node0 generation577 is evaluating
+  the remaining seven groups/lifetime controls. Its first atomic model passes 6
+  ordinary + 1 smoke goals; the complete nine-model set is pending. Fresh finite native agreement remains independently accepted for
   112,589 defined comparisons. New checklist/corpus tests pass 24 + 15 controls;
   their test-only commit and independent review are merged at `5c0ace82`.
 - **27:** Historical `71771f09` safe profile passes 11/11, with 792 ordinary +
-  252 smoke Valid. Current negative profile has seven accepted hazard
+  252 smoke Valid. Current negative profile has nine accepted hazard
   controls of 13, each preserving its exact failed hazard precondition and Doomed
   smoke checks. Current capacity32 stops on two memory-domain/invariant obligations
   (45/47 ordinary, 11/11 smoke Valid); 33 and CBMC capacity cases did not run.
@@ -31,15 +33,14 @@ remains `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
   refutations. Reviewed capacity profile passes 3/3: WP32 all 49 ordinary + 11 smoke,
   WP33 ghost-capacity nonproof with 11 passing smoke, CBMC32/33 agreement.
   Node0 now runs the remaining original24 groups; fresh safe remains queued.
-- **07:** Run 23 finished unproven at 17:33:26 ET after 52.02 counted minutes,
-  26 open goals (15 unit / 11 hint), no qualifying final replay/negative.
-  [Audited result](evidence/t07-counted-23-20261015.json). Separately named method21
-  diagnostic-baseline10 passes 187 controls and independent prelaunch review.
-  Fresh run24 started 17:52:17 ET at `14c2a298`, all 30 freeze source pins
-  checked; actual launch and first-prompt audits pass. Full baseline takes 6.11
-  minutes (all 393 entries, 139 smoke checks passed), seeds finish at 8.64 minutes.
-  Latest incumbent has 29 open / 253 ordinary goals; search continues.
-  Final proof/smoke/negative stay 30 seconds.
+- **07:** Run 24 at `14c2a298` ended unproven at 18:44:19 ET after 52.03
+  counted minutes: 29 open (14 unit / 15 hint), 259 ordinary entries, 41 hint records
+  (5 mechanical / 36 Codex). No final replay or wait-negative ran. All 15 proposal
+  requests reached candidate WP; 14 completed and 1 was deadline-censored.
+  The interrupted provider turn has unknown token usage. Actual Mac slot released;
+  independent final audit and one separate posthoc full-30-second diagnosis are pending.
+  Prospective method 22 changes the final-replay schedule only after TDD/review;
+  no fresh counted run or success is claimed.
 - **36:** Dependency-gated by 27. Its 122 focused controls exclude 13 actual-WP
   cases. Drafts 1/2 remain immutable; final method freeze and held-out gates remain.
 
