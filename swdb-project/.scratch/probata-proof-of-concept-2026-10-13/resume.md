@@ -4,7 +4,7 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 17:58 ET. **Implementation is active under the user's ongoing approval.**
+Updated: 2026-10-15 18:15 ET. **Implementation is active under the user's ongoing approval.**
 Integration `codex/probata-resume-20261015` is based on `yanrujhou_main` at `d94d629b`.
 Audited run23 documentation is published at `6dc94905`; reviewed method21 prototype
 is published at `14c2a298`. Only `swdb/c_lowering.py`
@@ -13,15 +13,15 @@ differs in production from `71771f09`; its reviewed SHA256 remains
 Every evaluation retains its own source identity.
 
 **32 resolved / 28 ready-for-agent / 3 claimed**, derived from ticket frontmatter.
-The active frontier is **07, 24, 27**. Ticket25 waits on24; ticket36 waits on27.
-Drafts1/2 remain immutable. No draft3 or final production freeze exists.
+The active frontier is **07, 24, 27**. Ticket 25 waits on 24; ticket 36 waits on 27.
+Drafts 1/2 remain immutable. No draft 3 or final production freeze exists.
 
 | Ticket / owner | Verified checkpoint | Active work |
 |---|---|---|
-| 07 / `ticket07` | Run23 at `df19ff8a` finished unproven: 26 open (15 unit / 11 hint), 52.02 counted minutes, no qualifying final replay or wait-negative. Independent audit preserves actual counters and unknown interrupted-call usage. | Separately named method21 diagnostic-baseline10 passes 187 controls and independent review. Fresh run24 started17:52:17 ET at14c2a298, full60-minute budget; independent launch audit passed; first prompt audit pending. Fresh own pass set/inputs/conversation; final proof/smoke/negative stay30s. |
-| 24 / `ticket24` | Fresh finite native agreement accepted for112,589 defined comparisons. Current float safe48 ordinary+5 smoke Valid,12 init retained; seed invariant-establishment timeout and four failed smoke checks retained. All five fresh standard models prove. | Current caller safe stops on pointer-formation timeout:46 ordinary Valid+1timeout,13 smoke Valid,5 init. Diagnose exact origin/precondition before a new source freeze. Later groups/controls did not run. Checklist24 and corpus15 controls pass; test-only81ab6c06 and independent review2e1dcb5e merged at5c0ace82. |
-| 27 / `ticket27` | Historical717 safe11/11,792 ordinary+252 smoke Valid. Current negative4/13 accepted, retaining exact hazard precondition timeouts and Doomed smoke outcomes. | Node1 generation603 negative profile continues. Capacity32 has two memory-domain/invariant timeouts;33/CBMC cases unrun. Node0 generation574 bounded35 active; fresh safe11 follows, same frozen0e7 source. |
-| 36 / dependency-gated | Mandatory RTE/command/mutation controls integrated;122 compiler/scripted controls pass with13 actual-WP excluded. | Waits on27; runtime fallback research remains prospective. |
+| 07 / `ticket07` | Run 23 at `df19ff8a` finished unproven: 26 open (15 unit / 11 hint), 52.02 counted minutes, no final replay or wait-negative. Method21 passes 187 controls and independent review. | Fresh run 24 at `14c2a298` started 17:52:17 ET. Full baseline: 6.11 minutes, 254 ordinary goals / 103 timeouts, all 139 smoke checks pass. Fresh seeds finish at 8.64 minutes; independent pre-candidate prompt audit passes. Latest incumbent: 39 open / 221 ordinary goals. Search continues; final checks stay 30s. |
+| 24 / `ticket24` | Fresh finite native agreement accepted for 112,589 comparisons. Current float pair accepted; all five standard models prove. Original standard caller retains its pointer-origin timeout (46 ordinary Valid, 13 smoke Valid). | Separately named object-domain contract/profile reviewed and published at `6221dad7`, 11 controls pass. Its safe/seeded WP pair is queued; original gap record stays unchanged. Remaining seven construct groups and lifetime controls still require fresh actual acceptance. |
+| 27 / `ticket27` | Historical safe 11/11 at `71771f09`. Fresh bounded/native profile passes 35/35 at `0e7f2327`: 12 CBMC proofs + 12 refutations with replay. Current negative profile: 6/13 accepted. | Capacity repair at `b9a34bbb` runs on node 0 generation 575; node 1 generation 603 continues negatives at `0e7f2327`. Fresh safe 11-case profile remains queued. |
+| 36 / dependency-gated | 122 compiler/scripted controls pass; 13 actual-WP cases excluded. | Waits on 27; runtime fallback research remains prospective. |
 
 At17:43:14 ET node0 generation572 released after the standard caller safe timeout;
 whole guard exit1,1805.69s,peak1,010,438,144B,noOOM/whole timeout. Its five standard
@@ -41,20 +41,29 @@ Actual setup/launch passed; no OOM/whole timeout or source mutation. Record SHA2
 Agent27 diagnoses the inductive domain obligation; no failed goal is filtered.
 The33-command WP and CBMC cases were not reached.
 
-Node0 generation574 bounded/native profile started17:57:19 ET through the freshly
-fetched socket wrapper, one worker,8GiB whole tree,7200s whole guard (outer7320s).
-All197 production modules match physical files and frozen Git blobs; full runtime
-provenance matches the same0e7 producer.
-Node1 generation603 remains held on its original negative run. Legacy77 released.
-Live17:47 readback:18GiB free `/data1`,95GiB `/data`,source clean detached
-`0e7f232762e4555aa9435a3a3622923fad8ee928`. Both runs share this immutable producer:
-`/data1/yanruj/probata-composed-0e7f2327`. Raw roots under
-`/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-{t27-bounded,t27-negative}`.
-[Initial launch](evidence/composed-launch-0e7f2327-20261015.json),
-[capacity provenance](evidence/t27-current-capacity-launch-20261015.json),
-[bounded provenance](evidence/t27-current-bounded-launch-20261015.json).
-Planned8GiB raw per lane is coordinator-monitored, not a filesystem quota.
-Recheck leases/processes/disks before further dispatch; never start a third job.
+Node 0 generation 574 bounded/native completed 35/35, exit 0 at 18:06:10 ET.
+Inner guard: 528.402s, peak 369.8MB; outer: 530.426s, peak 421.1MB, no OOM/timeout.
+Independent audit: 180 references / 204 files, zero mismatches. The 24 CBMC records
+split into 12 proven and 12 refuted with source replay; these are bounded outcomes.
+[Final bounded audit](evidence/t27-composed-bounded-completed-independent-20261015.json).
+
+Node 0 generation 575 capacity rerun started 18:11:29 ET at clean detached
+`b9a34bbbcaa1670a7e4653f78e220da94af01a08`, one worker, 8GiB tree cap and
+1800s whole guard (outer 1920s). Source: `/data1/yanruj/probata-reviewed-b9a34bbb`;
+raw: `/data/yanruj/EvolveSWDB_runs/probata-reviewed-b9a34bbb-t27-capacity`.
+The one new ordinary writer-kind invariant must itself be established/preserved;
+all old hints, source, preconditions and assertions remain. Production/library
+bytes and full runtime identity match `0e7f2327`; 197 physical/Git module checks pass.
+[Repair launch audit](evidence/reviewed-t27-capacity-launch-b9a34bbb-20261015.json).
+
+Node 1 generation 603 continues its original negative profile at clean detached
+`0e7f232762e4555aa9435a3a3622923fad8ee928` in
+`/data1/yanruj/probata-composed-0e7f2327`; raw remains
+`/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative`.
+Legacy 77 is released. Live 18:12 readback: 16GiB free on `/data1`, 95GiB on `/data`;
+one additional full source worktree consumed about 2GiB. Raw stays on `/data`.
+Planned raw budgets are coordinator-monitored, not filesystem quotas. Recheck
+leases/processes/disks before dispatch; at most two jobs, one per socket.
 
 Accepted evidence and preserved boundaries:
 
@@ -72,16 +81,17 @@ All producer worktrees remain frozen for audit readers. New method21 work is in
 Preflight checked 34 review pins, 30 freeze source pins, exact tool hashes, no
 active verifier/lease and 90.8 GiB free. Driver89738 birth1792101137.389743;
 whole budget ends around18:52:17 ET excluding any recorded lock wait. Its baseline-only10s
-limit is an explicit newly named plan; recovery of9–10minutes is a projection until
-measured, and the changed baseline pass set is a declared scheduling confound.
+limit is an explicit newly named plan; the observed baseline recovered 8.86 minutes versus run 23 (6.11 vs 14.97),
+with the changed diagnostic timeout/pass set retained as a comparison confound.
 
-Next: review the separately named corrected standard-caller contract (original
-contract-gap failure retained), diagnose capacity induction, finish bounded/native
-and negative profiles, and run fresh safe acceptance. No full ticket
+Next: audit capacity acceptance, run the reviewed qualified standard caller pair
+without relabeling the original contract, complete the remaining original matrix,
+and finish negative/fresh-safe profiles. No full ticket
 or final method success is claimed from these checkpoints. This chat's30-minute
 heartbeat stays active; last full table 17:50 ET, next due 18:20 ET.
 Research-only notes remain `/private/tmp/probata-ticket25-resume-exploration.md`,
 `/private/tmp/probata-ticket25-lifetime-capabilities.md`,
+`/private/tmp/probata-ticket25-heap-bridge-tcb-addendum.md`,
 `/private/tmp/probata-ticket28-resume-exploration.md` and
 `/private/tmp/probata-t36-runtime-fallback-review.md`.
 
