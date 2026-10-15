@@ -83,6 +83,21 @@ def test_a_gapbs_project_header_is_not_a_standard_header_shadow(tmp_path):
     assert any(row["path"].endswith("/pvector.h") for row in certificate["headers"])
 
 
+def test_original_tu_preserves_the_drivers_c_compatibility_header_order(tmp_path):
+    """Linux driver defaults must not precede its captured libc++ search paths."""
+    source = tmp_path / "unit.cc"
+    source.write_text('#include <vector>\n#include <cstddef>\n#include <cctype>\n#include <cwctype>\n'
+        'int unit(int n) { std::vector<int> v(n,7); return v.size(); }\n')
+    out = tmp_path / "out"
+    lower(source, "unit", out)
+    certificate = json.loads((out / "unit.anchors.json").read_text())["stdlib_provenance"]
+    assert certificate["verdict"] == "passed", certificate["reason"]
+    # These libc++ C wrappers must precede the underlying compiler/platform headers.
+    for header in ("stddef.h", "ctype.h", "wctype.h"):
+        assert any(row["path"].endswith("/include/c++/v1/" + header)
+                   for row in certificate["headers"]), header
+
+
 @pytest.mark.parametrize("injected,verdict", [(["-DSWDB_HIDDEN_WRAPPER=1"], "refused"),
     (["-stdlib=libc++"], "passed")])
 def test_a_compiler_wrapper_cannot_hide_undeclared_definitions(tmp_path, injected, verdict):

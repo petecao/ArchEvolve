@@ -182,8 +182,12 @@ def _effective(tool, command, defines):
     context = {"frontend": job, "driver": {"path": str(binary), "sha256": _sha(binary)},
                "command_executable": {"path": str(wrapper), "sha256": _sha(wrapper)}}
     # Libclang's public parser accepts driver arguments, not direct cc1 arguments.
-    # Forward every resolved frontend argument verbatim, after normal driver defaults.
-    arguments = [job[0], *[v for arg in job[2:-1] for v in ("-Xclang", arg)]]
+    # 2026-10-15 ET: the resolved cc1 job already contains the complete ordered
+    # system search. A second driver's defaults can put C/GCC headers before
+    # libc++'s compatibility wrappers. Suppress only that automatic search;
+    # retain every captured target/resource/include argument verbatim.
+    arguments = [job[0], "-nostdinc", "-nostdinc++",
+                 *[v for arg in job[2:-1] for v in ("-Xclang", arg)]]
     return arguments, context
 
 def certify(tool, source, *, includes=(), defines=(), models=()):
