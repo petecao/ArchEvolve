@@ -1,0 +1,101 @@
+{
+  "adapter_log": {
+    "path": "/private/tmp/probata-standard-range-actual-20261015/pytest/wp-initialized-models0/runs-outside-repo/proof.model.std_copy_int.20261015t144047z.8ab4ebcb/adapter.log",
+    "sha256": "3e116615a37cda8fc7bd55d3a0cdf8ec2ae3fd92419952d62dc282bacbaaf04a"
+  },
+  "date": "2026-10-15 ET",
+  "launch_manifest_sha256": "18086abfe169b2ec95ed000db7423d09610dc8dabba111d877706bb1eb457018",
+  "frozen_source": "1f760ba897a812c35e7a515f971ff0962f301a28",
+  "record": "/private/tmp/probata-standard-range-actual-20261015/pytest/wp-initialized-models0/records/proofs/proof.model.std_copy_int.20261015t144047z.8ab4ebcb.yaml",
+  "record_sha256": "e4c9c209669422cf9a26182999d61ed1bc3acd9940a0963b47aa3d87c131c946",
+  "verdict": "proven",
+  "scope": "range-qualified body contract; not unrestricted opaque-pointer admission",
+  "bounds": {
+    "threads": 1,
+    "input_size": "unbounded"
+  },
+  "ordinary_valid": 36,
+  "smoke_valid": 7,
+  "all_valid": 43,
+  "range_obligations": [
+    "std_copy_range_entry",
+    "std_copy_range_access",
+    "std_copy_range_return"
+  ],
+  "pointer_formation_sites": 2,
+  "job_wall_seconds": 31.325979,
+  "wp_wall_seconds": 30.8,
+  "peak_rss_bytes": 384204800,
+  "canonical_model_sha256": "efcf958c7433473e0478d53b60d2aab648124e87df8e04f13b41f1087c94da26",
+  "contract_sha256": "f27314968466482710d239625c0d906574f5790ffe9bbb8891bdf4fc4635d73a",
+  "qualification_certificate_sha256": "7066f6486388c5fddf294cace66c5e504ea76ac30a91482f8c8930a968b803b5",
+  "qualification_checker": {
+    "id": "standard-range-model-check-1",
+    "sha256": "5c8d385b2e506c77db69cfc664b5d33dc2514cd14d09ef79a8a1810f4c16084f"
+  },
+  "reports": {
+    "standard_range_original": {
+      "name": "standard_range_original",
+      "path": "/private/tmp/probata-standard-range-actual-20261015/pytest/wp-initialized-models0/runs-outside-repo/proof.model.std_copy_int.20261015t144047z.8ab4ebcb/wp/standard_range_original.c",
+      "sha256": "aa3c4cfaad8c29e47a76b32d361f99ebf1c608417e96e849999256a9c2275dba"
+    },
+    "standard_range_model_certificate": {
+      "name": "standard_range_model_certificate",
+      "path": "/private/tmp/probata-standard-range-actual-20261015/pytest/wp-initialized-models0/runs-outside-repo/proof.model.std_copy_int.20261015t144047z.8ab4ebcb/wp/standard_range_model.json",
+      "sha256": "ef667b5071a8f7e8a4fd7cf6e97bd004027008c5521ba9484e3eb4bfc09c91f0"
+    },
+    "wp_input": {
+      "name": "wp_input",
+      "path": "/private/tmp/probata-standard-range-actual-20261015/pytest/wp-initialized-models0/runs-outside-repo/proof.model.std_copy_int.20261015t144047z.8ab4ebcb/wp/wp_input.c",
+      "sha256": "b43b5a7688d7b4c780d3399f9f9d1a52fa09009c5d85934824927d06ee9d3a14"
+    },
+    "wp_log": {
+      "name": "wp_log",
+      "path": "/private/tmp/probata-standard-range-actual-20261015/pytest/wp-initialized-models0/runs-outside-repo/proof.model.std_copy_int.20261015t144047z.8ab4ebcb/wp/frama-c.log",
+      "sha256": "3c446727001ee453e4457a0294277c3ebdeb6aeb0487d67d2a6bb87c8d4b79b3"
+    },
+    "wp_goals": {
+      "name": "wp_goals",
+      "path": "/private/tmp/probata-standard-range-actual-20261015/pytest/wp-initialized-models0/runs-outside-repo/proof.model.std_copy_int.20261015t144047z.8ab4ebcb/wp/wp-goals.json",
+      "sha256": "d4f2b9d8a18ef87d30248c0e12d903add6af89aee9d5fd0fca99378076228da6"
+    },
+    "wp_properties": {
+      "name": "wp_properties",
+      "path": "/private/tmp/probata-standard-range-actual-20261015/pytest/wp-initialized-models0/runs-outside-repo/proof.model.std_copy_int.20261015t144047z.8ab4ebcb/wp/wp-properties.csv",
+      "sha256": "98b3c396e6ff102dae6a2d32509e2301bbd34b7f4cf35ede754e51ae059d0726"
+    },
+    "wp_inventory": {
+      "name": "wp_inventory",
+      "path": "/private/tmp/probata-standard-range-actual-20261015/pytest/wp-initialized-models0/runs-outside-repo/proof.model.std_copy_int.20261015t144047z.8ab4ebcb/wp/wp-inventory.json",
+      "sha256": "7d6721dc65f19a7d022b80f00e45752d90290695622da5548f4590ea8989573d"
+    },
+    "wp_normalized": {
+      "name": "wp_normalized",
+      "path": "/private/tmp/probata-standard-range-actual-20261015/pytest/wp-initialized-models0/runs-outside-repo/proof.model.std_copy_int.20261015t144047z.8ab4ebcb/wp/wp-normalized.c",
+      "sha256": "b3c61cff97e78f6322a30fcba0197350a78a3d5d4a2a7d165b662247f40ae8b4"
+    }
+  },
+  "pytest_log": {
+    "path": "/private/tmp/probata-standard-range-actual-20261015/pytest.log",
+    "sha256": "1fbbb518d8d65a516bb10339ff74757e4478d8d6b6fff5f6d2a63731b0d71c1a"
+  },
+  "caller_boundary": "std_copy_int caller imports still refused pending exact typed-root/subobject/offset/capacity discharge",
+  "ticket_status": "ticket24 remains claimed; this is qualified standalone body proof only",
+  "standin_regression": {
+    "path": "/private/tmp/probata-standard-range-actual-20261015/standin.log",
+    "sha256": "b8355656a4edcd06d3eaea02d6b2137ac16bbfab3711a95556c3dcdd4651764a",
+    "result": "1 passed in 65.64s; controlled unknown WP result, no solver"
+  },
+  "audit_manifest": {
+    "path": "/private/tmp/probata-standard-range-actual-20261015/audit.json",
+    "sha256": "98589d4c1ba6832ac19332010cda4919157c2257074a341bf1b2826d1fa12253"
+  },
+  "audit_script": {
+    "path": "/private/tmp/probata-standard-range-actual-20261015/audit.py",
+    "sha256": "c0e0bed1398dde9b5f1001de4594b71e04f3ab4b6dede1445d955b9a19db5964"
+  },
+  "acceptance_test": "tests/test_wp_subset.py::test_models_prove_initialized_read_and_output_obligations[std_copy_int]",
+  "pytest_result": "1 passed in 102.13s",
+  "scope_note": "Actual Mac frozen1f760 standalone qualified body; not a remote replay or caller acceptance.",
+  "post_run_assertion_replay": "Enhanced qualification/source/all-goal/smoke acceptance assertions passed offline on retained actual record; source runtime unchanged."
+}

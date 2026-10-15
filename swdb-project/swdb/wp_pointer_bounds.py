@@ -731,14 +731,22 @@ def check_input(lowering, base, report, text):
             raise Refused("a checked pointer formation obligation is missing or duplicated")
 
 
-def model_view(text, scratch):
+def model_view(text, scratch, *, qualified=None):
     """Check actual generated C bodies too, without assigning them C++ null rules.
 
     Clang inventories every generated function definition. The view adds only
     assertions; it never normalizes away a C operation. In particular an actual
     C null+zero operation must fail, while a guarded C++ emulation can skip it.
     """
-    from swdb import c_lowering
+    from swdb import c_lowering, standard_range_model
+    if qualified is not None:
+        try:
+            standard_range_model.check_view(standard_range_model.NAME, qualified, scratch)
+        except standard_range_model.Refused as exc:
+            raise Refused(str(exc)) from None
+        expected = "\n".join([*c_lowering.HEADERS, qualified.text]) + "\n"
+        if text != expected:
+            raise Refused("qualified standard-range model input differs from the exact checked view")
     if re.search(r"^\s*#\s*(?:if|elif|ifdef|ifndef).*\b__FRAMAC__\b", text, re.M):
         raise Refused("generated C model has a Frama-C-specific preprocessing branch")
     source = Path(scratch) / "pointer_model_source.c"
@@ -827,7 +835,10 @@ def model_view(text, scratch):
             children[0].get("kind") == "ArraySubscriptExpr"
         if arithmetic or address or kind == "ArraySubscriptExpr":
             base = _origin_base(node)
-            if base is None or model_origins.get(base, function) is None:
+            origin = model_origins.get(base, function) if base is not None else None
+            if origin is None and qualified is not None and base is not None:
+                origin = standard_range_model.qualified_origin(qualified, function, _strip_origin(base), model_definitions)
+            if origin is None:
                 raise Refused("generated C model pointer arithmetic/indexing needs a certified array-object origin; opaque parameter domains are unsupported")
         if mutation:
             raise Refused("generated C model pointer mutation needs a checked transition policy")
@@ -878,5 +889,7 @@ def model_view(text, scratch):
         raw = raw[:at] + "".join(edits[at]).encode() + raw[at:]
     report = {"check": identity(), "kind": "generated_c_model", "source_sha256": hashlib.sha256(text.encode()).hexdigest(),
               "functions": sorted(names), "sites": sites}
+    if qualified is not None:
+        report["qualified_standard_range"] = qualified.certificate
     report["certificate_sha256"] = _hash(report)
     return raw.decode(), report
