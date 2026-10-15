@@ -158,3 +158,69 @@ does not replace any actual WP safe/seeded/RTE/initializedness/smoke acceptance.
 The current unsupported-construct source-location profile also passes 19/19 in
 11.44 s. It includes the original seven required refusal kinds; these are public
 lowerer controls, not actual positive WP proofs.
+
+## Public unsupported results and original allocation actuals
+
+The original seven named unsupported kinds now also pass through public
+`swdb prove --adapter wp`: **7/7 in 30.27 s**. Every record reads
+`not_proven` / `unsupported_construct`, retains the construct name and source
+line in its hashed handler report, and has no goals, WP input or verifier
+launch. The contract library contains a separate ordinary valid context, so
+an invalid library entry cannot substitute for candidate refusal. These are
+expected prelaunch negative controls, not actual solver jobs.
+
+Frozen `71771f09` also completes the original new-array safe/seeded pair.
+Safe has **42 ordinary and 7 smoke Valid**. Seeded `i<=n` has **40 ordinary
+Valid**, ordinary invariant-preservation and memory-access timeouts, **4 smoke
+Valid and 3 failed smoke** after the invalid fill. The three failed smoke
+checks remain explicit negative evidence; the seed is never reported proven.
+Both retain **11 RTE initialization goals**. A timeout is not a solver
+counterexample. Native execution of the invalid write is deliberately excluded.
+
+[Independent compact allocation audit](t24-original-allocation-pair-mbit10-20261015.json)
+checks both record identities, all 26 report instances, physical candidate
+artifacts, method/canonical-contract/setup identities, original clauses and
+hints, certificate/source correspondence, and all 980 physical frozen source
+files against SHA-256 and Git blobs. It reconstructs the exact terminal WP view
+from the recorded lowering and current checker, retaining the original invalid
+write. No audit errors remain. Its SHA-256 is
+`a099dd64a325439944a0e1c81e2e42030ddde6fa6d32e558ead3516469d00ef3`.
+Raw evidence stays at
+`/data/yanruj/EvolveSWDB_runs/probata-resume-t24-remaining-71771f09/`.
+
+Ticket22's accepted agreement criterion is CBMC on C plus finite native
+C++/C differential comparison and C++ counterexample replay. No new formal
+C++ equivalence theorem is required. The WP matrix and isolated concrete
+seed witnesses do not themselves complete the current all-construct agreement
+profile; the coordinator is arranging a separately pinned agreement-only
+profile using the accepted native domain/oracle, with undefined runs excluded
+and no new bounded-proof verdict implied. Whole-ticket acceptance remains open.
+
+The subsequent original `new_out_of_range` command hit the test helper's
+600-second outer subprocess timeout. Its matrix row contains an exception and
+no accepted record; this is a harness interruption, not a semantic negative
+result. The coordinator must check descendant cleanup before reusing the lane.
+The committed runner now has a bounded `--public-timeout-seconds` option
+(default 1800, range 600–7200), recorded in its manifest. Only the outer public
+command budget changes; per-goal solver limits, RSS cap, shared lock and
+acceptance checks stay intact. CLI help/argument validation is checked locally;
+fresh actual out-of-range evidence remains required.
+
+The explicit outer-budget control now exercises inherited `Seed.prove` through
+the actual public-helper boundary: forcing the transport back to 600 produces
+RED (`600 != 1800`), restoring forwarding produces GREEN. A second runner
+control proves that `--cases new_out_of_range,new_after_delete` omits completed
+safe/seeded pairs and unrelated dependencies while recording the exact selection
+and budget in the source manifest. Both pass (transport/selection only, no solver).
+Dependency proofs remain mandatory whenever a selected caller requires them.
+The narrow retry is `--groups new_array --cases new_out_of_range,new_after_delete`
+plus the explicit remaining `new_<control>` labels desired by the coordinator;
+each fresh output still rebuilds the original candidate seed and checks source.
+
+A final dependency control selects only the seeded standard-model caller: all
+five required model jobs still run, and a caller that names stale proof IDs
+must fail acceptance. Omitting seeded dependency validation produces RED;
+applying the same ID/content checks to both caller variants produces GREEN.
+Summary callers also compare the pinned content hash with the newly proven
+summary record's code pin. The focused runner transport/selection/dependency
+profile passes **3/3 in 0.36 s**, using stand-ins only.
