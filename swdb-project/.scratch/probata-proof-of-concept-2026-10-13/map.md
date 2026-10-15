@@ -5,30 +5,38 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-re
 
 ## Current state (resume here)
 
-Updated: 2026-10-15 17:31 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
-Integration: `codex/probata-resume-20261015`; reviewed atomic/enum repair and float
-hints published at `7c06e9ed`. Fresh actual jobs use frozen `0e7f2327`.
-Mac counted run 23 stays frozen at `df19ff8a`, provider active after fresh baseline/seeds.
+Updated: 2026-10-15 17:49 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
+Integration: `codex/probata-resume-20261015`; audited run 23 is published at
+`6dc94905`. Remote actual jobs retain frozen `0e7f2327`; production lowerer SHA256
+remains `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
 [Current resume and evidence](resume.md).
 
-- **24:** Historical Ring/allocation/DXC/class/OMP pairs audited; safe float retained
-  three initializedness timeouts. Two field invariants pass RED/GREEN and review.
-  Atomic/enum repair passes 115 controls and independent review; fresh full original
-  matrix, dependencies and lifetime controls remain. Fresh finite agreement passes
-  independent audit of 112,589 defined comparisons. Current float safe proves all
-  48 ordinary + 5 smoke goals with 12 initialization obligations retained; seed
-  remains not proven at invariant establishment, with four failed smoke checks retained.
-- **27:** Historical `71771f09` safe profile passes 11/11: 792 ordinary + 252 smoke
-  Valid, 15,495 physical references audited without mismatch. Fresh negative,
-  capacity, bounded/native and safe profiles remain open. Current first negative
-  passes its exact unready-read control; twelve cases remain in that profile.
-- **07:** Run 23 active since 16:41 ET, provider launched 16:58:55 ET. Actual
-  prompt/argv/tool/source audit passes; budget ends around 17:41 ET. No qualifying proof.
-- **36:** Still dependency-gated. 122 focused controls pass; 13 actual-WP cases
-  excluded. Drafts 1/2, final method freeze and held-out gates remain.
+- **24:** Current float safe proves 48 ordinary + 5 smoke goals; seed retains its
+  invariant timeout and four failed smoke checks. All five fresh standard models
+  pass. The standard caller safe case stops on one pointer-formation timeout
+  (46 ordinary Valid, 13 smoke Valid); diagnosis is active and later groups did
+  not run. Fresh finite native agreement remains independently accepted for
+  112,589 defined comparisons. New checklist/corpus tests pass 24 + 15 controls;
+  their test-only commit is under independent review.
+- **27:** Historical `71771f09` safe profile passes 11/11, with 792 ordinary +
+  252 smoke Valid. Current negative profile has three accepted unready-read
+  controls of 13, each preserving its exact failed hazard precondition and Doomed
+  smoke checks. Current capacity profile is active on the freed node 0;
+  bounded/native and fresh safe profiles follow.
+- **07:** Run 23 finished unproven at 17:33:26 ET after 52.02 counted minutes,
+  26 open goals (15 unit / 11 hint), no qualifying final replay/negative.
+  [Audited result](evidence/t07-counted-23-20261015.json). Separately named method21
+  diagnostic-baseline10 passes 187 local controls and is under independent
+  prelaunch review; no new actual run yet. Final proof/smoke/negative stay 30 seconds.
+- **36:** Dependency-gated by 27. Its 122 focused controls exclude 13 actual-WP
+  cases. Drafts 1/2 remain immutable; final method freeze and held-out gates remain.
 
-Both remote lanes started 17:13 ET: node 0 generation 572 full original matrix,
-node 1 generation 603 negative profile. [Launch audit](evidence/composed-launch-0e7f2327-20261015.json).
+Node 0 generation 572 released after the caller timeout at 17:43:14 ET.
+Node 0 generation 573 started the three capacity controls at 17:46:58 ET;
+node 1 generation 603 continues the negative profile. Both use unchanged
+`0e7f2327` through socket leases and guarded process trees.
+[Initial launch audit](evidence/composed-launch-0e7f2327-20261015.json),
+[capacity launch](evidence/t27-current-capacity-launch-20261015.json).
 No whole ticket closes from partial or historical results. This chat's 30-minute
 heartbeat remains active; old chat paused. [Ticket index](ticket-status-20261015.md).
 

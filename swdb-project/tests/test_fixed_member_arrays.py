@@ -1,25 +1,27 @@
 """Exact automatic fixed-array subobjects through lower/prepare, 2026-10-15 ET."""
 from pathlib import Path
 import pytest
+import yaml
 from swdb import c_lowering, wp_pointer_bounds
 
 pytestmark = pytest.mark.skipif(bool(c_lowering.locate().missing), reason='Clang22.1.8 required')
-ORIGINAL = Path(__file__).parent/'fixtures/proof/lowering/templates.cc'
+CASE = yaml.safe_load((Path(__file__).parent/'fixtures/proof/regression_corpus/wp-fixed-member-array-local-origin.yaml').read_text())
+ORIGINAL = Path(__file__).resolve().parents[1]/CASE['input']['source']
 
 
 def lower(tmp_path, text=None):
     path = tmp_path/'templates.cc'
     path.write_text(ORIGINAL.read_text() if text is None else text)
-    return c_lowering.lower(path, 'swdb_template_unit')
+    return c_lowering.lower(path, CASE['input']['function'])
 
 
 def test_original_two_instantiations_keep_exact_fixed_member_subobjects(tmp_path):
     lowered = lower(tmp_path)
     report = wp_pointer_bounds.check(lowered)
     cert = report['member_windows']
-    assert cert['input_premises_added'] == []
-    assert cert['protocol'] == 'closed-automatic-fixed-member-arrays-1'
-    assert {(a['origin']['element_type'],a['origin']['elements']) for a in cert['accesses']} == {('int',3),('long',2)}
+    assert cert['input_premises_added'] == CASE['expected']['input_premises_added']
+    assert cert['protocol'] == CASE['expected']['protocol']
+    assert {(a['origin']['element_type'],a['origin']['elements']) for a in cert['accesses']} == {tuple(v) for v in CASE['expected']['subobjects']}
     assert cert['entry'] == 'swdb_template_unit'
     assert set(cert['inline_functions']) == {'twice_int','twice_long','Ring_int_3_put','Ring_int_3_get','Ring_long_2_put','Ring_long_2_get'}
     text, _ = wp_pointer_bounds.prepare(lowered, lowered.text)

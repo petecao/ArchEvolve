@@ -1,0 +1,18 @@
+# Created: 2026-10-15 ET. Public lower/check replay: test_terminal_overrun.py.
+id: wp-terminal-overrun-fill
+adapter: wp_terminal_overrun
+input:
+  source: tests/fixtures/proof/lowering/new_array.cc
+  cases: [[swdb_new_unit, true], [swdb_new_out_of_range, false]]
+historical_failure_class: unsupported_construct
+cause: >-
+  The original canonical <= n fill was refused before its invalid write reached
+  an ordinary RTE obligation. Admit the structural allocation/fill/release
+  protocol while retaining the exact <= n comparison and every write. This
+  certifies origin/lifetime eligibility, never bounds validity or initializedness.
+expected:
+  initialization_loop_comparison: <=
+  invalid_write_retained: true
+replay: tests/test_terminal_overrun.py::test_original_overrun_fill_retains_exact_allocation_origin_and_invalid_write
+fixed_by_commit: b801e5a
+historical_evidence: .scratch/probata-proof-of-concept-2026-10-13/issues/24-cpp-subset-widening.md
