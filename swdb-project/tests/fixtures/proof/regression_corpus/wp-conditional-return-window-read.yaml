@@ -1,0 +1,20 @@
+# Created: 2026-10-15 ET. Public lower/prepare replay: test_conditional_window_reads.py.
+id: wp-conditional-return-window-read
+adapter: wp_conditional_window_reads
+input:
+  expression: 'x + (n > 0 ? a[0] : 0)'
+  array: a
+  extent: n
+  contract: contract.fixture_conditional
+historical_failure_class: unsupported_construct
+cause: >-
+  A pure conditional return reads an array only on its evaluated branch.
+  Guard the ordinary access assertion by the evaluation path rather than
+  asserting a read for the skipped branch. Do not weaken bounds or add an
+  input premise; effects and unsupported short-circuit forms remain refused.
+expected:
+  evaluation_path: ['(((integer)n) > 0)']
+  input_premises_added: []
+replay: tests/test_conditional_window_reads.py::test_conditional_return_checks_only_the_evaluated_array_branch
+fixed_by_commit: 8a3bf8f
+historical_evidence: .scratch/probata-proof-of-concept-2026-10-13/issues/24-cpp-subset-widening.md
