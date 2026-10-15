@@ -378,6 +378,12 @@ def prove_wp(dx, name, *defines, hints=None):
     import json
     function = FIXTURES[name][0]
     extra = [arg for define in defines for arg in ("--define", define)]
+    if hints is None and name in {"store_source_wait", "stall_condition", "condition_wait"}:
+        from test_wp_adapter import _hints
+        statement = 7 if name == "store_source_wait" else 9
+        hints = _hints(f"{function}.s{statement}.before",
+            "assert \\forall integer k; 0 <= k < dx_tile_size[0] && k < DX_TS ==> "
+            "0 <= (unsigned int)dx_tile_data[0][k] < n;")
     if hints:
         hint_path = dx.root / "wp-hints.yaml"
         hint_path.write_text(yaml.safe_dump({"hints": hints}, sort_keys=False))
@@ -419,6 +425,8 @@ WP_FAULTS = [("three_reads", "SWDB_EARLY_READ_1", "swdb_tile_read_probe"),
 def test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics(dx, name):
     record = prove_wp(dx, name)
     assert record["verdict"] == "proven", (record.get("failure_class"), record.get("unproven_properties"))
+    if name in {"store_source_wait", "stall_condition"}:
+        assert record["hint_check"]["verdict"] == "accepted", record["hint_check"]
     assert record["pins"]["proof_semantics"]["id"] == ENTRY
     assert {a["kind"] for a in record["assumptions"]} >= {"proof_semantics", "reduction"}
     probes = record["settings"]["proof_semantics"]["probes"]

@@ -47,7 +47,6 @@ PROVERS = ("alt-ergo", "z3", "cvc5")
 WHY3_NAMES = {"Alt-Ergo": "alt-ergo", "Z3": "z3", "CVC5": "cvc5"}
 FROZEN = (("-wp-cache", "none"), ("-wp-model", "+real"))
 MACHDEP = ("-machdep", "x86_64")
-LEMMAS_OUT = ()    # ticket 26: logic-library lemmas are proven once, with the method (prove-logic)
 ALLOCATION_MODEL = "swdb_alloc_"   # ticket 24: new[] and delete[] rest on "allocation succeeds" (an assumption)
 DEFAULT_WALL_SECONDS = 3600
 DEFAULT_CAP_BYTES = 8 * 2**30                    # O9: the ~8 GB RSS watchdog
@@ -172,6 +171,8 @@ class WpAdapter:
         context["extern_contracts"] = {
             used["name"]: {"id": used["summary"], "sha256": self.library.content_sha256(used["summary"])}
             for used in lowering.summaries if used["name"] not in covered}
+        for model in context["pins"].get("models", []):
+            context["extern_contracts"][model["id"]] = {k: model[k] for k in ("id", "sha256")}
         if context.get("semantics"):
             semantics = context["semantics"]
             pin = {k: semantics[k] for k in ("id", "sha256")}
@@ -424,7 +425,7 @@ class WpAdapter:
         inventory = scratch / "wp-inventory.json"
         report_module = proof_setup.compile_report_module(scratch)
         settings_flags = [*tools["flags"], *MACHDEP, "-wp-prover", ",".join(PROVERS), "-wp-timeout",
-                          str(tools["seconds"]), "-wp-par", "1", "-wp-smoke-tests", *LEMMAS_OUT, *context.get("extra_flags", [])]
+                          str(tools["seconds"]), "-wp-par", "1", "-wp-smoke-tests", *context.get("extra_flags", [])]
         command = [*framac.locate().command, *settings_flags, "-wp-report-json", goals_json.name, "wp_input.c",
                    "-then", "-load-module", str(report_module), "-report", "-report-untried",
                    "-report-csv", properties_csv.name]
