@@ -381,3 +381,15 @@ through the independent AST check, even though raw source token reservation cann
 name. Combined helper/DX/source-span controls pass **53/53 in 7.79s**. This standalone module
 remains staged: no adapter helper admission or new actual WP claim is added. Evidence:
 `evidence/helper-capture-merge-review-20261015.json`.
+
+### Ordered nested entry reads — 2026-10-15 ET
+
+The original explicit-window three-read candidate now has actual WP evidence:
+112 ordinary properties Valid and all 31 smoke tests passing at `a185bc8b`.
+The checked helper view is followed by a separately certified once-only nested
+index capture; inner bounds/initializedness and outer numerical bounds remain
+independent obligations. Final stricter storage/attribute policy `18e7a7f0` passes
+60 structural/helper controls and eight public positive/negative/tamper controls.
+See [ticket 36's scoped checkpoint](36-proof-setup-check-and-verdict-reading.md#nested-entry-read-checkpoint--2026-10-15-et)
+and [the hash-checked manifest](../evidence/wp-nested-entry-reads-20261015.json).
+This does not close the remaining acceptance matrix or freeze production method 3.

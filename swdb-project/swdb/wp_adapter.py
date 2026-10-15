@@ -40,7 +40,7 @@ import subprocess
 from dataclasses import replace
 from pathlib import Path
 
-from swdb import artifacts, c_lowering, cpu_memory_admission, framac, helper_windows, hint_check, paths, proof_semantics, proof_setup, rss_watchdog, standard_model_view, standard_range_model, std_models, terminal_release, vector_ownership, vocab, wp_pointer_bounds
+from swdb import artifacts, c_lowering, cpu_memory_admission, framac, helper_windows, nested_entry_reads, hint_check, paths, proof_semantics, proof_setup, rss_watchdog, standard_model_view, standard_range_model, std_models, terminal_release, vector_ownership, vocab, wp_pointer_bounds
 from swdb.proof import MODEL_PREFIX, AdapterError, Verdict
 
 NAME = "wp"
@@ -219,7 +219,7 @@ class WpAdapter:
                         "helper_view_source": {"id": view.path.name, "sha256": lowering.source_sha256}}
                     context["helper_windows"] = {"source": source, "view": view, "options": helper_options,
                         "original_lowering": original_lowering, "original_kwargs": source_kwargs,
-                        "effective_kwargs": effective_kwargs, "original_path": original_path,
+                        "effective_kwargs": effective_kwargs, "effective_lowering": lowering, "original_path": original_path,
                         "original_source_text": source.read_text(), "certificate_path": certificate_path,
                         "certificate_text": certificate_text, "pins": helper_pins}
                     context["pins"].update(helper_pins)
@@ -227,10 +227,48 @@ class WpAdapter:
                         ("helper_original_lowering", original_path), ("helper_original_anchors", original_anchors),
                         ("helper_view_source", view.path), ("helper_windows_certificate", certificate_path)]
                     context["pointer_source_plan"] = {"source": str(view.path), "kwargs": effective_kwargs}
+            try:
+                wp_pointer_bounds.check(lowering)
+                nested_needed = False
+            except wp_pointer_bounds.Refused:
+                nested_needed = bool(unit.get("array_domains"))
+            if nested_needed:
+                if self.hints_path:
+                    raise nested_entry_reads.Refused("source-anchored hints are outside the checked nested-read slice")
+                nested_source = context.get("helper_windows", {}).get("view")
+                nested_source = nested_source.path if nested_source else source
+                nested_kwargs = context.get("helper_windows", {}).get("effective_kwargs", source_kwargs)
+                nested_options = {"defines": self.defines, "includes": nested_kwargs.get("includes", ()),
+                                  "entry_windows": lowering.pointer_bounds.get("entry_windows", {})}
+                nested_view = nested_entry_reads.prepare(nested_source, job.unit.function, **nested_options,
+                                                        scratch=wp_dir / "nested-source")
+                if nested_view:
+                    nested_entry_reads.check_view(nested_source, job.unit.function, nested_view, **nested_options)
+                    before_nested = lowering
+                    effective_kwargs = {**source_kwargs, "includes": nested_view.includes}
+                    lowering = c_lowering.lower(nested_view.path, job.unit.function, **effective_kwargs)
+                    original_path, original_anchors = before_nested.write(wp_dir / "nested-original")
+                    certificate_path = wp_dir / "nested_entry_reads.json"
+                    certificate_text = json.dumps(nested_view.certificate, indent=2) + "\n"
+                    certificate_path.write_text(certificate_text)
+                    nested_pins = {**nested_view.pins,
+                        "nested_read_original_lowering": {"id": original_path.name, "sha256": before_nested.sha256},
+                        "nested_read_original_source": {"id": nested_source.name, "sha256": before_nested.source_sha256},
+                        "nested_read_view_source": {"id": nested_view.path.name, "sha256": lowering.source_sha256}}
+                    context["nested_entry_reads"] = {"source": nested_source, "view": nested_view,
+                        "options": nested_options, "original_lowering": before_nested,
+                        "original_kwargs": nested_kwargs, "effective_kwargs": effective_kwargs,
+                        "original_path": original_path, "original_source_text": nested_source.read_text(),
+                        "certificate_path": certificate_path, "certificate_text": certificate_text, "pins": nested_pins}
+                    context["pins"].update(nested_pins)
+                    context["reports"] += [("nested_original_source", nested_source),
+                        ("nested_original_lowering", original_path), ("nested_original_anchors", original_anchors),
+                        ("nested_view_source", nested_view.path), ("nested_entry_reads_certificate", certificate_path)]
+                    context["pointer_source_plan"] = {"source": str(nested_view.path), "kwargs": effective_kwargs}
             if (unit.get("array_domains") or (lowering.pointer_bounds or {}).get("owner") or
                     any(row.get("kind") in {"call", "producer", "import"} for row in lowering.pointer_bounds.get("sites", []))):
                 context.setdefault("pointer_source_plan", {"source": str(source), "kwargs": source_kwargs})
-        except helper_windows.Refused as exc:
+        except (helper_windows.Refused, nested_entry_reads.Refused) as exc:
             context["settings"] = {"tool": "frama-c-wp", "flags": [], "verifier_launched": False,
                                    "helper_windows": {"verdict": "refused", "reason": str(exc)}}
             return self._not_proven("unsupported_construct", str(exc), context)
@@ -249,6 +287,10 @@ class WpAdapter:
             view = context["helper_windows"]["view"]
             context["assumed"].append({"kind": "trusted_tool", "reference": helper_windows.identity(),
                                        "sentence": view.assumption["text"]})
+        if context.get("nested_entry_reads"):
+            nested_view = context["nested_entry_reads"]["view"]
+            context["assumed"].append({"kind": "trusted_tool", "reference": nested_entry_reads.identity(),
+                                       "sentence": nested_view.assumption["text"]})
         context["pins"].update(std_models.pins(lowering))
         if lowering.std_models:
             probe = subprocess.run([*c_lowering.locate().command, "-dM", "-E", "-x", "c++",
@@ -337,7 +379,8 @@ class WpAdapter:
                 "reason": "imported array-window summaries require checked caller-domain discharge: " + ", ".join(domain_callees)}}
             return self._not_proven("unsupported_construct", context["settings"]["pointer_bounds"]["reason"], context)
         from swdb import summary_bindings
-        context['source'] = context["helper_windows"]["view"].path if context.get("helper_windows") else source
+        context['source'] = (context.get("nested_entry_reads") or context.get("helper_windows") or {}).get("view")
+        context['source'] = context['source'].path if context['source'] else source
         try:
             contracts = self._dependencies(dependency_lowering, context)
         except (summary_bindings.Refused, standard_range_model.Refused) as exc:
@@ -401,7 +444,7 @@ class WpAdapter:
             effective = c_lowering.lower(view.path, job.unit.function, **helper["effective_kwargs"])
         except c_lowering.LoweringError as exc:
             raise helper_windows.Refused(f"helper source replay failed: {exc}") from None
-        if original != helper["original_lowering"] or effective != context["lowering"]:
+        if original != helper["original_lowering"] or effective != helper["effective_lowering"]:
             raise helper_windows.Refused("original or contextual helper lowering changed after planning")
         expected = {**view.pins,
             "helper_original_lowering": {"id": helper["original_path"].name, "sha256": original.sha256},
@@ -409,6 +452,28 @@ class WpAdapter:
             "helper_view_source": {"id": view.path.name, "sha256": effective.source_sha256}}
         if expected != helper["pins"] or any(context["pins"].get(k) != v for k, v in expected.items()):
             raise helper_windows.Refused("helper checker, certificate, or original/view pins changed before launch")
+
+    def check_nested_entry_reads(self, job, context):
+        nested = context["nested_entry_reads"]
+        view = nested["view"]
+        if self.hints_path:
+            raise nested_entry_reads.Refused("source-anchored hints are outside the checked nested-read slice")
+        nested_entry_reads.check_view(nested["source"], job.unit.function, view, **nested["options"])
+        try:
+            original = c_lowering.lower(nested["source"], job.unit.function, **nested["original_kwargs"])
+            effective = c_lowering.lower(view.path, job.unit.function, **nested["effective_kwargs"])
+        except c_lowering.LoweringError as exc:
+            raise nested_entry_reads.Refused(f"nested source replay failed: {exc}") from None
+        if original != nested["original_lowering"] or effective != context["lowering"]:
+            raise nested_entry_reads.Refused("nested original or effective lowering changed after planning")
+        if nested["options"]["entry_windows"] != original.pointer_bounds.get("entry_windows", {}):
+            raise nested_entry_reads.Refused("nested entry-window binding changed")
+        expected = {**view.pins,
+            "nested_read_original_lowering": {"id": nested["original_path"].name, "sha256": original.sha256},
+            "nested_read_original_source": {"id": nested["source"].name, "sha256": original.source_sha256},
+            "nested_read_view_source": {"id": view.path.name, "sha256": effective.source_sha256}}
+        if expected != nested["pins"] or any(context["pins"].get(k) != v for k, v in expected.items()):
+            raise nested_entry_reads.Refused("nested checker, source or certificate pins changed before launch")
 
     def _hint_check(self, job, lowering, base, context):
         """Ticket 35: the proof hint check; the indices of the hints that reach WP (all of them, or none)."""
@@ -748,8 +813,18 @@ class WpAdapter:
                        (helper["certificate_path"], helper["certificate_text"])]
             context["settings"]["helper_windows"] = {"certificate": view.certificate,
                 "original_lowering_sha256": helper["original_lowering"].sha256,
-                "effective_lowering_sha256": context["lowering"].sha256,
+                "effective_lowering_sha256": helper["effective_lowering"].sha256,
                 "input_premises_added": [], "hints": "source-anchored hints unsupported"}
+        nested = context.get("nested_entry_reads")
+        if nested:
+            view = nested["view"]
+            inputs += [(nested["source"], nested["original_source_text"]),
+                       (nested["original_path"], nested["original_lowering"].text), (view.path, view.text),
+                       (nested["certificate_path"], nested["certificate_text"])]
+            context["settings"]["nested_entry_reads"] = {"certificate": view.certificate,
+                "original_lowering_sha256": nested["original_lowering"].sha256,
+                "effective_lowering_sha256": context["lowering"].sha256, "input_premises_added": [],
+                "hints": "source-anchored hints unsupported"}
         terminal = context.get("terminal_release")
         if terminal:
             view = terminal["view"]

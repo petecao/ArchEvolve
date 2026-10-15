@@ -410,6 +410,25 @@ original/view AST relation are freshly regenerated before WP. The source view pe
 the proof evidence. A declaration alone grants no origin permission to other helpers or models.
 
 The existing size fixture proves through this relation, while removing its original caller
-initializedness leaves the stream-load precondition unproved. Original three-read source
-`base[q[0]]` remains outside the supported scalar-offset grammar; helper certification does not
-waive that separate nested-read obligation.
+initializedness leaves the stream-load precondition unproved.
+
+Nested entry reads (2026-10-15): a separate checked source view admits `base[q[k]]` in an
+unconditionally evaluated, effect-free return. Both bases must be direct plain `int *` entry
+parameters with explicit typed windows; `k` uses the existing pure integer grammar. Every
+original inner read is captured once in a fresh automatic `int`, without coalescing repeated
+reads. The ordinary inner numerical bound, validity and initializedness obligations precede
+the capture; the outer numerical bound uses that captured value. No memory read is rendered
+inside a mathematical guard and no initializedness or array-domain premise is added.
+
+The independent checker matches the executable unit AST, exact declaration bindings and
+capture order, checks all unedited source byte regions and include dependencies, and rejects
+cached/static/TLS captures or attributes. Its closed executable closure admits local/parameter
+data and bodyless global imports. Global data, unexpanded source/header helper bodies, default
+arguments, member/indirect calls, location-dependent expressions, volatile/effectful reads,
+nonidentity index conversions and conditional/short-circuit placement remain unsupported.
+Checked helper expansion may precede this view; all original, intermediate and final lowerings
+and both AST relations are freshly replayed before launch. Source-anchored hints remain closed.
+Records retain `nested_read_check`, `nested_read_certificate`, `nested_read_original_source`,
+`nested_read_original_lowering`, and `nested_read_view_source` pins, the persistent source view,
+and `settings.nested_entry_reads` with an empty added-input-premise list. This supplies no
+origin permission to other source forms, helpers or models.
