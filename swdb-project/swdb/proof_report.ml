@@ -34,12 +34,14 @@ let run () = match Sys.getenv_opt "SWDB_PROOF_REPORT_OUT" with
     Wp.Wpo.iter_on_goals (fun w ->
         let p = Wp.Wpo.get_property w in
         let _, line = loc p in
+        let targets = List.map (fun p -> esc (Property.Names.get_prop_name_id p))
+            (Wp.WpPropId.doomed_if_valid w.Wp.Wpo.po_pid) in
         let best = List.map (fun (_, (r : Wp.VCS.result)) -> verdict r.verdict) (Wp.Wpo.get_results w) in
         goals := Printf.sprintf
-            "{\"goal\":%s,\"property\":%s,\"function\":%s,\"line\":%d,\"smoke\":%s,\"passed\":%s,\"results\":[%s]}"
+            "{\"goal\":%s,\"property\":%s,\"function\":%s,\"line\":%d,\"smoke\":%s,\"passed\":%s,\"targets\":[%s],\"results\":[%s]}"
             (esc (Wp.Wpo.get_gid w)) (esc (Property.Names.get_prop_name_id p))
             (function_of p) line (bool (Wp.Wpo.is_smoke_test w)) (bool (Wp.Wpo.is_passed w))
-            (String.concat "," (List.map esc best)) :: !goals);
+            (String.concat "," targets) (String.concat "," (List.map esc best)) :: !goals);
     let properties = ref [] in
     Property_status.iter (fun p ->
         let file, line = loc p in
@@ -48,6 +50,21 @@ let run () = match Sys.getenv_opt "SWDB_PROOF_REPORT_OUT" with
         let system = String.starts_with ~prefix:(Filepath.to_string_abs (Kernel.Share.get_dir "libc")) file in
         if not system then (
           let extern = Property_status.Feedback.get p = Property_status.Feedback.Considered_valid in
+          let emitter_name = match p with
+            | Property.IPCodeAnnot ca -> Emitter.get_name (Annotations.emitter_of_code_annot ca.ica_ca ca.ica_stmt)
+            | _ -> "" in
+          let smoke_failure = match p with
+            | Property.IPCodeAnnot ca ->
+              let e = Annotations.emitter_of_code_annot ca.ica_ca ca.ica_stmt in
+              let name = Emitter.get_name e in
+              (match ca.ica_ca.annot_content with
+               | Cil_types.AAssert (_, tp) ->
+                 (String.starts_with ~prefix:"Wp" name || name = "Unreachable Annotations") && tp.tp_statement.pred_name = ["Wp"; "SmokeTest"]
+               | _ -> false)
+            | _ -> false in
+          let origin = match p with
+            | Property.IPPropertyInstance instance -> esc (Property.Names.get_prop_name_id instance.ii_ip)
+            | _ -> "null" in
           let kind = match p with
             | Property.IPPredicate _ -> "contract"
             | Property.IPAssigns _ | Property.IPAllocation _ | Property.IPFrom _ -> "contract"
@@ -55,8 +72,8 @@ let run () = match Sys.getenv_opt "SWDB_PROOF_REPORT_OUT" with
             | Property.IPLemma _ -> "lemma"
             | _ -> "other" in
           properties := Printf.sprintf
-              "{\"property\":%s,\"function\":%s,\"kind\":%s,\"extern\":%s,\"line\":%d,\"description\":%s}"
-              (esc (Property.Names.get_prop_name_id p)) (function_of p) (esc kind) (bool extern) line
+              "{\"property\":%s,\"function\":%s,\"kind\":%s,\"emitter\":%s,\"origin\":%s,\"extern\":%s,\"generated_smoke_failure\":%s,\"line\":%d,\"description\":%s}"
+              (esc (Property.Names.get_prop_name_id p)) (function_of p) (esc kind) (esc emitter_name) origin (bool extern) (bool smoke_failure) line
               (esc (Format.asprintf "%a" Property.pretty p)) :: !properties));
     let oc = open_out path in
     Printf.fprintf oc "{\"version\":\"1\",\"goals\":[%s],\"properties\":[%s],\"complete\":true}\n"

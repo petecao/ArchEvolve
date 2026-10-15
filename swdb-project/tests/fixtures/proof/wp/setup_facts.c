@@ -43,6 +43,10 @@ int f(int n) {
 int maa_summary(void);
 /*@ assigns \nothing; ensures target: \result >= 0; */
 int f(void) { return maa_summary(); }
+#elif CASE == 12
+#include "injected.h"
+/*@ assigns \nothing; ensures target: \result == 42; */
+int f(void) { return 0; }
 #elif CASE == 9
 /*@ assigns \nothing; ensures target: \result == 42; */
 int f(void) { return 0; }

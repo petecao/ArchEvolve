@@ -11,10 +11,14 @@ import pytest
 from test_proof_records import proof_seed, seed  # public CLI seed
 
 
-def test_scripted_bounded_job_rejects_unattributed_harness_assume_before_command(seed):
+@pytest.mark.parametrize("text", [
+    "void f(int parent) { __CPROVER_assume(parent >= -1); }\n",
+    "llvm_assume (llvm_term {{ parent_v >= -1 }});\n",
+])
+def test_scripted_bounded_job_rejects_unattributed_harness_assume_before_command(seed, text):
     marker = seed.root / "must-not-run"
     harness = seed.root / "harness.c"
-    harness.write_text("void f(int parent) { __CPROVER_assume(parent >= -1); }\n")
+    harness.write_text(text)
     script = seed.script(setup={"tool": "saw", "inputs": [{"path": str(harness)}]},
                          run=["/usr/bin/touch", str(marker)])
     failed = seed.prove(script, ok=False)
@@ -137,7 +141,7 @@ def test_planned_input_hash_detects_changed_lowering(seed):
 
 @pytest.mark.parametrize("case,expected", [(0, "proven"), (1, "not_proven"), (2, "not_proven"),
     (3, "not_proven"), (4, "unexpected_extern"), (5, "unexpected_extern"),
-    (6, "vacuous_pass"), (7, "vacuous_pass"), (8, "proven"), (9, "not_proven"), (10, "not_proven")])
+    (6, "vacuous_pass"), (7, "vacuous_pass"), (8, "proven"), (9, "not_proven"), (10, "not_proven"), (11, "not_proven"), (12, "unexpected_extern")])
 def test_real_wp_facts_read_fresh_goals_and_premises(seed, case, expected):
     from conftest import REPO, FIXTURES
     from swdb import framac
@@ -157,6 +161,12 @@ def test_real_wp_facts_read_fresh_goals_and_premises(seed, case, expected):
         assert record["verdict"] == ("not_proven" if expected == "vacuous_pass" else expected)
         if expected == "vacuous_pass":
             assert record["failure_class"] == expected
+        if case == 8:
+            assert any(a["reference"]["id"] == "semantics.fixture" for a in record["assumptions"])
+        if case == 11:
+            log = Path(record["evidence"]["adapter_log"]["path"]).read_text()
+            assert "tampered actual WP cache entries:" in log
+            assert "[Cache]" in log
 
 
 def test_an_unclassified_property_cannot_hide_behind_an_unrelated_timeout(seed):
@@ -165,3 +175,27 @@ def test_an_unclassified_property_cannot_hide_behind_an_unrelated_timeout(seed):
     reports = _reports(seed, [target, failure], properties=[("unclassified property", "Unknown")])
     failed = seed.prove(seed.script(wp_reports=reports), ok=False)
     assert "unclassified_wp_outcome" in failed.stderr
+
+
+def test_existing_wp_session_stops_before_invoking_verifier(seed):
+    marker = seed.root / "must-not-run"
+    plan = {"tool": "wp", "flags": ["-wp-cache", "none", "-wp-model", "+real", "-machdep", "x86_64"],
+            "work_files": {".frama-c/session.json": "{\"verdict\":\"valid\"}"}}
+    failed = seed.prove(seed.script(setup=plan, run=["/usr/bin/touch", str(marker)]), ok=False)
+    assert "fresh_session" in failed.stderr
+    assert not marker.exists()
+
+
+def test_setup_failure_stops_batch_without_starting_later_jobs(seed):
+    bad = seed.script("bad", setup={"probes": [{"id": "missing", "origin": "generator"}]})
+    marker = seed.root / "later-job"
+    later = seed.script("later", run=["/usr/bin/touch", str(marker)])
+    failed = seed.prove(bad, "--script", later, ok=False)
+    assert "hazard_probes" in failed.stderr
+    assert not marker.exists()
+    assert not seed.proof_files()
+
+
+def test_job_plan_pin_cannot_be_replaced_with_different_run_settings(seed):
+    failed = seed.prove(seed.script(setup={"run_plan_sha256": "a" * 64}), ok=False)
+    assert "run_plan_hash" in failed.stderr

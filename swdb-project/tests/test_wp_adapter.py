@@ -206,8 +206,12 @@ def test_the_safe_fixture_is_proven_with_threads_1_bounds_per_goal_solvers_and_t
     assert record["bounds"] == {"threads": 1, "input_size": "unbounded"}
     assert record["evidence_kind"] == "contract_fixture"          # a fixture method version gives fixture evidence
     goals = record["goals"]
-    assert goals and all(g["status"] == "valid" and g["solver"] and g["seconds"] >= 0 for g in goals)
-    assert {g["solver"] for g in goals} <= {"qed", "alt-ergo", "z3", "cvc5"}
+    assert goals and all(g["status"] == "valid" for g in goals)
+    attempted = [g for g in goals if not g.get("smoke") and g.get("source") != "wp_inventory"]
+    assert attempted and all(g["solver"] and g["seconds"] >= 0 for g in attempted)
+    assert any(g.get("smoke") for g in goals)   # smoke passes invert the raw prover verdict
+    assert any(g.get("source") == "wp_inventory" for g in goals)  # automatic exit/termination
+    assert {g["solver"] for g in attempted} <= {"qed", "alt-ergo", "z3", "cvc5"}
     assert {a["reference"]["id"] for a in record["assumptions"] if a["kind"] == "trusted_tool"} == TRUSTED
     assert set(record["tools"]) == TRUSTED
     assert all(a["sentence"].strip() for a in record["assumptions"])
@@ -257,9 +261,9 @@ def test_map_07_smoke_pair_proves_the_safe_program_and_leaves_the_seeded_bug_not
     proven = seed.read(seed.prove("safe", "count_up", SMOKE, safe))
     assert proven["verdict"] == "proven"
     record = seed.read(seed.prove("safe", "count_up", SMOKE, buggy))
-    assert record["verdict"] == "not_proven" and record["failure_class"] in ("timeout", "unknown")
+    assert record["verdict"] == "not_proven" and record["failure_class"] == "vacuous_pass"
     assert "counterexample" not in record
-    assert [p["kind"] for p in record["unproven_properties"]].count("user assertion") == 1
+    assert [p.get("kind") for p in record["unproven_properties"]].count("user assertion") == 1
 
 
 # --- failure classes: each on a fixture or a scripted fault -------------------------------------------------

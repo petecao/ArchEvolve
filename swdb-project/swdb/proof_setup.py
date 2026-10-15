@@ -20,7 +20,7 @@ SETUP_VERSION = "1"
 READING_VERSION = "1"
 REPORT_MODULE = Path(__file__).with_name("proof_report.ml")
 _COMPILED_MODULES = {}
-_ASSUME = re.compile(r"\b(?:__CPROVER_assume|crucible_assume|llvm_assume|SWDB_ASSUME|assume)\s*\(")
+_ASSUME = re.compile(r"\b(?:llvm_assume|crucible_assume|__VERIFIER_assume)\b|\b(?:__CPROVER_assume|SWDB_ASSUME|assume)\s*\(")
 
 
 def _sha(value):
@@ -60,14 +60,22 @@ def _method(method):
                 _fail("method_version", f"{method.id} does not pin the installed {name} version and content hash")
 
 
+def _job_plan(job, adapter):
+    return {"bounds": job.bounds, "budget_seconds": job.budget_seconds,
+            "defines": list(getattr(adapter, "defines", ())), "function": job.unit.function,
+            "contract": job.unit.contract, "contract_sha256": job.unit.contract_sha256}
+
+
 def begin(job, adapter, pins, method):
     """Universal preflight before adapter.run, including a scripted bounded job."""
     _method(method)
     report = {"check": identity()["proof_setup_check"], "verdict": "passed", "method_version": pins["method_version"],
               "hashes": {"contract": job.unit.contract_sha256, "summaries": _digest(list(job.summaries))}, "runs": []}
-    job.setup.update(report=report, method=method, adapter=adapter, files={})
+    plan_hash = _digest(_job_plan(job, adapter))
+    report["hashes"]["run_plan"] = plan_hash
+    job.setup.update(report=report, method=method, adapter=adapter, files={}, plan_sha256=plan_hash)
     library = getattr(adapter, "library", None)
-    if library is not None and not job.unit.contract.startswith("c_model."):
+    if library is not None and job.unit.contract and not job.unit.contract.startswith("c_model."):
         from swdb.library import Library
         fresh = Library(library.root)
         if fresh.content_sha256(job.unit.contract) != job.unit.contract_sha256:
@@ -75,16 +83,26 @@ def begin(job, adapter, pins, method):
         entry = fresh.get(job.unit.contract) or {}
         _placements(entry)
         job.setup["contract_library"] = library.root
-        # Scan only the actual proof translation unit; scripted fixtures have no
-        # real source traversal and can explicitly supply their input manifest.
+    # Scan the actual translation units of both sides; scripted fixtures have no
+    # real source traversal and supply their own explicit manifest.
+    if library is not None and not str(job.unit.contract or "").startswith("c_model."):
         from swdb.wp_adapter import _unit_source
-        source = _unit_source(Path(job.unit.tree), job.unit.function)
-        _no_assume(source.read_text(), str(source))
-        job.setup["files"][str(source)] = _sha(source.read_bytes())
+        trees = [job.unit.tree]
+        baseline = (getattr(adapter, "spec", {}) or {}).get("baseline") or {}
+        if baseline.get("tree"):
+            trees.append(baseline["tree"])
+        for tree in trees:
+            source = _unit_source(Path(tree), job.unit.function)
+            _no_assume(source.read_text(), str(source))
+            job.setup["files"][str(source)] = _sha(source.read_bytes())
     plan = getattr(adapter, "script", {}).get("setup") or {}
     if plan:
+        if plan.get("run_plan_sha256", plan_hash) != plan_hash:
+            _fail("run_plan_hash", "the job differs from its pinned run plan")
         for row in plan.get("inputs", []):
             path = Path(row["path"])
+            if not path.is_absolute():
+                path = Path(job.scratch) / path
             text = path.read_text()
             _no_assume(text, str(path))
             actual = _sha(path.read_bytes())
@@ -145,7 +163,7 @@ def _wp_flags(flags, scratch):
                 _fail("fresh_session", "only the checked, freshly compiled proof inventory module may be loaded")
         if flag.startswith(("-wp-session", "-wp-script", "-wp-cache-dir")):
             _fail("fresh_session", "loading WP sessions, scripts, or caches is forbidden")
-    if any(p.name in ("wp", ".wp", "wp-session", "wp-cache") or "session" in p.name
+    if any(p.name in ("wp", ".wp", ".frama-c", "wp-session", "wp-cache") or "session" in p.name
            for p in Path(scratch).iterdir()):
         _fail("fresh_session", "the working folder contains an existing WP session")
 
@@ -164,6 +182,8 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
         method = getattr(adapter, "method", None)
         begin(job, adapter, {"method_version": {"id": method.id, "sha256": method.sha256}}, method)
     _method(job.setup.get("method"))
+    if _digest(_job_plan(job, adapter)) != job.setup["plan_sha256"]:
+        _fail("run_plan_hash", "bounds, build constants, budget or proof unit changed after planning")
     _environment()
     for path, expected in job.setup.get("files", {}).items():
         if _sha(Path(path).read_bytes()) != expected:
@@ -197,6 +217,13 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
             if f'"{probe["id"]}"' not in lowering.text or f'"{probe["id"]}"' not in final_text:
                 _fail("hazard_probes", f"generator probe {probe['id']} is absent from C lowering")
         hashes["lowering"] = _sha(lowering.text)
+    baseline = context.get("baseline_lowering")
+    if baseline is not None:
+        _no_assume(baseline.text, "baseline C lowering")
+        pin = context["pins"]["baseline_c_lowering"]
+        if pin["sha256"] != _sha(baseline.text):
+            _fail("lowering_hash", "baseline C lowering differs from its planned pin")
+        hashes["baseline_lowering"] = _sha(baseline.text)
     if adapter.name == "wp":
         _wp_flags(list(command) if command else flags, scratch or job.scratch)
     method = job.setup.get("method")
@@ -219,7 +246,7 @@ def _lineup(method, adapter, tools, flags):
         matches = installed == pinned or (name == "cbmc" and pinned is not None and installed.startswith(pinned + "."))
         if name in lineup and not matches:
             _fail("method_version", f"{name} version {identity_[2]} differs from method {lineup[name]['version']}")
-    name = "frama-c-wp" if adapter.name == "wp" else adapter.name
+    name = "frama-c-wp" if adapter.name == "wp" else "crux-llvm" if adapter.name.startswith("crux-llvm") else adapter.name
     declared = (lineup.get(name) or {}).get("flags", [])
     if adapter.name == "wp":
         expected_provers = [row["tool"] for row in method.data.get("lineup", []) if row.get("role") == "solver"]
@@ -264,8 +291,12 @@ def read_wp_reports(goals_json, properties_csv, inventory_path, extern_contracts
             properties = list(csv.DictReader(stream, delimiter="\t"))
     except (OSError, ValueError, TypeError) as exc:
         return outcome("not_proven", UNCLASSIFIED, f"malformed fresh report: {exc}")
-    if inventory.get("complete") is not True or inventory.get("version") != "1":
+    if not isinstance(inventory, dict) or inventory.get("complete") is not True or inventory.get("version") != "1":
         return outcome("not_proven", UNCLASSIFIED, "incomplete generated-goal inventory")
+    if (not isinstance(inventory, dict) or not isinstance(raw, list) or any(not isinstance(g, dict) for g in raw)
+            or not isinstance(inventory.get("goals"), list) or not isinstance(inventory.get("properties"), list)
+            or any(not isinstance(g, dict) for g in inventory["goals"] + inventory["properties"])):
+        return outcome("not_proven", UNCLASSIFIED, "fresh reports have the wrong shape")
     reported = {g.get("goal"): g for g in raw}
     generated = {g.get("goal"): g for g in inventory.get("goals", [])}
     if len(reported) != len(raw) or len(generated) != len(inventory.get("goals", [])) or None in reported or None in generated:
@@ -285,28 +316,35 @@ def read_wp_reports(goals_json, properties_csv, inventory_path, extern_contracts
         assumptions.append({"kind": "assumed_clause", "reference": reference,
                             "sentence": f"WP treats contract property {prop['property']} of {function} as Extern: "
                                         f"{prop.get('description') or prop['property']}."})
+    smoke_failures = [p for p in inventory.get("properties", []) if p.get("generated_smoke_failure")]
     goals, unproven = [], []
     for name, expected in generated.items():
         raw_goal = reported.get(name)
         if raw_goal is None:
             direct = expected.get("passed") is True and (expected.get("smoke") or "valid" in expected.get("results", []))
             goal = {"goal": name, "property": expected.get("property"), "function": expected.get("function"),
-                    "status": "valid" if direct else "unknown", "solver": None, "seconds": None}
+                    "status": "valid" if direct else "unknown", "solver": None, "seconds": None,
+                    "smoke": bool(expected.get("smoke")), "source": "wp_inventory"}
             goals.append(goal)
             if not direct:
-                unproven.append({"property": goal["property"], "goal": name, "status": "untried", "failure_class": "unknown"})
+                smoke_failed = bool(expected.get("smoke")) and not expected.get("passed")
+                goal["status"] = "failed_smoke" if smoke_failed else "unknown"
+                unproven.append({"property": goal["property"], "goal": name, "status": goal["status"],
+                                 "failure_class": "vacuous_pass" if smoke_failed else "unknown"})
             continue
-        goal = _goal(raw_goal)
+        goal = {**_goal(raw_goal), "smoke": bool(raw_goal.get("smoke")), "source": "wp_json"}
         goals.append(goal)
         if bool(raw_goal.get("smoke")) != bool(expected.get("smoke")) or \
                 bool(raw_goal.get("passed")) != bool(expected.get("passed")):
             return outcome("not_proven", UNCLASSIFIED, f"goal {name}: report disagrees with fresh inventory", goals)
         if expected.get("smoke"):
             if not expected.get("passed"):
-                return outcome("not_proven", "vacuous_pass", f"smoke test {name} failed (dead code)", goals,
-                               [{"property": goal["property"], "goal": name, "status": "failed smoke test",
-                                 "failure_class": "vacuous_pass"}], assumptions)
+                goal["status"] = "failed_smoke"
+                unproven.append({"property": goal["property"], "goal": name, "status": "failed smoke test",
+                                 "failure_class": "vacuous_pass"})
             continue
+        if expected.get("passed") and "valid" not in expected.get("results", []):
+            return outcome("not_proven", UNCLASSIFIED, f"goal {name} has no direct Valid prover result", goals)
         if not expected.get("passed"):
             mapping = {"timeout": "timeout", "stepout": "timeout", "unknown": "unknown", "untried": "unknown",
                        "failed": "solver_error"}
@@ -330,12 +368,26 @@ def read_wp_reports(goals_json, properties_csv, inventory_path, extern_contracts
                and (not functions or row.get("function") in functions or not row.get("function"))]
     classified_properties = []
     for row in invalid:
+        smoke = next((prop for prop in smoke_failures if prop.get("function") == row.get("function")
+                      and str(prop.get("line")) == str(row.get("line"))), None)
+        if smoke is not None:
+            classified_properties.append({"property": row.get("property"), "kind": row.get("property kind"),
+                "function": row.get("function"), "line": smoke.get("line"), "status": row.get("status"),
+                "failure_class": "vacuous_pass"})
+            continue
+        aliases = {prop.get("property") for prop in inventory.get("properties", [])
+                   if prop.get("function") == (row.get("function") or None)
+                   and str(prop.get("line", "")) == str(row.get("line", ""))}
         matches = []
         for failed in unproven:
             origin = reported.get(failed["goal"]) or generated.get(failed["goal"], {})
             same_function = origin.get("function") == (row.get("function") or None)
             same_line = str(origin.get("line", "")) == str(row.get("line", ""))
-            same_name = failed.get("property") == row.get("property")
+            origins = {prop.get("origin") for prop in inventory.get("properties", [])
+                       if prop.get("property") == failed.get("property") and prop.get("origin")}
+            doomed = set(generated.get(failed["goal"], {}).get("targets", []))
+            same_name = (failed.get("property") == row.get("property") or failed.get("property") in aliases
+                         or bool(origins & aliases) or bool(doomed & aliases))
             if same_name or (same_function and same_line):
                 matches.append(failed)
         if not matches:
@@ -345,6 +397,8 @@ def read_wp_reports(goals_json, properties_csv, inventory_path, extern_contracts
             "function": row.get("function"), "line": int(row["line"]) if str(row.get("line", "")).isdigit() else None,
             "status": row.get("status"), "goal": matches[0]["goal"], "failure_class": matches[0]["failure_class"]})
     unproven = classified_properties + unproven
+    if smoke_failures or any(p["failure_class"] == "vacuous_pass" for p in unproven):
+        return outcome("not_proven", "vacuous_pass", "one or more smoke tests failed", goals, unproven, assumptions)
     if unproven:
         return outcome("not_proven", unproven[0]["failure_class"], "one or more generated properties are not Valid",
                        goals, unproven, assumptions)
