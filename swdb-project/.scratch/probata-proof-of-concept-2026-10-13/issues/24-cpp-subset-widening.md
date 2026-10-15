@@ -468,3 +468,16 @@ mapping. The old fixture stand-ins are not evidence that arbitrary implementatio
 behind a declaration satisfy their contracts. Full construct acceptance remains
 open; ticket36's [repair evidence](../evidence/summary-source-binding-20261015.json)
 records the exact boundary and the original false proof.
+
+
+## Checkpoint — 2026-10-15 09:53 ET: frozen mbit10 replay
+
+Source `fddb1462dfb9ff8d7885521bc6edaf367d97a12e` (merged into integration
+`45560225`) ran in two socket lanes from 09:32 ET. Node 0 native shard passed 132
+checks with one deselected in 145.05s; node 1 bounded/source-summary shard passed 17
+checks in 581.79s. Both wrappers exited 0 and leases released. The audit covers 27
+retained proof records: all referenced artifact hashes match except the deliberately
+zeroed report pin in the evidence-mutation negative control. That dependency control
+is not accepted as a proof. Raw output remains remote for its readers; only compact
+metadata is exported. [Evidence](../evidence/summary-source-binding-mbit10-20261015.json).
+This checkpoint does not close the ticket's remaining acceptance criteria.

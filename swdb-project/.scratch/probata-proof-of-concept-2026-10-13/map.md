@@ -9,6 +9,15 @@ Updated: 2026-10-15 ET. Resumed under Yan-Ru's ongoing implementation, push and 
 Current integration branch: `codex/probata-poc-integration`, based on `yanrujhou_main` at `150930b4`.
 Current dispatch, evidence and blockers: [resume.md](resume.md).
 
+- **Checkpoint 2026-10-15 09:53 ET:** source-bound summary admission merged as
+  `45560225`; frozen mbit10 `fddb1462` replay passed 132 native checks/1 deselected
+  and 17 bounded/source-summary checks. [Remote evidence](evidence/summary-source-binding-mbit10-20261015.json).
+  Run18 launched 09:50 ET under reviewed strict initialization/deadline policy;
+  helper actual pair passes and its clean handoff is under integration review.
+  Header/allocation provenance and nested-entry reads remain open. Ticket statuses
+  remain 32 resolved, five claimed; no method freeze or full-ticket acceptance.
+
+
 - **Checkpoint 2026-10-15 08:38 ET:** primary `3f177e63` includes exact owner-at
   source binding and staged checked helper expansion. Qualified `at()` actual safe
   and missing-bounds controls pass at that source. Corrected primitive bounded
@@ -58,7 +67,7 @@ Current dispatch, evidence and blockers: [resume.md](resume.md).
 - **2026-10-15 generic-summary safety checkpoint:** a real changed-callee false
   proof was reproduced with a native violating witness. Fresh callee/source/proof
   binding, finite call-domain checks and prelaunch replay now pass focused actual
-  controls on the root implementation branch; integration review is pending.
+  controls on the root implementation branch; integration merged as `45560225`; frozen remote replay passes.
   [Evidence](evidence/summary-source-binding-20261015.json). Full ticket24/36
   and generic vector/helper acceptance remain open.
 

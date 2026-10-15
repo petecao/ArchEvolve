@@ -888,7 +888,7 @@ base/preservation bridge; this guidance supplies no axiom or assumed invariant.
 Harness regression:11 passed0.09s, `/private/tmp/probata-t07-run16-harness.jsonl`.
 Frozen source worktree `/private/tmp/probata-t07-run16`; run output destination
 `/private/tmp/probata-t07-20261015-run16/` on the Mac data volume, planned2GiB budget
-and at least50GiB remaining. Readers:ticket07, ticket09 and implementation coordinator.
+and at least 50 GiB remaining. Readers:ticket07, ticket09 and implementation coordinator.
 The existing30-minute heartbeat remains active. This preparation is no proof result.
 
 
@@ -983,3 +983,18 @@ A further prelaunch review found the prototype launcher did not disable WP's
 initializedness filtering. The prospective method18 must pin `-wp-no-filter-init`
 in every proof mode; no new precondition will be silently added to hide exposed
 initialization obligations.
+
+
+## Counted run18 launch — 2026-10-15 09:50 ET
+
+Launched at 09:50:53 ET from clean isolated `996bd62c1dd361845a7d6041167ca762e6d0ee32`
+after independent 85-control review and fresh 13-input/tool/resource preflight.
+Method `bridge-first-bounded-debt-v1` adds the one post-neighbor-gather comment
+anchor and temporary bounded hint debt; it preserves the original final acceptance.
+All work starts counting before the fresh baseline; 60 minutes total, 8-minute final reserve,
+only shared-lock waits excluded. Strict `-wp-no-filter-init` applies to all nine WP
+modes. Three prelaunch deadline findings were fixed and independently rechecked;
+the rejected 970a921f preparation never launched. Output stays at
+`/private/tmp/probata-t07-20261015-run18/counted-18`, 2 GiB budget and at least 50 GiB
+free-space guard. Existing explicit approval covers scoped export to Codex/OpenAI.
+No proof success is claimed. [Launch pins](../evidence/t07-counted-18-launch.json).
