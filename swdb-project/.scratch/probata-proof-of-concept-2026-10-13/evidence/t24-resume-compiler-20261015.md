@@ -136,3 +136,25 @@ The compact audit SHA-256 is
 This clears the original Ring/compiler-origin boundary only. The other eight
 construct groups, model/summary dependency closure and lifetime actuals remain
 required under the current method before ticket closure.
+
+## Concrete seeded native diagnostics
+
+Following the dxc precision-control finding, all eight non-allocation original
+safe/seeded groups were replayed on one explicit in-domain input through native
+C++ and the C lowering. All 32 observations agree between languages. Every safe
+case satisfies its original clause; every seeded case violates it: class 3/4,
+template 2/0, std destination 7/0, OMP 0/1, atomic final p 10/11, float
+0/3.333333333333333, corrected dxc 1/4, maa 1/2. Values are safe/seeded pairs,
+not timings or universal agreement claims. The float value is observed native
+arithmetic; it is not a proof over IEEE rounding.
+
+The original allocation overrun is deliberately not executed as native C++
+because it has undefined behavior. Its current-policy actual RTE outcome remains
+mandatory. [Inputs, source/binary hashes and outputs](t24-original-seeds-native-20261015.json)
+record the Mac ARM compiler diagnostic (26.08 s). Raw files remain at
+`/private/tmp/probata-t24-original-seeds-native/`. This additional native evidence
+does not replace any actual WP safe/seeded/RTE/initializedness/smoke acceptance.
+
+The current unsupported-construct source-location profile also passes 19/19 in
+11.44 s. It includes the original seven required refusal kinds; these are public
+lowerer controls, not actual positive WP proofs.
