@@ -55,6 +55,14 @@ printf '%q ' "$PROBATA_PYTHON" -m pytest "${PROBATA_TESTS[@]}" "${PROBATA_SELECT
   date -u
   uptime
   df -h /data1 /data
+  printf 'logged_in_users:\n'
+  who | awk '{print $1}' | sort -u
+  for PROBATA_HOST_SETTING in \
+      /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor \
+      /sys/devices/system/cpu/intel_pstate/no_turbo; do
+    printf '%s=' "$PROBATA_HOST_SETTING"
+    if [ -r "$PROBATA_HOST_SETTING" ]; then cat "$PROBATA_HOST_SETTING"; else printf 'unavailable\n'; fi
+  done
   uname -a
   lscpu
   numactl --hardware
