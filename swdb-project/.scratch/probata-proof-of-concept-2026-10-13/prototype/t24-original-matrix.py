@@ -32,17 +32,42 @@ def dump(path, value):
     path.write_text(json.dumps(value, sort_keys=True, indent=2)+'\n')
 
 
-def audit(record, expected):
+def audit(record, expected, *, actual=True, ordinary_open=None):
     goals = record.get('goals', [])
     errors = []
     if record.get('verdict') != expected:
         errors.append('unexpected verdict')
+    ordinary = [g for g in goals if not g.get('smoke')]
+    smoke = [g for g in goals if g.get('smoke')]
+    settings = record.get('settings',{})
+    flags = settings.get('flags',[])
+    if actual:
+        if settings.get('verifier_launched') is not True or record.get('proof_setup_check',{}).get('verdict') != 'passed':
+            errors.append('actual verification/setup did not run')
+        required = ['-wp-rte','-wp-no-filter-init','-wp-smoke-tests']
+        if any(flag not in flags for flag in required):
+            errors.append('mandatory RTE/init/smoke flags absent')
+        for flag,value in [('-rte-initialized','@all'),('-wp-cache','none'),('-machdep','x86_64')]:
+            if not any(f==flag and flags[i+1:i+2]==[value] for i,f in enumerate(flags)):
+                errors.append('mandatory flag differs: '+flag)
+        if not ordinary or not smoke:
+            errors.append('actual ordinary/smoke goal inventory is empty')
+        if expected == 'not_proven':
+            if record.get('failure_class') not in {'timeout','unknown','solver_error','vacuous_pass'}:
+                errors.append('seeded negative failed before semantic verification')
+            open_goals = [g for g in ordinary if g['status'] != 'valid']
+            if not open_goals or ordinary_open and not any(ordinary_open in g.get('goal','') for g in open_goals):
+                errors.append('seeded negative lacks its attributable ordinary open obligation')
+    elif (record.get('failure_class') != 'unsupported_construct' or settings.get('verifier_launched') or goals):
+        errors.append('deliberate lifetime refusal unexpectedly ran or changed failure class')
     if expected == 'proven':
         if not goals or not any(g.get('smoke') for g in goals) or any(g['status'] != 'valid' for g in goals):
             errors.append('safe proof lacks all-goal/smoke Valid acceptance')
         if record.get('proof_setup_check',{}).get('verdict') != 'passed':
             errors.append('safe setup did not pass')
     reports = record.get('evidence',{}).get('reports',[])
+    if actual and not {'wp_goals','wp_properties','wp_inventory','wp_normalized'}.issubset({r['name'] for r in reports}):
+        errors.append('actual WP reports are incomplete')
     files = []
     for report in reports:
         path = Path(report['path'])
@@ -100,13 +125,15 @@ def main():
     dump(output/'candidates.json',seed.candidates)
     result = {'commit':commit,'rows':[],'complete':False,'success':False}
     models, summaries = {}, {}
-    def run(label, action, expected, validate=None):
+    def run(label, action, expected, validate=None, *, actual=True, ordinary_open=None):
         started = time.monotonic()
         print('START '+label, flush=True)
         row = {'label':label,'expected':expected}
         try:
             record = action()
-            row.update(audit(record,expected))
+            row.update(audit(record,expected,actual=actual,ordinary_open=ordinary_open))
+            path = seed.records/'proofs'/(record['id']+'.yaml')
+            row['record'] = {'path':str(path),'sha256':hashlib.sha256(path.read_bytes()).hexdigest()}
             if validate:
                 validate(record)
         except Exception:
@@ -136,10 +163,14 @@ def main():
             for name in entries:
                 assert pinned[summary_id(name)]['proof_record']==summaries[name]['id']
         run(group+':safe',lambda g=group:seed.unit(g),'proven',validate)
-        run(group+':seeded',lambda g=group:seed.unit(g,candidate='bug'),'not_proven')
+        goal = {'classes':'loop_invariant','templates':'ensures','new_array':'rte_mem_access',
+                'omp':'ensures','floats':'ensures','std_models':'ensures','atomics':'ensures',
+                'dxc_summary':'ensures','maa_summary':'ensures'}[group]
+        run(group+':seeded',lambda g=group:seed.unit(g,candidate='bug'),'not_proven',ordinary_open=goal)
         if group=='new_array':
             for negative in ['new_out_of_range','new_after_delete',*[f'new_{n}' for n in TERMINAL_CONTROLS]]:
-                run(negative,lambda n=negative:seed.unit(n),'not_proven')
+                run(negative,lambda n=negative:seed.unit(n),'not_proven',actual=negative=='new_out_of_range',
+                    ordinary_open='rte_mem_access' if negative=='new_out_of_range' else None)
     result['complete'] = True
     result['success'] = all(not row.get('errors') for row in result['rows'])
     dump(output/'matrix.json',result)
