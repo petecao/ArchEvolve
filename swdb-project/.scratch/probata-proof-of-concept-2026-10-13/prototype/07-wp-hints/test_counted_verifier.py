@@ -328,12 +328,17 @@ def test_discovery_never_registers_a_reused_snapshot_pid(monkeypatch, discovery)
         def status(self): return 'running'
         def environ(self): return {V.RUN_TOKEN_ENV:'private-token'}
     parent=Process(101,90.0);snapshot=Process(102,100.0);replacement=Process(102,200.0)
-    monkeypatch.setattr(V.psutil,'Process',lambda pid:parent if pid==101 else replacement)
+    observations=iter([snapshot]) if discovery=='marker' else iter([])
+    monkeypatch.setattr(V.psutil,'Process',lambda pid:parent if pid==101 else next(observations,replacement))
+    monkeypatch.setattr(V.psutil,'pids',lambda:[102])
     monkeypatch.setattr(V.psutil,'process_iter',lambda:[snapshot])
     known={}
     if discovery=='ancestry': V._tree(101,known)
     else: V._token_tree('private-token',99.0,known)
     assert 102 not in known, 'unrelated replacement PID became an owned identity'
+    if discovery=='marker':
+        V._token_tree('private-token',99.0,known)
+        assert known[102]==200.0, 'a subsequent fresh exact-marker identity was never discovered'
 
 @pytest.mark.parametrize('transition',['direct','denial-before','denial-snapshot'])
 def test_cleanup_never_targets_a_group_when_leader_changes_during_inspection(monkeypatch, transition):
@@ -356,3 +361,41 @@ def test_cleanup_never_targets_a_group_when_leader_changes_during_inspection(mon
     old=SimpleNamespace(pid=103,poll=lambda:0,wait=lambda **kwargs:0)
     assert V._stop(old,{103:100.0})==['root-pid-reused-or-unobserved']
     assert not killed
+
+@pytest.mark.parametrize('marker',[None,'another-run','private-token'])
+def test_fresh_marker_discovery_renews_stale_owned_pid_only_for_exact_marker(monkeypatch, marker):
+    import counted_verifier as V
+    from types import SimpleNamespace
+    class Process:
+        pid=102
+        def create_time(self): return 200.0
+        def uids(self): return SimpleNamespace(real=os.getuid())
+        def status(self): return 'running'
+        def environ(self): return {} if marker is None else {V.RUN_TOKEN_ENV:marker}
+    current=Process()
+    monkeypatch.setattr(V.psutil,'Process',lambda pid:current)
+    monkeypatch.setattr(V.psutil,'pids',lambda:[102])
+    monkeypatch.setattr(V.psutil,'process_iter',lambda:[current])
+    known={102:100.0}
+    V._token_tree('private-token',99.0,known)
+    assert known=={102:200.0 if marker=='private-token' else 100.0}
+
+@pytest.mark.parametrize('captured_birth',[None,100.0])
+def test_marker_discovery_never_replaces_original_root_identity(monkeypatch,captured_birth):
+    import counted_verifier as V
+    from types import SimpleNamespace
+    class Process:
+        pid=102
+        def create_time(self): return 200.0
+        def uids(self): return SimpleNamespace(real=os.getuid())
+        def status(self): return 'running'
+        def environ(self): return {V.RUN_TOKEN_ENV:'private-token'}
+    current=Process()
+    monkeypatch.setattr(V.psutil,'Process',lambda pid:current)
+    monkeypatch.setattr(V.psutil,'pids',lambda:[102])
+    monkeypatch.setattr(V.psutil,'process_iter',lambda:[current])
+    known={} if captured_birth is None else {102:captured_birth}
+    original=dict(known)
+    with pytest.raises(RuntimeError,match='root identity'):
+        V._token_tree('private-token',99.0,known,root_pid=102)
+    assert known==original

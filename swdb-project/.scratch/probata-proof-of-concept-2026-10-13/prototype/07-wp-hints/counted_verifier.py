@@ -179,23 +179,26 @@ def _group(root, known):
             pass
 
 
-def _token_tree(token, born_after, known):
+def _token_tree(token, born_after, known, *, root_pid=None):
     """Find inherited run identity even after reparenting/session changes.
 
     Trusted toolchain descendants must preserve the marker. This does not contain
     hostile descendants that scrub their environment. Environment values never
     leave this comparison; only matching PID/birth identities are retained.
     """
-    # Fetch metadata explicitly: process_iter(attrs=...) replaces denied values
-    # with None, which otherwise loses both operation and identity context.
-    for process in psutil.process_iter():
+    # Fresh handles avoid process_iter's cached old identities. A new captured
+    # birth may replace a stale nonroot record only after exact marker checking.
+    for pid in psutil.pids():
         try:
-            born = _inspect(process, 'create_time', known.get(process.pid))
+            process = psutil.Process(pid)
+            born = _inspect(process, 'create_time')
             if born < born_after or _inspect(process, 'uids', born).real != os.getuid():
                 continue
             if _inspect(process, 'status', born) in {psutil.STATUS_ZOMBIE, psutil.STATUS_DEAD}:
                 continue
             if _inspect(process, 'environ', born).get(RUN_TOKEN_ENV) == token:
+                if process.pid == root_pid and known.get(process.pid) != born:
+                    raise RuntimeError('owned root identity changed or was never captured')
                 known[process.pid] = born
         except psutil.NoSuchProcess:
             pass
@@ -232,7 +235,7 @@ def _stop(process, known, *, token=None, born_after=None):
         _tree(process.pid, known)
         _group(process.pid, known)
         if token is not None:
-            _token_tree(token, born_after, known)
+            _token_tree(token, born_after, known, root_pid=process.pid)
     except (psutil.Error, PermissionError) as exc:
         unconfirmed.append(f"tree-inspection-unconfirmed:{type(exc).__name__}:pid={getattr(exc, 'pid', None)}")
     try:
@@ -246,7 +249,7 @@ def _stop(process, known, *, token=None, born_after=None):
         try:
             _group(process.pid, known)
             if token is not None:
-                _token_tree(token, born_after, known)
+                _token_tree(token, born_after, known, root_pid=process.pid)
         except (psutil.Error, PermissionError) as exc:
             unconfirmed.append(f"group-inspection-unconfirmed:{type(exc).__name__}:pid={getattr(exc, 'pid', None)}")
         active = _running(known)
@@ -372,7 +375,7 @@ def main():
                     while process.poll() is None:
                         _tree(process.pid, known)
                         if S.clock() >= next_marker_scan:
-                            _token_tree(token, born_after, known)
+                            _token_tree(token, born_after, known, root_pid=process.pid)
                             next_marker_scan = S.clock()+.1
                         peak = max(peak, _known_rss(known))
                         killed = peak > a.cap_gb*1024**3

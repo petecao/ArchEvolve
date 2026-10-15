@@ -175,3 +175,24 @@ Changed birth wins before querying replacement status. A denied snapshot birth
 still uses the retained expected birth when available. Independent final review
 passes178 composed controls, including separate ownership-edge reproductions;
 all22 runner controls pass. The actual resource component remains required.
+
+
+The first real resource component on clean `e52e3011` passed in150.53seconds:
+fresh five-seed parse/generation/round-s,209goals/39open, all three processes
+exited0, sampled peak2598.2MiB, source unchanged and leases clear. Eight actual
+single-attempt `environ` denials were retained without environment contents; no
+terminal inspection failure occurred. This component called no provider and its
+outputs may not enter a counted run.
+
+Subsequent identity-accounting review identified stale owned PID reuse: marker
+discovery must independently renew a fresh exact-marker child identity rather
+than reject it because the same numeric PID had an older known birth. Discovery
+now constructs fresh handles from a fresh PID list, bypassing iterator caches;
+it checks captured birth before/after UID/status/marker reads, then renews only
+an exact matching nonroot marker. Missing/different markers leave the old record
+unchanged. A stale captured snapshot is rejected in that scan; a subsequent fresh
+matching snapshot may be adopted. The original root identity is protected: changed
+or uncaptured root birth fails closed before any record replacement or group
+signaling. Five public boundary controls include matching/mismatched/missing
+markers and known/unknown protected root identity. Review and a fresh resource
+component precede counted launch because discovery/accounting changed.
