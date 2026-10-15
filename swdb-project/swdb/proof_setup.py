@@ -19,7 +19,8 @@ from swdb.proof import AdapterError
 SETUP_VERSION = "1"
 READING_VERSION = "1"
 REPORT_MODULE = Path(__file__).with_name("proof_report.ml")
-_ASSUME = re.compile(r"\b(?:__CPROVER_assume|crucible_assume|llvm_assume|SWDB_ASSUME|assume)\s*\(")
+_COMPILED_MODULES = {}
+_ASSUME = re.compile(r"\b(?:llvm_assume|crucible_assume|__VERIFIER_assume)\b|\b(?:__CPROVER_assume|SWDB_ASSUME|assume)\s*\(")
 
 
 def _sha(value):
@@ -48,9 +49,62 @@ def _no_assume(text, where):
         _fail("assumption_provenance", f"{where} contains an assumption not generated from a summary or the pinned domain")
 
 
+def check_semantics_hints(base, hints):
+    """Protect model ghost state with a deliberately small hint-ghost language.
+
+    Frama-C's noninterference check protects real C state, not trusted ghost
+    state. Semantics jobs therefore admit only fresh scalar witnesses and the
+    checked store-frame bound. Calls, pointers, indexed writes and shadowing
+    are refused rather than inferred safe from their spelling.
+    """
+    existing = set(re.findall(r"\b[A-Za-z_]\w*\b", base))
+    macros = set(re.findall(r"^\s*#\s*define\s+([A-Za-z_]\w*)", base, re.M))
+    owned = set()
+    scalar = r"(?:(?:unsigned|signed)\s+)?(?:int|long|short|char|_Bool)"
+    for hint in hints:
+        text = re.sub(r"/\*.*?\*/|//[^\n]*", " ", hint["text"], flags=re.S).strip()
+        if hint.get("kind") != "ghost" and not re.search(r"\bghost\b", text):
+            continue
+        if not text.startswith("ghost ") or not text.endswith(";"):
+            _fail("semantics_ghost_ownership", "semantics ghost hints require scalar declarations or assignments")
+        if macros.intersection(re.findall(r"\b[A-Za-z_]\w*\b", text)):
+            _fail("semantics_ghost_ownership", "ghost witness text may not expand a preprocessor macro")
+        for statement in text[6:].split(";")[:-1]:
+            statement = statement.strip()
+            declaration = re.fullmatch(rf"{scalar}\s+([A-Za-z_]\w*)(?:\s*=\s*(.+))?", statement, re.S)
+            assignment = re.fullmatch(r"([A-Za-z_]\w*)\s*=\s*(.+)", statement, re.S)
+            if declaration:
+                name, expression = declaration.groups()
+                if name in existing or name in owned:
+                    _fail("semantics_ghost_ownership", f"ghost declaration shadows an existing name: {name}")
+                owned.add(name)
+            elif assignment:
+                name, expression = assignment.groups()
+                if name not in owned and name != "dx_store_bound":
+                    _fail("semantics_ghost_ownership", f"ghost write targets trusted or unowned state: {name}")
+            else:
+                _fail("semantics_ghost_ownership", "only simple scalar ghost declarations and assignments are allowed")
+            if expression is not None and (
+                    not re.fullmatch(r"[A-Za-z_0-9\s()+*/%<>=!~^|?:.-]+", expression)
+                    or re.search(r"\b[A-Za-z_]\w*\s*\(|\)\s*\(|\+\+|--|(?<![<>=!])=(?!=)", expression)):
+                _fail("semantics_ghost_ownership", "ghost witness expressions may not call, take addresses, or mutate state")
+
+
 def _method(method):
     if method is not None and _sha(Path(method.path).read_bytes()) != method.sha256:
         _fail("method_version", f"method {method.id} changed after the job was planned")
+    if method is not None and method.data.get("evidence_kind") == "execution":
+        checks = method.data.get("checks") or {}
+        for name, current in identity().items():
+            frozen = checks.get(name)
+            if not isinstance(frozen, dict) or frozen.get("version") != current["version"] or frozen.get("sha256") != current["sha256"]:
+                _fail("method_version", f"{method.id} does not pin the installed {name} version and content hash")
+
+
+def _job_plan(job, adapter):
+    return {"bounds": job.bounds, "budget_seconds": job.budget_seconds,
+            "defines": list(getattr(adapter, "defines", ())), "function": job.unit.function,
+            "contract": job.unit.contract, "contract_sha256": job.unit.contract_sha256}
 
 
 def begin(job, adapter, pins, method):
@@ -58,9 +112,11 @@ def begin(job, adapter, pins, method):
     _method(method)
     report = {"check": identity()["proof_setup_check"], "verdict": "passed", "method_version": pins["method_version"],
               "hashes": {"contract": job.unit.contract_sha256, "summaries": _digest(list(job.summaries))}, "runs": []}
-    job.setup.update(report=report, method=method, adapter=adapter, files={})
+    plan_hash = _digest(_job_plan(job, adapter))
+    report["hashes"]["run_plan"] = plan_hash
+    job.setup.update(report=report, method=method, adapter=adapter, files={}, plan_sha256=plan_hash)
     library = getattr(adapter, "library", None)
-    if library is not None and not job.unit.contract.startswith("c_model."):
+    if library is not None and job.unit.contract and not job.unit.contract.startswith("c_model."):
         from swdb.library import Library
         fresh = Library(library.root)
         if fresh.content_sha256(job.unit.contract) != job.unit.contract_sha256:
@@ -68,16 +124,26 @@ def begin(job, adapter, pins, method):
         entry = fresh.get(job.unit.contract) or {}
         _placements(entry)
         job.setup["contract_library"] = library.root
-        # Scan only the actual proof translation unit; scripted fixtures have no
-        # real source traversal and can explicitly supply their input manifest.
+    # Scan the actual translation units of both sides; scripted fixtures have no
+    # real source traversal and supply their own explicit manifest.
+    if library is not None and not str(job.unit.contract or "").startswith("c_model."):
         from swdb.wp_adapter import _unit_source
-        source = _unit_source(Path(job.unit.tree), job.unit.function)
-        _no_assume(source.read_text(), str(source))
-        job.setup["files"][str(source)] = _sha(source.read_bytes())
+        trees = [job.unit.tree]
+        baseline = (getattr(adapter, "spec", {}) or {}).get("baseline") or {}
+        if baseline.get("tree"):
+            trees.append(baseline["tree"])
+        for tree in trees:
+            source = _unit_source(Path(tree), job.unit.function)
+            _no_assume(source.read_text(), str(source))
+            job.setup["files"][str(source)] = _sha(source.read_bytes())
     plan = getattr(adapter, "script", {}).get("setup") or {}
     if plan:
+        if plan.get("run_plan_sha256", plan_hash) != plan_hash:
+            _fail("run_plan_hash", "the job differs from its pinned run plan")
         for row in plan.get("inputs", []):
             path = Path(row["path"])
+            if not path.is_absolute():
+                path = Path(job.scratch) / path
             text = path.read_text()
             _no_assume(text, str(path))
             actual = _sha(path.read_bytes())
@@ -93,6 +159,9 @@ def begin(job, adapter, pins, method):
                 _fail("hazard_probes", f"probe {probe.get('id')} is absent or not generator-made")
         if plan.get("tool") in ("wp", "frama-c-wp"):
             _wp_flags(plan.get("flags", []), job.scratch)
+            selected = _values(plan.get("flags", []), "-wp-prover")
+            if method is not None and selected and any(value.split(",") != wp_provers(method) for value in selected):
+                _fail("method_version", "WP solver order differs from the method version")
         report["hashes"]["run_plan"] = _digest(plan)
     _environment()
     return report
@@ -125,11 +194,20 @@ def _wp_flags(flags, scratch):
         values = _values(flags, name)
         if not values or any(v != expected for v in values):
             _fail("frozen_flags", f"requires only {name} {expected}, got {values}")
+    if any(str(flag).startswith("-wp-prop") for flag in flags):
+        _fail("property_selection", "WP may not suppress generated properties or global lemmas")
     if any("warn-key" in str(flag) for flag in flags):
         _fail("warning_defaults", "Frama-C warning keys must stay at their defaults")
-    if any(f.startswith(("-wp-session", "-wp-script", "-load", "-wp-cache-dir")) for f in flags):
-        _fail("fresh_session", "loading WP sessions, scripts, or caches is forbidden")
-    if any(p.name in ("wp", ".wp", "wp-session", "wp-cache") or "session" in p.name
+    for index, flag in enumerate(flags):
+        if flag.startswith("-load"):
+            value = flags[index + 1] if index + 1 < len(flags) else ""
+            key = str(Path(value).resolve())
+            pinned = _COMPILED_MODULES.get(key)
+            if flag != "-load-module" or pinned is None or _sha(Path(value).read_bytes()) != pinned[0] or _sha(REPORT_MODULE.read_bytes()) != pinned[1]:
+                _fail("fresh_session", "only the checked, freshly compiled proof inventory module may be loaded")
+        if flag.startswith(("-wp-session", "-wp-script", "-wp-cache-dir")):
+            _fail("fresh_session", "loading WP sessions, scripts, or caches is forbidden")
+    if any(p.name in ("wp", ".wp", ".frama-c", "wp-session", "wp-cache") or "session" in p.name
            for p in Path(scratch).iterdir()):
         _fail("fresh_session", "the working folder contains an existing WP session")
 
@@ -143,12 +221,13 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
     """
     if not getattr(job, "setup", None):
         # Direct adapter usage outside prove still gets the same preflight.
-        from types import SimpleNamespace
         if getattr(job, "setup", None) is None:
             _fail("unplanned_job", "adapter invocation has no planned setup")
         method = getattr(adapter, "method", None)
         begin(job, adapter, {"method_version": {"id": method.id, "sha256": method.sha256}}, method)
     _method(job.setup.get("method"))
+    if _digest(_job_plan(job, adapter)) != job.setup["plan_sha256"]:
+        _fail("run_plan_hash", "bounds, build constants, budget or proof unit changed after planning")
     _environment()
     for path, expected in job.setup.get("files", {}).items():
         if _sha(Path(path).read_bytes()) != expected:
@@ -159,7 +238,12 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
         fresh = Library(library_root)
         if fresh.content_sha256(job.unit.contract) != job.unit.contract_sha256:
             _fail("contract_hash", "the contract changed after planning")
-    hashes = {}
+    summary_pins = (context.get("pins") or {}).get("summaries", [])
+    if library_root is not None:
+        for summary in summary_pins:
+            if fresh.content_sha256(summary["id"]) != summary["sha256"]:
+                _fail("summary_hash", f"summary {summary['id']} differs from its pinned content")
+    hashes = {"summaries": _digest(summary_pins)}
     for path, expected in inputs:
         path = Path(path)
         actual = path.read_bytes()
@@ -172,12 +256,25 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
         pinned = (context.get("pins") or {}).get("c_lowering") or context.get("c_lowering")
         if pinned and pinned.get("sha256") != _sha(lowering.text):
             _fail("lowering_hash", "C lowering differs from its planned pin")
+        final_text = "\n".join(Path(path).read_text() for path, _expected in inputs)
         for probe in lowering.probes:
-            if f'"{probe["id"]}"' not in lowering.text:
+            if f'"{probe["id"]}"' not in lowering.text or f'"{probe["id"]}"' not in final_text:
                 _fail("hazard_probes", f"generator probe {probe['id']} is absent from C lowering")
         hashes["lowering"] = _sha(lowering.text)
+    baseline = context.get("baseline_lowering")
+    if baseline is not None:
+        _no_assume(baseline.text, "baseline C lowering")
+        pin = context["pins"]["baseline_c_lowering"]
+        if pin["sha256"] != _sha(baseline.text):
+            _fail("lowering_hash", "baseline C lowering differs from its planned pin")
+        hashes["baseline_lowering"] = _sha(baseline.text)
+    if adapter.name == "wp" and context.get("semantics"):
+        base = context.get("semantics_hint_base")
+        if base is None:
+            _fail("semantics_ghost_ownership", "semantics invocation has no pinned hint-free base")
+        check_semantics_hints(base, getattr(adapter, "hints", []))
     if adapter.name == "wp":
-        _wp_flags(flags, scratch or job.scratch)
+        _wp_flags(list(command) if command else flags, scratch or job.scratch)
     method = job.setup.get("method")
     tools = context.get("tools") or {}
     if method is not None:
@@ -190,13 +287,36 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
     return result
 
 
+def wp_provers(method):
+    """The explicitly frozen portfolio, or the legacy method's historical order."""
+    row = next((r for r in method.data.get("lineup", []) if r.get("tool") == "frama-c-wp"), {})
+    declared = _values(row.get("flags", []), "-wp-prover")
+    if len(declared) > 1:
+        _fail("method_version", "the method declares WP solver selection more than once")
+    return declared[0].split(",") if declared else ["alt-ergo", "z3", "cvc5"]
+
+
 def _lineup(method, adapter, tools, flags):
     lineup = {row["tool"]: row for row in method.data.get("lineup", [])}
     for name, identity_ in tools.get("identities", {}).items():
-        if name in lineup and str(identity_[2]) != lineup[name]["version"]:
+        installed = str(identity_[2])
+        pinned = (lineup.get(name) or {}).get("version")
+        matches = installed == pinned or (name == "cbmc" and pinned is not None and installed.startswith(pinned + "."))
+        if name in lineup and not matches:
             _fail("method_version", f"{name} version {identity_[2]} differs from method {lineup[name]['version']}")
-    name = "frama-c-wp" if adapter.name == "wp" else adapter.name
+    name = "frama-c-wp" if adapter.name == "wp" else "crux-llvm" if adapter.name.startswith("crux-llvm") else adapter.name
     declared = (lineup.get(name) or {}).get("flags", [])
+    if adapter.name == "wp":
+        expected_provers = wp_provers(method)
+        for key, value in (("-wp-timeout", str(method.data["budgets"]["wp_seconds_per_solver"])),
+                           ("-wp-par", "1")):
+            if _values(flags, key) != [value] and set(_values(flags, key)) != {value}:
+                _fail("method_version", f"{key} differs from the frozen method budget/settings")
+        selected = _values(flags, "-wp-prover")
+        if not selected or any(value.split(",") != expected_provers for value in selected):
+            _fail("method_version", "WP solver selection differs from the method lineup")
+        if "-wp-smoke-tests" not in flags:
+            _fail("smoke_tests", "the final WP run must generate smoke tests")
     # Every method flag occurs in its original order; derived bounds, property
     # selection and report destinations may be added but cannot override it.
     for i, flag in enumerate(declared):
@@ -229,8 +349,12 @@ def read_wp_reports(goals_json, properties_csv, inventory_path, extern_contracts
             properties = list(csv.DictReader(stream, delimiter="\t"))
     except (OSError, ValueError, TypeError) as exc:
         return outcome("not_proven", UNCLASSIFIED, f"malformed fresh report: {exc}")
-    if inventory.get("complete") is not True or inventory.get("version") != "1":
+    if not isinstance(inventory, dict) or inventory.get("complete") is not True or inventory.get("version") != "1":
         return outcome("not_proven", UNCLASSIFIED, "incomplete generated-goal inventory")
+    if (not isinstance(inventory, dict) or not isinstance(raw, list) or any(not isinstance(g, dict) for g in raw)
+            or not isinstance(inventory.get("goals"), list) or not isinstance(inventory.get("properties"), list)
+            or any(not isinstance(g, dict) for g in inventory["goals"] + inventory["properties"])):
+        return outcome("not_proven", UNCLASSIFIED, "fresh reports have the wrong shape")
     reported = {g.get("goal"): g for g in raw}
     generated = {g.get("goal"): g for g in inventory.get("goals", [])}
     if len(reported) != len(raw) or len(generated) != len(inventory.get("goals", [])) or None in reported or None in generated:
@@ -250,26 +374,35 @@ def read_wp_reports(goals_json, properties_csv, inventory_path, extern_contracts
         assumptions.append({"kind": "assumed_clause", "reference": reference,
                             "sentence": f"WP treats contract property {prop['property']} of {function} as Extern: "
                                         f"{prop.get('description') or prop['property']}."})
+    smoke_failures = [p for p in inventory.get("properties", []) if p.get("generated_smoke_failure")]
     goals, unproven = [], []
     for name, expected in generated.items():
         raw_goal = reported.get(name)
         if raw_goal is None:
+            direct = expected.get("passed") is True and (expected.get("smoke") or "valid" in expected.get("results", []))
             goal = {"goal": name, "property": expected.get("property"), "function": expected.get("function"),
-                    "status": "unknown", "solver": None, "seconds": None}
+                    "status": "valid" if direct else "unknown", "solver": None, "seconds": None,
+                    "smoke": bool(expected.get("smoke")), "source": "wp_inventory"}
             goals.append(goal)
-            unproven.append({"property": goal["property"], "goal": name, "status": "untried", "failure_class": "unknown"})
+            if not direct:
+                smoke_failed = bool(expected.get("smoke")) and not expected.get("passed")
+                goal["status"] = "failed_smoke" if smoke_failed else "unknown"
+                unproven.append({"property": goal["property"], "goal": name, "status": goal["status"],
+                                 "failure_class": "vacuous_pass" if smoke_failed else "unknown"})
             continue
-        goal = _goal(raw_goal)
+        goal = {**_goal(raw_goal), "smoke": bool(raw_goal.get("smoke")), "source": "wp_json"}
         goals.append(goal)
         if bool(raw_goal.get("smoke")) != bool(expected.get("smoke")) or \
                 bool(raw_goal.get("passed")) != bool(expected.get("passed")):
             return outcome("not_proven", UNCLASSIFIED, f"goal {name}: report disagrees with fresh inventory", goals)
         if expected.get("smoke"):
             if not expected.get("passed"):
-                return outcome("not_proven", "vacuous_pass", f"smoke test {name} failed (dead code)", goals,
-                               [{"property": goal["property"], "goal": name, "status": "failed smoke test",
-                                 "failure_class": "vacuous_pass"}], assumptions)
+                goal["status"] = "failed_smoke"
+                unproven.append({"property": goal["property"], "goal": name, "status": "failed smoke test",
+                                 "failure_class": "vacuous_pass"})
             continue
+        if expected.get("passed") and "valid" not in expected.get("results", []):
+            return outcome("not_proven", UNCLASSIFIED, f"goal {name} has no direct Valid prover result", goals)
         if not expected.get("passed"):
             mapping = {"timeout": "timeout", "stepout": "timeout", "unknown": "unknown", "untried": "unknown",
                        "failed": "solver_error"}
@@ -280,11 +413,58 @@ def read_wp_reports(goals_json, properties_csv, inventory_path, extern_contracts
             unproven.append({"property": goal["property"], "goal": name, "status": goal["status"], "failure_class": failure})
     # CSV catches failed call-site preconditions and termination properties that
     # are not captured by a locally Valid target. Global lemmas are never filtered.
+    def declared_unit_precondition(row):
+        # WP reports a proof unit's own requires as Ignored under -report-untried:
+        # it is the explicit condition of this conditional theorem, not a call-site
+        # obligation. Never apply this exception to Unknown or failing instances.
+        return row.get("status") == "Ignored" and row.get("property kind") == "precondition" and any(
+            prop.get("function") == row.get("function") and str(prop.get("line")) == str(row.get("line"))
+            and str(prop.get("description", "")).startswith("requires")
+            for prop in inventory.get("properties", []))
     invalid = [row for row in properties if row.get("status") != "Valid"
-               and row.get("status") != "Considered valid"
+               and row.get("status") != "Considered valid" and not declared_unit_precondition(row)
                and (not functions or row.get("function") in functions or not row.get("function"))]
-    if invalid and not unproven:
-        return outcome("not_proven", UNCLASSIFIED, "not-Valid properties have no classified failing goal", goals, invalid, assumptions)
+    classified_properties = []
+    for row in invalid:
+        smoke = next((prop for prop in smoke_failures if prop.get("function") == row.get("function")
+                      and str(prop.get("line")) == str(row.get("line"))), None)
+        if smoke is not None:
+            classified_properties.append({"property": row.get("property"), "kind": row.get("property kind"),
+                "function": row.get("function"), "line": smoke.get("line"), "status": row.get("status"),
+                "failure_class": "vacuous_pass"})
+            continue
+        aliases = {prop.get("property") for prop in inventory.get("properties", [])
+                   if prop.get("function") == (row.get("function") or None)
+                   and str(prop.get("line", "")) == str(row.get("line", ""))}
+        dependency_map = {prop["property"]: set(prop.get("dependencies", [])) | ({prop["origin"]} if prop.get("origin") else set())
+                          for prop in inventory.get("properties", [])}
+        pending, reachable = list(aliases), set(aliases)
+        while pending:
+            dependency = pending.pop()
+            for dep in dependency_map.get(dependency, set()) - reachable:
+                reachable.add(dep)
+                pending.append(dep)
+        matches = []
+        for failed in unproven:
+            origin = reported.get(failed["goal"]) or generated.get(failed["goal"], {})
+            same_function = origin.get("function") == (row.get("function") or None)
+            same_line = str(origin.get("line", "")) == str(row.get("line", ""))
+            origins = {prop.get("origin") for prop in inventory.get("properties", [])
+                       if prop.get("property") == failed.get("property") and prop.get("origin")}
+            doomed = set(generated.get(failed["goal"], {}).get("targets", []))
+            same_name = (failed.get("property") == row.get("property") or failed.get("property") in aliases
+                         or bool(origins & aliases) or bool(doomed & aliases) or failed.get("property") in reachable)
+            if same_name or (same_function and same_line):
+                matches.append(failed)
+        if not matches:
+            return outcome("not_proven", UNCLASSIFIED, "not-Valid property has no classified failing goal: " +
+                           str(row.get("property")), goals, classified_properties, assumptions)
+        classified_properties.append({"property": row.get("property"), "kind": row.get("property kind"),
+            "function": row.get("function"), "line": int(row["line"]) if str(row.get("line", "")).isdigit() else None,
+            "status": row.get("status"), "goal": matches[0]["goal"], "failure_class": matches[0]["failure_class"]})
+    unproven = classified_properties + unproven
+    if smoke_failures or any(p["failure_class"] == "vacuous_pass" for p in unproven):
+        return outcome("not_proven", "vacuous_pass", "one or more smoke tests failed", goals, unproven, assumptions)
     if unproven:
         return outcome("not_proven", unproven[0]["failure_class"], "one or more generated properties are not Valid",
                        goals, unproven, assumptions)
@@ -306,4 +486,5 @@ def compile_report_module(workdir):
                            "-o", str(out), str(source)], capture_output=True, text=True, timeout=120)
     if done.returncode:
         _fail("report_reader", f"cannot compile fresh inventory reader: {(done.stderr or done.stdout)[:800]}")
+    _COMPILED_MODULES[str(out.resolve())] = (_sha(out.read_bytes()), _sha(REPORT_MODULE.read_bytes()))
     return out

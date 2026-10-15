@@ -44,12 +44,11 @@ from swdb import artifacts, c_lowering, framac, hint_check, paths, proof_semanti
 from swdb.proof import MODEL_PREFIX, AdapterError, Verdict
 
 NAME = "wp"
-PROVERS = ("alt-ergo", "z3", "cvc5")
+PROVERS = ("z3", "cvc5", "alt-ergo")   # required tools; invocation order comes from the method
 WHY3_NAMES = {"Alt-Ergo": "alt-ergo", "Z3": "z3", "CVC5": "cvc5"}
 FROZEN = (("-wp-cache", "none"), ("-wp-model", "+real"))
 MACHDEP = ("-machdep", "x86_64")
-LEMMAS_OUT = ()    # ticket 26: logic-library lemmas are proven once, with the method (prove-logic)
-ALLOCATION_MODEL = "swdb_alloc_"   # ordinary new[] success is assumed; uncertified releases remain refused
+ALLOCATION_MODEL = "swdb_alloc_"   # new[] success is assumed; an ordinary release still needs lifetime support
 DEFAULT_WALL_SECONDS = 3600
 DEFAULT_CAP_BYTES = 8 * 2**30                    # O9: the ~8 GB RSS watchdog
 UNCLASSIFIED = "unclassified_wp_outcome"         # not a failure class: stops the batch (11 item 9)
@@ -80,6 +79,7 @@ class WpAdapter:
         except hint_check.HintSetError as exc:
             raise AdapterError(str(exc)) from None
         self.defines = tuple(defines)
+        proof_semantics.check_defines(self.defines)
 
     @classmethod
     def from_args(cls, args, script, *, library, contract, method):
@@ -189,7 +189,7 @@ class WpAdapter:
         contracts = self._dependencies(dependency_lowering, context)
         context["lowering"] = lowering
         context["extern_contracts"] = {
-            used["name"]: {"id": used["summary"], "sha256": self.library.content_sha256(used["summary"])}
+            used["c_name"]: {"id": used["summary"], "sha256": self.library.content_sha256(used["summary"])}
             for used in lowering.summaries if used["name"] not in covered}
         for model in context["pins"].get("models", []):
             context["extern_contracts"][model["id"]] = {k: model[k] for k in ("id", "sha256")}
@@ -208,6 +208,9 @@ class WpAdapter:
         base = hint_check.wp_base(view.text if view else lowering.text, lowering.anchors,
                                   self._context(lowering, entry, summary_job, context))
         base = self._with_contracts(base, contracts)
+        if context.get("semantics"):
+            context["semantics_hint_base"] = base
+            proof_setup.check_semantics_hints(base, self.hints)
         accepted = self._hint_check(job, lowering, base, context) if self.hints_path else []
         text = hint_check.merge(base, lowering.anchors, self.hints, accepted).text
         input_path = wp_dir / "wp_input.c"
@@ -278,7 +281,8 @@ class WpAdapter:
         identities = {"c_lowering": (lowering_id["id"], lowering_id["sha256"], c_lowering.TOOL_VERSION)}
         for tool, (version, sha) in found.items():
             identities[tool] = (f"{tool}-{version}", sha, version)
-        return {"flags": list(flags), "seconds": seconds, "identities": identities}
+        return {"flags": list(flags), "seconds": seconds, "identities": identities,
+                "provers": proof_setup.wp_provers(self.method)}
 
     # --- ticket 24: summaries and C models the unit calls, each proven by its own record ----------------------
     def _summarized(self):
@@ -436,6 +440,7 @@ class WpAdapter:
             for array in wp.get("separate_from") or []:
                 dims = next((loc.count("[") for loc in locations if loc.split("[")[0] == array), 0)
                 extra.append(f"requires \\base_addr({name}) != \\base_addr(&{array}{'[0]' * dims});")
+        semantics["unit_requires"] = list(extra)
         prelude = proof_semantics.wp_prelude(self.library, entry_id, semantics["calls"], self.defines)
         return extra + rewritten, [prelude]
 
@@ -447,8 +452,10 @@ class WpAdapter:
         goals_json, properties_csv = scratch / "wp-goals.json", scratch / "wp-properties.csv"
         inventory = scratch / "wp-inventory.json"
         report_module = proof_setup.compile_report_module(scratch)
-        settings_flags = [*tools["flags"], *MACHDEP, "-wp-prover", ",".join(PROVERS), "-wp-timeout",
-                          str(tools["seconds"]), "-wp-par", "1", "-wp-smoke-tests", *LEMMAS_OUT, *context.get("extra_flags", [])]
+        prover_flags = [] if any(f == "-wp-prover" or f.startswith("-wp-prover=") for f in tools["flags"]) else \
+            ["-wp-prover", ",".join(tools["provers"])]
+        settings_flags = [*tools["flags"], *MACHDEP, *prover_flags, "-wp-timeout",
+                          str(tools["seconds"]), "-wp-par", "1", "-wp-smoke-tests", *context.get("extra_flags", [])]
         command = [*framac.locate().command, *settings_flags, "-wp-report-json", goals_json.name, "wp_input.c",
                    "-then", "-load-module", str(report_module), "-report", "-report-untried",
                    "-report-csv", properties_csv.name]
@@ -492,7 +499,8 @@ class WpAdapter:
                                inventory=inventory, extern_contracts=context.get("extern_contracts"))
         context.setdefault("assumed", []).extend(outcome.get("assumptions", []))
         context["verdict_reading"] = outcome.get("reading")
-        if context.get("semantics") and outcome["verdict"] == "not_proven" and any(
+        if context.get("semantics") and outcome["verdict"] == "not_proven" and \
+                outcome["failure_class"] in {"timeout", "unknown", "solver_error"} and any(
                 g.get("status") != "valid" and "ghost_capacity" in str(g.get("goal", ""))
                 for g in outcome["goals"]):
             outcome["failure_class"] = "ghost_capacity"
@@ -535,11 +543,19 @@ class WpAdapter:
         semantics = context.get("semantics")
         if semantics:                               # ticket 27: as the CBMC adapter records it
             pins["proof_semantics"] = {"id": semantics["id"], "sha256": semantics["sha256"]}
-            fields.setdefault("settings", {})["proof_semantics"] = context["semantics_settings"]
+            fields.setdefault("settings", {})["proof_semantics"] = {
+                **context["semantics_settings"], "unit_requires": semantics.get("unit_requires", [])}
             assumptions.append({"kind": "proof_semantics", "reference": {"id": semantics["id"],
                                                                          "sha256": semantics["sha256"]},
                                 "sentence": f"The DX100 behaves as its proof semantics {semantics['id']} says: each "
                                             "command's values as if it finished at issue, hazards as its rules state."})
+            assumptions.append({"kind": "assumed_clause", "reference": {"id": semantics["id"],
+                                                                        "sha256": semantics["sha256"]},
+                "sentence": "The WP model-domain preconditions hold: no DX100 command is outstanding at entry, "
+                            "and CPU pointer parameters occupy objects separate from tile data, tile sizes, and "
+                            "register values. The exact generated clauses are recorded in "
+                            "settings.proof_semantics.unit_requires; store-frame witnesses and selected-index "
+                            "bounds remain checked proof obligations."})
             reduction = Path(self.library.root) / "rocq" / "probata" / "Reduction.v"
             if not reduction.is_file():
                 reduction = paths.HOME / "library" / "rocq" / "probata" / "Reduction.v"
@@ -559,7 +575,7 @@ USER_ERROR = re.compile(r"User Error|annot-error|invalid user input|syntax error
 
 
 def read_outcome(result, log_text, goals_json, properties_csv, functions=None, *, inventory=None, extern_contracts=None):
-    """{verdict, failure_class, why, goals, unproven} from one WP run (minimal reading; 36 owns the full rule).
+    """{verdict, failure_class, why, goals, unproven} from one fresh WP run (ticket36 strict reading).
 
     `functions` (ticket 24): read only the properties and goals of these functions (the proof unit, its inlined
     callees included); C models and summaries in the same file are proven by their own records."""
@@ -578,29 +594,7 @@ def read_outcome(result, log_text, goals_json, properties_csv, functions=None, *
         return outcome("not_proven", "tool_crash", f"Frama-C exited {result.exit_code} without a user error")
     if goals_json is None or properties_csv is None:
         return outcome("not_proven", UNCLASSIFIED, "WP exited 0 but wrote no per-property or per-goal report")
-    if inventory is not None:
-        return proof_setup.read_wp_reports(goals_json, properties_csv, inventory, extern_contracts, functions)
-    goals = [_goal(g) for g in json.loads(goals_json.read_text() or "[]")]
-    with open(properties_csv, newline="") as handle:
-        properties = list(csv.DictReader(handle, delimiter="\t"))
-    if functions:
-        goals = [g for g in goals if g["function"] in functions]
-        properties = [row for row in properties if row.get("function") in functions]
-    unproven = [{"property": row.get("property"), "kind": row.get("property kind"), "function": row.get("function"),
-                 "line": int(row["line"]) if str(row.get("line", "")).isdigit() else None, "status": row.get("status")}
-                for row in properties if row.get("status") != "Valid"]
-    if not properties and not goals:
-        return outcome("not_proven", "vacuous_pass", "WP reported no property and no goal", goals, unproven)
-    failing = [g for g in goals if g["status"] != "valid"]
-    if not unproven and not failing:
-        return outcome("proven", None, "every property Valid and every goal passed", goals)
-    statuses = {g["status"] for g in failing}
-    for status, failure_class in (("failed", "solver_error"), ("timeout", "timeout"), ("stepout", "timeout"),
-                                  ("unknown", "unknown")):
-        if status in statuses:
-            return outcome("not_proven", failure_class, f"{len(failing)} goal(s) not proven ({status})", goals, unproven)
-    return outcome("not_proven", UNCLASSIFIED, f"properties not Valid with no failing goal: "
-                   f"{sorted({u['status'] for u in unproven})}", goals, unproven)
+    return proof_setup.read_wp_reports(goals_json, properties_csv, inventory, extern_contracts, functions)
 
 
 def _goal(raw):

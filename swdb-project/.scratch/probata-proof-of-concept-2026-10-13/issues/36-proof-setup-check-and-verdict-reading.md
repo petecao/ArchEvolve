@@ -94,3 +94,50 @@ is tested with its negative controls.
   (map 26 item 10: a failure outside the list stops the batch).
 - Assumption (not decided in the map): on a bounded-verifier run the setup check covers the same
   items except the WP flags; that tool's frozen flags come from the method-version file.
+
+## Implementation checkpoint — 2026-10-15 ET
+
+Implemented the universal setup preflight, per-invocation generated-input check,
+and fresh WP property reader in `swdb/proof_setup.py` and `swdb/proof_report.ml`.
+The WP, CBMC, crux-llvm and whole-function CBMC adapters call the generated-input
+check immediately before their verifier process. A real successful verdict without
+that check is refused by `swdb prove`. Schemas and
+`docs/reference/format-v0.4-proof-setup.md` describe both attestations; production
+execution methods must pin each check's version and content hash. Historical
+fixture methods remain fixture evidence.
+
+The reader enumerates generated Wpo obligations, actual individual prover results,
+property dependencies and user include closure. Automatically proved obligations
+omitted from WP JSON require direct valid results; omitted untried obligations stay
+not proven. No consolidated Valid summary establishes proof. Unexpected Externs
+stop the batch; exact pinned summary, C-model and DX100 contract Externs become
+individual assumption entries. Failed smoke tests invalidate the result while
+retaining each original goal and failure class. Lemmas are never filtered out to
+make a target pass.
+
+Assumption resolved with the project coordinator: bounded harness restrictions
+are reconstructed from pinned bounds and the formal unit's declared preconditions.
+They are explicit input-domain restrictions, distinct from summary postconditions.
+An undeclared `parent[v] >= -1` restriction is still refused. A unit's own Ignored
+preconditions describe its conditional theorem; failed call-site preconditions
+remain proof obligations. Neither check discharges lifting obligations at callers.
+
+Validation before the final semantics ghost-state hardening: 48 setup/documentation
+controls passed in 149.65 s, including 13 real Frama-C fact controls and the actual
+doctor-cache experiment; two additional production version/hash controls passed;
+three direct CBMC/baseline/chain controls passed; all 15 existing WP adapter cases
+passed (safe and seeded-bug pair, then the other 13). Logs are local under
+`/private/tmp/probata-t36-{verified,method-controls,bounded,wp-verified}.jsonl`.
+The packaged wheel also contains byte-identical Python/ML check assets.
+
+A subsequent cross-ticket review found that Frama-C permits ghost hints to mutate
+the trusted semantics ghost model. The setup guard now restricts semantics-job ghost
+hints to fresh scalar witnesses and the checked `dx_store_bound` witness; direct
+model writes, pointer/indexed writes, shadowing, calls, mutation expressions and
+macro expansion fail closed before hint goal generation and before final WP.
+Non-semantics hint behavior is unchanged. The dedicated public CLI adversarial and
+accepted-witness controls are being completed before the final identity is pinned.
+
+Status remains `claimed`: ticket 27's final real WP semantics acceptance is still a
+required dependency. This checkpoint does not assert that all ticket-27 units have
+passed, that Rocq composition is proved, or that a production campaign is proven.

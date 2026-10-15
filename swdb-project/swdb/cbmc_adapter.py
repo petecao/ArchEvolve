@@ -136,6 +136,7 @@ class CbmcAdapter:
         self.library, self.contract, self.method = library, contract, method
         self.records = Path(records) if records else None
         self.defines = tuple(sorted(defines))
+        proof_semantics.check_defines(self.defines)
 
     @classmethod
     def from_args(cls, args, script, *, library, contract, method):
@@ -454,6 +455,9 @@ class CbmcAdapter:
         log.line(f"command: {shlex.join(map(str, command))}\ncwd: scratch\nrss cap bytes: {cap}\n"
                  f"wall budget seconds: {wall}")
         context["settings"].update(flags=flags, rss_cap_bytes=cap, wall_budget_seconds=wall)
+        from swdb import proof_setup
+        proof_setup.check_generated(job, self, context, [(scratch / "job.c", text)], flags,
+                                    command=command, scratch=scratch, lowering=code.lowering)
         result = rss_watchdog.run(command, log=cbmc_log, cap_bytes=cap, timeout=wall, cwd=scratch,
                                   env={**os.environ, "TMPDIR": str(scratch)})
         context["reports"].append(("cbmc_output", cbmc_log))

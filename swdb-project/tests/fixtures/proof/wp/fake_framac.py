@@ -18,7 +18,12 @@ if "-version" in args:
     print("33.0 (Arsenic)")
     sys.exit(0)
 mode = os.environ.get("FAKE_WP_MODE", "")
-no_prover = "-wp-prover" in args and args[args.index("-wp-prover") + 1] == "none"
+if os.environ.get("FAKE_HINT_NO_SOLVERS") and "hint_check.c" in args and "-wp" in args:
+    selectors = [args[i + 1] for i, flag in enumerate(args[:-1]) if flag == "-wp-prover"]
+    if selectors != ["none"]:
+        print("[kernel] User Error: hint goal generation must select only the none prover")
+        sys.exit(1)
+no_prover = any(args[i + 1] == "none" for i, flag in enumerate(args[:-1]) if flag == "-wp-prover")
 if "-wp" not in args or no_prover:        # not a WP job (a parse-only check, the hint check): the real Frama-C
     sys.exit(subprocess.run([*shlex.split(os.environ["FAKE_WP_REAL"]), *args]).returncode)
 
@@ -53,6 +58,9 @@ goal = {"goal": f"typed_real_{f}_ensures", "property": f"{f}_ensures", "file": "
         "provers": [{"prover": "Z3:5.1.0", "time": 0.01, "success": 0}]}
 with open(target("-wp-report-json"), "w") as out:
     json.dump([goal], out)
+if os.environ.get("SWDB_PROOF_REPORT_OUT"):
+    with open(os.environ["SWDB_PROOF_REPORT_OUT"], "w") as out:
+        json.dump({"version": "1", "complete": True, "goals": [{**goal, "results": [verdict]}], "properties": []}, out)
 with open(target("-report-csv"), "w") as out:
     out.write("directory\tfile\tline\tfunction\tproperty kind\tstatus\tproperty\n"
               f".\twp_input.c\t4\t{f}\tpostcondition\tUnknown\t\\result >= 0\n")

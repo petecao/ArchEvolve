@@ -52,9 +52,7 @@
         "runs"
       ],
       "properties": {
-        "check": {
-          "type": "object"
-        },
+        "check": {"$ref": "#/$defs/setup_identity"},
         "verdict": {
           "const": "passed"
         },
@@ -81,9 +79,7 @@
         "verdict"
       ],
       "properties": {
-        "check": {
-          "type": "object"
-        },
+        "check": {"$ref": "#/$defs/setup_identity"},
         "verdict": {
           "enum": [
             "proven",
@@ -262,12 +258,13 @@
     },
     "goals": {
       "type": "array",
-      "description": "Ticket 21 (minimal verdict reader): per goal of the verifier's per-goal report, its status and the solver that proved it (any one of the portfolio counts; qed is WP's simplifier) with its time.",
+      "description": "Ticket 36: every generated goal, with source wp_json or wp_inventory and a smoke marker. Automatic goals and successful smoke tests may have no proving solver/time; smoke passed means the false reachability goal was not proven.",
       "items": {
         "type": "object",
         "additionalProperties": false,
         "required": ["goal", "status", "solver", "seconds"],
         "properties": {
+          "smoke": {"type": "boolean"}, "source": {"enum": ["wp_json", "wp_inventory"]},
           "goal": {"type": "string", "minLength": 1}, "property": {"type": ["string", "null"]},
           "function": {"type": ["string", "null"]}, "status": {"type": "string", "minLength": 1},
           "solver": {"type": ["string", "null"]}, "seconds": {"type": ["number", "null"], "minimum": 0}
@@ -284,7 +281,9 @@
         "properties": {
           "property": {"type": ["string", "null"]}, "kind": {"type": ["string", "null"]},
           "function": {"type": ["string", "null"]}, "line": {"type": ["integer", "null"]},
-          "status": {"type": ["string", "null"]}
+          "status": {"type": ["string", "null"]},
+          "goal": {"type": "string"},
+          "failure_class": {"type": "string", "x-vocab": "proof_failure_classes"}
         }
       }
     },
@@ -480,6 +479,10 @@
     }
   ],
   "$defs": {
+    "setup_identity": {
+      "type": "object", "additionalProperties": false, "required": ["version", "sha256"],
+      "properties": {"version": {"type": "string", "minLength": 1}, "sha256": {"$ref": "#/$defs/sha256"}}
+    },
     "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
     "tool_identity": {
       "type": "object",

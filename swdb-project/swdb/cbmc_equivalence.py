@@ -366,6 +366,10 @@ class EquivalenceAdapter(CbmcAdapter):
         cbmc_log = out / "cbmc.json"
         log.line(f"command: {' '.join(map(str, command))}\ncwd: scratch\nrss cap bytes: {cap}\nwall budget seconds: {wall}")
         context["settings"].update(flags=flags, rss_cap_bytes=cap, wall_budget_seconds=wall)
+        from swdb import proof_setup
+        context["baseline_lowering"] = built["codes"][1].lowering
+        proof_setup.check_generated(job, self, context, [(scratch / "job.c", built["c"])], flags,
+                                    command=command, scratch=scratch, lowering=built["codes"][0].lowering)
         result = rss_watchdog.run(command, log=cbmc_log, cap_bytes=cap, timeout=wall, cwd=scratch,
                                   env={**os.environ, "TMPDIR": str(scratch)})
         context["reports"].append(("cbmc_output", cbmc_log))

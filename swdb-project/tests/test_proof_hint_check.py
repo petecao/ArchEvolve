@@ -141,6 +141,22 @@ def test_one_hint_of_each_allowed_kind_is_accepted(seed):
 
 
 @needs_wp
+def test_hint_goal_generation_disables_inherited_provers_and_final_wp_keeps_the_frozen_portfolio(seed):
+    # 2026-10-15 ET: Frama-C accumulates repeated -wp-prover selectors; adding none does not remove Z3.
+    path = seed.root / "library" / "methods" / "wp-tracer-fixture.yaml"
+    method = yaml.safe_load(path.read_text())
+    wp = next(row for row in method["lineup"] if row["tool"] == "frama-c-wp")
+    wp["flags"] += ["-wp-prover", "z3,cvc5,alt-ergo"]
+    path.write_text(yaml.safe_dump(method, sort_keys=False))
+    record = seed.prove_hints(GOOD, env=fake("unknown", FAKE_HINT_NO_SOLVERS="1"))
+    assert record["hint_check"]["verdict"] == "accepted", record["hint_check"]
+    flags = record["settings"]["flags"]
+    assert flags.count("-wp-prover") == 1
+    assert flags[flags.index("-wp-prover") + 1] == "z3,cvc5,alt-ergo"
+    assert "-wp-smoke-tests" in flags
+
+
+@needs_wp
 def test_a_hint_at_an_anchor_the_lowering_did_not_generate_is_rejected_and_the_set_never_reaches_wp(seed):
     record = seed.prove_hints(GOOD + [hint("swdb_fixture_fill.loop9.head", "loop_invariant", "loop invariant 0 <= i;")])
     check = record["hint_check"]

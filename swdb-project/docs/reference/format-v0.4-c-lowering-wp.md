@@ -1,6 +1,6 @@
 # The C lowering tool, the WP adapter and the verifier lock
 
-Created: 2026-10-14 15:10 ET, Probata proof of concept ticket 21 (the A2 tracer).
+Created: 2026-10-14 15:10 ET, Probata proof of concept ticket 21 (the A2 tracer). Updated: 2026-10-15 ET.
 Spec: `.scratch/probata-proof-of-concept-2026-10-13/issues/21-c-lowering-wp-tracer.md`; design:
 `.scratch/formal-verification-2026-10-09/spec.md` ("Modules", "Verifier lineup and order", "Proof-hint loop"),
 map 11 items 1, 3, 8, 9, 10; 13 items 4, 6, 7; 16 items 3, 6.
@@ -129,7 +129,8 @@ anchors only when the proof hint check accepts the set (ticket 35, updated 2026-
 [format-v0.4-proof-hints.md](format-v0.4-proof-hints.md)). Anchor lines stay in WP's input.
 
 **Frozen settings** (the record's `settings`): the lineup's frama-c-wp flags (must hold `-wp-cache none`
-and `-wp-model +real`), `-machdep x86_64`, `-wp-prover alt-ergo,z3,cvc5`, `-wp-timeout` =
+and `-wp-model +real`), `-machdep x86_64`, `-wp-prover` in the method's exact pinned order (legacy methods without it use `alt-ergo,z3,cvc5`;
+new fixture methods pin `z3,cvc5,alt-ergo`), `-wp-timeout` =
 `budgets.wp_seconds_per_solver` (30), `-wp-par 1`, `-wp-prop=-@lemma` (ticket 26: logic-library lemmas
 are proven once, with the method; see [format-v0.4-logic-library.md](format-v0.4-logic-library.md)), default
 Frama-C warning levels (an annotation error aborts), a fresh session, every `FRAMAC_WP*` environment variable
