@@ -4,10 +4,12 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 16:51 ET. **Implementation is active under the user's ongoing approval.**
-Integration: `codex/probata-resume-20261015`, based on `yanrujhou_main` at
-`d94d629b`. One remote integration ref is published. Production `swdb/` bytes
-still match `71771f09`; each evaluation retains its exact source identity below.
+Updated: 2026-10-15 17:11 ET. **Implementation is active under the user's ongoing approval.**
+Integration: `codex/probata-resume-20261015`, based on `yanrujhou_main` at `d94d629b`.
+Reviewed atomic/enum repair and float hints are published at `7c06e9ed`.
+Only `swdb/c_lowering.py` differs in production from `71771f09`; its reviewed SHA256
+is `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
+Each evaluation retains its own exact source identity; none is relabeled.
 
 **32 resolved / 28 ready-for-agent / 3 claimed**, derived from ticket frontmatter.
 The frontier is **07, 24, 27**. Ticket 25 waits on 24; ticket 36 waits on 27.
@@ -15,79 +17,46 @@ Drafts 1/2 remain immutable. Draft 3 and the final production freeze have not ha
 
 | Ticket / owner | Verified checkpoint | Active work |
 |---|---|---|
-| 07 / `ticket07` | Scoped CLI repair and neutral actual probe pass. Final resource revision `79d6f338` passes 183 controls; runs 20–22 remain aborted. | Run 22 at `703ff3d7` aborted before provider work: baseline completed in 15.04 minutes, then process inspection raised AccessDenied during seed checking. Fresh counted run 23 active from 16:41:25 ET at `df19ff8a`; baseline is running. Every source/review pin matches; full clock, hints and provider conversation are fresh. Budget ends around 17:41 ET, excluding recorded lock wait. No qualifying proof yet. |
-| 24 / `ticket24` | Original Ring and allocation safe/seeded pairs audited at `71771f09`; details below. Seven public unsupported-construct controls pass. | Node 0 generation 571 stopped at 16:45 ET after the safe float case retained three initializedness timeouts. DXC, class and OMP pairs passed at `9b75f4a2`; source/contract/dependency pins are audited. Float diagnosis is isolated from the atomic repair, frozen at `220ef337` with 78 focused controls passing and independent review pending. |
-| 27 / `ticket27` | Ten of eleven safe cases pass at `71771f09`; stall-condition retains 111 ordinary + 35 smoke Valid, no open goals. | Node 1 generation 602 runs the final footprint safe case. Negative, capacity and bounded/native profiles remain. |
-| 36 / dependency-gated | Mandatory RTE, complete-command and mutation checks integrated; 122 compiler/scripted controls pass, 13 actual-WP cases excluded. | Waits on 27; no full setup acceptance or production method freeze. |
+| 07 / `ticket07` | Guard revision passes 183 controls and an actual mechanical component; runs 20–22 remain aborted. Run 23 baseline completed in 14.97 minutes: 254 ordinary goals, 103 timeouts, all 139 smoke checks passed. | Frozen `df19ff8a` run 23 started 16:41:25 ET. Fresh mechanical seed check completed; provider launched 16:58:55 ET. Independent actual prompt/argv/tool/source audit passes, and `record_design` works. Full clock remains counted; budget ends around 17:41 ET excluding recorded lock wait. No qualifying proof yet. |
+| 24 / `ticket24` | Historical Ring/allocation and corrected DXC/class/OMP pairs audited. Full finite native agreement accepted at its old source. Two field-init loop invariants pass compiler RED/GREEN and independent review. Atomic/enum refusal repair passes 86 compiler/native plus 29 public/corpus controls and independent review. | Freeze combined source for fresh full nine-group actual matrix, float first, with fresh model/summary dependencies and allocation/lifetime controls. Prior safe float failure remains three initialization timeouts, not an accepted positive. Fresh finite native agreement is also required. |
+| 27 / `ticket27` | Frozen `71771f09`: all 11 safe cases pass, 792 ordinary + 252 smoke goals Valid, including 143 initialization and 141 RTE goals. Final audit: 15,495 physical references / 1,039 files, zero mismatches. | Fresh combined-source negative, capacity, bounded/native and safe profiles remain. Dispatch negative profile first using the committed runner; no new comparison harness is needed. |
+| 36 / dependency-gated | Mandatory RTE, complete-command and mutation checks integrated; 122 compiler/scripted controls pass, 13 actual-WP cases excluded. | Waits on 27; no full setup acceptance or production method freeze. Read-only provenance fallback research remains prospective. |
 
-Ticket 24 evidence: [Ring pair](evidence/t24-original-template-pair-mbit10-20261015.json)
-has safe 89 ordinary + 1 smoke Valid and seeded 88 ordinary Valid + one ensures
-timeout + 1 smoke Valid. [Allocation pair](evidence/t24-original-allocation-pair-mbit10-20261015.json)
-has safe 42 ordinary + 7 smoke Valid; seeded 40 ordinary Valid, invariant/RTE
-timeouts, 4 smoke Valid and 3 failed smoke. Both allocation records retain 11
-initialization goals. Neither negative is a solver refutation.
+Accepted historical boundaries and reviewed changes:
 
-The first remaining-groups run ended at 15:54:36 ET when the public test helper's
-600-second limit interrupted the separate out-of-range case. It produced no
-accepted record for that case. Generation 570 released normally; post-exit
-inspection found no run-prefix survivors. The reviewed retry uses an explicit
-1800-second public-command limit, unchanged 30-second solver limits, an 8 GiB
-process-tree cap and a four-hour whole-profile limit.
-[Launch, selection and prior cleanup metadata](evidence/resumed-t24-pending-launch-20261015.json).
+- [Original Ring pair](evidence/t24-original-template-pair-mbit10-20261015.json): safe 89 ordinary + 1 smoke Valid; seed has one ensures timeout. [Allocation pair](evidence/t24-original-allocation-pair-mbit10-20261015.json): safe 42 ordinary + 7 smoke Valid; seed retains invariant/RTE timeouts and three failed smoke checks. Neither negative is a solver refutation.
+- [Final historical matrix audit](evidence/t24-historical-frontier-9b75-mbit10-20261015.json): corrected DXC, class and OMP pairs pass; safe float has 41 ordinary Valid, three initialization timeouts and five passing smoke checks. Generation 571 exited 1 after 2368.46 seconds, peak 2,169,536,512 bytes, no OOM/whole timeout, clean source. Its post-exit run-prefix process audit has zero survivors/denials.
+- [Atomic/enum independent review](evidence/t24-atomic-enum-independent-review-t27-20261015.json): erased operand effects, weak CAS and ambiguous enum values/types now refuse. Original constant fixture C/anchors/models/names remain exact. [Float hint review](evidence/t24-float-hints-independent-review-t27-20261015.json): only two ordinary field-specific initializedness invariants, with original source/contracts unchanged. Actual current-source acceptance remains open.
+- [Accepted finite native agreement](evidence/t24-finite-agreement-20261015.md): 17 rows agree on 112,589 defined input comparisons; samples may repeat, allocation seed is UB-only. This is finite native evidence and emits no proof verdict. [Compiler provenance addendum](evidence/t27-717-compiler-provenance-addendum-20261015.json): exact launch environment reconstructs the historical aggregate with full driver/parser/wrapper and 1,983 header hashes. Default SSH lacked clang; that mismatch receipt is retained. Native link-DSO bytes are outside that frontend receipt.
 
-Raw evidence stays outside Git:
+Raw artifacts and frozen checkouts remain available for their readers:
 
-- Mac: active `/private/tmp/probata-t07-20261015-run23` (driver 55248), frozen `df19ff8a`;
-  aborted `/private/tmp/probata-t07-20261015-run22` (driver 38318 stopped);
-  aborted runs 20/21 retain their separate folders. No provider ran in run 22.
-  Completed guard components: `/private/tmp/probata-t07-seed-resource-check-v4` at `e52e3011` and
-  `/private/tmp/probata-t07-seed-resource-check-v5` at `79d6f338`. Both are non-counted diagnostics.
-- Ticket 24: accepted Ring at `/data/yanruj/EvolveSWDB_runs/probata-resume-t24-templates-71771f09`;
-  allocation and interrupted out-of-range at `probata-resume-t24-remaining-71771f09`
-  under the same root; stopped retry at `probata-resume-t24-pending-9b75f4a2`.
-- Ticket 27: active `/data/yanruj/EvolveSWDB_runs/probata-resume-t27-safe-71771f09`;
-  old controlled-stop diagnostic remains `probata-resume-t27-diagnostic-20261015-1512`.
+- Mac active `/private/tmp/probata-t07-20261015-run23` at `df19ff8a` (driver 55248); runs 20–22 and component v4/v5 retain their separate folders. No provider ran in run 22.
+- Ticket 24 roots under `/data/yanruj/EvolveSWDB_runs/`: `probata-resume-t24-templates-71771f09`, `probata-resume-t24-remaining-71771f09`, and stopped `probata-resume-t24-pending-9b75f4a2`. Their source worktrees stay fixed for audit readers.
+- Ticket 27 completed root `probata-resume-t27-safe-71771f09` under the same remote parent. Generation 602 exited 0 at 16:52:28 ET after 6015.55 seconds, peak 4,503,920,640 bytes, no OOM/timeout, unchanged `71771f09`.
 
-Keep the baseline archive and node 1 checkout at `71771f09`, stopped node 0 at
-`9b75f4a2`, keep active Mac run 23 at `df19ff8a`, and retain run 22 at `703ff3d7` for audit. Node 0
-uses `/data1/yanruj/probata-t24-corrected-20261015`. Latest preflight: 19 GiB free
-on `/data1`, 95 GiB on `/data`. Node 0 generation 571 is released; node 1 generation 602 is held. Node 0 exited
-1 after 2368.46 seconds with 2,169,536,512-byte peak RSS, no OOM or whole-run
-timeout, and unchanged source. The 16:51 ET same-user argv-marker inspection
-found zero surviving processes and zero inspection denials; its raw receipt is
-`post-exit-process-audit.json`. Raw output stays on `/data`. Recheck live before dispatch. The lane wrapper matches freshly
-fetched MemAcc `yanrujhou_main` at `76cca359`; its default `main` lacks that script.
-GPU NVML has a driver/library mismatch; these jobs use CPUs.
+Last lane readback: both socket generations 571/602 and legacy 77 are released;
+19 GiB free on `/data1`, 95 GiB on `/data`. Recheck leases/processes/disks before dispatch.
+New source uses Git and a separate frozen worktree; raw output uses `/data`, planned
+8 GiB per lane, monitored by the coordinator. Each lane has one worker and an 8 GiB
+worker-tree watchdog including provenance bootstrap. Trusted outer monitor overhead
+is outside its own measurement. Wrapper bytes must match freshly fetched MemAcc
+`yanrujhou_main`; its default `main` lacks that script. CPU jobs do not use the GPU
+whose NVML driver/library diagnostic currently fails.
 
-A native audit found old DXC seed `+2` satisfies its stand-in contract. Its old WP
-timeout is a modular-summary precision control. Corrected seed `+4` has a concrete
-C++/C violation and is selected for fresh actual acceptance. OMP/float negative
-readers accept attributable invariant failures. These changes never relabel old
-records. The finite native agreement runner completed its independently admitted full
-nine-group run: 17 rows agree on 112,589 defined input comparisons (samples may
-repeat); the allocation seed is UB-only. Final independent review reconstructed
-every defined observation and all exclusions with zero errors; 15,768 physical
-references match. This reuses ticket 22's accepted native subcheck and emits no
-proof verdict. [Accepted finite agreement and bounds](evidence/t24-finite-agreement-20261015.md).
+Next: freeze the current integration head and launch node 0's complete original
+matrix (float first; six-hour whole cap, 1800-second public-command limits) and node 1's
+negative profile (three-hour whole cap). RTE/init/smoke and per-goal limits remain
+unchanged. Follow with the remaining disjoint 27 profiles as lanes release. No
+current-source proof success is claimed before actual artifacts and independent audit.
 
-The coordinator owns merges, graph updates and remote dispatch. The Mac's actual
-verifier slot belongs to 07; remote jobs are serial within each leased socket.
-This chat's 30-minute heartbeat is active; the old chat's remains paused.
-
-A new compiler-only countercontrol found erased atomic order/weak argument
-evaluation: four defined C++/C mismatches, including 119 versus 19. Current
-constant-order fixture proofs retain their exact old source identities. A narrow
-refusal fix at `220ef337` passes 78 focused controls and is being independently reviewed; it must preserve those fixtures while rejecting
-unsupported operands and weak CAS. Fresh composed-source acceptance follows the
-fix; old reports will not be relabeled. Audit: `/private/tmp/probata-t24-atomic-operand-audit.md`.
-
-Next: finish independent atomic review, diagnose the three float initializedness
-goals, and monitor run 23 and the last historical safe case. Fresh composed-source
-acceptance follows the reviewed repair; remaining matrix rows have not run. [Map](map.md), ticket acceptance text and compact evidence remain
-authoritative. Research-only next-ticket notes remain in
-`/private/tmp/probata-ticket25-resume-exploration.md`,
-`/private/tmp/probata-ticket25-lifetime-capabilities.md` and
-`/private/tmp/probata-ticket28-resume-exploration.md`.
+The coordinator owns merges, graph updates and remote dispatch. Mac actual verification
+belongs to 07; one additional guarded compiler/native worker is available. This chat's
+30-minute heartbeat remains active, old chat paused; last full table 16:51 ET, next due 17:21 ET.
+Research-only notes remain `/private/tmp/probata-ticket25-resume-exploration.md`,
+`/private/tmp/probata-ticket25-lifetime-capabilities.md`,
+`/private/tmp/probata-ticket28-resume-exploration.md` and
+`/private/tmp/probata-t36-runtime-fallback-review.md`.
 
 ## Historical integration snapshots
 
