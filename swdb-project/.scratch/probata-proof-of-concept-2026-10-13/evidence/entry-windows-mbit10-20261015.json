@@ -1,0 +1,814 @@
+{
+  "observed_at_utc": "2026-10-15T12:03:50.955622+00:00",
+  "source_commit": "b876dcb3a79b2241af5048a95384df14fe312b78",
+  "output": "/data/yanruj/EvolveSWDB_runs/probata-entry-windows-20261015-0750-node0",
+  "shard": "entry-windows",
+  "launch_exit": "0",
+  "lane": {
+    "socket_lane": {
+      "aligned_cell_age_s": "",
+      "aligned_to": "no_gapbs_batch_running",
+      "command": [
+        "bash",
+        "-c",
+        "cd /data1/yanruj/probata-t27 && bash swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/27-proof-semantics/run_acceptance.sh b876dcb3a79b2241af5048a95384df14fe312b78 \"$1\" -o \"cache_dir=$PROBATA_OUTPUT/pytest-cache\"",
+        "bash",
+        "entry-windows"
+      ],
+      "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+      "ended_utc": "2026-10-15T11:59:50Z",
+      "exit_code": 0,
+      "host": "mbit10",
+      "job": "probata-entry-windows-20261015-0750",
+      "lease_generation": 551,
+      "lease_name": "mbit10-evaluation-node0",
+      "load1_at_start": 0.18,
+      "load1_max": 32,
+      "node": 0,
+      "numa_memory_policy": "bind:0",
+      "numactl": "--cpunodebind=0 --membind=0",
+      "preregistration_sha256": null,
+      "started_utc": "2026-10-15T11:49:32Z"
+    }
+  },
+  "records": [
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-entry-windows-20261015-0750-node0/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t115051z.663e9881.yaml",
+      "sha256": "760e90f07186a21bbfb2bd166a78158d33436211f901ae67cfbab58481bc74e1",
+      "function": "window_form",
+      "verdict": "proven",
+      "setup": "passed",
+      "reading": "proven",
+      "ordinary": {
+        "valid": 6
+      },
+      "smoke": {
+        "valid": 1
+      },
+      "open_goals": [],
+      "entry_semantics": {
+        "role": "explicit typed-array-window input-contract premise; not inferred from validity",
+        "checked": "entry extent nonnegative/target byte capacity/null-empty; numerical operation bounds; ordinary RTE",
+        "smoke_scope": "projected ACSL preconditions; no complete typed-domain/formal realizability proof",
+        "caller_boundary": "imported domain-bearing summaries and unmodeled pointer calls are refused"
+      },
+      "lowerer": {
+        "id": "swdb-c-lowering-9",
+        "sha256": "e645ba54b4b4f5977c82b30ae4be751fa8ed8b62ddd2c52f0c059110f92dbc70"
+      },
+      "pointer_check": {
+        "id": "swdb-wp-pointer-bounds-1",
+        "sha256": "8262c1fa7531ebbca78a14523da2f58c2d3d2a34e4ee932b0a9593d858272d4b"
+      },
+      "artifact_count": 9,
+      "artifact_hash_mismatches": [],
+      "flags": [
+        "-wp",
+        "-wp-rte",
+        "-wp-cache",
+        "none",
+        "-wp-model",
+        "+real",
+        "-wp-par",
+        "1",
+        "-machdep",
+        "x86_64",
+        "-rte-initialized",
+        "@all",
+        "-wp-no-filter-init",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-machdep",
+        "x86_64",
+        "-wp-timeout",
+        "30",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-fct=window_form"
+      ],
+      "peak_rss_bytes": 204808192
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-entry-windows-20261015-0750-node0/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t115117z.e76233f8.yaml",
+      "sha256": "a5a0854052b7378d58a488aab997f450fc24ac55700e9be1fc532446527c6e32",
+      "function": "window_read",
+      "verdict": "proven",
+      "setup": "passed",
+      "reading": "proven",
+      "ordinary": {
+        "valid": 8
+      },
+      "smoke": {
+        "valid": 1
+      },
+      "open_goals": [],
+      "entry_semantics": {
+        "role": "explicit typed-array-window input-contract premise; not inferred from validity",
+        "checked": "entry extent nonnegative/target byte capacity/null-empty; numerical operation bounds; ordinary RTE",
+        "smoke_scope": "projected ACSL preconditions; no complete typed-domain/formal realizability proof",
+        "caller_boundary": "imported domain-bearing summaries and unmodeled pointer calls are refused"
+      },
+      "lowerer": {
+        "id": "swdb-c-lowering-9",
+        "sha256": "e645ba54b4b4f5977c82b30ae4be751fa8ed8b62ddd2c52f0c059110f92dbc70"
+      },
+      "pointer_check": {
+        "id": "swdb-wp-pointer-bounds-1",
+        "sha256": "8262c1fa7531ebbca78a14523da2f58c2d3d2a34e4ee932b0a9593d858272d4b"
+      },
+      "artifact_count": 9,
+      "artifact_hash_mismatches": [],
+      "flags": [
+        "-wp",
+        "-wp-rte",
+        "-wp-cache",
+        "none",
+        "-wp-model",
+        "+real",
+        "-wp-par",
+        "1",
+        "-machdep",
+        "x86_64",
+        "-rte-initialized",
+        "@all",
+        "-wp-no-filter-init",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-machdep",
+        "x86_64",
+        "-wp-timeout",
+        "30",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-fct=window_read"
+      ],
+      "peak_rss_bytes": 202264576
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-entry-windows-20261015-0750-node0/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t115141z.8eace7e8.yaml",
+      "sha256": "e631f16418b4d14e45128d57f825bab36ea0d55dfddc0880cf2e83aad45c9714",
+      "function": "window_form",
+      "verdict": "proven",
+      "setup": "passed",
+      "reading": "proven",
+      "ordinary": {
+        "valid": 8
+      },
+      "smoke": {
+        "valid": 2
+      },
+      "open_goals": [],
+      "entry_semantics": {
+        "role": "explicit typed-array-window input-contract premise; not inferred from validity",
+        "checked": "entry extent nonnegative/target byte capacity/null-empty; numerical operation bounds; ordinary RTE",
+        "smoke_scope": "projected ACSL preconditions; no complete typed-domain/formal realizability proof",
+        "caller_boundary": "imported domain-bearing summaries and unmodeled pointer calls are refused"
+      },
+      "lowerer": {
+        "id": "swdb-c-lowering-9",
+        "sha256": "e645ba54b4b4f5977c82b30ae4be751fa8ed8b62ddd2c52f0c059110f92dbc70"
+      },
+      "pointer_check": {
+        "id": "swdb-wp-pointer-bounds-1",
+        "sha256": "8262c1fa7531ebbca78a14523da2f58c2d3d2a34e4ee932b0a9593d858272d4b"
+      },
+      "artifact_count": 9,
+      "artifact_hash_mismatches": [],
+      "flags": [
+        "-wp",
+        "-wp-rte",
+        "-wp-cache",
+        "none",
+        "-wp-model",
+        "+real",
+        "-wp-par",
+        "1",
+        "-machdep",
+        "x86_64",
+        "-rte-initialized",
+        "@all",
+        "-wp-no-filter-init",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-machdep",
+        "x86_64",
+        "-wp-timeout",
+        "30",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-fct=window_form"
+      ],
+      "peak_rss_bytes": 219136000
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-entry-windows-20261015-0750-node0/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t115207z.1fab26dd.yaml",
+      "sha256": "adc1246b5b843af24daf1b9818b8a7dad6995949ce4a87351e5177063ab669ca",
+      "function": "window_read",
+      "verdict": "proven",
+      "setup": "passed",
+      "reading": "proven",
+      "ordinary": {
+        "valid": 8
+      },
+      "smoke": {
+        "valid": 1
+      },
+      "open_goals": [],
+      "entry_semantics": {
+        "role": "explicit typed-array-window input-contract premise; not inferred from validity",
+        "checked": "entry extent nonnegative/target byte capacity/null-empty; numerical operation bounds; ordinary RTE",
+        "smoke_scope": "projected ACSL preconditions; no complete typed-domain/formal realizability proof",
+        "caller_boundary": "imported domain-bearing summaries and unmodeled pointer calls are refused"
+      },
+      "lowerer": {
+        "id": "swdb-c-lowering-9",
+        "sha256": "e645ba54b4b4f5977c82b30ae4be751fa8ed8b62ddd2c52f0c059110f92dbc70"
+      },
+      "pointer_check": {
+        "id": "swdb-wp-pointer-bounds-1",
+        "sha256": "8262c1fa7531ebbca78a14523da2f58c2d3d2a34e4ee932b0a9593d858272d4b"
+      },
+      "artifact_count": 9,
+      "artifact_hash_mismatches": [],
+      "flags": [
+        "-wp",
+        "-wp-rte",
+        "-wp-cache",
+        "none",
+        "-wp-model",
+        "+real",
+        "-wp-par",
+        "1",
+        "-machdep",
+        "x86_64",
+        "-rte-initialized",
+        "@all",
+        "-wp-no-filter-init",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-machdep",
+        "x86_64",
+        "-wp-timeout",
+        "30",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-fct=window_read"
+      ],
+      "peak_rss_bytes": 202883072
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-entry-windows-20261015-0750-node0/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t115229z.d38d6e47.yaml",
+      "sha256": "6f44921615b9fd320d74b81a8cf5dbf9c1b008a61e01e504481e155bd94b438c",
+      "function": "window_null",
+      "verdict": "proven",
+      "setup": "passed",
+      "reading": "proven",
+      "ordinary": {
+        "valid": 6
+      },
+      "smoke": {
+        "valid": 1
+      },
+      "open_goals": [],
+      "entry_semantics": {
+        "role": "explicit typed-array-window input-contract premise; not inferred from validity",
+        "checked": "entry extent nonnegative/target byte capacity/null-empty; numerical operation bounds; ordinary RTE",
+        "smoke_scope": "projected ACSL preconditions; no complete typed-domain/formal realizability proof",
+        "caller_boundary": "imported domain-bearing summaries and unmodeled pointer calls are refused"
+      },
+      "lowerer": {
+        "id": "swdb-c-lowering-9",
+        "sha256": "e645ba54b4b4f5977c82b30ae4be751fa8ed8b62ddd2c52f0c059110f92dbc70"
+      },
+      "pointer_check": {
+        "id": "swdb-wp-pointer-bounds-1",
+        "sha256": "8262c1fa7531ebbca78a14523da2f58c2d3d2a34e4ee932b0a9593d858272d4b"
+      },
+      "artifact_count": 9,
+      "artifact_hash_mismatches": [],
+      "flags": [
+        "-wp",
+        "-wp-rte",
+        "-wp-cache",
+        "none",
+        "-wp-model",
+        "+real",
+        "-wp-par",
+        "1",
+        "-machdep",
+        "x86_64",
+        "-rte-initialized",
+        "@all",
+        "-wp-no-filter-init",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-machdep",
+        "x86_64",
+        "-wp-timeout",
+        "30",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-fct=window_null"
+      ],
+      "peak_rss_bytes": 251637760
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-entry-windows-20261015-0750-node0/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t115254z.7027bbbe.yaml",
+      "sha256": "a459519bbf9c27f7aa1e3bccb20e9d3089eee807fbedaa0a65021922d7a24474",
+      "function": "window_form",
+      "verdict": "not_proven",
+      "setup": "passed",
+      "reading": "not_proven",
+      "ordinary": {
+        "valid": 6,
+        "timeout": 1
+      },
+      "smoke": {
+        "valid": 1
+      },
+      "open_goals": [
+        {
+          "goal": "typed_real_window_form_assert_swdb_pointer_formation_1",
+          "status": "timeout"
+        }
+      ],
+      "entry_semantics": {
+        "role": "explicit typed-array-window input-contract premise; not inferred from validity",
+        "checked": "entry extent nonnegative/target byte capacity/null-empty; numerical operation bounds; ordinary RTE",
+        "smoke_scope": "projected ACSL preconditions; no complete typed-domain/formal realizability proof",
+        "caller_boundary": "imported domain-bearing summaries and unmodeled pointer calls are refused"
+      },
+      "lowerer": {
+        "id": "swdb-c-lowering-9",
+        "sha256": "e645ba54b4b4f5977c82b30ae4be751fa8ed8b62ddd2c52f0c059110f92dbc70"
+      },
+      "pointer_check": {
+        "id": "swdb-wp-pointer-bounds-1",
+        "sha256": "8262c1fa7531ebbca78a14523da2f58c2d3d2a34e4ee932b0a9593d858272d4b"
+      },
+      "artifact_count": 10,
+      "artifact_hash_mismatches": [],
+      "flags": [
+        "-wp",
+        "-wp-rte",
+        "-wp-cache",
+        "none",
+        "-wp-model",
+        "+real",
+        "-wp-par",
+        "1",
+        "-machdep",
+        "x86_64",
+        "-rte-initialized",
+        "@all",
+        "-wp-no-filter-init",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-machdep",
+        "x86_64",
+        "-wp-timeout",
+        "30",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-fct=window_form"
+      ],
+      "peak_rss_bytes": 460197888
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-entry-windows-20261015-0750-node0/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t115350z.8a705d07.yaml",
+      "sha256": "9d9fcc1235edfc52d33c62478e2f61dbbc3b073661de8d05ed620e343b9a4937",
+      "function": "window_read",
+      "verdict": "not_proven",
+      "setup": "passed",
+      "reading": "not_proven",
+      "ordinary": {
+        "valid": 7,
+        "timeout": 1
+      },
+      "smoke": {
+        "valid": 1
+      },
+      "open_goals": [
+        {
+          "goal": "typed_real_window_read_assert_swdb_window_access_1",
+          "status": "timeout"
+        }
+      ],
+      "entry_semantics": {
+        "role": "explicit typed-array-window input-contract premise; not inferred from validity",
+        "checked": "entry extent nonnegative/target byte capacity/null-empty; numerical operation bounds; ordinary RTE",
+        "smoke_scope": "projected ACSL preconditions; no complete typed-domain/formal realizability proof",
+        "caller_boundary": "imported domain-bearing summaries and unmodeled pointer calls are refused"
+      },
+      "lowerer": {
+        "id": "swdb-c-lowering-9",
+        "sha256": "e645ba54b4b4f5977c82b30ae4be751fa8ed8b62ddd2c52f0c059110f92dbc70"
+      },
+      "pointer_check": {
+        "id": "swdb-wp-pointer-bounds-1",
+        "sha256": "8262c1fa7531ebbca78a14523da2f58c2d3d2a34e4ee932b0a9593d858272d4b"
+      },
+      "artifact_count": 10,
+      "artifact_hash_mismatches": [],
+      "flags": [
+        "-wp",
+        "-wp-rte",
+        "-wp-cache",
+        "none",
+        "-wp-model",
+        "+real",
+        "-wp-par",
+        "1",
+        "-machdep",
+        "x86_64",
+        "-rte-initialized",
+        "@all",
+        "-wp-no-filter-init",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-machdep",
+        "x86_64",
+        "-wp-timeout",
+        "30",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-fct=window_read"
+      ],
+      "peak_rss_bytes": 460189696
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-entry-windows-20261015-0750-node0/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t115447z.38226873.yaml",
+      "sha256": "ebba066bfdbac4690b61f080d74769392148431ecd2cddc1281014250c87b518",
+      "function": "window_bad_extent",
+      "verdict": "not_proven",
+      "setup": "passed",
+      "reading": "not_proven",
+      "ordinary": {
+        "valid": 5,
+        "timeout": 1
+      },
+      "smoke": {
+        "valid": 1
+      },
+      "open_goals": [
+        {
+          "goal": "typed_real_window_bad_extent_assert_swdb_window_entry_1",
+          "status": "timeout"
+        }
+      ],
+      "entry_semantics": {
+        "role": "explicit typed-array-window input-contract premise; not inferred from validity",
+        "checked": "entry extent nonnegative/target byte capacity/null-empty; numerical operation bounds; ordinary RTE",
+        "smoke_scope": "projected ACSL preconditions; no complete typed-domain/formal realizability proof",
+        "caller_boundary": "imported domain-bearing summaries and unmodeled pointer calls are refused"
+      },
+      "lowerer": {
+        "id": "swdb-c-lowering-9",
+        "sha256": "e645ba54b4b4f5977c82b30ae4be751fa8ed8b62ddd2c52f0c059110f92dbc70"
+      },
+      "pointer_check": {
+        "id": "swdb-wp-pointer-bounds-1",
+        "sha256": "8262c1fa7531ebbca78a14523da2f58c2d3d2a34e4ee932b0a9593d858272d4b"
+      },
+      "artifact_count": 10,
+      "artifact_hash_mismatches": [],
+      "flags": [
+        "-wp",
+        "-wp-rte",
+        "-wp-cache",
+        "none",
+        "-wp-model",
+        "+real",
+        "-wp-par",
+        "1",
+        "-machdep",
+        "x86_64",
+        "-rte-initialized",
+        "@all",
+        "-wp-no-filter-init",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-machdep",
+        "x86_64",
+        "-wp-timeout",
+        "30",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-fct=window_bad_extent"
+      ],
+      "peak_rss_bytes": 734195712
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-entry-windows-20261015-0750-node0/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t115545z.eb4122f8.yaml",
+      "sha256": "c405e94d1889bf36c6c2e35d4dfb142b8d06e4058e6fe34e9dbe220d99351759",
+      "function": "window_huge_extent",
+      "verdict": "not_proven",
+      "setup": "passed",
+      "reading": "not_proven",
+      "ordinary": {
+        "valid": 5,
+        "timeout": 1
+      },
+      "smoke": {
+        "valid": 1
+      },
+      "open_goals": [
+        {
+          "goal": "typed_real_window_huge_extent_assert_swdb_window_entry_1",
+          "status": "timeout"
+        }
+      ],
+      "entry_semantics": {
+        "role": "explicit typed-array-window input-contract premise; not inferred from validity",
+        "checked": "entry extent nonnegative/target byte capacity/null-empty; numerical operation bounds; ordinary RTE",
+        "smoke_scope": "projected ACSL preconditions; no complete typed-domain/formal realizability proof",
+        "caller_boundary": "imported domain-bearing summaries and unmodeled pointer calls are refused"
+      },
+      "lowerer": {
+        "id": "swdb-c-lowering-9",
+        "sha256": "e645ba54b4b4f5977c82b30ae4be751fa8ed8b62ddd2c52f0c059110f92dbc70"
+      },
+      "pointer_check": {
+        "id": "swdb-wp-pointer-bounds-1",
+        "sha256": "8262c1fa7531ebbca78a14523da2f58c2d3d2a34e4ee932b0a9593d858272d4b"
+      },
+      "artifact_count": 10,
+      "artifact_hash_mismatches": [],
+      "flags": [
+        "-wp",
+        "-wp-rte",
+        "-wp-cache",
+        "none",
+        "-wp-model",
+        "+real",
+        "-wp-par",
+        "1",
+        "-machdep",
+        "x86_64",
+        "-rte-initialized",
+        "@all",
+        "-wp-no-filter-init",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-machdep",
+        "x86_64",
+        "-wp-timeout",
+        "30",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-fct=window_huge_extent"
+      ],
+      "peak_rss_bytes": 773828608
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-entry-windows-20261015-0750-node0/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t115642z.06e48f95.yaml",
+      "sha256": "0a77979ced4f95f0a2e977c7fb6c7aa8b915aa27305213b42474b817442b1c70",
+      "function": "window_unknown_zero",
+      "verdict": "not_proven",
+      "setup": "passed",
+      "reading": "not_proven",
+      "ordinary": {
+        "valid": 5,
+        "timeout": 1
+      },
+      "smoke": {
+        "valid": 1
+      },
+      "open_goals": [
+        {
+          "goal": "typed_real_window_unknown_zero_assert_swdb_pointer_formation_1",
+          "status": "timeout"
+        }
+      ],
+      "entry_semantics": {
+        "role": "explicit typed-array-window input-contract premise; not inferred from validity",
+        "checked": "entry extent nonnegative/target byte capacity/null-empty; numerical operation bounds; ordinary RTE",
+        "smoke_scope": "projected ACSL preconditions; no complete typed-domain/formal realizability proof",
+        "caller_boundary": "imported domain-bearing summaries and unmodeled pointer calls are refused"
+      },
+      "lowerer": {
+        "id": "swdb-c-lowering-9",
+        "sha256": "e645ba54b4b4f5977c82b30ae4be751fa8ed8b62ddd2c52f0c059110f92dbc70"
+      },
+      "pointer_check": {
+        "id": "swdb-wp-pointer-bounds-1",
+        "sha256": "8262c1fa7531ebbca78a14523da2f58c2d3d2a34e4ee932b0a9593d858272d4b"
+      },
+      "artifact_count": 10,
+      "artifact_hash_mismatches": [],
+      "flags": [
+        "-wp",
+        "-wp-rte",
+        "-wp-cache",
+        "none",
+        "-wp-model",
+        "+real",
+        "-wp-par",
+        "1",
+        "-machdep",
+        "x86_64",
+        "-rte-initialized",
+        "@all",
+        "-wp-no-filter-init",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-machdep",
+        "x86_64",
+        "-wp-timeout",
+        "30",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-fct=window_unknown_zero"
+      ],
+      "peak_rss_bytes": 501940224
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-entry-windows-20261015-0750-node0/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t115813z.198b1a8b.yaml",
+      "sha256": "ac36153c19db885c7e507da6a27541eb8a08a16f60620e6e9c0b32f128d97261",
+      "function": "window_form",
+      "verdict": "not_proven",
+      "setup": "passed",
+      "reading": null,
+      "ordinary": {},
+      "smoke": {},
+      "open_goals": [],
+      "entry_semantics": null,
+      "lowerer": {
+        "id": "swdb-c-lowering-9",
+        "sha256": "e645ba54b4b4f5977c82b30ae4be751fa8ed8b62ddd2c52f0c059110f92dbc70"
+      },
+      "pointer_check": {
+        "id": "swdb-wp-pointer-bounds-1",
+        "sha256": "8262c1fa7531ebbca78a14523da2f58c2d3d2a34e4ee932b0a9593d858272d4b"
+      },
+      "artifact_count": 4,
+      "artifact_hash_mismatches": [],
+      "flags": [],
+      "peak_rss_bytes": 137363456
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-entry-windows-20261015-0750-node0/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t115836z.f81c7975.yaml",
+      "sha256": "c54940f8743bb3699e07fa8eb98364c041f8739ba188368f5aad7583c972ae9d",
+      "function": "window_shadow",
+      "verdict": "not_proven",
+      "setup": "passed",
+      "reading": null,
+      "ordinary": {},
+      "smoke": {},
+      "open_goals": [],
+      "entry_semantics": null,
+      "lowerer": {
+        "id": "swdb-c-lowering-9",
+        "sha256": "e645ba54b4b4f5977c82b30ae4be751fa8ed8b62ddd2c52f0c059110f92dbc70"
+      },
+      "pointer_check": {
+        "id": "swdb-wp-pointer-bounds-1",
+        "sha256": "8262c1fa7531ebbca78a14523da2f58c2d3d2a34e4ee932b0a9593d858272d4b"
+      },
+      "artifact_count": 4,
+      "artifact_hash_mismatches": [],
+      "flags": [],
+      "peak_rss_bytes": 137887744
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-entry-windows-20261015-0750-node0/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t115859z.3b2c3dfa.yaml",
+      "sha256": "95f005b1799459b0de1c979c06733c34eabcd3452897b7f1075ba2ac8c9aaba6",
+      "function": "window_escape",
+      "verdict": "not_proven",
+      "setup": "passed",
+      "reading": null,
+      "ordinary": {},
+      "smoke": {},
+      "open_goals": [],
+      "entry_semantics": null,
+      "lowerer": {
+        "id": "swdb-c-lowering-9",
+        "sha256": "e645ba54b4b4f5977c82b30ae4be751fa8ed8b62ddd2c52f0c059110f92dbc70"
+      },
+      "pointer_check": {
+        "id": "swdb-wp-pointer-bounds-1",
+        "sha256": "8262c1fa7531ebbca78a14523da2f58c2d3d2a34e4ee932b0a9593d858272d4b"
+      },
+      "artifact_count": 4,
+      "artifact_hash_mismatches": [],
+      "flags": [],
+      "peak_rss_bytes": 137887744
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-entry-windows-20261015-0750-node0/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t115922z.ab0c626f.yaml",
+      "sha256": "cc90aad3808bf0e872a148f10bcaffca59798b898e43cf7d5a0085fa7f512fee",
+      "function": "window_calls",
+      "verdict": "not_proven",
+      "setup": "passed",
+      "reading": null,
+      "ordinary": {},
+      "smoke": {},
+      "open_goals": [],
+      "entry_semantics": null,
+      "lowerer": {
+        "id": "swdb-c-lowering-9",
+        "sha256": "e645ba54b4b4f5977c82b30ae4be751fa8ed8b62ddd2c52f0c059110f92dbc70"
+      },
+      "pointer_check": {
+        "id": "swdb-wp-pointer-bounds-1",
+        "sha256": "8262c1fa7531ebbca78a14523da2f58c2d3d2a34e4ee932b0a9593d858272d4b"
+      },
+      "artifact_count": 4,
+      "artifact_hash_mismatches": [],
+      "flags": [],
+      "peak_rss_bytes": 137887744
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-entry-windows-20261015-0750-node0/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t115947z.c51c818a.yaml",
+      "sha256": "8b62d5f36f6b882f56345a779fbbb2d4b8a395579711981954e2c1f7bc149ddc",
+      "function": "window_calls",
+      "verdict": "not_proven",
+      "setup": "passed",
+      "reading": null,
+      "ordinary": {},
+      "smoke": {},
+      "open_goals": [],
+      "entry_semantics": null,
+      "lowerer": {
+        "id": "swdb-c-lowering-9",
+        "sha256": "e645ba54b4b4f5977c82b30ae4be751fa8ed8b62ddd2c52f0c059110f92dbc70"
+      },
+      "pointer_check": null,
+      "artifact_count": 4,
+      "artifact_hash_mismatches": [],
+      "flags": [],
+      "peak_rss_bytes": 137363456
+    }
+  ],
+  "artifacts": {
+    "report.jsonl": {
+      "sha256": "46143d17abbac40e68cf9cafa7441726851e404d7c250f1d9230714a31ad4add",
+      "bytes": 34452
+    },
+    "environment.txt": {
+      "sha256": "081f7747bb7f73ab9b9fafd9566ec995835878ebbf6ef612ba881f8deb9b5696",
+      "bytes": 6208
+    },
+    "selection.txt": {
+      "sha256": "0be5bd4a7d4d27a540f1351305f3ed67a4d93178a5e71cdb4244eeedc5873c43",
+      "bytes": 182
+    },
+    "retention.txt": {
+      "sha256": "d200f0e092993292b1122ef73f2f48cef42f6792cc4141d8fc81ee651bac53b6",
+      "bytes": 172
+    },
+    "source-commit.txt": {
+      "sha256": "2934930efcebe6535328a4e8fd6ba345b1c9c8cfa25af8f1dede5d987c63c3ab",
+      "bytes": 41
+    },
+    "finished-at.txt": {
+      "sha256": "426c2929847386e227b490a6c9cd556c509f6af5f0cc1b6737caf900d5d0dbba",
+      "bytes": 29
+    },
+    "launch.sh": {
+      "sha256": "93e6c19bc000e6b26215f82f7fdca8c04a11c9a54817962b077b345009106db8",
+      "bytes": 1430
+    },
+    "lane.json": {
+      "sha256": "89b605848cbe504e2185211a7dc55a0eb0665e91fb1ab79d15ca784d65fb648a",
+      "bytes": 929
+    },
+    "pytest.log": {
+      "sha256": "170250e1e6e5e626d082ee81b115b0f5204304de0ce6d29c1f250098a3afdeaf",
+      "bytes": 226
+    }
+  },
+  "test_outcomes": {
+    "passed": 15
+  },
+  "session_finished": true,
+  "host": {
+    "leases": [
+      {
+        "name": "mbit10-evaluation.meta.json",
+        "state": "released"
+      },
+      {
+        "name": "mbit10-evaluation-node1.meta.json",
+        "state": "released"
+      },
+      {
+        "name": "mbit10-evaluation-node0.meta.json",
+        "state": "released"
+      }
+    ],
+    "load": "0.10 0.76 0.86 1/1283 3527576",
+    "disk": "Filesystem      Size  Used Avail Use% Mounted on\n/dev/sdd1       1.8T  1.7T   21G  99% /data1\n/dev/sdb1       1.8T  1.7T   97G  95% /data\n"
+  },
+  "scope": "Public conditional entry-window WP controls, not complete typed-domain realizability, generic caller discharge or bounded execution support."
+}
