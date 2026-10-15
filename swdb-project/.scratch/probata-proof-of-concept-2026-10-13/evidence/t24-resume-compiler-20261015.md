@@ -158,3 +158,40 @@ does not replace any actual WP safe/seeded/RTE/initializedness/smoke acceptance.
 The current unsupported-construct source-location profile also passes 19/19 in
 11.44 s. It includes the original seven required refusal kinds; these are public
 lowerer controls, not actual positive WP proofs.
+
+## Public unsupported results and original allocation actuals
+
+The original seven named unsupported kinds now also pass through public
+`swdb prove --adapter wp`: **7/7 in 30.27 s**. Every record reads
+`not_proven` / `unsupported_construct`, retains the construct name and source
+line in its hashed handler report, and has no goals, WP input or verifier
+launch. The contract library contains a separate ordinary valid context, so
+an invalid library entry cannot substitute for candidate refusal. These are
+expected prelaunch negative controls, not actual solver jobs.
+
+Frozen `71771f09` also completes the original new-array safe/seeded pair.
+Safe has **42 ordinary and 7 smoke Valid**. Seeded `i<=n` has **40 ordinary
+Valid**, ordinary invariant-preservation and memory-access timeouts, **4 smoke
+Valid and 3 failed smoke** after the invalid fill. The three failed smoke
+checks remain explicit negative evidence; the seed is never reported proven.
+Both retain **11 RTE initialization goals**. A timeout is not a solver
+counterexample. Native execution of the invalid write is deliberately excluded.
+
+[Independent compact allocation audit](t24-original-allocation-pair-mbit10-20261015.json)
+checks both record identities, all 26 report instances, physical candidate
+artifacts, method/canonical-contract/setup identities, original clauses and
+hints, certificate/source correspondence, and all 980 physical frozen source
+files against SHA-256 and Git blobs. It reconstructs the exact terminal WP view
+from the recorded lowering and current checker, retaining the original invalid
+write. No audit errors remain. Its SHA-256 is
+`a099dd64a325439944a0e1c81e2e42030ddde6fa6d32e558ead3516469d00ef3`.
+Raw evidence stays at
+`/data/yanruj/EvolveSWDB_runs/probata-resume-t24-remaining-71771f09/`.
+
+Ticket22's accepted agreement criterion is CBMC on C plus finite native
+C++/C differential comparison and C++ counterexample replay. No new formal
+C++ equivalence theorem is required. The WP matrix and isolated concrete
+seed witnesses do not themselves complete the current all-construct agreement
+profile; the coordinator is arranging a separately pinned agreement-only
+profile using the accepted native domain/oracle, with undefined runs excluded
+and no new bounded-proof verdict implied. Whole-ticket acceptance remains open.

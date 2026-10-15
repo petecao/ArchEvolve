@@ -782,3 +782,20 @@ control goes RED (old+2) to GREEN (corrected+4), 2.06 s / 1.71 s. This is native
 fixture evidence, not a solver refutation or production DX100 semantics claim.
 Frozen `71771f09` records keep their exact old source identities; fresh corrected-seed
 actual acceptance remains required. [Native source/binary hashes and outcomes](../evidence/t24-dxc-native-negative-control-20261015.json).
+
+### Original allocation pair and public unsupported controls — 2026-10-15 ET
+
+The original new-array safe/seeded pair now has actual frozen `71771f09`
+evidence. Safe proves 42 ordinary + 7 smoke goals. The original `i<=n` seed
+reads `not_proven`: 40 ordinary Valid, ordinary invariant-preservation and
+memory-access timeouts, 4 smoke Valid and 3 failed smoke. Both retain 11
+initialization goals. Independent physical/source/certificate/view auditing
+finds no errors; no timeout is labeled a counterexample and no invalid native
+write is executed. [Compact actual audit](../evidence/t24-original-allocation-pair-mbit10-20261015.json).
+
+All seven original unsupported groups also pass public proof refusal controls
+(7/7, 30.27 s), with named source-line diagnostics, no goals and no verifier
+launch. Their `not_proven` result is deliberate prelaunch refusal, distinct from
+the actual original semantic negative jobs. Remaining groups, lifetime actuals,
+dependency closure, corrected-DXC actuals and accepted ticket22 finite agreement
+profile are still pending. Status remains **claimed**.
