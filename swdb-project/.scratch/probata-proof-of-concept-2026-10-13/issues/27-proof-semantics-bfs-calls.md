@@ -625,3 +625,17 @@ it does not establish the new invariant or close capacity acceptance. Independen
 review and a real 32/33 rerun are still required. Exact retained failure,
 diagnosis and controls are in
 [`t27-capacity-hint-repair-20261015.json`](../evidence/t27-capacity-hint-repair-20261015.json).
+
+
+### Independent capacity-hint admission — 2026-10-15 ET
+
+The exact test-only repair `0e71d962` passes independent source/retained-control
+review. Old hint and acceptance ASTs remain identical apart from the helper
+extraction and new ordinary invariant. All 15 local artifact pins rehash without
+error. Production runtime, library and original fixture bytes remain at `0e7f2327`;
+no new premise, assumption or capacity success is claimed. The reviewer did not
+rehash remote raw failure artifacts or launch any job.
+[Independent review and boundaries](../evidence/t27-capacity-hint-independent-review-20261015.md),
+[exact compact receipt](../evidence/t27-capacity-hint-independent-review-20261015.json).
+Actual WP32 establishment/preservation, WP33 ghost-capacity failure and original
+CBMC32/33 agreement remain pending; status stays **claimed**.
