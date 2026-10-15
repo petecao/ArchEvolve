@@ -40,7 +40,7 @@ import subprocess
 from dataclasses import replace
 from pathlib import Path
 
-from swdb import artifacts, c_lowering, cpu_memory_admission, framac, hint_check, paths, proof_semantics, proof_setup, rss_watchdog, std_models, terminal_release, vocab
+from swdb import artifacts, c_lowering, cpu_memory_admission, framac, hint_check, paths, proof_semantics, proof_setup, rss_watchdog, std_models, terminal_release, vocab, wp_pointer_bounds
 from swdb.proof import MODEL_PREFIX, AdapterError, Verdict
 
 NAME = "wp"
@@ -108,10 +108,18 @@ class WpAdapter:
                 return self._not_proven("unsupported_construct",
                     "WP 33.0 does not model allocation lifetime; this C model needs allocates/frees support", context)
             input_path = wp_dir / "wp_input.c"
-            context["wp_expected_text"] = "\n".join([*c_lowering.HEADERS, text]) + "\n"
+            context["pointer_bounds_model_source"] = "\n".join([*c_lowering.HEADERS, text]) + "\n"
+            try:
+                context["wp_expected_text"], context["pointer_bounds_report"] = wp_pointer_bounds.model_view(
+                    context["pointer_bounds_model_source"], job.scratch)
+            except wp_pointer_bounds.Refused as exc:
+                context["settings"] = {"tool": "frama-c-wp", "flags": [], "verifier_launched": False,
+                    "pointer_bounds": {"verdict": "refused", "reason": str(exc), "check": wp_pointer_bounds.identity()}}
+                return self._not_proven("unsupported_construct", str(exc), context)
             input_path.write_text(context["wp_expected_text"])
             context["reports"].append(("wp_input", input_path))
-            context["extra_flags"] = [f"-wp-fct={job.unit.function}"]
+            context["functions"] = set(context["pointer_bounds_report"]["functions"])
+            context["extra_flags"] = ["-wp-fct=" + ",".join(sorted(context["functions"]))]
             return self._wp(job, input_path, context)
         entry = self.library.get(self.contract) or {}
         unit = entry.get("proof_unit") or {}
@@ -192,6 +200,12 @@ class WpAdapter:
                                    "proof_semantics_admission": refusal}
             return self._not_proven("unsupported_construct",
                 "ordinary CPU memory interference with DX100 commands needs ticket 28's memory-hazard probes", context)
+        try:
+            wp_pointer_bounds.check(lowering)
+        except wp_pointer_bounds.Refused as exc:
+            context["settings"] = {"tool": "frama-c-wp", "flags": [], "verifier_launched": False,
+                "pointer_bounds": {"verdict": "refused", "reason": str(exc), "check": wp_pointer_bounds.identity()}}
+            return self._not_proven("unsupported_construct", str(exc), context)
         contracts = self._dependencies(dependency_lowering, context)
         refusal = cpu_memory_admission.summary_refusal(self.records, [
             pin["proof_record"] for group in ("summaries", "models") for pin in context["pins"].get(group, [])])
@@ -220,6 +234,8 @@ class WpAdapter:
         base = hint_check.wp_base(view.text if view else lowering.text, lowering.anchors,
                                   self._context(lowering, entry, summary_job, context))
         base = self._with_contracts(base, contracts)
+        context["pointer_bounds_base"] = base
+        base, context["pointer_bounds_report"] = wp_pointer_bounds.prepare(lowering, base)
         if context.get("semantics"):
             context["semantics_hint_base"] = base
             proof_setup.check_semantics_hints(base, self.hints)
@@ -539,6 +555,7 @@ class WpAdapter:
                  f"rss cap bytes: {cap}\nwall budget seconds: {wall}")
         context["reports"].append(("wp_log", wp_log))
         context["settings"] = {"tool": "frama-c-wp", "flags": settings_flags, "session": "fresh",
+                               "pointer_bounds": context["pointer_bounds_report"],
                                "warning_levels": "default", "machdep": "x86_64",
                                "wp_seconds_per_solver": tools["seconds"], "environment_removed": removed,
                                "rss_cap_bytes": cap, "hint_count": context.get("hints_reaching_wp", 0), "build_constants": list(self.defines)}
