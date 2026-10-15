@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-15 ET",
+  "scope": "independent helper capture binding review; standalone checker remains staged",
+  "helper_source": "537d6103",
+  "checks": {
+    "passed": 53,
+    "wall_seconds": 7.79,
+    "junit": "/private/tmp/probata-helper-staging-merge.xml",
+    "actual_wp": false
+  },
+  "new_controls": [
+    "Header macro expands caller argument to a global whose name matches a generated capture: exact declaration-key comparison refuses the shadowed initializer.",
+    "Header macro renames the generated capture itself: clone formal name/type inventory refuses it."
+  ],
+  "identity_review": "Every original DeclRef compares source file, original offset, kind, name and type against the reparsed view declaration; substituted helper formals compare exact captured declaration IDs. The recursive matcher checks all expanded contexts; complete preprocessor dependency hashes cover macro-only headers. Raw-source token reservation is supplemented by these independent identity checks.",
+  "boundary": "No adapter helper admission, source window inheritance, actual helper WP proof, or bounded branch merge is claimed."
+}

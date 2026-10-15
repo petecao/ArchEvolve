@@ -354,3 +354,17 @@ public checker-byte invalidation control passed 1/1 in 11.00s; 17 component cont
 The source insertion API additionally records exclusive `source_statement` spans and
 `source_functions` body/definition spans, with macros providing no invented statement positions;
 2 public lowering controls pass in 0.62s. No bounded domain admission or method 3 claim is added.
+
+
+### Exact qualified at source hook — 2026-10-15 ET
+
+The merge replay reproduced the missing member-call span binding through the public CLI
+(one failing test in 2.19s). The narrow hook now resolves each alias/index/at access by exact
+AST kind and source span, then binds its persistent receiver declaration ID. An at access
+additionally rechecks the exact defensive-at model relation and qualified receiver. The lowerer
+content identity now includes `standard_model_view.py` transitively. Four fake-verifier/prelaunch
+controls pass **4/4 in 22.83s**, including opaque standalone-model refusal, checked bounds without
+new input premises, and refusal after renderer guard deletion. Original safe/stale protocols also
+regenerate and recertify. The two actual at WP controls were excluded and remain pending; no
+generic member-domain admission or ticket closure is claimed. Evidence:
+`evidence/owner-at-source-binding-merge-20261015.json`.

@@ -235,3 +235,50 @@ No generic field-origin exemption, standalone model-domain acceptance or general
 is claimed. Status stays **claimed**.
 
 Compact staging evidence:[t25-closed-owner-origins-20261015.json](../evidence/t25-closed-owner-origins-20261015.json).
+
+
+Closed-owner origin actual replay — 2026-10-15 ET: frozen b876dcb3 remote node1 shard completed
+16PASS/SessionFinish0. Actual safe record has119/119ordinaryVALID+11/11smokePASS; stale has
+104/105ordinaryVALID+11/11smokePASS, with only distinct open goal alias_live_after. Raw smoke
+contradiction attempts time out and are classified as passing smoke by the strict reader. Stale is
+NOT_PROVEN, not a WP counterexample. All checked artifact paths/hashes match in place. The fixture
+method declares legacy check placeholders; actual returned records separately pin/pass version1
+setup/reader. This is contract_fixture evidence for the closed two-site relation, not production
+method3 or generic vector/member acceptance. Source-frame projection remains checked structurally;
+WP proves the private view frame. Imported typed allocator/model separation is explicit trust.
+Evidence:[t25-closed-owner-remote-20261015.json](../evidence/t25-closed-owner-remote-20261015.json).
+Outside audit:/private/tmp/probata-owner-remote-b876dcb3-audit.md. Status stays claimed.
+
+Next read-only slice — 2026-10-15 ET: locally owned at() receives an exact per-call qualified domain
+with frozen growth extent/live prefix, persistent receiver declaration, producing append model pin,
+independent exact defensive-at C-AST audit and checked caller range guard. No user precondition is
+added, and standalone incoming-field models keep their conservative refusal. Public prelaunch RED
+reproduced unsupported_construct before implementation; after the new relation it reaches the
+explicit missing CXXMemberCallExpr source-binding hook (owned by ticket36). No actual new at() WP
+acceptance is claimed by this staging checkpoint; shared hook and fresh combined replay follow.
+
+
+Qualified at handoff — 2026-10-15 ET: public standalone at refusal GREEN1/6.59s; no WP
+log is produced. Two public RED sessions each terminate cleanly with one failed test: initial
+unsupported call, then the known missing exact member-call source-span hook. Four admission/fault
+controls plus two actual safe/out-of-range controls are now written. The other three admission
+controls and both actual WP controls remain pending combined ticket36 hook; no new at proof is
+claimed. The negative original scalar contract ignores the chosen value, so the at(2) range guard
+must fail for n=1 independently of a functional postcondition. A freshly pinned renderer deleting
+only that checked guard must refuse via the independent generated-C access checker. Source/native
+abort, original contracts and standalone opaque model admission remain unchanged. No heldout or
+remote job started for this slice. Evidence:[t25-qualified-owner-at-staging-20261015.json](../evidence/t25-qualified-owner-at-staging-20261015.json).
+
+
+### Exact qualified at source hook — 2026-10-15 ET
+
+The merge replay reproduced the missing member-call span binding through the public CLI
+(one failing test in 2.19s). The narrow hook now resolves each alias/index/at access by exact
+AST kind and source span, then binds its persistent receiver declaration ID. An at access
+additionally rechecks the exact defensive-at model relation and qualified receiver. The lowerer
+content identity now includes `standard_model_view.py` transitively. Four fake-verifier/prelaunch
+controls pass **4/4 in 22.83s**, including opaque standalone-model refusal, checked bounds without
+new input premises, and refusal after renderer guard deletion. Original safe/stale protocols also
+regenerate and recertify. The two actual at WP controls were excluded and remain pending; no
+generic member-domain admission or ticket closure is claimed. Evidence:
+`evidence/owner-at-source-binding-merge-20261015.json`.

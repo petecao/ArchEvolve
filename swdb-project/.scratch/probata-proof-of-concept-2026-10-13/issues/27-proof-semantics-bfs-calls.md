@@ -341,3 +341,43 @@ an unstable entry binding caused by the not-yet-audited device pointer call. No 
 `/private/tmp/probata-dx-domain-call-red.jsonl`. An additional pending control fixes the entry window at
 n==2, grows the call-state end register to three, and supplies a larger valid/initialized physical range;
 its checked stream footprint must still reject the third cell. Eight frontier controls now collect.
+
+## Transparent helper-view component checkpoint — 2026-10-15 ET
+
+Status remains `claimed`. `helper_windows.prepare` / `check_view` add a checked C++ view for main-file,
+global, acyclic void helpers with plain `int` / `int *` formals and straight-line imported calls. Each
+standalone helper call in a braced unit context becomes a fresh block of by-value actual captures and the
+original ordered calls. Nested helpers get separate captures per context. Pointer captures retain the bare
+caller binding so the existing origin checker can trace them to the original unit window; no helper entry
+window, requires clause or assumption is synthesized. Source outside replaced call statements is preserved,
+including physical newline counts. Model callees use global qualification to prevent caller-local capture.
+
+The trusted transformation boundary is explicit in the recorded assumption and checker/certificate pins.
+A separately parsed complete Clang AST must match every unchanged unit operation, each typed capture,
+original helper operation, declaration binding and call order. Residual reachable helper calls, recursion,
+annotations, effects or arithmetic in helper operands, unsupported placement, function-pointer calls,
+attributes, exception specifications and imported names with source definitions are refused. The certificate
+pins full preprocessor dependencies (including macro-only headers), source/view bytes, imports, tool version,
+parse implementation and contexts. Immediately before use, `check_view` rereads the actual view and reparses
+both source and view; changed source, headers, imports or certificate are refused.
+
+The 32 component controls pass in 6.31 s. They include the original `dxf_store_exit` fixture with both
+`dxf_load` contexts expanded, branch/nested contexts, later invalid callers, a deliberately broken generator
+caught by independent AST checking, and native original/view traces with the same ordered device calls and
+actual values before/after changing n. Report: `/private/tmp/probata-helper-windows-component.jsonl`.
+These are transformation checks, not WP or final proof acceptance. Ticket 36 still owns the adapter's
+original/view provenance split, fresh prelaunch source/lowering replays and the ordinary checked window
+assertions on the resulting view. Hints remain closed for this slice. The original three-read fixture also
+contains nested ordinary memory operands, which remain a separate unsupported frontier.
+
+
+### Independent helper capture review — 2026-10-15 ET
+
+The staged helper checker compares exact declaration identity across the source and independently
+parsed expanded view, including original file/offset and captured formal declaration IDs. Its
+recursive matcher checks every context; macro-only headers are included in dependency replay.
+Two additional controls hide a colliding global or generated-name macro in a header. Both refuse
+through the independent AST check, even though raw source token reservation cannot see the hidden
+name. Combined helper/DX/source-span controls pass **53/53 in 7.79s**. This standalone module
+remains staged: no adapter helper admission or new actual WP claim is added. Evidence:
+`evidence/helper-capture-merge-review-20261015.json`.
