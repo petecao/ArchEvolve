@@ -47,7 +47,7 @@ from pathlib import Path
 from swdb import bounded_initialization, cpu_effects, std_models, terminal_release
 
 TOOL_ID = "swdb-c-lowering"
-TOOL_VERSION = "6"                   # generated bounded initializedness admission; names unchanged
+TOOL_VERSION = "7"                   # checked memberwise-copy initialized sources; names unchanged
 NAMING_RULES = "kept-names.3"        # bump on any change to RULES
 RULES = (
     "A function, parameter, local, global or field keeps its C++ name.",
@@ -1231,13 +1231,13 @@ class _Printer:
     def declaration_list(self, node):
         texts = []
         for i, decl in enumerate(node.get("inner", [])):
-            text, extra = self.local(decl, first=i == 0)
+            text, extra = self.local(decl, first=i == 0, copy_allowed=False)
             if extra:
                 raise Unsupported("a constructor call in a for initializer", self.line)
             texts.append(text)
         return ", ".join(texts)
 
-    def local(self, node, first=True):
+    def local(self, node, first=True, copy_allowed=True):
         """(declaration text without `;`, extra statement lines) of one local variable."""
         self._at(node)
         if node.get("kind") != "VarDecl":
@@ -1271,7 +1271,9 @@ class _Printer:
                 try:
                     call = self.construct(_strip(init[0]), name)
                 except _CopyInit as copy:
-                    text += " = " + copy.text
+                    if not copy_allowed:
+                        raise Unsupported("an implicit memberwise copy in a for initializer", self.line)
+                    text = self.copy_guard(copy, exclude=node.get("id")) + " ; " + text + " = " + copy.text
                 else:
                     if call:
                         extra.append(call)
@@ -1329,7 +1331,7 @@ class _Printer:
         if ctor.get("isImplicit") or ctor.get("explicitlyDefaulted") == "default":
             self._trivial(cname, cls)
             if args:                                            # implicit copy or move: a C struct copy
-                raise _CopyInit(self.expr(args[0], top=True))
+                raise _CopyInit(self.expr(args[0], top=True), args[0])
             return None
         if ctor.get("explicitlyDefaulted") or ctor.get("isDeleted"):
             raise Unsupported(f"special constructor of {cname}", self.line)
@@ -1341,6 +1343,60 @@ class _Printer:
         params = [p for p in _children(ctor) if p.get("kind") == "ParmVarDecl"]
         texts = [f"&{target}"] + self.arguments(params, args)
         return f"{name}({', '.join(texts)});"
+
+    def copy_guard(self, copy, exclude=None):
+        """Check the exact source lvalue before replacing memberwise C++ construction by a C copy.
+
+        C struct copying need not read indeterminate scalar members. The C++ wording is still being
+        discussed in CWG2264; our declared subset conservatively requires initialized sources. This is
+        an obligation, never a premise. Restrict duplicated address evaluation to simple pure lvalues.
+        """
+        constants = {}
+
+        def pure(node):
+            node = _strip(node)
+            kind, children = node.get("kind"), _children(node)
+            if kind == "DeclRefExpr" and (node.get("referencedDecl") or {}).get("id") == exclude:
+                return False
+            if kind in ("DeclRefExpr", "CXXThisExpr", "IntegerLiteral"):
+                return True
+            if kind == "MemberExpr":
+                return len(children) == 1 and pure(children[0])
+            if kind == "UnaryOperator" and node.get("opcode") == "*":
+                return len(children) == 1 and pure(children[0])
+            if kind == "ArraySubscriptExpr":
+                return len(children) == 2 and all(pure(c) for c in children)
+            if kind == "ImplicitCastExpr" and node.get("castKind") == "ArrayToPointerDecay":
+                return len(children) == 1 and pure(children[0])
+            if kind == "CallExpr" and len(children) == 1:
+                callee = children[0]
+                if callee.get("kind") == "ImplicitCastExpr" and callee.get("castKind") == "FunctionToPointerDecay":
+                    callee = _children(callee)[0]
+                ref = callee.get("referencedDecl") or {}
+                if callee.get("kind") == "DeclRefExpr" and ref.get("name") in OMP_RUNTIME:
+                    target = self.unit.function_node(ref["name"], _qual(ref), self.line)
+                    value = OMP_RUNTIME[ref["name"]]
+                    if target is not None and _has_body(target):
+                        body = next(c for c in _children(target) if c.get("kind") == "CompoundStmt")
+                        statements = _children(body)
+                        returns = _children(statements[0]) if len(statements) == 1 else []
+                        if (not statements or statements[0].get("kind") != "ReturnStmt" or len(returns) != 1
+                                or _strip(returns[0]).get("kind") != "IntegerLiteral"
+                                or _strip(returns[0]).get("value") != str(value)):
+                            return False
+                    # The model (or exact constant shim body) has this value and no effects. C calls
+                    # cannot occur in ACSL terms; substitute only this syntactically checked constant.
+                    constants[self.expr(node, top=True)] = str(value)
+                    return True
+            return False
+        node = _strip(copy.node)
+        if node.get("valueCategory") != "lvalue" or not pure(node):
+            raise Unsupported("an implicit memberwise copy without a simple source lvalue", self.line)
+        address = self.address(node)
+        for call, value in constants.items():
+            address = address.replace(call, value)
+        return (f"/*@ assert swdb_memberwise_source_initialized: "
+                f"\\valid_read({address}) && \\initialized({address}); */")
 
     def _trivial(self, cname, cls):
         for child in _children(cls):
@@ -1618,10 +1674,8 @@ class _Printer:
             cname, _ = self.unit.class_of(obj, self.line)
             method = self._method(cname, name, (ref.get("type") or {}).get("qualType"))
             if method.get("isImplicit") or method.get("explicitlyDefaulted"):
-                if name == "=":
-                    return f"{self.expr(obj)} = {self.expr(children[2])}", False
-                if name == "operator=":
-                    return f"{self.expr(obj)} = {self.expr(children[2])}", False
+                if name in ("=", "operator="):
+                    raise Unsupported("an implicit memberwise assignment (expression ordering is not checked)", self.line)
                 raise Unsupported(f"implicit operator {name} of {cname}", self.line)
             return self._invoke(method, cname, [self.address(obj)], children[2:])
         if ref.get("kind") == "FunctionDecl":
@@ -1970,9 +2024,10 @@ class _Printer:
 class _CopyInit(Exception):
     """A declaration initialized by an implicit copy constructor: printed as a C struct copy."""
 
-    def __init__(self, text):
+    def __init__(self, text, node):
         super().__init__(text)
         self.text = text
+        self.node = node
 
 
 def _tile_strip(node):
@@ -2350,6 +2405,7 @@ def _member_inits(printer, node, owner):
             try:
                 call = printer.construct(stripped, f"this->{name}")
             except _CopyInit as copy:
+                printer.simple(printer.copy_guard(copy) + " ;", 1)
                 printer.simple(f"this->{name} = {copy.text};", 1)
                 continue
             if call:
