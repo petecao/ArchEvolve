@@ -6,17 +6,18 @@ Updated: 2026-10-15 ET.
 
 Checkpoint: integration `codex/probata-poc-integration`, based on `yanrujhou_main`
 `150930b4`; production composition record at `3793deba`, prototype guard at `3db8002c`,
-initialization policy/strict TSV reader merged at `d04193c1`, doc follow-up `f66bf568`.
+initialization policy/strict TSV reader merged at `d04193c1`, doc follow-up `f66bf568`,
+counting model dependencies and checked terminal-release acceptance merged at `cd642839`.
 User approval covers scoped implementation, commits, pushes, remote source sync and
 two mbit10 CPU lanes; the specific BFS-to-Codex/OpenAI export approval also covers 07.
 
 | Ticket | Current work | Evidence or next action |
 |---|---|---|
 | 07 | Counted run 14 active from 03:33:40 ET | Fresh hints, repaired guard and abstract partial-chunk guidance; frozen `05e81eac`; output `/private/tmp/probata-t07-20261015-run14/`. Run 13 remains failed. |
-| 24 | Construct-group WP acceptance | Remote baseline 17 passed, 1 known UAF xfailed; three lifetime refusal controls pass. Positive safe deallocation remains expected-failing pending checked terminal-release integration. |
-| 25 | Narrow checked terminal release; general lifetime still open | Worktree `/private/tmp/probata-lifetime-narrow`. Public WP acceptance pending. General aliases, moves and dangling-pointer semantics remain unresolved; WP initializedness support exists but requires an additional RTE selector. |
-| 27 | Store/capacity acceptance and CPU-access admission | Node 0 frozen `dd975e72`: all six targeted cases passed in 3291.80 s. Add checked CPU/device memory interference and explicit initializedness before final two-lane acceptance. |
-| 36 | Strict preflight and reader; waits for 27 | Shift/trigraph controls pass. New strict multiline TSV reader and initialization policy: 121 focused tests passed; current checker `48a828aa…`. Draft 2 keeps its historical pin. |
+| 24 | Construct-group WP acceptance | Narrow initialized terminal release now proves (49 valid goals); broader fixtures are replaying with mandatory initialization checks in `/private/tmp/probata-construct-init`. The old remote baseline does not close current acceptance. |
+| 25 | Checked terminal release merged; general lifetime still open | Current-method model dependency checks and initialized model contracts are merged. General vector aliases, moves and dangling-pointer semantics remain unresolved. Bounded std fixtures need precise initializedness admission. |
+| 27 | Store/capacity acceptance and CPU-access admission | Current combined focused checkpoint: 23 passed, including six actual CBMC memory-domain/exit controls. Local automatic-storage lifetime refusal is being repaired before final two-lane acceptance. |
+| 36 | Strict preflight, reader and bounded initializedness gate | Broad frozen run: 153 passed and one cap-zero assertion mismatch, since corrected. Final gate recheck is active. Draft 2 keeps its historical pin; final combined checker identity is pending. |
 | 41 | Resolved | Approved reconstruction `e23f3715…`, protected/class/ownership lifetime premises; exact guard and sanity controls pass. |
 | 42 | Resolved: production Rocq-checked theorem | `proof.probata.composition.20261015-a1`, 209 Qed, closed global context, actual record validate/build pass; 9 final integrated tests passed. About 491.2 MiB peak. |
 
@@ -63,9 +64,10 @@ not substitute for reading incremental run artifacts.
 
 ## Validation and progress reporting
 
-The 2026-10-15 03:30 ET report covered every active ticket and both lanes; next report is
-due around 04:00 ET. Counted hint run 13 ended with 19 goals open and is not proven. Node 0 holds
-the targeted semantics replay; node 1's generation 594 was released at 06:12:13 UTC.
+The 2026-10-15 04:00 ET report covered every active ticket and both lanes; next report is
+due around 04:30 ET. Counted hint run 13 ended with 19 goals open and is not proven. Run 14
+has closed the unit goals while 15 hint obligations remain open at 27.85 counted minutes;
+this is still not proven. Both remote evaluation lanes await the final combined source.
 
 The early structural run disabled clang as well as WP/CBMC; four formal-frame assertions
 therefore failed for the wrong tool configuration. One isolated failure passes with clang
