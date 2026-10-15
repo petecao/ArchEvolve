@@ -71,10 +71,64 @@ def check_semantic_origins(lowering, library, defines=()):
             raise Refused("array-object origin model content, entry or geometry changed after planning")
 
 
+def _scalar_math(node):
+    """Pure signed integer source arithmetic; RTE independently checks C overflow."""
+    from swdb.c_lowering import INTEGER_TYPES
+    kind = node.get("kind")
+    children = [n for n in node.get("inner", []) if isinstance(n, dict) and n.get("kind")]
+    qual = ' '.join(re.sub(r'\b(?:const|volatile)\b', '',
+                          str((node.get("type") or {}).get("qualType", ""))).split())
+    if "volatile" in str((node.get("type") or {}).get("qualType", "")):
+        raise Refused("window offsets cannot duplicate volatile reads")
+    if kind in {"ParenExpr", "ImplicitCastExpr"} and len(children) == 1:
+        if kind == "ImplicitCastExpr" and node.get("castKind") not in {"NoOp", "LValueToRValue"}:
+            raise Refused("window offsets need a value-preserving scalar conversion policy")
+        return _scalar_math(children[0])
+    if kind == "IntegerLiteral":
+        return node["value"]
+    if kind == "DeclRefExpr" and qual in INTEGER_TYPES:
+        name = (node.get("referencedDecl") or {}).get("name", "")
+        if re.fullmatch(r'[A-Za-z_]\w*', name):
+            return f'((integer){name})'
+    if kind == "BinaryOperator" and node.get("opcode") in {"+", "-", "*"} and len(children) == 2:
+        if qual not in INTEGER_TYPES or qual.startswith("unsigned") or qual in {"size_t", "uintptr_t"} or qual.startswith("uint"):
+            raise Refused("window offset arithmetic needs a checked unsigned/mixed-width conversion policy")
+        return f'({_scalar_math(children[0])} {node["opcode"]} {_scalar_math(children[1])})'
+    if kind == "UnaryOperator" and node.get("opcode") in {"+", "-"} and len(children) == 1:
+        if qual not in INTEGER_TYPES or qual.startswith("unsigned") or qual in {"size_t", "uintptr_t"} or qual.startswith("uint"):
+            raise Refused("window offset arithmetic needs a checked unsigned conversion policy")
+        return f'({node["opcode"]}{_scalar_math(children[0])})'
+    raise Refused("window offsets need pure primitive integer expressions")
+
+
+def _window_target(node, origin):
+    children = [n for n in node.get("inner", []) if isinstance(n, dict) and n.get("kind")]
+    if node.get("kind") == "UnaryOperator" and node.get("opcode") == "&":
+        return _window_target(_strip_origin(children[0]), origin)
+    if node.get("kind") == "UnaryOperator" and node.get("opcode") == "*":
+        return origin.get("relative_offset", "0")
+    scalar = next((n for n in children if not _pointer(n)), None)
+    if scalar is None:
+        raise Refused("window operation has no primitive scalar offset")
+    sign = '-' if node.get("kind") == "BinaryOperator" and node.get("opcode") == '-' else '+'
+    return f'({origin.get("relative_offset", "0")} {sign} {_scalar_math(scalar)})'
+
+
+def recheck_source(lowering, plan):
+    """Freshly parse the source/closure; no candidate-supplied certificate is loaded."""
+    from swdb import c_lowering
+    if not isinstance(plan, dict) or not plan.get("kwargs", {}).get("array_domains"):
+        raise Refused("entry windows have no generator-owned source recheck plan")
+    fresh = c_lowering.lower(Path(plan["source"]), lowering.function, **plan["kwargs"])
+    if fresh.pointer_bounds != lowering.pointer_bounds or fresh.text != lowering.text:
+        raise Refused("entry-window AST, binding, source closure or checked lowering changed after planning")
+
+
 class _Origins:
     """Conservative source origins; no allocation-validity-to-array inference."""
-    def __init__(self, definitions, globals=(), known=None, terminal=None):
+    def __init__(self, definitions, globals=(), known=None, terminal=None, entry_windows=None, entry_function=None):
         self.definitions, self.known, self.terminal = definitions, known or {}, terminal or {}
+        self.entry_windows, self.entry_function = entry_windows or {}, entry_function
         self.declarations = {function: {n.get("id"): n for n in _walk(root)
                                      if n.get("kind") in {"VarDecl", "ParmVarDecl"}}
                              for function, root in definitions.items()}
@@ -107,7 +161,10 @@ class _Origins:
         if kind == "BinaryOperator" and node.get("opcode") in {"+", "-"}:
             pointers = [n for n in children if _pointer(n)]
             if len(pointers) == 1:
-                return self.get(pointers[0], function, seen)
+                origin = self.get(pointers[0], function, seen)
+                if origin and origin.get("kind") == "entry_window":
+                    return {**origin, "relative_offset": _window_target(node, origin)}
+                return origin
         if kind == "CallExpr" and children:
             refs = [(n.get("referencedDecl") or {}).get("name") for n in _walk(children[0])]
             return next((self.known[name] for name in refs if name in self.known), None)
@@ -118,7 +175,14 @@ class _Origins:
         declaration = self.declarations.get(function, {}).get(key)
         if declaration is None and ref.get("kind") == "VarDecl":
             declaration = self.globals.get(name)
-        if declaration is None or key in seen or declaration.get("kind") == "ParmVarDecl":
+        if declaration is None or key in seen or (function, key) in self.unstable:
+            return None
+        if declaration.get("kind") == "ParmVarDecl":
+            window = self.entry_windows.get("windows", {}).get(name) if function == self.entry_function else None
+            if window and _pointer(declaration):
+                return {"kind": "entry_window", "parameter": name, "root": name,
+                        "element_type": window["element_type"], "elements": window["entry_acsl"],
+                        "relative_offset": "0", "declarations_sha256": self.entry_windows["declarations_sha256"]}
             return None
         qual = str((declaration.get("type") or {}).get("qualType", ""))
         match = re.fullmatch(r"((?:const )?(?:unsigned |signed )?(?:int|long|long long|short|char|float|double|bool))\s*\[(\d+)\]", qual)
@@ -135,6 +199,13 @@ class _Origins:
         initializers = [n for n in declaration.get("inner", []) if isinstance(n, dict) and n.get("kind")]
         if len(initializers) != 1:
             return None
+        # A variable offset in an alias initializer would require a value
+        # snapshot at that declaration, distinct from the unit-entry extent.
+        initializer = _strip_origin(initializers[0])
+        if initializer.get("kind") == "BinaryOperator" and any(
+                n.get("kind") == "DeclRefExpr" and not _pointer(n)
+                for n in _walk(initializer)):
+            return None
         return self.get(initializers[0], function, (*seen, key))
 
 
@@ -146,20 +217,33 @@ def _origin_base(node):
 
 
 def complete(sites, definitions, observed, *, external_calls=(), known_pointer_calls=(),
-             global_nodes=(), known_origins=None, terminal=None):
+             global_nodes=(), known_origins=None, terminal=None, entry_windows=None, entry_function=None):
     """Refuse source operations omitted by printing and untracked subobject origins.
 
     The printer owns normalizations. This independent closure walk ensures that
     wrapper expressions cannot hide an operation from that inventory. Pointer
     casts and array subobjects need a typed extent policy beyond block bounds.
     """
-    rows = [dict(row) for row in sites]
+    all_rows = [dict(row) for row in sites]
     # Clang dumps for separate functions may reuse process-local AST IDs.
-    by_node = {(row["function"], row.pop("_ast_id", None)): row for row in rows}
-    origins = _Origins(definitions, global_nodes, known_origins, terminal)
+    by_node = {(row["function"], row.pop("_ast_id", None)): row for row in all_rows}
+    rows = [row for row in all_rows if row.get("kind") != "access"]
+    origins = _Origins(definitions, global_nodes, known_origins, terminal, entry_windows, entry_function)
     has_arithmetic = bool(rows)
     external = {row.get("name") if isinstance(row, dict) else row for row in external_calls}
     for function, root in definitions.items():
+        if function == entry_function and entry_windows:
+            names = set(entry_windows.get("windows", {})) | {name for w in entry_windows.get("windows", {}).values() for name in w["parameters"]}
+            params = {n.get("name"): n for n in root.get("inner", []) if n.get("kind") == "ParmVarDecl"}
+            for name in entry_windows.get("windows", {}):
+                if name not in params or not _pointer(params[name]) or (function, params[name].get("id")) in origins.unstable:
+                    rows.append({"function": function, "source_line": None, "reason": "entry-window pointer binding is not a stable primitive source parameter"})
+            if any(n.get("kind") == "VarDecl" and n.get("name") in names for n in _walk(root)):
+                rows.append({"function": function, "source_line": None, "reason": "entry-window parameter shadowing needs captured collision-free names"})
+        addressed = set()
+        for parent in _walk(root):
+            if parent.get("kind") == "UnaryOperator" and parent.get("opcode") == "&" and parent.get("inner"):
+                addressed.add(_strip_origin(parent["inner"][0]).get("id"))
         for node in _walk(root):
             kind, children = node.get("kind"), node.get("inner", [])
             children = [c for c in children if isinstance(c, dict) and c.get("kind")]
@@ -171,9 +255,15 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
                           or node.get("opcode") == "&" and children[0].get("kind") == "ArraySubscriptExpr"))
             reason = ""
             indexed = kind == "ArraySubscriptExpr"
-            if operation or indexed:
+            dereferenced = bool(entry_windows and entry_windows.get("windows") and kind == "UnaryOperator" and node.get("opcode") == "*")
+            if entry_windows and entry_windows.get("windows") and kind in {"CallExpr", "CXXMemberCallExpr", "CXXOperatorCallExpr"} and any(_pointer(c) for c in children[1:]):
+                reason = "entry-window pointer call boundaries need checked callee-domain discharge"
+            if operation or indexed or dereferenced:
                 base = _origin_base(node)
-                origin = origins.get(base, function) if base is not None else None
+                try:
+                    origin = origins.get(base, function) if base is not None else None
+                except Refused as exc:
+                    origin, reason = None, str(exc)
                 row = by_node.get((function, node.get("id"))) if operation else None
                 offset_nodes = [c for c in children if not _pointer(c)]
                 null_zero = (kind == "BinaryOperator" and node.get("opcode") in {"+", "-"}
@@ -187,6 +277,27 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
                     reason = "pointer arithmetic/indexing needs a certified array-object origin; incoming pointer domains are unsupported"
                 elif row is not None:
                     row["origin"] = origin
+                    if origin.get("kind") == "entry_window":
+                        try:
+                            target = _window_target(node, origin)
+                            row["window_guard"] = f'0 <= ({target}) <= ({origin["elements"]})'
+                        except Refused as exc:
+                            reason = str(exc)
+                elif (indexed or dereferenced) and origin.get("kind") == "entry_window":
+                    access = by_node.get((function, node.get("id")))
+                    if access is None or access.get("kind") != "access":
+                        reason = "entry-window access was not captured at a checked source statement"
+                    elif dereferenced and node.get("id") in addressed:
+                        reason = "entry-window address-of indirection needs a checked cancellation policy"
+                    else:
+                        try:
+                            target = _window_target(node, origin)
+                            relation = "<=" if node.get("id") in addressed else "<"
+                            access["origin"] = origin
+                            access["window_guard"] = f'0 <= ({target}) {relation} ({origin["elements"]})'
+                            rows.append(access)
+                        except Refused as exc:
+                            reason = str(exc)
                 elif indexed:
                     rows.append({"function": function, "source_line": ((node.get("loc") or {}).get("line") or
                                                  ((node.get("range") or {}).get("begin") or {}).get("line")),
@@ -247,17 +358,47 @@ def site(node, *, expression, base, statement, anchor, function, line, reason=""
             "normalized_expression": normalize(expression, base, offset) if not reason else None, "_ast_id": node.get("id")}
 
 
+def access_site(node, *, expression, statement, anchor, function, line):
+    """Pure access at a statement entry; legacy whole-object accesses keep RTE."""
+    reason = ""
+    if statement is None or statement.get("kind") not in {"DeclStmt", "ReturnStmt", "BinaryOperator",
+            "CStyleCastExpr", "CXXStaticCastExpr", "ParenExpr", "ImplicitCastExpr"}:
+        reason = "entry-window access needs a precise statement check placement"
+    if statement is not None:
+        nodes = list(_walk(statement))
+        for n in nodes:
+            kind, op = n.get("kind"), n.get("opcode")
+            if (kind in {"CallExpr", "CXXMemberCallExpr", "CXXOperatorCallExpr", "ConditionalOperator", "BinaryConditionalOperator", "CompoundAssignOperator"}
+                    or kind == "UnaryOperator" and op in {"++", "--"}
+                    or kind == "BinaryOperator" and (op in {",", "&&", "||"} or op == "=" and n is not statement)
+                    or "volatile" in str((n.get("type") or {}).get("qualType", ""))):
+                reason = "entry-window access with side effects/conditional evaluation needs single-evaluation support"
+        declared = {n.get("id") for n in nodes if n.get("kind") == "VarDecl"}
+        if any((n.get("referencedDecl") or {}).get("id") in declared for n in _walk(node)):
+            reason = "entry-window access depends on a declaration inside its statement"
+    return {"function": function, "source_line": line, "anchor": anchor, "kind": "access",
+            "expression": expression, "reason": reason, "_ast_id": node.get("id")}
+
+
 def normalize(expression, base, offset):
     if offset is None:
         return expression
     return f"(({offset}) == 0 ? ({base}) : ({expression}))"
 
 
-def inventory(sites, *, source_sha256, text):
+def inventory(sites, *, source_sha256, text, entry_windows=None, entry_contract=None):
     report = {"check": identity(), "source_sha256": source_sha256,
               "lowering_sha256": hashlib.sha256(text.encode()).hexdigest(), "sites": list(sites),
               "domain_boundary": "Only certified whole one-dimensional arrays, exact audited semantic rows and terminal typed allocations; "
-                                 "opaque incoming pointer arithmetic/indexing is unsupported; exact C++ null-plus-zero is checked."}
+                                 "incoming arithmetic/indexing requires a pinned explicit entry-window contract and checked numerical bounds; "
+                                 "opaque origins remain unsupported; exact C++ null-plus-zero is checked."}
+    if entry_windows and entry_windows.get("windows"):
+        report["entry_windows"], report["entry_contract"] = entry_windows, entry_contract
+        report["entry_window_semantics"] = {
+            "role": "explicit typed-array-window input-contract premise; not inferred from validity",
+            "checked": "entry extent nonnegative/target byte capacity/null-empty; numerical operation bounds; ordinary RTE",
+            "smoke_scope": "projected ACSL preconditions; no complete typed-domain/formal realizability proof",
+            "caller_boundary": "imported domain-bearing summaries and unmodeled pointer calls are refused"}
     report["certificate_sha256"] = _hash(report)
     return report
 
@@ -269,10 +410,18 @@ def check(lowering):
             or report.get("source_sha256") != lowering.source_sha256
             or report.get("lowering_sha256") != hashlib.sha256(lowering.text.encode()).hexdigest()):
         raise Refused("pointer formation inventory is absent, stale or differs from its generated lowering")
+    if report.get("entry_windows"):
+        from swdb import array_domains
+        if report["entry_windows"].get("check") != array_domains.identity() or not report.get("entry_contract"):
+            raise Refused("entry-window declaration/check/contract pin is absent or stale")
     for row in report["sites"]:
         if row["reason"]:
             raise Refused(f"{row['function']}:{row['source_line']}: {row['reason']}")
         if row.get("admission_only"):
+            continue
+        if row.get("kind") == "access":
+            if not row.get("window_guard") or row["expression"] not in lowering.text:
+                raise Refused("entry-window access differs from its generated lowering")
             continue
         normalized = normalize(row["expression"], row["base"], row.get("offset"))
         if normalized != row.get("normalized_expression") or normalized not in lowering.text:
@@ -293,8 +442,20 @@ def prepare(lowering, text):
     """Insert independently named checked assertions into a generated WP view."""
     report = check(lowering)
     additions = {}
+    if report.get("entry_windows"):
+        clauses = []
+        for i, (name, window) in enumerate(report["entry_windows"]["windows"].items(), 1):
+            extent = window["entry_acsl"]
+            predicate = (f'0 <= ({extent}) <= SIZE_MAX / sizeof({window["element_type"]}) && '
+                         f'(\\at({name},Pre) == \\null ==> ({extent}) == 0)')
+            clauses.append(f'/*@ assert swdb_window_entry_{i}: {predicate}; */')
+        additions[f"{lowering.function}.entry"] = clauses
     for i, row in enumerate(report["sites"], 1):
         if row.get("admission_only"):
+            continue
+        if row.get("kind") == "access":
+            assertion = f'/*@ assert swdb_window_access_{i}: {row["window_guard"]}; */'
+            additions.setdefault(row["anchor"], []).append(assertion)
             continue
         base, result = f"({row['base']})", f"({row['expression']})"
         predicate = f"{_in_object_or_one_past(base, base)} && {_in_object_or_one_past(result, base)}"
@@ -302,6 +463,8 @@ def prepare(lowering, text):
             predicate = f"(({base} == \\null && ({row['offset']}) == 0) || ({predicate}))"
         if row.get("null_only"):
             predicate = f"{base} == \\null && ({row['offset']}) == 0"
+        if row.get("window_guard"):
+            predicate = f'({row["window_guard"]}) && ({predicate})'
         assertion = f"/*@ assert swdb_pointer_formation_{i}: {predicate}; */"
         additions.setdefault(row["anchor"], []).append(assertion)
     for anchor, assertions in additions.items():
@@ -317,7 +480,7 @@ def check_input(lowering, base, report, text):
     generated, fresh = prepare(lowering, base)
     if fresh != report:
         raise Refused("pointer formation admission changed after planning")
-    for assertion in re.findall(r"/\*@ assert swdb_pointer_formation_.*?\*/", generated, re.S):
+    for assertion in re.findall(r"/\*@ assert swdb_(?:pointer_formation|window_).*?\*/", generated, re.S):
         if text.count(assertion) != 1:
             raise Refused("a checked pointer formation obligation is missing or duplicated")
 
