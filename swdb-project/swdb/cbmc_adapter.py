@@ -161,7 +161,7 @@ class CbmcAdapter:
         sizes = _sizes(job.bounds)
         context = {"job": job, "out": out, "log": log, "reports": [], "tools": tools, "bounds": dict(job.bounds),
                    "settings": {"tool": "cbmc", "flags": [], "translator": tools["translator"]["id"],
-                                "build_constants": list(self.defines)}}
+                                "build_constants": list(self.defines), "verifier_launched": False}}
         if summary_job:
             source = self.library.resolve((entry.get("proof_unit") or {}).get("source"))
         else:
@@ -169,9 +169,13 @@ class CbmcAdapter:
             source = _unit_source(Path(job.unit.tree), job.unit.function)
         log.line(f"source: {source.name}")
         covered = proof_semantics.covered_names(self.library)
+        declarations = (entry.get('proof_unit') or {}).get('array_domains')
+        source_kwargs = dict(defines=self.defines, **proof_semantics.lowering_options(self.library))
+        if declarations:
+            source_kwargs.update(array_domains=json.loads(json.dumps(declarations)),
+                array_domain_contract={'id': self.contract, 'sha256': job.unit.contract_sha256})
         try:
-            lowering = c_lowering.lower(source, job.unit.function, defines=self.defines,
-                                        **proof_semantics.lowering_options(self.library))
+            lowering = c_lowering.lower(source, job.unit.function, **source_kwargs)
         except c_lowering.Unsupported as exc:
             context["settings"]["outside_cpp_subset"] = f"outside the C++ subset: {exc}"
             return self._not_proven("unsupported_construct", str(exc), context)
@@ -235,19 +239,63 @@ class CbmcAdapter:
             return self._not_proven("unsupported_construct", f"the CBMC translator: {exc}", context)
         if built['plan'].array_domains:
             context['settings'].update(array_domains=built['plan'].array_domains, verifier_launched=False)
-            return self._not_proven('unsupported_construct',
-                                    'array_domains is planner-only: source-origin, operation and call alignment '
-                                    'are not certified by nonnull bounded buffers', context)
+            from swdb import bounded_entry_windows
+            try:
+                code.text, source_view, checked = bounded_entry_windows.prepare(
+                    lowering, source, built['plan'].array_domains, defines=self.defines)
+            except bounded_entry_windows.Refused as exc:
+                context['settings']['array_domains'] = dict(built['plan'].array_domains, refusal=str(exc))
+                return self._not_proven('unsupported_construct', str(exc), context)
+            code.window_cxx[lowering.function] = source_view
+            context['settings']['array_domains'] = checked
+            context['array_domain_runtime'] = {'source': source, 'kwargs': source_kwargs,
+                'code': code, 'built': built, 'summary_job': summary_job}
         refusal = cpu_memory_admission.summary_refusal(self.records, [
             pin["proof_record"] for pin in context["pins"].get("summaries", [])])
         if refusal:
             context["settings"]["proof_semantics_admission"] = refusal
             context["settings"]["verifier_launched"] = False
             return self._not_proven("memory_domain", "opaque semantics dependency needs a checked memory boundary", context)
-        problem = self._differential(job, code, built, context)
+        from swdb import bounded_entry_windows
+        try:
+            self.check_entry_windows(job, context)
+            problem = self._differential(job, code, built, context)
+        except bounded_entry_windows.Refused as exc:
+            return self._not_proven('unsupported_construct', str(exc), context)
         if problem:
             return problem
         return self._cbmc(job, code, built, context)
+
+    def check_entry_windows(self, job, context, inputs=()):
+        """Regenerate source, planner and both checked views immediately before launch."""
+        entry = self.library.get(self.contract) or {}
+        declarations = (entry.get('proof_unit') or {}).get('array_domains')
+        runtime = context.get('array_domain_runtime')
+        planned = bool(runtime or context.get('settings', {}).get('array_domains'))
+        if not declarations and not planned:
+            return
+        from swdb import bounded_entry_windows
+        if not declarations or not runtime:
+            raise bounded_entry_windows.Refused('bounded window declarations or source replay plan disappeared')
+        if self.library.content_sha256(self.contract) != job.unit.contract_sha256:
+            raise bounded_entry_windows.Refused('bounded window input contract changed after planning')
+        fresh = c_lowering.lower(runtime['source'], job.unit.function, **runtime['kwargs'])
+        if fresh != runtime['code'].lowering:
+            raise bounded_entry_windows.Refused('bounded window source/closure lowering changed before launch')
+        code = Code(fresh, runtime['source'], self.defines)
+        rebuilt = self._build(job, entry, code, _sizes(job.bounds), runtime['summary_job'],
+                              {'settings': {}, 'pins': {}})
+        if rebuilt != runtime['built']:
+            raise bounded_entry_windows.Refused('bounded window harness, declarations or planner changed before launch')
+        c_text, source_view, checked = bounded_entry_windows.prepare(
+            fresh, runtime['source'], rebuilt['plan'].array_domains, defines=self.defines)
+        if (runtime['code'].text != c_text or runtime['code'].window_cxx != {fresh.function: source_view}
+                or context['settings'].get('array_domains') != checked):
+            raise bounded_entry_windows.Refused('bounded window source views or operation checks changed before launch')
+        if inputs:
+            expected = tr.prelude() + rebuilt['logic'] + c_text + rebuilt['harness']
+            if len(inputs) != 1 or Path(inputs[0][0]).read_text() != expected:
+                raise bounded_entry_windows.Refused('bounded window launched input differs from fresh checked view')
 
     def _tools(self):
         """Installed CBMC and clang against the method version's lineup; the translator and the C lowering tool
@@ -487,6 +535,7 @@ class CbmcAdapter:
         from swdb import proof_setup
         proof_setup.check_generated(job, self, context, [(scratch / "job.c", text)], flags,
                                     command=command, scratch=scratch, lowering=code.lowering)
+        context['settings']['verifier_launched'] = True
         result = rss_watchdog.run(command, log=cbmc_log, cap_bytes=cap, timeout=wall, cwd=scratch,
                                   env={**os.environ, "TMPDIR": str(scratch)})
         context["reports"].append(("cbmc_output", cbmc_log))
@@ -843,6 +892,7 @@ class Code:
         self.lowering, self.source, self.defines = lowering, Path(source), tuple(defines)
         self.model = model                             # ticket 27: the proof semantics' C model, or None
         self.text = lowering.text
+        self.window_cxx = {}
         self.functions = [a["function"] for a in lowering.anchors if a["kind"] == "contract"]
         self.prototypes = {}
         lines = self.text.splitlines()
@@ -935,7 +985,8 @@ class Code:
             parts.append(self._cut(tool, data, name, {"VarDecl"}) + ";")
         parts += [f"{self.prototypes[name]};" for name in self.functions]
         for name in self.functions:
-            parts.append(stubs[name].rstrip("\n") if name in stubs else self._cut(tool, data, name, {"FunctionDecl"}))
+            parts.append(stubs[name].rstrip("\n") if name in stubs else self.window_cxx[name]
+                         if name in self.window_cxx else self._cut(tool, data, name, {"FunctionDecl"}))
         return "\n".join(parts) + "\n"
 
     def _cut(self, tool, data, name, kinds):

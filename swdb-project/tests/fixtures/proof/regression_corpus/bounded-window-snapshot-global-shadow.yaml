@@ -1,0 +1,19 @@
+# Created: 2026-10-15 ET. Checked view API regression; no solver needed.
+id: bounded-window-snapshot-global-shadow
+adapter: bounded_entry_window_view
+input:
+  function: shadow
+  source: |
+    int swdb_window_extent_p = 9;
+    int shadow(int *p, int n) { (void)(p+n); return swdb_window_extent_p; }
+  array_domains: {p: {extent: n}}
+  requires: n == 2
+  capacity: 4
+failure_class: unsupported_construct
+cause: >-
+  An injected entry snapshot named swdb_window_extent_p shadows the source global,
+  changing the original return from 9 to n in both generated C and C++ views.
+  Agreement between those two modified views cannot establish preservation of the
+  original binding. Reserve generated names across source and referenced header
+  declarations; reject collisions before preparing either view. The regression
+  runs at the checked-view API because both downstream views share this defect.

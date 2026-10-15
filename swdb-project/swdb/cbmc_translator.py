@@ -56,7 +56,9 @@ class Untranslatable(Exception):
 
 def identity():
     """{id, sha256} of the translator itself (this module's source)."""
-    return {"id": f"{TOOL_ID}-{TOOL_VERSION}", "sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}
+    here = Path(__file__)
+    return {"id": f"{TOOL_ID}-{TOOL_VERSION}", "sha256": hashlib.sha256(
+        here.read_bytes() + here.with_name('bounded_entry_windows.py').read_bytes()).hexdigest()}
 
 
 # --- clauses -------------------------------------------------------------------------------------------
