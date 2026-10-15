@@ -1,0 +1,95 @@
+{
+  "artifacts": [
+    {
+      "path": "/private/tmp/probata-t24-dxc-corpus-current-green/checks.log",
+      "sha256": "96a8cb52be1ed2c3302d2e9f6528eca38c1cf7c2462ec7201e826ec440278f9d"
+    },
+    {
+      "path": "/private/tmp/probata-t24-dxc-corpus-current-green/resources.json",
+      "sha256": "e2b6e44c1f638f558f683fa34475fd004de03a6590a73281c106306b8007db3c"
+    },
+    {
+      "path": "/private/tmp/probata-t24-dxc-corpus-current-green/command.json",
+      "sha256": "80f2fe62ae5cad1fed4942491c4942a3f09eb010bae28011997c246c0cfcee03"
+    },
+    {
+      "path": "/private/tmp/probata-t24-dxc-corpus-current-green/guard.py",
+      "sha256": "927e1dce76fc4848bcbbba3d3079438650f261f37b55caf524742dc9137debfd"
+    },
+    {
+      "path": "/private/tmp/probata-t24-dxc-corpus-current-green/junit.xml",
+      "sha256": "e2353ec310ed0a04833af8ef1925bc9e847b98124221d84b8909fbd5892e1b42"
+    },
+    {
+      "path": "/private/tmp/probata-t24-dxc-corpus-current-green/pytest/test_the_shared_dxc_seed_viola0/seeded.cc",
+      "sha256": "58df7d2775ff9c0cb33c8395c130f4e0edd86ba4876ee9beed9ed3f929325844"
+    },
+    {
+      "path": "/private/tmp/probata-t24-dxc-corpus-current-green/pytest/test_the_shared_dxc_seed_viola0/safe.c",
+      "sha256": "ac46106607e4cae151639f98447e05af620807276f44770167332464e02b2c26"
+    },
+    {
+      "path": "/private/tmp/probata-t24-dxc-corpus-current-green/pytest/test_the_shared_dxc_seed_viola0/safe-c",
+      "sha256": "bae98a41242d3d94dc3f2ae2a61babd8cdd4749becd250552d98c59a90c74799"
+    },
+    {
+      "path": "/private/tmp/probata-t24-dxc-corpus-current-green/pytest/test_the_shared_dxc_seed_viola0/safe-cxx",
+      "sha256": "2d962564462b86d3620de5e57026125adaed49104467c08e8e26cf99d271f989"
+    },
+    {
+      "path": "/private/tmp/probata-t24-dxc-corpus-current-green/pytest/test_the_shared_dxc_seed_viola0/seeded-c",
+      "sha256": "388e9e01110a28b54d8a508ef715ff107160a7c74dbfd1af7250a52e04325a95"
+    },
+    {
+      "path": "/private/tmp/probata-t24-dxc-corpus-current-green/pytest/test_the_shared_dxc_seed_viola0/seeded.c",
+      "sha256": "3ed86a410a5329179c994e1398464f1029cc185bc0e959f9c9eb293ef73fc72e"
+    },
+    {
+      "path": "/private/tmp/probata-t24-dxc-corpus-current-green/pytest/test_the_shared_dxc_seed_viola0/seeded-cxx",
+      "sha256": "736880940e7c3aabcd395bcfe02c5d60ffc5e42821150abd86a5d9649a4689bf"
+    },
+    {
+      "path": "/private/tmp/probata-t24-dxc-corpus-current-green/pytest/test_the_shared_dxc_seed_viola0/safe.cc",
+      "sha256": "c1b3e56de760aa7101f1e0be1c69a2049d14e26c5405012d4c6bbf46212a419d"
+    }
+  ],
+  "boundary": "One-input native fixture control, not solver refutation or production DX100 semantics; original +2 RED producer preserved.",
+  "created": "2026-10-15 ET",
+  "native_asserted_observations": {
+    "corrected_seed_cpp_and_c": 4,
+    "original_postcondition": "1<=result<=3",
+    "safe_cpp_and_c": 1,
+    "tile": 0
+  },
+  "passed": 1,
+  "prior_real_red_green": {
+    "path": "/private/tmp/probata-resume-t24/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t24-dxc-native-negative-control-20261015.json",
+    "sha256": "a7a053784d0ab9f135e5fdbe1675c9e463859d7da6b8390e1677271baa6eb334"
+  },
+  "prospective_acceptance": {
+    "path": "/private/tmp/probata-resume-t24/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t24-prospective-acceptance-20261015.md",
+    "sha256": "00a6b0c134796a8755366a396979780da917cbb826bfacbee1b85cd9cffdf887"
+  },
+  "pytest_seconds": 1.51,
+  "resources": {
+    "cpu_seconds": 1.140188,
+    "exit_code": 0,
+    "out_of_memory": false,
+    "peak_rss_bytes": 140935168,
+    "timed_out": false,
+    "wall_seconds": 1.884581749967765
+  },
+  "runtime_source_boundary": "Production swdb and original construct fixtures unchanged from0e7; this adds a corpus link and prospective acceptance documentation only.",
+  "skipped": 0,
+  "sources": [
+    {
+      "path": "/private/tmp/probata-resume-t24/swdb-project/tests/test_dxc_seeded_control.py",
+      "sha256": "b89f77ba9aa79dbbe6ec143f569f3c599cf13dae46757ab3ca01a2fa7dabad22"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t24/swdb-project/tests/fixtures/proof/regression_corpus/fixture-dxc-seed-did-not-violate-post.yaml",
+      "sha256": "676e952eb81b985ede8548bc1b20ff694acf7dd73574efdb3f4c54ec24e67110"
+    }
+  ],
+  "test": "tests/test_dxc_seeded_control.py"
+}
