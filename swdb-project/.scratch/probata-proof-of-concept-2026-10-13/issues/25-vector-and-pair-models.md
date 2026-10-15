@@ -211,3 +211,27 @@ also using `-wp-no-filter-init`. Original at proof source and clean handoff help
 match exactly. A prior mistakenly sandboxed run had62PASS13FAIL because macOS denied the watchdog's
 process-tree read; those failures produced no accepted proof evidence. The13 actual controls passed
 with escalation, followed by the complete75-test canonical run. No watchdog or smoke check was disabled.
+
+
+Closed-owner origin staging — 2026-10-15 ET: API82e6af76 supplies exact source declaration/call
+registries and an independent C-AST checker for the closed two-site ownership view. Entry-frozen
+initial/growth extents are distinguished from live element prefixes; every source/view access maps
+to numerical and alias-liveness guards. The C checker audits all bindings, allocation calls, loop
+conditions/bodies, capture/invalidation and guard placement rather than exempting an owned view.
+Source/native model bodies and the original source contract are unchanged. A pinned trusted-tool
+sentence explicitly identifies the typed source allocator/model relation; numerical validity alone
+is not used as provenance.
+
+The new public prelaunch report first failed because no origin certificate was recorded. Its first
+implementation passed with the seven existing source-protocol refusals (8PASS49.69s); final metadata
+control passed1test7.79s. A separate public renderer-mutation batch passed3tests21.59s: source/method
+hashes are freshly recomputed, but shifted alias initialization and weakened liveness predicates
+still refuse before a verifier. The final batch passed4tests42.77s, including a moved bounds-guard refusal.
+Report:`/private/tmp/probata-owner-origin-tamper-final.jsonl` (SessionFinish0). These use stand-in WP and provide no new proven/unbounded production record.
+
+Ticket36 owns the pending lowerer/adapter/source-to-view coupling and transitive helper pins. The
+existing nine actual ownership controls must be rerun under that combined method after integration.
+No generic field-origin exemption, standalone model-domain acceptance or general ticket25 resolution
+is claimed. Status stays **claimed**.
+
+Compact staging evidence:[t25-closed-owner-origins-20261015.json](../evidence/t25-closed-owner-origins-20261015.json).

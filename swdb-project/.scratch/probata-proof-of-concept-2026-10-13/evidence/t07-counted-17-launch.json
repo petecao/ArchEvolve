@@ -1,0 +1,29 @@
+{
+  "created": "2026-10-15 ET",
+  "evidence_kind": "counted_run_launch_not_result",
+  "started": "2026-10-15 07:31:46 EDT",
+  "source_commit": "af9a61b6fe582507f55b7f37dd12331925c17b16",
+  "scope": "Functional BFS proof-hint spike only; not production initializedness or typed-origin acceptance",
+  "method": "consumed-prefix-cursor-snapshots-v4",
+  "acceptance": "total",
+  "two_phase": false,
+  "out": "/private/tmp/probata-t07-20261015-run17",
+  "preflight_source_manifest": {
+    "path": "/private/tmp/probata-t07-20261015-run17/source-manifest.json",
+    "sha256": "289954c92167bd6a89b05c6e56047d8d5d1a1325fd50a6d9c9ef8a08a30af542"
+  },
+  "launch_meta": {
+    "path": "/private/tmp/probata-t07-20261015-run17/counted-17/meta.json",
+    "sha256": "c66a816532378cc58affaa214eb5807cf5fc319710f638e84acca600e93a0273"
+  },
+  "source_status_at_launch": "clean, all preflight source hashes rechecked",
+  "storage_budget_bytes": 2147483648,
+  "free_disk_gib_at_preparation": 69.81,
+  "readers": [
+    "ticket07",
+    "ticket09",
+    "coordinator"
+  ],
+  "provider_boundary": "Approved scoped BFS Codex/OpenAI export; fresh hints; no old hints, finite audit cases, tests, evaluator or workload inputs supplied.",
+  "resource_boundary": "Shared two-slot verifier lock and 8GiB watchdog; count lock waiting separately."
+}

@@ -3,12 +3,16 @@
 The source contract keeps assigns nothing. A private-region proof view must separately justify
 its source-frame projection; merely proving a broader frame is not acceptance.
 """
+import json
+import os
 import shutil
+import subprocess
+import sys
 
 import pytest
 import yaml
 
-from conftest import FIXTURES, REPO, make_records
+from conftest import FIXTURES, REPO, make_records, run_swdb
 from test_proof_records import _library_roots
 from test_wp_adapter import method_version, needs_wp
 from test_wp_subset import Seed, _entry
@@ -45,10 +49,8 @@ for _name, _tail in REFUSALS.items():
                f"int *p=v.data(); v.push_back(9); {_tail} }}\n")
 
 
-@pytest.fixture(scope="module")
-def ownership_subset(tmp_path_factory):
+def _ownership_seed(root):
     from swdb import c_lowering, std_models
-    root = tmp_path_factory.mktemp("wp-vector-ownership")
     records = make_records(root)
     copy_record_subset(REPO / "records", records.path, sorted(_library_roots()))
     shutil.copytree(REPO / "library", root / "library")
@@ -69,6 +71,11 @@ def ownership_subset(tmp_path_factory):
         (root / "library" / "rewrite_contracts" / f"fixture_vector_owner_{label}.yaml").write_text(
             yaml.safe_dump(data, sort_keys=False))
     return Seed(root, {})
+
+
+@pytest.fixture(scope="module")
+def ownership_subset(tmp_path_factory):
+    return _ownership_seed(tmp_path_factory.mktemp("wp-vector-ownership"))
 
 
 @needs_wp
@@ -92,3 +99,68 @@ def test_untracked_vector_observations_and_protocols_refuse_before_verification(
     record = ownership_subset.prove("--summary", f"contract.fixture_vector_owner_{control}")
     assert record["verdict"] == "not_proven" and record["failure_class"] == "unsupported_construct", record
     assert not any(row["name"] == "wp_log" for row in record["evidence"]["reports"]), record
+
+
+@needs_wp
+def test_the_closed_owner_view_reports_typed_origins_for_all_source_and_generated_accesses(ownership_subset):
+    from test_wp_adapter import fake
+    result = run_swdb("prove", "--records", ownership_subset.records, "--summary",
+        "contract.fixture_vector_owner_safe", "--adapter", "wp", "--runs-dir", ownership_subset.runs,
+        "--format", "json", env=fake("unknown"))
+    assert result.returncode == 0, result.stderr + result.stdout
+    record = yaml.safe_load((ownership_subset.records / json.loads(result.stdout)["path"]).read_text())
+    assert record["failure_class"] == "unknown", record
+    origins = record["settings"]["vector_ownership"]["certificate"]["origins"]
+    assert record["settings"]["pointer_bounds"]["owner"] == record["settings"]["vector_ownership"]["certificate"]["source_origins"]
+    assert origins["complete"] is True
+    assert {row["site"] for row in origins["allocations"]} == {"initial", "growth"}
+    assert all(row["element_type"] == "int" for row in origins["allocations"])
+    assert origins["aliases"][0]["allocation_site"] == "initial"
+    assert origins["aliases"][0]["invalidated_by"] == "growth"
+    assert origins["source_accesses"] and origins["view_accesses"]
+    assert all(row["bounds_guard"] for row in origins["view_accesses"])
+    assert all(row["liveness_guard"] for row in origins["view_accesses"] if row.get("alias"))
+
+
+@needs_wp
+@pytest.mark.parametrize("fault", ["alias_offset", "liveness_guard", "range_guard_position"])
+def test_a_rehashed_renderer_cannot_hide_wrong_alias_origins_or_weakened_liveness(tmp_path, fault):
+    from test_wp_adapter import fake
+    seed = _ownership_seed(tmp_path)
+    runtime = tmp_path / "changed-runtime"
+    shutil.copytree(REPO / "swdb", runtime / "swdb", ignore=shutil.ignore_patterns("__pycache__"))
+    target = runtime / "swdb" / "vector_ownership.py"
+    source = target.read_text()
+    if fault == "range_guard_position":
+        guard = "/*@ assert owner_initial_range: 0 <= swdb_owner_k0 < swdb_owner_bound0; */"
+        old = 'f"  for(swdb_owner_k0=0;swdb_owner_k0<swdb_owner_bound0;++swdb_owner_k0) {{",'
+        assert source.count(old) == source.count(guard) == 1
+        source = source.replace('"    '+guard+'",', '')
+        source = source.replace(old, '"  '+guard+'",'+old)
+    else:
+        old, new = (("int *swdb_owner_alias=swdb_owner_v.data;", "int *swdb_owner_alias=swdb_owner_v.data+1;")
+                    if fault == "alias_offset" else
+                    ("assert alias_live_after: swdb_owner_alias_live == 1", "assert alias_live_after: 1 == 1"))
+        assert source.count(old) == 1
+        source = source.replace(old, new)
+    target.write_text(source)
+    env = {**os.environ, **fake("unknown"), "SWDB_HOME": str(REPO), "PYTHONPATH": str(runtime)}
+    refreshed = subprocess.run([sys.executable, "-c",
+        "import json; from swdb import c_lowering,proof_setup; "
+        "print(json.dumps([c_lowering.identity(),proof_setup.identity()]))"],
+        cwd=runtime, env=env, capture_output=True, text=True, check=True)
+    lowering, checks = json.loads(refreshed.stdout)
+    method = method_version(lowering)
+    method["checks"].update(checks)
+    from swdb import std_models
+    method["models"]["std_vector"] = std_models.identity()
+    (seed.root / "library" / "methods" / "wp-tracer-fixture.yaml").write_text(yaml.safe_dump(method, sort_keys=False))
+    label = "stale" if fault == "liveness_guard" else "safe"
+    result = subprocess.run([sys.executable, "-m", "swdb", "prove", "--records", str(seed.records),
+        "--adapter", "wp", "--summary", "contract.fixture_vector_owner_"+label,
+        "--runs-dir", str(seed.runs), "--format", "json"],
+        cwd=runtime, env=env, capture_output=True, text=True, timeout=600)
+    assert result.returncode == 0, result.stderr + result.stdout
+    record = yaml.safe_load((seed.records / json.loads(result.stdout)["path"]).read_text())
+    assert record["verdict"] == "not_proven" and record["failure_class"] == "unsupported_construct", record
+    assert not any(row["name"] == "wp_log" for row in record["evidence"]["reports"])

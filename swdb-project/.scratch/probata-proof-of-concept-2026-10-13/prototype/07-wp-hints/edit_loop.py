@@ -73,6 +73,17 @@ cases before relying on such a cut to close the final reachability postcondition
 This is abstract proof-method guidance; no previous hints or concrete cases are
 supplied. Every proposed invariant and bridge must pass its own checked WP goals.
 
+Consumed-prefix construction (method revision, 2026-10-15): distinguish issuing a
+range batch from consuming its emitted pairs. The issue call advances continuation
+registers before the CPU processes that batch. Capture the pre-issue cursor with
+fresh scalar ghost witnesses; a post-issue cursor alone cannot denote consumed
+work. At the range-loop head relate prior chunks and fully consumed CSR pairs to
+visitation. Inside the batch loop refine this by completed batches and positions
+already consumed. Carry the row/column-to-frontier-edge-to-vertex relationship.
+The scalar fallback needs the corresponding completed-row and current-edge prefix.
+Construct and prove those base/preservation steps before final reachability cuts.
+Moving a postcondition into an unproved assertion only moves the proof burden.
+
 HOW THIS LOOP WORKS (monotone, local editing):
 - The loop keeps ONE best hint set. It starts with mechanically generated frame seeds (ids "seed*": every
   loop's `loop assigns`, written from the code; they are fixed, you cannot change them or add `loop assigns`).
@@ -333,7 +344,7 @@ def main():
     meta = {"started": L.now(), "pin": L.PIN,
             "codex_version": subprocess.run([L.CODEX, "--version"], capture_output=True, text=True).stdout.strip(),
             "ghost_hint_guard": H.GHOST_HINT_RULE,
-            "diagnostic_guidance": "processed-frontier-and-csr-induction-v3",
+            "diagnostic_guidance": "consumed-prefix-cursor-snapshots-v4",
             "standin_sha256": {f: L.sha(L.STANDIN_DIR / f) for f in [L.UNIT] + L.HEADERS},
             "cpp_unit_sha256": L.sha(L.CPP_UNIT), "rounds": a.rounds, "budget_min": a.budget_min,
             "round_timeout_s": a.round_timeout, "final_reserve_min": a.final_reserve_min,

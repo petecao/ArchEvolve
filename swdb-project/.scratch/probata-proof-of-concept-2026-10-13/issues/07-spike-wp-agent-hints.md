@@ -1,7 +1,7 @@
 # 07 — Spike (c): WP with agent hints
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-15 ET (run 16 not proven; 4 unit and 22 hint obligations remain; final offline audit recorded); 2026-10-14 22:50 ET (continuation 3: runs 10-12 fail, verdict fail so far, effort paused); 2026-10-14 17:10 ET (continuation 2: runs 7-9 fail, verdict fail so far); 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-15 ET (run 17 active with consumed-prefix guidance; run 16 remains unproven with final audit recorded); 2026-10-14 22:50 ET (continuation 3: runs 10-12 fail, verdict fail so far, effort paused); 2026-10-14 17:10 ET (continuation 2: runs 7-9 fail, verdict fail so far); 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 03
@@ -923,3 +923,25 @@ batches and positions already consumed. The scalar fallback needs the equivalent
 row/edge prefix. No previous hints, finite counterstates, tests or evaluator code
 may enter the provider workspace. No unchanged retry or run 17 has started.
 Ticket 07 remains claimed within the shared two-week box.
+
+### 2026-10-15: prospective consumed-prefix method
+
+Prepared `consumed-prefix-cursor-snapshots-v4`: abstract guidance distinguishes range issuance from CPU consumption, captures pre-issue cursors, and carries processed row/edge prefixes through the range, batch and scalar loops. It contains no prior hints, worked formulas, counterstates, tests or workload inputs. All 54 pure prototype controls pass in 0.13 seconds (`/private/tmp/probata-consumed-prefix-guidance-controls.xml`). A future counted experiment will use fresh hints and total-open-goal acceptance, allowing it to revise the proof decomposition without rewarding a unit goal merely transferred into an open hint. No run 17 has started; implementation acceptance currently owns both local verifier slots. This is a prospective method change, not a proof result.
+
+
+### Counted run 17 — 2026-10-15 ET
+
+Started **07:31:46 ET** on frozen `af9a61b6`, with fresh hints and the prospective
+consumed-prefix/cursor-snapshot guidance. Acceptance uses total open goals; the
+unit-first relaxation and phase lock are disabled. Provider, effort, allowed hint
+kinds, symbolic source/model contracts and final strict replay are unchanged.
+All 54 pure prototype controls pass. The source worktree and preflight hashes were
+rechecked before launch. No previous hints, audit counterstates, evaluator, tests
+or workload inputs are exported; the existing scoped Codex/OpenAI approval applies.
+
+Output: `/private/tmp/probata-t07-20261015-run17/`, budget 2 GiB, about 69.81 GiB
+free at preparation, readers 07/09/coordinator. It uses the shared two-slot local
+verifier lock and 8 GiB watchdog. The second slot was idle while vector acceptance
+waited on integration hooks; further vector proof checkpoints are planned for the
+two remote lanes. This is a launch record, not a result. Ticket 07 remains claimed.
+[Launch metadata](../evidence/t07-counted-17-launch.json).

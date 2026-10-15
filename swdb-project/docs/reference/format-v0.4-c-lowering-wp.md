@@ -324,8 +324,20 @@ terminal `new int[]` owner, and exact audited DX100 independent tile rows. Each 
 the entry, model contents and generated geometry and is revalidated before launch. Rebinding,
 address escapes and unknown calls invalidate pointer aliases. Embedded/multidimensional arrays,
 untracked pointer casts and opaque returned pointers are refused. Ordinary indexing is inventoried
-through the entire emitted callee closure too. Opaque incoming pointers need a separately implemented
-explicit array-object domain; concurrency-frame array lists and `valid` ranges do not supply it.
+through the entire emitted callee closure too. Incoming primitive parameters can declare
+`proof_unit.array_domains: {p: {extent: n}}`. This is an explicit typed-array-window input-contract
+premise; concurrency-frame array lists and `valid` ranges do not supply it. The binding freezes every
+extent parameter at entry, pins the formal half, and is independently regenerated from the source AST
+before launch. Stable direct aliases preserve the window. Rebinding, shadowing, address escape and
+unmodeled pointer calls refuse. Imported domain-bearing summaries also refuse without checked caller
+discharge, including when the caller has no domain declaration.
+
+WP checks named obligations for nonnegative extent, target byte capacity, null implying an empty
+window, formation within the inclusive one-past range, and accesses within the strict element range.
+These assertions add no preconditions. Existing RTE obligations still check memory access and
+initializedness. The typed-window premise is advertised by the input contract; WP33 does not establish
+the complete realizability of that premise together with arbitrary formal preconditions. Smoke checks
+cover their projected ACSL preconditions. Opaque model and callee parameter origins remain unsupported.
 
 C++17 permits null-pointer plus/minus zero. Supported side-effect-free expressions use
 `offset == 0 ? base : original_expression`, preserving that result without executing C null
@@ -340,6 +352,16 @@ until a checked model domain exists; this currently leaves the copy model's desi
 acceptance pending. Its C body handles empty/null ranges without C-only arithmetic and explicitly
 requires its nonnegative distance to fit `ptrdiff_t`. Before launch the setup check regenerates the
 complete model view or source assertions. The checker identity includes these policy/generator bytes.
+
+Closed-vector origins (2026-10-15): the exact two-allocation owner view carries both a source
+registry and an independently parsed C-view registry. The source registry binds the alias declaration
+and every retained source observation by its AST range, model bytes and entry-frozen allocation
+extent. The C-view registry inventories allocation, initialization loops, indexed accesses and alias
+reads, checking the exact preceding range and liveness assertions. Source names are mapped to the
+renamed view through this certificate; they are never emitted as unbound generic assertions. The
+lowerer pins both checker modules and records `pointer_bounds.owner`. Admission and prelaunch
+regenerate the original lowering and both registries and require equality. A registry alone grants
+no permission to accept arbitrary `data()` results, field pointers, spare capacity or model calls.
 
 The arithmetic boundary follows [C++17 N4659, additive operators](https://www.ece.uvic.ca/~frodo/cppdraft/n4659/html/expr.add).
 [ACSL1.24's implementation manual for Frama-C33](https://frama-c.com/download/frama-c-acsl-implementation.pdf)
