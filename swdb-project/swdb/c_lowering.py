@@ -2047,21 +2047,25 @@ def model_definition(family, op, ctype):
         return model, (f"/*@ assigns \\nothing;\n    ensures \\result == ({pick}); */\n"
                        f"static {ctype} {model}({ctype} a, {ctype} b) {{ return {pick}; }}")
     if family == "std" and op == "swap":
-        return model, (f"/*@ requires \\valid(a) && \\valid(b);\n    assigns *a, *b;\n"
+        return model, (f"/*@ requires \\valid(a) && \\valid(b);\n    requires \\initialized(a) && \\initialized(b);\n"
+                       f"    assigns *a, *b;\n    ensures \\initialized(a) && \\initialized(b);\n"
                        f"    ensures *a == \\old(*b) && *b == \\old(*a); */\n"
                        f"static void {model}({ctype} *a, {ctype} *b) {{ {ctype} t = *a; *a = *b; *b = t; }}")
     if family == "std" and op == "copy":
         return model, (f"/*@ requires \\base_addr(first) == \\base_addr(last) && first <= last;\n"
                        f"    requires \\valid_read(first + (0 .. last - first - 1));\n"
+                       f"    requires \\initialized(first + (0 .. last - first - 1));\n"
                        f"    requires \\valid(d_first + (0 .. last - first - 1));\n"
                        f"    requires \\separated(first + (0 .. last - first - 1), d_first + (0 .. last - first - 1));\n"
                        f"    assigns d_first[0 .. last - first - 1];\n"
+                       f"    ensures \\initialized(d_first + (0 .. last - first - 1));\n"
                        f"    ensures \\forall integer k; 0 <= k < last - first ==> d_first[k] == \\old(first[k]);\n"
                        f"    ensures \\result == d_first + (last - first); */\n"
                        f"static {ctype} *{model}(const {ctype} *first, const {ctype} *last, {ctype} *d_first) {{\n"
                        f"  const ptrdiff_t n = last - first;\n"
                        f"  /*@ loop invariant 0 <= i <= n;\n"
                        f"      loop invariant \\forall integer k; 0 <= k < i ==> d_first[k] == first[k];\n"
+                       f"      loop invariant \\initialized(d_first + (0 .. i - 1));\n"
                        f"      loop assigns i, d_first[0 .. n - 1];\n"
                        f"      loop variant n - i; */\n"
                        f"  for (ptrdiff_t i = 0; i < n; ++i) d_first[i] = first[i];\n"
@@ -2074,6 +2078,8 @@ def model_definition(family, op, ctype):
     unsigned = ctype if pointer or ctype.startswith("unsigned") or ctype.startswith("uint") or ctype == "bool" \
         or ctype == "size_t" or ctype == "uintptr_t" else UNSIGNED_OF.get(ctype)
     head = "/*@ requires \\valid(p);\n"
+    if op != "store_n":
+        head += "    requires \\initialized(p);\n"
     if op == "load_n":
         text = (f"{head}    assigns \\nothing;\n    ensures \\result == *p; */\n"
                 f"static {ctype} {model}({ctype} *p) {{ return *p; }}")
@@ -2084,7 +2090,8 @@ def model_definition(family, op, ctype):
         text = (f"{head}    assigns *p;\n    ensures *p == v && \\result == \\old(*p); */\n"
                 f"static {ctype} {model}({ctype} *p, {ctype} v) {{ {ctype} old = *p; *p = v; return old; }}")
     elif op == "compare_exchange_n":
-        text = (f"/*@ requires \\valid(p) && \\valid(e) && \\separated(p, e);\n    assigns *p, *e;\n"
+        text = (f"/*@ requires \\valid(p) && \\valid(e) && \\separated(p, e);\n"
+                f"    requires \\initialized(p) && \\initialized(e);\n    assigns *p, *e;\n"
                 f"    ensures \\old(*p) == \\old(*e) ==> *p == d && *e == \\old(*e) && \\result == 1;\n"
                 f"    ensures \\old(*p) != \\old(*e) ==> *p == \\old(*p) && *e == \\old(*p) && \\result == 0; */\n"
                 f"static bool {model}({ctype} *p, {ctype} *e, {ctype} d) {{\n"
@@ -2115,6 +2122,9 @@ def model_definition(family, op, ctype):
                 f"    ensures \\result == {acsl_result}; */\n"
                 f"static {ctype} {model}({ctype} *p, {ctype} v) {{\n"
                 f"  {ctype} old = *p;\n  *p = {new};\n  return {result};\n}}")
+    if op != "load_n":
+        initialized = "\\initialized(p)" + (" && \\initialized(e)" if op == "compare_exchange_n" else "")
+        text = text.replace("    ensures ", f"    ensures {initialized};\n    ensures ", 1)
     return model, text
 
 

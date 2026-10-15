@@ -36,7 +36,7 @@ from zoneinfo import ZoneInfo
 
 from swdb import artifacts, yamlio
 
-VERSION = "level-rule.3"   # ticket 42, 2026-10-15: checked method parts discharge matching written-proof entries
+VERSION = "level-rule.4"   # 2026-10-15: checked method parts and recursive model-dependency counting
 UNBOUNDED = "unbounded"
 ORDER = ("uncertified", "certified", "proven_within_bounds_threads_1", "proven_within_bounds_threads_k",
          "proven_unbounded")
@@ -152,6 +152,8 @@ class Rule:
             "minimum_bounds": self.current_record,
             "predecessor_snapshot": self.current_code,
         }
+        if (record.get("subject") or {}).get("kind") == "c_model":
+            checks["code"] = checks["contract"] = self.current_model
         for kind, current in checks.items():
             pin = pins.get(kind) or {}
             if _not_applicable(pin):
@@ -163,6 +165,10 @@ class Rule:
             now = self.current_entry(pin.get("id"))
             if now != pin.get("sha256"):
                 yield {"pin": "summaries", "reason": f"summary {position}: " + _changed("summary entry", pin, now)}
+        for pin in pins.get("models") or []:
+            now = self.current_model(pin.get("id"))
+            if now != pin.get("sha256"):
+                yield {"pin": "models", "reason": _changed("C model", pin, now)}
         for pin in pins.get("logic") or []:                  # ticket 26: the logic-library files used
             now = self.current_logic(pin.get("id"))
             if now != pin.get("sha256"):
@@ -175,7 +181,7 @@ class Rule:
 
         def depend(kind, rid, label, pin_kind):
             state = self.status(rid)
-            if not state["counts"]:
+            if not state["counts"] or not isinstance(state.get("bounds"), dict):
                 stale.append({"pin": pin_kind, "reason": f"{label} {rid} stopped counting", "dependency": rid})
                 return
             used.append({"kind": kind, "record": rid, "bounds": state["bounds"],
@@ -183,6 +189,16 @@ class Rule:
 
         for pin in pins.get("summaries") or []:
             depend("summary", pin.get("proof_record"), f"the proof record of summary {pin.get('id')}", "summaries")
+        for pin in pins.get("models") or []:
+            rid = pin.get("proof_record")
+            model = self.proofs.get(rid) or {}
+            if (model.get("subject") != {"kind": "c_model", "id": pin.get("id")}
+                    or model.get("verdict") != "proven"
+                    or (model.get("pins") or {}).get("code") != {k: pin.get(k) for k in ("id", "sha256")}):
+                stale.append({"pin": "models", "reason": "the cited C-model record does not prove this model text",
+                              "dependency": rid})
+            else:
+                depend("model", rid, f"the proof record of model {pin.get('id')}", "models")
         for pin in pins.get("logic") or []:                  # ticket 26: a shared file's lemmas, proven once
             rid = self._logic_lemmas(record, pin)
             if rid is False:
@@ -306,6 +322,12 @@ class Rule:
                        "failed": failed}
 
     # -- current hashes ------------------------------------------------------------------------
+
+    def current_model(self, ident):
+        from swdb import c_lowering
+        import hashlib
+        text = c_lowering.model_text(ident or "")
+        return hashlib.sha256(text.encode()).hexdigest() if text is not None else None
 
     def current_code(self, ident):
         candidate = self.store.get(ident or "", "candidate")
