@@ -67,11 +67,14 @@ def test_schema_shape_errors_are_reported_by_field(tmp_path, change, field):
 def test_library_entries_clauses_and_dependencies_are_indexed(repo):
     rows = _sql(repo, "select id, kind, tier, status, derived_from from swdb_library_entries order by id")
     # Every entry YAML of every kind is indexed. Certification profiles (`profiles/`, tickets
-    # 49-51) are inputs to `swdb certify --profile`, not library entries (2026-10-04 ET).
+    # 49-51) are inputs to `swdb certify --profile`, not library entries (2026-10-04 ET); method-version
+    # files (`methods/`, Probata PoC 11) are inputs to `swdb prove` (2026-10-15 ET).
     library_root = repo.path.parent / "library"
-    yaml_files = [p for p in library_root.rglob("*.yaml") if p.relative_to(library_root).parts[0] != "profiles"]
+    yaml_files = [p for p in library_root.rglob("*.yaml")
+                  if p.relative_to(library_root).parts[0] not in ("profiles", "methods")]
     assert len(rows) == len(yaml_files) and len(rows) > 20
-    assert {row["kind"] for row in rows} == {"intrinsic", "lowering", "library_operation", "rewrite_contract"}
+    assert {row["kind"] for row in rows} == {"intrinsic", "lowering", "library_operation", "rewrite_contract",
+                                            "proof_semantics"}   # proof_semantics: Probata PoC 27
     assert {"operation.pack_executor", "operation.update_binning_executor", "operation.vertex_relabel_executor",
             "operation.regroup_executor", "operation.gather_staging_executor"} <= {row["id"] for row in rows}
     contract = next(row for row in rows if row["id"] == "contract.bc_read_offload")

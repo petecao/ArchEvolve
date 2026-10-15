@@ -46,12 +46,14 @@ if mode == "silent":
     print("[kernel] Parsing wp_input.c (with preprocessing)")
     sys.exit(0)
 verdict = {"unknown": "unknown", "solver_error": "failed"}[mode]
-goal = {"goal": "typed_real_f_ensures", "property": "f_ensures", "file": "wp_input.c", "line": 4, "function": "f",
+# The goal belongs to the unit's function (-wp-fct): the reader keeps only the unit's goals (ticket 24).
+f = next((a.split("=", 1)[1] for a in args if a.startswith("-wp-fct=")), "f")
+goal = {"goal": f"typed_real_{f}_ensures", "property": f"{f}_ensures", "file": "wp_input.c", "line": 4, "function": f,
         "smoke": False, "passed": False, "verdict": verdict,
         "provers": [{"prover": "Z3:5.1.0", "time": 0.01, "success": 0}]}
 with open(target("-wp-report-json"), "w") as out:
     json.dump([goal], out)
 with open(target("-report-csv"), "w") as out:
     out.write("directory\tfile\tline\tfunction\tproperty kind\tstatus\tproperty\n"
-              f".\twp_input.c\t4\tf\tpostcondition\tUnknown\t\\result >= 0\n")
-print(f"[wp] [{verdict.capitalize()}] typed_real_f_ensures (Z3)")
+              f".\twp_input.c\t4\t{f}\tpostcondition\tUnknown\t\\result >= 0\n")
+print(f"[wp] [{verdict.capitalize()}] typed_real_{f}_ensures (Z3)")

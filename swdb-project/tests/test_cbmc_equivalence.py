@@ -20,8 +20,8 @@ import pytest
 import yaml
 
 from conftest import make_records, run_swdb
-from test_cbmc_adapter import (ANCHOR_BEFORE, FILL, FILL_CLAUSES, TRUSTED, UNITS, _contract, _contracts, fake,
-                               method_version, needs_cbmc)
+from test_cbmc_adapter import (ANCHOR_BEFORE, FILL, FILL_CLAUSES, LOGIC_SUM, TRUSTED, UNITS, _contract, _contracts,
+                               fake, method_version, needs_cbmc)
 from test_proof_records import _library_roots
 from test_wp_adapter import _certify
 from testkit.proposals import build_proposal_setup
@@ -62,6 +62,8 @@ def build_equivalence_seed(path):
     (methods / "cbmc-fixture.yaml").write_text(yaml.safe_dump(method, sort_keys=False))
     (path / "library" / "proof_units").mkdir()
     (path / "library" / "proof_units" / "cbmc_fixture_units.cc").write_text(UNITS)
+    (path / "library" / "logic").mkdir(exist_ok=True)                          # ticket 23's contracts call it
+    (path / "library" / "logic" / "fixture_sum.acsl").write_text(LOGIC_SUM)
     contracts = _contracts()
     relational = _contract(REL, FUNCTION, FILL_CLAUSES, [{"array": "a", "shared_actions": [], "history_reads": False}])
     relational["relational_template"] = {"reason": REASON}

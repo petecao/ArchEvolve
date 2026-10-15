@@ -507,8 +507,10 @@ def test_installed_tools_that_differ_from_the_method_versions_lineup_run_nothing
 
 @needs_cbmc
 def test_two_real_cbmc_jobs_started_together_never_overlap(seed, tmp_path):
+    """Updated 2026-10-15 ET: the Mac's machine lock has two slots, so exclusion is checked on a private
+    one-slot lock (no policy file beside it)."""
     times = tmp_path / "times.txt"
-    env = fake("wrap", FAKE_CBMC_TIMES=str(times))
+    env = fake("wrap", FAKE_CBMC_TIMES=str(times), SWDB_VERIFIER_LOCK=str(tmp_path / "one-slot.lock"))
     results = []
     threads = [threading.Thread(target=lambda: results.append(seed.prove(env=env))) for _ in range(2)]
     for thread in threads:
