@@ -1,8 +1,9 @@
 """Checked entry-specific pointer-field windows (2026-10-15 ET).
 
-Only one trivial automatic receiver, with immutable pointer/count captures from
-an explicit entry window, is admitted. This is a selected-entry context, never a
-contract for an arbitrary method receiver. Ordinary init/validity/RTE remain.
+One trivial automatic array receiver captures immutable pointer/count fields
+from an explicit entry window. An additional closed scalar/reference object may
+use a checked enclosing-local lifetime. This selected-entry context never forms
+a contract for an arbitrary method receiver. Ordinary init/validity/RTE remain.
 """
 import hashlib
 import json
@@ -55,6 +56,156 @@ def _key(n, source):
     return (n.get('kind'), *_span(n, source), n.get('name'), _qual(n), n.get('mangledName'))
 
 
+class _ScalarLifetimes:
+    """One closed automatic scalar/reference object; no pointer-origin exemptions."""
+    def __init__(self, tree, full, source, entry, bag, bag_type):
+        from swdb.helper_windows import _span
+        self.tree, self.full, self.source, self.entry = tree, full, source, entry
+        self.nodes, self.objects, self.owners, self.allowed, self.rows = tree.nodes, {}, {}, set(), []
+        entry_fn = full[entry]
+        body, = [n for n in _children(entry_fn) if n.get('kind') == 'CompoundStmt']
+        self.parents = {n.get('id'): p for p in _walk(body) for n in _children(p)}
+        record_names = {n.get('name') for n in _walk(tree.root) if n.get('kind') == 'CXXRecordDecl' and n.get('completeDefinition')}
+        extras = [n for n in _walk(body) if n.get('kind') == 'VarDecl' and _type(n) in record_names and n['id'] != bag['id']]
+        if len(extras) > 1:
+            raise Refused('member scalar lifetime needs at most one additional automatic object')
+        self.constructions = {}
+        for obj in extras:
+            name = _type(obj)
+            records = [n for n in _walk(tree.root) if n.get('kind') == 'CXXRecordDecl' and n.get('completeDefinition') and n.get('name') == name]
+            if len(records) != 1 or name == bag_type:
+                raise Refused('member scalar lifetime record/copy is ambiguous')
+            record, = records
+            fields = [n for n in _children(record) if n.get('kind') == 'FieldDecl']
+            if (not fields or record.get('bases') or record.get('tagUsed') == 'union' or
+                    any(_qual(n) not in {'int', 'int &'} or _children(n) for n in fields) or
+                    any(n.get('kind', '').endswith('Attr') or n.get('virtual') or n.get('isVirtual') or
+                        n.get('kind') == 'VarDecl' for n in _children(record))):
+                raise Refused('member scalar lifetime needs plain int/reference fields and no hidden storage/effects')
+            if _qual(obj) != name or obj.get('storageClass') or obj.get('tls'):
+                raise Refused('member scalar lifetime object must be automatic and unaliased')
+            decl = self.parents.get(obj['id'], {})
+            scope = self.parents.get(decl.get('id'), {})
+            if decl.get('kind') != 'DeclStmt' or _children(decl) != [obj] or scope.get('kind') != 'CompoundStmt':
+                raise Refused('member scalar lifetime needs one direct compound-scope declaration')
+            # First slice has one normal block exit; no alternate lifetime edges.
+            if any(n.get('kind') in {'ReturnStmt', 'BreakStmt', 'ContinueStmt', 'GotoStmt', 'IndirectGotoStmt',
+                                     'CXXThrowExpr', 'LabelStmt'} for n in _walk(scope)):
+                raise Refused('member scalar lifetime needs a normal scope exit without early control transfer')
+            constructors = [n for n in _children(record) if n.get('kind') == 'CXXConstructorDecl' and not n.get('isImplicit')]
+            destructors = [n for n in _children(record) if n.get('kind') == 'CXXDestructorDecl' and not n.get('isImplicit')]
+            if len(constructors) != 1 or len(destructors) != 1:
+                raise Refused('member scalar lifetime needs exact single constructor/destructor definitions')
+            ctor, dtor = constructors[0], destructors[0]
+            by_id = {n['id']: cname for cname, n in full.items()}
+            if ctor['id'] not in by_id or dtor['id'] not in by_id:
+                raise Refused('member scalar lifetime special members are not exact retained original definitions')
+            init, = _children(obj)
+            if (init.get('kind') != 'CXXConstructExpr' or init.get('constructionKind') != 'complete' or
+                    init.get('ctorType', {}).get('qualType') != _qual(ctor)):
+                raise Refused('member scalar lifetime needs exact noncopy complete construction')
+            formals = [n for n in _children(ctor) if n.get('kind') == 'ParmVarDecl']
+            if len(formals) != len(_children(init)) or any(_qual(n) != 'int &' for n in formals):
+                raise Refused('member scalar constructor needs plain int-reference parameters')
+            initializers = [n for n in _children(ctor) if n.get('kind') == 'CXXCtorInitializer']
+            if {n.get('anyInit', {}).get('id') for n in initializers} != {n['id'] for n in fields} or len(initializers) != len(fields):
+                raise Refused('member scalar constructor must explicitly initialize every exact field')
+            ref_ids = {n['id'] for n in formals}
+            for initializer in initializers:
+                target = initializer.get('anyInit', {})
+                if _qual(target) == 'int &':
+                    value, = _children(initializer)
+                    if value.get('kind') != 'DeclRefExpr' or value.get('referencedDecl', {}).get('id') not in ref_ids:
+                        raise Refused('member scalar reference field must bind an exact constructor reference parameter')
+            refs = []
+            for actual, formal in zip(_children(init), formals):
+                value = _strip(actual)
+                ref = self.nodes.get(value.get('referencedDecl', {}).get('id'), {})
+                parent = self.parents.get(ref.get('id'), {})
+                outer = self.parents.get(parent.get('id'), {})
+                ancestors = []
+                current = self.parents.get(scope.get('id'), {})
+                while current:
+                    ancestors.append(current.get('id')); current = self.parents.get(current.get('id'), {})
+                if (value.get('kind') != 'DeclRefExpr' or ref.get('kind') != 'VarDecl' or _qual(ref) != 'int' or
+                        ref.get('storageClass') or ref.get('tls') or not _children(ref) or
+                        parent.get('kind') != 'DeclStmt' or outer.get('id') not in ancestors or
+                        _span(ref, source)[0] >= _span(obj, source)[0]):
+                    raise Refused('member scalar reference requires a prior plain local in a strictly enclosing lifetime')
+                refs.append({'formal': formal['name'], 'local': ref['name'], 'span': list(_span(ref, source))})
+            owner = {'object': obj, 'record': record, 'field_ids': {n['id'] for n in fields},
+                     'scope': scope, 'ctor': by_id[ctor['id']], 'dtor': by_id[dtor['id']]}
+            self.objects[name] = owner
+            for method in _children(record):
+                if method.get('id') in by_id:
+                    self.owners[by_id[method['id']]] = name
+            self.constructions[init['id']] = owner
+            self.rows.append({'object': obj['name'], 'type': name, 'span': list(_span(obj, source)),
+                              'scope': list(_span(scope, source)), 'constructor': owner['ctor'],
+                              'destructor': owner['dtor'], 'references': refs})
+        if not self.objects:
+            return
+        for name, fn in full.items():
+            if fn.get('kind') not in {'CXXConstructorDecl', 'CXXDestructorDecl'}:
+                # Scalar helpers may not return references/addresses; the Bag
+                # index method retains its separately checked array-reference policy.
+                if any(n.get('id') == fn['id'] for record in _walk(tree.root)
+                       if record.get('kind') == 'CXXRecordDecl' and record.get('name') == bag_type
+                       for n in _children(record)):
+                    continue
+                result = _qual(fn).split(' (', 1)[0]
+                if result not in {'int', 'void'}:
+                    raise Refused('member scalar methods cannot return aliases or receiver storage')
+
+    def receiver(self, node, function):
+        node = _strip(node)
+        if node.get('kind') == 'DeclRefExpr' and function == self.entry:
+            ref = node.get('referencedDecl', {}).get('id')
+            owner = next((n for n in self.objects.values() if n['object']['id'] == ref), None)
+        elif node.get('kind') == 'CXXThisExpr' and function in self.owners:
+            owner = self.objects[self.owners[function]]
+        else:
+            owner = None
+        if owner is None:
+            raise Refused('member scalar call/access uses an untracked receiver')
+        self.allowed.add(node['id'])
+        return owner['record']['name']
+
+    def reference_argument(self, arg, formal, function, captured):
+        """Only nonescaping scalar storage; never a pointer/count or field alias."""
+        if _qual(formal) != 'int &':
+            return False
+        arg = _strip(arg)
+        ref = self.nodes.get(arg.get('referencedDecl', {}).get('id'), {})
+        if (arg.get('kind') != 'DeclRefExpr' or ref.get('id') in captured or
+                function != self.entry or ref.get('kind') != 'VarDecl' or ref.get('id') not in self.parents or _qual(ref) != 'int' or
+                ref.get('storageClass') or ref.get('tls')):
+            raise Refused('member scalar reference arguments need exact noncaptured plain local storage')
+        # No formal/reference forwarding in this first grammar; the exact local
+        # binding is live throughout this direct call. Constructors additionally
+        # require the strict enclosing-scope lifetime checked above.
+        return True
+
+    def inspect(self, node, function):
+        kind = node.get('kind')
+        if kind == 'MemberExpr':
+            owner = next((n for n in self.objects.values() if node.get('referencedMemberDecl') in n['field_ids']), None)
+            if owner and self.receiver(_children(node)[0], function) != owner['record']['name']:
+                raise Refused('member scalar field belongs to another receiver')
+        if kind == 'UnaryOperator' and node.get('opcode') == '&':
+            raise Refused('member scalar lifetime does not admit address-taking/escape')
+        if kind == 'VarDecl' and '&' in _qual(node):
+            raise Refused('member scalar lifetime does not admit local reference aliases')
+
+    def finish(self, full):
+        for function, fn in full.items():
+            for node in _walk(fn):
+                if ((node.get('kind') == 'DeclRefExpr' and _type(node) in self.objects) or
+                        node.get('kind') == 'CXXThisExpr' and _type(node) in self.objects):
+                    if node['id'] not in self.allowed:
+                        raise Refused('member scalar receiver copy, alias or escape is unsupported')
+
+
 def certify(definitions, classes, *, source, tool, includes, defines, entry, windows):
     """Return (serializable context, exact emitted-AST member origins).
 
@@ -73,14 +224,15 @@ def certify(definitions, classes, *, source, tool, includes, defines, entry, win
         emitted = {_key(n, source): name for name, n in definitions.items()}
         emitted_mangled = {n.get('mangledName') for n in definitions.values()}
         full = {emitted[_key(n, source)]: n for n in _walk(tree.root)
-                if n.get('kind') in {'FunctionDecl', 'CXXMethodDecl'} and n.get('mangledName') in emitted_mangled and
+                if n.get('kind') in {'FunctionDecl', 'CXXMethodDecl', 'CXXConstructorDecl', 'CXXDestructorDecl'} and n.get('mangledName') in emitted_mangled and
                 any(c.get('kind') == 'CompoundStmt' for c in _children(n)) and
                 _key(n, source) in emitted}
         if set(full) != set(definitions):
             raise Refused('member context needs exact original definitions for every retained callee')
         entry_node = full[entry]
         body, = [c for c in _children(entry_node) if c.get('kind') == 'CompoundStmt']
-        candidates = [n for n in _walk(body) if n.get('kind') == 'VarDecl' and _type(n) in classes]
+        pointer_records = {name for name, record in classes.items() if any(c.get('kind') == 'FieldDecl' and '*' in _qual(c) for c in _children(record))}
+        candidates = [n for n in _walk(body) if n.get('kind') == 'VarDecl' and _type(n) in pointer_records]
         if len(candidates) != 1:
             raise Refused('member context needs one automatic receiver without copies or aliases')
         obj, = candidates
@@ -121,6 +273,7 @@ def certify(definitions, classes, *, source, tool, includes, defines, entry, win
             if ref.get('name') not in params or ref.get('id') != params[ref['name']]['id']:
                 raise Refused('member capture is not an entry parameter')
             captures.append((statement, left, ref['name']))
+        scalar = _ScalarLifetimes(tree, full, source, entry, obj, record_name)
         p_name, n_name = captures[0][2], captures[1][2]
         window = windows['windows'].get(p_name)
         if (not window or window['element_type'] != 'int' or
@@ -159,8 +312,17 @@ def certify(definitions, classes, *, source, tool, includes, defines, entry, win
             parents = {c.get('id'): n for n in _walk(fn) for c in _children(n)}
             for node in _walk(fn):
                 kind, children = node.get('kind'), _children(node)
+                if scalar.objects:
+                    scalar.inspect(node, name)
                 if kind in {'CXXNewExpr', 'CXXDeleteExpr', 'CXXThrowExpr', 'LambdaExpr', 'CXXConstructExpr'}:
-                    if kind != 'CXXConstructExpr' or _type(node) != record_name or children:
+                    if kind == 'CXXConstructExpr' and node.get('id') in scalar.constructions:
+                        lifetime = scalar.constructions[node['id']]
+                        for target_name, event in ((lifetime['ctor'], 'constructor'), (lifetime['dtor'], 'destructor')):
+                            event_source = node if event == 'constructor' else lifetime['scope']
+                            calls.append({'caller': name, 'callee': target_name, 'span': list(_span(event_source, source)),
+                                          'mangled': full[target_name].get('mangledName'), 'lifetime_event': event})
+                            visit(target_name, set())
+                    elif kind != 'CXXConstructExpr' or _type(node) != record_name or children:
                         raise Refused('member context lifetime/construction effects are unsupported')
                 if kind in {'BinaryOperator', 'CompoundAssignOperator', 'UnaryOperator'} and children and (
                         kind == 'CompoundAssignOperator' or node.get('opcode') in {'=', '++', '--', '&'}):
@@ -192,7 +354,11 @@ def certify(definitions, classes, *, source, tool, includes, defines, entry, win
                     callee = _strip(children[0]); args = children[1:]; target_env = set()
                     if kind == 'CXXMemberCallExpr':
                         target = tree.nodes.get(callee.get('referencedMemberDecl'), {})
-                        receiver(_children(callee)[0], environment); target_env.add('this')
+                        if target.get('id') in {full[k]['id'] for k in scalar.owners}:
+                            if scalar.receiver(_children(callee)[0], name) != scalar.owners[full_to_name[target['id']]]:
+                                raise Refused('member scalar call binds another receiver')
+                        else:
+                            receiver(_children(callee)[0], environment); target_env.add('this')
                     else:
                         target = tree.nodes.get(callee.get('referencedDecl', {}).get('id'), {})
                         if kind == 'CXXOperatorCallExpr' and target.get('kind') == 'CXXMethodDecl':
@@ -210,6 +376,8 @@ def certify(definitions, classes, *, source, tool, includes, defines, entry, win
                             receiver(arg, environment); target_env.add(formal['id'])
                         else:
                             from swdb.c_lowering import INTEGER_TYPES, FLOAT_TYPES
+                            if scalar.objects and scalar.reference_argument(arg, formal, name, captured_params):
+                                continue
                             if ('*' in _qual(formal) or '&' in _qual(formal) or
                                     _type(formal) not in INTEGER_TYPES | FLOAT_TYPES):
                                 raise Refused('member context nonreceiver arguments must be primitive scalar values, never pointers/references')
@@ -224,6 +392,7 @@ def certify(definitions, classes, *, source, tool, includes, defines, entry, win
                         raise Refused('member receiver copy, alias or escape is unsupported')
             active.remove(name); visited.add(name)
         visit(entry, {obj['id']})
+        scalar.finish(full)
         if visited != set(full):
             raise Refused('member context has retained bodies outside the closed entry call graph')
         # Receiver visitation memoization is not a path-length proof: a shared
@@ -262,7 +431,7 @@ def certify(definitions, classes, *, source, tool, includes, defines, entry, win
                   'calls': sorted(calls, key=lambda c: (c['caller'], c['span'])),
                   'accesses': [{'function': name, 'span': list(span), 'origin': origin}
                                for (name, span), origin in sorted(member_origins.items())],
-                  'input_premises_added': [], 'maximum_call_depth': depth, 'allowed_call_depth': 2, 'scope': 'selected entry after exact closed direct-callee inlining'}
+                  'scalar_lifetimes': scalar.rows, 'input_premises_added': [], 'maximum_call_depth': depth, 'allowed_call_depth': 2, 'scope': 'selected entry after exact closed direct-callee inlining'}
         report['certificate_sha256'] = _hash(report)
         return report, origins
     except TreeRefused as exc:
