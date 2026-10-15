@@ -35,7 +35,7 @@ FILL, KNOB, SMOKE = "contract.fixture_cbmc_fill", "contract.fixture_cbmc_knob", 
 CLAMP, CLAMP_ALL = "contract.fixture_cbmc_clamp", "contract.fixture_cbmc_clamp_all"
 TWICE, VACUOUS = "contract.fixture_cbmc_twice", "contract.fixture_cbmc_vacuous"
 FILL_BOUNDS = {"threads": 1, "n": 3}
-TRUSTED = {"swdb-c-lowering-2", "clang-22.1.8", "swdb-cbmc-translator-2", "cbmc-6.11.0", "cadical-in-cbmc-6.11.0"}
+TRUSTED = {"swdb-c-lowering-3", "clang-22.1.8", "swdb-cbmc-translator-3", "cbmc-6.11.0", "cadical-in-cbmc-6.11.0"}
 FILL_CLAUSES = [("fill_pre", "legality", "requires n >= 0 && \\valid(a + (0 .. n-1));", "per_candidate"),
                 ("fill_post", "postcondition", "assigns a[0 .. n-1];\nensures \\forall integer k; 0 <= k < n ==> a[k] == v;",
                  "per_candidate")]
@@ -87,8 +87,9 @@ def _contract(cid, function, clauses, frame, knobs=()):
 
 def method_version(identity):
     """A contract_fixture method version with the real Mac lineup and CBMC as the bounded verifier (sequence 2)."""
-    from swdb import cbmc_translator
+    from swdb import cbmc_translator, std_models
     data = wp_method_version(identity)
+    data["models"] = {"std_vector": std_models.identity(), "std_pair": std_models.identity()}
     data.update(id="method.cbmc-fixture", description="Fixture method version with CBMC 6.11 as the bounded "
                                                        "verifier on the C lowering (ticket 22 tests).")
     next(row for row in data["lineup"] if row["tool"] == "cbmc")["flags"] = ["--sat-solver", "cadical"]
@@ -263,7 +264,7 @@ def test_the_safe_fixture_is_proven_within_its_bounds_on_both_forms(seed):
     assert {a["reference"]["id"] for a in record["assumptions"] if a["kind"] == "trusted_tool"} == TRUSTED
     assert set(record["tools"]) == TRUSTED
     assert record["pins"]["c_lowering"]["id"] == "swdb_fixture_fill.c"
-    assert record["pins"]["translator"]["id"] == "swdb-cbmc-translator-2"
+    assert record["pins"]["translator"]["id"] == "swdb-cbmc-translator-3"
     assert {f"{FILL}#fill_post.ensures1", f"{FILL}#fill_post.assigns1"} <= {g["property"] for g in record["goals"]}
     assert all(g["status"] == "success" for g in record["goals"] if not g["property"].startswith("swdb_reach"))
     assert not (seed.runs / record["id"] / "scratch").exists()
@@ -276,7 +277,7 @@ def test_the_safe_fixture_is_proven_within_its_bounds_on_both_forms(seed):
 def test_the_translator_is_deterministic_and_pinned(seed):
     first, second = (seed.read(seed.prove()) for _ in range(2))
     inputs = [open(seed.report(r, "cbmc_input"), "rb").read() for r in (first, second)]
-    assert inputs[0] == inputs[1] and b"swdb-cbmc-translator 2" in inputs[0]
+    assert inputs[0] == inputs[1] and b"swdb-cbmc-translator 3" in inputs[0]
     assert first["pins"]["translator"] == second["pins"]["translator"]
 
 

@@ -41,3 +41,47 @@ Updated: 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-13 23:40 ET (revie
 - Assumption (not decided in the map): one proof record per model version covers all its members' contracts.
 - A read through a stale pointer is undefined behavior, so it is a proof obligation and a bounded counterexample refutes it (11 item 11).
 - The rest of the standard library follows one modeled type at a time (16 item 7).
+
+## Resume checkpoint — 2026-10-15
+
+Status remains `claimed`: vector growth does not yet satisfy the WP acceptance criterion.
+Recovered the prior vector/pair model implementation from `probata-poc/t25` into the current integration
+architecture, retaining `swdb prove --model NAME`, subject `c_model`, and `pins.models`. The obsolete
+`swdb.models` / `--summary model.NAME` path is not recovered. The lowering retains ticket 24's C models,
+summary parameter names and restrict qualifiers, plus ticket 27's hazard probes.
+
+Current validation: `tests/test_c_lowering.py`: **65 passed** (51.64 s), report
+`/private/tmp/t25-lowering-all.jsonl`; `tests/test_std_models.py` bounded tests: **6 passed** (39.28 s), report
+`/private/tmp/t25-report-models3.jsonl`. The bounded proof of the vector/pair maximum fixture succeeds;
+stale `data()` and iterator reads are refuted with replayed C++ sanitizer counterexamples; unchecked `at`
+is refuted and checked `at` proves. These jobs used the verifier lock and RSS watchdog. A first sandboxed
+attempt failed because macOS denied the watchdog process-tree inspection; the authorized unsandboxed rerun
+passed. No watchdog was disabled.
+
+Assumption: scalar and pointer elements remain the model's declared subset. CBMC executes the reviewed C
+model bodies with real malloc/free, rather than assuming contracts that cannot express lifetimes in its
+stub translator. A changed model source changes its version pin and method admission check.
+
+WP 33 still cannot establish allocation/deallocation lifetime facts. Existing retained diagnostic
+`/tmp/claude/probata-runs/t25/wp-models/wp2.log`, lines 37–49, explicitly says allocation, initialization and
+danglingness are not implemented; its historical 309/327 goals is partial evidence only. The safe current
+fallback refuses units containing releases, including implicit vector destruction, before WP. Ticket 27's
+adapter integration adds that fail-closed check. No expected failure or paused skip counts as completion.
+
+A future sound remedy needs either a verifier with supported allocation lifetimes or a validated transformation
+that carries allocation identities and liveness through every pointer alias and dereference. Adding ghost
+size/capacity fields alone does not make a raw stale `T *` read invalid and is insufficient. A bounded fixed
+storage pool would change the unbounded proof scope, so it cannot silently replace the accepted model.
+
+The recovered pair constructor also proves through the public `swdb prove --model std_pair_int_int_ctor
+--adapter wp` seam: **1 passed** (18.24 s), `/private/tmp/t25-pair-model.jsonl`; the resulting subject is
+`c_model` and `swdb validate` accepts the record. This does not discharge vector allocation obligations.
+
+Standard-library admission (2026-10-15): the concrete growth policy is libc++ 22.1.8, not whichever STL
+clang happens to select. The bounded adapter now probes `<vector>` and admits model jobs only with
+`_LIBCPP_VERSION=220108`; otherwise it records `not_proven / unsupported_construct` before differential or
+CBMC execution. Local headers match. The matched public vector proof passed (16.23 s) and the public
+unmatched-library refusal passed (13.72 s), reports `/private/tmp/t25-model-stl-check.jsonl` and
+`/private/tmp/t25-stl-refusal.jsonl`. Linux clang using libstdc++ 13 is outside this model and cannot supply
+its bounded differential evidence. A single stale translator-version literal in the broader adapter
+regression was corrected; that broader subset was not completed.
