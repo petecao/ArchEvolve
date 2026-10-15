@@ -1,0 +1,20 @@
+# Created: 2026-10-15 ET. Public lower/prepare replay: test_fixed_member_arrays.py.
+id: wp-fixed-member-array-local-origin
+adapter: wp_fixed_member_arrays
+input:
+  source: tests/fixtures/proof/lowering/templates.cc
+  function: swdb_template_unit
+historical_failure_class: unsupported_construct
+cause: >-
+  The original two Ring instantiations access exact embedded fixed arrays via
+  local receivers and direct member calls. Treating this as an arbitrary
+  borrowed pointer refused the whole fixture. Certify only closed automatic
+  trivial-record origins and direct calls, preserving initializedness, lifetime
+  and ordinary element bounds; aliases and arbitrary receivers remain refused.
+expected:
+  protocol: closed-automatic-fixed-member-arrays-1
+  subobjects: [[int, 3], [long, 2]]
+  input_premises_added: []
+replay: tests/test_fixed_member_arrays.py::test_original_two_instantiations_keep_exact_fixed_member_subobjects
+fixed_by_commit: 8a3bf8f
+historical_evidence: .scratch/probata-proof-of-concept-2026-10-13/issues/24-cpp-subset-widening.md
