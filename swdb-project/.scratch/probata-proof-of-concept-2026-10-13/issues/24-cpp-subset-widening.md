@@ -309,3 +309,26 @@ AST admission checker is being implemented over the whole lowered closure and bo
 sides of equivalence; safe heap/class cases it cannot establish will be refused
 until a more precise checked analysis exists. A 24-lowering impact sample is bounded
 exploration, not a full-catalog acceptance result.
+
+### Bounded admission checkpoint — 2026-10-15 ET
+
+Implemented `swdb.bounded_initialization` with a generated lowerer-6 certificate.
+It checks every retained function before summary substitution, evaluates initializers
+before binding locals, tracks primitive parameter-buffer origins, refuses unknown
+AST effects and heap/aggregate/alias storage, and independently checks candidate and
+baseline in both whole-function routes. The final invocation revalidates the source,
+lowering, checker/generator identity, actual harness capacity and model policy.
+The exact-content DX100 policy admits its reviewed initialized model state and
+requires every tile draw and the checked model exit; arbitrary summaries and
+changed model bodies receive no such exemption.
+
+Final focused recheck: **43 passed, 4 strict xfailed, 18 deselected**, including all
+18 new initialization controls and real DX100 safe/domain/exit checks. The broad
+frozen checkpoint passed 153 tests and identified one expected zero-cap error-vs-record
+assertion, corrected and rerun in that recheck. Four strict expected-failure cases
+retain five original vector proof jobs pending ticket 25's precise object/range
+policy; new tests separately verify their current conservative refusal. No full
+construct-group, full-catalog or general UB-safety acceptance is inferred. This
+ticket remains claimed for the separate aggregate/lifetime acceptance work.
+Source checkpoint and hashes, domain exclusions, commands/log hashes and historical
+RED controls are in [the evidence](../evidence/cbmc-initializedness-20261015.json).

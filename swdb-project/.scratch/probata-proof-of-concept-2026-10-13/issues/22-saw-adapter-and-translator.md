@@ -154,3 +154,34 @@ cases **2 passed** (`pytest-gate.log`). Runs: `/tmp/claude/probata-runs/t22/` (p
 - 46/47: reuse `cbmc_adapter.Code` (lowering + C++ cut) and the oracle replay; `bounded_job` for `threads_k`.
 - 60: start from `counterexample.oracle` / `inputs`; `replay.form: cxx` is stage 1.
 - 61: CBMC on a product of two C lowerings with this harness is the natural replacement.
+
+### Initializedness admission repair — 2026-10-15 ET
+
+The discarded-read controls exposed a bounded-verifier gap: CBMC may treat an
+uninitialized value as nondeterminism. The generated AST admission policy now checks
+the whole retained candidate/callee closure and both sides of equivalence before
+native agreement or CBMC. Explicit scalar initialization is checked before binding;
+uncertain heap/aggregate/alias storage, late initialization and opaque effects are
+conservatively unsupported, including some safe programs. This is not a general UB
+proof or a concrete UB refutation. Zero-capacity pointer jobs produce an unsupported
+record. The initialized input domain is explicit: separate nonnull primitive buffers
+of exactly the largest size bound, plus initialized scalars; logical sizes do not
+shorten those buffers.
+
+`settings.bounded_initialization` pins the checker, source, lowering and generated
+certificate. Lowerer 6 also pins the checker and proof-semantics generator bytes;
+the last invocation boundary rechecks capacity, certificate and admitted model
+content. DX100 admission requires the exact reviewed ghost/state/C-model hashes,
+all generated state draws and the checked exit boundary. A changed, repinned model
+does not inherit the exemption. No immutable method version was edited.
+
+Validation: the frozen old adapter recorded the unused local, uninitialized alias,
+heap and partial-array controls and both equivalence sides/routes as proven. The
+broad regression passed 153 cases with one stale zero-cap CLI-error assertion;
+after updating that assertion and integrating shared hooks, the final focused
+recheck passed **43**, with **4 strict expected failures preserving 5 standard-model
+jobs** and 18 deselected. The 18 initialization controls, operational DX100 safe
+case, CPU/domain/exit checks and dependency controls passed. Ticket 25's precise
+object/range policy remains pending; its original proven/refuted expectations were
+retained, not replaced with refusal success. See
+[the compact evidence](../evidence/cbmc-initializedness-20261015.json).
