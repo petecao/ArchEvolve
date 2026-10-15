@@ -116,3 +116,17 @@ def test_a_global_pointer_cannot_be_admitted_from_a_stale_initializer(tmp_path):
     except c_lowering.Unsupported:return  # earlier exact-source admission may refuse global pointer initializers
     with pytest.raises(wp_pointer_bounds.Refused,match='global origins|stable|origin'):
         wp_pointer_bounds.prepare(lowered,lowered.text)
+
+
+def test_local_array_formation_guards_typecheck_without_implicit_acsl_decay(tmp_path):
+    from swdb import framac,rss_watchdog,verifier_lock
+    tool=framac.locate()
+    if tool.missing:pytest.skip(tool.missing)
+    lowered=lower(tmp_path,'int a[2]={1,2}; int b[2]={0,0}; std::copy(a,a+2,b); return b[0];')
+    generated,_=wp_pointer_bounds.prepare(lowered,lowered.text)
+    source=tmp_path/'guard.c';source.write_text(generated)
+    log=tmp_path/'parser.log'
+    with verifier_lock.hold('t41 local array guard parser control'):
+        result=rss_watchdog.run([*tool.command,'-machdep','x86_64',str(source),'-print'],
+            log=log,cap_bytes=8589934592,timeout=60)
+    assert result.exit_code==0,log.read_text()[-5000:]

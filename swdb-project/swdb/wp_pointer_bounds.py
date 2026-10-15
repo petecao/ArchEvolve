@@ -733,6 +733,10 @@ def prepare(lowering, text):
             additions.setdefault(row["anchor"], []).append(assertion)
             continue
         base, result = f"({row['base']})", f"({row['expression']})"
+        if row.get("origin", {}).get("kind") == "one_dimensional_array":
+            # ACSL does not apply C array-to-pointer decay in null comparisons
+            # or logic-function arguments. Keep the same typed pointer value.
+            base = f'(({row["origin"]["element_type"]} *)({row["base"]}))'
         predicate = f"{_in_object_or_one_past(base, base)} && {_in_object_or_one_past(result, base)}"
         if row.get("offset") is not None:
             predicate = f"(({base} == \\null && ({row['offset']}) == 0) || ({predicate}))"
