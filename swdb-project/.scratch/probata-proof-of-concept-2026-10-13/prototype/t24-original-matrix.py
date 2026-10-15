@@ -119,11 +119,18 @@ def main():
         if path.is_file():
             manifest['sources'][name] = hashlib.sha256(path.read_bytes()).hexdigest()
     dump(output/'source-manifest.json',manifest)
+    result = {'commit':commit,'rows':[],'phase':'building_original_candidate_seed','complete':False,'success':False}
+    dump(output/'matrix.json',result)
+    print('START original candidate seed (public submission/validation)',flush=True)
+    seed_started = time.monotonic()
     seed_path = output/'seed'
     seed_path.mkdir()
     seed = Seed(seed_path,build_subset_seed(seed_path))
     dump(output/'candidates.json',seed.candidates)
-    result = {'commit':commit,'rows':[],'complete':False,'success':False}
+    result['seed_wall_seconds'] = time.monotonic()-seed_started
+    result['phase'] = 'actual_proof_matrix'
+    dump(output/'matrix.json',result)
+    print('PASS original candidate seed '+str(round(result['seed_wall_seconds'],2))+'s',flush=True)
     models, summaries = {}, {}
     def run(label, action, expected, validate=None, *, actual=True, ordinary_open=None):
         started = time.monotonic()
@@ -172,6 +179,7 @@ def main():
                 run(negative,lambda n=negative:seed.unit(n),'not_proven',actual=negative=='new_out_of_range',
                     ordinary_open='rte_mem_access' if negative=='new_out_of_range' else None)
     result['complete'] = True
+    result['phase'] = 'finished'
     result['success'] = all(not row.get('errors') for row in result['rows'])
     dump(output/'matrix.json',result)
     return 0 if result['success'] else 1
