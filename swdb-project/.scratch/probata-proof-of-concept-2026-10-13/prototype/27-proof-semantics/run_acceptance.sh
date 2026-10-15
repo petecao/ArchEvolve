@@ -11,7 +11,7 @@ case "$PROBATA_SHARD" in
   safe)
     PROBATA_TESTS=(tests/test_proof_semantics.py tests/test_proof_semantics_admission.py
       tests/test_proof_semantics_native.py tests/test_memory_admission_dependencies.py
-      tests/test_bounded_initialization.py)
+      tests/test_bounded_initialization.py tests/test_bounded_pointers.py)
     PROBATA_SELECTION=( -k 'not wp_leaves' ) ;;
   unsafe)
     PROBATA_TESTS=(tests/test_proof_semantics.py)

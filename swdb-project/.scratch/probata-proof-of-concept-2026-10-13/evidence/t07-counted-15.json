@@ -1,0 +1,183 @@
+{
+  "created": "2026-10-15 ET",
+  "source_commit": "de78b7c6997a84d7ec5ab544e49d7495c02f8e94",
+  "scope": "Functional proof-hint spike, not production RTE-initialization acceptance",
+  "summary": {
+    "proven": false,
+    "within_budget": false,
+    "rounds": 2,
+    "codex_calls": 2,
+    "elapsed_min": 52.75,
+    "lock_wait_excluded_s": 1124.2,
+    "best_n_open": 25,
+    "best_hints": 57,
+    "best_sha256": "b0b754d8f5104fed3173e7ca0b6fdf51952be7af561560139d959644a198cfcb",
+    "tool_calls": 41,
+    "show_goal_calls": 15,
+    "best_unit_hint_open": [
+      1,
+      24
+    ],
+    "phase_at_end": 1,
+    "wp_attempts": 12,
+    "tokens": {
+      "input_tokens": 12944124,
+      "cached_input_tokens": 12600960,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 29767,
+      "reasoning_output_tokens": 13420
+    },
+    "final": null,
+    "finished": "2026-10-15 05:58:59 EDT"
+  },
+  "artifacts": [
+    {
+      "path": "/private/tmp/probata-t07-20261015-run15/counted-15/meta.json",
+      "sha256": "8e1a4331a93119458193a0a5c63e65f587917449c44c4741fc2fce7eef62663a",
+      "bytes": 2541
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run15/counted-15/summary.json",
+      "sha256": "1e586bc6e544962fef85c8b70688a2678160fd25af32ba88827035db20036ccf",
+      "bytes": 610
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run15/counted-15/history.json",
+      "sha256": "a7cd2756fe67067a0d98feae8c4972a9424d9149eae1993f9f8ef755c7958ef5",
+      "bytes": 11248
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run15/counted-15/best.json",
+      "sha256": "b0b754d8f5104fed3173e7ca0b6fdf51952be7af561560139d959644a198cfcb",
+      "bytes": 33079
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run15/counted-15/tool-r1/submissions.jsonl",
+      "sha256": "06c4e2cac7f156a7f896e41f1eea9b0e1b6a630e207a5c9b1e20fdd6a270a2d8",
+      "bytes": 66707
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run15/counted-15/tool-r2/submissions.jsonl",
+      "sha256": "11c0805469ae28510146405207643c75eaf941cf3e4ea4a2d295dd82a77b4baa",
+      "bytes": 943
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run15/source-manifest.json",
+      "sha256": "50c33220683ca79197b471017971ad3c04b169553fc85bfd2212ff21461cadf8",
+      "bytes": 1997
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run15/counted-15/attempt-r2c1/tdstep_standin.c",
+      "sha256": "9f8eef08266c63c0126227d6aeddd071c89b10a68c4b2d98e6f8f8cae43a2cf4",
+      "bytes": 24462
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run15/counted-15/attempt-r2c1/dxc_summaries.h",
+      "sha256": "d708c0ef974e5ede1aaadd2b5e66dd785affa5e1dc6ef37419bf9e72517ae0d2",
+      "bytes": 10789
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run15/counted-15/attempt-r2c1/gapbs_models.h",
+      "sha256": "401d8ccfa8fdc1ef3734c97563a1c110d003d8847508aaa24ec3f300a33eed3e",
+      "bytes": 10157
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run15/counted-15/attempt-r2c1/bfs_unit.h",
+      "sha256": "1bcbf4dac683d6a46269fcd5f896fefc2571adc49d059b46f93fb25eb0f7b235",
+      "bytes": 1941
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run15/counted-15/attempt-r2c1/goals.json",
+      "sha256": "c48e5d2eaddb15200c77239e9bba523b27e446a33d6263ff30404ec7073b15f7",
+      "bytes": 109566
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run15/counted-15/attempt-r2c1/round-s.log",
+      "sha256": "5712fca1382e4d24aaf362f1a49f3015663d7b1f93c4cf650403059188f76521",
+      "bytes": 153212
+    }
+  ],
+  "audit": {
+    "scope": "Offline fixed round-1 best snapshot; no steering or verifier. Reconciled against final best after run completion.",
+    "concretely_false_hint_identified": false,
+    "finding": "Listed outer-loop bookkeeping/safety invariants do not entail processed reachability. A finite unreachable induction counterstate witnesses the missing relationship, not a false execution or hint.",
+    "artifacts": [
+      {
+        "path": "/private/tmp/probata-t07-run15-audit/README.md",
+        "sha256": "103ab21f636d0afb47d2398f7f49a4dd89e27531a1a70a686af39138e6c4100b",
+        "bytes": 4993
+      },
+      {
+        "path": "/private/tmp/probata-t07-run15-audit/inputs.json",
+        "sha256": "681e8cd1d19da78e7190f67a4f4748c9e24f5c6d2a7243f83f25e913058df44a",
+        "bytes": 2219
+      },
+      {
+        "path": "/private/tmp/probata-t07-run15-audit/best.observed.json",
+        "sha256": "c8cedaa192f6a7d31538071aea7a54ac08eece9990a86c89f6705adb00aeef35",
+        "bytes": 32651
+      },
+      {
+        "path": "/private/tmp/probata-t07-run15-audit/induction_gap.py",
+        "sha256": "6d0aa62fd0f7efb8d4ecf3a8770b18fc550f955cb66f7ca85264dddc02aab752",
+        "bytes": 2666
+      },
+      {
+        "path": "/private/tmp/probata-t07-run15-audit/induction_gap.result.json",
+        "sha256": "4975a25f07486e463c9911330b2caf8af9d759225ba3ca64b95c8944ca7c3563",
+        "bytes": 257
+      },
+      {
+        "path": "/private/tmp/probata-t07-run15-audit/final-reconciliation.json",
+        "sha256": "c17f086edd2d58670998535af3fe4c9b587af5dc67ab77bfbd164d887ab5e802",
+        "bytes": 1861
+      }
+    ],
+    "reconciliation": {
+      "audited_best_directory": "/private/tmp/probata-t07-20261015-run15/counted-15/attempt-r1f",
+      "final_best_directory": "/private/tmp/probata-t07-20261015-run15/counted-15/attempt-r2c1",
+      "audit_snapshot_full_best_sha256": "c8cedaa192f6a7d31538071aea7a54ac08eece9990a86c89f6705adb00aeef35",
+      "final_full_best_sha256": "b0b754d8f5104fed3173e7ca0b6fdf51952be7af561560139d959644a198cfcb",
+      "summary_best_sha256_means": "SHA256 of raw final best.json bytes; not a digest of hints alone",
+      "hint_records_sha256": "c550e37b78a8feb7aed5d6b11595fbd5163c0ccae1f8ead6205bbf0ccae25e4b",
+      "hint_records_sha256_encoding": "UTF-8 json.dumps(best[\"hints\"], sort_keys=True, separators=(\",\", \":\")); IDs and provenance included",
+      "logical_hints_sha256": "73406c825f9c1fd00abefa4f0c6a09c07eb45b39e03191577ab8f6ead506ac2d",
+      "logical_hints_sha256_encoding": "Same canonical JSON of ordered anchor/kind/text records excluding strategy/proof records",
+      "audited_hint_count": 55,
+      "final_hint_count": 57,
+      "all_audited_hint_records_unchanged": true,
+      "logical_hints_unchanged": true,
+      "added_strategy_records": [
+        {
+          "id": "r2c1h1",
+          "kind": "strategy",
+          "text": "\\wp::strategy TDFrameUnfold: \\tactic(\"Wp.unfold\", \\children(TDArray));"
+        },
+        {
+          "id": "r2c1h2",
+          "kind": "proof",
+          "text": "\\wp::proof TDFrameUnfold: \"@assigns\";"
+        }
+      ],
+      "same_open_goal_names_and_failure_classes": true,
+      "summary_headers_unchanged": true,
+      "audited_merged_unit_sha256": "86933fc26bbf904ab602b847aaa1ff834e1720e22dce625c7a5562098d93773f",
+      "final_merged_unit_sha256": "9f8eef08266c63c0126227d6aeddd071c89b10a68c4b2d98e6f8f8cae43a2cf4",
+      "boundary": "Final source and best file differ; only a strategy and its attachment were appended. Offline logical findings transfer to unchanged hint formulas; no new proof or C replay."
+    }
+  },
+  "next_experiment_decision": {
+    "blind_retry_warranted": false,
+    "start_next_run": false,
+    "missing_relationship": "For initially negative vertices, current visitation iff an original-frontier edge in the processed prefix (with final partial chunk clamped), refined by the range cursor and processed batch prefix.",
+    "supporting_relationship": "Retain equality between tile lower/upper CSR offsets and the original frontier vertex for each chunk row; range_inputs currently keeps only bounds.",
+    "boundary": "A proposed induction experiment within the remaining shared box, not a claim it will prove; no new counted method or run started."
+  },
+  "storage_budget_bytes": 2147483648,
+  "readers": [
+    "ticket07",
+    "ticket09",
+    "coordinator"
+  ],
+  "final_replay": "not run; summary.final is null and no proof/smoke or negative-control success is claimed"
+}
