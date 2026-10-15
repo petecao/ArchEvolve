@@ -1,6 +1,9 @@
 # Method-version files (`library/methods/<version>.yaml`)
 
 Updated: 2026-10-15 ET, ticket 36: setup and verdict checks pin their content hashes.
+The hash covers the named setup, domain/hint generation, adapter readers, common verdict handling,
+RSS result accounting and failure-vocabulary dependencies. Changing any covered byte requires a new
+method file; loading an older execution pin fails before invocation.
 
 Created: 2026-10-14 (Eastern Time), Probata proof of concept ticket 11.
 Updated: 2026-10-14 15:43 ET (fix-21): lifecycle (current = frozen; drafts only by name), the first real
@@ -45,7 +48,9 @@ proof record pins it by ID and file sha256.
   13:19 ET); CIVL 1.23; GenMC 0.19.0; Frama-C/WP 33.0 with Alt-Ergo 2.6.4, Z3 5.1.0 and CVC5 1.2.1;
   Rocq 9.3.0. Starting budgets. WP flags include `-wp-par 1` (ticket 08: hard goals on the Mac) and
   `-machdep x86_64`. CBMC flags: `--sat-solver cadical` (the adapter adds `--unwind K` and
-  `--unwinding-assertions`). Translators: the C lowering tool and the CBMC translator, each by its
+  `--unwinding-assertions --pointer-overflow-check`). The final setup check independently requires
+  both safety flags and refuses safety-check suppression or property/entrypoint filtering.
+  Translators: the C lowering tool and the CBMC translator, each by its
   source sha256; a change to either tool needs a new draft before the WP or CBMC adapter accepts it.
   The logic library is ticket 26's four shared files at version 1.0, with `logic.sum` 1.0 as the sum
   library; an edit to any of them needs a new draft. Sections later tickets build are `not_yet_built`.

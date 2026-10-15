@@ -92,7 +92,8 @@ def method_version(identity):
     data["models"] = {"std_vector": std_models.identity(), "std_pair": std_models.identity()}
     data.update(id="method.cbmc-fixture", description="Fixture method version with CBMC 6.11 as the bounded "
                                                        "verifier on the C lowering (ticket 22 tests).")
-    next(row for row in data["lineup"] if row["tool"] == "cbmc")["flags"] = ["--sat-solver", "cadical"]
+    from swdb.cbmc_adapter import FROZEN
+    next(row for row in data["lineup"] if row["tool"] == "cbmc")["flags"] = [*FROZEN, "--sat-solver", "cadical"]
     data["lineup"].append({"role": "bounded_verifier_fallback", "tool": "crux-llvm", "version": "0.12",
                            "flags": ["--no-compile"]})                       # ticket 23
     data["c_lowering"]["translators"] = [identity["c_lowering"], cbmc_translator.identity()]

@@ -339,6 +339,7 @@ class Model:
     c_text: str
     functions: tuple                 # model function names (their loops get the model's unwinding bound)
     unwind: int                      # the model's loop bound + 1
+    tile_objects: tuple = ()         # independent bounded C objects: (name, element count)
 
 
 def current(library):
@@ -378,6 +379,25 @@ def called(lowering, covered):
     return sorted({row["name"] for row in lowering.summaries if row.get("name") in covered})
 
 
+def _bounded_state(text, constants):
+    """Give each tile its own C object; created 2026-10-15 ET.
+
+    CBMC pointer checks follow allocation objects, so rows of one 2D array do
+    not enforce each tile's extent. Static rows preserve initialization and
+    indexed access without assuming heap allocation succeeds. WP keeps state.h.
+    """
+    count, extent = int(constants["DX_NT"]), int(constants["DX_TS"])
+    if count < 1 or extent < 1:
+        raise ValueError("bounded tile object dimensions must be positive")
+    objects = tuple((f"swdb_dx_tile_row_{i}", extent) for i in range(count))
+    declaration = r"\bint\s+dx_tile_data\s*\[DX_NT\]\s*\[DX_TS\]\s*;"
+    if len(re.findall(declaration, text)) != 1:
+        raise ValueError("bounded state needs the canonical single tile array declaration")
+    rows = [f"static int {name}[DX_TS];" for name, _size in objects]
+    rows.append("int *dx_tile_data[DX_NT] = {" + ", ".join(name for name, _size in objects) + "};")
+    return re.sub(declaration, lambda _match: "\n".join(rows), text), objects
+
+
 def model_for(library, entry_id, defines=()):
     """The Model of one entry, with the build constants `defines` (NAME or NAME=VALUE) overriding its defaults."""
     data = library.get(entry_id)
@@ -388,7 +408,8 @@ def model_for(library, entry_id, defines=()):
     ghost = ghost_declarations(library.resolve(data["ghost"]["acsl"]).read_text())
     parts.append("/* ghost state, generated from ghost.acsl (declared once there) */")
     parts += [f"{decl};" for _name, decl in ghost]
-    parts.append(library.resolve(data["model"]["state"]).read_text())
+    state, tile_objects = _bounded_state(library.resolve(data["model"]["state"]).read_text(), constants)
+    parts.append(state)
     model = library.resolve(data["model"]["c"]).read_text()
     parts.append(model)
     functions = sorted(set(re.findall(r"^(?:static\s+)?[A-Za-z_][\w\s\*]*?\b([A-Za-z_]\w*)\s*\([^;{]*\)\s*\{",
@@ -397,7 +418,7 @@ def model_for(library, entry_id, defines=()):
                  [int(constants.get("DX_TS", 0)) + 1]) + 1
     return Model(entry=entry_id, sha256=artifacts.file_hash(library.files[entry_id]),
                  calls=tuple(r["call"] for r in data["calls"]), queries=tuple(r["query"] for r in data.get("queries") or []),
-                 c_text="\n".join(parts) + "\n", functions=tuple(functions), unwind=unwind)
+                 c_text="\n".join(parts) + "\n", functions=tuple(functions), unwind=unwind, tile_objects=tile_objects)
 
 
 def state_draws(library, entry_id, defines=()):

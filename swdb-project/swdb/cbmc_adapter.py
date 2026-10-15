@@ -48,7 +48,7 @@ from swdb.proof import AdapterError, Verdict
 NAME = "cbmc"
 DEFAULT_WALL_SECONDS = 15 * 60                   # map 19 item 8: 15 minutes per bounded job
 DEFAULT_CAP_BYTES = 8 * 2**30                    # O9: the ~8 GB RSS watchdog
-FROZEN = ("--unwinding-assertions",)
+FROZEN = ("--unwinding-assertions", "--pointer-overflow-check")
 UNCLASSIFIED = "unclassified_cbmc_outcome"       # not a failure class: stops the batch (11 item 9)
 DISAGREEMENT = "c_lowering_disagreement"
 MAX_RUNS = 20000
@@ -272,6 +272,8 @@ class CbmcAdapter:
         if problems:
             raise AdapterError("; ".join(problems))
         flags = [str(f) for f in (lineup.get("cbmc") or {}).get("flags") or []]
+        from swdb import proof_setup
+        proof_setup.check_cbmc_flags([*command[1:], *flags], require=False)
         solver = flags[flags.index("--sat-solver") + 1] if "--sat-solver" in flags[:-1] else "minisat2"
         cbmc_sha = _sha256(_binary(command))
         return {"command": command, "version": version, "flags": flags, "clang": clang,
@@ -460,7 +462,8 @@ class CbmcAdapter:
         job_c.write_text(text)
         shutil.copyfile(job_c, scratch / "job.c")
         context["reports"].append(("cbmc_input", job_c))
-        flags = ["-DSWDB_CBMC", "--unwind", str(built["unwind"]), *FROZEN, *tools["flags"]]
+        flags = ["-DSWDB_CBMC", "--unwind", str(built["unwind"]), *FROZEN,
+                 *(flag for flag in tools["flags"] if flag not in FROZEN)]
         if code.model is not None:                   # ticket 27: the model's loops get the model's own bound
             loops = self._model_loops(tools, scratch, code.model)
             if loops:
@@ -494,7 +497,8 @@ class CbmcAdapter:
 
     def _model_loops(self, tools, scratch, model):
         """CBMC's IDs of the loops inside the proof-semantics model's functions (`cbmc --show-loops`, parse only)."""
-        done = subprocess.run([*tools["command"], "job.c", "-DSWDB_CBMC", "--show-loops"], cwd=scratch,
+        done = subprocess.run([*tools["command"], "job.c", "-DSWDB_CBMC", *FROZEN,
+                               *(flag for flag in tools["flags"] if flag not in FROZEN), "--show-loops"], cwd=scratch,
                               capture_output=True, text=True, timeout=300)
         loops = re.findall(r"^Loop (\S+):", done.stdout, re.M)
         return [loop for loop in loops if loop.rsplit(".", 1)[0] in model.functions]

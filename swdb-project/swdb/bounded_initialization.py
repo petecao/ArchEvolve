@@ -269,7 +269,7 @@ def check(lowering, cap, *, library=None, model=None):
 DX100_CONTENT = {
     "ghost": "5fa3f12850eba75ccb254b1c1e8ab5c143488046949fbe0e4c965b55ecdb48e9",
     "state": "b371131b4a3a7ef21ad654b0eaffac94b4c63252d63397ee8b67a6b017610701",
-    "c": "ad17837f8dc8aa61de019144f69d6aa6a68b49632caab8a9e48dabd73b6d7b34",
+    "c": "88298dbb9176640fd8ec2d0c6e31386dd51849411b08df7cebf7f12eab1d22ce",
 }
 DX100_CALLS = {"add_mem_region", "clear_mem_region", "get_cacheable_tile_pointer", "get_new_reg", "get_new_tile",
                "get_tile_size", "maa_alu_scalar", "maa_const", "maa_indirect_load", "maa_indirect_store_vector",
@@ -295,6 +295,7 @@ def _dx100_policy(library, model, defines):
         return None
     return {"id": "dx100-initialized-inputs-1", "entry": model.entry, "entry_sha256": model.sha256,
             "components": actual, "generated_sha256": hashlib.sha256(model.c_text.encode()).hexdigest(),
+            "tile_objects": [{"name": name, "elements": extent} for name, extent in model.tile_objects],
             "calls": sorted((set(model.calls) | set(model.queries)) & set(model.functions) & DX100_CALLS)}
 
 
