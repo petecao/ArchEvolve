@@ -890,6 +890,7 @@ class WpAdapter:
                        (range_model["certificate_path"], range_model["certificate_text"])]
             context["settings"]["standard_range_model"] = view.certificate
         proof_setup.check_generated(job, self, context, inputs, settings_flags, command=command, scratch=scratch)
+        context["settings"]["verifier_launched"] = True
         result = rss_watchdog.run(command, log=wp_log, cap_bytes=cap, timeout=wall, cwd=scratch, env=env)
         context["peak"] = result.peak_rss_bytes
         log.line(f"frama-c exit {result.exit_code}, wall {result.wall_seconds:.2f} s, peak rss {result.peak_rss_bytes}, "
