@@ -2746,6 +2746,57 @@ Proof.
   - eapply t42_window_other_outside; eauto.
 Qed.
 
+Lemma t42_read_class_stable_global X t i c l v q e :
+  reads_class_stable (proj X t) -> at_ X i t (DeviceRead c l v) ->
+  i < q -> at_ X q t e ->
+  (forall m, i < m < q -> ~ at_ X m t (DeviceCovered c)) ->
+  cls (interval X t q) (array_of l) = cls (interval X t i) (array_of l).
+Proof.
+  intros Hstable Hi Hiq Hq Hnocover.
+  specialize (Hstable (t42_local_index X t i) c l v
+    (t42_local_index X t q) e (t42_at_local_index X i t (DeviceRead c l v) Hi)
+    (t42_local_index_strict X i q t (DeviceRead c l v) e Hi Hq Hiq)
+    (t42_at_local_index X q t e Hq)).
+  assert (Hlocal : ~ covered_between (proj X t) c
+    (t42_local_index X t i) (t42_local_index X t q)).
+  { intro Hcover.
+    destruct (t42_covered_local_global X t i q c (DeviceRead c l v) e Hi Hq Hcover)
+      as [m [Him Hm]]. exact (Hnocover m Him Hm). }
+  specialize (Hstable Hlocal).
+  repeat rewrite t42_proj_local_prefix in Hstable. exact Hstable.
+Qed.
+
+(** The ownership repair closes the remaining cross-epoch source/cover cycle. *)
+Lemma t42_future_owned_source_impossible X rf i t c l v s u d :
+  obl_team_size -> obl_owned_disjoint -> model_run X rf -> all_fit X ->
+  reads_owner_stable X t ->
+  at_ X i t (DeviceRead c l v) ->
+  cls (interval X t i) (array_of l) = ThreadOwned ->
+  rf i = Some s -> i < s -> at_ X s u d -> t <> u -> owned X u s l -> False.
+Proof.
+  intros Hteam Hdis Hmodel Hfit Hstable Hi Hclass Hrf His Hs Htu Hown.
+  pose proof Hmodel as [_ [_ [Hdevice Homp]]].
+  destruct (Hdevice i t c l v Hi) as [_ Hfuture].
+  destruct (Hfuture s Hrf His) as [Hnocover _].
+  destruct Hown as [p [Hps [Hp Hinterval]]].
+  destruct (Nat.lt_trichotomy p i) as [Hpi | [Heq | Hip]].
+  - pose proof (t42_intervals_contiguous Hteam X rf Homp p i u t (Own l)
+      (DeviceRead c l v) Hpi Hp Hi) as Hlo.
+    pose proof (t42_intervals_contiguous Hteam X rf Homp i s t u
+      (DeviceRead c l v) d His Hi Hs) as Hhi.
+    assert (Hint : interval X t i = interval X u s) by lia.
+    pose proof (t42_threads_below_N Hteam X rf Homp i t (DeviceRead c l v) Hi) as Ht.
+    pose proof (Hfit t Ht i (DeviceRead c l v) l Hi eq_refl) as Hfe.
+    rewrite Hclass in Hfe.
+    eapply (t42_owned_same_interval_disjoint X rf t u i s l Hdis Hmodel Hfit Htu Hint).
+    + exact (t42_fits_owned_touch _ _ (DeviceRead c l v) l Hfe eq_refl).
+    + exists p. auto.
+  - subst p. destruct (t42_at_unique X i t (DeviceRead c l v) u (Own l) Hi Hp)
+      as [_ Hbad]. discriminate.
+  - destruct (Hstable i c l v p u Hi Hclass Hip Hp Htu) as [q [Hiq Hq]].
+    apply (Hnocover q); [lia | exact Hq].
+Qed.
+
 (* END t42 lemmas *)
 (** * 8. The parallel composition theorem.  OPEN: proof is ticket 42. *)
 Theorem parallel_composition :

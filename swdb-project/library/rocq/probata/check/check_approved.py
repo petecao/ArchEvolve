@@ -17,7 +17,7 @@ from pathlib import Path
 
 APPROVED = {
     "Vocabulary.v": "081b558de2d94a0b37200b094d39af38eddf51546686a575f97dac2e3a6a3a3d",
-    "Composition.v": "ffb5bda714b9fce5a13927a4860f6c85438821cdcdf3b4f1560f26a91eefd4f4",
+    "Composition.v": "e23f37153fadb8c3307384b4ec074422e0af6ebc121ff673688b6d321485e513",
 }
 OPEN_BODY = ("  (* OPEN — ticket 42 proves this; it must prove exactly this approved text. *)\n"
              "Admitted.\n")

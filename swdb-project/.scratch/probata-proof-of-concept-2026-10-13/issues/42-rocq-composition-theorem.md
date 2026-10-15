@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-15 01:41 ET (ticket 41 repaired and approved under delegation; proof may resume); 2026-10-14 22:30 ET (blocker: the approved statement is false; needs a statement decision); 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-14 00:15 ET (review fixes, round 4); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** needs-info
+**Status:** claimed
 **Blocked by:** 10, 11, 12, 41
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Concurrency" (composition theorem: 2-week box, written fallback), "Records and levels" (subjects), "What a proven verdict asserts" (assumption set, cap rule), "Modules" (level rule: level computed on read), "Further Notes" (risk: the Rocq theorem does not fit 2 weeks), "Proof-of-concept plan" (Rocq side track, overrun rule), S1, S2, S8, S9); decisions: [15](../../formal-verification-2026-10-09/issues/15-concurrency-proofs.md), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md)
 **Time estimate:** one 2-week box, shared with 43 (S9)
@@ -180,3 +180,19 @@ then force a foreign event inside a critical section. Ticket 41 is reopened for 
 coordinator-delegated ownership-lifetime repair; its new hash requires review. The
 checked A5 and window lemmas remain useful. The shared box is not restarted and no
 fallback or method-part proof record is claimed.
+
+### Resumed after ownership repair — 2026-10-15 ET
+
+The main session independently reviewed and approved ticket 41's ownership
+lifetime repair. The exact reconstruction is now `e23f3715…`; the changed-ownership
+negative control is refused. Three sanity controls are Qed and closed: rejecting
+the exact ownership-handoff witness, accepting prior-covered handoff, and accepting
+a static owner's barrier crossing. The original shared box and all checked A5/window
+proof progress remain intact; full composition proof work resumes.
+
+The repair's first use is also Qed: `t42_future_owned_source_impossible` proves that
+an outstanding ThreadOwned device read cannot source a future foreign owner's
+write, even across a barrier, under `reads_owner_stable`. Global/thread-local
+class-lifetime transport is Qed as `t42_read_class_stable_global`. Compile:
+`/tmp/probata-t42-resume/logs/owner-proof-1.log.summary.json`, exit 0, 3.73 s,
+peak 443.6 MB. These directly address the previously open RF-sensitive swap case.

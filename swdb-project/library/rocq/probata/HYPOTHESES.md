@@ -67,7 +67,7 @@ A WP obligation for a candidate is named after the hypothesis it discharges (16 
 | `obl_chunk_cover` | per-candidate WP obligation | WP (arithmetic over t and N, plus thread t's loop) | Chunk splits computed from the thread id cover each loop's iteration space exactly once, and thread t runs exactly its chunk (15 items 2, 4). |
 | `obl_uniform_control` | per-candidate WP obligation | WP, two-copy product (GPUVerify style) | Any two threads reach the same barriers and worksharing constructs in the same order (15 item 6). |
 | `obl_team_size` | per-candidate WP obligation | WP over the run-time guard | The team has exactly N threads (15 item 4; 11's guard). |
-| `obl_dx100_quiet` | per-candidate WP obligation | WP over the ghost hazard state | No own CPU access conflicts with a DX100 command before a wait covers it; a command may stay uncovered past a barrier or a critical exit only if it writes only tile elements that are dead there and reads no lock-protected location; each command read retains its sharing class until covered (F1, refined 2026-10-15). |
+| `obl_dx100_quiet` | per-candidate WP obligation | WP over the ghost hazard state and a two-thread ownership product | No own CPU access conflicts with a DX100 command before a wait covers it; a command may stay uncovered past a barrier or a critical exit only if it writes only tile elements that are dead there and reads no lock-protected location; each command read retains its sharing class until covered, and a pending ThreadOwned read is covered before another thread establishes ownership (F1, refined 2026-10-15). |
 | `memory_ok` (premise; uses `hb_cpu`) | assumption entry, **platform choice** | "The pinned compiler and ISA implement RC11, and each `__sync_*` builtin is a fully fenced read-modify-write" (15 item 3; 26 item 4; M1). Stronger than C++ seq_cst RMWs; stated as such. | Reads are history reads over program order and the fenced-atomic order; an atomic read-modify-write reads the latest write; a failed CAS writes nothing. |
 | `omp_ok` (premise; its first clause uses `hb` with `omp_sync`) | assumption entry, **trusted tool** | "The pinned OpenMP runtime implements OpenMP 5.2" (15 item 4) | Barrier and `critical` order memory; thread ids are 0 to N-1; a barrier waits for all threads; `critical` excludes other threads; `omp for` gives each iteration to exactly one thread. |
 | `device_ok` (premise; uses `hb`) | assumption entry, **proof semantics** | The pinned DX100 proof-semantics version (12 items 4, 7) | A DX100 read returns a value the location held while the command ran, never older than the stores made before issue. |
@@ -393,3 +393,9 @@ lemmas accept a covered handoff and a static owner's crossing. Ticket 45 must ch
 this lifetime property for every pending read; candidate compatibility is conditional.
 The previous reconstruction `ffb5bda7…` is superseded as false; the revised hash is
 not yet approved. No proof outcome or assumption removal is claimed.
+
+**Independent approval, 2026-10-15 ET:** the root coordinator reviewed the repaired
+class cases and approved reconstruction `e23f3715…` after the Qed sanity controls
+and guard negative test. No further counterexample was found; the theorem itself
+remains open. The table above explicitly assigns the new lifetime rule a two-thread
+ghost ownership discharge. This approval does not establish candidate compatibility.

@@ -1292,6 +1292,27 @@ and
 
 Arguments quiet_ok (loc arr val arg)%_type_scope
   (array_of is_tile cls)%_function_scope tr%_list_scope
+reads_owner_stable =
+fun (loc arr val arg : Type) (array_of : forall _ : loc, arr)
+  (cls : forall (_ : nat) (_ : arr), sharing_class) 
+  (X : run loc val arg) (t : nat) =>
+forall (i c : nat) (l : loc) (v : val) (j u : nat)
+  (_ : at_ loc val arg X i t (DeviceRead loc val arg c l v))
+  (_ : @eq sharing_class (cls (interval loc val arg X t i) (array_of l))
+         ThreadOwned)
+  (_ : lt i j) (_ : at_ loc val arg X j u (Own loc val arg l))
+  (_ : not (@eq nat t u)),
+@ex nat
+  (fun q : nat =>
+   and (and (lt i q) (lt q j))
+     (at_ loc val arg X q t (DeviceCovered loc val arg c)))
+     : forall (loc arr val arg : Type) (_ : forall _ : loc, arr)
+         (_ : forall (_ : nat) (_ : arr), sharing_class)
+         (_ : run loc val arg) (_ : nat),
+       Prop
+
+Arguments reads_owner_stable (loc arr val arg)%_type_scope
+  (array_of cls)%_function_scope X t%_nat_scope
 obl_dx100_quiet =
 fun (loc arr val arg : Type) (array_of : forall _ : loc, arr)
   (is_tile : forall _ : loc, Prop) (init : forall _ : loc, val)
@@ -1307,7 +1328,8 @@ forall (X : run loc val arg) (rf : rf_map) (t : nat)
          done X rf)
   (_ : complete loc val arg N done X)
   (_ : all_fit loc arr val arg array_of N cls X) (_ : lt t N),
-quiet_ok loc arr val arg array_of is_tile cls (proj loc val arg X t)
+and (quiet_ok loc arr val arg array_of is_tile cls (proj loc val arg X t))
+  (reads_owner_stable loc arr val arg array_of cls X t)
      : forall (loc arr val arg : Type) (_ : forall _ : loc, arr)
          (_ : forall _ : loc, Prop) (_ : forall _ : loc, val)
          (_ : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)

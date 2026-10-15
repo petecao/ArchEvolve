@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-15 01:41 ET (fix (a) plus class-lifetime repair checked; approved under delegation; resolved); 2026-10-14 23:10 ET (reopened: Codex round t41c-1 counterexample stands; fix (a) decided, not applied); 2026-10-14 22:40 ET (Composition.v second revision in progress, paused; see Progress (paused)); 2026-10-14 21:30 ET (`Reduction.v` revised under delegation: ticket 27 covers, see Later changes); 2026-10-14 14:40 ET (revised; approved by the main session under Yan-Ru's delegation; resolved); 2026-10-14 14:13 ET (Codex review: revise); 2026-10-14 14:07 ET (statements drafted); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 09
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Concurrency" (composition theorem, shared-action kinds, memory model, OpenMP), "Formal-half language and the C++ subset" (sharing classes, YAML frame), "DX100 proof semantics" (reduction lemma, hazards), "Modules" (Rocq development), "What a proven verdict asserts" (assumption set, seven kinds), "Proof-of-concept plan" (Rocq side track), S9); decisions: [12](../../formal-verification-2026-10-09/issues/12-dx100-proof-semantics.md), [15](../../formal-verification-2026-10-09/issues/15-concurrency-proofs.md), [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md)
 **Time estimate:** about 4 days plus Yan-Ru's review
@@ -111,8 +111,8 @@ table, F1 candidate check and Codex dispositions:
   | File | sha256 |
   |---|---|
   | `Vocabulary.v` | `081b558de2d94a0b37200b094d39af38eddf51546686a575f97dac2e3a6a3a3d` |
-  | `Composition.v` (current, includes retained ticket 42 proof lemmas) | `c91507a4591d1ffbb81bde6e98ef26997578656bb85580a5a7dcd64cf1dc3abb` |
-  | `Composition.v` statement reconstructed by `check_approved.py` (current) | `ffb5bda714b9fce5a13927a4860f6c85438821cdcdf3b4f1560f26a91eefd4f4` |
+  | `Composition.v` (superseded 2026-10-15 01:41 ET approval snapshot) | `c91507a4591d1ffbb81bde6e98ef26997578656bb85580a5a7dcd64cf1dc3abb` |
+  | `Composition.v` statement reconstructed by `check_approved.py` (current) | `e23f37153fadb8c3307384b4ec074422e0af6ebc121ff673688b6d321485e513` |
   | `Composition.v` (**superseded**, false) | `e30f62402164802aaf1bed224c6be0ac62fb787c43efe61190266e5a511dd01b` |
   | `Reduction.v` (current, revised 2026-10-14 21:30 ET, see Later changes) | `72f4a79fbf6005fc89990d5dcfed4b80118f9d02d8aac44b0bb9bc7b84968e53` |
   | `Reduction.v` (**superseded** 2026-10-14 21:30 ET) | `8a779482ff13c83a12d11fd15d34c0aadf1d8856052575e7ede38ab935188b7a` |
@@ -347,3 +347,25 @@ print `Closed under the global context`; no axiom or admitted regression proof.
 `/tmp/probata-t42-resume/logs/owner-sanity-2.log` sha256
 `9142003af0ddfc667b3be918398301beda2b58ef86b659f73c468d6f1ff51d73`.
 The exact-text approval guard intentionally still rejects this pending revision.
+
+### Current delegated approval: ownership lifetime — 2026-10-15 ET
+
+**Resolved.** The main session independently reviewed and approved the ownership
+lifetime repair under Yan-Ru's ongoing delegation after the regression checks.
+The review found no further counterexample after considering ReadOnly, protected,
+same-interval owned, new-interval owned, and shared-action source cases. This is
+agent review and approval, not Yan-Ru's personal reading or a theorem proof.
+
+Approved reconstructed Composition statement sha256:
+`e23f37153fadb8c3307384b4ec074422e0af6ebc121ff673688b6d321485e513`.
+This supersedes the false `ffb5bda7…` reconstruction. Vocabulary and Reduction
+retain their existing approvals. `Checks.v` now prints `reads_owner_stable`;
+`statement.expected` is the exact generated elaboration (sha256
+`d5cd84e54159cc1403f5f04297caec6b3acb53c9567d42e646eb27143fe7453f`).
+Its generated trailing spaces are retained to preserve exact compiler output.
+The new exact guard accepts this reconstruction and refuses a copy with the
+ownership inequality changed before any record is written. The check log is
+`/tmp/probata-t42-resume/logs/owner-checks.log` (sha256
+`0437c06b3a27a25aa2d3ad81caf1048dc839f98433d7b9804c71640a5999f76b`).
+Ticket 42 may resume inside the original shared box. Candidate compatibility
+remains conditional on ticket 45's two-thread ghost ownership-lifetime discharge.
