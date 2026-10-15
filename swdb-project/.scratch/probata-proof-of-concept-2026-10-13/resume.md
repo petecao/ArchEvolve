@@ -14,7 +14,7 @@ two mbit10 CPU lanes; the specific BFS-to-Codex/OpenAI export approval also cove
 
 | Ticket | Current work | Evidence or next action |
 |---|---|---|
-| 07 | Counted run 14 active from 03:33:40 ET | Fresh hints, repaired guard and abstract partial-chunk guidance; frozen `05e81eac`; output `/private/tmp/probata-t07-20261015-run14/`. Run 13 remains failed. |
+| 07 | Counted run 15 active from 04:47:30 ET | Fresh hints plus abstract chunk and postcondition-scope guidance; frozen `de78b7c6`; output `/private/tmp/probata-t07-20261015-run15/`. Run 14 failed with 14 hint goals open; its finite false-assertion audit is retained. |
 | 24 | Construct-group WP acceptance | Narrow terminal release proves. Class fixture now proves with explicit initialized inputs and checked loop invariants: 153 recorded goals valid, including 11 smoke checks; its seeded bug is replaying. Full combined-source construct acceptance remains pending. |
 | 25 | Checked terminal release merged; general lifetime still open | Public implicit aggregate-copy initializedness gap reproduced; checked-copy lowerer revision 7 is being validated. General vector lifetime remains unresolved. Bounded std fixtures need precise initializedness admission. |
 | 27 | Store/capacity acceptance and CPU-access admission | Current combined focused checkpoint: 23 passed, including six actual CBMC memory-domain/exit controls. Local automatic-storage lifetime refusal is being repaired before final two-lane acceptance. |
@@ -66,9 +66,9 @@ not substitute for reading incremental run artifacts.
 ## Validation and progress reporting
 
 The 2026-10-15 04:30 ET report covered every active ticket and both lanes; next report is
-due around 05:00 ET. Counted hint run 13 ended with 19 goals open and is not proven. Run 14
-has closed the unit goals while 14 hint obligations remain open at 43.94 counted minutes;
-this is still not proven. Both remote evaluation lanes await the final combined source.
+due around 05:00 ET. Run 14 ended unproven after 53.32 counted minutes with 14 hint
+obligations open; no final proof replay ran. Run 15 is active on fresh hints. Both
+remote evaluation lanes await the final combined source and method checkpoint.
 
 The early structural run disabled clang as well as WP/CBMC; four formal-frame assertions
 therefore failed for the wrong tool configuration. One isolated failure passes with clang

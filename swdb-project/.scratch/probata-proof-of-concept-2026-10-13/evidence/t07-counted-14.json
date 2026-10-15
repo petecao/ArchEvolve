@@ -1,0 +1,103 @@
+{
+  "created": "2026-10-15 ET",
+  "source_commit": "05e81eacd7d2ae586e78ddcb3fd737e14e0226f1",
+  "scope": "Functional proof-hint spike, not production RTE-initialization acceptance",
+  "summary": {
+    "proven": false,
+    "within_budget": false,
+    "rounds": 1,
+    "codex_calls": 1,
+    "elapsed_min": 53.32,
+    "lock_wait_excluded_s": 373.2,
+    "best_n_open": 14,
+    "best_hints": 39,
+    "best_sha256": "ee6180a79516a9689de72d49a866e7cff4c62d1e288d3edf6583804f819597a5",
+    "tool_calls": 27,
+    "show_goal_calls": 8,
+    "best_unit_hint_open": [
+      0,
+      14
+    ],
+    "phase_at_end": 2,
+    "wp_attempts": 10,
+    "tokens": {
+      "input_tokens": 12983748,
+      "cached_input_tokens": 12686976,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 33241,
+      "reasoning_output_tokens": 14438
+    },
+    "final": null,
+    "finished": "2026-10-15 04:33:12 EDT"
+  },
+  "artifacts": [
+    {
+      "path": "/private/tmp/probata-t07-20261015-run14/counted-14/meta.json",
+      "sha256": "02d9d6d68a599d40d156dfce0caa98f9664c9d5e543caa84d1b730a5e7e09090",
+      "bytes": 2526
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run14/counted-14/summary.json",
+      "sha256": "d9d2ba49bf3a1d897bde3c9dbcd021fcbc3320a47f7935c877d96bf14be08482",
+      "bytes": 608
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run14/counted-14/history.json",
+      "sha256": "055366360a8ced6cf2e0509d58e206ce4a1a2d52b5247f4a833c92f84276271c",
+      "bytes": 8572
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run14/counted-14/best.json",
+      "sha256": "ee6180a79516a9689de72d49a866e7cff4c62d1e288d3edf6583804f819597a5",
+      "bytes": 26542
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run14/counted-14/tool-r1/submissions.jsonl",
+      "sha256": "659a7cf4e9b0470765837a22c97bd79dd920e76f235b7e4d9fa5633cd7170693",
+      "bytes": 62416
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run14/source-manifest.json",
+      "sha256": "f249f2eae33a17845fdcf27f2a3f4840bffde59836519204d52f60bbba8d9034",
+      "bytes": 1997
+    }
+  ],
+  "audit": {
+    "scope": "Frozen accepted submission25; finite logical counterexample only, no C replay or universal claim",
+    "finding": "False appended-output assertion requires membership for previsited/unreachable vertices",
+    "hint_id": "r1c15h4",
+    "retained_in_final_best": true,
+    "artifacts": [
+      {
+        "path": "/private/tmp/probata-t07-run14-audit/audit.md",
+        "sha256": "893dbea0d7a34965c142f9be7871d3709f5a939f9f5efb4887ddb4b8696fd72f",
+        "bytes": 5977
+      },
+      {
+        "path": "/private/tmp/probata-t07-run14-audit/inputs.json",
+        "sha256": "84ae9cf03548207dba10c72137132abb9a2490fc751503179193093a0f3df6b7",
+        "bytes": 3301
+      },
+      {
+        "path": "/private/tmp/probata-t07-run14-audit/counterexample_td_post.py",
+        "sha256": "15092cbe14be4c802dcb5f60bafbb01dce5ae45d928eeb46e4969fdb58bfb2c2",
+        "bytes": 3238
+      },
+      {
+        "path": "/private/tmp/probata-t07-run14-audit/counterexample.result.json",
+        "sha256": "e050a5cf21078afbd85ec9fd48a5a3d815f82e2cba963ea155edaa01862ec6f3",
+        "bytes": 290
+      }
+    ],
+    "final_best_directory": "/private/tmp/probata-t07-20261015-run14/counted-14/attempt-r1f",
+    "unchanged_hint_text_in_final_best": true,
+    "hint_text_sha256": "4881fa345398ac2a3ee690cddf013e930753d3b875a0c0fab20145f095898cf4"
+  },
+  "storage_budget_bytes": 2147483648,
+  "readers": [
+    "ticket07",
+    "ticket09",
+    "coordinator"
+  ],
+  "final_replay": "not run; not proven"
+}

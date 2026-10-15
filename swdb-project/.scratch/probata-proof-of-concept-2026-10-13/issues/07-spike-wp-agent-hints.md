@@ -795,7 +795,7 @@ queue storage. A finite worked case falsifies that hint while preserving the uni
 relation; clamping the prefix fixes that case only. This is not a contract bug or
 universal proof. Compact artifact hashes: [goal audit](../evidence/t07-goal-audit-20261015.json).
 
-**Counted run 14 started 03:33:40 ET; outcome pending.** Frozen source branch
+**Counted run 14 started 03:33:40 ET and ended 04:33:12 ET unproven.** Frozen source branch
 `codex/probata-t07-run14`, commit `05e81eac`. This method adds the checked ghost
 ownership guard plus abstract partial-chunk boundary guidance, recorded in the
 harness metadata. Same pinned provider and 60-minute counted budget (8-minute
@@ -804,5 +804,32 @@ worked-case workload inputs, tests or negative controls are supplied to Codex.
 The user's explicit scoped Codex/OpenAI source-export approval applies. Original
 source manifest, metadata and incremental output:
 `/private/tmp/probata-t07-20261015-run14/`. Storage budget 2 GiB, 92 GiB free at
-preflight; remaining readers are tickets 07/09 and the coordinator. No success,
-final replay, smoke result or negative-control outcome is claimed while it runs.
+preflight; remaining readers are tickets 07/09 and the coordinator.
+
+Run 14 used 53.32 counted minutes, excluding 373.2 s of verifier-queue wait. One Codex
+call made 27 tool calls and 10 WP attempts. The best set has 39 hints and 14 open
+hint obligations; zero open unit goals does not complete a proof resting on those
+unproved cuts. No final proof/smoke replay or negative-control success occurred.
+Compact metadata: [counted-14 evidence](../evidence/t07-counted-14.json).
+
+The offline audit of accepted submission 25 finds one concretely false helper
+assertion, `r1c15h4` at `stmt:after_flush`; its text is unchanged in the final best set. Its appended
+queue-membership existential is outside the implication selecting newly discovered
+vertices. An empty-frontier, previsited-vertex finite case satisfies the unit relation
+and falsifies this stronger assertion. The executable logical evaluation and hashed
+snapshots are retained at `/private/tmp/probata-t07-run14-audit/`; this is not a full C
+replay or a counterexample to the unit contract. The audit never steered the active run.
+
+### Counted run 15 — 2026-10-15 ET
+
+Started **04:47:30 ET**, frozen `de78b7c6` in `/private/tmp/probata-t07-run15`.
+This method adds abstract guidance to preserve quantifier and implication scope
+when restating postconditions; it keeps run 14's partial-chunk guidance. All 54
+prototype controls pass. Provider, effort, seeds and counted budgets are unchanged;
+all hints are fresh. No previous hints, worked inputs, tests or negative controls
+are exported. The existing scoped Codex/OpenAI approval applies.
+
+Original output and source manifest: `/private/tmp/probata-t07-20261015-run15/`;
+2 GiB budget, 83 GiB free at preflight, readers 07/09/coordinator. This functional
+spike does not establish production RTE-initialization acceptance. Ticket 07 stays
+claimed and the shared spike box remains open; no run-15 success is claimed yet.
