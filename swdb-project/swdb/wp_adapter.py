@@ -10,8 +10,10 @@ One job (`swdb prove --adapter wp`):
    (`swdb.c_lowering`). Outside the core subset: not proven, `unsupported_construct`; unparsable C++:
    `parse_error`.
 2. Build WP's input: the C lowering with the contract's per-candidate formal halves at the unit's
-   `contract` anchor, the logic-library files they use at `ghost.globals`, and fixture hints at their
-   anchors (`--hint-file`; ticket 35 replaces them with hint records).
+   `contract` anchor, the logic-library files they use at `ghost.globals`, and the hint set (`--hint-file`,
+   hint records) merged at its anchors, only when the proof hint check accepts it (ticket 35,
+   swdb.hint_check); a rejected set never reaches WP, which then runs without hints, and the record lists
+   every rejected hint with its rule.
 3. Check the installed tools against the pinned method version's lineup (Frama-C/WP, the three solvers,
    clang, the C lowering tool's ID and sha256); a mismatch runs nothing.
 4. Run Frama-C/WP with the frozen settings in a fresh process in the job's scratch folder (TMPDIR too, so
@@ -19,6 +21,9 @@ One job (`swdb prove --adapter wp`):
 5. Minimal verdict reader: proven only when every property of this run's per-property report
    (`-report-csv`) is `Valid` and every goal of its per-goal report (`-wp-report-json`) passed; WP's
    consolidated summary line is never read. Ticket 36 owns the full reading rule.
+   Ticket 23 (2026-10-14 ET): a callee that a library entry summarizes (its `proof_unit.function`, with
+   `once: self` formal halves) gets that entry's formal halves at its own `<callee>.contract` anchor: the ACSL
+   form of the summary, the third of the three summary forms (WP uses the contract at the call).
 6. Every outcome maps to a class of vocabulary `proof_failure_classes`, and that class's handler runs
    (`handler.json` in the runs folder). An outcome with no class reports `unclassified_wp_outcome`, which is
    not in the vocabulary, so `swdb prove` stops the batch. WP's "not proven" is never a refutation.
@@ -34,8 +39,8 @@ import shutil
 import subprocess
 from pathlib import Path
 
-from swdb import c_lowering, framac, paths, rss_watchdog, vocab, yamlio
-from swdb.proof import AdapterError, Verdict
+from swdb import c_lowering, framac, hint_check, paths, rss_watchdog, vocab
+from swdb.proof import MODEL_PREFIX, AdapterError, Verdict
 
 NAME = "wp"
 PROVERS = ("alt-ergo", "z3", "cvc5")
@@ -43,15 +48,11 @@ WHY3_NAMES = {"Alt-Ergo": "alt-ergo", "Z3": "z3", "CVC5": "cvc5"}
 FROZEN = (("-wp-cache", "none"), ("-wp-model", "+real"))
 MACHDEP = ("-machdep", "x86_64")
 LEMMAS_OUT = ("-wp-prop=-@lemma",)    # ticket 26: logic-library lemmas are proven once, with the method (prove-logic)
+ALLOCATION_MODEL = "swdb_alloc_"   # ticket 24: new[] and delete[] rest on "allocation succeeds" (an assumption)
 DEFAULT_WALL_SECONDS = 3600
 DEFAULT_CAP_BYTES = 8 * 2**30                    # O9: the ~8 GB RSS watchdog
 UNCLASSIFIED = "unclassified_wp_outcome"         # not a failure class: stops the batch (11 item 9)
 SOURCE_SUFFIXES = (".cc", ".cpp", ".cxx", ".c")
-HINT_KINDS = {"loop_head": ("loop invariant", "loop assigns", "loop variant"),
-              "before": ("assert",), "after": ("assert",), "entry": ("assert",)}
-FORBIDDEN_HINT = re.compile(r"(?:^|;|\*/|\n)\s*(admit|check|requires|ensures|assumes|axiom|axiomatic|lemma|ghost|"
-                            r"behavior|predicate|logic|inductive|assigns|terminates|decreases)\b")
-UNBOUNDED_RANGE = re.compile(r"\.\.\s*\]|\[\s*\.\.")
 SENTENCES = {
     "c_lowering": "The C lowering tool (swdb lower, version {version}) lowers the C++ proof unit to C that behaves the "
                   "same; WP proves the C lowering, not the C++.",
@@ -69,10 +70,14 @@ class WpAdapter:
     name = NAME
     real = True                                   # swdb prove takes the machine-wide verifier lock
 
-    def __init__(self, library, contract, method, hints=None, defines=()):
+    def __init__(self, library, contract, method, hints=None, defines=(), records=None):
         self.library, self.contract, self.method = library, contract, method
+        self.records = records
         self.hints_path = Path(hints) if hints else None
-        self.hints = _read_hints(self.hints_path) if hints else []
+        try:
+            self.hints = hint_check.read_hint_set(self.hints_path) if hints else []
+        except hint_check.HintSetError as exc:
+            raise AdapterError(str(exc)) from None
         self.defines = tuple(defines)
 
     @classmethod
@@ -80,7 +85,7 @@ class WpAdapter:
         if script is not None:
             raise AdapterError("the wp adapter takes no --script (one WP job per call)")
         return cls(library, contract, method, hints=getattr(args, "hint_file", None),
-                   defines=getattr(args, "define", None) or ())
+                   defines=getattr(args, "define", None) or (), records=getattr(args, "records", None))
 
     # --- the job --------------------------------------------------------------------------------
     def run(self, job):
@@ -88,15 +93,28 @@ class WpAdapter:
         wp_dir = run_dir / "wp"
         wp_dir.mkdir(exist_ok=True)
         log = _Log(job.log)
-        entry = self.library.get(self.contract) or {}
-        unit = entry.get("proof_unit") or {}
         log.line(f"adapter: wp\nunit: {job.unit.candidate} {job.unit.function}\ncontract: {self.contract}")
         tools = self._tools()                     # missing or mismatched tools: no job, no record
+        context = {"job": job, "wp_dir": wp_dir, "log": log, "reports": [], "tools": tools,
+                   "functions": {job.unit.function}, "extra_flags": [], "pins": {}}
+        if self.contract.startswith(MODEL_PREFIX):            # ticket 24: one C model against its own contract
+            text = c_lowering.model_text(job.unit.function)
+            if text is None:
+                raise AdapterError(f"the C lowering has no C model {job.unit.function}")
+            input_path = wp_dir / "wp_input.c"
+            input_path.write_text("\n".join([*c_lowering.HEADERS, text]) + "\n")
+            context["reports"].append(("wp_input", input_path))
+            context["extra_flags"] = [f"-wp-fct={job.unit.function}"]
+            return self._wp(job, input_path, context)
+        entry = self.library.get(self.contract) or {}
+        unit = entry.get("proof_unit") or {}
+        summary_job = job.unit.candidate is None
         source = _unit_source(Path(job.unit.tree), job.unit.function)
         log.line(f"source: {source.relative_to(job.unit.tree)}")
-        context = {"job": job, "wp_dir": wp_dir, "log": log, "reports": [], "tools": tools}
+        summaries = self._summarized()
         try:
-            lowering = c_lowering.lower(source, job.unit.function, defines=self.defines)
+            lowering = c_lowering.lower(source, job.unit.function, defines=self.defines,
+                                        summaries={f: e for f, e in summaries.items() if f != job.unit.function})
         except c_lowering.Unsupported as exc:
             return self._not_proven("unsupported_construct", str(exc), context)
         except c_lowering.ParseError as exc:
@@ -109,14 +127,43 @@ class WpAdapter:
         c_path, anchors_path = lowering.write(wp_dir)
         context["reports"] += [("c_lowering", c_path), ("anchors", anchors_path)]
         context["c_lowering"] = {"id": c_path.name, "sha256": lowering.sha256}
-        text = self._input(lowering, entry)
+        contracts = self._dependencies(lowering, context)
+        callees = sorted({a["function"] for a in lowering.anchors if a["kind"] == "contract"} - {job.unit.function})
+        context["extra_flags"] = [f"-wp-fct={job.unit.function}"] + \
+            ([f"-inline-calls={','.join(callees)}"] if callees else [])
+        base = hint_check.wp_base(lowering.text, lowering.anchors, self._context(lowering, entry, summary_job))
+        base = self._with_contracts(base, contracts)
+        accepted = self._hint_check(job, lowering, base, context) if self.hints_path else []
+        text = hint_check.merge(base, lowering.anchors, self.hints, accepted).text
         input_path = wp_dir / "wp_input.c"
         input_path.write_text(text)
         context["reports"].append(("wp_input", input_path))
-        if self.hints_path:
-            shutil.copyfile(self.hints_path, wp_dir / "hints.yaml")
-            context["reports"].append(("hints", wp_dir / "hints.yaml"))
+        context["hints_reaching_wp"] = len(accepted)
         return self._wp(job, input_path, context)
+
+    def _hint_check(self, job, lowering, base, context):
+        """Ticket 35: the proof hint check; the indices of the hints that reach WP (all of them, or none)."""
+        wp_dir, log = context["wp_dir"], context["log"]
+        shutil.copyfile(self.hints_path, wp_dir / "hints.yaml")
+        context["reports"].append(("hints", wp_dir / "hints.yaml"))
+        try:
+            result = hint_check.judge(base, lowering.anchors, self.hints, Path(job.scratch) / "hint-check",
+                                      wp_flags=context["tools"]["flags"])
+        except hint_check.HintCheckError as exc:
+            raise AdapterError(f"proof hint check: {exc}") from None
+        merged = wp_dir / "hints_merged.c"
+        merged.write_text(result.pop("merged"))
+        accepted = result.pop("accepted")
+        result["reached_wp"] = bool(accepted)
+        context["hint_set"] = {"sha256": result.pop("hint_set_sha256"), "hints": [dict(h) for h in self.hints]}
+        context["hint_check"] = result
+        report = wp_dir / "hint_check.json"
+        report.write_text(json.dumps({"hint_set": context["hint_set"], "hint_check": result}, indent=1,
+                                     sort_keys=True) + "\n")
+        context["reports"] += [("hints_merged", merged), ("hint_check", report)]
+        log.line(f"proof hint check: {result['verdict']}, {len(result['rejections'])} rejection(s), "
+                 f"{result['frama_c_runs']} Frama-C run(s)")
+        return accepted
 
     def _tools(self):
         """Installed versions and binary hashes, checked against the method version's lineup."""
@@ -157,12 +204,88 @@ class WpAdapter:
             identities[tool] = (f"{tool}-{version}", sha, version)
         return {"flags": list(flags), "seconds": seconds, "identities": identities}
 
-    def _input(self, lowering, entry):
-        """WP's input file: contract at the unit's contract anchor, logic files at ghost.globals, hints at anchors."""
+    # --- ticket 24: summaries and C models the unit calls, each proven by its own record ----------------------
+    def _summarized(self):
+        """{function: library entry ID} of every function a library entry summarizes (`once: self` formal halves)."""
+        found = {}
+        for eid, data in sorted(self.library.entries.items()):
+            unit = data.get("proof_unit") if isinstance(data, dict) else None
+            if eid == self.contract or not isinstance(unit, dict) or not unit.get("function"):
+                continue
+            if any(isinstance(c, dict) and c.get("proof_placement") == {"once": "self"} and c.get("acsl")
+                   for c in data.get("clauses") or []):
+                if unit["function"] in found:
+                    raise AdapterError(f"{unit['function']} is summarized by more than one library entry: "
+                                       f"{found[unit['function']]}, {eid}")
+                found[unit["function"]] = eid
+        return found
+
+    def _proven(self, kind, ident, sha):
+        """The latest proven proof record about {kind, ident} whose code pin is `sha`, or None."""
+        from swdb.store import Store
+        proven = []
+        if self.records is not None:
+            for record in Store(self.records).of_kind("proof"):
+                d = record.data
+                subject = d.get("subject") or {}
+                if subject.get("kind") == kind and subject.get("id") == ident and d.get("verdict") == "proven" and \
+                        ((d.get("pins") or {}).get("code") or {}).get("sha256") == sha:
+                    proven.append(((d.get("job") or {}).get("batch", ""), record.id))
+        return sorted(proven)[-1][1] if proven else None
+
+    def _dependencies(self, lowering, context):
+        """{C name: ACSL text} of the summarized calls; pins every summary and C model to its proven record."""
+        contracts, summaries, models, assumed = {}, [], [], []
+        for used in lowering.summaries:
+            entry_id = used["summary"]
+            data = self.library.get(entry_id) or {}
+            sha = self.library.content_sha256(entry_id)
+            record = self._proven("library_summary", entry_id, sha)
+            if record is None:
+                raise AdapterError(f"{used['name']} is summarized by library entry {entry_id}, which has no proven summary "
+                                   f"record at its current content: run `swdb prove --summary {entry_id} --adapter wp` "
+                                   "first")
+            texts = [c["acsl"]["text"].strip() for c in data.get("clauses") or [] if isinstance(c, dict)
+                     and c.get("acsl") and c.get("proof_placement") == {"once": "self"}]
+            contracts[used["c_name"]] = sorted(texts, key=lambda t: 0 if t.startswith("requires") else 1)
+            summaries.append({"id": entry_id, "sha256": sha, "proof_record": record})
+            assumed.append({"kind": "summary", "reference": {"id": entry_id, "sha256": sha},
+                            "sentence": f"The summary of {used['name']} (library entry {entry_id}) stands for its code "
+                                        f"here; proof record {record} proves the summary on that code."})
+        for name in lowering.models:
+            sha = hashlib.sha256((c_lowering.model_text(name) or "").encode()).hexdigest()
+            if name.startswith(ALLOCATION_MODEL):
+                assumed.append({"kind": "assumed_clause", "reference": {"id": name, "sha256": sha},
+                                "sentence": f"Allocation succeeds: the allocation model {name} behaves as its contract "
+                                            "says (new[] returns as many valid elements as asked; delete[] releases "
+                                            "them); the assumption entry of map 16 item 7, since WP cannot prove an "
+                                            "allocation or see a release."})
+                continue
+            record = self._proven("c_model", name, sha)
+            if record is None:
+                raise AdapterError(f"the C lowering calls the C model {name}, which has no proven record at its current "
+                                   f"text: run `swdb prove --model {name} --adapter wp` first")
+            models.append({"id": name, "sha256": sha, "proof_record": record})
+            assumed.append({"kind": "summary", "reference": {"id": name, "sha256": sha},
+                            "sentence": f"The C model {name} stands for the call it models (one thread); proof record "
+                                        f"{record} proves its contract on its text."})
+        context["assumed"] = assumed
+        if summaries:
+            context["pins"]["summaries"] = summaries
+        if models:
+            context["pins"]["models"] = models
+        return contracts
+
+    def _context(self, lowering, entry, summary_job=False):
+        """What WP sees besides the hints, {anchor: [block]}: the contract's formal halves at the unit's contract
+        anchor (`requires` first; per-candidate, or `once: self` for a summary job, ticket 24), the logic-library
+        files they use at ghost.globals."""
+        placement = {"once": "self"} if summary_job else "per_candidate"
         clauses = [c for c in entry.get("clauses") or [] if isinstance(c, dict) and c.get("acsl")
-                   and c.get("proof_placement") == "per_candidate"]
+                   and c.get("proof_placement") == placement]
         if not clauses:
-            raise AdapterError(f"contract {self.contract} has no per-candidate formal half to prove")
+            raise AdapterError(f"contract {self.contract} has no {'once: self' if summary_job else 'per-candidate'} "
+                               "formal half to prove")
         texts = [c["acsl"]["text"].strip() for c in clauses]
         texts = sorted(texts, key=lambda t: 0 if t.startswith("requires") else 1)
         uses = []
@@ -170,29 +293,44 @@ class WpAdapter:
             uses += [u for u in clause["acsl"].get("uses", []) if u not in uses]
         from swdb.formal_frame import logic_files
         files = logic_files(self.library.root, self.library)       # ticket 26: an entry's own file too
-        inserts = {f"{lowering.function}.contract": ["/*@ " + "\n    ".join("\n".join(texts).splitlines()) + " */"],
-                   "ghost.globals": [f"/*@\n{files[u].read_text()}\n*/" for u in uses]}
-        kinds = {a["id"]: a["kind"] for a in lowering.anchors}
-        for hint in self.hints:
-            anchor, text = hint["anchor"], hint["acsl"].strip()
-            if anchor not in kinds:
-                raise AdapterError(f"hint anchor {anchor} is not an anchor of the C lowering of {lowering.function}")
-            allowed = HINT_KINDS.get(kinds[anchor], ())
-            if not text.startswith(allowed) or FORBIDDEN_HINT.search(text):
-                raise AdapterError(f"hint at {anchor} ({kinds[anchor]}) may hold only {', '.join(allowed) or 'nothing'}")
-            if UNBOUNDED_RANGE.search(text):                 # ticket 07: WP 33 aborts on `a[i ..]` in loop assigns
-                raise AdapterError(f"hint at {anchor} has an unbounded range (`..]`); bound it (WP 33 cannot prove "
-                                   "writes into an infinite assigns range)")
-            inserts.setdefault(anchor, []).append("/*@ " + "\n    ".join(text.splitlines()) + " */")
-        out = []
-        for line in lowering.text.splitlines():
-            match = c_lowering.ANCHOR_LINE.match(line)
-            if match and match.group(1) in inserts and inserts[match.group(1)]:
-                indent = line[:len(line) - len(line.lstrip())]
-                out += [indent + block.replace("\n", "\n" + indent) for block in inserts[match.group(1)]]
-            else:
-                out.append(line)
+        inserts = {f"{lowering.function}.contract": ["/*@ " + "\n    ".join("\n".join(texts).splitlines()) + " */"]}
+        for anchor in lowering.anchors:                  # ticket 23: summarized callees carry their ACSL summary
+            callee = anchor.get("function")
+            if anchor["kind"] != "contract" or callee == lowering.function:
+                continue
+            summary = self._summary_clauses(callee)
+            if summary:
+                ordered = sorted((c["acsl"]["text"].strip() for c in summary),
+                                 key=lambda t: 0 if t.startswith("requires") else 1)
+                inserts[anchor["id"]] = ["/*@ " + "\n    ".join("\n".join(ordered).splitlines()) + " */"]
+                for clause in summary:
+                    uses += [u for u in clause["acsl"].get("uses", []) if u not in uses]
+        inserts["ghost.globals"] = [f"/*@\n{files[u].read_text()}\n*/" for u in uses]
+        return inserts
+
+    def _summary_clauses(self, callee):
+        """The `once: self` formal halves of the library entry that summarizes `callee` (ticket 23), or []."""
+        found = [data for eid, data in sorted(self.library.entries.items())
+                 if eid != self.contract and isinstance(data.get("proof_unit"), dict)
+                 and data["proof_unit"].get("function") == callee]
+        for data in found:
+            clauses = [c for c in data.get("clauses") or [] if isinstance(c, dict) and c.get("acsl")
+                       and c.get("proof_placement") == {"once": "self"}]
+            if clauses:
+                return clauses
+        return []
+
+    @staticmethod
+    def _with_contracts(text, contracts):
+        """Ticket 24: each summarized callee's `once: self` formal halves right before its prototype line."""
+        out, waiting = [], dict(contracts or {})
+        for line in text.splitlines():
+            name = next((n for n in waiting if re.match(rf"^[^/{{]*\b{re.escape(n)}\([^{{]*\);$", line)), None)
+            if name is not None:
+                out.append("/*@ " + "\n    ".join("\n".join(waiting.pop(name)).splitlines()) + " */")
+            out.append(line)
         return "\n".join(out) + "\n"
+
 
     def _wp(self, job, input_path, context):
         tools, log, wp_dir = context["tools"], context["log"], context["wp_dir"]
@@ -201,7 +339,7 @@ class WpAdapter:
         (scratch / "tmp").mkdir(exist_ok=True)
         goals_json, properties_csv = scratch / "wp-goals.json", scratch / "wp-properties.csv"
         settings_flags = [*tools["flags"], *MACHDEP, "-wp-prover", ",".join(PROVERS), "-wp-timeout",
-                          str(tools["seconds"]), "-wp-par", "1", *LEMMAS_OUT]
+                          str(tools["seconds"]), "-wp-par", "1", *LEMMAS_OUT, *context.get("extra_flags", [])]
         command = [*framac.locate().command, *settings_flags, "-wp-report-json", goals_json.name, "wp_input.c",
                    "-then", "-report-csv", properties_csv.name]
         removed = sorted(k for k in os.environ if k.startswith("FRAMAC_WP"))
@@ -216,7 +354,7 @@ class WpAdapter:
         context["settings"] = {"tool": "frama-c-wp", "flags": settings_flags, "session": "fresh",
                                "warning_levels": "default", "machdep": "x86_64",
                                "wp_seconds_per_solver": tools["seconds"], "environment_removed": removed,
-                               "rss_cap_bytes": cap, "hint_count": len(self.hints), "build_constants": list(self.defines)}
+                               "rss_cap_bytes": cap, "hint_count": context.get("hints_reaching_wp", 0), "build_constants": list(self.defines)}
         result = rss_watchdog.run(command, log=wp_log, cap_bytes=cap, timeout=wall, cwd=scratch, env=env)
         context["peak"] = result.peak_rss_bytes
         log.line(f"frama-c exit {result.exit_code}, wall {result.wall_seconds:.2f} s, peak rss {result.peak_rss_bytes}, "
@@ -227,7 +365,7 @@ class WpAdapter:
                 context["reports"].append((name, wp_dir / path.name))
         outcome = read_outcome(result, wp_log.read_text(errors="replace"),
                                goals_json if goals_json.exists() else None,
-                               properties_csv if properties_csv.exists() else None)
+                               properties_csv if properties_csv.exists() else None, context.get("functions"))
         context["goals"], context["unproven"] = outcome["goals"], outcome["unproven"]
         log.line(f"outcome: {outcome['verdict']} {outcome['failure_class'] or ''} ({outcome['why']})")
         if outcome["verdict"] == "proven":
@@ -251,12 +389,18 @@ class WpAdapter:
             assumptions.append({"kind": "trusted_tool", "reference": {"id": ident, "sha256": sha},
                                 "sentence": SENTENCES[tool].format(version=version)})
             tools.append(ident)
+        assumptions += context.get("assumed", [])            # ticket 24: summaries, C models, allocation
         fields = {"goals": context.get("goals", [])}
+        for name in ("hint_set", "hint_check"):                   # ticket 35: the hint set and its check result
+            if context.get(name) is not None:
+                fields[name] = context[name]
         if verdict == "not_proven":
             fields["unproven_properties"] = context.get("unproven", [])
         if context.get("settings"):
             fields["settings"] = context["settings"]
-        pins = {"c_lowering": context["c_lowering"]} if context.get("c_lowering") else {}
+        pins = {"c_lowering": context["c_lowering"], "naming_rules": c_lowering.naming_rules()} \
+            if context.get("c_lowering") else {}
+        pins.update(context.get("pins") or {})                 # ticket 24: summaries and C models
         return Verdict(verdict=verdict, bounds={"threads": 1, "input_size": "unbounded"}, assumptions=assumptions,
                        failure_class=failure_class, tools=tuple(tools), peak_rss_bytes=context.get("peak"),
                        record_fields=fields, pins=pins, reports=tuple(context["reports"]))
@@ -268,8 +412,11 @@ CRASH = re.compile(r"Unexpected error|internal error|Fatal error|Stack overflow|
 USER_ERROR = re.compile(r"User Error|annot-error|invalid user input|syntax error|Ignoring")
 
 
-def read_outcome(result, log_text, goals_json, properties_csv):
-    """{verdict, failure_class, why, goals, unproven} from one WP run (minimal reading; 36 owns the full rule)."""
+def read_outcome(result, log_text, goals_json, properties_csv, functions=None):
+    """{verdict, failure_class, why, goals, unproven} from one WP run (minimal reading; 36 owns the full rule).
+
+    `functions` (ticket 24): read only the properties and goals of these functions (the proof unit, its inlined
+    callees included); C models and summaries in the same file are proven by their own records."""
     def outcome(verdict, failure_class, why, goals=(), unproven=()):
         return {"verdict": verdict, "failure_class": failure_class, "why": why, "goals": list(goals),
                 "unproven": list(unproven)}
@@ -288,6 +435,9 @@ def read_outcome(result, log_text, goals_json, properties_csv):
     goals = [_goal(g) for g in json.loads(goals_json.read_text() or "[]")]
     with open(properties_csv, newline="") as handle:
         properties = list(csv.DictReader(handle, delimiter="\t"))
+    if functions:
+        goals = [g for g in goals if g["function"] in functions]
+        properties = [row for row in properties if row.get("function") in functions]
     unproven = [{"property": row.get("property"), "kind": row.get("property kind"), "function": row.get("function"),
                  "line": int(row["line"]) if str(row.get("line", "")).isdigit() else None, "status": row.get("status")}
                 for row in properties if row.get("status") != "Valid"]
@@ -363,18 +513,6 @@ class _Log:
     def line(self, text):
         with open(self.path, "a", encoding="utf-8") as handle:
             handle.write(text.rstrip("\n") + "\n")
-
-
-def _read_hints(path):
-    try:
-        data = yamlio.load(Path(path))
-    except (OSError, ValueError) as exc:
-        raise AdapterError(f"cannot read the hint file {path}: {exc}") from None
-    hints = (data or {}).get("hints") if isinstance(data, dict) else None
-    if not isinstance(hints, list) or not all(isinstance(h, dict) and isinstance(h.get("anchor"), str)
-                                              and isinstance(h.get("acsl"), str) for h in hints):
-        raise AdapterError(f"hint file {path} holds hints: [{{anchor, acsl}}, ...]")
-    return hints
 
 
 def _unit_source(tree, function):

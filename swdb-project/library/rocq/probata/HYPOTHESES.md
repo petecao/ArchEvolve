@@ -1,7 +1,9 @@
 # Probata Rocq development: review guide and hypothesis table
 
-Created: 2026-10-14 ET (ticket 41). Updated: 2026-10-14 14:35 ET (revision after Codex's review
-and the main session's decisions under Yan-Ru's delegation).
+Created: 2026-10-14 ET (ticket 41). Updated: 2026-10-14 21:30 ET (`Reduction.v` revised by the
+main session under Yan-Ru's delegation: two covers from ticket 27, see "Later change: ticket 27
+covers"); 2026-10-14 14:35 ET (revision after Codex's review and the main session's decisions
+under Yan-Ru's delegation).
 
 ## One-page summary (read this first)
 
@@ -32,6 +34,9 @@ behave as the DX100 proof semantics says.
 DX100 command finishes the moment it is issued. This lemma says the pretense is safe. If the
 command contracts are well formed, and no hazard occurs in the pretend world, then every timing
 gem5 allows ends with the same observations and the same memory as the pretend world.
+A command stops being "pending" in the pretend world at the first step that gem5 holds until
+it has finished: a wait that covers it, the issue of a later command its dispatch stalls on, or
+a CPU write of a register it names.
 
 **What the review decides.** Whether these two statements say the right thing. Approval is
 recorded with the files' sha256 in ticket 41; any later change needs a new approval.
@@ -207,7 +212,81 @@ are unaffected for F1; `TDStepMAA`'s critical section already falls outside the 
 
 Round 4 (`codex-review4.md`, truth only, after that fix): **no counterexample found** for either
 statement; the round-2 and round-3 runs are excluded by the new hypotheses. Open (not truth
-findings): `cover_sound` bridge for ticket 45; M6 split for ticket 43.
+findings): `cover_sound` bridge for ticket 45; M6 split for ticket 43. This verdict is about the
+approved `Reduction.v` of 14:12 ET (sha256 `8a779482…`); round 5 below covers the revision.
+
+## Later change: ticket 27 covers (2026-10-14 21:30 ET)
+
+Revised by the main session under Yan-Ru's delegation. Source: ticket 27's Answer,
+"Disagreements with ticket 41's Rocq statement". Proof semantics 0.1 covers a command in two
+places `covered` lacked, so `dx100_reduction` did not back proofs relying on them (fixtures
+`stall_condition`, `register_write`). `Composition.v` and `Vocabulary.v` are unchanged.
+
+| Change in `Reduction.v` | gem5 at `e4fc4af` | Mirrors `timed_run` clause |
+|---|---|---|
+| `cov_issue`: the issue of k' at step m covers every earlier command k with `stalls k k'` | dispatch stall `IF.cc:193-212` (tile), `IF.cc:213-219` (region); the CPU's issuing store is acknowledged only at dispatch (`CpuSidePort.cc:235-250`, `MAA.cc:581-583`; research 14 section 2) | dispatch stall |
+| `cov_reg_write`: a CPU write at step m of an element of register g covers every earlier command naming g | `IF.cc:233-249` (`MAA.cc:510-538`, `CpuSidePort.cc:145-149`) | register write |
+| `pending A n j` now excludes covers at step j itself (`m <= j`, was `m < j`) | the covering step acts only after the command finished | `unfinished T n j` (finish before j) |
+
+Why the inclusive boundary: with `m < j`, a CPU register write would still see the commands it
+covers as pending at its own step and be a same-thread overlap hazard (`hazard_own`, `CpuWrite`
+case), so `cov_reg_write` would not help the `register_write` fixture. For waits and issues the
+change is harmless: their own steps carry only ownership hazards. `cov_stall` (F5) is now
+implied by `cov_issue` as far as `pending` goes; it stays, so no proof that used it breaks.
+
+Each base cover only removes a command from `pending` at a step where `timed_run` forces it to
+have finished, so the smaller pending set (weaker `obl_hazard_free_*`, stricter `at_issue_run`)
+should keep the lemma true. Region covers go beyond 0.1 (ticket 28 adds the region stall);
+they are sound against `timed_run`, which uses the same `stalls`.
+
+Sanity lemmas added (`Sanity.v`, all `Qed`, no axiom): `stall_covered`, `stall_not_pending`,
+`reg_write_covered`, `reg_write_not_pending`; `no_wait_before_step_2` became
+`no_cover_up_to_step_2` for the inclusive boundary.
+
+Round 5 (`/tmp/claude/probata-runs/t41b/codex-review.md`, sha256 `9dc000a6…`; `gpt-5.6-sol`,
+`xhigh`, read-only): **no counterexample found.** Codex confirms both covers sound against
+`timed_run` and gem5 (cross-core included, one instance), the inclusive boundary correct, and
+every cover of model 0.1 present in Rocq. Findings:
+
+| # | Finding | Disposition |
+|---|---|---|
+| 1 | blocker: new hash not recorded or approved in ticket 41 | **Accepted:** ticket 41 Later changes and approval record updated (new hash, old one superseded). |
+| 2 | major: `contracts_ok` does not tie `regions_of` / `writes_memory` to gem5's assigned region and access class, so a wrong descriptor could invent a region cover | **Accepted in part, no statement change.** The same descriptors already drive `timed_run`'s approved dispatch-stall clause, so a wrong descriptor narrows "every timing gem5 allows" there too; it is not new with `cov_issue`. Descriptor faithfulness (each command's `regions_of` is gem5's assigned region, `writes_memory` its READ/WRITE/COMPUTE class) joins the `cover_sound` lowering obligation (ticket 45) and proof semantics' region rules (ticket 28). Note for 43. |
+| 3 | major: this guide still describes wait-only coverage and scopes round 4 to the old hash | **Accepted:** this section, the summary sentence, and the round-4 scope note. |
+| 4 | minor: comments equate coverage with waits; closure rules called step rules | **Accepted:** `Reduction.v` header and `covered` comments now say "covering step" and separate base covers from closure rules. |
+
+## Composition.v revision in progress: well-bracketed critical sections (paused 2026-10-14 22:40 ET)
+
+**Not approved; the effort is paused.** Branch `probata-poc/t41c` (from `probata-poc/t42`).
+
+- **Decision** (main session under Yan-Ru's delegation, 2026-10-14 22:24 ET): ticket 42's
+  stray-`Exit` counterexample is excluded by `omp_ok`, the trusted-tool entry "the pinned OpenMP
+  runtime implements OpenMP 5.2": `critical` is a structured block, so each thread's
+  `Enter`/`Exit` events are well bracketed. Not a per-candidate obligation.
+- **Done:** `brackets_ok` and `omp_ok`'s new last clause
+  `forall t, brackets_ok (proj X t) false = true`; `Sanity.v` lemma `stray_exit_excluded`
+  (ticket 42's exact run is not `omp_ok`; Qed, no axiom).
+- **Lowering obligation (ticket 45), next to `cover_sound`:** the per-thread lowering must
+  preserve the bracketing: each thread's `Enter`/`Exit` events come from OpenMP `critical`
+  structured blocks, in order, none dropped or added.
+- **Codex round t41c-1** (`/tmp/claude/probata-runs/t41c/codex-review1.md`, sha256 `020368a8…`;
+  `gpt-5.6-sol`, `xhigh`, read-only): **counterexample, open.** Both critical sections are well
+  bracketed. Thread 1 issues `DeviceRead cA A 1` on a `LockProtected` A inside its critical
+  section, leaves `cA` uncovered past its `Exit` (allowed: `cA` writes only a dead tile, F1),
+  and `device_ok` lets that read take its value from thread 0's later `Write A 1` inside thread
+  0's critical section. With a second device read (`cB` of `SharedActionsOnly` B, sourced from
+  thread 1's later `Shared B`), the covers force `WA < CoverA < SharedB < CoverB`, so thread
+  1's events fall inside thread 0's critical window: no serial twin exists. Codex checked all
+  3,003 projection-preserving orders. Root cause: a command left uncovered past a critical exit
+  may still *read* lock-protected data written by a later critical section. Ticket 42's
+  `t42_device_safe` finding is the same reversal.
+- **Fix candidates (need a decision):** (a) F1's exemption covers only commands that read no
+  `LockProtected` location (a command reading lock-protected data must be covered before the
+  `Exit`); (b) `device_ok` refuses a source from another thread's critical section that begins
+  after the reading command's critical section ends; (c) fold into `dead_after`: the command's
+  reads must also be outside lock-protected arrays. (a) is the smallest and matches 12 item 7's
+  intent; both candidates' critical sections already cover their commands before the exit
+  (F1 check above).
 
 ## Machine checks
 
@@ -219,6 +298,7 @@ findings): `cover_sound` bridge for ticket 45; M6 split for ticket 43.
   members; `stale_run_fits`, `stale_history_read_allowed`, `history_read_not_always_latest`
   (inside the program class a relaxed load may be stale); `read_own_write`;
   `failed_cas_reread_sees_winner` (15 item 12's must-prove control); `unready_read_is_hazard`
-  (12 item 9).
+  (12 item 9); since 21:30 ET also `stall_covered`, `stall_not_pending`, `reg_write_covered`,
+  `reg_write_not_pending` (ticket 27's two covers).
 - Negative check: `negative/HistoryReadIsLatest_FALSE.v` (history reads are SC) is rejected at
   its unprovable branch, as required.

@@ -1,7 +1,7 @@
 # 41 — Rocq: composition theorem statement and definitions
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-14 14:40 ET (revised; approved by the main session under Yan-Ru's delegation; resolved); 2026-10-14 14:13 ET (Codex review: revise); 2026-10-14 14:07 ET (statements drafted); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-14 22:40 ET (Composition.v second revision in progress, paused; see Progress (paused)); 2026-10-14 21:30 ET (`Reduction.v` revised under delegation: ticket 27 covers, see Later changes); 2026-10-14 14:40 ET (revised; approved by the main session under Yan-Ru's delegation; resolved); 2026-10-14 14:13 ET (Codex review: revise); 2026-10-14 14:07 ET (statements drafted); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** 09
@@ -112,11 +112,13 @@ table, F1 candidate check and Codex dispositions:
   |---|---|
   | `Vocabulary.v` | `081b558de2d94a0b37200b094d39af38eddf51546686a575f97dac2e3a6a3a3d` |
   | `Composition.v` | `e30f62402164802aaf1bed224c6be0ac62fb787c43efe61190266e5a511dd01b` |
-  | `Reduction.v` | `8a779482ff13c83a12d11fd15d34c0aadf1d8856052575e7ede38ab935188b7a` |
+  | `Reduction.v` (current, revised 2026-10-14 21:30 ET, see Later changes) | `72f4a79fbf6005fc89990d5dcfed4b80118f9d02d8aac44b0bb9bc7b84968e53` |
+  | `Reduction.v` (**superseded** 2026-10-14 21:30 ET) | `8a779482ff13c83a12d11fd15d34c0aadf1d8856052575e7ede38ab935188b7a` |
 
-  Not part of the approval: `Sanity.v` (`8e73b9c3…`), `negative/HistoryReadIsLatest_FALSE.v`
-  (`16aaf7db…`), `HYPOTHESES.md` (`a7b9759a…`). Any change to the three approved files needs a
-  new approval; 42 and 43 check these hashes.
+  Not part of the approval: `Sanity.v` (`8e73b9c3…`; now `8df1b4e7…`),
+  `negative/HistoryReadIsLatest_FALSE.v` (`16aaf7db…`), `HYPOTHESES.md` (`a7b9759a…`; now
+  `8da8a879…`). Any change to the three approved files needs a new approval; 42 and 43 check
+  these hashes. `Vocabulary.v` and `Composition.v` are unchanged by the revision.
 
 ### What is stated
 
@@ -206,3 +208,60 @@ message).
   `parallel_composition`, `dx100_reduction` as in the method-version fixture).
 - Assumption: Codex's adapter pin is taken from the ticket and design spec (`gpt-5.6-sol`,
   `xhigh`); the CLI ran with `-m gpt-5.6-sol -c model_reasoning_effort=xhigh -s read-only`.
+
+### Later changes
+
+- 2026-10-14 21:30 ET: `Reduction.v` revised by the main session under Yan-Ru's delegation
+  (branch `probata-poc/t41b`). Source: ticket 27's Answer, "Disagreements with ticket 41's Rocq
+  statement": `covered` only started at a wait, so `dx100_reduction` did not back proofs using
+  proof semantics 0.1's issue-stall and register-write covers (fixtures `stall_condition`,
+  `register_write`). Changes: constructors `cov_issue` (dispatch stall, `IF.cc:193-219`) and
+  `cov_reg_write` (CPU register write held, `IF.cc:233-249`), both mirroring existing
+  `timed_run` clauses; `pending` now excludes covers at its own step (`m <= j`), else a register
+  write would still be a same-thread hazard against the commands it covers. New sha256
+  `72f4a79f…` (approval record; `8a779482…` superseded). `Composition.v`, `Vocabulary.v`
+  unchanged. Sanity lemmas `stall_covered`, `stall_not_pending`, `reg_write_covered`,
+  `reg_write_not_pending` (Qed, no axiom). Codex round 5 (`gpt-5.6-sol`, `xhigh`, read-only,
+  `/tmp/claude/probata-runs/t41b/codex-review.md`, sha256 `9dc000a6…`): no counterexample;
+  4 findings, dispositions in HYPOTHESES.md ("Later change: ticket 27 covers"). Checks via
+  `verifier_run.py` (`/tmp/claude/probata-runs/t41b/compile-5.log`, sha256 `83bab795…`): all four
+  files compile; `Print Assumptions` lists only `parallel_composition` and `dx100_reduction`
+  (Admitted); the negative check is still rejected (exit 1).
+- **Note for ticket 43:** prove the text with sha256 `72f4a79f…`, not `8a779482…`. Proof
+  shape: each base cover (`cov_direct`, `cov_issue`, `cov_reg_write`) removes n from `pending`
+  only at a step where the matching `timed_run` clause forces n finished before that step, and
+  the closure rules (`cov_producer`, `cov_stall`) preserve "finished before m"; inclusive
+  `pending A n j` lines up with `unfinished T n j`. `cov_stall` is implied by `cov_issue` for
+  `pending` (kept). Open from Codex round 5 finding 2: `contracts_ok` does not tie
+  `regions_of`/`writes_memory` to gem5's assigned region and access class; this was already true
+  of `timed_run`'s approved stall clause and is carried as descriptor faithfulness in the
+  `cover_sound` lowering obligation (ticket 45) and ticket 28's region rules, not as a premise.
+
+### Progress (paused), 2026-10-14 22:40 ET: second revision, `Composition.v`
+
+Branch `probata-poc/t41c` (from `probata-poc/t42`). Effort paused by Yan-Ru; **nothing here is
+approved**, and the approval record above is unchanged (approved `Composition.v` stays
+`e30f6240…`, known false).
+- **Decision** (main session under Yan-Ru's delegation, 2026-10-14 22:24 ET): ticket 42's
+  stray-`Exit` counterexample goes into the `omp_ok` premise (OpenMP 5.2: `critical` is a
+  structured block, so each thread's `Enter`/`Exit` are well bracketed), not a new obligation;
+  ticket 45's lowering must preserve the bracketing (HYPOTHESES.md, next to `cover_sound`).
+- **Done:** `brackets_ok` plus `omp_ok`'s new last clause. `Sanity.v` `stray_exit_excluded`
+  (Qed, no axiom) shows ticket 42's run is excluded. One unavoidable touch of 42's lemma block:
+  `t42_omp_ok_swap` destructs and proves the new clause (two lines, proof via
+  `t42_proj_swap`). Compile `/tmp/claude/probata-runs/t41c/compile-3.log` (`16fca6e6…`): all
+  files compile, only the two Admitted theorems in `Print Assumptions`, negative check still
+  rejected. WIP hashes: `Composition.v` `4302fc3e…` (statement part, as 42's
+  `check_approved.py` rebuilds it: `9ea8013a…`); the elaborated statement for 42's harness is
+  `/tmp/claude/probata-runs/t41c/statement.revised.expected` (`3e6faf11…`, not installed:
+  42's harness still guards the approved text).
+- **Open:** Codex round t41c-1 (`/tmp/claude/probata-runs/t41c/codex-review1.md`,
+  `020368a8…`) found **another counterexample**: a command left uncovered past its critical
+  section's `Exit` (F1) reads a `LockProtected` location whose value `device_ok` lets come from
+  another thread's later critical section. Details and fix candidates (a)-(c) in HYPOTHESES.md.
+- **Next step:** the main session (or Yan-Ru) picks a fix ((a) is the smallest: F1's
+  exemption excludes commands that read lock-protected data), then apply it, run Codex rounds
+  until one finds no counterexample, record the new hash here (`e30f6240…` superseded), update
+  42's `check_approved.py` hash and `statement.expected`, and resume 42.
+- **Note for ticket 42:** stays `needs-info`. Rebase onto `probata-poc/t41c` when it is approved;
+  the only lemma-block change is in `t42_omp_ok_swap`.

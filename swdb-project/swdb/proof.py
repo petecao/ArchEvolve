@@ -15,7 +15,8 @@ map ticket 26 and ADR 0016. Format: docs/reference/format-v0.4-proof.md.
 - The adapter's log stays in a runs folder outside the repo, named by path and sha256. The
   job's scratch folder is never named by the record and is deleted when the job ends.
 - Ticket 11 (2026-10-14 ET): one call runs a batch (one job per script, or one skip); every record
-  pins the current method version (swdb.method_version); a failure class outside vocabulary
+  pins the current method version (swdb.method_version; since fix-21, 2026-10-14 ET, the frozen one, or a
+  draft named with `--method-version`); a failure class outside vocabulary
   proof_failure_classes stops the batch; `validate_record` checks the class, skip reason and pin.
   Updated 2026-10-14 02:26 ET (Yan-Ru's decision of 02:25 ET): an unreplayed counterexample goes with
   failure class spurious_counterexample and no other, both ways; repair never takes that class.
@@ -27,6 +28,8 @@ map ticket 26 and ADR 0016. Format: docs/reference/format-v0.4-proof.md.
   may pin the minimum-bounds derivation it ran at (`--minimum-bounds`).
 - Ticket 22 (2026-10-14 ET): `--summary ENTRY` proves a library entry's summary (subject library_summary); the
   cbmc adapter (swdb.cbmc_adapter) registers itself in ADAPTERS.
+- Ticket 61 (2026-10-14 ET): `--whole-function bounded_direct|no_contract_baseline` runs whole-function equivalence
+  (swdb.cbmc_equivalence) and writes `route: bounded_direct`; the no-contract baseline's contract pin is not applicable.
 - Levels are computed on read by the versioned level rule (`swdb.level_rule`, ticket 10), which
   replaced this tracer's code-and-contract-pin rule; nothing here stores a level (ADR 0016).
 """
@@ -48,6 +51,7 @@ from swdb.cli import Failure, UsageError
 VERDICTS = ("proven", "refuted", "not_proven")
 UNPINNED = "unpinned"
 OUT_OF_MEMORY = "out_of_memory"       # ticket 57: the class the worker's RSS watchdog gives (O9)
+MODEL_PREFIX = "c_model."             # ticket 24: a C-model job's contract slot (subject c_model)
 SPURIOUS = "spurious_counterexample"   # Yan-Ru 2026-10-14 02:25 ET: the class of a counterexample that did not replay
 
 
@@ -164,7 +168,8 @@ class ScriptedAdapter:
 
 
 ADAPTERS = {"scripted": ScriptedAdapter}
-RECORD_FIELDS = ("goals", "unproven_properties", "settings")     # ticket 21: what a real adapter may add
+RECORD_FIELDS = ("goals", "unproven_properties", "settings",     # ticket 21: what a real adapter may add
+                 "hint_set", "hint_check")                       # ticket 35: the hint set and its check result
 
 
 # --- swdb prove -----------------------------------------------------------------------
@@ -179,6 +184,9 @@ def register_cli(commands):
     sub.add_argument("--summary", metavar="ENTRY",
                      help="ticket 22: prove a library entry's summary (its proof_unit function against its `once: self` "
                           "formal halves) instead of a candidate proof unit; the subject is library_summary")
+    sub.add_argument("--model", metavar="NAME",
+                     help="ticket 24: prove one C model of the C lowering (swdb.c_lowering.model_text, e.g. std_min_int) "
+                          "against its ACSL contract, once; the subject is c_model and units that call it pin the record")
     sub.add_argument("--function", help="the function that holds the rewrite site (default with --summary: the "
                                          "entry's proof_unit function)")
     sub.add_argument("--contract", help="the rewrite contract (default: the one its certification records name)")
@@ -190,6 +198,9 @@ def register_cli(commands):
     sub.add_argument("--runs-dir", type=Path, required=True, help="runs folder outside the repo for the adapter log")
     sub.add_argument("--batch", help="batch ID (default: a new one for this call)")
     sub.add_argument("--position", type=int, default=1, help="position of the first job in the batch (default 1)")
+    sub.add_argument("--method-version", metavar="ID",
+                     help="run under this method version, draft or frozen (default: the current one, the frozen "
+                          "version with the highest sequence; a draft is used only when named)")
     sub.add_argument("--id", help="proof record ID of a one-job batch (default: a new one)")
     gate = sub.add_argument_group("bounded jobs (ticket 14): the bounded gate names its bounds, budget and minimum")
     gate.add_argument("--bounds", type=_bounds_argument, help="JSON object: the bounds the job runs at")
@@ -203,12 +214,27 @@ def register_cli(commands):
     run.add_argument("--provider-model", help="provider pin: model (for example gpt-5.6-sol)")
     run.add_argument("--provider-effort", help="provider pin: effort (for example xhigh)")
     real = sub.add_argument_group("real adapters (tickets 21, 22): the wp and cbmc adapters")
-    real.add_argument("--hint-file", type=Path, help="wp: fixture hints {hints: [{anchor, acsl}]} placed at anchors "
-                                                     "of the C lowering (ticket 35 replaces them with hint records)")
+    real.add_argument("--hint-file", type=Path, help="wp only: a hint set {hints: [{anchor, kind, text, provenance}]}; "
+                                                     "it reaches WP only when the proof hint check accepts it "
+                                                     "(ticket 35); any other adapter refuses it")
     real.add_argument("--define", action="append", default=[], help="wp, cbmc: a build constant NAME or NAME=VALUE "
                                                                     "for the C lowering (repeatable; pinned as "
                                                                     "build_constants)")
-    from swdb import archevolve_proof      # Probata PoC 18: ArchEvolve mode's whole proof path
+    whole = sub.add_argument_group("whole-function equivalence (ticket 61): cbmc on a product program of the candidate's "
+                                   "function and the baseline's; the record's route is bounded_direct")
+    whole.add_argument("--whole-function", choices=["bounded_direct", "no_contract_baseline"],
+                       help="bounded_direct: a proof unit with no unit postcondition (contract with relational_template); "
+                            "no_contract_baseline: the evaluation's baseline, never a level")
+    whole.add_argument("--baseline-candidate", help="compare against this candidate artifact's function (default: the "
+                                                    "candidate's source snapshot)")
+    whole.add_argument("--borrowed-bounds", metavar="RECORD", help="no_contract_baseline: run at this minimum-bounds "
+                                                                   "derivation record's bounds, labeled borrowed")
+    whole.add_argument("--output-determinism", choices=["deterministic", "nondeterministic"],
+                       help="no_contract_baseline (required): whether the kernel's output is deterministic; only a "
+                            "deterministic output is compared by equality")
+    whole.add_argument("--unwindset",action="append", default=[], metavar="SIDE:LOOP=K",
+                       help="a per-loop unwinding bound for one copy, e.g. candidate:f.0=7 (repeatable)")
+    from swdb import archevolve_proof     # Probata PoC 18: ArchEvolve mode's whole proof path
     archevolve_proof.register_options(sub)
     sub.add_argument("--format", choices=["yaml", "json"], default="yaml")
     sub.set_defaults(analytic_handler=prove)
@@ -227,30 +253,45 @@ def prove(args):
     store = _require_valid(args.records)
     if getattr(args, "summary", None):
         return _prove_summary(args, store)
+    if getattr(args, "model", None):
+        return _prove_model(args, store)
     if not args.candidate or not args.function:
         raise UsageError("swdb prove needs --candidate and --function (or --summary ENTRY)")
     candidate = store.get(args.candidate, "candidate")
     if candidate is None:
         raise Failure(f"candidate {args.candidate!r} does not exist")
     library = _library(store)
-    contract = args.contract or _certified_contract(store, args.candidate, library)
-    if library is None or library.get(contract) is None:
-        raise Failure(f"contract {contract!r} is not in the library beside {args.records}")
+    whole = getattr(args, "whole_function", None)
+    if whole:                                     # ticket 61: whole-function equivalence (route bounded_direct)
+        from swdb import cbmc_equivalence
+        if args.adapter != "cbmc" or args.skip is not None:
+            raise UsageError("--whole-function runs the cbmc adapter (no --skip)")
+        contract = cbmc_equivalence.contract(args, store, library,
+                                             lambda: _certified_contract(store, args.candidate, library))
+    else:
+        contract = args.contract or _certified_contract(store, args.candidate, library)
+        if library is None or library.get(contract) is None:
+            raise Failure(f"contract {contract!r} is not in the library beside {args.records}")
     vocabs, _problems = vocab.load_all(paths.VOCAB)
     if args.skip is not None and args.skip not in listed(vocabs, "skip_reason"):
         raise UsageError(f"--skip {args.skip!r} is not a skip reason in vocabulary {FAILURE_VOCAB}")
+    if getattr(args, "hint_file", None) is not None and args.adapter != "wp":     # ticket 35; map 13 item 2
+        raise UsageError(f"a hint set goes only to the WP adapter: the {args.adapter} adapter (a bounded-verifier job) "
+                         "takes no --hint-file, so no refutation depends on hint text")
     scripts = [None] if args.skip is not None else (args.script or [None])
     if args.id and len(scripts) > 1:
         raise UsageError("--id names the record of a one-job batch only")
     run_fields = _run_fields(args)
-    method = _current_method(args.records)
+    method = _current_method(args.records, getattr(args, "method_version", None))
     runs = _outside_repo(args.runs_dir)
     artifact = candidate.get("artifact") or {}
     unit = ProofUnit(args.candidate, args.function, artifact.get("path"), artifact.get("sha256"),
-                     contract, library.content_sha256(contract))
+                     contract, library.content_sha256(contract) if contract else None)
     pins = _pins(store, candidate, unit, (), method)
+    if whole:
+        pins.update(cbmc_equivalence.prepare(args, store, candidate, args.function))
     from swdb import logic_library                    # ticket 26: the logic files the formal halves use
-    logic = logic_library.pins(library, library.get(contract))
+    logic = logic_library.pins(library, library.get(contract) if contract else None)
     if logic:
         pins["logic"] = logic
     if getattr(args, "minimum_bounds", None):
@@ -272,6 +313,8 @@ def prove(args):
         else:
             record = _run_job(rid, unit, pins, adapter, runs, place, listed(vocabs, "failure_class"), method,
                               bounds=getattr(args, "bounds", None), budget_minutes=getattr(args, "budget_minutes", None))
+        if whole:
+            record["route"] = cbmc_equivalence.ROUTE
         record.update(run_fields)
         done.append({"record": record, "path": _write(args.records, record)})
     return done[0] if len(done) == 1 else {"batch": batch, "jobs": done}
@@ -316,6 +359,40 @@ def _prove_summary(args, store):
     place = {"batch": args.batch or f"batch.{rid}", "position": args.position}
     record = _run_job(rid, unit, pins, adapter, _outside_repo(args.runs_dir), place, listed(vocabs, "failure_class"),
                       method, bounds=getattr(args, "bounds", None), budget_minutes=getattr(args, "budget_minutes", None))
+    record.update(_run_fields(args))
+    return {"record": record, "path": _write(args.records, record)}
+
+
+def _prove_model(args, store):
+    """Ticket 24: one job proving a C model of the C lowering against its own ACSL contract; the record's subject is
+    {c_model, id: NAME}. Code and contract pins are the sha256 of the model's text, so a changed model (a new C
+    lowering tool version) makes the record stop counting; a unit's record pins it in `pins.models`."""
+    from swdb import c_lowering, method_version, vocab
+    name = args.model
+    text = c_lowering.model_text(name)
+    if text is None:
+        raise UsageError(f"--model {name}: the C lowering has no C model of that name")
+    if args.adapter != "wp" or args.candidate or args.summary or args.skip is not None or args.script:
+        raise UsageError("--model runs one wp job on a C model: --adapter wp, no --candidate, --summary, --skip or --script")
+    sha = hashlib.sha256(text.encode()).hexdigest()
+    unit = ProofUnit(None, name, "", sha, f"{MODEL_PREFIX}{name}", sha)
+    method = _current_method(args.records)
+    pins = {"code": {"id": name, "sha256": sha}, "contract": {"id": name, "sha256": sha},
+            "baseline_function": {"not_applicable": "A C model is proven on its own text."},
+            "reference_semantics": {"not_applicable": "No reference-semantics definition is pinned before ticket 30."},
+            "proof_semantics": {"not_applicable": "A C model makes no DX100 call."},
+            "method_version": method_version.pin(method), "summaries": [],
+            "minimum_bounds": {"not_applicable": "A C model has no minimum bounds."},
+            "predecessor_snapshot": {"not_applicable": "A C model has no predecessor."},
+            "build_constants": []}
+    adapter = _adapter(args, None, _library(store), unit.contract, method)
+    vocabs, _problems = vocab.load_all(paths.VOCAB)
+    rid = args.id or _new_id(f"model.{name}")
+    if store.get(rid) is not None:
+        raise Failure(f"ID {rid!r} is already used; nothing written")
+    place = {"batch": args.batch or f"batch.{rid}", "position": args.position}
+    record = _run_job(rid, unit, pins, adapter, _outside_repo(args.runs_dir), place, listed(vocabs, "failure_class"),
+                      method, budget_minutes=getattr(args, "budget_minutes", None))
     record.update(_run_fields(args))
     return {"record": record, "path": _write(args.records, record)}
 
@@ -466,7 +543,9 @@ def _head(rid, unit, description):
             "created": writer.today(), "updated": writer.today(),
             "provenance": [{"id": "prove", "kind": "agent_run", "description": description, "uri": None}],
             "subject": {"kind": "candidate_proof_unit", "candidate": unit.candidate, "function": unit.function}
-            if unit.candidate is not None else {"kind": "library_summary", "id": unit.contract}}
+            if unit.candidate is not None else
+            {"kind": "c_model", "id": unit.function} if unit.contract.startswith(MODEL_PREFIX) else
+            {"kind": "library_summary", "id": unit.contract}}
 
 
 def _write(records, record):
@@ -476,15 +555,15 @@ def _write(records, record):
     return writer.commit(records, new=[record])[0]
 
 
-def _current_method(records):
-    """The current method version beside the records folder; `swdb prove` refuses to run without one."""
+def _current_method(records, ident=None):
+    """The method version beside the records folder that the batch pins: the one named (`--method-version`,
+    draft or frozen), else the current frozen one; `swdb prove` refuses to run without one."""
     from swdb import method_version
     from swdb.library import default_root
-    root = default_root(records)
-    found = method_version.current(root)
-    if found is None:
-        raise Failure(f"no method-version file in {root / method_version.FOLDER}: every proof record pins one")
-    return found
+    try:
+        return method_version.select(default_root(records), ident)
+    except LookupError as exc:
+        raise Failure(f"{exc}: every proof record pins one") from None
 
 
 def _pins(store, candidate, unit, summaries, method):

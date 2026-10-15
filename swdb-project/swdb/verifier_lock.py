@@ -1,4 +1,4 @@
-"""The machine-wide verifier lock: one real verifier job at a time on a host (the Mac rule).
+"""The machine-wide verifier lock: at most N real verifier jobs at a time on a host (the Mac rule).
 
 Created: 2026-10-14 ET (Probata proof of concept ticket 21). `swdb prove` takes it before any real
 verifier job; every real adapter (21 WP, 22 CBMC, 46 CIVL, 47 GenMC) inherits it through `swdb prove`
@@ -10,6 +10,9 @@ and none rebuilds it. The scripted adapter takes no lock. Format: docs/reference
   queues; it never fails. A lock whose holder is dead and that is older than 10 s is stale and removed.
 - Where: `SWDB_VERIFIER_LOCK` (a path), else `/tmp/claude/swdb-verifier.lock` when `/tmp/claude` exists
   (the Mac), else `/tmp/swdb-verifier-<uid>.lock`. The queue is the same path with `.queue` for `.lock`.
+- Slots (2026-10-14, Yan-Ru approved two): the machine policy file `<lock without .lock>.slots` (one
+  integer, default 1) sets N. Slot 1 is the lock path itself; slot k > 1 is `<name>.slot<k>.lock`. A waiter
+  among the first N live tickets takes any free slot, so at most N jobs run and the queue stays FIFO.
 - Nested hold: when the holder is an ancestor of this process (a test run inside `verifier_run.py`), this
   process already runs inside the one machine-wide job, so it takes the nested lock `<lock>/nested`
   instead, by the same protocol. Jobs inside one holder still never overlap.
@@ -32,6 +35,24 @@ def path():
     if Path("/tmp/claude").is_dir():
         return Path("/tmp/claude/swdb-verifier.lock")
     return Path(f"/tmp/swdb-verifier-{os.getuid()}.lock")
+
+
+def _stem(lock):
+    return lock.name[:-len(".lock")] if lock.name.endswith(".lock") else lock.name
+
+
+def slots(lock=None):
+    """The configured slot count (policy file beside the lock; default 1, never below 1)."""
+    lock = Path(lock) if lock else path()
+    try:
+        return max(1, int(lock.with_name(f"{_stem(lock)}.slots").read_text().split()[0]))
+    except (OSError, ValueError, IndexError):
+        return 1
+
+
+def slot_paths(lock=None):
+    lock = Path(lock) if lock else path()
+    return [lock] + [lock.with_name(f"{_stem(lock)}.slot{k}.lock") for k in range(2, slots(lock) + 1)]
 
 
 def _queue(lock):
@@ -71,11 +92,15 @@ def hold(owner, lock=None):
 
     Yields {lock, nested, waited_seconds}."""
     lock = Path(lock) if lock else path()
-    holder = _owner_pid(lock) if lock.is_dir() else None
-    nested = holder is not None and holder in _ancestors()
-    target = lock / "nested" if nested else lock
+    ancestors = _ancestors()
+    held = [s for s in slot_paths(lock) if s.is_dir() and _owner_pid(s) in ancestors]
+    nested = bool(held)
     started = time.monotonic()
-    _acquire(target, owner)
+    if nested:
+        target = held[0] / "nested"
+        _acquire([target], owner, held[0] / "nested.queue", 1)
+    else:
+        target = _acquire(slot_paths(lock), owner, _queue(lock), len(slot_paths(lock)))
     try:
         yield {"lock": str(target), "nested": nested, "waited_seconds": round(time.monotonic() - started, 3)}
     finally:
@@ -83,39 +108,48 @@ def hold(owner, lock=None):
             shutil.rmtree(target, ignore_errors=True)
 
 
-def _acquire(lock, owner):
-    queue = _queue(lock) if lock.name != "nested" else lock.parent / "nested.queue"
-    lock.parent.mkdir(parents=True, exist_ok=True)
+def _acquire(candidates, owner, queue, admit):
+    """Queue FIFO; once among the first `admit` live tickets, take the first free candidate. Returns it."""
+    candidates[0].parent.mkdir(parents=True, exist_ok=True)
     queue.mkdir(parents=True, exist_ok=True)
     ticket = queue / f"{time.time_ns():020d}-{os.getpid()}"
     ticket.write_text(f"owner={owner} pid={os.getpid()}\n")
     try:
         while True:
-            if _first_live(queue) == ticket.name:
-                try:
-                    lock.mkdir()
-                    (lock / "owner").write_text(f"owner={owner} pid={os.getpid()} "
-                                                f"since={time.strftime('%Y-%m-%d %H:%M:%S %Z')}\n")
-                    return
-                except FileExistsError:
-                    _clear_if_stale(lock)
-                except FileNotFoundError:                 # nested lock whose holder just released the outer one
-                    raise RuntimeError(f"the verifier lock {lock.parent} was released under a nested job")
+            if ticket.name in _live(queue)[:admit]:
+                for lock in candidates:
+                    try:
+                        lock.mkdir()
+                        (lock / "owner").write_text(f"owner={owner} pid={os.getpid()} "
+                                                    f"since={time.strftime('%Y-%m-%d %H:%M:%S %Z')}\n")
+                        return lock
+                    except FileExistsError:
+                        _clear_if_stale(lock)
+                    except FileNotFoundError:             # nested lock whose holder just released the outer one
+                        raise RuntimeError(f"the verifier lock {lock.parent} was released under a nested job")
             time.sleep(POLL_SECONDS)
     finally:
         ticket.unlink(missing_ok=True)
 
 
-def _first_live(queue):
+def _live(queue):
+    """Live tickets in FIFO order; dead waiters' tickets are removed."""
+    live = []
     for name in sorted(os.listdir(queue)):
         try:
             pid = int(name.split("-")[1])
         except (IndexError, ValueError):
             pid = None
         if pid is not None and _alive(pid):
-            return name
-        (queue / name).unlink(missing_ok=True)
-    return None
+            live.append(name)
+        else:
+            (queue / name).unlink(missing_ok=True)
+    return live
+
+
+def _first_live(queue):
+    live = _live(queue)
+    return live[0] if live else None
 
 
 def _clear_if_stale(lock):

@@ -1,0 +1,70 @@
+# Created: 2026-10-14 ET (Probata proof of concept ticket 35). Planted bad hints: the proof hint check's negative
+# controls, at anchors of the C lowering of swdb_fixture_fill (tests/fixtures/proof/wp/fixture_units.cc).
+# `expect` is the rule the check must reject the hint with (null: a support hint that may pass); `fact` names the
+# escape hatch's source: a WP fact file of map 13 (formal-verification-2026-10-09/prototype/13-wp-hint-facts/
+# q<N>_*.c, case) or the ticket's own control. tests/test_proof_hint_check.py strips both fields, adds
+# provenance, and runs each set through `swdb prove`; every rule of vocab/proof_hint_rules.yaml is planted.
+# The sets are split only where Frama-C needs it: one loop assigns and one loop variant per loop, a function
+# contract right before the function, a statement contract right before its statement.
+sets:
+  - name: parse_and_tree
+    hints:
+      - {expect: null, fact: support, anchor: ghost.globals, kind: ghost, text: "ghost volatile int swdb_gv;"}
+      - {expect: null, fact: support, anchor: ghost.globals, kind: predicate, text: "predicate Rtrue(integer x, integer y) = \\true;"}
+      # q1: ghost code that interferes with real code (the kernel's ghost:bad-use)
+      - {expect: interfering_ghost_code, fact: q1 case 1 (ghost write to real memory), anchor: swdb_fixture_fill.s2.before, kind: ghost, text: "ghost n = 0;"}
+      - {expect: interfering_ghost_code, fact: q1 case 2 (ghost write to a real array), anchor: swdb_fixture_fill.s2.after, kind: ghost, text: "ghost a[0] = 1;"}
+      - {expect: interfering_ghost_code, fact: q1 case 4 (ghost write through a real pointer), anchor: swdb_fixture_fill.entry, kind: ghost, text: "ghost *a = 0;"}
+      - {expect: interfering_ghost_code, fact: q1 case 5 (cast to a ghost pointer), anchor: swdb_fixture_fill.entry, kind: ghost, text: "ghost int \\ghost *swdb_gp = (int \\ghost *)&n;"}
+      - {expect: interfering_ghost_code, fact: q1 case 6 (ghost break), anchor: swdb_fixture_fill.s2.after, kind: ghost, text: "ghost break;"}
+      - {expect: interfering_ghost_code, fact: q1 case 7 (ghost return), anchor: swdb_fixture_fill.s1.after, kind: ghost, text: "ghost return;"}
+      - {expect: interfering_ghost_code, fact: q1 case 10 (ghost call to a real function), anchor: swdb_fixture_fill.s1.before, kind: ghost, text: "ghost swdb_fixture_fill(a, 0, v);"}
+      - {expect: parse_error, fact: ticket 35 (text the parser refuses), anchor: swdb_fixture_fill.s1.after, kind: assert, text: "assert 0 <= ;"}
+      # q2: logic definitions
+      - {expect: recursive_definition, fact: q2 case 2 (recursive logic), anchor: ghost.globals, kind: logic, text: "logic integer bad(integer x) = bad(x) + 1;"}
+      - {expect: recursive_definition, fact: q2 case 3 (self-contradictory predicate), anchor: ghost.globals, kind: predicate, text: "predicate pbad(integer x) = !pbad(x);"}
+      - {expect: inductive_definition, fact: q2 case 6 (inductive), anchor: ghost.globals, kind: predicate, text: "inductive is_zero(integer x) { case zero: is_zero(0); }"}
+      # q3: check, assert and admit
+      - {expect: admit, fact: q3 (admit assertion), anchor: swdb_fixture_fill.s2.before, kind: assert, text: "admit 0 <= i;"}
+      - {expect: admit, fact: q3 (admit loop invariant), anchor: swdb_fixture_fill.loop1.head, kind: loop_invariant, text: "admit loop invariant 0 <= i;"}
+      - {expect: axiom, fact: q3 (admit lemma), anchor: ghost.globals, kind: lemma, text: "admit lemma LA: \\false;"}
+      - {expect: check, fact: q3 (check assertion), anchor: swdb_fixture_fill.s1.after, kind: assert, text: "check 0 <= n;"}
+      - {expect: check, fact: q3 (check lemma), anchor: ghost.globals, kind: lemma, text: "check lemma LC: \\true;"}
+      - {expect: check, fact: q3 (check loop invariant), anchor: swdb_fixture_fill.loop1.head, kind: loop_invariant, text: "check loop invariant i <= n;"}
+      # q3, q7: axioms, ghost functions, body-less declarations, other constructs
+      - {expect: axiom, fact: q4 (axiom inside an axiomatic), anchor: ghost.globals, kind: lemma, text: "axiomatic A { logic integer h(integer x); axiom AX: h(0) == 1; }"}
+      - {expect: axiom, fact: q7 (top-level axiom), anchor: ghost.globals, kind: lemma, text: "axiom AXT: \\false;"}
+      - {expect: ghost_function, fact: q7 case 2 (ghost function with a body), anchor: ghost.globals, kind: ghost, text: "ghost int swdb_gf(int x) { return x; }"}
+      - {expect: ghost_function, fact: "q7 case 1 (body-less ghost function with a trusted contract, called)", anchor: ghost.globals, kind: ghost, text: "ghost\n  /@ assigns \\nothing; ensures \\result == 42; @/\n  int swdb_gd(int x);"}
+      - {expect: null, fact: "support (Frama-C drops an unused prototype; without a contract the kernel refuses it)", anchor: swdb_fixture_fill.s2.after, kind: ghost, text: "ghost int swdb_r = swdb_gd(0);"}
+      - {expect: ghost_function, fact: q7 case 5 (volatile reader), anchor: ghost.globals, kind: ghost, text: "ghost int swdb_rd(volatile int *p) { return 0; }"}
+      - {expect: bodyless_declaration, fact: q3 (logic declaration), anchor: ghost.globals, kind: logic, text: "logic integer h2(integer x);"}
+      - {expect: bodyless_declaration, fact: q3 (predicate with a reads clause only), anchor: ghost.globals, kind: predicate, text: "predicate p2(integer x) reads \\nothing;"}
+      - {expect: import, fact: q7 case 7 (import a Why3 theory), anchor: ghost.globals, kind: lemma, text: "import \\wp::why3: number::Gcd;"}
+      - {expect: global_invariant, fact: q7 case 8 (global invariant), anchor: ghost.globals, kind: lemma, text: "global invariant GI: \\true;"}
+      - {expect: volatile_clause, fact: q7 case 5 (volatile clause), anchor: ghost.globals, kind: lemma, text: "volatile swdb_gv reads swdb_rd;"}
+      - {expect: not_on_vocabulary, fact: ticket 35 (logic type), anchor: ghost.globals, kind: logic, text: "type swdb_t = integer;"}
+      - {expect: from_clause, fact: q7 case 4 (\from), anchor: swdb_fixture_fill.loop1.head, kind: loop_assigns, text: "loop assigns i, a[0 .. n-1] \\from n;"}
+      - {expect: variant_relation, fact: q7 case 3 (loop variant for R), anchor: swdb_fixture_fill.loop1.head, kind: loop_variant, text: "loop variant n - i for Rtrue;"}
+      # the ticket's own record, erase and tree controls
+      - {expect: kind_mismatch, fact: ticket 35 (a ghost declaration declared as an assertion), anchor: swdb_fixture_fill.s1.after, kind: assert, text: "ghost int swdb_k = 0;"}
+      - {expect: parse_error, fact: ticket 35 (two assertions in one comment), anchor: swdb_fixture_fill.s2.before, kind: assert, text: "assert 0 <= i;\nassert i < n;"}
+      - {expect: unknown_anchor, fact: ticket 35, anchor: swdb_fixture_fill.loop7.head, kind: loop_invariant, text: "loop invariant 0 <= i;"}
+      - {expect: kind_not_allowed, fact: ticket 35 (check is on no list), anchor: swdb_fixture_fill.s2.before, kind: check, text: "check 0 <= i;"}
+      - {expect: anchor_kind_mismatch, fact: ticket 35, anchor: swdb_fixture_fill.s2.before, kind: loop_invariant, text: "loop invariant 0 <= i;"}
+      - {expect: erase_and_diff, fact: ticket 35 (closes its comment and adds code), anchor: swdb_fixture_fill.entry, kind: assert, text: "assert \\true; */ v = 0; /*@ assert \\true;"}
+  - name: contracts_and_ranges
+    hints:
+      - {expect: contract, fact: q3, q7 case 1 (requires, ensures, assumes, behavior; admit requires), anchor: ghost.globals, kind: predicate, text: "admit requires \\false;\nensures \\false;\nbehavior b:\n  assumes \\true;\n  ensures \\false;"}
+      - {expect: statement_contract, fact: q7 case 9 (statement contract), anchor: swdb_fixture_fill.s2.before, kind: assert, text: "assigns a[i];\nensures a[i] == v;"}
+      - {expect: null, fact: support, anchor: swdb_fixture_fill.loop1.head, kind: loop_invariant, text: "loop invariant 0 <= i <= n;"}
+      - {expect: unbounded_range, fact: ticket 07 (infinite range in loop assigns aborts WP 33), anchor: swdb_fixture_fill.loop1.head, kind: loop_assigns, text: "loop assigns i, a[0 ..];"}
+  - name: other_code_annotation
+    hints:
+      - {expect: not_on_vocabulary, fact: q7 case 6 (calls), anchor: swdb_fixture_fill.s2.before, kind: assert, text: "calls swdb_fixture_fill;"}
+      - {expect: parse_error, fact: ticket 35 (a non-integer loop variant; the kernel's type check refuses it), anchor: swdb_fixture_fill.loop1.head, kind: loop_variant, text: "loop variant (real)(n - i);"}
+  - name: wp_generation
+    hints:
+      - {expect: null, fact: support, anchor: ghost.globals, kind: lemma, text: "lemma swdb_l: \\true;"}
+      - {expect: wp_generation_error, fact: research 13 Q5 (only WP's predefined tactics), anchor: ghost.globals, kind: wp_strategy, text: "\\wp::strategy S: \\tactic(\"Wp.nosuch\");"}
+      - {expect: null, fact: support, anchor: ghost.globals, kind: wp_strategy, text: "\\wp::proof S: swdb_l;"}

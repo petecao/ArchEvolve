@@ -35,12 +35,22 @@ FILL, KNOB, SMOKE = "contract.fixture_cbmc_fill", "contract.fixture_cbmc_knob", 
 CLAMP, CLAMP_ALL = "contract.fixture_cbmc_clamp", "contract.fixture_cbmc_clamp_all"
 TWICE, VACUOUS = "contract.fixture_cbmc_twice", "contract.fixture_cbmc_vacuous"
 FILL_BOUNDS = {"threads": 1, "n": 3}
-TRUSTED = {"swdb-c-lowering-1", "clang-22.1.8", "swdb-cbmc-translator-1", "cbmc-6.11.0", "cadical-in-cbmc-6.11.0"}
+TRUSTED = {"swdb-c-lowering-2", "clang-22.1.8", "swdb-cbmc-translator-2", "cbmc-6.11.0", "cadical-in-cbmc-6.11.0"}
 FILL_CLAUSES = [("fill_pre", "legality", "requires n >= 0 && \\valid(a + (0 .. n-1));", "per_candidate"),
                 ("fill_post", "postcondition", "assigns a[0 .. n-1];\nensures \\forall integer k; 0 <= k < n ==> a[k] == v;",
                  "per_candidate")]
 CLAMP_POST = "assigns \\nothing;\nensures lo <= \\result <= hi;\nensures lo <= x <= hi ==> \\result == x;"
 ONCE = {"once": "self"}
+# Ticket 23: the C-stub meaning controls, a logic call, \separated, and a real-valued unit.
+ADD_ONE, CALL_BAD, CALL_KEEP = "contract.fixture_cbmc_add_one", "contract.fixture_cbmc_call_bad", "contract.fixture_cbmc_call_keep"
+CALL_OUTSIDE, TOTAL, TOTAL_WRONG = ("contract.fixture_cbmc_call_outside", "contract.fixture_cbmc_total",
+                                    "contract.fixture_cbmc_total_wrong")
+CALL_INC = "contract.fixture_cbmc_call_inc"
+COPY, HALF, POST_BOUND = "contract.fixture_cbmc_copy", "contract.fixture_cbmc_half", "contract.fixture_cbmc_post_bound"
+CALLER_PRE = "requires 1 <= n <= 3 && \\valid(a + (0 .. n-1)) && -1000 <= a[0] <= 1000;"
+LOGIC_SUM = ("// version: 1.0\n"
+             "logic integer fixture_sum{L}(int *a, integer n) =\n"
+             "  n <= 0 ? 0 : fixture_sum(a, n - 1) + a[n - 1];\n")
 
 
 def _tools_present():
@@ -63,8 +73,8 @@ def _contract(cid, function, clauses, frame, knobs=()):
         "concurrency_frame": frame,
         "clauses": [{"id": name, "role": role, "statement": f"Fixture clause {name}.", "discharge_mode": "runtime_guard",
                      "negative_control": {"id": f"{name}-control", "check": name},
-                     "acsl": {"text": text, "uses": []}, "proof_placement": placement}
-                    for name, role, text, placement in clauses],
+                     "acsl": {"text": text, "uses": list(more[0]) if more else []}, "proof_placement": placement}
+                    for name, role, text, placement, *more in clauses],
         "pattern_key": [{"roles": ["index", "target"], "address_shapes": ["stream", "single_valued_indirect"],
                          "update_kind": "read"}],
         "strategies": [], "uses_intrinsics": [], "uses_library_operations": [], "runtime_guards": [],
@@ -82,6 +92,8 @@ def method_version(identity):
     data.update(id="method.cbmc-fixture", description="Fixture method version with CBMC 6.11 as the bounded "
                                                        "verifier on the C lowering (ticket 22 tests).")
     next(row for row in data["lineup"] if row["tool"] == "cbmc")["flags"] = ["--sat-solver", "cadical"]
+    data["lineup"].append({"role": "bounded_verifier_fallback", "tool": "crux-llvm", "version": "0.12",
+                           "flags": ["--no-compile"]})                       # ticket 23
     data["c_lowering"]["translators"] = [identity["c_lowering"], cbmc_translator.identity()]
     return data
 
@@ -108,6 +120,47 @@ def _contracts():
         "fixture_cbmc_twice": _contract(TWICE, "swdb_fixture_twice", [
             ("twice_post", "postcondition", "requires 0 <= n <= 100;\nassigns \\nothing;\nensures \\result == 2 * n;",
              "per_candidate")], []),
+        "fixture_cbmc_add_one": _contract(ADD_ONE, "swdb_fixture_add_one", [
+            ("add_one_pre", "legality", "requires 0 <= i < n && \\valid(a + (0 .. n-1)) && -1000 <= a[i] <= 1000;", ONCE),
+            ("add_one_post", "postcondition", "assigns a[i];\nensures a[i] == \\old(a[i]) + 1;", ONCE)], array),
+        "fixture_cbmc_call_bad": _contract(CALL_BAD, "swdb_fixture_call_bad", [
+            ("bad_pre", "legality", CALLER_PRE, "per_candidate"),
+            ("bad_post", "postcondition", "assigns a[0 .. n-1];\nensures \\result == 0;", "per_candidate")], array),
+        "fixture_cbmc_call_keep": _contract(CALL_KEEP, "swdb_fixture_call_keep", [
+            ("keep_pre", "legality", CALLER_PRE, "per_candidate"),
+            ("keep_post", "postcondition", "assigns a[0 .. n-1];\nensures \\result == \\old(a[0]);",
+             "per_candidate")], array),
+        "fixture_cbmc_call_outside": _contract(CALL_OUTSIDE, "swdb_fixture_call_outside", [
+            ("outside_pre", "legality", CALLER_PRE.replace("1 <= n", "2 <= n"), "per_candidate"),
+            ("outside_post", "postcondition", "assigns a[0 .. n-1];\nensures \\result == \\old(a[1]);",
+             "per_candidate")], array),
+        "fixture_cbmc_call_inc": _contract(CALL_INC, "swdb_fixture_call_inc", [
+            ("inc_pre", "legality", CALLER_PRE, "per_candidate"),
+            ("inc_post", "postcondition", "assigns a[0 .. n-1];\nensures \\result == \\old(a[0]) + 1;",
+             "per_candidate")], array),
+        "fixture_cbmc_total": _contract(TOTAL, "swdb_fixture_total", [
+            ("total_pre", "legality", "requires 0 <= n && \\valid(a + (0 .. n-1)) && "
+                                       "(\\forall integer k; 0 <= k < n ==> -1000 <= a[k] <= 1000);", "per_candidate"),
+            ("total_post", "postcondition", "assigns \\nothing;\nensures \\result == fixture_sum(a, n);",
+             "per_candidate", ["logic.fixture_sum"])], array),
+        "fixture_cbmc_total_wrong": _contract(TOTAL_WRONG, "swdb_fixture_total", [
+            ("total_pre", "legality", "requires 0 <= n && \\valid(a + (0 .. n-1)) && "
+                                       "(\\forall integer k; 0 <= k < n ==> -1000 <= a[k] <= 1000);", "per_candidate"),
+            ("total_post", "postcondition", "assigns \\nothing;\nensures \\result == fixture_sum(a, n - 1);",
+             "per_candidate", ["logic.fixture_sum"])], array),
+        "fixture_cbmc_copy": _contract(COPY, "swdb_fixture_copy", [
+            ("copy_pre", "legality", "requires 0 <= n && \\valid(a + (0 .. n-1)) && \\valid(b + (0 .. n-1)) && "
+                                     "\\separated(a + (0 .. n-1), b + (0 .. n-1)) && "
+                                     "(\\forall integer k; 0 <= k < n ==> -1000 <= a[k] <= 1000);", "per_candidate"),
+            ("copy_post", "postcondition", "assigns b[0 .. n-1];\n"
+                                           "ensures \\forall integer k; 0 <= k < n ==> b[k] == \\old(a[k]);",
+             "per_candidate")], array + [{"array": "b", "shared_actions": [], "history_reads": False}]),
+        "fixture_cbmc_half": _contract(HALF, "swdb_fixture_half", [
+            ("half_post", "postcondition", "assigns \\nothing;\nensures \\result == x / 2.0;", "per_candidate")], []),
+        "fixture_cbmc_post_bound": _contract(POST_BOUND, "swdb_fixture_total", [
+            ("post_bound_pre", "legality", "requires 0 <= n && \\valid(a + (0 .. n-1));", "per_candidate"),
+            ("post_bound_post", "postcondition", "assigns \\nothing;\n"
+             "ensures \\forall integer k; 0 <= k < \\result ==> a[0] >= -2;", "per_candidate")], array),
         "fixture_cbmc_vacuous": _contract(VACUOUS, "smoke_main", [
             ("vacuous_pre", "legality", "requires x > 100 && x < 0;", "per_candidate"),
             ("vacuous_post", "postcondition", "assigns \\nothing;\nensures \\result == 1;", "per_candidate")], []),
@@ -127,6 +180,8 @@ def build_cbmc_seed(path):
     (methods / "cbmc-fixture.yaml").write_text(yaml.safe_dump(method_version(c_lowering.identity()), sort_keys=False))
     (path / "library" / "proof_units").mkdir()
     (path / "library" / "proof_units" / "cbmc_fixture_units.cc").write_text(UNITS)
+    (path / "library" / "logic").mkdir(exist_ok=True)
+    (path / "library" / "logic" / "fixture_sum.acsl").write_text(LOGIC_SUM)
     for name, data in _contracts().items():
         (path / "library" / "rewrite_contracts" / f"{name}.yaml").write_text(yaml.safe_dump(data, sort_keys=False))
     records, runs, _snapshot, request = build_proposal_setup(records, path, copy_all=False)
@@ -167,9 +222,9 @@ class Seed:
         assert (result.returncode == 0) is ok, result.stderr + result.stdout
         return json.loads(result.stdout) if ok else result
 
-    def prove_summary(self, entry=CLAMP, ok=True):
+    def prove_summary(self, entry=CLAMP, ok=True, bounds=None, env=None):
         result = self.swdb("prove", "--summary", entry, "--adapter", "cbmc", "--runs-dir", self.runs, "--format", "json",
-                           "--bounds", json.dumps({"threads": 1}))
+                           "--bounds", json.dumps(bounds or {"threads": 1}), env=env)
         assert (result.returncode == 0) is ok, result.stderr + result.stdout
         return json.loads(result.stdout) if ok else result
 
@@ -208,7 +263,7 @@ def test_the_safe_fixture_is_proven_within_its_bounds_on_both_forms(seed):
     assert {a["reference"]["id"] for a in record["assumptions"] if a["kind"] == "trusted_tool"} == TRUSTED
     assert set(record["tools"]) == TRUSTED
     assert record["pins"]["c_lowering"]["id"] == "swdb_fixture_fill.c"
-    assert record["pins"]["translator"]["id"] == "swdb-cbmc-translator-1"
+    assert record["pins"]["translator"]["id"] == "swdb-cbmc-translator-2"
     assert {f"{FILL}#fill_post.ensures1", f"{FILL}#fill_post.assigns1"} <= {g["property"] for g in record["goals"]}
     assert all(g["status"] == "success" for g in record["goals"] if not g["property"].startswith("swdb_reach"))
     assert not (seed.runs / record["id"] / "scratch").exists()
@@ -221,7 +276,7 @@ def test_the_safe_fixture_is_proven_within_its_bounds_on_both_forms(seed):
 def test_the_translator_is_deterministic_and_pinned(seed):
     first, second = (seed.read(seed.prove()) for _ in range(2))
     inputs = [open(seed.report(r, "cbmc_input"), "rb").read() for r in (first, second)]
-    assert inputs[0] == inputs[1] and b"swdb-cbmc-translator 1" in inputs[0]
+    assert inputs[0] == inputs[1] and b"swdb-cbmc-translator 2" in inputs[0]
     assert first["pins"]["translator"] == second["pins"]["translator"]
 
 
@@ -288,6 +343,65 @@ def test_override_negative_control_a_weakened_summary_no_longer_proves_the_unit(
     assert seed.read(seed.prove_summary())["verdict"] == "proven"
     unit = seed.read(seed.prove("swdb_fixture_clamp_all", CLAMP_ALL, {"threads": 1, "n": 2}))
     assert unit["verdict"] != "proven"
+
+
+# --- ticket 23: C-stub meaning (\old over memory in a stub), assumes listed under their summary -------------------
+
+CALLER_BOUNDS = {"threads": 1, "n": 3}
+
+
+def _with_add_one_summary(seed):
+    summary = seed.read(seed.prove_summary(ADD_ONE, bounds={"threads": 1, "n": 2}))
+    assert summary["verdict"] == "proven"
+    return summary
+
+
+@needs_cbmc
+def test_c_stub_meaning_a_caller_that_breaks_the_callees_precondition_is_refuted_at_the_stubs_assert(seed):
+    _with_add_one_summary(seed)
+    record = seed.read(seed.prove("swdb_fixture_call_bad", CALL_BAD, CALLER_BOUNDS))
+    assert record["verdict"] == "refuted"
+    assert record["counterexample"]["property"] == f"{ADD_ONE}#add_one_pre"
+    assert record["counterexample"]["replay"]["replayed"] is True
+
+
+@needs_cbmc
+def test_c_stub_meaning_a_caller_expecting_a_location_inside_assigns_to_keep_its_value_is_refuted(seed):
+    _with_add_one_summary(seed)
+    record = seed.read(seed.prove("swdb_fixture_call_keep", CALL_KEEP, CALLER_BOUNDS))
+    assert record["verdict"] == "refuted"
+    assert record["counterexample"]["property"] == f"{CALL_KEEP}#keep_post.ensures1"
+
+
+@needs_cbmc
+def test_c_stub_meaning_a_caller_relying_on_a_location_outside_assigns_proves_and_lists_each_assume(seed):
+    summary = _with_add_one_summary(seed)
+    record = seed.read(seed.prove("swdb_fixture_call_outside", CALL_OUTSIDE, CALLER_BOUNDS))
+    assert record["verdict"] == "proven"
+    (pin,) = record["pins"]["summaries"]
+    assert pin["id"] == ADD_ONE and pin["proof_record"] == summary["id"]
+    assert pin["assumes"] == [f"{ADD_ONE}#add_one_post.ensures1"]          # the stub's one generated assume
+    job_c = open(seed.report(record, "cbmc_input")).read()
+    assume = next(line for line in job_c.splitlines() if "assume from summary" in line)
+    assert f"{ADD_ONE} sha256 {pin['sha256'][:16]}" in assume and "add_one_post.ensures1" in assume
+    assert seed.swdb("validate").returncode == 0
+
+
+# --- ticket 23: logic calls and \separated -----------------------------------------------------------------------
+
+@needs_cbmc
+def test_a_logic_library_call_in_a_formal_half_is_translated_and_decides_the_verdict(seed):
+    assert seed.read(seed.prove("swdb_fixture_total", TOTAL))["verdict"] == "proven"
+    wrong = seed.read(seed.prove("swdb_fixture_total", TOTAL_WRONG))
+    assert wrong["verdict"] == "refuted" and wrong["counterexample"]["property"] == f"{TOTAL_WRONG}#total_post.ensures1"
+
+
+@needs_cbmc
+def test_separated_arrays_and_an_old_value_under_a_quantifier_prove_the_copy(seed):
+    assert seed.read(seed.prove("swdb_fixture_copy", COPY))["verdict"] == "proven"
+    buggy = seed.read(seed.prove("swdb_fixture_copy", COPY, None, "--define", "SWDB_SEEDED_FRAME_BUG"))
+    assert buggy["verdict"] == "refuted"                            # the frame (assigns) or the \old clause catches it
+    assert buggy["counterexample"]["property"] in (f"{COPY}#copy_post.assigns1", f"{COPY}#copy_post.ensures1")
 
 
 # --- the agreement check and the subset -------------------------------------------------------------------------

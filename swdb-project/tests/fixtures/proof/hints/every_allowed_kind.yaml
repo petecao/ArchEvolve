@@ -1,0 +1,56 @@
+# Created: 2026-10-14 ET (Probata proof of concept ticket 35). One hint of each kind on proof-hint-vocabulary-1
+# (vocab/proof_hint_kinds.yaml), at anchors of the C lowering of swdb_fixture_fill (tests/fixtures/proof/wp/
+# fixture_units.cc). The proof hint check must accept the whole set; it need not prove anything.
+hints:
+  - anchor: ghost.globals
+    kind: ghost
+    text: "ghost int swdb_fill_steps = 0;"
+    provenance: {source: agent}
+  - anchor: ghost.globals
+    kind: predicate
+    text: "predicate filled{L}(int *p, integer m, integer x) = \\forall integer k; 0 <= k < m ==> \\at(p[k], L) == x;"
+    provenance: {source: agent}
+  - anchor: ghost.globals
+    kind: logic
+    text: "logic integer twice(integer x) = 2 * x;"
+    provenance: {source: human}
+  - anchor: ghost.globals
+    kind: lemma
+    text: "lemma twice_nonneg: \\forall integer x; 0 <= x ==> 0 <= twice(x);"
+    provenance: {source: agent}
+  - anchor: ghost.globals
+    kind: wp_strategy
+    text: "\\wp::strategy Leaf: \\prover(\"Alt-Ergo\", 30), \\prover(\"Z3\", 30);"
+    provenance: {source: agent}
+  - anchor: ghost.globals
+    kind: wp_strategy
+    text: "\\wp::proof Leaf: twice_nonneg;"
+    provenance: {source: agent}
+  - anchor: swdb_fixture_fill.entry
+    kind: ghost
+    text: "ghost int seen = 0;"
+    provenance: {source: seed, seed_source: contract.fixture_wp_fill}
+  - anchor: swdb_fixture_fill.entry
+    kind: assert
+    text: "assert 0 <= n;"
+    provenance: {source: agent}
+  - anchor: swdb_fixture_fill.loop1.head
+    kind: loop_invariant
+    text: "loop invariant 0 <= i <= n;"
+    provenance: {source: agent}
+  - anchor: swdb_fixture_fill.loop1.head
+    kind: loop_assigns
+    text: "loop assigns i, a[0 .. n-1], seen;"
+    provenance: {source: agent}
+  - anchor: swdb_fixture_fill.loop1.head
+    kind: loop_variant
+    text: "loop variant n - i;"
+    provenance: {source: agent}
+  - anchor: swdb_fixture_fill.s2.before
+    kind: ghost
+    text: "ghost seen = seen + 1;"
+    provenance: {source: agent}
+  - anchor: swdb_fixture_fill.s1.after
+    kind: assert
+    text: "assert filled{Here}(a, n, v);"
+    provenance: {source: agent}

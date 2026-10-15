@@ -50,14 +50,22 @@ class Case:
         return self.records.swdb(*args)
 
     def semantics(self, name, sequence):
-        """A proof-semantics version file in library/proof_semantics/ (ticket 27 writes the real ones)."""
+        """A proof-semantics version file in library/proof_semantics/ (ticket 27 writes the real ones).
+
+        Since ticket 20 the folder holds typed-library entries of kind proof_semantics (ID prefix `semantics.`,
+        formal_frame, version, rules; no `status`); the level rule's version line still reads `target` and
+        `sequence` (the same fixture form as tests/test_level_rule.py since 9280a24c)."""
         folder = self.library / "proof_semantics"
         folder.mkdir(exist_ok=True)
         path = folder / f"{name}.yaml"
-        path.write_text(yaml.safe_dump({"id": f"proof_semantics.{name}", "kind": "proof_semantics",
-                                        "target": "dx100", "sequence": sequence, "status": "draft",
-                                        "evidence_kind": "contract_fixture"}))
-        return {"id": f"proof_semantics.{name}", "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
+        ident = f"semantics.{name}"
+        path.write_text(yaml.safe_dump({
+            "id": ident, "kind": "proof_semantics", "formal_frame": 1, "version": f"{sequence}.0",
+            "target": "dx100", "sequence": sequence,
+            "provenance": {"origin": {"intrinsic_specification": "fixture-12"}}, "clauses": [],
+            "rules": [{"id": "wait", "statement": f"Fixture proof-semantics version {name}: a read waits for its command.",
+                       "assumed": {"owner": "fixture"}}]}, sort_keys=False))
+        return {"id": ident, "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
 
     def prove(self, candidate=CANDIDATE, **pins):
         script = self.root / "script.yaml"
@@ -97,7 +105,7 @@ def test_promote_cites_the_counting_proof_records_and_the_level_snapshot(promota
     assert review["proof_records"] == [promotable.proof_id]
     snapshot = review["level_snapshot"]
     assert snapshot["level"] == "proven_within_bounds_threads_1"
-    assert snapshot["level_rule"] == "level-rule.1"
+    assert snapshot["level_rule"] == "level-rule.2"
     assert snapshot["records"] == [promotable.proof_id]
     assert snapshot["at"].endswith(" ET") and len(snapshot["at"]) == len("2026-10-14 02:36 ET")
     assert promotable.swdb("validate").returncode == 0
@@ -111,7 +119,7 @@ def test_a_later_drop_shows_beside_the_approved_snapshot(promotable):
     promotion = level["promotion"]
     assert promotion["review"] == review["id"]
     assert promotion["level_snapshot"] == {"level": "proven_within_bounds_threads_1",
-                                           "at": review["level_snapshot"]["at"], "level_rule": "level-rule.1",
+                                           "at": review["level_snapshot"]["at"], "level_rule": "level-rule.2",
                                            "records": [promotable.proof_id]}
     assert promotion["proof_records"] == [promotable.proof_id]
     assert promotion["dropped"] is True

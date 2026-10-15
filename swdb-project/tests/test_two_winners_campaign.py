@@ -80,7 +80,7 @@ def test_both_winners_are_tracked_every_iteration_shown_in_best_and_reported_in_
         for winner in rows_now:
             snapshot = winner["level_snapshot"]
             assert snapshot["level"] == level(store, winner["candidate"])["level"] != "proven_unbounded"
-            assert snapshot["level_rule"] == "level-rule.1" and snapshot["at"].endswith(" ET")
+            assert snapshot["level_rule"] == "level-rule.2" and snapshot["at"].endswith(" ET")
     # The next rewrite workspace's best/: the fastest winner's patch, and the best-proven winner's when it differs.
     calls = rewrite_calls(team)
     assert calls[1]["best"] == {"best/kronecker.patch": PATCHES[0], "best/uniform_random.patch": PATCHES[0]}

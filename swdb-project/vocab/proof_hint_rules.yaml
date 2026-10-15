@@ -1,0 +1,79 @@
+# Created: 2026-10-14 ET (Probata proof of concept ticket 35). The rules of the proof hint check (formal-
+# verification map 13 items 4, 5, 7, 8): every rejected hint is recorded with one or more of these rules.
+# VERSIONED with proof_hint_kinds.yaml (swdb.hint_check pins both files' sha256 as one vocabulary version).
+name: proof_hint_rules
+description: The rule under which the proof hint check rejected a hint (one per reason).
+fields: [stage]
+values:
+  - value: unknown_anchor
+    stage: record
+    meaning: "The hint's anchor is not an anchor of the C lowering."
+  - value: kind_not_allowed
+    stage: record
+    meaning: "The hint's kind is not on the proof hint vocabulary (proof_hint_kinds); the vocabulary rejects everything it does not allow."
+  - value: anchor_kind_mismatch
+    stage: record
+    meaning: "The hint's kind may not sit at this kind of anchor (for example a loop invariant at a statement anchor)."
+  - value: erase_and_diff
+    stage: erase
+    meaning: "Erasing the merged hint annotations does not give back the C lowering byte for byte (the text closed its annotation and added code, a comment or a line splice)."
+  - value: parse_error
+    stage: parse
+    meaning: "Frama-C's ACSL parser or type checker refused the text."
+  - value: interfering_ghost_code
+    stage: parse
+    meaning: "Frama-C refused ghost code that writes real memory, changes real control flow or calls a real function (Frama-C warn key ghost:bad-use)."
+  - value: kind_mismatch
+    stage: tree
+    meaning: "The text's syntax tree is not exactly the declared kind (another annotation kind, more than one annotation, or none)."
+  - value: admit
+    stage: tree
+    meaning: "An admit form (admit assert, admit loop invariant, admit clause): a hypothesis with no proof obligation (an admit lemma is an axiom)."
+  - value: check
+    stage: tree
+    meaning: "A check form (check assert, check lemma, check invariant), which is not on the vocabulary."
+  - value: axiom
+    stage: tree
+    meaning: "An axiom, an admit lemma (Frama-C's syntax tree makes axioms admit lemmas) or an axiomatic block."
+  - value: recursive_definition
+    stage: tree
+    meaning: "A logic or predicate definition that refers to itself (WP turns it into an unchecked axiom); only the logic library may hold recursion."
+  - value: inductive_definition
+    stage: tree
+    meaning: "An inductive predicate; only the logic library may hold one."
+  - value: bodyless_declaration
+    stage: tree
+    meaning: "A logic or predicate declaration without a body (or with only a reads clause)."
+  - value: contract
+    stage: tree
+    meaning: "A function contract clause (requires, ensures, assumes, assigns, behavior, terminates, decreases) or an annotation for named behaviors."
+  - value: statement_contract
+    stage: tree
+    meaning: "A statement contract."
+  - value: ghost_function
+    stage: tree
+    meaning: "A ghost function, with or without a body."
+  - value: variant_relation
+    stage: tree
+    meaning: "A loop variant with a `for R` relation (WP assumes R well-founded)."
+  - value: import
+    stage: tree
+    meaning: "An import of an external module (for example import \\wp::why3:), whose axioms enter with no proof obligation."
+  - value: from_clause
+    stage: tree
+    meaning: "A \\from dependency in an assigns clause (WP never checks it)."
+  - value: global_invariant
+    stage: tree
+    meaning: "A global invariant (WP ignores it)."
+  - value: volatile_clause
+    stage: tree
+    meaning: "A volatile clause."
+  - value: unbounded_range
+    stage: tree
+    meaning: "An unbounded range (a[i ..]) in loop assigns, which aborts WP 33.0."
+  - value: not_on_vocabulary
+    stage: tree
+    meaning: "Any other syntax-tree node (logic type, type invariant, model field, code invariant, calls, loop allocation, another extension)."
+  - value: wp_generation_error
+    stage: wp_generation
+    meaning: "WP refused the merged unit while generating goals (no prover runs)."

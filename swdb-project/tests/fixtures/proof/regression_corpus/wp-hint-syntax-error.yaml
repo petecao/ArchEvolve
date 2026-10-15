@@ -1,6 +1,8 @@
 # Created: 2026-10-14 ET (Probata PoC 21). Regression corpus: one diagnosed failure per file, rerun by
 # tests/test_wp_adapter.py (cases through `swdb prove`) and tests/test_c_lowering.py (cases through `swdb lower`);
 # each must give its recorded class again. One corpus serves every adapter (22, 46, 47 add cases).
+# Updated 2026-10-14 ET (Probata PoC 35): hints are hint records, and the proof hint check now rejects this hint
+# before WP runs (rule parse_error), so the case records `hint_rule` instead of WP's failure class.
 id: wp-hint-syntax-error
 adapter: wp
 input:
@@ -9,9 +11,12 @@ input:
   contract: contract.fixture_wp_fill
   hints:
     - anchor: swdb_fixture_fill.loop1.head
-      acsl: "loop invariant 0 <= i <= n &&;"
-failure_class: parse_error
+      kind: loop_invariant
+      text: "loop invariant 0 <= i <= n &&;"
+      provenance: {source: human}
+hint_rule: parse_error
 cause: >-
   A hint Frama-C's kernel cannot parse. Frama-C 33.0's default level for annot-error aborts the run
-  ("warning annot-error treated as fatal error"), so the hint is never dropped silently; the adapter reads
-  the user error as parse_error and writes a minimal reproduction (WP input, command).
+  ("warning annot-error treated as fatal error"), so the hint is never dropped silently. Until ticket 35 the
+  adapter read WP's user error as parse_error; now the proof hint check parses every hint first, blames the
+  error line on this hint, rejects the set under rule parse_error, and WP runs without it.

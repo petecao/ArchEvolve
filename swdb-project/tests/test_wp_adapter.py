@@ -38,11 +38,21 @@ ANCHOR_BEFORE = "pvector<NodeID> InitParent(const Graph &g) {"
 SEEDED_BUG = ("i < n; ++i", "i < n - 1; ++i")
 FILL = "contract.fixture_wp_fill"
 SMOKE = "contract.fixture_wp_smoke"
-FILL_HINTS = [{"anchor": "swdb_fixture_fill.loop1.head",
-               "acsl": "loop invariant 0 <= i <= n;\nloop invariant \\forall integer k; 0 <= k < i ==> a[k] == v;\n"
-                       "loop assigns i, a[0 .. n-1];\nloop variant n - i;"}]
-SMOKE_HINTS = [{"anchor": "count_up.loop1.head", "acsl": "loop invariant 0 <= i <= n;\nloop assigns i;\nloop variant n - i;"}]
-TRUSTED = {"swdb-c-lowering-1", "clang-22.1.8", "frama-c-wp-33.0", "alt-ergo-2.6.4", "z3-5.1.0", "cvc5-1.2.1"}
+
+
+def _hints(anchor, *texts):
+    """Hint records (ticket 35) at one anchor, kind read from each text's keyword."""
+    kinds = {"loop invariant": "loop_invariant", "loop assigns": "loop_assigns", "loop variant": "loop_variant",
+             "assert": "assert"}
+    return [{"anchor": anchor, "kind": next(k for p, k in kinds.items() if t.startswith(p)), "text": t,
+             "provenance": {"source": "human"}} for t in texts]
+
+
+FILL_HINTS = _hints("swdb_fixture_fill.loop1.head", "loop invariant 0 <= i <= n;",
+                    "loop invariant \\forall integer k; 0 <= k < i ==> a[k] == v;", "loop assigns i, a[0 .. n-1];",
+                    "loop variant n - i;")
+SMOKE_HINTS = _hints("count_up.loop1.head", "loop invariant 0 <= i <= n;", "loop assigns i;", "loop variant n - i;")
+TRUSTED = {"swdb-c-lowering-2", "clang-22.1.8", "frama-c-wp-33.0", "alt-ergo-2.6.4", "z3-5.1.0", "cvc5-1.2.1"}
 
 
 def _tools_present():
@@ -78,18 +88,13 @@ def _contract(cid, function, clauses, frame):
 
 
 def method_version(identity):
-    """A contract_fixture method version with the real Mac lineup (ticket 21), sequence 2 (current)."""
+    """A contract_fixture method version with the real Mac lineup, sequence 2 (current: frozen, from the
+    frozen contract fixture). fix-21 (2026-10-14 ET): the lineup is the committed draft's
+    (library/methods/probata-draft-1.yaml), so the two never drift; the translator is this checkout's tool."""
     data = yaml.safe_load((FIXTURES / "proof" / "methods" / "contract-fixture-1.yaml").read_text())
     data.update(id="method.wp-tracer-fixture", sequence=2,
                 description="Fixture method version with the real WP lineup of the Mac (ticket 21 tests).")
-    data["lineup"] = [
-        {"role": "front_end", "tool": "clang", "version": "22.1.8", "flags": ["-std=c++17", "-fopenmp"]},
-        {"role": "bounded_verifier", "tool": "cbmc", "version": "6.11", "flags": []},
-        {"role": "unbounded_verifier", "tool": "frama-c-wp", "version": "33.0",
-         "flags": ["-wp", "-wp-rte", "-wp-cache", "none", "-wp-model", "+real"]},
-        {"role": "solver", "tool": "alt-ergo", "version": "2.6.4", "flags": []},
-        {"role": "solver", "tool": "z3", "version": "5.1.0", "flags": []},
-        {"role": "solver", "tool": "cvc5", "version": "1.2.1", "flags": []}]
+    data["lineup"] = yaml.safe_load((REPO / "library" / "methods" / "probata-draft-1.yaml").read_text())["lineup"]
     data["c_lowering"]["translators"] = [identity["c_lowering"]]
     return data
 
@@ -207,6 +212,8 @@ def test_the_safe_fixture_is_proven_with_threads_1_bounds_per_goal_solvers_and_t
     assert set(record["tools"]) == TRUSTED
     assert all(a["sentence"].strip() for a in record["assumptions"])
     assert record["pins"]["c_lowering"]["id"] == "swdb_fixture_fill.c"
+    from swdb import c_lowering                                   # ticket 24: the naming rules are pinned too
+    assert record["pins"]["naming_rules"] == {"id": "kept-names.2", "sha256": c_lowering.RULES_SHA256}
     settings = record["settings"]
     for flag in ("-wp-cache none", "-wp-model +real", "-machdep x86_64", "-wp-timeout 30"):
         assert flag in " ".join(settings["flags"])
@@ -245,8 +252,8 @@ def test_the_seeded_bug_is_not_proven_with_a_class_and_its_unproven_properties_n
 
 @needs_wp
 def test_map_07_smoke_pair_proves_the_safe_program_and_leaves_the_seeded_bug_not_proven(seed):
-    safe = SMOKE_HINTS + [{"anchor": "count_up.s2.after", "acsl": "assert i == n;"}]
-    buggy = SMOKE_HINTS + [{"anchor": "count_up.s2.after", "acsl": "assert i == n + 1;"}]
+    safe = SMOKE_HINTS + _hints("count_up.s2.after", "assert i == n;")
+    buggy = SMOKE_HINTS + _hints("count_up.s2.after", "assert i == n + 1;")
     proven = seed.read(seed.prove("safe", "count_up", SMOKE, safe))
     assert proven["verdict"] == "proven"
     record = seed.read(seed.prove("safe", "count_up", SMOKE, buggy))
@@ -267,19 +274,23 @@ def fake(mode, **more):
 
 
 @needs_wp
-def test_a_hint_frama_c_cannot_parse_is_a_parse_error_with_a_minimal_reproduction(seed):
-    record = seed.read(seed.prove("safe", "swdb_fixture_fill", FILL, [{"anchor": "swdb_fixture_fill.loop1.head",
-                                                                      "acsl": "loop invariant 0 <= i <= n &&;"}]))
+def test_a_wp_user_error_is_a_parse_error_with_a_minimal_reproduction(seed):
+    """Updated 2026-10-14 ET (ticket 35): a hint Frama-C cannot parse no longer reaches WP (the proof hint check
+    rejects it); WP's own user error (a scripted fault) still reads as parse_error."""
+    record = seed.read(seed.prove(env=fake("user_error")))
     assert record["verdict"] == "not_proven" and record["failure_class"] == "parse_error"
     handler = _handler(record)
     assert "wp_input.c" in handler["minimal_reproduction"] and "command.txt" in handler["minimal_reproduction"]
 
 
 @needs_wp
-def test_a_hint_with_an_unbounded_assigns_range_is_refused_before_wp_runs(seed):
-    """Ticket 07: WP 33 aborts on an infinite range in `loop assigns`; the adapter asks for a bound instead."""
-    result = seed.prove(hints=[{"anchor": "swdb_fixture_fill.loop1.head", "acsl": "loop assigns i, a[0 ..];"}], ok=False)
-    assert "unbounded range" in result.stderr and not list((seed.records / "proofs").glob("*.yaml"))
+def test_a_hint_with_an_unbounded_assigns_range_never_reaches_wp(seed):
+    """Ticket 07: WP 33 aborts on an infinite range in `loop assigns`. Updated 2026-10-14 ET (ticket 35): the proof
+    hint check rejects it (rule unbounded_range) and WP runs without the hint set."""
+    hints = FILL_HINTS[:2] + _hints("swdb_fixture_fill.loop1.head", "loop assigns i, a[0 ..];", "loop variant n - i;")
+    record = seed.read(seed.prove(hints=hints, env=fake("unknown")))
+    assert [(r["hint"], r["rule"]) for r in record["hint_check"]["rejections"]] == [(2, "unbounded_range")]
+    assert "a[0 ..]" not in open(next(r["path"] for r in record["evidence"]["reports"] if r["name"] == "wp_input")).read()
 
 
 @needs_wp
@@ -355,5 +366,11 @@ def test_each_wp_regression_corpus_case_gives_its_recorded_class_again(seed, cas
     data = yaml.safe_load(case.read_text())
     assert data["cause"].strip()
     given = data["input"]
+    if "hint_rule" in data:          # ticket 35: the proof hint check catches it before WP (scripted WP run)
+        record = seed.read(seed.prove(given["candidate"], given["function"], given["contract"], given["hints"],
+                                      env=fake("unknown")))
+        assert data["hint_rule"] in {r["rule"] for r in record["hint_check"]["rejections"]}
+        assert not record["hint_check"]["reached_wp"]
+        return
     record = seed.read(seed.prove(given["candidate"], given["function"], given["contract"], given.get("hints") or []))
     assert record.get("failure_class") == data["failure_class"]

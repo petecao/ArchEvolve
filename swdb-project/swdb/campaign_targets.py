@@ -302,7 +302,7 @@ class TargetAdapter:
     def proof_function(self, contract):
         return self.PROOF_FUNCTION
 
-    def prepare_proofs(self, store_dir):
+    def prepare_proofs(self, store_dir, method=None):
         """Copy the team store's contract-proof records of the campaign's contracts (with their closure).
 
         Tickets 29, 32 and 33 write real contract proofs and minimum bounds; until then the team store has

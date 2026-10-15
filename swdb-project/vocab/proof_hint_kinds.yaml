@@ -1,0 +1,65 @@
+# Created: 2026-10-14 ET (Probata proof of concept ticket 35). The proof hint vocabulary (formal-verification
+# map 13 item 5, map 24 items 1 and 7): the kinds a hint record may have. Everything not listed is rejected.
+# VERSIONED: swdb.hint_check pins this file's sha256 as proof-hint-vocabulary-<N>; any change to this file is a
+# new vocabulary version (bump swdb.hint_check.VOCABULARY_VERSION and its pinned sha256; the method version
+# cites it). Fields: `acsl` is the ACSL form the text holds; `anchor_kinds` the C lowering anchors the kind
+# may sit at; `rank` the merger's order within one anchor (declarations before their uses; equal ranks keep
+# the hint set's order); `nodes` the Frama-C syntax-tree nodes the text must parse to (swdb/hint_tree.ml).
+name: proof_hint_kinds
+description: The kinds a proof hint record may have (the versioned proof hint vocabulary); a hint of any other kind is rejected.
+fields: [acsl, anchor_kinds, rank, nodes]
+values:
+  - value: loop_invariant
+    acsl: "loop invariant P;"
+    anchor_kinds: [loop_head]
+    rank: 0
+    nodes: [loop_invariant]
+    meaning: One loop invariant (not admit or check, for no behavior) at a loop head.
+  - value: loop_assigns
+    acsl: "loop assigns L;"
+    anchor_kinds: [loop_head]
+    rank: 1
+    nodes: [loop_assigns]
+    meaning: One loop assigns clause with bounded ranges and no \from at a loop head (one per loop; Frama-C merges a second).
+  - value: loop_variant
+    acsl: "loop variant e;"
+    anchor_kinds: [loop_head]
+    rank: 2
+    nodes: [loop_variant]
+    meaning: One loop variant with an integer measure and no `for R` relation at a loop head.
+  - value: assert
+    acsl: "assert P;"
+    anchor_kinds: [entry, before, after]
+    rank: 1
+    nodes: [assert]
+    meaning: One assertion (not admit or check, for no behavior) at a statement anchor.
+  - value: ghost
+    acsl: "ghost <declaration or statement>"
+    anchor_kinds: [ghost_globals, entry, before, after]
+    rank: 0
+    nodes: [ghost_variable, ghost_statement]
+    meaning: Ghost declarations and statements; Frama-C's default ghost:bad-use level refuses ghost code that interferes with real code.
+  - value: predicate
+    acsl: "predicate p(...) = P;"
+    anchor_kinds: [ghost_globals]
+    rank: 1
+    nodes: [logic_definition]
+    meaning: One non-recursive predicate definition with a body.
+  - value: logic
+    acsl: "logic T f(...) = e;"
+    anchor_kinds: [ghost_globals]
+    rank: 1
+    nodes: [logic_definition]
+    meaning: One non-recursive logic function definition with a body.
+  - value: lemma
+    acsl: "lemma L: P;"
+    anchor_kinds: [ghost_globals]
+    rank: 2
+    nodes: [lemma]
+    meaning: One lemma (not admit or check); the verdict reading (ticket 36) requires it proven in the same run.
+  - value: wp_strategy
+    acsl: "\\wp::strategy S: ...; or \\wp::proof S: names;"
+    anchor_kinds: [ghost_globals]
+    rank: 3
+    nodes: [extension]
+    meaning: One WP strategy definition or attachment (for example a Wp.induction or Wp.lemma tactic hint); WP's predefined tactics only, as the frozen flags load no tactic plug-in.
