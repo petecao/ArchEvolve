@@ -346,6 +346,7 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
     # Clang dumps for separate functions may reuse process-local AST IDs.
     by_node = {(row["function"], row.pop("_ast_id", None)): row for row in all_rows}
     rows = [row for row in all_rows if row.get("kind") != "access"]
+    owner_handles = {"accesses": set(), "calls": set()}
     if owner:
         # The closed source grammar certifies each alias/member observation.
         # Its independent C-view checker maps these to renamed range/liveness
@@ -356,6 +357,12 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
         root = definitions.get(owner.get("function"))
         if root is None:
             raise Refused("closed-owner source registry has no emitted source definition")
+        if owner.get("protocol") == "private-vector-copy-scan-1":
+            from swdb import vector_pipeline
+            try:
+                owner_handles = vector_pipeline.checked_handles(root, owner, entry_windows)
+            except vector_pipeline.Refused as exc:
+                raise Refused(str(exc)) from None
         for access in owner["source_accesses"]:
             try:
                 model_domains.bind_source_access(root, owner, access)
@@ -406,7 +413,7 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
             except (Refused, dx_array_domains.Refused) as exc:
                 rows.append({"function": function, "source_line": (site or {}).get("source_line"), "reason": str(exc)})
     origins = _Origins(definitions, global_nodes, known_origins, terminal, entry_windows, entry_function,
-                       set(candidates) | set(producers), producers)
+                       set(candidates) | set(producers) | {(owner["function"], key) for key in owner_handles["calls"]}, producers)
     if call_sites:
         declarations = [n for root in definitions.values() for n in _walk(root)
                         if n.get("kind") in {"VarDecl", "ParmVarDecl"}]
@@ -438,6 +445,10 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
             if parent.get("kind") == "UnaryOperator" and parent.get("opcode") == "&" and parent.get("inner"):
                 addressed.add(_strip_origin(parent["inner"][0]).get("id"))
         for node in _walk(root):
+            if owner and function == owner["function"] and node.get("id") in owner_handles["accesses"]:
+                # This exact original read is mapped to renamed, independently checked
+                # view guards; all other source nodes retain the ordinary inventory.
+                continue
             kind, children = node.get("kind"), node.get("inner", [])
             children = [c for c in children if isinstance(c, dict) and c.get("kind")]
             pointer_children = [c for c in children if _pointer(c)]
@@ -450,7 +461,8 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
             indexed = kind == "ArraySubscriptExpr"
             dereferenced = bool(entry_windows and entry_windows.get("windows") and kind == "UnaryOperator" and node.get("opcode") == "*")
             if (entry_windows and entry_windows.get("windows") and kind in {"CallExpr", "CXXMemberCallExpr", "CXXOperatorCallExpr"}
-                    and any(_pointer(c) for c in children[1:]) and (function, node.get("id")) not in candidates):
+                    and any(_pointer(c) for c in children[1:]) and (function, node.get("id")) not in candidates
+                    and not (owner and function == owner["function"] and node.get("id") in owner_handles["calls"])):
                 reason = "entry-window pointer call boundaries need checked callee-domain discharge"
             if operation or indexed or dereferenced:
                 base = _origin_base(node)
