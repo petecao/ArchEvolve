@@ -704,3 +704,8 @@ prelaunch source refusal retains false. The public stand-in regression first
 reproduces1failed/1passed; the correction gives2passed in47.06s under8GiB
 (peak408,092,672bytes), with no actual solver. Historical5c records are unchanged.
 [Evidence](../evidence/wp-launch-metadata-20261015.json). Ticket36 stays claimed.
+
+
+### Entry hints and original store proof — 2026-10-15 ET
+
+At frozen `593c35d6`, checked helper/nested views admit only original-unit entry assertions and ghost hints, retaining normal noninterference checks. Eight public/component controls passed (234.60s); all five stand-in records and 70 report references match. Independent review found no blocker. The original store-source-wait fixture, with explicit q/p:n windows and entry witness `dx_store_bound=n`, proves all 90 ordinary goals and passes 29 smoke checks. The shortened witness `n-1` stays not proven with one open `store_indices` obligation and 29 smoke tests passed. The old-source premature CPU read stops prelaunch because scalar assignment was not yet supported; its test failure is retained and a separate composed-source replay is required. All three records, 59 report references and 10 runtime pins match. [Compact evidence](../evidence/wp-source-view-entry-hints-20261015.json). Ticket remains claimed.

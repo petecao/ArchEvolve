@@ -81,6 +81,11 @@ class WpAdapter:
         self.defines = tuple(defines)
         proof_semantics.check_defines(self.defines)
 
+    def _entry_view_hints(self, job):
+        """Entry scope is unchanged by the independently checked source views."""
+        return all(hint.get("anchor") == f"{job.unit.function}.entry" and
+                   hint.get("kind") in {"assert", "ghost"} for hint in self.hints)
+
     @classmethod
     def from_args(cls, args, script, *, library, contract, method):
         if script is not None:
@@ -203,8 +208,8 @@ class WpAdapter:
             has_helpers = any(a["kind"] == "contract" and a["function"] != job.unit.function
                               for a in lowering.anchors)
             if needs_origins and has_helpers and proof_semantics.called(lowering, covered):
-                if self.hints_path:
-                    raise helper_windows.Refused("source-anchored hints are outside the checked helper-view slice")
+                if self.hints_path and not self._entry_view_hints(job):
+                    raise helper_windows.Refused("helper views admit only assertions/ghost hints at the original unit entry")
                 imported = {name: {"id": policy["model"]["entry"],
                                    "sha256": policy["model"]["entry_sha256"]}
                             for name, policy in semantics_options["semantics"]["audited_imports"].items()}
@@ -239,8 +244,8 @@ class WpAdapter:
             except wp_pointer_bounds.Refused:
                 nested_needed = bool(unit.get("array_domains"))
             if nested_needed:
-                if self.hints_path:
-                    raise nested_entry_reads.Refused("source-anchored hints are outside the checked nested-read slice")
+                if self.hints_path and not self._entry_view_hints(job):
+                    raise nested_entry_reads.Refused("nested views admit only assertions/ghost hints at the original unit entry")
                 nested_source = context.get("helper_windows", {}).get("view")
                 nested_source = nested_source.path if nested_source else source
                 nested_kwargs = context.get("helper_windows", {}).get("effective_kwargs", source_kwargs)
@@ -442,8 +447,8 @@ class WpAdapter:
         """Recheck both source lowerings and the independent contextual AST relation."""
         helper = context["helper_windows"]
         view = helper["view"]
-        if self.hints_path:
-            raise helper_windows.Refused("source-anchored hints are outside the checked helper-view slice")
+        if self.hints_path and not self._entry_view_hints(job):
+            raise helper_windows.Refused("helper views admit only assertions/ghost hints at the original unit entry")
         helper_windows.check_view(helper["source"], job.unit.function, view, **helper["options"])
         try:
             original = c_lowering.lower(helper["source"], job.unit.function, **helper["original_kwargs"])
@@ -462,8 +467,8 @@ class WpAdapter:
     def check_nested_entry_reads(self, job, context):
         nested = context["nested_entry_reads"]
         view = nested["view"]
-        if self.hints_path:
-            raise nested_entry_reads.Refused("source-anchored hints are outside the checked nested-read slice")
+        if self.hints_path and not self._entry_view_hints(job):
+            raise nested_entry_reads.Refused("nested views admit only assertions/ghost hints at the original unit entry")
         nested_entry_reads.check_view(nested["source"], job.unit.function, view, **nested["options"])
         try:
             original = c_lowering.lower(nested["source"], job.unit.function, **nested["original_kwargs"])
@@ -950,6 +955,12 @@ class WpAdapter:
             fields["unproven_properties"] = context.get("unproven", [])
         if context.get("settings"):
             fields["settings"] = context["settings"]
+        if self.hints and (context.get("helper_windows") or context.get("nested_entry_reads")):
+            source_view = context.get("nested_entry_reads") or context["helper_windows"]
+            fields.setdefault("settings", {})["source_view_hints"] = {
+                "policy": "original-unit-entry assertions and ghost hints only",
+                "anchor": f"{source_view['original_lowering'].function}.entry", "count": len(self.hints),
+                "scope": "unchanged original parameters; ordinary hint and semantics checks remain mandatory"}
         pins = {"c_lowering": context["c_lowering"], "naming_rules": c_lowering.naming_rules()} \
             if context.get("c_lowering") else {}
         pins.update(context.get("pins") or {})                 # ticket 24: summaries and C models

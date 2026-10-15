@@ -234,6 +234,11 @@ class _Plan:
         if output[view_cursor:] != self.raw[original_cursor:]:
             raise Refused("nested renderer changed bytes after its source statements")
         actual = ast._Tree(path, self.tool, self.includes, self.defines)
+        rewritten_entry = actual.entry(self.entry["name"])
+        if (ast._signature(self.entry) != ast._signature(rewritten_entry) or
+                [ast._signature(n) for n in ast._children(self.entry) if n.get("kind") == "ParmVarDecl"] !=
+                [ast._signature(n) for n in ast._children(rewritten_entry) if n.get("kind") == "ParmVarDecl"]):
+            raise Refused("nested view changed the original unit entry signature or parameter scope")
         headers = lambda deps, source: {p: h for p, h in deps.items() if p != str(source)}
         original_headers = headers(self.dependencies, self.source)
         if headers(ast._dependencies(path, self.tool, self.includes, self.defines), Path(path).resolve()) != original_headers:
@@ -336,7 +341,7 @@ def prepare(source, function, *, entry_windows, includes=(), defines=(), scratch
         certificate = plan.certificate(plan.verify(path))
         pins = {"nested_read_check": identity(), "nested_read_certificate":
                 {"id": "swdb-nested-read-certificate-1", "sha256": ast._hash(certificate)}}
-        assumption = {"kind": "trusted_tool", "text": "The checked nested-read view evaluates each original plain int index read once in an effect-free return, before its outer read; all input-window, validity and initializedness obligations remain checked."}
+        assumption = {"kind": "trusted_tool", "text": "The checked nested-read view evaluates each original plain int index read once before its outer read in an effect-free return or automatic int initializer; original declaration scope and bindings are preserved, and all input-window, validity and initializedness obligations remain checked."}
         return View(path, plan.output, plan.includes, certificate, pins, assumption)
     except (ast.Refused, UnicodeError) as exc:
         raise Refused(str(exc)) from None
