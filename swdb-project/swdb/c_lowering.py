@@ -555,6 +555,7 @@ class _Unit:
         self.summaries = dict(summaries or {})
         self.semantics = dict(semantics or {})      # ticket 27: {tile_pointer: names}; probes at tile accesses
         self.probes = []
+        self.probe_nodes = set()
         self._dumps = {}
         self.structs, self.struct_order, self.classes = {}, [], {}
         self.functions, self.order, self.pending = {}, [], []
@@ -1415,6 +1416,7 @@ class _Printer:
                 "begin": begin.get("offset"), "end": (end.get("offset") or 0) + (end.get("tokLen") or 0)}
         self.probes.append(site)
         self.unit.probes.append(site)
+        self.unit.probe_nodes.add((self.function, access, node.get("id")))
         self._tile_ok += 1
         if node.get("kind") == "ArraySubscriptExpr":
             text = f"{self.expr(node['inner'][0])}[{self.expr(node['inner'][1], top=True)}]"
@@ -2254,7 +2256,7 @@ def lower(source, function, includes=(), defines=(), summaries=None, semantics=N
                           "naming_rules_sha256": RULES_SHA256, "clang": tool.version},
                     summaries=tuple(unit.summaries_used), models=tuple(n for n in unit.model_order if n != "SWDB_MODEL_FAIL" and not n.endswith("_valid")), probes=tuple(unit.probes),
                     std_models=tuple(sorted(unit.std_types)), allocation=unit.allocates or any(n.startswith("std_vector_") for n in unit.std_types) or any(n.startswith("swdb_alloc_new_array_") for n in unit.model_order),
-                    cpu_effects=cpu_effects.collect(definition_nodes, unit.probes, unit.models,
+                    cpu_effects=cpu_effects.collect(definition_nodes, unit.probe_nodes, unit.models,
                                                     unit.summaries_used, INTEGER_TYPES | FLOAT_TYPES),
                     terminal_release=certificate)
 
