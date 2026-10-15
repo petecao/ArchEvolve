@@ -161,6 +161,11 @@ initialization postconditions expose the invariant at the written tile; the read
 input and preserves it at its equal returned address. These are checked caller obligations and trusted
 preservation contracts, respectively.
 
+The WP generator also exposes the canonical invariant as a finite conjunction for the frozen tile count,
+at entry and on preserving calls. It recognizes the complete predicate body before adding these equivalent
+facts; other predicate definitions are unchanged. The generated entry clauses are visible in the proof record.
+This avoids losing initializedness facts through quantified predicates and call frames in WP 33.
+
 - 28: the remaining calls and rules; supersede 0.1 with `sequence: 2`.
 - 29: three-form agreement (ACSL contracts, C model, C stubs) and the semantics negative controls.
 - 30: generate the C model from the one source; this version's `model.h` is hand-written.

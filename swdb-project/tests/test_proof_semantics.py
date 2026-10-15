@@ -451,6 +451,8 @@ def test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics(dx, name
     flags = record["settings"]["flags"]
     assert flags.count("-wp-prover") == 1 and flags[flags.index("-wp-prover") + 1] == "z3,cvc5,alt-ergo"
     assert record["settings"]["proof_semantics"]["unit_requires"]
+    assert any("initialized_device_storage_0" in clause
+               for clause in record["settings"]["proof_semantics"]["unit_requires"])
     probes = record["settings"]["proof_semantics"]["probes"]
     wp_input = open(dx.report(record, "wp_input")).read()
     assert wp_input.count("SWDB_TILE_READ(&(") + wp_input.count("SWDB_TILE_WRITE(&(") == len(probes)

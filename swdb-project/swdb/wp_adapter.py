@@ -507,6 +507,9 @@ class WpAdapter:
         extra = []
         if wp.get("unit_requires"):
             extra.append(f"requires {wp['unit_requires']};")
+            if re.search(r"\bdx_state_initialized\b", wp["unit_requires"]):
+                extra += [f"requires initialized_device_storage_{i}: {term};" for i, term in enumerate(
+                    proof_semantics.wp_initialized_state(self.library, entry_id, self.defines))]
         for name, _ctype, pointer in lowering.parameters:
             if not pointer:
                 continue
