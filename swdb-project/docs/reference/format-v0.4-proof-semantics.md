@@ -88,6 +88,15 @@ interference proof.
   every failing obligation and never refutes. Ticket 28 can replace these restrictions with checked overlap
   rules and ordinary-memory probes; these restrictions do not claim its full memory model is implemented.
 
+Native agreement and replay use the explicit flat 64-bit `uintptr_t` data-address ABI of the
+selected Clang target (x86_64 on mbit10; AArch64 on the Mac), with 32-bit `int`; compilation checks the
+widths, and records state the platform premise. Queries compare unsigned aligned element-address
+ordinals, never unrelated C/C++ pointers. CBMC retains allocation-object and offset guards. This avoids
+undefined cross-object pointer subtraction; C and C++ query controls also run address, invalid-pointer-pair
+and undefined-behavior sanitizers. The intermediate spelling with direct `uintptr_t` subtraction was
+defined arithmetic but triggered the sanitizer's pointer-subtraction heuristic; the ordinal spelling
+retains exact remainder and range checks without disabling a sanitizer.
+
 ## Bounded jobs (`swdb prove --adapter cbmc`)
 
 - The covered calls and queries reach the C lowering as ticket 24's `summaries` (each call kept, prototype

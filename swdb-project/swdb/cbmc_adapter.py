@@ -197,6 +197,7 @@ class CbmcAdapter:
             context["settings"]["proof_semantics"] = {
                 "id": model.entry, "calls": list(externals),
                 "exit_check": "no pending device store before formal poststate observations; pending reads allowed",
+                "native_address_abi": "flat 64-bit uintptr_t data addresses, 32-bit int; CBMC retains object IDs",
                 "probes": [{k: p[k] for k in ("id", "function", "access", "line")} for p in lowering.probes]}
             context["model"] = model
         problem = std_models.method_problem(self.method, lowering)
@@ -567,6 +568,10 @@ class CbmcAdapter:
             assumptions.append({"kind": "proof_semantics", "reference": {"id": model.entry, "sha256": model.sha256},
                                 "sentence": f"The DX100 behaves as its proof semantics {model.entry} says: each "
                                             "command's values as if it finished at issue, hazards as its rules state."})
+            assumptions.append({"kind": "assumed_clause", "reference": {"id": model.entry, "sha256": model.sha256},
+                "sentence": "Native agreement and replay use Clang's flat 64-bit uintptr_t data-address ABI "
+                            "with 32-bit int; the model checks these widths at compilation. CBMC separately "
+                            "uses allocation-object IDs and offsets for footprint membership."})
             reduction = Path(self.library.root) / "rocq" / "probata" / "Reduction.v"
             if not reduction.is_file():
                 reduction = paths.HOME / "library" / "rocq" / "probata" / "Reduction.v"

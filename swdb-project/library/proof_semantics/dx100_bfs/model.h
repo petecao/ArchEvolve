@@ -30,6 +30,14 @@ static void swdb_dx_check_failed(const char *name) { swdb_failed(name); longjmp(
 #endif
 #define DX_CHECK(c, name) SWDB_CHECK((c), name)
 
+#if !defined(SWDB_CBMC)
+#if defined(__cplusplus)
+static_assert(sizeof(uintptr_t) == 8 && sizeof(int) == 4, "DX100 native model needs a 64-bit address/32-bit int ABI");
+#else
+_Static_assert(sizeof(uintptr_t) == 8 && sizeof(int) == 4, "DX100 native model needs a 64-bit address/32-bit int ABI");
+#endif
+#endif
+
 static unsigned int dx_bit(int s) { return 1u << s; }
 static int dx_tile_ok(int t) { return t >= 0 && t < DX_NT; }
 static int dx_reg_ok(int r) { return r >= 0 && r < DX_NR; }
@@ -38,9 +46,17 @@ static int dx_reg_ok(int r) { return r >= 0 && r < DX_NR; }
 static int dx_tile_of(const int *addr) {
 #if defined(SWDB_CBMC)
   if (__CPROVER_POINTER_OBJECT(addr) != __CPROVER_POINTER_OBJECT(&dx_tile_data[0][0])) return -1;
-  long long off = (long long)__CPROVER_POINTER_OFFSET(addr) / (long long)sizeof(int);
+  long long position = (long long)__CPROVER_POINTER_OFFSET(addr);
+  if (position < 0 || (unsigned long long)position >= sizeof(dx_tile_data) || position % sizeof(int)) return -1;
+  long long off = position / (long long)sizeof(int);
 #else
-  long long off = ((long long)(uintptr_t)addr - (long long)(uintptr_t)&dx_tile_data[0][0]) / (long long)sizeof(int);
+  /* Native agreement/replay uses the pinned flat 64-bit address ABI. No relational pointer comparison
+   * or unrelated-object subtraction: compare unsigned addresses, then subtract only in that domain. */
+  uintptr_t position = (uintptr_t)addr, base = (uintptr_t)&dx_tile_data[0][0];
+  if (position < base || position % sizeof(int) != base % sizeof(int)) return -1;
+  uintptr_t index = position / sizeof(int) - base / sizeof(int);
+  if (index >= sizeof(dx_tile_data) / sizeof(int)) return -1;
+  long long off = (long long)index;
 #endif
   if (off < 0 || off >= (long long)DX_NT * DX_TS) return -1;
   return (int)(off / DX_TS);
@@ -332,8 +348,19 @@ int swdb_dx_in_footprint(int tile, const int *addr) {
   if (s < 0 || dx_base[s] == 0) return 0;
 #if defined(SWDB_CBMC)
   if (__CPROVER_POINTER_OBJECT(addr) != __CPROVER_POINTER_OBJECT(dx_base[s])) return 0;
+  long long position = (long long)__CPROVER_POINTER_OFFSET(addr);
+  long long base = (long long)__CPROVER_POINTER_OFFSET(dx_base[s]);
+  if (position < 0 || base < 0 || position < base || position % sizeof(int) != base % sizeof(int)) return 0;
+  unsigned long long index = (unsigned long long)position / sizeof(int) - (unsigned long long)base / sizeof(int);
+#else
+  uintptr_t position = (uintptr_t)addr, base = (uintptr_t)dx_base[s];
+  if (position < base || position % sizeof(int) != base % sizeof(int)) return 0;
+  unsigned long long index = (unsigned long long)(position / sizeof(int) - base / sizeof(int));
 #endif
-  long long off = (long long)(addr - (const int *)dx_base[s]);
+  /* Stream register indices are signed 32-bit; indirect indices are unsigned 32-bit. This bound also
+   * makes the conversion below exact, without inventing a native object-provenance oracle. */
+  if (index > UINT32_MAX) return 0;
+  long long off = (long long)index;
   if (dx_kind[s] == DX_STREAM_LOAD) {
     long long n = (dx_hi[s] == dx_lo[s]) ? 0 : (dx_hi[s] - dx_lo[s] - 1) / dx_stride[s] + 1;
     if (n > DX_TS) n = DX_TS;
