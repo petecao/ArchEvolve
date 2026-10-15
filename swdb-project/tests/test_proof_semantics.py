@@ -227,7 +227,11 @@ def build_dx_seed(path):
     methods = path / "library" / "methods"
     methods.mkdir(exist_ok=True)
     shutil.copy(FIX / "proof" / "methods" / "contract-fixture-1.yaml", methods)
-    (methods / "cbmc-fixture.yaml").write_text(yaml.safe_dump(method_version(c_lowering.identity()), sort_keys=False))
+    fixture_method = method_version(c_lowering.identity())
+    for tool in fixture_method["lineup"]:
+        if tool["tool"] == "frama-c-wp":
+            tool["flags"] += ["-wp-prover", "z3,cvc5,alt-ergo"]
+    (methods / "cbmc-fixture.yaml").write_text(yaml.safe_dump(fixture_method, sort_keys=False))
     (path / "library" / "proof_units").mkdir()
     (path / "library" / "proof_units" / "dx100_fixture_units.cc").write_text(UNITS)
     for name, data in _dx_contracts().items():
@@ -431,6 +435,9 @@ def test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics(dx, name
         assert record["hint_check"]["verdict"] == "accepted", record["hint_check"]
     assert record["pins"]["proof_semantics"]["id"] == ENTRY
     assert {a["kind"] for a in record["assumptions"]} >= {"proof_semantics", "reduction"}
+    flags = record["settings"]["flags"]
+    assert flags.count("-wp-prover") == 1 and flags[flags.index("-wp-prover") + 1] == "z3,cvc5,alt-ergo"
+    assert record["settings"]["proof_semantics"]["unit_requires"]
     probes = record["settings"]["proof_semantics"]["probes"]
     wp_input = open(dx.report(record, "wp_input")).read()
     assert wp_input.count("SWDB_TILE_READ(&(") + wp_input.count("SWDB_TILE_WRITE(&(") == len(probes)

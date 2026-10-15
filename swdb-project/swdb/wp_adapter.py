@@ -256,7 +256,8 @@ class WpAdapter:
         identities = {"c_lowering": (lowering_id["id"], lowering_id["sha256"], c_lowering.TOOL_VERSION)}
         for tool, (version, sha) in found.items():
             identities[tool] = (f"{tool}-{version}", sha, version)
-        return {"flags": list(flags), "seconds": seconds, "identities": identities}
+        return {"flags": list(flags), "seconds": seconds, "identities": identities,
+                "provers": proof_setup.wp_provers(self.method)}
 
     # --- ticket 24: summaries and C models the unit calls, each proven by its own record ----------------------
     def _summarized(self):
@@ -414,6 +415,7 @@ class WpAdapter:
             for array in wp.get("separate_from") or []:
                 dims = next((loc.count("[") for loc in locations if loc.split("[")[0] == array), 0)
                 extra.append(f"requires \\base_addr({name}) != \\base_addr(&{array}{'[0]' * dims});")
+        semantics["unit_requires"] = list(extra)
         prelude = proof_semantics.wp_prelude(self.library, entry_id, semantics["calls"], self.defines)
         return extra + rewritten, [prelude]
 
@@ -425,7 +427,9 @@ class WpAdapter:
         goals_json, properties_csv = scratch / "wp-goals.json", scratch / "wp-properties.csv"
         inventory = scratch / "wp-inventory.json"
         report_module = proof_setup.compile_report_module(scratch)
-        settings_flags = [*tools["flags"], *MACHDEP, "-wp-prover", ",".join(PROVERS), "-wp-timeout",
+        prover_flags = [] if any(f == "-wp-prover" or f.startswith("-wp-prover=") for f in tools["flags"]) else \
+            ["-wp-prover", ",".join(tools["provers"])]
+        settings_flags = [*tools["flags"], *MACHDEP, *prover_flags, "-wp-timeout",
                           str(tools["seconds"]), "-wp-par", "1", "-wp-smoke-tests", *context.get("extra_flags", [])]
         command = [*framac.locate().command, *settings_flags, "-wp-report-json", goals_json.name, "wp_input.c",
                    "-then", "-load-module", str(report_module), "-report", "-report-untried",
@@ -504,11 +508,19 @@ class WpAdapter:
         semantics = context.get("semantics")
         if semantics:                               # ticket 27: as the CBMC adapter records it
             pins["proof_semantics"] = {"id": semantics["id"], "sha256": semantics["sha256"]}
-            fields.setdefault("settings", {})["proof_semantics"] = context["semantics_settings"]
+            fields.setdefault("settings", {})["proof_semantics"] = {
+                **context["semantics_settings"], "unit_requires": semantics.get("unit_requires", [])}
             assumptions.append({"kind": "proof_semantics", "reference": {"id": semantics["id"],
                                                                          "sha256": semantics["sha256"]},
                                 "sentence": f"The DX100 behaves as its proof semantics {semantics['id']} says: each "
                                             "command's values as if it finished at issue, hazards as its rules state."})
+            assumptions.append({"kind": "assumed_clause", "reference": {"id": semantics["id"],
+                                                                        "sha256": semantics["sha256"]},
+                "sentence": "The WP model-domain preconditions hold: no DX100 command is outstanding at entry, "
+                            "and CPU pointer parameters occupy objects separate from tile data, tile sizes, and "
+                            "register values. The exact generated clauses are recorded in "
+                            "settings.proof_semantics.unit_requires; store-frame witnesses and selected-index "
+                            "bounds remain checked proof obligations."})
             reduction = Path(self.library.root) / "rocq" / "probata" / "Reduction.v"
             if not reduction.is_file():
                 reduction = paths.HOME / "library" / "rocq" / "probata" / "Reduction.v"

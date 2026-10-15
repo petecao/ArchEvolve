@@ -80,14 +80,18 @@ operators, and they are trusted (an assumption entry), never executed by check m
   contract of every call and query the unit makes.
 - The unit's contract gets `requires dx_idle` (the ghost state g0, as CBMC's `swdb_dx_init`), one
   `\base_addr` separation per pointer parameter and device array (`wp.separate_from`), and the ghost and device
-  state in every `assigns` clause (`swdb.proof_semantics.wp_locations`).
+  state in every `assigns` clause (`swdb.proof_semantics.wp_locations`). These generated initial-state and
+  separation premises are listed in `settings.proof_semantics.unit_requires` and in an `assumed_clause` record
+  entry, making the proof model's domain explicit alongside the original formal half. Each call
+  separately proves its operand and separation preconditions.
 - The WP contracts state a per-tile view (`dx_wait_covers`, `dx_stall_covers`, `dx_kept`, `dx_new_slot`,
   `dx_issuable` in `logic.acsl`): consequences of the C model, with no shifts or masks for the provers (Z3,
   Alt-Ergo and CVC5 time out on constant shift-and-mask facts). The transitive clause of a wait names tiles
   0-7 one by one; with more tiles it claims less, never more.
 - The store's WP frame is `data[0 .. dx_store_bound - 1]`. The proof-only ghost scalar `dx_store_bound`
   is a caller-selected frame witness: a checked ghost hint sets it, and the call requires every selected index
-  to be within it. It changes no device values or hazards; the bounded C model ignores it. The fixtures set
+  to be within it. Calls preserve this scalar; a caller loop that changes it must include it in `loop assigns`,
+  checked by WP. It changes no device values or hazards; the bounded C model ignores it. The fixtures set
   it to `n`, keeping their original `assigns p[0 .. n - 1]` contracts. An insufficient witness leaves a named
   `store_indices` precondition unproved. This avoids WP's incomplete treatment of indirect assigns sets.
   Command frames include all three register-index arrays (`dx_reg_a`, `dx_reg_b`, `dx_reg_c`) that the C model writes.
