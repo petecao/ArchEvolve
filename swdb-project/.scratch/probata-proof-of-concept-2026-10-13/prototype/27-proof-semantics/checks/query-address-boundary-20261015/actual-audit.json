@@ -1,0 +1,88 @@
+{
+  "created": "2026-10-15 13:28 ET",
+  "source_commit": "8e37727424b72a2b0520e7ea14a95dc1e57b552b",
+  "source_files": 349,
+  "source_hashes_unchanged_before_test_only_fix": true,
+  "records": [
+    {
+      "record": "/private/tmp/probata-query-actual-20261015/pytest/test_actual_original_footprint0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t171210z.b11906cf.yaml",
+      "record_sha256": "b0edf577e6ab27e0ffd522ac1fa7298c92ccd0e0c6d4794c28ca4d75ed0ff51a",
+      "verdict": "proven",
+      "failure_class": null,
+      "setup": "passed",
+      "ordinary": {
+        "valid": 57,
+        "total": 57
+      },
+      "smoke": {
+        "valid": 18,
+        "total": 18
+      },
+      "open": [],
+      "artifact_refs": 18,
+      "all_artifact_hashes_match": true,
+      "evidence_keys": [
+        "adapter_log",
+        "reports"
+      ]
+    },
+    {
+      "record": "/private/tmp/probata-query-actual-20261015/pytest/test_actual_original_footprint1/records/proofs/proof.dx100-fixtures.candidate-1.20261015t171834z.b4f6e0d0.yaml",
+      "record_sha256": "e442672eac92778600e5bf8d982fc91eb37ba10caa61a3d252994ece3fed35bc",
+      "verdict": "not_proven",
+      "failure_class": "vacuous_pass",
+      "setup": "passed",
+      "ordinary": {
+        "valid": 51,
+        "total": 52
+      },
+      "smoke": {
+        "valid": 17,
+        "total": 18
+      },
+      "open": [
+        {
+          "goal": "typed_real_dxf_footprint_wp_smoke_dead_code_s20",
+          "property": "dxf_footprint_wp_smoke_dead_code_s20",
+          "function": "dxf_footprint",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_dxf_footprint_ensures",
+          "property": "dxf_footprint_ensures",
+          "function": "dxf_footprint",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "artifact_refs": 14,
+      "all_artifact_hashes_match": true,
+      "evidence_keys": [
+        "adapter_log",
+        "reports"
+      ]
+    }
+  ],
+  "raw_pytest": "1 failed, 1 passed in735.26s; negative test wrongly required every smoke valid",
+  "resources": {
+    "exit_code": 1,
+    "peak_rss_bytes": 5385355264,
+    "out_of_memory": false,
+    "timed_out": false,
+    "wall_seconds": 735.5920742920134,
+    "cpu_seconds": 678.929953
+  },
+  "boundary": "No proof/model-agreement upgrade for negative; its original ensures timeout and generated unreachable zero-offset branch smoke failure are retained.",
+  "physical_pins": {
+    "declared_refs": 5584,
+    "unique_files": 957,
+    "mismatches": []
+  }
+}

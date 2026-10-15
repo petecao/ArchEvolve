@@ -107,10 +107,25 @@ class _Plan:
                     index = _strip(children[1])
                     if index.get("kind") == "ArraySubscriptExpr":
                         nested.append((outer, index))
+                query = None
+                calls = [n for n in ast._walk(node) if n.get('kind') == 'CallExpr']
+                if not nested and len(calls) == 1:
+                    call = calls[0]
+                    fn = self.tree.binding(call)
+                    arguments = ast._children(call)[1:]
+                    if (fn.get('name') == 'swdb_dx_in_footprint' and
+                            re.sub(r'\s+', '', fn.get('type', {}).get('qualType', '')) == 'int(int,constint*)' and
+                            len(arguments) == 2 and _strip(arguments[0]).get('kind') == 'IntegerLiteral'):
+                        pointer = _strip(arguments[1])
+                        operands = ast._children(pointer)
+                        if (pointer.get('kind') == 'BinaryOperator' and pointer.get('opcode') == '+' and
+                                len(operands) == 2 and _strip(operands[1]).get('kind') == 'ArraySubscriptExpr'):
+                            nested.append((pointer, _strip(operands[1])))
+                            query = call
                 if nested:
                     if not parent or parent.get("kind") != "CompoundStmt":
                         raise Refused("nested read must be an ordinary statement in braces")
-                    self.capture_return(node, nested)
+                    self.capture_return(node, nested, query=query)
                 return
             for child in ast._children(node):
                 scan(child, node)
@@ -139,7 +154,7 @@ class _Plan:
             raise Refused("nested read pointer has no explicit plain int entry window")
         return parameter["name"]
 
-    def capture_return(self, statement, nested):
+    def capture_return(self, statement, nested, *, query=None):
         declaration = statement.get("kind") == "DeclStmt"
         assignment = statement.get("kind") == "BinaryOperator"
         if assignment:
@@ -159,8 +174,12 @@ class _Plan:
         allowed = {"ReturnStmt", "ParenExpr", "ImplicitCastExpr", "ArraySubscriptExpr", "DeclRefExpr", "IntegerLiteral", "BinaryOperator", "UnaryOperator"}
         if declaration:
             allowed |= {"DeclStmt", "VarDecl"}
+        if query:
+            allowed.add('CallExpr')
         for node in ast._walk(statement):
             kind = node.get("kind")
+            if kind == 'CallExpr' and node is not query:
+                raise Refused('query capture must retain exactly its original direct call')
             if kind not in allowed or "volatile" in node.get("type", {}).get("qualType", ""):
                 raise Refused("nested return must contain only nonvolatile pure primitive expressions")
             if (kind == "BinaryOperator" and node.get("opcode") not in {"+", "-", "*", "/", "%", "&", "|", "^", "==", "!=", "<", ">", "<=", ">="}
@@ -168,7 +187,8 @@ class _Plan:
                 raise Refused("nested return cannot reorder conditional evaluation or mutation")
             if kind == "UnaryOperator" and node.get("opcode") not in {"+", "-", "!", "~"}:
                 raise Refused("nested return cannot transport address, dereference, or mutation operators")
-            if kind == "ImplicitCastExpr" and node.get("castKind") not in {"NoOp", "LValueToRValue", "IntegralCast"}:
+            if kind == "ImplicitCastExpr" and node.get("castKind") not in ({"NoOp", "LValueToRValue", "IntegralCast", "FunctionToPointerDecay"}
+                    if query else {"NoOp", "LValueToRValue", "IntegralCast"}):
                 raise Refused("nested return contains an unsupported conversion")
             # bool-to-int conversions of comparisons are harmless, but index reads
             # below have the stricter exact plain-int identity policy.
@@ -186,7 +206,7 @@ class _Plan:
         for outer, inner in nested:
             outer_root = self.parameter(ast._children(outer)[0])
             inner_root = self.parameter(ast._children(inner)[0])
-            if inner.get("type", {}).get("qualType") != "int" or outer.get("type", {}).get("qualType") != "int":
+            if inner.get("type", {}).get("qualType") != "int" or outer.get("type", {}).get("qualType") != ("int *" if query else "int"):
                 raise Refused("nested reads require exact int elements")
             try:
                 wp_pointer_bounds._scalar_math(ast._children(inner)[1])
@@ -201,7 +221,7 @@ class _Plan:
                 serial += 1
                 name = f"swdb_nested_read_{serial}"
             self.reserved.add(name)
-            row = {"name": name, "inner_parameter": inner_root, "outer_parameter": outer_root,
+            row = {"name": name, "inner_parameter": inner_root, "outer_parameter": outer_root, "context": "query_address" if query else "nested_read",
                    "source_read": {"begin": ib, "end": ie}, "source_statement": {"begin": begin, "end": end}}
             self.captures.append(row)
             rows.append((inner, row))
@@ -351,7 +371,7 @@ def prepare(source, function, *, entry_windows, includes=(), defines=(), scratch
         certificate = plan.certificate(plan.verify(path))
         pins = {"nested_read_check": identity(), "nested_read_certificate":
                 {"id": "swdb-nested-read-certificate-1", "sha256": ast._hash(certificate)}}
-        assumption = {"kind": "trusted_tool", "text": "The checked nested-read view evaluates each original plain int index read once before its outer read in an effect-free return, automatic int initializer or plain local int assignment; original declaration scope and bindings are preserved, and all input-window, validity and initializedness obligations remain checked."}
+        assumption = {"kind": "trusted_tool", "text": "The checked nested-read view evaluates each original plain int index read once before its outer read or exact footprint-query address in an effect-free return, automatic int initializer or plain local int assignment; original declaration scope and bindings are preserved, and all input-window, validity and initializedness obligations remain checked."}
         return View(path, plan.output, plan.includes, certificate, pins, assumption)
     except (ast.Refused, UnicodeError) as exc:
         raise Refused(str(exc)) from None

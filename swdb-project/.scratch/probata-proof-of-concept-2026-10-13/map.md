@@ -9,6 +9,22 @@ Updated: 2026-10-15 ET. Resumed under Yan-Ru's ongoing implementation, push and 
 Current integration branch: `codex/probata-poc-integration`, based on `yanrujhou_main` at `150930b4`.
 Current dispatch, evidence and blockers: [resume.md](resume.md).
 
+- **Query integration 2026-10-15 13:45 ET:** reviewed branch `904a2bab` composes
+  the original class slice. The 134 compiler union controls pass; the earlier
+  119-pass run retained two environment failures, and only those two passed their
+  permission-corrected rerun. Safe proof and outside not_proven/failed-smoke records
+  retain historical pins. The exact native address-boundary counterstate is retained.
+  [Query evidence](evidence/wp-footprint-query-20261015.json). Tickets 27/36 remain claimed.
+
+- **Checkpoint 2026-10-15 13:45 ET:** reviewed original Bag/Counter lifetime
+  slice merged from `0e4e6b74`; safe 146 ordinary + 11 smoke proves, seeded
+  negative retains its one invariant timeout. All 48 composition controls pass.
+  The one-case stale-data retry at `bc457086` passes with recovered inputs and
+  matching source-C++ sanitizer fault; all artifact/source/certificate hashes match.
+  [Classes](evidence/t24-member-lifetimes-mac-20261015.json),
+  [stale replay](evidence/t25-stale-data-replay-flush-20261015.json).
+  Tickets 24/25 remain claimed; counts stay 32 resolved/five claimed.
+
 - **Checkpoint 2026-10-15 13:39 ET:** primary runtime `bc457086` preserves native
   replay input metadata before sanitizer termination. Bounded maximum acceptance
   remains pinned to `d874c4dc`; the one-case stale-data retry passes with recovered inputs and is under final hash audit.
