@@ -631,8 +631,15 @@ def test_wp_leaves_every_unit_cbmc_refutes_not_proven_never_refuted(qualified_dx
     if call is None:
         assert any(not g.get("smoke") and "ensures" in g["goal"] and g["status"] != "valid"
                    for g in record["goals"]), record
-    if call:                                                  # the probe's (or call's) precondition is the one
-        assert call in unproven or "precondition" in unproven, unproven
+    if call:                                                  # the named hazard obligation must remain open
+        assert any(not g.get("smoke") and call in g["goal"] and g["status"] != "valid"
+                   for g in record["goals"]), unproven
+    if name == "footprint":
+        # Retain the outside query's independent wrong-value failure even when
+        # its generated zero-offset branch also fails smoke (historical vacuous_pass).
+        assert record["failure_class"] in {"unknown", "timeout", "vacuous_pass"}, record
+        assert all(g["status"] == "valid" for g in record["goals"]
+                   if not g.get("smoke") and "ensures" not in g["goal"]), record
 
 
 @needs_wp
