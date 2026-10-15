@@ -563,3 +563,37 @@ records/pins. No stale/at batch, allocating member-body proof, general origin or
 whole-ticket completion is claimed.
 [Actual audit](../evidence/t25-bounded-max-accepted-20261015.json),
 [repair controls and historical refusals](../evidence/t25-canonical-header-repair-20261015.json).
+
+
+### Original stale-data replay input recovery — 2026-10-15 13:52 ET
+
+The first original stale-data control at `e28eb7f0` retains its **1 failed in
+194.09 s** outcome. Its actual proof record already refuted the deallocated-object
+read with passed setup and a matching source-C++ heap-use-after-free sanitizer
+fault, but the test failed because replay inputs were absent. The native harness
+printed inputs and flushed only after the target returned; sanitizer termination
+therefore discarded captured stdout before `_replay` could parse it. This was an
+input-metadata failure, not a counterexample integer-decoding defect.
+
+The narrow `bc457086` repair flushes stdout after printing all normalized replay
+inputs and before entering the target. An independently reviewed native regression
+failed before and passed after the change (0.56 s each). Contracts, bounds, oracle
+casts, fixture source and CBMC translation semantics were unchanged.
+
+Only the original stale-data case was replayed at frozen `bc457086`, node 0
+generation 567: **1 passed in 226.98 s**, guarded wall 227.39 s, peak 508,973,056
+bytes with no watchdog/OOM failure. Its record is `refuted`, setup passed and the
+verifier launched. Recovered inputs are `n=1, a=[-1]`; the original source C++
+replays the matching heap-use-after-free fault. The 15-case native differential
+includes five UB cases, which remain excluded from ordinary defined-behavior
+agreement. This is one bounded refutation with concrete source replay, not a
+universal C++ lifetime theorem.
+
+The coordinator checked nine artifact references, 3,394 absolute physical-file
+references across 1,064 unique files, 203 runtime/test/schema source pins and the
+certificate self-hash: no mismatches. The source remained clean and unchanged;
+node 0 released at 13:36:03 ET. Raw output (12,312,876 bytes) remains remote for the
+named acceptance/audit readers. No iterator/at batch ran. The earlier failed test
+is retained, and ticket 25 remains claimed for the broader member/lifetime/origin
+acceptance frontier.
+[Final compact audit](../evidence/t25-stale-data-replay-flush-20261015.json).

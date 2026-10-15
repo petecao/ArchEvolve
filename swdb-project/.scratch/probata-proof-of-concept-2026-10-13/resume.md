@@ -4,32 +4,34 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 13:39 ET. Integration runtime `bc457086` includes the
+Updated: 2026-10-15 13:52 ET. Integration now includes the reviewed original
+Bag/Counter lifetime slice (`0e4e6b74`) and runtime `bc457086`, including the
 reviewed canonical-header macro checks and selected-receiver member-window slice,
-plus native replay input flushing before sanitizer termination. The reviewed runtime checkpoint is pushed; this resume update changes documentation only. Historical actual source/method pins remain distinct from
-this tip. **32 of 63 tickets are resolved; 07, 24, 25, 27 and 36 are claimed.**
+plus native replay input flushing before sanitizer termination. Historical actual
+source/method pins remain distinct from this integrated tip. **32 of 63 tickets are resolved; 07, 24, 25, 27 and 36 are claimed.**
 The other 26 tickets all have unresolved dependencies; no unclaimed ticket is
 currently eligible. Drafts 1/2 remain immutable; draft 3 is not created.
 
 | Ticket | Current evidence | Next action |
 |---|---|---|
 | 07 | Method19 ended unproven: 27 open of 237 goals, 52.04 counted minutes; no final proof, smoke replay or covering-wait negative. Offline source/tool/log audit found no mismatches | Review the distinct method20 plan before another counted launch; preserve prototype RTE scope |
-| 24 | Qualified copy and selected-receiver slices are accepted. The original Bag/Counter positive at `a70fc6fd` proves 146 ordinary + 11 smoke goals; after a test-only optional-key correction, the original seeded negative passes its expected-not-proven check with 146 ordinary Valid, one invariant timeout and 11 smoke Valid | Agent is packaging the original safe/negative records and unchanged runtime pins; no full-ticket acceptance |
-| 25 | Original bounded maximum at `d874c4dc`: 310 ordinary CBMC properties plus expected reachability failure; 625 native C/C++ comparisons agree. The first stale-data run refuted the memory fault, but buffered stdout lost its input metadata before sanitizer exit | The original stale-data retry at `bc457086` passes in 226.98 s, recovers n=1/a=[-1] and refutes the same heap-use-after-free; coordinator hash audit is in progress. Standalone member lifetime/origin frontiers remain open |
+| 24 | Qualified copy and selected-receiver slices are accepted. The original Bag/Counter positive at `a70fc6fd` proves 146 ordinary + 11 smoke goals; after a test-only optional-key correction, the original seeded negative passes its expected-not-proven check with 146 ordinary Valid, one invariant timeout and 11 smoke Valid | Reviewed slice merged; 48 compiler/policy and stand-in composition controls pass, all 25 packaged artifact hashes match and runtime equals that tested composition. Full construct-group acceptance remains open |
+| 25 | Original bounded maximum at `d874c4dc`: 310 ordinary CBMC properties plus expected reachability failure; 625 native C/C++ comparisons agree. The first stale-data run refuted the memory fault, but buffered stdout lost its input metadata before sanitizer exit | The original stale-data retry at `bc457086` passes in 226.98 s, recovers n=1/a=[-1] and refutes the same heap-use-after-free; the final audit matches nine artifact references, 3,394 physical-file references and 203 source pins. Standalone member lifetime/origin frontiers remain open |
 | 27 | Qualified stall at `909eb6cd`: 110 ordinary Valid, one memory-domain timeout, 35 smoke Valid; the following gather initializedness gap is closed. Query at `8e377274`: safe 57 ordinary + 18 smoke proves; outside query remains not_proven with one ensures timeout and one failed smoke | Package query evidence and its native same-object boundary; diagnose stall with focused checks before any production logic change |
 | 36 | Earlier 45 scripted setup controls pass; later member/header unions have focused controls and source-pin audits | Remain claimed pending 27 and final source/method freeze |
 
 Coordinator working evidence remains outside the repository until its reviewed
 handoff: `/private/tmp/probata-t07-run19-audit.md`,
 `/private/tmp/probata-method20-plan.md`,
-`/private/tmp/probata-member-lifetime-actual-20261015/`,
 `/private/tmp/probata-query-actual-20261015/` and
 `/private/tmp/probata-dx-store-kernel-check-v4/manifest.json`. These are scoped
 checkpoints, not integrated acceptance claims. The query negative's failed smoke
 and original pytest failure are retained; corrected expectations are checked
 offline without rerunning or upgrading the proof record.
 
-Durable completed slices: [bounded maximum audit](evidence/t25-bounded-max-accepted-20261015.json),
+Durable completed slices: [original class lifetimes](evidence/t24-member-lifetimes-mac-20261015.json),
+[stale-data replay audit](evidence/t25-stale-data-replay-flush-20261015.json),
+[bounded maximum audit](evidence/t25-bounded-max-accepted-20261015.json),
 [member-window audit](evidence/t24-member-windows-mac-20261015.json),
 [focused Linux audit](evidence/focused-parser-owner-final-20261015.json),
 [entry-hint audit](evidence/wp-source-view-entry-hints-20261015.json) and
@@ -53,7 +55,8 @@ owned evaluation process remains. The checkout is clean detached at `bc457086`.
 The one-case stale-data retry passed in 226.98 s (guarded wall 227.39 s,
 peak 508,973,056 bytes; no OOM/timeout), with `refuted`, passed setup, recovered
 inputs `n=1, a=[-1]` and the matching source-C++ heap-use-after-free sanitizer fault.
-The coordinator is auditing all hashes before accepting the complete evidence.
+The coordinator audit matches all nine artifacts, 3,394 physical-file references,
+203 source pins and the certificate self-hash.
 The run retained one worker, 8 GiB RSS cap, 1800 s inner / 2000 s outer wall limit
 and 1 GiB output budget. Raw output remains at
 `/data/yanruj/EvolveSWDB_runs/probata-t25-stale-data-flush-20261015-1332-node0`.
