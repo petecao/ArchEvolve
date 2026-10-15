@@ -1,0 +1,165 @@
+{
+  "created": "2026-10-15 ET",
+  "reviewer": "Codex ticket27 independent reviewer",
+  "scope": "Read-only source/evidence review; no new compiler/verifier jobs.",
+  "reviewed_commit": "13cbfbfec63b3b67e3e939f81a4b1c70b8eb7553",
+  "repaired_c_lowering_sha256": "0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422",
+  "verdict": "pass_for_merge_and_fresh_actual_evaluation",
+  "findings": [],
+  "reviewed_changes": [
+    "Closed atomic operands admit supported literal/bool/enum constants and safe integer wrappers; effects, runtime/volatile reads, calls and unsupported expressions refuse.",
+    "Operation-specific order domains and explicit CAS success/failure relation retained; true weak CAS refuses.",
+    "Named enum values require one matching declaration before any value-cache access.",
+    "Enum underlying-type selection requires one EnumDecl and no mixed declaration kinds, closing record-sizeof collision.",
+    "Anonymous enumerators filter exact reported enum type and require one explicit matching value.",
+    "No cross-process Clang AST identifiers compared; atomic enum errors retain operand/source-line context.",
+    "Unique enum/repeated value/underlying-type controls and original constant C/anchors/model/name byte checks remain present."
+  ],
+  "physical_audit": {
+    "references": 55,
+    "mismatches": [],
+    "producer_metadata_sha256": "6f824ebdcca2f35a460d99cd1d8f70999d78177319c02bd207cb06bbb47e7402",
+    "source_matches_metadata": true
+  },
+  "compiler_controls": {
+    "passed": 86,
+    "log": "/private/tmp/probata-t24-atomic-enum-recorded-final/compiler.log",
+    "resources": {
+      "cpu_seconds": 21.721686,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 357416960,
+      "timed_out": false,
+      "wall_seconds": 23.376301874988712
+    },
+    "boundary": "Recorded compiler/native log and its hash independently read; no theorem claim."
+  },
+  "public_controls": {
+    "physical_refusal_records": 17,
+    "records": [
+      {
+        "function": "atomic_control_load_side_effect",
+        "reason": "unsupported construct: atomic memory order requires a literal or enum constant with safe integer wrappers (bfs.cc line 121)",
+        "sha256": "fd287640ad957da6cadd27a4b0c0863105a2085eccc36b07ef5d1a9bb8490383",
+        "verifier_launch_marker": null,
+        "ordinary_goals": 0
+      },
+      {
+        "function": "atomic_control_success_side_effect",
+        "reason": "unsupported construct: atomic memory order requires a literal or enum constant with safe integer wrappers (bfs.cc line 126)",
+        "sha256": "f1a80c63e1aab3ef6aeb08304073e4b017bc45222f4cdde30b7a6fe2d895d184",
+        "verifier_launch_marker": null,
+        "ordinary_goals": 0
+      },
+      {
+        "function": "atomic_control_failure_side_effect",
+        "reason": "unsupported construct: atomic memory order requires a literal or enum constant with safe integer wrappers (bfs.cc line 131)",
+        "sha256": "b5435094152e245be4348bf7ece3bfe4711a56b70aa8d507f3d261515e9255e7",
+        "verifier_launch_marker": null,
+        "ordinary_goals": 0
+      },
+      {
+        "function": "atomic_control_weak_side_effect",
+        "reason": "unsupported construct: atomic weak flag requires a literal or enum constant with safe integer wrappers (bfs.cc line 136)",
+        "sha256": "bebba04467405bf45b0a10498658823de27759c8d85bd1a4230cf50f4244d303",
+        "verifier_launch_marker": null,
+        "ordinary_goals": 0
+      },
+      {
+        "function": "atomic_control_weak_true",
+        "reason": "unsupported construct: atomic weak compare-exchange may fail spuriously; only constant false is supported (bfs.cc line 141)",
+        "sha256": "cb9254ddda1da92a29aad8f0e56f06affae54cb0e2fe456bea9671539a76256a",
+        "verifier_launch_marker": null,
+        "ordinary_goals": 0
+      },
+      {
+        "function": "atomic_control_weak_dynamic",
+        "reason": "unsupported construct: atomic weak flag requires a literal or enum constant with safe integer wrappers (bfs.cc line 146)",
+        "sha256": "dc3b457412a9181222a65f42405a004ea232b47e1c544f4d63acac9eda0babd3",
+        "verifier_launch_marker": null,
+        "ordinary_goals": 0
+      },
+      {
+        "function": "atomic_control_order_dynamic",
+        "reason": "unsupported construct: atomic memory order requires a literal or enum constant with safe integer wrappers (bfs.cc line 151)",
+        "sha256": "e5a859854beba98c298712026996885bc6f2e82d4213317e19782598534f5659",
+        "verifier_launch_marker": null,
+        "ordinary_goals": 0
+      },
+      {
+        "function": "atomic_control_order_volatile",
+        "reason": "unsupported construct: atomic memory order requires a literal or enum constant with safe integer wrappers (bfs.cc line 156)",
+        "sha256": "319d5809446e25542239afe0ea3f4b8b5b08624a21384827b562e65138a4cadd",
+        "verifier_launch_marker": null,
+        "ordinary_goals": 0
+      },
+      {
+        "function": "atomic_control_order_call",
+        "reason": "unsupported construct: atomic memory order requires a literal or enum constant with safe integer wrappers (bfs.cc line 161)",
+        "sha256": "01d1429b2000eb5472948507a9e8b39c2c9b61f027ac86caf5a7c9e36bbbc57e",
+        "verifier_launch_marker": null,
+        "ordinary_goals": 0
+      },
+      {
+        "function": "atomic_control_order_rte",
+        "reason": "unsupported construct: atomic memory order requires a literal or enum constant with safe integer wrappers (bfs.cc line 166)",
+        "sha256": "a5d54059f203c3f028805cfce15efcb853eaa0988a35330a1c689c317fdbff33",
+        "verifier_launch_marker": null,
+        "ordinary_goals": 0
+      },
+      {
+        "function": "atomic_control_invalid_load",
+        "reason": "unsupported construct: atomic memory order is invalid for this operation (bfs.cc line 171)",
+        "sha256": "570b90d8a953ef73c599115d574747e69160f28406945d4f4d63e642cf7b01b5",
+        "verifier_launch_marker": null,
+        "ordinary_goals": 0
+      },
+      {
+        "function": "atomic_control_invalid_store",
+        "reason": "unsupported construct: atomic memory order is invalid for this operation (bfs.cc line 176)",
+        "sha256": "14fd9ffc70d327db29a3c861788b16ae5f6a6545f9e2bcd4dbf0185f5f928f33",
+        "verifier_launch_marker": null,
+        "ordinary_goals": 0
+      },
+      {
+        "function": "atomic_control_invalid_cas_pair",
+        "reason": "unsupported construct: atomic memory order is invalid for this operation (bfs.cc line 181)",
+        "sha256": "2522985d85ade26af3a7cd2ca24a1dc8dffac5515214757dab543d172c05767f",
+        "verifier_launch_marker": null,
+        "ordinary_goals": 0
+      },
+      {
+        "function": "atomic_control_thread_fence",
+        "reason": "unsupported construct: atomic memory order requires a literal or enum constant with safe integer wrappers (bfs.cc line 186)",
+        "sha256": "75477277486e4b5fa1f23c461083e604293dcddfd02318aa34fbdb5242778a11",
+        "verifier_launch_marker": null,
+        "ordinary_goals": 0
+      },
+      {
+        "function": "atomic_control_signal_fence",
+        "reason": "unsupported construct: atomic memory order requires a literal or enum constant with safe integer wrappers (bfs.cc line 191)",
+        "sha256": "18a9f44edefa39d527883a85018f14a0a36035d90f7a3f2acc5e18b596d1762d",
+        "verifier_launch_marker": null,
+        "ordinary_goals": 0
+      },
+      {
+        "function": "atomic_control_weak_enum_collision",
+        "reason": "unsupported construct: atomic weak flag: enumerator global_weak_value of ambiguous enum WeakFlag (bfs.cc line 196)",
+        "sha256": "c5d83bbcb28f6d5ecddf19ef2e5ac2450e911233c2a9347bee2c0a56898c56bd",
+        "verifier_launch_marker": null,
+        "ordinary_goals": 0
+      },
+      {
+        "function": "atomic_control_order_enum_collision",
+        "reason": "unsupported construct: atomic memory order: enumerator global_bad_order of ambiguous enum OrderFlag (bfs.cc line 201)",
+        "sha256": "52a1f1170d9a661e721c4c928af38d59067db41bdc7e535fa898aa5f6eca58e6",
+        "verifier_launch_marker": null,
+        "ordinary_goals": 0
+      }
+    ],
+    "reported_profile_passes": 29,
+    "reported_seconds": 188.14,
+    "boundary": "All17 physical records and bound adapter/handler reports independently rehashed; no verifier-launch marker/no goals/no wp_input/current translator pin verified. Whole29 profile stdout/resources exist only in tool transcript; retained17records do not independently establish every stale/corpus test result."
+  },
+  "required_actual_acceptance": "Root must launch final ticket24/ticket27 profiles on exact combined reviewed source with fresh method pins; public refusal/compiler controls do not replace actual WP/CBMC acceptance."
+}
