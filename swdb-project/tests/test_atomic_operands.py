@@ -97,3 +97,60 @@ def test_existing_constant_atomic_fixtures_keep_exact_c_anchors_models_and_names
         assert list(result.models)==row['models']
         for model,expected in row['model_sha256'].items():
             assert hashlib.sha256(c_lowering.model_text(model).encode()).hexdigest()==expected
+
+
+def test_atomic_weak_enum_cannot_bind_an_unrelated_local_declaration(tmp_path):
+    source = tmp_path/'atomic_enum_collision.cc'
+    source.write_text('int unrelated() { enum Flag { Weak=0 }; return Weak; }\n'
+        'enum Flag { Weak=1 };\n'
+        'bool atomic_enum_collision(int *p,int *e) {\n'
+        '  return __atomic_compare_exchange_n(p,e,9,Weak,5,0);\n}\n')
+    with pytest.raises(c_lowering.Unsupported,match='atomic weak.*line 4'):
+        c_lowering.lower(source,'atomic_enum_collision')
+
+
+def test_ordinary_enum_value_cannot_bind_an_unrelated_local_declaration(tmp_path):
+    source = tmp_path/'ordinary_enum_collision.cc'
+    source.write_text('int unrelated() { enum Flag { Value=0 }; return Value; }\n'
+        'enum Flag { Value=1 };\n'
+        'int ordinary_enum_collision() { return Value; }\n')
+    with pytest.raises(c_lowering.Unsupported,match='enumerator.*ambiguous.*line 3'):
+        c_lowering.lower(source,'ordinary_enum_collision')
+
+
+def test_ordinary_enum_type_cannot_take_an_unrelated_underlying_type(tmp_path):
+    source = tmp_path/'enum_type_collision.cc'
+    source.write_text('int unrelated() { enum class Flag:unsigned char { X=0 }; return 0; }\n'
+        'enum class Flag:long long { X=4294967296LL };\n'
+        'long long enum_type_collision(Flag x) { return (long long)x; }\n')
+    with pytest.raises(c_lowering.Unsupported,match='ambiguous.*enum.*line 3'):
+        c_lowering.lower(source,'enum_type_collision')
+
+
+def test_atomic_order_enum_cannot_bind_an_unrelated_local_declaration(tmp_path):
+    source = tmp_path/'atomic_order_enum_collision.cc'
+    source.write_text('int unrelated() { enum Flag { Order=0 }; return Order; }\n'
+        'enum Flag { Order=3 };\n'
+        'int atomic_order_enum_collision(int *p) { return __atomic_load_n(p,Order); }\n')
+    with pytest.raises(c_lowering.Unsupported,match='atomic memory order.*ambiguous.*line 3'):
+        c_lowering.lower(source,'atomic_order_enum_collision')
+
+
+def test_unique_enum_underlying_type_and_repeated_values_still_lower(tmp_path):
+    source = tmp_path/'unique_enum.cc'
+    source.write_text('enum Flag { Zero, Value };\n'
+        'int unique_enum_value() { return Value+Value; }\n'
+        'enum class Wide:long long { X=4294967296LL };\n'
+        'long long unique_enum_type(Wide x) { return (long long)x; }\n')
+    result = c_lowering.lower(source,'unique_enum_type')
+    assert result.parameters == (('x','long long',False),)
+    assert '1 + 1' in c_lowering.lower(source,'unique_enum_value').text
+
+
+def test_enum_lookup_cannot_replace_a_global_record_in_sizeof(tmp_path):
+    source = tmp_path/'mixed_enum_context.cc'
+    source.write_text('int unrelated() { enum Flag { X=0 }; return X; }\n'
+        'struct Flag { long long value; };\n'
+        'int mixed_enum_context() { return sizeof(Flag); }\n')
+    with pytest.raises(c_lowering.Unsupported,match='ambiguous.*enum.*line 3'):
+        c_lowering.lower(source,'mixed_enum_context')

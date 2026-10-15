@@ -76,6 +76,10 @@ swdb lower --source <file.cc> --function <name> --out <folder> [--include <dir>]
   Naming rules and existing constant-fixture C/model bytes stay unchanged; translator content changes
   invalidate stale method pins. This is a conservative admitted shape, not support for all runtime orders
   accepted by GCC or for symbolic-N concurrency.
+- **Enum lookup context** (2026-10-15). A named enum must resolve to one matching declaration before
+  using a cached enumerator value or selecting its underlying C type. Same-spelled enums from unrelated
+  scopes, and mixed enum/record type candidates, refuse as ambiguous. Anonymous enumerators additionally
+  match their exact reported enum type context. AST IDs from separate Clang invocations are not compared.
 - **Summaries.** `--summary NAME=SUMMARY` (Python: `lower(..., summaries={NAME: SUMMARY})`): every call of
   `NAME` stays a call with a prototype, and `<name>.anchors.json` lists `summaries: [{name, c_name,
   summary}]`. Every `__dxc_*` and `maa_*` call needs one; without one it is an unsupported construct.

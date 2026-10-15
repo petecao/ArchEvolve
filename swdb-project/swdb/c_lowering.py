@@ -694,7 +694,10 @@ class _Unit:
         nodes = [n for n in self.dump(base) if n.get("name") == base and not n.get("isImplicit")]
         kinds = {n.get("kind") for n in nodes}
         if "EnumDecl" in kinds:
-            enum = [n for n in nodes if n.get("kind") == "EnumDecl"][0]
+            enums = [n for n in nodes if n.get("kind") == "EnumDecl"]
+            if len(enums) != 1 or kinds != {"EnumDecl"}:
+                raise Unsupported(f"ambiguous enum type {base}", line)
+            enum = enums[0]
             fixed = (enum.get("fixedUnderlyingType") or {})
             return self.ctype(fixed.get("qualType", "int"), fixed.get("desugaredQualType"), line=line) \
                 if fixed else "int"
@@ -853,11 +856,10 @@ class _Unit:
     def enum_value(self, ref, line):
         name, qual = ref.get("name"), (ref.get("type") or {}).get("qualType", "")
         key = (name, qual)
-        if key in self._cache:
-            return self._cache[key]
         enum_name = re.sub(r"^(enum\s+)", "", qual).strip()
         if enum_name.startswith("(") or "unnamed" in enum_name:
-            nodes = [n for n in self.dump(name) if n.get("kind") == "EnumConstantDecl" and n.get("name") == name]
+            nodes = [n for n in self.dump(name) if n.get("kind") == "EnumConstantDecl" and n.get("name") == name
+                     and _qual(n) == qual]
             values = [_explicit_enum_value(n) for n in nodes]
             if len(values) != 1 or values[0] is None:
                 raise Unsupported(f"enumerator {name} of an unnamed enum without an explicit value", line)
@@ -868,6 +870,10 @@ class _Unit:
         enums = [n for n in self.dump(enum_name) if n.get("kind") == "EnumDecl" and n.get("name") == enum_name]
         if not enums:
             raise Unsupported(f"enumerator {name} (no enum {enum_name})", line)
+        if len(enums) != 1:
+            raise Unsupported(f"enumerator {name} of ambiguous enum {enum_name}", line)
+        if key in self._cache:
+            return self._cache[key]
         value = -1
         for constant in [c for c in _children(enums[0]) if c.get("kind") == "EnumConstantDecl"]:
             explicit = _explicit_enum_value(constant)
@@ -2182,7 +2188,10 @@ class _Printer:
         if kind == "CXXBoolLiteralExpr" and not children:
             return int(node["value"])
         if kind == "DeclRefExpr" and not children and node.get("referencedDecl", {}).get("kind") == "EnumConstantDecl":
-            return self.unit.enum_value(node["referencedDecl"], self.line)
+            try:
+                return self.unit.enum_value(node["referencedDecl"], self.line)
+            except Unsupported as exc:
+                raise Unsupported(f"atomic {label}: {exc.construct}", self.line) from None
         raise Unsupported(f"atomic {label} requires a literal or enum constant with safe integer wrappers", self.line)
 
     def _atomic_order(self, node, allowed):

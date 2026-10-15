@@ -32,6 +32,8 @@ CASES = {
     'invalid_cas_pair':'__atomic_compare_exchange_n(p,e,9,false,3,2);',
     'thread_fence':'__atomic_thread_fence(m++);',
     'signal_fence':'__atomic_signal_fence(m++);',
+    'weak_enum_collision':'__atomic_compare_exchange_n(p,e,9,global_weak_value,5,0);',
+    'order_enum_collision':'__atomic_load_n(p,global_bad_order);',
 }
 pytestmark = pytest.mark.skipif(bool(c_lowering.locate().missing),reason='Clang22.1.8 required')
 
@@ -60,7 +62,11 @@ def atomic_seed(tmp_path_factory):
         files['rewrite_contracts/atomic_operands_'+case+'.yaml'] = item
     write_library(library,files)
     records,runs,_snapshot,request = build_proposal_setup(records,root,copy_all=False)
-    units = 'int next_atomic_order() { return 0; }\n'+'\n'.join(
+    units = ('int next_atomic_order() { return 0; }\n'
+        'int unrelated_weak() { enum WeakFlag { global_weak_value=0 }; return 0; }\n'
+        'enum WeakFlag { global_weak_value=1 };\n'
+        'int unrelated_order() { enum OrderFlag { global_bad_order=0 }; return 0; }\n'
+        'enum OrderFlag { global_bad_order=3 };\n')+'\n'.join(
         f'int atomic_control_{name}(int *p,int *e,int order,bool weak,volatile int vorder) {{\n'
         f'  int m=0;\n  {statement}\n  return m;\n}}' for name,statement in CASES.items())
     done = records.swdb('submit',request(ANCHOR_BEFORE,units+'\n'+ANCHOR_BEFORE,id='atomic-operands'),

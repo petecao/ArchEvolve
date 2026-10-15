@@ -1,0 +1,10 @@
+# Created: 2026-10-15 ET (ticket24 enum scope refusal).
+id: lowering-enum-scope-value
+adapter: c_lowering
+input:
+  source: tests/fixtures/proof/lowering/enum_scope_refusals.cc
+  function: enum_value_collision
+failure_class: unsupported_construct
+construct: enumerator Value of ambiguous enum Flag
+cause: An uncalled function local enum must not make a later global enumerator1 lower
+  to0. Ambiguous enum scope refuses before cache use.

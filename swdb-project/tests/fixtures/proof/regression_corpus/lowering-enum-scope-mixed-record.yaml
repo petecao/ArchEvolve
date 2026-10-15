@@ -1,0 +1,11 @@
+# Created: 2026-10-15 ET (ticket24 mixed enum scope refusal).
+id: lowering-enum-scope-mixed-record
+adapter: c_lowering
+input:
+  source: tests/fixtures/proof/lowering/enum_scope_refusals.cc
+  function: mixed_enum_record_collision
+failure_class: unsupported_construct
+construct: ambiguous enum type Mixed
+cause: 'An unrelated local enum must not replace a global record type: sizeof(record)
+  previously emitted sizeof(int). Mixed declaration kinds now refuse rather than choosing
+  the enum.'
