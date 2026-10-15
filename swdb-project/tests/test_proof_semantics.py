@@ -508,6 +508,7 @@ def test_wp_capacity_agrees_at_32_and_leaves_33_not_proven(dx, commands):
     hints = _hints("dxf_capacity.loop1.head",
         "loop invariant 0 <= t <= n;",
         "loop invariant 0 <= dx_count <= t;",
+        "loop invariant dx_state_initialized;",
         "loop invariant dx_memory_clear_after_stall(-1, -1, 0);",
         "loop invariant dx_reg_value[0] == 0 && dx_reg_value[1] == 1 && dx_reg_value[2] == 1;",
         "loop invariant dx_reg_writer[0] == -1 && dx_reg_writer[1] == -1 && dx_reg_writer[2] == -1;",

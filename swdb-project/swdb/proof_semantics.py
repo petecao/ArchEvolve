@@ -371,7 +371,7 @@ def lowering_options(library):
     covered = covered_names(library)
     if not covered:
         return {}
-    return {"summaries": dict(covered), "semantics": {"tile_pointer": {TILE_POINTER}}}
+    return {"summaries": dict(covered), "semantics": {"tile_pointer": {TILE_POINTER}, "calls": set(covered)}}
 
 
 def called(lowering, covered):

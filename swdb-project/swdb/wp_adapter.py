@@ -40,7 +40,7 @@ import subprocess
 from dataclasses import replace
 from pathlib import Path
 
-from swdb import artifacts, c_lowering, cpu_memory_admission, framac, hint_check, paths, proof_semantics, proof_setup, rss_watchdog, std_models, terminal_release, vocab
+from swdb import artifacts, c_lowering, cpu_memory_admission, framac, hint_check, paths, proof_semantics, proof_setup, rss_watchdog, std_models, terminal_release, vector_ownership, vocab
 from swdb.proof import MODEL_PREFIX, AdapterError, Verdict
 
 NAME = "wp"
@@ -155,14 +155,23 @@ class WpAdapter:
             try:
                 view = terminal_release.wp_view(lowering, formal_texts, self.hints)
                 terminal_release.check_view(lowering, view, formal_texts, self.hints)
-            except terminal_release.Refused as exc:
-                return self._not_proven("unsupported_construct",
-                    "WP 33.0 does not model allocation lifetime; reachable free/delete or vector growth needs it; "
-                    f"terminal-release check: {exc}", context)
+            except terminal_release.Refused as terminal_error:
+                try:
+                    if any(c.get("acsl", {}).get("uses") for c in entry.get("clauses", []) if isinstance(c, dict)):
+                        raise vector_ownership.Refused("logic-library imports are outside the scalar frame projection")
+                    view = vector_ownership.wp_view(lowering, source, formal_texts, self.hints)
+                    vector_ownership.check_view(lowering, source, view, formal_texts, self.hints)
+                except vector_ownership.Refused as exc:
+                    return self._not_proven("unsupported_construct",
+                        "WP 33.0 does not model allocation lifetime; reachable free/delete or vector growth needs "
+                        f"a checked view; terminal-release check: {terminal_error}; vector ownership: {exc}", context)
+                context["vector_ownership"] = {"view": view, "source": source, "formal_texts": formal_texts}
+                context["assumed"].extend(view.assumptions)
+            else:
+                context["terminal_release"] = {"view": view, "formal_texts": formal_texts}
+                context["assumed"].append(view.assumption)
             dependency_lowering = replace(lowering, models=view.models)
-            context["terminal_release"] = {"view": view, "formal_texts": formal_texts}
             context["pins"].update(view.pins)
-            context["assumed"].append(view.assumption)
         if unit.get("function") not in (None, job.unit.function):
             raise AdapterError(f"contract {self.contract} states the proof unit {unit.get('function')}, not "
                                f"{job.unit.function}")
@@ -174,6 +183,16 @@ class WpAdapter:
             terminal["path"] = wp_dir / "terminal_release_view.c"
             terminal["path"].write_text(terminal["view"].text)
             context["reports"].append(("terminal_release_view", terminal["path"]))
+        if context.get("vector_ownership"):
+            owner = context["vector_ownership"]
+            owner["path"] = wp_dir / "vector_ownership_view.c"
+            owner["path"].write_text(owner["view"].text)
+            context["reports"].append(("vector_ownership_view", owner["path"]))
+            owner["contract_path"] = wp_dir / "vector_ownership_contracts.json"
+            owner["contract_text"] = json.dumps({"source": owner["formal_texts"],
+                                                "view": owner["view"].formal_text}, indent=2) + "\n"
+            owner["contract_path"].write_text(owner["contract_text"])
+            context["reports"].append(("vector_ownership_contracts", owner["contract_path"]))
         called = proof_semantics.called(lowering, covered)
         if called:                                  # ticket 27: the WP form of the proof semantics
             entries = sorted({covered[name] for name in called})
@@ -206,6 +225,8 @@ class WpAdapter:
         for model in context["pins"].get("models", []):
             context["extern_contracts"][model["id"]] = {k: model[k] for k in ("id", "sha256")}
         context["extern_contracts"].update(context.get("allocation_contracts", {}))
+        if context.get("vector_ownership"):
+            context["extern_contracts"].update(context["vector_ownership"]["view"].extern_contracts)
         if context.get("semantics"):
             semantics = context["semantics"]
             pin = {k: semantics[k] for k in ("id", "sha256")}
@@ -216,7 +237,7 @@ class WpAdapter:
         callees = sorted({a["function"] for a in lowering.anchors if a["kind"] == "contract"} - {job.unit.function})
         context["extra_flags"] = [f"-wp-fct={job.unit.function}"] + \
             ([f"-inline-calls={','.join(callees)}"] if callees else [])
-        view = (context.get("terminal_release") or {}).get("view")
+        view = (context.get("terminal_release") or context.get("vector_ownership") or {}).get("view")
         base = hint_check.wp_base(view.text if view else lowering.text, lowering.anchors,
                                   self._context(lowering, entry, summary_job, context))
         base = self._with_contracts(base, contracts)
@@ -431,6 +452,8 @@ class WpAdapter:
         if semantics:
             texts, prelude = self._with_semantics(lowering, texts, semantics)
         texts = sorted(texts, key=lambda t: 0 if t.startswith("requires") else 1)
+        if (job_context or {}).get("vector_ownership"):
+            texts = [job_context["vector_ownership"]["view"].formal_text]
         uses = []
         for clause in clauses:
             uses += [u for u in clause["acsl"].get("uses", []) if u not in uses]
@@ -553,6 +576,23 @@ class WpAdapter:
             inputs.append((terminal["path"], view.text))
             context["settings"]["terminal_release"] = {
                 "certificate": view.certificate, "wp_view_sha256": hashlib.sha256(view.text.encode()).hexdigest()}
+        owner = context.get("vector_ownership")
+        if owner:
+            view = owner["view"]
+            try:
+                vector_ownership.check_view(context["lowering"], owner["source"], view,
+                                            owner["formal_texts"], self.hints)
+            except vector_ownership.Refused as exc:
+                raise AdapterError(f"vector ownership prelaunch check: {exc}") from None
+            if any(context["pins"].get(name) != pin for name, pin in view.pins.items()):
+                raise AdapterError("vector ownership checker/certificate/allocator pins changed before launch")
+            inputs += [(owner["path"], view.text), (owner["contract_path"], owner["contract_text"])]
+            context["settings"]["vector_ownership"] = {
+                "certificate": view.certificate, "wp_view_sha256": hashlib.sha256(view.text.encode()).hexdigest(),
+                "source_frame": view.certificate["source_frame"], "source_frame_preservation": "checked",
+                "frame_evidence": "structural relational lowering; not a WP goal",
+                "original_contract_sha256": view.certificate["original_contract_sha256"],
+                "view_contract_sha256": view.certificate["view_contract_sha256"]}
         proof_setup.check_generated(job, self, context, inputs, settings_flags, command=command, scratch=scratch)
         result = rss_watchdog.run(command, log=wp_log, cap_bytes=cap, timeout=wall, cwd=scratch, env=env)
         context["peak"] = result.peak_rss_bytes
@@ -629,10 +669,13 @@ class WpAdapter:
             assumptions.append({"kind": "assumed_clause", "reference": {"id": semantics["id"],
                                                                         "sha256": semantics["sha256"]},
                 "sentence": "The WP model-domain preconditions hold: no DX100 command is outstanding at entry, "
+                            "the fixed modeled device storage is initialized (dx_state_initialized), "
                             "and CPU pointer parameters occupy objects separate from tile data, tile sizes, and "
                             "register values. The exact generated clauses are recorded in "
                             "settings.proof_semantics.unit_requires; store-frame witnesses and selected-index "
-                            "bounds remain checked proof obligations."})
+                            "bounds and initialized caller-memory reads remain checked proof obligations. "
+                            "Device-call initialization preservation is a trusted semantics contract, "
+                            "pending ticket 29's independent contract/body agreement checks."})
             reduction = Path(self.library.root) / "rocq" / "probata" / "Reduction.v"
             if not reduction.is_file():
                 reduction = paths.HOME / "library" / "rocq" / "probata" / "Reduction.v"

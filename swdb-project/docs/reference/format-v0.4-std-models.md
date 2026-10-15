@@ -139,6 +139,19 @@ These contracts accompany mandatory WP initialization checks; they make no addit
 Model and summary dependencies must count under the caller's exact method and evidence boundary; a
 proof made before that policy cannot satisfy the new method merely because the code text matches.
 
+## Checked private vector view (2026-10-15 ET)
+
+The WP adapter can stage a closed `vector<int>` protocol with one count-value constructor,
+one `data()` alias, one growing append and scalar observations. The original contract keeps
+`assigns \nothing`; the checked relation projects writes to fresh, nonescaping private storage.
+WP proves the separate private-view frame, functional facts and alias-liveness obligations.
+`vector_ownership_check` pins the checker; `vector_ownership_certificate` pins the source/view
+bytes, contracts and structural frame certificate; `vector_ownership_allocator` pins the
+explicit trusted fresh-allocation and separation contracts. Neither fresh storage nor source-frame
+preservation is inferred from unsupported WP allocation clauses. The checker is included in the
+setup/reader identity and revalidates the view before launch. General vector lifetime acceptance
+and the remaining protocol refusal controls are still pending.
+
 
 ## Bounded initializedness admission (2026-10-15)
 

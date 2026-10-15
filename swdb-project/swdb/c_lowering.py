@@ -1781,6 +1781,14 @@ class _Printer:
             texts = [self.address(a) if i < len(params) and params[i].rstrip().endswith("&") else self.expr(a, top=True)
                      for i, a in enumerate(args)]
             call = f"{cname}({', '.join(texts)})"
+            if (name == "get_cacheable_tile_pointer" and name in self.semantics.get("tile_pointer", ())) or \
+                    (name in self.semantics.get("calls", ()) and returns in INTEGER_TYPES):
+                # 2026-10-15 ET: WP33 does not initialize a receiving local slot
+                # for a modular call. An identity expression forces its ordinary
+                # assignment path. Imported integer results have an exact identity;
+                # only the tile-pointer contract returns a known non-null static
+                # row. Nullable pointers and floating-point calls are unchanged.
+                return f"({call} + 0)", True
             return (f"(*{call})", True) if returns.rstrip().endswith("&") else (call, True)
         if name in STD_MODELS:
             target = unit.function_node(name, qual_type, self.line)
