@@ -1,8 +1,8 @@
 # Method20 prospective checkpoint
 
 Created: 2026-10-15 ET. Updated: 2026-10-15 ET. **Runs20/21/22 are harness-aborted,
-with no qualifying proof. The process-inspection revision awaits independent
-review, an actual seed-stage resource check and a new prospective freeze.** At the earlier closeout checkpoint this
+with no qualifying proof. The reviewed process-inspection revision and fresh
+actual seed-stage resource check pass; a new counted experiment remains required.** At the earlier closeout checkpoint this
 method was unlaunched. Historical method19 source `669df70f` stays unchanged.
 
 The new opt-in `--design-probes` requires the strict `--staged-induction`
@@ -196,3 +196,15 @@ or uncaptured root birth fails closed before any record replacement or group
 signaling. Five public boundary controls include matching/mismatched/missing
 markers and known/unknown protected root identity. Review and a fresh resource
 component precede counted launch because discovery/accounting changed.
+
+
+Final independent review passes183 controls (182 repository plus one independent
+CLI control). The fresh v5 actual component on clean `79d6f338` passed at
+16:36:59ET in150.48seconds: all three guarded processes exited0 with confirmed
+cleanup,209goals/39open from five fresh mechanical frames. An external audit
+verified27 source pins, process/log hashes and no remaining same-user tools or
+shared leases, with zero errors. [Combined source/review/resource evidence](../../evidence/t07-method20-inspection-review-20261015.json)
+retains the aborted-run boundary and both actual component receipts. Components
+are not scientific proof or reusable counted inputs. A fresh full baseline,
+provider conversation/clock, all-goal positive, final cache-none smoke replay and
+separate covering-wait negative remain mandatory.

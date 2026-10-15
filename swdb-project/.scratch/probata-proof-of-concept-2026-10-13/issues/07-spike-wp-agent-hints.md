@@ -1243,3 +1243,22 @@ any actual verifier launch. Focused ancestry/marker snapshot and cleanup-leader
 replacement controls failed before the identity-preserving fix and now pass.
 The complete20 runner controls pass; the interim retry commit is superseded.
 No scientific conclusion or new counted run follows from these controls alone.
+
+
+### Inspection/identity revision reviewed; actual resource pipeline passes — 2026-10-15 ET
+
+Final independent review passes **183 controls**. Birth mismatch precedes departed
+status; fresh marker discovery renews only independently checked exact-marker
+nonroot child identities. Original root identity cannot be renewed. Persistent
+live or unknown inspection denial still fails closed. The corrected real seed
+pipeline on `79d6f338` completed at16:36:59ET in150.48seconds, with all three
+processes exited0, cleanup confirmed, source unchanged and no remaining tools or
+leases. An independent script verified27 source pins and all process/log hashes
+with zero errors. It used only five fresh mechanical frames (209goals/39open),
+called no provider and makes no scientific success claim.
+
+[Combined exact review/control/component receipts](../evidence/t07-method20-inspection-review-20261015.json)
+retain both actual resource components and all RED/GREEN ownership controls.
+Their outputs, prior baselines and conversations will not be reused. The ticket
+remains claimed in the existing shared box; a fresh counted full-baseline run
+and unchanged final positive/smoke/negative acceptance are still required.
