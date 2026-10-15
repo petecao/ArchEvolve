@@ -533,6 +533,9 @@ def test_a_record_that_pins_an_older_proof_semantics_version_stops_counting(dx):
     "ghost dx_store_bound = wait_ready(0);",
     "ghost dx_store_bound = RESET;",
     "ghost dx_store_bound = (dx_count = 0);",
+    pytest.param("ghost dx_store_bound = (dx_count >>= 31);", id="ghost-shift-right"),
+    pytest.param("ghost dx_store_bound = (dx_count <<= 1);", id="ghost-shift-left"),
+    pytest.param("ghost dx_store_bound = (dx_count >>??/\n= 31);", id="ghost-trigraph-shift"),
     "ghost int witness = 0; witness++;",
     "ghost int witness = 0; witness = (*wait_ready)(0);",
 ])
@@ -559,7 +562,8 @@ def test_wp_refuses_hint_that_mutates_the_trusted_semantics_ghost_state(dx, text
 
 @needs_wp
 @pytest.mark.parametrize("text", ["ghost int hint_ready = 0; hint_ready = hint_ready + 1;",
-                                  "ghost dx_store_bound = n;"])
+                                  "ghost dx_store_bound = n;",
+                                  "ghost dx_store_bound = (n <= 0) ? 0 : n;"])
 def test_wp_allows_fresh_scalar_witnesses_without_trusting_them_as_model_updates(dx, text):
     from test_wp_adapter import fake
     hint_path = dx.root / "scalar-witness.yaml"

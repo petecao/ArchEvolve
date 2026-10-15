@@ -487,7 +487,7 @@ def test_the_block_is_a_dated_snapshot_naming_the_level_rule_and_a_rendered_hand
     _prove(seed)
     rendered = json.dumps(_handoff(seed))
     snapshot = json.loads(rendered)["content"]["certification_level"]["snapshot"]
-    assert snapshot["level"] == "proven_unbounded" and snapshot["level_rule"] == "level-rule.2"
+    assert snapshot["level"] == "proven_unbounded" and snapshot["level_rule"] == "level-rule.3"
     assert re.fullmatch(r"\d{4}-\d{2}-\d{2} \d{2}:\d{2} ET", snapshot["at"])
     # A pin changes: a newer method version, so every proof record pins one that is no longer current.
     newer = yaml.safe_load((seed.root / "library" / "methods" / "contract-fixture-1.yaml").read_text())
