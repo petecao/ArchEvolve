@@ -74,15 +74,51 @@ def tile_seed(tmp_path_factory):
     units = dx.UNITS + """
 int dxf_tile_extent(int n) {
   int *tile = get_cacheable_tile_pointer(0);
+#ifdef TILE_INIT_ROWS
+  int *neighbor = get_cacheable_tile_pointer(1);
+  tile[0] = 0; tile[1] = 0; neighbor[0] = 0; neighbor[1] = 0;
+#endif
 #ifdef TILE_OUTSIDE
   int ignored = tile[3];
+#elif defined(TILE_WP_DIRECT)
+  int ignored = tile[1];
 #else
   for (int k = 0; k < n; ++k) { int ignored = tile[k]; }
 #endif
   return 1;
 }
+int dxf_pointer_formation(int *p, int n) {
+#ifdef WP_POINTER_OUTSIDE
+  (void)(p + 3);
+#else
+  (void)(p + n);
+#endif
+  return 1;
+}
+int dxf_pointer_modes(int *p, int *q, int n) {
+#ifdef WP_POINTER_INCREMENT
+  p++;
+#elif defined(WP_POINTER_COMPOUND)
+  p += n + 1;
+#elif defined(WP_POINTER_DIFFERENCE)
+  (void)(p - q);
+#elif defined(WP_POINTER_CAST)
+  (void)((short *)p + 1);
+#elif defined(WP_POINTER_SUBOBJECT)
+  int a[2][2] = {{0, 0}, {0, 0}}; int *row = a[0]; (void)(row + 3);
+#else
+  (void)(&p[n + 1]);
+#endif
+  return 1;
+}
+int dxf_pointer_null(int *p, int n) { (void)(p + 0); return 1; }
 """
-    fixtures = {**dx.FIXTURES, "tile_extent": ("dxf_tile_extent", [], "requires 0 <= n <= 2;", "\\nothing", 2)}
+    fixtures = {**dx.FIXTURES, "tile_extent": ("dxf_tile_extent", [], "requires 0 <= n <= 2;", "\\nothing", 2),
+                "pointer_formation": ("dxf_pointer_formation", ["p"],
+                    "requires n == 2 && \\valid(p + (0 .. n - 1));", "\\nothing", 2),
+                "pointer_modes": ("dxf_pointer_modes", ["p", "q"],
+                    "requires n == 2 && \\valid(p + (0 .. n - 1)) && \\valid(q + (0 .. n - 1));", "\\nothing", 2),
+                "pointer_null": ("dxf_pointer_null", ["p"], "requires n == 0 && p == \\null;", "\\nothing", 0)}
     with pytest.MonkeyPatch.context() as patch:
         patch.setattr(dx, "UNITS", units)
         patch.setattr(dx, "FIXTURES", fixtures)
@@ -104,3 +140,82 @@ def test_tile_pointer_checks_its_own_row_extent(tile_seed, outside):
         assert any(g["status"] == "failure" and "pointer" in g["property"] for g in record["goals"])
     else:
         assert record["verdict"] == "proven", record
+
+
+@dx.needs_wp
+@pytest.mark.parametrize("outside", [True, False])
+def test_wp_tile_pointer_checks_its_own_row_extent(tile_seed, outside):
+    from conftest import run_swdb
+    seed = tile_seed
+    extra = [arg for define in ("DX_NT=2", "DX_NR=1", "DX_NM=1", "DX_K=1",
+                              "TILE_OUTSIDE" if outside else "TILE_WP_DIRECT", "TILE_INIT_ROWS")
+             for arg in ("--define", define)]
+    result = run_swdb("prove", "--records", seed.records, "--candidate", seed.candidates["safe"],
+        "--function", "dxf_tile_extent", "--contract", "contract.fixture_dx_tile_extent", "--adapter", "wp",
+        "--runs-dir", seed.runs, "--format", "json", *extra, timeout=3600)
+    assert result.returncode == 0, result.stderr + result.stdout
+    record = seed.read(json.loads(result.stdout))
+    assert record["verdict"] == ("not_proven" if outside else "proven"), record
+    if outside:
+        assert any("rte_mem_access" in g["goal"] and g["status"] != "valid" for g in record["goals"]), record
+
+
+@dx.needs_wp
+@pytest.mark.parametrize("outside", [True, False])
+def test_wp_discarded_pointer_formation_checks_bounds_and_allows_one_past(tile_seed, outside):
+    from conftest import run_swdb
+    seed = tile_seed
+    extra = ["--define", "WP_POINTER_OUTSIDE"] if outside else []
+    result = run_swdb("prove", "--records", seed.records, "--candidate", seed.candidates["safe"],
+        "--function", "dxf_pointer_formation", "--contract", "contract.fixture_dx_pointer_formation", "--adapter", "wp",
+        "--runs-dir", seed.runs, "--format", "json", *extra, timeout=3600)
+    assert result.returncode == 0, result.stderr + result.stdout
+    record = seed.read(json.loads(result.stdout))
+    assert record["verdict"] == ("not_proven" if outside else "proven"), record
+    goals = [g for g in record.get("goals", []) if "swdb_pointer_formation" in g["goal"]]
+    assert goals and any(g["status"] != "valid" for g in goals) is outside
+
+
+@dx.needs_wp
+@pytest.mark.parametrize("define", ["WP_POINTER_INCREMENT", "WP_POINTER_COMPOUND", "WP_POINTER_DIFFERENCE", "WP_POINTER_CAST", "WP_POINTER_SUBOBJECT", None])
+def test_wp_pointer_mutation_subtraction_and_indexed_address_cannot_bypass_checks(tile_seed, define):
+    from conftest import run_swdb
+    seed = tile_seed
+    extra = ["--define", define] if define else []
+    result = run_swdb("prove", "--records", seed.records, "--candidate", seed.candidates["safe"],
+        "--function", "dxf_pointer_modes", "--contract", "contract.fixture_dx_pointer_modes", "--adapter", "wp",
+        "--runs-dir", seed.runs, "--format", "json", *extra, timeout=3600)
+    assert result.returncode == 0, result.stderr + result.stdout
+    record = seed.read(json.loads(result.stdout))
+    assert record["verdict"] == "not_proven", record
+    if define:
+        assert record["failure_class"] == "unsupported_construct"
+        assert record["settings"]["verifier_launched"] is False
+    else:
+        assert any("swdb_pointer_formation" in g["goal"] and g["status"] != "valid" for g in record["goals"])
+
+
+@dx.needs_wp
+def test_cpp_null_plus_zero_is_preserved_without_c_null_arithmetic(tile_seed):
+    from conftest import run_swdb
+    seed = tile_seed
+    result = run_swdb("prove", "--records", seed.records, "--candidate", seed.candidates["safe"],
+        "--function", "dxf_pointer_null", "--contract", "contract.fixture_dx_pointer_null", "--adapter", "wp",
+        "--runs-dir", seed.runs, "--format", "json", timeout=3600)
+    assert result.returncode == 0, result.stderr + result.stdout
+    record = seed.read(json.loads(result.stdout))
+    assert record["verdict"] == "proven", record
+    assert record["settings"]["pointer_bounds"]["sites"][0]["normalized_expression"]
+
+
+@dx.needs_wp
+def test_generated_copy_model_proves_checked_pointer_distance_and_return(tile_seed):
+    from conftest import run_swdb
+    seed = tile_seed
+    result = run_swdb("prove", "--records", seed.records, "--model", "std_copy_int", "--adapter", "wp",
+        "--runs-dir", seed.runs, "--format", "json", timeout=3600)
+    assert result.returncode == 0, result.stderr + result.stdout
+    record = seed.read(json.loads(result.stdout))
+    assert record["verdict"] == "proven", record
+    assert len(record["settings"]["pointer_bounds"]["sites"]) == 2
+    assert all(g["status"] == "valid" for g in record["goals"] if "swdb_model_pointer_formation" in g["goal"])

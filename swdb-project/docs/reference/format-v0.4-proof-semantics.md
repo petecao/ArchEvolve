@@ -165,3 +165,11 @@ preservation contracts, respectively.
 - 29: three-form agreement (ACSL contracts, C model, C stubs) and the semantics negative controls.
 - 30: generate the C model from the one source; this version's `model.h` is hand-written.
 - 36: check that every tile-pointer access has a generator-made probe (`settings.proof_semantics.probes`).
+
+Tile object boundaries (2026-10-15): both bounded and WP generation give each tile a distinct static
+array object. A two-dimensional array makes adjacent tiles part of one allocation and can hide a row
+crossing from allocation-based pointer checks. WP uses an initialized `int * const` table mapping tile
+indices to these rows; the table is immutable, and only row contents appear in the device write frame.
+The entry type checker uses the same representation and build constants as WP. Caller and store
+separation clauses quantify over every tile row. This changes the generated representation without
+adding an allocation-success premise or altering the operational C model body.

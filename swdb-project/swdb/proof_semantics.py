@@ -201,13 +201,15 @@ def check(library, entry_id, data, error):
     return _typecheck(library, entry_id, data, texts, error)
 
 
-def acsl_source(data, texts, rows=None):
+def acsl_source(data, texts, rows=None, *, constants=None):
     """The C file Frama-C type-checks: constants, the ghost block, the device state, the logic definitions, then each
     call's (and query's) contract on its prototype. `rows` limits it to some call or query rows."""
     parts = [f"#define {name} {value}" for name, value in (data.get("constants") or {}).items()]
     parts += ["#include <stdint.h>", "/*@ ghost"]
     parts += [f"  {decl};" for _name, decl in ghost_declarations(texts["ghost.acsl"])]
-    parts += ["*/", texts["model.state"], "/*@", texts["model.logic"], "*/"]
+    state, _objects = _bounded_state(texts["model.state"], constants or data.get("constants") or {},
+                                     constant_table=True)
+    parts += ["*/", state, "/*@", texts["model.logic"], "*/"]
     for row in rows if rows is not None else [*(data.get("calls") or []), *(data.get("queries") or []),
                                               *((data.get("wp") or {}).get("probes") or [])]:
         parts += ["/*@", row.get("contract") or "", "*/", f"{row.get('prototype')};"]
@@ -231,7 +233,7 @@ def wp_prelude(library, entry_id, called, defines=()):
     for probe in probes:
         name = re.match(r".*?\b(\w+)\s*\(", probe["prototype"]).group(1)
         parts.append(f"#define {probe['macro']}(addr, id) {name}(addr)")
-    body = acsl_source({"constants": {}}, texts, rows=rows)
+    body = acsl_source({"constants": {}}, texts, rows=rows, constants=constants)
     parts.append(body.replace("#include <stdint.h>\n", ""))
     return "\n".join(parts) + "\n"
 
@@ -379,12 +381,13 @@ def called(lowering, covered):
     return sorted({row["name"] for row in lowering.summaries if row.get("name") in covered})
 
 
-def _bounded_state(text, constants):
+def _bounded_state(text, constants, *, constant_table=False):
     """Give each tile its own C object; created 2026-10-15 ET.
 
     CBMC pointer checks follow allocation objects, so rows of one 2D array do
     not enforce each tile's extent. Static rows preserve initialization and
-    indexed access without assuming heap allocation succeeds. WP keeps state.h.
+    indexed access without assuming heap allocation succeeds. WP uses the same
+    distinct objects and an immutable initialized pointer table.
     """
     count, extent = int(constants["DX_NT"]), int(constants["DX_TS"])
     if count < 1 or extent < 1:
@@ -394,7 +397,8 @@ def _bounded_state(text, constants):
     if len(re.findall(declaration, text)) != 1:
         raise ValueError("bounded state needs the canonical single tile array declaration")
     rows = [f"static int {name}[DX_TS];" for name, _size in objects]
-    rows.append("int *dx_tile_data[DX_NT] = {" + ", ".join(name for name, _size in objects) + "};")
+    table_type = "int * const" if constant_table else "int *"
+    rows.append(table_type + " dx_tile_data[DX_NT] = {" + ", ".join(name for name, _size in objects) + "};")
     return re.sub(declaration, lambda _match: "\n".join(rows), text), objects
 
 

@@ -24,6 +24,35 @@ PAIR = ("ctor_default", "ctor", "copy_ctor", "operator_assign")
 MEMBERS = tuple("std_vector_int_" + name for name in NONALLOCATING) + tuple("std_pair_int_int_" + name for name in PAIR)
 
 
+@pytest.mark.parametrize("changed", [False, True])
+def test_checked_at_view_composes_with_generated_pointer_prelaunch_checks(tmp_path, changed):
+    """2026-10-15 ET: both independently generated views survive their shared launch boundary."""
+    from dataclasses import replace
+    from types import SimpleNamespace
+    from swdb import c_lowering, proof, proof_setup, standard_model_view, wp_pointer_bounds
+    scratch = tmp_path / "scratch"
+    scratch.mkdir()
+    name = "std_vector_int_at"
+    unit = proof.ProofUnit(None, name, str(tmp_path), "0" * 64, "c_model." + name, "0" * 64)
+    job = proof.Job(unit, (), scratch, tmp_path / "adapter.log", bounds={}, budget_seconds=30)
+    adapter = SimpleNamespace(name="wp", library=None)
+    proof_setup.begin(job, adapter, {"method_version": {"not_applicable": "Static launch-boundary control."}}, None)
+    view = standard_model_view.wp_view(name, c_lowering.model_text(name), scratch)
+    source = "\n".join([*c_lowering.HEADERS, view.text]) + "\n"
+    text, report = wp_pointer_bounds.model_view(source, scratch)
+    input_path = scratch / "wp_input.c"
+    input_path.write_text(text)
+    context = {"pointer_bounds_model_source": source, "wp_expected_text": text,
+               "pointer_bounds_report": report,
+               "standard_model_view": {"view": replace(view, text=view.text + "\n") if changed else view}}
+    flags = ["-wp-cache", "none", "-machdep", "x86_64", "-wp-model", "+real", "-wp-no-filter-init"]
+    if changed:
+        with pytest.raises(proof.AdapterError, match="checked standard model view changed"):
+            proof_setup.check_generated(job, adapter, context, [(input_path, text)], flags)
+    else:
+        assert proof_setup.check_generated(job, adapter, context, [(input_path, text)], flags)["verdict"] == "passed"
+
+
 def _member_seed(root):
     from swdb import c_lowering, std_models
     records = make_records(root)

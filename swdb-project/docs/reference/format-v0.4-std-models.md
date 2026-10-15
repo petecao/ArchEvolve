@@ -188,6 +188,9 @@ unchanged `this->data + n` return. The view replaces that guard with the named c
 and view contract digests match, and no input precondition is added. The original/native/CBMC model
 retains the abort. Changed bodies or missing bounds contracts refuse this exact view. The source,
 view, C-AST shape, mapping certificate and checker are reported/pinned and regenerated before WP.
+`standard_model_view_check` pins the relation checker; `standard_model_view_certificate` pins its
+exact source/view and unchanged-contract mapping. Generated pointer checks are applied after that
+checked view and regenerated in the same order at launch.
 This avoids a dead defensive branch failing smoke checks without exempting any smoke obligation.
 
 The required boolean `-wp-no-filter-init` retains initialized representation predicates in ordinary

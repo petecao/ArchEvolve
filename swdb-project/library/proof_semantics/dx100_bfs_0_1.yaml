@@ -584,14 +584,15 @@ calls:
   contract: "requires initialized_state: dx_state_initialized;\nrequires 0 <= idx_tile < DX_NT && 0 <= src_tile\
     \ < DX_NT && (cond_tile == -1 || 0 <= cond_tile < DX_NT);\nrequires 0 <= dst_tile < DX_NT && dst_tile != idx_tile\
     \ && dst_tile != src_tile && dst_tile != cond_tile;\nrequires memory_domain: dx_memory_clear_after_stall(dst_tile,\
-    \ -1, 1);\nrequires \\base_addr(data) != \\base_addr(&dx_tile_data[0][0]) &&\n  \\base_addr(data) != \\base_addr(&dx_tile_size[0])\
-    \ && \\base_addr(data) != \\base_addr(&dx_reg_value[0]);\nrequires dx_tile_size[src_tile] == dx_tile_size[idx_tile]\
-    \ &&\n  (cond_tile == -1 || dx_tile_size[cond_tile] == dx_tile_size[idx_tile]);\nrequires ghost_capacity: 0\
-    \ <= dx_count < DX_K;\nrequires dx_issuable(-1, -1, -1, -1, -1);\nrequires \\forall integer k; 0 <= k < dx_tile_size[idx_tile]\
-    \ && k < DX_TS &&\n  (cond_tile == -1 || dx_tile_data[cond_tile][k] != 0) ==> \\valid(data + (unsigned int)dx_tile_data[idx_tile][k]);\n\
-    requires source_initialized: \\forall integer k; 0 <= k < dx_tile_size[idx_tile] && k < DX_TS &&\n  (cond_tile\
-    \ == -1 || dx_tile_data[cond_tile][k] != 0) ==> \\initialized(data + (unsigned int)dx_tile_data[idx_tile][k]);\n\
-    requires store_frame_bound: 0 <= dx_store_bound;\nrequires store_indices: \\forall integer k; 0 <= k < dx_tile_size[idx_tile]\
+    \ -1, 1);\nrequires (\\forall integer swdb_tile; 0 <= swdb_tile < DX_NT ==>\n  \\base_addr(data) != \\base_addr(dx_tile_data[swdb_tile]))\
+    \ &&\n  \\base_addr(data) != \\base_addr(&dx_tile_size[0]) && \\base_addr(data) != \\base_addr(&dx_reg_value[0]);\n\
+    requires dx_tile_size[src_tile] == dx_tile_size[idx_tile] &&\n  (cond_tile == -1 || dx_tile_size[cond_tile]\
+    \ == dx_tile_size[idx_tile]);\nrequires ghost_capacity: 0 <= dx_count < DX_K;\nrequires dx_issuable(-1, -1,\
+    \ -1, -1, -1);\nrequires \\forall integer k; 0 <= k < dx_tile_size[idx_tile] && k < DX_TS &&\n  (cond_tile ==\
+    \ -1 || dx_tile_data[cond_tile][k] != 0) ==> \\valid(data + (unsigned int)dx_tile_data[idx_tile][k]);\nrequires\
+    \ source_initialized: \\forall integer k; 0 <= k < dx_tile_size[idx_tile] && k < DX_TS &&\n  (cond_tile == -1\
+    \ || dx_tile_data[cond_tile][k] != 0) ==> \\initialized(data + (unsigned int)dx_tile_data[idx_tile][k]);\nrequires\
+    \ store_frame_bound: 0 <= dx_store_bound;\nrequires store_indices: \\forall integer k; 0 <= k < dx_tile_size[idx_tile]\
     \ && k < DX_TS &&\n  (cond_tile == -1 || dx_tile_data[cond_tile][k] != 0) ==>\n  0 <= (unsigned int)dx_tile_data[idx_tile][k]\
     \ < dx_store_bound;\nassigns data[0 .. dx_store_bound - 1],\n  dx_tile_data[dst_tile][0 .. DX_TS - 1], dx_tile_size[dst_tile],\
     \ dx_live, dx_kind[0 .. DX_K - 1], dx_dst1[0 .. DX_K - 1], dx_dst2[0 .. DX_K - 1], dx_src1[0 .. DX_K - 1], dx_src2[0\
