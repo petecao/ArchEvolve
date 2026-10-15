@@ -3,7 +3,7 @@
 Created: 2026-10-14 13:45 ET, Probata proof of concept ticket 20. Updated: 2026-10-14 15:10 ET, ticket 21
 (`proof_unit` names the baseline C++ source; the formal halves type-check against its C lowering; the
 concurrency frame must name every interface array). Updated: 2026-10-15 ET
-(explicit initializedness predicates for WP runtime-error obligations).
+(explicit initializedness predicates and staged array-domain declarations).
 Spec: `.scratch/probata-proof-of-concept-2026-10-13/issues/20-formal-half-frame.md`; design:
 `.scratch/formal-verification-2026-10-09/spec.md` ("Formal-half language and the C++ subset"), map 16
 items 2, 4 and 13, 17 item 5, 10 item 4, 15 item 5, 26 item 4, 12 item 1.
@@ -20,7 +20,7 @@ the allowed subset and type-checks.
 |---|---|---|
 | `formal_frame` | any entry | `1`: the entry is written in this frame. Without it no frame field is allowed, and the entry gives no proven verdict. |
 | `version` | frame entries | Dotted numbers as a quoted string (`"1.0"`). `once` placements and version ranges name it. |
-| `proof_unit` | entries with `acsl`, frame rewrite contracts | `{source, function, types?}`: `source` pins the baseline proof unit's C++ file (`root`, `path`, `sha256`), `function` names it. The formal halves type-check against the C lowering of its signature (`swdb lower`, kept C++ names, no renaming layer; ticket 21). A hand-written `prototype` is refused. `types` pins a C header. Without clang 22.1.8 every formal half is reported unchecked; a baseline outside the core subset is refused. |
+| `proof_unit` | entries with `acsl`, frame rewrite contracts | `{source, function, types?, array_domains?}`: `source` pins the baseline proof unit's C++ file (`root`, `path`, `sha256`), `function` names it. The formal halves type-check against the C lowering of its signature (`swdb lower`, kept C++ names, no renaming layer; ticket 21). A hand-written `prototype` is refused. `types` pins a C header. Without clang 22.1.8 every formal half is reported unchecked; a baseline outside the core subset is refused. |
 | `concurrency_frame` | frame rewrite contracts (required) | One row per interface array: `array`, `shared_actions` (vocabulary `shared_action_kinds`; empty list allowed), `history_reads` (YAML yes/no). Ticket 21: every pointer parameter of the lowered proof unit has a row, and every row names one. |
 | `contract_role` | rewrite contracts (optional) | `offload_only` or `enabling`. The smallest marker the checks need. |
 | `required_enabling_contracts` | offload-only contracts (required there only) | Ordered list of `{contract, versions}`. Each names an `enabling` contract; `versions` is comma-separated bounds (`">=2.0, <3.0"`). `swdb build` keeps the written order. |
@@ -30,6 +30,27 @@ the allowed subset and type-checks.
 A proof-semantics entry is the new kind `proof_semantics` (folder `library/proof_semantics/`, ID prefix
 `semantics.`). It needs `formal_frame`, `version`, `rules` and an empty `clauses` list. The ACSL of each
 rule comes with tickets 27 and 28.
+
+### Explicit array-window input domains (staged)
+
+`proof_unit.array_domains` optionally maps a primitive pointer parameter to an
+`extent` expression. For example, `array_domains: {parent: {extent: n}}` declares
+that the window starting at `parent`, with `n` elements and its one-past endpoint,
+lies within one live array object of the pointer's element type. An empty window
+may use a null pointer; this supplies no initialization or writable-storage fact.
+This is an explicit input-domain condition. Existing concurrency-frame rows and
+ACSL allocation-validity ranges do not imply it.
+
+Validation binds the pointer and extent names to the actual lowered parameters.
+Extents use mathematical integer arithmetic over scalar integer parameters,
+constants, parentheses, `+`, `-` and `*`; calls, memory reads and implicit
+initializedness claims are refused. Constant extents must be nonnegative.
+
+This declaration format is staged: proof jobs currently refuse a nonempty domain
+until a source-origin certificate can check operations and imported-summary calls.
+Successful `swdb validate` validates the declaration; it does not establish an
+array's runtime origin or enable a proof. Code: `swdb/array_domains.py`; public
+controls: `tests/test_array_domains.py`.
 
 ## Clause fields
 

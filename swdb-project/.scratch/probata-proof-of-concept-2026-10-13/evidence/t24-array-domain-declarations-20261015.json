@@ -1,0 +1,54 @@
+{
+  "created": "2026-10-15 ET",
+  "evidence_kind": "staged_declaration_validation",
+  "scope": "Explicit array-window input domain syntax and actual parameter bindings only. Proof jobs refuse declarations until independent origin/call admission is implemented. No array-origin or C++ safety proof claim.",
+  "runtime_base_commit": "ac4396f4",
+  "changed_sources": [
+    {
+      "path": "/private/tmp/probata-construct-init/swdb-project/swdb/array_domains.py",
+      "sha256": "ebf22aef322164ee9c68e7a8a20a50834eb4953682cfd36a2b5ce3e9a62207d4"
+    },
+    {
+      "path": "/private/tmp/probata-construct-init/swdb-project/swdb/formal_frame.py",
+      "sha256": "7e32c4776803fc754ecf982053a23ee38700328ef9cd17776cf8f87ae6e60643"
+    },
+    {
+      "path": "/private/tmp/probata-construct-init/swdb-project/swdb/proof.py",
+      "sha256": "908ffe22c885774a92aa82769f16fc81cb758d47e20b3e298155e395c3cc3de2"
+    },
+    {
+      "path": "/private/tmp/probata-construct-init/swdb-project/swdb/proof_setup.py",
+      "sha256": "0964087d83961abdc529788529b180dc6e53f961d65fc59bf87f1370d1ccf25e"
+    },
+    {
+      "path": "/private/tmp/probata-construct-init/swdb-project/tests/test_array_domains.py",
+      "sha256": "4a59a32efd9ecba4fb269cace979d55a3e1b6b5f8d267d5c916bf3cb34f60414"
+    },
+    {
+      "path": "/private/tmp/probata-construct-init/swdb-project/tests/test_proof_setup.py",
+      "sha256": "e103b8f874ee7a433dc90618c9bb27a0c9a6e2f2b759d6b4740ae916e0852207"
+    }
+  ],
+  "validation": [
+    {
+      "path": "/private/tmp/probata-array-domain-green2.jsonl",
+      "sha256": "8b7b08ffab34270f419f9de88d6358e9fbc9518d7376a63b173067c18b93547b",
+      "passed": 17,
+      "scope": "16 domain cases and one named checker dependency control"
+    },
+    {
+      "path": "/private/tmp/probata-array-domain-final.jsonl",
+      "sha256": "be8155f6e77b9b37a29269d5f8e466204d9c9965883a649764313296c69acd36",
+      "passed": 17,
+      "scope": "16 repeated domain cases plus existing validate/build compatibility case"
+    },
+    {
+      "path": "/private/tmp/probata-array-domain-c-names.jsonl",
+      "sha256": "69c5807374729241f65b834c050000c24f9cede457fa3a0edd31429ab4037805",
+      "passed": 19,
+      "scope": "Final domain parser cases, including actual C++ lambda/async/True parameter names"
+    }
+  ],
+  "boundary": "Input declarations are never inferred from concurrency rows or allocation-validity ACSL. Pure mathematical integer expressions cannot call, read memory or add initialization. The universal adapter factory refuses a nonempty declaration before even a scripted verifier can execute. Typed source-origin and imported-call checking is the next slice.",
+  "design_note": "/private/tmp/probata-array-domain-design.md"
+}
