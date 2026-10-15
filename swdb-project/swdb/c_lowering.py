@@ -1491,7 +1491,8 @@ class _Printer:
             self.pointer_rendering = False
         statement, anchor = self.pointer_contexts[-1] if self.pointer_contexts else (None, "")
         row = wp_pointer_bounds.site(node, expression=expression, base=base_text, offset=offset_text,
-            statement=statement, anchor=anchor, function=self.function, line=_where(node) or self.line, reason=reason)
+            statement=statement, anchor=anchor, function=self.function, line=_where(node) or self.line, reason=reason,
+            literal_offset=int(offset["value"]) if offset is not None and offset.get("kind") == "IntegerLiteral" else None)
         self.unit.pointer_sites.append(row)
         self.unit.pointer_nodes.add((self.function, node.get("id")))
         return row["normalized_expression"]
@@ -1857,15 +1858,18 @@ class _Printer:
             cname = name
             node_found = unit.function_node(name, qual_type, self.line) if "<" not in name else None
             policy = self.semantics.get("array_call_policies", {}).get(name)
+            imported = self.semantics.get("audited_imports", {}).get(name)
             producer = self.semantics.get("array_origins", {}).get(name)
             if producer:
                 policy = {"model": producer["policy"]}
+            policy = policy or imported
             if policy:
                 statement, anchor = self.pointer_contexts[-1] if self.pointer_contexts else (None, "")
                 site = wp_pointer_bounds.call_site(node, statement=statement, anchor=anchor,
                     function=self.function, line=_where(node) or self.line)
                 site["producer"] = bool(producer)
-                if producer:
+                site["import"] = imported
+                if producer or name not in self.semantics.get("array_call_policies", {}):
                     # No duplicated argument evaluation or derived guard for
                     # row producers: their original call/RTE obligations remain.
                     site["reason"] = ""
@@ -1873,6 +1877,8 @@ class _Printer:
                 try:
                     site["binding"] = wp_pointer_bounds.imported_binding(node, unit.dump(""), name,
                         summary=unit.summaries[name], policy=policy)
+                    if imported:
+                        wp_pointer_bounds.check_import_signature(site["binding"], imported)
                 except wp_pointer_bounds.Refused as exc:
                     site["reason"] = str(exc)
                 unit.pointer_calls.append(site)
@@ -2464,7 +2470,8 @@ def lower(source, function, includes=(), defines=(), summaries=None, semantics=N
                             known_pointer_calls=(semantics or {}).get("tile_pointer", ()),
                             global_nodes=unit.global_nodes.values(), known_origins=(semantics or {}).get("array_origins"),
                             terminal=certificate, entry_windows=windows, entry_function=function, owner=owner,
-                            call_sites=unit.pointer_calls, call_policies=(semantics or {}).get("array_call_policies")),
+                            call_sites=unit.pointer_calls, call_policies=(semantics or {}).get("array_call_policies"),
+                            audited_imports=(semantics or {}).get("audited_imports")),
                         source_sha256=_file_sha256(source), text=text, entry_windows=windows,
                         entry_contract=array_domain_contract, owner=owner,
                         source_entries=wp_pointer_bounds.function_entries(definition_nodes, source)),

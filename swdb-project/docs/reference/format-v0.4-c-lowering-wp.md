@@ -341,7 +341,9 @@ cover their projected ACSL preconditions. Opaque model and callee parameter orig
 
 C++17 permits null-pointer plus/minus zero. Supported side-effect-free expressions use
 `offset == 0 ? base : original_expression`, preserving that result without executing C null
-arithmetic. An otherwise unknown origin receives a checked null-only obligation. Invalid nonnull
+arithmetic. An exact AST integer literal zero reduces to the base; an exact nonzero literal retains
+the original arithmetic. This avoids generating a dead conditional branch while retaining the same
+checked bounds. An otherwise unknown origin receives a checked null-only obligation. Invalid nonnull
 pointers receive no zero-offset exemption. Legal one-past formation of certified flat arrays remains
 supported. Mutating arithmetic, pointer subtraction and conditional/effectful placement are refused
 until their evaluation has a precise policy.
@@ -371,3 +373,17 @@ confirm that `object_pointer` admits a target in an adjacent live subarray, whil
 precondition on an imported summary can prove for a local/global two-dimensional row extending into
 the next row; struct-member controls instead fail. Therefore block-validity checks apply only after
 the conservative origin gate. These results do not establish general C++ undefined-behavior freedom.
+
+Audited DX100 calls (2026-10-15): every imported command, query and tile-pointer producer must bind
+to its exact global declaration, canonical pinned prototype and model/entry/geometry policy in a
+fresh full translation-unit AST. Source definitions, namespaces, templates and unrecognized
+code/linkage attributes refuse. Source declarations in the reserved `dx_`/`DX_` proof-state namespace
+also refuse, preventing checked predicates from binding to caller-local state. These checks apply
+even when the unit has no array-domain declaration.
+
+The supported stream, gather and store host-pointer calls additionally need a stable explicit
+primitive entry-window origin. Named assertions check each current command-state footprint against
+the frozen entry extent and certified offset. Original initializedness, separation and RTE
+obligations remain. Mutable-offset aliases, missing windows, pointer region/query calls without a
+footprint policy, and retained pointer helpers refuse. No helper premise is synthesized. Before
+launch, setup reparses the complete source and rederives every call binding and live policy.

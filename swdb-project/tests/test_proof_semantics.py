@@ -173,6 +173,21 @@ void maa_stream_load(int *q, int lo, int hi, int step, int tile, int cond) {}
 #ifdef DX_SOURCE_PRODUCER
 int *get_cacheable_tile_pointer(int tile) { return (int *)0; }
 #endif
+#ifdef DX_SOURCE_CONST
+void maa_const(int value, int reg) {}
+#endif
+template<class T> int *get_cacheable_tile_pointer(int);
+int dxf_template_producer(int *q, int n) {
+  int *p=get_cacheable_tile_pointer<int>(0);
+  return 1;
+}
+int dxf_shadow_stream(int *q, int *fake, int n) {
+  int *dx_reg_value=fake;
+  maa_const(0,0); maa_const(n,1); maa_const(1,2);
+  maa_stream_load(q,0,1,2,0,-1);
+  wait_ready(0);
+  return get_tile_size(0)==n;
+}
 namespace impostor { void maa_stream_load(int *, int, int, int, int, int); }
 int dxf_namespace_stream(int *q, int n) {
   impostor::maa_stream_load(q, 0, 1, 2, 0, -1);
@@ -250,6 +265,10 @@ RANGE = ("requires 2 <= n <= 3 && \\valid(q + (0 .. n - 1)) && \\valid(offs + (0
          "requires \\forall integer k; 0 <= k < n - 1 ==> offs[k] <= offs[k + 1];")
 #: contract name: (function, pointer parameters, requires, assigns, size bound of n)
 FIXTURES = {
+    "template_producer": ("dxf_template_producer", ["q"], "requires n == 2 && \\valid(q + (0 .. n - 1));", "\\nothing", 2),
+    "shadow_stream": ("dxf_shadow_stream", ["q", "fake"],
+        "requires n == 2 && \\valid(q + (0 .. n - 1)) && \\valid(fake + (0 .. 2));\n"
+        "requires fake[0] == 0 && fake[1] == 0 && fake[2] == 1;", "\\nothing", 2),
     "namespace_stream": ("dxf_namespace_stream", ["q"], "requires n == 2 && \\valid(q + (0 .. n - 1));", "\\nothing", 2),
     "mutable_alias_gather": ("dxf_mutable_alias_gather", ["q", "offs"],
         "requires n == 2 && \\valid(q + (0 .. n - 1)) && \\valid(offs + (0 .. n - 1));\n"
@@ -300,9 +319,11 @@ def _dx_contracts():
             ("pre", "legality", requires, "per_candidate"),
             ("post", "postcondition", f"assigns {assigns};\nensures \\result == 1;", "per_candidate")],
             [{"array": a, "shared_actions": [], "history_reads": False} for a in arrays])
-        if name in {"direct_stream", "direct_three_reads", "direct_offset_gather", "direct_growing_stream", "namespace_stream", "mutable_alias_gather"}:
+        if name in {"direct_stream", "direct_three_reads", "direct_offset_gather", "direct_growing_stream", "namespace_stream", "mutable_alias_gather", "shadow_stream", "template_producer"}:
             # An explicit typed input-window contract addition, independent of validity.
             data["proof_unit"]["array_domains"] = {array: {"extent": "n"} for array in arrays}
+        if name == "shadow_stream":
+            data["proof_unit"]["array_domains"] = {"q": {"extent": "n - 1"}, "fake": {"extent": "3"}}
         if name == "summary_wrapper":
             for clause in data["clauses"]:
                 clause["proof_placement"] = {"once": "self"}
@@ -764,6 +785,9 @@ def test_wp_dx_call_state_cannot_enlarge_the_frozen_input_window(dx):
     ("direct_stream", ("DX_ASM_MODEL",), "unsupported code/linkage attributes"),
     ("direct_three_reads", ("DX_SOURCE_PRODUCER",), "defined rather than imported"),
     ("mutable_alias_gather", (), "stable explicit int entry-window origin"),
+    ("direct_stream", ("DX_SOURCE_CONST",), "defined rather than imported"),
+    ("template_producer", (), "global imported"),
+    ("shadow_stream", (), "reserved DX100 proof-state namespace"),
 ])
 def test_wp_dx_call_binding_and_alias_initialization_are_certified_before_launch(dx, name, defines, reason):
     record = prove_wp(dx, name, *defines)

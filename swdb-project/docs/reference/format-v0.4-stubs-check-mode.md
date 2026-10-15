@@ -1,6 +1,7 @@
 # C stubs, bounded fallbacks, check mode and summary-form agreement
 
 Created: 2026-10-14 ET, Probata proof of concept ticket 23.
+Updated: 2026-10-15 ET, checked Crux source initializedness and fallback-policy refusal.
 Spec: `.scratch/probata-proof-of-concept-2026-10-13/issues/23-stub-translator-fallbacks-check-mode.md`; design:
 `.scratch/formal-verification-2026-10-09/spec.md` ("Verifier lineup and order", "Bounds", "Formal-half language and
 the C++ subset", "DX100 proof semantics"). Builds on [format-v0.4-cbmc.md](format-v0.4-cbmc.md) (ticket 22).
@@ -64,6 +65,8 @@ A quantifier bound that reads the post-state cannot be snapshotted on entry. In 
 
 - The next tool runs only when the previous one cannot read the code: `parse_error` or `unsupported_construct`.
   That is the handler of those two classes inside a route. Any other result ends the route; a timeout never moves on.
+  An explicit checked initializedness/origin-policy refusal also ends the route, even when its class is
+  `unsupported_construct`; trying another tool cannot relax that policy.
 - The last tool's result stands. A real-valued unit that neither crux-llvm run can read reads not proven, with
   that class, and no CBMC job starts.
 - `settings.route` in the record: `order`, `attempts` (`tool`, `verdict`, `failure_class`, `handler`), `reason`,
@@ -72,8 +75,17 @@ A quantifier bound that reads the post-state cannot be snapshotted on entry. In 
 ### crux-llvm (`--adapter crux-llvm-cxx` / `crux-llvm-c`)
 
 - **Code.** `crux-llvm-c`: the C lowering, with the CBMC adapter's C-versus-C++ differential run first.
-  `crux-llvm-cxx`: the C++ itself, cut from the source (`swdb.cxx_cut` when the C lowering refuses the unit, for
-  example a floating type). Summarized callees become the same C stubs.
+  `crux-llvm-cxx`: the C++ itself, cut from the source after the original retained closure passes the same
+  initialized-input admission. A C++ cut without checked source analysis is currently unsupported. Primitive
+  initialized scalars and actual one-dimensional harness buffers remain supported; uncertain arrays,
+  aggregates, pointer casts/rebinding and helper reads remain outside the checked source policy. Exact audited
+  standard-model policies retain their own restrictions. Summarized callees become the same C stubs; imported
+  domain-bearing summaries remain refused.
+- **Fresh boundary.** Both forms regenerate the source/closure, initializedness admission, summary stubs and
+  exact harness/input view before execution and again at the proof-setup launch boundary. Records carry
+  `settings.bounded_initialization`, `settings.source_admission` and the corresponding proof-setup hashes.
+  A stale source, changed contract, omitted plan or changed launched view cannot use cached admission metadata.
+  Stand-in regression results exercise these guards; they do not establish that all Crux fallbacks prove.
 - **Harness.** The CBMC translator's harness built with `-DSWDB_CRUX`: oracle values are crux symbolic values,
   each property is `crucible_assert(cond, "<name>", __LINE__)`.
 - **Flags.** `--no-compile --skip-report --solver=z3`, always an explicit `--floating-point=real` (real-valued

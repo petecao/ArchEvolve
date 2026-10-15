@@ -15,6 +15,8 @@ docs/reference/format-v0.4-stubs-check-mode.md.
   `unsupported_construct` (the handler of those two classes in a chain is the next fallback). A proof, a
   refutation, a timeout or any other class is that tool's verdict and ends the chain; a timeout never moves on.
   When the last tool cannot read the code either, the unit reads not proven with that run's class.
+- An explicit initializedness/origin-policy refusal ends the route (2026-10-15 ET). A fallback cannot relax
+  the checked input domain merely because that refusal uses unsupported_construct.
 - The record is the verdict tool's, plus `settings.route`: the order, every attempt (tool, verdict, class, why it
   moved on), the reason for the order, and `verdict_tool`, the tool that gave the verdict.
 """
@@ -87,6 +89,11 @@ class BoundedChain:
             attempt = {"tool": name, "verdict": verdict.verdict}
             if verdict.failure_class:
                 attempt["failure_class"] = verdict.failure_class
+            admission = ((verdict.record_fields or {}).get('settings') or {}).get('bounded_initialization') or {}
+            if admission.get('verdict') == 'refused':
+                attempt['handler'] = 'checked source initializedness/origin policy refused; no fallback may relax it'
+                attempts.append(attempt)
+                break
             last = position == len(route) - 1
             if verdict.verdict == "not_proven" and verdict.failure_class in READ_FAILURES and not last:
                 attempt["handler"] = f"next fallback: {route[position + 1]} ({name} cannot read the code)"

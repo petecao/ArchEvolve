@@ -44,7 +44,7 @@ def imported_binding(node, translation_units, name, *, summary, policy):
     declarations, contexts, calls = {}, {}, []
     def visit(part, context=()):
         kind = part.get("kind")
-        if kind in {"NamespaceDecl", "CXXRecordDecl", "RecordDecl"}:
+        if kind in {"NamespaceDecl", "CXXRecordDecl", "RecordDecl", "FunctionTemplateDecl"}:
             context += ((kind, part.get("name", "")),)
         if kind == "FunctionDecl":
             declarations[part.get("id")] = part
@@ -73,6 +73,8 @@ def imported_binding(node, translation_units, name, *, summary, policy):
     declaration = declarations.get(matching[0].get("id"))
     if not declaration or contexts.get(declaration.get("id")) or declaration.get("storageClass") == "static":
         raise Refused("DX100 source call is not a global imported function")
+    if any(c.get("kind") == "TemplateArgument" for c in declaration.get("inner", [])):
+        raise Refused("DX100 source callee is a template rather than its canonical imported function")
     if any(d.get("name") == name and any(c.get("kind", "").endswith("Attr") for c in d.get("inner", []))
            for d in declarations.values()):
         raise Refused("DX100 imported callee has unsupported code/linkage attributes")
@@ -115,6 +117,24 @@ def call_site(node, *, statement, anchor, function, line):
             "reason": reason, "_ast_id": node.get("id")}
 
 
+def check_import_signature(binding, policy):
+    prototype = policy.get("prototype", "")
+    name = policy.get("call", "")
+    match = re.fullmatch(r"\s*(.*?)\b" + re.escape(name) + r"\s*\((.*?)\)\s*;?\s*", prototype, re.S)
+    if not match:
+        raise Refused("DX100 imported call has no canonical pinned prototype")
+    params = []
+    if match[2].strip() not in {"", "void"}:
+        for parameter in match[2].split(","):
+            param = re.sub(r"\b[A-Za-z_]\w*\s*$", "", parameter).strip()
+            if not param:
+                raise Refused("DX100 prototype needs explicit primitive named parameters")
+            params.append(param)
+    expected = re.sub(r"\s+", "", match[1] + "(" + ",".join(params) + ")")
+    if re.sub(r"\s+", "", binding["signature"]) != expected:
+        raise Refused("DX100 imported signature differs from its audited pinned prototype")
+
+
 def _pointer(node):
     return bool(re.search(r"\*\s*(?:(?:const|volatile|restrict)\s*)*$",
                           str((node.get("type") or {}).get("qualType", ""))))
@@ -151,9 +171,12 @@ def check_semantic_origins(lowering, library, defines=()):
     from swdb import proof_semantics
     fresh = semantic_origins(library, defines)
     calls = proof_semantics.array_call_policies(library, defines)
+    imports = proof_semantics.imported_call_policies(library, defines)
     for row in (lowering.pointer_bounds or {}).get("sites", []):
         if row.get("kind") == "call" and row.get("policy") != calls.get(row.get("call")):
             raise Refused("DX100 call footprint policy, model content, entry or geometry changed after planning")
+        if row.get("kind") == "import" and row.get("import_policy") != imports.get(row.get("call")):
+            raise Refused("DX100 imported-call prototype, entry or model changed after planning")
         origin = row.get("origin") or {}
         if origin.get("kind") == "semantic_rows" and origin != fresh.get(origin.get("producer")):
             raise Refused("array-object origin model content, entry or geometry changed after planning")
@@ -207,7 +230,7 @@ def recheck_source(lowering, plan):
     from swdb import c_lowering
     if not isinstance(plan, dict) or not (plan.get("kwargs", {}).get("array_domains") or
             (lowering.pointer_bounds or {}).get("owner") or
-            any(row.get("kind") in {"call", "producer"} for row in lowering.pointer_bounds.get("sites", []))):
+            any(row.get("kind") in {"call", "producer", "import"} for row in lowering.pointer_bounds.get("sites", []))):
         raise Refused("entry windows have no generator-owned source recheck plan")
     fresh = c_lowering.lower(Path(plan["source"]), lowering.function, **plan["kwargs"])
     if fresh.pointer_bounds != lowering.pointer_bounds or fresh.text != lowering.text:
@@ -312,7 +335,7 @@ def _origin_base(node):
 
 def complete(sites, definitions, observed, *, external_calls=(), known_pointer_calls=(),
              global_nodes=(), known_origins=None, terminal=None, entry_windows=None, entry_function=None, owner=None,
-             call_sites=(), call_policies=None):
+             call_sites=(), call_policies=None, audited_imports=None):
     """Refuse source operations omitted by printing and untracked subobject origins.
 
     The printer owns normalizations. This independent closure walk ensures that
@@ -348,7 +371,8 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
             if node.get("kind") != "CallExpr" or not node.get("inner"):
                 continue
             names = [(n.get("referencedDecl") or {}).get("name") for n in _walk(node["inner"][0])]
-            name = next((name for name in names if name in (call_policies or {}) or name in (known_origins or {})), None)
+            name = next((name for name in names if name in (call_policies or {}) or name in (known_origins or {})
+                         or name in (audited_imports or {})), None)
             if name is None:
                 continue
             key = (function, node.get("id"))
@@ -356,6 +380,11 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
             try:
                 if not site or site.get("reason") or not site.get("binding"):
                     raise Refused((site or {}).get("reason") or "DX100 call has no checked source placement/binding")
+                if name in (audited_imports or {}):
+                    check_import_signature(site["binding"], audited_imports[name])
+                    rows.append({**{k: v for k, v in site.items() if not k.startswith("_")},
+                                 "kind": "import", "admission_only": True, "call": name,
+                                 "import_policy": audited_imports[name]})
                 if site.get("producer"):
                     origin = (known_origins or {}).get(name)
                     if (not origin or site["binding"]["summary"] != origin["policy"]["entry"] or
@@ -364,6 +393,10 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
                     producers[key] = origin
                     rows.append({**{k: v for k, v in site.items() if not k.startswith("_")},
                                  "kind": "producer", "admission_only": True, "call": name, "origin": origin})
+                    continue
+                if name not in (call_policies or {}):
+                    if any(_pointer(arg) for arg in node.get("inner", [])[1:]):
+                        raise Refused("DX100 pointer query/region call needs its own checked footprint policy")
                     continue
                 candidate = dx_array_domains.candidate(node, call_policies[name])
                 binding = site["binding"]
@@ -374,6 +407,13 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
                 rows.append({"function": function, "source_line": (site or {}).get("source_line"), "reason": str(exc)})
     origins = _Origins(definitions, global_nodes, known_origins, terminal, entry_windows, entry_function,
                        set(candidates) | set(producers), producers)
+    if call_sites:
+        declarations = [n for root in definitions.values() for n in _walk(root)
+                        if n.get("kind") in {"VarDecl", "ParmVarDecl"}]
+        declarations += list(global_nodes)
+        if any(str(n.get("name", "")).startswith(("dx_", "DX_")) for n in declarations):
+            rows.append({"function": entry_function, "source_line": None,
+                         "reason": "source declarations shadow the reserved DX100 proof-state namespace"})
     for key, candidate in candidates.items():
         site = call_rows[key]
         try:
@@ -486,7 +526,7 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
     return rows
 
 
-def site(node, *, expression, base, statement, anchor, function, line, reason="", offset=None):
+def site(node, *, expression, base, statement, anchor, function, line, reason="", offset=None, literal_offset=None):
     """One printer-owned site. AST IDs are used locally, never serialized."""
     if statement is None or statement.get("kind") not in {
             "DeclStmt", "ReturnStmt", "CStyleCastExpr", "CXXStaticCastExpr", "ParenExpr", "CallExpr",
@@ -509,8 +549,8 @@ def site(node, *, expression, base, statement, anchor, function, line, reason=""
             reason = reason or "pointer formation depends on a binding inside its containing statement"
     span = _statement_span(statement)
     return {"function": function, "anchor": anchor, "source_line": line, "source_statement": span, "base": base,
-            "expression": expression, "offset": offset, "reason": reason,
-            "normalized_expression": normalize(expression, base, offset) if not reason else None, "_ast_id": node.get("id")}
+            "expression": expression, "offset": offset, "literal_offset": literal_offset, "reason": reason,
+            "normalized_expression": normalize(expression, base, offset, literal_offset) if not reason else None, "_ast_id": node.get("id")}
 
 
 def access_site(node, *, expression, statement, anchor, function, line):
@@ -535,9 +575,11 @@ def access_site(node, *, expression, statement, anchor, function, line):
             "expression": expression, "reason": reason, "_ast_id": node.get("id")}
 
 
-def normalize(expression, base, offset):
+def normalize(expression, base, offset, literal_offset=None):
     if offset is None:
         return expression
+    if type(literal_offset) is int:
+        return f"({base})" if literal_offset == 0 else expression
     return f"(({offset}) == 0 ? ({base}) : ({expression}))"
 
 
@@ -624,7 +666,7 @@ def check(lowering):
             if not row.get("window_guard") or row["expression"] not in lowering.text:
                 raise Refused("entry-window access differs from its generated lowering")
             continue
-        normalized = normalize(row["expression"], row["base"], row.get("offset"))
+        normalized = normalize(row["expression"], row["base"], row.get("offset"), row.get("literal_offset"))
         if normalized != row.get("normalized_expression") or normalized not in lowering.text:
             raise Refused("pointer formation normalization differs from its generated lowering")
     report["certificate_sha256"] = digest
