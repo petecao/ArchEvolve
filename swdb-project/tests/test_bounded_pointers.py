@@ -80,6 +80,8 @@ int dxf_tile_extent(int n) {
 #endif
 #ifdef TILE_OUTSIDE
   int ignored = tile[3];
+#elif defined(TILE_WP_DIRECT)
+  int ignored = tile[1];
 #else
   for (int k = 0; k < n; ++k) { int ignored = tile[k]; }
 #endif
@@ -141,17 +143,21 @@ def test_tile_pointer_checks_its_own_row_extent(tile_seed, outside):
 
 
 @dx.needs_wp
-def test_wp_tile_pointer_checks_its_own_row_extent(tile_seed):
+@pytest.mark.parametrize("outside", [True, False])
+def test_wp_tile_pointer_checks_its_own_row_extent(tile_seed, outside):
     from conftest import run_swdb
     seed = tile_seed
-    extra = [arg for define in ("DX_NT=2", "DX_NR=1", "DX_NM=1", "DX_K=1", "TILE_OUTSIDE", "TILE_INIT_ROWS")
+    extra = [arg for define in ("DX_NT=2", "DX_NR=1", "DX_NM=1", "DX_K=1",
+                              "TILE_OUTSIDE" if outside else "TILE_WP_DIRECT", "TILE_INIT_ROWS")
              for arg in ("--define", define)]
     result = run_swdb("prove", "--records", seed.records, "--candidate", seed.candidates["safe"],
         "--function", "dxf_tile_extent", "--contract", "contract.fixture_dx_tile_extent", "--adapter", "wp",
         "--runs-dir", seed.runs, "--format", "json", *extra, timeout=3600)
     assert result.returncode == 0, result.stderr + result.stdout
     record = seed.read(json.loads(result.stdout))
-    assert record["verdict"] == "not_proven", record
+    assert record["verdict"] == ("not_proven" if outside else "proven"), record
+    if outside:
+        assert any("rte_mem_access" in g["goal"] and g["status"] != "valid" for g in record["goals"]), record
 
 
 @dx.needs_wp
