@@ -22,6 +22,19 @@ sys.path[:0] = [str(REPO), str(REPO/'tests')]
 from swdb import c_lowering, framac  # noqa: E402
 from test_wp_subset import (Seed, build_subset_seed, GROUPS, MODELS, SUMMARIES,
                             TERMINAL_CONTROLS, summary_id)  # noqa: E402
+from conftest import run_swdb  # noqa: E402
+
+
+class MatrixSeed(Seed):
+    """Keep long original goal inventories within an explicit outer command budget."""
+
+    def __init__(self, root, candidates, public_timeout_seconds):
+        super().__init__(root, candidates)
+        self.public_timeout_seconds = public_timeout_seconds
+
+    def swdb(self, command, *args):
+        return run_swdb(command, '--records', self.records, *args,
+                        timeout=self.public_timeout_seconds)
 
 
 def git(*words):
@@ -93,7 +106,11 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--groups', default='templates,classes,new_array,omp,floats,std_models,atomics,dxc_summary,maa_summary')
     parser.add_argument('--stop-on-failure', action='store_true')
+    parser.add_argument('--public-timeout-seconds', type=int, default=1800,
+                        help='outer public-command budget; per-goal solver limits remain unchanged')
     args = parser.parse_args()
+    if not 600 <= args.public_timeout_seconds <= 7200:
+        parser.error('--public-timeout-seconds must be between 600 and 7200')
     commit = git('rev-parse','HEAD')
     if commit != args.expected_commit:
         parser.error('source HEAD differs from --expected-commit')
@@ -115,7 +132,8 @@ def main():
     from swdb import host_identity
     os.environ[host_identity.FIXTURE_HOST_ENV] = 'swdb-fixture-host'
     manifest = {'created':'2026-10-15 ET','commit':commit,'groups':groups,'workers':1,
-                'rss_cap_bytes':8589934592,'output':str(output),'sources':{}}
+                'rss_cap_bytes':8589934592,'public_timeout_seconds':args.public_timeout_seconds,
+                'output':str(output),'sources':{}}
     for name in git('ls-files','swdb','tests','library','schemas').splitlines():
         path = REPO/name
         if path.is_file():
@@ -127,7 +145,7 @@ def main():
     seed_started = time.monotonic()
     seed_path = output/'seed'
     seed_path.mkdir()
-    seed = Seed(seed_path,build_subset_seed(seed_path))
+    seed = MatrixSeed(seed_path,build_subset_seed(seed_path),args.public_timeout_seconds)
     dump(output/'candidates.json',seed.candidates)
     result['seed_wall_seconds'] = time.monotonic()-seed_started
     result['phase'] = 'actual_proof_matrix'

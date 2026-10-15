@@ -195,3 +195,13 @@ seed witnesses do not themselves complete the current all-construct agreement
 profile; the coordinator is arranging a separately pinned agreement-only
 profile using the accepted native domain/oracle, with undefined runs excluded
 and no new bounded-proof verdict implied. Whole-ticket acceptance remains open.
+
+The subsequent original `new_out_of_range` command hit the test helper's
+600-second outer subprocess timeout. Its matrix row contains an exception and
+no accepted record; this is a harness interruption, not a semantic negative
+result. The coordinator must check descendant cleanup before reusing the lane.
+The committed runner now has a bounded `--public-timeout-seconds` option
+(default 1800, range 600–7200), recorded in its manifest. Only the outer public
+command budget changes; per-goal solver limits, RSS cap, shared lock and
+acceptance checks stay intact. CLI help/argument validation is checked locally;
+fresh actual out-of-range evidence remains required.
