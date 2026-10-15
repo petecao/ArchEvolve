@@ -6,17 +6,18 @@ input:
   function: swdb_std_unit
   original_contract: contract.fixture_wp24_std_models
   original_contract_sha256: 13fd0509e48eb0d9f45e8e6edc9a0fd5a4fec66d45f3e3cc525ee072b09c57d9
-  qualified_contract: contract.fixture_wp24_std_models_object_domain
+  qualified_contract: contract.fixture_wp24_std_models_object_domain_v2
 historical_failure_class: timeout
 historical_goal: typed_real_swdb_std_unit_assert_swdb_pointer_formation_1
 cause: >-
   The original n==0 readability/writability ranges are empty and do not establish
   a live object or one-past domain for arbitrary non-null pointer parameters.
   Preserve the ordinary pointer assertion and original failed contract. A distinct
-  explicit fixture contract qualifies only the empty case by null or a readable
-  object/same-base one-past proxy for both endpoints. No source behavior changes.
+  explicit v2 fixture contract qualifies only the empty case by null or a writable
+  object/writable-predecessor proxy for both endpoints. No source behavior changes.
 limitation: >-
-  Live zero-size allocations are not represented by this readable-neighbor proxy.
+  Read-only empty objects and live zero-size allocations are outside this explicit
+  writable-neighbor domain.
   Native success does not establish portable domain legality; this limitation
   does not classify zero-size allocations as undefined behavior.
 replay: tests/test_t24_std_object_domain.py

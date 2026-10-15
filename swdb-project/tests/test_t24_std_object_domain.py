@@ -1,5 +1,6 @@
 """Distinct explicit std fixture domain; no production policy change, 2026-10-15 ET."""
 import copy
+import json
 import os
 from pathlib import Path
 import subprocess
@@ -29,8 +30,8 @@ def test_corrected_fixture_is_distinct_and_preserves_original_source_and_clauses
     assert 'n == 0 ==>' in domain
     for pointer in ('a', 'b'):
         assert pointer + r' == \null' in domain
-        assert r'\valid_read(' + pointer + ')' in domain
-        assert r'\base_addr(' + pointer + ' - 1)' in domain
+        assert r'\valid(' + pointer + ')' in domain
+        assert r'\valid(' + pointer + ' - 1)' in domain
 
 
 @pytest.mark.parametrize('mutation', ['post', 'source', 'domain'])
@@ -51,7 +52,7 @@ def test_corrected_domain_typechecks_over_original_names_and_rejects_a_wrong_fie
     texts = '\n'.join(c['acsl']['text'] for c in contract['clauses'])
     head, declaration = lowered.declaration.rstrip('\n').rsplit('\n',1)
     assert framac.typecheck(framac.locate(),head+'\n/*@ '+texts+' */\n'+declaration+'\n') is None
-    wrong = texts.replace(r'\valid_read(a)',r'\valid_read(a->missing)')
+    wrong = texts.replace(r'\valid(a)',r'\valid(a->missing)')
     assert framac.typecheck(framac.locate(),head+'\n/*@ '+wrong+' */\n'+declaration+'\n') is not None
 
 
@@ -84,3 +85,37 @@ def test_targeted_profile_rejects_output_inside_historical_input_or_checkout_bef
     assert done.returncode == 2 and 'disjoint from the historical input matrix' in done.stderr
     assert not output.exists()
     assert list(source.iterdir()) == []
+
+
+def _public_contract_validation(tmp_path, contract):
+    from conftest import run_swdb
+    from test_wp_subset import UNITS
+    records=tmp_path/'records';records.mkdir()
+    library=tmp_path/'library'
+    (library/'rewrite_contracts').mkdir(parents=True)
+    (library/'proof_units').mkdir()
+    (library/'proof_units/subset_units.cc').write_text(UNITS)
+    (library/'rewrite_contracts/std.yaml').write_text(yaml.safe_dump(contract,sort_keys=False))
+    done = run_swdb('validate','--records',records,'--library',library,timeout=90)
+    (tmp_path/'public-validation.json').write_text(json.dumps({
+        'command':list(map(str,done.args)),'returncode':done.returncode,
+        'stdout':done.stdout,'stderr':done.stderr},indent=2)+'\n')
+    return done
+
+
+def test_qualified_fixture_passes_public_library_validation(tmp_path):
+    done = _public_contract_validation(tmp_path, corrected_contract(original_contract()))
+    assert done.returncode == 0, done.stdout + done.stderr
+
+
+def test_previous_readable_domain_retains_its_actual_public_admission_failure(tmp_path):
+    from t24_std_object_domain import rejected_readable_contract, REJECTED_ID
+    rejected = rejected_readable_contract(original_contract())
+    case = yaml.safe_load((Path(__file__).parent/'fixtures/proof/regression_corpus/wp-std-domain-public-vocabulary.yaml').read_text())['input']
+    assert rejected['id'] == REJECTED_ID == case['rejected_contract'] != QUALIFIED_ID
+    assert artifacts.digest(rejected) == case['rejected_contract_sha256']
+    done = _public_contract_validation(tmp_path, rejected)
+    assert done.returncode == 1
+    assert f"FAILED: {case['errors']} error(s)" in done.stdout + done.stderr
+    for builtin in case['forbidden_builtins']:
+        assert 'memory built-in ' + builtin + ' is not allowed' in done.stdout + done.stderr

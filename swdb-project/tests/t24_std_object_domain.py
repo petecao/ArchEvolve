@@ -2,7 +2,8 @@
 import copy
 from test_wp_subset import GROUPS, UNITS, _entry, contract_id
 
-QUALIFIED_ID = 'contract.fixture_wp24_std_models_object_domain'
+REJECTED_ID = 'contract.fixture_wp24_std_models_object_domain'
+QUALIFIED_ID = 'contract.fixture_wp24_std_models_object_domain_v2'
 GAP_LABEL = 'std_models_original_contract_gap'
 
 
@@ -14,11 +15,11 @@ def original_contract():
     return data
 
 
-def corrected_contract(original):
+def rejected_readable_contract(original):
     if original != original_contract():
         raise ValueError('qualification requires the exact original std fixture contract')
     data = copy.deepcopy(original)
-    data['id'] = QUALIFIED_ID
+    data['id'] = REJECTED_ID
     domains = [rf'({p} == \null || \valid_read({p}) || '
                rf'(\base_addr({p} - 1) == \base_addr({p}) && \valid_read({p} - 1)))'
                for p in ('a', 'b')]
@@ -30,4 +31,16 @@ def corrected_contract(original):
         'negative_control': {'id': 'empty-object-domain-control', 'check': 'explicit_object_or_one_past'},
         'acsl': {'text': 'requires n == 0 ==> (' + ' && '.join(domains) + ');', 'uses': []},
         'proof_placement': 'per_candidate'})
+    return data
+
+
+def corrected_contract(original):
+    """A distinct stronger writable-object domain in the existing public vocabulary."""
+    data = rejected_readable_contract(original)
+    data['id'] = QUALIFIED_ID
+    clause = next(c for c in data['clauses'] if c['id'] == 'empty_object_domain')
+    clause['statement'] = ('For an empty range each endpoint is null, writable, or one past a writable element. '
+                           'This explicit conservative domain excludes read-only and zero-size allocation proxy gaps.')
+    domains = [rf'({p} == \null || \valid({p}) || \valid({p} - 1))' for p in ('a', 'b')]
+    clause['acsl']['text'] = 'requires n == 0 ==> (' + ' && '.join(domains) + ');'
     return data
