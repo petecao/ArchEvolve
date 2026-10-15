@@ -62,6 +62,17 @@ discovered vertices, not for every vertex. Check empty frontiers and previsited 
 unreachable vertices before spending prover time on a stronger assertion. Correct
 or remove an invalid cut even when other goals become easy when it is assumed.
 
+Induction guidance (method revision, 2026-10-15): establish an algorithmic progress
+relationship at each loop cutpoint, not only safety and queue bookkeeping. Relate
+new visitation to reachability through the already processed original-frontier
+prefix, clamped at the original frontier end. Refine that relationship inside each
+range/batch loop by its actual processed cursor. Preserve the connection between
+each tile row and the CSR bounds of the original frontier vertex it represents;
+numeric range bounds alone lose this connection. Derive base and preservation
+cases before relying on such a cut to close the final reachability postcondition.
+This is abstract proof-method guidance; no previous hints or concrete cases are
+supplied. Every proposed invariant and bridge must pass its own checked WP goals.
+
 HOW THIS LOOP WORKS (monotone, local editing):
 - The loop keeps ONE best hint set. It starts with mechanically generated frame seeds (ids "seed*": every
   loop's `loop assigns`, written from the code; they are fixed, you cannot change them or add `loop assigns`).
@@ -322,7 +333,7 @@ def main():
     meta = {"started": L.now(), "pin": L.PIN,
             "codex_version": subprocess.run([L.CODEX, "--version"], capture_output=True, text=True).stdout.strip(),
             "ghost_hint_guard": H.GHOST_HINT_RULE,
-            "diagnostic_guidance": "partial-chunk-and-postcondition-scope-v2",
+            "diagnostic_guidance": "processed-frontier-and-csr-induction-v3",
             "standin_sha256": {f: L.sha(L.STANDIN_DIR / f) for f in [L.UNIT] + L.HEADERS},
             "cpp_unit_sha256": L.sha(L.CPP_UNIT), "rounds": a.rounds, "budget_min": a.budget_min,
             "round_timeout_s": a.round_timeout, "final_reserve_min": a.final_reserve_min,

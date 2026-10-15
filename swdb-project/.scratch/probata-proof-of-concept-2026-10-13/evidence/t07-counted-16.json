@@ -1,0 +1,227 @@
+{
+  "created": "2026-10-15 ET",
+  "source_commit": "6acfbe4e7552d1763526e1da46dd2ef7d8041d28",
+  "scope": "Functional proof-hint spike, not production RTE, initializedness or typed-origin acceptance",
+  "summary": {
+    "proven": false,
+    "within_budget": false,
+    "rounds": 1,
+    "codex_calls": 1,
+    "elapsed_min": 52.55,
+    "lock_wait_excluded_s": 694.6,
+    "best_n_open": 26,
+    "best_hints": 42,
+    "best_sha256": "65d2df5df0de00c519ad65ed96d95f3a2774433816484537669444b0f098501d",
+    "tool_calls": 21,
+    "show_goal_calls": 9,
+    "best_unit_hint_open": [
+      4,
+      22
+    ],
+    "phase_at_end": 1,
+    "wp_attempts": 11,
+    "tokens": {
+      "input_tokens": 6079169,
+      "cached_input_tokens": 5920256,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 24815,
+      "reasoning_output_tokens": 13187
+    },
+    "final": null,
+    "finished": "2026-10-15 07:13:28 EDT"
+  },
+  "artifacts": [
+    {
+      "path": "/private/tmp/probata-t07-20261015-run16/counted-16/meta.json",
+      "sha256": "51e3ea817a00b1597a9273402318b1175d5c8bb17f3580f0d36f4e9b6b490083",
+      "bytes": 2540
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run16/counted-16/summary.json",
+      "sha256": "95c5aeaf7455307249479251b487bccfec9a0c9668107062d8d7e8d07a1e4529",
+      "bytes": 606
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run16/counted-16/history.json",
+      "sha256": "9968518d048f74200dc07e7aa14de42ca1e9301c74c23378d426c8aee89756cf",
+      "bytes": 8007
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run16/counted-16/best.json",
+      "sha256": "65d2df5df0de00c519ad65ed96d95f3a2774433816484537669444b0f098501d",
+      "bytes": 28525
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run16/counted-16/tool-r1/submissions.jsonl",
+      "sha256": "7b251a03bbcad8cdb9a3987c462044e190389176d480c5661aff622b1dea4493",
+      "bytes": 85063
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run16/counted-16/attempt-r1f/tdstep_standin.c",
+      "sha256": "a37404772aeb8e89db3f0150e840b95e315a32ffaae8aacbedc34da1c45450e8",
+      "bytes": 22979
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run16/counted-16/attempt-r1f/dxc_summaries.h",
+      "sha256": "d708c0ef974e5ede1aaadd2b5e66dd785affa5e1dc6ef37419bf9e72517ae0d2",
+      "bytes": 10789
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run16/counted-16/attempt-r1f/gapbs_models.h",
+      "sha256": "401d8ccfa8fdc1ef3734c97563a1c110d003d8847508aaa24ec3f300a33eed3e",
+      "bytes": 10157
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run16/counted-16/attempt-r1f/bfs_unit.h",
+      "sha256": "1bcbf4dac683d6a46269fcd5f896fefc2571adc49d059b46f93fb25eb0f7b235",
+      "bytes": 1941
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run16/counted-16/attempt-r1f/goals.json",
+      "sha256": "353d56432bea3ee1a2e65fb3a16ed45d8abb01e9df6162d83037df9ab54389b9",
+      "bytes": 106793
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run16/counted-16/attempt-r1f/round-s.log",
+      "sha256": "9e57879766cbc5eeae71b3a480be8883f2f57aa9119720f065db6961f68768e7",
+      "bytes": 156002
+    }
+  ],
+  "final_directory": "/private/tmp/probata-t07-20261015-run16/counted-16/attempt-r1f",
+  "postrun_source_check": {
+    "checked_at": "2026-10-15 07:17 ET",
+    "worktree": "/private/tmp/probata-t07-run16",
+    "status": "clean",
+    "meta_harness_and_standin_hashes_match": {
+      "prototype/loop.py": true,
+      "prototype/hints.py": true,
+      "prototype/wp_run.sh": true,
+      "prototype/edit_loop.py": true,
+      "prototype/edit_core.py": true,
+      "prototype/edit_tool_mcp.py": true,
+      "prototype/frame_seeds.py": true,
+      "prototype/goal_print.py": true,
+      "standin/tdstep_standin.c": true,
+      "standin/dxc_summaries.h": true,
+      "standin/gapbs_models.h": true,
+      "standin/bfs_unit.h": true
+    },
+    "boundary": "Post-run observation, not a preflight source-manifest file; meta.json recorded source content hashes at launch."
+  },
+  "storage_budget_bytes": 2147483648,
+  "readers": [
+    "ticket07",
+    "ticket09",
+    "coordinator"
+  ],
+  "final_replay": "Not run; summary.final is null; no proof/smoke/negative-control success claimed.",
+  "audit": {
+    "scope": "Offline final snapshot after completion; no verifier, provider steering or external export",
+    "artifacts": [
+      {
+        "path": "/private/tmp/probata-t07-run16-audit/README.md",
+        "sha256": "9f08204e2763de934dae41d0ed2221313d4b65b1295af97e939b6f3ef58372c0",
+        "bytes": 6458
+      },
+      {
+        "path": "/private/tmp/probata-t07-run16-audit/inputs.json",
+        "sha256": "a645bc14dcd7672546bb919493b8592c37e6543bceba1699b1831e37c031d531",
+        "bytes": 8584
+      },
+      {
+        "path": "/private/tmp/probata-t07-run16-audit/inventory.result.json",
+        "sha256": "ceb1c621e2358e4cdf1ecb5625e2de2c3a2699ade90e03fb8dbaff33bacbdfd1",
+        "bytes": 729
+      },
+      {
+        "path": "/private/tmp/probata-t07-run16-audit/logical_cases.py",
+        "sha256": "4bc3fd1843e7736bbaba7382819630caaee8724965f880f15843d8b5372cfdbe",
+        "bytes": 5487
+      },
+      {
+        "path": "/private/tmp/probata-t07-run16-audit/logical_cases.result.json",
+        "sha256": "445f03ed884e4a198d14db6212caa2584b3369326871fa9ca7eb4f6f42c6ce4e",
+        "bytes": 915
+      },
+      {
+        "path": "/private/tmp/probata-t07-run16-audit/output-hashes.json",
+        "sha256": "3f4df387eff966376d6e0168a201186831b31537dccc202d61bc0e733b019ef8",
+        "bytes": 3577
+      }
+    ],
+    "inventory": {
+      "split_counts": [
+        4,
+        22
+      ],
+      "open_goal_inventory": 26,
+      "goal_inventory": 257,
+      "unit_goals": [
+        "typed_TDStep_loop_assigns_5_part07",
+        "typed_TDStep_loop_assigns_5_part10",
+        "typed_TDStep_call___dxc_gather_4_dxc_gather_requires_3",
+        "typed_TDStep_call___dxc_gather_5_dxc_gather_requires_3"
+      ],
+      "hint_failure_classes": {
+        "unknown": 11,
+        "timeout": 11
+      },
+      "full_best_sha256": "65d2df5df0de00c519ad65ed96d95f3a2774433816484537669444b0f098501d",
+      "canonical_hints_sha256": "0d325ef671cf68aa4a26f028795315c00b9d84eeea080f4c591ed5e75e14ed28",
+      "canonical_hints_serialization": "json.dumps(hints,sort_keys=True,separators=(comma,colon)); distinct from full-best bytes",
+      "hint_count": 42
+    },
+    "finite_examples": {
+      "finite_bookkeeping_cases": 1383,
+      "bookkeeping_cutpoints": 6140,
+      "partial_final_chunks": 524,
+      "false_hints_found_in_these_cases": 0,
+      "rank_states": 110,
+      "strict_rank_pairs": 430,
+      "induction_counterstate": {
+        "graph": [
+          [
+            1
+          ],
+          []
+        ],
+        "frontier": [
+          0
+        ],
+        "pre_parent": [
+          0,
+          -1
+        ],
+        "abstract_parent": [
+          0,
+          -1
+        ],
+        "begin": 2,
+        "out_end": 1,
+        "chunk": 2,
+        "premises": {
+          "td_chunk_bounds": true,
+          "td_frontier_kept": true,
+          "td_chunk_book": true,
+          "loop_exit": true
+        },
+        "td_final_reach": false,
+        "actual_parent": [
+          0,
+          0
+        ],
+        "classification": "unreachable state allowed by listed invariants; NOT a false hint or execution counterexample"
+      },
+      "boundary": "finite mathematical sequence model; no C, WP, pointer validity, alias, overflow or universal proof"
+    },
+    "finding": "No concrete false hint identified in inspected finite cases. Actual chunk bounds, frontier preservation and td_book do not entail processed reachability: an unreachable induction counterstate satisfies them while final reachability fails. This is not a false execution or unit contract counterexample.",
+    "boundary": "Finite mathematical sequence/rank evaluations do not prove pointer validity, C execution, alias safety, overflow, device semantics or a universal theorem."
+  },
+  "next_experiment_decision": {
+    "blind_retry_warranted": false,
+    "new_counted_run_started": false,
+    "method_change": "Carry clamped processed-frontier and consumed CSR-pair prefixes. Snapshot continuation cursor before range issuance because issuance advances it before CPU consumption; refine through completed batches and current positions. Scalar fallback needs equivalent row/edge prefixes.",
+    "provider_boundary": "No old hints, finite counterstates, tests, workload inputs or evaluator scripts may enter the provider workspace; only abstract algorithmic guidance may change.",
+    "scheduling": "Implement and review a distinct method before another counted run; local verifier slots currently belong to implementation acceptance."
+  }
+}
