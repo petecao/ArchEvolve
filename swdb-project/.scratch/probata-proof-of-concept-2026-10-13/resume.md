@@ -4,77 +4,65 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 13:17 ET. Integration runtime `d874c4dc` includes exact
-physical platform-header macro probes and the reviewed selected-receiver member
-window slice (`c9317b2b`). Parser/source, entry-hint, nested-assignment, checked
-vector, qualified copy and WP invocation metadata unions remain intact.
-The whole effort remains
-**32 of 63 resolved; five claimed**. Drafts 1/2 stay immutable; draft 3 is not created.
-Historical actual method/source pins remain distinct from this integration tip.
-
-The focused frozen Linux replay at `d3a5dd48` completed: node 0 **167 passed**
-(512.96s, peak 385,536,000 bytes), node 1 **20 passed** (898.64s,
-peak 708,300,800 bytes), both exit 0 with no watchdog/OOM failure. Its 17 proof records,
-90 report references plus 17 adapter logs (107 total references), 19,946 declared
-absolute file-pin references, 196 runtime source files per lane and 16 certificate
-self-hashes match. Both post-run source checks are clean and unchanged.
-[Final compact audit](evidence/focused-parser-owner-final-20261015.json).
-
-Actual Linux subjects: owner safe 105 ordinary/11 smoke proves; stale alias retains
-one lifetime timeout with 111 ordinary Valid/11 smoke. Qualified copy model 36/7,
-safe 15/2 and empty 13/2 prove. Missing initializedness and insufficient declared
-capacity remain not_proven; the capacity case also retains its two failed smoke
-checks. The 167/20 counts describe passing controls, not 167/20 proven subjects.
-The earlier frozen `5c2a` failures stay recorded as 134/1 and 19/1; they are not upgraded.
+Updated: 2026-10-15 13:39 ET. Integration runtime `bc457086` includes the
+reviewed canonical-header macro checks and selected-receiver member-window slice,
+plus native replay input flushing before sanitizer termination. The reviewed runtime checkpoint is pushed; this resume update changes documentation only. Historical actual source/method pins remain distinct from
+this tip. **32 of 63 tickets are resolved; 07, 24, 25, 27 and 36 are claimed.**
+The other 26 tickets all have unresolved dependencies; no unclaimed ticket is
+currently eligible. Drafts 1/2 remain immutable; draft 3 is not created.
 
 | Ticket | Current evidence | Next action |
 |---|---|---|
-| 07 | Method19 ended unproven at 13:14:01: 27 open of 237 goals (24 unit / 3 hint), 52.04 counted minutes, 20.4 s tagged waits; no final, smoke or covering-wait negative | Offline audit in progress; runner exit 0 is not proof success; no next counted launch |
-| 24 | Copy caller/model actuals accepted; selected-receiver getter at historical `1e93b9cb`: safe 15 ordinary + 1 smoke and bad-index 14 Valid + 1 open + 1 smoke accepted; 18 merged compiler controls pass | Broader Bag/Counter and member context acceptance remain open |
-| 25 | Original bounded maximum at `d874c4dc` passes:310 ordinary properties plus expected reachability failure;625 native C/C++ comparisons agree. Three prior prelaunch refusals retained | One original stale-data control active on node 0 gen566 at frozen e28; standalone 7 lifetime / 3 origin member frontiers remain open |
-| 27 | Earlier store/assignment slices accepted; qualified stall actual at `909eb6cd` and root query actual pair at `8e377274` are separate frozen work, without final acceptance yet | Audit those original outcomes; ordinary CPU/device overlap belongs to 28 |
-| 36 | 45 scripted setup controls passed at `85161a4b`; later member/header unions have focused controls and source-pin audit; actual bounded/WP invocation metadata exercised | Keep claimed pending 27 and final freeze; historical real-fact/cache evidence pins remain distinct |
+| 07 | Method19 ended unproven: 27 open of 237 goals, 52.04 counted minutes; no final proof, smoke replay or covering-wait negative. Offline source/tool/log audit found no mismatches | Review the distinct method20 plan before another counted launch; preserve prototype RTE scope |
+| 24 | Qualified copy and selected-receiver slices are accepted. The original Bag/Counter positive at `a70fc6fd` proves 146 ordinary + 11 smoke goals; after a test-only optional-key correction, the original seeded negative passes its expected-not-proven check with 146 ordinary Valid, one invariant timeout and 11 smoke Valid | Agent is packaging the original safe/negative records and unchanged runtime pins; no full-ticket acceptance |
+| 25 | Original bounded maximum at `d874c4dc`: 310 ordinary CBMC properties plus expected reachability failure; 625 native C/C++ comparisons agree. The first stale-data run refuted the memory fault, but buffered stdout lost its input metadata before sanitizer exit | The original stale-data retry at `bc457086` passes in 226.98 s, recovers n=1/a=[-1] and refutes the same heap-use-after-free; coordinator hash audit is in progress. Standalone member lifetime/origin frontiers remain open |
+| 27 | Qualified stall at `909eb6cd`: 110 ordinary Valid, one memory-domain timeout, 35 smoke Valid; the following gather initializedness gap is closed. Query at `8e377274`: safe 57 ordinary + 18 smoke proves; outside query remains not_proven with one ensures timeout and one failed smoke | Package query evidence and its native same-object boundary; diagnose stall with focused checks before any production logic change |
+| 36 | Earlier 45 scripted setup controls pass; later member/header unions have focused controls and source-pin audits | Remain claimed pending 27 and final source/method freeze |
 
-The latest bounded maximum evidence is a contract fixture on C with native C++
-differential agreement, not a C++ formal theorem or general member-body proof.
-[Fresh bounded audit](evidence/t25-bounded-max-accepted-20261015.json).
+Coordinator working evidence remains outside the repository until its reviewed
+handoff: `/private/tmp/probata-t07-run19-audit.md`,
+`/private/tmp/probata-method20-plan.md`,
+`/private/tmp/probata-member-lifetime-actual-20261015/`,
+`/private/tmp/probata-query-actual-20261015/` and
+`/private/tmp/probata-dx-store-kernel-check-v4/manifest.json`. These are scoped
+checkpoints, not integrated acceptance claims. The query negative's failed smoke
+and original pytest failure are retained; corrected expectations are checked
+offline without rerunning or upgrading the proof record.
 
-The original store at 593 proves 90 ordinary/29 smoke; a shortened witness leaves
-its specific store_indices obligation open. Assignment 713 safe 14/1 proves;
-missing initializedness leaves one RTE obligation open. The composed aead premature
-CPU read is intentionally refused before WP by semantics 0.1, with zero goals and
-no WP log; no overlap theorem is claimed.
-[Entry-hint evidence](evidence/wp-source-view-entry-hints-20261015.json),
-[assignment evidence](evidence/wp-nested-assignments-20261015.json).
+Durable completed slices: [bounded maximum audit](evidence/t25-bounded-max-accepted-20261015.json),
+[member-window audit](evidence/t24-member-windows-mac-20261015.json),
+[focused Linux audit](evidence/focused-parser-owner-final-20261015.json),
+[entry-hint audit](evidence/wp-source-view-entry-hints-20261015.json) and
+[nested-assignment audit](evidence/wp-nested-assignments-20261015.json).
+The bounded maximum is a contract fixture on C with native C++ differential
+agreement; the member-window slice is narrower than the full classes fixture.
+Neither establishes general C++ or member-body verification.
 
-Method19 uses the exact `996bd62c` source/models, a fixed provider, 60 counted
-minutes with eight minutes reserved for final checking, no prior hints and strict
-`-wp-no-filter-init`. Its 18-file source manifest has SHA-256
-`b1ce8ac2f6de0f6b41eaebf6e41650733caa65ff31b160ea58168416e53afea3`;
-all 18 files match this merged checkpoint. Root-exit cleanup and completed baseline/seed
-guards were repaired and independently reviewed before launch. Its prototype RTE
-scope and historical run evidence remain distinct from production proof acceptance.
-
-Ticket 28 remains gated by 27; 43 remains blocked by 29. Held-out kernels and final
-production method identities stay dependency-gated. Last whole-effort status table:
-13:05 ET; next due 13:35 ET. Existing user authorization covers implementation,
-commits/pushes, two remote lanes and scoped BFS source export.
+The next dependency frontier is 27 → 28 → 29; 30 additionally waits for 25,
+43 waits for 29, and 36 waits for 27. Held-out BC/PR/SSSP and the final method
+freeze remain gated. The last whole-effort progress table was 13:38 ET; the next is due 14:05 ET.
+The coordinator owns that table and remote dispatch. Existing authorization covers implementation, commits/pushes,
+two remote lanes and scoped BFS source export.
 
 ## Host coordination
 
-Live preflight: 2026-10-15 13:17:04 ET. Node 0 generation 565, node 1 generation 599
-and legacy 77 were released before the original stale-data control acquired
-node 0 generation 566. Node 1 remains free. Load 0.02/0.16/0.29; 21 GiB free on
-`/data1`, 95 GiB on `/data`; CPU activity was idle. GPU NVML readback is unavailable
-(driver/library mismatch); this CPU-only job uses no GPU. The checkout is clean
-detached and frozen at `e28eb7f0` (runtime `d874c4dc`). One worker, 8 GiB sampled
-RSS cap, 1800 s inner / 2000 s outer wall limit and 1 GiB output budget. Raw data
-stays under `/data/yanruj/EvolveSWDB_runs/probata-t25-stale-data-20261015-1315-node0`;
-the directory label is nominal and the exact start is in lane metadata. Existing
-compiler wrappers in the earlier native-output folder remain a retained dependency.
-[Prospective launch](evidence/t25-stale-data-current-launch-20261015.json). No
-iterator/at batch is scheduled. Recheck both leases/activity/disks/wrapper before
-another dispatch; source arrives by Git only and raw artifacts stay remote.
+Coordinator live readback: **2026-10-15 13:38 ET**. This is a timestamped
+observation, not a current availability promise. Node 0 generation 567 released
+at 13:36:03 ET; node 1 generation 599 and legacy generation 77 are released. No
+owned evaluation process remains. The checkout is clean detached at `bc457086`.
+The one-case stale-data retry passed in 226.98 s (guarded wall 227.39 s,
+peak 508,973,056 bytes; no OOM/timeout), with `refuted`, passed setup, recovered
+inputs `n=1, a=[-1]` and the matching source-C++ heap-use-after-free sanitizer fault.
+The coordinator is auditing all hashes before accepting the complete evidence.
+The run retained one worker, 8 GiB RSS cap, 1800 s inner / 2000 s outer wall limit
+and 1 GiB output budget. Raw output remains at
+`/data/yanruj/EvolveSWDB_runs/probata-t25-stale-data-flush-20261015-1332-node0`.
+No iterator/at batch is scheduled. The older
+[stale-data launch record](evidence/t25-stale-data-current-launch-20261015.json)
+identifies the prior `e28eb7f0` run and must not be read as this retry's outcome.
+Root owns lane coordination; recheck both socket leases, legacy lease, activity,
+disks and wrapper before dispatch. Source arrives by Git only; raw artifacts stay
+remote.
 
 ## Historical integration snapshots
 
