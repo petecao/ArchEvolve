@@ -52,7 +52,7 @@ A quantifier bound that reads the post-state cannot be snapshotted on entry. In 
 
 | Field | Meaning |
 |---|---|
-| `pins.summaries[].assumes` | the names of the `assume`s that summary's stub emitted (one per `ensures` clause) |
+| `pins.summaries[].assumes` (`assumes`) | the names of the `assume`s that summary's stub emitted (one per `ensures` clause) |
 | `pins.translator` | `swdb-cbmc-translator-2` and the sha256 of `swdb/cbmc_translator.py` |
 
 ## Bounded fallbacks (`swdb prove --adapter bounded`)

@@ -48,7 +48,8 @@ CALL_OUTSIDE, TOTAL, TOTAL_WRONG = ("contract.fixture_cbmc_call_outside", "contr
 CALL_INC = "contract.fixture_cbmc_call_inc"
 COPY, HALF, POST_BOUND = "contract.fixture_cbmc_copy", "contract.fixture_cbmc_half", "contract.fixture_cbmc_post_bound"
 CALLER_PRE = "requires 1 <= n <= 3 && \\valid(a + (0 .. n-1)) && -1000 <= a[0] <= 1000;"
-LOGIC_SUM = ("logic integer fixture_sum{L}(int *a, integer n) =\n"
+LOGIC_SUM = ("// version: 1.0\n"
+             "logic integer fixture_sum{L}(int *a, integer n) =\n"
              "  n <= 0 ? 0 : fixture_sum(a, n - 1) + a[n - 1];\n")
 
 
