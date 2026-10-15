@@ -110,7 +110,13 @@ bounded verifier). Branch `probata-poc/t23`. Interface doc:
 - [x] Lock: every real job goes through `swdb prove`'s verifier lock (`real = True`) under the RSS watchdog; tests
   skip without CBMC, crux-llvm, clang 22.1.8 or Frama-C.
 
-**Tests** (Mac; serial, no xdist; pytest outside the lock, each verifier job inside it): @TESTS@
+**Tests** (Mac; serial, no xdist; pytest outside the lock, each verifier job inside it): `tests/test_format_doc.py`, `test_cbmc_adapter.py`,
+`test_crux_fallbacks.py`, `test_check_mode.py`, `test_summary_agreement.py`, `test_wp_adapter.py`,
+`test_proof_records.py`: **119 passed** in 5810 s after merging the integration tip 2dff3f58 (commit 268d6534); log
+`/tmp/claude/probata-runs/t23/pytest-final2.log` (sha256 `1c94baa4a0cf0595`...), report log `report-final2.jsonl`
+(`a7f945cc4e0a6f31`...). A second merge (tip c1bfea05: tickets 27, 35, 61 touched the translator, CBMC and WP
+adapters; commit dab3d479) passed `test_format_doc.py` + `test_check_mode.py` (8) and the first tests of the same
+targeted set (`pytest-final3.log`); the full rerun was cut short by the pause (see the report).
 
 **SAW to CBMC translations** (each an Assumption; not decided in the map beyond 13:19 ET's change)
 
