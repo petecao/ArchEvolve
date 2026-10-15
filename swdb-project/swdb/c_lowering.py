@@ -390,6 +390,28 @@ def _children(node):
     return [c for c in node.get("inner", []) if isinstance(c, dict)]
 
 
+# 2026-10-15 ET: these attributes affect diagnostics or inlining only. All other
+# declaration attributes need an explicit model; in particular CleanupAttr invokes
+# a callback at scope exit and cannot be discarded with an initializer's siblings.
+BENIGN_DECLARATION_ATTRIBUTES = frozenset({
+    "UnusedAttr", "DeprecatedAttr", "WarnUnusedResultAttr", "AlwaysInlineAttr", "NoInlineAttr",
+})
+
+
+def _declaration_attributes(node, line):
+    for child in _children(node):
+        kind = child.get("kind", "")
+        if kind.endswith("Attr") and kind not in BENIGN_DECLARATION_ATTRIBUTES:
+            raise Unsupported(f"declaration attribute {kind} on {node.get('name') or node.get('kind')}", line)
+
+
+def _function_attributes(node, line):
+    _declaration_attributes(node, line)
+    for param in _children(node):
+        if param.get("kind") == "ParmVarDecl":
+            _declaration_attributes(param, _where(param) or line)
+
+
 def _has_body(node):
     return any(c.get("kind") == "CompoundStmt" for c in _children(node))
 
@@ -1269,6 +1291,7 @@ class _Printer:
             raise Unsupported(f"declaration {node.get('kind')}", self.line)
         if node.get("storageClass") in ("static", "extern") or node.get("tls"):
             raise Unsupported(f"{node.get('storageClass') or 'thread-local'} local variable {node.get('name')}", self.line)
+        _declaration_attributes(node, self.line)
         self.local_ids.add(node.get("id"))
         name = _name(node.get("name"), self.line)
         qual, desugared = _types(node)
@@ -1276,7 +1299,7 @@ class _Printer:
         text = unit.ctype(qual, desugared, name, self.line)
         if not first:                                        # for (int i = 0, j = 1; ...): repeat no type
             text = name
-        init = node.get("inner", [])
+        init = [child for child in _children(node) if not child.get("kind", "").endswith("Attr")]
         extra = []
         if qual.rstrip().endswith("&"):
             self.ref_ids.add(node.get("id"))
@@ -1858,6 +1881,8 @@ class _Printer:
                                   self.line)
             cname = name
             node_found = unit.function_node(name, qual_type, self.line) if "<" not in name else None
+            if node_found is not None:
+                _function_attributes(node_found, self.line)
             policy = self.semantics.get("array_call_policies", {}).get(name)
             imported = self.semantics.get("audited_imports", {}).get(name)
             producer = self.semantics.get("array_origins", {}).get(name)
@@ -2500,6 +2525,7 @@ def _define(unit, cname, node, owner):
     printer._at(node)
     line = printer.line
     kind = node.get("kind")
+    _function_attributes(node, line)
     if node.get("variadic"):
         raise Unsupported(f"variadic function {node.get('name')}", line)
     if node.get("isDeleted") or (node.get("explicitlyDefaulted") and kind != "CXXDestructorDecl"):

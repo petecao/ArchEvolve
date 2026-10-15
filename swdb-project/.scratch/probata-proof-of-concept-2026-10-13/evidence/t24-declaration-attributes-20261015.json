@@ -1,0 +1,37 @@
+{
+  "created_et": "2026-10-15",
+  "baseline": "f389beb1",
+  "scope": "retained local/function/parameter and summary-prototype declaration attributes",
+  "actual_solver_run": false,
+  "public_cleanup_red": {
+    "path": "/private/tmp/probata-declattrs-red2.jsonl",
+    "sha256": "263046d9b46b2fe6e95d1989cba19d204a99954388c6c4866e5c61fce21bebdd",
+    "failed": 1,
+    "seconds": 0.6
+  },
+  "public_declaration_red": {
+    "path": "/private/tmp/probata-declattrs-red3.jsonl",
+    "sha256": "7f32891234a6a1afcf1a318e472c39eba7d4585996849b47441738bdb06e3af7",
+    "failed": 4,
+    "seconds": 1.03
+  },
+  "green": {
+    "path": "/private/tmp/probata-declattrs-final.jsonl",
+    "sha256": "109cd3904d3e47b8dc7a09005faf98713945c1e30924da82d92e1a8a987a5893",
+    "passed": 27,
+    "seconds": 11.89
+  },
+  "native_witness": {
+    "path": "/private/tmp/probata-declattrs-native-witness/observations.json",
+    "sha256": "416729dcb93bdf4068ca8c76846a55803e9c1b9db188c8dea0382d77e6c6f1c2",
+    "interpretation": "original C++ 7 4 versus old lowered C 7 0; one input; no verifier falseproof claim"
+  },
+  "benign_attributes": [
+    "UnusedAttr",
+    "DeprecatedAttr",
+    "WarnUnusedResultAttr",
+    "AlwaysInlineAttr",
+    "NoInlineAttr"
+  ],
+  "boundary": "Not a full-TU startup-effect or class/global-attribute checker; ticket24 remains claimed."
+}
