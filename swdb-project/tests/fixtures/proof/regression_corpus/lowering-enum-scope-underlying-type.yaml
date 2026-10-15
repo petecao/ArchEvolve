@@ -1,0 +1,10 @@
+# Created: 2026-10-15 ET (ticket24 enum scope refusal).
+id: lowering-enum-scope-underlying-type
+adapter: c_lowering
+input:
+  source: tests/fixtures/proof/lowering/enum_scope_refusals.cc
+  function: enum_type_collision
+failure_class: unsupported_construct
+construct: ambiguous enum type Wide
+cause: An unrelated local unsigned-char enum must not replace the global long-long
+  parameter underlying type.

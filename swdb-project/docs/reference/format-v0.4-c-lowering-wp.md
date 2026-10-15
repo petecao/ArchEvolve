@@ -60,6 +60,26 @@ swdb lower --source <file.cc> --function <name> --out <folder> [--include <dir>]
   stays outside.
 - **One thread.** OpenMP and atomics get their meaning for one thread here: a parallel region runs as one
   thread, a CAS is a read, a compare and a write. The program for one symbolic thread of N is ticket 45.
+- **Atomic operand admission v1** (2026-10-15). Erasing ordering at one thread requires an operand with
+  no runtime evaluation to preserve. `__atomic_*` orders admit integer/bool literals and enum constants,
+  optionally under parentheses, checked constant-expression wrappers and safe integer casts. Reads,
+  calls, mutations, comma expressions, arithmetic and target-specific flag bits are refused with a source
+  location. Folded values alone do not establish admission: wrapper children are checked. Casts use the
+  closed 0–5 domain; conversion to bool retains its actual value.
+  Loads accept RELAXED, CONSUME, ACQUIRE or SEQ_CST; stores accept RELAXED, RELEASE or SEQ_CST;
+  read-modify-write operations and fences accept the six standard orders. CAS failure orders must be
+  permitted by the success order, with RELEASE and ACQ_REL forbidden on failure. In particular, RELEASE
+  success permits only RELAXED failure; comparing numeric order codes is insufficient. Both fence
+  builtins check their order before becoming a one-thread no-op. CAS additionally requires constant
+  `weak=false`: spurious failure has no model here, including at one thread. These restrictions follow
+  the [GCC atomic builtin contracts](https://gcc.gnu.org/onlinedocs/gcc/_005f_005fatomic-Builtins.html).
+  Naming rules and existing constant-fixture C/model bytes stay unchanged; translator content changes
+  invalidate stale method pins. This is a conservative admitted shape, not support for all runtime orders
+  accepted by GCC or for symbolic-N concurrency.
+- **Enum lookup context** (2026-10-15). A named enum must resolve to one matching declaration before
+  using a cached enumerator value or selecting its underlying C type. Same-spelled enums from unrelated
+  scopes, and mixed enum/record type candidates, refuse as ambiguous. Anonymous enumerators additionally
+  match their exact reported enum type context. AST IDs from separate Clang invocations are not compared.
 - **Summaries.** `--summary NAME=SUMMARY` (Python: `lower(..., summaries={NAME: SUMMARY})`): every call of
   `NAME` stays a call with a prototype, and `<name>.anchors.json` lists `summaries: [{name, c_name,
   summary}]`. Every `__dxc_*` and `maa_*` call needs one; without one it is an unsupported construct.

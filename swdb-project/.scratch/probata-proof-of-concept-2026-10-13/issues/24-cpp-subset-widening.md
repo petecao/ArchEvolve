@@ -1,12 +1,20 @@
 # 24 — C++ subset widening
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-15 ET (original Ring/allocation actual pairs and public unsupported controls accepted; remaining matrix open)
+Updated: 2026-10-15 ET (historical Ring/allocation/DXC/classes/OMP accepted; repaired-source actual matrix open)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 21
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Formal-half language and the C++ subset": the subset by construct and kept names; "Verifier lineup and order": failure classes; "Records and levels": method-version file contents; "Testing Decisions", seam 1; choice S1); decisions: [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md) items 3, 9; [13](../../formal-verification-2026-10-09/issues/13-proof-hint-loop.md) item 2; [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md) items 3, 6
 **Time estimate:** about 4 days
+
+**Current soundness follow-up (2026-10-15 ET):** independent review found that
+generic atomic lowering dropped evaluated order/weak operands and admitted weak
+CAS into a deterministic strong model. The scoped constant-operand/strong-only
+fix and the independently discovered enum-scope repair pass 86 recorded compiler/native
+controls and 29 public/corpus controls; independent final review and fresh method
+pins/replay remain required. [Enum repair evidence](../evidence/t24-enum-scope-repair-20261015.md). Existing remote/finite records keep their
+historical freezes. [Fix, TDD and exact evidence boundary](../evidence/t24-atomic-operand-fix-20261015.md).
 
 **What to build:** The C lowering tool grows from 21's core (functions, arrays, loops) to the declared C++ subset, construct by construct, so GAPBS-style candidate artifacts can reach WP. Accepted: C plus references; classes without inheritance or virtual functions; member functions and operators; constructors and destructors as explicit calls; instantiated templates; `new[]` and `delete[]`; `enum class`, `constexpr`, `static_assert`; `std::min`, `std::max`, `std::copy`, `std::swap` through C models proven once; the OpenMP constructs (`parallel`, `for` with static, dynamic and `nowait`, `critical`, `atomic`, `barrier`, `reduction`); `__sync_*` and `__atomic_*`; `__dxc_*` and `maa_*` calls through summaries. The C lowering keeps C++ names: a class becomes a struct with the same name and fields, references become pointers, operators become named functions. So formal halves type-check unchanged. Anything outside the subset gives failure class "unsupported construct", never a crash or a partial C lowering. The naming rules are versioned and belong to the content-hash set.
 
@@ -846,3 +854,25 @@ result 4 against the unchanged `1<=result<=3` clause.
 [Exact corrected pair and dependency audit](../evidence/t24-corrected-dxc-pair-mbit10-20261015.json).
 Remaining original groups, allocation/lifetime controls and model/summary
 closure remain open; overall status stays **claimed**.
+
+
+## 2026-10-15 ET — Historical matrix final frontier and repaired-source replay
+
+The frozen `9b75f4a2` actual batch accepted corrected DXC safe/+4-seed,
+classes safe/seed and OpenMP safe/seed, then stopped at float-safe initializedness
+open goals. All launched rows retain setup/RTE/init/smoke/cache/machdep obligations;
+seeded acceptance is an attributable ordinary open goal, not a counterexample.
+[Final compact audit and resources/cleanup](../evidence/t24-historical-frontier-9b75-mbit10-20261015.md)
+checks 983 physical source hashes/Git blobs, eight records, 97 report/log instances,
+644 artifact instances and exact-launch translator components with zero integrity
+errors. The first default-reader environment mismatch receipt remains retained.
+
+The reviewed float hint repair is merged from integration `1fe30bb1`; atomic
+operand and enum ambiguity repairs are frozen separately for independent final
+review. The public controls refuse all 17 problematic operand shapes before
+launch, and stale translator pins create no proof record. Unique enums and
+original constant atomic C/anchors/models/names remain covered. No actual WP
+proof at this repaired translator is claimed yet. The finite agreement limb is
+accepted under ticket22's finite boundary; actual safe/seed/current-method and
+allocation/lifetime matrix obligations remain open. No shared map/resume or
+historical proof record was modified by this ticket update.

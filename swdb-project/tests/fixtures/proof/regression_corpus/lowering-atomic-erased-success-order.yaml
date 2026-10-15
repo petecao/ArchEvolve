@@ -1,0 +1,10 @@
+# Created: 2026-10-15 ET (ticket24 atomic operand admission v1).
+id: lowering-atomic-erased-success-order
+adapter: c_lowering
+input:
+  source: tests/fixtures/proof/lowering/atomic_operand_refusals.cc
+  function: erased_success_order
+failure_class: unsupported_construct
+construct: atomic memory order
+cause: The success-order expression increments m; erasing it changed a defined native
+  CAS return from119 to19.

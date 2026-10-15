@@ -1,0 +1,709 @@
+{
+  "assumptions": [
+    "Ambiguous same-name declarations are conservatively unsupported even if a richer resolver could disambiguate.",
+    "Unique named/anonymous enums retain existing underlying-type/value semantics; this change does not claim full C++ name resolution.",
+    "Literal atomic fixtures keep byte-identical C/anchors/model texts/naming pins; translator aggregate changes and needs fresh method pins."
+  ],
+  "c_lowering_source_sha256": "0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422",
+  "compiler_profile": {
+    "deselected": 87,
+    "files": [
+      {
+        "path": "/private/tmp/probata-t24-atomic-enum-recorded-final/guard.py",
+        "sha256": "186253f614098f8dae661ecbd9b2b3c2d3a9c47ea091d9a91f50f77489fe3435"
+      },
+      {
+        "path": "/private/tmp/probata-t24-atomic-enum-recorded-final/command.json",
+        "sha256": "041a2b66817c1695b83c3e0dbd077ac24ac0c7b949bbf0ee558d8dab105ef4db"
+      },
+      {
+        "path": "/private/tmp/probata-t24-atomic-enum-recorded-final/compiler.log",
+        "sha256": "f06eaf1d6b8865c136d1d1b5cc7a7dc885db0e6eafaad8ee7bc0d88d8315fdc0"
+      },
+      {
+        "path": "/private/tmp/probata-t24-atomic-enum-recorded-final/resources.json",
+        "sha256": "b9542b36d82bee77e10dddc2381c9ed644483de7db2bf15df1c95b72df4781f8"
+      }
+    ],
+    "passed": 86,
+    "pytest_raw_root": "/private/tmp/probata-t24-atomic-enum-recorded-final/pytest",
+    "pytest_seconds": 23.08,
+    "resources": {
+      "cpu_seconds": 21.721686,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 357416960,
+      "timed_out": false,
+      "wall_seconds": 23.376301874988712
+    }
+  },
+  "created": "2026-10-15 ET",
+  "initial_atomic_candidate": "220ef337",
+  "local_tool_identity": {
+    "c_lowering": {
+      "id": "swdb-c-lowering-9",
+      "sha256": "077947cb193890b2a229be0d19200c01194558c563feb40239532dabb7307c9f"
+    },
+    "clang": {
+      "id": "clang-22.1.8",
+      "sha256": "305697d3868243dca6e4aabf4f628df7de135d701eb4fd78f6a5d7528fef4395"
+    },
+    "naming_rules": {
+      "id": "kept-names.3",
+      "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+    }
+  },
+  "public_profile": {
+    "composition": "17 public refusals + stale translator no-new-record +11 corpus selectors; fourth mixed-kind corpus in final compiler86",
+    "deselected": 101,
+    "passed": 29,
+    "raw_root": "/private/tmp/probata-t24-atomic-enum-public-final-green",
+    "records": [
+      {
+        "evidence": [
+          {
+            "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/proof-runs/proof.atomic-operands.candidate-1.20261015t210258z.9cbdb651/adapter.log",
+            "sha256": "51399af1572f71a1f298b3f73947a41875b57a2616983757f6f3ba118578e409"
+          },
+          {
+            "name": "handler",
+            "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/proof-runs/proof.atomic-operands.candidate-1.20261015t210258z.9cbdb651/wp/handler.json",
+            "sha256": "e1bd5573f774fe926e564d5f246032d8bfb73b0bac6fa6d60ca014c6f53c5c60"
+          }
+        ],
+        "function": "atomic_control_load_side_effect",
+        "job": {
+          "adapter": "wp",
+          "batch": "batch.proof.atomic-operands.candidate-1.20261015t210258z.9cbdb651",
+          "batch_load": {
+            "end": 3.927,
+            "start": 3.927
+          },
+          "cpu_seconds": 0.678441,
+          "host": "mac",
+          "peak_rss_bytes": 130449408,
+          "position": 1,
+          "wall_seconds": 0.688167,
+          "worker_core": "unpinned"
+        },
+        "reason": "unsupported construct: atomic memory order requires a literal or enum constant with safe integer wrappers (bfs.cc line 121)",
+        "record": {
+          "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/records/proofs/proof.atomic-operands.candidate-1.20261015t210258z.9cbdb651.yaml",
+          "sha256": "fd287640ad957da6cadd27a4b0c0863105a2085eccc36b07ef5d1a9bb8490383"
+        },
+        "tool": {
+          "id": "swdb-c-lowering-9",
+          "sha256": "077947cb193890b2a229be0d19200c01194558c563feb40239532dabb7307c9f"
+        }
+      },
+      {
+        "evidence": [
+          {
+            "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/proof-runs/proof.atomic-operands.candidate-1.20261015t210305z.ec6f8b06/adapter.log",
+            "sha256": "4033c4b420869a02c08b09558ce8ec567b8b8006b821053c3004ca22181a5093"
+          },
+          {
+            "name": "handler",
+            "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/proof-runs/proof.atomic-operands.candidate-1.20261015t210305z.ec6f8b06/wp/handler.json",
+            "sha256": "9e072218aa4608d8514083a752ebf1fe5adfc1c8bf263e380965a6f5c9231d57"
+          }
+        ],
+        "function": "atomic_control_success_side_effect",
+        "job": {
+          "adapter": "wp",
+          "batch": "batch.proof.atomic-operands.candidate-1.20261015t210305z.ec6f8b06",
+          "batch_load": {
+            "end": 4.454,
+            "start": 4.454
+          },
+          "cpu_seconds": 0.791647,
+          "host": "mac",
+          "peak_rss_bytes": 130891776,
+          "position": 1,
+          "wall_seconds": 0.795188,
+          "worker_core": "unpinned"
+        },
+        "reason": "unsupported construct: atomic memory order requires a literal or enum constant with safe integer wrappers (bfs.cc line 126)",
+        "record": {
+          "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/records/proofs/proof.atomic-operands.candidate-1.20261015t210305z.ec6f8b06.yaml",
+          "sha256": "f1a80c63e1aab3ef6aeb08304073e4b017bc45222f4cdde30b7a6fe2d895d184"
+        },
+        "tool": {
+          "id": "swdb-c-lowering-9",
+          "sha256": "077947cb193890b2a229be0d19200c01194558c563feb40239532dabb7307c9f"
+        }
+      },
+      {
+        "evidence": [
+          {
+            "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/proof-runs/proof.atomic-operands.candidate-1.20261015t210317z.07a3c76e/adapter.log",
+            "sha256": "66d447cf1542f80a075a8a0ea3b98af6d0c6e7cf2bd6cabc6abbebbb47dd9da4"
+          },
+          {
+            "name": "handler",
+            "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/proof-runs/proof.atomic-operands.candidate-1.20261015t210317z.07a3c76e/wp/handler.json",
+            "sha256": "21f9dbb529bacf9bbfd21296daf1a7e5495c14a017559335a30343a8ddfa9fbd"
+          }
+        ],
+        "function": "atomic_control_failure_side_effect",
+        "job": {
+          "adapter": "wp",
+          "batch": "batch.proof.atomic-operands.candidate-1.20261015t210317z.07a3c76e",
+          "batch_load": {
+            "end": 6.555,
+            "start": 6.555
+          },
+          "cpu_seconds": 0.924278,
+          "host": "mac",
+          "peak_rss_bytes": 131022848,
+          "position": 1,
+          "wall_seconds": 1.004455,
+          "worker_core": "unpinned"
+        },
+        "reason": "unsupported construct: atomic memory order requires a literal or enum constant with safe integer wrappers (bfs.cc line 131)",
+        "record": {
+          "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/records/proofs/proof.atomic-operands.candidate-1.20261015t210317z.07a3c76e.yaml",
+          "sha256": "b5435094152e245be4348bf7ece3bfe4711a56b70aa8d507f3d261515e9255e7"
+        },
+        "tool": {
+          "id": "swdb-c-lowering-9",
+          "sha256": "077947cb193890b2a229be0d19200c01194558c563feb40239532dabb7307c9f"
+        }
+      },
+      {
+        "evidence": [
+          {
+            "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/proof-runs/proof.atomic-operands.candidate-1.20261015t210328z.3832976e/adapter.log",
+            "sha256": "ef7e811d93657b4e32c37b9a9e9ffd832c9b04766515079edfd41d5f345dae4b"
+          },
+          {
+            "name": "handler",
+            "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/proof-runs/proof.atomic-operands.candidate-1.20261015t210328z.3832976e/wp/handler.json",
+            "sha256": "376dfce20a4cb7ede617a4a541f5db534891003168b503e2ec4d8feddc21e32b"
+          }
+        ],
+        "function": "atomic_control_weak_side_effect",
+        "job": {
+          "adapter": "wp",
+          "batch": "batch.proof.atomic-operands.candidate-1.20261015t210328z.3832976e",
+          "batch_load": {
+            "end": 13.145,
+            "start": 9.589
+          },
+          "cpu_seconds": 1.025146,
+          "host": "mac",
+          "peak_rss_bytes": 130416640,
+          "position": 1,
+          "wall_seconds": 1.138399,
+          "worker_core": "unpinned"
+        },
+        "reason": "unsupported construct: atomic weak flag requires a literal or enum constant with safe integer wrappers (bfs.cc line 136)",
+        "record": {
+          "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/records/proofs/proof.atomic-operands.candidate-1.20261015t210328z.3832976e.yaml",
+          "sha256": "bebba04467405bf45b0a10498658823de27759c8d85bd1a4230cf50f4244d303"
+        },
+        "tool": {
+          "id": "swdb-c-lowering-9",
+          "sha256": "077947cb193890b2a229be0d19200c01194558c563feb40239532dabb7307c9f"
+        }
+      },
+      {
+        "evidence": [
+          {
+            "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/proof-runs/proof.atomic-operands.candidate-1.20261015t210340z.6bb27173/adapter.log",
+            "sha256": "e21249e6c0ece08416d34b8a8f8faab4ef07a9005d589dac02dd8d01a053915d"
+          },
+          {
+            "name": "handler",
+            "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/proof-runs/proof.atomic-operands.candidate-1.20261015t210340z.6bb27173/wp/handler.json",
+            "sha256": "95959de7770ba5f4a739b81730536e3ceca944749e79a2247822252976e73a46"
+          }
+        ],
+        "function": "atomic_control_weak_true",
+        "job": {
+          "adapter": "wp",
+          "batch": "batch.proof.atomic-operands.candidate-1.20261015t210340z.6bb27173",
+          "batch_load": {
+            "end": 13.318,
+            "start": 13.318
+          },
+          "cpu_seconds": 0.826019,
+          "host": "mac",
+          "peak_rss_bytes": 130400256,
+          "position": 1,
+          "wall_seconds": 0.831297,
+          "worker_core": "unpinned"
+        },
+        "reason": "unsupported construct: atomic weak compare-exchange may fail spuriously; only constant false is supported (bfs.cc line 141)",
+        "record": {
+          "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/records/proofs/proof.atomic-operands.candidate-1.20261015t210340z.6bb27173.yaml",
+          "sha256": "cb9254ddda1da92a29aad8f0e56f06affae54cb0e2fe456bea9671539a76256a"
+        },
+        "tool": {
+          "id": "swdb-c-lowering-9",
+          "sha256": "077947cb193890b2a229be0d19200c01194558c563feb40239532dabb7307c9f"
+        }
+      },
+      {
+        "evidence": [
+          {
+            "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/proof-runs/proof.atomic-operands.candidate-1.20261015t210348z.6acff3f2/adapter.log",
+            "sha256": "6749a395ff64bc1113ba485138a9650e102d8388c58e04c7c588cd4197e41c69"
+          },
+          {
+            "name": "handler",
+            "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/proof-runs/proof.atomic-operands.candidate-1.20261015t210348z.6acff3f2/wp/handler.json",
+            "sha256": "68ce2ea0951a9b4ca8659a4ae079f77529660c65da5ab37ee42066d8dc0d92a4"
+          }
+        ],
+        "function": "atomic_control_weak_dynamic",
+        "job": {
+          "adapter": "wp",
+          "batch": "batch.proof.atomic-operands.candidate-1.20261015t210348z.6acff3f2",
+          "batch_load": {
+            "end": 13.201,
+            "start": 13.132
+          },
+          "cpu_seconds": 0.901764,
+          "host": "mac",
+          "peak_rss_bytes": 130613248,
+          "position": 1,
+          "wall_seconds": 0.922035,
+          "worker_core": "unpinned"
+        },
+        "reason": "unsupported construct: atomic weak flag requires a literal or enum constant with safe integer wrappers (bfs.cc line 146)",
+        "record": {
+          "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/records/proofs/proof.atomic-operands.candidate-1.20261015t210348z.6acff3f2.yaml",
+          "sha256": "dc3b457412a9181222a65f42405a004ea232b47e1c544f4d63acac9eda0babd3"
+        },
+        "tool": {
+          "id": "swdb-c-lowering-9",
+          "sha256": "077947cb193890b2a229be0d19200c01194558c563feb40239532dabb7307c9f"
+        }
+      },
+      {
+        "evidence": [
+          {
+            "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/proof-runs/proof.atomic-operands.candidate-1.20261015t210359z.12a8bc5b/adapter.log",
+            "sha256": "514b8acd729bedd8e5205783c88b2b1425d019f62278a74500e8ab7f1ba8a673"
+          },
+          {
+            "name": "handler",
+            "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/proof-runs/proof.atomic-operands.candidate-1.20261015t210359z.12a8bc5b/wp/handler.json",
+            "sha256": "dc02e588f54eb953ab03d3e9f53ccbab2cba577a0f4041e56e36ec0f3ff0657d"
+          }
+        ],
+        "function": "atomic_control_order_dynamic",
+        "job": {
+          "adapter": "wp",
+          "batch": "batch.proof.atomic-operands.candidate-1.20261015t210359z.12a8bc5b",
+          "batch_load": {
+            "end": 13.884,
+            "start": 13.265
+          },
+          "cpu_seconds": 0.906206,
+          "host": "mac",
+          "peak_rss_bytes": 128565248,
+          "position": 1,
+          "wall_seconds": 0.951107,
+          "worker_core": "unpinned"
+        },
+        "reason": "unsupported construct: atomic memory order requires a literal or enum constant with safe integer wrappers (bfs.cc line 151)",
+        "record": {
+          "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/records/proofs/proof.atomic-operands.candidate-1.20261015t210359z.12a8bc5b.yaml",
+          "sha256": "e5a859854beba98c298712026996885bc6f2e82d4213317e19782598534f5659"
+        },
+        "tool": {
+          "id": "swdb-c-lowering-9",
+          "sha256": "077947cb193890b2a229be0d19200c01194558c563feb40239532dabb7307c9f"
+        }
+      },
+      {
+        "evidence": [
+          {
+            "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/proof-runs/proof.atomic-operands.candidate-1.20261015t210411z.a9199090/adapter.log",
+            "sha256": "74d80fbcc4acce987dd002a0a3b40ea670d378d701a7d3fbd4c6027e18e82962"
+          },
+          {
+            "name": "handler",
+            "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/proof-runs/proof.atomic-operands.candidate-1.20261015t210411z.a9199090/wp/handler.json",
+            "sha256": "651e9653dda76a64348977b28e50854f2284b41bf44c623f1a90598b08ecb3e0"
+          }
+        ],
+        "function": "atomic_control_order_volatile",
+        "job": {
+          "adapter": "wp",
+          "batch": "batch.proof.atomic-operands.candidate-1.20261015t210411z.a9199090",
+          "batch_load": {
+            "end": 15.397,
+            "start": 15.397
+          },
+          "cpu_seconds": 1.024901,
+          "host": "mac",
+          "peak_rss_bytes": 130842624,
+          "position": 1,
+          "wall_seconds": 1.276834,
+          "worker_core": "unpinned"
+        },
+        "reason": "unsupported construct: atomic memory order requires a literal or enum constant with safe integer wrappers (bfs.cc line 156)",
+        "record": {
+          "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/records/proofs/proof.atomic-operands.candidate-1.20261015t210411z.a9199090.yaml",
+          "sha256": "319d5809446e25542239afe0ea3f4b8b5b08624a21384827b562e65138a4cadd"
+        },
+        "tool": {
+          "id": "swdb-c-lowering-9",
+          "sha256": "077947cb193890b2a229be0d19200c01194558c563feb40239532dabb7307c9f"
+        }
+      },
+      {
+        "evidence": [
+          {
+            "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/proof-runs/proof.atomic-operands.candidate-1.20261015t210422z.1a277799/adapter.log",
+            "sha256": "98a652d6cc4cb61977525cf8da476174734f64537b690aaaef74268f37dc4dd0"
+          },
+          {
+            "name": "handler",
+            "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/proof-runs/proof.atomic-operands.candidate-1.20261015t210422z.1a277799/wp/handler.json",
+            "sha256": "93650c509e341ad9fceb8463e0fd5f9f96b60a2396d73a69174819ca7c383159"
+          }
+        ],
+        "function": "atomic_control_order_call",
+        "job": {
+          "adapter": "wp",
+          "batch": "batch.proof.atomic-operands.candidate-1.20261015t210422z.1a277799",
+          "batch_load": {
+            "end": 15.108,
+            "start": 15.108
+          },
+          "cpu_seconds": 0.839423,
+          "host": "mac",
+          "peak_rss_bytes": 128892928,
+          "position": 1,
+          "wall_seconds": 0.842683,
+          "worker_core": "unpinned"
+        },
+        "reason": "unsupported construct: atomic memory order requires a literal or enum constant with safe integer wrappers (bfs.cc line 161)",
+        "record": {
+          "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/records/proofs/proof.atomic-operands.candidate-1.20261015t210422z.1a277799.yaml",
+          "sha256": "01d1429b2000eb5472948507a9e8b39c2c9b61f027ac86caf5a7c9e36bbbc57e"
+        },
+        "tool": {
+          "id": "swdb-c-lowering-9",
+          "sha256": "077947cb193890b2a229be0d19200c01194558c563feb40239532dabb7307c9f"
+        }
+      },
+      {
+        "evidence": [
+          {
+            "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/proof-runs/proof.atomic-operands.candidate-1.20261015t210432z.00cc1735/adapter.log",
+            "sha256": "96c0253dd95202258fe7d292bb006b317afa90ab3e674acd59c246102ed790d9"
+          },
+          {
+            "name": "handler",
+            "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/proof-runs/proof.atomic-operands.candidate-1.20261015t210432z.00cc1735/wp/handler.json",
+            "sha256": "b2d6bf6985379d36bf841f12a1143ccaab64b4e7082290adf1da2bca787dd069"
+          }
+        ],
+        "function": "atomic_control_order_rte",
+        "job": {
+          "adapter": "wp",
+          "batch": "batch.proof.atomic-operands.candidate-1.20261015t210432z.00cc1735",
+          "batch_load": {
+            "end": 15.854,
+            "start": 15.854
+          },
+          "cpu_seconds": 0.951839,
+          "host": "mac",
+          "peak_rss_bytes": 130646016,
+          "position": 1,
+          "wall_seconds": 1.058713,
+          "worker_core": "unpinned"
+        },
+        "reason": "unsupported construct: atomic memory order requires a literal or enum constant with safe integer wrappers (bfs.cc line 166)",
+        "record": {
+          "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/records/proofs/proof.atomic-operands.candidate-1.20261015t210432z.00cc1735.yaml",
+          "sha256": "a5d54059f203c3f028805cfce15efcb853eaa0988a35330a1c689c317fdbff33"
+        },
+        "tool": {
+          "id": "swdb-c-lowering-9",
+          "sha256": "077947cb193890b2a229be0d19200c01194558c563feb40239532dabb7307c9f"
+        }
+      },
+      {
+        "evidence": [
+          {
+            "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/proof-runs/proof.atomic-operands.candidate-1.20261015t210444z.c070a4e1/adapter.log",
+            "sha256": "64e89ac78c384ce40dc21a6834f13cd8bb0381165fc9f6ba0f1eb16b13060e5a"
+          },
+          {
+            "name": "handler",
+            "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/proof-runs/proof.atomic-operands.candidate-1.20261015t210444z.c070a4e1/wp/handler.json",
+            "sha256": "a90721c893268a474f3a899d40bb2434a17f2f04f009ab64bfec8388d140c5b9"
+          }
+        ],
+        "function": "atomic_control_invalid_load",
+        "job": {
+          "adapter": "wp",
+          "batch": "batch.proof.atomic-operands.candidate-1.20261015t210444z.c070a4e1",
+          "batch_load": {
+            "end": 17.542,
+            "start": 17.542
+          },
+          "cpu_seconds": 0.917273,
+          "host": "mac",
+          "peak_rss_bytes": 130088960,
+          "position": 1,
+          "wall_seconds": 0.99655,
+          "worker_core": "unpinned"
+        },
+        "reason": "unsupported construct: atomic memory order is invalid for this operation (bfs.cc line 171)",
+        "record": {
+          "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/records/proofs/proof.atomic-operands.candidate-1.20261015t210444z.c070a4e1.yaml",
+          "sha256": "570b90d8a953ef73c599115d574747e69160f28406945d4f4d63e642cf7b01b5"
+        },
+        "tool": {
+          "id": "swdb-c-lowering-9",
+          "sha256": "077947cb193890b2a229be0d19200c01194558c563feb40239532dabb7307c9f"
+        }
+      },
+      {
+        "evidence": [
+          {
+            "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/proof-runs/proof.atomic-operands.candidate-1.20261015t210453z.8a045d3d/adapter.log",
+            "sha256": "00e16af631bb8af536060e1d958b068544a149c10dd72cadf83bf58a72c3cc9a"
+          },
+          {
+            "name": "handler",
+            "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/proof-runs/proof.atomic-operands.candidate-1.20261015t210453z.8a045d3d/wp/handler.json",
+            "sha256": "01a81024bfee7f86f854c3e74aa5eeaa9ae379ca9c4e7ffc34ad508d01c8485a"
+          }
+        ],
+        "function": "atomic_control_invalid_store",
+        "job": {
+          "adapter": "wp",
+          "batch": "batch.proof.atomic-operands.candidate-1.20261015t210453z.8a045d3d",
+          "batch_load": {
+            "end": 16.938,
+            "start": 16.938
+          },
+          "cpu_seconds": 0.824084,
+          "host": "mac",
+          "peak_rss_bytes": 130400256,
+          "position": 1,
+          "wall_seconds": 0.829525,
+          "worker_core": "unpinned"
+        },
+        "reason": "unsupported construct: atomic memory order is invalid for this operation (bfs.cc line 176)",
+        "record": {
+          "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/records/proofs/proof.atomic-operands.candidate-1.20261015t210453z.8a045d3d.yaml",
+          "sha256": "14fd9ffc70d327db29a3c861788b16ae5f6a6545f9e2bcd4dbf0185f5f928f33"
+        },
+        "tool": {
+          "id": "swdb-c-lowering-9",
+          "sha256": "077947cb193890b2a229be0d19200c01194558c563feb40239532dabb7307c9f"
+        }
+      },
+      {
+        "evidence": [
+          {
+            "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/proof-runs/proof.atomic-operands.candidate-1.20261015t210502z.4c19270e/adapter.log",
+            "sha256": "41a2e9d57bbc95a25fb5a80e25ca44109018280549a696cad4635c69f4213426"
+          },
+          {
+            "name": "handler",
+            "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/proof-runs/proof.atomic-operands.candidate-1.20261015t210502z.4c19270e/wp/handler.json",
+            "sha256": "6cd775c7ce28af56237773734bc36b5bb30c34e597c0a57f3d4f06e45bc70aba"
+          }
+        ],
+        "function": "atomic_control_invalid_cas_pair",
+        "job": {
+          "adapter": "wp",
+          "batch": "batch.proof.atomic-operands.candidate-1.20261015t210502z.4c19270e",
+          "batch_load": {
+            "end": 15.952,
+            "start": 15.952
+          },
+          "cpu_seconds": 0.805821,
+          "host": "mac",
+          "peak_rss_bytes": 130400256,
+          "position": 1,
+          "wall_seconds": 0.811353,
+          "worker_core": "unpinned"
+        },
+        "reason": "unsupported construct: atomic memory order is invalid for this operation (bfs.cc line 181)",
+        "record": {
+          "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/records/proofs/proof.atomic-operands.candidate-1.20261015t210502z.4c19270e.yaml",
+          "sha256": "2522985d85ade26af3a7cd2ca24a1dc8dffac5515214757dab543d172c05767f"
+        },
+        "tool": {
+          "id": "swdb-c-lowering-9",
+          "sha256": "077947cb193890b2a229be0d19200c01194558c563feb40239532dabb7307c9f"
+        }
+      },
+      {
+        "evidence": [
+          {
+            "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/proof-runs/proof.atomic-operands.candidate-1.20261015t210509z.7d47655e/adapter.log",
+            "sha256": "045b9ee220a94e18d657f673138d5e96818e14f808bb5a131a16626df1a7142c"
+          },
+          {
+            "name": "handler",
+            "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/proof-runs/proof.atomic-operands.candidate-1.20261015t210509z.7d47655e/wp/handler.json",
+            "sha256": "4e2d55f4f996b2075297b45ded8e682fd835dc88585a3e8fe52e9e39c0fedf44"
+          }
+        ],
+        "function": "atomic_control_thread_fence",
+        "job": {
+          "adapter": "wp",
+          "batch": "batch.proof.atomic-operands.candidate-1.20261015t210509z.7d47655e",
+          "batch_load": {
+            "end": 14.113,
+            "start": 14.994
+          },
+          "cpu_seconds": 0.730647,
+          "host": "mac",
+          "peak_rss_bytes": 130252800,
+          "position": 1,
+          "wall_seconds": 0.73519,
+          "worker_core": "unpinned"
+        },
+        "reason": "unsupported construct: atomic memory order requires a literal or enum constant with safe integer wrappers (bfs.cc line 186)",
+        "record": {
+          "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/records/proofs/proof.atomic-operands.candidate-1.20261015t210509z.7d47655e.yaml",
+          "sha256": "75477277486e4b5fa1f23c461083e604293dcddfd02318aa34fbdb5242778a11"
+        },
+        "tool": {
+          "id": "swdb-c-lowering-9",
+          "sha256": "077947cb193890b2a229be0d19200c01194558c563feb40239532dabb7307c9f"
+        }
+      },
+      {
+        "evidence": [
+          {
+            "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/proof-runs/proof.atomic-operands.candidate-1.20261015t210517z.40794262/adapter.log",
+            "sha256": "8f20cb3b849de0ced504c2b2595bd0ad2534ac85751fe61dddcfc7297379b5df"
+          },
+          {
+            "name": "handler",
+            "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/proof-runs/proof.atomic-operands.candidate-1.20261015t210517z.40794262/wp/handler.json",
+            "sha256": "cdd64a00333ac9be86106eef78e284c30f73b1eaa095ef46fbf9542ee9dad919"
+          }
+        ],
+        "function": "atomic_control_signal_fence",
+        "job": {
+          "adapter": "wp",
+          "batch": "batch.proof.atomic-operands.candidate-1.20261015t210517z.40794262",
+          "batch_load": {
+            "end": 13.303,
+            "start": 13.303
+          },
+          "cpu_seconds": 0.746922,
+          "host": "mac",
+          "peak_rss_bytes": 130203648,
+          "position": 1,
+          "wall_seconds": 0.750218,
+          "worker_core": "unpinned"
+        },
+        "reason": "unsupported construct: atomic memory order requires a literal or enum constant with safe integer wrappers (bfs.cc line 191)",
+        "record": {
+          "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/records/proofs/proof.atomic-operands.candidate-1.20261015t210517z.40794262.yaml",
+          "sha256": "18a9f44edefa39d527883a85018f14a0a36035d90f7a3f2acc5e18b596d1762d"
+        },
+        "tool": {
+          "id": "swdb-c-lowering-9",
+          "sha256": "077947cb193890b2a229be0d19200c01194558c563feb40239532dabb7307c9f"
+        }
+      },
+      {
+        "evidence": [
+          {
+            "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/proof-runs/proof.atomic-operands.candidate-1.20261015t210524z.1bec9508/adapter.log",
+            "sha256": "6f01ea389453c10b7f825fd52590bb944ea746cd255286cbc9e9c41ee19277e7"
+          },
+          {
+            "name": "handler",
+            "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/proof-runs/proof.atomic-operands.candidate-1.20261015t210524z.1bec9508/wp/handler.json",
+            "sha256": "bd2f420c17dedfb9907b1582f05f67666736d8df937a8dbf6eae99c294d5bf4b"
+          }
+        ],
+        "function": "atomic_control_weak_enum_collision",
+        "job": {
+          "adapter": "wp",
+          "batch": "batch.proof.atomic-operands.candidate-1.20261015t210524z.1bec9508",
+          "batch_load": {
+            "end": 11.953,
+            "start": 12.558
+          },
+          "cpu_seconds": 0.99069,
+          "host": "mac",
+          "peak_rss_bytes": 130449408,
+          "position": 1,
+          "wall_seconds": 0.996943,
+          "worker_core": "unpinned"
+        },
+        "reason": "unsupported construct: atomic weak flag: enumerator global_weak_value of ambiguous enum WeakFlag (bfs.cc line 196)",
+        "record": {
+          "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/records/proofs/proof.atomic-operands.candidate-1.20261015t210524z.1bec9508.yaml",
+          "sha256": "c5d83bbcb28f6d5ecddf19ef2e5ac2450e911233c2a9347bee2c0a56898c56bd"
+        },
+        "tool": {
+          "id": "swdb-c-lowering-9",
+          "sha256": "077947cb193890b2a229be0d19200c01194558c563feb40239532dabb7307c9f"
+        }
+      },
+      {
+        "evidence": [
+          {
+            "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/proof-runs/proof.atomic-operands.candidate-1.20261015t210531z.89642af0/adapter.log",
+            "sha256": "4ddf0aec0684252b8edd5fccae69dd2512179b0623c58e1ae3508923613ae49b"
+          },
+          {
+            "name": "handler",
+            "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/proof-runs/proof.atomic-operands.candidate-1.20261015t210531z.89642af0/wp/handler.json",
+            "sha256": "e932fb71f68c5c538518d1c16b38f84662e5ad7c08ab1a2aca6fbc50fd4d2073"
+          }
+        ],
+        "function": "atomic_control_order_enum_collision",
+        "job": {
+          "adapter": "wp",
+          "batch": "batch.proof.atomic-operands.candidate-1.20261015t210531z.89642af0",
+          "batch_load": {
+            "end": 11.476,
+            "start": 11.476
+          },
+          "cpu_seconds": 0.95315,
+          "host": "mac",
+          "peak_rss_bytes": 130482176,
+          "position": 1,
+          "wall_seconds": 0.958378,
+          "worker_core": "unpinned"
+        },
+        "reason": "unsupported construct: atomic memory order: enumerator global_bad_order of ambiguous enum OrderFlag (bfs.cc line 201)",
+        "record": {
+          "path": "/private/tmp/probata-t24-atomic-enum-public-final-green/atomic-operands-public0/records/proofs/proof.atomic-operands.candidate-1.20261015t210531z.89642af0.yaml",
+          "sha256": "52a1f1170d9a661e721c4c928af38d59067db41bdc7e535fa898aa5f6eca58e6"
+        },
+        "tool": {
+          "id": "swdb-c-lowering-9",
+          "sha256": "077947cb193890b2a229be0d19200c01194558c563feb40239532dabb7307c9f"
+        }
+      }
+    ],
+    "seconds": 188.14,
+    "stdout_resources_boundary": "Public run stdout retained in tool transcript only; no standalone stdout/resources receipt. Physical refusal records and their hash-bound reports below are retained."
+  },
+  "red_controls": [
+    "actual weak=true became strong CAS via unrelated local enum0",
+    "ordinary global enumerator1 became0",
+    "global long long enum parameter took unrelated unsigned char type",
+    "global record sizeof took unrelated enum int type"
+  ],
+  "red_raw_roots": [
+    "/private/tmp/probata-t24-atomic-enum-red",
+    "/private/tmp/probata-t24-enum-scope-red",
+    "/private/tmp/probata-t24-enum-type-red",
+    "/private/tmp/probata-t24-enum-mixed-red"
+  ],
+  "repair": "Refuse nonunique same-name EnumDecl contexts before value-cache reuse; refuse mixed enum/type kinds; filter anonymous value lookup by qualified type. No AST IDs compared across parser processes.",
+  "scope": "compiler/native and public prelaunch controls only; no actual WP verdict"
+}
