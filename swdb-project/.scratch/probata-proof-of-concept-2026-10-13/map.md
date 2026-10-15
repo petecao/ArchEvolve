@@ -5,7 +5,7 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-re
 
 ## Current state (resume here)
 
-Updated: 2026-10-15 17:53 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
+Updated: 2026-10-15 17:58 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
 Integration: `codex/probata-resume-20261015`; audited run 23 is published at
 `6dc94905`; method21 prototype merged at `14c2a298`. Remote actual jobs retain
 frozen `0e7f2327`; production lowerer SHA256
@@ -22,23 +22,26 @@ remains `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
 - **27:** Historical `71771f09` safe profile passes 11/11, with 792 ordinary +
   252 smoke Valid. Current negative profile has four accepted hazard
   controls of 13, each preserving its exact failed hazard precondition and Doomed
-  smoke checks. Current capacity profile is active on the freed node 0;
-  bounded/native and fresh safe profiles follow.
+  smoke checks. Current capacity32 stops on two memory-domain/invariant obligations
+  (45/47 ordinary, 11/11 smoke Valid); 33 and CBMC capacity cases did not run.
+  Bounded/native profile is now active on node0; fresh safe follows.
 - **07:** Run 23 finished unproven at 17:33:26 ET after 52.02 counted minutes,
   26 open goals (15 unit / 11 hint), no qualifying final replay/negative.
   [Audited result](evidence/t07-counted-23-20261015.json). Separately named method21
   diagnostic-baseline10 passes 187 controls and independent prelaunch review.
   Fresh run24 started 17:52:17 ET at `14c2a298`, all 30 freeze source pins
-  checked; actual launch/prompt audit pending. Final proof/smoke/negative stay 30 seconds.
+  checked; independent actual launch audit passes, first prompt audit pending. Final proof/smoke/negative stay 30 seconds.
 - **36:** Dependency-gated by 27. Its 122 focused controls exclude 13 actual-WP
   cases. Drafts 1/2 remain immutable; final method freeze and held-out gates remain.
 
 Node 0 generation 572 released after the caller timeout at 17:43:14 ET.
-Node 0 generation 573 started the three capacity controls at 17:46:58 ET;
-node 1 generation 603 continues the negative profile. Both use unchanged
+Node0 generation573 capacity profile released at17:53:38 ET after its first failure.
+Node0 generation574 started bounded/native at17:57:19 ET;
+node1 generation603 continues the negative profile. Both use unchanged
 `0e7f2327` through socket leases and guarded process trees.
 [Initial launch audit](evidence/composed-launch-0e7f2327-20261015.json),
-[capacity launch](evidence/t27-current-capacity-launch-20261015.json).
+[capacity launch](evidence/t27-current-capacity-launch-20261015.json),
+[bounded launch](evidence/t27-current-bounded-launch-20261015.json).
 No whole ticket closes from partial or historical results. This chat's 30-minute
 heartbeat remains active; old chat paused. [Ticket index](ticket-status-20261015.md).
 
