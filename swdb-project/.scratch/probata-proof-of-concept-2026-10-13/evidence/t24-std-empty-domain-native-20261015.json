@@ -1,0 +1,513 @@
+{
+  "boundary": "Native observations/sanitizer controls only. Undefined-input diagnostics and zero-size domain investigation do not establish portable semantics or WP validity.",
+  "commands": [
+    {
+      "argv": [
+        "/opt/homebrew/opt/llvm/bin/clang++",
+        "-std=c++17",
+        "-O1",
+        "-g",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-c",
+        "/private/tmp/probata-t24-std-empty-native-20261015/original.cc",
+        "-o",
+        "/private/tmp/probata-t24-std-empty-native-20261015/cpp.o"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/opt/llvm/bin/clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-c",
+        "/private/tmp/probata-t24-std-empty-native-20261015/lowered.c",
+        "-o",
+        "/private/tmp/probata-t24-std-empty-native-20261015/c.o"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/opt/llvm/bin/clang",
+        "-std=c11",
+        "-O1",
+        "-g",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-c",
+        "/private/tmp/probata-t24-std-empty-native-20261015/c_wrapper.c",
+        "-o",
+        "/private/tmp/probata-t24-std-empty-native-20261015/cw.o"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/opt/llvm/bin/clang++",
+        "-std=c++17",
+        "-O1",
+        "-g",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "/private/tmp/probata-t24-std-empty-native-20261015/harness.cc",
+        "/private/tmp/probata-t24-std-empty-native-20261015/cpp.o",
+        "/private/tmp/probata-t24-std-empty-native-20261015/cpp_wrapper.cc",
+        "-o",
+        "/private/tmp/probata-t24-std-empty-native-20261015/cpp"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/opt/llvm/bin/clang++",
+        "-std=c++17",
+        "-O1",
+        "-g",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "/private/tmp/probata-t24-std-empty-native-20261015/harness.cc",
+        "/private/tmp/probata-t24-std-empty-native-20261015/c.o",
+        "/private/tmp/probata-t24-std-empty-native-20261015/cw.o",
+        "-o",
+        "/private/tmp/probata-t24-std-empty-native-20261015/c"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": ""
+    }
+  ],
+  "created": "2026-10-15 ET",
+  "files": [
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/cpp-dangling_empty_diagnostic.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/c-nonobject_empty_diagnostic.stdout",
+      "sha256": "5e926ca4fd6126236b275b7560fd053b3eec68abf6f03077fe8b49ead0cac2ea"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/c_wrapper.c",
+      "sha256": "9caaeebb02c8276a71912729b8890555f4888d29d2e38e6dc68473d97f7fdaa2"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/c-live_nonempty.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/cpp-live_array_base_empty.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/run.py",
+      "sha256": "c5c756680f7b3e6f7e17125bbcedbc8f24d9228192382bf5666b3a70d5ead896"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/cpp-live_zero_allocation_empty.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/c-dangling_empty_diagnostic.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/c-sanitizer_positive_bad_read.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/c-null_plus_zero.stdout",
+      "sha256": "5e926ca4fd6126236b275b7560fd053b3eec68abf6f03077fe8b49ead0cac2ea"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/c-null_plus_zero.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/cpp_wrapper.cc",
+      "sha256": "4c32edaf12ca7a99f13051ceeaa29bc9ea62b4ef562b6d95b519415d3c4f8991"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/c-sanitizer_positive_bad_read.stderr",
+      "sha256": "22f0c989777480b19413f482f5f6bdb6e0bf37681531f052630ac605811f9b07"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/cpp-live_zero_allocation_empty.stdout",
+      "sha256": "59ce63ecfa32b9c62e51e286348ec03cbd9e5e312094591ae64ec16cefbf943a"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/c-dangling_empty_diagnostic.stdout",
+      "sha256": "59ce63ecfa32b9c62e51e286348ec03cbd9e5e312094591ae64ec16cefbf943a"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/original.cc",
+      "sha256": "6811db5464a89ea0650a590d9594a4b01a7b35091f47d3cf417542a204285669"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/c-nonobject_empty_diagnostic.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/cpp.o",
+      "sha256": "236ae82c3148d3797dd02dc5de389fb3617353a4082945481b7c3c9b8adffba7"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/cpp-dangling_empty_diagnostic.stdout",
+      "sha256": "59ce63ecfa32b9c62e51e286348ec03cbd9e5e312094591ae64ec16cefbf943a"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/lowered.c",
+      "sha256": "4f3829e26dc377f2ea1d0fcb3666e842a274a79f31907e0c06b6070f0a344104"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/cpp-live_array_base_empty.stdout",
+      "sha256": "b9dfa6808260bde9e796eb02fb1a02ebc71485965280be5a2cf81c4b8ca1971f"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/c-live_nonempty.stdout",
+      "sha256": "3f656ff04cde496dd3401aa9dcb49984334139e0a834226c768571dab860e394"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/c.o",
+      "sha256": "fc432b1b7bd8be08d69894aa71d8d48dfc82966608c0004a2234f614b9cd98d4"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/c-live_array_base_empty.stdout",
+      "sha256": "b9dfa6808260bde9e796eb02fb1a02ebc71485965280be5a2cf81c4b8ca1971f"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/cpp-live_nonempty.stdout",
+      "sha256": "3f656ff04cde496dd3401aa9dcb49984334139e0a834226c768571dab860e394"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/cpp",
+      "sha256": "81455a192fd0897efb4949ccc125f561fda722e681f49b18b6e3ee1049f5b22f"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/cpp-nonobject_empty_diagnostic.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/cpp-sanitizer_positive_bad_read.stderr",
+      "sha256": "22f0c989777480b19413f482f5f6bdb6e0bf37681531f052630ac605811f9b07"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/c-live_one_past_empty.stdout",
+      "sha256": "59ce63ecfa32b9c62e51e286348ec03cbd9e5e312094591ae64ec16cefbf943a"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/cpp-live_one_past_empty.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/cpp-null_plus_zero.stdout",
+      "sha256": "5e926ca4fd6126236b275b7560fd053b3eec68abf6f03077fe8b49ead0cac2ea"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/guard.py",
+      "sha256": "c4f3b2524a98e6eba264d9d76aac05ca662e660ab5a245accccc3e38e82b42e9"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/c-live_zero_allocation_empty.stdout",
+      "sha256": "59ce63ecfa32b9c62e51e286348ec03cbd9e5e312094591ae64ec16cefbf943a"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/cpp-live_one_past_empty.stdout",
+      "sha256": "59ce63ecfa32b9c62e51e286348ec03cbd9e5e312094591ae64ec16cefbf943a"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/cpp-sanitizer_positive_bad_read.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/c-live_one_past_empty.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/cw.o",
+      "sha256": "65052736fb03a2d466fa2a5c76fa045fd0ab63403caeb09d4df1076bc90cf40c"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/c-live_zero_allocation_empty.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/harness.cc",
+      "sha256": "b3115ea73ba40b4fef815596cd6d154e10d9553b6002dc98ada1e26a24cc898c"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/cpp-null_plus_zero.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/cpp-nonobject_empty_diagnostic.stdout",
+      "sha256": "5e926ca4fd6126236b275b7560fd053b3eec68abf6f03077fe8b49ead0cac2ea"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/c",
+      "sha256": "f9358752721b9b7ea3d770e76ed4cab924a117f645e6edc53c2eb9d982d55abb"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/c-live_array_base_empty.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/probata-t24-std-empty-native-20261015/cpp-live_nonempty.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "independent_domain_review": {
+    "path": "/private/tmp/probata-t24-std-object-domain-independent-review-20261015.md",
+    "sha256": "f1a448c8a40d1fcee098298e4e3e714f4076c430e199092984a8b9e088f98a65"
+  },
+  "interpretation": "Native observations do not prove domain legality. Invalid-pointer copying alone is implementation-defined in C++17; dangling/non-object arithmetic and iterator use are outside the portable defined domain. Live zero-size allocation is a native-supported/unsupported-readable-proxy distinction, never classified UB.",
+  "raw_report": {
+    "path": "/private/tmp/probata-t24-std-empty-native-20261015/report.json",
+    "sha256": "fc7e5e262e117e0ef15015649a1fe389c93dd818f5d1856315d29d026802aaa5"
+  },
+  "resources": {
+    "cpu_seconds": 9.166649,
+    "exit_code": 0,
+    "out_of_memory": false,
+    "peak_rss_bytes": 238944256,
+    "timed_out": false,
+    "wall_seconds": 10.49598533398239
+  },
+  "rows": [
+    {
+      "c": {
+        "argv": [
+          "/private/tmp/probata-t24-std-empty-native-20261015/c",
+          "0"
+        ],
+        "returncode": 0,
+        "stderr_bytes": 0,
+        "stderr_path": "/private/tmp/probata-t24-std-empty-native-20261015/c-null_plus_zero.stderr",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "result=12 n=0\n"
+      },
+      "case": "null_plus_zero",
+      "classification": "defined-input control",
+      "cpp": {
+        "argv": [
+          "/private/tmp/probata-t24-std-empty-native-20261015/cpp",
+          "0"
+        ],
+        "returncode": 0,
+        "stderr_bytes": 0,
+        "stderr_path": "/private/tmp/probata-t24-std-empty-native-20261015/cpp-null_plus_zero.stderr",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "result=12 n=0\n"
+      }
+    },
+    {
+      "c": {
+        "argv": [
+          "/private/tmp/probata-t24-std-empty-native-20261015/c",
+          "1"
+        ],
+        "returncode": 0,
+        "stderr_bytes": 0,
+        "stderr_path": "/private/tmp/probata-t24-std-empty-native-20261015/c-live_array_base_empty.stderr",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "asan_first_int_poisoned=0\nresult=12 n=0\n"
+      },
+      "case": "live_array_base_empty",
+      "classification": "defined-input control",
+      "cpp": {
+        "argv": [
+          "/private/tmp/probata-t24-std-empty-native-20261015/cpp",
+          "1"
+        ],
+        "returncode": 0,
+        "stderr_bytes": 0,
+        "stderr_path": "/private/tmp/probata-t24-std-empty-native-20261015/cpp-live_array_base_empty.stderr",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "asan_first_int_poisoned=0\nresult=12 n=0\n"
+      }
+    },
+    {
+      "c": {
+        "argv": [
+          "/private/tmp/probata-t24-std-empty-native-20261015/c",
+          "2"
+        ],
+        "returncode": 0,
+        "stderr_bytes": 0,
+        "stderr_path": "/private/tmp/probata-t24-std-empty-native-20261015/c-live_one_past_empty.stderr",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "asan_first_int_poisoned=1\nresult=12 n=0\n"
+      },
+      "case": "live_one_past_empty",
+      "classification": "defined-input control",
+      "cpp": {
+        "argv": [
+          "/private/tmp/probata-t24-std-empty-native-20261015/cpp",
+          "2"
+        ],
+        "returncode": 0,
+        "stderr_bytes": 0,
+        "stderr_path": "/private/tmp/probata-t24-std-empty-native-20261015/cpp-live_one_past_empty.stderr",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "asan_first_int_poisoned=1\nresult=12 n=0\n"
+      }
+    },
+    {
+      "c": {
+        "argv": [
+          "/private/tmp/probata-t24-std-empty-native-20261015/c",
+          "3"
+        ],
+        "returncode": 0,
+        "stderr_bytes": 0,
+        "stderr_path": "/private/tmp/probata-t24-std-empty-native-20261015/c-live_zero_allocation_empty.stderr",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "asan_first_int_poisoned=1\nresult=12 n=0\n"
+      },
+      "case": "live_zero_allocation_empty",
+      "classification": "zero-size live allocation diagnostic",
+      "cpp": {
+        "argv": [
+          "/private/tmp/probata-t24-std-empty-native-20261015/cpp",
+          "3"
+        ],
+        "returncode": 0,
+        "stderr_bytes": 0,
+        "stderr_path": "/private/tmp/probata-t24-std-empty-native-20261015/cpp-live_zero_allocation_empty.stderr",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "asan_first_int_poisoned=1\nresult=12 n=0\n"
+      }
+    },
+    {
+      "c": {
+        "argv": [
+          "/private/tmp/probata-t24-std-empty-native-20261015/c",
+          "4"
+        ],
+        "returncode": 0,
+        "stderr_bytes": 0,
+        "stderr_path": "/private/tmp/probata-t24-std-empty-native-20261015/c-dangling_empty_diagnostic.stderr",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "asan_first_int_poisoned=1\nresult=12 n=0\n"
+      },
+      "case": "dangling_empty_diagnostic",
+      "classification": "intentional undefined-input diagnostic; never agreement or proof",
+      "cpp": {
+        "argv": [
+          "/private/tmp/probata-t24-std-empty-native-20261015/cpp",
+          "4"
+        ],
+        "returncode": 0,
+        "stderr_bytes": 0,
+        "stderr_path": "/private/tmp/probata-t24-std-empty-native-20261015/cpp-dangling_empty_diagnostic.stderr",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "asan_first_int_poisoned=1\nresult=12 n=0\n"
+      }
+    },
+    {
+      "c": {
+        "argv": [
+          "/private/tmp/probata-t24-std-empty-native-20261015/c",
+          "5"
+        ],
+        "returncode": 0,
+        "stderr_bytes": 0,
+        "stderr_path": "/private/tmp/probata-t24-std-empty-native-20261015/c-nonobject_empty_diagnostic.stderr",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "result=12 n=0\n"
+      },
+      "case": "nonobject_empty_diagnostic",
+      "classification": "intentional undefined-input diagnostic; never agreement or proof",
+      "cpp": {
+        "argv": [
+          "/private/tmp/probata-t24-std-empty-native-20261015/cpp",
+          "5"
+        ],
+        "returncode": 0,
+        "stderr_bytes": 0,
+        "stderr_path": "/private/tmp/probata-t24-std-empty-native-20261015/cpp-nonobject_empty_diagnostic.stderr",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "result=12 n=0\n"
+      }
+    },
+    {
+      "c": {
+        "argv": [
+          "/private/tmp/probata-t24-std-empty-native-20261015/c",
+          "6"
+        ],
+        "returncode": 0,
+        "stderr_bytes": 0,
+        "stderr_path": "/private/tmp/probata-t24-std-empty-native-20261015/c-live_nonempty.stderr",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "asan_first_int_poisoned=0\nresult=15 n=1\n"
+      },
+      "case": "live_nonempty",
+      "classification": "defined-input control",
+      "cpp": {
+        "argv": [
+          "/private/tmp/probata-t24-std-empty-native-20261015/cpp",
+          "6"
+        ],
+        "returncode": 0,
+        "stderr_bytes": 0,
+        "stderr_path": "/private/tmp/probata-t24-std-empty-native-20261015/cpp-live_nonempty.stderr",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "asan_first_int_poisoned=0\nresult=15 n=1\n"
+      }
+    },
+    {
+      "c": {
+        "argv": [
+          "/private/tmp/probata-t24-std-empty-native-20261015/c",
+          "7"
+        ],
+        "returncode": -6,
+        "stderr_bytes": 249,
+        "stderr_path": "/private/tmp/probata-t24-std-empty-native-20261015/c-sanitizer_positive_bad_read.stderr",
+        "stderr_sha256": "22f0c989777480b19413f482f5f6bdb6e0bf37681531f052630ac605811f9b07",
+        "stdout": ""
+      },
+      "case": "sanitizer_positive_bad_read",
+      "classification": "intentional undefined-input diagnostic; never agreement or proof",
+      "cpp": {
+        "argv": [
+          "/private/tmp/probata-t24-std-empty-native-20261015/cpp",
+          "7"
+        ],
+        "returncode": -6,
+        "stderr_bytes": 249,
+        "stderr_path": "/private/tmp/probata-t24-std-empty-native-20261015/cpp-sanitizer_positive_bad_read.stderr",
+        "stderr_sha256": "22f0c989777480b19413f482f5f6bdb6e0bf37681531f052630ac605811f9b07",
+        "stdout": ""
+      }
+    }
+  ],
+  "runtime_evaluation_freeze": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+  "runtime_identity": {
+    "c_lowering": {
+      "id": "swdb-c-lowering-9",
+      "sha256": "077947cb193890b2a229be0d19200c01194558c563feb40239532dabb7307c9f"
+    },
+    "clang": {
+      "id": "clang-22.1.8",
+      "sha256": "305697d3868243dca6e4aabf4f628df7de135d701eb4fd78f6a5d7528fef4395"
+    },
+    "naming_rules": {
+      "id": "kept-names.3",
+      "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+    }
+  }
+}
