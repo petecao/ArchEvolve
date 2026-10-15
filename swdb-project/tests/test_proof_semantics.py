@@ -193,6 +193,16 @@ int dxf_direct_three_reads(int *q, int *base, int n) {
   int c = t2[0];
   return (0 <= a) & (a < n) & (b == c);
 }
+int dxf_direct_offset_gather(int *q, int *offs, int n) {
+  maa_const(0, 0);
+  maa_const(n, 1);
+  maa_const(1, 2);
+  maa_stream_load(q, 0, 1, 2, 0, -1);
+  wait_ready(0);
+  maa_indirect_load(offs + 1, 0, 1, -1);
+  wait_ready(1);
+  return get_tile_size(1) == n;
+}
 """
 UNITS = (DX / "fixture_units.cc").read_text() + DIRECT_UNITS
 BASE = ("requires 1 <= n <= 2 && \\valid(q + (0 .. n - 1)) && \\valid({arr} + (0 .. n - 1));\n"
@@ -207,6 +217,9 @@ RANGE = ("requires 2 <= n <= 3 && \\valid(q + (0 .. n - 1)) && \\valid(offs + (0
 FIXTURES = {
     "direct_stream": ("dxf_direct_stream", ["q"], "requires 0 <= n <= 2 && \\valid(q + (0 .. n - 1));", "\\nothing", 2),
     "direct_three_reads": ("dxf_direct_three_reads", ["q", "base"], BASE.format(arr="base"), "\\nothing", 2),
+    "direct_offset_gather": ("dxf_direct_offset_gather", ["q", "offs"],
+        "requires n == 2 && \\valid(q + (0 .. n - 1)) && \\valid(offs + (0 .. n - 1));\n"
+        "requires \\forall integer k; 0 <= k < n ==> 0 <= q[k] < n - 1;", "\\nothing", 2),
     "summary_wrapper": ("dxf_summary_wrapper", [], "requires 0 <= n <= 2;", "\\nothing", 2),
     "summary_caller": ("dxf_summary_caller", [], "requires 0 <= n <= 2;", "\\nothing", 2),
     "local_storage": ("dxf_local_storage", [], "requires 1 <= n <= 2;", "\\nothing", 2),
@@ -246,7 +259,7 @@ def _dx_contracts():
             ("pre", "legality", requires, "per_candidate"),
             ("post", "postcondition", f"assigns {assigns};\nensures \\result == 1;", "per_candidate")],
             [{"array": a, "shared_actions": [], "history_reads": False} for a in arrays])
-        if name in {"direct_stream", "direct_three_reads"}:
+        if name in {"direct_stream", "direct_three_reads", "direct_offset_gather"}:
             # An explicit typed input-window contract addition, independent of validity.
             data["proof_unit"]["array_domains"] = {array: {"extent": "n"} for array in arrays}
         if name == "summary_wrapper":
@@ -631,12 +644,12 @@ def test_wp_allows_fresh_scalar_witnesses_without_trusting_them_as_model_updates
 
 
 @needs_wp
-@pytest.mark.parametrize("name", ["direct_stream", "direct_three_reads"])
+@pytest.mark.parametrize("name", ["direct_stream", "direct_three_reads", "direct_offset_gather"])
 def test_wp_audited_dx_pointer_calls_prove_only_checked_explicit_input_windows(dx, name):
     record = prove_wp(dx, name)
     assert record["verdict"] == "proven", record.get("unproven_properties")
     guards = [goal for goal in record["goals"] if "swdb_window_call" in goal["goal"] and not goal.get("smoke")]
-    assert len(guards) == (1 if name == "direct_stream" else 3)
+    assert len(guards) == {"direct_stream": 1, "direct_three_reads": 3, "direct_offset_gather": 2}[name]
     assert all(goal["status"] == "valid" for goal in guards)
 
 
@@ -679,3 +692,15 @@ def test_wp_unit_window_does_not_invent_a_domain_for_a_defined_pointer_helper(dx
     record = prove_wp(dx, "three_reads")
     assert record["verdict"] == "not_proven" and record["failure_class"] == "unsupported_construct", record
     assert not any(report["name"] == "wp_log" for report in record["evidence"]["reports"])
+
+
+@needs_wp
+def test_wp_one_past_offset_formation_does_not_admit_a_gather_read_through_it(dx):
+    path = dx.root / "library/rewrite_contracts/fixture_dx_direct_offset_gather.yaml"
+    contract = yaml.safe_load(path.read_text())
+    contract["proof_unit"]["array_domains"]["offs"]["extent"] = "n - 1"
+    path.write_text(yaml.safe_dump(contract, sort_keys=False))
+    record = prove_wp(dx, "direct_offset_gather")
+    assert record["verdict"] == "not_proven", record
+    assert any("swdb_window_call" in goal["goal"] and goal["status"] != "valid"
+               for goal in record["goals"]), record
