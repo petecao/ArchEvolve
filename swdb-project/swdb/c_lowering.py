@@ -299,6 +299,7 @@ def identity():
                             + here.with_name("nested_entry_reads.py").read_bytes()
                             + here.with_name("dx_array_domains.py").read_bytes()
                             + here.with_name("standard_range_calls.py").read_bytes()
+                            + here.with_name("member_windows.py").read_bytes()
                             + here.with_name("stdlib_source_admission.py").read_bytes()
                             + json.dumps(stdlib_provenance.runtime_identity(tool), sort_keys=True).encode()).hexdigest()
     found = {"c_lowering": {"id": f"{TOOL_ID}-{TOOL_VERSION}", "sha256": digest},
@@ -2499,6 +2500,15 @@ def lower(source, function, includes=(), defines=(), summaries=None, semantics=N
                                             models=unit.model_order, anchors=anchors, text=text)
     owner = vector_ownership.certify_origins(node, source=source.read_text(), source_sha256=_file_sha256(source),
                                            models=unit.model_order, anchors=anchors, text=text, entry_windows=windows)
+    from swdb import member_windows
+    member_context, member_origins, member_refusal = None, {}, None
+    if not owner:
+        try:
+            member_context, member_origins = member_windows.certify(
+                definition_nodes, unit.classes, source=source, tool=tool, includes=includes, defines=defines,
+                entry=function, windows=windows)
+        except member_windows.Refused as exc:
+            member_refusal = str(exc)
     models = tuple(n for n in unit.model_order if n != "SWDB_MODEL_FAIL" and not n.endswith("_valid"))
     allocation = unit.allocates or any(n.startswith("std_vector_") for n in unit.std_types) or any(n.startswith("swdb_alloc_new_array_") for n in unit.model_order)
     provenance_models = sorted(set((*models, *unit.std_types)))
@@ -2523,11 +2533,12 @@ def lower(source, function, includes=(), defines=(), summaries=None, semantics=N
                             known_pointer_calls=(semantics or {}).get("tile_pointer", ()),
                             global_nodes=unit.global_nodes.values(), known_origins=(semantics or {}).get("array_origins"),
                             terminal=certificate, entry_windows=windows, entry_function=function, owner=owner,
-                            standard_calls=unit.standard_range_calls,
+                            standard_calls=unit.standard_range_calls, member_origins=member_origins,
+                            member_refusal=member_refusal,
                             call_sites=unit.pointer_calls, call_policies=(semantics or {}).get("array_call_policies"),
                             audited_imports=(semantics or {}).get("audited_imports")),
                         source_sha256=_file_sha256(source), text=text, entry_windows=windows,
-                        entry_contract=array_domain_contract, owner=owner,
+                        entry_contract=array_domain_contract, owner=owner, member_context=member_context,
                         source_entries=wp_pointer_bounds.function_entries(definition_nodes, source)),
                     terminal_release=certificate)
 
