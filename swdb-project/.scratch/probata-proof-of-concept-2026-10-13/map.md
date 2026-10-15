@@ -5,7 +5,10 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Integration branch: `prob
 
 ## Current state (resume here)
 
-Updated: 2026-10-14 23:20 ET. Session paused by Yan-Ru; integration merged into `yanrujhou_main`.
+Updated: 2026-10-15 ET. Resumed under Yan-Ru's ongoing implementation, push and mbit10 approval.
+Current integration branch: `codex/probata-poc-integration`, based on `yanrujhou_main` at `150930b4`.
+Current dispatch, evidence and blockers: [resume.md](resume.md). The historical paused checklist below
+records the incoming checkpoint; ticket files and resume.md hold the resumed state.
 
 - **Resolved:** 33 of 63 (see Context pointers). Ticket files hold each status.
 - **Paused, claimed** (each has a "Progress (paused)" section; resume from it):
