@@ -670,3 +670,28 @@ def test_cpu_effect_inventory_retains_reference_argument_reads_hidden_by_scalar_
     assert not effects["writes"]
     anchors = json.loads((tmp_path / "out" / "swdb_effect_minimum.anchors.json").read_text())
     assert anchors["cpu_effects"] == effects
+
+
+@pytest.mark.parametrize("parameters,body", [
+    ("int n, int *caller", "int local[2]; swdb_storage_use(local);"),
+    ("int n, int *caller", "int local[2] = {1, 2}; swdb_storage_use(local);"),
+    ("int n, int *caller", "int local; swdb_storage_use(&local);"),
+    ("int n, int *caller", "swdb_storage_use(&n);"),
+    ("int n, int *caller", "Storage local; swdb_storage_use(&local.value);"),
+])
+def test_cpu_effect_inventory_keeps_automatic_storage_that_can_outlive_pending_device_reads(tmp_path, parameters, body):
+    source = tmp_path / "storage_lifetime.cc"
+    source.write_text("struct Storage { int value; }; void swdb_storage_use(int *p);\n"
+                      "int swdb_storage_lifetime(" + parameters + ") { " + body + " return n; }\n")
+    effects = lower(source, "swdb_storage_lifetime", tmp_path / "out", "--summary",
+                    "swdb_storage_use=fixture.storage")["cpu_effects"]
+    assert any(row["kind"] == "local_storage" for row in effects["writes"])
+
+
+def test_a_caller_pointer_parameter_does_not_become_callee_owned_storage(tmp_path):
+    source = tmp_path / "caller_storage.cc"
+    source.write_text("void swdb_storage_use(int *p);\n"
+                      "int swdb_caller_storage(int n, int *caller) { swdb_storage_use(caller); return n; }\n")
+    effects = lower(source, "swdb_caller_storage", tmp_path / "out", "--summary",
+                    "swdb_storage_use=fixture.storage")["cpu_effects"]
+    assert not any(row["kind"] == "local_storage" for row in effects["writes"])

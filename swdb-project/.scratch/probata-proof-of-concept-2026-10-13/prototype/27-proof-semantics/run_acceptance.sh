@@ -6,6 +6,8 @@ set -euo pipefail
 mkdir -p "$PROBATA_OUTPUT/tmp" "$PROBATA_OUTPUT/cache"
 export TMPDIR="$PROBATA_OUTPUT/tmp" XDG_CACHE_HOME="$PROBATA_OUTPUT/cache"
 export SWDB_VERIFIER_RSS_CAP_BYTES=8589934592
+# Each output belongs to one leased socket. One verifier per socket; the coordinator reserves at most two.
+export SWDB_VERIFIER_LOCK="$PROBATA_OUTPUT/verifier.lock"
 cd "$(git rev-parse --show-toplevel)/swdb-project"
 git rev-parse HEAD > "$PROBATA_OUTPUT/source-commit.txt"
 {
@@ -15,6 +17,8 @@ git rev-parse HEAD > "$PROBATA_OUTPUT/source-commit.txt"
   uname -a
   lscpu
   numactl --hardware
+  printf 'verifier_lock=%s\n' "$SWDB_VERIFIER_LOCK"
+  printf 'rss_cap_bytes=%s\n' "$SWDB_VERIFIER_RSS_CAP_BYTES"
   grep -H '"state"' /data1/yanruj/lact-host-lease/mbit10-evaluation*.meta.json
 } > "$PROBATA_OUTPUT/environment.txt"
 set +e

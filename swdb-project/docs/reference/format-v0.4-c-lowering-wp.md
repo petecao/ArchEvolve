@@ -109,6 +109,10 @@ The normalized pre-proof input is retained as `wp_normalized`; every generated
 initialization assertion remains a proof obligation. Input memory may require explicit
 `\initialized` preconditions: `\valid` establishes access bounds, not initialization.
 The adapter never invents those preconditions or assumes candidate locals initialized.
+For bounded jobs, the ACSL translator accepts an explicit `requires \initialized` only for a pointer
+parameter backed by the harness's completely filled input buffer. It emits the requested range check
+against that buffer's actual capacity. Heap/global locations, summaries, runtime checks and postconditions
+remain unsupported; this translation never asserts arbitrary storage initialized.
 An older method without the explicit initialization flag cannot run this WP policy;
 use a new method file rather than edit an existing pinned manifest.
 
@@ -283,3 +287,10 @@ rule binds return values without marking the receiving local initialized; ordina
 assignment tracks it. This preserves the pointer value under the existing nonempty allocation
 contract, adds no heap initializedness or freshness premise, and leaves native artifacts unchanged.
 An ignored unfilled-array read remains a failed initialization obligation.
+
+Automatic storage admission (2026-10-15): CPU effects also list `local_storage` for local arrays and
+aggregates, and for address-taken local or by-value parameter slots even when uninitialized. Pending
+device reads can otherwise retain addresses after those objects cease to exist. Until a checked
+ownership boundary models that lifetime, DX100 units with such storage are refused conservatively.
+Passing a caller-owned buffer pointer by value does not give the callee ownership of its pointee;
+taking the address of the pointer parameter itself exposes its callee-owned slot and is refused.

@@ -202,3 +202,33 @@ The proof-only scalar is declared once in `ghost.acsl`; the C model ignores it. 
 control and safe fixtures remain pending. Also closed a generated-model validity gap: overriding `DX_K`
 outside `1..32` is refused before any tool, consistent with the 32-bit slot masks. All four public controls
 (0/33, CBMC/WP), including disabled tool executables, pass; Frama-C validates the updated entry and contracts.
+
+
+## Soundness and acceptance checkpoint — 2026-10-15 04:06 ET
+
+Status remains `claimed`; full acceptance must use the combined initializedness and memory policies.
+The earlier remote `branchless` run at `dd975e72` passed all six targeted cases in 3291.80 s: both store
+fixtures, three reads, the insufficient store-frame witness, and capacity 32/33. Its scope is the prior
+method and declared model, not the current final acceptance or a hardware timing claim. Raw outputs remain
+at `/data/yanruj/EvolveSWDB_runs/probata-t27-20261015/branchless` on mbit10.
+
+- Store frames now use the checked `dx_store_bound` witness and selected-index obligation, preserving the
+  original unit frame. DX_K outside 1..32 is rejected before tools; capacity 32/33 also passed the strict
+  reader on Mac (2 cases, 571.32 s).
+- Added conservative ordinary CPU effect admission from clang AST identities, including macro-expanded
+  accesses. CPU writes and opaque effects are refused; reads after a device store require the later memory
+  model. Prefix reads have checked intraprocedural statement ordering. Transitive summary/model proof
+  dependencies cannot hide accelerator semantics behind a scalar summary boundary (`21fa9b2d`).
+- Added checked device-memory serialization after destination-stall coverage and no pending store at unit
+  exit, before formal poststate observations (`ca438d12`). Pending reads remain explicit state and require
+  caller hazard/lifetime handling. A source-derived cache-line interference concern motivates this domain;
+  no gem5 lost-update replay is claimed. Dedicated `memory_domain` failures never refute the program.
+- Red controls reproduced old-model success for uncovered store/store overlap and store-return without
+  wait. After the changes, all six bounded domain/exit cases plus the safe CBMC regression passed (7 cases,
+  240.30 s). Explicit initialized fixture inputs reproduced an unsupported translation; the narrow
+  harness-owned-buffer translation now passes its real bounded control. Three focused translator/dependency
+  controls pass. The real WP size fixture passed with mandatory initializedness (217.80 s); the public
+  once-proven-wrapper/caller boundary control passed.
+- Remaining: finish the frozen focused batch, add local-storage lifetime admission controls, merge the
+  audited bounded-initialization gate and current terminal checker, freeze method draft 3, then run complete
+  coordinated remote safe/unsafe acceptance and update this ticket with final evidence.

@@ -31,6 +31,34 @@ void dxf_cpu_store(int *p) { *p = 0; }
 #define DXF_CPU_TILE_MIX(tile, data) ((tile)[0] + ((data)[0] = 0))
 int dxf_summary_wrapper(int n) { get_tile_size(0); return 1; }
 int dxf_summary_caller(int n) { return dxf_summary_wrapper(n); }
+int dxf_signed_stream(int *q, int n) {
+  maa_const(-1, 0);
+  maa_const(0, 1);
+  maa_const(1, 2);
+  maa_stream_load(q + 1, 0, 1, 2, 0, -1);
+  int member = swdb_dx_in_footprint(0, q);
+  wait_ready(0);
+#ifdef SWDB_SIGNED_STREAM_EXCLUDE
+  return !member;
+#else
+  return member;
+#endif
+}
+int dxf_local_storage(int n) {
+  maa_const(0, 0);
+  maa_const(1, 1);
+  maa_const(1, 2);
+#ifdef SWDB_LOCAL_STORAGE_PARAMETER
+  maa_stream_load(&n, 0, 1, 2, 0, -1);
+#elif defined(SWDB_LOCAL_STORAGE_SCALAR)
+  int local;
+  maa_stream_load(&local, 0, 1, 2, 0, -1);
+#else
+  int local[2] = {0, 0};
+  maa_stream_load(local, 0, 1, 2, 0, -1);
+#endif
+  return 1;
+}
 int dxf_store_exit(int *q, int *p, int n) {
   dxf_load(q, n, 0);
   wait_ready(0);
@@ -39,6 +67,9 @@ int dxf_store_exit(int *q, int *p, int n) {
   maa_indirect_store_vector(p, 0, 3, -1, 5);
 #ifdef SWDB_STORE_EXIT_WAIT
   wait_ready(3);
+#endif
+#ifdef SWDB_STORE_EXIT_BAD_POST
+  return 0;
 #endif
   return 1;
 }
