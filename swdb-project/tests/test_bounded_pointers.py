@@ -7,6 +7,7 @@ import pytest
 import test_cbmc_adapter as cbmc
 import test_cbmc_equivalence as equiv
 import test_proof_semantics as dx
+import test_wp_adapter as wp
 
 
 @pytest.fixture(scope="module")
@@ -72,6 +73,7 @@ def test_both_equivalence_sides_check_pointer_formation(pointer_equivalence_seed
 def tile_seed(tmp_path_factory):
     root = tmp_path_factory.mktemp("bounded-tile-pointers")
     units = dx.UNITS + """
+struct PointerFields { int first; int second; int third; };
 int dxf_tile_extent(int n) {
   int *tile = get_cacheable_tile_pointer(0);
 #ifdef TILE_INIT_ROWS
@@ -106,11 +108,29 @@ int dxf_pointer_modes(int *p, int *q, int n) {
   (void)((short *)p + 1);
 #elif defined(WP_POINTER_SUBOBJECT)
   int a[2][2] = {{0, 0}, {0, 0}}; int *row = a[0]; (void)(row + 3);
+#elif defined(WP_POINTER_MEMBER)
+  PointerFields fields = {0, 0, 0}; int *member = &fields.first; (void)(member + 2);
 #else
   (void)(&p[n + 1]);
 #endif
   return 1;
 }
+int pointer_global_flat[2] = {0, 0};
+int dxf_pointer_flat(int n) {
+#ifdef WP_POINTER_GLOBAL
+  int *p = pointer_global_flat;
+#else
+  int a[2] = {0, 0}; int *p = a;
+#endif
+#ifdef WP_POINTER_OUTSIDE
+  (void)(p + 3);
+#else
+  (void)(p + n);
+#endif
+  return 1;
+}
+int dxf_pointer_rebound(int *q, int n) { int a[2] = {0,0}; int *p=a; p=q; (void)(p+n); return 1; }
+int dxf_pointer_index(int *p, int n) { int ignored = p[0]; return 1; }
 int dxf_pointer_null(int *p, int n) { (void)(p + 0); return 1; }
 """
     fixtures = {**dx.FIXTURES, "tile_extent": ("dxf_tile_extent", [], "requires 0 <= n <= 2;", "\\nothing", 2),
@@ -118,6 +138,9 @@ int dxf_pointer_null(int *p, int n) { (void)(p + 0); return 1; }
                     "requires n == 2 && \\valid(p + (0 .. n - 1));", "\\nothing", 2),
                 "pointer_modes": ("dxf_pointer_modes", ["p", "q"],
                     "requires n == 2 && \\valid(p + (0 .. n - 1)) && \\valid(q + (0 .. n - 1));", "\\nothing", 2),
+                "pointer_flat": ("dxf_pointer_flat", [], "requires n == 2;", "\\nothing", 2),
+                "pointer_rebound": ("dxf_pointer_rebound", ["q"], "requires n == 2 && \\valid(q + (0 .. n - 1));", "\\nothing", 2),
+                "pointer_index": ("dxf_pointer_index", ["p"], "requires n == 2 && \\valid(p + (0 .. n - 1));", "\\nothing", 2),
                 "pointer_null": ("dxf_pointer_null", ["p"], "requires n == 0 && p == \\null;", "\\nothing", 0)}
     with pytest.MonkeyPatch.context() as patch:
         patch.setattr(dx, "UNITS", units)
@@ -160,6 +183,7 @@ def test_wp_tile_pointer_checks_its_own_row_extent(tile_seed, outside):
         assert any("rte_mem_access" in g["goal"] and g["status"] != "valid" for g in record["goals"]), record
 
 
+@pytest.mark.xfail(strict=True, reason="Pending explicit checked incoming array-object domain; old validity range alone is insufficient")
 @dx.needs_wp
 @pytest.mark.parametrize("outside", [True, False])
 def test_wp_discarded_pointer_formation_checks_bounds_and_allows_one_past(tile_seed, outside):
@@ -177,14 +201,15 @@ def test_wp_discarded_pointer_formation_checks_bounds_and_allows_one_past(tile_s
 
 
 @dx.needs_wp
-@pytest.mark.parametrize("define", ["WP_POINTER_INCREMENT", "WP_POINTER_COMPOUND", "WP_POINTER_DIFFERENCE", "WP_POINTER_CAST", "WP_POINTER_SUBOBJECT", None])
+@pytest.mark.parametrize("define", ["WP_POINTER_INCREMENT", "WP_POINTER_COMPOUND", "WP_POINTER_DIFFERENCE", "WP_POINTER_CAST", "WP_POINTER_SUBOBJECT", "WP_POINTER_MEMBER", None])
 def test_wp_pointer_mutation_subtraction_and_indexed_address_cannot_bypass_checks(tile_seed, define):
     from conftest import run_swdb
     seed = tile_seed
     extra = ["--define", define] if define else []
     result = run_swdb("prove", "--records", seed.records, "--candidate", seed.candidates["safe"],
         "--function", "dxf_pointer_modes", "--contract", "contract.fixture_dx_pointer_modes", "--adapter", "wp",
-        "--runs-dir", seed.runs, "--format", "json", *extra, timeout=3600)
+        "--runs-dir", seed.runs, "--format", "json", *extra, timeout=3600,
+        env=wp.fake("unknown") if define == "WP_POINTER_MEMBER" else None)
     assert result.returncode == 0, result.stderr + result.stdout
     record = seed.read(json.loads(result.stdout))
     assert record["verdict"] == "not_proven", record
@@ -192,7 +217,8 @@ def test_wp_pointer_mutation_subtraction_and_indexed_address_cannot_bypass_check
         assert record["failure_class"] == "unsupported_construct"
         assert record["settings"]["verifier_launched"] is False
     else:
-        assert any("swdb_pointer_formation" in g["goal"] and g["status"] != "valid" for g in record["goals"])
+        assert record["failure_class"] == "unsupported_construct"
+        assert record["settings"]["verifier_launched"] is False
 
 
 @dx.needs_wp
@@ -208,6 +234,7 @@ def test_cpp_null_plus_zero_is_preserved_without_c_null_arithmetic(tile_seed):
     assert record["settings"]["pointer_bounds"]["sites"][0]["normalized_expression"]
 
 
+@pytest.mark.xfail(strict=True, reason="Pending explicit checked source/endpoints array-object domain for C model")
 @dx.needs_wp
 def test_generated_copy_model_proves_checked_pointer_distance_and_return(tile_seed):
     from conftest import run_swdb
@@ -219,3 +246,54 @@ def test_generated_copy_model_proves_checked_pointer_distance_and_return(tile_se
     assert record["verdict"] == "proven", record
     assert len(record["settings"]["pointer_bounds"]["sites"]) == 2
     assert all(g["status"] == "valid" for g in record["goals"] if "swdb_model_pointer_formation" in g["goal"])
+
+
+@pytest.mark.parametrize("function", ["dxf_pointer_formation", "dxf_pointer_index"])
+def test_wp_opaque_incoming_array_origins_are_refused_before_verifier(tile_seed, function):
+    from conftest import run_swdb
+    contract = "pointer_formation" if function.endswith("formation") else "pointer_index"
+    result = run_swdb("prove", "--records", tile_seed.records, "--candidate", tile_seed.candidates["safe"],
+        "--function", function, "--contract", "contract.fixture_dx_" + contract, "--adapter", "wp",
+        "--runs-dir", tile_seed.runs, "--format", "json", timeout=3600, env=wp.fake("unknown"))
+    assert result.returncode == 0, result.stderr + result.stdout
+    record = tile_seed.read(json.loads(result.stdout))
+    assert record["verdict"] == "not_proven", record
+    assert record["failure_class"] == "unsupported_construct", record
+    assert record["settings"]["verifier_launched"] is False, record
+    assert "array-object origin" in record["settings"]["pointer_bounds"]["reason"], record
+
+
+@dx.needs_wp
+@pytest.mark.parametrize("global_origin", [False, True])
+def test_wp_concrete_flat_array_allows_legal_one_past(tile_seed, global_origin):
+    from conftest import run_swdb
+    extra = ["--define", "WP_POINTER_GLOBAL"] if global_origin else []
+    result = run_swdb("prove", "--records", tile_seed.records, "--candidate", tile_seed.candidates["safe"],
+        "--function", "dxf_pointer_flat", "--contract", "contract.fixture_dx_pointer_flat", "--adapter", "wp",
+        "--runs-dir", tile_seed.runs, "--format", "json", timeout=3600, *extra)
+    assert result.returncode == 0, result.stderr + result.stdout
+    record = tile_seed.read(json.loads(result.stdout))
+    assert record["verdict"] == "proven", record
+    assert record["settings"]["pointer_bounds"]["sites"][0]["origin"]["elements"] == 2
+
+
+def test_wp_rebound_alias_cannot_inherit_its_initializer_origin(tile_seed):
+    from conftest import run_swdb
+    result = run_swdb("prove", "--records", tile_seed.records, "--candidate", tile_seed.candidates["safe"],
+        "--function", "dxf_pointer_rebound", "--contract", "contract.fixture_dx_pointer_rebound", "--adapter", "wp",
+        "--runs-dir", tile_seed.runs, "--format", "json", timeout=3600, env=wp.fake("unknown"))
+    assert result.returncode == 0, result.stderr + result.stdout
+    record = tile_seed.read(json.loads(result.stdout))
+    assert record["failure_class"] == "unsupported_construct", record
+    assert record["settings"]["verifier_launched"] is False
+
+
+def test_generated_copy_model_opaque_origins_are_refused_before_verifier(tile_seed):
+    from conftest import run_swdb
+    result = run_swdb("prove", "--records", tile_seed.records, "--model", "std_copy_int", "--adapter", "wp",
+        "--runs-dir", tile_seed.runs, "--format", "json", timeout=3600, env=wp.fake("unknown"))
+    assert result.returncode == 0, result.stderr + result.stdout
+    record = tile_seed.read(json.loads(result.stdout))
+    assert record["failure_class"] == "unsupported_construct", record
+    assert record["settings"]["verifier_launched"] is False
+    assert "array-object origin" in record["settings"]["pointer_bounds"]["reason"]

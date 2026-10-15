@@ -315,20 +315,37 @@ justify erasing that question. The generated assertion is a proof obligation, ne
 
 Checked pointer formation (2026-10-15): lowerer9 records `pointer_bounds` in command output and
 anchor metadata across the complete emitted function closure. WP33's RTE checks alone omit discarded
-pointer addition. The WP view adds separately named assertions at the original statement's entry,
-checking the original pointer and result in the same object, including its one-past position. These
-assertions are obligations; a successful later goal cannot hide an unproved formation assertion.
+pointer addition. The WP view adds separately named assertions at the original statement's entry.
+They are checked obligations, never assumptions; every failed or missing obligation stops proof.
 
-C++17 permits null-pointer plus/minus zero. For supported side-effect-free expressions the lowering
-uses `offset == 0 ? base : original_expression`, preserving that result without executing C null
-arithmetic. Legal one-past formation remains supported. Mutating arithmetic, pointer subtraction,
-conditional or effectful placement, unchecked pointer casts, and known embedded/multidimensional
-array origins are refused until their evaluation or subobject extent has a precise policy. This is a
-conservative proof subset, not a general claim of C++ undefined-behavior freedom.
+Admission first certifies a typed array origin. The supported origins are concrete local/global
+one-dimensional primitive arrays, immutable aliases to them, the existing checked nonescaping
+terminal `new int[]` owner, and exact audited DX100 independent tile rows. Each semantic origin pins
+the entry, model contents and generated geometry and is revalidated before launch. Rebinding,
+address escapes and unknown calls invalidate pointer aliases. Embedded/multidimensional arrays,
+untracked pointer casts and opaque returned pointers are refused. Ordinary indexing is inventoried
+through the entire emitted callee closure too. Opaque incoming pointers need a separately implemented
+explicit array-object domain; concurrency-frame array lists and `valid` ranges do not supply it.
 
-Generated C model proofs independently inventory every defined function with Clang and check their
-actual C pointer operations, including representable pointer distance. They receive no blanket
-exemption from a content hash. The copy model handles empty/null ranges without C-only arithmetic
-and explicitly requires its nonnegative distance to fit `ptrdiff_t`; callers must prove that
-precondition. Before launch the setup check regenerates the complete model view or source assertions.
-The checker identity includes the pointer policy and proof-semantics generator bytes.
+C++17 permits null-pointer plus/minus zero. Supported side-effect-free expressions use
+`offset == 0 ? base : original_expression`, preserving that result without executing C null
+arithmetic. An otherwise unknown origin receives a checked null-only obligation. Invalid nonnull
+pointers receive no zero-offset exemption. Legal one-past formation of certified flat arrays remains
+supported. Mutating arithmetic, pointer subtraction and conditional/effectful placement are refused
+until their evaluation has a precise policy.
+
+Generated C model proofs independently inventory every defined function with Clang. They receive no
+blanket exemption from a content hash. Opaque model-parameter arithmetic/indexing is likewise refused
+until a checked model domain exists; this currently leaves the copy model's desired positive
+acceptance pending. Its C body handles empty/null ranges without C-only arithmetic and explicitly
+requires its nonnegative distance to fit `ptrdiff_t`. Before launch the setup check regenerates the
+complete model view or source assertions. The checker identity includes these policy/generator bytes.
+
+The arithmetic boundary follows [C++17 N4659, additive operators](https://www.ece.uvic.ca/~frodo/cppdraft/n4659/html/expr.add).
+[ACSL1.24's implementation manual for Frama-C33](https://frama-c.com/download/frama-c-acsl-implementation.pdf)
+distinguishes allocation-block validity from same-array provenance. Actual uncached WP33 controls
+confirm that `object_pointer` admits a target in an adjacent live subarray, while
+`pointer_comparable` reports an undefined builtin even for a genuine flat one-past pointer. A validity
+precondition on an imported summary can prove for a local/global two-dimensional row extending into
+the next row; struct-member controls instead fail. Therefore block-validity checks apply only after
+the conservative origin gate. These results do not establish general C++ undefined-behavior freedom.

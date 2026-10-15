@@ -339,6 +339,7 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
                 if generated != context["wp_expected_text"] or report != context["pointer_bounds_report"]:
                     _fail("pointer_bounds", "generated C model pointer checks changed after planning")
             else:
+                wp_pointer_bounds.check_semantic_origins(lowering, adapter.library, adapter.defines)
                 wp_pointer_bounds.check_input(lowering, context["pointer_bounds_base"], context["pointer_bounds_report"],
                     "\n".join(Path(path).read_text() for path, _expected in inputs))
         except (KeyError, standard_model_view.Refused, wp_pointer_bounds.Refused) as exc:

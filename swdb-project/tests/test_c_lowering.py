@@ -719,3 +719,25 @@ def test_a_caller_pointer_parameter_does_not_become_callee_owned_storage(tmp_pat
     effects = lower(source, "swdb_caller_storage", tmp_path / "out", "--summary",
                     "swdb_storage_use=fixture.storage")["cpu_effects"]
     assert not any(row["kind"] == "local_storage" for row in effects["writes"])
+
+
+@pytest.mark.parametrize("kind", ["local", "global", "rebound", "reference", "address_escape", "index", "callee"])
+def test_pointer_origin_inventory_preserves_only_concrete_flat_arrays(tmp_path, kind):
+    source = tmp_path / "origins.cc"
+    variants = {
+        "local": "int unit(int n){int a[2]={0,0};int*p=a;(void)(p+n);return 1;}",
+        "global": "int a[2]={0,0};int unit(int n){int*p=a;(void)(p+n);return 1;}",
+        "rebound": "int unit(int*q,int n){int a[2]={0,0};int*p=a;p=q;(void)(p+n);return 1;}",
+        "reference": "int unit(int*q,int n){int a[2]={0,0};int*p=a;int*&r=p;r=q;(void)(p+n);return 1;}",
+        "address_escape": "int unit(int*q,int n){int a[2]={0,0};int*p=a;int**r=&p;*r=q;(void)(p+n);return 1;}",
+        "index": "int unit(int*p){int ignored=p[0];return 1;}",
+        "callee": "int helper(int*p){int ignored=p[0];return 1;} int unit(){int a[2]={0,0};return helper(a);}",
+    }
+    source.write_text(variants[kind])
+    result = lower(source, "unit", tmp_path / "out")
+    sites = result["pointer_bounds"]["sites"]
+    refused = any(row["reason"] for row in sites)
+    assert refused is (kind not in {"local", "global"}), result
+    if not refused:
+        assert sites[0]["origin"] == {"kind": "one_dimensional_array", "name": "a", "element_type": "int", "elements": 2}
+    assert "_ast_id" not in json.dumps(result)
