@@ -1933,7 +1933,7 @@ Proof.
     + rewrite <- (t42_sw_involutive p j).
       apply t42_sw_order; [exact Hxj |]. intros [Hxp Hjsp]. subst x.
       rewrite Hjsp in HatX, Hk.
-      apply Hnos. apply sync_omp. eapply omp_sync_barrier; eauto. lia.
+      apply Hnos. apply sync_omp. eapply omp_sync_barrier; eauto; try lia.
     + split.
       * apply (proj2 (t42_at_swap_iff X p t1 e1 t2 e2 x t Barrier Hadj)). exact Hatb.
       * rewrite (t42_interval_swap X p t1 e1 t2 e2 x t Barrier Hadj Hdiff Hatb).
@@ -2198,6 +2198,486 @@ Proof.
     Hdevice_safe Hmodel Hfit. split.
   - eapply t42_model_run_swap; eauto.
   - eapply t42_all_fit_swap; eauto.
+Qed.
+
+(** 2026-10-15 ET: the repaired bracketing premise rules out foreign exits
+    inside a critical window, completing the window shape facts. *)
+Lemma t42_brackets_app (a b : list event) state :
+  brackets_ok (a ++ b) state = true ->
+  brackets_ok a state = true /\
+  brackets_ok b (in_crit a state) = true.
+Proof.
+  revert state. induction a as [|e a IH]; intro state; simpl.
+  - auto.
+  - destruct e; simpl; try apply IH.
+    + destruct state; simpl; [discriminate | apply IH].
+    + destruct state; simpl; [apply IH | discriminate].
+Qed.
+
+Lemma t42_proj_before_at (X : run) i t e :
+  at_ X i t e ->
+  exists post, proj X t = proj (firstn i X) t ++ e :: post.
+Proof.
+  intro Hat. destruct (t42_at_split X i t e Hat) as [a [b [-> Hlen]]].
+  subst i. rewrite firstn_app, firstn_all, Nat.sub_diag. simpl.
+  rewrite app_nil_r, t42_proj_app, t42_proj_cons_same.
+  exists (proj b t). reflexivity.
+Qed.
+
+Lemma t42_bracket_exit_inside (X : run) rf i t :
+  omp_ok X rf -> at_ X i t Exit -> inside X t i = true.
+Proof.
+  intros Homp Hat. destruct Homp as [_ [_ [_ [_ [_ Hbr]]]]].
+  destruct (t42_proj_before_at X i t Exit Hat) as [post Hproj].
+  specialize (Hbr t). rewrite Hproj in Hbr.
+  apply t42_brackets_app in Hbr. destruct Hbr as [_ Hbr].
+  change (inside X t i) with (in_crit (proj (firstn i X) t) false).
+  destruct (in_crit (proj (firstn i X) t) false); [reflexivity |].
+  discriminate.
+Qed.
+
+Lemma t42_window_no_other_exit (X : run) rf i x t u :
+  omp_ok X rf ->
+  at_ X i t Enter -> at_ X x t Exit -> i < x ->
+  (forall q, i < q < x -> ~ at_ X q t Enter /\ ~ at_ X q t Exit) ->
+  t <> u -> forall m, i < m < x -> ~ at_ X m u Exit.
+Proof.
+  intros Homp Henter Hexit Hix Hwindow Htu m Him Hat.
+  pose proof (t42_window_other_outside X rf i x t u m Homp Henter Hexit
+    Hix Hwindow Htu Him) as Houtside.
+  pose proof (t42_bracket_exit_inside X rf m u Homp Hat) as Hinside.
+  congruence.
+Qed.
+
+Lemma t42_owned_same_interval_disjoint (X : run) rf t u i j l :
+  obl_owned_disjoint -> model_run X rf -> all_fit X -> t <> u ->
+  interval X t i = interval X u j ->
+  owned X t i l -> owned X u j l -> False.
+Proof.
+  intros Hdis Hmodel Hfit Htu Heq [p [Hpi [Hp Hip]]]
+    [q [Hqj [Hq Hjq]]].
+  apply (Hdis X rf t u p q l Hmodel Hfit Htu Hp Hq).
+  congruence.
+Qed.
+
+Lemma t42_fits_owned_touch crit own e l :
+  fits_event ThreadOwned crit own e -> loc_of e = Some l -> own.
+Proof.
+  destruct e; simpl; intuition discriminate.
+Qed.
+
+Lemma t42_fits_locked_touch crit own e l :
+  fits_event LockProtected crit own e -> loc_of e = Some l -> crit.
+Proof.
+  destruct e; simpl; intuition discriminate.
+Qed.
+
+Lemma t42_fits_shared_touch crit own e l :
+  fits_event SharedActionsOnly crit own e -> loc_of e = Some l -> ~ crit.
+Proof.
+  destruct e; simpl; intuition discriminate.
+Qed.
+
+Lemma t42_fits_readonly_no_write crit own e l v :
+  fits_event ReadOnly crit own e -> written e <> Some (l, v).
+Proof.
+  destruct e; simpl; intuition discriminate.
+Qed.
+
+(** Two threads cannot conflict while one is inside and the other outside a
+    critical section in the same barrier interval. This is the memory part of
+    the window-clearing commutation argument. *)
+Lemma t42_cross_critical_no_conflict X rf i j t u e d :
+  obl_owned_disjoint -> model_run X rf -> all_fit X -> t < N -> u < N ->
+  t <> u -> at_ X i t e -> at_ X j u d ->
+  interval X t i = interval X u j ->
+  inside X t i = true -> inside X u j = false ->
+  ~ t42_events_conflict e d.
+Proof.
+  intros Hdis Hmodel Hfit Ht Hu Htu He Hd Hint Hinside Houtside
+    [l [Hel [Hdl Hwrite]]].
+  pose proof (Hfit t Ht i e l He Hel) as Hfe.
+  pose proof (Hfit u Hu j d l Hd Hdl) as Hfd.
+  rewrite <- Hint in Hfd.
+  destruct (cls (interval X t i) (array_of l)) eqn:Hclass.
+  - destruct Hwrite as [[v Hv] | [v Hv]].
+    + exact (t42_fits_readonly_no_write _ _ e l v Hfe Hv).
+    + exact (t42_fits_readonly_no_write _ _ d l v Hfd Hv).
+  - eapply t42_owned_same_interval_disjoint; eauto;
+      eapply t42_fits_owned_touch; eauto.
+  - pose proof (t42_fits_shared_touch _ _ e l Hfe Hel) as Hnot.
+    contradiction.
+  - pose proof (t42_fits_locked_touch _ _ d l Hfd Hdl) as Hopen.
+    congruence.
+Qed.
+
+Lemma t42_earlier_interval_hb X rf i j t u e d :
+  omp_ok X rf -> at_ X i t e -> at_ X j u d ->
+  interval X t i < interval X u j -> hb X i j.
+Proof.
+  intros Homp Hei Hdj Hlt.
+  destruct Homp as [_ [Hthreads [Hbar _]]].
+  destruct (Hbar j u d (interval X t i) t Hdj Hlt
+    (Hthreads i t e Hei)) as [b [Hbj [Hb Hbi]]].
+  assert (Hib : i <= b).
+  { destruct (Nat.le_gt_cases i b); [assumption |].
+    pose proof (t42_barrier_interval_lt X t b i ltac:(lia) Hb). lia. }
+  destruct (Nat.eq_dec i b) as [-> | Hne].
+  - apply t_step. apply sync_omp. eapply omp_sync_barrier; eauto; try lia.
+  - eapply t_trans with (y := b).
+    + apply t_step. apply sync_cpu. eapply cpu_po; eauto; try lia.
+    + apply t_step. apply sync_omp. eapply omp_sync_barrier; eauto; try lia.
+Qed.
+
+Lemma t42_inside_order_hb X rf i j t u e d :
+  omp_ok X rf -> at_ X i t e -> at_ X j u d -> i < j ->
+  e <> Exit -> inside X t i = true -> inside X u j = true -> hb X i j.
+Proof.
+  intros Homp Hei Hdj Hij Hnotexit Hini Hinj.
+  destruct (Nat.eq_dec t u) as [-> | Htu].
+  - apply t_step. apply sync_cpu. eapply cpu_po; eauto.
+  - destruct (t42_inside_true_witness X t i Hini) as [p [Hpi [Hp Hpex]]].
+    destruct (t42_inside_true_witness X u j Hinj) as [q [Hqj [Hq Hqex]]].
+    pose proof Homp as Hompc.
+    destruct Hompc as [_ [_ [_ [Hcritical _]]]].
+    assert (Hpq : p < q).
+    { destruct (Nat.lt_trichotomy p q) as [Hlt | [Heq | Hgt]]; [exact Hlt | |].
+      - subst q. destruct (t42_at_unique X p t Enter u Enter Hp Hq). contradiction.
+      - destruct (Hcritical q p u t Hgt Hq Hp ltac:(congruence))
+          as [r [[Hqr Hrp] Hr]].
+        exfalso. apply (Hqex r); [lia | exact Hr]. }
+    destruct (Hcritical p q t u Hpq Hp Hq Htu) as [r [[Hpr Hrq] Hr]].
+    assert (Hir : i < r).
+    { destruct (Nat.lt_ge_cases i r); [assumption |].
+      destruct (Nat.eq_dec i r) as [Heq | Hne].
+      - subst r. exfalso. apply Hnotexit.
+        exact (proj2 (t42_at_unique X i t e t Exit Hei Hr)).
+      - exfalso. apply (Hpex r); [lia | exact Hr]. }
+    eapply t_trans with (y := r).
+    + apply t_step. apply sync_cpu. eapply cpu_po; eauto.
+    + eapply t_trans with (y := q).
+      * apply t_step. apply sync_omp. eapply omp_sync_critical; eauto.
+      * apply t_step. apply sync_cpu. eapply cpu_po; eauto.
+Qed.
+
+(** Every preceding write to a nonracing read is ordered before it. *)
+Lemma t42_nonshared_prior_write_hb X rf i j u t d e l w :
+  obl_team_size -> obl_owned_disjoint -> model_run X rf -> all_fit X ->
+  at_ X i u d -> at_ X j t e -> i < j ->
+  written d = Some (l, w) -> loc_of e = Some l ->
+  cls (interval X t j) (array_of l) <> SharedActionsOnly -> hb X i j.
+Proof.
+  intros Hteam Hdis Hmodel Hfit Hdi Hej Hij Hw Hel Hnonshared.
+  pose proof Hmodel as [_ [_ [_ Homp]]].
+  pose proof (t42_threads_below_N Hteam X rf Homp i u d Hdi) as Hu.
+  pose proof (t42_threads_below_N Hteam X rf Homp j t e Hej) as Ht.
+  pose proof (t42_intervals_contiguous Hteam X rf Homp i j u t d e Hij Hdi Hej)
+    as Hinterval.
+  destruct (Nat.lt_ge_cases (interval X u i) (interval X t j)) as [Hlt | Hge].
+  - eapply t42_earlier_interval_hb; eauto.
+  - assert (Hint : interval X u i = interval X t j) by lia.
+    pose proof (t42_written_loc d l w Hw) as Hdl.
+    pose proof (Hfit u Hu i d l Hdi Hdl) as Hfd.
+    pose proof (Hfit t Ht j e l Hej Hel) as Hfe.
+    rewrite Hint in Hfd.
+    destruct (cls (interval X t j) (array_of l)) eqn:Hclass.
+    + exfalso. exact (t42_fits_readonly_no_write _ _ d l w Hfd Hw).
+    + destruct (Nat.eq_dec u t) as [-> | Hut].
+      * apply t_step. apply sync_cpu. eapply cpu_po; eauto.
+      * exfalso. eapply t42_owned_same_interval_disjoint; eauto;
+          eapply t42_fits_owned_touch; eauto.
+    + contradiction.
+    + eapply t42_inside_order_hb; eauto.
+      * intro Heq. subst d. discriminate.
+      * eapply t42_fits_locked_touch; eauto.
+      * eapply t42_fits_locked_touch; eauto.
+Qed.
+
+Lemma t42_nonshared_read_age X rf j t e l v :
+  obl_team_size -> obl_owned_disjoint -> model_run X rf -> all_fit X ->
+  at_ X j t e -> read_value e = Some (l, v) -> is_shared e = false ->
+  cls (interval X t j) (array_of l) <> SharedActionsOnly ->
+  forall i w, i < j -> writes X i l w -> not_older (rf j) i.
+Proof.
+  intros Hteam Hdis Hmodel Hfit He Hread Hnosh Hclass i w Hij Hwrite.
+  assert (Hseen : seen (hb X) X rf j l i).
+  { split; [exists w; exact Hwrite | left].
+    destruct Hwrite as [u [d [Hd Hw]]].
+    eapply t42_nonshared_prior_write_hb; eauto using t42_read_value_loc. }
+  destruct Hmodel as [_ [_ [Hdevice [Homp _]]]].
+  destruct e; simpl in Hread, Hnosh; try discriminate;
+    inversion Hread; subst.
+  - eapply Homp; eauto.
+  - eapply Homp; eauto.
+  - destruct (Hdevice j t c l v He) as [[_ Hage] _].
+    apply Hage. exact Hseen.
+Qed.
+
+Lemma t42_past_read_latest X rf j t e l v :
+  obl_team_size -> obl_owned_disjoint -> model_run X rf -> all_fit X ->
+  at_ X j t e -> read_value e = Some (l, v) -> is_shared e = false ->
+  cls (interval X t j) (array_of l) <> SharedActionsOnly ->
+  source_ok X l v (rf j) j -> latest X l j (rf j).
+Proof.
+  intros Hteam Hdis Hmodel Hfit He Hread Hnosh Hclass Hsource.
+  pose proof (t42_nonshared_read_age X rf j t e l v Hteam Hdis Hmodel Hfit
+    He Hread Hnosh Hclass) as Hage.
+  destruct (rf j) as [s |] eqn:Hrf; simpl in Hsource |- *.
+  - split; [exact (proj1 Hsource) |].
+    intros i w [Hsi Hij] Hw.
+    specialize (Hage i w Hij Hw). simpl in Hage. lia.
+  - intros i w Hij Hw. specialize (Hage i w Hij Hw).
+    exact Hage.
+Qed.
+
+(** Global/thread-local position correspondence for DX100 lifetime obligations. *)
+Definition t42_local_index (X : run) (t i : nat) : nat :=
+  length (proj (firstn i X) t).
+
+Lemma t42_proj_local_prefix X t i :
+  firstn (t42_local_index X t i) (proj X t) = proj (firstn i X) t.
+Proof.
+  pose proof (t42_proj_app (firstn i X) (skipn i X) t) as Hsplit.
+  rewrite firstn_skipn in Hsplit. rewrite Hsplit.
+  unfold t42_local_index. rewrite firstn_app, firstn_all, Nat.sub_diag.
+  simpl. apply app_nil_r.
+Qed.
+
+Lemma t42_local_index_step X t i :
+  t42_local_index X t i <= t42_local_index X t (S i).
+Proof.
+  destruct (nth_error X i) as [[u e] |] eqn:Hat.
+  - unfold t42_local_index. rewrite (t42_firstn_succ_some X i (u,e) Hat).
+    destruct (Nat.eq_dec u t) as [-> | Hne].
+    + rewrite t42_proj_snoc_same, length_app. simpl. lia.
+    + rewrite t42_proj_snoc_other by exact Hne. lia.
+  - unfold t42_local_index. rewrite t42_firstn_succ_none by exact Hat. lia.
+Qed.
+
+Lemma t42_local_index_mono X t i j :
+  i <= j -> t42_local_index X t i <= t42_local_index X t j.
+Proof.
+  intro Hij. induction Hij; [lia |].
+  pose proof (t42_local_index_step X t m). lia.
+Qed.
+
+Lemma t42_at_local_index X i t e :
+  at_ X i t e -> nth_error (proj X t) (t42_local_index X t i) = Some e.
+Proof.
+  intro Hat. destruct (t42_proj_before_at X i t e Hat) as [post Hproj].
+  rewrite Hproj. unfold t42_local_index.
+  rewrite nth_error_app2 by lia. rewrite Nat.sub_diag. reflexivity.
+Qed.
+
+Lemma t42_local_index_strict X i j t e d :
+  at_ X i t e -> at_ X j t d -> i < j ->
+  t42_local_index X t i < t42_local_index X t j.
+Proof.
+  intros Hei Hdj Hij.
+  pose proof (t42_local_index_mono X t (S i) j ltac:(lia)) as Hmono.
+  unfold t42_local_index in *. unfold at_ in Hei.
+  rewrite (t42_firstn_succ_some X i (t,e) Hei) in Hmono.
+  rewrite t42_proj_snoc_same, length_app in Hmono. simpl in Hmono. lia.
+Qed.
+
+Lemma t42_local_at_global X t q e :
+  nth_error (proj X t) q = Some e ->
+  exists i, at_ X i t e /\ t42_local_index X t i = q.
+Proof.
+  revert q. induction X as [|[u d] X IH]; intros q Hnth.
+  - unfold proj in Hnth. simpl in Hnth. destruct q; discriminate.
+  - destruct (Nat.eq_dec u t) as [-> | Hne].
+    + rewrite t42_proj_cons_same in Hnth.
+      destruct q as [|q].
+      * simpl in Hnth. inversion Hnth; subst d. exists 0. split; reflexivity.
+      * simpl in Hnth. destruct (IH q Hnth) as [i [Hei Hidx]].
+        exists (S i). split; [exact Hei |].
+        unfold t42_local_index in *. simpl firstn.
+        rewrite t42_proj_cons_same. simpl. now rewrite Hidx.
+    + assert (Hproj : proj ((u,d)::X) t = proj X t).
+      { unfold proj. simpl. destruct (Nat.eqb u t) eqn:Heq; [|reflexivity].
+        apply Nat.eqb_eq in Heq. contradiction. }
+      rewrite Hproj in Hnth.
+      destruct (IH q Hnth) as [i [Hei Hidx]].
+      exists (S i). split; [exact Hei |].
+      unfold t42_local_index in *. simpl firstn.
+      unfold proj at 1. simpl. destruct (Nat.eqb u t) eqn:Heq.
+      * apply Nat.eqb_eq in Heq. contradiction.
+      * exact Hidx.
+Qed.
+
+Lemma t42_covered_local_global X t i j c e d :
+  at_ X i t e -> at_ X j t d ->
+  covered_between (proj X t) c (t42_local_index X t i) (t42_local_index X t j) ->
+  exists m, i < m < j /\ at_ X m t (DeviceCovered c).
+Proof.
+  intros Hei Hdj [q [[Hiq Hqj] Hq]].
+  destruct (t42_local_at_global X t q (DeviceCovered c) Hq) as [m [Hm Hidx]].
+  exists m. split; [|exact Hm]. split.
+  - destruct (Nat.lt_ge_cases i m); [assumption |].
+    pose proof (t42_local_index_mono X t m i ltac:(lia)). lia.
+  - destruct (Nat.lt_ge_cases m j); [assumption |].
+    pose proof (t42_local_index_mono X t j m ltac:(lia)). lia.
+Qed.
+
+Lemma t42_device_future_no_sync X rf j t c l v s q e :
+  device_ok X rf -> at_ X j t (DeviceRead c l v) ->
+  rf j = Some s -> j < s -> ~ crosses_sync (proj X t) c ->
+  j < q <= s -> at_ X q t e ->
+  ~ (e = Barrier \/ (e = Exit /\ inside X t j = true)).
+Proof.
+  intros Hdevice Hj Hrf Hjs Hnocross Hjq Hq Hsync.
+  destruct (Hdevice j t c l v Hj) as [_ Hfuture].
+  destruct (Hfuture s Hrf Hjs) as [Hnocover _].
+  apply Hnocross.
+  exists (t42_local_index X t j), (t42_local_index X t q),
+    (DeviceRead c l v), e.
+  split; [now apply t42_at_local_index |].
+  split; [reflexivity |].
+  split; [eapply t42_local_index_strict; eauto; lia |].
+  split; [now apply t42_at_local_index |].
+  split.
+  - destruct Hsync as [-> | [-> Hin]]; [now left | right].
+    split; [reflexivity |]. rewrite t42_proj_local_prefix. exact Hin.
+  - intro Hcovered.
+    destruct (t42_covered_local_global X t j q c (DeviceRead c l v) e
+      Hj Hq Hcovered) as [m [[Hjm Hmq] Hm]].
+    apply (Hnocover m); [lia | exact Hm].
+Qed.
+
+Lemma t42_device_future_same_interval X rf j t c l v s u d :
+  obl_team_size -> omp_ok X rf -> device_ok X rf ->
+  at_ X j t (DeviceRead c l v) -> rf j = Some s -> j < s ->
+  at_ X s u d -> ~ crosses_sync (proj X t) c ->
+  interval X t j = interval X u s.
+Proof.
+  intros Hteam Homp Hdevice Hj Hrf Hjs Hs Hnocross.
+  pose proof (t42_intervals_contiguous Hteam X rf Homp j s t u
+    (DeviceRead c l v) d Hjs Hj Hs) as Hle.
+  destruct (Nat.eq_dec (interval X t j) (interval X u s)); [assumption |].
+  assert (Hlt : interval X t j < interval X u s) by lia.
+  pose proof Homp as [_ [Hthreads [Hbar _]]].
+  destruct (Hbar s u d (interval X t j) t Hs Hlt
+    (Hthreads j t (DeviceRead c l v) Hj)) as [q [Hqs [Hq Hinterval]]].
+  assert (Hjq : j < q).
+  { destruct (Nat.lt_ge_cases j q); [assumption |].
+    destruct (Nat.eq_dec j q) as [-> | Hne].
+    - destruct (t42_at_unique X q t (DeviceRead c l v) t Barrier Hj Hq)
+        as [_ Hbad]. discriminate.
+    - pose proof (t42_barrier_interval_lt X t q j ltac:(lia) Hq). lia. }
+  exfalso. exact (t42_device_future_no_sync X rf j t c l v s q Barrier
+    Hdevice Hj Hrf Hjs Hnocross ltac:(lia) Hq (or_introl eq_refl)).
+Qed.
+
+Lemma t42_foreign_inside_later_exit X rf i j t u e d :
+  omp_ok X rf -> at_ X i t e -> at_ X j u d -> i < j -> t <> u ->
+  e <> Exit -> inside X t i = true -> inside X u j = true ->
+  exists r, i < r < j /\ at_ X r t Exit.
+Proof.
+  intros Homp Hei Hdj Hij Htu Hnotexit Hini Hinj.
+  destruct (t42_inside_true_witness X t i Hini) as [p [Hpi [Hp Hpex]]].
+  destruct (t42_inside_true_witness X u j Hinj) as [q [Hqj [Hq Hqex]]].
+  destruct Homp as [_ [_ [_ [Hcritical _]]]].
+  assert (Hpq : p < q).
+  { destruct (Nat.lt_trichotomy p q) as [Hlt | [Heq | Hgt]]; [exact Hlt | |].
+    - subst q. destruct (t42_at_unique X p t Enter u Enter Hp Hq). contradiction.
+    - destruct (Hcritical q p u t Hgt Hq Hp ltac:(congruence))
+        as [r [[Hqr Hrp] Hr]].
+      exfalso. apply (Hqex r); [lia | exact Hr]. }
+  destruct (Hcritical p q t u Hpq Hp Hq Htu) as [r [[Hpr Hrq] Hr]].
+  exists r. split; [|exact Hr]. split; [|lia].
+  destruct (Nat.lt_ge_cases i r); [assumption |].
+  destruct (Nat.eq_dec i r) as [Heq | Hne].
+  - subst r. exfalso. apply Hnotexit.
+    exact (proj2 (t42_at_unique X i t e t Exit Hei Hr)).
+  - exfalso. apply (Hpex r); [lia | exact Hr].
+Qed.
+
+Lemma t42_device_noncross_past_source X rf j t c l v :
+  obl_team_size -> obl_owned_disjoint -> model_run X rf -> all_fit X ->
+  at_ X j t (DeviceRead c l v) ->
+  cls (interval X t j) (array_of l) <> SharedActionsOnly ->
+  ~ crosses_sync (proj X t) c -> source_ok X l v (rf j) j.
+Proof.
+  intros Hteam Hdis Hmodel Hfit Hj Hclass Hnocross.
+  pose proof Hmodel as [_ [_ [Hdevice Homp]]].
+  destruct (Hdevice j t c l v Hj) as [[Hsource _] Hfuture].
+  destruct (rf j) as [s |] eqn:Hrf; simpl in Hsource |- *; [|exact Hsource].
+  destruct Hsource as [Hslen Hw]. split; [|exact Hw].
+  destruct (Nat.lt_ge_cases s j); [assumption |].
+  exfalso. destruct (Nat.eq_dec s j) as [-> | Hne].
+  - destruct Hw as [u [d [Hd Hwd]]].
+    destruct (t42_at_unique X j t (DeviceRead c l v) u d Hj Hd) as [_ Heq].
+    subst d. discriminate.
+  - assert (Hjs : j < s) by lia.
+    destruct Hw as [u [d [Hd Hwd]]].
+    destruct (Hfuture s eq_refl Hjs) as [_ Hother].
+    assert (Htu : t <> u).
+    { intro Heq. subst u. apply Hother. now exists d. }
+    pose proof (t42_device_future_same_interval X rf j t c l v s u d
+      Hteam Homp Hdevice Hj Hrf Hjs Hd Hnocross) as Hint.
+    pose proof (t42_threads_below_N Hteam X rf Homp j t (DeviceRead c l v) Hj) as Ht.
+    pose proof (t42_threads_below_N Hteam X rf Homp s u d Hd) as Hu.
+    pose proof (Hfit t Ht j (DeviceRead c l v) l Hj eq_refl) as Hfe.
+    pose proof (t42_written_loc d l v Hwd) as Hdl.
+    pose proof (Hfit u Hu s d l Hd Hdl) as Hfd.
+    rewrite <- Hint in Hfd.
+    destruct (cls (interval X t j) (array_of l)) eqn:Hcls.
+    + exact (t42_fits_readonly_no_write _ _ d l v Hfd Hwd).
+    + exact (t42_owned_same_interval_disjoint X rf t u j s l Hdis Hmodel Hfit
+        Htu Hint (t42_fits_owned_touch _ _ (DeviceRead c l v) l Hfe eq_refl)
+        (t42_fits_owned_touch _ _ d l Hfd Hdl)).
+    + contradiction.
+    + pose proof (t42_fits_locked_touch _ _ (DeviceRead c l v) l Hfe eq_refl) as Hini.
+      pose proof (t42_fits_locked_touch _ _ d l Hfd Hdl) as Hins.
+      destruct (t42_foreign_inside_later_exit X rf j s t u (DeviceRead c l v) d
+        Homp Hj Hd Hjs Htu ltac:(discriminate) Hini Hins) as [q [Hjq Hq]].
+      exact (t42_device_future_no_sync X rf j t c l v s q Exit
+        Hdevice Hj Hrf Hjs Hnocross ltac:(lia) Hq (or_intror (conj eq_refl Hini))).
+Qed.
+
+Lemma t42_shared_read_latest X rf j t e l v :
+  memory_ok X rf -> at_ X j t e -> read_value e = Some (l,v) ->
+  is_shared e = true -> source_ok X l v (rf j) j /\ latest X l j (rf j).
+Proof.
+  intros [_ Hshared] He Hread Hissh.
+  destruct e; simpl in Hissh; try discriminate.
+  simpl in Hread. inversion Hread; subst.
+  eapply Hshared; eauto.
+Qed.
+
+Lemma t42_nonshared_past_source X rf j t e l v :
+  obl_team_size -> obl_owned_disjoint -> model_run X rf -> all_fit X ->
+  at_ X j t e -> read_value e = Some (l, v) -> is_shared e = false ->
+  cls (interval X t j) (array_of l) <> SharedActionsOnly ->
+  ~ (exists c, device_cmd e = Some c /\ crosses_sync (proj X t) c) ->
+  source_ok X l v (rf j) j.
+Proof.
+  intros Hteam Hdis Hmodel Hfit He Hread Hnosh Hclass Hcross.
+  pose proof Hmodel as [_ [[Hcpu _] _]].
+  destruct e; simpl in Hread, Hnosh; try discriminate;
+    inversion Hread; subst.
+  - exact (proj1 (Hcpu j t l v (or_introl He))).
+  - exact (proj1 (Hcpu j t l v (or_intror He))).
+  - eapply t42_device_noncross_past_source; eauto.
+    intro Hcr. apply Hcross. exists c. auto.
+Qed.
+
+(** A5: every nonracing, nonexempt read of the original run is already latest.
+    Serialization only has to preserve this property. *)
+Lemma t42_reads_latest X rf :
+  obl_team_size -> obl_owned_disjoint -> model_run X rf -> all_fit X ->
+  reads_latest X rf.
+Proof.
+  intros Hteam Hdis Hmodel Hfit j t e l v He Hread Hqual.
+  pose proof Hmodel as [_ [Hmemory _]].
+  destruct (is_shared e) eqn:Hshared.
+  - eapply t42_shared_read_latest; eauto.
+  - destruct Hqual as [Hbad | [Hclass Hcross]]; [congruence |].
+    assert (Hsource : source_ok X l v (rf j) j).
+    { eapply t42_nonshared_past_source; eauto. }
+    split; [exact Hsource |].
+    eapply t42_past_read_latest; eauto.
 Qed.
 
 (* END t42 lemmas *)
