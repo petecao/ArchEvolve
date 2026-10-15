@@ -4,7 +4,7 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 18:15 ET. **Implementation is active under the user's ongoing approval.**
+Updated: 2026-10-15 18:20 ET. **Implementation is active under the user's ongoing approval.**
 Integration `codex/probata-resume-20261015` is based on `yanrujhou_main` at `d94d629b`.
 Audited run23 documentation is published at `6dc94905`; reviewed method21 prototype
 is published at `14c2a298`. Only `swdb/c_lowering.py`
@@ -18,7 +18,7 @@ Drafts 1/2 remain immutable. No draft 3 or final production freeze exists.
 
 | Ticket / owner | Verified checkpoint | Active work |
 |---|---|---|
-| 07 / `ticket07` | Run 23 at `df19ff8a` finished unproven: 26 open (15 unit / 11 hint), 52.02 counted minutes, no final replay or wait-negative. Method21 passes 187 controls and independent review. | Fresh run 24 at `14c2a298` started 17:52:17 ET. Full baseline: 6.11 minutes, 254 ordinary goals / 103 timeouts, all 139 smoke checks pass. Fresh seeds finish at 8.64 minutes; independent pre-candidate prompt audit passes. Latest incumbent: 39 open / 221 ordinary goals. Search continues; final checks stay 30s. |
+| 07 / `ticket07` | Run 23 at `df19ff8a` finished unproven: 26 open (15 unit / 11 hint), 52.02 counted minutes, no final replay or wait-negative. Method21 passes 187 controls and independent review. | Fresh run 24 at `14c2a298` started 17:52:17 ET. Full baseline: 6.11 minutes, 254 ordinary goals / 103 timeouts, all 139 smoke checks pass. Fresh seeds finish at 8.64 minutes; independent pre-candidate prompt audit passes. Latest incumbent: 31 open / 237 ordinary goals. Search continues; final checks stay 30s. |
 | 24 / `ticket24` | Fresh finite native agreement accepted for 112,589 comparisons. Current float pair accepted; all five standard models prove. Original standard caller retains its pointer-origin timeout (46 ordinary Valid, 13 smoke Valid). | Separately named object-domain contract/profile reviewed and published at `6221dad7`, 11 controls pass. Its safe/seeded WP pair is queued; original gap record stays unchanged. Remaining seven construct groups and lifetime controls still require fresh actual acceptance. |
 | 27 / `ticket27` | Historical safe 11/11 at `71771f09`. Fresh bounded/native profile passes 35/35 at `0e7f2327`: 12 CBMC proofs + 12 refutations with replay. Current negative profile: 6/13 accepted. | Capacity repair at `b9a34bbb` runs on node 0 generation 575; node 1 generation 603 continues negatives at `0e7f2327`. Fresh safe 11-case profile remains queued. |
 | 36 / dependency-gated | 122 compiler/scripted controls pass; 13 actual-WP cases excluded. | Waits on 27; runtime fallback research remains prospective. |
@@ -38,7 +38,9 @@ Open: `typed_real_dxf_capacity_loop_invariant_4_preserved` and
 `typed_real_dxf_capacity_call_maa_stream_load_requires_memory_domain`.
 Actual setup/launch passed; no OOM/whole timeout or source mutation. Record SHA256
 `e358e61937fded3fd12f44b68f0e515580623a7d3c013e643b7ad58a4aa88bee`.
-Agent27 diagnoses the inductive domain obligation; no failed goal is filtered.
+The later reviewed repair passes WP32 (49 ordinary + 11 smoke Valid);
+new invariant establishment/preservation are Valid. Its code/contract/semantics/
+method/build/naming pins match the old failed record exactly. No failed goal is filtered.
 The33-command WP and CBMC cases were not reached.
 
 Node 0 generation 574 bounded/native completed 35/35, exit 0 at 18:06:10 ET.
@@ -88,7 +90,7 @@ Next: audit capacity acceptance, run the reviewed qualified standard caller pair
 without relabeling the original contract, complete the remaining original matrix,
 and finish negative/fresh-safe profiles. No full ticket
 or final method success is claimed from these checkpoints. This chat's30-minute
-heartbeat stays active; last full table 17:50 ET, next due 18:20 ET.
+heartbeat stays active; last full table 18:20 ET, next due 18:50 ET.
 Research-only notes remain `/private/tmp/probata-ticket25-resume-exploration.md`,
 `/private/tmp/probata-ticket25-lifetime-capabilities.md`,
 `/private/tmp/probata-ticket25-heap-bridge-tcb-addendum.md`,
