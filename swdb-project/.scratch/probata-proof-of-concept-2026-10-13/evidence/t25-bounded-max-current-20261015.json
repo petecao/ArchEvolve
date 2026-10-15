@@ -1,0 +1,69 @@
+{
+  "source": "2629bdfda826053bf708457dcf913ddef785ddd7",
+  "selection": [
+    "tests/test_std_models.py::test_a_unit_using_vector_members_and_pair_proves_and_its_c_and_cpp_agree_with_the_model_pinned"
+  ],
+  "outcome": "1 failed; prelaunch refusal, no verifier/native differential result",
+  "record": {
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-t25-bounded-max-20261015-1234-node0/pytest/test_a_unit_using_vector_membe0/records/proofs/proof.vector-safe.candidate-1.20261015t163654z.e30f1e21.yaml",
+    "sha256": "02d42aea25fa7d27d14546736a3762ad0aa1f2c547365669e956a777f683a9ae",
+    "verdict": "not_proven",
+    "failure_class": "unsupported_construct",
+    "reason": "noncanonical standard header in original TU: /usr/include/inttypes.h",
+    "verifier_launched": false,
+    "certificate_sha256": "ca902fa59db989f6d773b180c50885cdc04c2e32f1bd055e97aa402ee9a0b89c"
+  },
+  "audit": {
+    "records": 1,
+    "artifact_references_including_adapter_log": 2,
+    "declared_absolute_file_pin_references": 715,
+    "unique_absolute_pinned_files": 715,
+    "runtime_test_fixture_reader_schema_source_pins": 200,
+    "source_pin_set_sha256": "3d43def05a1e815fe7e36f8ad0a2f113b24ac114f76f59441d5609f2a4a26673",
+    "errors": [],
+    "certificate_self_hash_matches": true
+  },
+  "resources": {
+    "exit_code": 1,
+    "peak_rss_bytes": 439922688,
+    "out_of_memory": false,
+    "timed_out": false,
+    "wall_seconds": 132.17301673535258,
+    "cpu_seconds": 132.628718
+  },
+  "lane": {
+    "aligned_cell_age_s": "",
+    "aligned_to": "no_gapbs_batch_running",
+    "command": [
+      "timeout",
+      "2000",
+      "bash",
+      "/data/yanruj/EvolveSWDB_runs/probata-t25-bounded-max-20261015-1234-node0/run.sh"
+    ],
+    "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+    "ended_utc": "2026-10-15T16:37:01Z",
+    "exit_code": 1,
+    "host": "mbit10",
+    "job": "probata-t25-bounded-max-20261015",
+    "lease_generation": 562,
+    "lease_name": "mbit10-evaluation-node0",
+    "load1_at_start": 0.23,
+    "load1_max": 32,
+    "node": 0,
+    "numa_memory_policy": "bind:0",
+    "numactl": "--cpunodebind=0 --membind=0",
+    "preregistration_sha256": null,
+    "started_utc": "2026-10-15T16:34:48Z"
+  },
+  "source_after": {
+    "commit": "2629bdfda826053bf708457dcf913ddef785ddd7",
+    "tracked_changes": "",
+    "source_unchanged": true
+  },
+  "output_bytes_before_audit": 4542054,
+  "retention": "raw outputs remain remote while readers need them; compact hashes/metadata only transferred",
+  "diagnosis": "The basename/suffix shadow check includes libc++ support inttypes.h but baseline vector/utility/algorithm/new/cstdlib misses actual system inttypes.h; legitimate original GAPBS C-header refused. No bypass/falseproof.",
+  "created": "2026-10-15 ET",
+  "ticket_status": "claimed",
+  "scope": "one original maximum control; prelaunch refusal only; historical bounded/WP success unchanged"
+}

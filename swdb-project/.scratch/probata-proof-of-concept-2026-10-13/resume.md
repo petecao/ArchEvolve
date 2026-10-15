@@ -31,7 +31,7 @@ The earlier frozen `5c2a` failures stay recorded as 134/1 and 19/1; they are not
 |---|---|---|
 | 07 | Method19 launched at 12:21:38 ET from frozen `669df70f` after 137 postcomposition offline controls passed; fresh baseline active at launch | Keep its worktree immutable; audit counted search/final outcomes when complete; no proof claimed |
 | 24 | Qualified copy caller/model actual acceptance passed on Mac `0831b224` and Linux `d3a5dd48`; initializedness/capacity negatives retained | Design member-window class context admission |
-| 25 | Narrow owner safe/stale Linux acceptance passed; checked vector workflow historical evidence remains separate | Continue wider vector/pair acceptance; generic model gates remain closed |
+| 25 | Narrow owner safe/stale Linux acceptance passed; one current bounded maximum control at2629 refuses prelaunch on genuine system inttypes.h classification | Repair canonical header context before another bounded replay; historical pipeline/body evidence remains separate |
 | 27 | Entry-hint store safe/short-frame and nested assignment slices accepted at their frozen pins; a separate WP-qualified transitive one-case diagnostic is underway | Finish that diagnostic and remaining DX acceptance; ordinary CPU/device overlap belongs to 28 |
 | 36 | All 45 current scripted setup controls pass; actual Linux WP records exercise true invocation metadata and prelaunch refusals retain false; acceptance audit found no reproduced bypass | Keep claimed pending 27 and final method freeze; preserve historical real-fact/cache evidence pins |
 
