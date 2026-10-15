@@ -5,7 +5,7 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-re
 
 ## Current state (resume here)
 
-Updated: 2026-10-15 19:11 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
+Updated: 2026-10-15 19:19 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
 Integration: `codex/probata-resume-20261015`; audited run 23 is published at
 `6dc94905`; method21 prototype merged at `14c2a298`. Remote actual jobs retain
 exact `0e7f2327` and `bf7a404c` source freezes; production lowerer SHA256
@@ -19,11 +19,12 @@ remains `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
   The original source/contract is unchanged; a narrow no-op summary/caller witness
   policy is under investigation. No later groups ran. The original standard caller
   retains its pointer-formation timeout. Qualified writable-domain v2 is running at
-  `bf7a404c` on node 0 generation 578; first qualified profile `6221dad7` remains a
+  `bf7a404c` on node 0 generation 578: safe has 47 ordinary + 13 smoke
+  Valid and selects all five original model records normally; seed pending. First qualified profile `6221dad7` remains a
   pre-WP public-validation refusal. Finite native agreement stays accepted for
   112,589 defined comparisons. [Current launch](evidence/reviewed-t24-std-domain-v2-launch-bf7a404c-20261015.json).
 - **27:** Historical `71771f09` safe profile passes 11/11, with 792 ordinary +
-  252 smoke Valid. Current negative profile has eleven accepted hazard
+  252 smoke Valid. Current negative profile has twelve accepted hazard
   controls of 13, each preserving its exact failed hazard precondition and Doomed
   smoke checks. Current capacity32 stops on two memory-domain/invariant obligations
   (45/47 ordinary, 11/11 smoke Valid); 33 and CBMC capacity cases did not run.
@@ -38,7 +39,7 @@ remains `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
   requests reached candidate WP; 14 completed and 1 was deadline-censored.
   The interrupted provider turn has unknown complete usage; observed partial
   counters are retained separately. Actual Mac slot released;
-  final documentation is pending. The separate posthoc full-30-second diagnosis
+  reviewed closeout is published at `f79dfc7a`. The separate posthoc full-30-second diagnosis
   timed out after 710.42s without a complete report; no new verdict. Its temporary
   process-inspection quarantine was independently checked and released at 19:07 ET.
   Prospective method 22 changes the final-replay schedule and omits mechanical

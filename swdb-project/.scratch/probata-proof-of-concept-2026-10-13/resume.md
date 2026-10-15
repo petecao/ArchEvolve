@@ -4,7 +4,7 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 19:11 ET. **Implementation is active under the user's ongoing approval.**
+Updated: 2026-10-15 19:19 ET. **Implementation is active under the user's ongoing approval.**
 Integration `codex/probata-resume-20261015` is based on `yanrujhou_main` at `d94d629b`.
 Audited run23 documentation is published at `6dc94905`; reviewed method21 prototype
 is published at `14c2a298`. Only `swdb/c_lowering.py`
@@ -19,8 +19,8 @@ Drafts 1/2 remain immutable. No draft 3 or final production freeze exists.
 | Ticket / owner | Verified checkpoint | Active work |
 |---|---|---|
 | 07 / `ticket07` | Run 24 remains unproven: 29 open, 52.03 counted minutes, 5 mechanical / 36 Codex records. Posthoc full-30-second replay timed out after 710.42s without a complete report; no verdict upgrade. | Temporary cleanup quarantine independently checked and released at 19:07 ET. Method 22 adds zero seeds, paged VC inspection and complete provider accounting; 33/36-minute search/return limits leave 24 minutes for final checks. TDD/review, no fresh actual. |
-| 24 / `ticket24` | Current float pair, five std models, nine atomic models and atomic caller pair accepted. Remaining matrix stopped on a MAA summary with 3 ordinary Valid / 0 generated smoke goals; strict refusal preserved. Original std caller still unproven. | Node 0 generation 578 runs reviewed qualified std v2 at `bf7a404c`. Agent investigates a narrow no-op summary/caller nonvacuity witness without source/contract changes. Later original groups remain pending. |
-| 27 / `ticket27` | Current bounded/native 35/35 and repaired capacity 3/3 accepted. Current negative 11/13 independently audited; historical safe 11/11 remains `717` only. | Node 1 generation 603 continues outside-footprint and short-store-frame negatives at `0e7`. Fresh safe 11 queued as disjoint 5 + 6 shards; historical weights about 50 minutes each, excluding setup/runtime drift. |
+| 24 / `ticket24` | Current float pair, five std models, nine atomic models and atomic caller pair accepted. Remaining matrix stopped on a MAA summary with 3 ordinary Valid / 0 generated smoke goals; strict refusal preserved. Original std caller still unproven. | Node 0 generation 578 runs reviewed qualified std v2 at `bf7a404c`: safe has 47 ordinary + 13 smoke Valid; seed pending. Agent investigates a narrow no-op summary/caller nonvacuity witness without source/contract changes. Later original groups remain pending. |
+| 27 / `ticket27` | Current bounded/native 35/35 and repaired capacity 3/3 accepted. Current negative 12/13 independently audited; historical safe 11/11 remains `717` only. | Node 1 generation 603 continues the final short-store-frame negative at `0e7`. Fresh safe 11 queued as disjoint 5 + 6 shards; historical weights about 50 minutes each, excluding setup/runtime drift. |
 | 36 / dependency-gated | 122 compiler/scripted controls pass; 13 actual-WP cases excluded. | Waits on 27; runtime fallback research remains prospective. |
 
 At17:43:14 ET node0 generation572 released after the standard caller safe timeout;
@@ -100,7 +100,9 @@ pass; the full runtime dictionary equals the accepted `0e7` launch identity.
 This establishes source/runtime/admission, not ordinary model selection or proof success.
 
 Run 24 source remains frozen at `14c` in `/private/tmp/probata-resume-t07-method21`;
-raw `/private/tmp/probata-t07-20261015-run24`. Final evidence documentation is pending.
+raw `/private/tmp/probata-t07-20261015-run24`. Reviewed closeout merged at
+`f79dfc7a`: [counted run](evidence/t07-counted-24-20261015.json),
+[posthoc diagnosis](evidence/t07-run24-posthoc-full30-20261015.json).
 There were 63 guarded resource reports (62 exit 0, one normal search-deadline exit 137);
 no terminal resource or owned-process cleanup failure. Its first provider turn
 never returned `turn.completed`, so complete usage is unknown, not zero. Exact
@@ -138,7 +140,9 @@ no ordinary model eligibility/semantic result is claimed. V2 uses only allowed
 null/valid/current-or-predecessor clauses, a disclosed narrower writable-object
 domain;13controls now include actual public validation, and independent final
 review passes at `bf7a`. Fresh WP/model eligibility/same-base assertion are active
-on node 0; no result yet.
+on node 0. The safe case is independently accepted with 47 ordinary + 13 smoke
+Valid and 5 initialization goals; all original five model IDs are selected normally.
+The seeded partner remains pending.
 
 Node0 generation577 started the remaining original matrix at18:27 ET using
 the existing0e7 checkout. Groups: atomics,maa_summary,dxc_summary,templates,
@@ -159,7 +163,7 @@ negative/fresh-safe profiles. The prospective two-shard safe plan covers all11
 without overlap; historical weights project about50minutes each plus setup
 if two lanes are available. No fresh-safe success or ETA guarantee is claimed. No full ticket
 or final method success is claimed from these checkpoints. This chat's30-minute
-heartbeat stays active; last full table 18:49 ET, next due 19:19 ET.
+heartbeat stays active; last full table 19:19 ET, next due 19:49 ET.
 Research-only notes remain `/private/tmp/probata-ticket25-resume-exploration.md`,
 `/private/tmp/probata-ticket25-lifetime-capabilities.md`,
 `/private/tmp/probata-ticket25-heap-bridge-tcb-addendum.md`,
