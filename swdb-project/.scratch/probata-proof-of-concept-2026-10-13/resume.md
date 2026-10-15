@@ -4,48 +4,34 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 14:31 ET. **Paused at the user's request; closeout is complete.**
-The implementation, review fixes and handoff are on `yanrujhou_main` (published
-checkpoint `8bae60b9` plus this documentation receipt). No implementation,
-evaluation or provider worker remains. The old progress heartbeat is **PAUSED**.
+Updated: 2026-10-15 14:55 ET. **Implementation resumed at the user's request.**
+Integration branch: `codex/probata-resume-20261015`, based on clean synchronized
+`yanrujhou_main` at `d94d629b`. Existing historical evidence retains its exact pins.
 
-**32 resolved / 31 ready-for-agent / 0 claimed**, from all 63 ticket files. The five
-unfinished claims were released without closing unmet acceptance criteria. Ready
-frontier: **07, 24, 27**; 25 waits on 24 and 36 on 27. Other open tickets retain their
-dependencies. Drafts 1/2 remain immutable; draft 3 and final method freeze do not exist.
+**32 resolved / 28 ready-for-agent / 3 claimed**, derived from ticket frontmatter.
+Active owners: ticket07 `probata-resume-t07`; ticket24 `probata-resume-t24`;
+ticket27 `probata-resume-t27`. Each implementer uses an isolated local worktree.
+The coordinator owns merges, ticket graph updates, and both remote socket lanes.
+No evaluation job has been dispatched in this resumed effort yet.
 
-| Ticket | Accepted checkpoint | Remaining work |
-|---|---|---|
-|07|Method19 unproven: 27/237 open, 52.04 counted minutes; method20 unlaunched, 158 controls|Fresh reviewed/frozen counted run, all goals, final smoke and covering-wait negative|
-|24|Original class safe: 146 ordinary + 11 smoke; seeded negative open invariant; 72 condition controls|Full construct-group actual matrix, embedded template-array origins, conditional reads and lifetime criteria|
-|25|Bounded maximum, stale data/iterator and at pair audited; WP owner/pipeline conditional slices|Allocating member body proofs, explicit receiver domains, complete agreement; blocked by 24|
-|27|Qualified stall: 111 ordinary + 35 smoke at `9940b155`; separately pinned query/store/transitive evidence|Full current-policy positive/negative, values/register/range/footprint/capacity and agreement matrix|
-|36|Focused setup/source/verdict controls; known evidence boundaries retained|Independent RTE admission check before final freeze, remaining setup acceptance; blocked by 27|
+1. Review/freeze method20 independently before a fresh counted ticket07 run.
+2. Finish ticket24 original construct acceptance, preserving all validity,
+   initializedness, RTE, source-origin and smoke obligations.
+3. Finish ticket27 current-policy positive/negative agreement and capacity matrix.
 
-Two-axis review at `53471f7f` found one stale explanatory comment (fixed) and no new
-actionable runtime defect. The inherited reliance on method flags for `-wp-rte`
-is recorded under ticket 36 before freeze; current actual methods include that flag.
-Final scoped validation: **313 passed / 42 deselected**, 747.43 s, no timeout/OOM;
-review fix changes only a docstring and has identical executable AST. Historical
-actual records are never relabeled as proofs of the final integrated source.
+Ticket25 still waits on24; ticket36 still waits on27. No downstream dependency is
+waived. Drafts1/2 remain immutable; draft3 and final method freeze do not exist.
+Assumption: the prior user pause is lifted by this new implementation request.
+The old chat's heartbeat remains paused; this chat has its own30-minute heartbeat.
 
-Cleanup removed 30 remote branches, 53 local branches and 33 idle worktrees after
-verified recovery snapshots. Recovery tag `probata-source-recovery-20261015` and a complete
-local bundle retain historical tips and two dirty snapshots. Unrelated LANL and
-`.claude` worktrees and all raw evaluation outputs remain. The final receipt is
-[evidence/closeout-complete-20261015.json](evidence/closeout-complete-20261015.json).
+Last live remote connection:2026-10-15 14:52ET. Both socket leases and the legacy
+lease reported released; load0.14/0.41/0.32; /data1 had21GiB and /data95GiB free.
+Remote checkout was on `yanrujhou_main` at `680298a3`. A full process/memory/GPU/
+wrapper check remains mandatory immediately before dispatch. Raw output goes to
+`/data/yanruj/EvolveSWDB_runs/` to preserve /data1 headroom.
 
-Start a new session with [HANDOFF.md](HANDOFF.md), [map](map.md),
-[all-ticket status](ticket-status-20261015.md), and ticket acceptance text.
-[Review](evidence/closeout-code-review-20261015.md),
-[validation](evidence/closeout-validation-20261015.json), and the handoff preserve
-exact source pins, remaining blockers and source-restoration commands. Attach any
-resumed heartbeat to the new chat; leave this old chat paused.
-
-Last live mbit10 readback: 2026-10-15 14:25 ET; node 0 generation 568 / node 1 generation 600 / legacy 77
-released, no owned evaluation process, clean frozen `94769312`, origin main updated.
-No remote worktree or raw output was removed. This is a timestamped observation;
-recheck leases/processes/load/storage/wrapper before any new dispatch.
+Historical handoff and remaining acceptance:
+[HANDOFF.md](HANDOFF.md), [map.md](map.md), and individual ticket acceptance text.
 
 ## Historical integration snapshots
 
