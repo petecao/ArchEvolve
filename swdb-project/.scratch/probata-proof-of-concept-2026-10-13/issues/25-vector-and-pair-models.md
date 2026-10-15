@@ -256,3 +256,15 @@ added, and standalone incoming-field models keep their conservative refusal. Pub
 reproduced unsupported_construct before implementation; after the new relation it reaches the
 explicit missing CXXMemberCallExpr source-binding hook (owned by ticket36). No actual new at() WP
 acceptance is claimed by this staging checkpoint; shared hook and fresh combined replay follow.
+
+
+Qualified at handoff — 2026-10-15 ET: public standalone at refusal GREEN1/6.59s; no WP
+log is produced. Two public RED sessions each terminate cleanly with one failed test: initial
+unsupported call, then the known missing exact member-call source-span hook. Four admission/fault
+controls plus two actual safe/out-of-range controls are now written. The other three admission
+controls and both actual WP controls remain pending combined ticket36 hook; no new at proof is
+claimed. The negative original scalar contract ignores the chosen value, so the at(2) range guard
+must fail for n=1 independently of a functional postcondition. A freshly pinned renderer deleting
+only that checked guard must refuse via the independent generated-C access checker. Source/native
+abort, original contracts and standalone opaque model admission remain unchanged. No heldout or
+remote job started for this slice. Evidence:[t25-qualified-owner-at-staging-20261015.json](../evidence/t25-qualified-owner-at-staging-20261015.json).
