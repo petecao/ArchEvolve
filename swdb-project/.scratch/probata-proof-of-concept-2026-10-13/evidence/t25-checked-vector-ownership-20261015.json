@@ -1,0 +1,630 @@
+{
+  "created": "2026-10-15 ET",
+  "source_commit": "2662f3fcd71112d496057ac6d8ed5ad45f295e9f",
+  "evidence_kind": "contract_fixture",
+  "scope": "Nine focused ownership controls as union of two runs; no single completed nine-test run and no general ticket25 completion. Original source frame is checked structurally; WP proves separate private-view frame and functional/liveness goals.",
+  "coverage": [
+    {
+      "path": "/private/tmp/probata-vector-owner-public-green2.jsonl",
+      "sha256": "de0d18703a35afa98b096ad66e0561c195211b5e62df0b22c8cacd7244a7beb4",
+      "session_finished": false,
+      "exitstatus": null,
+      "passed_calls": [
+        "tests/test_vector_ownership_wp.py::test_a_local_vector_grows_and_preserves_a_value_read_before_invalidation",
+        "tests/test_vector_ownership_wp.py::test_a_retained_data_pointer_fails_a_checked_liveness_obligation_after_growth",
+        "tests/test_vector_ownership_wp.py::test_untracked_vector_observations_and_protocols_refuse_before_verification[clear_alias]",
+        "tests/test_vector_ownership_wp.py::test_untracked_vector_observations_and_protocols_refuse_before_verification[copied_alias]",
+        "tests/test_vector_ownership_wp.py::test_untracked_vector_observations_and_protocols_refuse_before_verification[local_address]"
+      ]
+    },
+    {
+      "path": "/private/tmp/probata-vector-owner-refusals-finish.jsonl",
+      "sha256": "7c99b31a1ad5548fb922e583f9104499c325621bfc49b0848fa48ffa87c498e5",
+      "session_finished": true,
+      "exitstatus": 0,
+      "passed_calls": [
+        "tests/test_vector_ownership_wp.py::test_untracked_vector_observations_and_protocols_refuse_before_verification[pointer_cast]",
+        "tests/test_vector_ownership_wp.py::test_untracked_vector_observations_and_protocols_refuse_before_verification[pointer_comparison]",
+        "tests/test_vector_ownership_wp.py::test_untracked_vector_observations_and_protocols_refuse_before_verification[second_append]",
+        "tests/test_vector_ownership_wp.py::test_untracked_vector_observations_and_protocols_refuse_before_verification[write_alias]"
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "path": "/private/tmp/probata-vector-owner-public-green2/wp-vector-ownership0/records/proofs/proof.contract.fixture_vector_owner_clear_alias.20261015t095031z.41b972bb.yaml",
+      "sha256": "5a5b3a8bd873f1f3b2570e2b167bdb692c7ac2f6f444b3d7db658e40efe0e541",
+      "id": "proof.contract.fixture_vector_owner_clear_alias.20261015t095031z.41b972bb",
+      "case": "contract.fixture_vector_owner_clear_alias",
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "evidence_kind": "contract_fixture",
+      "pins": {
+        "std_models": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        }
+      },
+      "unproven_properties": [],
+      "reports": [
+        {
+          "name": "handler",
+          "path": "/private/tmp/probata-vector-owner-public-green2/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_clear_alias.20261015t095031z.41b972bb/wp/handler.json",
+          "sha256": "5bcc78dfdc9ff7d9900f511993bc4ade1549c4c5075d8aac9a9a76016f32063f"
+        }
+      ],
+      "view_evidence": null
+    },
+    {
+      "path": "/private/tmp/probata-vector-owner-public-green2/wp-vector-ownership0/records/proofs/proof.contract.fixture_vector_owner_copied_alias.20261015t095111z.3f2e5f10.yaml",
+      "sha256": "31250dde917db98e245863a2200bcd8bd23676453061bc88420a2afcafa1bd57",
+      "id": "proof.contract.fixture_vector_owner_copied_alias.20261015t095111z.3f2e5f10",
+      "case": "contract.fixture_vector_owner_copied_alias",
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "evidence_kind": "contract_fixture",
+      "pins": {
+        "std_models": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        }
+      },
+      "unproven_properties": [],
+      "reports": [
+        {
+          "name": "handler",
+          "path": "/private/tmp/probata-vector-owner-public-green2/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_copied_alias.20261015t095111z.3f2e5f10/wp/handler.json",
+          "sha256": "5bcc78dfdc9ff7d9900f511993bc4ade1549c4c5075d8aac9a9a76016f32063f"
+        }
+      ],
+      "view_evidence": null
+    },
+    {
+      "path": "/private/tmp/probata-vector-owner-public-green2/wp-vector-ownership0/records/proofs/proof.contract.fixture_vector_owner_local_address.20261015t095321z.55212ba8.yaml",
+      "sha256": "a4343391447d84a3fd70db7e38b3632154f5798e8611482769e676d98060e3ff",
+      "id": "proof.contract.fixture_vector_owner_local_address.20261015t095321z.55212ba8",
+      "case": "contract.fixture_vector_owner_local_address",
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "evidence_kind": "contract_fixture",
+      "pins": {
+        "std_models": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        }
+      },
+      "unproven_properties": [],
+      "reports": [
+        {
+          "name": "handler",
+          "path": "/private/tmp/probata-vector-owner-public-green2/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_local_address.20261015t095321z.55212ba8/wp/handler.json",
+          "sha256": "e0880359594459e215361260632be265ca53ce1ffb6c70be99d6679817a907a4"
+        }
+      ],
+      "view_evidence": null
+    },
+    {
+      "path": "/private/tmp/probata-vector-owner-public-green2/wp-vector-ownership0/records/proofs/proof.contract.fixture_vector_owner_safe.20261015t094256z.d09f8b73.yaml",
+      "sha256": "0d9b5c05085eea4990e4acd03c4c8d0eb1c2a1414ffc6ac429f8f64c224f1a06",
+      "id": "proof.contract.fixture_vector_owner_safe.20261015t094256z.d09f8b73",
+      "case": "contract.fixture_vector_owner_safe",
+      "verdict": "proven",
+      "failure_class": null,
+      "evidence_kind": "contract_fixture",
+      "pins": {
+        "c_lowering": {
+          "id": "swdb_vector_owner_safe.c",
+          "sha256": "40f1284e5bdc91148b7373d6a4d23df19af198744d5089412bdfc881300d629b"
+        },
+        "std_models": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        },
+        "vector_ownership_check": {
+          "id": "vector-ownership-check-1",
+          "sha256": "00068a9867f7339b471ddd013776b4fccd0da64d08d8e3003c2870277a9ed258"
+        },
+        "vector_ownership_certificate": {
+          "id": "swdb_vector_owner_safe.vector-private-frame",
+          "sha256": "5c559924331e5c37795fe46b60a9409aef1663a57c7ed9add41539c0ba28fefb"
+        },
+        "vector_ownership_allocator": {
+          "id": "vector-owner-private-allocator-1",
+          "sha256": "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
+        }
+      },
+      "unproven_properties": [],
+      "reports": [
+        {
+          "name": "c_lowering",
+          "path": "/private/tmp/probata-vector-owner-public-green2/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_safe.20261015t094256z.d09f8b73/wp/swdb_vector_owner_safe.c",
+          "sha256": "40f1284e5bdc91148b7373d6a4d23df19af198744d5089412bdfc881300d629b"
+        },
+        {
+          "name": "anchors",
+          "path": "/private/tmp/probata-vector-owner-public-green2/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_safe.20261015t094256z.d09f8b73/wp/swdb_vector_owner_safe.anchors.json",
+          "sha256": "1d86de4f4f573b5841c7f8f2a22dbdf293e5a85021e4fb92a60da223cc22830c"
+        },
+        {
+          "name": "vector_ownership_view",
+          "path": "/private/tmp/probata-vector-owner-public-green2/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_safe.20261015t094256z.d09f8b73/wp/vector_ownership_view.c",
+          "sha256": "25c720405a1dce7efb24979c661c76df3dc665b4847f920da135f1d918aecf39"
+        },
+        {
+          "name": "vector_ownership_contracts",
+          "path": "/private/tmp/probata-vector-owner-public-green2/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_safe.20261015t094256z.d09f8b73/wp/vector_ownership_contracts.json",
+          "sha256": "1beb17b72faac16cf561140a9f8d0c761667173e8794ddf8e58ca10a5f45cca3"
+        },
+        {
+          "name": "wp_input",
+          "path": "/private/tmp/probata-vector-owner-public-green2/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_safe.20261015t094256z.d09f8b73/wp/wp_input.c",
+          "sha256": "7e3c70943ef66bd79796a597e2667a953c8fe04a9486a78e133640aaf9cfb270"
+        },
+        {
+          "name": "wp_log",
+          "path": "/private/tmp/probata-vector-owner-public-green2/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_safe.20261015t094256z.d09f8b73/wp/frama-c.log",
+          "sha256": "ed879076fbd17ddfabcf1f4d5e29781e783498c2abef75892bd3bd8e5dab6215"
+        },
+        {
+          "name": "wp_goals",
+          "path": "/private/tmp/probata-vector-owner-public-green2/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_safe.20261015t094256z.d09f8b73/wp/wp-goals.json",
+          "sha256": "f2302d89adef041c17fca145f422342a40ddcc7b848296f9995f9b347d6f567f"
+        },
+        {
+          "name": "wp_properties",
+          "path": "/private/tmp/probata-vector-owner-public-green2/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_safe.20261015t094256z.d09f8b73/wp/wp-properties.csv",
+          "sha256": "b92394736555901542b67a15dd5b9110adcc929a1ed7aa387f95e899058e39af"
+        },
+        {
+          "name": "wp_inventory",
+          "path": "/private/tmp/probata-vector-owner-public-green2/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_safe.20261015t094256z.d09f8b73/wp/wp-inventory.json",
+          "sha256": "59441e382b582ad60bef9846cf4fb6956efc858ee2633bf179eac009c077ef0c"
+        },
+        {
+          "name": "wp_normalized",
+          "path": "/private/tmp/probata-vector-owner-public-green2/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_safe.20261015t094256z.d09f8b73/wp/wp-normalized.c",
+          "sha256": "6b90cf39bb746532a17766176d2b69c4965d59ed02f9064866fe0dccccec79b3"
+        }
+      ],
+      "view_evidence": {
+        "certificate": {
+          "id": "vector-private-frame-projection-1",
+          "source_sha256": "5dc04e7f8cbe6936ebb04b002e8cf502d03c1ecd2a021f8f8e78f939c51b8af8",
+          "original_c_sha256": "40f1284e5bdc91148b7373d6a4d23df19af198744d5089412bdfc881300d629b",
+          "original_contract_sha256": "3f4cf6c3a8f46d22672dc7fc5715b70e24bfda3f4dcf7b6e470831e96b8d730b",
+          "view_contract_sha256": "4c5b13f2d174531c54a2e7b4a0a46541086860b606206659b4521db6c339f0a0",
+          "view_sha256": "25c720405a1dce7efb24979c661c76df3dc665b4847f920da135f1d918aecf39",
+          "protocol": {
+            "parameter": "n",
+            "fill": 7,
+            "pushed": 9,
+            "old": true,
+            "return": "((swdb_owner_old + swdb_owner_v.data[(size_t)(0)]) + swdb_owner_v.data[(size_t)(n)])",
+            "checks": [
+              "/*@ assert owner_index: 0 <= 0 < swdb_owner_v.size; */",
+              "/*@ assert owner_index: 0 <= n < swdb_owner_v.size; */"
+            ],
+            "source_names": [
+              "n",
+              "v",
+              "p",
+              "old_value"
+            ],
+            "source_statements": 5
+          },
+          "source_frame": "assigns \\nothing;",
+          "view_frame": "assigns SWDB_OWNER_PRIVATE0(n,&n)[0..n-1], SWDB_OWNER_PRIVATE1(2*(integer)n,&n)[0..2*(integer)n-1];",
+          "source_frame_preservation": "checked structurally from fresh owned writes and no escape",
+          "wp_frame_scope": "private view only; structural projection is not a WP goal",
+          "allocation_sites": [
+            {
+              "name": "SWDB_OWNER_PRIVATE0",
+              "executions": 1
+            },
+            {
+              "name": "SWDB_OWNER_PRIVATE1",
+              "executions": 1
+            }
+          ],
+          "alias_rule": "capture live; growth invalidates; every retained alias read asserts live",
+          "model_bodies": [
+            {
+              "id": "std_vector_int_ctor_count_value",
+              "sha256": "3cd8afffdc132e49f623b56149a1621603ea1314c030515f0320fd5b912b000c"
+            },
+            {
+              "id": "std_vector_int_data",
+              "sha256": "125bba06912a277c744a4088f7d947335c161fc981c715fc540ec21ba9ef4b6a"
+            },
+            {
+              "id": "std_vector_int_dtor",
+              "sha256": "7779eb945593c441b99b36115d35a24a8347bee1fb9d91db1db14879458ef38a"
+            },
+            {
+              "id": "std_vector_int_grow",
+              "sha256": "83952d2951e4f1be130b9f458e5a8ebbcc4a8f613c0a1013510248a2ec751317"
+            },
+            {
+              "id": "std_vector_int_operator_index",
+              "sha256": "bf76d7c19a54b6e64ddae1a8c6f4819dea513961b15964a8dfd5788bfcda036a"
+            },
+            {
+              "id": "std_vector_int_push_back",
+              "sha256": "170325c43350afd10c6dc8a48fcfa87f99b239f3598f1847d2d83422dd110d8a"
+            },
+            {
+              "id": "std_vector_int_recommend",
+              "sha256": "cd1e4a22f90ecf23948b35a09b4eef92f2824b4347721f8a67724e4d93b1c1ef"
+            },
+            {
+              "id": "swdb_alloc_int",
+              "sha256": "eb1f5833017762a8d83cc477b6d35e604be6906ebe70b7c0ba56abf032fa03b0"
+            },
+            {
+              "id": "swdb_free",
+              "sha256": "e301a232920b9439f2db75cccc278276c1e74ba760cbd9ca2ae7958210b401d4"
+            }
+          ]
+        },
+        "wp_view_sha256": "25c720405a1dce7efb24979c661c76df3dc665b4847f920da135f1d918aecf39",
+        "source_frame": "assigns \\nothing;",
+        "source_frame_preservation": "checked",
+        "frame_evidence": "structural relational lowering; not a WP goal",
+        "original_contract_sha256": "3f4cf6c3a8f46d22672dc7fc5715b70e24bfda3f4dcf7b6e470831e96b8d730b",
+        "view_contract_sha256": "4c5b13f2d174531c54a2e7b4a0a46541086860b606206659b4521db6c339f0a0"
+      }
+    },
+    {
+      "path": "/private/tmp/probata-vector-owner-public-green2/wp-vector-ownership0/records/proofs/proof.contract.fixture_vector_owner_stale.20261015t094525z.9254358c.yaml",
+      "sha256": "5b42f588e48d5db9ff49f93614a25e4023abc12e164f794718b48d8a028a4c29",
+      "id": "proof.contract.fixture_vector_owner_stale.20261015t094525z.9254358c",
+      "case": "contract.fixture_vector_owner_stale",
+      "verdict": "not_proven",
+      "failure_class": "timeout",
+      "evidence_kind": "contract_fixture",
+      "pins": {
+        "c_lowering": {
+          "id": "swdb_vector_owner_stale.c",
+          "sha256": "c429b8fd89ad2e9a1ce7ca5ec3a6d09843a70aee7f7f0a1ab84bf9adff8e118b"
+        },
+        "std_models": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        },
+        "vector_ownership_check": {
+          "id": "vector-ownership-check-1",
+          "sha256": "00068a9867f7339b471ddd013776b4fccd0da64d08d8e3003c2870277a9ed258"
+        },
+        "vector_ownership_certificate": {
+          "id": "swdb_vector_owner_stale.vector-private-frame",
+          "sha256": "2e680e2052415cdaecde433a0aa1c6d947a2da5398c6d265152bf2fefefa2fa3"
+        },
+        "vector_ownership_allocator": {
+          "id": "vector-owner-private-allocator-1",
+          "sha256": "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
+        }
+      },
+      "unproven_properties": [
+        {
+          "property": "assigns *(SWDB_OWNER_PRIVATE0(n, &n) + (0 .. n - 1)), *(SWDB_OWNER_PRIVATE1(2 * n, &n) + (0 .. 2 * n - 1));",
+          "kind": "assigns clause",
+          "function": "swdb_vector_owner_stale",
+          "line": 30,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_vector_owner_stale_assert_alias_live_after",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\result \u2261 7",
+          "kind": "postcondition",
+          "function": "swdb_vector_owner_stale",
+          "line": 30,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_vector_owner_stale_assert_alias_live_after",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "swdb_owner_alias_live \u2261 1",
+          "kind": "user assertion",
+          "function": "swdb_vector_owner_stale",
+          "line": 73,
+          "status": "Unknown",
+          "goal": "typed_real_swdb_vector_owner_stale_assert_alias_live_after",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&swdb_owner_alias)",
+          "kind": "initialization",
+          "function": "swdb_vector_owner_stale",
+          "line": 74,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_vector_owner_stale_assert_alias_live_after",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(swdb_owner_alias)",
+          "kind": "initialization",
+          "function": "swdb_vector_owner_stale",
+          "line": 74,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_vector_owner_stale_assert_alias_live_after",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\valid_read(swdb_owner_alias)",
+          "kind": "mem_access",
+          "function": "swdb_vector_owner_stale",
+          "line": 74,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_vector_owner_stale_assert_alias_live_after",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "swdb_vector_owner_stale_assert_alias_live_after",
+          "goal": "typed_real_swdb_vector_owner_stale_assert_alias_live_after",
+          "status": "timeout",
+          "failure_class": "timeout"
+        }
+      ],
+      "reports": [
+        {
+          "name": "c_lowering",
+          "path": "/private/tmp/probata-vector-owner-public-green2/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_stale.20261015t094525z.9254358c/wp/swdb_vector_owner_stale.c",
+          "sha256": "c429b8fd89ad2e9a1ce7ca5ec3a6d09843a70aee7f7f0a1ab84bf9adff8e118b"
+        },
+        {
+          "name": "anchors",
+          "path": "/private/tmp/probata-vector-owner-public-green2/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_stale.20261015t094525z.9254358c/wp/swdb_vector_owner_stale.anchors.json",
+          "sha256": "4b69197cbea95bdfeaf5ac3f9ae114c17c255d2edb2af4c59977384543c34c5b"
+        },
+        {
+          "name": "vector_ownership_view",
+          "path": "/private/tmp/probata-vector-owner-public-green2/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_stale.20261015t094525z.9254358c/wp/vector_ownership_view.c",
+          "sha256": "8bab4f9fbb85b22c1c627f2cc66d2be7a31b1e5ae12326435e2d9639bb833e09"
+        },
+        {
+          "name": "vector_ownership_contracts",
+          "path": "/private/tmp/probata-vector-owner-public-green2/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_stale.20261015t094525z.9254358c/wp/vector_ownership_contracts.json",
+          "sha256": "5d9e8c69d9a9e67abc0c35ddbb957f5cf82645b2cba69a83b1d56fc669b4b017"
+        },
+        {
+          "name": "wp_input",
+          "path": "/private/tmp/probata-vector-owner-public-green2/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_stale.20261015t094525z.9254358c/wp/wp_input.c",
+          "sha256": "fd3fef0aaf4a7d114d45f5f666d94f5e6ee85c5cf858986d22c1ddd4562b22f2"
+        },
+        {
+          "name": "wp_log",
+          "path": "/private/tmp/probata-vector-owner-public-green2/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_stale.20261015t094525z.9254358c/wp/frama-c.log",
+          "sha256": "161ce52842c480e6edc249127033a08860537d4a3987583cff823bbf3561b34a"
+        },
+        {
+          "name": "wp_goals",
+          "path": "/private/tmp/probata-vector-owner-public-green2/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_stale.20261015t094525z.9254358c/wp/wp-goals.json",
+          "sha256": "29989457df19cb357240b767886b049ce4ee63015cdf474056af90db0e4f41e8"
+        },
+        {
+          "name": "wp_properties",
+          "path": "/private/tmp/probata-vector-owner-public-green2/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_stale.20261015t094525z.9254358c/wp/wp-properties.csv",
+          "sha256": "4695bee906ad609f04bc5e63d5f2daf9a51008cb3a29ef2a39499089e54c3d19"
+        },
+        {
+          "name": "wp_inventory",
+          "path": "/private/tmp/probata-vector-owner-public-green2/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_stale.20261015t094525z.9254358c/wp/wp-inventory.json",
+          "sha256": "508a73a4524c4f3474dfd8dbd6e4dc46ac3ef9e5dcbdd2e2f50a3e3415bcfec2"
+        },
+        {
+          "name": "wp_normalized",
+          "path": "/private/tmp/probata-vector-owner-public-green2/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_stale.20261015t094525z.9254358c/wp/wp-normalized.c",
+          "sha256": "b0b02e06d523635656ff1866fe2f6ec1fd3db8f269e99c1f2293493a3117f7aa"
+        },
+        {
+          "name": "handler",
+          "path": "/private/tmp/probata-vector-owner-public-green2/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_stale.20261015t094525z.9254358c/wp/handler.json",
+          "sha256": "37f898f7d9fb2aea78eb70d88c8bd727a4ae761c73a9f983521d9039ab201c1d"
+        }
+      ],
+      "view_evidence": {
+        "certificate": {
+          "id": "vector-private-frame-projection-1",
+          "source_sha256": "5dc04e7f8cbe6936ebb04b002e8cf502d03c1ecd2a021f8f8e78f939c51b8af8",
+          "original_c_sha256": "c429b8fd89ad2e9a1ce7ca5ec3a6d09843a70aee7f7f0a1ab84bf9adff8e118b",
+          "original_contract_sha256": "07b4c56708d7afd86ed8e8e8f24fb59d40ffcda9e6e91b14c5362fabe7c79b44",
+          "view_contract_sha256": "30ff712a52a5739bbac32f61f9bb131b30c95142c1539d5cc0fdc4ad7bb40162",
+          "view_sha256": "8bab4f9fbb85b22c1c627f2cc66d2be7a31b1e5ae12326435e2d9639bb833e09",
+          "protocol": {
+            "parameter": "n",
+            "fill": 7,
+            "pushed": 9,
+            "old": false,
+            "return": "*swdb_owner_alias",
+            "checks": [
+              "/*@ assert alias_live_after: swdb_owner_alias_live == 1; */"
+            ],
+            "source_names": [
+              "n",
+              "v",
+              "p"
+            ],
+            "source_statements": 4
+          },
+          "source_frame": "assigns \\nothing;",
+          "view_frame": "assigns SWDB_OWNER_PRIVATE0(n,&n)[0..n-1], SWDB_OWNER_PRIVATE1(2*(integer)n,&n)[0..2*(integer)n-1];",
+          "source_frame_preservation": "checked structurally from fresh owned writes and no escape",
+          "wp_frame_scope": "private view only; structural projection is not a WP goal",
+          "allocation_sites": [
+            {
+              "name": "SWDB_OWNER_PRIVATE0",
+              "executions": 1
+            },
+            {
+              "name": "SWDB_OWNER_PRIVATE1",
+              "executions": 1
+            }
+          ],
+          "alias_rule": "capture live; growth invalidates; every retained alias read asserts live",
+          "model_bodies": [
+            {
+              "id": "std_vector_int_ctor_count_value",
+              "sha256": "3cd8afffdc132e49f623b56149a1621603ea1314c030515f0320fd5b912b000c"
+            },
+            {
+              "id": "std_vector_int_data",
+              "sha256": "125bba06912a277c744a4088f7d947335c161fc981c715fc540ec21ba9ef4b6a"
+            },
+            {
+              "id": "std_vector_int_dtor",
+              "sha256": "7779eb945593c441b99b36115d35a24a8347bee1fb9d91db1db14879458ef38a"
+            },
+            {
+              "id": "std_vector_int_grow",
+              "sha256": "83952d2951e4f1be130b9f458e5a8ebbcc4a8f613c0a1013510248a2ec751317"
+            },
+            {
+              "id": "std_vector_int_push_back",
+              "sha256": "170325c43350afd10c6dc8a48fcfa87f99b239f3598f1847d2d83422dd110d8a"
+            },
+            {
+              "id": "std_vector_int_recommend",
+              "sha256": "cd1e4a22f90ecf23948b35a09b4eef92f2824b4347721f8a67724e4d93b1c1ef"
+            },
+            {
+              "id": "swdb_alloc_int",
+              "sha256": "eb1f5833017762a8d83cc477b6d35e604be6906ebe70b7c0ba56abf032fa03b0"
+            },
+            {
+              "id": "swdb_free",
+              "sha256": "e301a232920b9439f2db75cccc278276c1e74ba760cbd9ca2ae7958210b401d4"
+            }
+          ]
+        },
+        "wp_view_sha256": "8bab4f9fbb85b22c1c627f2cc66d2be7a31b1e5ae12326435e2d9639bb833e09",
+        "source_frame": "assigns \\nothing;",
+        "source_frame_preservation": "checked",
+        "frame_evidence": "structural relational lowering; not a WP goal",
+        "original_contract_sha256": "07b4c56708d7afd86ed8e8e8f24fb59d40ffcda9e6e91b14c5362fabe7c79b44",
+        "view_contract_sha256": "30ff712a52a5739bbac32f61f9bb131b30c95142c1539d5cc0fdc4ad7bb40162"
+      }
+    },
+    {
+      "path": "/private/tmp/probata-vector-owner-refusals-finish/wp-vector-ownership0/records/proofs/proof.contract.fixture_vector_owner_pointer_cast.20261015t100332z.b10db738.yaml",
+      "sha256": "045011c1cdeeb26681dd405e0e72929458ab9458aa0024b2b065355bea111047",
+      "id": "proof.contract.fixture_vector_owner_pointer_cast.20261015t100332z.b10db738",
+      "case": "contract.fixture_vector_owner_pointer_cast",
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "evidence_kind": "contract_fixture",
+      "pins": {
+        "std_models": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        }
+      },
+      "unproven_properties": [],
+      "reports": [
+        {
+          "name": "handler",
+          "path": "/private/tmp/probata-vector-owner-refusals-finish/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_pointer_cast.20261015t100332z.b10db738/wp/handler.json",
+          "sha256": "9197005aefd466ac6a078b5c4c5a3b52e5cadeed74826caaac8d655ade680584"
+        }
+      ],
+      "view_evidence": null
+    },
+    {
+      "path": "/private/tmp/probata-vector-owner-refusals-finish/wp-vector-ownership0/records/proofs/proof.contract.fixture_vector_owner_pointer_comparison.20261015t100424z.8c0dfc1e.yaml",
+      "sha256": "d29e6febe44d2002831661efa858b692a8c67b8d978f75f82690c22b4dcb2fc9",
+      "id": "proof.contract.fixture_vector_owner_pointer_comparison.20261015t100424z.8c0dfc1e",
+      "case": "contract.fixture_vector_owner_pointer_comparison",
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "evidence_kind": "contract_fixture",
+      "pins": {
+        "std_models": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        }
+      },
+      "unproven_properties": [],
+      "reports": [
+        {
+          "name": "handler",
+          "path": "/private/tmp/probata-vector-owner-refusals-finish/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_pointer_comparison.20261015t100424z.8c0dfc1e/wp/handler.json",
+          "sha256": "5d059de93751ca3082b78ee83d2a854c7e18cc201ee6c0b6d954d156bb5877bf"
+        }
+      ],
+      "view_evidence": null
+    },
+    {
+      "path": "/private/tmp/probata-vector-owner-refusals-finish/wp-vector-ownership0/records/proofs/proof.contract.fixture_vector_owner_second_append.20261015t100430z.d4fabbf3.yaml",
+      "sha256": "0195bfb7d28b9e2d4c506dc5ad0b2177893b6108bdc90d545cd32284a49e7184",
+      "id": "proof.contract.fixture_vector_owner_second_append.20261015t100430z.d4fabbf3",
+      "case": "contract.fixture_vector_owner_second_append",
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "evidence_kind": "contract_fixture",
+      "pins": {
+        "std_models": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        }
+      },
+      "unproven_properties": [],
+      "reports": [
+        {
+          "name": "handler",
+          "path": "/private/tmp/probata-vector-owner-refusals-finish/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_second_append.20261015t100430z.d4fabbf3/wp/handler.json",
+          "sha256": "5bcc78dfdc9ff7d9900f511993bc4ade1549c4c5075d8aac9a9a76016f32063f"
+        }
+      ],
+      "view_evidence": null
+    },
+    {
+      "path": "/private/tmp/probata-vector-owner-refusals-finish/wp-vector-ownership0/records/proofs/proof.contract.fixture_vector_owner_write_alias.20261015t100437z.aa031b92.yaml",
+      "sha256": "8e9ea0eb2f943df344180751057f2d433468e2c307df289c7847709fbb9d3fd8",
+      "id": "proof.contract.fixture_vector_owner_write_alias.20261015t100437z.aa031b92",
+      "case": "contract.fixture_vector_owner_write_alias",
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "evidence_kind": "contract_fixture",
+      "pins": {
+        "std_models": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        }
+      },
+      "unproven_properties": [],
+      "reports": [
+        {
+          "name": "handler",
+          "path": "/private/tmp/probata-vector-owner-refusals-finish/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_write_alias.20261015t100437z.aa031b92/wp/handler.json",
+          "sha256": "5bcc78dfdc9ff7d9900f511993bc4ade1549c4c5075d8aac9a9a76016f32063f"
+        }
+      ],
+      "view_evidence": null
+    }
+  ],
+  "wp_counts": {
+    "safe": {
+      "generated_valid": 122,
+      "generated_total": 122,
+      "smoke_passed": 11,
+      "smoke_total": 11
+    },
+    "stale": {
+      "generated_valid": 109,
+      "generated_total": 110,
+      "smoke_passed": 11,
+      "smoke_total": 11,
+      "only_open_goal": "assert_alias_live_after"
+    }
+  },
+  "supplemental_reports": [
+    {
+      "path": "/private/tmp/probata-vector-owner-setup-regression.jsonl",
+      "sha256": "56209caaaa12dd53258109937fd4602edd029fad44f2b7a079ee27a26cfd78b8"
+    },
+    {
+      "path": "/private/tmp/probata-vector-owner-helper-pin.jsonl",
+      "sha256": "e37d6cdbeac578a1797e5ab95ecf60cede2a4e7d682df87bf5e8794db1c0ec53"
+    }
+  ]
+}

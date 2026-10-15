@@ -150,3 +150,28 @@ These are `contract_fixture` records and bounded outcomes, not production or unb
 acceptance. Ticket25 stays **claimed**. An outside-repository research design at
 `/private/tmp/probata-lifetime-research-2026-10-15/vector-owner-view-design.md` outlines separate checked
 allocator separation and pointer/buffer-liveness obligations; it is not implemented or claimed proven.
+
+
+Checked ownership slice checkpoint — 2026-10-15 ET: commit2662f3fc adds a relational WP view for a
+closed scalar-vector count-value construction, one captured data alias, optional pre-growth saved
+read, one growing append and scalar return. The source has scalar-only input/output, no globals or
+escape, and exact audited model-version2 bodies. Every alias read asserts liveness; growth invalidates
+it. Source/native artifacts keep ordinary malloc/free. The original `assigns nothing` frame is checked
+structurally from source-fresh owned writes and no escape; WP proves a separately reported exact
+private-region frame. The checker/certificate and explicit fresh-allocation premise are pinned and
+revalidated. This is not a WP proof of the original growing member's ACSL body.
+
+Nine focused public controls passed **as the union of two runs**: the original report has five
+completed passing calls (safe, stale, clear, copied alias, local address) but **no SessionFinish**;
+the coordinator's finishing report has four passing refusal calls and SessionFinish0 (72.17s).
+The safe record is PROVEN with122/122 generated goals and11/11 smoke; the stale record is NOT_PROVEN
+with109/110 and11/11 smoke, with only the named `alias_live_after` assertion open. The seven unknown
+protocol/address controls refuse before WP. Reports: `/private/tmp/probata-vector-owner-public-green2.jsonl`
+and `/private/tmp/probata-vector-owner-refusals-finish.jsonl`. The frozen setup/reader regressions
+passed55tests and the new helper-byte execution-method refusal passed1test. Compact records/report
+hashes and exact boundaries are in
+[t25-checked-vector-ownership-20261015.json](../evidence/t25-checked-vector-ownership-20261015.json).
+These are contract-fixture records on the2662 source checkpoint; integration0999dfb7 was merged before
+follow-on work. No single completed nine-test run, production-method acceptance or general ticket25
+completion is claimed. Repeated allocation sites, iterator protocols, copy/move/resize/reserve/clear/swap,
+opaque effects and escaping pointers remain outside this WP slice. Status stays **claimed**.
