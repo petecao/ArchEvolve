@@ -827,3 +827,22 @@ seeded artifacts retain their distinct old-DXC+2/corrected-DXC+4 identities.
 No historical record is relabeled current. Remaining actual construct pairs,
 lifetime controls and fresh model/summary closure still gate ticket completion.
 Status remains **claimed**.
+
+### Corrected dxc original caller pair accepted — 2026-10-15 ET
+
+Fresh frozen `9b75f4a2` proves the unchanged fixture summary (4 ordinary + 1
+smoke Valid) and safe caller (9 ordinary + 3 smoke Valid). The corrected `+4`
+seed reads `not_proven`, with 8 ordinary Valid, one ordinary ensures timeout
+and all 3 smoke Valid. Both callers bind the same newly proven summary ID and
+content, with current source-closure binding receipts. No prelaunch refusal or
+historical `+2` precision control substitutes for this actual negative.
+
+The independent compact audit finds zero errors across all 983 frozen source
+files, report/adapter-log hashes, candidate/baseline artifacts, original
+source/clauses/hints, current method/checker/naming pins and fresh dependency
+identity/content. Raw records remain remote. Timeout is not a counterexample;
+the separate native `tile=0` witness establishes the corrected seed's concrete
+result 4 against the unchanged `1<=result<=3` clause.
+[Exact corrected pair and dependency audit](../evidence/t24-corrected-dxc-pair-mbit10-20261015.json).
+Remaining original groups, allocation/lifetime controls and model/summary
+closure remain open; overall status stays **claimed**.
