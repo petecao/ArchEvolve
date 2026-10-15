@@ -5,23 +5,24 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-re
 
 ## Current state (resume here)
 
-Updated: 2026-10-15 16:01 ET. **Active implementation; 32 resolved / 28 ready-for-agent / 3 claimed.**
-Current owners:07,24,27. Integration is `codex/probata-resume-20261015`;
-current evaluation runtime is frozen at `71771f09`. [Live resume](resume.md).
+Updated: 2026-10-15 16:08 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
+Integration: `codex/probata-resume-20261015`. Production runtime bytes match
+`71771f09`; exact sources: node 0 `9b75f4a2`, node 1 `71771f09`, Mac `703ff3d7`.
+[Current resume and evidence](resume.md).
 
-- 24: original Ring safe/seeded pair accepted; allocation safe/seeded passed;
-  separate out-of-range hit the helper600s timeout. Node0 generation570 is released;
-  runner-only outer-budget repair precedes fresh remaining-group dispatch.
-- 27: current safe profile has4 confirmed passes; remaining safe cases, negatives,
-  capacity and bounded/native agreement remain open. Node1 generation602.
-- 07: run22 active at `703ff3d7` after scoped CLI approval repair,169 review
-  controls and neutral actual CLI probe. Run21 is preserved as aborted. No BFS proof.
-- 122 focused integrated compiler/scripted controls pass;13 actual-WP cases excluded.
-  Drafts1/2 remain immutable; final production method freeze and held-out work remain gated.
+- **24:** Ring and allocation pairs audited. Node 0 generation 571 runs selected
+  remaining pairs/dependencies/controls; prior outer timeout retains an incomplete
+  out-of-range row. Finite native agreement pilot is under independent review.
+- **27:** Four of eleven safe cases pass. Node 1 generation 602 continues; negatives,
+  capacity and bounded/native agreement remain open.
+- **07:** Fresh run 22 active after scoped CLI approval repair and 169 controls.
+  Runs 20/21 remain aborted. No qualifying BFS proof.
+- **36:** Still dependency-gated. 122 focused compiler/scripted controls pass;
+  13 actual-WP cases excluded. Drafts 1/2, final method freeze and held-out gates remain.
 
-No whole ticket is closed from these partial results. Historical evidence below
-retains its original pins. The old chat/heartbeat remain paused; this chat has an
-active30-minute progress heartbeat. [Ticket index](ticket-status-20261015.md).
+No whole ticket closes from these partial results. Historical records retain their
+source pins. This chat's 30-minute heartbeat is active; the old chat's remains
+paused. [Authoritative ticket index](ticket-status-20261015.md).
 
 ## Historical integration checkpoints
 
@@ -153,6 +154,11 @@ Current dispatch, evidence and blockers: [resume.md](resume.md).
   and generic vector/helper acceptance remain open.
 
 ## Context pointers
+
+- Selected remaining original acceptance restarted16:06ET on node0 generation571
+  at `9b75f4a2`, with fresh dependencies, exact case filter and1800s outer command
+  limit; per-goal30s, RTE/init/smoke and8GiB unchanged. No proof result yet.
+  [Launch and interrupted-run cleanup metadata](evidence/resumed-t24-pending-launch-20261015.json).
 
 - Resumed original-template acceptance at`71771f09`:89 ordinary+1smoke safe,
   seeded one ordinary ensures timeout with initialization retained; all producer

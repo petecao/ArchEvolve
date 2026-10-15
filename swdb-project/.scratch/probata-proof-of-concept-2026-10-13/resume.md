@@ -4,64 +4,73 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 16:01 ET. **Implementation is active under the user's ongoing approval.**
-Integration: `codex/probata-resume-20261015`, based on synchronized
-`yanrujhou_main` at `d94d629b`. Only one remote integration ref is published.
-Production `swdb/` bytes still match the remote runtime freeze `71771f09`.
+Updated: 2026-10-15 16:08 ET. **Implementation is active under the user's ongoing approval.**
+Integration: `codex/probata-resume-20261015`, based on `yanrujhou_main` at
+`d94d629b`. One remote integration ref is published. Production `swdb/` bytes
+still match `71771f09`; each evaluation retains its exact source identity below.
 
-**32 resolved / 28 ready-for-agent / 3 claimed**, from authoritative ticket files.
-The active frontier is **07, 24, 27**. Ticket 25 waits on 24; ticket 36 waits on 27.
-No downstream dependency is waived. Drafts1/2 remain immutable; draft3 and final
-production method freeze have not happened.
+**32 resolved / 28 ready-for-agent / 3 claimed**, derived from ticket frontmatter.
+The frontier is **07, 24, 27**. Ticket 25 waits on 24; ticket 36 waits on 27.
+Drafts 1/2 remain immutable. Draft 3 and the final production freeze have not happened.
 
-| Ticket / owner | Verified checkpoint | Active work / next acceptance |
+| Ticket / owner | Verified checkpoint | Active work |
 |---|---|---|
-|07 / `ticket07`|Run20 aborted during baseline before provider work; two resource findings fixed and independently re-reviewed with165 controls|Run22 active at clean `703ff3d7`, started15:55:16ET after169 review controls and a neutral actual CLI probe passed. Run21 preserves baseline/seeds and refused design tools; no hinted proof. Fresh baseline, provider search, final all-goal/smoke and covering-wait negative remain.|
-|24 / `ticket24`|Original Ring pair at `71771f09`: safe89 ordinary+1smoke Valid; seeded88 ordinary Valid+one ensures timeout+1smoke Valid;25 initialization goals each;zero residual helper calls|Node0 generation570 ended at15:54:36ET after the helper's600s public-command timeout; lane released, zero run-prefix survivors in readback. Runner timeout repair is being validated before fresh dispatch. New-array safe:42 ordinary+7smoke Valid,11 initialization goals,198.81s; seeded overrun not_proven (40 ordinary Valid, invariant/RTE timeouts;4 smoke Valid/3 failed smoke),283.45s. Separate out-of-range case has no completed record and remains unaccepted. Compact safe/seeded provenance audit has zero errors.|
-|27 / `ticket27`|Initial old-source diagnostic retained separately. Current `71771f09` safe profile has4 confirmed passes, including store/wait (90 ordinary+29 smoke Valid); stall-condition source replay is active|Node1 generation602 runs11 safe cases. Negative, capacity and bounded/native profiles remain. No whole-ticket acceptance yet.|
-|36 / no active claim|Mandatory RTE/complete-command checks and post-plan mutation controls integrated.122 focused compiler/scripted controls pass;13 actual-WP cases excluded|Still dependency-gated; no production method freeze or complete setup acceptance claim.|
+| 07 / `ticket07` | Scoped CLI approval repair: 169 controls and neutral actual CLI probe pass. Runs 20/21 remain aborted. | Fresh run 22 at `703ff3d7`, started 15:55:16 ET. Baseline, provider search, final all-goal/smoke replay and covering-wait negative remain. |
+| 24 / `ticket24` | Original Ring and allocation safe/seeded pairs audited at `71771f09`; details below. Seven public unsupported-construct controls pass. | Node 0 generation 571 runs seven remaining pairs, fresh dependencies and ten allocation/lifetime controls at `9b75f4a2`. Completed pairs are skipped. |
+| 27 / `ticket27` | Four of eleven safe cases pass at `71771f09`, including store/wait: 90 ordinary + 29 smoke Valid. | Node 1 generation 602 continues safe cases; stall-condition is in actual WP. Negative, capacity and bounded/native profiles remain. |
+| 36 / dependency-gated | Mandatory RTE, complete-command and mutation checks integrated; 122 compiler/scripted controls pass, 13 actual-WP cases excluded. | Waits on 27; no full setup acceptance or production method freeze. |
 
-The coordinator owns all merges, ticket graph updates and remote dispatch.
-Mac: one real verifier slot reserved for ticket07. Remote: one serial job per
-leased socket,8GiB process-tree guard, bounded timeout, raw output under `/data`.
-The old chat's heartbeat remains paused; this chat's30-minute heartbeat is active.
+Ticket 24 evidence: [Ring pair](evidence/t24-original-template-pair-mbit10-20261015.json)
+has safe 89 ordinary + 1 smoke Valid and seeded 88 ordinary Valid + one ensures
+timeout + 1 smoke Valid. [Allocation pair](evidence/t24-original-allocation-pair-mbit10-20261015.json)
+has safe 42 ordinary + 7 smoke Valid; seeded 40 ordinary Valid, invariant/RTE
+timeouts, 4 smoke Valid and 3 failed smoke. Both allocation records retain 11
+initialization goals. Neither negative is a solver refutation.
 
-Raw evidence remains in place:
+The first remaining-groups run ended at 15:54:36 ET when the public test helper's
+600-second limit interrupted the separate out-of-range case. It produced no
+accepted record for that case. Generation 570 released normally; post-exit
+inspection found no run-prefix survivors. The reviewed retry uses an explicit
+1800-second public-command limit, unchanged 30-second solver limits, an 8 GiB
+process-tree cap and a four-hour whole-profile limit.
+[Launch, selection and prior cleanup metadata](evidence/resumed-t24-pending-launch-20261015.json).
 
-- Active Mac run22: `/private/tmp/probata-t07-20261015-run22` (driver38318).
-  Aborted Mac run21: `/private/tmp/probata-t07-20261015-run21` (driver28786).
-  Aborted run20: `/private/tmp/probata-t07-20261015-run20`.
-- Accepted Ring pair: `/data/yanruj/EvolveSWDB_runs/probata-resume-t24-templates-71771f09`.
-  Interrupted remaining groups: `/data/yanruj/EvolveSWDB_runs/probata-resume-t24-remaining-71771f09`.
-- Current semantics safe profile: `/data/yanruj/EvolveSWDB_runs/probata-resume-t27-safe-71771f09`.
-  Old diagnostic: `/data/yanruj/EvolveSWDB_runs/probata-resume-t27-diagnostic-20261015-1512`.
-  Its first case passed; the next case was deliberately cancelled before obsolete-source scaling.
+Raw evidence stays outside Git:
 
-Keep both remote source checkouts frozen at `71771f09` while their readers remain.
-Keep active Mac run22 at its frozen source, and retain aborted run21 for audit. Host preflight before the new checkout found21GiB free on `/data1`,95GiB
-on `/data`,115GiB available RAM. A separate1.6GiB corrected-DXC source checkout
-now exists at `/data1/yanruj/probata-t24-corrected-20261015`, clean detached
-`94d18974`; no job has launched there. Keep its new raw output on `/data`.
-Node1 remains held by this coordinator; node0 is released pending the next preflight. Recheck live before any new dispatch. GPU NVML monitoring reports a
-driver/library mismatch; these evaluations use CPUs.
+- Mac: active `/private/tmp/probata-t07-20261015-run22` (driver 38318);
+  aborted runs 20/21 retain their separate folders.
+- Ticket 24: accepted Ring at `/data/yanruj/EvolveSWDB_runs/probata-resume-t24-templates-71771f09`;
+  allocation and interrupted out-of-range at `probata-resume-t24-remaining-71771f09`
+  under the same root; active retry at `probata-resume-t24-pending-9b75f4a2`.
+- Ticket 27: active `/data/yanruj/EvolveSWDB_runs/probata-resume-t27-safe-71771f09`;
+  old controlled-stop diagnostic remains `probata-resume-t27-diagnostic-20261015-1512`.
 
-A native audit found old DXC seed`+2` concretely satisfies its stand-in contract;
-its old WP timeout is a modular-summary precision control, not a semantic bug.
-Corrected seed`+4` has a C++/C native violation and needs fresh actual acceptance.
-OMP/float negative readers now also accept attributable loop-invariant failures.
-These test/reader changes never relabel immutable `71771f09` proof records.
+Keep the baseline archive and node 1 checkout at `71771f09`, active node 0 at
+`9b75f4a2`, and Mac run 22 at `703ff3d7` while their jobs/readers need them. Node 0
+uses `/data1/yanruj/probata-t24-corrected-20261015`. Latest preflight: 19 GiB free
+on `/data1`, 95 GiB on `/data`. Both lanes are held by this coordinator; raw output
+stays on `/data`. Recheck live before dispatch. The lane wrapper matches freshly
+fetched MemAcc `yanrujhou_main` at `76cca359`; its default `main` lacks that script.
+GPU NVML has a driver/library mismatch; these jobs use CPUs.
 
-A dedicated finite native C++/C agreement runner is being implemented for24, using
-ticket22's accepted native subcheck independently of CBMC proof admission. Existing
-32 native witness observations alone are insufficient. The runner will report
-domain/sampling, valid/precondition/UB counts and exact source/tool/output pins; it
-will emit no proof verdict. Original WP acceptance remains separately required.
+A native audit found old DXC seed `+2` satisfies its stand-in contract. Its old WP
+timeout is a modular-summary precision control. Corrected seed `+4` has a concrete
+C++/C violation and is selected for fresh actual acceptance. OMP/float negative
+readers accept attributable invariant failures. These changes never relabel old
+records. A separate finite native agreement runner now has a successful template
+pilot and five controls; independent admission review precedes all-nine scaling.
+It reuses ticket 22's accepted native subcheck and emits no proof verdict.
 
-Next: finish and audit the original allocation safe/seeded/out-of-range records
-before treating that construct group as accepted. [Map](map.md), ticket acceptance text and compact
-JSON evidence remain authoritative. Exploration notes for the next gated tickets:
-`/private/tmp/probata-ticket25-resume-exploration.md` and
-`/private/tmp/probata-ticket28-resume-exploration.md` (research only).
+The coordinator owns merges, graph updates and remote dispatch. The Mac's actual
+verifier slot belongs to 07; remote jobs are serial within each leased socket.
+This chat's 30-minute heartbeat is active; the old chat's remains paused.
+
+Next: audit each selected original pair and the pending out-of-range record as
+it completes. [Map](map.md), ticket acceptance text and compact evidence remain
+authoritative. Research-only next-ticket notes remain in
+`/private/tmp/probata-ticket25-resume-exploration.md`,
+`/private/tmp/probata-ticket25-lifetime-capabilities.md` and
+`/private/tmp/probata-ticket28-resume-exploration.md`.
 
 ## Historical integration snapshots
 
