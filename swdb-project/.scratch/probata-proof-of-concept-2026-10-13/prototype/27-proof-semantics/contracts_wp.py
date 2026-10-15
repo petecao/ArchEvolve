@@ -82,8 +82,9 @@ assigns \\nothing;
 ensures \\result == &dx_tile_data[tile][0];"""),
     ("maa_stream_load", "void maa_stream_load(int *data, int min_reg, int max_reg, int stride_reg, int dst_tile, "
                         "int cond_tile)", [L["stream"]],
-     ["operands", "stream_operands", "stream_values", "dispatch_stall", "register_overlap"], f"""\
+     ["operands", "stream_operands", "stream_values", "dispatch_stall", "register_overlap", "memory_serial_domain"], f"""\
 requires 0 <= min_reg < DX_NR && 0 <= max_reg < DX_NR && 0 <= stride_reg < DX_NR && 0 <= dst_tile < DX_NT;
+requires memory_domain: dx_memory_clear_after_stall(dst_tile, -1, 0);
 requires cond_tile == -1;
 requires dx_reg_value[stride_reg] > 0 && dx_reg_value[min_reg] <= dx_reg_value[max_reg];
 {stream_req}requires \\forall integer k; 0 <= k < DX_TS && dx_reg_value[min_reg] + k * dx_reg_value[stride_reg] <
@@ -97,8 +98,9 @@ ensures \\let lo = \\old(dx_reg_value[min_reg]); \\let hi = \\old(dx_reg_value[m
   dx_tile_size[dst_tile] == (n < DX_TS ? n : DX_TS) &&
   (\\forall integer k; 0 <= k < DX_TS && k < n ==> dx_tile_data[dst_tile][k] == \\old(data[lo + k * st]));"""),
     ("maa_indirect_load", "void maa_indirect_load(int *data, int idx_tile, int dst_tile, int cond_tile)",
-     [L["gather"]], ["operands", "gather_values", "dispatch_stall"], f"""\
+     [L["gather"]], ["operands", "gather_values", "dispatch_stall", "memory_serial_domain"], f"""\
 requires 0 <= idx_tile < DX_NT && 0 <= dst_tile < DX_NT && dst_tile != idx_tile && cond_tile == -1;
+requires memory_domain: dx_memory_clear_after_stall(dst_tile, -1, 0);
 {gather_req}requires \\forall integer k; 0 <= k < dx_tile_size[idx_tile] && k < DX_TS ==>
   \\valid_read(data + (unsigned int)dx_tile_data[idx_tile][k]);
 assigns dx_tile_data[dst_tile][0 .. DX_TS - 1], dx_tile_size[dst_tile], {GHOST};
@@ -133,9 +135,10 @@ ensures \\forall integer k; 0 <= k < \\old(dx_tile_size[src_tile]) && k < DX_TS 
   dx_tile_data[dst_tile][k] == (\\old(dx_tile_data[src_tile][k]) < \\old(dx_reg_value[src_reg]) ? 1 : 0);"""),
     ("maa_indirect_store_vector", "void maa_indirect_store_vector(int *data, int idx_tile, int src_tile, "
                                   "int cond_tile, int dst_tile)", [],
-     ["operands", "store_operands", "store_vector_values", "store_duplicate_order", "dispatch_stall"], f"""\
+     ["operands", "store_operands", "store_vector_values", "store_duplicate_order", "dispatch_stall", "memory_serial_domain"], f"""\
 requires 0 <= idx_tile < DX_NT && 0 <= src_tile < DX_NT && (cond_tile == -1 || 0 <= cond_tile < DX_NT);
 requires 0 <= dst_tile < DX_NT && dst_tile != idx_tile && dst_tile != src_tile && dst_tile != cond_tile;
+requires memory_domain: dx_memory_clear_after_stall(dst_tile, -1, 1);
 requires \\base_addr(data) != \\base_addr(&dx_tile_data[0][0]) &&
   \\base_addr(data) != \\base_addr(&dx_tile_size[0]) && \\base_addr(data) != \\base_addr(&dx_reg_value[0]);
 requires dx_tile_size[src_tile] == dx_tile_size[idx_tile] &&

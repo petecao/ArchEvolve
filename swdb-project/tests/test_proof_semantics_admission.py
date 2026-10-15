@@ -12,6 +12,34 @@ from conftest import run_swdb
 from test_proof_semantics import dx, dx_seed, needs_cbmc, needs_wp, prove, prove_wp
 
 
+@needs_cbmc
+@pytest.mark.parametrize("wait", [False, True])
+def test_store_must_be_covered_before_return_in_the_bounded_model(dx, wait):
+    record = prove(dx, "store_exit", *(["SWDB_STORE_EXIT_WAIT"] if wait else []))
+    if wait:
+        assert record["verdict"] == "proven", record
+    else:
+        assert record["verdict"] == "not_proven" and record["failure_class"] == "memory_domain" and "counterexample" not in record, record
+        assert any(g["property"] == "swdb.dx100_memory_domain" and g["status"] == "failure"
+                   for g in record["goals"])
+
+
+@needs_wp
+@pytest.mark.parametrize("wait", [False, True])
+def test_store_must_be_covered_before_return_in_wp(dx, wait):
+    record = prove_wp(dx, "store_exit", *(["SWDB_STORE_EXIT_WAIT"] if wait else []), hints=[
+        {"anchor": "dxf_store_exit.entry", "kind": "ghost", "text": "ghost dx_store_bound = n;",
+         "provenance": {"source": "agent"}},
+        {"anchor": "dxf_store_exit.s5.before", "kind": "assert",
+         "text": "assert \\forall integer k; 0 <= k < dx_tile_size[0] && k < DX_TS ==> "
+                 "0 <= (unsigned int)dx_tile_data[0][k] < n;", "provenance": {"source": "agent"}}])
+    if wait:
+        assert record["verdict"] == "proven", record.get("unproven_properties")
+    else:
+        assert record["verdict"] == "not_proven" and "counterexample" not in record
+        assert any("memory_domain_exit" in g["goal"] and g["status"] != "valid" for g in record["goals"])
+
+
 @needs_wp
 @pytest.mark.parametrize("adapter", ["cbmc", "wp"])
 @pytest.mark.parametrize("unit,define", [
@@ -48,7 +76,7 @@ def test_device_memory_domain_requires_a_covering_wait_in_the_bounded_model(dx, 
     if wait_between:
         assert record["verdict"] == "proven", record
     else:
-        assert record["verdict"] == "not_proven" and record["failure_class"] == "unsupported_construct", record
+        assert record["verdict"] == "not_proven" and record["failure_class"] == "memory_domain", record
         assert "counterexample" not in record
         assert any(g["property"] == "swdb.dx100_memory_domain" and g["status"] == "failure" for g in record["goals"])
 

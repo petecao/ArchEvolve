@@ -75,11 +75,11 @@ model:
   c:
     root: library
     path: proof_semantics/dx100_bfs/model.h
-    sha256: 79c813065431e1128c5091554ce3df280e81f9b3e54639f8956e3287d2d6302a
+    sha256: ad17837f8dc8aa61de019144f69d6aa6a68b49632caab8a9e48dabd73b6d7b34
   logic:
     root: library
     path: proof_semantics/dx100_bfs/logic.acsl
-    sha256: 719d0ae5366197477f932ce4a226df79c36d4fa96068d779286ded494af34ddb
+    sha256: 18962d8e9c965ac57658c234bd7fd2545e4af79362a0bf555f1799e2e0548b0d
 clauses: []
 rules:
 - id: operands
@@ -146,6 +146,16 @@ rules:
     gem5_commit: e4fc4afdf894f295442cef3604667a469fab8e62
     path: src/mem/MAA/IF.cc
     lines: 279-299
+- id: memory_serial_domain
+  statement: 'Conservative proof-domain restriction until ticket 28: after destination-stall coverage, a device
+    store needs no uncovered memory command, and a device load needs no uncovered device store. An indirect store
+    copies a whole cache line, updates selected words, and writes back the whole line; selected-element disjointness
+    therefore does not establish absence of memory interference. Domain failure is not proven, never a refutation
+    of the program.'
+  cites:
+    gem5_commit: e4fc4afdf894f295442cef3604667a469fab8e62
+    path: src/mem/MAA/IndirectAccess.cc
+    lines: 898-940, 1145-1158
 - id: unready_read
   statement: A CPU read of tile memory is not blocked while a command fills the tile, so reading a tile through
     its tile pointer while an uncovered command writes it is a hazard (map 12 item 3).
@@ -390,11 +400,13 @@ calls:
   - stream_values
   - dispatch_stall
   - register_overlap
+  - memory_serial_domain
   contract: "requires 0 <= min_reg < DX_NR && 0 <= max_reg < DX_NR && 0 <= stride_reg < DX_NR && 0 <= dst_tile <\
-    \ DX_NT;\nrequires cond_tile == -1;\nrequires dx_reg_value[stride_reg] > 0 && dx_reg_value[min_reg] <= dx_reg_value[max_reg];\n\
-    requires ghost_capacity: 0 <= dx_count < DX_K;\nrequires dx_issuable(min_reg, max_reg, stride_reg, -1, -1);\n\
-    requires \\forall integer k; 0 <= k < DX_TS && dx_reg_value[min_reg] + k * dx_reg_value[stride_reg] <\n  dx_reg_value[max_reg]\
-    \ ==> \\valid_read(data + (dx_reg_value[min_reg] + k * dx_reg_value[stride_reg]));\nassigns dx_tile_data[dst_tile][0\
+    \ DX_NT;\nrequires memory_domain: dx_memory_clear_after_stall(dst_tile, -1, 0);\nrequires cond_tile == -1;\n\
+    requires dx_reg_value[stride_reg] > 0 && dx_reg_value[min_reg] <= dx_reg_value[max_reg];\nrequires ghost_capacity:\
+    \ 0 <= dx_count < DX_K;\nrequires dx_issuable(min_reg, max_reg, stride_reg, -1, -1);\nrequires \\forall integer\
+    \ k; 0 <= k < DX_TS && dx_reg_value[min_reg] + k * dx_reg_value[stride_reg] <\n  dx_reg_value[max_reg] ==> \\\
+    valid_read(data + (dx_reg_value[min_reg] + k * dx_reg_value[stride_reg]));\nassigns dx_tile_data[dst_tile][0\
     \ .. DX_TS - 1], dx_tile_size[dst_tile], dx_live, dx_kind[0 .. DX_K - 1], dx_dst1[0 .. DX_K - 1], dx_dst2[0\
     \ .. DX_K - 1], dx_src1[0 .. DX_K - 1], dx_src2[0 .. DX_K - 1], dx_cond[0 .. DX_K - 1], dx_regs_in[0 .. DX_K\
     \ - 1], dx_regs_out[0 .. DX_K - 1], dx_reg_a[0 .. DX_K - 1], dx_reg_b[0 .. DX_K - 1], dx_reg_c[0 .. DX_K - 1],\
@@ -420,21 +432,22 @@ calls:
   - operands
   - gather_values
   - dispatch_stall
+  - memory_serial_domain
   contract: "requires 0 <= idx_tile < DX_NT && 0 <= dst_tile < DX_NT && dst_tile != idx_tile && cond_tile == -1;\n\
-    requires ghost_capacity: 0 <= dx_count < DX_K;\nrequires dx_issuable(-1, -1, -1, -1, -1);\nrequires \\forall\
-    \ integer k; 0 <= k < dx_tile_size[idx_tile] && k < DX_TS ==>\n  \\valid_read(data + (unsigned int)dx_tile_data[idx_tile][k]);\n\
-    assigns dx_tile_data[dst_tile][0 .. DX_TS - 1], dx_tile_size[dst_tile], dx_live, dx_kind[0 .. DX_K - 1], dx_dst1[0\
-    \ .. DX_K - 1], dx_dst2[0 .. DX_K - 1], dx_src1[0 .. DX_K - 1], dx_src2[0 .. DX_K - 1], dx_cond[0 .. DX_K -\
-    \ 1], dx_regs_in[0 .. DX_K - 1], dx_regs_out[0 .. DX_K - 1], dx_reg_a[0 .. DX_K - 1], dx_reg_b[0 .. DX_K - 1],\
-    \ dx_reg_c[0 .. DX_K - 1], dx_region[0 .. DX_K - 1], dx_base[0 .. DX_K - 1], dx_lo[0 .. DX_K - 1], dx_hi[0 ..\
-    \ DX_K - 1], dx_stride[0 .. DX_K - 1], dx_index[0 .. DX_K - 1], dx_deps[0 .. DX_K - 1], dx_writes_memory[0 ..\
-    \ DX_K - 1], dx_tile_writer[0 .. DX_NT - 1], dx_tile_readers[0 .. DX_NT - 1], dx_reg_writer[0 .. DX_NR - 1],\
-    \ dx_reg_named[0 .. DX_NR - 1], dx_count;\nensures dx_new_slot(DX_GATHER, dst_tile, -1, idx_tile, -1, -1, -1,\
-    \ -1, -1);\nensures dx_stall_covers{Pre, Post}(dst_tile, -1);\nensures dx_kept{Pre, Post}(dst_tile, -1, idx_tile,\
-    \ -1, -1, -1, -1, -1, -1, -1, 1);\nensures dx_base[dx_tile_writer[dst_tile]] == data && dx_index[dx_tile_writer[dst_tile]]\
-    \ == idx_tile;\nensures dx_tile_size[dst_tile] == \\old(dx_tile_size[idx_tile]);\nensures \\forall integer k;\
-    \ 0 <= k < \\old(dx_tile_size[idx_tile]) && k < DX_TS ==>\n  dx_tile_data[dst_tile][k] == \\old(data[(unsigned\
-    \ int)dx_tile_data[idx_tile][k]]);\n"
+    requires memory_domain: dx_memory_clear_after_stall(dst_tile, -1, 0);\nrequires ghost_capacity: 0 <= dx_count\
+    \ < DX_K;\nrequires dx_issuable(-1, -1, -1, -1, -1);\nrequires \\forall integer k; 0 <= k < dx_tile_size[idx_tile]\
+    \ && k < DX_TS ==>\n  \\valid_read(data + (unsigned int)dx_tile_data[idx_tile][k]);\nassigns dx_tile_data[dst_tile][0\
+    \ .. DX_TS - 1], dx_tile_size[dst_tile], dx_live, dx_kind[0 .. DX_K - 1], dx_dst1[0 .. DX_K - 1], dx_dst2[0\
+    \ .. DX_K - 1], dx_src1[0 .. DX_K - 1], dx_src2[0 .. DX_K - 1], dx_cond[0 .. DX_K - 1], dx_regs_in[0 .. DX_K\
+    \ - 1], dx_regs_out[0 .. DX_K - 1], dx_reg_a[0 .. DX_K - 1], dx_reg_b[0 .. DX_K - 1], dx_reg_c[0 .. DX_K - 1],\
+    \ dx_region[0 .. DX_K - 1], dx_base[0 .. DX_K - 1], dx_lo[0 .. DX_K - 1], dx_hi[0 .. DX_K - 1], dx_stride[0\
+    \ .. DX_K - 1], dx_index[0 .. DX_K - 1], dx_deps[0 .. DX_K - 1], dx_writes_memory[0 .. DX_K - 1], dx_tile_writer[0\
+    \ .. DX_NT - 1], dx_tile_readers[0 .. DX_NT - 1], dx_reg_writer[0 .. DX_NR - 1], dx_reg_named[0 .. DX_NR - 1],\
+    \ dx_count;\nensures dx_new_slot(DX_GATHER, dst_tile, -1, idx_tile, -1, -1, -1, -1, -1);\nensures dx_stall_covers{Pre,\
+    \ Post}(dst_tile, -1);\nensures dx_kept{Pre, Post}(dst_tile, -1, idx_tile, -1, -1, -1, -1, -1, -1, -1, 1);\n\
+    ensures dx_base[dx_tile_writer[dst_tile]] == data && dx_index[dx_tile_writer[dst_tile]] == idx_tile;\nensures\
+    \ dx_tile_size[dst_tile] == \\old(dx_tile_size[idx_tile]);\nensures \\forall integer k; 0 <= k < \\old(dx_tile_size[idx_tile])\
+    \ && k < DX_TS ==>\n  dx_tile_data[dst_tile][k] == \\old(data[(unsigned int)dx_tile_data[idx_tile][k]]);\n"
 - call: maa_range_loop
   prototype: void maa_range_loop(int last_i_reg, int last_j_reg, int min_tile, int max_tile, int stride_reg, int
     dst_i_tile, int dst_j_tile, int cond_tile)
@@ -505,14 +518,16 @@ calls:
   - store_vector_values
   - store_duplicate_order
   - dispatch_stall
+  - memory_serial_domain
   contract: "requires 0 <= idx_tile < DX_NT && 0 <= src_tile < DX_NT && (cond_tile == -1 || 0 <= cond_tile < DX_NT);\n\
     requires 0 <= dst_tile < DX_NT && dst_tile != idx_tile && dst_tile != src_tile && dst_tile != cond_tile;\nrequires\
-    \ \\base_addr(data) != \\base_addr(&dx_tile_data[0][0]) &&\n  \\base_addr(data) != \\base_addr(&dx_tile_size[0])\
-    \ && \\base_addr(data) != \\base_addr(&dx_reg_value[0]);\nrequires dx_tile_size[src_tile] == dx_tile_size[idx_tile]\
-    \ &&\n  (cond_tile == -1 || dx_tile_size[cond_tile] == dx_tile_size[idx_tile]);\nrequires ghost_capacity: 0\
-    \ <= dx_count < DX_K;\nrequires dx_issuable(-1, -1, -1, -1, -1);\nrequires \\forall integer k; 0 <= k < dx_tile_size[idx_tile]\
-    \ && k < DX_TS &&\n  (cond_tile == -1 || dx_tile_data[cond_tile][k] != 0) ==> \\valid(data + (unsigned int)dx_tile_data[idx_tile][k]);\n\
-    requires store_frame_bound: 0 <= dx_store_bound;\nrequires store_indices: \\forall integer k; 0 <= k < dx_tile_size[idx_tile]\
+    \ memory_domain: dx_memory_clear_after_stall(dst_tile, -1, 1);\nrequires \\base_addr(data) != \\base_addr(&dx_tile_data[0][0])\
+    \ &&\n  \\base_addr(data) != \\base_addr(&dx_tile_size[0]) && \\base_addr(data) != \\base_addr(&dx_reg_value[0]);\n\
+    requires dx_tile_size[src_tile] == dx_tile_size[idx_tile] &&\n  (cond_tile == -1 || dx_tile_size[cond_tile]\
+    \ == dx_tile_size[idx_tile]);\nrequires ghost_capacity: 0 <= dx_count < DX_K;\nrequires dx_issuable(-1, -1,\
+    \ -1, -1, -1);\nrequires \\forall integer k; 0 <= k < dx_tile_size[idx_tile] && k < DX_TS &&\n  (cond_tile ==\
+    \ -1 || dx_tile_data[cond_tile][k] != 0) ==> \\valid(data + (unsigned int)dx_tile_data[idx_tile][k]);\nrequires\
+    \ store_frame_bound: 0 <= dx_store_bound;\nrequires store_indices: \\forall integer k; 0 <= k < dx_tile_size[idx_tile]\
     \ && k < DX_TS &&\n  (cond_tile == -1 || dx_tile_data[cond_tile][k] != 0) ==>\n  0 <= (unsigned int)dx_tile_data[idx_tile][k]\
     \ < dx_store_bound;\nassigns data[0 .. dx_store_bound - 1],\n  dx_tile_data[dst_tile][0 .. DX_TS - 1], dx_tile_size[dst_tile],\
     \ dx_live, dx_kind[0 .. DX_K - 1], dx_dst1[0 .. DX_K - 1], dx_dst2[0 .. DX_K - 1], dx_src1[0 .. DX_K - 1], dx_src2[0\
