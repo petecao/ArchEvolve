@@ -15,7 +15,12 @@ The coordinator owns merges, ticket graph updates, and both remote socket lanes.
 Ticket27 diagnostic matrix is active on mbit10 node1 at frozen `159d912e`.
 Raw output: `/data/yanruj/EvolveSWDB_runs/probata-resume-t27-diagnostic-20261015-1512`.
 The directory suffix is an identifier; actual start time is in the environment record.
-Node0 remains reserved for ticket24. Final proofs wait for setup hardening.
+Node0 runs ticket24 original templates safe/seeded at composed `71771f09`
+(generation569, started2026-10-15 15:08:36ET). Raw output:
+`/data/yanruj/EvolveSWDB_runs/probata-resume-t24-templates-71771f09`.
+Setup hardening is integrated. Ticket07 method20 fresh counted run started15:05:50ET
+at frozen `418a48d7`, raw `/private/tmp/probata-t07-20261015-run20`; its Mac slot
+is reserved. No new actual proof acceptance is claimed yet.
 
 1. Review/freeze method20 independently before a fresh counted ticket07 run.
 2. Finish ticket24 original construct acceptance, preserving all validity,
