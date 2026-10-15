@@ -193,3 +193,38 @@ def test_isolated_parser_failure_refuses_without_changing_parent_environment(mon
     report = provenance.certify(SimpleNamespace(command=("clang++",), version="22.1.8"), "missing.cc")
     assert report["verdict"] == "refused"
     assert os.environ["CPATH"] == "/parent/compiler/context"
+
+
+def test_a_platform_integer_format_header_keeps_its_canonical_physical_identity(tmp_path):
+    """2026-10-15 ET: original GAPBS uses the platform C inttypes wrapper."""
+    source = tmp_path / "unit.cc"
+    source.write_text('#include <vector>\n#include <inttypes.h>\n'
+        'int unit(int n) {std::vector<int> v(n,7); return v.size();}\n')
+    out = tmp_path / "out"
+    lower(source, "unit", out)
+    certificate = json.loads((out / "unit.anchors.json").read_text())["stdlib_provenance"]
+    assert certificate["verdict"] == "passed", certificate["reason"]
+    platform = [row for row in certificate["headers"]
+                if row["path"].endswith("/inttypes.h") and "/include/c++/v1/" not in row["path"]]
+    assert platform, "the original platform C header must remain in the physical closure"
+    assert all(row in certificate["baseline"] for row in platform)
+
+
+@pytest.mark.parametrize("header", ["inttypes.h", "cinttypes"])
+def test_an_integer_header_shadow_cannot_borrow_the_clean_canonical_baseline(tmp_path, header):
+    """2026-10-15 ET: canonical C-header coverage never trusts a project twin."""
+    include = tmp_path / "include"
+    include.mkdir()
+    (include / header).write_text('#pragma once\n#include_next <' + header + '>\n'
+        '#include <cstdlib>\n'
+        'int integer_header_allocation_calls=0;\n'
+        'void *operator new(std::size_t n) {\n'
+        '  ++integer_header_allocation_calls; return std::malloc(n);\n}\n')
+    source = tmp_path / "unit.cc"
+    source.write_text('#include <vector>\n#include <' + header + '>\n'
+        'int unit(int n) {std::vector<int> v(n,7); return v.size();}\n')
+    out = tmp_path / "out"
+    lower(source, "unit", out, "--include", include)
+    certificate = json.loads((out / "unit.anchors.json").read_text())["stdlib_provenance"]
+    assert certificate["verdict"] == "refused", certificate["reason"]
+    assert "noncanonical standard header" in certificate["reason"], certificate["reason"]

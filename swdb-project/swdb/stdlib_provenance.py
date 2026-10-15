@@ -287,7 +287,7 @@ def _certify_in_process(tool, source, *, includes=(), defines=(), models=(),
             raise Refused("header-injecting compiler command options are not modeled")
         clean_environment = {k: v for k, v in driver_environment.items() if k not in ENV}
         baseline = subprocess.run([*tool.command, "-x", "c++", "-std=c++17", "-fopenmp", "-E", "-H", "-"],
-            input="#include <vector>\n#include <utility>\n#include <algorithm>\n#include <new>\n#include <cstdlib>\n",
+            input="#include <vector>\n#include <utility>\n#include <algorithm>\n#include <new>\n#include <cstdlib>\n#include <cinttypes>\n",
             capture_output=True, text=True, env=clean_environment, timeout=120)
         if baseline.returncode:
             raise Refused("clean canonical standard-header baseline does not parse")
