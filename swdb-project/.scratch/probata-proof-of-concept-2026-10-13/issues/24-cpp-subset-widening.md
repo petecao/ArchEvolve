@@ -481,3 +481,17 @@ zeroed report pin in the evidence-mutation negative control. That dependency con
 is not accepted as a proof. Raw output remains remote for its readers; only compact
 metadata is exported. [Evidence](../evidence/summary-source-binding-mbit10-20261015.json).
 This checkpoint does not close the ticket's remaining acceptance criteria.
+
+Declaration-attribute sidefinding — 2026-10-15 ET: generic lowering accepted a local
+`__attribute__((cleanup(release_local)))` after its initializer and silently dropped its scope-exit
+callback. Public `swdb lower` RED1in0.60s; four retained-declaration RED controls in1.03s also exposed
+parameter NoEscapeAttr and function ConstructorAttr/NonNullAttr erasure. A native fixed-input witness
+returned `7 4` (result, global counter) in original C++ and `7 0` in the old lowered C. This establishes
+a lowering mismatch; no actual verifier or falseproof is claimed. The narrow repair validates direct
+attributes before processing retained locals, definitions, parameters and summarized declarations.
+Only five covered diagnostic/inlining attributes are discarded; unknown/effectful attributes refuse
+with their Clang kind. The same guard catches inherited prototype attributes. Ordinary GAPBS includes
+remain admitted. Selected public controls:27PASS11.89s, including14new controls and13existing construct
+groups with deterministic lowering/C compilation. Full-TU startup effects of otherwise uncalled
+functions and class/global attributes are outside this scoped repair. Status remains claimed.
+Evidence:[t24-declaration-attributes-20261015.json](../evidence/t24-declaration-attributes-20261015.json).

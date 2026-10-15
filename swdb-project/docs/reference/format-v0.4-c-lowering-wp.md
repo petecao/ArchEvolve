@@ -70,6 +70,12 @@ swdb lower --source <file.cc> --function <name> --out <folder> [--include <dir>]
   and `std::pair` come with ticket 25) and streams, `long double`, calls of functions with no body,
   overloads, other OpenMP directives and clauses, a `return`/`break`/`continue` out of a scope that
   destroys an object. C++ that does not parse: `parse error: ...`.
+- **Declaration attributes (2026-10-15 ET).** Retained local variables, function definitions,
+  parameters, and summarized function declarations admit only `UnusedAttr`, `DeprecatedAttr`,
+  `WarnUnusedResultAttr`, `AlwaysInlineAttr`, and `NoInlineAttr` (diagnostic/inlining metadata).
+  Other declaration attributes give `unsupported construct` with their Clang attribute name;
+  a local `CleanupAttr` callback is never erased. This guard covers the retained declaration
+  closure; it is not a full-TU startup-effect or class/global-attribute checker.
 - The tool's identity is `swdb-c-lowering-<TOOL_VERSION>` plus the sha256 of `swdb/c_lowering.py`;
   `swdb.c_lowering.naming_rules()` is `{id: kept-names.<n>, sha256}` of the rules text.
 
