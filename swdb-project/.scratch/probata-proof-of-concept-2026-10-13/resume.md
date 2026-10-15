@@ -4,7 +4,7 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 14:55 ET. **Implementation resumed at the user's request.**
+Updated: 2026-10-15 14:59 ET. **Implementation resumed at the user's request.**
 Integration branch: `codex/probata-resume-20261015`, based on clean synchronized
 `yanrujhou_main` at `d94d629b`. Existing historical evidence retains its exact pins.
 
@@ -12,7 +12,10 @@ Integration branch: `codex/probata-resume-20261015`, based on clean synchronized
 Active owners: ticket07 `probata-resume-t07`; ticket24 `probata-resume-t24`;
 ticket27 `probata-resume-t27`. Each implementer uses an isolated local worktree.
 The coordinator owns merges, ticket graph updates, and both remote socket lanes.
-No evaluation job has been dispatched in this resumed effort yet.
+Ticket27 diagnostic matrix is active on mbit10 node1 at frozen `159d912e`.
+Raw output: `/data/yanruj/EvolveSWDB_runs/probata-resume-t27-diagnostic-20261015-1512`.
+The directory suffix is an identifier; actual start time is in the environment record.
+Node0 remains reserved for ticket24. Final proofs wait for setup hardening.
 
 1. Review/freeze method20 independently before a fresh counted ticket07 run.
 2. Finish ticket24 original construct acceptance, preserving all validity,

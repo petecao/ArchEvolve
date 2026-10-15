@@ -5,19 +5,21 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `yanrujhou_main`;
 
 ## Current state (resume here)
 
-Updated: 2026-10-15 14:31 ET. **Paused; reviewed closeout and cleanup complete.**
-Implementation and handoff are on `yanrujhou_main`; the old heartbeat is PAUSED.
+Updated: 2026-10-15 14:59 ET. **Implementation resumed at the user's request.**
+Integration: `codex/probata-resume-20261015`, based on clean synchronized
+`yanrujhou_main` at `d94d629b`. One remote integration ref is published.
 
-- **32 resolved / 31 ready-for-agent / 0 claimed.** No unmet ticket was force-closed.
-  Ready frontier: 07, 24, 27;25 and36 remain dependency-gated.
-- Final validation: 313 passed / 42 deselected; standards comment fixed, no new
-  actionable runtime defect found by the separate spec review.
-- Cleanup:30 remote branches, 53 local branches, 33 idle worktrees removed after
-  verified archive/tag/bundle and dirty-source snapshots. Raw outputs retained.
-- Qualified stall: 111 ordinary + 35 smoke is a scoped historical proof, not full ticket 27
-  acceptance. Drafts 1/2 immutable; no draft 3/final method freeze/held-out campaign.
-- [Cold-start handoff](HANDOFF.md), [all-ticket index](ticket-status-20261015.md),
-  [resume](resume.md), [completion receipt](evidence/closeout-complete-20261015.json).
+- **32 resolved / 28 ready-for-agent / 3 claimed**, from ticket frontmatter.
+  Active frontier:07,24,27 in separate local worktrees.25 and36 remain gated.
+-07: independent method20 review before a fresh60-minute counted run; no historical hints.
+-24: original construct-group acceptance, typed embedded arrays and conditional reads.
+-27: current-policy proof-semantics acceptance and32/33-command capacity agreement.
+- Coordinator owns merges, both remote lanes and the30-minute heartbeat. A separate
+  prerequisite review hardens inherited RTE admission before fresh acceptance proofs.
+  See [resume](resume.md) and [live ticket index](ticket-status-20261015.md).
+
+No new actual proof or whole-ticket completion is claimed at this checkpoint.
+The old chat/heartbeat remain paused. Historical evidence below retains exact pins.
 
 ## Historical integration checkpoints
 
