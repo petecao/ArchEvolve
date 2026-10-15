@@ -347,6 +347,11 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
                 if generated != context["wp_expected_text"] or report != context["pointer_bounds_report"]:
                     _fail("pointer_bounds", "generated C model pointer checks changed after planning")
             else:
+                if context.get("helper_windows"):
+                    try:
+                        adapter.check_helper_windows(job, context)
+                    except ValueError as exc:
+                        _fail("helper_windows", str(exc))
                 if ((lowering.pointer_bounds or {}).get("entry_windows") or (lowering.pointer_bounds or {}).get("owner") or
                         any(row.get("kind") in {"call", "producer", "import"} for row in lowering.pointer_bounds.get("sites", []))):
                     wp_pointer_bounds.recheck_source(lowering, context.get("pointer_source_plan"))

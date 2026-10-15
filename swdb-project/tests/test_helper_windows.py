@@ -59,6 +59,17 @@ def test_transparent_clone_keeps_every_state_call_and_has_no_helper_premise(tmp_
     helper_windows.check_view(path, "unit", view, imported_calls=IMPORTS)
 
 
+def test_utf8_comments_preserve_clang_byte_spans_and_original_source_bytes(tmp_path):
+    from swdb import helper_windows
+    prefix = "// π and 🍎 precede every helper byte span\n"
+    suffix = "// a later λ comment stays unchanged\n"
+    path, view = prepare(tmp_path, helper=prefix + HELPER, unit=UNIT + suffix)
+    assert prefix in view.text and suffix in view.text
+    assert view.path.read_bytes() == view.text.encode("utf-8")
+    assert view.certificate["source_sha256"] == hashlib.sha256(path.read_bytes()).hexdigest()
+    helper_windows.check_view(path, "unit", view, imported_calls=IMPORTS)
+
+
 def test_every_branch_and_nested_helper_context_is_expanded_without_shared_formals(tmp_path):
     helper = HELPER + '\nvoid wrap(int *p, int n, int t) { load(p,n,t); }\n'
     unit = '''int unit(int *q, int *p, int n, int m) {

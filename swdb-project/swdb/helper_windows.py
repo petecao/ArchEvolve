@@ -181,9 +181,9 @@ class _Plan:
         self.source = Path(source).resolve()
         self.raw = self.source.read_bytes()
         try:
-            self.text = self.raw.decode("ascii")
+            self.text = self.raw.decode("utf-8")
         except UnicodeDecodeError:
-            raise Refused("helper view currently requires ASCII source offsets") from None
+            raise Refused("helper view requires UTF-8 source") from None
         if re.search(r'/\*@|//@|\b(?:__(?:FILE|LINE|COUNTER|BASE_FILE|INCLUDE_LEVEL)__|__builtin_(?:FILE|FUNCTION|LINE|COLUMN))\b', self.text):
             raise Refused("helper views do not transport annotations or location-dependent builtins")
         self.tool = c_lowering.locate()
@@ -215,12 +215,12 @@ class _Plan:
                     if not parent or parent.get("kind") != "CompoundStmt":
                         raise Refused("helper call must be a standalone statement in braces")
                     start, end = _span(node, self.source)
-                    suffix = re.match(r'\s*;', self.text[end:])
+                    suffix = re.match(rb'\s*;', self.raw[end:])
                     if not suffix:
                         raise Refused("helper statement terminator is not explicit")
                     end += suffix.end()
                     replacement = self.expand(node, {}, ())
-                    replacement += "\n" * self.text[start:end].count("\n")
+                    replacement += "\n" * self.raw[start:end].count(b"\n")
                     self.edits.append({"begin": start, "end": end, "text": replacement})
                     return
             for child in _children(node):
@@ -229,14 +229,19 @@ class _Plan:
         self.edits.sort(key=lambda e: e["begin"])
         if any(a["end"] > b["begin"] for a, b in zip(self.edits, self.edits[1:])):
             raise Refused("overlapping helper contexts")
-        self.output = self.text
+        # Clang ranges are byte offsets, including when comments or identifiers
+        # contain UTF-8. Preserve all unedited bytes and measure replacement
+        # lengths in the same coordinate system as the independent AST checker.
+        output = self.raw
         for edit in reversed(self.edits):
-            self.output = self.output[:edit["begin"]] + edit["text"] + self.output[edit["end"]:]
+            output = output[:edit["begin"]] + edit["text"].encode("utf-8") + output[edit["end"]:]
+        self.output = output.decode("utf-8")
         shift = 0
         for edit in self.edits:
             edit["view_begin"] = edit["begin"] + shift
-            edit["view_end"] = edit["view_begin"] + len(edit["text"])
-            shift += len(edit["text"]) - (edit["end"] - edit["begin"])
+            size = len(edit["text"].encode("utf-8"))
+            edit["view_end"] = edit["view_begin"] + size
+            shift += size - (edit["end"] - edit["begin"])
 
     def expand(self, call, substitutions, stack):
         fn = self.tree.binding(call)
@@ -362,15 +367,20 @@ class _Plan:
                 env[param["id"]] = declaration["id"]
             for original, generated in zip(source_statements, statements[len(params):]):
                 match(original, generated, env)
-        match(self.tree.body(self.entry), actual.body(actual.entry(self.entry["name"])))
-        if next(contexts, None) is not None or len(consumed) != len(self.contexts):
-            raise Refused("not every source helper context was checked")
-        for node in _walk(actual.body(actual.entry(self.entry["name"]))):
-            if node.get("kind") == "CallExpr" and actual.body(actual.binding(node)) is not None:
-                raise Refused("reachable source helper remains after contextual expansion")
-        if Path(path).read_text() != self.output or _dependencies(self.source, self.tool, self.includes, self.defines) != self.dependencies:
-            raise Refused("source/view changed during independent AST certification")
-        return original_headers
+        try:
+            match(self.tree.body(self.entry), actual.body(actual.entry(self.entry["name"])))
+            if next(contexts, None) is not None or len(consumed) != len(self.contexts):
+                raise Refused("not every source helper context was checked")
+            for node in _walk(actual.body(actual.entry(self.entry["name"]))):
+                if node.get("kind") == "CallExpr" and actual.body(actual.binding(node)) is not None:
+                    raise Refused("reachable source helper remains after contextual expansion")
+            if Path(path).read_text() != self.output or _dependencies(self.source, self.tool, self.includes, self.defines) != self.dependencies:
+                raise Refused("source/view changed during independent AST certification")
+            return original_headers
+        finally:
+            # The mutually recursive closures otherwise retain both full TU
+            # trees until cyclic GC, overlapping the next source replay/verifier.
+            match = clone = None
 
     def certificate(self, dependencies):
         return {"version": 1, "source_sha256": _hash(self.raw), "view_sha256": _hash(self.output.encode()),

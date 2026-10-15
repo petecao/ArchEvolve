@@ -385,5 +385,25 @@ The supported stream, gather and store host-pointer calls additionally need a st
 primitive entry-window origin. Named assertions check each current command-state footprint against
 the frozen entry extent and certified offset. Original initializedness, separation and RTE
 obligations remain. Mutable-offset aliases, missing windows, pointer region/query calls without a
-footprint policy, and retained pointer helpers refuse. No helper premise is synthesized. Before
+footprint policy, and unmodeled pointer helpers refuse. No helper premise is synthesized. Before
 launch, setup reparses the complete source and rederives every call binding and live policy.
+
+Checked contextual helpers (2026-10-15): a narrow DX100 source view expands annotation-free,
+acyclic global void helpers with plain `int`/`int *` formals and bare binding/literal arguments.
+Each context captures arguments once in fresh local declarations and retains every original
+audited call in order. An independent full translation-unit AST comparison checks the original
+body, captures, declaration bindings and expanded view. UTF-8 text is edited using Clang byte
+offsets; unedited source bytes and include resolution are preserved.
+
+This relation supplies no helper contract or entry window. The ordinary origin, call-footprint,
+CPU-domain, initializedness and RTE checks still apply to the effective lowering. Source-anchored
+hints are outside this initial slice. Records retain `helper_window_check`,
+`helper_window_certificate`, `helper_original_source`, `helper_original_lowering` and
+`helper_view_source` pins; `c_lowering` names the effective lowering. Both lowerings and the
+original/view AST relation are freshly regenerated before WP. The source view persists beside
+the proof evidence. A declaration alone grants no origin permission to other helpers or models.
+
+The existing size fixture proves through this relation, while removing its original caller
+initializedness leaves the stream-load precondition unproved. Original three-read source
+`base[q[0]]` remains outside the supported scalar-offset grammar; helper certification does not
+waive that separate nested-read obligation.

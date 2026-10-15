@@ -40,7 +40,7 @@ import subprocess
 from dataclasses import replace
 from pathlib import Path
 
-from swdb import artifacts, c_lowering, cpu_memory_admission, framac, hint_check, paths, proof_semantics, proof_setup, rss_watchdog, standard_model_view, std_models, terminal_release, vector_ownership, vocab, wp_pointer_bounds
+from swdb import artifacts, c_lowering, cpu_memory_admission, framac, helper_windows, hint_check, paths, proof_semantics, proof_setup, rss_watchdog, standard_model_view, std_models, terminal_release, vector_ownership, vocab, wp_pointer_bounds
 from swdb.proof import MODEL_PREFIX, AdapterError, Verdict
 
 NAME = "wp"
@@ -164,9 +164,52 @@ class WpAdapter:
                              "array_domain_contract": {"id": self.contract, "sha256": job.unit.contract_sha256},
                              **semantics_options}
             lowering = c_lowering.lower(source, job.unit.function, **source_kwargs)
+            original_lowering = lowering
+            try:
+                wp_pointer_bounds.check(lowering)
+                needs_origins = False
+            except wp_pointer_bounds.Refused:
+                needs_origins = True
+            has_helpers = any(a["kind"] == "contract" and a["function"] != job.unit.function
+                              for a in lowering.anchors)
+            if needs_origins and has_helpers and proof_semantics.called(lowering, covered):
+                if self.hints_path:
+                    raise helper_windows.Refused("source-anchored hints are outside the checked helper-view slice")
+                imported = {name: {"id": policy["model"]["entry"],
+                                   "sha256": policy["model"]["entry_sha256"]}
+                            for name, policy in semantics_options["semantics"]["audited_imports"].items()}
+                helper_options = {"defines": self.defines, "imported_calls": imported}
+                view = helper_windows.prepare(source, job.unit.function, **helper_options,
+                                              scratch=wp_dir / "helper-source")
+                if view:
+                    helper_windows.check_view(source, job.unit.function, view, **helper_options)
+                    effective_kwargs = {**source_kwargs, "includes": view.includes}
+                    lowering = c_lowering.lower(view.path, job.unit.function, **effective_kwargs)
+                    original_path, original_anchors = original_lowering.write(wp_dir / "helper-original")
+                    certificate_path = wp_dir / "helper_windows.json"
+                    certificate_text = json.dumps(view.certificate, indent=2) + "\n"
+                    certificate_path.write_text(certificate_text)
+                    helper_pins = {**view.pins,
+                        "helper_original_lowering": {"id": original_path.name, "sha256": original_lowering.sha256},
+                        "helper_original_source": {"id": source.name, "sha256": original_lowering.source_sha256},
+                        "helper_view_source": {"id": view.path.name, "sha256": lowering.source_sha256}}
+                    context["helper_windows"] = {"source": source, "view": view, "options": helper_options,
+                        "original_lowering": original_lowering, "original_kwargs": source_kwargs,
+                        "effective_kwargs": effective_kwargs, "original_path": original_path,
+                        "original_source_text": source.read_text(), "certificate_path": certificate_path,
+                        "certificate_text": certificate_text, "pins": helper_pins}
+                    context["pins"].update(helper_pins)
+                    context["reports"] += [("helper_original_source", source),
+                        ("helper_original_lowering", original_path), ("helper_original_anchors", original_anchors),
+                        ("helper_view_source", view.path), ("helper_windows_certificate", certificate_path)]
+                    context["pointer_source_plan"] = {"source": str(view.path), "kwargs": effective_kwargs}
             if (unit.get("array_domains") or (lowering.pointer_bounds or {}).get("owner") or
                     any(row.get("kind") in {"call", "producer", "import"} for row in lowering.pointer_bounds.get("sites", []))):
-                context["pointer_source_plan"] = {"source": str(source), "kwargs": source_kwargs}
+                context.setdefault("pointer_source_plan", {"source": str(source), "kwargs": source_kwargs})
+        except helper_windows.Refused as exc:
+            context["settings"] = {"tool": "frama-c-wp", "flags": [], "verifier_launched": False,
+                                   "helper_windows": {"verdict": "refused", "reason": str(exc)}}
+            return self._not_proven("unsupported_construct", str(exc), context)
         except c_lowering.Unsupported as exc:
             return self._not_proven("unsupported_construct", str(exc), context)
         except c_lowering.ParseError as exc:
@@ -178,6 +221,10 @@ class WpAdapter:
             raise AdapterError(problem)
         lowering_tool = c_lowering.identity()["c_lowering"]
         context["assumed"] = std_models.assumptions(lowering, tools["identities"]["clang"][2], lowering_tool)
+        if context.get("helper_windows"):
+            view = context["helper_windows"]["view"]
+            context["assumed"].append({"kind": "trusted_tool", "reference": helper_windows.identity(),
+                                       "sentence": view.assumption["text"]})
         context["pins"].update(std_models.pins(lowering))
         if lowering.std_models:
             probe = subprocess.run([*c_lowering.locate().command, "-dM", "-E", "-x", "c++",
@@ -266,7 +313,7 @@ class WpAdapter:
                 "reason": "imported array-window summaries require checked caller-domain discharge: " + ", ".join(domain_callees)}}
             return self._not_proven("unsupported_construct", context["settings"]["pointer_bounds"]["reason"], context)
         from swdb import summary_bindings
-        context['source'] = source
+        context['source'] = context["helper_windows"]["view"].path if context.get("helper_windows") else source
         try:
             contracts = self._dependencies(dependency_lowering, context)
         except summary_bindings.Refused as exc:
@@ -314,6 +361,27 @@ class WpAdapter:
         context["reports"].append(("wp_input", input_path))
         context["hints_reaching_wp"] = len(accepted)
         return self._wp(job, input_path, context)
+
+    def check_helper_windows(self, job, context):
+        """Recheck both source lowerings and the independent contextual AST relation."""
+        helper = context["helper_windows"]
+        view = helper["view"]
+        if self.hints_path:
+            raise helper_windows.Refused("source-anchored hints are outside the checked helper-view slice")
+        helper_windows.check_view(helper["source"], job.unit.function, view, **helper["options"])
+        try:
+            original = c_lowering.lower(helper["source"], job.unit.function, **helper["original_kwargs"])
+            effective = c_lowering.lower(view.path, job.unit.function, **helper["effective_kwargs"])
+        except c_lowering.LoweringError as exc:
+            raise helper_windows.Refused(f"helper source replay failed: {exc}") from None
+        if original != helper["original_lowering"] or effective != context["lowering"]:
+            raise helper_windows.Refused("original or contextual helper lowering changed after planning")
+        expected = {**view.pins,
+            "helper_original_lowering": {"id": helper["original_path"].name, "sha256": original.sha256},
+            "helper_original_source": {"id": helper["source"].name, "sha256": original.source_sha256},
+            "helper_view_source": {"id": view.path.name, "sha256": effective.source_sha256}}
+        if expected != helper["pins"] or any(context["pins"].get(k) != v for k, v in expected.items()):
+            raise helper_windows.Refused("helper checker, certificate, or original/view pins changed before launch")
 
     def _hint_check(self, job, lowering, base, context):
         """Ticket 35: the proof hint check; the indices of the hints that reach WP (all of them, or none)."""
@@ -639,6 +707,16 @@ class WpAdapter:
                                "wp_seconds_per_solver": tools["seconds"], "environment_removed": removed,
                                "rss_cap_bytes": cap, "hint_count": context.get("hints_reaching_wp", 0), "build_constants": list(self.defines)}
         inputs = [(scratch / "wp_input.c", context["wp_expected_text"])]
+        helper = context.get("helper_windows")
+        if helper:
+            view = helper["view"]
+            inputs += [(helper["source"], helper["original_source_text"]),
+                       (helper["original_path"], helper["original_lowering"].text), (view.path, view.text),
+                       (helper["certificate_path"], helper["certificate_text"])]
+            context["settings"]["helper_windows"] = {"certificate": view.certificate,
+                "original_lowering_sha256": helper["original_lowering"].sha256,
+                "effective_lowering_sha256": context["lowering"].sha256,
+                "input_premises_added": [], "hints": "source-anchored hints unsupported"}
         terminal = context.get("terminal_release")
         if terminal:
             view = terminal["view"]
