@@ -254,7 +254,7 @@ def test_each_construct_group_lowers_twice_to_identical_c_and_anchors_that_compi
     second = lower(LOWERING / fixture, function, tmp_path / "two", *extra)
     assert first["c_lowering"]["sha256"] == second["c_lowering"]["sha256"]
     assert first["anchors"]["sha256"] == second["anchors"]["sha256"]
-    assert first["tool"]["version"] == "3" and first["tool"]["naming_rules"] == "kept-names.3"
+    assert first["tool"]["version"] == "4" and first["tool"]["naming_rules"] == "kept-names.3"
     c_file = tmp_path / "one" / f"{function}.c"
     assert str(tmp_path) not in c_file.read_text()
     done = subprocess.run([_c_compiler(), "-std=c11", "-Wall", "-Werror", "-fsyntax-only", c_file],
@@ -574,3 +574,41 @@ def test_changing_one_member_contract_gives_a_new_model_pin(tmp_path):
     changed.write_text(source.replace(old, 'f"    ensures \\\\result == this->data; */\\n"', 1))
     assert std_models.identity(changed)["id"] == std_models.identity()["id"]
     assert std_models.identity(changed)["sha256"] != std_models.identity()["sha256"]
+
+
+def test_terminal_delete_certificate_keeps_the_native_lowering_and_names_the_checked_release(tmp_path):
+    record = lower(LOWERING / "new_array.cc", "swdb_new_unit", tmp_path)
+    certificate = record["terminal_release"]
+    assert certificate["function"] == "swdb_new_unit" and certificate["owner"] == "buf"
+    assert certificate["model"] == "swdb_alloc_delete_array_int"
+    assert certificate["checker"]["id"] == "terminal-release-check-1"
+    assert "swdb_alloc_delete_array_int(buf);" in (tmp_path / "swdb_new_unit.c").read_text()
+    anchors = json.loads((tmp_path / "swdb_new_unit.anchors.json").read_text())
+    assert anchors["terminal_release"] == certificate
+
+
+@pytest.mark.parametrize("body", [
+    "int **escaped = &buf; buf[0] = n; delete[] buf; return n;",
+    "int *alias = buf; alias[0] = n; delete[] buf; return n;",
+    "int value = n; int *escaped = &value; buf[0] = *escaped; delete[] buf; return value;",
+    "buf[0] = n; delete[] buf; return buf[0];",
+    "if (n == 1) delete[] buf; delete[] buf; return n;",
+    "delete[] buf; delete[] buf; return n;",
+    "buf = new int[n]; delete[] buf; return n;",
+    "buf[0] = n; delete[] buf; return swdb_later(n);",
+])
+def test_terminal_release_checker_refuses_escapes_aliases_later_heap_reads_and_extra_effects(tmp_path, body):
+    source = tmp_path / "lifetime_control.cc"
+    source.write_text("int swdb_later(int n) { return n; }\n"
+                      "int swdb_terminal_guard(int n) { int *buf = new int[n]; "
+                      "for (int i = 0; i < n; ++i) buf[i] = n; " + body + " }\n")
+    record = lower(source, "swdb_terminal_guard", tmp_path / "out")
+    assert "terminal_release" not in record
+
+
+def test_terminal_release_does_not_certify_a_read_before_any_array_initialization(tmp_path):
+    source = tmp_path / "uninitialized.cc"
+    source.write_text("int swdb_uninitialized(int n) { int *buf = new int[n]; "
+                      "int ignored = buf[0]; delete[] buf; return n; }\n")
+    record = lower(source, "swdb_uninitialized", tmp_path / "out")
+    assert "terminal_release" not in record

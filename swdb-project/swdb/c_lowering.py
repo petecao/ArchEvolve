@@ -44,10 +44,10 @@ import subprocess
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from swdb import std_models
+from swdb import std_models, terminal_release
 
 TOOL_ID = "swdb-c-lowering"
-TOOL_VERSION = "3"                   # bump on any change to what the tool prints (a new method version)
+TOOL_VERSION = "4"                   # checked terminal-release metadata; the naming rules remain unchanged
 NAMING_RULES = "kept-names.3"        # bump on any change to RULES
 RULES = (
     "A function, parameter, local, global or field keeps its C++ name.",
@@ -196,6 +196,7 @@ class Lowering:
     probes: tuple = ()          # ticket 27: hazard probes {id, function, access, line, begin, end (C++ byte offsets)}
     std_models: tuple = ()      # ticket 25: the modeled std types the C uses (struct names, e.g. std_vector_int)
     allocation: bool = False    # ticket 25: the C allocates (new[] or a std model): "allocation succeeds" applies
+    terminal_release: dict | None = None  # checked ownership certificate; native lowering retains delete[]
 
     @property
     def sha256(self):
@@ -213,6 +214,8 @@ class Lowering:
             data["std_models"] = {**std_models.identity(), "types": list(self.std_models)}
         if self.allocation:
             data["allocation"] = True
+        if self.terminal_release:
+            data["terminal_release"] = self.terminal_release
         return json.dumps(data, indent=1, sort_keys=True) + "\n"
 
     @property
@@ -267,10 +270,11 @@ def _probe(command):
 
 
 def identity():
-    """{id, sha256} of the C lowering tool (this module's source), its naming rules, and the clang binary it runs."""
+    """Identity of the lowering and its ownership checker, naming rules, and clang binary."""
     tool = locate()
     here = Path(__file__)
-    found = {"c_lowering": {"id": f"{TOOL_ID}-{TOOL_VERSION}", "sha256": _file_sha256(here)},
+    digest = hashlib.sha256(here.read_bytes() + Path(terminal_release.__file__).read_bytes()).hexdigest()
+    found = {"c_lowering": {"id": f"{TOOL_ID}-{TOOL_VERSION}", "sha256": digest},
              "naming_rules": naming_rules()}
     if not tool.missing:
         found["clang"] = {"id": f"clang-{tool.version}", "sha256": _file_sha256(_binary(tool.command[0]))}
@@ -2225,12 +2229,16 @@ def lower(source, function, includes=(), defines=(), summaries=None, semantics=N
         raise LoweringError("anchor IDs are not unique (a C lowering tool defect)")
     unit_prototype, unit_params = definitions[function][0], definitions[function][2]
     declaration = "\n".join([*headers, *types, *globals_text, f"{unit_prototype};"]) + "\n"
-    return Lowering(function=function, text="\n".join(lines) + "\n", anchors=tuple(anchors), declaration=declaration,
+    text = "\n".join(lines) + "\n"
+    certificate = terminal_release.certify(node, source=source.read_text(), source_sha256=_file_sha256(source),
+                                            models=unit.model_order, anchors=anchors, text=text)
+    return Lowering(function=function, text=text, anchors=tuple(anchors), declaration=declaration,
                     parameters=tuple(unit_params), source_sha256=_file_sha256(source), defines=defines,
                     tool={"id": TOOL_ID, "version": TOOL_VERSION, "naming_rules": NAMING_RULES,
                           "naming_rules_sha256": RULES_SHA256, "clang": tool.version},
                     summaries=tuple(unit.summaries_used), models=tuple(n for n in unit.model_order if n != "SWDB_MODEL_FAIL" and not n.endswith("_valid")), probes=tuple(unit.probes),
-                    std_models=tuple(sorted(unit.std_types)), allocation=unit.allocates or any(n.startswith("std_vector_") for n in unit.std_types) or any(n.startswith("swdb_alloc_new_array_") for n in unit.model_order))
+                    std_models=tuple(sorted(unit.std_types)), allocation=unit.allocates or any(n.startswith("std_vector_") for n in unit.std_types) or any(n.startswith("swdb_alloc_new_array_") for n in unit.model_order),
+                    terminal_release=certificate)
 
 
 def _callees_first(function, definitions):
@@ -2408,4 +2416,6 @@ def _cli(args):
         out["std_models"] = {**std_models.identity(), "types": list(lowering.std_models)}
     if lowering.allocation:
         out["allocation"] = True
+    if lowering.terminal_release:
+        out["terminal_release"] = lowering.terminal_release
     return out
