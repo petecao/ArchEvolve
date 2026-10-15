@@ -236,9 +236,8 @@ Ordinary C and C++ artifacts retain `delete[]`. A separate WP view may omit the 
 - One fresh local owner, scalar `int` parameters, locals and return; no aliases, address escapes,
   reassignment, globals, calls, callbacks, extra releases or custom allocator definitions.
 - A canonical complete fill loop immediately follows allocation, before any array read. Scalar locals
-  initialize before use; self-initialization is rejected. This is a syntactic initializedness check,
-  because the frozen `-wp-rte` setup does not request the separate
-  `-rte-initialized <function>` selector. WP 33 does support initializedness predicates.
+  initialize before use; self-initialization is rejected. This syntactic check restricts the ownership
+  fragment in addition to the mandatory `-rte-initialized @all` proof obligations.
 - The last two statements are exactly `delete[] owner; return scalar_expression;`, and the return does
   not read the owner. Formal halves mention only scalar parameters and result; only pre-release loop
   hints are admitted. Ghost declarations and statements are refused.
