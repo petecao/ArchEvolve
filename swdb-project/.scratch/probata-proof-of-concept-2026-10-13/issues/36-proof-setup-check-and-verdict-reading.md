@@ -1,7 +1,7 @@
 # 36 — Proof setup check and verdict reading
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-15 ET (source-bound summary and remote replay checkpoint)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 11, 21, 27
@@ -529,8 +529,21 @@ imports and all three corrected bounded stub-meaning controls pass. Runtime
 manifest hashes remained unchanged throughout. An earlier 88-case Crux/scripted
 setup batch passed; it is not actual Crux proof evidence. The record-evidence
 mutation control deliberately changes one artifact hash; every other audited
-artifact hash matches. This checkpoint does not resolve ticket36 or draft3.
+artifact hash matches. This checkpoint does not resolve ticket36 or draft 3.
 
 Evidence: [summary-source-binding-20261015.json](../evidence/summary-source-binding-20261015.json).
 Regression: `tests/test_summary_source_binding.py`, including corpus case
 `summary-same-name-different-body.yaml`.
+
+
+## Checkpoint — 2026-10-15 09:53 ET: frozen mbit10 replay
+
+Source `fddb1462dfb9ff8d7885521bc6edaf367d97a12e` (merged into integration
+`45560225`) ran in two socket lanes from 09:32 ET. Node 0 native shard passed 132
+checks with one deselected in 145.05s; node 1 bounded/source-summary shard passed 17
+checks in 581.79s. Both wrappers exited 0 and leases released. The audit covers 27
+retained proof records: all referenced artifact hashes match except the deliberately
+zeroed report pin in the evidence-mutation negative control. That dependency control
+is not accepted as a proof. Raw output remains remote for its readers; only compact
+metadata is exported. [Evidence](../evidence/summary-source-binding-mbit10-20261015.json).
+This checkpoint does not close the ticket's remaining acceptance criteria.

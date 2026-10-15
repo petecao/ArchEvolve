@@ -4,45 +4,46 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 09:15 ET. Pushed clean integration is `bfc5e4f6` on
+Updated: 2026-10-15 09:53 ET. Pushed integration checkpoint is `45560225` on
 `codex/probata-poc-integration`, based on `yanrujhou_main` at `150930b4`.
-It includes primitive checked CBMC windows, exact all-DX imported-call binding,
-strict smoke-preserving literal-offset normalization, checked Crux source admission
-on both forms, and the closed current-owner `at()`/immediate `data()` views.
-Historical actual evidence retains each original source/method pin; later merges
-and stand-in checks do not upgrade that proof evidence.
-
-A real public CBMC counterexample on integration `44d50f7e` confirmed that a
-changed same-name callee could borrow a summary proved on different code. The
-root branch `codex/probata-construct-init` is implementing fresh complete callee
-closure equality, current proof/method/evidence binding, checked finite call bounds
-and exact pointer-buffer alignment, plus independent prelaunch replay. The changed
-callee now refuses before launch; matching scalar and array positives passed early
-controls. The final combined CBMC/WP batch is active, so this fix is not yet merged
-or accepted. Old array-summary fixtures used an n<=2 summary for n<=3 callers;
-positive fixtures now prove the matching bound and a separate negative retains
-that mismatch. No domain limitation is silently promoted to a general theorem.
+The source-bound summary fix is merged: fresh callee closure, current proof/method
+and evidence, finite call bounds and pointer-buffer alignment are checked before
+launch. A native violating witness supports the historical changed-callee false
+proof; focused actual controls and the frozen mbit10 replay now pass.
+[Local evidence](evidence/summary-source-binding-20261015.json).
+[Remote evidence](evidence/summary-source-binding-mbit10-20261015.json).
+Historical proof records retain their original source and method pins.
 
 | Ticket | Current evidence | Next action |
 |---|---|---|
-| 07 | Run17 ended unproven: 2 unit and 17 hint goals; offline audit shows snapshots were attempted then reverted | Prepare method18's smaller bridges and a prospective, explicitly named search/source revision; no run18 launched |
-| 24 | Earlier 132-case remote native checkpoint; current-policy full constructs remain open | Finish generic summary binding and replay the combined construct groups |
-| 25 | Qualified at pair passed; current data safe/stale pair2 passing tests at `67dfd7a8`, with sole stale goal alias_live_after | Complete wider model/member lifetime acceptance; standalone opaque models stay closed |
-| 27 | Direct DX final 9 hardening checks and 2 safe replays pass at `f83fdf04`; helper component reviewed | Wire independently checked contextual helper view into WP, then actual combined acceptance |
-| 36 | Primitive remote CBMC 5 passing checks at `07a9a299`; 88 Crux and scripted setup controls pass on root follow-up | Complete source/proof-bound summary eligibility and combined checker replay |
-| 41 /42 | Resolved; approved strengthened composition statement, production Rocq 209 Qed | Preserve exact evidence boundary; no DX reduction claim |
+| 07 | Run17 unproven; run18 launched 09:50:53 ET at isolated `996bd62c`, reviewed 85 offline controls and strict initialization/deadline policy | Finish fresh baseline, counted hint search and final proof within 60 minutes; no success claimed |
+| 24 | Frozen `fddb1462` native replay132 passed/1 deselected on mbit10 | Finish current-policy construct-group proof acceptance |
+| 25 | Qualified at/data actual pairs pass; shadow-header prelaunch control exposes source-provenance gap | Check canonical full-TU declarations/allocation hooks, then wider vector/pair acceptance |
+| 27 | Direct DX controls pass; helper safe/initialization-negative actual pair passes at `7f9e3621`, clean integration handoff `e28eb2e2` | Review/merge helper view, then ordered nested-index reads; original three_reads still refused |
+| 36 | Frozen remote bounded/source-summary 17 checks pass;27 proof records audited with only intended mutation mismatch | Complete general setup/verdict acceptance as helper/model coverage grows |
+| 41 /42 | Resolved; approved composition statement and 209 production Rocq Qed | Preserve exact evidence boundary; no DX reduction claim |
 
 **32 of 63 resolved; five claimed.** Drafts 1/2 are immutable; draft 3 is not created.
-Ticket 28 remains unclaimed until 27 closes; 43 remains blocked by 29. Held-out kernels
-and method freeze remain gated by their dependencies. User authorization includes
-implementation, commits/pushes, source sync, two remote lanes and the scoped BFS
-workspace export through Codex/OpenAI.
+Ticket 28 remains gated by 27; 43 remains blocked by 29. Held-out kernels and method
+freeze remain gated by their dependencies. Existing user authorization covers
+implementation, commits/pushes, two remote lanes and scoped BFS source export.
 
-Next: integrate the checked helper and summary fixes, replay combined-source
-acceptance, recompute the ticket frontier, then create a new method draft after
-runtime identities settle. The 09:05 ET status report was delivered; next due 09:35 ET.
+Next: integrate the checked helper, close source-header provenance, complete nested
+read admission and combined acceptance, then create a new method draft after runtime
+identities settle. Last 30-minute status table 09:35 ET; next due 10:05 ET.
 
 ## Host coordination
+
+Latest audited readback: 2026-10-15 09:51 ET. Both socket leases and legacy lease
+released; load 0.02/0.25/0.52, 21 GiB free on `/data1`, 97 GiB on `/data`.
+Evaluation checkout is clean detached `fddb1462`. Node 0 native job ended 09:35 ET;
+node 1 bounded/source-summary job ended 09:42 ET, both exit 0. Their outputs use
+14.2 MiB and 28.3 MiB, each below its 2 GiB budget. Raw output remains remote for
+coordinator/ticket acceptance and independent audit readers. Recheck live leases,
+load and disks before any dispatch; this is a timestamped observation.
+[Compact audit](evidence/summary-source-binding-mbit10-20261015.json).
+
+Historical host observations follow.
 
 Latest live readback: 2026-10-15 09:00 ET. Node 0 generation 554, node 1 generation 595
 and legacy generation 77 were released; load 0.00/0.02/0.14, 21 GiB free on `/data1`

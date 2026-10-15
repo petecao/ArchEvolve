@@ -1,0 +1,136 @@
+{
+  "created": "2026-10-15 09:50:39 ET",
+  "phase": "independent review GO; fresh live preflight passed; prepared for counted launch",
+  "source_commit": "996bd62c1dd361845a7d6041167ca762e6d0ee32",
+  "source_worktree": "/private/tmp/probata-t07-method18",
+  "method": "bridge-first-bounded-debt-v1",
+  "source_files": [
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/loop.py",
+      "sha256": "e55acace9bdcb0aa83a8982f538d3df99c2162ceefefc40ceb78ca7c4df917ae",
+      "bytes": 43403
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/hints.py",
+      "sha256": "48bafc2eab6caf40bb921e773212dff3efbbbc652aa2d120d87da4704b021bca",
+      "bytes": 16853
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/wp_run.sh",
+      "sha256": "80340ca19f516ac1da217aedb54309fd8ff127f04ec1165c82d61565254eaff1",
+      "bytes": 4423
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/edit_loop.py",
+      "sha256": "50cfd525be88aa3932ca6632aabec3a507b6cf73477f6f4833e017cc8dc2e65b",
+      "bytes": 38291
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/edit_core.py",
+      "sha256": "772585447b87a60d357150b8ea9e691849c1f2a0b42bc443a89ef7fcb6323215",
+      "bytes": 18128
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/edit_tool_mcp.py",
+      "sha256": "2c713cb52c834a330d50dafe444d056ad1df9b34e4186bca0265c1f95a5b9080",
+      "bytes": 10042
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/frame_seeds.py",
+      "sha256": "7c8bec31b2be840218545a3370cafde8431ddd4699a363ebe3e391fb56c519c2",
+      "bytes": 12227
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/goal_print.py",
+      "sha256": "9494e8d457f0d28d055c109ea4fbaada278c15e3088466096dc2a407a89a358f",
+      "bytes": 6514
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/tdstep_standin.c",
+      "sha256": "b4a820bd20b197eee293616af17da884bbc63ed92f9252e77f261092387024de",
+      "bytes": 11987
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/dxc_summaries.h",
+      "sha256": "d708c0ef974e5ede1aaadd2b5e66dd785affa5e1dc6ef37419bf9e72517ae0d2",
+      "bytes": 10789
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/gapbs_models.h",
+      "sha256": "401d8ccfa8fdc1ef3734c97563a1c110d003d8847508aaa24ec3f300a33eed3e",
+      "bytes": 10157
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/bfs_unit.h",
+      "sha256": "1bcbf4dac683d6a46269fcd5f896fefc2571adc49d059b46f93fb25eb0f7b235",
+      "bytes": 1941
+    },
+    {
+      "path": "swdb-project/library/dx100/bfs_read_offload.inc",
+      "sha256": "3c5867a2b8919806f681603836bd0cff448f21634485abf84e49ed71f25515ef",
+      "bytes": 3157
+    }
+  ],
+  "prepared_manifest_sha256": "062fe9927698ecff166a9ea29638959635b24eca953e6004e4015d190041fb5c",
+  "external_verifier_runner": {
+    "path": "/tmp/claude/probata-tools/verifier_run.py",
+    "sha256": "ba62febe742cbf1710ecaecb13a6693adcc83becc56c25784ca602322a5fbb89",
+    "note": "separate external execution dependency, not one of13 project source inputs; live host/tool/lease preflight remains required"
+  },
+  "transitive_project_pin": {
+    "path": "swdb-project/swdb/provider_adapters.py",
+    "sha256": "5bf97c5bc4170e9a36cc853147bdc9f5c1ba43b22e51f6c11b8405101d26d5b8",
+    "scope": "all tracked source additionally pinned by clean exact source commit"
+  },
+  "tools": {
+    "codex": "codex-cli 0.153.0",
+    "frama_c": "33.0 (Arsenic)"
+  },
+  "tool_binaries": [
+    {
+      "path": "/Users/yanrujhou/.codex/packages/standalone/releases/0.153.0-aarch64-apple-darwin/bin/codex",
+      "sha256": "a29d9e86eef88cbbd69f97ce8c590b1d0a287c8f77424f5eef226b883d7eaa22"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/bin/frama-c",
+      "sha256": "412ccd77e77caf5bceb5ca1fd4e0a3efab04cda64af07706126cd5409cb05475"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/bin/alt-ergo",
+      "sha256": "0845fc162c1c8081841e38e45966854a3c72cde075cebd149bdf3d58be12f7ae"
+    },
+    {
+      "path": "/opt/homebrew/bin/z3",
+      "sha256": "b9a2c3a7dc833da652955116ad743cc733aa7938dbe64f528f71cb09066e2512"
+    },
+    {
+      "path": "/opt/homebrew/bin/cvc5",
+      "sha256": "28dd5e5d8b8828ec6eea7fdf2e1544a218551382ca19e6ec8c2967fd6230cf5f"
+    }
+  ],
+  "python": "Python 3.12.6",
+  "local_slots": "2",
+  "live_owner_snapshot": [],
+  "free_bytes": 67404054528,
+  "output_budget_bytes": 2147483648,
+  "output": "/private/tmp/probata-t07-20261015-run18/counted-18",
+  "retention_readers": [
+    "ticket07 completion",
+    "offline proof audit",
+    "independent method review"
+  ],
+  "counting": "60 counted minutes includes fresh baseline, seeds, provider, diagnostics, rejected work, rollback and final proof; only shared-lock waits excluded",
+  "frozen_wp_flags": [
+    "-wp-no-filter-init"
+  ],
+  "new_requires": false,
+  "provider_source_export": "explicitly authorized by user for prepared BFS workspace to Codex/OpenAI",
+  "prepared_manifest_path": "/private/tmp/probata-t07-method18-deadline-repair/source-manifest-amended.json",
+  "independent_review": {
+    "path": "/private/tmp/probata-method18-rereview.md",
+    "sha256": "6e10494b19e4bfc5f72f5f12e9d8e29875d50202453f4435bbf0b75635556b3b"
+  },
+  "counted_run_started": true,
+  "started": "2026-10-15 09:50:53 ET",
+  "session_id": 52050
+}
