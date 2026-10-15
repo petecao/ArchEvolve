@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-14 20:05 ET (Answer); 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** resolved
+**Status:** claimed
 **Blocked by:** 22, 24
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Formal-half language and the C++ subset": the C++ subset and the standard-library model; "Modules", library content: the `std::vector` and `std::pair` models; "What a proven verdict asserts": the assumption set; "Records and levels": the method-version file lists the `std::vector` model; "Testing Decisions", seam 1; choice S1); decisions: [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md) items 6, 7; also [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md) item 11 (undefined behavior is a proof obligation)
 **Time estimate:** about 1 week
@@ -136,3 +136,36 @@ deleted).
   sharing class; element access goes through `std_vector_<t>_operator_index` (or `data()` pointers).
 - 11/59: `method.probata-draft-2` carries `models`; it must be regenerated if 24 edits the lowering again
   (`/tmp/claude/probata-runs/t25/make_draft2.py`).
+
+## Progress (paused)
+
+2026-10-14 22:35 ET. Yan-Ru paused the effort. Status stays `claimed` (LR-01: the WP boxes are not met). The
+Answer above is the state at 20:05 ET; this section supersedes its "Not met" part.
+
+**Done since the Answer**
+
+- Allocation, decided under Yan-Ru's delegation: `swdb_alloc_<t>` (`allocates \result`, `\fresh`, `\valid`) and
+  `swdb_free` (`\freeable`, `frees p`) stubs, contract-only under Frama-C and `malloc`/`free` elsewhere; growth
+  members carry `allocates`/`frees`. WP on the 23 model functions: **309 of 327** goals (was 293 of 322). The
+  18 open goals all come from WP 33 not implementing `\fresh`, `\freeable`, `allocates` and `frees` ("Allocation,
+  initialization and danglingness not yet implemented"); the table is in `format-v0.4-std-models.md`
+  ("Allocation in WP"). Log `/tmp/claude/probata-runs/t25/wp-models/wp2.log`.
+- Model proof records (one mechanism, also for ticket 24's `std::min/max/swap/copy` models): `swdb/models.py`;
+  `swdb prove --summary model.<name> --adapter wp` proves a model once (subject `library_summary`); units (WP and
+  CBMC) pin proven model records in `pins.summaries` and list the others as `summary` assumption entries. Unit WP
+  jobs run `-wp-fct` on the unit's own functions only. Tests: `std_pair_int_int_ctor` and `std_min_int` prove and
+  a CBMC unit pins the pair record; `std_vector_int_grow` reads not proven with only allocation goals open.
+- `test_wp_adapter.py`: the overlap test now uses a private one-slot lock (the machine lock admits two jobs).
+
+**Open**
+
+- Unit-level WP proof of `swdb_fixture_vec_max` (with loop hints): an interrupted run (frozen flags, 30 s per
+  solver) had 19 goals timed out, among them `ensures`, `ensures_2`, `ensures_3`, `loop_invariant_3_preserved`
+  and 11 `assigns` parts (the buffer that `push_back` may reallocate cannot be separated from `a` without
+  `\fresh`). It cannot prove in WP 33 for the same reason. The "WP does not prove the stale case" run was not
+  finished. The test exists, skipped while paused.
+- Map acceptance "proves in WP" for a growing unit: needs an encoding WP 33 accepts (a ghost storage pool, ticket
+  07's note) or a decision that CBMC alone covers growth.
+
+**Next step**: decide between the ghost storage-pool encoding and accepting CBMC for growth; then finish the two
+unit WP runs (each takes over 10 min; run them outside the 600 s test limit) and regenerate draft 2.

@@ -173,3 +173,89 @@ def test_a_method_version_that_pins_another_model_version_admits_no_job_on_a_uni
     assert problem and "models.std_vector" in problem
     neither = c_lowering.Lowering("f", "", (), "", (), "0" * 64)
     assert std_models.method_problem(SimpleNamespace(id="m", data={"models": stale}), neither) is None
+
+
+# --- WP: model proof records (swdb.models) and the unit-level runs ---------------------------------------------------
+
+WP_ENV = {"SWDB_FRAMA_C": ""}             # the seed's helper disables Frama-C for swdb validate; WP needs it back
+MAX_HINTS = [
+    ("swdb_fixture_vec_max.loop1.head", "loop_invariant", "loop invariant 0 <= i <= n;"),
+    ("swdb_fixture_vec_max.loop1.head", "loop_invariant", "loop invariant std_vector_int_valid(&v) && v.size == i;"),
+    ("swdb_fixture_vec_max.loop1.head", "loop_invariant",
+     "loop invariant \\forall integer k; 0 <= k < i ==> v.data[k] == a[k];"),
+    ("swdb_fixture_vec_max.loop1.head", "loop_assigns", "loop assigns i, v, v.data[0 .. n - 1];"),
+    ("swdb_fixture_vec_max.loop1.head", "loop_variant", "loop variant n - i;"),
+]
+
+
+def _wp_ready():
+    from swdb import c_lowering, framac
+    return not framac.locate().missing and not c_lowering.locate().missing
+
+
+needs_wp = pytest.mark.skipif(not _wp_ready(), reason="Frama-C 33.0 or clang 22.1.8 is missing")
+
+
+def _prove_model(seed, name, ok=True):
+    result = seed.swdb("prove", "--summary", f"model.{name}", "--adapter", "wp", "--runs-dir", seed.runs,
+                       "--format", "json", env=WP_ENV)
+    assert (result.returncode == 0) is ok, result.stderr + result.stdout
+    return seed.read(json.loads(result.stdout)) if ok else result
+
+
+def _prove_wp(seed, function, contract, hints=None):
+    args = ["--candidate", seed.candidates["safe"], "--function", function, "--contract", contract, "--adapter", "wp",
+            "--runs-dir", seed.runs, "--format", "json", "--budget-minutes", "6"]   # under run_swdb's 600 s limit;
+    if hints:                                                                     # the full runs are in the Answer
+        path = seed.root / f"hints-{function}.yaml"
+        path.write_text(yaml.safe_dump({"hints": [{"anchor": a, "kind": k, "text": t, "provenance": {"source": "human"}}
+                                                  for a, k, t in hints]}, sort_keys=False))
+        args += ["--hint-file", path]
+    result = seed.swdb("prove", *args, env=WP_ENV)
+    assert result.returncode == 0, result.stderr + result.stdout
+    return seed.read(json.loads(result.stdout))
+
+
+def test_every_model_a_lowering_defines_is_rebuilt_by_name_with_a_hash_that_follows_the_contracts_it_calls():
+    from swdb import c_lowering, models
+    lowering = c_lowering.lower(FIXTURES / "proof" / "lowering" / "vector_pair.cc", "swdb_vector_unit")
+    names = [m.name for m in models.provable(lowering)]
+    assert "std_vector_int_push_back" in names and "std_vector_int_grow" in names and "std_pair_int_int_ctor" in names
+    assert not any(n.startswith(("swdb_alloc_", "swdb_free", "SWDB_")) or n.endswith("_valid") for n in names)
+    push = models.unit("model.std_vector_int_push_back")
+    assert "static void std_vector_int_grow(" in push.text and push.id == "model.std_vector_int_push_back"
+    assert models.unit("std_min_int").text.count("static int std_min_int(") == 1          # ticket 24's models too
+    assert models.unit("std_vector_bool_size") is None and models.unit("not_a_model") is None
+
+
+@needs_wp
+def test_a_model_is_proven_once_by_name_and_a_unit_that_uses_it_pins_that_record(seed):
+    pair = _prove_model(seed, "std_pair_int_int_ctor")
+    assert pair["verdict"] == "proven"
+    assert pair["subject"] == {"kind": "library_summary", "id": "model.std_pair_int_int_ctor"}
+    assert pair["pins"]["code"]["id"] == "model.std_pair_int_int_ctor" and pair["pins"]["std_models"]
+    assert _prove_model(seed, "std_min_int")["verdict"] == "proven"                  # ticket 24's model, same mechanism
+    unit = seed.read(seed.prove("swdb_fixture_vec_max", MAX, {"threads": 1, "n": 1}))
+    pinned = {p["id"]: p for p in unit["pins"]["summaries"]}
+    assert pinned["model.std_pair_int_int_ctor"]["proof_record"] == pair["id"]
+    unproven = {a["reference"]["id"] for a in unit["assumptions"] if a["kind"] == "summary"}
+    assert "model.std_vector_int_push_back" in unproven and "model.std_pair_int_int_ctor" not in unproven
+    assert seed.swdb("validate").returncode == 0
+
+
+@needs_wp
+def test_a_growing_member_is_not_proven_and_its_open_goals_are_the_allocation_ones(seed):
+    record = _prove_model(seed, "std_vector_int_grow")
+    assert record["verdict"] == "not_proven"
+    open_goals = {g["goal"] for g in record["goals"] if g["status"] not in ("valid", "qed")}
+    assert open_goals and all("grow" in g for g in open_goals), open_goals
+    assert len([a for a in record["assumptions"] if a["sentence"].startswith("Allocation succeeds")]) == 1
+
+
+@needs_wp
+@pytest.mark.skip(reason="paused 2026-10-14 (ticket 25 Progress): two WP jobs take over 20 min; see the ticket")
+def test_wp_on_the_vector_unit_and_on_the_stale_pointer_never_proves_and_never_refutes(seed):
+    unit = _prove_wp(seed, "swdb_fixture_vec_max", MAX, MAX_HINTS)
+    assert unit["verdict"] == "not_proven" and unit["pins"]["std_models"]
+    stale = _prove_wp(seed, "swdb_fixture_vec_stale_data", STALE)
+    assert stale["verdict"] == "not_proven"                                          # WP never refutes

@@ -36,7 +36,7 @@ import shutil
 import subprocess
 from pathlib import Path
 
-from swdb import c_lowering, framac, hint_check, paths, rss_watchdog, std_models, vocab
+from swdb import c_lowering, framac, hint_check, models, paths, rss_watchdog, std_models, vocab
 from swdb.proof import AdapterError, Verdict
 
 NAME = "wp"
@@ -74,13 +74,16 @@ class WpAdapter:
         except hint_check.HintSetError as exc:
             raise AdapterError(str(exc)) from None
         self.defines = tuple(defines)
+        self.records = None                      # ticket 25: the store whose model proof records units pin
 
     @classmethod
     def from_args(cls, args, script, *, library, contract, method):
         if script is not None:
             raise AdapterError("the wp adapter takes no --script (one WP job per call)")
-        return cls(library, contract, method, hints=getattr(args, "hint_file", None),
-                   defines=getattr(args, "define", None) or ())
+        adapter = cls(library, contract, method, hints=getattr(args, "hint_file", None),
+                      defines=getattr(args, "define", None) or ())
+        adapter.records = getattr(args, "records", None)
+        return adapter
 
     # --- the job --------------------------------------------------------------------------------
     def run(self, job):
@@ -88,6 +91,8 @@ class WpAdapter:
         wp_dir = run_dir / "wp"
         wp_dir.mkdir(exist_ok=True)
         log = _Log(job.log)
+        if self.contract.startswith(models.PREFIX):
+            return self._model_job(job, wp_dir, log)                            # ticket 25: a C model, proven once
         entry = self.library.get(self.contract) or {}
         unit = entry.get("proof_unit") or {}
         log.line(f"adapter: wp\nunit: {job.unit.candidate} {job.unit.function}\ncontract: {self.contract}")
@@ -113,6 +118,8 @@ class WpAdapter:
         context["reports"] += [("c_lowering", c_path), ("anchors", anchors_path)]
         context["c_lowering"] = {"id": c_path.name, "sha256": lowering.sha256}
         context["lowering"] = lowering                                           # ticket 25: model assumptions
+        if models.provable(lowering):            # ticket 25: models are proven once on their own; the unit uses
+            context["wp_fct"] = [a["function"] for a in lowering.anchors if a["kind"] == "contract"]   # their contracts
         base = hint_check.wp_base(lowering.text, lowering.anchors, self._context(lowering, entry))
         accepted = self._hint_check(job, lowering, base, context) if self.hints_path else []
         text = hint_check.merge(base, lowering.anchors, self.hints, accepted).text
@@ -145,6 +152,21 @@ class WpAdapter:
         log.line(f"proof hint check: {result['verdict']}, {len(result['rejections'])} rejection(s), "
                  f"{result['frama_c_runs']} Frama-C run(s)")
         return accepted
+
+    def _model_job(self, job, wp_dir, log):
+        """WP on one C model against its own contract (`swdb prove --summary model.<name>`): the models it calls
+        are read by their contracts; the allocator stubs are trusted ("allocation succeeds")."""
+        model = models.unit(self.contract)
+        if model is None:
+            raise AdapterError(f"no C model generator knows {self.contract}")
+        log.line(f"model: {model.id} sha256 {model.sha256}")
+        tools = self._tools()
+        context = {"job": job, "wp_dir": wp_dir, "log": log, "reports": [], "tools": tools, "wp_fct": [model.name],
+                   "model": model}
+        input_path = wp_dir / "wp_input.c"
+        input_path.write_text(model.text)
+        context["reports"].append(("wp_input", input_path))
+        return self._wp(job, input_path, context)
 
     def _tools(self):
         """Installed versions and binary hashes, checked against the method version's lineup."""
@@ -210,6 +232,8 @@ class WpAdapter:
         goals_json, properties_csv = scratch / "wp-goals.json", scratch / "wp-properties.csv"
         settings_flags = [*tools["flags"], *MACHDEP, "-wp-prover", ",".join(PROVERS), "-wp-timeout",
                           str(tools["seconds"]), "-wp-par", "1", *LEMMAS_OUT]
+        if context.get("wp_fct"):                                               # ticket 25: a model job
+            settings_flags += ["-wp-fct", ",".join(context["wp_fct"])]
         command = [*framac.locate().command, *settings_flags, "-wp-report-json", goals_json.name, "wp_input.c",
                    "-then", "-report-csv", properties_csv.name]
         removed = sorted(k for k in os.environ if k.startswith("FRAMAC_WP"))
@@ -273,6 +297,16 @@ class WpAdapter:
             fields["settings"] = context["settings"]
         pins = {"c_lowering": context["c_lowering"], "naming_rules": c_lowering.naming_rules(),
                 **std_models.pins(context["lowering"])} if context.get("c_lowering") else {}
+        if context.get("lowering") is not None:                                  # ticket 25: model proof records
+            used, unproven = models.pins(context["lowering"], self.records)
+            assumptions += unproven
+            if used:
+                pins["summaries"] = used
+        if context.get("model") is not None and context["model"].name.startswith(("std_vector_", "std_pair_")):
+            pins["std_models"] = std_models.identity()
+        if context.get("model") is not None and "swdb_alloc_" in context["model"].text:
+            assumptions.append({"kind": "trusted_tool", "reference": std_models.identity(),
+                                "sentence": std_models.SENTENCE_ALLOCATION})
         return Verdict(verdict=verdict, bounds={"threads": 1, "input_size": "unbounded"}, assumptions=assumptions,
                        failure_class=failure_class, tools=tuple(tools), peak_rss_bytes=context.get("peak"),
                        record_fields=fields, pins=pins, reports=tuple(context["reports"]))

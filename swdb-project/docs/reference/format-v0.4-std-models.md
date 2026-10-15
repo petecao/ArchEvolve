@@ -90,14 +90,42 @@ Every proof record (CBMC or WP) of a unit adds:
 
 A unit that uses neither adds neither.
 
+## Model proof records (`swdb.models`; ticket 24's models too)
+
+- Every C model function a lowering defines (vector and pair members and helpers; `std_min_<t>`, `std_max_<t>`,
+  `std_swap_<t>`, `std_copy_<t>`) is rebuilt from its C name alone: headers, types, the models it calls (read by
+  their contracts), then itself. Its content hash is the sha256 of that text, so changing it or any contract it
+  calls gives a new hash.
+- `swdb prove --summary model.<name> --adapter wp` proves it once: subject `{kind: library_summary, id:
+  model.<name>}`, `pins.code` and `pins.contract` = `{id: model.<name>, sha256}`, WP restricted to that function
+  (`-wp-fct`). A model that allocates also lists "allocation succeeds".
+- A unit's record (WP or CBMC) pins each used model that has a proven record at its current hash in
+  `pins.summaries` (`{id: model.<name>, sha256, proof_record}`), and lists every other one as a `summary`
+  assumption entry ("used without a proof record of its own"). A unit WP job proves only the unit's own
+  functions (`-wp-fct`); the models enter through their contracts.
+- New models: `swdb.models.register(regex, generator)`, where the generator returns `[(C name, C text)]` in
+  definition order with the model itself last.
+
+## Allocation in WP
+
+The allocator is `swdb_alloc_<t>(n)` (`allocates \result; ensures \fresh(\result, n * sizeof(T)) &&
+\valid(\result + (0 .. n - 1))`) and `swdb_free(p)` (`requires p == \null || \freeable(p); frees p`):
+contract-only under Frama-C (`__FRAMAC__`), `malloc`/`free` elsewhere, trusted under "allocation succeeds".
+Growth members carry `allocates this->data; frees this->data`.
+
+WP 33 does not implement `\fresh`, `\freeable`, `allocates` or `frees` ("Allocation, initialization and
+danglingness not yet implemented"): it degenerates those terms. On the 23 model functions of the vector_pair
+fixture (2026-10-14, 10 s per solver) 309 of 327 goals prove; the 18 open goals are exactly those:
+
+| Cause | Goals |
+|---|---|
+| `\freeable` (free's and grow's precondition) | `dtor_call_swdb_free_requires`, `grow_call_swdb_free_requires`, `push_back`/`reserve`/`resize_call_std_vector_int_grow_requires_2` |
+| `\fresh` (new buffer separate from old memory) | `grow_loop_invariant_2_preserved`, `grow_ensures_2`, `grow_assigns_{normal,exit}_part3`, `copy_ctor_ensures`, `copy_ctor_loop_invariant_2_preserved`, `copy_ctor_assigns_normal_part7`, `ctor_count[_value]_assigns_normal_part7`, `push_back_assigns_normal_part4`, `resize_assigns_normal_part4` |
+| `frees` (old buffer invalid after) | `dtor_ensures`, `grow_ensures_3` |
+
+So no growing member and no unit that grows a vector proves in WP 33; CBMC (which runs the bodies) refutes and
+proves them. A ghost storage-pool encoding (ticket 07's note) is the known workaround, not built.
+
 ## Not built yet
 
-- Proving each model contract against its C function once, as a record (`library_summary`): models are not
-  library entries, so `swdb prove --summary` cannot name them yet. One exploratory WP job (2026-10-14, the
-  frozen WP flags with a 10 s solver timeout, `-wp-fct` on the 23 model functions of the vector_pair fixture)
-  proved 293 of 322 goals. Every member that neither allocates nor frees proved fully (`ctor`, `move_ctor`,
-  `size`, `empty`, `data`, `begin`, `end`, `operator_index`, `at`, `clear`, `swap`, `reserve`, all pair
-  members). The 29 open goals sit in `grow`, `dtor`, `push_back`, `resize` and the allocating constructors:
-  `malloc`'s result validity, `free`'s `freeable` precondition and the libc heap-status `assigns`. Closing them
-  needs an ACSL form of "allocation succeeds" that WP accepts.
-- WP proofs of units that use the models.
+- WP proofs of growing members and of units that grow a vector (the table above).

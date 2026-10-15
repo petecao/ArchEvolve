@@ -291,9 +291,11 @@ def _prove_summary(args, store):
 
     The code proven is the entry's proof_unit function in its pinned source; the code and contract pins are the
     entry's content hash, so an edit to the entry (or its source) makes the record stop counting."""
-    from swdb import method_version, vocab
+    from swdb import method_version, models, vocab
     library = _library(store)
     entry_id = args.summary
+    if entry_id.startswith(models.PREFIX):                 # ticket 25: a C model (std::vector, std::pair, std::min...)
+        return _prove_model(args, store, library)
     entry = library.get(entry_id) if library is not None else None
     if entry is None:
         raise Failure(f"library entry {entry_id!r} is not in the library beside {args.records}")
@@ -320,6 +322,42 @@ def _prove_summary(args, store):
     adapter = _adapter(args, (args.script or [None])[0], library, entry_id, method)
     vocabs, _problems = vocab.load_all(paths.VOCAB)
     rid = args.id or _new_id(entry_id)
+    if store.get(rid) is not None:
+        raise Failure(f"ID {rid!r} is already used; nothing written")
+    place = {"batch": args.batch or f"batch.{rid}", "position": args.position}
+    record = _run_job(rid, unit, pins, adapter, _outside_repo(args.runs_dir), place, listed(vocabs, "failure_class"),
+                      method, bounds=getattr(args, "bounds", None), budget_minutes=getattr(args, "budget_minutes", None))
+    record.update(_run_fields(args))
+    return {"record": record, "path": _write(args.records, record)}
+
+
+def _prove_model(args, store, library):
+    """Ticket 25: one WP job proving a C model against its own contract (`--summary model.<name>`); the subject is
+    {library_summary, model.<name>}, the code and contract pins the model text's sha256 (swdb.models)."""
+    from swdb import method_version, models, vocab
+    model = models.unit(args.summary)
+    if model is None:
+        raise Failure(f"no C model generator knows {args.summary!r} (swdb.models)")
+    if args.adapter != "wp":
+        raise UsageError(f"--summary {model.id}: a C model is proven with --adapter wp")
+    if args.candidate or args.skip is not None or (args.script and len(args.script) > 1):
+        raise UsageError("--summary runs one job on a model: no --candidate, --skip or batch of scripts")
+    if args.function not in (None, model.name):
+        raise UsageError(f"--summary {model.id}: the function is {model.name}, not {args.function}")
+    unit = ProofUnit(None, model.name, str(Path(models.__file__).parent), model.sha256, model.id, model.sha256)
+    method = _current_method(args.records)
+    pin = {"id": model.id, "sha256": model.sha256}
+    pins = {"code": dict(pin), "contract": dict(pin),
+            "baseline_function": {"not_applicable": "A C model is proven on its own body."},
+            "reference_semantics": {"not_applicable": "A C model has no reference semantics."},
+            "proof_semantics": {"not_applicable": "A C model has no proof semantics."},
+            "method_version": method_version.pin(method), "summaries": [],
+            "minimum_bounds": {"not_applicable": "A C model proof is unbounded (WP)."},
+            "predecessor_snapshot": {"not_applicable": "A C model has no predecessor."},
+            "build_constants": []}
+    adapter = _adapter(args, None, library, model.id, method)
+    vocabs, _problems = vocab.load_all(paths.VOCAB)
+    rid = args.id or _new_id(model.id)
     if store.get(rid) is not None:
         raise Failure(f"ID {rid!r} is already used; nothing written")
     place = {"batch": args.batch or f"batch.{rid}", "position": args.position}

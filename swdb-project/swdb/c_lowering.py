@@ -1681,10 +1681,7 @@ class _Printer:
                 raise Unsupported(f"std::{name} with a comparator or an initializer list", self.line)
             qual, desugared = _types(_strip(args[0]))
             ctype = self._scalar(unit.ctype(qual, desugared, line=self.line), f"std::{name}")
-            model = f"std_{name}_{_mangle_text(ctype)}"
-            pick = "(b < a) ? b : a" if name == "min" else "(a < b) ? b : a"
-            text = (f"/*@ assigns \\nothing;\n    ensures \\result == ({pick}); */\n"
-                    f"static {ctype} {model}({ctype} a, {ctype} b) {{ return {pick}; }}")
+            model, text = std_function_model(name, ctype)
             unit.model(model, text, self.line)
             return f"{model}({self.expr(args[0], top=True)}, {self.expr(args[1], top=True)})", True
         if name == "swap":
@@ -1693,10 +1690,7 @@ class _Printer:
             if model and model[1]["kind"] == "vector":
                 return f"{unit.std_member(model[0], 'swap', self.line)}({self.address(args[0])}, {self.address(args[1])})", True
             ctype = self._scalar(unit.ctype(qual, desugared, line=self.line), "std::swap")
-            model = f"std_swap_{_mangle_text(ctype)}"
-            text = (f"/*@ requires \\valid(a) && \\valid(b);\n    assigns *a, *b;\n"
-                    f"    ensures *a == \\old(*b) && *b == \\old(*a); */\n"
-                    f"static void {model}({ctype} *a, {ctype} *b) {{ {ctype} t = *a; *a = *b; *b = t; }}")
+            model, text = std_function_model("swap", ctype)
             unit.model(model, text, self.line)
             return f"{model}({self.address(args[0])}, {self.address(args[1])})", True
         if name == "copy":
@@ -1706,21 +1700,7 @@ class _Printer:
             out_element = self._pointee(args[2], "std::copy")
             if element != out_element:
                 raise Unsupported("std::copy between different element types", self.line)
-            model = f"std_copy_{_mangle_text(element)}"
-            text = (f"/*@ requires first <= last;\n"
-                    f"    requires \\valid_read(first + (0 .. last - first - 1));\n"
-                    f"    requires \\valid(d_first + (0 .. last - first - 1));\n"
-                    f"    requires \\separated(first + (0 .. last - first - 1), d_first + (0 .. last - first - 1));\n"
-                    f"    assigns d_first[0 .. last - first - 1];\n"
-                    f"    ensures \\forall integer k; 0 <= k < last - first ==> d_first[k] == \\old(first[k]);\n"
-                    f"    ensures \\result == d_first + (last - first); */\n"
-                    f"static {element} *{model}(const {element} *first, const {element} *last, {element} *d_first) {{\n"
-                    f"  /*@ loop invariant 0 <= i <= last - first;\n"
-                    f"      loop invariant \\forall integer k; 0 <= k < i ==> d_first[k] == first[k];\n"
-                    f"      loop assigns i, d_first[0 .. last - first - 1];\n"
-                    f"      loop variant last - first - i; */\n"
-                    f"  for (ptrdiff_t i = 0; i < last - first; ++i) d_first[i] = first[i];\n"
-                    f"  return d_first + (last - first);\n}}")
+            model, text = std_function_model("copy", element)
             unit.model(model, text, self.line)
             return f"{model}({', '.join(self.expr(a, top=True) for a in args)})", True
         raise Unsupported(f"standard library function std::{name}", self.line)
@@ -2248,3 +2228,48 @@ def _cli(args):
     if lowering.allocation:
         out["allocation"] = True
     return out
+
+
+# --- ticket 24's std::min/max/swap/copy C models (ticket 25: one definition, also rebuilt by name for swdb.models) ---
+
+def std_function_model(name, ctype):
+    """(C name, C text) of the C model of std::<name> at C type `ctype` (std::copy: the element type)."""
+    if name in ("min", "max"):
+        model = f"std_{name}_{_mangle_text(ctype)}"
+        pick = "(b < a) ? b : a" if name == "min" else "(a < b) ? b : a"
+        return model, (f"/*@ assigns \\nothing;\n    ensures \\result == ({pick}); */\n"
+                       f"static {ctype} {model}({ctype} a, {ctype} b) {{ return {pick}; }}")
+    if name == "swap":
+        model = f"std_swap_{_mangle_text(ctype)}"
+        return model, (f"/*@ requires \\valid(a) && \\valid(b);\n    assigns *a, *b;\n"
+                       f"    ensures *a == \\old(*b) && *b == \\old(*a); */\n"
+                       f"static void {model}({ctype} *a, {ctype} *b) {{ {ctype} t = *a; *a = *b; *b = t; }}")
+    element, model = ctype, f"std_copy_{_mangle_text(ctype)}"
+    return model, (f"/*@ requires first <= last;\n"
+            f"    requires \\valid_read(first + (0 .. last - first - 1));\n"
+            f"    requires \\valid(d_first + (0 .. last - first - 1));\n"
+            f"    requires \\separated(first + (0 .. last - first - 1), d_first + (0 .. last - first - 1));\n"
+            f"    assigns d_first[0 .. last - first - 1];\n"
+            f"    ensures \\forall integer k; 0 <= k < last - first ==> d_first[k] == \\old(first[k]);\n"
+            f"    ensures \\result == d_first + (last - first); */\n"
+            f"static {element} *{model}(const {element} *first, const {element} *last, {element} *d_first) {{\n"
+            f"  /*@ loop invariant 0 <= i <= last - first;\n"
+            f"      loop invariant \\forall integer k; 0 <= k < i ==> d_first[k] == first[k];\n"
+            f"      loop assigns i, d_first[0 .. last - first - 1];\n"
+            f"      loop variant last - first - i; */\n"
+            f"  for (ptrdiff_t i = 0; i < last - first; ++i) d_first[i] = first[i];\n"
+            f"  return d_first + (last - first);\n}}")
+
+
+def _std_function_unit(match):
+    from swdb import std_models
+    ctype = std_models._element(match.group(2))
+    return [std_function_model(match.group(1), ctype)] if ctype else None
+
+
+def _register_models():
+    from swdb import models
+    models.register(r"std_(min|max|swap|copy)_(\w+)", _std_function_unit)
+
+
+_register_models()

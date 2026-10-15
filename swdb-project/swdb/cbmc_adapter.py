@@ -37,7 +37,7 @@ import shutil
 import subprocess
 from pathlib import Path
 
-from swdb import c_lowering, cbmc_translator as tr, paths, rss_watchdog, std_models, vocab, yamlio
+from swdb import c_lowering, cbmc_translator as tr, models, paths, rss_watchdog, std_models, vocab, yamlio
 from swdb.proof import AdapterError, Verdict
 
 NAME = "cbmc"
@@ -468,6 +468,11 @@ class CbmcAdapter:
         if verdict == "not_proven":
             fields["unproven_properties"] = context.get("unproven", [])
         pins = dict(context.get("pins") or {})
+        if context.get("lowering") is not None:                                  # ticket 25: model proof records
+            used, unproven = models.pins(context["lowering"], self.records)
+            assumptions += unproven
+            if used:
+                pins["summaries"] = list(pins.get("summaries") or []) + used
         translator = context["tools"]["translator"]
         pins["translator"] = {"id": translator["id"], "sha256": translator["sha256"]}
         return Verdict(verdict=verdict, bounds=dict(context["bounds"]), assumptions=assumptions,
