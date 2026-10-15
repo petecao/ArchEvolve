@@ -39,8 +39,15 @@ def bind(context, lowering, source, *, includes=(), defines=(), side="unit"):
         if side == "unit":
             reports.update(verdict="refused", reason=reason)
         return reason
+    if certificate.get("substitution_requests") != list(lowering.stdlib_substitutions):
+        reason = "standard substitution certificate does not cover the printer's exact call requests"
+        reports[side] = {"verdict": "refused", "reason": reason, "source_certificate": certificate}
+        if side == "unit":
+            reports.update(verdict="refused", reason=reason)
+        return reason
     options = {"includes": tuple(map(str, includes)), "defines": tuple(defines),
-               "models": tuple(certificate["models"])}
+               "models": tuple(certificate["models"]),
+               "substitutions": copy.deepcopy(lowering.stdlib_substitutions)}
     context.setdefault("stdlib_sources", {})[side] = {
         "source": Path(source), "lowering": lowering, "certificate": certificate, "options": options}
     folder = context.get("wp_dir") or context.get("out")
@@ -75,6 +82,8 @@ def recheck(context, lowering=None):
                 raise Refused("retained original standard provenance artifact changed after planning")
         if plan["lowering"].stdlib_provenance != certificate:
             raise Refused("original standard provenance certificate changed after planning")
+        if tuple(plan["lowering"].stdlib_substitutions) != tuple(plan["options"]["substitutions"]):
+            raise Refused("original standard substitution requests changed after planning")
         recorded = context.get("settings", {}).get("stdlib_provenance", {}).get(side)
         if recorded != certificate:
             raise Refused("recorded original standard provenance changed after planning")

@@ -12,6 +12,8 @@ import re
 import shlex
 import shutil
 import subprocess
+import sys
+from types import SimpleNamespace
 
 ID = "swdb-stdlib-provenance-1"
 ENV = ("CPATH", "CPLUS_INCLUDE_PATH", "C_INCLUDE_PATH", "OBJC_INCLUDE_PATH", "INCLUDE")
@@ -33,6 +35,28 @@ def identity():
     return {"id": ID, "sha256": _sha(__file__)}
 
 
+def substitution(node, target):
+    """The printer's requested declaration at a physical original source call.
+
+    Macro expansion locations are ambiguous here and conservatively refused. The
+    independent full-TU parser supplies the actual referenced declaration later.
+    """
+    extent = node.get("range") or {}
+    begin, end = extent.get("begin") or {}, extent.get("end") or {}
+    location = target.get("loc") or {}
+    file = begin.get("_file", begin.get("file"))
+    target_file = location.get("_file", location.get("file"))
+    valid = (node.get("kind") == "CallExpr" and file and target_file and
+             type(begin.get("offset")) is int and type(end.get("offset")) is int and
+             type(end.get("tokLen")) is int and not
+             any(k in loc for loc in (begin, end) for k in ("spellingLoc", "expansionLoc")))
+    return {"cursor_kind": "CallExpr", "call_file": str(Path(file).resolve()) if file else "",
+            "call_range": [begin["offset"], end["offset"] + end["tokLen"]] if valid else None,
+            "requested": {"name": target.get("name"), "mangled": target.get("mangledName"),
+                          "file": str(Path(target_file).resolve()) if target_file else ""},
+            "reason": "" if valid else "standard model call has no unambiguous physical source range"}
+
+
 class _String(C.Structure):
     _fields_ = [("data", C.c_void_p), ("flags", C.c_uint)]
 
@@ -45,11 +69,16 @@ class _Location(C.Structure):
     _fields_ = [("data", C.c_void_p * 2), ("offset", C.c_uint)]
 
 
+class _Range(C.Structure):
+    # clang-c/CXSourceLocation.h: half-open byte range, not a source line.
+    _fields_ = [("data", C.c_void_p * 2), ("begin", C.c_uint), ("end", C.c_uint)]
+
+
 class _Clang:
     """Small binding to the pinned clang-c/Index.h ABI; no optional Python package."""
-    def __init__(self, tool):
+    def __init__(self, tool, *, environment=None):
         root = subprocess.run([*tool.command, "-print-resource-dir"], capture_output=True,
-                              text=True, check=True, timeout=30).stdout.strip()
+                              text=True, check=True, timeout=30, env=environment).stdout.strip()
         self.resource = Path(root).resolve()
         self.root = self.resource.parents[2]
         paths = [self.root / "lib" / name for name in ("libclang.dylib", "libclang.so")]
@@ -77,6 +106,9 @@ class _Clang:
         self.is_declaration = bind("clang_isDeclaration", C.c_uint, C.c_uint)
         self.kind = bind("clang_getCursorKindSpelling", _String, C.c_uint)
         self.location = bind("clang_getCursorLocation", _Location, _Cursor)
+        self.extent = bind("clang_getCursorExtent", _Range, _Cursor)
+        self.range_start = bind("clang_getRangeStart", _Location, _Range)
+        self.range_end = bind("clang_getRangeEnd", _Location, _Range)
         self.file_location = bind("clang_getFileLocation", None, _Location, C.POINTER(C.c_void_p),
                                   C.POINTER(C.c_uint), C.POINTER(C.c_uint), C.POINTER(C.c_uint))
         self.filename = bind("clang_getFileName", _String, C.c_void_p)
@@ -101,9 +133,18 @@ class _Clang:
         return result
 
     def physical(self, cursor):
+        return self.physical_location(self.location(cursor))
+
+    def physical_location(self, location):
         file, line, column, offset = C.c_void_p(), C.c_uint(), C.c_uint(), C.c_uint()
-        self.file_location(self.location(cursor), C.byref(file), C.byref(line), C.byref(column), C.byref(offset))
+        self.file_location(location, C.byref(file), C.byref(line), C.byref(column), C.byref(offset))
         return (str(Path(self.text(self.filename(file))).resolve()) if file else "", line.value, offset.value)
+
+    def physical_range(self, cursor):
+        extent = self.extent(cursor)
+        begin = self.physical_location(self.range_start(extent))
+        end = self.physical_location(self.range_end(extent))
+        return [begin[2], end[2]] if begin[0] == end[0] and begin[0] else None
 
     def translation_unit(self, command, source):
         args = (C.c_char_p * len(command))(*(os.fsencode(a) for a in command))
@@ -152,10 +193,10 @@ def _headers_identity(parser):
                 count += 1
     return {"id": "llvm-standard-resource-headers", "sha256": digest.hexdigest(), "files": count}
 
-def _effective(tool, command, defines):
+def _effective(tool, command, defines, *, environment=None):
     """Resolve executable wrappers to one exact frontend job, never guess their flags."""
     trace = subprocess.run([*command[:-1], "-###", command[-1]], input="", capture_output=True,
-                           text=True, timeout=120)
+                           text=True, timeout=120, env=environment)
     jobs = []
     for line in trace.stderr.splitlines():
         try:
@@ -182,21 +223,58 @@ def _effective(tool, command, defines):
     context = {"frontend": job, "driver": {"path": str(binary), "sha256": _sha(binary)},
                "command_executable": {"path": str(wrapper), "sha256": _sha(wrapper)}}
     # Libclang's public parser accepts driver arguments, not direct cc1 arguments.
-    # Forward every resolved frontend argument verbatim, after normal driver defaults.
-    arguments = [job[0], *[v for arg in job[2:-1] for v in ("-Xclang", arg)]]
+    # 2026-10-15 ET: the resolved cc1 job already contains the complete ordered
+    # system search. A second driver's defaults can put C/GCC headers before
+    # libc++'s compatibility wrappers. Suppress only that automatic search;
+    # retain every captured target/resource/include argument verbatim.
+    arguments = [job[0], "-nostdinc", "-nostdinc++",
+                 *[v for arg in job[2:-1] for v in ("-Xclang", arg)]]
     return arguments, context
 
-def certify(tool, source, *, includes=(), defines=(), models=()):
-    """Return a passed/refused original-TU certificate, never an inferred library premise.
+def certify(tool, source, *, includes=(), defines=(), models=(), substitutions=()):
+    """Certify in a child whose parser cannot reapply include environment paths.
 
-    Call for all modeled std substitutions, including algorithms without std_types.
-    Re-run on source replay; the certificate binds every transitive physical file.
+    The original driver still receives its original environment. Only the second
+    driver inside libclang sees sanitized include variables; the exact captured
+    cc1 search is forwarded by _effective. No process-wide environment mutation
+    can affect concurrent compiler work. Created 2026-10-15 ET.
     """
+    request = {"tool": {"command": list(tool.command), "version": tool.version},
+               "source": str(source), "includes": [str(p) for p in includes],
+               "defines": list(defines), "models": list(models),
+               "environment": {k: os.environ[k] for k in ENV if k in os.environ}}
+    if substitutions:
+        request["substitutions"] = list(substitutions)
+    clean_environment = {k: v for k, v in os.environ.items() if k not in ENV}
+    try:
+        worker = subprocess.run([sys.executable, "-I", str(Path(__file__).resolve()), "--certify"],
+            input=json.dumps(request), capture_output=True, text=True,
+            env=clean_environment, timeout=300)
+        if worker.returncode:
+            raise Refused("isolated full-TU parser failed (exit " + str(worker.returncode) + ")")
+        report = json.loads(worker.stdout)
+        if (not isinstance(report, dict) or report.get("check") != identity() or
+                report.get("verdict") not in {"passed", "refused"}):
+            raise Refused("isolated full-TU parser returned an invalid certificate")
+        unhashed = {k: v for k, v in report.items() if k != "sha256"}
+        if report.get("sha256") != hashlib.sha256(json.dumps(unhashed, sort_keys=True).encode()).hexdigest():
+            raise Refused("isolated full-TU parser returned an invalid certificate hash")
+        return report
+    except (OSError, ValueError, TypeError, Refused, subprocess.SubprocessError) as exc:
+        report = {"check": identity(), "verdict": "refused", "reason": str(exc)}
+        report["sha256"] = hashlib.sha256(json.dumps(report, sort_keys=True).encode()).hexdigest()
+        return report
+
+
+def _certify_in_process(tool, source, *, includes=(), defines=(), models=(),
+                        substitutions=(), environment=None):
+    """Private worker: explicit original-driver environment, sanitized parser process."""
+    driver_environment = dict(os.environ if environment is None else environment)
     report = {"check": identity(), "verdict": "refused", "reason": ""}
     parser, tu = None, None
     try:
         source = Path(source).resolve()
-        parser = _Clang(tool)
+        parser = _Clang(tool, environment=driver_environment)
         report["parser"] = {"id": "libclang-" + tool.version, "sha256": _sha(parser.path)}
         report["toolchain_headers"] = _headers_identity(parser)
         canonical = parser.root / "include" / "c++" / "v1"
@@ -207,7 +285,7 @@ def certify(tool, source, *, includes=(), defines=(), models=()):
         if any(a.startswith(("-I", "-D", "-U", "-include", "-imacros", "-isystem", "-iquote", "-ivfsoverlay", "-fmodule", "@"))
                for a in tool.command[1:]):
             raise Refused("header-injecting compiler command options are not modeled")
-        clean_environment = {k: v for k, v in os.environ.items() if k not in ENV}
+        clean_environment = {k: v for k, v in driver_environment.items() if k not in ENV}
         baseline = subprocess.run([*tool.command, "-x", "c++", "-std=c++17", "-fopenmp", "-E", "-H", "-"],
             input="#include <vector>\n#include <utility>\n#include <algorithm>\n#include <new>\n#include <cstdlib>\n",
             capture_output=True, text=True, env=clean_environment, timeout=120)
@@ -219,17 +297,17 @@ def certify(tool, source, *, includes=(), defines=(), models=()):
             raise Refused("the selected driver does not use its canonical libc++ vector header")
         report["baseline"] = [{"path": p, "sha256": _sha(p)} for p in sorted(baseline_files)]
         command = _command(tool, source, includes, defines)
-        effective, report["effective"] = _effective(tool, command, defines)
+        effective, report["effective"] = _effective(tool, command, defines, environment=driver_environment)
         tu = parser.translation_unit(effective, source)
         files = parser.closure(tu)
         macros = subprocess.run([*command[:-1], "-dM", "-E", command[-1]], capture_output=True,
-                                text=True, timeout=120)
+                                text=True, timeout=120, env=driver_environment)
         std_substitution = any(name.startswith("std_") for name in models)
         if macros.returncode or (std_substitution and not re.search(r"^#define _LIBCPP_VERSION 220108$", macros.stdout, re.M)):
             raise Refused("the original TU does not select libc++ 22.1.8")
         report["library"] = {"id": "libc++-22.1.8", "version_macro_required": std_substitution}
         # Independently compare with the exact driver invocation used by lowering.
-        driver = subprocess.run([*command[:-1], "-H", command[-1]], capture_output=True, text=True, timeout=120)
+        driver = subprocess.run([*command[:-1], "-H", command[-1]], capture_output=True, text=True, timeout=120, env=driver_environment)
         if driver.returncode:
             raise Refused("the original driver TU does not parse")
         driver_files = {str(Path(m.group(1)).resolve()) for line in driver.stderr.splitlines()
@@ -245,7 +323,7 @@ def certify(tool, source, *, includes=(), defines=(), models=()):
             if any("/".join(path.parts[-len(Path(name).parts):]) == name for name in known):
                 raise Refused(f"noncanonical standard header in original TU: {file}")
         report["headers"] = [{"path": p, "sha256": _sha(p)} for p in sorted(files)]
-        report["context"] = {"command": command, "environment": {k: os.environ[k] for k in ENV if k in os.environ}}
+        report["context"] = {"command": command, "environment": {k: driver_environment[k] for k in ENV if k in driver_environment}}
         declarations, bindings, problems = [], [], []
         # Candidate macros may otherwise rewrite canonical headers while leaving each
         # resulting declaration physically attributed to the genuine header.
@@ -289,7 +367,9 @@ def certify(tool, source, *, includes=(), defines=(), models=()):
                     origin, origin_line, _ = parser.physical(callee)
                     bindings.append({"name": parser.text(parser.spelling(callee)),
                         "mangled": parser.text(parser.mangling(callee)), "file": origin,
-                        "line": origin_line, "call_file": file, "call_line": line})
+                        "line": origin_line, "call_file": file, "call_line": line,
+                        "cursor_kind": kind, "call_offset": offset,
+                        "call_range": parser.physical_range(cursor)})
                 if (parser.text(parser.spelling(callee)) == "set_new_handler" or
                         parser.text(parser.mangling(callee)).lstrip("\x01").startswith("_ZSt15set_new_handler")):
                     problems.append(f"source-defined allocation handler registration: {file}:{line}")
@@ -306,11 +386,31 @@ def certify(tool, source, *, includes=(), defines=(), models=()):
                 problems.append("full-TU declaration traversal failed: " + str(exc))
                 return 0
         parser.visit(parser.root_cursor(tu), inspect, None)
+        report["declarations"] = sorted(declarations, key=lambda d: (d["file"], d["offset"], d["name"]))
+        report["bindings"] = sorted(bindings, key=lambda d: (d["call_file"], d["call_offset"], d["cursor_kind"], d["name"]))
+        report["models"] = sorted(models)
         if problems:
             raise Refused(problems[0])
-        report["declarations"] = sorted(declarations, key=lambda d: (d["file"], d["offset"], d["name"]))
-        report["bindings"] = sorted(bindings, key=lambda d: (d["call_file"], d["call_line"], d["name"]))
-        report["models"] = sorted(models)
+        report["substitution_requests"] = list(substitutions)
+        pairs, problems, seen = [], [], set()
+        for request in substitutions:
+            key = (request.get("call_file"), tuple(request.get("call_range") or ()))
+            matches = [b for b in bindings if b["cursor_kind"] == "CallExpr" and
+                       (b["call_file"], tuple(b["call_range"] or ())) == key]
+            pair = {**request, "actual": None}
+            pairs.append(pair)
+            if request.get("reason") or key in seen or len(matches) != 1:
+                problems.append("standard substitution has no unique exact original CallExpr binding")
+            else:
+                actual = matches[0]
+                pair["actual"] = {k: actual[k] for k in ("name", "mangled", "file")}
+                requested = request.get("requested")
+                if not requested or pair["actual"] != requested:
+                    problems.append("standard substitution original callee differs from the requested model declaration")
+            seen.add(key)
+        report["substitutions"] = pairs
+        if problems:
+            raise Refused(problems[0])
         report["verdict"] = "passed"
         report["reason"] = "original full TU uses canonical standard declarations without source allocation hooks"
     except (Refused, OSError, ValueError, AttributeError, subprocess.SubprocessError) as exc:
@@ -345,11 +445,25 @@ def needed(models, allocation=False):
     return allocation or any(name.startswith(("std_", "swdb_alloc_new_array_")) for name in models)
 
 
-def check(certificate, tool, source, *, includes=(), defines=(), models=()):
+def check(certificate, tool, source, *, includes=(), defines=(), models=(), substitutions=()):
     """Rebuild the original full TU immediately before launch; return a refusal or None."""
-    fresh = certify(tool, source, includes=includes, defines=defines, models=models)
+    fresh = certify(tool, source, includes=includes, defines=defines, models=models, substitutions=substitutions)
     if fresh["verdict"] != "passed":
         return fresh["reason"]
     if fresh != certificate:
         return "the original standard declaration/header/parser context changed before launch"
     return None
+
+
+if __name__ == "__main__":
+    if sys.argv[1:] != ["--certify"]:
+        raise SystemExit(2)
+    request = json.load(sys.stdin)
+    tool = SimpleNamespace(**request.pop("tool"))
+    original_includes = request.pop("environment")
+    if set(original_includes) - set(ENV):
+        raise SystemExit(2)
+    driver_environment = dict(os.environ)
+    driver_environment.update(original_includes)
+    result = _certify_in_process(tool, environment=driver_environment, **request)
+    json.dump(result, sys.stdout, sort_keys=True)
