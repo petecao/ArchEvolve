@@ -291,3 +291,21 @@ WP controls include both initialized positives and all four uninitialized negati
 Logs and incremental report: `/private/tmp/probata-init-final.{log,jsonl}`; initial
 reproduction: `/private/tmp/probata-init-red.{log,jsonl}`. No full construct-group or
 full-catalog acceptance is inferred from this focused suite.
+
+### Bounded initializedness audit — 2026-10-15 ET
+
+CBMC 6.11's direct command accepts discarded uninitialized reads in raw controls.
+Its experimental `goto-instrument --uninitialized-check` catches direct scalar and
+whole-array cases but misses alias, heap, C++ new/new[], partial-array and
+partial-struct cases. The pinned implementation explicitly leaves dereferences
+unhandled. Adding that option alone cannot establish the undefined-behavior
+obligation. No existing bounded acceptance is upgraded by this experiment.
+
+Retained primary-source snapshots, binary identities, 61 hashed command logs and
+12 raw controls: `/private/tmp/probata-cbmc-initializedness/{REPORT,ADMISSION}.md`
+and `results.json`. Harness pointer buffers are explicitly filled up to their
+actual capacity; a cap-zero dummy cell is not initialized by that loop. A conservative
+AST admission checker is being implemented over the whole lowered closure and both
+sides of equivalence; safe heap/class cases it cannot establish will be refused
+until a more precise checked analysis exists. A 24-lowering impact sample is bounded
+exploration, not a full-catalog acceptance result.

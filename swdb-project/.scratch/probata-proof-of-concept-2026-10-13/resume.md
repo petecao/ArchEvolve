@@ -5,19 +5,18 @@ Updated: 2026-10-15 ET.
 ## Current state
 
 Checkpoint: integration `codex/probata-poc-integration`, based on `yanrujhou_main`
-`150930b4`; production Rocq runner merged at `14a50bbf`, format follow-up at
-`8e05c78a`, counted run-13 metadata at `66c03f96`. The next checkpoint includes
-root ghost-expression hardening, immutable draft 2 and its actual composition record.
+`150930b4`; production composition record at `3793deba`, prototype guard at `3db8002c`,
+initialization policy/strict TSV reader merged at `d04193c1`, doc follow-up `f66bf568`.
 User approval covers scoped implementation, commits, pushes, remote source sync and
 two mbit10 CPU lanes; the specific BFS-to-Codex/OpenAI export approval also covers 07.
 
 | Ticket | Current work | Evidence or next action |
 |---|---|---|
-| 07 | Counted run 13 failed; prototype hint guard repair | 44 best hints, 19 of 239 goals open; no record or final replay. 52.78 counted minutes. Next approach must address these goals and reject ghost mutations. |
+| 07 | Counted run 14 active from 03:33:40 ET | Fresh hints, repaired guard and abstract partial-chunk guidance; frozen `05e81eac`; output `/private/tmp/probata-t07-20261015-run14/`. Run 13 remains failed. |
 | 24 | Construct-group WP acceptance | Remote baseline 17 passed, 1 known UAF xfailed; three lifetime refusal controls pass. Positive safe deallocation remains expected-failing pending checked terminal-release integration. |
 | 25 | Narrow checked terminal release; general lifetime still open | Worktree `/private/tmp/probata-lifetime-narrow`. Public WP acceptance pending. General aliases, moves and dangling-pointer semantics remain unresolved; WP initializedness support exists but requires an additional RTE selector. |
-| 27 | Store/capacity acceptance and CPU-access admission | Node 0 frozen `dd975e72` targeted replay: three-read, source-wait and stall cases passed. Capacity 32/33 pair passed locally. Add conservative ordinary CPU read/write admission before final two-lane acceptance. |
-| 36 | Strict preflight and reader; waits for 27 | Root shift/trigraph gap closed: 16 controls passed, checker identity `5f5b3e34…`. Production draft 2 pins this hash. |
+| 27 | Store/capacity acceptance and CPU-access admission | Node 0 frozen `dd975e72`: all six targeted cases passed in 3291.80 s. Add checked CPU/device memory interference and explicit initializedness before final two-lane acceptance. |
+| 36 | Strict preflight and reader; waits for 27 | Shift/trigraph controls pass. New strict multiline TSV reader and initialization policy: 121 focused tests passed; current checker `48a828aa…`. Draft 2 keeps its historical pin. |
 | 41 | Resolved | Approved reconstruction `e23f3715…`, protected/class/ownership lifetime premises; exact guard and sanity controls pass. |
 | 42 | Resolved: production Rocq-checked theorem | `proof.probata.composition.20261015-a1`, 209 Qed, closed global context, actual record validate/build pass; 9 final integrated tests passed. About 491.2 MiB peak. |
 
@@ -64,8 +63,8 @@ not substitute for reading incremental run artifacts.
 
 ## Validation and progress reporting
 
-The 2026-10-15 03:00 ET report covered every active ticket and both lanes; next report is
-due around 03:30 ET. Counted hint run 13 ended with 19 goals open and is not proven. Node 0 holds
+The 2026-10-15 03:30 ET report covered every active ticket and both lanes; next report is
+due around 04:00 ET. Counted hint run 13 ended with 19 goals open and is not proven. Node 0 holds
 the targeted semantics replay; node 1's generation 594 was released at 06:12:13 UTC.
 
 The early structural run disabled clang as well as WP/CBMC; four formal-frame assertions
@@ -81,3 +80,11 @@ in 1441.73 s. Four failures are the corrected clang configuration above; the two
 failures are covered by ticket 36's passing documentation checks. The teardown error is
 the independently passing frozen-worktree replay above. This is diagnostic evidence,
 not a clean final integrated-source suite.
+
+
+Live host check 2026-10-15 03:25 ET: node 0 generation 548, node 1 generation 594
+and legacy generation 77 all released; load 0.02/0.38/0.80, `/data1` 21 GiB free,
+`/data` 97 GiB free. Root remote checkout is `yanrujhou_main` at `680298a3`;
+it is not the frozen evaluation worktree. Both evaluation lanes await final source.
+The frozen policy worktree's representative existing safe-fill and smoke-pair WP
+regressions also passed: 2 tests, 139.41 s, `/private/tmp/probata-init-wp-regression.jsonl`.
