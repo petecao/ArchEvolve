@@ -304,7 +304,7 @@ def test_report_publication_counts_required_receipts_before_timed_admission(tmp_
     assert 'after' in receipt['measured_boundary'] and 'persistence' in receipt['measured_boundary']
 
 
-@pytest.mark.parametrize('identity', ['wrong-lemma', 'missing-part', 'matching-lemma', 'matching-part', 'ambiguous-part'])
+@pytest.mark.parametrize('identity', ['wrong-lemma', 'missing-part', 'matching-lemma', 'matching-part', 'ambiguous-part', 'wrong-check', 'matching-check', 'wrong-assert', 'matching-assert', 'wrong-anonymous-invariant', 'wrong-unit'])
 def test_paged_task_must_refuse_missing_requested_identity(tmp_path, identity):
     import loop as L
     import staged_search as S
@@ -313,6 +313,19 @@ def test_paged_task_must_refuse_missing_requested_identity(tmp_path, identity):
         goal='typed_lemma_ExpectedLemma';kind='lemma'
         name='ExpectedLemma' if identity=='matching-lemma' else 'DifferentLemma'
         task=f"Goal Lemma '{name}':\nAssume: true.\nProve: true."
+    elif identity.endswith('-check') or identity.endswith('-assert'):
+        is_check=identity.endswith('-check')
+        label='ExpectedCheck' if is_check else 'ExpectedAssertion'
+        goal='typed_TDStep_'+('check' if is_check else 'assert')+'_'+label
+        kind='check' if is_check else 'assert'
+        shown=label if identity.startswith('matching') else 'DifferentLabel'
+        task=f"Goal {'Check' if is_check else 'Assertion'} '{shown}' (file tdstep_standin.c, line 1):\nProve: true."
+    elif identity=='wrong-unit':
+        goal='typed_TDStep_check_ExpectedCheck';kind='check'
+        task="Goal Check 'ExpectedCheck' (\"foreign_tdstep_standin.c\", line 1):\nProve: true."
+    elif identity=='wrong-anonymous-invariant':
+        goal='typed_TDStep_loop_invariant_3_preserved';kind='loop invariant preserved'
+        task="Goal Preservation of Invariant 'DifferentInvariant' (file tdstep_standin.c, line 1):\nProve: true."
     else:
         goal='typed_TDStep_terminates_part2';kind='loop variant'
         task='Goal Termination-condition ("tdstep_standin.c", line 1) in \'TDStep\' (1/2):\nProve: true.'

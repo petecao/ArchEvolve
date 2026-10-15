@@ -135,7 +135,8 @@ def pick_exact(bl, g):
         line = int(g.get('line') or 0)
         if line <= 0:
             return []
-        candidates = [b for b in bl if L.UNIT in b[0] and re.search(rf'\bline {line}\b', b[0])]
+        unit = re.compile(r'"' + re.escape(L.UNIT) + r'"|\bfile\s+' + re.escape(L.UNIT) + r'(?=\s*[,\)])')
+        candidates = [b for b in bl if unit.search(b[0]) and re.search(rf'\bline {line}\b', b[0])]
         kind = g.get('kind') or H.goal_kind(name)
         if kind.startswith('loop invariant'):
             phase = re.search(r'_(established|preserved)(?:_part\d+)?$', name)
@@ -144,8 +145,9 @@ def pick_exact(bl, g):
             word = 'Establishment' if phase.group(1) == 'established' else 'Preservation'
             candidates = [b for b in candidates if word + ' of Invariant' in b[0]]
             label = re.search(r'_loop_invariant_(.+?)_(?:established|preserved)(?:_part\d+)?$', name)
-            if label and not label.group(1).isdigit():
-                candidates = [b for b in candidates if "'" + label.group(1) + "'" in b[0]]
+            expected = label.group(1) if label and not label.group(1).isdigit() else None
+            candidates = [b for b in candidates if
+                ((m.group(1) if (m := re.search(r"of Invariant\s+'([^']+)'", b[0])) else None) == expected)]
         elif kind == 'loop variant':
             candidates = [b for b in candidates if 'variant' in b[0].lower()]
             phase = re.search(r'_(positive|decrease)(?:_part\d+)?$', name)
@@ -157,6 +159,11 @@ def pick_exact(bl, g):
             if title is None:
                 return []
             candidates = [b for b in candidates if b[0].startswith('Goal ' + title)]
+            marker = {'assert': 'assert', 'check': 'check', 'loop assigns': 'loop_assigns'}.get(kind)
+            label = re.search(r'_' + marker + r'_(.+?)(?:_part\d+)?$', name) if marker else None
+            expected = label.group(1) if label and not label.group(1).isdigit() else None
+            candidates = [b for b in candidates if
+                ((m.group(1) if (m := re.match(r"^Goal " + re.escape(title) + r"\s+'([^']+)'", b[0])) else None) == expected)]
     candidates = [b for b in candidates if split_matches(b[0])]
     return candidates if len(candidates) == 1 else []
 
