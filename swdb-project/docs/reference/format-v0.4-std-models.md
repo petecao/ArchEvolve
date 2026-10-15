@@ -149,8 +149,9 @@ WP proves the separate private-view frame, functional facts and alias-liveness o
 bytes, contracts and structural frame certificate; `vector_ownership_allocator` pins the
 explicit trusted fresh-allocation and separation contracts. Neither fresh storage nor source-frame
 preservation is inferred from unsupported WP allocation clauses. The checker is included in the
-setup/reader identity and revalidates the view before launch. General vector lifetime acceptance
-and the remaining protocol refusal controls are still pending.
+setup/reader identity and revalidates the view before launch. The nine focused controls pass across two reports (five completed calls in an unfinished run,
+four in a completed finishing run); the exact evidence is recorded in ticket25. General vector
+lifetime acceptance remains pending.
 
 
 ## Bounded initializedness admission (2026-10-15)
