@@ -370,3 +370,17 @@ coverage diagnostic findings are repaired. Actual WP current-owner/stale-alias
 acceptance is running at frozen `00b16733`; no new actual success is claimed here.
 [Focused evidence](../evidence/stdlib-source-provenance-20261015.json). General
 vector/member and whole-pipeline acceptance remain open.
+
+
+### Source gate actual acceptance — 2026-10-15 10:53 ET
+
+Frozen `00b16733` passed the actual current-owner/stale-alias pair: **2 passed in
+243.20s**, peak 651 MiB under the shared 8 GiB watchdog. The safe record has
+105 ordinary Valid goals and 11 passing smoke checks. The stale record retains
+one timed-out `alias_live_after` obligation (111 ordinary Valid plus 11 passing
+smoke checks), so it remains not proven. Both original-TU certificates and shared
+setup replays pass; all referenced artifact hashes and the prospective runtime
+manifest match. The audit resolves pytest symlink aliases before counting records.
+[Actual evidence](../evidence/stdlib-source-provenance-actual-20261015.json).
+The gate's focused admission and actual pair are accepted; wider vector/member
+acceptance and the ticket remain open.

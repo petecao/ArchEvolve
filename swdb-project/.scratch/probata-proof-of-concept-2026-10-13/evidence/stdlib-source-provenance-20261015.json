@@ -19,7 +19,7 @@
   ],
   "boundaries": [
     "Stand-in results do not establish functional proof acceptance.",
-    "Actual WP safe-owner/stale-alias pair pending at frozen combined checkpoint.",
+    "Actual WP safe-owner positive and stale-alias negative both pass at frozen 00b16733; see stdlib-source-provenance-actual-20261015.json.",
     "Generated C model-body proofs retain their separate pinned model boundary.",
     "Runtime allocator freshness/success and no-preexisting-write frame remain explicit assumptions; this checker does not prove arbitrary linked runtime code."
   ],
@@ -48,5 +48,6 @@
       "sha256": "f9fb7ce0adfbabb3298dec011d6a0c6d99a8efbcc5bc9280dc3edb6f40d7274c",
       "bytes": 690
     }
-  ]
+  ],
+  "actual_evidence": "stdlib-source-provenance-actual-20261015.json"
 }
