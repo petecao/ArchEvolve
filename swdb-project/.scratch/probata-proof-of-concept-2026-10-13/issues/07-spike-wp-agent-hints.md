@@ -1115,3 +1115,15 @@ digests with no mismatch. See
 This prototype retains `-wp-no-filter-init` but lacks production
 `-wp-rte/-rte-initialized @all`; it establishes no production UB/init guarantee.
 Ticket 07 remains claimed with **no qualifying proof**.
+
+### Method20 saved for a later session — 2026-10-15 ET
+
+The approved search-policy implementation is preserved as a **prospective,
+unlaunched checkpoint**, with 158 deterministic/private process/clock controls and
+one synthetic diagnostic protocol check. It adds fresh structured state design
+and strictly non-promoting focused results; complete rounds alone score/promote.
+Closeout stops further method search. Independent review and a fresh launch freeze
+remain pending; no provider/count launch is authorized by this checkpoint.
+See [`METHOD20.md`](../prototype/07-wp-hints/METHOD20.md) and
+[`t07-method20-prospective-20261015.json`](../evidence/t07-method20-prospective-20261015.json).
+The failed run19 evidence remains the latest counted result.
