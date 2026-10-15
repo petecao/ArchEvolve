@@ -5,9 +5,10 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-re
 
 ## Current state (resume here)
 
-Updated: 2026-10-15 17:49 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
+Updated: 2026-10-15 17:53 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
 Integration: `codex/probata-resume-20261015`; audited run 23 is published at
-`6dc94905`. Remote actual jobs retain frozen `0e7f2327`; production lowerer SHA256
+`6dc94905`; method21 prototype merged at `14c2a298`. Remote actual jobs retain
+frozen `0e7f2327`; production lowerer SHA256
 remains `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
 [Current resume and evidence](resume.md).
 
@@ -19,15 +20,16 @@ remains `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
   112,589 defined comparisons. New checklist/corpus tests pass 24 + 15 controls;
   their test-only commit and independent review are merged at `5c0ace82`.
 - **27:** Historical `71771f09` safe profile passes 11/11, with 792 ordinary +
-  252 smoke Valid. Current negative profile has three accepted unready-read
+  252 smoke Valid. Current negative profile has four accepted hazard
   controls of 13, each preserving its exact failed hazard precondition and Doomed
   smoke checks. Current capacity profile is active on the freed node 0;
   bounded/native and fresh safe profiles follow.
 - **07:** Run 23 finished unproven at 17:33:26 ET after 52.02 counted minutes,
   26 open goals (15 unit / 11 hint), no qualifying final replay/negative.
   [Audited result](evidence/t07-counted-23-20261015.json). Separately named method21
-  diagnostic-baseline10 passes 187 local controls and is under independent
-  prelaunch review; no new actual run yet. Final proof/smoke/negative stay 30 seconds.
+  diagnostic-baseline10 passes 187 controls and independent prelaunch review.
+  Fresh run24 started 17:52:17 ET at `14c2a298`, all 30 freeze source pins
+  checked; actual launch/prompt audit pending. Final proof/smoke/negative stay 30 seconds.
 - **36:** Dependency-gated by 27. Its 122 focused controls exclude 13 actual-WP
   cases. Drafts 1/2 remain immutable; final method freeze and held-out gates remain.
 

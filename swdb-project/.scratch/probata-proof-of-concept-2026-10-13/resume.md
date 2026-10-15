@@ -4,9 +4,10 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 17:49 ET. **Implementation is active under the user's ongoing approval.**
+Updated: 2026-10-15 17:53 ET. **Implementation is active under the user's ongoing approval.**
 Integration `codex/probata-resume-20261015` is based on `yanrujhou_main` at `d94d629b`.
-Audited run23 documentation is published at `6dc94905`. Only `swdb/c_lowering.py`
+Audited run23 documentation is published at `6dc94905`; reviewed method21 prototype
+is published at `14c2a298`. Only `swdb/c_lowering.py`
 differs in production from `71771f09`; its reviewed SHA256 remains
 `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
 Every evaluation retains its own source identity.
@@ -17,9 +18,9 @@ Drafts1/2 remain immutable. No draft3 or final production freeze exists.
 
 | Ticket / owner | Verified checkpoint | Active work |
 |---|---|---|
-| 07 / `ticket07` | Run23 at `df19ff8a` finished unproven: 26 open (15 unit / 11 hint), 52.02 counted minutes, no qualifying final replay or wait-negative. Independent audit preserves actual counters and unknown interrupted-call usage. | Separately named method21 diagnostic-baseline10 passes 187 local controls and is under independent prelaunch review. Fresh inputs/clock/conversation are mandatory; final proof/smoke/negative stay30s. No new actual launch yet. |
+| 07 / `ticket07` | Run23 at `df19ff8a` finished unproven: 26 open (15 unit / 11 hint), 52.02 counted minutes, no qualifying final replay or wait-negative. Independent audit preserves actual counters and unknown interrupted-call usage. | Separately named method21 diagnostic-baseline10 passes 187 controls and independent review. Fresh run24 started17:52:17 ET at14c2a298, full60-minute budget; launch/prompt audit underway. Fresh own pass set/inputs/conversation; final proof/smoke/negative stay30s. |
 | 24 / `ticket24` | Fresh finite native agreement accepted for112,589 defined comparisons. Current float safe48 ordinary+5 smoke Valid,12 init retained; seed invariant-establishment timeout and four failed smoke checks retained. All five fresh standard models prove. | Current caller safe stops on pointer-formation timeout:46 ordinary Valid+1timeout,13 smoke Valid,5 init. Diagnose exact origin/precondition before a new source freeze. Later groups/controls did not run. Checklist24 and corpus15 controls pass; test-only81ab6c06 and independent review2e1dcb5e merged at5c0ace82. |
-| 27 / `ticket27` | Historical717 safe11/11,792 ordinary+252 smoke Valid. Current negative3/13 accepted, retaining exact unready-read precondition timeouts and Doomed smoke outcomes. | Node1 generation603 negative profile continues; node0 generation573 capacity3 active. Bounded35 and fresh safe11 follow without changing frozen0e7 source. |
+| 27 / `ticket27` | Historical717 safe11/11,792 ordinary+252 smoke Valid. Current negative4/13 accepted, retaining exact hazard precondition timeouts and Doomed smoke outcomes. | Node1 generation603 negative profile continues; node0 generation573 capacity3 active. Bounded35 and fresh safe11 follow without changing frozen0e7 source. |
 | 36 / dependency-gated | Mandatory RTE/command/mutation controls integrated;122 compiler/scripted controls pass with13 actual-WP excluded. | Waits on27; runtime fallback research remains prospective. |
 
 At17:43:14 ET node0 generation572 released after the standard caller safe timeout;
@@ -54,7 +55,11 @@ Accepted evidence and preserved boundaries:
 The coordinator owns merges, graph updates and remote dispatch. Ticket07 owns the
 one actual Mac verifier slot; ticket24's current local compiler controls are finished.
 All producer worktrees remain frozen for audit readers. New method21 work is in
-`/private/tmp/probata-resume-t07-method21`, separate from df19. Its baseline-only10s
+`/private/tmp/probata-resume-t07-method21`, separate from df19. Run24 raw is `/private/tmp/probata-t07-20261015-run24`, source-manifest SHA256
+`f5fbbe1aa3a63580f57e579975edf5da9d875ac7d7baaa3265e4f1b260445886`.
+Preflight checked 34 review pins, 30 freeze source pins, exact tool hashes, no
+active verifier/lease and 90.8 GiB free. Driver89738 birth1792101137.389743;
+whole budget ends around18:52:17 ET excluding any recorded lock wait. Its baseline-only10s
 limit is an explicit newly named plan; recovery of9–10minutes is a projection until
 measured, and the changed baseline pass set is a declared scheduling confound.
 
