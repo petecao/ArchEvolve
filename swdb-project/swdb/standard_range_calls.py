@@ -177,11 +177,18 @@ def certify(sites, definitions, origins):
 def check_row(row):
     from swdb import c_lowering
     certificate=dict(row);digest=certificate.pop('certificate_sha256',None)
-    if (row.get('policy')!=identity() or row.get('qualification')!=standard_range_model.identity()
-            or row.get('model')!=standard_range_model.NAME or digest!=_digest(certificate)
-            or row.get('model_sha256')!=hashlib.sha256(c_lowering.model_text(standard_range_model.NAME).encode()).hexdigest()
-            or row.get('first',{}).get('root')!=row.get('last',{}).get('root')
-            or row.get('predicate')!=_predicate(row['first'],row['last'],row['destination'])):
+    try:
+        first,last,destination=(row[name] for name in ('first','last','destination'))
+        valid=(row.get('policy')==identity() and row.get('qualification')==standard_range_model.identity()
+            and row.get('model')==standard_range_model.NAME and digest==_digest(certificate)
+            and row.get('model_sha256')==hashlib.sha256(c_lowering.model_text(standard_range_model.NAME).encode()).hexdigest()
+            and first['root']==last['root'] and first['elements']==last['elements']
+            and all(value['element_type']=='int' and value['root']['kind'] in
+                    {'one_dimensional_array','entry_window'} for value in (first,last,destination))
+            and row.get('predicate')==_predicate(first,last,destination))
+    except (KeyError,TypeError):
+        valid=False
+    if not valid:
         raise Refused('std::copy caller range certificate, roots or numerical predicate changed')
 
 
