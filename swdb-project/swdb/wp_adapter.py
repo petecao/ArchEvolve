@@ -164,6 +164,12 @@ class WpAdapter:
                              "array_domain_contract": {"id": self.contract, "sha256": job.unit.contract_sha256},
                              **semantics_options}
             lowering = c_lowering.lower(source, job.unit.function, **source_kwargs)
+            from swdb import stdlib_source_admission
+            context.setdefault("settings", {}).update(tool="frama-c-wp", flags=[], verifier_launched=False)
+            provenance_problem = stdlib_source_admission.bind(context, lowering, source, defines=self.defines)
+            if provenance_problem:
+                context["settings"].update(verifier_launched=False)
+                return self._not_proven("unsupported_construct", provenance_problem, context)
             original_lowering = lowering
             try:
                 wp_pointer_bounds.check(lowering)

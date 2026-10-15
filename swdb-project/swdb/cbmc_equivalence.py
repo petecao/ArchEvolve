@@ -218,6 +218,11 @@ class EquivalenceAdapter(CbmcAdapter):
                 return self._not_proven("parse_error", f"{side}: {exc}", context)
             except c_lowering.LoweringError as exc:
                 raise AdapterError(f"{side}: {exc}") from None
+            from swdb import stdlib_source_admission
+            provenance_problem = stdlib_source_admission.bind(context, lowering, source,
+                                                              defines=self.defines, side=side)
+            if provenance_problem:
+                return self._not_proven("unsupported_construct", f"{side}: {provenance_problem}", context)
             codes[side] = Code(lowering, source, self.defines)
             from swdb import bounded_initialization
             admission = bounded_initialization.check(lowering, max(sizes.values(), default=0))
@@ -305,6 +310,11 @@ class EquivalenceAdapter(CbmcAdapter):
 
     # --- the differential run (both sides' C lowering against their C++) -------------------------------------
     def _differential(self, job, built, context):
+        from swdb import stdlib_source_admission
+        try:
+            stdlib_source_admission.recheck(context)
+        except stdlib_source_admission.Refused as exc:
+            raise AdapterError(f"proof setup check [stdlib_provenance]: {exc}") from None
         out, log, scratch = context["out"], context["log"], Path(job.scratch)
         lines, sampled, domain = _domain(built["plan"])
         inputs = scratch / "domain.txt"

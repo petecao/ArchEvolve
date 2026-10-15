@@ -6,13 +6,15 @@ these tests distinguish that limitation from the new provenance refusal.
 """
 import hashlib
 import json
+import os
 import shutil
+import subprocess
 import sys
 
 import pytest
 import yaml
 
-from conftest import FIXTURES, make_records, run_swdb
+from conftest import FIXTURES, REPO, make_records, run_swdb
 from test_cbmc_adapter import method_version
 from test_formal_frame import frame_contract, write_library
 from swdb import c_lowering
@@ -30,7 +32,7 @@ template<> inline const int &min<int>(const int &a, const int &b) {
 '''
 
 
-def _prove(tmp_path, adapter, shadow):
+def _prove(tmp_path, adapter, shadow, *, model_mismatch=False):
     records = make_records(tmp_path)
     library = tmp_path / 'library'
     entry = frame_contract('contract.fixture_bounded_std_header', role='enabling', concurrency_frame=[], clauses=[
@@ -62,11 +64,27 @@ def _prove(tmp_path, adapter, shadow):
         'if tool=="cbmc":\n'
         ' print(json.dumps([{ "messageText":"PARSING ERROR", "messageType":"ERROR" }]));sys.exit(6)\n'
         'print("Invalid magic number\\n bitstream\\n llvm-bitstream");sys.exit(1)\n')
-    done = run_swdb('prove', '--records', records.path, '--summary', entry['id'], '--adapter', adapter,
-        '--bounds', '{"threads":1,"n":2}', '--runs-dir', tmp_path/'runs', '--format', 'json', env={
+    arguments = ['prove', '--records', records.path, '--summary', entry['id'], '--adapter', adapter,
+        '--bounds', '{"threads":1,"n":2}', '--runs-dir', tmp_path/'runs', '--format', 'json']
+    environment = {
             'SWDB_FRAMA_C':'none', 'SWDB_CBMC':f'{sys.executable} {stub} cbmc',
             'SWDB_CRUX':f'{sys.executable} {stub} crux', 'SWDB_CRUX_INCLUDES':str(includes),
-            'SWDB_VERIFIER_LOCK':str(tmp_path/'standin-only.lock')})
+            'SWDB_VERIFIER_LOCK':str(tmp_path/'standin-only.lock')}
+    if model_mismatch:
+        script = '''from swdb import proof, c_lowering
+from dataclasses import replace
+from swdb.cli import main
+original = c_lowering.lower
+def fault(*args, **kwargs):
+    lowering = original(*args, **kwargs)
+    return replace(lowering, models=(*lowering.models, 'std_max_int'))
+c_lowering.lower = fault
+raise SystemExit(main())
+'''
+        done = subprocess.run([sys.executable, '-c', script, *map(str, arguments)], cwd=REPO,
+            env={**os.environ, **environment}, text=True, capture_output=True, timeout=180)
+    else:
+        done = run_swdb(*arguments, env=environment)
     assert done.returncode == 0, done.stdout + done.stderr
     record = yaml.safe_load((records.path/json.loads(done.stdout)['path']).read_text())
     return record, marker
@@ -95,4 +113,14 @@ def test_canonical_scalar_standard_header_preserves_initializedness_refusal(tmp_
     assert record['settings']['bounded_initialization']['verdict'] == 'refused'
     assert 'opaque/model call' in record['settings']['bounded_initialization']['reason']
     assert record['settings']['verifier_launched'] is False
+    assert not marker.exists()
+
+
+def test_a_model_coverage_refusal_is_recorded_as_refused_and_stops_fallbacks(tmp_path):
+    record, marker = _prove(tmp_path, 'bounded', shadow=False, model_mismatch=True)
+    provenance = record['settings']['stdlib_provenance']
+    assert provenance['verdict'] == 'refused'
+    assert provenance['unit']['verdict'] == 'refused'
+    assert 'model/type set' in provenance['reason']
+    assert [r['tool'] for r in record['settings']['route']['attempts']] == ['cbmc']
     assert not marker.exists()
