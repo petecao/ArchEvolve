@@ -358,3 +358,15 @@ model symbols (including min/max/copy/swap) and new[]; shared lower/report and b
 are being integrated separately by the coordinator. No universal repair or whole-vector acceptance is
 claimed before combined public replays. Outside design/evidence pointer:
 `/private/tmp/probata-stdlib-provenance-design.md`. Ticket25 remains claimed.
+
+
+### Original full-TU admission integration — 2026-10-15 10:49 ET
+
+The native libclang certificate is now bound through all standard-model consumer
+paths and replayed immediately before differential execution or solver launch.
+Twenty focused source/allocator/bounded-route controls and four stand-in prelaunch
+controls pass. Independent review's custom unqualified allocator and fallback
+coverage diagnostic findings are repaired. Actual WP current-owner/stale-alias
+acceptance is running at frozen `00b16733`; no new actual success is claimed here.
+[Focused evidence](../evidence/stdlib-source-provenance-20261015.json). General
+vector/member and whole-pipeline acceptance remain open.

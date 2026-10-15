@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-15 ET",
+  "runtime_commit": "d965e016",
+  "combined_checkpoint": "00b16733f57ca5ddf273d631357ae23ab7979c55",
+  "scope": "Original complete C++ translation-unit and effective compiler/header provenance for standard model/allocation substitution; repeated before native differential and verifier launch.",
+  "controls": [
+    {
+      "count": 20,
+      "passed": 20,
+      "seconds": 115.38,
+      "scope": "9 full-TU/header/compiler controls, 2 allocator-declaration controls, 9 bounded-route controls"
+    },
+    {
+      "count": 4,
+      "passed": 4,
+      "seconds": 114.39,
+      "scope": "Stand-in positive and three prelaunch source/certificate/artifact tamper controls"
+    }
+  ],
+  "boundaries": [
+    "Stand-in results do not establish functional proof acceptance.",
+    "Actual WP safe-owner/stale-alias pair pending at frozen combined checkpoint.",
+    "Generated C model-body proofs retain their separate pinned model boundary.",
+    "Runtime allocator freshness/success and no-preexisting-write frame remain explicit assumptions; this checker does not prove arbitrary linked runtime code."
+  ],
+  "review_fixes": [
+    "Unqualified custom allocator<T> can no longer qualify as std::allocator<T>; canonical qualified allocator control remains accepted.",
+    "Certificate model/type coverage mismatch explicitly marks the unit provenance refused, stopping bounded fallback; original certificate is retained separately."
+  ],
+  "artifacts": [
+    {
+      "path": "/private/tmp/probata-stdlib-final-offline.jsonl",
+      "sha256": "6453a0488f6b0375bfe1a0a89c32698a5ba02a8556006991024276f97444382d",
+      "bytes": 46188
+    },
+    {
+      "path": "/private/tmp/probata-stdlib-final-prelaunch.jsonl",
+      "sha256": "fba894cdffa95f3954f31d934a9d9a777f9250d95804fb69cd71704b32b83778",
+      "bytes": 8321
+    },
+    {
+      "path": "/private/tmp/probata-stdlib-final-prelaunch.log",
+      "sha256": "491e8fae161269c9fcb42eca88662a22838a0b9ee2f7fa85e17c308101b441fb",
+      "bytes": 191
+    },
+    {
+      "path": "/private/tmp/probata-stdlib-final-prelaunch.log.summary.json",
+      "sha256": "f9fb7ce0adfbabb3298dec011d6a0c6d99a8efbcc5bc9280dc3edb6f40d7274c",
+      "bytes": 690
+    }
+  ]
+}

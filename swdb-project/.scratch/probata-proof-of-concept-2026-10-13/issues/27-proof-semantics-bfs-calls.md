@@ -381,3 +381,21 @@ through the independent AST check, even though raw source token reservation cann
 name. Combined helper/DX/source-span controls pass **53/53 in 7.79s**. This standalone module
 remains staged: no adapter helper admission or new actual WP claim is added. Evidence:
 `evidence/helper-capture-merge-review-20261015.json`.
+
+
+## Checkpoint — 2026-10-15 10:49 ET: helper/construct remote audit
+
+Frozen `1ece49b8` ran in two socket lanes from 09:57 ET. Entry-window and actual
+helper controls passed **17/17 in 1428.35s** on node 1, generation 597. Constructs
+on node 0, generation 556, stopped at its first failure: **5 passed, 1 failed in
+1268.59s**. The failure is the standalone `std_copy_int` model's uncertified opaque
+pointer origin, before WP launch, with zero goals. It is not a failing numerical
+proof or full construct acceptance. A separate qualified model-body repair is under
+review; caller range discharge remains required.
+
+All referenced artifact hashes match across 43 retained records. Both socket leases
+and the legacy lease were released at the 10:49 ET live readback; load was
+0.32/0.07/0.30, `/data1` had 21 GiB and `/data` had 97 GiB free. Raw results remain
+remote for coordinator, ticket acceptance and independent audit readers.
+[Compact audit](../evidence/helper-construct-mbit10-20261015.json). This checkpoint
+does not resolve the ticket. Recheck live state before dispatch.

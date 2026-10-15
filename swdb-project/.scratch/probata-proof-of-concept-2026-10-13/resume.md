@@ -4,50 +4,40 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 10:00 ET. Integration checkpoint `1ece49b8` includes checked helper merge `4d2fcc23` on
-`codex/probata-poc-integration`, based on `yanrujhou_main` at `150930b4`.
-The source-bound summary fix is merged: fresh callee closure, current proof/method
-and evidence, finite call bounds and pointer-buffer alignment are checked before
-launch. A native violating witness supports the historical changed-callee false
-proof; focused actual controls and the frozen mbit10 replay now pass.
-[Local evidence](evidence/summary-source-binding-20261015.json).
-[Remote evidence](evidence/summary-source-binding-mbit10-20261015.json).
-Historical proof records retain their original source and method pins.
-
-Helper integration verification: 36 helper/dependency controls passed in 21.52s;
-four schema-documentation checks passed in 0.28s; one public fake-WP composition
-control passed in 204.25s under an 8 GiB watchdog (peak 6,870,188,032 bytes).
-These checks establish source admission/composition, not a new actual proof.
+Updated: 2026-10-15 10:49 ET. Integration checkpoint `f389beb1` includes checked
+helper and source-summary admission, based on `yanrujhou_main` at `150930b4`.
+Declaration-attribute, qualified copy-body and nested-read changes are under
+independent integration review. The standard-source gate branch is at `00b16733`,
+with 20 focused offline and four prelaunch controls passing; its actual WP
+current-owner/stale-alias pair is running under the shared two-slot 8 GiB guard.
+[Gate evidence](evidence/stdlib-source-provenance-20261015.json).
 
 | Ticket | Current evidence | Next action |
 |---|---|---|
-| 07 | Run17 unproven; run18 launched 09:50:53 ET at isolated `996bd62c`, reviewed 85 offline controls and strict initialization/deadline policy | Finish fresh baseline, counted hint search and final proof within 60 minutes; no success claimed |
-| 24 | Frozen `fddb1462` native replay 132 passed/1 deselected; current `1ece49b8` construct proofs running on node 0 | Diagnose the first failure before a broader rerun; retain positive acceptance |
-| 25 | Qualified at/data actual pairs pass; shadow-header prelaunch control exposes source-provenance gap | Check canonical full-TU declarations/allocation hooks, then wider vector/pair acceptance |
-| 27 | Direct DX controls pass; helper safe/initialization-negative actual pair retains `7f9e3621` evidence; checked helper view merged as `4d2fcc23` | Complete ordered nested-index reads; original three_reads still refused |
-| 36 | Frozen remote bounded/source-summary 17 checks pass; 27 proof records audited with only intended mutation mismatch | Complete general setup/verdict acceptance as helper/model coverage grows |
-| 41 /42 | Resolved; approved composition statement and 209 production Rocq Qed | Preserve exact evidence boundary; no DX reduction claim |
+| 07 | Run18 finished unproven at 10:43 ET; 20 open goals (13 unit/7 hint), 51.76 counted minutes, no final proof/smoke | Audit negative outcome and remaining induction goals; retain prototype/RTE scope boundary |
+| 24 | Remote constructs stopped at opaque copy origin: 5 passed/1 failed; qualified copy body passes locally with 36 ordinary/7 smoke goals | Review repair and discharge caller typed range/capacity |
+| 25 | Original-TU standard-source gate passes 24 focused controls; actual safe/stale pair running | Complete actual acceptance, integrate gate and continue vector/pair pipeline |
+| 27 | Remote entry/helper shard passes 17/17; original nested three-read actual proof passes | Integrate independently checked nested view, then combined acceptance |
+| 36 | 43 remote records audited, all referenced hashes match; nested closure/capture hardening reviewed | Compose setup/source/checker unions and replay combined source |
 
-**32 of 63 resolved; five claimed.** Drafts 1/2 are immutable; draft 3 is not created.
-Ticket 28 remains gated by 27; 43 remains blocked by 29. Held-out kernels and method
-freeze remain gated by their dependencies. Existing user authorization covers
+**32 of 63 resolved; five claimed.** Drafts 1/2 remain immutable; draft 3 is not
+created. Ticket 28 remains gated by 27; 43 remains blocked by 29. Held-out kernels
+and method freeze remain gated by dependencies. Existing user authorization covers
 implementation, commits/pushes, two remote lanes and scoped BFS source export.
-
-Next: close source-header provenance, complete nested-read admission and combined
-acceptance, then create a new method draft after runtime
-identities settle. Last 30-minute status table 09:35 ET; next due 10:05 ET.
+Last 30-minute status table 10:35 ET; next due 11:05 ET.
 
 ## Host coordination
 
-Latest live readback: 2026-10-15 09:58 ET. Current-policy acceptance started at
-09:57 ET on frozen clean detached `1ece49b8`: node 0 constructs, generation 556;
-node 1 entry windows plus the two actual helper initializedness controls,
-generation 597. Both leases held; legacy lease released. Load 3.28/1.11/0.69.
-Each job has one worker, an 8 GiB verifier cap, two-hour timeout and 2 GiB output
-budget. Constructs stops at its first failure for diagnosis. Raw output stays
-remote for ticket/coordinator/audit readers. No result is claimed yet.
-[Launch record](evidence/helper-construct-lanes-launch-20261015-0957.json).
-Recheck live leases, load and disks before another dispatch.
+Live readback: 2026-10-15 10:49 ET. Both socket leases (node 0 generation 556,
+node 1 generation 597) and legacy generation 77 are released. Load0.32/0.07/0.30;
+21 GiB free on `/data1`, 97 GiB on `/data`. Evaluation checkout remains clean
+detached `1ece49b8`. The completed 09:57 ET jobs produced 43 retained proof records
+with matching artifact hashes: node 1 entry/helper **17 passed/1428.35s**; node 0
+constructs **5 passed/1 failed/1268.59s**, stopped before WP on the opaque copy
+model. Raw outputs remain remote for coordinator, ticket acceptance and independent
+audit readers, each below its 2 GiB budget. Recheck all leases, activity and disks
+before dispatching the next frozen combined checkpoint.
+[Compact audit](evidence/helper-construct-mbit10-20261015.json).
 
 Historical completed checkpoint:
 
