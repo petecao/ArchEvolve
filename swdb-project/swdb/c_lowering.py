@@ -44,7 +44,7 @@ import subprocess
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from swdb import bounded_initialization, cpu_effects, std_models, terminal_release, vector_ownership, wp_pointer_bounds
+from swdb import bounded_initialization, cpu_effects, std_models, stdlib_provenance, terminal_release, vector_ownership, wp_pointer_bounds
 
 TOOL_ID = "swdb-c-lowering"
 TOOL_VERSION = "9"                   # checked WP pointer formation and integer model receiving slots
@@ -200,6 +200,7 @@ class Lowering:
     bounded_initialization: dict = field(default_factory=dict)
     pointer_bounds: dict = field(default_factory=dict)
     terminal_release: dict | None = None  # checked ownership certificate; native lowering retains delete[]
+    stdlib_provenance: dict = field(default_factory=dict)  # original full-TU declarations and header closure
 
     @property
     def sha256(self):
@@ -222,6 +223,8 @@ class Lowering:
         data["pointer_bounds"] = self.pointer_bounds
         if self.terminal_release:
             data["terminal_release"] = self.terminal_release
+        if self.stdlib_provenance:
+            data["stdlib_provenance"] = self.stdlib_provenance
         return json.dumps(data, indent=1, sort_keys=True) + "\n"
 
     @property
@@ -291,7 +294,9 @@ def identity():
                             + here.with_name("standard_model_view.py").read_bytes()
                             + here.with_name("helper_windows.py").read_bytes()
                             + here.with_name("nested_entry_reads.py").read_bytes()
-                            + here.with_name("dx_array_domains.py").read_bytes()).hexdigest()
+                            + here.with_name("dx_array_domains.py").read_bytes()
+                            + here.with_name("stdlib_source_admission.py").read_bytes()
+                            + json.dumps(stdlib_provenance.runtime_identity(tool), sort_keys=True).encode()).hexdigest()
     found = {"c_lowering": {"id": f"{TOOL_ID}-{TOOL_VERSION}", "sha256": digest},
              "naming_rules": naming_rules()}
     if not tool.missing:
@@ -955,7 +960,10 @@ class _Unit:
                 raise Unsupported(f"iterator type {shown}", line)
             return pointer
         if std == "vector":
-            if not args or len(args) > 2 or (len(args) == 2 and not re.match(r"(std::(__\w+::)?)?allocator<", args[1])):
+            # An unrelated global allocator<T> may have observable effects. Only
+            # a qualified std allocator is eligible; the full-TU checker then
+            # binds that namespace's declarations to the canonical library.
+            if not args or len(args) > 2 or (len(args) == 2 and not re.match(r"std::(?:__\w+::)?allocator<", args[1])):
                 raise Unsupported(f"std::vector with an allocator other than std::allocator ({shown})", line)
             elements = (self._std_element(args[0], line, "std::vector"),)
             if elements[0] == "bool":
@@ -2480,12 +2488,18 @@ def lower(source, function, includes=(), defines=(), summaries=None, semantics=N
                                             models=unit.model_order, anchors=anchors, text=text)
     owner = vector_ownership.certify_origins(node, source=source.read_text(), source_sha256=_file_sha256(source),
                                            models=unit.model_order, anchors=anchors, text=text)
+    models = tuple(n for n in unit.model_order if n != "SWDB_MODEL_FAIL" and not n.endswith("_valid"))
+    allocation = unit.allocates or any(n.startswith("std_vector_") for n in unit.std_types) or any(n.startswith("swdb_alloc_new_array_") for n in unit.model_order)
+    provenance_models = sorted(set((*models, *unit.std_types)))
+    provenance = (stdlib_provenance.certify(tool, source, includes=includes, defines=defines,
+                                          models=provenance_models)
+                  if stdlib_provenance.needed(provenance_models, allocation) else {})
     return Lowering(function=function, text=text, anchors=tuple(anchors), declaration=declaration,
                     parameters=tuple(unit_params), source_sha256=_file_sha256(source), defines=defines,
                     tool={"id": TOOL_ID, "version": TOOL_VERSION, "naming_rules": NAMING_RULES,
                           "naming_rules_sha256": RULES_SHA256, "clang": tool.version},
-                    summaries=tuple(unit.summaries_used), models=tuple(n for n in unit.model_order if n != "SWDB_MODEL_FAIL" and not n.endswith("_valid")), probes=tuple(unit.probes),
-                    std_models=tuple(sorted(unit.std_types)), allocation=unit.allocates or any(n.startswith("std_vector_") for n in unit.std_types) or any(n.startswith("swdb_alloc_new_array_") for n in unit.model_order),
+                    summaries=tuple(unit.summaries_used), models=models, probes=tuple(unit.probes),
+                    std_models=tuple(sorted(unit.std_types)), allocation=allocation, stdlib_provenance=provenance,
                     cpu_effects=cpu_effects.collect(definition_nodes, unit.probe_nodes, unit.models,
                                                     unit.summaries_used, INTEGER_TYPES | FLOAT_TYPES),
                     bounded_initialization=bounded_initialization.analyze(definition_nodes,
