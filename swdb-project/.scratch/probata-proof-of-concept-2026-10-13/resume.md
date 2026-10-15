@@ -4,22 +4,24 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Runtime checkpoint: integration `0999dfb7` on `codex/probata-poc-integration`,
-based on `yanrujhou_main` at `150930b4`. Includes lowerer 9's integer model-result
-normalization, the checked private-vector proof view and named DX100 initialization.
-Focused merged-source validation at isolated `7437f3b9`:94 native/lowering and 69
-setup cases pass across retained runs; sandbox-only failures were reproduced and
-replayed with watchdog permissions. Details remain in ticket24's evidence.
+Runtime checkpoint: integration `70683774` on `codex/probata-poc-integration`,
+based on `yanrujhou_main` at `150930b4`, pushed and clean on 2026-10-15 07:05 ET.
+Includes lowerer 9's integer result normalization, private-vector ownership,
+mandatory `-wp-no-filter-init`, checked `at()` view, named DX100 initialization,
+and conservative typed array-origin refusal. Explicit entry-domain declarations
+and mathematical bindings are staged; metadata alone cannot admit a proof.
+Latest merged binding validation: 36 focused checks pass, with exact raw report
+`/private/tmp/probata-array-bind-merged-20261015.jsonl`.
 User approval covers scoped implementation, commits, pushes, remote source sync,
 two mbit10 CPU lanes and BFS proof-workspace export through Codex/OpenAI.
 
 | Ticket | Current work | Evidence or next action |
 |---|---|---|
-| 07 | Counted run16 started 06:09 ET, frozen `6acfbe4e` | Fresh hints plus processed-frontier/CSR induction guidance; output `/private/tmp/probata-t07-20261015-run16/`. Run 15 ended not proven with 1 unit and 24 hint obligations. Audit found missing induction information, no concrete false hint. |
+| 07 | Counted run16 started 06:09 ET, frozen `6acfbe4e` | Fresh processed-frontier/CSR guidance; output `/private/tmp/probata-t07-20261015-run16/`. Latest accepted candidate at 06:55 ET has 5 unit and 20 hint goals open; counted budget 37.62 minutes. Later reverted edit used 41.48 minutes. Run remains unproven. Run 15 ended with 1 unit and 24 hint goals; its offline audit found missing induction information and no concrete false hint. |
 | 24 | Focused model-result fix integrated | Four public positive callers and missing-input negative pass; combined-source full constructs await node 1 after pointer policy finalizes. |
-| 25 | Nine focused private-vector ownership controls pass across two reports | Safe: 122/122 goals, stale alias sole liveness failure,7 protocol refusals. Nonallocating member/model public acceptance continues; general vector lifetime acceptance remains open. |
-| 27 | Exact safe three-read initializedness diagnostic | Shared static rows retain checked caller-input requirements. Quantifier exposure remains incomplete; finite specialization of frozen geometry is planned without new premises. Capacity and remote acceptance remain pending. |
-| 36 | Pointer formation and typed-origin audit | Legal/out-of-range row controls and 5 final pointer/model controls pass on staged source. Checking arbitrary primitive input pointer subobject provenance before pinning draft 3; allocation-block bounds alone are insufficient. |
+| 25 | Nine focused private-vector ownership controls pass across two reports | Safe: 122/122 goals, stale alias sole liveness failure,7 protocol refusals. General member/model and lifetime acceptance remains open; opaque model buffer arithmetic is now refused pending exact field/ownership domains. The earlier checked-at positive is checkpoint evidence, not current-origin acceptance. |
+| 27 | Safe three-read initializedness positive/negative pass | Mandatory no-filter policy gives 100 ordinary goals plus 31 smoke checks for safe caller; missing initialization leaves the intended obligation open. Finite specialization was removed as unnecessary. Current-origin, capacity and remote acceptance remain pending. |
+| 36 | Pointer formation and typed-origin audit | Eight public origin proof controls and eight lowering controls pass. Conservative origin gate is integrated; opaque inputs/model fields refuse. Explicit entry-window WP admission and bounded domain planning are underway. Allocation-block bounds cannot establish 2D row provenance. |
 | 41 | Resolved | Approved reconstruction `e23f3715…`, protected/class/ownership lifetime premises and exact guard controls. |
 | 42 | Resolved | Production Rocq composition theorem: 209 Qed, closed context, actual record validate/build; no DX100 reduction claim. |
 
@@ -34,10 +36,11 @@ recompute the ticket frontier and use the two leased remote socket lanes.
 
 ## Host coordination
 
-Live preflight at 2026-10-15 06:05 ET found both socket leases and the legacy lease released,
-load 0.02/0.06/0.01, about 117 GiB available RAM, 21 GiB free on `/data1` and 97 GiB on
+Live preflight at 2026-10-15 07:04 ET found both socket leases and the legacy lease released,
+load 0.02/0.06/0.04, about 117 GiB available RAM, 21 GiB free on `/data1` and 97 GiB on
 `/data`. The process check found no active proof jobs. Evaluation source remains clean
-detached `dd975e72`; the installed wrapper matches its tracked remote blob. These are dispatch observations, not permanent availability claims. New output
+detached `dd975e72`. The wrapper matched its tracked remote blob at the earlier
+06:05 ET check; fetch and compare again immediately before dispatch. These are dispatch observations, not permanent availability claims. New output
 uses `/data/yanruj/EvolveSWDB_runs/`; source uses Git worktrees under `/data1/yanruj/`.
 The current lane wrapper is in `/data1/yanruj/Memacc-evolveswdb-lane`, verified against
 `origin/yanrujhou_main`. The older `/data1/yanruj/Memacc` checkout lacks it and has unrelated
@@ -65,8 +68,8 @@ not substitute for reading incremental run artifacts.
 
 ## Validation and progress reporting
 
-The 2026-10-15 06:00 ET report covered every active ticket and both lanes; next report
-is due around 06:30 ET. Run 15 ended not proven after 52.75 counted minutes with1unit
+The 2026-10-15 07:00 ET report covered every active ticket and both lanes; next report
+is due around 07:30 ET. Run 15 ended not proven after 52.75 counted minutes with1unit
 and 24 hint obligations open; no final proof replay ran. Run 16 is active on fresh
 hints. Both remote lanes await the final combined source and method checkpoint.
 
