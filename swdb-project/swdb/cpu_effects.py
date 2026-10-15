@@ -39,12 +39,14 @@ def _site(node, function, statement, kind):
             "statement": statement}
 
 
-def collect(nodes, probes, models, summaries, scalar_types):
+def collect(nodes, probe_nodes, models, summaries, scalar_types):
     """Inventory every lowered function, including callees. No caller-provided write/read allowlist is used."""
     result = {"reads": [], "writes": [], "calls": [], "loop_functions": []}
     summary_names = {row["name"] for row in summaries}
     seen_summaries = set()
-    tile = {(p["function"], p["access"], p["begin"], p["end"]) for p in probes}
+    # Internal AST identities avoid conflating macro-expanded accesses with shared/missing source ranges.
+    # They never enter artifacts or hashes, whose content remains deterministic.
+    tile = {row for row in probe_nodes if row[2] is not None}
 
     for function, node in nodes.items():
         all_nodes = list(_walk(node))
@@ -96,7 +98,7 @@ def collect(nodes, probes, models, summaries, scalar_types):
             if kind is None:
                 return
             row = _site(target, function, statement, kind)
-            if (function, access, row["begin"], row["end"]) not in tile:
+            if (function, access, target.get("id")) not in tile:
                 result["reads" if access == "read" else "writes"].append(row)
 
         def visit(current, statement):
