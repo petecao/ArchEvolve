@@ -1,0 +1,106 @@
+{
+  "scope": "Prospective read-only scheduling plan; no job or collector/compiler launched. Runtime/source freeze must be selected by root.",
+  "historical_source": "71771f097feb83338928430bdf78a4de8384e63b",
+  "historical_report": {
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-t27-safe-71771f09/report.jsonl",
+    "sha256": "e4c4c06d17d674b617852ea53c061ea272a56f4e9ff7c9842c92267800120daf"
+  },
+  "weights": [
+    {
+      "name": "three_reads",
+      "nodeid": "tests/test_proof_semantics.py::test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics[three_reads]",
+      "historical_call_seconds": 585.5602468326688
+    },
+    {
+      "name": "size",
+      "nodeid": "tests/test_proof_semantics.py::test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics[size]",
+      "historical_call_seconds": 282.08486034721136
+    },
+    {
+      "name": "cpu_write",
+      "nodeid": "tests/test_proof_semantics.py::test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics[cpu_write]",
+      "historical_call_seconds": 330.6945020761341
+    },
+    {
+      "name": "store_source_wait",
+      "nodeid": "tests/test_proof_semantics.py::test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics[store_source_wait]",
+      "historical_call_seconds": 728.7608109889552
+    },
+    {
+      "name": "stall_condition",
+      "nodeid": "tests/test_proof_semantics.py::test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics[stall_condition]",
+      "historical_call_seconds": 1129.8931006705388
+    },
+    {
+      "name": "transitive",
+      "nodeid": "tests/test_proof_semantics.py::test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics[transitive]",
+      "historical_call_seconds": 518.6658261576667
+    },
+    {
+      "name": "register_write",
+      "nodeid": "tests/test_proof_semantics.py::test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics[register_write]",
+      "historical_call_seconds": 268.5905461506918
+    },
+    {
+      "name": "value_stream",
+      "nodeid": "tests/test_proof_semantics.py::test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics[value_stream]",
+      "historical_call_seconds": 272.4015202941373
+    },
+    {
+      "name": "value_gather",
+      "nodeid": "tests/test_proof_semantics.py::test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics[value_gather]",
+      "historical_call_seconds": 424.5278197256848
+    },
+    {
+      "name": "value_range",
+      "nodeid": "tests/test_proof_semantics.py::test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics[value_range]",
+      "historical_call_seconds": 950.5088336030021
+    },
+    {
+      "name": "footprint",
+      "nodeid": "tests/test_proof_semantics.py::test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics[footprint]",
+      "historical_call_seconds": 460.5126884570345
+    }
+  ],
+  "shards": [
+    {
+      "name": "safe-a",
+      "profile": "wp-safe",
+      "extra_pytest_argv": [
+        "-k",
+        "cpu_write or store_source_wait or stall_condition or transitive or register_write"
+      ],
+      "expected_count": 5,
+      "expected_collector_ids": [
+        "tests/test_proof_semantics.py::test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics[cpu_write]",
+        "tests/test_proof_semantics.py::test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics[store_source_wait]",
+        "tests/test_proof_semantics.py::test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics[stall_condition]",
+        "tests/test_proof_semantics.py::test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics[transitive]",
+        "tests/test_proof_semantics.py::test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics[register_write]"
+      ],
+      "historical_call_seconds": 2976.6047860439867
+    },
+    {
+      "name": "safe-b",
+      "profile": "wp-safe",
+      "extra_pytest_argv": [
+        "-k",
+        "three_reads or size or value_stream or value_gather or value_range or footprint"
+      ],
+      "expected_count": 6,
+      "expected_collector_ids": [
+        "tests/test_proof_semantics.py::test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics[three_reads]",
+        "tests/test_proof_semantics.py::test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics[size]",
+        "tests/test_proof_semantics.py::test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics[value_stream]",
+        "tests/test_proof_semantics.py::test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics[value_gather]",
+        "tests/test_proof_semantics.py::test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics[value_range]",
+        "tests/test_proof_semantics.py::test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics[footprint]"
+      ],
+      "historical_call_seconds": 2975.595969259739
+    }
+  ],
+  "historical_call_sum_seconds": 5952.200755303726,
+  "historical_whole_profile_seconds": 6015.03,
+  "disjoint_union_count": 11,
+  "boundary": "Expected IDs derived from current WP_SAFE AST and historical actual collector IDs; no pytest collection run. -k is applied only after existing wp-safe function selector. Historical weights exclude setup/bootstrap and are not a fresh ETA guarantee; new compiler/setup source may change durations. Root retains dispatch/resource/lease ownership."
+}
