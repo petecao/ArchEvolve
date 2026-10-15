@@ -145,6 +145,10 @@
         "reference_semantics": {"$ref": "#/$defs/pin"},
         "proof_semantics": {"$ref": "#/$defs/pin"},
         "method_version": {"$ref": "#/$defs/pin"},
+        "terminal_release_check": {"$ref": "#/$defs/pin",
+                                   "description": "The ownership checker used to omit a proven-unobservable final delete[] in the WP view; original C lowering and code remain pinned."},
+        "terminal_release_certificate": {"$ref": "#/$defs/pin",
+                                         "description": "Hash of the generator-owned AST ownership certificate for one nonescaping scalar-array owner and terminal delete[]."},
         "minimum_bounds": {"$ref": "#/$defs/pin"},
         "predecessor_snapshot": {"$ref": "#/$defs/pin"},
         "summaries": {
