@@ -1,0 +1,118 @@
+{
+  "created": "2026-10-15 ET",
+  "kind": "prospective current-policy two-lane launch; no final acceptance claimed",
+  "started_at_utc": "2026-10-15T13:57:08.975289+00:00",
+  "source": "1ece49b8734447d8d9996a8f9c84319c6417a5d1",
+  "branch": "HEAD",
+  "wrapper_blob": "261e7e04a64474020c6d2fd288bee9bab8dd1f5d",
+  "leases_before": [
+    {
+      "file": "mbit10-evaluation.meta.json",
+      "active_session": null,
+      "heartbeat_at": "2026-09-12T04:49:11Z",
+      "lease": {
+        "acquired_at": "2026-09-12T01:35:42Z",
+        "daemon_pid": 209457,
+        "daemon_start_token": "sh209457-1789176942",
+        "generation": 77,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation",
+        "mode": "measure",
+        "session_id": null
+      },
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "recovered_from_generation": null,
+      "released_at": "2026-09-12T04:49:11Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    {
+      "file": "mbit10-evaluation-node1.meta.json",
+      "active_session": null,
+      "heartbeat_at": "2026-10-15T13:42:20Z",
+      "lease": {
+        "acquired_at": "2026-10-15T13:32:37Z",
+        "daemon_pid": 3543817,
+        "daemon_start_token": "sh3543817-1792071157",
+        "generation": 596,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node1",
+        "mode": "measure",
+        "session_id": null
+      },
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "recovered_from_generation": null,
+      "released_at": "2026-10-15T13:42:20Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    {
+      "file": "mbit10-evaluation-node0.meta.json",
+      "active_session": null,
+      "heartbeat_at": "2026-10-15T13:35:03Z",
+      "lease": {
+        "acquired_at": "2026-10-15T13:32:37Z",
+        "daemon_pid": 3543807,
+        "daemon_start_token": "sh3543807-1792071157",
+        "generation": 555,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node0",
+        "mode": "measure",
+        "session_id": null
+      },
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "recovered_from_generation": null,
+      "released_at": "2026-10-15T13:35:03Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    }
+  ],
+  "uptime": "09:57:08 up 76 days,  2:16, 10 users,  load average: 0.66, 0.22, 0.39",
+  "disk": [
+    "/dev/sdd1       1.8T  1.7T   21G  99% /data1",
+    "/dev/sdb1       1.8T  1.7T   97G  95% /data"
+  ],
+  "outputs": [
+    {
+      "node": 0,
+      "shard": "constructs",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-constructs-20261015-0958-node0"
+    },
+    {
+      "node": 1,
+      "shard": "entry-windows",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-entry-windows-20261015-0958-node1"
+    }
+  ],
+  "budget_bytes_each": 2147483648,
+  "guards": {
+    "workers_per_socket": 1,
+    "max_lanes": 2,
+    "rss_cap_bytes": 8589934592,
+    "timeout_s": 7200,
+    "output_budget_bytes_each": 2147483648,
+    "constructs_maxfail": 1,
+    "source_mutation_while_running": false
+  },
+  "retention": {
+    "raw_output": "mbit10 only",
+    "remaining_readers": [
+      "coordinator",
+      "ticket24/27/36 acceptance",
+      "independent artifact audit"
+    ]
+  },
+  "selection": {
+    "node0": "tests/test_wp_subset.py --maxfail=1",
+    "node1": "tests/test_entry_array_domains.py plus two test_actual_helper_size_proof_retains_original_source_initializedness cases"
+  }
+}
