@@ -26,7 +26,7 @@ CHECK_SOURCES = ("proof_setup.py", "proof_report.ml", "proof.py", "cbmc_adapter.
                  "vocab.py", "formal_frame.py", "acsl_subset.py", "framac.py", "hint_check.py", "hint_tree.ml",
                  "wp_pointer_bounds.py", "proof_semantics.py", "vector_ownership.py", "standard_model_view.py",
                  "array_domains.py", "model_domains.py", "dx_array_domains.py", "bounded_entry_windows.py",
-                 "bounded_chain.py", "summary_bindings.py", "helper_windows.py")
+                 "bounded_chain.py", "summary_bindings.py", "helper_windows.py", "standard_range_model.py")
 REQUIRED_WP_SWITCHES = (("-wp-no-filter-init", "-wp-filter-init"),)
 _COMPILED_MODULES = {}
 _ASSUME = re.compile(r"\b(?:llvm_assume|crucible_assume|__VERIFIER_assume)\b|\b(?:__CPROVER_assume|SWDB_ASSUME|assume)\s*\(")
@@ -330,7 +330,7 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
             _fail("semantics_ghost_ownership", "semantics invocation has no pinned hint-free base")
         check_semantics_hints(base, getattr(adapter, "hints", []))
     if adapter.name == "wp":
-        from swdb import standard_model_view, wp_pointer_bounds
+        from swdb import standard_model_view, standard_range_model, wp_pointer_bounds
         try:
             if "pointer_bounds_model_source" in context:
                 from swdb import c_lowering
@@ -340,10 +340,17 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
                     if view != context["standard_model_view"]["view"]:
                         _fail("pointer_bounds", "checked standard model view changed after planning")
                     model = view.text
+                qualified = None
+                if context.get("standard_range_model"):
+                    qualified = standard_range_model.wp_view(job.unit.function, model, scratch or job.scratch)
+                    if qualified != context["standard_range_model"]["view"]:
+                        _fail("pointer_bounds", "qualified standard range model changed after planning")
+                    model = qualified.text
+                    hashes["standard_range_model"] = qualified.pins["standard_range_model_certificate"]["sha256"]
                 fresh = "\n".join([*c_lowering.HEADERS, model]) + "\n" if model is not None else None
                 if fresh != context["pointer_bounds_model_source"]:
                     _fail("pointer_bounds", "generated C model changed after planning")
-                generated, report = wp_pointer_bounds.model_view(fresh, scratch or job.scratch)
+                generated, report = wp_pointer_bounds.model_view(fresh, scratch or job.scratch, qualified=qualified)
                 if generated != context["wp_expected_text"] or report != context["pointer_bounds_report"]:
                     _fail("pointer_bounds", "generated C model pointer checks changed after planning")
             else:
@@ -368,7 +375,7 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
                 wp_pointer_bounds.check_semantic_origins(lowering, adapter.library, adapter.defines)
                 wp_pointer_bounds.check_input(lowering, context["pointer_bounds_base"], context["pointer_bounds_report"],
                     "\n".join(Path(path).read_text() for path, _expected in inputs))
-        except (KeyError, standard_model_view.Refused, wp_pointer_bounds.Refused) as exc:
+        except (KeyError, standard_model_view.Refused, standard_range_model.Refused, wp_pointer_bounds.Refused) as exc:
             _fail("pointer_bounds", str(exc))
         _wp_flags(list(command) if command else flags, scratch or job.scratch)
     elif adapter.name == "cbmc":

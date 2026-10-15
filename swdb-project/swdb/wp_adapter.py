@@ -40,7 +40,7 @@ import subprocess
 from dataclasses import replace
 from pathlib import Path
 
-from swdb import artifacts, c_lowering, cpu_memory_admission, framac, helper_windows, hint_check, paths, proof_semantics, proof_setup, rss_watchdog, standard_model_view, std_models, terminal_release, vector_ownership, vocab, wp_pointer_bounds
+from swdb import artifacts, c_lowering, cpu_memory_admission, framac, helper_windows, hint_check, paths, proof_semantics, proof_setup, rss_watchdog, standard_model_view, standard_range_model, std_models, terminal_release, vector_ownership, vocab, wp_pointer_bounds
 from swdb.proof import MODEL_PREFIX, AdapterError, Verdict
 
 NAME = "wp"
@@ -130,11 +130,35 @@ class WpAdapter:
                 context["reports"] += [("standard_model_original", original),
                                        ("standard_model_view_certificate", certificate)]
                 text = view.text
+            if job.unit.function == standard_range_model.NAME:
+                try:
+                    range_view = standard_range_model.wp_view(job.unit.function, text, wp_dir)
+                    standard_range_model.check_view(job.unit.function, range_view, wp_dir)
+                except standard_range_model.Refused as exc:
+                    return self._not_proven("unsupported_construct", str(exc), context)
+                original = wp_dir / "standard_range_original.c"
+                original.write_text("\n".join([*c_lowering.HEADERS, text]) + "\n")
+                certificate = wp_dir / "standard_range_model.json"
+                certificate_text = json.dumps(range_view.certificate, indent=2) + "\n"
+                certificate.write_text(certificate_text)
+                context["standard_range_model"] = {"view":range_view, "original_path":original,
+                    "original_text":original.read_text(), "certificate_path":certificate,
+                    "certificate_text":certificate_text}
+                context["pins"].update(range_view.pins)
+                context.setdefault("assumed", []).append({"kind":"trusted_tool",
+                    "reference":standard_range_model.identity(),
+                    "sentence":"The checked std_copy_int body proof is qualified by explicit live typed input/output "
+                               "array ranges. This is standard-library valid-range semantics, not a theorem for "
+                               "arbitrary pointer parameters; every caller must discharge the typed range domain."})
+                context["reports"] += [("standard_range_original",original),
+                                       ("standard_range_model_certificate",certificate)]
+                text = range_view.text
             input_path = wp_dir / "wp_input.c"
             context["pointer_bounds_model_source"] = "\n".join([*c_lowering.HEADERS, text]) + "\n"
             try:
                 context["wp_expected_text"], context["pointer_bounds_report"] = wp_pointer_bounds.model_view(
-                    context["pointer_bounds_model_source"], job.scratch)
+                    context["pointer_bounds_model_source"], job.scratch,
+                    qualified=(context.get("standard_range_model") or {}).get("view"))
             except wp_pointer_bounds.Refused as exc:
                 context["settings"] = {"tool": "frama-c-wp", "flags": [], "verifier_launched": False,
                     "pointer_bounds": {"verdict": "refused", "reason": str(exc), "check": wp_pointer_bounds.identity()}}
@@ -316,8 +340,11 @@ class WpAdapter:
         context['source'] = context["helper_windows"]["view"].path if context.get("helper_windows") else source
         try:
             contracts = self._dependencies(dependency_lowering, context)
-        except summary_bindings.Refused as exc:
-            context.setdefault('settings', {}).update(verifier_launched=False)
+        except (summary_bindings.Refused, standard_range_model.Refused) as exc:
+            settings = context.setdefault('settings', {})
+            settings.setdefault('tool', 'frama-c-wp')
+            settings.setdefault('flags', [])
+            settings.update(verifier_launched=False)
             return self._not_proven('unsupported_construct', str(exc), context)
         refusal = cpu_memory_admission.summary_refusal(self.records, [
             pin["proof_record"] for group in ("summaries", "models") for pin in context["pins"].get(group, [])])
@@ -549,6 +576,12 @@ class WpAdapter:
                             "sentence": f"The summary of {used['name']} (library entry {entry_id}) stands for its code "
                                         f"here; proof record {record} proves the summary on that code."})
         for name in lowering.models:
+            # A range-qualified proof cannot be imported by ACSL validity alone.
+            # Source-root/subobject and endpoint/destination discharge is a later
+            # checked caller relation; absence never falls back to old eligibility.
+            if name == standard_range_model.NAME:
+                raise standard_range_model.Refused(
+                    "std_copy_int requires checked caller typed-range discharge before importing its qualified model proof")
             sha = hashlib.sha256((c_lowering.model_text(name) or "").encode()).hexdigest()
             if name.startswith(ALLOCATION_MODEL):
                 context.setdefault("allocation_contracts", {})[name] = {"id": name, "sha256": sha}
@@ -756,6 +789,18 @@ class WpAdapter:
             inputs += [(model_view["original_path"], model_view["original_text"]),
                        (model_view["certificate_path"], model_view["certificate_text"])]
             context["settings"]["standard_model_view"] = view.certificate
+        range_model = context.get("standard_range_model")
+        if range_model:
+            view = range_model["view"]
+            try:
+                standard_range_model.check_view(job.unit.function, view, wp_dir)
+            except standard_range_model.Refused as exc:
+                raise AdapterError(f"standard range model prelaunch check: {exc}") from None
+            if any(context["pins"].get(name) != pin for name,pin in view.pins.items()):
+                raise AdapterError("standard range model checker/certificate pins changed before launch")
+            inputs += [(range_model["original_path"], range_model["original_text"]),
+                       (range_model["certificate_path"], range_model["certificate_text"])]
+            context["settings"]["standard_range_model"] = view.certificate
         proof_setup.check_generated(job, self, context, inputs, settings_flags, command=command, scratch=scratch)
         result = rss_watchdog.run(command, log=wp_log, cap_bytes=cap, timeout=wall, cwd=scratch, env=env)
         context["peak"] = result.peak_rss_bytes
