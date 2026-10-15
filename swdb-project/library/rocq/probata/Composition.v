@@ -1,6 +1,8 @@
 (* Probata Rocq development: the parallel composition theorem (statement only).
    Created 2026-10-14 ET (ticket 41).  Revised 2026-10-14 ET after Codex's adversarial review
-   and the main session's decisions (F1, F2, M1-M10).  Proof: ticket 42.
+   and the main session's decisions (F1, F2, M1-M10).  Revised 2026-10-14 ET by the main
+   session under Yan-Ru's delegation (ticket 41, Later changes): omp_ok requires well-bracketed
+   critical sections (ticket 42's stray-Exit counterexample).  Proof: ticket 42.
    Review guide: HYPOTHESES.md.  Map decisions: 15 items 1-7; 16 item 4 and Later changes;
    26 item 4; 12 items 4, 7.
 
@@ -170,6 +172,15 @@ Definition count_iter (X : run) (w i : nat) : nat :=
   length (filter (fun p => match snd p with
                            | Iter w' i' => andb (Nat.eqb w w') (Nat.eqb i i')
                            | _ => false end) X).
+(* critical is a structured block (OpenMP 5.2): in a thread's events an Exit closes the open
+   critical section, and an Enter opens one only while none is open *)
+Fixpoint brackets_ok (tr : list event) (open : bool) : bool :=
+  match tr with
+  | [] => true
+  | Enter :: tr' => if open then false else brackets_ok tr' true
+  | Exit :: tr' => if open then brackets_ok tr' false else false
+  | _ :: tr' => brackets_ok tr' open
+  end.
 Definition omp_ok (X : run) (rf : rf_map) : Prop :=
   (* barrier and critical order memory: no CPU read is older than a write ordered before it
      through them (omp_sync, inside hb) *)
@@ -187,7 +198,10 @@ Definition omp_ok (X : run) (rf : rf_map) : Prop :=
   ((forall t, t < team_size -> done t (proj X t)) ->
    forall w, split_by_tid w = false ->
    (forall t, t < team_size -> In (Workshare w) (proj X t)) ->
-   forall i, count_iter X w i = if in_dec Nat.eq_dec i (space w) then 1 else 0).
+   forall i, count_iter X w i = if in_dec Nat.eq_dec i (space w) then 1 else 0) /\
+  (* critical sections are well bracketed in every thread (structured blocks; ticket 42's
+     stray-Exit counterexample) *)
+  (forall t, brackets_ok (proj X t) false = true).
 
 (** * 5. DX100 reads by this thread's commands (15 item 7; 12 item 4).
     Assumption entry, proof semantics: a DX100 read returns a value the location held while
@@ -1862,7 +1876,7 @@ Lemma t42_omp_ok_swap X rf p t1 e1 t2 e2 :
   omp_ok (t42_swap_run X p) (t42_swap_rf p rf).
 Proof.
   intros Hadj Hdiff Hnos Hnos' Hsafe Hmemory Hdevice Homp.
-  destruct Homp as [Hread [Hthreads [Hbarrier [Hcritical Hiter]]]].
+  destruct Homp as [Hread [Hthreads [Hbarrier [Hcritical [Hiter Hbrackets]]]]].
   pose proof (t42_model_rf_valid X rf Hmemory Hdevice) as Hvalid.
   repeat split.
   - intros j t l v [Hat | Hat] i Hseen.
@@ -1933,6 +1947,8 @@ Proof.
     + exact Hsplit.
     + intros t Ht. rewrite <- (t42_proj_swap X p t1 e1 t2 e2 t Hadj Hdiff).
       apply Hreach. exact Ht.
+  - (* t41c, 2026-10-14: well-bracketed critical sections (omp_ok's new last clause) *)
+    intro t. rewrite (t42_proj_swap X p t1 e1 t2 e2 t Hadj Hdiff). apply Hbrackets.
 Qed.
 
 Definition t42_device_safe (X : run) (rf : rf_map) (p : nat) : Prop :=

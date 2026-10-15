@@ -142,6 +142,23 @@ Proof.
     inversion He; subst; simpl in Hw; inversion Hw; reflexivity.
 Qed.
 
+(* 3b. Ticket 42's stray-Exit counterexample (x = 0, l = 1, m = 2) is no longer a model run:
+       thread 1 performs an Exit with no open Enter, which omp_ok now refuses (t41c). *)
+Local Arguments Enter {loc val arg}.
+Local Arguments Exit {loc val arg}.
+Local Arguments DeviceRead {loc val arg}.
+Local Arguments DeviceCovered {loc val arg}.
+Definition X_stray : R :=
+  [(1, Shared Claim false 0 0 0); (0, DeviceRead 7 1 1); (0, Enter); (0, Read 2 0);
+   (1, Exit); (0, Write 2 1); (1, Shared Claim false 0 1 0); (0, DeviceCovered 7);
+   (0, Exit); (0, HistoryRead 0 0)].
+Lemma stray_exit_excluded : forall sa_new team_size space split_by_tid done rf,
+  ~ omp_ok nat nat nat sa_new team_size space split_by_tid done X_stray rf.
+Proof.
+  intros sa_new team_size space split_by_tid done rf [_ [_ [_ [_ [_ Hb]]]]].
+  specialize (Hb 1). simpl in Hb. discriminate.
+Qed.
+
 (** * Reduction: the hazard definition flags an unready read *)
 Local Arguments SCpu {res val core tile cmd}.
 Local Arguments SRun {res val core tile cmd}.
@@ -241,6 +258,7 @@ Print Assumptions stale_history_read_allowed.
 Print Assumptions history_read_not_always_latest.
 Print Assumptions read_own_write.
 Print Assumptions failed_cas_reread_sees_winner.
+Print Assumptions stray_exit_excluded.
 Print Assumptions unready_read_is_hazard.
 Print Assumptions stall_covered.
 Print Assumptions stall_not_pending.
