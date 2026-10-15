@@ -436,3 +436,7 @@ and overlapping validation scopes:
 [`t24-array-domain-declarations-20261015.json`](../evidence/t24-array-domain-declarations-20261015.json).
 Next: implement origin/call admission, then update explicit fixture input contracts
 and replay their actual proofs. Ticket 24 remains claimed.
+
+### 2026-10-15: shared entry-window binding
+
+The staged `array_domains.bind` API now supplies canonical parameter-bound mathematical trees and entry-frozen ACSL rendering; `interval` conservatively evaluates all bounded scalar draws with arbitrary-precision arithmetic. After integrating `a728b529`, 19 public declaration controls and 10 mathematical controls pass (29 total, 7.92 seconds). This is a prerequisite for operation/call admission, not acceptance: proof jobs remain closed to declaration-only metadata. Evidence: `../evidence/t24-array-domain-binding-20261015.json`.
