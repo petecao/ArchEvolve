@@ -71,7 +71,7 @@ def test_actual_original_class_fixture_preserves_all_goal_and_smoke_acceptance(t
     assert done.returncode==0,done.stdout+done.stderr
     row=yaml.safe_load((records.path/json.loads(done.stdout)['path']).read_text())
     assert row['verdict']==('not_proven' if invalid else 'proven'),row.get('unproven_properties')
-    assert row['failure_class'] not in {'unsupported_construct','parse_error'}
+    assert row.get('failure_class') not in {'unsupported_construct','parse_error'}
     assert row['proof_setup_check']['verdict']=='passed'
     assert row['settings']['member_windows']['certificate']['input_premises_added']==[]
     assert any(g.get('smoke') for g in row['goals'])
