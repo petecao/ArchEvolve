@@ -239,7 +239,13 @@ class CruxAdapter:
         if [p for p in unit.parameters if p[2]] and not sizes:
             raise AdapterError(f"{unit.function} takes arrays: the bounds need a size bound on an integer parameter")
         logic = cbmc_adapter.logic_of(self.library)
-        harness, plan = tr.harness(unit, clauses, sizes=sizes, cap=cap, knobs=knobs, logic=logic)
+        setup, state = (), ()
+        if getattr(code, "model", None) is not None:    # ticket 27: ghost state g0, then havoc the tile elements
+            from swdb import proof_semantics
+            setup = ("swdb_dx_init();",)
+            state = proof_semantics.state_draws(self.library, code.model.entry, self.defines)
+        harness, plan = tr.harness(unit, clauses, sizes=sizes, cap=cap, knobs=knobs, logic=logic, setup=setup,
+                                   state=state)
         drop = cbmc_adapter.stub_fault()
         stubs, summaries = {}, []
         for callee in code.functions:

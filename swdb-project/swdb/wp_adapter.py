@@ -10,8 +10,10 @@ One job (`swdb prove --adapter wp`):
    (`swdb.c_lowering`). Outside the core subset: not proven, `unsupported_construct`; unparsable C++:
    `parse_error`.
 2. Build WP's input: the C lowering with the contract's per-candidate formal halves at the unit's
-   `contract` anchor, the logic-library files they use at `ghost.globals`, and fixture hints at their
-   anchors (`--hint-file`; ticket 35 replaces them with hint records).
+   `contract` anchor, the logic-library files they use at `ghost.globals`, and the hint set (`--hint-file`,
+   hint records) merged at its anchors, only when the proof hint check accepts it (ticket 35,
+   swdb.hint_check); a rejected set never reaches WP, which then runs without hints, and the record lists
+   every rejected hint with its rule.
 3. Check the installed tools against the pinned method version's lineup (Frama-C/WP, the three solvers,
    clang, the C lowering tool's ID and sha256); a mismatch runs nothing.
 4. Run Frama-C/WP with the frozen settings in a fresh process in the job's scratch folder (TMPDIR too, so
@@ -37,7 +39,7 @@ import shutil
 import subprocess
 from pathlib import Path
 
-from swdb import c_lowering, framac, paths, rss_watchdog, vocab, yamlio
+from swdb import c_lowering, framac, hint_check, paths, rss_watchdog, vocab
 from swdb.proof import AdapterError, Verdict
 
 NAME = "wp"
@@ -50,11 +52,6 @@ DEFAULT_WALL_SECONDS = 3600
 DEFAULT_CAP_BYTES = 8 * 2**30                    # O9: the ~8 GB RSS watchdog
 UNCLASSIFIED = "unclassified_wp_outcome"         # not a failure class: stops the batch (11 item 9)
 SOURCE_SUFFIXES = (".cc", ".cpp", ".cxx", ".c")
-HINT_KINDS = {"loop_head": ("loop invariant", "loop assigns", "loop variant"),
-              "before": ("assert",), "after": ("assert",), "entry": ("assert",)}
-FORBIDDEN_HINT = re.compile(r"(?:^|;|\*/|\n)\s*(admit|check|requires|ensures|assumes|axiom|axiomatic|lemma|ghost|"
-                            r"behavior|predicate|logic|inductive|assigns|terminates|decreases)\b")
-UNBOUNDED_RANGE = re.compile(r"\.\.\s*\]|\[\s*\.\.")
 SENTENCES = {
     "c_lowering": "The C lowering tool (swdb lower, version {version}) lowers the C++ proof unit to C that behaves the "
                   "same; WP proves the C lowering, not the C++.",
@@ -75,7 +72,10 @@ class WpAdapter:
     def __init__(self, library, contract, method, hints=None, defines=()):
         self.library, self.contract, self.method = library, contract, method
         self.hints_path = Path(hints) if hints else None
-        self.hints = _read_hints(self.hints_path) if hints else []
+        try:
+            self.hints = hint_check.read_hint_set(self.hints_path) if hints else []
+        except hint_check.HintSetError as exc:
+            raise AdapterError(str(exc)) from None
         self.defines = tuple(defines)
 
     @classmethod
@@ -112,14 +112,38 @@ class WpAdapter:
         c_path, anchors_path = lowering.write(wp_dir)
         context["reports"] += [("c_lowering", c_path), ("anchors", anchors_path)]
         context["c_lowering"] = {"id": c_path.name, "sha256": lowering.sha256}
-        text = self._input(lowering, entry)
+        base = hint_check.wp_base(lowering.text, lowering.anchors, self._context(lowering, entry))
+        accepted = self._hint_check(job, lowering, base, context) if self.hints_path else []
+        text = hint_check.merge(base, lowering.anchors, self.hints, accepted).text
         input_path = wp_dir / "wp_input.c"
         input_path.write_text(text)
         context["reports"].append(("wp_input", input_path))
-        if self.hints_path:
-            shutil.copyfile(self.hints_path, wp_dir / "hints.yaml")
-            context["reports"].append(("hints", wp_dir / "hints.yaml"))
+        context["hints_reaching_wp"] = len(accepted)
         return self._wp(job, input_path, context)
+
+    def _hint_check(self, job, lowering, base, context):
+        """Ticket 35: the proof hint check; the indices of the hints that reach WP (all of them, or none)."""
+        wp_dir, log = context["wp_dir"], context["log"]
+        shutil.copyfile(self.hints_path, wp_dir / "hints.yaml")
+        context["reports"].append(("hints", wp_dir / "hints.yaml"))
+        try:
+            result = hint_check.judge(base, lowering.anchors, self.hints, Path(job.scratch) / "hint-check",
+                                      wp_flags=context["tools"]["flags"])
+        except hint_check.HintCheckError as exc:
+            raise AdapterError(f"proof hint check: {exc}") from None
+        merged = wp_dir / "hints_merged.c"
+        merged.write_text(result.pop("merged"))
+        accepted = result.pop("accepted")
+        result["reached_wp"] = bool(accepted)
+        context["hint_set"] = {"sha256": result.pop("hint_set_sha256"), "hints": [dict(h) for h in self.hints]}
+        context["hint_check"] = result
+        report = wp_dir / "hint_check.json"
+        report.write_text(json.dumps({"hint_set": context["hint_set"], "hint_check": result}, indent=1,
+                                     sort_keys=True) + "\n")
+        context["reports"] += [("hints_merged", merged), ("hint_check", report)]
+        log.line(f"proof hint check: {result['verdict']}, {len(result['rejections'])} rejection(s), "
+                 f"{result['frama_c_runs']} Frama-C run(s)")
+        return accepted
 
     def _tools(self):
         """Installed versions and binary hashes, checked against the method version's lineup."""
@@ -160,8 +184,9 @@ class WpAdapter:
             identities[tool] = (f"{tool}-{version}", sha, version)
         return {"flags": list(flags), "seconds": seconds, "identities": identities}
 
-    def _input(self, lowering, entry):
-        """WP's input file: contract at the unit's contract anchor, logic files at ghost.globals, hints at anchors."""
+    def _context(self, lowering, entry):
+        """What WP sees besides the hints, {anchor: [block]}: the contract's per-candidate formal halves at the
+        unit's contract anchor (`requires` first), the logic-library files they use at ghost.globals."""
         clauses = [c for c in entry.get("clauses") or [] if isinstance(c, dict) and c.get("acsl")
                    and c.get("proof_placement") == "per_candidate"]
         if not clauses:
@@ -186,27 +211,7 @@ class WpAdapter:
                 for clause in summary:
                     uses += [u for u in clause["acsl"].get("uses", []) if u not in uses]
         inserts["ghost.globals"] = [f"/*@\n{files[u].read_text()}\n*/" for u in uses]
-        kinds = {a["id"]: a["kind"] for a in lowering.anchors}
-        for hint in self.hints:
-            anchor, text = hint["anchor"], hint["acsl"].strip()
-            if anchor not in kinds:
-                raise AdapterError(f"hint anchor {anchor} is not an anchor of the C lowering of {lowering.function}")
-            allowed = HINT_KINDS.get(kinds[anchor], ())
-            if not text.startswith(allowed) or FORBIDDEN_HINT.search(text):
-                raise AdapterError(f"hint at {anchor} ({kinds[anchor]}) may hold only {', '.join(allowed) or 'nothing'}")
-            if UNBOUNDED_RANGE.search(text):                 # ticket 07: WP 33 aborts on `a[i ..]` in loop assigns
-                raise AdapterError(f"hint at {anchor} has an unbounded range (`..]`); bound it (WP 33 cannot prove "
-                                   "writes into an infinite assigns range)")
-            inserts.setdefault(anchor, []).append("/*@ " + "\n    ".join(text.splitlines()) + " */")
-        out = []
-        for line in lowering.text.splitlines():
-            match = c_lowering.ANCHOR_LINE.match(line)
-            if match and match.group(1) in inserts and inserts[match.group(1)]:
-                indent = line[:len(line) - len(line.lstrip())]
-                out += [indent + block.replace("\n", "\n" + indent) for block in inserts[match.group(1)]]
-            else:
-                out.append(line)
-        return "\n".join(out) + "\n"
+        return inserts
 
     def _summary_clauses(self, callee):
         """The `once: self` formal halves of the library entry that summarizes `callee` (ticket 23), or []."""
@@ -242,7 +247,7 @@ class WpAdapter:
         context["settings"] = {"tool": "frama-c-wp", "flags": settings_flags, "session": "fresh",
                                "warning_levels": "default", "machdep": "x86_64",
                                "wp_seconds_per_solver": tools["seconds"], "environment_removed": removed,
-                               "rss_cap_bytes": cap, "hint_count": len(self.hints), "build_constants": list(self.defines)}
+                               "rss_cap_bytes": cap, "hint_count": context.get("hints_reaching_wp", 0), "build_constants": list(self.defines)}
         result = rss_watchdog.run(command, log=wp_log, cap_bytes=cap, timeout=wall, cwd=scratch, env=env)
         context["peak"] = result.peak_rss_bytes
         log.line(f"frama-c exit {result.exit_code}, wall {result.wall_seconds:.2f} s, peak rss {result.peak_rss_bytes}, "
@@ -278,6 +283,9 @@ class WpAdapter:
                                 "sentence": SENTENCES[tool].format(version=version)})
             tools.append(ident)
         fields = {"goals": context.get("goals", [])}
+        for name in ("hint_set", "hint_check"):                   # ticket 35: the hint set and its check result
+            if context.get(name) is not None:
+                fields[name] = context[name]
         if verdict == "not_proven":
             fields["unproven_properties"] = context.get("unproven", [])
         if context.get("settings"):
@@ -390,18 +398,6 @@ class _Log:
     def line(self, text):
         with open(self.path, "a", encoding="utf-8") as handle:
             handle.write(text.rstrip("\n") + "\n")
-
-
-def _read_hints(path):
-    try:
-        data = yamlio.load(Path(path))
-    except (OSError, ValueError) as exc:
-        raise AdapterError(f"cannot read the hint file {path}: {exc}") from None
-    hints = (data or {}).get("hints") if isinstance(data, dict) else None
-    if not isinstance(hints, list) or not all(isinstance(h, dict) and isinstance(h.get("anchor"), str)
-                                              and isinstance(h.get("acsl"), str) for h in hints):
-        raise AdapterError(f"hint file {path} holds hints: [{{anchor, acsl}}, ...]")
-    return hints
 
 
 def _unit_source(tree, function):

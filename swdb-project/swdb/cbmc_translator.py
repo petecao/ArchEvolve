@@ -920,13 +920,16 @@ def _print(label, ctype, value):
     return f'printf(" {label}=%lld", (long long) {value})'
 
 
-def harness(interface, rows, *, sizes, cap, knobs=(), logic=None, call=None, check=False):
+def harness(interface, rows, *, sizes, cap, knobs=(), logic=None, call=None, check=False, setup=(),
+            state=()):
     """(C text of the harness, Plan) for the proof unit `interface` and its clause list `rows` (Clause).
 
     `sizes`: {parameter: bound} (each an integer parameter of the unit); `cap`: the length of every interface
     array; `knobs`: [(global name, legality condition as C text, (min, max))], drawn from the oracle and assumed
     legal (the range is the differential run's domain). `logic`: the Logic of the job (logic-library calls).
-    Check mode's driver (`check=True`) calls `call` (the runtime form) and states no property itself."""
+    Check mode's driver (`check=True`) calls `call` (the runtime form) and states no property itself. Ticket 27: `setup` are C
+    statements run first (a proof semantics' ghost initialization) and `state` the int lvalues of device state drawn
+    next (havoc)."""
     for name in sizes:
         if not interface.scalar(name):
             raise Untranslatable(f"size bound {name} is not an integer parameter of {interface.function}")
@@ -956,6 +959,10 @@ def harness(interface, rows, *, sizes, cap, knobs=(), logic=None, call=None, che
         ctype = next(g[1] for g in interface.globals if g[0] == name)
         lines.append(f"  {name} = ({ctype}) swdb_next();")
         plan.draws.append({"name": name, "role": "knob", "ctype": ctype, "range": list(legal)})
+    lines += [f"  {statement}" for statement in setup]
+    for name in state:
+        lines.append(f"  {name} = (int) swdb_next();")
+        plan.draws.append({"name": name, "role": "state", "ctype": "int"})
     lines.append("#if defined(SWDB_REPLAY)")
     for draw in plan.draws:
         if draw["role"] == "element":

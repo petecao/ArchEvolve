@@ -158,14 +158,17 @@ Definition no_tiles : nat -> list nat := fun _ => [].
 Definition A_unready : Reduction.run nat nat nat nat nat :=
   [SCpu 0 (Issue 0) Ack; SRun 0 (fun _ => 0); SCpu 0 (CpuRead 7) (Got 0)].
 
-Lemma no_wait_before_step_2 : forall n m,
-  covered nat nat nat nat nat nat no_tiles no_tiles no_tiles no_tiles (fun _ => false)
-    (fun _ => false) A_unready n m -> 2 <= m.
+(* No step up to step 2 covers anything: no wait, no CPU register write, and the only issue
+   (step 0) has no earlier command. *)
+Lemma no_cover_up_to_step_2 : forall n m,
+  covered nat nat nat nat nat nat nat no_tiles no_tiles no_tiles no_tiles no_tiles
+    (fun _ => false) (fun _ => false) (fun _ _ => False) A_unready n m -> 3 <= m.
 Proof.
-  intros n m Hc. induction Hc; [|assumption|assumption].
-  unfold waits_at in *.
-  match goal with H : exists _, _ |- _ => destruct H as [c0 [Hw|Hw]] end;
-    destruct m as [|[|m]]; simpl in Hw; try discriminate; lia.
+  intros n m Hc. induction Hc; try assumption;
+    unfold waits_at, issued in *;
+    repeat match goal with H : exists _, _ |- _ => destruct H end;
+    repeat match goal with H : _ \/ _ |- _ => destruct H end;
+    destruct m as [|[|[|m]]]; simpl in *; try discriminate; lia.
 Qed.
 
 Lemma unready_read_is_hazard :
@@ -176,11 +179,62 @@ Proof.
   left. exists (CpuRead 7), (Got 0). split; [reflexivity|].
   left. exists 0. split; [|split].
   - split; [exists 0, 0; reflexivity|]. split; [lia|].
-    intros m Hm Hc. apply no_wait_before_step_2 in Hc. lia.
+    intros m Hm Hc. apply no_cover_up_to_step_2 in Hc. lia.
   - exists 0. reflexivity.
   - exists 0, 0, (fun _ => 0). split; [reflexivity|]. split; [reflexivity|].
     simpl. left. reflexivity.
 Qed.
+
+(* 5. The two covers ticket 27 requires (fixtures stall_condition, register_write). *)
+Local Arguments CpuWrite {res val tile cmd}.
+Definition tile0 : nat -> list nat := fun _ => [0].   (* every command names tile 0 *)
+Definition reg0 : nat -> list nat := fun _ => [0].    (* every command names register 0 *)
+Definition reg_elem : nat -> nat -> Prop := fun r g => r = 5 /\ g = 0.  (* element 5 is reg 0 *)
+
+(* 5a. Issue stall (IF.cc:193-212): command 1 writes tile 0, which the uncovered command 0
+       names, so gem5 dispatches it only after command 0 finished.  Its issue covers
+       command 0, which is no longer pending from that step on. *)
+Definition A_stall : Reduction.run nat nat nat nat nat :=
+  [SCpu 0 (Issue 0) Ack; SRun 0 (fun _ => 0); SCpu 0 (Issue 1) Ack; SRun 2 (fun _ => 0)].
+
+Lemma stall_covered :
+  covered nat nat nat nat nat nat nat no_tiles no_tiles tile0 no_tiles no_tiles
+    (fun _ => false) (fun _ => false) (fun _ _ => False) A_stall 0 2.
+Proof.
+  apply (cov_issue _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 0 0 0 1).
+  - reflexivity.
+  - reflexivity.
+  - lia.
+  - left. exists 0. simpl. split; [left; reflexivity | right; left; left; reflexivity].
+Qed.
+
+Lemma stall_not_pending :
+  ~ pending nat nat nat nat nat nat nat no_tiles no_tiles tile0 no_tiles no_tiles
+      (fun _ => false) (fun _ => false) (fun _ _ => False) A_stall 0 2.
+Proof. intros [_ [_ H]]. exact (H 2 (le_n 2) stall_covered). Qed.
+
+(* 5b. Register write (IF.cc:233-249): the CPU writes register 0 (element 5) while
+       command 0, which names register 0, is uncovered; gem5 holds the write until
+       command 0 finished.  The write covers command 0 at its own step. *)
+Definition A_regw : Reduction.run nat nat nat nat nat :=
+  [SCpu 0 (Issue 0) Ack; SRun 0 (fun _ => 0); SCpu 0 (CpuWrite 5 1) Ack].
+
+Lemma reg_write_covered :
+  covered nat nat nat nat nat nat nat no_tiles no_tiles no_tiles reg0 no_tiles
+    (fun _ => false) (fun _ => false) reg_elem A_regw 0 2.
+Proof.
+  apply (cov_reg_write _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 0 0 0 5 1 0).
+  - reflexivity.
+  - lia.
+  - reflexivity.
+  - split; reflexivity.
+  - simpl. left. reflexivity.
+Qed.
+
+Lemma reg_write_not_pending :
+  ~ pending nat nat nat nat nat nat nat no_tiles no_tiles no_tiles reg0 no_tiles
+      (fun _ => false) (fun _ => false) reg_elem A_regw 0 2.
+Proof. intros [_ [_ H]]. exact (H 2 (le_n 2) reg_write_covered). Qed.
 
 Print Assumptions stale_run_fits.
 Print Assumptions stale_history_read_allowed.
@@ -188,5 +242,9 @@ Print Assumptions history_read_not_always_latest.
 Print Assumptions read_own_write.
 Print Assumptions failed_cas_reread_sees_winner.
 Print Assumptions unready_read_is_hazard.
+Print Assumptions stall_covered.
+Print Assumptions stall_not_pending.
+Print Assumptions reg_write_covered.
+Print Assumptions reg_write_not_pending.
 Print Assumptions shared_action_kinds_exactly_five.
 Print Assumptions sharing_classes_exactly_four.

@@ -179,6 +179,7 @@ class Lowering:
     tool: dict = field(default_factory=dict)
     summaries: tuple = ()       # ({name, c_name, summary}) per summarized function the C calls (prototype only)
     models: tuple = ()          # C model functions the C defines (std::*, __atomic_*, __sync_*, OpenMP runtime)
+    probes: tuple = ()          # ticket 27: hazard probes {id, function, access, line, begin, end (C++ byte offsets)}
 
     @property
     def sha256(self):
@@ -519,9 +520,11 @@ def _return_and_params(function_type, line):
 class _Unit:
     """One lowering: clang dumps by name, the structs, functions, globals, models and summaries the C needs."""
 
-    def __init__(self, tool, source, includes, defines, summaries):
+    def __init__(self, tool, source, includes, defines, summaries, semantics=None):
         self.tool, self.source, self.includes, self.defines = tool, source, tuple(includes), defines
         self.summaries = dict(summaries or {})
+        self.semantics = dict(semantics or {})      # ticket 27: {tile_pointer: names}; probes at tile accesses
+        self.probes = []
         self._dumps = {}
         self.structs, self.struct_order, self.classes = {}, [], {}
         self.functions, self.order, self.pending = {}, [], []
@@ -907,6 +910,10 @@ class _Printer:
         self.scopes = []            # per open block: [(object, destructor C name)]
         self.calls = []             # C names of the lowered functions this one calls, in order of appearance
         self.omp_reductions = []
+        self.semantics = unit.semantics if unit is not None else {}   # ticket 27: tile pointers get probes
+        self.tile_vars = set()
+        self.probes = []
+        self._tile_ok = 0
 
     # positions and anchors
     def _at(self, node):
@@ -1134,7 +1141,10 @@ class _Printer:
                     if call:
                         extra.append(call)
         elif init:
+            tile = node.get("id") in self.tile_vars             # ticket 27: a tile pointer's initializer
+            self._tile_ok += tile
             text += " = " + self.initializer(init[0], node.get("init"))
+            self._tile_ok -= tile
         if not parsed.pointers and not _c_known(parsed.base):
             cname = unit.base_type(parsed.base, parsed.args, self.line)
             if cname in unit.classes:
@@ -1232,10 +1242,68 @@ class _Printer:
         ref = node.get("referencedDecl") or {}
         return ref.get("id") in self.ref_ids or (ref.get("type") or {}).get("qualType", "").rstrip().endswith("&")
 
+    # ticket 27: tile pointers and their hazard probes
+    def _is_tile_pointer_call(self, node):
+        node = _tile_strip(node)
+        if node.get("kind") != "CallExpr" or not self.semantics:
+            return False
+        callee = _tile_strip(node.get("inner", [{}])[0])
+        return (callee.get("referencedDecl") or {}).get("name") in self.semantics.get("tile_pointer", ())
+
+    def _is_tile_pointer(self, node):
+        node = _tile_strip(node)
+        if node.get("kind") == "DeclRefExpr":
+            return (node.get("referencedDecl") or {}).get("id") in self.tile_vars
+        if node.get("kind") == "BinaryOperator" and node.get("opcode") in ("+", "-"):
+            return any(self._is_tile_pointer(child) for child in node.get("inner", []))
+        return self._is_tile_pointer_call(node)
+
+    def _tile_access(self, node):
+        """Whether `node` reads or writes an element through a tile pointer (p[i], *p, *(p + i))."""
+        node = _tile_strip(node)
+        if node.get("kind") in ("ArraySubscriptExpr", "UnaryOperator") and \
+                (node.get("kind") == "ArraySubscriptExpr" or node.get("opcode") == "*"):
+            return self._is_tile_pointer(node["inner"][0])
+        return False
+
+    def _probe(self, node, access):
+        """The access wrapped in its generated hazard probe; the site is recorded (C++ gets the same probe)."""
+        node = _tile_strip(node)
+        ident = f"{self.function}.probe{len(self.probes) + 1}"
+        begin, end = (node.get("range") or {}).get("begin") or {}, (node.get("range") or {}).get("end") or {}
+        site = {"id": ident, "function": self.function, "access": access, "line": self.line,
+                "begin": begin.get("offset"), "end": (end.get("offset") or 0) + (end.get("tokLen") or 0)}
+        self.probes.append(site)
+        self.unit.probes.append(site)
+        self._tile_ok += 1
+        if node.get("kind") == "ArraySubscriptExpr":
+            text = f"{self.expr(node['inner'][0])}[{self.expr(node['inner'][1], top=True)}]"
+        else:
+            text = f"*{self.expr(node['inner'][0])}"
+        self._tile_ok -= 1
+        macro = "SWDB_TILE_READ" if access == "read" else "SWDB_TILE_WRITE"
+        return f'(*{macro}(&({text}), "{ident}"))'
+
     def _expr(self, node):
         self._at(node)
         kind = node.get("kind")
         inner = node.get("inner", [])
+        if self.semantics:                                   # ticket 27: probes before any other printing
+            if kind == "ImplicitCastExpr" and node.get("castKind") == "LValueToRValue" and self._tile_access(inner[0]):
+                return self._probe(inner[0], "read"), True
+            if kind in ("ArraySubscriptExpr", "UnaryOperator") and self._tile_access(node):
+                return self._probe(node, "write"), True
+            if self._tile_ok == 0 and kind == "DeclRefExpr" and \
+                    (node.get("referencedDecl") or {}).get("id") in self.tile_vars:
+                raise Unsupported("a tile pointer used other than to read or write a tile element (p[i], *p)",
+                                  self.line)
+            if self._tile_ok == 0 and kind == "CallExpr" and self._is_tile_pointer_call(node):
+                raise Unsupported("a tile pointer call whose result is not kept in a local variable", self.line)
+            if kind == "BinaryOperator" and node.get("opcode") == "=" and self._is_tile_pointer_call(inner[1]):
+                self._tile_ok += 1
+                text = f"{self.expr(inner[0])} = {self.expr(inner[1])}"
+                self._tile_ok -= 1
+                return text, False
         if kind == "ImplicitCastExpr":
             cast = node.get("castKind")
             if cast == "NullToPointer":
@@ -1707,6 +1775,32 @@ class _CopyInit(Exception):
         self.text = text
 
 
+def _tile_strip(node):
+    """The node under parentheses and pass-through implicit conversions (ticket 27's tile-pointer tracking)."""
+    while node.get("kind") == "ParenExpr" or (node.get("kind") == "ImplicitCastExpr" and
+                                               node.get("castKind") in PASS_CASTS):
+        node = node["inner"][0]
+    return node
+
+
+def _tile_vars(printer, body):
+    """IDs of the local variables that hold a tile pointer (initialized or assigned from a tile-pointer call)."""
+    found, pending = set(), [body]
+    while pending:
+        node = pending.pop()
+        if not isinstance(node, dict):
+            continue
+        kind = node.get("kind")
+        if kind == "VarDecl" and node.get("inner") and printer._is_tile_pointer_call(node["inner"][0]):
+            found.add(node.get("id"))
+        if kind == "BinaryOperator" and node.get("opcode") == "=" and printer._is_tile_pointer_call(node["inner"][1]):
+            target = _tile_strip(node["inner"][0])
+            if target.get("kind") == "DeclRefExpr":
+                found.add((target.get("referencedDecl") or {}).get("id"))
+        pending += node.get("inner", [])
+    return found
+
+
 def _children_kind(node, kind):
     return any(c.get("kind") == kind for c in _children(node))
 
@@ -1749,12 +1843,18 @@ def _name(name, line):
 
 # --- lowering ---------------------------------------------------------------------------------------
 
-def lower(source, function, includes=(), defines=(), summaries=None):
+def lower(source, function, includes=(), defines=(), summaries=None, semantics=None):
     """The C lowering of `function` (and of every function, class and global it uses) from the C++ file `source`.
 
     `summaries` maps the C++ name of a function to the summary that stands for it ({name: summary ID or
     text}): each call to it stays a call (with a prototype), and the lowering lists the summary as used.
-    Every `__dxc_*` and `maa_*` call needs one."""
+    Every `__dxc_*` and `maa_*` call needs one.
+
+    `semantics` (ticket 27; the bounded verifier passes it with the proof semantics' calls as summaries):
+    {tile_pointer: the calls that return a tile pointer}. Every element access through a tile pointer then
+    gets a generated hazard probe (`SWDB_TILE_READ` / `SWDB_TILE_WRITE`, ID `<function>.probe<N>`), listed in
+    `Lowering.probes` with its C++ source range so the C++ side gets the same probe. A tile pointer used any
+    other way is outside the subset. Without `semantics` the output is unchanged."""
     tool = locate()
     if tool.missing:
         raise LoweringError(tool.missing)
@@ -1762,7 +1862,7 @@ def lower(source, function, includes=(), defines=(), summaries=None):
     if not source.is_file():
         raise LoweringError(f"no source file {source}")
     defines = tuple(sorted(defines))
-    unit = _Unit(tool, source, includes, defines, summaries)
+    unit = _Unit(tool, source, includes, defines, summaries, semantics)
     node = unit.function_node(function, None, None, unit=True)
     mangled = node.get("mangledName", function)
     if mangled.startswith(("_ZN", "__ZN")):
@@ -1819,7 +1919,7 @@ def lower(source, function, includes=(), defines=(), summaries=None):
                     parameters=tuple(unit_params), source_sha256=_file_sha256(source), defines=defines,
                     tool={"id": TOOL_ID, "version": TOOL_VERSION, "naming_rules": NAMING_RULES,
                           "naming_rules_sha256": RULES_SHA256, "clang": tool.version},
-                    summaries=tuple(unit.summaries_used), models=tuple(unit.model_order))
+                    summaries=tuple(unit.summaries_used), models=tuple(unit.model_order), probes=tuple(unit.probes))
 
 
 def _callees_first(function, definitions):
@@ -1877,6 +1977,8 @@ def _define(unit, cname, node, owner):
     bodies = [c for c in _children(node) if c.get("kind") == "CompoundStmt"]
     if not bodies:
         raise Unsupported(f"function {node.get('name')} with no body", line)
+    if unit.semantics:                                       # ticket 27: before printing, which reads them
+        printer.tile_vars = _tile_vars(printer, bodies[0])
     try:
         printer.body(bodies[0], 1)
     except _CopyInit:
