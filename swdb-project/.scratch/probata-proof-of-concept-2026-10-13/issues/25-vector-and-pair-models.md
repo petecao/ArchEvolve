@@ -470,3 +470,13 @@ proof dependencies are added. No immutable method file changed; these are
 `contract_fixture` records. Ticket25 stays **claimed**: general member-body proofs,
 wider protocols/types and matched bounded/native acceptance under the eventual
 combined method remain required.
+
+
+### Focused Linux owner acceptance — 2026-10-15 12:14 ET
+
+At frozen `d3a5dd48`, current-owner data safe proves 105 ordinary/11 smoke goals.
+The stale alias remains not_proven with 111 ordinary Valid, one alias_live_after
+timeout and 11 smoke goals passed. Both actual records correctly report attempted
+WP invocation. This repairs the earlier prelaunch parser failure without upgrading
+its historical5c record or closing wider vector/pair acceptance. Ticket stays claimed.
+[Audited source, records and reports](../evidence/focused-parser-owner-final-20261015.json).

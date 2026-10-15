@@ -4,6 +4,64 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
+Updated: 2026-10-15 12:14 ET. Integration runtime `cc7e747b` includes checked
+entry hints (`593c35d6`) and standalone nested assignments (`71382aff`), alongside
+the parser isolation, exact standard-call bindings, qualified copy caller ranges,
+vector workflow and corrected WP invocation metadata. The whole effort remains
+**32 of 63 resolved; five claimed**. Drafts 1/2 stay immutable; draft 3 is not created.
+Historical actual method/source pins remain distinct from this integration tip.
+
+The focused frozen Linux replay at `d3a5dd48` completed: node 0 **167 passed**
+(512.96s, peak 385,536,000 bytes), node 1 **20 passed** (898.64s,
+peak 708,300,800 bytes), both exit 0 with no watchdog/OOM failure. Its 17 proof records,
+90 report references plus 17 adapter logs (107 total references), 19,946 declared
+absolute file-pin references, 196 runtime source files per lane and 16 certificate
+self-hashes match. Both post-run source checks are clean and unchanged.
+[Final compact audit](evidence/focused-parser-owner-final-20261015.json).
+
+Actual Linux subjects: owner safe 105 ordinary/11 smoke proves; stale alias retains
+one lifetime timeout with 111 ordinary Valid/11 smoke. Qualified copy model 36/7,
+safe 15/2 and empty 13/2 prove. Missing initializedness and insufficient declared
+capacity remain not_proven; the capacity case also retains its two failed smoke
+checks. The 167/20 counts describe passing controls, not 167/20 proven subjects.
+The earlier frozen `5c2a` failures stay recorded as 134/1 and 19/1; they are not upgraded.
+
+| Ticket | Current evidence | Next action |
+|---|---|---|
+| 07 | Method 19 preparation has 110 passing offline controls; new root-exit orphan RED and completed baseline/seed guard still need repair; no counted launch | Fix and review those guards before any launch |
+| 24 | Qualified copy caller/model actual acceptance passed on Mac `0831b224` and Linux `d3a5dd48`; initializedness/capacity negatives retained | Design member-window class context admission |
+| 25 | Narrow owner safe/stale Linux acceptance passed; checked vector workflow historical evidence remains separate | Continue wider vector/pair acceptance; generic model gates remain closed |
+| 27 | Entry-hint store safe/short-frame and nested assignment slices accepted at their frozen pins; a separate WP-qualified transitive one-case diagnostic is underway | Finish that diagnostic and remaining DX acceptance; ordinary CPU/device overlap belongs to 28 |
+| 36 | Parser/source/checker unions audited; actual Linux WP records exercise true invocation metadata and prelaunch refusals retain false | Complete remaining setup/acceptance gates before final method freeze |
+
+The original store at 593 proves 90 ordinary/29 smoke; a shortened witness leaves
+its specific store_indices obligation open. Assignment 713 safe 14/1 proves;
+missing initializedness leaves one RTE obligation open. The composed aead premature
+CPU read is intentionally refused before WP by semantics 0.1, with zero goals and
+no WP log; no overlap theorem is claimed.
+[Entry-hint evidence](evidence/wp-source-view-entry-hints-20261015.json),
+[assignment evidence](evidence/wp-nested-assignments-20261015.json).
+
+Ticket 28 remains gated by 27; 43 remains blocked by 29. Held-out kernels and final
+production method identities stay dependency-gated. Last whole-effort status table:
+12:05 ET; next due 12:35 ET. Existing user authorization covers implementation,
+commits/pushes, two remote lanes and scoped BFS source export.
+
+## Host coordination
+
+Live readback: 2026-10-15 12:14:20 ET. Node 0 generation 561, node 1 generation 599 and
+legacy 77 are released. Load 0.15/0.94/1.25; 21 GiB free on `/data1`, 95 GiB on `/data`.
+The evaluation checkout `/data1/yanruj/probata-t27` remains clean detached at
+`d3a5dd48`. Both focused jobs finished and their raw outputs remain remote for the
+coordinator, ticket acceptance and independent audit readers. Output sizes are
+32,128,172 bytes and 9,516,810 bytes, each below 2 GiB. Source/code arrived by Git only;
+no new source sync or evaluation is implied by this readback. Recheck all leases,
+activity, disks and wrapper identity before another dispatch.
+
+## Historical integration snapshots
+
+The following checkpoints predate the current state above.
+
 Integration `d3a5dd48` adds the reviewed typed-array ACSL spelling repair and
 prospective WP launch metadata (two public stand-in controls pass). A focused
 Linux replay started11:55:56ET at that frozen source: node0generation561 covers
@@ -36,7 +94,7 @@ safe/missing-window/missing-initialization evidence are accepted scoped slices.
 Exact-call caller actual acceptance and the root entry-hint checkpoint remain
 separate; no production method3 or whole-ticket completion is claimed.
 
-| Ticket | Current evidence | Next action |
+| Ticket | Evidence at that checkpoint | Action recorded then |
 |---|---|---|
 | 07 | Run18 finished unproven at 10:43 ET; 20 open goals (13 unit/7 hint), 51.76 counted minutes, no final proof/smoke | Audit negative outcome and remaining induction goals; retain prototype/RTE scope boundary |
 | 24 | Qualified copy body historical36ordinary/7smoke; exact original callee and typed caller range discharge integrated with compiler/stand-in controls | Run fresh qualified caller actual acceptance |
@@ -51,7 +109,7 @@ implementation, commits/pushes, two remote lanes and scoped BFS source export.
 The coordinator owns the full periodic status report and live lane dispatch; this
 11:43 update records the scoped integration handoff.
 
-## Host coordination
+## Historical host snapshots
 
 Readback2026-10-15 11:46ET: node0generation560, node1generation598 and legacy77
 are released; load0.02/0.57/1.04, `/data1`21GiB and `/data`95GiB free. Frozen
@@ -148,7 +206,7 @@ the original report and logs occupy 9.7 MiB and remain on the host.
 The 30-minute progress heartbeat is `probata-implementation-progress`; its reports do
 not substitute for reading incremental run artifacts.
 
-## Validation and progress reporting
+## Historical validation and progress reporting
 
 The 2026-10-15 08:35 ET report covered every active ticket and both lanes; next report
 is due around 09:05 ET. Run 15 ended not proven after 52.75 counted minutes with 1 unit

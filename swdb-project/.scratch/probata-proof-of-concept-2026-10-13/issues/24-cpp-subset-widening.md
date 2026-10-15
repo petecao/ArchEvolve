@@ -568,3 +568,14 @@ source/test hashes, five proof records and 46 evidence artifacts were checked. L
 launch-metadata changes at `d3a5dd48` do not relabel this frozen evidence. Broader
 construct acceptance and ticket closure remain open.
 [Scoped caller evidence](../evidence/t24-std-copy-callers-mac-20261015.json).
+
+
+### Focused Linux caller acceptance — 2026-10-15 12:14 ET
+
+At frozen `d3a5dd48`, the qualified copy model proves 36 ordinary/7 smoke goals,
+safe copy proves 15/2 and empty copy proves 13/2. Missing initializedness and
+insufficient declared capacity stay not_proven; the latter retains its two failed
+smoke checks. The focused lane's 20 controls pass, including original-callee
+refusals. Mac0831 and Linuxd3a retain separate method identities. The next class
+member-window context work and whole ticket remain open.
+[Audited source, records and reports](../evidence/focused-parser-owner-final-20261015.json).

@@ -715,3 +715,18 @@ At frozen `593c35d6`, checked helper/nested views admit only original-unit entry
 
 
 Composed `aead7909` passes 37 component/public controls (56.55s). Its premature ordinary CPU read is intentionally refused before WP by the existing semantics0.1 policy; overlap hazards belong to ticket28. The new test incorrectly expected a WP result and failed on absent hint metadata. A test-only correction now checks that documented refusal, and strengthens the shortened-frame assertion to the specific open store_indices obligation. Offline assertions pass all three frozen593 records and the frozenaead refusal; runtime and historical artifacts are unchanged. No overlap theorem is claimed.
+
+
+### Focused Linux final setup audit — 2026-10-15 12:14 ET
+
+Frozen `d3a5dd48` finishes node 0 with 167 passing compiler/stand-in controls and
+node 1 with 20 passing owner/binding/copy controls, both exit0. Actual owner and
+qualified copy positives prove; stale alias, missing initialization and short
+capacity remain not_proven. Invocation metadata is true for attempts and false
+for prelaunch refusal. Historical5c failures and later entry/assignment pins stay
+separate; no whole-ticket or production-method claim is made.
+
+All 17 records, 90 report references plus 17 adapter logs (107 total), 19,946
+absolute file-pin references, 196 runtime source files per lane and 16 certificate
+self-hashes match. Both source-after checks remain clean atd3a. Ticket stays claimed.
+[Final audit](../evidence/focused-parser-owner-final-20261015.json).
