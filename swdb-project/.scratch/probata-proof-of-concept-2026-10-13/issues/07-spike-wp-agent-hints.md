@@ -1,7 +1,7 @@
 # 07 — Spike (c): WP with agent hints
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-15 ET (resumed method20 prelaunch review and cleanup repair; no new proof yet); 2026-10-14 22:50 ET (continuation 3: runs 10-12 fail, verdict fail so far, effort paused); 2026-10-14 17:10 ET (continuation 2: runs 7-9 fail, verdict fail so far); 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-15 ET (method20 run23 completed unproven; prospective baseline allocation review); 2026-10-14 22:50 ET (continuation 3: runs 10-12 fail, verdict fail so far, effort paused); 2026-10-14 17:10 ET (continuation 2: runs 7-9 fail, verdict fail so far); 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 03
@@ -1262,3 +1262,41 @@ retain both actual resource components and all RED/GREEN ownership controls.
 Their outputs, prior baselines and conversations will not be reused. The ticket
 remains claimed in the existing shared box; a fresh counted full-baseline run
 and unchanged final positive/smoke/negative acceptance are still required.
+
+
+### Run23 completed; method20 unproven — 2026-10-15 ET
+
+**Fail / not proven for this run.** Fresh clean freeze
+`df19ff8a6342d24ca853624f1e97a6c6833cabcb` ran16:41:25–17:33:26EDT,
+52.02counted minutes. Full baseline:254ordinary goals/103timeouts and139/139smoke
+checks passed,14.97minutes. Five fresh frames:39/209ordinary goals open at17.50minutes.
+The final incumbent has36hints and26/254round-mode goals open (15unit +11hint),
+all timeout; all nine postconditions remain open. Different modes produce
+different inventories, so the coincident254ordinary totals are not equal sets.
+
+Two provider calls share one fresh same-run conversation; no historical hints,
+examples, counterstates or control fragments were exported. Exact vocabulary,
+merge, erase and unchanged-header checks pass. Twelve legacy proposal requests
+include one edit-rule refusal;11candidate round-s attempts ran (10complete,
+one deadline-censored), separately from the baseline and seed jobs. The second
+provider turn has no `turn.completed`, so recorded token totals are lower bounds
+and its usage is unknown. No final proof/smoke replay or covering-wait negative
+was reached. The eight-minute final reserve was unused; `within_budget:false`
+means no qualifying success, not a60-minute overrun.
+
+[Compact completed evidence](../evidence/t07-counted-23-20261015.json) retains
+27matching source pins,55guarded process/log reports, launch/provider checks
+and the clean poststop audit. All cleanup confirmed, binaries stayed pinned,
+no tools or shared leases remain. Best JSON SHA256:
+`967300badab8e307c007bea3298d0e85030e46d83cf48c92776fa08066fe3d6b`.
+The source checkout and raw output remain frozen outside the repo. Ticket07 stays
+claimed within its existing shared box; acceptance remains incomplete.
+
+**Prospective decision:** map13 item11 permits tuning starting values through a
+new run plan; these Notes explicitly adopted30seconds. A baseline-only10second
+diagnostic plan therefore needs its own name, recorded departure, tests/review
+and fresh freeze. Every original final obligation, final30second cache-none
+all-function smoke replay and same-hints covering-wait negative remain mandatory.
+No baseline, seed, hint or conversation reuse is permitted. A projected9–10minutes
+of recovered search time is unmeasured; baseline statuses and regression pass sets
+may change with the timeout. See the separate method21 plan when reviewed.
