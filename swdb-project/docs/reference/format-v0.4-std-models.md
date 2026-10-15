@@ -200,3 +200,20 @@ uninitialized, wrong-postcondition, stale-alias and contradictory-precondition c
 or fail smoke. The prospective member contract fixtures (14 original bodies plus this checked `at`
 view) precede the separate array-object provenance gate; they do not establish a final production
 method, all member/lifetime acceptance, or a stronger model input domain.
+
+Closed-owner origin integration checkpoint (2026-10-15 ET): `model_domains.py` independently audits
+the generated two-site vector view's C AST, allocation calls, pointer bindings, exact loop effects,
+array/indirect accesses and immediately preceding numerical/liveness guards. Its source certificate
+binds the captured alias by function/name/source declaration range to the initial typed allocation,
+with extent frozen at entry. The growing append invalidates that alias. Backing extents and live
+prefixes are separate; spare capacity grants no source read permission. Every modeled source call
+records its exact C-model text pin and origin transition. The existing source/native malloc/free
+models remain unchanged. The proof record explicitly states the pinned typed allocator/model
+relation; WP validity is not treated as an array-object origin proof.
+
+The lowerer/adapter integration must store that source certificate in `pointer_bounds.owner`, map
+source access records to their independently checked view guards, and freshly recheck source and
+view before launch. A source registry alone grants no waiver. Generic modeled fields/parameters,
+standalone domain-qualified model jobs, additional allocation sites and wider member protocols
+remain refused. Current prelaunch fault controls exercise public proof records; they do not supply
+real-WP acceptance for the combined origin method.

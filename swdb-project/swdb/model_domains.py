@@ -178,6 +178,20 @@ def closed_owner_view(text, protocol, source_certificate):
     raw = text.encode()
     expr = lambda n: raw[slice(*span(n))].decode()
     compact = lambda s: re.sub(r"\s+", "", s)
+    windows = {}
+
+    def place(node, low=None, high=None):
+        if node.get("kind") == "CompoundStmt":
+            previous = span(node)[0] + 1
+            for statement in children(node):
+                place(statement, previous, span(statement)[0])
+                previous = span(statement)[1]
+        else:
+            windows[id(node)] = (low, high)
+            for child in children(node):
+                place(child, low, high)
+
+    place(body)
     guards = {m.group(1): (m.start(), m.end(), compact(m.group(2)))
               for m in re.finditer(r"/\*@\s*assert\s+(\w+)\s*:\s*(.*?);\s*\*/", text, re.S)}
     guard_count = len(re.findall(r"/\*@\s*assert\s+", text))
@@ -185,7 +199,9 @@ def closed_owner_view(text, protocol, source_certificate):
         raise Refused("closed owner view repeats an assertion name")
 
     def guarded(name, predicate, node):
-        if name not in guards or guards[name][2] != compact(predicate) or guards[name][1] > span(node)[0]:
+        low, high = windows.get(id(node), (None, None))
+        if (name not in guards or guards[name][2] != compact(predicate) or low is None or high is None
+                or not low <= guards[name][0] < guards[name][1] <= high):
             raise Refused(f"closed owner view access lacks its exact preceding {name} obligation")
         return name
 
@@ -304,8 +320,7 @@ def closed_owner_view(text, protocol, source_certificate):
             raise Refused("closed owner view has untracked pointer mutation")
     if calls != list(expected_calls):
         raise Refused("closed owner view allocation site multiplicity differs")
-    if "owner_count" not in guards or guards["owner_count"][2] != compact(f"{n} >= 1"):
-        raise Refused("closed owner count obligation is missing")
+    guarded("owner_count", f"{n} >= 1", top[0])
     if index != sum(a["kind"] == "owner_index" for a in source["source_accesses"]):
         raise Refused("closed owner source/view indexed observations differ")
     if sum(a["kind"] == "alias_read" for a in accesses) != sum(a["kind"] == "alias_read" for a in source["source_accesses"]):
