@@ -4,6 +4,20 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
+Integration `d3a5dd48` adds the reviewed typed-array ACSL spelling repair and
+prospective WP launch metadata (two public stand-in controls pass). A focused
+Linux replay started11:55:56ET at that frozen source: node0generation561 covers
+native/header/metadata controls, node1generation599 covers original owner-data
+safe/stale plus exact bindings and qualified copy callers. Snapshot11:57:52ET
+has51 node0passes and node1firstactualactive; neither has a final result.
+[Launch metadata](evidence/focused-parser-owner-launch-20261015.json). The remote
+checkout must remain frozen until both jobs finish; later primary docs do not
+upgrade that exact source. Mac caller acceptance at `0831b224` is separately
+audited: four controls pass, with safe15ordinary/2smoke, empty13/2, model36/7;
+uninitialized and short-capacity subjects remain not_proven.
+[Caller evidence](evidence/t24-std-copy-callers-mac-20261015.json).
+
+
 Updated: 2026-10-15 11:43 ET. Integration runtime checkpoint `77624eec` composes
 nested initializers `268aaf19`, checked vector pipeline `5c8decdf`, exact original
 standard-call bindings/caller ranges `c61af423`, and isolated parser fix `7e663aaf`.
