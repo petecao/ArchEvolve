@@ -450,3 +450,38 @@ and `bounded_chain.py` joins the frozen checker closure. Independent merged vali
 checker dependency union is preserved. Generic imported-summary proof-source/bounds eligibility
 is still an open, separately owned gap: refreshed stub identity does not certify eligibility.
 Ticket 36 remains claimed. Evidence: `evidence/crux-source-admission-20261015.json`.
+
+### Checked contextual helper adapter — 2026-10-15 ET
+
+The staged helper transformation is now coupled to the public WP adapter. It is attempted only
+when an original DX100 unit with retained helpers needs an origin relation. The closed grammar
+expands annotation-free acyclic primitive void helpers, captures actual arguments once and retains
+audited imported calls in order. An independent full-TU AST comparison checks the transformation;
+the normal origin/CPU-domain/initializedness/RTE checks still inspect the effective lowering.
+No helper requires or window is synthesized. The original source/lowering and effective source/
+lowering have separate immutable pins and reports, and both lowerings plus the AST relation are
+freshly regenerated before invocation. Source-anchored hints remain refused in this slice.
+
+The first public RED reproduced the old unsupported boundary. Integration controls then exposed
+the real candidate's UTF-8 comments and a scratch-lifetime evidence bug. Byte-oriented editing now
+preserves Clang offsets and unedited source bytes, and the private source view persists under the
+WP evidence directory. Matcher closures are released after the same checks to avoid retaining
+full-TU ASTs into subsequent checks/verifier execution. Both helper bytes and parser bytes are
+pinned transitively; altered helper-checker bytes refuse under the frozen method.
+
+Validation: **35 helper components + 1 public stale-pin control pass in 15.81s**. Five public
+fake-WP controls pass **5/5 in 332.13s**, covering admission/reporting, missing entry windows,
+source hints, changed private source and changed certificate. Those five precede the nonsemantic
+matcher-closure release; the final component and actual runs use the final checker bytes.
+The actual size fixture and missing-input-initializedness control pass **2/2 in 512.71s** under
+the 8 GiB outer watchdog (peak **7,301,693,440 bytes**, no OOM or timeout). Safe: **38 ordinary
+Valid + 15 smoke PASS**. Missing initializedness: **37/38 ordinary Valid + 15 smoke PASS**;
+the only open goal is `typed_real_dxf_size_call_maa_stream_load_requires_source_initialized`.
+All listed artifacts of five preserved proof records were independently hash-checked in
+`evidence/wp-helper-windows-20261015.json`.
+
+The original three-read helper source still refuses `base[q[0]]` because nested memory reads are
+outside the checked offset grammar. This is a separate source-operation obligation, not permission
+to waive the origin gate. No production method 3, full ticket-27 acceptance or ticket-36 resolution
+is claimed. The next slice must account independently for the inner read's bounds/initializedness
+and the outer read's numerical bound, preserving evaluation and exact source bindings.
