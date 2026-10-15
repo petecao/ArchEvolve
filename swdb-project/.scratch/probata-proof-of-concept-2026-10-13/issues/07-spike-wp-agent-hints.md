@@ -760,3 +760,23 @@ closing the hints themselves within 60 minutes.
 - Harness hashes per run are in each `meta.json` (`harness_sha256`). Harness commits: `c25a70f2`
   (run 10) and `06ea3ae6` (runs 11-12).
 - Tests: `test_edit_loop.py`, `test_hints.py` and `test_loop_tool.py`, 26 passed.
+
+### Counted run 13 — 2026-10-15 ET
+
+**Fail; ticket remains claimed.** Same run-10 method, pinned Codex CLI 0.153.0,
+`gpt-5.6-sol` / `xhigh`; fresh hints and the verified no-hint round-0 baseline.
+Yan-Ru explicitly approved the scoped BFS proof-workspace export to Codex/OpenAI.
+Run started 01:45:59 ET and ended 02:40:14 ET: 52.78 counted minutes, excluding
+88.4 s waiting for shared verifier slots. No candidate proved before the in-call budget ended; the nominal 8-minute final
+reserve was unused and no successful final replay ran.
+
+Two Codex calls, 38 tool calls, 18 WP attempts. Best set: 44 hints, **19 open goals
+of 239** (2 unit goals and 17 hint goals). A hint's own failing obligation cannot
+be assumed to complete the unit. The original source, tool traces and reports
+remain at `/private/tmp/probata-t07-20261015/counted-13`. Compact metadata and
+artifact hashes: [counted-13 evidence](../evidence/t07-counted-13.json). The
+shared box remains open to approximately 2026-10-27; this run does not exhaust it.
+
+Before another counted run, audit the prototype's hint ghost-state ownership
+boundary against ticket 36's newly fixed production check. Run 13 was not proven,
+so no previously promoted result depends on that unaudited boundary.
