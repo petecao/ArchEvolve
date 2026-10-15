@@ -1,0 +1,25 @@
+# Created: 2026-10-15 ET. Runner policy only; production checker unchanged.
+id: fixture-noop-summary-has-no-generated-smoke
+adapter: fixture_matrix_reader
+input:
+  source: tests/fixtures/proof/lowering/summary_impls.cc
+  function: maa_const_i32
+  contract: contract.fixture_wp24_summary_maa_const
+  source_sha256: 7954719a7ab3bd93f8da1eea7a028de9d1dfa524761f2ff5f56c92dd70712e25
+  contract_sha256: 4c3e3b76b033cee9def533ee7e5994441e56ac005c41e6c348e52ca2c2b7d4a0
+  ordinary_valid: 3
+  generated_smoke: 0
+historical_failure: >-
+  Original matrix946176dc rejected the unchanged no-op summary because it
+  required a generated smoke goal for every selected function. This record
+  has three real Valid obligations (terminates, exits, assigns), not an empty
+  ordinary inventory. Its body has no reads, writes or precondition.
+correction: >-
+  Only this exact source/contract/normalized return-only body may be provisional
+  with generated smoke marked not applicable. All three ordinary goals and
+  mandatory setup/RTE/init/smoke command flags remain required. Final acceptance
+  requires actual unchanged safe MAA caller precondition and separate reachable
+  call smoke for both summaries, plus exact candidate/code/dependency pins.
+  No arbitrary zero-smoke proof or contradictory-precondition summary qualifies.
+evidence: .scratch/probata-proof-of-concept-2026-10-13/evidence/t24-noop-summary-continuation-20261015.json
+replay: tests/test_t24_noop_summary.py::test_exact_noop_is_provisional_and_old_strict_rejection_is_preserved

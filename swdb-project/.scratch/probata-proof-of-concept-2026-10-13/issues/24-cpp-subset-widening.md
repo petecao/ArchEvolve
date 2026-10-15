@@ -898,3 +898,9 @@ This is finite ordinary C/C++ agreement only: no formal equivalence, WP checking
 device semantics theorem or fresh proof verdict is claimed. Actual WP pairs
 and dependency acceptance remain separate; **Status stays claimed**.
 [Fresh profile and exact pins](../evidence/t24-fresh-finite-agreement-0e7f2327-20261015.md).
+
+### Current atomic pair and exact no-op summary frontier — 2026-10-15 ET
+
+The current0e7 remaining matrix accepted all9 atomic models and the unchanged atomic safe/seed pair:86/85 ordinary Valid respectively,19 smoke Valid each,11 initialization goals each, and an attributable seeded ensures timeout. It stopped at `maa_const` because the original runner requires generated smoke for every summary. That actual unchanged no-op record has3 ordinary Valid goals and0 smoke; its original rejection is preserved. No later group in that stopped run is accepted.
+
+A separate fixture-only continuation policy is under independent review: exact source/contract/return-body/3VC binding, provisional no-op status, then mandatory actual unchanged MAA caller precondition and both per-call reachability smokes with original candidate/code/contract/dependency pins. It reuses ordinarily eligible accepted atomic records and retains all remaining allocation/lifetime obligations. No production checker or original source/contract changes, no arbitrary zero-smoke acceptance and no new actual witness are claimed. [Current atomic audit, RED/GREEN controls and continuation boundary](../evidence/t24-noop-summary-continuation-20261015.md). Status remains **claimed**.

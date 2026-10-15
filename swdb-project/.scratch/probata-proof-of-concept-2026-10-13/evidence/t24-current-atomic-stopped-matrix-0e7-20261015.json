@@ -1,0 +1,1953 @@
+{
+  "acceptance_blockers": [
+    {
+      "errors": [
+        "actual ordinary/smoke goal inventory is empty",
+        "safe proof lacks all-goal/smoke Valid acceptance"
+      ],
+      "independent_errors": [
+        "ordinary/smoke inventory empty"
+      ],
+      "label": "summary:maa_const",
+      "ordinary_open": []
+    }
+  ],
+  "artifact_file_instances_verified": 184,
+  "created": "2026-10-15 ET",
+  "errors": [],
+  "evidence_instances_verified": 97,
+  "integrity_errors": [],
+  "matrix_complete": false,
+  "matrix_manifest_sha256": "c73f8f81a7ba139099f141bf341609b43867c3174cc65a98779ff9175a6079fb",
+  "matrix_success": false,
+  "phase": "actual_proof_matrix",
+  "physical_sources_checked": 1003,
+  "producer": {
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/audit-13a804007eb330d9527b79f3b49adf61fc5591c204889fe7d80d051749e0e595.py",
+    "sha256": "13a804007eb330d9527b79f3b49adf61fc5591c204889fe7d80d051749e0e595"
+  },
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining",
+  "reader_context": {
+    "aggregate_identity": {
+      "c_lowering": {
+        "id": "swdb-c-lowering-9",
+        "sha256": "b1ddaa111bec5d19843b69fd7571530859acb1382947d96692894bfc29b0b993"
+      },
+      "clang": {
+        "id": "clang-22.1.8",
+        "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+      },
+      "naming_rules": {
+        "id": "kept-names.3",
+        "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+      }
+    },
+    "environment": "exact run.sh allowlist; env.sh sourced; CPLUS_INCLUDE_PATH unset",
+    "runtime_identity": {
+      "check": {
+        "id": "swdb-stdlib-provenance-1",
+        "sha256": "4aee5a271a2f92fced7a94c04807cd2d94d36da24ea3d163f2364048bc79d937"
+      },
+      "command_executable": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+        "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+      },
+      "driver": {
+        "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang-22",
+        "sha256": "31a40dc31f3c15a47aa119aa148f339bf363d8f61202ddbdacbd3f24b71ba113"
+      },
+      "headers": {
+        "files": 1983,
+        "id": "llvm-standard-resource-headers",
+        "sha256": "d37aec646b1e6e1748d40690c60436f905f55852ee578e79c43a3199c4a16e23"
+      },
+      "parser": {
+        "id": "libclang-22.1.8",
+        "sha256": "8b03ee2c60f0699651869fea5135cb5a144777a10c6e4b9b7835283ac9ca3f7d"
+      }
+    },
+    "tool": {
+      "command": [
+        "clang++"
+      ],
+      "missing": "",
+      "version": "22.1.8"
+    }
+  },
+  "record_hashes_verified": 12,
+  "rows": [
+    {
+      "artifact_file_instances": 0,
+      "dependencies": [],
+      "errors": [],
+      "evidence_instances": 7,
+      "expected": "proven",
+      "failure_class": null,
+      "frozen_case_accepted": true,
+      "full_settings_sha256": "0d60a49f28c8a62f072742a93d49ec74ca71edd72de155233bbed4a4bccd105d",
+      "id": "proof.model.swdb_atomic_load_n_int.20261015t223802z.e06749b9",
+      "independent_acceptance_errors": [],
+      "initialization_goals": 1,
+      "job": {
+        "adapter": "wp",
+        "batch": "batch.proof.model.swdb_atomic_load_n_int.20261015t223802z.e06749b9",
+        "batch_load": {
+          "end": 3.04,
+          "start": 3.218
+        },
+        "cpu_seconds": 5.793668,
+        "host": "swdb-fixture-host",
+        "peak_rss_bytes": 204259328,
+        "position": 1,
+        "wall_seconds": 5.755324,
+        "worker_core": "unpinned"
+      },
+      "label": "model:swdb_atomic_load_n_int",
+      "member_context": null,
+      "ordinary_open": [],
+      "ordinary_valid": 6,
+      "pins": {
+        "baseline_function": {
+          "not_applicable": "A C model is proven on its own text."
+        },
+        "build_constants": [],
+        "code": {
+          "id": "swdb_atomic_load_n_int",
+          "sha256": "8c5a0605432a22148fb4cbb022642ad3a6892f82d2d2e114cec752c6ef27b1d3"
+        },
+        "contract": {
+          "id": "swdb_atomic_load_n_int",
+          "sha256": "8c5a0605432a22148fb4cbb022642ad3a6892f82d2d2e114cec752c6ef27b1d3"
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "ac4fe5ea50ebb15eddc88e239cb340d9fca41306df41e0cdda8432c9d0d88c5c"
+        },
+        "minimum_bounds": {
+          "not_applicable": "A C model has no minimum bounds."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "A C model has no predecessor."
+        },
+        "proof_semantics": {
+          "not_applicable": "A C model makes no DX100 call."
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "summaries": []
+      },
+      "qualifications": {},
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/matrix/seed/records/proofs/proof.model.swdb_atomic_load_n_int.20261015t223802z.e06749b9.yaml",
+        "sha256": "c08c5a1eb55ca22b3b8c1c24317c44d33e010970bef03148484d1a8777bb3baa"
+      },
+      "runner_acceptance_errors": [],
+      "settings": {
+        "flags": [
+          "-wp",
+          "-wp-rte",
+          "-wp-cache",
+          "none",
+          "-wp-model",
+          "+real",
+          "-wp-par",
+          "1",
+          "-machdep",
+          "x86_64",
+          "-rte-initialized",
+          "@all",
+          "-wp-no-filter-init",
+          "-machdep",
+          "x86_64",
+          "-wp-prover",
+          "alt-ergo,z3,cvc5",
+          "-wp-timeout",
+          "30",
+          "-wp-par",
+          "1",
+          "-wp-smoke-tests",
+          "-wp-fct=swdb_atomic_load_n_int"
+        ],
+        "hint_count": 0,
+        "machdep": "x86_64",
+        "rss_cap_bytes": 8589934592,
+        "verifier_launched": true
+      },
+      "setup_hashes": {
+        "contract": "8c5a0605432a22148fb4cbb022642ad3a6892f82d2d2e114cec752c6ef27b1d3",
+        "run_plan": "11c30ac6f72b244ed705b7eaf19eb1b0e04a8567246b415d44d5079ad7396b65",
+        "stdlib_provenance": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "wp_input.c": "4eddeee2c611787d67964f2955ea6ae608ee44c8c3231d5f2b1bef6a28806556"
+      },
+      "smoke_open": [],
+      "smoke_valid": 1,
+      "subject": {
+        "id": "swdb_atomic_load_n_int",
+        "kind": "c_model"
+      },
+      "summary_bindings": [],
+      "verdict": "proven"
+    },
+    {
+      "artifact_file_instances": 0,
+      "dependencies": [],
+      "errors": [],
+      "evidence_instances": 7,
+      "expected": "proven",
+      "failure_class": null,
+      "frozen_case_accepted": true,
+      "full_settings_sha256": "c4856949e4487fb23016a478ee418349db388e7027e94e4aa3dca03c7d27f6c4",
+      "id": "proof.model.swdb_atomic_store_n_int.20261015t224008z.662ce799",
+      "independent_acceptance_errors": [],
+      "initialization_goals": 0,
+      "job": {
+        "adapter": "wp",
+        "batch": "batch.proof.model.swdb_atomic_store_n_int.20261015t224008z.662ce799",
+        "batch_load": {
+          "end": 2.603,
+          "start": 2.829
+        },
+        "cpu_seconds": 7.758835,
+        "host": "swdb-fixture-host",
+        "peak_rss_bytes": 202518528,
+        "position": 1,
+        "wall_seconds": 7.357815,
+        "worker_core": "unpinned"
+      },
+      "label": "model:swdb_atomic_store_n_int",
+      "member_context": null,
+      "ordinary_open": [],
+      "ordinary_valid": 6,
+      "pins": {
+        "baseline_function": {
+          "not_applicable": "A C model is proven on its own text."
+        },
+        "build_constants": [],
+        "code": {
+          "id": "swdb_atomic_store_n_int",
+          "sha256": "52084121b1cf6058b1ce9bfd561bda5e335d93487de09b0c8d9fe1578595f5a2"
+        },
+        "contract": {
+          "id": "swdb_atomic_store_n_int",
+          "sha256": "52084121b1cf6058b1ce9bfd561bda5e335d93487de09b0c8d9fe1578595f5a2"
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "ac4fe5ea50ebb15eddc88e239cb340d9fca41306df41e0cdda8432c9d0d88c5c"
+        },
+        "minimum_bounds": {
+          "not_applicable": "A C model has no minimum bounds."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "A C model has no predecessor."
+        },
+        "proof_semantics": {
+          "not_applicable": "A C model makes no DX100 call."
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "summaries": []
+      },
+      "qualifications": {},
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/matrix/seed/records/proofs/proof.model.swdb_atomic_store_n_int.20261015t224008z.662ce799.yaml",
+        "sha256": "3d8b977e96ec82f6e3fe82b8935b7e40a2192636758b4c208ab8981a47e127e3"
+      },
+      "runner_acceptance_errors": [],
+      "settings": {
+        "flags": [
+          "-wp",
+          "-wp-rte",
+          "-wp-cache",
+          "none",
+          "-wp-model",
+          "+real",
+          "-wp-par",
+          "1",
+          "-machdep",
+          "x86_64",
+          "-rte-initialized",
+          "@all",
+          "-wp-no-filter-init",
+          "-machdep",
+          "x86_64",
+          "-wp-prover",
+          "alt-ergo,z3,cvc5",
+          "-wp-timeout",
+          "30",
+          "-wp-par",
+          "1",
+          "-wp-smoke-tests",
+          "-wp-fct=swdb_atomic_store_n_int"
+        ],
+        "hint_count": 0,
+        "machdep": "x86_64",
+        "rss_cap_bytes": 8589934592,
+        "verifier_launched": true
+      },
+      "setup_hashes": {
+        "contract": "52084121b1cf6058b1ce9bfd561bda5e335d93487de09b0c8d9fe1578595f5a2",
+        "run_plan": "ce7224e38b175a04d54321302bbd4691e6a74a77b77a3a7088a96c0737093eef",
+        "stdlib_provenance": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "wp_input.c": "cbd4c70642844f7ef63c49f7a81858f0dbdf66024a9d8799602afda5c9749fa7"
+      },
+      "smoke_open": [],
+      "smoke_valid": 1,
+      "subject": {
+        "id": "swdb_atomic_store_n_int",
+        "kind": "c_model"
+      },
+      "summary_bindings": [],
+      "verdict": "proven"
+    },
+    {
+      "artifact_file_instances": 0,
+      "dependencies": [],
+      "errors": [],
+      "evidence_instances": 7,
+      "expected": "proven",
+      "failure_class": null,
+      "frozen_case_accepted": true,
+      "full_settings_sha256": "79f4ef5200bbf3a66ce449d2057122d66e330e691f28093645b5a01737f43c73",
+      "id": "proof.model.swdb_atomic_fetch_add_int.20261015t224218z.94ca2cc8",
+      "independent_acceptance_errors": [],
+      "initialization_goals": 3,
+      "job": {
+        "adapter": "wp",
+        "batch": "batch.proof.model.swdb_atomic_fetch_add_int.20261015t224218z.94ca2cc8",
+        "batch_load": {
+          "end": 2.746,
+          "start": 2.882
+        },
+        "cpu_seconds": 5.908212,
+        "host": "swdb-fixture-host",
+        "peak_rss_bytes": 203173888,
+        "position": 1,
+        "wall_seconds": 6.137633,
+        "worker_core": "unpinned"
+      },
+      "label": "model:swdb_atomic_fetch_add_int",
+      "member_context": null,
+      "ordinary_open": [],
+      "ordinary_valid": 11,
+      "pins": {
+        "baseline_function": {
+          "not_applicable": "A C model is proven on its own text."
+        },
+        "build_constants": [],
+        "code": {
+          "id": "swdb_atomic_fetch_add_int",
+          "sha256": "e33cdce66e1db30882eab0529e0cd782d1f9aa6dedc8da3cb5f73b4273a26724"
+        },
+        "contract": {
+          "id": "swdb_atomic_fetch_add_int",
+          "sha256": "e33cdce66e1db30882eab0529e0cd782d1f9aa6dedc8da3cb5f73b4273a26724"
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "ac4fe5ea50ebb15eddc88e239cb340d9fca41306df41e0cdda8432c9d0d88c5c"
+        },
+        "minimum_bounds": {
+          "not_applicable": "A C model has no minimum bounds."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "A C model has no predecessor."
+        },
+        "proof_semantics": {
+          "not_applicable": "A C model makes no DX100 call."
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "summaries": []
+      },
+      "qualifications": {},
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/matrix/seed/records/proofs/proof.model.swdb_atomic_fetch_add_int.20261015t224218z.94ca2cc8.yaml",
+        "sha256": "fa7b03f2357e9f403d6de6cdc03cf418796c07788af13c61e17ec673078e4c57"
+      },
+      "runner_acceptance_errors": [],
+      "settings": {
+        "flags": [
+          "-wp",
+          "-wp-rte",
+          "-wp-cache",
+          "none",
+          "-wp-model",
+          "+real",
+          "-wp-par",
+          "1",
+          "-machdep",
+          "x86_64",
+          "-rte-initialized",
+          "@all",
+          "-wp-no-filter-init",
+          "-machdep",
+          "x86_64",
+          "-wp-prover",
+          "alt-ergo,z3,cvc5",
+          "-wp-timeout",
+          "30",
+          "-wp-par",
+          "1",
+          "-wp-smoke-tests",
+          "-wp-fct=swdb_atomic_fetch_add_int"
+        ],
+        "hint_count": 0,
+        "machdep": "x86_64",
+        "rss_cap_bytes": 8589934592,
+        "verifier_launched": true
+      },
+      "setup_hashes": {
+        "contract": "e33cdce66e1db30882eab0529e0cd782d1f9aa6dedc8da3cb5f73b4273a26724",
+        "run_plan": "a56bde963edb0e2f428a3b241d2e67c73b217718540adeb6ece1d82428c3c0cf",
+        "stdlib_provenance": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "wp_input.c": "cc0e334399981aafe9fb91099156b8bac9dce922a1c860f0adff17a1990446b2"
+      },
+      "smoke_open": [],
+      "smoke_valid": 1,
+      "subject": {
+        "id": "swdb_atomic_fetch_add_int",
+        "kind": "c_model"
+      },
+      "summary_bindings": [],
+      "verdict": "proven"
+    },
+    {
+      "artifact_file_instances": 0,
+      "dependencies": [],
+      "errors": [],
+      "evidence_instances": 7,
+      "expected": "proven",
+      "failure_class": null,
+      "frozen_case_accepted": true,
+      "full_settings_sha256": "72d3174f41025b80c35595bad4e4592836e4ca2f803612c1ed217971d5cfbc06",
+      "id": "proof.model.swdb_atomic_exchange_n_int.20261015t224419z.3a8083b6",
+      "independent_acceptance_errors": [],
+      "initialization_goals": 2,
+      "job": {
+        "adapter": "wp",
+        "batch": "batch.proof.model.swdb_atomic_exchange_n_int.20261015t224419z.3a8083b6",
+        "batch_load": {
+          "end": 3.073,
+          "start": 2.992
+        },
+        "cpu_seconds": 5.766987,
+        "host": "swdb-fixture-host",
+        "peak_rss_bytes": 204451840,
+        "position": 1,
+        "wall_seconds": 5.871592,
+        "worker_core": "unpinned"
+      },
+      "label": "model:swdb_atomic_exchange_n_int",
+      "member_context": null,
+      "ordinary_open": [],
+      "ordinary_valid": 9,
+      "pins": {
+        "baseline_function": {
+          "not_applicable": "A C model is proven on its own text."
+        },
+        "build_constants": [],
+        "code": {
+          "id": "swdb_atomic_exchange_n_int",
+          "sha256": "ddd5efd9fb6359a3e66154cb4f58f667bab74cb363c165e3c4159824d39ed12a"
+        },
+        "contract": {
+          "id": "swdb_atomic_exchange_n_int",
+          "sha256": "ddd5efd9fb6359a3e66154cb4f58f667bab74cb363c165e3c4159824d39ed12a"
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "ac4fe5ea50ebb15eddc88e239cb340d9fca41306df41e0cdda8432c9d0d88c5c"
+        },
+        "minimum_bounds": {
+          "not_applicable": "A C model has no minimum bounds."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "A C model has no predecessor."
+        },
+        "proof_semantics": {
+          "not_applicable": "A C model makes no DX100 call."
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "summaries": []
+      },
+      "qualifications": {},
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/matrix/seed/records/proofs/proof.model.swdb_atomic_exchange_n_int.20261015t224419z.3a8083b6.yaml",
+        "sha256": "3b6c024eed034b896581534e096aec1710c658a9d682a17e40bbf7031a6af053"
+      },
+      "runner_acceptance_errors": [],
+      "settings": {
+        "flags": [
+          "-wp",
+          "-wp-rte",
+          "-wp-cache",
+          "none",
+          "-wp-model",
+          "+real",
+          "-wp-par",
+          "1",
+          "-machdep",
+          "x86_64",
+          "-rte-initialized",
+          "@all",
+          "-wp-no-filter-init",
+          "-machdep",
+          "x86_64",
+          "-wp-prover",
+          "alt-ergo,z3,cvc5",
+          "-wp-timeout",
+          "30",
+          "-wp-par",
+          "1",
+          "-wp-smoke-tests",
+          "-wp-fct=swdb_atomic_exchange_n_int"
+        ],
+        "hint_count": 0,
+        "machdep": "x86_64",
+        "rss_cap_bytes": 8589934592,
+        "verifier_launched": true
+      },
+      "setup_hashes": {
+        "contract": "ddd5efd9fb6359a3e66154cb4f58f667bab74cb363c165e3c4159824d39ed12a",
+        "run_plan": "8dee9f837202dbad8acb99b5299a8c4272d42d7bc580788343c93c2e5e055185",
+        "stdlib_provenance": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "wp_input.c": "5dc0ce7b17592242e699af6d162da5e6dfa899f1441aef1b579a7501776986ca"
+      },
+      "smoke_open": [],
+      "smoke_valid": 1,
+      "subject": {
+        "id": "swdb_atomic_exchange_n_int",
+        "kind": "c_model"
+      },
+      "summary_bindings": [],
+      "verdict": "proven"
+    },
+    {
+      "artifact_file_instances": 0,
+      "dependencies": [],
+      "errors": [],
+      "evidence_instances": 7,
+      "expected": "proven",
+      "failure_class": null,
+      "frozen_case_accepted": true,
+      "full_settings_sha256": "415d44efd95a8f46248a59f81135728d7696ee0e6e3e649c81c1b3cf156a0d17",
+      "id": "proof.model.swdb_atomic_compare_exchange_n_int.20261015t224625z.ac8eb10c",
+      "independent_acceptance_errors": [],
+      "initialization_goals": 0,
+      "job": {
+        "adapter": "wp",
+        "batch": "batch.proof.model.swdb_atomic_compare_exchange_n_int.20261015t224625z.ac8eb10c",
+        "batch_load": {
+          "end": 2.648,
+          "start": 2.937
+        },
+        "cpu_seconds": 14.927162,
+        "host": "swdb-fixture-host",
+        "peak_rss_bytes": 336568320,
+        "position": 1,
+        "wall_seconds": 14.69861,
+        "worker_core": "unpinned"
+      },
+      "label": "model:swdb_atomic_compare_exchange_n_int",
+      "member_context": null,
+      "ordinary_open": [],
+      "ordinary_valid": 17,
+      "pins": {
+        "baseline_function": {
+          "not_applicable": "A C model is proven on its own text."
+        },
+        "build_constants": [],
+        "code": {
+          "id": "swdb_atomic_compare_exchange_n_int",
+          "sha256": "f3d0c750fb94e59554f9df8f143e924356c79d876cb6a6f65f0b4bd5f3e69add"
+        },
+        "contract": {
+          "id": "swdb_atomic_compare_exchange_n_int",
+          "sha256": "f3d0c750fb94e59554f9df8f143e924356c79d876cb6a6f65f0b4bd5f3e69add"
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "ac4fe5ea50ebb15eddc88e239cb340d9fca41306df41e0cdda8432c9d0d88c5c"
+        },
+        "minimum_bounds": {
+          "not_applicable": "A C model has no minimum bounds."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "A C model has no predecessor."
+        },
+        "proof_semantics": {
+          "not_applicable": "A C model makes no DX100 call."
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "summaries": []
+      },
+      "qualifications": {},
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/matrix/seed/records/proofs/proof.model.swdb_atomic_compare_exchange_n_int.20261015t224625z.ac8eb10c.yaml",
+        "sha256": "2d5fe0605abad7f29a521b71e27ff178c4d8abd32887518407221a9981ca6c13"
+      },
+      "runner_acceptance_errors": [],
+      "settings": {
+        "flags": [
+          "-wp",
+          "-wp-rte",
+          "-wp-cache",
+          "none",
+          "-wp-model",
+          "+real",
+          "-wp-par",
+          "1",
+          "-machdep",
+          "x86_64",
+          "-rte-initialized",
+          "@all",
+          "-wp-no-filter-init",
+          "-machdep",
+          "x86_64",
+          "-wp-prover",
+          "alt-ergo,z3,cvc5",
+          "-wp-timeout",
+          "30",
+          "-wp-par",
+          "1",
+          "-wp-smoke-tests",
+          "-wp-fct=swdb_atomic_compare_exchange_n_int"
+        ],
+        "hint_count": 0,
+        "machdep": "x86_64",
+        "rss_cap_bytes": 8589934592,
+        "verifier_launched": true
+      },
+      "setup_hashes": {
+        "contract": "f3d0c750fb94e59554f9df8f143e924356c79d876cb6a6f65f0b4bd5f3e69add",
+        "run_plan": "971251cd571df90a02d8d38b40a464afce970b5baaf2af9856c68c170104cfbb",
+        "stdlib_provenance": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "wp_input.c": "875a5a53f974961e73a102f6ba842d5807b730278933c717789b9a8d28d91d04"
+      },
+      "smoke_open": [],
+      "smoke_valid": 3,
+      "subject": {
+        "id": "swdb_atomic_compare_exchange_n_int",
+        "kind": "c_model"
+      },
+      "summary_bindings": [],
+      "verdict": "proven"
+    },
+    {
+      "artifact_file_instances": 0,
+      "dependencies": [],
+      "errors": [],
+      "evidence_instances": 7,
+      "expected": "proven",
+      "failure_class": null,
+      "frozen_case_accepted": true,
+      "full_settings_sha256": "ca1d785bb601c7444794c100e71198d9f77fdd946da71aeb1b8946c21153fd69",
+      "id": "proof.model.swdb_sync_bool_compare_and_swap_int.20261015t224841z.d11f1a83",
+      "independent_acceptance_errors": [],
+      "initialization_goals": 0,
+      "job": {
+        "adapter": "wp",
+        "batch": "batch.proof.model.swdb_sync_bool_compare_and_swap_int.20261015t224841z.d11f1a83",
+        "batch_load": {
+          "end": 3.204,
+          "start": 2.688
+        },
+        "cpu_seconds": 12.16113,
+        "host": "swdb-fixture-host",
+        "peak_rss_bytes": 297775104,
+        "position": 1,
+        "wall_seconds": 11.932037,
+        "worker_core": "unpinned"
+      },
+      "label": "model:swdb_sync_bool_compare_and_swap_int",
+      "member_context": null,
+      "ordinary_open": [],
+      "ordinary_valid": 11,
+      "pins": {
+        "baseline_function": {
+          "not_applicable": "A C model is proven on its own text."
+        },
+        "build_constants": [],
+        "code": {
+          "id": "swdb_sync_bool_compare_and_swap_int",
+          "sha256": "cc1d18a092f9f1303426d7cba5eacc2845f510388047574ca6c4315303dbc3df"
+        },
+        "contract": {
+          "id": "swdb_sync_bool_compare_and_swap_int",
+          "sha256": "cc1d18a092f9f1303426d7cba5eacc2845f510388047574ca6c4315303dbc3df"
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "ac4fe5ea50ebb15eddc88e239cb340d9fca41306df41e0cdda8432c9d0d88c5c"
+        },
+        "minimum_bounds": {
+          "not_applicable": "A C model has no minimum bounds."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "A C model has no predecessor."
+        },
+        "proof_semantics": {
+          "not_applicable": "A C model makes no DX100 call."
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "summaries": []
+      },
+      "qualifications": {},
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/matrix/seed/records/proofs/proof.model.swdb_sync_bool_compare_and_swap_int.20261015t224841z.d11f1a83.yaml",
+        "sha256": "5d6fd2d97e56d82534747ab12b4c1e84eb0e7b0107ae02c6fdebacb88c5fcfc0"
+      },
+      "runner_acceptance_errors": [],
+      "settings": {
+        "flags": [
+          "-wp",
+          "-wp-rte",
+          "-wp-cache",
+          "none",
+          "-wp-model",
+          "+real",
+          "-wp-par",
+          "1",
+          "-machdep",
+          "x86_64",
+          "-rte-initialized",
+          "@all",
+          "-wp-no-filter-init",
+          "-machdep",
+          "x86_64",
+          "-wp-prover",
+          "alt-ergo,z3,cvc5",
+          "-wp-timeout",
+          "30",
+          "-wp-par",
+          "1",
+          "-wp-smoke-tests",
+          "-wp-fct=swdb_sync_bool_compare_and_swap_int"
+        ],
+        "hint_count": 0,
+        "machdep": "x86_64",
+        "rss_cap_bytes": 8589934592,
+        "verifier_launched": true
+      },
+      "setup_hashes": {
+        "contract": "cc1d18a092f9f1303426d7cba5eacc2845f510388047574ca6c4315303dbc3df",
+        "run_plan": "f84f0310538574e9dfb31acf474205fa54241b8881511b77a53c81f096038ca3",
+        "stdlib_provenance": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "wp_input.c": "3fc9274899580070236a9d553626bff9014fb15a301572007f8ea3033a1ab2f0"
+      },
+      "smoke_open": [],
+      "smoke_valid": 3,
+      "subject": {
+        "id": "swdb_sync_bool_compare_and_swap_int",
+        "kind": "c_model"
+      },
+      "summary_bindings": [],
+      "verdict": "proven"
+    },
+    {
+      "artifact_file_instances": 0,
+      "dependencies": [],
+      "errors": [],
+      "evidence_instances": 7,
+      "expected": "proven",
+      "failure_class": null,
+      "frozen_case_accepted": true,
+      "full_settings_sha256": "dcc6b9692fc413e37313093b197a080d8f7e66d20030c3161aa6c90363dc8144",
+      "id": "proof.model.swdb_sync_val_compare_and_swap_int.20261015t225059z.ca628fe1",
+      "independent_acceptance_errors": [],
+      "initialization_goals": 0,
+      "job": {
+        "adapter": "wp",
+        "batch": "batch.proof.model.swdb_sync_val_compare_and_swap_int.20261015t225059z.ca628fe1",
+        "batch_load": {
+          "end": 3.059,
+          "start": 2.967
+        },
+        "cpu_seconds": 12.289404,
+        "host": "swdb-fixture-host",
+        "peak_rss_bytes": 300228608,
+        "position": 1,
+        "wall_seconds": 12.124962,
+        "worker_core": "unpinned"
+      },
+      "label": "model:swdb_sync_val_compare_and_swap_int",
+      "member_context": null,
+      "ordinary_open": [],
+      "ordinary_valid": 12,
+      "pins": {
+        "baseline_function": {
+          "not_applicable": "A C model is proven on its own text."
+        },
+        "build_constants": [],
+        "code": {
+          "id": "swdb_sync_val_compare_and_swap_int",
+          "sha256": "0e58649bfbbc32cbae8e6801ee08862801e3c6e5eacf11f0b2d40deaf40bfe53"
+        },
+        "contract": {
+          "id": "swdb_sync_val_compare_and_swap_int",
+          "sha256": "0e58649bfbbc32cbae8e6801ee08862801e3c6e5eacf11f0b2d40deaf40bfe53"
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "ac4fe5ea50ebb15eddc88e239cb340d9fca41306df41e0cdda8432c9d0d88c5c"
+        },
+        "minimum_bounds": {
+          "not_applicable": "A C model has no minimum bounds."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "A C model has no predecessor."
+        },
+        "proof_semantics": {
+          "not_applicable": "A C model makes no DX100 call."
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "summaries": []
+      },
+      "qualifications": {},
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/matrix/seed/records/proofs/proof.model.swdb_sync_val_compare_and_swap_int.20261015t225059z.ca628fe1.yaml",
+        "sha256": "66b6f8d0110ddbbc6d0626585e9cf03765173a24214053819b55da41946f4ec8"
+      },
+      "runner_acceptance_errors": [],
+      "settings": {
+        "flags": [
+          "-wp",
+          "-wp-rte",
+          "-wp-cache",
+          "none",
+          "-wp-model",
+          "+real",
+          "-wp-par",
+          "1",
+          "-machdep",
+          "x86_64",
+          "-rte-initialized",
+          "@all",
+          "-wp-no-filter-init",
+          "-machdep",
+          "x86_64",
+          "-wp-prover",
+          "alt-ergo,z3,cvc5",
+          "-wp-timeout",
+          "30",
+          "-wp-par",
+          "1",
+          "-wp-smoke-tests",
+          "-wp-fct=swdb_sync_val_compare_and_swap_int"
+        ],
+        "hint_count": 0,
+        "machdep": "x86_64",
+        "rss_cap_bytes": 8589934592,
+        "verifier_launched": true
+      },
+      "setup_hashes": {
+        "contract": "0e58649bfbbc32cbae8e6801ee08862801e3c6e5eacf11f0b2d40deaf40bfe53",
+        "run_plan": "d86edb50fcaf42e8b8a834d681dd4c9eed209f1d362df5886956e7bc0e7607a4",
+        "stdlib_provenance": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "wp_input.c": "2191297a6a0af7943bf11688f1ad2d828be0180f3145792f1caf5adff9601417"
+      },
+      "smoke_open": [],
+      "smoke_valid": 3,
+      "subject": {
+        "id": "swdb_sync_val_compare_and_swap_int",
+        "kind": "c_model"
+      },
+      "summary_bindings": [],
+      "verdict": "proven"
+    },
+    {
+      "artifact_file_instances": 0,
+      "dependencies": [],
+      "errors": [],
+      "evidence_instances": 7,
+      "expected": "proven",
+      "failure_class": null,
+      "frozen_case_accepted": true,
+      "full_settings_sha256": "b5aa3cd2dd001dfd3e536fd046b71651c86cf8e3b6a20fd37ec06ad28c53790f",
+      "id": "proof.model.swdb_sync_fetch_and_add_int.20261015t225310z.fc8aff72",
+      "independent_acceptance_errors": [],
+      "initialization_goals": 3,
+      "job": {
+        "adapter": "wp",
+        "batch": "batch.proof.model.swdb_sync_fetch_and_add_int.20261015t225310z.fc8aff72",
+        "batch_load": {
+          "end": 2.919,
+          "start": 2.825
+        },
+        "cpu_seconds": 6.115377,
+        "host": "swdb-fixture-host",
+        "peak_rss_bytes": 205504512,
+        "position": 1,
+        "wall_seconds": 6.347039,
+        "worker_core": "unpinned"
+      },
+      "label": "model:swdb_sync_fetch_and_add_int",
+      "member_context": null,
+      "ordinary_open": [],
+      "ordinary_valid": 11,
+      "pins": {
+        "baseline_function": {
+          "not_applicable": "A C model is proven on its own text."
+        },
+        "build_constants": [],
+        "code": {
+          "id": "swdb_sync_fetch_and_add_int",
+          "sha256": "46750c4204562de1d54585a151a4e3fd853501d5f37df9f9ee99fd9e80336133"
+        },
+        "contract": {
+          "id": "swdb_sync_fetch_and_add_int",
+          "sha256": "46750c4204562de1d54585a151a4e3fd853501d5f37df9f9ee99fd9e80336133"
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "ac4fe5ea50ebb15eddc88e239cb340d9fca41306df41e0cdda8432c9d0d88c5c"
+        },
+        "minimum_bounds": {
+          "not_applicable": "A C model has no minimum bounds."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "A C model has no predecessor."
+        },
+        "proof_semantics": {
+          "not_applicable": "A C model makes no DX100 call."
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "summaries": []
+      },
+      "qualifications": {},
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/matrix/seed/records/proofs/proof.model.swdb_sync_fetch_and_add_int.20261015t225310z.fc8aff72.yaml",
+        "sha256": "392803232d8bb9f5ddc0ae64db61277dbd2044561a2d842777a57180d71dd1fe"
+      },
+      "runner_acceptance_errors": [],
+      "settings": {
+        "flags": [
+          "-wp",
+          "-wp-rte",
+          "-wp-cache",
+          "none",
+          "-wp-model",
+          "+real",
+          "-wp-par",
+          "1",
+          "-machdep",
+          "x86_64",
+          "-rte-initialized",
+          "@all",
+          "-wp-no-filter-init",
+          "-machdep",
+          "x86_64",
+          "-wp-prover",
+          "alt-ergo,z3,cvc5",
+          "-wp-timeout",
+          "30",
+          "-wp-par",
+          "1",
+          "-wp-smoke-tests",
+          "-wp-fct=swdb_sync_fetch_and_add_int"
+        ],
+        "hint_count": 0,
+        "machdep": "x86_64",
+        "rss_cap_bytes": 8589934592,
+        "verifier_launched": true
+      },
+      "setup_hashes": {
+        "contract": "46750c4204562de1d54585a151a4e3fd853501d5f37df9f9ee99fd9e80336133",
+        "run_plan": "aa6e50407aa0d6ce39dce868bbb8e328bd9ea6df722e31e3bf079586dc15ec2a",
+        "stdlib_provenance": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "wp_input.c": "ba348f1450c14c66209a69b74154220053d6876c5ff73383cb38ca80c5efc46f"
+      },
+      "smoke_open": [],
+      "smoke_valid": 1,
+      "subject": {
+        "id": "swdb_sync_fetch_and_add_int",
+        "kind": "c_model"
+      },
+      "summary_bindings": [],
+      "verdict": "proven"
+    },
+    {
+      "artifact_file_instances": 0,
+      "dependencies": [],
+      "errors": [],
+      "evidence_instances": 7,
+      "expected": "proven",
+      "failure_class": null,
+      "frozen_case_accepted": true,
+      "full_settings_sha256": "7326ae7e1cb66a72c3d695573887b4ac9d1e32d0fec97d9b0a288b4a550fdeb1",
+      "id": "proof.model.swdb_sync_add_and_fetch_int.20261015t225515z.5ff33132",
+      "independent_acceptance_errors": [],
+      "initialization_goals": 3,
+      "job": {
+        "adapter": "wp",
+        "batch": "batch.proof.model.swdb_sync_add_and_fetch_int.20261015t225515z.5ff33132",
+        "batch_load": {
+          "end": 2.946,
+          "start": 2.941
+        },
+        "cpu_seconds": 5.950376,
+        "host": "swdb-fixture-host",
+        "peak_rss_bytes": 203628544,
+        "position": 1,
+        "wall_seconds": 6.258916,
+        "worker_core": "unpinned"
+      },
+      "label": "model:swdb_sync_add_and_fetch_int",
+      "member_context": null,
+      "ordinary_open": [],
+      "ordinary_valid": 13,
+      "pins": {
+        "baseline_function": {
+          "not_applicable": "A C model is proven on its own text."
+        },
+        "build_constants": [],
+        "code": {
+          "id": "swdb_sync_add_and_fetch_int",
+          "sha256": "090a841979606705ad14a9045236636dadee5fcad7a4804d9c9989c241908630"
+        },
+        "contract": {
+          "id": "swdb_sync_add_and_fetch_int",
+          "sha256": "090a841979606705ad14a9045236636dadee5fcad7a4804d9c9989c241908630"
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "ac4fe5ea50ebb15eddc88e239cb340d9fca41306df41e0cdda8432c9d0d88c5c"
+        },
+        "minimum_bounds": {
+          "not_applicable": "A C model has no minimum bounds."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "A C model has no predecessor."
+        },
+        "proof_semantics": {
+          "not_applicable": "A C model makes no DX100 call."
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "summaries": []
+      },
+      "qualifications": {},
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/matrix/seed/records/proofs/proof.model.swdb_sync_add_and_fetch_int.20261015t225515z.5ff33132.yaml",
+        "sha256": "ec0057d9bb306bbbbe3f7b2f2bf9cd46993dbb392006f97f7e30ff4cc2d75cac"
+      },
+      "runner_acceptance_errors": [],
+      "settings": {
+        "flags": [
+          "-wp",
+          "-wp-rte",
+          "-wp-cache",
+          "none",
+          "-wp-model",
+          "+real",
+          "-wp-par",
+          "1",
+          "-machdep",
+          "x86_64",
+          "-rte-initialized",
+          "@all",
+          "-wp-no-filter-init",
+          "-machdep",
+          "x86_64",
+          "-wp-prover",
+          "alt-ergo,z3,cvc5",
+          "-wp-timeout",
+          "30",
+          "-wp-par",
+          "1",
+          "-wp-smoke-tests",
+          "-wp-fct=swdb_sync_add_and_fetch_int"
+        ],
+        "hint_count": 0,
+        "machdep": "x86_64",
+        "rss_cap_bytes": 8589934592,
+        "verifier_launched": true
+      },
+      "setup_hashes": {
+        "contract": "090a841979606705ad14a9045236636dadee5fcad7a4804d9c9989c241908630",
+        "run_plan": "62d8d45db0a91a570da60ba335f7143514b56c0e0ae53ad1b626429157a0f614",
+        "stdlib_provenance": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "wp_input.c": "20075adde80b9a33c28662487ad10e8a82f2f9e049fcb6342eccde06dac28bac"
+      },
+      "smoke_open": [],
+      "smoke_valid": 1,
+      "subject": {
+        "id": "swdb_sync_add_and_fetch_int",
+        "kind": "c_model"
+      },
+      "summary_bindings": [],
+      "verdict": "proven"
+    },
+    {
+      "artifact_file_instances": 92,
+      "dependencies": [
+        {
+          "kind": "models",
+          "pin": {
+            "id": "swdb_atomic_load_n_int",
+            "proof_record": "proof.model.swdb_atomic_load_n_int.20261015t223802z.e06749b9",
+            "sha256": "8c5a0605432a22148fb4cbb022642ad3a6892f82d2d2e114cec752c6ef27b1d3"
+          },
+          "record": {
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/matrix/seed/records/proofs/proof.model.swdb_atomic_load_n_int.20261015t223802z.e06749b9.yaml",
+            "sha256": "c08c5a1eb55ca22b3b8c1c24317c44d33e010970bef03148484d1a8777bb3baa"
+          }
+        },
+        {
+          "kind": "models",
+          "pin": {
+            "id": "swdb_atomic_store_n_int",
+            "proof_record": "proof.model.swdb_atomic_store_n_int.20261015t224008z.662ce799",
+            "sha256": "52084121b1cf6058b1ce9bfd561bda5e335d93487de09b0c8d9fe1578595f5a2"
+          },
+          "record": {
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/matrix/seed/records/proofs/proof.model.swdb_atomic_store_n_int.20261015t224008z.662ce799.yaml",
+            "sha256": "3d8b977e96ec82f6e3fe82b8935b7e40a2192636758b4c208ab8981a47e127e3"
+          }
+        },
+        {
+          "kind": "models",
+          "pin": {
+            "id": "swdb_atomic_fetch_add_int",
+            "proof_record": "proof.model.swdb_atomic_fetch_add_int.20261015t224218z.94ca2cc8",
+            "sha256": "e33cdce66e1db30882eab0529e0cd782d1f9aa6dedc8da3cb5f73b4273a26724"
+          },
+          "record": {
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/matrix/seed/records/proofs/proof.model.swdb_atomic_fetch_add_int.20261015t224218z.94ca2cc8.yaml",
+            "sha256": "fa7b03f2357e9f403d6de6cdc03cf418796c07788af13c61e17ec673078e4c57"
+          }
+        },
+        {
+          "kind": "models",
+          "pin": {
+            "id": "swdb_atomic_exchange_n_int",
+            "proof_record": "proof.model.swdb_atomic_exchange_n_int.20261015t224419z.3a8083b6",
+            "sha256": "ddd5efd9fb6359a3e66154cb4f58f667bab74cb363c165e3c4159824d39ed12a"
+          },
+          "record": {
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/matrix/seed/records/proofs/proof.model.swdb_atomic_exchange_n_int.20261015t224419z.3a8083b6.yaml",
+            "sha256": "3b6c024eed034b896581534e096aec1710c658a9d682a17e40bbf7031a6af053"
+          }
+        },
+        {
+          "kind": "models",
+          "pin": {
+            "id": "swdb_atomic_compare_exchange_n_int",
+            "proof_record": "proof.model.swdb_atomic_compare_exchange_n_int.20261015t224625z.ac8eb10c",
+            "sha256": "f3d0c750fb94e59554f9df8f143e924356c79d876cb6a6f65f0b4bd5f3e69add"
+          },
+          "record": {
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/matrix/seed/records/proofs/proof.model.swdb_atomic_compare_exchange_n_int.20261015t224625z.ac8eb10c.yaml",
+            "sha256": "2d5fe0605abad7f29a521b71e27ff178c4d8abd32887518407221a9981ca6c13"
+          }
+        },
+        {
+          "kind": "models",
+          "pin": {
+            "id": "swdb_sync_bool_compare_and_swap_int",
+            "proof_record": "proof.model.swdb_sync_bool_compare_and_swap_int.20261015t224841z.d11f1a83",
+            "sha256": "cc1d18a092f9f1303426d7cba5eacc2845f510388047574ca6c4315303dbc3df"
+          },
+          "record": {
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/matrix/seed/records/proofs/proof.model.swdb_sync_bool_compare_and_swap_int.20261015t224841z.d11f1a83.yaml",
+            "sha256": "5d6fd2d97e56d82534747ab12b4c1e84eb0e7b0107ae02c6fdebacb88c5fcfc0"
+          }
+        },
+        {
+          "kind": "models",
+          "pin": {
+            "id": "swdb_sync_val_compare_and_swap_int",
+            "proof_record": "proof.model.swdb_sync_val_compare_and_swap_int.20261015t225059z.ca628fe1",
+            "sha256": "0e58649bfbbc32cbae8e6801ee08862801e3c6e5eacf11f0b2d40deaf40bfe53"
+          },
+          "record": {
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/matrix/seed/records/proofs/proof.model.swdb_sync_val_compare_and_swap_int.20261015t225059z.ca628fe1.yaml",
+            "sha256": "66b6f8d0110ddbbc6d0626585e9cf03765173a24214053819b55da41946f4ec8"
+          }
+        },
+        {
+          "kind": "models",
+          "pin": {
+            "id": "swdb_sync_fetch_and_add_int",
+            "proof_record": "proof.model.swdb_sync_fetch_and_add_int.20261015t225310z.fc8aff72",
+            "sha256": "46750c4204562de1d54585a151a4e3fd853501d5f37df9f9ee99fd9e80336133"
+          },
+          "record": {
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/matrix/seed/records/proofs/proof.model.swdb_sync_fetch_and_add_int.20261015t225310z.fc8aff72.yaml",
+            "sha256": "392803232d8bb9f5ddc0ae64db61277dbd2044561a2d842777a57180d71dd1fe"
+          }
+        },
+        {
+          "kind": "models",
+          "pin": {
+            "id": "swdb_sync_add_and_fetch_int",
+            "proof_record": "proof.model.swdb_sync_add_and_fetch_int.20261015t225515z.5ff33132",
+            "sha256": "090a841979606705ad14a9045236636dadee5fcad7a4804d9c9989c241908630"
+          },
+          "record": {
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/matrix/seed/records/proofs/proof.model.swdb_sync_add_and_fetch_int.20261015t225515z.5ff33132.yaml",
+            "sha256": "ec0057d9bb306bbbbe3f7b2f2bf9cd46993dbb392006f97f7e30ff4cc2d75cac"
+          }
+        }
+      ],
+      "errors": [],
+      "evidence_instances": 12,
+      "expected": "proven",
+      "failure_class": null,
+      "frozen_case_accepted": true,
+      "full_settings_sha256": "16e2d6a32e24f6c3c6450ddfc1534d4c5c40224b72e07a31e897fbb18dddc047",
+      "id": "proof.wp24-safe.candidate-1.20261015t225725z.27e4d813",
+      "independent_acceptance_errors": [],
+      "initialization_goals": 11,
+      "job": {
+        "adapter": "wp",
+        "batch": "batch.proof.wp24-safe.candidate-1.20261015t225725z.27e4d813",
+        "batch_load": {
+          "end": 2.88,
+          "start": 2.905
+        },
+        "cpu_seconds": 130.291261,
+        "host": "swdb-fixture-host",
+        "peak_rss_bytes": 389001216,
+        "position": 1,
+        "wall_seconds": 134.560764,
+        "worker_core": "unpinned"
+      },
+      "label": "atomics:safe",
+      "member_context": null,
+      "ordinary_open": [],
+      "ordinary_valid": 86,
+      "pins": {
+        "baseline_function": {
+          "function": "swdb_atomics_unit",
+          "id": "test-source",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "build_constants": [],
+        "c_lowering": {
+          "id": "swdb_atomics_unit.c",
+          "sha256": "51eed82a8d9fba6f9dba27e478e52098472454c9d232ad4be204234252eeb6ee"
+        },
+        "code": {
+          "id": "wp24-safe.candidate-1",
+          "sha256": "4b3cef39b12eb3ec213895ee9f124461b9ca77829883c32f4a2be58ca133237b"
+        },
+        "contract": {
+          "id": "contract.fixture_wp24_atomics",
+          "sha256": "1ae96446b58ad6597fd84fce4e7fd9bb812e000f969465cd59c74bdcd7b4aec9"
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "ac4fe5ea50ebb15eddc88e239cb340d9fca41306df41e0cdda8432c9d0d88c5c"
+        },
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "models": [
+          {
+            "id": "swdb_atomic_load_n_int",
+            "proof_record": "proof.model.swdb_atomic_load_n_int.20261015t223802z.e06749b9",
+            "sha256": "8c5a0605432a22148fb4cbb022642ad3a6892f82d2d2e114cec752c6ef27b1d3"
+          },
+          {
+            "id": "swdb_atomic_store_n_int",
+            "proof_record": "proof.model.swdb_atomic_store_n_int.20261015t224008z.662ce799",
+            "sha256": "52084121b1cf6058b1ce9bfd561bda5e335d93487de09b0c8d9fe1578595f5a2"
+          },
+          {
+            "id": "swdb_atomic_fetch_add_int",
+            "proof_record": "proof.model.swdb_atomic_fetch_add_int.20261015t224218z.94ca2cc8",
+            "sha256": "e33cdce66e1db30882eab0529e0cd782d1f9aa6dedc8da3cb5f73b4273a26724"
+          },
+          {
+            "id": "swdb_atomic_exchange_n_int",
+            "proof_record": "proof.model.swdb_atomic_exchange_n_int.20261015t224419z.3a8083b6",
+            "sha256": "ddd5efd9fb6359a3e66154cb4f58f667bab74cb363c165e3c4159824d39ed12a"
+          },
+          {
+            "id": "swdb_atomic_compare_exchange_n_int",
+            "proof_record": "proof.model.swdb_atomic_compare_exchange_n_int.20261015t224625z.ac8eb10c",
+            "sha256": "f3d0c750fb94e59554f9df8f143e924356c79d876cb6a6f65f0b4bd5f3e69add"
+          },
+          {
+            "id": "swdb_sync_bool_compare_and_swap_int",
+            "proof_record": "proof.model.swdb_sync_bool_compare_and_swap_int.20261015t224841z.d11f1a83",
+            "sha256": "cc1d18a092f9f1303426d7cba5eacc2845f510388047574ca6c4315303dbc3df"
+          },
+          {
+            "id": "swdb_sync_val_compare_and_swap_int",
+            "proof_record": "proof.model.swdb_sync_val_compare_and_swap_int.20261015t225059z.ca628fe1",
+            "sha256": "0e58649bfbbc32cbae8e6801ee08862801e3c6e5eacf11f0b2d40deaf40bfe53"
+          },
+          {
+            "id": "swdb_sync_fetch_and_add_int",
+            "proof_record": "proof.model.swdb_sync_fetch_and_add_int.20261015t225310z.fc8aff72",
+            "sha256": "46750c4204562de1d54585a151a4e3fd853501d5f37df9f9ee99fd9e80336133"
+          },
+          {
+            "id": "swdb_sync_add_and_fetch_int",
+            "proof_record": "proof.model.swdb_sync_add_and_fetch_int.20261015t225515z.5ff33132",
+            "sha256": "090a841979606705ad14a9045236636dadee5fcad7a4804d9c9989c241908630"
+          }
+        ],
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "proof_semantics": {
+          "not_applicable": "No proof-semantics version exists before ticket 27."
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "summaries": []
+      },
+      "qualifications": {},
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/matrix/seed/records/proofs/proof.wp24-safe.candidate-1.20261015t225725z.27e4d813.yaml",
+        "sha256": "4bbc17299537287f40d258de5907cc794228218504fc25348e24fb84ad15efe9"
+      },
+      "runner_acceptance_errors": [],
+      "settings": {
+        "flags": [
+          "-wp",
+          "-wp-rte",
+          "-wp-cache",
+          "none",
+          "-wp-model",
+          "+real",
+          "-wp-par",
+          "1",
+          "-machdep",
+          "x86_64",
+          "-rte-initialized",
+          "@all",
+          "-wp-no-filter-init",
+          "-machdep",
+          "x86_64",
+          "-wp-prover",
+          "alt-ergo,z3,cvc5",
+          "-wp-timeout",
+          "30",
+          "-wp-par",
+          "1",
+          "-wp-smoke-tests",
+          "-wp-fct=swdb_atomics_unit"
+        ],
+        "hint_count": 0,
+        "machdep": "x86_64",
+        "rss_cap_bytes": 8589934592,
+        "verifier_launched": true
+      },
+      "setup_hashes": {
+        "contract": "1ae96446b58ad6597fd84fce4e7fd9bb812e000f969465cd59c74bdcd7b4aec9",
+        "lowering": "51eed82a8d9fba6f9dba27e478e52098472454c9d232ad4be204234252eeb6ee",
+        "run_plan": "6a2ee38333aba9b78ea220627676e4b95ca7e713cd4e08826195a0555133fe06",
+        "stdlib_provenance": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "wp_input.c": "cc41e57363a63db929f6eb0ecd483b3d4336eed270ee9996437d3e3084897606"
+      },
+      "smoke_open": [],
+      "smoke_valid": 19,
+      "subject": {
+        "candidate": "wp24-safe.candidate-1",
+        "function": "swdb_atomics_unit",
+        "kind": "candidate_proof_unit"
+      },
+      "summary_bindings": [],
+      "verdict": "proven"
+    },
+    {
+      "artifact_file_instances": 92,
+      "dependencies": [
+        {
+          "kind": "models",
+          "pin": {
+            "id": "swdb_atomic_load_n_int",
+            "proof_record": "proof.model.swdb_atomic_load_n_int.20261015t223802z.e06749b9",
+            "sha256": "8c5a0605432a22148fb4cbb022642ad3a6892f82d2d2e114cec752c6ef27b1d3"
+          },
+          "record": {
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/matrix/seed/records/proofs/proof.model.swdb_atomic_load_n_int.20261015t223802z.e06749b9.yaml",
+            "sha256": "c08c5a1eb55ca22b3b8c1c24317c44d33e010970bef03148484d1a8777bb3baa"
+          }
+        },
+        {
+          "kind": "models",
+          "pin": {
+            "id": "swdb_atomic_store_n_int",
+            "proof_record": "proof.model.swdb_atomic_store_n_int.20261015t224008z.662ce799",
+            "sha256": "52084121b1cf6058b1ce9bfd561bda5e335d93487de09b0c8d9fe1578595f5a2"
+          },
+          "record": {
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/matrix/seed/records/proofs/proof.model.swdb_atomic_store_n_int.20261015t224008z.662ce799.yaml",
+            "sha256": "3d8b977e96ec82f6e3fe82b8935b7e40a2192636758b4c208ab8981a47e127e3"
+          }
+        },
+        {
+          "kind": "models",
+          "pin": {
+            "id": "swdb_atomic_fetch_add_int",
+            "proof_record": "proof.model.swdb_atomic_fetch_add_int.20261015t224218z.94ca2cc8",
+            "sha256": "e33cdce66e1db30882eab0529e0cd782d1f9aa6dedc8da3cb5f73b4273a26724"
+          },
+          "record": {
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/matrix/seed/records/proofs/proof.model.swdb_atomic_fetch_add_int.20261015t224218z.94ca2cc8.yaml",
+            "sha256": "fa7b03f2357e9f403d6de6cdc03cf418796c07788af13c61e17ec673078e4c57"
+          }
+        },
+        {
+          "kind": "models",
+          "pin": {
+            "id": "swdb_atomic_exchange_n_int",
+            "proof_record": "proof.model.swdb_atomic_exchange_n_int.20261015t224419z.3a8083b6",
+            "sha256": "ddd5efd9fb6359a3e66154cb4f58f667bab74cb363c165e3c4159824d39ed12a"
+          },
+          "record": {
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/matrix/seed/records/proofs/proof.model.swdb_atomic_exchange_n_int.20261015t224419z.3a8083b6.yaml",
+            "sha256": "3b6c024eed034b896581534e096aec1710c658a9d682a17e40bbf7031a6af053"
+          }
+        },
+        {
+          "kind": "models",
+          "pin": {
+            "id": "swdb_atomic_compare_exchange_n_int",
+            "proof_record": "proof.model.swdb_atomic_compare_exchange_n_int.20261015t224625z.ac8eb10c",
+            "sha256": "f3d0c750fb94e59554f9df8f143e924356c79d876cb6a6f65f0b4bd5f3e69add"
+          },
+          "record": {
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/matrix/seed/records/proofs/proof.model.swdb_atomic_compare_exchange_n_int.20261015t224625z.ac8eb10c.yaml",
+            "sha256": "2d5fe0605abad7f29a521b71e27ff178c4d8abd32887518407221a9981ca6c13"
+          }
+        },
+        {
+          "kind": "models",
+          "pin": {
+            "id": "swdb_sync_bool_compare_and_swap_int",
+            "proof_record": "proof.model.swdb_sync_bool_compare_and_swap_int.20261015t224841z.d11f1a83",
+            "sha256": "cc1d18a092f9f1303426d7cba5eacc2845f510388047574ca6c4315303dbc3df"
+          },
+          "record": {
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/matrix/seed/records/proofs/proof.model.swdb_sync_bool_compare_and_swap_int.20261015t224841z.d11f1a83.yaml",
+            "sha256": "5d6fd2d97e56d82534747ab12b4c1e84eb0e7b0107ae02c6fdebacb88c5fcfc0"
+          }
+        },
+        {
+          "kind": "models",
+          "pin": {
+            "id": "swdb_sync_val_compare_and_swap_int",
+            "proof_record": "proof.model.swdb_sync_val_compare_and_swap_int.20261015t225059z.ca628fe1",
+            "sha256": "0e58649bfbbc32cbae8e6801ee08862801e3c6e5eacf11f0b2d40deaf40bfe53"
+          },
+          "record": {
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/matrix/seed/records/proofs/proof.model.swdb_sync_val_compare_and_swap_int.20261015t225059z.ca628fe1.yaml",
+            "sha256": "66b6f8d0110ddbbc6d0626585e9cf03765173a24214053819b55da41946f4ec8"
+          }
+        },
+        {
+          "kind": "models",
+          "pin": {
+            "id": "swdb_sync_fetch_and_add_int",
+            "proof_record": "proof.model.swdb_sync_fetch_and_add_int.20261015t225310z.fc8aff72",
+            "sha256": "46750c4204562de1d54585a151a4e3fd853501d5f37df9f9ee99fd9e80336133"
+          },
+          "record": {
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/matrix/seed/records/proofs/proof.model.swdb_sync_fetch_and_add_int.20261015t225310z.fc8aff72.yaml",
+            "sha256": "392803232d8bb9f5ddc0ae64db61277dbd2044561a2d842777a57180d71dd1fe"
+          }
+        },
+        {
+          "kind": "models",
+          "pin": {
+            "id": "swdb_sync_add_and_fetch_int",
+            "proof_record": "proof.model.swdb_sync_add_and_fetch_int.20261015t225515z.5ff33132",
+            "sha256": "090a841979606705ad14a9045236636dadee5fcad7a4804d9c9989c241908630"
+          },
+          "record": {
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/matrix/seed/records/proofs/proof.model.swdb_sync_add_and_fetch_int.20261015t225515z.5ff33132.yaml",
+            "sha256": "ec0057d9bb306bbbbe3f7b2f2bf9cd46993dbb392006f97f7e30ff4cc2d75cac"
+          }
+        }
+      ],
+      "errors": [],
+      "evidence_instances": 13,
+      "expected": "not_proven",
+      "failure_class": "timeout",
+      "frozen_case_accepted": true,
+      "full_settings_sha256": "629af70543bb1b0fbc1cc2d4de789fae615cdab91e3e51870c5dce5ea8519693",
+      "id": "proof.wp24-bug.candidate-1.20261015t230140z.2924df16",
+      "independent_acceptance_errors": [],
+      "initialization_goals": 11,
+      "job": {
+        "adapter": "wp",
+        "batch": "batch.proof.wp24-bug.candidate-1.20261015t230140z.2924df16",
+        "batch_load": {
+          "end": 2.747,
+          "start": 2.727
+        },
+        "cpu_seconds": 195.923925,
+        "host": "swdb-fixture-host",
+        "peak_rss_bytes": 404615168,
+        "position": 1,
+        "wall_seconds": 188.44772,
+        "worker_core": "unpinned"
+      },
+      "label": "atomics:seeded",
+      "member_context": null,
+      "ordinary_open": [
+        {
+          "function": "swdb_atomics_unit",
+          "goal": "typed_real_swdb_atomics_unit_ensures",
+          "property": "swdb_atomics_unit_ensures_2",
+          "seconds": null,
+          "smoke": false,
+          "solver": null,
+          "source": "wp_json",
+          "status": "timeout"
+        }
+      ],
+      "ordinary_valid": 85,
+      "pins": {
+        "baseline_function": {
+          "function": "swdb_atomics_unit",
+          "id": "test-source",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "build_constants": [],
+        "c_lowering": {
+          "id": "swdb_atomics_unit.c",
+          "sha256": "33a9dda117d2e1a556dc18cc7ba9b6edd060c4f1754f6ff5225d415718ffa086"
+        },
+        "code": {
+          "id": "wp24-bug.candidate-1",
+          "sha256": "ee8adaae9aeb0bada01bb405802b0bb63a2c9f7655a7752e6c0ae4a3f3e6133d"
+        },
+        "contract": {
+          "id": "contract.fixture_wp24_atomics",
+          "sha256": "1ae96446b58ad6597fd84fce4e7fd9bb812e000f969465cd59c74bdcd7b4aec9"
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "ac4fe5ea50ebb15eddc88e239cb340d9fca41306df41e0cdda8432c9d0d88c5c"
+        },
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "models": [
+          {
+            "id": "swdb_atomic_load_n_int",
+            "proof_record": "proof.model.swdb_atomic_load_n_int.20261015t223802z.e06749b9",
+            "sha256": "8c5a0605432a22148fb4cbb022642ad3a6892f82d2d2e114cec752c6ef27b1d3"
+          },
+          {
+            "id": "swdb_atomic_store_n_int",
+            "proof_record": "proof.model.swdb_atomic_store_n_int.20261015t224008z.662ce799",
+            "sha256": "52084121b1cf6058b1ce9bfd561bda5e335d93487de09b0c8d9fe1578595f5a2"
+          },
+          {
+            "id": "swdb_atomic_fetch_add_int",
+            "proof_record": "proof.model.swdb_atomic_fetch_add_int.20261015t224218z.94ca2cc8",
+            "sha256": "e33cdce66e1db30882eab0529e0cd782d1f9aa6dedc8da3cb5f73b4273a26724"
+          },
+          {
+            "id": "swdb_atomic_exchange_n_int",
+            "proof_record": "proof.model.swdb_atomic_exchange_n_int.20261015t224419z.3a8083b6",
+            "sha256": "ddd5efd9fb6359a3e66154cb4f58f667bab74cb363c165e3c4159824d39ed12a"
+          },
+          {
+            "id": "swdb_atomic_compare_exchange_n_int",
+            "proof_record": "proof.model.swdb_atomic_compare_exchange_n_int.20261015t224625z.ac8eb10c",
+            "sha256": "f3d0c750fb94e59554f9df8f143e924356c79d876cb6a6f65f0b4bd5f3e69add"
+          },
+          {
+            "id": "swdb_sync_bool_compare_and_swap_int",
+            "proof_record": "proof.model.swdb_sync_bool_compare_and_swap_int.20261015t224841z.d11f1a83",
+            "sha256": "cc1d18a092f9f1303426d7cba5eacc2845f510388047574ca6c4315303dbc3df"
+          },
+          {
+            "id": "swdb_sync_val_compare_and_swap_int",
+            "proof_record": "proof.model.swdb_sync_val_compare_and_swap_int.20261015t225059z.ca628fe1",
+            "sha256": "0e58649bfbbc32cbae8e6801ee08862801e3c6e5eacf11f0b2d40deaf40bfe53"
+          },
+          {
+            "id": "swdb_sync_fetch_and_add_int",
+            "proof_record": "proof.model.swdb_sync_fetch_and_add_int.20261015t225310z.fc8aff72",
+            "sha256": "46750c4204562de1d54585a151a4e3fd853501d5f37df9f9ee99fd9e80336133"
+          },
+          {
+            "id": "swdb_sync_add_and_fetch_int",
+            "proof_record": "proof.model.swdb_sync_add_and_fetch_int.20261015t225515z.5ff33132",
+            "sha256": "090a841979606705ad14a9045236636dadee5fcad7a4804d9c9989c241908630"
+          }
+        ],
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "proof_semantics": {
+          "not_applicable": "No proof-semantics version exists before ticket 27."
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "summaries": []
+      },
+      "qualifications": {},
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/matrix/seed/records/proofs/proof.wp24-bug.candidate-1.20261015t230140z.2924df16.yaml",
+        "sha256": "ec519da2ed288a4aadbae0094b2b9b5f76d3512c0a22e4f90ca9c727207c9760"
+      },
+      "runner_acceptance_errors": [],
+      "settings": {
+        "flags": [
+          "-wp",
+          "-wp-rte",
+          "-wp-cache",
+          "none",
+          "-wp-model",
+          "+real",
+          "-wp-par",
+          "1",
+          "-machdep",
+          "x86_64",
+          "-rte-initialized",
+          "@all",
+          "-wp-no-filter-init",
+          "-machdep",
+          "x86_64",
+          "-wp-prover",
+          "alt-ergo,z3,cvc5",
+          "-wp-timeout",
+          "30",
+          "-wp-par",
+          "1",
+          "-wp-smoke-tests",
+          "-wp-fct=swdb_atomics_unit"
+        ],
+        "hint_count": 0,
+        "machdep": "x86_64",
+        "rss_cap_bytes": 8589934592,
+        "verifier_launched": true
+      },
+      "setup_hashes": {
+        "contract": "1ae96446b58ad6597fd84fce4e7fd9bb812e000f969465cd59c74bdcd7b4aec9",
+        "lowering": "33a9dda117d2e1a556dc18cc7ba9b6edd060c4f1754f6ff5225d415718ffa086",
+        "run_plan": "6a2ee38333aba9b78ea220627676e4b95ca7e713cd4e08826195a0555133fe06",
+        "stdlib_provenance": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "wp_input.c": "8d7444e7e67b453f124cda8b846cd44937d5ebaac8923dc84626beb384dde0a7"
+      },
+      "smoke_open": [],
+      "smoke_valid": 19,
+      "subject": {
+        "candidate": "wp24-bug.candidate-1",
+        "function": "swdb_atomics_unit",
+        "kind": "candidate_proof_unit"
+      },
+      "summary_bindings": [],
+      "verdict": "not_proven"
+    },
+    {
+      "artifact_file_instances": 0,
+      "dependencies": [],
+      "errors": [],
+      "evidence_instances": 9,
+      "expected": "proven",
+      "failure_class": null,
+      "frozen_case_accepted": false,
+      "full_settings_sha256": "2f286335e3c98f7e6ea894dcc7219c5d015093343666aa8ffff4485bb5dd7fa2",
+      "id": "proof.contract.fixture_wp24_summary_maa_const.20261015t230651z.fedbec2c",
+      "independent_acceptance_errors": [
+        "ordinary/smoke inventory empty"
+      ],
+      "initialization_goals": 0,
+      "job": {
+        "adapter": "wp",
+        "batch": "batch.proof.contract.fixture_wp24_summary_maa_const.20261015t230651z.fedbec2c",
+        "batch_load": {
+          "end": 3.506,
+          "start": 3.638
+        },
+        "cpu_seconds": 3.112458,
+        "host": "swdb-fixture-host",
+        "peak_rss_bytes": 114798592,
+        "position": 1,
+        "wall_seconds": 3.06229,
+        "worker_core": "unpinned"
+      },
+      "label": "summary:maa_const",
+      "member_context": null,
+      "ordinary_open": [],
+      "ordinary_valid": 3,
+      "pins": {
+        "baseline_function": {
+          "not_applicable": "A library summary is proven on the entry's own code."
+        },
+        "build_constants": [],
+        "c_lowering": {
+          "id": "maa_const_i32.c",
+          "sha256": "f477b2c43c8b2a9e456069b1ed7380b087cc2183edd5253a203ce87ce8b0bb4f"
+        },
+        "code": {
+          "id": "contract.fixture_wp24_summary_maa_const",
+          "sha256": "4c3e3b76b033cee9def533ee7e5994441e56ac005c41e6c348e52ca2c2b7d4a0"
+        },
+        "contract": {
+          "id": "contract.fixture_wp24_summary_maa_const",
+          "sha256": "4c3e3b76b033cee9def533ee7e5994441e56ac005c41e6c348e52ca2c2b7d4a0"
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "ac4fe5ea50ebb15eddc88e239cb340d9fca41306df41e0cdda8432c9d0d88c5c"
+        },
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "A library summary has no predecessor."
+        },
+        "proof_semantics": {
+          "not_applicable": "No proof-semantics version exists before ticket 27."
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "summaries": []
+      },
+      "qualifications": {},
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/matrix/seed/records/proofs/proof.contract.fixture_wp24_summary_maa_const.20261015t230651z.fedbec2c.yaml",
+        "sha256": "2834ee3077d62f2c90b80d5fc20a18def6c3d02cae60218748f656870813bb0d"
+      },
+      "runner_acceptance_errors": [
+        "actual ordinary/smoke goal inventory is empty",
+        "safe proof lacks all-goal/smoke Valid acceptance"
+      ],
+      "settings": {
+        "flags": [
+          "-wp",
+          "-wp-rte",
+          "-wp-cache",
+          "none",
+          "-wp-model",
+          "+real",
+          "-wp-par",
+          "1",
+          "-machdep",
+          "x86_64",
+          "-rte-initialized",
+          "@all",
+          "-wp-no-filter-init",
+          "-machdep",
+          "x86_64",
+          "-wp-prover",
+          "alt-ergo,z3,cvc5",
+          "-wp-timeout",
+          "30",
+          "-wp-par",
+          "1",
+          "-wp-smoke-tests",
+          "-wp-fct=maa_const_i32"
+        ],
+        "hint_count": 0,
+        "machdep": "x86_64",
+        "rss_cap_bytes": 8589934592,
+        "verifier_launched": true
+      },
+      "setup_hashes": {
+        "contract": "4c3e3b76b033cee9def533ee7e5994441e56ac005c41e6c348e52ca2c2b7d4a0",
+        "lowering": "f477b2c43c8b2a9e456069b1ed7380b087cc2183edd5253a203ce87ce8b0bb4f",
+        "run_plan": "c7b25aa3ee652ccd33a33d89addcfc2bd18e1b403a156288fe1e396e2b359a64",
+        "stdlib_provenance": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "wp_input.c": "94c584e17de5e3d20687b992e240e0223537e70497a85e6f495ac7c885df68b8"
+      },
+      "smoke_open": [],
+      "smoke_valid": 0,
+      "subject": {
+        "id": "contract.fixture_wp24_summary_maa_const",
+        "kind": "library_summary"
+      },
+      "summary_bindings": [],
+      "verdict": "proven"
+    }
+  ],
+  "run_receipts": {
+    "acceptance.log": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/acceptance.log",
+      "sha256": "c37ff8af9a5d4c008eb486a8616d01d15cbb4da549c830e05fa9be865588d746"
+    },
+    "execute.py": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/execute.py",
+      "sha256": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612"
+    },
+    "lane.json": {
+      "data": {
+        "socket_lane": {
+          "aligned_cell_age_s": "",
+          "aligned_to": "no_gapbs_batch_running",
+          "command": [
+            "timeout",
+            "--signal=TERM",
+            "--kill-after=60",
+            "21720",
+            "bash",
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/run.sh"
+          ],
+          "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+          "ended_utc": "2026-10-15T23:06:55Z",
+          "exit_code": 1,
+          "host": "mbit10",
+          "job": "probata-reviewed-0e7f2327-t24-remaining",
+          "lease_generation": 577,
+          "lease_name": "mbit10-evaluation-node0",
+          "load1_at_start": 1.56,
+          "load1_max": 32,
+          "node": 0,
+          "numa_memory_policy": "bind:0",
+          "numactl": "--cpunodebind=0 --membind=0",
+          "preregistration_sha256": null,
+          "started_utc": "2026-10-15T22:27:50Z"
+        }
+      },
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/lane.json",
+      "sha256": "ce67f3ac3bb69b05753f4c5828453e1098035cea6828b4c7eff009143e7ca34d"
+    },
+    "launch.json": {
+      "data": {
+        "command": [
+          "/data1/yanruj/venvs/swdb-test/bin/python",
+          "/data1/yanruj/probata-composed-0e7f2327/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/t24-original-matrix.py",
+          "--expected-commit",
+          "0e7f232762e4555aa9435a3a3622923fad8ee928",
+          "--output",
+          "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/matrix",
+          "--groups",
+          "atomics,maa_summary,dxc_summary,templates,classes,omp,new_array",
+          "--public-timeout-seconds",
+          "1800",
+          "--stop-on-failure"
+        ],
+        "created_utc": "2026-10-15T22:27:50.556425+00:00",
+        "log_name": "acceptance.log",
+        "node": 0,
+        "planned_raw_budget_bytes": 8589934592,
+        "raw_budget_enforcement": "coordinator monitors; not a filesystem quota",
+        "readers": [
+          "root",
+          "ticket24",
+          "ticket27"
+        ],
+        "reviewed_wrapper_reuse": {
+          "execute.py": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612",
+          "watch.py": "4485ae66aa50c65f2b579f84836576aa67b54431978da71cac6eea6a68ecd07c"
+        },
+        "rss_cap_bytes": 8589934592,
+        "rss_scope": "outer watchdog covers worker bootstrap, compiler provenance probes, inner monitor and proof process tree; trusted outer monitor excluded",
+        "source": "/data1/yanruj/probata-composed-0e7f2327",
+        "source_commit": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+        "timeout_seconds": 21600,
+        "workers": 1
+      },
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/launch.json",
+      "sha256": "e4801cb64fbc6394f9eaafae6150020fa8634dd31de686d6f0996113ee197187"
+    },
+    "matrix/matrix.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/matrix/matrix.json",
+      "sha256": "946176dcb5fcf7caa4e0e2e4bed8fe5ada363eaa7d5bb2514e339de914a22c49"
+    },
+    "matrix/source-manifest.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/matrix/source-manifest.json",
+      "sha256": "c73f8f81a7ba139099f141bf341609b43867c3174cc65a98779ff9175a6079fb"
+    },
+    "outer-resources.json": {
+      "data": {
+        "cpu_seconds": 2827.5989280000003,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 849440768,
+        "timed_out": false,
+        "wall_seconds": 2344.2236976362765
+      },
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/outer-resources.json",
+      "sha256": "1756041304060414d08e7d94317d97512c0ec89997a6271d649e70f2fad5902c"
+    },
+    "resources.json": {
+      "data": {
+        "cpu_seconds": 2361.962364,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 798060544,
+        "timed_out": false,
+        "wall_seconds": 2342.3478519115597
+      },
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/resources.json",
+      "sha256": "c07fb1d178278ab66d256c73803f652df46c4e8a57fd5bd74f7046d6ae3cf5fe"
+    },
+    "run.sh": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/run.sh",
+      "sha256": "97f4553ea74d8d275d2024873855bf99f67e454cf4a8ad1910a9b53ad7d082c1"
+    },
+    "source-after.json": {
+      "data": {
+        "commit": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+        "source_unchanged": true,
+        "tracked_changes": ""
+      },
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/source-after.json",
+      "sha256": "53a46be3c357337f05b0ffa45a1ddcedbb313414550758526ba87c2104ea2ad7"
+    },
+    "source-manifest.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining/source-manifest.json",
+      "sha256": "2f4e30d04a99eaddd7cff2361f591ac065491dbe01b52e7025ba82e1c9d06f1d"
+    }
+  },
+  "scope": "current composed-source actual WP matrix snapshot; completion and acceptance separate from integrity",
+  "source_commit": "0e7f232762e4555aa9435a3a3622923fad8ee928"
+}
