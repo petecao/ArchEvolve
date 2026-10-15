@@ -43,7 +43,7 @@ from swdb import artifacts, c_lowering, framac, hint_check, paths, proof_semanti
 from swdb.proof import MODEL_PREFIX, AdapterError, Verdict
 
 NAME = "wp"
-PROVERS = ("alt-ergo", "z3", "cvc5")
+PROVERS = ("z3", "cvc5", "alt-ergo")   # serial portfolio: quick SMT checks before Alt-Ergo fallback
 WHY3_NAMES = {"Alt-Ergo": "alt-ergo", "Z3": "z3", "CVC5": "cvc5"}
 FROZEN = (("-wp-cache", "none"), ("-wp-model", "+real"))
 MACHDEP = ("-machdep", "x86_64")
