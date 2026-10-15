@@ -4,21 +4,22 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Runtime checkpoint: integration `70683774` on `codex/probata-poc-integration`,
-based on `yanrujhou_main` at `150930b4`, pushed and clean on 2026-10-15 07:05 ET.
+Runtime checkpoint: integration `01cc080c` on `codex/probata-poc-integration`,
+based on `yanrujhou_main` at `150930b4`, pushed and clean on 2026-10-15 07:16 ET.
 Includes lowerer 9's integer result normalization, private-vector ownership,
 mandatory `-wp-no-filter-init`, checked `at()` view, named DX100 initialization,
 and conservative typed array-origin refusal. Explicit entry-domain declarations
 and mathematical bindings are staged; metadata alone cannot admit a proof.
-Latest merged binding validation: 36 focused checks pass, with exact raw report
-`/private/tmp/probata-array-bind-merged-20261015.jsonl`.
+Bounded domain planning is integrated with execution and imported-domain stub refusal.
+Latest compact merged validation: 45 checks pass; report
+`/private/tmp/probata-bounded-planner-merged-static-20261015.jsonl`.
 User approval covers scoped implementation, commits, pushes, remote source sync,
 two mbit10 CPU lanes and BFS proof-workspace export through Codex/OpenAI.
 
 | Ticket | Current work | Evidence or next action |
 |---|---|---|
-| 07 | Counted run16 started 06:09 ET, frozen `6acfbe4e` | Fresh processed-frontier/CSR guidance; output `/private/tmp/probata-t07-20261015-run16/`. Latest accepted candidate at 06:55 ET has 5 unit and 20 hint goals open; counted budget 37.62 minutes. Later reverted edit used 41.48 minutes. Run remains unproven. Run 15 ended with 1 unit and 24 hint goals; its offline audit found missing induction information and no concrete false hint. |
-| 24 | Focused model-result fix integrated | Four public positive callers and missing-input negative pass; combined-source full constructs await node 1 after pointer policy finalizes. |
+| 07 | Run 16 ended unproven at 07:13 ET, frozen `6acfbe4e` | 52.55 counted minutes, excluding 694.6 seconds of slot waiting; 26 open goals (4 unit and 22 hint), 42 hints, no final replay. Offline audit pending; no blind run 17 started. Output `/private/tmp/probata-t07-20261015-run16/`. |
+| 24 | Focused model-result fix integrated | Four public positive callers and missing-input negative pass; remote native checkpoint passes 132 checks in 69.36 seconds at `aa7be61c`; combined-source full constructs await final origin policy. |
 | 25 | Nine focused private-vector ownership controls pass across two reports | Safe: 122/122 goals, stale alias sole liveness failure,7 protocol refusals. General member/model and lifetime acceptance remains open; opaque model buffer arithmetic is now refused pending exact field/ownership domains. The earlier checked-at positive is checkpoint evidence, not current-origin acceptance. |
 | 27 | Safe three-read initializedness positive/negative pass | Mandatory no-filter policy gives 100 ordinary goals plus 31 smoke checks for safe caller; missing initialization leaves the intended obligation open. Finite specialization was removed as unnecessary. Current-origin, capacity and remote acceptance remain pending. |
 | 36 | Pointer formation and typed-origin audit | Eight public origin proof controls and eight lowering controls pass. Conservative origin gate is integrated; opaque inputs/model fields refuse. Explicit entry-window WP admission and bounded domain planning are underway. Allocation-block bounds cannot establish 2D row provenance. |
@@ -36,11 +37,18 @@ recompute the ticket frontier and use the two leased remote socket lanes.
 
 ## Host coordination
 
-Live preflight at 2026-10-15 07:04 ET found both socket leases and the legacy lease released,
-load 0.02/0.06/0.04, about 117 GiB available RAM, 21 GiB free on `/data1` and 97 GiB on
-`/data`. The process check found no active proof jobs. Evaluation source remains clean
-detached `dd975e72`. The wrapper matched its tracked remote blob at the earlier
-06:05 ET check; fetch and compare again immediately before dispatch. These are dispatch observations, not permanent availability claims. New output
+Live preflight at 2026-10-15 07:14 ET found both socket leases and the legacy lease released,
+load 0.11/0.29/0.19, 21 GiB free on `/data1` and 97 GiB on `/data`. The wrapper was fetched
+and matched blob `261e7e04a64474020c6d2fd288bee9bab8dd1f5d`. Frozen native replay
+`aa7be61c` then passed 132 checks in 69.36 seconds on node 0, generation 550, ending at 07:16 ET.
+Its lease is released; node 1 generation 594 and legacy generation 77 remain released in that snapshot.
+The clean detached evaluation checkout remains at `aa7be61c`; source must stay frozen
+during any later job. The original replay used GNU headers and failed 21 of 133 checks;
+matching libc++ 22.1.8 plus GCC 13 driver wrappers fixes configuration; the corrected
+raw-endpoint expectation accounts for the remaining test. The corrected native shard
+excludes the accidentally selected CBMC query. See ticket 24's native evidence;
+this does not establish final proof acceptance. These are dispatch observations,
+not permanent availability claims. New output
 uses `/data/yanruj/EvolveSWDB_runs/`; source uses Git worktrees under `/data1/yanruj/`.
 The current lane wrapper is in `/data1/yanruj/Memacc-evolveswdb-lane`, verified against
 `origin/yanrujhou_main`. The older `/data1/yanruj/Memacc` checkout lacks it and has unrelated
@@ -69,9 +77,11 @@ not substitute for reading incremental run artifacts.
 ## Validation and progress reporting
 
 The 2026-10-15 07:00 ET report covered every active ticket and both lanes; next report
-is due around 07:30 ET. Run 15 ended not proven after 52.75 counted minutes with1unit
-and 24 hint obligations open; no final proof replay ran. Run 16 is active on fresh
-hints. Both remote lanes await the final combined source and method checkpoint.
+is due around 07:30 ET. Run 15 ended not proven after 52.75 counted minutes with 1 unit
+and 24 hint obligations open; no final proof replay ran. Run 16 also ended unproven
+with 4 unit and 22 hint goals; its offline audit is underway.
+Both remote lanes await the final combined proof source and method checkpoint;
+The 132-case native checkpoint has passed separately.
 
 The early structural run disabled clang as well as WP/CBMC; four formal-frame assertions
 therefore failed for the wrong tool configuration. One isolated failure passes with clang

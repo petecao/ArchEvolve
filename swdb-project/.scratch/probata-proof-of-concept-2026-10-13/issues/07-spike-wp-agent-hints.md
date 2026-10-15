@@ -1,7 +1,7 @@
 # 07 — Spike (c): WP with agent hints
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-15 ET (run 15 not proven; 1 unit and 24 hint obligations remain; induction gap recorded); 2026-10-14 22:50 ET (continuation 3: runs 10-12 fail, verdict fail so far, effort paused); 2026-10-14 17:10 ET (continuation 2: runs 7-9 fail, verdict fail so far); 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-15 ET (run 16 not proven; 4 unit and 22 hint obligations remain; final offline audit recorded); 2026-10-14 22:50 ET (continuation 3: runs 10-12 fail, verdict fail so far, effort paused); 2026-10-14 17:10 ET (continuation 2: runs 7-9 fail, verdict fail so far); 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 03
@@ -890,3 +890,36 @@ Frozen source worktree `/private/tmp/probata-t07-run16`; run output destination
 `/private/tmp/probata-t07-20261015-run16/` on the Mac data volume, planned2GiB budget
 and at least50GiB remaining. Readers:ticket07, ticket09 and implementation coordinator.
 The existing30-minute heartbeat remains active. This preparation is no proof result.
+
+
+**Run 16 ended 07:13:28 ET, not proven.** One Codex call, 21 tool calls and
+11 WP attempts used **52.55 counted minutes**, excluding 694.6 seconds of verifier
+slot waiting. Final best `attempt-r1f` has 42 hints, 257 goals and 26 open goals:
+**4 unit and 22 hint obligations**. The four unit obligations are two seeded scalar
+loop-frame goals and two gather call preconditions. All postconditions passing under
+unproved cuts would not establish a proof. `summary.final` is null; no full proof,
+smoke replay or negative-control success is claimed.
+
+Compact evidence: [counted-16](../evidence/t07-counted-16.json). The full final
+best-file SHA256 is `65d2df5df0de00c519ad65ed96d95f3a2774433816484537669444b0f098501d`;
+the evidence separately labels the canonical hint-record digest. The frozen source
+worktree is clean at `6acfbe4e7552d1763526e1da46dd2ef7d8041d28`, and its actual
+harness/stand-in bytes match the launch metadata. This last observation was made
+after completion; a separate preflight source-manifest file did not exist for run 16.
+
+**Offline audit and next method.** Final-snapshot audit artifacts are retained in
+`/private/tmp/probata-t07-run16-audit/`. No concretely false hint was found among
+1,383 finite bookkeeping cases, 6,140 cutpoints, 524 partial chunks and 110 rank
+states. These mathematical examples do not establish C execution, pointer safety,
+device semantics or a universal theorem. An unreachable abstract exit state still
+satisfies the actual chunk bounds, frontier preservation and bookkeeping predicates
+while failing final reachability; actual processing visits the missing vertex.
+The proof still lacks induction relating visitation to processed work.
+
+A distinct follow-up must carry the clamped processed-frontier prefix and the
+consumed CSR-pair prefix. Range issuance advances its continuation registers before
+CPU consumption, so capture the pre-issue cursor and refine through completed
+batches and positions already consumed. The scalar fallback needs the equivalent
+row/edge prefix. No previous hints, finite counterstates, tests or evaluator code
+may enter the provider workspace. No unchanged retry or run 17 has started.
+Ticket 07 remains claimed within the shared two-week box.

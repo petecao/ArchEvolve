@@ -440,3 +440,17 @@ and replay their actual proofs. Ticket 24 remains claimed.
 ### 2026-10-15: shared entry-window binding
 
 The staged `array_domains.bind` API now supplies canonical parameter-bound mathematical trees and entry-frozen ACSL rendering; `interval` conservatively evaluates all bounded scalar draws with arbitrary-precision arithmetic. After integrating `a728b529`, 19 public declaration controls and 10 mathematical controls pass (29 total, 7.92 seconds). This is a prerequisite for operation/call admission, not acceptance: proof jobs remain closed to declaration-only metadata. Evidence: `../evidence/t24-array-domain-binding-20261015.json`.
+
+### 2026-10-15 07:16 ET: mbit10 native checkpoint
+
+Frozen replay `aa7be61c` passes all 132 selected compiler/native/domain controls in
+69.36 seconds on node 0, lease generation 550; the lease is released. Matching
+LLVM/libc++ 22.1.8 and explicit GCC 13 driver selection are recorded. The original
+checkpoint `2b4198db` gave 112 passes and 21 failures: 14 driver-selection diagnostics,
+6 standard-library/model mismatches and 1 stale raw-endpoint expectation. That
+expectation was independently reproduced locally and updated to require the C++
+null-plus-zero normalization. The original native shard also selected one CBMC
+footprint query; the corrected shard excludes it. Raw outputs of 11 MiB and 17 MiB
+remain on mbit10; only compact counts, configuration, lane metadata and hashes are
+transferred in `../evidence/t24-native-mbit10-20261015.json`. This is native/compiler
+evidence, not final WP acceptance or a reason to resolve ticket 24.
