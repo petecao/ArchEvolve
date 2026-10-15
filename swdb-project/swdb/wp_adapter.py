@@ -277,6 +277,7 @@ class WpAdapter:
                         ("nested_view_source", nested_view.path), ("nested_entry_reads_certificate", certificate_path)]
                     context["pointer_source_plan"] = {"source": str(nested_view.path), "kwargs": effective_kwargs}
             if (unit.get("array_domains") or (lowering.pointer_bounds or {}).get("owner") or
+                    (lowering.pointer_bounds or {}).get("member_windows") or
                     any(row.get("kind") in {"call", "producer", "import", "standard_range_call"} for row in lowering.pointer_bounds.get("sites", []))):
                 context.setdefault("pointer_source_plan", {"source": str(source), "kwargs": source_kwargs})
         except (helper_windows.Refused, nested_entry_reads.Refused) as exc:
