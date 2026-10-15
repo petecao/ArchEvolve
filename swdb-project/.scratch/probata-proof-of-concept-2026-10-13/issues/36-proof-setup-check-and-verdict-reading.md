@@ -668,3 +668,11 @@ controls. Both reserved node-0 leases released; the frozen primary remote source
 and concurrent node-1 job were untouched. These results do not upgrade historical
 proof pins or close ticket 36.
 [Compact evidence](../evidence/stdlib-parser-context-20261015.json).
+
+
+Merged runtime `77624eec` preserves the checked owner-call and standard-copy call
+sets together, as well as all checker/lowerer source identities. Fourteen focused
+combined compiler/stand-in controls pass (100.94s, peak450,658,304bytes under8GiB),
+including both positive source views, declaration/return fault refusals, exact
+callee/request coverage and worker failures. This is composition evidence only;
+new actual caller proofs remain coordinator-owned. Ticket36 stays claimed.

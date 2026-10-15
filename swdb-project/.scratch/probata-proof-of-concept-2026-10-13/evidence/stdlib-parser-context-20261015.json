@@ -179,5 +179,25 @@
     "raw_outputs": "Retained on mbit10; only compact metadata transferred.",
     "active_checkout": "Frozen /data1/yanruj/probata-t27 at 5c2a untouched. Tests use isolated Git clone."
   },
-  "acceptance_boundary": "Real Clang and parser with explicit Frama/Why3 stand-ins. Existing historical proof identities are not upgraded. Exact substituted-call requests are a separate composed t41 checkpoint; standalone 7e refuses nonempty requests."
+  "acceptance_boundary": "Real Clang and parser with explicit Frama/Why3 stand-ins. Existing historical proof identities are not upgraded. Exact substituted-call requests are a separate composed t41 checkpoint; standalone 7e refuses nonempty requests.",
+  "composition": {
+    "source_commit": "77624eec3bdae42f5a137e8c6c5a131faf38083b",
+    "tests": 14,
+    "passed": 14,
+    "pytest_seconds": 100.94,
+    "resources": {
+      "exit_code": 0,
+      "peak_rss_bytes": 450658304,
+      "out_of_memory": false,
+      "timed_out": false,
+      "wall_seconds": 101.30968262499664,
+      "cpu_seconds": 99.449658
+    },
+    "artifacts": {
+      "/private/tmp/probata-merged-parser-caller-components.xml": "c0ff8b1670a303898cd49702fc146866f8dca4d286efbb364dd18acb715dae1a",
+      "/private/tmp/probata-merged-parser-caller-components.log": "96291cd45ac660040d8760f1a09c1cd93d8cd9c968e3cb1e813b3e18ae8e1c66",
+      "/private/tmp/probata-merged-parser-caller-components.resources.json": "3674d6778d62e66b60a3f7ecc581ecb7609cbf4fc89549363df923e3f04250e0"
+    },
+    "scope": "Compiler and explicit verifier stand-ins: caller roots/alias identity, exact binding positives/refusals/request coverage, owner pipeline and nested initializer preparation, renderer storage/return faults, isolated worker failures. No actual solver."
+  }
 }
