@@ -50,14 +50,22 @@ class Case:
         return self.records.swdb(*args)
 
     def semantics(self, name, sequence):
-        """A proof-semantics version file in library/proof_semantics/ (ticket 27 writes the real ones)."""
+        """A proof-semantics version file in library/proof_semantics/ (ticket 27 writes the real ones).
+
+        Since ticket 20 the folder holds typed-library entries of kind proof_semantics (ID prefix `semantics.`,
+        formal_frame, version, rules; no `status`); the level rule's version line still reads `target` and
+        `sequence` (the same fixture form as tests/test_level_rule.py since 9280a24c)."""
         folder = self.library / "proof_semantics"
         folder.mkdir(exist_ok=True)
         path = folder / f"{name}.yaml"
-        path.write_text(yaml.safe_dump({"id": f"proof_semantics.{name}", "kind": "proof_semantics",
-                                        "target": "dx100", "sequence": sequence, "status": "draft",
-                                        "evidence_kind": "contract_fixture"}))
-        return {"id": f"proof_semantics.{name}", "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
+        ident = f"semantics.{name}"
+        path.write_text(yaml.safe_dump({
+            "id": ident, "kind": "proof_semantics", "formal_frame": 1, "version": f"{sequence}.0",
+            "target": "dx100", "sequence": sequence,
+            "provenance": {"origin": {"intrinsic_specification": "fixture-12"}}, "clauses": [],
+            "rules": [{"id": "wait", "statement": f"Fixture proof-semantics version {name}: a read waits for its command.",
+                       "assumed": {"owner": "fixture"}}]}, sort_keys=False))
+        return {"id": ident, "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
 
     def prove(self, candidate=CANDIDATE, **pins):
         script = self.root / "script.yaml"
