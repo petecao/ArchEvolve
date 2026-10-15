@@ -1,4 +1,4 @@
-"""Checked once-only nested int reads in pure returns (2026-10-15 ET).
+"""Checked once-only nested int reads in pure statements (2026-10-15 ET).
 
 Only source sequencing is changed. The ordinary origin checker and WP RTE must
 prove the inner read before the captured index can be used by the outer read.
@@ -95,7 +95,7 @@ class _Plan:
         self.reserved = {s.decode("ascii") for s in reserved}
         self.edits, self.captures, self.targets = [], [], {}
         def scan(node, parent=None):
-            if node.get("kind") == "ReturnStmt":
+            if node.get("kind") in {"ReturnStmt", "DeclStmt"}:
                 nested = []
                 for outer in ast._walk(node):
                     if outer.get("kind") != "ArraySubscriptExpr":
@@ -108,7 +108,7 @@ class _Plan:
                         nested.append((outer, index))
                 if nested:
                     if not parent or parent.get("kind") != "CompoundStmt":
-                        raise Refused("nested read return must be an ordinary statement in braces")
+                        raise Refused("nested read must be an ordinary statement in braces")
                     self.capture_return(node, nested)
                 return
             for child in ast._children(node):
@@ -139,7 +139,17 @@ class _Plan:
         return parameter["name"]
 
     def capture_return(self, statement, nested):
+        declaration = statement.get("kind") == "DeclStmt"
+        if declaration:
+            declarations = ast._children(statement)
+            if (len(declarations) != 1 or declarations[0].get("kind") != "VarDecl" or
+                    declarations[0].get("type", {}).get("qualType") != "int" or
+                    len(ast._children(declarations[0])) != 1 or declarations[0].get("storageClass") or
+                    declarations[0].get("tls") or declarations[0].get("constexpr")):
+                raise Refused("nested initializer needs one automatic plain int declaration")
         allowed = {"ReturnStmt", "ParenExpr", "ImplicitCastExpr", "ArraySubscriptExpr", "DeclRefExpr", "IntegerLiteral", "BinaryOperator", "UnaryOperator"}
+        if declaration:
+            allowed |= {"DeclStmt", "VarDecl"}
         for node in ast._walk(statement):
             kind = node.get("kind")
             if kind not in allowed or "volatile" in node.get("type", {}).get("qualType", ""):
@@ -157,10 +167,11 @@ class _Plan:
                 if child.get("type", {}).get("qualType") != "bool" or node.get("type", {}).get("qualType") != "int":
                     raise Refused("nested return cannot transport narrowing integer conversions")
         begin, end = ast._span(statement, self.source)
-        suffix = re.match(rb'\s*;', self.raw[end:])
-        if not suffix:
-            raise Refused("nested return terminator is not explicit")
-        end += suffix.end()
+        if not declaration or self.raw[end-1:end] != b';':
+            suffix = re.match(rb'\s*;', self.raw[end:])
+            if not suffix:
+                raise Refused("nested statement terminator is not explicit")
+            end += suffix.end()
         replacements, rows = [], []
         for outer, inner in nested:
             outer_root = self.parameter(ast._children(outer)[0])
@@ -189,12 +200,16 @@ class _Plan:
         for ib, ie, name in sorted(replacements, reverse=True):
             text = text[:ib-begin] + name.encode() + text[ie-begin:]
         declarations = [f'int {row["name"]} = ' + self.raw[ast._span(inner, self.source)[0]:ast._span(inner, self.source)[1]].decode() + ';' for inner, row in rows]
-        replacement = '{ ' + ' '.join(declarations) + ' ' + text.decode() + ' }'
+        replacement = ' '.join(declarations) + ' ' + text.decode()
+        if not declaration:
+            replacement = '{ ' + replacement + ' }'
         replacement += "\n" * max(0, self.raw[begin:end].count(b"\n") - replacement.count("\n"))
         self.edits.append({"begin": begin, "end": end, "text": replacement})
         self.targets[statement["id"]] = rows
 
     def original_offset(self, offset):
+        if offset in self.declaration_offsets:
+            return self.declaration_offsets[offset]
         shift = 0
         for edit in self.edits:
             if offset < edit["view_begin"]:
@@ -224,6 +239,7 @@ class _Plan:
         if headers(ast._dependencies(path, self.tool, self.includes, self.defines), Path(path).resolve()) != original_headers:
             raise Refused("nested view changed header resolution")
         consumed = []
+        self.declaration_offsets = {}
         def match(left, right, captures=None):
             captures = captures or {}
             if left.get("id") in captures:
@@ -251,6 +267,17 @@ class _Plan:
                     match(inner, init)
                     bindings[inner["id"]] = decl["id"]
                     consumed.append(row)
+                if left.get("kind") == "DeclStmt":
+                    original, = ast._children(left)
+                    rewritten = ast._children(statements[-1])
+                    if len(rewritten) != 1 or ast._signature(original) != ast._signature(rewritten[0]):
+                        raise Refused("nested initializer changed its original local declaration")
+                    before, after = original.get("loc", {}).get("offset"), rewritten[0].get("loc", {}).get("offset")
+                    if (not isinstance(before, int) or not isinstance(after, int) or
+                            rewritten[0].get("tls") or rewritten[0].get("constexpr") or
+                            any(n.get("kind", "").endswith("Attr") for n in ast._children(rewritten[0]))):
+                        raise Refused("nested initializer declaration has an untracked location or storage policy")
+                    self.declaration_offsets[after] = before
                 # Bypass target recognition only for this return, retaining all
                 # inner read substitutions and all other source operations.
                 if ast._signature(left) != ast._signature(statements[-1]):
@@ -259,6 +286,21 @@ class _Plan:
                     match(a, b, bindings)
                 if len(ast._children(left)) != len(ast._children(statements[-1])):
                     raise Refused("nested return expression count drifted")
+                return
+            if left.get("kind") == right.get("kind") == "CompoundStmt":
+                cursor = 0
+                statements = ast._children(right)
+                for original in ast._children(left):
+                    width = (len(self.targets[original["id"]]) + 1
+                             if original.get("kind") == "DeclStmt" and original.get("id") in self.targets else 1)
+                    if cursor + width > len(statements):
+                        raise Refused("nested initializer lost an original sibling statement")
+                    rewritten = ({"kind": "CompoundStmt", "inner": statements[cursor:cursor+width]}
+                                 if width > 1 else statements[cursor])
+                    match(original, rewritten, captures)
+                    cursor += width
+                if cursor != len(statements):
+                    raise Refused("nested initializer added an unchecked sibling statement")
                 return
             if ast._signature(left) != ast._signature(right) or len(ast._children(left)) != len(ast._children(right)):
                 raise Refused("nested view changed an original executable operation")
