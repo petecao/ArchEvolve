@@ -17,9 +17,13 @@ void maa_alu_scalar(int src_tile, int src_reg, int dst_tile, int op, int cond_ti
 void maa_indirect_store_vector(int *data, int idx_tile, int src_tile, int cond_tile, int dst_tile);
 int swdb_dx_in_footprint(int tile, const int *addr);
 
-// tile t = q[0 .. n) (registers 0, 1, 2: begin, end, stride 1); the stream load stays uncovered. A macro, not a
-// helper function, so WP sees one unit with no uncontracted callee (CBMC sees the same statements).
-#define DXF_LOAD(q, n, t) maa_const(0, 0); maa_const(n, 1); maa_const(1, 2); maa_stream_load(q, 0, 1, 2, t, -1)
+// tile t = q[0 .. n) (registers 0, 1, 2: begin, end, stride 1); the stream load stays uncovered.
+void dxf_load(int *q, int n, int t) {
+  maa_const(0, 0);
+  maa_const(n, 1);
+  maa_const(1, 2);
+  maa_stream_load(q, 0, 1, 2, t, -1);
+}
 
 // Three tile-pointer reads, each after its covering wait (SWDB_EARLY_READ_<N> moves read N before it).
 int dxf_three_reads(int *q, int *base, int n) {
@@ -29,7 +33,7 @@ int dxf_three_reads(int *q, int *base, int n) {
   int a = 0;
   int b = 0;
   int c = 0;
-  DXF_LOAD(q, n, 0);
+  dxf_load(q, n, 0);
 #ifdef SWDB_EARLY_READ_1
   a = t0[0];
 #endif
@@ -58,7 +62,7 @@ int dxf_three_reads(int *q, int *base, int n) {
 
 // get_tile_size after (or, with SWDB_EARLY_SIZE, before) the covering wait.
 int dxf_size(int *q, int n) {
-  DXF_LOAD(q, n, 0);
+  dxf_load(q, n, 0);
 #ifndef SWDB_EARLY_SIZE
   wait_ready(0);
 #endif
@@ -70,7 +74,7 @@ int dxf_size(int *q, int n) {
 // A CPU read of a tile an uncovered gather only reads is no hazard; a CPU write (SWDB_CPU_WRITE) is.
 int dxf_cpu_write(int *q, int *base, int n) {
   int *t0 = get_cacheable_tile_pointer(0);
-  DXF_LOAD(q, n, 0);
+  dxf_load(q, n, 0);
   wait_ready(0);
   maa_indirect_load(base, 0, 1, -1);
   int a = t0[0];
@@ -84,9 +88,9 @@ int dxf_cpu_write(int *q, int *base, int n) {
 // A wait on a store's source tile covers the store and its result tile (old values).
 int dxf_store_source_wait(int *q, int *p, int n) {
   int *t5 = get_cacheable_tile_pointer(5);
-  DXF_LOAD(q, n, 0);
+  dxf_load(q, n, 0);
   wait_ready(0);
-  DXF_LOAD(q, n, 3);
+  dxf_load(q, n, 3);
   wait_ready(3);
   int old0 = p[q[0]];
   maa_indirect_store_vector(p, 0, 3, -1, 5);
@@ -98,7 +102,7 @@ int dxf_store_source_wait(int *q, int *p, int n) {
 int dxf_transitive(int *q, int *base, int n) {
   int *t0 = get_cacheable_tile_pointer(0);
   int *t1 = get_cacheable_tile_pointer(1);
-  DXF_LOAD(q, n, 0);
+  dxf_load(q, n, 0);
   maa_indirect_load(base, 0, 1, -1);
   wait_ready(1);
   return t0[0] == q[0] && t1[0] == base[q[0]];
@@ -108,9 +112,9 @@ int dxf_transitive(int *q, int *base, int n) {
 // role, condition included: the store (tile 4 is its condition) and the ALU (tile 4 is its destination).
 int dxf_stall_condition(int *q, int *p, int *base, int n) {
   int *t5 = get_cacheable_tile_pointer(5);
-  DXF_LOAD(q, n, 0);
+  dxf_load(q, n, 0);
   wait_ready(0);
-  DXF_LOAD(q, n, 3);
+  dxf_load(q, n, 3);
   wait_ready(3);
   maa_const(5, 6);
   int old0 = p[q[0]];
@@ -125,7 +129,7 @@ int dxf_stall_condition(int *q, int *p, int *base, int n) {
 // Writing a constant into a register first covers every uncovered command naming it (the device holds it).
 int dxf_register_write(int *q, int n) {
   int *t0 = get_cacheable_tile_pointer(0);
-  DXF_LOAD(q, n, 0);
+  dxf_load(q, n, 0);
   maa_const(7, 0);
   return t0[0] == q[0];
 }
@@ -134,7 +138,7 @@ int dxf_register_write(int *q, int n) {
 // tiles, so reading tile 1 after it is refuted.
 int dxf_range_exception(int *q, int *offs, int n) {
   int *t1 = get_cacheable_tile_pointer(1);
-  DXF_LOAD(q, n, 0);
+  dxf_load(q, n, 0);
   wait_ready(0);
   maa_indirect_load(offs, 0, 1, -1);
   maa_indirect_load(offs + 1, 0, 2, -1);
@@ -148,9 +152,9 @@ int dxf_range_exception(int *q, int *offs, int n) {
 // A wait on a tile the store names only as its condition does not cover the store: reading its result is refuted.
 int dxf_condition_wait(int *q, int *p, int n) {
   int *t5 = get_cacheable_tile_pointer(5);
-  DXF_LOAD(q, n, 0);
+  dxf_load(q, n, 0);
   wait_ready(0);
-  DXF_LOAD(q, n, 3);
+  dxf_load(q, n, 3);
   wait_ready(3);
   maa_const(5, 6);
   int old0 = p[q[0]];
@@ -163,7 +167,7 @@ int dxf_condition_wait(int *q, int *p, int n) {
 // A wait on an unrelated tile covers nothing: reading tile 0 after it is refuted.
 int dxf_unrelated_wait(int *q, int n) {
   int *t0 = get_cacheable_tile_pointer(0);
-  DXF_LOAD(q, n, 0);
+  dxf_load(q, n, 0);
   wait_ready(3);
   return t0[0] == q[0];
 }
@@ -171,7 +175,7 @@ int dxf_unrelated_wait(int *q, int n) {
 // Values at issue: a stream load, a gather and a range loop, read after the covering wait.
 int dxf_value_stream(int *q, int n) {
   int *t0 = get_cacheable_tile_pointer(0);
-  DXF_LOAD(q, n, 0);
+  dxf_load(q, n, 0);
   wait_ready(0);
 #ifdef SWDB_WRONG_VALUE
   return t0[n - 1] != q[n - 1];
@@ -182,7 +186,7 @@ int dxf_value_stream(int *q, int n) {
 
 int dxf_value_gather(int *q, int *base, int n) {
   int *t1 = get_cacheable_tile_pointer(1);
-  DXF_LOAD(q, n, 0);
+  dxf_load(q, n, 0);
   maa_indirect_load(base, 0, 1, -1);
   wait_ready(1);
 #ifdef SWDB_WRONG_VALUE
@@ -196,7 +200,7 @@ int dxf_value_gather(int *q, int *base, int n) {
 int dxf_value_range(int *q, int *offs, int n) {
   int *t6 = get_cacheable_tile_pointer(6);
   int *t7 = get_cacheable_tile_pointer(7);
-  DXF_LOAD(q, n, 0);
+  dxf_load(q, n, 0);
   wait_ready(0);
   maa_indirect_load(offs, 0, 1, -1);
   maa_indirect_load(offs + 1, 0, 2, -1);
@@ -216,7 +220,7 @@ int dxf_value_range(int *q, int *offs, int n) {
 
 // The footprint of an uncovered gather: base + each index in its index tile (SWDB_OUTSIDE: an address past them).
 int dxf_footprint(int *q, int *base, int n) {
-  DXF_LOAD(q, n, 0);
+  dxf_load(q, n, 0);
   wait_ready(0);
   maa_indirect_load(base, 0, 1, -1);
 #ifdef SWDB_OUTSIDE
