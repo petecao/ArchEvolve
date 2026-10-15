@@ -40,7 +40,7 @@ import subprocess
 from dataclasses import replace
 from pathlib import Path
 
-from swdb import artifacts, c_lowering, cpu_memory_admission, framac, hint_check, paths, proof_semantics, proof_setup, rss_watchdog, std_models, terminal_release, vector_ownership, vocab
+from swdb import artifacts, c_lowering, cpu_memory_admission, framac, hint_check, paths, proof_semantics, proof_setup, rss_watchdog, standard_model_view, std_models, terminal_release, vector_ownership, vocab
 from swdb.proof import MODEL_PREFIX, AdapterError, Verdict
 
 NAME = "wp"
@@ -107,6 +107,29 @@ class WpAdapter:
             if re.search(r"\b(?:allocates|frees)\b|\\(?:fresh|freeable)\b", text):
                 return self._not_proven("unsupported_construct",
                     "WP 33.0 does not model allocation lifetime; this C model needs allocates/frees support", context)
+            if job.unit.function == "std_vector_int_at":
+                try:
+                    view = standard_model_view.wp_view(job.unit.function, text, wp_dir)
+                    standard_model_view.check_view(job.unit.function, view, wp_dir)
+                except standard_model_view.Refused as exc:
+                    return self._not_proven("unsupported_construct", str(exc), context)
+                original = wp_dir / "standard_model_original.c"
+                original.write_text("\n".join([*c_lowering.HEADERS, text]) + "\n")
+                certificate = wp_dir / "standard_model_view.json"
+                certificate_text = json.dumps(view.certificate, indent=2) + "\n"
+                certificate.write_text(certificate_text)
+                context["standard_model_view"] = {"view": view, "original_path": original,
+                    "original_text": original.read_text(), "certificate_path": certificate,
+                    "certificate_text": certificate_text}
+                context["pins"].update(view.pins)
+                context.setdefault("assumed", []).append({"kind": "trusted_tool",
+                    "reference": standard_model_view.identity(),
+                    "sentence": "The exact audited pure defensive-at abort guard is omitted only in the WP view; "
+                                "the unchanged contract must prove its negation as at_guard_false. "
+                                "The original/native/CBMC model and the input premises are unchanged."})
+                context["reports"] += [("standard_model_original", original),
+                                       ("standard_model_view_certificate", certificate)]
+                text = view.text
             input_path = wp_dir / "wp_input.c"
             context["wp_expected_text"] = "\n".join([*c_lowering.HEADERS, text]) + "\n"
             input_path.write_text(context["wp_expected_text"])
@@ -596,6 +619,18 @@ class WpAdapter:
                 "frame_evidence": "structural relational lowering; not a WP goal",
                 "original_contract_sha256": view.certificate["original_contract_sha256"],
                 "view_contract_sha256": view.certificate["view_contract_sha256"]}
+        model_view = context.get("standard_model_view")
+        if model_view:
+            view = model_view["view"]
+            try:
+                standard_model_view.check_view(job.unit.function, view, wp_dir)
+            except standard_model_view.Refused as exc:
+                raise AdapterError(f"standard model view prelaunch check: {exc}") from None
+            if any(context["pins"].get(name) != pin for name, pin in view.pins.items()):
+                raise AdapterError("standard model view checker/certificate pins changed before launch")
+            inputs += [(model_view["original_path"], model_view["original_text"]),
+                       (model_view["certificate_path"], model_view["certificate_text"])]
+            context["settings"]["standard_model_view"] = view.certificate
         proof_setup.check_generated(job, self, context, inputs, settings_flags, command=command, scratch=scratch)
         result = rss_watchdog.run(command, log=wp_log, cap_bytes=cap, timeout=wall, cwd=scratch, env=env)
         context["peak"] = result.peak_rss_bytes

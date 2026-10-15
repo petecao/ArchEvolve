@@ -1,9 +1,14 @@
 """Public once-per-member WP contracts; created 2026-10-15 ET (ticket25).
 
-These records prove the actual C model contract/body. Allocation-bearing members require a
-separate checked relation and are deliberately outside this first actual contract-proof batch.
+These records check the original C model contracts. at() uses the separately certified pure
+defensive-guard view; other members use their original bodies. Allocation-bearing members and
+the broader same-array-object provenance domain are outside this contract-proof batch.
 """
+import json
+import os
 import shutil
+import subprocess
+import sys
 
 import pytest
 import yaml
@@ -19,10 +24,8 @@ PAIR = ("ctor_default", "ctor", "copy_ctor", "operator_assign")
 MEMBERS = tuple("std_vector_int_" + name for name in NONALLOCATING) + tuple("std_pair_int_int_" + name for name in PAIR)
 
 
-@pytest.fixture(scope="module")
-def member_subset(tmp_path_factory):
+def _member_seed(root):
     from swdb import c_lowering, std_models
-    root = tmp_path_factory.mktemp("wp-standard-members")
     records = make_records(root)
     copy_record_subset(REPO / "records", records.path, sorted(_library_roots()))
     shutil.copytree(REPO / "library", root / "library")
@@ -34,6 +37,11 @@ def member_subset(tmp_path_factory):
     return Seed(root, {})
 
 
+@pytest.fixture(scope="module")
+def member_subset(tmp_path_factory):
+    return _member_seed(tmp_path_factory.mktemp("wp-standard-members"))
+
+
 @needs_wp
 @pytest.mark.parametrize("member", MEMBERS)
 def test_each_nonallocating_standard_member_satisfies_its_actual_model_contract(member_subset, member):
@@ -42,11 +50,19 @@ def test_each_nonallocating_standard_member_satisfies_its_actual_model_contract(
     assert record["subject"] == {"kind": "c_model", "id": member}
     assert record["evidence_kind"] == "contract_fixture"
     assert record.get("unproven_properties", []) == []
+    if member == "std_vector_int_at":
+        certificate = record["settings"]["standard_model_view"]
+        assert certificate["original_contract_sha256"] == certificate["view_contract_sha256"]
+        assert certificate["input_premises_added"] == []
+        assert certificate["guard_elision_obligation"] == "at_guard_false"
+        assert any("at_guard_false" in goal.get("goal", "") for goal in record["goals"])
+        assert "standard_model_view_check" in record["pins"]
 
 
 @needs_wp
 @pytest.mark.parametrize("override", ["missing", "opposite", "value", "duplicate"])
-def test_the_real_adapter_requires_the_canonical_initialization_filter_switch_before_verifying(member_subset, override):
+def test_the_real_adapter_requires_the_canonical_initialization_filter_switch_before_verifying(tmp_path, override):
+    member_subset = _member_seed(tmp_path)
     method_path = member_subset.root / "library" / "methods" / "wp-tracer-fixture.yaml"
     original = method_path.read_text()
     method = yaml.safe_load(original)
@@ -68,3 +84,39 @@ def test_the_real_adapter_requires_the_canonical_initialization_filter_switch_be
         assert set((member_subset.records / "proofs").glob("*.yaml")) == before
     finally:
         method_path.write_text(original)
+
+
+@needs_wp
+def test_a_changed_at_contract_without_its_bounds_precondition_cannot_use_the_checked_view(tmp_path):
+    seed = _member_seed(tmp_path)
+    runtime = tmp_path / "changed-runtime"
+    for folder in ("swdb", "schemas", "vocab"):
+        shutil.copytree(REPO / folder, runtime / folder, ignore=shutil.ignore_patterns("__pycache__"))
+    models = runtime / "swdb" / "std_models.py"
+    original = models.read_text()
+    start, tail = original.split('    elif member == "at":', 1)
+    at, end = tail.split('    elif member == "data":', 1)
+    assert "_readable(this) && n < this->size" in at
+    at = at.replace("_readable(this) && n < this->size", "_readable(this)")
+    models.write_text(start + '    elif member == "at":' + at + '    elif member == "data":' + end)
+    env = {**os.environ, "SWDB_HOME": str(REPO), "PYTHONPATH": str(runtime)}
+    # This is a prospective, freshly pinned method; stale-method rejection must
+    # not mask the missing original bounds premise at the actual prove seam.
+    refresh = subprocess.run([sys.executable, "-c",
+        "import json; from swdb import c_lowering,proof_setup,std_models; "
+        "print(json.dumps([c_lowering.identity(),proof_setup.identity(),std_models.identity()]))"],
+        cwd=runtime, env=env, capture_output=True, text=True, check=True)
+    lowering, checks, model = json.loads(refresh.stdout)
+    method_path = seed.root / "library" / "methods" / "wp-tracer-fixture.yaml"
+    method = method_version(lowering)
+    method["checks"].update(checks)
+    method["models"].update(std_vector=model, std_pair=model)
+    method_path.write_text(yaml.safe_dump(method, sort_keys=False))
+    result = subprocess.run([sys.executable, "-m", "swdb", "prove", "--records", str(seed.records),
+        "--adapter", "wp", "--runs-dir", str(seed.runs), "--format", "json", "--model", "std_vector_int_at",
+        "--method-version", "method.wp-tracer-fixture"],
+        cwd=runtime, env=env, capture_output=True, text=True, timeout=600)
+    assert result.returncode == 0, result.stderr + result.stdout
+    record = yaml.safe_load((seed.records / json.loads(result.stdout)["path"]).read_text())
+    assert record["verdict"] == "not_proven" and record["failure_class"] == "unsupported_construct", record
+    assert not list(seed.runs.glob("*/wp/frama-c.log"))
