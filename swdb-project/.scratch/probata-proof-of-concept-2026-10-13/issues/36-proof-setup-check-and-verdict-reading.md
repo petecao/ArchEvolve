@@ -318,3 +318,16 @@ acceptance is still pending on the combined source; no generic model-origin waiv
 Final source/view prelaunch controls pass **11/11 in 71.22s**; changed checker-byte method refusal
 passes **1/1 in 10.34s**. Commands/log digests and combined identities are in
 `evidence/wp-entry-windows-20261015.json`.
+
+
+### Independent merge review: private-view annotations — 2026-10-15 ET
+
+The merge review found that Clang's C inventory ignored added ACSL after the pinned allocator
+prefix. A direct replay accepted injected axiomatic, function-precondition and line-style
+precondition annotations before the repair; all three now refuse. The private view admits only
+checked named assertions, its two exact generated loop blocks and its two exact liveness ghost
+effects before the adapter inserts the separately checked source contract. Public fake-verifier
+origin and renderer-tampering controls pass **7/7 in 67.06s**; these are prelaunch controls, not
+actual WP acceptance. Runner collection is entry windows **15**, owner **16**. Evidence:
+`evidence/owner-annotation-merge-review-20261015.json`. Ticket 36 remains claimed, with combined
+safe/stale WP replay pending.
