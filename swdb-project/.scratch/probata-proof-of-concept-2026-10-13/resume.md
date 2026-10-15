@@ -4,7 +4,7 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 15:52 ET. **Implementation is active under the user's ongoing approval.**
+Updated: 2026-10-15 16:01 ET. **Implementation is active under the user's ongoing approval.**
 Integration: `codex/probata-resume-20261015`, based on synchronized
 `yanrujhou_main` at `d94d629b`. Only one remote integration ref is published.
 Production `swdb/` bytes still match the remote runtime freeze `71771f09`.
@@ -16,8 +16,8 @@ production method freeze have not happened.
 
 | Ticket / owner | Verified checkpoint | Active work / next acceptance |
 |---|---|---|
-|07 / `ticket07`|Run20 aborted during baseline before provider work; two resource findings fixed and independently re-reviewed with165 controls|Run21 at `7408be92` completed baseline (254 ordinary,103 open;139 smoke pass), then the CLI refused design-tool approval before any design tool executed. Agent is preserving the aborted run and correcting scoped per-tool approval before a fresh review/freeze/run.|
-|24 / `ticket24`|Original Ring pair at `71771f09`: safe89 ordinary+1smoke Valid; seeded88 ordinary Valid+one ensures timeout+1smoke Valid;25 initialization goals each;zero residual helper calls|Node0 generation570 runs remaining8 original groups. New-array safe:42 ordinary+7smoke Valid,11 initialization goals,198.81s; seeded overrun passed283.45s. Separate out-of-range case is active; negative audit remains pending.|
+|07 / `ticket07`|Run20 aborted during baseline before provider work; two resource findings fixed and independently re-reviewed with165 controls|Run22 active at clean `703ff3d7`, started15:55:16ET after169 review controls and a neutral actual CLI probe passed. Run21 preserves baseline/seeds and refused design tools; no hinted proof. Fresh baseline, provider search, final all-goal/smoke and covering-wait negative remain.|
+|24 / `ticket24`|Original Ring pair at `71771f09`: safe89 ordinary+1smoke Valid; seeded88 ordinary Valid+one ensures timeout+1smoke Valid;25 initialization goals each;zero residual helper calls|Node0 generation570 ended at15:54:36ET after the helper's600s public-command timeout; lane released, zero run-prefix survivors in readback. Runner timeout repair is being validated before fresh dispatch. New-array safe:42 ordinary+7smoke Valid,11 initialization goals,198.81s; seeded overrun not_proven (40 ordinary Valid, invariant/RTE timeouts;4 smoke Valid/3 failed smoke),283.45s. Separate out-of-range case has no completed record and remains unaccepted. Compact safe/seeded provenance audit has zero errors.|
 |27 / `ticket27`|Initial old-source diagnostic retained separately. Current `71771f09` safe profile has4 confirmed passes, including store/wait (90 ordinary+29 smoke Valid); stall-condition source replay is active|Node1 generation602 runs11 safe cases. Negative, capacity and bounded/native profiles remain. No whole-ticket acceptance yet.|
 |36 / no active claim|Mandatory RTE/complete-command checks and post-plan mutation controls integrated.122 focused compiler/scripted controls pass;13 actual-WP cases excluded|Still dependency-gated; no production method freeze or complete setup acceptance claim.|
 
@@ -28,20 +28,21 @@ The old chat's heartbeat remains paused; this chat's30-minute heartbeat is activ
 
 Raw evidence remains in place:
 
-- Aborted Mac run21: `/private/tmp/probata-t07-20261015-run21` (driver28786).
+- Active Mac run22: `/private/tmp/probata-t07-20261015-run22` (driver38318).
+  Aborted Mac run21: `/private/tmp/probata-t07-20261015-run21` (driver28786).
   Aborted run20: `/private/tmp/probata-t07-20261015-run20`.
 - Accepted Ring pair: `/data/yanruj/EvolveSWDB_runs/probata-resume-t24-templates-71771f09`.
-  Active remaining groups: `/data/yanruj/EvolveSWDB_runs/probata-resume-t24-remaining-71771f09`.
+  Interrupted remaining groups: `/data/yanruj/EvolveSWDB_runs/probata-resume-t24-remaining-71771f09`.
 - Current semantics safe profile: `/data/yanruj/EvolveSWDB_runs/probata-resume-t27-safe-71771f09`.
   Old diagnostic: `/data/yanruj/EvolveSWDB_runs/probata-resume-t27-diagnostic-20261015-1512`.
   Its first case passed; the next case was deliberately cancelled before obsolete-source scaling.
 
 Keep both remote source checkouts frozen at `71771f09` while their readers remain.
-Keep the aborted Mac run21 source available for its audit. Host preflight before the new checkout found21GiB free on `/data1`,95GiB
+Keep active Mac run22 at its frozen source, and retain aborted run21 for audit. Host preflight before the new checkout found21GiB free on `/data1`,95GiB
 on `/data`,115GiB available RAM. A separate1.6GiB corrected-DXC source checkout
 now exists at `/data1/yanruj/probata-t24-corrected-20261015`, clean detached
 `94d18974`; no job has launched there. Keep its new raw output on `/data`.
-Both lanes are held by this coordinator. Recheck live before any new dispatch. GPU NVML monitoring reports a
+Node1 remains held by this coordinator; node0 is released pending the next preflight. Recheck live before any new dispatch. GPU NVML monitoring reports a
 driver/library mismatch; these evaluations use CPUs.
 
 A native audit found old DXC seed`+2` concretely satisfies its stand-in contract;
@@ -49,6 +50,12 @@ its old WP timeout is a modular-summary precision control, not a semantic bug.
 Corrected seed`+4` has a C++/C native violation and needs fresh actual acceptance.
 OMP/float negative readers now also accept attributable loop-invariant failures.
 These test/reader changes never relabel immutable `71771f09` proof records.
+
+A dedicated finite native C++/C agreement runner is being implemented for24, using
+ticket22's accepted native subcheck independently of CBMC proof admission. Existing
+32 native witness observations alone are insufficient. The runner will report
+domain/sampling, valid/precondition/UB counts and exact source/tool/output pins; it
+will emit no proof verdict. Original WP acceptance remains separately required.
 
 Next: finish and audit the original allocation safe/seeded/out-of-range records
 before treating that construct group as accepted. [Map](map.md), ticket acceptance text and compact

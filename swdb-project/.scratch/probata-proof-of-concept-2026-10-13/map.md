@@ -5,17 +5,17 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-re
 
 ## Current state (resume here)
 
-Updated: 2026-10-15 15:52 ET. **Active implementation; 32 resolved / 28 ready-for-agent / 3 claimed.**
+Updated: 2026-10-15 16:01 ET. **Active implementation; 32 resolved / 28 ready-for-agent / 3 claimed.**
 Current owners:07,24,27. Integration is `codex/probata-resume-20261015`;
 current evaluation runtime is frozen at `71771f09`. [Live resume](resume.md).
 
 - 24: original Ring safe/seeded pair accepted; allocation safe/seeded passed;
-  separate out-of-range and remaining original construct groups run on node0 generation570.
+  separate out-of-range hit the helper600s timeout. Node0 generation570 is released;
+  runner-only outer-budget repair precedes fresh remaining-group dispatch.
 - 27: current safe profile has4 confirmed passes; remaining safe cases, negatives,
   capacity and bounded/native agreement remain open. Node1 generation602.
-- 07: run21 at `7408be92` stopped after baseline/seeds when the CLI refused
-  design-tool approval. Scoped per-tool approval correction and fresh review/run
-  are in progress. Resource findings pass165 controls. No BFS proof.
+- 07: run22 active at `703ff3d7` after scoped CLI approval repair,169 review
+  controls and neutral actual CLI probe. Run21 is preserved as aborted. No BFS proof.
 - 122 focused integrated compiler/scripted controls pass;13 actual-WP cases excluded.
   Drafts1/2 remain immutable; final production method freeze and held-out work remain gated.
 
