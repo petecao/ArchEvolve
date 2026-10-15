@@ -35,8 +35,24 @@ extension must preserve the original source and use an independently checked vie
 or translation with ordinary validity/init/numeric/lifetime obligations; a false
 freshness/validity premise or dropped lifetime goal is not acceptance.
 
-Smallest next implementation: the pure IfStmt condition placement tracer, followed
-by the std conditional-return branch guard; both at existing public lower/check
-and prove/prelaunch seams. Embedded Ring arrays need a separate source-typed
-subobject/context design. No broad proof batch until concrete compiler refusals
-are repaired and independently reviewed. Ticket24 stays claimed.
+## Closeout boundary
+
+The active pure IfStmt placement slice was implemented at081c67fd, with a needed
+AtomicExpr purity hardening atef41e5f8. Its original OMP compiler tracer went RED
+at condition placement and then GREEN. A separate compiler RED showed that a
+hidden __atomic_fetch_add side effect could be treated as pure; the new explicit
+AtomicExpr refusal closes that admission gap without claiming an actual false
+proof. Exact condition AST membership and purity are checked before an ordinary
+guard is emitted ahead of the if. Later branch-body mutation does not execute
+before that condition read. Init bindings, short circuit, calls, volatile and
+mutating-index conditions remain refused. The original OMP/floats fixtures gain
+only explicit typed a:n metadata matching their intended existing range interface;
+their numeric/validity/initializedness requires and hints are unchanged. This typed
+input qualification is explicit, never inferred from validity.
+
+At the user's closeout steering, no std conditional-return, embedded Ring array,
+new allocator or other frontier implementation was started. Those remain the
+concrete compiler/proof gaps above, not scheduled work or silently passed criteria.
+No new batch verifier or remote job was launched. Finish only the active slice's
+focused compiler/public stand-in review and preserve a resume pointer. Ticket24
+stays claimed; final method review/freeze and whole-ticket acceptance are open.

@@ -60,3 +60,21 @@ def test_atomic_builtin_side_effect_is_not_treated_as_a_pure_condition(tmp_path)
     source='int unit(int *a,int n,int i){if(a[i]>__atomic_fetch_add(&i,1,__ATOMIC_SEQ_CST))return 1;return 0;}'
     with pytest.raises(wp_pointer_bounds.Refused,match='side effects/conditional'):
         checked(tmp_path,source)
+
+
+def test_public_pure_if_condition_reaches_execution_with_fresh_source_checks(tmp_path):
+    import json
+    import yaml
+    from conftest import run_swdb
+    from test_member_windows import public_seed
+    from test_wp_adapter import fake
+    source='int unit(int *a,int n){if(a[0]>=0)return a[0];return a[0];}'
+    records,method=public_seed(tmp_path,source)
+    result=run_swdb('prove','--records',records.path,'--adapter','wp','--method-version',method['id'],
+        '--runs-dir',tmp_path/'runs','--summary','contract.fixture_member','--format','json',env=fake('unknown'))
+    assert result.returncode==0,result.stdout+result.stderr
+    row=yaml.safe_load((records.path/json.loads(result.stdout)['path']).read_text())
+    assert row['failure_class']=='unknown',row
+    assert row['proof_setup_check']['verdict']=='passed'
+    assert len([r for r in row['settings']['pointer_bounds']['sites'] if r.get('kind')=='access'])==3
+    assert '-wp-no-filter-init' in row['settings']['flags']

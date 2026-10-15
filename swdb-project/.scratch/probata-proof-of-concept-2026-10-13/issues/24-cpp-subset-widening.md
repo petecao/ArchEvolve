@@ -681,3 +681,30 @@ source and method identities. The complete per-candidate original construct grou
 and remaining template/member-array/model/lifetime acceptance are still separate
 frontiers. Ticket24 remains **claimed**, with no whole-ticket closure.
 [Scoped original-class evidence](../evidence/t24-member-lifetimes-mac-20261015.json).
+
+
+### Pure condition placement and closeout frontier — 2026-10-15 ET
+
+A compiler-only audit on integration `c6636b0d` identified the remaining original
+construct boundaries before any new solver batch. The original template Ring
+member arrays lack a typed subobject origin; the std combined fixture's conditional
+return needs a path-sensitive read check; OMP and floats lacked explicit typed a:n
+metadata matching their existing n-element range interfaces. New[] terminal-release,
+atomic and fixture-summary shapes already pass compiler admission, but retained
+historical records do not establish all current full-group acceptance. The exact
+matrix/source hashes are in the [frontier audit](../evidence/t24-acceptance-frontier-20261015.md).
+
+Only the already-active pure IfStmt placement slice was implemented before the
+user's closeout steering. A guard immediately before an if now checks an access
+that is independently bound to its pure original condition; later branch effects
+are not confused with precondition evaluation. Init bindings, short circuit, calls,
+volatile reads and mutating indices remain refused. A compiler RED also exposed
+Clang AtomicExpr side effects bypassing the call/mutation blacklist; explicit
+AtomicExpr refusal repairs it. No real-verifier/false-proof claim is made for that
+admission control. OMP/floats metadata is an explicit typed input qualification,
+not a validity-to-origin inference; existing requires, source and hints remain.
+No _Origins or generic call exemption was changed.
+
+No conditional-return, template/member-array or allocator extension was started.
+These are preserved as concrete open gaps for resumption. Ticket24 remains claimed;
+this closeout slice does not close the original construct or full-method acceptance.
