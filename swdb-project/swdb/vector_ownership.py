@@ -136,7 +136,7 @@ def _protocol(node):
     names = [d.get("name", "") for d in (params[0], owner, alias, *([old] if old else []))]
     if any(not re.fullmatch(r"[A-Za-z_]\w*", name) or name.startswith((PREFIX, "SWDB_OWNER_")) for name in names):
         raise Refused("source names overlap generated ownership names")
-    checks, observations = [], []
+    checks, observations, data_reads = [], [], []
 
     def scalar(expr):
         expr = _strip(expr)
@@ -157,6 +157,15 @@ def _protocol(node):
                 checks.append("/*@ assert owner_alias_after_range: 0 < swdb_owner_bound0; */")
                 checks.append("/*@ assert alias_live_after: swdb_owner_alias_live == 1; */")
                 return "*swdb_owner_alias"
+            if op == "*" and _strip(parts[0]).get("kind") == "CXXMemberCallExpr":
+                if _member(parts[0], "data", owner):
+                    raise Refused("immediate owner data read takes no arguments")
+                ordinal = len(data_reads) + 1
+                data_reads.append({"ordinal": ordinal, "begin": model_domains.span(expr)[0],
+                                   "end": model_domains.span(expr)[1]})
+                checks.append(f"/*@ assert owner_data_live_{ordinal}: 0 < swdb_owner_v.size; */")
+                checks.append(f"/*@ assert owner_data_storage_{ordinal}: 0 < swdb_owner_bound1; */")
+                return "swdb_owner_v.data[0]"
             if op in ("+", "-", "!", "~") and _type(expr) == "int":
                 return f"({op}{scalar(parts[0])})"
         if kind == "BinaryOperator" and len(parts) == 2 and _type(expr) == "int" and expr.get("opcode") in \
@@ -190,7 +199,7 @@ def _protocol(node):
     returned = scalar(_children(result)[0])
     return {"parameter": params[0]["name"], "fill": fill, "pushed": pushed, "old": old is not None,
             "return": returned, "checks": checks, "source_names": names,
-            "source_statements": len(statements), "observations": observations}
+            "source_statements": len(statements), "observations": observations, "data_reads": data_reads}
 
 
 def certify_origins(node, *, source, source_sha256, models, anchors, text):

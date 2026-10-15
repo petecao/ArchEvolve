@@ -299,3 +299,19 @@ C-model proofs or general ticket25 acceptance. One local worker, shared2slotlock
 source/HEAD remained frozen. Retained outputs are <5MiB on APFS with69GiB free at preflight.
 Evidence:[t25-qualified-owner-at-actual-20261015.json](../evidence/t25-qualified-owner-at-actual-20261015.json).
 Full selected metadata:/private/tmp/probata-owner-at-actual-3f177e63-audit.json. Status stays claimed.
+
+
+Current-owner data staging — 2026-10-15 ET: the closed two-site grammar permits only an
+immediate scalar *v.data() after its sole growth. Exact outer/inner source spans and persistent
+receiver bind the read to the append producer and current typed allocation. The full data-model
+text/hash and independently parsed pure this->data return are audited; live-prefix and backing
+bounds have separate checked assertions at the actual C read. No source/native body or user
+contract changes. Existing delegated binding requires no shared core hook. Unchecked pointer
+offsets/casts refuse; new current data reads do not revive the initial alias; rehashed weaker
+guards/changed returned root/changed model contract refuse before WP. Final8stand-in controls
+PASS28.69s; existing11owner/at stand-in regressions PASS65.64s before the final exact data-text
+hash guard. Correctly targeted changed-contract RED exposed an unhandled substring extraction,
+not an accepted proof; the exact-content refusal fixes it. Two earlier attempts failed in test
+setup and are excluded from the intended RED evidence. Actual safe/stale data tests are written
+but pending coordinated execution. Status stays claimed; no general model-domain acceptance.
+Evidence:[t25-current-owner-data-staging-20261015.json](../evidence/t25-current-owner-data-staging-20261015.json).

@@ -13,6 +13,7 @@ from pathlib import Path
 from swdb import standard_model_view, std_models
 
 MODEL_SHA256 = "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+DATA_TEXT_SHA256 = "ee4f867911135688f5b76932243b38aaff73a56d85ffeb24229725c7d4ec6f3f"
 ALLOCATOR_SHA256 = "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
 VIEW_PREFIX_SHA256 = "7a0e60d25b448de2a498aa53628e7b2d75c35ca2d8188dae1dafd64c6f70b3f6"
 
@@ -77,10 +78,65 @@ def _at_relation():
             "pins": view.pins, "scope": "closed caller source-to-view relation; no standalone model proof"}
 
 
+def _data_relation():
+    """Audit only the pinned pure data() body; no incoming field domain follows."""
+    from swdb import c_lowering
+    if std_models.identity()["sha256"] != MODEL_SHA256:
+        raise Refused("closed data model needs a new exact-content audit")
+    text = c_lowering.model_text("std_vector_int_data")
+    if text is None or _sha(text) != DATA_TEXT_SHA256:
+        raise Refused("the exact data model contract/body needs a new content audit")
+    with tempfile.TemporaryDirectory(prefix="swdb-owner-data-model-") as directory:
+        path = Path(directory) / "model.c"
+        path.write_text("\n".join([*c_lowering.HEADERS, text])+"\n")
+        result = subprocess.run([*c_lowering.locate().command, "-x", "c", "-std=c11", "-fsyntax-only",
+            "-Xclang", "-ast-dump=json", "-Xclang", "-ast-dump-filter=std_vector_int_data", str(path)],
+            capture_output=True, text=True, timeout=60)
+        if result.returncode:
+            raise Refused("the pinned data model cannot be independently parsed")
+        try:
+            function = json.loads(result.stdout)
+            owner, body = children(function)
+            returned, = children(body)
+            value, = children(returned)
+            value = strip(value)
+            receiver, = children(value)
+        except (ValueError, TypeError):
+            raise Refused("the data model lacks its exact pure-return AST") from None
+    if not (function.get("kind") == "FunctionDecl" and function.get("name") == "std_vector_int_data"
+            and owner.get("kind") == "ParmVarDecl" and owner.get("name") == "this"
+            and body.get("kind") == "CompoundStmt" and returned.get("kind") == "ReturnStmt"
+            and value.get("kind") == "MemberExpr" and value.get("name") == "data" and value.get("isArrow")
+            and (strip(receiver).get("referencedDecl") or {}).get("id") == owner.get("id")):
+        raise Refused("only the exact pure this->data return is admitted")
+    contract = text[text.index("/*@ requires std_vector_int_readable(this);"):text.index("static int *std_vector_int_data")]
+    return {"check": identity(), "model": std_models.identity(), "original_text_sha256": _sha(text),
+            "original_contract_sha256": _sha(contract), "view_contract_sha256": _sha(contract),
+            "source_ast": {"function": "std_vector_int_data", "return": "this->data", "effects": []},
+            "input_premises_added": [],
+            "scope": "closed current-owner source-to-view read; no standalone qualified model proof"}
+
+
+def _data_read(node):
+    parts = children(node)
+    if node.get("kind") != "UnaryOperator" or node.get("opcode") != "*" or len(parts) != 1:
+        return None
+    call = strip(parts[0])
+    arguments = children(call)
+    if call.get("kind") != "CXXMemberCallExpr" or len(arguments) != 1:
+        return None
+    member = arguments[0]
+    receivers = children(member)
+    if (member.get("kind") == "MemberExpr" and member.get("name") == "data"
+            and not member.get("isArrow") and len(receivers) == 1):
+        return call, receivers[0]
+    return None
+
+
 def bind_source_access(root, certificate, access):
     """Bind one recorded observation to its exact source kind, span and receiver."""
     kind = {"alias_read": "UnaryOperator", "owner_index": "CXXOperatorCallExpr",
-            "owner_at": "CXXMemberCallExpr"}.get(access.get("kind"))
+            "owner_at": "CXXMemberCallExpr", "owner_data_read": "UnaryOperator"}.get(access.get("kind"))
     matches = [n for n in walk(root) if n.get("kind") == kind and
                span(n) == (access["begin"], access["end"])]
     if certificate.get("check") != identity() or len(matches) != 1:
@@ -96,6 +152,17 @@ def bind_source_access(root, certificate, access):
         receiver = parts[0] if len(parts) == 1 and node.get("opcode") == "*" else {}
     elif access["kind"] == "owner_index":
         receiver = parts[1] if len(parts) == 3 and reference(parts[0]) == "operator[]" else {}
+    elif access["kind"] == "owner_data_read":
+        observed = _data_read(node)
+        if observed is None:
+            raise Refused("closed data read lacks its exact immediate member-call binding")
+        call_node, receiver = observed
+        calls = [call for call in certificate["calls"] if (call["begin"], call["end"]) == span(call_node)
+                 and call["model"] == "std_vector_int_data"]
+        if (len(calls) != 1 or calls[0].get("qualified_domain", {}).get("model_relation") != _data_relation()
+                or calls[0]["qualified_domain"].get("receiver") != certificate["owner"]
+                or calls[0]["qualified_domain"].get("allocation_site") != "growth"):
+            raise Refused("closed data read lacks its exact audited current-owner model relation")
     else:
         member = parts[0] if len(parts) == 2 else {}
         receiver = children(member)[0] if (member.get("kind") == "MemberExpr" and member.get("name") == "at"
@@ -128,8 +195,8 @@ def source_owner(node, protocol, *, source_sha256, lowering_sha256, models, anch
                      "kind": "closed_vector_alias", "element_type": "int", "elements": entry,
                      "relative_offset": 0, "allocation_site": "initial", "requires_liveness": True}]
     accesses, calls = [], []
-    at_relation = None
-    index = 0
+    at_relation, data_relation = None, None
+    index, data_index = 0, 0
     permitted = {p["id"] for p in children(node) if p.get("kind") == "ParmVarDecl"}
     permitted.update(p["id"] for p in walk(body) if p.get("kind") == "VarDecl")
     for part in walk(body):
@@ -149,12 +216,24 @@ def source_owner(node, protocol, *, source_sha256, lowering_sha256, models, anch
         if kind == "CXXOperatorCallExpr" and reference(children(part)[0]) != "operator[]":
             raise Refused("closed source has an unmodeled operator origin/effect")
         if kind == "UnaryOperator" and part.get("opcode") == "*":
-            if len(children(part)) != 1 or reference(children(part)[0]) != alias["name"]:
-                raise Refused("untracked source pointer read")
-            phase = "before" if span(part)[0] < append_at else "after"
-            accesses.append({"kind": "alias_read", "begin": span(part)[0], "end": span(part)[1],
-                "allocation_site": "initial", "relative_offset": 0,
-                "bounds_guard": f"owner_alias_{phase}_range", "liveness_guard": f"alias_live_{phase}"})
+            observed = _data_read(part)
+            if observed:
+                call, receiver = observed
+                if reference(receiver) != owner["name"] or span(part)[0] <= append_at:
+                    raise Refused("data read must observe the unchanged current owner after growth")
+                data_index += 1
+                accesses.append({"kind": "owner_data_read", "begin": span(part)[0], "end": span(part)[1],
+                    "call_begin": span(call)[0], "call_end": span(call)[1],
+                    "allocation_site": "growth", "relative_offset": 0,
+                    "bounds_guard": f"owner_data_storage_{data_index}",
+                    "live_prefix_guard": f"owner_data_live_{data_index}", "liveness_guard": "owner_current_growth"})
+            else:
+                if len(children(part)) != 1 or reference(children(part)[0]) != alias["name"]:
+                    raise Refused("untracked source pointer read")
+                phase = "before" if span(part)[0] < append_at else "after"
+                accesses.append({"kind": "alias_read", "begin": span(part)[0], "end": span(part)[1],
+                    "allocation_site": "initial", "relative_offset": 0,
+                    "bounds_guard": f"owner_alias_{phase}_range", "liveness_guard": f"alias_live_{phase}"})
         is_at = kind == "CXXMemberCallExpr" and children(part)[0].get("name") == "at"
         if kind == "CXXOperatorCallExpr" or is_at:
             index += 1
@@ -187,6 +266,28 @@ def source_owner(node, protocol, *, source_sha256, lowering_sha256, models, anch
                     "caller_discharge": {"guard": f"owner_at_guard_{index}",
                         "live_prefix_guard": f"owner_index_{index}", "bounds_guard": f"owner_storage_index_{index}",
                         "receiver_binding": "exact persistent local declaration; current growth allocation"},
+                    "input_premises_added": []}
+            elif model == "std_vector_int_data" and span(part)[0] > append_at:
+                observed = [a for a in accesses if a["kind"] == "owner_data_read"
+                            and (a["call_begin"], a["call_end"]) == span(part)]
+                if len(observed) != 1:
+                    raise Refused("post-growth data result must have one immediate checked value observation")
+                if data_relation is None:
+                    data_relation = _data_relation()
+                access = observed[0]
+                calls[-1]["qualified_domain"] = {
+                    "id": "closed-vector-live-array-1", "check": identity(),
+                    "receiver": {"name": owner["name"], "begin": span(owner)[0], "end": span(owner)[1]},
+                    "allocation_site": "growth", "element_type": "int", "relative_offset": 0,
+                    "elements": f"(2 * {entry})", "live_elements": f"({entry} + 1)",
+                    "producer": {"model": "std_vector_int_push_back", "begin": span(statements[-2])[0],
+                                 "end": span(statements[-2])[1],
+                                 "model_sha256": _sha(c_lowering.model_text("std_vector_int_push_back"))},
+                    "model_relation": data_relation,
+                    "caller_discharge": {"live_prefix_guard": access["live_prefix_guard"],
+                        "bounds_guard": access["bounds_guard"],
+                        "receiver_binding": "exact persistent local declaration; current growth allocation",
+                        "return_binding": "immediate element-zero value read from exact data() result"},
                     "input_premises_added": []}
     model_bodies = []
     for name in sorted(set(models)):
@@ -361,7 +462,7 @@ def closed_owner_view(text, protocol, source_certificate):
         raise Refused("closed owner liveness guards are not at the exact capture/release transition")
     if not 0 <= capture < invalidation < growth_at or text.count("swdb_owner_alias_live=0;") != 1:
         raise Refused("closed owner alias capture/invalidation transition is absent or misplaced")
-    calls, accesses, index = [], [], 0
+    calls, accesses, index, data_index = [], [], 0, 0
     n = protocol["parameter"]
     expected_calls = {
         "swdb_owner_allocate_initial": ["swdb_owner_bound0", "&swdb_owner_v", "&"+n,
@@ -394,6 +495,14 @@ def closed_owner_view(text, protocol, source_certificate):
                 guard, predicate = "owner_copy_range", "0 <= swdb_owner_k1 < swdb_owner_bound0 && swdb_owner_k1 < swdb_owner_bound1"
             elif data(base) and span(node)[0] > growth_at and position == "swdb_owner_v.size":
                 site, guard, predicate = "growth", "owner_append_range", "0 <= swdb_owner_v.size < swdb_owner_bound1"
+            elif data(base) and span(node)[0] > growth_at and position == "0":
+                data_index += 1
+                site, guard, predicate = "growth", f"owner_data_storage_{data_index}", "0 < swdb_owner_bound1"
+                live_guard = guarded(f"owner_data_live_{data_index}", "0 < swdb_owner_v.size", node)
+                accesses.append({"kind": "owner_data_read", "allocation_site": site, "relative_offset": 0,
+                    "bounds_guard": guarded(guard, predicate, node), "live_prefix_guard": live_guard,
+                    "liveness_guard": "current_owned_storage"})
+                continue
             elif data(base) and span(node)[0] > growth_at:
                 index += 1
                 observations = protocol.get("observations", [])
@@ -425,6 +534,8 @@ def closed_owner_view(text, protocol, source_certificate):
     guarded("owner_count", f"{n} >= 1", top[0])
     if index != sum(a["kind"] in {"owner_index", "owner_at"} for a in source["source_accesses"]):
         raise Refused("closed owner source/view indexed observations differ")
+    if data_index != sum(a["kind"] == "owner_data_read" for a in source["source_accesses"]):
+        raise Refused("closed owner source/view immediate data observations differ")
     if sum(a["kind"] == "alias_read" for a in accesses) != sum(a["kind"] == "alias_read" for a in source["source_accesses"]):
         raise Refused("closed owner source/view alias observations differ")
     out = {"check": identity(), "complete": True, "source_certificate_sha256": digest,
