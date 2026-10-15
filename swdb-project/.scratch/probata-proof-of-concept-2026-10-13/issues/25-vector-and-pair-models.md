@@ -85,3 +85,18 @@ unmatched-library refusal passed (13.72 s), reports `/private/tmp/t25-model-stl-
 `/private/tmp/t25-stl-refusal.jsonl`. Linux clang using libstdc++ 13 is outside this model and cannot supply
 its bounded differential evidence. A single stale translator-version literal in the broader adapter
 regression was corrected; that broader subset was not completed.
+
+
+Initialized model/dependency checkpoint — 2026-10-15 ET: model version2 requires initialized read
+inputs and establishes initialized written outputs (copy/swap/atomics/pair; vector representation
+and live element prefix, excluding spare capacity). The original copy contract failed the new
+mandatory WP init checks; repaired public model records for copy, swap, atomic load, compare-exchange
+and pair copy all prove. The initialized copy caller proves; an uninitialized source is refused by
+its precondition even when the caller post ignores the copied value. Seven invalid dependency
+controls refuse, and the current-method summary control proves. `level-rule.4` now checks C-model
+text pins and transitive model dependencies; WP requires counting same-method/evidence dependencies.
+Reports: `/private/tmp/probata-lifetime-research-2026-10-15/model-init-{red,green2}.jsonl`,
+`model-artifact-assertions.json`, `summary-current-control.json`. The green2 run had13passing tests
+and one goal-name-only assertion failure; all five actual model records were proven and the corrected
+artifact assertions passed for all five without repeating successful verifier runs. The level-rule
+regression passed97tests. Status stays **claimed** because general vector deallocation is unsupported.

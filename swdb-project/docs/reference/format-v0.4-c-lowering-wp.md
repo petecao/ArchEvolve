@@ -279,3 +279,11 @@ ordering. Same-expression order, callee order and loop iterations are not inferr
 The lowerer identity hashes the lowering, ownership checker, effect collector and CPU admission policy
 sources together. An absent policy has an explicit hash marker; adding or changing it changes the pin.
 The final method draft must pin the integrated policy, not an intermediate lowerer-only checkout.
+
+
+Terminal-release checker version 2 permits checked initialization loop invariants and gives the WP
+view's valid, nonempty allocator result an equivalent `+ 0` pointer initializer. WP 33's modular call
+rule binds return values without marking the receiving local initialized; ordinary expression
+assignment tracks it. This preserves the pointer value under the existing nonempty allocation
+contract, adds no heap initializedness or freshness premise, and leaves native artifacts unchanged.
+An ignored unfilled-array read remains a failed initialization obligation.
