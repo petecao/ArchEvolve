@@ -11,6 +11,19 @@ import pytest
 from test_proof_records import proof_seed, seed  # public CLI seed
 
 
+@pytest.mark.parametrize("flags", [[], ["--unwinding-assertions"],
+    ["--unwinding-assertions", "--pointer-overflow-check", "--no-pointer-check"],
+    ["--unwinding-assertions", "--pointer-overflow-check", "--no-standard-checks"],
+    ["--unwinding-assertions", "--pointer-overflow-check", "--property=harmless"],
+    ["--unwinding-assertions", "--pointer-overflow-check", "--function", "harmless"]])
+def test_bounded_flags_cannot_omit_pointer_formation_or_hide_safety_properties(seed, flags):
+    marker = seed.root / "must-not-run"
+    failed = seed.prove(seed.script(setup={"tool": "cbmc", "flags": flags},
+                                   run=["/usr/bin/touch", str(marker)]), ok=False)
+    assert "cbmc_safety_flags" in failed.stderr
+    assert not marker.exists() and not seed.proof_files()
+
+
 @pytest.mark.parametrize("text", [
     "void f(int parent) { __CPROVER_assume(parent >= -1); }\n",
     "llvm_assume (llvm_term {{ parent_v >= -1 }});\n",

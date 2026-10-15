@@ -163,6 +163,8 @@ def begin(job, adapter, pins, method):
             selected = _values(plan.get("flags", []), "-wp-prover")
             if method is not None and selected and any(value.split(",") != wp_provers(method) for value in selected):
                 _fail("method_version", "WP solver order differs from the method version")
+        elif plan.get("tool") == "cbmc":
+            check_cbmc_flags(plan.get("flags", []))
         report["hashes"]["run_plan"] = _digest(plan)
     _environment()
     return report
@@ -296,6 +298,8 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
         check_semantics_hints(base, getattr(adapter, "hints", []))
     if adapter.name == "wp":
         _wp_flags(list(command) if command else flags, scratch or job.scratch)
+    elif adapter.name == "cbmc":
+        check_cbmc_flags(list(command) if command else flags)
     method = job.setup.get("method")
     tools = context.get("tools") or {}
     if method is not None:
@@ -315,6 +319,25 @@ def wp_provers(method):
     if len(declared) > 1:
         _fail("method_version", "the method declares WP solver selection more than once")
     return declared[0].split(",") if declared else ["alt-ergo", "z3", "cvc5"]
+
+
+def check_cbmc_flags(flags, *, require=True):
+    """Frozen safety checks and full property/entrypoint selection; created 2026-10-15 ET.
+
+    Inspect the complete command too: SWDB_CBMC may include prefix arguments. The
+    policy lives in this content-pinned check, independently of adapter constants.
+    """
+    required = {"--unwinding-assertions", "--pointer-overflow-check"}
+    forbidden = {"--no-standard-checks", "--no-bounds-check", "--no-pointer-check", "--no-pointer-primitive-check",
+                 "--no-pointer-overflow-check", "--no-signed-overflow-check", "--no-div-by-zero-check",
+                 "--no-undefined-shift-check", "--no-unwinding-assertions", "--no-assertions", "--no-assumptions",
+                 "--no-built-in-assertions", "--partial-loops", "--property", "--function", "--main", "--cover"}
+    words = {str(flag).split("=", 1)[0] for flag in flags}
+    disabled = words & forbidden
+    if disabled:
+        _fail("cbmc_safety_flags", f"CBMC safety/property/entrypoint override is forbidden: {sorted(disabled)}")
+    if require and not required <= set(flags):
+        _fail("cbmc_safety_flags", f"CBMC must retain frozen flags: {sorted(required - set(flags))}")
 
 
 def _lineup(method, adapter, tools, flags):
