@@ -17,9 +17,7 @@
 // - swdb_fixture_total: a sum checked against a logic-library definition (logic call in a formal half).
 // - swdb_fixture_copy: b[k] = a[k] with \separated arrays; SWDB_SEEDED_FRAME_BUG negates a[k] first (a frame
 //   violation only an \old snapshot under the quantifier catches).
-// - swdb_fixture_half: a real-valued unit (double); SWDB_SEEDED_REAL_ERROR adds 1e-3 to its result. The C lowering
-//   refuses floating types until ticket 24, and a library entry's baseline proof unit must have one, so its fixture
-//   contract pins the integer stand-in swdb_fixture_half_baseline as the baseline.
+// - swdb_fixture_half: a real-valued unit (double); SWDB_SEEDED_REAL_ERROR adds 1e-3 to its result.
 int swdb_fixture_threshold = 4;
 
 void swdb_fixture_fill(int *a, int n, int v) {
@@ -111,8 +109,4 @@ double swdb_fixture_half(double x) {
 #else
   return x * 0.5;
 #endif
-}
-
-int swdb_fixture_half_baseline(int x) {
-  return x / 2;
 }

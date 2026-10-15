@@ -161,7 +161,8 @@ class CbmcAdapter:
             raise AdapterError(str(exc)) from None
         code = Code(lowering, source, self.defines)
         code.apply_fault(os.environ.get("SWDB_CBMC_LOWERING_FAULT"))
-        context["pins"] = {"c_lowering": {"id": f"{lowering.function}.c", "sha256": code.c_sha256}}
+        context["pins"] = {"c_lowering": {"id": f"{lowering.function}.c", "sha256": code.c_sha256},
+                           "naming_rules": c_lowering.naming_rules()}           # ticket 24
         try:
             built = self._build(job, entry, code, sizes, summary_job, context)
         except tr.Untranslatable as exc:
@@ -756,7 +757,7 @@ def logic_of(library):
     """The logic-library definitions a job's formal halves may call (ticket 23): every library/logic/*.acsl file."""
     from swdb.formal_frame import logic_files
     root = getattr(library, "root", None)
-    files = logic_files(Path(root)) if root is not None else {}
+    files = logic_files(Path(root), library) if root is not None else {}
     return tr.Logic({entry: path.read_text() for entry, path in files.items()})
 
 

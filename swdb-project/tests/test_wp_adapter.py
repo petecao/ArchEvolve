@@ -42,7 +42,7 @@ FILL_HINTS = [{"anchor": "swdb_fixture_fill.loop1.head",
                "acsl": "loop invariant 0 <= i <= n;\nloop invariant \\forall integer k; 0 <= k < i ==> a[k] == v;\n"
                        "loop assigns i, a[0 .. n-1];\nloop variant n - i;"}]
 SMOKE_HINTS = [{"anchor": "count_up.loop1.head", "acsl": "loop invariant 0 <= i <= n;\nloop assigns i;\nloop variant n - i;"}]
-TRUSTED = {"swdb-c-lowering-1", "clang-22.1.8", "frama-c-wp-33.0", "alt-ergo-2.6.4", "z3-5.1.0", "cvc5-1.2.1"}
+TRUSTED = {"swdb-c-lowering-2", "clang-22.1.8", "frama-c-wp-33.0", "alt-ergo-2.6.4", "z3-5.1.0", "cvc5-1.2.1"}
 
 
 def _tools_present():
@@ -78,18 +78,13 @@ def _contract(cid, function, clauses, frame):
 
 
 def method_version(identity):
-    """A contract_fixture method version with the real Mac lineup (ticket 21), sequence 2 (current)."""
+    """A contract_fixture method version with the real Mac lineup, sequence 2 (current: frozen, from the
+    frozen contract fixture). fix-21 (2026-10-14 ET): the lineup is the committed draft's
+    (library/methods/probata-draft-1.yaml), so the two never drift; the translator is this checkout's tool."""
     data = yaml.safe_load((FIXTURES / "proof" / "methods" / "contract-fixture-1.yaml").read_text())
     data.update(id="method.wp-tracer-fixture", sequence=2,
                 description="Fixture method version with the real WP lineup of the Mac (ticket 21 tests).")
-    data["lineup"] = [
-        {"role": "front_end", "tool": "clang", "version": "22.1.8", "flags": ["-std=c++17", "-fopenmp"]},
-        {"role": "bounded_verifier", "tool": "cbmc", "version": "6.11", "flags": []},
-        {"role": "unbounded_verifier", "tool": "frama-c-wp", "version": "33.0",
-         "flags": ["-wp", "-wp-rte", "-wp-cache", "none", "-wp-model", "+real"]},
-        {"role": "solver", "tool": "alt-ergo", "version": "2.6.4", "flags": []},
-        {"role": "solver", "tool": "z3", "version": "5.1.0", "flags": []},
-        {"role": "solver", "tool": "cvc5", "version": "1.2.1", "flags": []}]
+    data["lineup"] = yaml.safe_load((REPO / "library" / "methods" / "probata-draft-1.yaml").read_text())["lineup"]
     data["c_lowering"]["translators"] = [identity["c_lowering"]]
     return data
 
@@ -207,6 +202,8 @@ def test_the_safe_fixture_is_proven_with_threads_1_bounds_per_goal_solvers_and_t
     assert set(record["tools"]) == TRUSTED
     assert all(a["sentence"].strip() for a in record["assumptions"])
     assert record["pins"]["c_lowering"]["id"] == "swdb_fixture_fill.c"
+    from swdb import c_lowering                                   # ticket 24: the naming rules are pinned too
+    assert record["pins"]["naming_rules"] == {"id": "kept-names.2", "sha256": c_lowering.RULES_SHA256}
     settings = record["settings"]
     for flag in ("-wp-cache none", "-wp-model +real", "-machdep x86_64", "-wp-timeout 30"):
         assert flag in " ".join(settings["flags"])

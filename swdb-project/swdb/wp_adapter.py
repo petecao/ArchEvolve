@@ -45,6 +45,7 @@ PROVERS = ("alt-ergo", "z3", "cvc5")
 WHY3_NAMES = {"Alt-Ergo": "alt-ergo", "Z3": "z3", "CVC5": "cvc5"}
 FROZEN = (("-wp-cache", "none"), ("-wp-model", "+real"))
 MACHDEP = ("-machdep", "x86_64")
+LEMMAS_OUT = ("-wp-prop=-@lemma",)    # ticket 26: logic-library lemmas are proven once, with the method (prove-logic)
 DEFAULT_WALL_SECONDS = 3600
 DEFAULT_CAP_BYTES = 8 * 2**30                    # O9: the ~8 GB RSS watchdog
 UNCLASSIFIED = "unclassified_wp_outcome"         # not a failure class: stops the batch (11 item 9)
@@ -171,7 +172,7 @@ class WpAdapter:
         for clause in clauses:
             uses += [u for u in clause["acsl"].get("uses", []) if u not in uses]
         from swdb.formal_frame import logic_files
-        files = logic_files(self.library.root)
+        files = logic_files(self.library.root, self.library)       # ticket 26: an entry's own file too
         inserts = {f"{lowering.function}.contract": ["/*@ " + "\n    ".join("\n".join(texts).splitlines()) + " */"]}
         for anchor in lowering.anchors:                  # ticket 23: summarized callees carry their ACSL summary
             callee = anchor.get("function")
@@ -226,7 +227,7 @@ class WpAdapter:
         (scratch / "tmp").mkdir(exist_ok=True)
         goals_json, properties_csv = scratch / "wp-goals.json", scratch / "wp-properties.csv"
         settings_flags = [*tools["flags"], *MACHDEP, "-wp-prover", ",".join(PROVERS), "-wp-timeout",
-                          str(tools["seconds"]), "-wp-par", "1"]
+                          str(tools["seconds"]), "-wp-par", "1", *LEMMAS_OUT]
         command = [*framac.locate().command, *settings_flags, "-wp-report-json", goals_json.name, "wp_input.c",
                    "-then", "-report-csv", properties_csv.name]
         removed = sorted(k for k in os.environ if k.startswith("FRAMAC_WP"))
@@ -281,7 +282,8 @@ class WpAdapter:
             fields["unproven_properties"] = context.get("unproven", [])
         if context.get("settings"):
             fields["settings"] = context["settings"]
-        pins = {"c_lowering": context["c_lowering"]} if context.get("c_lowering") else {}
+        pins = {"c_lowering": context["c_lowering"], "naming_rules": c_lowering.naming_rules()} \
+            if context.get("c_lowering") else {}
         return Verdict(verdict=verdict, bounds={"threads": 1, "input_size": "unbounded"}, assumptions=assumptions,
                        failure_class=failure_class, tools=tuple(tools), peak_rss_bytes=context.get("peak"),
                        record_fields=fields, pins=pins, reports=tuple(context["reports"]))

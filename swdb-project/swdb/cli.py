@@ -287,6 +287,8 @@ def main(argv=None):
     proof_lane.register_cli(commands)
     from swdb import c_lowering     # Probata ticket 21 (2026-10-14 ET): `swdb lower`, the C lowering tool
     c_lowering.register_cli(commands)
+    from swdb import logic_library  # Probata ticket 26 (2026-10-14 ET): `swdb prove-logic`
+    logic_library.register_cli(commands)
 
     from swdb import archevolve
     archevolve.register_cli(commands)
@@ -535,6 +537,8 @@ def _validate(records_dir, library_root=None, crosswalk=None):
     # Probata PoC 20: a formal half Frama-C could not check is reported as unchecked, never as valid.
     for note in frame.unchecked if frame else []:
         print(f"UNCHECKED: {note}", file=sys.stderr)
+    for note in frame.logic_unchecked if frame else []:     # Probata PoC 26: logic files type-checked alone
+        print(f"UNCHECKED: {note}", file=sys.stderr)
     if result.problems:
         files = len({problem.file for problem in result.problems})
         print(
@@ -547,6 +551,10 @@ def _validate(records_dir, library_root=None, crosswalk=None):
         suffix += f"; {frame.checked} acsl field(s) type-checked by Frama-C {frame.framac_version}"
     if frame and frame.unchecked:
         suffix += f"; {len(frame.unchecked)} acsl field(s) unchecked (no usable Frama-C 33.0 or C lowering)"
+    if frame and frame.logic_checked:
+        suffix += f"; {frame.logic_checked} logic file(s) type-checked"
+    if frame and frame.logic_unchecked:
+        suffix += f"; {len(frame.logic_unchecked)} logic file(s) unchecked (no usable Frama-C 33.0)"
     print(f"OK: {result.count} record(s) valid{suffix}")
     return 0
 

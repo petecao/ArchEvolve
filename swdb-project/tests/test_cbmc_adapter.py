@@ -35,7 +35,7 @@ FILL, KNOB, SMOKE = "contract.fixture_cbmc_fill", "contract.fixture_cbmc_knob", 
 CLAMP, CLAMP_ALL = "contract.fixture_cbmc_clamp", "contract.fixture_cbmc_clamp_all"
 TWICE, VACUOUS = "contract.fixture_cbmc_twice", "contract.fixture_cbmc_vacuous"
 FILL_BOUNDS = {"threads": 1, "n": 3}
-TRUSTED = {"swdb-c-lowering-1", "clang-22.1.8", "swdb-cbmc-translator-2", "cbmc-6.11.0", "cadical-in-cbmc-6.11.0"}
+TRUSTED = {"swdb-c-lowering-2", "clang-22.1.8", "swdb-cbmc-translator-2", "cbmc-6.11.0", "cadical-in-cbmc-6.11.0"}
 FILL_CLAUSES = [("fill_pre", "legality", "requires n >= 0 && \\valid(a + (0 .. n-1));", "per_candidate"),
                 ("fill_post", "postcondition", "assigns a[0 .. n-1];\nensures \\forall integer k; 0 <= k < n ==> a[k] == v;",
                  "per_candidate")]
@@ -154,7 +154,7 @@ def _contracts():
             ("copy_post", "postcondition", "assigns b[0 .. n-1];\n"
                                            "ensures \\forall integer k; 0 <= k < n ==> b[k] == \\old(a[k]);",
              "per_candidate")], array + [{"array": "b", "shared_actions": [], "history_reads": False}]),
-        "fixture_cbmc_half": _contract(HALF, "swdb_fixture_half_baseline", [
+        "fixture_cbmc_half": _contract(HALF, "swdb_fixture_half", [
             ("half_post", "postcondition", "assigns \\nothing;\nensures \\result == x / 2.0;", "per_candidate")], []),
         "fixture_cbmc_post_bound": _contract(POST_BOUND, "swdb_fixture_total", [
             ("post_bound_pre", "legality", "requires 0 <= n && \\valid(a + (0 .. n-1));", "per_candidate"),

@@ -1,0 +1,18 @@
+# Created: 2026-10-14 ET (Probata PoC 21, as lowering-spike-unit-member-access). Updated: 2026-10-14 ET
+# (ticket 24: the subset now has classes, references and templates; the first construct outside it is the
+# push hook's inheritance). Regression corpus case through `swdb lower` (see wp-hint-syntax-error.yaml).
+id: lowering-spike-unit-push-hook-inheritance
+adapter: c_lowering
+input:
+  source: .scratch/probata-proof-of-concept-2026-10-13/prototype/06-two-lanes/unit_peter.cpp
+  function: swdb_unit_peter
+  include: [library/dx100]
+failure_class: unsupported_construct
+construct: inheritance
+cause: >-
+  Spike (b)'s proof unit includes the candidate prelude's push hook (spike_lowering.hpp,
+  `swdb_hooked_QueueBuffer : public QueueBuffer<T>`, from library/dx100/certification/candidate_prelude.hpp),
+  and TDStep's QueueBuffer is that class through a macro. Inheritance is outside the C++ subset (map 16
+  item 6), so the tool names it and writes nothing. Ticket 21 refused this unit at its first member access;
+  ticket 24's subset covers the rest (tests/fixtures/proof/lowering/spike_peter_unit.cc undoes the hook and
+  lowers). A candidate prelude that hooks push_back without inheritance would bring the fault builds in.

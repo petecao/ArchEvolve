@@ -29,7 +29,7 @@ int *dxc_tile_data[DXC_NUM_TILES];
 //@ ghost int dxc_tile_len[DXC_NUM_TILES];
 //@ ghost int dxc_reg[DXC_NUM_REGS];
 //@ ghost int dxc_pending[DXC_NUM_TILES];
-//@ ghost int dxc_dep[DXC_NUM_TILES][DXC_NUM_TILES];
+//@ ghost int dxc_dep[DXC_NUM_TILES * DXC_NUM_TILES];  /* row-major: dxc_dep[x * DXC_NUM_TILES + y] */
 
 /*@
   predicate dxc_tile_ok(integer t) = 0 <= t < DXC_NUM_TILES;
@@ -50,17 +50,17 @@ int *dxc_tile_data[DXC_NUM_TILES];
       (!dxc_in2(x, d1, d2) ==> \at(dxc_pending[x], L2) == \at(dxc_pending[x], L1)) &&
       (\forall integer y; 0 <= y < DXC_NUM_TILES ==>
         (dxc_in2(x, d1, d2) ==>
-          (\at(dxc_dep[x][y], L2) != 0 <==>
+          (\at(dxc_dep[x * DXC_NUM_TILES + y], L2) != 0 <==>
             ((dxc_in2(y, d1, d2) && y != x) ||
              (dxc_in2(y, s1, s2) && \at(dxc_pending[y], L1) != 0) ||
-             (s1 >= 0 && \at(dxc_pending[s1], L1) != 0 && \at(dxc_dep[s1][y], L1) != 0) ||
-             (s2 >= 0 && \at(dxc_pending[s2], L1) != 0 && \at(dxc_dep[s2][y], L1) != 0)))) &&
+             (s1 >= 0 && \at(dxc_pending[s1], L1) != 0 && \at(dxc_dep[s1 * DXC_NUM_TILES + y], L1) != 0) ||
+             (s2 >= 0 && \at(dxc_pending[s2], L1) != 0 && \at(dxc_dep[s2 * DXC_NUM_TILES + y], L1) != 0)))) &&
         (!dxc_in2(x, d1, d2) ==>
-          (\at(dxc_dep[x][y], L2) != 0 <==> (!dxc_in2(y, d1, d2) && \at(dxc_dep[x][y], L1) != 0))));
+          (\at(dxc_dep[x * DXC_NUM_TILES + y], L2) != 0 <==> (!dxc_in2(y, d1, d2) && \at(dxc_dep[x * DXC_NUM_TILES + y], L1) != 0))));
 
   // A wait on tile t covers t's uncovered writer and everything that writer depends on.
   predicate dxc_covers{L}(integer t, integer x) =
-    \at(dxc_pending[t], L) != 0 && (x == t || \at(dxc_dep[t][x], L) != 0);
+    \at(dxc_pending[t], L) != 0 && (x == t || \at(dxc_dep[t * DXC_NUM_TILES + x], L) != 0);
 
   // Range loop (stride 1): pairs (i, j) with 0 <= i < n and lo[i] <= j < hi[i], in
   // lexicographic order; continuation state (i, j): j == -1 means "before row i".
@@ -86,7 +86,7 @@ void __dxc_const_i32(int32_t value, int reg);
     requires \valid_read(base + (dxc_reg[minimum] .. dxc_reg[maximum] - 1));
     terminates \true;
     assigns dxc_tile_data[dst][0 .. TILE_SIZE - 1], dxc_tile_len[dst],
-            dxc_pending[0 .. DXC_NUM_TILES - 1], dxc_dep[0 .. DXC_NUM_TILES - 1][0 .. DXC_NUM_TILES - 1];
+            dxc_pending[0 .. DXC_NUM_TILES - 1], dxc_dep[0 .. DXC_NUM_TILES * DXC_NUM_TILES - 1];
     ensures dxc_tile_len[dst] == (dxc_reg[maximum] > dxc_reg[minimum] ? dxc_reg[maximum] - dxc_reg[minimum] : 0);
     ensures \forall integer i; 0 <= i < dxc_tile_len[dst] ==>
               dxc_tile_data[dst][i] == \old(base[dxc_reg[minimum] + i]);
@@ -99,7 +99,7 @@ void __dxc_stream_load(const int *base, int minimum, int maximum, int stride, in
     requires \forall integer i; 0 <= i < dxc_tile_len[index] ==> \valid_read(base + dxc_tile_data[index][i]);
     terminates \true;
     assigns dxc_tile_data[dst][0 .. TILE_SIZE - 1], dxc_tile_len[dst],
-            dxc_pending[0 .. DXC_NUM_TILES - 1], dxc_dep[0 .. DXC_NUM_TILES - 1][0 .. DXC_NUM_TILES - 1];
+            dxc_pending[0 .. DXC_NUM_TILES - 1], dxc_dep[0 .. DXC_NUM_TILES * DXC_NUM_TILES - 1];
     ensures dxc_tile_len[dst] == dxc_tile_len[index];
     ensures \forall integer i; 0 <= i < dxc_tile_len[dst] ==>
               dxc_tile_data[dst][i] == \old(base[dxc_tile_data[index][i]]);
@@ -120,7 +120,7 @@ void __dxc_gather(const int *base, int index, int dst);
     terminates \true;
     assigns dxc_tile_data[rows][0 .. TILE_SIZE - 1], dxc_tile_data[columns][0 .. TILE_SIZE - 1],
             dxc_tile_len[rows], dxc_tile_len[columns], dxc_reg[last_i], dxc_reg[last_j],
-            dxc_pending[0 .. DXC_NUM_TILES - 1], dxc_dep[0 .. DXC_NUM_TILES - 1][0 .. DXC_NUM_TILES - 1];
+            dxc_pending[0 .. DXC_NUM_TILES - 1], dxc_dep[0 .. DXC_NUM_TILES * DXC_NUM_TILES - 1];
     ensures dxc_tile_len[rows] == dxc_tile_len[columns] && 0 <= dxc_tile_len[columns] <= TILE_SIZE;
     ensures \forall integer k; 0 <= k < dxc_tile_len[columns] ==>
               dxc_rl_pair{Pre}(dxc_tile_data[lower], dxc_tile_data[upper], \old(dxc_tile_len[lower]),
@@ -150,12 +150,12 @@ void __dxc_range_loop(int last_i, int last_j, int lower, int upper, int stride, 
 
 /*@ requires dxc_tile_ok(tile);
     terminates \true;
-    assigns dxc_pending[0 .. DXC_NUM_TILES - 1], dxc_dep[0 .. DXC_NUM_TILES - 1][0 .. DXC_NUM_TILES - 1];
+    assigns dxc_pending[0 .. DXC_NUM_TILES - 1], dxc_dep[0 .. DXC_NUM_TILES * DXC_NUM_TILES - 1];
     ensures \forall integer x; 0 <= x < DXC_NUM_TILES ==>
               (dxc_covers{Pre}(tile, x) ==> dxc_pending[x] == 0) &&
               (!dxc_covers{Pre}(tile, x) ==> dxc_pending[x] == \old(dxc_pending[x])) &&
               (\forall integer y; 0 <= y < DXC_NUM_TILES ==>
-                 (dxc_dep[x][y] != 0 <==> (!dxc_covers{Pre}(tile, x) && \old(dxc_dep[x][y]) != 0)));
+                 (dxc_dep[x * DXC_NUM_TILES + y] != 0 <==> (!dxc_covers{Pre}(tile, x) && \old(dxc_dep[x * DXC_NUM_TILES + y]) != 0)));
     exits \false; */
 void __dxc_wait(int tile);
 

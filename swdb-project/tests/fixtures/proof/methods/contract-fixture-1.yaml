@@ -3,10 +3,12 @@
 # Its values follow the map's decisions where they exist (budgets: 25 item 2, 13 item 11, 15 item 9;
 # lineup: 11 item 8 and the Mac installs of ticket 03) but it is NOT the method: the first real
 # method-version file is written by ticket 21 once the lineup is installed, and 59 freezes one.
+# Updated: 2026-10-14 ET (fix-21): status frozen, so it stays the current method version of test seeds
+# (current = the highest-sequence frozen version; a draft is used only when named). Still fixture evidence.
 id: method.contract-fixture-1
 kind: method_version
 sequence: 1
-status: draft
+status: frozen
 created: '2026-10-14'
 evidence_kind: contract_fixture
 description: Fixture method version with every section, for tests of swdb validate and swdb prove.

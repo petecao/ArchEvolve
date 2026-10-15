@@ -12,24 +12,64 @@ Tests: `tests/test_c_lowering.py`, `tests/test_wp_adapter.py`, `tests/test_forma
 
 ## `swdb lower` (the C lowering tool)
 
+Updated: 2026-10-14 ET (ticket 24: the declared C++ subset, naming rules `kept-names.2`, tool version 2).
+
 ```
 swdb lower --source <file.cc> --function <name> --out <folder> [--include <dir>] [--define NAME[=VALUE]]
+           [--summary NAME=SUMMARY]
 ```
 
 - Writes `<name>.c` and `<name>.anchors.json`. Prints `{function, tool, c_lowering: {path, sha256},
-  anchors: {path, sha256, count}}`.
-- **Deterministic.** clang 22.1.8 parses the C++ (filtered `-ast-dump=json`); Python prints the C. No LLM,
-  no absolute path, no time in the output: the same input gives the same bytes.
-- **Kept names.** Functions, parameters, locals and globals keep their C++ names (naming rules
-  `kept-names.1`; an unnamed parameter becomes `swdb_unnamed_<n>`). So ACSL written over the C++ names
-  type-checks against the C unchanged.
-- **Core subset** (ticket 21): free functions; scalar, pointer and array parameters; global and local
-  scalars and arrays; `if`, `for`, `while`, `do`, `break`, `continue`, `return`; integer and `bool`
-  arithmetic; explicit casts; calls to functions defined in the same file (lowered too, callees first).
-- **Outside the subset:** exit 1, `unsupported construct: <what> (line N)`, and nothing written. Examples:
-  references, classes and member access, templates, OpenMP directives, floating point, calls to functions
-  with no body, overloads. Ticket 24 widens the subset. C++ that does not parse: `parse error: ...`.
-- The tool's identity is `swdb-c-lowering-<TOOL_VERSION>` plus the sha256 of `swdb/c_lowering.py`.
+  anchors: {path, sha256, count}}`, plus `summaries` and `models` when the C uses any.
+- **Deterministic.** clang 22.1.8 parses the C++ (filtered `-ast-dump=json`, one dump per declaration name);
+  Python prints the C. No LLM, no absolute path, no time in the output: the same input gives the same bytes.
+- **Kept names** (naming rules `kept-names.2`, `swdb.c_lowering.RULES`): functions, parameters, locals,
+  globals and fields keep their C++ names, so ACSL written over the C++ names type-checks against the C
+  unchanged. The rules, in short:
+
+| C++ | C |
+|---|---|
+| class or struct `C` | `struct C` (same fields, same order) plus `typedef struct C C;` |
+| `C<int, 3>` (instantiated class template) | `struct C_int_3`; argument spelling: its C type, spaces to `_`, `*` to `ptr`, `-k` to `mk`, typedefs resolved |
+| `f<long>` (instantiated function template) | `f_long` |
+| member function `m` of `C` | `C_m(C *this, ...)`; `const C *this` for a const member; no `this` when static |
+| `C::operator[]`, free `operator+` | `C_operator_index`, `operator_add` (table `OPERATOR_NAMES`) |
+| constructor, destructor | `C_ctor(C *this, ...)` called right after the declaration; `C_dtor(C *this)` at scope end |
+| `T &` | `T *`; the callee dereferences, the caller passes an address (a bound temporary: a compound literal) |
+| `enum`, `enum class` | its underlying integer type (`int` if none); an enumerator prints as its value |
+| `std::min`, `std::max`, `std::swap`, `std::copy` at `T` | calls of the C models `std_min_<t>`, ... (ACSL contract each) |
+| `__atomic_<op>`, `__sync_<op>` at `T` | calls of the C models `swdb_atomic_<op>_<t>`, `swdb_sync_<op>_<t>` (one thread) |
+| `new T[n]`, `delete[] p` | `(T *)malloc(sizeof(T) * (size_t)(n))`, `free(p)` |
+| an OpenMP directive | a comment `/* omp <directive> (one thread) */`, then its statement |
+| a call of a summarized function | the same (instantiated) name, a prototype only |
+| an unnamed parameter | `swdb_unnamed_<n>` |
+
+- **The subset** (map 16 item 6; ticket 21's core plus ticket 24): C plus references; classes without
+  inheritance or virtual functions (fields, member functions, operators, constructors with member
+  initializers, destructors); instantiated templates; `new[]`/`delete[]`; `enum class`, `constexpr`,
+  `static_assert`; `std::min`/`max`/`swap`/`copy` through C models; OpenMP `parallel`, `for` (`schedule`
+  static or dynamic, `nowait`), `critical`, `atomic`, `barrier`, `reduction` (`+ - * & | ^`, each use of the
+  variable an `op=` update); `__sync_*` and `__atomic_*` through C models; calls named by `--summary` kept
+  as calls.
+- **Floating point** (asked by ticket 26): `float` and `double` types, literals and conversions print as the
+  same C, so the C is faithful to IEEE semantics. A proof's meaning for them is the verifier's float model, a
+  method-version choice: the frozen WP flags read `-wp-model +real` (floats as mathematical reals; the
+  rounding gap is an assumption entry, map 11 item 6); `+float` would check IEEE rounding. `long double`
+  stays outside.
+- **One thread.** OpenMP and atomics get their meaning for one thread here: a parallel region runs as one
+  thread, a CAS is a read, a compare and a write. The program for one symbolic thread of N is ticket 45.
+- **Summaries.** `--summary NAME=SUMMARY` (Python: `lower(..., summaries={NAME: SUMMARY})`): every call of
+  `NAME` stays a call with a prototype, and `<name>.anchors.json` lists `summaries: [{name, c_name,
+  summary}]`. Every `__dxc_*` and `maa_*` call needs one; without one it is an unsupported construct.
+- **C models** (`models` in `<name>.anchors.json`): static C functions with ACSL contracts, defined in the C
+  after the globals. Proving each model's contract once (one proof record each) is not built yet.
+- **Outside the subset:** exit 1, `unsupported construct: <what> (<file> line N)`, and nothing written.
+  Examples: inheritance, virtual functions, exceptions, lambdas, RTTI, standard containers (`std::vector`
+  and `std::pair` come with ticket 25) and streams, `long double`, calls of functions with no body,
+  overloads, other OpenMP directives and clauses, a `return`/`break`/`continue` out of a scope that
+  destroys an object. C++ that does not parse: `parse error: ...`.
+- The tool's identity is `swdb-c-lowering-<TOOL_VERSION>` plus the sha256 of `swdb/c_lowering.py`;
+  `swdb.c_lowering.naming_rules()` is `{id: kept-names.<n>, sha256}` of the rules text.
 
 ### Anchors
 
@@ -66,8 +106,10 @@ with hint records and the proof hint check.
 
 **Frozen settings** (the record's `settings`): the lineup's frama-c-wp flags (must hold `-wp-cache none`
 and `-wp-model +real`), `-machdep x86_64`, `-wp-prover alt-ergo,z3,cvc5`, `-wp-timeout` =
-`budgets.wp_seconds_per_solver` (30), `-wp-par 1`, default Frama-C warning levels (an annotation error
-aborts), a fresh session, every `FRAMAC_WP*` environment variable removed.
+`budgets.wp_seconds_per_solver` (30), `-wp-par 1`, `-wp-prop=-@lemma` (ticket 26: logic-library lemmas
+are proven once, with the method; see [format-v0.4-logic-library.md](format-v0.4-logic-library.md)), default
+Frama-C warning levels (an annotation error aborts), a fresh session, every `FRAMAC_WP*` environment variable
+removed.
 
 **Minimal verdict reader:** proven only when every row of this run's per-property report (`-report-csv`)
 is `Valid` and every goal of its per-goal report (`-wp-report-json`) passed. The consolidated summary line
@@ -96,9 +138,10 @@ WP never refutes: a not-proven record has no counterexample.
 | `unproven_properties` | not proven only: each per-property row that is not `Valid`: `property`, `kind`, `function`, `line`, `status` |
 | `settings` | `tool`, `flags`, `session`, `warning_levels`, `machdep`, `wp_seconds_per_solver`, `environment_removed`, `rss_cap_bytes`, `hint_count`, `build_constants` |
 | `pins.c_lowering` | `{id: <f>.c, sha256}` of the C lowering WP ran on |
+| `pins.naming_rules` | `{id: kept-names.<n>, sha256}` of the lowering's naming rules (ticket 24); a new rules version gives a different pin |
 | `pins.build_constants` | one `{name, value}` per `--define` |
 | `evidence.reports` | `{name, path, sha256}` of `c_lowering`, `anchors`, `wp_input`, `hints`, `wp_log`, `wp_goals`, `wp_properties`, `handler`, all under `<runs-dir>/<record>/wp/` |
-| `assumptions`, `tools` | one `trusted_tool` entry per tool, each with one plain sentence: `swdb-c-lowering-1`, `clang-22.1.8`, `frama-c-wp-33.0`, `alt-ergo-2.6.4`, `z3-5.1.0`, `cvc5-1.2.1` (IDs carry the installed versions; sha256 of each binary) |
+| `assumptions`, `tools` | one `trusted_tool` entry per tool, each with one plain sentence: `swdb-c-lowering-2`, `clang-22.1.8`, `frama-c-wp-33.0`, `alt-ergo-2.6.4`, `z3-5.1.0`, `cvc5-1.2.1` (IDs carry the installed versions; sha256 of each binary) |
 | `evidence_kind` | `execution` under a method version whose `evidence_kind` is `execution`; `contract_fixture` under a fixture method version (and always for the scripted adapter) |
 
 ## The machine-wide verifier lock
@@ -125,8 +168,11 @@ serves every adapter.
 - 22/23 (CBMC): lower with `swdb.c_lowering.lower`; the bounded job adds the C-versus-C++ differential
   (pattern `tests/test_c_lowering.py::test_the_c_lowering_agrees_with_the_cpp_on_every_input_of_a_bounded_domain`
   and `prototype/06c-cbmc/faith/`). Take the lock through `swdb prove` (set `real = True` on the adapter).
-- 24: widen `_Printer`; every refusal stays `Unsupported`; bump `TOOL_VERSION` (a new method version).
-  Reference for the spike units: `prototype/06c-cbmc/unit_*.c`.
+- 24 (done 2026-10-14): the subset above; `TOOL_VERSION` 2, naming rules `kept-names.2`. The tool's lowering
+  of spike (b)'s unit 1 agrees with the hand lowering `prototype/06c-cbmc/unit_peter.c` on every bounded input
+  (`tests/test_c_lowering.py`, fixture `tests/fixtures/proof/lowering/spike_peter_unit.cc`).
+- 25: `std::vector`/`std::pair` models go next to the `std::*` models (`_Printer._std`); add the types to
+  `c_lowering.STD_CONTAINERS` handling. 45: replace the one-thread OpenMP and atomic models.
 - 34/35/37: anchors from `<f>.anchors.json`; hints placed by `WpAdapter._input`; goals to retry from the
   record's `goals` and `unproven_properties`.
 - 36: replace `read_outcome` with the full reading rule; keep the class table above.

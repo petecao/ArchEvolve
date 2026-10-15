@@ -291,8 +291,11 @@ class FixtureAdapter(TargetAdapter):
     def proof_function(self, contract):
         return (self.fx.get("proof") or {}).get("function") or self.PROOF_FUNCTION
 
-    def prepare_proofs(self, store_dir):
+    def prepare_proofs(self, store_dir, method=None):
         """Write the fixture file's contract-fixture contract proofs into the campaign store, once.
+
+        `method` is the gate's method-version pin (fix-21: it may be a draft the campaign names); without
+        it the records pin the current frozen method version.
 
         `contract_proofs: {contract: {parts: [part names] (default [unit_postcondition]), minimum_bounds:
         {threads_1: bounds, threads_k: bounds}}}`: each part is a proven record over unbounded data and threads;
@@ -302,7 +305,7 @@ class FixtureAdapter(TargetAdapter):
         from swdb.store import Store
         store = Store(store_dir)
         library = Library(default_root(store_dir))
-        method = method_version.pin(method_version.current(default_root(store_dir)))
+        method = method or method_version.pin(method_version.select(default_root(store_dir)))
         for contract, spec in sorted((self.fx.get("contract_proofs") or {}).items()):
             if library.get(contract) is None:
                 raise UsageError(f"fixture contract_proofs names {contract}, which the campaign's library does not hold")

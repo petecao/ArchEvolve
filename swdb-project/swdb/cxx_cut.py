@@ -34,7 +34,7 @@ class CxxCode:
         self._visit(function, unit=True)
 
     def _visit(self, name, unit=False):
-        node = c_lowering._function(self.tool, self.source, name, (), self.defines, unit=unit)
+        node = _function(self.tool, self.source, name, self.defines, unit)
         self.nodes[name] = node
         self.functions.append(name)
         body = next(c for c in node.get("inner", []) if c.get("kind") == "CompoundStmt")
@@ -74,7 +74,7 @@ class CxxCode:
             if not param.get("name"):
                 raise c_lowering.Unsupported(f"unnamed parameter of {function}")
             params.append((param["name"], qual, "*" in qual))
-        returns = _scalar(c_lowering._return_type(c_lowering._qual(node), None), allow_void=True)
+        returns = _scalar(c_lowering._qual(node).split("(")[0].strip(), allow_void=True)
         return tr.Interface(function=function, returns=returns, parameters=tuple(params),
                             globals=tuple((name, ctype) for name, ctype, _text in self.globals))
 
@@ -91,6 +91,26 @@ class CxxCode:
         for name in self.functions:
             parts.append(stubs[name].rstrip("\n") if name in stubs else self._text(self.nodes[name]))
         return "\n".join(parts) + "\n"
+
+
+def _function(tool, source, name, defines, unit):
+    """The one FunctionDecl with a body that `source` gives `name` (a free function, no template or member)."""
+    nodes = c_lowering._dump(tool, source, name, (), defines)
+    if c_lowering._named(nodes, name, {"FunctionTemplateDecl"}):
+        raise c_lowering.Unsupported(f"function template {name}")
+    found = [n for n in c_lowering._named(nodes, name, {"FunctionDecl"})
+             if any(c.get("kind") == "CompoundStmt" for c in n.get("inner", []))]
+    if not found:
+        if c_lowering._named(nodes, name, {"CXXMethodDecl", "CXXConstructorDecl", "CXXDestructorDecl"}):
+            raise c_lowering.Unsupported(f"member function {name}")
+        if unit:
+            raise c_lowering.NotFound(f"{Path(source).name} defines no function {name}")
+        raise c_lowering.Unsupported(f"call to a function with no body in the translation unit: {name}")
+    if len({(n.get("loc") or {}).get("offset") for n in found}) > 1:
+        raise c_lowering.Unsupported(f"overloaded function {name}")
+    if str(found[0].get("mangledName", name)).startswith(("_ZN", "__ZN")):
+        raise c_lowering.Unsupported(f"function {name} inside a namespace or class")
+    return found[0]
 
 
 def _walk(node, locals_, refs):

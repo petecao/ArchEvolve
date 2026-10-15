@@ -61,7 +61,8 @@ def require_budget(campaign):
     """A new campaign whose library holds a method version (it will have a WP phase) must set
     `budgets.provider_calls_proof`: budgets come from the campaign file, never from a default."""
     from swdb import bounded_gate
-    if bounded_gate.method_version_of(campaign.library_root) is not None and BUDGET not in campaign.data["budgets"]:
+    found = bounded_gate.method_version_of(campaign.library_root, campaign.data.get("method_version"))
+    if found is not None and BUDGET not in campaign.data["budgets"]:
         raise Failure(f"campaign file refused:\n  budgets.{BUDGET}: required when the campaign's library holds a "
                       "method version (the WP phase's proof-hint calls; the spec default is 30)")
 
@@ -116,7 +117,8 @@ class Phase:
     def __init__(self, campaign):
         from swdb import bounded_gate
         self.c = campaign
-        found = bounded_gate.method_version_of(campaign.library_root)
+        found = bounded_gate.method_version_of(campaign.library_root, campaign.data.get("method_version"))
+        self.method_id = found.id                     # fix-21: a pinned draft runs the WP jobs too
         values = found.data.get("budgets") or {}
         for name in METHOD_BUDGETS:
             value = values.get(name)
@@ -285,7 +287,8 @@ class Phase:
         runs.mkdir(parents=True, exist_ok=True)
         args = Namespace(records=self.c.store_dir, candidate=cid, function=self.c.adapter.proof_function(contract),
                          contract=contract, adapter=adapter, script=[script] if script else None, skip=skip,
-                         runs_dir=runs, batch=batch, position=position, id=None, run_index=None, provider_kind=None,
+                         runs_dir=runs, batch=batch, position=position, id=None, method_version=self.method_id,
+                         run_index=None, provider_kind=None,
                          provider_model=None, provider_effort=None, format="json", bounds=None, minimum_bounds=None,
                          budget_minutes=None if skip else self.budgets["hint_loop_wall_minutes"])
         return proof.prove(args)["record"]
