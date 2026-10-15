@@ -21,7 +21,7 @@ import yaml
 
 from conftest import FIXTURES, REPO, make_records, run_swdb
 from test_proof_records import _library_roots
-from test_wp_adapter import ANCHOR_BEFORE, method_version
+from test_wp_adapter import ANCHOR_BEFORE, _hints, method_version
 from testkit.proposals import build_proposal_setup
 from testkit.record_subset import copy_record_subset
 
@@ -231,7 +231,8 @@ class Seed:
     def unit(self, group, candidate="safe", function=None, ok=True):
         name, _clauses, _arrays, hints = {**GROUPS, **BUG_UNITS}[group]
         path = self.root / f"hints-{group}.yaml"
-        path.write_text(yaml.safe_dump({"hints": [{"anchor": a, "acsl": t} for a, t in hints]}))
+        records = [h for a, text in hints for h in _hints(a, *text.splitlines())]       # ticket 35's hint records
+        path.write_text(yaml.safe_dump({"hints": records}))
         return self.prove("--candidate", self.candidates[candidate], "--function", function or name,
                           "--contract", contract_id(group), "--hint-file", path, ok=ok)
 

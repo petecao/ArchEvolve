@@ -36,7 +36,7 @@ from zoneinfo import ZoneInfo
 
 from swdb import artifacts, yamlio
 
-VERSION = "level-rule.1"
+VERSION = "level-rule.2"   # ticket 61 (main session, 2026-10-14): measurements, bounded_direct cap, candidate baseline pin
 UNBOUNDED = "unbounded"
 ORDER = ("uncertified", "certified", "proven_within_bounds_threads_1", "proven_within_bounds_threads_k",
          "proven_unbounded")
@@ -46,6 +46,7 @@ MINIMUM_PART = "minimum_bounds_derivation"
 PROOF_SEMANTICS_FOLDER = "proof_semantics"
 LOGIC_PARTS = ("logic_lemmas", "logic_false_check")    # ticket 26: method parts about one logic file
 BELOW_MINIMUM = "bounded check below minimum"
+BOUNDED_DIRECT = "bounded_direct"        # ticket 61: whole-function equivalence; capped at threads = 1 within bounds
 WORDS = {"proven_unbounded": "proven unbounded",
          "proven_within_bounds_threads_k": "proven within bounds, threads ≤ k",
          "proven_within_bounds_threads_1": "proven within bounds, threads = 1",
@@ -100,6 +101,11 @@ class Rule:
             return _not_counting("-", f"no proof record {rid}")
         self._status[rid] = _not_counting("-", "the record depends on itself")
         stale = list(self.pin_problems(record)) + list(self._void_problems(record))
+        bounds = record.get("bounds") or {}
+        if record.get("route") == BOUNDED_DIRECT and record.get("verdict") == "proven" and \
+                (bounds.get("threads") != 1 or UNBOUNDED in bounds.values()):
+            stale.append({"pin": "route", "reason": "a bounded_direct record above proven within bounds, threads = 1 "
+                                                    "never counts (ticket 61; map 24 item 1)"})
         dependencies, more = self._dependencies(record)
         stale += more
         result = {"counts": not stale, "stale": stale, "bounds": None, "caps": [], "uses": dependencies,
@@ -313,6 +319,8 @@ class Rule:
 
     def current_snapshot(self, ident):
         snapshot = self.store.get(ident or "", "source_snapshot")
+        if snapshot is None:      # ticket 61: a whole-function baseline may be another candidate artifact's code
+            snapshot = self.store.get(ident or "", "candidate")
         return (snapshot.get("artifact") or {}).get("sha256") if snapshot else None
 
     def current_method(self, ident):
@@ -364,6 +372,8 @@ class Rule:
         records = sorted((r for r in self.proofs.values()
                           if (r.get("subject") or {}).get("kind") == "candidate_proof_unit"
                           and r["subject"].get("candidate") == candidate_id), key=lambda r: r["id"])
+        measurements = [r for r in records if is_baseline_measurement(r)]      # ticket 61: never a level
+        records = [r for r in records if not is_baseline_measurement(r)]
         units = []
         for contract in sorted(contracts):
             mine = [r for r in records if ((r.get("pins") or {}).get("contract") or {}).get("id") == contract]
@@ -395,6 +405,8 @@ class Rule:
                 "stale_proofs": stale, "below_minimum": below, "direct_proofs": direct,
                 "skipped": [{"record": r["id"], "skip_reason": r["skip_reason"]} for r in records
                             if r.get("skip_reason")],
+                "baseline_measurements": [{"record": r["id"], "verdict": r.get("verdict"), "bounds": r.get("bounds")}
+                                          for r in measurements],
                 "proof_records": [r["id"] for r in records]}
 
     def _refuted(self, records):
@@ -435,6 +447,12 @@ class Rule:
             for dependency in self.status(rid)["uses"]:
                 pending += [dependency["record"]] if "record" in dependency else list(dependency.get("records", []))
         return list(entries.values())
+
+
+def is_baseline_measurement(record):
+    """Ticket 61: a no-contract-baseline record (route bounded_direct, contract pin not applicable): a measurement for
+    the evaluation (map 23 item 2), never part of a candidate artifact's level, and never its refuted flag."""
+    return record.get("route") == BOUNDED_DIRECT and _not_applicable((record.get("pins") or {}).get("contract"))
 
 
 def current_versions(library_root, folder):

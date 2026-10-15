@@ -1,13 +1,17 @@
 (* Probata Rocq development: the DX100 reduction lemma (statement only).
    Created 2026-10-14 ET (ticket 41).  Revised 2026-10-14 ET after Codex's adversarial review
-   and the main session's decisions (F2, M6).  Proof: ticket 43.  Review guide: HYPOTHESES.md.
+   and the main session's decisions (F2, M6).  Revised 2026-10-14 ET by the main session under
+   Yan-Ru's delegation (ticket 41, Later changes): the issue-stall and register-write covers
+   ticket 27 found missing, and an inclusive pending set.
+   Proof: ticket 43.  Review guide: HYPOTHESES.md.
    Map decisions: 12 items 1-5 (and Later changes); research 14 (wait rule, gem5 e4fc4af);
    research 12 (region stall across the cores of one instance).
 
    Two semantics of the same multi-core program and one DX100 instance:
    - timed (what gem5 allows): commands run and finish at any time the gem5 rules permit;
    - at-issue (the proof semantics): each command runs at its issue; a ghost "pending" set
-     says which commands no wait has covered yet; hazards are checked against it.
+     says which commands no covering step (a wait, a stalled issue, a CPU register write)
+     has covered yet; hazards are checked against it.
    The lemma: if the command contracts are well formed and no at-issue run has a hazard,
    every complete timed run is matched by an at-issue run with the same observations and
    the same final state.  CPU steps are in one global order here (M6; ticket 43 must show
@@ -165,7 +169,7 @@ Definition timed_run (T : run) : Prop :=
   (forall m c t, nth_error T m = Some (SCpu c (TileReady t) (Answer false)) ->
      exists n c' k', issued T n c' k' /\ unfinished T n m /\ names_counted k' t).
 
-(* every command runs and finishes before the run ends; a command no wait covers may finish
+(* every command runs and finishes before the run ends; a command nothing covers may finish
    at any time before that *)
 Definition complete_timed (T : run) : Prop :=
   (forall c, prog c (observations T c) = Halt) /\
@@ -175,20 +179,39 @@ Definition complete_timed (T : run) : Prop :=
 Definition waits_at (A : run) (m : nat) (t : tile) : Prop :=
   exists c, nth_error A m = Some (SCpu c (WaitReady t) Ack) \/
             nth_error A m = Some (SCpu c (TileReady t) (Answer true)).
-(* A wait on tile t covers every command naming t in a counted role and, transitively, the
-   producers of their inputs, but not through a range loop (research 14, section 4).
-   A covered command also covers every earlier command that would have stalled its
-   dispatch (IF.cc:193-219): that command finished before it was dispatched (F5). *)
+(* What covers command n at covering step m.  Three base covers, each a gem5 rule that holds
+   the CPU at step m until the command has finished (each mirrors a clause of timed_run), and
+   two closure rules that extend a cover backward to earlier commands:
+   - base, a wait on tile t covers every command naming t in a counted role
+     (research 14, section 4);
+   - closure, the producers of a covered command's inputs are covered, but not through a
+     range loop (research 14, section 4);
+   - closure, a covered command also covers every earlier command that would have stalled
+     its dispatch (IF.cc:193-219): that command finished before it was dispatched (F5;
+     implied by cov_issue for pending, kept);
+   - base, the issue of a command covers every earlier command that stalls its dispatch; the
+     CPU's issuing store is not acknowledged until dispatch (CpuSidePort.cc:235-250,
+     MAA.cc:581-583, research 14 section 2)
+     (destination tile IF.cc:193-212, region IF.cc:213-219; ticket 27);
+   - base, a CPU write of a register covers every earlier command naming the register: gem5 holds
+     the write until no unfinished command names it (IF.cc:233-249; ticket 27). *)
 Inductive covered (A : run) (n m : nat) : Prop :=
 | cov_direct c k t : issued A n c k -> n < m -> waits_at A m t -> names_counted k t ->
     covered A n m
 | cov_producer c k n' c' k' : covered A n' m -> issued A n c k -> issued A n' c' k' ->
     n < n' -> is_range_loop k' = false -> produces k k' -> covered A n m
 | cov_stall c k n' c' k' : covered A n' m -> issued A n c k -> issued A n' c' k' ->
-    n < n' -> stalls k k' -> covered A n m.
-(* ghost state: issued at n, not covered by any wait before step j *)
+    n < n' -> stalls k k' -> covered A n m
+| cov_issue c k c' k' : issued A n c k -> issued A m c' k' -> n < m -> stalls k k' ->
+    covered A n m
+| cov_reg_write c k c' r v g : issued A n c k -> n < m ->
+    nth_error A m = Some (SCpu c' (CpuWrite r v) Ack) -> in_reg r g -> In g (cmd_regs k) ->
+    covered A n m.
+(* ghost state: issued at n, not covered by any step up to and including step j.  Inclusive:
+   a covering step (a register write, an issue) acts only once gem5 has finished the command,
+   the same "finished before step j" boundary as timed_run's unfinished T n j. *)
 Definition pending (A : run) (n j : nat) : Prop :=
-  (exists c k, issued A n c k) /\ n < j /\ forall m, m < j -> ~ covered A n m.
+  (exists c k, issued A n c k) /\ n < j /\ forall m, m <= j -> ~ covered A n m.
 
 Definition at_issue_run (A : run) : Prop :=
   follows_program A /\ cpu_ok A /\
