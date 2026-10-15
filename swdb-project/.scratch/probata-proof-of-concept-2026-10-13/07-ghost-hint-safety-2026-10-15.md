@@ -36,8 +36,8 @@ rejection change, not a relaxed check.
 
 At the existing public hint-check and loop-precheck seams, the controls first failed:
 unsafe model-shadow hints reached the would-be verifier; model writes, aliases, and
-calls were accepted. After the repair, all 51 prototype tests pass (the original 26
-plus 25 safety/preservation controls). The precheck control confirms that rejection
+calls were accepted. After the repair, all 54 prototype tests pass (the original 26
+plus 28 safety/preservation controls). The precheck control confirms that rejection
 happens before a verifier call or run directory is created. Coverage includes all three
 trusted headers, direct/indexed calls, hidden ghost statements, duplicate witness names,
 macro tokens, pure indexed snapshots, fresh scalar reassignment, and existing strategies.
@@ -51,7 +51,7 @@ Command (from the repository root):
 python -m pytest swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_hints.py swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_loop_tool.py swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_edit_loop.py -q
 ```
 
-The selected interpreter was Python 3.12.6, pytest 9.0.3. The final run took 0.12 seconds.
+The selected interpreter was Python 3.12.6, pytest 9.0.3. The final run took 0.10 seconds.
 No real verifier, external agent CLI, or expensive hint loop was run for this repair.
 
 ## Evidence boundary
@@ -68,3 +68,14 @@ A short read-only diagnosis of the outstanding goals is outside the repository a
 validity preconditions for the queue and parent gathers; the hint debts comprise 11
 loop-invariant obligations, 3 assertions, 2 variant obligations, and one helper lemma.
 No missing result was replaced by an assumption.
+
+### Preprocessing boundary hardening, 2026-10-15 ET
+
+The ghost-expression guard explicitly refuses `??` sequences, which have no legitimate
+use in the admitted pure expression language and could be transformed by C trigraph
+processing before line splicing. Controls cover `dx_count >>??/` followed by newline and
+`= 31`, an unsupported `??` expression, and an ordinary comparison/ternary expression.
+The exact shift/newline example was already refused by the plain-assignment check; the
+new explicit rejection removes reliance on recognizing the later operator spelling.
+This is lexical safety hardening, not evidence that a trigraph attack executed under the
+installed compiler's default flags. No preprocessing or solver run was needed.

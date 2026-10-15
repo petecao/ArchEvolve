@@ -196,7 +196,8 @@ def ghost_problems(base, hints):
                     why = "only simple scalar ghost declarations and assignments are allowed"
                     break
                 if expression is not None and (
-                        not re.fullmatch(r"[A-Za-z_0-9\s()\[\]+*/%<>=!~^|?:.-]+", expression)
+                        "??" in expression
+                        or not re.fullmatch(r"[A-Za-z_0-9\s()\[\]+*/%<>=!~^|?:.-]+", expression)
                         or re.search(r"\b[A-Za-z_]\w*\s*\(|[)\]]\s*\(|\+\+|--|<<=|>>=|(?<![<>=!])=(?!=)", expression)):
                     why = "ghost witness expressions may not call, take addresses, or mutate state"
                     break

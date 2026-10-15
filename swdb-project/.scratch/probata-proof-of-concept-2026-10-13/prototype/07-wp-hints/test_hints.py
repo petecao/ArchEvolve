@@ -251,3 +251,18 @@ def test_ghost_rhs_non_strict_comparisons_remain_allowed():
     hs = [rec("stmt:entry", "ghost", "ghost int hint_le = (n <= 1);", "le"),
           rec("stmt:entry", "ghost", "ghost int hint_ge = (n >= 1);", "ge")]
     assert H.check(STANDIN, hs) == []
+
+
+@pytest.mark.parametrize("expression", [
+    "(dx_count >>??/\n= 31)",
+    "(dx_count ?? 1)",
+])
+def test_ghost_rhs_refuses_preprocessing_trigraph_sequences(expression):
+    standin = "int dx_count;\n" + STANDIN
+    hs = [rec("stmt:entry", "ghost", f"ghost int hint_trigraph = {expression};")]
+    assert any(b["rule"] == "ghost_ownership" for b in H.check(standin, hs))
+
+
+def test_ghost_rhs_comparison_and_ordinary_ternary_remain_allowed():
+    hs = [rec("stmt:entry", "ghost", "ghost int hint_choose = (n <= 1 ? 1 : 0);")]
+    assert H.check(STANDIN, hs) == []
