@@ -1,29 +1,23 @@
 # Map: Extensa Probata proof of concept
 
 Created: 2026-10-14 00:45 ET
-Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Closeout target: `yanrujhou_main`; archived integration branch: `codex/probata-poc-integration`.
+Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `yanrujhou_main`; archived effort history: `probata-source-recovery-20261015`.
 
 ## Current state (resume here)
 
-Updated: 2026-10-15 ET. Implementation, evaluation and provider work are paused
-by user direction. Closeout review, documentation, merge and cleanup remain in
-progress. Root's bounded final controls passed313 tests (42 deselected); no
-watchdog/OOM failure. This is scoped validation, not a new evaluation campaign. The progress heartbeat is **PAUSED**.
+Updated: 2026-10-15 14:31 ET. **Paused; reviewed closeout and cleanup complete.**
+Implementation and handoff are on `yanrujhou_main`; the old heartbeat is PAUSED.
 
-- **32 resolved / 31 ready-for-agent / 0 claimed**, recomputed from all 63 tickets.
-  No ticket is force-closed. Released tickets: 07, 24, 25, 27 and 36.
-- **Dependency frontier:** 07, 24 and 27; 25 waits on 24, and 36 waits on 27.
-  No implementation agents or verifier/provider campaigns are assigned. Root owns
-  any still-active bounded final controls and the remaining closeout steps.
-- Reviewed checkpoint: `53471f7f`, compared with `yanrujhou_main` at `150930b4`.
-  Final review requested one docstring correction and recorded the inherited
-  independent RTE admission gap for ticket 36; no new runtime feature is added.
-- Qualified stall evidence is accepted: **111 ordinary + 35 smoke checks** at
-  `9940b155`. Other evidence retains its own source/method pins. Full ticket
-  acceptance, held-out work and final method freeze remain open.
+- **32 resolved / 31 ready-for-agent / 0 claimed.** No unmet ticket was force-closed.
+  Ready frontier: 07, 24, 27;25 and36 remain dependency-gated.
+- Final validation: 313 passed / 42 deselected; standards comment fixed, no new
+  actionable runtime defect found by the separate spec review.
+- Cleanup:30 remote branches, 53 local branches, 33 idle worktrees removed after
+  verified archive/tag/bundle and dirty-source snapshots. Raw outputs retained.
+- Qualified stall: 111 ordinary + 35 smoke is a scoped historical proof, not full ticket 27
+  acceptance. Drafts 1/2 immutable; no draft 3/final method freeze/held-out campaign.
 - [Cold-start handoff](HANDOFF.md), [all-ticket index](ticket-status-20261015.md),
-  [current resume](resume.md), [review decisions](evidence/final-review-closeout-20261015.md),
-  [accepted stall](evidence/t27-stall-qualified-accepted-20261015.json).
+  [resume](resume.md), [completion receipt](evidence/closeout-complete-20261015.json).
 
 ## Historical integration checkpoints
 

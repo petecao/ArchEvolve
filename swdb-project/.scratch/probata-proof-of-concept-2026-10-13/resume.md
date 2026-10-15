@@ -4,76 +4,48 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 ET. **Implementation, evaluation and provider work are paused
-by user direction.** Closeout review, documentation, merge and cleanup are still
-in progress. Root's bounded final controls at frozen `53471f7f` completed:313 passed,42
-deselected in747.43s, no timeout/OOM. This is scoped closeout validation, not a
-new evaluation campaign. No implementation agents or
-verifier/provider campaigns are assigned. The progress heartbeat is **PAUSED**.
-The reviewed docstring-only fix has identical executable AST; final merge and
-recovery cleanup are still pending. [Cold-start handoff](HANDOFF.md) and
-[all-ticket index](ticket-status-20261015.md) are authoritative resumption pointers.
+Updated: 2026-10-15 14:31 ET. **Paused at the user's request; closeout is complete.**
+The implementation, review fixes and handoff are on `yanrujhou_main` (published
+checkpoint `8bae60b9` plus this documentation receipt). No implementation,
+evaluation or provider worker remains. The old progress heartbeat is **PAUSED**.
 
-All 63 ticket files now contain **32 resolved / 31 ready-for-agent / 0 claimed**.
-The five unfinished claims (07/24/25/27/36) are released without closing any
-acceptance criteria. The dependency frontier is **07, 24, 27**; 25 waits on 24,
-36 on 27, and the other 26 open tickets retain their unresolved dependencies.
-Drafts 1/2 remain immutable; draft 3 and the final method freeze do not exist.
+**32 resolved / 31 ready-for-agent / 0 claimed**, from all 63 ticket files. The five
+unfinished claims were released without closing unmet acceptance criteria. Ready
+frontier: **07, 24, 27**; 25 waits on 24 and 36 on 27. Other open tickets retain their
+dependencies. Drafts 1/2 remain immutable; draft 3 and final method freeze do not exist.
 
-| Ticket | Retained evidence | Remaining work after resumption |
+| Ticket | Accepted checkpoint | Remaining work |
 |---|---|---|
-| 07 | Method19 unproven: 27/237 open, 52.04 counted minutes; method20 unlaunched with 158 controls | Reviewed fresh counted run, every goal, final smoke and covering-wait negative; no qualifying BFS proof |
-| 24 | Qualified copy and original class safe/negative records; pure condition slice 72 focused controls | Full current-policy construct/dependency acceptance, embedded template-array origins, conditional access placement and broader lifetime coverage |
-| 25 | Bounded maximum and matching stale-data/iterator/at source replays accepted | Allocating member bodies, receiver domains and complete WP/bounded agreement; blocked by 24 |
-| 27 | Qualified stall at 9940b155: 111 ordinary + 35 smoke checks; distinct query/transitive evidence retained | Full qualified safe/negative, values/register/range/footprint/capacity matrix and verifier agreement |
-| 36 | Focused setup/source replay/verdict controls and two-axis review checkpoint | Independent RTE admission check before final freeze, remaining setup criteria; blocked by 27 |
+|07|Method19 unproven: 27/237 open, 52.04 counted minutes; method20 unlaunched, 158 controls|Fresh reviewed/frozen counted run, all goals, final smoke and covering-wait negative|
+|24|Original class safe: 146 ordinary + 11 smoke; seeded negative open invariant; 72 condition controls|Full construct-group actual matrix, embedded template-array origins, conditional reads and lifetime criteria|
+|25|Bounded maximum, stale data/iterator and at pair audited; WP owner/pipeline conditional slices|Allocating member body proofs, explicit receiver domains, complete agreement; blocked by 24|
+|27|Qualified stall: 111 ordinary + 35 smoke at `9940b155`; separately pinned query/store/transitive evidence|Full current-policy positive/negative, values/register/range/footprint/capacity and agreement matrix|
+|36|Focused setup/source/verdict controls; known evidence boundaries retained|Independent RTE admission check before final freeze, remaining setup acceptance; blocked by 27|
 
-The final review of `53471f7f` against `150930b4` found no new runtime must-fix.
-The stale bounded-planner docstring is corrected; the inherited reliance on
-method flags for `-wp-rte` is recorded in ticket 36. Current actual methods include
-that flag; this is not evidence of a false proof. No flag-policy feature is added
-during closeout. Historical actual results are not relabeled as proofs of the
-current integrated runtime.
+Two-axis review at `53471f7f` found one stale explanatory comment (fixed) and no new
+actionable runtime defect. The inherited reliance on method flags for `-wp-rte`
+is recorded under ticket 36 before freeze; current actual methods include that flag.
+Final scoped validation: **313 passed / 42 deselected**, 747.43 s, no timeout/OOM;
+review fix changes only a docstring and has identical executable AST. Historical
+actual records are never relabeled as proofs of the final integrated source.
 
-Durable pointers: [review decisions](evidence/final-review-closeout-20261015.md),
-[method19 negative audit](evidence/t07-method19-negative-20261015.json),
-[unlaunched method20](evidence/t07-method20-prospective-20261015.json),
-[class lifetimes](evidence/t24-member-lifetimes-mac-20261015.json),
-[condition slice](evidence/t24-condition-closeout-20261015.json),
-[vector controls](evidence/t25-next-controls-accepted-20261015.json),
-[deferred vector design](evidence/t25-vector-receiver-domain-deferred-20261015.json),
-[qualified stall](evidence/t27-stall-qualified-accepted-20261015.json),
-[footprint query](evidence/wp-footprint-query-20261015.json).
+Cleanup removed 30 remote branches, 53 local branches and 33 idle worktrees after
+verified recovery snapshots. Recovery tag `probata-source-recovery-20261015` and a complete
+local bundle retain historical tips and two dirty snapshots. Unrelated LANL and
+`.claude` worktrees and all raw evaluation outputs remain. The final receipt is
+[evidence/closeout-complete-20261015.json](evidence/closeout-complete-20261015.json).
 
-## Retained host and closeout observations
+Start a new session with [HANDOFF.md](HANDOFF.md), [map](map.md),
+[all-ticket status](ticket-status-20261015.md), and ticket acceptance text.
+[Review](evidence/closeout-code-review-20261015.md),
+[validation](evidence/closeout-validation-20261015.json), and the handoff preserve
+exact source pins, remaining blockers and source-restoration commands. Attach any
+resumed heartbeat to the new chat; leave this old chat paused.
 
-The observations below are historical, not current lease claims. No further
-remote evaluation is scheduled. Root owns final validation, merges and cleanup;
-retain raw proof artifacts and recovery inputs until their acceptance/audit readers
-finish. Recheck actual host state before any later dispatch.
-
-### Last accepted remote control readback
-
-Both controls at frozen **94769312** completed with zero wrapper exits and no
-watchdog/OOM failure. Iterator: 1 passed in 222.45 s, refuted with matching
-source-C++ use-after-free. At pair: 1 passed in 302.84 s, unchecked refuted and
-guarded proven. All three records, 26 report/log references, declared physical
-pins, 203 source pins per lane and three certificate self-hashes match.
-[Final audit](evidence/t25-next-controls-accepted-20261015.json),
-[prospective launch](evidence/t25-next-controls-launch-20261015.json).
-
-Read-only live check **2026-10-15 13:56 ET** found node 0 generation 568,
-node 1 generation 600 and legacy generation 77 released, no owned evaluation
-process, clean detached source `94769312`, load 0.40/0.85/0.76, and 21 GiB free
-on `/data1` / 95 GiB on `/data`. These are timestamped observations.
-Raw outputs remain at
-`/data/yanruj/EvolveSWDB_runs/probata-t25-next-controls-20261015-1347-node0` and
-`...-node1`; only compact metadata returned to the Mac. Coordinator, ticket25
-acceptance and independent audit readers retain these outputs. No further remote
-evaluation is scheduled during closeout. Local/remote effort refs and attached
-checkouts have a [recovery-safe inventory](evidence/closeout-branch-inventory-20261015.json);
-its exact tips require refreshing after final integration, and it authorizes no deletion. Root owns lane coordination and cleanup;
-no remote path may be removed without checking current use and root authorization.
+Last live mbit10 readback: 2026-10-15 14:25 ET; node 0 generation 568 / node 1 generation 600 / legacy 77
+released, no owned evaluation process, clean frozen `94769312`, origin main updated.
+No remote worktree or raw output was removed. This is a timestamped observation;
+recheck leases/processes/load/storage/wrapper before any new dispatch.
 
 ## Historical integration snapshots
 
