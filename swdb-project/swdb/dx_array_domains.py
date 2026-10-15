@@ -145,3 +145,92 @@ def certify(candidate, origin, site):
     return {key: site.get(key) for key in ("function", "anchor", "source_line", "source_range")} | {
         "call": call, "scalar_arguments": list(arguments), "origin": dict(origin),
         "policy": candidate["policy"], "predicate": predicate}
+
+
+# Exact trusted WP contract for the audited C query: it observes pointer values,
+# never reads the pointed-to host cell, writes state or retains a caller pointer.
+QUERY_CONTRACT = r"""requires 0 <= tile < DX_NT;
+assigns \nothing;
+ensures \result == 1 <==> (dx_tile_writer[tile] >= 0 && dx_in_footprint(dx_tile_writer[tile], (int *)addr));"""
+
+
+def certify_query(node, policy, site):
+    """One exact bodyless imported query; pointer formation stays independently checked."""
+    from swdb import bounded_initialization
+    model = policy.get('model', {})
+    children = _children(node)
+    callee = _strip(children[0], callee=True) if children else {}
+    ref = callee.get('referencedDecl', {})
+    if (policy.get('call') != 'swdb_dx_in_footprint' or
+            re.sub(r'\s+', '', policy.get('query_contract', '')) != re.sub(r'\s+', '', QUERY_CONTRACT) or
+            model.get('components') != bounded_initialization.DX100_CONTENT or
+            policy['call'] not in model.get('calls', []) or
+            any(not re.fullmatch(r'[a-f0-9]{64}', str(model.get(key, '')))
+                for key in ('entry_sha256', 'generated_sha256')) or
+            node.get('kind') != 'CallExpr' or len(children) != 3 or
+            callee.get('kind') != 'DeclRefExpr' or ref.get('kind') != 'FunctionDecl' or
+            ref.get('name') != policy['call'] or
+            re.sub(r'\s+', '', ref.get('type', {}).get('qualType', '')) != 'int(int,constint*)' or
+            re.sub(r'\s+', '', children[2].get('type', {}).get('qualType', '')) != 'constint*' or
+            not site.get('binding')):
+        raise Refused('footprint query needs its exact audited read-only pointer-value model and contract')
+    # No generated expression is evaluated twice. Keep a deliberately small pure
+    # argument grammar, leaving the normal access and formation inventory intact.
+    def walk(part):
+        yield part
+        for child in _children(part):
+            yield from walk(child)
+    for argument in children[1:]:
+        for part in walk(argument):
+            kind, op = part.get('kind'), part.get('opcode')
+            if (kind.endswith('CallExpr') or kind in {'ConditionalOperator', 'BinaryConditionalOperator',
+                    'CompoundAssignOperator', 'CXXNewExpr', 'CXXDeleteExpr', 'CXXThrowExpr'} or
+                    kind == 'UnaryOperator' and op in {'++', '--'} or
+                    kind == 'BinaryOperator' and op in {'=', ',', '&&', '||'} or
+                    'volatile' in part.get('type', {}).get('qualType', '')):
+                raise Refused('footprint query arguments require pure single-evaluation source operands')
+    tile = _scalar(children[1])
+    statement = site.get('_statement') or {}
+    parts = _children(statement)
+    value = parts[0] if len(parts) == 1 else {}
+    if (statement.get('kind') == 'DeclStmt' and value.get('kind') == 'VarDecl' and _qual_type(value) == 'int'
+            and not value.get('storageClass') and not value.get('tls') and not value.get('constexpr')
+            and not any(n.get('kind', '').endswith('Attr') for n in _children(value))):
+        initializers = _children(value)
+        value = initializers[0] if len(initializers) == 1 else {}
+    elif statement.get('kind') == 'CallExpr':
+        value = statement
+    elif statement.get('kind') != 'ReturnStmt':
+        value = {}
+    if _strip(value).get('id') != node.get('id') or not site.get('anchor'):
+        raise Refused('footprint query domain needs one unconditional direct call as its entire statement value')
+    return {**{k: v for k, v in site.items() if not k.startswith('_')},
+            'kind': 'query', 'call': policy['call'], 'admission_only': False,
+            '_pointer_argument': children[2], 'tile_argument': tile,
+            'reason': '', 'query_policy': policy, 'check': identity(),
+            'pointer_effect': 'pointer value observed only; no host dereference, writes or escape'}
+
+
+
+def _qual_type(node):
+    return ' '.join(node.get('type', {}).get('qualType', '').split())
+
+
+def query_domain(query, origin):
+    """Conservative native/abstract-pointer agreement boundary, as a checked VC.
+
+    Native uintptr comparisons can conflate one-past and an adjacent object.
+    Requiring the queried command and address root to share their array object
+    excludes that cross-root case, while allowing same-root one-past misses.
+    An idle writer has an empty footprint independently of the address.
+    """
+    if not origin or origin.get('kind') != 'entry_window' or origin.get('element_type') != 'int':
+        raise Refused('footprint query domain needs an exact stable int entry-window array-object origin')
+    root = origin.get('root')
+    if not root or not re.fullmatch(r'[A-Za-z_]\w*', root):
+        raise Refused('footprint query root is not a stable primitive source binding')
+    tile = query['tile_argument']
+    writer = f'dx_tile_writer[{tile}]'
+    return {'origin': origin, 'predicate': f'0 <= {tile} < DX_NT && ({writer} < 0 || '
+            f'(0 <= {writer} < DX_K && \\base_addr({root}) == \\base_addr(dx_base[{writer}])))',
+            'model_domain': 'idle writer or query and pending command share the same array object'}

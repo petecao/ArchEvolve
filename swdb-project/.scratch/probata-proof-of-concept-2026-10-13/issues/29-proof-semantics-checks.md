@@ -37,3 +37,16 @@ Updated: 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-13 23:15 ET (revie
 - Risk: the strict layer applies DX100 memory effects at the call, so the memory-timing rules stay on the "stricter" list until ticket 51. If 51 is cut (cut order 2), replays (60 — Strict-layer replay and whole-kernel reproduction) of refutations that use them stay "proof semantics only" (map 27 item 7).
 - Mac: one real verifier job at a time under the ~8 GB RSS watchdog. Before the full scenario batch, record its output destination, size budget and readers (LR-06); if it runs past 30 minutes, post the 30-minute heartbeat (LR-07).
 - Assumption (not decided in the map): the citation of this ticket's agreement, form and control records is resolved on read by proof-semantics version, never stored on a proof record. A record that pins a version whose checks do not exist yet reads "proof semantics unchecked" in its assumption entry and counts once the checks pass; a failed check voids the version (10).
+
+
+### Retained agreement boundary — 2026-10-15 ET
+
+An exact complete native-model finite case observes one-past of one automatic
+array at the numerical address of an adjacent distinct array and answers the
+footprint query true. ACSL additionally distinguishes the physical object. The
+production query slice now requires a separately proved same-object domain; this
+does not establish general agreement of the inherited native query and ACSL.
+Retained source, output and independent review:
+`prototype/27-proof-semantics/checks/query-address-boundary-20261015/`.
+[Evidence](../evidence/wp-footprint-query-20261015.json). Account for this boundary
+in the scenario/agreement matrix after28; no public false proof is claimed.
