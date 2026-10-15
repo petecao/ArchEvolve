@@ -1,0 +1,91 @@
+// DX100 proof semantics 0.1 (semantics.dx100_bfs_0_1): logic definitions over the ghost state (ghost.acsl)
+// and the device state (state.h) that the ACSL call contracts (the WP form) use.
+// Created: 2026-10-14 ET (Probata proof of concept ticket 27). Each definition mirrors the function of the
+// same name in model.h (the CBMC form); ticket 29 checks the forms agree. Masks are integers; bit s is slot s.
+
+predicate dx_has(integer m, integer s) = ((m >> s) & 1) != 0;
+
+// Live slots naming tile t in a counted role (src1, src2, dst1, dst2): what a wait on t covers directly.
+logic integer dx_counted{L}(integer t, integer n) =
+  n <= 0 ? 0 :
+  dx_counted(t, n - 1) |
+    ((dx_has(dx_live, n - 1) && (dx_dst1[n - 1] == t || dx_dst2[n - 1] == t || dx_src1[n - 1] == t ||
+                                 dx_src2[n - 1] == t)) ? (1 << (n - 1)) : 0);
+
+// Live slots naming tile t in any role, condition included: what a command with destination t stalls on.
+logic integer dx_naming{L}(integer t, integer n) =
+  n <= 0 ? 0 :
+  dx_naming(t, n - 1) |
+    ((dx_has(dx_live, n - 1) && (dx_dst1[n - 1] == t || dx_dst2[n - 1] == t || dx_src1[n - 1] == t ||
+                                 dx_src2[n - 1] == t || dx_cond[n - 1] == t)) ? (1 << (n - 1)) : 0);
+
+// Live slots naming register r: what a CPU write of r waits for.
+logic integer dx_reg_users{L}(integer r, integer n) =
+  n <= 0 ? 0 :
+  dx_reg_users(r, n - 1) |
+    ((dx_has(dx_live, n - 1) && dx_has(dx_regs_in[n - 1] | dx_regs_out[n - 1], r)) ? (1 << (n - 1)) : 0);
+
+// The producers of the commands in c, not through a range loop.
+logic integer dx_deps_of{L}(integer c, integer n) =
+  n <= 0 ? 0 :
+  dx_deps_of(c, n - 1) | ((dx_has(c, n - 1) && dx_kind[n - 1] != DX_RANGE_LOOP) ? dx_deps[n - 1] : 0);
+
+// c closed under producers (n rounds; DX_K rounds reach the fixpoint).
+logic integer dx_close{L}(integer c, integer n) =
+  n <= 0 ? (c & dx_live) : ((dx_close(c, n - 1) | dx_deps_of(dx_close(c, n - 1), DX_K)) & dx_live);
+
+// The live set left after covering what a command with destinations d1, d2 stalls on.
+logic integer dx_after_stall{L}(integer d1, integer d2) =
+  dx_live & ~dx_close((d1 >= 0 ? dx_naming(d1, DX_K) : 0) | (d2 >= 0 ? dx_naming(d2, DX_K) : 0), DX_K);
+
+// The ghost links are consistent: writers and readers are live slots, dependencies are live.
+predicate dx_ghost_ok{L} =
+  (\forall integer t; 0 <= t < DX_NT ==>
+     (dx_tile_writer[t] == -1 || (0 <= dx_tile_writer[t] < DX_K && dx_has(dx_live, dx_tile_writer[t]))) &&
+     (dx_tile_readers[t] & ~dx_live) == 0) &&
+  (\forall integer r; 0 <= r < DX_NR ==>
+     dx_reg_writer[r] == -1 || (0 <= dx_reg_writer[r] < DX_K && dx_has(dx_live, dx_reg_writer[r]))) &&
+  (\forall integer s; 0 <= s < DX_K ==> (dx_deps[s] & ~dx_live) == 0);
+
+// Between L1 and L2 only covering happened: the links of the slots still live are kept, the rest dropped.
+predicate dx_links_after_cover{L1, L2} =
+  (\forall integer t; 0 <= t < DX_NT ==>
+     \at(dx_tile_writer[t], L2) == ((\at(dx_tile_writer[t], L1) >= 0 &&
+                                     dx_has(\at(dx_live, L2), \at(dx_tile_writer[t], L1))) ?
+                                    \at(dx_tile_writer[t], L1) : -1) &&
+     \at(dx_tile_readers[t], L2) == (\at(dx_tile_readers[t], L1) & \at(dx_live, L2))) &&
+  (\forall integer r; 0 <= r < DX_NR ==>
+     \at(dx_reg_writer[r], L2) == ((\at(dx_reg_writer[r], L1) >= 0 &&
+                                    dx_has(\at(dx_live, L2), \at(dx_reg_writer[r], L1))) ?
+                                   \at(dx_reg_writer[r], L1) : -1)) &&
+  (\forall integer s; 0 <= s < DX_K ==> \at(dx_deps[s], L2) == (\at(dx_deps[s], L1) & \at(dx_live, L2)));
+
+// A command with these roles may issue now: no register overlap with a command left live (F6), and a
+// free slot (else ghost capacity).
+predicate dx_may_issue{L}(integer d1, integer d2, integer rin, integer rout) =
+  (\forall integer s; 0 <= s < DX_K && dx_has(dx_after_stall(d1, d2), s) ==>
+     ((rout & (dx_regs_in[s] | dx_regs_out[s])) | (rin & dx_regs_out[s])) == 0) &&
+  (\exists integer s; 0 <= s < DX_K && !dx_has(dx_after_stall(d1, d2), s));
+
+// Between L1 and L2 one command issued into a free slot after the dispatch stall, with these roles.
+predicate dx_issued{L1, L2}(integer kind, integer d1, integer d2, integer s1, integer s2, integer c,
+                             integer rin, integer rout) =
+  \exists integer slot; 0 <= slot < DX_K && !dx_has(dx_after_stall{L1}(d1, d2), slot) &&
+    \at(dx_live, L2) == (dx_after_stall{L1}(d1, d2) | (1 << slot)) &&
+    \at(dx_kind[slot], L2) == kind && \at(dx_dst1[slot], L2) == d1 && \at(dx_dst2[slot], L2) == d2 &&
+    \at(dx_src1[slot], L2) == s1 && \at(dx_src2[slot], L2) == s2 && \at(dx_cond[slot], L2) == c &&
+    \at(dx_regs_in[slot], L2) == rin && \at(dx_regs_out[slot], L2) == rout &&
+    (d1 >= 0 ==> \at(dx_tile_writer[d1], L2) == slot) && (d2 >= 0 ==> \at(dx_tile_writer[d2], L2) == slot);
+
+// A CPU read at addr inside tile t is ready; a CPU write is free of uncovered readers and writers.
+predicate dx_read_ready{L}(integer t) = dx_tile_writer[t] == -1;
+predicate dx_write_free{L}(integer t) = dx_tile_writer[t] == -1 && dx_tile_readers[t] == 0;
+
+// The footprint of slot s (no per-element copy): a stream's range, or the addresses its index tile names now.
+predicate dx_in_footprint{L}(integer s, int *addr) =
+  dx_base[s] != \null && \base_addr(addr) == \base_addr(dx_base[s]) &&
+  (dx_kind[s] == DX_STREAM_LOAD ?
+     (\exists integer k; 0 <= k < DX_TS && dx_lo[s] + k * dx_stride[s] < dx_hi[s] &&
+        addr == dx_base[s] + (dx_lo[s] + k * dx_stride[s])) :
+     (\exists integer k; 0 <= k < dx_tile_size[dx_index[s]] && k < DX_TS &&
+        addr == dx_base[s] + (unsigned int)dx_tile_data[dx_index[s]][k]));

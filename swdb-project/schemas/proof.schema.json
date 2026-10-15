@@ -125,6 +125,8 @@
                        "description": "Ticket 22: the formal-half translator the verifier's input came from, {id: <tool>-<version>, sha256 of the translator's source} (the CBMC translator). Optional: only adapters with a translator write it."},
         "std_models": {"$ref": "#/$defs/pin",
                        "description": "Ticket 25: the std::vector and std::pair model version the C lowering used, {id: swdb-std-models-<version>, sha256 of swdb/std_models.py} (swdb.std_models.identity()). Written exactly when the proof unit uses a modeled type; changing any member's contract gives a different pin."},
+        "baseline_c_lowering": {"$ref": "#/$defs/pin",
+                                "description": "Ticket 61: whole-function equivalence: the baseline function's C lowering in the product program, {id: <function>.c, sha256 of its text}. Optional: only whole-function jobs write it."},
         "logic": {
           "type": "array",
           "description": "Ticket 26: every logic-library file the proof used (the formal halves' acsl.uses, or the file a prove-logic job checked), each by ID, version and file sha256. Optional: written only when a file is used. The level rule stops counting the record when a file's sha256 changes.",
@@ -392,6 +394,16 @@
       "then": {
         "properties": {"subject": {"properties": {"kind": {"const": "candidate_proof_unit",
           "x-reason": "only a candidate proof unit carries a proof route"}}}}
+      }
+    },
+    {
+      "if": {"properties": {"route": {"const": "bounded_direct"}}, "required": ["route"]},
+      "then": {
+        "properties": {"bounds": {
+          "properties": {"threads": {"const": 1,
+            "x-reason": "a bounded_direct record is capped at proven within bounds, threads = 1 (ticket 61; map 24 item 1): its thread count is 1"}},
+          "additionalProperties": {"type": "integer",
+            "x-reason": "a bounded_direct record is capped at proven within bounds (ticket 61; map 24 item 1): no dimension is unbounded"}}}
       }
     }
   ],

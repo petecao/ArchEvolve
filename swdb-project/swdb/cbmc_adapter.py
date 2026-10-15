@@ -37,7 +37,7 @@ import shutil
 import subprocess
 from pathlib import Path
 
-from swdb import c_lowering, cbmc_translator as tr, models, paths, rss_watchdog, std_models, vocab, yamlio
+from swdb import c_lowering, cbmc_translator as tr, models, paths, proof_semantics, rss_watchdog, std_models, vocab, yamlio
 from swdb.proof import AdapterError, Verdict
 
 NAME = "cbmc"
@@ -120,6 +120,9 @@ class CbmcAdapter:
 
     @classmethod
     def from_args(cls, args, script, *, library, contract, method):
+        if getattr(args, "whole_function", None):          # ticket 61: whole-function equivalence
+            from swdb.cbmc_equivalence import EquivalenceAdapter
+            return EquivalenceAdapter.from_args(args, script, library=library, contract=contract, method=method)
         if script is not None:
             raise AdapterError("the cbmc adapter takes no --script (one CBMC job per call)")
         return cls(library, contract, method, records=getattr(args, "records", None),
@@ -145,8 +148,10 @@ class CbmcAdapter:
             from swdb.wp_adapter import _unit_source
             source = _unit_source(Path(job.unit.tree), job.unit.function)
         log.line(f"source: {source.name}")
+        covered = proof_semantics.covered_names(self.library)
         try:
-            lowering = c_lowering.lower(source, job.unit.function, defines=self.defines)
+            lowering = c_lowering.lower(source, job.unit.function, defines=self.defines,
+                                        **proof_semantics.lowering_options(self.library))
         except c_lowering.Unsupported as exc:
             context["settings"]["outside_cpp_subset"] = f"outside the C++ subset: {exc}"
             return self._not_proven("unsupported_construct", str(exc), context)
@@ -154,10 +159,19 @@ class CbmcAdapter:
             return self._not_proven("parse_error", str(exc), context)
         except c_lowering.LoweringError as exc:
             raise AdapterError(str(exc)) from None
+        model = None
+        externals = proof_semantics.called(lowering, covered)
+        if externals:
+            entries = sorted({covered[name] for name in externals})
+            if len(entries) != 1:
+                raise AdapterError(f"{job.unit.function} calls into more than one proof semantics: {', '.join(entries)}")
+            model = proof_semantics.model_for(self.library, entries[0], self.defines)
+            log.line(f"proof semantics: {model.entry} (sha256 {model.sha256}); calls {', '.join(externals)}; "
+                     f"{len(lowering.probes)} hazard probe(s)")
         problem = std_models.method_problem(self.method, lowering)              # ticket 25: the model version
         if problem:
             raise AdapterError(problem)
-        code = Code(lowering, source, self.defines)
+        code = Code(lowering, source, self.defines, model)
         code.apply_fault(os.environ.get("SWDB_CBMC_LOWERING_FAULT"))
         context["pins"] = {"c_lowering": {"id": f"{lowering.function}.c", "sha256": code.c_sha256},
                            "naming_rules": c_lowering.naming_rules(),           # ticket 24
@@ -165,6 +179,12 @@ class CbmcAdapter:
         context["lowering"] = lowering
         if lowering.std_models:
             context["settings"]["std_models"] = list(lowering.std_models)
+        if model is not None:
+            context["pins"]["proof_semantics"] = {"id": model.entry, "sha256": model.sha256}
+            context["settings"]["proof_semantics"] = {
+                "id": model.entry, "calls": list(externals),
+                "probes": [{k: p[k] for k in ("id", "function", "access", "line")} for p in lowering.probes]}
+            context["model"] = model
         try:
             built = self._build(job, entry, code, sizes, summary_job, context)
         except tr.Untranslatable as exc:
@@ -237,7 +257,11 @@ class CbmcAdapter:
         if pointers and not sizes:
             raise AdapterError(f"{unit.function} takes arrays ({', '.join(p[0] for p in pointers)}): the bounds need a "
                                "size bound on an integer parameter")
-        harness, plan = tr.harness(unit, clauses, sizes=sizes, cap=cap, knobs=knobs)
+        setup, state = (), ()
+        if code.model is not None:                    # ticket 27: ghost state g0, then havoc the tile elements
+            setup = ("swdb_dx_init();",)
+            state = proof_semantics.state_draws(self.library, code.model.entry, self.defines)
+        harness, plan = tr.harness(unit, clauses, sizes=sizes, cap=cap, knobs=knobs, setup=setup, state=state)
         stubs, summaries = {}, []
         for callee in code.functions:
             if callee == job.unit.function:
@@ -383,6 +407,10 @@ class CbmcAdapter:
         flags = ["-DSWDB_CBMC", "--unwind", str(built["unwind"]), *FROZEN, *tools["flags"]]
         if code.lowering.allocation:              # ticket 25: the "allocation succeeds" assumption entry (CBMC 6
             flags.append("--no-malloc-may-fail")  # lets malloc return NULL by default)
+        if code.model is not None:                   # ticket 27: the model's loops get the model's own bound
+            loops = self._model_loops(tools, scratch, code.model)
+            if loops:
+                flags += ["--unwindset", ",".join(f"{loop}:{code.model.unwind}" for loop in loops)]
         command = [*tools["command"], "job.c", *flags, "--json-ui"]
         cap = int(os.environ.get("SWDB_VERIFIER_RSS_CAP_BYTES") or DEFAULT_CAP_BYTES)
         wall = job.budget_seconds or DEFAULT_WALL_SECONDS
@@ -404,6 +432,13 @@ class CbmcAdapter:
         if outcome["verdict"] == "failed":
             return self._replay(job, code, built, outcome, context)
         return self._not_proven(outcome["failure_class"], outcome["why"], context)
+
+    def _model_loops(self, tools, scratch, model):
+        """CBMC's IDs of the loops inside the proof-semantics model's functions (`cbmc --show-loops`, parse only)."""
+        done = subprocess.run([*tools["command"], "job.c", "-DSWDB_CBMC", "--show-loops"], cwd=scratch,
+                              capture_output=True, text=True, timeout=300)
+        loops = re.findall(r"^Loop (\S+):", done.stdout, re.M)
+        return [loop for loop in loops if loop.rsplit(".", 1)[0] in model.functions]
 
     def _replay(self, job, code, built, outcome, context):
         """Replay each failing property's trace on the C++ (callees by their stubs) with sanitizers on."""
@@ -462,6 +497,18 @@ class CbmcAdapter:
             ident, sha, _version = identities["c_lowering"]
             assumptions += std_models.assumptions(context["lowering"], identities["clang"][2],
                                                   {"id": ident, "sha256": sha})
+        model = context.get("model")
+        if model is not None:                        # ticket 27: the proof semantics and the reduction it rests on
+            assumptions.append({"kind": "proof_semantics", "reference": {"id": model.entry, "sha256": model.sha256},
+                                "sentence": f"The DX100 behaves as its proof semantics {model.entry} says: each "
+                                            "command's values as if it finished at issue, hazards as its rules state."})
+            reduction = Path(self.library.root) / "rocq" / "probata" / "Reduction.v"
+            if not reduction.is_file():
+                reduction = paths.HOME / "library" / "rocq" / "probata" / "Reduction.v"
+            assumptions.append({"kind": "reduction", "reference": {
+                "id": "rocq.probata.dx100_reduction", "sha256": _sha256(reduction)},
+                "sentence": "The DX100 reduction lemma (Reduction.v, statement only; proof: ticket 43): a hazard-free "
+                            "at-issue run matches every timing gem5 allows."})
         if verdict == "proven":
             context["settings"].setdefault("forms", {"c_lowering": "proven", "cxx": "agrees on the bounded domain"})
         fields = {"goals": context.get("goals", []), "settings": context["settings"]}
@@ -542,7 +589,7 @@ def read_outcome(result, text):
             return outcome("not_proven", "parse_error", joined[:400])
         return outcome("not_proven", UNCLASSIFIED, f"CBMC exited {result.exit_code} with no property results")
     goals, unproven, failures = [], [], []
-    reach_ok, unwind_failed, real_failed, capacity = True, [], [], False
+    reach_ok, unwind_failed, real_failed, capacity, ghost = True, [], [], False, False
     for row in results:
         prop, status = row.get("property", ""), str(row.get("status", "")).lower()
         description = row.get("description", "")
@@ -562,6 +609,8 @@ def read_outcome(result, text):
             unwind_failed.append(prop)
         elif description == tr.ORACLE_CAPACITY:
             capacity = True
+        elif description == proof_semantics.CAPACITY:      # ticket 27: never a refutation (S3)
+            ghost = True
         elif status == "failure":
             builtin = ".assertion." not in prop
             failures.append({"check": prop, "property": description, "function": location.get("function"),
@@ -570,6 +619,9 @@ def read_outcome(result, text):
     unknown = [g for g in goals if g["status"] not in ("success", "failure")]
     if failures:
         return outcome("failed", None, f"{len(failures)} propert(ies) failed", goals, unproven, failures)
+    if ghost:
+        return outcome("not_proven", "ghost_capacity", f"more uncovered DX100 commands than the ghost capacity "
+                       f"({proof_semantics.CAPACITY} failed)", goals, unproven)
     if unwind_failed or capacity:
         why = f"unwinding assertions failed: {', '.join(unwind_failed)}" if unwind_failed else \
             "the oracle of the bounded encoding ran out (more havocked values than its capacity)"
@@ -626,7 +678,7 @@ def _domain(plan):
         elif draw["role"] == "knob":
             low, high = draw["range"]
             values = list(range(low, high + 1)) if high - low <= 15 else [low, low + 1, (low + high) // 2, high - 1, high]
-        elif draw["role"] == "element":
+        elif draw["role"] in ("element", "state"):        # state: proof-semantics device state (ticket 27)
             values = list(VALUES)
         else:
             values = list(VALUES) + list(SCALAR_EXTREMES)
@@ -696,8 +748,9 @@ PROTOTYPE = re.compile(r"^(static\s+)?(.+?)\b([A-Za-z_]\w*)\((.*)\)$")
 class Code:
     """The C lowering of a proof unit plus the C++ text of the same functions and globals."""
 
-    def __init__(self, lowering, source, defines):
+    def __init__(self, lowering, source, defines, model=None):
         self.lowering, self.source, self.defines = lowering, Path(source), tuple(defines)
+        self.model = model                             # ticket 27: the proof semantics' C model, or None
         self.text = lowering.text
         self.functions = [a["function"] for a in lowering.anchors if a["kind"] == "contract"]
         self.prototypes = {}
@@ -757,7 +810,11 @@ class Code:
         return {"compared_only": not other, "other": other[:2]}
 
     def c_text(self, stubs=None):
-        """The C lowering, with each summarized callee's definition replaced by its stub."""
+        """The proof semantics' C model (if the unit calls into one), then the C lowering, with each summarized
+        callee's definition replaced by its stub."""
+        return (self.model.c_text if self.model is not None else "") + self._c_lowering_text(stubs)
+
+    def _c_lowering_text(self, stubs):
         if not stubs:
             return self.text
         lines, out, skip = self.text.splitlines(), [], None
@@ -780,9 +837,10 @@ class Code:
         stubs = stubs or {}
         tool = c_lowering.locate()
         data = self.source.read_bytes()
-        parts = [f"/* C++ of {self.lowering.function} cut from {self.source.name} by the CBMC adapter. */",
-                 "#include <cstddef>", "#include <cstdint>",
-                 "#include <stdexcept>", "#include <utility>", "#include <vector>"]       # ticket 25: modeled types
+        parts = [self.model.c_text] if self.model is not None else []
+        parts += [f"/* C++ of {self.lowering.function} cut from {self.source.name} by the CBMC adapter. */",
+                  "#include <cstddef>", "#include <cstdint>",
+                  "#include <stdexcept>", "#include <utility>", "#include <vector>"]   # ticket 25
         for name, _ctype, _line in self.globals:
             parts.append(self._cut(tool, data, name, {"VarDecl"}) + ";")
         parts += [f"{self.prototypes[name]};" for name in self.functions]
@@ -799,10 +857,32 @@ class Code:
         begin, end = nodes[0]["range"]["begin"], nodes[0]["range"]["end"]
         if "includedFrom" in begin or "offset" not in begin or "offset" not in end:
             raise AdapterError(f"{name} is not defined in {self.source.name} itself")
-        return data[begin["offset"]:end["offset"] + end.get("tokLen", 0)].decode()
+        start, stop = begin["offset"], end["offset"] + end.get("tokLen", 0)
+        sites = [p for p in self.lowering.probes if start <= p["begin"] and p["end"] <= stop]
+        return _probed(data, start, stop, sites).decode()
 
 
 # --- helpers ---------------------------------------------------------------------------------------------------
+
+def _probed(data, start, stop, sites):
+    """data[start:stop] with each hazard-probe site (C++ byte range) wrapped in the probe the C lowering placed there:
+    the same macro and ID, so a probe refutation on the C lowering replays at the same probe on the C++."""
+    out, at = [], start
+    top = [s for s in sorted(sites, key=lambda s: (s["begin"], -s["end"]))
+           if not any(o is not s and o["begin"] <= s["begin"] and s["end"] <= o["end"] and
+                      (o["begin"], o["end"]) != (s["begin"], s["end"]) for o in sites)]
+    for site in top:
+        if site["begin"] < at:
+            continue
+        inner = [s for s in sites if s is not site and site["begin"] <= s["begin"] and s["end"] <= site["end"]]
+        out.append(data[at:site["begin"]])
+        macro = b"SWDB_TILE_READ" if site["access"] == "read" else b"SWDB_TILE_WRITE"
+        out.append(b"(*" + macro + b"(&(" + _probed(data, site["begin"], site["end"], inner) + b'), "' +
+                   site["id"].encode() + b'"))')
+        at = site["end"]
+    out.append(data[at:stop])
+    return b"".join(out)
+
 
 def _sizes(bounds):
     """{parameter: bound} from the job's bounds; threads must be 1 (threads > 1 is CIVL's, ticket 46)."""

@@ -2,6 +2,8 @@
 
 Created: 2026-10-14 16:10 ET, Probata proof of concept ticket 22 (Yan-Ru's 13:19 ET decision: CBMC 6.11 on
 ticket 21's C lowering replaces SAW as the bounded verifier).
+Updated: 2026-10-14 17:20 ET, ticket 61: [Whole-function equivalence](#whole-function-equivalence-ticket-61)
+(the bounded direct route and the no-contract baseline, CBMC on a product program).
 Spec: `.scratch/probata-proof-of-concept-2026-10-13/issues/22-saw-adapter-and-translator.md` (Later changes);
 design: `.scratch/formal-verification-2026-10-09/spec.md` ("Verifier lineup and order", "Bounds"), map 11
 items 1-4, 8, 9; 16 items 1, 3; 19 items 2, 8. Reference: `prototype/06c-cbmc/` and the shared note
@@ -157,4 +159,97 @@ nothing. Scripted faults for tests: `SWDB_CBMC` (a stand-in `cbmc` command line;
 - 33: per-loop unwinding bounds (`--unwindset`) from the minimum-bounds derivation; the A2 exit's 14 verdicts.
 - 46/47: threads > 1; reuse `Code` (C lowering plus C++ cut) and the replay.
 - 60: strict-layer replay of a `refuted` record starts from `counterexample.oracle` and `inputs`.
-- 61: whole-function equivalence could run CBMC on a product program of two C lowerings with this harness.
+- 61: built, below.
+
+## Whole-function equivalence (ticket 61)
+
+**In one line:** `swdb prove --adapter cbmc --whole-function MODE` runs the candidate artifact's function and
+the baseline's on the same symbolic inputs, at one thread and within bounds, and compares every output. Equal:
+proven within bounds, threads = 1. Unequal: refuted, with the concrete inputs, the first differing location and
+both values. Never more (no alignment exists: map 24 item 1). Code: `swdb/cbmc_equivalence.py`,
+`swdb/cbmc_product.py` (the product-program generator); tests: `tests/test_cbmc_equivalence.py`.
+
+**Method version.** The product-program generator is its own trusted tool, `swdb-cbmc-product-1` (ID plus the
+sha256 of `swdb/cbmc_product.py`), kept out of `swdb/cbmc_translator.py` so the translator's sha256, which
+`method.probata-draft-1` pins, did not change. A whole-function job runs only under a method version whose
+`c_lowering.translators` lists it (else nothing runs); `method.probata-draft-1` does not, so a new draft must add
+it. Records name it in `tools` and in the assumption set.
+
+```
+swdb prove --candidate <c> --function <f> --adapter cbmc --whole-function bounded_direct --contract <contract> \
+           [--minimum-bounds <record> | --bounds <JSON>] [--baseline-candidate <b>] [--unwindset SIDE:LOOP=K ...] \
+           [--define NAME[=VALUE]] [--budget-minutes <n>] --runs-dir <outside the repo>
+swdb prove --candidate <c> --function <f> --adapter cbmc --whole-function no_contract_baseline \
+           [--borrowed-bounds <record> | --bounds <JSON>] [--baseline-candidate <b>] ... --runs-dir <outside the repo>
+```
+
+| Mode | Who uses it | Contract | Level |
+|---|---|---|---|
+| `bounded_direct` | a proof unit with no unit postcondition (map 24 item 3) | required, and it must carry `relational_template: {reason}`; else refused, nothing written (the route guard) | counts like any bounded record (at most proven within bounds, threads = 1) |
+| `no_contract_baseline` | the evaluation's no-contract baseline, bounded half (map 23 item 2) | none; `pins.contract` is not applicable | never: a measurement (`baseline_measurements` in `swdb candidate-level`), never the refuted flag |
+
+Both modes write `route: bounded_direct`.
+
+- **Equality only for a deterministic output** (decided by the main session under Yan-Ru's delegation,
+  2026-10-14 20:48 ET). `bounded_direct` reads the contract's `output_determinism` (`deterministic` or
+  `nondeterministic`); `no_contract_baseline` needs `--output-determinism`. Deterministic: outputs are compared by
+  equality (`settings.comparison: {kind: equality, output_determinism: deterministic}`). Nondeterministic with no
+  `output_relation`: refused with that reason (equality would refute a correct candidate with another valid output,
+  such as another BFS parent array). Nondeterministic with an `output_relation`: the job should assert the relation
+  on the candidate's output with the baseline's output as the witness; that form is ticket 62's work, so it is
+  refused today and says so. Not stated: refused. Nothing is written on a refusal.
+
+- **The baseline** is the candidate's source snapshot, or another candidate artifact (`--baseline-candidate`, for
+  example a materialized baseline candidate or a fixture). `pins.baseline_function` pins it (`{id, function,
+  sha256}`); the level rule reads a candidate ID there by its `artifact.sha256`.
+- **The product program** (`job.c`): the candidate's C lowering as lowered; the baseline's C lowering with every
+  function and global renamed to `swdb_base_<name>` by `#define`s around it; one harness. The harness draws
+  every input once from the oracle (ticket 22's draws, size bounds and `requires`), gives each call its own copy
+  of every array, calls the baseline then the candidate, checks the contract's per-candidate formal halves on the
+  candidate's call (`bounded_direct` only), then asserts one property per output location, `swdb_equal.<location>`:
+  the return value (`result`), every element of every array parameter (`a[0]` ... all `array_length` of them,
+  so a write past what the baseline writes is caught), every scalar global both versions' code names, every
+  global array both name (one property each), and every scalar global only one version's code names (compared
+  with its value before the call, which the other version leaves alone).
+- **Bounds.** `bounded_direct`: `--minimum-bounds` pins the contract's minimum-bounds derivation, and without
+  `--bounds` the job runs at that record's bounds; a run below them is proven but reads "bounded check below
+  minimum" and gives no level (the level rule, unchanged). `no_contract_baseline`: the bounds passed, or
+  `--borrowed-bounds <minimum-bounds derivation record>`, whose bounds are used and labeled borrowed.
+  `settings.bounds_origin` says which: `{kind: passed}`, `{kind: minimum_bounds, record}` or
+  `{kind: borrowed, record, contract}`.
+- **Unwinding.** `--unwind K` (K = the largest size bound + 1) for every loop, plus `--unwindset
+  candidate:<function>.<n>=K` or `baseline:<function>.<n>=K` for a loop of one copy whose trip count differs
+  (loop numbers from `cbmc --show-loops` on the function's own lowering). Unwinding assertions stay on: a copy
+  whose loop runs longer than its bound is `unwinding_bound_too_small`, never proven. No alignment hints.
+- **Both forms.** The differential run compiles the same product program twice, from both C lowerings and from
+  both C++ cuts, and runs the bounded domain natively; any difference stops the batch (`c_lowering_disagreement`,
+  the message names the side: `baseline`, `candidate` or `both`). A refutation replays on the product of the two
+  C++ cuts with sanitizers on; equality failures are replayed first, in the order of `settings.compared`. Either
+  function outside the C++ subset: not proven, `unsupported_construct`, `settings.outside_cpp_subset` names the
+  side. A lowering that defines a type, or two functions whose parameter or return types differ, is also
+  `unsupported_construct`.
+- **Budget and failure classes:** as ticket 22's adapter (the same reader and handlers).
+
+On top of the CBMC record above:
+
+| Field | Meaning |
+|---|---|
+| `route` | `bounded_direct` (both modes); `swdb validate` refuses such a record with a thread count other than 1 or any dimension `unbounded`, and the level rule never counts one |
+| `pins.baseline_function` | `{id, function, sha256}` of the baseline (source snapshot or candidate artifact) |
+| `pins.baseline_c_lowering` | pin `baseline_c_lowering`: `{id: <f>.c, sha256}` of the baseline's C lowering |
+| `pins.contract`, `pins.minimum_bounds` | `no_contract_baseline`: `not_applicable` |
+| `pins.build_constants` | the build constants, the same for both builds |
+| `counterexample.first_difference` | refuted: `{location, baseline, candidate}`, the first compared location whose values differ on the replay, with both values (null when a formal half failed and every output agrees) |
+| `settings.whole_function` | the mode |
+| `settings.baseline` | `{kind: source_snapshot or candidate, id, function}` |
+| `settings.bounds_origin` | above |
+| `settings.comparison` | `{kind: equality, output_determinism: deterministic}` (the only form today) |
+| `settings.build_constants_by_build` | `{candidate, baseline}`: each build's `{name, value}` list |
+| `settings.compared` | the compared locations, in property order |
+| `settings.uncompared_globals` | globals not compared (a global array only one version names) |
+| `settings.formal_halves` | the contract's formal halves checked in the same job (`bounded_direct`) |
+| `settings.unwindset` | the per-loop bounds as CBMC got them (`<loop>:<K>`) |
+| `settings.agreement.sides` | `[candidate, baseline]`: both sides' lowerings were checked |
+
+A contract with no unit postcondition says so with `relational_template: {reason: <text>}` (a library entry
+field, ticket 61's smallest form; map 24's drafting rule: a relational template needs a recorded reason).
