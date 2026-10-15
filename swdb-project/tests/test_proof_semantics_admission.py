@@ -13,6 +13,17 @@ from test_proof_semantics import dx, dx_seed, needs_cbmc, needs_wp, prove, prove
 
 
 @needs_wp
+@needs_cbmc
+@pytest.mark.parametrize("adapter", ["cbmc", "wp"])
+@pytest.mark.parametrize("wrong", [False, True])
+def test_a_stream_from_an_interior_base_keeps_its_negative_index(dx, adapter, wrong):
+    defines = ["SWDB_SIGNED_STREAM_EXCLUDE"] if wrong else []
+    record = (prove if adapter == "cbmc" else prove_wp)(dx, "signed_stream", *defines)
+    expected = ("refuted" if adapter == "cbmc" else "not_proven") if wrong else "proven"
+    assert record["verdict"] == expected, record
+
+
+@needs_wp
 def test_opaque_once_proven_summary_cannot_hide_dx_memory_boundary(dx):
     result = run_swdb("prove", "--records", dx.records, "--summary", "contract.fixture_dx_summary_wrapper",
                      "--adapter", "wp", "--runs-dir", dx.runs, "--format", "json", timeout=3600)

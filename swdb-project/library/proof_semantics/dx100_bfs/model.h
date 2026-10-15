@@ -44,22 +44,25 @@ static int dx_reg_ok(int r) { return r >= 0 && r < DX_NR; }
 
 /* The tile a CPU address lies in, or -1 for an address outside the tile memory. */
 static int dx_tile_of(const int *addr) {
+  for (int t = 0; t < DX_NT; ++t) {
 #if defined(SWDB_CBMC)
-  if (__CPROVER_POINTER_OBJECT(addr) != __CPROVER_POINTER_OBJECT(&dx_tile_data[0][0])) return -1;
-  long long position = (long long)__CPROVER_POINTER_OFFSET(addr);
-  if (position < 0 || (unsigned long long)position >= sizeof(dx_tile_data) || position % sizeof(int)) return -1;
-  long long off = position / (long long)sizeof(int);
+    if (__CPROVER_POINTER_OBJECT(addr) != __CPROVER_POINTER_OBJECT(&dx_tile_data[t][0])) continue;
+    long long byte_position = (long long)__CPROVER_POINTER_OFFSET(addr);
+    long long byte_base = (long long)__CPROVER_POINTER_OFFSET(&dx_tile_data[t][0]);
+    if (byte_position < 0 || byte_base < 0 || byte_position < byte_base ||
+        byte_position % sizeof(int) != byte_base % sizeof(int)) continue;
+    unsigned long long index = (unsigned long long)byte_position / sizeof(int) -
+                               (unsigned long long)byte_base / sizeof(int);
 #else
-  /* Native agreement/replay uses the pinned flat 64-bit address ABI. No relational pointer comparison
-   * or unrelated-object subtraction: compare unsigned addresses, then subtract only in that domain. */
-  uintptr_t position = (uintptr_t)addr, base = (uintptr_t)&dx_tile_data[0][0];
-  if (position < base || position % sizeof(int) != base % sizeof(int)) return -1;
-  uintptr_t index = position / sizeof(int) - base / sizeof(int);
-  if (index >= sizeof(dx_tile_data) / sizeof(int)) return -1;
-  long long off = (long long)index;
+    /* Native agreement/replay uses the pinned flat 64-bit address ABI. Compare each row's address
+     * range independently; the generated C/C++ rows may be distinct objects with unrelated bases. */
+    uintptr_t byte_position = (uintptr_t)addr, byte_base = (uintptr_t)&dx_tile_data[t][0];
+    if (byte_position < byte_base || byte_position % sizeof(int) != byte_base % sizeof(int)) continue;
+    unsigned long long index = (unsigned long long)(byte_position / sizeof(int) - byte_base / sizeof(int));
 #endif
-  if (off < 0 || off >= (long long)DX_NT * DX_TS) return -1;
-  return (int)(off / DX_TS);
+    if (index < DX_TS) return t;
+  }
+  return -1;
 }
 static int dx_read_ok(const int *addr) {
   int t = dx_tile_of(addr);
@@ -348,24 +351,31 @@ int swdb_dx_in_footprint(int tile, const int *addr) {
   if (s < 0 || dx_base[s] == 0) return 0;
 #if defined(SWDB_CBMC)
   if (__CPROVER_POINTER_OBJECT(addr) != __CPROVER_POINTER_OBJECT(dx_base[s])) return 0;
-  long long position = (long long)__CPROVER_POINTER_OFFSET(addr);
-  long long base = (long long)__CPROVER_POINTER_OFFSET(dx_base[s]);
-  if (position < 0 || base < 0 || position < base || position % sizeof(int) != base % sizeof(int)) return 0;
-  unsigned long long index = (unsigned long long)position / sizeof(int) - (unsigned long long)base / sizeof(int);
+  long long byte_position = (long long)__CPROVER_POINTER_OFFSET(addr);
+  long long byte_base = (long long)__CPROVER_POINTER_OFFSET(dx_base[s]);
+  if (byte_position < 0 || byte_base < 0 || byte_position % sizeof(int) != byte_base % sizeof(int)) return 0;
+  unsigned long long position = (unsigned long long)byte_position / sizeof(int);
+  unsigned long long base = (unsigned long long)byte_base / sizeof(int);
 #else
-  uintptr_t position = (uintptr_t)addr, base = (uintptr_t)dx_base[s];
-  if (position < base || position % sizeof(int) != base % sizeof(int)) return 0;
-  unsigned long long index = (unsigned long long)(position / sizeof(int) - base / sizeof(int));
+  uintptr_t byte_position = (uintptr_t)addr, byte_base = (uintptr_t)dx_base[s];
+  if (byte_position % sizeof(int) != byte_base % sizeof(int)) return 0;
+  unsigned long long position = (unsigned long long)(byte_position / sizeof(int));
+  unsigned long long base = (unsigned long long)(byte_base / sizeof(int));
 #endif
-  /* Stream register indices are signed 32-bit; indirect indices are unsigned 32-bit. This bound also
-   * makes the conversion below exact, without inventing a native object-provenance oracle. */
-  if (index > UINT32_MAX) return 0;
-  long long off = (long long)index;
+  int negative = position < base;
+  unsigned long long magnitude = negative ? base - position : position - base;
   if (dx_kind[s] == DX_STREAM_LOAD) {
+    /* An interior base permits negative stream indices. Bound the unsigned magnitude before
+     * conversion/negation; every stream index comes from a signed 32-bit register range. */
+    if (magnitude > (negative ? 2147483648ULL : 2147483647ULL)) return 0;
+    long long off = negative ? -(long long)magnitude : (long long)magnitude;
     long long n = (dx_hi[s] == dx_lo[s]) ? 0 : (dx_hi[s] - dx_lo[s] - 1) / dx_stride[s] + 1;
     if (n > DX_TS) n = DX_TS;
     return off >= dx_lo[s] && off < dx_lo[s] + n * dx_stride[s] && (off - dx_lo[s]) % dx_stride[s] == 0;
   }
+  /* Indirect indices retain their unsigned 32-bit interpretation. */
+  if (negative || magnitude > UINT32_MAX) return 0;
+  long long off = (long long)magnitude;
   int found = 0;
   for (int k = 0; k < DX_TS; ++k)
     if (k < dx_tile_size[dx_index[s]] && off == (long long)(unsigned int)dx_tile_data[dx_index[s]][k]) found = 1;
