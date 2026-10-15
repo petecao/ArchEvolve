@@ -44,10 +44,10 @@ import subprocess
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from swdb import std_models, terminal_release
+from swdb import cpu_effects, std_models, terminal_release
 
 TOOL_ID = "swdb-c-lowering"
-TOOL_VERSION = "4"                   # checked terminal-release metadata; the naming rules remain unchanged
+TOOL_VERSION = "5"                   # conservative CPU effects and pinned admission policy; names unchanged
 NAMING_RULES = "kept-names.3"        # bump on any change to RULES
 RULES = (
     "A function, parameter, local, global or field keeps its C++ name.",
@@ -196,6 +196,7 @@ class Lowering:
     probes: tuple = ()          # ticket 27: hazard probes {id, function, access, line, begin, end (C++ byte offsets)}
     std_models: tuple = ()      # ticket 25: the modeled std types the C uses (struct names, e.g. std_vector_int)
     allocation: bool = False    # ticket 25: the C allocates (new[] or a std model): "allocation succeeds" applies
+    cpu_effects: dict = field(default_factory=dict)  # source/model memory effects and sequenced call sites
     terminal_release: dict | None = None  # checked ownership certificate; native lowering retains delete[]
 
     @property
@@ -214,6 +215,7 @@ class Lowering:
             data["std_models"] = {**std_models.identity(), "types": list(self.std_models)}
         if self.allocation:
             data["allocation"] = True
+        data["cpu_effects"] = self.cpu_effects
         if self.terminal_release:
             data["terminal_release"] = self.terminal_release
         return json.dumps(data, indent=1, sort_keys=True) + "\n"
@@ -270,10 +272,13 @@ def _probe(command):
 
 
 def identity():
-    """Identity of the lowering and its ownership checker, naming rules, and clang binary."""
+    """Pin lowering, ownership/effects checkers, CPU admission policy, naming rules and clang."""
     tool = locate()
     here = Path(__file__)
-    digest = hashlib.sha256(here.read_bytes() + Path(terminal_release.__file__).read_bytes()).hexdigest()
+    admission = here.with_name("cpu_memory_admission.py")
+    policy = admission.read_bytes() if admission.exists() else b"cpu-memory-admission:absent"
+    digest = hashlib.sha256(here.read_bytes() + Path(terminal_release.__file__).read_bytes()
+                            + Path(cpu_effects.__file__).read_bytes() + policy).hexdigest()
     found = {"c_lowering": {"id": f"{TOOL_ID}-{TOOL_VERSION}", "sha256": digest},
              "naming_rules": naming_rules()}
     if not tool.missing:
@@ -2184,10 +2189,11 @@ def lower(source, function, includes=(), defines=(), summaries=None, semantics=N
     if _children_kind(node, "TemplateArgument"):
         raise Unsupported(f"function template {function} as the proof unit")
     unit.lower_function(node, function, None, None)
-    definitions = {}
+    definitions, definition_nodes = {}, {}
     while unit.pending:
         cname, fnode, owner = unit.pending.pop(0)
         definitions[cname] = _define(unit, cname, fnode, owner)
+        definition_nodes[cname] = fnode
         for global_name in definitions[cname][1].globals:
             if global_name not in unit.globals:
                 unit.globals.append(global_name)
@@ -2238,6 +2244,8 @@ def lower(source, function, includes=(), defines=(), summaries=None, semantics=N
                           "naming_rules_sha256": RULES_SHA256, "clang": tool.version},
                     summaries=tuple(unit.summaries_used), models=tuple(n for n in unit.model_order if n != "SWDB_MODEL_FAIL" and not n.endswith("_valid")), probes=tuple(unit.probes),
                     std_models=tuple(sorted(unit.std_types)), allocation=unit.allocates or any(n.startswith("std_vector_") for n in unit.std_types) or any(n.startswith("swdb_alloc_new_array_") for n in unit.model_order),
+                    cpu_effects=cpu_effects.collect(definition_nodes, unit.probes, unit.models,
+                                                    unit.summaries_used, INTEGER_TYPES | FLOAT_TYPES),
                     terminal_release=certificate)
 
 
@@ -2416,6 +2424,7 @@ def _cli(args):
         out["std_models"] = {**std_models.identity(), "types": list(lowering.std_models)}
     if lowering.allocation:
         out["allocation"] = True
+    out["cpu_effects"] = lowering.cpu_effects
     if lowering.terminal_release:
         out["terminal_release"] = lowering.terminal_release
     return out
