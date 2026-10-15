@@ -169,3 +169,16 @@ failure is not diagnosed yet (open for the main session: rerun that test alone o
 - 24 (merged): the C lowering reads `float`/`double`; `swdb.cxx_cut` now serves only units the lowering refuses.
 - 33: per-loop bounds would replace the single K of CBMC and crux.
 - Runs: `/tmp/claude/probata-runs/t23/` (pytest logs, report logs, crux explorations).
+
+### Summary-call eligibility correction — 2026-10-15 ET
+
+Stub substitution now requires independently checked actual-callee/source and
+proof-method/evidence binding on CBMC and both Crux forms. Finite summary domains
+must cover the caller's unchanged arguments, with equal capacities and distinct
+entry bases for pointer imports. The old stub-meaning fixtures used an `n<=2`
+summary for `n<=3` callers; the positive fixture proves the matching `n<=3` domain
+now, and the old mismatch is a prelaunch negative. All three corrected actual
+stub-meaning controls pass: precondition violation and inside-assigns preservation
+are refuted; outside-assigns preservation proves. This repairs reuse eligibility
+without changing the generated contract's precondition/frame/postcondition meaning.
+See ticket36's [source/proof binding evidence](../evidence/summary-source-binding-20261015.json).

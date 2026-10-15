@@ -40,7 +40,7 @@ def seed(agreement_seed, tmp_path):
     for name in ("records", "library"):
         shutil.copytree(source / name, tmp_path / name)
     seed = Seed(tmp_path, candidates)
-    summary = seed.prove_summary(ADD_ONE, bounds={"threads": 1, "n": 2})
+    summary = seed.prove_summary(ADD_ONE, bounds={"threads": 1, "n": 3})
     assert seed.read(summary)["verdict"] == "proven"
     return seed
 
