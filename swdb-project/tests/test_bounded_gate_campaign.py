@@ -94,10 +94,12 @@ def gate_fixture(team, *, kronecker=None, uniform=None, contract_proofs=None, it
                         proof={"function": "DOBFS"}, **changes)
 
 
-def gate_campaign(team, plan, *, contracts=(READ,), fixture=None, library=True, expect=0, **budgets):
+def gate_campaign(team, plan, *, contracts=(READ,), fixture=None, library=True, expect=0, method=None, **budgets):
     raised = {"approval": {"by": "Yan-Ru Jhou", "date": "2026-10-14", "scope": "contract-fixture test",
                            "raised_budgets": ["provider_calls_per_iteration"]}} \
         if budgets.get("provider_calls_per_iteration", 3) > 3 else {}
+    if method is not None:
+        raised["method_version"] = method
     path = campaign_file(team, library={"contracts": list(contracts)}, budgets={"max_iterations": 1, **budgets},
                          **raised)
     extra = ["--library", team["library"]] if library else []
@@ -154,6 +156,39 @@ def test_a_certified_candidate_runs_both_rungs_at_the_minimum_bounds_with_k_from
     assert gate["budget_minutes"] == 15 and gate["k"] == K and gate["refuted"] is False
     # Level read, never stored: the level rule reads the sub-rung both rungs proved.
     assert level(store, kron["id"])["level"] == "proven_within_bounds_threads_k"
+
+
+# --- a draft method version turns the gate on only when the campaign names it (fix-21, 2026-10-14) -------
+
+def draft_library(team):
+    """The campaign library with its only method version a draft (no frozen version: no current one)."""
+    library = team["root"] / "draft-library"
+    shutil.copytree(team["library"], library)
+    path = library / "methods" / "contract-fixture-1.yaml"
+    path.write_text(path.read_text().replace("status: frozen", "status: draft"))
+    assert "status: draft" in path.read_text()
+    return {**team, "library": library}
+
+
+def test_a_library_whose_method_versions_are_all_drafts_keeps_the_gate_off(team):
+    summary, store = gate_campaign(draft_library(team), {"rewriting": [rewrite(contracts=[READ], patch=ALPHA)]})
+    assert summary["stop_reason"] == "max_iterations", summary.get("stop_detail")
+    assert "bounded_gate" not in summary and not proofs(store)
+
+
+def test_a_campaign_that_pins_a_draft_method_version_runs_the_gate_under_it(team):
+    summary, store = gate_campaign(draft_library(team), {"rewriting": [rewrite(contracts=[READ], patch=ALPHA)]},
+                                   method="method.contract-fixture-1")
+    assert summary["stop_reason"] == "max_iterations", summary.get("stop_detail")
+    (kron,) = entries(summary)["kronecker"]
+    assert {job["rung"] for job in kron["bounded_gate"]["jobs"]} == {"threads_1", "threads_k"}
+    assert {r["pins"]["method_version"]["id"] for r in proofs(store, kron["id"])} == {"method.contract-fixture-1"}
+    assert level(store, kron["id"])["level"] == "proven_within_bounds_threads_k"
+
+
+def test_a_campaign_that_pins_a_method_version_with_no_file_is_refused(team):
+    gate_campaign(team, {"rewriting": [rewrite(contracts=[READ], patch=ALPHA)]}, method="method.never-written",
+                  expect=1)
 
 
 # --- refuted code is never evaluated; repairs; the reverted-repair control -------------------------------
@@ -384,13 +419,15 @@ def test_no_contract_proof_and_no_minimum_bounds_skip_both_rungs_and_keep_the_le
         assert level(store, entry["id"])["level"] == "certified"
 
 
-def test_code_outside_the_cpp_subset_runs_only_the_one_thread_rung(team):
+def test_code_outside_the_cpp_subset_skips_both_bounded_rungs(team):
+    """Ticket 22 (2026-10-14 ET): CBMC, the one-thread rung, reads the C lowering too, so code outside the
+    subset (no C lowering) skips both rungs and keeps its certification level."""
     fixture = gate_fixture(team, kronecker={"proof": {"cpp_subset": False}})
     summary, store = gate_campaign(team, {"rewriting": [rewrite(contracts=[READ], patch=ALPHA)]}, fixture=fixture)
     (kron,), (control,) = entries(summary)["kronecker"], entries(summary)["uniform_random"]
     jobs = {j["rung"]: j for j in kron["bounded_gate"]["jobs"]}
-    assert jobs["threads_1"]["verdict"] == "proven" and jobs["threads_k"]["skip_reason"] == "outside_cpp_subset"
-    assert kron["comparisons"] and level(store, kron["id"])["level"] == "proven_within_bounds_threads_1"
+    assert jobs["threads_1"]["skip_reason"] == jobs["threads_k"]["skip_reason"] == "outside_cpp_subset"
+    assert kron["comparisons"] and level(store, kron["id"])["level"] == "certified"
     # Control: the same candidate artifact with a contract proof, minimum bounds and subset code runs both.
     assert {j["rung"]: j.get("verdict") for j in control["bounded_gate"]["jobs"]} == \
         {"threads_1": "proven", "threads_k": "proven"}

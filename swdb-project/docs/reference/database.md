@@ -1248,18 +1248,18 @@ One row per proof record.
 
 ### `swdb_proof_pins`
 
-The content-hash set: one row per single pin, per summary used and per build constant.
+The content-hash set: one row per single pin, per summary used, per build constant and per logic-library file (ticket 26).
 
 | Column | Meaning |
 |---|---|
 | `proof` | proof record ID |
-| `kind` | pin kind (`code`, `contract`, `baseline_function`, `reference_semantics`, `proof_semantics`, `method_version`, `minimum_bounds`, `predecessor_snapshot`, `summaries`, `build_constants`) |
-| `position` | 0 for a single pin; the list index for a summary or build constant |
+| `kind` | pin kind (`code`, `contract`, `baseline_function`, `reference_semantics`, `proof_semantics`, `method_version`, `minimum_bounds`, `predecessor_snapshot`, `summaries`, `build_constants`, `c_lowering`, `logic`) |
+| `position` | 0 for a single pin; the list index for a summary, build constant or logic file |
 | `ref` | the pinned ID (a build constant's name); NULL when not applicable |
 | `sha256` | the pinned hash; NULL when not applicable or a build constant |
 | `function` | `baseline_function` pin: the function named in the pinned tree (else NULL) |
 | `proof_record` | summary pin: the proof record that proved the summary (else NULL) |
-| `value` | build constant: its value as JSON (else NULL) |
+| `value` | build constant: its value as JSON; logic file: its version (else NULL) |
 | `not_applicable` | the sentence saying why a pin does not apply yet (else NULL) |
 
 ### `swdb_proof_assumptions`

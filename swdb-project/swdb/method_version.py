@@ -8,7 +8,12 @@ item 3, S8, 25 item 2, 13 item 11, 15 item 9. Format: docs/reference/format-v0.4
   `schemas/library/method_version.schema.json`; `swdb validate` checks every file.
 - Every proof record pins one by ID and file sha256 (`pin`, `pin_problem`). Changing any byte makes
   a new method version (glossary): the fix for an edited file is a new file, never an edited record.
-- Old files stay, so old pins still resolve; the current method version has the highest `sequence`.
+- Old files stay, so old pins still resolve.
+- Lifecycle (`status`; fix-21, 2026-10-14 ET, main-session decision recorded in ticket 21): the current
+  method version is the frozen one with the highest `sequence` (`current`). A draft is used only when
+  named (`named`, `select`: `swdb prove --method-version <id>`, a campaign file's `method_version`); it
+  never becomes current. A record under a draft keeps counting while the draft is newer than the
+  current frozen version (`counting`). The freeze (ticket 59) is a new file with `status: frozen`.
 - A draft may mark a section `{not_yet_built: <sentence>}`; a frozen file may not.
 """
 
@@ -78,10 +83,51 @@ def load(library_root):
 
 
 def current(library_root):
-    """The current method version (highest sequence) as a MethodVersion, or None when there is none."""
+    """The current method version: the frozen one with the highest sequence, or None (a draft never is)."""
     versions, _problems = load(library_root)
-    ranked = [v for v in versions.values() if isinstance(v.data.get("sequence"), int)]
+    ranked = [v for v in versions.values()
+              if v.data.get("status") == "frozen" and isinstance(v.data.get("sequence"), int)]
     return max(ranked, key=lambda v: v.data["sequence"]) if ranked else None
+
+
+def named(library_root, ident):
+    """The method version with this ID, draft or frozen, or None when no file holds it."""
+    versions, _problems = load(library_root)
+    return versions.get(ident)
+
+
+def select(library_root, ident=None):
+    """The method version a job runs under: the one named by `ident` (draft or frozen), else the current one.
+
+    Raises LookupError with the reason when the named one has no file, or when none is named and no
+    frozen one exists."""
+    folder = Path(library_root) / FOLDER
+    if ident is not None:
+        found = named(library_root, ident)
+        if found is None:
+            raise LookupError(f"no method-version file {ident!r} in {folder}")
+        return found
+    found = current(library_root)
+    if found is None:
+        drafts = sorted(load(library_root)[0])
+        named_only = (f"; a draft ({', '.join(drafts)}) is used only when named (--method-version <id>, or the "
+                      "campaign file's method_version)") if drafts else ""
+        raise LookupError(f"no frozen method-version file in {folder}{named_only}")
+    return found
+
+
+def counting(library_root):
+    """{ID: file sha256} of the method versions whose proof records keep counting (ticket 10's level rule):
+    the current frozen version, and each draft newer than it (pinned by name and not yet superseded)."""
+    versions, _problems = load(library_root)
+    now = current(library_root)
+    found = {now.id: now.sha256} if now else {}
+    for version in versions.values():
+        sequence = version.data.get("sequence")
+        if (version.data.get("status") == "draft" and isinstance(sequence, int)
+                and (now is None or sequence > now.data["sequence"])):
+            found[version.id] = version.sha256
+    return found
 
 
 def pin(version):
@@ -113,6 +159,8 @@ def validate(library_root):
     for version in versions.values():
         problems.extend(_file_problems(version))
         sequence = version.data.get("sequence")
+        if version.data.get("status") != "frozen":
+            continue                  # only frozen versions are ordered (`current`); a draft is used by name
         if isinstance(sequence, int) and sequence in sequences:
             problems.append(Problem(str(version.path), "sequence", f"sequence {sequence} is also used by {sequences[sequence]}"))
         sequences.setdefault(sequence, version.id)

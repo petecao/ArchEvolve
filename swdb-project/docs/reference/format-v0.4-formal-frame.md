@@ -1,6 +1,8 @@
 # The formal-half frame of typed-library entries
 
-Created: 2026-10-14 13:45 ET, Probata proof of concept ticket 20.
+Created: 2026-10-14 13:45 ET, Probata proof of concept ticket 20. Updated: 2026-10-14 15:10 ET, ticket 21
+(`proof_unit` names the baseline C++ source; the formal halves type-check against its C lowering; the
+concurrency frame must name every interface array).
 Spec: `.scratch/probata-proof-of-concept-2026-10-13/issues/20-formal-half-frame.md`; design:
 `.scratch/formal-verification-2026-10-09/spec.md` ("Formal-half language and the C++ subset"), map 16
 items 2, 4 and 13, 17 item 5, 10 item 4, 15 item 5, 26 item 4, 12 item 1.
@@ -17,8 +19,8 @@ the allowed subset and type-checks.
 |---|---|---|
 | `formal_frame` | any entry | `1`: the entry is written in this frame. Without it no frame field is allowed, and the entry gives no proven verdict. |
 | `version` | frame entries | Dotted numbers as a quoted string (`"1.0"`). `once` placements and version ranges name it. |
-| `proof_unit` | entries with `acsl` | `{prototype, types?}`: the C declaration the formal halves are type-checked against; `types` pins a C header (path, sha256). Hand-written until ticket 21's C lowering supplies it. |
-| `concurrency_frame` | frame rewrite contracts (required) | One row per interface array: `array`, `shared_actions` (vocabulary `shared_action_kinds`; empty list allowed), `history_reads` (YAML yes/no). |
+| `proof_unit` | entries with `acsl`, frame rewrite contracts | `{source, function, types?}`: `source` pins the baseline proof unit's C++ file (`root`, `path`, `sha256`), `function` names it. The formal halves type-check against the C lowering of its signature (`swdb lower`, kept C++ names, no renaming layer; ticket 21). A hand-written `prototype` is refused. `types` pins a C header. Without clang 22.1.8 every formal half is reported unchecked; a baseline outside the core subset is refused. |
+| `concurrency_frame` | frame rewrite contracts (required) | One row per interface array: `array`, `shared_actions` (vocabulary `shared_action_kinds`; empty list allowed), `history_reads` (YAML yes/no). Ticket 21: every pointer parameter of the lowered proof unit has a row, and every row names one. |
 | `contract_role` | rewrite contracts (optional) | `offload_only` or `enabling`. The smallest marker the checks need. |
 | `required_enabling_contracts` | offload-only contracts (required there only) | Ordered list of `{contract, versions}`. Each names an `enabling` contract; `versions` is comma-separated bounds (`">=2.0, <3.0"`). `swdb build` keeps the written order. |
 | `enables` | never | Refused: an enabling contract never lists what it enables. |
@@ -57,7 +59,8 @@ rule comes with tickets 27 and 28.
 - No `axiom`, no `axiomatic` block, no declaration without a body.
 - Definition bodies follow the expression rules above, except that labels are free; lemma and
   inductive-case bodies are free (they are proven, never executed).
-- Ticket 26 adds versions, hashes and the `\false` check for the real files.
+- Ticket 26 (done): a `// version:` first line, an entry's own file beside its YAML, a Frama-C type check per
+  file, pins and the `\false` check: [format-v0.4-logic-library.md](format-v0.4-logic-library.md).
 
 ## Frama-C
 
@@ -71,9 +74,9 @@ rule comes with tickets 27 and 28.
 
 ## For later tickets
 
-- 21: replace `proof_unit.prototype` with the lowered signature; check that the concurrency frame names
-  every pointer parameter of the proof unit.
-- 26: real logic files; run these rules on every file (they already run on every file in `library/logic/`).
+- 21 (done): `proof_unit.source` + `function` replace the prototype; the concurrency frame names every
+  pointer parameter of the proof unit.
+- 26 (done): real logic files in `library/logic/` (`csr_graph`, `sets`, `access`, `sum`); see the logic-library doc.
 - 30/31: placements on real entries (new entry versions in the frame).
 - 36: refuse an entry without `formal_frame` (or a clause without placement) at proof time.
 - 44: compare vocabulary `shared_action_kinds` with the Rocq constructors.

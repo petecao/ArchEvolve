@@ -39,9 +39,10 @@ RANGE = re.compile(r'\s*(>=|<=|==|>|<)\s*\d+(\.\d+)*\s*(,\s*(>=|<=|==|>|<)\s*\d+
 LOGIC_FOLDER = 'logic'
 
 
-def logic_files(root):
-    """{entry ID: path} of the library's logic-library files."""
-    return {f'logic.{path.stem}': path for path in sorted((root / LOGIC_FOLDER).glob('*.acsl'))}
+def logic_files(root, library=None):
+    """{entry ID: path} of the library's logic-library files (ticket 26: with the library, each entry's own file)."""
+    from swdb import logic_library
+    return {ident: found.path for ident, found in logic_library.files(root, library).items()}
 
 
 class Report:
@@ -52,16 +53,23 @@ class Report:
         self.unchecked = []
         self.checked = 0
         self.framac_version = ''
+        self.logic_checked = 0          # ticket 26: logic files type-checked on their own
+        self.logic_unchecked = []
 
 
 def check(library):
     """Check every entry and logic-library file of `library` (a swdb.library.Library)."""
     report = Report()
     vocabs, _ = vocab.load_all(paths.VOCAB)
-    files = logic_files(library.root)
+    from swdb import logic_library
+    files = logic_files(library.root, library)
     logic = acsl_subset.LogicLibrary({entry: path.read_text() for entry, path in files.items()})
     for entry, found in logic.problems.items():
         report.problems += [Problem(str(files[entry]), where, reason) for where, reason in found]
+    for entry, path in files.items():                     # ticket 26: every logic file is versioned
+        if logic_library.version_of(path.read_text()) is None:
+            report.problems.append(Problem(str(path), 'version', f'{entry} has no version line: the first line of a '
+                                           'logic-library file is "// version: <dotted numbers>" (for example 1.0)'))
     rules = {f"{eid}#{rule.get('id')}" for eid, data in library.entries.items()
              if data.get('kind') == 'proof_semantics' and isinstance(data.get('rules'), list)
              for rule in data['rules'] if isinstance(rule, dict)}
@@ -73,6 +81,9 @@ def check(library):
             report.problems.append(Problem(path, where, reason))
 
         _entry(library, entry_id, data, error, vocabs, logic, rules, pending)
+        if data.get('kind') == 'proof_semantics' and data.get('formal_frame') == FRAME_VERSION:
+            from swdb import proof_semantics       # ticket 27: calls, contracts, inventory, ghost state
+            report.unchecked += proof_semantics.check(library, entry_id, data, error)
     _typecheck(library, logic, files, pending, report)
     return report
 
@@ -114,25 +125,35 @@ def _entry(library, entry_id, data, error, vocabs, logic, rules, pending):
                 error(f'{where}.acsl', 'acsl takes text (the formal half) and uses (logic-library entry IDs)')
                 continue
             reasons = acsl_subset.check_formal_half(acsl['text'], acsl.get('uses', []), logic)
+            reasons += [f'uses {u}, which belongs to another entry: an entry\'s own logic file serves only that '
+                        'entry (map 16 item 9)' for u in acsl.get('uses', [])
+                        if u in logic.files and u.startswith('logic.') and library.get(u[len('logic.'):]) is not None
+                        and u != f'logic.{entry_id}']
             for reason in reasons:
                 error(f'{where}.acsl', reason)
             if not reasons:
                 with_acsl.append((i, acsl))
     unit = data.get('proof_unit')
     if with_acsl or unit is not None:
-        if (not isinstance(unit, dict) or set(unit) - {'prototype', 'types'}
-                or not isinstance(unit.get('prototype'), str) or '(' not in unit['prototype']):
-            error('proof_unit', 'formal halves need proof_unit.prototype, the C declaration of the proof unit '
-                                'they are type-checked against (ticket 21 replaces it with the C lowering)')
-            with_acsl = []
-        elif 'types' in unit:
-            try:
-                library._pin(unit['types'])
-            except (KeyError, TypeError, ValueError, OSError) as exc:
-                error('proof_unit.types', str(exc))
-                with_acsl = []
-    if with_acsl:
-        pending.append((entry_id, error, unit, with_acsl))
+        if isinstance(unit, dict) and 'prototype' in unit:
+            error('proof_unit.prototype', 'a hand-written prototype is replaced by the C lowering of the baseline proof '
+                                          'unit (ticket 21): give proof_unit.source (path, sha256) and function')
+            unit, with_acsl = None, []
+        elif (not isinstance(unit, dict) or set(unit) - {'source', 'function', 'types'}
+                or not isinstance(unit.get('function'), str) or not re.fullmatch(r'[A-Za-z_]\w*', unit['function'])):
+            error('proof_unit', 'formal halves need proof_unit: {source: {path, sha256}, function}, the baseline proof '
+                                'unit whose C lowering they are type-checked against (kept C++ names)')
+            unit, with_acsl = None, []
+        else:
+            for key in ('source', 'types') if 'types' in unit else ('source',):
+                try:
+                    library._pin(unit[key])
+                except (KeyError, TypeError, ValueError, OSError) as exc:
+                    error(f'proof_unit.{key}', str(exc))
+                    unit, with_acsl = None, []
+                    break
+    if unit is not None and (with_acsl or data.get('kind') == 'rewrite_contract'):
+        pending.append((entry_id, error, unit, with_acsl, data.get('concurrency_frame')))
     kind = data.get('kind')
     if kind == 'rewrite_contract':
         _concurrency(data, error, vocabs)
@@ -278,36 +299,106 @@ def _rules(data, error):
                 error(f'{where}.assumed', 'assumed takes exactly owner')
 
 
-def _source(unit, logic, clauses):
+def _source(unit, logic, clauses, declaration):
+    """The check file: the used logic files, then each formal half on the lowered declaration (ticket 21)."""
     uses = []
     for _, acsl in clauses:
         uses += [u for u in acsl.get('uses', []) if u not in uses]
     parts = ['#include "proof_unit_types.h"'] if 'types' in unit else []
+    head, prototype = declaration.rstrip('\n').rsplit('\n', 1)
+    parts.append(head)
     parts += [f'/*@\n{logic.files[u]}\n*/' for u in uses]
-    prototype = unit['prototype'].strip().rstrip(';') + ';'
     for _, acsl in clauses:
         parts += [f'/*@\n{acsl["text"]}\n*/', prototype]
     return '\n'.join(parts) + '\n'
 
 
+_LOWERED = {}
+
+
+def lowered(library, unit):
+    """The C lowering of a proof_unit's baseline function (cached per source sha256), or the LoweringError."""
+    from swdb import c_lowering, proof_semantics
+    path = library.resolve(unit['source'])
+    covered = proof_semantics.covered_names(library)       # ticket 27: calls a proof semantics defines
+    key = (str(path), unit['source'].get('sha256'), unit['function'], c_lowering.locate(), tuple(sorted(covered)))
+    if key not in _LOWERED:
+        try:
+            _LOWERED[key] = c_lowering.lower(path, unit['function'], **proof_semantics.lowering_options(library))
+        except c_lowering.LoweringError as exc:
+            _LOWERED[key] = exc
+    return _LOWERED[key]
+
+
+def _interface(unit_lowering, frame, error):
+    """Ticket 21: the concurrency frame names every interface array (pointer parameter) of the proof unit, and only those."""
+    if not isinstance(frame, list):
+        return
+    arrays = [name for name, _type, pointer in unit_lowering.parameters if pointer]
+    named = [row.get('array') for row in frame if isinstance(row, dict)]
+    for name in arrays:
+        if name not in named:
+            error('concurrency_frame', f'the concurrency frame has no row for interface array {name} of '
+                                       f'{unit_lowering.function} (every pointer parameter needs one)')
+    for name in named:
+        if isinstance(name, str) and name not in arrays:
+            error('concurrency_frame', f'{name} is not a pointer parameter of {unit_lowering.function}, so it is not an '
+                                       'interface array of the proof unit')
+
+
 def _typecheck(library, logic, files, pending, report):
+    _typecheck_logic(logic, files, report)
     if not pending:
         return
     tool = framac.locate()
     report.framac_version = tool.version if not tool.missing else ''
-    for entry_id, error, unit, clauses in pending:
+    for entry_id, error, unit, clauses, frame in pending:
         path = str(library.files[entry_id])
+        unit_lowering = lowered(library, unit)
+        if isinstance(unit_lowering, Exception):
+            from swdb import c_lowering
+            if isinstance(unit_lowering, (c_lowering.Unsupported, c_lowering.ParseError, c_lowering.NotFound)):
+                error('proof_unit', f'the baseline proof unit {unit["function"]} has no C lowering: {unit_lowering}')
+                continue
+            report.unchecked += [Problem(path, f'clauses[{i}].acsl', f'not type-checked: no C lowering of the proof '
+                                         f'unit ({unit_lowering}); this formal half is unchecked, not valid')
+                                 for i, _ in clauses]
+            continue
+        _interface(unit_lowering, frame, error)
+        if not clauses:
+            continue
         if tool.missing:
             report.unchecked += [Problem(path, f'clauses[{i}].acsl', f'not type-checked: {tool.missing}; '
                                          'this formal half is unchecked, not valid') for i, _ in clauses]
             continue
         includes = [('proof_unit_types.h', library.resolve(unit['types']))] if 'types' in unit else []
-        if framac.typecheck(tool, _source(unit, logic, clauses), includes) is None:
+        declaration = unit_lowering.declaration
+        if framac.typecheck(tool, _source(unit, logic, clauses, declaration), includes) is None:
             report.checked += len(clauses)
             continue
         for i, acsl in clauses:
-            message = framac.typecheck(tool, _source(unit, logic, [(i, acsl)]), includes)
+            message = framac.typecheck(tool, _source(unit, logic, [(i, acsl)], declaration), includes)
             if message is None:
                 report.checked += 1
             else:
                 error(f'clauses[{i}].acsl', f'Frama-C {tool.version} refuses the formal half: {message}')
+
+
+def _typecheck_logic(logic, files, report):
+    """Ticket 26: Frama-C parses and type-checks every logic file that passes the subset, on its own."""
+    clean = [entry for entry in files if not logic.problems.get(entry)]
+    if not clean:
+        return
+    tool = framac.locate()
+    report.framac_version = tool.version if not tool.missing else report.framac_version
+    for entry in clean:
+        path = str(files[entry])
+        if tool.missing:
+            report.logic_unchecked.append(Problem(path, '-', f'logic file not type-checked: {tool.missing}; it is '
+                                                             'unchecked, not valid'))
+            continue
+        message = framac.typecheck(tool, f'/*@\n{logic.files[entry]}\n*/\n')
+        if message is not None:
+            report.problems.append(Problem(path, '-', f'Frama-C {tool.version} refuses the logic file: {message}'))
+        else:
+            report.logic_checked += 1

@@ -13,7 +13,10 @@ reason.
 The rule, in order:
 1. A proof record counts only while every pin in its content-hash set matches the current hash
    (`Rule.pin_problems`), no failed method part or contract-proof part voids a version or content it
-   pins (`Rule._voids`), and every proof record it depends on still counts.
+   pins (`Rule._voids`), and every proof record it depends on still counts. Ticket 26 (2026-10-14 ET):
+   the pins include the logic-library files used (`pins.logic`); a record that pins a shared file with
+   lemmas depends on a counting `logic_lemmas` record of that sha256, and a failed `\\false` check
+   (`voids: logic`) voids every record that pins the version it checked.
 2. Each counting proven record's level is taken after its caps: per bound dimension, the smallest
    bound among its own bounds and those of the proven parts it depends on (summaries, contract-proof
    parts, the minimum-bounds derivation, a route-3 predecessor's level). An unproven dependency is
@@ -33,7 +36,7 @@ from zoneinfo import ZoneInfo
 
 from swdb import artifacts, yamlio
 
-VERSION = "level-rule.1"
+VERSION = "level-rule.2"   # ticket 61 (main session, 2026-10-14): measurements, bounded_direct cap, candidate baseline pin
 UNBOUNDED = "unbounded"
 ORDER = ("uncertified", "certified", "proven_within_bounds_threads_1", "proven_within_bounds_threads_k",
          "proven_unbounded")
@@ -41,7 +44,9 @@ PROVEN = ORDER[2:]
 PART_VOCAB = "proof_part_names"          # part names and what a failed part voids (read, never hard-coded)
 MINIMUM_PART = "minimum_bounds_derivation"
 PROOF_SEMANTICS_FOLDER = "proof_semantics"
+LOGIC_PARTS = ("logic_lemmas", "logic_false_check")    # ticket 26: method parts about one logic file
 BELOW_MINIMUM = "bounded check below minimum"
+BOUNDED_DIRECT = "bounded_direct"        # ticket 61: whole-function equivalence; capped at threads = 1 within bounds
 WORDS = {"proven_unbounded": "proven unbounded",
          "proven_within_bounds_threads_k": "proven within bounds, threads ≤ k",
          "proven_within_bounds_threads_1": "proven within bounds, threads = 1",
@@ -96,6 +101,11 @@ class Rule:
             return _not_counting("-", f"no proof record {rid}")
         self._status[rid] = _not_counting("-", "the record depends on itself")
         stale = list(self.pin_problems(record)) + list(self._void_problems(record))
+        bounds = record.get("bounds") or {}
+        if record.get("route") == BOUNDED_DIRECT and record.get("verdict") == "proven" and \
+                (bounds.get("threads") != 1 or UNBOUNDED in bounds.values()):
+            stale.append({"pin": "route", "reason": "a bounded_direct record above proven within bounds, threads = 1 "
+                                                    "never counts (ticket 61; map 24 item 1)"})
         dependencies, more = self._dependencies(record)
         stale += more
         result = {"counts": not stale, "stale": stale, "bounds": None, "caps": [], "uses": dependencies,
@@ -152,6 +162,10 @@ class Rule:
             now = self.current_entry(pin.get("id"))
             if now != pin.get("sha256"):
                 yield {"pin": "summaries", "reason": f"summary {position}: " + _changed("summary entry", pin, now)}
+        for pin in pins.get("logic") or []:                  # ticket 26: the logic-library files used
+            now = self.current_logic(pin.get("id"))
+            if now != pin.get("sha256"):
+                yield {"pin": "logic", "reason": _changed("logic file", pin, now)}
 
     def _dependencies(self, record):
         """([{kind, record | candidate, bounds}] of the proven parts this record depends on, [stale])."""
@@ -168,6 +182,13 @@ class Rule:
 
         for pin in pins.get("summaries") or []:
             depend("summary", pin.get("proof_record"), f"the proof record of summary {pin.get('id')}", "summaries")
+        for pin in pins.get("logic") or []:                  # ticket 26: a shared file's lemmas, proven once
+            rid = self._logic_lemmas(record, pin)
+            if rid is False:
+                stale.append({"pin": "logic", "reason": f"no counting proof of the lemmas of {pin.get('id')} "
+                              f"{pin.get('version')} (swdb prove-logic --lemmas)"})
+            elif rid:
+                depend("logic_lemmas", rid, f"the lemma proof of {pin.get('id')}", "logic")
         minimum = pins.get("minimum_bounds") or {}
         if not _not_applicable(minimum) and minimum.get("id") in self.proofs:
             depend("minimum_bounds", minimum["id"], "the minimum-bounds derivation", "minimum_bounds")
@@ -200,6 +221,26 @@ class Rule:
                                   f"{constants[name]!r} here but {constant.get('value')!r} in {dependency['record']}"})
         return [d for d in used if d["bounds"] is not None], stale
 
+    def _logic_lemmas(self, record, pin):
+        """Ticket 26: the counting proven lemma record of a shared logic file's pinned version; None when no
+        such record is needed (the file states no lemma, belongs to an entry, or `record` is a logic part
+        itself); False when it is needed and missing."""
+        subject = record.get("subject") or {}
+        if subject.get("kind") == "method_part" and subject.get("part") in LOGIC_PARTS:
+            return None
+        from swdb import logic_library
+        found = self._logic_files().get(pin.get("id"))
+        if found is None or found.owner is not None or not logic_library.lemma_names(found.text):
+            return None
+        for rid, other in sorted(self.proofs.items(), reverse=True):
+            subject = other.get("subject") or {}
+            if (subject.get("kind") == "method_part" and subject.get("part") == "logic_lemmas"
+                    and subject.get("id") == pin.get("id") and other.get("verdict") == "proven"
+                    and any(p.get("sha256") == pin.get("sha256") for p in (other.get("pins") or {}).get("logic") or [])
+                    and self.status(rid)["counts"]):
+                return rid
+        return False
+
     def _contract_parts(self, record):
         """{part: [record IDs]}: the contract-proof parts of the contract content a candidate record pins."""
         if (record.get("subject") or {}).get("kind") != "candidate_proof_unit":
@@ -231,11 +272,19 @@ class Rule:
         voids = {}
         for rid, record in sorted(self.proofs.items()):
             subject = record.get("subject") or {}
-            if record.get("verdict") != "refuted" or list(self.pin_problems(record)):
+            if record.get("verdict") != "refuted":
                 continue
             entry = parts.get(subject.get("part")) or {}
             kind = entry.get("voids") if entry.get("subject_kind") == subject.get("kind") else None
             kind = None if kind == "none" else kind
+            # a failed \false check voids the version it checked even when that version is no longer (or never
+            # was) the library's file (ticket 26); its other pins must still match
+            if [p for p in self.pin_problems(record) if not (kind == "logic" and p["pin"] == "logic")]:
+                continue
+            if kind == "logic":                               # ticket 26: a failed false check
+                for pin in (record.get("pins") or {}).get("logic") or []:
+                    voids.setdefault(("logic", pin.get("id"), pin.get("sha256")), rid)
+                continue
             pin = ((record.get("pins") or {}).get(kind) or {}) if kind else {}
             if kind and pin and not _not_applicable(pin):
                 voids.setdefault((kind, pin.get("id"), pin.get("sha256")), rid)
@@ -243,6 +292,11 @@ class Rule:
 
     def _void_problems(self, record):
         pins = record.get("pins") or {}
+        for pin in pins.get("logic") or []:
+            failed = self.voids.get(("logic", pin.get("id"), pin.get("sha256")))
+            if failed and failed != record.get("id"):
+                yield {"pin": "logic", "reason": f"logic file {pin.get('id')} {pin.get('version')} is void: "
+                                                 f"failed false check {failed}", "failed": failed}
         for kind in ("proof_semantics", "method_version", "contract"):
             pin = pins.get(kind) or {}
             failed = self.voids.get((kind, pin.get("id"), pin.get("sha256")))
@@ -265,21 +319,32 @@ class Rule:
 
     def current_snapshot(self, ident):
         snapshot = self.store.get(ident or "", "source_snapshot")
+        if snapshot is None:      # ticket 61: a whole-function baseline may be another candidate artifact's code
+            snapshot = self.store.get(ident or "", "candidate")
         return (snapshot.get("artifact") or {}).get("sha256") if snapshot else None
 
     def current_method(self, ident):
         from swdb import method_version
-        if "method_version" not in self._current:
-            found = method_version.current(self.library_root)
-            self._current["method_version"] = method_version.pin(found) if found else {}
-        current = self._current["method_version"]
-        return current.get("sha256") if current.get("id") == ident else None
+        if "method_version" not in self._current:       # the current frozen version and newer drafts (fix-21)
+            self._current["method_version"] = method_version.counting(self.library_root)
+        return self._current["method_version"].get(ident)
 
     def current_version(self, folder, ident):
         """The file sha256 of version `ident` in library/<folder>/ while it is current in its line, else None."""
         if folder not in self._current:
             self._current[folder] = current_versions(self.library_root, folder)
         return self._current[folder].get(ident)
+
+    def _logic_files(self):
+        if "logic" not in self._current:
+            from swdb import logic_library
+            self._current["logic"] = logic_library.files(self.library_root, self.library)
+        return self._current["logic"]
+
+    def current_logic(self, ident):
+        """Ticket 26: the current file sha256 of a logic-library file, else None."""
+        found = self._logic_files().get(ident)
+        return found.sha256 if found is not None else None
 
     def current_record(self, ident):
         record = self.proofs.get(ident or "")
@@ -307,6 +372,8 @@ class Rule:
         records = sorted((r for r in self.proofs.values()
                           if (r.get("subject") or {}).get("kind") == "candidate_proof_unit"
                           and r["subject"].get("candidate") == candidate_id), key=lambda r: r["id"])
+        measurements = [r for r in records if is_baseline_measurement(r)]      # ticket 61: never a level
+        records = [r for r in records if not is_baseline_measurement(r)]
         units = []
         for contract in sorted(contracts):
             mine = [r for r in records if ((r.get("pins") or {}).get("contract") or {}).get("id") == contract]
@@ -338,6 +405,8 @@ class Rule:
                 "stale_proofs": stale, "below_minimum": below, "direct_proofs": direct,
                 "skipped": [{"record": r["id"], "skip_reason": r["skip_reason"]} for r in records
                             if r.get("skip_reason")],
+                "baseline_measurements": [{"record": r["id"], "verdict": r.get("verdict"), "bounds": r.get("bounds")}
+                                          for r in measurements],
                 "proof_records": [r["id"] for r in records]}
 
     def _refuted(self, records):
@@ -378,6 +447,12 @@ class Rule:
             for dependency in self.status(rid)["uses"]:
                 pending += [dependency["record"]] if "record" in dependency else list(dependency.get("records", []))
         return list(entries.values())
+
+
+def is_baseline_measurement(record):
+    """Ticket 61: a no-contract-baseline record (route bounded_direct, contract pin not applicable): a measurement for
+    the evaluation (map 23 item 2), never part of a candidate artifact's level, and never its refuted flag."""
+    return record.get("route") == BOUNDED_DIRECT and _not_applicable((record.get("pins") or {}).get("contract"))
 
 
 def current_versions(library_root, folder):

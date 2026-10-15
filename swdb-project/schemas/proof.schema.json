@@ -116,6 +116,28 @@
             "required": ["name", "value"],
             "properties": {"name": {"type": "string", "minLength": 1}, "value": {}}
           }
+        },
+        "c_lowering": {"$ref": "#/$defs/pin",
+                       "description": "Ticket 21: the C lowering the verifier ran on, {id: <function>.c, sha256 of its text}. Optional: only adapters that run on a C lowering write it."},
+        "naming_rules": {"$ref": "#/$defs/pin",
+                         "description": "Ticket 24: the C lowering's naming rules, {id: kept-names.<n>, sha256 of the rules text} (swdb.c_lowering.naming_rules()). Written with c_lowering; a new rules version gives a different pin."},
+        "translator": {"$ref": "#/$defs/pin",
+                       "description": "Ticket 22: the formal-half translator the verifier's input came from, {id: <tool>-<version>, sha256 of the translator's source} (the CBMC translator). Optional: only adapters with a translator write it."},
+        "baseline_c_lowering": {"$ref": "#/$defs/pin",
+                                "description": "Ticket 61: whole-function equivalence: the baseline function's C lowering in the product program, {id: <function>.c, sha256 of its text}. Optional: only whole-function jobs write it."},
+        "logic": {
+          "type": "array",
+          "description": "Ticket 26: every logic-library file the proof used (the formal halves' acsl.uses, or the file a prove-logic job checked), each by ID, version and file sha256. Optional: written only when a file is used. The level rule stops counting the record when a file's sha256 changes.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "version", "sha256"],
+            "properties": {
+              "id": {"type": "string", "pattern": "^logic\\.[a-z0-9][a-z0-9._-]*$"},
+              "version": {"type": "string", "pattern": "^[0-9]+(\\.[0-9]+)*$"},
+              "sha256": {"$ref": "#/$defs/sha256"}
+            }
+          }
         }
       }
     },
@@ -164,6 +186,101 @@
       "items": {"type": "string", "minLength": 1},
       "description": "Ticket 10 (S14): the verifiers and solvers the job used, each by the reference ID of a trusted_tool entry in the assumption set (for example frama-c-wp-33.0, z3-4.8.14). swdb validate refuses a tool with no such entry. Optional until the real adapters (21, 22) write it."
     },
+    "goals": {
+      "type": "array",
+      "description": "Ticket 21 (minimal verdict reader): per goal of the verifier's per-goal report, its status and the solver that proved it (any one of the portfolio counts; qed is WP's simplifier) with its time.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["goal", "status", "solver", "seconds"],
+        "properties": {
+          "goal": {"type": "string", "minLength": 1}, "property": {"type": ["string", "null"]},
+          "function": {"type": ["string", "null"]}, "status": {"type": "string", "minLength": 1},
+          "solver": {"type": ["string", "null"]}, "seconds": {"type": ["number", "null"], "minimum": 0}
+        }
+      }
+    },
+    "unproven_properties": {
+      "type": "array",
+      "description": "Ticket 21: not proven only: each property of the per-property report that is not Valid (the hint loop's input, ticket 37).",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["property", "status"],
+        "properties": {
+          "property": {"type": ["string", "null"]}, "kind": {"type": ["string", "null"]},
+          "function": {"type": ["string", "null"]}, "line": {"type": ["integer", "null"]},
+          "status": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "settings": {
+      "type": "object",
+      "description": "Ticket 21: the frozen settings the verifier ran with (flags, fresh session, default warning levels, machdep, time per solver, environment variables removed, RSS cap, hint count, build constants).",
+      "required": ["tool", "flags"],
+      "properties": {"tool": {"type": "string", "minLength": 1}, "flags": {"type": "array", "items": {"type": "string"}}}
+    },
+    "hint_set": {
+      "type": "object",
+      "description": "Ticket 35: the hint set the job was given (records in the given order) and its hash (anchor, kind and text of each record, in canonical order).",
+      "additionalProperties": false,
+      "required": ["sha256", "hints"],
+      "properties": {
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "hints": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["anchor", "kind", "text", "provenance"],
+            "x-required-reasons": {"provenance": "every hint says who wrote it: agent, seed (with its source) or human (map 13 item 9)"},
+            "properties": {
+              "anchor": {"type": "string", "minLength": 1}, "kind": {"type": "string", "minLength": 1},
+              "text": {"type": "string", "minLength": 1},
+              "provenance": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["source"],
+                "properties": {"source": {"enum": ["agent", "seed", "human"]}, "seed_source": {"type": "string", "minLength": 1}},
+                "if": {"properties": {"source": {"const": "seed"}}},
+                "then": {"required": ["seed_source"], "x-required-reasons": {"seed_source": "a seed names where it came from"}},
+                "else": {"properties": {"seed_source": {"not": {}, "x-reason": "only a seed names a seed source"}}}
+              }
+            }
+          }
+        }
+      }
+    },
+    "hint_check": {
+      "type": "object",
+      "description": "Ticket 35: the proof hint check's result (check and vocabulary versions, verdict, every rejection by rule); a rejected set never reaches WP.",
+      "additionalProperties": false,
+      "required": ["check", "vocabulary", "verdict", "merged_sha256", "rejections", "frama_c_runs", "reached_wp"],
+      "properties": {
+        "check": {"$ref": "#/$defs/tool_identity"}, "vocabulary": {"$ref": "#/$defs/tool_identity"},
+        "verdict": {"enum": ["accepted", "rejected"]},
+        "merged_sha256": {"$ref": "#/$defs/sha256"},
+        "frama_c_runs": {"type": "integer", "minimum": 0},
+        "reached_wp": {"type": "boolean"},
+        "rejections": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["hint", "anchor", "kind", "rule", "detail"],
+            "properties": {
+              "hint": {"type": ["integer", "null"], "minimum": 0},
+              "anchor": {"type": ["string", "null"]}, "kind": {"type": ["string", "null"]},
+              "rule": {"type": "string", "x-vocab": "proof_hint_rules"}, "detail": {"type": "string"}
+            }
+          }
+        }
+      },
+      "if": {"properties": {"verdict": {"const": "accepted"}}},
+      "then": {"properties": {"rejections": {"maxItems": 0, "x-reason": "an accepted hint set has no rejection"}}},
+      "else": {"properties": {"rejections": {"minItems": 1, "x-reason": "a rejected hint set names each rejection"},
+                              "reached_wp": {"const": false, "x-reason": "a rejected hint set never reaches WP"}}}
+    },
     "run_index": {"$ref": "#/$defs/run_index"},
     "provider_pin": {"$ref": "#/$defs/provider_pin"},
     "job": {
@@ -206,12 +323,23 @@
           "required": ["path", "sha256"],
           "description": "The adapter's log in a runs folder outside the repo, on the host the job ran on.",
           "properties": {"path": {"type": "string", "pattern": "^/"}, "sha256": {"$ref": "#/$defs/sha256"}}
+        },
+        "reports": {
+          "type": "array",
+          "description": "Ticket 21: the verifier's own reports and inputs in the runs folder (WP input, WP log, per-goal and per-property reports, the handler's output), each by name, absolute path and sha256.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "path", "sha256"],
+            "properties": {"name": {"type": "string", "minLength": 1}, "path": {"type": "string", "pattern": "^/"},
+                           "sha256": {"$ref": "#/$defs/sha256"}}
+          }
         }
       }
     },
     "evidence_kind": {
-      "enum": ["contract_fixture"],
-      "x-reason": "only the scripted adapter writes proof records so far, and its records are contract_fixture evidence"
+      "enum": ["contract_fixture", "execution"],
+      "x-reason": "evidence_kind is contract_fixture (scripted adapter, or a contract_fixture method version) or execution (a real verifier under a real method version; ticket 21)"
     }
   },
   "required": ["subject", "pins", "job", "evidence_kind"],
@@ -265,10 +393,26 @@
         "properties": {"subject": {"properties": {"kind": {"const": "candidate_proof_unit",
           "x-reason": "only a candidate proof unit carries a proof route"}}}}
       }
+    },
+    {
+      "if": {"properties": {"route": {"const": "bounded_direct"}}, "required": ["route"]},
+      "then": {
+        "properties": {"bounds": {
+          "properties": {"threads": {"const": 1,
+            "x-reason": "a bounded_direct record is capped at proven within bounds, threads = 1 (ticket 61; map 24 item 1): its thread count is 1"}},
+          "additionalProperties": {"type": "integer",
+            "x-reason": "a bounded_direct record is capped at proven within bounds (ticket 61; map 24 item 1): no dimension is unbounded"}}}
+      }
     }
   ],
   "$defs": {
     "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "tool_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "sha256"],
+      "properties": {"id": {"type": "string", "minLength": 1}, "sha256": {"$ref": "#/$defs/sha256"}}
+    },
     "pin": {
       "oneOf": [
         {

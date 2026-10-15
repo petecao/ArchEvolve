@@ -83,7 +83,8 @@ def _method(store_dir):
     from swdb.library import default_root
     found = bounded_gate.method_version_of(default_root(Path(store_dir)))
     if found is None:
-        raise Failure("no method version beside the records: the proof path reads its per-candidate budgets there")
+        raise Failure("no frozen method version beside the records (a draft is used only when named; fix-21): "
+                      "the proof path reads its per-candidate budgets there")
     return found
 
 
@@ -267,7 +268,7 @@ class ScriptedPlan:
     def proof_function(self, contract):
         return self.function
 
-    def prepare_proofs(self, store_dir):
+    def prepare_proofs(self, store_dir, method=None):
         """Contract proofs are the contract's own records in the store; a plan writes none."""
 
     def outside_cpp_subset(self, candidate_id, position=0, **_context):
