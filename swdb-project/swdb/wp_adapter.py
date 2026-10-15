@@ -36,7 +36,7 @@ import shutil
 import subprocess
 from pathlib import Path
 
-from swdb import c_lowering, framac, hint_check, paths, rss_watchdog, vocab
+from swdb import artifacts, c_lowering, framac, hint_check, paths, proof_semantics, rss_watchdog, vocab
 from swdb.proof import AdapterError, Verdict
 
 NAME = "wp"
@@ -95,8 +95,10 @@ class WpAdapter:
         source = _unit_source(Path(job.unit.tree), job.unit.function)
         log.line(f"source: {source.relative_to(job.unit.tree)}")
         context = {"job": job, "wp_dir": wp_dir, "log": log, "reports": [], "tools": tools}
+        covered = proof_semantics.covered_names(self.library)
         try:
-            lowering = c_lowering.lower(source, job.unit.function, defines=self.defines)
+            lowering = c_lowering.lower(source, job.unit.function, defines=self.defines,
+                                        **proof_semantics.lowering_options(self.library))
         except c_lowering.Unsupported as exc:
             return self._not_proven("unsupported_construct", str(exc), context)
         except c_lowering.ParseError as exc:
@@ -109,7 +111,19 @@ class WpAdapter:
         c_path, anchors_path = lowering.write(wp_dir)
         context["reports"] += [("c_lowering", c_path), ("anchors", anchors_path)]
         context["c_lowering"] = {"id": c_path.name, "sha256": lowering.sha256}
-        base = hint_check.wp_base(lowering.text, lowering.anchors, self._context(lowering, entry))
+        called = proof_semantics.called(lowering, covered)
+        if called:                                  # ticket 27: the WP form of the proof semantics
+            entries = sorted({covered[name] for name in called})
+            if len(entries) != 1:
+                raise AdapterError(f"{job.unit.function} calls into more than one proof semantics: {', '.join(entries)}")
+            sha = artifacts.file_hash(self.library.files[entries[0]])
+            context["semantics"] = {"id": entries[0], "sha256": sha, "calls": called}
+            context["semantics_settings"] = {
+                "id": entries[0], "calls": called,
+                "probes": [{k: p[k] for k in ("id", "function", "access", "line")} for p in lowering.probes]}
+            log.line(f"proof semantics: {entries[0]} (sha256 {sha}); calls {', '.join(called)}; "
+                     f"{len(lowering.probes)} hazard probe(s)")
+        base = hint_check.wp_base(lowering.text, lowering.anchors, self._context(lowering, entry, context))
         accepted = self._hint_check(job, lowering, base, context) if self.hints_path else []
         text = hint_check.merge(base, lowering.anchors, self.hints, accepted).text
         input_path = wp_dir / "wp_input.c"
@@ -181,14 +195,21 @@ class WpAdapter:
             identities[tool] = (f"{tool}-{version}", sha, version)
         return {"flags": list(flags), "seconds": seconds, "identities": identities}
 
-    def _context(self, lowering, entry):
+    def _context(self, lowering, entry, job_context=None):
         """What WP sees besides the hints, {anchor: [block]}: the contract's per-candidate formal halves at the
-        unit's contract anchor (`requires` first), the logic-library files they use at ghost.globals."""
+        unit's contract anchor (`requires` first), the logic-library files they use at ghost.globals. Ticket 27: a
+        unit that calls into a proof semantics also gets its WP form at ghost.globals, the initial ghost state and
+        the separation of its arrays from the device state as preconditions, and the ghost and device state in
+        every `assigns` clause (the calls write them)."""
         clauses = [c for c in entry.get("clauses") or [] if isinstance(c, dict) and c.get("acsl")
                    and c.get("proof_placement") == "per_candidate"]
         if not clauses:
             raise AdapterError(f"contract {self.contract} has no per-candidate formal half to prove")
         texts = [c["acsl"]["text"].strip() for c in clauses]
+        semantics = (job_context or {}).get("semantics")
+        prelude = []
+        if semantics:
+            texts, prelude = self._with_semantics(lowering, texts, semantics)
         texts = sorted(texts, key=lambda t: 0 if t.startswith("requires") else 1)
         uses = []
         for clause in clauses:
@@ -196,7 +217,32 @@ class WpAdapter:
         from swdb.formal_frame import logic_files
         files = logic_files(self.library.root, self.library)       # ticket 26: an entry's own file too
         return {f"{lowering.function}.contract": ["/*@ " + "\n    ".join("\n".join(texts).splitlines()) + " */"],
-                "ghost.globals": [f"/*@\n{files[u].read_text()}\n*/" for u in uses]}
+                "ghost.globals": prelude + [f"/*@\n{files[u].read_text()}\n*/" for u in uses]}
+
+    def _with_semantics(self, lowering, texts, semantics):
+        """(formal-half texts with the semantics' preconditions and state locations, [the WP-form prelude])."""
+        entry_id = semantics["id"]
+        data = self.library.get(entry_id) or {}
+        wp = data.get("wp") or {}
+        locations = proof_semantics.wp_locations(self.library, entry_id, self.defines)
+        joined = ", ".join(locations)
+        rewritten = []
+        for text in texts:
+            text = re.sub(r"\bassigns\s+\\nothing\s*;", f"assigns {joined};", text)
+            text = re.sub(r"\bassigns\s+(?!" + re.escape(locations[0]) + r")([^;]+);",
+                          lambda m: f"assigns {m.group(1).strip()}, {joined};", text)
+            rewritten.append(text)
+        extra = []
+        if wp.get("unit_requires"):
+            extra.append(f"requires {wp['unit_requires']};")
+        for name, _ctype, pointer in lowering.parameters:
+            if not pointer:
+                continue
+            for array in wp.get("separate_from") or []:
+                dims = next((loc.count("[") for loc in locations if loc.split("[")[0] == array), 0)
+                extra.append(f"requires \\base_addr({name}) != \\base_addr(&{array}{'[0]' * dims});")
+        prelude = proof_semantics.wp_prelude(self.library, entry_id, semantics["calls"], self.defines)
+        return extra + rewritten, [prelude]
 
     def _wp(self, job, input_path, context):
         tools, log, wp_dir = context["tools"], context["log"], context["wp_dir"]
@@ -265,6 +311,21 @@ class WpAdapter:
             fields["settings"] = context["settings"]
         pins = {"c_lowering": context["c_lowering"], "naming_rules": c_lowering.naming_rules()} \
             if context.get("c_lowering") else {}
+        semantics = context.get("semantics")
+        if semantics:                               # ticket 27: as the CBMC adapter records it
+            pins["proof_semantics"] = {"id": semantics["id"], "sha256": semantics["sha256"]}
+            fields.setdefault("settings", {})["proof_semantics"] = context["semantics_settings"]
+            assumptions.append({"kind": "proof_semantics", "reference": {"id": semantics["id"],
+                                                                         "sha256": semantics["sha256"]},
+                                "sentence": f"The DX100 behaves as its proof semantics {semantics['id']} says: each "
+                                            "command's values as if it finished at issue, hazards as its rules state."})
+            reduction = Path(self.library.root) / "rocq" / "probata" / "Reduction.v"
+            if not reduction.is_file():
+                reduction = paths.HOME / "library" / "rocq" / "probata" / "Reduction.v"
+            assumptions.append({"kind": "reduction", "reference": {"id": "rocq.probata.dx100_reduction",
+                                                                   "sha256": artifacts.file_hash(reduction)},
+                                "sentence": "The DX100 reduction lemma (Reduction.v, statement only; proof: ticket "
+                                            "43): a hazard-free at-issue run matches every timing gem5 allows."})
         return Verdict(verdict=verdict, bounds={"threads": 1, "input_size": "unbounded"}, assumptions=assumptions,
                        failure_class=failure_class, tools=tuple(tools), peak_rss_bytes=context.get("peak"),
                        record_fields=fields, pins=pins, reports=tuple(context["reports"]))

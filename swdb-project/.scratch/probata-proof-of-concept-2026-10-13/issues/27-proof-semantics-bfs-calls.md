@@ -135,3 +135,31 @@ out once under contention, with CBMC itself at 0.3 s).
 - 29: compare `model.h` with the ACSL contracts (`swdb.proof_semantics.acsl_source`) and with 23's stubs.
 - 30: generate `model.h`; `model_for` is the consumer (ghost globals already generated from `ghost.acsl`).
 - 36: probes are in `settings.proof_semantics.probes` and `Lowering.probes` (id, access, C++ range).
+- Rocq: the two missing covers (issue stall, register write) — Rocq statement revised by 41's follow-up.
+
+## Progress (paused)
+
+2026-10-14 22:38 ET. The CBMC half is merged (integration 1672b48a). The WP half is partly done; Status stays
+`claimed` (Yan-Ru paused the effort).
+
+- **Done.** `swdb/wp_adapter.py` takes the proof semantics: same lowering (summaries + probes), the WP form at
+  `ghost.globals` (`swdb.proof_semantics.wp_prelude`: constants, probe macros calling contracted probe functions,
+  `ghost.acsl` as written, `state.h`, `logic.acsl`, the called contracts), `requires dx_idle` and array separation on
+  the unit, ghost/device state added to its `assigns`; records pin and assume the semantics as CBMC does. The call
+  contracts were rewritten in a per-tile view (`logic.acsl`: `dx_wait_covers`, `dx_stall_covers`, `dx_kept`,
+  `dx_new_slot`, `dx_issuable`) with no shifts or masks: Z3, Alt-Ergo and CVC5 time out on constant shift-and-mask
+  facts (checked on a 3-line file). New ghost fields `dx_count`, `dx_reg_named`, `dx_reg_a/b/c` (model maintains
+  them). Fixture helper `dxf_load` became a macro (WP has no contract for helpers). Generator split:
+  `prototype/27-proof-semantics/contracts_wp.py`.
+- **WP results** (Frama-C 33.0, 30 s per prover, `/tmp/claude/probata-runs/t27/wp/summary2.txt`): proven
+  three_reads 62/62, size, cpu_write, transitive, register_write, value_stream, value_gather, value_range, footprint.
+  Every CBMC-refuted variant run so far stays not proven at the probe (or call) CBMC names: early reads 1-3,
+  early size, CPU write, range exception, unrelated wait.
+- **Open.** (1) store_source_wait and stall_condition: everything proves except the unit's `assigns` against the
+  store's set-comprehension `assigns` (2 goals each); next step: give the store contract an index bound the
+  provers use (for example `requires` all active indices in `[0, bound)` with `assigns data[0 .. bound - 1]`), or
+  a proof hint. (2) condition_wait and the wrong-value / outside-footprint variants were not run to completion.
+  (3) The WP tests in `tests/test_proof_semantics.py` (`needs_wp`, sandbox off for Why3) were written but not run
+  through `swdb prove` yet; the two store fixtures are left out of `WP_SAFE` until (1).
+- **Next step.** Fix (1), then run `pytest tests/test_proof_semantics.py -k wp` with the sandbox off, record the
+  numbers here, and resolve.

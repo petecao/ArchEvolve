@@ -15,6 +15,9 @@ ghost int dx_src2[DX_K];
 ghost int dx_cond[DX_K];
 ghost unsigned int dx_regs_in[DX_K];  // registers the command reads (bit r)
 ghost unsigned int dx_regs_out[DX_K]; // registers the command writes (bit r)
+ghost int dx_reg_a[DX_K];             // the same registers by index, lowest first (-1: none); at most three
+ghost int dx_reg_b[DX_K];
+ghost int dx_reg_c[DX_K];
 ghost int dx_region[DX_K];            // registered region of its memory accesses (-1: none or not modeled yet)
 ghost int *dx_base[DX_K];             // base address of its memory accesses (0: none)
 ghost long long dx_lo[DX_K];          // stream: first element offset (range lo .. hi, step stride)
@@ -29,6 +32,10 @@ ghost int dx_tile_owner[DX_NT];
 ghost int dx_tile_writer[DX_NT];
 ghost unsigned int dx_tile_readers[DX_NT];
 
-// Per register: owner thread, uncovered writer (slot or -1).
+// Per register: owner thread, uncovered writer (slot or -1), uncovered commands naming it (bit s).
 ghost int dx_reg_owner[DX_NR];
 ghost int dx_reg_writer[DX_NR];
+ghost unsigned int dx_reg_named[DX_NR];
+
+// The number of uncovered commands (the population count of dx_live; capacity K).
+ghost int dx_count;

@@ -60,12 +60,12 @@ static void swdb_dx_init(void) {
   dx_live = 0u;
   for (int s = 0; s < DX_K; ++s) {
     dx_kind[s] = 0; dx_dst1[s] = -1; dx_dst2[s] = -1; dx_src1[s] = -1; dx_src2[s] = -1; dx_cond[s] = -1;
-    dx_regs_in[s] = 0u; dx_regs_out[s] = 0u; dx_region[s] = -1; dx_base[s] = 0; dx_lo[s] = 0; dx_hi[s] = 0;
+    dx_regs_in[s] = 0u; dx_regs_out[s] = 0u; dx_reg_a[s] = -1; dx_reg_b[s] = -1; dx_reg_c[s] = -1; dx_region[s] = -1; dx_base[s] = 0; dx_lo[s] = 0; dx_hi[s] = 0;
     dx_stride[s] = 0; dx_index[s] = -1; dx_deps[s] = 0u; dx_writes_memory[s] = 0;
   }
   for (int t = 0; t < DX_NT; ++t) { dx_tile_owner[t] = -1; dx_tile_writer[t] = -1; dx_tile_readers[t] = 0u; dx_tile_size[t] = 0; }
-  for (int r = 0; r < DX_NR; ++r) { dx_reg_owner[r] = -1; dx_reg_writer[r] = -1; dx_reg_value[r] = 0; }
-  dx_next_tile = 0; dx_next_reg = 0; dx_regions = 0;
+  for (int r = 0; r < DX_NR; ++r) { dx_reg_owner[r] = -1; dx_reg_writer[r] = -1; dx_reg_named[r] = 0u; dx_reg_value[r] = 0; }
+  dx_next_tile = 0; dx_next_reg = 0; dx_regions = 0; dx_count = 0;
 }
 
 /* Live slots naming tile t in a counted role (src1, src2, dst1, dst2; not cond): what a wait on t covers. */
@@ -110,13 +110,18 @@ static void dx_cover(unsigned int start) {
   unsigned int m = dx_closure(start);
   if (m == 0u) return;
   dx_live &= ~m;
-  for (int s = 0; s < DX_K; ++s) dx_deps[s] &= ~m;
+  for (int s = 0; s < DX_K; ++s) {
+    dx_deps[s] &= ~m;
+    if ((m >> s) & 1u) dx_count = dx_count - 1;
+  }
   for (int t = 0; t < DX_NT; ++t) {
     if (dx_tile_writer[t] >= 0 && ((m >> dx_tile_writer[t]) & 1u)) dx_tile_writer[t] = -1;
     dx_tile_readers[t] &= ~m;
   }
-  for (int r = 0; r < DX_NR; ++r)
+  for (int r = 0; r < DX_NR; ++r) {
     if (dx_reg_writer[r] >= 0 && ((m >> dx_reg_writer[r]) & 1u)) dx_reg_writer[r] = -1;
+    dx_reg_named[r] &= ~m;
+  }
 }
 
 /* Dispatch one command: the stall covers, the register-overlap hazard, a free slot, the ghost links. */
@@ -148,8 +153,17 @@ static int dx_dispatch(int kind, int dst1, int dst2, int src1, int src2, int con
   if (src1 >= 0) dx_tile_readers[src1] |= dx_bit(slot);
   if (src2 >= 0) dx_tile_readers[src2] |= dx_bit(slot);
   if (cond >= 0) dx_tile_readers[cond] |= dx_bit(slot);
-  for (int r = 0; r < DX_NR; ++r)
+  dx_reg_a[slot] = -1; dx_reg_b[slot] = -1; dx_reg_c[slot] = -1;
+  for (int r = 0; r < DX_NR; ++r) {
     if ((regs_out >> r) & 1u) dx_reg_writer[r] = slot;
+    if (((regs_in | regs_out) >> r) & 1u) {
+      dx_reg_named[r] |= dx_bit(slot);
+      if (dx_reg_a[slot] < 0) dx_reg_a[slot] = r;
+      else if (dx_reg_b[slot] < 0) dx_reg_b[slot] = r;
+      else dx_reg_c[slot] = r;
+    }
+  }
+  dx_count = dx_count + 1;
   return slot;
 }
 
