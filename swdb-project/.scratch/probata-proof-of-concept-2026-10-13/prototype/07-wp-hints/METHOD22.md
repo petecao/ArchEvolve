@@ -30,7 +30,11 @@ Raw scoped MCP requests and final CLI artifacts are retained before ordinary
 schema/design/parser refusals. Each attempted candidate records the raw operation
 hash, its index, immutable base/record hashes and edit-parent ancestry. Candidate
 records must derive exactly from those operations; untraceable/imported/generated
-records fail closed before checking. Before terminal use, the complete trace is
+records fail closed before checking. Admission replays the entire captured base
+through add/edit/delete, preserving every unchanged record as well as explicit
+removals. Historical fingerprint/origin pairs remain valid across cached repeats.
+Every raw edit request needs exactly one attempt or explicit pre-attempt refusal;
+missing, duplicated, leftover or unscoped receipts fail closed. Before terminal use, the complete trace is
 corroborated with the exact owned CLI MCP events/final message and one fresh
 conversation. The trust boundary is the pinned local harness/scoped transport,
 not hostile same-UID authentication. Raw hint payloads stay outside Git.
@@ -43,7 +47,9 @@ This named mode adds bounded `offset` pages (≤14kcharacters) from the same exa
 selected active task. Receipts pin the full selected task artifact/hash, raw
 WP-print log/hash, candidate hint/source and header hashes, total characters,
 offset/returned count and explicit truncation. Later pages require its task hash;
-stale identities, modified artifacts and arbitrary paths are refused. Cached
+stale identities, modified artifacts and arbitrary paths are refused. Method22
+uses strict requested-identity matching: absent/ambiguous lemma, phase or split
+identity is refused, with no legacy first-goal or neighboring-part fallback. Cached
 pages launch no additional solver or regeneration job. Printing is diagnostic and
 never grants proof credit or changes the incumbent.
 
@@ -62,6 +68,18 @@ positive or positive-plus-negative fits12minutes. No budget reset, focus-based
 promotion, historical pass-set reuse or posthoc upgrade is allowed. Shared queue
 wait accounting keeps the existing matched continuous-clock rule; Mac dispatch
 must avoid external contention. Cleanup/receipt/audit time remains counted.
+All retained-report accounting finishes before timed publication. A matching
+`completion.json`, the matching returned `publication complete` log observation
+and clean driver exit0 are required in addition to summary success. The publisher
+observes the continuous clock after summary persistence and again after the
+completion receipt; an observed overrun rewrites admission false. The final
+post-persistence observation/hash is returned in the terminal diagnostic log;
+the completion file's earlier `observed_after_summary_persistence_s` is explicitly
+before its own write, never mislabeled as the final observation. All required
+receipt hashes are computed before the final counted observation.
+This is the source-level measured finish boundary, with no hard realtime I/O or
+process-termination bound. Final informational status logging records that stopped
+observation; no verifier/provider work or required accounting follows it.
 
 Search keeps its checked incumbent separate from temporary debt; it rolls debt
 back before terminal verification. One terminal fresh all-function/cache-none

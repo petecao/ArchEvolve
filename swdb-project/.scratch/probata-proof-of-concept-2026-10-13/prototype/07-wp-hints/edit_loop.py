@@ -420,8 +420,8 @@ def main():
         if a.bounded_debt or a.two_phase or a.accept != "total" or a.round0_from:
             ap.error("method19 needs total acceptance, a fresh baseline, and its own staged policy")
         if a.terminal_full30:
-            if a.budget_min != 60 or a.final_reserve_min != 24:
-                ap.error("method22 requires60 counted minutes and24minute final allocation")
+            if a.budget_min != 60 or a.final_reserve_min != 24 or a.round_timeout != 10 or not 1 <= a.rounds <= 10:
+                ap.error("method22 requires60 counted minutes,24minute final allocation,10second rounds and1..10rounds")
         elif a.budget_min != 60 or a.final_reserve_min != 8 or not a.seeds:
             ap.error("method19 requires 60 counted minutes, an eight-minute reserve, and mechanical frame seeds")
         if a.dev_effort or a.dev_no_codex or a.dev_skip_round0:
@@ -511,11 +511,14 @@ def main():
             "all_original_final_obligations_mandatory": True,
             "confound": "Shorter diagnostic timeout can change baseline statuses and regression pass set; projected time recovery is unmeasured."}
     if a.terminal_full30:
+        meta["method19"]["covering_wait_negative"] = "mandatory same-clock identical-hints negative after qualifying positive; included in method22 summary.proven"
         meta["method22"] = {"id": T.METHOD, "mechanical_seeds": False,
             "proof_search_stop_min": T.PROOF_STOP_MIN, "provider_hard_stop_min": T.HARD_STOP_MIN,
             "negative_reserve_min": T.NEGATIVE_RESERVE_MIN, "total_min": 60,
             "terminal_replay_even_with_diagnostic_open": True, "positive_and_negative_counted": True,
-            "all_provider_receipts_required": True, "allocation_sufficiency": "unproven; chosen prospectively"}
+            "all_provider_receipts_required": True, "completion_receipt_required": True,
+            "timed_admission_boundary": "after required accounting and summary/completion receipt persistence; final informational logging afterward",
+            "allocation_sufficiency": "unproven; chosen prospectively"}
     (out / "meta.json").write_text(json.dumps(meta, indent=1))
     # Round 0 is outside the legacy budget; methods18/19 count the fresh baseline.
     # Own run, or reused from an
@@ -671,6 +674,9 @@ def main():
                "codex": {k: c.get(k) for k in ("exit", "wall_s", "usage", "usage_status", "completed_usage_receipts", "usage_fields_valid", "completion_deadline_met", "error", "killed_at_deadline", "stop_reason")}, "codex_notes": c.get("notes"), "codex_thread": thread, "tool": tool,
                "codex_calls": 1}
         best = E.load_working(out, counted_s=budget_s(t0), remaining_s=E.SEARCH_REMAINING_S[0]()) if (a.bounded_debt or a.staged_induction) else E.load_best(out)
+        if a.terminal_full30 and c.get("ops"):
+            O.CONTEXT[0] = {"kind": "final", "round": r, "pin": L.PIN,
+                "source_sha256": L.sha(out / f"codex-r{r}" / "final.json")}
         if c.get("ops") and best["n_open"] > 0 and (T.PROOF_STOP_MIN if a.terminal_full30 else a.budget_min - a.final_reserve_min) - budget_s(t0) / 60 > 0.5:
             prov = f"codex {L.PIN['model']} {L.PIN['effort']} round {r} final answer"
             if a.terminal_full30:
@@ -683,6 +689,10 @@ def main():
             if nb is not None:
                 E.save_best(out, nb)
                 best = nb
+        elif a.terminal_full30 and c.get("ops"):
+            receipt = O.begin(out, best, c["ops"], f"r{r}f", refusal="final edit outside proof window or diagnostic goals already closed")
+            rec["final_answer_edit"] = {"result": "refused before attempt", "ops": c["ops"],
+                                        "provider_receipt_sha256": receipt["receipt_sha256"]}
         best = E.load_best(out)  # authoritative incumbent only; staged hints never decide a verdict
         rec["debt_status"] = E.debt_status(out) if (a.bounded_debt or a.staged_induction) else None
         rec["best_n_open"] = best["n_open"]
@@ -743,7 +753,11 @@ def main():
         summary["method21"] = True
         summary["attempt_counts"] = R.attempt_counts(out, history)
         summary["legacy_wp_attempts_meaning"] = "Recorded proposal requests, not completed candidate proof runs; use attempt_counts."
-    (out / "summary.json").write_text(json.dumps(summary, indent=1))
+    if a.terminal_full30:
+        publication = T.publish(out, summary, counted_s=lambda: budget_s(t0), limit_min=a.budget_min)
+        L.log(out, f"publication complete: {json.dumps(publication)}")
+    else:
+        (out / "summary.json").write_text(json.dumps(summary, indent=1))
     L.log(out, f"done: {json.dumps(summary)}")
 
 

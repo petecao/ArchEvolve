@@ -65,7 +65,7 @@ def test_scoped_goal_paging_exposes_omitted_premises_without_regeneration(tmp_pa
     assert records[0]['truncated'] is True and records[1]['truncated'] is False
 
 
-@pytest.mark.parametrize("corroborated,negative_complete,trace_fault", [(None,True,None),(True,True,None),(False,True,None),(True,False,None),(True,True,"drop-attempt")])
+@pytest.mark.parametrize("corroborated,negative_complete,trace_fault", [(None,True,None),(True,True,None),(False,True,None),(True,False,None),(True,True,"drop-attempt"),(True,True,"drop-all"),(True,True,"drop-materialized")])
 def test_terminal_plan_starts_empty_and_checks_full_replay_with_open_diagnostics(tmp_path, corroborated, negative_complete, trace_fault):
     """A complete provider receipt admits one terminal replay despite open10s goals."""
     home = tmp_path / 'home'; tools = tmp_path / 'tools'; tools.mkdir()
@@ -89,9 +89,16 @@ print(json.dumps({'type':'turn.completed','usage':{'input_tokens':7,'output_toke
         script+="args=json.loads(setting.split('=',1)[1])\n"
         script+="requests=[{'jsonrpc':'2.0','id':i,'method':'tools/call','params':{'name':name,'arguments':arguments}} for i,(name,arguments) in enumerate(actions,1)]\n"
         script+="p=subprocess.run([sys.executable,*args],input=''.join(json.dumps(r)+'\\n' for r in requests),text=True,capture_output=True);assert p.returncode==0,p.stderr\n"
-        if trace_fault == 'drop-attempt':
+        if trace_fault in {'drop-attempt','drop-all','drop-materialized'}:
             script+="from pathlib import Path\ntrace=Path(json.loads((Path(args[-1])/'config.json').read_text())['out'])/'provider-origin.jsonl'\n"
-            script+="trace.write_text(''.join(line+'\\n' for line in trace.read_text().splitlines() if json.loads(line)['event']!='attempt'))\n"
+            if trace_fault == 'drop-attempt':
+                script+="trace.write_text(''.join(line+'\\n' for line in trace.read_text().splitlines() if json.loads(line)['event']!='attempt'))\n"
+            elif trace_fault == 'drop-all':
+                script+="trace.write_text('')\n"
+            else:
+                script+="import hashlib\nrows=[json.loads(line) for line in trace.read_text().splitlines()]\n"
+                script+="for row in rows:\n if row['event']=='materialized':\n  row['candidate_hints']=[]\n  row['candidate_records']=[]\n  row['candidate_set_sha256']=hashlib.sha256(json.dumps([],sort_keys=True).encode()).hexdigest()\n"
+                script+="trace.write_text(''.join(json.dumps(row)+'\\n' for row in rows))\n"
         script+="print(json.dumps({'type':'thread.started','thread_id':'fresh22'}))\n"
         script+="for i,(name,arguments) in enumerate(actions):\n"
         script+=f" if {corroborated!r} or name=='record_design':print(json.dumps({{'type':'item.completed','item':{{'id':str(i),'type':'mcp_tool_call','server':'probata','tool':name,'arguments':arguments,'status':'completed'}}}}))\n"
@@ -105,6 +112,7 @@ with open({str(capture)!r},'a') as s:s.write(json.dumps({{'directory':directory.
 if '-wp' not in args or '-wp-report-json' not in args:sys.exit(0)
 positive=directory.name.startswith('final-');negative=directory.name.startswith('negative-')
 goals=[{{'goal':'typed_TDStep_check_hazard_hints_read','property':'TDStep_check_hazard_hints_read','function':'TDStep','smoke':False,'passed':positive,'verdict':'valid' if positive else 'unknown'}}]
+if directory.name.startswith('attempt-') and {trace_fault in {'drop-all','drop-materialized'}!r}:goals.append({{'goal':'typed_TDStep_ensures_extra','function':'TDStep','smoke':False,'passed':False,'verdict':'unknown'}})
 if '-wp-smoke-tests' in args:goals.append({{'goal':'typed_TDStep_wp_smoke','function':'TDStep','smoke':True,'passed':True,'verdict':'unknown'}})
 pathlib.Path('goals.json').write_text(json.dumps(goals))
 if '-wp-fct' in args:pathlib.Path('lemmas.json').write_text('[]')
@@ -153,7 +161,8 @@ print("[report] Computing properties status...\\n--- Properties of Function 'TDS
     assert finals[0]['args'][finals[0]['args'].index('-wp-timeout')+1]=='30'
 
 
-def test_mcp_records_provider_frame_operations_before_any_candidate_check(tmp_path):
+@pytest.mark.parametrize("expired", [False, True])
+def test_mcp_records_provider_frame_operations_before_any_candidate_check(tmp_path, expired):
     """No design means no WP, but the actual supplied operation still needs a trace."""
     import loop as L
     import staged_search as S
@@ -164,7 +173,7 @@ def test_mcp_records_provider_frame_operations_before_any_candidate_check(tmp_pa
     (tmp_path/'best.json').write_text(json.dumps(best));state=tmp_path/'tool-r1';state.mkdir()
     config={'out':str(tmp_path),'allowed_kinds':['loop_assigns'],'staged_search':F.schedule(0,1980),
             'method20':True,'method22':True,'clock_kind':'continuous_monotonic','clock_info':S.clock_info(),
-            't0':S.clock(),'budget_min':60,'final_reserve_min':24,'proof_search_stop_min':33,
+            't0':S.clock()-(1981 if expired else 0),'budget_min':60,'final_reserve_min':24,'proof_search_stop_min':33,
             'round':1,'round_timeout':10,'mode':'round-s','show_goal':True}
     (state/'config.json').write_text(json.dumps(config))
     operation={'op':'add','goal':'typed_TDStep_ensures_queue_kept','id':'','anchor':'loop:k_loop',
@@ -173,10 +182,12 @@ def test_mcp_records_provider_frame_operations_before_any_candidate_check(tmp_pa
     result=subprocess.run([sys.executable,str(HERE/'edit_tool_mcp.py'),'--state',str(state)],
                           input=json.dumps(request)+'\n',capture_output=True,text=True,timeout=10)
     assert result.returncode==0,result.stderr
-    assert 'First record' in json.loads(result.stdout)['result']['content'][0]['text']
+    text=json.loads(result.stdout)['result']['content'][0]['text']
+    assert ('Return final JSON' if expired else 'First record') in text
     trace=tmp_path/'provider-origin.jsonl'
     assert trace.exists(), 'raw scoped operation must survive an ordinary parser/design refusal'
     rows=[json.loads(line) for line in trace.read_text().splitlines()]
+    assert rows[0]['event']==('pre-attempt-refusal' if expired else 'attempt')
     assert rows[0]['ops']==[operation] and rows[0]['context']['kind']=='mcp'
     assert rows[0]['context']['round']==1 and rows[0]['base_records']==[]
     assert rows[0]['ops_sha256']==hashlib.sha256(json.dumps([operation],sort_keys=True).encode()).hexdigest()
@@ -272,3 +283,55 @@ def test_terminal_plan_refuses_seed_or_historical_inputs_before_work(tmp_path, f
     result=subprocess.run(args,capture_output=True,text=True,timeout=5)
     assert result.returncode==2 and not (tmp_path/'run').exists()
     assert 'error' in result.stderr
+
+
+@pytest.mark.parametrize('late', [False, True])
+def test_report_publication_counts_required_receipts_before_timed_admission(tmp_path, late):
+    """The public report seam observes a supplied monotonic clock, not a sleep."""
+    import terminal_plan as T
+    times=iter([3500.0,3598.0,3598.5,3600.1] if late else [3500.0,3500.1,3500.2,3500.3])
+    summary={'proven':True,'within_budget':True,'tokens':{'input_tokens':7,'output_tokens':3},
+             'attempt_counts':{'candidate_wp_completed_checks':1}}
+    result=T.publish(tmp_path,summary,counted_s=lambda:next(times),limit_min=60)
+    saved=json.loads((tmp_path/'summary.json').read_text())
+    receipt=json.loads((tmp_path/'completion.json').read_text())
+    assert saved['within_budget'] is (not late) and receipt['within_budget'] is (not late)
+    assert receipt['summary_sha256']==hashlib.sha256((tmp_path/'summary.json').read_bytes()).hexdigest()
+    assert result['within_budget'] is (not late)
+    assert result['observed_after_required_persistence_s']==(3600.1 if late else 3500.3)
+    assert result['completion_sha256']==hashlib.sha256((tmp_path/'completion.json').read_bytes()).hexdigest()
+    assert saved['tokens']=={'input_tokens':7,'output_tokens':3}
+    assert 'after' in receipt['measured_boundary'] and 'persistence' in receipt['measured_boundary']
+
+
+@pytest.mark.parametrize('identity', ['wrong-lemma', 'missing-part', 'matching-lemma', 'matching-part', 'ambiguous-part'])
+def test_paged_task_must_refuse_missing_requested_identity(tmp_path, identity):
+    import loop as L
+    import staged_search as S
+    original=L.run_dir(tmp_path,'initial',(L.STANDIN_DIR/L.UNIT).read_text())
+    if identity in {'wrong-lemma','matching-lemma'}:
+        goal='typed_lemma_ExpectedLemma';kind='lemma'
+        name='ExpectedLemma' if identity=='matching-lemma' else 'DifferentLemma'
+        task=f"Goal Lemma '{name}':\nAssume: true.\nProve: true."
+    else:
+        goal='typed_TDStep_terminates_part2';kind='loop variant'
+        task='Goal Termination-condition ("tdstep_standin.c", line 1) in \'TDStep\' (1/2):\nProve: true.'
+    if identity in {'matching-part','ambiguous-part'}:
+        task += '\n'+'-'*60+'\n'+task.replace('(1/2)', '(2/2)')
+        if identity=='ambiguous-part':task += '\n'+'-'*60+'\n'+task.split('-'*60)[-1]
+    best={'hints':[],'dir':str(original),'n_open':1,'n_goals':1,'failing_goals':[{'goal':goal,'function':'TDStep','kind':kind,'line':1}]}
+    (tmp_path/'best.json').write_text(json.dumps(best))
+    state=tmp_path/'tool-r1';state.mkdir()
+    (state/'config.json').write_text(json.dumps({'out':str(tmp_path),'allowed_kinds':['loop_assigns'],'method22':True,'staged_search':None,'clock_kind':'continuous_monotonic','clock_info':S.clock_info(),'t0':S.clock(),'budget_min':60,'final_reserve_min':24,'proof_search_stop_min':33,'round':1,'round_timeout':10,'mode':'round-s','show_goal':True}))
+    tools=tmp_path/'tools';tools.mkdir();opam=tools/'opam'
+    opam.write_text('#!'+sys.executable+'\nprint('+repr(task)+')\n');opam.chmod(0o755)
+    request={'jsonrpc':'2.0','id':1,'method':'tools/call','params':{'name':'show_goal','arguments':{'goal':goal,'offset':0}}}
+    result=subprocess.run([sys.executable,str(HERE/'edit_tool_mcp.py'),'--state',str(state)],input=json.dumps(request)+'\n',env={**os.environ,'PATH':str(tools)+os.pathsep+os.environ['PATH'],'PYTHONDONTWRITEBYTECODE':'1'},capture_output=True,text=True,timeout=15)
+    assert result.returncode==0,result.stderr
+    reply=json.loads(result.stdout)['result']['content'][0]['text']
+    if identity.startswith('matching'):
+        assert 'refused' not in reply.lower() and list((tmp_path/'goal-pages').glob('*.task.txt'))
+        if identity=='matching-part':assert '(2/2)' in reply and '(1/2)' not in reply
+    else:
+        assert 'refused' in reply.lower(),'wrong task identity admitted: '+reply[:200]
+        assert not list((tmp_path/'goal-pages').glob('*.task.txt'))

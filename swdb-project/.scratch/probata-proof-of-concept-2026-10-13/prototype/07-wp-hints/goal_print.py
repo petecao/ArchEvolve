@@ -102,6 +102,64 @@ def pick(bl, g):
     return cand
 
 
+
+def pick_exact(bl, g):
+    """Method22 refuses absent/ambiguous task identities; no legacy fallback."""
+    name = g['goal']
+    part = re.search(r'_part(\d+)$', name)
+
+    def split_matches(header):
+        split = re.search(r'\((\d+)/\d+\):$', header.rstrip())
+        return int(split.group(1)) == (int(part.group(1)) if part else 1) if split else part is None
+
+    if name.startswith('typed_lemma_'):
+        lemma = re.escape(name[len('typed_lemma_'):])
+        candidates = [b for b in bl if re.match(r"^Goal Lemma ['\"]?" + lemma + r"['\"]?(?:\s|:|$)", b[0])]
+    elif (post := re.search(r'_ensures_(\w+?)(?:_part\d+)?$', name)):
+        candidates = [b for b in bl if f"Post-condition '{post.group(1)}' in 'TDStep'" in b[0]]
+    elif re.search(r'_terminates(?:_part\d+)?$', name):
+        candidates = [b for b in bl if b[0].startswith('Goal Termination-condition') and "'TDStep'" in b[0]]
+    elif '_call_' in name:
+        line = int(g.get('line') or 0)
+        candidates = [b for b in bl if re.search(rf'"{re.escape(L.UNIT)}", line {line}\) :$', b[0])]
+        pre = re.search(r'_requires_(\d+)(?:_part\d+)?$', name)
+        if not pre:
+            return []
+        lines = sorted({int(m.group(1)) for b in candidates
+                        if (m := re.search(r'Pre-condition \("[^"]+", line (\d+)\)', b[0]))})
+        index = int(pre.group(1))-1
+        if not 0 <= index < len(lines):
+            return []
+        candidates = [b for b in candidates if f'line {lines[index]}) in' in b[0]]
+    else:
+        line = int(g.get('line') or 0)
+        if line <= 0:
+            return []
+        candidates = [b for b in bl if L.UNIT in b[0] and re.search(rf'\bline {line}\b', b[0])]
+        kind = g.get('kind') or H.goal_kind(name)
+        if kind.startswith('loop invariant'):
+            phase = re.search(r'_(established|preserved)(?:_part\d+)?$', name)
+            if not phase:
+                return []
+            word = 'Establishment' if phase.group(1) == 'established' else 'Preservation'
+            candidates = [b for b in candidates if word + ' of Invariant' in b[0]]
+            label = re.search(r'_loop_invariant_(.+?)_(?:established|preserved)(?:_part\d+)?$', name)
+            if label and not label.group(1).isdigit():
+                candidates = [b for b in candidates if "'" + label.group(1) + "'" in b[0]]
+        elif kind == 'loop variant':
+            candidates = [b for b in candidates if 'variant' in b[0].lower()]
+            phase = re.search(r'_(positive|decrease)(?:_part\d+)?$', name)
+            if phase:
+                stem = 'positiv' if phase.group(1) == 'positive' else 'decreas'
+                candidates = [b for b in candidates if stem in b[0].lower()]
+        else:
+            title = {'loop assigns':'Loop assigns', 'assigns':'Assigns', 'assert':'Assertion', 'check':'Check'}.get(kind)
+            if title is None:
+                return []
+            candidates = [b for b in candidates if b[0].startswith('Goal ' + title)]
+    candidates = [b for b in candidates if split_matches(b[0])]
+    return candidates if len(candidates) == 1 else []
+
 def show(out, best, goal_name, tag, timeout_s=600):
     """Returns (text, record) for the tool."""
     g = next((x for x in best["failing_goals"] if x["goal"] == goal_name), None)
@@ -163,7 +221,7 @@ def show_paged(out, best, goal_name, tag, *, offset=0, task_sha256=None, timeout
         d = L.run_dir(Path(out), f"goal-{tag}", merged)
         sel = selection(goal_name, g.get("kind") or H.goal_kind(goal_name))
         log, ws = L.verifier(Path(out), d, "print", timeout=timeout_s, extra=(sel,))
-        selected = pick(blocks(log.read_text(errors="replace")), g)
+        selected = pick_exact(blocks(log.read_text(errors="replace")), g)
         if ws["exit_code"] != 0 or not selected:
             return refused("fresh WP task generation failed")
         task = "\n\n".join(header + "\n" + body for header, body in selected)

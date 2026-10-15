@@ -145,6 +145,9 @@ def call(tool, args):
         phase_note = f"\nMETHOD{20 if CFG.get('method20') else 19} PHASE {phase['index']+1}/3: {phase['name']}; " + phase['guidance']
     best = E.load_working(OUT, counted_s=budget_used_min() * 60, remaining_s=remaining_min() * 60) if E.DEBT[0] else E.load_best(OUT)
     if CFG.get("method22") and remaining_min() <= 0:
+        if tool in {"check_edit", "propose_edit"}:
+            O.begin(OUT, best, args.get("ops") or [], f"r{CFG['round']}q{O.CONTEXT[0]['request_index']}",
+                    refusal="proof search deadline; no candidate checked")
         record(tool, {"result": "refused: proof search ended; natural-return window"})
         return "Proof search ended. Return final JSON with empty ops NOW; this counted natural-return window ends at minute36."
     if tool == "show_best":

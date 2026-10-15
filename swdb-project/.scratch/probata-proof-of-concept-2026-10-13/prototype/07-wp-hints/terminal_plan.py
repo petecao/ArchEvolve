@@ -98,3 +98,62 @@ def negative_replay(out, best, *, remaining_s, mode):
     return {**rec, 'checked_run': checked, 'hazard_hints_read': hazard,
             'negative_control_passed': passed, 'negative_answer': 'not proven' if passed else 'not established',
             'refuted': False if passed else None, 'dir': str(d)}
+
+
+def publish(out, summary, *, counted_s, limit_min):
+    """Public retained-report seam; observe the clock after required persistence.
+
+    Success leaves both artifacts published only if the final post-persistence
+    observation meets the deadline. That observation is returned for final
+    informational logging; it is not a hard realtime storage/termination bound.
+    """
+    import math
+    out = Path(out)
+    completion = out / 'completion.json'
+    if completion.exists():
+        raise RuntimeError('completion receipt already exists; no report/clock reuse')
+    limit = limit_min * 60
+
+    def observe():
+        value = counted_s()
+        if not math.isfinite(value) or value < 0:
+            raise RuntimeError('invalid counted publication clock')
+        return value
+
+    def store(path, data):
+        temporary = path.with_suffix('.tmp')
+        temporary.write_text(json.dumps(data, indent=1, allow_nan=False))
+        temporary.replace(path)
+
+    first = observe()
+    summary.update(within_budget=False, elapsed_min=round(first/60, 2),
+                   publication={'completion_receipt_required': True, 'successful_return_log_and_clean_driver_exit_required': True, 'state': 'pending',
+                                'limit_s': limit, 'before_persistence_s': first})
+    store(out / 'summary.json', summary)
+    ready = observe()
+    summary.update(within_budget=bool(summary['proven'] and ready <= limit),
+                   elapsed_min=round(ready/60, 2), finished=L.now())
+    summary['publication'].update(state='published; matching completion receipt required',
+                                  after_draft_persistence_s=ready)
+    store(out / 'summary.json', summary)
+    after_summary = observe()
+    receipt = {'summary_sha256': L.sha(out / 'summary.json'),
+               'within_budget': bool(summary['within_budget'] and after_summary <= limit),
+               'observed_after_summary_persistence_s': after_summary,
+               'measured_boundary': 'after all required accounting and summary/completion receipt persistence; final observation additionally checked after completion receipt write',
+               'clock': S.clock_info(), 'finished': L.now()}
+    store(completion, receipt)
+    completion_digest = L.sha(completion)
+    after_receipt = observe()
+    if after_receipt > limit or not receipt['within_budget']:
+        summary.update(within_budget=False, elapsed_min=round(after_receipt/60, 2), finished=L.now())
+        summary['publication'].update(state='not admitted', observed_after_required_persistence_s=after_receipt)
+        store(out / 'summary.json', summary)
+        receipt.update(summary_sha256=L.sha(out / 'summary.json'), within_budget=False,
+                       observed_after_required_persistence_s=after_receipt)
+        store(completion, receipt)
+        completion_digest = L.sha(completion)
+    return {'publication_complete': True, 'clean_driver_exit_required': True,
+            'observed_after_required_persistence_s': after_receipt,
+            'within_budget': bool(summary['within_budget'] and after_receipt <= limit),
+            'completion_sha256': completion_digest}
