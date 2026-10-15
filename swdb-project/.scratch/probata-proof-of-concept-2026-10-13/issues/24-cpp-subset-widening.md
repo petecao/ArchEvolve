@@ -370,3 +370,34 @@ invariant; it is not counted as a completed test. Exact record hashes and source
 [`t24-class-initialization-20261015.json`](../evidence/t24-class-initialization-20261015.json).
 Original records/logs remain under `/private/tmp/probata-construct-initialization-20261015/`.
 These are focused proofs on the recorded source, not final combined-source construct acceptance.
+
+### Atomic call-result diagnosis — 2026-10-15 ET
+
+Raw WP33 diagnostics of the current integer atomic models isolate another receiving-slot issue:
+two RTE initialization goals fail after assigning exchange/fetch-add results to ordinary local
+integers. All three explicit pointee-initialization assertions pass, as do all seven smoke checks.
+An ordinary `+ 0` expression assignment makes all 19 ordinary goals valid and passes 9 smoke checks;
+it adds no input or allocator premise. This is a narrow integer control, not a floating-result or
+nullable-pointer rule. The raw runs use three seconds per solver and are diagnostic evidence only;
+the production public workflow and full construct-suite acceptance are still required.
+Exact source, command, result and artifact hashes:
+[`t24-atomic-receiver-initialization-20261015.json`](../evidence/t24-atomic-receiver-initialization-20261015.json).
+
+### Checked integer model results — 2026-10-15 ET
+
+Lowerer9 makes known integer/bool model results ordinary expression assignments with `+ 0`.
+It evaluates each call once, preserves the one-thread atomic meaning, and excludes void,
+floating and arbitrary pointer results. Discarded normalized results use an explicit void
+cast so native C builds stay warning-free. No input initialization premise is generated.
+
+Focused public acceptance: exchange, fetch-add and bool compare-exchange callers all prove
+with separately proven model records (**3 passed,591.59s**); std::min proves with its pinned
+model (**1 passed,359.86s**). Removing only the caller's initialized-pointee premise leaves
+the actual model precondition unproved (**1 negative control passed,143.01s**). All smoke
+checks in these records pass. Native/lowering checks:90 existing cases plus4 new cases
+pass, including ASan/UBSan C++/C null/live pointer-return behavior. Raw std min/max/OpenMP
+result diagnostics also pass; they do not replace the full public construct suite.
+
+Exact source and record hashes, incremental reports and validation boundaries:
+[`t24-model-results-public-20261015.json`](../evidence/t24-model-results-public-20261015.json).
+Ticket24 remains claimed until combined-source acceptance completes.

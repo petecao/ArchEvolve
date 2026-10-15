@@ -1,0 +1,466 @@
+{
+  "created": "2026-10-15 ET",
+  "evidence_kind": "focused_public_acceptance",
+  "scope": "Known integer/bool modular model result assignments. Full combined-source construct acceptance remains pending.",
+  "base_commit": "9eb57374468cc053883325dfaf76e649009760be",
+  "source_files": [
+    {
+      "path": "/private/tmp/probata-construct-init/swdb-project/swdb/c_lowering.py",
+      "sha256": "7adfefdc0a0c0409bfd82bb65c7758f2c6a5665965cad0ae2a820ab177a87163"
+    },
+    {
+      "path": "/private/tmp/probata-construct-init/swdb-project/tests/test_wp_subset.py",
+      "sha256": "c2aef63091aea4442a57516b67dd12f2b8cf8cf6f11f285fc5b345b86604cb07"
+    },
+    {
+      "path": "/private/tmp/probata-construct-init/swdb-project/tests/test_c_lowering.py",
+      "sha256": "3a3eacc9068536075f9b37131987695267fd3f57a9e3f95b3abbc0022b865175"
+    },
+    {
+      "path": "/private/tmp/probata-construct-init/swdb-project/tests/fixtures/proof/lowering/omp_atomics.cc",
+      "sha256": "ad3178d12c82443d3ddbae50cd900926ab96cb95a8aead881c8cd6e682c38447"
+    },
+    {
+      "path": "/private/tmp/probata-construct-init/swdb-project/tests/fixtures/proof/lowering/std_models.cc",
+      "sha256": "6811db5464a89ea0650a590d9594a4b01a7b35091f47d3cf417542a204285669"
+    }
+  ],
+  "records": [
+    {
+      "path": "/private/tmp/probata-t24-atomic-public-green/wp-model-results0/records/proofs/proof.model.swdb_atomic_compare_exchange_n_int.20261015t093611z.f63a79af.yaml",
+      "sha256": "063f061234fec0c2fe050298aa08ee27b761fb683255895a92559b8097805474",
+      "id": "proof.model.swdb_atomic_compare_exchange_n_int.20261015t093611z.f63a79af",
+      "subject": {
+        "kind": "c_model",
+        "id": "swdb_atomic_compare_exchange_n_int"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "total_goals": 20,
+      "valid_goals": 20,
+      "open_goals": [],
+      "method": {
+        "id": "method.wp-tracer-fixture",
+        "sha256": "eb641f26320a4f0f7b93c584818411bc51b641a27d08640f72686d2b3818b3f0"
+      }
+    },
+    {
+      "path": "/private/tmp/probata-t24-atomic-public-green/wp-model-results0/records/proofs/proof.model.swdb_atomic_exchange_n_int.20261015t093817z.d9dc57c0.yaml",
+      "sha256": "de4d3d16dbf3807e754531c39251bc29398b3bbdbc87fdfbaa7abcb7dfe24b72",
+      "id": "proof.model.swdb_atomic_exchange_n_int.20261015t093817z.d9dc57c0",
+      "subject": {
+        "kind": "c_model",
+        "id": "swdb_atomic_exchange_n_int"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "total_goals": 10,
+      "valid_goals": 10,
+      "open_goals": [],
+      "method": {
+        "id": "method.wp-tracer-fixture",
+        "sha256": "eb641f26320a4f0f7b93c584818411bc51b641a27d08640f72686d2b3818b3f0"
+      }
+    },
+    {
+      "path": "/private/tmp/probata-t24-atomic-public-green/wp-model-results0/records/proofs/proof.model.swdb_sync_fetch_and_add_int.20261015t094215z.1cb60f0c.yaml",
+      "sha256": "a0da2c1b9b146477e8349e8550191f3f6b43dc3869ce66e8a15e9ea29e71b083",
+      "id": "proof.model.swdb_sync_fetch_and_add_int.20261015t094215z.1cb60f0c",
+      "subject": {
+        "kind": "c_model",
+        "id": "swdb_sync_fetch_and_add_int"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "total_goals": 12,
+      "valid_goals": 12,
+      "open_goals": [],
+      "method": {
+        "id": "method.wp-tracer-fixture",
+        "sha256": "eb641f26320a4f0f7b93c584818411bc51b641a27d08640f72686d2b3818b3f0"
+      }
+    },
+    {
+      "path": "/private/tmp/probata-t24-atomic-public-green/wp-model-results0/records/proofs/proof.wp24-safe.candidate-1.20261015t093709z.5fe0e0c2.yaml",
+      "sha256": "a4e97f764d0d5e3f0334132f9412990b4bc6d803fc1ea8514716252a9451547f",
+      "id": "proof.wp24-safe.candidate-1.20261015t093709z.5fe0e0c2",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "wp24-safe.candidate-1",
+        "function": "swdb_atomic_compare_result"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "total_goals": 9,
+      "valid_goals": 9,
+      "open_goals": [],
+      "method": {
+        "id": "method.wp-tracer-fixture",
+        "sha256": "eb641f26320a4f0f7b93c584818411bc51b641a27d08640f72686d2b3818b3f0"
+      }
+    },
+    {
+      "path": "/private/tmp/probata-t24-atomic-public-green/wp-model-results0/records/proofs/proof.wp24-safe.candidate-1.20261015t094100z.bb151cf1.yaml",
+      "sha256": "7d7136431599957e96e5e689cc4e27aff751291c47d87d73122c69bf1f5caa1f",
+      "id": "proof.wp24-safe.candidate-1.20261015t094100z.bb151cf1",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "wp24-safe.candidate-1",
+        "function": "swdb_atomic_exchange_result"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "total_goals": 13,
+      "valid_goals": 13,
+      "open_goals": [],
+      "method": {
+        "id": "method.wp-tracer-fixture",
+        "sha256": "eb641f26320a4f0f7b93c584818411bc51b641a27d08640f72686d2b3818b3f0"
+      }
+    },
+    {
+      "path": "/private/tmp/probata-t24-atomic-public-green/wp-model-results0/records/proofs/proof.wp24-safe.candidate-1.20261015t094235z.ed558542.yaml",
+      "sha256": "1e478898cffedde7a0286718609b64c6866f0f5432e3788b5dd797d900dbe0f8",
+      "id": "proof.wp24-safe.candidate-1.20261015t094235z.ed558542",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "wp24-safe.candidate-1",
+        "function": "swdb_sync_fetch_result"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "total_goals": 13,
+      "valid_goals": 13,
+      "open_goals": [],
+      "method": {
+        "id": "method.wp-tracer-fixture",
+        "sha256": "eb641f26320a4f0f7b93c584818411bc51b641a27d08640f72686d2b3818b3f0"
+      }
+    },
+    {
+      "path": "/private/tmp/probata-t24-atomic-public-green/wp-model-resultscurrent/records/proofs/proof.model.swdb_atomic_compare_exchange_n_int.20261015t093611z.f63a79af.yaml",
+      "sha256": "063f061234fec0c2fe050298aa08ee27b761fb683255895a92559b8097805474",
+      "id": "proof.model.swdb_atomic_compare_exchange_n_int.20261015t093611z.f63a79af",
+      "subject": {
+        "kind": "c_model",
+        "id": "swdb_atomic_compare_exchange_n_int"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "total_goals": 20,
+      "valid_goals": 20,
+      "open_goals": [],
+      "method": {
+        "id": "method.wp-tracer-fixture",
+        "sha256": "eb641f26320a4f0f7b93c584818411bc51b641a27d08640f72686d2b3818b3f0"
+      }
+    },
+    {
+      "path": "/private/tmp/probata-t24-atomic-public-green/wp-model-resultscurrent/records/proofs/proof.model.swdb_atomic_exchange_n_int.20261015t093817z.d9dc57c0.yaml",
+      "sha256": "de4d3d16dbf3807e754531c39251bc29398b3bbdbc87fdfbaa7abcb7dfe24b72",
+      "id": "proof.model.swdb_atomic_exchange_n_int.20261015t093817z.d9dc57c0",
+      "subject": {
+        "kind": "c_model",
+        "id": "swdb_atomic_exchange_n_int"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "total_goals": 10,
+      "valid_goals": 10,
+      "open_goals": [],
+      "method": {
+        "id": "method.wp-tracer-fixture",
+        "sha256": "eb641f26320a4f0f7b93c584818411bc51b641a27d08640f72686d2b3818b3f0"
+      }
+    },
+    {
+      "path": "/private/tmp/probata-t24-atomic-public-green/wp-model-resultscurrent/records/proofs/proof.model.swdb_sync_fetch_and_add_int.20261015t094215z.1cb60f0c.yaml",
+      "sha256": "a0da2c1b9b146477e8349e8550191f3f6b43dc3869ce66e8a15e9ea29e71b083",
+      "id": "proof.model.swdb_sync_fetch_and_add_int.20261015t094215z.1cb60f0c",
+      "subject": {
+        "kind": "c_model",
+        "id": "swdb_sync_fetch_and_add_int"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "total_goals": 12,
+      "valid_goals": 12,
+      "open_goals": [],
+      "method": {
+        "id": "method.wp-tracer-fixture",
+        "sha256": "eb641f26320a4f0f7b93c584818411bc51b641a27d08640f72686d2b3818b3f0"
+      }
+    },
+    {
+      "path": "/private/tmp/probata-t24-atomic-public-green/wp-model-resultscurrent/records/proofs/proof.wp24-safe.candidate-1.20261015t093709z.5fe0e0c2.yaml",
+      "sha256": "a4e97f764d0d5e3f0334132f9412990b4bc6d803fc1ea8514716252a9451547f",
+      "id": "proof.wp24-safe.candidate-1.20261015t093709z.5fe0e0c2",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "wp24-safe.candidate-1",
+        "function": "swdb_atomic_compare_result"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "total_goals": 9,
+      "valid_goals": 9,
+      "open_goals": [],
+      "method": {
+        "id": "method.wp-tracer-fixture",
+        "sha256": "eb641f26320a4f0f7b93c584818411bc51b641a27d08640f72686d2b3818b3f0"
+      }
+    },
+    {
+      "path": "/private/tmp/probata-t24-atomic-public-green/wp-model-resultscurrent/records/proofs/proof.wp24-safe.candidate-1.20261015t094100z.bb151cf1.yaml",
+      "sha256": "7d7136431599957e96e5e689cc4e27aff751291c47d87d73122c69bf1f5caa1f",
+      "id": "proof.wp24-safe.candidate-1.20261015t094100z.bb151cf1",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "wp24-safe.candidate-1",
+        "function": "swdb_atomic_exchange_result"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "total_goals": 13,
+      "valid_goals": 13,
+      "open_goals": [],
+      "method": {
+        "id": "method.wp-tracer-fixture",
+        "sha256": "eb641f26320a4f0f7b93c584818411bc51b641a27d08640f72686d2b3818b3f0"
+      }
+    },
+    {
+      "path": "/private/tmp/probata-t24-atomic-public-green/wp-model-resultscurrent/records/proofs/proof.wp24-safe.candidate-1.20261015t094235z.ed558542.yaml",
+      "sha256": "1e478898cffedde7a0286718609b64c6866f0f5432e3788b5dd797d900dbe0f8",
+      "id": "proof.wp24-safe.candidate-1.20261015t094235z.ed558542",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "wp24-safe.candidate-1",
+        "function": "swdb_sync_fetch_result"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "total_goals": 13,
+      "valid_goals": 13,
+      "open_goals": [],
+      "method": {
+        "id": "method.wp-tracer-fixture",
+        "sha256": "eb641f26320a4f0f7b93c584818411bc51b641a27d08640f72686d2b3818b3f0"
+      }
+    },
+    {
+      "path": "/private/tmp/probata-t24-standard-public-green/wp-model-results0/records/proofs/proof.model.std_min_int.20261015t094845z.2980ec11.yaml",
+      "sha256": "f6cebc893c67f576f0e0de4671ca739d9fd4e737be4aeae727e98e0a7d249ce7",
+      "id": "proof.model.std_min_int.20261015t094845z.2980ec11",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_min_int"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "total_goals": 7,
+      "valid_goals": 7,
+      "open_goals": [],
+      "method": {
+        "id": "method.wp-tracer-fixture",
+        "sha256": "4889544c7fc01dcfed214e8baacf3ccf26265dcc441faea3911fa3a461af9f34"
+      }
+    },
+    {
+      "path": "/private/tmp/probata-t24-standard-public-green/wp-model-results0/records/proofs/proof.wp24-safe.candidate-1.20261015t095118z.35542cff.yaml",
+      "sha256": "699ff6d3f0790bf4b39ecfcc6a5d810f592cab4bfdf9b1135502f20f2897dedf",
+      "id": "proof.wp24-safe.candidate-1.20261015t095118z.35542cff",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "wp24-safe.candidate-1",
+        "function": "swdb_std_min_result"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "total_goals": 7,
+      "valid_goals": 7,
+      "open_goals": [],
+      "method": {
+        "id": "method.wp-tracer-fixture",
+        "sha256": "4889544c7fc01dcfed214e8baacf3ccf26265dcc441faea3911fa3a461af9f34"
+      }
+    },
+    {
+      "path": "/private/tmp/probata-t24-standard-public-green/wp-model-resultscurrent/records/proofs/proof.model.std_min_int.20261015t094845z.2980ec11.yaml",
+      "sha256": "f6cebc893c67f576f0e0de4671ca739d9fd4e737be4aeae727e98e0a7d249ce7",
+      "id": "proof.model.std_min_int.20261015t094845z.2980ec11",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_min_int"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "total_goals": 7,
+      "valid_goals": 7,
+      "open_goals": [],
+      "method": {
+        "id": "method.wp-tracer-fixture",
+        "sha256": "4889544c7fc01dcfed214e8baacf3ccf26265dcc441faea3911fa3a461af9f34"
+      }
+    },
+    {
+      "path": "/private/tmp/probata-t24-standard-public-green/wp-model-resultscurrent/records/proofs/proof.wp24-safe.candidate-1.20261015t095118z.35542cff.yaml",
+      "sha256": "699ff6d3f0790bf4b39ecfcc6a5d810f592cab4bfdf9b1135502f20f2897dedf",
+      "id": "proof.wp24-safe.candidate-1.20261015t095118z.35542cff",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "wp24-safe.candidate-1",
+        "function": "swdb_std_min_result"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "total_goals": 7,
+      "valid_goals": 7,
+      "open_goals": [],
+      "method": {
+        "id": "method.wp-tracer-fixture",
+        "sha256": "4889544c7fc01dcfed214e8baacf3ccf26265dcc441faea3911fa3a461af9f34"
+      }
+    },
+    {
+      "path": "/private/tmp/probata-t24-model-input-negative/wp-model-results0/records/proofs/proof.model.swdb_atomic_exchange_n_int.20261015t095929z.8e0132e7.yaml",
+      "sha256": "9280df5c9b44eba34917ba95337357fe80e647750e95e583e282d446a8d77bce",
+      "id": "proof.model.swdb_atomic_exchange_n_int.20261015t095929z.8e0132e7",
+      "subject": {
+        "kind": "c_model",
+        "id": "swdb_atomic_exchange_n_int"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "total_goals": 10,
+      "valid_goals": 10,
+      "open_goals": [],
+      "method": {
+        "id": "method.wp-tracer-fixture",
+        "sha256": "4889544c7fc01dcfed214e8baacf3ccf26265dcc441faea3911fa3a461af9f34"
+      }
+    },
+    {
+      "path": "/private/tmp/probata-t24-model-input-negative/wp-model-results0/records/proofs/proof.wp24-safe.candidate-1.20261015t095948z.48758f2f.yaml",
+      "sha256": "95f779b7cc668e3c09adb6de6118bcbb54f15320578a8afc784472bbb607e341",
+      "id": "proof.wp24-safe.candidate-1.20261015t095948z.48758f2f",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "wp24-safe.candidate-1",
+        "function": "swdb_atomic_exchange_result"
+      },
+      "verdict": "not_proven",
+      "failure_class": "timeout",
+      "total_goals": 13,
+      "valid_goals": 12,
+      "open_goals": [
+        "typed_real_swdb_atomic_exchange_result_call_swdb_atomic_exchange_n_int_requires_2"
+      ],
+      "method": {
+        "id": "method.wp-tracer-fixture",
+        "sha256": "4889544c7fc01dcfed214e8baacf3ccf26265dcc441faea3911fa3a461af9f34"
+      }
+    },
+    {
+      "path": "/private/tmp/probata-t24-model-input-negative/wp-model-resultscurrent/records/proofs/proof.model.swdb_atomic_exchange_n_int.20261015t095929z.8e0132e7.yaml",
+      "sha256": "9280df5c9b44eba34917ba95337357fe80e647750e95e583e282d446a8d77bce",
+      "id": "proof.model.swdb_atomic_exchange_n_int.20261015t095929z.8e0132e7",
+      "subject": {
+        "kind": "c_model",
+        "id": "swdb_atomic_exchange_n_int"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "total_goals": 10,
+      "valid_goals": 10,
+      "open_goals": [],
+      "method": {
+        "id": "method.wp-tracer-fixture",
+        "sha256": "4889544c7fc01dcfed214e8baacf3ccf26265dcc441faea3911fa3a461af9f34"
+      }
+    },
+    {
+      "path": "/private/tmp/probata-t24-model-input-negative/wp-model-resultscurrent/records/proofs/proof.wp24-safe.candidate-1.20261015t095948z.48758f2f.yaml",
+      "sha256": "95f779b7cc668e3c09adb6de6118bcbb54f15320578a8afc784472bbb607e341",
+      "id": "proof.wp24-safe.candidate-1.20261015t095948z.48758f2f",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "wp24-safe.candidate-1",
+        "function": "swdb_atomic_exchange_result"
+      },
+      "verdict": "not_proven",
+      "failure_class": "timeout",
+      "total_goals": 13,
+      "valid_goals": 12,
+      "open_goals": [
+        "typed_real_swdb_atomic_exchange_result_call_swdb_atomic_exchange_n_int_requires_2"
+      ],
+      "method": {
+        "id": "method.wp-tracer-fixture",
+        "sha256": "4889544c7fc01dcfed214e8baacf3ccf26265dcc441faea3911fa3a461af9f34"
+      }
+    }
+  ],
+  "reports": [
+    {
+      "path": "/private/tmp/probata-t24-atomic-public-green.jsonl",
+      "sha256": "88539fc717462b7e85b009cf0bd02bfda12ab5991140c469952630436a3b7bb5",
+      "passed": 3,
+      "failed": 0,
+      "finish": {
+        "exitstatus": 0,
+        "$report_type": "SessionFinish"
+      }
+    },
+    {
+      "path": "/private/tmp/probata-t24-standard-public-green.jsonl",
+      "sha256": "62b623f828116cf834a69855452b2f788ff2ee083b05c1535a549a572e2f3b54",
+      "passed": 1,
+      "failed": 0,
+      "finish": {
+        "exitstatus": 0,
+        "$report_type": "SessionFinish"
+      }
+    },
+    {
+      "path": "/private/tmp/probata-t24-model-input-negative.jsonl",
+      "sha256": "62a2ec21b72ca603cd56be11cf3802ce37daff5e9dd68cedfcf65b8bca2985e5",
+      "passed": 1,
+      "failed": 0,
+      "finish": {
+        "exitstatus": 0,
+        "$report_type": "SessionFinish"
+      }
+    },
+    {
+      "path": "/private/tmp/probata-t24-model-results-lowering.jsonl",
+      "sha256": "edb4aa667939a6724597c8320dfe30fde46382a18ee5e0b873b23d06f671dc00",
+      "passed": 90,
+      "failed": 0,
+      "finish": {
+        "exitstatus": 0,
+        "$report_type": "SessionFinish"
+      }
+    },
+    {
+      "path": "/private/tmp/probata-t24-model-results-new-native.jsonl",
+      "sha256": "6fa294b4eb1a2c6a8b609182e9bb7ee754370ade8e96f88cf053930b6dcf1a4f",
+      "passed": 4,
+      "failed": 0,
+      "finish": {
+        "exitstatus": 0,
+        "$report_type": "SessionFinish"
+      }
+    }
+  ],
+  "interpretation": "Ordinary +0 integer identity initializes the receiving slot without any new initialized-input premise. Input lacking initialized(p) stays not_proven on a checked model precondition. Void, floating and arbitrary pointer results are excluded. Nullable pointer C/C++ native behavior remains unchanged. Atomic positives precede std/OMP helper extension; combined replay is required.",
+  "raw_diagnostics": [
+    "/private/tmp/probata-t24-standard-call-results",
+    "/private/tmp/probata-t24-atomic-native-pointer"
+  ],
+  "readers": [
+    "ticket24",
+    "coordinator",
+    "combined-acceptance-review"
+  ]
+}

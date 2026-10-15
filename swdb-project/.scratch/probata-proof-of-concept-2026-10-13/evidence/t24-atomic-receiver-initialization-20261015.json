@@ -1,0 +1,155 @@
+{
+  "created": "2026-10-15 ET",
+  "evidence_kind": "diagnostic_only",
+  "scope": "WP33 known integer model call-result initialization; not public workflow or final construct acceptance",
+  "source_commit": "284dbc78f28880560e4944c7e1fad397d0fbf1c7",
+  "raw_root": "/private/tmp/probata-atomic-init-20261015",
+  "output_budget_bytes": 20971520,
+  "readers": [
+    "ticket24",
+    "ticket27",
+    "coordinator"
+  ],
+  "runs": {
+    "original": {
+      "lowering": {
+        "c_lowering": {
+          "id": "swdb-c-lowering-8",
+          "sha256": "81a997f9c8e4a0464affc987430bdc055f7963ee8bf9789fa9cedd2cb4579104"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "clang": {
+          "id": "clang-22.1.8",
+          "sha256": "305697d3868243dca6e4aabf4f628df7de135d701eb4fd78f6a5d7528fef4395"
+        }
+      },
+      "ordinary_total": 19,
+      "ordinary_valid": 17,
+      "smoke_total": 7,
+      "smoke_passed": 7,
+      "failed_goals": [
+        "typed_real_check_1_assert_rte_initialization",
+        "typed_real_check_2_assert_rte_initialization"
+      ],
+      "pointee_initialization_assertions": [
+        {
+          "function": "check_0",
+          "passed": true,
+          "verdict": "valid"
+        },
+        {
+          "function": "check_1",
+          "passed": true,
+          "verdict": "valid"
+        },
+        {
+          "function": "check_2",
+          "passed": true,
+          "verdict": "valid"
+        }
+      ],
+      "result": "Result(exit_code=0, peak_rss_bytes=361299968, out_of_memory=False, timed_out=False, wall_seconds=46.72390391700901, cpu_seconds=37.865842)",
+      "lock": {
+        "lock": "/tmp/claude/swdb-verifier.slot2.lock",
+        "nested": false,
+        "waited_seconds": 24.922
+      },
+      "files": [
+        {
+          "path": "/private/tmp/probata-atomic-init-20261015/atomic-init.c",
+          "sha256": "cf3b4249632f77f0d24785d5b2288b3051fab518a3bf0a0ff8eddc53c066b5ac"
+        },
+        {
+          "path": "/private/tmp/probata-atomic-init-20261015/normalized.c",
+          "sha256": "0d999ed190851285e10489b3426bc3ec7352003ebceaa01f61ff0893b999219b"
+        },
+        {
+          "path": "/private/tmp/probata-atomic-init-20261015/frama-c.log",
+          "sha256": "0db284269dc2351f0fa9e9ff8ab43856ba044bb9afa6d2e617ec5e7c6014ce1c"
+        },
+        {
+          "path": "/private/tmp/probata-atomic-init-20261015/goals.json",
+          "sha256": "59bb451e9bdff8d4e9fdf30a140e3a5ac8d3f55ce546dfc23b752cd648284d62"
+        },
+        {
+          "path": "/private/tmp/probata-atomic-init-20261015/result.json",
+          "sha256": "4d2966b6aabef94f22d4c7fd340c8c8ca66d0ab3c8e736927dff9412add38c52"
+        }
+      ]
+    },
+    "integer_identity": {
+      "lowering": {
+        "c_lowering": {
+          "id": "swdb-c-lowering-8",
+          "sha256": "81a997f9c8e4a0464affc987430bdc055f7963ee8bf9789fa9cedd2cb4579104"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "clang": {
+          "id": "clang-22.1.8",
+          "sha256": "305697d3868243dca6e4aabf4f628df7de135d701eb4fd78f6a5d7528fef4395"
+        }
+      },
+      "ordinary_total": 19,
+      "ordinary_valid": 19,
+      "smoke_total": 9,
+      "smoke_passed": 9,
+      "failed_goals": [],
+      "pointee_initialization_assertions": [
+        {
+          "function": "check_0",
+          "passed": true,
+          "verdict": "valid"
+        },
+        {
+          "function": "check_1",
+          "passed": true,
+          "verdict": "valid"
+        },
+        {
+          "function": "check_2",
+          "passed": true,
+          "verdict": "valid"
+        }
+      ],
+      "result": "Result(exit_code=0, peak_rss_bytes=358776832, out_of_memory=False, timed_out=False, wall_seconds=42.60114937502658, cpu_seconds=37.464822999999996)",
+      "lock": {
+        "lock": "/tmp/claude/swdb-verifier.slot2.lock",
+        "nested": false,
+        "waited_seconds": 26.779
+      },
+      "files": [
+        {
+          "path": "/private/tmp/probata-atomic-init-20261015/identity/atomic-init.c",
+          "sha256": "5670776a6d9ecd51df4ae424e703ff818f7bb99744de2dd9c3a6007b26d65742"
+        },
+        {
+          "path": "/private/tmp/probata-atomic-init-20261015/identity/normalized.c",
+          "sha256": "67efe6fa0ecc6b7b2ccf97db2495cf54aeeb87252e254306a260a0b6f55cff74"
+        },
+        {
+          "path": "/private/tmp/probata-atomic-init-20261015/identity/frama-c.log",
+          "sha256": "2308b23923dae54a31a7cf4a5e88441480fa272b59020b45b5b573b5da47657d"
+        },
+        {
+          "path": "/private/tmp/probata-atomic-init-20261015/identity/goals.json",
+          "sha256": "129cb8b619c62483b5df6d98fe913f0cec64c672a15f572894dc21544083535c"
+        },
+        {
+          "path": "/private/tmp/probata-atomic-init-20261015/identity/result.json",
+          "sha256": "bd89be172fc8beac47518ed9f187724eb040dd170ffe4bc0319b52e3af4c6122"
+        }
+      ]
+    }
+  },
+  "probe": {
+    "path": "/private/tmp/probata-atomic-init-20261015/probe.py",
+    "sha256": "b6e710b3a06101477bddb2db2baf2ef1a1ec38a22794e58dd715032736107c2f"
+  },
+  "interpretation": "Only returned integer receiving slots fail in the original. All pointee initialization assertions pass. Ordinary arithmetic +0 assignment repairs these integer controls without new input, heap or initialization premises. Three-second per-solver raw diagnostics do not replace the public adapter acceptance policy. Do not generalize to floating results or arbitrary nullable pointers."
+}

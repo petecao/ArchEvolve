@@ -137,6 +137,21 @@ for _control in TERMINAL_CONTROLS:
     BUG_UNITS[f"new_{_control}"] = (f"swdb_new_{_control}", [
         ("pre", "legality", "requires 1 <= n <= 100;"),
         ("post", "postcondition", "ensures \\result == n;")], [], [])
+MODEL_RESULT_CONTROLS = {
+    "atomic_exchange_result": ("swdb_atomic_exchange_result", "swdb_atomic_exchange_n_int", ["p"]),
+    "sync_fetch_result": ("swdb_sync_fetch_result", "swdb_sync_fetch_and_add_int", ["p"]),
+    "atomic_compare_result": ("swdb_atomic_compare_result", "swdb_atomic_compare_exchange_n_int", ["p", "e"]),
+    "std_min_result": ("swdb_std_min_result", "std_min_int", []),
+}
+for _group, (_function, _model, _arrays) in MODEL_RESULT_CONTROLS.items():
+    _pre = ("requires \\valid(p) && \\initialized(p) && *p == 7;" if _arrays else
+            "requires x == 7 && y == 3;")
+    if "e" in _arrays:
+        _pre += "\nrequires \\valid(e) && \\initialized(e) && \\separated(p, e) && *e == 7;"
+    BUG_UNITS[_group] = (_function, [
+        ("pre", "legality", _pre),
+        ("post", "postcondition", "ensures \\result == " +
+         ("1;" if "e" in _arrays else "7;" if _arrays else "3;"))], _arrays, [])
 SUMMARIES = {   # entry: (function, [(clause id, role, ACSL)], interface arrays)
     "dxc_tile_size": ("__dxc_tile_size", [
         ("pre", "legality", "requires 0 <= tile < 8;"),
@@ -250,6 +265,50 @@ class Seed:
         path.write_text(yaml.safe_dump({"hints": records}))
         return self.prove("--candidate", self.candidates[candidate], "--function", function or name,
                           "--contract", contract_id(group), "--hint-file", path, ok=ok)
+
+
+@needs_wp
+@pytest.mark.parametrize("group", sorted(MODEL_RESULT_CONTROLS))
+def test_integer_and_bool_model_results_are_initialized_without_a_new_input_premise(model_result_seed, group):
+    """A once-proven model result is assigned/read; no receiving-slot initialization is assumed."""
+    seed = model_result_seed
+    model = MODEL_RESULT_CONTROLS[group][1]
+    summary = seed.prove("--model", model)
+    assert summary["verdict"] == "proven", summary.get("unproven_properties")
+    seed.result_models[model] = summary
+    record = seed.unit(group)
+    assert record["verdict"] == "proven", record.get("unproven_properties")
+    assert record["pins"]["models"][0]["proof_record"] == summary["id"]
+
+
+@pytest.fixture(scope="module")
+def model_result_seed(tmp_path_factory):
+    path = tmp_path_factory.mktemp("wp-model-results")
+    seed = Seed(path, build_subset_seed(path))
+    seed.result_models = {}
+    return seed
+
+
+@needs_wp
+def test_an_integer_model_result_identity_does_not_initialize_its_uninitialized_input(model_result_seed):
+    seed = model_result_seed
+    model = "swdb_atomic_exchange_n_int"
+    if model not in seed.result_models:
+        summary = seed.prove("--model", model)
+        assert summary["verdict"] == "proven", summary.get("unproven_properties")
+    contracts = seed.root / "library" / "rewrite_contracts"
+    data = yaml.safe_load((contracts / "fixture_wp24_atomic_exchange_result.yaml").read_text())
+    data["id"] = contract_id("atomic_exchange_uninitialized")
+    pre = data["clauses"][0]["acsl"]["text"]
+    assert " && \\initialized(p)" in pre
+    data["clauses"][0]["acsl"]["text"] = pre.replace(" && \\initialized(p)", "")
+    (contracts / "fixture_wp24_atomic_exchange_uninitialized.yaml").write_text(yaml.safe_dump(data, sort_keys=False))
+    record = seed.prove("--candidate", seed.candidates["safe"], "--function", "swdb_atomic_exchange_result",
+                        "--contract", data["id"])
+    assert record["verdict"] == "not_proven"
+    assert record["failure_class"] in {"timeout", "unknown"}
+    assert any(not goal.get("smoke") and "requires" in goal["goal"] and goal["status"] != "valid"
+               for goal in record["goals"])
 
 
 @pytest.fixture(scope="module")
