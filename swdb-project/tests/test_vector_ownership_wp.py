@@ -111,6 +111,7 @@ def test_the_closed_owner_view_reports_typed_origins_for_all_source_and_generate
     record = yaml.safe_load((ownership_subset.records / json.loads(result.stdout)["path"]).read_text())
     assert record["failure_class"] == "unknown", record
     origins = record["settings"]["vector_ownership"]["certificate"]["origins"]
+    assert record["settings"]["pointer_bounds"]["owner"] == record["settings"]["vector_ownership"]["certificate"]["source_origins"]
     assert origins["complete"] is True
     assert {row["site"] for row in origins["allocations"]} == {"initial", "growth"}
     assert all(row["element_type"] == "int" for row in origins["allocations"])

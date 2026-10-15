@@ -353,6 +353,16 @@ acceptance pending. Its C body handles empty/null ranges without C-only arithmet
 requires its nonnegative distance to fit `ptrdiff_t`. Before launch the setup check regenerates the
 complete model view or source assertions. The checker identity includes these policy/generator bytes.
 
+Closed-vector origins (2026-10-15): the exact two-allocation owner view carries both a source
+registry and an independently parsed C-view registry. The source registry binds the alias declaration
+and every retained source observation by its AST range, model bytes and entry-frozen allocation
+extent. The C-view registry inventories allocation, initialization loops, indexed accesses and alias
+reads, checking the exact preceding range and liveness assertions. Source names are mapped to the
+renamed view through this certificate; they are never emitted as unbound generic assertions. The
+lowerer pins both checker modules and records `pointer_bounds.owner`. Admission and prelaunch
+regenerate the original lowering and both registries and require equality. A registry alone grants
+no permission to accept arbitrary `data()` results, field pointers, spare capacity or model calls.
+
 The arithmetic boundary follows [C++17 N4659, additive operators](https://www.ece.uvic.ca/~frodo/cppdraft/n4659/html/expr.add).
 [ACSL1.24's implementation manual for Frama-C33](https://frama-c.com/download/frama-c-acsl-implementation.pdf)
 distinguishes allocation-block validity from same-array provenance. Actual uncached WP33 controls
