@@ -309,3 +309,23 @@ AST admission checker is being implemented over the whole lowered closure and bo
 sides of equivalence; safe heap/class cases it cannot establish will be refused
 until a more precise checked analysis exists. A 24-lowering impact sample is bounded
 exploration, not a full-catalog acceptance result.
+
+### Checked terminal release acceptance — 2026-10-15 ET
+
+The narrow initialized, nonescaping `new int[]` / terminal `delete[]` unit now proves through the
+public WP seam with mandatory `-rte-initialized @all`: **1 passed,93.13s** fixture time; the actual
+proof job took31.15s and records49valid goals. It pins checker2 and the ownership certificate, keeps
+the original C/C++ delete, and reports the separate checked WP view. The exact record is
+`/private/tmp/probata-terminal-call-init-public/wp24-lifetime-seed0/records/proofs/`
+`proof.wp24-safe.candidate-1.20261015t075300z.1453c91b.yaml`; report
+`/private/tmp/probata-lifetime-research-2026-10-15/terminal-call-init-public.jsonl`.
+
+WP33's modular call-result rule binds a returned pointer's value without initializing the receiving
+lvalue. A checked `+ 0` initializer gives the valid nonempty allocator result an equivalent ordinary
+expression assignment; it adds no allocator/freshness/heap-init premise. Before this transformation
+the initialized owner-slot invariant failed establishment. The raw repaired control proves49/49
+goals plus7/7smoke; an ignored unfilled-array read remains9/10 with its initialization goal unproven.
+Only checked pre-release initialization invariants are admitted.
+
+The full current-policy construct suite is still required before closing ticket24. Ticket25's
+growing vector lifetime acceptance remains open; this restricted transformation does not apply to it.

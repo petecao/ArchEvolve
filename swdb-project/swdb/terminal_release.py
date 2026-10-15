@@ -18,7 +18,7 @@ class Refused(ValueError):
 
 
 def identity():
-    return {"id": "terminal-release-check-1", "sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}
+    return {"id": "terminal-release-check-2", "sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}
 
 
 def _children(node):
@@ -254,7 +254,7 @@ def wp_view(lowering, formal_texts, hints=()):
         if hint.get("kind") not in ("loop_invariant", "loop_assigns", "loop_variant") or not re.fullmatch(
                 re.escape(lowering.function) + r"\.loop\d+\.head", hint.get("anchor", "")):
             raise Refused("terminal release accepts only pre-release loop annotations")
-        if re.search(r"\\(?!forall\b|exists\b|old\b|at\b)\w+|\b(?:axiom|assume|admit|ghost|allocates|frees)\b", hint.get("text", "")):
+        if re.search(r"\\(?!forall\b|exists\b|old\b|at\b|initialized\b)\w+|\b(?:axiom|assume|admit|ghost|allocates|frees)\b", hint.get("text", "")):
             raise Refused("hint observes allocation state or introduces unsupported ghost behavior")
     lines = lowering.text.splitlines(keepends=True)
     index = certificate["release_line"] - 1
@@ -269,7 +269,13 @@ def wp_view(lowering, formal_texts, hints=()):
         raise Refused("the certified allocation call differs from the lowering")
     # A negative C++ array bound throws before allocation. Prove nonnegativity before the size_t conversion;
     # never use allocation success to hide invalid array lengths. One line keeps the original anchors stable.
-    lines[alloc_index] = f"  /*@ assert {certificate['count']} >= 0; */ " + expected_alloc.lstrip()
+    # WP33's modular call-result rule binds the value without initializing the receiving lvalue.
+    # The existing allocator contract requires a valid nonempty array; adding zero is defined C pointer
+    # arithmetic and preserves that exact address. Kernel normalization introduces a temporary and an
+    # ordinary expression assignment, whose initializedness WP tracks. This initializes only the owner
+    # pointer representation, never its array elements. No new allocator or lifetime premise is added.
+    identity_alloc = expected_alloc.removesuffix(";\n") + " + 0;\n"
+    lines[alloc_index] = f"  /*@ assert {certificate['count']} >= 0; */ " + identity_alloc.lstrip()
     sha = hashlib.sha256(json.dumps(certificate, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
     pin = {"id": f"{lowering.function}.terminal-release", "sha256": sha}
     return View("".join(lines), tuple(m for m in lowering.models if m != certificate["model"]), certificate,

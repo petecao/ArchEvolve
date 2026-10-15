@@ -52,7 +52,7 @@ FILL_HINTS = _hints("swdb_fixture_fill.loop1.head", "loop invariant 0 <= i <= n;
                     "loop invariant \\forall integer k; 0 <= k < i ==> a[k] == v;", "loop assigns i, a[0 .. n-1];",
                     "loop variant n - i;")
 SMOKE_HINTS = _hints("count_up.loop1.head", "loop invariant 0 <= i <= n;", "loop assigns i;", "loop variant n - i;")
-TRUSTED = {"swdb-c-lowering-4", "clang-22.1.8", "frama-c-wp-33.0", "alt-ergo-2.6.4", "z3-5.1.0", "cvc5-1.2.1"}
+TRUSTED = {"swdb-c-lowering-5", "clang-22.1.8", "frama-c-wp-33.0", "alt-ergo-2.6.4", "z3-5.1.0", "cvc5-1.2.1"}
 
 
 def _tools_present():

@@ -44,10 +44,10 @@ import subprocess
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from swdb import std_models, terminal_release
+from swdb import cpu_effects, std_models, terminal_release
 
 TOOL_ID = "swdb-c-lowering"
-TOOL_VERSION = "4"                   # checked terminal-release metadata; the naming rules remain unchanged
+TOOL_VERSION = "5"                   # conservative CPU effects and pinned admission policy; names unchanged
 NAMING_RULES = "kept-names.3"        # bump on any change to RULES
 RULES = (
     "A function, parameter, local, global or field keeps its C++ name.",
@@ -196,6 +196,7 @@ class Lowering:
     probes: tuple = ()          # ticket 27: hazard probes {id, function, access, line, begin, end (C++ byte offsets)}
     std_models: tuple = ()      # ticket 25: the modeled std types the C uses (struct names, e.g. std_vector_int)
     allocation: bool = False    # ticket 25: the C allocates (new[] or a std model): "allocation succeeds" applies
+    cpu_effects: dict = field(default_factory=dict)  # source/model memory effects and sequenced call sites
     terminal_release: dict | None = None  # checked ownership certificate; native lowering retains delete[]
 
     @property
@@ -214,6 +215,7 @@ class Lowering:
             data["std_models"] = {**std_models.identity(), "types": list(self.std_models)}
         if self.allocation:
             data["allocation"] = True
+        data["cpu_effects"] = self.cpu_effects
         if self.terminal_release:
             data["terminal_release"] = self.terminal_release
         return json.dumps(data, indent=1, sort_keys=True) + "\n"
@@ -270,10 +272,13 @@ def _probe(command):
 
 
 def identity():
-    """Identity of the lowering and its ownership checker, naming rules, and clang binary."""
+    """Pin lowering, ownership/effects checkers, CPU admission policy, naming rules and clang."""
     tool = locate()
     here = Path(__file__)
-    digest = hashlib.sha256(here.read_bytes() + Path(terminal_release.__file__).read_bytes()).hexdigest()
+    admission = here.with_name("cpu_memory_admission.py")
+    policy = admission.read_bytes() if admission.exists() else b"cpu-memory-admission:absent"
+    digest = hashlib.sha256(here.read_bytes() + Path(terminal_release.__file__).read_bytes()
+                            + Path(cpu_effects.__file__).read_bytes() + policy).hexdigest()
     found = {"c_lowering": {"id": f"{TOOL_ID}-{TOOL_VERSION}", "sha256": digest},
              "naming_rules": naming_rules()}
     if not tool.missing:
@@ -550,6 +555,7 @@ class _Unit:
         self.summaries = dict(summaries or {})
         self.semantics = dict(semantics or {})      # ticket 27: {tile_pointer: names}; probes at tile accesses
         self.probes = []
+        self.probe_nodes = set()
         self._dumps = {}
         self.structs, self.struct_order, self.classes = {}, [], {}
         self.functions, self.order, self.pending = {}, [], []
@@ -1410,6 +1416,7 @@ class _Printer:
                 "begin": begin.get("offset"), "end": (end.get("offset") or 0) + (end.get("tokLen") or 0)}
         self.probes.append(site)
         self.unit.probes.append(site)
+        self.unit.probe_nodes.add((self.function, access, node.get("id")))
         self._tile_ok += 1
         if node.get("kind") == "ArraySubscriptExpr":
             text = f"{self.expr(node['inner'][0])}[{self.expr(node['inner'][1], top=True)}]"
@@ -2042,21 +2049,25 @@ def model_definition(family, op, ctype):
         return model, (f"/*@ assigns \\nothing;\n    ensures \\result == ({pick}); */\n"
                        f"static {ctype} {model}({ctype} a, {ctype} b) {{ return {pick}; }}")
     if family == "std" and op == "swap":
-        return model, (f"/*@ requires \\valid(a) && \\valid(b);\n    assigns *a, *b;\n"
+        return model, (f"/*@ requires \\valid(a) && \\valid(b);\n    requires \\initialized(a) && \\initialized(b);\n"
+                       f"    assigns *a, *b;\n    ensures \\initialized(a) && \\initialized(b);\n"
                        f"    ensures *a == \\old(*b) && *b == \\old(*a); */\n"
                        f"static void {model}({ctype} *a, {ctype} *b) {{ {ctype} t = *a; *a = *b; *b = t; }}")
     if family == "std" and op == "copy":
         return model, (f"/*@ requires \\base_addr(first) == \\base_addr(last) && first <= last;\n"
                        f"    requires \\valid_read(first + (0 .. last - first - 1));\n"
+                       f"    requires \\initialized(first + (0 .. last - first - 1));\n"
                        f"    requires \\valid(d_first + (0 .. last - first - 1));\n"
                        f"    requires \\separated(first + (0 .. last - first - 1), d_first + (0 .. last - first - 1));\n"
                        f"    assigns d_first[0 .. last - first - 1];\n"
+                       f"    ensures \\initialized(d_first + (0 .. last - first - 1));\n"
                        f"    ensures \\forall integer k; 0 <= k < last - first ==> d_first[k] == \\old(first[k]);\n"
                        f"    ensures \\result == d_first + (last - first); */\n"
                        f"static {ctype} *{model}(const {ctype} *first, const {ctype} *last, {ctype} *d_first) {{\n"
                        f"  const ptrdiff_t n = last - first;\n"
                        f"  /*@ loop invariant 0 <= i <= n;\n"
                        f"      loop invariant \\forall integer k; 0 <= k < i ==> d_first[k] == first[k];\n"
+                       f"      loop invariant \\initialized(d_first + (0 .. i - 1));\n"
                        f"      loop assigns i, d_first[0 .. n - 1];\n"
                        f"      loop variant n - i; */\n"
                        f"  for (ptrdiff_t i = 0; i < n; ++i) d_first[i] = first[i];\n"
@@ -2069,6 +2080,8 @@ def model_definition(family, op, ctype):
     unsigned = ctype if pointer or ctype.startswith("unsigned") or ctype.startswith("uint") or ctype == "bool" \
         or ctype == "size_t" or ctype == "uintptr_t" else UNSIGNED_OF.get(ctype)
     head = "/*@ requires \\valid(p);\n"
+    if op != "store_n":
+        head += "    requires \\initialized(p);\n"
     if op == "load_n":
         text = (f"{head}    assigns \\nothing;\n    ensures \\result == *p; */\n"
                 f"static {ctype} {model}({ctype} *p) {{ return *p; }}")
@@ -2079,7 +2092,8 @@ def model_definition(family, op, ctype):
         text = (f"{head}    assigns *p;\n    ensures *p == v && \\result == \\old(*p); */\n"
                 f"static {ctype} {model}({ctype} *p, {ctype} v) {{ {ctype} old = *p; *p = v; return old; }}")
     elif op == "compare_exchange_n":
-        text = (f"/*@ requires \\valid(p) && \\valid(e) && \\separated(p, e);\n    assigns *p, *e;\n"
+        text = (f"/*@ requires \\valid(p) && \\valid(e) && \\separated(p, e);\n"
+                f"    requires \\initialized(p) && \\initialized(e);\n    assigns *p, *e;\n"
                 f"    ensures \\old(*p) == \\old(*e) ==> *p == d && *e == \\old(*e) && \\result == 1;\n"
                 f"    ensures \\old(*p) != \\old(*e) ==> *p == \\old(*p) && *e == \\old(*p) && \\result == 0; */\n"
                 f"static bool {model}({ctype} *p, {ctype} *e, {ctype} d) {{\n"
@@ -2110,6 +2124,9 @@ def model_definition(family, op, ctype):
                 f"    ensures \\result == {acsl_result}; */\n"
                 f"static {ctype} {model}({ctype} *p, {ctype} v) {{\n"
                 f"  {ctype} old = *p;\n  *p = {new};\n  return {result};\n}}")
+    if op != "load_n":
+        initialized = "\\initialized(p)" + (" && \\initialized(e)" if op == "compare_exchange_n" else "")
+        text = text.replace("    ensures ", f"    ensures {initialized};\n    ensures ", 1)
     return model, text
 
 
@@ -2184,10 +2201,11 @@ def lower(source, function, includes=(), defines=(), summaries=None, semantics=N
     if _children_kind(node, "TemplateArgument"):
         raise Unsupported(f"function template {function} as the proof unit")
     unit.lower_function(node, function, None, None)
-    definitions = {}
+    definitions, definition_nodes = {}, {}
     while unit.pending:
         cname, fnode, owner = unit.pending.pop(0)
         definitions[cname] = _define(unit, cname, fnode, owner)
+        definition_nodes[cname] = fnode
         for global_name in definitions[cname][1].globals:
             if global_name not in unit.globals:
                 unit.globals.append(global_name)
@@ -2238,6 +2256,8 @@ def lower(source, function, includes=(), defines=(), summaries=None, semantics=N
                           "naming_rules_sha256": RULES_SHA256, "clang": tool.version},
                     summaries=tuple(unit.summaries_used), models=tuple(n for n in unit.model_order if n != "SWDB_MODEL_FAIL" and not n.endswith("_valid")), probes=tuple(unit.probes),
                     std_models=tuple(sorted(unit.std_types)), allocation=unit.allocates or any(n.startswith("std_vector_") for n in unit.std_types) or any(n.startswith("swdb_alloc_new_array_") for n in unit.model_order),
+                    cpu_effects=cpu_effects.collect(definition_nodes, unit.probe_nodes, unit.models,
+                                                    unit.summaries_used, INTEGER_TYPES | FLOAT_TYPES),
                     terminal_release=certificate)
 
 
@@ -2416,6 +2436,7 @@ def _cli(args):
         out["std_models"] = {**std_models.identity(), "types": list(lowering.std_models)}
     if lowering.allocation:
         out["allocation"] = True
+    out["cpu_effects"] = lowering.cpu_effects
     if lowering.terminal_release:
         out["terminal_release"] = lowering.terminal_release
     return out

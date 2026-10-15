@@ -114,6 +114,7 @@ GROUPS = {
         ("post", "postcondition", "ensures \\result == k * n;")], [], [
         ("swdb_new_unit.loop1.head",
          "loop invariant 0 <= i <= n;\nloop invariant \\forall integer j; 0 <= j < i ==> buf[j] == k;\n"
+         "loop invariant \\initialized(&buf);\nloop invariant \\initialized(buf + (0 .. i - 1));\n"
          "loop assigns i, buf[0 .. n - 1];\nloop variant n - i;"),
         ("swdb_new_unit.loop2.head",
          "loop invariant 0 <= i <= n;\nloop invariant s == k * i;\nloop assigns i, s;\nloop variant n - i;")]),
@@ -333,7 +334,7 @@ def test_wp_refuses_uncertified_deallocation_aliases_escapes_and_later_effects(a
 def test_checked_terminal_delete_allows_the_initialized_nonescaping_array_unit_to_prove(allocation_subset):
     record = allocation_subset.unit("new_array")
     assert record["verdict"] == "proven", record.get("unproven_properties")
-    assert record["pins"]["terminal_release_check"]["id"] == "terminal-release-check-1"
+    assert record["pins"]["terminal_release_check"]["id"] == "terminal-release-check-2"
     assert record["pins"]["terminal_release_certificate"]["id"] == "swdb_new_unit.terminal-release"
     certificate = record["settings"]["terminal_release"]["certificate"]
     assert certificate["owner"] == "buf" and certificate["initialization"] == "canonical complete fill before every array read"
@@ -342,6 +343,8 @@ def test_checked_terminal_delete_allows_the_initialized_nonescaping_array_unit_t
     view = Path(paths["terminal_release_view"]).read_text()
     assert "swdb_alloc_delete_array_int(buf);" in original
     assert "swdb_alloc_delete_array_int(buf);" not in view and "assert n >= 0" in view
+    assert "swdb_alloc_new_array_int((size_t)(n)) + 0;" in view
+    assert "swdb_alloc_new_array_int((size_t)(n)) + 0;" not in original
     assert len(original.splitlines()) == len(view.splitlines())
 
 
@@ -388,3 +391,103 @@ def test_terminal_release_proof_refuses_heap_observation_and_ghost_effects(alloc
         assert not any(report["name"] == "wp_input" for report in record.get("evidence", {}).get("reports", []))
     finally:
         contract.write_text(original)
+
+
+@pytest.fixture(scope="module")
+def summary_dependency_seed(tmp_path_factory):
+    """One real summary proof; mutations exercise public dependency admission before another verifier starts."""
+    if not _tools_present():
+        pytest.skip("Frama-C 33.0 or clang 22.1.8 is missing")
+    path = tmp_path_factory.mktemp("wp-summary-dependency")
+    seed = Seed(path, build_subset_seed(path))
+    record = seed.prove("--summary", summary_id("dxc_tile_size"))
+    assert record["verdict"] == "proven", record
+    return path, seed.candidates, record["id"]
+
+
+@needs_wp
+@pytest.mark.parametrize("mutation", ["current", "method", "evidence", "adapter", "setup", "reading", "bounded", "model"])
+def test_summary_dependency_requires_current_method_counting_execution_boundary_and_transitive_models(
+        summary_dependency_seed, tmp_path, mutation):
+    source, candidates, rid = summary_dependency_seed
+    for name in ("records", "library"):
+        shutil.copytree(source / name, tmp_path / name)
+    seed = Seed(tmp_path, candidates)
+    path = seed.records / "proofs" / f"{rid}.yaml"
+    record = yaml.safe_load(path.read_text())
+    if mutation == "method":
+        old = seed.root / "library" / "methods" / "contract-fixture-1.yaml"
+        record["pins"]["method_version"] = {"id": yaml.safe_load(old.read_text())["id"],
+                                             "sha256": hashlib.sha256(old.read_bytes()).hexdigest()}
+    elif mutation == "evidence":
+        record["evidence_kind"] = "execution"
+    elif mutation == "adapter":
+        record["job"]["adapter"] = "scripted"
+    elif mutation == "setup":
+        record["proof_setup_check"]["runs"] = []
+    elif mutation == "reading":
+        record["verdict_reading"]["verdict"] = "not_proven"
+    elif mutation == "bounded":
+        record["bounds"]["input_size"] = 4
+    elif mutation == "model":
+        from swdb import c_lowering
+        record["pins"]["models"] = [{"id": "std_min_int", "sha256": hashlib.sha256(
+            c_lowering.model_text("std_min_int").encode()).hexdigest(), "proof_record": rid}]
+    path.write_text(yaml.safe_dump(record, sort_keys=False))
+    if mutation == "current":
+        proven = seed.unit("dxc_summary")
+        assert proven["verdict"] == "proven"
+        assert proven["pins"]["summaries"][0]["proof_record"] == rid
+    else:
+        result = seed.unit("dxc_summary", ok=False)
+        assert "no proven summary record" in result.stderr or "validation error" in result.stderr
+
+
+@pytest.fixture(scope="module")
+def initialized_model_subset(tmp_path_factory):
+    if not _tools_present():
+        pytest.skip("Frama-C 33.0 or clang 22.1.8 is missing")
+    path = tmp_path_factory.mktemp("wp-initialized-models")
+    seed = Seed(path, build_subset_seed(path))
+    seed.model_records = {"std_copy_int": seed.prove("--model", "std_copy_int")}
+    code = ("#include <algorithm>\n"
+            "int swdb_copy_initialized(int *out) { int source[1] = {7}; std::copy(source, source + 1, out); return 0; }\n"
+            "int swdb_copy_uninitialized(int *out) { int source[1]; std::copy(source, source + 1, out); return 0; }\n")
+    (path / "library" / "proof_units" / "initialized_copy.cc").write_text(code)
+    for label in ("initialized", "uninitialized"):
+        cid, function = f"contract.fixture_copy_{label}", f"swdb_copy_{label}"
+        data = _entry(cid, function, "initialized_copy.cc", code,
+                      [("pre", "legality", "requires \\valid(out);"),
+                       ("post", "postcondition", "assigns *out; ensures \\result == 0;")],
+                      ["out"], {"once": "self"})
+        (path / "library" / "rewrite_contracts" / f"fixture_copy_{label}.yaml").write_text(
+            yaml.safe_dump(data, sort_keys=False))
+    return seed
+
+
+@needs_wp
+@pytest.mark.parametrize("name", ["std_copy_int", "std_swap_int", "swdb_atomic_load_n_int",
+                                   "swdb_atomic_compare_exchange_n_int", "std_pair_int_int_copy_ctor"])
+def test_models_prove_initialized_read_and_output_obligations(initialized_model_subset, name):
+    seed = initialized_model_subset
+    record = seed.model_records.get(name)
+    if record is None:
+        record = seed.prove("--model", name)
+        seed.model_records[name] = record
+    assert record["verdict"] == "proven", (name, record.get("unproven_properties"))
+    from pathlib import Path
+    source = next(row for row in record["evidence"]["reports"] if row["name"] == "wp_input")
+    assert "\\initialized" in Path(source["path"]).read_text()
+    assert "-rte-initialized @all" in " ".join(record["settings"]["flags"])
+
+
+@needs_wp
+@pytest.mark.parametrize("initialized", [True, False])
+def test_a_model_call_requires_initialized_source_even_when_the_postcondition_ignores_its_value(
+        initialized_model_subset, initialized):
+    label = "initialized" if initialized else "uninitialized"
+    record = initialized_model_subset.prove("--summary", f"contract.fixture_copy_{label}")
+    assert record["verdict"] == ("proven" if initialized else "not_proven"), record
+    if not initialized:
+        assert record["unproven_properties"]
+        assert any("std_copy_int_requires" in str(goal) for goal in record["unproven_properties"])

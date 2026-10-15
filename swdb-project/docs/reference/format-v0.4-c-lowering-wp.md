@@ -257,3 +257,29 @@ and separately report the WP view and its hash. The lowerer identity hashes both
 ownership-checker sources; the checker revalidates the exact view before hint checking and launch.
 All uncertified releases and vector allocation/deallocation remain `not_proven / unsupported_construct`.
 Ticket 25's WP vector-growth acceptance is still open.
+
+## CPU effect inventory (2026-10-15)
+
+Lowering version 5 adds generator-owned `cpu_effects` to `swdb lower` output and anchor metadata. It
+lists ordinary reads, writes, calls and loop-containing functions across the entire lowered call tree.
+Each source event names its function, source range and enclosing top-level statement ordinal; modeled
+or unresolved effects keep unknown locations explicit. Matching tile probes cover their accesses;
+ordinary arrays, dereferences, references, members, globals, atomics, escaped local storage and opaque
+summaries remain visible. Pure local scalar operations need no ordinary-memory hazard probe.
+
+This inventory supports conservative DX100 admission until ticket 28 models full cache-line hazards.
+It does not prove a lack of interference. The admission policy rejects ordinary writes and permits
+ordinary reads around device stores only when an acyclic unit-only prefix establishes strict statement
+ordering. Same-expression order, callee order and loop iterations are not inferred from source offsets.
+
+The lowerer identity hashes the lowering, ownership checker, effect collector and CPU admission policy
+sources together. An absent policy has an explicit hash marker; adding or changing it changes the pin.
+The final method draft must pin the integrated policy, not an intermediate lowerer-only checkout.
+
+
+Terminal-release checker version 2 permits checked initialization loop invariants and gives the WP
+view's valid, nonempty allocator result an equivalent `+ 0` pointer initializer. WP 33's modular call
+rule binds return values without marking the receiving local initialized; ordinary expression
+assignment tracks it. This preserves the pointer value under the existing nonempty allocation
+contract, adds no heap initializedness or freshness premise, and leaves native artifacts unchanged.
+An ignored unfilled-array read remains a failed initialization obligation.
