@@ -37,17 +37,18 @@ import re
 import shlex
 import shutil
 import subprocess
+from dataclasses import replace
 from pathlib import Path
 
-from swdb import artifacts, c_lowering, framac, hint_check, paths, proof_semantics, proof_setup, rss_watchdog, std_models, vocab
+from swdb import artifacts, c_lowering, framac, hint_check, paths, proof_semantics, proof_setup, rss_watchdog, std_models, terminal_release, vocab
 from swdb.proof import MODEL_PREFIX, AdapterError, Verdict
 
 NAME = "wp"
-PROVERS = ("z3", "cvc5", "alt-ergo")   # serial portfolio: quick SMT checks before Alt-Ergo fallback
+PROVERS = ("z3", "cvc5", "alt-ergo")   # required tools; invocation order comes from the method
 WHY3_NAMES = {"Alt-Ergo": "alt-ergo", "Z3": "z3", "CVC5": "cvc5"}
-FROZEN = (("-wp-cache", "none"), ("-wp-model", "+real"))
+FROZEN = (("-wp-cache", "none"), ("-wp-model", "+real"), ("-rte-initialized", "@all"))
 MACHDEP = ("-machdep", "x86_64")
-ALLOCATION_MODEL = "swdb_alloc_"   # ticket 24: new[] and delete[] rest on "allocation succeeds" (an assumption)
+ALLOCATION_MODEL = "swdb_alloc_"   # new[] success is assumed; an ordinary release still needs lifetime support
 DEFAULT_WALL_SECONDS = 3600
 DEFAULT_CAP_BYTES = 8 * 2**30                    # O9: the ~8 GB RSS watchdog
 UNCLASSIFIED = "unclassified_wp_outcome"         # not a failure class: stops the batch (11 item 9)
@@ -146,15 +147,33 @@ class WpAdapter:
                 return self._not_proven("unsupported_construct",
                     "the standard models require libc++ 22.1.8 (_LIBCPP_VERSION 220108); "
                     "the selected clang uses an unmatched standard library", context)
+        dependency_lowering = lowering
         if any(name == "swdb_free" or name.startswith("swdb_alloc_delete_array_") for name in lowering.models):
-            return self._not_proven("unsupported_construct",
-                "WP 33.0 does not model allocation lifetime; reachable free/delete or vector growth needs it", context)
+            placement = {"once": "self"} if summary_job else "per_candidate"
+            formal_texts = [c["acsl"]["text"].strip() for c in entry.get("clauses", [])
+                            if isinstance(c, dict) and c.get("acsl") and c.get("proof_placement") == placement]
+            try:
+                view = terminal_release.wp_view(lowering, formal_texts, self.hints)
+                terminal_release.check_view(lowering, view, formal_texts, self.hints)
+            except terminal_release.Refused as exc:
+                return self._not_proven("unsupported_construct",
+                    "WP 33.0 does not model allocation lifetime; reachable free/delete or vector growth needs it; "
+                    f"terminal-release check: {exc}", context)
+            dependency_lowering = replace(lowering, models=view.models)
+            context["terminal_release"] = {"view": view, "formal_texts": formal_texts}
+            context["pins"].update(view.pins)
+            context["assumed"].append(view.assumption)
         if unit.get("function") not in (None, job.unit.function):
             raise AdapterError(f"contract {self.contract} states the proof unit {unit.get('function')}, not "
                                f"{job.unit.function}")
         c_path, anchors_path = lowering.write(wp_dir)
         context["reports"] += [("c_lowering", c_path), ("anchors", anchors_path)]
         context["c_lowering"] = {"id": c_path.name, "sha256": lowering.sha256}
+        if context.get("terminal_release"):
+            terminal = context["terminal_release"]
+            terminal["path"] = wp_dir / "terminal_release_view.c"
+            terminal["path"].write_text(terminal["view"].text)
+            context["reports"].append(("terminal_release_view", terminal["path"]))
         called = proof_semantics.called(lowering, covered)
         if called:                                  # ticket 27: the WP form of the proof semantics
             entries = sorted({covered[name] for name in called})
@@ -167,13 +186,14 @@ class WpAdapter:
                 "probes": [{k: p[k] for k in ("id", "function", "access", "line")} for p in lowering.probes]}
             log.line(f"proof semantics: {entries[0]} (sha256 {sha}); calls {', '.join(called)}; "
                      f"{len(lowering.probes)} hazard probe(s)")
-        contracts = self._dependencies(lowering, context)
+        contracts = self._dependencies(dependency_lowering, context)
         context["lowering"] = lowering
         context["extern_contracts"] = {
             used["c_name"]: {"id": used["summary"], "sha256": self.library.content_sha256(used["summary"])}
             for used in lowering.summaries if used["name"] not in covered}
         for model in context["pins"].get("models", []):
             context["extern_contracts"][model["id"]] = {k: model[k] for k in ("id", "sha256")}
+        context["extern_contracts"].update(context.get("allocation_contracts", {}))
         if context.get("semantics"):
             semantics = context["semantics"]
             pin = {k: semantics[k] for k in ("id", "sha256")}
@@ -184,7 +204,9 @@ class WpAdapter:
         callees = sorted({a["function"] for a in lowering.anchors if a["kind"] == "contract"} - {job.unit.function})
         context["extra_flags"] = [f"-wp-fct={job.unit.function}"] + \
             ([f"-inline-calls={','.join(callees)}"] if callees else [])
-        base = hint_check.wp_base(lowering.text, lowering.anchors, self._context(lowering, entry, summary_job, context))
+        view = (context.get("terminal_release") or {}).get("view")
+        base = hint_check.wp_base(view.text if view else lowering.text, lowering.anchors,
+                                  self._context(lowering, entry, summary_job, context))
         base = self._with_contracts(base, contracts)
         if context.get("semantics"):
             context["semantics_hint_base"] = base
@@ -315,11 +337,11 @@ class WpAdapter:
         for name in lowering.models:
             sha = hashlib.sha256((c_lowering.model_text(name) or "").encode()).hexdigest()
             if name.startswith(ALLOCATION_MODEL):
+                context.setdefault("allocation_contracts", {})[name] = {"id": name, "sha256": sha}
                 assumed.append({"kind": "assumed_clause", "reference": {"id": name, "sha256": sha},
                                 "sentence": f"Allocation succeeds: the allocation model {name} behaves as its contract "
-                                            "says (new[] returns as many valid elements as asked; delete[] releases "
-                                            "them); the assumption entry of map 16 item 7, since WP cannot prove an "
-                                            "allocation or see a release."})
+                                            "says (new[] returns as many valid elements as asked); the assumption "
+                                            "entry of map 16 item 7, since WP cannot prove allocation success."})
                 continue
             record = self._proven("c_model", name, sha)
             if record is None:
@@ -434,7 +456,14 @@ class WpAdapter:
             ["-wp-prover", ",".join(tools["provers"])]
         settings_flags = [*tools["flags"], *MACHDEP, *prover_flags, "-wp-timeout",
                           str(tools["seconds"]), "-wp-par", "1", "-wp-smoke-tests", *context.get("extra_flags", [])]
-        command = [*framac.locate().command, *settings_flags, "-wp-report-json", goals_json.name, "wp_input.c",
+        # RTE's function-set option resolves against an existing AST. Parse (and inline)
+        # first, then enable initialization checks for every body, including lowered callees.
+        # -wp-rte alone does not generate initialization assertions in Frama-C 33.
+        parse_flags = [f for f in context.get("extra_flags", []) if f.startswith("-inline-calls=")]
+        normalized = scratch / "wp-normalized.c"
+        command = [*framac.locate().command, *MACHDEP, *parse_flags, "wp_input.c",
+                   "-print", "-ocode", normalized.name, "-then",
+                   *settings_flags, "-wp-report-json", goals_json.name,
                    "-then", "-load-module", str(report_module), "-report", "-report-untried",
                    "-report-csv", properties_csv.name]
         removed = []
@@ -451,13 +480,24 @@ class WpAdapter:
                                "warning_levels": "default", "machdep": "x86_64",
                                "wp_seconds_per_solver": tools["seconds"], "environment_removed": removed,
                                "rss_cap_bytes": cap, "hint_count": context.get("hints_reaching_wp", 0), "build_constants": list(self.defines)}
-        proof_setup.check_generated(job, self, context,
-            [(scratch / "wp_input.c", context["wp_expected_text"])], settings_flags, command=command, scratch=scratch)
+        inputs = [(scratch / "wp_input.c", context["wp_expected_text"])]
+        terminal = context.get("terminal_release")
+        if terminal:
+            view = terminal["view"]
+            try:
+                terminal_release.check_view(context["lowering"], view, terminal["formal_texts"], self.hints)
+            except terminal_release.Refused as exc:
+                raise AdapterError(f"terminal-release prelaunch check: {exc}") from None
+            inputs.append((terminal["path"], view.text))
+            context["settings"]["terminal_release"] = {
+                "certificate": view.certificate, "wp_view_sha256": hashlib.sha256(view.text.encode()).hexdigest()}
+        proof_setup.check_generated(job, self, context, inputs, settings_flags, command=command, scratch=scratch)
         result = rss_watchdog.run(command, log=wp_log, cap_bytes=cap, timeout=wall, cwd=scratch, env=env)
         context["peak"] = result.peak_rss_bytes
         log.line(f"frama-c exit {result.exit_code}, wall {result.wall_seconds:.2f} s, peak rss {result.peak_rss_bytes}, "
                  f"out of memory {result.out_of_memory}, timed out {result.timed_out}")
-        for name, path in (("wp_goals", goals_json), ("wp_properties", properties_csv), ("wp_inventory", inventory)):
+        for name, path in (("wp_goals", goals_json), ("wp_properties", properties_csv), ("wp_inventory", inventory),
+                           ("wp_normalized", normalized)):
             if path.exists():
                 shutil.copyfile(path, wp_dir / path.name)
                 context["reports"].append((name, wp_dir / path.name))

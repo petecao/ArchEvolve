@@ -52,7 +52,7 @@ FILL_HINTS = _hints("swdb_fixture_fill.loop1.head", "loop invariant 0 <= i <= n;
                     "loop invariant \\forall integer k; 0 <= k < i ==> a[k] == v;", "loop assigns i, a[0 .. n-1];",
                     "loop variant n - i;")
 SMOKE_HINTS = _hints("count_up.loop1.head", "loop invariant 0 <= i <= n;", "loop assigns i;", "loop variant n - i;")
-TRUSTED = {"swdb-c-lowering-3", "clang-22.1.8", "frama-c-wp-33.0", "alt-ergo-2.6.4", "z3-5.1.0", "cvc5-1.2.1"}
+TRUSTED = {"swdb-c-lowering-4", "clang-22.1.8", "frama-c-wp-33.0", "alt-ergo-2.6.4", "z3-5.1.0", "cvc5-1.2.1"}
 
 
 def _tools_present():
@@ -95,6 +95,7 @@ def method_version(identity):
     data.update(id="method.wp-tracer-fixture", sequence=2,
                 description="Fixture method version with the real WP lineup of the Mac (ticket 21 tests).")
     data["lineup"] = yaml.safe_load((REPO / "library" / "methods" / "probata-draft-1.yaml").read_text())["lineup"]
+    next(row for row in data["lineup"] if row["tool"] == "frama-c-wp")["flags"] += ["-rte-initialized", "@all"]
     data["c_lowering"]["translators"] = [identity["c_lowering"]]
     return data
 

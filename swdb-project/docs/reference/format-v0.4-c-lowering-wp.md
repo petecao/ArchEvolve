@@ -12,6 +12,8 @@ Tests: `tests/test_c_lowering.py`, `tests/test_wp_adapter.py`, `tests/test_forma
 
 ## `swdb lower` (the C lowering tool)
 
+Updated: 2026-10-15 ET (explicit initialization policy; historical manifests stay immutable).
+
 Updated: 2026-10-14 ET (ticket 24: the declared C++ subset, naming rules `kept-names.2`, tool version 2).
 
 ```
@@ -99,6 +101,21 @@ swdb prove --candidate <c> --function <f> --contract <contract> --adapter wp --r
 4. Runs Frama-C/WP once, frozen settings, in a fresh process in the job's scratch folder (also `TMPDIR`),
    under the RSS watchdog and the wall budget.
 5. Reads the verdict and runs the failure class's handler.
+
+WP methods must freeze `-rte-initialized @all`. The adapter first parses and inlines
+the C input, then enables this function-set option against the existing AST and runs
+WP in the same fresh process. Frama-C 33's `-wp-rte` alone omits initialization checks.
+The normalized pre-proof input is retained as `wp_normalized`; every generated
+initialization assertion remains a proof obligation. Input memory may require explicit
+`\initialized` preconditions: `\valid` establishes access bounds, not initialization.
+The adapter never invents those preconditions or assumes candidate locals initialized.
+An older method without the explicit initialization flag cannot run this WP policy;
+use a new method file rather than edit an existing pinned manifest.
+
+The property reader accepts Frama-C 33's indented multiline property text as part of
+the preceding TSV row. It refuses incomplete rows and keeps each property's function,
+status and dependencies intact; a continuation never becomes a new unnamed property.
+
 
 **Ticket 24: callees, summaries and C models.** One job proves one function, `<f>`, with everything it uses
 accounted for once:
@@ -209,3 +226,35 @@ WP names `hint_rule` (the check's rule) instead of `failure_class`, and reruns w
 - 34/35/37: anchors from `<f>.anchors.json`; hints placed by `WpAdapter._input`; goals to retry from the
   record's `goals` and `unproven_properties`.
 - 36: replace `read_outcome` with the full reading rule; keep the class table above.
+
+## Checked terminal release (2026-10-15)
+
+The C lowering version 4 records an ownership certificate for one restricted `new int[]` pattern.
+Ordinary C and C++ artifacts retain `delete[]`. A separate WP view may omit the final delete only when
+`swdb.terminal_release` checks all of these conditions:
+
+- One fresh local owner, scalar `int` parameters, locals and return; no aliases, address escapes,
+  reassignment, globals, calls, callbacks, extra releases or custom allocator definitions.
+- A canonical complete fill loop immediately follows allocation, before any array read. Scalar locals
+  initialize before use; self-initialization is rejected. This is a syntactic initializedness check,
+  because the frozen `-wp-rte` setup does not request the separate
+  `-rte-initialized <function>` selector. WP 33 does support initializedness predicates.
+- The last two statements are exactly `delete[] owner; return scalar_expression;`, and the return does
+  not read the owner. Formal halves mention only scalar parameters and result; only pre-release loop
+  hints are admitted. Ghost declarations and statements are refused.
+
+The view adds a proof obligation that the array count is nonnegative before conversion to `size_t`.
+The existing allocation model requires a nonempty buffer, so zero-length arrays remain outside this
+narrow path. WP must still prove all earlier accesses and scalar runtime checks; allocation success
+never establishes freshness or initializedness by assumption.
+
+The release argument is the unchanged allocation base, with no earlier release. After it, the unit
+cannot observe heap lifetime or call an allocator hook. Eliding that terminal release therefore
+preserves the scalar result and live caller memory under the existing ordinary allocator-model trust.
+The path does not prove custom allocator side effects, resource exhaustion or general heap lifetimes.
+
+Records pin `terminal_release_check` and `terminal_release_certificate`, keep the original lowering,
+and separately report the WP view and its hash. The lowerer identity hashes both the lowering and
+ownership-checker sources; the checker revalidates the exact view before hint checking and launch.
+All uncertified releases and vector allocation/deallocation remain `not_proven / unsupported_construct`.
+Ticket 25's WP vector-growth acceptance is still open.

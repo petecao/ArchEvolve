@@ -231,3 +231,63 @@ Original logs and incremental reports: `/private/tmp/probata-t24-20261015/{red,g
 No expected failure counts as acceptance. [WP's official manual](https://frama-c.com/download/frama-c-wp-manual.pdf),
 section 1.6, confirms that ACSL allocation/deallocation clauses are not implemented; switching
 memory models alone is not evidence that this gap is solved.
+
+## Narrow lifetime implementation — 2026-10-15
+
+A checked terminal-release path is being integrated for the initialized, nonescaping scalar-array fixture.
+Code: `swdb/terminal_release.py`, lowering version 4 (naming rules stay 3). It checks a single unchanged
+new-int-array owner, full initialization before any read, no aliases/escapes/calls or extra releases,
+and terminal delete followed by a scalar return that cannot observe the buffer. The ordinary lowering
+retains delete; only a separately pinned WP view elides that unobservable final release. It inserts a
+nonnegative-count proof obligation before unsigned conversion. Unsupported freshness/initializedness
+facts are not assumed. Every uncertified free/delete and every vector lifetime remains refused.
+
+Public TDD: the safe `swdb prove` test failed with `not_proven` before adapter integration, report
+`/private/tmp/probata-lifetime-research-2026-10-15/public-red.jsonl`. The lowerer's 75 tests passed
+(51.24 s), then ten focused controls passed after tightening initialization/alias cases (2.32 s).
+No positive production-WP acceptance is claimed at this checkpoint. Design, source evidence and the
+outside-repository diagnostic logs: `/private/tmp/probata-lifetime-research-2026-10-15/design.md`.
+
+Side finding: WP 33 supports `Pinitialized` (`LogicSemantics.ml:871`), but the frozen `-wp-rte`
+flags do not request its separate `-rte-initialized <function>` selector for read-initialization guards.
+The certificate requires a canonical full fill loop and initialized scalar locals rather than inferring
+arbitrary definedness from omitted obligations. This does not establish general initialization-guard
+coverage for the rest of the declared C++ subset. Custom or externally replaced allocator behavior remains outside the ordinary allocator
+model's assumption boundary. General vector growth needs real pointer provenance/liveness semantics;
+this narrow transformation does not close ticket 25.
+
+Before adapter integration, the expanded public negative set passed: **11 passed** (189.85 s),
+`/private/tmp/probata-lifetime-research-2026-10-15/public-negative.jsonl`. These establish conservative
+refusal controls, not positive terminal-release WP acceptance; the latter remains the recorded red test.
+
+### Initialization obligations — 2026-10-15 ET
+
+The public summary-proof seam reproduced a separate safety gap: an unused read of an
+uninitialized local received `proven` under `-wp-rte` alone. The new WP policy requires
+the method to freeze `-rte-initialized @all`, after a parse/inlining stage in the same
+fresh process. It does not reuse a normalized file as trusted input. Initialized locals
+prove; uninitialized locals, including an inlined callee, and a fresh unfilled array
+remain not proven. A pointer with only `\valid` remains not proven, whereas an explicit
+`\initialized` precondition establishes the initialized input domain.
+
+Decision under the user's delegated implementation authority: admit the standard ACSL
+`\initialized` predicate in formal halves so callers can state this necessary premise.
+This small language extension does not enable other memory built-ins or imply a general
+heap-lifetime model. Bounded translators must still refuse this predicate unless their
+actual harness/storage initialization supports a faithful encoding. No input premise is
+silently generated. This policy requires a new method file, not edits to pinned draft 2.
+[Frama-C's RTE manual](https://www.frama-c.com/download/frama-c-rte-manual.pdf), section 2.7,
+describes the initialization checks; the installed 33.0 help and raw negative controls
+confirm the option is separate from the default WP RTE checks.
+
+Raw CBMC initializedness checks are a separate ongoing audit; this WP fix establishes
+no initializedness guarantee for bounded proofs. Ticket 24 remains claimed until its
+full current-policy construct acceptance completes.
+
+Validation: the unused-local public control failed before the policy (WP reported
+proven), then passed after it. The complete focused policy/formal-frame/report suite
+passed **121 tests in 114.92 s**, two workers, isolated retained basetemp. Six actual
+WP controls include both initialized positives and all four uninitialized negatives.
+Logs and incremental report: `/private/tmp/probata-init-final.{log,jsonl}`; initial
+reproduction: `/private/tmp/probata-init-red.{log,jsonl}`. No full construct-group or
+full-catalog acceptance is inferred from this focused suite.
