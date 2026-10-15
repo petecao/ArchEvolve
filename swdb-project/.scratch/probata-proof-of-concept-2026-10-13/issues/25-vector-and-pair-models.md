@@ -315,3 +315,20 @@ not an accepted proof; the exact-content refusal fixes it. Two earlier attempts 
 setup and are excluded from the intended RED evidence. Actual safe/stale data tests are written
 but pending coordinated execution. Status stays claimed; no general model-domain acceptance.
 Evidence:[t25-current-owner-data-staging-20261015.json](../evidence/t25-current-owner-data-staging-20261015.json).
+
+
+Current-owner data actual checkpoint — 2026-10-15 ET: at frozen67dfd7a8 the public pair
+PASS2/184.49s. Immediate current-owner data read PROVEN105/105ordinaryVALID+11smokePASS,
+116complete inventoried/reported goals. Adding a subsequent read of the initial captured alias
+is NOT_PROVEN111/112ordinaryVALID+11smokePASS,123complete inventoried/reported goals; sole
+open ordinary goal alias_live_after. The fresh read does not revive its stale predecessor.
+Downstream RTE/functional properties in the negative remain conditional/partially proven on
+that open assertion, not unconditional safety claims. All checked report hashes and goalsets
+match. Actual setup/strictreader pass; source/HEAD stayed frozen with one local worker under
+shared2slotlock and8GiB RSS cap (peak353/499MB). Outputs3.7MiB are retained on APFS, preflight
+67GiBfree/68%memoryfree. Raw smoke attempts time out and pass strict smoke checking. These are
+contract_fixture source-to-view records; no standalone C-model domain, bounded refutation or
+whole25 completion is claimed. Frame projection remains structural and allocator/library trust
+explicit. Source/native malloc/free and original scalar contracts are unchanged. Status claimed.
+Evidence:[t25-current-owner-data-actual-20261015.json](../evidence/t25-current-owner-data-actual-20261015.json).
+Outside audit:/private/tmp/probata-owner-data-actual-67dfd7a8-audit.json.
