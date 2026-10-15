@@ -55,6 +55,13 @@ or assume chunk divisibility. Keep range-loop cursor progress, gather source val
 across calls, and queue-flush concatenation as separately checked obligations. No
 previous run's hints are supplied or pre-seeded.
 
+Logical-scope guidance (method revision, 2026-10-15): when restating a quantified
+postcondition as a bookkeeping assertion, preserve every antecedent and its scope
+over the whole conjunction. Appended-output membership is required for newly
+discovered vertices, not for every vertex. Check empty frontiers and previsited or
+unreachable vertices before spending prover time on a stronger assertion. Correct
+or remove an invalid cut even when other goals become easy when it is assumed.
+
 HOW THIS LOOP WORKS (monotone, local editing):
 - The loop keeps ONE best hint set. It starts with mechanically generated frame seeds (ids "seed*": every
   loop's `loop assigns`, written from the code; they are fixed, you cannot change them or add `loop assigns`).
@@ -315,7 +322,7 @@ def main():
     meta = {"started": L.now(), "pin": L.PIN,
             "codex_version": subprocess.run([L.CODEX, "--version"], capture_output=True, text=True).stdout.strip(),
             "ghost_hint_guard": H.GHOST_HINT_RULE,
-            "diagnostic_guidance": "partial-chunk-boundary-v1",
+            "diagnostic_guidance": "partial-chunk-and-postcondition-scope-v2",
             "standin_sha256": {f: L.sha(L.STANDIN_DIR / f) for f in [L.UNIT] + L.HEADERS},
             "cpp_unit_sha256": L.sha(L.CPP_UNIT), "rounds": a.rounds, "budget_min": a.budget_min,
             "round_timeout_s": a.round_timeout, "final_reserve_min": a.final_reserve_min,
