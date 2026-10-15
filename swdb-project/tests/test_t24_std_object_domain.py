@@ -70,3 +70,17 @@ def test_invalid_targeted_profile_budget_stops_before_touching_input_or_output(t
         capture_output=True,text=True,env={**os.environ,'PYTHONDONTWRITEBYTECODE':'1'},timeout=30)
     assert done.returncode == 2 and 'between 600 and 7200' in done.stderr
     assert not output.exists()
+
+
+@pytest.mark.parametrize('location', ['seed', 'matrix', 'checkout'])
+def test_targeted_profile_rejects_output_inside_historical_input_or_checkout_before_mutation(tmp_path,location):
+    source = tmp_path/'historical'/'seed'
+    source.mkdir(parents=True)
+    output = {'seed':source/'new', 'matrix':source.parent/'new',
+              'checkout':PROFILE.parent/'unused-review-control'}[location]
+    done = subprocess.run([sys.executable,str(PROFILE),'--expected-commit','unused',
+        '--from-seed',str(source),'--output',str(output)],capture_output=True,text=True,
+        env={**os.environ,'PYTHONDONTWRITEBYTECODE':'1'},timeout=30)
+    assert done.returncode == 2 and 'disjoint from the historical input matrix' in done.stderr
+    assert not output.exists()
+    assert list(source.iterdir()) == []

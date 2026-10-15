@@ -31,3 +31,5 @@ python .scratch/probata-proof-of-concept-2026-10-13/prototype/t24-std-object-dom
 ```
 
 Budget: one worker, 8 GiB whole-worker cap, 30-minute whole-run allowance plus wrapper cleanup margin, 1 GiB output allowance; expected two actual calls in roughly 8–15 minutes. No model solver replay is requested. A preflight-only run can add `--check-only` with a separate fresh output path.
+
+Independent final review of 28a36212 identified one runner guard gap: a nested output could write into the historical input tree. The follow-up resolves output/source paths and refuses output within the checkout or any overlap with the historical matrix before mutation. Removing this guard makes all three new rejection controls fail (real mutation RED); the restored complete compiler/parser profile passes 11/11 in 8.92s, guarded9.292s/296370176B. No actual verifier ran. The original8-control receipts remain preserved.

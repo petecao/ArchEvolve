@@ -47,11 +47,14 @@ def main():
     args = parser.parse_args()
     if not 600 <= args.public_timeout_seconds <= 7200:
         parser.error('public timeout must be between 600 and 7200 seconds')
+    source = args.from_seed.resolve()
+    destination = args.output.resolve()
+    if destination.is_relative_to(REPO) or destination.is_relative_to(source.parent) or source.parent.is_relative_to(destination):
+        parser.error('output must be outside the checkout and disjoint from the historical input matrix')
     head = subprocess.check_output(['git','rev-parse','HEAD'], cwd=REPO, text=True).strip()
     assert head == args.expected_commit, 'unexpected runner source commit'
     assert not subprocess.check_output(['git','status','--porcelain','--untracked-files=no','--',':(top)swdb-project'],
                                        cwd=REPO, text=True).strip(), 'tracked source changes'
-    source = args.from_seed.resolve()
     prior = json.loads((source.parent/'matrix.json').read_text())
     manifest = json.loads((source.parent/'source-manifest.json').read_text())
     assert prior['commit'] == manifest['commit'] == FROZEN, 'reuse source is not the diagnosed current freeze'
