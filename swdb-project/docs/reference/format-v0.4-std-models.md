@@ -149,8 +149,9 @@ WP proves the separate private-view frame, functional facts and alias-liveness o
 bytes, contracts and structural frame certificate; `vector_ownership_allocator` pins the
 explicit trusted fresh-allocation and separation contracts. Neither fresh storage nor source-frame
 preservation is inferred from unsupported WP allocation clauses. The checker is included in the
-setup/reader identity and revalidates the view before launch. General vector lifetime acceptance
-and the remaining protocol refusal controls are still pending.
+setup/reader identity and revalidates the view before launch. The nine focused controls pass across two reports (five completed calls in an unfinished run,
+four in a completed finishing run); the exact evidence is recorded in ticket25. General vector
+lifetime acceptance remains pending.
 
 
 ## Bounded initializedness admission (2026-10-15)
@@ -178,3 +179,21 @@ in for liveness. The matched libc++22.1.8 differential requirement remains in fo
 The original maximum proof, stale-data and stale-iterator replayed refutations, unchecked `at`
 refutation and checked-`at` proof are retained. This bounded restoration does not satisfy the open
 unbounded WP vector-lifetime acceptance.
+
+
+The defensive `std_vector_int_at` WP model job has a separate checked view. For the exact audited
+model-version2 C text, pinned Clang C parsing checks the pure `n >= this->size` abort guard and
+unchanged `this->data + n` return. The view replaces that guard with the named checked assertion
+`at_guard_false: n < this->size`; WP must prove it under the unchanged original contract. Original
+and view contract digests match, and no input precondition is added. The original/native/CBMC model
+retains the abort. Changed bodies or missing bounds contracts refuse this exact view. The source,
+view, C-AST shape, mapping certificate and checker are reported/pinned and regenerated before WP.
+This avoids a dead defensive branch failing smoke checks without exempting any smoke obligation.
+
+The required boolean `-wp-no-filter-init` retains initialized representation predicates in ordinary
+memory goals: WP33's default aggressive initialization filter can discard an entire predicate atom
+that also carries validity facts. This optimization change adds no semantic premise. Raw invalid,
+uninitialized, wrong-postcondition, stale-alias and contradictory-precondition controls remain open
+or fail smoke. The prospective member contract fixtures (14 original bodies plus this checked `at`
+view) precede the separate array-object provenance gate; they do not establish a final production
+method, all member/lifetime acceptance, or a stronger model input domain.
