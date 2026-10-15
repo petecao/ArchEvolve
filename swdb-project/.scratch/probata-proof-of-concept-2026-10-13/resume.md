@@ -4,7 +4,7 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 14:59 ET. **Implementation resumed at the user's request.**
+Updated: 2026-10-15 15:13 ET. **Implementation resumed at the user's request.**
 Integration branch: `codex/probata-resume-20261015`, based on clean synchronized
 `yanrujhou_main` at `d94d629b`. Existing historical evidence retains its exact pins.
 
@@ -12,9 +12,13 @@ Integration branch: `codex/probata-resume-20261015`, based on clean synchronized
 Active owners: ticket07 `probata-resume-t07`; ticket24 `probata-resume-t24`;
 ticket27 `probata-resume-t27`. Each implementer uses an isolated local worktree.
 The coordinator owns merges, ticket graph updates, and both remote socket lanes.
-Ticket27 diagnostic matrix is active on mbit10 node1 at frozen `159d912e`.
+Ticket27 first diagnostic at `159d912e` passed112ordinary+31smoke;
+the suite was then deliberately stopped before continuing obsolete setup identity.
+Node1 now runs11safe-fixture current-policy profile at composed `71771f09`
+(generation602).
 Raw output: `/data/yanruj/EvolveSWDB_runs/probata-resume-t27-diagnostic-20261015-1512`.
-The directory suffix is an identifier; actual start time is in the environment record.
+The diagnostic directory suffix is an identifier; actual time is in its environment record.
+Current node1 raw output: `/data/yanruj/EvolveSWDB_runs/probata-resume-t27-safe-71771f09`.
 Node0 runs ticket24 original templates safe/seeded at composed `71771f09`
 (generation569, started2026-10-15 15:08:36ET). Raw output:
 `/data/yanruj/EvolveSWDB_runs/probata-resume-t24-templates-71771f09`.
