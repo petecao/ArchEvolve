@@ -129,3 +129,11 @@ proves them. A ghost storage-pool encoding (ticket 07's note) is the known worka
 ## Not built yet
 
 - WP proofs of growing members and of units that grow a vector (the table above).
+
+
+Model version 2 (2026-10-15) makes initializedness explicit: pair copy/assignment require initialized
+source objects, constructors establish initialized destinations, and vector invariants require an
+initialized representation plus the live element prefix. Spare capacity remains uninitialized storage.
+These contracts accompany mandatory WP initialization checks; they make no additional lifetime claim.
+Model and summary dependencies must count under the caller's exact method and evidence boundary; a
+proof made before that policy cannot satisfy the new method merely because the code text matches.
