@@ -1,14 +1,13 @@
 # 5. Contribute records and understand profiling
 
-Updated: 2026-10-09 (Eastern Time). Reading budget: 7 minutes.
+Updated: 2026-10-14 (Eastern Time). Reading budget: 7 minutes.
 
 [Tutorial](README.md) · [Previous](04-bfs-workflow.md)
 
 ## Add a catalog record in a temporary workspace
 
-This optional exercise uses the repository's tiny graph input fixture. It shows
-the full write path without changing the project's records or running a
-benchmark. Run inside `ArchEvolve/swdb-project/` with chapter 1's dependencies.
+This optional tiny-input exercise writes only temporary files. Run inside
+`ArchEvolve/swdb-project/` with chapter 1's dependencies.
 
 ```sh
 python3 -B - <<'PY'
@@ -33,10 +32,9 @@ with TemporaryDirectory(prefix="swdb-tutorial-") as work:
 PY
 ```
 
-The fixture refers to a checked-in edge list and hash. Its node count is read
-from code; edge counts remain unknown. `add --agent` records draft status and
-agent provenance at `inputs/tiny-sym.yaml`; `get` retrieves that identity.
-The temporary directory is removed when the block exits.
+The fixture pins a checked-in edge list. Its node count is read from code; edge
+counts remain unknown. `add --agent` writes draft status and agent provenance
+at `inputs/tiny-sym.yaml`; `get` retrieves it. The block removes temporary files.
 
 ## Extend the catalog deliberately
 
@@ -57,10 +55,10 @@ For a new application, work through these dependencies:
    environment, and raw-output locations. Review the evidence before treating
    the record as reviewed.
 
-Copy a similar record, then re-establish its facts. Describe duplicate indices,
-index modification, dependencies, sharing, atomic requirements, ordering, and
-numerical requirements. A compare-and-swap retry loop keeps update kind `compare_and_swap`,
-even when implementing a minimum. Record aliases to avoid double-counted footprints.
+Copy a similar record, then re-establish its facts: duplicates, index modification,
+dependencies, sharing, atomicity, ordering, and numerical requirements. A compare-and-swap
+retry loop keeps update kind `compare_and_swap`, even for a minimum. Record aliases
+to avoid double-counted footprints.
 
 For a new strategy, first check whether its **target plus typed effect** already
 exists. Tile sizes and prefetch distances are parameters, not new identities.
@@ -128,12 +126,14 @@ toolchain and host prerequisites. Read the [profiling guide](../mbit10-profiling
 | Certification stops a campaign with `infrastructure_failure` | Fix the compiler, trusted files, or configuration named by `stop_detail`; candidate repair does not address these errors |
 
 For code changes, follow the [ArchEvolve rules](../../../AGENTS.md),
-[SWDB rules](../../AGENTS.md), [local ticket workflow](../agents/issue-tracker.md),
-and relevant ADRs. Work on `yanrujhou_main` within `swdb-project/`. Claim a
-ticket before its work; resolve it with an answer and a context pointer in its
-map. Use focused tests for the component you changed and record validation for
-catalog changes. The general test command is `python3 -B -m pytest`; development
-test dependencies can be installed with `python3 -m pip install -e '.[test]'`.
+[SWDB rules](../../AGENTS.md), [ticket workflow](../agents/issue-tracker.md), and
+ADRs. Work on `yanrujhou_main` within `swdb-project/`. Claim the ticket first;
+finish with an answer and map pointer. Validate changed records and run focused tests.
+
+Install test dependencies with `python3 -m pip install -e '.[test]'`.
+`python3 -B -m pytest` excludes expensive `whole_store` tests by default;
+`python3 -B -m pytest -m whole_store` opts into full-catalog checks. Component
+fixtures copy record dependencies with [test helpers](../../tests/testkit/record_subset.py).
 
 You have finished the reading path. Use the [component map](03-components.md)
 to find code and the [reference index](../reference/README.md) for exact contracts.

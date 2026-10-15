@@ -1,6 +1,6 @@
 # 3. Find the component that owns your task
 
-Updated: 2026-10-11 21:53 ET (ADR 0015: the database takes the main database's shape); 2026-10-07. Reading budget: 7 minutes.
+Updated: 2026-10-14 (Eastern Time). Reading budget: 7 minutes.
 
 [Tutorial](README.md) · [Previous](02-records-and-queries.md) · [Next](04-bfs-workflow.md)
 
@@ -78,6 +78,7 @@ Certification is finite testing of exact content, not a formal proof.
 | [Estimate protocol](../../swdb/estimate_protocol.py), [parameter filling](../../swdb/estimation_parameters.py) | Freeze exact identities; fill only supported numerical unknowns with separately labeled estimated facts |
 | [Functional evaluation](../../swdb/functional_evaluation.py) | Join current strict-functional certification with a frozen estimate; record functional-target correctness |
 | [CPU calibration](../../swdb/cpu_calibration.py), [service calibration](../../swdb/cpu_service_calibration.py), [error bands](../../swdb/cpu_error_band.py) | Native rate/service receipts, compatibility gates, held-out error qualification |
+| [Attribution](../../swdb/attribution.py) | Diff retained source trees; split saved estimates by code origin, calculate bounds, and check measured shares |
 | [Campaign](../../swdb/campaign.py), [site finder](../../swdb/site_finder.py), [Extensa boundary](../../swdb/extensa_boundary.py) | Budgeted research iterations, contract/site selection, certification-first ranking and promotion boundaries |
 | [DX100](../../swdb/dx100.py), [profiling](../../swdb/dx100_profile.py), [witness](../../swdb/dx100_witness.py) | Extensa simulated stages, clock/interval interpretation, accelerator/completion observations |
 | [Paired estimates](../../swdb/extensa_pairing.py), [agreement](../../swdb/extensa_agreement.py) | Retain research estimates and timed-observation identities under a prospective policy; unsupported bridges stay unknown |
@@ -95,7 +96,7 @@ Run inside `ArchEvolve/swdb-project/`. These groups are a map, not a launch sequ
 | Query/store | `validate`, `build`, `sql`, `find`, `strategies`, `implementations`, `get`, `view`, `add` |
 | Propose source | `source-snapshot`, `baseline-candidate`, `submit`, `repair` |
 | Check contracts | `certify`, `candidate-level`, `promote`, `correct-review` |
-| Estimate | `characterize`, `fill-target-parameters`, `freeze-protocol`, `estimate`, `evaluate-functional` |
+| Estimate/explain | `characterize`, `fill-target-parameters`, `freeze-protocol`, `estimate`, `evaluate-functional`, `attribute` |
 | Time/profile | `profile`, `evaluate`, `evaluate-pair`, `bfs-profile`, `profile-package` |
 | Research | `campaign`, `campaign-export`, `agreement-freeze`, `agreement-report` |
 | Report | `compare-evaluations`, `bfs-coverage`, `handoff-message` |

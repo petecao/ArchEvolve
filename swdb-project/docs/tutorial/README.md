@@ -1,6 +1,6 @@
 # EvolveSWDB tutorial
 
-Updated: 2026-10-09 (Eastern Time).
+Updated: 2026-10-14 (Eastern Time).
 
 Start with the overview. Then read chapters 2–5 in order. Basic familiarity
 with code and command-line tools is enough; no ArchEvolve or simulator knowledge
@@ -26,10 +26,10 @@ describe interfaces, not a campaign launch sequence. Mermaid diagrams have
 accompanying explanations.
 
 Code and local examples were checked against `yanrujhou_main` source commit
-`e62a63bb1a93a37ae2c150b921a6af7ccd4ca89f` on 2026-10-09, including campaign
-artifact receipts and certification infrastructure stops. Query examples used
-temporary copies of their committed records, source excerpts, and typed library.
-Remote paths and dated results remain retained metadata; this review ran no
-measurements on mbit10.
+`c98db87c9793e4cd95e1409f6ce235abc7885a27` on 2026-10-14, including the LANL
+core, estimate attribution, functional offload selection, and certification defaults.
+Queries used a temporary 223-record dependency subset with source excerpts and the
+typed library. Full-catalog validation and remote artifact availability were not
+rechecked. No profiling or experiments ran; dated results retain their original scope.
 
 **[Begin the overview →](01-overview.md)**

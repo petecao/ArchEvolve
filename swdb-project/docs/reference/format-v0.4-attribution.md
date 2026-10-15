@@ -1,6 +1,7 @@
 # Attribution reports (`swdb.attribution.v1`)
 
 Created: 2026-10-11 (Eastern Time), fine-grained attribution ticket 02.
+Updated: 2026-10-14 ET (record persistence and deferred index refresh).
 Updated: 2026-10-12 ET (cpu-description review F1: floor-only rates count `memory_service_scenario` as covering non-stream bytes; ticket 03: floor reads
 `resource_floor_mechanisms`); 2026-10-11 ET (ticket 05: library, intrinsic and offload labels; ticket 07: resource
 floor, floor headroom and ranking; ticket 06 + 07 merge: floors in `this_iteration`; ticket 04:
@@ -28,9 +29,12 @@ counted, and says how much time is in untouched, agent-rewritten and unattribute
 5. Computes each region's **resource floor** and **headroom** (ticket 07).
 6. Given site-finder regions, computes each region's **catalog bound**, and ranks the
    candidate's regions by **remaining gain bound**, then floor headroom (ticket 08).
-7. Writes one validated `attribution` record and indexes it into SQLite.
+7. Writes one validated `attribution` record. The next indexed query or `build`
+   refreshes SQLite to include it.
 
-It only reads saved records. It never re-estimates and never binds a protocol.
+It reads saved estimates and their retained source trees, then writes the report.
+It never re-estimates or binds a protocol. See the
+[producer](../../swdb/attribution.py) and [record writer](../../swdb/writer.py).
 
 ## Run it
 
