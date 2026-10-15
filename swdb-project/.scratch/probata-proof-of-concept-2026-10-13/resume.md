@@ -4,7 +4,8 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 12:14 ET. Integration runtime `cc7e747b` includes checked
+Updated: 2026-10-15 12:23 ET. Integration checkpoint `919b63bd` includes reviewed
+method19 prototype changes and the prior SWDB runtime `cc7e747b`: checked
 entry hints (`593c35d6`) and standalone nested assignments (`71382aff`), alongside
 the parser isolation, exact standard-call bindings, qualified copy caller ranges,
 vector workflow and corrected WP invocation metadata. The whole effort remains
@@ -28,11 +29,11 @@ The earlier frozen `5c2a` failures stay recorded as 134/1 and 19/1; they are not
 
 | Ticket | Current evidence | Next action |
 |---|---|---|
-| 07 | Method 19 preparation has 110 passing offline controls; new root-exit orphan RED and completed baseline/seed guard still need repair; no counted launch | Fix and review those guards before any launch |
+| 07 | Method19 launched at 12:21:38 ET from frozen `669df70f` after 137 postcomposition offline controls passed; fresh baseline active at launch | Keep its worktree immutable; audit counted search/final outcomes when complete; no proof claimed |
 | 24 | Qualified copy caller/model actual acceptance passed on Mac `0831b224` and Linux `d3a5dd48`; initializedness/capacity negatives retained | Design member-window class context admission |
 | 25 | Narrow owner safe/stale Linux acceptance passed; checked vector workflow historical evidence remains separate | Continue wider vector/pair acceptance; generic model gates remain closed |
 | 27 | Entry-hint store safe/short-frame and nested assignment slices accepted at their frozen pins; a separate WP-qualified transitive one-case diagnostic is underway | Finish that diagnostic and remaining DX acceptance; ordinary CPU/device overlap belongs to 28 |
-| 36 | Parser/source/checker unions audited; actual Linux WP records exercise true invocation metadata and prelaunch refusals retain false | Complete remaining setup/acceptance gates before final method freeze |
+| 36 | All 45 current scripted setup controls pass; actual Linux WP records exercise true invocation metadata and prelaunch refusals retain false; acceptance audit found no reproduced bypass | Keep claimed pending 27 and final method freeze; preserve historical real-fact/cache evidence pins |
 
 The original store at 593 proves 90 ordinary/29 smoke; a shortened witness leaves
 its specific store_indices obligation open. Assignment 713 safe 14/1 proves;
@@ -41,6 +42,14 @@ CPU read is intentionally refused before WP by semantics 0.1, with zero goals an
 no WP log; no overlap theorem is claimed.
 [Entry-hint evidence](evidence/wp-source-view-entry-hints-20261015.json),
 [assignment evidence](evidence/wp-nested-assignments-20261015.json).
+
+Method19 uses the exact `996bd62c` source/models, a fixed provider, 60 counted
+minutes with eight minutes reserved for final checking, no prior hints and strict
+`-wp-no-filter-init`. Its 18-file source manifest has SHA-256
+`b1ce8ac2f6de0f6b41eaebf6e41650733caa65ff31b160ea58168416e53afea3`;
+all 18 files match this merged checkpoint. Root-exit cleanup and completed baseline/seed
+guards were repaired and independently reviewed before launch. Its prototype RTE
+scope and historical run evidence remain distinct from production proof acceptance.
 
 Ticket 28 remains gated by 27; 43 remains blocked by 29. Held-out kernels and final
 production method identities stay dependency-gated. Last whole-effort status table:
