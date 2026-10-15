@@ -42,7 +42,7 @@ import shutil
 import subprocess
 from pathlib import Path
 
-from swdb import c_lowering, cbmc_translator as tr, paths, proof_semantics, rss_watchdog, std_models, vocab, yamlio
+from swdb import c_lowering, cbmc_translator as tr, cpu_memory_admission, paths, proof_semantics, rss_watchdog, std_models, vocab, yamlio
 from swdb.proof import AdapterError, Verdict
 
 NAME = "cbmc"
@@ -203,6 +203,11 @@ class CbmcAdapter:
             raise AdapterError(problem)
         context["pins"].update(std_models.pins(lowering))
         context["lowering"] = lowering
+        refusal = cpu_memory_admission.check(lowering, covered)
+        if refusal:
+            context["settings"]["proof_semantics_admission"] = refusal
+            return self._not_proven("unsupported_construct",
+                "ordinary CPU memory interference with DX100 commands needs ticket 28's memory-hazard probes", context)
         if lowering.std_models:
             context["settings"]["std_models"] = list(lowering.std_models)
             # The concrete growth policy follows libc++ 22.1.8. Clang's version does not identify its STL:

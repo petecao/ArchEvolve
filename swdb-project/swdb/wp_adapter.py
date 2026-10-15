@@ -40,7 +40,7 @@ import subprocess
 from dataclasses import replace
 from pathlib import Path
 
-from swdb import artifacts, c_lowering, framac, hint_check, paths, proof_semantics, proof_setup, rss_watchdog, std_models, terminal_release, vocab
+from swdb import artifacts, c_lowering, cpu_memory_admission, framac, hint_check, paths, proof_semantics, proof_setup, rss_watchdog, std_models, terminal_release, vocab
 from swdb.proof import MODEL_PREFIX, AdapterError, Verdict
 
 NAME = "wp"
@@ -186,6 +186,11 @@ class WpAdapter:
                 "probes": [{k: p[k] for k in ("id", "function", "access", "line")} for p in lowering.probes]}
             log.line(f"proof semantics: {entries[0]} (sha256 {sha}); calls {', '.join(called)}; "
                      f"{len(lowering.probes)} hazard probe(s)")
+        refusal = cpu_memory_admission.check(lowering, covered)
+        if refusal:
+            context.setdefault("settings", {})["proof_semantics_admission"] = refusal
+            return self._not_proven("unsupported_construct",
+                "ordinary CPU memory interference with DX100 commands needs ticket 28's memory-hazard probes", context)
         contracts = self._dependencies(dependency_lowering, context)
         context["lowering"] = lowering
         context["extern_contracts"] = {
