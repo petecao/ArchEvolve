@@ -19,11 +19,15 @@ Current dispatch, evidence and blockers: [resume.md](resume.md).
 - **Current blockers:** general vector lifetime remains unsupported in WP (25); full current-policy
   construct acceptance remains open (24). Final store/capacity acceptance, native footprint boundaries
   and bounded pointer-formation checks are in progress (27/36).
-  Counted proof-hint run 14 failed with 14 hint obligations open; run 15 is active
-  with fresh hints and additional quantified-postcondition scope guidance (07).
-- **Next action:** finish these acceptance runs and the bounded initializedness guard; create a new draft
-  method after lowerer and policy
-  hashes settle. Draft 2 is immutable after the composition record pinned it. No method freeze is justified yet.
+  Counted proof-hint run 15 ended unproven with 1 unit and 24 hint obligations open;
+  run 16 is active with processed-frontier/CSR induction guidance (07).
+- **Next action:** complete checked explicit array-domain operation/call admission and
+  bounded alignment; then run combined-source acceptance and create a new draft
+  method after lowerer and policy hashes settle. Draft 2 is immutable after the composition record pinned it. No method freeze is justified yet.
+- **Checkpoint 2026-10-15 07:05 ET:** `70683774` pushed with conservative typed-origin
+  refusal, mandatory no-filter initializedness, checked standard-model view and staged
+  entry-window bindings; 36 focused binding/dependency checks pass. Domain metadata
+  alone cannot admit proofs; full current-policy acceptance remains open.
 - Real Mac verifier jobs use the shared two-slot policy and 8 GiB watchdog. Validation uses a frozen
   worktree so concurrent integration merges cannot trigger checkout-integrity false alarms.
 
