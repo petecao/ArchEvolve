@@ -8,9 +8,10 @@ a `bounded_direct` record above threads = 1 within bounds never counts, and a `b
 candidate artifact. These make the rule `level-rule.2` (decided by the main session under Yan-Ru's delegation,
 2026-10-14 20:48 ET: the versioning rule is strict even when no level changes). Snapshots stored earlier keep
 `level-rule.1` (for example the handoff examples in `docs/bfs-handoff-examples/`); they are never recomputed.
-Updated: 2026-10-15 ET, ticket 42: `level-rule.3` discharges a matching written-proof entry when a counting Rocq-checked method-part record exists. The original proof record stays unchanged.
-Updated: 2026-10-15 ET: `level-rule.4` resolves C-model text pins and recursively counts `pins.models`;
-stale, missing, unproven or cyclic model dependencies cannot support a candidate level.
+Updated: 2026-10-15 ET: `level-rule.4` combines checked method-part discharge (ticket 42) and
+recursive C-model dependency counting. A matching counting Rocq record discharges its written-proof entry
+without changing the original record. Stale, missing, unproven or cyclic model dependencies cannot support
+a candidate level. The two isolated implementations used `level-rule.3`; their combined rule is version 4.
 Spec: `.scratch/probata-proof-of-concept-2026-10-13/issues/10-level-rule.md`; design:
 `.scratch/formal-verification-2026-10-09/spec.md` ("Records and levels", S11, S14, O1, O6, O7), map 26,
 [ADR 0016](../adr/0016-proof-records-never-change-level-computed-on-read.md). Code: `swdb/level_rule.py`.
@@ -113,7 +114,7 @@ The existing fields keep their meaning (`candidate`, `certifications`, `counted`
 |---|---|
 | `level` | the level above; a proven level only on a certified, unrefuted candidate artifact |
 | `rank` | the level's rank (table above) |
-| `level_rule` | the level-rule version, `level-rule.4` (`level-rule.3` before model-dependency counting) |
+| `level_rule` | the level-rule version, `level-rule.4` (combines the two isolated `level-rule.3` changes) |
 | `proven` | null, or `{level, bounds, records}`: the level, per dimension the smallest bound across proof units, the records that set it |
 | `proof_units` | per contract: `{contract, level, bounds, records: [{record, bounds, route, caps}]}`; `caps` lists each dependency that lowered that record's level (`kind`, `record` or `candidate`, `bounds`) |
 | `assumptions` | the assumption set of the level: each entry (`kind`, `reference`, `sentence`) of the records that set it and of the proven parts they depend on, once, with `records` |

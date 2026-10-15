@@ -35,7 +35,7 @@ FILL, KNOB, SMOKE = "contract.fixture_cbmc_fill", "contract.fixture_cbmc_knob", 
 CLAMP, CLAMP_ALL = "contract.fixture_cbmc_clamp", "contract.fixture_cbmc_clamp_all"
 TWICE, VACUOUS = "contract.fixture_cbmc_twice", "contract.fixture_cbmc_vacuous"
 FILL_BOUNDS = {"threads": 1, "n": 3}
-TRUSTED = {"swdb-c-lowering-5", "clang-22.1.8", "swdb-cbmc-translator-3", "cbmc-6.11.0", "cadical-in-cbmc-6.11.0"}
+TRUSTED = {"swdb-c-lowering-6", "clang-22.1.8", "swdb-cbmc-translator-4", "cbmc-6.11.0", "cadical-in-cbmc-6.11.0"}
 FILL_CLAUSES = [("fill_pre", "legality", "requires n >= 0 && \\valid(a + (0 .. n-1));", "per_candidate"),
                 ("fill_post", "postcondition", "assigns a[0 .. n-1];\nensures \\forall integer k; 0 <= k < n ==> a[k] == v;",
                  "per_candidate")]
@@ -264,7 +264,7 @@ def test_the_safe_fixture_is_proven_within_its_bounds_on_both_forms(seed):
     assert {a["reference"]["id"] for a in record["assumptions"] if a["kind"] == "trusted_tool"} == TRUSTED
     assert set(record["tools"]) == TRUSTED
     assert record["pins"]["c_lowering"]["id"] == "swdb_fixture_fill.c"
-    assert record["pins"]["translator"]["id"] == "swdb-cbmc-translator-3"
+    assert record["pins"]["translator"]["id"] == "swdb-cbmc-translator-4"
     assert {f"{FILL}#fill_post.ensures1", f"{FILL}#fill_post.assigns1"} <= {g["property"] for g in record["goals"]}
     assert all(g["status"] == "success" for g in record["goals"] if not g["property"].startswith("swdb_reach"))
     assert not (seed.runs / record["id"] / "scratch").exists()
@@ -277,7 +277,7 @@ def test_the_safe_fixture_is_proven_within_its_bounds_on_both_forms(seed):
 def test_the_translator_is_deterministic_and_pinned(seed):
     first, second = (seed.read(seed.prove()) for _ in range(2))
     inputs = [open(seed.report(r, "cbmc_input"), "rb").read() for r in (first, second)]
-    assert inputs[0] == inputs[1] and b"swdb-cbmc-translator 3" in inputs[0]
+    assert inputs[0] == inputs[1] and b"swdb-cbmc-translator 4" in inputs[0]
     assert first["pins"]["translator"] == second["pins"]["translator"]
 
 
@@ -445,7 +445,9 @@ def test_a_job_over_its_budget_is_not_proven_timeout_and_never_retried_smaller(s
 @needs_cbmc
 def test_bounds_other_than_one_thread_and_sizes_are_refused(seed):
     assert "threads = 1" in seed.prove(bounds={"threads": 3, "n": 3}, ok=False).stderr
-    assert "size bound" in seed.prove(bounds={"threads": 1}, ok=False).stderr
+    missing = seed.read(seed.prove(bounds={"threads": 1}))
+    assert missing["verdict"] == "not_proven" and missing["failure_class"] == "unsupported_construct"
+    assert "zero-capacity" in missing["settings"]["bounded_initialization"]["reason"]
     assert "not an integer parameter" in seed.prove(bounds={"threads": 1, "vertices": 3}, ok=False).stderr
 
 

@@ -2,7 +2,7 @@
 # item 10 and its Later changes, 11 item 9, S3, 13, 19, 25). The one list of failure classes and skip
 # reasons. A proof record's failure_class must be a failure_class value here and its skip_reason a
 # skip_reason value; an adapter reporting anything else stops the `swdb prove` batch. Handlers are text
-# here; the adapter tickets (21, 22, 46, 47) build them.
+# here; the adapter tickets (21, 22, 46, 47) build them. Updated: 2026-10-15 ET (checked memory_domain).
 # Updated: 2026-10-14 09:43 ET (Probata PoC 18: `words`, each class in plain words for the handoff's
 # certification_level block). Updated: 2026-10-14 02:26 ET (spurious_counterexample added: Yan-Ru's decision of 2026-10-14 02:25 ET,
 # from ticket 05's SAW spike; it replaces ticket 11's nearest-class assumption).
@@ -60,6 +60,11 @@ values:
     meaning: More uncovered commands than the ghost capacity K, so the proof cannot track them (never a refutation).
     handler: Raise ghost capacity K in a new method version, or keep the level.
     words: more pending accelerator commands than the proof can track
+  - value: memory_domain
+    role: failure_class
+    meaning: The checked accelerator memory domain is not established, including overlapping pending memory operations or a store still pending at unit exit. This is a conservative proof restriction, never a program refutation.
+    handler: Establish covering waits or use a new method with checked, more precise memory semantics; keep the current level.
+    words: accelerator memory-domain obligations are not proven
   - value: hint_budget_spent
     role: failure_class
     meaning: The proof-hint loop used its rounds, wall time or the campaign's hint calls without a proof.

@@ -43,7 +43,7 @@ from pathlib import Path
 from swdb import acsl_subset, std_models
 
 TOOL_ID = "swdb-cbmc-translator"
-TOOL_VERSION = "3"                  # ticket 25 model checks in the existing ticket 23 translator
+TOOL_VERSION = "4"                  # checked proof-semantics boundary after the unit call
 REACH_END = "swdb_reach.end"
 REACH_SUMMARY = "swdb_reach.summary."
 ORACLE_CAPACITY = "swdb.oracle_capacity"
@@ -287,6 +287,8 @@ class _Expr:
             return self.old()
         if tok == "\\valid":
             return self.valid()
+        if tok == "\\initialized":
+            return self.initialized()
         if tok == "\\separated":
             return self.separated()
         if tok == "\\result":
@@ -464,6 +466,17 @@ class _Expr:
         self.take("(")
         pointer, low, high = self.location()
         self.take(")")
+        return self.ctx.valid(pointer, low, high)
+
+    def initialized(self):
+        self.take()
+        self.take("(")
+        pointer, low, high = self.location()
+        self.take(")")
+        # The harness fills every element of its own interface buffers before evaluating requires.
+        # No initialization fact is invented for heap/global storage, summaries or poststates.
+        if self.ctx.mode != "harness" or self.ctx.post or self.ctx.is_old or pointer not in self.ctx.caps:
+            raise Untranslatable("\\initialized is supported only for harness-owned input-buffer preconditions")
         return self.ctx.valid(pointer, low, high)
 
     def separated(self):
@@ -930,7 +943,7 @@ def _print(label, ctype, value):
 
 
 def harness(interface, rows, *, sizes, cap, knobs=(), logic=None, call=None, check=False, setup=(),
-            state=()):
+            state=(), finish=()):
     """(C text of the harness, Plan) for the proof unit `interface` and its clause list `rows` (Clause).
 
     `sizes`: {parameter: bound} (each an integer parameter of the unit); `cap`: the length of every interface
@@ -938,7 +951,7 @@ def harness(interface, rows, *, sizes, cap, knobs=(), logic=None, call=None, che
     legal (the range is the differential run's domain). `logic`: the Logic of the job (logic-library calls).
     Check mode's driver (`check=True`) calls `call` (the runtime form) and states no property itself. Ticket 27: `setup` are C
     statements run first (a proof semantics' ghost initialization) and `state` the int lvalues of device state drawn
-    next (havoc)."""
+    next (havoc). `finish` are checked boundary statements after the call, before observing its poststate."""
     for name in sizes:
         if not interface.scalar(name):
             raise Untranslatable(f"size bound {name} is not an integer parameter of {interface.function}")
@@ -1006,6 +1019,7 @@ def harness(interface, rows, *, sizes, cap, knobs=(), logic=None, call=None, che
         lines.append(f"  {interface.returns} swdb_result = {target}({arguments});")
     else:
         lines.append(f"  {target}({arguments});")
+    lines += [f"  {statement}" for statement in finish]
     for clause in [] if check else rows:
         if clause.kind == "ensures":
             text = expression(clause.text, interface, "harness", result=result, caps=caps, counter=counter,
