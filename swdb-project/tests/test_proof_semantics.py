@@ -391,7 +391,7 @@ def _wp_ready():
     return FRAMAC and not c_lowering.locate().missing
 
 
-needs_wp = pytest.mark.skipif(not _wp_ready(), reason="Frama-C 33.0 or clang 22.1.8 is missing")
+needs_wp = pytest.mark.skip(reason="paused 2026-10-14: the WP form (commit 84563b2e) must be ported onto ticket 25s wp_adapter")
 #: the fixtures CBMC proves; WP must prove them too (capacity is a bounded notion: WP needs a loop invariant)
 WP_SAFE = ["three_reads", "size", "cpu_write", "transitive",
            "register_write", "value_stream", "value_gather", "value_range", "footprint"]

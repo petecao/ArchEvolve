@@ -67,7 +67,8 @@ RULES = (
     "std_max_<t>, std_swap_<t>, std_copy_<t>.",
     "__atomic_<op>(p, ...) and __sync_<op>(p, ...) at type T become calls of the C models "
     "swdb_atomic_<op>_<t> and swdb_sync_<op>_<t> (one-thread meaning, memory order dropped).",
-    "new T[n] becomes (T *)malloc(sizeof(T) * (size_t)(n)); delete[] p becomes free(p).",
+    "new T[n] becomes swdb_alloc_new_array_<t>((size_t)(n)), a C model whose contract is the assumption entry "
+    "\"allocation succeeds\" (map 16 item 7); delete[] p becomes swdb_alloc_delete_array_<t>(p), likewise.",
     "An OpenMP directive becomes a comment line `/* omp <directive> (one thread) */` before its statement.",
     "A call to a summarized function keeps its (template-instantiated) name and gets a prototype only.",
 )
@@ -461,7 +462,8 @@ def _parse_type(text, line):
     for token in tail:
         if token == "*":
             pointers.append([])
-        elif token in ("const", "volatile") and pointers:
+        elif token in ("const", "volatile", "__restrict", "__restrict__", "restrict") and pointers:
+            token = "restrict" if "restrict" in token else token          # C99 restrict, as C++'s __restrict
             pointers[-1].append(token)
         else:
             raise Unsupported(f"type {text}", line)
@@ -823,14 +825,17 @@ class _Unit:
             self.pending.append((cname, node, owner))
         return cname
 
-    def summary(self, name, cname, qual_type, line):
-        """A summarized call: a prototype from the call's function type, recorded once."""
+    def summary(self, name, cname, qual_type, line, names=()):
+        """A summarized call: a prototype from the call's function type (parameter names from its declaration,
+        which the summary's formal halves name), recorded once."""
         self.claim(cname, ("summary", name, qual_type), line)
         if cname not in self.prototypes_only:
             returns, params, variadic = _return_and_params(qual_type, line)
             if variadic:
                 raise Unsupported(f"variadic function {name}", line)
-            texts = [self.ctype(p, name=f"swdb_unnamed_{i + 1}", line=line) for i, p in enumerate(params)]
+            names = [n if n and re.fullmatch(r"[A-Za-z_]\w*", n) and n not in C_ONLY_KEYWORDS else
+                     f"swdb_unnamed_{i + 1}" for i, n in enumerate(list(names) + [None] * (len(params) - len(names)))]
+            texts = [self.ctype(p, name=names[i], line=line) for i, p in enumerate(params)]
             self.prototypes_only[cname] = f"{_join(self.ctype(returns, line=line), cname)}({', '.join(texts) or 'void'})"
             self.summaries_used.append({"name": name, "c_name": cname, "summary": self.summaries[name]})
         return cname
@@ -1565,7 +1570,8 @@ class _Printer:
             node_found = unit.function_node(name, qual_type, self.line) if "<" not in name else None
             if node_found is not None and _children_kind(node_found, "TemplateArgument"):
                 cname = f"{name}_{'_'.join(_mangle_text(a) for a in unit._spec_args(node_found, self.line))}"
-            unit.summary(name, cname, qual_type, self.line)
+            names = [p.get("name") for p in _children(node_found or {}) if p.get("kind") == "ParmVarDecl"]
+            unit.summary(name, cname, qual_type, self.line, names)
             returns, params, _ = _return_and_params(qual_type, self.line)
             texts = [self.address(a) if i < len(params) and params[i].rstrip().endswith("&") else self.expr(a, top=True)
                      for i, a in enumerate(args)]
@@ -1592,10 +1598,8 @@ class _Printer:
         return self._finish_call(target, cname, [], args)
 
     def _omp_runtime(self, name):
-        value = OMP_RUNTIME[name]
-        text = (f"/*@ assigns \\nothing;\n    ensures \\result == {value}; */\n"
-                f"static int {name}(void) {{ return {value}; }}")
-        return f"{self.unit.model(name, text, self.line)}()"
+        model, text = model_definition("omp", name, "int")
+        return f"{self.unit.model(model, text, self.line)}()"
 
     def _scalar(self, ctype, what):
         plain = ctype.replace("const ", "").replace("volatile ", "").strip()
@@ -1612,49 +1616,22 @@ class _Printer:
 
     def _std(self, name, target, args):
         unit = self.unit
-        if name in ("min", "max"):
+        if name in ("min", "max", "swap"):
             if len(args) != 2:
                 raise Unsupported(f"std::{name} with a comparator or an initializer list", self.line)
             qual, desugared = _types(_strip(args[0]))
             ctype = self._scalar(unit.ctype(qual, desugared, line=self.line), f"std::{name}")
-            model = f"std_{name}_{_mangle_text(ctype)}"
-            pick = "(b < a) ? b : a" if name == "min" else "(a < b) ? b : a"
-            text = (f"/*@ assigns \\nothing;\n    ensures \\result == ({pick}); */\n"
-                    f"static {ctype} {model}({ctype} a, {ctype} b) {{ return {pick}; }}")
-            unit.model(model, text, self.line)
+            model = unit.model(*model_definition("std", name, ctype), self.line)
+            if name == "swap":
+                return f"{model}({self.address(args[0])}, {self.address(args[1])})", True
             return f"{model}({self.expr(args[0], top=True)}, {self.expr(args[1], top=True)})", True
-        if name == "swap":
-            qual, desugared = _types(_strip(args[0]))
-            ctype = self._scalar(unit.ctype(qual, desugared, line=self.line), "std::swap")
-            model = f"std_swap_{_mangle_text(ctype)}"
-            text = (f"/*@ requires \\valid(a) && \\valid(b);\n    assigns *a, *b;\n"
-                    f"    ensures *a == \\old(*b) && *b == \\old(*a); */\n"
-                    f"static void {model}({ctype} *a, {ctype} *b) {{ {ctype} t = *a; *a = *b; *b = t; }}")
-            unit.model(model, text, self.line)
-            return f"{model}({self.address(args[0])}, {self.address(args[1])})", True
         if name == "copy":
             if len(args) != 3:
                 raise Unsupported("std::copy with an execution policy", self.line)
             element = self._pointee(args[0], "std::copy")
-            out_element = self._pointee(args[2], "std::copy")
-            if element != out_element:
+            if element != self._pointee(args[2], "std::copy"):
                 raise Unsupported("std::copy between different element types", self.line)
-            model = f"std_copy_{_mangle_text(element)}"
-            text = (f"/*@ requires first <= last;\n"
-                    f"    requires \\valid_read(first + (0 .. last - first - 1));\n"
-                    f"    requires \\valid(d_first + (0 .. last - first - 1));\n"
-                    f"    requires \\separated(first + (0 .. last - first - 1), d_first + (0 .. last - first - 1));\n"
-                    f"    assigns d_first[0 .. last - first - 1];\n"
-                    f"    ensures \\forall integer k; 0 <= k < last - first ==> d_first[k] == \\old(first[k]);\n"
-                    f"    ensures \\result == d_first + (last - first); */\n"
-                    f"static {element} *{model}(const {element} *first, const {element} *last, {element} *d_first) {{\n"
-                    f"  /*@ loop invariant 0 <= i <= last - first;\n"
-                    f"      loop invariant \\forall integer k; 0 <= k < i ==> d_first[k] == first[k];\n"
-                    f"      loop assigns i, d_first[0 .. last - first - 1];\n"
-                    f"      loop variant last - first - i; */\n"
-                    f"  for (ptrdiff_t i = 0; i < last - first; ++i) d_first[i] = first[i];\n"
-                    f"  return d_first + (last - first);\n}}")
-            unit.model(model, text, self.line)
+            model = unit.model(*model_definition("std", "copy", element), self.line)
             return f"{model}({', '.join(self.expr(a, top=True) for a in args)})", True
         raise Unsupported(f"standard library function std::{name}", self.line)
 
@@ -1687,54 +1664,10 @@ class _Printer:
         return f"{model}({', '.join(self.expr(a, top=True) for a in args)})", True
 
     def _atomic_model(self, family, op, ctype):
-        """A one-thread C model of an atomic builtin (map 15: a CAS is a read, a compare and a write)."""
-        model = f"swdb_{family}_{op}_{_mangle_text(ctype)}"
-        pointer = ctype.endswith("*")
-        unsigned = ctype if pointer or ctype.startswith("unsigned") or ctype.startswith("uint") or ctype == "bool" \
-            or ctype == "size_t" or ctype == "uintptr_t" else UNSIGNED_OF.get(ctype)
-        head = "/*@ requires \\valid(p);\n"
-        if op == "load_n":
-            text = (f"{head}    assigns \\nothing;\n    ensures \\result == *p; */\n"
-                    f"static {ctype} {model}({ctype} *p) {{ return *p; }}")
-        elif op == "store_n":
-            text = (f"{head}    assigns *p;\n    ensures *p == v; */\n"
-                    f"static void {model}({ctype} *p, {ctype} v) {{ *p = v; }}")
-        elif op == "exchange_n":
-            text = (f"{head}    assigns *p;\n    ensures *p == v && \\result == \\old(*p); */\n"
-                    f"static {ctype} {model}({ctype} *p, {ctype} v) {{ {ctype} old = *p; *p = v; return old; }}")
-        elif op == "compare_exchange_n":
-            text = (f"/*@ requires \\valid(p) && \\valid(e) && \\separated(p, e);\n    assigns *p, *e;\n"
-                    f"    ensures \\old(*p) == \\old(*e) ==> *p == d && *e == \\old(*e) && \\result == 1;\n"
-                    f"    ensures \\old(*p) != \\old(*e) ==> *p == \\old(*p) && *e == \\old(*p) && \\result == 0; */\n"
-                    f"static bool {model}({ctype} *p, {ctype} *e, {ctype} d) {{\n"
-                    f"  if (*p == *e) {{ *p = d; return true; }}\n  *e = *p;\n  return false;\n}}")
-        elif op == "bool_compare_and_swap":
-            text = (f"{head}    assigns *p;\n"
-                    f"    ensures \\old(*p) == o ==> *p == n && \\result == 1;\n"
-                    f"    ensures \\old(*p) != o ==> *p == \\old(*p) && \\result == 0; */\n"
-                    f"static bool {model}({ctype} *p, {ctype} o, {ctype} n) {{\n"
-                    f"  if (*p == o) {{ *p = n; return true; }}\n  return false;\n}}")
-        elif op == "val_compare_and_swap":
-            text = (f"{head}    assigns *p;\n"
-                    f"    ensures \\old(*p) == o ==> *p == n;\n    ensures \\old(*p) != o ==> *p == \\old(*p);\n"
-                    f"    ensures \\result == \\old(*p); */\n"
-                    f"static {ctype} {model}({ctype} *p, {ctype} o, {ctype} n) {{\n"
-                    f"  {ctype} old = *p;\n  if (old == o) *p = n;\n  return old;\n}}")
-        else:
-            if pointer or unsigned is None or ctype == "bool":
-                raise Unsupported(f"atomic arithmetic on type {ctype}", self.line)
-            words = op.split("_")
-            fetch_first = words[0] == "fetch"
-            arith = _ARITH[words[-1] if fetch_first else words[0]]
-            new = f"({ctype})(({unsigned})old {arith} ({unsigned})v)"
-            result = "old" if fetch_first else "*p"
-            acsl_new = f"({ctype})(\\old(*p) {arith} v)"
-            acsl_result = "\\old(*p)" if fetch_first else "*p"
-            text = (f"{head}    assigns *p;\n    ensures *p == {acsl_new};\n"
-                    f"    ensures \\result == {acsl_result}; */\n"
-                    f"static {ctype} {model}({ctype} *p, {ctype} v) {{\n"
-                    f"  {ctype} old = *p;\n  *p = {new};\n  return {result};\n}}")
-        return self.unit.model(model, text, self.line)
+        try:
+            return self.unit.model(*model_definition(family, op, ctype), self.line)
+        except Unsupported as exc:
+            raise Unsupported(exc.construct, self.line) from None
 
     def _new(self, node):
         if not node.get("isArray"):
@@ -1753,7 +1686,8 @@ class _Printer:
                 raise Unsupported(f"new[] of class {element} with a constructor", self.line)
             self._trivial(element, cls)
         self.unit.needs_stdlib = True
-        return f"({ctype})malloc(sizeof({element}) * (size_t)({self.expr(children[0], top=True)}))", True
+        model = self.unit.model(*model_definition("alloc", "new_array", element), self.line)
+        return f"{model}((size_t)({self.expr(children[0], top=True)}))", True
 
     def delete(self, node):
         if not node.get("isArray"):
@@ -1764,7 +1698,8 @@ class _Printer:
         if element in self.unit.classes and self.destructor(element):
             raise Unsupported(f"delete[] of class {element} with a destructor", self.line)
         self.unit.needs_stdlib = True
-        return f"free({self.expr(target, top=True)})"
+        model = self.unit.model(*model_definition("alloc", "delete_array", element), self.line)
+        return f"{model}({self.expr(target, top=True)})"
 
 
 class _CopyInit(Exception):
@@ -1820,6 +1755,127 @@ def _check_reductions(target, reductions, line):
                     raise Unsupported(f"reduction variable {name} used other than in a `{names[name]}=` update", line)
         for child in _children(node):
             stack.append((child, node))
+
+
+# --- C models (each proven once: `swdb prove --model NAME`; a unit's record pins it) ------------------------
+
+MODEL_TYPES = sorted(INTEGER_TYPES | FLOAT_TYPES)
+
+
+def model_definition(family, op, ctype):
+    """(C name, C text with its ACSL contract) of one C model: family std (min, max, swap, copy), atomic or sync
+    (one-thread meaning, map 15: a CAS is a read, a compare and a write), or omp (the OpenMP runtime, one thread)."""
+    if family == "omp":
+        value = OMP_RUNTIME[op]
+        return op, (f"/*@ assigns \\nothing;\n    ensures \\result == {value}; */\n"
+                    f"static int {op}(void) {{ return {value}; }}")
+    model = f"std_{op}_{_mangle_text(ctype)}" if family == "std" else f"swdb_{family}_{op}_{_mangle_text(ctype)}"
+    if family == "alloc":
+        # Allocation models rest on the assumption entry "allocation succeeds" (map 16 item 7; ticket 25 writes it):
+        # their contracts are assumed, not proven. WP 33 has no deallocation (\fresh, \freeable and frees are not
+        # supported), so a read after delete[] is beyond WP; the bounded verifier (CBMC) models free.
+        if op == "new_array":
+            return model, (f"/*@ requires 1 <= n;\n    assigns \\nothing;\n"
+                           f"    ensures \\valid(\\result + (0 .. n - 1)); */\n"
+                           f"static {ctype} *{model}(size_t n) {{ return ({ctype} *)malloc(sizeof({ctype}) * n); }}")
+        if op == "delete_array":
+            return model, (f"/*@ requires \\valid(p);\n    assigns \\nothing; */\n"
+                           f"static void {model}({ctype} *p) {{ free(p); }}")
+        raise Unsupported(f"C model alloc {op}")
+    if family == "std" and op in ("min", "max"):
+        pick = "(b < a) ? b : a" if op == "min" else "(a < b) ? b : a"
+        return model, (f"/*@ assigns \\nothing;\n    ensures \\result == ({pick}); */\n"
+                       f"static {ctype} {model}({ctype} a, {ctype} b) {{ return {pick}; }}")
+    if family == "std" and op == "swap":
+        return model, (f"/*@ requires \\valid(a) && \\valid(b);\n    assigns *a, *b;\n"
+                       f"    ensures *a == \\old(*b) && *b == \\old(*a); */\n"
+                       f"static void {model}({ctype} *a, {ctype} *b) {{ {ctype} t = *a; *a = *b; *b = t; }}")
+    if family == "std" and op == "copy":
+        return model, (f"/*@ requires \\base_addr(first) == \\base_addr(last) && first <= last;\n"
+                       f"    requires \\valid_read(first + (0 .. last - first - 1));\n"
+                       f"    requires \\valid(d_first + (0 .. last - first - 1));\n"
+                       f"    requires \\separated(first + (0 .. last - first - 1), d_first + (0 .. last - first - 1));\n"
+                       f"    assigns d_first[0 .. last - first - 1];\n"
+                       f"    ensures \\forall integer k; 0 <= k < last - first ==> d_first[k] == \\old(first[k]);\n"
+                       f"    ensures \\result == d_first + (last - first); */\n"
+                       f"static {ctype} *{model}(const {ctype} *first, const {ctype} *last, {ctype} *d_first) {{\n"
+                       f"  const ptrdiff_t n = last - first;\n"
+                       f"  /*@ loop invariant 0 <= i <= n;\n"
+                       f"      loop invariant \\forall integer k; 0 <= k < i ==> d_first[k] == first[k];\n"
+                       f"      loop assigns i, d_first[0 .. n - 1];\n"
+                       f"      loop variant n - i; */\n"
+                       f"  for (ptrdiff_t i = 0; i < n; ++i) d_first[i] = first[i];\n"
+                       f"  return d_first + n;\n}}")
+    if family not in ("atomic", "sync") or op not in (ATOMIC_OPS if family == "atomic" else SYNC_OPS):
+        raise Unsupported(f"C model {family} {op}")
+    pointer = ctype.endswith("*")
+    if not pointer and ctype not in INTEGER_TYPES:
+        raise Unsupported(f"atomic {op} on type {ctype} (integers and pointers only)")
+    unsigned = ctype if pointer or ctype.startswith("unsigned") or ctype.startswith("uint") or ctype == "bool" \
+        or ctype == "size_t" or ctype == "uintptr_t" else UNSIGNED_OF.get(ctype)
+    head = "/*@ requires \\valid(p);\n"
+    if op == "load_n":
+        text = (f"{head}    assigns \\nothing;\n    ensures \\result == *p; */\n"
+                f"static {ctype} {model}({ctype} *p) {{ return *p; }}")
+    elif op == "store_n":
+        text = (f"{head}    assigns *p;\n    ensures *p == v; */\n"
+                f"static void {model}({ctype} *p, {ctype} v) {{ *p = v; }}")
+    elif op == "exchange_n":
+        text = (f"{head}    assigns *p;\n    ensures *p == v && \\result == \\old(*p); */\n"
+                f"static {ctype} {model}({ctype} *p, {ctype} v) {{ {ctype} old = *p; *p = v; return old; }}")
+    elif op == "compare_exchange_n":
+        text = (f"/*@ requires \\valid(p) && \\valid(e) && \\separated(p, e);\n    assigns *p, *e;\n"
+                f"    ensures \\old(*p) == \\old(*e) ==> *p == d && *e == \\old(*e) && \\result == 1;\n"
+                f"    ensures \\old(*p) != \\old(*e) ==> *p == \\old(*p) && *e == \\old(*p) && \\result == 0; */\n"
+                f"static bool {model}({ctype} *p, {ctype} *e, {ctype} d) {{\n"
+                f"  if (*p == *e) {{ *p = d; return true; }}\n  *e = *p;\n  return false;\n}}")
+    elif op == "bool_compare_and_swap":
+        text = (f"{head}    assigns *p;\n"
+                f"    ensures \\old(*p) == o ==> *p == n && \\result == 1;\n"
+                f"    ensures \\old(*p) != o ==> *p == \\old(*p) && \\result == 0; */\n"
+                f"static bool {model}({ctype} *p, {ctype} o, {ctype} n) {{\n"
+                f"  if (*p == o) {{ *p = n; return true; }}\n  return false;\n}}")
+    elif op == "val_compare_and_swap":
+        text = (f"{head}    assigns *p;\n"
+                f"    ensures \\old(*p) == o ==> *p == n;\n    ensures \\old(*p) != o ==> *p == \\old(*p);\n"
+                f"    ensures \\result == \\old(*p); */\n"
+                f"static {ctype} {model}({ctype} *p, {ctype} o, {ctype} n) {{\n"
+                f"  {ctype} old = *p;\n  if (old == o) *p = n;\n  return old;\n}}")
+    else:
+        if pointer or unsigned is None or ctype == "bool":
+            raise Unsupported(f"atomic arithmetic on type {ctype}")
+        words = op.split("_")
+        fetch_first = words[0] == "fetch"
+        arith = _ARITH[words[-1] if fetch_first else words[0]]
+        new = f"({ctype})(({unsigned})old {arith} ({unsigned})v)"
+        result = "old" if fetch_first else "*p"
+        acsl_new = f"({ctype})(\\old(*p) {arith} v)"
+        acsl_result = "\\old(*p)" if fetch_first else "*p"
+        text = (f"{head}    assigns *p;\n    ensures *p == {acsl_new};\n"
+                f"    ensures \\result == {acsl_result}; */\n"
+                f"static {ctype} {model}({ctype} *p, {ctype} v) {{\n"
+                f"  {ctype} old = *p;\n  *p = {new};\n  return {result};\n}}")
+    return model, text
+
+
+def model_text(name):
+    """The C text of the C model a lowering calls `name`, or None: what `swdb prove --model NAME` proves."""
+    if name in OMP_RUNTIME:
+        return model_definition("omp", name, "int")[1]
+    types = [*MODEL_TYPES, *[f"{t} *" for t in MODEL_TYPES]]
+    for family, ops in (("std", ("min", "max", "swap", "copy")), ("atomic", sorted(ATOMIC_OPS)),
+                        ("sync", sorted(SYNC_OPS)), ("alloc", ("new_array", "delete_array"))):
+        for op in ops:
+            prefix = f"std_{op}_" if family == "std" else f"swdb_{family}_{op}_"
+            if not name.startswith(prefix):
+                continue
+            for ctype in types:
+                if _mangle_text(ctype) == name[len(prefix):]:
+                    try:
+                        return model_definition(family, op, ctype)[1]
+                    except Unsupported:
+                        return None
+    return None
 
 
 def _describe(kind):

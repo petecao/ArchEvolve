@@ -320,14 +320,29 @@ def lowered(library, unit):
     """The C lowering of a proof_unit's baseline function (cached per source sha256), or the LoweringError."""
     from swdb import c_lowering, proof_semantics
     path = library.resolve(unit['source'])
-    covered = proof_semantics.covered_names(library)       # ticket 27: calls a proof semantics defines
-    key = (str(path), unit['source'].get('sha256'), unit['function'], c_lowering.locate(), tuple(sorted(covered)))
+    options = proof_semantics.lowering_options(library)    # ticket 27: calls a proof semantics defines
+    summaries = {**summarized(library, unit['function']), **options.get('summaries', {})}   # ticket 24: summaries
+    options['summaries'] = summaries
+    key = (str(path), unit['source'].get('sha256'), unit['function'], c_lowering.locate(), tuple(sorted(summaries)))
     if key not in _LOWERED:
         try:
-            _LOWERED[key] = c_lowering.lower(path, unit['function'], **proof_semantics.lowering_options(library))
+            _LOWERED[key] = c_lowering.lower(path, unit['function'], **options)
         except c_lowering.LoweringError as exc:
             _LOWERED[key] = exc
     return _LOWERED[key]
+
+
+def summarized(library, own=None):
+    """{function: entry ID} of the functions library entries summarize (`once: self` formal halves), but `own`."""
+    found = {}
+    for eid, data in sorted((getattr(library, 'entries', None) or {}).items()):
+        unit = data.get('proof_unit') if isinstance(data, dict) else None
+        if not isinstance(unit, dict) or not unit.get('function') or unit['function'] == own:
+            continue
+        if any(isinstance(c, dict) and c.get('proof_placement') == {'once': 'self'} and c.get('acsl')
+               for c in data.get('clauses') or []):
+            found.setdefault(unit['function'], eid)
+    return found
 
 
 def _interface(unit_lowering, frame, error):

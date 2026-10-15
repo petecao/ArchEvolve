@@ -1,5 +1,5 @@
 # Created: 2026-10-14 ET (Probata proof of concept ticket 04; five kinds from formal-verification map 26
-# item 1, plus calibration_program for the public-suite calibration runs of ticket 38).
+# item 1, plus calibration_program for the public-suite calibration runs of ticket 38, and c_model, ticket 24, 2026-10-14).
 name: proof_subject_kinds
 description: What one proof record proves or refutes.
 values:
@@ -15,3 +15,5 @@ values:
     meaning: A whole-kernel reproduction of a refutation.
   - value: calibration_program
     meaning: A public C-suite program run to calibrate the verifier lineup.
+  - value: c_model
+    meaning: A C model the C lowering emits for a standard-library, atomic or OpenMP-runtime call (ticket 24), proven once against its ACSL contract.

@@ -39,7 +39,7 @@ swdb lower --source <file.cc> --function <name> --out <folder> [--include <dir>]
 | `enum`, `enum class` | its underlying integer type (`int` if none); an enumerator prints as its value |
 | `std::min`, `std::max`, `std::swap`, `std::copy` at `T` | calls of the C models `std_min_<t>`, ... (ACSL contract each) |
 | `__atomic_<op>`, `__sync_<op>` at `T` | calls of the C models `swdb_atomic_<op>_<t>`, `swdb_sync_<op>_<t>` (one thread) |
-| `new T[n]`, `delete[] p` | `(T *)malloc(sizeof(T) * (size_t)(n))`, `free(p)` |
+| `new T[n]`, `delete[] p` | `swdb_alloc_new_array_<t>((size_t)(n))`, `swdb_alloc_delete_array_<t>(p)`: allocation models whose contracts are the assumption entry "allocation succeeds" |
 | an OpenMP directive | a comment `/* omp <directive> (one thread) */`, then its statement |
 | a call of a summarized function | the same (instantiated) name, a prototype only |
 | an unnamed parameter | `swdb_unnamed_<n>` |
@@ -62,7 +62,7 @@ swdb lower --source <file.cc> --function <name> --out <folder> [--include <dir>]
   `NAME` stays a call with a prototype, and `<name>.anchors.json` lists `summaries: [{name, c_name,
   summary}]`. Every `__dxc_*` and `maa_*` call needs one; without one it is an unsupported construct.
 - **C models** (`models` in `<name>.anchors.json`): static C functions with ACSL contracts, defined in the C
-  after the globals. Proving each model's contract once (one proof record each) is not built yet.
+  after the globals. Each is proven once by its own record (`swdb prove --model NAME --adapter wp`, below).
 - **Outside the subset:** exit 1, `unsupported construct: <what> (<file> line N)`, and nothing written.
   Examples: inheritance, virtual functions, exceptions, lambdas, RTTI, standard containers (`std::vector`
   and `std::pair` come with ticket 25) and streams, `long double`, calls of functions with no body,
@@ -99,6 +99,30 @@ swdb prove --candidate <c> --function <f> --contract <contract> --adapter wp --r
 4. Runs Frama-C/WP once, frozen settings, in a fresh process in the job's scratch folder (also `TMPDIR`),
    under the RSS watchdog and the wall budget.
 5. Reads the verdict and runs the failure class's handler.
+
+**Ticket 24: callees, summaries and C models.** One job proves one function, `<f>`, with everything it uses
+accounted for once:
+
+- Lowered callees (helpers, member functions, constructors, destructors, instantiated templates) are inlined
+  (`-inline-calls=<every lowered callee>`), and WP proves only `<f>` (`-wp-fct=<f>`). A hint at a callee's
+  anchor (for example `Bag_scale.loop1.head`) travels with the inlined copy. The verdict reader reads only
+  `<f>`'s properties and goals.
+- A callee that a library entry summarizes (its `proof_unit.function`, with `once: self` formal halves) stays a
+  call: the lowering keeps a prototype, and WP's input puts the entry's `once: self` halves before it as the
+  callee's contract. The entry's summary must have a proven record at its current content (`swdb prove --summary
+  ENTRY --adapter wp`, subject `library_summary`, proven on the entry's own `proof_unit` code); the record pins
+  it as `pins.summaries: [{id, sha256, proof_record}]` (ticket 22's shape) and lists it as a `summary`
+  assumption entry.
+- A C model (`std_min_int`, `swdb_atomic_load_n_int`, ...) must have a proven record of its own text:
+  `swdb prove --model NAME --adapter wp` (no candidate) proves the model against its ACSL contract once,
+  subject `{kind: c_model, id: NAME}`, code and contract pins the sha256 of the model's text. A unit pins it as
+  `pins.models: [{id, sha256, proof_record}]` and lists it as a `summary` assumption entry. A missing record
+  stops the job (no record): "run `swdb prove --model NAME --adapter wp` first".
+- `new T[n]` and `delete[] p` call the allocation models `swdb_alloc_new_array_<t>` (n valid elements) and
+  `swdb_alloc_delete_array_<t>`, whose contracts are the assumption entry "allocation succeeds" (map 16 item
+  7): an `assumed_clause` entry each, no proof record. WP 33 has no deallocation (`\fresh`, `\freeable` and
+  `frees` are unsupported): an index out of range reads not proven, but WP cannot see a read after
+  `delete[]`; the bounded verifier (CBMC, ticket 22) models `free`.
 
 **Hint file** (`--hint-file`): hint records `{hints: [{anchor, kind, text, provenance}]}`, merged at their
 anchors only when the proof hint check accepts the set (ticket 35, updated 2026-10-14 ET:
@@ -139,9 +163,12 @@ WP never refutes: a not-proven record has no counterexample.
 | `settings` | `tool`, `flags`, `session`, `warning_levels`, `machdep`, `wp_seconds_per_solver`, `environment_removed`, `rss_cap_bytes`, `hint_count`, `build_constants` |
 | `pins.c_lowering` | `{id: <f>.c, sha256}` of the C lowering WP ran on |
 | `pins.naming_rules` | `{id: kept-names.<n>, sha256}` of the lowering's naming rules (ticket 24); a new rules version gives a different pin |
+| `pins.summaries` | ticket 24: `{id, sha256, proof_record}` per summarized callee (library entry, content hash, its proven `library_summary` record) |
+| `pins.models` | ticket 24: `{id, sha256, proof_record}` per C model the lowering calls (model name, sha256 of its text, its proven `c_model` record) |
 | `pins.build_constants` | one `{name, value}` per `--define` |
 | `evidence.reports` | `{name, path, sha256}` of `c_lowering`, `anchors`, `wp_input`, `hints`, `wp_log`, `wp_goals`, `wp_properties`, `handler`, all under `<runs-dir>/<record>/wp/` |
 | `assumptions`, `tools` | one `trusted_tool` entry per tool, each with one plain sentence: `swdb-c-lowering-2`, `clang-22.1.8`, `frama-c-wp-33.0`, `alt-ergo-2.6.4`, `z3-5.1.0`, `cvc5-1.2.1` (IDs carry the installed versions; sha256 of each binary) |
+| `assumptions` (ticket 24) | plus one `summary` entry per pinned summary and C model, and one `assumed_clause` entry ("allocation succeeds") per allocation model |
 | `evidence_kind` | `execution` under a method version whose `evidence_kind` is `execution`; `contract_fixture` under a fixture method version (and always for the scripted adapter) |
 
 ## The machine-wide verifier lock

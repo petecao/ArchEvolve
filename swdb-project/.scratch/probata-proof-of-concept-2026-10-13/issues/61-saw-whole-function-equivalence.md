@@ -3,7 +3,7 @@
 Created: 2026-10-13 23:15 ET
 Updated: 2026-10-14 00:15 ET (review fixes, round 4); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 22
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Proof routes" (bounded direct); "Verifier lineup and order" (bounded verifier, cross-check of the lowering, pinned versions, failure classes); "Bounds" (build constants, minimum bounds, 15 minutes per bounded job); "What a proven verdict asserts" (bounds, thread count always a dimension); "Evaluation design" (baselines: no contract); "Testing Decisions", seam 1; S1); decisions: [17](../../formal-verification-2026-10-09/issues/17-enabling-rewrites.md) item 4 and Later changes; [23](../../formal-verification-2026-10-09/issues/23-evaluation-baselines-and-metrics.md) item 2 and Later changes; [24](../../formal-verification-2026-10-09/issues/24-alignment-hint-kind.md) items 1, 3
 **Time estimate:** about 3 days
@@ -107,3 +107,131 @@ Tested on fixtures through `swdb prove`.
 
 ## Later changes
 - 2026-10-14 13:19 ET (Yan-Ru accepted ticket 09's A2 changes): SAW whole-function equivalence lost its role when CBMC replaced SAW as the bounded verifier. Before starting: pick another tool (e.g. CBMC on a product program of the two C lowerings) or propose the cut to Yan-Ru.
+
+## Answer
+
+2026-10-14 17:55 ET. **Resolved as CBMC whole-function equivalence on a product program.** Branch `probata-poc/t61`.
+Format: [`format-v0.4-cbmc.md`, "Whole-function equivalence"](../../../docs/reference/format-v0.4-cbmc.md).
+
+**Decision recorded (main session, under Yan-Ru's delegation, 2026-10-14):** SAW lost this role (Later changes).
+The tool is CBMC 6.11 on a product program (self-composition) of the two functions' C lowerings, reusing 22's
+harness and oracle, with the same bounded domain, unwinding assertions, reachability asserts and the C-vs-C++
+differential on both sides. Loops whose trip counts differ get their own per-loop bound (`--unwindset`);
+equality is asserted at the end; no alignment hints (map 24).
+
+**What was built**
+
+| Piece | Where |
+|---|---|
+| `swdb prove --adapter cbmc --whole-function bounded_direct\|no_contract_baseline` (`--baseline-candidate`, `--borrowed-bounds`, `--unwindset`) | `swdb/proof.py`, `swdb/cbmc_equivalence.py` |
+| Product harness (one input draw, a copy of every array per call, one `swdb_equal.<location>` property per output) and baseline renaming | `swdb/cbmc_product.py`, its own trusted tool `swdb-cbmc-product-1` (the method version must list it; `swdb/cbmc_translator.py` is unchanged, so `method.probata-draft-1`'s translator pin still holds) |
+| Route cap: schema (`route: bounded_direct` needs `threads: 1`, no `unbounded`); the level rule never counts one above | `schemas/proof.schema.json`, `swdb/level_rule.py` |
+| No-contract baseline = measurement (`baseline_measurements`), never a level or the refuted flag | `swdb/level_rule.py` (`is_baseline_measurement`) |
+| `relational_template: {reason}` on a contract (the route guard reads it); pin `baseline_c_lowering` | `schemas/library/library_entry.schema.json`, `schemas/proof.schema.json` |
+| Tests (13) | `tests/test_cbmc_equivalence.py` |
+
+**Acceptance, box by box (CBMC form)**
+
+- Equal pair proves: split loop vs the baseline fill, `bounded_direct`: proven, `route: bounded_direct`, bounds
+  `{threads: 1, n: 3}`, `pins.code` (candidate), `pins.baseline_function` and both C lowerings pinned, build
+  constant `SWDB_FIXTURE_UNUSED=7` in `pins.build_constants` and in `settings.build_constants_by_build` for
+  both builds; inputs drawn from the oracle (symbolic) up to the size bound; level
+  `proven_within_bounds_threads_1`.
+- Unequal pair refutes: the early-stop fill is refuted with `counterexample.inputs` and `first_difference
+  {location: a[n-1], baseline: v, candidate: the old a[n-1]}`, replayed on the C++.
+- Every output compared: the return value, every array element up to the array length, globals both versions
+  use, and a global only one version uses (against its pre-call value). Negative controls: a write to `a[1]`
+  the baseline never makes (n = 1) and a write to a global the baseline never names: both refuted at that
+  location.
+- Capped: `swdb validate` refuses a `bounded_direct` record with `threads: 2` or `n: unbounded`;
+  `swdb candidate-level` refuses the invalid store; the level rule itself never counts such a record.
+- Route guard: `bounded_direct` on a contract without `relational_template` is refused with the reason; no record.
+- Bounds: `--minimum-bounds` runs at the derivation's bounds; below them the record reads below minimum and gives
+  no level. The no-contract baseline runs at `--borrowed-bounds`, labeled `{kind: borrowed, record, contract}`.
+- Measurement, not a level: a certified candidate whose only record is a no-contract-baseline record reads
+  certified; a refuted measurement does not set the refuted flag. A `bounded_direct` record counts normally.
+- Both forms: the product program is built from both C lowerings and from both C++ cuts and run over the bounded
+  domain; a planted fault in the baseline's lowering stops the batch (`c_lowering_disagreement`, side named), no
+  record. Outside the subset (GAPBS `InitParent`, default snapshot baseline): `unsupported_construct`, side named.
+- Budget and failures: over budget reads `timeout` at unchanged bounds; an unclassified outcome stops the batch;
+  every other class comes from 22's reader and handlers (shared code).
+- Pins and Mac rules: CBMC, solver flag, clang 22.1.8 and the translator through 22's `_tools`; one CBMC job at
+  a time through `swdb/verifier_lock.py`; tests skip without CBMC or clang 22.1.8; records are
+  `contract_fixture` and pass `swdb validate`.
+
+**Tests** (Mac; serial; no xdist; pytest outside the verifier lock, each CBMC job takes it through
+`swdb/verifier_lock.py`). Equivalence results (CBMC wall per job): split vs base proven (0.10-0.17 s);
+early-stop refuted (first difference `a[n-1]`); extra write refuted at `a[1]` (0.09 s); global write refuted at
+`swdb_fixture_threshold`; slow loop unwinding_bound_too_small at K = 4 (0.10 s), proven with
+`candidate:swdb_fixture_fill.0=7`. After merging integration `bedb57c7` and `12d44ea8`:
+`test_cbmc_equivalence.py` (14), `test_cbmc_adapter.py`, `test_format_doc.py`, `test_level_rule.py`,
+`test_proof_records.py`, `test_proof_method_version.py`: 262 passed, 1 failed by the lock-queue timeout (below),
+which then passed alone (`pytest-final2.log` sha256 `21c58eefc59bba6f`..., `pytest-final3.log` `7851a891dc47799f`...).
+After merging `2dff3f58` (ticket 24): `test_cbmc_equivalence.py`, `test_format_doc.py`, `test_level_rule.py`
+**113 passed** (`pytest-final4.log` `b0d13e8986b14ab1`..., `report-final4.jsonl` `46a608990a43349b`...). Runs:
+`/tmp/claude/probata-runs/t61/` (pytest temp folders deleted).
+
+**SAW to CBMC translations** (each an Assumption; not decided in the map beyond the main session's decision):
+
+- Assumption: "SAW runs both whole functions on the same symbolic inputs and compares every output" = CBMC on a
+  product program: one oracle draw feeds both calls; one `swdb_equal.<location>` property per output location.
+- Assumption: "SAW on the C++ and on the C lowering, verdicts agree" = 22's form on both sides: the native
+  C-vs-C++ differential of the whole product program over the bounded domain, and replay of every
+  counterexample on the product of the two C++ cuts. A disagreement stops the batch and names the side.
+- Assumption: "outside the subset: SAW on the C++ only" = not proven, `unsupported_construct`, side named (as 22:
+  CBMC never reads the C++).
+- Assumption: "SAW version, solver, flags pinned" = CBMC, its bundled SAT solver and the lineup flags, as 22.
+- Assumption: SAW's counterexample = the CBMC trace's oracle values replayed natively; the first differing
+  location comes from that replay, in `settings.compared` order (equality failures are replayed first).
+
+**Other assumptions**
+
+- Assumption: the baseline is the candidate's source snapshot by default, or another candidate artifact
+  (`--baseline-candidate`: a materialized baseline candidate, or a fixture); the level rule reads a candidate ID
+  in `pins.baseline_function` by its `artifact.sha256`.
+- Assumption: a contract "has no unit postcondition" exactly when it carries `relational_template: {reason}`
+  (smallest form; every other contract is taken to state one, map 24's drafting rule).
+- Assumption: a no-contract-baseline record says so by `route: bounded_direct` plus a `not_applicable`
+  `pins.contract` (the smallest form the level rule reads); its `minimum_bounds` pin is not applicable too.
+- Assumption: `--minimum-bounds` is optional on `bounded_direct` (as for 22's jobs); given without `--bounds`,
+  the job runs at the derivation's bounds.
+- Assumption: both builds use the same build constants (one `--define` list), recorded per build.
+- Assumption: globals keep their static initializers on both sides (no symbolic global state); compared knobs
+  and callee summaries are not used in the product program (callees inlined: the function is compared whole); a
+  global array only one version names is listed in `settings.uncompared_globals`, not compared.
+- Assumption: the two functions must have the same parameter and return types (17 item 4.5, same boundary); a
+  lowering that defines a type is `unsupported_construct` (the product would define it twice).
+- Assumption: a failing built-in check (overflow, bounds) in either copy is a refutation when it replays under the
+  sanitizers; `counterexample.function` names the copy. Found while testing: a candidate loop bound `2 * n`
+  overflows at `n = INT_MIN` and is refuted although its outputs agree elsewhere (fixture now guards `n > 0`).
+- Assumption: the product-program generator is a separate trusted tool (`swdb/cbmc_product.py`,
+  `swdb-cbmc-product-1`), not an extension of 22's translator: `method.probata-draft-1` pins the translator's
+  sha256 and a method-version file is never edited in place. It reuses the translator's printers.
+  No committed method version lists `swdb-cbmc-product-1`, so a real whole-function
+  job refuses to run until draft-2 adds it (decision 2 below; fixture method versions in the tests list it).
+- Side finding: under a long verifier-lock queue (8 waiters), `test_a_job_over_its_budget_is_timeout_at_unchanged_bounds`
+  failed once because `run_swdb`'s 600 s subprocess timeout counts the lock wait; alone it passes. 22's tests share
+  this exposure.
+
+**Decisions** (each decided by the main session under Yan-Ru's delegation, 2026-10-14 20:48 ET):
+
+1. Level rule: bumped to `level-rule.2` (the versioning rule is strict even when no level changes). Tests and
+   `format-v0.4-level-rule.md` updated; stored snapshots (the handoff examples) keep `level-rule.1`.
+2. Method version: `method.probata-draft-1` is not edited (it is pinned). The next draft (`probata-draft-2`,
+   written by whichever ticket first runs a real whole-function job, at the latest ticket 59) must list
+   `swdb-cbmc-product-1` in `c_lowering.translators`.
+3. Equality only for a deterministic output. Where the kernel's output relation admits several valid outputs
+   (for example BFS parent arrays), the product program must assert the output relation on the candidate's output
+   with the baseline's output as the witness that the input is valid, not equality; a unit with no stated output
+   relation and a nondeterministic output is refused by the route guard with a named reason. **Built here: the
+   guard only** (contract field `output_determinism`, `--output-determinism` for the no-contract baseline;
+   nondeterministic without a relation, nondeterministic with one, and unstated are each refused with their
+   reason; deterministic runs on equality, `settings.comparison`). **The relation form (and its fixture pair: two
+   valid parents passing under the relation, failing under equality) is ticket 62's work.**
+
+Tests after the decisions (integration `fea82f24` merged): `test_cbmc_equivalence.py` (18),
+`test_format_doc.py`, `test_level_rule.py`, `test_archevolve_proof_path.py`, `test_two_winners_campaign.py`,
+`test_wp_phase_campaign.py`, `test_promotion_level_snapshot.py`: 162 passed, 8 errors, all in
+`test_promotion_level_snapshot.py` setup. They are not this ticket's: its fixture writes `library/proof_semantics/`
+files in the old format, and the same error occurs on integration `1672b48a` (as `test_level_rule.py` did before
+`9280a24c`). Log `pytest-final5.log` (sha256 `d7b243aca112248a`...).

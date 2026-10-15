@@ -161,5 +161,8 @@ out once under contention, with CBMC itself at 0.3 s).
   a proof hint. (2) condition_wait and the wrong-value / outside-footprint variants were not run to completion.
   (3) The WP tests in `tests/test_proof_semantics.py` (`needs_wp`, sandbox off for Why3) were written but not run
   through `swdb prove` yet; the two store fixtures are left out of `WP_SAFE` until (1).
-- **Next step.** Fix (1), then run `pytest tests/test_proof_semantics.py -k wp` with the sandbox off, record the
+- (4) Merging the integration tip conflicted with ticket 25's rewrite of `swdb/wp_adapter.py`; the merge keeps
+  ticket 25's file, so the WP adapter changes live only in commit `84563b2e` and must be ported onto it (the WP
+  tests are marked skip until then). `proof_semantics.wp_prelude` / `wp_locations` and the contracts stay.
+- **Next step.** Port the adapter changes (4), fix (1), then run `pytest tests/test_proof_semantics.py -k wp` with the sandbox off, record the
   numbers here, and resolve.

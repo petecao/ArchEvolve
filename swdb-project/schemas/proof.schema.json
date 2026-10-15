@@ -108,6 +108,20 @@
             }
           }
         },
+        "models": {
+          "type": "array",
+          "description": "Ticket 24: the C models the C lowering calls (std::min, __atomic_*, ...), each by name, sha256 of its text and its proven c_model proof record (`swdb prove --model NAME`). Optional: written by the wp adapter when the unit's lowering calls a model.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "sha256", "proof_record"],
+            "properties": {
+              "id": {"type": "string", "minLength": 1},
+              "sha256": {"$ref": "#/$defs/sha256"},
+              "proof_record": {"type": "string", "x-ref": "proof"}
+            }
+          }
+        },
         "build_constants": {
           "type": "array",
           "items": {
@@ -123,6 +137,8 @@
                          "description": "Ticket 24: the C lowering's naming rules, {id: kept-names.<n>, sha256 of the rules text} (swdb.c_lowering.naming_rules()). Written with c_lowering; a new rules version gives a different pin."},
         "translator": {"$ref": "#/$defs/pin",
                        "description": "Ticket 22: the formal-half translator the verifier's input came from, {id: <tool>-<version>, sha256 of the translator's source} (the CBMC translator). Optional: only adapters with a translator write it."},
+        "baseline_c_lowering": {"$ref": "#/$defs/pin",
+                                "description": "Ticket 61: whole-function equivalence: the baseline function's C lowering in the product program, {id: <function>.c, sha256 of its text}. Optional: only whole-function jobs write it."},
         "logic": {
           "type": "array",
           "description": "Ticket 26: every logic-library file the proof used (the formal halves' acsl.uses, or the file a prove-logic job checked), each by ID, version and file sha256. Optional: written only when a file is used. The level rule stops counting the record when a file's sha256 changes.",
@@ -390,6 +406,16 @@
       "then": {
         "properties": {"subject": {"properties": {"kind": {"const": "candidate_proof_unit",
           "x-reason": "only a candidate proof unit carries a proof route"}}}}
+      }
+    },
+    {
+      "if": {"properties": {"route": {"const": "bounded_direct"}}, "required": ["route"]},
+      "then": {
+        "properties": {"bounds": {
+          "properties": {"threads": {"const": 1,
+            "x-reason": "a bounded_direct record is capped at proven within bounds, threads = 1 (ticket 61; map 24 item 1): its thread count is 1"}},
+          "additionalProperties": {"type": "integer",
+            "x-reason": "a bounded_direct record is capped at proven within bounds (ticket 61; map 24 item 1): no dimension is unbounded"}}}
       }
     }
   ],

@@ -121,7 +121,7 @@ An adapter is a class in `ADAPTERS` with a `name` and `run(job) -> Verdict`.
 | Field | Meaning |
 |---|---|
 | `subject` | `{kind: candidate_proof_unit, candidate, function}`; any other kind (vocabulary `proof_subject_kinds`) has `{kind, id}` and an optional `part`, a value of vocabulary `proof_part_names` whose `subject_kind` is the subject's kind (ticket 10; a new part is added there first) |
-| `route` | optional; `route_1`, `route_3` or `bounded_direct`; only on a candidate proof unit |
+| `route` | optional; `route_1`, `route_3` or `bounded_direct`; only on a candidate proof unit. Ticket 61 writes `bounded_direct` (whole-function equivalence, [format-v0.4-cbmc.md](format-v0.4-cbmc.md#whole-function-equivalence-ticket-61)); such a record must have `threads: 1` and no `unbounded` dimension |
 | `verdict` | `proven`, `refuted` or `not_proven`; absent on a skip record |
 | `skip_reason` | a skip record only: why no verifier ran (vocabulary `proof_failure_classes`, role `skip_reason`): `no_contract_proof`, `no_minimum_bounds`, `outside_cpp_subset` |
 | `counterexample` | refuted only, required: the counterexample, inline |
