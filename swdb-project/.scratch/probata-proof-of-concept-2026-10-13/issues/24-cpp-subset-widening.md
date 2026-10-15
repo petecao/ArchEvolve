@@ -454,3 +454,17 @@ footprint query; the corrected shard excludes it. Raw outputs of 11 MiB and 17 M
 remain on mbit10; only compact counts, configuration, lane metadata and hashes are
 transferred in `../evidence/t24-native-mbit10-20261015.json`. This is native/compiler
 evidence, not final WP acceptance or a reason to resolve ticket 24.
+
+### Generic callee binding repair — 2026-10-15 ET
+
+The public CBMC changed-clamp counterexample established that an unchanged
+function name does not permit substituting a summary proved on other code.
+The checked generic-summary import now binds the actual complete callee closure
+and current proof/method/evidence, and checks finite caller arguments and exact
+buffer alignment. Matching scalar/array CBMC controls and a scalar WP import
+pass; both Crux forms reject the changed definition before solver launch.
+External-only generic declarations still need a separately checked symbol/library
+mapping. The old fixture stand-ins are not evidence that arbitrary implementations
+behind a declaration satisfy their contracts. Full construct acceptance remains
+open; ticket36's [repair evidence](../evidence/summary-source-binding-20261015.json)
+records the exact boundary and the original false proof.
