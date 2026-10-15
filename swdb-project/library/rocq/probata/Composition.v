@@ -2797,6 +2797,191 @@ Proof.
     apply (Hnocover q); [lia | exact Hq].
 Qed.
 
+Lemma t42_crosses_sync_global X i q t c l v e :
+  at_ X i t (DeviceRead c l v) -> i < q -> at_ X q t e ->
+  (e = Barrier \/ (e = Exit /\ inside X t i = true)) ->
+  (forall m, i < m < q -> ~ at_ X m t (DeviceCovered c)) ->
+  crosses_sync (proj X t) c.
+Proof.
+  intros Hi Hiq Hq Hsync Hnocover.
+  exists (t42_local_index X t i), (t42_local_index X t q),
+    (DeviceRead c l v), e.
+  split; [now apply t42_at_local_index |].
+  split; [reflexivity |].
+  split; [eapply t42_local_index_strict; eauto |].
+  split; [now apply t42_at_local_index |].
+  split.
+  - destruct Hsync as [-> | [-> Hin]]; [now left | right].
+    split; [reflexivity |]. rewrite t42_proj_local_prefix. exact Hin.
+  - intro Hcovered.
+    destruct (t42_covered_local_global X t i q c (DeviceRead c l v) e
+      Hi Hq Hcovered) as [m [Him Hm]]. exact (Hnocover m Him Hm).
+Qed.
+
+Lemma t42_future_source_in_critical_forbidden X rf i u c l v s t e :
+  obl_team_size -> obl_owned_disjoint -> obl_dx100_quiet ->
+  model_run X rf -> complete X -> all_fit X ->
+  at_ X i u (DeviceRead c l v) -> rf i = Some s -> i < s ->
+  at_ X s t e -> written e = Some (l,v) -> inside X t s = true -> t <> u ->
+  at_ X (S s) u (DeviceCovered c) ->
+  interval X u (S s) = interval X t s -> False.
+Proof.
+  intros Hteam Hdis Hquiet Hmodel Hcomplete Hfit Hi Hrf His Hs Hwrite Hinside
+    Htu Hcover Hinterval.
+  pose proof Hmodel as [_ [_ [Hdevice Homp]]].
+  pose proof (t42_threads_below_N Hteam X rf Homp i u (DeviceRead c l v) Hi) as Hu.
+  pose proof (t42_threads_below_N Hteam X rf Homp s t e Hs) as Ht.
+  destruct (Hquiet X rf u Hmodel Hcomplete Hfit Hu) as [[Hhaz [Hcross Hstable]] Howner].
+  destruct (Hdevice i u c l v Hi) as [_ Hfuture].
+  destruct (Hfuture s Hrf His) as [Hnocover Hother].
+  assert (Hclass : cls (interval X t s) (array_of l) =
+    cls (interval X u i) (array_of l)).
+  { rewrite <- Hinterval.
+    eapply (t42_read_class_stable_global X u i c l v (S s) (DeviceCovered c)
+      Hstable Hi ltac:(lia) Hcover).
+    intros m Him. apply (Hnocover m). lia. }
+  pose proof (t42_written_loc e l v Hwrite) as Hloc.
+  pose proof (Hfit t Ht s e l Hs Hloc) as Hfe.
+  pose proof (Hfit u Hu i (DeviceRead c l v) l Hi eq_refl) as Hfd.
+  rewrite <- Hclass in Hfd.
+  destruct (cls (interval X t s) (array_of l)) eqn:Hcls.
+  - exact (t42_fits_readonly_no_write _ _ e l v Hfe Hwrite).
+  - eapply (t42_future_owned_source_impossible X rf i u c l v s t e
+      Hteam Hdis Hmodel Hfit Howner Hi ltac:(congruence) Hrf His Hs ltac:(congruence)).
+    exact (t42_fits_owned_touch _ _ e l Hfe Hloc).
+  - pose proof (t42_fits_shared_touch _ _ e l Hfe Hloc). contradiction.
+  - pose proof (t42_fits_locked_touch _ _ (DeviceRead c l v) l Hfd eq_refl) as Hini.
+    destruct (t42_foreign_inside_later_exit X rf i s u t (DeviceRead c l v) e
+      Homp Hi Hs His ltac:(congruence) ltac:(discriminate) Hini Hinside)
+      as [q [Hiq Hq]].
+    assert (Hcrosses : crosses_sync (proj X u) c).
+    { eapply (t42_crosses_sync_global X i q u c l v Exit Hi ltac:(lia) Hq).
+      - right. auto.
+      - intros m Him. apply (Hnocover m). lia. }
+    destruct (Hcross c Hcrosses) as [_ Hnoread].
+    specialize (Hnoread (t42_local_index X u i) l v
+      (t42_at_local_index X i u (DeviceRead c l v) Hi)).
+    rewrite t42_proj_local_prefix in Hnoread.
+    apply Hnoread. change (cls (interval X u i) (array_of l) = LockProtected).
+    congruence.
+Qed.
+
+Lemma t42_window_device_safe X rf i x t p u e d :
+  obl_team_size -> obl_owned_disjoint -> obl_atomic_blocks -> obl_dx100_quiet ->
+  model_run X rf -> complete X -> all_fit X ->
+  at_ X i t Enter -> at_ X x t Exit -> i < x ->
+  (forall r, i < r < x -> ~ at_ X r t Enter /\ ~ at_ X r t Exit) ->
+  i <= p -> S p < x -> t42_adjacent X p t e u d -> t <> u ->
+  t42_device_safe X rf p.
+Proof.
+  intros Hteam Hdis Hatomic Hquiet Hmodel Hcomplete Hfit Henter Hexit Hix
+    Hwindow Hip Hpx Hadj Htu j r c l v Hread Hrf Hjp Hcover.
+  pose proof Hmodel as [Hprogram [_ [Hdevice Homp]]].
+  destruct (Hdevice j r c l v Hread) as [[Hsource _] _].
+  unfold source_ok in Hsource. rewrite Hrf in Hsource.
+  destruct Hsource as [_ [a [f [Hwriteat Hwrite]]]].
+  destruct (t42_adjacent_at X p t e u d Hadj) as [Hp Hsp].
+  destruct (t42_at_unique X p t e a f Hp Hwriteat) as [<- <-].
+  destruct (t42_at_unique X (S p) u d r (DeviceCovered c) Hsp Hcover) as [<- Heq].
+  subst d.
+  destruct (Nat.eq_dec i p) as [-> | Hne].
+  - destruct (t42_at_unique X p t Enter t e Henter Hp) as [_ He].
+    subst e. discriminate.
+  - pose proof (t42_threads_below_N Hteam X rf Homp p t e Hp) as Ht.
+    pose proof (t42_window_interval X i x t Hatomic Hprogram Ht
+      (t42_intervals_contiguous Hteam X rf Homp) Henter Hexit Hix Hwindow) as Hint.
+    eapply (t42_future_source_in_critical_forbidden X rf j u c l v p t e
+      Hteam Hdis Hquiet Hmodel Hcomplete Hfit Hread Hrf Hjp Hp Hwrite).
+    + eapply t42_window_owner_inside; eauto; lia.
+    + exact Htu.
+    + exact Hcover.
+    + rewrite (Hint p t e ltac:(lia) Hp),
+        (Hint (S p) u (DeviceCovered c) ltac:(lia) Hcover). reflexivity.
+Qed.
+
+Lemma t42_no_sync_same_interval X i j t u e d :
+  at_ X i t e -> at_ X j u d -> t <> u ->
+  interval X t i = interval X u j ->
+  (is_shared e = false \/ is_shared d = false) -> e <> Exit -> ~ sync X i j.
+Proof.
+  intros Hi Hj Htu Hint Hnosh Hnotexit Hsync.
+  inversion Hsync as [Hcpu | Homp].
+  - inversion Hcpu as [w a b Hij Hia Hjb |
+      w w' k a l v k' a' l' v' Hij Hia Hjb].
+    + destruct (t42_at_unique X i t e w a Hi Hia) as [Ht _].
+      destruct (t42_at_unique X j u d w b Hj Hjb) as [Hu _]. congruence.
+    + destruct (t42_at_unique X i t e w (Shared k true a l v) Hi Hia) as [_ He].
+      destruct (t42_at_unique X j u d w' (Shared k' true a' l' v') Hj Hjb) as [_ Hd].
+      destruct Hnosh as [Hnosh | Hnosh]; [rewrite He in Hnosh | rewrite Hd in Hnosh];
+        discriminate.
+  - inversion Homp as [w w' b Hij Hia Hjb Hints | w w' Hij Hia Hjb].
+    + destruct (t42_at_unique X i t e w Barrier Hi Hia) as [Ht _].
+      destruct (t42_at_unique X j u d w' b Hj Hjb) as [Hu _]. subst w w'. lia.
+    + destruct (t42_at_unique X i t e w Exit Hi Hia) as [_ He]. contradiction.
+Qed.
+
+Lemma t42_inside_not_shared X i t e :
+  all_fit X -> t < N -> at_ X i t e -> inside X t i = true -> is_shared e = false.
+Proof.
+  intros Hfit Ht Hat Hin.
+  destruct e; simpl; try reflexivity.
+  match goal with
+  | H : at_ _ _ _ (Shared ?k ?f ?a ?l ?v) |- _ =>
+    pose proof (Hfit t Ht i (Shared k f a l v) l H eq_refl) as K
+  end.
+  simpl in K. tauto.
+Qed.
+
+Lemma t42_window_adjacent_indep X rf i x t p u e d :
+  obl_team_size -> obl_owned_disjoint -> obl_atomic_blocks ->
+  model_run X rf -> all_fit X ->
+  at_ X i t Enter -> at_ X x t Exit -> i < x ->
+  (forall r, i < r < x -> ~ at_ X r t Enter /\ ~ at_ X r t Exit) ->
+  i <= p -> S p < x -> t42_adjacent X p t e u d -> t <> u -> t42_indep X p.
+Proof.
+  intros Hteam Hdis Hatomic Hmodel Hfit Henter Hexit Hix Hwindow Hip Hpx Hadj Htu.
+  pose proof Hmodel as [Hprogram [_ [_ Homp]]].
+  destruct (t42_adjacent_at X p t e u d Hadj) as [Hp Hsp].
+  pose proof (t42_threads_below_N Hteam X rf Homp p t e Hp) as Ht.
+  pose proof (t42_window_interval X i x t Hatomic Hprogram Ht
+    (t42_intervals_contiguous Hteam X rf Homp) Henter Hexit Hix Hwindow) as Hint.
+  assert (Hsame : interval X t p = interval X u (S p)).
+  { rewrite (Hint p t e ltac:(lia) Hp), (Hint (S p) u d ltac:(lia) Hsp).
+    reflexivity. }
+  assert (Hnotexit : e <> Exit).
+  { destruct (Nat.eq_dec i p) as [-> | Hne].
+    - destruct (t42_at_unique X p t Enter t e Henter Hp) as [_ He]. congruence.
+    - intro He. subst e. exact (proj2 (Hwindow p ltac:(lia)) Hp). }
+  assert (Hnotexitd : d <> Exit).
+  { intro He. subst d.
+    exact (t42_window_no_other_exit X rf i x t u Homp Henter Hexit Hix Hwindow Htu
+      (S p) ltac:(lia) Hsp). }
+  assert (Hnosh : is_shared e = false).
+  { destruct (Nat.eq_dec i p) as [-> | Hne].
+    - destruct (t42_at_unique X p t Enter t e Henter Hp) as [_ He]. subst e. reflexivity.
+    - eapply t42_inside_not_shared; eauto.
+      eapply t42_window_owner_inside; eauto; lia. }
+  assert (Hsafe : ~ t42_events_conflict e d).
+  { destruct (Nat.eq_dec i p) as [-> | Hne].
+    - destruct (t42_at_unique X p t Enter t e Henter Hp) as [_ He]. subst e.
+      intros [l [Hloc _]]. discriminate.
+    - eapply t42_window_no_conflict; eauto; lia. }
+  exists t, e, u, d. split; [exact Hadj |]. split; [exact Htu |].
+  split.
+  - exact (t42_no_sync_same_interval X p (S p) t u e d Hp Hsp Htu Hsame
+      (or_introl Hnosh) Hnotexit).
+  - split; [|exact Hsafe].
+    destruct (t42_adjacent_at (t42_swap_run X p) p u d t e
+      (t42_adjacent_swap X p t e u d Hadj)) as [Hswp Hswsp].
+    assert (Hsame' : interval (t42_swap_run X p) u p =
+      interval (t42_swap_run X p) t (S p)).
+    { pose proof (t42_interval_swap X p t e u d (S p) u d Hadj Htu Hsp) as H1.
+      pose proof (t42_interval_swap X p t e u d p t e Hadj Htu Hp) as H2.
+      rewrite t42_sw_Sp in H1. rewrite t42_sw_p in H2. congruence. }
+    exact (t42_no_sync_same_interval (t42_swap_run X p) p (S p) u t d e
+      Hswp Hswsp ltac:(congruence) Hsame' (or_intror Hnosh) Hnotexitd).
+Qed.
+
 (* END t42 lemmas *)
 (** * 8. The parallel composition theorem.  OPEN: proof is ticket 42. *)
 Theorem parallel_composition :

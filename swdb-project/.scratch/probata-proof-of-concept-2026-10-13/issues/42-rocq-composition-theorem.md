@@ -196,3 +196,17 @@ write, even across a barrier, under `reads_owner_stable`. Global/thread-local
 class-lifetime transport is Qed as `t42_read_class_stable_global`. Compile:
 `/tmp/probata-t42-resume/logs/owner-proof-1.log.summary.json`, exit 0, 3.73 s,
 peak 443.6 MB. These directly address the previously open RF-sensitive swap case.
+
+### Critical-window swap safety — 2026-10-15 02:10 ET
+
+Both conditions for clearing any foreign event leftward inside a critical window
+are now Qed: `t42_window_adjacent_indep` proves nonconflict and absence of new or
+old synchronization; `t42_window_device_safe` excludes the earlier RF-source/cover
+reversal. `t42_future_source_in_critical_forbidden` combines class lifetime,
+ownership lifetime, and protected-read quietness to close that case. The four
+core results print `Closed under the global context` (log sha256
+`f0532d0e8a885018e887fe9f2fc1415078fabe8f12825919a931ee3c625a3996`).
+Rocq compile: `owner-proof-6.log.summary.json`, exit 0, 5.36 s, peak 451.7 MB,
+8 GB watchdog. No approved statement edit. Remaining: finite constructive window
+partition, global serialization, and iteration-count/conclusion assembly. The
+main theorem is still open, so this remains checked progress only.
