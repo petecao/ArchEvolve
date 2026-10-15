@@ -1,0 +1,78 @@
+{
+  "created": "2026-10-15 14:23 ET",
+  "review_baseline": "150930b4be39526e6eeefd881987dba1c6d6e4d3",
+  "review_and_test_source": "53471f7f942d2c1ae7456d4fd08b776777006447",
+  "review_fix": "0951cc9ed484688eb7f2deae37175050deb09223",
+  "review_axes": {
+    "standards": "one minor stale docstring corrected",
+    "spec": "no new actionable runtime defect; known partial acceptance remains open; inherited RTE flag admission check recorded before freeze"
+  },
+  "controls": {
+    "passed": 313,
+    "deselected": 42,
+    "pytest_seconds": 747.43,
+    "resources": {
+      "cmd": [
+        "/Users/yanrujhou/.pyenv/shims/python3",
+        "-m",
+        "pytest",
+        "tests/test_array_domains.py",
+        "tests/test_bounded_array_domains.py",
+        "tests/test_bounded_initialization.py",
+        "tests/test_dx_array_domains.py",
+        "tests/test_dx_footprint_query.py",
+        "tests/test_helper_windows.py",
+        "tests/test_member_windows.py",
+        "tests/test_member_lifetimes.py",
+        "tests/test_nested_entry_reads.py",
+        "tests/test_pointer_source_spans.py",
+        "tests/test_wp_condition_access.py",
+        "tests/test_standard_range_model.py",
+        "tests/test_standard_range_calls.py",
+        "tests/test_summary_source_binding.py",
+        "tests/test_stdlib_prelaunch.py",
+        "tests/test_proof_setup.py",
+        "-k",
+        "not real_wp_facts and not changed_verdict_reader_or_failure_vocabulary and not actual",
+        "-q",
+        "--maxfail=1",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp",
+        "/private/tmp/probata-closeout-validation-20261015/pytest",
+        "--junitxml=/private/tmp/probata-closeout-validation-20261015/controls.xml"
+      ],
+      "exit_code": 0,
+      "wall_s": 748.04,
+      "peak_rss_mb": 3862.9,
+      "cap_gb": 8.0,
+      "killed_by_watchdog": false,
+      "timed_out": false,
+      "timeout_s": 900.0,
+      "log": "/private/tmp/probata-closeout-validation-20261015/controls.log",
+      "log_sha256": "b9f06f33bbd263eeefdb4ec4333915aa8a7051da6655221ba1204dc2403a531a",
+      "lock_wait_s": 0.0,
+      "finished": "2026-10-15 14:22:42 EDT"
+    },
+    "source_tracked_files_unchanged_through_job": true,
+    "files": {
+      "/private/tmp/probata-closeout-validation-20261015/controls.log": "b9f06f33bbd263eeefdb4ec4333915aa8a7051da6655221ba1204dc2403a531a",
+      "/private/tmp/probata-closeout-validation-20261015/controls.xml": "3e4b5e4a7cc9c961636a2e92b8f01f74704b71c918db74559d42904fa763dcf3",
+      "/private/tmp/probata-closeout-validation-20261015/controls.log.summary.json": "4bfa7a2fd074750eb34595f3484544c016c4d40ab23f095108ae361dd0d09ae2"
+    }
+  },
+  "post_test_runtime_change": "Only cbmc_translator.harness docstring; complete parsed executable AST identical after removing that docstring. Source identity hashes still change and historical actuals retain exact original pins.",
+  "open_pr_guard": {
+    "checked": "2026-10-15 ET",
+    "open_head_refs": [
+      "yanrujhou_main"
+    ],
+    "effort_branch_open_prs": 0,
+    "source": "GitHub connector GET pulls?state=open&per_page=100"
+  },
+  "cleanup_precheck": {
+    "evidence_referenced_untracked_or_ignored_files_inside_removable_worktrees": 0,
+    "scope": "All feature evidence JSON string paths versus actual tracked files in this effort worktrees; ignored raw outputs outside worktrees retained."
+  },
+  "boundary": "Bounded integration validation, not full catalog acceptance or completion of 63 tickets; no new production method freeze or counted BFS run."
+}

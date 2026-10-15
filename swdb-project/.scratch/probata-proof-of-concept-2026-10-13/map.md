@@ -1,14 +1,14 @@
 # Map: Extensa Probata proof of concept
 
 Created: 2026-10-14 00:45 ET
-Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Integration branch: `codex/probata-poc-integration` (resumed 2026-10-15).
+Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Closeout target: `yanrujhou_main`; archived integration branch: `codex/probata-poc-integration`.
 
 ## Current state (resume here)
 
 Updated: 2026-10-15 ET. Implementation, evaluation and provider work are paused
 by user direction. Closeout review, documentation, merge and cleanup remain in
-progress; root's bounded final controls are closeout validation, not a new
-evaluation campaign. The progress heartbeat is **PAUSED**.
+progress. Root's bounded final controls passed313 tests (42 deselected); no
+watchdog/OOM failure. This is scoped validation, not a new evaluation campaign. The progress heartbeat is **PAUSED**.
 
 - **32 resolved / 31 ready-for-agent / 0 claimed**, recomputed from all 63 tickets.
   No ticket is force-closed. Released tickets: 07, 24, 25, 27 and 36.
@@ -21,7 +21,8 @@ evaluation campaign. The progress heartbeat is **PAUSED**.
 - Qualified stall evidence is accepted: **111 ordinary + 35 smoke checks** at
   `9940b155`. Other evidence retains its own source/method pins. Full ticket
   acceptance, held-out work and final method freeze remain open.
-- [Current resume](resume.md), [review decisions](evidence/final-review-closeout-20261015.md),
+- [Cold-start handoff](HANDOFF.md), [all-ticket index](ticket-status-20261015.md),
+  [current resume](resume.md), [review decisions](evidence/final-review-closeout-20261015.md),
   [accepted stall](evidence/t27-stall-qualified-accepted-20261015.json).
 
 ## Historical integration checkpoints
