@@ -4,7 +4,7 @@
 // Harness: new_array_harness.inc (the safe unit only).
 int swdb_new_unit(int n, int k) {
   int *buf = new int[n];
-  for (int i = 0; i < n; ++i) buf[i] = i * k;
+  for (int i = 0; i < n; ++i) buf[i] = k;
   int s = 0;
   for (int i = 0; i < n; ++i) s += buf[i];
   delete[] buf;

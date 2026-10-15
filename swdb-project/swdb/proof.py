@@ -49,6 +49,7 @@ from swdb.cli import Failure, UsageError
 VERDICTS = ("proven", "refuted", "not_proven")
 UNPINNED = "unpinned"
 OUT_OF_MEMORY = "out_of_memory"       # ticket 57: the class the worker's RSS watchdog gives (O9)
+MODEL_PREFIX = "c_model."             # ticket 24: a C-model job's contract slot (subject c_model)
 SPURIOUS = "spurious_counterexample"   # Yan-Ru 2026-10-14 02:25 ET: the class of a counterexample that did not replay
 
 
@@ -180,6 +181,9 @@ def register_cli(commands):
     sub.add_argument("--summary", metavar="ENTRY",
                      help="ticket 22: prove a library entry's summary (its proof_unit function against its `once: self` "
                           "formal halves) instead of a candidate proof unit; the subject is library_summary")
+    sub.add_argument("--model", metavar="NAME",
+                     help="ticket 24: prove one C model of the C lowering (swdb.c_lowering.model_text, e.g. std_min_int) "
+                          "against its ACSL contract, once; the subject is c_model and units that call it pin the record")
     sub.add_argument("--function", help="the function that holds the rewrite site (default with --summary: the "
                                          "entry's proof_unit function)")
     sub.add_argument("--contract", help="the rewrite contract (default: the one its certification records name)")
@@ -231,6 +235,8 @@ def prove(args):
     store = _require_valid(args.records)
     if getattr(args, "summary", None):
         return _prove_summary(args, store)
+    if getattr(args, "model", None):
+        return _prove_model(args, store)
     if not args.candidate or not args.function:
         raise UsageError("swdb prove needs --candidate and --function (or --summary ENTRY)")
     candidate = store.get(args.candidate, "candidate")
@@ -320,6 +326,40 @@ def _prove_summary(args, store):
     place = {"batch": args.batch or f"batch.{rid}", "position": args.position}
     record = _run_job(rid, unit, pins, adapter, _outside_repo(args.runs_dir), place, listed(vocabs, "failure_class"),
                       method, bounds=getattr(args, "bounds", None), budget_minutes=getattr(args, "budget_minutes", None))
+    record.update(_run_fields(args))
+    return {"record": record, "path": _write(args.records, record)}
+
+
+def _prove_model(args, store):
+    """Ticket 24: one job proving a C model of the C lowering against its own ACSL contract; the record's subject is
+    {c_model, id: NAME}. Code and contract pins are the sha256 of the model's text, so a changed model (a new C
+    lowering tool version) makes the record stop counting; a unit's record pins it in `pins.models`."""
+    from swdb import c_lowering, method_version, vocab
+    name = args.model
+    text = c_lowering.model_text(name)
+    if text is None:
+        raise UsageError(f"--model {name}: the C lowering has no C model of that name")
+    if args.adapter != "wp" or args.candidate or args.summary or args.skip is not None or args.script:
+        raise UsageError("--model runs one wp job on a C model: --adapter wp, no --candidate, --summary, --skip or --script")
+    sha = hashlib.sha256(text.encode()).hexdigest()
+    unit = ProofUnit(None, name, "", sha, f"{MODEL_PREFIX}{name}", sha)
+    method = _current_method(args.records)
+    pins = {"code": {"id": name, "sha256": sha}, "contract": {"id": name, "sha256": sha},
+            "baseline_function": {"not_applicable": "A C model is proven on its own text."},
+            "reference_semantics": {"not_applicable": "No reference-semantics definition is pinned before ticket 30."},
+            "proof_semantics": {"not_applicable": "A C model makes no DX100 call."},
+            "method_version": method_version.pin(method), "summaries": [],
+            "minimum_bounds": {"not_applicable": "A C model has no minimum bounds."},
+            "predecessor_snapshot": {"not_applicable": "A C model has no predecessor."},
+            "build_constants": []}
+    adapter = _adapter(args, None, _library(store), unit.contract, method)
+    vocabs, _problems = vocab.load_all(paths.VOCAB)
+    rid = args.id or _new_id(f"model.{name}")
+    if store.get(rid) is not None:
+        raise Failure(f"ID {rid!r} is already used; nothing written")
+    place = {"batch": args.batch or f"batch.{rid}", "position": args.position}
+    record = _run_job(rid, unit, pins, adapter, _outside_repo(args.runs_dir), place, listed(vocabs, "failure_class"),
+                      method, budget_minutes=getattr(args, "budget_minutes", None))
     record.update(_run_fields(args))
     return {"record": record, "path": _write(args.records, record)}
 
@@ -470,7 +510,9 @@ def _head(rid, unit, description):
             "created": writer.today(), "updated": writer.today(),
             "provenance": [{"id": "prove", "kind": "agent_run", "description": description, "uri": None}],
             "subject": {"kind": "candidate_proof_unit", "candidate": unit.candidate, "function": unit.function}
-            if unit.candidate is not None else {"kind": "library_summary", "id": unit.contract}}
+            if unit.candidate is not None else
+            {"kind": "c_model", "id": unit.function} if unit.contract.startswith(MODEL_PREFIX) else
+            {"kind": "library_summary", "id": unit.contract}}
 
 
 def _write(records, record):

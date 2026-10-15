@@ -108,6 +108,20 @@
             }
           }
         },
+        "models": {
+          "type": "array",
+          "description": "Ticket 24: the C models the C lowering calls (std::min, __atomic_*, ...), each by name, sha256 of its text and its proven c_model proof record (`swdb prove --model NAME`). Optional: written by the wp adapter when the unit's lowering calls a model.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "sha256", "proof_record"],
+            "properties": {
+              "id": {"type": "string", "minLength": 1},
+              "sha256": {"$ref": "#/$defs/sha256"},
+              "proof_record": {"type": "string", "x-ref": "proof"}
+            }
+          }
+        },
         "build_constants": {
           "type": "array",
           "items": {

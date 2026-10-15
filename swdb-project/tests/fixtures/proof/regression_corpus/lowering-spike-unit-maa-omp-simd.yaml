@@ -1,0 +1,18 @@
+# Created: 2026-10-14 ET (Probata PoC 24). Regression corpus case through `swdb lower` (see wp-hint-syntax-error.yaml).
+id: lowering-spike-unit-maa-omp-simd
+adapter: c_lowering
+input:
+  source: .scratch/probata-proof-of-concept-2026-10-13/prototype/06-two-lanes/unit_maa.cpp
+  function: swdb_unit_maa
+  include: [library/dx100]
+  summary: [swdb_cxx_assert, maa_const, maa_stream_load, maa_indirect_load, maa_range_loop, maa_alu_scalar,
+            maa_indirect_store_vector, wait_ready, get_tile_size, swdb_probe_tile_read, swdb_probe_cpu]
+failure_class: unsupported_construct
+construct: OpenMP directive OMPSimdDirective
+cause: >-
+  Spike (b)'s proof unit 2 (unit_maa.cpp, the MAA-style TDStep) vectorizes its tile scan with
+  `#pragma omp simd aligned(...) simdlen(4)`. The declared OpenMP constructs are parallel, for, critical,
+  atomic, barrier and reduction (map 16 item 6), so simd is outside the subset and the tool names it.
+  Everything before it in the unit (classes, references, templates, __restrict__ pointers, enum class
+  arguments, summarized maa_* calls) lowers. Bringing simd in (one thread: the loop itself) is a subset
+  decision for Yan-Ru.

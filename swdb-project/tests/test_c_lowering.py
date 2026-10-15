@@ -182,6 +182,7 @@ def test_each_lowering_regression_corpus_case_gives_its_recorded_class_again(tmp
     assert data["cause"].strip()
     given = data["input"]
     extra = [arg for folder in given.get("include", []) for arg in ("--include", REPO / folder)]
+    extra += [arg for name in given.get("summary", []) for arg in ("--summary", f"{name}=corpus")]   # ticket 24
     result = lower(REPO / given["source"], given["function"], tmp_path / "out", *extra, ok=False)
     words = {"unsupported_construct": "unsupported construct", "parse_error": "parse error"}[data["failure_class"]]
     assert words in result.stderr
@@ -211,7 +212,7 @@ GROUPS = {   # construct group: (fixture, unit function, extra `swdb lower` argu
     "floats": ("floats.cc", "swdb_float_unit", ()),
     "dxc_summary": ("summaries.cc", "swdb_dxc_unit", ("--summary", "__dxc_tile_size=fixture.dxc_tile_size.1")),
     "maa_summary": ("summaries.cc", "swdb_maa_unit", ("--summary", "maa_const_i32=fixture.maa_const.1",
-                                                      "--summary", "maa_indirect_load=fixture.maa_indirect_load.1")),
+                                                      "--summary", "maa_indirect_load_i32=fixture.maa_indirect_load.1")),
 }
 HARNESS = {"classes": "classes_harness.inc", "templates": "templates_harness.inc", "new_array": "new_array_harness.inc",
            "std_models": "std_models_harness.inc", "omp": "omp_atomics_harness.inc", "floats": "floats_harness.inc"}
@@ -308,13 +309,13 @@ def test_a_template_at_two_types_lowers_to_two_c_functions_and_two_structs_by_th
     assert "long Ring_long_2_get(const Ring_long_2 *this, int i);" in text
 
 
-def test_new_and_delete_arrays_lower_to_malloc_and_free_and_the_seeded_bugs_lower_too(tmp_path):
+def test_new_and_delete_arrays_lower_to_allocation_models_and_the_seeded_bugs_lower_too(tmp_path):
     text, _ = _lowered("new_array", tmp_path)
     assert "#include <stdlib.h>" in text
-    assert "int *buf = (int *)malloc(sizeof(int) * (size_t)(n));" in text and "free(buf);" in text
+    assert "int *buf = swdb_alloc_new_array_int((size_t)(n));" in text and "swdb_alloc_delete_array_int(buf);" in text
     for bug in ("swdb_new_out_of_range", "swdb_new_after_delete"):
         lower(LOWERING / "new_array.cc", bug, tmp_path / bug)
-        assert "free(buf);" in (tmp_path / bug / f"{bug}.c").read_text()
+        assert "swdb_alloc_delete_array_int(buf);" in (tmp_path / bug / f"{bug}.c").read_text()
 
 
 def test_each_std_function_lowers_to_a_call_of_its_c_model_with_its_acsl_contract(tmp_path):
@@ -352,8 +353,8 @@ def test_a_reduction_variable_used_other_than_in_its_update_is_refused(tmp_path)
 @pytest.mark.parametrize("group, call, summary", [
     ("dxc_summary", "__dxc_tile_size(tile)",
      {"name": "__dxc_tile_size", "c_name": "__dxc_tile_size", "summary": "fixture.dxc_tile_size.1"}),
-    ("maa_summary", "maa_indirect_load_int(base, 0, 1, -1)",
-     {"name": "maa_indirect_load", "c_name": "maa_indirect_load_int", "summary": "fixture.maa_indirect_load.1"})])
+    ("maa_summary", "maa_indirect_load_i32(base, 0, 1, -1)",
+     {"name": "maa_indirect_load_i32", "c_name": "maa_indirect_load_i32", "summary": "fixture.maa_indirect_load.1"})])
 def test_dxc_and_maa_calls_stay_calls_through_their_summary_and_the_lowering_lists_it(tmp_path, group, call, summary):
     text, listed = _lowered(group, tmp_path)
     assert call in text

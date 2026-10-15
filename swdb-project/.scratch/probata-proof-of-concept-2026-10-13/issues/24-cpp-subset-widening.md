@@ -1,7 +1,7 @@
 # 24 — C++ subset widening
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-14 17:05 ET (Answer)
+Updated: 2026-10-14 22:35 ET (Progress, paused)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 21
@@ -46,7 +46,7 @@ Updated: 2026-10-14 17:05 ET (Answer)
 
 ## Answer
 
-2026-10-14 17:10 ET. **Resolved, partly.** The C lowering tool now covers the declared C++ subset (plus
+2026-10-14 17:10 ET (first pass; superseded in part by "Progress (paused)" below). The C lowering tool now covers the declared C++ subset (plus
 `float`/`double`, asked by ticket 26), and its lowering of spike (b)'s proof unit 1 agrees with ticket 06's
 hand lowering on every bounded input. The WP-proof boxes are **not met** (see "Not met"). Branch
 `probata-poc/t24`. Interface doc: [`format-v0.4-c-lowering-wp.md`](../../../docs/reference/format-v0.4-c-lowering-wp.md)
@@ -147,3 +147,46 @@ contract per group (the fixtures and seeded bugs exist), one proof record per C 
 (`tests9.log`). Logs and report logs: `/tmp/claude/probata-runs/t24/` (`tests8.log`, `report-r8.jsonl`).
 Merge note: ticket 22's CBMC adapter now also pins `naming_rules`, and its tests and doc name
 `swdb-c-lowering-2`; `c_lowering._named` stays for its `_cut`.
+
+## Progress (paused)
+
+2026-10-14 22:35 ET. Paused at Yan-Ru's request; **Status stays `claimed`**. Branch `probata-poc/t24`.
+
+**Done since the first pass**
+
+- WP proofs of the construct groups through the real `swdb prove --adapter wp` (`tests/test_wp_subset.py`; seed:
+  GAPBS bfs.cc with every fixture of `tests/fixtures/proof/lowering/` inserted, one safe and one seeded-bug
+  candidate, one fixture contract per group). Safe proves and seeded bug reads not proven for classes, OpenMP,
+  atomics, floats, the `__dxc_*` summary, the `maa_*` summaries and `new[]` (run r12,
+  `/tmp/claude/probata-runs/t24/tests12.log`). std_models and templates proved in the dev runs
+  (`/tmp/claude/probata-runs/t24/dev1.log`, `dev2.log`) but hit the test's 600 s subprocess timeout in r12 while
+  `swdb prove` waited in the shared verifier queue.
+- WP adapter (`swdb/wp_adapter.py`): lowered callees are inlined (`-inline-calls`), WP proves only the unit
+  (`-wp-fct`), and the verdict reader reads only the unit's properties. Summarized callees stay calls, with the
+  entry's `once: self` halves as their contract. `swdb prove --summary ENTRY --adapter wp` proves a summary on the
+  entry's own code. Unit records pin `pins.summaries: [{id, sha256, proof_record}]` (ticket 22's shape) and list
+  a `summary` assumption entry each. `formal_frame.lowered` lowers with the same summaries.
+- `new[]`/`delete[]` lower to allocation models whose contracts are the assumption entry "allocation succeeds"
+  (`assumed_clause`). An index out of range reads not proven. A read after `delete[]` proves, because WP 33 has
+  no deallocation (`\fresh`, `\freeable` and `frees` are unsupported; experiment
+  `/tmp/claude/probata-runs/t24/explore/alloc.log`). It is kept as a strict xfail.
+- C models: `model_definition`/`model_text` in `c_lowering.py`. `swdb prove --model NAME --adapter wp` (subject
+  `c_model`, `pins.models`) is built, and its 14 model records prove. **The coordinator moved this item to
+  ticket 25 (2026-10-14, about 21:20 ET)**: 25 replaces or adopts it at merge; nothing else depends on it.
+- Inheritance stays outside the declared subset (map 16 item 6, "out at first"). It is not built, so
+  unit_peter's fault builds still cannot run. `unit_maa.cpp` now lowers up to `#pragma omp simd`, which is
+  outside the declared OpenMP list: regression case `lowering-spike-unit-maa-omp-simd`. `__restrict` pointers
+  are in (C99 `restrict`).
+- Assumption: a summary prototype takes the declaration's parameter names (the summary's formal halves name them).
+- Assumption: a `new[]` fixture contract has no `assigns` clause (WP sees the buffer as caller memory).
+
+**Open**
+
+1. Rerun `tests/test_wp_subset.py` in full on a quiet queue (std_models, templates, the pin tests and the
+   `new[]` out-of-range case), then record the result. The module-scoped seed reruns every model and summary
+   job (about 40 WP jobs).
+2. Settle the C-model records with ticket 25 at merge: keep 24's `--model`/`c_model`/`pins.models`, or take 25's.
+3. Decide with Yan-Ru whether single non-virtual inheritance and `omp simd` join the subset. Either would
+   unblock part of the spike: inheritance the fault builds, `omp simd` unit_maa.
+
+**Next step:** merge 25 through the integration tip, resolve the model-record overlap, then do item 1.
