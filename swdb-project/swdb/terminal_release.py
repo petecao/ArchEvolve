@@ -46,7 +46,7 @@ def _reference(node, ident):
 
 
 def _full_initialization(statement, owner, count, params):
-    """Syntactically establish initializedness, which WP33 cannot generate as an obligation.
+    """Establish initializedness syntactically instead of relying on default RTE coverage.
 
     The first operation is exactly `for (int i=0; i<count; ++i) owner[i]=pure_scalar_expression`.
     Count cannot change in this loop; neither calls, pointer reads nor assignments occur in its RHS.
