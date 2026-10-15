@@ -1,0 +1,119 @@
+{
+  "created": "2026-10-15",
+  "ticket": "07",
+  "kind": "counted_failed_run",
+  "run_root": "/private/tmp/probata-t07-20261015/counted-13",
+  "source_manifest": {
+    "standin": {
+      "tdstep_standin.c": "d5d599e48c30b9877a3003345dac4077163ffb06359daa24142cf90cbe4540f8",
+      "dxc_summaries.h": "d708c0ef974e5ede1aaadd2b5e66dd785affa5e1dc6ef37419bf9e72517ae0d2",
+      "bfs_unit.h": "1bcbf4dac683d6a46269fcd5f896fefc2571adc49d059b46f93fb25eb0f7b235",
+      "gapbs_models.h": "401d8ccfa8fdc1ef3734c97563a1c110d003d8847508aaa24ec3f300a33eed3e"
+    },
+    "integration": "a65e8cb1",
+    "authorization": "User explicitly authorized this scoped source export via async reply2026-10-15 ET"
+  },
+  "meta": {
+    "started": "2026-10-15 01:45:59 EDT",
+    "pin": {
+      "model": "gpt-5.6-sol",
+      "effort": "xhigh"
+    },
+    "codex_version": "codex-cli 0.153.0",
+    "standin_sha256": {
+      "tdstep_standin.c": "d5d599e48c30b9877a3003345dac4077163ffb06359daa24142cf90cbe4540f8",
+      "dxc_summaries.h": "d708c0ef974e5ede1aaadd2b5e66dd785affa5e1dc6ef37419bf9e72517ae0d2",
+      "gapbs_models.h": "401d8ccfa8fdc1ef3734c97563a1c110d003d8847508aaa24ec3f300a33eed3e",
+      "bfs_unit.h": "1bcbf4dac683d6a46269fcd5f896fefc2571adc49d059b46f93fb25eb0f7b235"
+    },
+    "cpp_unit_sha256": "3c5867a2b8919806f681603836bd0cff448f21634485abf84e49ed71f25515ef",
+    "rounds": 10,
+    "budget_min": 60.0,
+    "round_timeout_s": 10,
+    "final_reserve_min": 8.0,
+    "method_changes_t07d": {
+      "monotone": true,
+      "max_ops": 8,
+      "max_text": 6000,
+      "seeds": true,
+      "frame_filter": false,
+      "strategies": true,
+      "examples": true,
+      "mode": "round-s",
+      "final_mode": "wp-smoke-s",
+      "accept": "unit-first",
+      "hint_open_cap": 30
+    },
+    "method_changes_t07e": {
+      "budget_clock_deadline": true,
+      "two_phase": true,
+      "show_goal": true,
+      "mcp_tool_timeout_s": 14400,
+      "wall_cap_s": 18000,
+      "seed_frame_goals_are_unit_goals": true
+    },
+    "allowed_kinds": [
+      "assert",
+      "ghost",
+      "lemma",
+      "logic",
+      "loop_invariant",
+      "loop_variant",
+      "predicate",
+      "proof",
+      "strategy"
+    ],
+    "harness_sha256": {
+      "loop.py": "871e6718077f65c9a45449e77a651bf515a7f3a26f31768368b8cfb8dbfcb4e6",
+      "hints.py": "ce9f4a57db3824c619ff71b31789fd2c0385bff5e85dae813d109f5ef0303ddd",
+      "wp_run.sh": "a5b8c94661b2c972f5b6b3f1fe6c2386e716eab6899af7f06bb7eaca34e5cec0",
+      "edit_loop.py": "b285330b4a260343dd69de48810327852ba33de1abe3109cb1ae047ee4d3c66f",
+      "edit_core.py": "82dec706202995b301e533d048a4682cc0dd87a6ccc5ae0209b2842daca207e3",
+      "edit_tool_mcp.py": "3792649fc05ebe2015c2631a722199d29cba3ea625dc1e793410ccf2f69b2531",
+      "frame_seeds.py": "7c8bec31b2be840218545a3370cafde8431ddd4699a363ebe3e391fb56c519c2",
+      "goal_print.py": "9494e8d457f0d28d055c109ea4fbaada278c15e3088466096dc2a407a89a358f"
+    },
+    "examples_sha256": {
+      "acsl_examples.c": "17710a605e540d99b388bc1c27a567b2e8e3e38d20c4b4dd0a7e808756281f73",
+      "check_examples.sh": "2e88a7636a2f6caef4a4bb761e086add7b1467a68998070e680826aa463edde7",
+      "errors_fixed.c": "bbc70bc6a1abf14316a9854ae85cefd5fa53ff266f4c87e6e80fce3c218670a2",
+      "frama_c_errors.txt": "720c47ac0480c922bada6059729bfd71af81bc36ebb23fd155b4c789580d433f"
+    },
+    "dev": false
+  },
+  "summary": {
+    "proven": false,
+    "within_budget": false,
+    "rounds": 2,
+    "codex_calls": 2,
+    "elapsed_min": 52.78,
+    "lock_wait_excluded_s": 88.4,
+    "best_n_open": 19,
+    "best_hints": 44,
+    "best_sha256": "6a98b547d42c71ac5563e5b279d5acef2eb9aea114b3467703dba0205a66db98",
+    "tool_calls": 38,
+    "show_goal_calls": 10,
+    "best_unit_hint_open": [
+      2,
+      17
+    ],
+    "phase_at_end": 1,
+    "wp_attempts": 18,
+    "tokens": {
+      "input_tokens": 10510838,
+      "cached_input_tokens": 10082944,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 27130,
+      "reasoning_output_tokens": 12091
+    },
+    "final": null,
+    "finished": "2026-10-15 02:40:14 EDT"
+  },
+  "artifacts": {
+    "meta.json": "3629c7a984a1bc3f91ae41058c64c410216f88497724084ad784097ab28553ab",
+    "summary.json": "103b8ce953144aee1bd7512a9323f5aa15f3be00823dc62d10375c4a4b1c0a31",
+    "history.json": "4a3635dba900661fd99bb9a84e30c0cd92111acff897f05b1ae904b868dc56e7",
+    "best.json": "6a98b547d42c71ac5563e5b279d5acef2eb9aea114b3467703dba0205a66db98"
+  },
+  "boundary": "No final successful replay or proof record. Open hint goals remain obligations, not assumptions."
+}
