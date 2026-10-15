@@ -1218,3 +1218,47 @@ pins the distinct prospective `method20-scoped-tool-approvals-v3` revision, the
 actual neutral routing check and unchanged proof/resource boundaries. Root review
 of the six-line runtime change found no additional issue. Fresh source/tool freeze,
 baseline and conversation remain required; no qualifying proof is claimed.
+
+
+### Run22 harness-aborted on process inspection — 2026-10-15 ET
+
+Clean `703ff3d7` completed its no-hint baseline and failed closed18seconds into
+seed-stage proving on `AccessDenied(pid44755)`, before any provider. The exact
+historical operation is unavailable; no cause is inferred. [Source/process/stop
+receipt](../evidence/t07-method20-inspection-aborted-20261015.json) preserves27
+source checks with zero mismatches and no remaining tools/shared leases.
+No baseline/output reuse, proof, final replay or negative-control success is claimed.
+
+Prospective observation retries now retain sanitized stage/operation/PID/birth/time
+metadata and independently recheck identity after denial. Only confirmed departed
+or replaced identities are skipped; persistent live or unknown denial fails closed.
+Four external process-boundary controls show RED/GREEN for transient and persistent
+ancestry/RSS denial;173 composed controls pass. Independent review and an actual
+fresh mechanical-seed verifier pipeline precede any fresh counted freeze. Scientific
+criteria and the existing claimed/shared-box status remain unchanged.
+
+
+Independent review then caught a transient-retry PID ownership regression before
+any actual verifier launch. Focused ancestry/marker snapshot and cleanup-leader
+replacement controls failed before the identity-preserving fix and now pass.
+The complete20 runner controls pass; the interim retry commit is superseded.
+No scientific conclusion or new counted run follows from these controls alone.
+
+
+### Inspection/identity revision reviewed; actual resource pipeline passes — 2026-10-15 ET
+
+Final independent review passes **183 controls**. Birth mismatch precedes departed
+status; fresh marker discovery renews only independently checked exact-marker
+nonroot child identities. Original root identity cannot be renewed. Persistent
+live or unknown inspection denial still fails closed. The corrected real seed
+pipeline on `79d6f338` completed at16:36:59ET in150.48seconds, with all three
+processes exited0, cleanup confirmed, source unchanged and no remaining tools or
+leases. An independent script verified27 source pins and all process/log hashes
+with zero errors. It used only five fresh mechanical frames (209goals/39open),
+called no provider and makes no scientific success claim.
+
+[Combined exact review/control/component receipts](../evidence/t07-method20-inspection-review-20261015.json)
+retain both actual resource components and all RED/GREEN ownership controls.
+Their outputs, prior baselines and conversations will not be reused. The ticket
+remains claimed in the existing shared box; a fresh counted full-baseline run
+and unchanged final positive/smoke/negative acceptance are still required.

@@ -1,8 +1,8 @@
 # Method20 prospective checkpoint
 
-Created: 2026-10-15 ET. Updated: 2026-10-15 ET. **Runs20/21 are harness-aborted,
-with no qualifying proof. The scoped tool-approval correction awaits independent
-review and a new prospective freeze.** At the earlier closeout checkpoint this
+Created: 2026-10-15 ET. Updated: 2026-10-15 ET. **Runs20/21/22 are harness-aborted,
+with no qualifying proof. The reviewed process-inspection revision and fresh
+actual seed-stage resource check pass; a new counted experiment remains required.** At the earlier closeout checkpoint this
 method was unlaunched. Historical method19 source `669df70f` stays unchanged.
 
 The new opt-in `--design-probes` requires the strict `--staged-induction`
@@ -122,3 +122,89 @@ BFS source, proof hints or verifier. A deterministic external-CLI argv control
 failed before the correction and passes for new/resumed method20 calls afterward;
 legacy calls acquire no new approval. Independent re-review precedes the next
 fresh freeze. The scientific acceptance criteria and budgets remain unchanged.
+
+
+## Run22 inspection abort and prospective retry boundary — 2026-10-15 ET
+
+Run22 at `703ff3d7` completed its fresh no-hint baseline, then failed closed during
+its seed-stage prover process after18seconds with `AccessDenied(pid44755)`.
+No provider was called. The historical summary did not identify the denied
+operation, so its exact cause remains unknown. [Aborted-run evidence](../../evidence/t07-method20-inspection-aborted-20261015.json)
+retains27 unchanged source checks, process reports and clean tool/lease audit.
+Neither baseline nor output is reusable for a counted run.
+
+The prospective guard retries each process observation three times, separated by
+10ms. After denial it independently checks fresh PID birth/status; only confirmed
+exit/zombie or changed identity is skipped. Persistent live or unknown denial
+still fails closed. Sanitized operation, PID, expected/observed birth, attempt,
+continuous/wall clock and supervision/cleanup stage are retained; no environment
+values are logged. Marker metadata is fetched explicitly so `process_iter`
+cannot silently substitute missing attributes. Discovery no longer duplicates
+RSS reads; the retained live identity union still accounts for sampled memory.
+Four actual private-child controls failed before the change and pass afterward,
+covering transient and persistent `children`/`memory_info` denial. The composed
+173 controls pass. Independent review and an actual fresh mechanical-seed
+parse/generation/prover/cleanup pipeline must pass before another counted freeze.
+This remains a sampled trusted-toolchain guard with a finite cleanup settlement,
+without a hard memory quota or hostile-process containment claim.
+
+
+Independent review caught and reproduced a PID-reuse regression in the first
+retry revision before an actual verifier was launched: refreshing a discovery
+snapshot could adopt an unrelated replacement PID. Ancestry/marker identity
+controls now retain the captured birth and compare fresh birth before/after each
+observation. A separate leader-transition control distinguishes changed identity
+from process exit and prevents targeting its replacement process group. All20
+runner controls pass after these RED/GREEN fixes. The first retry commit alone
+is superseded and must not be treated as an approved launch source.
+
+
+The central observation state uses the captured `(pid,birth)` independently of
+fresh reads. Its explicit precedence is:
+
+| Observation | Guard action |
+| --- | --- |
+| Captured and fresh births match before/after successful read | Return that observation. |
+| Fresh birth differs, including after denial | `IdentityChanged`; never adopt replacement. Cleanup leader refuses group targeting. |
+| OS confirms missing process | Skip that departed identity. |
+| Denial followed by matching-identity zombie/dead confirmation | Skip that departed identity. |
+| Denial while identity is live or cannot be confirmed | Retry up to three attempts, then fail closed. |
+| Exited root has no captured identity but numeric PID exists | Refuse group targeting before inspection. |
+
+Changed birth wins before querying replacement status. A denied snapshot birth
+still uses the retained expected birth when available. Independent final review
+passes178 composed controls, including separate ownership-edge reproductions;
+all22 runner controls pass. The actual resource component remains required.
+
+
+The first real resource component on clean `e52e3011` passed in150.53seconds:
+fresh five-seed parse/generation/round-s,209goals/39open, all three processes
+exited0, sampled peak2598.2MiB, source unchanged and leases clear. Eight actual
+single-attempt `environ` denials were retained without environment contents; no
+terminal inspection failure occurred. This component called no provider and its
+outputs may not enter a counted run.
+
+Subsequent identity-accounting review identified stale owned PID reuse: marker
+discovery must independently renew a fresh exact-marker child identity rather
+than reject it because the same numeric PID had an older known birth. Discovery
+now constructs fresh handles from a fresh PID list, bypassing iterator caches;
+it checks captured birth before/after UID/status/marker reads, then renews only
+an exact matching nonroot marker. Missing/different markers leave the old record
+unchanged. A stale captured snapshot is rejected in that scan; a subsequent fresh
+matching snapshot may be adopted. The original root identity is protected: changed
+or uncaptured root birth fails closed before any record replacement or group
+signaling. Five public boundary controls include matching/mismatched/missing
+markers and known/unknown protected root identity. Review and a fresh resource
+component precede counted launch because discovery/accounting changed.
+
+
+Final independent review passes183 controls (182 repository plus one independent
+CLI control). The fresh v5 actual component on clean `79d6f338` passed at
+16:36:59ET in150.48seconds: all three guarded processes exited0 with confirmed
+cleanup,209goals/39open from five fresh mechanical frames. An external audit
+verified27 source pins, process/log hashes and no remaining same-user tools or
+shared leases, with zero errors. [Combined source/review/resource evidence](../../evidence/t07-method20-inspection-review-20261015.json)
+retains the aborted-run boundary and both actual component receipts. Components
+are not scientific proof or reusable counted inputs. A fresh full baseline,
+provider conversation/clock, all-goal positive, final cache-none smoke replay and
+separate covering-wait negative remain mandatory.
