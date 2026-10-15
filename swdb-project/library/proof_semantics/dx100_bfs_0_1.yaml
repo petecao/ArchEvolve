@@ -79,7 +79,7 @@ model:
   logic:
     root: library
     path: proof_semantics/dx100_bfs/logic.acsl
-    sha256: 18962d8e9c965ac57658c234bd7fd2545e4af79362a0bf555f1799e2e0548b0d
+    sha256: 4f5d4780d7ed6f08ee24ff34391a1d1c8c5edf06c9e9deef014c217f579211d1
 clauses: []
 rules:
 - id: operands
@@ -243,6 +243,14 @@ rules:
     earlier lanes' writes).
   assumed:
     owner: Eric
+- id: initialized_state
+  statement: 'The working C model has initialized fixed device storage: static globals start initialized and harness
+    state draws assign initialized tile values. Trusted call contracts preserve dx_state_initialized, requiring
+    initialized ordinary-memory cells before reading them; ordinary CPU stores preserve initialized storage after
+    their RHS initialization obligations. This is a model representation invariant, not an assumed caller-buffer
+    premise or a body proof; ticket 29 checks contract/body agreement.'
+  assumed:
+    owner: SWDB proof-semantics model
 calls:
 - call: get_new_tile
   prototype: int get_new_tile(void)
@@ -252,13 +260,18 @@ calls:
   - bfs_read_offload
   rules:
   - allocation
-  contract: 'requires dx_next_tile < DX_NT;
+  - initialized_state
+  contract: 'requires initialized_state: dx_state_initialized;
+
+    requires dx_next_tile < DX_NT;
 
     assigns dx_next_tile, dx_tile_owner[dx_next_tile];
 
     ensures \result == \old(dx_next_tile) && dx_next_tile == \old(dx_next_tile) + 1;
 
     ensures dx_tile_owner[\result] == 0;
+
+    ensures dx_state_initialized;
 
     '
 - call: get_new_reg
@@ -269,13 +282,18 @@ calls:
   - bfs_read_offload
   rules:
   - allocation
-  contract: 'requires dx_next_reg < DX_NR;
+  - initialized_state
+  contract: 'requires initialized_state: dx_state_initialized;
+
+    requires dx_next_reg < DX_NR;
 
     assigns dx_next_reg, dx_reg_owner[dx_next_reg];
 
     ensures \result == \old(dx_next_reg) && dx_next_reg == \old(dx_next_reg) + 1;
 
     ensures dx_reg_owner[\result] == 0;
+
+    ensures dx_state_initialized;
 
     '
 - call: add_mem_region
@@ -286,11 +304,16 @@ calls:
   - TDStepMAA
   rules:
   - regions
-  contract: 'requires dx_regions < DX_NM;
+  - initialized_state
+  contract: 'requires initialized_state: dx_state_initialized;
+
+    requires dx_regions < DX_NM;
 
     assigns dx_regions;
 
     ensures dx_regions == \old(dx_regions) + 1;
+
+    ensures dx_state_initialized;
 
     '
 - call: clear_mem_region
@@ -301,9 +324,14 @@ calls:
   - TDStepMAA
   rules:
   - regions
-  contract: 'assigns dx_regions;
+  - initialized_state
+  contract: 'requires initialized_state: dx_state_initialized;
+
+    assigns dx_regions;
 
     ensures dx_regions == 0;
+
+    ensures dx_state_initialized;
 
     '
 - call: maa_const
@@ -316,15 +344,17 @@ calls:
   rules:
   - operands
   - register_write_stall
-  contract: "requires 0 <= reg < DX_NR;\nassigns dx_reg_value[reg], dx_live, dx_kind[0 .. DX_K - 1], dx_dst1[0 ..\
-    \ DX_K - 1], dx_dst2[0 .. DX_K - 1], dx_src1[0 .. DX_K - 1], dx_src2[0 .. DX_K - 1], dx_cond[0 .. DX_K - 1],\
-    \ dx_regs_in[0 .. DX_K - 1], dx_regs_out[0 .. DX_K - 1], dx_reg_a[0 .. DX_K - 1], dx_reg_b[0 .. DX_K - 1], dx_reg_c[0\
-    \ .. DX_K - 1], dx_region[0 .. DX_K - 1], dx_base[0 .. DX_K - 1], dx_lo[0 .. DX_K - 1], dx_hi[0 .. DX_K - 1],\
-    \ dx_stride[0 .. DX_K - 1], dx_index[0 .. DX_K - 1], dx_deps[0 .. DX_K - 1], dx_writes_memory[0 .. DX_K - 1],\
-    \ dx_tile_writer[0 .. DX_NT - 1], dx_tile_readers[0 .. DX_NT - 1], dx_reg_writer[0 .. DX_NR - 1], dx_reg_named[0\
-    \ .. DX_NR - 1], dx_count;\nensures dx_reg_value[reg] == value;\nensures dx_reg_writer[reg] == -1 && dx_reg_named[reg]\
-    \ == 0;\nensures \\forall integer u; 0 <= u < DX_NT && dx_uses_reg{Pre}(\\at(dx_tile_writer[u], Pre), reg) ==>\n\
-    \  dx_tile_writer[u] == -1;\nensures dx_kept{Pre, Post}(-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0);\n"
+  - initialized_state
+  contract: "requires initialized_state: dx_state_initialized;\nrequires 0 <= reg < DX_NR;\nassigns dx_reg_value[reg],\
+    \ dx_live, dx_kind[0 .. DX_K - 1], dx_dst1[0 .. DX_K - 1], dx_dst2[0 .. DX_K - 1], dx_src1[0 .. DX_K - 1], dx_src2[0\
+    \ .. DX_K - 1], dx_cond[0 .. DX_K - 1], dx_regs_in[0 .. DX_K - 1], dx_regs_out[0 .. DX_K - 1], dx_reg_a[0 ..\
+    \ DX_K - 1], dx_reg_b[0 .. DX_K - 1], dx_reg_c[0 .. DX_K - 1], dx_region[0 .. DX_K - 1], dx_base[0 .. DX_K -\
+    \ 1], dx_lo[0 .. DX_K - 1], dx_hi[0 .. DX_K - 1], dx_stride[0 .. DX_K - 1], dx_index[0 .. DX_K - 1], dx_deps[0\
+    \ .. DX_K - 1], dx_writes_memory[0 .. DX_K - 1], dx_tile_writer[0 .. DX_NT - 1], dx_tile_readers[0 .. DX_NT\
+    \ - 1], dx_reg_writer[0 .. DX_NR - 1], dx_reg_named[0 .. DX_NR - 1], dx_count;\nensures dx_reg_value[reg] ==\
+    \ value;\nensures dx_reg_writer[reg] == -1 && dx_reg_named[reg] == 0;\nensures \\forall integer u; 0 <= u <\
+    \ DX_NT && dx_uses_reg{Pre}(\\at(dx_tile_writer[u], Pre), reg) ==>\n  dx_tile_writer[u] == -1;\nensures dx_kept{Pre,\
+    \ Post}(-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0);\nensures dx_state_initialized;\n"
 - call: wait_ready
   prototype: void wait_ready(int tile)
   lowerings:
@@ -337,7 +367,10 @@ calls:
   - wait_counted_roles
   - wait_transitive
   - wait_range_loop_exception
-  contract: 'requires 0 <= tile < DX_NT;
+  - initialized_state
+  contract: 'requires initialized_state: dx_state_initialized;
+
+    requires 0 <= tile < DX_NT;
 
     assigns dx_live, dx_kind[0 .. DX_K - 1], dx_dst1[0 .. DX_K - 1], dx_dst2[0 .. DX_K - 1], dx_src1[0 .. DX_K -
     1], dx_src2[0 .. DX_K - 1], dx_cond[0 .. DX_K - 1], dx_regs_in[0 .. DX_K - 1], dx_regs_out[0 .. DX_K - 1], dx_reg_a[0
@@ -350,6 +383,8 @@ calls:
 
     ensures dx_kept{Pre, Post}(-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0);
 
+    ensures dx_state_initialized;
+
     '
 - call: get_tile_size
   prototype: unsigned short get_tile_size(int tile)
@@ -361,13 +396,18 @@ calls:
   rules:
   - operands
   - unready_size_read
-  contract: 'requires 0 <= tile < DX_NT;
+  - initialized_state
+  contract: 'requires initialized_state: dx_state_initialized;
+
+    requires 0 <= tile < DX_NT;
 
     requires dx_tile_writer[tile] == -1;
 
     assigns \nothing;
 
     ensures \result == dx_tile_size[tile];
+
+    ensures dx_state_initialized;
 
     '
 - call: get_cacheable_tile_pointer
@@ -380,11 +420,18 @@ calls:
   rules:
   - operands
   - tile_pointer
-  contract: 'requires 0 <= tile < DX_NT;
+  - initialized_state
+  contract: 'requires initialized_state: dx_state_initialized;
+
+    requires 0 <= tile < DX_NT;
 
     assigns \nothing;
 
     ensures \result == &dx_tile_data[tile][0];
+
+    ensures dx_state_initialized;
+
+    ensures \initialized(\result + (0 .. DX_TS - 1));
 
     '
 - call: maa_stream_load
@@ -401,12 +448,15 @@ calls:
   - dispatch_stall
   - register_overlap
   - memory_serial_domain
-  contract: "requires 0 <= min_reg < DX_NR && 0 <= max_reg < DX_NR && 0 <= stride_reg < DX_NR && 0 <= dst_tile <\
-    \ DX_NT;\nrequires memory_domain: dx_memory_clear_after_stall(dst_tile, -1, 0);\nrequires cond_tile == -1;\n\
-    requires dx_reg_value[stride_reg] > 0 && dx_reg_value[min_reg] <= dx_reg_value[max_reg];\nrequires ghost_capacity:\
-    \ 0 <= dx_count < DX_K;\nrequires dx_issuable(min_reg, max_reg, stride_reg, -1, -1);\nrequires \\forall integer\
-    \ k; 0 <= k < DX_TS && dx_reg_value[min_reg] + k * dx_reg_value[stride_reg] <\n  dx_reg_value[max_reg] ==> \\\
-    valid_read(data + (dx_reg_value[min_reg] + k * dx_reg_value[stride_reg]));\nassigns dx_tile_data[dst_tile][0\
+  - initialized_state
+  contract: "requires initialized_state: dx_state_initialized;\nrequires 0 <= min_reg < DX_NR && 0 <= max_reg <\
+    \ DX_NR && 0 <= stride_reg < DX_NR && 0 <= dst_tile < DX_NT;\nrequires memory_domain: dx_memory_clear_after_stall(dst_tile,\
+    \ -1, 0);\nrequires cond_tile == -1;\nrequires dx_reg_value[stride_reg] > 0 && dx_reg_value[min_reg] <= dx_reg_value[max_reg];\n\
+    requires ghost_capacity: 0 <= dx_count < DX_K;\nrequires dx_issuable(min_reg, max_reg, stride_reg, -1, -1);\n\
+    requires \\forall integer k; 0 <= k < DX_TS && dx_reg_value[min_reg] + k * dx_reg_value[stride_reg] <\n  dx_reg_value[max_reg]\
+    \ ==> \\valid_read(data + (dx_reg_value[min_reg] + k * dx_reg_value[stride_reg]));\nrequires source_initialized:\
+    \ \\forall integer k; 0 <= k < DX_TS && dx_reg_value[min_reg] + k * dx_reg_value[stride_reg] <\n  dx_reg_value[max_reg]\
+    \ ==> \\initialized(data + (dx_reg_value[min_reg] + k * dx_reg_value[stride_reg]));\nassigns dx_tile_data[dst_tile][0\
     \ .. DX_TS - 1], dx_tile_size[dst_tile], dx_live, dx_kind[0 .. DX_K - 1], dx_dst1[0 .. DX_K - 1], dx_dst2[0\
     \ .. DX_K - 1], dx_src1[0 .. DX_K - 1], dx_src2[0 .. DX_K - 1], dx_cond[0 .. DX_K - 1], dx_regs_in[0 .. DX_K\
     \ - 1], dx_regs_out[0 .. DX_K - 1], dx_reg_a[0 .. DX_K - 1], dx_reg_b[0 .. DX_K - 1], dx_reg_c[0 .. DX_K - 1],\
@@ -420,7 +470,8 @@ calls:
     \  dx_stride[dx_tile_writer[dst_tile]] == \\old(dx_reg_value[stride_reg]);\nensures \\let lo = \\old(dx_reg_value[min_reg]);\
     \ \\let hi = \\old(dx_reg_value[max_reg]);\n  \\let st = \\old(dx_reg_value[stride_reg]); \\let n = (hi == lo\
     \ ? 0 : (hi - lo - 1) / st + 1);\n  dx_tile_size[dst_tile] == (n < DX_TS ? n : DX_TS) &&\n  (\\forall integer\
-    \ k; 0 <= k < DX_TS && k < n ==> dx_tile_data[dst_tile][k] == \\old(data[lo + k * st]));\n"
+    \ k; 0 <= k < DX_TS && k < n ==> dx_tile_data[dst_tile][k] == \\old(data[lo + k * st]));\nensures dx_state_initialized;\n\
+    ensures \\initialized(dx_tile_data[dst_tile] + (0 .. DX_TS - 1));\n"
 - call: maa_indirect_load
   prototype: void maa_indirect_load(int *data, int idx_tile, int dst_tile, int cond_tile)
   lowerings:
@@ -433,21 +484,25 @@ calls:
   - gather_values
   - dispatch_stall
   - memory_serial_domain
-  contract: "requires 0 <= idx_tile < DX_NT && 0 <= dst_tile < DX_NT && dst_tile != idx_tile && cond_tile == -1;\n\
-    requires memory_domain: dx_memory_clear_after_stall(dst_tile, -1, 0);\nrequires ghost_capacity: 0 <= dx_count\
-    \ < DX_K;\nrequires dx_issuable(-1, -1, -1, -1, -1);\nrequires \\forall integer k; 0 <= k < dx_tile_size[idx_tile]\
-    \ && k < DX_TS ==>\n  \\valid_read(data + (unsigned int)dx_tile_data[idx_tile][k]);\nassigns dx_tile_data[dst_tile][0\
-    \ .. DX_TS - 1], dx_tile_size[dst_tile], dx_live, dx_kind[0 .. DX_K - 1], dx_dst1[0 .. DX_K - 1], dx_dst2[0\
-    \ .. DX_K - 1], dx_src1[0 .. DX_K - 1], dx_src2[0 .. DX_K - 1], dx_cond[0 .. DX_K - 1], dx_regs_in[0 .. DX_K\
-    \ - 1], dx_regs_out[0 .. DX_K - 1], dx_reg_a[0 .. DX_K - 1], dx_reg_b[0 .. DX_K - 1], dx_reg_c[0 .. DX_K - 1],\
-    \ dx_region[0 .. DX_K - 1], dx_base[0 .. DX_K - 1], dx_lo[0 .. DX_K - 1], dx_hi[0 .. DX_K - 1], dx_stride[0\
-    \ .. DX_K - 1], dx_index[0 .. DX_K - 1], dx_deps[0 .. DX_K - 1], dx_writes_memory[0 .. DX_K - 1], dx_tile_writer[0\
-    \ .. DX_NT - 1], dx_tile_readers[0 .. DX_NT - 1], dx_reg_writer[0 .. DX_NR - 1], dx_reg_named[0 .. DX_NR - 1],\
-    \ dx_count;\nensures dx_new_slot(DX_GATHER, dst_tile, -1, idx_tile, -1, -1, -1, -1, -1);\nensures dx_stall_covers{Pre,\
-    \ Post}(dst_tile, -1);\nensures dx_kept{Pre, Post}(dst_tile, -1, idx_tile, -1, -1, -1, -1, -1, -1, -1, 1);\n\
-    ensures dx_base[dx_tile_writer[dst_tile]] == data && dx_index[dx_tile_writer[dst_tile]] == idx_tile;\nensures\
-    \ dx_tile_size[dst_tile] == \\old(dx_tile_size[idx_tile]);\nensures \\forall integer k; 0 <= k < \\old(dx_tile_size[idx_tile])\
-    \ && k < DX_TS ==>\n  dx_tile_data[dst_tile][k] == \\old(data[(unsigned int)dx_tile_data[idx_tile][k]]);\n"
+  - initialized_state
+  contract: "requires initialized_state: dx_state_initialized;\nrequires 0 <= idx_tile < DX_NT && 0 <= dst_tile\
+    \ < DX_NT && dst_tile != idx_tile && cond_tile == -1;\nrequires memory_domain: dx_memory_clear_after_stall(dst_tile,\
+    \ -1, 0);\nrequires ghost_capacity: 0 <= dx_count < DX_K;\nrequires dx_issuable(-1, -1, -1, -1, -1);\nrequires\
+    \ \\forall integer k; 0 <= k < dx_tile_size[idx_tile] && k < DX_TS ==>\n  \\valid_read(data + (unsigned int)dx_tile_data[idx_tile][k]);\n\
+    requires source_initialized: \\forall integer k; 0 <= k < dx_tile_size[idx_tile] && k < DX_TS ==>\n  \\initialized(data\
+    \ + (unsigned int)dx_tile_data[idx_tile][k]);\nassigns dx_tile_data[dst_tile][0 .. DX_TS - 1], dx_tile_size[dst_tile],\
+    \ dx_live, dx_kind[0 .. DX_K - 1], dx_dst1[0 .. DX_K - 1], dx_dst2[0 .. DX_K - 1], dx_src1[0 .. DX_K - 1], dx_src2[0\
+    \ .. DX_K - 1], dx_cond[0 .. DX_K - 1], dx_regs_in[0 .. DX_K - 1], dx_regs_out[0 .. DX_K - 1], dx_reg_a[0 ..\
+    \ DX_K - 1], dx_reg_b[0 .. DX_K - 1], dx_reg_c[0 .. DX_K - 1], dx_region[0 .. DX_K - 1], dx_base[0 .. DX_K -\
+    \ 1], dx_lo[0 .. DX_K - 1], dx_hi[0 .. DX_K - 1], dx_stride[0 .. DX_K - 1], dx_index[0 .. DX_K - 1], dx_deps[0\
+    \ .. DX_K - 1], dx_writes_memory[0 .. DX_K - 1], dx_tile_writer[0 .. DX_NT - 1], dx_tile_readers[0 .. DX_NT\
+    \ - 1], dx_reg_writer[0 .. DX_NR - 1], dx_reg_named[0 .. DX_NR - 1], dx_count;\nensures dx_new_slot(DX_GATHER,\
+    \ dst_tile, -1, idx_tile, -1, -1, -1, -1, -1);\nensures dx_stall_covers{Pre, Post}(dst_tile, -1);\nensures dx_kept{Pre,\
+    \ Post}(dst_tile, -1, idx_tile, -1, -1, -1, -1, -1, -1, -1, 1);\nensures dx_base[dx_tile_writer[dst_tile]] ==\
+    \ data && dx_index[dx_tile_writer[dst_tile]] == idx_tile;\nensures dx_tile_size[dst_tile] == \\old(dx_tile_size[idx_tile]);\n\
+    ensures \\forall integer k; 0 <= k < \\old(dx_tile_size[idx_tile]) && k < DX_TS ==>\n  dx_tile_data[dst_tile][k]\
+    \ == \\old(data[(unsigned int)dx_tile_data[idx_tile][k]]);\nensures dx_state_initialized;\nensures \\initialized(dx_tile_data[dst_tile]\
+    \ + (0 .. DX_TS - 1));\n"
 - call: maa_range_loop
   prototype: void maa_range_loop(int last_i_reg, int last_j_reg, int min_tile, int max_tile, int stride_reg, int
     dst_i_tile, int dst_j_tile, int cond_tile)
@@ -462,28 +517,31 @@ calls:
   - range_loop_values
   - dispatch_stall
   - register_overlap
-  contract: "requires 0 <= last_i_reg < DX_NR && 0 <= last_j_reg < DX_NR && 0 <= stride_reg < DX_NR && last_i_reg\
-    \ != last_j_reg;\nrequires 0 <= min_tile < DX_NT && 0 <= max_tile < DX_NT && 0 <= dst_i_tile < DX_NT && 0 <=\
-    \ dst_j_tile < DX_NT;\nrequires dst_i_tile != dst_j_tile && dst_i_tile != min_tile && dst_i_tile != max_tile\
-    \ && dst_j_tile != min_tile &&\n  dst_j_tile != max_tile && cond_tile == -1;\nrequires dx_tile_size[min_tile]\
-    \ == dx_tile_size[max_tile] && dx_reg_value[stride_reg] > 0 && dx_reg_value[last_i_reg] >= 0;\nrequires 0 <=\
-    \ dx_tile_size[min_tile] <= DX_TS;\nrequires ghost_capacity: 0 <= dx_count < DX_K;\nrequires dx_issuable(last_i_reg,\
-    \ last_j_reg, stride_reg, last_i_reg, last_j_reg);\nassigns dx_tile_data[dst_i_tile][0 .. DX_TS - 1], dx_tile_data[dst_j_tile][0\
-    \ .. DX_TS - 1], dx_tile_size[dst_i_tile],\n  dx_tile_size[dst_j_tile], dx_reg_value[last_i_reg], dx_reg_value[last_j_reg],\
-    \ dx_live, dx_kind[0 .. DX_K - 1], dx_dst1[0 .. DX_K - 1], dx_dst2[0 .. DX_K - 1], dx_src1[0 .. DX_K - 1], dx_src2[0\
-    \ .. DX_K - 1], dx_cond[0 .. DX_K - 1], dx_regs_in[0 .. DX_K - 1], dx_regs_out[0 .. DX_K - 1], dx_reg_a[0 ..\
-    \ DX_K - 1], dx_reg_b[0 .. DX_K - 1], dx_reg_c[0 .. DX_K - 1], dx_region[0 .. DX_K - 1], dx_base[0 .. DX_K -\
-    \ 1], dx_lo[0 .. DX_K - 1], dx_hi[0 .. DX_K - 1], dx_stride[0 .. DX_K - 1], dx_index[0 .. DX_K - 1], dx_deps[0\
-    \ .. DX_K - 1], dx_writes_memory[0 .. DX_K - 1], dx_tile_writer[0 .. DX_NT - 1], dx_tile_readers[0 .. DX_NT\
-    \ - 1], dx_reg_writer[0 .. DX_NR - 1], dx_reg_named[0 .. DX_NR - 1], dx_count;\nensures dx_new_slot(DX_RANGE_LOOP,\
-    \ dst_i_tile, dst_j_tile, min_tile, max_tile, -1, last_i_reg, last_j_reg, stride_reg);\nensures dx_stall_covers{Pre,\
-    \ Post}(dst_i_tile, dst_j_tile);\nensures dx_kept{Pre, Post}(dst_i_tile, dst_j_tile, min_tile, max_tile, -1,\
-    \ last_i_reg, last_j_reg, stride_reg, last_i_reg, last_j_reg, 1);\nensures 0 <= dx_tile_size[dst_i_tile] <=\
-    \ DX_TS && dx_tile_size[dst_j_tile] == dx_tile_size[dst_i_tile];\nensures \\old(dx_reg_value[last_j_reg]) ==\
-    \ -1 && \\old(dx_reg_value[last_i_reg]) < \\old(dx_tile_size[min_tile]) &&\n  (unsigned int)\\old(dx_tile_data[min_tile][dx_reg_value[last_i_reg]])\
-    \ <\n  (unsigned int)\\old(dx_tile_data[max_tile][dx_reg_value[last_i_reg]]) ==>\n  dx_tile_size[dst_j_tile]\
-    \ >= 1 && dx_tile_data[dst_i_tile][0] == \\old(dx_reg_value[last_i_reg]) &&\n  dx_tile_data[dst_j_tile][0] ==\
-    \ \\old(dx_tile_data[min_tile][dx_reg_value[last_i_reg]]);\n"
+  - initialized_state
+  contract: "requires initialized_state: dx_state_initialized;\nrequires 0 <= last_i_reg < DX_NR && 0 <= last_j_reg\
+    \ < DX_NR && 0 <= stride_reg < DX_NR && last_i_reg != last_j_reg;\nrequires 0 <= min_tile < DX_NT && 0 <= max_tile\
+    \ < DX_NT && 0 <= dst_i_tile < DX_NT && 0 <= dst_j_tile < DX_NT;\nrequires dst_i_tile != dst_j_tile && dst_i_tile\
+    \ != min_tile && dst_i_tile != max_tile && dst_j_tile != min_tile &&\n  dst_j_tile != max_tile && cond_tile\
+    \ == -1;\nrequires dx_tile_size[min_tile] == dx_tile_size[max_tile] && dx_reg_value[stride_reg] > 0 && dx_reg_value[last_i_reg]\
+    \ >= 0;\nrequires 0 <= dx_tile_size[min_tile] <= DX_TS;\nrequires ghost_capacity: 0 <= dx_count < DX_K;\nrequires\
+    \ dx_issuable(last_i_reg, last_j_reg, stride_reg, last_i_reg, last_j_reg);\nassigns dx_tile_data[dst_i_tile][0\
+    \ .. DX_TS - 1], dx_tile_data[dst_j_tile][0 .. DX_TS - 1], dx_tile_size[dst_i_tile],\n  dx_tile_size[dst_j_tile],\
+    \ dx_reg_value[last_i_reg], dx_reg_value[last_j_reg], dx_live, dx_kind[0 .. DX_K - 1], dx_dst1[0 .. DX_K - 1],\
+    \ dx_dst2[0 .. DX_K - 1], dx_src1[0 .. DX_K - 1], dx_src2[0 .. DX_K - 1], dx_cond[0 .. DX_K - 1], dx_regs_in[0\
+    \ .. DX_K - 1], dx_regs_out[0 .. DX_K - 1], dx_reg_a[0 .. DX_K - 1], dx_reg_b[0 .. DX_K - 1], dx_reg_c[0 ..\
+    \ DX_K - 1], dx_region[0 .. DX_K - 1], dx_base[0 .. DX_K - 1], dx_lo[0 .. DX_K - 1], dx_hi[0 .. DX_K - 1], dx_stride[0\
+    \ .. DX_K - 1], dx_index[0 .. DX_K - 1], dx_deps[0 .. DX_K - 1], dx_writes_memory[0 .. DX_K - 1], dx_tile_writer[0\
+    \ .. DX_NT - 1], dx_tile_readers[0 .. DX_NT - 1], dx_reg_writer[0 .. DX_NR - 1], dx_reg_named[0 .. DX_NR - 1],\
+    \ dx_count;\nensures dx_new_slot(DX_RANGE_LOOP, dst_i_tile, dst_j_tile, min_tile, max_tile, -1, last_i_reg,\
+    \ last_j_reg, stride_reg);\nensures dx_stall_covers{Pre, Post}(dst_i_tile, dst_j_tile);\nensures dx_kept{Pre,\
+    \ Post}(dst_i_tile, dst_j_tile, min_tile, max_tile, -1, last_i_reg, last_j_reg, stride_reg, last_i_reg, last_j_reg,\
+    \ 1);\nensures 0 <= dx_tile_size[dst_i_tile] <= DX_TS && dx_tile_size[dst_j_tile] == dx_tile_size[dst_i_tile];\n\
+    ensures \\old(dx_reg_value[last_j_reg]) == -1 && \\old(dx_reg_value[last_i_reg]) < \\old(dx_tile_size[min_tile])\
+    \ &&\n  (unsigned int)\\old(dx_tile_data[min_tile][dx_reg_value[last_i_reg]]) <\n  (unsigned int)\\old(dx_tile_data[max_tile][dx_reg_value[last_i_reg]])\
+    \ ==>\n  dx_tile_size[dst_j_tile] >= 1 && dx_tile_data[dst_i_tile][0] == \\old(dx_reg_value[last_i_reg]) &&\n\
+    \  dx_tile_data[dst_j_tile][0] == \\old(dx_tile_data[min_tile][dx_reg_value[last_i_reg]]);\nensures dx_state_initialized;\n\
+    ensures \\initialized(dx_tile_data[dst_i_tile] + (0 .. DX_TS - 1)) && \\initialized(dx_tile_data[dst_j_tile]\
+    \ + (0 .. DX_TS - 1));\n"
 - call: maa_alu_scalar
   prototype: void maa_alu_scalar(int src_tile, int src_reg, int dst_tile, int op, int cond_tile)
   lowerings: []
@@ -494,19 +552,22 @@ calls:
   - alu_lt_values
   - dispatch_stall
   - register_overlap
-  contract: "requires 0 <= src_tile < DX_NT && 0 <= src_reg < DX_NR && 0 <= dst_tile < DX_NT && dst_tile != src_tile;\n\
-    requires op == DX_LT_OP && cond_tile == -1;\nrequires ghost_capacity: 0 <= dx_count < DX_K;\nrequires dx_issuable(src_reg,\
-    \ -1, -1, -1, -1);\nassigns dx_tile_data[dst_tile][0 .. DX_TS - 1], dx_tile_size[dst_tile], dx_live, dx_kind[0\
-    \ .. DX_K - 1], dx_dst1[0 .. DX_K - 1], dx_dst2[0 .. DX_K - 1], dx_src1[0 .. DX_K - 1], dx_src2[0 .. DX_K -\
-    \ 1], dx_cond[0 .. DX_K - 1], dx_regs_in[0 .. DX_K - 1], dx_regs_out[0 .. DX_K - 1], dx_reg_a[0 .. DX_K - 1],\
-    \ dx_reg_b[0 .. DX_K - 1], dx_reg_c[0 .. DX_K - 1], dx_region[0 .. DX_K - 1], dx_base[0 .. DX_K - 1], dx_lo[0\
-    \ .. DX_K - 1], dx_hi[0 .. DX_K - 1], dx_stride[0 .. DX_K - 1], dx_index[0 .. DX_K - 1], dx_deps[0 .. DX_K -\
-    \ 1], dx_writes_memory[0 .. DX_K - 1], dx_tile_writer[0 .. DX_NT - 1], dx_tile_readers[0 .. DX_NT - 1], dx_reg_writer[0\
-    \ .. DX_NR - 1], dx_reg_named[0 .. DX_NR - 1], dx_count;\nensures dx_new_slot(DX_ALU_SCALAR, dst_tile, -1, src_tile,\
-    \ -1, -1, src_reg, -1, -1);\nensures dx_stall_covers{Pre, Post}(dst_tile, -1);\nensures dx_kept{Pre, Post}(dst_tile,\
-    \ -1, src_tile, -1, -1, src_reg, -1, -1, -1, -1, 1);\nensures dx_tile_size[dst_tile] == \\old(dx_tile_size[src_tile]);\n\
-    ensures \\forall integer k; 0 <= k < \\old(dx_tile_size[src_tile]) && k < DX_TS ==>\n  dx_tile_data[dst_tile][k]\
-    \ == (\\old(dx_tile_data[src_tile][k]) < \\old(dx_reg_value[src_reg]) ? 1 : 0);\n"
+  - initialized_state
+  contract: "requires initialized_state: dx_state_initialized;\nrequires 0 <= src_tile < DX_NT && 0 <= src_reg <\
+    \ DX_NR && 0 <= dst_tile < DX_NT && dst_tile != src_tile;\nrequires op == DX_LT_OP && cond_tile == -1;\nrequires\
+    \ ghost_capacity: 0 <= dx_count < DX_K;\nrequires dx_issuable(src_reg, -1, -1, -1, -1);\nassigns dx_tile_data[dst_tile][0\
+    \ .. DX_TS - 1], dx_tile_size[dst_tile], dx_live, dx_kind[0 .. DX_K - 1], dx_dst1[0 .. DX_K - 1], dx_dst2[0\
+    \ .. DX_K - 1], dx_src1[0 .. DX_K - 1], dx_src2[0 .. DX_K - 1], dx_cond[0 .. DX_K - 1], dx_regs_in[0 .. DX_K\
+    \ - 1], dx_regs_out[0 .. DX_K - 1], dx_reg_a[0 .. DX_K - 1], dx_reg_b[0 .. DX_K - 1], dx_reg_c[0 .. DX_K - 1],\
+    \ dx_region[0 .. DX_K - 1], dx_base[0 .. DX_K - 1], dx_lo[0 .. DX_K - 1], dx_hi[0 .. DX_K - 1], dx_stride[0\
+    \ .. DX_K - 1], dx_index[0 .. DX_K - 1], dx_deps[0 .. DX_K - 1], dx_writes_memory[0 .. DX_K - 1], dx_tile_writer[0\
+    \ .. DX_NT - 1], dx_tile_readers[0 .. DX_NT - 1], dx_reg_writer[0 .. DX_NR - 1], dx_reg_named[0 .. DX_NR - 1],\
+    \ dx_count;\nensures dx_new_slot(DX_ALU_SCALAR, dst_tile, -1, src_tile, -1, -1, src_reg, -1, -1);\nensures dx_stall_covers{Pre,\
+    \ Post}(dst_tile, -1);\nensures dx_kept{Pre, Post}(dst_tile, -1, src_tile, -1, -1, src_reg, -1, -1, -1, -1,\
+    \ 1);\nensures dx_tile_size[dst_tile] == \\old(dx_tile_size[src_tile]);\nensures \\forall integer k; 0 <= k\
+    \ < \\old(dx_tile_size[src_tile]) && k < DX_TS ==>\n  dx_tile_data[dst_tile][k] == (\\old(dx_tile_data[src_tile][k])\
+    \ < \\old(dx_reg_value[src_reg]) ? 1 : 0);\nensures dx_state_initialized;\nensures \\initialized(dx_tile_data[dst_tile]\
+    \ + (0 .. DX_TS - 1));\n"
 - call: maa_indirect_store_vector
   prototype: void maa_indirect_store_vector(int *data, int idx_tile, int src_tile, int cond_tile, int dst_tile)
   lowerings: []
@@ -519,15 +580,18 @@ calls:
   - store_duplicate_order
   - dispatch_stall
   - memory_serial_domain
-  contract: "requires 0 <= idx_tile < DX_NT && 0 <= src_tile < DX_NT && (cond_tile == -1 || 0 <= cond_tile < DX_NT);\n\
-    requires 0 <= dst_tile < DX_NT && dst_tile != idx_tile && dst_tile != src_tile && dst_tile != cond_tile;\nrequires\
-    \ memory_domain: dx_memory_clear_after_stall(dst_tile, -1, 1);\nrequires \\base_addr(data) != \\base_addr(&dx_tile_data[0][0])\
-    \ &&\n  \\base_addr(data) != \\base_addr(&dx_tile_size[0]) && \\base_addr(data) != \\base_addr(&dx_reg_value[0]);\n\
-    requires dx_tile_size[src_tile] == dx_tile_size[idx_tile] &&\n  (cond_tile == -1 || dx_tile_size[cond_tile]\
-    \ == dx_tile_size[idx_tile]);\nrequires ghost_capacity: 0 <= dx_count < DX_K;\nrequires dx_issuable(-1, -1,\
-    \ -1, -1, -1);\nrequires \\forall integer k; 0 <= k < dx_tile_size[idx_tile] && k < DX_TS &&\n  (cond_tile ==\
-    \ -1 || dx_tile_data[cond_tile][k] != 0) ==> \\valid(data + (unsigned int)dx_tile_data[idx_tile][k]);\nrequires\
-    \ store_frame_bound: 0 <= dx_store_bound;\nrequires store_indices: \\forall integer k; 0 <= k < dx_tile_size[idx_tile]\
+  - initialized_state
+  contract: "requires initialized_state: dx_state_initialized;\nrequires 0 <= idx_tile < DX_NT && 0 <= src_tile\
+    \ < DX_NT && (cond_tile == -1 || 0 <= cond_tile < DX_NT);\nrequires 0 <= dst_tile < DX_NT && dst_tile != idx_tile\
+    \ && dst_tile != src_tile && dst_tile != cond_tile;\nrequires memory_domain: dx_memory_clear_after_stall(dst_tile,\
+    \ -1, 1);\nrequires \\base_addr(data) != \\base_addr(&dx_tile_data[0][0]) &&\n  \\base_addr(data) != \\base_addr(&dx_tile_size[0])\
+    \ && \\base_addr(data) != \\base_addr(&dx_reg_value[0]);\nrequires dx_tile_size[src_tile] == dx_tile_size[idx_tile]\
+    \ &&\n  (cond_tile == -1 || dx_tile_size[cond_tile] == dx_tile_size[idx_tile]);\nrequires ghost_capacity: 0\
+    \ <= dx_count < DX_K;\nrequires dx_issuable(-1, -1, -1, -1, -1);\nrequires \\forall integer k; 0 <= k < dx_tile_size[idx_tile]\
+    \ && k < DX_TS &&\n  (cond_tile == -1 || dx_tile_data[cond_tile][k] != 0) ==> \\valid(data + (unsigned int)dx_tile_data[idx_tile][k]);\n\
+    requires source_initialized: \\forall integer k; 0 <= k < dx_tile_size[idx_tile] && k < DX_TS &&\n  (cond_tile\
+    \ == -1 || dx_tile_data[cond_tile][k] != 0) ==> \\initialized(data + (unsigned int)dx_tile_data[idx_tile][k]);\n\
+    requires store_frame_bound: 0 <= dx_store_bound;\nrequires store_indices: \\forall integer k; 0 <= k < dx_tile_size[idx_tile]\
     \ && k < DX_TS &&\n  (cond_tile == -1 || dx_tile_data[cond_tile][k] != 0) ==>\n  0 <= (unsigned int)dx_tile_data[idx_tile][k]\
     \ < dx_store_bound;\nassigns data[0 .. dx_store_bound - 1],\n  dx_tile_data[dst_tile][0 .. DX_TS - 1], dx_tile_size[dst_tile],\
     \ dx_live, dx_kind[0 .. DX_K - 1], dx_dst1[0 .. DX_K - 1], dx_dst2[0 .. DX_K - 1], dx_src1[0 .. DX_K - 1], dx_src2[0\
@@ -539,8 +603,10 @@ calls:
     \ dst_tile, -1, idx_tile, src_tile, cond_tile, -1, -1, -1);\nensures dx_stall_covers{Pre, Post}(dst_tile, -1);\n\
     ensures dx_kept{Pre, Post}(dst_tile, -1, idx_tile, src_tile, cond_tile, -1, -1, -1, -1, -1, 1);\nensures dx_base[dx_tile_writer[dst_tile]]\
     \ == data && dx_index[dx_tile_writer[dst_tile]] == idx_tile;\nensures dx_tile_size[dst_tile] == \\old(dx_tile_size[idx_tile]);\n\
-    ensures \\old(dx_tile_size[idx_tile]) >= 1 && (cond_tile == -1 || \\old(dx_tile_data[cond_tile][0]) != 0) ==>\n\
-    \  dx_tile_data[dst_tile][0] == \\old(data[(unsigned int)dx_tile_data[idx_tile][0]]);\n"
+    ensures \\forall integer k; 0 <= k < \\old(dx_store_bound) && \\at(\\initialized(data + k), Pre) ==>\n  \\initialized(data\
+    \ + k);\nensures \\old(dx_tile_size[idx_tile]) >= 1 && (cond_tile == -1 || \\old(dx_tile_data[cond_tile][0])\
+    \ != 0) ==>\n  dx_tile_data[dst_tile][0] == \\old(data[(unsigned int)dx_tile_data[idx_tile][0]]);\nensures dx_state_initialized;\n\
+    ensures \\initialized(dx_tile_data[dst_tile] + (0 .. DX_TS - 1));\n"
 queries:
 - query: swdb_dx_in_footprint
   prototype: int swdb_dx_in_footprint(int tile, const int *addr)
@@ -557,9 +623,13 @@ wp:
     prototype: int *swdb_tile_read_probe(int *addr)
     contract: 'requires dx_read_ok(addr);
 
+      requires initialized_read: \initialized(addr);
+
       assigns \nothing;
 
       ensures \result == addr;
+
+      ensures \initialized(\result);
 
       '
   - macro: SWDB_TILE_WRITE
@@ -571,7 +641,7 @@ wp:
       ensures \result == addr;
 
       '
-  unit_requires: dx_idle
+  unit_requires: dx_idle && dx_state_initialized
   separate_from:
   - dx_tile_data
   - dx_tile_size

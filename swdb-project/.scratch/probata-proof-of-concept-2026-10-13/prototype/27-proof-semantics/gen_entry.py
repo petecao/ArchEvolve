@@ -243,6 +243,13 @@ ensures \\result == 1 <==> (dx_tile_writer[tile] >= 0 && dx_in_footprint(dx_tile
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from contracts_wp import CALLS, QUERIES, WP  # noqa: E402,F811  (the WP-form contracts, ticket 27 WP half)
 
+RULES.append(("initialized_state", "The working C model has initialized fixed device storage: static globals "
+              "start initialized and harness state draws assign initialized tile values. Trusted call contracts "
+              "preserve dx_state_initialized, requiring initialized ordinary-memory cells before reading them; "
+              "ordinary CPU stores preserve initialized storage after their RHS initialization obligations. "
+              "This is a model representation invariant, not an assumed caller-buffer premise or a body proof; "
+              "ticket 29 checks contract/body agreement.", {"owner": "SWDB proof-semantics model"}))
+
 SOURCES = [
     {**pin("dx100/dxc_lowering.hpp"), "role": "lowerings"},
     {**pin("dx100/bfs_read_offload.inc"), "role": "offload"},

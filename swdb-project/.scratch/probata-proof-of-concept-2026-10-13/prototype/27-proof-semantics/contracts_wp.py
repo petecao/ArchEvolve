@@ -89,6 +89,8 @@ requires cond_tile == -1;
 requires dx_reg_value[stride_reg] > 0 && dx_reg_value[min_reg] <= dx_reg_value[max_reg];
 {stream_req}requires \\forall integer k; 0 <= k < DX_TS && dx_reg_value[min_reg] + k * dx_reg_value[stride_reg] <
   dx_reg_value[max_reg] ==> \\valid_read(data + (dx_reg_value[min_reg] + k * dx_reg_value[stride_reg]));
+requires source_initialized: \\forall integer k; 0 <= k < DX_TS && dx_reg_value[min_reg] + k * dx_reg_value[stride_reg] <
+  dx_reg_value[max_reg] ==> \\initialized(data + (dx_reg_value[min_reg] + k * dx_reg_value[stride_reg]));
 assigns dx_tile_data[dst_tile][0 .. DX_TS - 1], dx_tile_size[dst_tile], {GHOST};
 {stream_ens}ensures dx_base[dx_tile_writer[dst_tile]] == data && dx_lo[dx_tile_writer[dst_tile]] == \\old(dx_reg_value[min_reg]) &&
   dx_hi[dx_tile_writer[dst_tile]] == \\old(dx_reg_value[max_reg]) &&
@@ -103,6 +105,8 @@ requires 0 <= idx_tile < DX_NT && 0 <= dst_tile < DX_NT && dst_tile != idx_tile 
 requires memory_domain: dx_memory_clear_after_stall(dst_tile, -1, 0);
 {gather_req}requires \\forall integer k; 0 <= k < dx_tile_size[idx_tile] && k < DX_TS ==>
   \\valid_read(data + (unsigned int)dx_tile_data[idx_tile][k]);
+requires source_initialized: \\forall integer k; 0 <= k < dx_tile_size[idx_tile] && k < DX_TS ==>
+  \\initialized(data + (unsigned int)dx_tile_data[idx_tile][k]);
 assigns dx_tile_data[dst_tile][0 .. DX_TS - 1], dx_tile_size[dst_tile], {GHOST};
 {gather_ens}ensures dx_base[dx_tile_writer[dst_tile]] == data && dx_index[dx_tile_writer[dst_tile]] == idx_tile;
 ensures dx_tile_size[dst_tile] == \\old(dx_tile_size[idx_tile]);
@@ -145,6 +149,8 @@ requires dx_tile_size[src_tile] == dx_tile_size[idx_tile] &&
   (cond_tile == -1 || dx_tile_size[cond_tile] == dx_tile_size[idx_tile]);
 {store_req}requires \\forall integer k; 0 <= k < dx_tile_size[idx_tile] && k < DX_TS &&
   (cond_tile == -1 || dx_tile_data[cond_tile][k] != 0) ==> \\valid(data + (unsigned int)dx_tile_data[idx_tile][k]);
+requires source_initialized: \\forall integer k; 0 <= k < dx_tile_size[idx_tile] && k < DX_TS &&
+  (cond_tile == -1 || dx_tile_data[cond_tile][k] != 0) ==> \\initialized(data + (unsigned int)dx_tile_data[idx_tile][k]);
 requires store_frame_bound: 0 <= dx_store_bound;
 requires store_indices: \\forall integer k; 0 <= k < dx_tile_size[idx_tile] && k < DX_TS &&
   (cond_tile == -1 || dx_tile_data[cond_tile][k] != 0) ==>
@@ -153,9 +159,30 @@ assigns data[0 .. dx_store_bound - 1],
   dx_tile_data[dst_tile][0 .. DX_TS - 1], dx_tile_size[dst_tile], {GHOST};
 {store_ens}ensures dx_base[dx_tile_writer[dst_tile]] == data && dx_index[dx_tile_writer[dst_tile]] == idx_tile;
 ensures dx_tile_size[dst_tile] == \\old(dx_tile_size[idx_tile]);
+ensures \\forall integer k; 0 <= k < \\old(dx_store_bound) && \\at(\\initialized(data + k), Pre) ==>
+  \\initialized(data + k);
 ensures \\old(dx_tile_size[idx_tile]) >= 1 && (cond_tile == -1 || \\old(dx_tile_data[cond_tile][0]) != 0) ==>
   dx_tile_data[dst_tile][0] == \\old(data[(unsigned int)dx_tile_data[idx_tile][0]]);"""),
 ]
+
+# These are explicitly trusted preservation contracts, not body proofs. The
+# corresponding C storage is initialized statically/by harness draws; ordinary
+# CPU stores cannot clear initialization, and all model memory reads above have
+# explicit caller obligations. Ticket 29 validates the forms independently.
+INITIALIZED_OUTPUTS = {
+    "get_cacheable_tile_pointer": r"\initialized(\result + (0 .. DX_TS - 1))",
+    "maa_stream_load": r"\initialized(dx_tile_data[dst_tile] + (0 .. DX_TS - 1))",
+    "maa_indirect_load": r"\initialized(dx_tile_data[dst_tile] + (0 .. DX_TS - 1))",
+    "maa_alu_scalar": r"\initialized(dx_tile_data[dst_tile] + (0 .. DX_TS - 1))",
+    "maa_indirect_store_vector": r"\initialized(dx_tile_data[dst_tile] + (0 .. DX_TS - 1))",
+    "maa_range_loop": (r"\initialized(dx_tile_data[dst_i_tile] + (0 .. DX_TS - 1)) && "
+                       r"\initialized(dx_tile_data[dst_j_tile] + (0 .. DX_TS - 1))"),
+}
+CALLS = [(n, p, lw, [*rules, "initialized_state"],
+          "requires initialized_state: dx_state_initialized;\n" + contract +
+          "\nensures dx_state_initialized;" +
+          ("\nensures " + INITIALIZED_OUTPUTS[n] + ";" if n in INITIALIZED_OUTPUTS else ""))
+         for n, p, lw, rules, contract in CALLS]
 
 QUERIES = [("swdb_dx_in_footprint", "int swdb_dx_in_footprint(int tile, const int *addr)", """\
 requires 0 <= tile < DX_NT;
@@ -166,10 +193,11 @@ ensures \\result == 1 <==> (dx_tile_writer[tile] >= 0 && dx_in_footprint(dx_tile
 WP = {
     "probes": [
         {"macro": "SWDB_TILE_READ", "prototype": "int *swdb_tile_read_probe(int *addr)",
-         "contract": "requires dx_read_ok(addr);\nassigns \\nothing;\nensures \\result == addr;\n"},
+         "contract": "requires dx_read_ok(addr);\nrequires initialized_read: \\initialized(addr);\n"
+                     "assigns \\nothing;\nensures \\result == addr;\nensures \\initialized(\\result);\n"},
         {"macro": "SWDB_TILE_WRITE", "prototype": "int *swdb_tile_write_probe(int *addr)",
          "contract": "requires dx_write_ok(addr);\nassigns \\nothing;\nensures \\result == addr;\n"},
     ],
-    "unit_requires": "dx_idle",
+    "unit_requires": "dx_idle && dx_state_initialized",
     "separate_from": ["dx_tile_data", "dx_tile_size", "dx_reg_value"],
 }
