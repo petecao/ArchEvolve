@@ -18,7 +18,7 @@ Drafts1/2 remain immutable. No draft3 or final production freeze exists.
 | Ticket / owner | Verified checkpoint | Active work |
 |---|---|---|
 | 07 / `ticket07` | Run23 at `df19ff8a` finished unproven: 26 open (15 unit / 11 hint), 52.02 counted minutes, no qualifying final replay or wait-negative. Independent audit preserves actual counters and unknown interrupted-call usage. | Separately named method21 diagnostic-baseline10 passes 187 local controls and is under independent prelaunch review. Fresh inputs/clock/conversation are mandatory; final proof/smoke/negative stay30s. No new actual launch yet. |
-| 24 / `ticket24` | Fresh finite native agreement accepted for112,589 defined comparisons. Current float safe48 ordinary+5 smoke Valid,12 init retained; seed invariant-establishment timeout and four failed smoke checks retained. All five fresh standard models prove. | Current caller safe stops on pointer-formation timeout:46 ordinary Valid+1timeout,13 smoke Valid,5 init. Diagnose exact origin/precondition before a new source freeze. Later groups/controls did not run. Checklist24 and corpus15 controls pass; test-only81ab6c06 under independent review. |
+| 24 / `ticket24` | Fresh finite native agreement accepted for112,589 defined comparisons. Current float safe48 ordinary+5 smoke Valid,12 init retained; seed invariant-establishment timeout and four failed smoke checks retained. All five fresh standard models prove. | Current caller safe stops on pointer-formation timeout:46 ordinary Valid+1timeout,13 smoke Valid,5 init. Diagnose exact origin/precondition before a new source freeze. Later groups/controls did not run. Checklist24 and corpus15 controls pass; test-only81ab6c06 and independent review2e1dcb5e merged at5c0ace82. |
 | 27 / `ticket27` | Historical717 safe11/11,792 ordinary+252 smoke Valid. Current negative3/13 accepted, retaining exact unready-read precondition timeouts and Doomed smoke outcomes. | Node1 generation603 negative profile continues; node0 generation573 capacity3 active. Bounded35 and fresh safe11 follow without changing frozen0e7 source. |
 | 36 / dependency-gated | Mandatory RTE/command/mutation controls integrated;122 compiler/scripted controls pass with13 actual-WP excluded. | Waits on27; runtime fallback research remains prospective. |
 
@@ -61,7 +61,7 @@ measured, and the changed baseline pass set is a declared scheduling confound.
 Next: finish caller diagnosis, independent test/prototype review, current capacity
 and negative profiles; then bounded/native and fresh safe acceptance. No full ticket
 or final method success is claimed from these checkpoints. This chat's30-minute
-heartbeat stays active; last full table17:21 ET,next due17:51 ET.
+heartbeat stays active; last full table 17:50 ET, next due 18:20 ET.
 Research-only notes remain `/private/tmp/probata-ticket25-resume-exploration.md`,
 `/private/tmp/probata-ticket25-lifetime-capabilities.md`,
 `/private/tmp/probata-ticket28-resume-exploration.md` and

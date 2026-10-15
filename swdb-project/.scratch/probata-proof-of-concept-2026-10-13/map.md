@@ -17,7 +17,7 @@ remains `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
   (46 ordinary Valid, 13 smoke Valid); diagnosis is active and later groups did
   not run. Fresh finite native agreement remains independently accepted for
   112,589 defined comparisons. New checklist/corpus tests pass 24 + 15 controls;
-  their test-only commit is under independent review.
+  their test-only commit and independent review are merged at `5c0ace82`.
 - **27:** Historical `71771f09` safe profile passes 11/11, with 792 ordinary +
   252 smoke Valid. Current negative profile has three accepted unready-read
   controls of 13, each preserving its exact failed hazard precondition and Doomed
