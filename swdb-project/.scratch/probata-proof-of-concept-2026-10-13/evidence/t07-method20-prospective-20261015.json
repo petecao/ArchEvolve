@@ -1,0 +1,123 @@
+{
+  "created": "2026-10-15 ET",
+  "status": "prospective implementation checkpoint; independent review/freeze pending; never launched",
+  "counted_run_started": false,
+  "provider_called": false,
+  "control_result": {
+    "passed": 158,
+    "report": {
+      "path": "/private/tmp/probata-method20-checkpoint-final.jsonl",
+      "sha256": "3db3d934428d8b7fcfddec7a759f7446753fee803ebbecd1de8f27109375652b"
+    }
+  },
+  "synthetic_protocol": {
+    "manifest": {
+      "path": "/private/tmp/probata-method20-protocol-check-v3/manifest.json",
+      "sha256": "bf5056df0ba8d905b20e59597e9245e7db55cb20d2e7b361d8827b3607505c17"
+    },
+    "authority": "diagnostic_only",
+    "promoted": false,
+    "selected_valid": 1,
+    "unselected_obligations": [
+      "typed_TDStep_assert_unchecked_cut"
+    ],
+    "boundary": "Tiny synthetic component shows a selected ensures may use an unproved assertion. It is never an incumbent/milestone/BFS result; no provider invoked.",
+    "files": [
+      {
+        "path": "/private/tmp/probata-method20-protocol-check-v3/generation/tdstep_standin.c",
+        "sha256": "0565ebad00ee791af8553851859d2ea4a1c147ef257566af72b118ee149ce446"
+      },
+      {
+        "path": "/private/tmp/probata-method20-protocol-check-v3/generation/goals.json",
+        "sha256": "d6a771e0c0b834b67c6519177417277b3d8e3904bca2422c3c5449bec72bf353"
+      },
+      {
+        "path": "/private/tmp/probata-method20-protocol-check-v3/generation/probe-gen.log.wait.json",
+        "sha256": "de83e6b76b55ee33ffb1f0b127c0e1e7865858b65781bd7df58a03cc6b54ce1c"
+      },
+      {
+        "path": "/private/tmp/probata-method20-protocol-check-v3/generation/probe-gen.log",
+        "sha256": "5d87c8069d643e073286873ba3ceecb43f67514313626707142b79c368c7d334"
+      },
+      {
+        "path": "/private/tmp/probata-method20-protocol-check-v3/generation/lemmas.json",
+        "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+      },
+      {
+        "path": "/private/tmp/probata-method20-protocol-check-v3/generation/probe-gen.log.summary.json",
+        "sha256": "a74e7104d61047aa6155619826ccbe0c5475d5e99b715514ef53c76325353181"
+      },
+      {
+        "path": "/private/tmp/probata-method20-protocol-check-v3/selected/tdstep_standin.c",
+        "sha256": "0565ebad00ee791af8553851859d2ea4a1c147ef257566af72b118ee149ce446"
+      },
+      {
+        "path": "/private/tmp/probata-method20-protocol-check-v3/selected/goals.json",
+        "sha256": "5638e115ad53dc8354312651e1587c21cdf6f56a95b56e2c79b813f830e87303"
+      },
+      {
+        "path": "/private/tmp/probata-method20-protocol-check-v3/selected/focused.log.summary.json",
+        "sha256": "80261c22cb2d2047d8f7b33a307dbffc5f994ad7c3280380df204046df1156be"
+      },
+      {
+        "path": "/private/tmp/probata-method20-protocol-check-v3/selected/focused.log.wait.json",
+        "sha256": "c922fa56f74c8256136ae0594ad4fc045924f7336479cc7e757da42face66675"
+      },
+      {
+        "path": "/private/tmp/probata-method20-protocol-check-v3/selected/focused.log",
+        "sha256": "9472b41436a068bdc270f0802c0f0580d019a6b8109853c2c723ec4b5fdf5656"
+      }
+    ]
+  },
+  "harness_files": [
+    {
+      "path": "/private/tmp/probata-t07-method20/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/loop.py",
+      "sha256": "cb84fdca2b0d8dd0c77b286037513a4642835cd631ad9f87c74f0d736982d350"
+    },
+    {
+      "path": "/private/tmp/probata-t07-method20/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/hints.py",
+      "sha256": "48bafc2eab6caf40bb921e773212dff3efbbbc652aa2d120d87da4704b021bca"
+    },
+    {
+      "path": "/private/tmp/probata-t07-method20/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/wp_run.sh",
+      "sha256": "c397cdda98d9b82d756a8dbbfc21c5bed481834f8cb569bfa2888f6878f672a2"
+    },
+    {
+      "path": "/private/tmp/probata-t07-method20/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/edit_loop.py",
+      "sha256": "29c7aa2b1279c8e0d76253e20c2de33bcc715f8b3cce95db9c8f35bdb8fb20d8"
+    },
+    {
+      "path": "/private/tmp/probata-t07-method20/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/edit_core.py",
+      "sha256": "d4168260e3eb866e8bd127b4de56d8070e5806b74d39b4910d52e16379800d4e"
+    },
+    {
+      "path": "/private/tmp/probata-t07-method20/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/edit_tool_mcp.py",
+      "sha256": "7ee77c0238f687fec845042a10a1e862f561726f1975703980644c95a203034f"
+    },
+    {
+      "path": "/private/tmp/probata-t07-method20/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/frame_seeds.py",
+      "sha256": "7c8bec31b2be840218545a3370cafde8431ddd4699a363ebe3e391fb56c519c2"
+    },
+    {
+      "path": "/private/tmp/probata-t07-method20/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/goal_print.py",
+      "sha256": "9494e8d457f0d28d055c109ea4fbaada278c15e3088466096dc2a407a89a358f"
+    },
+    {
+      "path": "/private/tmp/probata-t07-method20/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/staged_search.py",
+      "sha256": "125e2562342e6ba684d1189ca29fb48476b73bee30d0fd368f7f7c6b4c6b2419"
+    },
+    {
+      "path": "/private/tmp/probata-t07-method20/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py",
+      "sha256": "d7ff784cadd2f336ee377b8442c0edf3e4d4ae548df4459e37a3896b5e3a77be"
+    },
+    {
+      "path": "/private/tmp/probata-t07-method20/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/focused_probe.py",
+      "sha256": "9ad86e2c61530a19f95ebb4d5aff639d489ef5a0788a6a1e00ddbdf0bd7c05db"
+    },
+    {
+      "path": "/private/tmp/probata-t07-method20/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_focused_probe.py",
+      "sha256": "c3edcf944e59d53756149003ccc8b15f62e4c206208bdc0888628ac0f2dfdd0b"
+    }
+  ],
+  "scope": "Search-only extension. Historical method19 source669 and source/model design996 remain unchanged. Focused diagnostics never score/promote/milestone. Prototype RTE boundary unchanged."
+}

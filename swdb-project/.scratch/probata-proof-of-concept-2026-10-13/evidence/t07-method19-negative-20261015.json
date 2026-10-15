@@ -1,0 +1,1054 @@
+{
+  "created": "2026-10-15 ET",
+  "source": "669df70f1ff3c8a0602302349d5923d0505e0dc5",
+  "source_worktree_clean": true,
+  "summary": {
+    "proven": false,
+    "within_budget": false,
+    "rounds": 1,
+    "codex_calls": 1,
+    "elapsed_min": 52.04,
+    "lock_wait_excluded_s": 20.4,
+    "best_n_open": 27,
+    "best_hints": 31,
+    "best_sha256": "8be0a32c9f5f100e75b9dc7890b2bbab1f127e84c258159febd4214c9b4de75a",
+    "tool_calls": 35,
+    "show_goal_calls": 16,
+    "best_unit_hint_open": [
+      24,
+      3
+    ],
+    "phase_at_end": 1,
+    "wp_attempts": 12,
+    "proposal_attempts_including_final": 12,
+    "tokens": {},
+    "final": null,
+    "finished": "2026-10-15 13:14:01 EDT",
+    "bounded_debt": false,
+    "staged_induction": true,
+    "debt_events_sha256": "e344709e7b5ba72c3d753f364c2de00b23187a2b6ffcb773c12979b4ba799331"
+  },
+  "unused_final_reserve_min_approx": 7.96,
+  "within_budget_field_meaning": "proven AND elapsed<=60; false here is not evidence that60 minutes elapsed",
+  "timed_search_phase_at_end": "recovery (tool search_phase index2); summary.phase_at_end1 is legacy unit/hint proof-phase classification",
+  "source_and_tool_pins": [
+    {
+      "path": "/private/tmp/probata-t07-method19/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/loop.py",
+      "sha256": "cb84fdca2b0d8dd0c77b286037513a4642835cd631ad9f87c74f0d736982d350",
+      "expected_matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t07-method19/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/hints.py",
+      "sha256": "48bafc2eab6caf40bb921e773212dff3efbbbc652aa2d120d87da4704b021bca",
+      "expected_matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t07-method19/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/wp_run.sh",
+      "sha256": "80340ca19f516ac1da217aedb54309fd8ff127f04ec1165c82d61565254eaff1",
+      "expected_matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t07-method19/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/edit_loop.py",
+      "sha256": "32bd043fbe5eb82cae28c3a8900f6bdd0714405311d01e23b2a0673f0b60a270",
+      "expected_matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t07-method19/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/edit_core.py",
+      "sha256": "b6262267969abcb5fa098afb2e7498518973eca53a79ab6f00a6e811eb26cf0a",
+      "expected_matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t07-method19/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/edit_tool_mcp.py",
+      "sha256": "c8605ccea17126df24d578c82d3fe8110fb6f37dfc4708b622b0820d03e6d203",
+      "expected_matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t07-method19/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/frame_seeds.py",
+      "sha256": "7c8bec31b2be840218545a3370cafde8431ddd4699a363ebe3e391fb56c519c2",
+      "expected_matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t07-method19/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/goal_print.py",
+      "sha256": "9494e8d457f0d28d055c109ea4fbaada278c15e3088466096dc2a407a89a358f",
+      "expected_matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t07-method19/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/tdstep_standin.c",
+      "sha256": "b4a820bd20b197eee293616af17da884bbc63ed92f9252e77f261092387024de",
+      "expected_matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t07-method19/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/dxc_summaries.h",
+      "sha256": "d708c0ef974e5ede1aaadd2b5e66dd785affa5e1dc6ef37419bf9e72517ae0d2",
+      "expected_matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t07-method19/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/gapbs_models.h",
+      "sha256": "401d8ccfa8fdc1ef3734c97563a1c110d003d8847508aaa24ec3f300a33eed3e",
+      "expected_matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t07-method19/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/bfs_unit.h",
+      "sha256": "1bcbf4dac683d6a46269fcd5f896fefc2571adc49d059b46f93fb25eb0f7b235",
+      "expected_matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t07-method19/swdb-project/library/dx100/bfs_read_offload.inc",
+      "sha256": "3c5867a2b8919806f681603836bd0cff448f21634485abf84e49ed71f25515ef",
+      "expected_matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t07-method19/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/staged_search.py",
+      "sha256": "bc9d013de3278147767618d89e5fa2f0b9e24df5b1f337dc8c7248f56610ef60",
+      "expected_matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t07-method19/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py",
+      "sha256": "d7ff784cadd2f336ee377b8442c0edf3e4d4ae548df4459e37a3896b5e3a77be",
+      "expected_matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t07-method19/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_debt.py",
+      "sha256": "8bf8ccd58625ae289e082c0bb217543ebb34d8920ec7b94467a75fed36373721",
+      "expected_matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t07-method19/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_staged_search.py",
+      "sha256": "db1cef2a96c7bf2c0d29a21476886b994ed6c11874a217feae707fb3da93b4b1",
+      "expected_matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t07-method19/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_counted_verifier.py",
+      "sha256": "119698305e63d7f024330a84e0f10f3b634e2bca8460c9e3141b64e875e99d8b",
+      "expected_matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t07-method19/swdb-project/swdb/provider_adapters.py",
+      "sha256": "5bf97c5bc4170e9a36cc853147bdc9f5c1ba43b22e51f6c11b8405101d26d5b8",
+      "expected_matches": true
+    },
+    {
+      "path": "/Users/yanrujhou/.codex/packages/standalone/releases/0.153.0-aarch64-apple-darwin/bin/codex",
+      "sha256": "a29d9e86eef88cbbd69f97ce8c590b1d0a287c8f77424f5eef226b883d7eaa22",
+      "expected_matches": true
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/bin/frama-c",
+      "sha256": "412ccd77e77caf5bceb5ca1fd4e0a3efab04cda64af07706126cd5409cb05475",
+      "expected_matches": true
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/bin/alt-ergo",
+      "sha256": "0845fc162c1c8081841e38e45966854a3c72cde075cebd149bdf3d58be12f7ae",
+      "expected_matches": true
+    },
+    {
+      "path": "/opt/homebrew/Cellar/z3/5.1.0/bin/z3",
+      "sha256": "b9a2c3a7dc833da652955116ad743cc733aa7938dbe64f528f71cb09066e2512",
+      "expected_matches": true
+    },
+    {
+      "path": "/opt/homebrew/Cellar/cvc5/1.2.1/bin/cvc5",
+      "sha256": "28dd5e5d8b8828ec6eea7fdf2e1544a218551382ca19e6ec8c2967fd6230cf5f",
+      "expected_matches": true
+    },
+    {
+      "path": "/private/tmp/probata-method19-composed-final.jsonl",
+      "sha256": "ab4a469aefcd225e3dc2b57fff428dc50add9ea0394cf109e1d4ee5b261d20ea",
+      "expected_matches": true
+    },
+    {
+      "path": "/private/tmp/probata-method19-independent-recheck.md",
+      "sha256": "23d256f5d7ffc7ecc4f4ed678eb5c2bcbd556b13f578a690d24d7a1bb0a55dd7",
+      "expected_matches": true
+    }
+  ],
+  "provider_pin": {
+    "model": "gpt-5.6-sol",
+    "effort": "xhigh"
+  },
+  "source_blob_checks": 18,
+  "process_reports": [
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c14/parse.log.summary.json",
+      "summary_sha256": "7bce7d51af8df42ac4ae2eaeac2b6b2b2c4b924c5f26760395c90d92d0fe7dd7",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c14/parse.log",
+      "log_sha256": "ce4c9abc2cacf96755c449b07100148ef0a31ac175bbde7ab4b765f664e34f62",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 102.53125,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c14/round-s.log.summary.json",
+      "summary_sha256": "e8596bb8490fa2b38b31eef1db3d4a9aa9cd10c51a8996a92b7627a6a9d03732",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c14/round-s.log",
+      "log_sha256": "d1a5b015e016d342a588d37e4d05d7f6f26b94697f54fedc20f27a3b8705b0a3",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 2353.375,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c14/wp-gen.log.summary.json",
+      "summary_sha256": "7b9c658755ef01bc52d2bb6ce2db0fff224097b0d544d99d0d44d783373215c7",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c14/wp-gen.log",
+      "log_sha256": "f7faff0e9cc35f4c4d568e913889caa5c12cbc86d25b2f5d3acfba08b2af1977",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 147.765625,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c19/parse.log.summary.json",
+      "summary_sha256": "19ee1374f183fcbbf93b448fc444b93aa61cad758a4e4f83ac940df568f14fcf",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c19/parse.log",
+      "log_sha256": "ce4c9abc2cacf96755c449b07100148ef0a31ac175bbde7ab4b765f664e34f62",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 111.28125,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c19/round-s.log.summary.json",
+      "summary_sha256": "a3efa3294abff689f1bbeaa42db4d33f4ad69e9d8fcdd481cfec028dbe7b90e2",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c19/round-s.log",
+      "log_sha256": "0e2a286c128db6c9104c9708aa9e3f739476e6e0829e6144525a55e407338330",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 2539.0,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c19/wp-gen.log.summary.json",
+      "summary_sha256": "f44659d527a6a4a60b5d9209e4074483725c2016ffdb424630f0c3bb200600e9",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c19/wp-gen.log",
+      "log_sha256": "c75e0216124895f278d47dd1aa39dc21eae11e7d18fbba648483b3dbdf9e9929",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 151.171875,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c21/parse.log.summary.json",
+      "summary_sha256": "01929cd71f0251edc895e89e0c9f261a872103cd4c9d99963a066ed9a2375369",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c21/parse.log",
+      "log_sha256": "ce4c9abc2cacf96755c449b07100148ef0a31ac175bbde7ab4b765f664e34f62",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 103.8125,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c21/round-s.log.summary.json",
+      "summary_sha256": "94b65840f93699c98872849a7930f4a98b3f9d6ce1890bb22e35a237ac31ae40",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c21/round-s.log",
+      "log_sha256": "70e3735633f5e38237ea3e1a2c6e98ea766a4d7c975d95f77df15ee63fc0ea48",
+      "log_hash_matches": true,
+      "exit_code": 137,
+      "timed_out": true,
+      "peak_rss_mb": 2551.0625,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c21/wp-gen.log.summary.json",
+      "summary_sha256": "8bda02902264140950a799282b88ec299416e44528ece2bb54ecf2b903f8b97b",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c21/wp-gen.log",
+      "log_sha256": "72b999913caaba9cde8903a3cb8ca2c221db8a9ef28c867adaee5932b6c49fac",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 153.046875,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c23/parse.log.summary.json",
+      "summary_sha256": "54a22e440506f45d47b25205b0db1960f27cf7f6a68a54e1105afbefcd8c06ea",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c23/parse.log",
+      "log_sha256": "ce4c9abc2cacf96755c449b07100148ef0a31ac175bbde7ab4b765f664e34f62",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 102.5625,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c23/round-s.log.summary.json",
+      "summary_sha256": "61338edfe769dd8e1ddb6ce3f3e69b2ae1f4d5d5461b8ec89766a0472195fdfd",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c23/round-s.log",
+      "log_sha256": "37fe82c2d35e67fec58881e033e00445f014b017a4c2e3b1ba371d4ed4930f13",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 2255.578125,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c23/wp-gen.log.summary.json",
+      "summary_sha256": "c34075c2de84c4ebe318dbe94d071a724347df8579a58c0fe18b3bf3102d7100",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c23/wp-gen.log",
+      "log_sha256": "6bc5992257ee33480665042858de49c83f54109ba2d22b047a36dfdaf1b17bba",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 148.40625,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c24/parse.log.summary.json",
+      "summary_sha256": "cb6b34a8cd68ec28bf07e8434809c46bfedd7fefcb00657cbd9d01535cb115f4",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c24/parse.log",
+      "log_sha256": "ce4c9abc2cacf96755c449b07100148ef0a31ac175bbde7ab4b765f664e34f62",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 102.4375,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c24/round-s.log.summary.json",
+      "summary_sha256": "fd508377862142d815589915274e7909f536c7dbdcd0b10710796530c805d0eb",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c24/round-s.log",
+      "log_sha256": "8c93a1ccdfa1b9a13ed54baec5bca8baac3d453e4a68cc165c759aa6a0696e78",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 2123.515625,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c24/wp-gen.log.summary.json",
+      "summary_sha256": "a26ebee47acb02324a89bd4ba4f44ef79730f8814bbb37b067226ca6c1b91d2e",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c24/wp-gen.log",
+      "log_sha256": "57bd45925862e14d51eab3676766a88de0d6c57f7ef5249af39494958cfde32c",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 146.890625,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c25/parse.log.summary.json",
+      "summary_sha256": "c60fa9e4e9420c2e0877a789c20cd9c874db4e0270cd4eae63b8b2dbb9c23769",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c25/parse.log",
+      "log_sha256": "ce4c9abc2cacf96755c449b07100148ef0a31ac175bbde7ab4b765f664e34f62",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 102.65625,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c25/round-s.log.summary.json",
+      "summary_sha256": "efde582308ea3396bdafde5a08cca8f28fd133d002482bae116ba31137fdbf0b",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c25/round-s.log",
+      "log_sha256": "d3870ee4604834b443ebac7682490d5727f77b5d1f80e16c105dcdfaded1b76f",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 2823.40625,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c25/wp-gen.log.summary.json",
+      "summary_sha256": "5a054f0890e087456993f71be9f3fc9848c27495426d93861e9755a2cbb98a6e",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c25/wp-gen.log",
+      "log_sha256": "e73309ce4e286c2e5a7f29285cc91fbd0406a6edfe7e53b97fe8dd29e4277637",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 149.90625,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c27/parse.log.summary.json",
+      "summary_sha256": "a1d47d860dae4119510e962adfbe826a7ace66d3f5594f3be8e67af96b1dfbd5",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c27/parse.log",
+      "log_sha256": "ce4c9abc2cacf96755c449b07100148ef0a31ac175bbde7ab4b765f664e34f62",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 102.546875,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c27/round-s.log.summary.json",
+      "summary_sha256": "b679923f0bc891f5f49c9a0690110aa069e6abf00581bb2b4eb5a4471c36fafc",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c27/round-s.log",
+      "log_sha256": "f94e67f27d6b04f69c8c605d4ca19631e4034b7f581ec3649279dbaa87d59038",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 2687.65625,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c27/wp-gen.log.summary.json",
+      "summary_sha256": "167a4c0f8fa1451c7c69a2f379af79d99af8dec93e0ba77961c5692a256b22db",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c27/wp-gen.log",
+      "log_sha256": "598f5111edfdd6ac2e1758c3b86b0b0b22c63831000358d88f790021e4ebe702",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 154.453125,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c29/parse.log.summary.json",
+      "summary_sha256": "bade9b4438f7c3c661b0a829ff477ed2b8a6021b78205d3da2f837c36088a9ec",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c29/parse.log",
+      "log_sha256": "ce4c9abc2cacf96755c449b07100148ef0a31ac175bbde7ab4b765f664e34f62",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 112.984375,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c29/round-s.log.summary.json",
+      "summary_sha256": "9163de7f1f7a67733edab9d5a3229d10bae7238199a7e8da4a7b2d7ec52e822d",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c29/round-s.log",
+      "log_sha256": "835b8a090c43befebb57249dcb0a5ab509e5ed890ccbeff9320f80846003059d",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 2267.65625,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c29/wp-gen.log.summary.json",
+      "summary_sha256": "070a9e4b2414d79da171f7baca70d58799b5f4304ac00075e220703b159645b9",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c29/wp-gen.log",
+      "log_sha256": "2bdb914f2cd3b51ffd9216d5c99cde090fa600af2abe9707f2add6abeb38c067",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 155.453125,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c31/parse.log.summary.json",
+      "summary_sha256": "bac8e62adac8231e3a1795ae69cccb5b9115d2f0536fe4496ea292824b0b1be2",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c31/parse.log",
+      "log_sha256": "ce4c9abc2cacf96755c449b07100148ef0a31ac175bbde7ab4b765f664e34f62",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 102.65625,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c31/round-s.log.summary.json",
+      "summary_sha256": "8cb3a35a5afc92d3034ad8b1f60cc23bad2dd5f14c436b30a7b83a2323e3a60d",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c31/round-s.log",
+      "log_sha256": "2453c42194646413e080552fdef4bfac64a074790039cf8dd349680a268701be",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 2105.640625,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c31/wp-gen.log.summary.json",
+      "summary_sha256": "e1c74b6cb854831e0b5d041e3df31dad27a6b22faca63cf8fd860a0a70da19d3",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c31/wp-gen.log",
+      "log_sha256": "c2e918d85cdb8a7fcb18b655a49b36558aa334a82482f708cdb0c81c36d2e5f3",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 153.9375,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c32/parse.log.summary.json",
+      "summary_sha256": "9fc7b6512ed2cede67162b7d297996cb30ba0c32168b0f158a8ede9946db7db8",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c32/parse.log",
+      "log_sha256": "ce4c9abc2cacf96755c449b07100148ef0a31ac175bbde7ab4b765f664e34f62",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 103.0625,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c32/round-s.log.summary.json",
+      "summary_sha256": "4e0bf08613a752414421edfca63dd803cf9bc348f4ea6bbebee2374983e8d3ca",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c32/round-s.log",
+      "log_sha256": "9c9080fc81c8d49081b8428945c61abe271757b32f39ec5aed63cda010dc22e6",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 1447.828125,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c32/wp-gen.log.summary.json",
+      "summary_sha256": "ddb96506b16a735ef8862ec711fb07d1e94f3ed27e74fd575b9bf5f52efc29c6",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c32/wp-gen.log",
+      "log_sha256": "0e01dbfea4c28d88a98bd8a16d2160ce84481487c6a435ac708ea06e9336d6e2",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 153.921875,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c33/parse.log.summary.json",
+      "summary_sha256": "8d77342dec6d2f3d3fed15cd5b9b1fe07a6f28b76e48f49d327ea1a010a77fbf",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c33/parse.log",
+      "log_sha256": "ce4c9abc2cacf96755c449b07100148ef0a31ac175bbde7ab4b765f664e34f62",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 111.171875,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c33/round-s.log.summary.json",
+      "summary_sha256": "1d55c065882c2deef2a077e42a12efeb28c6bbdb0d63000dd38d75012a8b2be1",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c33/round-s.log",
+      "log_sha256": "774e8a84f7603018ca50da010d47e1e71e4097457404b8ad0535fb24261cf1b4",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 3600.59375,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c33/wp-gen.log.summary.json",
+      "summary_sha256": "0cbc7ce2df560101ed2353ce135f64b3ccd218d0d60d29643ab39470c9a5f7a9",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c33/wp-gen.log",
+      "log_sha256": "2f7148829e958492d8de97d6a6927a6c511678df5e11e8d3e4ece31090024db6",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 154.53125,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c34/parse.log.summary.json",
+      "summary_sha256": "a095321a103a1a110969d332670347e7a2e5046539191627497def921b68b57a",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c34/parse.log",
+      "log_sha256": "ce4c9abc2cacf96755c449b07100148ef0a31ac175bbde7ab4b765f664e34f62",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 109.515625,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c34/round-s.log.summary.json",
+      "summary_sha256": "41a96c685d0ebea980d2f02d70c9c8b333738e6392a040e7a0d7d517b6b6f326",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c34/round-s.log",
+      "log_sha256": "1db340d3e8c5dbdc0dcacc44bcbfaf43bda8166d8352a8a96c23afc7b4e34c6d",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 2724.4375,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c34/wp-gen.log.summary.json",
+      "summary_sha256": "4aa13985e262850563e84d789f98331144d3b8856560e526c8443b97172e7b4f",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/attempt-r1c34/wp-gen.log",
+      "log_sha256": "02d7d3ec776906d04e4368ec603d5a3d9e50b21b05a514aac693be967ea5aa95",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 155.671875,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/goal-r1c1/print.log.summary.json",
+      "summary_sha256": "e3151f3c1fd9e93f0342d590513bd24b26d91a1417e94811ed76bd4e0b38503e",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/goal-r1c1/print.log",
+      "log_sha256": "7a085bbdf23ca0aadbfafe762a7a0f682e7cf7cedf2bca1594135fe1f309ae3a",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 359.875,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/goal-r1c10/print.log.summary.json",
+      "summary_sha256": "0167f3247299fec5099f9d69bb6c618d6975d0ebda6c2bcc1216bd6794e90b0a",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/goal-r1c10/print.log",
+      "log_sha256": "7a085bbdf23ca0aadbfafe762a7a0f682e7cf7cedf2bca1594135fe1f309ae3a",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 359.53125,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/goal-r1c11/print.log.summary.json",
+      "summary_sha256": "55a826fd7e5f7c72a95e4742d24ddeaefcf1374bfc40c14303a91efefaf34b89",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/goal-r1c11/print.log",
+      "log_sha256": "952999c89de2a68972056bbae251185f9a540fc457a4b0443fa917b797c87340",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 185.21875,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/goal-r1c12/print.log.summary.json",
+      "summary_sha256": "1c902d338bb7d6a82e5912e6f8c1554ea383f112b2b2ee568f36b63dafc6efd8",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/goal-r1c12/print.log",
+      "log_sha256": "7a085bbdf23ca0aadbfafe762a7a0f682e7cf7cedf2bca1594135fe1f309ae3a",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 341.359375,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/goal-r1c13/print.log.summary.json",
+      "summary_sha256": "be51ef9412c3fd2c9a145423e004bcd319a764f0a4304d9c3efa6818b433eb21",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/goal-r1c13/print.log",
+      "log_sha256": "7a085bbdf23ca0aadbfafe762a7a0f682e7cf7cedf2bca1594135fe1f309ae3a",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 360.0625,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/goal-r1c16/print.log.summary.json",
+      "summary_sha256": "7007492ee14f097b4cce1da1d68e515cd810f4f96bcba0ec9dddf08bcec1a90b",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/goal-r1c16/print.log",
+      "log_sha256": "c3b92a32a7960869763950be1bc1d94137f6c91fe691bbd5c777a813e0258ae7",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 212.203125,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/goal-r1c17/print.log.summary.json",
+      "summary_sha256": "9813283dd1286ff886a22a1eaa34077ef893966efb7253ee907116ca9a8c15bb",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/goal-r1c17/print.log",
+      "log_sha256": "c3b92a32a7960869763950be1bc1d94137f6c91fe691bbd5c777a813e0258ae7",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 211.9375,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/goal-r1c18/print.log.summary.json",
+      "summary_sha256": "035d4007c5fe2ddba35b5f9ed09891c1b5f2e937f8e2f9e17000a8b571469a10",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/goal-r1c18/print.log",
+      "log_sha256": "c3b92a32a7960869763950be1bc1d94137f6c91fe691bbd5c777a813e0258ae7",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 212.296875,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/goal-r1c2/print.log.summary.json",
+      "summary_sha256": "8510a5f5758af74f5d0efe8f1d9fd22c2178e891bf1986104d2f249a2f7ee009",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/goal-r1c2/print.log",
+      "log_sha256": "7a085bbdf23ca0aadbfafe762a7a0f682e7cf7cedf2bca1594135fe1f309ae3a",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 360.5625,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/goal-r1c3/print.log.summary.json",
+      "summary_sha256": "0c7043b08bf31914208f5fee0e82531bf3cdacf51e365479103a37cdc6c47301",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/goal-r1c3/print.log",
+      "log_sha256": "7a085bbdf23ca0aadbfafe762a7a0f682e7cf7cedf2bca1594135fe1f309ae3a",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 362.40625,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/goal-r1c4/print.log.summary.json",
+      "summary_sha256": "6f93b77cdcd795afd29f2baa4be6a67f600d2e33ac0a2906b80fe9f4230d4624",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/goal-r1c4/print.log",
+      "log_sha256": "7a085bbdf23ca0aadbfafe762a7a0f682e7cf7cedf2bca1594135fe1f309ae3a",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 344.53125,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/goal-r1c5/print.log.summary.json",
+      "summary_sha256": "9b368d0ed480447447f003a55e6970db47ccdc93615003df1a5be36e57323088",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/goal-r1c5/print.log",
+      "log_sha256": "7a085bbdf23ca0aadbfafe762a7a0f682e7cf7cedf2bca1594135fe1f309ae3a",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 349.5625,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/goal-r1c6/print.log.summary.json",
+      "summary_sha256": "386e5440d7814e1250b08956460d461c65cd4dc51c2f0d272335874522d68cf6",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/goal-r1c6/print.log",
+      "log_sha256": "7a085bbdf23ca0aadbfafe762a7a0f682e7cf7cedf2bca1594135fe1f309ae3a",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 361.046875,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/goal-r1c7/print.log.summary.json",
+      "summary_sha256": "6578678cf1cedcb2144f170889b45668cb757f00174e8e0fedceba6306053826",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/goal-r1c7/print.log",
+      "log_sha256": "952999c89de2a68972056bbae251185f9a540fc457a4b0443fa917b797c87340",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 184.015625,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/goal-r1c8/print.log.summary.json",
+      "summary_sha256": "2b539bcc51c9834d5b6582d9a62dff4da6a68ad6eccf7a11b04e74bbfe59fc14",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/goal-r1c8/print.log",
+      "log_sha256": "7a085bbdf23ca0aadbfafe762a7a0f682e7cf7cedf2bca1594135fe1f309ae3a",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 358.9375,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/goal-r1c9/print.log.summary.json",
+      "summary_sha256": "925e1bee284a4334d6d80a0791671a4f7eb2dcd2aed1adace5c495a86a261838",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/goal-r1c9/print.log",
+      "log_sha256": "7a085bbdf23ca0aadbfafe762a7a0f682e7cf7cedf2bca1594135fe1f309ae3a",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 359.59375,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/round-0/parse.log.summary.json",
+      "summary_sha256": "1a124509841a4b11dac518960adffb33a8f21c60f994545ed5e071f75f74b85b",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/round-0/parse.log",
+      "log_sha256": "ce4c9abc2cacf96755c449b07100148ef0a31ac175bbde7ab4b765f664e34f62",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 102.78125,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/round-0/wp-gen.log.summary.json",
+      "summary_sha256": "d5479187395d8d363ca28db9fffda9e77c224fc2ebac0d91bcad37c5ed25d84d",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/round-0/wp-gen.log",
+      "log_sha256": "cffd2545456ab0158ea06f8bb4d0663d82bfc90856040140bbc09256e39517b1",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 131.765625,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/round-0/wp-smoke.log.summary.json",
+      "summary_sha256": "22a67227f24e7b97b6a5d9f473cc96dc0cbb3fcc29e86c4da2eb634e743f6d61",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/round-0/wp-smoke.log",
+      "log_sha256": "5ad1806ac3ea48a74c05e9db6fd4e0ee93a004182c766b3d9e5a422fdb9db9b3",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 3433.453125,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/seeds/parse.log.summary.json",
+      "summary_sha256": "007977d54212e57a0a06978b721f9a2b27b985733286b10f5ee5a47074db8dc1",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/seeds/parse.log",
+      "log_sha256": "ce4c9abc2cacf96755c449b07100148ef0a31ac175bbde7ab4b765f664e34f62",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 102.53125,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/seeds/round-s.log.summary.json",
+      "summary_sha256": "f2f9f5658d570999e932cf58fca4fc1e3fd7dd2bdda3ba544037b340aaf9a94d",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/seeds/round-s.log",
+      "log_sha256": "0fde48323d0567cd000a4f0402623f24ffa84430a7a088ade877c872a8e74937",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 2473.484375,
+      "unconfirmed_children": []
+    },
+    {
+      "summary": "/private/tmp/probata-t07-20261015-run19/counted-19/seeds/wp-gen.log.summary.json",
+      "summary_sha256": "42ecb51af176b153e31cdfd81ffbf5ca9f94a22a75b62b13592413fb4b366ce7",
+      "log": "/private/tmp/probata-t07-20261015-run19/counted-19/seeds/wp-gen.log",
+      "log_sha256": "bbce5119af1aa2dd7f3ef1aff2b0808446b802cd011aaab8673a2d4b02364794",
+      "log_hash_matches": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "peak_rss_mb": 146.65625,
+      "unconfirmed_children": []
+    }
+  ],
+  "files": [
+    {
+      "path": "/private/tmp/probata-t07-20261015-run19/source-manifest.json",
+      "sha256": "b1ce8ac2f6de0f6b41eaebf6e41650733caa65ff31b160ea58168416e53afea3"
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run19/launch.json",
+      "sha256": "449d235babb8070f974fcc38e240c47a944404d0fca0148a6a24144e1b064bb8"
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run19/counted-19/meta.json",
+      "sha256": "d131ecdcf88af40de176c139c2bb8954d6b85a8631dc3b6d2a00499213e6dd9f"
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run19/counted-19/summary.json",
+      "sha256": "b5a9e0b6c939e98ba03a344b0edec502ea2398fd115df2b2d6f1e8d944acf3c2"
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run19/counted-19/best.json",
+      "sha256": "8be0a32c9f5f100e75b9dc7890b2bbab1f127e84c258159febd4214c9b4de75a"
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run19/counted-19/history.json",
+      "sha256": "daeb37f313595cc26b032b69f336a81237522f76c101d985e697fe38534c92ef"
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run19/counted-19/debt-events.jsonl",
+      "sha256": "e344709e7b5ba72c3d753f364c2de00b23187a2b6ffcb773c12979b4ba799331"
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run19/counted-19/tool-r1/submissions.jsonl",
+      "sha256": "bf616e27bed83ed9cf081f742b6085a09f7234867d4853b819a0ab8fd0ad4869"
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run19/driver.log",
+      "sha256": "2864fcf8da6882cdff38ea0d08ea0faed2e1146f74e0589b9dcccc8d91a1deb0"
+    }
+  ],
+  "open_goals": [
+    {
+      "goal": "typed_TDStep_terminates_part2",
+      "kind": "terminates",
+      "hint_ids": []
+    },
+    {
+      "goal": "typed_TDStep_ensures_visited_parent_unchanged",
+      "kind": "ensures",
+      "hint_ids": []
+    },
+    {
+      "goal": "typed_TDStep_ensures_visited_iff_reachable",
+      "kind": "ensures",
+      "hint_ids": []
+    },
+    {
+      "goal": "typed_TDStep_ensures_unreached_unchanged",
+      "kind": "ensures",
+      "hint_ids": []
+    },
+    {
+      "goal": "typed_TDStep_ensures_parent_is_frontier_neighbor",
+      "kind": "ensures",
+      "hint_ids": []
+    },
+    {
+      "goal": "typed_TDStep_ensures_pushed_are_new",
+      "kind": "ensures",
+      "hint_ids": []
+    },
+    {
+      "goal": "typed_TDStep_ensures_new_are_pushed",
+      "kind": "ensures",
+      "hint_ids": []
+    },
+    {
+      "goal": "typed_TDStep_ensures_pushed_once",
+      "kind": "ensures",
+      "hint_ids": []
+    },
+    {
+      "goal": "typed_TDStep_ensures_queue_kept",
+      "kind": "ensures",
+      "hint_ids": []
+    },
+    {
+      "goal": "typed_TDStep_ensures_dx100_idle_after",
+      "kind": "ensures",
+      "hint_ids": []
+    },
+    {
+      "goal": "typed_TDStep_loop_invariant_range_rows_established",
+      "kind": "loop invariant established",
+      "hint_ids": [
+        "seed2",
+        "r1c27h5",
+        "r1c27h6",
+        "r1c27h7"
+      ]
+    },
+    {
+      "goal": "typed_TDStep_loop_invariant_range_rows_preserved",
+      "kind": "loop invariant preserved",
+      "hint_ids": [
+        "seed2",
+        "r1c27h5",
+        "r1c27h6",
+        "r1c27h7"
+      ]
+    },
+    {
+      "goal": "typed_TDStep_loop_invariant_range_state_preserved",
+      "kind": "loop invariant preserved",
+      "hint_ids": [
+        "seed2",
+        "r1c27h5",
+        "r1c27h6",
+        "r1c27h7"
+      ]
+    },
+    {
+      "goal": "typed_TDStep_check_hazard_vertices_read",
+      "kind": "check",
+      "hint_ids": []
+    },
+    {
+      "goal": "typed_TDStep_loop_assigns_3_part04",
+      "kind": "loop assigns",
+      "hint_ids": [
+        "seed3",
+        "r1c25h7",
+        "r1c25h8",
+        "r1c27h8"
+      ]
+    },
+    {
+      "goal": "typed_TDStep_loop_assigns_3_part10",
+      "kind": "loop assigns",
+      "hint_ids": [
+        "seed3",
+        "r1c25h7",
+        "r1c25h8",
+        "r1c27h8"
+      ]
+    },
+    {
+      "goal": "typed_TDStep_loop_assigns_3_part11",
+      "kind": "loop assigns",
+      "hint_ids": [
+        "seed3",
+        "r1c25h7",
+        "r1c25h8",
+        "r1c27h8"
+      ]
+    },
+    {
+      "goal": "typed_TDStep_loop_assigns_5_part11",
+      "kind": "loop assigns",
+      "hint_ids": [
+        "seed5",
+        "r1c25h4",
+        "r1c25h5",
+        "r1c25h6"
+      ]
+    },
+    {
+      "goal": "typed_TDStep_assigns_normal_part16",
+      "kind": "assigns",
+      "hint_ids": []
+    },
+    {
+      "goal": "typed_TDStep_assigns_exit_part33",
+      "kind": "assigns",
+      "hint_ids": []
+    },
+    {
+      "goal": "typed_TDStep_assigns_exit_part39",
+      "kind": "assigns",
+      "hint_ids": []
+    },
+    {
+      "goal": "typed_TDStep_assigns_exit_part53",
+      "kind": "assigns",
+      "hint_ids": []
+    },
+    {
+      "goal": "typed_TDStep_call___dxc_gather_dxc_gather_requires_3",
+      "kind": "call-site precondition",
+      "hint_ids": []
+    },
+    {
+      "goal": "typed_TDStep_call___dxc_gather_2_dxc_gather_requires_3",
+      "kind": "call-site precondition",
+      "hint_ids": []
+    },
+    {
+      "goal": "typed_TDStep_call___dxc_gather_3_dxc_gather_requires_3",
+      "kind": "call-site precondition",
+      "hint_ids": []
+    },
+    {
+      "goal": "typed_TDStep_call___dxc_gather_5_dxc_gather_requires_3",
+      "kind": "call-site precondition",
+      "hint_ids": []
+    },
+    {
+      "goal": "typed_TDStep_call_compare_and_swap_requires",
+      "kind": "call-site precondition",
+      "hint_ids": []
+    }
+  ],
+  "hint_kinds": {
+    "loop_assigns": 5,
+    "assert": 4,
+    "loop_invariant": 10,
+    "loop_variant": 4,
+    "strategy": 4,
+    "proof": 4
+  },
+  "source_snapshot_witnesses": 0,
+  "boundary": "UNPROVEN. Best is cached round-mode evidence only; no final all-goal/smoke replay or covering-wait negative. Prototype lacks production RTE initializedness. Counts across different hint inventories are not direct comparative scores.",
+  "errors": [],
+  "historical_inputs": [
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/tdstep_standin.c",
+      "sha256": "b4a820bd20b197eee293616af17da884bbc63ed92f9252e77f261092387024de",
+      "matches_996": true
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/dxc_summaries.h",
+      "sha256": "d708c0ef974e5ede1aaadd2b5e66dd785affa5e1dc6ef37419bf9e72517ae0d2",
+      "matches_996": true
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/gapbs_models.h",
+      "sha256": "401d8ccfa8fdc1ef3734c97563a1c110d003d8847508aaa24ec3f300a33eed3e",
+      "matches_996": true
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/bfs_unit.h",
+      "sha256": "1bcbf4dac683d6a46269fcd5f896fefc2571adc49d059b46f93fb25eb0f7b235",
+      "matches_996": true
+    }
+  ]
+}

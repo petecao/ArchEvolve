@@ -29,6 +29,9 @@ def schedule(start_s, stop_s):
 
 
 def phase(plan, counted_s):
+    if plan.get("method") == "design-focused-diagnostics-v1":
+        import focused_probe
+        return focused_probe.phase(plan, counted_s)
     start, stop = plan['start_s'], plan['stop_s']
     if stop <= start or not all(math.isfinite(x) for x in (start, stop, counted_s)):
         raise ValueError('invalid staged search clock/schedule')
@@ -139,7 +142,7 @@ def check_run(directory, log_path, *, round_mode):
         if not n_unit or len({row['goal'] for row in goals}) != len(goals):
             raise ValueError('unit inventory is empty or duplicates goals')
         text = log_path.read_text()
-        scheduled = [int(value) for value in re.findall(r'^\[wp\] (\d+) goals scheduled\s*$',text,re.M)]
+        scheduled = [int(value) for value in re.findall(r'^\[wp\] (\d+) goals? scheduled\s*$',text,re.M)]
         if not scheduled or sum(scheduled) != len(goals):
             raise ValueError('generated scheduled inventory and JSON count disagree')
         totals = re.findall(r'^\s+(\d+) Total\s*$',text,re.M)

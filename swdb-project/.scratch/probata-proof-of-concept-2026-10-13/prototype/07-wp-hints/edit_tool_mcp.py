@@ -20,6 +20,7 @@ import edit_core as E  # noqa: E402
 import goal_print as G  # noqa: E402
 import loop as L  # noqa: E402
 import staged_search as S  # noqa: E402
+import focused_probe as F  # noqa: E402
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--state", required=True)
@@ -63,6 +64,15 @@ if CFG.get("show_goal"):
                         "changes. Up to about a minute.",
          "inputSchema": {"type": "object", "required": ["goal"], "properties": {"goal": {"type": "string"}}},
          "annotations": {"readOnlyHint": True}})
+if CFG.get("method20"):
+    if not E.STAGED[0]:
+        raise RuntimeError("method20 requires the strict counted staged-search policy")
+    TOOLS += [
+        {"name":"record_design", "description":"Record your own relation, scope, witness/lifetime, and invalidating operations for CAS history, queue phase, and consumed prefix. Required before proposal/probe. Design only, no proof credit.",
+         "inputSchema":{"type":"object","required":["relations"],"properties":{"relations":{"type":"object"}}}},
+        {"name":"focused_probe", "description":"Regenerate the exact active candidate inventory, then solve the selected ordinary TDStep goal's closed property class. All results diagnostic only: no scoring, promotion, milestones, debt/clock resets, or final acceptance. All time counts.",
+         "inputSchema":{"type":"object","required":["goal"],"properties":{"goal":{"type":"string"}}}},
+    ]
 TOOL_NAMES = {t["name"] for t in TOOLS}
 
 
@@ -78,7 +88,7 @@ def remaining_min():
 E.COUNTED_S[0] = lambda: budget_used_min() * 60
 E.SEARCH_REMAINING_S[0] = lambda: remaining_min() * 60
 if E.STAGED[0]:
-    TOOLS[1]["description"] += (" Method19: +8 total temporary goals, four repair proposals/300 counted seconds; last third recovery only; unchanged incumbent until total recovery. Every final goal and fresh smoke remains mandatory.")
+    TOOLS[1]["description"] += (" Strict staged policy: +8 total temporary goals, four repair proposals/300 counted seconds; last phase recovery only; unchanged incumbent until total recovery. Every final goal and fresh smoke remains mandatory.")
 elif E.DEBT[0]:
     TOOLS[1]["description"] += (" Method18: temporary +4 hint debt uses a separate working candidate for at most "
                                 "4 repair proposals/5 counted minutes; no unit regression. Promotion recovers "
@@ -123,7 +133,7 @@ def call(tool, args):
     phase_note = ""
     if E.STAGED[0]:
         phase = S.phase(E.STAGED[0], budget_used_min()*60)
-        phase_note = f"\nMETHOD19 PHASE {phase['index']+1}/3: {phase['name']}; " + phase['guidance']
+        phase_note = f"\nMETHOD{20 if CFG.get('method20') else 19} PHASE {phase['index']+1}/3: {phase['name']}; " + phase['guidance']
     best = E.load_working(OUT, counted_s=budget_used_min() * 60, remaining_s=remaining_min() * 60) if E.DEBT[0] else E.load_best(OUT)
     if tool == "show_best":
         return E.working_text(OUT, best) + "\n" + E.open_text(best) + E.debt_text(OUT) + phase_note + f"\nBudget left for in-call work: {remaining_min():.1f} min."
@@ -131,7 +141,24 @@ def call(tool, args):
         record(tool, {"result": "refused: budget"})
         return (f"Budget for in-call work is spent ({budget_used_min():.1f} of {CFG['budget_min']} min used; "
                 f"{CFG['final_reserve_min']} min are kept for the final replay). Return your final answer NOW.")
+    if CFG.get("method20") and tool == "record_design":
+        rec=F.record_design(OUT,args.get("relations"))
+        record(tool,{"result":"design recorded",**rec})
+        return "Design recorded, with no proof credit. Author your concrete hints; only full checked rounds can promote."
+    if CFG.get("method20") and tool == "focused_probe" and not F.has_design(OUT):
+        record(tool,{"result":"refused: state design missing"})
+        return "First record your own structured state design using record_design. No concrete hints are supplied."
     tag = f"r{CFG['round']}c{N[0] + 1}"
+    if tool == "focused_probe":
+        rec=F.run(OUT,best,str(args.get("goal","")),tag,
+                  remaining_s=lambda:max(0,E.search_remaining(OUT)),round_timeout=CFG["round_timeout"])
+        record(tool,rec)
+        if E.DEBT[0]:
+            E.load_working(OUT,counted_s=budget_used_min()*60,remaining_s=remaining_min()*60)
+        display={k:v for k,v in rec.items() if k not in ("selected","unselected_obligations")}
+        display['selected']=[{k:g.get(k) for k in ('goal','passed','verdict')} for g in rec['selected']]
+        display['unselected_obligations_count']=len(rec['unselected_obligations'])
+        return json.dumps(display,indent=2)+f"\nCounted budget left: {remaining_min():.1f} min."
     if tool == "show_goal":
         t = L.clock()
         text, rec = G.show(OUT, best, str(args.get("goal", "")), tag,

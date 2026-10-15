@@ -253,6 +253,12 @@ def _checked_attempt(out, best, ops, tag, provenance, mode, round_timeout, allow
                      timeout_s=2400, defer_decision=False):
     """One edit attempt. Returns (record, new_best or None)."""
     rec = {"tag": tag, "ops": ops, "time": L.now(), "n_open_before": best["n_open"]}
+    if STAGED[0] and STAGED[0].get('method') == 'design-focused-diagnostics-v1':
+        import focused_probe
+        if not focused_probe.has_design(out):
+            rec.update(result='edit rejected (state design missing)',
+                       problems=[['*','design_required','First record your own structured state design.']])
+            return rec,None
     probs = validate(ops, best, allowed_kinds)
     if probs:
         rec.update(result="edit rejected (edit rules)", problems=[list(p) for p in probs])
