@@ -399,3 +399,15 @@ and the legacy lease were released at the 10:49 ET live readback; load was
 remote for coordinator, ticket acceptance and independent audit readers.
 [Compact audit](../evidence/helper-construct-mbit10-20261015.json). This checkpoint
 does not resolve the ticket. Recheck live state before dispatch.
+
+### Ordered nested entry reads — 2026-10-15 ET
+
+The original explicit-window three-read candidate now has actual WP evidence:
+112 ordinary properties Valid and all 31 smoke tests passing at `a185bc8b`.
+The checked helper view is followed by a separately certified once-only nested
+index capture; inner bounds/initializedness and outer numerical bounds remain
+independent obligations. Final stricter storage/attribute policy `18e7a7f0` passes
+60 structural/helper controls and eight public positive/negative/tamper controls.
+See [ticket 36's scoped checkpoint](36-proof-setup-check-and-verdict-reading.md#nested-entry-read-checkpoint--2026-10-15-et)
+and [the hash-checked manifest](../evidence/wp-nested-entry-reads-20261015.json).
+This does not close the remaining acceptance matrix or freeze production method 3.

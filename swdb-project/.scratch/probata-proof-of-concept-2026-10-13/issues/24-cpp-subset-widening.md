@@ -499,3 +499,32 @@ and the legacy lease were released at the 10:49 ET live readback; load was
 remote for coordinator, ticket acceptance and independent audit readers.
 [Compact audit](../evidence/helper-construct-mbit10-20261015.json). This checkpoint
 does not resolve the ticket. Recheck live state before dispatch.
+
+Declaration-attribute sidefinding — 2026-10-15 ET: generic lowering accepted a local
+`__attribute__((cleanup(release_local)))` after its initializer and silently dropped its scope-exit
+callback. Public `swdb lower` RED1in0.60s; four retained-declaration RED controls in1.03s also exposed
+parameter NoEscapeAttr and function ConstructorAttr/NonNullAttr erasure. A native fixed-input witness
+returned `7 4` (result, global counter) in original C++ and `7 0` in the old lowered C. This establishes
+a lowering mismatch; no actual verifier or falseproof is claimed. The narrow repair validates direct
+attributes before processing retained locals, definitions, parameters and summarized declarations.
+Only five covered diagnostic/inlining attributes are discarded; unknown/effectful attributes refuse
+with their Clang kind. The same guard catches inherited prototype attributes. Ordinary GAPBS includes
+remain admitted. Selected public controls:27PASS11.89s, including14new controls and13existing construct
+groups with deterministic lowering/C compilation. Full-TU startup effects of otherwise uncalled
+functions and class/global attributes are outside this scoped repair. Status remains claimed.
+Evidence:[t24-declaration-attributes-20261015.json](../evidence/t24-declaration-attributes-20261015.json).
+
+## Integration checkpoint — 2026-10-15 ET: qualified copy body and declaration attributes
+
+Integration `636b2080` includes declaration-attribute admission `51ff3999` and the
+qualified standalone copy checkpoint `0e25002d`. The retained actual copy record at
+frozen `1f760ba8` has 36 ordinary Valid and seven smoke PASS goals; its record and eight
+named evidence report hashes were independently checked during integration. Its exact
+model body and contract hashes remain pinned. This is a body result under an explicit
+standard-library typed-range domain, not arbitrary opaque-pointer or caller acceptance;
+WP callers still refuse pending checked typed-root/subobject and range discharge.
+[Copy evidence](../evidence/t24-std-copy-qualified-body-mac-20261015.json).
+The declaration-attribute guard retains its scoped boundary and native cleanup witness;
+this integration does not claim a complete startup/global/class-attribute model.
+Ticket24 remains claimed, with current-policy construct acceptance still coordinated
+separately. Later integration method identities do not upgrade either historical record.

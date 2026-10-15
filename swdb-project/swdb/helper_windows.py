@@ -104,7 +104,10 @@ class _Tree:
                 elif child.get("kind") == "FunctionDecl":
                     self.global_ids.add(child["id"])
                     self.functions.setdefault(child.get("name"), []).append(child)
-        globals_in(self.root)
+        try:
+            globals_in(self.root)
+        finally:
+            globals_in = None
 
     def body(self, fn):
         return next((n for n in _children(fn) if n.get("kind") == "CompoundStmt"), None)
@@ -225,7 +228,10 @@ class _Plan:
                     return
             for child in _children(node):
                 scan(child, node)
-        scan(body)
+        try:
+            scan(body)
+        finally:
+            scan = None
         self.edits.sort(key=lambda e: e["begin"])
         if any(a["end"] > b["begin"] for a, b in zip(self.edits, self.edits[1:])):
             raise Refused("overlapping helper contexts")

@@ -1,0 +1,1894 @@
+{
+  "created": "2026-10-15 ET",
+  "status": "scoped nested-entry-read checkpoint; tickets27/36 remain claimed",
+  "boundary": "Explicit direct int-pointer entry windows; one captured int read per nested occurrence in pure returns; independently checked automatic storage, exact declaration bindings, unedited bytes and executable dependency closure. Globals, opaque/default/member/implicit cleanup dependencies, effects, volatile reads, unsupported casts and source-anchored hints refuse. No input premise added.",
+  "method_boundary": "Originalcandidate actual a185 proof precedes stricter storage/attribute refusal. Final18e7 policy has fresh actual primitive positive/negative controls. No productionmethod3 or full27 acceptance claim.",
+  "batches": {
+    "nested-public-red": {
+      "report": {
+        "path": "/private/tmp/probata-cbmc-pointers/nested-public-red.jsonl",
+        "sha256": "157fcb851a759f4ee0bb9302e3998c25c8da839c295d111208763be609286e8d"
+      },
+      "outcomes": {
+        "failed": 1
+      },
+      "tests": [
+        {
+          "nodeid": "tests/test_wp_nested_entry_reads.py::test_original_three_reads_retains_each_nested_read_as_a_checked_capture",
+          "outcome": "failed",
+          "seconds": 90.47
+        }
+      ],
+      "watchdog": {
+        "exit_code": 1,
+        "peak_rss_bytes": 5646680064,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 165.4295109579689,
+        "cpu_seconds": 142.893995
+      }
+    },
+    "nested-public-green": {
+      "report": {
+        "path": "/private/tmp/probata-cbmc-pointers/nested-public-green.jsonl",
+        "sha256": "39f8693271386c26148ed363d494ef8448bb714a963df03aa49742d0382e24e3"
+      },
+      "outcomes": {
+        "passed": 1
+      },
+      "tests": [
+        {
+          "nodeid": "tests/test_wp_nested_entry_reads.py::test_original_three_reads_retains_each_nested_read_as_a_checked_capture",
+          "outcome": "passed",
+          "seconds": 193.845
+        }
+      ],
+      "watchdog": {
+        "exit_code": 0,
+        "peak_rss_bytes": 5644845056,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 270.94311599998036,
+        "cpu_seconds": 253.156147
+      }
+    },
+    "nested-original-actual": {
+      "report": {
+        "path": "/private/tmp/probata-cbmc-pointers/nested-original-actual.jsonl",
+        "sha256": "a54498ea4f399800fdc8e7b18eba14b75e82c36c95e89f4f1de2506c446c5b03"
+      },
+      "outcomes": {
+        "failed": 1
+      },
+      "tests": [
+        {
+          "nodeid": "tests/test_wp_nested_entry_reads.py::test_actual_original_three_reads_with_explicit_windows_proves",
+          "outcome": "failed",
+          "seconds": 61.231
+        }
+      ],
+      "watchdog": {
+        "exit_code": 1,
+        "peak_rss_bytes": 5337874432,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 104.61496354202973,
+        "cpu_seconds": 104.40133900000001
+      }
+    },
+    "nested-original-actual2": {
+      "report": {
+        "path": "/private/tmp/probata-cbmc-pointers/nested-original-actual2.jsonl",
+        "sha256": "c61bac7ecd07b22ad8bf37fe7da95217d20c2c6bab896759a6b48fbf691d74c9"
+      },
+      "outcomes": {
+        "passed": 1
+      },
+      "tests": [
+        {
+          "nodeid": "tests/test_wp_nested_entry_reads.py::test_actual_original_three_reads_with_explicit_windows_proves",
+          "outcome": "passed",
+          "seconds": 407.931
+        }
+      ],
+      "watchdog": {
+        "exit_code": 0,
+        "peak_rss_bytes": 5843206144,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 455.85134083300363,
+        "cpu_seconds": 504.90099299999997
+      }
+    },
+    "nested-storage-green": {
+      "report": {
+        "path": "/private/tmp/probata-cbmc-pointers/nested-storage-green.jsonl",
+        "sha256": "5f2cb67a97066de935ab7d3e07bb7015ed49b6ea5345abb7b76c598e12f2cf93"
+      },
+      "outcomes": {
+        "passed": 58
+      },
+      "tests": [
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_each_occurrence_is_captured_once_and_freshly_checked",
+          "outcome": "passed",
+          "seconds": 0.356
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_utf8_and_source_names_do_not_capture_generated_bindings",
+          "outcome": "passed",
+          "seconds": 0.178
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_effects_conversions_conditions_and_deeper_reads_refuse[base[q[0]++]]",
+          "outcome": "passed",
+          "seconds": 0.08
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_effects_conversions_conditions_and_deeper_reads_refuse[base[(int)(long)q[0]]]",
+          "outcome": "passed",
+          "seconds": 0.092
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_effects_conversions_conditions_and_deeper_reads_refuse[base[q[0]] && n]",
+          "outcome": "passed",
+          "seconds": 0.093
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_effects_conversions_conditions_and_deeper_reads_refuse[base[q[n++]]]",
+          "outcome": "passed",
+          "seconds": 0.087
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_effects_conversions_conditions_and_deeper_reads_refuse[base[q[0]] + f()]",
+          "outcome": "passed",
+          "seconds": 0.09
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_effects_conversions_conditions_and_deeper_reads_refuse[base[q[base[0]]]]",
+          "outcome": "passed",
+          "seconds": 0.093
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_volatile_input_does_not_become_an_ordinary_capture",
+          "outcome": "passed",
+          "seconds": 0.1
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_fresh_replay_rejects_drift[source]",
+          "outcome": "passed",
+          "seconds": 0.318
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_fresh_replay_rejects_drift[view]",
+          "outcome": "passed",
+          "seconds": 0.217
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_fresh_replay_rejects_drift[certificate]",
+          "outcome": "passed",
+          "seconds": 0.427
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_fresh_replay_rejects_drift[window]",
+          "outcome": "passed",
+          "seconds": 0.427
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_independent_ast_check_rejects_faulty_renderer_even_with_fresh_hashes[wrong_read]",
+          "outcome": "passed",
+          "seconds": 0.18
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_independent_ast_check_rejects_faulty_renderer_even_with_fresh_hashes[wrong_binding]",
+          "outcome": "passed",
+          "seconds": 0.186
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_independent_ast_check_rejects_faulty_renderer_even_with_fresh_hashes[extra_call]",
+          "outcome": "passed",
+          "seconds": 0.105
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_independent_ast_check_rejects_faulty_renderer_even_with_fresh_hashes[annotation]",
+          "outcome": "passed",
+          "seconds": 0.087
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_complete_unit_closure_refuses_untransported_dependencies[header_body]",
+          "outcome": "passed",
+          "seconds": 0.092
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_complete_unit_closure_refuses_untransported_dependencies[global_data]",
+          "outcome": "passed",
+          "seconds": 0.095
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_complete_unit_closure_refuses_untransported_dependencies[default_argument]",
+          "outcome": "passed",
+          "seconds": 0.088
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_independent_relation_rejects_renderer_changes_outside_target_statements",
+          "outcome": "passed",
+          "seconds": 0.109
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_freshly_rehashed_renderer_cannot_cache_a_capture_between_calls[static ]",
+          "outcome": "passed",
+          "seconds": 0.174
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_freshly_rehashed_renderer_cannot_cache_a_capture_between_calls[thread_local ]",
+          "outcome": "passed",
+          "seconds": 0.236
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_transparent_clone_keeps_every_state_call_and_has_no_helper_premise",
+          "outcome": "passed",
+          "seconds": 0.56
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_utf8_comments_preserve_clang_byte_spans_and_original_source_bytes",
+          "outcome": "passed",
+          "seconds": 0.552
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_every_branch_and_nested_helper_context_is_expanded_without_shared_formals",
+          "outcome": "passed",
+          "seconds": 0.261
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_source_view_or_certificate_drift_is_rejected_by_fresh_replay[file]",
+          "outcome": "passed",
+          "seconds": 0.282
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_source_view_or_certificate_drift_is_rejected_by_fresh_replay[source]",
+          "outcome": "passed",
+          "seconds": 0.394
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_source_view_or_certificate_drift_is_rejected_by_fresh_replay[certificate]",
+          "outcome": "passed",
+          "seconds": 0.569
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_nontransparent_helper_shapes_do_not_gain_a_source_window[\\n/*@ requires n >= 0; */\\nvoid load(int *p, int n, int t) {\\n  maa_const(0, 0);\\n  maa_const(n, 1);\\n  maa_const(1, 2);\\n  maa_stream_load(p, 0, 1, 2, t, -1);\\n}\\n]",
+          "outcome": "passed",
+          "seconds": 0.001
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_nontransparent_helper_shapes_do_not_gain_a_source_window[\\nvoid load(int *p, int n, int t) {\\n  int local = n; maa_const(local,0);\\n  maa_const(n, 1);\\n  maa_const(1, 2);\\n  maa_stream_load(p, 0, 1, 2, t, -1);\\n}\\n]",
+          "outcome": "passed",
+          "seconds": 0.102
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_nontransparent_helper_shapes_do_not_gain_a_source_window[\\nvoid load(int *p, int n, int t) {\\n  p[0] = n;\\n  maa_const(n, 1);\\n  maa_const(1, 2);\\n  maa_stream_load(p, 0, 1, 2, t, -1);\\n}\\n]",
+          "outcome": "passed",
+          "seconds": 0.1
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_nontransparent_helper_shapes_do_not_gain_a_source_window[\\nvoid load(int *p, int n, int t) {\\n  load(p,n,t);\\n  maa_const(n, 1);\\n  maa_const(1, 2);\\n  maa_stream_load(p, 0, 1, 2, t, -1);\\n}\\n]",
+          "outcome": "passed",
+          "seconds": 0.101
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_nontransparent_helper_shapes_do_not_gain_a_source_window[\\nvoid load(int *p, int n, int t) {\\n  maa_const(0, 0);\\n  maa_const(n + 1, 1);\\n  maa_const(1, 2);\\n  maa_stream_load(p, 0, 1, 2, t, -1);\\n}\\n]",
+          "outcome": "passed",
+          "seconds": 0.087
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_nontransparent_helper_shapes_do_not_gain_a_source_window[\\n__attribute__((noinline)) void load(int *p, int n, int t) {\\n  maa_const(0, 0);\\n  maa_const(n, 1);\\n  maa_const(1, 2);\\n  maa_stream_load(p, 0, 1, 2, t, -1);\\n}\\n]",
+          "outcome": "passed",
+          "seconds": 0.104
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_nontransparent_helper_shapes_do_not_gain_a_source_window[\\nvoid load(int *p, int n, int t) {\\n  return;\\n  maa_const(n, 1);\\n  maa_const(1, 2);\\n  maa_stream_load(p, 0, 1, 2, t, -1);\\n}\\n]",
+          "outcome": "passed",
+          "seconds": 0.087
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_effectful_or_unmodeled_actual_arguments_are_not_duplicated_or_hidden[n++]",
+          "outcome": "passed",
+          "seconds": 0.094
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_effectful_or_unmodeled_actual_arguments_are_not_duplicated_or_hidden[n + 1]",
+          "outcome": "passed",
+          "seconds": 0.095
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_effectful_or_unmodeled_actual_arguments_are_not_duplicated_or_hidden[get_tile_size(0)]",
+          "outcome": "passed",
+          "seconds": 0.098
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_a_caller_local_cannot_capture_the_helpers_global_callee",
+          "outcome": "passed",
+          "seconds": 0.275
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_header_hidden_names_cannot_change_capture_bindings[int swdb_hw_0_arg_1 = 9;\\n#define VALUE swdb_hw_0_arg_1\\n-\\nint unit(int *q, int n) {\\n  load(q, VALUE, 0);\\n  wait_ready(0);\\n  return get_tile_size(0) == n;\\n}\\n-unmapped generated declaration]",
+          "outcome": "passed",
+          "seconds": 0.236
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_header_hidden_names_cannot_change_capture_bindings[#define swdb_hw_0_arg_0 hidden_capture\\n-\\nint unit(int *q, int n) {\\n  load(q, n, 0);\\n  wait_ready(0);\\n  return get_tile_size(0) == n;\\n}\\n-formal type, name]",
+          "outcome": "passed",
+          "seconds": 0.224
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_an_existing_source_without_a_defined_helper_needs_no_view",
+          "outcome": "passed",
+          "seconds": 0.1
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_unchecked_contexts_or_language_semantics_remain_closed[\\nvoid load(int *p, int n, int t) {\\n  maa_const(0, 0);\\n  maa_const(n, 1);\\n  maa_const(1, 2);\\n  maa_stream_load(p, 0, 1, 2, t, -1);\\n}\\n-\\nint unit(int *q, int n) {\\n  if (n) load(q,n,0);\\n  wait_ready(0);\\n  return get_tile_size(0) == n;\\n}\\n]",
+          "outcome": "passed",
+          "seconds": 0.091
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_unchecked_contexts_or_language_semantics_remain_closed[\\nvoid load(int *p, int n, int t) {\\n  maa_const(0, 0);\\n  maa_const(n, 1);\\n  maa_const(1, 2);\\n  maa_stream_load(p, 0, 1, 2, t, -1);\\n}\\n-\\nint unit(int *q, int n) {\\n  for (load(q,n,0); n; --n) {}\\n  wait_ready(0);\\n  return get_tile_size(0) == n;\\n}\\n]",
+          "outcome": "passed",
+          "seconds": 0.111
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_unchecked_contexts_or_language_semantics_remain_closed[\\nvoid load(int *p, int n, int t) {\\n  maa_const(0, 0);\\n  maa_const(n, 1);\\n  maa_const(1, 2);\\n  maa_stream_load(p, 0, 1, 2, t, -1);\\n}\\n-\\nint unit(int *q, int n) {\\n  auto f = load; f(q,n,0); load(q,n,0);\\n  wait_ready(0);\\n  return get_tile_size(0) == n;\\n}\\n]",
+          "outcome": "passed",
+          "seconds": 0.1
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_unchecked_contexts_or_language_semantics_remain_closed[\\nvoid load(int *p, int n, int t) noexcept {\\n  maa_const(0, 0);\\n  maa_const(n, 1);\\n  maa_const(1, 2);\\n  maa_stream_load(p, 0, 1, 2, t, -1);\\n}\\n-\\nint unit(int *q, int n) {\\n  load(q, n, 0);\\n  wait_ready(0);\\n  return get_tile_size(0) == n;\\n}\\n]",
+          "outcome": "passed",
+          "seconds": 0.098
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_unchecked_contexts_or_language_semantics_remain_closed[\\nvoid load(int *p, int n, int t) {\\n  volatile int x = n; maa_const(x,0);\\n  maa_const(n, 1);\\n  maa_const(1, 2);\\n  maa_stream_load(p, 0, 1, 2, t, -1);\\n}\\n-\\nint unit(int *q, int n) {\\n  load(q, n, 0);\\n  wait_ready(0);\\n  return get_tile_size(0) == n;\\n}\\n]",
+          "outcome": "passed",
+          "seconds": 0.091
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_unchecked_contexts_or_language_semantics_remain_closed[\\nvoid load(int *p, int n, int t) {\\n  #define HW_CALL maa_const(0,0)\\n HW_CALL;\\n  maa_const(n, 1);\\n  maa_const(1, 2);\\n  maa_stream_load(p, 0, 1, 2, t, -1);\\n}\\n-\\nint unit(int *q, int n) {\\n  load(q, n, 0);\\n  wait_ready(0);\\n  return get_tile_size(0) == n;\\n}\\n]",
+          "outcome": "passed",
+          "seconds": 0.098
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_unchecked_contexts_or_language_semantics_remain_closed[\\nvoid load(int *p, int n, int t) {\\n  maa_const(0, 0);\\n  maa_const(n, 1);\\n  maa_const(1, 2);\\n  maa_stream_load(p, 0, 1, 2, t, -1);\\n}\\n-\\nint unit(int *q, int n) {\\n  int where = __builtin_LINE(); load(q,n,0);\\n  wait_ready(0);\\n  return get_tile_size(0) == n;\\n}\\n]",
+          "outcome": "passed",
+          "seconds": 0.001
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_all_contexts_are_checked_even_when_only_the_second_one_is_invalid",
+          "outcome": "passed",
+          "seconds": 0.113
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_declared_import_cannot_be_replaced_with_a_source_definition_or_alias",
+          "outcome": "passed",
+          "seconds": 0.088
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_import_pin_and_header_changes_are_replayed",
+          "outcome": "passed",
+          "seconds": 0.778
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_generated_scopes_preserve_other_operations_and_newline_positions",
+          "outcome": "passed",
+          "seconds": 0.429
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_independent_ast_check_rejects_a_generator_that_omits_a_model_call",
+          "outcome": "passed",
+          "seconds": 0.178
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_macro_only_dependencies_are_pinned_even_without_ast_declarations",
+          "outcome": "passed",
+          "seconds": 0.53
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_original_dx_fixture_expands_both_load_contexts_and_keeps_store_and_wait",
+          "outcome": "passed",
+          "seconds": 0.587
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_native_call_order_and_call_value_captures_match_the_original",
+          "outcome": "passed",
+          "seconds": 0.855
+        }
+      ]
+    },
+    "nested-closure-final": {
+      "report": {
+        "path": "/private/tmp/probata-cbmc-pointers/nested-closure-final.jsonl",
+        "sha256": "8bd015eda0a0ca29299d6d66f94d398dccf36ba6eb25a6cca541b480e0c12aea"
+      },
+      "outcomes": {
+        "passed": 60
+      },
+      "tests": [
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_each_occurrence_is_captured_once_and_freshly_checked",
+          "outcome": "passed",
+          "seconds": 0.482
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_utf8_and_source_names_do_not_capture_generated_bindings",
+          "outcome": "passed",
+          "seconds": 0.273
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_effects_conversions_conditions_and_deeper_reads_refuse[base[q[0]++]]",
+          "outcome": "passed",
+          "seconds": 0.132
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_effects_conversions_conditions_and_deeper_reads_refuse[base[(int)(long)q[0]]]",
+          "outcome": "passed",
+          "seconds": 0.122
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_effects_conversions_conditions_and_deeper_reads_refuse[base[q[0]] && n]",
+          "outcome": "passed",
+          "seconds": 0.084
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_effects_conversions_conditions_and_deeper_reads_refuse[base[q[n++]]]",
+          "outcome": "passed",
+          "seconds": 0.133
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_effects_conversions_conditions_and_deeper_reads_refuse[base[q[0]] + f()]",
+          "outcome": "passed",
+          "seconds": 0.092
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_effects_conversions_conditions_and_deeper_reads_refuse[base[q[base[0]]]]",
+          "outcome": "passed",
+          "seconds": 0.089
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_volatile_input_does_not_become_an_ordinary_capture",
+          "outcome": "passed",
+          "seconds": 0.106
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_fresh_replay_rejects_drift[source]",
+          "outcome": "passed",
+          "seconds": 0.307
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_fresh_replay_rejects_drift[view]",
+          "outcome": "passed",
+          "seconds": 0.219
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_fresh_replay_rejects_drift[certificate]",
+          "outcome": "passed",
+          "seconds": 0.48
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_fresh_replay_rejects_drift[window]",
+          "outcome": "passed",
+          "seconds": 0.516
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_independent_ast_check_rejects_faulty_renderer_even_with_fresh_hashes[wrong_read]",
+          "outcome": "passed",
+          "seconds": 0.186
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_independent_ast_check_rejects_faulty_renderer_even_with_fresh_hashes[wrong_binding]",
+          "outcome": "passed",
+          "seconds": 0.187
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_independent_ast_check_rejects_faulty_renderer_even_with_fresh_hashes[extra_call]",
+          "outcome": "passed",
+          "seconds": 0.111
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_independent_ast_check_rejects_faulty_renderer_even_with_fresh_hashes[annotation]",
+          "outcome": "passed",
+          "seconds": 0.135
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_complete_unit_closure_refuses_untransported_dependencies[header_body]",
+          "outcome": "passed",
+          "seconds": 0.09
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_complete_unit_closure_refuses_untransported_dependencies[global_data]",
+          "outcome": "passed",
+          "seconds": 0.093
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_complete_unit_closure_refuses_untransported_dependencies[default_argument]",
+          "outcome": "passed",
+          "seconds": 0.115
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_independent_relation_rejects_renderer_changes_outside_target_statements",
+          "outcome": "passed",
+          "seconds": 0.095
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_freshly_rehashed_renderer_cannot_cache_a_capture_between_calls[static ]",
+          "outcome": "passed",
+          "seconds": 0.179
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_freshly_rehashed_renderer_cannot_cache_a_capture_between_calls[thread_local ]",
+          "outcome": "passed",
+          "seconds": 0.184
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_freshly_rehashed_renderer_cannot_cache_a_capture_between_calls[__attribute__((aligned(16))) ]",
+          "outcome": "passed",
+          "seconds": 0.179
+        },
+        {
+          "nodeid": "tests/test_nested_entry_reads.py::test_unit_closure_refuses_implicit_cleanup_callees",
+          "outcome": "passed",
+          "seconds": 0.095
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_transparent_clone_keeps_every_state_call_and_has_no_helper_premise",
+          "outcome": "passed",
+          "seconds": 0.558
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_utf8_comments_preserve_clang_byte_spans_and_original_source_bytes",
+          "outcome": "passed",
+          "seconds": 0.599
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_every_branch_and_nested_helper_context_is_expanded_without_shared_formals",
+          "outcome": "passed",
+          "seconds": 0.283
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_source_view_or_certificate_drift_is_rejected_by_fresh_replay[file]",
+          "outcome": "passed",
+          "seconds": 0.264
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_source_view_or_certificate_drift_is_rejected_by_fresh_replay[source]",
+          "outcome": "passed",
+          "seconds": 0.398
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_source_view_or_certificate_drift_is_rejected_by_fresh_replay[certificate]",
+          "outcome": "passed",
+          "seconds": 0.554
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_nontransparent_helper_shapes_do_not_gain_a_source_window[\\n/*@ requires n >= 0; */\\nvoid load(int *p, int n, int t) {\\n  maa_const(0, 0);\\n  maa_const(n, 1);\\n  maa_const(1, 2);\\n  maa_stream_load(p, 0, 1, 2, t, -1);\\n}\\n]",
+          "outcome": "passed",
+          "seconds": 0.0
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_nontransparent_helper_shapes_do_not_gain_a_source_window[\\nvoid load(int *p, int n, int t) {\\n  int local = n; maa_const(local,0);\\n  maa_const(n, 1);\\n  maa_const(1, 2);\\n  maa_stream_load(p, 0, 1, 2, t, -1);\\n}\\n]",
+          "outcome": "passed",
+          "seconds": 0.093
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_nontransparent_helper_shapes_do_not_gain_a_source_window[\\nvoid load(int *p, int n, int t) {\\n  p[0] = n;\\n  maa_const(n, 1);\\n  maa_const(1, 2);\\n  maa_stream_load(p, 0, 1, 2, t, -1);\\n}\\n]",
+          "outcome": "passed",
+          "seconds": 0.094
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_nontransparent_helper_shapes_do_not_gain_a_source_window[\\nvoid load(int *p, int n, int t) {\\n  load(p,n,t);\\n  maa_const(n, 1);\\n  maa_const(1, 2);\\n  maa_stream_load(p, 0, 1, 2, t, -1);\\n}\\n]",
+          "outcome": "passed",
+          "seconds": 0.094
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_nontransparent_helper_shapes_do_not_gain_a_source_window[\\nvoid load(int *p, int n, int t) {\\n  maa_const(0, 0);\\n  maa_const(n + 1, 1);\\n  maa_const(1, 2);\\n  maa_stream_load(p, 0, 1, 2, t, -1);\\n}\\n]",
+          "outcome": "passed",
+          "seconds": 0.084
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_nontransparent_helper_shapes_do_not_gain_a_source_window[\\n__attribute__((noinline)) void load(int *p, int n, int t) {\\n  maa_const(0, 0);\\n  maa_const(n, 1);\\n  maa_const(1, 2);\\n  maa_stream_load(p, 0, 1, 2, t, -1);\\n}\\n]",
+          "outcome": "passed",
+          "seconds": 0.085
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_nontransparent_helper_shapes_do_not_gain_a_source_window[\\nvoid load(int *p, int n, int t) {\\n  return;\\n  maa_const(n, 1);\\n  maa_const(1, 2);\\n  maa_stream_load(p, 0, 1, 2, t, -1);\\n}\\n]",
+          "outcome": "passed",
+          "seconds": 0.09
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_effectful_or_unmodeled_actual_arguments_are_not_duplicated_or_hidden[n++]",
+          "outcome": "passed",
+          "seconds": 0.089
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_effectful_or_unmodeled_actual_arguments_are_not_duplicated_or_hidden[n + 1]",
+          "outcome": "passed",
+          "seconds": 0.088
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_effectful_or_unmodeled_actual_arguments_are_not_duplicated_or_hidden[get_tile_size(0)]",
+          "outcome": "passed",
+          "seconds": 0.108
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_a_caller_local_cannot_capture_the_helpers_global_callee",
+          "outcome": "passed",
+          "seconds": 0.263
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_header_hidden_names_cannot_change_capture_bindings[int swdb_hw_0_arg_1 = 9;\\n#define VALUE swdb_hw_0_arg_1\\n-\\nint unit(int *q, int n) {\\n  load(q, VALUE, 0);\\n  wait_ready(0);\\n  return get_tile_size(0) == n;\\n}\\n-unmapped generated declaration]",
+          "outcome": "passed",
+          "seconds": 0.208
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_header_hidden_names_cannot_change_capture_bindings[#define swdb_hw_0_arg_0 hidden_capture\\n-\\nint unit(int *q, int n) {\\n  load(q, n, 0);\\n  wait_ready(0);\\n  return get_tile_size(0) == n;\\n}\\n-formal type, name]",
+          "outcome": "passed",
+          "seconds": 0.221
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_an_existing_source_without_a_defined_helper_needs_no_view",
+          "outcome": "passed",
+          "seconds": 0.083
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_unchecked_contexts_or_language_semantics_remain_closed[\\nvoid load(int *p, int n, int t) {\\n  maa_const(0, 0);\\n  maa_const(n, 1);\\n  maa_const(1, 2);\\n  maa_stream_load(p, 0, 1, 2, t, -1);\\n}\\n-\\nint unit(int *q, int n) {\\n  if (n) load(q,n,0);\\n  wait_ready(0);\\n  return get_tile_size(0) == n;\\n}\\n]",
+          "outcome": "passed",
+          "seconds": 0.086
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_unchecked_contexts_or_language_semantics_remain_closed[\\nvoid load(int *p, int n, int t) {\\n  maa_const(0, 0);\\n  maa_const(n, 1);\\n  maa_const(1, 2);\\n  maa_stream_load(p, 0, 1, 2, t, -1);\\n}\\n-\\nint unit(int *q, int n) {\\n  for (load(q,n,0); n; --n) {}\\n  wait_ready(0);\\n  return get_tile_size(0) == n;\\n}\\n]",
+          "outcome": "passed",
+          "seconds": 0.088
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_unchecked_contexts_or_language_semantics_remain_closed[\\nvoid load(int *p, int n, int t) {\\n  maa_const(0, 0);\\n  maa_const(n, 1);\\n  maa_const(1, 2);\\n  maa_stream_load(p, 0, 1, 2, t, -1);\\n}\\n-\\nint unit(int *q, int n) {\\n  auto f = load; f(q,n,0); load(q,n,0);\\n  wait_ready(0);\\n  return get_tile_size(0) == n;\\n}\\n]",
+          "outcome": "passed",
+          "seconds": 0.101
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_unchecked_contexts_or_language_semantics_remain_closed[\\nvoid load(int *p, int n, int t) noexcept {\\n  maa_const(0, 0);\\n  maa_const(n, 1);\\n  maa_const(1, 2);\\n  maa_stream_load(p, 0, 1, 2, t, -1);\\n}\\n-\\nint unit(int *q, int n) {\\n  load(q, n, 0);\\n  wait_ready(0);\\n  return get_tile_size(0) == n;\\n}\\n]",
+          "outcome": "passed",
+          "seconds": 0.092
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_unchecked_contexts_or_language_semantics_remain_closed[\\nvoid load(int *p, int n, int t) {\\n  volatile int x = n; maa_const(x,0);\\n  maa_const(n, 1);\\n  maa_const(1, 2);\\n  maa_stream_load(p, 0, 1, 2, t, -1);\\n}\\n-\\nint unit(int *q, int n) {\\n  load(q, n, 0);\\n  wait_ready(0);\\n  return get_tile_size(0) == n;\\n}\\n]",
+          "outcome": "passed",
+          "seconds": 0.094
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_unchecked_contexts_or_language_semantics_remain_closed[\\nvoid load(int *p, int n, int t) {\\n  #define HW_CALL maa_const(0,0)\\n HW_CALL;\\n  maa_const(n, 1);\\n  maa_const(1, 2);\\n  maa_stream_load(p, 0, 1, 2, t, -1);\\n}\\n-\\nint unit(int *q, int n) {\\n  load(q, n, 0);\\n  wait_ready(0);\\n  return get_tile_size(0) == n;\\n}\\n]",
+          "outcome": "passed",
+          "seconds": 0.09
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_unchecked_contexts_or_language_semantics_remain_closed[\\nvoid load(int *p, int n, int t) {\\n  maa_const(0, 0);\\n  maa_const(n, 1);\\n  maa_const(1, 2);\\n  maa_stream_load(p, 0, 1, 2, t, -1);\\n}\\n-\\nint unit(int *q, int n) {\\n  int where = __builtin_LINE(); load(q,n,0);\\n  wait_ready(0);\\n  return get_tile_size(0) == n;\\n}\\n]",
+          "outcome": "passed",
+          "seconds": 0.001
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_all_contexts_are_checked_even_when_only_the_second_one_is_invalid",
+          "outcome": "passed",
+          "seconds": 0.095
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_declared_import_cannot_be_replaced_with_a_source_definition_or_alias",
+          "outcome": "passed",
+          "seconds": 0.108
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_import_pin_and_header_changes_are_replayed",
+          "outcome": "passed",
+          "seconds": 0.818
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_generated_scopes_preserve_other_operations_and_newline_positions",
+          "outcome": "passed",
+          "seconds": 0.699
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_independent_ast_check_rejects_a_generator_that_omits_a_model_call",
+          "outcome": "passed",
+          "seconds": 0.213
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_macro_only_dependencies_are_pinned_even_without_ast_declarations",
+          "outcome": "passed",
+          "seconds": 0.549
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_original_dx_fixture_expands_both_load_contexts_and_keeps_store_and_wait",
+          "outcome": "passed",
+          "seconds": 0.557
+        },
+        {
+          "nodeid": "tests/test_helper_windows.py::test_native_call_order_and_call_value_captures_match_the_original",
+          "outcome": "passed",
+          "seconds": 0.964
+        }
+      ]
+    },
+    "nested-obligations-final": {
+      "report": {
+        "path": "/private/tmp/probata-cbmc-pointers/nested-obligations-final.jsonl",
+        "sha256": "fea28cb7156ca5f7796aedf4b8513412f09d25b9e529e980d9b173eef099bfbd"
+      },
+      "outcomes": {
+        "passed": 5,
+        "failed": 3
+      },
+      "tests": [
+        {
+          "nodeid": "tests/test_wp_nested_entry_obligations.py::test_actual_ordered_nested_read_obligations[safe-None]",
+          "outcome": "passed",
+          "seconds": 9.885
+        },
+        {
+          "nodeid": "tests/test_wp_nested_entry_obligations.py::test_actual_ordered_nested_read_obligations[inner_window-swdb_window_access]",
+          "outcome": "passed",
+          "seconds": 41.083
+        },
+        {
+          "nodeid": "tests/test_wp_nested_entry_obligations.py::test_actual_ordered_nested_read_obligations[outer_window-swdb_window_access]",
+          "outcome": "passed",
+          "seconds": 43.342
+        },
+        {
+          "nodeid": "tests/test_wp_nested_entry_obligations.py::test_actual_ordered_nested_read_obligations[uninitialized_inner-initialization]",
+          "outcome": "passed",
+          "seconds": 99.045
+        },
+        {
+          "nodeid": "tests/test_wp_nested_entry_obligations.py::test_actual_ordered_nested_read_obligations[null_inner-swdb_window_access]",
+          "outcome": "passed",
+          "seconds": 40.272
+        },
+        {
+          "nodeid": "tests/test_wp_nested_prelaunch.py::test_changed_nested_source_certificate_or_domain_refuses_before_wp[file]",
+          "outcome": "failed",
+          "seconds": 0.065
+        },
+        {
+          "nodeid": "tests/test_wp_nested_prelaunch.py::test_changed_nested_source_certificate_or_domain_refuses_before_wp[certificate]",
+          "outcome": "failed",
+          "seconds": 0.061
+        },
+        {
+          "nodeid": "tests/test_wp_nested_prelaunch.py::test_changed_nested_source_certificate_or_domain_refuses_before_wp[entry_windows]",
+          "outcome": "failed",
+          "seconds": 0.059
+        }
+      ],
+      "watchdog": {
+        "exit_code": 1,
+        "peak_rss_bytes": 888143872,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 235.3710295840283,
+        "cpu_seconds": 211.06702
+      }
+    },
+    "nested-obligations-final2": {
+      "report": {
+        "path": "/private/tmp/probata-cbmc-pointers/nested-obligations-final2.jsonl",
+        "sha256": "b8168bf48d2db650ffce1a22fa08b95e841102b625a71950761b00282af88723"
+      },
+      "outcomes": {
+        "passed": 8
+      },
+      "tests": [
+        {
+          "nodeid": "tests/test_wp_nested_entry_obligations.py::test_actual_ordered_nested_read_obligations[safe-None]",
+          "outcome": "passed",
+          "seconds": 8.008
+        },
+        {
+          "nodeid": "tests/test_wp_nested_entry_obligations.py::test_actual_ordered_nested_read_obligations[inner_window-swdb_window_access]",
+          "outcome": "passed",
+          "seconds": 39.612
+        },
+        {
+          "nodeid": "tests/test_wp_nested_entry_obligations.py::test_actual_ordered_nested_read_obligations[outer_window-swdb_window_access]",
+          "outcome": "passed",
+          "seconds": 39.309
+        },
+        {
+          "nodeid": "tests/test_wp_nested_entry_obligations.py::test_actual_ordered_nested_read_obligations[uninitialized_inner-initialization]",
+          "outcome": "passed",
+          "seconds": 39.812
+        },
+        {
+          "nodeid": "tests/test_wp_nested_entry_obligations.py::test_actual_ordered_nested_read_obligations[null_inner-swdb_window_access]",
+          "outcome": "passed",
+          "seconds": 38.602
+        },
+        {
+          "nodeid": "tests/test_wp_nested_prelaunch.py::test_changed_nested_source_certificate_or_domain_refuses_before_wp[file]",
+          "outcome": "passed",
+          "seconds": 3.022
+        },
+        {
+          "nodeid": "tests/test_wp_nested_prelaunch.py::test_changed_nested_source_certificate_or_domain_refuses_before_wp[certificate]",
+          "outcome": "passed",
+          "seconds": 3.015
+        },
+        {
+          "nodeid": "tests/test_wp_nested_prelaunch.py::test_changed_nested_source_certificate_or_domain_refuses_before_wp[entry_windows]",
+          "outcome": "passed",
+          "seconds": 2.931
+        }
+      ],
+      "watchdog": {
+        "exit_code": 0,
+        "peak_rss_bytes": 880541696,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 175.54470729199238,
+        "cpu_seconds": 207.515642
+      }
+    },
+    "nested-existing-final": {
+      "report": {
+        "path": "/private/tmp/probata-cbmc-pointers/nested-existing-final.jsonl",
+        "sha256": "c2a717c5ea2bd1106ecc48a1f728e268716c88af4382d51ff831e544ea4f8062"
+      },
+      "outcomes": {
+        "passed": 2
+      },
+      "tests": [
+        {
+          "nodeid": "tests/test_proof_semantics.py::test_wp_checked_helper_and_nested_view_do_not_invent_missing_entry_windows",
+          "outcome": "passed",
+          "seconds": 51.088
+        },
+        {
+          "nodeid": "tests/test_entry_array_domains.py::test_explicit_entry_window_proves_legal_one_past",
+          "outcome": "passed",
+          "seconds": 19.991
+        }
+      ],
+      "watchdog": {
+        "exit_code": 0,
+        "peak_rss_bytes": 5134909440,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 167.21745295799337,
+        "cpu_seconds": 161.89810400000002
+      }
+    }
+  },
+  "records": [
+    {
+      "source_checkpoint": "pre-main-closure-refusal",
+      "record": {
+        "path": "/private/tmp/probata-t36-tests/nested-original-actual/test_actual_original_three_rea0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t141114z.3da90710.yaml",
+        "sha256": "c1b1841b664d3fd3a9b9c6eddc6d9877193e3ec0eacc87b4a3200184a2dc31e3"
+      },
+      "id": "proof.dx100-fixtures.candidate-1.20261015t141114z.3da90710",
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "goals": {},
+      "open_goals": [],
+      "pins": {
+        "contract": {
+          "id": "contract.fixture_dx_three_reads",
+          "sha256": "b6b1bc797fc5a00e9495e481acebcdd9372a3d76125682d7a42d4bc6452fc4ad"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "af836a6d5ac32e8355f935bf2283a7567090f15b99da1dec74ef287e02af0f70"
+        }
+      },
+      "setup": {
+        "check": {
+          "version": "1",
+          "sha256": "4786c8baea9512bde8eb46978535d43f91525e669461d5a38d4ff3ecfe75d024"
+        },
+        "verdict": "passed"
+      },
+      "nested_capture_count": 0,
+      "refusal": "nested view changed an original executable operation",
+      "reports": [
+        {
+          "name": "helper_original_source",
+          "path": "/private/tmp/probata-t36-tests/nested-original-actual/dx-seed0/runs/dx100-fixtures/source/src/bfs.cc",
+          "sha256": "1548c3422a56f6a5ba1233436cc5e33a887f2e4ea0b16b4d05e36a0ebd33338c"
+        },
+        {
+          "name": "helper_original_lowering",
+          "path": "/private/tmp/probata-t36-tests/nested-original-actual/test_actual_original_three_rea0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t141114z.3da90710/wp/helper-original/dxf_three_reads.c",
+          "sha256": "159ae2a4ed52566dd572f362ade5c7a14c464112017a7292326790fe962f73bf"
+        },
+        {
+          "name": "helper_original_anchors",
+          "path": "/private/tmp/probata-t36-tests/nested-original-actual/test_actual_original_three_rea0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t141114z.3da90710/wp/helper-original/dxf_three_reads.anchors.json",
+          "sha256": "501867ea69400b42708a2790cb9879914ddd9a57f5846f88442ff3fcb504c47f"
+        },
+        {
+          "name": "helper_view_source",
+          "path": "/private/tmp/probata-t36-tests/nested-original-actual/test_actual_original_three_rea0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t141114z.3da90710/wp/helper-source/helper-window-sfzm_0wf/source.cc",
+          "sha256": "be49f8cab0e795887d887ca69ba22700c1b7aaacb02b586fcd90f04b6e4379c2"
+        },
+        {
+          "name": "helper_windows_certificate",
+          "path": "/private/tmp/probata-t36-tests/nested-original-actual/test_actual_original_three_rea0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t141114z.3da90710/wp/helper_windows.json",
+          "sha256": "9d0a9e769246f0c9d5cf25aaac01ff6f8ea2d40fc8edd69a3ca575de4a2061bf"
+        },
+        {
+          "name": "handler",
+          "path": "/private/tmp/probata-t36-tests/nested-original-actual/test_actual_original_three_rea0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t141114z.3da90710/wp/handler.json",
+          "sha256": "862e33537ab50df6d01cf7d18d0d4cf60e0800cf46682abfdde6c9299adf6ed1"
+        }
+      ]
+    },
+    {
+      "source_checkpoint": "a185bc8b",
+      "record": {
+        "path": "/private/tmp/probata-t36-tests/nested-original-actual2/test_actual_original_three_rea0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t141908z.b42e370c.yaml",
+        "sha256": "dd2d186713f1174324c54b605692dbd3d8eb086c68dc9a8f70fb776fc39fc8c8"
+      },
+      "id": "proof.dx100-fixtures.candidate-1.20261015t141908z.b42e370c",
+      "verdict": "proven",
+      "failure_class": null,
+      "goals": {
+        "smoke:valid": 31,
+        "ordinary:valid": 112
+      },
+      "open_goals": [],
+      "pins": {
+        "contract": {
+          "id": "contract.fixture_dx_three_reads",
+          "sha256": "b6b1bc797fc5a00e9495e481acebcdd9372a3d76125682d7a42d4bc6452fc4ad"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "98b9842fad7e5f56890e5bc9f717217ad973ef8062829ebee4476fbc65ffaf9f"
+        },
+        "c_lowering": {
+          "id": "dxf_three_reads.c",
+          "sha256": "82707411a43ab6c243da1249617ea56bfef8e9b84395d181abbe8262c1f65597"
+        },
+        "nested_read_check": {
+          "id": "swdb-nested-entry-reads-1",
+          "sha256": "28837e0394f5554fa1a72aeacab3dd25963884ea77de907dc10af1c6b2f32b8b"
+        },
+        "nested_read_certificate": {
+          "id": "swdb-nested-read-certificate-1",
+          "sha256": "dc27e6bcef8410829d48a5b03e2bec62efed660a8068d00e37c6a3c6707d1b1e"
+        },
+        "nested_read_original_lowering": {
+          "id": "dxf_three_reads.c",
+          "sha256": "2e4b87b898b73a4e2616d1321664d81b8584472260c1ce7256525092d5861327"
+        },
+        "nested_read_original_source": {
+          "id": "source.cc",
+          "sha256": "be49f8cab0e795887d887ca69ba22700c1b7aaacb02b586fcd90f04b6e4379c2"
+        },
+        "nested_read_view_source": {
+          "id": "source.cc",
+          "sha256": "7dd2fd098830e9d505fbb285e8c46f1a425a8e6d5f12f13a29be0ae1cdc3931d"
+        }
+      },
+      "setup": {
+        "check": {
+          "version": "1",
+          "sha256": "2283848a0566a6ec447fbd0828afc43170388c423233945923bc416ecf8fbd02"
+        },
+        "verdict": "passed"
+      },
+      "nested_capture_count": 2,
+      "refusal": null,
+      "reports": [
+        {
+          "name": "helper_original_source",
+          "path": "/private/tmp/probata-t36-tests/nested-original-actual2/dx-seed0/runs/dx100-fixtures/source/src/bfs.cc",
+          "sha256": "1548c3422a56f6a5ba1233436cc5e33a887f2e4ea0b16b4d05e36a0ebd33338c"
+        },
+        {
+          "name": "helper_original_lowering",
+          "path": "/private/tmp/probata-t36-tests/nested-original-actual2/test_actual_original_three_rea0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t141908z.b42e370c/wp/helper-original/dxf_three_reads.c",
+          "sha256": "159ae2a4ed52566dd572f362ade5c7a14c464112017a7292326790fe962f73bf"
+        },
+        {
+          "name": "helper_original_anchors",
+          "path": "/private/tmp/probata-t36-tests/nested-original-actual2/test_actual_original_three_rea0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t141908z.b42e370c/wp/helper-original/dxf_three_reads.anchors.json",
+          "sha256": "501867ea69400b42708a2790cb9879914ddd9a57f5846f88442ff3fcb504c47f"
+        },
+        {
+          "name": "helper_view_source",
+          "path": "/private/tmp/probata-t36-tests/nested-original-actual2/test_actual_original_three_rea0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t141908z.b42e370c/wp/helper-source/helper-window-7lvfk_wt/source.cc",
+          "sha256": "be49f8cab0e795887d887ca69ba22700c1b7aaacb02b586fcd90f04b6e4379c2"
+        },
+        {
+          "name": "helper_windows_certificate",
+          "path": "/private/tmp/probata-t36-tests/nested-original-actual2/test_actual_original_three_rea0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t141908z.b42e370c/wp/helper_windows.json",
+          "sha256": "412a276c9ea4b371a4284c50e22294d57ef4750c98336f996ba077aae9ffc31a"
+        },
+        {
+          "name": "nested_original_source",
+          "path": "/private/tmp/probata-t36-tests/nested-original-actual2/test_actual_original_three_rea0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t141908z.b42e370c/wp/helper-source/helper-window-7lvfk_wt/source.cc",
+          "sha256": "be49f8cab0e795887d887ca69ba22700c1b7aaacb02b586fcd90f04b6e4379c2"
+        },
+        {
+          "name": "nested_original_lowering",
+          "path": "/private/tmp/probata-t36-tests/nested-original-actual2/test_actual_original_three_rea0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t141908z.b42e370c/wp/nested-original/dxf_three_reads.c",
+          "sha256": "2e4b87b898b73a4e2616d1321664d81b8584472260c1ce7256525092d5861327"
+        },
+        {
+          "name": "nested_original_anchors",
+          "path": "/private/tmp/probata-t36-tests/nested-original-actual2/test_actual_original_three_rea0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t141908z.b42e370c/wp/nested-original/dxf_three_reads.anchors.json",
+          "sha256": "1e461337db9ff5437b503b851ea9b1e298f60346e49017da230b6a83d659058c"
+        },
+        {
+          "name": "nested_view_source",
+          "path": "/private/tmp/probata-t36-tests/nested-original-actual2/test_actual_original_three_rea0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t141908z.b42e370c/wp/nested-source/nested-read-4mxa4_fr/source.cc",
+          "sha256": "7dd2fd098830e9d505fbb285e8c46f1a425a8e6d5f12f13a29be0ae1cdc3931d"
+        },
+        {
+          "name": "nested_entry_reads_certificate",
+          "path": "/private/tmp/probata-t36-tests/nested-original-actual2/test_actual_original_three_rea0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t141908z.b42e370c/wp/nested_entry_reads.json",
+          "sha256": "abca0139e5071528c66520668c765f01e350ee145fa0ab3d445f13d70d6a8b07"
+        },
+        {
+          "name": "c_lowering",
+          "path": "/private/tmp/probata-t36-tests/nested-original-actual2/test_actual_original_three_rea0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t141908z.b42e370c/wp/dxf_three_reads.c",
+          "sha256": "82707411a43ab6c243da1249617ea56bfef8e9b84395d181abbe8262c1f65597"
+        },
+        {
+          "name": "anchors",
+          "path": "/private/tmp/probata-t36-tests/nested-original-actual2/test_actual_original_three_rea0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t141908z.b42e370c/wp/dxf_three_reads.anchors.json",
+          "sha256": "276d26b1fb8fa69a090120ec270882c399b317aaed323569858429ca0c43beed"
+        },
+        {
+          "name": "wp_input",
+          "path": "/private/tmp/probata-t36-tests/nested-original-actual2/test_actual_original_three_rea0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t141908z.b42e370c/wp/wp_input.c",
+          "sha256": "d2f66a906bd9bc97fb5883c5c02f8e292dd934cc47f72b699bdce71c1105f707"
+        },
+        {
+          "name": "wp_log",
+          "path": "/private/tmp/probata-t36-tests/nested-original-actual2/test_actual_original_three_rea0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t141908z.b42e370c/wp/frama-c.log",
+          "sha256": "9786b83fd6f6dfbd0c99652299f813c6bda6cc18a892ae9af976a4d452c89814"
+        },
+        {
+          "name": "wp_goals",
+          "path": "/private/tmp/probata-t36-tests/nested-original-actual2/test_actual_original_three_rea0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t141908z.b42e370c/wp/wp-goals.json",
+          "sha256": "151875ecc62578aa0165dd3f9ac51d26f257b0e587d59e506849c989a4fdf0c2"
+        },
+        {
+          "name": "wp_properties",
+          "path": "/private/tmp/probata-t36-tests/nested-original-actual2/test_actual_original_three_rea0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t141908z.b42e370c/wp/wp-properties.csv",
+          "sha256": "32e1b97418eaf6fb3187b5613c1627811a263472aeaf44f9cae4a4a5d1947df1"
+        },
+        {
+          "name": "wp_inventory",
+          "path": "/private/tmp/probata-t36-tests/nested-original-actual2/test_actual_original_three_rea0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t141908z.b42e370c/wp/wp-inventory.json",
+          "sha256": "77b304b31d9a4de009a96c8410e3086e84cc4c2d1f35866744d854046c9f679d"
+        },
+        {
+          "name": "wp_normalized",
+          "path": "/private/tmp/probata-t36-tests/nested-original-actual2/test_actual_original_three_rea0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t141908z.b42e370c/wp/wp-normalized.c",
+          "sha256": "ec435a69ae164d43947afdd897551606fd33de4563be0038f4379999835788df"
+        }
+      ]
+    },
+    {
+      "source_checkpoint": "18e7a7f0",
+      "record": {
+        "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea0/records/proofs/proof.contract.fixture_dx_nested_read.20261015t143521z.04047fa6.yaml",
+        "sha256": "5c5fc1ab43164e99f64bd67d4365af092c2899297133a92e6742257e69b34171"
+      },
+      "id": "proof.contract.fixture_dx_nested_read.20261015t143521z.04047fa6",
+      "verdict": "proven",
+      "failure_class": null,
+      "goals": {
+        "smoke:valid": 1,
+        "ordinary:valid": 13
+      },
+      "open_goals": [],
+      "pins": {
+        "contract": {
+          "id": "contract.fixture_dx_nested_read",
+          "sha256": "89411b921fa946066efeee32ce3a2467783f2a63dfc3e7e947fa79e5d20ad03e"
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "afbc09b373a20257aee291160a1e33ee17e7ce4e95e560ecc4666f9d53c88d6d"
+        },
+        "c_lowering": {
+          "id": "nested_read.c",
+          "sha256": "6d17b44f5294749f166ea4296dd13ea2a5472dbb40d3e26d66530dc4bfc6f42d"
+        },
+        "nested_read_check": {
+          "id": "swdb-nested-entry-reads-1",
+          "sha256": "4006a7da9939b04302b23af9c000bd7be2f9950d2e2906acb2d09261f7f0175d"
+        },
+        "nested_read_certificate": {
+          "id": "swdb-nested-read-certificate-1",
+          "sha256": "efbf6bfda57e0dc9c940f5722dde8ea7282b52696ae0bfc100b6dece75e354bc"
+        },
+        "nested_read_original_lowering": {
+          "id": "nested_read.c",
+          "sha256": "26db498098141db365407014717e18e8c57bf43312a2c0d6d6c0ce21f662b120"
+        },
+        "nested_read_original_source": {
+          "id": "vector_ownership.cc",
+          "sha256": "3234ba8766237465a1df6097e7506c1924942f2a33e2c16b8d28c367007fb5e6"
+        },
+        "nested_read_view_source": {
+          "id": "source.cc",
+          "sha256": "8584588b834ca1266d7908a4c387cdf87eae7ae6f268e3850c4389531641ab2e"
+        }
+      },
+      "setup": {
+        "check": {
+          "version": "1",
+          "sha256": "b23e15ba911ddf0e3ac34d0b97c9d305b072c0ae0f8cfae7c905a11b9202765d"
+        },
+        "verdict": "passed"
+      },
+      "nested_capture_count": 1,
+      "refusal": null,
+      "reports": [
+        {
+          "name": "nested_original_source",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea0/library/proof_units/vector_ownership.cc",
+          "sha256": "3234ba8766237465a1df6097e7506c1924942f2a33e2c16b8d28c367007fb5e6"
+        },
+        {
+          "name": "nested_original_lowering",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea0/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143521z.04047fa6/wp/nested-original/nested_read.c",
+          "sha256": "26db498098141db365407014717e18e8c57bf43312a2c0d6d6c0ce21f662b120"
+        },
+        {
+          "name": "nested_original_anchors",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea0/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143521z.04047fa6/wp/nested-original/nested_read.anchors.json",
+          "sha256": "d471e4b89b8e7269076d3af3b4f6d140fc06f53fe341fa94daf07ee15413b9e0"
+        },
+        {
+          "name": "nested_view_source",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea0/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143521z.04047fa6/wp/nested-source/nested-read-erh5qo40/source.cc",
+          "sha256": "8584588b834ca1266d7908a4c387cdf87eae7ae6f268e3850c4389531641ab2e"
+        },
+        {
+          "name": "nested_entry_reads_certificate",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea0/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143521z.04047fa6/wp/nested_entry_reads.json",
+          "sha256": "db0c9e256083c817a49e6cfd963aa74b6fe38789a9ce2c200cb4c3387743d799"
+        },
+        {
+          "name": "c_lowering",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea0/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143521z.04047fa6/wp/nested_read.c",
+          "sha256": "6d17b44f5294749f166ea4296dd13ea2a5472dbb40d3e26d66530dc4bfc6f42d"
+        },
+        {
+          "name": "anchors",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea0/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143521z.04047fa6/wp/nested_read.anchors.json",
+          "sha256": "d98f5dd43e77b743a26c8316b9b6352d21a33ee7f2897fa226c82ee97bce710d"
+        },
+        {
+          "name": "wp_input",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea0/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143521z.04047fa6/wp/wp_input.c",
+          "sha256": "8c7d79a807751ca1f1e4df9e923853b7a18b607a492d00476017fa92e08646c3"
+        },
+        {
+          "name": "wp_log",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea0/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143521z.04047fa6/wp/frama-c.log",
+          "sha256": "d90bf1c40a78940584a9156fe1aadc6e070546ed638ea6ddebca375fa98d04dc"
+        },
+        {
+          "name": "wp_goals",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea0/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143521z.04047fa6/wp/wp-goals.json",
+          "sha256": "d777984e7e2e962223e31a2f6ad630c9896f0b12f5f901ac23d8082866677713"
+        },
+        {
+          "name": "wp_properties",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea0/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143521z.04047fa6/wp/wp-properties.csv",
+          "sha256": "93233406fee93f8843712f791673311f3b6b7ee7371ef7dac5f2ee54f30c9990"
+        },
+        {
+          "name": "wp_inventory",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea0/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143521z.04047fa6/wp/wp-inventory.json",
+          "sha256": "c394f7861eeddb7f98898662e748300e084f6b4d6ec0c377bf75e8fbc150046c"
+        },
+        {
+          "name": "wp_normalized",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea0/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143521z.04047fa6/wp/wp-normalized.c",
+          "sha256": "6a90be2a2daf9220386235b6645d20d02b21f34ca8438f66fc89a9042989a654"
+        }
+      ]
+    },
+    {
+      "source_checkpoint": "18e7a7f0",
+      "record": {
+        "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea1/records/proofs/proof.contract.fixture_dx_nested_read.20261015t143529z.e1ebc0d3.yaml",
+        "sha256": "1055405d96b34989171aa71025ab8e43d913ead3972107b52f0e4f21baa14562"
+      },
+      "id": "proof.contract.fixture_dx_nested_read.20261015t143529z.e1ebc0d3",
+      "verdict": "not_proven",
+      "failure_class": "timeout",
+      "goals": {
+        "smoke:valid": 1,
+        "ordinary:valid": 12,
+        "ordinary:timeout": 1
+      },
+      "open_goals": [
+        {
+          "goal": "typed_real_nested_read_assert_swdb_window_access_1",
+          "property": "nested_read_assert_swdb_window_access_1",
+          "function": "nested_read",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "pins": {
+        "contract": {
+          "id": "contract.fixture_dx_nested_read",
+          "sha256": "a4849604d811cf37b4a0d8de987f8a7a16b230c1f03304cb058bc7263613bf24"
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "afbc09b373a20257aee291160a1e33ee17e7ce4e95e560ecc4666f9d53c88d6d"
+        },
+        "c_lowering": {
+          "id": "nested_read.c",
+          "sha256": "6d17b44f5294749f166ea4296dd13ea2a5472dbb40d3e26d66530dc4bfc6f42d"
+        },
+        "nested_read_check": {
+          "id": "swdb-nested-entry-reads-1",
+          "sha256": "4006a7da9939b04302b23af9c000bd7be2f9950d2e2906acb2d09261f7f0175d"
+        },
+        "nested_read_certificate": {
+          "id": "swdb-nested-read-certificate-1",
+          "sha256": "01dbb351eb27e9fefd1b649e459ea0233679bf7a3e0dd224996f42bb89b330bd"
+        },
+        "nested_read_original_lowering": {
+          "id": "nested_read.c",
+          "sha256": "26db498098141db365407014717e18e8c57bf43312a2c0d6d6c0ce21f662b120"
+        },
+        "nested_read_original_source": {
+          "id": "vector_ownership.cc",
+          "sha256": "3234ba8766237465a1df6097e7506c1924942f2a33e2c16b8d28c367007fb5e6"
+        },
+        "nested_read_view_source": {
+          "id": "source.cc",
+          "sha256": "8584588b834ca1266d7908a4c387cdf87eae7ae6f268e3850c4389531641ab2e"
+        }
+      },
+      "setup": {
+        "check": {
+          "version": "1",
+          "sha256": "b23e15ba911ddf0e3ac34d0b97c9d305b072c0ae0f8cfae7c905a11b9202765d"
+        },
+        "verdict": "passed"
+      },
+      "nested_capture_count": 1,
+      "refusal": null,
+      "reports": [
+        {
+          "name": "nested_original_source",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea1/library/proof_units/vector_ownership.cc",
+          "sha256": "3234ba8766237465a1df6097e7506c1924942f2a33e2c16b8d28c367007fb5e6"
+        },
+        {
+          "name": "nested_original_lowering",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea1/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143529z.e1ebc0d3/wp/nested-original/nested_read.c",
+          "sha256": "26db498098141db365407014717e18e8c57bf43312a2c0d6d6c0ce21f662b120"
+        },
+        {
+          "name": "nested_original_anchors",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea1/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143529z.e1ebc0d3/wp/nested-original/nested_read.anchors.json",
+          "sha256": "6b130143c840ef625224440c3165de2937840454bec821dccccaee5b8b5eddb3"
+        },
+        {
+          "name": "nested_view_source",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea1/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143529z.e1ebc0d3/wp/nested-source/nested-read-7xi2t7wg/source.cc",
+          "sha256": "8584588b834ca1266d7908a4c387cdf87eae7ae6f268e3850c4389531641ab2e"
+        },
+        {
+          "name": "nested_entry_reads_certificate",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea1/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143529z.e1ebc0d3/wp/nested_entry_reads.json",
+          "sha256": "fbd948eb1817afff6b78ebb17a0db6b3add1732f947bf62d20da8f6d1f1020cd"
+        },
+        {
+          "name": "c_lowering",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea1/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143529z.e1ebc0d3/wp/nested_read.c",
+          "sha256": "6d17b44f5294749f166ea4296dd13ea2a5472dbb40d3e26d66530dc4bfc6f42d"
+        },
+        {
+          "name": "anchors",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea1/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143529z.e1ebc0d3/wp/nested_read.anchors.json",
+          "sha256": "7893c9675dac4983aee75ba434063754b858a66bdd93067b700cb616806dba65"
+        },
+        {
+          "name": "wp_input",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea1/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143529z.e1ebc0d3/wp/wp_input.c",
+          "sha256": "7af3915d3351d7d108e017e24d74d0ab33050dd2f67c5f98706f2db62299c6cd"
+        },
+        {
+          "name": "wp_log",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea1/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143529z.e1ebc0d3/wp/frama-c.log",
+          "sha256": "037007fc7a89d87847015ef82eb3038f6f746387861d9463b61f4269400633e6"
+        },
+        {
+          "name": "wp_goals",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea1/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143529z.e1ebc0d3/wp/wp-goals.json",
+          "sha256": "06e5f39e07db2b0dee021e49b84cea96b6e519f36c46e313cf48b4c1e9879dbd"
+        },
+        {
+          "name": "wp_properties",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea1/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143529z.e1ebc0d3/wp/wp-properties.csv",
+          "sha256": "93ce2bfa77fcd749c0bd6ec44028f61965e718731a3bb78b408d198d2f7fb6b6"
+        },
+        {
+          "name": "wp_inventory",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea1/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143529z.e1ebc0d3/wp/wp-inventory.json",
+          "sha256": "1a64d4aff9463247d404f8d1d1b64ca25e12958fab30442a278f42338eb3d084"
+        },
+        {
+          "name": "wp_normalized",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea1/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143529z.e1ebc0d3/wp/wp-normalized.c",
+          "sha256": "317e4186d6396df5950a6f3313b290045196372a55e8d6b55dd080c82022ecd4"
+        },
+        {
+          "name": "handler",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea1/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143529z.e1ebc0d3/wp/handler.json",
+          "sha256": "8e34f3183223f4a5c81e518438e7c8ebec3c7988a6dfdb4570fd9ad10eb2e276"
+        }
+      ]
+    },
+    {
+      "source_checkpoint": "18e7a7f0",
+      "record": {
+        "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea2/records/proofs/proof.contract.fixture_dx_nested_read.20261015t143609z.8f02d185.yaml",
+        "sha256": "46772b8072d207828a0f7971ba0e30fcdda07092e3f79765a01182c88fe6075f"
+      },
+      "id": "proof.contract.fixture_dx_nested_read.20261015t143609z.8f02d185",
+      "verdict": "not_proven",
+      "failure_class": "timeout",
+      "goals": {
+        "smoke:valid": 1,
+        "ordinary:valid": 12,
+        "ordinary:timeout": 1
+      },
+      "open_goals": [
+        {
+          "goal": "typed_real_nested_read_assert_swdb_window_access_2",
+          "property": "nested_read_assert_swdb_window_access_2",
+          "function": "nested_read",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "pins": {
+        "contract": {
+          "id": "contract.fixture_dx_nested_read",
+          "sha256": "bc554cf4e75fc2423e9c54e460838ce984b52c406a75b6ff1bd2e052654ecc2e"
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "afbc09b373a20257aee291160a1e33ee17e7ce4e95e560ecc4666f9d53c88d6d"
+        },
+        "c_lowering": {
+          "id": "nested_read.c",
+          "sha256": "6d17b44f5294749f166ea4296dd13ea2a5472dbb40d3e26d66530dc4bfc6f42d"
+        },
+        "nested_read_check": {
+          "id": "swdb-nested-entry-reads-1",
+          "sha256": "4006a7da9939b04302b23af9c000bd7be2f9950d2e2906acb2d09261f7f0175d"
+        },
+        "nested_read_certificate": {
+          "id": "swdb-nested-read-certificate-1",
+          "sha256": "b9eb0425f3f399161ed3755be931d1ce3e95c58129a07edad60be3eac142b4bd"
+        },
+        "nested_read_original_lowering": {
+          "id": "nested_read.c",
+          "sha256": "26db498098141db365407014717e18e8c57bf43312a2c0d6d6c0ce21f662b120"
+        },
+        "nested_read_original_source": {
+          "id": "vector_ownership.cc",
+          "sha256": "3234ba8766237465a1df6097e7506c1924942f2a33e2c16b8d28c367007fb5e6"
+        },
+        "nested_read_view_source": {
+          "id": "source.cc",
+          "sha256": "8584588b834ca1266d7908a4c387cdf87eae7ae6f268e3850c4389531641ab2e"
+        }
+      },
+      "setup": {
+        "check": {
+          "version": "1",
+          "sha256": "b23e15ba911ddf0e3ac34d0b97c9d305b072c0ae0f8cfae7c905a11b9202765d"
+        },
+        "verdict": "passed"
+      },
+      "nested_capture_count": 1,
+      "refusal": null,
+      "reports": [
+        {
+          "name": "nested_original_source",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea2/library/proof_units/vector_ownership.cc",
+          "sha256": "3234ba8766237465a1df6097e7506c1924942f2a33e2c16b8d28c367007fb5e6"
+        },
+        {
+          "name": "nested_original_lowering",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea2/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143609z.8f02d185/wp/nested-original/nested_read.c",
+          "sha256": "26db498098141db365407014717e18e8c57bf43312a2c0d6d6c0ce21f662b120"
+        },
+        {
+          "name": "nested_original_anchors",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea2/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143609z.8f02d185/wp/nested-original/nested_read.anchors.json",
+          "sha256": "42f0a82bbd1ed00695c4ec6fb3317b128a8d372a6e3a2fb0c7c6e9dcf713c008"
+        },
+        {
+          "name": "nested_view_source",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea2/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143609z.8f02d185/wp/nested-source/nested-read-bk0fmkw_/source.cc",
+          "sha256": "8584588b834ca1266d7908a4c387cdf87eae7ae6f268e3850c4389531641ab2e"
+        },
+        {
+          "name": "nested_entry_reads_certificate",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea2/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143609z.8f02d185/wp/nested_entry_reads.json",
+          "sha256": "fddcba141d28f46fa3a53122b5bda4ba3b3a70138d36c3ce69eb711bae9c896e"
+        },
+        {
+          "name": "c_lowering",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea2/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143609z.8f02d185/wp/nested_read.c",
+          "sha256": "6d17b44f5294749f166ea4296dd13ea2a5472dbb40d3e26d66530dc4bfc6f42d"
+        },
+        {
+          "name": "anchors",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea2/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143609z.8f02d185/wp/nested_read.anchors.json",
+          "sha256": "8943a38fabaf3630e2bd10585576f1a5e185b6a8ceac2518fdaa541dfbff5795"
+        },
+        {
+          "name": "wp_input",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea2/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143609z.8f02d185/wp/wp_input.c",
+          "sha256": "d7c8493fbd065b5ac93208a36b18cadf155540b2243cee634513b8ba0e22e026"
+        },
+        {
+          "name": "wp_log",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea2/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143609z.8f02d185/wp/frama-c.log",
+          "sha256": "c3b925e9484936091093c680d5aa021e40cee1997f72bd5e350581a443094de9"
+        },
+        {
+          "name": "wp_goals",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea2/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143609z.8f02d185/wp/wp-goals.json",
+          "sha256": "52048d853ac476b8d7a7d67e497b2fa3ca7e41d6ed40c3138279debed876b880"
+        },
+        {
+          "name": "wp_properties",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea2/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143609z.8f02d185/wp/wp-properties.csv",
+          "sha256": "f7486930b5d7f7bbb6d446799b8560eca6f67dd8153ac1c7f6bfac4e5b219298"
+        },
+        {
+          "name": "wp_inventory",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea2/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143609z.8f02d185/wp/wp-inventory.json",
+          "sha256": "0d9818798266062472e0dd6320a72d89f6dca75967d83ef864ed07e2ccbb73cb"
+        },
+        {
+          "name": "wp_normalized",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea2/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143609z.8f02d185/wp/wp-normalized.c",
+          "sha256": "5a8055628ea6a96603b8768c68c6d65c74033e0486ae2265ec923ff50267c74a"
+        },
+        {
+          "name": "handler",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea2/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143609z.8f02d185/wp/handler.json",
+          "sha256": "a45ae9f4c6450f9d9b0ea02ad9495a193532689d175ff69394b9140edd883a14"
+        }
+      ]
+    },
+    {
+      "source_checkpoint": "18e7a7f0",
+      "record": {
+        "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea3/records/proofs/proof.contract.fixture_dx_nested_read.20261015t143648z.19c5aae9.yaml",
+        "sha256": "47728b8c3698b311f3dd5ac76dd1a2732567d39589ff2debcfecea2a31fa45ad"
+      },
+      "id": "proof.contract.fixture_dx_nested_read.20261015t143648z.19c5aae9",
+      "verdict": "not_proven",
+      "failure_class": "timeout",
+      "goals": {
+        "smoke:valid": 1,
+        "ordinary:valid": 12,
+        "ordinary:timeout": 1
+      },
+      "open_goals": [
+        {
+          "goal": "typed_real_nested_read_assert_rte_initialization",
+          "property": "nested_read_assert_rte_initialization",
+          "function": "nested_read",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "pins": {
+        "contract": {
+          "id": "contract.fixture_dx_nested_read",
+          "sha256": "d93777826e103515e9b27ae3e03a44aeb7dae973a2e5f42af1d1480f17eac7ae"
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "afbc09b373a20257aee291160a1e33ee17e7ce4e95e560ecc4666f9d53c88d6d"
+        },
+        "c_lowering": {
+          "id": "nested_read.c",
+          "sha256": "6d17b44f5294749f166ea4296dd13ea2a5472dbb40d3e26d66530dc4bfc6f42d"
+        },
+        "nested_read_check": {
+          "id": "swdb-nested-entry-reads-1",
+          "sha256": "4006a7da9939b04302b23af9c000bd7be2f9950d2e2906acb2d09261f7f0175d"
+        },
+        "nested_read_certificate": {
+          "id": "swdb-nested-read-certificate-1",
+          "sha256": "b25b00d7d1dcbb65ca48e783927f33ab98cc2f8c3b517c7c9c6fb6ba0116ca6b"
+        },
+        "nested_read_original_lowering": {
+          "id": "nested_read.c",
+          "sha256": "26db498098141db365407014717e18e8c57bf43312a2c0d6d6c0ce21f662b120"
+        },
+        "nested_read_original_source": {
+          "id": "vector_ownership.cc",
+          "sha256": "3234ba8766237465a1df6097e7506c1924942f2a33e2c16b8d28c367007fb5e6"
+        },
+        "nested_read_view_source": {
+          "id": "source.cc",
+          "sha256": "8584588b834ca1266d7908a4c387cdf87eae7ae6f268e3850c4389531641ab2e"
+        }
+      },
+      "setup": {
+        "check": {
+          "version": "1",
+          "sha256": "b23e15ba911ddf0e3ac34d0b97c9d305b072c0ae0f8cfae7c905a11b9202765d"
+        },
+        "verdict": "passed"
+      },
+      "nested_capture_count": 1,
+      "refusal": null,
+      "reports": [
+        {
+          "name": "nested_original_source",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea3/library/proof_units/vector_ownership.cc",
+          "sha256": "3234ba8766237465a1df6097e7506c1924942f2a33e2c16b8d28c367007fb5e6"
+        },
+        {
+          "name": "nested_original_lowering",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea3/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143648z.19c5aae9/wp/nested-original/nested_read.c",
+          "sha256": "26db498098141db365407014717e18e8c57bf43312a2c0d6d6c0ce21f662b120"
+        },
+        {
+          "name": "nested_original_anchors",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea3/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143648z.19c5aae9/wp/nested-original/nested_read.anchors.json",
+          "sha256": "4bf77cc5e563f772359ebc46d2910f8e9f9b0db99a97078d9ec412dc65c67964"
+        },
+        {
+          "name": "nested_view_source",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea3/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143648z.19c5aae9/wp/nested-source/nested-read-b5oy9qtt/source.cc",
+          "sha256": "8584588b834ca1266d7908a4c387cdf87eae7ae6f268e3850c4389531641ab2e"
+        },
+        {
+          "name": "nested_entry_reads_certificate",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea3/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143648z.19c5aae9/wp/nested_entry_reads.json",
+          "sha256": "6a152beb886ee6f284029346b84e0117df8fc3c2941857c75884258753d20b3d"
+        },
+        {
+          "name": "c_lowering",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea3/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143648z.19c5aae9/wp/nested_read.c",
+          "sha256": "6d17b44f5294749f166ea4296dd13ea2a5472dbb40d3e26d66530dc4bfc6f42d"
+        },
+        {
+          "name": "anchors",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea3/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143648z.19c5aae9/wp/nested_read.anchors.json",
+          "sha256": "445d79a160d9854241e606f73c551e2497dc6fb0ef9139e1b39dd68a0c5dd245"
+        },
+        {
+          "name": "wp_input",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea3/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143648z.19c5aae9/wp/wp_input.c",
+          "sha256": "2a9cf367f64ea0e3fd9819e1b46b2102003d2fc55c00d72cc43ebf2eaac20ba7"
+        },
+        {
+          "name": "wp_log",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea3/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143648z.19c5aae9/wp/frama-c.log",
+          "sha256": "30fa5a62931791554369b0d8307d09b6eadba06ea17c03260166f811a2338d9b"
+        },
+        {
+          "name": "wp_goals",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea3/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143648z.19c5aae9/wp/wp-goals.json",
+          "sha256": "43a5d0ec9eecea7fd36b0c3c933da336794652f63d9147c06c04f287f45927b6"
+        },
+        {
+          "name": "wp_properties",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea3/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143648z.19c5aae9/wp/wp-properties.csv",
+          "sha256": "f7301240bfbcf7e29775caef27af9b72735bae2ad849d7e4fb507f58e766968b"
+        },
+        {
+          "name": "wp_inventory",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea3/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143648z.19c5aae9/wp/wp-inventory.json",
+          "sha256": "18e9976b549f1e262ef84ec110dd245c7d7963279c2d0e2ed3228b6d1772a59e"
+        },
+        {
+          "name": "wp_normalized",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea3/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143648z.19c5aae9/wp/wp-normalized.c",
+          "sha256": "54074e55df824b1fc8de687ee75982cbe219a36d94a6fd890ad4e0e3f37b8151"
+        },
+        {
+          "name": "handler",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea3/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143648z.19c5aae9/wp/handler.json",
+          "sha256": "d5dcf0708a8f3d04650872d9a05db3cefdadd83620bafb2b391d905e8bb0d468"
+        }
+      ]
+    },
+    {
+      "source_checkpoint": "18e7a7f0",
+      "record": {
+        "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea4/records/proofs/proof.contract.fixture_dx_nested_read.20261015t143727z.c9d0d2e6.yaml",
+        "sha256": "9f2b7bdd51d1d9848491c8f0adf1946082bf9970a523a5591f75d609c977b961"
+      },
+      "id": "proof.contract.fixture_dx_nested_read.20261015t143727z.c9d0d2e6",
+      "verdict": "not_proven",
+      "failure_class": "timeout",
+      "goals": {
+        "smoke:valid": 1,
+        "ordinary:valid": 12,
+        "ordinary:timeout": 1
+      },
+      "open_goals": [
+        {
+          "goal": "typed_real_nested_read_assert_swdb_window_access_1",
+          "property": "nested_read_assert_swdb_window_access_1",
+          "function": "nested_read",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "pins": {
+        "contract": {
+          "id": "contract.fixture_dx_nested_read",
+          "sha256": "490bb7295d7ff4ffd93d249ea37d9afc3a517364b0ce844a1497cf4bc37541da"
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "afbc09b373a20257aee291160a1e33ee17e7ce4e95e560ecc4666f9d53c88d6d"
+        },
+        "c_lowering": {
+          "id": "nested_read.c",
+          "sha256": "6d17b44f5294749f166ea4296dd13ea2a5472dbb40d3e26d66530dc4bfc6f42d"
+        },
+        "nested_read_check": {
+          "id": "swdb-nested-entry-reads-1",
+          "sha256": "4006a7da9939b04302b23af9c000bd7be2f9950d2e2906acb2d09261f7f0175d"
+        },
+        "nested_read_certificate": {
+          "id": "swdb-nested-read-certificate-1",
+          "sha256": "ee8a72b97ba86166ccac952cffb9f9c6ed89f3ee97d0eb7ab6499192a56b7b01"
+        },
+        "nested_read_original_lowering": {
+          "id": "nested_read.c",
+          "sha256": "26db498098141db365407014717e18e8c57bf43312a2c0d6d6c0ce21f662b120"
+        },
+        "nested_read_original_source": {
+          "id": "vector_ownership.cc",
+          "sha256": "3234ba8766237465a1df6097e7506c1924942f2a33e2c16b8d28c367007fb5e6"
+        },
+        "nested_read_view_source": {
+          "id": "source.cc",
+          "sha256": "8584588b834ca1266d7908a4c387cdf87eae7ae6f268e3850c4389531641ab2e"
+        }
+      },
+      "setup": {
+        "check": {
+          "version": "1",
+          "sha256": "b23e15ba911ddf0e3ac34d0b97c9d305b072c0ae0f8cfae7c905a11b9202765d"
+        },
+        "verdict": "passed"
+      },
+      "nested_capture_count": 1,
+      "refusal": null,
+      "reports": [
+        {
+          "name": "nested_original_source",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea4/library/proof_units/vector_ownership.cc",
+          "sha256": "3234ba8766237465a1df6097e7506c1924942f2a33e2c16b8d28c367007fb5e6"
+        },
+        {
+          "name": "nested_original_lowering",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea4/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143727z.c9d0d2e6/wp/nested-original/nested_read.c",
+          "sha256": "26db498098141db365407014717e18e8c57bf43312a2c0d6d6c0ce21f662b120"
+        },
+        {
+          "name": "nested_original_anchors",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea4/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143727z.c9d0d2e6/wp/nested-original/nested_read.anchors.json",
+          "sha256": "938c975a201dd966e50604168c6e4b99fadafb8bd5358a03a7283d1a027de83f"
+        },
+        {
+          "name": "nested_view_source",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea4/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143727z.c9d0d2e6/wp/nested-source/nested-read-246j_dog/source.cc",
+          "sha256": "8584588b834ca1266d7908a4c387cdf87eae7ae6f268e3850c4389531641ab2e"
+        },
+        {
+          "name": "nested_entry_reads_certificate",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea4/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143727z.c9d0d2e6/wp/nested_entry_reads.json",
+          "sha256": "8893681fc250245191c18e481be89a0727700620dbf5a7f86e2fabdf6a807342"
+        },
+        {
+          "name": "c_lowering",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea4/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143727z.c9d0d2e6/wp/nested_read.c",
+          "sha256": "6d17b44f5294749f166ea4296dd13ea2a5472dbb40d3e26d66530dc4bfc6f42d"
+        },
+        {
+          "name": "anchors",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea4/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143727z.c9d0d2e6/wp/nested_read.anchors.json",
+          "sha256": "2eb342d177956dea00b398d9c46c97bb9425a0d0531d2ab3e9e4f47cfc0ab594"
+        },
+        {
+          "name": "wp_input",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea4/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143727z.c9d0d2e6/wp/wp_input.c",
+          "sha256": "10d0e0d771ccad2457f706a3d35ca0bc61d96ff0531e9dab03a4eb8820506978"
+        },
+        {
+          "name": "wp_log",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea4/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143727z.c9d0d2e6/wp/frama-c.log",
+          "sha256": "95e5a679456f88821add9790867b82ff69819e632acaa67472ccbe06a04717ee"
+        },
+        {
+          "name": "wp_goals",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea4/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143727z.c9d0d2e6/wp/wp-goals.json",
+          "sha256": "db937dec4b19a6bec734cd6800ebafe468a0d0ddc85e8a7d8f3a330cbc3e8a4c"
+        },
+        {
+          "name": "wp_properties",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea4/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143727z.c9d0d2e6/wp/wp-properties.csv",
+          "sha256": "b7db0632293cafd5bd706f898b5e77a56982375656c04b2e00b22edd43435b1e"
+        },
+        {
+          "name": "wp_inventory",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea4/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143727z.c9d0d2e6/wp/wp-inventory.json",
+          "sha256": "c74e7040f508a0ac7400e4799295108dfecdb43ded08cb2f1a9f5449358eda9d"
+        },
+        {
+          "name": "wp_normalized",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea4/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143727z.c9d0d2e6/wp/wp-normalized.c",
+          "sha256": "37729cd783d91139b4a1eb2de1df028c84151ee4f17da81f3c8ba73449e0beae"
+        },
+        {
+          "name": "handler",
+          "path": "/private/tmp/probata-t36-tests/nested-obligations-final2/test_actual_ordered_nested_rea4/runs-outside-repo/proof.contract.fixture_dx_nested_read.20261015t143727z.c9d0d2e6/wp/handler.json",
+          "sha256": "8e34f3183223f4a5c81e518438e7c8ebec3c7988a6dfdb4570fd9ad10eb2e276"
+        }
+      ]
+    },
+    {
+      "source_checkpoint": "18e7a7f0",
+      "record": {
+        "path": "/private/tmp/probata-t36-tests/nested-existing-final/test_wp_checked_helper_and_nes0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t144333z.ad37c52c.yaml",
+        "sha256": "df273d9de0c9675e05a65e3bb3bdf3d2a4a937fe33cdd4665ba47de1a2ac189e"
+      },
+      "id": "proof.dx100-fixtures.candidate-1.20261015t144333z.ad37c52c",
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "goals": {},
+      "open_goals": [],
+      "reports": [
+        {
+          "name": "helper_original_source",
+          "path": "/private/tmp/probata-t36-tests/nested-existing-final/dx-seed0/runs/dx100-fixtures/source/src/bfs.cc",
+          "sha256": "1548c3422a56f6a5ba1233436cc5e33a887f2e4ea0b16b4d05e36a0ebd33338c"
+        },
+        {
+          "name": "helper_original_lowering",
+          "path": "/private/tmp/probata-t36-tests/nested-existing-final/test_wp_checked_helper_and_nes0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t144333z.ad37c52c/wp/helper-original/dxf_three_reads.c",
+          "sha256": "159ae2a4ed52566dd572f362ade5c7a14c464112017a7292326790fe962f73bf"
+        },
+        {
+          "name": "helper_original_anchors",
+          "path": "/private/tmp/probata-t36-tests/nested-existing-final/test_wp_checked_helper_and_nes0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t144333z.ad37c52c/wp/helper-original/dxf_three_reads.anchors.json",
+          "sha256": "d181c75091bda58f6e65c40e0314e7214a1a2e5351ec7d462a68ccd59b688f25"
+        },
+        {
+          "name": "helper_view_source",
+          "path": "/private/tmp/probata-t36-tests/nested-existing-final/test_wp_checked_helper_and_nes0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t144333z.ad37c52c/wp/helper-source/helper-window-3uv041p9/source.cc",
+          "sha256": "be49f8cab0e795887d887ca69ba22700c1b7aaacb02b586fcd90f04b6e4379c2"
+        },
+        {
+          "name": "helper_windows_certificate",
+          "path": "/private/tmp/probata-t36-tests/nested-existing-final/test_wp_checked_helper_and_nes0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t144333z.ad37c52c/wp/helper_windows.json",
+          "sha256": "987d6c93a00ba6d13201c9101c4050d9b6e45f9ce74b0cabdf4a908d5f5b7e3d"
+        },
+        {
+          "name": "c_lowering",
+          "path": "/private/tmp/probata-t36-tests/nested-existing-final/test_wp_checked_helper_and_nes0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t144333z.ad37c52c/wp/dxf_three_reads.c",
+          "sha256": "2e4b87b898b73a4e2616d1321664d81b8584472260c1ce7256525092d5861327"
+        },
+        {
+          "name": "anchors",
+          "path": "/private/tmp/probata-t36-tests/nested-existing-final/test_wp_checked_helper_and_nes0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t144333z.ad37c52c/wp/dxf_three_reads.anchors.json",
+          "sha256": "a2092921de8657670e906af442287ae87221d2ae9f89809cd867abb7813b7328"
+        },
+        {
+          "name": "handler",
+          "path": "/private/tmp/probata-t36-tests/nested-existing-final/test_wp_checked_helper_and_nes0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t144333z.ad37c52c/wp/handler.json",
+          "sha256": "aee5e2f10c7ed266ae591ac5e31ff88dc01661353ca3f384ed1ecd3f56ca3961"
+        }
+      ]
+    },
+    {
+      "source_checkpoint": "18e7a7f0",
+      "record": {
+        "path": "/private/tmp/probata-t36-tests/nested-existing-final/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t144516z.bf6decaf.yaml",
+        "sha256": "d0803501806e604886aa3f7c795c6bfde89cdedd1da6b17eefdd59ea71759980"
+      },
+      "id": "proof.dx100-fixtures.candidate-1.20261015t144516z.bf6decaf",
+      "verdict": "proven",
+      "failure_class": null,
+      "goals": {
+        "smoke:valid": 1,
+        "ordinary:valid": 6
+      },
+      "open_goals": [],
+      "reports": [
+        {
+          "name": "c_lowering",
+          "path": "/private/tmp/probata-t36-tests/nested-existing-final/entry-windows0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t144516z.bf6decaf/wp/window_form.c",
+          "sha256": "a94fbd8289158934dd7c3d22dc253c33038152ff8c9620c79ce425dbe6a4a4fe"
+        },
+        {
+          "name": "anchors",
+          "path": "/private/tmp/probata-t36-tests/nested-existing-final/entry-windows0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t144516z.bf6decaf/wp/window_form.anchors.json",
+          "sha256": "18f60716901b306aadf73e103bdd106c1978de97df672a8fe9de3cc31df36b5c"
+        },
+        {
+          "name": "wp_input",
+          "path": "/private/tmp/probata-t36-tests/nested-existing-final/entry-windows0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t144516z.bf6decaf/wp/wp_input.c",
+          "sha256": "06c4634527a5a9c3c4935b1cb92ee7bd4d0295355e6d0b16355f05a2ba35023f"
+        },
+        {
+          "name": "wp_log",
+          "path": "/private/tmp/probata-t36-tests/nested-existing-final/entry-windows0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t144516z.bf6decaf/wp/frama-c.log",
+          "sha256": "e9ec56c743e713fbc734a58432e9d860c29f2b818e99e866919ba2cfc0aa237a"
+        },
+        {
+          "name": "wp_goals",
+          "path": "/private/tmp/probata-t36-tests/nested-existing-final/entry-windows0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t144516z.bf6decaf/wp/wp-goals.json",
+          "sha256": "436f46e375d9c15b980511aa50323bdc58baa40bea4bdbd23c93116ab0fab8e7"
+        },
+        {
+          "name": "wp_properties",
+          "path": "/private/tmp/probata-t36-tests/nested-existing-final/entry-windows0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t144516z.bf6decaf/wp/wp-properties.csv",
+          "sha256": "0324d0f49cae7fe5f6776aacbeeeac873baab1ae3994d3f6243949d83a7ff24d"
+        },
+        {
+          "name": "wp_inventory",
+          "path": "/private/tmp/probata-t36-tests/nested-existing-final/entry-windows0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t144516z.bf6decaf/wp/wp-inventory.json",
+          "sha256": "de81ac9fdf3c28eb7f66df2906d00bf04143ec537466e3499bcb21ef433a09b5"
+        },
+        {
+          "name": "wp_normalized",
+          "path": "/private/tmp/probata-t36-tests/nested-existing-final/entry-windows0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t144516z.bf6decaf/wp/wp-normalized.c",
+          "sha256": "054e4502e036be14eb43549efbb153c8f2c537c8d4f376ac8a51e2137a781bbd"
+        }
+      ]
+    }
+  ],
+  "independent_storage_review_red": {
+    "path": "/private/tmp/probata-nested-storage-review.json",
+    "sha256": "fd919519a94ff18ca89984e4ba1de576b8077d6d848c7a869d6ce638d4e64bd3"
+  },
+  "rendering_function_byte_comparison": {
+    "a185bc8b_vs_18e7a7f0": {
+      "_render": "a33508e8d9bdc4256eabe2d0f29174a7a6e01b4cbde06bbb8ea4794b4a793fb8",
+      "capture_return": "94da0540fc6d5110ede5bbe939473a7780bbe462e00ff031fccf739d81b23aef"
+    },
+    "boundary": "These renderer/capture function source bytes are identical; actual original proof remains historical a185 evidence, not a final-method reexecution."
+  }
+}

@@ -70,6 +70,12 @@ swdb lower --source <file.cc> --function <name> --out <folder> [--include <dir>]
   and `std::pair` come with ticket 25) and streams, `long double`, calls of functions with no body,
   overloads, other OpenMP directives and clauses, a `return`/`break`/`continue` out of a scope that
   destroys an object. C++ that does not parse: `parse error: ...`.
+- **Declaration attributes (2026-10-15 ET).** Retained local variables, function definitions,
+  parameters, and summarized function declarations admit only `UnusedAttr`, `DeprecatedAttr`,
+  `WarnUnusedResultAttr`, `AlwaysInlineAttr`, and `NoInlineAttr` (diagnostic/inlining metadata).
+  Other declaration attributes give `unsupported construct` with their Clang attribute name;
+  a local `CleanupAttr` callback is never erased. This guard covers the retained declaration
+  closure; it is not a full-TU startup-effect or class/global-attribute checker.
 - The tool's identity is `swdb-c-lowering-<TOOL_VERSION>` plus the sha256 of `swdb/c_lowering.py`;
   `swdb.c_lowering.naming_rules()` is `{id: kept-names.<n>, sha256}` of the rules text.
 
@@ -433,3 +439,38 @@ their separate model-text boundary.
 This certifies the admitted source and compiler context. Allocation success, fresh
 storage and the stated frame for preexisting memory remain explicit premises;
 arbitrary linked runtime implementations are outside this check.
+
+initializedness leaves the stream-load precondition unproved.
+
+Nested entry reads (2026-10-15): a separate checked source view admits `base[q[k]]` in an
+unconditionally evaluated, effect-free return. Both bases must be direct plain `int *` entry
+parameters with explicit typed windows; `k` uses the existing pure integer grammar. Every
+original inner read is captured once in a fresh automatic `int`, without coalescing repeated
+reads. The ordinary inner numerical bound, validity and initializedness obligations precede
+the capture; the outer numerical bound uses that captured value. No memory read is rendered
+inside a mathematical guard and no initializedness or array-domain premise is added.
+
+The independent checker matches the executable unit AST, exact declaration bindings and
+capture order, checks all unedited source byte regions and include dependencies, and rejects
+cached/static/TLS captures or attributes. Its closed executable closure admits local/parameter
+data and bodyless global imports. Global data, unexpanded source/header helper bodies, default
+arguments, member/indirect calls, location-dependent expressions, volatile/effectful reads,
+nonidentity index conversions and conditional/short-circuit placement remain unsupported.
+Checked helper expansion may precede this view; all original, intermediate and final lowerings
+and both AST relations are freshly replayed before launch. Source-anchored hints remain closed.
+Records retain `nested_read_check`, `nested_read_certificate`, `nested_read_original_source`,
+`nested_read_original_lowering`, and `nested_read_view_source` pins, the persistent source view,
+and `settings.nested_entry_reads` with an empty added-input-premise list. This supplies no
+origin permission to other source forms, helpers or models.
+
+Qualified standard range body (2026-10-15): the exact audited `std_copy_int` body may be
+proved under an explicit standard-library typed valid-range domain. Its source endpoints
+must belong to one live typed array range, and the destination supplies the same element
+count. This qualification adds no ACSL input premise and removes no original body operation.
+Named numerical assertions, ordinary validity/initializedness obligations, RTE checks and
+smoke tests remain mandatory. Records retain `standard_range_model_check` and
+`standard_range_model_certificate` pins and `settings.standard_range_model`, including the
+unchanged contract hashes, explicit range domain and original/view body hashes. Setup
+rebuilds the exact qualified input before launch. This standalone body result supplies no
+unrestricted opaque-pointer permission: WP callers still refuse importing `std_copy_int`
+until their typed roots/subobjects, endpoint offsets and destination capacity are checked.

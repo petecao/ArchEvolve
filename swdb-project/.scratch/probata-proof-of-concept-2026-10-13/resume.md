@@ -4,10 +4,9 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 10:49 ET. Integration checkpoint `f389beb1` includes checked
-helper and source-summary admission, based on `yanrujhou_main` at `150930b4`.
-Declaration-attribute, qualified copy-body and nested-read changes are under
-independent integration review. The standard-source gate branch is at `00b16733`,
+Updated: 2026-10-15 10:55 ET. Integration checkpoint `40d2de72` includes checked
+helper/source-summary admission, declaration attributes, qualified copy body and
+nested reads, based on `yanrujhou_main` at `150930b4`. The standard-source gate branch is at `00b16733`,
 with 20 focused offline and four prelaunch controls passing; its actual WP
 current-owner/stale-alias pair passed at 10:53 ET (2 tests/243.20s, peak651MiB).
 [Gate evidence](evidence/stdlib-source-provenance-20261015.json).
@@ -15,9 +14,9 @@ current-owner/stale-alias pair passed at 10:53 ET (2 tests/243.20s, peak651MiB).
 | Ticket | Current evidence | Next action |
 |---|---|---|
 | 07 | Run18 finished unproven at 10:43 ET; 20 open goals (13 unit/7 hint), 51.76 counted minutes, no final proof/smoke | Audit negative outcome and remaining induction goals; retain prototype/RTE scope boundary |
-| 24 | Remote constructs stopped at opaque copy origin: 5 passed/1 failed; qualified copy body passes locally with 36 ordinary/7 smoke goals | Review repair and discharge caller typed range/capacity |
+| 24 | Remote constructs stopped at opaque copy origin: 5 passed/1 failed; qualified copy body passes locally with 36 ordinary/7 smoke goals | Discharge caller typed range/capacity |
 | 25 | Original-TU standard-source gate passes 24 focused controls; actual safe/stale pair passed | Integrate accepted gate and continue vector/pair pipeline |
-| 27 | Remote entry/helper shard passes 17/17; original nested three-read actual proof passes | Integrate independently checked nested view, then combined acceptance |
+| 27 | Remote entry/helper shard passes 17/17; original nested three-read actual proof passes | Complete combined-policy and remaining DX acceptance |
 | 36 | 43 remote records audited, all referenced hashes match; nested closure/capture hardening reviewed | Compose setup/source/checker unions and replay combined source |
 
 **32 of 63 resolved; five claimed.** Drafts 1/2 remain immutable; draft 3 is not

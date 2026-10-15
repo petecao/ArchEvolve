@@ -542,6 +542,26 @@ def test_models_prove_initialized_read_and_output_obligations(initialized_model_
     source = next(row for row in record["evidence"]["reports"] if row["name"] == "wp_input")
     assert "\\initialized" in Path(source["path"]).read_text()
     assert "-rte-initialized @all" in " ".join(record["settings"]["flags"])
+    if name == "std_copy_int":
+        certificate = record["settings"]["standard_range_model"]
+        assert certificate["domain_role"] == "explicit standard-library valid-range domain; caller discharge required"
+        assert certificate["original_contract_sha256"] == certificate["view_contract_sha256"]
+        assert certificate["acsl_input_premises_added"] == []
+        assert certificate["body_operations_removed"] == []
+        assert certificate["range_domain"]["source"]["same_array_required"] is True
+        from swdb import c_lowering, standard_range_model
+        sha = hashlib.sha256(c_lowering.model_text(name).encode()).hexdigest()
+        assert record["pins"]["code"] == record["pins"]["contract"] == {"id":name,"sha256":sha}
+        assert certificate["original_text_sha256"] == sha
+        assert record["pins"]["standard_range_model_check"] == standard_range_model.identity()
+        assert record["bounds"] == {"threads":1,"input_size":"unbounded"}
+        assert "-wp-no-filter-init" in record["settings"]["flags"]
+        assert "-wp-rte" in record["settings"]["flags"] and "-wp-smoke-tests" in record["settings"]["flags"]
+        ordinary = [g for g in record["goals"] if not g.get("smoke")]
+        smoke = [g for g in record["goals"] if g.get("smoke")]
+        assert ordinary and smoke and all(g["status"] == "valid" for g in ordinary + smoke)
+        for obligation in certificate["obligations"]:
+            assert any(obligation in g["goal"] for g in ordinary)
 
 
 @needs_wp
