@@ -667,22 +667,10 @@ def test_a_ghost_capacity_outside_the_command_mask_width_is_rejected_before_tool
     assert not list(dx.runs.glob("*/cbmc/cbmc_input.c"))
 
 
-@needs_wp
-@pytest.mark.parametrize("commands", [32, 33])
-def test_wp_capacity_agrees_at_32_and_leaves_33_not_proven(qualified_dx, commands):
-    dx = qualified_dx
+def capacity_hints(library):
+    """Ordinary loop obligations for the original repeated-stream capacity unit."""
     from swdb import proof_semantics
-    from swdb.library import Library
     from test_wp_adapter import _hints
-    path = dx.root / "library" / "rewrite_contracts" / "fixture_dx_capacity.yaml"
-    contract = yaml.safe_load(path.read_text())
-    # The source reads q[0]; advertise its complete incoming typed window explicitly.
-    contract["proof_unit"]["array_domains"] = {"q": {"extent": "n"}}
-    for clause in contract["clauses"]:
-        if clause.get("acsl"):
-            clause["acsl"]["text"] = clause["acsl"]["text"].replace("32 <= n <= 33", f"n == {commands}")
-    path.write_text(yaml.safe_dump(contract, sort_keys=False))
-    library = Library(dx.root / "library")
     locations = proof_semantics.wp_locations(library, ENTRY)
     hints = _hints("dxf_capacity.loop1.head",
         "loop invariant 0 <= t <= n;",
@@ -693,6 +681,30 @@ def test_wp_capacity_agrees_at_32_and_leaves_33_not_proven(qualified_dx, command
         "loop invariant dx_reg_writer[0] == -1 && dx_reg_writer[1] == -1 && dx_reg_writer[2] == -1;",
         "loop assigns t, " + ", ".join(locations) + ";",
         "loop variant n - t;")
+    # Every enqueued command is a stream load. Keep this inductive fact explicit
+    # when DX_NT=40 selects the quantified memory-clear predicate.
+    hints.insert(4, {"anchor": "dxf_capacity.loop1.head", "kind": "loop_invariant",
+        "text": "loop invariant \\forall integer u; 0 <= u < DX_NT && "
+                "0 <= dx_tile_writer[u] < DX_K ==> dx_kind[dx_tile_writer[u]] == DX_STREAM_LOAD;",
+        "provenance": {"source": "agent"}})
+    return hints
+
+
+@needs_wp
+@pytest.mark.parametrize("commands", [32, 33])
+def test_wp_capacity_agrees_at_32_and_leaves_33_not_proven(qualified_dx, commands):
+    dx = qualified_dx
+    from swdb.library import Library
+    path = dx.root / "library" / "rewrite_contracts" / "fixture_dx_capacity.yaml"
+    contract = yaml.safe_load(path.read_text())
+    # The source reads q[0]; advertise its complete incoming typed window explicitly.
+    contract["proof_unit"]["array_domains"] = {"q": {"extent": "n"}}
+    for clause in contract["clauses"]:
+        if clause.get("acsl"):
+            clause["acsl"]["text"] = clause["acsl"]["text"].replace("32 <= n <= 33", f"n == {commands}")
+    path.write_text(yaml.safe_dump(contract, sort_keys=False))
+    library = Library(dx.root / "library")
+    hints = capacity_hints(library)
     record = prove_wp(dx, "capacity", "DX_NT=40", "DX_TS=1", hints=hints)
     _assert_actual_wp_run(dx, record)
     assert record["hint_check"]["verdict"] == "accepted", record["hint_check"]
