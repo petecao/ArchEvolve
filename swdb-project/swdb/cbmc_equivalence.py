@@ -219,6 +219,11 @@ class EquivalenceAdapter(CbmcAdapter):
             except c_lowering.LoweringError as exc:
                 raise AdapterError(f"{side}: {exc}") from None
             codes[side] = Code(lowering, source, self.defines)
+            from swdb import bounded_initialization
+            admission = bounded_initialization.check(lowering, max(sizes.values(), default=0))
+            context["settings"].setdefault("bounded_initialization", {})[side] = admission
+            if admission["verdict"] != "passed":
+                return self._not_proven("unsupported_construct", f"{side}: {admission['reason']}", context)
         self._fault(codes, os.environ.get("SWDB_CBMC_LOWERING_FAULT"))
         cand, base = codes["candidate"], codes["baseline"]
         context["pins"] = {"c_lowering": {"id": f"{cand.lowering.function}.c", "sha256": cand.c_sha256},

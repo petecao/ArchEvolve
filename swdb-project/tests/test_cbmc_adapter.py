@@ -35,7 +35,7 @@ FILL, KNOB, SMOKE = "contract.fixture_cbmc_fill", "contract.fixture_cbmc_knob", 
 CLAMP, CLAMP_ALL = "contract.fixture_cbmc_clamp", "contract.fixture_cbmc_clamp_all"
 TWICE, VACUOUS = "contract.fixture_cbmc_twice", "contract.fixture_cbmc_vacuous"
 FILL_BOUNDS = {"threads": 1, "n": 3}
-TRUSTED = {"swdb-c-lowering-5", "clang-22.1.8", "swdb-cbmc-translator-4", "cbmc-6.11.0", "cadical-in-cbmc-6.11.0"}
+TRUSTED = {"swdb-c-lowering-6", "clang-22.1.8", "swdb-cbmc-translator-4", "cbmc-6.11.0", "cadical-in-cbmc-6.11.0"}
 FILL_CLAUSES = [("fill_pre", "legality", "requires n >= 0 && \\valid(a + (0 .. n-1));", "per_candidate"),
                 ("fill_post", "postcondition", "assigns a[0 .. n-1];\nensures \\forall integer k; 0 <= k < n ==> a[k] == v;",
                  "per_candidate")]
@@ -445,7 +445,9 @@ def test_a_job_over_its_budget_is_not_proven_timeout_and_never_retried_smaller(s
 @needs_cbmc
 def test_bounds_other_than_one_thread_and_sizes_are_refused(seed):
     assert "threads = 1" in seed.prove(bounds={"threads": 3, "n": 3}, ok=False).stderr
-    assert "size bound" in seed.prove(bounds={"threads": 1}, ok=False).stderr
+    missing = seed.read(seed.prove(bounds={"threads": 1}))
+    assert missing["verdict"] == "not_proven" and missing["failure_class"] == "unsupported_construct"
+    assert "zero-capacity" in missing["settings"]["bounded_initialization"]["reason"]
     assert "not an integer parameter" in seed.prove(bounds={"threads": 1, "vertices": 3}, ok=False).stderr
 
 
