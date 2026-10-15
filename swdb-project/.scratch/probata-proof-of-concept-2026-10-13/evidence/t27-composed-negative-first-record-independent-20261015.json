@@ -1,0 +1,276 @@
+{
+  "created_utc": "2026-10-15T21:26:11.405245+00:00",
+  "scope": "Independent completed-record snapshot; active13case negative profile and remaining current-source acceptance pending.",
+  "source_commit": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+  "run": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative",
+  "profile": "wp-negative",
+  "pytest_call_outcomes": {
+    "passed": 1
+  },
+  "physical_pins": {
+    "references": 1720,
+    "unique_files": 870,
+    "mismatches": []
+  },
+  "metadata_audit": "passed",
+  "records": [
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/pytest/test_wp_leaves_every_unit_cbmc0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t211434z.dc9d8edf.yaml",
+      "sha256": "307379762508cffec749306119ed93c60b6e9f651c66900c450b447e3faa39f7",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_three_reads"
+      },
+      "verdict": "not_proven",
+      "failure_class": "vacuous_pass",
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "ordinary": {
+        "valid": 111,
+        "total": 112
+      },
+      "smoke": {
+        "valid": 15,
+        "total": 31
+      },
+      "initialized_goals": 18,
+      "rte_goals": 27,
+      "flags": [
+        "-wp",
+        "-wp-rte",
+        "-wp-cache",
+        "none",
+        "-wp-model",
+        "+real",
+        "-wp-par",
+        "1",
+        "-machdep",
+        "x86_64",
+        "-rte-initialized",
+        "@all",
+        "-wp-no-filter-init",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-machdep",
+        "x86_64",
+        "-wp-timeout",
+        "30",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-fct=dxf_three_reads"
+      ],
+      "verifier_launched": true,
+      "job": {
+        "adapter": "wp",
+        "host": "swdb-fixture-host",
+        "worker_core": "unpinned",
+        "wall_seconds": 536.671163,
+        "cpu_seconds": 582.363756,
+        "batch_load": {
+          "start": 3.442,
+          "end": 3.142
+        },
+        "peak_rss_bytes": 1698758656,
+        "batch": "batch.proof.dx100-fixtures.candidate-1.20261015t211434z.dc9d8edf",
+        "position": 1
+      },
+      "ordinary_open": [
+        {
+          "goal": "typed_real_dxf_three_reads_call_swdb_tile_read_probe_requires",
+          "property": "swdb_tile_read_probe_requires_2",
+          "function": "dxf_three_reads",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open": [
+        {
+          "goal": "typed_real_wait_ready_wp_smoke_dead_call_s24",
+          "property": "wait_ready_wp_smoke_dead_call_s24",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_wait_ready_wp_smoke_dead_call_s27",
+          "property": "wait_ready_wp_smoke_dead_call_s27",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_wait_ready_wp_smoke_dead_call_s33",
+          "property": "wait_ready_wp_smoke_dead_call_s33",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_maa_indirect_load_wp_smoke_dead_call_s26",
+          "property": "maa_indirect_load_wp_smoke_dead_call_s26",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_maa_indirect_load_wp_smoke_dead_call_s32",
+          "property": "maa_indirect_load_wp_smoke_dead_call_s32",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_swdb_tile_read_probe_wp_smoke_dead_call_s22",
+          "property": "swdb_tile_read_probe_wp_smoke_dead_call_s22",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_swdb_tile_read_probe_wp_smoke_dead_call_s29",
+          "property": "swdb_tile_read_probe_wp_smoke_dead_call_s29",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_swdb_tile_read_probe_wp_smoke_dead_call_s35",
+          "property": "swdb_tile_read_probe_wp_smoke_dead_call_s35",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_dxf_three_reads_wp_smoke_dead_code_s23",
+          "property": "dxf_three_reads_wp_smoke_dead_code_s23",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_dxf_three_reads_wp_smoke_dead_code_s26",
+          "property": "dxf_three_reads_wp_smoke_dead_code_s26",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_dxf_three_reads_wp_smoke_dead_code_s27",
+          "property": "dxf_three_reads_wp_smoke_dead_code_s27",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_dxf_three_reads_wp_smoke_dead_code_s29",
+          "property": "dxf_three_reads_wp_smoke_dead_code_s29",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_dxf_three_reads_wp_smoke_dead_code_s30",
+          "property": "dxf_three_reads_wp_smoke_dead_code_s30",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_dxf_three_reads_wp_smoke_dead_code_s33",
+          "property": "dxf_three_reads_wp_smoke_dead_code_s33",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_dxf_three_reads_wp_smoke_dead_code_s35",
+          "property": "dxf_three_reads_wp_smoke_dead_code_s35",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_dxf_three_reads_wp_smoke_dead_code_s36",
+          "property": "dxf_three_reads_wp_smoke_dead_code_s36",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        }
+      ],
+      "method_pin": {
+        "id": "method.cbmc-fixture",
+        "sha256": "dc6ff76cba59f5112d308c99c6ad7194c0500fe5c63bd1eaf596a3b7c7929380"
+      },
+      "semantics_pin": {
+        "id": "semantics.dx100_bfs_0_1",
+        "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+      },
+      "build_constants": [
+        {
+          "name": "SWDB_EARLY_READ_1",
+          "value": "1"
+        }
+      ]
+    }
+  ],
+  "boundary": "No actual verifier/test/compiler launched by this audit. Named ordinary hazard goals remain open, smoke failures and not_proven/vacuous_pass remain retained. Negative control completion is not a proven theorem, current WP/CBMC agreement or whole-profile acceptance."
+}
