@@ -18,7 +18,7 @@ two mbit10 CPU lanes and BFS proof-workspace export through Codex/OpenAI.
 
 | Ticket | Current work | Evidence or next action |
 |---|---|---|
-| 07 | Run 16 ended unproven at 07:13 ET, frozen `6acfbe4e` | 52.55 counted minutes, excluding 694.6 seconds of slot waiting; 26 open goals (4 unit and 22 hint), 42 hints, no final replay. Offline audit pending; no blind run 17 started. Output `/private/tmp/probata-t07-20261015-run16/`. |
+| 07 | Run 16 ended unproven at 07:13 ET, frozen `6acfbe4e` | 52.55 counted minutes, excluding 694.6 seconds of slot waiting; 26 open goals (4 unit and 22 hint), 42 hints, no final replay. Final audit records missing processed-prefix induction; finite examples are not proofs. No run 17 started. Output `/private/tmp/probata-t07-20261015-run16/`. |
 | 24 | Focused model-result fix integrated | Four public positive callers and missing-input negative pass; remote native checkpoint passes 132 checks in 69.36 seconds at `aa7be61c`; combined-source full constructs await final origin policy. |
 | 25 | Nine focused private-vector ownership controls pass across two reports | Safe: 122/122 goals, stale alias sole liveness failure,7 protocol refusals. General member/model and lifetime acceptance remains open; opaque model buffer arithmetic is now refused pending exact field/ownership domains. The earlier checked-at positive is checkpoint evidence, not current-origin acceptance. |
 | 27 | Safe three-read initializedness positive/negative pass | Mandatory no-filter policy gives 100 ordinary goals plus 31 smoke checks for safe caller; missing initialization leaves the intended obligation open. Finite specialization was removed as unnecessary. Current-origin, capacity and remote acceptance remain pending. |
@@ -79,7 +79,7 @@ not substitute for reading incremental run artifacts.
 The 2026-10-15 07:00 ET report covered every active ticket and both lanes; next report
 is due around 07:30 ET. Run 15 ended not proven after 52.75 counted minutes with 1 unit
 and 24 hint obligations open; no final proof replay ran. Run 16 also ended unproven
-with 4 unit and 22 hint goals; its offline audit is underway.
+with 4 unit and 22 hint goals; its final offline audit is recorded.
 Both remote lanes await the final combined proof source and method checkpoint;
 The 132-case native checkpoint has passed separately.
 
