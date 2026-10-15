@@ -15,8 +15,8 @@ Format: docs/reference/format-v0.4-std-models.md.
   follows the pinned libc++ 22.1.8 (`__recommend`: twice the capacity, at least the new size; `reserve(n)` and a
   copy allocate exactly), so a counterexample on the C lowering replays on the C++. A contract states only what
   the standard says: reallocation happens exactly when the new size exceeds the old capacity, and then the old
-  buffer is no longer valid (stated through `\\valid` in `ensures`, 20's allowed-ACSL rules), so a stale pointer
-  or iterator fails the proof.
+  buffer is no longer valid (stated through `\\valid` in `ensures`, 20's allowed-ACSL rules), so CBMC detects a stale pointer
+  or iterator. WP refuses units with releases pending sound lifetime support.
 - `at(n)` with `n >= size()` throws `std::out_of_range`; exceptions are outside the subset, so the contract makes
   `n < size()` the caller's obligation, and the C body calls `SWDB_MODEL_FAIL` (CBMC: a failed assertion; the
   native harness: a failed check; standalone: `abort()`, what an uncaught exception does). `operator[]` with

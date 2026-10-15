@@ -61,6 +61,10 @@ it. So does `std::vector<bool>`, a vector of a class, and a class with a vector 
   `malloc` return NULL by default, so the CBMC adapter adds `--no-malloc-may-fail` (in `settings.flags`) exactly
   when the lowering allocates (a model or `new[]`), the same condition as the entry.
 
+The bounded adapter probes the selected clang headers and refuses model jobs unless
+`_LIBCPP_VERSION` is `220108` (libc++ 22.1.8). The record names that implementation and version in
+`settings.standard_library`. Clang 22 paired with Linux libstdc++ is not admitted by this model.
+
 ## The method version
 
 A job on a unit that uses a model runs only when the method version's `models.std_vector` (and

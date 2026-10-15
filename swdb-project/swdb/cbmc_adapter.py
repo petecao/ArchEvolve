@@ -204,6 +204,17 @@ class CbmcAdapter:
         context["lowering"] = lowering
         if lowering.std_models:
             context["settings"]["std_models"] = list(lowering.std_models)
+            # The concrete growth policy follows libc++ 22.1.8. Clang's version does not identify its STL:
+            # Linux commonly pairs that clang with libstdc++, whose capacity policy can differ.
+            probe = subprocess.run([*context["tools"]["clang"].command, "-dM", "-E", "-x", "c++",
+                                    "-std=gnu++17", "-include", "vector", "-"],
+                                   input="", capture_output=True, text=True, timeout=60)
+            if probe.returncode != 0 or not re.search(r"^#define _LIBCPP_VERSION 220108$", probe.stdout, re.M):
+                return self._not_proven("unsupported_construct",
+                                       "the standard models require libc++ 22.1.8 (_LIBCPP_VERSION 220108); "
+                                       "the selected clang uses an unmatched standard library", context)
+            context["settings"]["standard_library"] = {"implementation": "libc++", "version": "22.1.8",
+                                                         "header_macro": "_LIBCPP_VERSION=220108"}
         try:
             built = self._build(job, entry, code, sizes, summary_job, context)
         except tr.Untranslatable as exc:
