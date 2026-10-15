@@ -226,6 +226,10 @@ def build_subset_seed(path):
     contracts = path / "library" / "rewrite_contracts"
     for group, (function, clauses, arrays, _unused) in {**GROUPS, **BUG_UNITS}.items():
         data = _entry(contract_id(group), function, "subset_units.cc", UNITS, clauses, arrays, "per_candidate")
+        if group == "std_models":
+            # Explicit typed valid-range inputs match the existing n-element
+            # readability/writability requirements; validity alone is no origin.
+            data["proof_unit"]["array_domains"] = {name: {"extent": "n"} for name in ("a", "b")}
         contracts.joinpath(f"fixture_wp24_{group}.yaml").write_text(yaml.safe_dump(data, sort_keys=False))
     for name, (function, clauses, arrays) in SUMMARIES.items():
         data = _entry(summary_id(name), function, "summaries/summary_impls.cc", IMPLS, clauses, arrays, {"once": "self"})
@@ -523,6 +527,7 @@ def initialized_model_subset(tmp_path_factory):
                       [("pre", "legality", "requires \\valid(out);"),
                        ("post", "postcondition", "assigns *out; ensures \\result == 0;")],
                       ["out"], {"once": "self"})
+        data["proof_unit"]["array_domains"] = {"out": {"extent": "1"}}
         (path / "library" / "rewrite_contracts" / f"fixture_copy_{label}.yaml").write_text(
             yaml.safe_dump(data, sort_keys=False))
     return seed

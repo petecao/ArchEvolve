@@ -4,32 +4,51 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 11:00 ET. Integration includes standard-source gate `3a772f11` with checked
-helper/source-summary admission, declaration attributes, qualified copy body and
-nested reads, based on `yanrujhou_main` at `150930b4`. The gate actual WP
-current-owner/stale-alias pair passed at frozen `00b16733` (2 tests/243.20s, peak651MiB).
-Its proof identities remain separate from this combined checkpoint. The merged-source
-composition controls cover 27 distinct cases: 22 initial passes, one stand-in replay
-passed after a sandbox process-inspection failure, and four documentation passes.
-[Gate evidence](evidence/stdlib-source-provenance-20261015.json).
+Updated: 2026-10-15 11:43 ET. Integration runtime checkpoint `77624eec` composes
+nested initializers `268aaf19`, checked vector pipeline `5c8decdf`, exact original
+standard-call bindings/caller ranges `c61af423`, and isolated parser fix `7e663aaf`.
+The two pointer-call admission sets retain both checked owner handles and standard
+range calls; checker/lowerer source unions remain complete. Fourteen compiler and
+explicit verifier-stand-in composition controls pass (100.94s, peak450,658,304bytes
+under8GiB), with no actual solver replay at this combined checkpoint.
+[Parser diagnosis and composition evidence](evidence/stdlib-parser-context-20261015.json).
+
+Linux's original frozen `5c2a` native outcome remains134passed/1failed. Its header
+context failure is repaired by captured-search ordering plus an isolated libclang
+worker: six focused Linux controls pass at `7e663aaf` (87.005s), including CPATH and
+CPLUS_INCLUDE_PATH hook refusals. Historical actual WP results retain their exact
+source/method pins: vector pipeline safe/wrong-comparison and nested initializer
+safe/missing-window/missing-initialization evidence are accepted scoped slices.
+Exact-call caller actual acceptance and the root entry-hint checkpoint remain
+separate; no production method3 or whole-ticket completion is claimed.
 
 | Ticket | Current evidence | Next action |
 |---|---|---|
 | 07 | Run18 finished unproven at 10:43 ET; 20 open goals (13 unit/7 hint), 51.76 counted minutes, no final proof/smoke | Audit negative outcome and remaining induction goals; retain prototype/RTE scope boundary |
-| 24 | Remote constructs stopped at opaque copy origin: 5 passed/1 failed; qualified copy body passes locally with 36 ordinary/7 smoke goals | Discharge caller typed range/capacity |
-| 25 | Original-TU standard-source gate integrated; actual safe/stale pair and 27 composition controls pass with their exact source pins | Continue wider vector/pair acceptance; no full-ticket claim |
-| 27 | Remote entry/helper shard passes 17/17; original nested three-read actual proof passes | Complete combined-policy and remaining DX acceptance |
-| 36 | 43 remote records audited, all referenced hashes match; nested closure/capture hardening reviewed | Compose setup/source/checker unions and replay combined source |
+| 24 | Qualified copy body historical36ordinary/7smoke; exact original callee and typed caller range discharge integrated with compiler/stand-in controls | Run fresh qualified caller actual acceptance |
+| 25 | Checked vector workflow integrated; historical safe77ordinary/12smoke and wrong-comparison76ordinary/1open/12smoke remain distinct from combined runtime | Continue wider vector/pair acceptance; no full-ticket claim |
+| 27 | Checked automatic nested initializer integrated; historical safe14ordinary/1smoke, three independent negative obligations retained | Complete combined-policy, entry hints and remaining DX acceptance |
+| 36 | Parser search reconstruction repaired: Mac13, Linux6, combined14 compiler/stand-in controls pass; source/checker unions preserved | Coordinate frozen combined-source replay and remaining setup acceptance |
 
 **32 of 63 resolved; five claimed.** Drafts 1/2 remain immutable; draft 3 is not
 created. Ticket 28 remains gated by 27; 43 remains blocked by 29. Held-out kernels
 and method freeze remain gated by dependencies. Existing user authorization covers
 implementation, commits/pushes, two remote lanes and scoped BFS source export.
-Last 30-minute status table 10:35 ET; next due 11:05 ET.
+The coordinator owns the full periodic status report and live lane dispatch; this
+11:43 update records the scoped integration handoff.
 
 ## Host coordination
 
-Live readback: 2026-10-15 10:49 ET. Both socket leases (node 0 generation 556,
+Readback2026-10-15 11:46ET: node0generation560, node1generation598 and legacy77
+are released; load0.02/0.57/1.04, `/data1`21GiB and `/data`95GiB free. Frozen
+`5c2a` final outcomes remain native134passed/1failed and entry19passed/1failed.
+The owner-safe failure has no WP launch/goals and shares the repaired parser
+context refusal; stale-alias was not reached. All155 report references and2,852
+declared absolute pins match.
+[Final frozen audit](evidence/source-gate-final-frozen-5c-20261015.json).
+
+
+Historical readback: 2026-10-15 10:49 ET. Both socket leases (node 0 generation 556,
 node 1 generation 597) and legacy generation 77 are released. Load0.32/0.07/0.30;
 21 GiB free on `/data1`, 97 GiB on `/data`. Evaluation checkout remains clean
 detached `1ece49b8`. The completed 09:57 ET jobs produced 43 retained proof records

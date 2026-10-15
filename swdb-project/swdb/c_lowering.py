@@ -201,6 +201,7 @@ class Lowering:
     pointer_bounds: dict = field(default_factory=dict)
     terminal_release: dict | None = None  # checked ownership certificate; native lowering retains delete[]
     stdlib_provenance: dict = field(default_factory=dict)  # original full-TU declarations and header closure
+    stdlib_substitutions: tuple = ()  # printer-requested free std calls, independently bound in the original TU
 
     @property
     def sha256(self):
@@ -225,6 +226,7 @@ class Lowering:
             data["terminal_release"] = self.terminal_release
         if self.stdlib_provenance:
             data["stdlib_provenance"] = self.stdlib_provenance
+            data["stdlib_substitutions"] = list(self.stdlib_substitutions)
         return json.dumps(data, indent=1, sort_keys=True) + "\n"
 
     @property
@@ -290,11 +292,13 @@ def identity():
                             + wp_pointer_bounds.identity()["sha256"].encode()
                             + here.with_name("array_domains.py").read_bytes()
                             + here.with_name("vector_ownership.py").read_bytes()
+                            + here.with_name("vector_pipeline.py").read_bytes()
                             + here.with_name("model_domains.py").read_bytes()
                             + here.with_name("standard_model_view.py").read_bytes()
                             + here.with_name("helper_windows.py").read_bytes()
                             + here.with_name("nested_entry_reads.py").read_bytes()
                             + here.with_name("dx_array_domains.py").read_bytes()
+                            + here.with_name("standard_range_calls.py").read_bytes()
                             + here.with_name("stdlib_source_admission.py").read_bytes()
                             + json.dumps(stdlib_provenance.runtime_identity(tool), sort_keys=True).encode()).hexdigest()
     found = {"c_lowering": {"id": f"{TOOL_ID}-{TOOL_VERSION}", "sha256": digest},
@@ -599,6 +603,8 @@ class _Unit:
         self.pointer_sites = []
         self.pointer_nodes = set()
         self.pointer_calls = []
+        self.standard_range_calls = []
+        self.stdlib_substitutions = []
         self._dumps = {}
         self.structs, self.struct_order, self.classes = {}, [], {}
         self.functions, self.order, self.pending = {}, [], []
@@ -1937,7 +1943,7 @@ class _Printer:
         if name in STD_MODELS:
             target = unit.function_node(name, qual_type, self.line)
             if target is not None and _is_std(target):
-                return self._std(name, target, args)
+                return self._std(name, target, args, node)
         target = unit.function_node(name, qual_type, self.line)
         if target is None or not _has_body(target):
             if name in OMP_RUNTIME and not args:
@@ -1971,8 +1977,9 @@ class _Printer:
             raise Unsupported(f"{what} on a non-pointer", self.line)
         return self._scalar(ctype[:-1].strip().replace("volatile", "").strip(), what)
 
-    def _std(self, name, target, args):
+    def _std(self, name, target, args, call_node):
         unit = self.unit
+        unit.stdlib_substitutions.append(stdlib_provenance.substitution(call_node, target))
         if name == "swap" and len(args) == 2:
             model = unit.model_of(*_types(_strip(args[0])), self.line)
             if model and model[1]["kind"] == "vector":
@@ -1994,6 +2001,10 @@ class _Printer:
             if element != self._pointee(args[2], "std::copy"):
                 raise Unsupported("std::copy between different element types", self.line)
             model = unit.model(*model_definition("std", "copy", element), self.line)
+            from swdb import standard_range_calls
+            statement, anchor = self.pointer_contexts[-1] if self.pointer_contexts else (None, "")
+            unit.standard_range_calls.append(standard_range_calls.site(call_node, statement=statement,
+                anchor=anchor,function=self.function,line=_where(call_node) or self.line,model=model,target=target))
             return f"{model}({', '.join(self.expr(a, top=True) for a in args)})", True
         raise Unsupported(f"standard library function std::{name}", self.line)
 
@@ -2487,12 +2498,12 @@ def lower(source, function, includes=(), defines=(), summaries=None, semantics=N
     certificate = terminal_release.certify(node, source=source.read_text(), source_sha256=_file_sha256(source),
                                             models=unit.model_order, anchors=anchors, text=text)
     owner = vector_ownership.certify_origins(node, source=source.read_text(), source_sha256=_file_sha256(source),
-                                           models=unit.model_order, anchors=anchors, text=text)
+                                           models=unit.model_order, anchors=anchors, text=text, entry_windows=windows)
     models = tuple(n for n in unit.model_order if n != "SWDB_MODEL_FAIL" and not n.endswith("_valid"))
     allocation = unit.allocates or any(n.startswith("std_vector_") for n in unit.std_types) or any(n.startswith("swdb_alloc_new_array_") for n in unit.model_order)
     provenance_models = sorted(set((*models, *unit.std_types)))
     provenance = (stdlib_provenance.certify(tool, source, includes=includes, defines=defines,
-                                          models=provenance_models)
+                                          models=provenance_models, substitutions=unit.stdlib_substitutions)
                   if stdlib_provenance.needed(provenance_models, allocation) else {})
     return Lowering(function=function, text=text, anchors=tuple(anchors), declaration=declaration,
                     parameters=tuple(unit_params), source_sha256=_file_sha256(source), defines=defines,
@@ -2500,6 +2511,7 @@ def lower(source, function, includes=(), defines=(), summaries=None, semantics=N
                           "naming_rules_sha256": RULES_SHA256, "clang": tool.version},
                     summaries=tuple(unit.summaries_used), models=models, probes=tuple(unit.probes),
                     std_models=tuple(sorted(unit.std_types)), allocation=allocation, stdlib_provenance=provenance,
+                    stdlib_substitutions=tuple(unit.stdlib_substitutions),
                     cpu_effects=cpu_effects.collect(definition_nodes, unit.probe_nodes, unit.models,
                                                     unit.summaries_used, INTEGER_TYPES | FLOAT_TYPES),
                     bounded_initialization=bounded_initialization.analyze(definition_nodes,
@@ -2511,6 +2523,7 @@ def lower(source, function, includes=(), defines=(), summaries=None, semantics=N
                             known_pointer_calls=(semantics or {}).get("tile_pointer", ()),
                             global_nodes=unit.global_nodes.values(), known_origins=(semantics or {}).get("array_origins"),
                             terminal=certificate, entry_windows=windows, entry_function=function, owner=owner,
+                            standard_calls=unit.standard_range_calls,
                             call_sites=unit.pointer_calls, call_policies=(semantics or {}).get("array_call_policies"),
                             audited_imports=(semantics or {}).get("audited_imports")),
                         source_sha256=_file_sha256(source), text=text, entry_windows=windows,

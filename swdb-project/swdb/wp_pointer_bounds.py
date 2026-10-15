@@ -230,7 +230,7 @@ def recheck_source(lowering, plan):
     from swdb import c_lowering
     if not isinstance(plan, dict) or not (plan.get("kwargs", {}).get("array_domains") or
             (lowering.pointer_bounds or {}).get("owner") or
-            any(row.get("kind") in {"call", "producer", "import"} for row in lowering.pointer_bounds.get("sites", []))):
+            any(row.get("kind") in {"call", "producer", "import", "standard_range_call"} for row in lowering.pointer_bounds.get("sites", []))):
         raise Refused("entry windows have no generator-owned source recheck plan")
     fresh = c_lowering.lower(Path(plan["source"]), lowering.function, **plan["kwargs"])
     if fresh.pointer_bounds != lowering.pointer_bounds or fresh.text != lowering.text:
@@ -335,7 +335,7 @@ def _origin_base(node):
 
 def complete(sites, definitions, observed, *, external_calls=(), known_pointer_calls=(),
              global_nodes=(), known_origins=None, terminal=None, entry_windows=None, entry_function=None, owner=None,
-             call_sites=(), call_policies=None, audited_imports=None):
+             call_sites=(), call_policies=None, audited_imports=None, standard_calls=()):
     """Refuse source operations omitted by printing and untracked subobject origins.
 
     The printer owns normalizations. This independent closure walk ensures that
@@ -346,6 +346,7 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
     # Clang dumps for separate functions may reuse process-local AST IDs.
     by_node = {(row["function"], row.pop("_ast_id", None)): row for row in all_rows}
     rows = [row for row in all_rows if row.get("kind") != "access"]
+    owner_handles = {"accesses": set(), "calls": set()}
     if owner:
         # The closed source grammar certifies each alias/member observation.
         # Its independent C-view checker maps these to renamed range/liveness
@@ -356,6 +357,12 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
         root = definitions.get(owner.get("function"))
         if root is None:
             raise Refused("closed-owner source registry has no emitted source definition")
+        if owner.get("protocol") == "private-vector-copy-scan-1":
+            from swdb import vector_pipeline
+            try:
+                owner_handles = vector_pipeline.checked_handles(root, owner, entry_windows)
+            except vector_pipeline.Refused as exc:
+                raise Refused(str(exc)) from None
         for access in owner["source_accesses"]:
             try:
                 model_domains.bind_source_access(root, owner, access)
@@ -406,7 +413,9 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
             except (Refused, dx_array_domains.Refused) as exc:
                 rows.append({"function": function, "source_line": (site or {}).get("source_line"), "reason": str(exc)})
     origins = _Origins(definitions, global_nodes, known_origins, terminal, entry_windows, entry_function,
-                       set(candidates) | set(producers), producers)
+                       set(candidates) | set(producers)
+                       | {(owner["function"], key) for key in owner_handles["calls"]}
+                       | {(s["function"], s["_ast_id"]) for s in standard_calls}, producers)
     if call_sites:
         declarations = [n for root in definitions.values() for n in _walk(root)
                         if n.get("kind") in {"VarDecl", "ParmVarDecl"}]
@@ -422,6 +431,10 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
             rows.append({**record, "binding": site["binding"], "kind": "call", "reason": ""})
         except (Refused, dx_array_domains.Refused) as exc:
             rows.append({"function": key[0], "source_line": site["source_line"], "reason": str(exc)})
+    from swdb import standard_range_calls
+    standard_rows, standard_operation_origins = standard_range_calls.certify(standard_calls, definitions, origins)
+    rows.extend(standard_rows)
+    checked_standard = {(s["function"],s["_ast_id"]) for s in standard_calls}
     has_arithmetic = bool(rows)
     external = {row.get("name") if isinstance(row, dict) else row for row in external_calls}
     for function, root in definitions.items():
@@ -438,6 +451,10 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
             if parent.get("kind") == "UnaryOperator" and parent.get("opcode") == "&" and parent.get("inner"):
                 addressed.add(_strip_origin(parent["inner"][0]).get("id"))
         for node in _walk(root):
+            if owner and function == owner["function"] and node.get("id") in owner_handles["accesses"]:
+                # This exact original read is mapped to renamed, independently checked
+                # view guards; all other source nodes retain the ordinary inventory.
+                continue
             kind, children = node.get("kind"), node.get("inner", [])
             children = [c for c in children if isinstance(c, dict) and c.get("kind")]
             pointer_children = [c for c in children if _pointer(c)]
@@ -450,12 +467,16 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
             indexed = kind == "ArraySubscriptExpr"
             dereferenced = bool(entry_windows and entry_windows.get("windows") and kind == "UnaryOperator" and node.get("opcode") == "*")
             if (entry_windows and entry_windows.get("windows") and kind in {"CallExpr", "CXXMemberCallExpr", "CXXOperatorCallExpr"}
-                    and any(_pointer(c) for c in children[1:]) and (function, node.get("id")) not in candidates):
+                    and any(_pointer(c) for c in children[1:]) and (function, node.get("id")) not in candidates
+                    and (function, node.get("id")) not in checked_standard
+                    and not (owner and function == owner["function"] and node.get("id") in owner_handles["calls"])):
                 reason = "entry-window pointer call boundaries need checked callee-domain discharge"
             if operation or indexed or dereferenced:
                 base = _origin_base(node)
                 try:
                     origin = origins.get(base, function) if base is not None else None
+                    if origin is None:
+                        origin = standard_operation_origins.get((function,node.get("id")))
                 except Refused as exc:
                     origin, reason = None, str(exc)
                 row = by_node.get((function, node.get("id"))) if operation else None
@@ -657,6 +678,11 @@ def check(lowering):
             raise Refused(f"{row['function']}:{row['source_line']}: {row['reason']}")
         if row.get("admission_only"):
             continue
+        if row.get("kind") == "standard_range_call":
+            from swdb import standard_range_calls
+            try: standard_range_calls.check_row(row)
+            except standard_range_calls.Refused as exc: raise Refused(str(exc)) from None
+            continue
         if row.get("kind") == "call":
             from swdb import dx_array_domains
             if row["policy"].get("check") != dx_array_domains.identity() or not row.get("predicate") or not row.get("binding"):
@@ -696,6 +722,9 @@ def prepare(lowering, text):
     for i, row in enumerate(report["sites"], 1):
         if row.get("admission_only"):
             continue
+        if row.get("kind") == "standard_range_call":
+            additions.setdefault(row["anchor"], []).append(f'/*@ assert swdb_window_copy_{i}: {row["predicate"]}; */')
+            continue
         if row.get("kind") == "call":
             additions.setdefault(row["anchor"], []).append(f'/*@ assert swdb_window_call_{i}: {row["predicate"]}; */')
             continue
@@ -704,6 +733,10 @@ def prepare(lowering, text):
             additions.setdefault(row["anchor"], []).append(assertion)
             continue
         base, result = f"({row['base']})", f"({row['expression']})"
+        if row.get("origin", {}).get("kind") == "one_dimensional_array":
+            # ACSL does not apply C array-to-pointer decay in null comparisons
+            # or logic-function arguments. Keep the same typed pointer value.
+            base = f'(({row["origin"]["element_type"]} *)({row["base"]}))'
         predicate = f"{_in_object_or_one_past(base, base)} && {_in_object_or_one_past(result, base)}"
         if row.get("offset") is not None:
             predicate = f"(({base} == \\null && ({row['offset']}) == 0) || ({predicate}))"

@@ -1,0 +1,1634 @@
+{
+  "created": "2026-10-15 ET",
+  "scope": "Unchanged original int-vector/pair maximum workflow via an exact checked private copy/scan relation, explicit a:n typed input window and initializedness contract; successful fresh-allocation/library frame premise remains explicit. Not standalone allocating C-model body proofs or full ticket25 completion.",
+  "initial_runtime": "a876e3a6b9de9c8c9b863c4516137e4797faa774",
+  "final_tested_runtime": "0cc88ffc1582d012b60a13f8862d3fd13a697e74",
+  "reporting_commit": "a9288a49d7e62cdf2eb15d6b26f110da5b0851a3",
+  "runtime_identities_match_tested_preflight": true,
+  "fixture": {
+    "path": "/private/tmp/probata-owner-origins/swdb-project/tests/fixtures/proof/cbmc/vector_units.cc",
+    "sha256": "046819cf00a6e74a7d26729f5107e14a8a2f8b9d6ddbbcd121a4f3cd2a18dae3",
+    "bytes": 1667
+  },
+  "initial_actual_watchdog": {
+    "exit_code": 1,
+    "peak_rss_bytes": 1002209280,
+    "out_of_memory": false,
+    "timed_out": false,
+    "wall_seconds": 187.8103374579805,
+    "cpu_seconds": 197.66814800000003,
+    "preflight_sha256": "e8a7d23a50bcb78f915df3e5693fa96fa8bc7c601267b32491a70cd052165b05"
+  },
+  "final_actual_watchdog": {
+    "exit_code": 0,
+    "peak_rss_bytes": 1015414784,
+    "out_of_memory": false,
+    "timed_out": false,
+    "wall_seconds": 182.52662466699257,
+    "cpu_seconds": 191.496214,
+    "preflight_sha256": "4c053efbf01567c9160d5c0b9e03fe1427f67fcd862050b8355d7ffd4584cc54"
+  },
+  "actual_pair": "safe proven77ordinary+12smoke; wrong comparison not_proven,76ordinary valid+1invariant timeout,12smoke passes",
+  "controls": {
+    "standin_admission_source_and_declaration_integrity": 15,
+    "post_normalization_return_faults": 2,
+    "boundary": "The15 controls precede the exact return normalization;2 new return controls and the actual pair run on the normalization checkpoint. Injected runtimes deliberately get fresh checker/method pins."
+  },
+  "diagnosed_failures": {
+    "public_initial_refusal": "unhooked owner/window path",
+    "storage_checker": "rehashed static best reached stand-in WP, no actual proof claim; then independent storage/type/attribute/outer-closure checks added",
+    "initial_actual_smoke": "safe ordinary72valid but fallback conditional has one failed smoke; wrong comparison also has one invariant timeout. Preserved as failure, never relabeled proven."
+  },
+  "original_source_and_header_pins_rechecked": 794,
+  "records": [
+    {
+      "stage": "diagnosed_smoke_checkpoint",
+      "case": "test_the_original_whole_vector0",
+      "record": {
+        "path": "/private/tmp/probata-vector-pipeline-actual-pytest/test_the_original_whole_vector0/records/proofs/proof.contract.fixture_vector_pipeline.20261015t151620z.9e21bcd3.yaml",
+        "sha256": "7288b4020acd81cf2c3a7ae2c33f13ea4466b22138672989bfab0e67cafa695d",
+        "bytes": 389022
+      },
+      "verdict": "not_proven",
+      "failure_class": "vacuous_pass",
+      "ordinary": {
+        "valid": 72
+      },
+      "smoke": {
+        "valid": 12,
+        "failed_smoke": 1
+      },
+      "open": [],
+      "setup": "passed",
+      "reader": "not_proven",
+      "provenance": "passed",
+      "report_files": 13,
+      "pins": {
+        "c_lowering": {
+          "id": "swdb_fixture_vec_max.c",
+          "sha256": "27144fbb18dff99497dac76563e013876de1095e710405c69d1dde3c42d6c419"
+        },
+        "std_models": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        },
+        "vector_pipeline_check": {
+          "id": "private-vector-copy-scan-1",
+          "sha256": "7b37c8992f63eb4f475ddd3f3c08229416411dabffba4bef243a6ca4b5e7a29a"
+        },
+        "vector_ownership_check": {
+          "id": "vector-ownership-check-1",
+          "sha256": "58bf8bbd370cd735bb5eceb6e6c49a6f08e97d97b4c73207ca7fe8727c6c6595"
+        },
+        "vector_ownership_certificate": {
+          "id": "swdb_fixture_vec_max.private-vector-copy-scan",
+          "sha256": "52f005bac7199e29915829d321a7e6236ce22f520a9dba32437c46cec5bdccf5"
+        },
+        "vector_pipeline_allocator": {
+          "id": "swdb_alloc_int",
+          "sha256": "eb1f5833017762a8d83cc477b6d35e604be6906ebe70b7c0ba56abf032fa03b0"
+        }
+      },
+      "source_sha256": "046819cf00a6e74a7d26729f5107e14a8a2f8b9d6ddbbcd121a4f3cd2a18dae3",
+      "source_comparison": ">",
+      "return_normalization": null
+    },
+    {
+      "stage": "diagnosed_smoke_checkpoint",
+      "case": "test_the_wrong_maximum_compari0",
+      "record": {
+        "path": "/private/tmp/probata-vector-pipeline-actual-pytest/test_the_wrong_maximum_compari0/records/proofs/proof.contract.fixture_vector_pipeline.20261015t151738z.57a5aefa.yaml",
+        "sha256": "a8e44830a051ad906db55f843cb31ba1a58450ed684f2246d3d7e979483d4cbf",
+        "bytes": 397729
+      },
+      "verdict": "not_proven",
+      "failure_class": "vacuous_pass",
+      "ordinary": {
+        "valid": 71,
+        "timeout": 1
+      },
+      "smoke": {
+        "valid": 12,
+        "failed_smoke": 1
+      },
+      "open": [
+        "typed_real_swdb_fixture_vec_max_loop_invariant_6_preserved"
+      ],
+      "setup": "passed",
+      "reader": "not_proven",
+      "provenance": "passed",
+      "report_files": 13,
+      "pins": {
+        "c_lowering": {
+          "id": "swdb_fixture_vec_max.c",
+          "sha256": "61b5183b173d10056db71e76fe56d6d024c093d4435a19bf6fa5e18384886314"
+        },
+        "std_models": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        },
+        "vector_pipeline_check": {
+          "id": "private-vector-copy-scan-1",
+          "sha256": "7b37c8992f63eb4f475ddd3f3c08229416411dabffba4bef243a6ca4b5e7a29a"
+        },
+        "vector_ownership_check": {
+          "id": "vector-ownership-check-1",
+          "sha256": "58bf8bbd370cd735bb5eceb6e6c49a6f08e97d97b4c73207ca7fe8727c6c6595"
+        },
+        "vector_ownership_certificate": {
+          "id": "swdb_fixture_vec_max.private-vector-copy-scan",
+          "sha256": "4c71c4918672ac4379b44749644384025cb14bbd41f92f6fc7bc70cb070b3770"
+        },
+        "vector_pipeline_allocator": {
+          "id": "swdb_alloc_int",
+          "sha256": "eb1f5833017762a8d83cc477b6d35e604be6906ebe70b7c0ba56abf032fa03b0"
+        }
+      },
+      "source_sha256": "4361dd10207733364cc90f0ed61a2ac07033f2d2abcf8d554c43a1ac0d6e180a",
+      "source_comparison": "<",
+      "return_normalization": null
+    },
+    {
+      "stage": "final_actual",
+      "case": "test_the_original_whole_vector0",
+      "record": {
+        "path": "/private/tmp/probata-vector-pipeline-actual-green-pytest/test_the_original_whole_vector0/records/proofs/proof.contract.fixture_vector_pipeline.20261015t152211z.178412b7.yaml",
+        "sha256": "705cda12296e72ba7cab2243b0dd3a262c73bbc93e6a25a6d12b4998157a15ee",
+        "bytes": 391155
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "ordinary": {
+        "valid": 77
+      },
+      "smoke": {
+        "valid": 12
+      },
+      "open": [],
+      "setup": "passed",
+      "reader": "proven",
+      "provenance": "passed",
+      "report_files": 12,
+      "pins": {
+        "c_lowering": {
+          "id": "swdb_fixture_vec_max.c",
+          "sha256": "27144fbb18dff99497dac76563e013876de1095e710405c69d1dde3c42d6c419"
+        },
+        "std_models": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        },
+        "vector_pipeline_check": {
+          "id": "private-vector-copy-scan-1",
+          "sha256": "fc7c06e21b10b71a2b6ac89dca409f0fe6237b530286ace110f791b8d330e382"
+        },
+        "vector_ownership_check": {
+          "id": "vector-ownership-check-1",
+          "sha256": "58bf8bbd370cd735bb5eceb6e6c49a6f08e97d97b4c73207ca7fe8727c6c6595"
+        },
+        "vector_ownership_certificate": {
+          "id": "swdb_fixture_vec_max.private-vector-copy-scan",
+          "sha256": "97245112371afcd7182d521119bdff283cbbf816500068e72b467a0b8c077691"
+        },
+        "vector_pipeline_allocator": {
+          "id": "swdb_alloc_int",
+          "sha256": "eb1f5833017762a8d83cc477b6d35e604be6906ebe70b7c0ba56abf032fa03b0"
+        }
+      },
+      "source_sha256": "046819cf00a6e74a7d26729f5107e14a8a2f8b9d6ddbbcd121a4f3cd2a18dae3",
+      "source_comparison": ">",
+      "return_normalization": {
+        "source": "checked==n?best.second:-1000",
+        "view": "(checked==n)*best.second+(checked!=n)*-1000",
+        "scope": "exact pure initialized int operands in this closed source grammar only",
+        "justification": "complementary Boolean multipliers are 0/1; exactly one product is zero, so both products and their sum remain representable and equal the selected int operand"
+      }
+    },
+    {
+      "stage": "final_actual",
+      "case": "test_the_wrong_maximum_compari0",
+      "record": {
+        "path": "/private/tmp/probata-vector-pipeline-actual-green-pytest/test_the_wrong_maximum_compari0/records/proofs/proof.contract.fixture_vector_pipeline.20261015t152327z.1b707148.yaml",
+        "sha256": "f560f497ce56751dfda7cef9932f00095ba840762dac53337ccab3f22c4c7197",
+        "bytes": 402015
+      },
+      "verdict": "not_proven",
+      "failure_class": "timeout",
+      "ordinary": {
+        "valid": 76,
+        "timeout": 1
+      },
+      "smoke": {
+        "valid": 12
+      },
+      "open": [
+        "typed_real_swdb_fixture_vec_max_loop_invariant_6_preserved"
+      ],
+      "setup": "passed",
+      "reader": "not_proven",
+      "provenance": "passed",
+      "report_files": 13,
+      "pins": {
+        "c_lowering": {
+          "id": "swdb_fixture_vec_max.c",
+          "sha256": "61b5183b173d10056db71e76fe56d6d024c093d4435a19bf6fa5e18384886314"
+        },
+        "std_models": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        },
+        "vector_pipeline_check": {
+          "id": "private-vector-copy-scan-1",
+          "sha256": "fc7c06e21b10b71a2b6ac89dca409f0fe6237b530286ace110f791b8d330e382"
+        },
+        "vector_ownership_check": {
+          "id": "vector-ownership-check-1",
+          "sha256": "58bf8bbd370cd735bb5eceb6e6c49a6f08e97d97b4c73207ca7fe8727c6c6595"
+        },
+        "vector_ownership_certificate": {
+          "id": "swdb_fixture_vec_max.private-vector-copy-scan",
+          "sha256": "c147499cd390b2df67d1a6770d5e7790007deb3da91ef1652defd9294014816d"
+        },
+        "vector_pipeline_allocator": {
+          "id": "swdb_alloc_int",
+          "sha256": "eb1f5833017762a8d83cc477b6d35e604be6906ebe70b7c0ba56abf032fa03b0"
+        }
+      },
+      "source_sha256": "4361dd10207733364cc90f0ed61a2ac07033f2d2abcf8d554c43a1ac0d6e180a",
+      "source_comparison": "<",
+      "return_normalization": {
+        "source": "checked==n?best.second:-1000",
+        "view": "(checked==n)*best.second+(checked!=n)*-1000",
+        "scope": "exact pure initialized int operands in this closed source grammar only",
+        "justification": "complementary Boolean multipliers are 0/1; exactly one product is zero, so both products and their sum remain representable and equal the selected int operand"
+      }
+    },
+    {
+      "stage": "standin_controls",
+      "case": "test_a_changed_comparison_is_p0",
+      "record": {
+        "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_changed_comparison_is_p0/records/proofs/proof.contract.fixture_vector_pipeline.20261015t151233z.9cfd6f34.yaml",
+        "sha256": "2deb654559f235c9cbc87088e8d7fa2badd79d3f078d98a75cac97a87c5ea60f",
+        "bytes": 369617
+      },
+      "verdict": "not_proven",
+      "failure_class": "unknown",
+      "ordinary": {
+        "unknown": 1
+      },
+      "smoke": {},
+      "open": [
+        "typed_real_swdb_fixture_vec_max_ensures"
+      ],
+      "setup": "passed",
+      "reader": "not_proven",
+      "provenance": "passed",
+      "report_files": 12,
+      "pins": {
+        "c_lowering": {
+          "id": "swdb_fixture_vec_max.c",
+          "sha256": "61b5183b173d10056db71e76fe56d6d024c093d4435a19bf6fa5e18384886314"
+        },
+        "std_models": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        },
+        "vector_pipeline_check": {
+          "id": "private-vector-copy-scan-1",
+          "sha256": "7b37c8992f63eb4f475ddd3f3c08229416411dabffba4bef243a6ca4b5e7a29a"
+        },
+        "vector_ownership_check": {
+          "id": "vector-ownership-check-1",
+          "sha256": "58bf8bbd370cd735bb5eceb6e6c49a6f08e97d97b4c73207ca7fe8727c6c6595"
+        },
+        "vector_ownership_certificate": {
+          "id": "swdb_fixture_vec_max.private-vector-copy-scan",
+          "sha256": "4c71c4918672ac4379b44749644384025cb14bbd41f92f6fc7bc70cb070b3770"
+        },
+        "vector_pipeline_allocator": {
+          "id": "swdb_alloc_int",
+          "sha256": "eb1f5833017762a8d83cc477b6d35e604be6906ebe70b7c0ba56abf032fa03b0"
+        }
+      }
+    },
+    {
+      "stage": "standin_controls",
+      "case": "test_a_rehashed_pipeline_rende0",
+      "record": {
+        "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_rehashed_pipeline_rende0/records/proofs/proof.contract.fixture_vector_pipeline.20261015t151307z.35b7bd37.yaml",
+        "sha256": "c0d7488a9926c081167e554a6d2bcb457ff94938b31b5e8860ad001cbed43b64",
+        "bytes": 330761
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "ordinary": {},
+      "smoke": {},
+      "open": [],
+      "setup": "passed",
+      "reader": "not_launched",
+      "provenance": "passed",
+      "report_files": 3,
+      "pins": {
+        "std_models": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        }
+      }
+    },
+    {
+      "stage": "standin_controls",
+      "case": "test_a_rehashed_pipeline_rende1",
+      "record": {
+        "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_rehashed_pipeline_rende1/records/proofs/proof.contract.fixture_vector_pipeline.20261015t151322z.153bdb76.yaml",
+        "sha256": "9efc7f2cb3e1e108a5f786ceae3c372b607f5fc4d2e24d39e9e9570941879ba9",
+        "bytes": 330762
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "ordinary": {},
+      "smoke": {},
+      "open": [],
+      "setup": "passed",
+      "reader": "not_launched",
+      "provenance": "passed",
+      "report_files": 3,
+      "pins": {
+        "std_models": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        }
+      }
+    },
+    {
+      "stage": "standin_controls",
+      "case": "test_a_rehashed_pipeline_rende2",
+      "record": {
+        "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_rehashed_pipeline_rende2/records/proofs/proof.contract.fixture_vector_pipeline.20261015t151338z.491b5ae7.yaml",
+        "sha256": "0c8cd2514d924adf821b9db8d398c5ddcbab752edbd5c3e5c49efde7f6bf14f0",
+        "bytes": 330762
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "ordinary": {},
+      "smoke": {},
+      "open": [],
+      "setup": "passed",
+      "reader": "not_launched",
+      "provenance": "passed",
+      "report_files": 3,
+      "pins": {
+        "std_models": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        }
+      }
+    },
+    {
+      "stage": "standin_controls",
+      "case": "test_a_rehashed_pipeline_rende3",
+      "record": {
+        "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_rehashed_pipeline_rende3/records/proofs/proof.contract.fixture_vector_pipeline.20261015t151354z.d0bee7bc.yaml",
+        "sha256": "0615361329ad87b111f2e8f3d1aa4ae5308d350c83128b6f2c7105a78700e0a9",
+        "bytes": 330762
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "ordinary": {},
+      "smoke": {},
+      "open": [],
+      "setup": "passed",
+      "reader": "not_launched",
+      "provenance": "passed",
+      "report_files": 3,
+      "pins": {
+        "std_models": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        }
+      }
+    },
+    {
+      "stage": "standin_controls",
+      "case": "test_a_rehashed_pipeline_rende4",
+      "record": {
+        "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_rehashed_pipeline_rende4/records/proofs/proof.contract.fixture_vector_pipeline.20261015t151409z.4e6c418d.yaml",
+        "sha256": "0d4d836cb7b5f3bc84572229292900d152391cc481fe0604945a52980408fca5",
+        "bytes": 330761
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "ordinary": {},
+      "smoke": {},
+      "open": [],
+      "setup": "passed",
+      "reader": "not_launched",
+      "provenance": "passed",
+      "report_files": 3,
+      "pins": {
+        "std_models": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        }
+      }
+    },
+    {
+      "stage": "standin_controls",
+      "case": "test_a_rehashed_pipeline_rende5",
+      "record": {
+        "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_rehashed_pipeline_rende5/records/proofs/proof.contract.fixture_vector_pipeline.20261015t151425z.0010aefd.yaml",
+        "sha256": "b3c7723f3f9573de09a9af24b9b93ae597f4fc208bde98d9557bb9e1c5b3df9e",
+        "bytes": 330761
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "ordinary": {},
+      "smoke": {},
+      "open": [],
+      "setup": "passed",
+      "reader": "not_launched",
+      "provenance": "passed",
+      "report_files": 3,
+      "pins": {
+        "std_models": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        }
+      }
+    },
+    {
+      "stage": "standin_controls",
+      "case": "test_a_rehashed_pipeline_rende6",
+      "record": {
+        "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_rehashed_pipeline_rende6/records/proofs/proof.contract.fixture_vector_pipeline.20261015t151440z.97995694.yaml",
+        "sha256": "9ff20183be8d031def21dd0ee199567803a556cc5e3183a61760347171fcff8e",
+        "bytes": 330761
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "ordinary": {},
+      "smoke": {},
+      "open": [],
+      "setup": "passed",
+      "reader": "not_launched",
+      "provenance": "passed",
+      "report_files": 3,
+      "pins": {
+        "std_models": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        }
+      }
+    },
+    {
+      "stage": "standin_controls",
+      "case": "test_the_original_vector_size_0",
+      "record": {
+        "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_original_vector_size_0/records/proofs/proof.contract.fixture_vector_pipeline.20261015t151044z.f868ec4f.yaml",
+        "sha256": "2da6f915d83f0e19e0df62898a42cc96d1f46dbdee591e41be638d63bbf7ad89",
+        "bytes": 369621
+      },
+      "verdict": "not_proven",
+      "failure_class": "unknown",
+      "ordinary": {
+        "unknown": 1
+      },
+      "smoke": {},
+      "open": [
+        "typed_real_swdb_fixture_vec_max_ensures"
+      ],
+      "setup": "passed",
+      "reader": "not_proven",
+      "provenance": "passed",
+      "report_files": 12,
+      "pins": {
+        "c_lowering": {
+          "id": "swdb_fixture_vec_max.c",
+          "sha256": "27144fbb18dff99497dac76563e013876de1095e710405c69d1dde3c42d6c419"
+        },
+        "std_models": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        },
+        "vector_pipeline_check": {
+          "id": "private-vector-copy-scan-1",
+          "sha256": "7b37c8992f63eb4f475ddd3f3c08229416411dabffba4bef243a6ca4b5e7a29a"
+        },
+        "vector_ownership_check": {
+          "id": "vector-ownership-check-1",
+          "sha256": "58bf8bbd370cd735bb5eceb6e6c49a6f08e97d97b4c73207ca7fe8727c6c6595"
+        },
+        "vector_ownership_certificate": {
+          "id": "swdb_fixture_vec_max.private-vector-copy-scan",
+          "sha256": "52f005bac7199e29915829d321a7e6236ce22f520a9dba32437c46cec5bdccf5"
+        },
+        "vector_pipeline_allocator": {
+          "id": "swdb_alloc_int",
+          "sha256": "eb1f5833017762a8d83cc477b6d35e604be6906ebe70b7c0ba56abf032fa03b0"
+        }
+      }
+    },
+    {
+      "stage": "standin_controls",
+      "case": "test_the_pipeline_refuses_unch0",
+      "record": {
+        "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_pipeline_refuses_unch0/records/proofs/proof.contract.fixture_vector_pipeline.20261015t151119z.875555be.yaml",
+        "sha256": "9252357375be1edc458a309dc6da5856d2e377fb283782e85a3680020a400e03",
+        "bytes": 4801
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "ordinary": {},
+      "smoke": {},
+      "open": [],
+      "setup": "passed",
+      "reader": "not_launched",
+      "provenance": null,
+      "report_files": 3,
+      "pins": {}
+    },
+    {
+      "stage": "standin_controls",
+      "case": "test_the_pipeline_refuses_unch1",
+      "record": {
+        "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_pipeline_refuses_unch1/records/proofs/proof.contract.fixture_vector_pipeline.20261015t151133z.6a27791b.yaml",
+        "sha256": "17f615bfdb7c60e673105fcaaccf1d686e34ae4cebecf4f770d75bcdd3953068",
+        "bytes": 4802
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "ordinary": {},
+      "smoke": {},
+      "open": [],
+      "setup": "passed",
+      "reader": "not_launched",
+      "provenance": null,
+      "report_files": 3,
+      "pins": {}
+    },
+    {
+      "stage": "standin_controls",
+      "case": "test_the_pipeline_refuses_unch2",
+      "record": {
+        "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_pipeline_refuses_unch2/records/proofs/proof.contract.fixture_vector_pipeline.20261015t151146z.ed265e8f.yaml",
+        "sha256": "ae3236744319e47cb67b4f3608d8983a7528706126a6449173533be9765eefa9",
+        "bytes": 4802
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "ordinary": {},
+      "smoke": {},
+      "open": [],
+      "setup": "passed",
+      "reader": "not_launched",
+      "provenance": null,
+      "report_files": 3,
+      "pins": {}
+    },
+    {
+      "stage": "standin_controls",
+      "case": "test_the_pipeline_refuses_unch3",
+      "record": {
+        "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_pipeline_refuses_unch3/records/proofs/proof.contract.fixture_vector_pipeline.20261015t151159z.47b178fa.yaml",
+        "sha256": "108ec9b272ff650057d8c9ec314560e34cde69ee785273d7ea3f74bdd72f5383",
+        "bytes": 275038
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "ordinary": {},
+      "smoke": {},
+      "open": [],
+      "setup": "passed",
+      "reader": "not_launched",
+      "provenance": "refused",
+      "report_files": 2,
+      "pins": {}
+    },
+    {
+      "stage": "standin_controls",
+      "case": "test_the_pipeline_refuses_unch4",
+      "record": {
+        "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_pipeline_refuses_unch4/records/proofs/proof.contract.fixture_vector_pipeline.20261015t151209z.9f6acef3.yaml",
+        "sha256": "1e6354fea520ac78e3268208330778f9c68f2d101074230e94efb912043b9c00",
+        "bytes": 4802
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "ordinary": {},
+      "smoke": {},
+      "open": [],
+      "setup": "passed",
+      "reader": "not_launched",
+      "provenance": null,
+      "report_files": 3,
+      "pins": {}
+    },
+    {
+      "stage": "standin_controls",
+      "case": "test_the_pipeline_refuses_unch5",
+      "record": {
+        "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_pipeline_refuses_unch5/records/proofs/proof.contract.fixture_vector_pipeline.20261015t151222z.d3599d70.yaml",
+        "sha256": "4fff9fa3e9b9dc13cfb3e1bb1dac16f91fad0f2189f289b2433b1a9b93253129",
+        "bytes": 330654
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "ordinary": {},
+      "smoke": {},
+      "open": [],
+      "setup": "passed",
+      "reader": "not_launched",
+      "provenance": "passed",
+      "report_files": 3,
+      "pins": {
+        "std_models": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        }
+      }
+    },
+    {
+      "stage": "return_fault_controls",
+      "case": "test_branchless_return_keeps_b0",
+      "record": {
+        "path": "/private/tmp/probata-vector-pipeline-return-controls-pytest/test_branchless_return_keeps_b0/records/proofs/proof.contract.fixture_vector_pipeline.20261015t152031z.e83a0987.yaml",
+        "sha256": "d174af86ceff4f0003fd0691898f2e6091ce3d833548585d4d4cbf7e9f832318",
+        "bytes": 331812
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "ordinary": {},
+      "smoke": {},
+      "open": [],
+      "setup": "passed",
+      "reader": "not_launched",
+      "provenance": "passed",
+      "report_files": 3,
+      "pins": {
+        "std_models": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        }
+      }
+    },
+    {
+      "stage": "return_fault_controls",
+      "case": "test_branchless_return_keeps_b1",
+      "record": {
+        "path": "/private/tmp/probata-vector-pipeline-return-controls-pytest/test_branchless_return_keeps_b1/records/proofs/proof.contract.fixture_vector_pipeline.20261015t152048z.ef614a99.yaml",
+        "sha256": "b89b4cba4f48cc752595fdf486d05ae26c0f0e8a215c03152138d7396392bd46",
+        "bytes": 331811
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "ordinary": {},
+      "smoke": {},
+      "open": [],
+      "setup": "passed",
+      "reader": "not_launched",
+      "provenance": "passed",
+      "report_files": 3,
+      "pins": {
+        "std_models": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        }
+      }
+    },
+    {
+      "stage": "diagnosed_storage_checker_red",
+      "case": "test_a_rehashed_pipeline_rende0",
+      "record": {
+        "path": "/private/tmp/probata-vector-pipeline-static-red2-pytest/test_a_rehashed_pipeline_rende0/records/proofs/proof.contract.fixture_vector_pipeline.20261015t150839z.4c6ac1f2.yaml",
+        "sha256": "07e5cb5a85f5b87ba1339226d985f187a3607910ebe6840265210784f0ffc191",
+        "bytes": 367156
+      },
+      "verdict": "not_proven",
+      "failure_class": "unknown",
+      "ordinary": {
+        "unknown": 1
+      },
+      "smoke": {},
+      "open": [
+        "typed_real_swdb_fixture_vec_max_ensures"
+      ],
+      "setup": "passed",
+      "reader": "not_proven",
+      "provenance": "passed",
+      "report_files": 12,
+      "pins": {
+        "c_lowering": {
+          "id": "swdb_fixture_vec_max.c",
+          "sha256": "27144fbb18dff99497dac76563e013876de1095e710405c69d1dde3c42d6c419"
+        },
+        "std_models": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        },
+        "vector_pipeline_check": {
+          "id": "private-vector-copy-scan-1",
+          "sha256": "48701fdc585f512fcc2ce0635707ae4a68eee66ee097b2d072da54797e3df5fe"
+        },
+        "vector_ownership_check": {
+          "id": "vector-ownership-check-1",
+          "sha256": "58bf8bbd370cd735bb5eceb6e6c49a6f08e97d97b4c73207ca7fe8727c6c6595"
+        },
+        "vector_ownership_certificate": {
+          "id": "swdb_fixture_vec_max.private-vector-copy-scan",
+          "sha256": "2e4dc07315d4da981a5e769bb0cafd213ffc5cbb793a4c7cc62fed3cf62bf858"
+        },
+        "vector_pipeline_allocator": {
+          "id": "swdb_alloc_int",
+          "sha256": "eb1f5833017762a8d83cc477b6d35e604be6906ebe70b7c0ba56abf032fa03b0"
+        }
+      }
+    },
+    {
+      "stage": "original_public_hook_red",
+      "case": "test_the_original_vector_size_0",
+      "record": {
+        "path": "/private/tmp/probata-vector-pipeline-red-pytest/test_the_original_vector_size_0/records/proofs/proof.contract.fixture_vector_pipeline.20261015t150420z.56c8b01c.yaml",
+        "sha256": "53654016a71a78912b91bc6249c9d5b61a19cb1a368fc9c2eefbcbeaa91dfd4b",
+        "bytes": 4787
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "ordinary": {},
+      "smoke": {},
+      "open": [],
+      "setup": "passed",
+      "reader": "not_launched",
+      "provenance": null,
+      "report_files": 3,
+      "pins": {}
+    }
+  ],
+  "artifact_files": [
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-pytest/test_the_original_whole_vector0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151620z.9e21bcd3/adapter.log",
+      "sha256": "837c3511158876a016cb22cb5e8ec794ed0c7fec5f4ab573f59a94ef3b786e86",
+      "bytes": 1091
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-pytest/test_the_original_whole_vector0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151620z.9e21bcd3/wp/stdlib_provenance_unit.json",
+      "sha256": "e7c2e547d59ac991ebfa511635e9c9f3cde3647ee089ccbda35cfe32c1eb6b3d",
+      "bytes": 357708
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-pytest/test_the_original_whole_vector0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151620z.9e21bcd3/wp/swdb_fixture_vec_max.c",
+      "sha256": "27144fbb18dff99497dac76563e013876de1095e710405c69d1dde3c42d6c419",
+      "bytes": 10748
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-pytest/test_the_original_whole_vector0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151620z.9e21bcd3/wp/swdb_fixture_vec_max.anchors.json",
+      "sha256": "41f781e4deb63f6a4df1ef3f4a2361a10ec6201750fc52d37e58a8ee3de5b849",
+      "bytes": 374279
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-pytest/test_the_original_whole_vector0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151620z.9e21bcd3/wp/vector_ownership_view.c",
+      "sha256": "9c16af96e78f8c4170235b649ac326b1f8cd9994e87db3389c0cc3ab6d1496c0",
+      "bytes": 4044
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-pytest/test_the_original_whole_vector0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151620z.9e21bcd3/wp/vector_ownership_contracts.json",
+      "sha256": "974c17b15f2681baf17fae0950710c108af9dc0ccf1b2730835581748daf8e9b",
+      "bytes": 581
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-pytest/test_the_original_whole_vector0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151620z.9e21bcd3/wp/wp_input.c",
+      "sha256": "f391871e80d0b9d2cafa56aed7cbb3653ea83fd3e09f5844e2745b0863deabad",
+      "bytes": 4467
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-pytest/test_the_original_whole_vector0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151620z.9e21bcd3/wp/frama-c.log",
+      "sha256": "a1ffd74621eb011169baa67b6190c40707280deff13cff172b3a3db8c2495396",
+      "bytes": 8417
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-pytest/test_the_original_whole_vector0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151620z.9e21bcd3/wp/wp-goals.json",
+      "sha256": "e5fb3f685fb39336bfb5950f11f46cff298ce2a18f4ba55fd3f26e39e446ebd3",
+      "bytes": 45963
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-pytest/test_the_original_whole_vector0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151620z.9e21bcd3/wp/wp-properties.csv",
+      "sha256": "c5c9cd319ba9bf9cd2b9192247c13068f197c7a90c6f83835a14caea69074058",
+      "bytes": 4981
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-pytest/test_the_original_whole_vector0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151620z.9e21bcd3/wp/wp-inventory.json",
+      "sha256": "09da1f39d6d7cbcc4067865c911d9e653b7db03a037fede8553a221f27d87fd2",
+      "bytes": 77358
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-pytest/test_the_original_whole_vector0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151620z.9e21bcd3/wp/wp-normalized.c",
+      "sha256": "1df1d96a65ba658fee74ee5bcd026a6d398bf9b8e519a51183742985f11fccb2",
+      "bytes": 12944
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-pytest/test_the_original_whole_vector0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151620z.9e21bcd3/wp/handler.json",
+      "sha256": "0df2c583feffe179cc35b816c26a731e3b2c5045a8aa990c6a879238b8f959f1",
+      "bytes": 366
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-pytest/test_the_original_whole_vector0/records/proofs/proof.contract.fixture_vector_pipeline.20261015t151620z.9e21bcd3.yaml",
+      "sha256": "7288b4020acd81cf2c3a7ae2c33f13ea4466b22138672989bfab0e67cafa695d",
+      "bytes": 389022
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-pytest/test_the_wrong_maximum_compari0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151738z.57a5aefa/adapter.log",
+      "sha256": "96ebf9f9561469c4ad91883f50e604b8595d0b311d61ce70bbc8c3b2615dc37c",
+      "bytes": 1091
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-pytest/test_the_wrong_maximum_compari0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151738z.57a5aefa/wp/stdlib_provenance_unit.json",
+      "sha256": "931135fd3c39c94c60f3e9f105b2befa956abf16791779798fb20eb961b07aef",
+      "bytes": 357708
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-pytest/test_the_wrong_maximum_compari0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151738z.57a5aefa/wp/swdb_fixture_vec_max.c",
+      "sha256": "61b5183b173d10056db71e76fe56d6d024c093d4435a19bf6fa5e18384886314",
+      "bytes": 10748
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-pytest/test_the_wrong_maximum_compari0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151738z.57a5aefa/wp/swdb_fixture_vec_max.anchors.json",
+      "sha256": "e4b261b1c3f8381b2138a79ecc9bb9b4fef4e4d880f1b1ab1b298bdf30f3ac5c",
+      "bytes": 374279
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-pytest/test_the_wrong_maximum_compari0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151738z.57a5aefa/wp/vector_ownership_view.c",
+      "sha256": "40cfe6aa09902ef2685c35328a67d5cc20321879efed30a5905751119d253cc7",
+      "bytes": 4044
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-pytest/test_the_wrong_maximum_compari0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151738z.57a5aefa/wp/vector_ownership_contracts.json",
+      "sha256": "974c17b15f2681baf17fae0950710c108af9dc0ccf1b2730835581748daf8e9b",
+      "bytes": 581
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-pytest/test_the_wrong_maximum_compari0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151738z.57a5aefa/wp/wp_input.c",
+      "sha256": "6fb4c21a552ab0197d4bea05f29cc57bbae9cb7db94c21e370fc605baba34529",
+      "bytes": 4467
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-pytest/test_the_wrong_maximum_compari0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151738z.57a5aefa/wp/frama-c.log",
+      "sha256": "a97c0c755b0efe6c6e435c7c3cdedf702143cdd73843c40560f8e0887ca5d587",
+      "bytes": 11025
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-pytest/test_the_wrong_maximum_compari0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151738z.57a5aefa/wp/wp-goals.json",
+      "sha256": "0c260315bb360a6110720039d8037b6d592d724a8b5316f40ca9976cafb75e0f",
+      "bytes": 45976
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-pytest/test_the_wrong_maximum_compari0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151738z.57a5aefa/wp/wp-properties.csv",
+      "sha256": "2c5d1c0be006a457566cabb0cc7dd4bc01ee072513a6869fa7c0ab15dc540b59",
+      "bytes": 5379
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-pytest/test_the_wrong_maximum_compari0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151738z.57a5aefa/wp/wp-inventory.json",
+      "sha256": "68750847d1bb5308802a3c95d91e7b1cfc17e431eea02dd9e7ae8b3222c7674f",
+      "bytes": 76742
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-pytest/test_the_wrong_maximum_compari0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151738z.57a5aefa/wp/wp-normalized.c",
+      "sha256": "283f9e5e52a0f5e814e1daabcdcc4810c416e45de98ddd42f81144a062caf51e",
+      "bytes": 12944
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-pytest/test_the_wrong_maximum_compari0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151738z.57a5aefa/wp/handler.json",
+      "sha256": "0df2c583feffe179cc35b816c26a731e3b2c5045a8aa990c6a879238b8f959f1",
+      "bytes": 366
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-pytest/test_the_wrong_maximum_compari0/records/proofs/proof.contract.fixture_vector_pipeline.20261015t151738z.57a5aefa.yaml",
+      "sha256": "a8e44830a051ad906db55f843cb31ba1a58450ed684f2246d3d7e979483d4cbf",
+      "bytes": 397729
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-green-pytest/test_the_original_whole_vector0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t152211z.178412b7/adapter.log",
+      "sha256": "3183baf7d32f9ce5f9b27bad7355d371429ea96f363a4e7f18f7f65ede8de369",
+      "bytes": 1019
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-green-pytest/test_the_original_whole_vector0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t152211z.178412b7/wp/stdlib_provenance_unit.json",
+      "sha256": "1a12afb20cc71720c75eabd66aa0e90aa92003d2e782f2557f9c67c28f7b0086",
+      "bytes": 358578
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-green-pytest/test_the_original_whole_vector0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t152211z.178412b7/wp/swdb_fixture_vec_max.c",
+      "sha256": "27144fbb18dff99497dac76563e013876de1095e710405c69d1dde3c42d6c419",
+      "bytes": 10748
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-green-pytest/test_the_original_whole_vector0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t152211z.178412b7/wp/swdb_fixture_vec_max.anchors.json",
+      "sha256": "01fc630b42e59104d93587aa0f20b6d47a9dce9da128b41acf7697c8de40fa0d",
+      "bytes": 375149
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-green-pytest/test_the_original_whole_vector0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t152211z.178412b7/wp/vector_ownership_view.c",
+      "sha256": "c1d662565ebdac40b2c4737c230d01d7b70da4071f1d25360f844188d3ded966",
+      "bytes": 4055
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-green-pytest/test_the_original_whole_vector0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t152211z.178412b7/wp/vector_ownership_contracts.json",
+      "sha256": "974c17b15f2681baf17fae0950710c108af9dc0ccf1b2730835581748daf8e9b",
+      "bytes": 581
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-green-pytest/test_the_original_whole_vector0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t152211z.178412b7/wp/wp_input.c",
+      "sha256": "e17b3b1a59671c0a1c7aac6a79bdc9f2b7b1705bc4360da64e5f051d1fbf7b93",
+      "bytes": 4478
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-green-pytest/test_the_original_whole_vector0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t152211z.178412b7/wp/frama-c.log",
+      "sha256": "c0e9040f1e85fdaa68ffea66c9ccc2598656d45e297dcefccb259ff5b63714d8",
+      "bytes": 8182
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-green-pytest/test_the_original_whole_vector0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t152211z.178412b7/wp/wp-goals.json",
+      "sha256": "e60d55a2f076bcc488cf657a3b21e5d2aacdff9dbe9c44d9d58bbee81a22e33f",
+      "bytes": 48859
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-green-pytest/test_the_original_whole_vector0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t152211z.178412b7/wp/wp-properties.csv",
+      "sha256": "cde34ba05399aa71cf98bb53ae844cec88f5a2bdc398fe2a1fcc99a7f920e83a",
+      "bytes": 5726
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-green-pytest/test_the_original_whole_vector0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t152211z.178412b7/wp/wp-inventory.json",
+      "sha256": "c26b49ac21abcf8e1ec0a74b9264bdf740d7273f78fb9f06e1b1cf8eb153747f",
+      "bytes": 86560
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-green-pytest/test_the_original_whole_vector0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t152211z.178412b7/wp/wp-normalized.c",
+      "sha256": "db2327cb8160f553591591ff4f7b1f776960cef369039929a8d9a17f4116c8bc",
+      "bytes": 14611
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-green-pytest/test_the_original_whole_vector0/records/proofs/proof.contract.fixture_vector_pipeline.20261015t152211z.178412b7.yaml",
+      "sha256": "705cda12296e72ba7cab2243b0dd3a262c73bbc93e6a25a6d12b4998157a15ee",
+      "bytes": 391155
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-green-pytest/test_the_wrong_maximum_compari0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t152327z.1b707148/adapter.log",
+      "sha256": "b06c7b8d992b06ddeb684c7c743d0f46aea60e5dd3ff995d74c9896c5af0f6d0",
+      "bytes": 1112
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-green-pytest/test_the_wrong_maximum_compari0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t152327z.1b707148/wp/stdlib_provenance_unit.json",
+      "sha256": "6fce76b645f09b35a94c0fc15ab256c01c7e40c0bdd4641fbc53b1548df1ffc0",
+      "bytes": 358578
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-green-pytest/test_the_wrong_maximum_compari0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t152327z.1b707148/wp/swdb_fixture_vec_max.c",
+      "sha256": "61b5183b173d10056db71e76fe56d6d024c093d4435a19bf6fa5e18384886314",
+      "bytes": 10748
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-green-pytest/test_the_wrong_maximum_compari0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t152327z.1b707148/wp/swdb_fixture_vec_max.anchors.json",
+      "sha256": "702821c5ff4707bb1e8fe46bb5ddc7dbf091a728a832cf1c8ff7b05fcb7512cf",
+      "bytes": 375149
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-green-pytest/test_the_wrong_maximum_compari0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t152327z.1b707148/wp/vector_ownership_view.c",
+      "sha256": "ff382498970cf701214b8804d754151e2734f7934087ac3b9fd2e22f02ee8657",
+      "bytes": 4055
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-green-pytest/test_the_wrong_maximum_compari0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t152327z.1b707148/wp/vector_ownership_contracts.json",
+      "sha256": "974c17b15f2681baf17fae0950710c108af9dc0ccf1b2730835581748daf8e9b",
+      "bytes": 581
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-green-pytest/test_the_wrong_maximum_compari0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t152327z.1b707148/wp/wp_input.c",
+      "sha256": "8d4a1b5dc65eae44d1a9f7331bb3cf0fbbbcdd57f3095a8d82ca6cfbbfce551b",
+      "bytes": 4478
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-green-pytest/test_the_wrong_maximum_compari0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t152327z.1b707148/wp/frama-c.log",
+      "sha256": "05b6bf0af330060d8874f15943ef426d5f0b6af3c94338f3320530e61d90de0b",
+      "bytes": 11169
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-green-pytest/test_the_wrong_maximum_compari0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t152327z.1b707148/wp/wp-goals.json",
+      "sha256": "dc80553520b28ec5ff8a5609ce4ad7591d1ed931b9dd685a95d298d69c41d37f",
+      "bytes": 48848
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-green-pytest/test_the_wrong_maximum_compari0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t152327z.1b707148/wp/wp-properties.csv",
+      "sha256": "48d6a8d035c830d09f2b6dd6faacd62049e096df7ec204fa572ee32af8cd9918",
+      "bytes": 6190
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-green-pytest/test_the_wrong_maximum_compari0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t152327z.1b707148/wp/wp-inventory.json",
+      "sha256": "7fd6e9b5303e477789defd22d9cc0283e56fd57a18b5338dc9cc9c05d4127faa",
+      "bytes": 85944
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-green-pytest/test_the_wrong_maximum_compari0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t152327z.1b707148/wp/wp-normalized.c",
+      "sha256": "57641aa05e2c200320c600975974106eb7fe1bf795135d7f7e1b09f23fcd1ed7",
+      "bytes": 14611
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-green-pytest/test_the_wrong_maximum_compari0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t152327z.1b707148/wp/handler.json",
+      "sha256": "2274dd0a9ccae1769d67434e660a479d63f971aad3de2d83960ebb53b5fd4bd9",
+      "bytes": 279
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-green-pytest/test_the_wrong_maximum_compari0/records/proofs/proof.contract.fixture_vector_pipeline.20261015t152327z.1b707148.yaml",
+      "sha256": "f560f497ce56751dfda7cef9932f00095ba840762dac53337ccab3f22c4c7197",
+      "bytes": 402015
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_changed_comparison_is_p0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151233z.9cfd6f34/adapter.log",
+      "sha256": "916db4f504429d606e79c094d6e5de23d2bff3b3b04ead371200e8714f14c79e",
+      "bytes": 1156
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_changed_comparison_is_p0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151233z.9cfd6f34/wp/stdlib_provenance_unit.json",
+      "sha256": "0adaf7c2578ff6cc737dbac0443f3528793cf1400639ec69b5131f8bf0cdd2bf",
+      "bytes": 357998
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_changed_comparison_is_p0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151233z.9cfd6f34/wp/swdb_fixture_vec_max.c",
+      "sha256": "61b5183b173d10056db71e76fe56d6d024c093d4435a19bf6fa5e18384886314",
+      "bytes": 10748
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_changed_comparison_is_p0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151233z.9cfd6f34/wp/swdb_fixture_vec_max.anchors.json",
+      "sha256": "00ad5a00e5309e143f4e35b15a3c70b98160cbae1b5c92e6021a9a0340990db9",
+      "bytes": 374569
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_changed_comparison_is_p0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151233z.9cfd6f34/wp/vector_ownership_view.c",
+      "sha256": "40cfe6aa09902ef2685c35328a67d5cc20321879efed30a5905751119d253cc7",
+      "bytes": 4044
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_changed_comparison_is_p0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151233z.9cfd6f34/wp/vector_ownership_contracts.json",
+      "sha256": "974c17b15f2681baf17fae0950710c108af9dc0ccf1b2730835581748daf8e9b",
+      "bytes": 581
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_changed_comparison_is_p0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151233z.9cfd6f34/wp/wp_input.c",
+      "sha256": "6fb4c21a552ab0197d4bea05f29cc57bbae9cb7db94c21e370fc605baba34529",
+      "bytes": 4467
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_changed_comparison_is_p0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151233z.9cfd6f34/wp/frama-c.log",
+      "sha256": "4b07ddc3d104f5c0e5063fe316960985d271afb2b088377e831384bd85e43031",
+      "bytes": 60
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_changed_comparison_is_p0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151233z.9cfd6f34/wp/wp-goals.json",
+      "sha256": "0ea0a33f5cc15d2674be677d75e3f48cc09d5159f25356c1764c6ca819a9e6f8",
+      "bytes": 286
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_changed_comparison_is_p0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151233z.9cfd6f34/wp/wp-properties.csv",
+      "sha256": "ef8a93ce0916ee8157f83f6ea4c1cac54e84b656c4362782ad7790f99ed3a520",
+      "bytes": 130
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_changed_comparison_is_p0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151233z.9cfd6f34/wp/wp-inventory.json",
+      "sha256": "32310ff50549ae22f89894da1909f6106e91df07972663ffd16adbac90c352b6",
+      "bytes": 373
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_changed_comparison_is_p0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151233z.9cfd6f34/wp/handler.json",
+      "sha256": "5ff9df3033978edcec3e548df742821e531e6ecace131721dddb470d929cbfca",
+      "bytes": 211
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_changed_comparison_is_p0/records/proofs/proof.contract.fixture_vector_pipeline.20261015t151233z.9cfd6f34.yaml",
+      "sha256": "2deb654559f235c9cbc87088e8d7fa2badd79d3f078d98a75cac97a87c5ea60f",
+      "bytes": 369617
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_rehashed_pipeline_rende0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151307z.35b7bd37/adapter.log",
+      "sha256": "efb1e5453da0e873f6fc587825ca48157f98a5540746cd50058c457b1e665180",
+      "bytes": 227
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_rehashed_pipeline_rende0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151307z.35b7bd37/wp/stdlib_provenance_unit.json",
+      "sha256": "b0b9c86a098ba0cabcfaa0d733244abf4d9777ad0c3568526ecc509271e472d6",
+      "bytes": 358104
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_rehashed_pipeline_rende0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151307z.35b7bd37/wp/handler.json",
+      "sha256": "e8bcc8bea29bc35e9deb4c586b900268e3c922d55084fa54cd20256edc651799",
+      "bytes": 548
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_rehashed_pipeline_rende0/records/proofs/proof.contract.fixture_vector_pipeline.20261015t151307z.35b7bd37.yaml",
+      "sha256": "c0d7488a9926c081167e554a6d2bcb457ff94938b31b5e8860ad001cbed43b64",
+      "bytes": 330761
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_rehashed_pipeline_rende1/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151322z.153bdb76/adapter.log",
+      "sha256": "efb1e5453da0e873f6fc587825ca48157f98a5540746cd50058c457b1e665180",
+      "bytes": 227
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_rehashed_pipeline_rende1/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151322z.153bdb76/wp/stdlib_provenance_unit.json",
+      "sha256": "e73153b7384941955a0b9f296d15d955e4d0b7bdfa840090343bdadd4223743a",
+      "bytes": 358104
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_rehashed_pipeline_rende1/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151322z.153bdb76/wp/handler.json",
+      "sha256": "e8bcc8bea29bc35e9deb4c586b900268e3c922d55084fa54cd20256edc651799",
+      "bytes": 548
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_rehashed_pipeline_rende1/records/proofs/proof.contract.fixture_vector_pipeline.20261015t151322z.153bdb76.yaml",
+      "sha256": "9efc7f2cb3e1e108a5f786ceae3c372b607f5fc4d2e24d39e9e9570941879ba9",
+      "bytes": 330762
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_rehashed_pipeline_rende2/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151338z.491b5ae7/adapter.log",
+      "sha256": "efb1e5453da0e873f6fc587825ca48157f98a5540746cd50058c457b1e665180",
+      "bytes": 227
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_rehashed_pipeline_rende2/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151338z.491b5ae7/wp/stdlib_provenance_unit.json",
+      "sha256": "9a315247cf2a3e37d9f5492289788d86329726c2fa7ca2874c6f19322666221a",
+      "bytes": 358104
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_rehashed_pipeline_rende2/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151338z.491b5ae7/wp/handler.json",
+      "sha256": "e8bcc8bea29bc35e9deb4c586b900268e3c922d55084fa54cd20256edc651799",
+      "bytes": 548
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_rehashed_pipeline_rende2/records/proofs/proof.contract.fixture_vector_pipeline.20261015t151338z.491b5ae7.yaml",
+      "sha256": "0c8cd2514d924adf821b9db8d398c5ddcbab752edbd5c3e5c49efde7f6bf14f0",
+      "bytes": 330762
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_rehashed_pipeline_rende3/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151354z.d0bee7bc/adapter.log",
+      "sha256": "efb1e5453da0e873f6fc587825ca48157f98a5540746cd50058c457b1e665180",
+      "bytes": 227
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_rehashed_pipeline_rende3/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151354z.d0bee7bc/wp/stdlib_provenance_unit.json",
+      "sha256": "aed3c00ae90acc1b5050e5f2e924851386db8e8478222c64b3ce496112fc7ae8",
+      "bytes": 358104
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_rehashed_pipeline_rende3/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151354z.d0bee7bc/wp/handler.json",
+      "sha256": "e8bcc8bea29bc35e9deb4c586b900268e3c922d55084fa54cd20256edc651799",
+      "bytes": 548
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_rehashed_pipeline_rende3/records/proofs/proof.contract.fixture_vector_pipeline.20261015t151354z.d0bee7bc.yaml",
+      "sha256": "0615361329ad87b111f2e8f3d1aa4ae5308d350c83128b6f2c7105a78700e0a9",
+      "bytes": 330762
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_rehashed_pipeline_rende4/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151409z.4e6c418d/adapter.log",
+      "sha256": "efb1e5453da0e873f6fc587825ca48157f98a5540746cd50058c457b1e665180",
+      "bytes": 227
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_rehashed_pipeline_rende4/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151409z.4e6c418d/wp/stdlib_provenance_unit.json",
+      "sha256": "2b0918605709ea6142d3436277aba2ec87d3403f76f9d0f2c9516e0ef1bfce22",
+      "bytes": 358104
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_rehashed_pipeline_rende4/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151409z.4e6c418d/wp/handler.json",
+      "sha256": "e8bcc8bea29bc35e9deb4c586b900268e3c922d55084fa54cd20256edc651799",
+      "bytes": 548
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_rehashed_pipeline_rende4/records/proofs/proof.contract.fixture_vector_pipeline.20261015t151409z.4e6c418d.yaml",
+      "sha256": "0d4d836cb7b5f3bc84572229292900d152391cc481fe0604945a52980408fca5",
+      "bytes": 330761
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_rehashed_pipeline_rende5/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151425z.0010aefd/adapter.log",
+      "sha256": "efb1e5453da0e873f6fc587825ca48157f98a5540746cd50058c457b1e665180",
+      "bytes": 227
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_rehashed_pipeline_rende5/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151425z.0010aefd/wp/stdlib_provenance_unit.json",
+      "sha256": "acb288a9c8071982e26247855288e446eebd2fe0d596bc3acfaaf2018e77b5ad",
+      "bytes": 358104
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_rehashed_pipeline_rende5/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151425z.0010aefd/wp/handler.json",
+      "sha256": "6416e2728ce97c5b35a4e8a2e761bf8a2ad681b75a7ca8a4da38ef128bdaf279",
+      "bytes": 525
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_rehashed_pipeline_rende5/records/proofs/proof.contract.fixture_vector_pipeline.20261015t151425z.0010aefd.yaml",
+      "sha256": "b3c7723f3f9573de09a9af24b9b93ae597f4fc208bde98d9557bb9e1c5b3df9e",
+      "bytes": 330761
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_rehashed_pipeline_rende6/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151440z.97995694/adapter.log",
+      "sha256": "efb1e5453da0e873f6fc587825ca48157f98a5540746cd50058c457b1e665180",
+      "bytes": 227
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_rehashed_pipeline_rende6/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151440z.97995694/wp/stdlib_provenance_unit.json",
+      "sha256": "31ad9067c733122e94faf8fb35c49a0fff69150bf99f8545b54aaff6ec11b50d",
+      "bytes": 358104
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_rehashed_pipeline_rende6/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151440z.97995694/wp/handler.json",
+      "sha256": "85205b61d6246269e02cb4c24345b10e49facc07a3c7533dd968bbd43d7d458a",
+      "bytes": 522
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_a_rehashed_pipeline_rende6/records/proofs/proof.contract.fixture_vector_pipeline.20261015t151440z.97995694.yaml",
+      "sha256": "9ff20183be8d031def21dd0ee199567803a556cc5e3183a61760347171fcff8e",
+      "bytes": 330761
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_original_vector_size_0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151044z.f868ec4f/adapter.log",
+      "sha256": "04e7daacafede54f09a683df88ef513cfb377ee3145c6a2404e94ddc61781715",
+      "bytes": 1156
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_original_vector_size_0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151044z.f868ec4f/wp/stdlib_provenance_unit.json",
+      "sha256": "0fe34454b480f4746526cbb0abfc9637f62b5d8a6e3050de01c117ead18ac249",
+      "bytes": 357998
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_original_vector_size_0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151044z.f868ec4f/wp/swdb_fixture_vec_max.c",
+      "sha256": "27144fbb18dff99497dac76563e013876de1095e710405c69d1dde3c42d6c419",
+      "bytes": 10748
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_original_vector_size_0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151044z.f868ec4f/wp/swdb_fixture_vec_max.anchors.json",
+      "sha256": "176d05dd818018eb6c31ac08e0370cb2898e92f5ba7cb3208271fd149fcf4699",
+      "bytes": 374569
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_original_vector_size_0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151044z.f868ec4f/wp/vector_ownership_view.c",
+      "sha256": "9c16af96e78f8c4170235b649ac326b1f8cd9994e87db3389c0cc3ab6d1496c0",
+      "bytes": 4044
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_original_vector_size_0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151044z.f868ec4f/wp/vector_ownership_contracts.json",
+      "sha256": "974c17b15f2681baf17fae0950710c108af9dc0ccf1b2730835581748daf8e9b",
+      "bytes": 581
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_original_vector_size_0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151044z.f868ec4f/wp/wp_input.c",
+      "sha256": "f391871e80d0b9d2cafa56aed7cbb3653ea83fd3e09f5844e2745b0863deabad",
+      "bytes": 4467
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_original_vector_size_0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151044z.f868ec4f/wp/frama-c.log",
+      "sha256": "4b07ddc3d104f5c0e5063fe316960985d271afb2b088377e831384bd85e43031",
+      "bytes": 60
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_original_vector_size_0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151044z.f868ec4f/wp/wp-goals.json",
+      "sha256": "0ea0a33f5cc15d2674be677d75e3f48cc09d5159f25356c1764c6ca819a9e6f8",
+      "bytes": 286
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_original_vector_size_0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151044z.f868ec4f/wp/wp-properties.csv",
+      "sha256": "ef8a93ce0916ee8157f83f6ea4c1cac54e84b656c4362782ad7790f99ed3a520",
+      "bytes": 130
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_original_vector_size_0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151044z.f868ec4f/wp/wp-inventory.json",
+      "sha256": "32310ff50549ae22f89894da1909f6106e91df07972663ffd16adbac90c352b6",
+      "bytes": 373
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_original_vector_size_0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151044z.f868ec4f/wp/handler.json",
+      "sha256": "5ff9df3033978edcec3e548df742821e531e6ecace131721dddb470d929cbfca",
+      "bytes": 211
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_original_vector_size_0/records/proofs/proof.contract.fixture_vector_pipeline.20261015t151044z.f868ec4f.yaml",
+      "sha256": "2da6f915d83f0e19e0df62898a42cc96d1f46dbdee591e41be638d63bbf7ad89",
+      "bytes": 369621
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_pipeline_refuses_unch0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151119z.875555be/adapter.log",
+      "sha256": "efb1e5453da0e873f6fc587825ca48157f98a5540746cd50058c457b1e665180",
+      "bytes": 227
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_pipeline_refuses_unch0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151119z.875555be/wp/stdlib_provenance_unit.json",
+      "sha256": "335fcff723e3ffa1f59939d7188bbda0a3dbc62b20ba9daa41487f6fc4a95b70",
+      "bytes": 357996
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_pipeline_refuses_unch0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151119z.875555be/wp/handler.json",
+      "sha256": "daa5ff3a40e3b3e6642801cc196837c44a0246d9fa684afbbc51bb977c420849",
+      "bytes": 358
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_pipeline_refuses_unch0/records/proofs/proof.contract.fixture_vector_pipeline.20261015t151119z.875555be.yaml",
+      "sha256": "9252357375be1edc458a309dc6da5856d2e377fb283782e85a3680020a400e03",
+      "bytes": 4801
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_pipeline_refuses_unch1/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151133z.6a27791b/adapter.log",
+      "sha256": "efb1e5453da0e873f6fc587825ca48157f98a5540746cd50058c457b1e665180",
+      "bytes": 227
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_pipeline_refuses_unch1/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151133z.6a27791b/wp/stdlib_provenance_unit.json",
+      "sha256": "f950f2e4be2a86b3ca44b7dd1096a2c238fffd09e73f18a4006895b2b37dd5c4",
+      "bytes": 359199
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_pipeline_refuses_unch1/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151133z.6a27791b/wp/handler.json",
+      "sha256": "daa5ff3a40e3b3e6642801cc196837c44a0246d9fa684afbbc51bb977c420849",
+      "bytes": 358
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_pipeline_refuses_unch1/records/proofs/proof.contract.fixture_vector_pipeline.20261015t151133z.6a27791b.yaml",
+      "sha256": "17f615bfdb7c60e673105fcaaccf1d686e34ae4cebecf4f770d75bcdd3953068",
+      "bytes": 4802
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_pipeline_refuses_unch2/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151146z.ed265e8f/adapter.log",
+      "sha256": "efb1e5453da0e873f6fc587825ca48157f98a5540746cd50058c457b1e665180",
+      "bytes": 227
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_pipeline_refuses_unch2/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151146z.ed265e8f/wp/stdlib_provenance_unit.json",
+      "sha256": "90e51fd8dfcf7245337d46ee58c373021564517393315ef620588cddb3f24877",
+      "bytes": 359194
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_pipeline_refuses_unch2/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151146z.ed265e8f/wp/handler.json",
+      "sha256": "daa5ff3a40e3b3e6642801cc196837c44a0246d9fa684afbbc51bb977c420849",
+      "bytes": 358
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_pipeline_refuses_unch2/records/proofs/proof.contract.fixture_vector_pipeline.20261015t151146z.ed265e8f.yaml",
+      "sha256": "ae3236744319e47cb67b4f3608d8983a7528706126a6449173533be9765eefa9",
+      "bytes": 4802
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_pipeline_refuses_unch3/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151159z.47b178fa/adapter.log",
+      "sha256": "efb1e5453da0e873f6fc587825ca48157f98a5540746cd50058c457b1e665180",
+      "bytes": 227
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_pipeline_refuses_unch3/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151159z.47b178fa/wp/handler.json",
+      "sha256": "525bed437a4c14f87acb8e76e548c824ee001ee77ffe4deb6b7fa5ad03e9e8df",
+      "bytes": 471
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_pipeline_refuses_unch3/records/proofs/proof.contract.fixture_vector_pipeline.20261015t151159z.47b178fa.yaml",
+      "sha256": "108ec9b272ff650057d8c9ec314560e34cde69ee785273d7ea3f74bdd72f5383",
+      "bytes": 275038
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_pipeline_refuses_unch4/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151209z.9f6acef3/adapter.log",
+      "sha256": "efb1e5453da0e873f6fc587825ca48157f98a5540746cd50058c457b1e665180",
+      "bytes": 227
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_pipeline_refuses_unch4/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151209z.9f6acef3/wp/stdlib_provenance_unit.json",
+      "sha256": "266d1b0ca6645c642e086ae5a3794efe11645d853b731aaf9013eb7305481731",
+      "bytes": 357998
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_pipeline_refuses_unch4/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151209z.9f6acef3/wp/handler.json",
+      "sha256": "daa5ff3a40e3b3e6642801cc196837c44a0246d9fa684afbbc51bb977c420849",
+      "bytes": 358
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_pipeline_refuses_unch4/records/proofs/proof.contract.fixture_vector_pipeline.20261015t151209z.9f6acef3.yaml",
+      "sha256": "1e6354fea520ac78e3268208330778f9c68f2d101074230e94efb912043b9c00",
+      "bytes": 4802
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_pipeline_refuses_unch5/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151222z.d3599d70/adapter.log",
+      "sha256": "efb1e5453da0e873f6fc587825ca48157f98a5540746cd50058c457b1e665180",
+      "bytes": 227
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_pipeline_refuses_unch5/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151222z.d3599d70/wp/stdlib_provenance_unit.json",
+      "sha256": "de2f4756ff0043eff53b8518d43a19be5c0b7d3a28374b30a61185c20a2963f2",
+      "bytes": 357998
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_pipeline_refuses_unch5/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t151222z.d3599d70/wp/handler.json",
+      "sha256": "716e0dc02c6fc5439b04e98d5a5e9580173b8505f9e07a3e1c2188e69651598e",
+      "bytes": 560
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls-pytest/test_the_pipeline_refuses_unch5/records/proofs/proof.contract.fixture_vector_pipeline.20261015t151222z.d3599d70.yaml",
+      "sha256": "4fff9fa3e9b9dc13cfb3e1bb1dac16f91fad0f2189f289b2433b1a9b93253129",
+      "bytes": 330654
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-return-controls-pytest/test_branchless_return_keeps_b0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t152031z.e83a0987/adapter.log",
+      "sha256": "efb1e5453da0e873f6fc587825ca48157f98a5540746cd50058c457b1e665180",
+      "bytes": 227
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-return-controls-pytest/test_branchless_return_keeps_b0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t152031z.e83a0987/wp/stdlib_provenance_unit.json",
+      "sha256": "3323873faa717b769d63310c15b04320f78c098dbdd6f4cfb56385ab068b7d79",
+      "bytes": 359133
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-return-controls-pytest/test_branchless_return_keeps_b0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t152031z.e83a0987/wp/handler.json",
+      "sha256": "4e96d1783e1afa2cc54069371d580f2a7f383890db656c66161eddf4990b02bd",
+      "bytes": 501
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-return-controls-pytest/test_branchless_return_keeps_b0/records/proofs/proof.contract.fixture_vector_pipeline.20261015t152031z.e83a0987.yaml",
+      "sha256": "d174af86ceff4f0003fd0691898f2e6091ce3d833548585d4d4cbf7e9f832318",
+      "bytes": 331812
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-return-controls-pytest/test_branchless_return_keeps_b1/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t152048z.ef614a99/adapter.log",
+      "sha256": "efb1e5453da0e873f6fc587825ca48157f98a5540746cd50058c457b1e665180",
+      "bytes": 227
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-return-controls-pytest/test_branchless_return_keeps_b1/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t152048z.ef614a99/wp/stdlib_provenance_unit.json",
+      "sha256": "59446b840f2d7ef167015606a8c59e0951b9afde2fe4824fcc605c45a28aac33",
+      "bytes": 359133
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-return-controls-pytest/test_branchless_return_keeps_b1/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t152048z.ef614a99/wp/handler.json",
+      "sha256": "4e96d1783e1afa2cc54069371d580f2a7f383890db656c66161eddf4990b02bd",
+      "bytes": 501
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-return-controls-pytest/test_branchless_return_keeps_b1/records/proofs/proof.contract.fixture_vector_pipeline.20261015t152048z.ef614a99.yaml",
+      "sha256": "b89b4cba4f48cc752595fdf486d05ae26c0f0e8a215c03152138d7396392bd46",
+      "bytes": 331811
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-static-red2-pytest/test_a_rehashed_pipeline_rende0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t150839z.4c6ac1f2/adapter.log",
+      "sha256": "e547ec5fd8ba9f2dbb5deee450b17f773c05445d09dcacd9f2fa4de3d47ed563",
+      "bytes": 1159
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-static-red2-pytest/test_a_rehashed_pipeline_rende0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t150839z.4c6ac1f2/wp/stdlib_provenance_unit.json",
+      "sha256": "6c88963c52d5bd5b50abdf8f34ef8ff8b41a94c6bcfefcbe4f828f49729d89de",
+      "bytes": 358545
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-static-red2-pytest/test_a_rehashed_pipeline_rende0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t150839z.4c6ac1f2/wp/swdb_fixture_vec_max.c",
+      "sha256": "27144fbb18dff99497dac76563e013876de1095e710405c69d1dde3c42d6c419",
+      "bytes": 10748
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-static-red2-pytest/test_a_rehashed_pipeline_rende0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t150839z.4c6ac1f2/wp/swdb_fixture_vec_max.anchors.json",
+      "sha256": "8ca6b0a72806a327164c3489a433dfc13ec3f81b86f6c580b3bb66d758663976",
+      "bytes": 373426
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-static-red2-pytest/test_a_rehashed_pipeline_rende0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t150839z.4c6ac1f2/wp/vector_ownership_view.c",
+      "sha256": "cfe94c32628cf9e12503509e8b16b2ed2d47392a0ff237b9dad6f5363e28003a",
+      "bytes": 4051
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-static-red2-pytest/test_a_rehashed_pipeline_rende0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t150839z.4c6ac1f2/wp/vector_ownership_contracts.json",
+      "sha256": "974c17b15f2681baf17fae0950710c108af9dc0ccf1b2730835581748daf8e9b",
+      "bytes": 581
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-static-red2-pytest/test_a_rehashed_pipeline_rende0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t150839z.4c6ac1f2/wp/wp_input.c",
+      "sha256": "d10dd6fa1fe0b2f69e2cdf4b714541061a8e4d4c381ed1910a229a6472d40576",
+      "bytes": 4474
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-static-red2-pytest/test_a_rehashed_pipeline_rende0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t150839z.4c6ac1f2/wp/frama-c.log",
+      "sha256": "4b07ddc3d104f5c0e5063fe316960985d271afb2b088377e831384bd85e43031",
+      "bytes": 60
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-static-red2-pytest/test_a_rehashed_pipeline_rende0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t150839z.4c6ac1f2/wp/wp-goals.json",
+      "sha256": "0ea0a33f5cc15d2674be677d75e3f48cc09d5159f25356c1764c6ca819a9e6f8",
+      "bytes": 286
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-static-red2-pytest/test_a_rehashed_pipeline_rende0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t150839z.4c6ac1f2/wp/wp-properties.csv",
+      "sha256": "ef8a93ce0916ee8157f83f6ea4c1cac54e84b656c4362782ad7790f99ed3a520",
+      "bytes": 130
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-static-red2-pytest/test_a_rehashed_pipeline_rende0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t150839z.4c6ac1f2/wp/wp-inventory.json",
+      "sha256": "32310ff50549ae22f89894da1909f6106e91df07972663ffd16adbac90c352b6",
+      "bytes": 373
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-static-red2-pytest/test_a_rehashed_pipeline_rende0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t150839z.4c6ac1f2/wp/handler.json",
+      "sha256": "5ff9df3033978edcec3e548df742821e531e6ecace131721dddb470d929cbfca",
+      "bytes": 211
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-static-red2-pytest/test_a_rehashed_pipeline_rende0/records/proofs/proof.contract.fixture_vector_pipeline.20261015t150839z.4c6ac1f2.yaml",
+      "sha256": "07e5cb5a85f5b87ba1339226d985f187a3607910ebe6840265210784f0ffc191",
+      "bytes": 367156
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-red-pytest/test_the_original_vector_size_0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t150420z.56c8b01c/adapter.log",
+      "sha256": "efb1e5453da0e873f6fc587825ca48157f98a5540746cd50058c457b1e665180",
+      "bytes": 227
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-red-pytest/test_the_original_vector_size_0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t150420z.56c8b01c/wp/stdlib_provenance_unit.json",
+      "sha256": "4145e37ba8832cf46784c03e4013d3d45c851b4275b6338fbbff9d999e0a892d",
+      "bytes": 357273
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-red-pytest/test_the_original_vector_size_0/runs-outside-repo/proof.contract.fixture_vector_pipeline.20261015t150420z.56c8b01c/wp/handler.json",
+      "sha256": "daa5ff3a40e3b3e6642801cc196837c44a0246d9fa684afbbc51bb977c420849",
+      "bytes": 358
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-red-pytest/test_the_original_vector_size_0/records/proofs/proof.contract.fixture_vector_pipeline.20261015t150420z.56c8b01c.yaml",
+      "sha256": "53654016a71a78912b91bc6249c9d5b61a19cb1a368fc9c2eefbcbeaa91dfd4b",
+      "bytes": 4787
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual/pytest.log",
+      "sha256": "1172f974f57524da916bc36f9487cb94047024ecb07b937221a500470965e9a2",
+      "bytes": 1371
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual/watchdog.json",
+      "sha256": "977ac29213ad1dca11a464fce29210e65b666024b13feaeba342afc1e4f63e97",
+      "bytes": 265
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual/preflight.json",
+      "sha256": "e8a7d23a50bcb78f915df3e5693fa96fa8bc7c601267b32491a70cd052165b05",
+      "bytes": 1770
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual/pytest.jsonl",
+      "sha256": "68551ae59eb939487c12ad07ade456c0ed85ead84a35414e257492b35b835d42",
+      "bytes": 7402
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-green/pytest.log",
+      "sha256": "c37e021225e34889c0bba2cc826a1031980be5a88e338bf14d62b451d9e5fee9",
+      "bytes": 204
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-green/watchdog.json",
+      "sha256": "1cbd65aa94ff2668242d5e0523644daefda39d99e767716443ba21faa3c0c086",
+      "bytes": 258
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-green/preflight.json",
+      "sha256": "4c053efbf01567c9160d5c0b9e03fe1427f67fcd862050b8355d7ffd4584cc54",
+      "bytes": 1794
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-green/pytest.jsonl",
+      "sha256": "15316cc8ee4e610a3c4653795a87173607f23f205b734edb3ec8065b8aae2428",
+      "bytes": 4338
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-red.jsonl",
+      "sha256": "e51254ae8b4991dde33e9fefd185426e6d19707cf48bf643b5bc2bbd6178a99f",
+      "bytes": 5664
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-static-red2.jsonl",
+      "sha256": "52134403419ac38dff729024db4121f9042048d722fb30bd34407b848b6af751",
+      "bytes": 5595
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-controls.jsonl",
+      "sha256": "11acd2ca68d1881a86400a7f74088ac7d5e2118158f940443a6ec095e4f4bcc1",
+      "bytes": 34553
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-return-controls.jsonl",
+      "sha256": "b28d659b1644ce18f30e241fdab5e476b6f799526392df9f3da7bd26d823a0f2",
+      "bytes": 5274
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-run.py",
+      "sha256": "753daedb1a1e2b9798a20498ab963fb7e2af94dbc2ef3c2039749c6ea349390b",
+      "bytes": 2130
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-actual-green-run.py",
+      "sha256": "4cccaf2474d577aba0efdf854e145b037f64ad357efe60976b450fad8cb722c3",
+      "bytes": 2148
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-audit/collect.py",
+      "sha256": "cb13d36cb57e2941a7fda3c1c9442af6c42b8115a2843b640740413db9b1f5e3",
+      "bytes": 7574
+    },
+    {
+      "path": "/private/tmp/probata-owner-origins/swdb-project/tests/fixtures/proof/cbmc/vector_units.cc",
+      "sha256": "046819cf00a6e74a7d26729f5107e14a8a2f8b9d6ddbbcd121a4f3cd2a18dae3",
+      "bytes": 1667
+    }
+  ],
+  "ticket25_status": "claimed",
+  "production_method": "No immutable method edited; contract_fixture records with tested source/checker pins only."
+}
