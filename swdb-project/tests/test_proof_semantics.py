@@ -746,10 +746,10 @@ def test_wp_dx_source_initializedness_is_checked_after_explicit_window_admission
 
 
 @needs_wp
-def test_wp_unit_window_does_not_invent_a_domain_for_a_defined_pointer_helper(dx):
+def test_wp_checked_helper_and_nested_view_do_not_invent_missing_entry_windows(dx):
     path = dx.root / "library/rewrite_contracts/fixture_dx_three_reads.yaml"
     contract = yaml.safe_load(path.read_text())
-    contract["proof_unit"]["array_domains"] = {"q": {"extent": "n"}, "base": {"extent": "n"}}
+    contract["proof_unit"].pop("array_domains", None)
     path.write_text(yaml.safe_dump(contract, sort_keys=False))
     record = prove_wp(dx, "three_reads")
     assert record["verdict"] == "not_proven" and record["failure_class"] == "unsupported_construct", record

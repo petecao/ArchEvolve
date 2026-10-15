@@ -59,9 +59,13 @@ class _Plan:
         self.includes = tuple(dict.fromkeys([self.source.parent, *(Path(p).resolve() for p in includes)]))
         self.defines = tuple(defines)
         self.dependencies = ast._dependencies(self.source, self.tool, self.includes, self.defines)
+        if self.dependencies.get(str(self.source)) != ast._hash(self.raw):
+            raise Refused("source changed while collecting nested-view dependencies")
         self.tree = ast._Tree(self.source, self.tool, self.includes, self.defines)
         self.entry = self.tree.entry(function)
         self.parameters = {n["id"]: n for n in ast._children(self.entry) if n.get("kind") == "ParmVarDecl"}
+        if any(n.get("kind", "").endswith("Attr") for n in ast._walk(self.entry)):
+            raise Refused("nested executable closure does not project declaration or statement attributes")
         # This view certifies the unit, not unrelated retained BFS definitions.
         # Its complete executable/data closure must therefore be visible here:
         # locals/parameters and global bodyless imports only. Header/source bodies,
@@ -238,7 +242,10 @@ class _Plan:
                     if declaration.get("kind") != "DeclStmt" or len(decls) != 1:
                         raise Refused("nested capture is not an ordinary local value initialization")
                     decl = decls[0]
-                    if decl.get("kind") != "VarDecl" or decl.get("name") != row["name"] or decl.get("type", {}).get("qualType") != "int" or len(ast._children(decl)) != 1:
+                    if (decl.get("kind") != "VarDecl" or decl.get("name") != row["name"] or
+                            decl.get("type", {}).get("qualType") != "int" or len(ast._children(decl)) != 1 or
+                            decl.get("storageClass") or decl.get("tls") or decl.get("constexpr") or
+                            any(n.get("kind", "").endswith("Attr") for n in ast._children(decl))):
                         raise Refused("nested capture type, binding or initializer drifted")
                     init = _strip(ast._children(decl)[0])
                     match(inner, init)

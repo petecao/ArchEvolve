@@ -98,3 +98,22 @@ def test_independent_relation_rejects_renderer_changes_outside_target_statements
     monkeypatch.setattr(nested, '_render', lambda raw, edits: original(raw, edits).replace('int unrelated=1', 'int unrelated=2'))
     with pytest.raises(nested.Refused):
         make(tmp_path, 'int unrelated=1;\n' + SOURCE)
+
+
+@pytest.mark.parametrize('storage', ['static ', 'thread_local ', '__attribute__((aligned(16))) '])
+def test_freshly_rehashed_renderer_cannot_cache_a_capture_between_calls(tmp_path, monkeypatch, storage):
+    original = nested._render
+    def cached(raw, edits):
+        # Preserve the exact byte length so the unedited-region check cannot
+        # substitute for the independent automatic-storage AST obligation.
+        text = original(raw, edits)
+        return text.replace('int swdb_nested_read_0', storage + 'int swdb_nested_read_0').replace('q[' + ' ' * len(storage) + '0]', 'q[0]', 1)
+    monkeypatch.setattr(nested, '_render', cached)
+    with pytest.raises(nested.Refused):
+        make(tmp_path, SOURCE.replace('q[0]', 'q[' + ' ' * len(storage) + '0]', 1))
+
+
+def test_unit_closure_refuses_implicit_cleanup_callees(tmp_path):
+    text = 'void cleanup(int*);\n' + SOURCE.replace('return base', 'int local __attribute__((cleanup(cleanup)))=0; return base')
+    with pytest.raises(nested.Refused):
+        make(tmp_path, text)

@@ -15,18 +15,20 @@ UNIT = '\nint nested_read(int *q,int *base,int n) { return base[q[0]]; }\n'
 @pytest.fixture(scope='module')
 def nested_seed(tmp_path_factory):
     root = tmp_path_factory.mktemp('nested-obligations')
+    from test_vector_ownership_wp import _ownership_seed
+    from test_wp_subset import _entry
     requires = ('requires n == 1 && \\valid(q) && \\valid(base);\n'
-                'requires q[0] == 0 && base[0] == 1;')
-    fixtures = {**dx.FIXTURES, 'nested_read': ('nested_read', ['q', 'base'], requires, '\\nothing', 1)}
-    with pytest.MonkeyPatch.context() as patch:
-        patch.setattr(dx, 'UNITS', dx.UNITS + UNIT)
-        patch.setattr(dx, 'FIXTURES', fixtures)
-        candidate = dx.build_dx_seed(root)
-    path = root / 'library/rewrite_contracts/fixture_dx_nested_read.yaml'
-    data = yaml.safe_load(path.read_text())
+                'requires q[0] == 0 && base[0] == 1;\n'
+                'requires \\initialized(q + (0 .. n - 1));\n'
+                'requires \\initialized(base + (0 .. n - 1));')
+    seed = _ownership_seed(root, source=UNIT, cases=[])
+    data = _entry('contract.fixture_dx_nested_read', 'nested_read', 'vector_ownership.cc', UNIT,
+        [('pre', 'legality', requires), ('post', 'postcondition', 'assigns \\nothing; ensures \\result == 1;')],
+        ['q', 'base'], {'once': 'self'})
     data['proof_unit']['array_domains'] = {p: {'extent': 'n'} for p in ('q', 'base')}
+    path = root / 'library/rewrite_contracts/fixture_dx_nested_read.yaml'
     path.write_text(yaml.safe_dump(data, sort_keys=False))
-    return cbmc.Seed(root, {'safe': candidate})
+    return seed
 
 
 @pytest.fixture
@@ -38,8 +40,7 @@ def nested_case(nested_seed, tmp_path):
 
 
 def prove(seed, *, fake=False):
-    result = run_swdb('prove', '--records', seed.records, '--candidate', seed.candidates['safe'],
-        '--function', 'nested_read', '--contract', 'contract.fixture_dx_nested_read', '--adapter', 'wp',
+    result = run_swdb('prove', '--records', seed.records, '--summary', 'contract.fixture_dx_nested_read', '--adapter', 'wp',
         '--runs-dir', seed.runs, '--format', 'json', timeout=3600, env=wp.fake('unknown') if fake else None)
     assert result.returncode == 0, result.stderr + result.stdout
     return seed.read(json.loads(result.stdout))
