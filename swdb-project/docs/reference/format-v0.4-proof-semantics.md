@@ -72,6 +72,10 @@ interference proof.
 - For a unit with a device store, ordinary CPU reads must be in its acyclic prefix before every store-issue
   top-level statement. Reads in a callee, a loop-containing unit or the same statement as a store are refused.
   This admits the fixture's `old0` read before issue and rejects an ordinary read after issue, even after a wait.
+- A once-proven summary or C model cannot hide this boundary. Both adapters traverse the selected proof
+  records through summary and model dependencies. Any inherited accelerator semantics makes that opaque
+  call `not_proven / memory_domain` until its contract encodes a checked pending-command and ownership
+  boundary. Missing or unclassified dependency records also fail closed.
 - Device commands have a separate checked domain: after destination-stall coverage, a store requires no
   uncovered memory command, and a load requires no uncovered store. The bounded model checks live slots;
   WP checks the named `memory_domain` precondition using a conservative direct-stall predicate. Extra

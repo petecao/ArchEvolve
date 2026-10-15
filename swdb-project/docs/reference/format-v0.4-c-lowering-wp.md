@@ -109,6 +109,10 @@ The normalized pre-proof input is retained as `wp_normalized`; every generated
 initialization assertion remains a proof obligation. Input memory may require explicit
 `\initialized` preconditions: `\valid` establishes access bounds, not initialization.
 The adapter never invents those preconditions or assumes candidate locals initialized.
+For bounded jobs, the ACSL translator accepts an explicit `requires \initialized` only for a pointer
+parameter backed by the harness's completely filled input buffer. It emits the requested range check
+against that buffer's actual capacity. Heap/global locations, summaries, runtime checks and postconditions
+remain unsupported; this translation never asserts arbitrary storage initialized.
 An older method without the explicit initialization flag cannot run this WP policy;
 use a new method file rather than edit an existing pinned manifest.
 

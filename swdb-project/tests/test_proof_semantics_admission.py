@@ -61,6 +61,9 @@ def test_store_must_be_covered_before_return_in_wp(dx, wait):
     ("cpu_memory_overlap", "SWDB_CPU_OVERLAP_ATOMIC"),
     ("cpu_memory_overlap", "SWDB_CPU_OVERLAP_MACRO"),
     ("cpu_memory_overlap", "SWDB_CPU_OVERLAP_AFTER_COVER"),
+    ("local_storage", None),
+    ("local_storage", "SWDB_LOCAL_STORAGE_SCALAR"),
+    ("local_storage", "SWDB_LOCAL_STORAGE_PARAMETER"),
     ("store_source_wait", "SWDB_CPU_READ_AFTER_STORE"),
 ])
 def test_unmodeled_cpu_memory_effects_are_refused_before_a_verifier(dx, adapter, unit, define):
