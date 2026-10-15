@@ -95,7 +95,7 @@ def method_version(identity):
     data.update(id="method.wp-tracer-fixture", sequence=2,
                 description="Fixture method version with the real WP lineup of the Mac (ticket 21 tests).")
     data["lineup"] = yaml.safe_load((REPO / "library" / "methods" / "probata-draft-1.yaml").read_text())["lineup"]
-    next(row for row in data["lineup"] if row["tool"] == "frama-c-wp")["flags"] += ["-rte-initialized", "@all"]
+    next(row for row in data["lineup"] if row["tool"] == "frama-c-wp")["flags"] += ["-rte-initialized", "@all", "-wp-no-filter-init"]
     data["c_lowering"]["translators"] = [identity["c_lowering"]]
     return data
 

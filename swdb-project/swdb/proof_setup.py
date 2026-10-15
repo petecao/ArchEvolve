@@ -25,6 +25,7 @@ CHECK_SOURCES = ("proof_setup.py", "proof_report.ml", "proof.py", "cbmc_adapter.
                  "cbmc_product.py", "wp_adapter.py", "crux_adapter.py", "rocq_adapter.py", "rss_watchdog.py",
                  "vocab.py", "formal_frame.py", "acsl_subset.py", "framac.py", "hint_check.py", "hint_tree.ml",
                  "wp_pointer_bounds.py", "proof_semantics.py", "vector_ownership.py")
+REQUIRED_WP_SWITCHES = (("-wp-no-filter-init", "-wp-filter-init"),)
 _COMPILED_MODULES = {}
 _ASSUME = re.compile(r"\b(?:llvm_assume|crucible_assume|__VERIFIER_assume)\b|\b(?:__CPROVER_assume|SWDB_ASSUME|assume)\s*\(")
 
@@ -203,11 +204,23 @@ def _values(flags, name):
     return found
 
 
+def wp_switch_problem(flags):
+    """Canonical boolean switches: no pseudo-value argv and no later re-enabling override."""
+    for required, opposite in REQUIRED_WP_SWITCHES:
+        if flags.count(required) != 1 or any(
+                flag == opposite or flag.startswith((required + "=", opposite + "=")) for flag in flags):
+            return f"requires exactly {required} without {opposite} or boolean =value overrides"
+    return None
+
+
 def _wp_flags(flags, scratch):
     for name, expected in (("-wp-cache", "none"), ("-machdep", "x86_64"), ("-wp-model", "+real")):
         values = _values(flags, name)
         if not values or any(v != expected for v in values):
             _fail("frozen_flags", f"requires only {name} {expected}, got {values}")
+    switch_problem = wp_switch_problem(flags)
+    if switch_problem:
+        _fail("frozen_switches", switch_problem)
     if any(str(flag).startswith("-wp-prop") for flag in flags):
         _fail("property_selection", "WP may not suppress generated properties or global lemmas")
     if any("warn-key" in str(flag) for flag in flags):
