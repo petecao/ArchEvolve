@@ -3,12 +3,13 @@
 The source contract keeps assigns nothing. A private-region proof view must separately justify
 its source-frame projection; merely proving a broader frame is not acceptance.
 """
+import json
 import shutil
 
 import pytest
 import yaml
 
-from conftest import FIXTURES, REPO, make_records
+from conftest import FIXTURES, REPO, make_records, run_swdb
 from test_proof_records import _library_roots
 from test_wp_adapter import method_version, needs_wp
 from test_wp_subset import Seed, _entry
@@ -92,3 +93,23 @@ def test_untracked_vector_observations_and_protocols_refuse_before_verification(
     record = ownership_subset.prove("--summary", f"contract.fixture_vector_owner_{control}")
     assert record["verdict"] == "not_proven" and record["failure_class"] == "unsupported_construct", record
     assert not any(row["name"] == "wp_log" for row in record["evidence"]["reports"]), record
+
+
+@needs_wp
+def test_the_closed_owner_view_reports_typed_origins_for_all_source_and_generated_accesses(ownership_subset):
+    from test_wp_adapter import fake
+    result = run_swdb("prove", "--records", ownership_subset.records, "--summary",
+        "contract.fixture_vector_owner_safe", "--adapter", "wp", "--runs-dir", ownership_subset.runs,
+        "--format", "json", env=fake("unknown"))
+    assert result.returncode == 0, result.stderr + result.stdout
+    record = yaml.safe_load((ownership_subset.records / json.loads(result.stdout)["path"]).read_text())
+    assert record["failure_class"] == "unknown", record
+    origins = record["settings"]["vector_ownership"]["certificate"]["origins"]
+    assert origins["complete"] is True
+    assert {row["site"] for row in origins["allocations"]} == {"initial", "growth"}
+    assert all(row["element_type"] == "int" for row in origins["allocations"])
+    assert origins["aliases"][0]["allocation_site"] == "initial"
+    assert origins["aliases"][0]["invalidated_by"] == "growth"
+    assert origins["source_accesses"] and origins["view_accesses"]
+    assert all(row["bounds_guard"] for row in origins["view_accesses"])
+    assert all(row["liveness_guard"] for row in origins["view_accesses"] if row.get("alias"))

@@ -13,7 +13,7 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
-from swdb import std_models
+from swdb import model_domains, std_models
 
 MODEL_SHA256 = "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
 PREFIX = "swdb_owner_"
@@ -152,6 +152,9 @@ def _protocol(node):
         if kind == "UnaryOperator" and len(parts) == 1:
             op = expr.get("opcode")
             if op == "*" and _ref(parts[0], alias):
+                if any("alias_live_after" in check for check in checks):
+                    raise Refused("at most one post-growth alias read is supported")
+                checks.append("/*@ assert owner_alias_after_range: 0 < swdb_owner_bound0; */")
                 checks.append("/*@ assert alias_live_after: swdb_owner_alias_live == 1; */")
                 return "*swdb_owner_alias"
             if op in ("+", "-", "!", "~") and _type(expr) == "int":
@@ -169,7 +172,9 @@ def _protocol(node):
             if not (_ref(index, params[0]) or index.get("kind") == "IntegerLiteral"):
                 raise Refused("only the unchanged count or a literal index is supported")
             rendered = params[0]["name"] if _ref(index, params[0]) else str(_literal(index))
-            checks.append(f"/*@ assert owner_index: 0 <= {rendered} < swdb_owner_v.size; */")
+            ordinal = 1 + sum("owner_index_" in check for check in checks)
+            checks.append(f"/*@ assert owner_index_{ordinal}: 0 <= {rendered} < swdb_owner_v.size; */")
+            checks.append(f"/*@ assert owner_storage_index_{ordinal}: 0 <= {rendered} < swdb_owner_bound1; */")
             return f"swdb_owner_v.data[(size_t)({rendered})]"
         raise Refused(f"unmodeled return observation: {kind}")
 
@@ -177,6 +182,24 @@ def _protocol(node):
     return {"parameter": params[0]["name"], "fill": fill, "pushed": pushed, "old": old is not None,
             "return": returned, "checks": checks, "source_names": names,
             "source_statements": len(statements)}
+
+
+def certify_origins(node, *, source, source_sha256, models, anchors, text):
+    """Generator-owned exact source registry; unsupported protocols grant no origin."""
+    try:
+        if _sha(source) != source_sha256 or std_models.identity()["sha256"] != MODEL_SHA256:
+            raise Refused("the source or audited standard model changed")
+        if re.search(r"\boperator\s*(?:new|delete)\b|\bnamespace\s+std\b", source):
+            raise Refused("replacement allocation or standard definitions are unsupported")
+        for directive in re.findall(r"^\s*#.*$", source, re.M):
+            if not re.fullmatch(r"\s*#\s*include\s*<(?:vector|cstddef)>\s*", directive):
+                raise Refused("unmodeled preprocessing")
+        protocol = _protocol(node)
+        return model_domains.source_owner(node, protocol, source_sha256=source_sha256,
+            lowering_sha256=_sha(text), models=models, anchors=anchors, owner_check=identity(),
+            allocator=allocator_identity())
+    except (Refused, model_domains.Refused):
+        return {}
 
 
 def _formal(texts, parameter):
@@ -276,6 +299,17 @@ def wp_view(lowering, source, formal_texts, hints=()):
     if checked != lowering:
         raise Refused("the source inventory and original lowering/provenance differ")
     text = _render(lowering, protocol)
+    origins = certify_origins(node, source=source_text, source_sha256=lowering.source_sha256,
+        models=lowering.models, anchors=lowering.anchors, text=lowering.text)
+    if not origins:
+        raise Refused("closed source has no exact typed-owner origin certificate")
+    planned = (lowering.pointer_bounds or {}).get("owner")
+    if planned is not None and planned != origins:
+        raise Refused("closed source origin registry changed after lowering")
+    try:
+        view_origins = model_domains.closed_owner_view(text, protocol, origins)
+    except model_domains.Refused as exc:
+        raise Refused(str(exc)) from None
     model_bodies = dict(std_models.allocator("int"))
     for member in std_models.VECTOR_MEMBERS:
         model_bodies.update(std_models.vector_member("std_vector_int", "int", member))
@@ -288,12 +322,19 @@ def wp_view(lowering, source, formal_texts, hints=()):
                    "allocation_sites": [{"name": "SWDB_OWNER_PRIVATE0", "executions": 1},
                                         {"name": "SWDB_OWNER_PRIVATE1", "executions": 1}],
                    "alias_rule": "capture live; growth invalidates; every retained alias read asserts live",
+                   "origins": view_origins, "source_origins": origins,
                    "model_bodies": [{"id": name, "sha256": _sha(model_bodies[name])}
                                     for name in sorted(lowering.models)]}
     pins = {"vector_ownership_check": identity(), "vector_ownership_certificate":
             {"id": lowering.function + ".vector-private-frame", "sha256": _digest(certificate)},
             "vector_ownership_allocator": allocator_identity()}
     assumptions = (
+        {"kind": "trusted_tool", "reference": model_domains.identity(), "sentence":
+         "The exact audited closed vector constructor and growing append carry typed int allocation origins with "
+         "the entry-frozen extents and live prefixes in the origin certificate. This source allocator/model "
+         "relation is explicit; WP validity alone supplies no array-object provenance. Each source and view "
+         "access is tied to its recorded numerical and alias-liveness obligations; spare capacity grants no "
+         "source read permission."},
         {"kind": "trusted_tool", "reference": identity(), "sentence":
          "The checked relational vector lowering preserves scalar observations and the original assigns nothing "
          "frame because every source heap write targets fresh owned nonescaping storage; WP checks the separate "
@@ -309,6 +350,14 @@ def wp_view(lowering, source, formal_texts, hints=()):
 def check_view(lowering, source, view, formal_texts, hints=()):
     if wp_view(lowering, source, formal_texts, hints) != view:
         raise Refused("the vector ownership view, source, contract or certificate changed after planning")
+
+
+def check_origins(lowering, source, view, formal_texts, hints=()):
+    """Adapter prelaunch coupling: no source-registry-only waiver of pointer admission."""
+    check_view(lowering, source, view, formal_texts, hints)
+    if (lowering.pointer_bounds or {}).get("owner") != view.certificate["source_origins"]:
+        raise Refused("the checked source registry is absent or differs from the owner view")
+    return view.certificate["origins"]
 
 
 def _render(lowering, protocol):
@@ -333,6 +382,7 @@ def _render(lowering, protocol):
     begin()
     lines += [f"  /*@ assert owner_count: {n} >= 1; */", "  swdb_owner_vector swdb_owner_v = {0,0,0};",
               f"  size_t swdb_owner_bound0=(size_t){n}, swdb_owner_k0=0;", "  int *swdb_owner_fresh0;",
+              "  /*@ assert owner_initial_zero: 0 <= swdb_owner_bound0; */",
               f"  swdb_owner_fresh0=swdb_owner_allocate_initial(swdb_owner_bound0,&swdb_owner_v,&{n},"
               "&swdb_owner_fresh0,&swdb_owner_k0,&swdb_owner_bound0)+0;",
               f"  /*@ loop invariant 0 <= swdb_owner_k0 <= swdb_owner_bound0;\n"
@@ -342,7 +392,9 @@ def _render(lowering, protocol):
               f"      loop invariant \\forall integer j; 0 <= j < swdb_owner_k0 ==> swdb_owner_fresh0[j] == {fill};\n"
               "      loop assigns swdb_owner_k0, swdb_owner_fresh0[0..swdb_owner_bound0-1];\n"
               "      loop variant swdb_owner_bound0-swdb_owner_k0; */",
-              f"  for(swdb_owner_k0=0;swdb_owner_k0<swdb_owner_bound0;++swdb_owner_k0) swdb_owner_fresh0[swdb_owner_k0]={fill};",
+              f"  for(swdb_owner_k0=0;swdb_owner_k0<swdb_owner_bound0;++swdb_owner_k0) {{",
+              "    /*@ assert owner_initial_range: 0 <= swdb_owner_k0 < swdb_owner_bound0; */",
+              f"    swdb_owner_fresh0[swdb_owner_k0]={fill}; }}",
               "  swdb_owner_v.data=swdb_owner_fresh0; swdb_owner_v.size=swdb_owner_bound0; swdb_owner_v.capacity=swdb_owner_bound0;"]
     end(); begin()
     lines += ["  int *swdb_owner_alias=swdb_owner_v.data;", "  /*@ ghost int swdb_owner_alias_live=1; */"]
@@ -350,7 +402,8 @@ def _render(lowering, protocol):
     # A harmless initialized local exists even when source has no saved value: the second allocator separates it.
     if protocol["old"]:
         begin()
-        lines += ["  /*@ assert alias_live_before: swdb_owner_alias_live == 1; */",
+        lines += ["  /*@ assert owner_alias_before_range: 0 < swdb_owner_bound0; */",
+                  "  /*@ assert alias_live_before: swdb_owner_alias_live == 1; */",
                   "  int swdb_owner_old=*swdb_owner_alias;"]
         end()
     else:
@@ -358,6 +411,7 @@ def _render(lowering, protocol):
     begin()
     lines += ["  /*@ assert owner_growth_policy: swdb_owner_v.capacity < (SIZE_MAX/sizeof(int))/2; */",
               "  size_t swdb_owner_bound1=2*swdb_owner_v.capacity, swdb_owner_k1=0;", "  int *swdb_owner_fresh1;",
+              "  /*@ assert owner_growth_zero: 0 <= swdb_owner_bound1; */",
               f"  swdb_owner_fresh1=swdb_owner_allocate_growth(swdb_owner_bound1,&swdb_owner_v,&{n},&swdb_owner_alias,"
               "&swdb_owner_old,&swdb_owner_fresh1,&swdb_owner_k1,&swdb_owner_bound1,swdb_owner_v.data,swdb_owner_v.capacity)+0;",
               "  /*@ loop invariant 0 <= swdb_owner_k1 <= swdb_owner_v.size;\n"
@@ -368,9 +422,12 @@ def _render(lowering, protocol):
               f"      loop invariant \\forall integer j; 0 <= j < swdb_owner_k1 ==> swdb_owner_fresh1[j] == {fill};\n"
               "      loop assigns swdb_owner_k1, swdb_owner_fresh1[0..swdb_owner_bound1-1];\n"
               "      loop variant swdb_owner_v.size-swdb_owner_k1; */",
-              "  for(swdb_owner_k1=0;swdb_owner_k1<swdb_owner_v.size;++swdb_owner_k1) swdb_owner_fresh1[swdb_owner_k1]=swdb_owner_v.data[swdb_owner_k1];",
+              "  for(swdb_owner_k1=0;swdb_owner_k1<swdb_owner_v.size;++swdb_owner_k1) {",
+              "    /*@ assert owner_copy_range: 0 <= swdb_owner_k1 < swdb_owner_bound0 && swdb_owner_k1 < swdb_owner_bound1; */",
+              "    swdb_owner_fresh1[swdb_owner_k1]=swdb_owner_v.data[swdb_owner_k1]; }",
               "  /*@ ghost swdb_owner_alias_live=0; */",
               "  swdb_owner_v.data=swdb_owner_fresh1; swdb_owner_v.capacity=swdb_owner_bound1;",
+              "  /*@ assert owner_append_range: 0 <= swdb_owner_v.size < swdb_owner_bound1; */",
               f"  swdb_owner_v.data[swdb_owner_v.size]={pushed}; swdb_owner_v.size++;"]
     end(); begin()
     lines.extend("  " + check for check in protocol["checks"])
