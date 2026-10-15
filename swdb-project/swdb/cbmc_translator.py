@@ -1118,6 +1118,8 @@ def harness(interface, rows, *, sizes, cap, knobs=(), logic=None, call=None, che
             lines.append(f"  {_print('input ' + draw['name'], draw['ctype'], f'swdb_buf_{pointer}[{index[:-1]}]')};")
         else:
             lines.append(f"  {_print('input ' + draw['name'], draw['ctype'], draw['name'])};")
+    # A sanitizer may terminate inside the target without returning to main's final flush.
+    lines.append("  fflush(stdout);")
     lines.append("#endif")
     for name, bound in sorted(sizes.items()):
         lines.append(f"  SWDB_ASSUME({name} <= {int(bound)}); /* size bound */")
