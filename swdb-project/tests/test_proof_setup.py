@@ -129,7 +129,7 @@ def test_failed_smoke_goal_voids_locally_valid_proof(seed, kind):
 ])
 def test_wp_setup_refuses_overrides_before_any_verifier_runs(seed, flags, rule):
     marker = seed.root / "must-not-run"
-    frozen = ["-wp-cache", "none", "-wp-model", "+real", "-machdep", "x86_64"]
+    frozen = ["-wp-cache", "none", "-wp-model", "+real", "-machdep", "x86_64", "-wp-no-filter-init"]
     script = seed.script(setup={"tool": "wp", "flags": frozen + flags}, run=["/usr/bin/touch", str(marker)])
     failed = seed.prove(script, ok=False)
     assert rule in failed.stderr
@@ -201,7 +201,7 @@ def test_an_unclassified_property_cannot_hide_behind_an_unrelated_timeout(seed):
 
 def test_existing_wp_session_stops_before_invoking_verifier(seed):
     marker = seed.root / "must-not-run"
-    plan = {"tool": "wp", "flags": ["-wp-cache", "none", "-wp-model", "+real", "-machdep", "x86_64"],
+    plan = {"tool": "wp", "flags": ["-wp-cache", "none", "-wp-model", "+real", "-machdep", "x86_64", "-wp-no-filter-init"],
             "work_files": {".frama-c/session.json": "{\"verdict\":\"valid\"}"}}
     failed = seed.prove(seed.script(setup=plan, run=["/usr/bin/touch", str(marker)]), ok=False)
     assert "fresh_session" in failed.stderr
@@ -224,7 +224,7 @@ def test_job_plan_pin_cannot_be_replaced_with_different_run_settings(seed):
 
 
 def test_solver_portfolio_reordering_is_refused_even_with_the_same_solver_set(seed):
-    frozen = ["-wp-cache", "none", "-wp-model", "+real", "-machdep", "x86_64"]
+    frozen = ["-wp-cache", "none", "-wp-model", "+real", "-machdep", "x86_64", "-wp-no-filter-init"]
     failed = seed.prove(seed.script(setup={"tool": "wp", "flags": frozen + ["-wp-prover", "z3,alt-ergo,cvc5"]}), ok=False)
     assert "solver order differs" in failed.stderr
 
@@ -282,4 +282,18 @@ def test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_
         capture_output=True, text=True, timeout=60)
     assert result.returncode != 0, result.stdout
     assert "does not pin the installed" in result.stderr, result.stderr
+    assert not marker.exists() and not seed.proof_files()
+
+
+@pytest.mark.parametrize("flags", [
+    [], ["-wp-no-filter-init", "-wp-filter-init"],
+    ["-wp-no-filter-init=false"], ["-wp-no-filter-init", "-wp-filter-init=true"],
+    ["-wp-no-filter-init", "-wp-no-filter-init=false"],
+])
+def test_wp_initialization_facts_cannot_be_filtered_or_boolean_override_hidden(seed, flags):
+    marker = seed.root / "must-not-run"
+    frozen = ["-wp-cache", "none", "-wp-model", "+real", "-machdep", "x86_64"]
+    script = seed.script(setup={"tool": "wp", "flags": frozen + flags}, run=["/usr/bin/touch", str(marker)])
+    failed = seed.prove(script, ok=False)
+    assert "frozen_switches" in failed.stderr
     assert not marker.exists() and not seed.proof_files()
