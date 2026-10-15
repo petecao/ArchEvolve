@@ -4,46 +4,57 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 15:13 ET. **Implementation resumed at the user's request.**
-Integration branch: `codex/probata-resume-20261015`, based on clean synchronized
-`yanrujhou_main` at `d94d629b`. Existing historical evidence retains its exact pins.
+Updated: 2026-10-15 15:52 ET. **Implementation is active under the user's ongoing approval.**
+Integration: `codex/probata-resume-20261015`, based on synchronized
+`yanrujhou_main` at `d94d629b`. Only one remote integration ref is published.
+Production `swdb/` bytes still match the remote runtime freeze `71771f09`.
 
-**32 resolved / 28 ready-for-agent / 3 claimed**, derived from ticket frontmatter.
-Active owners: ticket07 `probata-resume-t07`; ticket24 `probata-resume-t24`;
-ticket27 `probata-resume-t27`. Each implementer uses an isolated local worktree.
-The coordinator owns merges, ticket graph updates, and both remote socket lanes.
-Ticket27 first diagnostic at `159d912e` passed112ordinary+31smoke;
-the suite was then deliberately stopped before continuing obsolete setup identity.
-Node1 now runs11safe-fixture current-policy profile at composed `71771f09`
-(generation602).
-Raw output: `/data/yanruj/EvolveSWDB_runs/probata-resume-t27-diagnostic-20261015-1512`.
-The diagnostic directory suffix is an identifier; actual time is in its environment record.
-Current node1 raw output: `/data/yanruj/EvolveSWDB_runs/probata-resume-t27-safe-71771f09`.
-Node0 runs ticket24 original templates safe/seeded at composed `71771f09`
-(generation569, started2026-10-15 15:08:36ET). Raw output:
-`/data/yanruj/EvolveSWDB_runs/probata-resume-t24-templates-71771f09`.
-Setup hardening is integrated. Ticket07 method20 fresh counted run started15:05:50ET
-at frozen `418a48d7`, raw `/private/tmp/probata-t07-20261015-run20`; its Mac slot
-is reserved. No new actual proof acceptance is claimed yet.
+**32 resolved / 28 ready-for-agent / 3 claimed**, from authoritative ticket files.
+The active frontier is **07, 24, 27**. Ticket 25 waits on 24; ticket 36 waits on 27.
+No downstream dependency is waived. Drafts1/2 remain immutable; draft3 and final
+production method freeze have not happened.
 
-1. Review/freeze method20 independently before a fresh counted ticket07 run.
-2. Finish ticket24 original construct acceptance, preserving all validity,
-   initializedness, RTE, source-origin and smoke obligations.
-3. Finish ticket27 current-policy positive/negative agreement and capacity matrix.
+| Ticket / owner | Verified checkpoint | Active work / next acceptance |
+|---|---|---|
+|07 / `ticket07`|Run20 aborted during baseline before provider work; two resource findings fixed and independently re-reviewed with165 controls|Run21 at `7408be92` completed baseline (254 ordinary,103 open;139 smoke pass), then the CLI refused design-tool approval before any design tool executed. Agent is preserving the aborted run and correcting scoped per-tool approval before a fresh review/freeze/run.|
+|24 / `ticket24`|Original Ring pair at `71771f09`: safe89 ordinary+1smoke Valid; seeded88 ordinary Valid+one ensures timeout+1smoke Valid;25 initialization goals each;zero residual helper calls|Node0 generation570 runs remaining8 original groups. New-array safe:42 ordinary+7smoke Valid,11 initialization goals,198.81s; seeded overrun passed283.45s. Separate out-of-range case is active; negative audit remains pending.|
+|27 / `ticket27`|Initial old-source diagnostic retained separately. Current `71771f09` safe profile has4 confirmed passes, including store/wait (90 ordinary+29 smoke Valid); stall-condition source replay is active|Node1 generation602 runs11 safe cases. Negative, capacity and bounded/native profiles remain. No whole-ticket acceptance yet.|
+|36 / no active claim|Mandatory RTE/complete-command checks and post-plan mutation controls integrated.122 focused compiler/scripted controls pass;13 actual-WP cases excluded|Still dependency-gated; no production method freeze or complete setup acceptance claim.|
 
-Ticket25 still waits on24; ticket36 still waits on27. No downstream dependency is
-waived. Drafts1/2 remain immutable; draft3 and final method freeze do not exist.
-Assumption: the prior user pause is lifted by this new implementation request.
-The old chat's heartbeat remains paused; this chat has its own30-minute heartbeat.
+The coordinator owns all merges, ticket graph updates and remote dispatch.
+Mac: one real verifier slot reserved for ticket07. Remote: one serial job per
+leased socket,8GiB process-tree guard, bounded timeout, raw output under `/data`.
+The old chat's heartbeat remains paused; this chat's30-minute heartbeat is active.
 
-Last live remote connection:2026-10-15 14:52ET. Both socket leases and the legacy
-lease reported released; load0.14/0.41/0.32; /data1 had21GiB and /data95GiB free.
-Remote checkout was on `yanrujhou_main` at `680298a3`. A full process/memory/GPU/
-wrapper check remains mandatory immediately before dispatch. Raw output goes to
-`/data/yanruj/EvolveSWDB_runs/` to preserve /data1 headroom.
+Raw evidence remains in place:
 
-Historical handoff and remaining acceptance:
-[HANDOFF.md](HANDOFF.md), [map.md](map.md), and individual ticket acceptance text.
+- Aborted Mac run21: `/private/tmp/probata-t07-20261015-run21` (driver28786).
+  Aborted run20: `/private/tmp/probata-t07-20261015-run20`.
+- Accepted Ring pair: `/data/yanruj/EvolveSWDB_runs/probata-resume-t24-templates-71771f09`.
+  Active remaining groups: `/data/yanruj/EvolveSWDB_runs/probata-resume-t24-remaining-71771f09`.
+- Current semantics safe profile: `/data/yanruj/EvolveSWDB_runs/probata-resume-t27-safe-71771f09`.
+  Old diagnostic: `/data/yanruj/EvolveSWDB_runs/probata-resume-t27-diagnostic-20261015-1512`.
+  Its first case passed; the next case was deliberately cancelled before obsolete-source scaling.
+
+Keep both remote source checkouts frozen at `71771f09` while their readers remain.
+Keep the aborted Mac run21 source available for its audit. Host preflight before the new checkout found21GiB free on `/data1`,95GiB
+on `/data`,115GiB available RAM. A separate1.6GiB corrected-DXC source checkout
+now exists at `/data1/yanruj/probata-t24-corrected-20261015`, clean detached
+`94d18974`; no job has launched there. Keep its new raw output on `/data`.
+Both lanes are held by this coordinator. Recheck live before any new dispatch. GPU NVML monitoring reports a
+driver/library mismatch; these evaluations use CPUs.
+
+A native audit found old DXC seed`+2` concretely satisfies its stand-in contract;
+its old WP timeout is a modular-summary precision control, not a semantic bug.
+Corrected seed`+4` has a C++/C native violation and needs fresh actual acceptance.
+OMP/float negative readers now also accept attributable loop-invariant failures.
+These test/reader changes never relabel immutable `71771f09` proof records.
+
+Next: finish and audit the original allocation safe/seeded/out-of-range records
+before treating that construct group as accepted. [Map](map.md), ticket acceptance text and compact
+JSON evidence remain authoritative. Exploration notes for the next gated tickets:
+`/private/tmp/probata-ticket25-resume-exploration.md` and
+`/private/tmp/probata-ticket28-resume-exploration.md` (research only).
 
 ## Historical integration snapshots
 
