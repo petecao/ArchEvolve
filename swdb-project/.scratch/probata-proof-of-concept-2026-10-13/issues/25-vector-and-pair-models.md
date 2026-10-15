@@ -340,3 +340,22 @@ separately1test5.74s. Both sessions use stand-in WP; actual safe/stale evidence 
 pinned67dfd7a8 and is not relabeled as a postmerge proof. No active job remains. No shared
 lowerer/adapter hook was added by this data slice; exact source binding stays delegated to
 model_domains and all existing source/view regeneration and helper pins remain in force.
+
+
+Whole vector workflow API staging — 2026-10-15 ET: next frontier is the existing exact
+swdb_fixture_vec_max input-copy/push loop, pair maximum, range-for, size/index scan and return.
+The new relation projects private storage to unchanged input values; allocation count is symbolic/
+unbounded, with no fixed pool or repeated private-address key. Exact full fixture source-token
+closure, target AST/signature/int templates and all12model-text pins reject source allocation
+hooks, handlers, custom allocators/elements, escapes and extra effects. The imported allocator
+frame (preexisting input unchanged) is explicit; successful return alone would not justify
+ignoring a handler with observable effects. Every transition lists its separate standalone C-body
+proof requirement and does not invent proof IDs. Array origin and input initialization are
+explicit in the new WP test's original contract; no view requires is injected. User source/native
+and ordinary lowered C remain retained. Helper source/view C AST inventory is implemented;
+public prelaunch remains RED until ticket36 forwards entry-window metadata and binds exact
+source copy-read/scalar append IDs. The first attempt used unsupported valid_read vocabulary and
+is excluded from the intended RED; corrected contract yields unsupported_construct. No actual
+WP acceptance, generic model-domain relaxation or ticket completion is claimed.
+Plan:/private/tmp/probata-vector-completion-plan.md.
+Evidence:[t25-vector-pipeline-api-20261015.json](../evidence/t25-vector-pipeline-api-20261015.json).
