@@ -1,7 +1,7 @@
 # 27 — Proof semantics for the BFS read-offload calls
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-15 ET (qualified transitive/stall acceptance; full matrix incomplete); 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 22
@@ -472,3 +472,41 @@ The exact native finite adjacency case and independent review are retained under
 `prototype/27-proof-semantics/checks/query-address-boundary-20261015/`; broader model
 agreement belongs to29. [Scoped evidence](../evidence/wp-footprint-query-20261015.json).
 Tickets27/36 remain claimed; full acceptance and method freeze remain open.
+
+### Original qualified stall accepted — 2026-10-15 14:02 ET
+
+Frozen source `9940b155` proves the original `stall_condition` fixture: **111 ordinary
+Valid + 35 smoke checks, no open goal**, setup and strict verdict reader passed.
+The formerly open store memory-domain goal is Valid (Z3, 0.313 s), and the later
+gather source-initialized obligation is Valid (Z3, 7.82 s). The single pytest case
+passed in 848.93 s; the outer 8 GiB watchdog saw no timeout/OOM. No broad matrix was
+run. All 22 record artifact references were freshly hashed and matched.
+
+The fixture now explicitly qualifies `q:n`, `p:n`, and `base:n` as typed entry
+windows, frozen to entry `n`. These are advertised conditional input-contract
+premises, never inferred from validity. Existing source, validity/initializedness
+requires, and original host-memory alias cases remain; no separation requirement
+or caller assertion cut was added. The ordinary CPU-after-store domain stays
+unsupported for ticket 28.
+
+The 909 replay first discharged initializedness but left memory-domain open.
+An ensures-only diagnostic then proved all eight writer-free facts independently
+while its forall clear predicate remained unknown. The checked NT8 expansion is
+now equivalent to that original forall over arbitrary ghost state/all integer
+arguments; NT40/TS1 uses the unchanged quantified fallback. Omitting index 7 leaves
+the equivalence unproved. The two new logical/initializedness consequences are
+conditional on the independently checked NT8/TS2 geometry. They are not a whole
+model UB/hazard theorem or ticket29 three-form agreement.
+
+Evidence: [`t27-stall-qualified-accepted-20261015.json`](../evidence/t27-stall-qualified-accepted-20261015.json),
+[`t27-stall-memory-quantifier-20261015.json`](../evidence/t27-stall-memory-quantifier-20261015.json),
+and the frozen narrow consequence inputs under `prototype/27-proof-semantics/checks/`.
+The separately qualified transitive case previously passed 72 ordinary + 21 smoke
+checks at its historical source; it is not silently upgraded to this checkpoint.
+
+**Ticket 27 remains claimed.** The full current-policy qualified safe/negative,
+value/register/range/footprint, and capacity acceptance matrix remains incomplete.
+The explicit WP-only qualification map preserves original bounded/no-domain controls;
+current safe-case success does not replace those remaining verifier expectations.
+Closeout stops additional evaluation; the next session must resume from this exact
+remaining matrix, preserving historical failed and accepted producer pins.

@@ -117,12 +117,25 @@ predicate dx_names{L}(integer w, integer t) = dx_counts(w, t) || (0 <= w < DX_K 
 // command covered; a load needs every pending store covered. Direct destination-stall coverage is
 // sufficient here; ignoring additional transitive coverage is conservative. Every WP memory command
 // has a destination writer; the bounded model checks all live slots, including destination-less stores.
-predicate dx_memory_clear_after_stall{L}(integer d1, integer d2, integer writing) =
-  \forall integer t; 0 <= t < DX_NT && 0 <= dx_tile_writer[t] < DX_K &&
+// 2026-10-15 ET: exact finite expansion at the checked eight-tile geometry. The
+// original quantified definition remains the fallback for every other geometry.
+predicate dx_memory_clear_at{L}(integer t, integer d1, integer d2, integer writing) =
+  0 <= t < DX_NT && 0 <= dx_tile_writer[t] < DX_K &&
     (dx_kind[dx_tile_writer[t]] == DX_STREAM_LOAD || dx_kind[dx_tile_writer[t]] == DX_GATHER ||
      dx_kind[dx_tile_writer[t]] == DX_STORE_VECTOR) &&
     !(d1 >= 0 && dx_names(dx_tile_writer[t], d1)) && !(d2 >= 0 && dx_names(dx_tile_writer[t], d2)) ==>
     writing == 0 && dx_kind[dx_tile_writer[t]] != DX_STORE_VECTOR;
+predicate dx_memory_clear_after_stall{L}(integer d1, integer d2, integer writing) =
+  DX_NT == 8 ?
+  (dx_memory_clear_at(0, d1, d2, writing) &&
+   dx_memory_clear_at(1, d1, d2, writing) &&
+   dx_memory_clear_at(2, d1, d2, writing) &&
+   dx_memory_clear_at(3, d1, d2, writing) &&
+   dx_memory_clear_at(4, d1, d2, writing) &&
+   dx_memory_clear_at(5, d1, d2, writing) &&
+   dx_memory_clear_at(6, d1, d2, writing) &&
+   dx_memory_clear_at(7, d1, d2, writing)) :
+  (\forall integer t; dx_memory_clear_at(t, d1, d2, writing));
 // Slot w reads tile u as an input (not a range loop: coverage never passes through one).
 predicate dx_feeds{L}(integer w, integer u) =
   0 <= w < DX_K && dx_kind[w] != DX_RANGE_LOOP && (dx_src1[w] == u || dx_src2[w] == u || dx_cond[w] == u);

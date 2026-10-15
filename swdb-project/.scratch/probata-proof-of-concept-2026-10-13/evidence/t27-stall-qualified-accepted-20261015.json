@@ -1,0 +1,311 @@
+{
+  "created": "2026-10-15 ET",
+  "status": "single original qualified stall proved; full ticket27 matrix remains incomplete",
+  "source": "9940b155573ce46106a88707b04551b272f719d0",
+  "record": {
+    "path": "/private/tmp/probata-dx-stall-finite/pytest/test_wp_proves_every_unit_cbmc0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t174756z.fbf624a5.yaml",
+    "sha256": "8125aadc56c98138c726d1d3bb6f0e12fad37bc3fba9e4f9fc87d4d59b9c42be"
+  },
+  "verdict": "proven",
+  "setup": "passed",
+  "verdict_reader": {
+    "check": {
+      "version": "1",
+      "sha256": "4f81078ccba7dcdfebe359db8e8af9104ec43785d2cad037968ca32096d45e89"
+    },
+    "verdict": "proven"
+  },
+  "ordinary_valid": 111,
+  "smoke_pass": 35,
+  "open": [],
+  "process_manifest": {
+    "path": "/private/tmp/probata-dx-stall-finite/manifest.json",
+    "sha256": "060cdc59f939eb763daf69c75d71510279f0b0bbd8f35e87d9db5891fa359785"
+  },
+  "process_result": "Result(exit_code=0, peak_rss_bytes=5349851136, out_of_memory=False, timed_out=False, wall_seconds=849.1751944579883, cpu_seconds=948.147739)",
+  "job": {
+    "adapter": "wp",
+    "host": "mac",
+    "worker_core": "unpinned",
+    "wall_seconds": 793.108351,
+    "cpu_seconds": 895.482815,
+    "batch_load": {
+      "start": 5.261,
+      "end": 6.615
+    },
+    "peak_rss_bytes": 980041728,
+    "batch": "batch.proof.dx100-fixtures.candidate-1.20261015t174756z.fbf624a5",
+    "position": 1
+  },
+  "proof_semantics": {
+    "id": "semantics.dx100_bfs_0_1",
+    "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+  },
+  "method": {
+    "id": "method.cbmc-fixture",
+    "sha256": "8978146fe39f1df31991fe2e2968fc5939d61d231afe89d2a0286680e5378a77"
+  },
+  "contract": {
+    "id": "contract.fixture_dx_stall_condition",
+    "sha256": "ba66416d34fed787cfcf4e6e87bb40fa31aba32ad786638183cbe3d27fafc5e4"
+  },
+  "input_windows": {
+    "check": {
+      "id": "swdb-array-domain-1",
+      "sha256": "4ce7f64892b3e63c8dba65ef3c4f532e47842a287c38e0f5cc5f69d27e7780bd"
+    },
+    "declarations_sha256": "7de411d75b7c39e3385406c9b196f76e5b276369ff8240fbf1f58da0b4f65910",
+    "windows": {
+      "base": {
+        "parameter": "base",
+        "element_type": "int",
+        "extent_tree": {
+          "kind": "parameter",
+          "name": "n"
+        },
+        "entry_acsl": "\\at((integer)n,Pre)",
+        "parameters": [
+          "n"
+        ]
+      },
+      "p": {
+        "parameter": "p",
+        "element_type": "int",
+        "extent_tree": {
+          "kind": "parameter",
+          "name": "n"
+        },
+        "entry_acsl": "\\at((integer)n,Pre)",
+        "parameters": [
+          "n"
+        ]
+      },
+      "q": {
+        "parameter": "q",
+        "element_type": "int",
+        "extent_tree": {
+          "kind": "parameter",
+          "name": "n"
+        },
+        "entry_acsl": "\\at((integer)n,Pre)",
+        "parameters": [
+          "n"
+        ]
+      }
+    }
+  },
+  "input_boundary": {
+    "role": "explicit typed-array-window input-contract premise; not inferred from validity",
+    "checked": "entry extent nonnegative/target byte capacity/null-empty; numerical operation bounds; ordinary RTE",
+    "smoke_scope": "projected ACSL preconditions; no complete typed-domain/formal realizability proof",
+    "caller_boundary": "imported domain-bearing summaries and unmodeled pointer calls are refused"
+  },
+  "flags": [
+    "-wp",
+    "-wp-rte",
+    "-wp-cache",
+    "none",
+    "-wp-model",
+    "+real",
+    "-wp-par",
+    "1",
+    "-machdep",
+    "x86_64",
+    "-rte-initialized",
+    "@all",
+    "-wp-no-filter-init",
+    "-wp-prover",
+    "z3,cvc5,alt-ergo",
+    "-machdep",
+    "x86_64",
+    "-wp-timeout",
+    "30",
+    "-wp-par",
+    "1",
+    "-wp-smoke-tests",
+    "-wp-fct=dxf_stall_condition"
+  ],
+  "solved_obligations": [
+    {
+      "goal": "typed_real_dxf_stall_condition_ensures_memory_domain_exit",
+      "property": "dxf_stall_condition_ensures_memory_domain_exit",
+      "function": "dxf_stall_condition",
+      "status": "valid",
+      "solver": "z3",
+      "seconds": 1.23,
+      "smoke": false,
+      "source": "wp_json"
+    },
+    {
+      "goal": "typed_real_dxf_stall_condition_call_maa_stream_load_requires_memory_domain",
+      "property": "maa_stream_load_requires_memory_domain_2",
+      "function": "dxf_stall_condition",
+      "status": "valid",
+      "solver": "alt-ergo",
+      "seconds": 1.71,
+      "smoke": false,
+      "source": "wp_json"
+    },
+    {
+      "goal": "typed_real_dxf_stall_condition_call_maa_stream_load_requires_source_initialized",
+      "property": "maa_stream_load_requires_source_initialized_2",
+      "function": "dxf_stall_condition",
+      "status": "valid",
+      "solver": "alt-ergo",
+      "seconds": 0.0389,
+      "smoke": false,
+      "source": "wp_json"
+    },
+    {
+      "goal": "typed_real_dxf_stall_condition_call_maa_stream_load_2_requires_memory_domain",
+      "property": "maa_stream_load_requires_memory_domain_3",
+      "function": "dxf_stall_condition",
+      "status": "valid",
+      "solver": "alt-ergo",
+      "seconds": 6.66,
+      "smoke": false,
+      "source": "wp_json"
+    },
+    {
+      "goal": "typed_real_dxf_stall_condition_call_maa_stream_load_2_requires_source_initialized",
+      "property": "maa_stream_load_requires_source_initialized_3",
+      "function": "dxf_stall_condition",
+      "status": "valid",
+      "solver": "alt-ergo",
+      "seconds": 0.195,
+      "smoke": false,
+      "source": "wp_json"
+    },
+    {
+      "goal": "typed_real_dxf_stall_condition_call_maa_indirect_store_vector_requires_memory_domain",
+      "property": "maa_indirect_store_vector_requires_memory_domain_2",
+      "function": "dxf_stall_condition",
+      "status": "valid",
+      "solver": "z3",
+      "seconds": 0.313,
+      "smoke": false,
+      "source": "wp_json"
+    },
+    {
+      "goal": "typed_real_dxf_stall_condition_call_maa_indirect_store_vector_requires_source_initialized",
+      "property": "maa_indirect_store_vector_requires_source_initialized_2",
+      "function": "dxf_stall_condition",
+      "status": "valid",
+      "solver": "alt-ergo",
+      "seconds": 4.8,
+      "smoke": false,
+      "source": "wp_json"
+    },
+    {
+      "goal": "typed_real_dxf_stall_condition_call_maa_indirect_load_requires_memory_domain",
+      "property": "maa_indirect_load_requires_memory_domain_2",
+      "function": "dxf_stall_condition",
+      "status": "valid",
+      "solver": "z3",
+      "seconds": 1.19,
+      "smoke": false,
+      "source": "wp_json"
+    },
+    {
+      "goal": "typed_real_dxf_stall_condition_call_maa_indirect_load_requires_source_initialized",
+      "property": "maa_indirect_load_requires_source_initialized_2",
+      "function": "dxf_stall_condition",
+      "status": "valid",
+      "solver": "z3",
+      "seconds": 7.82,
+      "smoke": false,
+      "source": "wp_json"
+    }
+  ],
+  "verified_artifacts": [
+    {
+      "path": "/private/tmp/probata-dx-stall-finite/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t174756z.fbf624a5/adapter.log",
+      "sha256": "ea578b64abaf3020df63df23f1b27c0c9bbfa4db28837ebcadff753e1bc1890c"
+    },
+    {
+      "path": "/private/tmp/probata-dx-stall-finite/pytest/dx-seed0/runs/dx100-fixtures/source/src/bfs.cc",
+      "sha256": "1548c3422a56f6a5ba1233436cc5e33a887f2e4ea0b16b4d05e36a0ebd33338c"
+    },
+    {
+      "path": "/private/tmp/probata-dx-stall-finite/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t174756z.fbf624a5/wp/helper-original/dxf_stall_condition.c",
+      "sha256": "a4171b75014eaf9df88ff7691c617c01bf5b5489c1301c1f66477c7f6ae33263"
+    },
+    {
+      "path": "/private/tmp/probata-dx-stall-finite/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t174756z.fbf624a5/wp/helper-original/dxf_stall_condition.anchors.json",
+      "sha256": "dd198ada1d3410b341b973b51ab9b71482d125ae8a7d5ab0587449f141c89f56"
+    },
+    {
+      "path": "/private/tmp/probata-dx-stall-finite/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t174756z.fbf624a5/wp/helper-source/helper-window-ehar14xs/source.cc",
+      "sha256": "9b0ee901fd6aa8759ec3b6a73f620c3fcc07da47e2d0b73a70a309762949cad9"
+    },
+    {
+      "path": "/private/tmp/probata-dx-stall-finite/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t174756z.fbf624a5/wp/helper_windows.json",
+      "sha256": "630f32aa9232c9b4c647c4bbd8449456d09ebc1549a7f19a7f829475a86b530f"
+    },
+    {
+      "path": "/private/tmp/probata-dx-stall-finite/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t174756z.fbf624a5/wp/helper-source/helper-window-ehar14xs/source.cc",
+      "sha256": "9b0ee901fd6aa8759ec3b6a73f620c3fcc07da47e2d0b73a70a309762949cad9"
+    },
+    {
+      "path": "/private/tmp/probata-dx-stall-finite/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t174756z.fbf624a5/wp/nested-original/dxf_stall_condition.c",
+      "sha256": "435ab8b94345f11c139d2dceacf7f045c5a90c19d30d4cdb722b548c79556f84"
+    },
+    {
+      "path": "/private/tmp/probata-dx-stall-finite/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t174756z.fbf624a5/wp/nested-original/dxf_stall_condition.anchors.json",
+      "sha256": "9bd6128d278491dd3914d4e493e355e000e8dfb9394736ea58b6e2f1686310e2"
+    },
+    {
+      "path": "/private/tmp/probata-dx-stall-finite/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t174756z.fbf624a5/wp/nested-source/nested-read-fcnecmjr/source.cc",
+      "sha256": "b6b7213b7782a8aa582786a2c77e5a561e4cf43bd07b75a64cad78adebaa1a65"
+    },
+    {
+      "path": "/private/tmp/probata-dx-stall-finite/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t174756z.fbf624a5/wp/nested_entry_reads.json",
+      "sha256": "9cb742fb63300a6808bdeac40f33865198f58cfccde403e6b31dcf89ba665044"
+    },
+    {
+      "path": "/private/tmp/probata-dx-stall-finite/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t174756z.fbf624a5/wp/dxf_stall_condition.c",
+      "sha256": "98732124057de514ce5e259f77a95eba9cd2ff70b72c1e9d5a3f928388f306cd"
+    },
+    {
+      "path": "/private/tmp/probata-dx-stall-finite/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t174756z.fbf624a5/wp/dxf_stall_condition.anchors.json",
+      "sha256": "7db6caf62a282a5afe3d4196e817d552befd1920c897e75f86a207f1e45f30cb"
+    },
+    {
+      "path": "/private/tmp/probata-dx-stall-finite/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t174756z.fbf624a5/wp/hints.yaml",
+      "sha256": "c39054515054db4a06b431e3fc6d8097c62fc272c71b5a3deb089569ff435bb6"
+    },
+    {
+      "path": "/private/tmp/probata-dx-stall-finite/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t174756z.fbf624a5/wp/hints_merged.c",
+      "sha256": "97799beb0a9a15cf29dcdd2f7c32b7cf47143a0e9e18a05726760ce9ec1d2ba7"
+    },
+    {
+      "path": "/private/tmp/probata-dx-stall-finite/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t174756z.fbf624a5/wp/hint_check.json",
+      "sha256": "139cc0cf5ef6138c5ecd02e2999a590ea715d33b2dc70cbea72fe2beceab6a70"
+    },
+    {
+      "path": "/private/tmp/probata-dx-stall-finite/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t174756z.fbf624a5/wp/wp_input.c",
+      "sha256": "97799beb0a9a15cf29dcdd2f7c32b7cf47143a0e9e18a05726760ce9ec1d2ba7"
+    },
+    {
+      "path": "/private/tmp/probata-dx-stall-finite/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t174756z.fbf624a5/wp/frama-c.log",
+      "sha256": "a9547fc6a2ec2f53a03404ea41cd1200d8d1928644a1d4de61f8f39c72d12b4f"
+    },
+    {
+      "path": "/private/tmp/probata-dx-stall-finite/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t174756z.fbf624a5/wp/wp-goals.json",
+      "sha256": "2f2ca7d79cd63535da1b9c74f1bfeea382aee33c3afeefb3eb0962907e271f60"
+    },
+    {
+      "path": "/private/tmp/probata-dx-stall-finite/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t174756z.fbf624a5/wp/wp-properties.csv",
+      "sha256": "0cf74693b5add1970be6993b4ce7fa739a471b6813f1feebc3109f06cac8c3f2"
+    },
+    {
+      "path": "/private/tmp/probata-dx-stall-finite/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t174756z.fbf624a5/wp/wp-inventory.json",
+      "sha256": "7842233971ed145611ae238e17598e91196fae6ebde57ed8e0fdc29fdcaeec5c"
+    },
+    {
+      "path": "/private/tmp/probata-dx-stall-finite/pytest/test_wp_proves_every_unit_cbmc0/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t174756z.fbf624a5/wp/wp-normalized.c",
+      "sha256": "6731d882f2e72e509459c802b792c540055635c60ac727b835666f03ca3ebef4"
+    }
+  ],
+  "boundary": "No stronger caller requires, separation premise, handwritten proof cut or C model change. Exact original source and contract validity/init conditions retained, with explicit q:n,p:n,base:n typed-window qualifications. New consequences only at NT8/TS2; finite memory-clear form proved equivalent to prior forall. Ordinary CPU memory after store remains ticket28/unsupported. This single acceptance does not resolve ticket27, prove whole-model UB/hazards, or establish ticket29 agreement."
+}
