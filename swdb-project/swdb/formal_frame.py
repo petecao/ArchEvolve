@@ -1,6 +1,7 @@
 """The formal-half frame of typed-library entries (`formal_frame: 1`), checked by `swdb validate`.
 
-Created: 2026-10-14 ET (Probata proof of concept ticket 20). Design: formal-verification map 16
+Created: 2026-10-14 ET (Probata proof of concept ticket 20). Updated: 2026-10-15 ET
+(staged explicit array-window domains; proof admission remains guarded). Design: formal-verification map 16
 items 2, 4 and 13; 17 item 5; 10 item 4; 15 item 5; 26 item 4; 12 item 1. Format:
 docs/reference/format-v0.4-formal-frame.md.
 
@@ -27,7 +28,7 @@ fields; ticket 36's proof setup check refuses them at proof time.
 
 import re
 
-from swdb import acsl_subset, framac, paths, vocab
+from swdb import acsl_subset, array_domains, framac, paths, vocab
 from swdb.problems import Problem
 
 FRAME_VERSION = 1
@@ -139,7 +140,7 @@ def _entry(library, entry_id, data, error, vocabs, logic, rules, pending):
             error('proof_unit.prototype', 'a hand-written prototype is replaced by the C lowering of the baseline proof '
                                           'unit (ticket 21): give proof_unit.source (path, sha256) and function')
             unit, with_acsl = None, []
-        elif (not isinstance(unit, dict) or set(unit) - {'source', 'function', 'types'}
+        elif (not isinstance(unit, dict) or set(unit) - {'source', 'function', 'types', 'array_domains'}
                 or not isinstance(unit.get('function'), str) or not re.fullmatch(r'[A-Za-z_]\w*', unit['function'])):
             error('proof_unit', 'formal halves need proof_unit: {source: {path, sha256}, function}, the baseline proof '
                                 'unit whose C lowering they are type-checked against (kept C++ names)')
@@ -152,6 +153,12 @@ def _entry(library, entry_id, data, error, vocabs, logic, rules, pending):
                     error(f'proof_unit.{key}', str(exc))
                     unit, with_acsl = None, []
                     break
+    if unit is not None and 'array_domains' in unit:
+        findings = array_domains.problems(unit['array_domains'])
+        for where, reason in findings:
+            error('proof_unit.' + where, reason)
+        if findings:
+            unit, with_acsl = None, []
     if unit is not None and (with_acsl or data.get('kind') == 'rewrite_contract'):
         pending.append((entry_id, error, unit, with_acsl, data.get('concurrency_frame')))
     kind = data.get('kind')
@@ -380,6 +387,9 @@ def _typecheck(library, logic, files, pending, report):
                                  for i, _ in clauses]
             continue
         _interface(unit_lowering, frame, error)
+        if 'array_domains' in unit:
+            for where, reason in array_domains.problems(unit['array_domains'], unit_lowering.parameters):
+                error('proof_unit.' + where, reason)
         if not clauses:
             continue
         if tool.missing:

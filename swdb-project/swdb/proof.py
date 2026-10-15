@@ -435,6 +435,10 @@ def _prove_model(args, store):
 
 def _adapter(args, script, library, contract, method):
     """The adapter of one job: a real adapter builds itself from the call (ticket 21), the scripted one from its script."""
+    entry = library.get(contract) if library is not None else None
+    if isinstance(entry, dict) and (entry.get('proof_unit') or {}).get('array_domains'):
+        raise UsageError('proof_unit.array_domains requires a checked source-origin certificate; '
+                         'declaration validation alone does not admit a proof job')
     kind = ADAPTERS[args.adapter]
     if hasattr(kind, "from_args"):
         try:

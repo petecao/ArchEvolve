@@ -415,3 +415,24 @@ public safe WP/bounded jobs both pass (**2 passed,311.74s**); bounded native
 agreement includes4,375 C++/C executions. Exact trusted-tool sets are asserted.
 Report:`/private/tmp/probata-t24-lowerer9-tool-pins.jsonl`. This focused replay
 precedes ticket36's later pointer policy and does not upgrade historical records.
+
+### Explicit array-domain declaration slice — 2026-10-15 ET
+
+The pointer audit showed that allocation validity does not establish same-array
+provenance. `proof_unit.array_domains` now accepts explicit typed array-window
+input declarations, bound to actual primitive pointer and scalar integer
+parameters. The extent grammar uses mathematical integer arithmetic and preserves
+C++ identifier meaning, including names reserved by the parser's host language.
+It adds no initializedness fact and is never inferred from concurrency rows.
+
+This is a staged contract format. The universal adapter factory refuses every
+nonempty declaration until an independent source-origin certificate also checks
+operations and imported-summary calls. A scripted verifier cannot bypass the
+refusal. No C++ safety acceptance is inferred from declaration validation.
+
+Final public domain controls: 19 passed in 8.38 s. The existing validate/build fixture
+also passes, and the new helper's named dependency pin is checked. Exact hashes
+and overlapping validation scopes:
+[`t24-array-domain-declarations-20261015.json`](../evidence/t24-array-domain-declarations-20261015.json).
+Next: implement origin/call admission, then update explicit fixture input contracts
+and replay their actual proofs. Ticket 24 remains claimed.
