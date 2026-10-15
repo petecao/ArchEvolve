@@ -334,3 +334,10 @@ Remaining: integrate ticket 36's exact call-site/placement and fresh-replay hook
 and capacity controls with the real WP adapter under the shared lock, review the combined source, then
 freeze the next method before coordinated remote acceptance. Existing native agreement remains separate
 from this pending proof-admission frontier.
+
+After merging reviewed entry/owner integration `7e15176f` into this branch, the same direct-stream control
+is RED at the next prelaunch boundary (64.68 s): `unsupported_construct`, `verifier_launched: false`, with
+an unstable entry binding caused by the not-yet-audited device pointer call. No WP log is produced. Report:
+`/private/tmp/probata-dx-domain-call-red.jsonl`. An additional pending control fixes the entry window at
+n==2, grows the call-state end register to three, and supplies a larger valid/initialized physical range;
+its checked stream footprint must still reject the third cell. Eight frontier controls now collect.
