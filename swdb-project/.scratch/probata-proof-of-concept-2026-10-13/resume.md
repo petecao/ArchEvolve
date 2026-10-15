@@ -15,20 +15,21 @@ currently eligible. Drafts 1/2 remain immutable; draft 3 is not created.
 
 | Ticket | Current evidence | Next action |
 |---|---|---|
-| 07 | Method19 ended unproven: 27 open of 237 goals, 52.04 counted minutes; no final proof, smoke replay or covering-wait negative. Offline source/tool/log audit found no mismatches | Distinct method20 offline implementation is isolated in another worktree; no provider launch. Preserve prototype RTE scope |
+| 07 | Method19 ended unproven: 27 open of 237 goals, 52.04 counted minutes; no final proof, smoke replay or covering-wait negative. Offline source/tool/log audit found no mismatches | Unlaunched method20 prototype is merged with its 158 controls and negative method19 audit. No provider launch/BFS proof or production method freeze; independent final union review pending |
 | 24 | Qualified copy and selected-receiver slices are accepted. The original Bag/Counter positive at `a70fc6fd` proves 146 ordinary + 11 smoke goals; after a test-only optional-key correction, the original seeded negative passes its expected-not-proven check with 146 ordinary Valid, one invariant timeout and 11 smoke Valid | Reviewed slice merged; 48 compiler/policy and stand-in composition controls pass, all 25 packaged artifact hashes match and runtime equals that tested composition. Full construct-group acceptance remains open |
 | 25 | Original bounded maximum at `d874c4dc`: 310 ordinary CBMC properties plus expected reachability failure; 625 native C/C++ comparisons agree. The first stale-data run refuted the memory fault, but buffered stdout lost its input metadata before sanitizer exit | The original stale-data retry at `bc457086` passes in 226.98 s, recovers n=1/a=[-1] and refutes the same heap-use-after-free; the final audit matches nine artifact references, 3,394 physical-file references and 203 source pins. Original stale iterator and unchecked at are refuted with matching source replay; guarded at proves all 119 ordinary properties at frozen 94769312. All artifact/source/certificate pins match. Broader member lifetime/origin criteria remain unmet; no new evaluation at closeout |
 | 27 | Qualified stall at `909eb6cd`: 110 ordinary Valid, one memory-domain timeout, 35 smoke Valid; the following gather initializedness gap is closed. Query at `8e377274`: safe 57 ordinary + 18 smoke proves; outside query remains not_proven with one ensures timeout and one failed smoke | Query and native same-object evidence are merged; 134 compiler union controls pass. The earlier two watchdog environment failures passed when individually rerun with process-inspection access; reviewed stall equivalence/geometry fix is frozen at 9940b155 for one full Mac rerun, still without final outcome |
 | 36 | Earlier 45 scripted setup controls pass; later member/header unions have focused controls and source-pin audits | Remain claimed pending 27 and final source/method freeze |
 
 Coordinator working evidence remains outside the repository until its reviewed
-handoff: `/private/tmp/probata-t07-run19-audit.md`,
-`/private/tmp/probata-method20-plan.md` and
-`/private/tmp/probata-dx-store-kernel-check-v4/manifest.json`. These are scoped
+handoff: `/private/tmp/probata-dx-store-kernel-check-v4/manifest.json`. These are scoped
 checkpoints, not integrated acceptance claims. The merged query package retains the negative's failed smoke and original pytest
 failure; corrected expectations passed offline without upgrading the proof record.
 
-Durable completed slices: [footprint query](evidence/wp-footprint-query-20261015.json),
+Durable completed slices: [method19 negative audit](evidence/t07-method19-negative-20261015.json),
+[unlaunched method20](evidence/t07-method20-prospective-20261015.json),
+[deferred vector domain](evidence/t25-vector-receiver-domain-deferred-20261015.json),
+[footprint query](evidence/wp-footprint-query-20261015.json),
 [original class lifetimes](evidence/t24-member-lifetimes-mac-20261015.json),
 [stale-data replay audit](evidence/t25-stale-data-replay-flush-20261015.json),
 [iterator/at controls](evidence/t25-next-controls-accepted-20261015.json),
@@ -65,7 +66,9 @@ Raw outputs remain at
 `/data/yanruj/EvolveSWDB_runs/probata-t25-next-controls-20261015-1347-node0` and
 `...-node1`; only compact metadata returned to the Mac. Coordinator, ticket25
 acceptance and independent audit readers retain these outputs. No further remote
-evaluation is scheduled during closeout. Root owns lane coordination and cleanup;
+evaluation is scheduled during closeout. Local/remote effort refs and attached
+checkouts have a [recovery-safe inventory](evidence/closeout-branch-inventory-20261015.json);
+its exact tips require refreshing after final integration, and it authorizes no deletion. Root owns lane coordination and cleanup;
 no remote path may be removed without checking current use and root authorization.
 
 ## Historical integration snapshots

@@ -1,0 +1,910 @@
+{
+  "created": "2026-10-15 13:58 ET",
+  "integration": "f1dffc46de0a137e00a9cbd2a51d9d7e285571ab",
+  "yanmain_before_closeout": "150930b4be39526e6eeefd881987dba1c6d6e4d3",
+  "scope": "Inventory only. Confirmed codex/probata* effort refs; unrelated LANL, main, Peter, worktree-agent and historical probata-poc refs are excluded from cleanup. No deletion authorized by this manifest itself.",
+  "local_branches": [
+    {
+      "branch": "codex/probata-aggregate-copy",
+      "expected_tip": "22bbecb63dae3b5b91d38b18a5781cfa68016af5",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [
+        {
+          "path": "/private/tmp/probata-aggregate-copy",
+          "status": ""
+        }
+      ],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-bounded-array-domains",
+      "expected_tip": "42bca5cfc23353f50893401f46e67a08355c6477",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [
+        {
+          "path": "/private/tmp/probata-bounded-array-domains",
+          "status": ""
+        }
+      ],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-bounded-init",
+      "expected_tip": "e28eb2e2d13cc7314de7c7ae1a05208ac9a511c4",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [
+        {
+          "path": "/private/tmp/probata-bounded-init",
+          "status": ""
+        }
+      ],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-c-header-context",
+      "expected_tip": "d918de78cf29ead7f99a06977b8c6dbb11999889",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-construct-init",
+      "expected_tip": "ee3d6a733f2277fd97a1a359d3ebc824fdc9be49",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-crux-admission",
+      "expected_tip": "a2f2e3f504c3a96a6a1381291a3b35cce833d648",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [
+        {
+          "path": "/private/tmp/probata-crux-admission",
+          "status": ""
+        }
+      ],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-declaration-attrs",
+      "expected_tip": "51ff3999d19545f28bca845df9bc907ae498a552",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [
+        {
+          "path": "/private/tmp/probata-declaration-attrs",
+          "status": ""
+        }
+      ],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-dx-acceptance",
+      "expected_tip": "268aaf1918d67f5e8f62152a2d9cc8c4bf69466f",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-dx-waits-values",
+      "expected_tip": "9940b155573ce46106a88707b04551b272f719d0",
+      "merged_into_integration": false,
+      "merged_into_yanmain": false,
+      "worktrees": [
+        {
+          "path": "/private/tmp/probata-owner-origins",
+          "status": ""
+        }
+      ],
+      "active_or_coordination_hold": true,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-footprint-query",
+      "expected_tip": "904a2babeeee46c9bbcddb2997c518473556826c",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-initialization",
+      "expected_tip": "d5266fd074f93dbc9f9fb03b5657bfbd15bc15cb",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [
+        {
+          "path": "/private/tmp/probata-initialization",
+          "status": ""
+        }
+      ],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-libclang-driver",
+      "expected_tip": "fe343c1d1ddcd11697e945781a42450a401d219b",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-lifetime-narrow",
+      "expected_tip": "eb43f7a2d19ec30dea38a8669d8176645ac61ce9",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [
+        {
+          "path": "/private/tmp/probata-lifetime-narrow",
+          "status": ""
+        }
+      ],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-method19",
+      "expected_tip": "669df70f1ff3c8a0602302349d5923d0505e0dc5",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [
+        {
+          "path": "/private/tmp/probata-t07-method19",
+          "status": ""
+        }
+      ],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-method20",
+      "expected_tip": "54ef390e6034d3df5ba66e9fab30cbbf28e5d821",
+      "merged_into_integration": false,
+      "merged_into_yanmain": false,
+      "worktrees": [
+        {
+          "path": "/private/tmp/probata-t07-method20",
+          "status": ""
+        }
+      ],
+      "active_or_coordination_hold": true,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-nested-assignment",
+      "expected_tip": "7ea52f4c6a4a0b780283d6f172f2124abbe01c3e",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-nested-reads",
+      "expected_tip": "55cddec5e59ef9fa021c9dba3cf4f339dc98c7a2",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [
+        {
+          "path": "/private/tmp/probata-nested-reads",
+          "status": ""
+        }
+      ],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-owner-data",
+      "expected_tip": "bfc5e4f6742576eef85b4383adf4839a8912b4e9",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-owner-members",
+      "expected_tip": "44d50f7e1e6e59cebaeff0e3b9e230d9c9d962f6",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-owner-origins",
+      "expected_tip": "32602e042e3d38de59ac7685967fb4330d628e30",
+      "merged_into_integration": false,
+      "merged_into_yanmain": false,
+      "worktrees": [],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-poc-integration",
+      "expected_tip": "f1dffc46de0a137e00a9cbd2a51d9d7e285571ab",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [
+        {
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve",
+          "status": "?? swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/closeout-branch-inventory-20261015.json"
+        }
+      ],
+      "active_or_coordination_hold": true,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-rocq-adapter",
+      "expected_tip": "d1a3ff9b892d630064ad2f137e1be9cd2cea4b85",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [
+        {
+          "path": "/private/tmp/probata-rocq-adapter",
+          "status": ""
+        }
+      ],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-run18-audit",
+      "expected_tip": "51cd61cbe6f2b1a7651961be694f53452212fa6c",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [
+        {
+          "path": "/private/tmp/probata-run18-audit",
+          "status": ""
+        }
+      ],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-setup-audit",
+      "expected_tip": "85161a4b9bc41df3933899a1e2a0bdd8088d7613",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-standard-at-view",
+      "expected_tip": "e44162182d02ee549b444acfca7cdb9644b780c7",
+      "merged_into_integration": false,
+      "merged_into_yanmain": false,
+      "worktrees": [
+        {
+          "path": "/private/tmp/probata-standard-at-view",
+          "status": "A  swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-standard-member-contracts-20261015.json\nM  swdb-project/.scratch/probata-proof-of-concept-2026-10-13/issues/25-vector-and-pair-models.md\nM  swdb-project/docs/reference/format-v0.4-std-models.md\nM  swdb-project/schemas/proof.schema.json\nM  swdb-project/swdb/proof_setup.py\nA  swdb-project/swdb/standard_model_view.py\nM  swdb-project/swdb/wp_adapter.py\nM  swdb-project/tests/test_proof_setup.py\nM  swdb-project/tests/test_standard_member_contracts.py"
+        }
+      ],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-standard-range-model",
+      "expected_tip": "d0982631aeb1da2450c5b8efda9a0fe84b05215e",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-stdlib-gate",
+      "expected_tip": "3a772f1102e24eddda8eb5fdad85b7747bbff5f9",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-stdlib-provenance",
+      "expected_tip": "a8bc9adff082c2370c5e3a637e0b7e06744ee009",
+      "merged_into_integration": false,
+      "merged_into_yanmain": false,
+      "worktrees": [],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-stdlib-public-controls",
+      "expected_tip": "5910b14fbe6f609baf9c375aa9c3c471acf34e59",
+      "merged_into_integration": false,
+      "merged_into_yanmain": false,
+      "worktrees": [
+        {
+          "path": "/private/tmp/probata-stdlib-public-controls",
+          "status": ""
+        }
+      ],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-t07-checkpoint15",
+      "expected_tip": "bc93b4efe73539b79c6e4fe0ef5d51c11fa53805",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [
+        {
+          "path": "/private/tmp/probata-t07-checkpoint15",
+          "status": ""
+        }
+      ],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-t07-guard",
+      "expected_tip": "09be3abf466f63dcf3d63c32b9a48222edbbeeb4",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [
+        {
+          "path": "/private/tmp/probata-t07-guard",
+          "status": ""
+        }
+      ],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-t07-method18",
+      "expected_tip": "996bd62c1dd361845a7d6041167ca762e6d0ee32",
+      "merged_into_integration": false,
+      "merged_into_yanmain": false,
+      "worktrees": [
+        {
+          "path": "/private/tmp/probata-t07-method18",
+          "status": ""
+        }
+      ],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-t07-run14",
+      "expected_tip": "05e81eacd7d2ae586e78ddcb3fd737e14e0226f1",
+      "merged_into_integration": false,
+      "merged_into_yanmain": false,
+      "worktrees": [
+        {
+          "path": "/private/tmp/probata-t07-run14",
+          "status": ""
+        }
+      ],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-t07-run15",
+      "expected_tip": "de78b7c6997a84d7ec5ab544e49d7495c02f8e94",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [
+        {
+          "path": "/private/tmp/probata-t07-run15",
+          "status": ""
+        }
+      ],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-t07-run16",
+      "expected_tip": "6acfbe4e7552d1763526e1da46dd2ef7d8041d28",
+      "merged_into_integration": false,
+      "merged_into_yanmain": false,
+      "worktrees": [
+        {
+          "path": "/private/tmp/probata-t07-run16",
+          "status": ""
+        }
+      ],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-t07-run17",
+      "expected_tip": "af9a61b6fe582507f55b7f37dd12331925c17b16",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [
+        {
+          "path": "/private/tmp/probata-t07-run17",
+          "status": ""
+        }
+      ],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-t24-acceptance",
+      "expected_tip": "fd0ee6e28cb0414331c8b1f01d58a0935ca1c124",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [
+        {
+          "path": "/private/tmp/probata-t24-acceptance",
+          "status": ""
+        }
+      ],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-t24-acceptance-current",
+      "expected_tip": "c5e0d9e04ffd4901321b1b4e59a83cc7ee800870",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-t24-frontier",
+      "expected_tip": "71e3d4fe82bd4e36d96cfc870e5443261ca5174c",
+      "merged_into_integration": false,
+      "merged_into_yanmain": false,
+      "worktrees": [
+        {
+          "path": "/private/tmp/probata-standard-range-model",
+          "status": "M swdb-project/tests/test_wp_condition_access.py"
+        }
+      ],
+      "active_or_coordination_hold": true,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-t24-member-effects",
+      "expected_tip": "0e4e6b74555d8e316424d48c7c44b83de6d5a41f",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-t25",
+      "expected_tip": "29e84fc986f3400d296a6f5360895a636d19b698",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [
+        {
+          "path": "/private/tmp/probata-t25",
+          "status": ""
+        }
+      ],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-t27",
+      "expected_tip": "537d6103406f5f01129e96284e4b4680ff2d97e9",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [
+        {
+          "path": "/private/tmp/probata-t27",
+          "status": ""
+        }
+      ],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-t27-dx-call-checkpoint",
+      "expected_tip": "2e49b2201f1eb6e034c61d5766743341e74b00bf",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-t36",
+      "expected_tip": "99631671ee9d31be441228ecdd1f4dfa47c48e58",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [
+        {
+          "path": "/private/tmp/probata-t36",
+          "status": ""
+        }
+      ],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-t41",
+      "expected_tip": "32614501751b926811847edd6e419c0ae1c67b66",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [
+        {
+          "path": "/private/tmp/probata-t41",
+          "status": ""
+        }
+      ],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-t42",
+      "expected_tip": "06664a5f3a68c5f85536b7b7fc2e6fe6827492ca",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [
+        {
+          "path": "/private/tmp/probata-t42",
+          "status": ""
+        }
+      ],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-vector-completion",
+      "expected_tip": "cb8dc040985f8d58fa4dff2184ef892b34f026b6",
+      "merged_into_integration": false,
+      "merged_into_yanmain": false,
+      "worktrees": [],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-vector-ownership",
+      "expected_tip": "e44162182d02ee549b444acfca7cdb9644b780c7",
+      "merged_into_integration": false,
+      "merged_into_yanmain": false,
+      "worktrees": [
+        {
+          "path": "/private/tmp/probata-vector-ownership",
+          "status": "M swdb-project/tests/test_standard_member_contracts.py"
+        }
+      ],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-vector-pipeline",
+      "expected_tip": "5c8decdfeda7788ef095bf7b681b5cc7a9b89780",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-vector-receiver-domain",
+      "expected_tip": "b91acc6efbabfa0749cf3d608b2fc90eb20178bf",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [
+        {
+          "path": "/private/tmp/probata-construct-init",
+          "status": ""
+        }
+      ],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-view-entry-hints",
+      "expected_tip": "3183da217f8410e12d5673f1584eca62c4e89229",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-wp-init-filter",
+      "expected_tip": "bb3068be434d61c6540a6004b44c593eb471006d",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [
+        {
+          "path": "/private/tmp/probata-wp-init-filter",
+          "status": ""
+        }
+      ],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    },
+    {
+      "branch": "codex/probata-wp-launch-metadata",
+      "expected_tip": "ecf53e1ee4406292fe1a94fa84bfda2553a681db",
+      "merged_into_integration": true,
+      "merged_into_yanmain": false,
+      "worktrees": [],
+      "active_or_coordination_hold": false,
+      "cleanup_rule": "Hold until owner confirms idle and tip ancestor of pushed yanrujhou_main; preserve snapshot/tag before any removal; expected-tip lease for remote deletion."
+    }
+  ],
+  "remote_refs": [
+    {
+      "ref": "refs/heads/codex/probata-bounded-init",
+      "expected_tip": "e28eb2e2d13cc7314de7c7ae1a05208ac9a511c4",
+      "known_local_commit": true,
+      "merged_into_integration": true,
+      "merged_into_yanmain": false
+    },
+    {
+      "ref": "refs/heads/codex/probata-construct-init",
+      "expected_tip": "ee3d6a733f2277fd97a1a359d3ebc824fdc9be49",
+      "known_local_commit": true,
+      "merged_into_integration": true,
+      "merged_into_yanmain": false
+    },
+    {
+      "ref": "refs/heads/codex/probata-crux-admission",
+      "expected_tip": "a2f2e3f504c3a96a6a1381291a3b35cce833d648",
+      "known_local_commit": true,
+      "merged_into_integration": true,
+      "merged_into_yanmain": false
+    },
+    {
+      "ref": "refs/heads/codex/probata-declaration-attrs",
+      "expected_tip": "51ff3999d19545f28bca845df9bc907ae498a552",
+      "known_local_commit": true,
+      "merged_into_integration": true,
+      "merged_into_yanmain": false
+    },
+    {
+      "ref": "refs/heads/codex/probata-dx-acceptance",
+      "expected_tip": "268aaf1918d67f5e8f62152a2d9cc8c4bf69466f",
+      "known_local_commit": true,
+      "merged_into_integration": true,
+      "merged_into_yanmain": false
+    },
+    {
+      "ref": "refs/heads/codex/probata-dx-waits-values",
+      "expected_tip": "11757d88ca05935bd16542294bb1a3397108f36a",
+      "known_local_commit": true,
+      "merged_into_integration": false,
+      "merged_into_yanmain": false
+    },
+    {
+      "ref": "refs/heads/codex/probata-footprint-query",
+      "expected_tip": "904a2babeeee46c9bbcddb2997c518473556826c",
+      "known_local_commit": true,
+      "merged_into_integration": true,
+      "merged_into_yanmain": false
+    },
+    {
+      "ref": "refs/heads/codex/probata-libclang-driver",
+      "expected_tip": "fe343c1d1ddcd11697e945781a42450a401d219b",
+      "known_local_commit": true,
+      "merged_into_integration": true,
+      "merged_into_yanmain": false
+    },
+    {
+      "ref": "refs/heads/codex/probata-method19",
+      "expected_tip": "669df70f1ff3c8a0602302349d5923d0505e0dc5",
+      "known_local_commit": true,
+      "merged_into_integration": true,
+      "merged_into_yanmain": false
+    },
+    {
+      "ref": "refs/heads/codex/probata-method20",
+      "expected_tip": "54ef390e6034d3df5ba66e9fab30cbbf28e5d821",
+      "known_local_commit": true,
+      "merged_into_integration": false,
+      "merged_into_yanmain": false
+    },
+    {
+      "ref": "refs/heads/codex/probata-nested-assignment",
+      "expected_tip": "7ea52f4c6a4a0b780283d6f172f2124abbe01c3e",
+      "known_local_commit": true,
+      "merged_into_integration": true,
+      "merged_into_yanmain": false
+    },
+    {
+      "ref": "refs/heads/codex/probata-nested-reads",
+      "expected_tip": "55cddec5e59ef9fa021c9dba3cf4f339dc98c7a2",
+      "known_local_commit": true,
+      "merged_into_integration": true,
+      "merged_into_yanmain": false
+    },
+    {
+      "ref": "refs/heads/codex/probata-poc-integration",
+      "expected_tip": "f1dffc46de0a137e00a9cbd2a51d9d7e285571ab",
+      "known_local_commit": true,
+      "merged_into_integration": true,
+      "merged_into_yanmain": false
+    },
+    {
+      "ref": "refs/heads/codex/probata-run18-audit",
+      "expected_tip": "51cd61cbe6f2b1a7651961be694f53452212fa6c",
+      "known_local_commit": true,
+      "merged_into_integration": true,
+      "merged_into_yanmain": false
+    },
+    {
+      "ref": "refs/heads/codex/probata-standard-range-model",
+      "expected_tip": "d0982631aeb1da2450c5b8efda9a0fe84b05215e",
+      "known_local_commit": true,
+      "merged_into_integration": true,
+      "merged_into_yanmain": false
+    },
+    {
+      "ref": "refs/heads/codex/probata-stdlib-gate",
+      "expected_tip": "3a772f1102e24eddda8eb5fdad85b7747bbff5f9",
+      "known_local_commit": true,
+      "merged_into_integration": true,
+      "merged_into_yanmain": false
+    },
+    {
+      "ref": "refs/heads/codex/probata-stdlib-public-controls",
+      "expected_tip": "5910b14fbe6f609baf9c375aa9c3c471acf34e59",
+      "known_local_commit": true,
+      "merged_into_integration": false,
+      "merged_into_yanmain": false
+    },
+    {
+      "ref": "refs/heads/codex/probata-t07-method18",
+      "expected_tip": "996bd62c1dd361845a7d6041167ca762e6d0ee32",
+      "known_local_commit": true,
+      "merged_into_integration": false,
+      "merged_into_yanmain": false
+    },
+    {
+      "ref": "refs/heads/codex/probata-t07-run14",
+      "expected_tip": "05e81eacd7d2ae586e78ddcb3fd737e14e0226f1",
+      "known_local_commit": true,
+      "merged_into_integration": false,
+      "merged_into_yanmain": false
+    },
+    {
+      "ref": "refs/heads/codex/probata-t07-run15",
+      "expected_tip": "de78b7c6997a84d7ec5ab544e49d7495c02f8e94",
+      "known_local_commit": true,
+      "merged_into_integration": true,
+      "merged_into_yanmain": false
+    },
+    {
+      "ref": "refs/heads/codex/probata-t07-run16",
+      "expected_tip": "6acfbe4e7552d1763526e1da46dd2ef7d8041d28",
+      "known_local_commit": true,
+      "merged_into_integration": false,
+      "merged_into_yanmain": false
+    },
+    {
+      "ref": "refs/heads/codex/probata-t24-acceptance",
+      "expected_tip": "fd0ee6e28cb0414331c8b1f01d58a0935ca1c124",
+      "known_local_commit": true,
+      "merged_into_integration": true,
+      "merged_into_yanmain": false
+    },
+    {
+      "ref": "refs/heads/codex/probata-t24-acceptance-current",
+      "expected_tip": "c5e0d9e04ffd4901321b1b4e59a83cc7ee800870",
+      "known_local_commit": true,
+      "merged_into_integration": true,
+      "merged_into_yanmain": false
+    },
+    {
+      "ref": "refs/heads/codex/probata-t24-member-effects",
+      "expected_tip": "0e4e6b74555d8e316424d48c7c44b83de6d5a41f",
+      "known_local_commit": true,
+      "merged_into_integration": true,
+      "merged_into_yanmain": false
+    },
+    {
+      "ref": "refs/heads/codex/probata-t27",
+      "expected_tip": "9827d9e7c6600728ffeb724f3350df6c05cea5bb",
+      "known_local_commit": true,
+      "merged_into_integration": true,
+      "merged_into_yanmain": false
+    },
+    {
+      "ref": "refs/heads/codex/probata-vector-pipeline",
+      "expected_tip": "5c8decdfeda7788ef095bf7b681b5cc7a9b89780",
+      "known_local_commit": true,
+      "merged_into_integration": true,
+      "merged_into_yanmain": false
+    },
+    {
+      "ref": "refs/heads/codex/probata-vector-receiver-domain",
+      "expected_tip": "b91acc6efbabfa0749cf3d608b2fc90eb20178bf",
+      "known_local_commit": true,
+      "merged_into_integration": true,
+      "merged_into_yanmain": false
+    },
+    {
+      "ref": "refs/heads/codex/probata-view-entry-hints",
+      "expected_tip": "3183da217f8410e12d5673f1584eca62c4e89229",
+      "known_local_commit": true,
+      "merged_into_integration": true,
+      "merged_into_yanmain": false
+    },
+    {
+      "ref": "refs/heads/codex/probata-wp-launch-metadata",
+      "expected_tip": "ecf53e1ee4406292fe1a94fa84bfda2553a681db",
+      "known_local_commit": true,
+      "merged_into_integration": true,
+      "merged_into_yanmain": false
+    }
+  ],
+  "excluded_attached_worktrees": [
+    {
+      "worktree": "/Users/yanrujhou/.codex/worktrees/lanl-analytic-eval/ArchEvolve",
+      "HEAD": "682f03796cb4f438a7be272f08138eaed1848624",
+      "branch": "refs/heads/codex/lanl-analytic-eval"
+    },
+    {
+      "worktree": "/Users/yanrujhou/.codex/worktrees/lanl-ticket17/ArchEvolve",
+      "HEAD": "9eee5ebe60dee46e803181c22be0e93dbcb43e02",
+      "branch": "refs/heads/codex/lanl17-storage-guard-cost"
+    },
+    {
+      "worktree": "/Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a012fcac5f347a306",
+      "HEAD": "c3de51f4bae375ea64d8b8548d420b0048f0b581",
+      "branch": "refs/heads/worktree-agent-a012fcac5f347a306"
+    },
+    {
+      "worktree": "/Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a54d4d429b904320e",
+      "HEAD": "d9ac390b6d9d77031c224c40df6d5c62595efbe3",
+      "branch": "refs/heads/probata-poc/t25"
+    }
+  ],
+  "cleanup_sequence": [
+    "Root finishes active packages and merges reviewed integration into yanrujhou_main; push and verify exact remote tip.",
+    "Re-read all expected tips/statuses; classify active-use and source/evidence readers.",
+    "For each approved idle fully merged effort branch, preserve recoverable snapshot/tag in Git before worktree removal. Dirty or unmerged work requires an explicit separate recovery disposition.",
+    "Delete remote refs only with explicit --force-with-lease=<ref>:<expected_tip>; leave unknown/unmerged/active-attached remote refs.",
+    "Remove only approved idle managed worktree paths and registrations, then delete the corresponding local fully merged branches. Root owns actual cleanup."
+  ],
+  "remote_attached_checkouts": {
+    "observed_et": "2026-10-15 13:58 ET",
+    "common_dir": "/data1/yanruj/ArchEvolve/.git",
+    "worktrees": [
+      {
+        "path": "/data1/yanruj/ArchEvolve",
+        "tip": "680298a3370b72ed2f8aed15cd29e67aa056229d",
+        "branch": "yanrujhou_main",
+        "disposition": "Preserve original remote checkout; unrelated branch state not altered."
+      },
+      {
+        "path": "/data1/yanruj/ArchEvolve-probata-baseline-20261015",
+        "tip": "150930b4be39526e6eeefd881987dba1c6d6e4d3",
+        "branch": null,
+        "disposition": "Hold; baseline evidence readers and root must authorize path cleanup."
+      },
+      {
+        "path": "/data1/yanruj/probata-t27",
+        "tip": "94769312e4511fd7c90b873e6ebf2c86a2cb5a9e",
+        "branch": null,
+        "disposition": "Hold; completed frozen evaluations still need raw-source evidence readers and root authorization."
+      }
+    ],
+    "probata_local_branches_on_remote": "None; other remote-local branches are LANL and excluded."
+  },
+  "inventory_note": "Branch/ref tips can change during active closeout. This is a checkpoint, not a deletion script. Recompute ancestry against the final pushed yanrujhou_main and re-read expected remote tips before cleanup."
+}
