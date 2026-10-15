@@ -54,3 +54,9 @@ def test_if_binding_is_not_read_by_a_guard_before_its_declaration(tmp_path,condi
     source=f'int unit(int *a,int n){{if({condition})return 1;return 0;}}'
     with pytest.raises((wp_pointer_bounds.Refused,c_lowering.Unsupported),match='if|IfStmt|declaration'):
         checked(tmp_path,source)
+
+
+def test_atomic_builtin_side_effect_is_not_treated_as_a_pure_condition(tmp_path):
+    source='int unit(int *a,int n,int i){if(a[i]>__atomic_fetch_add(&i,1,__ATOMIC_SEQ_CST))return 1;return 0;}'
+    with pytest.raises(wp_pointer_bounds.Refused,match='side effects/conditional'):
+        checked(tmp_path,source)

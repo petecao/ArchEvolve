@@ -603,7 +603,8 @@ def access_site(node, *, expression, statement, anchor, function, line):
         nodes = list(_walk(evaluated))
         for n in nodes:
             kind, op = n.get("kind"), n.get("opcode")
-            if (kind in {"CallExpr", "CXXMemberCallExpr", "CXXOperatorCallExpr", "ConditionalOperator", "BinaryConditionalOperator"}
+            if (kind in {"CallExpr", "CXXMemberCallExpr", "CXXOperatorCallExpr", "AtomicExpr",
+                         "ConditionalOperator", "BinaryConditionalOperator"}
                     or kind == "CompoundAssignOperator" and n is not statement
                     or kind == "UnaryOperator" and op in {"++", "--"}
                     or kind == "BinaryOperator" and (op in {",", "&&", "||"} or op == "=" and n is not statement)
