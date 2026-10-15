@@ -352,3 +352,21 @@ Only checked pre-release initialization invariants are admitted.
 
 The full current-policy construct suite is still required before closing ticket24. Ticket25's
 growing vector lifetime acceptance remains open; this restricted transformation does not apply to it.
+
+### Initialized class fixture — 2026-10-15 ET
+
+The original class contract/hints leave five named initialization obligations unproven under
+mandatory `-rte-initialized @all`. Logical bounds on input values do not establish initialized
+storage. The fixture now explicitly requires initialized input elements, and its loops prove
+preservation of the counter field and scaled array's initialization. The public WP replay is
+`proven`: all 153 recorded goals are valid, including 11 smoke checks; 98.31 s wall, 405.8 MiB peak.
+The seeded multiplication bug remains `not_proven`, with the functional loop invariant's
+preservation unproven. No initialization goal is dropped or assumed.
+
+The common input helper also supplies the explicit initialized-buffer premise to the other
+reading fixtures; the atomic fixture states initialized pointees. Their broader acceptance is
+pending. An input-only intermediate diagnostic was stopped after reproducing the missing loop
+invariant; it is not counted as a completed test. Exact record hashes and source boundary:
+[`t24-class-initialization-20261015.json`](../evidence/t24-class-initialization-20261015.json).
+Original records/logs remain under `/private/tmp/probata-construct-initialization-20261015/`.
+These are focused proofs on the recorded source, not final combined-source construct acceptance.

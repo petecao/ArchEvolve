@@ -294,3 +294,14 @@ device reads can otherwise retain addresses after those objects cease to exist. 
 ownership boundary models that lifetime, DX100 units with such storage are refused conservatively.
 Passing a caller-owned buffer pointer by value does not give the callee ownership of its pointee;
 taking the address of the pointer parameter itself exposes its callee-owned slot and is refused.
+
+
+Checked memberwise copies (2026-10-15): lowerer7 emits a named `\valid_read` and `\initialized`
+assertion on the exact source lvalue before ordinary implicit local/member copy construction. The
+source must be a simple side-effect-free lvalue; self-initialization and copies in for initializers
+are refused. Ordinary implicit/defaulted assignment is refused until its expression ordering has a
+checked lowering. By-value copy expressions and returned copied objects remain outside the subset.
+Modeled `std::pair` retains its separate initialized-source model contract. These are conservative
+proof-subset restrictions: [CWG2264](https://www.open-std.org/jtc1/sc22/wg21/docs/cwg_active.html#2264)
+still discusses the C++ treatment of copying indeterminate members; C struct assignment alone cannot
+justify erasing that question. The generated assertion is a proof obligation, never an assumption.

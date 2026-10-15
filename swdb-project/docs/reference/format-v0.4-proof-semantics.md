@@ -95,7 +95,9 @@ ordinals, never unrelated C/C++ pointers. CBMC retains allocation-object and off
 undefined cross-object pointer subtraction; C and C++ query controls also run address, invalid-pointer-pair
 and undefined-behavior sanitizers. The intermediate spelling with direct `uintptr_t` subtraction was
 defined arithmetic but triggered the sanitizer's pointer-subtraction heuristic; the ordinal spelling
-retains exact remainder and range checks without disabling a sanitizer.
+retains exact remainder and range checks without disabling a sanitizer. Stream offsets retain their
+signed 32-bit register meaning, including negative offsets from an interior base. Indirect indices remain
+unsigned 32-bit. Ordered unsigned magnitudes are checked before signed conversion or negation.
 
 ## Bounded jobs (`swdb prove --adapter cbmc`)
 
