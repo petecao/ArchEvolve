@@ -47,7 +47,47 @@
       "path": "/private/tmp/probata-stdlib-final-prelaunch.log.summary.json",
       "sha256": "f9fb7ce0adfbabb3298dec011d6a0c6d99a8efbcc5bc9280dc3edb6f40d7274c",
       "bytes": 690
+    },
+    {
+      "path": "/private/tmp/probata-stdlib-union.jsonl",
+      "sha256": "9188b89d173a5f357d8dc407ea239888b543926e3aa5db719fc8ae142ca1813e",
+      "bytes": 64164
+    },
+    {
+      "path": "/private/tmp/probata-stdlib-union-standin.jsonl",
+      "sha256": "d1b502c451cc691b73a18b9ec3f5c5f766452bd46cba3dabb12d859f2540dea8",
+      "bytes": 2304
+    },
+    {
+      "path": "/private/tmp/probata-stdlib-union-docs.jsonl",
+      "sha256": "99fc8656c49faaeab40ed5cabaf7aec73de92facc4663408090ab02eebc9be7e",
+      "bytes": 6775
     }
   ],
-  "actual_evidence": "stdlib-source-provenance-actual-20261015.json"
+  "actual_evidence": "stdlib-source-provenance-actual-20261015.json",
+  "union_validation": {
+    "source_commit": "b58d6cd2",
+    "distinct_cases_passed": 27,
+    "runs": [
+      {
+        "path": "/private/tmp/probata-stdlib-union.jsonl",
+        "passed": 22,
+        "failed": 1,
+        "seconds": 21.39,
+        "failure": "Known sandbox RSS sysctl EPERM in stand-in execution; no proof admitted."
+      },
+      {
+        "path": "/private/tmp/probata-stdlib-union-standin.jsonl",
+        "passed": 1,
+        "failed": 0,
+        "scope": "Only sandbox-blocked stand-in case rerun under shared 8 GiB guard; wrapper wall3.12s."
+      },
+      {
+        "path": "/private/tmp/probata-stdlib-union-docs.jsonl",
+        "passed": 4,
+        "failed": 0,
+        "seconds": 0.21
+      }
+    ]
+  }
 }
