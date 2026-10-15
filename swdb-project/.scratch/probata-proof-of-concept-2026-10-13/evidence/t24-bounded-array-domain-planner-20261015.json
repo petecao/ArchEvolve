@@ -1,0 +1,45 @@
+{
+  "created": "2026-10-15 ET",
+  "scope": "ticket 24 bounded array-domain capacity planner; checkpoint only",
+  "base": "bb9beb9203cd1ce7e23554f38256c54e6ac15c49",
+  "canonical_api_dependency": "3b5ca0dd",
+  "decision": "Planner only. Explicit-domain proof/native execution and imported summary assumptions remain refused.",
+  "behavior": [
+    "Arbitrary-precision conservative extent intervals over typed LP64 scalar domains, requested upper size bounds, and existing unconditional scalar/decimal requires comparisons.",
+    "No added capacity or nonnegative assumption; malformed, negative, oversized and empty-domain plans refused.",
+    "Entry-frozen extent tree/ACSL stays distinct from physical buffer capacity. Zero extent has a nonnull one-element backing array and zero element draws.",
+    "Physical validity and initialization translation unchanged. No source-operation, lifetime, call-admission or minimal-window coverage certificate.",
+    "CBMC/Crux adapters pass actual declarations to planner and refuse before execution. Domain-bearing imported summaries are refused by stub translation.",
+    "Public proof factory remains closed; native runtime-check refuses before source compilation. No real verifier or remote job launched."
+  ],
+  "red_green_controls": [
+    "Signed negative draw was first TypeError, then correctly refused. Existing n>=0 initially refused, then admitted to planner without changing generated C.",
+    "Malformed falsy declarations initially skipped validation, then refused.",
+    "C octal literal 010 and unary -9223372036854775808 initially incorrectly justified narrower intervals; both now ignored for narrowing and corresponding plans refused.",
+    "Native runtime-check initially attempted to read source, then refused before reading/compilation.",
+    "Domain-bearing summary stub initially unsupported keyword, then explicitly refused before emitting assumptions."
+  ],
+  "limitations": [
+    "Not a proof-admission implementation. Remaining operation/call origin work is still required.",
+    "Interval arithmetic loses correlations, e.g. n-n may be conservatively refused.",
+    "Only safe signed-long-long scalar comparisons narrow; uint64 without prior safe requested bound and noncanonical C integer literals cannot justify narrowing.",
+    "Public factory refusal matrix does not by itself exercise direct adapter run guards; stub/harness/runtime-check use public callable seams."
+  ],
+  "validation": {
+    "command": "python -m pytest -q tests/test_bounded_array_domains.py tests/test_bounded_array_domains_cli.py tests/test_array_domains.py tests/test_array_domain_math.py tests/test_check_mode.py",
+    "passed": 65,
+    "elapsed_seconds": 57.06,
+    "exit_code": 0,
+    "real_verifier_jobs": 0,
+    "diff_check": "passed"
+  },
+  "sha256": {
+    "swdb/array_domains.py": "4ce7f64892b3e63c8dba65ef3c4f532e47842a287c38e0f5cc5f69d27e7780bd",
+    "swdb/cbmc_translator.py": "279d6cd9fb6a8fd4da0f68bc61bed9aa877b2ee4b0a023524f98ec1b2c10c51c",
+    "swdb/cbmc_adapter.py": "d20dcea2dc5edc31730857e8d5dc17cf886f0f8956dfd15826cac0db945a4ff2",
+    "swdb/crux_adapter.py": "e401e10733d2e793faf57a218b4bc258e426bbd36698366d2d00f0904abd95ed",
+    "swdb/check_mode.py": "a96e9fda6043ea111b1336ee60a4a5588eb740c80f2b6e6bd599b8a3c52d4010",
+    "tests/test_bounded_array_domains.py": "0d5d7449fae547e5b7d84d9909447278d316bbbec8e523a139fd4cb2d3432927",
+    "tests/test_bounded_array_domains_cli.py": "27f1936186061fd3a2d5f2897d4b521176f9165000d13e01928d859efb69870d"
+  }
+}
