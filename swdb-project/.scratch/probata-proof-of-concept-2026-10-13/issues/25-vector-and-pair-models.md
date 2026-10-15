@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-15 ET (original vector/pair maximum workflow WP view accepted; member/bounded frontier remains open); 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** claimed
+**Status:** ready-for-agent
 **Blocked by:** 22, 24
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Formal-half language and the C++ subset": the C++ subset and the standard-library model; "Modules", library content: the `std::vector` and `std::pair` models; "What a proven verdict asserts": the assumption set; "Records and levels": the method-version file lists the `std::vector` model; "Testing Decisions", seam 1; choice S1); decisions: [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md) items 6, 7; also [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md) item 11 (undefined behavior is a proof obligation)
 **Time estimate:** about 1 week
@@ -634,3 +634,17 @@ C++ equivalence, allocating member-body proofs or complete ticket acceptance.
 Ticket 25 remains claimed; further evaluation is deferred for this closeout.
 [Final compact audit](../evidence/t25-next-controls-accepted-20261015.json),
 [prospective launch](../evidence/t25-next-controls-launch-20261015.json).
+
+
+### User-paused checkpoint — 2026-10-15 ET
+
+Implementation, evaluation and provider work are paused by user direction. The
+claim is released for a later session; acceptance is not complete. Closeout
+review, documentation, merge and cleanup continue separately.
+
+Bounded maximum, stale-data/iterator replay and unchecked/guarded at controls
+are retained with their exact-source pins. General allocating member-body proofs,
+receiver-domain admission and complete WP/bounded agreement remain incomplete;
+the receiver-domain design is prospective. Ticket 24 still blocks this ticket.
+See [accepted controls](../evidence/t25-next-controls-accepted-20261015.json) and
+[deferred design](../evidence/t25-vector-receiver-domain-deferred-20261015.json).

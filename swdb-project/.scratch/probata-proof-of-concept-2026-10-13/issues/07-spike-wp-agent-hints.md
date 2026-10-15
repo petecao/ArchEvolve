@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-15 ET (method19 ended unproven; method20 preserved as unlaunched prospective work); 2026-10-14 22:50 ET (continuation 3: runs 10-12 fail, verdict fail so far, effort paused); 2026-10-14 17:10 ET (continuation 2: runs 7-9 fail, verdict fail so far); 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** claimed
+**Status:** ready-for-agent
 **Blocked by:** 03
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Proof-of-concept plan", A1 row (c); "Proof-hint loop"; "Verifier lineup and order", unbounded verifier; "Providers and machines"); decisions: [07](../../formal-verification-2026-10-09/issues/07-install-verifiers.md), [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md), [12](../../formal-verification-2026-10-09/issues/12-dx100-proof-semantics.md), [13](../../formal-verification-2026-10-09/issues/13-proof-hint-loop.md), [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md), [19](../../formal-verification-2026-10-09/issues/19-bounded-verdict-bounds.md), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md), [27](../../formal-verification-2026-10-09/issues/27-proof-of-concept-stages.md)
 **Time estimate:** about 3 days, inside the 2-week box
@@ -1127,3 +1127,17 @@ remain pending; no provider/count launch is authorized by this checkpoint.
 See [`METHOD20.md`](../prototype/07-wp-hints/METHOD20.md) and
 [`t07-method20-prospective-20261015.json`](../evidence/t07-method20-prospective-20261015.json).
 The failed run19 evidence remains the latest counted result.
+
+
+### User-paused checkpoint — 2026-10-15 ET
+
+Implementation, evaluation and provider work are paused by user direction. The
+claim is released for a later session; acceptance is not complete. Closeout
+review, documentation, merge and cleanup continue separately.
+
+Latest counted method19 ended unproven (27/237 open; 52.04 counted minutes).
+Method20 is an unlaunched prototype with 158 controls, not a qualifying BFS proof.
+Remaining: a fresh reviewed counted run meeting every goal, final smoke and
+covering-wait negative criteria, with the required source/method freeze.
+See [method19 audit](../evidence/t07-method19-negative-20261015.json) and
+[prospective method20](../evidence/t07-method20-prospective-20261015.json).

@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-15 ET (original Bag/Counter scalar-lifetime checkpoint; whole construct acceptance remains open)
 **Type:** slice
-**Status:** claimed
+**Status:** ready-for-agent
 **Blocked by:** 21
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Formal-half language and the C++ subset": the subset by construct and kept names; "Verifier lineup and order": failure classes; "Records and levels": method-version file contents; "Testing Decisions", seam 1; choice S1); decisions: [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md) items 3, 9; [13](../../formal-verification-2026-10-09/issues/13-proof-hint-loop.md) item 2; [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md) items 3, 6
 **Time estimate:** about 4 days
@@ -716,3 +716,18 @@ review is GREEN. All source pins and retained public report hashes were checked;
 no actual solver or remote job was launched. The fake records remain not_proven/
 unknown and do not establish original OMP/floats proof acceptance.
 [Condition closeout evidence](../evidence/t24-condition-closeout-20261015.json).
+
+
+### User-paused checkpoint — 2026-10-15 ET
+
+Implementation, evaluation and provider work are paused by user direction. The
+claim is released for a later session; acceptance is not complete. Closeout
+review, documentation, merge and cleanup continue separately.
+
+Qualified copy and original Bag/Counter slices retain their exact-source proof
+and negative evidence. Pure condition placement has 72 focused passing controls;
+this is compiler/stand-in coverage, not an actual OMP proof. Remaining: the full
+current-policy construct/dependency matrix, including embedded template-array
+origins, conditional standard-call placement and broader allocation/lifetime
+coverage. See [class evidence](../evidence/t24-member-lifetimes-mac-20261015.json)
+and [condition closeout](../evidence/t24-condition-closeout-20261015.json).

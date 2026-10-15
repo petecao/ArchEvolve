@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-15 ET (qualified transitive/stall acceptance; full matrix incomplete); 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** claimed
+**Status:** ready-for-agent
 **Blocked by:** 22
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("DX100 proof semantics", "Formal-half language and the C++ subset", "Modules" (library content), "Testing Decisions", S1, S2, S3); decisions: [12](../../formal-verification-2026-10-09/issues/12-dx100-proof-semantics.md), [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md), [14](../../formal-verification-2026-10-09/issues/14-dx100-wait-rule.md)
 **Time estimate:** about 1 week
@@ -510,3 +510,17 @@ The explicit WP-only qualification map preserves original bounded/no-domain cont
 current safe-case success does not replace those remaining verifier expectations.
 Closeout stops additional evaluation; the next session must resume from this exact
 remaining matrix, preserving historical failed and accepted producer pins.
+
+
+### User-paused checkpoint — 2026-10-15 ET
+
+Implementation, evaluation and provider work are paused by user direction. The
+claim is released for a later session; acceptance is not complete. Closeout
+review, documentation, merge and cleanup continue separately.
+
+The original qualified stall at 9940b155 proves 111 ordinary + 35 smoke checks;
+query safe/outside and transitive evidence retain their distinct source pins.
+The full qualified safe/negative, values/register/range/footprint and capacity
+matrix, plus required verifier agreement, remains incomplete. No current partial
+result closes the ticket. See [accepted stall](../evidence/t27-stall-qualified-accepted-20261015.json)
+and [query evidence](../evidence/wp-footprint-query-20261015.json).

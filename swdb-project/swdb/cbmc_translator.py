@@ -1076,8 +1076,9 @@ def harness(interface, rows, *, sizes, cap, knobs=(), logic=None, call=None, che
     Check mode's driver (`check=True`) calls `call` (the runtime form) and states no property itself. Ticket 27: `setup` are C
     statements run first (a proof semantics' ghost initialization) and `state` the int lvalues of device state drawn
     next (havoc). `finish` are checked boundary statements after the call, before observing its poststate.
-    `array_domains` (2026-10-15 ET) only plans entry extents against capacity. The returned metadata is not a
-    source-origin or operation certificate; production adapters and runtime-check refuse these jobs."""
+    `array_domains` (2026-10-15 ET) only plans entry extents against capacity. Planner metadata alone is
+    insufficient for proof admission: checked WP/CBMC paths require independent source certificates;
+    unchecked adapter paths and runtime-check refuse these jobs."""
     for name in sizes:
         if not interface.scalar(name):
             raise Untranslatable(f"size bound {name} is not an integer parameter of {interface.function}")

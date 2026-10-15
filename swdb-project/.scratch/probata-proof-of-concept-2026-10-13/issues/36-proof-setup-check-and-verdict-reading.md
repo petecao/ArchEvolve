@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-15 ET (source-bound summary and remote replay checkpoint)
 **Type:** slice
-**Status:** claimed
+**Status:** ready-for-agent
 **Blocked by:** 11, 21, 27
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Proof-hint loop": Three checks; "Verifier lineup and order": one summary source, failure classes; "What a proven verdict asserts": harness `assume`s; "Records and levels": method-version file; "Testing Decisions", seam 1; user stories 15, 21, 30, 31, 33; S1, S3, S7); decisions: [13](../../formal-verification-2026-10-09/issues/13-proof-hint-loop.md) (items 7, 10), [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md) (item 4), [09](../../formal-verification-2026-10-09/issues/09-what-proven-asserts.md) (item 10), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md) (items 3, 10)
 **Time estimate:** about 3 days
@@ -754,3 +754,21 @@ The exact native finite adjacency case and independent review are retained under
 `prototype/27-proof-semantics/checks/query-address-boundary-20261015/`; broader model
 agreement belongs to29. [Scoped evidence](../evidence/wp-footprint-query-20261015.json).
 Tickets27/36 remain claimed; full acceptance and method freeze remain open.
+
+
+### User-paused checkpoint — 2026-10-15 ET
+
+Implementation, evaluation and provider work are paused by user direction. The
+claim is released for a later session; acceptance is not complete. Closeout
+review, documentation, merge and cleanup continue separately.
+
+Focused setup, source/certificate replay and verdict-reading controls are
+retained; ticket 27 and the final source/method freeze remain blockers.
+The final two-axis review of 53471f7f against 150930b4 found an inherited hardening
+gap: WP setup checks trust the method's flags for -wp-rte rather than requiring
+RTE generation independently. Current actual methods include -wp-rte; this
+finding is not evidence of a false proof. Before the final method freeze, add an
+independent RTE admission check with a public no-launch control for an otherwise
+self-consistent method/plan omitting -wp-rte, and retain initialization and
+per-property obligations. This closeout records the requirement only; no runtime
+flag policy is changed. See [review decisions](../evidence/final-review-closeout-20261015.md).
