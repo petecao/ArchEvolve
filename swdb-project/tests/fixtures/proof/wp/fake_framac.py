@@ -23,7 +23,7 @@ if os.environ.get("FAKE_HINT_NO_SOLVERS") and "hint_check.c" in args and "-wp" i
     if selectors != ["none"]:
         print("[kernel] User Error: hint goal generation must select only the none prover")
         sys.exit(1)
-no_prover = "-wp-prover" in args and args[args.index("-wp-prover") + 1] == "none"
+no_prover = any(args[i + 1] == "none" for i, flag in enumerate(args[:-1]) if flag == "-wp-prover")
 if "-wp" not in args or no_prover:        # not a WP job (a parse-only check, the hint check): the real Frama-C
     sys.exit(subprocess.run([*shlex.split(os.environ["FAKE_WP_REAL"]), *args]).returncode)
 

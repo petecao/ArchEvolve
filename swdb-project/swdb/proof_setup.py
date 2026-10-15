@@ -49,6 +49,47 @@ def _no_assume(text, where):
         _fail("assumption_provenance", f"{where} contains an assumption not generated from a summary or the pinned domain")
 
 
+def check_semantics_hints(base, hints):
+    """Protect model ghost state with a deliberately small hint-ghost language.
+
+    Frama-C's noninterference check protects real C state, not trusted ghost
+    state. Semantics jobs therefore admit only fresh scalar witnesses and the
+    checked store-frame bound. Calls, pointers, indexed writes and shadowing
+    are refused rather than inferred safe from their spelling.
+    """
+    existing = set(re.findall(r"\b[A-Za-z_]\w*\b", base))
+    macros = set(re.findall(r"^\s*#\s*define\s+([A-Za-z_]\w*)", base, re.M))
+    owned = set()
+    scalar = r"(?:(?:unsigned|signed)\s+)?(?:int|long|short|char|_Bool)"
+    for hint in hints:
+        text = re.sub(r"/\*.*?\*/|//[^\n]*", " ", hint["text"], flags=re.S).strip()
+        if hint.get("kind") != "ghost" and not re.search(r"\bghost\b", text):
+            continue
+        if not text.startswith("ghost ") or not text.endswith(";"):
+            _fail("semantics_ghost_ownership", "semantics ghost hints require scalar declarations or assignments")
+        if macros.intersection(re.findall(r"\b[A-Za-z_]\w*\b", text)):
+            _fail("semantics_ghost_ownership", "ghost witness text may not expand a preprocessor macro")
+        for statement in text[6:].split(";")[:-1]:
+            statement = statement.strip()
+            declaration = re.fullmatch(rf"{scalar}\s+([A-Za-z_]\w*)(?:\s*=\s*(.+))?", statement, re.S)
+            assignment = re.fullmatch(r"([A-Za-z_]\w*)\s*=\s*(.+)", statement, re.S)
+            if declaration:
+                name, expression = declaration.groups()
+                if name in existing or name in owned:
+                    _fail("semantics_ghost_ownership", f"ghost declaration shadows an existing name: {name}")
+                owned.add(name)
+            elif assignment:
+                name, expression = assignment.groups()
+                if name not in owned and name != "dx_store_bound":
+                    _fail("semantics_ghost_ownership", f"ghost write targets trusted or unowned state: {name}")
+            else:
+                _fail("semantics_ghost_ownership", "only simple scalar ghost declarations and assignments are allowed")
+            if expression is not None and (
+                    not re.fullmatch(r"[A-Za-z_0-9\s()+*/%<>=!~^|?:.-]+", expression)
+                    or re.search(r"\b[A-Za-z_]\w*\s*\(|\)\s*\(|\+\+|--|(?<![<>=!])=(?!=)", expression)):
+                _fail("semantics_ghost_ownership", "ghost witness expressions may not call, take addresses, or mutate state")
+
+
 def _method(method):
     if method is not None and _sha(Path(method.path).read_bytes()) != method.sha256:
         _fail("method_version", f"method {method.id} changed after the job was planned")
@@ -227,6 +268,11 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
         if pin["sha256"] != _sha(baseline.text):
             _fail("lowering_hash", "baseline C lowering differs from its planned pin")
         hashes["baseline_lowering"] = _sha(baseline.text)
+    if adapter.name == "wp" and context.get("semantics"):
+        base = context.get("semantics_hint_base")
+        if base is None:
+            _fail("semantics_ghost_ownership", "semantics invocation has no pinned hint-free base")
+        check_semantics_hints(base, getattr(adapter, "hints", []))
     if adapter.name == "wp":
         _wp_flags(list(command) if command else flags, scratch or job.scratch)
     method = job.setup.get("method")

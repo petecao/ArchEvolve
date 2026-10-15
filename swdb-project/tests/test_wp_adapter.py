@@ -263,7 +263,9 @@ def test_map_07_smoke_pair_proves_the_safe_program_and_leaves_the_seeded_bug_not
     record = seed.read(seed.prove("safe", "count_up", SMOKE, buggy))
     assert record["verdict"] == "not_proven" and record["failure_class"] == "vacuous_pass"
     assert "counterexample" not in record
-    assert [p.get("kind") for p in record["unproven_properties"]].count("user assertion") == 1
+    assertions = [p for p in record["unproven_properties"] if p.get("kind") == "user assertion"]
+    assert any(p["failure_class"] in ("timeout", "unknown") for p in assertions)  # false proposed hint
+    assert any(p["failure_class"] == "vacuous_pass" for p in assertions)  # WP-generated smoke assertion
 
 
 # --- failure classes: each on a fixture or a scripted fault -------------------------------------------------
