@@ -203,3 +203,11 @@ the checked view. No single all-member green session is claimed. These contract-
 precede the incoming-pointer array-object domain gate being developed in ticket36; array provenance,
 owner/control-buffer separation, general repeated allocation and broader vector lifetime protocols
 remain open. Status stays **claimed**.
+
+
+Final scoped setup validation: **75PASS227.11s** in
+`/private/tmp/probata-t25-at-view-setup-canonical.jsonl` (SessionFinish0), with the actual fact driver
+also using `-wp-no-filter-init`. Original at proof source and clean handoff helper/adapter/setup bytes
+match exactly. A prior mistakenly sandboxed run had62PASS13FAIL because macOS denied the watchdog's
+process-tree read; those failures produced no accepted proof evidence. The13 actual controls passed
+with escalation, followed by the complete75-test canonical run. No watchdog or smoke check was disabled.
