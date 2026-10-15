@@ -1,6 +1,6 @@
 # Probata Rocq development: review guide and hypothesis table
 
-Created: 2026-10-14 ET (ticket 41). Updated: 2026-10-14 21:30 ET (`Reduction.v` revised by the
+Created: 2026-10-14 ET (ticket 41). Updated: 2026-10-15 ET (protected-read lifetime fix (a)); 2026-10-14 21:30 ET (`Reduction.v` revised by the
 main session under Yan-Ru's delegation: two covers from ticket 27, see "Later change: ticket 27
 covers"); 2026-10-14 14:35 ET (revision after Codex's review and the main session's decisions
 under Yan-Ru's delegation).
@@ -20,7 +20,8 @@ WP proves one thread t of N at a time. This theorem says why that is enough. If 
 - splits work by thread id so every iteration runs once;
 - reaches the same barriers and worksharing loops as every other thread;
 - runs in a team of exactly N threads;
-- lets a DX100 command stay unfinished past a barrier only if it wrote nothing anyone reads;
+- lets a DX100 command cross synchronization uncovered only if its tile outputs are dead
+  and it reads no lock-protected location;
 
 then **every finished run has a serial twin**: each thread does exactly the same steps, barrier
 intervals and critical sections happen one after another, every read outside a
@@ -66,7 +67,7 @@ A WP obligation for a candidate is named after the hypothesis it discharges (16 
 | `obl_chunk_cover` | per-candidate WP obligation | WP (arithmetic over t and N, plus thread t's loop) | Chunk splits computed from the thread id cover each loop's iteration space exactly once, and thread t runs exactly its chunk (15 items 2, 4). |
 | `obl_uniform_control` | per-candidate WP obligation | WP, two-copy product (GPUVerify style) | Any two threads reach the same barriers and worksharing constructs in the same order (15 item 6). |
 | `obl_team_size` | per-candidate WP obligation | WP over the run-time guard | The team has exactly N threads (15 item 4; 11's guard). |
-| `obl_dx100_quiet` | per-candidate WP obligation | WP over the ghost hazard state | No own CPU access conflicts with a DX100 command before a wait covers it; a command may stay uncovered past a barrier or a critical exit only if it writes only tile elements that are dead there (F1, refined). |
+| `obl_dx100_quiet` | per-candidate WP obligation | WP over the ghost hazard state | No own CPU access conflicts with a DX100 command before a wait covers it; a command may stay uncovered past a barrier or a critical exit only if it writes only tile elements that are dead there and reads no lock-protected location; each command read retains its sharing class until covered (F1, refined 2026-10-15). |
 | `memory_ok` (premise; uses `hb_cpu`) | assumption entry, **platform choice** | "The pinned compiler and ISA implement RC11, and each `__sync_*` builtin is a fully fenced read-modify-write" (15 item 3; 26 item 4; M1). Stronger than C++ seq_cst RMWs; stated as such. | Reads are history reads over program order and the fenced-atomic order; an atomic read-modify-write reads the latest write; a failed CAS writes nothing. |
 | `omp_ok` (premise; its first clause uses `hb` with `omp_sync`) | assumption entry, **trusted tool** | "The pinned OpenMP runtime implements OpenMP 5.2" (15 item 4) | Barrier and `critical` order memory; thread ids are 0 to N-1; a barrier waits for all threads; `critical` excludes other threads; `omp for` gives each iteration to exactly one thread. |
 | `device_ok` (premise; uses `hb`) | assumption entry, **proof semantics** | The pinned DX100 proof-semantics version (12 items 4, 7) | A DX100 read returns a value the location held while the command ran, never older than the stores made before issue. |
@@ -120,7 +121,9 @@ cores share one instruction file, so the stalls compare every core's unfinished 
 
 - **F1 (accepted, refined).** A command may stay uncovered past a barrier, or past the exit of
   a critical section it was issued in, only if it writes tile elements only and those are dead
-  there: not read again before a later command overwrites them. The main session's wording
+  there: not read again before a later command overwrites them. Since 2026-10-15 it must also
+  read no lock-protected location (class at each read's barrier interval); a command that reads
+  protected data must be covered before releasing its lock. The main session's wording
   said "before a covered overwrite"; this uses "before a later command's overwrite", because
   gem5's WAW dispatch stall (`IF.cc:193-212`) already finishes the old command before the
   overwriting one dispatches, and the overwriting commands in both candidates are themselves
@@ -255,9 +258,9 @@ every cover of model 0.1 present in Rocq. Findings:
 | 3 | major: this guide still describes wait-only coverage and scopes round 4 to the old hash | **Accepted:** this section, the summary sentence, and the round-4 scope note. |
 | 4 | minor: comments equate coverage with waits; closure rules called step rules | **Accepted:** `Reduction.v` header and `covered` comments now say "covering step" and separate base covers from closure rules. |
 
-## Composition.v revision in progress: well-bracketed critical sections (paused 2026-10-14 22:40 ET)
+## Composition.v revision: well-bracketed critical sections and protected reads (2026-10-15 ET)
 
-**Not approved; the effort is paused.** Branch `probata-poc/t41c` (from `probata-poc/t42`).
+Resumed on `codex/probata-t41` from the integration branch. Approval is recorded in ticket 41 after checks and adversarial review.
 
 - **Decision** (main session under Yan-Ru's delegation, 2026-10-14 22:24 ET): ticket 42's
   stray-`Exit` counterexample is excluded by `omp_ok`, the trusted-tool entry "the pinned OpenMP
@@ -302,3 +305,56 @@ every cover of model 0.1 present in Rocq. Findings:
   `reg_write_not_pending` (ticket 27's two covers).
 - Negative check: `negative/HistoryReadIsLatest_FALSE.v` (history reads are SC) is rejected at
   its unprovable branch, as required.
+
+### Applied fix (a), 2026-10-15 ET
+
+The recorded 2026-10-14 23:10 ET decision is applied: `reads_no_lock_protected tr c` checks
+every element read by command c at that read's barrier interval; `quiet_ok` requires it
+alongside `dead_after` whenever c crosses synchronization uncovered. This prevents the
+review's cA command from carrying its protected A read past Exit. Its existing dead output
+condition still applies. No new assumption or obligation is introduced; `obl_dx100_quiet`
+discharges the strengthened command-lifetime rule. `Sanity.v` proves the escaping protected
+read is rejected. This is an agent revision under delegation, not personal human review.
+
+### Class-lifetime counterexample and decision, 2026-10-15 ET
+
+The coordinator's local adversarial review found that fix (a) alone still admits the
+previous cycle if A is `ReadOnly` in interval 0 and `LockProtected` in interval 1. With
+B shared-actions-only and T thread-owned, the fixed-value traces are:
+
+- t0: `Barrier; DeviceRead cB B 1; Enter; Read A 0; Write A 1; DeviceCovered cB; Exit`.
+- t1: `Own T; Enter; DeviceRead cA A 1; Read T 0; DeviceWrite cA T 1; Exit; Barrier;
+  DeviceCovered cA; Shared Claim false tt B 0`.
+
+A model run interleaves these as t0's barrier, t1 through its barrier, t0 through `Write A`,
+t1's cover and shared action, then t0's cover and exit. Device reads source those two future
+writes. The required order `Write A < CoverA < SharedB < CoverB` prevents t0's critical
+section from being contiguous in any twin. An independent necessary-condition enumeration
+(`/tmp/claude/probata-runs/t41d/counterexample-barrier.py`) checks all 11,440 shuffles: none
+has both required source/cover order and contiguous critical sections. This enumeration is
+not a Rocq proof that every theorem premise holds. Replacing A's later class by ThreadOwned
+and adding t0's ownership event gives the same issue, so a global no-LockProtected check
+would be insufficient.
+
+**Delegated decision:** keep fix (a) and strengthen existing `obl_dx100_quiet` with
+`reads_class_stable`: every device element read retains its sharing class at every later
+event until a covering event has completed. The covering event itself must still have the
+old class (coverage is strict-between). This is the lifetime requirement for an outstanding
+access when a barrier starts a new ownership/class interval; arrays may still change class
+after covering their commands. It adds no assumption entry or new top-level hypothesis.
+`Sanity.v` proves both RO-to-LockProtected and RO-to-ThreadOwned escapes are rejected.
+
+**Candidate scope:** source inspection finds Peter's immutable graph reads and parent
+shared-action reads, and the authors' parent reads/writes covered inside critical. The
+frontier buffer also receives reserved-range output writes from `QueueBuffer::flush`
+(`apps/dx100/benchmarks/gapbs/src/sliding_queue.h:114`), after Peter's implicit omp-for
+barrier. Compatibility therefore depends on the formal frame retaining stable classes for
+the disjoint input/output logical arrays, or covering pending frontier reads before a
+class transition. Ticket 45 must discharge this; source inspection does not establish it.
+The authors' multi-location critical block already lies outside the supported theorem
+class (M3), independently of this change.
+
+**External review limitation:** automatic approval review twice rejected the requested
+Codex CLI invocation because exporting repository source to the external Codex/OpenAI
+destination was not authorized under its assessment. No CLI review ran for this revision;
+local coordinator review found and repaired the class-lifetime issue above.

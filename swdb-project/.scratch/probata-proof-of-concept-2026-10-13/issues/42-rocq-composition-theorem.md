@@ -1,9 +1,9 @@
 # 42 — Rocq: composition theorem proof
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-14 22:30 ET (blocker: the approved statement is false; needs a statement decision); 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-14 00:15 ET (review fixes, round 4); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-15 01:41 ET (ticket 41 repaired and approved under delegation; proof may resume); 2026-10-14 22:30 ET (blocker: the approved statement is false; needs a statement decision); 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-14 00:15 ET (review fixes, round 4); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** needs-info
+**Status:** ready-for-agent
 **Blocked by:** 10, 11, 12, 41
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Concurrency" (composition theorem: 2-week box, written fallback), "Records and levels" (subjects), "What a proven verdict asserts" (assumption set, cap rule), "Modules" (level rule: level computed on read), "Further Notes" (risk: the Rocq theorem does not fit 2 weeks), "Proof-of-concept plan" (Rocq side track, overrun rule), S1, S2, S8, S9); decisions: [15](../../formal-verification-2026-10-09/issues/15-concurrency-proofs.md), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md)
 **Time estimate:** one 2-week box, shared with 43 (S9)
@@ -131,3 +131,15 @@ with `check/statement.expected` and prints `Print Assumptions`.
 (147 rows; sha256 `42d68c4c…`), `codex/turn-{1,2,3}.{jsonl,final.md}`, `work/NOTES.md`
 (`c52d489d…`). Peak RSS per Rocq job about 0.42 GB. Lock waits reached 20 min while other
 tickets held the lock across whole pytest batches.
+
+## Resumption — 2026-10-15 01:41 ET
+
+Ticket 41's current answer supersedes the false statement: well-bracketed critical sections,
+fix (a)'s protected-read lifetime rule, and read-class stability while commands remain
+uncovered are approved by the main session under delegation after independent local review.
+No personal human reading or external CLI review is claimed. Reconstructed statement hash:
+`ffb5bda714b9fce5a13927a4860f6c85438821cdcdf3b4f1560f26a91eefd4f4`.
+`check_approved.py` and `statement.expected` now guard that version. Existing 122 Qed
+lemmas remain checked. This resumes the same shared box; it does not restart its clock or
+claim any unchecked step complete. Candidate compatibility and lowering discharge of
+`obl_dx100_quiet` remain ticket 45's responsibility.

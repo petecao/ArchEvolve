@@ -373,11 +373,15 @@ def test_32_uncovered_commands_prove_and_33_end_not_proven_ghost_capacity(dx):
     assert "counterexample" not in over
 
 
-def prove_wp(dx, name, *defines):
+def prove_wp(dx, name, *defines, hints=None):
     """One `swdb prove --adapter wp` job (the WP form of the proof semantics), allowing for the verifier lock."""
     import json
     function = FIXTURES[name][0]
     extra = [arg for define in defines for arg in ("--define", define)]
+    if hints:
+        hint_path = dx.root / "wp-hints.yaml"
+        hint_path.write_text(yaml.safe_dump({"hints": hints}, sort_keys=False))
+        extra += ["--hint-file", str(hint_path)]
     result = run_swdb("prove", "--records", dx.records, "--candidate", dx.candidates["dx"], "--function", function,
                       "--contract", f"contract.fixture_dx_{name}", "--adapter", "wp", "--runs-dir", dx.runs,
                       "--format", "json", *extra, timeout=3600)
@@ -391,9 +395,9 @@ def _wp_ready():
     return FRAMAC and not c_lowering.locate().missing
 
 
-needs_wp = pytest.mark.skip(reason="paused 2026-10-14: the WP form (commit 84563b2e) must be ported onto ticket 25s wp_adapter")
+needs_wp = pytest.mark.skipif(not _wp_ready(), reason="Frama-C 33.0 or clang 22.1.8 is missing")
 #: the fixtures CBMC proves; WP must prove them too (capacity is a bounded notion: WP needs a loop invariant)
-WP_SAFE = ["three_reads", "size", "cpu_write", "transitive",
+WP_SAFE = ["three_reads", "size", "cpu_write", "store_source_wait", "stall_condition", "transitive",
            "register_write", "value_stream", "value_gather", "value_range", "footprint"]
 #: the variants CBMC refutes, and the WP property that stays unproven (WP never refutes)
 WP_FAULTS = [("three_reads", "SWDB_EARLY_READ_1", "swdb_tile_read_probe"),
@@ -420,7 +424,7 @@ def test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics(dx, name
     probes = record["settings"]["proof_semantics"]["probes"]
     wp_input = open(dx.report(record, "wp_input")).read()
     assert wp_input.count("SWDB_TILE_READ(&(") + wp_input.count("SWDB_TILE_WRITE(&(") == len(probes)
-    assert "ghost unsigned int dx_live;" in wp_input            # ghost.acsl as written
+    assert wp_input.count("unsigned int dx_live;") == 1 and "/*@ ghost" in wp_input
 
 
 @needs_wp
@@ -431,6 +435,36 @@ def test_wp_leaves_every_unit_cbmc_refutes_not_proven_never_refuted(dx, name, de
     unproven = json.dumps(record.get("unproven_properties"))
     if call:                                                  # the probe's (or call's) precondition is the one
         assert call in unproven or "precondition" in unproven, unproven
+
+
+@needs_wp
+@pytest.mark.parametrize("commands", [32, 33])
+def test_wp_capacity_agrees_at_32_and_leaves_33_not_proven(dx, commands):
+    from swdb import proof_semantics
+    from swdb.library import Library
+    from test_wp_adapter import _hints
+    path = dx.root / "library" / "rewrite_contracts" / "fixture_dx_capacity.yaml"
+    contract = yaml.safe_load(path.read_text())
+    for clause in contract["clauses"]:
+        if clause.get("acsl"):
+            clause["acsl"]["text"] = clause["acsl"]["text"].replace("32 <= n <= 33", f"n == {commands}")
+    path.write_text(yaml.safe_dump(contract, sort_keys=False))
+    library = Library(dx.root / "library")
+    locations = proof_semantics.wp_locations(library, ENTRY)
+    hints = _hints("dxf_capacity.loop1.head",
+        "loop invariant 0 <= t <= n;",
+        "loop invariant 0 <= dx_count <= t;",
+        "loop invariant dx_reg_value[0] == 0 && dx_reg_value[1] == 1 && dx_reg_value[2] == 1;",
+        "loop invariant dx_reg_writer[0] == -1 && dx_reg_writer[1] == -1 && dx_reg_writer[2] == -1;",
+        "loop assigns t, " + ", ".join(locations) + ";",
+        "loop variant n - t;")
+    record = prove_wp(dx, "capacity", "DX_NT=40", "DX_TS=1", hints=hints)
+    assert record["hint_check"]["verdict"] == "accepted", record["hint_check"]
+    if commands == 32:
+        assert record["verdict"] == "proven", record.get("unproven_properties")
+    else:
+        assert record["verdict"] == "not_proven" and record["failure_class"] == "ghost_capacity"
+        assert "counterexample" not in record
 
 
 @needs_cbmc
