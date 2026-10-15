@@ -97,11 +97,20 @@ def test_actual_initializer_scope_and_independent_read_obligations(tmp_path, cas
             clause['acsl']['text'] = clause['acsl']['text'].replace(r'\initialized(q) && ', '')
     path.write_text(yaml.safe_dump(entry, sort_keys=False))
     record = prove(fixture, standin=False)
+    assert_initializer_obligations(record, case)
+
+
+def assert_initializer_obligations(record, case):
+    """Check public property meaning without depending on a prover's goal spelling."""
     assert len(record['settings']['nested_entry_reads']['certificate']['captures']) == 1
     if case == 'safe':
         assert record['verdict'] == 'proven', record.get('unproven_properties')
     else:
         assert record['verdict'] == 'not_proven', record
-        expected = 'initialized' if case == 'uninitialized_inner' else 'swdb_window_access'
-        assert any(expected in row['goal'] and row['status'] != 'valid' for row in record['goals']), record
+        open_goals = {row['goal'] for row in record['goals'] if row['status'] != 'valid'}
+        if case == 'uninitialized_inner':
+            assert any(row.get('kind') == 'initialization' and row.get('goal') in open_goals
+                       for row in record['unproven_properties']), record
+        else:
+            assert any('swdb_window_access' in goal for goal in open_goals), record
 
