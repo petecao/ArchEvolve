@@ -147,3 +147,13 @@ covering transient and persistent `children`/`memory_info` denial. The composed
 parse/generation/prover/cleanup pipeline must pass before another counted freeze.
 This remains a sampled trusted-toolchain guard with a finite cleanup settlement,
 without a hard memory quota or hostile-process containment claim.
+
+
+Independent review caught and reproduced a PID-reuse regression in the first
+retry revision before an actual verifier was launched: refreshing a discovery
+snapshot could adopt an unrelated replacement PID. Ancestry/marker identity
+controls now retain the captured birth and compare fresh birth before/after each
+observation. A separate leader-transition control distinguishes changed identity
+from process exit and prevents targeting its replacement process group. All20
+runner controls pass after these RED/GREEN fixes. The first retry commit alone
+is superseded and must not be treated as an approved launch source.

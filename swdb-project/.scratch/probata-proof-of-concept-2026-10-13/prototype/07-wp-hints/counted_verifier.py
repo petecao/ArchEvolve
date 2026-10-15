@@ -69,11 +69,28 @@ _INSPECTION_EVENTS = []
 _INSPECTION_STAGE = 'supervision'
 
 
+class _IdentityChanged(psutil.NoSuchProcess):
+    """The numeric PID exists but no longer names the captured identity."""
+
+
 def _inspect(process, operation, born=None, **kwargs):
     """Retry transient OS inspection denial; persistent live/unknown denial fails closed."""
+    snapshot_birth = None
     for attempt in range(1, 4):
         try:
-            result = getattr(psutil.Process(process.pid), operation)(**kwargs)
+            # Preserve children/process_iter snapshot identity. Refreshing the
+            # target before retaining its birth could adopt an unrelated PID.
+            observing = 'snapshot.create_time'
+            snapshot_birth = process.create_time()
+            expected = snapshot_birth if born is None else born
+            observing = 'identity_before.create_time'
+            if snapshot_birth != expected or psutil.Process(process.pid).create_time() != expected:
+                raise _IdentityChanged(process.pid)
+            observing = operation
+            result = getattr(process, operation)(**kwargs)
+            observing = 'identity_after.create_time'
+            if psutil.Process(process.pid).create_time() != expected:
+                raise _IdentityChanged(process.pid)
         except psutil.AccessDenied as exc:
             observed = None
             state = 'unknown'
@@ -81,21 +98,24 @@ def _inspect(process, operation, born=None, **kwargs):
                 # Fresh objects avoid psutil's cached create_time during revalidation.
                 observed = psutil.Process(process.pid).create_time()
                 status = psutil.Process(process.pid).status()
-                state = 'reused' if born is not None and observed != born else 'live'
+                expected = snapshot_birth if born is None else born
+                state = 'reused' if expected is not None and observed != expected else 'live'
                 if status in {psutil.STATUS_ZOMBIE, psutil.STATUS_DEAD}:
                     state = 'gone'
             except psutil.NoSuchProcess:
                 state = 'gone'
             except psutil.AccessDenied:
                 pass
-            event = {'stage':_INSPECTION_STAGE, 'operation':operation, 'pid':process.pid,
+            event = {'stage':_INSPECTION_STAGE, 'operation':observing, 'requested_operation':operation, 'pid':process.pid,
                      'exception_pid':getattr(exc, 'pid', None),
-                     'expected_birth':born, 'observed_birth':observed, 'identity_state':state,
+                     'expected_birth':born if born is not None else snapshot_birth, 'observed_birth':observed, 'identity_state':state,
                      'attempt':attempt, 'clock_s':S.clock(), 'wall_unix_s':time.time(), 'outcome':'denied'}
             _INSPECTION_EVENTS.append(event)
             del _INSPECTION_EVENTS[:-128]
             if state in {'gone', 'reused'}:
                 event['outcome'] = 'confirmed-'+state
+                if state == 'reused':
+                    raise _IdentityChanged(process.pid) from exc
                 raise psutil.NoSuchProcess(process.pid) from exc
             if attempt == 3:
                 exc.inspection_detail = dict(event)
@@ -189,12 +209,14 @@ def _stop(process, known, *, token=None, born_after=None):
     root_alive = process.poll() is None
     try:
         leader = psutil.Process(process.pid)
-        birth = _inspect(leader, 'create_time', known.get(process.pid))
+        birth = _inspect(leader, 'create_time')
         # A reaped Popen PID can be reused. Never target its replacement group.
         if not root_alive and known.get(process.pid) != birth:
             return ["root-pid-reused-or-unobserved"]
         if os.getpgid(process.pid) != process.pid or os.getsid(process.pid) != process.pid:
             return ["owned-process-group-unconfirmed"]
+    except _IdentityChanged:
+        return ['root-pid-reused-or-unobserved']
     except (psutil.NoSuchProcess, ProcessLookupError):
         pass  # descendants may retain the original session/group after root exit
     except (psutil.Error, PermissionError):

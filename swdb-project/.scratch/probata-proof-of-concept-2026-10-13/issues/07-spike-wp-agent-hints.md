@@ -1236,3 +1236,10 @@ Four external process-boundary controls show RED/GREEN for transient and persist
 ancestry/RSS denial;173 composed controls pass. Independent review and an actual
 fresh mechanical-seed verifier pipeline precede any fresh counted freeze. Scientific
 criteria and the existing claimed/shared-box status remain unchanged.
+
+
+Independent review then caught a transient-retry PID ownership regression before
+any actual verifier launch. Focused ancestry/marker snapshot and cleanup-leader
+replacement controls failed before the identity-preserving fix and now pass.
+The complete20 runner controls pass; the interim retry commit is superseded.
+No scientific conclusion or new counted run follows from these controls alone.

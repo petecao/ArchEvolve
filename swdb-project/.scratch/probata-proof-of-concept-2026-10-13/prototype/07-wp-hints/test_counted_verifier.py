@@ -314,3 +314,40 @@ def test_owned_process_inspection_retries_transient_denial_and_reports_persisten
     else:
         assert any(event['outcome']=='recovered' for event in events)
         assert not lock.exists() and summary['unconfirmed_children']==[]
+
+@pytest.mark.parametrize('discovery', ['ancestry', 'marker'])
+def test_discovery_never_registers_a_reused_snapshot_pid(monkeypatch, discovery):
+    """An OS PID snapshot may outlive its process; the replacement is unrelated."""
+    import counted_verifier as V
+    from types import SimpleNamespace
+    class Process:
+        def __init__(self,pid,birth): self.pid=pid;self.birth=birth
+        def create_time(self): return self.birth
+        def children(self,recursive=False): return [snapshot]
+        def uids(self): return SimpleNamespace(real=os.getuid())
+        def status(self): return 'running'
+        def environ(self): return {V.RUN_TOKEN_ENV:'private-token'}
+    parent=Process(101,90.0);snapshot=Process(102,100.0);replacement=Process(102,200.0)
+    monkeypatch.setattr(V.psutil,'Process',lambda pid:parent if pid==101 else replacement)
+    monkeypatch.setattr(V.psutil,'process_iter',lambda:[snapshot])
+    known={}
+    if discovery=='ancestry': V._tree(101,known)
+    else: V._token_tree('private-token',99.0,known)
+    assert 102 not in known, 'unrelated replacement PID became an owned identity'
+
+def test_cleanup_never_targets_a_group_when_leader_changes_during_inspection(monkeypatch):
+    import counted_verifier as V
+    from types import SimpleNamespace
+    class Process:
+        pid=103
+        def __init__(self,birth): self.birth=birth
+        def create_time(self): return self.birth
+    snapshots=iter([Process(100.0)])
+    replacement=Process(200.0)
+    monkeypatch.setattr(V.psutil,'Process',lambda pid:next(snapshots,replacement))
+    monkeypatch.setattr(V.psutil,'process_iter',lambda:[])
+    killed=[]
+    monkeypatch.setattr(V.os,'killpg',lambda *args:killed.append(args))
+    old=SimpleNamespace(pid=103,poll=lambda:0,wait=lambda **kwargs:0)
+    assert V._stop(old,{103:100.0})==['root-pid-reused-or-unobserved']
+    assert not killed
