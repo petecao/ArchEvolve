@@ -49,7 +49,7 @@ for _name, _tail in REFUSALS.items():
                f"int *p=v.data(); v.push_back(9); {_tail} }}\n")
 
 
-def _ownership_seed(root):
+def _ownership_seed(root, *, source=SOURCE, cases=None):
     from swdb import c_lowering, std_models
     records = make_records(root)
     copy_record_subset(REPO / "records", records.path, sorted(_library_roots()))
@@ -61,10 +61,10 @@ def _ownership_seed(root):
     (methods / "wp-tracer-fixture.yaml").write_text(yaml.safe_dump(method, sort_keys=False))
     units = root / "library" / "proof_units"
     units.mkdir(exist_ok=True)
-    (units / "vector_ownership.cc").write_text(SOURCE)
-    for label, value in (("safe", 23), ("stale", 7), *((name, 0) for name in REFUSALS)):
+    (units / "vector_ownership.cc").write_text(source)
+    for label, value in (cases if cases is not None else (("safe", 23), ("stale", 7), *((name, 0) for name in REFUSALS))):
         cid = f"contract.fixture_vector_owner_{label}"
-        data = _entry(cid, f"swdb_vector_owner_{label}", "vector_ownership.cc", SOURCE,
+        data = _entry(cid, f"swdb_vector_owner_{label}", "vector_ownership.cc", source,
                       [("pre", "legality", "requires n >= 1;"),
                        ("post", "postcondition", f"assigns \\nothing; ensures \\result == {value};")],
                       [], {"once": "self"})

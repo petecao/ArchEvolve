@@ -1,0 +1,66 @@
+{
+  "created": "2026-10-15 ET",
+  "ticket": 25,
+  "status": "claimed",
+  "base": "b876dcb3",
+  "helper_commit": "4e38d04c",
+  "scope": "closed-owner at source-to-view callsite relation only",
+  "reports": [
+    {
+      "path": "/private/tmp/probata-owner-members-red.jsonl",
+      "sha256": "5dde2525142497e9f3b0a3a138a8f934eed73c983268a131ca70b78053d0582b",
+      "calls": [
+        {
+          "test": "tests/test_closed_owner_members.py::test_a_closed_at_call_records_its_qualified_live_domain_and_caller_discharge",
+          "outcome": "failed"
+        }
+      ],
+      "finish": [
+        {
+          "exitstatus": 1
+        }
+      ]
+    },
+    {
+      "path": "/private/tmp/probata-owner-members-hook-red.jsonl",
+      "sha256": "a0b0386b84e041f55e3935f883edd203416e4986faed7a51cf66a178ac3f58f3",
+      "calls": [
+        {
+          "test": "tests/test_closed_owner_members.py::test_a_closed_at_call_records_its_qualified_live_domain_and_caller_discharge",
+          "outcome": "failed"
+        }
+      ],
+      "finish": [
+        {
+          "exitstatus": 1
+        }
+      ]
+    },
+    {
+      "path": "/private/tmp/probata-owner-members-opaque.jsonl",
+      "sha256": "1ff93f52ef6d886726e7a58624f3c732522b502ace1abac9f08b7dd241878c07",
+      "calls": [
+        {
+          "test": "tests/test_closed_owner_members.py::test_a_standalone_at_model_keeps_its_opaque_incoming_field_refusal",
+          "outcome": "passed"
+        }
+      ],
+      "finish": [
+        {
+          "exitstatus": 0
+        }
+      ]
+    }
+  ],
+  "acceptance_boundary": "Stand-in WP only; first RED unsupported, next RED missing owner_at CXXMemberCallExpr hook. Standalone unqualified at refusal GREEN. No actual at proof has run at this checkpoint.",
+  "pending_hook": {
+    "owner": "ticket36",
+    "module": "wp_pointer_bounds.complete",
+    "requirement": "Bind CXXMemberCallExpr only for source_access.kind owner_at and exact persistent span; preserve full source/view certificate regeneration.",
+    "pin": "Include standard_model_view.py bytes in c_lowering.identity; model_domains.identity already includes its transitive bytes."
+  },
+  "next_actual_tests": [
+    "test_a_qualified_closed_at_call_proves_under_the_original_scalar_contract",
+    "test_an_out_of_range_qualified_at_call_fails_its_actual_bounds_obligation"
+  ]
+}

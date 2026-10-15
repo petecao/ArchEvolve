@@ -9,6 +9,15 @@ Updated: 2026-10-15 ET. Resumed under Yan-Ru's ongoing implementation, push and 
 Current integration branch: `codex/probata-poc-integration`, based on `yanrujhou_main` at `150930b4`.
 Current dispatch, evidence and blockers: [resume.md](resume.md).
 
+- **Checkpoint 2026-10-15 08:03 ET:** frozen `b876dcb3` remote entry-window controls
+  passed 15/15 and owner controls passed 16/16. Both socket leases released. Entry
+  records show five positive proofs, five intended numerical negatives and five
+  prelaunch refusals, with matching artifact hashes; typed windows remain conditional
+  input premises. [Entry evidence](evidence/entry-windows-mbit10-20261015.json).
+  Direct stream WP passed locally; exact call/producer binding controls and helper
+  contextual cloning are in progress. These results do not resolve general member,
+  helper, bounded execution or complete construct acceptance.
+
 - **Resolved: 32 of 63**, recomputed from all ticket files on 2026-10-15. The incoming map's
   count of 33 was stale. Partial implementations and checked auxiliary lemmas do not close tickets.
 - **Claimed:** 07, 24, 25, 27, 36. Other `ready-for-agent` tickets still respect their blockers.
