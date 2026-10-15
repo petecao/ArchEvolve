@@ -5,18 +5,22 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-re
 
 ## Current state (resume here)
 
-Updated: 2026-10-15 16:22 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
+Updated: 2026-10-15 16:51 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
 Integration: `codex/probata-resume-20261015`. Production runtime bytes match
-`71771f09`; exact sources: node 0 `9b75f4a2`, node 1 `71771f09`, Mac `703ff3d7`.
+`71771f09`; exact remote sources: node 0 `9b75f4a2`, node 1 `71771f09`.
+Mac counted run 23 is active at `df19ff8a`, after resource component acceptance.
 [Current resume and evidence](resume.md).
 
-- **24:** Ring and allocation pairs audited. Node 0 generation 571 runs selected
-  remaining pairs/dependencies/controls; prior outer timeout retains an incomplete
-  out-of-range row. Full nine-group finite native agreement is independently accepted.
-- **27:** Seven of eleven safe cases pass. Node 1 generation 602 continues; negatives,
+- **24:** Ring and allocation pairs audited; DXC/class/OMP pairs pass at `9b75f4a2`.
+  Node 0 generation 571 stopped/released after the safe float case retained three
+  initialization timeouts; diagnosis is active. No OOM/whole timeout or surviving
+  run-prefix process. Atomic refusal fix `220ef337` passes 78 focused controls,
+  pending independent review and fresh composed-source acceptance. Full nine-group
+  finite native agreement at `e48a302e` retains its accepted historical source.
+- **27:** Ten of eleven safe cases pass; final footprint case is running. Node 1 generation 602 continues; negatives,
   capacity and bounded/native agreement remain open.
-- **07:** Run 22 aborted before provider on a process-inspection error after baseline.
-  Guard diagnosis precedes another counted run; no qualifying BFS proof.
+- **07:** Fresh run 23 active from 16:41 ET after 183 controls, actual component
+  acceptance and independent readiness review. Run 22 remains aborted. No qualifying BFS proof.
 - **36:** Still dependency-gated. 122 focused compiler/scripted controls pass;
   13 actual-WP cases excluded. Drafts 1/2, final method freeze and held-out gates remain.
 
@@ -157,7 +161,8 @@ Current dispatch, evidence and blockers: [resume.md](resume.md).
 
 - Selected remaining original acceptance restarted16:06ET on node0 generation571
   at `9b75f4a2`, with fresh dependencies, exact case filter and1800s outer command
-  limit; per-goal30s, RTE/init/smoke and8GiB unchanged. No proof result yet.
+  limit; per-goal30s, RTE/init/smoke and8GiB unchanged. It stopped/released16:45ET
+  on three safe-float initializedness timeouts; DXC/class/OMP pairs passed.
   [Launch and interrupted-run cleanup metadata](evidence/resumed-t24-pending-launch-20261015.json).
 
 - Resumed original-template acceptance at`71771f09`:89 ordinary+1smoke safe,

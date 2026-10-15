@@ -1,0 +1,50 @@
+{
+  "created": "2026-10-15 ET",
+  "scope": "Read-only metadata and physical-byte inspection; no compiler execution, no proof upgrade.",
+  "source_commit": "71771f097feb83338928430bdf78a4de8384e63b",
+  "run": "/data/yanruj/EvolveSWDB_runs/probata-resume-t27-safe-71771f09",
+  "record": "pytest/test_wp_proves_every_unit_cbmc0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t191331z.b843a970.yaml",
+  "record_trusted_tools": {
+    "swdb-c-lowering-9": "5d9a246e9d803e56ade4d6b4bc5c30c8cbf42b4e5064153e652f2c05ffed732d",
+    "clang-22.1.8": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+  },
+  "wrapper": {
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+    "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4",
+    "exec": [
+      "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang++",
+      "--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13",
+      "-stdlib=libc++"
+    ],
+    "retention": "Live dependency of the frozen run; preserve the old raw compiler-bin directory."
+  },
+  "physical_reads": [
+    {
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang-22",
+      "sha256": "31a40dc31f3c15a47aa119aa148f339bf363d8f61202ddbdacbd3f24b71ba113",
+      "bytes": 271520144
+    },
+    {
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/libclang.so.22.1.8",
+      "sha256": "8b03ee2c60f0699651869fea5135cb5a144777a10c6e4b9b7835283ac9ca3f7d",
+      "bytes": 216591928
+    }
+  ],
+  "source_bytes": {
+    "swdb/c_lowering.py": "c452963b546f4bbfe5cc8b54973b4078fd1c6e073b6ff53f17c2859ac8671b88",
+    "swdb/stdlib_provenance.py": "4aee5a271a2f92fced7a94c04807cd2d94d36da24ea3d163f2364048bc79d937"
+  },
+  "implementation_boundary": {
+    "c_lowering.identity": "Aggregate digest incorporates stdlib_provenance.runtime_identity(tool), in addition to source/checker identities.",
+    "runtime_identity_success": [
+      "resolved effective cc1 driver path and binary SHA256",
+      "matching libclang parser binary SHA256",
+      "command executable wrapper path and SHA256",
+      "complete canonical libc++ and clang-resource header-tree SHA256"
+    ],
+    "runtime_identity_failure": "Explicit unavailable reason is incorporated instead when context resolution fails.",
+    "record_boundary": "For these non-standard-substitution units, the record retains only the aggregate lowering digest and wrapper clang digest. It does not decompose the runtime components or expose which runtime_identity branch supplied that aggregate. Current physical reads alone do not reconstruct historical runtime selection.",
+    "link_boundary": "Run.sh configures LIBRARY_PATH and LD_LIBRARY_PATH for LLVM libc++ and GCC13. runtime_identity does not hash native link inputs or their transitive shared objects. WP source parsing is a frontend/header boundary."
+  },
+  "next": "Capture decomposed current-source runtime/toolchain identity during the coordinated final preflight; rerun every final acceptance profile on reviewed composed source."
+}

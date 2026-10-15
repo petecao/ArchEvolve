@@ -573,3 +573,38 @@ and CPU/device memory overlap remain tickets 29 and 28 respectively.
 Next acceptance: run all four final profiles on the same frozen composed
 source, retain every ordinary and smoke outcome, audit the producer artifacts,
 then resolve only if every required positive/negative/capacity result is met.
+
+
+### Completed frozen safe checkpoint and independent review — 2026-10-15 ET
+
+Status remains `claimed`. The exact `wp-safe` profile at frozen `71771f09`
+completed **11/11 cases**, exit 0, in 6,015.03 seconds. All 11 qualified records
+are `proven`: **792 ordinary goals Valid and 252 smoke checks passed**, with
+143 named initializedness and 141 RTE goals. The producer-side audit verified
+15,495 physical hash references across 1,039 unique files with no mismatch.
+The whole-run guard peaked at 4,503,920,640 bytes without OOM or timeout;
+the source stayed clean. Exact records, flags, setup identities and producer
+audit hash are retained in
+[`t27-717-safe-completed-20261015.json`](../evidence/t27-717-safe-completed-20261015.json).
+This is historical source-qualified evidence; final composed-source acceptance
+still requires fresh safe, negative, capacity and bounded profiles.
+
+The separate clang tool pin names the retained wrapper. The aggregate lowering
+identity incorporates runtime compiler/parser/header provenance, but these
+records do not decompose its full-components versus explicit-unavailable branch.
+The exact read-only boundary, physical driver/parser hashes and live wrapper
+retention requirement are recorded in
+[`t27-717-compiler-provenance-20261015.json`](../evidence/t27-717-compiler-provenance-20261015.json).
+
+Independent compiler review of atomic fix `220ef337` found a concrete blocker:
+an earlier local enum in an uncalled function can collide with a global enum
+name and cause actual `weak=true` to be read as zero by the existing enum lookup.
+The resulting C incorrectly uses the strong CAS model. The exact defined C++
+probe, source/output hashes, C model, guarded resource receipt and required
+repair are retained in
+[`t27-atomic-enum-review-20261015.json`](../evidence/t27-atomic-enum-review-20261015.json).
+The owner received the reproducer. The 40-variant comparison was controlled-stopped
+after 11 old-source rows at a completed-row boundary; the new-source phase never
+started, so it establishes no old/new equality. Its compiler slot was released
+to the coordinator's next diagnosis. Root retains dispatch ownership for both
+remote lanes and will compose the reviewed repairs before final acceptance.
