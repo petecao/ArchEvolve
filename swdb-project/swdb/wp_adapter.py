@@ -186,6 +186,9 @@ class WpAdapter:
             ([f"-inline-calls={','.join(callees)}"] if callees else [])
         base = hint_check.wp_base(lowering.text, lowering.anchors, self._context(lowering, entry, summary_job, context))
         base = self._with_contracts(base, contracts)
+        if context.get("semantics"):
+            context["semantics_hint_base"] = base
+            proof_setup.check_semantics_hints(base, self.hints)
         accepted = self._hint_check(job, lowering, base, context) if self.hints_path else []
         text = hint_check.merge(base, lowering.anchors, self.hints, accepted).text
         input_path = wp_dir / "wp_input.c"
