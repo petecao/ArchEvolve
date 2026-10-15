@@ -401,3 +401,17 @@ result diagnostics also pass; they do not replace the full public construct suit
 Exact source and record hashes, incremental reports and validation boundaries:
 [`t24-model-results-public-20261015.json`](../evidence/t24-model-results-public-20261015.json).
 Ticket24 remains claimed until combined-source acceptance completes.
+
+After merging the ownership/DX100 initialization checkpoint into isolated7437f3b9,
+all94 native/lowering and69 proof-setup cases pass across retained runs. The first
+combined invocation stopped after127 passes and5 watchdog process-inspection EPERM
+failures inside the sandbox. The first failed case passes alone with the authorized
+permissions; only the35 remaining cases were replayed and all pass. The evidence
+records this split rather than calling the interrupted run clean. No guard was
+disabled, and this does not cover ticket36's later pointer changes.
+
+The two core adapter tests now expect the current lowerer9 tool ID. Their actual
+public safe WP/bounded jobs both pass (**2 passed,311.74s**); bounded native
+agreement includes4,375 C++/C executions. Exact trusted-tool sets are asserted.
+Report:`/private/tmp/probata-t24-lowerer9-tool-pins.jsonl`. This focused replay
+precedes ticket36's later pointer policy and does not upgrade historical records.

@@ -4,40 +4,40 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Checkpoint: reviewed integration source `284dbc78`, plus diagnostic note `9eb57374`,
-on `codex/probata-poc-integration`, based on `yanrujhou_main` at `150930b4`.
-It includes lowerer 8's checked standard-object initializedness and aggregate copies,
-initialized WP fixtures, signed native footprint queries, distinct bounded tile objects,
-mandatory CBMC pointer checks and the reader dependency hash closure.
-User approval covers scoped implementation, commits, pushes, remote source sync and
-two mbit10 CPU lanes; the specific BFS-to-Codex/OpenAI export approval also covers 07.
+Runtime checkpoint: integration `0999dfb7` on `codex/probata-poc-integration`,
+based on `yanrujhou_main` at `150930b4`. Includes lowerer 9's integer model-result
+normalization, the checked private-vector proof view and named DX100 initialization.
+Focused merged-source validation at isolated `7437f3b9`:94 native/lowering and 69
+setup cases pass across retained runs; sandbox-only failures were reproduced and
+replayed with watchdog permissions. Details remain in ticket24's evidence.
+User approval covers scoped implementation, commits, pushes, remote source sync,
+two mbit10 CPU lanes and BFS proof-workspace export through Codex/OpenAI.
 
 | Ticket | Current work | Evidence or next action |
 |---|---|---|
-| 07 | Counted run 15 active from 04:47:30 ET | Fresh hints plus abstract chunk and postcondition-scope guidance; frozen `de78b7c6`; output `/private/tmp/probata-t07-20261015-run15/`. Run 14 failed with 14 hint goals open; its finite false-assertion audit is retained. |
-| 24 | Construct-group WP acceptance | Class positive/seeded-bug pair passes; template positive also proves. Raw integer call-result normalization passes 19 ordinary goals and 9 smoke checks; public regression and implementation are underway. Full combined-source replay, including new controls, awaits node 1. |
-| 25 | Lowerer 8 merged; unbounded lifetime research continues | Combined bounded std/initialization batch: 50 passed, no xfails; original five outcomes preserved. A private-region WP view is feasible in a raw probe, but checked source-frame projection and public acceptance remain open. |
-| 27 | Initialized semantics repair before two-lane acceptance | Safe three-read diagnostic has six initialization failures. Ignored uninitialized caller input incorrectly proves on the old contracts. Named internal-state initialization and checked caller-source requirements are being repaired; no remote acceptance dispatched. |
-| 36 | WP pointer boundary repair | Actual discarded out-of-range pointer formation incorrectly proved before the fix. First repaired public pair passes: invalid case stays unproven, legal one-past proves. Nullable-zero, address, mutation, difference and tile-row controls remain; initialization failure cannot count as extent protection. |
-| 41 | Resolved | Approved reconstruction `e23f3715…`, protected/class/ownership lifetime premises; exact guard and sanity controls pass. |
-| 42 | Resolved: production Rocq-checked theorem | `proof.probata.composition.20261015-a1`, 209 Qed, closed global context, actual record validate/build pass; 9 final integrated tests passed. About 491.2 MiB peak. |
+| 07 | Counted run16 started 06:09 ET, frozen `6acfbe4e` | Fresh hints plus processed-frontier/CSR induction guidance; output `/private/tmp/probata-t07-20261015-run16/`. Run 15 ended not proven with 1 unit and 24 hint obligations. Audit found missing induction information, no concrete false hint. |
+| 24 | Focused model-result fix integrated | Four public positive callers and missing-input negative pass; combined-source full constructs await node 1 after pointer policy finalizes. |
+| 25 | Nine focused private-vector ownership controls pass across two reports | Safe: 122/122 goals, stale alias sole liveness failure,7 protocol refusals. Nonallocating member/model public acceptance continues; general vector lifetime acceptance remains open. |
+| 27 | Exact safe three-read initializedness diagnostic | Shared static rows retain checked caller-input requirements. Quantifier exposure remains incomplete; finite specialization of frozen geometry is planned without new premises. Capacity and remote acceptance remain pending. |
+| 36 | Pointer formation and typed-origin audit | Legal/out-of-range row controls and 5 final pointer/model controls pass on staged source. Checking arbitrary primitive input pointer subobject provenance before pinning draft 3; allocation-block bounds alone are insufficient. |
+| 41 | Resolved | Approved reconstruction `e23f3715…`, protected/class/ownership lifetime premises and exact guard controls. |
+| 42 | Resolved | Production Rocq composition theorem: 209 Qed, closed context, actual record validate/build; no DX100 reduction claim. |
 
-Current count: **32 of 63 resolved**, five claimed. Draft 2 is immutable after an
-actual proof record pinned it; new lowerer or policy identities require draft 3.
-Ticket 43 remains blocked by 29. Ticket 28 research is available in
-`/private/tmp/probata-t28-research/PLAN.md`; it has not been claimed before 27 closes.
-Research identifies source-inferred full-cache-line interference and ready-query
-progress gaps, not a replayed gem5 counterexample. The adapter must refuse ordinary
-memory cases it cannot check rather than assume their preservation.
+Current count: **32 of 63 resolved**, five claimed. Drafts 1 and 2 are immutable;
+reviewed combined identities will create draft 3. No current pointer source or
+full construct acceptance is inferred from older checkpoints. Ticket43 remains
+blocked by 29; 28 remains unclaimed until 27 closes. No held-out kernels or method
+freeze before their dependencies resolve.
 
-Next: finish acceptance and conservative admission, merge verified changes, recompute
-frontier. No held-out kernel work or method freeze before its dependencies resolve.
+Next: finish conservative admission and actual acceptance, merge verified changes,
+recompute the ticket frontier and use the two leased remote socket lanes.
 
 ## Host coordination
 
-Live preflight at 2026-10-15 05:28 ET found both socket leases and the legacy lease released,
-load 0.00/0.02/0.00, about 117 GiB available RAM, 21 GiB free on `/data1` and 97 GiB on
-`/data`. These are dispatch observations, not permanent availability claims. New output
+Live preflight at 2026-10-15 06:05 ET found both socket leases and the legacy lease released,
+load 0.02/0.06/0.01, about 117 GiB available RAM, 21 GiB free on `/data1` and 97 GiB on
+`/data`. The process check found no active proof jobs. Evaluation source remains clean
+detached `dd975e72`; the installed wrapper matches its tracked remote blob. These are dispatch observations, not permanent availability claims. New output
 uses `/data/yanruj/EvolveSWDB_runs/`; source uses Git worktrees under `/data1/yanruj/`.
 The current lane wrapper is in `/data1/yanruj/Memacc-evolveswdb-lane`, verified against
 `origin/yanrujhou_main`. The older `/data1/yanruj/Memacc` checkout lacks it and has unrelated
@@ -65,10 +65,10 @@ not substitute for reading incremental run artifacts.
 
 ## Validation and progress reporting
 
-The 2026-10-15 05:30 ET report covered every active ticket and both lanes; next report is
-due around 06:00 ET. Run 14 ended unproven after 53.32 counted minutes with 14 hint
-obligations open; no final proof replay ran. Run 15 is active on fresh hints. Both
-remote evaluation lanes await the final combined source and method checkpoint.
+The 2026-10-15 06:00 ET report covered every active ticket and both lanes; next report
+is due around 06:30 ET. Run 15 ended not proven after 52.75 counted minutes with1unit
+and 24 hint obligations open; no final proof replay ran. Run 16 is active on fresh
+hints. Both remote lanes await the final combined source and method checkpoint.
 
 The early structural run disabled clang as well as WP/CBMC; four formal-frame assertions
 therefore failed for the wrong tool configuration. One isolated failure passes with clang

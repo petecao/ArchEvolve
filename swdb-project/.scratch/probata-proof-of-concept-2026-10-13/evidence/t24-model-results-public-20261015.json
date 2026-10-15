@@ -462,5 +462,51 @@
     "ticket24",
     "coordinator",
     "combined-acceptance-review"
-  ]
+  ],
+  "merged_validation": {
+    "source_commit": "7437f3b9687167dfb162f1dfd08c5a3b3a93cdbe",
+    "reports": [
+      {
+        "path": "/private/tmp/probata-t24-merged-native.jsonl",
+        "sha256": "84f983349d5b43b5a8b6dd9ee8a1f69a0f5fe796e6663af25bdf0e4099ec3294",
+        "passed": 127,
+        "failed": 5,
+        "session_finish": {
+          "exitstatus": 2,
+          "$report_type": "SessionFinish"
+        }
+      },
+      {
+        "path": "/private/tmp/probata-t24-setup-isolated.jsonl",
+        "sha256": "98c053b7534bb9fc19093e0d1ce593ac4df0c8377500d93f8bd619f90415e216",
+        "passed": 1,
+        "failed": 0,
+        "session_finish": {
+          "exitstatus": 0,
+          "$report_type": "SessionFinish"
+        }
+      },
+      {
+        "path": "/private/tmp/probata-t24-setup-remaining.jsonl",
+        "sha256": "60b1ecb3dbeb7ff30565a7073cc22576a7cb81efda1ea0193f4d43ef6b8c2b97",
+        "passed": 35,
+        "failed": 0,
+        "session_finish": {
+          "exitstatus": 0,
+          "$report_type": "SessionFinish"
+        }
+      }
+    ],
+    "outcome": "94 lowering/native and69 setup cases passed across retained runs. First combined run stopped after127passed and5 sandbox-only watchdog process-tree EPERM failures. Isolated first failure passed with permissions restored; only35 remaining cases were replayed and all passed. No guard disabled. No current t36 source/combined construct acceptance inferred."
+  },
+  "tool_pin_replay": {
+    "created": "2026-10-15 ET",
+    "runtime_base_commit": "8213ad6b",
+    "test_changes": "Only two expected tool ID literals changed from lowerer8 to9; runtime source unchanged.",
+    "report": "/private/tmp/probata-t24-lowerer9-tool-pins.jsonl",
+    "sha256": "c551449a80a84332b860d7c2c2c965cc1e3fd21fa4f1f61bbc1872d9100017a5",
+    "passed": 2,
+    "wall_seconds": 311.74,
+    "scope": "Public WP safe fixture and public bounded safe fixture prove and match exact trusted-tool set9. Bounded differential compares4375 native C++/C executions. Not final t36 combined acceptance."
+  }
 }

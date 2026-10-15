@@ -129,7 +129,7 @@ def test_failed_smoke_goal_voids_locally_valid_proof(seed, kind):
 ])
 def test_wp_setup_refuses_overrides_before_any_verifier_runs(seed, flags, rule):
     marker = seed.root / "must-not-run"
-    frozen = ["-wp-cache", "none", "-wp-model", "+real", "-machdep", "x86_64"]
+    frozen = ["-wp-cache", "none", "-wp-model", "+real", "-machdep", "x86_64", "-wp-no-filter-init"]
     script = seed.script(setup={"tool": "wp", "flags": frozen + flags}, run=["/usr/bin/touch", str(marker)])
     failed = seed.prove(script, ok=False)
     assert rule in failed.stderr
@@ -201,7 +201,7 @@ def test_an_unclassified_property_cannot_hide_behind_an_unrelated_timeout(seed):
 
 def test_existing_wp_session_stops_before_invoking_verifier(seed):
     marker = seed.root / "must-not-run"
-    plan = {"tool": "wp", "flags": ["-wp-cache", "none", "-wp-model", "+real", "-machdep", "x86_64"],
+    plan = {"tool": "wp", "flags": ["-wp-cache", "none", "-wp-model", "+real", "-machdep", "x86_64", "-wp-no-filter-init"],
             "work_files": {".frama-c/session.json": "{\"verdict\":\"valid\"}"}}
     failed = seed.prove(seed.script(setup=plan, run=["/usr/bin/touch", str(marker)]), ok=False)
     assert "fresh_session" in failed.stderr
@@ -224,7 +224,7 @@ def test_job_plan_pin_cannot_be_replaced_with_different_run_settings(seed):
 
 
 def test_solver_portfolio_reordering_is_refused_even_with_the_same_solver_set(seed):
-    frozen = ["-wp-cache", "none", "-wp-model", "+real", "-machdep", "x86_64"]
+    frozen = ["-wp-cache", "none", "-wp-model", "+real", "-machdep", "x86_64", "-wp-no-filter-init"]
     failed = seed.prove(seed.script(setup={"tool": "wp", "flags": frozen + ["-wp-prover", "z3,alt-ergo,cvc5"]}), ok=False)
     assert "solver order differs" in failed.stderr
 
@@ -248,7 +248,7 @@ def test_execution_method_must_pin_the_running_checks_version_and_content(seed, 
     "swdb/crux_adapter.py", "swdb/rocq_adapter.py", "swdb/proof.py", "vocab/proof_failure_classes.yaml",
     "swdb/cbmc_product.py", "swdb/rss_watchdog.py", "swdb/vocab.py", "swdb/formal_frame.py", "swdb/acsl_subset.py",
     "swdb/framac.py", "swdb/hint_check.py", "swdb/hint_tree.ml",
-    "swdb/wp_pointer_bounds.py", "swdb/proof_semantics.py", "swdb/vector_ownership.py"])
+    "swdb/wp_pointer_bounds.py", "swdb/proof_semantics.py", "swdb/vector_ownership.py", "swdb/standard_model_view.py"])
 def test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation(seed, changed):
     import os
     import shutil
@@ -283,4 +283,18 @@ def test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_
         capture_output=True, text=True, timeout=60)
     assert result.returncode != 0, result.stdout
     assert "does not pin the installed" in result.stderr, result.stderr
+    assert not marker.exists() and not seed.proof_files()
+
+
+@pytest.mark.parametrize("flags", [
+    [], ["-wp-no-filter-init", "-wp-filter-init"],
+    ["-wp-no-filter-init=false"], ["-wp-no-filter-init", "-wp-filter-init=true"],
+    ["-wp-no-filter-init", "-wp-no-filter-init=false"],
+])
+def test_wp_initialization_facts_cannot_be_filtered_or_boolean_override_hidden(seed, flags):
+    marker = seed.root / "must-not-run"
+    frozen = ["-wp-cache", "none", "-wp-model", "+real", "-machdep", "x86_64"]
+    script = seed.script(setup={"tool": "wp", "flags": frozen + flags}, run=["/usr/bin/touch", str(marker)])
+    failed = seed.prove(script, ok=False)
+    assert "frozen_switches" in failed.stderr
     assert not marker.exists() and not seed.proof_files()

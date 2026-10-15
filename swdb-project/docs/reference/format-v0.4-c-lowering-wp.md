@@ -102,6 +102,13 @@ swdb prove --candidate <c> --function <f> --contract <contract> --adapter wp --r
    under the RSS watchdog and the wall budget.
 5. Reads the verdict and runs the failure class's handler.
 
+Updated 2026-10-15 ET: WP methods also require the canonical boolean switch
+`-wp-no-filter-init`. WP33's default initialization filter can remove an entire defined
+predicate containing initializedness, including its validity conjuncts, from a non-initialization
+goal. Retaining the original hypotheses avoids that loss; it adds no input premise or runtime
+assumption. Methods and prelaunch setup reject omission, the opposite switch, duplicate switches
+and boolean `=value` spellings. This is a new method policy; existing method versions stay immutable.
+
 WP methods must freeze `-rte-initialized @all`. The adapter first parses and inlines
 the C input, then enables this function-set option against the existing AST and runs
 WP in the same fresh process. Frama-C 33's `-wp-rte` alone omits initialization checks.
