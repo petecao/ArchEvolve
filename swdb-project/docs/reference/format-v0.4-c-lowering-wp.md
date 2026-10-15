@@ -209,3 +209,35 @@ WP names `hint_rule` (the check's rule) instead of `failure_class`, and reruns w
 - 34/35/37: anchors from `<f>.anchors.json`; hints placed by `WpAdapter._input`; goals to retry from the
   record's `goals` and `unproven_properties`.
 - 36: replace `read_outcome` with the full reading rule; keep the class table above.
+
+## Checked terminal release (2026-10-15)
+
+The C lowering version 4 records an ownership certificate for one restricted `new int[]` pattern.
+Ordinary C and C++ artifacts retain `delete[]`. A separate WP view may omit the final delete only when
+`swdb.terminal_release` checks all of these conditions:
+
+- One fresh local owner, scalar `int` parameters, locals and return; no aliases, address escapes,
+  reassignment, globals, calls, callbacks, extra releases or custom allocator definitions.
+- A canonical complete fill loop immediately follows allocation, before any array read. Scalar locals
+  initialize before use; self-initialization is rejected. This is a syntactic initializedness check,
+  because the frozen `-wp-rte` setup does not request the separate
+  `-rte-initialized <function>` selector. WP 33 does support initializedness predicates.
+- The last two statements are exactly `delete[] owner; return scalar_expression;`, and the return does
+  not read the owner. Formal halves mention only scalar parameters and result; only pre-release loop
+  hints are admitted. Ghost declarations and statements are refused.
+
+The view adds a proof obligation that the array count is nonnegative before conversion to `size_t`.
+The existing allocation model requires a nonempty buffer, so zero-length arrays remain outside this
+narrow path. WP must still prove all earlier accesses and scalar runtime checks; allocation success
+never establishes freshness or initializedness by assumption.
+
+The release argument is the unchanged allocation base, with no earlier release. After it, the unit
+cannot observe heap lifetime or call an allocator hook. Eliding that terminal release therefore
+preserves the scalar result and live caller memory under the existing ordinary allocator-model trust.
+The path does not prove custom allocator side effects, resource exhaustion or general heap lifetimes.
+
+Records pin `terminal_release_check` and `terminal_release_certificate`, keep the original lowering,
+and separately report the WP view and its hash. The lowerer identity hashes both the lowering and
+ownership-checker sources; the checker revalidates the exact view before hint checking and launch.
+All uncertified releases and vector allocation/deallocation remain `not_proven / unsupported_construct`.
+Ticket 25's WP vector-growth acceptance is still open.

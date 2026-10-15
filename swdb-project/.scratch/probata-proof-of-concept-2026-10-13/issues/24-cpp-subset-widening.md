@@ -231,3 +231,31 @@ Original logs and incremental reports: `/private/tmp/probata-t24-20261015/{red,g
 No expected failure counts as acceptance. [WP's official manual](https://frama-c.com/download/frama-c-wp-manual.pdf),
 section 1.6, confirms that ACSL allocation/deallocation clauses are not implemented; switching
 memory models alone is not evidence that this gap is solved.
+
+## Narrow lifetime implementation — 2026-10-15
+
+A checked terminal-release path is being integrated for the initialized, nonescaping scalar-array fixture.
+Code: `swdb/terminal_release.py`, lowering version 4 (naming rules stay 3). It checks a single unchanged
+new-int-array owner, full initialization before any read, no aliases/escapes/calls or extra releases,
+and terminal delete followed by a scalar return that cannot observe the buffer. The ordinary lowering
+retains delete; only a separately pinned WP view elides that unobservable final release. It inserts a
+nonnegative-count proof obligation before unsigned conversion. Unsupported freshness/initializedness
+facts are not assumed. Every uncertified free/delete and every vector lifetime remains refused.
+
+Public TDD: the safe `swdb prove` test failed with `not_proven` before adapter integration, report
+`/private/tmp/probata-lifetime-research-2026-10-15/public-red.jsonl`. The lowerer's 75 tests passed
+(51.24 s), then ten focused controls passed after tightening initialization/alias cases (2.32 s).
+No positive production-WP acceptance is claimed at this checkpoint. Design, source evidence and the
+outside-repository diagnostic logs: `/private/tmp/probata-lifetime-research-2026-10-15/design.md`.
+
+Side finding: WP 33 supports `Pinitialized` (`LogicSemantics.ml:871`), but the frozen `-wp-rte`
+flags do not request its separate `-rte-initialized <function>` selector for read-initialization guards.
+The certificate requires a canonical full fill loop and initialized scalar locals rather than inferring
+arbitrary definedness from omitted obligations. This does not establish general initialization-guard
+coverage for the rest of the declared C++ subset. Custom or externally replaced allocator behavior remains outside the ordinary allocator
+model's assumption boundary. General vector growth needs real pointer provenance/liveness semantics;
+this narrow transformation does not close ticket 25.
+
+Before adapter integration, the expanded public negative set passed: **11 passed** (189.85 s),
+`/private/tmp/probata-lifetime-research-2026-10-15/public-negative.jsonl`. These establish conservative
+refusal controls, not positive terminal-release WP acceptance; the latter remains the recorded red test.

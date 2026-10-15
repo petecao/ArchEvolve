@@ -211,7 +211,7 @@ def test_an_unmatched_standard_library_is_refused_before_bounded_proof(seed, tmp
                                   env={"SWDB_CLANG": str(wrapper)}))
     assert record["verdict"] == "not_proven" and record["failure_class"] == "unsupported_construct"
     assert "agreement" not in record["settings"]
-    assert not any(r["name"] == "cbmc_input" for r in record.get("reports", []))
+    assert not any(r["name"] == "cbmc_input" for r in record.get("evidence", {}).get("reports", []))
 
 
 @pytest.mark.skipif(not _wp_ready(), reason="Frama-C 33.0 or clang 22.1.8 is missing")

@@ -16,6 +16,7 @@ per job) with the sandbox off (Why3 needs its socket).
 import hashlib
 import json
 import shutil
+from pathlib import Path
 
 import pytest
 import yaml
@@ -28,7 +29,7 @@ from testkit.record_subset import copy_record_subset
 
 LOWERING = FIXTURES / "proof" / "lowering"
 GROUP_FILES = ("classes.cc", "templates.cc", "new_array.cc", "std_models.cc", "omp_atomics.cc", "floats.cc",
-               "summaries.cc", "summary_impls.cc")
+               "summaries.cc", "summary_impls.cc", "terminal_release_controls.cc")
 UNITS = "\n".join((LOWERING / name).read_text() for name in GROUP_FILES)
 IMPLS = (LOWERING / "summary_impls.cc").read_text()
 SEEDED_BUGS = (
@@ -123,6 +124,14 @@ BUG_UNITS = {   # new_array.cc's two seeded-bug functions, each with its own con
     "new_after_delete": ("swdb_new_after_delete", [
         ("pre", "legality", "requires 1 <= n <= 100;"), ("post", "postcondition", "ensures \\result == n;")], [], []),
 }
+TERMINAL_CONTROLS = (
+    "escape_owner_address", "alias_write", "escape_scalar_address", "conditional_delete", "double_delete",
+    "later_callback", "ignored_uninitialized_read", "reassigned_owner",
+)
+for _control in TERMINAL_CONTROLS:
+    BUG_UNITS[f"new_{_control}"] = (f"swdb_new_{_control}", [
+        ("pre", "legality", "requires 1 <= n <= 100;"),
+        ("post", "postcondition", "ensures \\result == n;")], [], [])
 SUMMARIES = {   # entry: (function, [(clause id, role, ACSL)], interface arrays)
     "dxc_tile_size": ("__dxc_tile_size", [
         ("pre", "legality", "requires 0 <= tile < 8;"),
@@ -310,21 +319,37 @@ def allocation_subset(tmp_path_factory):
 
 
 @needs_wp
-@pytest.mark.parametrize("group", ["new_array", "new_out_of_range", "new_after_delete"])
-def test_wp_refuses_deallocation_including_an_out_of_range_access_and_use_after_delete(allocation_subset, group):
+@pytest.mark.parametrize("group", ["new_after_delete", *[f"new_{name}" for name in TERMINAL_CONTROLS]])
+def test_wp_refuses_uncertified_deallocation_aliases_escapes_and_later_effects(allocation_subset, group):
     record = allocation_subset.unit(group)
     assert record["verdict"] == "not_proven"
     assert record["failure_class"] == "unsupported_construct"
     assert record["goals"] == []
-    assert not any(report["name"] == "wp_input" for report in record.get("reports", []))
+    assert not any(report["name"] == "wp_input" for report in record.get("evidence", {}).get("reports", []))
     assert any(a["sentence"].startswith("Allocation succeeds") for a in record["assumptions"])
 
 
 @needs_wp
-@pytest.mark.xfail(strict=True, reason="Open ticket 24 acceptance: WP 33 lacks deallocation lifetime support; "
-                                       "safe new[]/delete[] units are conservatively refused")
-def test_acceptance_gap_safe_new_and_delete_array_unit_can_be_proven(allocation_subset):
-    assert allocation_subset.unit("new_array")["verdict"] == "proven"
+def test_checked_terminal_delete_allows_the_initialized_nonescaping_array_unit_to_prove(allocation_subset):
+    record = allocation_subset.unit("new_array")
+    assert record["verdict"] == "proven", record.get("unproven_properties")
+    assert record["pins"]["terminal_release_check"]["id"] == "terminal-release-check-1"
+    assert record["pins"]["terminal_release_certificate"]["id"] == "swdb_new_unit.terminal-release"
+    certificate = record["settings"]["terminal_release"]["certificate"]
+    assert certificate["owner"] == "buf" and certificate["initialization"] == "canonical complete fill before every array read"
+    paths = {r["name"]: r["path"] for r in record["evidence"]["reports"]}
+    original = Path(paths["c_lowering"]).read_text()
+    view = Path(paths["terminal_release_view"]).read_text()
+    assert "swdb_alloc_delete_array_int(buf);" in original
+    assert "swdb_alloc_delete_array_int(buf);" not in view and "assert n >= 0" in view
+    assert len(original.splitlines()) == len(view.splitlines())
+
+
+@needs_wp
+@pytest.mark.parametrize("candidate,group", [("safe", "new_out_of_range"), ("bug", "new_array")])
+def test_out_of_range_array_access_never_gains_a_terminal_release_proof(allocation_subset, candidate, group):
+    record = allocation_subset.unit(group, candidate=candidate)
+    assert record["verdict"] == "not_proven"
 
 
 @needs_wp
@@ -339,3 +364,27 @@ def test_a_unit_whose_c_model_has_no_proven_record_runs_nothing(subset, tmp_path
     result = fresh.unit("std_models", ok=False)
     assert "has no proven record at its current text: run `swdb prove --model std_min_int --adapter wp` first" \
         in result.stderr
+
+
+@needs_wp
+@pytest.mark.parametrize("annotation", ["heap_postcondition", "ghost_hint"])
+def test_terminal_release_proof_refuses_heap_observation_and_ghost_effects(allocation_subset, annotation):
+    contract = allocation_subset.root / "library" / "rewrite_contracts" / "fixture_wp24_new_array.yaml"
+    original = contract.read_text()
+    hint_file = allocation_subset.root / f"terminal-release-{annotation}.yaml"
+    hints = [h for anchor, text in GROUPS["new_array"][3] for h in _hints(anchor, *text.splitlines())]
+    try:
+        if annotation == "heap_postcondition":
+            data = yaml.safe_load(original)
+            data["clauses"][-1]["acsl"]["text"] = "ensures \\valid(&n);"
+            contract.write_text(yaml.safe_dump(data, sort_keys=False))
+        else:
+            hints.append({"anchor": "ghost.globals", "kind": "ghost_declaration", "text": "ghost int observed = 0;",
+                          "provenance": {"source": "human"}})
+        hint_file.write_text(yaml.safe_dump({"hints": hints}, sort_keys=False))
+        record = allocation_subset.prove("--candidate", allocation_subset.candidates["safe"], "--function",
+                                         "swdb_new_unit", "--contract", contract_id("new_array"), "--hint-file", hint_file)
+        assert record["verdict"] == "not_proven" and record["failure_class"] == "unsupported_construct"
+        assert not any(report["name"] == "wp_input" for report in record.get("evidence", {}).get("reports", []))
+    finally:
+        contract.write_text(original)
