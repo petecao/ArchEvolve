@@ -1,0 +1,357 @@
+{
+  "created": "2026-10-15 09:26 ET",
+  "scope": "Ticket24/36 generic summary definition and proof-domain binding; no whole-ticket completion",
+  "source": {
+    "base": "bfc5e4f6742576eef85b4383adf4839a8912b4e9",
+    "branch": "codex/probata-construct-init",
+    "runtime_manifest": {
+      "created": "2026-10-15 09:12 ET",
+      "base": "bfc5e4f6742576eef85b4383adf4839a8912b4e9",
+      "files": [
+        {
+          "path": "/private/tmp/probata-construct-init/swdb-project/swdb/summary_bindings.py",
+          "sha256": "1c5d99b99753eb8c92f039722c15ece12b488af99003047b7cc9b2a81b2a6100"
+        },
+        {
+          "path": "/private/tmp/probata-construct-init/swdb-project/swdb/cbmc_adapter.py",
+          "sha256": "c2d907137a53f16c9e11cedef09d7555cd51a583913132fd0e286d60a8cb10b2"
+        },
+        {
+          "path": "/private/tmp/probata-construct-init/swdb-project/swdb/crux_adapter.py",
+          "sha256": "499220e211a921421e8e9402f92707c415a9f23d2205de8c342760e76db17bd8"
+        },
+        {
+          "path": "/private/tmp/probata-construct-init/swdb-project/swdb/wp_adapter.py",
+          "sha256": "c124ad6dc152a85a8d468a8a44a2be0294896f97a5d8c534e9b89104ddf95bfe"
+        },
+        {
+          "path": "/private/tmp/probata-construct-init/swdb-project/swdb/proof_setup.py",
+          "sha256": "b5cde653cad810a98081a70826544b34aabd2dbac9d3f15c84a3c89df17d872a"
+        },
+        {
+          "path": "/private/tmp/probata-construct-init/swdb-project/swdb/helper_windows.py",
+          "sha256": "ad59fe552e41bbd6019ab79e3dfb20a9a5de319776cabd75bab609ba220e6338"
+        },
+        {
+          "path": "/private/tmp/probata-construct-init/swdb-project/swdb/c_lowering.py",
+          "sha256": "29c198aaaa6589d8bb1696c9ae52c4def6f63c104263b48ce743ee76e5faf047"
+        },
+        {
+          "path": "/private/tmp/probata-construct-init/swdb-project/swdb/bounded_initialization.py",
+          "sha256": "12885e27dc1cb62b6c89ed4c2b5728c350dc6b0a5781b09ab70ff058e83b287d"
+        },
+        {
+          "path": "/private/tmp/probata-construct-init/swdb-project/swdb/vector_ownership.py",
+          "sha256": "a93479583c7fd09d992bd5a68bf117280200c09f8749eafbe2dc0e9e077db8e7"
+        },
+        {
+          "path": "/private/tmp/probata-construct-init/swdb-project/swdb/model_domains.py",
+          "sha256": "37b2720fa7595eb6bd6b9e541211348526e0f087182a5d9416e3b379569725b0"
+        }
+      ]
+    },
+    "manifest_sha256": "6f0946d1546bfd3336de2a8bc65bd6dba92b1cc07e2d4698edad0325f7a8be05",
+    "lowering": {
+      "c_lowering": {
+        "id": "swdb-c-lowering-9",
+        "sha256": "4863fe79ef11d6b289d362b106618b9e2c04c5cc59f24ad2e09728c89f3d61ec"
+      },
+      "naming_rules": {
+        "id": "kept-names.3",
+        "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+      },
+      "clang": {
+        "id": "clang-22.1.8",
+        "sha256": "305697d3868243dca6e4aabf4f628df7de135d701eb4fd78f6a5d7528fef4395"
+      }
+    },
+    "checks": {
+      "proof_setup_check": {
+        "version": "1",
+        "sha256": "4ea13f2781aca8490873a498ac4ae7efb49af739ddfe4941689cfdb5e14fc9d0"
+      },
+      "verdict_reading": {
+        "version": "1",
+        "sha256": "4ea13f2781aca8490873a498ac4ae7efb49af739ddfe4941689cfdb5e14fc9d0"
+      }
+    },
+    "translator": {
+      "id": "swdb-cbmc-translator-4",
+      "sha256": "6bd87667137100283979b46060ed2ab0f06408ba7bb91b1923c4573bfda0289e"
+    }
+  },
+  "baseline_false_proof": {
+    "source": "44d50f7e1e6e59cebaeff0e3b9e230d9c9d962f6",
+    "public_red": {
+      "cmd": [
+        "/Users/yanrujhou/.pyenv/shims/python3",
+        "-m",
+        "pytest",
+        "tests/test_summary_source_binding.py",
+        "-q",
+        "--basetemp=/private/tmp/probata-summary-binding-red2",
+        "--report-log=/private/tmp/probata-summary-binding-red2.jsonl"
+      ],
+      "exit_code": 1,
+      "wall_s": 35.38,
+      "peak_rss_mb": 271.4,
+      "cap_gb": 8.0,
+      "killed_by_watchdog": false,
+      "timed_out": false,
+      "timeout_s": 1200.0,
+      "log": "/private/tmp/probata-summary-binding-red2.log",
+      "log_sha256": "e4c43ca6d681016dc6a5e9c06393bdd39c718a41de766827d16f9ffdb53ab2e9",
+      "lock_wait_s": 0.0,
+      "finished": "2026-10-15 08:58:56 EDT",
+      "summary_path": "/private/tmp/probata-summary-binding-red2.log.summary.json",
+      "summary_sha256": "bf6bbe7dbc3aefeab12cb22886b3f8d69741c2550f81fc01cd9be493be52721e"
+    },
+    "records": [
+      {
+        "path": "/private/tmp/probata-summary-binding-red2/divergent-summary0/records/proofs/proof.cbmc-safe.candidate-1.20261015t125853z.adc9c18a.yaml",
+        "sha256": "7d44a0ee4f711a001cc7d108163507f74dea70955dbe938cc1562d6a8b1d76d0",
+        "subject": {
+          "kind": "candidate_proof_unit",
+          "candidate": "cbmc-safe.candidate-1",
+          "function": "swdb_fixture_clamp_all"
+        },
+        "verdict": "proven"
+      },
+      {
+        "path": "/private/tmp/probata-summary-binding-red2/divergent-summary0/records/proofs/proof.contract.fixture_cbmc_clamp.20261015t125851z.902a1410.yaml",
+        "sha256": "3edcb93a53d570be3674a8cd343bdb9e0e47136dbdad3e6c076f5f4f2a04f0a7",
+        "subject": {
+          "kind": "library_summary",
+          "id": "contract.fixture_cbmc_clamp"
+        },
+        "verdict": "proven"
+      }
+    ],
+    "native_witness": {
+      "created": "2026-10-15 09:20 ET",
+      "source": "/private/tmp/probata-summary-binding-red2/divergent-summary0/runs/cbmc-safe/source/src/bfs.cc",
+      "source_sha256": "1149e6bf6f6a8e18f344be445fb645d41e05f5d9211097980a2718fe1eb0ddd4",
+      "witness_source": "/private/tmp/probata-summary-binding-native-witness/witness.cc",
+      "witness_source_sha256": "8375ec87951bbdb66a17b5945d8450d1aa5eebf869bfc299cc832a47298b8d52",
+      "compiler": [
+        "/opt/homebrew/opt/llvm/bin/clang++"
+      ],
+      "compile_exit": 0,
+      "run_exit": 0,
+      "input": {
+        "a": [
+          1
+        ],
+        "n": 1
+      },
+      "actual_post_a": [
+        0
+      ],
+      "contract_requires_post_a": [
+        1
+      ],
+      "scope": "native witness for baseline false summary proof; exact candidate function source spans copied, no modeled stub"
+    },
+    "agreement_boundary": "100 recorded finite-grid native inputs agree on the changed callee; neither agreement nor a shared name binds the library summary"
+  },
+  "validation": {
+    "initial_five": {
+      "cmd": [
+        "/Users/yanrujhou/.pyenv/shims/python3",
+        "-m",
+        "pytest",
+        "tests/test_summary_source_binding.py",
+        "tests/test_cbmc_adapter.py::test_a_callee_summary_is_proven_first_then_pinned_and_used_as_a_stub_in_place_of_its_code",
+        "tests/test_cbmc_adapter.py::test_c_stub_meaning_a_caller_that_breaks_the_callees_precondition_is_refuted_at_the_stubs_assert",
+        "tests/test_cbmc_adapter.py::test_c_stub_meaning_a_caller_expecting_a_location_inside_assigns_to_keep_its_value_is_refuted",
+        "tests/test_cbmc_adapter.py::test_c_stub_meaning_a_caller_relying_on_a_location_outside_assigns_proves_and_lists_each_assume",
+        "-q",
+        "--basetemp=/private/tmp/probata-summary-binding-green1",
+        "--report-log=/private/tmp/probata-summary-binding-green1.jsonl"
+      ],
+      "exit_code": 1,
+      "wall_s": 128.0,
+      "peak_rss_mb": 2644.8,
+      "cap_gb": 8.0,
+      "killed_by_watchdog": false,
+      "timed_out": false,
+      "timeout_s": 1800.0,
+      "log": "/private/tmp/probata-summary-binding-green1.log",
+      "log_sha256": "6157e94dbc47ebdbfdde978de1dbca727472d37ab20437029409e6f70b5e5a7b",
+      "lock_wait_s": 0.0,
+      "finished": "2026-10-15 09:07:32 EDT",
+      "summary_path": "/private/tmp/probata-summary-binding-green1.log.summary.json",
+      "summary_sha256": "9dc44f9f2307925a11af86161a1b8f3bed4d0d9c6fa1c2b2f49f191f95616922"
+    },
+    "initial_five_boundary": "2 passed; 3 intentionally newly refused because old fixtures used summary n<=2 for caller n<=3. Positive fixtures corrected to n<=3; mismatch retained as explicit negative.",
+    "array_isolated": {
+      "cmd": [
+        "/Users/yanrujhou/.pyenv/shims/python3",
+        "-m",
+        "pytest",
+        "tests/test_cbmc_adapter.py::test_c_stub_meaning_a_caller_relying_on_a_location_outside_assigns_proves_and_lists_each_assume",
+        "-q",
+        "--basetemp=/private/tmp/probata-summary-array-repro",
+        "--report-log=/private/tmp/probata-summary-array-repro.jsonl"
+      ],
+      "exit_code": 0,
+      "wall_s": 52.63,
+      "peak_rss_mb": 2643.0,
+      "cap_gb": 8.0,
+      "killed_by_watchdog": false,
+      "timed_out": false,
+      "timeout_s": 900.0,
+      "log": "/private/tmp/probata-summary-array-repro.log",
+      "log_sha256": "0410793cf752536f56adcc182e183811bdbd4721cc048dee0186e1cae95292bc",
+      "lock_wait_s": 0.0,
+      "finished": "2026-10-15 09:09:30 EDT",
+      "summary_path": "/private/tmp/probata-summary-array-repro.log.summary.json",
+      "summary_sha256": "f37bf83d59e797122f4ca0077074ea1df251a9a47876c9e545780c6f8517fca5"
+    },
+    "main_thirteen": {
+      "cmd": [
+        "/Users/yanrujhou/.pyenv/shims/python3",
+        "-m",
+        "pytest",
+        "tests/test_summary_source_binding.py",
+        "tests/test_cbmc_adapter.py::test_a_callee_summary_is_proven_first_then_pinned_and_used_as_a_stub_in_place_of_its_code",
+        "tests/test_cbmc_adapter.py::test_c_stub_meaning_a_caller_that_breaks_the_callees_precondition_is_refuted_at_the_stubs_assert",
+        "tests/test_cbmc_adapter.py::test_c_stub_meaning_a_caller_expecting_a_location_inside_assigns_to_keep_its_value_is_refuted",
+        "tests/test_cbmc_adapter.py::test_c_stub_meaning_a_caller_relying_on_a_location_outside_assigns_proves_and_lists_each_assume",
+        "-q",
+        "--basetemp=/private/tmp/probata-summary-binding-final",
+        "--report-log=/private/tmp/probata-summary-binding-final.jsonl"
+      ],
+      "exit_code": 1,
+      "wall_s": 286.69,
+      "peak_rss_mb": 4139.7,
+      "cap_gb": 8.0,
+      "killed_by_watchdog": false,
+      "timed_out": false,
+      "timeout_s": 1800.0,
+      "log": "/private/tmp/probata-summary-binding-final.log",
+      "log_sha256": "66df96dfdb3dc6beb9dae939d642bf673ecb4ee2478fb3762a0cb40e0c464798",
+      "lock_wait_s": 0.0,
+      "finished": "2026-10-15 09:18:02 EDT",
+      "summary_path": "/private/tmp/probata-summary-binding-final.log.summary.json",
+      "summary_sha256": "7cc55ee59501677dcb43b2295069b32ed3404c7e4b214183aea1b8590c2ce47f"
+    },
+    "main_boundary": "11 passed; two test setup assertions failed because an all-zero stale method hash was rejected during record validation before dependency admission. Both corrected tests use a valid older method pin and pass below. Runtime bytes unchanged.",
+    "corrected_method_pair": {
+      "cmd": [
+        "/Users/yanrujhou/.pyenv/shims/python3",
+        "-m",
+        "pytest",
+        "tests/test_summary_source_binding.py::test_a_summary_proof_must_match_its_method_implementation_and_retained_evidence[method]",
+        "tests/test_summary_source_binding.py::test_a_newer_ineligible_summary_does_not_mask_an_eligible_proof",
+        "-q",
+        "--basetemp=/private/tmp/probata-summary-method-repro",
+        "--report-log=/private/tmp/probata-summary-method-repro.jsonl"
+      ],
+      "exit_code": 0,
+      "wall_s": 73.0,
+      "peak_rss_mb": 4776.5,
+      "cap_gb": 8.0,
+      "killed_by_watchdog": false,
+      "timed_out": false,
+      "timeout_s": 900.0,
+      "log": "/private/tmp/probata-summary-method-repro.log",
+      "log_sha256": "043d0098bf511ad1db3df7fb5f3cf09589228027bc51ed7afdf26a683e5c723b",
+      "lock_wait_s": 0.0,
+      "finished": "2026-10-15 09:20:19 EDT",
+      "summary_path": "/private/tmp/probata-summary-method-repro.log.summary.json",
+      "summary_sha256": "21543197baaf39960c4ac2c3baad6ce24605769991fb630f4382eb9c95d142b3"
+    },
+    "crux_pair": {
+      "cmd": [
+        "/Users/yanrujhou/.pyenv/shims/python3",
+        "-m",
+        "pytest",
+        "tests/test_summary_source_binding.py",
+        "-q",
+        "-k",
+        "changed_candidate and crux",
+        "--basetemp=/private/tmp/probata-summary-crux-binding",
+        "--report-log=/private/tmp/probata-summary-crux-binding.jsonl"
+      ],
+      "exit_code": 0,
+      "wall_s": 60.11,
+      "peak_rss_mb": 3537.5,
+      "cap_gb": 8.0,
+      "killed_by_watchdog": false,
+      "timed_out": false,
+      "timeout_s": 900.0,
+      "log": "/private/tmp/probata-summary-crux-binding.log",
+      "log_sha256": "ae36e7584b1ae90edaa7c92881b103bfcd88d4d3601c0ca768b5db990baf3d2b",
+      "lock_wait_s": 0.0,
+      "finished": "2026-10-15 09:22:05 EDT",
+      "summary_path": "/private/tmp/probata-summary-crux-binding.log.summary.json",
+      "summary_sha256": "82e9736d368a7af5704a5cca999fdf343b7f46292c4f8395291496c1eff037ea"
+    },
+    "unique_accepted_controls": 15,
+    "accepted_control_union": "11 main controls +2 corrected method controls +2 additional Crux source-refusal controls; not one clean fifteen-test batch",
+    "standins": {
+      "report": "/private/tmp/probata-summary-standins2.jsonl",
+      "sha256": "5b4eef25e2a390881e5a7e045ed10cbb109fe6fd7c295e0e335c7f1445c4c74b",
+      "passed": 88,
+      "deselected_real_wp": 13,
+      "seconds": 157.67,
+      "boundary": "Earlier root hook snapshot before final proof-adapter/code-pin selection hardening; no actual Crux proof inferred."
+    },
+    "corpus_pins_and_docs": {
+      "cmd": [
+        "/Users/yanrujhou/.pyenv/shims/python3",
+        "-m",
+        "pytest",
+        "tests/test_summary_source_binding.py::test_changed_candidate_callee_cannot_borrow_library_implementation_summary[cbmc]",
+        "tests/test_proof_setup.py::test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation[swdb/summary_bindings.py]",
+        "tests/test_proof_setup.py::test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation[swdb/helper_windows.py]",
+        "tests/test_format_doc.py",
+        "-q",
+        "--basetemp=/private/tmp/probata-summary-corpus-pins",
+        "--report-log=/private/tmp/probata-summary-corpus-pins.jsonl"
+      ],
+      "exit_code": 0,
+      "wall_s": 57.58,
+      "peak_rss_mb": 2325.6,
+      "cap_gb": 8.0,
+      "killed_by_watchdog": false,
+      "timed_out": false,
+      "timeout_s": 900.0,
+      "log": "/private/tmp/probata-summary-corpus-pins.log",
+      "log_sha256": "8c07760f43cb51e6ed957342e33da2d7d2a474c277007e0244811811d62c52f1",
+      "lock_wait_s": 0.0,
+      "finished": "2026-10-15 09:27:57 EDT",
+      "summary_path": "/private/tmp/probata-summary-corpus-pins.log.summary.json",
+      "summary_sha256": "9c6acd96c3f20e3d320fe971d855dccfe865356e42bcc166848b72f148a54f5e"
+    },
+    "corpus_pins_and_docs_counts": {
+      "passed": 7,
+      "seconds": 57.27,
+      "new_pin_controls": 2,
+      "boundary": "One already covered CBMC rejection rerun after converting it to consume the persistent regression corpus case; not seven additional actual proof cases."
+    }
+  },
+  "artifact_audit": {
+    "path": "/private/tmp/probata-summary-final-record-audit.json",
+    "sha256": "8d6270265e14fa161af5935d1c59f145a0a161b2f56951d2bfd97427a5b699b9",
+    "record_rows": 30,
+    "intentional_evidence_mismatch_records": [
+      "proof.contract.fixture_cbmc_clamp.20261015t131453z.05437753"
+    ],
+    "boundary": "The evidence-mutation negative deliberately changes one summary report hash. All other audited referenced artifact hashes match; mutated records are test controls, not accepted dependencies."
+  },
+  "independent_review": {
+    "path": "/private/tmp/probata-summary-binding-review.md",
+    "sha256": "205e3c8866c5a4b10b78b53c497a859a03bc89159334b3d8aef4590a85f32018",
+    "boundary": "Read-only earlier snapshot review. Latest-eligible selection and preservation of WP settings were subsequently repaired and exercised by actual controls."
+  },
+  "limits": [
+    "Generic imports require an actual global definition with equal complete fresh C closure except provenance banner.",
+    "Global/persistent state, external-only declarations, model/summary dependencies and contextual pointer forwarding are refused by this slice.",
+    "Finite dimensions follow only from literals or unmodified caller entry bounds; finite pointer buffers have distinct bases and equal physical capacities.",
+    "WP imports still require current same-method unbounded checked WP dependencies.",
+    "DX imported symbols use their independent model binding; no general extern symbol/library mapping inferred.",
+    "Final method3, combined construct/helper/model acceptance, and held-out kernels remain gated."
+  ]
+}

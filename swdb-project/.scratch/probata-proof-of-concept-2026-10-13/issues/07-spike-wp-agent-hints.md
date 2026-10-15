@@ -963,3 +963,23 @@ Original output remains outside Git for offline induction/hint audit. This check
 does not establish universal validity of its hints or production pointer/initializedness
 acceptance. Status stays `claimed`; the authorized timebox remains open. Audit this
 distinct method before choosing any later counted attempt.
+
+### Run17 offline audit — 2026-10-15 ET
+
+The consumed-prefix guidance was attempted, then reverted: split scalar ghost
+declarations/assignments passed hint checking, but the progress proposal increased
+open goals from21 to25. The final38 hints contain no snapshots or consumption
+progress. A concrete loop-abstraction counterstate, not an execution counterexample,
+shows parent/queue safety alone cannot imply reachability completeness. The batch
+also lacks the suffix relation connecting gathered parent hints to monotone parent
+updates through exact CAS, and the parent-gather validity obligation precedes the
+currently available post-gather hint anchor.
+
+The [full offline audit](../evidence/t07-run17-offline-audit.md) verifies the frozen
+stand-in hashes and gives exact contract/cutpoint evidence. It motivates smaller
+bottom-up bridges and an explicitly named prospective method18 search/source
+revision. Run17 remains unproven; no final proof/smoke or later success is inferred.
+A further prelaunch review found the prototype launcher did not disable WP's
+initializedness filtering. The prospective method18 must pin `-wp-no-filter-init`
+in every proof mode; no new precondition will be silently added to hide exposed
+initialization obligations.

@@ -1,11 +1,11 @@
 # C stubs, bounded fallbacks, check mode and summary-form agreement
 
 Created: 2026-10-14 ET, Probata proof of concept ticket 23.
-Updated: 2026-10-15 ET, checked Crux source initializedness and fallback-policy refusal.
+Updated: 2026-10-15 ET, checked Crux source admission and generic summary source/proof-domain binding.
 Spec: `.scratch/probata-proof-of-concept-2026-10-13/issues/23-stub-translator-fallbacks-check-mode.md`; design:
 `.scratch/formal-verification-2026-10-09/spec.md` ("Verifier lineup and order", "Bounds", "Formal-half language and
 the C++ subset", "DX100 proof semantics"). Builds on [format-v0.4-cbmc.md](format-v0.4-cbmc.md) (ticket 22).
-Code: `swdb/cbmc_translator.py` (version 2), `swdb/crux_adapter.py`, `swdb/bounded_chain.py`, `swdb/cxx_cut.py`,
+Code: `swdb/cbmc_translator.py` (version 4), `swdb/crux_adapter.py`, `swdb/bounded_chain.py`, `swdb/summary_bindings.py`,
 `swdb/check_mode.py`, `swdb/summary_agreement.py`; the ACSL form of a summary in `swdb/wp_adapter.py`.
 Tests: `tests/test_cbmc_adapter.py`, `tests/test_crux_fallbacks.py`, `tests/test_check_mode.py`,
 `tests/test_summary_agreement.py`.
@@ -27,7 +27,7 @@ became its CBMC equivalent:
 | SAWScript, C stubs and ACSL agree | C stubs (CBMC) and ACSL (WP) agree; SAWScript has no verifier left |
 | SAW float-mode check | not run: no SAW adapter; recorded as "not confirmed in this effort", so crux-llvm `-f real` stays |
 
-## The C stubs (`swdb.cbmc_translator`, version 2)
+## The C stubs (`swdb.cbmc_translator`, version 4)
 
 A stub replaces a summarized callee. In order:
 
@@ -37,6 +37,22 @@ A stub replaces a summarized callee. In order:
 3. The `assigns` locations are havocked from the oracle.
 4. Each `ensures` is assumed. Its comment names the summary: `assume from summary <entry> sha256 <first 16>:
    <clause>`. These are the only `assume`s after a call.
+
+Updated 2026-10-15 ET: generic summary imports require a fresh binding to the actual
+global callee definition. The complete lowered callee closure must equal the
+pinned library implementation, excluding only the generated provenance banner.
+The summary proof must match that fresh implementation, the current method and
+checker, build constants and retained evidence. A newer ineligible proof cannot
+mask an eligible one. The same gate applies to WP, CBMC and both Crux forms, and
+is independently repeated before launch.
+
+Finite summary dimensions must cover unchanged caller entry arguments or literal
+arguments. Pointer imports additionally require distinct entry-buffer bases with
+the same physical capacity as the summary proof. A proof for `n <= 2` cannot stand
+for a caller admitted at `n <= 3`. Offsets, contextual pointer forwarding, global
+state, external-only declarations, and recursive model/summary dependencies remain
+unsupported by this generic binding slice. Checked DX imports use their separate
+model binding. Native C/C++ agreement alone does not certify a summary substitution.
 
 New in the translated ACSL subset:
 
@@ -54,7 +70,9 @@ A quantifier bound that reads the post-state cannot be snapshotted on entry. In 
 | Field | Meaning |
 |---|---|
 | `pins.summaries[].assumes` (`assumes`) | the names of the `assume`s that summary's stub emitted (one per `ensures` clause) |
-| `pins.translator` | `swdb-cbmc-translator-2` and the sha256 of `swdb/cbmc_translator.py` |
+| `pins.translator` | `swdb-cbmc-translator-4` and its content hash |
+| `settings.summary_bindings` | exact callee/proof identities and checked finite call-domain scope |
+| `proof_setup_check.runs[].hashes.summary_bindings` | digest of independently replayed bindings |
 
 ## Bounded fallbacks (`swdb prove --adapter bounded`)
 

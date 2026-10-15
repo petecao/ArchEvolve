@@ -4,45 +4,51 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Runtime checkpoint: integration `3f177e63` on `codex/probata-poc-integration`,
-based on `yanrujhou_main` at `150930b4`, pushed and clean before the current acceptance handoffs.
-Includes lowerer 9's integer result normalization, private-vector ownership,
-mandatory `-wp-no-filter-init`, checked `at()` view, named DX100 initialization,
-and conservative typed array-origin refusal. Explicit entry-domain declarations,
-mathematical bindings and checked WP operation admission are integrated. Entry windows
-are conditional typed input-contract premises; WP checks numerical bounds, target byte
-capacity and operations. It does not establish complete typed-domain realizability.
-Closed owner views independently check source origins, statement/access inventories,
-guards and annotation admission; generic model fields remain unsupported.
-Bounded domain planning and imported-domain stub refusal are integrated. The isolated
-root branch has checked primitive CBMC execution at frozen `07a9a299`: five remote
-controls pass in 189.77 seconds, including actual source C++ replay of both numerical
-negatives. Its independently reviewed source-name fix and 40 component checks pass;
-the corrected source has not yet been merged into integration. Crux fallback
-initializedness/source admission is a separate active follow-up.
-User approval covers scoped implementation, commits, pushes, remote source sync,
-two mbit10 CPU lanes and BFS proof-workspace export through Codex/OpenAI.
+Updated: 2026-10-15 09:15 ET. Pushed clean integration is `bfc5e4f6` on
+`codex/probata-poc-integration`, based on `yanrujhou_main` at `150930b4`.
+It includes primitive checked CBMC windows, exact all-DX imported-call binding,
+strict smoke-preserving literal-offset normalization, checked Crux source admission
+on both forms, and the closed current-owner `at()`/immediate `data()` views.
+Historical actual evidence retains each original source/method pin; later merges
+and stand-in checks do not upgrade that proof evidence.
 
-| Ticket | Current work | Evidence or next action |
+A real public CBMC counterexample on integration `44d50f7e` confirmed that a
+changed same-name callee could borrow a summary proved on different code. The
+root branch `codex/probata-construct-init` is implementing fresh complete callee
+closure equality, current proof/method/evidence binding, checked finite call bounds
+and exact pointer-buffer alignment, plus independent prelaunch replay. The changed
+callee now refuses before launch; matching scalar and array positives passed early
+controls. The final combined CBMC/WP batch is active, so this fix is not yet merged
+or accepted. Old array-summary fixtures used an n<=2 summary for n<=3 callers;
+positive fixtures now prove the matching bound and a separate negative retains
+that mismatch. No domain limitation is silently promoted to a general theorem.
+
+| Ticket | Current evidence | Next action |
 |---|---|---|
-| 07 | Run 17 ended unproven at 08:25:15 ET, frozen `af9a61b6` | 53.48 counted minutes, 38 hints, 270 goals, 2 unit and 17 hint goals open; no final proof/smoke replay. All 13 preflight source pins match the clean worktree. Audit before choosing any later method. [Final evidence](evidence/t07-counted-17.json). |
-| 24 | Focused model-result fix integrated | Four public positive callers and missing-input negative pass; remote native checkpoint passes 132 checks in 69.36 seconds at `aa7be61c`; combined-source full constructs await final origin policy. |
-| 25 | Remote owner 16/16 audited; qualified `at()` actual pair passes | Original safe: 119 ordinary goals plus 11 smoke passes; stale's sole open goal is alias liveness. New pair at `3f177e63`: safe 121/121 ordinary plus 11 smoke; missing bounds 105/106 ordinary plus 11 smoke, sole open `owner_at_guard_1`. General model/member lifetime acceptance remains open. |
-| 27 | Frozen DX batch 13 pass, 1 strict smoke failure | Stream/three-read positives and intended negatives/refusals pass. Offset-gather positive fails the introduced constant normalization branch smoke. Literal-only folding and stronger all-import/state-name bindings are under replay. Helper expansion has 53 component controls; adapter admission and nested ordinary reads remain pending. |
-| 36 | WP entry 15/15 audited; primitive CBMC 5/5 at `07a9a299` | Typed windows remain conditional premises. Primitive CBMC checks exact original and lowered views, frozen extents and all mathematical intermediates; two negatives replay on C++. Other domain routes stay closed. Global snapshot binding regression repaired before integration; Crux source admission is being aligned. |
-| 41 | Resolved | Approved reconstruction `e23f3715…`, protected/class/ownership lifetime premises and exact guard controls. |
-| 42 | Resolved | Production Rocq composition theorem: 209 Qed, closed context, actual record validate/build; no DX100 reduction claim. |
+| 07 | Run17 ended unproven: 2 unit and 17 hint goals; offline audit shows snapshots were attempted then reverted | Prepare method18's smaller bridges and a prospective, explicitly named search/source revision; no run18 launched |
+| 24 | Earlier 132-case remote native checkpoint; current-policy full constructs remain open | Finish generic summary binding and replay the combined construct groups |
+| 25 | Qualified at pair passed; current data safe/stale pair2 passing tests at `67dfd7a8`, with sole stale goal alias_live_after | Complete wider model/member lifetime acceptance; standalone opaque models stay closed |
+| 27 | Direct DX final 9 hardening checks and 2 safe replays pass at `f83fdf04`; helper component reviewed | Wire independently checked contextual helper view into WP, then actual combined acceptance |
+| 36 | Primitive remote CBMC 5 passing checks at `07a9a299`; 88 Crux and scripted setup controls pass on root follow-up | Complete source/proof-bound summary eligibility and combined checker replay |
+| 41 /42 | Resolved; approved strengthened composition statement, production Rocq 209 Qed | Preserve exact evidence boundary; no DX reduction claim |
 
-Current count: **32 of 63 resolved**, five claimed. Drafts 1 and 2 are immutable;
-reviewed combined identities will create draft 3. No current pointer source or
-full construct acceptance is inferred from older checkpoints. Ticket43 remains
-blocked by 29; 28 remains unclaimed until 27 closes. No held-out kernels or method
-freeze before their dependencies resolve.
+**32 of 63 resolved; five claimed.** Drafts 1/2 are immutable; draft 3 is not created.
+Ticket 28 remains unclaimed until 27 closes; 43 remains blocked by 29. Held-out kernels
+and method freeze remain gated by their dependencies. User authorization includes
+implementation, commits/pushes, source sync, two remote lanes and the scoped BFS
+workspace export through Codex/OpenAI.
 
-Next: finish conservative admission and actual acceptance, merge verified changes,
-recompute the ticket frontier and use the two leased remote socket lanes.
+Next: integrate the checked helper and summary fixes, replay combined-source
+acceptance, recompute the ticket frontier, then create a new method draft after
+runtime identities settle. The 09:05 ET status report was delivered; next due 09:35 ET.
 
 ## Host coordination
+
+Latest live readback: 2026-10-15 09:00 ET. Node 0 generation 554, node 1 generation 595
+and legacy generation 77 were released; load 0.00/0.02/0.14, 21 GiB free on `/data1`
+and 97 GiB on `/data`. Evaluation checkout remained clean detached `07a9a299`.
+No proof process appeared in the top CPU inventory. Recheck all leases and load
+before either lane is used; this is a timestamped observation.
 
 Latest readback at 2026-10-15 08:38 ET found both socket leases and the legacy lease
 released, with load 0.38/0.68/0.61, 21 GiB free on `/data1` and 97 GiB on `/data`.
