@@ -118,6 +118,9 @@ def begin(job, adapter, pins, method):
                 _fail("hazard_probes", f"probe {probe.get('id')} is absent or not generator-made")
         if plan.get("tool") in ("wp", "frama-c-wp"):
             _wp_flags(plan.get("flags", []), job.scratch)
+            selected = _values(plan.get("flags", []), "-wp-prover")
+            if method is not None and selected and any(value.split(",") != wp_provers(method) for value in selected):
+                _fail("method_version", "WP solver order differs from the method version")
         report["hashes"]["run_plan"] = _digest(plan)
     _environment()
     return report
@@ -238,6 +241,15 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
     return result
 
 
+def wp_provers(method):
+    """The explicitly frozen portfolio, or the legacy method's historical order."""
+    row = next((r for r in method.data.get("lineup", []) if r.get("tool") == "frama-c-wp"), {})
+    declared = _values(row.get("flags", []), "-wp-prover")
+    if len(declared) > 1:
+        _fail("method_version", "the method declares WP solver selection more than once")
+    return declared[0].split(",") if declared else ["alt-ergo", "z3", "cvc5"]
+
+
 def _lineup(method, adapter, tools, flags):
     lineup = {row["tool"]: row for row in method.data.get("lineup", [])}
     for name, identity_ in tools.get("identities", {}).items():
@@ -249,13 +261,13 @@ def _lineup(method, adapter, tools, flags):
     name = "frama-c-wp" if adapter.name == "wp" else "crux-llvm" if adapter.name.startswith("crux-llvm") else adapter.name
     declared = (lineup.get(name) or {}).get("flags", [])
     if adapter.name == "wp":
-        expected_provers = [row["tool"] for row in method.data.get("lineup", []) if row.get("role") == "solver"]
+        expected_provers = wp_provers(method)
         for key, value in (("-wp-timeout", str(method.data["budgets"]["wp_seconds_per_solver"])),
                            ("-wp-par", "1")):
             if _values(flags, key) != [value] and set(_values(flags, key)) != {value}:
                 _fail("method_version", f"{key} differs from the frozen method budget/settings")
         selected = _values(flags, "-wp-prover")
-        if not selected or any(set(value.split(",")) != set(expected_provers) for value in selected):
+        if not selected or any(value.split(",") != expected_provers for value in selected):
             _fail("method_version", "WP solver selection differs from the method lineup")
         if "-wp-smoke-tests" not in flags:
             _fail("smoke_tests", "the final WP run must generate smoke tests")
@@ -378,6 +390,14 @@ def read_wp_reports(goals_json, properties_csv, inventory_path, extern_contracts
         aliases = {prop.get("property") for prop in inventory.get("properties", [])
                    if prop.get("function") == (row.get("function") or None)
                    and str(prop.get("line", "")) == str(row.get("line", ""))}
+        dependency_map = {prop["property"]: set(prop.get("dependencies", [])) | ({prop["origin"]} if prop.get("origin") else set())
+                          for prop in inventory.get("properties", [])}
+        pending, reachable = list(aliases), set(aliases)
+        while pending:
+            dependency = pending.pop()
+            for dep in dependency_map.get(dependency, set()) - reachable:
+                reachable.add(dep)
+                pending.append(dep)
         matches = []
         for failed in unproven:
             origin = reported.get(failed["goal"]) or generated.get(failed["goal"], {})
@@ -387,7 +407,7 @@ def read_wp_reports(goals_json, properties_csv, inventory_path, extern_contracts
                        if prop.get("property") == failed.get("property") and prop.get("origin")}
             doomed = set(generated.get(failed["goal"], {}).get("targets", []))
             same_name = (failed.get("property") == row.get("property") or failed.get("property") in aliases
-                         or bool(origins & aliases) or bool(doomed & aliases))
+                         or bool(origins & aliases) or bool(doomed & aliases) or failed.get("property") in reachable)
             if same_name or (same_function and same_line):
                 matches.append(failed)
         if not matches:

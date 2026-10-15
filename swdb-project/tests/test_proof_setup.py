@@ -199,3 +199,24 @@ def test_setup_failure_stops_batch_without_starting_later_jobs(seed):
 def test_job_plan_pin_cannot_be_replaced_with_different_run_settings(seed):
     failed = seed.prove(seed.script(setup={"run_plan_sha256": "a" * 64}), ok=False)
     assert "run_plan_hash" in failed.stderr
+
+
+def test_solver_portfolio_reordering_is_refused_even_with_the_same_solver_set(seed):
+    frozen = ["-wp-cache", "none", "-wp-model", "+real", "-machdep", "x86_64"]
+    failed = seed.prove(seed.script(setup={"tool": "wp", "flags": frozen + ["-wp-prover", "z3,alt-ergo,cvc5"]}), ok=False)
+    assert "solver order differs" in failed.stderr
+
+
+@pytest.mark.parametrize("change", ["version", "sha256"])
+def test_execution_method_must_pin_the_running_checks_version_and_content(seed, change):
+    import yaml
+    from swdb import proof_setup
+    path = seed.root / "library" / "methods" / "contract-fixture-1.yaml"
+    data = yaml.safe_load(path.read_text())
+    data.update(id="method.setup-control", sequence=3, evidence_kind="execution")
+    data["checks"].update(proof_setup.identity())
+    data["checks"]["proof_setup_check"][change] = "wrong" if change == "version" else "f" * 64
+    (path.parent / "setup-control.yaml").write_text(yaml.safe_dump(data))
+    failed = seed.prove(seed.script(), ok=False)
+    assert "method_version" in failed.stderr
+    assert "does not pin the installed proof_setup_check" in failed.stderr

@@ -62,6 +62,10 @@ let run () = match Sys.getenv_opt "SWDB_PROOF_REPORT_OUT" with
                  (String.starts_with ~prefix:"Wp" name || name = "Unreachable Annotations") && tp.tp_statement.pred_name = ["Wp"; "SmokeTest"]
                | _ -> false)
             | _ -> false in
+          let dependencies = Property_status.fold_on_statuses
+              (fun e _ acc -> List.fold_left (fun acc p -> Property.Names.get_prop_name_id p :: acc)
+                  acc e.Property_status.properties) p [] in
+          let dependencies = List.sort_uniq String.compare dependencies in
           let origin = match p with
             | Property.IPPropertyInstance instance -> esc (Property.Names.get_prop_name_id instance.ii_ip)
             | _ -> "null" in
@@ -72,8 +76,8 @@ let run () = match Sys.getenv_opt "SWDB_PROOF_REPORT_OUT" with
             | Property.IPLemma _ -> "lemma"
             | _ -> "other" in
           properties := Printf.sprintf
-              "{\"property\":%s,\"function\":%s,\"kind\":%s,\"emitter\":%s,\"origin\":%s,\"extern\":%s,\"generated_smoke_failure\":%s,\"line\":%d,\"description\":%s}"
-              (esc (Property.Names.get_prop_name_id p)) (function_of p) (esc kind) (esc emitter_name) origin (bool extern) (bool smoke_failure) line
+              "{\"property\":%s,\"function\":%s,\"kind\":%s,\"emitter\":%s,\"origin\":%s,\"dependencies\":[%s],\"extern\":%s,\"generated_smoke_failure\":%s,\"line\":%d,\"description\":%s}"
+              (esc (Property.Names.get_prop_name_id p)) (function_of p) (esc kind) (esc emitter_name) origin (String.concat "," (List.map esc dependencies)) (bool extern) (bool smoke_failure) line
               (esc (Format.asprintf "%a" Property.pretty p)) :: !properties));
     let oc = open_out path in
     Printf.fprintf oc "{\"version\":\"1\",\"goals\":[%s],\"properties\":[%s],\"complete\":true}\n"
