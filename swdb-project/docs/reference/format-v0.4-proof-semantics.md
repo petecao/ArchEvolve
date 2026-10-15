@@ -147,6 +147,20 @@ unsigned 32-bit. Ordered unsigned magnitudes are checked before signed conversio
 
 ## For later tickets
 
+Updated 2026-10-15 ET: the WP entry and call contracts name `dx_state_initialized`, an initialization
+invariant for the fixed device storage. Static C initialization and the bounded harness's tile draws establish
+it; the trusted device contracts preserve it. Each stream/gather source and each store's old-value read has an
+explicit `source_initialized` caller obligation. No caller buffer is silently assumed initialized. Store
+contracts also preserve preexisting initialization inside their conservative frame. Ticket 29 must check these
+preservation contracts against the model bodies; the current proof record names this trust boundary.
+
+The lowering applies an identity `+ 0` to imported integer device-call results and the tile-pointer result,
+whose contract returns a non-null static row address. This forces WP 33's ordinary receiving-variable
+assignment to record initialization. Nullable pointer and floating-point calls are unchanged. Direct output
+initialization postconditions expose the invariant at the written tile; the read probe requires initialized
+input and preserves it at its equal returned address. These are checked caller obligations and trusted
+preservation contracts, respectively.
+
 - 28: the remaining calls and rules; supersede 0.1 with `sequence: 2`.
 - 29: three-form agreement (ACSL contracts, C model, C stubs) and the semantics negative controls.
 - 30: generate the C model from the one source; this version's `model.h` is hand-written.

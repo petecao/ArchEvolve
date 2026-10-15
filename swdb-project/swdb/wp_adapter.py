@@ -629,10 +629,13 @@ class WpAdapter:
             assumptions.append({"kind": "assumed_clause", "reference": {"id": semantics["id"],
                                                                         "sha256": semantics["sha256"]},
                 "sentence": "The WP model-domain preconditions hold: no DX100 command is outstanding at entry, "
+                            "the fixed modeled device storage is initialized (dx_state_initialized), "
                             "and CPU pointer parameters occupy objects separate from tile data, tile sizes, and "
                             "register values. The exact generated clauses are recorded in "
                             "settings.proof_semantics.unit_requires; store-frame witnesses and selected-index "
-                            "bounds remain checked proof obligations."})
+                            "bounds and initialized caller-memory reads remain checked proof obligations. "
+                            "Device-call initialization preservation is a trusted semantics contract, "
+                            "pending ticket 29's independent contract/body agreement checks."})
             reduction = Path(self.library.root) / "rocq" / "probata" / "Reduction.v"
             if not reduction.is_file():
                 reduction = paths.HOME / "library" / "rocq" / "probata" / "Reduction.v"

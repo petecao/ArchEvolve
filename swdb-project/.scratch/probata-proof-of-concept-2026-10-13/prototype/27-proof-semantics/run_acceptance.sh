@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Created: 2026-10-15 ET. Run inside a coordinated mbit10 socket lane; output is external to Git.
 set -euo pipefail
-# Usage: run_acceptance.sh <full frozen commit SHA> <safe|unsafe> [extra pytest arguments...]
+# Usage: run_acceptance.sh <full frozen commit SHA> <safe|unsafe|constructs> [extra pytest arguments...]
 PROBATA_EXPECTED_COMMIT="${1:?pass the full frozen commit SHA}"
 PROBATA_SHARD="${2:?pass safe or unsafe}"
 shift 2
@@ -16,6 +16,9 @@ case "$PROBATA_SHARD" in
   unsafe)
     PROBATA_TESTS=(tests/test_proof_semantics.py)
     PROBATA_SELECTION=( -k wp_leaves ) ;;
+  constructs)
+    PROBATA_TESTS=(tests/test_wp_subset.py)
+    PROBATA_SELECTION=() ;;
   *) exit 2 ;;
 esac
 PROBATA_ACTUAL_COMMIT="$(git rev-parse HEAD)"
