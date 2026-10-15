@@ -69,6 +69,18 @@ def collect(nodes, probe_nodes, models, summaries, scalar_types):
         statics = {n["id"] for n in all_nodes if n.get("kind") == "VarDecl" and
                    (n.get("storageClass") or n.get("tls"))}
 
+        def owned_storage(declaration):
+            plain = _qual(declaration).replace("const ", "").replace("volatile ", "").strip()
+            # References denote the referent, not a separate C++ object whose lifetime ends here.
+            if "&" in plain:
+                return False
+            return (declaration.get("id") in address_taken or "[" in plain
+                    or (plain not in scalar_types and "*" not in plain))
+
+        def storage(declaration, statement):
+            if owned_storage(declaration):
+                result["writes"].append(_site(declaration, function, statement, "local_storage"))
+
         def location(target):
             target = _strip(target)
             kind = target.get("kind")
@@ -123,8 +135,10 @@ def collect(nodes, probe_nodes, models, summaries, scalar_types):
                 result["writes"].append(_site(current, function, statement, "construction"))
             elif kind == "VarDecl" and (current.get("storageClass") or current.get("tls")):
                 result["writes"].append(_site(current, function, statement, "static_local"))
-            elif kind == "VarDecl" and current.get("id") in address_taken and children:
-                result["writes"].append(_site(current, function, statement, "address_taken_local"))
+            elif kind == "VarDecl":
+                # Storage lifetime is an effect even without initialization. A pending device read
+                # must not retain this address after the automatic object ceases to exist.
+                storage(current, statement)
             if kind in ("CallExpr", "CXXMemberCallExpr", "CXXOperatorCallExpr") and children:
                 callee = _strip(children[0])
                 name = (callee.get("referencedDecl") or {}).get("name") or callee.get("name")
@@ -141,6 +155,8 @@ def collect(nodes, probe_nodes, models, summaries, scalar_types):
             for child in children:
                 visit(child, statement)
 
+        for parameter in (c for c in _children(node) if c.get("kind") == "ParmVarDecl"):
+            storage(parameter, None)  # '&n' escapes the local by-value slot; plain caller pointer 'p' does not.
         for initializer in (c for c in _children(node) if c.get("kind") == "CXXCtorInitializer"):
             visit(initializer, None)
         body = next((c for c in _children(node) if c.get("kind") == "CompoundStmt"), {})

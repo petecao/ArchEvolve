@@ -30,20 +30,39 @@ static void swdb_dx_check_failed(const char *name) { swdb_failed(name); longjmp(
 #endif
 #define DX_CHECK(c, name) SWDB_CHECK((c), name)
 
+#if !defined(SWDB_CBMC)
+#if defined(__cplusplus)
+static_assert(sizeof(uintptr_t) == 8 && sizeof(int) == 4, "DX100 native model needs a 64-bit address/32-bit int ABI");
+#else
+_Static_assert(sizeof(uintptr_t) == 8 && sizeof(int) == 4, "DX100 native model needs a 64-bit address/32-bit int ABI");
+#endif
+#endif
+
 static unsigned int dx_bit(int s) { return 1u << s; }
 static int dx_tile_ok(int t) { return t >= 0 && t < DX_NT; }
 static int dx_reg_ok(int r) { return r >= 0 && r < DX_NR; }
 
 /* The tile a CPU address lies in, or -1 for an address outside the tile memory. */
 static int dx_tile_of(const int *addr) {
+  for (int t = 0; t < DX_NT; ++t) {
 #if defined(SWDB_CBMC)
-  if (__CPROVER_POINTER_OBJECT(addr) != __CPROVER_POINTER_OBJECT(&dx_tile_data[0][0])) return -1;
-  long long off = (long long)__CPROVER_POINTER_OFFSET(addr) / (long long)sizeof(int);
+    if (__CPROVER_POINTER_OBJECT(addr) != __CPROVER_POINTER_OBJECT(&dx_tile_data[t][0])) continue;
+    long long byte_position = (long long)__CPROVER_POINTER_OFFSET(addr);
+    long long byte_base = (long long)__CPROVER_POINTER_OFFSET(&dx_tile_data[t][0]);
+    if (byte_position < 0 || byte_base < 0 || byte_position < byte_base ||
+        byte_position % sizeof(int) != byte_base % sizeof(int)) continue;
+    unsigned long long index = (unsigned long long)byte_position / sizeof(int) -
+                               (unsigned long long)byte_base / sizeof(int);
 #else
-  long long off = ((long long)(uintptr_t)addr - (long long)(uintptr_t)&dx_tile_data[0][0]) / (long long)sizeof(int);
+    /* Native agreement/replay uses the pinned flat 64-bit address ABI. Compare each row's address
+     * range independently; the generated C/C++ rows may be distinct objects with unrelated bases. */
+    uintptr_t byte_position = (uintptr_t)addr, byte_base = (uintptr_t)&dx_tile_data[t][0];
+    if (byte_position < byte_base || byte_position % sizeof(int) != byte_base % sizeof(int)) continue;
+    unsigned long long index = (unsigned long long)(byte_position / sizeof(int) - byte_base / sizeof(int));
 #endif
-  if (off < 0 || off >= (long long)DX_NT * DX_TS) return -1;
-  return (int)(off / DX_TS);
+    if (index < DX_TS) return t;
+  }
+  return -1;
 }
 static int dx_read_ok(const int *addr) {
   int t = dx_tile_of(addr);
@@ -332,13 +351,31 @@ int swdb_dx_in_footprint(int tile, const int *addr) {
   if (s < 0 || dx_base[s] == 0) return 0;
 #if defined(SWDB_CBMC)
   if (__CPROVER_POINTER_OBJECT(addr) != __CPROVER_POINTER_OBJECT(dx_base[s])) return 0;
+  long long byte_position = (long long)__CPROVER_POINTER_OFFSET(addr);
+  long long byte_base = (long long)__CPROVER_POINTER_OFFSET(dx_base[s]);
+  if (byte_position < 0 || byte_base < 0 || byte_position % sizeof(int) != byte_base % sizeof(int)) return 0;
+  unsigned long long position = (unsigned long long)byte_position / sizeof(int);
+  unsigned long long base = (unsigned long long)byte_base / sizeof(int);
+#else
+  uintptr_t byte_position = (uintptr_t)addr, byte_base = (uintptr_t)dx_base[s];
+  if (byte_position % sizeof(int) != byte_base % sizeof(int)) return 0;
+  unsigned long long position = (unsigned long long)(byte_position / sizeof(int));
+  unsigned long long base = (unsigned long long)(byte_base / sizeof(int));
 #endif
-  long long off = (long long)(addr - (const int *)dx_base[s]);
+  int negative = position < base;
+  unsigned long long magnitude = negative ? base - position : position - base;
   if (dx_kind[s] == DX_STREAM_LOAD) {
+    /* An interior base permits negative stream indices. Bound the unsigned magnitude before
+     * conversion/negation; every stream index comes from a signed 32-bit register range. */
+    if (magnitude > (negative ? 2147483648ULL : 2147483647ULL)) return 0;
+    long long off = negative ? -(long long)magnitude : (long long)magnitude;
     long long n = (dx_hi[s] == dx_lo[s]) ? 0 : (dx_hi[s] - dx_lo[s] - 1) / dx_stride[s] + 1;
     if (n > DX_TS) n = DX_TS;
     return off >= dx_lo[s] && off < dx_lo[s] + n * dx_stride[s] && (off - dx_lo[s]) % dx_stride[s] == 0;
   }
+  /* Indirect indices retain their unsigned 32-bit interpretation. */
+  if (negative || magnitude > UINT32_MAX) return 0;
+  long long off = (long long)magnitude;
   int found = 0;
   for (int k = 0; k < DX_TS; ++k)
     if (k < dx_tile_size[dx_index[s]] && off == (long long)(unsigned int)dx_tile_data[dx_index[s]][k]) found = 1;

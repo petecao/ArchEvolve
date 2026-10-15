@@ -72,6 +72,10 @@ interference proof.
 - For a unit with a device store, ordinary CPU reads must be in its acyclic prefix before every store-issue
   top-level statement. Reads in a callee, a loop-containing unit or the same statement as a store are refused.
   This admits the fixture's `old0` read before issue and rejects an ordinary read after issue, even after a wait.
+- A once-proven summary or C model cannot hide this boundary. Both adapters traverse the selected proof
+  records through summary and model dependencies. Any inherited accelerator semantics makes that opaque
+  call `not_proven / memory_domain` until its contract encodes a checked pending-command and ownership
+  boundary. Missing or unclassified dependency records also fail closed.
 - Device commands have a separate checked domain: after destination-stall coverage, a store requires no
   uncovered memory command, and a load requires no uncovered store. The bounded model checks live slots;
   WP checks the named `memory_domain` precondition using a conservative direct-stall predicate. Extra
@@ -83,6 +87,15 @@ interference proof.
 - A checked domain failure ends `not_proven / memory_domain`, without a counterexample. WP retains
   every failing obligation and never refutes. Ticket 28 can replace these restrictions with checked overlap
   rules and ordinary-memory probes; these restrictions do not claim its full memory model is implemented.
+
+Native agreement and replay use the explicit flat 64-bit `uintptr_t` data-address ABI of the
+selected Clang target (x86_64 on mbit10; AArch64 on the Mac), with 32-bit `int`; compilation checks the
+widths, and records state the platform premise. Queries compare unsigned aligned element-address
+ordinals, never unrelated C/C++ pointers. CBMC retains allocation-object and offset guards. This avoids
+undefined cross-object pointer subtraction; C and C++ query controls also run address, invalid-pointer-pair
+and undefined-behavior sanitizers. The intermediate spelling with direct `uintptr_t` subtraction was
+defined arithmetic but triggered the sanitizer's pointer-subtraction heuristic; the ordinal spelling
+retains exact remainder and range checks without disabling a sanitizer.
 
 ## Bounded jobs (`swdb prove --adapter cbmc`)
 

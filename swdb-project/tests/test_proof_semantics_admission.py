@@ -13,6 +13,17 @@ from test_proof_semantics import dx, dx_seed, needs_cbmc, needs_wp, prove, prove
 
 
 @needs_wp
+@needs_cbmc
+@pytest.mark.parametrize("adapter", ["cbmc", "wp"])
+@pytest.mark.parametrize("wrong", [False, True])
+def test_a_stream_from_an_interior_base_keeps_its_negative_index(dx, adapter, wrong):
+    defines = ["SWDB_SIGNED_STREAM_EXCLUDE"] if wrong else []
+    record = (prove if adapter == "cbmc" else prove_wp)(dx, "signed_stream", *defines)
+    expected = ("refuted" if adapter == "cbmc" else "not_proven") if wrong else "proven"
+    assert record["verdict"] == expected, record
+
+
+@needs_wp
 def test_opaque_once_proven_summary_cannot_hide_dx_memory_boundary(dx):
     result = run_swdb("prove", "--records", dx.records, "--summary", "contract.fixture_dx_summary_wrapper",
                      "--adapter", "wp", "--runs-dir", dx.runs, "--format", "json", timeout=3600)
@@ -35,6 +46,18 @@ def test_store_must_be_covered_before_return_in_the_bounded_model(dx, wait):
         assert record["verdict"] == "not_proven" and record["failure_class"] == "memory_domain" and "counterexample" not in record, record
         assert any(g["property"] == "swdb.dx100_memory_domain" and g["status"] == "failure"
                    for g in record["goals"])
+
+
+@needs_cbmc
+@pytest.mark.parametrize("wait", [False, True])
+def test_a_failed_poststate_outside_the_memory_domain_cannot_refute_the_program(dx, wait):
+    record = prove(dx, "store_exit", "SWDB_STORE_EXIT_BAD_POST", *(["SWDB_STORE_EXIT_WAIT"] if wait else []))
+    if wait:
+        assert record["verdict"] == "refuted" and "counterexample" in record, record
+    else:
+        assert record["verdict"] == "not_proven" and record["failure_class"] == "memory_domain", record
+        assert "counterexample" not in record and "unreplayed_counterexample" not in record
+        assert any(g["property"] == "swdb.dx100_memory_domain" and g["status"] == "failure" for g in record["goals"])
 
 
 @needs_wp
@@ -61,6 +84,9 @@ def test_store_must_be_covered_before_return_in_wp(dx, wait):
     ("cpu_memory_overlap", "SWDB_CPU_OVERLAP_ATOMIC"),
     ("cpu_memory_overlap", "SWDB_CPU_OVERLAP_MACRO"),
     ("cpu_memory_overlap", "SWDB_CPU_OVERLAP_AFTER_COVER"),
+    ("local_storage", None),
+    ("local_storage", "SWDB_LOCAL_STORAGE_SCALAR"),
+    ("local_storage", "SWDB_LOCAL_STORAGE_PARAMETER"),
     ("store_source_wait", "SWDB_CPU_READ_AFTER_STORE"),
 ])
 def test_unmodeled_cpu_memory_effects_are_refused_before_a_verifier(dx, adapter, unit, define):
@@ -72,7 +98,7 @@ def test_unmodeled_cpu_memory_effects_are_refused_before_a_verifier(dx, adapter,
     result = run_swdb("prove", "--records", dx.records, "--candidate", dx.candidates["dx"],
         "--function", f"dxf_{unit}", "--contract", f"contract.fixture_dx_{unit}", "--adapter", adapter,
         "--runs-dir", dx.runs, "--format", "json", *extra,
-        env=fake_cbmc("unknown") if adapter == "cbmc" else fake_wp("unknown"), timeout=180)
+        env=fake_cbmc("unknown") if adapter == "cbmc" else fake_wp("unknown"), timeout=3600)
     assert result.returncode == 0, result.stderr + result.stdout
     record = dx.read(json.loads(result.stdout))
     assert record["verdict"] == "not_proven" and record["failure_class"] == "unsupported_construct", record

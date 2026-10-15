@@ -177,6 +177,8 @@ RANGE = ("requires 2 <= n <= 3 && \\valid(q + (0 .. n - 1)) && \\valid(offs + (0
 FIXTURES = {
     "summary_wrapper": ("dxf_summary_wrapper", [], "requires 0 <= n <= 2;", "\\nothing", 2),
     "summary_caller": ("dxf_summary_caller", [], "requires 0 <= n <= 2;", "\\nothing", 2),
+    "local_storage": ("dxf_local_storage", [], "requires 1 <= n <= 2;", "\\nothing", 2),
+    "signed_stream": ("dxf_signed_stream", ["q"], "requires n == 2 && \\valid(q + (0 .. n - 1));", "\\nothing", 2),
     "three_reads": ("dxf_three_reads", ["q", "base"], BASE.format(arr="base"), "\\nothing", 2),
     "size": ("dxf_size", ["q"], "requires 0 <= n <= 2 && \\valid(q + (0 .. n - 1));", "\\nothing", 2),
     "cpu_write": ("dxf_cpu_write", ["q", "base"], BASE.format(arr="base"), "\\nothing", 2),
