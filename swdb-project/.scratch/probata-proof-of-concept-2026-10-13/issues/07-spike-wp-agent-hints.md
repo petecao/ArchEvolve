@@ -1,7 +1,7 @@
 # 07 — Spike (c): WP with agent hints
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-15 ET (method19 prepared; review pending, no launch; run18 remains unproven); 2026-10-14 22:50 ET (continuation 3: runs 10-12 fail, verdict fail so far, effort paused); 2026-10-14 17:10 ET (continuation 2: runs 7-9 fail, verdict fail so far); 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-15 ET (method19 ended unproven; method20 preserved as unlaunched prospective work); 2026-10-14 22:50 ET (continuation 3: runs 10-12 fail, verdict fail so far, effort paused); 2026-10-14 17:10 ET (continuation 2: runs 7-9 fail, verdict fail so far); 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 03
@@ -1091,3 +1091,39 @@ ordinary open/unknown goals. The revised **137-control union passes** using only
 Python stand-ins/private locks. [Review-fix evidence](../evidence/t07-method19-review-fixes.json)
 retains the RED and revised pins. Independent re-review remains pending; no counted
 method19 run has launched and ticket status is unchanged.
+
+### Method19 finished unproven — 2026-10-15 13:14 ET
+
+Frozen source `669df70f` ended after **52.04 counted minutes**, with 20.4 seconds
+of correctly tagged queue wait excluded. Its checked incumbent has **27 open
+obligations: 24 unit and 3 hint**. There is no final all-goal replay, final smoke
+replay, or covering-wait negative. About 7.96 minutes of final reserve were unused;
+`within_budget:false` combines proof success with the time test and does not mean
+60 minutes elapsed. The historical worktree and output remain unchanged.
+
+The fresh agent authored scalar/range facts, but no ghost snapshot appeared in
+its incumbent or any recorded edit. All nine ensures remain open, along with
+CAS/gather/readiness, frame, and termination obligations. The missing history,
+post-CAS/pre-enqueue phase, and saved pre-issue consumed-prefix relation are an
+induction gap, not a demonstrated source counterexample. Different hint inventories
+make raw open-goal counts across runs unsuitable as comparative scores.
+
+The audit verified 26 source/tool/control/review pins, 18 committed source blobs,
+58 process-report log hashes, four exact 996 historical inputs, and launch/best/debt
+digests with no mismatch. See
+[`t07-method19-negative-20261015.json`](../evidence/t07-method19-negative-20261015.json).
+This prototype retains `-wp-no-filter-init` but lacks production
+`-wp-rte/-rte-initialized @all`; it establishes no production UB/init guarantee.
+Ticket 07 remains claimed with **no qualifying proof**.
+
+### Method20 saved for a later session — 2026-10-15 ET
+
+The approved search-policy implementation is preserved as a **prospective,
+unlaunched checkpoint**, with 158 deterministic/private process/clock controls and
+one synthetic diagnostic protocol check. It adds fresh structured state design
+and strictly non-promoting focused results; complete rounds alone score/promote.
+Closeout stops further method search. Independent review and a fresh launch freeze
+remain pending; no provider/count launch is authorized by this checkpoint.
+See [`METHOD20.md`](../prototype/07-wp-hints/METHOD20.md) and
+[`t07-method20-prospective-20261015.json`](../evidence/t07-method20-prospective-20261015.json).
+The failed run19 evidence remains the latest counted result.

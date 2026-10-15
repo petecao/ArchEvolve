@@ -1,0 +1,31 @@
+{
+  "created": "2026-10-15 13:56 ET",
+  "status": "deferred before implementation by user closeout",
+  "runtime_changed": false,
+  "public_red": {
+    "cmd": [
+      "/Users/yanrujhou/.pyenv/shims/python3",
+      "-m",
+      "pytest",
+      "tests/test_standard_vector_range_model.py",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "--junitxml=/private/tmp/probata-vector-domain-public-red.xml"
+    ],
+    "exit_code": 1,
+    "wall_s": 1.62,
+    "peak_rss_mb": 182.2,
+    "cap_gb": 8.0,
+    "killed_by_watchdog": false,
+    "timed_out": false,
+    "timeout_s": 300.0,
+    "log": "/private/tmp/probata-vector-domain-public-red.log",
+    "log_sha256": "c88afb04b1aceb856a5d5dc3f78023644db2bc14fd0256b43353b4a04a2949b6",
+    "lock_wait_s": 0.0,
+    "finished": "2026-10-15 13:51:25 EDT"
+  },
+  "summary_sha256": "a62c805621a9af4f9bae7dc96c699f58eb55787a293510c70e1aed68eae0f9a9",
+  "interpretation": "One expected-feature assertion failed because current policy returns unsupported_construct before launch; no qualifier or actual proof implemented.",
+  "control": "prototype/25-vector-receiver-domain/expected-feature-control.py.txt"
+}

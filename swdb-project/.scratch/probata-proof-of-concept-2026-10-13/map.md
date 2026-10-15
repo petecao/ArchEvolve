@@ -9,6 +9,21 @@ Updated: 2026-10-15 ET. Resumed under Yan-Ru's ongoing implementation, push and 
 Current integration branch: `codex/probata-poc-integration`, based on `yanrujhou_main` at `150930b4`.
 Current dispatch, evidence and blockers: [resume.md](resume.md).
 
+- **Prototype preservation 2026-10-15 13:58 ET:** method20 `54ef390e` is merged
+  only as an unlaunched prototype (158 controls, no provider/BFS proof). Method19's
+  negative audit is preserved. Vector receiver-domain design and its expected
+  future-feature RED are retained outside the active test suite as deferred work.
+  [Method20](evidence/t07-method20-prospective-20261015.json),
+  [deferred vector design](evidence/t25-vector-receiver-domain-deferred-20261015.json).
+  No ticket is closed; final source review and yanrujhou_main sync remain pending.
+
+- **Accepted scoped controls 2026-10-15 13:57 ET:** frozen `94769312` iterator
+  passes with a replayed refutation; at pair passes with unchecked refuted and
+  guarded proven. All three records/artifact/source/certificate pins match.
+  Both lanes and legacy are released; no owned evaluation process at 13:56 ET.
+  [Audit](evidence/t25-next-controls-accepted-20261015.json). Ticket 25 remains
+  claimed; broader criteria and final source/method freeze are unmet.
+
 - **Launch 2026-10-15 13:48 ET:** two original bounded member controls are active
   at frozen `94769312`: stale iterator on node 0 generation 568 and at()/guarded-at
   on node 1 generation 600. No final result is claimed. Reviewed stall fix
