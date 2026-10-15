@@ -259,3 +259,27 @@ this narrow transformation does not close ticket 25.
 Before adapter integration, the expanded public negative set passed: **11 passed** (189.85 s),
 `/private/tmp/probata-lifetime-research-2026-10-15/public-negative.jsonl`. These establish conservative
 refusal controls, not positive terminal-release WP acceptance; the latter remains the recorded red test.
+
+### Initialization obligations — 2026-10-15 ET
+
+The public summary-proof seam reproduced a separate safety gap: an unused read of an
+uninitialized local received `proven` under `-wp-rte` alone. The new WP policy requires
+the method to freeze `-rte-initialized @all`, after a parse/inlining stage in the same
+fresh process. It does not reuse a normalized file as trusted input. Initialized locals
+prove; uninitialized locals, including an inlined callee, and a fresh unfilled array
+remain not proven. A pointer with only `\valid` remains not proven, whereas an explicit
+`\initialized` precondition establishes the initialized input domain.
+
+Decision under the user's delegated implementation authority: admit the standard ACSL
+`\initialized` predicate in formal halves so callers can state this necessary premise.
+This small language extension does not enable other memory built-ins or imply a general
+heap-lifetime model. Bounded translators must still refuse this predicate unless their
+actual harness/storage initialization supports a faithful encoding. No input premise is
+silently generated. This policy requires a new method file, not edits to pinned draft 2.
+[Frama-C's RTE manual](https://www.frama-c.com/download/frama-c-rte-manual.pdf), section 2.7,
+describes the initialization checks; the installed 33.0 help and raw negative controls
+confirm the option is separate from the default WP RTE checks.
+
+Raw CBMC initializedness checks are a separate ongoing audit; this WP fix establishes
+no initializedness guarantee for bounded proofs. Ticket 24 remains claimed until its
+full current-policy construct acceptance completes.

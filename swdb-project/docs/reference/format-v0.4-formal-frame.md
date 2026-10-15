@@ -2,7 +2,8 @@
 
 Created: 2026-10-14 13:45 ET, Probata proof of concept ticket 20. Updated: 2026-10-14 15:10 ET, ticket 21
 (`proof_unit` names the baseline C++ source; the formal halves type-check against its C lowering; the
-concurrency frame must name every interface array).
+concurrency frame must name every interface array). Updated: 2026-10-15 ET
+(explicit initializedness predicates for WP runtime-error obligations).
 Spec: `.scratch/probata-proof-of-concept-2026-10-13/issues/20-formal-half-frame.md`; design:
 `.scratch/formal-verification-2026-10-09/spec.md` ("Formal-half language and the C++ subset"), map 16
 items 2, 4 and 13, 17 item 5, 10 item 4, 15 item 5, 26 item 4, 12 item 1.

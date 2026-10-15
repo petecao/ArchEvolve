@@ -12,6 +12,8 @@ Tests: `tests/test_c_lowering.py`, `tests/test_wp_adapter.py`, `tests/test_forma
 
 ## `swdb lower` (the C lowering tool)
 
+Updated: 2026-10-15 ET (explicit initialization policy; historical manifests stay immutable).
+
 Updated: 2026-10-14 ET (ticket 24: the declared C++ subset, naming rules `kept-names.2`, tool version 2).
 
 ```
@@ -99,6 +101,21 @@ swdb prove --candidate <c> --function <f> --contract <contract> --adapter wp --r
 4. Runs Frama-C/WP once, frozen settings, in a fresh process in the job's scratch folder (also `TMPDIR`),
    under the RSS watchdog and the wall budget.
 5. Reads the verdict and runs the failure class's handler.
+
+WP methods must freeze `-rte-initialized @all`. The adapter first parses and inlines
+the C input, then enables this function-set option against the existing AST and runs
+WP in the same fresh process. Frama-C 33's `-wp-rte` alone omits initialization checks.
+The normalized pre-proof input is retained as `wp_normalized`; every generated
+initialization assertion remains a proof obligation. Input memory may require explicit
+`\initialized` preconditions: `\valid` establishes access bounds, not initialization.
+The adapter never invents those preconditions or assumes candidate locals initialized.
+An older method without the explicit initialization flag cannot run this WP policy;
+use a new method file rather than edit an existing pinned manifest.
+
+The property reader accepts Frama-C 33's indented multiline property text as part of
+the preceding TSV row. It refuses incomplete rows and keeps each property's function,
+status and dependencies intact; a continuation never becomes a new unnamed property.
+
 
 **Ticket 24: callees, summaries and C models.** One job proves one function, `<f>`, with everything it uses
 accounted for once:
