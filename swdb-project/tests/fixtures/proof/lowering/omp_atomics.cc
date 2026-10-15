@@ -37,3 +37,21 @@ int swdb_atomics_unit(int *p, int *e, int v) {
   __sync_synchronize();
   return old + x + ok + ok2 + y + z + w + *p + *e;
 }
+
+// Updated: 2026-10-15 ET. Isolate initialized results of modular integer/bool model calls.
+int swdb_atomic_exchange_result(int *p) {
+  int old = __atomic_exchange_n(p, 3, __ATOMIC_SEQ_CST);
+  __atomic_exchange_n(p, 3, __ATOMIC_SEQ_CST); // discarded result must still compile without warnings
+  return old;
+}
+
+int swdb_sync_fetch_result(int *p) {
+  int old = __sync_fetch_and_add(p, 3);
+  __sync_fetch_and_add(p, 0); // preserve the discarded-result path too
+  return old;
+}
+
+bool swdb_atomic_compare_result(int *p, int *e) {
+  bool changed = __atomic_compare_exchange_n(p, e, 3, false, __ATOMIC_SEQ_CST, __ATOMIC_SEQ_CST);
+  return changed;
+}

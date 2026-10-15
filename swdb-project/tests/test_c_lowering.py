@@ -226,6 +226,9 @@ GROUPS = {   # construct group: (fixture, unit function, extra `swdb lower` argu
     "std_models": ("std_models.cc", "swdb_std_unit", ()),
     "omp": ("omp_atomics.cc", "swdb_omp_unit", ()),
     "atomics": ("omp_atomics.cc", "swdb_atomics_unit", ()),
+    "atomic_exchange_result": ("omp_atomics.cc", "swdb_atomic_exchange_result", ()),
+    "atomic_compare_result": ("omp_atomics.cc", "swdb_atomic_compare_result", ()),
+    "sync_fetch_result": ("omp_atomics.cc", "swdb_sync_fetch_result", ()),
     "floats": ("floats.cc", "swdb_float_unit", ()),
     "vector_pair": ("vector_pair.cc", "swdb_vector_unit", ()),          # ticket 25
     "dxc_summary": ("summaries.cc", "swdb_dxc_unit", ("--summary", "__dxc_tile_size=fixture.dxc_tile_size.1")),
@@ -254,7 +257,7 @@ def test_each_construct_group_lowers_twice_to_identical_c_and_anchors_that_compi
     second = lower(LOWERING / fixture, function, tmp_path / "two", *extra)
     assert first["c_lowering"]["sha256"] == second["c_lowering"]["sha256"]
     assert first["anchors"]["sha256"] == second["anchors"]["sha256"]
-    assert first["tool"]["version"] == "8" and first["tool"]["naming_rules"] == "kept-names.3"
+    assert first["tool"]["version"] == "9" and first["tool"]["naming_rules"] == "kept-names.3"
     c_file = tmp_path / "one" / f"{function}.c"
     assert str(tmp_path) not in c_file.read_text()
     done = subprocess.run([_c_compiler(), "-std=c11", "-Wall", "-Werror", "-fsyntax-only", c_file],
@@ -359,6 +362,27 @@ def test_openmp_constructs_and_atomics_lower_to_their_one_thread_meaning(tmp_pat
                   "swdb_sync_bool_compare_and_swap_int(p, 9, 4)", "swdb_sync_val_compare_and_swap_int(p, 4, 5)",
                   "swdb_sync_fetch_and_add_int(p, 2)", "swdb_sync_add_and_fetch_int(p, 3)"):
         assert model in text
+
+
+def test_atomic_pointer_results_preserve_null_and_live_addresses_on_both_language_paths(tmp_path):
+    source = tmp_path / "unit.cc"
+    source.write_text("int *swdb_pointer_load_result(int **p) {\n"
+                      "  int *v = __atomic_load_n(p, __ATOMIC_SEQ_CST); return v;\n}\n")
+    lower(source, "swdb_pointer_load_result", tmp_path / "out")
+    harness = ("int main(void) { int v=11; int *p=0; "
+               "if(swdb_pointer_load_result(&p)!=0) return 1; p=&v; "
+               "return swdb_pointer_load_result(&p)!=&v; }\n")
+    for language, body, compiler, standard in (
+            ("cpp", source.read_text(), _clang().command[0], "c++17"),
+            ("c", (tmp_path / "out/swdb_pointer_load_result.c").read_text(), _c_compiler(), "c11")):
+        unit = tmp_path / (language + (".cc" if language == "cpp" else ".c"))
+        unit.write_text(body + harness)
+        built = subprocess.run([compiler, "-std=" + standard, "-O1", "-Wall", "-Werror",
+                                "-fsanitize=address,undefined", unit, "-o", tmp_path / language],
+                               capture_output=True, text=True)
+        assert built.returncode == 0, built.stderr
+        ran = subprocess.run([tmp_path / language], capture_output=True, text=True)
+        assert ran.returncode == 0 and not ran.stderr, ran.stderr
 
 
 def test_a_reduction_variable_used_other_than_in_its_update_is_refused(tmp_path):
