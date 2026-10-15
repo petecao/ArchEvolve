@@ -4,7 +4,7 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 18:47 ET. **Implementation is active under the user's ongoing approval.**
+Updated: 2026-10-15 19:11 ET. **Implementation is active under the user's ongoing approval.**
 Integration `codex/probata-resume-20261015` is based on `yanrujhou_main` at `d94d629b`.
 Audited run23 documentation is published at `6dc94905`; reviewed method21 prototype
 is published at `14c2a298`. Only `swdb/c_lowering.py`
@@ -18,9 +18,9 @@ Drafts 1/2 remain immutable. No draft 3 or final production freeze exists.
 
 | Ticket / owner | Verified checkpoint | Active work |
 |---|---|---|
-| 07 / `ticket07` | Run 24 ended unproven at 18:44:19 ET: 52.03 counted minutes, 29 open (14 unit / 15 hint), 41 records (5 mechanical / 36 Codex). No final replay/wait-negative; interrupted provider usage unknown. | Mac slot released; final independent audit and one separately guarded posthoc 30-second diagnosis pending. Method 22 prospective terminal replay and zero-seed provenance changes in a new worktree; no actual counted launch. |
-| 24 / `ticket24` | Fresh finite 112,589 native comparisons accepted; current float pair and 5 standard models accepted. Original standard caller retains pointer-origin timeout; first qualified profile `6221` refused before WP. Writable v2 public validation + 13 controls + independent review pass at `bf7a`. | Node 0 generation 577 evaluates 7 remaining original groups/lifetime controls at `0e7`; first atomic model has 6 ordinary + 1 smoke Valid. Qualified v2 actual queued on next free lane. |
-| 27 / `ticket27` | Current bounded/native 35/35 and repaired capacity 3/3 accepted. Current negative 9/13 independently audited at `868eff7b`; ordinary open/failed-smoke evidence retained. Historical safe 11/11 remains `717` only. | Node 1 generation 603 continues remaining 4 negatives at `0e7`. Fresh safe 11 queued as disjoint 5 + 6 shards, about 50 minutes each by historical case weights, excluding setup and runtime drift. |
+| 07 / `ticket07` | Run 24 remains unproven: 29 open, 52.03 counted minutes, 5 mechanical / 36 Codex records. Posthoc full-30-second replay timed out after 710.42s without a complete report; no verdict upgrade. | Temporary cleanup quarantine independently checked and released at 19:07 ET. Method 22 adds zero seeds, paged VC inspection and complete provider accounting; 33/36-minute search/return limits leave 24 minutes for final checks. TDD/review, no fresh actual. |
+| 24 / `ticket24` | Current float pair, five std models, nine atomic models and atomic caller pair accepted. Remaining matrix stopped on a MAA summary with 3 ordinary Valid / 0 generated smoke goals; strict refusal preserved. Original std caller still unproven. | Node 0 generation 578 runs reviewed qualified std v2 at `bf7a404c`. Agent investigates a narrow no-op summary/caller nonvacuity witness without source/contract changes. Later original groups remain pending. |
+| 27 / `ticket27` | Current bounded/native 35/35 and repaired capacity 3/3 accepted. Current negative 11/13 independently audited; historical safe 11/11 remains `717` only. | Node 1 generation 603 continues outside-footprint and short-store-frame negatives at `0e7`. Fresh safe 11 queued as disjoint 5 + 6 shards; historical weights about 50 minutes each, excluding setup/runtime drift. |
 | 36 / dependency-gated | 122 compiler/scripted controls pass; 13 actual-WP cases excluded. | Waits on 27; runtime fallback research remains prospective. |
 
 At17:43:14 ET node0 generation572 released after the standard caller safe timeout;
@@ -83,34 +83,62 @@ Accepted evidence and preserved boundaries:
 - [Historical matrix](evidence/t24-historical-frontier-9b75-mbit10-20261015.json): Ring/allocation/DXC/class/OMP results retain their historical source; no upgrade to current0e7. [717 compiler provenance](evidence/t27-717-compiler-provenance-addendum-20261015.json) retains full frontend hashes and explicit link-DSO boundary.
 - [Run23 audit](evidence/t07-counted-23-20261015.json): frozen df19 and raw `/private/tmp/probata-t07-20261015-run23` retained.55 guarded reports, no terminal resource/cleanup failure. Legacy12 proposal requests include one edit refusal;11 candidate proof attempts are10 complete+1censored. Interrupted second-call usage is unknown, totals lower bounds. No final-smoke/wait-negative success is claimed.
 
-The coordinator owns merges, graph updates and remote dispatch. Both remote lanes
-remain occupied, checked 18:45:57 ET: node 0 generation 577 / node 1 generation 603,
-legacy released, source clean detached `0e7`. Load 3.13, 15 GiB free on `/data1` and 94 GiB on `/data`;
-CPU verifier processes advance on both sockets. No third evaluation is dispatched.
+The coordinator owns merges, graph updates and remote dispatch. Node 0 generation
+577 naturally released at 19:06:55 ET. Root preflight at 19:08:45 checked all three
+leases (0 released / 1 held / legacy released), clean detached `0e7`, source/disk/load
+and independent process state. Load 1.90; before the new checkout, 15 GiB was free
+on `/data1` and 94 GiB on `/data`. No residual matrix verifier or third job.
+
+Qualified std v2 started 19:09:05 ET on node 0 generation 578, exact clean detached
+`bf7a404c65694a18d83635c4f6f56105b005fb59`; source:
+`/data1/yanruj/probata-reviewed-bf7a404c`; raw:
+`/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2`.
+Whole cap 4200s / outer 4320s, public limits 1800s, one worker, 8 GiB process tree,
+8 GiB planned raw storage (monitored, no quota). All 197 physical/Git module checks
+pass; the full runtime dictionary equals the accepted `0e7` launch identity.
+[Actual admission receipt](evidence/reviewed-t24-std-domain-v2-launch-bf7a404c-20261015.json).
+This establishes source/runtime/admission, not ordinary model selection or proof success.
 
 Run 24 source remains frozen at `14c` in `/private/tmp/probata-resume-t07-method21`;
-raw `/private/tmp/probata-t07-20261015-run24`. Independent final audit is finishing.
+raw `/private/tmp/probata-t07-20261015-run24`. Final evidence documentation is pending.
 There were 63 guarded resource reports (62 exit 0, one normal search-deadline exit 137);
 no terminal resource or owned-process cleanup failure. Its first provider turn
-never returned `turn.completed`, so usage is unknown, not zero. The 259 ordinary entries
+never returned `turn.completed`, so complete usage is unknown, not zero. Exact
+owned-session telemetry retains 13,413,886 observed partial total tokens (including
+13,386,648 input / 27,238 output; cached input and reasoning are subsets). The
+last counter does not establish the unknown in-flight tail. The 259 ordinary entries
 include 230 passed / 25 unknown / 4 timeouts; 6 of 9 postconditions remain open. Passing
 individual goals under open hints is not a unit proof. The final 8-minute reserve
 was unused because method 21 required zero diagnostic-open goals before replay.
-A separate posthoc full-30-second diagnostic may assess this scheduling gate; it cannot
-upgrade run 24, and its concrete hints/results cannot seed another fresh provider.
+The separate posthoc full-30-second diagnostic at
+`/private/tmp/probata-t07-20261015-run24-posthoc-full30` timed out at 710.420516s,
+peak 5616.22 MiB. It scheduled 497 goals and emitted 24 Unknown / 2 Timeout status
+lines, but no complete JSON inventory. The 238-goal delta from the diagnostic
+ordinary inventory cannot be partitioned reliably from retained files. No full
+verdict or success is claimed. Its inspection error on exact owned PID 9354
+remains recorded. Independent fresh absence scans supported exact-owner archival
+and slot release at 19:07:14 ET; no process was signaled. These old concrete hints
+and results cannot seed another fresh provider. Scheduling alone is not supported
+as a remedy by this censored result.
 Method 22 design/TDD/review proceeds separately; no blind method 21 rerun.
 Independent literal acceptance review found the five mechanical frame hints cannot
 satisfy ticket 07's every-hint-Codex criterion. The explicitly undecided seed
 assumption does not override that criterion. Method 22 must start without mechanical
 seeds and let the fresh scoped Codex session independently author allowed frames;
 old concrete frame payloads are excluded. Existing provenance is not relabeled.
+The next plan also adds bounded paging for previously truncated active-goal premises,
+natural provider completion/accounting, and 33/36-minute search/return limits.
+The remaining 24 minutes cover full-30-second positive and identical-hints negative
+verification (at least 8 minutes reserved for the negative). This is an explicit
+prospective allocation, not a measured sufficiency guarantee. No fresh run is launched.
 
 Qualified std at6221 stopped before WP: public formal-half vocabulary excludes
 valid_read/base_addr. Its zero-row failure and unchanged inputs remain retained;
 no ordinary model eligibility/semantic result is claimed. V2 uses only allowed
 null/valid/current-or-predecessor clauses, a disclosed narrower writable-object
 domain;13controls now include actual public validation, and independent final
-review passes atbf7a. Fresh WP/model eligibility/same-base assertion remain.
+review passes at `bf7a`. Fresh WP/model eligibility/same-base assertion are active
+on node 0; no result yet.
 
 Node0 generation577 started the remaining original matrix at18:27 ET using
 the existing0e7 checkout. Groups: atomics,maa_summary,dxc_summary,templates,
@@ -120,6 +148,11 @@ Oneworker8GiB tree,21600s whole cap,1800s public limits,8GiB planned raw
 `/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining`.
 [Launch audit](evidence/reviewed-t24-remaining-launch-0e7f2327-20261015.json):
 197physical/Gitchecks,0errors, exact runtime matches prior0e7.
+This run stopped at 19:06:55 ET after 12 rows: 9 atomic models + 2 callers accepted,
+then a MAA summary with 3 ordinary Valid but no generated smoke goals refused by
+the strict reader. Its original no-op body and frame-only contract are unchanged;
+no general zero-smoke exception or artificial postcondition is adopted. Agent 24
+is evaluating a narrow no-op/caller feasibility witness. Later groups did not run.
 
 Next: finish the remaining matrix, reviewed v2 standard caller pair and
 negative/fresh-safe profiles. The prospective two-shard safe plan covers all11
@@ -131,6 +164,7 @@ Research-only notes remain `/private/tmp/probata-ticket25-resume-exploration.md`
 `/private/tmp/probata-ticket25-lifetime-capabilities.md`,
 `/private/tmp/probata-ticket25-heap-bridge-tcb-addendum.md`,
 `/private/tmp/probata-ticket25-heap-import-entrypoints-20261015.md`,
+`/private/tmp/probata-ticket25-lemma-dependency-safety-20261015.md`,
 `/private/tmp/probata-ticket28-resume-exploration.md` and
 `/private/tmp/probata-t36-runtime-fallback-review.md`.
 

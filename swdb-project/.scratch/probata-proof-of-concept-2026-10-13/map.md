@@ -5,43 +5,47 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-re
 
 ## Current state (resume here)
 
-Updated: 2026-10-15 18:47 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
+Updated: 2026-10-15 19:11 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
 Integration: `codex/probata-resume-20261015`; audited run 23 is published at
 `6dc94905`; method21 prototype merged at `14c2a298`. Remote actual jobs retain
-frozen `0e7f2327`; production lowerer SHA256
+exact `0e7f2327` and `bf7a404c` source freezes; production lowerer SHA256
 remains `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
 [Current resume and evidence](resume.md).
 
-- **24:** Current float safe proves 48 ordinary + 5 smoke goals; seed retains its
-  invariant timeout and four failed smoke checks. All five fresh standard models
-  pass. The standard caller safe case stops on one pointer-formation timeout
-  (46 ordinary Valid, 13 smoke Valid). A distinct object-domain contract/profile
-  at `6221dad7` passed local review but stopped at public library validation
-  before WP (8 vocabulary errors, zero rows). A new writable-object domain passes
-  13 controls including public validate and independent dispatch review. Fresh actual
-  remains queued. Original gap stays unchanged; node0 generation577 is evaluating
-  the remaining seven groups/lifetime controls. Its first atomic model passes 6
-  ordinary + 1 smoke goals; the complete nine-model set is pending. Fresh finite native agreement remains independently accepted for
-  112,589 defined comparisons. New checklist/corpus tests pass 24 + 15 controls;
-  their test-only commit and independent review are merged at `5c0ace82`.
+- **24:** Current float pair and five standard models accepted; all nine atomic
+  models now pass independent audit (96 ordinary + 15 smoke Valid), and the atomic
+  caller pair is accepted. Remaining matrix stopped at its next MAA summary: three
+  ordinary goals Valid, zero generated smoke goals, rejected by the strict runner.
+  The original source/contract is unchanged; a narrow no-op summary/caller witness
+  policy is under investigation. No later groups ran. The original standard caller
+  retains its pointer-formation timeout. Qualified writable-domain v2 is running at
+  `bf7a404c` on node 0 generation 578; first qualified profile `6221dad7` remains a
+  pre-WP public-validation refusal. Finite native agreement stays accepted for
+  112,589 defined comparisons. [Current launch](evidence/reviewed-t24-std-domain-v2-launch-bf7a404c-20261015.json).
 - **27:** Historical `71771f09` safe profile passes 11/11, with 792 ordinary +
-  252 smoke Valid. Current negative profile has nine accepted hazard
+  252 smoke Valid. Current negative profile has eleven accepted hazard
   controls of 13, each preserving its exact failed hazard precondition and Doomed
   smoke checks. Current capacity32 stops on two memory-domain/invariant obligations
   (45/47 ordinary, 11/11 smoke Valid); 33 and CBMC capacity cases did not run.
   Fresh bounded/native passes 35/35, including 12 CBMC proofs and 12 replayed
   refutations. Reviewed capacity profile passes 3/3: WP32 all 49 ordinary + 11 smoke,
   WP33 ghost-capacity nonproof with 11 passing smoke, CBMC32/33 agreement.
-  Node0 now runs the remaining original24 groups; fresh safe remains queued.
+  Node 0 now runs qualified std v2; remaining original groups need the no-op
+  summary repair. Fresh safe remains queued.
 - **07:** Run 24 at `14c2a298` ended unproven at 18:44:19 ET after 52.03
   counted minutes: 29 open (14 unit / 15 hint), 259 ordinary entries, 41 hint records
   (5 mechanical / 36 Codex). No final replay or wait-negative ran. All 15 proposal
   requests reached candidate WP; 14 completed and 1 was deadline-censored.
-  The interrupted provider turn has unknown token usage. Actual Mac slot released;
-  independent final audit and one separate posthoc full-30-second diagnosis are pending.
+  The interrupted provider turn has unknown complete usage; observed partial
+  counters are retained separately. Actual Mac slot released;
+  final documentation is pending. The separate posthoc full-30-second diagnosis
+  timed out after 710.42s without a complete report; no new verdict. Its temporary
+  process-inspection quarantine was independently checked and released at 19:07 ET.
   Prospective method 22 changes the final-replay schedule and omits mechanical
   seeds to meet the literal every-hint-Codex criterion, only after TDD/review;
-  no fresh counted run or success is claimed.
+  the revised 33/36-minute search/return limits reserve up to 24 minutes for
+  positive and identical-hints wait-negative verification within the same 60 minutes.
+  Allocation sufficiency is unmeasured; no fresh counted run or success is claimed.
 - **36:** Dependency-gated by 27. Its 122 focused controls exclude 13 actual-WP
   cases. Drafts 1/2 remain immutable; final method freeze and held-out gates remain.
 
@@ -50,8 +54,9 @@ Node0 generation573 capacity profile released at17:53:38 ET after its first fail
 Node 0 generation 574 bounded/native finished 18:06:10 ET, 35/35 passed.
 Node 0 generation 575 capacity completed at 18:21:42 ET (`b9a34bbb`).
 Generation 576 qualified std stopped before proof at `6221dad7`.
-Node0 generation577 now runs seven original24 groups; node1 generation603
-continues negatives. Both active runs use the unchanged `0e7f2327` producer.
+Node 0 generation 577 released at 19:06:55 ET after the no-smoke MAA summary
+refusal. Generation 578 starts qualified std v2 at 19:09:05 ET (`bf7a404c`);
+node 1 generation 603 continues negatives at unchanged `0e7f2327`.
 [Remaining matrix launch](evidence/reviewed-t24-remaining-launch-0e7f2327-20261015.json).
 [Capacity repair launch](evidence/reviewed-t27-capacity-launch-b9a34bbb-20261015.json).
 [Initial launch audit](evidence/composed-launch-0e7f2327-20261015.json),
