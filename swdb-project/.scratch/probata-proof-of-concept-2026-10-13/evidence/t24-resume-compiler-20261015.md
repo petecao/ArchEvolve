@@ -205,3 +205,14 @@ The committed runner now has a bounded `--public-timeout-seconds` option
 command budget changes; per-goal solver limits, RSS cap, shared lock and
 acceptance checks stay intact. CLI help/argument validation is checked locally;
 fresh actual out-of-range evidence remains required.
+
+The explicit outer-budget control now exercises inherited `Seed.prove` through
+the actual public-helper boundary: forcing the transport back to 600 produces
+RED (`600 != 1800`), restoring forwarding produces GREEN. A second runner
+control proves that `--cases new_out_of_range,new_after_delete` omits completed
+safe/seeded pairs and unrelated dependencies while recording the exact selection
+and budget in the source manifest. Both pass (transport/selection only, no solver).
+Dependency proofs remain mandatory whenever a selected caller requires them.
+The narrow retry is `--groups new_array --cases new_out_of_range,new_after_delete`
+plus the explicit remaining `new_<control>` labels desired by the coordinator;
+each fresh output still rebuilds the original candidate seed and checks source.

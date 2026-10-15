@@ -106,6 +106,7 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--groups', default='templates,classes,new_array,omp,floats,std_models,atomics,dxc_summary,maa_summary')
     parser.add_argument('--stop-on-failure', action='store_true')
+    parser.add_argument('--cases', help='optional exact caller/control labels; dependency proofs stay mandatory')
     parser.add_argument('--public-timeout-seconds', type=int, default=1800,
                         help='outer public-command budget; per-goal solver limits remain unchanged')
     args = parser.parse_args()
@@ -125,6 +126,13 @@ def main():
     groups = args.groups.split(',')
     if not groups or set(groups)-set(GROUPS):
         parser.error('unknown group selection')
+    terminal_cases = ['new_out_of_range','new_after_delete',*[f'new_{n}' for n in TERMINAL_CONTROLS]]
+    available = {f'{g}:{v}' for g in groups for v in ('safe','seeded')}
+    if 'new_array' in groups:
+        available.update(terminal_cases)
+    cases = set(args.cases.split(',')) if args.cases else None
+    if cases is not None and (not cases or cases-available):
+        parser.error('--cases contains an unknown label for the selected groups')
     output.mkdir(parents=True)
     os.environ['SWDB_VERIFIER_RSS_CAP_BYTES'] = '8589934592'
     # Test fixtures always use their fixture host; the outer wrapper alone owns
@@ -133,7 +141,7 @@ def main():
     os.environ[host_identity.FIXTURE_HOST_ENV] = 'swdb-fixture-host'
     manifest = {'created':'2026-10-15 ET','commit':commit,'groups':groups,'workers':1,
                 'rss_cap_bytes':8589934592,'public_timeout_seconds':args.public_timeout_seconds,
-                'output':str(output),'sources':{}}
+                'cases':sorted(cases) if cases is not None else None,'output':str(output),'sources':{}}
     for name in git('ls-files','swdb','tests','library','schemas').splitlines():
         path = REPO/name
         if path.is_file():
@@ -153,6 +161,8 @@ def main():
     print('PASS original candidate seed '+str(round(result['seed_wall_seconds'],2))+'s',flush=True)
     models, summaries = {}, {}
     def run(label, action, expected, validate=None, *, actual=True, ordinary_open=None):
+        if cases is not None and label not in cases and not label.startswith(('model:','summary:')):
+            return None
         started = time.monotonic()
         print('START '+label, flush=True)
         row = {'label':label,'expected':expected}
@@ -173,11 +183,12 @@ def main():
             raise RuntimeError(label+' failed; see matrix.json')
         return row
     for group in groups:
-        for name in MODELS.get(group,[]):
+        callers = cases is None or any(f'{group}:{v}' in cases for v in ('safe','seeded'))
+        for name in MODELS.get(group,[]) if callers else []:
             if name not in models:
                 models[name] = run('model:'+name,lambda n=name:seed.prove('--model',n),'proven')
         entries = {'dxc_summary':['dxc_tile_size'],'maa_summary':['maa_const','maa_indirect_load']}.get(group,[])
-        for name in entries:
+        for name in entries if callers else []:
             if name not in summaries:
                 summaries[name] = run('summary:'+name,lambda n=name:seed.prove('--summary',summary_id(n)),'proven')
         def validate(record):
@@ -199,7 +210,7 @@ def main():
                 'dxc_summary':'ensures','maa_summary':'ensures'}[group]
         run(group+':seeded',lambda g=group:seed.unit(g,candidate='bug'),'not_proven',ordinary_open=goal)
         if group=='new_array':
-            for negative in ['new_out_of_range','new_after_delete',*[f'new_{n}' for n in TERMINAL_CONTROLS]]:
+            for negative in terminal_cases:
                 run(negative,lambda n=negative:seed.unit(n),'not_proven',actual=negative=='new_out_of_range',
                     ordinary_open='rte_mem_access' if negative=='new_out_of_range' else None)
     result['complete'] = True
