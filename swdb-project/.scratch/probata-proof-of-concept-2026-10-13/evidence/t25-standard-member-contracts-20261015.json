@@ -65,6 +65,42 @@
           "$report_type": "SessionFinish"
         }
       ]
+    },
+    {
+      "path": "/private/tmp/probata-t25-at-view-setup-canonical.jsonl",
+      "sha256": "6e1bda1e2b646576efef782bdf97aa270b502fcddfe2a382ca550c79385bff92",
+      "passed": 75,
+      "failed": 0,
+      "session_finish": [
+        {
+          "exitstatus": 0,
+          "$report_type": "SessionFinish"
+        }
+      ]
+    },
+    {
+      "path": "/private/tmp/probata-t25-at-view-setup-real.jsonl",
+      "sha256": "6502a9fbf053c0c3d4888d99f7746b59739ab53fc0c4e3bb3d08e1cd478f3d07",
+      "passed": 13,
+      "failed": 0,
+      "session_finish": [
+        {
+          "exitstatus": 0,
+          "$report_type": "SessionFinish"
+        }
+      ]
+    },
+    {
+      "path": "/private/tmp/probata-t25-at-view-setup-final.jsonl",
+      "sha256": "e07caabd525ec9b55e84a96a9236fe5d43b92edb05fd70d3852d68db8effefc8",
+      "passed": 62,
+      "failed": 13,
+      "session_finish": [
+        {
+          "exitstatus": 1,
+          "$report_type": "SessionFinish"
+        }
+      ]
     }
   ],
   "initial_member_batch": [
@@ -528,5 +564,6 @@
     "path": "swdb/standard_model_view.py",
     "sha256": "a9b0ac93e830fa966114f0a853b638d93a2274f64cf48a0cd5fe14c1bd2774b1"
   },
-  "checked_at_method": "Exact stdmodels2 and original C text SHA plus independent pinned Clang C-AST; pure n>=this->size abort replaced with checked at_guard_false:n<this->size assertion. Original/view contracts identical, no added input premise; original/native/CBMC abort retained; exact source/view/certificate/checker revalidated immediately before WP. Changed model lacking bound is unsupported before WP."
+  "checked_at_method": "Exact stdmodels2 and original C text SHA plus independent pinned Clang C-AST; pure n>=this->size abort replaced with checked at_guard_false:n<this->size assertion. Original/view contracts identical, no added input premise; original/native/CBMC abort retained; exact source/view/certificate/checker revalidated immediately before WP. Changed model lacking bound is unsupported before WP.",
+  "setup_regression": "Canonical driver64db6160, same helper/adapter/setup source bytes as checked-at proof:75PASS227.11s. Earlier sandboxed full run62PASS13FAIL because watchdog sysctl EPERM (no verifier evidence); escalation replay13PASS142.30s. The final75 supersedes that invocation error and includes all real13 fact controls with -wp-no-filter-init."
 }

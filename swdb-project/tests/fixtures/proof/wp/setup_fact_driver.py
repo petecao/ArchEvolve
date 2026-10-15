@@ -14,7 +14,7 @@ if case == 12:
     Path('injected.h').write_text('/*@ axiomatic injected { axiom hidden_header_axiom: \\false; } */\n')
 with verifier_lock.hold(f'ticket36 fact {case}'):
     module = proof_setup.compile_report_module(Path.cwd())
-    flags = ['-wp', '-wp-rte', '-wp-cache', 'none', '-machdep', 'x86_64', '-wp-model', '+real',
+    flags = ['-wp', '-wp-rte', '-wp-cache', 'none', '-machdep', 'x86_64', '-wp-model', '+real', '-wp-no-filter-init',
              '-wp-prover', 'alt-ergo', '-wp-timeout', '1', '-wp-par', '1', '-wp-smoke-tests',
              '-cpp-extra-args=-DCASE=' + str(case), '-wp-report-json', 'goals.json']
     if case == 11:
