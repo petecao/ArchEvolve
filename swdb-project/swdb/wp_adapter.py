@@ -265,7 +265,13 @@ class WpAdapter:
             context["settings"] = {"tool": "frama-c-wp", "flags": [], "verifier_launched": False, "pointer_bounds": {"verdict": "refused",
                 "reason": "imported array-window summaries require checked caller-domain discharge: " + ", ".join(domain_callees)}}
             return self._not_proven("unsupported_construct", context["settings"]["pointer_bounds"]["reason"], context)
-        contracts = self._dependencies(dependency_lowering, context)
+        from swdb import summary_bindings
+        context['source'] = source
+        try:
+            contracts = self._dependencies(dependency_lowering, context)
+        except summary_bindings.Refused as exc:
+            context.setdefault('settings', {}).update(verifier_launched=False)
+            return self._not_proven('unsupported_construct', str(exc), context)
         refusal = cpu_memory_admission.summary_refusal(self.records, [
             pin["proof_record"] for group in ("summaries", "models") for pin in context["pins"].get(group, [])])
         if refusal:
@@ -466,6 +472,9 @@ class WpAdapter:
                                    "first")
             texts = [c["acsl"]["text"].strip() for c in data.get("clauses") or [] if isinstance(c, dict)
                      and c.get("acsl") and c.get("proof_placement") == {"once": "self"}]
+            from swdb import summary_bindings
+            summary_bindings.bind(self, context, context['source'], context['job'].unit.function,
+                                  used['name'], entry_id, record)
             contracts[used["c_name"]] = sorted(texts, key=lambda t: 0 if t.startswith("requires") else 1)
             summaries.append({"id": entry_id, "sha256": sha, "proof_record": record})
             assumed.append({"kind": "summary", "reference": {"id": entry_id, "sha256": sha},
@@ -624,7 +633,7 @@ class WpAdapter:
         log.line(f"command: {shlex.join(map(str, command))}\ncwd: scratch\nenvironment removed: {removed or 'none'}\n"
                  f"rss cap bytes: {cap}\nwall budget seconds: {wall}")
         context["reports"].append(("wp_log", wp_log))
-        context["settings"] = {"tool": "frama-c-wp", "flags": settings_flags, "session": "fresh",
+        context["settings"] = {**context.get('settings', {}), "tool": "frama-c-wp", "flags": settings_flags, "session": "fresh",
                                "pointer_bounds": context["pointer_bounds_report"],
                                "warning_levels": "default", "machdep": "x86_64",
                                "wp_seconds_per_solver": tools["seconds"], "environment_removed": removed,

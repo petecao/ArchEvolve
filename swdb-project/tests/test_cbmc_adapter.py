@@ -353,7 +353,8 @@ CALLER_BOUNDS = {"threads": 1, "n": 3}
 
 
 def _with_add_one_summary(seed):
-    summary = seed.read(seed.prove_summary(ADD_ONE, bounds={"threads": 1, "n": 2}))
+    # 2026-10-15: an n<=2 proof cannot stand for the n<=3 callers below.
+    summary = seed.read(seed.prove_summary(ADD_ONE, bounds=CALLER_BOUNDS))
     assert summary["verdict"] == "proven"
     return summary
 

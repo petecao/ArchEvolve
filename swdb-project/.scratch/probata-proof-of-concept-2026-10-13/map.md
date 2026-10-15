@@ -55,6 +55,13 @@ Current dispatch, evidence and blockers: [resume.md](resume.md).
   assumption discharge; checked composition record and bounded validate/build pass.
   See [ticket 42 Answer](issues/42-rocq-composition-theorem.md#answer--2026-10-15-0314-et).
 
+- **2026-10-15 generic-summary safety checkpoint:** a real changed-callee false
+  proof was reproduced with a native violating witness. Fresh callee/source/proof
+  binding, finite call-domain checks and prelaunch replay now pass focused actual
+  controls on the root implementation branch; integration review is pending.
+  [Evidence](evidence/summary-source-binding-20261015.json). Full ticket24/36
+  and generic vector/helper acceptance remain open.
+
 ## Context pointers
 
 Historical results and current checkpoints. Ticket files, not the number of entries here, determine completion.

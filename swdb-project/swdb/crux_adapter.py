@@ -159,8 +159,11 @@ class CruxAdapter:
         context['settings']['bounded_initialization'] = admission
         if admission['verdict'] != 'passed':
             return self._not_proven('unsupported_construct', admission['reason'], context)
+        from swdb import summary_bindings
         try:
             built = self._build(job, entry, code, sizes, summary_job, context)
+        except summary_bindings.Refused as exc:
+            return self._not_proven('unsupported_construct', str(exc), context)
         except c_lowering.Unsupported as exc:            # the cut's interface (a reference type, a class)
             context["settings"]["outside_cpp_subset"] = f"outside the C++ subset: {exc}"
             return self._not_proven("unsupported_construct", str(exc), context)
@@ -314,10 +317,15 @@ class CruxAdapter:
         for callee in code.functions:
             if callee == job.unit.function:
                 continue
-            found = self._summary(callee)
+            from swdb import summary_bindings
+            found = self._summary(callee, accept=lambda eid, rid: summary_bindings.check(
+                self, code.source, job.unit.function, callee, eid, rid, caller_bounds=job.bounds))
             if found is None:
                 continue
             entry_id, data, record_id = found
+            from swdb import summary_bindings
+            summary_bindings.bind(self, context, code.source, job.unit.function, callee, entry_id, record_id,
+                                  caller_bounds=job.bounds)
             sha = self.library.content_sha256(entry_id)
             rows_s = [c for c in data.get("clauses") or [] if isinstance(c, dict) and c.get("acsl")
                       and c.get("proof_placement") == {"once": "self"}]

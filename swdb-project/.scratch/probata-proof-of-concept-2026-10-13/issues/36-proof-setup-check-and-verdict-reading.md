@@ -450,3 +450,44 @@ and `bounded_chain.py` joins the frozen checker closure. Independent merged vali
 checker dependency union is preserved. Generic imported-summary proof-source/bounds eligibility
 is still an open, separately owned gap: refreshed stub identity does not certify eligibility.
 Ticket 36 remains claimed. Evidence: `evidence/crux-source-admission-20261015.json`.
+
+### Generic summary definition/proof binding — 2026-10-15 ET
+
+A real public CBMC control on `44d50f7e` confirmed a false proof: the candidate's
+same-name clamp returned zero while the summary was proved on the correct clamp.
+Both native views agreed on the changed implementation. An exact source-span
+native witness with `a=[1], n=1` returns `[0]`, violating the caller's preserved-value
+postcondition. Name equality and native agreement did not establish summary validity.
+
+`summary_bindings.py` now independently resolves the actual global call and
+compares complete fresh callee C closures, ignoring only the generated provenance
+banner. It requires the proof's exact current method/checker, implementation
+lowering hash, build constants, contract/code pins, named real adapter and
+retained artifact hashes. Generic globals/persistent state, external-only
+declarations and model/summary dependencies remain closed. WP retains its stricter
+unbounded/current-WP dependency policy. Every imported binding is replayed before
+launch and must match both its generator-owned plan and summary pins. WP preserves
+the binding report through final settings construction. CBMC/Crux choose the newest
+eligible proof, so a newer stale-method record cannot mask a valid predecessor.
+
+Finite arguments must follow from literals or unmodified caller entry bounds.
+Pointer arguments must be distinct entry-buffer bases of exactly the proved
+physical capacity. The old add-one positives proved only `n<=2` for `n<=3` callers;
+they now prove `n<=3`, and a separate negative checks the former mismatch. No
+finite proof silently supplies an unbounded contract.
+
+Validation covers 15 distinct actual/public controls across selected runs:
+11 passed in the initial 13-control batch; its two stale-method test fixtures
+used invalid all-zero hashes and failed record validation before this gate.
+Both corrected fixtures use a valid older method pin and pass (72.63 seconds).
+Two further controls show both Crux forms refuse before their solver launches
+(59.79 seconds; their library summary was proved by CBMC). Matching WP and CBMC
+imports and all three corrected bounded stub-meaning controls pass. Runtime
+manifest hashes remained unchanged throughout. An earlier 88-case Crux/scripted
+setup batch passed; it is not actual Crux proof evidence. The record-evidence
+mutation control deliberately changes one artifact hash; every other audited
+artifact hash matches. This checkpoint does not resolve ticket36 or draft3.
+
+Evidence: [summary-source-binding-20261015.json](../evidence/summary-source-binding-20261015.json).
+Regression: `tests/test_summary_source_binding.py`, including corpus case
+`summary-same-name-different-body.yaml`.

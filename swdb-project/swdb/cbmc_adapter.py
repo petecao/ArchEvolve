@@ -232,8 +232,11 @@ class CbmcAdapter:
                                        "the selected clang uses an unmatched standard library", context)
             context["settings"]["standard_library"] = {"implementation": "libc++", "version": "22.1.8",
                                                          "header_macro": "_LIBCPP_VERSION=220108"}
+        from swdb import summary_bindings
         try:
             built = self._build(job, entry, code, sizes, summary_job, context)
+        except summary_bindings.Refused as exc:
+            return self._not_proven('unsupported_construct', str(exc), context)
         except tr.Untranslatable as exc:
             context["settings"]["untranslatable"] = str(exc)
             return self._not_proven("unsupported_construct", f"the CBMC translator: {exc}", context)
@@ -375,10 +378,15 @@ class CbmcAdapter:
         for callee in code.functions:
             if callee == job.unit.function:
                 continue
-            found = self._summary(callee)
+            from swdb import summary_bindings
+            found = self._summary(callee, accept=lambda eid, rid: summary_bindings.check(
+                self, code.source, job.unit.function, callee, eid, rid, caller_bounds=job.bounds))
             if found is None:
                 continue
             entry_id, data, record_id = found
+            from swdb import summary_bindings
+            summary_bindings.bind(self, context, code.source, job.unit.function, callee, entry_id, record_id,
+                                  caller_bounds=job.bounds)
             sha = self.library.content_sha256(entry_id)
             rows_s = [c for c in data.get("clauses") or [] if isinstance(c, dict) and c.get("acsl")
                       and c.get("proof_placement") == {"once": "self"}]
@@ -421,7 +429,7 @@ class CbmcAdapter:
                              "range": {"min": low, "max": high}})
         return knobs, symbolic
 
-    def _summary(self, callee):
+    def _summary(self, callee, *, accept=None):
         """(entry ID, entry, proven summary record ID) of the library entry that summarizes `callee`, or None."""
         entries = [(eid, data) for eid, data in sorted(self.library.entries.items())
                    if eid != self.contract and isinstance(data.get("proof_unit"), dict)
@@ -447,7 +455,17 @@ class CbmcAdapter:
         if not proven:
             raise AdapterError(f"callee {callee} is summarized by library entry {entry_id}, which has no proven summary "
                                f"record at its current content: run `swdb prove --summary {entry_id} --adapter cbmc` first")
-        return entry_id, data, sorted(proven)[-1][1]
+        refused = None
+        for _, record_id in sorted(proven, reverse=True):
+            if accept is not None:
+                from swdb import summary_bindings
+                try:
+                    accept(entry_id, record_id)
+                except summary_bindings.Refused as exc:
+                    refused = exc
+                    continue
+            return entry_id, data, record_id
+        raise refused
 
     # --- the differential run ------------------------------------------------------------------------------
     def _differential(self, job, code, built, context):

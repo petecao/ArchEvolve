@@ -26,7 +26,7 @@ CHECK_SOURCES = ("proof_setup.py", "proof_report.ml", "proof.py", "cbmc_adapter.
                  "vocab.py", "formal_frame.py", "acsl_subset.py", "framac.py", "hint_check.py", "hint_tree.ml",
                  "wp_pointer_bounds.py", "proof_semantics.py", "vector_ownership.py", "standard_model_view.py",
                  "array_domains.py", "model_domains.py", "dx_array_domains.py", "bounded_entry_windows.py",
-                 "bounded_chain.py")
+                 "bounded_chain.py", "summary_bindings.py", "helper_windows.py")
 REQUIRED_WP_SWITCHES = (("-wp-no-filter-init", "-wp-filter-init"),)
 _COMPILED_MODULES = {}
 _ASSUME = re.compile(r"\b(?:llvm_assume|crucible_assume|__VERIFIER_assume)\b|\b(?:__CPROVER_assume|SWDB_ASSUME|assume)\s*\(")
@@ -273,6 +273,13 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
             if fresh.content_sha256(summary["id"]) != summary["sha256"]:
                 _fail("summary_hash", f"summary {summary['id']} differs from its pinned content")
     hashes = {"summaries": _digest(summary_pins)}
+    if adapter.name in {'cbmc', 'wp', 'crux-llvm-c', 'crux-llvm-cxx'}:
+        from swdb import summary_bindings
+        try:
+            checked_summaries = summary_bindings.recheck(adapter, context)
+        except (summary_bindings.Refused, ValueError) as exc:
+            _fail('summary_binding', str(exc))
+        hashes['summary_bindings'] = _digest(checked_summaries)
     for path, expected in inputs:
         path = Path(path)
         actual = path.read_bytes()
