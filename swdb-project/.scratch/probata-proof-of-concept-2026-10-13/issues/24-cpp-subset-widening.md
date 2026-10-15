@@ -189,4 +189,11 @@ Merge note: ticket 22's CBMC adapter now also pins `naming_rules`, and its tests
 3. Decide with Yan-Ru whether single non-virtual inheritance and `omp simd` join the subset. Either would
    unblock part of the spike: inheritance the fault builds, `omp simd` unit_maa.
 
+**Merge state (2026-10-14 22:55 ET):** the integration tip is merged. Tickets 27 and 35 conflicted in
+`wp_adapter.py` and `formal_frame.py`; the resolution keeps 35's hint records and hint check, 27's
+proof-semantics lowering options, and 24's summaries, inlining and `-wp-fct`. After the merge,
+test_c_lowering, test_format_doc and test_formal_frame give 124 passed, and the WP adapter's safe-fixture proof
+passes (`report-r14.jsonl`, `report-r15.jsonl`). `test_wp_subset.py` now writes ticket 35's hint records and has
+not been rerun since the merge.
+
 **Next step:** merge 25 through the integration tip, resolve the model-record overlap, then do item 1.
