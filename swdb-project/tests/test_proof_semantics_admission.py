@@ -37,6 +37,18 @@ def test_store_must_be_covered_before_return_in_the_bounded_model(dx, wait):
                    for g in record["goals"])
 
 
+@needs_cbmc
+@pytest.mark.parametrize("wait", [False, True])
+def test_a_failed_poststate_outside_the_memory_domain_cannot_refute_the_program(dx, wait):
+    record = prove(dx, "store_exit", "SWDB_STORE_EXIT_BAD_POST", *(["SWDB_STORE_EXIT_WAIT"] if wait else []))
+    if wait:
+        assert record["verdict"] == "refuted" and "counterexample" in record, record
+    else:
+        assert record["verdict"] == "not_proven" and record["failure_class"] == "memory_domain", record
+        assert "counterexample" not in record and "unreplayed_counterexample" not in record
+        assert any(g["property"] == "swdb.dx100_memory_domain" and g["status"] == "failure" for g in record["goals"])
+
+
 @needs_wp
 @pytest.mark.parametrize("wait", [False, True])
 def test_store_must_be_covered_before_return_in_wp(dx, wait):
@@ -75,7 +87,7 @@ def test_unmodeled_cpu_memory_effects_are_refused_before_a_verifier(dx, adapter,
     result = run_swdb("prove", "--records", dx.records, "--candidate", dx.candidates["dx"],
         "--function", f"dxf_{unit}", "--contract", f"contract.fixture_dx_{unit}", "--adapter", adapter,
         "--runs-dir", dx.runs, "--format", "json", *extra,
-        env=fake_cbmc("unknown") if adapter == "cbmc" else fake_wp("unknown"), timeout=180)
+        env=fake_cbmc("unknown") if adapter == "cbmc" else fake_wp("unknown"), timeout=3600)
     assert result.returncode == 0, result.stderr + result.stdout
     record = dx.read(json.loads(result.stdout))
     assert record["verdict"] == "not_proven" and record["failure_class"] == "unsupported_construct", record

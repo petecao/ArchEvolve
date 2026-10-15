@@ -55,6 +55,9 @@ int dxf_store_exit(int *q, int *p, int n) {
 #ifdef SWDB_STORE_EXIT_WAIT
   wait_ready(3);
 #endif
+#ifdef SWDB_STORE_EXIT_BAD_POST
+  return 0;
+#endif
   return 1;
 }
 int dxf_device_memory_overlap(int *q, int *p, int n) {
