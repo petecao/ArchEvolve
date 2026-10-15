@@ -280,7 +280,7 @@ def control_cases():
         # memory built-ins
         'valid_separated': (c('valid_separated', 'requires \\valid(parent + (0 .. n-1)) && \\separated(parent, frontier);'), None, False),
         'block_length': (c('block_length', 'requires \\block_length(parent) >= 4;'), 'memory built-in', False),
-        'initialized': (c('initialized', 'requires \\initialized(parent + (0 .. n-1));'), 'memory built-in', False),
+        'initialized': (c('initialized', 'requires \\initialized(parent + (0 .. n-1));'), None, True),
         # logic calls
         'logic_call': (c('logic_call', 'ensures \\result == count_pos(parent, n) + twice(n);', uses=['logic.graph', 'logic.nonrec']), None, False),
         'logic_unlisted': (c('logic_unlisted', 'ensures \\result == count_pos(parent, n);'), 'no listed logic-library entry', False),

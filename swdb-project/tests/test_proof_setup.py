@@ -65,6 +65,15 @@ def test_fresh_reader_accepts_directly_proved_automatic_goals_omitted_by_wp_json
     assert {g["goal"] for g in record["goals"]} == {"typed_f_ensures", "typed_f_terminates"}
 
 
+def test_fresh_reader_keeps_multiline_csv_properties_attached_to_their_function(seed):
+    reports = _reports(seed, [_valid()])
+    with open(reports["properties"], "a") as stream:
+        stream.write("\n.\twp_input.c\t20\tunused_model\tcomplete behaviors\tIgnored\tcomplete\n"
+                     " allocation, no_allocation\n")
+    record = seed.prove(seed.script(wp_reports=reports))["record"]
+    assert record["verdict"] == "proven"
+
+
 @pytest.mark.parametrize("failure", ["lemma", "call_precondition", "callee_termination", "missing_goal"])
 def test_locally_valid_target_cannot_hide_an_unproved_premise(seed, failure):
     target = _valid()

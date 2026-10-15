@@ -166,3 +166,18 @@ Both check identities are now version `1`, sha256
 The production composition record in ticket 42 pins this exact checker through
 immutable `method.probata-draft-2`. Earlier checker identities above are historical.
 Ticket 27's remaining acceptance and CPU-memory admission work still block resolution.
+
+### Multiline property report repair — 2026-10-15 ET
+
+Frama-C's unquoted, indented continuation lines in libc complete/disjoint-behavior
+properties became synthetic rows with missing function/status under DictReader. A
+public scripted-report control reproduced the spurious unclassified outcome. The
+reader now reconstructs complete TSV rows and attaches only indented single-cell
+continuations to the preceding property; incomplete column rows and unindented
+fragments still stop the batch. It retains function, status and dependency scope;
+this is not a relaxation of Extern attribution or permission to ignore failed goals.
+The control is red before the fix and green after it. A real uninitialized new-array
+job now produces its expected not-proven record rather than an unclassified parser
+failure. All 121 focused policy/report/formal-frame tests pass in 114.92 s.
+Both check identities remain version `1`, content hash `48a828aa532aabaa24caffbbd2289464c28a0f0901e9c47528540bccb1afa092`.
+Draft 2's older pinned identity remains immutable; new jobs need a new method file.
