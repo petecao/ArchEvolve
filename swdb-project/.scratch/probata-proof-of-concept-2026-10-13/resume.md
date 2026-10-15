@@ -4,11 +4,12 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 12:23 ET. Integration checkpoint `919b63bd` includes reviewed
-method19 prototype changes and the prior SWDB runtime `cc7e747b`: checked
-entry hints (`593c35d6`) and standalone nested assignments (`71382aff`), alongside
-the parser isolation, exact standard-call bindings, qualified copy caller ranges,
-vector workflow and corrected WP invocation metadata. The whole effort remains
+Updated: 2026-10-15 12:52 ET. Integration runtime `ce94128b` adds canonical
+integer-header context and physical canonical macro-origin repairs to the checked
+parser/source pipeline. Method19 prototype changes, entry hints (`593c35d6`),
+standalone nested assignments (`71382aff`), exact standard-call bindings, qualified
+copy caller ranges, vector workflow and corrected WP invocation metadata remain.
+The whole effort remains
 **32 of 63 resolved; five claimed**. Drafts 1/2 stay immutable; draft 3 is not created.
 Historical actual method/source pins remain distinct from this integration tip.
 
@@ -31,7 +32,7 @@ The earlier frozen `5c2a` failures stay recorded as 134/1 and 19/1; they are not
 |---|---|---|
 | 07 | Method19 launched at 12:21:38 ET from frozen `669df70f` after 137 postcomposition offline controls passed; fresh baseline active at launch | Keep its worktree immutable; audit counted search/final outcomes when complete; no proof claimed |
 | 24 | Qualified copy caller/model actual acceptance passed on Mac `0831b224` and Linux `d3a5dd48`; initializedness/capacity negatives retained | Design member-window class context admission |
-| 25 | Narrow owner safe/stale Linux acceptance passed; one current bounded maximum control at2629 refuses prelaunch on genuine system inttypes.h classification | Repair canonical header context before another bounded replay; historical pipeline/body evidence remains separate |
+| 25 | Narrow owner safe/stale Linux acceptance passed; two current bounded maximum attempts refused prelaunch on canonical header/macro classification; both guards repaired with public controls | Same original n3 case replaying at frozen ce941, node0gen564; diagnose before any broader batch |
 | 27 | Entry-hint store safe/short-frame and nested assignment slices accepted at their frozen pins; a separate WP-qualified transitive one-case diagnostic is underway | Finish that diagnostic and remaining DX acceptance; ordinary CPU/device overlap belongs to 28 |
 | 36 | All 45 current scripted setup controls pass; actual Linux WP records exercise true invocation metadata and prelaunch refusals retain false; acceptance audit found no reproduced bypass | Keep claimed pending 27 and final method freeze; preserve historical real-fact/cache evidence pins |
 
@@ -53,19 +54,22 @@ scope and historical run evidence remain distinct from production proof acceptan
 
 Ticket 28 remains gated by 27; 43 remains blocked by 29. Held-out kernels and final
 production method identities stay dependency-gated. Last whole-effort status table:
-12:05 ET; next due 12:35 ET. Existing user authorization covers implementation,
+12:35 ET; next due 13:05 ET. Existing user authorization covers implementation,
 commits/pushes, two remote lanes and scoped BFS source export.
 
 ## Host coordination
 
-Live readback: 2026-10-15 12:14:20 ET. Node 0 generation 561, node 1 generation 599 and
-legacy 77 are released. Load 0.15/0.94/1.25; 21 GiB free on `/data1`, 95 GiB on `/data`.
-The evaluation checkout `/data1/yanruj/probata-t27` remains clean detached at
-`d3a5dd48`. Both focused jobs finished and their raw outputs remain remote for the
-coordinator, ticket acceptance and independent audit readers. Output sizes are
-32,128,172 bytes and 9,516,810 bytes, each below 2 GiB. Source/code arrived by Git only;
-no new source sync or evaluation is implied by this readback. Recheck all leases,
-activity, disks and wrapper identity before another dispatch.
+Live preflight: 2026-10-15 12:50:59 ET. Both socket leases and legacy77 were
+released before the single bounded maximum replay; node0 now holds generation564,
+node1generation599 remains available. Load0.06/0.31/0.38;21GiB free on `/data1`,95GiB
+on `/data`. The evaluation checkout `/data1/yanruj/probata-t27` is clean detached
+and frozen at `ce94128b` until this job finishes and its pins are audited. One worker,
+8GiB sampled-RSS cap,1800s inner wall bound and1GiB output budget; raw data stays
+under `/data/yanruj/EvolveSWDB_runs/probata-t25-bounded-max-20261015-1252-node0` for
+the coordinator/acceptance/audit readers. The directory label is nominal; exact
+start time is in lane metadata. Historical d3 focused jobs and both prelaunch
+failures retain their original records and sources. Source arrives by Git only.
+Recheck leases/activity/disks/wrapper before any further dispatch.
 
 ## Historical integration snapshots
 

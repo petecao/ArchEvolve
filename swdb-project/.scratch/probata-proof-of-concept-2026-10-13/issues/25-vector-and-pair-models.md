@@ -504,3 +504,27 @@ typed-origin, initializedness or smoke policy was relaxed.
 Ticket remains claimed; a canonical C-header context repair must precede another
 current bounded acceptance attempt. Historical5488 bounded and0cc WP evidence keep
 their original source/method boundaries.
+
+
+### Canonical header repairs and same-case replay — 2026-10-15 12:52 ET
+
+The public compiler control reproduced the inttypes false refusal, then passed
+after the clean canonical probe included `<cinttypes>`; original compiler/platform
+physical header hashes remain in both closures. Two malicious project `inttypes.h`/
+`cinttypes` include-next allocation-hook shadows refuse before and after. Sixteen
+compiler/context controls pass43.62s; no system-header path whitelist was added.
+
+The same original bounded maximum at frozen`feb92b5b` then passed that check but
+refused on canonical libc++ iostream's own `_LIBCPP_IOSTREAM` guard. That separate
+control failed1test150.34s with no CBMC/differential, peak430,682,112bytes; its
+record/two artifacts,1,569declared physical-file pins and201runtime/test pins match.
+The macro check now distinguishes the independently resolved physical canonical
+root from candidate/project definitions. Clean iostream RED and project guard
+negative were captured before the repair;18compiler/context controls pass59.65s
+afterward, preserving project guard and allocation-hook refusals. The coordinator
+independently reviewed both narrow changes.
+
+Only the same n=3 bounded maximum is replaying at frozen`ce94128b`, node0generation564
+(started12:51:01ET; exact lane metadata authoritative). One worker,8GiB/1800s and1GiB
+planned output; node1 remains free. No broader batch or theorem success is claimed.
+[Repair, intermediate refusal and launch metadata](../evidence/t25-canonical-header-repair-20261015.json).
