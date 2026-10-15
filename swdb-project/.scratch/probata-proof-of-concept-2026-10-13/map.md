@@ -1,25 +1,27 @@
 # Map: Extensa Probata proof of concept
 
 Created: 2026-10-14 00:45 ET
-Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `yanrujhou_main`; archived effort history: `probata-source-recovery-20261015`.
+Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-resume-20261015`; base: `yanrujhou_main`; archived effort history: `probata-source-recovery-20261015`.
 
 ## Current state (resume here)
 
-Updated: 2026-10-15 14:59 ET. **Implementation resumed at the user's request.**
-Integration: `codex/probata-resume-20261015`, based on clean synchronized
-`yanrujhou_main` at `d94d629b`. One remote integration ref is published.
+Updated: 2026-10-15 15:49 ET. **Active implementation; 32 resolved / 28 ready-for-agent / 3 claimed.**
+Current owners:07,24,27. Integration is `codex/probata-resume-20261015`;
+current evaluation runtime is frozen at `71771f09`. [Live resume](resume.md).
 
-- **32 resolved / 28 ready-for-agent / 3 claimed**, from ticket frontmatter.
-  Active frontier:07,24,27 in separate local worktrees.25 and36 remain gated.
--07: independent method20 review before a fresh60-minute counted run; no historical hints.
--24: original construct-group acceptance, typed embedded arrays and conditional reads.
--27: current-policy proof-semantics acceptance and32/33-command capacity agreement.
-- Coordinator owns merges, both remote lanes and the30-minute heartbeat. A separate
-  prerequisite review hardens inherited RTE admission before fresh acceptance proofs.
-  See [resume](resume.md) and [live ticket index](ticket-status-20261015.md).
+- 24: original Ring safe/seeded pair accepted; allocation safe passed, seeded
+  overrun and remaining original construct groups run on node0 generation570.
+- 27: current safe profile has3 confirmed passes; remaining safe cases, negatives,
+  capacity and bounded/native agreement remain open. Node1 generation602.
+- 07: run21 at `7408be92` stopped after baseline/seeds when the CLI refused
+  design-tool approval. Scoped per-tool approval correction and fresh review/run
+  are in progress. Resource findings pass165 controls. No BFS proof.
+- 122 focused integrated compiler/scripted controls pass;13 actual-WP cases excluded.
+  Drafts1/2 remain immutable; final production method freeze and held-out work remain gated.
 
-No new actual proof or whole-ticket completion is claimed at this checkpoint.
-The old chat/heartbeat remain paused. Historical evidence below retains exact pins.
+No whole ticket is closed from these partial results. Historical evidence below
+retains its original pins. The old chat/heartbeat remain paused; this chat has an
+active30-minute progress heartbeat. [Ticket index](ticket-status-20261015.md).
 
 ## Historical integration checkpoints
 
@@ -151,6 +153,13 @@ Current dispatch, evidence and blockers: [resume.md](resume.md).
   and generic vector/helper acceptance remain open.
 
 ## Context pointers
+
+- Resumed original-template acceptance at`71771f09`:89 ordinary+1smoke safe,
+  seeded one ordinary ensures timeout with initialization retained; all producer
+  pins verified. [Ticket24](issues/24-cpp-subset-widening.md),
+  [compact pair](evidence/t24-original-template-pair-mbit10-20261015.json).
+- Resource review fixed at`1ebf9d59`;165 controls and independent source-pin
+  re-review precede fresh run21. [Disposition](evidence/resumed-review-disposition-20261015.md).
 
 Historical results and current checkpoints. Ticket files, not the number of entries here, determine completion.
 
