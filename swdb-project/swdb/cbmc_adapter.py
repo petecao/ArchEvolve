@@ -120,6 +120,9 @@ class CbmcAdapter:
 
     @classmethod
     def from_args(cls, args, script, *, library, contract, method):
+        if getattr(args, "whole_function", None):          # ticket 61: whole-function equivalence
+            from swdb.cbmc_equivalence import EquivalenceAdapter
+            return EquivalenceAdapter.from_args(args, script, library=library, contract=contract, method=method)
         if script is not None:
             raise AdapterError("the cbmc adapter takes no --script (one CBMC job per call)")
         return cls(library, contract, method, records=getattr(args, "records", None),

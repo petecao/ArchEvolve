@@ -97,7 +97,7 @@ def test_promote_cites_the_counting_proof_records_and_the_level_snapshot(promota
     assert review["proof_records"] == [promotable.proof_id]
     snapshot = review["level_snapshot"]
     assert snapshot["level"] == "proven_within_bounds_threads_1"
-    assert snapshot["level_rule"] == "level-rule.1"
+    assert snapshot["level_rule"] == "level-rule.2"
     assert snapshot["records"] == [promotable.proof_id]
     assert snapshot["at"].endswith(" ET") and len(snapshot["at"]) == len("2026-10-14 02:36 ET")
     assert promotable.swdb("validate").returncode == 0
@@ -111,7 +111,7 @@ def test_a_later_drop_shows_beside_the_approved_snapshot(promotable):
     promotion = level["promotion"]
     assert promotion["review"] == review["id"]
     assert promotion["level_snapshot"] == {"level": "proven_within_bounds_threads_1",
-                                           "at": review["level_snapshot"]["at"], "level_rule": "level-rule.1",
+                                           "at": review["level_snapshot"]["at"], "level_rule": "level-rule.2",
                                            "records": [promotable.proof_id]}
     assert promotion["proof_records"] == [promotable.proof_id]
     assert promotion["dropped"] is True
