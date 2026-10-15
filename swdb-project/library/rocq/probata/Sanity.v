@@ -328,3 +328,52 @@ Print Assumptions reg_write_covered.
 Print Assumptions reg_write_not_pending.
 Print Assumptions shared_action_kinds_exactly_five.
 Print Assumptions sharing_classes_exactly_four.
+
+(* Ownership-handoff regression, 2026-10-15 ET. Classes remain ThreadOwned,
+   but an uncovered old owner can otherwise read a future new owner's write. *)
+Definition handoff_class (_ a : nat) : sharing_class :=
+  if Nat.eqb a 1 then SharedActionsOnly else ThreadOwned.
+Definition handoff_run : Composition.run nat nat nat :=
+  [(0, Barrier); (1, Own 0); (1, Own 2); (1, Enter);
+   (1, DeviceRead 8 0 1); (1, Read 2 0); (1, DeviceWrite 8 2 1);
+   (1, Exit); (1, Barrier); (0, Own 0); (0, DeviceRead 7 1 1);
+   (0, Enter); (0, Read 0 0); (0, Write 0 1);
+   (1, DeviceCovered 8); (1, Shared Claim false 0 1 0);
+   (0, DeviceCovered 7); (0, Exit)].
+Lemma uncovered_owned_handoff_rejected :
+  ~ reads_owner_stable nat nat nat nat (fun l => l) handoff_class handoff_run 1.
+Proof.
+  intro Hstable.
+  destruct (Hstable 4 8 0 1 9 0 eq_refl eq_refl ltac:(lia) eq_refl ltac:(lia))
+    as [q [[Hlo Hhi] Hcover]].
+  destruct q as [|[|[|[|[|[|[|[|[|q]]]]]]]]]; simpl in Hcover;
+    try discriminate; lia.
+Qed.
+
+Definition covered_handoff_run : Composition.run nat nat nat :=
+  [(0, DeviceRead 8 0 1); (0, DeviceCovered 8); (1, Own 0)].
+Lemma covered_owned_handoff_allowed :
+  reads_owner_stable nat nat nat nat (fun l => l) handoff_class covered_handoff_run 0.
+Proof.
+  intros i c l v j u Hi Hclass Hij Hj Htu.
+  destruct i as [|[|[|i]]]; simpl in Hi; try discriminate;
+    try (destruct i; discriminate).
+  inversion Hi; subst c l v.
+  destruct j as [|[|[|j]]]; simpl in Hj; try discriminate;
+    try (destruct j; discriminate).
+  inversion Hj; subst u. exists 1. repeat split; try lia; reflexivity.
+Qed.
+
+Definition static_owner_crossing_run : Composition.run nat nat nat :=
+  [(0, Own 0); (0, DeviceRead 8 0 1); (0, Barrier); (0, DeviceCovered 8)].
+Lemma static_owned_read_crossing_allowed :
+  reads_owner_stable nat nat nat nat (fun l => l) handoff_class static_owner_crossing_run 0.
+Proof.
+  intros i c l v j u Hi Hclass Hij Hj Htu.
+  destruct j as [|[|[|[|j]]]]; simpl in Hj; try discriminate;
+    try (destruct j; discriminate).
+  inversion Hj; subst u. contradiction.
+Qed.
+Print Assumptions uncovered_owned_handoff_rejected.
+Print Assumptions covered_owned_handoff_allowed.
+Print Assumptions static_owned_read_crossing_allowed.

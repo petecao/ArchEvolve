@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-15 01:41 ET (fix (a) plus class-lifetime repair checked; approved under delegation; resolved); 2026-10-14 23:10 ET (reopened: Codex round t41c-1 counterexample stands; fix (a) decided, not applied); 2026-10-14 22:40 ET (Composition.v second revision in progress, paused; see Progress (paused)); 2026-10-14 21:30 ET (`Reduction.v` revised under delegation: ticket 27 covers, see Later changes); 2026-10-14 14:40 ET (revised; approved by the main session under Yan-Ru's delegation; resolved); 2026-10-14 14:13 ET (Codex review: revise); 2026-10-14 14:07 ET (statements drafted); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** resolved
+**Status:** claimed
 **Blocked by:** 09
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Concurrency" (composition theorem, shared-action kinds, memory model, OpenMP), "Formal-half language and the C++ subset" (sharing classes, YAML frame), "DX100 proof semantics" (reduction lemma, hazards), "Modules" (Rocq development), "What a proven verdict asserts" (assumption set, seven kinds), "Proof-of-concept plan" (Rocq side track), S9); decisions: [12](../../formal-verification-2026-10-09/issues/12-dx100-proof-semantics.md), [15](../../formal-verification-2026-10-09/issues/15-concurrency-proofs.md), [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md)
 **Time estimate:** about 4 days plus Yan-Ru's review
@@ -318,3 +318,32 @@ it judged transmission of repository source to the external Codex/OpenAI destina
 unauthorized. No external CLI review ran for this revision. Independent local coordinator
 review was used within the approved workspace; its first counterexample was accepted and
 repaired. The theorem proofs remain visibly open for tickets 42 and 43.
+
+### Reopened: ownership lifetime — 2026-10-15 ET
+
+The constant-ThreadOwned ownership-handoff counterexample is confirmed by an
+executable finite audit: all 43,758 projection-preserving full orders were checked;
+210 have both critical sections contiguous, and zero preserve the two required
+DX100 source/coverage constraints. Its full run, seven obligation checks and
+memory/OpenMP/device checks are in `/tmp/probata-t42-resume/owned_handoff_counterexample.py`.
+This is an executable model audit, not a Rocq proof of the theorem's negation.
+
+The root coordinator delegated the minimum repair: retain existing protected-read
+and class-lifetime clauses, and additionally require `reads_owner_stable X t` through
+`obl_dx100_quiet`. A device read of a ThreadOwned location must have a covering event
+strictly before another thread establishes Own of that location. Static owners may
+still carry uncovered dead commands across barriers. No new top-level hypothesis or
+assumption entry is introduced. `Sanity.v` adds rejection of the exact witness,
+acceptance after prior coverage, and acceptance of static-owner barrier crossing.
+
+The previous approved reconstruction `ffb5bda7…` is known false; this revision is
+pending independent root review and a new hash approval. Candidate compatibility
+remains conditional on ticket 45 discharging the ownership lifetime obligation.
+
+Checks before independent review: Rocq 9.3.0 compiles the repaired Composition and
+all retained/new ticket 42 lemmas (3.28 s, peak 442.0 MB) and Sanity (1.81 s, peak
+432.9 MB) under the shared 8 GB watchdog. The three ownership regression lemmas
+print `Closed under the global context`; no axiom or admitted regression proof.
+`/tmp/probata-t42-resume/logs/owner-sanity-2.log` sha256
+`9142003af0ddfc667b3be918398301beda2b58ef86b659f73c468d6f1ff51d73`.
+The exact-text approval guard intentionally still rejects this pending revision.

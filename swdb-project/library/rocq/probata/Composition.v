@@ -345,8 +345,19 @@ Definition quiet_ok (tr : list event) : Prop :=
      forall m e, p < m -> nth_error tr m = Some e -> conflicts d e -> covered_between tr c p m) /\
   (forall c, crosses_sync tr c -> dead_after tr c /\ reads_no_lock_protected tr c) /\
   reads_class_stable tr.
+(* 2026-10-15 ET, ticket 41 ownership-handoff repair: a pending element read
+   of a thread-owned location must finish before a different thread establishes
+   ownership. Stable sharing classes alone do not preserve element ownership
+   across a barrier. Coverage must precede the ownership event, not coincide
+   with it. A static owner may retain an uncovered dead read across a barrier. *)
+Definition reads_owner_stable (X : run) (t : nat) : Prop :=
+  forall i c l v j u, at_ X i t (DeviceRead c l v) ->
+    cls (interval X t i) (array_of l) = ThreadOwned ->
+    i < j -> at_ X j u (Own l) -> t <> u ->
+    exists q, i < q < j /\ at_ X q t (DeviceCovered c).
 Definition obl_dx100_quiet : Prop :=
-  forall X rf t, model_run X rf -> complete X -> all_fit X -> t < N -> quiet_ok (proj X t).
+  forall X rf t, model_run X rf -> complete X -> all_fit X -> t < N ->
+    quiet_ok (proj X t) /\ reads_owner_stable X t.
 
 (** * 7. Conclusion: the run ends as a serial order of its shared actions would *)
 Definition intervals_contiguous (Y : run) : Prop :=
@@ -2678,6 +2689,61 @@ Proof.
     { eapply t42_nonshared_past_source; eauto. }
     split; [exact Hsource |].
     eapply t42_past_read_latest; eauto.
+Qed.
+
+Lemma t42_inside_after_enter (X : run) i t m :
+  at_ X i t Enter -> i < m ->
+  (forall q, i < q < m -> ~ at_ X q t Exit) -> inside X t m = true.
+Proof.
+  revert i. induction m as [|m IH]; intros i Henter Him Hnoexit; [lia |].
+  destruct (Nat.eq_dec i m) as [-> | Hne].
+  - unfold inside. rewrite (t42_firstn_succ_some X m (t,Enter) Henter).
+    rewrite t42_proj_snoc_same, t42_in_crit_app. reflexivity.
+  - assert (Hin : inside X t m = true).
+    { eapply IH; eauto; [lia |]. intros q Hq. apply Hnoexit. lia. }
+    destruct (nth_error X m) as [[u e] |] eqn:Hat.
+    + unfold inside. rewrite (t42_firstn_succ_some X m (u,e) Hat).
+      destruct (Nat.eq_dec u t) as [-> | Hut].
+      * rewrite t42_proj_snoc_same, t42_in_crit_app.
+        change (in_crit [e] (inside X t m) = true). rewrite Hin.
+        assert (Hnot : e <> Exit).
+        { intro Heq. subst e. apply (Hnoexit m); [lia | exact Hat]. }
+        destruct e; simpl; congruence.
+      * rewrite t42_proj_snoc_other by exact Hut. exact Hin.
+    + unfold inside. rewrite t42_firstn_succ_none by exact Hat. exact Hin.
+Qed.
+
+Lemma t42_window_owner_inside (X : run) i x t m :
+  at_ X i t Enter -> i < x ->
+  (forall q, i < q < x -> ~ at_ X q t Enter /\ ~ at_ X q t Exit) ->
+  i < m <= x -> inside X t m = true.
+Proof.
+  intros Henter Hix Hwindow Him. eapply t42_inside_after_enter; eauto; [lia |].
+  intros q Hq. apply (proj2 (Hwindow q ltac:(lia))).
+Qed.
+
+Lemma t42_window_no_conflict X rf i x t m u e q d :
+  obl_team_size -> obl_owned_disjoint -> obl_atomic_blocks ->
+  model_run X rf -> all_fit X ->
+  at_ X i t Enter -> at_ X x t Exit -> i < x ->
+  (forall r, i < r < x -> ~ at_ X r t Enter /\ ~ at_ X r t Exit) ->
+  i < m < x -> i < q < x -> at_ X m t e -> at_ X q u d -> t <> u ->
+  ~ t42_events_conflict e d.
+Proof.
+  intros Hteam Hdis Hatomic Hmodel Hfit Henter Hexit Hix Hwindow
+    Him Hiq He Hd Htu.
+  pose proof Hmodel as [Hprogram [_ [_ Homp]]].
+  pose proof (t42_threads_below_N Hteam X rf Homp m t e He) as Ht.
+  pose proof (t42_threads_below_N Hteam X rf Homp q u d Hd) as Hu.
+  pose proof (t42_window_interval X i x t Hatomic Hprogram Ht
+    (t42_intervals_contiguous Hteam X rf Homp) Henter Hexit Hix Hwindow) as Hinterval.
+  assert (Hint : interval X t m = interval X u q).
+  { rewrite (Hinterval m t e ltac:(lia) He), (Hinterval q u d ltac:(lia) Hd).
+    reflexivity. }
+  eapply (t42_cross_critical_no_conflict X rf m q t u e d Hdis Hmodel Hfit
+    Ht Hu Htu He Hd Hint).
+  - eapply t42_window_owner_inside; eauto; lia.
+  - eapply t42_window_other_outside; eauto.
 Qed.
 
 (* END t42 lemmas *)

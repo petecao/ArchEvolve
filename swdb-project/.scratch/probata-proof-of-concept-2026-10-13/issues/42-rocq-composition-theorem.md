@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-15 01:41 ET (ticket 41 repaired and approved under delegation; proof may resume); 2026-10-14 22:30 ET (blocker: the approved statement is false; needs a statement decision); 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-14 00:15 ET (review fixes, round 4); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** claimed
+**Status:** needs-info
 **Blocked by:** 10, 11, 12, 41
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Concurrency" (composition theorem: 2-week box, written fallback), "Records and levels" (subjects), "What a proven verdict asserts" (assumption set, cap rule), "Modules" (level rule: level computed on read), "Further Notes" (risk: the Rocq theorem does not fit 2 weeks), "Proof-of-concept plan" (Rocq side track, overrun rule), S1, S2, S8, S9); decisions: [15](../../formal-verification-2026-10-09/issues/15-concurrency-proofs.md), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md)
 **Time estimate:** one 2-week box, shared with 43 (S9)
@@ -171,3 +171,12 @@ definition or hypothesis changed. The theorem itself remains open, so this is
 proof progress only and does not authorize a Rocq-checked method-part record.
 Next: critical-window clearing, including the RF-sensitive coverage side condition,
 then the global serialization and iteration-count assembly.
+
+### Statement blocker: ownership handoff — 2026-10-15 ET
+
+The approved statement admits a command reading a ThreadOwned location across an
+ownership transfer while its class remains ThreadOwned. Two source/cover constraints
+then force a foreign event inside a critical section. Ticket 41 is reopened for the
+coordinator-delegated ownership-lifetime repair; its new hash requires review. The
+checked A5 and window lemmas remain useful. The shared box is not restarted and no
+fallback or method-part proof record is claimed.

@@ -358,3 +358,38 @@ class (M3), independently of this change.
 Codex CLI invocation because exporting repository source to the external Codex/OpenAI
 destination was not authorized under its assessment. No CLI review ran for this revision;
 local coordinator review found and repaired the class-lifetime issue above.
+
+### Ownership-lifetime counterexample and delegated repair, 2026-10-15 ET
+
+Constant classes do not retain element ownership across a barrier. Let A and T be
+ThreadOwned in every interval, B SharedActionsOnly, T a tile, init = 0, and each shared
+action increment its location. The full fixed traces are:
+
+- t0: `Barrier; Own A; DeviceRead cB B 1; Enter; Read A 0; Write A 1; Cover cB; Exit`.
+- t1: `Own A; Own T; Enter; DeviceRead cA A 1; Read T 0; DeviceWrite cA T 1; Exit; Barrier; Cover cA; Shared B 0`.
+
+Run t0's Barrier, then t1 through its Barrier, then t0 through Write A, then t1's
+Cover cA and Shared B, then t0's Cover cB and Exit. Both device reads source future
+writes before their own covers. All original obligations hold: A's old t1 ownership
+is in interval 0 and its new t0 ownership in interval 1; cA has a dead tile output,
+reads no protected location, and A keeps its class. Critical sections are bracketed.
+The cover/source constraints require `Write A < Cover cA < Shared B < Cover cB`,
+which makes t0's critical section noncontiguous in every exact-trace twin.
+
+`negative/OwnedReadHandoffCounterexample.py` audits this run against the explicit
+finite definitions and all exact-trace orders: 43,758 shuffles, 210 with contiguous
+critical sections, zero meeting both device source/cover constraints. This is an
+executable model audit, not a Rocq proof of the universal negation. Its structural
+prefix checks support the universal program obligations because `step` admits only
+prefixes of the two fixed traces. `Sanity.v` checks the exact witness's exclusion
+under the new predicate in Rocq.
+
+**Root-delegated repair, pending independent approval:** `reads_owner_stable X t`
+requires coverage of a ThreadOwned element read strictly before another thread's
+later Own of that location. `obl_dx100_quiet` discharges it alongside its existing
+local quiet rule. The prior protected-read and class-lifetime repairs remain.
+This targets handoff rather than banning all owned reads across barriers: sanity
+lemmas accept a covered handoff and a static owner's crossing. Ticket 45 must check
+this lifetime property for every pending read; candidate compatibility is conditional.
+The previous reconstruction `ffb5bda7…` is superseded as false; the revised hash is
+not yet approved. No proof outcome or assumption removal is claimed.
