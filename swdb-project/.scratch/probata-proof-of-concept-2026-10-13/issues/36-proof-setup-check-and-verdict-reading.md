@@ -693,3 +693,14 @@ A prospective metadata correction remains necessary: some actual positive WP
 records retain `verifier_launched:false` despite WP logs and proof goals. These
 historical records stay immutable; current acceptance is traced to their artifacts.
 [Compact final audit](../evidence/source-gate-final-frozen-5c-20261015.json).
+
+
+### Prospective WP invocation metadata — 2026-10-15 ET
+
+`b4dc2748` sets `settings.verifier_launched:true` only after generated-input,
+source and pin checks pass, immediately before invoking the WP watchdog. True
+means attempted verifier invocation, not successful completion or proof. Real
+prelaunch source refusal retains false. The public stand-in regression first
+reproduces1failed/1passed; the correction gives2passed in47.06s under8GiB
+(peak408,092,672bytes), with no actual solver. Historical5c records are unchanged.
+[Evidence](../evidence/wp-launch-metadata-20261015.json). Ticket36 stays claimed.

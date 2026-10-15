@@ -1,0 +1,32 @@
+{
+  "created": "2026-10-15 ET",
+  "runtime_commit": "b4dc27487deff88c89dda8d8edd9f46c127efa8a",
+  "scope": "WP record metadata only. True means attempted WP verifier invocation, not successful completion or proof. Historical records remain immutable.",
+  "change": "Set verifier_launched true after all generated/source/pin checks pass and immediately before rss_watchdog.run; prelaunch refusal retains false.",
+  "public_red": {
+    "passed": 1,
+    "failed": 1,
+    "seconds": 46.55,
+    "failure": "Completed unknown stand-in with flags and WP log retained false; source-gate refusal correctly false."
+  },
+  "public_green": {
+    "passed": 2,
+    "seconds": 47.06,
+    "resources": {
+      "exit_code": 0,
+      "peak_rss_bytes": 408092672,
+      "out_of_memory": false,
+      "timed_out": false,
+      "wall_seconds": 47.58825875003822,
+      "cpu_seconds": 46.262017
+    },
+    "boundary": "Real Clang plus explicit Frama/Why3 stand-ins; no actual solver."
+  },
+  "independent_review": "Coordinator reviewed the one-line runtime delta before integration.",
+  "artifact_sha256": {
+    "/private/tmp/probata-wp-launch-metadata-red.xml": "261f1852d117aea6a9109b947ce6875a8547278ba264deed0161b1ce4a61633f",
+    "/private/tmp/probata-wp-launch-metadata-green.xml": "a9f75f81ffbc06496e6198291f3f23a65636cec93363c283b9a1093e91e46fd8",
+    "/private/tmp/probata-wp-launch-metadata-green.log": "da04d0f49d89dad27c9954faa8a00bd9dfcf4e27746ca6920db0540b489ddc3c",
+    "/private/tmp/probata-wp-launch-metadata-green.resources.json": "30eb0a42f85ff57cbd63629fae34b3b09e9e1b28ecec456b3bfeb04e2243e944"
+  }
+}
