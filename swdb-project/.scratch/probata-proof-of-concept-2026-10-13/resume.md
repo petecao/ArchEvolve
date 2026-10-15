@@ -22,9 +22,13 @@ Current node1 raw output: `/data/yanruj/EvolveSWDB_runs/probata-resume-t27-safe-
 Node0 runs ticket24 original templates safe/seeded at composed `71771f09`
 (generation569, started2026-10-15 15:08:36ET). Raw output:
 `/data/yanruj/EvolveSWDB_runs/probata-resume-t24-templates-71771f09`.
-Setup hardening is integrated. Ticket07 method20 fresh counted run started15:05:50ET
-at frozen `418a48d7`, raw `/private/tmp/probata-t07-20261015-run20`; its Mac slot
-is reserved. No new actual proof acceptance is claimed yet.
+Setup hardening is integrated. Ticket24 original templates safe case proves
+89ordinary+1smoke with25initializedness goals and0residual helper calls; seeded
+case remains active. Ticket07 run20 at `418a48d7` was stopped during baseline before
+any provider call; raw `/private/tmp/probata-t07-20261015-run20` is retained.
+Its2review findings are fixed at `1ebf9d59`, independently re-reviewed with165controls.
+Fresh launch preflight/manifests are pending; no counted proof success is claimed.
+The Mac actual verifier slot remains reserved for ticket07.
 
 1. Review/freeze method20 independently before a fresh counted ticket07 run.
 2. Finish ticket24 original construct acceptance, preserving all validity,
