@@ -21,6 +21,7 @@ import goal_print as G  # noqa: E402
 import loop as L  # noqa: E402
 import staged_search as S  # noqa: E402
 import focused_probe as F  # noqa: E402
+import provider_origin as O  # noqa: E402
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--state", required=True)
@@ -32,6 +33,7 @@ L.OWNER[0] = CFG.get("owner", "t07d")
 PIN = CFG.get("pin") or L.PIN
 L.BASELINE_PASSED.update(CFG.get("baseline_passed") or [])
 ALLOWED = set(CFG["allowed_kinds"])
+O.REQUIRED[0] = bool(CFG.get("method22"))
 E.ACCEPT[0] = CFG.get("accept", "total")
 E.CAP[0] = CFG.get("hint_cap", E.HINT_OPEN_CAP)
 E.TWO_PHASE[0] = bool(CFG.get("two_phase"))
@@ -74,6 +76,11 @@ if CFG.get("method20"):
          "inputSchema":{"type":"object","required":["goal"],"properties":{"goal":{"type":"string"}}}},
     ]
 TOOL_NAMES = {t["name"] for t in TOOLS}
+if CFG.get("method22") and CFG.get("show_goal"):
+    page_tool = next(t for t in TOOLS if t["name"] == "show_goal")
+    page_tool["inputSchema"]["properties"].update(
+        offset={"type": "integer", "minimum": 0}, task_sha256={"type": "string"})
+    page_tool["description"] += " Method22: offset pages (at most14000chars), pinned complete-task hash; repeat with task_sha256 to inspect omitted premises. Active candidate only."
 
 
 def budget_used_min():
@@ -82,7 +89,7 @@ def budget_used_min():
 
 
 def remaining_min():
-    return CFG["budget_min"] - CFG["final_reserve_min"] - budget_used_min()
+    return (CFG.get("proof_search_stop_min") or CFG["budget_min"] - CFG["final_reserve_min"]) - budget_used_min()
 
 
 E.COUNTED_S[0] = lambda: budget_used_min() * 60
@@ -95,6 +102,8 @@ elif E.DEBT[0]:
                                 "the incumbent rule; otherwise rollback. Final full proof/smoke acceptance is unchanged.")
 
 N = [0]
+if O.REQUIRED[0] and (STATE / "submissions.jsonl").exists():
+    N[0] = max((json.loads(line).get("n", 0) for line in (STATE / "submissions.jsonl").read_text().splitlines()), default=0)
 
 
 def record(tool, rec):
@@ -135,6 +144,12 @@ def call(tool, args):
         phase = S.phase(E.STAGED[0], budget_used_min()*60)
         phase_note = f"\nMETHOD{20 if CFG.get('method20') else 19} PHASE {phase['index']+1}/3: {phase['name']}; " + phase['guidance']
     best = E.load_working(OUT, counted_s=budget_used_min() * 60, remaining_s=remaining_min() * 60) if E.DEBT[0] else E.load_best(OUT)
+    if CFG.get("method22") and remaining_min() <= 0:
+        if tool in {"check_edit", "propose_edit"}:
+            O.begin(OUT, best, args.get("ops") or [], f"r{CFG['round']}q{O.CONTEXT[0]['request_index']}",
+                    refusal="proof search deadline; no candidate checked")
+        record(tool, {"result": "refused: proof search ended; natural-return window"})
+        return "Proof search ended. Return final JSON with empty ops NOW; this counted natural-return window ends at minute36."
     if tool == "show_best":
         return E.working_text(OUT, best) + "\n" + E.open_text(best) + E.debt_text(OUT) + phase_note + f"\nBudget left for in-call work: {remaining_min():.1f} min."
     if remaining_min() <= 0:
@@ -148,7 +163,8 @@ def call(tool, args):
     if CFG.get("method20") and tool == "focused_probe" and not F.has_design(OUT):
         record(tool,{"result":"refused: state design missing"})
         return "First record your own structured state design using record_design. No concrete hints are supplied."
-    tag = f"r{CFG['round']}c{N[0] + 1}"
+    request_number = O.CONTEXT[0]["request_index"] + 1 if O.REQUIRED[0] else N[0] + 1
+    tag = f"r{CFG['round']}c{request_number}"
     if tool == "focused_probe":
         rec=F.run(OUT,best,str(args.get("goal","")),tag,
                   remaining_s=lambda:max(0,E.search_remaining(OUT)),round_timeout=CFG["round_timeout"])
@@ -161,8 +177,10 @@ def call(tool, args):
         return json.dumps(display,indent=2)+f"\nCounted budget left: {remaining_min():.1f} min."
     if tool == "show_goal":
         t = L.clock()
-        text, rec = G.show(OUT, best, str(args.get("goal", "")), tag,
-                           **({"timeout_s": max(1, E.search_remaining(OUT))} if E.DEBT[0] else {}))
+        page_args = {"offset": args.get("offset", 0), "task_sha256": args.get("task_sha256")} if CFG.get("method22") else {}
+        text, rec = (G.show_paged if CFG.get("method22") else G.show)(
+            OUT, best, str(args.get("goal", "")), tag, **page_args,
+            **({"timeout_s": max(1, E.search_remaining(OUT))} if E.DEBT[0] else {}))
         rec["wall_s"] = round(L.clock() - t, 1)
         record(tool, rec)
         if E.DEBT[0]:
@@ -217,6 +235,13 @@ for line in sys.stdin:
         try:
             if p.get("name") not in TOOL_NAMES:
                 raise ValueError(f"unknown tool {p.get('name')}")
+            if O.REQUIRED[0]:
+                path = STATE / "provider-requests.jsonl"
+                index = len(path.read_text().splitlines()) if path.exists() else 0
+                with path.open("a") as stream:
+                    stream.write(json.dumps(msg) + "\n")
+                O.CONTEXT[0] = {"kind": "mcp", "round": CFG["round"], "pin": PIN,
+                                "request_index": index, "request_sha256": O.digest(msg)}
             text, err = call(p["name"], p.get("arguments") or {}), False
         except Exception as e:  # noqa: BLE001
             text, err = f"tool error: {type(e).__name__}: {e}", True
