@@ -1890,6 +1890,9 @@ class _Printer:
         if name.startswith("__sync_"):
             return self._sync(name, args)
         if name in ("__atomic_thread_fence", "__atomic_signal_fence"):
+            if len(args) != 1:
+                raise Unsupported(f"atomic fence {name} operand shape", self.line)
+            self._atomic_order(args[0], set(range(6)))
             return "(void)0", False
         if name.startswith("__builtin"):
             raise Unsupported(f"builtin call {name}", self.line)
@@ -2135,6 +2138,18 @@ class _Printer:
         if op not in ATOMIC_OPS:
             raise Unsupported(f"atomic builtin {name}", self.line)
         children = _children(node)
+        if len(children) != (2 if op == "load_n" else 6 if op == "compare_exchange_n" else 3):
+            raise Unsupported(f"atomic builtin {name} operand shape", self.line)
+        order = self._atomic_order(children[1], {0, 1, 2, 5} if op == "load_n" else
+                                   {0, 3, 5} if op == "store_n" else set(range(6)))
+        if op == "compare_exchange_n":
+            # Failure has load semantics: release is incomparable with acquire,
+            # so a numeric failure <= success comparison would admit invalid pairs.
+            failure_orders = {0: {0}, 1: {0, 1}, 2: {0, 1, 2}, 3: {0}, 4: {0, 1, 2}, 5: {0, 1, 2, 5}}
+            self._atomic_order(children[3], failure_orders[order])
+            if self._atomic_constant(children[5], "weak flag") != 0:
+                raise Unsupported("atomic weak compare-exchange may fail spuriously; only constant false is supported",
+                                  self.line)
         ptr = children[0]
         ctype = self._pointee(ptr, name)
         if op == "load_n":
@@ -2148,6 +2163,33 @@ class _Printer:
         text = f"{model}({', '.join(texts)})"
         return self._initialized_model_result(text, ctype, boolean=op == "compare_exchange_n",
                                               void=op == "store_n"), True
+
+    def _atomic_constant(self, node, label):
+        """Atomic operand admission v1: no runtime reads/effects or folded-away RTE."""
+        kind, children = node.get("kind"), _children(node)
+        wrappers = {"ParenExpr", "ConstantExpr", "ImplicitCastExpr", "CStyleCastExpr", "CXXStaticCastExpr"}
+        if kind in wrappers and len(children) == 1:
+            if kind in {"ParenExpr", "ConstantExpr"}:
+                return self._atomic_constant(children[0], label)
+            if (node.get("castKind") in {"NoOp", "IntegralCast", "IntegralToBoolean"}
+                    and _qual(node) in INTEGER_TYPES | {"bool"}):
+                value = self._atomic_constant(children[0], label)
+                if not 0 <= value <= 5:
+                    raise Unsupported(f"atomic {label} cast is outside the closed constant domain", self.line)
+                return int(value != 0) if node.get("castKind") == "IntegralToBoolean" else value
+        if kind == "IntegerLiteral" and not children:
+            return int(node["value"])
+        if kind == "CXXBoolLiteralExpr" and not children:
+            return int(node["value"])
+        if kind == "DeclRefExpr" and not children and node.get("referencedDecl", {}).get("kind") == "EnumConstantDecl":
+            return self.unit.enum_value(node["referencedDecl"], self.line)
+        raise Unsupported(f"atomic {label} requires a literal or enum constant with safe integer wrappers", self.line)
+
+    def _atomic_order(self, node, allowed):
+        value = self._atomic_constant(node, "memory order")
+        if value not in allowed:
+            raise Unsupported("atomic memory order is invalid for this operation", self.line)
+        return value
 
     def _sync(self, name, args):
         if name == "__sync_synchronize":

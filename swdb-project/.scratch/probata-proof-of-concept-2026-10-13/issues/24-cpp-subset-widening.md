@@ -8,6 +8,13 @@ Updated: 2026-10-15 ET (original Ring/allocation actual pairs and public unsuppo
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Formal-half language and the C++ subset": the subset by construct and kept names; "Verifier lineup and order": failure classes; "Records and levels": method-version file contents; "Testing Decisions", seam 1; choice S1); decisions: [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md) items 3, 9; [13](../../formal-verification-2026-10-09/issues/13-proof-hint-loop.md) item 2; [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md) items 3, 6
 **Time estimate:** about 4 days
 
+**Current soundness follow-up (2026-10-15 ET):** independent review found that
+generic atomic lowering dropped evaluated order/weak operands and admitted weak
+CAS into a deterministic strong model. The scoped constant-operand/strong-only
+fix passes compiler and public refusal controls; independent review and fresh
+method pins/replay remain required. Existing remote/finite records keep their
+historical freezes. [Fix, TDD and exact evidence boundary](../evidence/t24-atomic-operand-fix-20261015.md).
+
 **What to build:** The C lowering tool grows from 21's core (functions, arrays, loops) to the declared C++ subset, construct by construct, so GAPBS-style candidate artifacts can reach WP. Accepted: C plus references; classes without inheritance or virtual functions; member functions and operators; constructors and destructors as explicit calls; instantiated templates; `new[]` and `delete[]`; `enum class`, `constexpr`, `static_assert`; `std::min`, `std::max`, `std::copy`, `std::swap` through C models proven once; the OpenMP constructs (`parallel`, `for` with static, dynamic and `nowait`, `critical`, `atomic`, `barrier`, `reduction`); `__sync_*` and `__atomic_*`; `__dxc_*` and `maa_*` calls through summaries. The C lowering keeps C++ names: a class becomes a struct with the same name and fields, references become pointers, operators become named functions. So formal halves type-check unchanged. Anything outside the subset gives failure class "unsupported construct", never a crash or a partial C lowering. The naming rules are versioned and belong to the content-hash set.
 
 ## Acceptance

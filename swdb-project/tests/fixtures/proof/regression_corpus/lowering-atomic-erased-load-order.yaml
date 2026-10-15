@@ -1,0 +1,10 @@
+# Created: 2026-10-15 ET (ticket24 atomic operand admission v1).
+id: lowering-atomic-erased-load-order
+adapter: c_lowering
+input:
+  source: tests/fixtures/proof/lowering/atomic_operand_refusals.cc
+  function: erased_load_order
+failure_class: unsupported_construct
+construct: atomic memory order
+cause: The order expression increments m; erasing it changed a defined native return
+  from107 to7.
