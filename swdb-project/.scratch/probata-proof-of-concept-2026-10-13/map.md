@@ -16,8 +16,9 @@ Current dispatch, evidence and blockers: [resume.md](resume.md).
   and ownership lifetimes. Reconstructed approved hash `e23f37153fadb8c3307384b4ec074422e0af6ebc121ff673688b6d321485e513`.
   The full composition theorem is Qed; 42 is resolved with production record
   `proof.probata.composition.20261015-a1`.
-- **Current blockers:** WP 33 lacks deallocation support (24/25); store-frame and strict-reader
-  acceptance and conservative CPU-memory admission are still running (27/36).
+- **Current blockers:** general vector lifetime remains unsupported in WP (25); full current-policy
+  construct acceptance remains open (24). Final store/capacity acceptance, native footprint boundaries
+  and bounded pointer-formation checks are in progress (27/36).
   Counted proof-hint run 13 failed with 19 goals open; run 14 is active with a repaired
   guard and corrected boundary guidance (07).
 - **Next action:** finish these acceptance runs and the bounded initializedness guard; create a new draft
