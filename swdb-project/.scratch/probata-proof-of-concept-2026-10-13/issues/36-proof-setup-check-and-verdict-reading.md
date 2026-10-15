@@ -534,3 +534,45 @@ artifact hash matches. This checkpoint does not resolve ticket36 or draft3.
 Evidence: [summary-source-binding-20261015.json](../evidence/summary-source-binding-20261015.json).
 Regression: `tests/test_summary_source_binding.py`, including corpus case
 `summary-same-name-different-body.yaml`.
+
+### Nested entry-read checkpoint — 2026-10-15 ET
+
+`nested_entry_reads.py` supplies a separate checked source view for one-level
+`base[q[k]]` reads in pure returns. It captures each original inner plain-int read
+once, retains the inner bounds/validity/initializedness checks before that capture,
+and checks the outer bound against its value. Both direct pointer parameters need
+explicit typed entry windows. No scalar mathematical expression gains permission
+to read memory, and no contract premise is synthesized. Checked helper expansion
+may precede this view; original, intermediate and final sources/lowerings and both
+independent AST relations are replayed before launch. Schema/source/checker pins
+and persistent view/certificate artifacts cover the additional stage.
+
+The closed executable dependency check refuses globals, unexpanded source/header
+bodies, default-argument evaluation, member/indirect calls, location-dependent
+expressions and declaration/statement attributes (including implicit cleanup
+calls). Capture variables must have ordinary automatic storage, with no TLS,
+static storage or attributes. Independent review reproduced a cached-static
+renderer fault accepted by the first checker, while the downstream lowerer still
+refused it; the explicit storage check and same-byte-length fault controls now
+reject it directly. All unedited byte regions and header dependencies are checked.
+
+Evidence: [compact manifest](../evidence/wp-nested-entry-reads-20261015.json).
+The original three-read candidate at `a185bc8b` proves with **112 ordinary Valid
+properties and 31 passing smoke tests**, under the 8 GiB process-tree cap
+(455.54 s, peak 5,843,206,144 bytes). This actual run precedes the stricter
+storage/attribute refusal. Final-source `18e7a7f0` passes **60 structural/helper
+controls** and **8 public controls** (175.28 s, peak 880,541,696 bytes): a fresh
+primitive nested read proves; inner-window, outer-window, missing-initializedness
+and null-inner controls each leave exactly their intended checked property open;
+changed view, certificate and window binding stop before WP. Every persisted
+report in the manifest was independently rehashed. The obsolete original
+three-read refusal expectation is replaced by a missing-entry-window control;
+its supported explicit-window behavior has separate actual acceptance evidence.
+
+Ticket 36 remains **claimed**. These are scoped fixture checkpoints; they neither
+freeze production method 3 nor close the complete ticket-27 acceptance matrix.
+
+Two focused existing regressions also pass at `18e7a7f0` (166.98 s, peak
+5,134,909,440 bytes): original three-read source without declared entry windows
+still refuses before WP, and the existing legal one-past entry-window fixture
+still proves. The manifest includes both records and their checked report hashes.
