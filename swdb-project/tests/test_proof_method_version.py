@@ -165,6 +165,7 @@ def test_removing_a_budget_fails_and_names_it(library, budget):
 
 def test_a_draft_may_mark_a_section_not_yet_built_and_a_frozen_file_may_not(library):
     data = _method()
+    data["status"] = "draft"
     data["rocq_development"] = {"not_yet_built": "Tickets 41-43 write the Rocq development."}
     path = library.write(data)
     result = library.validate()
@@ -172,6 +173,42 @@ def test_a_draft_may_mark_a_section_not_yet_built_and_a_frozen_file_may_not(libr
     data["status"] = "frozen"
     path.write_text(yaml.safe_dump(data, sort_keys=False))
     _refused(library, path, "rocq_development", "only a draft")
+
+
+# --- lifecycle: current means frozen; a draft is used only when named (fix-21, 2026-10-14) ---------
+
+def _version(data, name, sequence, status):
+    return {**data, "id": f"method.{name}", "sequence": sequence, "status": status}
+
+
+def test_current_is_the_highest_sequence_frozen_version_never_a_higher_draft(library):
+    from swdb import method_version
+    data = _method()
+    library.write(_version(data, "contract-fixture-1", 1, "frozen"), "contract-fixture-1")
+    library.write(_version(data, "contract-fixture-2", 2, "frozen"), "contract-fixture-2")
+    library.write(_version(data, "contract-fixture-3", 3, "draft"), "contract-fixture-3")
+    root = library.methods.parent
+    assert method_version.current(root).id == "method.contract-fixture-2"
+    assert method_version.named(root, "method.contract-fixture-3").data["status"] == "draft"
+    assert method_version.named(root, "method.never-written") is None
+    assert library.validate().returncode == 0
+
+
+def test_with_only_drafts_there_is_no_current_method_version(library):
+    from swdb import method_version
+    library.write(_version(_method(), "contract-fixture-1", 1, "draft"))
+    assert method_version.current(library.methods.parent) is None
+    assert library.validate().returncode == 0
+
+
+def test_two_frozen_versions_may_not_share_a_sequence_but_a_draft_may_share_one(library):
+    data = _method()
+    library.write(_version(data, "contract-fixture-1", 1, "frozen"), "contract-fixture-1")
+    draft = library.write(_version(data, "draft-1", 1, "draft"), "draft-1")
+    assert library.validate().returncode == 0, library.validate().stderr
+    draft.unlink()
+    _refused(library, library.write(_version(data, "frozen-1", 1, "frozen"), "frozen-1"), "sequence",
+             "also used by")
 
 
 # --- every proof record pins the method version ------------------------------------------------
@@ -194,6 +231,101 @@ def test_prove_pins_the_method_version_with_the_highest_sequence(seed):
     (_method_file(seed).parent / "contract-fixture-2.yaml").write_text(yaml.safe_dump(data, sort_keys=False))
     record = seed.prove(seed.script())["record"]
     assert record["pins"]["method_version"]["id"] == "method.contract-fixture-2"
+
+
+def _draft(seed, name="contract-fixture-2", sequence=2):
+    data = _version(_method(), name, sequence, "draft")
+    (_method_file(seed).parent / f"{name}.yaml").write_text(yaml.safe_dump(data, sort_keys=False))
+    return f"method.{name}"
+
+
+def test_prove_never_pins_a_draft_it_was_not_given_even_with_a_higher_sequence(seed):
+    _draft(seed)
+    record = seed.prove(seed.script())["record"]
+    assert record["pins"]["method_version"]["id"] == "method.contract-fixture-1"
+
+
+def test_prove_pins_a_draft_named_with_method_version_and_validate_accepts_it(seed):
+    import hashlib
+    draft = _draft(seed)
+    record = seed.prove(seed.script(), "--method-version", draft)["record"]
+    sha = hashlib.sha256((_method_file(seed).parent / "contract-fixture-2.yaml").read_bytes()).hexdigest()
+    assert record["pins"]["method_version"] == {"id": draft, "sha256": sha}
+    assert seed.swdb("validate").returncode == 0
+
+
+def test_prove_refuses_a_method_version_name_with_no_file(seed):
+    result = seed.prove(seed.script(), "--method-version", "method.never-written", ok=False)
+    assert result.returncode == 1 and "method.never-written" in result.stderr
+    assert not seed.proof_files()
+
+
+def test_prove_with_only_a_draft_refuses_unless_the_draft_is_named(seed):
+    _method_file(seed).unlink()
+    draft = _draft(seed, "contract-fixture-1", 1)
+    result = seed.prove(seed.script(), ok=False)
+    assert result.returncode == 1 and "frozen" in result.stderr and "--method-version" in result.stderr
+    assert not seed.proof_files()
+    assert seed.prove(seed.script(), "--method-version", draft)["record"]["pins"]["method_version"]["id"] == draft
+
+
+# --- the real draft in library/methods/ (fix-21) ----------------------------------------------------
+
+REAL_DRAFT = "method.probata-draft-1"
+
+
+def test_the_repository_draft_validates_and_is_never_current():
+    from swdb import method_version
+    root = paths.HOME / "library"
+    assert method_version.validate(root) == []
+    assert method_version.current(root) is None or method_version.current(root).id != REAL_DRAFT
+    draft = method_version.named(root, REAL_DRAFT)
+    assert draft is not None and draft.data["status"] == "draft" and draft.data["evidence_kind"] == "execution"
+
+
+def test_the_repository_draft_holds_the_mac_lineup_and_the_starting_budgets():
+    from swdb import method_version, proof, wp_adapter  # noqa: F401  (proof first: wp_adapter imports it)
+    data = method_version.named(paths.HOME / "library", REAL_DRAFT).data
+    tools = {(row["role"], row["tool"]): row for row in data["lineup"]}
+    versions = {key: row["version"] for key, row in tools.items()}
+    assert versions[("unbounded_verifier", "frama-c-wp")] == "33.0"
+    assert versions[("bounded_verifier", "cbmc")] == "6.11"            # Yan-Ru 2026-10-14 13:19 ET
+    assert versions[("concurrent_bounded_verifier", "civl")] == "1.23"
+    assert versions[("second_refuter", "genmc")] == "0.19.0"
+    assert versions[("proof_assistant", "rocq")] == "9.3.0"
+    assert versions[("front_end", "clang")] == "22.1.8"
+    assert {tool for role, tool in versions if role == "solver"} == {"alt-ergo", "z3", "cvc5"}
+    assert not any(tool == "saw" for _role, tool in versions)        # CBMC replaced SAW (ticket 09)
+    flags = tools[("unbounded_verifier", "frama-c-wp")]["flags"]
+    for flag, value in (*wp_adapter.FROZEN, ("-wp-par", "1")):        # -wp-par 1: hard goals (ticket 08)
+        assert flag in flags and flags[flags.index(flag) + 1] == value
+    assert data["budgets"] == BUDGETS
+
+
+def test_the_repository_draft_pins_logic_sum_as_its_sum_library_and_each_shared_logic_file():
+    from swdb import artifacts, logic_library, method_version
+    root = paths.HOME / "library"
+    section = method_version.named(root, REAL_DRAFT).data["logic_library"]
+    files = logic_library.files(root)
+    assert section["sum_library"] == files["logic.sum"].pin() and section["sum_library"]["version"] == "1.0"
+    assert section["files"] and all(pin == files[pin["id"]].pin() for pin in section["files"])
+    assert section["sha256"] == artifacts.digest(section["files"])       # the library's hash: its file pins
+
+
+def test_prove_logic_also_names_a_draft_with_method_version(library):
+    result = run_swdb("prove-logic", "--records", library.records, "--runs-dir", library.records.parent / "runs",
+                      "--lemmas", "logic.sum", "--method-version", "method.never-written")
+    assert result.returncode == 1 and "method.never-written" in result.stderr, result.stderr + result.stdout
+
+
+def test_a_reference_takes_an_optional_dotted_version_and_nothing_else(library):
+    data = _method()
+    data["logic_library"]["sum_library"]["version"] = "1.0"
+    path = library.write(data)
+    assert library.validate().returncode == 0, library.validate().stderr
+    data["logic_library"]["sum_library"]["version"] = "latest"
+    path.write_text(yaml.safe_dump(data, sort_keys=False))
+    _refused(library, path, "logic_library.sum_library.version", "version")
 
 
 def test_prove_refuses_to_run_without_a_method_version_file(seed):

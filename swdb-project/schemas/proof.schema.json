@@ -119,6 +119,8 @@
         },
         "c_lowering": {"$ref": "#/$defs/pin",
                        "description": "Ticket 21: the C lowering the verifier ran on, {id: <function>.c, sha256 of its text}. Optional: only adapters that run on a C lowering write it."},
+        "naming_rules": {"$ref": "#/$defs/pin",
+                         "description": "Ticket 24: the C lowering's naming rules, {id: kept-names.<n>, sha256 of the rules text} (swdb.c_lowering.naming_rules()). Written with c_lowering; a new rules version gives a different pin."},
         "translator": {"$ref": "#/$defs/pin",
                        "description": "Ticket 22: the formal-half translator the verifier's input came from, {id: <tool>-<version>, sha256 of the translator's source} (the CBMC translator). Optional: only adapters with a translator write it."},
         "logic": {

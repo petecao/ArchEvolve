@@ -146,9 +146,9 @@ class CbmcAdapter:
             source = _unit_source(Path(job.unit.tree), job.unit.function)
         log.line(f"source: {source.name}")
         covered = proof_semantics.covered_names(self.library)
-        semantics = {"externals": set(covered), "tile_pointer": {proof_semantics.TILE_POINTER}} if covered else None
         try:
-            lowering = c_lowering.lower(source, job.unit.function, defines=self.defines, semantics=semantics)
+            lowering = c_lowering.lower(source, job.unit.function, defines=self.defines,
+                                        **proof_semantics.lowering_options(self.library))
         except c_lowering.Unsupported as exc:
             context["settings"]["outside_cpp_subset"] = f"outside the C++ subset: {exc}"
             return self._not_proven("unsupported_construct", str(exc), context)
@@ -157,20 +157,22 @@ class CbmcAdapter:
         except c_lowering.LoweringError as exc:
             raise AdapterError(str(exc)) from None
         model = None
-        if lowering.externals:
-            entries = sorted({covered[name] for name in lowering.externals})
+        externals = proof_semantics.called(lowering, covered)
+        if externals:
+            entries = sorted({covered[name] for name in externals})
             if len(entries) != 1:
                 raise AdapterError(f"{job.unit.function} calls into more than one proof semantics: {', '.join(entries)}")
             model = proof_semantics.model_for(self.library, entries[0], self.defines)
-            log.line(f"proof semantics: {model.entry} (sha256 {model.sha256}); calls {', '.join(lowering.externals)}; "
+            log.line(f"proof semantics: {model.entry} (sha256 {model.sha256}); calls {', '.join(externals)}; "
                      f"{len(lowering.probes)} hazard probe(s)")
         code = Code(lowering, source, self.defines, model)
         code.apply_fault(os.environ.get("SWDB_CBMC_LOWERING_FAULT"))
-        context["pins"] = {"c_lowering": {"id": f"{lowering.function}.c", "sha256": code.c_sha256}}
+        context["pins"] = {"c_lowering": {"id": f"{lowering.function}.c", "sha256": code.c_sha256},
+                           "naming_rules": c_lowering.naming_rules()}           # ticket 24
         if model is not None:
             context["pins"]["proof_semantics"] = {"id": model.entry, "sha256": model.sha256}
             context["settings"]["proof_semantics"] = {
-                "id": model.entry, "calls": list(lowering.externals),
+                "id": model.entry, "calls": list(externals),
                 "probes": [{k: p[k] for k in ("id", "function", "access", "line")} for p in lowering.probes]}
             context["model"] = model
         try:

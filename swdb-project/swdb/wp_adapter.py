@@ -256,7 +256,8 @@ class WpAdapter:
             fields["unproven_properties"] = context.get("unproven", [])
         if context.get("settings"):
             fields["settings"] = context["settings"]
-        pins = {"c_lowering": context["c_lowering"]} if context.get("c_lowering") else {}
+        pins = {"c_lowering": context["c_lowering"], "naming_rules": c_lowering.naming_rules()} \
+            if context.get("c_lowering") else {}
         return Verdict(verdict=verdict, bounds={"threads": 1, "input_size": "unbounded"}, assumptions=assumptions,
                        failure_class=failure_class, tools=tuple(tools), peak_rss_bytes=context.get("peak"),
                        record_fields=fields, pins=pins, reports=tuple(context["reports"]))

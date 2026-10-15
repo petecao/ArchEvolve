@@ -321,11 +321,10 @@ def lowered(library, unit):
     from swdb import c_lowering, proof_semantics
     path = library.resolve(unit['source'])
     covered = proof_semantics.covered_names(library)       # ticket 27: calls a proof semantics defines
-    semantics = {'externals': set(covered), 'tile_pointer': {proof_semantics.TILE_POINTER}} if covered else None
     key = (str(path), unit['source'].get('sha256'), unit['function'], c_lowering.locate(), tuple(sorted(covered)))
     if key not in _LOWERED:
         try:
-            _LOWERED[key] = c_lowering.lower(path, unit['function'], semantics=semantics)
+            _LOWERED[key] = c_lowering.lower(path, unit['function'], **proof_semantics.lowering_options(library))
         except c_lowering.LoweringError as exc:
             _LOWERED[key] = exc
     return _LOWERED[key]

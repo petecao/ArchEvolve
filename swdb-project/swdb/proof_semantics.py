@@ -301,6 +301,20 @@ def covered_names(library):
     return found
 
 
+def lowering_options(library):
+    """The keyword arguments of `c_lowering.lower` for a unit that may call into a current proof semantics: its
+    calls and queries as summaries (calls kept, prototype only) and the tile-pointer calls (hazard probes)."""
+    covered = covered_names(library)
+    if not covered:
+        return {}
+    return {"summaries": dict(covered), "semantics": {"tile_pointer": {TILE_POINTER}}}
+
+
+def called(lowering, covered):
+    """The proof-semantics calls and queries a C lowering makes (sorted)."""
+    return sorted({row["name"] for row in lowering.summaries if row.get("name") in covered})
+
+
 def model_for(library, entry_id, defines=()):
     """The Model of one entry, with the build constants `defines` (NAME or NAME=VALUE) overriding its defaults."""
     data = library.get(entry_id)

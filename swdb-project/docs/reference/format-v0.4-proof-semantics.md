@@ -56,8 +56,9 @@ operators, and they are trusted (an assumption entry), never executed by check m
 
 ## Bounded jobs (`swdb prove --adapter cbmc`)
 
-- The C lowering leaves the covered calls undefined and puts a probe at every element access through a tile
-  pointer: `(*SWDB_TILE_READ(&(p[i]), "<function>.probe<N>"))` (writes: `SWDB_TILE_WRITE`). A tile pointer
+- The covered calls and queries reach the C lowering as ticket 24's `summaries` (each call kept, prototype
+  only; `swdb.proof_semantics.lowering_options`), and the lowering puts a probe at every element access through
+  a tile pointer: `(*SWDB_TILE_READ(&(p[i]), "<function>.probe<N>"))` (writes: `SWDB_TILE_WRITE`). A tile pointer
   used any other way is outside the subset. The C++ cut gets the same probes at the same source ranges.
 - `job.c` = harness prelude, the generated model (constants, `DX_RULE`, ghost globals from `ghost.acsl`,
   `state.h`, `model.h`), the C lowering, the harness. The harness runs `swdb_dx_init()` and draws every tile

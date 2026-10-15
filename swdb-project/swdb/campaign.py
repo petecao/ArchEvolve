@@ -819,7 +819,8 @@ class Campaign:
         self.store_dir.mkdir(parents=True, exist_ok=True)
         self.adapter.prepare()
         from swdb import bounded_gate     # Probata PoC 14: a library with a method version turns the gate on
-        found = bounded_gate.method_version_of(self.library_root)
+        # fix-21: a frozen method version, or the one the campaign file pins (a draft is used only when named)
+        found = bounded_gate.method_version_of(self.library_root, self.data.get("method_version"))
         if found is not None:
             gate = bounded_gate.Gate(self.store_dir, self.folder / "proofs", self.library_root, self.adapter, found)
             gate.setup(self.team)
@@ -1345,7 +1346,7 @@ class Campaign:
         if not recorded:
             return None
         from swdb import bounded_gate
-        found = bounded_gate.method_version_of(self.library_root)
+        found = bounded_gate.method_version_of(self.library_root, self.data.get("method_version"))
         gate = bounded_gate.Gate(self.store_dir, self.folder / "proofs", self.library_root, self.adapter, found) \
             if found else None
         if gate is None or gate.method != recorded["method_version"]:

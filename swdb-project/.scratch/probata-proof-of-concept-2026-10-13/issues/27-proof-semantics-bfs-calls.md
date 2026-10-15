@@ -113,8 +113,9 @@ two boxes is not met** (below). Branch `probata-poc/t27`. Interface doc:
   state, bitwise operators); they are trusted, never executed by check mode. Range-loop and store contracts
   state weaker (sound) value facts than the C model; ticket 29 compares the forms.
 - Assumption: tile contents start havocked from the oracle (part of the bounded domain); sizes and registers 0.
-- Assumption: the C lowering keeps `TOOL_VERSION` 1 and the translator 1: their output is byte-identical
-  without a proof semantics; records pin both by sha256.
+- Assumption: the C lowering (version 2 after ticket 24) and the translator keep their version numbers: their
+  output is byte-identical without a proof semantics; records pin both by sha256. The covered calls reach the
+  lowering as ticket 24's `summaries` (calls kept, prototype only); probes come from `semantics=`.
 - Assumption: `get_tile_ready` is not in the inventory (strict layer only, `#ifdef SWDB_STRICT`); ticket 28.
 
 **Tests** (Mac; serial; pytest outside the lock, each CBMC job takes the lock): `tests/test_proof_semantics.py`
