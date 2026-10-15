@@ -4,21 +4,20 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Checkpoint: integration `codex/probata-poc-integration`, based on `yanrujhou_main`
-`150930b4`; production composition record at `3793deba`, prototype guard at `3db8002c`,
-initialization policy/strict TSV reader merged at `d04193c1`, doc follow-up `f66bf568`,
-counting model dependencies and checked terminal-release acceptance merged at `cd642839`,
-bounded initializedness admission merged at `2b036379`.
+Checkpoint: reviewed integration source `6497f4f8` on `codex/probata-poc-integration`,
+based on `yanrujhou_main` at `150930b4`. It includes lowerer 7's checked copies,
+initialized WP fixtures, signed native footprint queries, distinct bounded tile objects,
+mandatory CBMC pointer checks and the reader dependency hash closure.
 User approval covers scoped implementation, commits, pushes, remote source sync and
 two mbit10 CPU lanes; the specific BFS-to-Codex/OpenAI export approval also covers 07.
 
 | Ticket | Current work | Evidence or next action |
 |---|---|---|
 | 07 | Counted run 15 active from 04:47:30 ET | Fresh hints plus abstract chunk and postcondition-scope guidance; frozen `de78b7c6`; output `/private/tmp/probata-t07-20261015-run15/`. Run 14 failed with 14 hint goals open; its finite false-assertion audit is retained. |
-| 24 | Construct-group WP acceptance | Narrow terminal release proves. Class fixture now proves with explicit initialized inputs and checked loop invariants: 153 recorded goals valid, including 11 smoke checks; its seeded bug is replaying. Full combined-source construct acceptance remains pending. |
-| 25 | Checked terminal release merged; general lifetime still open | Public implicit aggregate-copy initializedness gap reproduced; checked-copy lowerer revision 7 is being validated. General vector lifetime remains unresolved. Bounded std fixtures need precise initializedness admission. |
-| 27 | Store/capacity acceptance and CPU-access admission | Current combined focused checkpoint: 23 passed, including six actual CBMC memory-domain/exit controls. Local automatic-storage lifetime refusal is being repaired before final two-lane acceptance. |
-| 36 | Bounded admission merged; pointer-formation checks in progress | Final gate recheck: 43 passed, 4 strict expected failures preserving five pending std proof jobs. Public discarded out-of-range pointer formation was accepted under default CBMC flags; mandatory checks and distinct tile-row objects are being added. Draft 2 remains unchanged. |
+| 24 | Construct-group WP acceptance | Class positive/seeded-bug pair passes; positive has 153 valid recorded goals including 11 smoke checks. Template positive also proves on lowerer 7. Full 44-case combined-source replay awaits node 1 after unsafe semantics checks. |
+| 25 | Lowerer 7 merged; bounded std restoration being combined | Original five bounded std jobs pass, including replayed stale-pointer refutations; 12 admission refusals pass. Lowerer 8's combined checks are running. General vector lifetime in WP remains unresolved. |
+| 27 | Final source and two-lane acceptance | Local-storage and signed-query repairs are merged. Safe shard collects 133 cases, unsafe 12. Actual WP initialized-read and tile-extent diagnostics precede dispatch; older successful replays do not close current acceptance. |
+| 36 | Pointer checks and reader closure merged | 80 focused tests and 14 post-merge controls pass. WP tile-boundary and discarded-pointer controls are being classified separately; an initialization failure must not mask a missing extent check. Draft 2 remains unchanged. |
 | 41 | Resolved | Approved reconstruction `e23f3715…`, protected/class/ownership lifetime premises; exact guard and sanity controls pass. |
 | 42 | Resolved: production Rocq-checked theorem | `proof.probata.composition.20261015-a1`, 209 Qed, closed global context, actual record validate/build pass; 9 final integrated tests passed. About 491.2 MiB peak. |
 
@@ -35,8 +34,8 @@ frontier. No held-out kernel work or method freeze before its dependencies resol
 
 ## Host coordination
 
-Live preflight at 2026-10-15 04:26 ET found both socket leases and the legacy lease released,
-load 0.00/0.01/0.00, about 117 GiB available RAM, 21 GiB free on `/data1` and 97 GiB on
+Live preflight at 2026-10-15 04:56 ET found both socket leases and the legacy lease released,
+load 0.00, no proof jobs, about 117 GiB available RAM, 21 GiB free on `/data1` and 97 GiB on
 `/data`. These are dispatch observations, not permanent availability claims. New output
 uses `/data/yanruj/EvolveSWDB_runs/`; source uses Git worktrees under `/data1/yanruj/`.
 The current lane wrapper is in `/data1/yanruj/Memacc-evolveswdb-lane`, verified against
@@ -65,8 +64,8 @@ not substitute for reading incremental run artifacts.
 
 ## Validation and progress reporting
 
-The 2026-10-15 04:30 ET report covered every active ticket and both lanes; next report is
-due around 05:00 ET. Run 14 ended unproven after 53.32 counted minutes with 14 hint
+The 2026-10-15 05:00 ET report covered every active ticket and both lanes; next report is
+due around 05:30 ET. Run 14 ended unproven after 53.32 counted minutes with 14 hint
 obligations open; no final proof replay ran. Run 15 is active on fresh hints. Both
 remote evaluation lanes await the final combined source and method checkpoint.
 
