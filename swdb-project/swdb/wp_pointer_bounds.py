@@ -586,13 +586,14 @@ def access_site(node, *, expression, statement, anchor, function, line):
     """Pure access at a statement entry; legacy whole-object accesses keep RTE."""
     reason = ""
     if statement is None or statement.get("kind") not in {"DeclStmt", "ReturnStmt", "BinaryOperator",
-            "CStyleCastExpr", "CXXStaticCastExpr", "ParenExpr", "ImplicitCastExpr"}:
+            "CStyleCastExpr", "CXXStaticCastExpr", "ParenExpr", "ImplicitCastExpr", "CompoundAssignOperator"}:
         reason = "entry-window access needs a precise statement check placement"
     if statement is not None:
         nodes = list(_walk(statement))
         for n in nodes:
             kind, op = n.get("kind"), n.get("opcode")
-            if (kind in {"CallExpr", "CXXMemberCallExpr", "CXXOperatorCallExpr", "ConditionalOperator", "BinaryConditionalOperator", "CompoundAssignOperator"}
+            if (kind in {"CallExpr", "CXXMemberCallExpr", "CXXOperatorCallExpr", "ConditionalOperator", "BinaryConditionalOperator"}
+                    or kind == "CompoundAssignOperator" and n is not statement
                     or kind == "UnaryOperator" and op in {"++", "--"}
                     or kind == "BinaryOperator" and (op in {",", "&&", "||"} or op == "=" and n is not statement)
                     or "volatile" in str((n.get("type") or {}).get("qualType", ""))):

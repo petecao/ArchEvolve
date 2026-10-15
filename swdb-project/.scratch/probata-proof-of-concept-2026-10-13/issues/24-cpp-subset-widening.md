@@ -1,7 +1,7 @@
 # 24 — C++ subset widening
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-15 ET (contextual member checkpoint; original construct acceptance remains open)
+Updated: 2026-10-15 ET (original Bag/Counter scalar-lifetime checkpoint; whole construct acceptance remains open)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 21
@@ -624,3 +624,60 @@ After merging canonical integer-header baseline repair `feb92b5b`, focused membe
 and header composition controls pass **29/29 in 55.92s** at `6cc5147e`. This checks
 current compiler/admission composition; the actual proof records retain their
 original `1e93b9cb` runtime and method identities.
+
+
+### Original Bag/Counter scalar-lifetime checkpoint — 2026-10-15 ET
+
+The original `classes.cc` fixture now reaches WP with its unchanged original
+pre/post clauses and existing hint records. The explicit typed `a:n` domain
+metadata matches the already-required initialized valid range; it supplies typed
+origin rather than new numeric, validity or initialization requires. The old
+opaque constructor/destructor refusal is replaced only for one additional exact
+automatic scalar/reference object: its reference fields bind prior plain int
+locals in a strictly enclosing scope, its complete closed constructor/method/
+destructor effects are retained, and no early exit, copy, escape or alias is
+admitted. Plain int-reference helpers receive only exact selected-entry locals,
+never captured parameters/fields or reference aliases. Bag pointer/count captures
+remain immutable. No generic pointer-call exemption was added. A pure single
+top-level compound assignment now permits its ordinary guard before the statement;
+nested mutation/calls/conditional/volatile operands remain refused.
+
+Independent agent review approved runtime `a70fc6fd` and the subsequent parser/public
+attestation; this does not imply personal human source review. The installed
+Frama-C33 parser fully expands a depth-two constructor/destructor helper probe,
+with zero selected-entry residual calls and verified constructor → update →
+destructor → scalar-helper order. Three member numeric guards and six field-init
+predicates remain. Compiler/source-policy controls pass **39/39 in 7.84s**, including
+constructor/helper attempts to alias `n`, `Bag.n`, an int-reference alias or an
+untracked pointer binding. Explicit destructor and reference reinterpret-cast
+controls preserve existing lowerer refusals.
+
+Actual public standalone original-fixture proof at frozen `2f85b7a6` is **proven:
+146 ordinary and 11 smoke goals Valid**, including **46 RTE initialization goals**.
+The original safe pytest result was **one failed** only because the new test read
+the optional `failure_class` key after its successful verdict assertion. A test-only
+`row.get` correction at `c4cfbf1f` passed the complete remaining safe assertion block
+offline against the immutable record. The safe solver was not rerun. The separately
+launched original seeded-scaling negative then passes its test in **184.62s**:
+**not_proven, 146 ordinary Valid, one distinct loop-invariant-preservation timeout,
+and 11 smoke Valid**. Dependent partially proven properties are not extra independent
+open goals. A native finite case `n=1,a[0]=1,mode=2` writes 4 in the seeded code
+where the original contract requires 3; timeout alone is not a mathematical disproof.
+Both original and seeded C/C++ streams match on the supplied **105-case** native
+harness each, with no universal C++/C agreement claim.
+
+The three public records, **34 report hashes**, and **209 Git source pins per run**
+were audited, together with the exact source/seeded transformation, unchanged
+contract/hints and reconstructed generated context hashes. Actual workers used
+normal shared two-slot locking, one pytest worker and an 8 GiB RSS cap; safe peak
+569,294,848 bytes/94.04s, negative peak 837,517,312 bytes/184.80s, no OOM or outer
+timeout. Raw records, the original safe failure, corrected offline replay, native
+outputs and source manifests remain outside the repository.
+
+After composing integration `bc457086` at `1bc9eac1`, **48 compiler/policy/public
+stand-in controls pass in 22.34s**, with two real-verifier cases deselected. These
+are current composition checks; historical actual records retain their original
+source and method identities. The complete per-candidate original construct group
+and remaining template/member-array/model/lifetime acceptance are still separate
+frontiers. Ticket24 remains **claimed**, with no whole-ticket closure.
+[Scoped original-class evidence](../evidence/t24-member-lifetimes-mac-20261015.json).
