@@ -275,3 +275,8 @@ under `/private/tmp/probata-cbmc-pointers/`; final fixture artifacts use the ded
 `/private/tmp/probata-t36-tests/origin-final/` root. The next slice must pin/export explicit
 array windows and independently discharge imported-summary/model domains from caller
 origins. Ticket 36 stays **claimed**, blocked by ticket 27 and combined method/acceptance.
+
+Integration handoff `964feccc` merges parent `0d3e6c18`, retaining no-filter initializedness
+checks and the checked standard-model view alongside the origin gate. The post-merge public
+lowering controls pass **8/8 in 1.98s**. This union changes the setup/reader hash (recorded in
+the evidence), so final method pins must be recomputed after the parent finishes composition.

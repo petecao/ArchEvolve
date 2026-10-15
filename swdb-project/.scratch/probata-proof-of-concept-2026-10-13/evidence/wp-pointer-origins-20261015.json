@@ -1333,5 +1333,25 @@
         "sha256": "8087e77bce7066353bb160c55805326326665638e3eca1ab95ad3fab8027e45c"
       }
     }
-  ]
+  ],
+  "integration_handoff": {
+    "merge_commit": "964feccc",
+    "integration_parent": "0d3e6c18",
+    "lowering": {
+      "id": "swdb-c-lowering-9",
+      "sha256": "12653a9ed0814dec3df7581e201e04029500eeb0a01c3973987a7b9adbc4cf5f"
+    },
+    "checks": {
+      "proof_setup_check": {
+        "version": "1",
+        "sha256": "415d739ad05470ccb2a6edfa17c45168787c99733c00ee250ea77995eca1f764"
+      },
+      "verdict_reading": {
+        "version": "1",
+        "sha256": "415d739ad05470ccb2a6edfa17c45168787c99733c00ee250ea77995eca1f764"
+      }
+    },
+    "validation": "8 public lowering controls passed in 1.98s after resolving the union with no-filter-init and standard_model_view; no extra real verifier run for dependency-union-only merge",
+    "status": "staging: explicit array domain metadata alone never waives conservative admission"
+  }
 }
