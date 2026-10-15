@@ -438,3 +438,15 @@ producers, namespace impostors, wrong signatures and shadow proof state. Literal
 variable offset forms retain their distinct normalization policies. Fresh prelaunch source replay
 includes import-only jobs and current library policies; the bounded checker/source closure remains
 complete. No new real verifier replay or historical-method evidence upgrade is claimed by this merge.
+
+
+### Crux source-admission integration — 2026-10-15 ET
+
+Both Crux forms now require the retained source closure to pass the initialized-input policy;
+an unanalyzed C++ cut remains unsupported. Fresh prelaunch replay regenerates the source, current
+summary stubs and exact harness/view. Explicit source-policy refusal stops the bounded route,
+and `bounded_chain.py` joins the frozen checker closure. Independent merged validation passes
+**24 stand-in/doc/method-pin controls in 18.06s**; no real solver was run. The complete DX/bounded
+checker dependency union is preserved. Generic imported-summary proof-source/bounds eligibility
+is still an open, separately owned gap: refreshed stub identity does not certify eligibility.
+Ticket 36 remains claimed. Evidence: `evidence/crux-source-admission-20261015.json`.
