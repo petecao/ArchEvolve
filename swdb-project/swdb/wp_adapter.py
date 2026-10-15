@@ -823,6 +823,16 @@ class WpAdapter:
                                "wp_seconds_per_solver": tools["seconds"], "environment_removed": removed,
                                "rss_cap_bytes": cap, "hint_count": context.get("hints_reaching_wp", 0), "build_constants": list(self.defines)}
         inputs = [(scratch / "wp_input.c", context["wp_expected_text"])]
+        member = (getattr(context.get("lowering"), "pointer_bounds", None) or {}).get("member_windows")
+        if member:
+            policy = {"certificate": member, "entry": member["entry"],
+                      "inline_functions": member["inline_functions"]}
+            context["settings"]["member_windows"] = policy
+            member_text = json.dumps(policy, sort_keys=True, indent=2) + "\n"
+            member_path = scratch / "member-window-context.json"
+            member_path.write_text(member_text)
+            inputs.append((member_path, member_text))
+
         helper = context.get("helper_windows")
         if helper:
             view = helper["view"]

@@ -120,6 +120,7 @@ class _Clang:
         self.visit = bind("clang_visitChildren", C.c_uint, _Cursor, self.visitor, C.c_void_p)
         self.inclusion = C.CFUNCTYPE(None, C.c_void_p, C.POINTER(_Location), C.c_uint, C.c_void_p)
         self.includes = bind("clang_getInclusions", None, C.c_void_p, self.inclusion, C.c_void_p)
+        self.included_file = bind("clang_getIncludedFile", C.c_void_p, _Cursor)
         self.diag_count = bind("clang_getNumDiagnostics", C.c_uint, C.c_void_p)
         self.diag = bind("clang_getDiagnostic", C.c_void_p, C.c_void_p, C.c_uint)
         self.severity = bind("clang_getDiagnosticSeverity", C.c_int, C.c_void_p)
@@ -331,12 +332,66 @@ def _certify_in_process(tool, source, *, includes=(), defines=(), models=(),
         for file in files & baseline_files:
             if Path(file).is_relative_to(canonical):
                 canonical_words.update(re.findall(r"[A-Za-z_][A-Za-z_0-9]*", Path(file).read_text(errors="replace")))
+        # A platform header need not occur in the small libc++ baseline. Bind its
+        # actual include spelling/physical target, then independently reproduce
+        # that target with the clean driver; a project twin is never sufficient.
+        inclusions, macro_files = {}, set()
+        def guarded_macro(name):
+            return name in canonical_words or name.startswith(("__", "_LIBCPP"))
+        @parser.visitor
+        def preprocessing(cursor, parent, data):
+            name = parser.text(parser.spelling(cursor))
+            if cursor.kind == 503:  # InclusionDirective, from preprocessing record
+                included = parser.included_file(cursor)
+                if included:
+                    target = str(Path(parser.text(parser.filename(included))).resolve())
+                    inclusions.setdefault(target, set()).add(name)
+            elif cursor.kind == 501 and guarded_macro(name):
+                file, _line, _offset = parser.physical(cursor)
+                if file and not Path(file).is_relative_to(canonical) and file not in baseline_files:
+                    macro_files.add(file)
+            return 2
+        parser.visit(parser.root_cursor(tu), preprocessing, None)
+        platform_macros, probes = set(), {}
+        report["platform_header_probes"] = []
+        original_headers = {row["path"]: row["sha256"] for row in report["headers"]}
+        for file in sorted(macro_files):
+            if file in platform_macros:
+                continue
+            for spelling in sorted(inclusions.get(file, ())):
+                if (not re.fullmatch(r"[A-Za-z0-9_][A-Za-z0-9_./+-]*", spelling) or
+                        any(part in {"", ".", ".."} for part in spelling.split("/"))):
+                    continue
+                if spelling not in probes:
+                    if len(probes) >= 16:
+                        raise Refused("platform macro provenance exceeds the clean header-probe limit")
+                    probe = subprocess.run([*tool.command, "-x", "c++", "-std=c++17", "-fopenmp", "-E", "-H", "-"],
+                        input="#include <" + spelling + ">\n", capture_output=True, text=True,
+                        env=clean_environment, timeout=120)
+                    probes[spelling] = {str(Path(m.group(1)).resolve()) for line in probe.stderr.splitlines()
+                        if (m := re.match(r"^\.+ (.+?)(?: \(.*\))?$", line))} if not probe.returncode else set()
+                clean_files = probes[spelling]
+                if file not in clean_files:
+                    continue
+                headers = [{"path": path, "sha256": _sha(path)} for path in sorted(clean_files)]
+                if any(row["path"] in original_headers and original_headers[row["path"]] != row["sha256"] for row in headers):
+                    raise Refused("platform header changed between original parsing and clean probing")
+                report["platform_header_probes"].append({"spelling": spelling,
+                    "target": {"path": file, "sha256": original_headers[file]}, "headers": headers})
+                platform_macros.update(clean_files & files)
+                break
+        # Command-line macro definitions can have no physical C API file. They
+        # cannot inherit trust from any header probe or disappear from screening.
+        for definition in defines:
+            match = re.match(r"[A-Za-z_]\w*", str(definition))
+            if match and guarded_macro(match[0]):
+                problems.append("candidate macro can rewrite canonical standard headers: command-line (" + match[0] + ")")
         def inspect_node(cursor, parent, data):
             kind = parser.text(parser.kind(cursor.kind))
             name = parser.text(parser.spelling(cursor))
             file, line, offset = parser.physical(cursor)
             trusted = bool(file and Path(file).is_relative_to(canonical))
-            if cursor.kind == 501 and file and file not in baseline_files:
+            if cursor.kind == 501 and file and not trusted and file not in baseline_files and file not in platform_macros:
                 if name in canonical_words or name.startswith(("__", "_LIBCPP")):
                     problems.append(f"candidate macro can rewrite canonical standard headers: {file}:{line} ({name})")
             if parser.is_declaration(cursor.kind):

@@ -228,3 +228,89 @@ def test_an_integer_header_shadow_cannot_borrow_the_clean_canonical_baseline(tmp
     certificate = json.loads((out / "unit.anchors.json").read_text())["stdlib_provenance"]
     assert certificate["verdict"] == "refused", certificate["reason"]
     assert "noncanonical standard header" in certificate["reason"], certificate["reason"]
+
+
+def test_a_canonical_iostream_guard_is_not_a_candidate_header_macro(tmp_path):
+    """2026-10-15 ET: original GAPBS includes more libc++ headers than the probe."""
+    source = tmp_path / "unit.cc"
+    source.write_text('#include <vector>\n#include <iostream>\n'
+        'int unit(int n) {std::vector<int> v(n,7); return v.size();}\n')
+    out = tmp_path / "out"
+    lower(source, "unit", out)
+    certificate = json.loads((out / "unit.anchors.json").read_text())["stdlib_provenance"]
+    assert certificate["verdict"] == "passed", certificate["reason"]
+    assert any(row["path"].endswith("/include/c++/v1/iostream") for row in certificate["headers"])
+
+
+def test_a_project_iostream_guard_cannot_borrow_canonical_header_macro_trust(tmp_path):
+    """2026-10-15 ET: a candidate-defined libc++ guard remains forbidden."""
+    source = tmp_path / "unit.cc"
+    source.write_text('#include <vector>\n#define _LIBCPP_IOSTREAM\n#include <iostream>\n'
+        'int unit(int n) {std::vector<int> v(n,7); return v.size();}\n')
+    out = tmp_path / "out"
+    lower(source, "unit", out)
+    certificate = json.loads((out / "unit.anchors.json").read_text())["stdlib_provenance"]
+    assert certificate["verdict"] == "refused", certificate["reason"]
+    assert "candidate macro can rewrite canonical standard headers" in certificate["reason"]
+    assert str(source) in certificate["reason"] and "(_LIBCPP_IOSTREAM)" in certificate["reason"]
+
+
+def test_a_platform_getopt_include_keeps_its_physical_header_and_macros(tmp_path):
+    """2026-10-15 ET: GAPBS' platform header is selected by the clean driver."""
+    source = tmp_path / "unit.cc"
+    source.write_text('#include <vector>\n#include <getopt.h>\n'
+        'int unit(int n) {std::vector<int> v(n,7); return v.size();}\n')
+    out = tmp_path / "out"
+    lower(source, "unit", out)
+    certificate = json.loads((out / "unit.anchors.json").read_text())["stdlib_provenance"]
+    assert certificate["verdict"] == "passed", certificate["reason"]
+    assert any(row["path"].endswith("/getopt.h") for row in certificate["headers"])
+
+
+@pytest.mark.parametrize("mode", ["project_guard", "include_next_hook", "system_header", "symlink"])
+def test_a_project_getopt_twin_cannot_borrow_platform_macro_trust(tmp_path, mode):
+    include = tmp_path / "include"
+    include.mkdir()
+    body = '#pragma once\n#include_next <getopt.h>\n'
+    if mode == "system_header":
+        body = '#pragma GCC system_header\n' + body
+    if mode == "include_next_hook":
+        body += ('#include <cstdlib>\nint platform_header_allocations=0;\n'
+                 'void *operator new(std::size_t n) {++platform_header_allocations; return std::malloc(n);}\n')
+    else:
+        body += '#undef __getopt_argv_const\n#define __getopt_argv_const const\n'
+    header = include / "getopt.h"
+    if mode == "symlink":
+        physical = tmp_path / "custom-platform.h"
+        physical.write_text(body)
+        header.symlink_to(physical)
+    else:
+        physical = header
+        header.write_text(body)
+    source = tmp_path / "unit.cc"
+    source.write_text('#include <vector>\n#include <getopt.h>\n'
+        'int unit(int n) {std::vector<int> v(n,7); return v.size();}\n')
+    out = tmp_path / "out"
+    lower(source, "unit", out, "--include", include)
+    certificate = json.loads((out / "unit.anchors.json").read_text())["stdlib_provenance"]
+    assert certificate["verdict"] == "refused", certificate["reason"]
+    if mode == "include_next_hook":
+        assert "allocation/deallocation hook" in certificate["reason"], certificate["reason"]
+    else:
+        assert "candidate macro can rewrite canonical standard headers" in certificate["reason"]
+        assert str(physical) in certificate["reason"], certificate["reason"]
+
+
+@pytest.mark.parametrize("origin", ["source", "build_flag"])
+def test_a_candidate_platform_macro_is_not_a_default_driver_header_definition(tmp_path, origin):
+    source = tmp_path / "unit.cc"
+    source.write_text('#include <vector>\n' +
+        ('#define __swdb_candidate_platform_guard 1\n' if origin == "source" else '') +
+        'int unit(int n) {std::vector<int> v(n,7); return v.size();}\n')
+    out = tmp_path / "out"
+    options = ("--define", "__swdb_candidate_platform_guard=1") if origin == "build_flag" else ()
+    lower(source, "unit", out, *options)
+    certificate = json.loads((out / "unit.anchors.json").read_text())["stdlib_provenance"]
+    assert certificate["verdict"] == "refused", certificate["reason"]
+    assert "candidate macro can rewrite canonical standard headers" in certificate["reason"]
+    assert "__swdb_candidate_platform_guard" in certificate["reason"]

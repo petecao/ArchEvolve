@@ -242,10 +242,11 @@ def recheck_source(lowering, plan):
 class _Origins:
     """Conservative source origins; no allocation-validity-to-array inference."""
     def __init__(self, definitions, globals=(), known=None, terminal=None, entry_windows=None, entry_function=None,
-                 checked_calls=(), checked_producers=()):
+                 checked_calls=(), checked_producers=(), member_origins=None):
         self.definitions, self.known, self.terminal = definitions, known or {}, terminal or {}
         self.entry_windows, self.entry_function = entry_windows or {}, entry_function
         self.checked_producers = checked_producers
+        self.member_origins = member_origins or {}
         self.declarations = {function: {n.get("id"): n for n in _walk(root)
                                      if n.get("kind") in {"VarDecl", "ParmVarDecl"}}
                              for function, root in definitions.items()}
@@ -275,6 +276,8 @@ class _Origins:
     def get(self, node, function, seen=()):
         node = _strip_origin(node)
         kind, children = node.get("kind"), [n for n in node.get("inner", []) if isinstance(n, dict) and n.get("kind")]
+        if (function, node.get("id")) in self.member_origins:
+            return self.member_origins[(function, node["id"])]
         if kind == "BinaryOperator" and node.get("opcode") in {"+", "-"}:
             pointers = [n for n in children if _pointer(n)]
             if len(pointers) == 1:
@@ -337,7 +340,8 @@ def _origin_base(node):
 
 def complete(sites, definitions, observed, *, external_calls=(), known_pointer_calls=(),
              global_nodes=(), known_origins=None, terminal=None, entry_windows=None, entry_function=None, owner=None,
-             call_sites=(), call_policies=None, audited_imports=None, standard_calls=()):
+             call_sites=(), call_policies=None, audited_imports=None, standard_calls=(),
+             member_origins=None, member_refusal=None):
     """Refuse source operations omitted by printing and untracked subobject origins.
 
     The printer owns normalizations. This independent closure walk ensures that
@@ -348,6 +352,8 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
     # Clang dumps for separate functions may reuse process-local AST IDs.
     by_node = {(row["function"], row.pop("_ast_id", None)): row for row in all_rows}
     rows = [row for row in all_rows if row.get("kind") != "access"]
+    if member_refusal:
+        rows.insert(0, {"function": entry_function, "source_line": None, "reason": member_refusal})
     owner_handles = {"accesses": set(), "calls": set()}
     if owner:
         # The closed source grammar certifies each alias/member observation.
@@ -421,7 +427,7 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
     origins = _Origins(definitions, global_nodes, known_origins, terminal, entry_windows, entry_function,
                        set(candidates) | set(producers) | set(queries)
                        | {(owner["function"], key) for key in owner_handles["calls"]}
-                       | {(s["function"], s["_ast_id"]) for s in standard_calls}, producers)
+                       | {(s["function"], s["_ast_id"]) for s in standard_calls}, producers, member_origins)
     if call_sites:
         declarations = [n for root in definitions.values() for n in _walk(root)
                         if n.get("kind") in {"VarDecl", "ParmVarDecl"}]
@@ -511,7 +517,7 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
                             row["window_guard"] = f'0 <= ({target}) <= ({origin["elements"]})'
                         except Refused as exc:
                             reason = str(exc)
-                elif (indexed or dereferenced) and origin.get("kind") == "entry_window":
+                elif (indexed or dereferenced) and origin.get("kind") in {"entry_window", "contextual_member_window"}:
                     access = by_node.get((function, node.get("id")))
                     if access is None or access.get("kind") != "access":
                         reason = "entry-window access was not captured at a checked source statement"
@@ -523,6 +529,8 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
                             relation = "<=" if node.get("id") in addressed else "<"
                             access["origin"] = origin
                             access["window_guard"] = f'0 <= ({target}) {relation} ({origin["elements"]})'
+                            if origin.get("field_guard"):
+                                access["window_guard"] = f'({origin["field_guard"]}) && ({access["window_guard"]})'
                             rows.append(access)
                         except Refused as exc:
                             reason = str(exc)
@@ -646,7 +654,7 @@ def function_entries(definitions, source):
     return entries
 
 
-def inventory(sites, *, source_sha256, text, entry_windows=None, entry_contract=None, owner=None, source_entries=None):
+def inventory(sites, *, source_sha256, text, entry_windows=None, entry_contract=None, owner=None, source_entries=None, member_context=None):
     report = {"check": identity(), "source_sha256": source_sha256,
               "lowering_sha256": hashlib.sha256(text.encode()).hexdigest(), "sites": list(sites),
               "source_functions": source_entries or {},
@@ -660,6 +668,8 @@ def inventory(sites, *, source_sha256, text, entry_windows=None, entry_contract=
             "checked": "entry extent nonnegative/target byte capacity/null-empty; numerical operation bounds; ordinary RTE",
             "smoke_scope": "projected ACSL preconditions; no complete typed-domain/formal realizability proof",
             "caller_boundary": "imported domain-bearing summaries and unmodeled pointer calls are refused"}
+    if member_context:
+        report["member_windows"] = member_context
     if owner:
         report["owner"] = owner
     report["certificate_sha256"] = _hash(report)
@@ -677,6 +687,12 @@ def check(lowering):
         from swdb import array_domains
         if report["entry_windows"].get("check") != array_domains.identity() or not report.get("entry_contract"):
             raise Refused("entry-window declaration/check/contract pin is absent or stale")
+    if report.get("member_windows"):
+        from swdb import member_windows
+        try:
+            member_windows.check(report["member_windows"], lowering.source_sha256)
+        except member_windows.Refused as exc:
+            raise Refused(str(exc)) from None
     if report.get("owner"):
         from swdb import model_domains, vector_ownership
         owner = dict(report["owner"])
