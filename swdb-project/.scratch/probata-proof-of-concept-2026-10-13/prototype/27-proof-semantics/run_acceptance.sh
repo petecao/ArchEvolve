@@ -28,7 +28,7 @@ case "$PROBATA_SHARD" in
     PROBATA_TESTS=(tests/test_entry_array_domains.py)
     PROBATA_SELECTION=() ;;
   bounded-windows)
-    PROBATA_TESTS=(tests/test_bounded_entry_windows.py)
+    PROBATA_TESTS=(tests/test_bounded_entry_windows.py tests/test_bounded_entry_window_view.py)
     PROBATA_SELECTION=() ;;
   owner)
     PROBATA_TESTS=(tests/test_vector_ownership_wp.py)

@@ -90,6 +90,10 @@ def prepare(lowering, source, planner, *, defines=()):
     raw = source.read_bytes()
     if hashlib.sha256(raw).hexdigest() != lowering.source_sha256:
         raise Refused('bounded entry-window source changed after lowering')
+    # Reserve across the whole source, including macros and globals outside
+    # the selected function. A new local must never hide an existing binding.
+    if re.search(rb'\bswdb_window_[A-Za-z_0-9]*\b', raw):
+        raise Refused('source uses a reserved bounded-window instrumentation name')
     try:
         report = wp_pointer_bounds.check(lowering)
     except wp_pointer_bounds.Refused as exc:
@@ -110,6 +114,8 @@ def prepare(lowering, source, planner, *, defines=()):
     if len(nodes) != 1:
         raise Refused('bounded windows need one exact source function definition')
     node = nodes[0]
+    if any(c.get('kind', '').endswith('Attr') for c in node.get('inner', [])):
+        raise Refused('bounded primitive windows require an attribute-free source function')
     start, end = _span(node)
     body = next(c for c in node['inner'] if c.get('kind') == 'CompoundStmt')
     body_start, body_end = _span(body)
@@ -125,6 +131,11 @@ def prepare(lowering, source, planner, *, defines=()):
     names = set()
     for child in wp_pointer_bounds._walk(node):
         kind = child.get('kind', '')
+        referenced = child.get('referencedDecl') or {}
+        if str(referenced.get('name', '')).startswith('swdb_window_'):
+            raise Refused('source references a reserved bounded-window instrumentation name')
+        if 'volatile' in (child.get('type') or {}).get('qualType', ''):
+            raise Refused('bounded primitive windows do not add checks to volatile source operations')
         if kind in {'CallExpr', 'CXXMemberCallExpr', 'CXXOperatorCallExpr', 'LambdaExpr',
                     'StmtExpr', 'ConditionalOperator', 'BinaryConditionalOperator', 'CompoundStmt'} and child is not body:
             raise Refused('bounded primitive windows do not admit calls or nested control')
@@ -205,6 +216,10 @@ def prepare(lowering, source, planner, *, defines=()):
                  operation_check=identity(), source_functions={lowering.function: expected}, operations=checks,
                  integer_model='checked signed __int128 representation of every mathematical intermediate',
                  restriction='nonnull bounded buffers; one straight-line primitive function; no imported domains or calls',
+                 entry_window_semantics={'role': 'explicit typed-window input-contract premise; not inferred from validity',
+                     'checked': 'entry extent/target capacity and every admitted formation/access numerical bound',
+                     'representation': 'nonnull physical harness buffers; logical extent can be smaller than capacity',
+                     'caller_boundary': 'no helper, imported summary, model or whole-function domain admission'},
                  source_sha256=lowering.source_sha256,
                  c_view_sha256=hashlib.sha256(c_text.encode()).hexdigest(),
                  cxx_function_sha256=hashlib.sha256(cpp).hexdigest())

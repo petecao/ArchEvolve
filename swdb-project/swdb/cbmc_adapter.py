@@ -172,7 +172,7 @@ class CbmcAdapter:
         declarations = (entry.get('proof_unit') or {}).get('array_domains')
         source_kwargs = dict(defines=self.defines, **proof_semantics.lowering_options(self.library))
         if declarations:
-            source_kwargs.update(array_domains=declarations,
+            source_kwargs.update(array_domains=json.loads(json.dumps(declarations)),
                 array_domain_contract={'id': self.contract, 'sha256': job.unit.contract_sha256})
         try:
             lowering = c_lowering.lower(source, job.unit.function, **source_kwargs)
@@ -258,6 +258,7 @@ class CbmcAdapter:
             return self._not_proven("memory_domain", "opaque semantics dependency needs a checked memory boundary", context)
         from swdb import bounded_entry_windows
         try:
+            self.check_entry_windows(job, context)
             problem = self._differential(job, code, built, context)
         except bounded_entry_windows.Refused as exc:
             return self._not_proven('unsupported_construct', str(exc), context)
@@ -268,12 +269,16 @@ class CbmcAdapter:
     def check_entry_windows(self, job, context, inputs=()):
         """Regenerate source, planner and both checked views immediately before launch."""
         entry = self.library.get(self.contract) or {}
-        if not (entry.get('proof_unit') or {}).get('array_domains'):
+        declarations = (entry.get('proof_unit') or {}).get('array_domains')
+        runtime = context.get('array_domain_runtime')
+        planned = bool(runtime or context.get('settings', {}).get('array_domains'))
+        if not declarations and not planned:
             return
         from swdb import bounded_entry_windows
-        runtime = context.get('array_domain_runtime')
-        if not runtime:
-            raise bounded_entry_windows.Refused('bounded window source replay plan is absent')
+        if not declarations or not runtime:
+            raise bounded_entry_windows.Refused('bounded window declarations or source replay plan disappeared')
+        if self.library.content_sha256(self.contract) != job.unit.contract_sha256:
+            raise bounded_entry_windows.Refused('bounded window input contract changed after planning')
         fresh = c_lowering.lower(runtime['source'], job.unit.function, **runtime['kwargs'])
         if fresh != runtime['code'].lowering:
             raise bounded_entry_windows.Refused('bounded window source/closure lowering changed before launch')
@@ -447,7 +452,6 @@ class CbmcAdapter:
     # --- the differential run ------------------------------------------------------------------------------
     def _differential(self, job, code, built, context):
         """C lowering versus C++ on every input of the bounded domain (no stubs: the real callees on both sides)."""
-        self.check_entry_windows(job, context)
         out, log, scratch = context["out"], context["log"], Path(job.scratch)
         lines, sampled, domain = _domain(built["plan"])
         inputs = scratch / "domain.txt"
