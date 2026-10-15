@@ -143,7 +143,8 @@ ensures \\forall integer k; 0 <= k < \\old(dx_tile_size[src_tile]) && k < DX_TS 
 requires 0 <= idx_tile < DX_NT && 0 <= src_tile < DX_NT && (cond_tile == -1 || 0 <= cond_tile < DX_NT);
 requires 0 <= dst_tile < DX_NT && dst_tile != idx_tile && dst_tile != src_tile && dst_tile != cond_tile;
 requires memory_domain: dx_memory_clear_after_stall(dst_tile, -1, 1);
-requires \\base_addr(data) != \\base_addr(&dx_tile_data[0][0]) &&
+requires (\\forall integer swdb_tile; 0 <= swdb_tile < DX_NT ==>
+  \\base_addr(data) != \\base_addr(dx_tile_data[swdb_tile])) &&
   \\base_addr(data) != \\base_addr(&dx_tile_size[0]) && \\base_addr(data) != \\base_addr(&dx_reg_value[0]);
 requires dx_tile_size[src_tile] == dx_tile_size[idx_tile] &&
   (cond_tile == -1 || dx_tile_size[cond_tile] == dx_tile_size[idx_tile]);

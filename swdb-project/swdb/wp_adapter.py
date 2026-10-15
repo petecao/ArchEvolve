@@ -511,6 +511,10 @@ class WpAdapter:
             if not pointer:
                 continue
             for array in wp.get("separate_from") or []:
+                if array == "dx_tile_data":
+                    extra.append(f"requires \\forall integer swdb_tile; 0 <= swdb_tile < DX_NT ==> "
+                                 f"\\base_addr({name}) != \\base_addr(dx_tile_data[swdb_tile]);")
+                    continue
                 dims = next((loc.count("[") for loc in locations if loc.split("[")[0] == array), 0)
                 extra.append(f"requires \\base_addr({name}) != \\base_addr(&{array}{'[0]' * dims});")
         semantics["unit_requires"] = list(extra)

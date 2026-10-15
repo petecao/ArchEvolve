@@ -305,3 +305,23 @@ Modeled `std::pair` retains its separate initialized-source model contract. Thes
 proof-subset restrictions: [CWG2264](https://www.open-std.org/jtc1/sc22/wg21/docs/cwg_active.html#2264)
 still discusses the C++ treatment of copying indeterminate members; C struct assignment alone cannot
 justify erasing that question. The generated assertion is a proof obligation, never an assumption.
+
+Checked pointer formation (2026-10-15): lowerer9 records `pointer_bounds` in command output and
+anchor metadata across the complete emitted function closure. WP33's RTE checks alone omit discarded
+pointer addition. The WP view adds separately named assertions at the original statement's entry,
+checking the original pointer and result in the same object, including its one-past position. These
+assertions are obligations; a successful later goal cannot hide an unproved formation assertion.
+
+C++17 permits null-pointer plus/minus zero. For supported side-effect-free expressions the lowering
+uses `offset == 0 ? base : original_expression`, preserving that result without executing C null
+arithmetic. Legal one-past formation remains supported. Mutating arithmetic, pointer subtraction,
+conditional or effectful placement, unchecked pointer casts, and known embedded/multidimensional
+array origins are refused until their evaluation or subobject extent has a precise policy. This is a
+conservative proof subset, not a general claim of C++ undefined-behavior freedom.
+
+Generated C model proofs independently inventory every defined function with Clang and check their
+actual C pointer operations, including representable pointer distance. They receive no blanket
+exemption from a content hash. The copy model handles empty/null ranges without C-only arithmetic
+and explicitly requires its nonnegative distance to fit `ptrdiff_t`; callers must prove that
+precondition. Before launch the setup check regenerates the complete model view or source assertions.
+The checker identity includes the pointer policy and proof-semantics generator bytes.
