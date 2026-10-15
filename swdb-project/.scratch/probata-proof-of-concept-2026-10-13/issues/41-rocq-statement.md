@@ -111,8 +111,8 @@ table, F1 candidate check and Codex dispositions:
   | File | sha256 |
   |---|---|
   | `Vocabulary.v` | `081b558de2d94a0b37200b094d39af38eddf51546686a575f97dac2e3a6a3a3d` |
-  | `Composition.v` (current, includes retained ticket 42 proof lemmas) | `c91507a4591d1ffbb81bde6e98ef26997578656bb85580a5a7dcd64cf1dc3abb` |
-  | `Composition.v` statement reconstructed by `check_approved.py` (current) | `ffb5bda714b9fce5a13927a4860f6c85438821cdcdf3b4f1560f26a91eefd4f4` |
+  | `Composition.v` (superseded 2026-10-15 01:41 ET approval snapshot) | `c91507a4591d1ffbb81bde6e98ef26997578656bb85580a5a7dcd64cf1dc3abb` |
+  | `Composition.v` statement reconstructed by `check_approved.py` (current) | `e23f37153fadb8c3307384b4ec074422e0af6ebc121ff673688b6d321485e513` |
   | `Composition.v` (**superseded**, false) | `e30f62402164802aaf1bed224c6be0ac62fb787c43efe61190266e5a511dd01b` |
   | `Reduction.v` (current, revised 2026-10-14 21:30 ET, see Later changes) | `72f4a79fbf6005fc89990d5dcfed4b80118f9d02d8aac44b0bb9bc7b84968e53` |
   | `Reduction.v` (**superseded** 2026-10-14 21:30 ET) | `8a779482ff13c83a12d11fd15d34c0aadf1d8856052575e7ede38ab935188b7a` |
@@ -318,3 +318,54 @@ it judged transmission of repository source to the external Codex/OpenAI destina
 unauthorized. No external CLI review ran for this revision. Independent local coordinator
 review was used within the approved workspace; its first counterexample was accepted and
 repaired. The theorem proofs remain visibly open for tickets 42 and 43.
+
+### Reopened: ownership lifetime — 2026-10-15 ET
+
+The constant-ThreadOwned ownership-handoff counterexample is confirmed by an
+executable finite audit: all 43,758 projection-preserving full orders were checked;
+210 have both critical sections contiguous, and zero preserve the two required
+DX100 source/coverage constraints. Its full run, seven obligation checks and
+memory/OpenMP/device checks are in `/tmp/probata-t42-resume/owned_handoff_counterexample.py`.
+This is an executable model audit, not a Rocq proof of the theorem's negation.
+
+The root coordinator delegated the minimum repair: retain existing protected-read
+and class-lifetime clauses, and additionally require `reads_owner_stable X t` through
+`obl_dx100_quiet`. A device read of a ThreadOwned location must have a covering event
+strictly before another thread establishes Own of that location. Static owners may
+still carry uncovered dead commands across barriers. No new top-level hypothesis or
+assumption entry is introduced. `Sanity.v` adds rejection of the exact witness,
+acceptance after prior coverage, and acceptance of static-owner barrier crossing.
+
+The previous approved reconstruction `ffb5bda7…` is known false; this revision is
+pending independent root review and a new hash approval. Candidate compatibility
+remains conditional on ticket 45 discharging the ownership lifetime obligation.
+
+Checks before independent review: Rocq 9.3.0 compiles the repaired Composition and
+all retained/new ticket 42 lemmas (3.28 s, peak 442.0 MB) and Sanity (1.81 s, peak
+432.9 MB) under the shared 8 GB watchdog. The three ownership regression lemmas
+print `Closed under the global context`; no axiom or admitted regression proof.
+`/tmp/probata-t42-resume/logs/owner-sanity-2.log` sha256
+`9142003af0ddfc667b3be918398301beda2b58ef86b659f73c468d6f1ff51d73`.
+The exact-text approval guard intentionally still rejects this pending revision.
+
+### Current delegated approval: ownership lifetime — 2026-10-15 ET
+
+**Resolved.** The main session independently reviewed and approved the ownership
+lifetime repair under Yan-Ru's ongoing delegation after the regression checks.
+The review found no further counterexample after considering ReadOnly, protected,
+same-interval owned, new-interval owned, and shared-action source cases. This is
+agent review and approval, not Yan-Ru's personal reading or a theorem proof.
+
+Approved reconstructed Composition statement sha256:
+`e23f37153fadb8c3307384b4ec074422e0af6ebc121ff673688b6d321485e513`.
+This supersedes the false `ffb5bda7…` reconstruction. Vocabulary and Reduction
+retain their existing approvals. `Checks.v` now prints `reads_owner_stable`;
+`statement.expected` is the exact generated elaboration (sha256
+`d5cd84e54159cc1403f5f04297caec6b3acb53c9567d42e646eb27143fe7453f`).
+Its generated trailing spaces are retained to preserve exact compiler output.
+The new exact guard accepts this reconstruction and refuses a copy with the
+ownership inequality changed before any record is written. The check log is
+`/tmp/probata-t42-resume/logs/owner-checks.log` (sha256
+`0437c06b3a27a25aa2d3ad81caf1048dc839f98433d7b9804c71640a5999f76b`).
+Ticket 42 may resume inside the original shared box. Candidate compatibility
+remains conditional on ticket 45's two-thread ghost ownership-lifetime discharge.
