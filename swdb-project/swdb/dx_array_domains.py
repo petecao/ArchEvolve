@@ -189,8 +189,48 @@ def certify_query(node, policy, site):
                     kind == 'BinaryOperator' and op in {'=', ',', '&&', '||'} or
                     'volatile' in part.get('type', {}).get('qualType', '')):
                 raise Refused('footprint query arguments require pure single-evaluation source operands')
-    _scalar(children[1])
+    tile = _scalar(children[1])
+    statement = site.get('_statement') or {}
+    parts = _children(statement)
+    value = parts[0] if len(parts) == 1 else {}
+    if (statement.get('kind') == 'DeclStmt' and value.get('kind') == 'VarDecl' and _qual_type(value) == 'int'
+            and not value.get('storageClass') and not value.get('tls') and not value.get('constexpr')
+            and not any(n.get('kind', '').endswith('Attr') for n in _children(value))):
+        initializers = _children(value)
+        value = initializers[0] if len(initializers) == 1 else {}
+    elif statement.get('kind') == 'CallExpr':
+        value = statement
+    elif statement.get('kind') != 'ReturnStmt':
+        value = {}
+    if _strip(value).get('id') != node.get('id') or not site.get('anchor'):
+        raise Refused('footprint query domain needs one unconditional direct call as its entire statement value')
     return {**{k: v for k, v in site.items() if not k.startswith('_')},
-            'kind': 'query', 'call': policy['call'], 'admission_only': True,
+            'kind': 'query', 'call': policy['call'], 'admission_only': False,
+            '_pointer_argument': children[2], 'tile_argument': tile,
             'reason': '', 'query_policy': policy, 'check': identity(),
             'pointer_effect': 'pointer value observed only; no host dereference, writes or escape'}
+
+
+
+def _qual_type(node):
+    return ' '.join(node.get('type', {}).get('qualType', '').split())
+
+
+def query_domain(query, origin):
+    """Conservative native/abstract-pointer agreement boundary, as a checked VC.
+
+    Native uintptr comparisons can conflate one-past and an adjacent object.
+    Requiring the queried command and address root to share their array object
+    excludes that cross-root case, while allowing same-root one-past misses.
+    An idle writer has an empty footprint independently of the address.
+    """
+    if not origin or origin.get('kind') != 'entry_window' or origin.get('element_type') != 'int':
+        raise Refused('footprint query domain needs an exact stable int entry-window array-object origin')
+    root = origin.get('root')
+    if not root or not re.fullmatch(r'[A-Za-z_]\w*', root):
+        raise Refused('footprint query root is not a stable primitive source binding')
+    tile = query['tile_argument']
+    writer = f'dx_tile_writer[{tile}]'
+    return {'origin': origin, 'predicate': f'0 <= {tile} < DX_NT && ({writer} < 0 || '
+            f'(0 <= {writer} < DX_K && \\base_addr({root}) == \\base_addr(dx_base[{writer}])))',
+            'model_domain': 'idle writer or query and pending command share the same array object'}

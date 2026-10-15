@@ -114,7 +114,7 @@ def call_site(node, *, statement, anchor, function, line):
     except Refused as exc:
         span, reason = None, str(exc)
     return {"function": function, "anchor": anchor, "source_line": line, "source_range": span,
-            "reason": reason, "_ast_id": node.get("id")}
+            "reason": reason, "_ast_id": node.get("id"), "_statement": statement}
 
 
 def check_import_signature(binding, policy):
@@ -429,6 +429,12 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
         if any(str(n.get("name", "")).startswith(("dx_", "DX_")) for n in declarations):
             rows.append({"function": entry_function, "source_line": None,
                          "reason": "source declarations shadow the reserved DX100 proof-state namespace"})
+    for key, query in queries.items():
+        try:
+            origin = origins.get(query.pop('_pointer_argument'), key[0])
+            query.update(dx_array_domains.query_domain(query, origin))
+        except (Refused, dx_array_domains.Refused) as exc:
+            query['reason'] = str(exc)
     for key, candidate in candidates.items():
         site = call_rows[key]
         try:
@@ -690,6 +696,11 @@ def check(lowering):
             try: standard_range_calls.check_row(row)
             except standard_range_calls.Refused as exc: raise Refused(str(exc)) from None
             continue
+        if row.get("kind") == "query":
+            from swdb import dx_array_domains
+            if row.get('check') != dx_array_domains.identity() or not row.get('predicate') or not row.get('binding'):
+                raise Refused('DX100 query domain/binding is missing or stale')
+            continue
         if row.get("kind") == "call":
             from swdb import dx_array_domains
             if row["policy"].get("check") != dx_array_domains.identity() or not row.get("predicate") or not row.get("binding"):
@@ -731,6 +742,9 @@ def prepare(lowering, text):
             continue
         if row.get("kind") == "standard_range_call":
             additions.setdefault(row["anchor"], []).append(f'/*@ assert swdb_window_copy_{i}: {row["predicate"]}; */')
+            continue
+        if row.get("kind") == "query":
+            additions.setdefault(row['anchor'], []).append(f'/*@ assert swdb_window_query_domain_{i}: {row["predicate"]}; */')
             continue
         if row.get("kind") == "call":
             additions.setdefault(row["anchor"], []).append(f'/*@ assert swdb_window_call_{i}: {row["predicate"]}; */')

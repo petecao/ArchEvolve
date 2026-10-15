@@ -93,3 +93,26 @@ def test_a_query_capture_cannot_substitute_another_source_read(tmp_path,monkeypa
     monkeypatch.setattr(nested_entry_reads,'_render',lambda raw,edits:render(raw,edits).replace('= q[0]','= p[0]'))
     with pytest.raises(nested_entry_reads.Refused,match='binding|operation'):
         nested_entry_reads.prepare(path,'unit',entry_windows=windows,scratch=tmp_path/'view')
+
+
+@pytest.mark.parametrize('expression',[
+    'swdb_dx_in_footprint(1,base+n)+swdb_dx_in_footprint(1,base)',
+    'n ? swdb_dx_in_footprint(1,base+n) : 0',
+    '(n=1,swdb_dx_in_footprint(1,base+n))',
+])
+def test_query_domain_cannot_be_checked_before_a_sibling_effect_or_conditional(tmp_path,expression):
+    source='int swdb_dx_in_footprint(int,const int*); int unit(int *base,int n){int member='+expression+';return member;}'
+    with pytest.raises(wp_pointer_bounds.Refused):
+        wp_pointer_bounds.check(lower(tmp_path,source))
+
+
+def test_query_has_a_checked_same_object_or_idle_domain_instead_of_an_input_assumption(tmp_path):
+    lowered=lower(tmp_path)
+    text,report=wp_pointer_bounds.prepare(lowered,lowered.text)
+    query=next(row for row in report['sites'] if row.get('kind')=='query')
+    assert not query['admission_only']
+    assert 'dx_tile_writer[1] < 0' in query['predicate']
+    assert r'\base_addr(base) == \base_addr(dx_base[dx_tile_writer[1]])' in query['predicate']
+    assert 'DX_K' in query['predicate']
+    assert 'assert swdb_window_query_domain_' in text
+    assert 'requires' not in text
