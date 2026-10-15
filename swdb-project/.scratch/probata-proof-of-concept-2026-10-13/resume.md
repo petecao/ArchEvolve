@@ -39,6 +39,15 @@ The coordinator owns the full periodic status report and live lane dispatch; thi
 
 ## Host coordination
 
+Readback2026-10-15 11:46ET: node0generation560, node1generation598 and legacy77
+are released; load0.02/0.57/1.04, `/data1`21GiB and `/data`95GiB free. Frozen
+`5c2a` final outcomes remain native134passed/1failed and entry19passed/1failed.
+The owner-safe failure has no WP launch/goals and shares the repaired parser
+context refusal; stale-alias was not reached. All155 report references and2,852
+declared absolute pins match.
+[Final frozen audit](evidence/source-gate-final-frozen-5c-20261015.json).
+
+
 Historical readback: 2026-10-15 10:49 ET. Both socket leases (node 0 generation 556,
 node 1 generation 597) and legacy generation 77 are released. Load0.32/0.07/0.30;
 21 GiB free on `/data1`, 97 GiB on `/data`. Evaluation checkout remains clean

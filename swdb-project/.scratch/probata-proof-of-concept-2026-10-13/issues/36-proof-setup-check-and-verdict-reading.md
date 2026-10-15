@@ -676,3 +676,20 @@ combined compiler/stand-in controls pass (100.94s, peak450,658,304bytes under8Gi
 including both positive source views, declaration/return fault refusals, exact
 callee/request coverage and worker failures. This is composition evidence only;
 new actual caller proofs remain coordinator-owned. Ticket36 stays claimed.
+
+
+### Final frozen Linux checkpoint audit — 2026-10-15 11:46 ET
+
+Frozen `5c2a` jobs finish with native134passed/1failed and entry19passed/1failed,
+both exit1. The original owner-data safe test has zero WP goals and no WP log:
+it stops before launch on the same CAPI libc++ compatibility-header context
+refusal repaired at `7e663aaf`. Its selected stale-alias successor is not reached
+because `--maxfail=1` stops the shard. This is a prelaunch failure, not a failed
+owner theorem. Twenty-three deduplicated proof YAMLs parse; all155 report
+references (153 unique files) and2,852 declared absolute file-pin references
+match retained bytes, with916 unique files hashed. No solver was rerun for audit.
+
+A prospective metadata correction remains necessary: some actual positive WP
+records retain `verifier_launched:false` despite WP logs and proof goals. These
+historical records stay immutable; current acceptance is traced to their artifacts.
+[Compact final audit](../evidence/source-gate-final-frozen-5c-20261015.json).
