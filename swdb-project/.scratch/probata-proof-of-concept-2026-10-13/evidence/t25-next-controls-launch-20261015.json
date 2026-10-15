@@ -1,0 +1,61 @@
+{
+  "created": "2026-10-15 13:48 ET",
+  "phase": "launched; no final outcomes",
+  "source_commit": "94769312e4511fd7c90b873e6ebf2c86a2cb5a9e",
+  "remote_checkout": "/data1/yanruj/probata-t27",
+  "source_state_at_dispatch": "clean detached; frozen until both jobs finish",
+  "coordinator": "root; integration agent records supplied metadata without remote commands",
+  "preflight": {
+    "observed_et": "2026-10-15 13:46 ET",
+    "socket_and_legacy_leases": "all released before dispatch",
+    "load": [
+      0.11,
+      0.21,
+      0.35
+    ],
+    "available_ram_gib": 117,
+    "free_space_gib": {
+      "/data1": 21,
+      "/data": 95
+    },
+    "gpu": "NVML driver/library mismatch; unused for CPU-only jobs",
+    "lane_wrapper_git_blob": "261e7e04a64474020c6d2fd288bee9bab8dd1f5d",
+    "lane_wrapper_verified": "after fetch"
+  },
+  "budgets_per_job": {
+    "workers": 1,
+    "rss_cap_bytes": 8589934592,
+    "inner_wall_seconds": 1800,
+    "outer_timeout_seconds": 2000,
+    "output_budget_bytes": 1073741824,
+    "output_estimate_bytes": 31457280
+  },
+  "readers": [
+    "coordinator",
+    "ticket25 acceptance",
+    "independent audit"
+  ],
+  "jobs": [
+    {
+      "node": 0,
+      "lease_name": "mbit10-evaluation-node0",
+      "lease_generation": 568,
+      "started_et": "2026-10-15 13:47:36 ET",
+      "selection": "tests/test_std_models.py::test_a_pointer_or_iterator_kept_across_a_growing_push_back_is_refuted_with_a_counterexample[swdb_fixture_vec_stale_iterator]",
+      "output": "/data/yanruj/EvolveSWDB_runs/probata-t25-next-controls-20261015-1347-node0",
+      "plan_sha256": "16b6449da8b0174d8e3a48f59345c691abd1aad6253afe291d106f7e6ea86944",
+      "expected": "bounded stale-iterator refutation with matching source C++ sanitizer replay"
+    },
+    {
+      "node": 1,
+      "lease_name": "mbit10-evaluation-node1",
+      "lease_generation": 600,
+      "started_et": "2026-10-15 13:47:38 ET",
+      "selection": "tests/test_std_models.py::test_at_with_an_index_that_may_reach_size_is_refuted_and_the_same_call_behind_a_bounds_check_proves",
+      "output": "/data/yanruj/EvolveSWDB_runs/probata-t25-next-controls-20261015-1347-node1",
+      "plan_sha256": "e9d722dc1f13927a1a5263e4b8d73b0541d116c7cda6a07144eebde9c7a255d9",
+      "expected": "bounded at() bad-index refutation and guarded-call proof"
+    }
+  ],
+  "boundary": "Prospective launch only; no verdict, test pass, proof success or ticket closure. Raw output stays remote; only compact metadata returns to Mac."
+}

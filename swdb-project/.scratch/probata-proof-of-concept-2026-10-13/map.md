@@ -9,7 +9,20 @@ Updated: 2026-10-15 ET. Resumed under Yan-Ru's ongoing implementation, push and 
 Current integration branch: `codex/probata-poc-integration`, based on `yanrujhou_main` at `150930b4`.
 Current dispatch, evidence and blockers: [resume.md](resume.md).
 
-- **Checkpoint 2026-10-15 13:52 ET:** reviewed original Bag/Counter lifetime
+- **Launch 2026-10-15 13:48 ET:** two original bounded member controls are active
+  at frozen `94769312`: stale iterator on node 0 generation 568 and at()/guarded-at
+  on node 1 generation 600. No final result is claimed. Reviewed stall fix
+  `9940b155` is separately frozen for one Mac rerun; method20 implementation is
+  offline with no provider launch. [Remote launch](evidence/t25-next-controls-launch-20261015.json).
+
+- **Query integration 2026-10-15 13:45 ET:** reviewed branch `904a2bab` composes
+  the original class slice. The 134 compiler union controls pass; the earlier
+  119-pass run retained two environment failures, and only those two passed their
+  permission-corrected rerun. Safe proof and outside not_proven/failed-smoke records
+  retain historical pins. The exact native address-boundary counterstate is retained.
+  [Query evidence](evidence/wp-footprint-query-20261015.json). Tickets 27/36 remain claimed.
+
+- **Checkpoint 2026-10-15 13:45 ET:** reviewed original Bag/Counter lifetime
   slice merged from `0e4e6b74`; safe 146 ordinary + 11 smoke proves, seeded
   negative retains its one invariant timeout. All 48 composition controls pass.
   The one-case stale-data retry at `bc457086` passes with recovered inputs and

@@ -730,3 +730,27 @@ All 17 records, 90 report references plus 17 adapter logs (107 total), 19,946
 absolute file-pin references, 196 runtime source files per lane and 16 certificate
 self-hashes match. Both source-after checks remain clean atd3a. Ticket stays claimed.
 [Final audit](../evidence/focused-parser-owner-final-20261015.json).
+
+
+### Footprint query source domain — 2026-10-15 ET
+
+Frozen `8e377274` admits the exact imported read-only query over a stable explicit
+int entry window. Original nested index reads execute once before pointer formation;
+normal read initializedness and formation bounds remain obligations. Independent
+review found numerical adjacency of distinct native arrays, so a separately named
+ordinary query-domain VC now requires the writer to share the certified root's
+physical object. No input premise was added. Six independent compiler controls and
+116 composed controls pass; a fresh public stand-in has matching source/report pins.
+
+Actual safe proves all57 ordinary and18 smoke goals. The outside query remains
+not_proven/vacuous_pass:51 ordinary Valid, its ensures timeout,17 smoke Valid and
+one failed smoke on a generated zero-offset normalization branch. Original pytest
+reported1failed/1passed in735.26s because the new negative test wrongly required
+every smoke Valid. Corrected assertions pass offline against both immutable records;
+no solver rerun or negative-record upgrade. All32 artifact references,349 source
+pins and5,584 physical pin references (957 unique files) match.
+
+The exact native finite adjacency case and independent review are retained under
+`prototype/27-proof-semantics/checks/query-address-boundary-20261015/`; broader model
+agreement belongs to29. [Scoped evidence](../evidence/wp-footprint-query-20261015.json).
+Tickets27/36 remain claimed; full acceptance and method freeze remain open.
