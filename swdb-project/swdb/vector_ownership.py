@@ -13,7 +13,7 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
-from swdb import model_domains, std_models
+from swdb import model_domains, std_models, vector_pipeline
 
 MODEL_SHA256 = "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
 PREFIX = "swdb_owner_"
@@ -202,7 +202,7 @@ def _protocol(node):
             "source_statements": len(statements), "observations": observations, "data_reads": data_reads}
 
 
-def certify_origins(node, *, source, source_sha256, models, anchors, text):
+def certify_origins(node, *, source, source_sha256, models, anchors, text, entry_windows=None):
     """Generator-owned exact source registry; unsupported protocols grant no origin."""
     try:
         if _sha(source) != source_sha256 or std_models.identity()["sha256"] != MODEL_SHA256:
@@ -210,13 +210,17 @@ def certify_origins(node, *, source, source_sha256, models, anchors, text):
         if re.search(r"\boperator\s*(?:new|delete)\b|\bnamespace\s+std\b", source):
             raise Refused("replacement allocation or standard definitions are unsupported")
         for directive in re.findall(r"^\s*#.*$", source, re.M):
-            if not re.fullmatch(r"\s*#\s*include\s*<(?:vector|cstddef)>\s*", directive):
+            if not re.fullmatch(r"\s*#\s*include\s*<(?:vector|utility|cstddef)>\s*", directive):
                 raise Refused("unmodeled preprocessing")
-        protocol = _protocol(node)
+        try:
+            protocol = _protocol(node)
+        except Refused:
+            return vector_pipeline.certify(node, source=source, source_sha256=source_sha256,
+                models=models, anchors=anchors, text=text, entry_windows=entry_windows, owner_check=identity())
         return model_domains.source_owner(node, protocol, source_sha256=source_sha256,
             lowering_sha256=_sha(text), models=models, anchors=anchors, owner_check=identity(),
             allocator=allocator_identity())
-    except (Refused, model_domains.Refused):
+    except (Refused, model_domains.Refused, vector_pipeline.Refused):
         return {}
 
 
@@ -285,6 +289,12 @@ class View:
 
 def wp_view(lowering, source, formal_texts, hints=()):
     """Generate a fresh certificate from source AST and exact audited model bodies, never an input certificate."""
+    if ((lowering.pointer_bounds or {}).get("owner") or {}).get("protocol") == vector_pipeline.PROTOCOL:
+        try:
+            return vector_pipeline.wp_view(lowering, source, formal_texts, hints)
+        except vector_pipeline.Refused as exc:
+            raise Refused(str(exc)) from None
+
     from swdb import c_lowering
     if hints:
         raise Refused("version 1 admits no user hints or post-release ghost effects")
@@ -293,7 +303,7 @@ def wp_view(lowering, source, formal_texts, hints=()):
     if re.search(r"\boperator\s*(?:new|delete)\b|\bnamespace\s+std\b|\b(?:class|struct)\s+std::", source_text):
         raise Refused("replacement allocation or standard-library definitions are unsupported")
     for directive in re.findall(r"^\s*#.*$", source_text, re.M):
-        if not re.fullmatch(r"\s*#\s*include\s*<(?:vector|cstddef)>\s*", directive):
+        if not re.fullmatch(r"\s*#\s*include\s*<(?:vector|utility|cstddef)>\s*", directive):
             raise Refused("only the pinned vector/cstddef includes are supported")
     if _sha(source.read_bytes()) != lowering.source_sha256:
         raise Refused("the source changed after lowering")

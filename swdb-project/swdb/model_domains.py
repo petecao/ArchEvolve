@@ -32,7 +32,8 @@ def _digest(value):
 
 def identity():
     return {"id": "closed-owner-model-domain-2", "sha256": _sha(
-        Path(__file__).read_bytes() + Path(standard_model_view.__file__).read_bytes())}
+        Path(__file__).read_bytes() + Path(standard_model_view.__file__).read_bytes()
+        + Path(__file__).with_name("vector_pipeline.py").read_bytes())}
 
 
 def children(node):
@@ -135,6 +136,12 @@ def _data_read(node):
 
 def bind_source_access(root, certificate, access):
     """Bind one recorded observation to its exact source kind, span and receiver."""
+    if certificate.get("protocol") == "private-vector-copy-scan-1":
+        from swdb import vector_pipeline
+        try:
+            return vector_pipeline.bind_access(root, certificate, access)
+        except vector_pipeline.Refused as exc:
+            raise Refused(str(exc)) from None
     kind = {"alias_read": "UnaryOperator", "owner_index": "CXXOperatorCallExpr",
             "owner_at": "CXXMemberCallExpr", "owner_data_read": "UnaryOperator"}.get(access.get("kind"))
     matches = [n for n in walk(root) if n.get("kind") == kind and

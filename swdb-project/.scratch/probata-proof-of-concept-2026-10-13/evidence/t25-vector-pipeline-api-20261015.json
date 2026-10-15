@@ -1,0 +1,53 @@
+{
+  "created": "2026-10-15 ET",
+  "ticket": 25,
+  "status": "claimed",
+  "base": "bfc5e4f6",
+  "plan": "/private/tmp/probata-vector-completion-plan.md",
+  "scope": "exact existing vector maximum workflow; checked private copy/scan projection, not generic vector/model completion",
+  "reports": [
+    {
+      "path": "/private/tmp/probata-vector-pipeline-red.jsonl",
+      "sha256": "8b9bb9e8a9832c17738cfbf50b5ee81ce2751d4071162c3a1e27b686becd3f7d",
+      "calls": [
+        {
+          "test": "tests/test_vector_pipeline_wp.py::test_the_original_vector_size_push_range_and_pair_workflow_has_a_checked_unbounded_view",
+          "outcome": "failed"
+        }
+      ],
+      "finish": [
+        {
+          "exitstatus": 1
+        }
+      ]
+    },
+    {
+      "path": "/private/tmp/probata-vector-pipeline-red2.jsonl",
+      "sha256": "d7eb4d05e5b347e2f1848fe83dc0f1f806b9b3e07e8b139629e92e31f4282978",
+      "calls": [
+        {
+          "test": "tests/test_vector_pipeline_wp.py::test_the_original_vector_size_push_range_and_pair_workflow_has_a_checked_unbounded_view",
+          "outcome": "failed"
+        }
+      ],
+      "finish": [
+        {
+          "exitstatus": 1
+        }
+      ]
+    }
+  ],
+  "red_boundary": "First attempt rejected unsupported user-contract valid_read vocabulary; corrected valid/initialized original contract then reaches intended unsupported_construct. No public GREEN or actual WP record yet.",
+  "pending_core_hooks": [
+    "Forward bound entry_windows into certify_origins; no pipeline certificate without explicit a:n domain",
+    "Pin vector_pipeline.py in lowerer identity and CHECK_SOURCES",
+    "Consult checked_handles for exact source array-read and scalar-value push call IDs, preserving all other origin/escape gates"
+  ],
+  "source_hashes": {
+    "swdb-project/swdb/vector_pipeline.py": "7b602d6ea3dc412272f9e390b1e55021f2256459d834b00e80f7416797d52283",
+    "swdb-project/swdb/vector_ownership.py": "58bf8bbd370cd735bb5eceb6e6c49a6f08e97d97b4c73207ca7fe8727c6c6595",
+    "swdb-project/swdb/model_domains.py": "0abeb81edf3a7c92b0465d9a617ef272f85f9263cc50427e3e46a1743d51e17a",
+    "swdb-project/tests/test_vector_pipeline_wp.py": "4aeee0e0a3722448c5e7b1baab752df3c5ce9c7a5409cff4dff319571511a416"
+  },
+  "boundary": "Original C++/native and lower C artifacts unchanged. Original formal contract unchanged in view; input initializedness and typed window are declared explicitly by the new WP test contract. Unbounded allocation count projected without fixed storage. Allocation success/freshness and allocator no-preexisting-write frame are explicit imported tool assumptions. No standalone allocating C-model proof is counted."
+}
