@@ -1,0 +1,246 @@
+{
+  "created": "2026-10-15 ET",
+  "verdict": "Bootstrap/input integrity GREEN; public contract admission RED before any new actual proof record",
+  "scope": "Read-only independent bootstrap and stopped prelaunch failure audit; no code changes, compilation, test/verifier/evaluation launches, raw transfer or remote mutation",
+  "bootstrap": {
+    "candidate_artifact_file_instances_checked": 92,
+    "created": "2026-10-15 ET",
+    "errors": [],
+    "lane": {
+      "ended_utc": "2026-10-15T22:25:34Z",
+      "generation": 576,
+      "node": 0,
+      "started_utc": "2026-10-15T22:23:22Z"
+    },
+    "launch": {
+      "rss_cap_bytes": 8589934592,
+      "timeout_seconds": 4200,
+      "workers": 1
+    },
+    "launch_source_manifest_files_checked": 197,
+    "method": {
+      "id": "method.wp-tracer-fixture",
+      "sha256": "ac4fe5ea50ebb15eddc88e239cb340d9fca41306df41e0cdda8432c9d0d88c5c"
+    },
+    "model_evidence_instances_checked": 37,
+    "new_proof_ids_observed": [],
+    "old_evidence_instances_checked": 76,
+    "old_records_checked": 8,
+    "original_gap": {
+      "label": "std_models_original_contract_gap",
+      "original_acceptance_errors": [
+        "unexpected verdict",
+        "safe proof lacks all-goal/smoke Valid acceptance"
+      ],
+      "original_expected": "proven",
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/matrix/seed/records/proofs/proof.wp24-safe.candidate-1.20261015t214040z.c309a2c9.yaml",
+        "sha256": "e03a86746f27c7815aeb4b3765fb3d84da21e1079f8170b4f1a21ae881b6a194"
+      },
+      "role": "retained original contract-gap negative; no unchanged-original success",
+      "verdict": "not_proven"
+    },
+    "profile_complete_observed": false,
+    "profile_rows_observed": 0,
+    "profile_sha256_at_read": "1fc3c611a0f247590ef7b9bfbcf3efd59286431b06c231ef158a0b5ab9510e9a",
+    "profile_unchanged_during_audit": true,
+    "qualified_contract": {
+      "file_sha256": "c1211e5e457cef809524115538f3e388780073adf66f2436792897a566d1ae03",
+      "id": "contract.fixture_wp24_std_models_object_domain",
+      "sha256": "762deba8e2d8dc8961500d26209a6857553993225eadb0da6a12a8ba3b0c341a"
+    },
+    "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-6221dad7-t24-std-domain",
+    "receipts": {
+      "execute.py": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-6221dad7-t24-std-domain/execute.py",
+        "sha256": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612"
+      },
+      "launch.json": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-6221dad7-t24-std-domain/launch.json",
+        "sha256": "85e07b7017c597c1d983a2bee66e8f1e011f951b032e482b1e966f052292f1e9"
+      },
+      "run.sh": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-6221dad7-t24-std-domain/run.sh",
+        "sha256": "20026761cb988ef469f3161398cd4ec8121622fca3f84731d3656f05c86bcd9f"
+      },
+      "runtime-provenance.json": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-6221dad7-t24-std-domain/runtime-provenance.json",
+        "sha256": "42d8992de63d5fe69c5a35a3d819c5889ccac81aaf38aef7a5d95ed7e4eb4ef0"
+      },
+      "source-manifest.json": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-6221dad7-t24-std-domain/source-manifest.json",
+        "sha256": "2f4e30d04a99eaddd7cff2361f591ac065491dbe01b52e7025ba82e1c9d06f1d"
+      },
+      "watch.py": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-6221dad7-t24-std-domain/watch.py",
+        "sha256": "4485ae66aa50c65f2b579f84836576aa67b54431978da71cac6eea6a68ecd07c"
+      }
+    },
+    "reused_models": [
+      {
+        "copied_bytes_match": true,
+        "id": "proof.model.std_min_int.20261015t212915z.949d8187",
+        "model": "std_min_int",
+        "sha256": "7028e9105fdb92ecf8ba1bc1974f456a5084676cdfc1e08161b861978bd7523a"
+      },
+      {
+        "copied_bytes_match": true,
+        "id": "proof.model.std_max_int.20261015t213126z.f8b8689c",
+        "model": "std_max_int",
+        "sha256": "714be0d2ec0f6017544af81a067c7a60ffafa6ae389109b313a161f73ede6707"
+      },
+      {
+        "copied_bytes_match": true,
+        "id": "proof.model.std_swap_int.20261015t213339z.c0ed4542",
+        "model": "std_swap_int",
+        "sha256": "c06d6a934ae68fcb72e164c38444faa6b40868119e04d4d96673ce346d6a3b32"
+      },
+      {
+        "copied_bytes_match": true,
+        "id": "proof.model.std_copy_int.20261015t213547z.ea97bd04",
+        "model": "std_copy_int",
+        "sha256": "ab86fab89802a166bad0263c5235b9b17f84552467a067af1da0fc3887940130"
+      },
+      {
+        "copied_bytes_match": true,
+        "id": "proof.model.std_max_long.20261015t213829z.89f04fca",
+        "model": "std_max_long",
+        "sha256": "00e5e0404b786243aeba6426a2f8ae7d9bec37a14294ddd5460426d2b86d0037"
+      }
+    ],
+    "reviewed_wrappers": [
+      {
+        "name": "execute.py",
+        "sha256": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612"
+      },
+      {
+        "name": "watch.py",
+        "sha256": "4485ae66aa50c65f2b579f84836576aa67b54431978da71cac6eea6a68ecd07c"
+      }
+    ],
+    "runtime_freeze": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+    "runtime_identity": {
+      "c_lowering": {
+        "id": "swdb-c-lowering-9",
+        "sha256": "b1ddaa111bec5d19843b69fd7571530859acb1382947d96692894bfc29b0b993"
+      },
+      "clang": {
+        "id": "clang-22.1.8",
+        "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+      },
+      "naming_rules": {
+        "id": "kept-names.3",
+        "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+      }
+    },
+    "runtime_sources_checked": 296,
+    "source_head": "6221dad752804703a0dec8aed74a825c7143b389",
+    "source_matrix_sha256": "7088085bfe119af99c4ea7d73bf140b5e4537021c03c47bb21f8d203703ab40f",
+    "verdict": "bootstrap integrity GREEN; actual proof/dependency selection pending"
+  },
+  "completion": {
+    "created": "2026-10-15 ET",
+    "status": "public admission failed before actual proof records",
+    "new_proof_records": [],
+    "profile_rows": 0,
+    "profile_complete": false,
+    "validation_error_count_line": "swdb prove: 8 validation error(s); run swdb validate",
+    "error_lines": [
+      "AssertionError: /data/yanruj/EvolveSWDB_runs/probata-reviewed-6221dad7-t24-std-domain/matrix/seed/library/rewrite_contracts/fixture_wp24_std_models_object_domain.yaml: clauses[1].acsl: memory built-in \\valid_read is not allowed: only \\valid, \\initialized, \\separated and \\result",
+      "/data/yanruj/EvolveSWDB_runs/probata-reviewed-6221dad7-t24-std-domain/matrix/seed/library/rewrite_contracts/fixture_wp24_std_models_object_domain.yaml: clauses[1].acsl: memory built-in \\base_addr is not allowed: only \\valid, \\initialized, \\separated and \\result",
+      "/data/yanruj/EvolveSWDB_runs/probata-reviewed-6221dad7-t24-std-domain/matrix/seed/library/rewrite_contracts/fixture_wp24_std_models_object_domain.yaml: clauses[1].acsl: memory built-in \\base_addr is not allowed: only \\valid, \\initialized, \\separated and \\result",
+      "/data/yanruj/EvolveSWDB_runs/probata-reviewed-6221dad7-t24-std-domain/matrix/seed/library/rewrite_contracts/fixture_wp24_std_models_object_domain.yaml: clauses[1].acsl: memory built-in \\valid_read is not allowed: only \\valid, \\initialized, \\separated and \\result",
+      "/data/yanruj/EvolveSWDB_runs/probata-reviewed-6221dad7-t24-std-domain/matrix/seed/library/rewrite_contracts/fixture_wp24_std_models_object_domain.yaml: clauses[1].acsl: memory built-in \\valid_read is not allowed: only \\valid, \\initialized, \\separated and \\result",
+      "/data/yanruj/EvolveSWDB_runs/probata-reviewed-6221dad7-t24-std-domain/matrix/seed/library/rewrite_contracts/fixture_wp24_std_models_object_domain.yaml: clauses[1].acsl: memory built-in \\base_addr is not allowed: only \\valid, \\initialized, \\separated and \\result",
+      "/data/yanruj/EvolveSWDB_runs/probata-reviewed-6221dad7-t24-std-domain/matrix/seed/library/rewrite_contracts/fixture_wp24_std_models_object_domain.yaml: clauses[1].acsl: memory built-in \\base_addr is not allowed: only \\valid, \\initialized, \\separated and \\result",
+      "/data/yanruj/EvolveSWDB_runs/probata-reviewed-6221dad7-t24-std-domain/matrix/seed/library/rewrite_contracts/fixture_wp24_std_models_object_domain.yaml: clauses[1].acsl: memory built-in \\valid_read is not allowed: only \\valid, \\initialized, \\separated and \\result"
+    ],
+    "failure_before_wp": true,
+    "run_directory_exists": false,
+    "receipts": {
+      "acceptance.log": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-6221dad7-t24-std-domain/acceptance.log",
+        "sha256": "66a93d45c9750e7facc84c90b1c132f026a879440687d3d7271d41b7374d6490"
+      },
+      "resources.json": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-6221dad7-t24-std-domain/resources.json",
+        "sha256": "952fb67436423b7f0d053bd823447ff41eb8c0b6974545d5fc2292df6fb2e28a",
+        "data": {
+          "cpu_seconds": 130.613224,
+          "exit_code": 1,
+          "out_of_memory": false,
+          "peak_rss_bytes": 936992768,
+          "timed_out": false,
+          "wall_seconds": 129.53030343074352
+        }
+      },
+      "outer-resources.json": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-6221dad7-t24-std-domain/outer-resources.json",
+        "sha256": "1bd51bdc005f8da42990c996cff53ca85730968493047491706e413a9aead8d3",
+        "data": {
+          "exit_code": 1,
+          "peak_rss_bytes": 987848704,
+          "out_of_memory": false,
+          "timed_out": false,
+          "wall_seconds": 131.4272845890373,
+          "cpu_seconds": 158.341237
+        }
+      },
+      "source-after.json": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-6221dad7-t24-std-domain/source-after.json",
+        "sha256": "f7482744727ef7f7355323e6b9fc65263ca30cf51c98a9f4fcffe9f8367b3bd2",
+        "data": {
+          "commit": "6221dad752804703a0dec8aed74a825c7143b389",
+          "source_unchanged": true,
+          "tracked_changes": ""
+        }
+      },
+      "lane.json": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-6221dad7-t24-std-domain/lane.json",
+        "sha256": "1d3406a63a8742f3e8bd044486a98703991b8b1b65cd4c3f3fa016e10c4f099d",
+        "data": {
+          "socket_lane": {
+            "aligned_cell_age_s": "",
+            "aligned_to": "no_gapbs_batch_running",
+            "command": [
+              "timeout",
+              "--signal=TERM",
+              "--kill-after=60",
+              "4320",
+              "bash",
+              "/data/yanruj/EvolveSWDB_runs/probata-reviewed-6221dad7-t24-std-domain/run.sh"
+            ],
+            "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+            "ended_utc": "2026-10-15T22:25:34Z",
+            "exit_code": 1,
+            "host": "mbit10",
+            "job": "probata-reviewed-6221dad7-t24-std-domain",
+            "lease_generation": 576,
+            "lease_name": "mbit10-evaluation-node0",
+            "load1_at_start": 2.48,
+            "load1_max": 32,
+            "node": 0,
+            "numa_memory_policy": "bind:0",
+            "numactl": "--cpunodebind=0 --membind=0",
+            "preregistration_sha256": null,
+            "started_utc": "2026-10-15T22:23:22Z"
+          }
+        }
+      },
+      "matrix/profile.json": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-6221dad7-t24-std-domain/matrix/profile.json",
+        "sha256": "1fc3c611a0f247590ef7b9bfbcf3efd59286431b06c231ef158a0b5ab9510e9a"
+      }
+    }
+  },
+  "acceptance": {
+    "new_actual_proof_records": 0,
+    "public_dependency_selection": "unverified: no new proof record",
+    "qualified_safe": "not run: rejected by public formal-half validation before WP",
+    "qualified_seeded": "not run",
+    "original_contract_gap": "retained not_proven, unchanged record e03a86746f27c7815aeb4b3765fb3d84da21e1079f8170b4f1a21ae881b6a194",
+    "previous_11_controls": "compiler/parser/test-only; did not cover the public validator boundary",
+    "pair_acceptance": "pending"
+  },
+  "followup": "Owner retains sole launch and corrective design ownership. A future new public-validation RED control and corrected test-only domain design must preserve this stopped run and the original failed contract."
+}
