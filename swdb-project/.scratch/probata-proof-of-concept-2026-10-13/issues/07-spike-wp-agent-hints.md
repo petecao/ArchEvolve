@@ -1191,3 +1191,30 @@ repository plus one separate CLI control); [exact source/review/RED/GREEN pins](
 are retained under a distinct prospective `method20-resource-discovery-settle-v2`
 revision. A second Spec re-review, new clean freeze and preflight still precede
 any fresh run. The interrupted run20 clock is not reset or reused.
+
+### Run21 harness-aborted; scoped MCP approval correction — 2026-10-15 ET
+
+Fresh run21 at `7408be92` completed its no-hint baseline (103/254ordinary goals
+open, all timeout;139/139baseline smoke checks passed) and five-seed round
+(39/209open). The provider then encountered the CLI's approval refusal on
+`record_design`; no design record or promoted agent hint exists. Existing
+read-only diagnostics executed, and their time remains in this interrupted run.
+The stopped driver/provider and source/tool evidence, including the pre-seed
+AppleClang21 syntactic-parser receipt, are retained in
+[run21 aborted evidence](../evidence/t07-method20-approval-aborted-20261015.json).
+No final proof/smoke replay or negative-control success is claimed.
+
+The prospective fix grants explicit per-tool approval only to method20's
+`record_design` and `focused_probe`. A neutral actual CLI probe executed both toy
+tools without BFS source/hints/verifiers. Four external-CLI argv controls pass
+after RED: new/resumed method20 calls receive exactly those two overrides; legacy
+calls remain unchanged. Read-only sandbox, disabled shell and final proof criteria
+are preserved. Independent review and a wholly fresh counted run remain required;
+the prior baseline, hints, conversation and clock will not be reused.
+
+Independent composed review passes **169 controls** (168 repository plus one
+separate CLI control). [Approval revision/source/probe evidence](../evidence/t07-method20-tool-approval-review-20261015.json)
+pins the distinct prospective `method20-scoped-tool-approvals-v3` revision, the
+actual neutral routing check and unchanged proof/resource boundaries. Root review
+of the six-line runtime change found no additional issue. Fresh source/tool freeze,
+baseline and conversation remain required; no qualifying proof is claimed.
