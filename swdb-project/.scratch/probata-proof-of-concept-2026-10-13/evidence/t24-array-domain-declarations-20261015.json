@@ -50,5 +50,13 @@
     }
   ],
   "boundary": "Input declarations are never inferred from concurrency rows or allocation-validity ACSL. Pure mathematical integer expressions cannot call, read memory or add initialization. The universal adapter factory refuses a nonempty declaration before even a scripted verifier can execute. Typed source-origin and imported-call checking is the next slice.",
-  "design_note": "/private/tmp/probata-array-domain-design.md"
+  "design_note": "/private/tmp/probata-array-domain-design.md",
+  "merged_validation": {
+    "source_commit": "c04dc575ceb3c1053bbfdfc478f040dd7847ed92",
+    "report": "/private/tmp/probata-array-domain-merged.jsonl",
+    "sha256": "c213987894e5e2770d11f644f3871439b351069ece3f74c7127a6ce6ac6c7293",
+    "passed": 24,
+    "wall_seconds": 32.87,
+    "scope": "19 public declaration cases plus five named checker dependency controls on integration0d3e6c18 merged with explicit-domain source. No origin admission or general safety claim."
+  }
 }

@@ -36,7 +36,8 @@ rule comes with tickets 27 and 28.
 `proof_unit.array_domains` optionally maps a primitive pointer parameter to an
 `extent` expression. For example, `array_domains: {parent: {extent: n}}` declares
 that the window starting at `parent`, with `n` elements and its one-past endpoint,
-lies within one live array object of the pointer's element type. An empty window
+lies within one live array object of the pointer's element type. The extent uses
+parameter values at function entry; later assignments cannot enlarge it. An empty window
 may use a null pointer; this supplies no initialization or writable-storage fact.
 This is an explicit input-domain condition. Existing concurrency-frame rows and
 ACSL allocation-validity ranges do not imply it.
