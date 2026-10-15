@@ -1,10 +1,10 @@
-# All-ticket status at controlled pause
+# Current Probata ticket status
 
-Updated: 2026-10-15 14:24 ET.
+Updated: 2026-10-15 15:05 ET.
 
-32 resolved / 31 ready-for-agent / 0 claimed. Ready frontier: **07, 24, 27**.
-Status comes from ticket frontmatter; a ready label never overrides unresolved dependencies.
-No new ticket is resolved by this closeout. [Resume](HANDOFF.md).
+32 resolved / 28 ready-for-agent / 3 claimed. Active frontier: **07, 24, 27**.
+Derived from authoritative ticket frontmatter; unresolved dependencies still gate later work.
+[Current resume](resume.md). Historical proof evidence retains its exact source pins.
 
 | Ticket | Status | Unresolved blockers |
 |---|---|---|
@@ -14,7 +14,7 @@ No new ticket is resolved by this closeout. [Resume](HANDOFF.md).
 | [04 — Proof record tracer](issues/04-proof-record-tracer.md) | resolved | none |
 | [05 — Spike (a): SAW on clang 22 bitcode](issues/05-spike-saw-clang22.md) | resolved | none |
 | [06 — Spike (b): 2 lanes under 15 minutes](issues/06-spike-two-lanes.md) | resolved | none |
-| [07 — Spike (c): WP with agent hints](issues/07-spike-wp-agent-hints.md) | ready-for-agent | none |
+| [07 — Spike (c): WP with agent hints](issues/07-spike-wp-agent-hints.md) | claimed | none |
 | [08 — Spike (d): sums over reals](issues/08-spike-sums-over-reals.md) | resolved | none |
 | [09 — Spike verdict](issues/09-spike-verdict.md) | resolved | 07 |
 | [10 — Level rule](issues/10-level-rule.md) | resolved | none |
@@ -31,10 +31,10 @@ No new ticket is resolved by this closeout. [Resume](HANDOFF.md).
 | [21 — C lowering and WP adapter (A2 tracer)](issues/21-c-lowering-wp-tracer.md) | resolved | none |
 | [22 — SAW adapter and SAWScript translator](issues/22-saw-adapter-and-translator.md) | resolved | none |
 | [23 — C-stub translator, fallbacks and check mode](issues/23-stub-translator-fallbacks-check-mode.md) | resolved | none |
-| [24 — C++ subset widening](issues/24-cpp-subset-widening.md) | ready-for-agent | none |
+| [24 — C++ subset widening](issues/24-cpp-subset-widening.md) | claimed | none |
 | [25 — std::vector and std::pair models](issues/25-vector-and-pair-models.md) | ready-for-agent | 24 |
 | [26 — Logic and sum libraries](issues/26-logic-and-sum-libraries.md) | resolved | none |
-| [27 — Proof semantics for the BFS read-offload calls](issues/27-proof-semantics-bfs-calls.md) | ready-for-agent | none |
+| [27 — Proof semantics for the BFS read-offload calls](issues/27-proof-semantics-bfs-calls.md) | claimed | none |
 | [28 — Proof semantics for the remaining maa_* calls](issues/28-proof-semantics-remaining-calls.md) | ready-for-agent | 27 |
 | [29 — Proof-semantics checks](issues/29-proof-semantics-checks.md) | ready-for-agent | 28 |
 | [30 — Reference definitions, per-call summaries and new intrinsic versions](issues/30-reference-definitions-and-summaries.md) | ready-for-agent | 25, 28 |
@@ -65,8 +65,8 @@ No new ticket is resolved by this closeout. [Resume](HANDOFF.md).
 | [55 — End-to-end fixture campaign with real verifiers](issues/55-end-to-end-fixture-campaign.md) | ready-for-agent | 39, 48, 60 |
 | [56 — Verifier lineup on mbit10](issues/56-lineup-on-mbit10.md) | resolved | none |
 | [57 — Proof workers in a socket lane](issues/57-proof-workers-in-socket-lane.md) | resolved | none |
-| [58 — Mac verdicts reproduced on mbit10](issues/58-reproduce-on-mbit10.md) | ready-for-agent | 38, 40, 49, 51, 53, 54, 51, 53, 54 |
-| [59 — Method-version review and freeze](issues/59-method-version-freeze.md) | ready-for-agent | 43, 58, 62, 62 |
+| [58 — Mac verdicts reproduced on mbit10](issues/58-reproduce-on-mbit10.md) | ready-for-agent | 38, 40, 49, 51, 53, 54 |
+| [59 — Method-version review and freeze](issues/59-method-version-freeze.md) | ready-for-agent | 43, 58, 62 |
 | [60 — Strict-layer replay and whole-kernel reproduction](issues/60-strict-layer-replay-and-kernel-reproduction.md) | ready-for-agent | 29 |
 | [61 — SAW whole-function equivalence (bounded direct route)](issues/61-saw-whole-function-equivalence.md) | resolved | none |
 | [62 — Route choice and predecessor proofs in the campaign](issues/62-route-choice-and-predecessor-proofs.md) | ready-for-agent | 53 |
