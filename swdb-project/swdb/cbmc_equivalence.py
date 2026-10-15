@@ -364,7 +364,7 @@ class EquivalenceAdapter(CbmcAdapter):
         flags = ["-DSWDB_CBMC", "--unwind", str(built["unwind"])]
         if built["loops"]:
             flags += ["--unwindset", ",".join(f"{loop}:{k}" for loop, k in built["loops"])]
-        flags += [*FROZEN, *tools["flags"]]
+        flags += [*FROZEN, *(flag for flag in tools["flags"] if flag not in FROZEN)]
         command = [*tools["command"], "job.c", *flags, "--json-ui"]
         cap = int(os.environ.get("SWDB_VERIFIER_RSS_CAP_BYTES") or DEFAULT_CAP_BYTES)
         wall = job.budget_seconds or DEFAULT_WALL_SECONDS

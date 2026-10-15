@@ -19,6 +19,11 @@ from swdb.proof import AdapterError
 SETUP_VERSION = "1"
 READING_VERSION = "1"
 REPORT_MODULE = Path(__file__).with_name("proof_report.ml")
+# Named sources that generate/check domains or interpret execution evidence.
+# Translator, lowering, std-model and semantics bytes also have their own pins.
+CHECK_SOURCES = ("proof_setup.py", "proof_report.ml", "proof.py", "cbmc_adapter.py", "cbmc_equivalence.py",
+                 "cbmc_product.py", "wp_adapter.py", "crux_adapter.py", "rocq_adapter.py", "rss_watchdog.py",
+                 "vocab.py", "formal_frame.py", "acsl_subset.py", "framac.py", "hint_check.py", "hint_tree.ml")
 _COMPILED_MODULES = {}
 _ASSUME = re.compile(r"\b(?:llvm_assume|crucible_assume|__VERIFIER_assume)\b|\b(?:__CPROVER_assume|SWDB_ASSUME|assume)\s*\(")
 
@@ -32,7 +37,12 @@ def _digest(value):
 
 
 def identity():
-    sha = _sha(Path(__file__).read_bytes() + REPORT_MODULE.read_bytes())
+    from swdb import paths
+    folder = Path(__file__).parent
+    dependencies = [("swdb/" + name, folder / name) for name in CHECK_SOURCES]
+    dependencies.append(("vocab/proof_failure_classes.yaml", paths.VOCAB / "proof_failure_classes.yaml"))
+    # Frame each name and digest; concatenation must not blur dependency boundaries.
+    sha = _digest([{"path": name, "sha256": _sha(path.read_bytes())} for name, path in dependencies])
     return {"proof_setup_check": {"version": SETUP_VERSION, "sha256": sha},
             "verdict_reading": {"version": READING_VERSION, "sha256": sha}}
 
@@ -163,6 +173,8 @@ def begin(job, adapter, pins, method):
             selected = _values(plan.get("flags", []), "-wp-prover")
             if method is not None and selected and any(value.split(",") != wp_provers(method) for value in selected):
                 _fail("method_version", "WP solver order differs from the method version")
+        elif plan.get("tool") == "cbmc":
+            check_cbmc_flags(plan.get("flags", []))
         report["hashes"]["run_plan"] = _digest(plan)
     _environment()
     return report
@@ -296,6 +308,8 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
         check_semantics_hints(base, getattr(adapter, "hints", []))
     if adapter.name == "wp":
         _wp_flags(list(command) if command else flags, scratch or job.scratch)
+    elif adapter.name == "cbmc":
+        check_cbmc_flags(list(command) if command else flags)
     method = job.setup.get("method")
     tools = context.get("tools") or {}
     if method is not None:
@@ -315,6 +329,25 @@ def wp_provers(method):
     if len(declared) > 1:
         _fail("method_version", "the method declares WP solver selection more than once")
     return declared[0].split(",") if declared else ["alt-ergo", "z3", "cvc5"]
+
+
+def check_cbmc_flags(flags, *, require=True):
+    """Frozen safety checks and full property/entrypoint selection; created 2026-10-15 ET.
+
+    Inspect the complete command too: SWDB_CBMC may include prefix arguments. The
+    policy lives in this content-pinned check, independently of adapter constants.
+    """
+    required = {"--unwinding-assertions", "--pointer-overflow-check"}
+    forbidden = {"--no-standard-checks", "--no-bounds-check", "--no-pointer-check", "--no-pointer-primitive-check",
+                 "--no-pointer-overflow-check", "--no-signed-overflow-check", "--no-div-by-zero-check",
+                 "--no-undefined-shift-check", "--no-unwinding-assertions", "--no-assertions", "--no-assumptions",
+                 "--no-built-in-assertions", "--partial-loops", "--property", "--function", "--main", "--cover"}
+    words = {str(flag).split("=", 1)[0] for flag in flags}
+    disabled = words & forbidden
+    if disabled:
+        _fail("cbmc_safety_flags", f"CBMC safety/property/entrypoint override is forbidden: {sorted(disabled)}")
+    if require and not required <= set(flags):
+        _fail("cbmc_safety_flags", f"CBMC must retain frozen flags: {sorted(required - set(flags))}")
 
 
 def _lineup(method, adapter, tools, flags):

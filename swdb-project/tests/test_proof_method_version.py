@@ -17,7 +17,7 @@ from test_proof_records import proof_seed, seed  # noqa: F401  (the certified fi
 
 FAILURE_CLASSES = {"parse_error", "unsupported_construct", "unwinding_bound_too_small", "timeout",
                    "out_of_memory", "solver_error", "tool_crash", "vacuous_pass",      # 11 item 9
-                   "unknown", "ghost_capacity",                                         # S3
+                   "unknown", "ghost_capacity", "memory_domain",                        # S3, DX admission
                    "hint_budget_spent",                                                 # 13
                    "below_minimum_bounds",                                              # 19
                    "spurious_counterexample"}                    # Yan-Ru 2026-10-14 02:25 ET (from 05)

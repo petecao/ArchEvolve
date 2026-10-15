@@ -11,6 +11,19 @@ import pytest
 from test_proof_records import proof_seed, seed  # public CLI seed
 
 
+@pytest.mark.parametrize("flags", [[], ["--unwinding-assertions"],
+    ["--unwinding-assertions", "--pointer-overflow-check", "--no-pointer-check"],
+    ["--unwinding-assertions", "--pointer-overflow-check", "--no-standard-checks"],
+    ["--unwinding-assertions", "--pointer-overflow-check", "--property=harmless"],
+    ["--unwinding-assertions", "--pointer-overflow-check", "--function", "harmless"]])
+def test_bounded_flags_cannot_omit_pointer_formation_or_hide_safety_properties(seed, flags):
+    marker = seed.root / "must-not-run"
+    failed = seed.prove(seed.script(setup={"tool": "cbmc", "flags": flags},
+                                   run=["/usr/bin/touch", str(marker)]), ok=False)
+    assert "cbmc_safety_flags" in failed.stderr
+    assert not marker.exists() and not seed.proof_files()
+
+
 @pytest.mark.parametrize("text", [
     "void f(int parent) { __CPROVER_assume(parent >= -1); }\n",
     "llvm_assume (llvm_term {{ parent_v >= -1 }});\n",
@@ -229,3 +242,44 @@ def test_execution_method_must_pin_the_running_checks_version_and_content(seed, 
     failed = seed.prove(seed.script(), ok=False)
     assert "method_version" in failed.stderr
     assert "does not pin the installed proof_setup_check" in failed.stderr
+
+
+@pytest.mark.parametrize("changed", ["swdb/cbmc_adapter.py", "swdb/cbmc_equivalence.py", "swdb/wp_adapter.py",
+    "swdb/crux_adapter.py", "swdb/rocq_adapter.py", "swdb/proof.py", "vocab/proof_failure_classes.yaml",
+    "swdb/cbmc_product.py", "swdb/rss_watchdog.py", "swdb/vocab.py", "swdb/formal_frame.py", "swdb/acsl_subset.py",
+    "swdb/framac.py", "swdb/hint_check.py", "swdb/hint_tree.ml"])
+def test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation(seed, changed):
+    import os
+    import shutil
+    import subprocess
+    import sys
+    import yaml
+    from conftest import REPO
+    from swdb import proof_setup
+    from test_proof_records import FUNCTION
+
+    path = seed.root / "library" / "methods" / "reader-control.yaml"
+    data = yaml.safe_load((path.parent / "contract-fixture-1.yaml").read_text())
+    data.update(id="method.reader-control", sequence=3, evidence_kind="execution")
+    data["checks"].update(proof_setup.identity())
+    path.write_text(yaml.safe_dump(data))
+    runtime = seed.root / "changed-runtime"
+    for folder in ("swdb", "schemas", "vocab"):
+        shutil.copytree(REPO / folder, runtime / folder, ignore=shutil.ignore_patterns("__pycache__"))
+    # Keep the repository's pinned resource roots while selecting the copied
+    # vocabulary. This tests installed reader bytes without cloning provenance data.
+    paths = runtime / "swdb" / "paths.py"
+    paths.write_text(paths.read_text() + '\nVOCAB = Path(__file__).resolve().parent.parent / "vocab"\n')
+    target = runtime / changed
+    suffix = b"\n(* changed verdict dependency *)\n" if target.suffix == ".ml" else b"\n# changed verdict dependency\n"
+    target.write_bytes(target.read_bytes() + suffix)
+    marker = seed.root / "must-not-run"
+    script = seed.script(run=["/usr/bin/touch", str(marker)])
+    result = subprocess.run([sys.executable, "-m", "swdb", "prove", "--records", str(seed.records),
+        "--candidate", seed.candidate, "--function", FUNCTION, "--adapter", "scripted", "--script", str(script),
+        "--runs-dir", str(seed.runs), "--format", "json", "--method-version", "method.reader-control"],
+        cwd=runtime, env={**os.environ, "SWDB_HOME": str(REPO), "PYTHONPATH": str(runtime)},
+        capture_output=True, text=True, timeout=60)
+    assert result.returncode != 0, result.stdout
+    assert "does not pin the installed" in result.stderr, result.stderr
+    assert not marker.exists() and not seed.proof_files()
