@@ -923,3 +923,7 @@ batches and positions already consumed. The scalar fallback needs the equivalent
 row/edge prefix. No previous hints, finite counterstates, tests or evaluator code
 may enter the provider workspace. No unchanged retry or run 17 has started.
 Ticket 07 remains claimed within the shared two-week box.
+
+### 2026-10-15: prospective consumed-prefix method
+
+Prepared `consumed-prefix-cursor-snapshots-v4`: abstract guidance distinguishes range issuance from CPU consumption, captures pre-issue cursors, and carries processed row/edge prefixes through the range, batch and scalar loops. It contains no prior hints, worked formulas, counterstates, tests or workload inputs. All 54 pure prototype controls pass in 0.13 seconds (`/private/tmp/probata-consumed-prefix-guidance-controls.xml`). A future counted experiment will use fresh hints and total-open-goal acceptance, allowing it to revise the proof decomposition without rewarding a unit goal merely transferred into an open hint. No run 17 has started; implementation acceptance currently owns both local verifier slots. This is a prospective method change, not a proof result.
