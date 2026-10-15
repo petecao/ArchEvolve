@@ -120,8 +120,13 @@ two boxes is not met** (below). Branch `probata-poc/t27`. Interface doc:
 
 **Tests** (Mac; serial; pytest outside the lock, each CBMC job takes the lock): `tests/test_proof_semantics.py`
 29 cases; full run 25 passed, 2 failed on fixture defects (a wrong-value variant overflowed; the symbolic
-capacity bound took over 9 min), both fixed and rerun: 2 passed. Logs `/tmp/claude/probata-runs/t27/pytest-c.log`,
-`pytest-e.log`, report logs `report-c.jsonl`, `report-e.jsonl`. gem5 sources: `/tmp/claude/probata-runs/t27/gem5/`.
+capacity bound took over 9 min), both fixed and rerun: 2 passed. After merging the integration tip (2dff3f58;
+probes ported onto ticket 24's lowering): `test_proof_semantics.py`, `test_format_doc.py`, `test_formal_frame.py`,
+`test_c_lowering.py`, `test_cbmc_adapter.py`, `test_level_rule.py` (`-m "not whole_store"`): **274 passed** in
+57 min (most of it waiting for the shared verifier lock). Logs `/tmp/claude/probata-runs/t27/pytest-final3.log`,
+report log `report-final3.jsonl`; earlier `pytest-c.log`, `pytest-e.log`. gem5 sources:
+`/tmp/claude/probata-runs/t27/gem5/`. Prove jobs in the tests allow an hour for the lock (the default 600 s timed
+out once under contention, with CBMC itself at 0.3 s).
 
 **Interface notes**
 
