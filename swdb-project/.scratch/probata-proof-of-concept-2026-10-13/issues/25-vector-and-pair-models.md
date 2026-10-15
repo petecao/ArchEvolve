@@ -72,3 +72,7 @@ A future sound remedy needs either a verifier with supported allocation lifetime
 that carries allocation identities and liveness through every pointer alias and dereference. Adding ghost
 size/capacity fields alone does not make a raw stale `T *` read invalid and is insufficient. A bounded fixed
 storage pool would change the unbounded proof scope, so it cannot silently replace the accepted model.
+
+The recovered pair constructor also proves through the public `swdb prove --model std_pair_int_int_ctor
+--adapter wp` seam: **1 passed** (18.24 s), `/private/tmp/t25-pair-model.jsonl`; the resulting subject is
+`c_model` and `swdb validate` accepts the record. This does not discharge vector allocation obligations.
