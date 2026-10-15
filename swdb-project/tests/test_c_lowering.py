@@ -344,7 +344,9 @@ def test_each_std_function_lowers_to_a_call_of_its_c_model_with_its_acsl_contrac
     out = lower(LOWERING / "std_models.cc", "swdb_std_unit", tmp_path)
     text = (tmp_path / "swdb_std_unit.c").read_text()
     assert out["models"] == ["std_min_int", "std_max_int", "std_swap_int", "std_copy_int", "std_max_long"]
-    for call in ("std_min_int(x, y)", "std_max_int(x, y)", "std_swap_int(&lo, &hi)", "std_copy_int(a, a + n, b)",
+    # Preserve C++ null-plus-zero before the C model receives its last endpoint.
+    for call in ("std_min_int(x, y)", "std_max_int(x, y)", "std_swap_int(&lo, &hi)",
+                 "std_copy_int(a, ((n) == 0 ? (a) : (a + n)), b)",
                  "std_max_long(lo, 7)"):
         assert call in text
     contract = text.split("static int *std_copy_int(")[0].rsplit("/*@", 1)[1]
