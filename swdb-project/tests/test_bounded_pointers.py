@@ -234,7 +234,6 @@ def test_cpp_null_plus_zero_is_preserved_without_c_null_arithmetic(tile_seed):
     assert record["settings"]["pointer_bounds"]["sites"][0]["normalized_expression"]
 
 
-@pytest.mark.xfail(strict=True, reason="Pending explicit checked source/endpoints array-object domain for C model")
 @dx.needs_wp
 def test_generated_copy_model_proves_checked_pointer_distance_and_return(tile_seed):
     from conftest import run_swdb
@@ -288,12 +287,16 @@ def test_wp_rebound_alias_cannot_inherit_its_initializer_origin(tile_seed):
     assert record["settings"]["verifier_launched"] is False
 
 
-def test_generated_copy_model_opaque_origins_are_refused_before_verifier(tile_seed):
+def test_generated_copy_model_records_qualification_before_a_controlled_unknown_verdict(tile_seed):
     from conftest import run_swdb
     result = run_swdb("prove", "--records", tile_seed.records, "--model", "std_copy_int", "--adapter", "wp",
         "--runs-dir", tile_seed.runs, "--format", "json", timeout=3600, env=wp.fake("unknown"))
     assert result.returncode == 0, result.stderr + result.stdout
     record = tile_seed.read(json.loads(result.stdout))
-    assert record["failure_class"] == "unsupported_construct", record
-    assert record["settings"]["verifier_launched"] is False
-    assert "array-object origin" in record["settings"]["pointer_bounds"]["reason"]
+    assert record["failure_class"] == "unknown", record
+    assert record["verdict"] == "not_proven"
+    assert record["settings"]["standard_range_model"]["domain_role"] == \
+        "explicit standard-library valid-range domain; caller discharge required"
+    assert record["pins"]["standard_range_model_certificate"]
+    # Generic opaque C parameter domains remain closed; the exact checked
+    # standalone qualification is covered by test_standard_range_model.py.
