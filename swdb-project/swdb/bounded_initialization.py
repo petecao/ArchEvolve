@@ -12,7 +12,11 @@ from pathlib import Path
 
 
 def identity():
-    return {"id": "swdb-bounded-initialization-1", "sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}
+    here = Path(__file__)
+    # Regeneration and state-draw enumeration are policy dependencies, too. A changed
+    # generator must invalidate the frozen method even if the three model files match.
+    return {"id": "swdb-bounded-initialization-1", "sha256": hashlib.sha256(
+        here.read_bytes() + here.with_name("proof_semantics.py").read_bytes()).hexdigest()}
 
 
 def _hash(value):

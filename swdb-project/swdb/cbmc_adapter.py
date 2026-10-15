@@ -204,16 +204,16 @@ class CbmcAdapter:
             raise AdapterError(problem)
         context["pins"].update(std_models.pins(lowering))
         context["lowering"] = lowering
-        from swdb import bounded_initialization
-        admission = bounded_initialization.check(lowering, max(sizes.values(), default=0), library=self.library, model=model)
-        context["settings"]["bounded_initialization"] = admission
-        if admission["verdict"] != "passed":
-            return self._not_proven("unsupported_construct", admission["reason"], context)
         refusal = cpu_memory_admission.check(lowering, covered)
         if refusal:
             context["settings"]["proof_semantics_admission"] = refusal
             return self._not_proven("unsupported_construct",
                 "ordinary CPU memory interference with DX100 commands needs ticket 28's memory-hazard probes", context)
+        from swdb import bounded_initialization
+        admission = bounded_initialization.check(lowering, max(sizes.values(), default=0), library=self.library, model=model)
+        context["settings"]["bounded_initialization"] = admission
+        if admission["verdict"] != "passed":
+            return self._not_proven("unsupported_construct", admission["reason"], context)
         if lowering.std_models:
             context["settings"]["std_models"] = list(lowering.std_models)
             # The concrete growth policy follows libc++ 22.1.8. Clang's version does not identify its STL:

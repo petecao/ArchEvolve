@@ -445,7 +445,9 @@ def test_a_job_over_its_budget_is_not_proven_timeout_and_never_retried_smaller(s
 @needs_cbmc
 def test_bounds_other_than_one_thread_and_sizes_are_refused(seed):
     assert "threads = 1" in seed.prove(bounds={"threads": 3, "n": 3}, ok=False).stderr
-    assert "size bound" in seed.prove(bounds={"threads": 1}, ok=False).stderr
+    missing = seed.read(seed.prove(bounds={"threads": 1}))
+    assert missing["verdict"] == "not_proven" and missing["failure_class"] == "unsupported_construct"
+    assert "zero-capacity" in missing["settings"]["bounded_initialization"]["reason"]
     assert "not an integer parameter" in seed.prove(bounds={"threads": 1, "vertices": 3}, ok=False).stderr
 
 

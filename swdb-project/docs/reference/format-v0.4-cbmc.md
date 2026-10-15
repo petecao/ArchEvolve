@@ -40,7 +40,8 @@ swdb prove --summary <library entry> --adapter cbmc --runs-dir <outside the repo
   separate from this bounded admission rule.
   `settings.bounded_initialization` records the checker content hash, generated certificate, source and
   lowering hashes, admitted functions, input domain and actual harness capacity. The checker source is
-  part of the C lowering tool identity. The final setup check validates the certificate and capacity
+  part of the C lowering tool identity, together with the proof-semantics generator used to reconstruct
+  model bytes and enumerate initialized state draws. The final setup check validates the certificate and capacity
   again immediately before invocation. A zero-capacity pointer job is refused: its dummy allocation
   has no initialized elements.
   The bounded input domain consists of initialized scalar values and, for each pointer parameter, its

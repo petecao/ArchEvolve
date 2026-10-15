@@ -281,7 +281,7 @@ def identity():
     policy = admission.read_bytes() if admission.exists() else b"cpu-memory-admission:absent"
     digest = hashlib.sha256(here.read_bytes() + Path(terminal_release.__file__).read_bytes()
                             + Path(cpu_effects.__file__).read_bytes() + policy
-                            + Path(bounded_initialization.__file__).read_bytes()).hexdigest()
+                            + bounded_initialization.identity()["sha256"].encode()).hexdigest()
     found = {"c_lowering": {"id": f"{TOOL_ID}-{TOOL_VERSION}", "sha256": digest},
              "naming_rules": naming_rules()}
     if not tool.missing:

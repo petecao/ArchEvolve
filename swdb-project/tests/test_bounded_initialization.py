@@ -8,6 +8,10 @@ import test_cbmc_adapter as cbmc
 from test_proof_semantics import dx, dx_seed
 
 
+def _not_executed(record):
+    assert not any(r["name"].startswith(("cbmc_", "differential_")) for r in record["evidence"]["reports"])
+
+
 CONTROLS = """
 #if defined(INIT_LOCAL)
   int u; int discarded = u;
@@ -62,7 +66,7 @@ def test_uncertain_initializedness_is_unsupported_before_execution(initializatio
     admission = record["settings"]["bounded_initialization"]
     assert admission["verdict"] == "refused" and admission["reason"]
     assert admission["function"] and admission["source_line"]
-    assert not any(r["name"] in ("cbmc_json", "agreement") for r in record["evidence"]["reports"])
+    _not_executed(record)
 
 
 @cbmc.needs_cbmc
@@ -109,6 +113,7 @@ def test_whole_function_checks_initializedness_on_both_sides(initialization_equi
     assert record["verdict"] == "not_proven", record
     assert record["failure_class"] == "unsupported_construct"
     assert record["settings"]["bounded_initialization"][side]["verdict"] == "refused"
+    _not_executed(record)
 
 
 @cbmc.needs_cbmc
@@ -127,4 +132,4 @@ def test_changed_model_body_does_not_inherit_the_known_models_initialization_pol
     record = prove(dx, "size")
     assert record["verdict"] == "not_proven" and record["failure_class"] == "unsupported_construct"
     assert "exact-content" in record["settings"]["bounded_initialization"]["reason"]
-    assert not any(r["name"] in ("cbmc_json", "differential") for r in record["evidence"]["reports"])
+    _not_executed(record)
