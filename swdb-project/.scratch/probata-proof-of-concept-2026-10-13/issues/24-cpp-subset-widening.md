@@ -291,3 +291,24 @@ WP controls include both initialized positives and all four uninitialized negati
 Logs and incremental report: `/private/tmp/probata-init-final.{log,jsonl}`; initial
 reproduction: `/private/tmp/probata-init-red.{log,jsonl}`. No full construct-group or
 full-catalog acceptance is inferred from this focused suite.
+
+
+### Checked terminal release acceptance — 2026-10-15 ET
+
+The narrow initialized, nonescaping `new int[]` / terminal `delete[]` unit now proves through the
+public WP seam with mandatory `-rte-initialized @all`: **1 passed,93.13s** fixture time; the actual
+proof job took31.15s and records49valid goals. It pins checker2 and the ownership certificate, keeps
+the original C/C++ delete, and reports the separate checked WP view. The exact record is
+`/private/tmp/probata-terminal-call-init-public/wp24-lifetime-seed0/records/proofs/`
+`proof.wp24-safe.candidate-1.20261015t075300z.1453c91b.yaml`; report
+`/private/tmp/probata-lifetime-research-2026-10-15/terminal-call-init-public.jsonl`.
+
+WP33's modular call-result rule binds a returned pointer's value without initializing the receiving
+lvalue. A checked `+ 0` initializer gives the valid nonempty allocator result an equivalent ordinary
+expression assignment; it adds no allocator/freshness/heap-init premise. Before this transformation
+the initialized owner-slot invariant failed establishment. The raw repaired control proves49/49
+goals plus7/7smoke; an ignored unfilled-array read remains9/10 with its initialization goal unproven.
+Only checked pre-release initialization invariants are admitted.
+
+The full current-policy construct suite is still required before closing ticket24. Ticket25's
+growing vector lifetime acceptance remains open; this restricted transformation does not apply to it.
