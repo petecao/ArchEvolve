@@ -146,8 +146,6 @@ def certify(definitions, classes, *, source, tool, includes, defines, entry, win
             raise Refused('member call/access uses another or untracked receiver')
 
         def visit(name, environment):
-            if len(active) > 2:
-                raise Refused('member context exceeds independently demonstrated two-level inline depth')
             if name in active:
                 raise Refused('recursive member context cannot be fully inlined')
             if name in visited:
@@ -228,6 +226,24 @@ def certify(definitions, classes, *, source, tool, includes, defines, entry, win
         visit(entry, {obj['id']})
         if visited != set(full):
             raise Refused('member context has retained bodies outside the closed entry call graph')
+        # Receiver visitation memoization is not a path-length proof: a shared
+        # callee may first be visited through a shorter path. Independently
+        # compute the longest path over the complete checked call graph.
+        successors = {name: set() for name in full}
+        for call in calls:
+            successors[call['caller']].add(call['callee'])
+        heights, pending = {}, set()
+        def height(name):
+            if name in pending:
+                raise Refused('recursive member context cannot be fully inlined')
+            if name not in heights:
+                pending.add(name)
+                heights[name] = max((1 + height(child) for child in successors[name]), default=0)
+                pending.remove(name)
+            return heights[name]
+        depth = height(entry)
+        if depth > 2:
+            raise Refused('member context exceeds independently demonstrated two-level inline depth')
         origins, handles = {}, set()
         for name, fn in definitions.items():
             for n in _walk(fn):
@@ -246,7 +262,7 @@ def certify(definitions, classes, *, source, tool, includes, defines, entry, win
                   'calls': sorted(calls, key=lambda c: (c['caller'], c['span'])),
                   'accesses': [{'function': name, 'span': list(span), 'origin': origin}
                                for (name, span), origin in sorted(member_origins.items())],
-                  'input_premises_added': [], 'maximum_call_depth': 2, 'scope': 'selected entry after exact closed direct-callee inlining'}
+                  'input_premises_added': [], 'maximum_call_depth': depth, 'allowed_call_depth': 2, 'scope': 'selected entry after exact closed direct-callee inlining'}
         report['certificate_sha256'] = _hash(report)
         return report, origins
     except TreeRefused as exc:

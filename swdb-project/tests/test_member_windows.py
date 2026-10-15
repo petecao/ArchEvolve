@@ -202,3 +202,20 @@ raise SystemExit(main())
     if tamper in {'entry','inline','policy_settings'}:
         assert '[member_windows]' in done.stderr,done.stderr
     assert not list(records.path.glob('proofs/*.yaml'))
+
+
+def test_shared_callee_visited_first_on_shorter_path_does_not_hide_deeper_path(tmp_path):
+    source=SOURCE.replace('int get(int i) const { return data[i]; }',
+        'int leaf(int i) const { return data[i]; } int get(int i) const { return leaf(i); } int other(int i) const { return get(i); }')
+    source=source.replace('return b.get(0);','int first=b.get(0); return first+b.other(0);')
+    with pytest.raises(wp_pointer_bounds.Refused,match='depth'):
+        wp_pointer_bounds.check(lower(tmp_path,source))
+
+
+def test_shared_leaf_on_direct_and_two_level_paths_keeps_depth_two(tmp_path):
+    source=SOURCE.replace('int get(int i) const { return data[i]; }',
+        'int leaf(int i) const { return data[i]; } int get(int i) const { return leaf(i); }')
+    source=source.replace('return b.get(0);','int first=b.leaf(0); int second=b.get(0); return first+second;')
+    row=wp_pointer_bounds.check(lower(tmp_path,source))
+    assert row['member_windows']['maximum_call_depth']==2
+    assert row['member_windows']['allowed_call_depth']==2
