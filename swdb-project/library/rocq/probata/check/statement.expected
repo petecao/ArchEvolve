@@ -581,21 +581,27 @@ and
               (fun x : nat =>
                and (and (lt i x) (lt x j))
                  (at_ loc val arg X x t (Exit loc val arg))))
-           (forall
-              (_ : forall (t : nat) (_ : lt t team_size),
-                   done t (proj loc val arg X t))
-              (w : nat) (_ : @eq bool (split_by_tid w) false)
-              (_ : forall (t : nat) (_ : lt t team_size),
-                   @List.In (event loc val arg) (Workshare loc val arg w)
-                     (proj loc val arg X t))
-              (i : nat),
-            @eq nat (count_iter loc val arg X w i)
-              match
-                @List.in_dec nat PeanoNat.Nat.eq_dec i (space w) return nat
-              with
-              | @left _ _ _ => S O
-              | @right _ _ _ => O
-              end))))
+           (and
+              (forall
+                 (_ : forall (t : nat) (_ : lt t team_size),
+                      done t (proj loc val arg X t))
+                 (w : nat) (_ : @eq bool (split_by_tid w) false)
+                 (_ : forall (t : nat) (_ : lt t team_size),
+                      @List.In (event loc val arg) 
+                        (Workshare loc val arg w) 
+                        (proj loc val arg X t))
+                 (i : nat),
+               @eq nat (count_iter loc val arg X w i)
+                 match
+                   @List.in_dec nat PeanoNat.Nat.eq_dec i (space w)
+                   return nat
+                 with
+                 | @left _ _ _ => S O
+                 | @right _ _ _ => O
+                 end)
+              (forall t : nat,
+               @eq bool
+                 (brackets_ok loc val arg (proj loc val arg X t) false) true)))))
      : forall (loc val arg : Type)
          (_ : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
          (_ : nat) (_ : forall _ : nat, list nat) 
@@ -1202,8 +1208,64 @@ and
 
 Arguments dead_after (loc val arg)%_type_scope is_tile%_function_scope
   tr%_list_scope c%_nat_scope
+reads_no_lock_protected =
+fun (loc arr val arg : Type) (array_of : forall _ : loc, arr)
+  (cls : forall (_ : nat) (_ : arr), sharing_class)
+  (tr : list (event loc val arg)) (c : nat) =>
+forall (p : nat) (l : loc) (v : val)
+  (_ : @eq (option (event loc val arg))
+         (@List.nth_error (event loc val arg) tr p)
+         (@Some (event loc val arg) (DeviceRead loc val arg c l v))),
+not
+  (@eq sharing_class
+     (cls
+        (@length (event loc val arg)
+           (@List.filter (event loc val arg) (is_barrier loc val arg)
+              (@ListDef.firstn (event loc val arg) p tr)))
+        (array_of l))
+     LockProtected)
+     : forall (loc arr val arg : Type) (_ : forall _ : loc, arr)
+         (_ : forall (_ : nat) (_ : arr), sharing_class)
+         (_ : list (event loc val arg)) (_ : nat),
+       Prop
+
+Arguments reads_no_lock_protected (loc arr val arg)%_type_scope
+  (array_of cls)%_function_scope tr%_list_scope c%_nat_scope
+reads_class_stable =
+fun (loc arr val arg : Type) (array_of : forall _ : loc, arr)
+  (cls : forall (_ : nat) (_ : arr), sharing_class)
+  (tr : list (event loc val arg)) =>
+forall (p c : nat) (l : loc) (v : val) (q : nat) (e : event loc val arg)
+  (_ : @eq (option (event loc val arg))
+         (@List.nth_error (event loc val arg) tr p)
+         (@Some (event loc val arg) (DeviceRead loc val arg c l v)))
+  (_ : lt p q)
+  (_ : @eq (option (event loc val arg))
+         (@List.nth_error (event loc val arg) tr q)
+         (@Some (event loc val arg) e))
+  (_ : not (covered_between loc val arg tr c p q)),
+@eq sharing_class
+  (cls
+     (@length (event loc val arg)
+        (@List.filter (event loc val arg) (is_barrier loc val arg)
+           (@ListDef.firstn (event loc val arg) q tr)))
+     (array_of l))
+  (cls
+     (@length (event loc val arg)
+        (@List.filter (event loc val arg) (is_barrier loc val arg)
+           (@ListDef.firstn (event loc val arg) p tr)))
+     (array_of l))
+     : forall (loc arr val arg : Type) (_ : forall _ : loc, arr)
+         (_ : forall (_ : nat) (_ : arr), sharing_class)
+         (_ : list (event loc val arg)),
+       Prop
+
+Arguments reads_class_stable (loc arr val arg)%_type_scope
+  (array_of cls)%_function_scope tr%_list_scope
 quiet_ok =
-fun (loc val arg : Type) (is_tile : forall _ : loc, Prop)
+fun (loc arr val arg : Type) (array_of : forall _ : loc, arr)
+  (is_tile : forall _ : loc, Prop)
+  (cls : forall (_ : nat) (_ : arr), sharing_class)
   (tr : list (event loc val arg)) =>
 and
   (forall (p : nat) (d : event loc val arg) (c : nat)
@@ -1217,14 +1279,19 @@ and
             (@Some (event loc val arg) e))
      (_ : conflicts loc val arg d e),
    covered_between loc val arg tr c p m)
-  (forall (c : nat) (_ : crosses_sync loc val arg tr c),
-   dead_after loc val arg is_tile tr c)
-     : forall (loc val arg : Type) (_ : forall _ : loc, Prop)
+  (and
+     (forall (c : nat) (_ : crosses_sync loc val arg tr c),
+      and (dead_after loc val arg is_tile tr c)
+        (reads_no_lock_protected loc arr val arg array_of cls tr c))
+     (reads_class_stable loc arr val arg array_of cls tr))
+     : forall (loc arr val arg : Type) (_ : forall _ : loc, arr)
+         (_ : forall _ : loc, Prop)
+         (_ : forall (_ : nat) (_ : arr), sharing_class)
          (_ : list (event loc val arg)),
        Prop
 
-Arguments quiet_ok (loc val arg)%_type_scope is_tile%_function_scope
-  tr%_list_scope
+Arguments quiet_ok (loc arr val arg)%_type_scope
+  (array_of is_tile cls)%_function_scope tr%_list_scope
 obl_dx100_quiet =
 fun (loc arr val arg : Type) (array_of : forall _ : loc, arr)
   (is_tile : forall _ : loc, Prop) (init : forall _ : loc, val)
@@ -1240,7 +1307,7 @@ forall (X : run loc val arg) (rf : rf_map) (t : nat)
          done X rf)
   (_ : complete loc val arg N done X)
   (_ : all_fit loc arr val arg array_of N cls X) (_ : lt t N),
-quiet_ok loc val arg is_tile (proj loc val arg X t)
+quiet_ok loc arr val arg array_of is_tile cls (proj loc val arg X t)
      : forall (loc arr val arg : Type) (_ : forall _ : loc, arr)
          (_ : forall _ : loc, Prop) (_ : forall _ : loc, val)
          (_ : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)

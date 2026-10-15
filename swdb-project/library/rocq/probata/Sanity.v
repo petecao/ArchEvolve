@@ -1,5 +1,5 @@
 (* Probata Rocq development: sanity lemmas on the statement's definitions.
-   Created 2026-10-14 ET (ticket 41); revised 2026-10-14 ET with the statements.
+   Created 2026-10-14 ET (ticket 41); revised 2026-10-15 ET with the statements.
    Not part of the reviewed statement.  Each lemma is proven (Qed) and uses no axiom;
    "Print Assumptions" below shows it. *)
 From Stdlib Require Import List Arith Lia Relations.
@@ -253,6 +253,68 @@ Lemma reg_write_not_pending :
       (fun _ => false) (fun _ => false) reg_elem A_regw 0 2.
 Proof. intros [_ [_ H]]. exact (H 2 (le_n 2) reg_write_covered). Qed.
 
+(* 2026-10-15 ET, fix (a): a device read of a lock-protected location may not
+   escape its critical section merely because its output tile is dead. *)
+Local Arguments Enter {loc val arg}.
+Local Arguments Exit {loc val arg}.
+Local Arguments DeviceRead {loc val arg}.
+Local Arguments DeviceWrite {loc val arg}.
+Definition locked_read_trace : list (Composition.event nat nat nat) :=
+  [Enter; DeviceRead 7 0 1; DeviceWrite 7 2 1; Exit].
+Definition locked0 : nat -> nat -> sharing_class :=
+  fun _ l => if Nat.eqb l 0 then LockProtected else ThreadOwned.
+
+Lemma locked_device_read_cannot_escape :
+  ~ quiet_ok nat nat nat nat (fun l => l) (fun _ => True) locked0 locked_read_trace.
+Proof.
+  intros [_ [Hcross _]].
+  assert (Hcrosses : crosses_sync nat nat nat locked_read_trace 7).
+  { exists 1, 3, (DeviceRead 7 0 1), Exit.
+    repeat split; try reflexivity; try lia.
+    - right. split; reflexivity.
+    - intros [m [[Hlo Hhi] Hcover]].
+      assert (m = 2) by lia. subst m. discriminate. }
+  specialize (Hcross 7 Hcrosses).
+  destruct Hcross as [_ Hreads].
+  specialize (Hreads 1 0 1 eq_refl). simpl in Hreads. apply Hreads. reflexivity.
+Qed.
+
+(* Read-only data changes class after the barrier, while c remains uncovered. *)
+Local Arguments Own {loc val arg}.
+Local Arguments Barrier {loc val arg}.
+Definition changing_read_trace : list (Composition.event nat nat nat) :=
+  [Own 2; Enter; DeviceRead 7 0 1; Read 2 0; DeviceWrite 7 2 1; Exit;
+   Barrier; DeviceCovered 7].
+Definition changing0 (next : sharing_class) : nat -> nat -> sharing_class :=
+  fun b l => if Nat.eqb l 0 then
+    (if Nat.eqb b 0 then ReadOnly else next) else ThreadOwned.
+
+Lemma changed_read_class_cannot_escape : forall next, next <> ReadOnly ->
+  ~ quiet_ok nat nat nat nat (fun l => l) (fun _ => True)
+      (changing0 next) changing_read_trace.
+Proof.
+  intros next Hnext [_ [_ Hstable]].
+  assert (Hcover : ~ covered_between nat nat nat changing_read_trace 7 2 7).
+  { intros [m [[Hlo Hhi] Hm]].
+    destruct m as [|[|[|[|[|[|[|m]]]]]]]; simpl in Hm; try discriminate; lia. }
+  specialize (Hstable 2 7 0 1 7 (DeviceCovered 7)
+    eq_refl ltac:(lia) eq_refl Hcover).
+  simpl in Hstable. exact (Hnext Hstable).
+Qed.
+
+Lemma readonly_to_locked_uncovered_rejected :
+  ~ quiet_ok nat nat nat nat (fun l => l) (fun _ => True)
+      (changing0 LockProtected) changing_read_trace.
+Proof. apply changed_read_class_cannot_escape. discriminate. Qed.
+Lemma readonly_to_owned_uncovered_rejected :
+  ~ quiet_ok nat nat nat nat (fun l => l) (fun _ => True)
+      (changing0 ThreadOwned) changing_read_trace.
+Proof. apply changed_read_class_cannot_escape. discriminate. Qed.
+
+Print Assumptions changed_read_class_cannot_escape.
+Print Assumptions readonly_to_locked_uncovered_rejected.
+Print Assumptions readonly_to_owned_uncovered_rejected.
+Print Assumptions locked_device_read_cannot_escape.
 Print Assumptions stale_run_fits.
 Print Assumptions stale_history_read_allowed.
 Print Assumptions history_read_not_always_latest.

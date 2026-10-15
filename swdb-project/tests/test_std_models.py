@@ -105,6 +105,7 @@ def test_a_unit_using_vector_members_and_pair_proves_and_its_c_and_cpp_agree_wit
     record = seed.read(seed.prove("swdb_fixture_vec_max", MAX, {"threads": 1, "n": 3}))
     assert record["verdict"] == "proven", record.get("failure_class")
     settings = record["settings"]
+    assert settings["standard_library"]["header_macro"] == "_LIBCPP_VERSION=220108"
     assert settings["agreement"]["verdict"] == "agree" and settings["agreement"]["undefined_behavior_runs"] == 0
     assert settings["std_models"] == ["std_pair_int_int", "std_vector_int"]
     assert record["pins"]["std_models"] == std_models.identity()          # the model's version, in the hash set
@@ -190,4 +191,48 @@ def test_a_pair_model_proves_through_the_shared_public_model_interface(seed):
     record = seed.read(json.loads(result.stdout))
     assert record["subject"] == {"kind": "c_model", "id": "std_pair_int_int_ctor"}
     assert record["verdict"] == "proven", record.get("failure_class")
+    assert seed.swdb("validate").returncode == 0
+
+
+@needs_cbmc
+def test_an_unmatched_standard_library_is_refused_before_bounded_proof(seed, tmp_path):
+    from swdb import c_lowering
+    import sys
+    wrapper = tmp_path / "clang-different-stl"
+    wrapper.write_text(f"#!{sys.executable}\n"
+                       "import os, sys\n"
+                       "if '-dM' in sys.argv:\n"
+                       "    print('#define __GLIBCXX__ 20240101')\n"
+                       "else:\n"
+                       f"    os.execv({c_lowering.locate().command[0]!r}, "
+                       f"[{c_lowering.locate().command[0]!r}, *sys.argv[1:]])\n")
+    wrapper.chmod(0o755)
+    record = seed.read(seed.prove("swdb_fixture_vec_max", MAX, {"threads": 1, "n": 1},
+                                  env={"SWDB_CLANG": str(wrapper)}))
+    assert record["verdict"] == "not_proven" and record["failure_class"] == "unsupported_construct"
+    assert "agreement" not in record["settings"]
+    assert not any(r["name"] == "cbmc_input" for r in record.get("reports", []))
+
+
+@pytest.mark.skipif(not _wp_ready(), reason="Frama-C 33.0 or clang 22.1.8 is missing")
+@pytest.mark.parametrize("function,contract", [("swdb_fixture_vec_max", MAX),
+                                                ("swdb_fixture_vec_stale_data", STALE),
+                                                ("swdb_fixture_vec_stale_iterator", STALE)])
+def test_wp_refuses_vector_lifetime_obligations_including_stale_aliases(seed, function, contract):
+    result = seed.swdb("prove", "--candidate", seed.candidates["safe"], "--function", function,
+                       "--contract", contract, "--adapter", "wp", "--runs-dir", seed.runs,
+                       "--format", "json", env={"SWDB_FRAMA_C": ""})
+    assert result.returncode == 0, result.stderr + result.stdout
+    record = seed.read(json.loads(result.stdout))
+    assert record["verdict"] == "not_proven" and record["failure_class"] == "unsupported_construct"
+    assert seed.swdb("validate").returncode == 0
+
+
+@pytest.mark.skipif(not _wp_ready(), reason="Frama-C 33.0 or clang 22.1.8 is missing")
+def test_wp_refuses_a_growing_model_until_allocation_lifetimes_are_supported(seed):
+    result = seed.swdb("prove", "--model", "std_vector_int_grow", "--adapter", "wp",
+                       "--runs-dir", seed.runs, "--format", "json", env={"SWDB_FRAMA_C": ""})
+    assert result.returncode == 0, result.stderr + result.stdout
+    record = seed.read(json.loads(result.stdout))
+    assert record["verdict"] == "not_proven" and record["failure_class"] == "unsupported_construct"
     assert seed.swdb("validate").returncode == 0

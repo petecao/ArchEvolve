@@ -277,7 +277,7 @@ def test_the_safe_fixture_is_proven_within_its_bounds_on_both_forms(seed):
 def test_the_translator_is_deterministic_and_pinned(seed):
     first, second = (seed.read(seed.prove()) for _ in range(2))
     inputs = [open(seed.report(r, "cbmc_input"), "rb").read() for r in (first, second)]
-    assert inputs[0] == inputs[1] and b"swdb-cbmc-translator 2" in inputs[0]
+    assert inputs[0] == inputs[1] and b"swdb-cbmc-translator 3" in inputs[0]
     assert first["pins"]["translator"] == second["pins"]["translator"]
 
 
