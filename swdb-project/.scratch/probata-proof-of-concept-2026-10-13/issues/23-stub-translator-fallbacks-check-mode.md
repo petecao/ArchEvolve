@@ -116,7 +116,10 @@ bounded verifier). Branch `probata-poc/t23`. Interface doc:
 `/tmp/claude/probata-runs/t23/pytest-final2.log` (sha256 `1c94baa4a0cf0595`...), report log `report-final2.jsonl`
 (`a7f945cc4e0a6f31`...). A second merge (tip c1bfea05: tickets 27, 35, 61 touched the translator, CBMC and WP
 adapters; commit dab3d479) passed `test_format_doc.py` + `test_check_mode.py` (8) and the first tests of the same
-targeted set (`pytest-final3.log`); the full rerun was cut short by the pause (see the report).
+targeted set (`pytest-final3.log`); the full rerun then finished: **118 passed, 1 failed** in 3739 s (`pytest-final3.log`). The failure is
+`test_wp_adapter.py::test_two_real_wp_jobs_started_together_never_overlap`: the two jobs' start and end times
+overlap. Ticket 23 does not touch the lock, but the merged tip changed `swdb/verifier_lock.py` (tickets 35/61). The
+failure is not diagnosed yet (open for the main session: rerun that test alone on the integration tip).
 
 **SAW to CBMC translations** (each an Assumption; not decided in the map beyond 13:19 ET's change)
 
