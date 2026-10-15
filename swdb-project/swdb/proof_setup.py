@@ -24,7 +24,7 @@ REPORT_MODULE = Path(__file__).with_name("proof_report.ml")
 CHECK_SOURCES = ("proof_setup.py", "proof_report.ml", "proof.py", "cbmc_adapter.py", "cbmc_equivalence.py",
                  "cbmc_product.py", "wp_adapter.py", "crux_adapter.py", "rocq_adapter.py", "rss_watchdog.py",
                  "vocab.py", "formal_frame.py", "acsl_subset.py", "framac.py", "hint_check.py", "hint_tree.ml",
-                 "wp_pointer_bounds.py", "proof_semantics.py", "vector_ownership.py", "standard_model_view.py",
+                 "wp_pointer_bounds.py", "proof_semantics.py", "vector_ownership.py", "vector_pipeline.py", "standard_model_view.py",
                  "array_domains.py", "model_domains.py", "dx_array_domains.py", "bounded_entry_windows.py",
                  "bounded_chain.py", "summary_bindings.py", "helper_windows.py", "standard_range_model.py",
                  "nested_entry_reads.py", "stdlib_provenance.py", "stdlib_source_admission.py")

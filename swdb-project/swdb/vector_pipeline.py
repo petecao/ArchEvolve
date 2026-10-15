@@ -85,6 +85,29 @@ def _tokens(text):
                  if not m.group().startswith(("//", "/*")))
 
 
+def _operations(body):
+    """Bind every explicit member and compiler-generated range-iterator call."""
+    calls = [n for n in _walk(body) if n.get("kind") in {
+        "CallExpr", "CXXMemberCallExpr", "CXXOperatorCallExpr"}]
+    records = []
+    for call in calls:
+        callee = _children(call)[0]
+        if callee.get("kind") == "MemberExpr":
+            name = callee.get("name")
+        else:
+            names = [(n.get("referencedDecl") or {}).get("name") for n in _walk(callee)]
+            name = next((name for name in names if name), None)
+        records.append({"kind": call["kind"], "operation": name,
+                        "begin": _span(call)[0], "end": _span(call)[1],
+                        "result_type": (call.get("type") or {}).get("qualType"),
+                        "argument_types": [(n.get("type") or {}).get("qualType")
+                                           for n in _children(call)[1:]]})
+    if [row["operation"] for row in records] != [
+            "push_back", "begin", "end", "operator!=", "operator++", "operator*", "size", "operator[]"]:
+        raise Refused("pipeline standard/range operation inventory changed")
+    return calls, records
+
+
 def _protocol(node, source):
     from swdb import model_domains
     if std_models.identity()["sha256"] != MODEL_SHA256:
@@ -131,12 +154,14 @@ def _protocol(node, source):
             or (receiver.get("referencedDecl") or {}).get("id") != vector.get("id")
             or (read.get("type") or {}).get("qualType") != "const int"):
         raise Refused("pipeline append/read observes a different input, receiver or element type")
+    _, operations = _operations(body)
     return {"comparison": comparison, "function": node["name"],
             "owner": {"name": "v", "begin": _span(vector)[0], "end": _span(vector)[1]},
             "input": {"name": "a", "begin": _span(params[0])[0], "end": _span(params[0])[1]},
             "phases": [{"kind": kind, "begin": _span(statements[i])[0], "end": _span(statements[i])[1]}
                        for i, kind in ((1, "pipeline_copy"), (3, "pipeline_range"), (5, "pipeline_index"))],
             "read_span": list(_span(read)), "push_span": list(_span(push)),
+            "operations": operations,
             "source_closure_sha256": closure,
             "closure": "exact full fixture source-token closure plus target AST; canonical int/pair types, no source allocation hooks, macros, user headers, namespaces or opaque effects"}
 
@@ -210,6 +235,9 @@ def checked_handles(root, certificate, entry_windows):
     if certificate.get("protocol") != PROTOCOL or not _window(entry_windows) or certificate.get("entry_windows") != entry_windows:
         raise Refused("pipeline needs its exact explicit input window")
     body = next(n for n in _children(root) if n.get("kind") == "CompoundStmt")
+    all_calls, operations = _operations(body)
+    if operations != certificate["source_protocol"].get("operations"):
+        raise Refused("pipeline explicit/implicit source operations changed before exact-ID binding")
     reads = [n for n in _walk(body) if n.get("kind") == "ArraySubscriptExpr"
              and list(_span(n)) == certificate["source_protocol"]["read_span"]]
     calls = [n for n in _walk(body) if n.get("kind") == "CXXMemberCallExpr"
@@ -218,7 +246,7 @@ def checked_handles(root, certificate, entry_windows):
         raise Refused("pipeline source copy read/append identity changed")
     for access in certificate["source_accesses"]:
         bind_access(root, certificate, access)
-    return {"accesses": {reads[0]["id"]}, "calls": {calls[0]["id"]}}
+    return {"accesses": {reads[0]["id"]}, "calls": {call["id"] for call in all_calls}}
 
 
 def _render(lowering, comparison):
@@ -277,6 +305,10 @@ def _view_check(text, protocol, directory):
                    and any(c.get("kind") == "CompoundStmt" for c in _children(n))]
     if len(definitions) != 1 or definitions[0].get("name") != protocol["function"]:
         raise Refused("pipeline view has an untracked function/call")
+    function = definitions[0]
+    if ((function.get("type") or {}).get("qualType") != "int (const int *, int)"
+            or function.get("inline") or function.get("isInline") or function.get("variadic")):
+        raise Refused("pipeline view changed its function declaration")
     params = [n for n in _children(definitions[0]) if n.get("kind") == "ParmVarDecl"]
     if [(n.get("name"),(n.get("type") or {}).get("qualType")) for n in params] != [("a","const int *"),("n","int")]:
         raise Refused("pipeline C view changed its original signature")
@@ -284,7 +316,15 @@ def _view_check(text, protocol, directory):
     expected_prefix = "#include <stddef.h>\n#include <stdint.h>\n#include <limits.h>\nstruct swdb_pipeline_pair { int first; int second; };\n"
     if prefix != expected_prefix:
         raise Refused("pipeline C view has a changed layout/global declaration")
+    start, end = _span(function)
+    if _tokens(text[len(prefix):start]) or _tokens(text[end:]):
+        raise Refused("pipeline C view has extra top-level declarations or effects")
     body = next(n for n in _children(definitions[0]) if n.get("kind") == "CompoundStmt")
+    for declaration in _walk(function):
+        if declaration.get("kind") in {"FunctionDecl", "ParmVarDecl", "VarDecl"} and (
+                declaration.get("storageClass") or declaration.get("tls") or declaration.get("tlsKind")
+                or any(c.get("kind", "").endswith("Attr") for c in _children(declaration))):
+            raise Refused("pipeline C view cannot project storage duration, linkage or declaration attributes")
     top = _children(body)
     if [n.get("kind") for n in top] != ["DeclStmt", "ForStmt", "DeclStmt", "DeclStmt", "ForStmt", "DeclStmt", "DeclStmt", "ForStmt", "ReturnStmt"]:
         raise Refused("pipeline view has an untracked phase/effect")
@@ -293,11 +333,14 @@ def _view_check(text, protocol, directory):
     declarations = {n.get("name"): n for n in _walk(body) if n.get("kind") == "VarDecl"}
     initial = {"swdb_pipeline_copy": "0", "best": "{0,0}", "swdb_pipeline_range": "0",
                "checked": "0", "swdb_pipeline_index": "0", "swdb_pipeline_value": "a[swdb_pipeline_copy]", "x": "a[swdb_pipeline_range]"}
+    types = {name: "int" for name in initial}
+    types.update(best="struct swdb_pipeline_pair", swdb_pipeline_index="size_t")
     if len([n for n in _walk(body) if n.get("kind") == "VarDecl"]) != len(initial) or set(declarations) != set(initial):
         raise Refused("pipeline view has an untracked local/shadow")
     for name, expected in initial.items():
         values = _children(declarations[name])
-        if len(values) != 1 or expression(values[0]) != _tokens(expected):
+        if ((declarations[name].get("type") or {}).get("qualType") != types[name]
+                or len(values) != 1 or expression(values[0]) != _tokens(expected)):
             raise Refused("pipeline view initializer changes source values or roots")
     expected_bodies = {1: "{int swdb_pipeline_value=a[swdb_pipeline_copy];}",
         4: "{int x=a[swdb_pipeline_range];if(best.first==0||x"+protocol["comparison"]+"best.second){best.first=1;best.second=x;}}",
