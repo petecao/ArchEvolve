@@ -1,0 +1,59 @@
+{
+  "created": "2026-10-15 ET",
+  "scope": "ticket24 public WP unsupported-subset boundary; no ticket closure",
+  "base": "1ece49b8734447d8d9996a8f9c84319c6417a5d1",
+  "seam": "swdb prove --summary ENTRY --adapter wp --define WP24_OUTSIDE_CASE",
+  "controls": [
+    "inheritance",
+    "virtual function",
+    "exception",
+    "lambda",
+    "RTTI",
+    "standard container std::map",
+    "stream"
+  ],
+  "behavior": "Requested build reaches the actual WP adapter and emits not_proven/unsupported_construct naming the exact source file and line; no generated wp_input, no goals, no WP/RTE/load invocation.",
+  "tool_boundary": "Real Clang22.1.8 diagnoses source. Frama-C version/validation and Why3 solver declarations are controlled stand-ins; every proof-generation invocation would trip a marker. No actual Frama-C parse/proof or solver is claimed.",
+  "validation": {
+    "command": "python -m pytest -q tests/test_wp_subset_admission.py --tb=short",
+    "passed": 7,
+    "seconds": 4.92,
+    "exit_code": 0,
+    "real_verifier_jobs": 0,
+    "remote_jobs": 0,
+    "log": {
+      "path": "/private/tmp/probata-t24-acceptance-audit/public-controls.log",
+      "sha256": "5d4f52b28732d1bd4aff970c14646d8a07e877e2a70eee66afefe17ae442e491"
+    },
+    "junit": {
+      "path": "/private/tmp/probata-t24-acceptance-audit/public-controls.xml",
+      "sha256": "012795b6ede65214c88548f0cec87dfa3016a35529c941762c6815a1089d2360"
+    },
+    "diff_check": "passed"
+  },
+  "limitations": [
+    "Adds missing public-route regression coverage; it is not a new runtime acceptance implementation.",
+    "Positive safe/seeded-bug WP fixtures, all source premises and supported/unsupported feature boundaries are unchanged.",
+    "Current full construct replay remains owned by the main session on frozen mbit10 source; this evidence does not upgrade historical proofs or resolve ticket24.",
+    "Fixture setup initially used a method filename inconsistent with its ID, then was corrected. No semantic runtime RED\u2192GREEN defect is claimed."
+  ],
+  "sha256": {
+    "tests/test_wp_subset_admission.py": "becdb20b0e61a7c47a2434a8374cb82e99b5621aa94d18f2a0041a1ce79fbab6",
+    "tests/test_wp_subset.py": "c2aef63091aea4442a57516b67dd12f2b8cf8cf6f11f285fc5b345b86604cb07",
+    "tests/test_c_lowering.py": "188cbd269e5f13f10e7d6b0b1bff3c800b1ffa4a1b6813932fa2719ce48bc23f",
+    "tests/test_wp_adapter.py": "4d23d5a09e52a58ebe8e16a35ab0909e451988ea1ed7378ace70a325a986ccbc",
+    "swdb/wp_adapter.py": "718bf3bda2fced5f1bd0bab9868bee253b9d4e25beb299ab3b5aba209d8c7216",
+    "swdb/c_lowering.py": "d7aadcfd68c457342d71739fd87a3faa93a29965fb2ad5fcd9a5a530035d87f2",
+    "swdb/wp_pointer_bounds.py": "2ab3b4ab7e2225b6138161b13a92b65ef641cc9c7b845b181fc8dc26d4b7ef01",
+    "swdb/summary_bindings.py": "1c5d99b99753eb8c92f039722c15ece12b488af99003047b7cc9b2a81b2a6100",
+    "tests/fixtures/proof/lowering/classes.cc": "c7fe7c1d2cc5bad67ea5816119a12a5b3be6f2573c68d7a1206b081baddc90a4",
+    "tests/fixtures/proof/lowering/templates.cc": "b0bb72f0d852ddf717fbfc7d693c7e386e198e12dfa379d6792a245eeb0d4aee",
+    "tests/fixtures/proof/lowering/new_array.cc": "0bc45825da677544e3dd20bbc212b8595861d40e83e927a0b9aa41e88b57a598",
+    "tests/fixtures/proof/lowering/std_models.cc": "6811db5464a89ea0650a590d9594a4b01a7b35091f47d3cf417542a204285669",
+    "tests/fixtures/proof/lowering/omp_atomics.cc": "ad3178d12c82443d3ddbae50cd900926ab96cb95a8aead881c8cd6e682c38447",
+    "tests/fixtures/proof/lowering/floats.cc": "c41740bfaced1d9f04a499865b0f09b0f7a34c38756581ffa8d13a66a4870d8d",
+    "tests/fixtures/proof/lowering/summaries.cc": "5a71ba2f6f7a53d96759edbfc3ff823d1073677450e08abeaa001c60f92ca7c0",
+    "tests/fixtures/proof/lowering/summary_impls.cc": "7954719a7ab3bd93f8da1eea7a028de9d1dfa524761f2ff5f56c92dd70712e25",
+    "tests/fixtures/proof/lowering/terminal_release_controls.cc": "1d905b0a2ade9cbb19ed8d6188c50a12a04a2bbf336277d0a7fae9aaf1c27971"
+  }
+}
