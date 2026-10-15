@@ -254,7 +254,7 @@ def test_each_construct_group_lowers_twice_to_identical_c_and_anchors_that_compi
     second = lower(LOWERING / fixture, function, tmp_path / "two", *extra)
     assert first["c_lowering"]["sha256"] == second["c_lowering"]["sha256"]
     assert first["anchors"]["sha256"] == second["anchors"]["sha256"]
-    assert first["tool"]["version"] == "4" and first["tool"]["naming_rules"] == "kept-names.3"
+    assert first["tool"]["version"] == "5" and first["tool"]["naming_rules"] == "kept-names.3"
     c_file = tmp_path / "one" / f"{function}.c"
     assert str(tmp_path) not in c_file.read_text()
     done = subprocess.run([_c_compiler(), "-std=c11", "-Wall", "-Werror", "-fsyntax-only", c_file],
@@ -612,3 +612,61 @@ def test_terminal_release_does_not_certify_a_read_before_any_array_initializatio
                       "int ignored = buf[0]; delete[] buf; return n; }\n")
     record = lower(source, "swdb_uninitialized", tmp_path / "out")
     assert "terminal_release" not in record
+
+
+def test_cpu_effect_inventory_separates_local_scalars_from_array_effects_and_orders_call_statements(tmp_path):
+    source = tmp_path / "effects.cc"
+    source.write_text("void swdb_effect_store(int *p);\n"
+                      "int swdb_effect_unit(int *p) { int local = p[0]; local += 2; "
+                      "swdb_effect_store(p); p[1] = local; return local; }\n")
+    record = lower(source, "swdb_effect_unit", tmp_path / "out", "--summary", "swdb_effect_store=fixture.store")
+    effects = record["cpu_effects"]
+    array_read, = [r for r in effects["reads"] if r["kind"] == "array"]
+    array_write, = [r for r in effects["writes"] if r["kind"] == "array"]
+    call, = effects["calls"]
+    assert (array_read["statement"], call["statement"], array_write["statement"]) == (0, 2, 3)
+    assert call["callee"] == "swdb_effect_store" and call["function"] == "swdb_effect_unit"
+    assert not effects["loop_functions"]
+    assert {r["kind"] for r in effects["writes"]} == {"array", "summary_call"}
+
+
+@pytest.mark.parametrize("declarations,body,expected", [
+    ("", "*p = 3; return *p;", "dereference"),
+    ("int swdb_g;", "swdb_g = 3; return swdb_g;", "global"),
+    ("", "int &r = *p; r = 3; return r;", "reference"),
+    ("struct Box { int value; };", "Box b; b.value = 3; return b.value;", "member"),
+    ("void swdb_effect_escape(int *p);", "int value = 3; swdb_effect_escape(&value); value = 4; return value;",
+     "address_taken_local"),
+    ("void swdb_effect_escape(int *p);", "int value = 3; int &r = value; swdb_effect_escape(&r); value = 4; return value;",
+     "address_taken_local"),
+])
+def test_cpu_effect_inventory_retains_indirect_and_escaped_storage(tmp_path, declarations, body, expected):
+    source = tmp_path / "storage.cc"
+    source.write_text(declarations + "\nint swdb_effect_storage(int *p) { " + body + " }\n")
+    extra = ("--summary", "swdb_effect_escape=fixture.escape") if "escape" in declarations else ()
+    effects = lower(source, "swdb_effect_storage", tmp_path / "out", *extra)["cpu_effects"]
+    assert expected in {row["kind"] for row in effects["writes"]}
+    assert expected in {row["kind"] for row in effects["reads"]}
+
+
+def test_cpu_effect_inventory_includes_callee_reads_and_loop_backedges(tmp_path):
+    source = tmp_path / "callee.cc"
+    source.write_text("int swdb_effect_read(int *p) { return p[0]; }\n"
+                      "int swdb_effect_loop(int *p, int n) { int sum = 0; for(int i=0;i<n;++i) "
+                      "sum += swdb_effect_read(p); return sum; }\n")
+    effects = lower(source, "swdb_effect_loop", tmp_path / "out")["cpu_effects"]
+    assert effects["loop_functions"] == ["swdb_effect_loop"]
+    assert any(row["function"] == "swdb_effect_read" and row["kind"] == "array" for row in effects["reads"])
+    assert any(row["callee"] == "swdb_effect_read" for row in effects["calls"])
+    assert not effects["writes"]
+
+
+def test_cpu_effect_inventory_retains_reference_argument_reads_hidden_by_scalar_models(tmp_path):
+    source = tmp_path / "minimum.cc"
+    source.write_text("#include <algorithm>\nint swdb_effect_minimum(int *p) { return std::min(p[0], p[1]); }\n")
+    record = lower(source, "swdb_effect_minimum", tmp_path / "out")
+    effects = record["cpu_effects"]
+    assert len([row for row in effects["reads"] if row["kind"] == "array"]) == 2
+    assert not effects["writes"]
+    anchors = json.loads((tmp_path / "out" / "swdb_effect_minimum.anchors.json").read_text())
+    assert anchors["cpu_effects"] == effects
