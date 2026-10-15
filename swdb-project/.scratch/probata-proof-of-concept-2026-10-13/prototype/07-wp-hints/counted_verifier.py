@@ -97,11 +97,12 @@ def _inspect(process, operation, born=None, **kwargs):
             try:
                 # Fresh objects avoid psutil's cached create_time during revalidation.
                 observed = psutil.Process(process.pid).create_time()
-                status = psutil.Process(process.pid).status()
                 expected = snapshot_birth if born is None else born
                 state = 'reused' if expected is not None and observed != expected else 'live'
-                if status in {psutil.STATUS_ZOMBIE, psutil.STATUS_DEAD}:
-                    state = 'gone'
+                if state != 'reused':
+                    status = psutil.Process(process.pid).status()
+                    if status in {psutil.STATUS_ZOMBIE, psutil.STATUS_DEAD}:
+                        state = 'gone'
             except psutil.NoSuchProcess:
                 state = 'gone'
             except psutil.AccessDenied:
@@ -209,7 +210,9 @@ def _stop(process, known, *, token=None, born_after=None):
     root_alive = process.poll() is None
     try:
         leader = psutil.Process(process.pid)
-        birth = _inspect(leader, 'create_time')
+        if not root_alive and process.pid not in known:
+            return ['root-pid-reused-or-unobserved']
+        birth = _inspect(leader, 'create_time', known.get(process.pid))
         # A reaped Popen PID can be reused. Never target its replacement group.
         if not root_alive and known.get(process.pid) != birth:
             return ["root-pid-reused-or-unobserved"]

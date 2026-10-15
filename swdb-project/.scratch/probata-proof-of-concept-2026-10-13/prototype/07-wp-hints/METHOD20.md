@@ -157,3 +157,21 @@ observation. A separate leader-transition control distinguishes changed identity
 from process exit and prevents targeting its replacement process group. All20
 runner controls pass after these RED/GREEN fixes. The first retry commit alone
 is superseded and must not be treated as an approved launch source.
+
+
+The central observation state uses the captured `(pid,birth)` independently of
+fresh reads. Its explicit precedence is:
+
+| Observation | Guard action |
+| --- | --- |
+| Captured and fresh births match before/after successful read | Return that observation. |
+| Fresh birth differs, including after denial | `IdentityChanged`; never adopt replacement. Cleanup leader refuses group targeting. |
+| OS confirms missing process | Skip that departed identity. |
+| Denial followed by matching-identity zombie/dead confirmation | Skip that departed identity. |
+| Denial while identity is live or cannot be confirmed | Retry up to three attempts, then fail closed. |
+| Exited root has no captured identity but numeric PID exists | Refuse group targeting before inspection. |
+
+Changed birth wins before querying replacement status. A denied snapshot birth
+still uses the retained expected birth when available. Independent final review
+passes178 composed controls, including separate ownership-edge reproductions;
+all22 runner controls pass. The actual resource component remains required.

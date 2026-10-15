@@ -335,14 +335,19 @@ def test_discovery_never_registers_a_reused_snapshot_pid(monkeypatch, discovery)
     else: V._token_tree('private-token',99.0,known)
     assert 102 not in known, 'unrelated replacement PID became an owned identity'
 
-def test_cleanup_never_targets_a_group_when_leader_changes_during_inspection(monkeypatch):
+@pytest.mark.parametrize('transition',['direct','denial-before','denial-snapshot'])
+def test_cleanup_never_targets_a_group_when_leader_changes_during_inspection(monkeypatch, transition):
     import counted_verifier as V
     from types import SimpleNamespace
     class Process:
         pid=103
-        def __init__(self,birth): self.birth=birth
-        def create_time(self): return self.birth
-    snapshots=iter([Process(100.0)])
+        def __init__(self,birth,denied=False): self.birth=birth;self.denied=denied
+        def create_time(self):
+            if self.denied: raise V.psutil.AccessDenied(self.pid)
+            return self.birth
+        def status(self): return V.psutil.STATUS_ZOMBIE
+    snapshots=iter([Process(100.0,denied=True)] if transition=='denial-snapshot' else
+                   [Process(100.0),Process(200.0,denied=True)] if transition=='denial-before' else [Process(100.0)])
     replacement=Process(200.0)
     monkeypatch.setattr(V.psutil,'Process',lambda pid:next(snapshots,replacement))
     monkeypatch.setattr(V.psutil,'process_iter',lambda:[])
