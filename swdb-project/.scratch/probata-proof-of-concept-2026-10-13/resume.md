@@ -4,7 +4,7 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 18:20 ET. **Implementation is active under the user's ongoing approval.**
+Updated: 2026-10-15 18:32 ET. **Implementation is active under the user's ongoing approval.**
 Integration `codex/probata-resume-20261015` is based on `yanrujhou_main` at `d94d629b`.
 Audited run23 documentation is published at `6dc94905`; reviewed method21 prototype
 is published at `14c2a298`. Only `swdb/c_lowering.py`
@@ -18,9 +18,9 @@ Drafts 1/2 remain immutable. No draft 3 or final production freeze exists.
 
 | Ticket / owner | Verified checkpoint | Active work |
 |---|---|---|
-| 07 / `ticket07` | Run 23 at `df19ff8a` finished unproven: 26 open (15 unit / 11 hint), 52.02 counted minutes, no final replay or wait-negative. Method21 passes 187 controls and independent review. | Fresh run 24 at `14c2a298` started 17:52:17 ET. Full baseline: 6.11 minutes, 254 ordinary goals / 103 timeouts, all 139 smoke checks pass. Fresh seeds finish at 8.64 minutes; independent pre-candidate prompt audit passes. Latest incumbent: 31 open / 237 ordinary goals. Search continues; final checks stay 30s. |
-| 24 / `ticket24` | Fresh finite native agreement accepted for 112,589 comparisons. Current float pair accepted; all five standard models prove. Original standard caller retains its pointer-origin timeout (46 ordinary Valid, 13 smoke Valid). | Separately named object-domain contract/profile reviewed and published at `6221dad7`, 11 controls pass. Its safe/seeded WP pair is queued; original gap record stays unchanged. Remaining seven construct groups and lifetime controls still require fresh actual acceptance. |
-| 27 / `ticket27` | Historical safe 11/11 at `71771f09`. Fresh bounded/native profile passes 35/35 at `0e7f2327`: 12 CBMC proofs + 12 refutations with replay. Current negative profile: 6/13 accepted. | Capacity repair at `b9a34bbb` runs on node 0 generation 575; node 1 generation 603 continues negatives at `0e7f2327`. Fresh safe 11-case profile remains queued. |
+| 07 / `ticket07` | Run 23 at `df19ff8a` finished unproven: 26 open (15 unit / 11 hint), 52.02 counted minutes, no final replay or wait-negative. Method21 passes 187 controls and independent review. | Fresh run 24 at `14c2a298` started 17:52:17 ET. Full baseline: 6.11 minutes, 254 ordinary goals / 103 timeouts, all 139 smoke checks pass. Fresh seeds finish at 8.64 minutes; independent pre-candidate prompt audit passes. Latest incumbent: 29 open / 253 ordinary goals. Search continues; final checks stay 30s. |
+| 24 / `ticket24` | Fresh finite native agreement accepted for 112,589 comparisons. Current float pair accepted; all five standard models prove. Original standard caller retains its pointer-origin timeout (46 ordinary Valid, 13 smoke Valid). | The reviewed6221 profile stopped at public library validation (8 vocabulary errors), before WP or ordinary dependency selection. New writable-object contract passes13controls including publicvalidate; review/freshactual pending. Node0 now runs remainingseven originalgroups/lifetime controls; original gap unchanged. |
+| 27 / `ticket27` | Historical safe 11/11 at `71771f09`. Fresh bounded/native profile passes 35/35 at `0e7f2327`: 12 CBMC proofs + 12 refutations with replay. Current negative profile: 7/13 accepted. | Capacityrepair atb9a passes3/3; allfourrecords audited. Node1generation603 continuesnegative7/13; node0generation577 runs24remaininggroups, both0e7. Freshsafe11case profile queued; disjoint5+6shards are prospectively reviewed planning only. |
 | 36 / dependency-gated | 122 compiler/scripted controls pass; 13 actual-WP cases excluded. | Waits on 27; runtime fallback research remains prospective. |
 
 At17:43:14 ET node0 generation572 released after the standard caller safe timeout;
@@ -53,7 +53,15 @@ Node 0 generation 575 capacity rerun started 18:11:29 ET at clean detached
 `b9a34bbbcaa1670a7e4653f78e220da94af01a08`, one worker, 8GiB tree cap and
 1800s whole guard (outer 1920s). Source: `/data1/yanruj/probata-reviewed-b9a34bbb`;
 raw: `/data/yanruj/EvolveSWDB_runs/probata-reviewed-b9a34bbb-t27-capacity`.
-The one new ordinary writer-kind invariant must itself be established/preserved;
+This profile completed 3/3 and released naturally at 18:21:42 ET.
+WP32: 49/49 ordinary + 11/11 smoke; WP33: ghost-capacity nonproof,
+47/49 ordinary + 11/11 smoke with both capacity-dependent timeouts retained.
+CBMC32 proves; CBMC33 ends not_proven/ghost_capacity, no counterexample.
+All four records pass 40-reference / 44-file audit; guard610.165s,
+peak2,934,345,728B, no OOM/timeout. The new writer-kind invariant is Valid
+in both WP32/WP33 establishment and preservation.
+[Final capacity audit](evidence/t27-reviewed-capacity-completed-independent-20261015.json).
+The one new ordinary writer-kind invariant itself is established/preserved;
 all old hints, source, preconditions and assertions remain. Production/library
 bytes and full runtime identity match `0e7f2327`; 197 physical/Git module checks pass.
 [Repair launch audit](evidence/reviewed-t27-capacity-launch-b9a34bbb-20261015.json).
@@ -86,9 +94,25 @@ whole budget ends around18:52:17 ET excluding any recorded lock wait. Its baseli
 limit is an explicit newly named plan; the observed baseline recovered 8.86 minutes versus run 23 (6.11 vs 14.97),
 with the changed diagnostic timeout/pass set retained as a comparison confound.
 
-Next: audit capacity acceptance, run the reviewed qualified standard caller pair
-without relabeling the original contract, complete the remaining original matrix,
-and finish negative/fresh-safe profiles. No full ticket
+Qualified std at6221 stopped before WP: public formal-half vocabulary excludes
+valid_read/base_addr. Its zero-row failure and unchanged inputs remain retained;
+no ordinary model eligibility/semantic result is claimed. V2 uses only allowed
+null/valid/current-or-predecessor clauses, a disclosed narrower writable-object
+domain;13controls now include actual public validation. Review/fresh WP remains.
+
+Node0 generation577 started the remaining original matrix at18:27 ET using
+the existing0e7 checkout. Groups: atomics,maa_summary,dxc_summary,templates,
+classes,omp,new_array, including all dependencies and lifetime controls.
+Oneworker8GiB tree,21600s whole cap,1800s public limits,8GiB planned raw
+(coordinator-monitored, no quota). Raw:
+`/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t24-remaining`.
+[Launch audit](evidence/reviewed-t24-remaining-launch-0e7f2327-20261015.json):
+197physical/Gitchecks,0errors, exact runtime matches prior0e7.
+
+Next: finish the remaining matrix, reviewed v2 standard caller pair and
+negative/fresh-safe profiles. The prospective two-shard safe plan covers all11
+without overlap; historical weights project about50minutes each plus setup
+if two lanes are available. No fresh-safe success or ETA guarantee is claimed. No full ticket
 or final method success is claimed from these checkpoints. This chat's30-minute
 heartbeat stays active; last full table 18:20 ET, next due 18:50 ET.
 Research-only notes remain `/private/tmp/probata-ticket25-resume-exploration.md`,

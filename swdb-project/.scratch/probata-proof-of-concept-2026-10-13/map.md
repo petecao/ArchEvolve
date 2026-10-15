@@ -5,7 +5,7 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-re
 
 ## Current state (resume here)
 
-Updated: 2026-10-15 18:20 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
+Updated: 2026-10-15 18:32 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
 Integration: `codex/probata-resume-20261015`; audited run 23 is published at
 `6dc94905`; method21 prototype merged at `14c2a298`. Remote actual jobs retain
 frozen `0e7f2327`; production lowerer SHA256
@@ -16,18 +16,21 @@ remains `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
   invariant timeout and four failed smoke checks. All five fresh standard models
   pass. The standard caller safe case stops on one pointer-formation timeout
   (46 ordinary Valid, 13 smoke Valid). A distinct object-domain contract/profile
-  at `6221dad7` passes 11 controls and independent review; actual pair queued.
+  at `6221dad7` passed local review but stopped at public library validation
+  before WP (8 vocabulary errors, zero rows). A new writable-object domain passes
+  13 controls including public validate; independent review/fresh actual still pending.
   Original gap stays unchanged; later seven groups/lifetime controls did not run. Fresh finite native agreement remains independently accepted for
   112,589 defined comparisons. New checklist/corpus tests pass 24 + 15 controls;
   their test-only commit and independent review are merged at `5c0ace82`.
 - **27:** Historical `71771f09` safe profile passes 11/11, with 792 ordinary +
-  252 smoke Valid. Current negative profile has six accepted hazard
+  252 smoke Valid. Current negative profile has seven accepted hazard
   controls of 13, each preserving its exact failed hazard precondition and Doomed
   smoke checks. Current capacity32 stops on two memory-domain/invariant obligations
   (45/47 ordinary, 11/11 smoke Valid); 33 and CBMC capacity cases did not run.
   Fresh bounded/native passes 35/35, including 12 CBMC proofs and 12 replayed
-  refutations. Reviewed capacity32 now passes 49 ordinary + 11 smoke goals; capacity33/CBMC
-  still run on node 0. Fresh safe remains queued.
+  refutations. Reviewed capacity profile passes 3/3: WP32 all 49 ordinary + 11 smoke,
+  WP33 ghost-capacity nonproof with 11 passing smoke, CBMC32/33 agreement.
+  Node0 now runs the remaining original24 groups; fresh safe remains queued.
 - **07:** Run 23 finished unproven at 17:33:26 ET after 52.02 counted minutes,
   26 open goals (15 unit / 11 hint), no qualifying final replay/negative.
   [Audited result](evidence/t07-counted-23-20261015.json). Separately named method21
@@ -35,7 +38,7 @@ remains `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
   Fresh run24 started 17:52:17 ET at `14c2a298`, all 30 freeze source pins
   checked; actual launch and first-prompt audits pass. Full baseline takes 6.11
   minutes (all 393 entries, 139 smoke checks passed), seeds finish at 8.64 minutes.
-  Latest incumbent has 31 open / 237 ordinary goals; search continues.
+  Latest incumbent has 29 open / 253 ordinary goals; search continues.
   Final proof/smoke/negative stay 30 seconds.
 - **36:** Dependency-gated by 27. Its 122 focused controls exclude 13 actual-WP
   cases. Drafts 1/2 remain immutable; final method freeze and held-out gates remain.
@@ -43,8 +46,11 @@ remains `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
 Node 0 generation 572 released after the caller timeout at 17:43:14 ET.
 Node0 generation573 capacity profile released at17:53:38 ET after its first failure.
 Node 0 generation 574 bounded/native finished 18:06:10 ET, 35/35 passed.
-Node 0 generation 575 capacity repair started 18:11:29 ET at `b9a34bbb`;
-node 1 generation 603 continues negatives at `0e7f2327`. Production TCB is identical.
+Node 0 generation 575 capacity completed at 18:21:42 ET (`b9a34bbb`).
+Generation 576 qualified std stopped before proof at `6221dad7`.
+Node0 generation577 now runs seven original24 groups; node1 generation603
+continues negatives. Both active runs use the unchanged `0e7f2327` producer.
+[Remaining matrix launch](evidence/reviewed-t24-remaining-launch-0e7f2327-20261015.json).
 [Capacity repair launch](evidence/reviewed-t27-capacity-launch-b9a34bbb-20261015.json).
 [Initial launch audit](evidence/composed-launch-0e7f2327-20261015.json),
 [capacity launch](evidence/t27-current-capacity-launch-20261015.json),

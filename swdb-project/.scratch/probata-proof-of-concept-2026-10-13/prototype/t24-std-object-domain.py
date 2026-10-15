@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Distinct std safe-domain fixture, reusing normally eligible actual models, 2026-10-15 ET.
+"""Distinct writable-object std safe-domain fixture v2, reusing normally eligible actual models, 2026-10-15 ET.
 
 The input seed is read only. Only copied records/library and new proof outputs are
 written. The original failed contract is retained as a named negative receipt.
@@ -79,7 +79,7 @@ def main():
     original = yaml.safe_load(original_bytes)
     assert original == original_contract(), 'original contract differs from diagnosed fixture'
     corrected = corrected_contract(original)
-    qualified_file = seed_path/'library/rewrite_contracts/fixture_wp24_std_models_object_domain.yaml'
+    qualified_file = seed_path/'library/rewrite_contracts/fixture_wp24_std_models_object_domain_v2.yaml'
     qualified_file.write_text(yaml.safe_dump(corrected, sort_keys=False))
     reused = []
     for name in MODELS['std_models']:
@@ -113,6 +113,7 @@ def main():
               'runtime_sources':runtime_sources,'runtime_identity':c_lowering.identity(),
               'source_seed':str(source),'source_matrix_sha256':sha(source.parent/'matrix.json'),
               'method':{'id':method['id'],'sha256':sha(method_file)},'candidates':candidates,
+              'qualification_version':2,
               'qualified_contract':{'id':QUALIFIED_ID,'sha256':artifacts.digest(corrected),
                                     'file_sha256':sha(qualified_file)},
               'retained_original_gap':{'label':GAP_LABEL,'record':gap['record'],
@@ -120,7 +121,7 @@ def main():
                     'verdict':'not_proven','role':'retained original contract-gap negative; no unchanged-original success'},
               'reused_models':reused,'public_timeout_seconds':args.public_timeout_seconds,
               'ordinary_dependency_eligibility':'public swdb prove must resolve these records normally; no bypass',
-              'zero_size_boundary':'live zero-size allocations are not represented by the readable-neighbor proxy; no UB claim',
+              'zero_size_boundary':'live zero-size allocations and read-only empty objects are outside this explicit writable-neighbor domain; no UB claim',
               'rows':[],'complete':False,'check_only':args.check_only}
     dump(output/'profile.json', result)
     if args.check_only:
@@ -129,7 +130,7 @@ def main():
     seed = matrix.MatrixSeed(seed_path, candidates, args.public_timeout_seconds)
     for candidate,label,expected in [('safe','safe','proven'),('bug','seeded','not_proven')]:
         started = time.monotonic()
-        print('START std_models_object_domain:'+label, flush=True)
+        print('START std_models_object_domain_v2:'+label, flush=True)
         record = seed.prove('--candidate',candidates[candidate],'--function','swdb_std_unit',
                             '--contract',QUALIFIED_ID)
         checked = matrix.audit(record, expected, ordinary_open=('ensures','swdb_pointer_formation','swdb_window_copy','rte_'))
@@ -140,7 +141,7 @@ def main():
         for reused_row in reused:
             assert actual[reused_row['model']]['proof_record'] == reused_row['id'], 'public dependency selection differs'
         proof_file = seed.records/'proofs'/(record['id']+'.yaml')
-        checked.update(label='std_models_object_domain:'+label,
+        checked.update(label='std_models_object_domain_v2:'+label,
                        record={'path':str(proof_file),'sha256':sha(proof_file)},wall_seconds=time.monotonic()-started)
         result['rows'].append(checked)
         dump(output/'profile.json', result)
