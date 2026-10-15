@@ -341,7 +341,8 @@ def test_installed_tools_that_differ_from_the_method_versions_lineup_run_nothing
 @needs_wp
 def test_two_real_wp_jobs_started_together_never_overlap(seed, tmp_path):
     times = tmp_path / "times.txt"
-    env = fake("wrap", FAKE_WP_TIMES=str(times))
+    # A private one-slot lock (no .slots policy file beside it): the machine lock now admits two jobs (2026-10-14).
+    env = fake("wrap", FAKE_WP_TIMES=str(times), SWDB_VERIFIER_LOCK=str(tmp_path / "one-slot.lock"))
     results = []
     threads = [threading.Thread(target=lambda: results.append(seed.prove(env=env))) for _ in range(2)]
     for thread in threads:

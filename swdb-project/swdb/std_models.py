@@ -25,10 +25,14 @@ Format: docs/reference/format-v0.4-std-models.md.
 - Elements are scalars (integers, floating point) or pointers; `std::vector<bool>` and class elements are
   outside the model. Iterators are pointers (libc++'s `__wrap_iter<T *>` wraps one).
 - Allocation succeeds (an assumption entry of every record that uses a model that allocates): the bodies call
-  `malloc` without a null check.
+  `swdb_alloc_<t>` and `swdb_free`. For WP (`__FRAMAC__`) these are contract-only stubs (`allocates`/`\\fresh`,
+  `frees`/`\\freeable`), never proven; elsewhere they are `malloc` and `free`, with no null check.
+- Model proof units (swdb.models): every vector and pair model function can be rebuilt from its C name alone and
+  proven once with `swdb prove --summary model.<name> --adapter wp`.
 """
 
 import hashlib
+import re
 from pathlib import Path
 
 MODELS_ID = "swdb-std-models"
@@ -123,6 +127,32 @@ def vector_logic(v, t):
             f"      (v->capacity == 0 ? v->data == \\null : \\valid(v->data + (0 .. v->capacity - 1)));\n*/")
 
 
+def _mangle(t):
+    return re.sub(r"\s+", "_", re.sub(r"\s*\*", " ptr", t.strip()))
+
+
+def allocator(t):
+    """[(C name, C text)] of the allocator models: their contracts are the "allocation succeeds" assumption (map 16
+    item 7), so WP reads them and never proves them; CBMC and the native runs use malloc and free."""
+    a = f"swdb_alloc_{_mangle(t)}"
+    alloc = (f"/* swdb-std-models allocator (trusted: \"allocation succeeds\"): n fresh, valid elements. */\n"
+             f"#ifdef __FRAMAC__\n"
+             f"/*@ requires n >= 0;\n    assigns \\nothing;\n    allocates \\result;\n"
+             f"    ensures \\fresh(\\result, n * sizeof({t})) && \\valid(\\result + (0 .. n - 1)); */\n"
+             f"{_decl(t + ' *', a)}(size_t n);\n"
+             f"#else\n"
+             f"static inline {_decl(t + ' *', a)}(size_t n) {{ return ({t} *)malloc(n * sizeof({t})); }}\n"
+             f"#endif")
+    free = ("/* swdb-std-models deallocator (trusted with the allocator). */\n"
+            "#ifdef __FRAMAC__\n"
+            "/*@ requires p == \\null || \\freeable(p);\n    assigns \\nothing;\n    frees p; */\n"
+            "void swdb_free(void *p);\n"
+            "#else\n"
+            "static inline void swdb_free(void *p) { free(p); }\n"
+            "#endif")
+    return [(a, alloc), ("swdb_free", free)]
+
+
 def _helpers(v, t):
     """libc++'s growth policy (implementation-defined by the standard): __recommend and the reallocation step."""
     recommend = (
@@ -138,18 +168,21 @@ def _helpers(v, t):
     grow = (
         f"/* swdb-std-models helper: reallocation to capacity cap (allocate, move the elements, free the old buffer). */\n"
         f"/*@ requires {v}_valid(this) && this->size <= cap && cap > this->capacity && cap <= {_max(t)};\n"
+        f"    requires this->capacity == 0 || \\freeable(this->data);\n"
         f"    assigns *this;\n"
+        f"    allocates this->data;\n"
+        f"    frees this->data;\n"
         f"    ensures {v}_valid(this) && this->capacity == cap && this->size == \\old(this->size);\n"
         f"    ensures \\forall integer k; 0 <= k < this->size ==> this->data[k] == \\old(this->data[k]);\n"
         f"    ensures \\old(this->capacity) > 0 ==> !\\valid(\\old(this->data)); */\n"
         f"static void {v}_grow({v} *this, size_t cap) {{\n"
-        f"  {_decl(t + ' *', 'fresh')} = ({t} *)malloc(cap * sizeof({t}));   /* allocation succeeds (assumption entry) */\n"
+        f"  {_decl(t + ' *', 'fresh')} = swdb_alloc_{_mangle(t)}(cap);   /* allocation succeeds (assumption entry) */\n"
         f"  /*@ loop invariant 0 <= k <= this->size;\n"
         f"      loop invariant \\forall integer j; 0 <= j < k ==> fresh[j] == this->data[j];\n"
         f"      loop assigns k, fresh[0 .. cap - 1];\n"
         f"      loop variant this->size - k; */\n"
         f"  for (size_t k = 0; k < this->size; ++k) fresh[k] = this->data[k];\n"
-        f"  free(this->data);\n"
+        f"  swdb_free(this->data);\n"
         f"  this->data = fresh;\n"
         f"  this->capacity = cap;\n}}")
     return recommend, grow
@@ -161,6 +194,8 @@ def vector_member(v, t, member):
     zero = f"({t})0"
     ref = f"{t} *" if not t.endswith("*") else f"{t}*"
     out = []
+    if member in ALLOCATING or member == "dtor":
+        out += allocator(t)
     if member in ("push_back", "resize", "reserve"):
         recommend, grow = _helpers(v, t)
         if member != "reserve":
@@ -178,13 +213,13 @@ def vector_member(v, t, member):
         fill = "value" if value else zero
         params = f"{v} *this, size_t n" + (f", {_decl(t, 'value')}" if value else "")
         text = (f"/* {what} */\n"
-                f"/*@ requires \\valid(this) && n <= {m};\n    assigns *this;\n"
+                f"/*@ requires \\valid(this) && n <= {m};\n    assigns *this;\n    allocates this->data;\n"
                 f"    ensures {v}_valid(this) && this->size == n;\n"
                 f"    ensures \\forall integer k; 0 <= k < n ==> this->data[k] == {'value' if value else '0'}; */\n"
                 f"static void {v}_{member}({params}) {{\n"
                 f"  this->data = NULL; this->size = 0; this->capacity = 0;\n"
                 f"  if (n == 0) return;\n"
-                f"  this->data = ({t} *)malloc(n * sizeof({t}));   /* allocation succeeds (assumption entry) */\n"
+                f"  this->data = swdb_alloc_{_mangle(t)}(n);   /* allocation succeeds (assumption entry) */\n"
                 f"  this->capacity = n;\n"
                 f"  /*@ loop invariant 0 <= k <= n;\n"
                 f"      loop invariant \\forall integer j; 0 <= j < k ==> this->data[j] == {'value' if value else '0'};\n"
@@ -194,12 +229,13 @@ def vector_member(v, t, member):
     elif member == "copy_ctor":
         text = (f"/* [container.requirements.general] Table 83 (X u(a);): u == a; [vector.cons]. */\n"
                 f"/*@ requires \\valid(this) && {v}_readable(other) && \\separated(this, other);\n    assigns *this;\n"
+                f"    allocates this->data;\n"
                 f"    ensures {v}_valid(this) && this->size == other->size;\n"
                 f"    ensures \\forall integer k; 0 <= k < other->size ==> this->data[k] == other->data[k]; */\n"
                 f"static void {v}_copy_ctor({v} *this, const {v} *other) {{\n"
                 f"  this->data = NULL; this->size = 0; this->capacity = 0;\n"
                 f"  if (other->size == 0) return;\n"
-                f"  this->data = ({t} *)malloc(other->size * sizeof({t}));   /* allocation succeeds (assumption entry) */\n"
+                f"  this->data = swdb_alloc_{_mangle(t)}(other->size);   /* allocation succeeds (assumption entry) */\n"
                 f"  this->capacity = other->size;\n"
                 f"  /*@ loop invariant 0 <= k <= other->size;\n"
                 f"      loop invariant \\forall integer j; 0 <= j < k ==> this->data[j] == other->data[j];\n"
@@ -216,9 +252,10 @@ def vector_member(v, t, member):
                 f"  *this = *other;\n  other->data = NULL; other->size = 0; other->capacity = 0;\n}}")
     elif member == "dtor":
         text = (f"/* [container.requirements.general] Table 83 (a.~X()): destroys the elements, frees all memory. */\n"
-                f"/*@ requires {v}_valid(this);\n    assigns \\nothing;\n"
+                f"/*@ requires {v}_valid(this) && (this->capacity == 0 || \\freeable(this->data));\n    assigns \\nothing;\n"
+                f"    frees this->data;\n"
                 f"    ensures \\old(this->capacity) > 0 ==> !\\valid(\\old(this->data)); */\n"
-                f"static void {v}_dtor({v} *this) {{ free(this->data); }}")
+                f"static void {v}_dtor({v} *this) {{ swdb_free(this->data); }}")
     elif member == "operator_index":
         text = (f"/* [sequence.reqmts] Table 88 (a[n]: *(a.begin() + n)); n < size() is the caller's obligation. */\n"
                 f"/*@ requires {v}_readable(this) && n < this->size;\n    assigns \\nothing;\n"
@@ -260,7 +297,7 @@ def vector_member(v, t, member):
         text = (f"/* [vector.modifiers] p1: push_back(const T& x) appends x; it causes reallocation if the new size is\n"
                 f"   greater than the old capacity (every pointer, reference and iterator then becomes invalid). */\n"
                 f"/*@ requires {v}_valid(this) && this->size < {m};\n"
-                f"    assigns *this, this->data[this->size];\n"
+                f"    assigns *this, this->data[this->size];\n    allocates this->data;\n    frees this->data;\n"
                 f"    ensures {v}_valid(this) && this->size == \\old(this->size) + 1;\n"
                 f"    ensures this->data[\\old(this->size)] == x;\n"
                 f"    ensures \\forall integer k; 0 <= k < \\old(this->size) ==> this->data[k] == \\old(this->data[k]);\n"
@@ -275,7 +312,7 @@ def vector_member(v, t, member):
         text = (f"/* [vector.capacity] p13-p15: resize(sz) erases the last size() - sz elements, or appends sz - size()\n"
                 f"   value-initialized ones; reallocation happens if sz is greater than the old capacity. */\n"
                 f"/*@ requires {v}_valid(this) && n <= {m};\n"
-                f"    assigns *this, this->data[0 .. this->capacity - 1];\n"
+                f"    assigns *this, this->data[0 .. this->capacity - 1];\n    allocates this->data;\n    frees this->data;\n"
                 f"    ensures {v}_valid(this) && this->size == n;\n"
                 f"    ensures \\forall integer k; 0 <= k < n && k < \\old(this->size) ==> this->data[k] == \\old(this->data[k]);\n"
                 f"    ensures \\forall integer k; \\old(this->size) <= k < n ==> this->data[k] == 0;\n"
@@ -293,7 +330,7 @@ def vector_member(v, t, member):
         text = (f"/* [vector.capacity] p3-p5: reserve(n): if n > capacity(), reallocation happens (capacity() >= n after);\n"
                 f"   n > max_size() throws length_error: an exception, so n <= max_size() is the caller's obligation. */\n"
                 f"/*@ requires {v}_valid(this) && n <= {m};\n"
-                f"    assigns *this;\n"
+                f"    assigns *this;\n    allocates this->data;\n    frees this->data;\n"
                 f"    ensures {v}_valid(this) && this->size == \\old(this->size) && this->capacity >= n;\n"
                 f"    ensures \\forall integer k; 0 <= k < this->size ==> this->data[k] == \\old(this->data[k]);\n"
                 f"    ensures n <= \\old(this->capacity) ==> this->data == \\old(this->data);\n"
@@ -347,3 +384,56 @@ def pair_member(p, a, b, member):
     else:
         raise KeyError(member)
     return f"{p}_{member}", text
+
+
+# --- model proof units (swdb.models) ------------------------------------------------------------------------------
+
+def _element(mangled):
+    """The C element type whose mangled spelling is `mangled` (scalars and pointers to them), or None."""
+    from swdb import c_lowering
+    stars = 0
+    while mangled.endswith("_ptr"):
+        mangled, stars = mangled[:-4], stars + 1
+    for name in sorted(c_lowering.INTEGER_TYPES | c_lowering.FLOAT_TYPES | set(c_lowering.INTERNAL_TYPES.values())):
+        if _mangle(name) == mangled:
+            return name + (" " + "*" * stars if stars else "")
+    return None
+
+
+def _vector_types(v, t):
+    return (f"typedef struct {v} {v};\nstruct {v} {{ {' '.join(vector_struct_fields(t))} }};\n{MACROS}\n"
+            f"{vector_logic(v, t)}")
+
+
+def _vector_unit(match):
+    v, member = match.group(1), match.group(2)
+    t = _element(v[len("std_vector_"):])
+    if t is None or t == "bool":
+        return None
+    head = [(f"{v}_types", _vector_types(v, t))]
+    if member in ("recommend", "grow"):
+        recommend, grow = _helpers(v, t)
+        return head + (allocator(t) + [(f"{v}_grow", grow)] if member == "grow" else [(f"{v}_recommend", recommend)])
+    return head + vector_member(v, t, member)
+
+
+def _pair_unit(match):
+    rest, member = match.group(1), match.group(2)
+    words = rest.split("_")
+    for cut in range(1, len(words)):
+        a, b = _element("_".join(words[:cut])), _element("_".join(words[cut:]))
+        if a and b:
+            p = f"std_pair_{rest}"
+            types = f"typedef struct {p} {p};\nstruct {p} {{ {_decl(a, 'first')}; {_decl(b, 'second')}; }};"
+            return [(f"{p}_types", types), pair_member(p, a, b, member)]
+    return None
+
+
+def _register():
+    from swdb import models
+    members = "|".join(sorted(set(VECTOR_MEMBERS) | {"recommend", "grow"}, key=len, reverse=True))
+    models.register(rf"(std_vector_\w+?)_({members})", _vector_unit)
+    models.register(rf"std_pair_(\w+?)_({'|'.join(sorted(PAIR_MEMBERS, key=len, reverse=True))})", _pair_unit)
+
+
+_register()
