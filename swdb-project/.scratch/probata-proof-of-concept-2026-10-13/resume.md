@@ -4,7 +4,7 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 13:11 ET. Integration runtime `d874c4dc` includes exact
+Updated: 2026-10-15 13:17 ET. Integration runtime `d874c4dc` includes exact
 physical platform-header macro probes and the reviewed selected-receiver member
 window slice (`c9317b2b`). Parser/source, entry-hint, nested-assignment, checked
 vector, qualified copy and WP invocation metadata unions remain intact.
@@ -29,9 +29,9 @@ The earlier frozen `5c2a` failures stay recorded as 134/1 and 19/1; they are not
 
 | Ticket | Current evidence | Next action |
 |---|---|---|
-| 07 | Method19 active at frozen `669df70f`;13:04 snapshot reports incumbent 27/237,42.09 counted minutes and 17.91 left including 8 final; recovery healthy | Keep its worktree immutable; audit final outcomes; no proof claimed |
+| 07 | Method19 ended unproven at 13:14:01: 27 open of 237 goals (24 unit / 3 hint), 52.04 counted minutes, 20.4 s tagged waits; no final, smoke or covering-wait negative | Offline audit in progress; runner exit 0 is not proof success; no next counted launch |
 | 24 | Copy caller/model actuals accepted; selected-receiver getter at historical `1e93b9cb`: safe 15 ordinary + 1 smoke and bad-index 14 Valid + 1 open + 1 smoke accepted; 18 merged compiler controls pass | Broader Bag/Counter and member context acceptance remain open |
-| 25 | Original bounded maximum at `d874c4dc` passes:310 ordinary properties plus expected reachability failure;625 native C/C++ comparisons agree. Three prior prelaunch refusals retained | Plan one original bounded stale-data control; standalone 7 lifetime / 3 origin member frontiers remain open |
+| 25 | Original bounded maximum at `d874c4dc` passes:310 ordinary properties plus expected reachability failure;625 native C/C++ comparisons agree. Three prior prelaunch refusals retained | One original stale-data control active on node 0 gen566 at frozen e28; standalone 7 lifetime / 3 origin member frontiers remain open |
 | 27 | Earlier store/assignment slices accepted; qualified stall actual at `909eb6cd` and root query actual pair at `8e377274` are separate frozen work, without final acceptance yet | Audit those original outcomes; ordinary CPU/device overlap belongs to 28 |
 | 36 | 45 scripted setup controls passed at `85161a4b`; later member/header unions have focused controls and source-pin audit; actual bounded/WP invocation metadata exercised | Keep claimed pending 27 and final freeze; historical real-fact/cache evidence pins remain distinct |
 
@@ -62,14 +62,19 @@ commits/pushes, two remote lanes and scoped BFS source export.
 
 ## Host coordination
 
-Live readback: 2026-10-15 13:11:21 ET. node 0 generation 565, node 1 generation 599
-and legacy 77 are released. Load 0.29/0.48/0.43; 21 GiB free on `/data1`, 95 GiB on `/data`.
-The evaluation checkout `/data1/yanruj/probata-t27` remains clean detached at
-`d874c4dc`; its one-case run and source/artifact audit finished. Raw 11.8 MB and the
-three earlier refusal outputs remain remote for coordinator/acceptance/audit
-readers. No additional case is dispatched; the next stale-data control requires
-a prospective plan and fresh lease/activity/disk/wrapper checks. Source arrives
-by Git only; no Mac binaries or raw remote artifacts are transferred.
+Live preflight: 2026-10-15 13:17:04 ET. Node 0 generation 565, node 1 generation 599
+and legacy 77 were released before the original stale-data control acquired
+node 0 generation 566. Node 1 remains free. Load 0.02/0.16/0.29; 21 GiB free on
+`/data1`, 95 GiB on `/data`; CPU activity was idle. GPU NVML readback is unavailable
+(driver/library mismatch); this CPU-only job uses no GPU. The checkout is clean
+detached and frozen at `e28eb7f0` (runtime `d874c4dc`). One worker, 8 GiB sampled
+RSS cap, 1800 s inner / 2000 s outer wall limit and 1 GiB output budget. Raw data
+stays under `/data/yanruj/EvolveSWDB_runs/probata-t25-stale-data-20261015-1315-node0`;
+the directory label is nominal and the exact start is in lane metadata. Existing
+compiler wrappers in the earlier native-output folder remain a retained dependency.
+[Prospective launch](evidence/t25-stale-data-current-launch-20261015.json). No
+iterator/at batch is scheduled. Recheck both leases/activity/disks/wrapper before
+another dispatch; source arrives by Git only and raw artifacts stay remote.
 
 ## Historical integration snapshots
 
