@@ -780,3 +780,29 @@ shared box remains open to approximately 2026-10-27; this run does not exhaust i
 Before another counted run, audit the prototype's hint ghost-state ownership
 boundary against ticket 36's newly fixed production check. Run 13 was not proven,
 so no previously promoted result depends on that unaudited boundary.
+
+### Guard review, goal diagnosis and counted run 14 — 2026-10-15 ET
+
+The prototype now rejects model-state ghost writes, indirect calls, macro-based
+mutations, shift assignments and trigraph introducers while retaining fresh scalar
+snapshots. All **54 prototype controls pass** after integration (guard `09be3abf`,
+merged `3db8002c`). See [guard review](../07-ghost-hint-safety-2026-10-15.md).
+
+Read-only goal diagnosis found a concrete false hint in run 13: `best.json` index
+25, `r1c18h1` at `loop:chunk_loop`. Its processed-prefix relation uses `begin`, which
+may overshoot the frontier after a partial final chunk and include unprocessed
+queue storage. A finite worked case falsifies that hint while preserving the unit
+relation; clamping the prefix fixes that case only. This is not a contract bug or
+universal proof. Compact artifact hashes: [goal audit](../evidence/t07-goal-audit-20261015.json).
+
+**Counted run 14 started 03:33:40 ET; outcome pending.** Frozen source branch
+`codex/probata-t07-run14`, commit `05e81eac`. This method adds the checked ghost
+ownership guard plus abstract partial-chunk boundary guidance, recorded in the
+harness metadata. Same pinned provider and 60-minute counted budget (8-minute
+replay reserve), fresh hints and hash-verified no-hint baseline. No previous hints,
+worked-case workload inputs, tests or negative controls are supplied to Codex.
+The user's explicit scoped Codex/OpenAI source-export approval applies. Original
+source manifest, metadata and incremental output:
+`/private/tmp/probata-t07-20261015-run14/`. Storage budget 2 GiB, 92 GiB free at
+preflight; remaining readers are tickets 07/09 and the coordinator. No success,
+final replay, smoke result or negative-control outcome is claimed while it runs.
