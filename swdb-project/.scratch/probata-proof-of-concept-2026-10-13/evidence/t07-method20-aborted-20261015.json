@@ -1,0 +1,184 @@
+{
+  "created": "2026-10-15 ET",
+  "outcome": "aborted method20 baseline; resource-guard review blocker; no proof result",
+  "source_commit": "418a48d73a187ed725efba5a7089232e3713ecfe",
+  "source_file_checks": 27,
+  "source_and_artifact_errors": [],
+  "provider_called": false,
+  "counted_run_started": true,
+  "baseline_completed": false,
+  "summary": null,
+  "abort": {
+    "created_unix": 1792091749.570307,
+    "source_commit": "418a48d73a187ed725efba5a7089232e3713ecfe",
+    "reason": "independent review found detached descendant RSS accounting and final-sweep cleanup gaps; stop before provider",
+    "driver": {
+      "pid": 10626,
+      "born": 1792091150.513266
+    },
+    "owned_snapshot": [
+      {
+        "pid": 10693,
+        "born": 1792091152.055516,
+        "name": "python3.12"
+      },
+      {
+        "pid": 10694,
+        "born": 1792091152.09843,
+        "name": "frama-c"
+      },
+      {
+        "pid": 10713,
+        "born": 1792091152.768468,
+        "name": "why3server"
+      },
+      {
+        "pid": 17979,
+        "born": 1792091717.35418,
+        "name": "alt-ergo"
+      },
+      {
+        "pid": 18201,
+        "born": 1792091740.731164,
+        "name": "alt-ergo"
+      },
+      {
+        "pid": 18202,
+        "born": 1792091741.422948,
+        "name": "cvc5"
+      },
+      {
+        "pid": 18203,
+        "born": 1792091742.218277,
+        "name": "z3"
+      },
+      {
+        "pid": 18218,
+        "born": 1792091743.752658,
+        "name": "alt-ergo"
+      },
+      {
+        "pid": 18225,
+        "born": 1792091744.40779,
+        "name": "cvc5"
+      },
+      {
+        "pid": 18232,
+        "born": 1792091744.996075,
+        "name": "z3"
+      },
+      {
+        "pid": 18234,
+        "born": 1792091745.845943,
+        "name": "alt-ergo"
+      },
+      {
+        "pid": 18238,
+        "born": 1792091746.806842,
+        "name": "cvc5"
+      },
+      {
+        "pid": 18239,
+        "born": 1792091747.248313,
+        "name": "z3"
+      },
+      {
+        "pid": 18241,
+        "born": 1792091747.699772,
+        "name": "alt-ergo"
+      },
+      {
+        "pid": 18242,
+        "born": 1792091747.886922,
+        "name": "cvc5"
+      }
+    ],
+    "runner_signal_targets": [
+      10693
+    ],
+    "provider_started": false,
+    "status": "aborted before provider; post-stop process audit clean; own quarantined lease released",
+    "remaining_sampled_processes": [],
+    "locks": {
+      "/tmp/claude/swdb-verifier.lock": true,
+      "/tmp/claude/swdb-verifier.slot2.lock": false
+    },
+    "checked_unix": 1792091763.16544,
+    "quarantine_owner_path": "/private/tmp/probata-t07-20261015-run20/quarantined-owner.txt",
+    "post_stop_audit_path": "/private/tmp/probata-t07-20261015-run20/abort-process-audit.json"
+  },
+  "process_reports": [
+    {
+      "path": "/private/tmp/probata-t07-20261015-run20/counted-20/round-0/parse.log.summary.json",
+      "exit_code": 0,
+      "unconfirmed_children": [],
+      "timed_out": false,
+      "killed_by_watchdog": false,
+      "peak_rss_mb": 102.875,
+      "cleanup_boundary": "owned group, observed descendants, and inherited marker; trusted toolchain must preserve marker; hostile environment scrubbing unsupported"
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run20/counted-20/round-0/wp-gen.log.summary.json",
+      "exit_code": 0,
+      "unconfirmed_children": [],
+      "timed_out": false,
+      "killed_by_watchdog": false,
+      "peak_rss_mb": 131.203125,
+      "cleanup_boundary": "owned group, observed descendants, and inherited marker; trusted toolchain must preserve marker; hostile environment scrubbing unsupported"
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run20/counted-20/round-0/wp-smoke.log.summary.json",
+      "exit_code": 137,
+      "unconfirmed_children": [
+        "group-inspection-unconfirmed:AccessDenied:pid=10694"
+      ],
+      "timed_out": false,
+      "killed_by_watchdog": false,
+      "peak_rss_mb": 3380.15625,
+      "cleanup_boundary": "owned group, observed descendants, and inherited marker; trusted toolchain must preserve marker; hostile environment scrubbing unsupported"
+    }
+  ],
+  "remaining_acceptance": "fresh reviewed complete counted all-goal/cache-none/smoke replay plus covering-wait negative; scientific criteria unchanged",
+  "artifacts": [
+    {
+      "path": "/private/tmp/probata-t07-20261015-run20/source-manifest.json",
+      "sha256": "b0d64dc68cde4eba291aaec156f30ecb43e7cd02c137102ff0ddf660d8020629",
+      "bytes": 11133
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run20/launch.json",
+      "sha256": "1127830b3d02b3dc85cf14079a2eedc27ae2a0d11e35e363fb4e2f2ba43e6768",
+      "bytes": 614
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run20/counted-20/meta.json",
+      "sha256": "cba98dcc6b7a530bd6db749af3dda7e5b56068a410b4c3cd9e69ba81945bfed5",
+      "bytes": 5153
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run20/counted-20/history.json",
+      "sha256": "f8208f29abc956f85b4558f2bf31a5ef06d05c6d5b24d9923000005e18d39a05",
+      "bytes": 308
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run20/abort.json",
+      "sha256": "dae693af9479e361ab0bae66fb3763930fe448a07e6908627ffb88c0b7a7af47"
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run20/abort-process-audit.json",
+      "sha256": "53893c06247e4a16bf36d362847fbef9981257cf3a41e8f501ae2bc5cea7126f"
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run20/quarantined-owner.txt",
+      "sha256": "b0b24bcdac0ca516d5ee5dbae5b838da2db39997efb6fbe9004b2a4e9cbb4337"
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run20/audit.json",
+      "sha256": "acfb87807c7ec198f7a00a8457aec1b8965f8a2fc9507b9d19f5356f10a66c4d"
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run20/live-marker-check.json",
+      "sha256": "675154477a8599456f85645e36bfad8b5fe5e67893b2fbf1c6c4f06bd9e36c6c"
+    }
+  ]
+}

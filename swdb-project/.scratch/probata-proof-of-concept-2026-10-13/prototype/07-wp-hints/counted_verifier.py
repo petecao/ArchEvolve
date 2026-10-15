@@ -92,6 +92,17 @@ def _running(known):
     return active
 
 
+def _known_rss(known):
+    """Sum each live PID/birth identity once, including reparented descendants."""
+    total = 0
+    for process in _running(known):
+        try:
+            total += process.memory_info().rss
+        except psutil.NoSuchProcess:
+            pass
+    return total
+
+
 def _group(root, known):
     """Inventory the original start_new_session group, including reparented members."""
     for process in psutil.process_iter(["pid", "create_time"]):
@@ -176,6 +187,8 @@ def _stop(process, known, *, token=None, born_after=None):
     except ProcessLookupError:
         pass
     end = S.clock() + 5
+    empty_since = None
+    empty_sweeps = 0
     while True:
         try:
             _group(process.pid, known)
@@ -189,11 +202,19 @@ def _stop(process, known, *, token=None, born_after=None):
                 child.kill()
             except psutil.NoSuchProcess:
                 pass
-        if not active:
-            process.wait(timeout=1)
-            return sorted(set(unconfirmed))
+        if active:
+            empty_since = None
+            empty_sweeps = 0
+        else:
+            # A marked parent may fork/exit after a PID snapshot but before
+            # _running. Rediscover across separate empty sweeps before release.
+            empty_sweeps += 1
+            empty_since = S.clock() if empty_since is None else empty_since
+            if empty_sweeps >= 3 and S.clock()-empty_since >= .05:
+                process.wait(timeout=1)
+                return sorted(set(unconfirmed))
         if S.clock() >= end:
-            return [*sorted(set(unconfirmed)), *[p.pid for p in _running(known)]]
+            return [*sorted(set(unconfirmed)), 'cleanup-did-not-settle', *[p.pid for p in _running(known)]]
         time.sleep(0.02)
 
 
@@ -290,8 +311,13 @@ def main():
                     environment = {**os.environ, RUN_TOKEN_ENV: token}
                     process = subprocess.Popen(command, stdout=output, stderr=subprocess.STDOUT,
                                                start_new_session=True, env=environment)
+                    next_marker_scan = 0
                     while process.poll() is None:
-                        peak = max(peak, _tree(process.pid, known))
+                        _tree(process.pid, known)
+                        if S.clock() >= next_marker_scan:
+                            _token_tree(token, born_after, known)
+                            next_marker_scan = S.clock()+.1
+                        peak = max(peak, _known_rss(known))
                         killed = peak > a.cap_gb*1024**3
                         timed_out = S.clock()-active_start >= a.timeout
                         if stopped[0] or killed or timed_out:
@@ -334,7 +360,8 @@ def main():
         'timeout_s':a.timeout,'queue_timeout_s':a.queue_timeout,'lock_wait_s':wait_s,
         'runner_pid':os.getpid(),'clock':clock_info['kind'],'clock_info':clock_info,'log':str(log),
         'log_sha256':hashlib.sha256(log.read_bytes()).hexdigest(),'unconfirmed_children':cleanup_failed,'error':error,
-        'cleanup_boundary':'owned group, observed descendants, and inherited marker; trusted toolchain must preserve marker; hostile environment scrubbing unsupported',
+        'cleanup_boundary':'owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment',
+        'rss_scope':'live union of current ancestry, retained PID/birth identities and periodic inherited-marker matches; sampled, not a kernel quota',
         'finished':time.strftime('%Y-%m-%d %H:%M:%S %Z')}
     _json(str(log)+'.summary.json',summary)
     _json(status, {'runner_pid':os.getpid(),'clock_info':clock_info,'clock':clock_info['kind'],'pending_since':None,'settled_s':wait_s})

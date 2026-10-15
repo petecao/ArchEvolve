@@ -1,0 +1,74 @@
+{
+  "created": "2026-10-15 ET",
+  "outcome": "independent composed resource review PASS; fresh freeze and runtime preflight required",
+  "method_revision": "method20-resource-discovery-settle-v2",
+  "source_review": {
+    "created": "2026-10-15 ET",
+    "reviewed_base_commit": "418a48d73a187ed725efba5a7089232e3713ecfe",
+    "verdict": "PASS for explicit trusted-marker sampled/non-atomic runner boundary; new clean committed freeze and preflight required",
+    "source_sha256": {
+      "edit_loop.py": "29c7aa2b1279c8e0d76253e20c2de33bcc715f8b3cce95db9c8f35bdb8fb20d8",
+      "edit_core.py": "d4168260e3eb866e8bd127b4de56d8070e5806b74d39b4910d52e16379800d4e",
+      "edit_tool_mcp.py": "7ee77c0238f687fec845042a10a1e862f561726f1975703980644c95a203034f",
+      "focused_probe.py": "9ad86e2c61530a19f95ebb4d5aff639d489ef5a0788a6a1e00ddbdf0bd7c05db",
+      "staged_search.py": "125e2562342e6ba684d1189ca29fb48476b73bee30d0fd368f7f7c6b4c6b2419",
+      "counted_verifier.py": "0c0cfcd6040637a6df81d47bc65eee588dccd7ca720b6bd324315c8cb7c9151e",
+      "loop.py": "cb84fdca2b0d8dd0c77b286037513a4642835cd631ad9f87c74f0d736982d350",
+      "wp_run.sh": "69e952e3b65b18887a428fe964fec993f70aa3388024e56c675780cbe80b38b6",
+      "hints.py": "48bafc2eab6caf40bb921e773212dff3efbbbc652aa2d120d87da4704b021bca",
+      "frame_seeds.py": "7c8bec31b2be840218545a3370cafde8431ddd4699a363ebe3e391fb56c519c2",
+      "goal_print.py": "9494e8d457f0d28d055c109ea4fbaada278c15e3088466096dc2a407a89a358f",
+      "test_counted_verifier.py": "faa7c4f4551bf5877ec8e8d249cef61e92ffd8cdecceaf5284a985640b6f62f2",
+      "METHOD20.md": "eb20fedcf0d6a6f19444fec2ac1c1e20c2bc4e9a05a0f0dbfd4b6eb09e8a45a4"
+    },
+    "tests": {
+      "repo_controls": 164,
+      "independent_private_cli_controls": 1,
+      "passed": 165,
+      "duration_s": 5.85,
+      "output_path": "/private/tmp/probata-t07-method20-independent-rss-settle-tests.txt",
+      "sha256": "2120b4b1a68d9f6957ddb8aa7b93b0cdef296c05758aba93eb2cd39738c1b229"
+    },
+    "no_provider_or_real_verifier_launched": true
+  },
+  "artifacts": [
+    {
+      "path": "/private/tmp/probata-t07-method20-resource-review-manifest.json",
+      "sha256": "50bda2b34c180cc57879c8f2331139a5758e780d526593e5e930b216f6046c5a"
+    },
+    {
+      "path": "/private/tmp/probata-t07-method20-resource-review.md",
+      "sha256": "c1f12a697419dd0feb98bccfb91778f0a2ed7d6c26e8adccfe59e5021a89745e"
+    },
+    {
+      "path": "/private/tmp/probata-t07-method20-independent-rss-settle-tests.txt",
+      "sha256": "2120b4b1a68d9f6957ddb8aa7b93b0cdef296c05758aba93eb2cd39738c1b229"
+    },
+    {
+      "path": "/private/tmp/probata-t07-rss-orphan-red.xml",
+      "sha256": "5b71c801f3c877b17db82c27626cf2e959ae62fa5f90ba767207bbcbbfc62ea2"
+    },
+    {
+      "path": "/private/tmp/probata-t07-rss-orphan-green.xml",
+      "sha256": "259415a53b6b2d93347d3e796029f733c6cb4aabc62b715c3e2f3d00d4e33cee"
+    },
+    {
+      "path": "/private/tmp/probata-t07-final-sweep-red.xml",
+      "sha256": "96d977209969ee414ae2612f93b1234650ff0bc4e0308fe0d3c17d59cfa42f86"
+    },
+    {
+      "path": "/private/tmp/probata-t07-rss-settle-green.xml",
+      "sha256": "e723b6c7a3704c0349cd877b0d4999d639fefd270510c87cd588270e76c51e80"
+    },
+    {
+      "path": "/private/tmp/probata-t07-spec-review-initial.md",
+      "sha256": "f7767bd6f6a5641b205386907c0f2e1dbdb90b6695cb947f64084a6285a61c46"
+    }
+  ],
+  "aborted_previous_run": "t07-method20-aborted-20261015.json;418a48d7;before provider;no partial-baseline reuse",
+  "resource_change": "RSS is live union of current ancestry, retained PID/birth identities and periodic inherited-marker matches. Cleanup needs3empty discovery sweeps across50ms;5s nonsettling/inspection uncertainty quarantines.",
+  "boundary": "Trusted descendants preserve marker. Finite polling is not atomic/adversarial containment or kernel RSS quota. No unrelated process env values printed/persisted.",
+  "scientific_acceptance": "unchanged all-goal freshcache smoke and separate covering-wait negative; no production UB/init claim",
+  "provider_called_by_controls": false,
+  "real_verifier_called_by_controls": false
+}

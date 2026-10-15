@@ -218,3 +218,69 @@ def test_marker_inspection_denial_quarantines_the_private_lease(tmp_path, persis
     else:
         assert process.returncode==0,process.stderr+process.stdout
         assert not lock.exists() and summary['unconfirmed_children']==[]
+
+
+def test_reparented_marker_descendant_counts_against_active_rss_cap(tmp_path):
+    """An orphan remains this job's resource use while its root is still alive."""
+    import psutil
+    child_pid=tmp_path/'orphan.pid';lock=tmp_path/'private.lock';output=tmp_path/'orphan.log'
+    orphan=('import os,time; from pathlib import Path; '
+            'pid=os.fork(); '\
+            'exec("if pid: os._exit(0)"); os.setsid(); '
+            'data=bytearray(96*1024*1024); '
+            f'Path({str(child_pid)!r}).write_text(str(os.getpid())); time.sleep(30)')
+    root=('import subprocess,sys,time; '+f'subprocess.Popen([sys.executable,"-c",{orphan!r}]); time.sleep(30)')
+    process=subprocess.Popen([sys.executable,str(RUNNER),'--lock',str(lock),'--log',str(output),
+        '--cap-gb','0.06','--timeout','1.5','--',sys.executable,'-c',root],
+        stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True)
+    try:
+        stdout,stderr=process.communicate(timeout=8)
+        assert child_pid.exists(),stderr+stdout
+        summary=json.loads(Path(str(output)+'.summary.json').read_text())
+        assert summary['killed_by_watchdog'], 'escaped inherited-marker RSS was omitted until job timeout'
+        assert not summary['timed_out']
+        assert summary['peak_rss_mb']>60 and _stopped(int(child_pid.read_text()))
+        assert not lock.exists()
+    finally:
+        if process.poll() is None:process.terminate();process.wait(timeout=8)
+        if child_pid.exists():
+            try:psutil.Process(int(child_pid.read_text())).kill()
+            except psutil.NoSuchProcess:pass
+
+
+def test_fork_during_final_marker_sweep_is_settled_before_lease_release(tmp_path):
+    """Inspection schedules the last fork after the sweep's PID snapshot."""
+    import psutil
+    worker_pid=tmp_path/'worker.pid';child_pid=tmp_path/'last-child.pid';trigger=tmp_path/'fork'
+    wrapper=tmp_path/'runner.py';lock=tmp_path/'private.lock';output=tmp_path/'settle.log'
+    wrapper.write_text('import sys,time\nfrom pathlib import Path\n'+
+        f'sys.path.insert(0,{str(RUNNER.parent)!r})\nimport counted_verifier as V\n'+
+        'original_env=V.psutil.Process.environ\noriginal_stop=V._stop\ncleaning=[False]\nseen=[0]\n'+
+        'def stop(*args,**kwargs):\n cleaning[0]=True\n return original_stop(*args,**kwargs)\n'+
+        'def inspect(self):\n result=original_env(self)\n'+
+        f' if cleaning[0] and Path({str(worker_pid)!r}).exists() and self.pid==int(Path({str(worker_pid)!r}).read_text()):\n'+
+        '  seen[0]+=1\n  if seen[0]==2:\n'+
+        f'   Path({str(trigger)!r}).touch()\n   deadline=time.monotonic()+3\n'+
+        '   while self.is_running() and self.status() not in {V.psutil.STATUS_ZOMBIE,V.psutil.STATUS_DEAD}:\n'+
+        '    if time.monotonic()>deadline: raise RuntimeError("private worker did not exit")\n    time.sleep(.002)\n'+
+        ' return result\nV._stop=stop\nV.psutil.Process.environ=inspect\nraise SystemExit(V.main())\n')
+    worker=('import os,subprocess,sys,time;from pathlib import Path; '
+            f'Path({str(worker_pid)!r}).write_text(str(os.getpid())); '
+            f'exec("while not Path({str(trigger)!r}).exists(): time.sleep(.002)"); '
+            'child=subprocess.Popen([sys.executable,"-c","import time;time.sleep(30)"],start_new_session=True); '
+            f'Path({str(child_pid)!r}).write_text(str(child.pid));os._exit(0)')
+    root=('import subprocess,sys,time;from pathlib import Path; '+
+          f'subprocess.Popen([sys.executable,"-c",{worker!r}],start_new_session=True); '+
+          f'exec("while not Path({str(worker_pid)!r}).exists(): time.sleep(.002)")')
+    try:
+        result=subprocess.run([sys.executable,str(wrapper),'--lock',str(lock),'--log',str(output),
+            '--timeout','3','--',sys.executable,'-c',root],capture_output=True,text=True,timeout=8)
+        assert child_pid.exists(),result.stderr+result.stdout
+        assert result.returncode==0,result.stderr+result.stdout
+        assert _stopped(int(child_pid.read_text())), 'last marked child survived successful final sweep'
+        assert not lock.exists()
+    finally:
+        for file in (worker_pid,child_pid):
+            if file.exists():
+                try:psutil.Process(int(file.read_text())).kill()
+                except psutil.NoSuchProcess:pass

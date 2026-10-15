@@ -1166,3 +1166,28 @@ independently authored CLI regression), and all 11 WP mode values preserved the
 marker while scrubbing unrelated environment. [Reviewed source and artifact pins](../evidence/t07-method20-prelaunch-review-20261015.json)
 retain RED/GREEN, review and exact source hashes. No provider or real verifier
 was called by those controls.
+
+### Method20 run20 aborted before provider — 2026-10-15 ET
+
+Fresh baseline started15:05:50ET on clean `418a48d7`; a separate Spec review then
+found two resource-lifecycle gaps: reparented/marked descendants were absent from
+active RSS accounting, and a parent could fork/exit during the final marker
+sweep before lease release. Run20 was stopped at15:15:49ET, before any Codex call.
+No complete baseline or scientific hint-loop result is claimed. Exact source,
+logs, process/lease cleanup and hashes are retained in
+[aborted-run evidence](../evidence/t07-method20-aborted-20261015.json).
+
+Both defects now have deterministic public CLI regressions that failed before
+their fixes. Prospective active RSS uses current ancestry plus live retained
+PID/birth identities and periodic marker discovery. Cleanup requires repeated
+empty discovery across a settlement interval and quarantines nonsettling or
+unconfirmed cleanup. All13 runner controls pass; independent composed re-review
+is pending. These controls establish no BFS theorem. The fresh all-goal,
+cache-none, smoke and covering-wait-negative criteria remain mandatory; ticket07
+stays claimed within the existing shared box.
+
+The composed resource revision independently passes **165 controls** (164
+repository plus one separate CLI control); [exact source/review/RED/GREEN pins](../evidence/t07-method20-resource-review-20261015.json)
+are retained under a distinct prospective `method20-resource-discovery-settle-v2`
+revision. A second Spec re-review, new clean freeze and preflight still precede
+any fresh run. The interrupted run20 clock is not reset or reused.

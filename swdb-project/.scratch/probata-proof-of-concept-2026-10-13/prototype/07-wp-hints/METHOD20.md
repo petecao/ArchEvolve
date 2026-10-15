@@ -1,8 +1,9 @@
 # Method20 prospective checkpoint
 
-Created: 2026-10-15 ET. **Unlaunched; independent review and a fresh prospective
-freeze remain pending.** Closeout stopped further search. No provider or counted
-method20 run has started. Historical method19 source `669df70f` stays unchanged.
+Created: 2026-10-15 ET. Updated: 2026-10-15 ET. **The resumed run20 aborted
+during its baseline before any provider call; resource-guard re-review and a new
+prospective freeze remain pending.** At the earlier closeout checkpoint this
+method was unlaunched. Historical method19 source `669df70f` stays unchanged.
 
 The new opt-in `--design-probes` requires the strict `--staged-induction`
 foundation. It adds a structured fresh-agent design for CAS history, queue phase,
@@ -67,3 +68,28 @@ this change establishes no hard kernel memory quota. No proof criterion changes.
 The fresh method20 launch will omit `--examples`, so historical syntax/example
 fragments are also excluded from its provider workspace. Independent re-review
 and the clean source/method freeze still precede launch.
+
+## Run20 abort and prospective resource guard revision — 2026-10-15 ET
+
+Fresh run20 began on clean `418a48d7` at15:05:50ET. A separate Spec review found
+that active RSS sampling omitted reparented marked descendants, and that a marked
+parent could fork/exit between the final PID snapshot and its empty-live check.
+The run was stopped during its counted baseline at15:15:49ET, before any provider
+call. No complete baseline, final proof, final smoke or negative control exists.
+The retained source/output and stop audit are linked in
+[`t07-method20-aborted-20261015.json`](../../evidence/t07-method20-aborted-20261015.json).
+The conservative cleanup scan quarantined its lease on an inspection refusal;
+only after a separate audit found no tool/marked process and no inspection denial
+was that exact owned lease released. This abort is not a scientific failure or
+success of fresh agent hinting.
+
+The prospective resource guard revision now samples the union of current
+ancestry, retained live PID/birth identities and inherited-marker matches (marker
+discovery is scheduled every100ms, subject to polling/inspection overhead). RSS is sampled,
+not a hard quota. Cleanup requires at least three empty discovery sweeps spanning
+50ms; continued activity resets settlement, and failure to settle within five
+seconds quarantines the lease. This closes the deterministic final-sweep race;
+it does not create atomic or hostile-process containment. Trusted descendants
+still must preserve their marker. Both newly added CLI controls failed before
+their respective fixes and pass afterward. Independent re-review must assess the
+composed revision before any fresh freeze or actual evaluation.
