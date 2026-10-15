@@ -1,0 +1,212 @@
+{
+  "created": "2026-10-15 ET",
+  "scope": "Original float fixture hint correction; compiler/merge evidence only, actual WP replay pending",
+  "base_commit": "0fe4c75563ac87afd03fdd07a6058b30cfb9e654",
+  "historical": {
+    "commit_prefix": "9b75f4a2",
+    "root": "/data/yanruj/EvolveSWDB_runs/probata-resume-t24-pending-9b75f4a2",
+    "proof_record": "proof.wp24-safe.candidate-1.20261015t204154z.1f9883a8",
+    "verdict": "not_proven",
+    "failure_class": "timeout",
+    "ordinary_valid": 41,
+    "smoke_valid": 5,
+    "initialization_goals": 12,
+    "open_goals": {
+      "typed_real_swdb_float_unit_assert_rte_initialization_2": {
+        "normalized_line": 99,
+        "predicate": "\\initialized(&r.value)"
+      },
+      "typed_real_swdb_float_unit_assert_rte_initialization_5": {
+        "normalized_line": 103,
+        "predicate": "\\initialized(&r.weight)"
+      },
+      "typed_real_swdb_float_unit_assert_rte_initialization_7": {
+        "normalized_line": 126,
+        "predicate": "\\initialized(&r.value)"
+      }
+    },
+    "source_artifact_pins": {
+      "swdb_float_unit.c": "fffc05b6fbf24d78dd8335fdc3aba4c57c1c35697537f4befaf6b6277a9d42d9",
+      "wp-normalized.c": "1ec878d853c71eff19efd516b6bf5e0c3aff384a4339bbe33a45ac23e9d29220",
+      "wp-properties.csv": "0ad978e74f509d94027eb186dd14100281dfd5ad0a752547ab6ea010f8126b6c",
+      "hints.yaml": "83fa1ae941e06ba9213b44d90bce3945bfb3466d0c73748330a9b7bd6e61e8d6"
+    }
+  },
+  "hints": {
+    "old": {
+      "sha256": "83fa1ae941e06ba9213b44d90bce3945bfb3466d0c73748330a9b7bd6e61e8d6",
+      "hints": [
+        {
+          "anchor": "swdb_float_unit.loop1.head",
+          "kind": "loop_invariant",
+          "provenance": {
+            "source": "human"
+          },
+          "text": "loop invariant 0 <= i <= n;"
+        },
+        {
+          "anchor": "swdb_float_unit.loop1.head",
+          "kind": "loop_invariant",
+          "provenance": {
+            "source": "human"
+          },
+          "text": "loop invariant -1000.0 * i <= r.value <= 1000.0 * i;"
+        },
+        {
+          "anchor": "swdb_float_unit.loop1.head",
+          "kind": "loop_invariant",
+          "provenance": {
+            "source": "human"
+          },
+          "text": "loop invariant -5.0 <= r.weight <= 5.0;"
+        },
+        {
+          "anchor": "swdb_float_unit.loop1.head",
+          "kind": "loop_assigns",
+          "provenance": {
+            "source": "human"
+          },
+          "text": "loop assigns i, r.value;"
+        },
+        {
+          "anchor": "swdb_float_unit.loop1.head",
+          "kind": "loop_variant",
+          "provenance": {
+            "source": "human"
+          },
+          "text": "loop variant n - i;"
+        }
+      ]
+    },
+    "new": {
+      "sha256": "0d7e18cae18f823b5d8fd4b07ee988ea751ea21a4fbac647b048992055efd635",
+      "hints": [
+        {
+          "anchor": "swdb_float_unit.loop1.head",
+          "kind": "loop_invariant",
+          "provenance": {
+            "source": "human"
+          },
+          "text": "loop invariant 0 <= i <= n;"
+        },
+        {
+          "anchor": "swdb_float_unit.loop1.head",
+          "kind": "loop_invariant",
+          "provenance": {
+            "source": "human"
+          },
+          "text": "loop invariant -1000.0 * i <= r.value <= 1000.0 * i;"
+        },
+        {
+          "anchor": "swdb_float_unit.loop1.head",
+          "kind": "loop_invariant",
+          "provenance": {
+            "source": "human"
+          },
+          "text": "loop invariant -5.0 <= r.weight <= 5.0;"
+        },
+        {
+          "anchor": "swdb_float_unit.loop1.head",
+          "kind": "loop_invariant",
+          "provenance": {
+            "source": "human"
+          },
+          "text": "loop invariant \\initialized(&r.value);"
+        },
+        {
+          "anchor": "swdb_float_unit.loop1.head",
+          "kind": "loop_invariant",
+          "provenance": {
+            "source": "human"
+          },
+          "text": "loop invariant \\initialized(&r.weight);"
+        },
+        {
+          "anchor": "swdb_float_unit.loop1.head",
+          "kind": "loop_assigns",
+          "provenance": {
+            "source": "human"
+          },
+          "text": "loop assigns i, r.value;"
+        },
+        {
+          "anchor": "swdb_float_unit.loop1.head",
+          "kind": "loop_variant",
+          "provenance": {
+            "source": "human"
+          },
+          "text": "loop variant n - i;"
+        }
+      ]
+    }
+  },
+  "compiler_regression": {
+    "red": {
+      "created": "2026-10-15 ET",
+      "command": [
+        "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "tests/test_t24_float_hints.py",
+        "-m",
+        "not whole_store"
+      ],
+      "cwd": "/Users/yanrujhou/.codex/worktrees/probata-t24-float-init/ArchEvolve/swdb-project",
+      "resources": {
+        "exit_code": 1,
+        "peak_rss_bytes": 140492800,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 1.9464262079563923,
+        "cpu_seconds": 1.543146
+      },
+      "sha256": {
+        "tests/test_t24_float_hints.py": "bee2e69ef4a2fb4cf944663de715505ef4ae9e8005e56261c96da424ea059b76",
+        "tests/test_wp_subset.py": "3cb51aa7939807897638d10a4247af28bbb8d3d94e1592be7495665e9e83ffd6",
+        "tests/fixtures/proof/lowering/floats.cc": "c41740bfaced1d9f04a499865b0f09b0f7a34c38756581ffa8d13a66a4870d8d",
+        "tests/fixtures/proof/regression_corpus/wp-float-loop-field-initialization.yaml": "17c8efd4bcc41ea9b9c3a488c677ee0f40193e3bc81a00c1a6aa1ee61e80b862"
+      }
+    },
+    "green": {
+      "created": "2026-10-15 ET",
+      "command": [
+        "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "tests/test_t24_float_hints.py",
+        "-m",
+        "not whole_store"
+      ],
+      "cwd": "/Users/yanrujhou/.codex/worktrees/probata-t24-float-init/ArchEvolve/swdb-project",
+      "resources": {
+        "exit_code": 0,
+        "peak_rss_bytes": 157941760,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 1.2884646669845097,
+        "cpu_seconds": 1.229873
+      },
+      "sha256": {
+        "tests/test_t24_float_hints.py": "bee2e69ef4a2fb4cf944663de715505ef4ae9e8005e56261c96da424ea059b76",
+        "tests/test_wp_subset.py": "49d1bdc46ab7c125e8637aa5b96a8b29817422820c6ede1dabf0753adfc1b23e",
+        "tests/fixtures/proof/lowering/floats.cc": "c41740bfaced1d9f04a499865b0f09b0f7a34c38756581ffa8d13a66a4870d8d",
+        "tests/fixtures/proof/regression_corpus/wp-float-loop-field-initialization.yaml": "17c8efd4bcc41ea9b9c3a488c677ee0f40193e3bc81a00c1a6aa1ee61e80b862"
+      }
+    }
+  },
+  "original_fixture_sha256": "c41740bfaced1d9f04a499865b0f09b0f7a34c38756581ffa8d13a66a4870d8d",
+  "contract_change": false,
+  "original_source_change": false,
+  "production_lowerer_change": false,
+  "actual_verifier_launched": false,
+  "remaining_acceptance": "Fresh actual remote WP original safe/seeded pair with ordinary invariant establishment/preservation, >=12 retained initialization RTE goals, all ordinary/smoke Valid for safe and attributable seeded failure.",
+  "raw_local": "/private/tmp/probata-t24-float-init-20261015",
+  "output_budget_bytes": 2097152,
+  "bookkeeping": "An unchanged RED repeat is separately retained as red-repeat.json/.log after the snapshot helper found system Python lacked PyYAML; the selected Python applied the edit before the recorded GREEN."
+}

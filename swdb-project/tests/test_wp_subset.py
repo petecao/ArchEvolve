@@ -1,7 +1,7 @@
 """Ticket 24's construct groups through `swdb prove --adapter wp`: each safe fixture proves, its seeded bug does not;
 each C model and each summary is proven once by its own record, and a unit's record pins them.
 
-Created: 2026-10-14 ET. Updated: 2026-10-15 ET (explicit initialized input domains under WP's mandatory RTE policy).
+Created: 2026-10-14 ET. Updated: 2026-10-15 ET (explicit input and float-field loop initializedness under WP's mandatory RTE policy).
 Design: formal-verification map 16 item 6 (the C++
 subset), 11 items 3 and 9; format docs/reference/format-v0.4-c-lowering-wp.md.
 
@@ -108,7 +108,9 @@ GROUPS = {
         ("post", "postcondition", "assigns \\nothing;\nensures n == 0 ==> \\result == 0.0;")], ["a"], [
         ("swdb_float_unit.loop1.head",
          "loop invariant 0 <= i <= n;\nloop invariant -1000.0 * i <= r.value <= 1000.0 * i;\n"
-         "loop invariant -5.0 <= r.weight <= 5.0;\nloop assigns i, r.value;\nloop variant n - i;")]),
+         "loop invariant -5.0 <= r.weight <= 5.0;\n"
+         "loop invariant \\initialized(&r.value);\nloop invariant \\initialized(&r.weight);\n"
+         "loop assigns i, r.value;\nloop variant n - i;")]),
     "dxc_summary": ("swdb_dxc_unit", [
         ("pre", "legality", "requires 0 <= tile < 8;"),
         ("post", "postcondition", "assigns \\nothing;\nensures 1 <= \\result <= 3;")], [], []),
