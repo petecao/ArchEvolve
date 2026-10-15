@@ -565,7 +565,7 @@ whole-ticket completion is claimed.
 [repair controls and historical refusals](../evidence/t25-canonical-header-repair-20261015.json).
 
 
-### Original stale-data replay input recovery — 2026-10-15 13:52 ET
+### Original stale-data replay input recovery — 2026-10-15 13:45 ET
 
 The first original stale-data control at `e28eb7f0` retains its **1 failed in
 194.09 s** outcome. Its actual proof record already refuted the deallocated-object
