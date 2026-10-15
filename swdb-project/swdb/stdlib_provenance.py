@@ -12,6 +12,8 @@ import re
 import shlex
 import shutil
 import subprocess
+import sys
+from types import SimpleNamespace
 
 ID = "swdb-stdlib-provenance-1"
 ENV = ("CPATH", "CPLUS_INCLUDE_PATH", "C_INCLUDE_PATH", "OBJC_INCLUDE_PATH", "INCLUDE")
@@ -74,9 +76,9 @@ class _Range(C.Structure):
 
 class _Clang:
     """Small binding to the pinned clang-c/Index.h ABI; no optional Python package."""
-    def __init__(self, tool):
+    def __init__(self, tool, *, environment=None):
         root = subprocess.run([*tool.command, "-print-resource-dir"], capture_output=True,
-                              text=True, check=True, timeout=30).stdout.strip()
+                              text=True, check=True, timeout=30, env=environment).stdout.strip()
         self.resource = Path(root).resolve()
         self.root = self.resource.parents[2]
         paths = [self.root / "lib" / name for name in ("libclang.dylib", "libclang.so")]
@@ -191,10 +193,10 @@ def _headers_identity(parser):
                 count += 1
     return {"id": "llvm-standard-resource-headers", "sha256": digest.hexdigest(), "files": count}
 
-def _effective(tool, command, defines):
+def _effective(tool, command, defines, *, environment=None):
     """Resolve executable wrappers to one exact frontend job, never guess their flags."""
     trace = subprocess.run([*command[:-1], "-###", command[-1]], input="", capture_output=True,
-                           text=True, timeout=120)
+                           text=True, timeout=120, env=environment)
     jobs = []
     for line in trace.stderr.splitlines():
         try:
@@ -230,16 +232,49 @@ def _effective(tool, command, defines):
     return arguments, context
 
 def certify(tool, source, *, includes=(), defines=(), models=(), substitutions=()):
-    """Return a passed/refused original-TU certificate, never an inferred library premise.
+    """Certify in a child whose parser cannot reapply include environment paths.
 
-    Call for all modeled std substitutions, including algorithms without std_types.
-    Re-run on source replay; the certificate binds every transitive physical file.
+    The original driver still receives its original environment. Only the second
+    driver inside libclang sees sanitized include variables; the exact captured
+    cc1 search is forwarded by _effective. No process-wide environment mutation
+    can affect concurrent compiler work. Created 2026-10-15 ET.
     """
+    request = {"tool": {"command": list(tool.command), "version": tool.version},
+               "source": str(source), "includes": [str(p) for p in includes],
+               "defines": list(defines), "models": list(models),
+               "environment": {k: os.environ[k] for k in ENV if k in os.environ}}
+    if substitutions:
+        request["substitutions"] = list(substitutions)
+    clean_environment = {k: v for k, v in os.environ.items() if k not in ENV}
+    try:
+        worker = subprocess.run([sys.executable, "-I", str(Path(__file__).resolve()), "--certify"],
+            input=json.dumps(request), capture_output=True, text=True,
+            env=clean_environment, timeout=300)
+        if worker.returncode:
+            raise Refused("isolated full-TU parser failed (exit " + str(worker.returncode) + ")")
+        report = json.loads(worker.stdout)
+        if (not isinstance(report, dict) or report.get("check") != identity() or
+                report.get("verdict") not in {"passed", "refused"}):
+            raise Refused("isolated full-TU parser returned an invalid certificate")
+        unhashed = {k: v for k, v in report.items() if k != "sha256"}
+        if report.get("sha256") != hashlib.sha256(json.dumps(unhashed, sort_keys=True).encode()).hexdigest():
+            raise Refused("isolated full-TU parser returned an invalid certificate hash")
+        return report
+    except (OSError, ValueError, TypeError, Refused, subprocess.SubprocessError) as exc:
+        report = {"check": identity(), "verdict": "refused", "reason": str(exc)}
+        report["sha256"] = hashlib.sha256(json.dumps(report, sort_keys=True).encode()).hexdigest()
+        return report
+
+
+def _certify_in_process(tool, source, *, includes=(), defines=(), models=(),
+                        substitutions=(), environment=None):
+    """Private worker: explicit original-driver environment, sanitized parser process."""
+    driver_environment = dict(os.environ if environment is None else environment)
     report = {"check": identity(), "verdict": "refused", "reason": ""}
     parser, tu = None, None
     try:
         source = Path(source).resolve()
-        parser = _Clang(tool)
+        parser = _Clang(tool, environment=driver_environment)
         report["parser"] = {"id": "libclang-" + tool.version, "sha256": _sha(parser.path)}
         report["toolchain_headers"] = _headers_identity(parser)
         canonical = parser.root / "include" / "c++" / "v1"
@@ -250,7 +285,7 @@ def certify(tool, source, *, includes=(), defines=(), models=(), substitutions=(
         if any(a.startswith(("-I", "-D", "-U", "-include", "-imacros", "-isystem", "-iquote", "-ivfsoverlay", "-fmodule", "@"))
                for a in tool.command[1:]):
             raise Refused("header-injecting compiler command options are not modeled")
-        clean_environment = {k: v for k, v in os.environ.items() if k not in ENV}
+        clean_environment = {k: v for k, v in driver_environment.items() if k not in ENV}
         baseline = subprocess.run([*tool.command, "-x", "c++", "-std=c++17", "-fopenmp", "-E", "-H", "-"],
             input="#include <vector>\n#include <utility>\n#include <algorithm>\n#include <new>\n#include <cstdlib>\n",
             capture_output=True, text=True, env=clean_environment, timeout=120)
@@ -262,17 +297,17 @@ def certify(tool, source, *, includes=(), defines=(), models=(), substitutions=(
             raise Refused("the selected driver does not use its canonical libc++ vector header")
         report["baseline"] = [{"path": p, "sha256": _sha(p)} for p in sorted(baseline_files)]
         command = _command(tool, source, includes, defines)
-        effective, report["effective"] = _effective(tool, command, defines)
+        effective, report["effective"] = _effective(tool, command, defines, environment=driver_environment)
         tu = parser.translation_unit(effective, source)
         files = parser.closure(tu)
         macros = subprocess.run([*command[:-1], "-dM", "-E", command[-1]], capture_output=True,
-                                text=True, timeout=120)
+                                text=True, timeout=120, env=driver_environment)
         std_substitution = any(name.startswith("std_") for name in models)
         if macros.returncode or (std_substitution and not re.search(r"^#define _LIBCPP_VERSION 220108$", macros.stdout, re.M)):
             raise Refused("the original TU does not select libc++ 22.1.8")
         report["library"] = {"id": "libc++-22.1.8", "version_macro_required": std_substitution}
         # Independently compare with the exact driver invocation used by lowering.
-        driver = subprocess.run([*command[:-1], "-H", command[-1]], capture_output=True, text=True, timeout=120)
+        driver = subprocess.run([*command[:-1], "-H", command[-1]], capture_output=True, text=True, timeout=120, env=driver_environment)
         if driver.returncode:
             raise Refused("the original driver TU does not parse")
         driver_files = {str(Path(m.group(1)).resolve()) for line in driver.stderr.splitlines()
@@ -288,7 +323,7 @@ def certify(tool, source, *, includes=(), defines=(), models=(), substitutions=(
             if any("/".join(path.parts[-len(Path(name).parts):]) == name for name in known):
                 raise Refused(f"noncanonical standard header in original TU: {file}")
         report["headers"] = [{"path": p, "sha256": _sha(p)} for p in sorted(files)]
-        report["context"] = {"command": command, "environment": {k: os.environ[k] for k in ENV if k in os.environ}}
+        report["context"] = {"command": command, "environment": {k: driver_environment[k] for k in ENV if k in driver_environment}}
         declarations, bindings, problems = [], [], []
         # Candidate macros may otherwise rewrite canonical headers while leaving each
         # resulting declaration physically attributed to the genuine header.
@@ -418,3 +453,17 @@ def check(certificate, tool, source, *, includes=(), defines=(), models=(), subs
     if fresh != certificate:
         return "the original standard declaration/header/parser context changed before launch"
     return None
+
+
+if __name__ == "__main__":
+    if sys.argv[1:] != ["--certify"]:
+        raise SystemExit(2)
+    request = json.load(sys.stdin)
+    tool = SimpleNamespace(**request.pop("tool"))
+    original_includes = request.pop("environment")
+    if set(original_includes) - set(ENV):
+        raise SystemExit(2)
+    driver_environment = dict(os.environ)
+    driver_environment.update(original_includes)
+    result = _certify_in_process(tool, environment=driver_environment, **request)
+    json.dump(result, sys.stdout, sort_keys=True)

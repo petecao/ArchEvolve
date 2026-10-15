@@ -98,6 +98,30 @@ def test_original_tu_preserves_the_drivers_c_compatibility_header_order(tmp_path
                    for row in certificate["headers"]), header
 
 
+@pytest.mark.parametrize("variable", ["CPATH", "CPLUS_INCLUDE_PATH"])
+def test_environment_search_cannot_hide_an_explicit_include_allocation_hook(tmp_path, variable):
+    explicit, environment = tmp_path / "explicit", tmp_path / "environment"
+    explicit.mkdir(); environment.mkdir()
+    guard = "PROJECT_CONTEXT_CHOICE"
+    (explicit / "choice.h").write_text(f"#ifndef {guard}\n#define {guard}\n"
+        "int allocation_calls=0;\n"
+        "void *operator new(std::size_t n) {++allocation_calls; return std::malloc(n);}\n#endif\n")
+    (environment / "choice.h").write_text(f"#ifndef {guard}\n#define {guard}\n#endif\n")
+    source = tmp_path / "unit.cc"
+    # Both physical files are included, so equal dependency sets cannot detect
+    # choosing the environment header before the driver's explicit -I header.
+    source.write_text('#include <vector>\n#include <new>\n#include <cstdlib>\n#include <choice.h>\n'
+        '#include "explicit/choice.h"\n#include "environment/choice.h"\n'
+        'int unit(int n) {std::vector<int> v(n,7); return v.size();}\n')
+    out = tmp_path / "out"
+    result = run_swdb("lower", "--source", source, "--function", "unit", "--include", explicit,
+        "--out", out, "--format", "json", env={variable:str(environment)})
+    assert result.returncode == 0, result.stderr + result.stdout
+    certificate = json.loads((out / "unit.anchors.json").read_text())["stdlib_provenance"]
+    assert certificate["verdict"] == "refused", certificate["reason"]
+    assert "allocation/deallocation hook" in certificate["reason"]
+
+
 @pytest.mark.parametrize("injected,verdict", [(["-DSWDB_HIDDEN_WRAPPER=1"], "refused"),
     (["-stdlib=libc++"], "passed")])
 def test_a_compiler_wrapper_cannot_hide_undeclared_definitions(tmp_path, injected, verdict):
@@ -129,3 +153,43 @@ def test_bare_new_array_provenance_needs_no_standard_header_version_macro(tmp_pa
     assert certificate["verdict"] == "passed"
     assert certificate["library"]["version_macro_required"] is False
     assert certificate["toolchain_headers"]["files"] > 0
+
+
+def test_original_include_environment_remains_in_driver_context(tmp_path):
+    environment = tmp_path / "environment"
+    environment.mkdir()
+    (environment / "project_context.h").write_text("inline int project_identity(int x) {return x;}\n")
+    source = tmp_path / "unit.cc"
+    source.write_text('#include <vector>\n#include <project_context.h>\n'
+        'int unit(int n) {std::vector<int> v(n,7); return v.size();}\n')
+    out = tmp_path / "out"
+    result = run_swdb("lower", "--source", source, "--function", "unit", "--out", out,
+        "--format", "json", env={"CPATH": str(environment)})
+    assert result.returncode == 0, result.stderr + result.stdout
+    certificate = json.loads((out / "unit.anchors.json").read_text())["stdlib_provenance"]
+    assert certificate["verdict"] == "passed", certificate["reason"]
+    assert certificate["context"]["environment"]["CPATH"] == str(environment)
+    assert str(environment / "project_context.h") in {row["path"] for row in certificate["headers"]}
+
+
+@pytest.mark.parametrize("failure", ["nonzero", "timeout", "invalid-json", "invalid-hash"])
+def test_isolated_parser_failure_refuses_without_changing_parent_environment(monkeypatch, failure):
+    import os
+    import subprocess
+    from types import SimpleNamespace
+    from swdb import stdlib_provenance as provenance
+
+    monkeypatch.setenv("CPATH", "/parent/compiler/context")
+    def parser_failure(command, **options):
+        assert command[1] == "-I" and command[-1] == "--certify"
+        assert all(key not in options["env"] for key in provenance.ENV)
+        assert json.loads(options["input"])["environment"]["CPATH"] == "/parent/compiler/context"
+        if failure == "timeout":
+            raise subprocess.TimeoutExpired(command, 300)
+        payload = {"check": provenance.identity(), "verdict": "passed", "sha256": "0" * 64}
+        return SimpleNamespace(returncode=int(failure == "nonzero"),
+            stdout="invalid" if failure == "invalid-json" else json.dumps(payload))
+    monkeypatch.setattr(subprocess, "run", parser_failure)
+    report = provenance.certify(SimpleNamespace(command=("clang++",), version="22.1.8"), "missing.cc")
+    assert report["verdict"] == "refused"
+    assert os.environ["CPATH"] == "/parent/compiler/context"
