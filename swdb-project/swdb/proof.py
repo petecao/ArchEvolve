@@ -189,6 +189,8 @@ def register_cli(commands):
                                           "verifier adapter and write one proof record per job (never changed). A "
                                           "failure class outside vocabulary proof_failure_classes stops the batch.")
     sub.add_argument("--records", type=Path, default=paths.RECORDS)
+    sub.add_argument("--method-part", choices=["composition_theorem"], help="check the approved Rocq method part")
+    sub.add_argument("--development", type=Path, help="Rocq source directory (default: library/rocq/probata)")
     sub.add_argument("--candidate", help="the candidate artifact (required unless --summary)")
     sub.add_argument("--summary", metavar="ENTRY",
                      help="ticket 22: prove a library entry's summary (its proof_unit function against its `once: self` "
@@ -199,7 +201,7 @@ def register_cli(commands):
     sub.add_argument("--function", help="the function that holds the rewrite site (default with --summary: the "
                                          "entry's proof_unit function)")
     sub.add_argument("--contract", help="the rewrite contract (default: the one its certification records name)")
-    sub.add_argument("--adapter", choices=sorted(ADAPTERS), required=True)
+    sub.add_argument("--adapter", choices=sorted([*ADAPTERS, "rocq"]), required=True)
     sub.add_argument("--script", type=Path, action="append",
                      help="scripted adapter: a verdict script; repeat it for a batch (one job per script, in order)")
     sub.add_argument("--skip", metavar="REASON",
@@ -260,6 +262,11 @@ def prove(args):
     from swdb import vocab
     from swdb.cli import _require_valid
     store = _require_valid(args.records)
+    if getattr(args, "method_part", None):
+        from swdb import rocq_adapter
+        return rocq_adapter.prove(args, store)
+    if args.adapter == "rocq":
+        raise UsageError("--adapter rocq requires --method-part composition_theorem")
     if getattr(args, "summary", None):
         return _prove_summary(args, store)
     if getattr(args, "model", None):
@@ -708,6 +715,10 @@ def validate_record(record, ctx):
                           f"{value!r} is not a {field_name.replace('_', ' ')} in vocabulary {FAILURE_VOCAB}")
     subject = data.get("subject") or {}
     part = subject.get("part")
+    if data.get("method_part_status") is not None:
+        canonical = {"composition_theorem": "rocq.probata.composition", "reduction_lemma": "rocq.probata.reduction"}
+        if subject.get("id") != canonical.get(part):
+            yield Problem(record.rel, "subject.id", f"method-part status requires the canonical ID {canonical.get(part)!r}")
     if part is not None:                                             # ticket 10: one list of part names
         entry = ctx.vocabs.entries.get(PART_VOCAB, {}).get(part)
         if entry is None:

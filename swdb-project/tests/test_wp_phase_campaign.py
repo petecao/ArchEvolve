@@ -117,7 +117,7 @@ def test_each_class_tries_its_gain_candidates_fastest_first_until_one_is_proven_
     for cls in ("kronecker", "uniform_random"):
         for winner in per_class(summary, cls)["winners"]:
             snapshot = winner["level_snapshot"]
-            assert snapshot["at"] >= started_et and snapshot["level_rule"] == "level-rule.2"
+            assert snapshot["at"] >= started_et and snapshot["level_rule"] == "level-rule.3"
             assert snapshot["level"] == level(store, winner["candidate"])["level"]
     assert "pending" not in json.dumps(summary)
     # Budget lines: proof-hint calls on their own line, never in the rewriting total.
