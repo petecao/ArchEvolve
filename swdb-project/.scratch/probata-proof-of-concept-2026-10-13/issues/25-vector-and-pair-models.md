@@ -597,3 +597,40 @@ named acceptance/audit readers. No iterator/at batch ran. The earlier failed tes
 is retained, and ticket 25 remains claimed for the broader member/lifetime/origin
 acceptance frontier.
 [Final compact audit](../evidence/t25-stale-data-replay-flush-20261015.json).
+
+
+### Original iterator and at controls accepted — 2026-10-15 13:57 ET
+
+The two original bounded controls completed at clean frozen `94769312` with no
+watchdog/OOM failure. Node 0 generation 568 passed the stale-iterator test in
+222.45 s (guarded wall 222.89 s; peak 511,770,624 bytes). Its record is `refuted`,
+setup passed, with 194 ordinary successes, one deallocated-object failure and
+15 unknown properties retained. Inputs `n=1,a=[-1]` replay the matching original
+source-C++ heap-use-after-free fault. The 15-case finite C/C++ differential agrees
+on defined behavior; five UB cases remain explicitly excluded.
+
+Node 1 generation 600 passed the original combined at()/guarded-at test in
+302.84 s (guarded wall 303.26 s; peak 595,640,320 bytes). The unchecked subject is
+`refuted`: 112 ordinary properties pass and its out-of-range check fails. Inputs
+`n=0,k=0` replay the same `std.vector.at.out_of_range` source-C++ check. The guarded
+subject is `proven` with all 119 ordinary properties passing. Each subject's
+28-case finite C/C++ differential agrees with zero UB. All three records retain
+one intentional failing end-reachability assertion, separately from ordinary
+properties. Unwinding assertions, pointer-overflow checks and allocation-success
+policy remain explicit (unwind 2 for iterator, 3 for at controls).
+
+The read-only remote audit matched three records, 26 report/log references,
+9,462 declared absolute physical-file references across 838 unique paths,
+203 runtime/test/schema source pins per lane and all three provenance certificate
+self-hashes. Repeated declared references are counted; the exact audit scope is
+in the compact metadata. No mismatch occurred. Raw output remains remote
+(12,280,012 / 18,857,471 bytes) for the coordinator, ticket acceptance and independent
+audit readers. Source-after checks are clean and unchanged. Live readback at
+13:56 ET found socket generations 568/600 and legacy 77 released, no owned
+evaluation process, load 0.40/0.85/0.76 and 21/95 GiB free on `/data1`/`/data`.
+
+These are bounded records with finite source replay/agreement, not universal
+C++ equivalence, allocating member-body proofs or complete ticket acceptance.
+Ticket 25 remains claimed; further evaluation is deferred for this closeout.
+[Final compact audit](../evidence/t25-next-controls-accepted-20261015.json),
+[prospective launch](../evidence/t25-next-controls-launch-20261015.json).

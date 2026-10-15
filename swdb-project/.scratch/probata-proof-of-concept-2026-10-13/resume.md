@@ -4,7 +4,7 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 13:45 ET. Integration now includes the reviewed original
+Updated: 2026-10-15 13:57 ET. Frozen evaluation source `94769312` includes the reviewed original
 Bag/Counter lifetime slice (`0e4e6b74`) and runtime `bc457086`, including the
 reviewed canonical-header macro checks and selected-receiver member-window slice,
 plus native replay input flushing before sanitizer termination. Reviewed footprint
@@ -15,10 +15,10 @@ currently eligible. Drafts 1/2 remain immutable; draft 3 is not created.
 
 | Ticket | Current evidence | Next action |
 |---|---|---|
-| 07 | Method19 ended unproven: 27 open of 237 goals, 52.04 counted minutes; no final proof, smoke replay or covering-wait negative. Offline source/tool/log audit found no mismatches | Review the distinct method20 plan before another counted launch; preserve prototype RTE scope |
+| 07 | Method19 ended unproven: 27 open of 237 goals, 52.04 counted minutes; no final proof, smoke replay or covering-wait negative. Offline source/tool/log audit found no mismatches | Distinct method20 offline implementation is isolated in another worktree; no provider launch. Preserve prototype RTE scope |
 | 24 | Qualified copy and selected-receiver slices are accepted. The original Bag/Counter positive at `a70fc6fd` proves 146 ordinary + 11 smoke goals; after a test-only optional-key correction, the original seeded negative passes its expected-not-proven check with 146 ordinary Valid, one invariant timeout and 11 smoke Valid | Reviewed slice merged; 48 compiler/policy and stand-in composition controls pass, all 25 packaged artifact hashes match and runtime equals that tested composition. Full construct-group acceptance remains open |
-| 25 | Original bounded maximum at `d874c4dc`: 310 ordinary CBMC properties plus expected reachability failure; 625 native C/C++ comparisons agree. The first stale-data run refuted the memory fault, but buffered stdout lost its input metadata before sanitizer exit | The original stale-data retry at `bc457086` passes in 226.98 s, recovers n=1/a=[-1] and refutes the same heap-use-after-free; the final audit matches nine artifact references, 3,394 physical-file references and 203 source pins. Standalone member lifetime/origin frontiers remain open |
-| 27 | Qualified stall at `909eb6cd`: 110 ordinary Valid, one memory-domain timeout, 35 smoke Valid; the following gather initializedness gap is closed. Query at `8e377274`: safe 57 ordinary + 18 smoke proves; outside query remains not_proven with one ensures timeout and one failed smoke | Query and native same-object evidence are merged; 134 compiler union controls pass. The earlier two watchdog environment failures passed when individually rerun with process-inspection access; diagnose stall before production logic changes |
+| 25 | Original bounded maximum at `d874c4dc`: 310 ordinary CBMC properties plus expected reachability failure; 625 native C/C++ comparisons agree. The first stale-data run refuted the memory fault, but buffered stdout lost its input metadata before sanitizer exit | The original stale-data retry at `bc457086` passes in 226.98 s, recovers n=1/a=[-1] and refutes the same heap-use-after-free; the final audit matches nine artifact references, 3,394 physical-file references and 203 source pins. Original stale iterator and unchecked at are refuted with matching source replay; guarded at proves all 119 ordinary properties at frozen 94769312. All artifact/source/certificate pins match. Broader member lifetime/origin criteria remain unmet; no new evaluation at closeout |
+| 27 | Qualified stall at `909eb6cd`: 110 ordinary Valid, one memory-domain timeout, 35 smoke Valid; the following gather initializedness gap is closed. Query at `8e377274`: safe 57 ordinary + 18 smoke proves; outside query remains not_proven with one ensures timeout and one failed smoke | Query and native same-object evidence are merged; 134 compiler union controls pass. The earlier two watchdog environment failures passed when individually rerun with process-inspection access; reviewed stall equivalence/geometry fix is frozen at 9940b155 for one full Mac rerun, still without final outcome |
 | 36 | Earlier 45 scripted setup controls pass; later member/header unions have focused controls and source-pin audits | Remain claimed pending 27 and final source/method freeze |
 
 Coordinator working evidence remains outside the repository until its reviewed
@@ -31,6 +31,7 @@ failure; corrected expectations passed offline without upgrading the proof recor
 Durable completed slices: [footprint query](evidence/wp-footprint-query-20261015.json),
 [original class lifetimes](evidence/t24-member-lifetimes-mac-20261015.json),
 [stale-data replay audit](evidence/t25-stale-data-replay-flush-20261015.json),
+[iterator/at controls](evidence/t25-next-controls-accepted-20261015.json),
 [bounded maximum audit](evidence/t25-bounded-max-accepted-20261015.json),
 [member-window audit](evidence/t24-member-windows-mac-20261015.json),
 [focused Linux audit](evidence/focused-parser-owner-final-20261015.json),
@@ -48,24 +49,24 @@ two remote lanes and scoped BFS source export.
 
 ## Host coordination
 
-Coordinator live readback: **2026-10-15 13:38 ET**. This is a timestamped
-observation, not a current availability promise. Node 0 generation 567 released
-at 13:36:03 ET; node 1 generation 599 and legacy generation 77 are released. No
-owned evaluation process remains. The checkout is clean detached at `bc457086`.
-The one-case stale-data retry passed in 226.98 s (guarded wall 227.39 s,
-peak 508,973,056 bytes; no OOM/timeout), with `refuted`, passed setup, recovered
-inputs `n=1, a=[-1]` and the matching source-C++ heap-use-after-free sanitizer fault.
-The coordinator audit matches all nine artifacts, 3,394 physical-file references,
-203 source pins and the certificate self-hash.
-The run retained one worker, 8 GiB RSS cap, 1800 s inner / 2000 s outer wall limit
-and 1 GiB output budget. Raw output remains at
-`/data/yanruj/EvolveSWDB_runs/probata-t25-stale-data-flush-20261015-1332-node0`.
-No iterator/at batch is scheduled. The older
-[stale-data launch record](evidence/t25-stale-data-current-launch-20261015.json)
-identifies the prior `e28eb7f0` run and must not be read as this retry's outcome.
-Root owns lane coordination; recheck both socket leases, legacy lease, activity,
-disks and wrapper before dispatch. Source arrives by Git only; raw artifacts stay
-remote.
+Both controls at frozen **94769312** completed with zero wrapper exits and no
+watchdog/OOM failure. Iterator: 1 passed in 222.45 s, refuted with matching
+source-C++ use-after-free. At pair: 1 passed in 302.84 s, unchecked refuted and
+guarded proven. All three records, 26 report/log references, declared physical
+pins, 203 source pins per lane and three certificate self-hashes match.
+[Final audit](evidence/t25-next-controls-accepted-20261015.json),
+[prospective launch](evidence/t25-next-controls-launch-20261015.json).
+
+Read-only live check **2026-10-15 13:56 ET** found node 0 generation 568,
+node 1 generation 600 and legacy generation 77 released, no owned evaluation
+process, clean detached source `94769312`, load 0.40/0.85/0.76, and 21 GiB free
+on `/data1` / 95 GiB on `/data`. These are timestamped observations.
+Raw outputs remain at
+`/data/yanruj/EvolveSWDB_runs/probata-t25-next-controls-20261015-1347-node0` and
+`...-node1`; only compact metadata returned to the Mac. Coordinator, ticket25
+acceptance and independent audit readers retain these outputs. No further remote
+evaluation is scheduled during closeout. Root owns lane coordination and cleanup;
+no remote path may be removed without checking current use and root authorization.
 
 ## Historical integration snapshots
 
