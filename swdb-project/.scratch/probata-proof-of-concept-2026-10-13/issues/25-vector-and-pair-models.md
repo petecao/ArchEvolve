@@ -175,3 +175,31 @@ These are contract-fixture records on the2662 source checkpoint; integration0999
 follow-on work. No single completed nine-test run, production-method acceptance or general ticket25
 completion is claimed. Repeated allocation sites, iterator protocols, copy/move/resize/reserve/clear/swap,
 opaque effects and escaping pointers remain outside this WP slice. Status stays **claimed**.
+
+
+Standard member contract checkpoint — 2026-10-15 ET: the WP33 default initialization optimization
+removed whole representation-predicate hypotheses (including validity) from ordinary RTE goals.
+Raw proof display and installed primary source locate the filter at `Conditions.InitFilter` and
+`wp_parameters.FilterInit`. Requiring the exact boolean `-wp-no-filter-init` retains existing facts;
+no premise or model body changed. Policy-only commit830bc769 has60 scripted setup/reader controls;
+four public invalid-switch controls subsequently pass with fresh immutable fixture methods. Raw
+null/uninitialized reads, wrong postcondition, contradictory precondition(smoke), and stale alias
+remain unproved. A stronger-precondition diagnostic is explicitly excluded from original-contract
+acceptance.
+
+The public once-per-member batch proved14 original nonallocating vector/pair model contracts.
+The remaining `at` contract's defensive abort failed strict dead-branch smoke despite valid ordinary
+goals. A separate exact-model/hash/C-AST checked view replaces only its pure out-of-range guard with
+`assert at_guard_false: n < this->size`, under its unchanged original contract. Original/native/CBMC
+abort remains. The actual public checked-at final pair passed2tests: at PROVEN8/8reported goals with
+smoke and the named assertion counted; a freshly pinned changed-model contract without its bound
+refuses before WP. Two public model/checker controls pass separately. The checker is included in
+the frozen setup/reader closure and has explicit checker/certificate pins and prelaunch regeneration.
+
+Evidence:[t25-standard-member-contracts-20261015.json](../evidence/t25-standard-member-contracts-20261015.json).
+The first batch is honestly14PASS5FAIL: one at smoke gap and four test-isolation assertions masked by
+immutable-method validation. Those four pass in a subsequent isolated run; the at pair passes after
+the checked view. No single all-member green session is claimed. These contract-fixture results
+precede the incoming-pointer array-object domain gate being developed in ticket36; array provenance,
+owner/control-buffer separation, general repeated allocation and broader vector lifetime protocols
+remain open. Status stays **claimed**.
