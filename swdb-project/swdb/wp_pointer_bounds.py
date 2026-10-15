@@ -31,6 +31,90 @@ def _walk(node):
             yield from _walk(child)
 
 
+def _span(node):
+    begin, end = ((node.get("range") or {}).get(key) or {} for key in ("begin", "end"))
+    if ("offset" not in begin or "offset" not in end or
+            any(key in point for point in (begin, end) for key in ("spellingLoc", "expansionLoc"))):
+        raise Refused("DX100 call binding needs direct source coordinates")
+    return [begin["offset"], end["offset"] + end.get("tokLen", 0)]
+
+
+def imported_binding(node, translation_units, name, *, summary, policy):
+    """Resolve the actual callee in one full TU; filtered dumps have distinct IDs."""
+    declarations, contexts, calls = {}, {}, []
+    def visit(part, context=()):
+        kind = part.get("kind")
+        if kind in {"NamespaceDecl", "CXXRecordDecl", "RecordDecl"}:
+            context += ((kind, part.get("name", "")),)
+        if kind == "FunctionDecl":
+            declarations[part.get("id")] = part
+            contexts[part.get("id")] = context
+        if kind == "CallExpr":
+            try:
+                if _span(part) == _span(node):
+                    calls.append(part)
+            except Refused:
+                pass
+        for child in part.get("inner", []):
+            if isinstance(child, dict):
+                visit(child, context)
+    for root in translation_units:
+        visit(root)
+    matching = []
+    for call in calls:
+        callee = _strip_origin(call["inner"][0])
+        if callee.get("kind") == "ImplicitCastExpr" and callee.get("castKind") == "FunctionToPointerDecay":
+            callee = callee["inner"][0]
+        ref = callee.get("referencedDecl") or {}
+        if ref.get("name") == name:
+            matching.append(ref)
+    if len(matching) != 1:
+        raise Refused("DX100 source call has no unique full-TU callee binding")
+    declaration = declarations.get(matching[0].get("id"))
+    if not declaration or contexts.get(declaration.get("id")) or declaration.get("storageClass") == "static":
+        raise Refused("DX100 source call is not a global imported function")
+    if any(d.get("name") == name and any(c.get("kind", "").endswith("Attr") for c in d.get("inner", []))
+           for d in declarations.values()):
+        raise Refused("DX100 imported callee has unsupported code/linkage attributes")
+    signature = str((declaration.get("type") or {}).get("qualType", ""))
+    mangled = declaration.get("mangledName", "")
+    if mangled not in {name, "_" + name} and not mangled.startswith((f"_Z{len(name)}{name}", f"__Z{len(name)}{name}")):
+        raise Refused("DX100 source callee has a noncanonical linkage binding")
+    if any(d.get("name") == name and any(c.get("kind") == "CompoundStmt" for c in d.get("inner", []))
+           for d in declarations.values()):
+        raise Refused("DX100 source callee is defined rather than imported")
+    if not summary or summary != policy.get("model", {}).get("entry"):
+        raise Refused("DX100 source callee does not bind the audited semantics entry")
+    location = declaration.get("loc") or {}
+    path = Path(location.get("_file", location.get("file", "")))
+    if not path.is_file():
+        raise Refused("DX100 imported declaration has no pinned source file")
+    return {"name": name, "signature": signature, "mangled_name": mangled, "namespace": [],
+            "summary": summary, "source_name": path.name,
+            "source_sha256": hashlib.sha256(path.read_bytes()).hexdigest(), "source_range": _span(declaration)}
+
+
+def call_site(node, *, statement, anchor, function, line):
+    """First slice accepts a single standalone call, with pure argument evaluation."""
+    reason = ""
+    if statement is not node or not anchor:
+        reason = "DX100 window calls need a standalone statement and exact preceding anchor"
+    for part in _walk(node):
+        kind, op = part.get("kind"), part.get("opcode")
+        if (part is not node and kind in {"CallExpr", "CXXMemberCallExpr", "CXXOperatorCallExpr"}
+                or kind in {"CompoundAssignOperator", "ConditionalOperator", "BinaryConditionalOperator"}
+                or kind == "UnaryOperator" and op in {"++", "--"}
+                or kind == "BinaryOperator" and op in {"=", ",", "&&", "||"}
+                or "volatile" in str((part.get("type") or {}).get("qualType", ""))):
+            reason = "DX100 window call arguments need pure single-evaluation placement"
+    try:
+        span = _span(node)
+    except Refused as exc:
+        span, reason = None, str(exc)
+    return {"function": function, "anchor": anchor, "source_line": line, "source_range": span,
+            "reason": reason, "_ast_id": node.get("id")}
+
+
 def _pointer(node):
     return bool(re.search(r"\*\s*(?:(?:const|volatile|restrict)\s*)*$",
                           str((node.get("type") or {}).get("qualType", ""))))
@@ -64,8 +148,12 @@ def semantic_origins(library, defines=()):
 
 
 def check_semantic_origins(lowering, library, defines=()):
+    from swdb import proof_semantics
     fresh = semantic_origins(library, defines)
+    calls = proof_semantics.array_call_policies(library, defines)
     for row in (lowering.pointer_bounds or {}).get("sites", []):
+        if row.get("kind") == "call" and row.get("policy") != calls.get(row.get("call")):
+            raise Refused("DX100 call footprint policy, model content, entry or geometry changed after planning")
         origin = row.get("origin") or {}
         if origin.get("kind") == "semantic_rows" and origin != fresh.get(origin.get("producer")):
             raise Refused("array-object origin model content, entry or geometry changed after planning")
@@ -118,7 +206,8 @@ def recheck_source(lowering, plan):
     """Freshly parse the source/closure; no candidate-supplied certificate is loaded."""
     from swdb import c_lowering
     if not isinstance(plan, dict) or not (plan.get("kwargs", {}).get("array_domains") or
-                                         (lowering.pointer_bounds or {}).get("owner")):
+            (lowering.pointer_bounds or {}).get("owner") or
+            any(row.get("kind") in {"call", "producer"} for row in lowering.pointer_bounds.get("sites", []))):
         raise Refused("entry windows have no generator-owned source recheck plan")
     fresh = c_lowering.lower(Path(plan["source"]), lowering.function, **plan["kwargs"])
     if fresh.pointer_bounds != lowering.pointer_bounds or fresh.text != lowering.text:
@@ -127,9 +216,11 @@ def recheck_source(lowering, plan):
 
 class _Origins:
     """Conservative source origins; no allocation-validity-to-array inference."""
-    def __init__(self, definitions, globals=(), known=None, terminal=None, entry_windows=None, entry_function=None):
+    def __init__(self, definitions, globals=(), known=None, terminal=None, entry_windows=None, entry_function=None,
+                 checked_calls=(), checked_producers=()):
         self.definitions, self.known, self.terminal = definitions, known or {}, terminal or {}
         self.entry_windows, self.entry_function = entry_windows or {}, entry_function
+        self.checked_producers = checked_producers
         self.declarations = {function: {n.get("id"): n for n in _walk(root)
                                      if n.get("kind") in {"VarDecl", "ParmVarDecl"}}
                              for function, root in definitions.items()}
@@ -151,7 +242,7 @@ class _Origins:
                 # assignment in this closure. Unknown calls receive no exemption.
                 if kind in {"CallExpr", "CXXMemberCallExpr", "CXXOperatorCallExpr"} and children:
                     refs = [(n.get("referencedDecl") or {}).get("name") for n in _walk(children[0])]
-                    if not any(name in self.known for name in refs):
+                    if (function, node.get("id")) not in checked_calls:
                         for arg in children[1:]:
                             self.unstable.update((function, (n.get("referencedDecl") or {}).get("id")) for n in _walk(arg)
                                                  if n.get("kind") == "DeclRefExpr" and _pointer(n))
@@ -167,6 +258,8 @@ class _Origins:
                     return {**origin, "relative_offset": _window_target(node, origin)}
                 return origin
         if kind == "CallExpr" and children:
+            if (function, node.get("id")) not in self.checked_producers:
+                return None
             refs = [(n.get("referencedDecl") or {}).get("name") for n in _walk(children[0])]
             return next((self.known[name] for name in refs if name in self.known), None)
         if kind != "DeclRefExpr":
@@ -218,7 +311,8 @@ def _origin_base(node):
 
 
 def complete(sites, definitions, observed, *, external_calls=(), known_pointer_calls=(),
-             global_nodes=(), known_origins=None, terminal=None, entry_windows=None, entry_function=None, owner=None):
+             global_nodes=(), known_origins=None, terminal=None, entry_windows=None, entry_function=None, owner=None,
+             call_sites=(), call_policies=None):
     """Refuse source operations omitted by printing and untracked subobject origins.
 
     The printer owns normalizations. This independent closure walk ensures that
@@ -247,7 +341,47 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
             rows.append({"function": owner["function"], "source_line": None, "admission_only": True,
                          "reason": "", "owner_access": access,
                          "owner_certificate_sha256": owner["certificate_sha256"]})
-    origins = _Origins(definitions, global_nodes, known_origins, terminal, entry_windows, entry_function)
+    from swdb import dx_array_domains
+    candidates, producers, call_rows = {}, {}, {(s["function"], s["_ast_id"]): s for s in call_sites}
+    for function, root in definitions.items():
+        for node in _walk(root):
+            if node.get("kind") != "CallExpr" or not node.get("inner"):
+                continue
+            names = [(n.get("referencedDecl") or {}).get("name") for n in _walk(node["inner"][0])]
+            name = next((name for name in names if name in (call_policies or {}) or name in (known_origins or {})), None)
+            if name is None:
+                continue
+            key = (function, node.get("id"))
+            site = call_rows.get(key)
+            try:
+                if not site or site.get("reason") or not site.get("binding"):
+                    raise Refused((site or {}).get("reason") or "DX100 call has no checked source placement/binding")
+                if site.get("producer"):
+                    origin = (known_origins or {}).get(name)
+                    if (not origin or site["binding"]["summary"] != origin["policy"]["entry"] or
+                            re.sub(r"\s+", "", site["binding"]["signature"]) != "int*(int)"):
+                        raise Refused("DX100 tile producer has no canonical imported int-row binding")
+                    producers[key] = origin
+                    rows.append({**{k: v for k, v in site.items() if not k.startswith("_")},
+                                 "kind": "producer", "admission_only": True, "call": name, "origin": origin})
+                    continue
+                candidate = dx_array_domains.candidate(node, call_policies[name])
+                binding = site["binding"]
+                if binding["name"] != name or binding["summary"] != candidate["policy"]["model"]["entry"]:
+                    raise Refused("DX100 call imported binding and exact semantics policy differ")
+                candidates[key] = candidate
+            except (Refused, dx_array_domains.Refused) as exc:
+                rows.append({"function": function, "source_line": (site or {}).get("source_line"), "reason": str(exc)})
+    origins = _Origins(definitions, global_nodes, known_origins, terminal, entry_windows, entry_function,
+                       set(candidates) | set(producers), producers)
+    for key, candidate in candidates.items():
+        site = call_rows[key]
+        try:
+            origin = origins.get(candidate["pointer_argument"], key[0])
+            record = dx_array_domains.certify(candidate, origin, site)
+            rows.append({**record, "binding": site["binding"], "kind": "call", "reason": ""})
+        except (Refused, dx_array_domains.Refused) as exc:
+            rows.append({"function": key[0], "source_line": site["source_line"], "reason": str(exc)})
     has_arithmetic = bool(rows)
     external = {row.get("name") if isinstance(row, dict) else row for row in external_calls}
     for function, root in definitions.items():
@@ -275,7 +409,8 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
             reason = ""
             indexed = kind == "ArraySubscriptExpr"
             dereferenced = bool(entry_windows and entry_windows.get("windows") and kind == "UnaryOperator" and node.get("opcode") == "*")
-            if entry_windows and entry_windows.get("windows") and kind in {"CallExpr", "CXXMemberCallExpr", "CXXOperatorCallExpr"} and any(_pointer(c) for c in children[1:]):
+            if (entry_windows and entry_windows.get("windows") and kind in {"CallExpr", "CXXMemberCallExpr", "CXXOperatorCallExpr"}
+                    and any(_pointer(c) for c in children[1:]) and (function, node.get("id")) not in candidates):
                 reason = "entry-window pointer call boundaries need checked callee-domain discharge"
             if operation or indexed or dereferenced:
                 base = _origin_base(node)
@@ -372,7 +507,8 @@ def site(node, *, expression, base, statement, anchor, function, line, reason=""
         declared = {n.get("id") for n in nodes if n.get("kind") == "VarDecl"}
         if any((n.get("referencedDecl") or {}).get("id") in declared for n in _walk(node)):
             reason = reason or "pointer formation depends on a binding inside its containing statement"
-    return {"function": function, "anchor": anchor, "source_line": line, "base": base,
+    span = _statement_span(statement)
+    return {"function": function, "anchor": anchor, "source_line": line, "source_statement": span, "base": base,
             "expression": expression, "offset": offset, "reason": reason,
             "normalized_expression": normalize(expression, base, offset) if not reason else None, "_ast_id": node.get("id")}
 
@@ -395,7 +531,7 @@ def access_site(node, *, expression, statement, anchor, function, line):
         declared = {n.get("id") for n in nodes if n.get("kind") == "VarDecl"}
         if any((n.get("referencedDecl") or {}).get("id") in declared for n in _walk(node)):
             reason = "entry-window access depends on a declaration inside its statement"
-    return {"function": function, "source_line": line, "anchor": anchor, "kind": "access",
+    return {"function": function, "source_line": line, "source_statement": _statement_span(statement), "anchor": anchor, "kind": "access",
             "expression": expression, "reason": reason, "_ast_id": node.get("id")}
 
 
@@ -405,9 +541,39 @@ def normalize(expression, base, offset):
     return f"(({offset}) == 0 ? ({base}) : ({expression}))"
 
 
-def inventory(sites, *, source_sha256, text, entry_windows=None, entry_contract=None, owner=None):
+def _statement_span(statement):
+    try:
+        begin, end = _span(statement or {})
+        return {"begin": begin, "end": end}
+    except Refused:
+        return None
+
+
+def function_entries(definitions, source):
+    """Original main-source byte spans; macros/headers grant no position."""
+    entries = {}
+    for name, node in definitions.items():
+        bodies = [c for c in node.get("inner", []) if c.get("kind") == "CompoundStmt"]
+        if len(bodies) != 1:
+            continue
+        body = bodies[0]
+        start = (body.get("range") or {}).get("begin") or {}
+        if start.get("_file", start.get("file")) != str(source):
+            continue
+        try:
+            begin, end = _span(body)
+            definition_begin, definition_end = _span(node)
+            entries[name] = {"body_begin": begin, "body_end": end,
+                             "begin": definition_begin, "end": definition_end}
+        except Refused:
+            pass
+    return entries
+
+
+def inventory(sites, *, source_sha256, text, entry_windows=None, entry_contract=None, owner=None, source_entries=None):
     report = {"check": identity(), "source_sha256": source_sha256,
               "lowering_sha256": hashlib.sha256(text.encode()).hexdigest(), "sites": list(sites),
+              "source_functions": source_entries or {},
               "domain_boundary": "Only certified whole one-dimensional arrays, exact audited semantic rows and terminal typed allocations; "
                                  "incoming arithmetic/indexing requires a pinned explicit entry-window contract and checked numerical bounds; "
                                  "opaque origins remain unsupported; exact C++ null-plus-zero is checked."}
@@ -449,6 +615,11 @@ def check(lowering):
             raise Refused(f"{row['function']}:{row['source_line']}: {row['reason']}")
         if row.get("admission_only"):
             continue
+        if row.get("kind") == "call":
+            from swdb import dx_array_domains
+            if row["policy"].get("check") != dx_array_domains.identity() or not row.get("predicate") or not row.get("binding"):
+                raise Refused("DX100 source-call guard/binding is missing or stale")
+            continue
         if row.get("kind") == "access":
             if not row.get("window_guard") or row["expression"] not in lowering.text:
                 raise Refused("entry-window access differs from its generated lowering")
@@ -482,6 +653,9 @@ def prepare(lowering, text):
         additions[f"{lowering.function}.entry"] = clauses
     for i, row in enumerate(report["sites"], 1):
         if row.get("admission_only"):
+            continue
+        if row.get("kind") == "call":
+            additions.setdefault(row["anchor"], []).append(f'/*@ assert swdb_window_call_{i}: {row["predicate"]}; */')
             continue
         if row.get("kind") == "access":
             assertion = f'/*@ assert swdb_window_access_{i}: {row["window_guard"]}; */'

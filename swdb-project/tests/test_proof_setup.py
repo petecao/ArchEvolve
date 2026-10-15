@@ -249,7 +249,7 @@ def test_execution_method_must_pin_the_running_checks_version_and_content(seed, 
     "swdb/cbmc_product.py", "swdb/rss_watchdog.py", "swdb/vocab.py", "swdb/formal_frame.py", "swdb/acsl_subset.py",
     "swdb/framac.py", "swdb/hint_check.py", "swdb/hint_tree.ml",
     "swdb/wp_pointer_bounds.py", "swdb/proof_semantics.py", "swdb/vector_ownership.py", "swdb/standard_model_view.py",
-    "swdb/array_domains.py", "swdb/model_domains.py"])
+    "swdb/array_domains.py", "swdb/model_domains.py", "swdb/dx_array_domains.py"])
 def test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation(seed, changed):
     import os
     import shutil

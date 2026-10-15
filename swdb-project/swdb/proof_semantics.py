@@ -425,6 +425,26 @@ def model_for(library, entry_id, defines=()):
                  c_text="\n".join(parts) + "\n", functions=tuple(functions), unwind=unwind, tile_objects=tile_objects)
 
 
+def array_call_policies(library, defines=()):
+    """Exact audited host-pointer call footprints, separately checked at each source call.
+
+    A matching call name alone grants no exemption. The lowering must certify its
+    imported AST binding, stable typed source origin, placement and fresh guard view.
+    """
+    from swdb import bounded_initialization, dx_array_domains
+    found = {}
+    for entry in current(library):
+        model = model_for(library, entry, defines)
+        policy = bounded_initialization._dx100_policy(library, model, defines)
+        if policy is None:
+            continue
+        for call in sorted(set(policy["calls"]) & set(dx_array_domains.ARITIES)):
+            if call in found:
+                raise ValueError("ambiguous audited DX100 pointer-call policy: " + call)
+            found[call] = {"check": dx_array_domains.identity(), "model": policy, "call": call}
+    return found
+
+
 def state_draws(library, entry_id, defines=()):
     """The device-state elements the harness draws from the oracle at the start (havoc): tile elements."""
     data = library.get(entry_id)

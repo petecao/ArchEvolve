@@ -331,3 +331,26 @@ origin and renderer-tampering controls pass **7/7 in 67.06s**; these are prelaun
 actual WP acceptance. Runner collection is entry windows **15**, owner **16**. Evidence:
 `evidence/owner-annotation-merge-review-20261015.json`. Ticket 36 remains claimed, with combined
 safe/stale WP replay pending.
+
+
+### DX100 call-origin coupling checkpoint — 2026-10-15 ET
+
+The lowering inventories audited host-pointer calls regardless of whether the unit declares a
+window. Each candidate needs an independently resolved full-TU global imported callee, canonical
+signature, exact semantics-entry/model/geometry policy, safe standalone placement and stable
+entry-window origin. Only that transient source call key avoids pointer-escape invalidation.
+Checked call-state footprint assertions retain the entry-frozen extent and exact current offset;
+all original command/initializedness/separation obligations remain. Retained helpers and missing
+window metadata refuse rather than inherit a silent premise. Tile-pointer producers also require
+exact imported binding keys; source definitions, namespaces and unrecognized linkage/code
+attributes refuse. Prelaunch reparses the entire source and rederives live policy factories.
+
+The first actual direct-stream proof passed **155.85s**; the final frozen batch's stream replay
+also passed. The full 14-control actual/prelaunch batch is running at this checkpoint, so broader
+acceptance is pending. Supporting public binding controls passed 3/3 before the producer/attribute
+extension; the attribute fixture's first attempt refused at C++ parse time because its redeclaration
+followed earlier uses, and the fixture now attributes the original declaration instead. A final
+public checker-byte invalidation control passed 1/1 in 11.00s; 17 component controls pass in 1.14s.
+The source insertion API additionally records exclusive `source_statement` spans and
+`source_functions` body/definition spans, with macros providing no invented statement positions;
+2 public lowering controls pass in 0.62s. No bounded domain admission or method 3 claim is added.
