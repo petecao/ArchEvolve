@@ -212,13 +212,16 @@ access, and a use-after-delete. The original positive safe-allocation acceptance
 explicit strict expected failure. This ticket stays **claimed**, and that expected failure is
 never counted as completed acceptance. Bounded verification retains actual `malloc`/`free`.
 
-The full baseline replay is running on mbit10 node 1 from `150930b4`, output
+The full baseline replay completed on mbit10 node 1 from `150930b4`, output
 `/data/yanruj/EvolveSWDB_runs/probata-t24-baseline-20261015/r4`. Initial fixture setup failures were
 diagnosed one at a time: LLVM 22's default GCC 14 selection lacked C++ headers and the linker
 library path. The isolated class C++ versus C differential passes with GCC 13 header/library
 paths before the full WP module starts. This baseline precedes the lifetime refusal and the
 strict fresh-report reader; its results alone cannot close this ticket. Final guard regressions
-must run on the integrated source.
+must run on the integrated source. The serial baseline finished with **17 passed, 1 xfailed**
+in 1823.04 s; the expected failure is the unsafe read after `delete[]`. Its 9.7 MiB of
+original output is retained. Passing that earlier source does not establish acceptance for
+the new lowerer, allocator refusal or strict report reader.
 
 **Lifetime regression evidence (Mac).** The new public `swdb prove` use-after-delete test
 failed before the guard: WP reported `proven` (63.66 s including fixture setup and lock waits).
