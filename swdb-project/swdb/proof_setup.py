@@ -340,7 +340,7 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
                     _fail("pointer_bounds", "generated C model pointer checks changed after planning")
             else:
                 if ((lowering.pointer_bounds or {}).get("entry_windows") or (lowering.pointer_bounds or {}).get("owner") or
-                        any(row.get("kind") in {"call", "producer"} for row in lowering.pointer_bounds.get("sites", []))):
+                        any(row.get("kind") in {"call", "producer", "import"} for row in lowering.pointer_bounds.get("sites", []))):
                     wp_pointer_bounds.recheck_source(lowering, context.get("pointer_source_plan"))
                 if (lowering.pointer_bounds or {}).get("owner"):
                     from swdb import vector_ownership

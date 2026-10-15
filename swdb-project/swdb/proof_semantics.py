@@ -445,6 +445,26 @@ def array_call_policies(library, defines=()):
     return found
 
 
+def imported_call_policies(library, defines=()):
+    """Every audited external call needs its exact prototype and model binding."""
+    from swdb import bounded_initialization
+    found = {}
+    for entry in current(library):
+        model = model_for(library, entry, defines)
+        policy = bounded_initialization._dx100_policy(library, model, defines)
+        if policy is None:
+            continue
+        data = library.get(entry)
+        for row in [*data.get("calls", []), *data.get("queries", [])]:
+            name = row.get("call", row.get("query"))
+            if name not in policy["calls"]:
+                continue
+            if name in found:
+                raise ValueError("ambiguous audited DX100 imported-call policy: " + name)
+            found[name] = {"model": policy, "call": name, "prototype": row["prototype"]}
+    return found
+
+
 def state_draws(library, entry_id, defines=()):
     """The device-state elements the harness draws from the oracle at the start (havoc): tile elements."""
     data = library.get(entry_id)
