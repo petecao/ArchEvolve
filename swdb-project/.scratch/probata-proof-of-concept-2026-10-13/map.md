@@ -20,7 +20,8 @@ Current dispatch, evidence and blockers: [resume.md](resume.md).
   construct acceptance remains open (24). Final store/capacity acceptance, native footprint boundaries
   and bounded pointer-formation checks are in progress (27/36).
   Counted proof-hint run 15 ended unproven with 1 unit and 24 hint obligations open;
-  run 16 also ended unproven with 4 unit and 22 hint goals; its final offline audit records missing processed-prefix induction (07).
+  run 16 also ended unproven with 4 unit and 22 hint goals; its final offline audit records missing processed-prefix induction.
+  Run 17 started at 07:31 ET with fresh hints and the distinct consumed-prefix method (07).
 - **Next action:** complete checked explicit array-domain operation/call admission and
   bounded alignment; then run combined-source acceptance and create a new draft
   method after lowerer and policy hashes settle. Draft 2 is immutable after the composition record pinned it. No method freeze is justified yet.
