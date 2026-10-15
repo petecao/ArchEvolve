@@ -36,4 +36,4 @@ def test_original_member_read_requires_ordinary_field_init_and_exact_numeric_win
         assert any('swdb_window_access_' in str(g) for g in row['unproven_properties'])
     else:
         assert row['goals'] and all(g['status']=='valid' for g in row['goals'])
-        assert any('initialized' in g['goal'] for g in row['goals'] if not g.get('smoke'))
+        assert any('rte_initialization' in g['goal'] for g in row['goals'] if not g.get('smoke'))

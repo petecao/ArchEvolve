@@ -579,3 +579,43 @@ smoke checks. The focused lane's 20 controls pass, including original-callee
 refusals. Mac0831 and Linuxd3a retain separate method identities. The next class
 member-window context work and whole ticket remain open.
 [Audited source, records and reports](../evidence/focused-parser-owner-final-20261015.json).
+
+### Contextual member-window checkpoint — 2026-10-15 ET
+
+The first current public class diagnostic refused `Bag::data` before WP: validity
+and initializedness do not establish a typed array origin for an arbitrary receiver.
+A new checker now certifies a narrower selected-entry context: one exact trivial
+automatic pointer/count record, immediate immutable captures from an explicit input
+window, and original-TU checked direct receiver calls with no copies/escapes or
+nonreceiver pointer/reference arguments. The checked closed graph has longest path
+at most two, matching an installed Frama-C33 parser probe; both direct calls disappear
+from the normalized entry while field-initialization and numeric guards remain.
+Exact entry/inlining settings and generated context bytes are bound at prelaunch.
+No validity, initialization, separation or numeric premise is added.
+
+Independent agent review found two compiler-admission gaps before actual proof:
+a pointer-reference helper could suppress ordinary pointer invalidation, and a shared
+callee first visited on a short path could hide a longer path. Both have concrete
+RED-to-GREEN controls. Member call exemptions were removed entirely; longest-path
+checking is independent of receiver-visit memoization. These are compiler controls,
+not historical false-proof claims. The standalone-model optional-lowering path is
+also preserved by a public control. No personal human source review is implied.
+
+Frozen `1e93b9cb` passes **26** compiler/policy/public stand-in controls in **15.83s**.
+Its actual small safe getter proves **15 ordinary plus one smoke** goal, including
+four retained RTE initialization goals. Calling the getter at the advertised extent
+stays not_proven with one member-window timeout; the other 14 ordinary goals and one
+smoke are Valid. A finite `n=1,i=1` case violates `i<n`; timeout alone is not claimed
+as a mathematical disproof. The serial actual pair used the shared two-slot policy,
+an 8 GiB watchdog and peaked at **837,943,296 bytes** over **43.38s**. All 206 frozen
+source/test hashes, two records and 17 reports were checked.
+
+The original actual pytest result is **one failed, one passed**: the positive record
+already proved every obligation, but a test searched for `initialized` instead of
+Frama-C's `rte_initialization` goal spelling. Only that test spelling was corrected;
+all assertions then passed offline against both immutable records. No solver rerun,
+source-premise change or fresh-proof claim is implied. The original test/log/XML and
+frozen source snapshot remain retained. This checkpoint does **not** clear the original
+Bag/Counter constructor/destructor fixture, fixed member arrays/templates, arbitrary
+receiver summaries, or the remaining whole-ticket acceptance criteria. Status remains
+claimed. [Scoped member evidence](../evidence/t24-member-windows-mac-20261015.json).
