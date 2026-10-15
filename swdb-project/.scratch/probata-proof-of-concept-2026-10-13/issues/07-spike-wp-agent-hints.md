@@ -1,7 +1,7 @@
 # 07 — Spike (c): WP with agent hints
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-15 ET (method20 run23 completed unproven; prospective baseline allocation review); 2026-10-14 22:50 ET (continuation 3: runs 10-12 fail, verdict fail so far, effort paused); 2026-10-14 17:10 ET (continuation 2: runs 7-9 fail, verdict fail so far); 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-15 ET (method21 run24 unproven; seed provenance criterion reviewed); 2026-10-14 22:50 ET (continuation 3: runs 10-12 fail, verdict fail so far, effort paused); 2026-10-14 17:10 ET (continuation 2: runs 7-9 fail, verdict fail so far); 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 03
@@ -1300,3 +1300,86 @@ all-function smoke replay and same-hints covering-wait negative remain mandatory
 No baseline, seed, hint or conversation reuse is permitted. A projected9–10minutes
 of recovered search time is unmeasured; baseline statuses and regression pass sets
 may change with the timeout. See the separate method21 plan when reviewed.
+
+
+### Run24 completed; method21 unproven — 2026-10-15 ET
+
+**Fail / not proven for this run.** Fresh clean freeze
+`14c2a298f5692e273db8cf8c127f8248dc54714c` ran17:52:17–18:44:19EDT,
+52.03counted minutes with reported0.0seconds excluded lock wait (rounded;
+retained per-job waits total0.021875seconds). The full10second diagnostic
+baseline took6.11minutes:254ordinary goals/103timeouts and139/139smoke checks
+passed. This is8.86minutes shorter than run23's14.97minutes; fresh statuses,
+portfolio scheduling and pass-set differences prevent attributing proof-rate
+improvement to that single observation. Five fresh mechanical frames left39/209
+ordinary round goals open at8.64minutes.
+
+The final authoritative incumbent has41records (five mechanical,36Codex) and
+29/259round-mode ordinary goals open:14unit +15hint;25unknown +4timeout.
+Six of nine postconditions remain open. Passing downstream goals can depend on
+unproved hints, so these counts do not imply a complete proof. One provider call
+made15proposal requests:15candidate WP reports,14complete and one censored at
+the52minute search deadline. Baseline/seed jobs are separate. There was no fresh
+final replay or covering-wait negative; about7.97minutes of reserve went unused.
+`within_budget:false` means no qualifying success, not a60minute overrun.
+
+[Completed compact evidence](../evidence/t07-counted-24-20261015.json) binds30source
+pins,34review pins, six tools and63guarded reports. All cleanup confirmed; the
+poststop audit found no owned jobs, verifiers or leases. Peak sampled RSS was
+3552.90625MiB;44transient inspection events recovered without a terminal error.
+Source/workspace/raw output remain frozen outside the repo. Best JSON SHA256:
+`13b6af2f2b8ca8e63bfdf3b76e374974b8d0af001403b434ac3aae8cf63b41d3`.
+The CLI has no `turn.completed` usage receipt; its raw `tokens:{}` means unknown,
+not zero. The [scoped token addendum](../evidence/t07-token-accounting-acceptance-addendum-20261015.md)
+records136persisted snapshots; the latest cumulative observed counts are
+13,386,648input +27,238output =13,413,886total at22:44:18.019Z. Cached input
+13,099,904 and reasoning output12,010 are subsets, not extra tokens. These
+partial observations do not establish complete interrupted-turn accounting. The ticket remains claimed in its existing shared box.
+
+### Mechanical-seed assumption superseded prospectively — 2026-10-15 ET
+
+The earlier undecided assumption that deterministic frame seeds are method rather
+than hints is retained verbatim as historical context. It does **not** override
+Acceptance's requirement that every counted-run hint come from Codex. The dated
+[independent criterion review](../evidence/t07-seed-provenance-acceptance-review-20261015.md)
+finds that seeded runs cannot literally close07 even if otherwise all goals pass.
+Their actual mechanical/Codex origins and proof outcomes remain unchanged.
+
+A future method must start with no hints, never insert generated frames or filter
+seeds, allow Codex to author `loop_assigns` independently from frozen source, and
+trace every attempted record to raw scoped provider operations. No supplied old
+frames, copied/relabelled seeds, historical hints or seed-goal exemptions are
+allowed. Independently authored coincident text needs no artificial novelty rule.
+Complete natural provider usage receipts and the unchanged all-goal/smoke plus
+identical-hints covering-wait negative must fit the same60minute clock. The
+separate posthoc full30 replay is diagnosis only: it cannot upgrade run24 or feed
+concrete hints/history to a future provider. No new counted launch is implied.
+
+
+### Uncounted run24 full30 diagnostic censored — 2026-10-15 ET
+
+One independently reviewed replay of the authoritative incumbent on unchanged
+14c2a298 source ran18:52:52–19:04:43EDT,710.42seconds. The guard reached710seconds
+and exited137, with497goals scheduled and no final goals JSON/property closure.
+The partial log already emits24Unknown and two Timeout statuses; these are retained
+censored observations, not a complete final verdict. The497all-function/smoke
+schedule differs from259completed diagnostic ordinary goals; without the missing
+inventory, its238extra scheduled goals cannot be partitioned into smoke, additional
+ordinary goals or splits. The earlier139baseline smoke count is not assumed stable
+after adding41annotations. No proof, smoke pass or negative result is inferred.
+
+[Posthoc evidence](../evidence/t07-run24-posthoc-full30-20261015.json) records the
+710second lower bound,5616.21875MiB sampled peak and unchanged source/tool/origin
+hashes. Cleanup failed closed after three process-environment inspection denials
+for root9354, captured birth1792104772.581082; the resource report remains
+`unconfirmed_children`, not retroactively clean. Independent fresh poststop scans
+found the root absent and no recent owned markers, group/session members, run-path
+matches or inspection denials. At19:07:14 the exact owner/inode quarantine directory
+was atomically archived outside the repo; the manual recovery receipt preserves
+its original bytes. No process was signalled during that recovery.
+
+This uncounted experiment cannot upgrade run24 or supply concrete hints/history to
+a future provider. The allotted diagnostic did not complete even the positive replay; no evidence
+establishes that a complete positive plus same-strength negative fits12minutes. Scheduling alone has no
+evidence of all-goal success; a future zero-seed structural method needs separate
+prospective budget, provenance, accounting tests/review and launch authorization.
