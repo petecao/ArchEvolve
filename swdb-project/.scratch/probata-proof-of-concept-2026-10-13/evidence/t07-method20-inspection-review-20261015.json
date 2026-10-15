@@ -1,0 +1,243 @@
+{
+  "created": "2026-10-15 16:37:40 EDT",
+  "method_revision": "method20-identity-preserving-inspection-v5",
+  "status": "prospective guard reviewed and actual resource component passed; fresh counted experiment still required",
+  "source_commit": "79d6f338726092919a9c3984899d6c1669a6e7e8",
+  "review_controls": {
+    "repository": 182,
+    "independent_cli": 1,
+    "passed": 183,
+    "duration_s": 9.51
+  },
+  "source_file_checks": 27,
+  "source_and_artifact_errors": [],
+  "resource_component": {
+    "wall_s": 150.48259925004095,
+    "seeds": 5,
+    "n_goals": 209,
+    "n_open": 39,
+    "provider_called": false,
+    "resource_pipeline_passed": true,
+    "scientific_success": false,
+    "outputs_reusable": false,
+    "process_reports": [
+      {
+        "summary": {
+          "path": "/private/tmp/probata-t07-seed-resource-check-v5/seeds/parse.log.summary.json",
+          "sha256": "f859a2bdbc56f35401cc527032a18d565ca5ffc4e81d2eea582b850dea5ccf95",
+          "bytes": 1549
+        },
+        "log": {
+          "path": "/private/tmp/probata-t07-seed-resource-check-v5/seeds/parse.log",
+          "sha256": "ce4c9abc2cacf96755c449b07100148ef0a31ac175bbde7ab4b765f664e34f62",
+          "bytes": 55
+        },
+        "wall_s": 0.5845177083392628,
+        "peak_rss_mb": 102.421875,
+        "exit_code": 0,
+        "unconfirmed_children": [],
+        "inspection_events": [],
+        "inspection_failure": null,
+        "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment",
+        "rss_scope": "live union of current ancestry, retained PID/birth identities and periodic inherited-marker matches; sampled, not a kernel quota"
+      },
+      {
+        "summary": {
+          "path": "/private/tmp/probata-t07-seed-resource-check-v5/seeds/round-s.log.summary.json",
+          "sha256": "d19849cf948994e13f89e60da1bce594355f9666d78f0b7f2dec1c92e0871bd5",
+          "bytes": 2716
+        },
+        "log": {
+          "path": "/private/tmp/probata-t07-seed-resource-check-v5/seeds/round-s.log",
+          "sha256": "80a63328263b38540845a6a0643cc1ac39af8cf2cdfd10adc56cde5543172861",
+          "bytes": 59668
+        },
+        "wall_s": 148.83262262499193,
+        "peak_rss_mb": 2599.5625,
+        "exit_code": 0,
+        "unconfirmed_children": [],
+        "inspection_events": [
+          {
+            "stage": "supervision",
+            "operation": "environ",
+            "requested_operation": "environ",
+            "pid": 52095,
+            "exception_pid": 52095,
+            "expected_birth": 1792096497.457335,
+            "observed_birth": 1792096497.457335,
+            "identity_state": "live",
+            "attempt": 1,
+            "clock_s": 338646.019557375,
+            "wall_unix_s": 1792096507.470975,
+            "outcome": "denied"
+          },
+          {
+            "stage": "supervision",
+            "operation": "environ",
+            "requested_operation": "environ",
+            "pid": 52319,
+            "exception_pid": 52319,
+            "expected_birth": 1792096562.921745,
+            "observed_birth": 1792096562.921745,
+            "identity_state": "live",
+            "attempt": 1,
+            "clock_s": 338711.50063233334,
+            "wall_unix_s": 1792096572.952287,
+            "outcome": "denied"
+          },
+          {
+            "stage": "supervision",
+            "operation": "environ",
+            "requested_operation": "environ",
+            "pid": 52355,
+            "exception_pid": 52355,
+            "expected_birth": 1792096577.297282,
+            "observed_birth": 1792096577.297282,
+            "identity_state": "live",
+            "attempt": 1,
+            "clock_s": 338715.9853596667,
+            "wall_unix_s": 1792096577.4370291,
+            "outcome": "denied"
+          }
+        ],
+        "inspection_failure": null,
+        "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment",
+        "rss_scope": "live union of current ancestry, retained PID/birth identities and periodic inherited-marker matches; sampled, not a kernel quota"
+      },
+      {
+        "summary": {
+          "path": "/private/tmp/probata-t07-seed-resource-check-v5/seeds/wp-gen.log.summary.json",
+          "sha256": "54b3a93fa3d350f6238cdf7caba72ba9d71ff500533a7338d9d5b8328b5184a1",
+          "bytes": 1548
+        },
+        "log": {
+          "path": "/private/tmp/probata-t07-seed-resource-check-v5/seeds/wp-gen.log",
+          "sha256": "bbce5119af1aa2dd7f3ef1aff2b0808446b802cd011aaab8673a2d4b02364794",
+          "bytes": 27966
+        },
+        "wall_s": 0.7761124583194032,
+        "peak_rss_mb": 146.8125,
+        "exit_code": 0,
+        "unconfirmed_children": [],
+        "inspection_events": [],
+        "inspection_failure": null,
+        "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment",
+        "rss_scope": "live union of current ancestry, retained PID/birth identities and periodic inherited-marker matches; sampled, not a kernel quota"
+      }
+    ],
+    "same_user_tools_remaining": [],
+    "shared_locks": {
+      "/tmp/claude/swdb-verifier.lock": false,
+      "/tmp/claude/swdb-verifier.slot2.lock": false
+    }
+  },
+  "inspection_boundary": {
+    "attempts": 3,
+    "retry_delay_s": 0.01,
+    "persistent_live_or_unknown_denial": "failclosed",
+    "renewal": "fresh captured same-UID identity, birth checked before/after, exact inherited run marker only; protected original root cannot be renewed",
+    "environment_values_retained": false,
+    "sampled_not_kernel_quota": true,
+    "hostile_process_containment": false,
+    "finite_nonatomic_cleanup_settlement": true
+  },
+  "run22": "harness-aborted before provider; preserved separately; exact historical denied operation unknown; no prior baseline/seed/hints/conversation/clock reuse",
+  "scientific_acceptance": "unchanged complete all-goal positive, fresh all-functions cache-none smoke replay within60counted minutes, separate covering-wait negative required",
+  "artifacts": [
+    {
+      "path": "/private/tmp/probata-t07-method20-inspection-review-v4.md",
+      "sha256": "0bd9bca6c59a97794776812ec6d9188fdd264e85f3dfd7153dd8ad3eec9802e7",
+      "bytes": 5686
+    },
+    {
+      "path": "/private/tmp/probata-t07-method20-inspection-review-v4-manifest.json",
+      "sha256": "f8403480d6a47056d4a69102ef9943a688ab021e58d92f570aba598568cb6b20",
+      "bytes": 10614
+    },
+    {
+      "path": "/private/tmp/probata-t07-method20-inspection-review-v5.md",
+      "sha256": "19ae9fd5509302d9a3d41540431a72ee5d71395c5e1fd5ac26e3eaae451887f4",
+      "bytes": 4421
+    },
+    {
+      "path": "/private/tmp/probata-t07-method20-inspection-review-v5-manifest.json",
+      "sha256": "31349c265d9a2a9bec409899fa7a1126c390f4165fa6fdcbdbf433ccdcbde4f3",
+      "bytes": 10038
+    },
+    {
+      "path": "/private/tmp/probata-t07-run22-inspection-diagnosis.md",
+      "sha256": "fee5b4a164503a4c5d1280950b006045ce373a7d5f937aea6ab8b0e4afe35f37",
+      "bytes": 6137
+    },
+    {
+      "path": "/private/tmp/probata-t07-inspection-red.xml",
+      "sha256": "b7984d611d9b9c3fb0d29982b6f5e6e34fc953e69b1a715cd7e8b98b83ae3693",
+      "bytes": 13887
+    },
+    {
+      "path": "/private/tmp/probata-t07-inspection-identity-red.xml",
+      "sha256": "3399a45a822b7e473220fadd994dc53c20bb1a1531e684e736f5525bcbd03b33",
+      "bytes": 3855
+    },
+    {
+      "path": "/private/tmp/probata-t07-inspection-leader-red.xml",
+      "sha256": "a67fd64c3b5e73fd5bb4c3a446a9117006cd9d58242cee32ed7f72307a8d67ae",
+      "bytes": 1772
+    },
+    {
+      "path": "/private/tmp/probata-t07-inspection-leader-zombie-red.xml",
+      "sha256": "52757be1db9619d80ac2085bd5c650a23afe564997b53a1aea62f2c2eeef66e6",
+      "bytes": 2378
+    },
+    {
+      "path": "/private/tmp/probata-t07-inspection-leader-snapshot-denial-red.xml",
+      "sha256": "8bba2fa404d6b98e2f5d79a62e193a10fcaab6925a6151120d7c673009e1564b",
+      "bytes": 2703
+    },
+    {
+      "path": "/private/tmp/probata-t07-marker-renewal-red.xml",
+      "sha256": "7b962a6f9aa91c6fee1107afc4886239cef9db4ec066b3ab7093dcc35b1495e3",
+      "bytes": 5306
+    },
+    {
+      "path": "/private/tmp/probata-t07-marker-renewal-runner-green.xml",
+      "sha256": "f1c894e8a47640a9e7dfd5ffe8d650400f2c0e5002ac6b312bdc46ee000a6670",
+      "bytes": 5939
+    },
+    {
+      "path": "/private/tmp/probata-t07-inspection-v5-independent-full-tests.txt",
+      "sha256": "cc90e6cf2dfada5a5bd829bc74b2160a89d8aa5d9a59ef9f6e3bac15a0cf6ef9",
+      "bytes": 260
+    },
+    {
+      "path": "/private/tmp/probata-t07-seed-resource-check-v4/manifest.json",
+      "sha256": "6819c4c6cc4273b1d1bf9be28b092569f18d05f4c98b4e744b204a12a3049381",
+      "bytes": 6464
+    },
+    {
+      "path": "/private/tmp/probata-t07-seed-resource-check-v4/result.json",
+      "sha256": "c79f3f226f866de8da790bc3fd3b09ada2203d55d7f9dc1d4d8a3a92ecc7a8c8",
+      "bytes": 10836
+    },
+    {
+      "path": "/private/tmp/probata-t07-seed-resource-check-v5.py",
+      "sha256": "25d29b43467f72061a429d007d2e27157964ad28aa2d5b76c6721738e4ee1ac1",
+      "bytes": 3545
+    },
+    {
+      "path": "/private/tmp/probata-t07-seed-resource-check-v5/manifest.json",
+      "sha256": "bff1919f9a1b6725c9210f9e57829ec7b2f58c2f7d1c50af93f30cf678c37f19",
+      "bytes": 6464
+    },
+    {
+      "path": "/private/tmp/probata-t07-seed-resource-check-v5/result.json",
+      "sha256": "5c6f31b42c53396349c368f237b7f74a6bae89bd5178d2397c39384fe44844eb",
+      "bytes": 8405
+    },
+    {
+      "path": "/private/tmp/probata-t07-seed-resource-check-v5/audit.json",
+      "sha256": "28c18b9fd549269b2a13a93e74e2ec26b706d3755cff0b4a3837c4e3c05d01a2",
+      "bytes": 4785
+    }
+  ]
+}

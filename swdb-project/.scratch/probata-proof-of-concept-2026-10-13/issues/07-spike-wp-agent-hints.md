@@ -1166,3 +1166,99 @@ independently authored CLI regression), and all 11 WP mode values preserved the
 marker while scrubbing unrelated environment. [Reviewed source and artifact pins](../evidence/t07-method20-prelaunch-review-20261015.json)
 retain RED/GREEN, review and exact source hashes. No provider or real verifier
 was called by those controls.
+
+### Method20 run20 aborted before provider — 2026-10-15 ET
+
+Fresh baseline started15:05:50ET on clean `418a48d7`; a separate Spec review then
+found two resource-lifecycle gaps: reparented/marked descendants were absent from
+active RSS accounting, and a parent could fork/exit during the final marker
+sweep before lease release. Run20 was stopped at15:15:49ET, before any Codex call.
+No complete baseline or scientific hint-loop result is claimed. Exact source,
+logs, process/lease cleanup and hashes are retained in
+[aborted-run evidence](../evidence/t07-method20-aborted-20261015.json).
+
+Both defects now have deterministic public CLI regressions that failed before
+their fixes. Prospective active RSS uses current ancestry plus live retained
+PID/birth identities and periodic marker discovery. Cleanup requires repeated
+empty discovery across a settlement interval and quarantines nonsettling or
+unconfirmed cleanup. All13 runner controls pass; independent composed re-review
+is pending. These controls establish no BFS theorem. The fresh all-goal,
+cache-none, smoke and covering-wait-negative criteria remain mandatory; ticket07
+stays claimed within the existing shared box.
+
+The composed resource revision independently passes **165 controls** (164
+repository plus one separate CLI control); [exact source/review/RED/GREEN pins](../evidence/t07-method20-resource-review-20261015.json)
+are retained under a distinct prospective `method20-resource-discovery-settle-v2`
+revision. A second Spec re-review, new clean freeze and preflight still precede
+any fresh run. The interrupted run20 clock is not reset or reused.
+
+### Run21 harness-aborted; scoped MCP approval correction — 2026-10-15 ET
+
+Fresh run21 at `7408be92` completed its no-hint baseline (103/254ordinary goals
+open, all timeout;139/139baseline smoke checks passed) and five-seed round
+(39/209open). The provider then encountered the CLI's approval refusal on
+`record_design`; no design record or promoted agent hint exists. Existing
+read-only diagnostics executed, and their time remains in this interrupted run.
+The stopped driver/provider and source/tool evidence, including the pre-seed
+AppleClang21 syntactic-parser receipt, are retained in
+[run21 aborted evidence](../evidence/t07-method20-approval-aborted-20261015.json).
+No final proof/smoke replay or negative-control success is claimed.
+
+The prospective fix grants explicit per-tool approval only to method20's
+`record_design` and `focused_probe`. A neutral actual CLI probe executed both toy
+tools without BFS source/hints/verifiers. Four external-CLI argv controls pass
+after RED: new/resumed method20 calls receive exactly those two overrides; legacy
+calls remain unchanged. Read-only sandbox, disabled shell and final proof criteria
+are preserved. Independent review and a wholly fresh counted run remain required;
+the prior baseline, hints, conversation and clock will not be reused.
+
+Independent composed review passes **169 controls** (168 repository plus one
+separate CLI control). [Approval revision/source/probe evidence](../evidence/t07-method20-tool-approval-review-20261015.json)
+pins the distinct prospective `method20-scoped-tool-approvals-v3` revision, the
+actual neutral routing check and unchanged proof/resource boundaries. Root review
+of the six-line runtime change found no additional issue. Fresh source/tool freeze,
+baseline and conversation remain required; no qualifying proof is claimed.
+
+
+### Run22 harness-aborted on process inspection — 2026-10-15 ET
+
+Clean `703ff3d7` completed its no-hint baseline and failed closed18seconds into
+seed-stage proving on `AccessDenied(pid44755)`, before any provider. The exact
+historical operation is unavailable; no cause is inferred. [Source/process/stop
+receipt](../evidence/t07-method20-inspection-aborted-20261015.json) preserves27
+source checks with zero mismatches and no remaining tools/shared leases.
+No baseline/output reuse, proof, final replay or negative-control success is claimed.
+
+Prospective observation retries now retain sanitized stage/operation/PID/birth/time
+metadata and independently recheck identity after denial. Only confirmed departed
+or replaced identities are skipped; persistent live or unknown denial fails closed.
+Four external process-boundary controls show RED/GREEN for transient and persistent
+ancestry/RSS denial;173 composed controls pass. Independent review and an actual
+fresh mechanical-seed verifier pipeline precede any fresh counted freeze. Scientific
+criteria and the existing claimed/shared-box status remain unchanged.
+
+
+Independent review then caught a transient-retry PID ownership regression before
+any actual verifier launch. Focused ancestry/marker snapshot and cleanup-leader
+replacement controls failed before the identity-preserving fix and now pass.
+The complete20 runner controls pass; the interim retry commit is superseded.
+No scientific conclusion or new counted run follows from these controls alone.
+
+
+### Inspection/identity revision reviewed; actual resource pipeline passes — 2026-10-15 ET
+
+Final independent review passes **183 controls**. Birth mismatch precedes departed
+status; fresh marker discovery renews only independently checked exact-marker
+nonroot child identities. Original root identity cannot be renewed. Persistent
+live or unknown inspection denial still fails closed. The corrected real seed
+pipeline on `79d6f338` completed at16:36:59ET in150.48seconds, with all three
+processes exited0, cleanup confirmed, source unchanged and no remaining tools or
+leases. An independent script verified27 source pins and all process/log hashes
+with zero errors. It used only five fresh mechanical frames (209goals/39open),
+called no provider and makes no scientific success claim.
+
+[Combined exact review/control/component receipts](../evidence/t07-method20-inspection-review-20261015.json)
+retain both actual resource components and all RED/GREEN ownership controls.
+Their outputs, prior baselines and conversations will not be reused. The ticket
+remains claimed in the existing shared box; a fresh counted full-baseline run
+and unchanged final positive/smoke/negative acceptance are still required.

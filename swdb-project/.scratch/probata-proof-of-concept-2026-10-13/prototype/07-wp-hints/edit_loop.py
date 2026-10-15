@@ -230,6 +230,11 @@ def codex_call(out, r, prompt, resume, mcp_state, deadline_s, budget_stop=None):
               "-c", "mcp_servers.probata.args=" + json.dumps(["-I", str(HERE / "edit_tool_mcp.py"), "--state", str(mcp_state)]),
               "-c", "mcp_servers.probata.tool_timeout_sec=" + str(TOOL_TIMEOUT_S[0]),
               "-c", "mcp_servers.probata.startup_timeout_sec=60"]
+    if json.loads((Path(mcp_state) / "config.json").read_text()).get("method20"):
+        # Explicit project authorization for these two artifact-producing tools.
+        # Preserve truthful write-tool annotations and the read-only sandbox.
+        for tool in ("record_design", "focused_probe"):
+            common += ["-c", f'mcp_servers.probata.tools.{tool}.approval_mode="approve"']
     tail = ["--json", "--output-schema", str(d / "schema.json"), "--output-last-message", str(d / "final.json"),
             "--disable", "shell_tool"]
     for f in L.CODEX_DISABLED_FEATURES:
@@ -460,6 +465,7 @@ def main():
         meta["method20"] = {"check": F.identity(), "focused_results": "diagnostic_only",
             "can_promote": False, "milestones": "complete checked rounds only",
             "design_objectives": list(F.OBJECTIVES), "phase_fractions": [.55,.35,.10],
+            "authorized_mcp_approval_modes": {"record_design": "approve", "focused_probe": "approve"},
             "prototype_rte_boundary": "unchanged; no production RTE/initializedness claim"}
     (out / "meta.json").write_text(json.dumps(meta, indent=1))
     # Round 0 is outside the legacy budget; methods18/19 count the fresh baseline.

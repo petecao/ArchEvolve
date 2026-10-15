@@ -1,25 +1,32 @@
 # Map: Extensa Probata proof of concept
 
 Created: 2026-10-14 00:45 ET
-Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `yanrujhou_main`; archived effort history: `probata-source-recovery-20261015`.
+Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-resume-20261015`; base: `yanrujhou_main`; archived effort history: `probata-source-recovery-20261015`.
 
 ## Current state (resume here)
 
-Updated: 2026-10-15 14:59 ET. **Implementation resumed at the user's request.**
-Integration: `codex/probata-resume-20261015`, based on clean synchronized
-`yanrujhou_main` at `d94d629b`. One remote integration ref is published.
+Updated: 2026-10-15 16:51 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
+Integration: `codex/probata-resume-20261015`. Production runtime bytes match
+`71771f09`; exact remote sources: node 0 `9b75f4a2`, node 1 `71771f09`.
+Mac counted run 23 is active at `df19ff8a`, after resource component acceptance.
+[Current resume and evidence](resume.md).
 
-- **32 resolved / 28 ready-for-agent / 3 claimed**, from ticket frontmatter.
-  Active frontier:07,24,27 in separate local worktrees.25 and36 remain gated.
--07: independent method20 review before a fresh60-minute counted run; no historical hints.
--24: original construct-group acceptance, typed embedded arrays and conditional reads.
--27: current-policy proof-semantics acceptance and32/33-command capacity agreement.
-- Coordinator owns merges, both remote lanes and the30-minute heartbeat. A separate
-  prerequisite review hardens inherited RTE admission before fresh acceptance proofs.
-  See [resume](resume.md) and [live ticket index](ticket-status-20261015.md).
+- **24:** Ring and allocation pairs audited; DXC/class/OMP pairs pass at `9b75f4a2`.
+  Node 0 generation 571 stopped/released after the safe float case retained three
+  initialization timeouts; diagnosis is active. No OOM/whole timeout or surviving
+  run-prefix process. Atomic refusal fix `220ef337` passes 78 focused controls,
+  pending independent review and fresh composed-source acceptance. Full nine-group
+  finite native agreement at `e48a302e` retains its accepted historical source.
+- **27:** Ten of eleven safe cases pass; final footprint case is running. Node 1 generation 602 continues; negatives,
+  capacity and bounded/native agreement remain open.
+- **07:** Fresh run 23 active from 16:41 ET after 183 controls, actual component
+  acceptance and independent readiness review. Run 22 remains aborted. No qualifying BFS proof.
+- **36:** Still dependency-gated. 122 focused compiler/scripted controls pass;
+  13 actual-WP cases excluded. Drafts 1/2, final method freeze and held-out gates remain.
 
-No new actual proof or whole-ticket completion is claimed at this checkpoint.
-The old chat/heartbeat remain paused. Historical evidence below retains exact pins.
+No whole ticket closes from these partial results. Historical records retain their
+source pins. This chat's 30-minute heartbeat is active; the old chat's remains
+paused. [Authoritative ticket index](ticket-status-20261015.md).
 
 ## Historical integration checkpoints
 
@@ -151,6 +158,19 @@ Current dispatch, evidence and blockers: [resume.md](resume.md).
   and generic vector/helper acceptance remain open.
 
 ## Context pointers
+
+- Selected remaining original acceptance restarted16:06ET on node0 generation571
+  at `9b75f4a2`, with fresh dependencies, exact case filter and1800s outer command
+  limit; per-goal30s, RTE/init/smoke and8GiB unchanged. It stopped/released16:45ET
+  on three safe-float initializedness timeouts; DXC/class/OMP pairs passed.
+  [Launch and interrupted-run cleanup metadata](evidence/resumed-t24-pending-launch-20261015.json).
+
+- Resumed original-template acceptance at`71771f09`:89 ordinary+1smoke safe,
+  seeded one ordinary ensures timeout with initialization retained; all producer
+  pins verified. [Ticket24](issues/24-cpp-subset-widening.md),
+  [compact pair](evidence/t24-original-template-pair-mbit10-20261015.json).
+- Resource review fixed at`1ebf9d59`;165 controls and independent source-pin
+  re-review precede fresh run21. [Disposition](evidence/resumed-review-disposition-20261015.md).
 
 Historical results and current checkpoints. Ticket files, not the number of entries here, determine completion.
 

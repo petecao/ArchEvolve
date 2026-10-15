@@ -1,7 +1,7 @@
 # 24 — C++ subset widening
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-15 ET (original Bag/Counter scalar-lifetime checkpoint; whole construct acceptance remains open)
+Updated: 2026-10-15 ET (original Ring/allocation actual pairs and public unsupported controls accepted; remaining matrix open)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 21
@@ -19,7 +19,8 @@ Updated: 2026-10-15 ET (original Bag/Counter scalar-lifetime checkpoint; whole c
 - [ ] Each of `std::min`, `std::max`, `std::copy`, `std::swap` lowers to a call of its C model. Each model's ACSL contract is proven once (one proof record each, subject: a library entry's summary). A unit that uses a model pins that record.
 - [ ] An OpenMP fixture (`parallel for` with a `reduction`, a `critical` section, an `atomic`, a `barrier`) and an atomics fixture (`__sync_*`, `__atomic_*`) lower and prove at threads = 1.
 - [ ] A fixture with a `__dxc_*` call and one with a `maa_*` call keep each as a call whose contract comes from a fixture summary. The record lists the summary used.
-- [ ] Unsupported constructs: inheritance, a virtual function, an exception, a lambda, RTTI, another standard container (such as `std::map`) and a stream each read not proven, "unsupported construct", naming the construct and its source location.
+- [x] Unsupported constructs: inheritance, a virtual function, an exception, a lambda, RTTI, another standard container (such as `std::map`) and a stream each read not proven, "unsupported construct", naming the construct and its source location.
+- [x] Once ticket22 lands, run its accepted finite native C++/C agreement subcheck on every original construct fixture; record undefined-input exclusions separately and retain a planted disagreement stop control.
 - [ ] Naming rules carry a version. Every proof record pins it in its content-hash set, and bumping the version gives a different pin.
 - [ ] Each diagnosed failure joins 21's regression corpus. Fixtures use no BC, PR or SSSP code. Tests that need Frama-C or LLVM 22 skip cleanly.
 
@@ -731,3 +732,117 @@ current-policy construct/dependency matrix, including embedded template-array
 origins, conditional standard-call placement and broader allocation/lifetime
 coverage. See [class evidence](../evidence/t24-member-lifetimes-mac-20261015.json)
 and [condition closeout](../evidence/t24-condition-closeout-20261015.json).
+
+### Resumed original construct frontier — 2026-10-15 ET
+
+User resumed implementation and remote evaluation. The exact original Ring
+int/long fixtures now gain structural fixed-subobject identity through a closed
+live automatic receiver context; pure conditional-return reads carry ordinary
+path-conditioned numeric guards. No validity/init/numeric premise is added and
+no original source, contract or hint is replaced. Independent source review found
+and repaired a runner acceptance gap: original seeded prelaunch refusals cannot
+count as actual negative proofs. A separate narrow terminal `i<=n` fill grammar
+keeps the original off-by-one fixtures' invalid writes as actual RTE obligations.
+
+All 18 original safe/seeded combined-source compiler admissions now pass at
+`b801e5a2`. Original determinism/C11/bounded-native/name/refusal controls pass
+29/29; new fixed/conditional/public stand-in/setup controls pass16/16; terminal
+controls pass12/12. These overlapping profiles are compiler/stand-in coverage,
+not actual construct acceptance. The root coordinator owns fresh lane0 dispatch
+through the committed exact-source runner, after mandatory setup hardening is
+merged. Original all-goal/init/smoke safe+seeded acceptance and current dependency
+pins remain required. Status stays **claimed**.
+[Implementation assumptions, exact checkpoints and evidence](../evidence/t24-resume-compiler-20261015.md).
+
+### Original Ring per-candidate actual acceptance — 2026-10-15 ET
+
+Frozen `71771f09` passes the original template pair on mbit10 node0. Safe:
+**89 ordinary + 1 smoke Valid**. Seeded original `r.get(0)`: **not_proven,
+88 ordinary Valid, one ordinary ensures timeout, 1 smoke Valid**. Both retain
+**25 RTE initialization goals**, with zero residual Ring/twice calls in the
+normalized selected entry. No new validity/init/numeric requires or replacement
+fixture was used. All physical code/baseline/contract/method/checker/report pins,
+980 Git/source-manifest files and exact original source substitutions were
+independently checked. Raw evidence remains remote; compact audit is committed.
+This closes the original embedded-array compiler/proof gap, not the whole ticket.
+The remaining eight groups and lifetime/dependency actual matrix are pending;
+status remains **claimed**.
+[Exact pair audit](../evidence/t24-original-template-pair-mbit10-20261015.json).
+
+### Concrete dxc negative-control correction — 2026-10-15 ET
+
+The old `__dxc_tile_size(tile)+2` variant is not a concrete bug against the
+original stand-in: `tile&1` returns 0 or 1, so the variant returns 2 or 3 and still meets
+`1<=result<=3`. A modular ensures timeout from the looser proven summary
+`0<=result<=2` is a precision control, not genuine seeded semantic-bug acceptance.
+The root coordinator authorized changing only this seeded replacement to `+4`.
+Safe source, original contract, original summary and actual stand-in body remain
+unchanged. At in-domain `tile=0`, native C++ and its C lowering both return 1 for
+safe, 2 for the old seed and 4 for the corrected seed. The public native negative
+control goes RED (old+2) to GREEN (corrected+4), 2.06 s / 1.71 s. This is native
+fixture evidence, not a solver refutation or production DX100 semantics claim.
+Frozen `71771f09` records keep their exact old source identities; fresh corrected-seed
+actual acceptance remains required. [Native source/binary hashes and outcomes](../evidence/t24-dxc-native-negative-control-20261015.json).
+
+### Original allocation pair and public unsupported controls — 2026-10-15 ET
+
+The original new-array safe/seeded pair now has actual frozen `71771f09`
+evidence. Safe proves 42 ordinary + 7 smoke goals. The original `i<=n` seed
+reads `not_proven`: 40 ordinary Valid, ordinary invariant-preservation and
+memory-access timeouts, 4 smoke Valid and 3 failed smoke. Both retain 11
+initialization goals. Independent physical/source/certificate/view auditing
+finds no errors; no timeout is labeled a counterexample and no invalid native
+write is executed. [Compact actual audit](../evidence/t24-original-allocation-pair-mbit10-20261015.json).
+
+All seven original unsupported groups also pass public proof refusal controls
+(7/7, 30.27 s), with named source-line diagnostics, no goals and no verifier
+launch. Their `not_proven` result is deliberate prelaunch refusal, distinct from
+the actual original semantic negative jobs. Remaining groups, lifetime actuals,
+dependency closure, corrected-DXC actuals and accepted ticket22 finite agreement
+profile are still pending. Status remains **claimed**.
+
+### Accepted ticket22 finite agreement limb — 2026-10-15 ET
+
+The reviewed original nine-group safe/current-seeded profile at `e48a302e`
+records **112,589 defined input comparisons**, all equal between C++ and the
+ordinary C lowering. All 18 case classifications are present: 17 agree on
+defined inputs; the allocation seed is explicitly UB-only with zero defined
+comparisons. The **2,207 known UB exclusions** (500 allocation, 1,702 standard
+copy at `n==0`, 5 seeded maa overflow) remain separate from **47,164 original
+precondition exclusions**. No runtime sanitizer asymmetry was observed.
+
+Independent review reconstructed every domain/classification and all retained
+defined results, rehashed 15,768 references across 1,363 physical files, and
+found zero discrepancies. The shared planted C-only lowering mismatch stops
+comparison and emits no proof verdict. This completes the separate agreement
+limb under the accepted ticket22 decision; it is finite native evidence, not
+formal C++ equivalence, a proof of a WP checking view, or device semantics.
+[Accepted profile and exact pins](../evidence/t24-finite-agreement-20261015.md),
+[independent final review](../evidence/t24-finite-agreement-final-review-20261015.md).
+
+Provenance stays explicit: original Ring/allocation actual records use frozen
+`71771f09`; pending remaining actual jobs use `9b75f4a2`; finite agreement uses
+`e48a302e`. Production runtime bytes match across those freezes, while shared
+seeded artifacts retain their distinct old-DXC+2/corrected-DXC+4 identities.
+No historical record is relabeled current. Remaining actual construct pairs,
+lifetime controls and fresh model/summary closure still gate ticket completion.
+Status remains **claimed**.
+
+### Corrected dxc original caller pair accepted — 2026-10-15 ET
+
+Fresh frozen `9b75f4a2` proves the unchanged fixture summary (4 ordinary + 1
+smoke Valid) and safe caller (9 ordinary + 3 smoke Valid). The corrected `+4`
+seed reads `not_proven`, with 8 ordinary Valid, one ordinary ensures timeout
+and all 3 smoke Valid. Both callers bind the same newly proven summary ID and
+content, with current source-closure binding receipts. No prelaunch refusal or
+historical `+2` precision control substitutes for this actual negative.
+
+The independent compact audit finds zero errors across all 983 frozen source
+files, report/adapter-log hashes, candidate/baseline artifacts, original
+source/clauses/hints, current method/checker/naming pins and fresh dependency
+identity/content. Raw records remain remote. Timeout is not a counterexample;
+the separate native `tile=0` witness establishes the corrected seed's concrete
+result 4 against the unchanged `1<=result<=3` clause.
+[Exact corrected pair and dependency audit](../evidence/t24-corrected-dxc-pair-mbit10-20261015.json).
+Remaining original groups, allocation/lifetime controls and model/summary
+closure remain open; overall status stays **claimed**.

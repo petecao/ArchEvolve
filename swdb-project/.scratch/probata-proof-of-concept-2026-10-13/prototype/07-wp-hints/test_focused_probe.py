@@ -206,3 +206,30 @@ def test_every_proposal_route_requires_design_and_rejected_repair_still_ages(tmp
     assert promoted is None and 'design' in rec['result']
     assert (tmp_path/'best.json').read_bytes()==before
     assert E.debt_status(tmp_path)['started_s']==5 and E.debt_status(tmp_path)['repairs']==1
+
+
+@pytest.mark.parametrize('resume', [None, 'private-existing-read-only-session'])
+@pytest.mark.parametrize('method20', [False, True])
+def test_cli_approves_only_authorized_method20_tools_without_widening_sandbox(tmp_path,monkeypatch,resume,method20):
+    """Observe the actual provider argv at its external CLI boundary; no provider."""
+    import sys
+    import edit_loop
+    import loop as L
+    state=tmp_path/'state';state.mkdir();(state/'config.json').write_text(json.dumps({'method20':method20}))
+    captured=tmp_path/'argv.json';cli=tmp_path/'neutral-cli'
+    cli.write_text('#!'+sys.executable+'\nimport json,sys\nfrom pathlib import Path\n'+
+        f'Path({str(captured)!r}).write_text(json.dumps(sys.argv[1:]))\n'+
+        'sys.stdin.read()\nPath(sys.argv[sys.argv.index("--output-last-message")+1]).write_text(json.dumps({"ops":[],"notes":"neutral"}))\n'+
+        'print(json.dumps({"type":"thread.started","thread_id":"private-neutral-session"}))\n'+
+        'print(json.dumps({"type":"turn.completed","usage":{}}))\n');cli.chmod(0o755)
+    monkeypatch.setattr(L,'CODEX',str(cli))
+    result=edit_loop.codex_call(tmp_path,1,'neutral routing probe',resume,state,2)
+    assert result['exit']==0 and result['ops']==[]
+    argv=json.loads(captured.read_text());settings=[argv[i+1] for i,x in enumerate(argv[:-1]) if x=='-c']
+    approvals={x for x in settings if '.approval_mode=' in x}
+    expected={'mcp_servers.probata.tools.record_design.approval_mode="approve"',
+              'mcp_servers.probata.tools.focused_probe.approval_mode="approve"'} if method20 else set()
+    assert approvals==expected
+    assert '--dangerously-bypass-approvals-and-sandbox' not in argv and '--approve-for-me' not in argv
+    if resume is None:assert argv[argv.index('-s')+1]=='read-only'
+    assert argv[argv.index('--disable')+1]=='shell_tool'

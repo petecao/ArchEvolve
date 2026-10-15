@@ -1,0 +1,226 @@
+{
+  "created": "2026-10-15 16:07 ET",
+  "new_raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-t24-pending-9b75f4a2",
+  "old_raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-t24-remaining-71771f09",
+  "new_source_commit": "9b75f4a2c63d82ffa8417a487700e153948e39ef",
+  "uptime": "16:07:32 up 76 days,  8:26, 11 users,  load average: 2.29, 1.82, 2.04",
+  "disks": "Filesystem      Size  Used Avail Use% Mounted on\n/dev/sdd1       1.8T  1.7T   19G  99% /data1\n/dev/sdb1       1.8T  1.7T   95G  95% /data\n",
+  "logged_in_count": 2,
+  "new": {
+    "launch.json": {
+      "created": "2026-10-15 16:06 ET",
+      "source_commit": "9b75f4a2c63d82ffa8417a487700e153948e39ef",
+      "node": 0,
+      "storage_budget_gb": 8,
+      "readers": [
+        "root",
+        "ticket24"
+      ],
+      "raw_output_retained_remote": true,
+      "worker_limit": 1,
+      "rss_cap_bytes": 8589934592,
+      "timeout_seconds": 14400,
+      "purpose": "seven original construct pairs including corrected DXC, fresh dependencies and pending allocation/lifetime controls; accepted allocation pair not repeated; ticket remains open"
+    },
+    "lane.json": {
+      "socket_lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "command": [
+          "timeout",
+          "--signal=TERM",
+          "--kill-after=60",
+          "14520",
+          "bash",
+          "/data/yanruj/EvolveSWDB_runs/probata-resume-t24-pending-9b75f4a2/run.sh"
+        ],
+        "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+        "ended_utc": "",
+        "exit_code": -1,
+        "host": "mbit10",
+        "job": "probata-resume-t24-pending",
+        "lease_generation": 571,
+        "lease_name": "mbit10-evaluation-node0",
+        "load1_at_start": 1.31,
+        "load1_max": 32,
+        "node": 0,
+        "numa_memory_policy": "bind:0",
+        "numactl": "--cpunodebind=0 --membind=0",
+        "preregistration_sha256": null,
+        "started_utc": "2026-10-15T20:06:05Z"
+      }
+    },
+    "dispatch-selection.json": {
+      "source": "/data1/yanruj/probata-t24-corrected-20261015",
+      "commit": "9b75f4a2c63d82ffa8417a487700e153948e39ef",
+      "groups": [
+        "dxc_summary",
+        "classes",
+        "omp",
+        "floats",
+        "std_models",
+        "atomics",
+        "maa_summary",
+        "new_array"
+      ],
+      "cases": [
+        "dxc_summary:safe",
+        "dxc_summary:seeded",
+        "classes:safe",
+        "classes:seeded",
+        "omp:safe",
+        "omp:seeded",
+        "floats:safe",
+        "floats:seeded",
+        "std_models:safe",
+        "std_models:seeded",
+        "atomics:safe",
+        "atomics:seeded",
+        "maa_summary:safe",
+        "maa_summary:seeded",
+        "new_out_of_range",
+        "new_after_delete",
+        "new_escape_owner_address",
+        "new_alias_write",
+        "new_escape_scalar_address",
+        "new_conditional_delete",
+        "new_double_delete",
+        "new_later_callback",
+        "new_ignored_uninitialized_read",
+        "new_reassigned_owner"
+      ],
+      "public_timeout_seconds": 1800,
+      "whole_timeout_seconds": 14400,
+      "skip_completed": [
+        "templates:safe",
+        "templates:seeded",
+        "new_array:safe",
+        "new_array:seeded"
+      ]
+    },
+    "wrapper-check.json": {
+      "path": "/data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_lane.sh",
+      "sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8",
+      "remote_branch": "yanrujhou_main",
+      "remote_commit": "76cca359136794afa5ede975cfac8293cfa2ab9a",
+      "comparison": "bytes identical to freshly fetched branch; default main has no lane script"
+    },
+    "command.json": [
+      "/data1/yanruj/venvs/swdb-test/bin/python",
+      "/data1/yanruj/probata-t24-corrected-20261015/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/t24-original-matrix.py",
+      "--expected-commit",
+      "9b75f4a2c63d82ffa8417a487700e153948e39ef",
+      "--output",
+      "/data/yanruj/EvolveSWDB_runs/probata-resume-t24-pending-9b75f4a2/matrix",
+      "--groups",
+      "dxc_summary,classes,omp,floats,std_models,atomics,maa_summary,new_array",
+      "--cases",
+      "dxc_summary:safe,dxc_summary:seeded,classes:safe,classes:seeded,omp:safe,omp:seeded,floats:safe,floats:seeded,std_models:safe,std_models:seeded,atomics:safe,atomics:seeded,maa_summary:safe,maa_summary:seeded,new_out_of_range,new_after_delete,new_escape_owner_address,new_alias_write,new_escape_scalar_address,new_conditional_delete,new_double_delete,new_later_callback,new_ignored_uninitialized_read,new_reassigned_owner",
+      "--public-timeout-seconds",
+      "1800",
+      "--stop-on-failure"
+    ]
+  },
+  "interrupted": {
+    "resources.json": {
+      "exit_code": 1,
+      "peak_rss_bytes": 1084866560,
+      "out_of_memory": false,
+      "timed_out": false,
+      "wall_seconds": 1560.7556438753381,
+      "cpu_seconds": 1230.118852
+    },
+    "source-after.json": {
+      "commit": "71771f097feb83338928430bdf78a4de8384e63b",
+      "tracked_changes": "",
+      "source_unchanged": true
+    },
+    "post-exit-process-audit.json": {
+      "created_utc": "2026-10-15T20:00:05.950986+00:00",
+      "run": "/data/yanruj/EvolveSWDB_runs/probata-resume-t24-remaining-71771f09",
+      "matching_live_processes": [],
+      "inspection_denied": [
+        {
+          "name": "(sd-pam)",
+          "username": "yanruj",
+          "pid": 3261267
+        },
+        {
+          "name": "sshd",
+          "username": "yanruj",
+          "pid": 3664254
+        }
+      ],
+      "note": "Read-only same-user process inspection after generation570 release; no signals sent."
+    }
+  },
+  "leases": {
+    "mbit10-evaluation.meta.json": {
+      "active_session": null,
+      "heartbeat_at": "2026-09-12T04:49:11Z",
+      "lease": {
+        "acquired_at": "2026-09-12T01:35:42Z",
+        "daemon_pid": 209457,
+        "daemon_start_token": "sh209457-1789176942",
+        "generation": 77,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation",
+        "mode": "measure",
+        "session_id": null
+      },
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "recovered_from_generation": null,
+      "released_at": "2026-09-12T04:49:11Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation-node1.meta.json": {
+      "active_session": null,
+      "heartbeat_at": "2026-10-15T19:12:12Z",
+      "lease": {
+        "acquired_at": "2026-10-15T19:12:12Z",
+        "daemon_pid": 3646619,
+        "daemon_start_token": "sh3646619-1792091532",
+        "generation": 602,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node1",
+        "mode": "measure",
+        "session_id": null
+      },
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "recovered_from_generation": null,
+      "released_at": null,
+      "session_note": null,
+      "session_state": "none",
+      "state": "held",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation-node0.meta.json": {
+      "active_session": null,
+      "heartbeat_at": "2026-10-15T20:06:04Z",
+      "lease": {
+        "acquired_at": "2026-10-15T20:06:04Z",
+        "daemon_pid": 3665613,
+        "daemon_start_token": "sh3665613-1792094764",
+        "generation": 571,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node0",
+        "mode": "measure",
+        "session_id": null
+      },
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "recovered_from_generation": null,
+      "released_at": null,
+      "session_note": null,
+      "session_state": "none",
+      "state": "held",
+      "writer": "hostlock.sh"
+    }
+  },
+  "evidence_boundary": "Launch and interruption metadata only; no unfinished proof acceptance. Original Ring and allocation pair keep their separately audited frozen sources. Raw outputs remain remote."
+}
