@@ -707,3 +707,5 @@ prelaunch source refusal retains false. The public stand-in regression first
 reproduces1failed/1passed; the correction gives2passed in47.06s under8GiB
 (peak408,092,672bytes), with no actual solver. Historical5c records are unchanged.
 [Evidence](../evidence/wp-launch-metadata-20261015.json). Ticket36 stays claimed.
+
+Composed `aead7909` passes 37 component/public controls (56.55s). Its premature ordinary CPU read is intentionally refused before WP by the existing semantics0.1 policy; overlap hazards belong to ticket28. The new test incorrectly expected a WP result and failed on absent hint metadata. A test-only correction now checks that documented refusal, and strengthens the shortened-frame assertion to the specific open store_indices obligation. Offline assertions pass all three frozen593 records and the frozenaead refusal; runtime and historical artifacts are unchanged. No overlap theorem is claimed.

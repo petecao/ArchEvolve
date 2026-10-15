@@ -92,6 +92,108 @@
     "all_artifact_hashes_match": true
   },
   "scope": "Only a standalone plain local int assignment in braces, with a pure right-hand side and direct int entry-pointer nested reads. Original local destination binding and whole assignment are independently matched; no input premise is added. Memory lvalues, parameter writes, inner mutation and unbraced conditional placement remain closed.",
-  "remaining": "Original allocating/vector/whole-ticket acceptance remains separate; original store early-CPU-read control needs a prospective composed-source replay.",
-  "audit": "/private/tmp/probata-assignment-actual-audit.json"
+  "remaining": "Ordinary CPU/device overlap stays outside semantics0.1; ticket28 owns its hazard rules. No overlap proof or full-ticket acceptance claimed.",
+  "audit": "/private/tmp/probata-assignment-actual-audit.json",
+  "composition": {
+    "source": "aead7909a5a2de1353e8741300415ebe08c39f40",
+    "passed": 37,
+    "seconds": 56.55,
+    "guard": {
+      "cmd": [
+        "/Users/yanrujhou/.pyenv/shims/python3",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_nested_entry_reads.py",
+        "tests/test_helper_view_scope.py",
+        "tests/test_wp_nested_assignment.py::test_nested_assignment_reaches_the_ordinary_pointer_and_initializedness_checks",
+        "tests/test_wp_launch_metadata.py",
+        "--report-log=/private/tmp/probata-assignment-union.jsonl",
+        "--basetemp=/private/tmp/probata-assignment-union"
+      ],
+      "exit_code": 0,
+      "wall_s": 56.55,
+      "peak_rss_mb": 397.2,
+      "cap_gb": 8.0,
+      "killed_by_watchdog": false,
+      "timed_out": false,
+      "timeout_s": 300.0,
+      "log": "/private/tmp/probata-assignment-union.log",
+      "log_sha256": "998da3a282aeed4068fd6807507cdd14bdc734359f02418c697cb8f8535ee94a",
+      "lock_wait_s": 0.0,
+      "finished": "2026-10-15 11:59:24 EDT"
+    }
+  },
+  "cpu_overlap_boundary": {
+    "source": "aead7909a5a2de1353e8741300415ebe08c39f40",
+    "manifest_pins": {
+      "swdb/nested_entry_reads.py": "4822b2caab71a5a8782d0af550416748e14bd77030794f6fca2a47f484823bc5",
+      "swdb/helper_windows.py": "6ab445ad4ac32a1b72899f6debcf445c8afb7cd29d21503f21a2ab4a4bc145d5",
+      "swdb/wp_adapter.py": "737411058a229a97499f1810b9b0ac9795899b6b86a91df26c0e5c6938ed5e89",
+      "swdb/wp_pointer_bounds.py": "297b426e208d561b6dbb1b15902b72deb760fb2c1bf66a9ca61dcfe64dd5a3b4",
+      "swdb/proof_semantics.py": "e1b4eeef66c5fccf43618799597fe3a946574fcaacde4398ed96a9a1b1bd48fc",
+      "swdb/cpu_memory_admission.py": "2d8939807edd361b9962fda45dc75eb05680a2b99a87dbc97af4871b2b0d2656",
+      "tests/test_wp_view_entry_hints.py": "34597b09e753d41f5f6d47cc08e7506014667998fdd976b6ffea204f51ef02dc"
+    },
+    "record": "/private/tmp/probata-store-early-read-actual/test_actual_store_source_keeps0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t160111z.a24d1356.yaml",
+    "sha256": "409db1336e0066ccfc342ffbb694b3d276218e78297bbf855a79bd723ba3c8d8",
+    "verdict": "not_proven",
+    "failure_class": "unsupported_construct",
+    "admission": {
+      "policy": {
+        "id": "dx100-cpu-memory-admission-1",
+        "sha256": "2d8939807edd361b9962fda45dc75eb05680a2b99a87dbc97af4871b2b0d2656"
+      },
+      "scope": "ordinary CPU/DX100 memory interference is outside semantics 0.1",
+      "refused": [
+        {
+          "function": "dxf_store_source_wait",
+          "kind": "array",
+          "line": 305,
+          "begin": 9797,
+          "end": 9801,
+          "statement": 8,
+          "reason": "CPU read is not in an acyclic unit-only prefix before every device-store issue"
+        },
+        {
+          "function": "dxf_store_source_wait",
+          "kind": "array",
+          "line": 305,
+          "begin": 9810,
+          "end": 9831,
+          "statement": 8,
+          "reason": "CPU read is not in an acyclic unit-only prefix before every device-store issue"
+        }
+      ]
+    },
+    "verifier_launched": false,
+    "goal_count": 0,
+    "artifact_count": 14,
+    "artifact_set_sha256": "222de95caac7c65f41240c7ddbb8a8aa34ff4c7ad10b1fee46a0007727651ab7",
+    "guard": {
+      "cmd": [
+        "/Users/yanrujhou/.pyenv/shims/python3",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_wp_view_entry_hints.py::test_actual_store_source_keeps_entry_witness_and_original_safety_obligations[early_cpu_read]",
+        "--report-log=/private/tmp/probata-store-early-read-actual.jsonl",
+        "--basetemp=/private/tmp/probata-store-early-read-actual",
+        "--maxfail=1"
+      ],
+      "exit_code": 1,
+      "wall_s": 144.16,
+      "peak_rss_mb": 4216.2,
+      "cap_gb": 8.0,
+      "killed_by_watchdog": false,
+      "timed_out": false,
+      "timeout_s": 1200.0,
+      "log": "/private/tmp/probata-store-early-read-actual.log",
+      "log_sha256": "c456b72dc0145bbb7f1e038ff94f8d2c688476c3478c0d0746d9c3bc1458543f",
+      "lock_wait_s": 0.0,
+      "finished": "2026-10-15 12:02:28 EDT"
+    },
+    "interpretation": "Intentional prelaunch refusal of ordinary CPU/device memory overlap outside semantics0.1. Existing test_proof_semantics_admission.py defines this policy; ticket28 owns future overlap hazard semantics. The new test initially wrongly expected WP and failed on absent hint_check. Only that test expectation was corrected; runtime/proof inputs unchanged.",
+    "offline_assertions": "Corrected semantic assertion accepts frozen593 safe, short-frame, prelaunch refusal and frozenaead prelaunch refusal; short-frame requires the specific store_indices obligation to be open. No old run is relabeled."
+  }
 }

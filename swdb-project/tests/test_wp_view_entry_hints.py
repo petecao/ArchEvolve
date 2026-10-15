@@ -58,11 +58,25 @@ def test_actual_store_source_keeps_entry_witness_and_original_safety_obligations
               'text': f'ghost dx_store_bound = {bound};', 'provenance': {'source': 'agent'}}]
     record = prove_wp(dx, 'store_source_wait',
                       *(['SWDB_CPU_READ_AFTER_STORE'] if case == 'early_cpu_read' else []), hints=hints)
+    assert_store_obligations(record, case)
+
+
+def assert_store_obligations(record, case):
+    """Semantics 0.1 leaves CPU/device memory-overlap rules to ticket 28."""
+    if case == 'early_cpu_read':
+        assert record['failure_class'] == 'unsupported_construct', record
+        assert record['settings']['verifier_launched'] is False
+        admission = record['settings']['proof_semantics_admission']
+        assert 'outside semantics 0.1' in admission['scope']
+        assert any('CPU read' in row.get('reason', '') for row in admission['refused'])
+        assert not any(row['name'] == 'wp_log' for row in record['evidence']['reports'])
+        return
     assert record['hint_check']['verdict'] == 'accepted', record
     assert record['settings']['source_view_hints']['anchor'] == 'dxf_store_source_wait.entry'
     if case == 'safe':
         assert record['verdict'] == 'proven', (record['failure_class'], record.get('unproven_properties'))
     else:
         assert record['verdict'] == 'not_proven', record
-        assert any(row['status'] != 'valid' for row in record['goals']), record
+        assert any('store_indices' in row['goal'] and row['status'] != 'valid'
+                   for row in record['goals'] if not row.get('smoke')), record
 
