@@ -39,7 +39,7 @@ import shutil
 import subprocess
 from pathlib import Path
 
-from swdb import artifacts, c_lowering, framac, hint_check, paths, proof_semantics, rss_watchdog, std_models, vocab
+from swdb import artifacts, c_lowering, framac, hint_check, paths, proof_semantics, proof_setup, rss_watchdog, std_models, vocab
 from swdb.proof import MODEL_PREFIX, AdapterError, Verdict
 
 NAME = "wp"
@@ -47,7 +47,7 @@ PROVERS = ("alt-ergo", "z3", "cvc5")
 WHY3_NAMES = {"Alt-Ergo": "alt-ergo", "Z3": "z3", "CVC5": "cvc5"}
 FROZEN = (("-wp-cache", "none"), ("-wp-model", "+real"))
 MACHDEP = ("-machdep", "x86_64")
-LEMMAS_OUT = ("-wp-prop=-@lemma",)    # ticket 26: logic-library lemmas are proven once, with the method (prove-logic)
+LEMMAS_OUT = ()    # ticket 26: logic-library lemmas are proven once, with the method (prove-logic)
 ALLOCATION_MODEL = "swdb_alloc_"   # ticket 24: new[] and delete[] rest on "allocation succeeds" (an assumption)
 DEFAULT_WALL_SECONDS = 3600
 DEFAULT_CAP_BYTES = 8 * 2**30                    # O9: the ~8 GB RSS watchdog
@@ -107,7 +107,8 @@ class WpAdapter:
                 return self._not_proven("unsupported_construct",
                     "WP 33.0 does not model allocation lifetime; this C model needs allocates/frees support", context)
             input_path = wp_dir / "wp_input.c"
-            input_path.write_text("\n".join([*c_lowering.HEADERS, text]) + "\n")
+            context["wp_expected_text"] = "\n".join([*c_lowering.HEADERS, text]) + "\n"
+            input_path.write_text(context["wp_expected_text"])
             context["reports"].append(("wp_input", input_path))
             context["extra_flags"] = [f"-wp-fct={job.unit.function}"]
             return self._wp(job, input_path, context)
@@ -137,6 +138,14 @@ class WpAdapter:
         lowering_tool = c_lowering.identity()["c_lowering"]
         context["assumed"] = std_models.assumptions(lowering, tools["identities"]["clang"][2], lowering_tool)
         context["pins"].update(std_models.pins(lowering))
+        if lowering.std_models:
+            probe = subprocess.run([*c_lowering.locate().command, "-dM", "-E", "-x", "c++",
+                                    "-std=gnu++17", "-include", "vector", "-"],
+                                   input="", capture_output=True, text=True, timeout=60)
+            if probe.returncode != 0 or not re.search(r"^#define _LIBCPP_VERSION 220108$", probe.stdout, re.M):
+                return self._not_proven("unsupported_construct",
+                    "the standard models require libc++ 22.1.8 (_LIBCPP_VERSION 220108); "
+                    "the selected clang uses an unmatched standard library", context)
         if any(name == "swdb_free" or name.startswith("swdb_alloc_delete_array_") for name in lowering.models):
             return self._not_proven("unsupported_construct",
                 "WP 33.0 does not model allocation lifetime; reachable free/delete or vector growth needs it", context)
@@ -178,6 +187,7 @@ class WpAdapter:
         accepted = self._hint_check(job, lowering, base, context) if self.hints_path else []
         text = hint_check.merge(base, lowering.anchors, self.hints, accepted).text
         input_path = wp_dir / "wp_input.c"
+        context["wp_expected_text"] = text
         input_path.write_text(text)
         context["reports"].append(("wp_input", input_path))
         context["hints_reaching_wp"] = len(accepted)
@@ -411,12 +421,16 @@ class WpAdapter:
         shutil.copyfile(input_path, scratch / "wp_input.c")
         (scratch / "tmp").mkdir(exist_ok=True)
         goals_json, properties_csv = scratch / "wp-goals.json", scratch / "wp-properties.csv"
+        inventory = scratch / "wp-inventory.json"
+        report_module = proof_setup.compile_report_module(scratch)
         settings_flags = [*tools["flags"], *MACHDEP, "-wp-prover", ",".join(PROVERS), "-wp-timeout",
-                          str(tools["seconds"]), "-wp-par", "1", *LEMMAS_OUT, *context.get("extra_flags", [])]
+                          str(tools["seconds"]), "-wp-par", "1", "-wp-smoke-tests", *LEMMAS_OUT, *context.get("extra_flags", [])]
         command = [*framac.locate().command, *settings_flags, "-wp-report-json", goals_json.name, "wp_input.c",
-                   "-then", "-report-csv", properties_csv.name]
-        removed = sorted(k for k in os.environ if k.startswith("FRAMAC_WP"))
-        env = {k: v for k, v in os.environ.items() if k not in removed}
+                   "-then", "-load-module", str(report_module), "-report", "-report-untried",
+                   "-report-csv", properties_csv.name]
+        removed = []
+        env = dict(os.environ)
+        env["SWDB_PROOF_REPORT_OUT"] = str(inventory)
         env["TMPDIR"] = str(scratch / "tmp")
         cap = int(os.environ.get("SWDB_VERIFIER_RSS_CAP_BYTES") or DEFAULT_CAP_BYTES)
         wall = job.budget_seconds or DEFAULT_WALL_SECONDS
@@ -428,17 +442,22 @@ class WpAdapter:
                                "warning_levels": "default", "machdep": "x86_64",
                                "wp_seconds_per_solver": tools["seconds"], "environment_removed": removed,
                                "rss_cap_bytes": cap, "hint_count": context.get("hints_reaching_wp", 0), "build_constants": list(self.defines)}
+        proof_setup.check_generated(job, self, context,
+            [(scratch / "wp_input.c", context["wp_expected_text"])], settings_flags, command=command, scratch=scratch)
         result = rss_watchdog.run(command, log=wp_log, cap_bytes=cap, timeout=wall, cwd=scratch, env=env)
         context["peak"] = result.peak_rss_bytes
         log.line(f"frama-c exit {result.exit_code}, wall {result.wall_seconds:.2f} s, peak rss {result.peak_rss_bytes}, "
                  f"out of memory {result.out_of_memory}, timed out {result.timed_out}")
-        for name, path in (("wp_goals", goals_json), ("wp_properties", properties_csv)):
+        for name, path in (("wp_goals", goals_json), ("wp_properties", properties_csv), ("wp_inventory", inventory)):
             if path.exists():
                 shutil.copyfile(path, wp_dir / path.name)
                 context["reports"].append((name, wp_dir / path.name))
         outcome = read_outcome(result, wp_log.read_text(errors="replace"),
                                goals_json if goals_json.exists() else None,
-                               properties_csv if properties_csv.exists() else None, context.get("functions"))
+                               properties_csv if properties_csv.exists() else None, context.get("functions"),
+                               inventory=inventory, extern_contracts=context.get("extern_contracts"))
+        context.setdefault("assumed", []).extend(outcome.get("assumptions", []))
+        context["verdict_reading"] = outcome.get("reading")
         if context.get("semantics") and outcome["verdict"] == "not_proven" and any(
                 g.get("status") != "valid" and "ghost_capacity" in str(g.get("goal", ""))
                 for g in outcome["goals"]):
@@ -469,7 +488,7 @@ class WpAdapter:
             tools.append(ident)
         assumptions += context.get("assumed", [])            # ticket 24: summaries, C models, allocation
         fields = {"goals": context.get("goals", [])}
-        for name in ("hint_set", "hint_check"):                   # ticket 35: the hint set and its check result
+        for name in ("hint_set", "hint_check", "verdict_reading"):                   # ticket 35: the hint set and its check result
             if context.get(name) is not None:
                 fields[name] = context[name]
         if verdict == "not_proven":
@@ -505,7 +524,7 @@ CRASH = re.compile(r"Unexpected error|internal error|Fatal error|Stack overflow|
 USER_ERROR = re.compile(r"User Error|annot-error|invalid user input|syntax error|Ignoring")
 
 
-def read_outcome(result, log_text, goals_json, properties_csv, functions=None):
+def read_outcome(result, log_text, goals_json, properties_csv, functions=None, *, inventory=None, extern_contracts=None):
     """{verdict, failure_class, why, goals, unproven} from one WP run (minimal reading; 36 owns the full rule).
 
     `functions` (ticket 24): read only the properties and goals of these functions (the proof unit, its inlined
@@ -525,6 +544,8 @@ def read_outcome(result, log_text, goals_json, properties_csv, functions=None):
         return outcome("not_proven", "tool_crash", f"Frama-C exited {result.exit_code} without a user error")
     if goals_json is None or properties_csv is None:
         return outcome("not_proven", UNCLASSIFIED, "WP exited 0 but wrote no per-property or per-goal report")
+    if inventory is not None:
+        return proof_setup.read_wp_reports(goals_json, properties_csv, inventory, extern_contracts, functions)
     goals = [_goal(g) for g in json.loads(goals_json.read_text() or "[]")]
     with open(properties_csv, newline="") as handle:
         properties = list(csv.DictReader(handle, delimiter="\t"))
