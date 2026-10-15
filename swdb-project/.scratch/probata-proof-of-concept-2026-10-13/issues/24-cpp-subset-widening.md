@@ -219,3 +219,12 @@ library path. The isolated class C++ versus C differential passes with GCC 13 he
 paths before the full WP module starts. This baseline precedes the lifetime refusal and the
 strict fresh-report reader; its results alone cannot close this ticket. Final guard regressions
 must run on the integrated source.
+
+**Lifetime regression evidence (Mac).** The new public `swdb prove` use-after-delete test
+failed before the guard: WP reported `proven` (63.66 s including fixture setup and lock waits).
+After integrating the guard at `a41bcd39`, the three refusal controls pass and the positive
+safe-deallocation acceptance remains expected-failing: **3 passed, 1 xfailed**, 92.55 s.
+Original logs and incremental reports: `/private/tmp/probata-t24-20261015/{red,green}.{log,jsonl}`.
+No expected failure counts as acceptance. [WP's official manual](https://frama-c.com/download/frama-c-wp-manual.pdf),
+section 1.6, confirms that ACSL allocation/deallocation clauses are not implemented; switching
+memory models alone is not evidence that this gap is solved.
