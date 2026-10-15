@@ -32,6 +32,7 @@ import hints as H
 import loop as L
 import staged_search as S
 import focused_probe as F
+import run_report as R
 
 HERE = Path(__file__).resolve().parent
 OPS_SCHEMA = {"type": "object", "additionalProperties": False, "required": ["ops", "notes"],
@@ -376,6 +377,7 @@ def main():
     ap.add_argument("--bounded-debt", action="store_true", help="method18: +4 temporary hint goals, 4 repairs/5 counted minutes; incumbent remains separate")
     ap.add_argument("--staged-induction", action="store_true", help="method19: counted three-phase search, +8 temporary total goals; unchanged final acceptance")
     ap.add_argument("--design-probes", action="store_true", help="method20: explicit state design plus diagnostic-only focused probes; requires staged-induction")
+    ap.add_argument("--diagnostic-baseline10", action="store_true", help="method21: fresh full diagnostic baseline at10s only; final acceptance stays30s")
     ap.add_argument("--owner", default="t07d")
     ap.add_argument("--dev-effort", help="DEV ONLY (never a counted run): override the pinned effort")
     ap.add_argument("--dev-no-codex", action="store_true", help="DEV ONLY: stop after the seed round")
@@ -383,6 +385,8 @@ def main():
     a = ap.parse_args()
     if a.design_probes and not a.staged_induction:
         ap.error("method20 design-probes requires the strict staged-induction foundation")
+    if a.diagnostic_baseline10 and not a.design_probes:
+        ap.error("method21 diagnostic-baseline10 requires the strict method20 foundation")
     assert a.monotone, "this loop implements method change (a) only"
     E.ACCEPT[0] = a.accept
     E.CAP[0] = a.hint_cap
@@ -425,6 +429,8 @@ def main():
              "goal_print.py", "focused_probe.py"] + (["staged_search.py", "counted_verifier.py", "test_debt.py", "standin/tdstep_standin.c"] if a.staged_induction else [])
     if a.design_probes:
         files += ["test_focused_probe.py"]
+    if a.diagnostic_baseline10:
+        files += ["run_report.py", "test_baseline_plan.py"]
     meta = {"started": L.now(), "pin": L.PIN,
             "codex_version": subprocess.run([L.CODEX, "--version"], capture_output=True, text=True).stdout.strip(),
             "ghost_hint_guard": H.GHOST_HINT_RULE,
@@ -467,6 +473,12 @@ def main():
             "design_objectives": list(F.OBJECTIVES), "phase_fractions": [.55,.35,.10],
             "authorized_mcp_approval_modes": {"record_design": "approve", "focused_probe": "approve"},
             "prototype_rte_boundary": "unchanged; no production RTE/initializedness claim"}
+    if a.diagnostic_baseline10:
+        meta["method21"] = {"id": "diagnostic-baseline10-v1", "diagnostic_only": True,
+            "baseline_mode": "baseline-smoke10", "baseline_timeout_s": 10, "final_timeout_s": 30,
+            "baseline_full_inventory_and_smoke": True, "fresh_observed_pass_set_only": True,
+            "all_original_final_obligations_mandatory": True,
+            "confound": "Shorter diagnostic timeout can change baseline statuses and regression pass set; projected time recovery is unmeasured."}
     (out / "meta.json").write_text(json.dumps(meta, indent=1))
     # Round 0 is outside the legacy budget; methods18/19 count the fresh baseline.
     # Own run, or reused from an
@@ -490,8 +502,12 @@ def main():
     else:
         t_r0 = L.clock()
         r0 = {"round": 0, "hints": [], "started": L.now()}
-        L.log(out, "round 0: WP with no hints (frozen flags), " + ("counted from the fresh baseline" if (a.bounded_debt or a.staged_induction) else "outside the budget"))
+        baseline_mode = "baseline-smoke10" if a.diagnostic_baseline10 else "wp-smoke"
+        if a.diagnostic_baseline10:
+            r0["diagnostic_baseline"] = {"mode": baseline_mode, "timeout_s": 10}
+        L.log(out, "round 0: WP with no hints (" + baseline_mode + "), " + ("counted from the fresh baseline" if (a.bounded_debt or a.staged_induction) else "outside the budget"))
         L.wp_round(out, "round-0", standin, [], r0,
+                   mode=baseline_mode,
                    **({"remaining_s": E.SEARCH_REMAINING_S[0]} if (a.bounded_debt or a.staged_induction) else {}))
         if a.staged_induction:
             try:
@@ -511,6 +527,7 @@ def main():
         gj = out / "round-0" / "goals.json"
         L.log(out, f"round 0: {r0.get('outcome')} in {r0['elapsed_min']} min")
     if gj is not None:
+        L.BASELINE_PASSED.clear()
         L.BASELINE_PASSED.update(g["goal"] for g in json.loads(gj.read_text()) if g.get("passed") and not g.get("smoke"))
     # Legacy clock starts at seeds. Methods18/19 keep the earlier all-work clock.
     if not (a.bounded_debt or a.staged_induction):
@@ -669,6 +686,10 @@ def main():
     for h in history:
         for k, v in ((h.get("codex") or {}).get("usage") or {}).items():
             summary["tokens"][k] = summary["tokens"].get(k, 0) + v
+    if a.diagnostic_baseline10:
+        summary["method21"] = True
+        summary["attempt_counts"] = R.attempt_counts(out, history)
+        summary["legacy_wp_attempts_meaning"] = "Recorded proposal requests, not completed candidate proof runs; use attempt_counts."
     (out / "summary.json").write_text(json.dumps(summary, indent=1))
     L.log(out, f"done: {json.dumps(summary)}")
 
