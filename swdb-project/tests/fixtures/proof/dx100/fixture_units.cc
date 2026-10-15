@@ -25,6 +25,29 @@ void dxf_load(int *q, int n, int t) {
   maa_stream_load(q, 0, 1, 2, t, -1);
 }
 
+// 2026-10-15 ET: ordinary CPU memory effects need ticket 28's memory-hazard probes. Until then every
+// variant is refused conservatively, including an otherwise safe write after its covering wait.
+void dxf_cpu_store(int *p) { *p = 0; }
+int dxf_cpu_memory_overlap(int *q, int *base, int n) {
+  int *t1 = get_cacheable_tile_pointer(1);
+  dxf_load(q, n, 0);
+  wait_ready(0);
+  int old = base[q[0]];
+  maa_indirect_load(base, 0, 1, -1);
+#ifdef SWDB_CPU_OVERLAP_AFTER_COVER
+  wait_ready(1);
+#endif
+#ifdef SWDB_CPU_OVERLAP_CALLEE
+  dxf_cpu_store(base + q[0]);
+#elif defined(SWDB_CPU_OVERLAP_ATOMIC)
+  __atomic_store_n(base + q[0], 0, __ATOMIC_SEQ_CST);
+#else
+  base[q[0]] = 0;
+#endif
+  wait_ready(1);
+  return t1[0] == old;
+}
+
 // Boolean result predicates use eager, side-effect-free conjunctions so WP smoke tests do not add
 // provably unreachable short-circuit false branches. All operand reads are valid under the fixture contract.
 // Three tile-pointer reads, each after its covering wait (SWDB_EARLY_READ_<N> moves read N before it).
@@ -96,6 +119,9 @@ int dxf_store_source_wait(int *q, int *p, int n) {
   wait_ready(3);
   int old0 = p[q[0]];
   maa_indirect_store_vector(p, 0, 3, -1, 5);
+#ifdef SWDB_CPU_READ_AFTER_STORE
+  old0 = p[q[0]];
+#endif
   wait_ready(3);
   return t5[0] == old0;
 }
