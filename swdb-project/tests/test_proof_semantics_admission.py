@@ -7,9 +7,24 @@ hazard probes before these CPU writes or reads after a device store can reach a 
 import json
 
 import pytest
+import yaml
 
 from conftest import run_swdb
 from test_proof_semantics import dx, dx_seed, needs_cbmc, needs_wp, prove, prove_wp
+
+
+@needs_wp
+def test_wp_requires_initialized_caller_input_even_when_only_the_device_size_is_observed(dx):
+    path = dx.root / "library" / "rewrite_contracts" / "fixture_dx_size.yaml"
+    contract = yaml.safe_load(path.read_text())
+    for clause in contract["clauses"]:
+        if clause.get("acsl"):
+            clause["acsl"]["text"] = clause["acsl"]["text"].replace(
+                "requires \\initialized(q + (0 .. n - 1));", "")
+    path.write_text(yaml.safe_dump(contract, sort_keys=False))
+    record = prove_wp(dx, "size")
+    assert record["verdict"] == "not_proven", record
+    assert any("source_initialized" in g["goal"] and g["status"] != "valid" for g in record["goals"]), record
 
 
 @needs_wp

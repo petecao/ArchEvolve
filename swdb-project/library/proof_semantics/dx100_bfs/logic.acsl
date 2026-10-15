@@ -5,6 +5,17 @@
 
 predicate dx_has(integer m, integer s) = ((m >> s) & 1) != 0;
 
+// Updated: 2026-10-15 ET. A representation invariant, not a caller-buffer premise.
+// Static C storage starts initialized; model_for draws initialized tile values. Each
+// trusted device contract preserves this invariant and requires initialized source
+// cells before reading ordinary memory. Ticket 29 checks the contract/body agreement.
+predicate dx_state_initialized{L} =
+  (\forall integer t; 0 <= t < DX_NT ==>
+    \initialized(dx_tile_data[t] + (0 .. DX_TS - 1))) &&
+  \initialized(dx_tile_size + (0 .. DX_NT - 1)) &&
+  \initialized(dx_reg_value + (0 .. DX_NR - 1)) &&
+  \initialized(&dx_next_tile) && \initialized(&dx_next_reg) && \initialized(&dx_regions);
+
 // Live slots naming tile t in a counted role (src1, src2, dst1, dst2): what a wait on t covers directly.
 logic integer dx_counted{L}(integer t, integer n) =
   n <= 0 ? 0 :
