@@ -148,6 +148,10 @@ def accept_candidate(out, current, candidate, *, counted_s, remaining_s):
     refuses even a late recovery. Unit counts may not rise relative to either state.
     """
     incumbent, state = load_best(out), _debt(out)
+    if remaining_s <= 0:
+        rollback_debt(out, "search deadline before candidate completed", counted_s=counted_s)
+        _debt_event(out, "refused", counted_s, reason="search deadline before candidate completed")
+        return "reverted (search deadline)", None
     if state and (state["incumbent"] != incumbent or
                   counted_s - state["started_s"] >= DEBT_SECONDS or remaining_s <= 0):
         rollback_debt(out, "expired before proposal completed", counted_s=counted_s)

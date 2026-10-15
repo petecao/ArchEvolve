@@ -273,7 +273,7 @@ def tool_state(out, r, a, t0, mode, allowed):
         "budget_min": a.budget_min, "final_reserve_min": a.final_reserve_min, "round_timeout": a.round_timeout,
         "round": r, "pin": L.PIN, "mode": mode, "allowed_kinds": sorted(allowed), "accept": E.ACCEPT[0], "hint_cap": E.CAP[0],
         "baseline_passed": sorted(L.BASELINE_PASSED), "two_phase": E.TWO_PHASE[0], "show_goal": a.show_goal,
-        "live_file": str(state / "lockwait_live.json") if a.budget_deadline else None,
+        "live_file": str(state / "lockwait_live.json") if (a.budget_deadline or a.bounded_debt) else None,
         "bounded_debt": a.bounded_debt}, indent=1))
     return state
 
@@ -377,6 +377,8 @@ def main():
                          "repair_proposals": E.DEBT_REPAIRS, "counted_seconds": E.DEBT_SECONDS,
                          "incumbent_file": "best.json", "working_file": "debt.json",
                          "clock_includes_fresh_round0": a.bounded_debt,
+                         "provider_grace_seconds": 0 if a.bounded_debt else 120,
+                         "strict_completion_deadlines": a.bounded_debt,
                          "no_unit_regression": True, "all_goal_fresh_smoke_acceptance_unchanged": True},
             "standin_sha256": {f: L.sha(L.STANDIN_DIR / f) for f in [L.UNIT] + L.HEADERS},
             "cpp_unit_sha256": L.sha(L.CPP_UNIT), "rounds": a.rounds, "budget_min": a.budget_min,
@@ -385,7 +387,7 @@ def main():
                                     "seeds": a.seeds, "frame_filter": a.frame_filter, "strategies": a.strategies,
                                     "examples": a.examples, "mode": mode, "final_mode": final_mode,
                                     "accept": a.accept, "hint_open_cap": a.hint_cap},
-            "method_changes_t07e": {"budget_clock_deadline": a.budget_deadline, "two_phase": a.two_phase,
+            "method_changes_t07e": {"budget_clock_deadline": a.budget_deadline or a.bounded_debt, "two_phase": a.two_phase,
                                     "show_goal": a.show_goal, "mcp_tool_timeout_s": a.tool_timeout_s,
                                     "wall_cap_s": WALL_CAP_S, "seed_frame_goals_are_unit_goals": True},
             "allowed_kinds": sorted(allowed), "harness_sha256": {f: L.sha(HERE / f) for f in files},
@@ -483,7 +485,7 @@ def main():
                 accept_rule=ACCEPT_RULE[a.accept].format(cap=a.hint_cap) + (PHASE2_RULE if a.two_phase else "") + (DEBT_RULE if a.bounded_debt else ""),
                 tool_notes=SHOW_GOAL_NOTE if a.show_goal else "",
                 budget_clock_note=(" (time your tool calls wait for the shared verifier queue is not counted)"
-                                   if a.budget_deadline else ""),
+                                   if (a.budget_deadline or a.bounded_debt) else ""),
                 strategy_notes=STRATEGY_NOTES.format(tactics=tactics) if a.strategies else "",
                 round_timeout=a.round_timeout, tool_budget=tool_budget, round=r, rounds=a.rounds, minutes=used,
                 budget=a.budget_min, best=E.working_text(out, best), open=E.open_text(best) + E.debt_text(out), examples=examples,
@@ -495,13 +497,16 @@ def main():
                       "(JSON {\"ops\": [...], \"notes\": ...}) before the in-call budget ends.")
         L.log(out, f"round {r}: Codex call ({'resumed' if thread else 'new'} session, {len(prompt)} chars, best {best['n_open']} open)")
         lw0 = L.LOCKWAIT[0]
-        limit_s = (a.budget_min - a.final_reserve_min) * 60 + 120.0  # same 2-min grace as t07d
+        limit_s = (a.budget_min - a.final_reserve_min) * 60 + (0.0 if a.bounded_debt else 120.0)
+        # Method18 has no legacy provider grace: it cannot spend the final reserve.
 
         def budget_stop(state=state, lw0=lw0, limit_s=limit_s):
-            return time.time() - t0 - lw0 - live_lock_wait(state) > limit_s
+            elapsed = time.time() - t0 - lw0 - live_lock_wait(state)
+            return elapsed >= limit_s if a.bounded_debt else elapsed > limit_s
 
-        c = codex_call(out, r, prompt, thread, state, max(120.0, tool_budget * 60 + 120.0),
-                       budget_stop=budget_stop if a.budget_deadline else None)
+        c = codex_call(out, r, prompt, thread, state,
+                       max(1.0, tool_budget * 60) if a.bounded_debt else max(120.0, tool_budget * 60 + 120.0),
+                       budget_stop=budget_stop if (a.budget_deadline or a.bounded_debt) else None)
         thread = c.get("thread") or thread
         tool = read_tool(state)
         rec = {"round": r, "started": L.now(), "phase_at_start": E.phase_of(best),

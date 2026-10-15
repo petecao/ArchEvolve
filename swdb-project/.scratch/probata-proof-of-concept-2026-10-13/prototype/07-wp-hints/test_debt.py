@@ -127,7 +127,8 @@ def test_deadline_between_parse_and_goal_generation_keeps_final_reserve(state,mo
 
 
 @pytest.mark.parametrize("fresh_baseline", [False, True])
-def test_loop_summary_and_best_hash_never_report_an_unrecovered_working_set(tmp_path,monkeypatch,fresh_baseline):
+@pytest.mark.parametrize("deadline_flag", [False, True])
+def test_loop_summary_and_best_hash_never_report_an_unrecovered_working_set(tmp_path,monkeypatch,fresh_baseline,deadline_flag):
     import hashlib
     import sys
     from types import SimpleNamespace
@@ -137,7 +138,8 @@ def test_loop_summary_and_best_hash_never_report_an_unrecovered_working_set(tmp_
     clock=[1000.0]
     monkeypatch.setattr(EL.time,'time',lambda:clock[0])
     monkeypatch.setattr(sys,'argv',['edit_loop.py','--out',str(out),'--monotone','--bounded-debt',
-                                  '--rounds','1'] + ([] if fresh_baseline else ['--dev-skip-round0']))
+                                  '--rounds','1','--final-reserve-min','8'] + ([] if fresh_baseline else ['--dev-skip-round0']) +
+                                  (['--budget-deadline'] if deadline_flag else []))
     monkeypatch.setattr(EL.subprocess,'run',lambda *a,**k:SimpleNamespace(stdout='stand-in version'))
     monkeypatch.setattr(L,'precheck',lambda out,name,standin,hs,rec,**kw:L.run_dir(out,name,H.merge(standin,hs)))
     def verifier(out,d,*a,**kw):
@@ -155,6 +157,15 @@ def test_loop_summary_and_best_hash_never_report_an_unrecovered_working_set(tmp_
         goal.update(file='tdstep_standin.c',line=1,kind='assert',source='',failure_class='timeout')
     monkeypatch.setattr(L,'assess_round',lambda *a:{'failing_goals':baseline['failing_goals'],'n_goals':100})
     def provider(out,*a,**k):
+        stop=k['budget_stop']
+        assert callable(stop), 'method18 requires its counted provider deadline even without the legacy flag'
+        saved_clock=clock[0]
+        clock[0]=1000+52*60-0.1
+        assert stop() is False
+        clock[0]=1000+52*60
+        assert stop() is True, 'provider must stop at52min; no120s grace may consume the8min reserve'
+        clock[0]=saved_clock
+        assert a[4] <= 52*60-(12 if fresh_baseline else 0)
         clock[0]+=6
         incumbent=E.load_best(out)
         E.accept_candidate(out,incumbent,candidate(hint=23,tag='unrecovered'),counted_s=0,remaining_s=3600)
@@ -198,3 +209,30 @@ def test_every_frozen_invocation_disables_initialization_filtering_without_runni
     argv=json.loads(capture.read_text())
     assert argv.count('-wp-no-filter-init')==1 and '-wp-filter-init' not in argv,argv
     if mode!='parse':assert '-wp' in argv
+
+
+@pytest.mark.parametrize('remaining_s',[-1.0,0.0])
+def test_fresh_improvement_cannot_promote_after_search_deadline(state,remaining_s):
+    original=(state/'best.json').read_bytes()
+    result,promoted=E.accept_candidate(state,candidate(),candidate(hint=18),counted_s=3121,remaining_s=remaining_s)
+    assert result.startswith('reverted') and promoted is None
+    assert (state/'best.json').read_bytes()==original and not (state/'debt.json').exists()
+
+
+@pytest.mark.parametrize("completion_remaining,expected", [(-0.5, False), (0.0, False), (0.5, True)])
+def test_final_round_success_requires_positive_total_time_at_completion(state,monkeypatch,completion_remaining,expected):
+    import loop as L
+    remaining=[1.0]
+    d=L.run_dir(state,'late-final',(L.STANDIN_DIR/L.UNIT).read_text())
+    def verifier(*args,**kwargs):
+        remaining[0]=completion_remaining
+        log=d/'wp-smoke.log';log.write_text('controlled all-goal result')
+        return log,{'exit_code':0,'wall_s':1.5,'peak_rss_mb':1,'log_sha256':'a'*64}
+    monkeypatch.setattr(L,'verifier',verifier)
+    monkeypatch.setattr(L,'assess',lambda *args:{'ok':True,'n_goals':1,'failing_goals':[],
+                                              'problems':[],'smoke_failures':[]})
+    rec={}
+    assessed=L.wp_round(state,'late-final',(L.STANDIN_DIR/L.UNIT).read_text(),[],rec,d=d,
+                        remaining_s=lambda:remaining[0])
+    assert rec['proven'] is expected and assessed['ok'] is expected
+    if not expected:assert 'deadline' in rec['outcome']

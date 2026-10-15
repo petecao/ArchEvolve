@@ -456,6 +456,9 @@ def wp_round(out, name, standin, hint_set, record, mode="wp-smoke", timeout=7200
         timeout = min(timeout, remaining_s())
     wlog, ws = verifier(out, d, mode, timeout=timeout)
     a = assess(d, wlog)
+    completed_in_time = remaining_s is None or remaining_s() > 0
+    if not completed_in_time:
+        a = {**a, "ok": False}
     if ws["exit_code"] != 0 or a["n_goals"] == 0:
         record.update(wp={"exit": ws["exit_code"], "wall_s": ws["wall_s"], "log": str(wlog),
                           "log_sha256": ws["log_sha256"], "timed_out": ws.get("timed_out")},
@@ -472,6 +475,8 @@ def wp_round(out, name, standin, hint_set, record, mode="wp-smoke", timeout=7200
                   smoke_failures=a["smoke_failures"], proven=a["ok"],
                   outcome="proven" if a["ok"] else f"not proven ({len(a['failing_goals'])} failing goals, "
                                                     f"{len(a['problems'])} report properties not Valid)")
+    if not completed_in_time:
+        record.update(proven=False, outcome="not proven (counted deadline after completion)")
     return a
 
 
