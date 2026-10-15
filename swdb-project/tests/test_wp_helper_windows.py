@@ -84,7 +84,7 @@ def test_helper_view_does_not_synthesize_a_missing_entry_window(dx):
 @needs_wp
 def test_helper_view_keeps_source_anchored_hints_closed(dx):
     _contract(dx)
-    record = _run(dx, hints=[{"anchor": "dxf_size.entry", "kind": "assert", "text": "assert 1;",
+    record = _run(dx, hints=[{"anchor": "dxf_size.s1.before", "kind": "assert", "text": "assert 1;",
                              "provenance": {"source": "agent"}}])
     assert record["failure_class"] == "unsupported_construct"
     assert "helper" in record["settings"]["helper_windows"]["reason"]
