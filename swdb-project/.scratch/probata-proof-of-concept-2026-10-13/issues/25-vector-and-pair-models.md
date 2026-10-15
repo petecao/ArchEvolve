@@ -359,3 +359,14 @@ is excluded from the intended RED; corrected contract yields unsupported_constru
 WP acceptance, generic model-domain relaxation or ticket completion is claimed.
 Plan:/private/tmp/probata-vector-completion-plan.md.
 Evidence:[t25-vector-pipeline-api-20261015.json](../evidence/t25-vector-pipeline-api-20261015.json).
+
+
+Pipeline source-control baseline — 2026-10-15 ET: six public source/refusal controls pass
+16.26s before the positive core hook. Wrong append value, captured alias, mutation during range,
+comments-split operator-new override, extra global and absent typed window all refuse without WP.
+These must run again after the positive path is admitted; a coarse earlier refusal is not proof
+of full new checker coverage. Safe whole-workflow and bad-comparison actual tests are written;
+neither has been launched. Only the bad comparison is admitted as a second structural variant,
+preserving the changed source branch so WP must reject the original maximum specification.
+The allocation contract's existing no-preexisting-write frame has its own explicit pin/assumption;
+ambient callbacks are not ruled out merely because an allocation eventually succeeds.

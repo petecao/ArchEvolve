@@ -49,5 +49,41 @@
     "swdb-project/swdb/model_domains.py": "0abeb81edf3a7c92b0465d9a617ef272f85f9263cc50427e3e46a1743d51e17a",
     "swdb-project/tests/test_vector_pipeline_wp.py": "4aeee0e0a3722448c5e7b1baab752df3c5ce9c7a5409cff4dff319571511a416"
   },
-  "boundary": "Original C++/native and lower C artifacts unchanged. Original formal contract unchanged in view; input initializedness and typed window are declared explicitly by the new WP test contract. Unbounded allocation count projected without fixed storage. Allocation success/freshness and allocator no-preexisting-write frame are explicit imported tool assumptions. No standalone allocating C-model proof is counted."
+  "boundary": "Original C++/native and lower C artifacts unchanged. Original formal contract unchanged in view; input initializedness and typed window are declared explicitly by the new WP test contract. Unbounded allocation count projected without fixed storage. Allocation success/freshness and allocator no-preexisting-write frame are explicit imported tool assumptions. No standalone allocating C-model proof is counted.",
+  "source_refusal_baseline": {
+    "path": "/private/tmp/probata-vector-pipeline-source-refusals.jsonl",
+    "sha256": "6c36f87f71c17369575dda1daa5b65e021775423d8cd8f7fb5788c1a0d9f2198",
+    "calls": [
+      {
+        "test": "tests/test_vector_pipeline_wp.py::test_the_pipeline_refuses_unchecked_effects_and_missing_qualified_input_origins[wrong_append]",
+        "outcome": "passed"
+      },
+      {
+        "test": "tests/test_vector_pipeline_wp.py::test_the_pipeline_refuses_unchecked_effects_and_missing_qualified_input_origins[escaping_alias]",
+        "outcome": "passed"
+      },
+      {
+        "test": "tests/test_vector_pipeline_wp.py::test_the_pipeline_refuses_unchecked_effects_and_missing_qualified_input_origins[mutating_range]",
+        "outcome": "passed"
+      },
+      {
+        "test": "tests/test_vector_pipeline_wp.py::test_the_pipeline_refuses_unchecked_effects_and_missing_qualified_input_origins[allocation_override]",
+        "outcome": "passed"
+      },
+      {
+        "test": "tests/test_vector_pipeline_wp.py::test_the_pipeline_refuses_unchecked_effects_and_missing_qualified_input_origins[extra_global]",
+        "outcome": "passed"
+      },
+      {
+        "test": "tests/test_vector_pipeline_wp.py::test_the_pipeline_refuses_unchecked_effects_and_missing_qualified_input_origins[missing_window]",
+        "outcome": "passed"
+      }
+    ],
+    "finish": [
+      {
+        "exitstatus": 0
+      }
+    ],
+    "boundary": "Six refusals pass before positive pipeline core hooks. Rerun once the positive path admits; no functional proof or complete new-checker coverage claim."
+  }
 }
