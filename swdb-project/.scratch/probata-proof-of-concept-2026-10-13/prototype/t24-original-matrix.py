@@ -56,7 +56,9 @@ def audit(record, expected, *, actual=True, ordinary_open=None):
             if record.get('failure_class') not in {'timeout','unknown','solver_error','vacuous_pass'}:
                 errors.append('seeded negative failed before semantic verification')
             open_goals = [g for g in ordinary if g['status'] != 'valid']
-            if not open_goals or ordinary_open and not any(ordinary_open in g.get('goal','') for g in open_goals):
+            expected_goals = (ordinary_open,) if isinstance(ordinary_open,str) else tuple(ordinary_open or ())
+            if not open_goals or expected_goals and not any(
+                    token in g.get('goal','') for g in open_goals for token in expected_goals):
                 errors.append('seeded negative lacks its attributable ordinary open obligation')
     elif (record.get('failure_class') != 'unsupported_construct' or settings.get('verifier_launched') or goals):
         errors.append('deliberate lifetime refusal unexpectedly ran or changed failure class')
@@ -171,7 +173,11 @@ def main():
                 assert pinned[summary_id(name)]['proof_record']==summaries[name]['id']
         run(group+':safe',lambda g=group:seed.unit(g),'proven',validate)
         goal = {'classes':'loop_invariant','templates':'ensures','new_array':'rte_mem_access',
-                'omp':'ensures','floats':'ensures','std_models':'ensures','atomics':'ensures',
+                # The unchanged original hints can carry the postcondition even
+                # when the seed falsifies invariant establishment. Keep that
+                # failed invariant as attributable negative evidence.
+                'omp':('loop_invariant','ensures'),'floats':('loop_invariant','ensures'),
+                'std_models':'ensures','atomics':'ensures',
                 'dxc_summary':'ensures','maa_summary':'ensures'}[group]
         run(group+':seeded',lambda g=group:seed.unit(g,candidate='bug'),'not_proven',ordinary_open=goal)
         if group=='new_array':
