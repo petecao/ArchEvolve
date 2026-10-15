@@ -1,0 +1,63 @@
+{
+  "controls": [
+    {
+      "case": "onepast",
+      "verdict": "admitted",
+      "reason": "",
+      "predicate": "0 <= 1 < DX_NT && (dx_tile_writer[1] < 0 || (0 <= dx_tile_writer[1] < DX_K && \\base_addr(base) == \\base_addr(dx_base[dx_tile_writer[1]])))",
+      "source_cpp_sha256": "77bc2fdd0cc84cc867001cebe2be3e81f87d7697dbbc731f87001150b6e72028",
+      "checked_c_sha256": "917db3093acc321371f8771ca3c17d2fd8c87cd40767dd736c1693f545bb52c8"
+    },
+    {
+      "case": "alias",
+      "verdict": "admitted",
+      "reason": "",
+      "predicate": "0 <= 1 < DX_NT && (dx_tile_writer[1] < 0 || (0 <= dx_tile_writer[1] < DX_K && \\base_addr(base) == \\base_addr(dx_base[dx_tile_writer[1]])))",
+      "source_cpp_sha256": "11ceb99440f6120f3b8c8f845e3976d8c2ea57eb964e520a263444766fd510fd",
+      "checked_c_sha256": "ed5156ec0fe3bd237d3a7bc9359b94d722802a04352db080301f139267e923b5"
+    },
+    {
+      "case": "missing-domain",
+      "verdict": "refused",
+      "reason": "unit:missing-domain.cc line 2: footprint query domain needs an exact stable int entry-window array-object origin"
+    },
+    {
+      "case": "rebound",
+      "verdict": "refused",
+      "reason": "unit:rebound.cc line 2: footprint query domain needs an exact stable int entry-window array-object origin"
+    },
+    {
+      "case": "sibling",
+      "verdict": "refused",
+      "reason": "unit:sibling.cc line 2: pointer formation operands or sibling arguments have opaque effects"
+    },
+    {
+      "case": "conditional",
+      "verdict": "refused",
+      "reason": "unit:conditional.cc line 2: pointer formation with mutation or conditional evaluation needs a precise check placement"
+    }
+  ],
+  "finite_cases": [
+    {
+      "query_root": "a",
+      "writer_root": "b",
+      "tile": 0,
+      "writer": 0,
+      "DX_NT": 8,
+      "DX_K": 32,
+      "domain": false
+    },
+    {
+      "query_root": "a",
+      "writer_root": "a",
+      "tile": 0,
+      "writer": 0,
+      "DX_NT": 8,
+      "DX_K": 32,
+      "domain": true
+    }
+  ],
+  "wall_seconds": 0.6587305419961922,
+  "code_file": "/private/tmp/probata-footprint-query-review-4c860f39/frozen-source/swdb-project/swdb/c_lowering.py",
+  "verifier_jobs": 0
+}

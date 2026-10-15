@@ -40,8 +40,13 @@ def test_actual_original_footprint_query_and_outside_value_control(dx,outside):
     assert row['proof_setup_check']['verdict']=='passed'
     assert row['verdict']==('not_proven' if outside else 'proven'),row.get('unproven_properties')
     assert row['settings']['verifier_launched'] is True
-    assert all(g['status']=='valid' for g in row['goals'] if g.get('smoke'))
     if outside:
+        # The generated null+zero normalization branch is unreachable under
+        # the original n>=1 precondition. Preserve that negative smoke outcome;
+        # the original value postcondition must independently remain open.
         assert any(g['status']!='valid' and 'ensures' in g['goal'] for g in row['goals']),row
+        assert all(g['status']=='valid' for g in row['goals'] if not g.get('smoke') and 'ensures' not in g['goal'])
+        assert row['failure_class'] in {'unknown','timeout','vacuous_pass'}
     else:
+        assert all(g['status']=='valid' for g in row['goals'] if g.get('smoke'))
         assert len(row['settings']['nested_entry_reads']['certificate']['captures'])==1

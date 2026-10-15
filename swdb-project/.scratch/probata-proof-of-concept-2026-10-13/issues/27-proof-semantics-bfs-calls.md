@@ -448,3 +448,27 @@ At frozen `593c35d6`, checked helper/nested views admit only original-unit entry
 At frozen `71382aff`, the original local int assignment keeps its destination and later use. The safe WP fixture proves (14 ordinary/1 smoke); removing source initializedness leaves its RTE initialization obligation open (13 ordinary Valid/1 timeout, 1 smoke passed). Both controls passed in 51.39s under the 8 GiB guard. Independent source checks reject memory destinations, parameter writes, inner effects and unbraced conditional placement. Component controls: 31 passed; public stand-in admission: one passed. [Compact evidence](../evidence/wp-nested-assignments-20261015.json). This is a bounded slice checkpoint; ticket status remains claimed.
 
 Composed `aead7909` passes 37 component/public controls (56.55s). Its premature ordinary CPU read is intentionally refused before WP by the existing semantics0.1 policy; overlap hazards belong to ticket28. The new test incorrectly expected a WP result and failed on absent hint metadata. A test-only correction now checks that documented refusal, and strengthens the shortened-frame assertion to the specific open store_indices obligation. Offline assertions pass all three frozen593 records and the frozenaead refusal; runtime and historical artifacts are unchanged. No overlap theorem is claimed.
+
+
+### Footprint query source domain — 2026-10-15 ET
+
+Frozen `8e377274` admits the exact imported read-only query over a stable explicit
+int entry window. Original nested index reads execute once before pointer formation;
+normal read initializedness and formation bounds remain obligations. Independent
+review found numerical adjacency of distinct native arrays, so a separately named
+ordinary query-domain VC now requires the writer to share the certified root's
+physical object. No input premise was added. Six independent compiler controls and
+116 composed controls pass; a fresh public stand-in has matching source/report pins.
+
+Actual safe proves all57 ordinary and18 smoke goals. The outside query remains
+not_proven/vacuous_pass:51 ordinary Valid, its ensures timeout,17 smoke Valid and
+one failed smoke on a generated zero-offset normalization branch. Original pytest
+reported1failed/1passed in735.26s because the new negative test wrongly required
+every smoke Valid. Corrected assertions pass offline against both immutable records;
+no solver rerun or negative-record upgrade. All32 artifact references,349 source
+pins and5,584 physical pin references (957 unique files) match.
+
+The exact native finite adjacency case and independent review are retained under
+`prototype/27-proof-semantics/checks/query-address-boundary-20261015/`; broader model
+agreement belongs to29. [Scoped evidence](../evidence/wp-footprint-query-20261015.json).
+Tickets27/36 remain claimed; full acceptance and method freeze remain open.

@@ -1,0 +1,16 @@
+{
+  "source_sha256": "53ea646582534636b6f58f9289188cb9ac1d8fc8b1792b74086485cd4e7a1e63",
+  "model_generated_sha256": "059dd1c422b0ca17384a7911ad53011cb42871a3b6d532e5a630243f4bfb622f",
+  "command": [
+    "/opt/homebrew/opt/llvm/bin/clang",
+    "-O0",
+    "-std=c11",
+    "/private/tmp/probata-footprint-query-review-e3d21284/complete-native-query-boundary.c",
+    "-o",
+    "/private/tmp/probata-footprint-query-review-e3d21284/complete-native-query-boundary"
+  ],
+  "stdout": "adjacent=1 query=1 offset=4 live=1 count=1\n",
+  "stderr": "",
+  "exit_code": 0,
+  "boundary": "Exact complete generated native model, swdb_dx_init + real get_new_tile/reg, maa_const and valid stream load; no manual model state fabrication/no verifier"
+}
