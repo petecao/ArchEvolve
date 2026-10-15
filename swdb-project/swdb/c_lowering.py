@@ -291,7 +291,8 @@ def identity():
                             + here.with_name("standard_model_view.py").read_bytes()
                             + here.with_name("helper_windows.py").read_bytes()
                             + here.with_name("nested_entry_reads.py").read_bytes()
-                            + here.with_name("dx_array_domains.py").read_bytes()).hexdigest()
+                            + here.with_name("dx_array_domains.py").read_bytes()
+                            + here.with_name("standard_range_calls.py").read_bytes()).hexdigest()
     found = {"c_lowering": {"id": f"{TOOL_ID}-{TOOL_VERSION}", "sha256": digest},
              "naming_rules": naming_rules()}
     if not tool.missing:
@@ -594,6 +595,7 @@ class _Unit:
         self.pointer_sites = []
         self.pointer_nodes = set()
         self.pointer_calls = []
+        self.standard_range_calls = []
         self._dumps = {}
         self.structs, self.struct_order, self.classes = {}, [], {}
         self.functions, self.order, self.pending = {}, [], []
@@ -1929,7 +1931,7 @@ class _Printer:
         if name in STD_MODELS:
             target = unit.function_node(name, qual_type, self.line)
             if target is not None and _is_std(target):
-                return self._std(name, target, args)
+                return self._std(name, target, args, node)
         target = unit.function_node(name, qual_type, self.line)
         if target is None or not _has_body(target):
             if name in OMP_RUNTIME and not args:
@@ -1963,7 +1965,7 @@ class _Printer:
             raise Unsupported(f"{what} on a non-pointer", self.line)
         return self._scalar(ctype[:-1].strip().replace("volatile", "").strip(), what)
 
-    def _std(self, name, target, args):
+    def _std(self, name, target, args, call_node):
         unit = self.unit
         if name == "swap" and len(args) == 2:
             model = unit.model_of(*_types(_strip(args[0])), self.line)
@@ -1986,6 +1988,10 @@ class _Printer:
             if element != self._pointee(args[2], "std::copy"):
                 raise Unsupported("std::copy between different element types", self.line)
             model = unit.model(*model_definition("std", "copy", element), self.line)
+            from swdb import standard_range_calls
+            statement, anchor = self.pointer_contexts[-1] if self.pointer_contexts else (None, "")
+            unit.standard_range_calls.append(standard_range_calls.site(call_node, statement=statement,
+                anchor=anchor,function=self.function,line=_where(call_node) or self.line,model=model,target=target))
             return f"{model}({', '.join(self.expr(a, top=True) for a in args)})", True
         raise Unsupported(f"standard library function std::{name}", self.line)
 
@@ -2497,6 +2503,7 @@ def lower(source, function, includes=(), defines=(), summaries=None, semantics=N
                             known_pointer_calls=(semantics or {}).get("tile_pointer", ()),
                             global_nodes=unit.global_nodes.values(), known_origins=(semantics or {}).get("array_origins"),
                             terminal=certificate, entry_windows=windows, entry_function=function, owner=owner,
+                            standard_calls=unit.standard_range_calls,
                             call_sites=unit.pointer_calls, call_policies=(semantics or {}).get("array_call_policies"),
                             audited_imports=(semantics or {}).get("audited_imports")),
                         source_sha256=_file_sha256(source), text=text, entry_windows=windows,

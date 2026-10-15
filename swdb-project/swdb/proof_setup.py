@@ -27,7 +27,7 @@ CHECK_SOURCES = ("proof_setup.py", "proof_report.ml", "proof.py", "cbmc_adapter.
                  "wp_pointer_bounds.py", "proof_semantics.py", "vector_ownership.py", "standard_model_view.py",
                  "array_domains.py", "model_domains.py", "dx_array_domains.py", "bounded_entry_windows.py",
                  "bounded_chain.py", "summary_bindings.py", "helper_windows.py", "standard_range_model.py",
-                 "nested_entry_reads.py")
+                 "nested_entry_reads.py", "standard_range_calls.py")
 REQUIRED_WP_SWITCHES = (("-wp-no-filter-init", "-wp-filter-init"),)
 _COMPILED_MODULES = {}
 _ASSUME = re.compile(r"\b(?:llvm_assume|crucible_assume|__VERIFIER_assume)\b|\b(?:__CPROVER_assume|SWDB_ASSUME|assume)\s*\(")
@@ -331,7 +331,7 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
             _fail("semantics_ghost_ownership", "semantics invocation has no pinned hint-free base")
         check_semantics_hints(base, getattr(adapter, "hints", []))
     if adapter.name == "wp":
-        from swdb import standard_model_view, standard_range_model, wp_pointer_bounds
+        from swdb import standard_model_view, standard_range_model, standard_range_calls, wp_pointer_bounds
         try:
             if "pointer_bounds_model_source" in context:
                 from swdb import c_lowering
@@ -366,7 +366,7 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
                     except ValueError as exc:
                         _fail("nested_entry_reads", str(exc))
                 if ((lowering.pointer_bounds or {}).get("entry_windows") or (lowering.pointer_bounds or {}).get("owner") or
-                        any(row.get("kind") in {"call", "producer", "import"} for row in lowering.pointer_bounds.get("sites", []))):
+                        any(row.get("kind") in {"call", "producer", "import", "standard_range_call"} for row in lowering.pointer_bounds.get("sites", []))):
                     wp_pointer_bounds.recheck_source(lowering, context.get("pointer_source_plan"))
                 if (lowering.pointer_bounds or {}).get("owner"):
                     from swdb import vector_ownership
@@ -378,10 +378,13 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
                                                        owner["formal_texts"], getattr(adapter, "hints", []))
                     except vector_ownership.Refused as exc:
                         _fail("pointer_bounds", str(exc))
+                checked_ranges = standard_range_calls.recheck(adapter,context,lowering,scratch or job.scratch)
+                if checked_ranges is not None:
+                    hashes["standard_range_calls"] = checked_ranges
                 wp_pointer_bounds.check_semantic_origins(lowering, adapter.library, adapter.defines)
                 wp_pointer_bounds.check_input(lowering, context["pointer_bounds_base"], context["pointer_bounds_report"],
                     "\n".join(Path(path).read_text() for path, _expected in inputs))
-        except (KeyError, standard_model_view.Refused, standard_range_model.Refused, wp_pointer_bounds.Refused) as exc:
+        except (KeyError, standard_model_view.Refused, standard_range_model.Refused, standard_range_calls.Refused, wp_pointer_bounds.Refused) as exc:
             _fail("pointer_bounds", str(exc))
         _wp_flags(list(command) if command else flags, scratch or job.scratch)
     elif adapter.name == "cbmc":
