@@ -194,7 +194,7 @@ def build_subset_seed(path):
     (units / "summaries").mkdir()                                  # its own folder: one file defines each function
     (units / "summaries" / "summary_impls.cc").write_text(IMPLS)
     contracts = path / "library" / "rewrite_contracts"
-    for group, (function, clauses, arrays, _hints) in {**GROUPS, **BUG_UNITS}.items():
+    for group, (function, clauses, arrays, _unused) in {**GROUPS, **BUG_UNITS}.items():
         data = _entry(contract_id(group), function, "subset_units.cc", UNITS, clauses, arrays, "per_candidate")
         contracts.joinpath(f"fixture_wp24_{group}.yaml").write_text(yaml.safe_dump(data, sort_keys=False))
     for name, (function, clauses, arrays) in SUMMARIES.items():
