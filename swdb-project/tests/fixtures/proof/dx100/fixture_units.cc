@@ -28,6 +28,24 @@ void dxf_load(int *q, int n, int t) {
 // 2026-10-15 ET: ordinary CPU memory effects need ticket 28's memory-hazard probes. Until then every
 // variant is refused conservatively, including an otherwise safe write after its covering wait.
 void dxf_cpu_store(int *p) { *p = 0; }
+int dxf_device_memory_overlap(int *q, int *p, int n) {
+  dxf_load(q, n, 0);
+  wait_ready(0);
+  dxf_load(q, n, 3);
+  wait_ready(3);
+  maa_indirect_store_vector(p, 0, 3, -1, 5);
+#ifdef SWDB_DEVICE_WAIT_BETWEEN
+  wait_ready(3);
+#endif
+#ifdef SWDB_DEVICE_GATHER_AFTER_STORE
+  maa_indirect_load(p, 0, 6, -1);
+#else
+  maa_indirect_store_vector(p, 0, 3, -1, 6);
+#endif
+  wait_ready(3);
+  wait_ready(6);
+  return 1;
+}
 int dxf_cpu_memory_overlap(int *q, int *base, int n) {
   int *t1 = get_cacheable_tile_pointer(1);
   dxf_load(q, n, 0);

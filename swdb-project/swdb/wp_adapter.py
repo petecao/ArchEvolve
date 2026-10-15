@@ -188,7 +188,8 @@ class WpAdapter:
                      f"{len(lowering.probes)} hazard probe(s)")
         refusal = cpu_memory_admission.check(lowering, covered)
         if refusal:
-            context["settings"] = {"flags": [], "verifier_launched": False, "proof_semantics_admission": refusal}
+            context["settings"] = {"tool": "frama-c-wp", "flags": [], "verifier_launched": False,
+                                   "proof_semantics_admission": refusal}
             return self._not_proven("unsupported_construct",
                 "ordinary CPU memory interference with DX100 commands needs ticket 28's memory-hazard probes", context)
         contracts = self._dependencies(dependency_lowering, context)

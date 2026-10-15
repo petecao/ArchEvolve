@@ -179,6 +179,7 @@ FIXTURES = {
     "size": ("dxf_size", ["q"], "requires 0 <= n <= 2 && \\valid(q + (0 .. n - 1));", "\\nothing", 2),
     "cpu_write": ("dxf_cpu_write", ["q", "base"], BASE.format(arr="base"), "\\nothing", 2),
     "cpu_memory_overlap": ("dxf_cpu_memory_overlap", ["q", "base"], BASE.format(arr="base"), "base[0 .. n - 1]", 2),
+    "device_memory_overlap": ("dxf_device_memory_overlap", ["q", "p"], BASE.format(arr="p"), "p[0 .. n - 1]", 2),
     "store_source_wait": ("dxf_store_source_wait", ["q", "p"], BASE.format(arr="p"), "p[0 .. n - 1]", 2),
     "transitive": ("dxf_transitive", ["q", "base"], BASE.format(arr="base"), "\\nothing", 2),
     "stall_condition": ("dxf_stall_condition", ["q", "p", "base"],
