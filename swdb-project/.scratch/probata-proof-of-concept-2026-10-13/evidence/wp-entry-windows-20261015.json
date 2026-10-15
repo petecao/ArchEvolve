@@ -1,0 +1,51 @@
+{
+  "created": "2026-10-15 ET",
+  "status": "explicit entry-window checkpoint; ticket36 remains claimed",
+  "domain": "Pinned explicit typed-array-window input-contract premise; checked numeric operation bounds and ordinary RTE; projected-precondition smoke does not establish complete realizability. Imported domain summaries/helpers and opaque model origins remain refused.",
+  "validation": {
+    "public_controls": 14,
+    "passed": 14,
+    "seconds": 467.69,
+    "peak_rss_bytes": 1145159680,
+    "persistent_basetemp": "/private/tmp/probata-t36-tests/window-controls"
+  },
+  "raw_evidence": [
+    {
+      "path": "/private/tmp/probata-cbmc-pointers/window-red2.jsonl",
+      "sha256": "2f631d3bd9290da1d11f29f67b168ab1f800d19be2a58838038b2f86f04c48f9"
+    },
+    {
+      "path": "/private/tmp/probata-cbmc-pointers/window-form-green.jsonl",
+      "sha256": "c40925874f8657a9d21384c3c1d8c873b2694fd81930051d4fde1459186fa40a"
+    },
+    {
+      "path": "/private/tmp/probata-cbmc-pointers/window-read-red.log",
+      "sha256": "c20934cf8367a2fbe62f7c0ef9f983c9b9805fd68acfc187400f052d8ffb9fed"
+    },
+    {
+      "path": "/private/tmp/probata-cbmc-pointers/window-core-green.jsonl",
+      "sha256": "09540cf17e0e3e5106b06b98cd47a0ab84349b2b66e3a0965624413b02d52fd1"
+    },
+    {
+      "path": "/private/tmp/probata-cbmc-pointers/window-size-red.log",
+      "sha256": "0ce2fbe639378addf9d1e315ee9442b4501d07d2d2ae8b052759f352b00f5f30"
+    },
+    {
+      "path": "/private/tmp/probata-cbmc-pointers/window-controls.jsonl",
+      "sha256": "c53d6eb12eec61243f21c0f737f2666d67cf0d795aa882f91f2e27021d4b2b8e"
+    },
+    {
+      "path": "/private/tmp/probata-cbmc-pointers/window-imported.jsonl",
+      "sha256": "b439434e6c828bb1cad26b1859bfa069b40b86d8cc26dfa0af40df9ce1350d30"
+    },
+    {
+      "path": "/private/tmp/probata-cbmc-pointers/window-imported-green.jsonl",
+      "sha256": "c00b63fbce23e65ee9498133194c3d6c129aea79cbb2363ff6c019a3653ad985"
+    }
+  ],
+  "dependency_refusal": {
+    "passed": 1,
+    "seconds": 57.26,
+    "boundary": "caller without declarations still refuses imported domain-bearing summary before dependency/verifier invocation"
+  }
+}

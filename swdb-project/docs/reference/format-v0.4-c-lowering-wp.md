@@ -324,8 +324,20 @@ terminal `new int[]` owner, and exact audited DX100 independent tile rows. Each 
 the entry, model contents and generated geometry and is revalidated before launch. Rebinding,
 address escapes and unknown calls invalidate pointer aliases. Embedded/multidimensional arrays,
 untracked pointer casts and opaque returned pointers are refused. Ordinary indexing is inventoried
-through the entire emitted callee closure too. Opaque incoming pointers need a separately implemented
-explicit array-object domain; concurrency-frame array lists and `valid` ranges do not supply it.
+through the entire emitted callee closure too. Incoming primitive parameters can declare
+`proof_unit.array_domains: {p: {extent: n}}`. This is an explicit typed-array-window input-contract
+premise; concurrency-frame array lists and `valid` ranges do not supply it. The binding freezes every
+extent parameter at entry, pins the formal half, and is independently regenerated from the source AST
+before launch. Stable direct aliases preserve the window. Rebinding, shadowing, address escape and
+unmodeled pointer calls refuse. Imported domain-bearing summaries also refuse without checked caller
+discharge, including when the caller has no domain declaration.
+
+WP checks named obligations for nonnegative extent, target byte capacity, null implying an empty
+window, formation within the inclusive one-past range, and accesses within the strict element range.
+These assertions add no preconditions. Existing RTE obligations still check memory access and
+initializedness. The typed-window premise is advertised by the input contract; WP33 does not establish
+the complete realizability of that premise together with arbitrary formal preconditions. Smoke checks
+cover their projected ACSL preconditions. Opaque model and callee parameter origins remain unsupported.
 
 C++17 permits null-pointer plus/minus zero. Supported side-effect-free expressions use
 `offset == 0 ? base : original_expression`, preserving that result without executing C null

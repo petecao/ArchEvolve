@@ -280,3 +280,24 @@ Integration handoff `964feccc` merges parent `0d3e6c18`, retaining no-filter ini
 checks and the checked standard-model view alongside the origin gate. The post-merge public
 lowering controls pass **8/8 in 1.98s**. This union changes the setup/reader hash (recorded in
 the evidence), so final method pins must be recomputed after the parent finishes composition.
+
+### Explicit entry-window slice — 2026-10-15 ET
+
+Direct primitive parameters can now use the pinned `proof_unit.array_domains` contract declaration.
+The source AST independently binds stable pointer parameters/aliases; every extent scalar is frozen
+at entry. Checked assertions establish nonnegative/target-sized extent, null-empty consistency,
+inclusive one-past formation and strict access bounds. They add no preconditions. Setup regenerates
+the complete source lowering/certificate immediately before launch. Scripted, CBMC and Crux domain
+admission remains closed. Retained helper calls, escaped/rebound/shadowed bindings and imported
+domain-bearing summaries without caller discharge refuse, even if the caller declares no domain.
+
+The typed-window declaration is an explicit advertised input-contract premise. WP33 checks its
+numeric projection and ordinary RTE; smoke coverage is projected logical preconditions, not a proof
+that every combination of typed-domain and formal conditions is realizable. A real oversized-domain
+control first proved incorrectly; the checked target byte-capacity assertion closes that gap.
+
+The frozen public batch passed **14/14 in 467.69s**, including real legal formation/index/alias/
+dereference/null-empty proofs, failed frozen-extent/strict-one-past/negative-and-oversized-extent/
+invalid-nonnull-zero obligations, and four prelaunch source-binding refusals. Evidence:
+`evidence/wp-entry-windows-20261015.json`. This is a scoped checkpoint; imported calls, closed-owner
+mapping and DX100 host-footprint discharge are separate work in progress. Ticket 36 stays claimed.

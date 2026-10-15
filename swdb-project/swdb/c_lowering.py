@@ -284,7 +284,8 @@ def identity():
     digest = hashlib.sha256(here.read_bytes() + Path(terminal_release.__file__).read_bytes()
                             + Path(cpu_effects.__file__).read_bytes() + policy
                             + bounded_initialization.identity()["sha256"].encode()
-                            + wp_pointer_bounds.identity()["sha256"].encode()).hexdigest()
+                            + wp_pointer_bounds.identity()["sha256"].encode()
+                            + here.with_name("array_domains.py").read_bytes()).hexdigest()
     found = {"c_lowering": {"id": f"{TOOL_ID}-{TOOL_VERSION}", "sha256": digest},
              "naming_rules": naming_rules()}
     if not tool.missing:
@@ -1041,6 +1042,7 @@ class _Printer:
         self.loop_bases = []        # ticket 25: len(scopes) at each enclosing loop (break/continue leave only those)
         self.returns_ctype = "void"
         self.pointer_contexts = []
+        self.pointer_access_seen = set()
         self.pointer_seen = set()
         self.pointer_rendering = False
 
@@ -1432,8 +1434,22 @@ class _Printer:
         text, atomic = self._expr(node)
         rendered = text if top or atomic else f"({text})"
         if not self.pointer_rendering:
+            self._pointer_access(node, rendered)
             rendered = self._pointer_formation(node, rendered) or rendered
         return rendered
+
+    def _pointer_access(self, node, expression):
+        if not (node.get("kind") == "ArraySubscriptExpr" or
+                node.get("kind") == "UnaryOperator" and node.get("opcode") == "*" and
+                _children(node) and wp_pointer_bounds._pointer(_children(node)[0])):
+            return
+        key = node.get("id")
+        if key in self.pointer_access_seen:
+            return
+        self.pointer_access_seen.add(key)
+        statement, anchor = self.pointer_contexts[-1] if self.pointer_contexts else (None, "")
+        self.unit.pointer_sites.append(wp_pointer_bounds.access_site(node, expression=expression,
+            statement=statement, anchor=anchor, function=self.function, line=_where(node) or self.line))
 
     def _pointer_formation(self, node, expression):
         """Retain source pointer operations even when the later C AST discards their value."""
@@ -1542,6 +1558,7 @@ class _Printer:
         else:
             text = f"*{self.expr(node['inner'][0])}"
         self._tile_ok -= 1
+        self._pointer_access(node, text)
         macro = "SWDB_TILE_READ" if access == "read" else "SWDB_TILE_WRITE"
         return f'(*{macro}(&({text}), "{ident}"))'
 
@@ -1626,9 +1643,15 @@ class _Printer:
             if node.get("opcode") == "&":
                 return self.address(inner[0]), False
             operand = self.expr(inner[0])
-            return (f"{operand}{node['opcode']}" if node.get("isPostfix") else f"{node['opcode']}{operand}"), False
+            text = f"{operand}{node['opcode']}" if node.get("isPostfix") else f"{node['opcode']}{operand}"
+            if not self.pointer_rendering:
+                self._pointer_access(node, text)
+            return text, False
         if kind == "ArraySubscriptExpr":
-            return f"{self.expr(inner[0])}[{self.expr(inner[1], top=True)}]", True
+            text = f"{self.expr(inner[0])}[{self.expr(inner[1], top=True)}]"
+            if not self.pointer_rendering:
+                self._pointer_access(node, text)
+            return text, True
         if kind == "ConditionalOperator":
             return f"{self.expr(inner[0])} ? {self.expr(inner[1])} : {self.expr(inner[2])}", False
         if kind == "CallExpr":
@@ -2315,7 +2338,8 @@ def _name(name, line):
 
 # --- lowering ---------------------------------------------------------------------------------------
 
-def lower(source, function, includes=(), defines=(), summaries=None, semantics=None):
+def lower(source, function, includes=(), defines=(), summaries=None, semantics=None,
+          array_domains=None, array_domain_contract=None):
     """The C lowering of `function` (and of every function, class and global it uses) from the C++ file `source`.
 
     `summaries` maps the C++ name of a function to the summary that stands for it ({name: summary ID or
@@ -2389,6 +2413,11 @@ def lower(source, function, includes=(), defines=(), summaries=None, semantics=N
     unit_prototype, unit_params = definitions[function][0], definitions[function][2]
     declaration = "\n".join([*headers, *types, *globals_text, f"{unit_prototype};"]) + "\n"
     text = "\n".join(lines) + "\n"
+    from swdb import array_domains as domain_policy
+    try:
+        windows = domain_policy.bind(array_domains, unit_params) if array_domains else None
+    except domain_policy.Refused as exc:
+        raise Unsupported(str(exc)) from None
     certificate = terminal_release.certify(node, source=source.read_text(), source_sha256=_file_sha256(source),
                                             models=unit.model_order, anchors=anchors, text=text)
     return Lowering(function=function, text=text, anchors=tuple(anchors), declaration=declaration,
@@ -2407,8 +2436,8 @@ def lower(source, function, includes=(), defines=(), summaries=None, semantics=N
                             external_calls=unit.summaries_used,
                             known_pointer_calls=(semantics or {}).get("tile_pointer", ()),
                             global_nodes=unit.global_nodes.values(), known_origins=(semantics or {}).get("array_origins"),
-                            terminal=certificate),
-                        source_sha256=_file_sha256(source), text=text),
+                            terminal=certificate, entry_windows=windows, entry_function=function),
+                        source_sha256=_file_sha256(source), text=text, entry_windows=windows, entry_contract=array_domain_contract),
                     terminal_release=certificate)
 
 

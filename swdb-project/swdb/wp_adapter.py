@@ -156,9 +156,14 @@ class WpAdapter:
         summaries.update(semantics_options.pop("summaries", {}))
         context["covered"] = covered
         try:
-            lowering = c_lowering.lower(source, job.unit.function, defines=self.defines,
-                                        summaries={f: e for f, e in summaries.items() if f != job.unit.function},
-                                        **semantics_options)
+            source_kwargs = {"defines": self.defines,
+                             "summaries": {f: e for f, e in summaries.items() if f != job.unit.function},
+                             "array_domains": unit.get("array_domains"),
+                             "array_domain_contract": {"id": self.contract, "sha256": job.unit.contract_sha256},
+                             **semantics_options}
+            lowering = c_lowering.lower(source, job.unit.function, **source_kwargs)
+            if unit.get("array_domains"):
+                context["pointer_source_plan"] = {"source": str(source), "kwargs": source_kwargs}
         except c_lowering.Unsupported as exc:
             return self._not_proven("unsupported_construct", str(exc), context)
         except c_lowering.ParseError as exc:
@@ -249,6 +254,12 @@ class WpAdapter:
             context["settings"] = {"tool": "frama-c-wp", "flags": [], "verifier_launched": False,
                 "pointer_bounds": {"verdict": "refused", "reason": str(exc), "check": wp_pointer_bounds.identity()}}
             return self._not_proven("unsupported_construct", str(exc), context)
+        domain_callees = [row["name"] for row in lowering.summaries
+                          if ((self.library.get(row["summary"]) or {}).get("proof_unit") or {}).get("array_domains")]
+        if domain_callees:
+            context["settings"] = {"tool": "frama-c-wp", "flags": [], "verifier_launched": False, "pointer_bounds": {"verdict": "refused",
+                "reason": "imported array-window summaries require checked caller-domain discharge: " + ", ".join(domain_callees)}}
+            return self._not_proven("unsupported_construct", context["settings"]["pointer_bounds"]["reason"], context)
         contracts = self._dependencies(dependency_lowering, context)
         refusal = cpu_memory_admission.summary_refusal(self.records, [
             pin["proof_record"] for group in ("summaries", "models") for pin in context["pins"].get(group, [])])
