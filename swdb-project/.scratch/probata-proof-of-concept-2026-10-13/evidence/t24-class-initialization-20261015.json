@@ -1,0 +1,1454 @@
+{
+  "created": "2026-10-15 ET",
+  "scope": "Class construct fixture only; full combined-source construct acceptance remains pending",
+  "source_base": "cd64283997dda920766264d4bc4475ae857cf4fc",
+  "fixture_sha256": "d977a92dd4ed2ebd6911bd7650b7bd2038540ddd92a05d136c72890fa5e466ed",
+  "output_budget_bytes": 2147483648,
+  "readers": [
+    "ticket24",
+    "review",
+    "combined-source acceptance"
+  ],
+  "records": {
+    "original": {
+      "id": "proof.wp24-safe.candidate-1.20261015t080718z.5cba16fc",
+      "verdict": "not_proven",
+      "failure_class": "timeout",
+      "record": "/private/tmp/probata-construct-initialization-20261015/red/records/proofs/proof.wp24-safe.candidate-1.20261015t080718z.5cba16fc.yaml",
+      "sha256": "e32e777d05c4d6cb298ad48a9cae40424f6afa9751999ae7f03be5530aeb8b01",
+      "valid_goals": 144,
+      "smoke_checks": 11,
+      "unproven_properties": [
+        {
+          "property": "\\initialized(&this_22)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 34,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&this_22->total_)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 34,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(this_22->total_)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 34,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&this_22->count_)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 34,
+          "status": "Unknown",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\valid(this_22->total_)",
+          "kind": "mem_access",
+          "function": "swdb_class_unit",
+          "line": 34,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\valid_read(&this_22->count_)",
+          "kind": "mem_access",
+          "function": "swdb_class_unit",
+          "line": 34,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\valid_read(&this_22->total_)",
+          "kind": "mem_access",
+          "function": "swdb_class_unit",
+          "line": 34,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\valid_read(this_22->total_)",
+          "kind": "mem_access",
+          "function": "swdb_class_unit",
+          "line": 34,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "*(this_22->total_) + this_22->count_ \u2264 2147483647",
+          "kind": "signed_overflow",
+          "function": "swdb_class_unit",
+          "line": 34,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "-2147483648 \u2264 *(this_22->total_) + this_22->count_",
+          "kind": "signed_overflow",
+          "function": "swdb_class_unit",
+          "line": 34,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&this_21)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 48,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&v)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 48,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&this_21->count_)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 48,
+          "status": "Unknown",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\valid(&this_21->count_)",
+          "kind": "mem_access",
+          "function": "swdb_class_unit",
+          "line": 48,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\valid_read(&this_21->count_)",
+          "kind": "mem_access",
+          "function": "swdb_class_unit",
+          "line": 48,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "-2147483648 \u2264 this_21->count_ + v",
+          "kind": "signed_overflow",
+          "function": "swdb_class_unit",
+          "line": 48,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "this_21->count_ + v \u2264 2147483647",
+          "kind": "signed_overflow",
+          "function": "swdb_class_unit",
+          "line": 48,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&by)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 62,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&x)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 62,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(x)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 62,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\valid(x)",
+          "kind": "mem_access",
+          "function": "swdb_class_unit",
+          "line": 62,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\valid_read(x)",
+          "kind": "mem_access",
+          "function": "swdb_class_unit",
+          "line": 62,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "*x + by \u2264 2147483647",
+          "kind": "signed_overflow",
+          "function": "swdb_class_unit",
+          "line": 62,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "-2147483648 \u2264 *x + by",
+          "kind": "signed_overflow",
+          "function": "swdb_class_unit",
+          "line": 62,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "0 \u2264 i_24 \u2264 this_23->n",
+          "kind": "loop invariant",
+          "function": "swdb_class_unit",
+          "line": 70,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\u2200 \u2124 j; 0 \u2264 j < i_24 \u21d2 *(this_23->data + j) \u2261 k * \\at(*(this_23->data + j),LoopEntry)",
+          "kind": "loop invariant",
+          "function": "swdb_class_unit",
+          "line": 71,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\u2200 \u2124 j; i_24 \u2264 j < this_23->n \u21d2 *(this_23->data + j) \u2261 \\at(*(this_23->data + j),LoopEntry)",
+          "kind": "loop invariant",
+          "function": "swdb_class_unit",
+          "line": 72,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "assigns i_24, *(this_23->data + (0 .. this_23->n - 1));",
+          "kind": "assigns clause",
+          "function": "swdb_class_unit",
+          "line": 73,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&i_24)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 75,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&this_23)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 75,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&this_23->n)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 75,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\valid_read(&this_23->n)",
+          "kind": "mem_access",
+          "function": "swdb_class_unit",
+          "line": 75,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&i_24)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 75,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "i_24 + 1 \u2264 2147483647",
+          "kind": "signed_overflow",
+          "function": "swdb_class_unit",
+          "line": 75,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&i_24)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 77,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&k)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 77,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&this_23)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 77,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&this_23->data)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 77,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(this_23->data + i_24)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 77,
+          "status": "Unknown",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\valid(this_23->data + i_24)",
+          "kind": "mem_access",
+          "function": "swdb_class_unit",
+          "line": 77,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\valid_read(&this_23->data)",
+          "kind": "mem_access",
+          "function": "swdb_class_unit",
+          "line": 77,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\valid_read(this_23->data + i_24)",
+          "kind": "mem_access",
+          "function": "swdb_class_unit",
+          "line": 77,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "*(this_23->data + i_24) * k \u2264 2147483647",
+          "kind": "signed_overflow",
+          "function": "swdb_class_unit",
+          "line": 77,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "-2147483648 \u2264 *(this_23->data + i_24) * k",
+          "kind": "signed_overflow",
+          "function": "swdb_class_unit",
+          "line": 77,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "0 \u2264 i_25 \u2264 b->n \u2264 4",
+          "kind": "loop invariant",
+          "function": "swdb_class_unit",
+          "line": 90,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "-300 * i_25 \u2264 s \u2264 300 * i_25",
+          "kind": "loop invariant",
+          "function": "swdb_class_unit",
+          "line": 91,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\u2200 \u2124 j; 0 \u2264 j < b->n \u21d2 -300 \u2264 *(b->data + j) \u2264 300",
+          "kind": "loop invariant",
+          "function": "swdb_class_unit",
+          "line": 92,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "assigns i_25, s;",
+          "kind": "assigns clause",
+          "function": "swdb_class_unit",
+          "line": 93,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&b)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 95,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&b->n)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 95,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&i_25)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 95,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\valid_read(&b->n)",
+          "kind": "mem_access",
+          "function": "swdb_class_unit",
+          "line": 95,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&i_25)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 95,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "i_25 + 1 \u2264 2147483647",
+          "kind": "signed_overflow",
+          "function": "swdb_class_unit",
+          "line": 95,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&b)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 97,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&b->data)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 97,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&i_25)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 97,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&s)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 97,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(b->data + i_25)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 97,
+          "status": "Unknown",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\valid_read(&b->data)",
+          "kind": "mem_access",
+          "function": "swdb_class_unit",
+          "line": 97,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\valid_read(b->data + i_25)",
+          "kind": "mem_access",
+          "function": "swdb_class_unit",
+          "line": 97,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "-2147483648 \u2264 s + *(b->data + i_25)",
+          "kind": "signed_overflow",
+          "function": "swdb_class_unit",
+          "line": 97,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "s + *(b->data + i_25) \u2264 2147483647",
+          "kind": "signed_overflow",
+          "function": "swdb_class_unit",
+          "line": 97,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&s)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 102,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "assigns *(a + (0 .. n - 1));",
+          "kind": "assigns clause",
+          "function": "swdb_class_unit",
+          "line": 109,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\old(mode) \u2262 2 \u21d2 (\u2200 \u2124 j; 0 \u2264 j < \\old(n) \u21d2 *(\\old(a) + j) \u2261 \\old(*(a + j)))",
+          "kind": "postcondition",
+          "function": "swdb_class_unit",
+          "line": 110,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\old(mode) \u2261 2 \u21d2 (\u2200 \u2124 j; 0 \u2264 j < \\old(n) \u21d2 *(\\old(a) + j) \u2261 3 * \\old(*(a + j)))",
+          "kind": "postcondition",
+          "function": "swdb_class_unit",
+          "line": 111,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\true",
+          "kind": "termination clause",
+          "function": "swdb_class_unit",
+          "line": 112,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "0 \u2264 i \u2264 n",
+          "kind": "loop invariant",
+          "function": "swdb_class_unit",
+          "line": 133,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "-100 * i \u2264 counter.count_ \u2264 100 * i",
+          "kind": "loop invariant",
+          "function": "swdb_class_unit",
+          "line": 134,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "bag.data \u2261 a \u2227 bag.n \u2261 n \u2227 counter.total_ \u2261 &total",
+          "kind": "loop invariant",
+          "function": "swdb_class_unit",
+          "line": 135,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "assigns i, counter.count_;",
+          "kind": "assigns clause",
+          "function": "swdb_class_unit",
+          "line": 136,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&i)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 138,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "i + 1 \u2264 2147483647",
+          "kind": "signed_overflow",
+          "function": "swdb_class_unit",
+          "line": 138,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(tmp)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 140,
+          "status": "Unknown",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&m)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 155,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&m)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 162,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&total)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 162,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "(int)(total + tmp_2) + m \u2264 2147483647",
+          "kind": "signed_overflow",
+          "function": "swdb_class_unit",
+          "line": 162,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "-2147483648 \u2264 (int)(total + tmp_2) + m",
+          "kind": "signed_overflow",
+          "function": "swdb_class_unit",
+          "line": 162,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "-2147483648 \u2264 total + tmp_2",
+          "kind": "signed_overflow",
+          "function": "swdb_class_unit",
+          "line": 162,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "total + tmp_2 \u2264 2147483647",
+          "kind": "signed_overflow",
+          "function": "swdb_class_unit",
+          "line": 162,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "swdb_class_unit_assert_rte_initialization_16",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "status": "timeout",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "swdb_class_unit_assert_rte_initialization_18",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_18",
+          "status": "timeout",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "swdb_class_unit_assert_rte_initialization_23",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_23",
+          "status": "timeout",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "swdb_class_unit_assert_rte_initialization_34",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_34",
+          "status": "timeout",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "swdb_class_unit_assert_rte_initialization_44",
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_44",
+          "status": "timeout",
+          "failure_class": "timeout"
+        }
+      ],
+      "job": {
+        "adapter": "wp",
+        "host": "mac",
+        "worker_core": "unpinned",
+        "wall_seconds": 398.935422,
+        "cpu_seconds": 477.393674,
+        "batch_load": {
+          "start": 16.975,
+          "end": 35.419
+        },
+        "peak_rss_bytes": 1528102912,
+        "batch": "batch.proof.wp24-safe.candidate-1.20261015t080718z.5cba16fc",
+        "position": 1
+      },
+      "pins": {
+        "code": {
+          "id": "wp24-safe.candidate-1",
+          "sha256": "65996714e3afc586e057b062e3aa7570e9513746825a69c04c8b46892dc33348"
+        },
+        "contract": {
+          "id": "contract.fixture_wp24_classes",
+          "sha256": "0d216e42a75ff19bcc90f928f8b29f2b976e657ae10793f3f2d94a11a09c5dff"
+        },
+        "baseline_function": {
+          "id": "test-source",
+          "function": "swdb_class_unit",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "not_applicable": "No proof-semantics version exists before ticket 27."
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "2cdfb5c3878240484b7859d6baa6a7b058518838bb4ab15ec3c3344004b68dfe"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "build_constants": [],
+        "c_lowering": {
+          "id": "swdb_class_unit.c",
+          "sha256": "602ee1e4366a9dddf10591128eb4b76ee44392c0dbca2db5042c08aca039ecc9"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        }
+      }
+    },
+    "initialized": {
+      "id": "proof.wp24-safe.candidate-1.20261015t082232z.b4d6d808",
+      "verdict": "proven",
+      "failure_class": null,
+      "record": "/private/tmp/probata-construct-initialization-20261015/red/records/proofs/proof.wp24-safe.candidate-1.20261015t082232z.b4d6d808.yaml",
+      "sha256": "5f397f64fe90c857f8dd98fd8e17002c960feb98b97ef3ec60574ab87fea7bd6",
+      "valid_goals": 153,
+      "smoke_checks": 11,
+      "unproven_properties": [],
+      "job": {
+        "adapter": "wp",
+        "host": "mac",
+        "worker_core": "unpinned",
+        "wall_seconds": 98.311056,
+        "cpu_seconds": 103.718375,
+        "batch_load": {
+          "start": 10.397,
+          "end": 8.015
+        },
+        "peak_rss_bytes": 425558016,
+        "batch": "batch.proof.wp24-safe.candidate-1.20261015t082232z.b4d6d808",
+        "position": 1
+      },
+      "pins": {
+        "code": {
+          "id": "wp24-safe.candidate-1",
+          "sha256": "65996714e3afc586e057b062e3aa7570e9513746825a69c04c8b46892dc33348"
+        },
+        "contract": {
+          "id": "contract.fixture_wp24_classes",
+          "sha256": "879dacc728cb50d62ad560e82280299b54294ea67d131f0ec983fb45607cb85e"
+        },
+        "baseline_function": {
+          "id": "test-source",
+          "function": "swdb_class_unit",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "not_applicable": "No proof-semantics version exists before ticket 27."
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "2cdfb5c3878240484b7859d6baa6a7b058518838bb4ab15ec3c3344004b68dfe"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "build_constants": [],
+        "c_lowering": {
+          "id": "swdb_class_unit.c",
+          "sha256": "602ee1e4366a9dddf10591128eb4b76ee44392c0dbca2db5042c08aca039ecc9"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        }
+      }
+    },
+    "seeded_bug": {
+      "id": "proof.wp24-bug.candidate-1.20261015t082507z.2f1c41bc",
+      "verdict": "not_proven",
+      "failure_class": "timeout",
+      "record": "/private/tmp/probata-construct-initialization-20261015/red/records/proofs/proof.wp24-bug.candidate-1.20261015t082507z.2f1c41bc.yaml",
+      "sha256": "776ea11db04dae10e368b84731077ac7f0a6e7d23e3a256dd6cbc1feea76f354",
+      "valid_goals": 153,
+      "smoke_checks": 11,
+      "unproven_properties": [
+        {
+          "property": "0 \u2264 i_24 \u2264 this_23->n",
+          "kind": "loop invariant",
+          "function": "swdb_class_unit",
+          "line": 70,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\u2200 \u2124 j; 0 \u2264 j < i_24 \u21d2 *(this_23->data + j) \u2261 k * \\at(*(this_23->data + j),LoopEntry)",
+          "kind": "loop invariant",
+          "function": "swdb_class_unit",
+          "line": 71,
+          "status": "Unknown",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\u2200 \u2124 j; i_24 \u2264 j < this_23->n \u21d2 *(this_23->data + j) \u2261 \\at(*(this_23->data + j),LoopEntry)",
+          "kind": "loop invariant",
+          "function": "swdb_class_unit",
+          "line": 72,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(this_23->data + (0 .. this_23->n - 1))",
+          "kind": "loop invariant",
+          "function": "swdb_class_unit",
+          "line": 73,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "assigns i_24, *(this_23->data + (0 .. this_23->n - 1));",
+          "kind": "assigns clause",
+          "function": "swdb_class_unit",
+          "line": 74,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&i_24)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 76,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&this_23)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 76,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&this_23->n)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 76,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\valid_read(&this_23->n)",
+          "kind": "mem_access",
+          "function": "swdb_class_unit",
+          "line": 76,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&i_24)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 76,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "i_24 + 1 \u2264 2147483647",
+          "kind": "signed_overflow",
+          "function": "swdb_class_unit",
+          "line": 76,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&i_24)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 78,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&k)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 78,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&this_23)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 78,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&this_23->data)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 78,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(this_23->data + i_24)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 78,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\valid(this_23->data + i_24)",
+          "kind": "mem_access",
+          "function": "swdb_class_unit",
+          "line": 78,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\valid_read(&this_23->data)",
+          "kind": "mem_access",
+          "function": "swdb_class_unit",
+          "line": 78,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\valid_read(this_23->data + i_24)",
+          "kind": "mem_access",
+          "function": "swdb_class_unit",
+          "line": 78,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "*(this_23->data + i_24) * (int)(k + 1) \u2264 2147483647",
+          "kind": "signed_overflow",
+          "function": "swdb_class_unit",
+          "line": 78,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "-2147483648 \u2264 *(this_23->data + i_24) * (int)(k + 1)",
+          "kind": "signed_overflow",
+          "function": "swdb_class_unit",
+          "line": 78,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "k + 1 \u2264 2147483647",
+          "kind": "signed_overflow",
+          "function": "swdb_class_unit",
+          "line": 78,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "0 \u2264 i_25 \u2264 b->n \u2264 4",
+          "kind": "loop invariant",
+          "function": "swdb_class_unit",
+          "line": 91,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "-300 * i_25 \u2264 s \u2264 300 * i_25",
+          "kind": "loop invariant",
+          "function": "swdb_class_unit",
+          "line": 92,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\u2200 \u2124 j; 0 \u2264 j < b->n \u21d2 -300 \u2264 *(b->data + j) \u2264 300",
+          "kind": "loop invariant",
+          "function": "swdb_class_unit",
+          "line": 93,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "assigns i_25, s;",
+          "kind": "assigns clause",
+          "function": "swdb_class_unit",
+          "line": 94,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&b)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 96,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&b->n)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 96,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&i_25)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 96,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\valid_read(&b->n)",
+          "kind": "mem_access",
+          "function": "swdb_class_unit",
+          "line": 96,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&i_25)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 96,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "i_25 + 1 \u2264 2147483647",
+          "kind": "signed_overflow",
+          "function": "swdb_class_unit",
+          "line": 96,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&b)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 98,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&b->data)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 98,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&i_25)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 98,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&s)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 98,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(b->data + i_25)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 98,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\valid_read(&b->data)",
+          "kind": "mem_access",
+          "function": "swdb_class_unit",
+          "line": 98,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\valid_read(b->data + i_25)",
+          "kind": "mem_access",
+          "function": "swdb_class_unit",
+          "line": 98,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "-2147483648 \u2264 s + *(b->data + i_25)",
+          "kind": "signed_overflow",
+          "function": "swdb_class_unit",
+          "line": 98,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "s + *(b->data + i_25) \u2264 2147483647",
+          "kind": "signed_overflow",
+          "function": "swdb_class_unit",
+          "line": 98,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&s)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 103,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "assigns *(a + (0 .. n - 1));",
+          "kind": "assigns clause",
+          "function": "swdb_class_unit",
+          "line": 111,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\old(mode) \u2262 2 \u21d2 (\u2200 \u2124 j; 0 \u2264 j < \\old(n) \u21d2 *(\\old(a) + j) \u2261 \\old(*(a + j)))",
+          "kind": "postcondition",
+          "function": "swdb_class_unit",
+          "line": 112,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\old(mode) \u2261 2 \u21d2 (\u2200 \u2124 j; 0 \u2264 j < \\old(n) \u21d2 *(\\old(a) + j) \u2261 3 * \\old(*(a + j)))",
+          "kind": "postcondition",
+          "function": "swdb_class_unit",
+          "line": 113,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\true",
+          "kind": "termination clause",
+          "function": "swdb_class_unit",
+          "line": 114,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&m)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 165,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "\\initialized(&total)",
+          "kind": "initialization",
+          "function": "swdb_class_unit",
+          "line": 165,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "(int)(total + tmp_2) + m \u2264 2147483647",
+          "kind": "signed_overflow",
+          "function": "swdb_class_unit",
+          "line": 165,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "-2147483648 \u2264 (int)(total + tmp_2) + m",
+          "kind": "signed_overflow",
+          "function": "swdb_class_unit",
+          "line": 165,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "-2147483648 \u2264 total + tmp_2",
+          "kind": "signed_overflow",
+          "function": "swdb_class_unit",
+          "line": 165,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "total + tmp_2 \u2264 2147483647",
+          "kind": "signed_overflow",
+          "function": "swdb_class_unit",
+          "line": 165,
+          "status": "Partially proven",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "swdb_class_unit_loop_invariant_17",
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "status": "timeout",
+          "failure_class": "timeout"
+        }
+      ],
+      "job": {
+        "adapter": "wp",
+        "host": "mac",
+        "worker_core": "unpinned",
+        "wall_seconds": 189.012098,
+        "cpu_seconds": 217.499445,
+        "batch_load": {
+          "start": 5.075,
+          "end": 18.164
+        },
+        "peak_rss_bytes": 864206848,
+        "batch": "batch.proof.wp24-bug.candidate-1.20261015t082507z.2f1c41bc",
+        "position": 1
+      },
+      "pins": {
+        "code": {
+          "id": "wp24-bug.candidate-1",
+          "sha256": "eb32ff821d3c84909c3b861eefdd44b950b4434c607e2fb1480bd4c9dba0f99a"
+        },
+        "contract": {
+          "id": "contract.fixture_wp24_classes",
+          "sha256": "879dacc728cb50d62ad560e82280299b54294ea67d131f0ec983fb45607cb85e"
+        },
+        "baseline_function": {
+          "id": "test-source",
+          "function": "swdb_class_unit",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "not_applicable": "No proof-semantics version exists before ticket 27."
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "2cdfb5c3878240484b7859d6baa6a7b058518838bb4ab15ec3c3344004b68dfe"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "build_constants": [],
+        "c_lowering": {
+          "id": "swdb_class_unit.c",
+          "sha256": "e223d80347f9cc0943246a638c12641aed23d233c8b8d287e219448a7eb549f5"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        }
+      }
+    }
+  },
+  "intermediate_diagnostic": "Input-only diagnostic stopped after missing loop invariant reproduced; not a completed acceptance run"
+}
