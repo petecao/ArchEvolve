@@ -4,7 +4,7 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 19:19 ET. **Implementation is active under the user's ongoing approval.**
+Updated: 2026-10-15 19:34 ET. **Implementation is active under the user's ongoing approval.**
 Integration `codex/probata-resume-20261015` is based on `yanrujhou_main` at `d94d629b`.
 Audited run23 documentation is published at `6dc94905`; reviewed method21 prototype
 is published at `14c2a298`. Only `swdb/c_lowering.py`
@@ -19,8 +19,8 @@ Drafts 1/2 remain immutable. No draft 3 or final production freeze exists.
 | Ticket / owner | Verified checkpoint | Active work |
 |---|---|---|
 | 07 / `ticket07` | Run 24 remains unproven: 29 open, 52.03 counted minutes, 5 mechanical / 36 Codex records. Posthoc full-30-second replay timed out after 710.42s without a complete report; no verdict upgrade. | Temporary cleanup quarantine independently checked and released at 19:07 ET. Method 22 adds zero seeds, paged VC inspection and complete provider accounting; 33/36-minute search/return limits leave 24 minutes for final checks. TDD/review, no fresh actual. |
-| 24 / `ticket24` | Current float pair, five std models, nine atomic models and atomic caller pair accepted. Remaining matrix stopped on a MAA summary with 3 ordinary Valid / 0 generated smoke goals; strict refusal preserved. Original std caller still unproven. | Node 0 generation 578 runs reviewed qualified std v2 at `bf7a404c`: safe has 47 ordinary + 13 smoke Valid; seed pending. Agent investigates a narrow no-op summary/caller nonvacuity witness without source/contract changes. Later original groups remain pending. |
-| 27 / `ticket27` | Current bounded/native 35/35 and repaired capacity 3/3 accepted. Current negative 12/13 independently audited; historical safe 11/11 remains `717` only. | Node 1 generation 603 continues the final short-store-frame negative at `0e7`. Fresh safe 11 queued as disjoint 5 + 6 shards; historical weights about 50 minutes each, excluding setup/runtime drift. |
+| 24 / `ticket24` | Current float, atomic and qualified std pairs accepted; 14 models accepted. Qualified std safe has 47 ordinary + 13 smoke Valid; seed stays not_proven/vacuous_pass. Original std contract gap is retained. | Node 0 generation 580 runs reviewed continuation at `23933f8a`: 12 retained + 24 fresh rows. Exact no-op summary remains provisional until actual original-caller smoke witness. Six original groups pending. |
+| 27 / `ticket27` | Current negative 13/13, bounded/native 35/35 and repaired capacity 3/3 accepted. Fresh CPU safe proves 58 ordinary + 19 smoke goals; historical `717` evidence remains separate. | Node 1 generation 604 runs A-rest 4. B1/B2 groups of 3 are queued. Exact disjoint safe union 1 + 4 + 3 + 3 = 11; original A5/B6 unlaunched. Ten safe units pending. |
 | 36 / dependency-gated | 122 compiler/scripted controls pass; 13 actual-WP cases excluded. | Waits on 27; runtime fallback research remains prospective. |
 
 At17:43:14 ET node0 generation572 released after the standard caller safe timeout;
@@ -139,10 +139,15 @@ valid_read/base_addr. Its zero-row failure and unchanged inputs remain retained;
 no ordinary model eligibility/semantic result is claimed. V2 uses only allowed
 null/valid/current-or-predecessor clauses, a disclosed narrower writable-object
 domain;13controls now include actual public validation, and independent final
-review passes at `bf7a`. Fresh WP/model eligibility/same-base assertion are active
-on node 0. The safe case is independently accepted with 47 ordinary + 13 smoke
+review passes at `bf7a`. Fresh WP/model eligibility/same-base assertion have been checked. The safe case is independently accepted with 47 ordinary + 13 smoke
 Valid and 5 initialization goals; all original five model IDs are selected normally.
-The seeded partner remains pending.
+The seeded partner is independently accepted as not_proven/vacuous_pass:
+44 ordinary Valid / 4 timeouts, 11 smoke Valid / 2 failed smoke, 5 initialization.
+Both cases normally select the exact five old model record IDs and qualified copy
+certificate; all seven records pass cold reader and physical/runtime audit.
+Generation 578 released at 19:20:20 ET, exit 0; inner guard 672.850s, peak
+1,322,188,800B, no OOM/timeout.
+[Final qualified evidence](evidence/t24-std-object-domain-v2-20261015.json).
 
 Node0 generation577 started the remaining original matrix at18:27 ET using
 the existing0e7 checkout. Groups: atomics,maa_summary,dxc_summary,templates,
@@ -156,14 +161,43 @@ This run stopped at 19:06:55 ET after 12 rows: 9 atomic models + 2 callers accep
 then a MAA summary with 3 ordinary Valid but no generated smoke goals refused by
 the strict reader. Its original no-op body and frame-only contract are unchanged;
 no general zero-smoke exception or artificial postcondition is adopted. Agent 24
-is evaluating a narrow no-op/caller feasibility witness. Later groups did not run.
+reviewed an exact no-op/caller feasibility policy, now under actual validation
+in the continuation. Later groups did not run in that stopped profile.
 
-Next: finish the remaining matrix, reviewed v2 standard caller pair and
-negative/fresh-safe profiles. The prospective two-shard safe plan covers all11
-without overlap; historical weights project about50minutes each plus setup
-if two lanes are available. No fresh-safe success or ETA guarantee is claimed. No full ticket
-or final method success is claimed from these checkpoints. This chat's30-minute
-heartbeat stays active; last full table 19:19 ET, next due 19:49 ET.
+Next: finish the remaining matrix and ten fresh safe units. Selected positive
+schedule is now 1 + 4 + 3 + 3, not the original unlaunched A5/B6 jobs. The one CPU
+case completed at 19:30:02 ET with 58 ordinary + 19 smoke Valid, 11 initialization /
+9 RTE goals, zero audit mismatches and natural guard/lease cleanup. The final
+negative profile completed 13/13 at 19:26:43 ET: 1,008/1,021 ordinary Valid and
+283/318 smoke passing, with all 13 intended timeouts / 35 failed smoke checks
+retained. No solver refutation is claimed. Source/policy/18,091-reference audit
+passes; guard 8012.081s, peak 4,503,732,224B, no OOM/timeout.
+[Negative closure](evidence/t27-composed-negative-completed-independent-20261015.json),
+[CPU closure](evidence/t27-composed-safe-cpu-completed-independent-20261015.json).
+
+A-rest4 started at 19:29:42 ET on node 1 generation 604, exact existing clean
+`0e7f2327`. Whole 7200s / outer 7320s, one worker, 8 GiB process tree / planned
+raw output. [Admission](evidence/reviewed-t27-safe-a-rest-launch-0e7f2327-20261015.json).
+After CPU natural release, continuation started 19:31:53 ET on node 0 generation
+580 at exact clean detached `23933f8a6f08d5c6d10a4f6155021a9a83f159ec`.
+Source `/data1/yanruj/probata-reviewed-23933f8a`; raw
+`/data/yanruj/EvolveSWDB_runs/probata-reviewed-23933f8a-t24-continuation`.
+Whole 14400s / outer 14520s, public limits 1800s, one worker, 8 GiB process tree /
+planned raw output. Each launch passes 197 physical/Git module checks and its full
+runtime dictionary equals the accepted `0e7` identity. No third job.
+[Continuation admission](evidence/reviewed-t24-continuation-launch-23933f8a-20261015.json).
+The retained 12 rows and fresh 24-row schedule use normal public dependency
+eligibility; the no-op exception is exact-source/contract/three-VC scoped and
+provisional until actual unchanged-caller dead-call/precondition smoke passes.
+No artificial postcondition or general zero-smoke waiver is introduced.
+
+B1/B2 each select three disjoint remaining original cases, with historical case
+weights about 25 minutes each before setup/runtime drift. They fill naturally free
+lanes after the active jobs; every launch still needs fresh all-lease/resource
+admission. Historical weights are not a fresh ETA or success guarantee.
+[Selected schedule and exact commands](evidence/t27-selected-safe-shard-schedule-20261015.json).
+No full ticket or method success is claimed from these checkpoints. This chat's
+30-minute heartbeat stays active; last full table 19:19 ET, next due 19:49 ET.
 Research-only notes remain `/private/tmp/probata-ticket25-resume-exploration.md`,
 `/private/tmp/probata-ticket25-lifetime-capabilities.md`,
 `/private/tmp/probata-ticket25-heap-bridge-tcb-addendum.md`,

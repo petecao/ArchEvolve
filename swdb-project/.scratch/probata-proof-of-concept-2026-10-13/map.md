@@ -5,34 +5,32 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-re
 
 ## Current state (resume here)
 
-Updated: 2026-10-15 19:19 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
+Updated: 2026-10-15 19:34 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
 Integration: `codex/probata-resume-20261015`; audited run 23 is published at
 `6dc94905`; method21 prototype merged at `14c2a298`. Remote actual jobs retain
-exact `0e7f2327` and `bf7a404c` source freezes; production lowerer SHA256
+exact `0e7f2327` and `23933f8a` source freezes; production lowerer SHA256
 remains `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
 [Current resume and evidence](resume.md).
 
-- **24:** Current float pair and five standard models accepted; all nine atomic
-  models now pass independent audit (96 ordinary + 15 smoke Valid), and the atomic
-  caller pair is accepted. Remaining matrix stopped at its next MAA summary: three
-  ordinary goals Valid, zero generated smoke goals, rejected by the strict runner.
-  The original source/contract is unchanged; a narrow no-op summary/caller witness
-  policy is under investigation. No later groups ran. The original standard caller
-  retains its pointer-formation timeout. Qualified writable-domain v2 is running at
-  `bf7a404c` on node 0 generation 578: safe has 47 ordinary + 13 smoke
-  Valid and selects all five original model records normally; seed pending. First qualified profile `6221dad7` remains a
-  pre-WP public-validation refusal. Finite native agreement stays accepted for
-  112,589 defined comparisons. [Current launch](evidence/reviewed-t24-std-domain-v2-launch-bf7a404c-20261015.json).
-- **27:** Historical `71771f09` safe profile passes 11/11, with 792 ordinary +
-  252 smoke Valid. Current negative profile has twelve accepted hazard
-  controls of 13, each preserving its exact failed hazard precondition and Doomed
-  smoke checks. Current capacity32 stops on two memory-domain/invariant obligations
-  (45/47 ordinary, 11/11 smoke Valid); 33 and CBMC capacity cases did not run.
-  Fresh bounded/native passes 35/35, including 12 CBMC proofs and 12 replayed
-  refutations. Reviewed capacity profile passes 3/3: WP32 all 49 ordinary + 11 smoke,
-  WP33 ghost-capacity nonproof with 11 passing smoke, CBMC32/33 agreement.
-  Node 0 now runs qualified std v2; remaining original groups need the no-op
-  summary repair. Fresh safe remains queued.
+- **24:** Current float, atomic and qualified standard caller pairs accepted;
+  all five standard and nine atomic models accepted. Qualified std safe has 47
+  ordinary + 13 smoke Valid; seed remains not_proven/vacuous_pass with four
+  ordinary timeouts and two failed smoke checks. The original standard caller
+  gap stays unchanged. Reviewed no-op policy is provisional until unchanged MAA
+  caller reachability is observed. Continuation at `23933f8a` runs on node 0
+  generation 580: 12 retained rows + 24 fresh rows (15 WP / 9 deliberate refusals).
+  Six original groups remain pending. Finite native evidence stays finite.
+  [Qualified std](evidence/t24-std-object-domain-v2-20261015.json),
+  [continuation launch](evidence/reviewed-t24-continuation-launch-23933f8a-20261015.json).
+- **27:** Current negative profile accepted 13/13 at exact `0e7f2327`: all 13
+  intended ordinary timeouts and 35 failed smoke checks remain explicit. Fresh
+  bounded/native 35/35 and repaired capacity 3/3 remain accepted. First current
+  safe CPU case proves 58 ordinary + 19 smoke goals; ten safe units remain.
+  Four run on node 1 generation 604; the other six are queued as balanced 3 + 3
+  partitions. Original A5/B6 jobs are unlaunched; selected disjoint union is
+  1 + 4 + 3 + 3 = 11. Historical `717` safe evidence is separate.
+  [Final negatives](evidence/t27-composed-negative-completed-independent-20261015.json),
+  [selected schedule](evidence/t27-selected-safe-shard-schedule-20261015.json).
 - **07:** Run 24 at `14c2a298` ended unproven at 18:44:19 ET after 52.03
   counted minutes: 29 open (14 unit / 15 hint), 259 ordinary entries, 41 hint records
   (5 mechanical / 36 Codex). No final replay or wait-negative ran. All 15 proposal
@@ -57,7 +55,10 @@ Node 0 generation 575 capacity completed at 18:21:42 ET (`b9a34bbb`).
 Generation 576 qualified std stopped before proof at `6221dad7`.
 Node 0 generation 577 released at 19:06:55 ET after the no-smoke MAA summary
 refusal. Generation 578 starts qualified std v2 at 19:09:05 ET (`bf7a404c`);
-node 1 generation 603 continues negatives at unchanged `0e7f2327`.
+node 1 generation 603 completed negatives at 19:26:43 ET. Node 0 generation
+579 completed CPU safe at 19:30:02 ET. Generation 604 started four safe cases on
+node 1 at 19:29:42 ET; generation 580 started continuation on node 0 at
+19:31:53 ET. Both active producers retain their own exact source identities.
 [Remaining matrix launch](evidence/reviewed-t24-remaining-launch-0e7f2327-20261015.json).
 [Capacity repair launch](evidence/reviewed-t27-capacity-launch-b9a34bbb-20261015.json).
 [Initial launch audit](evidence/composed-launch-0e7f2327-20261015.json),
