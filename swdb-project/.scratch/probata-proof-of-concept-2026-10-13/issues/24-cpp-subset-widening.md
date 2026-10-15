@@ -767,3 +767,18 @@ This closes the original embedded-array compiler/proof gap, not the whole ticket
 The remaining eight groups and lifetime/dependency actual matrix are pending;
 status remains **claimed**.
 [Exact pair audit](../evidence/t24-original-template-pair-mbit10-20261015.json).
+
+### Concrete dxc negative-control correction — 2026-10-15 ET
+
+The old `__dxc_tile_size(tile)+2` variant is not a concrete bug against the
+original stand-in: `tile&1` returns0/1, so the variant returns2/3 and still meets
+`1<=result<=3`. A modular ensures timeout from the looser proven summary
+`0<=result<=2` is a precision control, not genuine seeded semantic-bug acceptance.
+The root coordinator authorized changing only this seeded replacement to `+4`.
+Safe source, original contract, original summary and actual stand-in body remain
+unchanged. At in-domain `tile=0`, native C++ and its C lowering both return1 for
+safe,2 for the old seed and4 for the corrected seed. The public native negative
+control goes RED (old+2) to GREEN (corrected+4), 2.06s /1.71s. This is native
+fixture evidence, not a solver refutation or production DX100 semantics claim.
+Frozen717 records keep their exact old source identities; fresh corrected-seed
+actual acceptance remains required. [Native source/binary hashes and outcomes](../evidence/t24-dxc-native-negative-control-20261015.json).

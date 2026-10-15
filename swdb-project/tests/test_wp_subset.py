@@ -40,7 +40,10 @@ SEEDED_BUGS = (
     ("int sum = 0, hits = 0, maxv = 0;", "int sum = 0, hits = 0, maxv = 1;"),                        # OpenMP
     ("__sync_add_and_fetch(p, 3)", "__sync_add_and_fetch(p, 4)"),                                   # atomics
     ("r.value = 0.0;", "r.value = 1.0;"),                                                           # floats
-    ("return __dxc_tile_size(tile) + 1;", "return __dxc_tile_size(tile) + 2;"),                     # __dxc_*
+    # 2026-10-15 ET: +2 was only a modular precision control: the unchanged
+    # stand-in returns tile&1, so +2 still satisfies 1<=result<=3. +4 has the
+    # concrete in-domain tile=0 witness result=4; safe source/summary are unchanged.
+    ("return __dxc_tile_size(tile) + 1;", "return __dxc_tile_size(tile) + 4;"),                     # __dxc_*
     ("  return n;\n}", "  return n + 1;\n}"),                                                       # maa_*
 )
 def _bounded(array, n, low, high):
