@@ -370,3 +370,15 @@ invariant; it is not counted as a completed test. Exact record hashes and source
 [`t24-class-initialization-20261015.json`](../evidence/t24-class-initialization-20261015.json).
 Original records/logs remain under `/private/tmp/probata-construct-initialization-20261015/`.
 These are focused proofs on the recorded source, not final combined-source construct acceptance.
+
+### Atomic call-result diagnosis — 2026-10-15 ET
+
+Raw WP33 diagnostics of the current integer atomic models isolate another receiving-slot issue:
+two RTE initialization goals fail after assigning exchange/fetch-add results to ordinary local
+integers. All three explicit pointee-initialization assertions pass, as do all seven smoke checks.
+An ordinary `+ 0` expression assignment makes all 19 ordinary goals valid and passes 9 smoke checks;
+it adds no input or allocator premise. This is a narrow integer control, not a floating-result or
+nullable-pointer rule. The raw runs use three seconds per solver and are diagnostic evidence only;
+the production public workflow and full construct-suite acceptance are still required.
+Exact source, command, result and artifact hashes:
+[`t24-atomic-receiver-initialization-20261015.json`](../evidence/t24-atomic-receiver-initialization-20261015.json).
