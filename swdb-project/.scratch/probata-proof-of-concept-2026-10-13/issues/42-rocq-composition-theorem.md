@@ -1,9 +1,9 @@
 # 42 — Rocq: composition theorem proof
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-14 00:15 ET (review fixes, round 4); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-14 22:30 ET (blocker: the approved statement is false; needs a statement decision); 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-14 00:15 ET (review fixes, round 4); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** claimed
+**Status:** needs-info
 **Blocked by:** 10, 11, 12, 41
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Concurrency" (composition theorem: 2-week box, written fallback), "Records and levels" (subjects), "What a proven verdict asserts" (assumption set, cap rule), "Modules" (level rule: level computed on read), "Further Notes" (risk: the Rocq theorem does not fit 2 weeks), "Proof-of-concept plan" (Rocq side track, overrun rule), S1, S2, S8, S9); decisions: [15](../../formal-verification-2026-10-09/issues/15-concurrency-proofs.md), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md)
 **Time estimate:** one 2-week box, shared with 43 (S9)
@@ -72,3 +72,62 @@ written one stays listed and does not cap the level.
   artifacts can still reach proven unbounded, with the written proof in their assumption sets.
 - Provider: Codex, pin `gpt-5.6-sol`, effort `xhigh`. The proof needs no human step.
 - Assumption (not decided in the map): the shared 2-week box clock starts when both 42 and 43 are unblocked apart from each other (41 approved and 29 resolved); 42 runs first inside it, then 43.
+
+## Blocker (2026-10-14 22:25 ET): the approved statement is false
+
+**Box.** Ticket 42 work started 2026-10-14 14:42 ET (from `date`). Used so far: about 7.7 h
+of the 2-week box shared with 43. Proof writer: Codex CLI 0.153.0, `gpt-5.6-sol`, `xhigh`,
+sandbox `workspace-write` on the proof folder; 3 Codex turns (1 new thread
+`01a13bc9-6103-7ca3-bb7d-005cf6693d0e`, 2 resumes). Every Rocq compile ran through
+`verifier_run.py`, one compile per lock hold (README rule of 2026-10-14).
+
+**Counterexample (found by the orchestrator, confirmed by Codex).** Nothing in the statement
+makes critical sections well bracketed, so a thread may perform an `Exit` with no open
+`Enter`. Take N = team_size = 2, locations x = 0, l = 1, m = 2, class of m LockProtected and
+of every other array SharedActionsOnly, init = 0, `sa_new _ _ v = Some (v+1)`, all
+`fence = false`, no barriers or worksharing. Thread 0: `DeviceRead 7 l 1; Enter; Read m 0;
+Write m 1; DeviceCovered 7; Exit; HistoryRead x 0`. Thread 1: `Shared x 0; Exit; Shared l 0`
+(a stray `Exit`). Run X: `0 (1,Shared x) 1 (0,DeviceRead) 2 (0,Enter) 3 (0,Read m)
+4 (1,Exit) 5 (0,Write m) 6 (1,Shared l) 7 (0,DeviceCovered 7) 8 (0,Exit) 9 (0,HistoryRead x 0)`,
+rf 1 = Some 6, all other rf = None.
+- All seven obligations hold (each thread fits its classes; the only critical block
+  implements a shared action and holds no barrier; command 7 conflicts with no later own
+  access and crosses no barrier or critical exit of a section it was issued in; the rest
+  are vacuous), and so do `program_run`, `memory_ok`, `omp_ok`, `device_ok` and `complete`
+  (the device read's later source at 6 is another thread's and precedes the cover at 7; no
+  write reaches the final `HistoryRead x 0` through `hb`).
+- No serial twin exists. The only value-1 source for the device read is `Shared l`. In any
+  Y, `device_ok` forbids `DeviceCovered 7` between the read and a later source, and thread 0's
+  critical section is contiguous, so `Shared l`, and thread 1's stray `Exit` before it, come
+  before thread 0's `Enter`. `omp_sync_critical` (stray Exit -> Enter) then puts `Shared x`
+  happens-before the final `HistoryRead x 0`, so `omp_ok Y` needs a source no older than it;
+  the only value-0 source is the initial value, and `not_older None _` is False.
+
+**Status of the Rocq refutation.** Codex was formalizing it as `NegStrayExit.v`
+(`~ type of parallel_composition`); stopped unfinished at the first error on line 638 of 945
+(the hypothesis side is checked through line 637). Draft:
+`/tmp/claude/probata-runs/t42/work/NegStrayExit.v` (sha256 `bbfb8e82…`); write-up
+`/tmp/claude/probata-runs/t42/work/COUNTEREXAMPLE.md` (`cb2dcc3e…`).
+
+**Proposed fix (needs Yan-Ru's approval: it changes the approved text).** Add a
+per-candidate obligation, or a clause of `obl_atomic_blocks`, that every program trace is
+well bracketed: an `Exit` only while a critical section is open, an `Enter` only while none
+is open. OpenMP structured blocks guarantee this; the C lowering discharges it
+syntactically. With it, no other thread's `Exit` can lie inside a critical window, and the
+window can be cleared by moving the other threads' events before the `Enter`, which also
+avoids the device-source/cover reversal (Codex's `t42_device_safe` finding). Not yet
+re-reviewed for other counterexamples.
+
+**What is checked (kept for the fixed statement).** 122 lemmas Qed in the `t42 lemmas` block
+of `library/rocq/probata/Composition.v` (commits `c2bbbc82`, `4db68f9b`): A1 threads below N,
+A2 `all_fit` from `obl_class_fit`, A3 runs are already sorted by barrier interval, A4 shape of
+critical windows, and the full adjacent-independent-swap preservation set (B). Open: A5
+(`reads_latest X`), C (window clearing), D, the theorem. The approved statement is unchanged:
+`library/rocq/probata/check/check_approved.py` rebuilds ticket 41's file from the marked blocks
+and checks its sha256; `check/Checks.v` compares the elaborated statement (`Set Printing All`)
+with `check/statement.expected` and prints `Print Assumptions`.
+
+**Run record.** `/tmp/claude/probata-runs/t42/`: `heartbeat.md`, `logs/compile-index.tsv`
+(147 rows; sha256 `42d68c4c…`), `codex/turn-{1,2,3}.{jsonl,final.md}`, `work/NOTES.md`
+(`c52d489d…`). Peak RSS per Rocq job about 0.42 GB. Lock waits reached 20 min while other
+tickets held the lock across whole pytest batches.

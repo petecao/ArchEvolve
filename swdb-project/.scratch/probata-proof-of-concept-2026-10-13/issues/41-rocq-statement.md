@@ -1,7 +1,7 @@
 # 41 — Rocq: composition theorem statement and definitions
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-14 21:30 ET (`Reduction.v` revised under delegation: ticket 27 covers, see Later changes); 2026-10-14 14:40 ET (revised; approved by the main session under Yan-Ru's delegation; resolved); 2026-10-14 14:13 ET (Codex review: revise); 2026-10-14 14:07 ET (statements drafted); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-14 22:40 ET (Composition.v second revision in progress, paused; see Progress (paused)); 2026-10-14 21:30 ET (`Reduction.v` revised under delegation: ticket 27 covers, see Later changes); 2026-10-14 14:40 ET (revised; approved by the main session under Yan-Ru's delegation; resolved); 2026-10-14 14:13 ET (Codex review: revise); 2026-10-14 14:07 ET (statements drafted); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** 09
@@ -236,3 +236,32 @@ message).
   `regions_of`/`writes_memory` to gem5's assigned region and access class; this was already true
   of `timed_run`'s approved stall clause and is carried as descriptor faithfulness in the
   `cover_sound` lowering obligation (ticket 45) and ticket 28's region rules, not as a premise.
+
+### Progress (paused), 2026-10-14 22:40 ET: second revision, `Composition.v`
+
+Branch `probata-poc/t41c` (from `probata-poc/t42`). Effort paused by Yan-Ru; **nothing here is
+approved**, and the approval record above is unchanged (approved `Composition.v` stays
+`e30f6240…`, known false).
+- **Decision** (main session under Yan-Ru's delegation, 2026-10-14 22:24 ET): ticket 42's
+  stray-`Exit` counterexample goes into the `omp_ok` premise (OpenMP 5.2: `critical` is a
+  structured block, so each thread's `Enter`/`Exit` are well bracketed), not a new obligation;
+  ticket 45's lowering must preserve the bracketing (HYPOTHESES.md, next to `cover_sound`).
+- **Done:** `brackets_ok` plus `omp_ok`'s new last clause. `Sanity.v` `stray_exit_excluded`
+  (Qed, no axiom) shows ticket 42's run is excluded. One unavoidable touch of 42's lemma block:
+  `t42_omp_ok_swap` destructs and proves the new clause (two lines, proof via
+  `t42_proj_swap`). Compile `/tmp/claude/probata-runs/t41c/compile-3.log` (`16fca6e6…`): all
+  files compile, only the two Admitted theorems in `Print Assumptions`, negative check still
+  rejected. WIP hashes: `Composition.v` `4302fc3e…` (statement part, as 42's
+  `check_approved.py` rebuilds it: `9ea8013a…`); the elaborated statement for 42's harness is
+  `/tmp/claude/probata-runs/t41c/statement.revised.expected` (`3e6faf11…`, not installed:
+  42's harness still guards the approved text).
+- **Open:** Codex round t41c-1 (`/tmp/claude/probata-runs/t41c/codex-review1.md`,
+  `020368a8…`) found **another counterexample**: a command left uncovered past its critical
+  section's `Exit` (F1) reads a `LockProtected` location whose value `device_ok` lets come from
+  another thread's later critical section. Details and fix candidates (a)-(c) in HYPOTHESES.md.
+- **Next step:** the main session (or Yan-Ru) picks a fix ((a) is the smallest: F1's
+  exemption excludes commands that read lock-protected data), then apply it, run Codex rounds
+  until one finds no counterexample, record the new hash here (`e30f6240…` superseded), update
+  42's `check_approved.py` hash and `statement.expected`, and resume 42.
+- **Note for ticket 42:** stays `needs-info`. Rebase onto `probata-poc/t41c` when it is approved;
+  the only lemma-block change is in `t42_omp_ok_swap`.

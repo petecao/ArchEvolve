@@ -255,6 +255,39 @@ every cover of model 0.1 present in Rocq. Findings:
 | 3 | major: this guide still describes wait-only coverage and scopes round 4 to the old hash | **Accepted:** this section, the summary sentence, and the round-4 scope note. |
 | 4 | minor: comments equate coverage with waits; closure rules called step rules | **Accepted:** `Reduction.v` header and `covered` comments now say "covering step" and separate base covers from closure rules. |
 
+## Composition.v revision in progress: well-bracketed critical sections (paused 2026-10-14 22:40 ET)
+
+**Not approved; the effort is paused.** Branch `probata-poc/t41c` (from `probata-poc/t42`).
+
+- **Decision** (main session under Yan-Ru's delegation, 2026-10-14 22:24 ET): ticket 42's
+  stray-`Exit` counterexample is excluded by `omp_ok`, the trusted-tool entry "the pinned OpenMP
+  runtime implements OpenMP 5.2": `critical` is a structured block, so each thread's
+  `Enter`/`Exit` events are well bracketed. Not a per-candidate obligation.
+- **Done:** `brackets_ok` and `omp_ok`'s new last clause
+  `forall t, brackets_ok (proj X t) false = true`; `Sanity.v` lemma `stray_exit_excluded`
+  (ticket 42's exact run is not `omp_ok`; Qed, no axiom).
+- **Lowering obligation (ticket 45), next to `cover_sound`:** the per-thread lowering must
+  preserve the bracketing: each thread's `Enter`/`Exit` events come from OpenMP `critical`
+  structured blocks, in order, none dropped or added.
+- **Codex round t41c-1** (`/tmp/claude/probata-runs/t41c/codex-review1.md`, sha256 `020368a8…`;
+  `gpt-5.6-sol`, `xhigh`, read-only): **counterexample, open.** Both critical sections are well
+  bracketed. Thread 1 issues `DeviceRead cA A 1` on a `LockProtected` A inside its critical
+  section, leaves `cA` uncovered past its `Exit` (allowed: `cA` writes only a dead tile, F1),
+  and `device_ok` lets that read take its value from thread 0's later `Write A 1` inside thread
+  0's critical section. With a second device read (`cB` of `SharedActionsOnly` B, sourced from
+  thread 1's later `Shared B`), the covers force `WA < CoverA < SharedB < CoverB`, so thread
+  1's events fall inside thread 0's critical window: no serial twin exists. Codex checked all
+  3,003 projection-preserving orders. Root cause: a command left uncovered past a critical exit
+  may still *read* lock-protected data written by a later critical section. Ticket 42's
+  `t42_device_safe` finding is the same reversal.
+- **Fix candidates (need a decision):** (a) F1's exemption covers only commands that read no
+  `LockProtected` location (a command reading lock-protected data must be covered before the
+  `Exit`); (b) `device_ok` refuses a source from another thread's critical section that begins
+  after the reading command's critical section ends; (c) fold into `dead_after`: the command's
+  reads must also be outside lock-protected arrays. (a) is the smallest and matches 12 item 7's
+  intent; both candidates' critical sections already cover their commands before the exit
+  (F1 check above).
+
 ## Machine checks
 
 - Rocq 9.3.0 (opam switch `rocq-9`, rocq-stdlib 9.2.0) accepts `Vocabulary.v`, `Composition.v`,

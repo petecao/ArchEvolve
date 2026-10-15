@@ -35,6 +35,8 @@ proof and bounded check from ticket 29 stay its evidence, and the entry stays, k
       never capped it). This is computed on read: no earlier proof record is rewritten (26 item 1).
 - [ ] A new proof-semantics version makes the record stop counting. The reduction entry then returns
       for candidate artifacts that pin the new version, until the lemma is checked again.
+- Box start (recorded by 42, 2026-10-14 22:25 ET): 42's work started 2026-10-14 14:42 ET;
+  42 is waiting on a statement decision (its "Blocker" section).
 - [ ] Box: one box with 42 (S9), 42 first, then this lemma. The start date is 42's; the time spent on
       this lemma is recorded.
 - [ ] Not checked when the shared box ends: no Rocq-checked record is written; ticket 29's written
