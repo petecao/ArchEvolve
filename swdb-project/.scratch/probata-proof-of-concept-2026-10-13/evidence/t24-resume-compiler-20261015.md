@@ -195,3 +195,32 @@ seed witnesses do not themselves complete the current all-construct agreement
 profile; the coordinator is arranging a separately pinned agreement-only
 profile using the accepted native domain/oracle, with undefined runs excluded
 and no new bounded-proof verdict implied. Whole-ticket acceptance remains open.
+
+The subsequent original `new_out_of_range` command hit the test helper's
+600-second outer subprocess timeout. Its matrix row contains an exception and
+no accepted record; this is a harness interruption, not a semantic negative
+result. The coordinator must check descendant cleanup before reusing the lane.
+The committed runner now has a bounded `--public-timeout-seconds` option
+(default 1800, range 600–7200), recorded in its manifest. Only the outer public
+command budget changes; per-goal solver limits, RSS cap, shared lock and
+acceptance checks stay intact. CLI help/argument validation is checked locally;
+fresh actual out-of-range evidence remains required.
+
+The explicit outer-budget control now exercises inherited `Seed.prove` through
+the actual public-helper boundary: forcing the transport back to 600 produces
+RED (`600 != 1800`), restoring forwarding produces GREEN. A second runner
+control proves that `--cases new_out_of_range,new_after_delete` omits completed
+safe/seeded pairs and unrelated dependencies while recording the exact selection
+and budget in the source manifest. Both pass (transport/selection only, no solver).
+Dependency proofs remain mandatory whenever a selected caller requires them.
+The narrow retry is `--groups new_array --cases new_out_of_range,new_after_delete`
+plus the explicit remaining `new_<control>` labels desired by the coordinator;
+each fresh output still rebuilds the original candidate seed and checks source.
+
+A final dependency control selects only the seeded standard-model caller: all
+five required model jobs still run, and a caller that names stale proof IDs
+must fail acceptance. Omitting seeded dependency validation produces RED;
+applying the same ID/content checks to both caller variants produces GREEN.
+Summary callers also compare the pinned content hash with the newly proven
+summary record's code pin. The focused runner transport/selection/dependency
+profile passes **3/3 in 0.36 s**, using stand-ins only.
