@@ -50,7 +50,8 @@ class _Clang:
     def __init__(self, tool):
         root = subprocess.run([*tool.command, "-print-resource-dir"], capture_output=True,
                               text=True, check=True, timeout=30).stdout.strip()
-        self.root = Path(root).resolve().parents[2]
+        self.resource = Path(root).resolve()
+        self.root = self.resource.parents[2]
         paths = [self.root / "lib" / name for name in ("libclang.dylib", "libclang.so")]
         self.path = next((p.resolve() for p in paths if p.is_file()), None)
         if self.path is None:
@@ -137,6 +138,20 @@ def _command(tool, source, includes, defines):
 
 
 
+
+def _headers_identity(parser):
+    digest, count = hashlib.sha256(), 0
+    for label, root in (("libc++", parser.root / "include" / "c++" / "v1"),
+                        ("clang-resource", parser.resource / "include")):
+        if not root.is_dir():
+            raise Refused("the selected compiler header tree is unavailable: " + label)
+        for path in sorted(root.rglob("*")):
+            if path.is_file():
+                digest.update(label.encode() + b"\0" + str(path.relative_to(root)).encode() + b"\0")
+                digest.update(bytes.fromhex(_sha(path)))
+                count += 1
+    return {"id": "llvm-standard-resource-headers", "sha256": digest.hexdigest(), "files": count}
+
 def _effective(tool, command, defines):
     """Resolve executable wrappers to one exact frontend job, never guess their flags."""
     trace = subprocess.run([*command[:-1], "-###", command[-1]], input="", capture_output=True,
@@ -183,6 +198,7 @@ def certify(tool, source, *, includes=(), defines=(), models=()):
         source = Path(source).resolve()
         parser = _Clang(tool)
         report["parser"] = {"id": "libclang-" + tool.version, "sha256": _sha(parser.path)}
+        report["toolchain_headers"] = _headers_identity(parser)
         canonical = parser.root / "include" / "c++" / "v1"
         if not (canonical / "vector").is_file():
             raise Refused("the selected LLVM distribution has no canonical libc++ headers")
@@ -208,9 +224,10 @@ def certify(tool, source, *, includes=(), defines=(), models=()):
         files = parser.closure(tu)
         macros = subprocess.run([*command[:-1], "-dM", "-E", command[-1]], capture_output=True,
                                 text=True, timeout=120)
-        if macros.returncode or not re.search(r"^#define _LIBCPP_VERSION 220108$", macros.stdout, re.M):
+        std_substitution = any(name.startswith("std_") for name in models)
+        if macros.returncode or (std_substitution and not re.search(r"^#define _LIBCPP_VERSION 220108$", macros.stdout, re.M)):
             raise Refused("the original TU does not select libc++ 22.1.8")
-        report["library"] = {"id": "libc++-22.1.8", "version_macro": 220108}
+        report["library"] = {"id": "libc++-22.1.8", "version_macro_required": std_substitution}
         # Independently compare with the exact driver invocation used by lowering.
         driver = subprocess.run([*command[:-1], "-H", command[-1]], capture_output=True, text=True, timeout=120)
         if driver.returncode:
@@ -314,7 +331,8 @@ def runtime_identity(tool):
         parser = _Clang(tool)
         _, effective = _effective(tool, [*tool.command, "-x", "c++", "-fsyntax-only", "-"], ())
         return {"check": identity(), "parser": {"id": "libclang-" + tool.version, "sha256": _sha(parser.path)},
-                "driver": effective["driver"], "command_executable": effective["command_executable"]}
+                "driver": effective["driver"], "command_executable": effective["command_executable"],
+                "headers": _headers_identity(parser)}
     except (Refused, OSError, ValueError, AttributeError, subprocess.SubprocessError) as exc:
         return {"check": identity(), "unavailable": str(exc)}
     finally:

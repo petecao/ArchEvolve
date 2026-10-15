@@ -103,3 +103,14 @@ def test_a_compiler_wrapper_cannot_hide_undeclared_definitions(tmp_path, injecte
     else:
         assert certificate["effective"]["command_executable"]["path"] == str(wrapper)
         assert certificate["effective"]["command_executable"]["sha256"] != certificate["effective"]["driver"]["sha256"]
+
+
+def test_bare_new_array_provenance_needs_no_standard_header_version_macro(tmp_path):
+    source = tmp_path / "unit.cc"
+    source.write_text("int unit(int n) { int *p=new int[n]; delete[] p; return n; }\n")
+    out = tmp_path / "out"
+    lower(source, "unit", out)
+    certificate = json.loads((out / "unit.anchors.json").read_text())["stdlib_provenance"]
+    assert certificate["verdict"] == "passed"
+    assert certificate["library"]["version_macro_required"] is False
+    assert certificate["toolchain_headers"]["files"] > 0
