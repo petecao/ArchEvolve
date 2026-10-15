@@ -1633,7 +1633,12 @@ class _Printer:
                 return "((void *)0)", True
             if cast not in PASS_CASTS:
                 raise Unsupported(f"implicit conversion {cast}", self.line)
-            return self._expr(inner[0])
+            text, atomic = self._expr(inner[0])
+            # Qualification conversions must not hide the underlying source
+            # pointer operation from its independent formation inventory.
+            if cast == "NoOp" and not self.pointer_rendering and wp_pointer_bounds._pointer(inner[0]):
+                text = self._pointer_formation(inner[0], text) or text
+            return text, atomic
         if kind in EXPLICIT_CASTS:
             cast = node.get("castKind")
             if kind == "CXXReinterpretCastExpr" and cast != "BitCast":

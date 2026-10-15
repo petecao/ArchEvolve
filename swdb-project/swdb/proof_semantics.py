@@ -462,6 +462,8 @@ def imported_call_policies(library, defines=()):
             if name in found:
                 raise ValueError("ambiguous audited DX100 imported-call policy: " + name)
             found[name] = {"model": policy, "call": name, "prototype": row["prototype"]}
+            if row.get("query"):
+                found[name]["query_contract"] = row["contract"]
     return found
 
 

@@ -175,6 +175,8 @@ def check_semantic_origins(lowering, library, defines=()):
     for row in (lowering.pointer_bounds or {}).get("sites", []):
         if row.get("kind") == "call" and row.get("policy") != calls.get(row.get("call")):
             raise Refused("DX100 call footprint policy, model content, entry or geometry changed after planning")
+        if row.get("kind") == "query" and row.get("query_policy") != imports.get(row.get("call")):
+            raise Refused("DX100 query contract, prototype or model changed after planning")
         if row.get("kind") == "import" and row.get("import_policy") != imports.get(row.get("call")):
             raise Refused("DX100 imported-call prototype, entry or model changed after planning")
         origin = row.get("origin") or {}
@@ -372,7 +374,7 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
                          "reason": "", "owner_access": access,
                          "owner_certificate_sha256": owner["certificate_sha256"]})
     from swdb import dx_array_domains
-    candidates, producers, call_rows = {}, {}, {(s["function"], s["_ast_id"]): s for s in call_sites}
+    candidates, producers, queries, call_rows = {}, {}, {}, {(s["function"], s["_ast_id"]): s for s in call_sites}
     for function, root in definitions.items():
         for node in _walk(root):
             if node.get("kind") != "CallExpr" or not node.get("inner"):
@@ -402,6 +404,10 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
                                  "kind": "producer", "admission_only": True, "call": name, "origin": origin})
                     continue
                 if name not in (call_policies or {}):
+                    if name == 'swdb_dx_in_footprint':
+                        queries[key] = dx_array_domains.certify_query(node, audited_imports[name], site)
+                        rows.append(queries[key])
+                        continue
                     if any(_pointer(arg) for arg in node.get("inner", [])[1:]):
                         raise Refused("DX100 pointer query/region call needs its own checked footprint policy")
                     continue
@@ -413,7 +419,7 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
             except (Refused, dx_array_domains.Refused) as exc:
                 rows.append({"function": function, "source_line": (site or {}).get("source_line"), "reason": str(exc)})
     origins = _Origins(definitions, global_nodes, known_origins, terminal, entry_windows, entry_function,
-                       set(candidates) | set(producers)
+                       set(candidates) | set(producers) | set(queries)
                        | {(owner["function"], key) for key in owner_handles["calls"]}
                        | {(s["function"], s["_ast_id"]) for s in standard_calls}, producers)
     if call_sites:
@@ -468,6 +474,7 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
             dereferenced = bool(entry_windows and entry_windows.get("windows") and kind == "UnaryOperator" and node.get("opcode") == "*")
             if (entry_windows and entry_windows.get("windows") and kind in {"CallExpr", "CXXMemberCallExpr", "CXXOperatorCallExpr"}
                     and any(_pointer(c) for c in children[1:]) and (function, node.get("id")) not in candidates
+                    and (function, node.get("id")) not in queries
                     and (function, node.get("id")) not in checked_standard
                     and not (owner and function == owner["function"] and node.get("id") in owner_handles["calls"])):
                 reason = "entry-window pointer call boundaries need checked callee-domain discharge"
