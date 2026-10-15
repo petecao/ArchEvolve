@@ -5,6 +5,7 @@ ticket 21's C lowering replaces SAW as the bounded verifier).
 Updated: 2026-10-14 17:20 ET, ticket 61: [Whole-function equivalence](#whole-function-equivalence-ticket-61)
 (the bounded direct route and the no-contract baseline, CBMC on a product program).
 Updated: 2026-10-15 ET, ticket 36: pointer formation checks and distinct bounded tile objects.
+Updated: 2026-10-15 ET, ticket 24: explicit array-domain capacity planning remains outside proof admission.
 Spec: `.scratch/probata-proof-of-concept-2026-10-13/issues/22-saw-adapter-and-translator.md` (Later changes);
 design: `.scratch/formal-verification-2026-10-09/spec.md` ("Verifier lineup and order", "Bounds"), map 11
 items 1-4, 8, 9; 16 items 1, 3; 19 items 2, 8. Reference: `prototype/06c-cbmc/` and the shared note
@@ -106,6 +107,20 @@ One text compiles three ways: `-DSWDB_CBMC` (CBMC), `-DSWDB_NATIVE -DSWDB_DIFFER
 `-DSWDB_NATIVE -DSWDB_REPLAY`. Every nondeterministic value (inputs, knobs, havocked locations, a stub's
 result) comes from one oracle, `swdb_next()`: under CBMC an unconstrained array; natively one line of stdin
 per run. So a CBMC trace replays as the sequence of values `swdb_next()` returned along it.
+
+Explicit `proof_unit.array_domains` currently supports capacity planning only. The harness API records each
+mathematical entry extent, its conservative interval over all typed scalar draws, the physical buffer capacity,
+and the nonnull-buffer restriction. Only requested size bounds and unconditional scalar/constant comparisons
+from existing `requires` clauses can narrow those draws; the planner adds no assumptions. Unsupported
+constraints cannot justify narrowing. A potentially negative or oversized extent, or an empty scalar domain,
+is refused. Repeated-variable correlation may cause a conservative refusal.
+
+The declared window is a subset of a live typed buffer, not its total physical allocation or an initialization
+guarantee. Capacity may exceed that window; physical `\valid` checks retain their original capacity meaning.
+Planner metadata explicitly states that source operations have not been checked. The public proof factory,
+CBMC/Crux execution, native runtime-check, and imported domain-bearing summary stubs remain refused until
+source-origin, operation, and caller-domain admission are implemented. A buffer-capacity plan cannot establish
+coverage of all minimal declared windows.
 
 | Formal half | Harness (the unit) | Stub (a summarized callee) |
 |---|---|---|

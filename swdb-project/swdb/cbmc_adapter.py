@@ -233,6 +233,11 @@ class CbmcAdapter:
         except tr.Untranslatable as exc:
             context["settings"]["untranslatable"] = str(exc)
             return self._not_proven("unsupported_construct", f"the CBMC translator: {exc}", context)
+        if built['plan'].array_domains:
+            context['settings'].update(array_domains=built['plan'].array_domains, verifier_launched=False)
+            return self._not_proven('unsupported_construct',
+                                    'array_domains is planner-only: source-origin, operation and call alignment '
+                                    'are not certified by nonnull bounded buffers', context)
         refusal = cpu_memory_admission.summary_refusal(self.records, [
             pin["proof_record"] for pin in context["pins"].get("summaries", [])])
         if refusal:
@@ -315,7 +320,8 @@ class CbmcAdapter:
             state = proof_semantics.state_draws(self.library, code.model.entry, self.defines)
             finish = ("swdb_dx_check_exit();",)
         harness, plan = tr.harness(unit, clauses, sizes=sizes, cap=cap, knobs=knobs, logic=logic, setup=setup,
-                                   state=state, finish=finish)
+                                   state=state, finish=finish,
+                                   array_domains=(entry.get('proof_unit') or {}).get('array_domains'))
         drop = stub_fault()
         stubs, summaries = {}, []
         for callee in code.functions:
@@ -330,7 +336,8 @@ class CbmcAdapter:
                       and c.get("proof_placement") == {"once": "self"}]
             clauses_s = tr.clauses(entry_id, rows_s)
             stubs[callee] = tr.stub(code.interface(callee), code.prototypes[callee], clauses_s, entry_id, sha,
-                                    logic=logic, drop=drop)
+                                    logic=logic, drop=drop,
+                                    array_domains=(data.get('proof_unit') or {}).get('array_domains'))
             summaries.append({"id": entry_id, "sha256": sha, "proof_record": record_id,
                               "assumes": tr.stub_assumes(clauses_s, drop)})
         unwind = cap + 1

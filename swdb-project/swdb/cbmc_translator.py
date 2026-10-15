@@ -842,6 +842,7 @@ class Plan:
     """What one generated harness draws from the oracle, in order: [{name, role, ctype, bound?, range?}]."""
     draws: list = field(default_factory=list)
     capacity: int = 0
+    array_domains: dict = field(default_factory=dict)
 
     @property
     def inputs(self):
@@ -942,8 +943,129 @@ def _print(label, ctype, value):
     return f'printf(" {label}=%lld", (long long) {value})'
 
 
+def _integer_draw_bounds(ctype):
+    """Conservative LP64 primitive domains for the bounded clang targets (2026-10-15 ET)."""
+    plain = ' '.join(re.sub(r'\b(?:const|volatile|restrict)\b', '', ctype).split())
+    if plain == 'bool':
+        return 0, 1
+    if plain == 'char':                         # do not assume implementation char signedness
+        return -128, 255
+    unsigned = plain.startswith('unsigned') or plain.startswith('uint') or plain in {'size_t', 'uintptr_t'}
+    widths = {'signed char': 8, 'unsigned char': 8, 'int8_t': 8, 'uint8_t': 8,
+              'short': 16, 'short int': 16, 'unsigned short': 16, 'unsigned short int': 16,
+              'int16_t': 16, 'uint16_t': 16, 'int': 32, 'signed': 32, 'signed int': 32,
+              'unsigned': 32, 'unsigned int': 32, 'int32_t': 32, 'uint32_t': 32,
+              'long': 64, 'long int': 64, 'long long': 64, 'long long int': 64,
+              'unsigned long': 64, 'unsigned long int': 64, 'unsigned long long': 64,
+              'unsigned long long int': 64, 'int64_t': 64, 'uint64_t': 64, 'size_t': 64,
+              'ptrdiff_t': 64, 'intptr_t': 64, 'uintptr_t': 64}
+    if plain not in widths:
+        raise Untranslatable(f'array domain scalar type {ctype} has no checked bounded integer interval')
+    bits = widths[plain]
+    return (0, 2**bits - 1) if unsigned else (-2**(bits - 1), 2**(bits - 1) - 1)
+
+
+def _scalar_constraints(words):
+    """Only unconditional conjunctions of scalar/constant comparisons, never implications."""
+    while words and words[0] == '(':
+        depth, close = 0, None
+        for k, word in enumerate(words):
+            depth += (word == '(') - (word == ')')
+            if depth == 0:
+                close = k
+                break
+        if close != len(words) - 1:
+            break
+        words = words[1:-1]
+    depth, splits = 0, []
+    for k, word in enumerate(words):
+        depth += (word == '(') - (word == ')')
+        if depth == 0:
+            if word in {'||', '==>', '<==>', '?', ':', ';'}:
+                return []
+            if word == '&&':
+                splits.append(k)
+    if splits:
+        ends = [-1, *splits, len(words)]
+        return [part for left, right in zip(ends, ends[1:])
+                for part in _scalar_constraints(words[left + 1:right])]
+    text = ' '.join(words)
+    parts = re.split(r'\s*(<=|>=|==|<|>)\s*', text)
+    if len(parts) < 3:
+        return []
+    operands = [re.sub(r'\s+', '', value) for value in parts[::2]]
+    if any(not re.fullmatch(r'(?:[A-Za-z_][A-Za-z_0-9]*|[+-]?[0-9]+)', value) for value in operands):
+        return []
+    return list(zip(operands, parts[1::2], operands[1:]))
+
+
+def _array_domain_plan(interface, rows, sizes, cap, declarations):
+    from swdb import array_domains
+    if declarations is None or (isinstance(declarations, dict) and not declarations):
+        return {}
+    if type(cap) is not int or cap < 0:
+        raise Untranslatable('array domain physical capacity must be a nonnegative integer')
+    try:
+        bound = array_domains.bind(declarations, interface.parameters)
+        names = {name for window in bound['windows'].values() for name in window['parameters']}
+        draws, provenance = {}, {}
+        for name in sorted(names):
+            low, high = _integer_draw_bounds(interface.ctype(name))
+            provenance[name] = [{'kind': 'type', 'interval': [low, high]}]
+            if name in sizes:
+                if type(sizes[name]) is not int or sizes[name] < 0:
+                    raise Untranslatable(f'array domain size bound {name} must be a nonnegative integer')
+                high = min(high, sizes[name])
+                provenance[name].append({'kind': 'requested_size', 'upper': sizes[name]})
+            draws[name] = [low, high]
+        # Existing formal requires already become harness assumptions. Extract
+        # no disjunction, negation, call, arithmetic or inferred cap constraint.
+        for clause in rows:
+            if clause.kind != 'requires':
+                continue
+            for left, op, right in _scalar_constraints([token.text for token in _tokens(clause.text)]):
+                if left not in draws:
+                    left, right = right, left
+                    op = {'<': '>', '<=': '>=', '>': '<', '>=': '<=', '==': '=='}[op]
+                # Generated C retains literal spelling; a leading zero would
+                # acquire octal meaning, so it cannot justify decimal bounds.
+                if left not in draws or not re.fullmatch(r'[+-]?(?:0|[1-9][0-9]*)', right):
+                    continue
+                value = int(right)
+                low, high = draws[left]
+                # The existing formal translator evaluates integer comparisons
+                # in long long. Never use its unsigned-64 wrapping casts to
+                # justify a mathematical narrowing.
+                if low < -2**63 or high > 2**63 - 1 or not -(2**63 - 1) <= value <= 2**63 - 1:
+                    continue
+                if op in {'>', '>=' , '=='}:
+                    low = max(low, value + (op == '>'))
+                if op in {'<', '<=', '=='}:
+                    high = min(high, value - (op == '<'))
+                draws[left] = [low, high]
+                provenance[left].append({'kind': 'requires', 'clause': clause.name,
+                                         'comparison': [left, op, value]})
+        if any(low > high for low, high in draws.values()):
+            raise Untranslatable('array domain has an empty bounded scalar domain under existing requires')
+        windows = {}
+        for name, window in bound['windows'].items():
+            low, high = array_domains.interval(window['extent_tree'], draws)
+            if low < 0:
+                raise Untranslatable(f'array domain {name} may have negative extent ({low} .. {high})')
+            if high > cap:
+                raise Untranslatable(f'array domain {name} extent ({low} .. {high}) exceeds physical capacity {cap}')
+            windows[name] = dict(window, extent_interval=[low, high], physical_capacity=cap,
+                                 allocated_elements=max(cap, 1), nonnull=True)
+        return dict(bound, planner=identity(), windows=windows, scalar_intervals=draws, scalar_provenance=provenance,
+                    admission='planner_only', source_operations_checked=False,
+                    integer_model='LP64 primitive draws; mathematical extent arithmetic; no C extent renderer',
+                    restriction='nonnull buffers; physical capacity does not certify declared-window accesses')
+    except array_domains.Refused as exc:
+        raise Untranslatable(f'array domain: {exc}') from None
+
+
 def harness(interface, rows, *, sizes, cap, knobs=(), logic=None, call=None, check=False, setup=(),
-            state=(), finish=()):
+            state=(), finish=(), array_domains=None):
     """(C text of the harness, Plan) for the proof unit `interface` and its clause list `rows` (Clause).
 
     `sizes`: {parameter: bound} (each an integer parameter of the unit); `cap`: the length of every interface
@@ -951,11 +1073,13 @@ def harness(interface, rows, *, sizes, cap, knobs=(), logic=None, call=None, che
     legal (the range is the differential run's domain). `logic`: the Logic of the job (logic-library calls).
     Check mode's driver (`check=True`) calls `call` (the runtime form) and states no property itself. Ticket 27: `setup` are C
     statements run first (a proof semantics' ghost initialization) and `state` the int lvalues of device state drawn
-    next (havoc). `finish` are checked boundary statements after the call, before observing its poststate."""
+    next (havoc). `finish` are checked boundary statements after the call, before observing its poststate.
+    `array_domains` (2026-10-15 ET) only plans entry extents against capacity. The returned metadata is not a
+    source-origin or operation certificate; production adapters and runtime-check refuse these jobs."""
     for name in sizes:
         if not interface.scalar(name):
             raise Untranslatable(f"size bound {name} is not an integer parameter of {interface.function}")
-    plan = Plan()
+    plan = Plan(array_domains=_array_domain_plan(interface, rows, sizes, cap, array_domains))
     counter = [0]
     caps = {p[0]: cap for p in interface.parameters if p[2]}
     lines = [f"/* Generated by {TOOL_ID} {TOOL_VERSION}: the bounded-job harness of {interface.function}. */",
@@ -1110,10 +1234,13 @@ def _frame(clause, interface, cap, caps, counter, logic=None):
 
 # --- summary stubs ------------------------------------------------------------------------------------------
 
-def stub(interface, prototype, rows, entry_id, entry_sha256, logic=None, drop=()):
+def stub(interface, prototype, rows, entry_id, entry_sha256, logic=None, drop=(), *, array_domains=None):
     """The C stub that replaces a summarized callee: CHECK each requires, snapshot each `\\old` on entry, havoc
     assigns, assume each ensures (tagged with its summary: entry and sha256). `drop`: clause names left out (a
-    scripted fault for the agreement negative control: a hand-weakened stub)."""
+    scripted fault for the agreement negative control: a hand-weakened stub). Domain-bearing imports need
+    checked caller admission; a stub cannot assume that the caller provided the declared window."""
+    if array_domains is not None and not (isinstance(array_domains, dict) and not array_domains):
+        raise Untranslatable(f'summary {entry_id} needs checked call admission for array_domains')
     lines = [f"/* Generated by {TOOL_ID} {TOOL_VERSION}: summary stub of {interface.function} from library entry "
              f"{entry_id} (sha256 {entry_sha256}). */", f"{prototype} {{"]
     counter, pre = [0], []

@@ -92,6 +92,10 @@ def _tolerance(store, entry, given):
 
 def run(library, contract, source, function, bounds, defines, tolerance, tolerance_source, out):
     """Run the runtime form on every feasible input of the bounded domain; return the report."""
+    entry = library.get(contract) or {}
+    if (entry.get('proof_unit') or {}).get('array_domains'):
+        raise tr.Untranslatable('array_domains needs checked source-origin and operation alignment; '
+                                'nonnull bounded buffers alone do not certify the declared windows')
     out = Path(out)
     out.mkdir(parents=True, exist_ok=True)
     defines = tuple(sorted(defines or ()))
@@ -99,7 +103,6 @@ def run(library, contract, source, function, bounds, defines, tolerance, toleran
         code = cbmc_adapter.Code(c_lowering.lower(source, function, defines=defines), source, defines)
     except c_lowering.Unsupported:
         code = cxx_cut.CxxCode(source, function, defines)
-    entry = library.get(contract) or {}
     rows = [c for c in entry.get("clauses") or [] if isinstance(c, dict) and c.get("acsl")
             and c.get("proof_placement") == "per_candidate"]
     if not rows:

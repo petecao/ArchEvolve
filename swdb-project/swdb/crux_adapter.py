@@ -157,6 +157,11 @@ class CruxAdapter:
         except tr.Untranslatable as exc:
             context["settings"]["untranslatable"] = str(exc)
             return self._not_proven("unsupported_construct", f"the CBMC translator: {exc}", context)
+        if built['plan'].array_domains:
+            context['settings'].update(array_domains=built['plan'].array_domains, verifier_launched=False)
+            return self._not_proven('unsupported_construct',
+                                    'array_domains is planner-only: source-origin, operation and call alignment '
+                                    'are not certified by nonnull bounded buffers', context)
         if self.form == "c":
             problem = self._differential(job, code, built, context)
             if problem:
@@ -245,7 +250,7 @@ class CruxAdapter:
             setup = ("swdb_dx_init();",)
             state = proof_semantics.state_draws(self.library, code.model.entry, self.defines)
         harness, plan = tr.harness(unit, clauses, sizes=sizes, cap=cap, knobs=knobs, logic=logic, setup=setup,
-                                   state=state)
+                                   state=state, array_domains=(entry.get('proof_unit') or {}).get('array_domains'))
         drop = cbmc_adapter.stub_fault()
         stubs, summaries = {}, []
         for callee in code.functions:
@@ -260,7 +265,8 @@ class CruxAdapter:
                       and c.get("proof_placement") == {"once": "self"}]
             clauses_s = tr.clauses(entry_id, rows_s)
             stubs[callee] = tr.stub(code.interface(callee), code.prototypes[callee], clauses_s, entry_id, sha,
-                                    logic=logic, drop=drop)
+                                    logic=logic, drop=drop,
+                                    array_domains=(data.get('proof_unit') or {}).get('array_domains'))
             summaries.append({"id": entry_id, "sha256": sha, "proof_record": record_id,
                               "assumes": tr.stub_assumes(clauses_s, drop)})
         real = tr.real_valued(unit, clauses)
