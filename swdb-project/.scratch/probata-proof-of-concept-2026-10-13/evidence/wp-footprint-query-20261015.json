@@ -151,5 +151,22 @@
       "/private/tmp/probata-query-final-public-retry.xml": "7a6ae480fa7d05e68e7883d60b20e7964e0227fcaa0d5c7349f798b786683a19",
       "/private/tmp/probata-query-final-public-retry.log.summary.json": "a5a3103b313f804a790d76ff7dbd9e72a1c32ed0b3136d7193a8ee2d8f181dc7"
     }
+  },
+  "retained_files_base": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13",
+  "class_composition": {
+    "source_commit": "2e9e76cc085c1517139b4555782f2ef932986d38",
+    "compiler_controls": 134,
+    "deselected": 11,
+    "seconds": 20.66,
+    "junit": {
+      "path": "/private/tmp/probata-query-class-compiler-union.xml",
+      "sha256": "c40987269eb275d28cafd667403e4b011e98914546c3f65ab302d12cc9d8461a"
+    },
+    "scope": "Compiler-only union after composing class lifetime implementation; no actual solver rerun."
+  },
+  "packaging_independent_review": {
+    "path": "/private/tmp/probata-footprint-query-package-review.md",
+    "sha256": "2566b66ef92faec4e5ea6c340467fb1f6e9179b2fc4aeab7542304efac374b81",
+    "verdict": "green; both exact corrected assertion blocks independently executed offline against immutable actual records"
   }
 }
