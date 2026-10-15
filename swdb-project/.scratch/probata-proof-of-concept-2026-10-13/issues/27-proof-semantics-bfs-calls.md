@@ -653,3 +653,21 @@ rehash remote raw failure artifacts or launch any job.
 [exact compact receipt](../evidence/t27-capacity-hint-independent-review-20261015.json).
 Actual WP32 establishment/preservation, WP33 ghost-capacity failure and original
 CBMC32/33 agreement remain pending; status stays **claimed**.
+
+### Reviewed capacity completion — 2026-10-15 ET
+
+The reviewed `b9a34bbb` capacity profile completed naturally: 3/3 passed with four
+actual records. WP32 proves all49ordinary/11smoke goals; WP33 remains
+`not_proven/ghost_capacity` with47/49ordinary Valid and11/11smoke checks passed.
+Its two open ordinary obligations are named capacity and `dx_issuable`, which
+includes the same count bound. Both establishment/preservation goals for the
+new invariant are Valid in both runs. CBMC agrees at explicit n=32/33, with the
+33-command ghost-capacity result carrying no source counterexample/refutation.
+
+Independent read-only closure checked40physical references/44files without
+mismatch, exact unchanged source/pins, original RTE/initialization/setup policy,
+and natural guard exits. The old failed32record remains preserved. Exact
+outcomes and resources are in
+[`t27-reviewed-capacity-completed-independent-20261015.json`](../evidence/t27-reviewed-capacity-completed-independent-20261015.json).
+Ticket remains `claimed`: fresh safe and remaining negatives are still required.
+The separately retained historical-weight two-lane safe plan is prospective only.
