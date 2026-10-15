@@ -265,3 +265,15 @@ in ticket 29's scope.
 Remaining: settle the initialization proof policy with actual safe and negative records, merge the final
 pointer/model changes, freeze the combined method, then run the source-pinned safe and unsafe mbit10
 shards. Node 1 must be handed back for the complete constructs module after its unsafe shard finishes.
+
+
+2026-10-15 06:35 ET diagnostic result: on the identical retained generated input, adding only the
+prospective `-wp-no-filter-init` switch passes the unchanged strict reader: 100 ordinary obligations and
+31 smoke checks, 131 generated and 131 reported, no unproven goal (234.41 s; 913,555,456-byte peak RSS).
+A second copy with the finite entry/postcondition consequences removed also passes all 131 obligations
+(228.63 s; 889,798,656-byte peak). Raw reports, generated-goal inventories, source, exact commands and
+strict-reading results remain in `/private/tmp/probata-t27-init-nofilter` and
+`/private/tmp/probata-t27-init-nofilter-minimal`. These are prospective raw diagnostics, not frozen-method
+proof records. The finite expansion is therefore removed; the named initialization invariant, checked
+selected caller-memory initialization, and exact receiver normalization remain. The public CLI safe/negative
+pair and final combined remote acceptance still need the prospectively pinned filter policy.

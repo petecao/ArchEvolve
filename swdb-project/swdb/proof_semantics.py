@@ -201,40 +201,6 @@ def check(library, entry_id, data, error):
     return _typecheck(library, entry_id, data, texts, error)
 
 
-def _initialized_state_terms(logic, constants):
-    """Finite consequences of the recognized invariant; created 2026-10-15 ET.
-
-    Keep other predicates unchanged. Matching the complete body prevents a
-    similarly named custom predicate from silently acquiring stronger facts.
-    """
-    expected = r"""(\forall integer t; 0 <= t < DX_NT ==>
-      \initialized(dx_tile_data[t] + (0 .. DX_TS - 1))) &&
-      \initialized(dx_tile_size + (0 .. DX_NT - 1)) &&
-      \initialized(dx_reg_value + (0 .. DX_NR - 1)) &&
-      \initialized(&dx_next_tile) && \initialized(&dx_next_reg) && \initialized(&dx_regions)"""
-    # The quantifier itself contains a semicolon; match through the terminating
-    # initialization clause instead of treating its binder as the declaration end.
-    found = re.findall(r"\bpredicate\s+dx_state_initialized\s*\{L\}\s*=\s*"
-                       r"(.*?\\initialized\(&dx_regions\))\s*;", logic, re.S)
-    compact = lambda text: re.sub(r"\s+", "", text)
-    if len(found) != 1 or compact(found[0]) != compact(expected):
-        return ()
-    count = int(constants["DX_NT"])
-    if count < 1:
-        raise ValueError("initialized device state needs a positive tile count")
-    return tuple([rf"\initialized(dx_tile_data[{t}] + (0 .. DX_TS - 1))" for t in range(count)] +
-                 [r"\initialized(dx_tile_size + (0 .. DX_NT - 1))",
-                  r"\initialized(dx_reg_value + (0 .. DX_NR - 1))",
-                  r"\initialized(&dx_next_tile)", r"\initialized(&dx_next_reg)", r"\initialized(&dx_regions)"])
-
-
-def wp_initialized_state(library, entry_id, defines=()):
-    """Expose equivalent initialized-state facts for the entry's frozen geometry."""
-    data = library.get(entry_id)
-    logic = library.resolve(data["model"]["logic"]).read_text()
-    return _initialized_state_terms(logic, _constants(data, defines))
-
-
 def acsl_source(data, texts, rows=None, *, constants=None):
     """The C file Frama-C type-checks: constants, the ghost block, the device state, the logic definitions, then each
     call's (and query's) contract on its prototype. `rows` limits it to some call or query rows."""
@@ -244,13 +210,9 @@ def acsl_source(data, texts, rows=None, *, constants=None):
     state, _objects = _bounded_state(texts["model.state"], constants or data.get("constants") or {},
                                      constant_table=True)
     parts += ["*/", state, "/*@", texts["model.logic"], "*/"]
-    initialized = _initialized_state_terms(texts["model.logic"], constants or data.get("constants") or {})
     for row in rows if rows is not None else [*(data.get("calls") or []), *(data.get("queries") or []),
                                               *((data.get("wp") or {}).get("probes") or [])]:
-        contract = row.get("contract") or ""
-        if re.search(r"\bensures\s+dx_state_initialized\s*;", contract):
-            contract += "\n" + "\n".join(f"ensures {term};" for term in initialized)
-        parts += ["/*@", contract, "*/", f"{row.get('prototype')};"]
+        parts += ["/*@", row.get("contract") or "", "*/", f"{row.get('prototype')};"]
     return "\n".join(parts) + "\n"
 
 
