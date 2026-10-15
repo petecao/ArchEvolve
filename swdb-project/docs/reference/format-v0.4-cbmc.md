@@ -57,7 +57,13 @@ swdb prove --summary <library entry> --adapter cbmc --runs-dir <outside the repo
    bound, each knob over its range (at most 16 values, else 5), every other value and array element from
    {-2, -1, 0, 1, 2} (scalar values also INT_MIN and INT_MAX); at most 20 000 runs (a fixed-seed sample
    beyond). Any difference stops the batch: no record, the message names `c_lowering_disagreement` and the
-   first differing input, and `cbmc/handler.json` plus `cbmc/reproduction/` hold both sources.
+   first differing input, and `cbmc/handler.json` plus `cbmc/reproduction/` hold both sources. Ticket 25: when
+   the lowering allocates (a `std::vector` model or `new[]`), both sides run under AddressSanitizer; a run that
+   ends in a sanitizer report (undefined behavior, such as a read through a stale pointer) is no agreement
+   evidence on either side, the harness resumes at the next input, and `settings.agreement` counts
+   `undefined_behavior_runs`. CBMC refutes such inputs itself. The C++ side includes `<vector>`, `<utility>`
+   and `<stdexcept>`, and its harness turns a `std::out_of_range` into the same failed check the model's `at`
+   reports (`std.vector.at.out_of_range`).
 4. CBMC on `job.c` (`-DSWDB_CBMC --unwind K --unwinding-assertions` plus the lineup's `cbmc` flags,
    `--json-ui`) in the job's scratch folder, under the RSS watchdog and the wall budget, inside the
    machine-wide verifier lock.
@@ -123,7 +129,7 @@ replays a refutation further, on the strict layer (`replay_label`).
 | `pins.translator` | `{id: swdb-cbmc-translator-<version>, sha256 of swdb/cbmc_translator.py}` |
 | `pins.summaries` | one `{id, sha256, proof_record}` per summarized callee |
 | `evidence.reports` | `differential_c`, `differential_cxx` and their outputs, `cbmc_input` (`job.c`), `cbmc_output` (CBMC's JSON), `replay_cxx`, `handler`, all under `<runs-dir>/<record>/cbmc/` |
-| `assumptions`, `tools` | one `trusted_tool` entry each: `swdb-c-lowering-2`, `clang-22.1.8`, `swdb-cbmc-translator-1`, `cbmc-6.11.0`, and the SAT solver inside CBMC (`cadical-in-cbmc-6.11.0`, from the lineup's `--sat-solver`) |
+| `assumptions`, `tools` | one `trusted_tool` entry each: `swdb-c-lowering-3`, `clang-22.1.8`, `swdb-cbmc-translator-2`, `cbmc-6.11.0`, and the SAT solver inside CBMC (`cadical-in-cbmc-6.11.0`, from the lineup's `--sat-solver`) |
 
 The method version must list both the C lowering tool and the CBMC translator (ID and sha256) in
 `c_lowering.translators`, and pin `cbmc` (`6.11` matches 6.11.0) and `clang` in its `lineup`; a mismatch runs

@@ -86,6 +86,8 @@ def method_version(identity):
                 description="Fixture method version with the real WP lineup of the Mac (ticket 21 tests).")
     data["lineup"] = yaml.safe_load((REPO / "library" / "methods" / "probata-draft-1.yaml").read_text())["lineup"]
     data["c_lowering"]["translators"] = [identity["c_lowering"]]
+    from swdb import std_models                       # ticket 25: this checkout's model version
+    data["models"] = {"std_vector": std_models.identity(), "std_pair": std_models.identity()}
     return data
 
 

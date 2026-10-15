@@ -51,6 +51,44 @@ def identity(path=None):
     return {"id": f"{MODELS_ID}-{MODELS_VERSION}", "sha256": hashlib.sha256(source.read_bytes()).hexdigest()}
 
 
+def assumptions(lowering, clang_version, lowering_tool):
+    """The assumption entries a proof record of this C lowering adds (map 16 item 7): "the pinned standard library
+    implements the modeled members as the standard says" (trusted tool; reference: the model version) when it uses a
+    model, and "allocation succeeds" (trusted tool; reference: the model version, or the C lowering tool that lowers
+    new[] to malloc) when it allocates. `lowering_tool`: {id, sha256} of the C lowering tool."""
+    found = []
+    model = identity()
+    if lowering.std_models:
+        types = ", ".join(lowering.std_models)
+        found.append({"kind": "trusted_tool", "reference": dict(model),
+                      "sentence": SENTENCE_LIBRARY.format(clang=clang_version, types=types, standard=STANDARD,
+                                                          model=model["id"])})
+    if lowering.allocation:
+        found.append({"kind": "trusted_tool", "reference": dict(model if lowering.std_models else lowering_tool),
+                      "sentence": SENTENCE_ALLOCATION})
+    return found
+
+
+def method_problem(method, lowering):
+    """Why the method version does not admit this lowering's models (its `models.std_vector` / `models.std_pair`
+    must be this model version), or None. A mismatch runs nothing, as for the translators."""
+    found = identity()
+    section = method.data.get("models") or {}
+    for key, prefix in (("std_vector", "std_vector_"), ("std_pair", "std_pair_")):
+        if not any(name.startswith(prefix) for name in lowering.std_models):
+            continue
+        pinned = section.get(key) if isinstance(section, dict) else None
+        if not isinstance(pinned, dict) or {k: pinned.get(k) for k in ("id", "sha256")} != found:
+            return (f"the C lowering uses the {key} model {found['id']} (sha256 {found['sha256'][:12]}...), but "
+                    f"method version {method.id} pins models.{key} = {pinned}")
+    return None
+
+
+def pins(lowering):
+    """The content-hash set's `std_models` pin ({id, sha256} of the model version) when the C uses a model."""
+    return {"std_models": identity()} if lowering.std_models else {}
+
+
 MACROS = """\
 /* swdb-std-models: the model's two check hooks (CBMC and the native harness define them first). */
 #ifndef SWDB_MODEL_REQUIRE

@@ -12,7 +12,8 @@ Tests: `tests/test_c_lowering.py`, `tests/test_wp_adapter.py`, `tests/test_forma
 
 ## `swdb lower` (the C lowering tool)
 
-Updated: 2026-10-14 ET (ticket 24: the declared C++ subset, naming rules `kept-names.2`, tool version 2).
+Updated: 2026-10-14 ET (ticket 24: the declared C++ subset, naming rules `kept-names.2`, tool version 2;
+ticket 25: `std::vector`/`std::pair` models, naming rules `kept-names.3`, tool version 3).
 
 ```
 swdb lower --source <file.cc> --function <name> --out <folder> [--include <dir>] [--define NAME[=VALUE]]
@@ -23,7 +24,7 @@ swdb lower --source <file.cc> --function <name> --out <folder> [--include <dir>]
   anchors: {path, sha256, count}}`, plus `summaries` and `models` when the C uses any.
 - **Deterministic.** clang 22.1.8 parses the C++ (filtered `-ast-dump=json`, one dump per declaration name);
   Python prints the C. No LLM, no absolute path, no time in the output: the same input gives the same bytes.
-- **Kept names** (naming rules `kept-names.2`, `swdb.c_lowering.RULES`): functions, parameters, locals,
+- **Kept names** (naming rules `kept-names.3`, `swdb.c_lowering.RULES`): functions, parameters, locals,
   globals and fields keep their C++ names, so ACSL written over the C++ names type-checks against the C
   unchanged. The rules, in short:
 
@@ -64,10 +65,15 @@ swdb lower --source <file.cc> --function <name> --out <folder> [--include <dir>]
 - **C models** (`models` in `<name>.anchors.json`): static C functions with ACSL contracts, defined in the C
   after the globals. Proving each model's contract once (one proof record each) is not built yet.
 - **Outside the subset:** exit 1, `unsupported construct: <what> (<file> line N)`, and nothing written.
-  Examples: inheritance, virtual functions, exceptions, lambdas, RTTI, standard containers (`std::vector`
-  and `std::pair` come with ticket 25) and streams, `long double`, calls of functions with no body,
-  overloads, other OpenMP directives and clauses, a `return`/`break`/`continue` out of a scope that
-  destroys an object. C++ that does not parse: `parse error: ...`.
+  Examples: inheritance, virtual functions, exceptions, lambdas, RTTI, standard containers other than
+  `std::vector` and `std::pair`, `std::vector<bool>`, an unmodeled member, streams, `long double`, calls of
+  functions with no body, overloads, other OpenMP directives and clauses, a `break`/`continue` out of a loop
+  body scope that destroys an object. C++ that does not parse: `parse error: ...`.
+- **Modeled standard types** (ticket 25; [format-v0.4-std-models.md](format-v0.4-std-models.md)):
+  `std::vector<T>` and `std::pair<A, B>` become the structs and member functions of `swdb.std_models`; the
+  lowering lists them as `std_models` (`{id, sha256, types}`) and `allocation: true` in `swdb lower`'s output
+  and `<name>.anchors.json` (`allocation` also for `new[]`). A `return` out of a scope that destroys an object
+  keeps its value in `swdb_return`, runs the destructors (innermost first), then returns it.
 - The tool's identity is `swdb-c-lowering-<TOOL_VERSION>` plus the sha256 of `swdb/c_lowering.py`;
   `swdb.c_lowering.naming_rules()` is `{id: kept-names.<n>, sha256}` of the rules text.
 
@@ -139,9 +145,10 @@ WP never refutes: a not-proven record has no counterexample.
 | `settings` | `tool`, `flags`, `session`, `warning_levels`, `machdep`, `wp_seconds_per_solver`, `environment_removed`, `rss_cap_bytes`, `hint_count`, `build_constants` |
 | `pins.c_lowering` | `{id: <f>.c, sha256}` of the C lowering WP ran on |
 | `pins.naming_rules` | `{id: kept-names.<n>, sha256}` of the lowering's naming rules (ticket 24); a new rules version gives a different pin |
+| `pins.std_models` | ticket 25: the model version when the unit uses `std::vector` or `std::pair`; the record then also lists the two model assumption entries ([format-v0.4-std-models.md](format-v0.4-std-models.md)) |
 | `pins.build_constants` | one `{name, value}` per `--define` |
 | `evidence.reports` | `{name, path, sha256}` of `c_lowering`, `anchors`, `wp_input`, `hints`, `wp_log`, `wp_goals`, `wp_properties`, `handler`, all under `<runs-dir>/<record>/wp/` |
-| `assumptions`, `tools` | one `trusted_tool` entry per tool, each with one plain sentence: `swdb-c-lowering-2`, `clang-22.1.8`, `frama-c-wp-33.0`, `alt-ergo-2.6.4`, `z3-5.1.0`, `cvc5-1.2.1` (IDs carry the installed versions; sha256 of each binary) |
+| `assumptions`, `tools` | one `trusted_tool` entry per tool, each with one plain sentence: `swdb-c-lowering-3`, `clang-22.1.8`, `frama-c-wp-33.0`, `alt-ergo-2.6.4`, `z3-5.1.0`, `cvc5-1.2.1` (IDs carry the installed versions; sha256 of each binary) |
 | `evidence_kind` | `execution` under a method version whose `evidence_kind` is `execution`; `contract_fixture` under a fixture method version (and always for the scripted adapter) |
 
 ## The machine-wide verifier lock
@@ -171,8 +178,8 @@ serves every adapter.
 - 24 (done 2026-10-14): the subset above; `TOOL_VERSION` 2, naming rules `kept-names.2`. The tool's lowering
   of spike (b)'s unit 1 agrees with the hand lowering `prototype/06c-cbmc/unit_peter.c` on every bounded input
   (`tests/test_c_lowering.py`, fixture `tests/fixtures/proof/lowering/spike_peter_unit.cc`).
-- 25: `std::vector`/`std::pair` models go next to the `std::*` models (`_Printer._std`); add the types to
-  `c_lowering.STD_CONTAINERS` handling. 45: replace the one-thread OpenMP and atomic models.
+- 25 (2026-10-14): `std::vector`/`std::pair` models (`swdb/std_models.py`, hooks next to `_Printer._std`);
+  `TOOL_VERSION` 3, naming rules `kept-names.3`. 45: replace the one-thread OpenMP and atomic models.
 - 34/35/37: anchors from `<f>.anchors.json`; hints placed by `WpAdapter._input`; goals to retry from the
   record's `goals` and `unproven_properties`.
 - 36: replace `read_outcome` with the full reading rule; keep the class table above.

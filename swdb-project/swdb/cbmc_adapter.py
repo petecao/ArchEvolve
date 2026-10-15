@@ -37,7 +37,7 @@ import shutil
 import subprocess
 from pathlib import Path
 
-from swdb import c_lowering, cbmc_translator as tr, paths, rss_watchdog, vocab, yamlio
+from swdb import c_lowering, cbmc_translator as tr, paths, rss_watchdog, std_models, vocab, yamlio
 from swdb.proof import AdapterError, Verdict
 
 NAME = "cbmc"
@@ -154,10 +154,17 @@ class CbmcAdapter:
             return self._not_proven("parse_error", str(exc), context)
         except c_lowering.LoweringError as exc:
             raise AdapterError(str(exc)) from None
+        problem = std_models.method_problem(self.method, lowering)              # ticket 25: the model version
+        if problem:
+            raise AdapterError(problem)
         code = Code(lowering, source, self.defines)
         code.apply_fault(os.environ.get("SWDB_CBMC_LOWERING_FAULT"))
         context["pins"] = {"c_lowering": {"id": f"{lowering.function}.c", "sha256": code.c_sha256},
-                           "naming_rules": c_lowering.naming_rules()}           # ticket 24
+                           "naming_rules": c_lowering.naming_rules(),           # ticket 24
+                           **std_models.pins(lowering)}                         # ticket 25
+        context["lowering"] = lowering
+        if lowering.std_models:
+            context["settings"]["std_models"] = list(lowering.std_models)
         try:
             built = self._build(job, entry, code, sizes, summary_job, context)
         except tr.Untranslatable as exc:
@@ -318,27 +325,36 @@ class CbmcAdapter:
         paths_["c"].write_text(c_text)
         paths_["cxx"].write_text(cxx_text)
         context["reports"] += [("differential_c", paths_["c"]), ("differential_cxx", paths_["cxx"])]
-        outputs = {}
+        outputs, undefined = {}, set()
+        heap = code.lowering.allocation           # ticket 25: heap use (models, new[]) runs under AddressSanitizer
         for side in ("c", "cxx"):
             binary = scratch / f"differential_{side}"
             problem = _compile(context["tools"]["clang"], side, paths_[side], binary,
                                ["-DSWDB_NATIVE", "-DSWDB_DIFFERENTIAL", "-O0", "-fwrapv", "-w",
+                                *(("-fsanitize=address",) if heap else ()),
                                 *(code.cxx_defines() if side == "cxx" else ())])
             if problem:
                 return self._not_proven("parse_error", f"the {side} side of the differential run does not compile: "
                                         f"{problem}", context)
-            with open(inputs) as stdin:
-                done = subprocess.run([binary], stdin=stdin, capture_output=True, text=True, timeout=600)
+            done, crashed = _run_domain(binary, lines, sanitized=heap)
             if done.returncode != 0:
                 return self._not_proven("tool_crash", f"the {side} side of the differential run exited "
                                         f"{done.returncode}: {done.stderr[-400:]}", context)
+            undefined |= crashed
             outputs[side] = done.stdout
             path = out / f"differential_{side}.out"
             path.write_text(done.stdout)
             context["reports"].append((f"differential_{side}_output", path))
+        if undefined:                             # either side's sanitizer fired: no agreement evidence there
+            for side in outputs:
+                rows = outputs[side].splitlines(keepends=True)
+                outputs[side] = "".join(f"run {k}: undefined behavior\n" if k in undefined else row
+                                        for k, row in enumerate(rows))
         agreement = {"runs": len(lines), "sampled": sampled, "domain": domain,
                      "c_output_sha256": hashlib.sha256(outputs["c"].encode()).hexdigest(),
                      "cxx_output_sha256": hashlib.sha256(outputs["cxx"].encode()).hexdigest()}
+        if heap:
+            agreement["undefined_behavior_runs"] = len(undefined)
         if outputs["c"] != outputs["cxx"]:
             first = next(k for k, (a, b) in enumerate(itertools.zip_longest(outputs["c"].splitlines(),
                                                                                 outputs["cxx"].splitlines())) if a != b)
@@ -365,6 +381,8 @@ class CbmcAdapter:
         shutil.copyfile(job_c, scratch / "job.c")
         context["reports"].append(("cbmc_input", job_c))
         flags = ["-DSWDB_CBMC", "--unwind", str(built["unwind"]), *FROZEN, *tools["flags"]]
+        if code.lowering.allocation:              # ticket 25: the "allocation succeeds" assumption entry (CBMC 6
+            flags.append("--no-malloc-may-fail")  # lets malloc return NULL by default)
         command = [*tools["command"], "job.c", *flags, "--json-ui"]
         cap = int(os.environ.get("SWDB_VERIFIER_RSS_CAP_BYTES") or DEFAULT_CAP_BYTES)
         wall = job.budget_seconds or DEFAULT_WALL_SECONDS
@@ -440,6 +458,10 @@ class CbmcAdapter:
             assumptions.append({"kind": "trusted_tool", "reference": {"id": ident, "sha256": sha},
                                 "sentence": SENTENCES[tool].format(version=version)})
             tools.append(ident)
+        if context.get("lowering") is not None:                                  # ticket 25
+            ident, sha, _version = identities["c_lowering"]
+            assumptions += std_models.assumptions(context["lowering"], identities["clang"][2],
+                                                  {"id": ident, "sha256": sha})
         if verdict == "proven":
             context["settings"].setdefault("forms", {"c_lowering": "proven", "cxx": "agrees on the bounded domain"})
         fields = {"goals": context.get("goals", []), "settings": context["settings"]}
@@ -615,6 +637,37 @@ def _domain(plan):
     return [[rng.choice(values) for values in choices] for _ in range(MAX_RUNS)], True, summary
 
 
+class _Done:
+    def __init__(self, returncode, stdout, stderr):
+        self.returncode, self.stdout, self.stderr = returncode, stdout, stderr
+
+
+def _run_domain(binary, lines, sanitized=False):
+    """(result, crashed) of the native harness over every oracle line. Sanitized (ticket 25): a run that ends in an
+    AddressSanitizer report prints `run K: sanitizer` and the harness resumes at the next line, so one run's
+    undefined behavior neither hides the other runs nor counts as agreement; `crashed` holds those run indexes."""
+    if not sanitized:
+        done = subprocess.run([binary], input="".join(" ".join(map(str, line)) + "\n" for line in lines),
+                              capture_output=True, text=True, timeout=600)
+        return done, set()
+    rows, crashed, start = [], set(), 0
+    env = {**os.environ, "ASAN_OPTIONS": "detect_leaks=0:abort_on_error=0"}
+    while start < len(lines):
+        feed = "".join(" ".join(map(str, line)) + "\n" for line in lines[start:])
+        done = subprocess.run([binary], input=feed, capture_output=True, text=True, timeout=600, env=env)
+        complete = [row for row in done.stdout.splitlines() if re.search(r" end=\S+$", row)]
+        rows += [re.sub(r"^run \d+:", f"run {start + k}:", row) for k, row in enumerate(complete)]
+        if done.returncode == 0 and len(complete) == len(lines) - start:
+            break
+        if "AddressSanitizer" not in done.stderr:
+            return _Done(done.returncode or 1, "\n".join(rows) + "\n", done.stderr), crashed
+        index = start + len(complete)
+        rows.append(f"run {index}: sanitizer")
+        crashed.add(index)
+        start = index + 1
+    return _Done(0, "\n".join(rows) + "\n", ""), crashed
+
+
 def _compile(clang, side, source, binary, flags):
     compiler = clang.command[0]
     if side == "c":
@@ -649,6 +702,8 @@ class Code:
         head = lowering.declaration.rstrip("\n").splitlines()
         self.globals = []                              # (name, scalar C type or None, declaration text)
         for line in head[len(c_lowering.HEADERS):-1]:
+            if line.startswith(("typedef ", "struct ", "#")):     # types (ticket 24 classes, ticket 25 models)
+                continue
             match = re.match(r"^(static\s+)?(.+?)\b([A-Za-z_]\w*)\s*((?:\[[^\]]*\])*)\s*(=.*)?;$", line)
             if match:
                 self.globals.append((match.group(3), None if match.group(4) else match.group(2).strip(), line))
@@ -721,7 +776,8 @@ class Code:
         tool = c_lowering.locate()
         data = self.source.read_bytes()
         parts = [f"/* C++ of {self.lowering.function} cut from {self.source.name} by the CBMC adapter. */",
-                 "#include <cstddef>", "#include <cstdint>"]
+                 "#include <cstddef>", "#include <cstdint>",
+                 "#include <stdexcept>", "#include <utility>", "#include <vector>"]       # ticket 25: modeled types
         for name, _ctype, _line in self.globals:
             parts.append(self._cut(tool, data, name, {"VarDecl"}) + ";")
         parts += [f"{self.prototypes[name]};" for name in self.functions]

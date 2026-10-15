@@ -34,7 +34,7 @@ import shutil
 import subprocess
 from pathlib import Path
 
-from swdb import c_lowering, framac, paths, rss_watchdog, vocab, yamlio
+from swdb import c_lowering, framac, paths, rss_watchdog, std_models, vocab, yamlio
 from swdb.proof import AdapterError, Verdict
 
 NAME = "wp"
@@ -106,9 +106,13 @@ class WpAdapter:
         if unit.get("function") not in (None, job.unit.function):
             raise AdapterError(f"contract {self.contract} states the proof unit {unit.get('function')}, not "
                                f"{job.unit.function}")
+        problem = std_models.method_problem(self.method, lowering)              # ticket 25: the model version
+        if problem:
+            raise AdapterError(problem)
         c_path, anchors_path = lowering.write(wp_dir)
         context["reports"] += [("c_lowering", c_path), ("anchors", anchors_path)]
         context["c_lowering"] = {"id": c_path.name, "sha256": lowering.sha256}
+        context["lowering"] = lowering                                           # ticket 25: model assumptions
         text = self._input(lowering, entry)
         input_path = wp_dir / "wp_input.c"
         input_path.write_text(text)
@@ -251,13 +255,17 @@ class WpAdapter:
             assumptions.append({"kind": "trusted_tool", "reference": {"id": ident, "sha256": sha},
                                 "sentence": SENTENCES[tool].format(version=version)})
             tools.append(ident)
+        if context.get("lowering") is not None:                                  # ticket 25
+            ident, sha, _version = identities["c_lowering"]
+            assumptions += std_models.assumptions(context["lowering"], identities["clang"][2],
+                                                  {"id": ident, "sha256": sha})
         fields = {"goals": context.get("goals", [])}
         if verdict == "not_proven":
             fields["unproven_properties"] = context.get("unproven", [])
         if context.get("settings"):
             fields["settings"] = context["settings"]
-        pins = {"c_lowering": context["c_lowering"], "naming_rules": c_lowering.naming_rules()} \
-            if context.get("c_lowering") else {}
+        pins = {"c_lowering": context["c_lowering"], "naming_rules": c_lowering.naming_rules(),
+                **std_models.pins(context["lowering"])} if context.get("c_lowering") else {}
         return Verdict(verdict=verdict, bounds={"threads": 1, "input_size": "unbounded"}, assumptions=assumptions,
                        failure_class=failure_class, tools=tuple(tools), peak_rss_bytes=context.get("peak"),
                        record_fields=fields, pins=pins, reports=tuple(context["reports"]))
