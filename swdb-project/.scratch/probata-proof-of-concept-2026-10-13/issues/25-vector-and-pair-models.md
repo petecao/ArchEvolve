@@ -123,3 +123,30 @@ passed1.75s. Reports: `/private/tmp/probata-aggregate-init-final.jsonl` (one tes
 `/private/tmp/probata-aggregate-lower-green3.jsonl`,
 `/private/tmp/probata-aggregate-lower-only-final.jsonl`. All source changes are hash pinned; the
 remaining bounded standard-object policy is separate follow-on work.
+
+
+Bounded initializedness restoration — 2026-10-15 ET: lowerer8 adds the source-hashed
+`bounded_std_initialization.py` protocol for initialized scalar standard objects/live prefixes. The
+exact std_models2 source body hash is audited separately. Default/count/count-value construction,
+append/accessors/index/at, scalar copied range variables and ordinary pair construction/fields are
+admitted; spare-capacity reads, unknown or conditional raw prefixes, escaped/cast origins, manual heap
+and uninitialized model arguments refuse before execution. Copy/move, resize/clear/reserve/swap,
+pointer elements, reference range variables and other untracked protocols stay unsupported. The
+checker and lowerer identities both cover the new helper. No body, allocation-success assumption or
+lifetime premise was changed.
+
+The five original real CBMC outcomes are restored with mandatory pointer-overflow checks: maximum
+PROVEN; stale data and iterator REFUTED with replay; unchecked at REFUTED and checked at PROVEN.
+Temporary strict xfails were removed only after the original jobs passed with `--runxfail`. Thirteen
+public refusal controls and a changed-model-body audit control pass. A narrowing-count control
+reproduced and fixed a new prefix-inference issue: `(unsigned char)256` must not count as256 initialized
+elements. Larger converted literals now need a checked constant folder and do not establish a prefix.
+
+After merging integration6497f4f8 (including ticket36 pointer/row/reader policy), the final standard
+model plus primitive initializedness suite passed **50 tests,0xfails** in543.83s, with shared verifier
+slot waits included. Report:`/private/tmp/probata-std-init-combined-final.jsonl`; compact actual-case
+evidence:[t25-bounded-standard-initialization-20261015.json](../evidence/t25-bounded-standard-initialization-20261015.json).
+These are `contract_fixture` records and bounded outcomes, not production or unbounded vector WP
+acceptance. Ticket25 stays **claimed**. An outside-repository research design at
+`/private/tmp/probata-lifetime-research-2026-10-15/vector-owner-view-design.md` outlines separate checked
+allocator separation and pointer/buffer-liveness obligations; it is not implemented or claimed proven.

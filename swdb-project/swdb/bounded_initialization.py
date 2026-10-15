@@ -10,13 +10,16 @@ import hashlib
 import json
 from pathlib import Path
 
+from swdb import bounded_std_initialization as standard
+
 
 def identity():
     here = Path(__file__)
     # Regeneration and state-draw enumeration are policy dependencies, too. A changed
     # generator must invalidate the frozen method even if the three model files match.
     return {"id": "swdb-bounded-initialization-1", "sha256": hashlib.sha256(
-        here.read_bytes() + here.with_name("proof_semantics.py").read_bytes()).hexdigest()}
+        here.read_bytes() + here.with_name("proof_semantics.py").read_bytes()
+        + here.with_name("bounded_std_initialization.py").read_bytes()).hexdigest()}
 
 
 def _hash(value):
@@ -52,7 +55,7 @@ class _Refusal(Exception):
         self.reason, self.node, self.function = reason, node, function
 
 
-def analyze(nodes, *, scalar_types, source_sha256, text, external_calls=()):
+def analyze(nodes, *, scalar_types, source_sha256, text, external_calls=(), standard_types=None):
     """Generate immutable-origin metadata from clang nodes; never consume candidate certificates.
 
     Every automatic local is initialized before binding; every admitted pointer
@@ -65,6 +68,9 @@ def analyze(nodes, *, scalar_types, source_sha256, text, external_calls=()):
               "input_domain": "initialized scalar values; each pointer binds a distinct nonnull fully initialized "
                               "primitive buffer of exactly harness_capacity elements (logical sizes do not shorten it)",
               "verdict": "passed", "model_obligations": []}
+    standard_types = standard_types or {}
+    if standard_types:
+        result["standard_policy"] = standard.report(standard_types)
     externals = {row["name"] for row in external_calls}
     # clang's separately filtered dumps give the same declaration different IDs.
     # Match retained function name AND canonical signature across those dumps.
@@ -76,9 +82,15 @@ def analyze(nodes, *, scalar_types, source_sha256, text, external_calls=()):
         def refuse(reason, node):
             raise _Refusal(reason, node, function)
 
+        policy = standard.Policy(standard_types, scalar_types, bound, refuse) if standard_types else None
+
         def visit(node):
             kind, children = node.get("kind"), _children(node)
             typ = _type(node, scalar_types)
+            if policy:
+                handled = policy.handle(node, visit, typ)
+                if handled is not standard.UNHANDLED:
+                    return handled
             if kind.startswith("OMP"):
                 refuse("generated OpenMP private/model storage needs a checked initializedness policy", node)
             if kind == "ParmVarDecl":
@@ -93,6 +105,9 @@ def analyze(nodes, *, scalar_types, source_sha256, text, external_calls=()):
                     refuse("automatic local has no explicit initializer (late initialization is outside this policy)", node)
                 # Bind only AFTER checking the initializer: int x=x must never find itself initialized.
                 values = [visit(child) for child in children]
+                if typ == "pointer" and standard.is_value(values[-1]) and values[-1].kind == "pointer":
+                    bound[node["id"]] = values[-1]
+                    return values[-1]
                 if typ == "pointer" and values[-1] != "pointer":
                     refuse("pointer initializer has no initialized harness-buffer origin", node)
                 bound[node["id"]] = typ
@@ -120,7 +135,8 @@ def analyze(nodes, *, scalar_types, source_sha256, text, external_calls=()):
                     refuse("call has no checked target", node)
                 # Arguments are ALWAYS checked before the callee exemption, including discarded values.
                 for argument in children[1:]:
-                    visit(argument)
+                    if standard.is_value(visit(argument)):
+                        refuse("standard storage cannot escape through an ordinary/model call", argument)
                 callee = children[0]
                 while callee.get("kind") in ("ImplicitCastExpr", "ParenExpr") and len(_children(callee)) == 1:
                     callee = _children(callee)[0]
@@ -140,11 +156,19 @@ def analyze(nodes, *, scalar_types, source_sha256, text, external_calls=()):
                 if op in ("++", "--") and children and _type(children[0], scalar_types) == "pointer":
                     refuse("pointer mutation needs flow-sensitive initialized-buffer origin tracking", node)
                 values = [visit(child) for child in children]
+                if any(standard.is_value(value) for value in values):
+                    if policy and op == "*" and typ == "scalar" and len(values) == 1:
+                        return policy.read(values[0], 0, node)
+                    refuse("standard origin cannot pass through this unary operation", node)
                 if op == "*" and (not values or values[0] != "pointer" or typ != "scalar"):
                     refuse("dereference has no initialized primitive buffer origin", node)
                 return "scalar" if op == "*" else typ
             if kind == "ArraySubscriptExpr":
                 values = [visit(child) for child in children]
+                if any(standard.is_value(value) for value in values):
+                    if policy and len(values) == 2 and standard.is_value(values[0]) and values[1] == "scalar":
+                        return policy.read(values[0], standard.integer(children[1]), node)
+                    refuse("raw standard array access has no checked initialized origin", node)
                 if values.count("pointer") != 1 or typ != "scalar":
                     refuse("array access has no initialized primitive buffer origin", node)
                 return "scalar"
@@ -153,6 +177,8 @@ def analyze(nodes, *, scalar_types, source_sha256, text, external_calls=()):
                 if (op == "=" or kind == "CompoundAssignOperator") and children and _type(children[0], scalar_types) == "pointer":
                     refuse("pointer reassignment needs flow-sensitive initialized-buffer origin tracking", node)
                 values = [visit(child) for child in children]
+                if any(standard.is_value(value) for value in values):
+                    refuse("standard origin cannot pass through this binary operation", node)
                 if typ == "pointer" and (op not in ("+", "-") or values.count("pointer") != 1):
                     refuse("pointer expression has no unique initialized-buffer origin", node)
                 return typ
@@ -170,6 +196,10 @@ def analyze(nodes, *, scalar_types, source_sha256, text, external_calls=()):
             if kind in ("CXXDefaultArgExpr", "CXXDefaultInitExpr") and not children:
                 refuse("default initializer has not been expanded into checked argument syntax", node)
             values = [visit(child) for child in children]
+            if policy:
+                handled = policy.wrapper(node, values)
+                if handled is not standard.UNHANDLED:
+                    return handled
             if kind.endswith("CastExpr") or kind == "ParenExpr":
                 if typ == "pointer":
                     if len(values) != 1 or values[0] != "pointer" or _qual(node).replace("const ", "") != _qual(children[0]).replace("const ", ""):
@@ -206,7 +236,11 @@ def check(lowering, cap, *, library=None, model=None):
         raise ValueError("bounded initializedness metadata is absent, stale or differs from its generated lowering")
     report["certificate_sha256"] = digest
     report["harness_capacity"] = cap
-    if lowering.allocation:
+    standard_ok = standard.valid_report(report.get("standard_policy"), lowering)
+    if lowering.std_models and not standard_ok:
+        report.update(verdict="refused", reason="standard model lacks an audited exact-content initializedness policy",
+                      function=lowering.function, source_line=1)
+    if lowering.allocation and not standard_ok:
         report.update(verdict="refused", reason="generated heap allocation needs a precise initializedness check",
                       function=report.get("function", lowering.function), source_line=report.get("source_line", 1))
     if report["verdict"] == "passed" and (report["model_obligations"] or model is not None):

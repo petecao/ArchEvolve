@@ -1,0 +1,108 @@
+{
+  "date_et": "2026-10-15",
+  "scope": "bounded scalar standard-object protocol; no unbounded WP lifetime claim",
+  "source_checkpoint": "5488a569",
+  "lowerer": {
+    "id": "swdb-c-lowering-8",
+    "sha256": "81a997f9c8e4a0464affc987430bdc055f7963ee8bf9789fa9cedd2cb4579104"
+  },
+  "initialization_check": {
+    "id": "swdb-bounded-initialization-1",
+    "sha256": "0815a3e1dbc7b4069ba637ba96506c9d8e274f4d5c6f5e2514e6d873b1b19d54"
+  },
+  "models": {
+    "id": "swdb-std-models-2",
+    "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+  },
+  "actual_cases": {
+    "swdb_fixture_vec_at": {
+      "record": "/private/tmp/probata-std-init-combined-final/test_at_with_an_index_that_may0/records/proofs/proof.vector-safe.candidate-1.20261015t085525z.c2aa5d18.yaml",
+      "record_id": "proof.vector-safe.candidate-1.20261015t085525z.c2aa5d18",
+      "verdict": "refuted",
+      "bounds": {
+        "threads": 1,
+        "n": 2
+      },
+      "evidence_kind": "contract_fixture",
+      "agreement": "agree",
+      "initialization_check": {
+        "id": "swdb-bounded-initialization-1",
+        "sha256": "0815a3e1dbc7b4069ba637ba96506c9d8e274f4d5c6f5e2514e6d873b1b19d54"
+      },
+      "replayed": true
+    },
+    "swdb_fixture_vec_at_checked": {
+      "record": "/private/tmp/probata-std-init-combined-final/test_at_with_an_index_that_may0/records/proofs/proof.vector-safe.candidate-1.20261015t085530z.1d83be5b.yaml",
+      "record_id": "proof.vector-safe.candidate-1.20261015t085530z.1d83be5b",
+      "verdict": "proven",
+      "bounds": {
+        "threads": 1,
+        "n": 2
+      },
+      "evidence_kind": "contract_fixture",
+      "agreement": "agree",
+      "initialization_check": {
+        "id": "swdb-bounded-initialization-1",
+        "sha256": "0815a3e1dbc7b4069ba637ba96506c9d8e274f4d5c6f5e2514e6d873b1b19d54"
+      }
+    },
+    "swdb_fixture_vec_max": {
+      "record": "/private/tmp/probata-std-init-combined-final/test_a_unit_using_vector_membe0/records/proofs/proof.vector-safe.candidate-1.20261015t085506z.e43109fa.yaml",
+      "record_id": "proof.vector-safe.candidate-1.20261015t085506z.e43109fa",
+      "verdict": "proven",
+      "bounds": {
+        "threads": 1,
+        "n": 3
+      },
+      "evidence_kind": "contract_fixture",
+      "agreement": "agree",
+      "initialization_check": {
+        "id": "swdb-bounded-initialization-1",
+        "sha256": "0815a3e1dbc7b4069ba637ba96506c9d8e274f4d5c6f5e2514e6d873b1b19d54"
+      }
+    },
+    "swdb_fixture_vec_stale_data": {
+      "record": "/private/tmp/probata-std-init-combined-final/test_a_pointer_or_iterator_kep0/records/proofs/proof.vector-safe.candidate-1.20261015t085511z.89f52d2a.yaml",
+      "record_id": "proof.vector-safe.candidate-1.20261015t085511z.89f52d2a",
+      "verdict": "refuted",
+      "bounds": {
+        "threads": 1,
+        "n": 1
+      },
+      "evidence_kind": "contract_fixture",
+      "agreement": "agree",
+      "initialization_check": {
+        "id": "swdb-bounded-initialization-1",
+        "sha256": "0815a3e1dbc7b4069ba637ba96506c9d8e274f4d5c6f5e2514e6d873b1b19d54"
+      },
+      "replayed": true
+    },
+    "swdb_fixture_vec_stale_iterator": {
+      "record": "/private/tmp/probata-std-init-combined-final/test_a_pointer_or_iterator_kep1/records/proofs/proof.vector-safe.candidate-1.20261015t085518z.25a4aa2f.yaml",
+      "record_id": "proof.vector-safe.candidate-1.20261015t085518z.25a4aa2f",
+      "verdict": "refuted",
+      "bounds": {
+        "threads": 1,
+        "n": 1
+      },
+      "evidence_kind": "contract_fixture",
+      "agreement": "agree",
+      "initialization_check": {
+        "id": "swdb-bounded-initialization-1",
+        "sha256": "0815a3e1dbc7b4069ba637ba96506c9d8e274f4d5c6f5e2514e6d873b1b19d54"
+      },
+      "replayed": true
+    }
+  },
+  "report": "/private/tmp/probata-std-init-combined-final.jsonl",
+  "validation": {
+    "tests": 50,
+    "passed": 50,
+    "xfails": 0,
+    "wall_seconds": 543.83,
+    "standard_model_tests": 32,
+    "primitive_initialization_tests": 18,
+    "shared_verifier_slots": 2,
+    "rss_cap_bytes": 8589934592
+  }
+}

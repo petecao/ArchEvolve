@@ -35,7 +35,7 @@ FILL, KNOB, SMOKE = "contract.fixture_cbmc_fill", "contract.fixture_cbmc_knob", 
 CLAMP, CLAMP_ALL = "contract.fixture_cbmc_clamp", "contract.fixture_cbmc_clamp_all"
 TWICE, VACUOUS = "contract.fixture_cbmc_twice", "contract.fixture_cbmc_vacuous"
 FILL_BOUNDS = {"threads": 1, "n": 3}
-TRUSTED = {"swdb-c-lowering-7", "clang-22.1.8", "swdb-cbmc-translator-4", "cbmc-6.11.0", "cadical-in-cbmc-6.11.0"}
+TRUSTED = {"swdb-c-lowering-8", "clang-22.1.8", "swdb-cbmc-translator-4", "cbmc-6.11.0", "cadical-in-cbmc-6.11.0"}
 FILL_CLAUSES = [("fill_pre", "legality", "requires n >= 0 && \\valid(a + (0 .. n-1));", "per_candidate"),
                 ("fill_post", "postcondition", "assigns a[0 .. n-1];\nensures \\forall integer k; 0 <= k < n ==> a[k] == v;",
                  "per_candidate")]
