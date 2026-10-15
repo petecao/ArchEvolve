@@ -196,6 +196,7 @@ class CbmcAdapter:
             context["pins"]["proof_semantics"] = {"id": model.entry, "sha256": model.sha256}
             context["settings"]["proof_semantics"] = {
                 "id": model.entry, "calls": list(externals),
+                "exit_check": "no pending device store before formal poststate observations; pending reads allowed",
                 "probes": [{k: p[k] for k in ("id", "function", "access", "line")} for p in lowering.probes]}
             context["model"] = model
         problem = std_models.method_problem(self.method, lowering)
@@ -294,12 +295,13 @@ class CbmcAdapter:
             raise AdapterError(f"{unit.function} takes arrays ({', '.join(p[0] for p in pointers)}): the bounds need a "
                                "size bound on an integer parameter")
         logic = logic_of(self.library)
-        setup, state = (), ()
+        setup, state, finish = (), (), ()
         if code.model is not None:                    # ticket 27: ghost state g0, then havoc the tile elements
             setup = ("swdb_dx_init();",)
             state = proof_semantics.state_draws(self.library, code.model.entry, self.defines)
+            finish = ("swdb_dx_check_exit();",)
         harness, plan = tr.harness(unit, clauses, sizes=sizes, cap=cap, knobs=knobs, logic=logic, setup=setup,
-                                   state=state)
+                                   state=state, finish=finish)
         drop = stub_fault()
         stubs, summaries = {}, []
         for callee in code.functions:
@@ -645,7 +647,7 @@ def read_outcome(result, text):
             return outcome("not_proven", "parse_error", joined[:400])
         return outcome("not_proven", UNCLASSIFIED, f"CBMC exited {result.exit_code} with no property results")
     goals, unproven, failures = [], [], []
-    reach_ok, unwind_failed, real_failed, capacity, ghost = True, [], [], False, False
+    reach_ok, unwind_failed, real_failed, capacity, ghost, memory_domain = True, [], [], False, False, False
     for row in results:
         prop, status = row.get("property", ""), str(row.get("status", "")).lower()
         description = row.get("description", "")
@@ -667,6 +669,8 @@ def read_outcome(result, text):
             capacity = True
         elif description == proof_semantics.CAPACITY:      # ticket 27: never a refutation (S3)
             ghost = True
+        elif description == proof_semantics.MEMORY_DOMAIN:
+            memory_domain = True
         elif status == "failure":
             builtin = ".assertion." not in prop
             failures.append({"check": prop, "property": description, "function": location.get("function"),
@@ -678,6 +682,10 @@ def read_outcome(result, text):
     if ghost:
         return outcome("not_proven", "ghost_capacity", f"more uncovered DX100 commands than the ghost capacity "
                        f"({proof_semantics.CAPACITY} failed)", goals, unproven)
+    if memory_domain:
+        return outcome("not_proven", "memory_domain",
+                       "device memory overlap or a pending store at unit exit needs coverage or more precise semantics",
+                       goals, unproven)
     if unwind_failed or capacity:
         why = f"unwinding assertions failed: {', '.join(unwind_failed)}" if unwind_failed else \
             "the oracle of the bounded encoding ran out (more havocked values than its capacity)"

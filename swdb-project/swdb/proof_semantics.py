@@ -35,6 +35,7 @@ DXC_CALL = re.compile(r"\b(__dxc_\w+)\s*(?:<[^<>();]*>)?\s*\(")
 DXC_DEF = re.compile(r"\b(__dxc_\w+)\s*\([^)]*\)\s*\{")
 TILE_POINTER = "get_cacheable_tile_pointer"
 CAPACITY = "swdb.ghost_capacity"
+MEMORY_DOMAIN = "swdb.dx100_memory_domain"
 
 
 # --- the call inventory -----------------------------------------------------------------------------------------

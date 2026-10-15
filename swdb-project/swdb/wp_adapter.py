@@ -447,6 +447,11 @@ class WpAdapter:
                 dims = next((loc.count("[") for loc in locations if loc.split("[")[0] == array), 0)
                 extra.append(f"requires \\base_addr({name}) != \\base_addr(&{array}{'[0]' * dims});")
         semantics["unit_requires"] = list(extra)
+        # Checked exit condition, never an assumed entry premise. Every admitted WP memory command
+        # has a destination writer; pending reads remain allowed across this unit boundary.
+        semantics["unit_ensures"] = (["ensures memory_domain_exit: dx_memory_clear_after_stall(-1, -1, 0);"]
+                                     if set(semantics["calls"]) & cpu_memory_admission.STORE_CALLS else [])
+        rewritten += semantics["unit_ensures"]
         prelude = proof_semantics.wp_prelude(self.library, entry_id, semantics["calls"], self.defines)
         return extra + rewritten, [prelude]
 
@@ -519,6 +524,12 @@ class WpAdapter:
                 for g in outcome["goals"]):
             outcome["failure_class"] = "ghost_capacity"
             outcome["why"] = "the named DX100 ghost-capacity obligation is not proven"
+        if context.get("semantics") and outcome["verdict"] == "not_proven" and \
+                outcome["failure_class"] in {"timeout", "unknown", "solver_error"} and any(
+                g.get("status") != "valid" and "memory_domain" in str(g.get("goal", ""))
+                for g in outcome["goals"]):
+            outcome["failure_class"] = "memory_domain"
+            outcome["why"] = "the checked DX100 device-memory domain is not proven; ticket 28 models overlap"
         context["goals"], context["unproven"] = outcome["goals"], outcome["unproven"]
         log.line(f"outcome: {outcome['verdict']} {outcome['failure_class'] or ''} ({outcome['why']})")
         if outcome["verdict"] == "proven":
@@ -558,7 +569,8 @@ class WpAdapter:
         if semantics:                               # ticket 27: as the CBMC adapter records it
             pins["proof_semantics"] = {"id": semantics["id"], "sha256": semantics["sha256"]}
             fields.setdefault("settings", {})["proof_semantics"] = {
-                **context["semantics_settings"], "unit_requires": semantics.get("unit_requires", [])}
+                **context["semantics_settings"], "unit_requires": semantics.get("unit_requires", []),
+                "unit_ensures": semantics.get("unit_ensures", [])}
             assumptions.append({"kind": "proof_semantics", "reference": {"id": semantics["id"],
                                                                          "sha256": semantics["sha256"]},
                                 "sentence": f"The DX100 behaves as its proof semantics {semantics['id']} says: each "

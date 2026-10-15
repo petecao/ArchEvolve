@@ -49,6 +49,13 @@ RULES = [
     ("register_overlap", "No gem5 rule orders a command after an unfinished command on a register (issue checks "
                          "tile status only), so issuing a command that shares a register with an uncovered command "
                          "where either writes it is a hazard (ticket 41, F6).", cite("IF.cc", "279-299")),
+    ("memory_serial_domain", "Conservative proof-domain restriction until ticket 28: after destination-stall "
+                            "coverage, a device store needs no uncovered memory command, and a device load needs "
+                            "no uncovered device store. An indirect store copies a whole cache line, updates "
+                            "selected words, and writes back the whole line; selected-element disjointness "
+                            "therefore does not establish absence of memory interference. Domain failure is "
+                            "not proven, never a refutation of the program.",
+     cite("IndirectAccess.cc", "898-940, 1145-1158")),
     ("unready_read", "A CPU read of tile memory is not blocked while a command fills the tile, so reading a tile "
                      "through its tile pointer while an uncovered command writes it is a hazard (map 12 item 3).",
      cite("CpuSidePort.cc", "346-360")),
