@@ -65,6 +65,7 @@ def build_equivalence_seed(path):
     contracts = _contracts()
     relational = _contract(REL, FUNCTION, FILL_CLAUSES, [{"array": "a", "shared_actions": [], "history_reads": False}])
     relational["relational_template"] = {"reason": REASON}
+    relational["output_determinism"] = "deterministic"
     contracts["fixture_cbmc_fill_relational"] = relational
     for name, data in contracts.items():
         (path / "library" / "rewrite_contracts" / f"{name}.yaml").write_text(yaml.safe_dump(data, sort_keys=False))
@@ -104,6 +105,8 @@ class Seed:
             args += ["--baseline-candidate", self.candidates[baseline]]
         if contract and mode == "bounded_direct":
             args += ["--contract", contract]
+        if mode == "no_contract_baseline" and "--output-determinism" not in extra:
+            args += ["--output-determinism", "deterministic"]
         if bounds is not None:
             args += ["--bounds", json.dumps(bounds)]
         result = self.swdb("prove", *args, *extra, env=env)
@@ -149,6 +152,7 @@ def test_an_equal_pair_proves_within_bounds_at_one_thread_on_the_bounded_direct_
     assert settings["formal_halves"] == [f"{REL}#fill_pre", f"{REL}#fill_post.assigns1", f"{REL}#fill_post.ensures1"]
     assert settings["agreement"]["verdict"] == "agree" and settings["agreement"]["domain"]["n"]["values"] == [-1, 0, 1, 2, 3]
     assert settings["bounds_origin"] == {"kind": "passed"}
+    assert settings["comparison"] == {"kind": "equality", "output_determinism": "deterministic"}
     assert set(record["tools"]) == TRUSTED | {"swdb-cbmc-product-1"}
     job_c = open(seed.report(record, "cbmc_input")).read()
     assert "swdb_next()" in job_c and "swdb_base_swdb_fixture_fill(" in job_c       # symbolic inputs, both copies
@@ -189,6 +193,41 @@ def test_a_rewrite_that_also_writes_a_location_the_baseline_never_writes_is_refu
 def test_the_bounded_direct_route_is_refused_for_a_unit_with_a_unit_postcondition(seed):
     result = seed.prove("split", "bounded_direct", contract=FILL, ok=False)
     assert "bounded direct route" in result.stderr and "unit postcondition" in result.stderr
+    assert not list((seed.records / "proofs").glob("*.yaml"))
+
+
+def _rel(seed, **changes):
+    """Rewrite the relational contract in this test's library copy (refusals happen before any job)."""
+    path = seed.root / "library" / "rewrite_contracts" / "fixture_cbmc_fill_relational.yaml"
+    data = yaml.safe_load(path.read_text())
+    for key, value in changes.items():
+        if value is None:
+            data.pop(key, None)
+        else:
+            data[key] = value
+    path.write_text(yaml.safe_dump(data, sort_keys=False))
+
+
+@pytest.mark.parametrize("changes, words", [
+    ({"output_determinism": None}, "states no output_determinism"),
+    ({"output_determinism": "nondeterministic"}, "nondeterministic output and states no output relation"),
+    ({"output_determinism": "nondeterministic", "output_relation": {"acsl": "ensures \\true;", "reason": "fixture"}},
+     "ticket 62"),
+])
+def test_the_route_guard_compares_by_equality_only_a_deterministic_output(seed, changes, words):
+    _rel(seed, **changes)
+    result = seed.prove("split", "bounded_direct", ok=False)
+    assert words in result.stderr
+    assert not list((seed.records / "proofs").glob("*.yaml"))
+
+
+def test_the_no_contract_baseline_states_the_kernels_output_determinism_and_a_nondeterministic_one_is_refused(seed):
+    result = seed.prove("split", "no_contract_baseline", "--output-determinism", "nondeterministic", ok=False)
+    assert "nondeterministic output and states no output relation" in result.stderr
+    args = ["--candidate", seed.candidates["split"], "--function", FUNCTION, "--adapter", "cbmc", "--whole-function",
+            "no_contract_baseline", "--runs-dir", seed.runs, "--bounds", json.dumps(BOUNDS)]
+    missing = seed.swdb("prove", *args)
+    assert missing.returncode != 0 and "--output-determinism" in missing.stderr
     assert not list((seed.records / "proofs").glob("*.yaml"))
 
 

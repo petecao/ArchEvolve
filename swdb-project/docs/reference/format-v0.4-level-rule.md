@@ -5,8 +5,9 @@ pinned in vocabulary `proof_part_names`.
 Updated: 2026-10-14 02:57 ET, ticket 12: `promotion` shows the approved level snapshot beside the level now.
 Updated: 2026-10-14 17:25 ET, ticket 61: no-contract-baseline records are measurements (`baseline_measurements`),
 a `bounded_direct` record above threads = 1 within bounds never counts, and a `baseline_function` pin may name a
-candidate artifact. No level that an earlier record gives changes, so the version stays `level-rule.1` (open point
-for the main session: the versioning rule below, read strictly, asks for `level-rule.2`).
+candidate artifact. These make the rule `level-rule.2` (decided by the main session under Yan-Ru's delegation,
+2026-10-14 20:48 ET: the versioning rule is strict even when no level changes). Snapshots stored earlier keep
+`level-rule.1` (for example the handoff examples in `docs/bfs-handoff-examples/`); they are never recomputed.
 Spec: `.scratch/probata-proof-of-concept-2026-10-13/issues/10-level-rule.md`; design:
 `.scratch/formal-verification-2026-10-09/spec.md` ("Records and levels", S11, S14, O1, O6, O7), map 26,
 [ADR 0016](../adr/0016-proof-records-never-change-level-computed-on-read.md). Code: `swdb/level_rule.py`.
@@ -27,7 +28,7 @@ returns one level with its reason. Nothing is stored; a changed pin changes the 
 
 Bounds above the minimum are reported, never ranked.
 
-## The rule (`level-rule.1`)
+## The rule (`level-rule.2`)
 
 1. **A proof record counts** only while every pin in its content-hash set matches the current hash, no
    failed part voids what it pins, and every proof record it depends on still counts. A
@@ -109,7 +110,7 @@ The existing fields keep their meaning (`candidate`, `certifications`, `counted`
 |---|---|
 | `level` | the level above; a proven level only on a certified, unrefuted candidate artifact |
 | `rank` | the level's rank (table above) |
-| `level_rule` | the level-rule version, `level-rule.1` |
+| `level_rule` | the level-rule version, `level-rule.2` (`level-rule.1` before ticket 61) |
 | `proven` | null, or `{level, bounds, records}`: the level, per dimension the smallest bound across proof units, the records that set it |
 | `proof_units` | per contract: `{contract, level, bounds, records: [{record, bounds, route, caps}]}`; `caps` lists each dependency that lowered that record's level (`kind`, `record` or `candidate`, `bounds`) |
 | `assumptions` | the assumption set of the level: each entry (`kind`, `reference`, `sentence`) of the records that set it and of the proven parts they depend on, once, with `records` |

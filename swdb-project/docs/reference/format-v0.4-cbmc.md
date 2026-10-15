@@ -184,6 +184,15 @@ swdb prove --candidate <c> --function <f> --adapter cbmc --whole-function no_con
 
 Both modes write `route: bounded_direct`.
 
+- **Equality only for a deterministic output** (decided by the main session under Yan-Ru's delegation,
+  2026-10-14 20:48 ET). `bounded_direct` reads the contract's `output_determinism` (`deterministic` or
+  `nondeterministic`); `no_contract_baseline` needs `--output-determinism`. Deterministic: outputs are compared by
+  equality (`settings.comparison: {kind: equality, output_determinism: deterministic}`). Nondeterministic with no
+  `output_relation`: refused with that reason (equality would refute a correct candidate with another valid output,
+  such as another BFS parent array). Nondeterministic with an `output_relation`: the job should assert the relation
+  on the candidate's output with the baseline's output as the witness; that form is ticket 62's work, so it is
+  refused today and says so. Not stated: refused. Nothing is written on a refusal.
+
 - **The baseline** is the candidate's source snapshot, or another candidate artifact (`--baseline-candidate`, for
   example a materialized baseline candidate or a fixture). `pins.baseline_function` pins it (`{id, function,
   sha256}`); the level rule reads a candidate ID there by its `artifact.sha256`.
@@ -228,6 +237,7 @@ On top of the CBMC record above:
 | `settings.whole_function` | the mode |
 | `settings.baseline` | `{kind: source_snapshot or candidate, id, function}` |
 | `settings.bounds_origin` | above |
+| `settings.comparison` | `{kind: equality, output_determinism: deterministic}` (the only form today) |
 | `settings.build_constants_by_build` | `{candidate, baseline}`: each build's `{name, value}` list |
 | `settings.compared` | the compared locations, in property order |
 | `settings.uncompared_globals` | globals not compared (a global array only one version names) |

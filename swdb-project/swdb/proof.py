@@ -225,7 +225,10 @@ def register_cli(commands):
                                                     "candidate's source snapshot)")
     whole.add_argument("--borrowed-bounds", metavar="RECORD", help="no_contract_baseline: run at this minimum-bounds "
                                                                    "derivation record's bounds, labeled borrowed")
-    whole.add_argument("--unwindset", action="append", default=[], metavar="SIDE:LOOP=K",
+    whole.add_argument("--output-determinism", choices=["deterministic", "nondeterministic"],
+                       help="no_contract_baseline (required): whether the kernel's output is deterministic; only a "
+                            "deterministic output is compared by equality")
+    whole.add_argument("--unwindset",action="append", default=[], metavar="SIDE:LOOP=K",
                        help="a per-loop unwinding bound for one copy, e.g. candidate:f.0=7 (repeatable)")
     from swdb import archevolve_proof     # Probata PoC 18: ArchEvolve mode's whole proof path
     archevolve_proof.register_options(sub)

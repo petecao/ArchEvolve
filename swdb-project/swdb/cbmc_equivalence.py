@@ -52,6 +52,10 @@ def contract(args, store, library, certified):
     if args.whole_function == "no_contract_baseline":
         if args.contract:
             raise UsageError("--whole-function no_contract_baseline runs with no contract: drop --contract")
+        if not getattr(args, "output_determinism", None):
+            raise UsageError("--whole-function no_contract_baseline needs --output-determinism (deterministic or "
+                             "nondeterministic): only a deterministic output is compared by equality")
+        args.swdb_comparison = _comparison(args.output_determinism, None, "the no-contract baseline")
         return None
     chosen = args.contract or certified()
     entry = library.get(chosen) if library is not None else None
@@ -64,7 +68,29 @@ def contract(args, store, library, certified):
                       f"{chosen} does not say it has none (no `relational_template: {{reason}}`): prove it by route 1 "
                       "against its unit postcondition, or run the no-contract baseline (--whole-function "
                       "no_contract_baseline)")
+    args.swdb_comparison = _comparison(entry.get("output_determinism"), entry.get("output_relation"),
+                                       f"contract {chosen}")
     return chosen
+
+
+def _comparison(determinism, relation, who):
+    """The route guard on outputs (main session under Yan-Ru's delegation, 2026-10-14 20:48 ET): outputs are compared
+    by equality only when the kernel's output is deterministic. A nondeterministic output needs its stated output
+    relation, asserted on the candidate's output with the baseline's as the witness that the input is valid; that
+    relation form is ticket 62's work, so it is refused here with its reason. Returns settings.comparison."""
+    from swdb.cli import Failure
+    if determinism not in ("deterministic", "nondeterministic"):
+        raise Failure(f"whole-function equivalence: {who} states no output_determinism (deterministic or "
+                      "nondeterministic); outputs are compared by equality only when the kernel's output is "
+                      "deterministic")
+    if determinism == "nondeterministic" and not relation:
+        raise Failure(f"whole-function equivalence refused: {who} has a nondeterministic output and states no output "
+                      "relation, so equal outputs would refute a correct candidate with another valid output")
+    if determinism == "nondeterministic":
+        raise Failure(f"whole-function equivalence refused: {who} has a nondeterministic output; comparing under its "
+                      "output_relation (the relation on the candidate's output, the baseline's output as the witness) "
+                      "is not built yet (ticket 62)")
+    return {"kind": "equality", "output_determinism": "deterministic"}
 
 
 def prepare(args, store, candidate, function):
@@ -103,7 +129,8 @@ def prepare(args, store, candidate, function):
         if args.minimum_bounds and args.bounds is None:
             args.bounds = dict(_derivation(store, args.minimum_bounds)["bounds"])
             origin = {"kind": "minimum_bounds", "record": args.minimum_bounds}
-    args.swdb_equivalence = {"mode": args.whole_function, "baseline": baseline, "bounds_origin": origin}
+    args.swdb_equivalence = {"mode": args.whole_function, "baseline": baseline, "bounds_origin": origin,
+                             "comparison": args.swdb_comparison}
     return pins
 
 
@@ -176,7 +203,7 @@ class EquivalenceAdapter(CbmcAdapter):
                    "settings": {"tool": "cbmc", "flags": [], "translator": tools["translator"]["id"],
                                 "build_constants": list(self.defines), "whole_function": self.spec["mode"],
                                 "baseline": {k: baseline[k] for k in ("kind", "id", "function")},
-                                "bounds_origin": self.spec["bounds_origin"],
+                                "bounds_origin": self.spec["bounds_origin"], "comparison": self.spec["comparison"],
                                 "build_constants_by_build": {"candidate": constants, "baseline": constants}}}
         codes = {}
         for side, tree in (("candidate", job.unit.tree), ("baseline", baseline["tree"])):

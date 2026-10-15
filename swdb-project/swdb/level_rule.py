@@ -36,7 +36,7 @@ from zoneinfo import ZoneInfo
 
 from swdb import artifacts, yamlio
 
-VERSION = "level-rule.1"
+VERSION = "level-rule.2"   # ticket 61 (main session, 2026-10-14): measurements, bounded_direct cap, candidate baseline pin
 UNBOUNDED = "unbounded"
 ORDER = ("uncertified", "certified", "proven_within_bounds_threads_1", "proven_within_bounds_threads_k",
          "proven_unbounded")

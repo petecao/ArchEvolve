@@ -207,13 +207,24 @@ After merging `2dff3f58` (ticket 24): `test_cbmc_equivalence.py`, `test_format_d
 - Assumption: the product-program generator is a separate trusted tool (`swdb/cbmc_product.py`,
   `swdb-cbmc-product-1`), not an extension of 22's translator: `method.probata-draft-1` pins the translator's
   sha256 and a method-version file is never edited in place. It reuses the translator's printers.
-  **Needs the main session:** no committed method version lists `swdb-cbmc-product-1`, so a real whole-function
-  job refuses to run until a new draft (next sequence) adds it (fixture method versions in the tests list it).
+  No committed method version lists `swdb-cbmc-product-1`, so a real whole-function
+  job refuses to run until draft-2 adds it (decision 2 below; fixture method versions in the tests list it).
 - Side finding: under a long verifier-lock queue (8 waiters), `test_a_job_over_its_budget_is_timeout_at_unchanged_bounds`
   failed once because `run_swdb`'s 600 s subprocess timeout counts the lock wait; alone it passes. 22's tests share
   this exposure.
-- Open point for the main session: `level-rule.1` is kept. The changes (measurements left out, the
-  `bounded_direct` cap, a candidate as baseline pin) change no level an earlier record gives, but the level-rule
-  doc's versioning rule, read strictly, asks for `level-rule.2` (5 test files and 2 handoff examples name `.1`).
-- Unchanged: this ticket's risk note (equal outputs refute a correct candidate with another valid output, such as
-  another BFS parent array) still needs Yan-Ru before the first real use.
+
+**Decisions** (each decided by the main session under Yan-Ru's delegation, 2026-10-14 20:48 ET):
+
+1. Level rule: bumped to `level-rule.2` (the versioning rule is strict even when no level changes). Tests and
+   `format-v0.4-level-rule.md` updated; stored snapshots (the handoff examples) keep `level-rule.1`.
+2. Method version: `method.probata-draft-1` is not edited (it is pinned). The next draft (`probata-draft-2`,
+   written by whichever ticket first runs a real whole-function job, at the latest ticket 59) must list
+   `swdb-cbmc-product-1` in `c_lowering.translators`.
+3. Equality only for a deterministic output. Where the kernel's output relation admits several valid outputs
+   (for example BFS parent arrays), the product program must assert the output relation on the candidate's output
+   with the baseline's output as the witness that the input is valid, not equality; a unit with no stated output
+   relation and a nondeterministic output is refused by the route guard with a named reason. **Built here: the
+   guard only** (contract field `output_determinism`, `--output-determinism` for the no-contract baseline;
+   nondeterministic without a relation, nondeterministic with one, and unstated are each refused with their
+   reason; deterministic runs on equality, `settings.comparison`). **The relation form (and its fixture pair: two
+   valid parents passing under the relation, failing under equality) is ticket 62's work.**
