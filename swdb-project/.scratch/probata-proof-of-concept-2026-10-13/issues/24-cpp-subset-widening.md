@@ -731,3 +731,24 @@ current-policy construct/dependency matrix, including embedded template-array
 origins, conditional standard-call placement and broader allocation/lifetime
 coverage. See [class evidence](../evidence/t24-member-lifetimes-mac-20261015.json)
 and [condition closeout](../evidence/t24-condition-closeout-20261015.json).
+
+### Resumed original construct frontier — 2026-10-15 ET
+
+User resumed implementation and remote evaluation. The exact original Ring
+int/long fixtures now gain structural fixed-subobject identity through a closed
+live automatic receiver context; pure conditional-return reads carry ordinary
+path-conditioned numeric guards. No validity/init/numeric premise is added and
+no original source, contract or hint is replaced. Independent source review found
+and repaired a runner acceptance gap: original seeded prelaunch refusals cannot
+count as actual negative proofs. A separate narrow terminal `i<=n` fill grammar
+keeps the original off-by-one fixtures' invalid writes as actual RTE obligations.
+
+All 18 original safe/seeded combined-source compiler admissions now pass at
+`b801e5a2`. Original determinism/C11/bounded-native/name/refusal controls pass
+29/29; new fixed/conditional/public stand-in/setup controls pass16/16; terminal
+controls pass12/12. These overlapping profiles are compiler/stand-in coverage,
+not actual construct acceptance. The root coordinator owns fresh lane0 dispatch
+through the committed exact-source runner, after mandatory setup hardening is
+merged. Original all-goal/init/smoke safe+seeded acceptance and current dependency
+pins remain required. Status stays **claimed**.
+[Implementation assumptions, exact checkpoints and evidence](../evidence/t24-resume-compiler-20261015.md).
