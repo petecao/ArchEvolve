@@ -1,0 +1,14 @@
+# Created: 2026-10-14 ET (Probata PoC 23). Regression corpus case through `swdb prove --adapter crux-llvm-cxx`.
+id: crux-cxx-cut-of-a-graph-function
+adapter: crux-llvm-cxx
+input:
+  function: InitParent
+  contract: contract.fixture_cbmc_fill
+  bounds: {threads: 1}
+failure_class: unsupported_construct
+cause: >-
+  Diagnosed 2026-10-14 ET (first run: the batch crashed with an uncaught Unsupported). GAPBS InitParent takes
+  `const Graph &`: the C lowering refuses the reference type, and so does the C++ cut's interface (swdb.cxx_cut reads
+  scalar and pointer parameters only), which the adapter read outside its handler. Fixed: the cut's refusal is
+  failure class unsupported_construct with the reason in settings.outside_cpp_subset; widening the subset is ticket
+  24.

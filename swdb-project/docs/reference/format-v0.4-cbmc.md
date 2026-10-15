@@ -125,7 +125,7 @@ replays a refutation further, on the strict layer (`replay_label`).
 | `pins.translator` | `{id: swdb-cbmc-translator-<version>, sha256 of swdb/cbmc_translator.py}` |
 | `pins.summaries` | one `{id, sha256, proof_record}` per summarized callee |
 | `evidence.reports` | `differential_c`, `differential_cxx` and their outputs, `cbmc_input` (`job.c`), `cbmc_output` (CBMC's JSON), `replay_cxx`, `handler`, all under `<runs-dir>/<record>/cbmc/` |
-| `assumptions`, `tools` | one `trusted_tool` entry each: `swdb-c-lowering-2`, `clang-22.1.8`, `swdb-cbmc-translator-1`, `cbmc-6.11.0`, and the SAT solver inside CBMC (`cadical-in-cbmc-6.11.0`, from the lineup's `--sat-solver`) |
+| `assumptions`, `tools` | one `trusted_tool` entry each: `swdb-c-lowering-2`, `clang-22.1.8`, `swdb-cbmc-translator-2` (ticket 23; was 1), `cbmc-6.11.0`, and the SAT solver inside CBMC (`cadical-in-cbmc-6.11.0`, from the lineup's `--sat-solver`) |
 
 The method version must list both the C lowering tool and the CBMC translator (ID and sha256) in
 `c_lowering.translators`, and pin `cbmc` (`6.11` matches 6.11.0) and `clang` in its `lineup`; a mismatch runs
@@ -145,8 +145,8 @@ nothing. Scripted faults for tests: `SWDB_CBMC` (a stand-in `cbmc` command line;
 
 ## For later tickets
 
-- 23: the stub translator here covers `requires`/`assigns`/`ensures` without `\old` over memory in a stub;
-  extend it (check mode, three-form agreement, crux-llvm fallbacks) rather than writing a second one.
+- 23 (done 2026-10-14): stubs read `\old` over memory, logic calls, `\separated`; crux-llvm fallbacks, check mode
+  and summary-form agreement: see [format-v0.4-stubs-check-mode.md](format-v0.4-stubs-check-mode.md).
 - 25: vector and pair models become C stubs through this translator (`assigns` ranges on struct fields are
   not translated yet).
 - 27: ghost hazard state goes into the stubs as globals; the harness already snapshots scalar globals.

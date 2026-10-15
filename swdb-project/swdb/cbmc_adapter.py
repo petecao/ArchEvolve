@@ -24,6 +24,11 @@ One job (`swdb prove --adapter cbmc --bounds '{"threads": 1, "<size parameter>":
    `spurious_counterexample`, with the counterexample in `unreplayed_counterexample`.
 6. Every outcome maps to a class of vocabulary `proof_failure_classes`, and that class's handler runs
    (`cbmc/handler.json`). An outcome with no class reports `unclassified_cbmc_outcome`, which stops the batch.
+
+Updated: 2026-10-14 ET (Probata PoC 23): the formal halves may call logic-library definitions (library/logic/,
+one C function each, ahead of the code); each summary pin lists the `assume`s its stub emitted (`assumes`);
+SWDB_CBMC_STUB_FAULT (a YAML file `drop: [clause name, ...]`) hand-weakens a stub for the agreement negative
+control. CBMC never serves a real-valued unit (the `bounded` adapter routes those to crux-llvm `-f real`).
 """
 
 import hashlib
@@ -250,11 +255,14 @@ class CbmcAdapter:
         if pointers and not sizes:
             raise AdapterError(f"{unit.function} takes arrays ({', '.join(p[0] for p in pointers)}): the bounds need a "
                                "size bound on an integer parameter")
+        logic = logic_of(self.library)
         setup, state = (), ()
         if code.model is not None:                    # ticket 27: ghost state g0, then havoc the tile elements
             setup = ("swdb_dx_init();",)
             state = proof_semantics.state_draws(self.library, code.model.entry, self.defines)
-        harness, plan = tr.harness(unit, clauses, sizes=sizes, cap=cap, knobs=knobs, setup=setup, state=state)
+        harness, plan = tr.harness(unit, clauses, sizes=sizes, cap=cap, knobs=knobs, logic=logic, setup=setup,
+                                   state=state)
+        drop = stub_fault()
         stubs, summaries = {}, []
         for callee in code.functions:
             if callee == job.unit.function:
@@ -266,15 +274,18 @@ class CbmcAdapter:
             sha = self.library.content_sha256(entry_id)
             rows_s = [c for c in data.get("clauses") or [] if isinstance(c, dict) and c.get("acsl")
                       and c.get("proof_placement") == {"once": "self"}]
-            stubs[callee] = tr.stub(code.interface(callee), code.prototypes[callee], tr.clauses(entry_id, rows_s),
-                                    entry_id, sha)
-            summaries.append({"id": entry_id, "sha256": sha, "proof_record": record_id})
+            clauses_s = tr.clauses(entry_id, rows_s)
+            stubs[callee] = tr.stub(code.interface(callee), code.prototypes[callee], clauses_s, entry_id, sha,
+                                    logic=logic, drop=drop)
+            summaries.append({"id": entry_id, "sha256": sha, "proof_record": record_id,
+                              "assumes": tr.stub_assumes(clauses_s, drop)})
         unwind = cap + 1
         context["settings"].update(unwind=unwind, array_length=cap, symbolic_knobs=symbolic,
                                    summaries=[s["id"] for s in summaries])
         if summaries:
             context["pins"]["summaries"] = summaries
-        return {"harness": harness, "plan": plan, "stubs": stubs, "unwind": unwind, "sizes": sizes}
+        return {"harness": harness, "plan": plan, "stubs": stubs, "unwind": unwind, "sizes": sizes,
+                "logic": logic.block()}
 
     def _knobs(self, entry, code, rows, chosen):
         """[(name, C condition, (min, max))] of the compared knobs this code uses; their legality clauses join `chosen`."""
@@ -336,8 +347,8 @@ class CbmcAdapter:
         lines, sampled, domain = _domain(built["plan"])
         inputs = scratch / "domain.txt"
         inputs.write_text("".join(" ".join(str(v) for v in line) + "\n" for line in lines))
-        c_text = tr.prelude() + code.c_text() + built["harness"]
-        cxx_text = tr.prelude() + code.cxx_text() + built["harness"]
+        c_text = tr.prelude() + built["logic"] + code.c_text() + built["harness"]
+        cxx_text = tr.prelude() + built["logic"] + code.cxx_text() + built["harness"]
         paths_ = {"c": out / "differential_c.c", "cxx": out / "differential_cxx.cc"}
         paths_["c"].write_text(c_text)
         paths_["cxx"].write_text(cxx_text)
@@ -383,7 +394,7 @@ class CbmcAdapter:
     # --- CBMC ------------------------------------------------------------------------------------------
     def _cbmc(self, job, code, built, context):
         tools, log, out, scratch = context["tools"], context["log"], context["out"], Path(job.scratch)
-        text = tr.prelude() + code.c_text(built["stubs"]) + built["harness"]
+        text = tr.prelude() + built["logic"] + code.c_text(built["stubs"]) + built["harness"]
         job_c = out / "job.c"
         job_c.write_text(text)
         shutil.copyfile(job_c, scratch / "job.c")
@@ -426,7 +437,7 @@ class CbmcAdapter:
         """Replay each failing property's trace on the C++ (callees by their stubs) with sanitizers on."""
         out, scratch = context["out"], Path(job.scratch)
         replay_cc = out / "replay_cxx.cc"
-        replay_cc.write_text(tr.prelude() + code.cxx_text(built["stubs"]) + built["harness"])
+        replay_cc.write_text(tr.prelude() + built["logic"] + code.cxx_text(built["stubs"]) + built["harness"])
         context["reports"].append(("replay_cxx", replay_cc))
         binary = scratch / "replay_cxx"
         problem = _compile(context["tools"]["clang"], "cxx", replay_cc, binary,
@@ -520,7 +531,7 @@ class CbmcAdapter:
             reproduction = out / "reproduction"
             reproduction.mkdir(exist_ok=True)
             for name, path in context["reports"]:
-                if name in ("cbmc_input", "differential_c", "differential_cxx", "replay_cxx"):
+                if name in ("cbmc_input", "crux_input", "differential_c", "differential_cxx", "replay_cxx"):
                     shutil.copyfile(path, reproduction / Path(path).name)
             if context["settings"].get("flags"):
                 (reproduction / "command.txt").write_text("cbmc job.c " + " ".join(context["settings"]["flags"]) +
@@ -823,6 +834,22 @@ def _probed(data, start, stop, sites):
     return b"".join(out)
 
 
+def logic_of(library):
+    """The logic-library definitions a job's formal halves may call (ticket 23): every library/logic/*.acsl file."""
+    from swdb.formal_frame import logic_files
+    root = getattr(library, "root", None)
+    files = logic_files(Path(root), library) if root is not None else {}
+    return tr.Logic({entry: path.read_text() for entry, path in files.items()})
+
+
+def stub_fault():
+    """Clause names a scripted fault drops from every generated stub (SWDB_CBMC_STUB_FAULT, tests only)."""
+    path = os.environ.get("SWDB_CBMC_STUB_FAULT")
+    if not path:
+        return ()
+    return tuple((yamlio.load(Path(path)) or {}).get("drop") or ())
+
+
 def _sizes(bounds):
     """{parameter: bound} from the job's bounds; threads must be 1 (threads > 1 is CIVL's, ticket 46)."""
     if not isinstance(bounds, dict):
@@ -851,3 +878,5 @@ class _Log:
 
 from swdb import proof as _proof_module      # noqa: E402  (registered here, so either module may be imported first)
 _proof_module.ADAPTERS[NAME] = CbmcAdapter
+from swdb import crux_adapter as _crux, bounded_chain as _chain   # noqa: E402,F401  (ticket 23: imported after this
+#                                                                  module is complete; each registers itself)

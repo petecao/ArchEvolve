@@ -1,0 +1,12 @@
+# Created: 2026-10-14 ET (Probata PoC 23). Regression corpus case through `swdb prove --adapter crux-llvm-cxx`.
+id: crux-loop-beyond-iteration-bound
+adapter: crux-llvm-cxx
+input:
+  function: swdb_fixture_twice
+  contract: contract.fixture_cbmc_twice
+  bounds: {threads: 1, n: 2}
+failure_class: unwinding_bound_too_small
+cause: >-
+  The loop runs 2n times, but the iteration bound comes from the largest size bound (K = 2 + 1). crux-llvm cuts
+  the path at the bound and reports the goal "Incomplete" ("Overall status: Unknown (incomplete)"), never
+  "Valid", so the adapter reads not proven, unwinding bound too small.
