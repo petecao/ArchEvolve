@@ -1,7 +1,8 @@
 """Ticket 24's construct groups through `swdb prove --adapter wp`: each safe fixture proves, its seeded bug does not;
 each C model and each summary is proven once by its own record, and a unit's record pins them.
 
-Created: 2026-10-14 ET (Probata proof of concept ticket 24). Design: formal-verification map 16 item 6 (the C++
+Created: 2026-10-14 ET. Updated: 2026-10-15 ET (ticket 24: fail closed on unsupported deallocation lifetimes).
+Design: formal-verification map 16 item 6 (the C++
 subset), 11 items 3 and 9; format docs/reference/format-v0.4-c-lowering-wp.md.
 
 Seam 1 (`swdb prove`). The candidate artifacts are GAPBS bfs.cc with every construct-group fixture of
@@ -267,7 +268,7 @@ def test_each_fixture_summary_is_proven_once_on_its_stand_in_code(subset):
 
 
 @needs_wp
-@pytest.mark.parametrize("group", sorted(GROUPS))
+@pytest.mark.parametrize("group", sorted(set(GROUPS) - {"new_array"}))
 def test_each_construct_group_safe_fixture_proves_and_its_seeded_bug_does_not(subset, group):
     safe = subset.unit(group)
     assert safe["verdict"] == "proven", (group, safe.get("failure_class"), safe.get("unproven_properties"))
@@ -299,22 +300,31 @@ def test_a_unit_that_calls_summarized_functions_pins_each_summary_record(subset,
         assert pinned[summary_id(entry)]["proof_record"] == subset.summaries[entry]["id"]
 
 
+@pytest.fixture(scope="module")
+def allocation_subset(tmp_path_factory):
+    """Allocation refusal needs no unrelated once-proven std/atomic models or summaries."""
+    if not _tools_present():
+        pytest.skip("Frama-C 33.0 or clang 22.1.8 is missing")
+    path = tmp_path_factory.mktemp("wp24-lifetime-seed")
+    return Seed(path, build_subset_seed(path))
+
+
 @needs_wp
-def test_new_array_indexed_out_of_range_is_not_proven_and_rests_on_allocation_succeeds(subset):
-    record = subset.unit("new_out_of_range")
+@pytest.mark.parametrize("group", ["new_array", "new_out_of_range", "new_after_delete"])
+def test_wp_refuses_deallocation_including_an_out_of_range_access_and_use_after_delete(allocation_subset, group):
+    record = allocation_subset.unit(group)
     assert record["verdict"] == "not_proven"
-    assert any(u["kind"] == "mem_access" for u in record["unproven_properties"])
-    safe = subset.unit("new_array")
-    assumed = [a for a in safe["assumptions"] if a["kind"] == "assumed_clause"]
-    assert {a["reference"]["id"] for a in assumed} == {"swdb_alloc_new_array_int", "swdb_alloc_delete_array_int"}
-    assert all(a["sentence"].startswith("Allocation succeeds") for a in assumed)
+    assert record["failure_class"] == "unsupported_construct"
+    assert record["goals"] == []
+    assert not any(report["name"] == "wp_input" for report in record.get("reports", []))
+    assert any(a["sentence"].startswith("Allocation succeeds") for a in record["assumptions"])
 
 
 @needs_wp
-@pytest.mark.xfail(strict=True, reason="WP 33 has no deallocation (\\fresh, \\freeable and frees unsupported): a read "
-                                       "after delete[] proves; the bounded verifier (CBMC) models free")
-def test_new_array_read_after_delete_is_not_proven(subset):
-    assert subset.unit("new_after_delete")["verdict"] == "not_proven"
+@pytest.mark.xfail(strict=True, reason="Open ticket 24 acceptance: WP 33 lacks deallocation lifetime support; "
+                                       "safe new[]/delete[] units are conservatively refused")
+def test_acceptance_gap_safe_new_and_delete_array_unit_can_be_proven(allocation_subset):
+    assert allocation_subset.unit("new_array")["verdict"] == "proven"
 
 
 @needs_wp

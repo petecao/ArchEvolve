@@ -1,7 +1,7 @@
 # 24 — C++ subset widening
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-14 22:35 ET (Progress, paused)
+Updated: 2026-10-15 ET (resumed: conservative lifetime refusal; supported-subset replay underway)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 21
@@ -197,3 +197,25 @@ passes (`report-r14.jsonl`, `report-r15.jsonl`). `test_wp_subset.py` now writes 
 not been rerun since the merge.
 
 **Next step:** merge 25 through the integration tip, resolve the model-record overlap, then do item 1.
+
+## Resumed, 2026-10-15 ET
+
+Assumption: keep inheritance and `omp simd` outside the declared subset, as the acceptance list
+requires. The spike does not justify silently widening that boundary. Ticket 25's recovery now
+uses the shared `--model` / `c_model` / `pins.models` interface; it is merged into the resumed
+integration branch.
+
+WP 33's missing deallocation semantics is a soundness gap, not merely a slow test. The adapter
+must refuse every reachable free/delete or vector lifetime obligation until a validated model
+exists. The public-seam regressions now require that refusal for safe allocation, an out-of-range
+access, and a use-after-delete. The original positive safe-allocation acceptance remains an
+explicit strict expected failure. This ticket stays **claimed**, and that expected failure is
+never counted as completed acceptance. Bounded verification retains actual `malloc`/`free`.
+
+The full baseline replay is running on mbit10 node 1 from `150930b4`, output
+`/data/yanruj/EvolveSWDB_runs/probata-t24-baseline-20261015/r4`. Initial fixture setup failures were
+diagnosed one at a time: LLVM 22's default GCC 14 selection lacked C++ headers and the linker
+library path. The isolated class C++ versus C differential passes with GCC 13 header/library
+paths before the full WP module starts. This baseline precedes the lifetime refusal and the
+strict fresh-report reader; its results alone cannot close this ticket. Final guard regressions
+must run on the integrated source.
