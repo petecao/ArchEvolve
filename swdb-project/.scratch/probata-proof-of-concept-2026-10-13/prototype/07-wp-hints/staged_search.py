@@ -105,3 +105,49 @@ def check_inputs(standin):
     for name, expected in HISTORICAL_INPUTS.items():
         if hashlib.sha256((Path(standin)/name).read_bytes()).hexdigest() != expected:
             raise RuntimeError('method19 historical source/model pin changed: '+name)
+
+
+def check_run(directory, log_path, *, round_mode):
+    """Require a completed checked search run, without requiring proof success.
+
+    Scheduled/total counts check report completeness only. Per-goal statuses still
+    decide open obligations, and the existing fresh full reader decides success.
+    """
+    import json
+    import re
+    import hints
+    try:
+        directory, log_path = Path(directory), Path(log_path)
+        summary = json.loads(Path(str(log_path)+'.summary.json').read_text())
+        required = {'exit_code','timed_out','killed_by_watchdog','queue_timed_out','unconfirmed_children','error'}
+        if (not required <= summary.keys() or summary['exit_code'] != 0 or summary['timed_out'] or
+                summary['killed_by_watchdog'] or summary['queue_timed_out'] or
+                summary['unconfirmed_children'] != [] or summary['error'] is not None):
+            raise ValueError('process failed, timed out, or cleanup is unconfirmed')
+        goals = []
+        for name in (('goals.json','lemmas.json') if round_mode else ('goals.json',)):
+            rows = json.loads((directory/name).read_text())
+            if not isinstance(rows,list):
+                raise ValueError('goal inventory is not a list')
+            for row in rows:
+                if (not isinstance(row,dict) or not isinstance(row.get('goal'),str) or not row['goal'] or
+                        type(row.get('passed')) is not bool or type(row.get('smoke')) is not bool or
+                        not isinstance(row.get('verdict'),str)):
+                    raise ValueError('goal inventory row is incomplete')
+            goals.extend(rows)
+        n_unit = sum(row.get('function') == 'TDStep' or row['goal'].startswith('typed_TDStep') for row in goals)
+        if not n_unit or len({row['goal'] for row in goals}) != len(goals):
+            raise ValueError('unit inventory is empty or duplicates goals')
+        text = log_path.read_text()
+        scheduled = [int(value) for value in re.findall(r'^\[wp\] (\d+) goals scheduled\s*$',text,re.M)]
+        if not scheduled or sum(scheduled) != len(goals):
+            raise ValueError('generated scheduled inventory and JSON count disagree')
+        totals = re.findall(r'^\s+(\d+) Total\s*$',text,re.M)
+        properties = hints.read_report(text)
+        if ('[report] Computing properties status' not in text or '--- Status Report Summary' not in text or
+                len(totals) != 1 or int(totals[0]) != len(properties) or
+                not any(row.get('function') == 'TDStep' for row in properties)):
+            raise ValueError('per-property report is missing or incomplete')
+        return {'n_goals':len(goals),'n_unit_goals':n_unit,'n_properties':len(properties)}
+    except (OSError,ValueError,KeyError,TypeError) as exc:
+        raise RuntimeError('method19 checked run refused: '+str(exc)) from None

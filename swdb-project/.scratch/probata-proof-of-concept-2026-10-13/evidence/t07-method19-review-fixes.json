@@ -1,0 +1,99 @@
+{
+  "created_et": "2026-10-15",
+  "status": "review_fixes_prepared_independent_recheck_pending",
+  "counted_run_launched": false,
+  "supersedes_preparation_checkpoint": "8af8956b02ac21193e087dedefff8c06cbacc1d5",
+  "independent_review": {
+    "path": "/private/tmp/probata-method19-independent-review.md",
+    "sha256": "ed56738728fbcbb9b427bb3731cf2273638b91d0305d96ceb39075e4c5761888"
+  },
+  "historical_input_sha256": {
+    "tdstep_standin.c": "b4a820bd20b197eee293616af17da884bbc63ed92f9252e77f261092387024de",
+    "dxc_summaries.h": "d708c0ef974e5ede1aaadd2b5e66dd785affa5e1dc6ef37419bf9e72517ae0d2",
+    "gapbs_models.h": "401d8ccfa8fdc1ef3734c97563a1c110d003d8847508aaa24ec3f300a33eed3e",
+    "bfs_unit.h": "1bcbf4dac683d6a46269fcd5f896fefc2571adc49d059b46f93fb25eb0f7b235"
+  },
+  "harness_sha256": {
+    "loop.py": "cb84fdca2b0d8dd0c77b286037513a4642835cd631ad9f87c74f0d736982d350",
+    "hints.py": "48bafc2eab6caf40bb921e773212dff3efbbbc652aa2d120d87da4704b021bca",
+    "wp_run.sh": "80340ca19f516ac1da217aedb54309fd8ff127f04ec1165c82d61565254eaff1",
+    "edit_loop.py": "32bd043fbe5eb82cae28c3a8900f6bdd0714405311d01e23b2a0673f0b60a270",
+    "edit_core.py": "b6262267969abcb5fa098afb2e7498518973eca53a79ab6f00a6e811eb26cf0a",
+    "edit_tool_mcp.py": "c8605ccea17126df24d578c82d3fe8110fb6f37dfc4708b622b0820d03e6d203",
+    "frame_seeds.py": "7c8bec31b2be840218545a3370cafde8431ddd4699a363ebe3e391fb56c519c2",
+    "goal_print.py": "9494e8d457f0d28d055c109ea4fbaada278c15e3088466096dc2a407a89a358f",
+    "staged_search.py": "bc9d013de3278147767618d89e5fa2f0b9e24df5b1f337dc8c7248f56610ef60",
+    "counted_verifier.py": "d7ff784cadd2f336ee377b8442c0edf3e4d4ae548df4459e37a3896b5e3a77be",
+    "test_debt.py": "8bf8ccd58625ae289e082c0bb217543ebb34d8920ec7b94467a75fed36373721",
+    "standin/tdstep_standin.c": "b4a820bd20b197eee293616af17da884bbc63ed92f9252e77f261092387024de"
+  },
+  "control_source_sha256": {
+    "test_staged_search.py": "db1cef2a96c7bf2c0d29a21476886b994ed6c11874a217feae707fb3da93b4b1",
+    "test_counted_verifier.py": "119698305e63d7f024330a84e0f10f3b634e2bca8460c9e3141b64e875e99d8b"
+  },
+  "reports": [
+    {
+      "path": "/private/tmp/probata-method19-root-exit-review-red.json",
+      "sha256": "5e3d33208818159b4797f2844eefafbb1d7476424e2567a7c2210c06f4732f50"
+    },
+    {
+      "path": "/private/tmp/probata-method19-root-exit-red.jsonl",
+      "sha256": "9c0cea593210fc3634bd3bc1d225b0228ef11ff27c11530262919b5242916493",
+      "call_outcomes": {
+        "passed": 0,
+        "failed": 1,
+        "skipped": 0
+      }
+    },
+    {
+      "path": "/private/tmp/probata-method19-root-exit-green.jsonl",
+      "sha256": "1e76d4839bd1d015d45fbf5c8e071840b3b55ac0f923764a8de37dafcbe1c7a6",
+      "call_outcomes": {
+        "passed": 6,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "path": "/private/tmp/probata-method19-run-integrity-red.jsonl",
+      "sha256": "fe0339abd7a9c6646d6819d30198a1e80d8104f76763b6653b857502f8b05aa4",
+      "call_outcomes": {
+        "passed": 0,
+        "failed": 9,
+        "skipped": 0
+      }
+    },
+    {
+      "path": "/private/tmp/probata-method19-driver-guard.jsonl",
+      "sha256": "aa77c68613be66fb11b9392346055496a928c881ef854b1fc075eb5d28d2afdb",
+      "call_outcomes": {
+        "passed": 45,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "path": "/private/tmp/probata-method19-review-fixes-final.jsonl",
+      "sha256": "df94dcab8c4598152ab000d4621822397bd598aa2589aa60a2e280290538078f",
+      "call_outcomes": {
+        "passed": 137,
+        "failed": 0,
+        "skipped": 0
+      }
+    }
+  ],
+  "fixes": [
+    "Kill and inspect the original owned session/process group after root exit, including reparented group members.",
+    "Never target a reused/unobserved live root PID; tracked descendant kills require birth identity.",
+    "An exited root with no ancestry sample remains explicitly unconfirmed even after its old group drains; unknown escaped descendants are not certified stopped and the lease is quarantined.",
+    "Baseline and seed cannot proceed/publish best.json after process failure, timeout, RSS kill, unconfirmed cleanup, empty unit inventory or incomplete JSON/property reports.",
+    "Candidate promotion and final replay use the same complete-run gate in method19. Individual unknown/timeout proof goals with process exit0 remain allowed as open obligations."
+  ],
+  "reader_boundary": "Scheduled goal counts and property summary totals are completeness checks only; status assessment/fresh final proof criteria are unchanged. This prototype gate is not production proof_setup or a theorem result.",
+  "boundaries": [
+    "Python-only stand-ins/private locks; no solver/provider/counting launch.",
+    "Exact996 stand-in/model bytes retained.",
+    "Root independent re-review remains required before launch.",
+    "All-goal/cache-none/smoke/covering-wait acceptance and prototype RTE boundary remain unchanged."
+  ]
+}

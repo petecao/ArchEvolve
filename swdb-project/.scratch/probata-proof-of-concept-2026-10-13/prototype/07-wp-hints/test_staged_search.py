@@ -88,7 +88,9 @@ def test_live_wait_exclusion_requires_the_serialized_clock_kind(tmp_path,monkeyp
     assert EL.live_lock_wait(tmp_path)==30.0
 
 
-def test_driver_counts_the_fresh_baseline_and_keeps_working_hints_out_of_the_summary(tmp_path,monkeypatch):
+@pytest.mark.parametrize('failure', [None] + [(stage,fault) for stage in ('baseline','seeds')
+    for fault in ('exit','timeout','rss','cleanup','missing_json','partial_json','no_unit','partial_report')])
+def test_driver_counts_the_fresh_baseline_and_keeps_working_hints_out_of_the_summary(tmp_path,monkeypatch,failure):
     import sys
     from types import SimpleNamespace
     import edit_loop as EL
@@ -103,12 +105,31 @@ def test_driver_counts_the_fresh_baseline_and_keeps_working_hints_out_of_the_sum
     out=tmp_path/'run'
     monkeypatch.setattr(sys,'argv',['edit_loop.py','--out',str(out),'--monotone','--staged-induction',
         '--seeds','--rounds','1','--final-reserve-min','8'])
+    provider_calls=[]
+    def fault(log,stage):
+        if failure is None or failure[0]!=stage:return
+        kind=failure[1]
+        if kind in {'exit','timeout','rss','cleanup'}:
+            from pathlib import Path
+            path=Path(str(log)+'.summary.json');summary=json.loads(path.read_text())
+            key,value={'exit':('exit_code',137),'timeout':('timed_out',True),
+                'rss':('killed_by_watchdog',True),'cleanup':('unconfirmed_children',['unknown'])}[kind]
+            summary[key]=value;path.write_text(json.dumps(summary))
+        elif kind=='missing_json':(log.parent/'goals.json').unlink()
+        elif kind=='partial_json':(log.parent/'goals.json').write_text('[]')
+        elif kind=='no_unit':
+            path=log.parent/'goals.json';rows=json.loads(path.read_text())
+            for row in rows:row['function']='other';row['goal']=row['goal'].replace('TDStep','other')
+            path.write_text(json.dumps(rows))
+        else:log.write_text(log.read_text().replace('--- Status Report Summary','--- interrupted'))
     original_run=EL.subprocess.run
     monkeypatch.setattr(EL.subprocess,'run',lambda argv,**kw: SimpleNamespace(stdout='controlled version') if argv[0]==L.CODEX else original_run(argv,**kw))
     def baseline(out,name,standin,hs,rec,**kwargs):
         clock[0]+=12
         d=L.run_dir(out,name,standin);(d/'goals.json').write_text('[]')
-        rec.update(outcome='controlled baseline',wp={'goals_sha256':L.sha(d/'goals.json')})
+        log=_completed_reports(d)
+        rec.update(outcome='controlled baseline',wp={'exit':0,'log':str(log),'goals_sha256':L.sha(d/'goals.json')})
+        fault(log,'baseline')
     monkeypatch.setattr(L,'wp_round',baseline)
     def check(out,name,standin,hs,rec,**kwargs):
         clock[0]+=2
@@ -116,13 +137,15 @@ def test_driver_counts_the_fresh_baseline_and_keeps_working_hints_out_of_the_sum
     monkeypatch.setattr(L,'precheck',check)
     def verifier(out,d,*args,**kwargs):
         clock[0]+=3
-        p=d/'controlled.log';p.write_text('no verifier launched')
+        p=_completed_reports(d,round_mode=True,goals=100)
+        fault(p,'seeds')
         return p,{'exit_code':0,'wall_s':3,'peak_rss_mb':1,'log_sha256':L.sha(p)}
     monkeypatch.setattr(L,'verifier',verifier)
     failures=candidate()['failing_goals']
     for g in failures:g.update(file=L.UNIT,line=1,kind='assert',source='',failure_class='timeout')
-    monkeypatch.setattr(L,'assess_round',lambda *a:{'failing_goals':failures,'n_goals':100})
+    monkeypatch.setattr(L,'assess_round',lambda *a:{'failing_goals':failures,'n_goals':100,'n_tdstep_goals':100})
     def provider(out,r,prompt,resume,state,*args,**kwargs):
+        provider_calls.append(r)
         cfg=json.loads((state/'config.json').read_text())
         assert cfg['clock_kind']=='continuous_monotonic' and cfg['t0']==1000.0
         assert cfg['staged_search']['start_s']==17.0
@@ -132,6 +155,12 @@ def test_driver_counts_the_fresh_baseline_and_keeps_working_hints_out_of_the_sum
         clock[0]+=5
         return {'exit':0,'wall_s':5,'usage':{},'error':None,'killed_at_deadline':False,'stop_reason':None,'notes':'controlled','ops':[],'thread':'controlled'}
     monkeypatch.setattr(EL,'codex_call',provider)
+    if failure is not None:
+        with pytest.raises(SystemExit,match='checked run'):
+            EL.main()
+        assert provider_calls==[] and not (out/'best.json').exists()
+        assert not (out/'summary.json').exists()
+        return
     EL.main()
     summary=json.loads((out/'summary.json').read_text())
     meta=json.loads((out/'meta.json').read_text())
@@ -256,3 +285,44 @@ def test_method19_mcp_tool_uses_the_serialized_clock_and_reports_each_phase(tmp_
     rejected=subprocess.run([sys.executable,str(L.HERE/'edit_tool_mcp.py'),'--state',str(state)],
         input=message,capture_output=True,text=True,timeout=5)
     assert rejected.returncode!=0 and 'does not match' in rejected.stderr
+
+
+def _completed_reports(directory, *, round_mode=False, goals=1):
+    from pathlib import Path
+    directory=Path(directory);directory.mkdir(parents=True,exist_ok=True)
+    rows=[{'goal':f'typed_TDStep_assert_{i}','function':'TDStep','smoke':False,'passed':False,'verdict':'timeout'} for i in range(goals)]
+    (directory/'goals.json').write_text(json.dumps(rows))
+    if round_mode:(directory/'lemmas.json').write_text('[]')
+    log=directory/'controlled.log'
+    log.write_text(f"[wp] {goals} goals scheduled\n[report] Computing properties status...\n"
+        "--- Properties of Function 'TDStep'\n[ Unknown ] Assertion 'open'\n"
+        "--- Status Report Summary\n    1 Total\n------------------------\n")
+    summary={'exit_code':0,'timed_out':False,'killed_by_watchdog':False,'queue_timed_out':False,
+        'unconfirmed_children':[],'error':None}
+    Path(str(log)+'.summary.json').write_text(json.dumps(summary))
+    return log
+
+
+@pytest.mark.parametrize('fault',['exit','timeout','rss','cleanup','missing_json','partial_json','no_unit','partial_report'])
+def test_checked_run_refuses_process_failure_or_incomplete_inventory_before_incumbent(tmp_path,fault):
+    from pathlib import Path
+    import staged_search as S
+    log=_completed_reports(tmp_path,round_mode=True)
+    summary_path=Path(str(log)+'.summary.json')
+    summary=json.loads(summary_path.read_text())
+    if fault in {'exit','timeout','rss','cleanup'}:
+        field,value={'exit':('exit_code',137),'timeout':('timed_out',True),'rss':('killed_by_watchdog',True),'cleanup':('unconfirmed_children',['unknown'])}[fault]
+        summary[field]=value;summary_path.write_text(json.dumps(summary))
+    elif fault=='missing_json':(tmp_path/'lemmas.json').unlink()
+    elif fault=='partial_json':(tmp_path/'goals.json').write_text('[]')
+    elif fault=='no_unit':
+        path=tmp_path/'goals.json';rows=json.loads(path.read_text());rows[0]['function']='other';rows[0]['goal']='typed_other_assert';path.write_text(json.dumps(rows))
+    else:log.write_text(log.read_text().replace('--- Status Report Summary','--- interrupted'))
+    with pytest.raises(RuntimeError,match='checked run'):
+        S.check_run(tmp_path,log,round_mode=True)
+
+
+def test_completed_unknown_goals_are_a_valid_baseline_not_a_process_failure(tmp_path):
+    import staged_search as S
+    log=_completed_reports(tmp_path)
+    assert S.check_run(tmp_path,log,round_mode=False)['n_unit_goals']==1

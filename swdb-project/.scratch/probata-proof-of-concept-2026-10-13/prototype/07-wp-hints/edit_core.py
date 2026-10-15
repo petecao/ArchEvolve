@@ -294,6 +294,12 @@ def _checked_attempt(out, best, ops, tag, provenance, mode, round_timeout, allow
             return rec, None
         timeout_s = min(timeout_s, remaining)
     wlog, ws = L.verifier(Path(out), d, mode, timeout=timeout_s, extra=(Path(out) / "round-cache", round_timeout))
+    if STAGED[0] is not None:
+        try:
+            rec["checked_run"] = S.check_run(d, wlog, round_mode=True)
+        except RuntimeError as exc:
+            rec.update(result="reverted (incomplete checked run)", check=str(exc))
+            return rec, None
     ar = L.assess_round(d, wlog)
     rec.update(dir=str(d), wp_wall_s=ws["wall_s"], peak_rss_mb=ws["peak_rss_mb"], wp_exit=ws["exit_code"],
                timed_out=ws.get("timed_out"), n_goals=ar["n_goals"], log_sha256=ws["log_sha256"])

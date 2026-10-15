@@ -1079,3 +1079,15 @@ has launched.** Fresh all-goal/cache-none/smoke acceptance and the covering-wait
 negative remain mandatory. Strict no-filter-init is retained; the existing prototype
 RTE boundary is unchanged. Ticket 07 stays **claimed**. This preparation does not
 close the ticket or decide the shared two-week stop condition.
+
+Method19 prelaunch review found and reproduced an exited-root cleanup gap at
+`8af8956b`: an unsampled same-group child could survive after the root exited.
+The scoped runner now drains/checks the owned group after root exit and keeps
+unsampled ancestry explicitly unconfirmed; it never claims unseen escaped children
+stopped. PID/birth/group checks prevent targeting a replacement root. Baseline,
+seed, candidate and final run-integrity gates also reject process/cleanup failure
+and incomplete goal/property inventories, while retaining completed runs with
+ordinary open/unknown goals. The revised **137-control union passes** using only
+Python stand-ins/private locks. [Review-fix evidence](../evidence/t07-method19-review-fixes.json)
+retains the RED and revised pins. Independent re-review remains pending; no counted
+method19 run has launched and ticket status is unchanged.

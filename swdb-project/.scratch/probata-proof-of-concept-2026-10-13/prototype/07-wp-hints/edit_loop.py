@@ -474,6 +474,18 @@ def main():
         L.log(out, "round 0: WP with no hints (frozen flags), " + ("counted from the fresh baseline" if (a.bounded_debt or a.staged_induction) else "outside the budget"))
         L.wp_round(out, "round-0", standin, [], r0,
                    **({"remaining_s": E.SEARCH_REMAINING_S[0]} if (a.bounded_debt or a.staged_induction) else {}))
+        if a.staged_induction:
+            try:
+                if not r0.get("wp") or r0["wp"].get("exit") != 0:
+                    raise RuntimeError("method19 checked run refused: fresh baseline process/check failed")
+                log_path = Path(r0["wp"]["log"])
+                r0["checked_run"] = S.check_run(log_path.parent, log_path, round_mode=False)
+                if E.SEARCH_REMAINING_S[0]() <= 0:
+                    raise RuntimeError("method19 checked run refused: baseline completed after search deadline")
+            except (RuntimeError, KeyError) as exc:
+                r0.update(outcome=str(exc), proven=False)
+                (out / "history.json").write_text(json.dumps([r0], indent=1))
+                raise SystemExit(str(exc)) from None
         r0["elapsed_min"] = round((L.clock() - t_r0) / 60, 2)
         r0.pop("failing_goals", None)
         history = [r0]
@@ -508,6 +520,16 @@ def main():
         raise SystemExit("seed round exhausted search time; no provider launch")
     wlog, ws = L.verifier(out, d, mode, timeout=(max(1, E.SEARCH_REMAINING_S[0]()) if (a.bounded_debt or a.staged_induction) else 3600),
                           extra=(out / "round-cache", a.round_timeout))
+    if a.staged_induction:
+        try:
+            rec["checked_run"] = S.check_run(d, wlog, round_mode=True)
+            if E.SEARCH_REMAINING_S[0]() <= 0:
+                raise RuntimeError("method19 checked run refused: seed completed after search deadline")
+        except RuntimeError as exc:
+            rec.update(outcome=str(exc), proven=False)
+            history.append(rec)
+            (out / "history.json").write_text(json.dumps(history, indent=1))
+            raise SystemExit(str(exc)) from None
     ar = L.assess_round(d, wlog)
     best = {"hints": seeds, "failing_goals": ar["failing_goals"], "n_open": len(ar["failing_goals"]),
             "n_goals": ar["n_goals"], "dir": str(d), "from": "seeds", "history": ["seeds"]}

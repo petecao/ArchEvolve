@@ -89,22 +89,53 @@ def _running(known):
     return active
 
 
+def _group(root, known):
+    """Inventory the original start_new_session group, including reparented members."""
+    for process in psutil.process_iter(["pid", "create_time"]):
+        try:
+            if os.getpgid(process.pid) == root and os.getsid(process.pid) == root:
+                known[process.pid] = process.info["create_time"]
+        except (psutil.NoSuchProcess, ProcessLookupError):
+            pass
+
+
 def _stop(process, known):
-    """Confirm tracked descendants stopped, including those that left the session."""
+    """Stop the owned group even after root exit; retain unconfirmed ancestry."""
     if process is None:
         return []
-    inspection_failed = False
+    unconfirmed = []
+    root_alive = process.poll() is None
+    try:
+        leader = psutil.Process(process.pid)
+        birth = leader.create_time()
+        # A reaped Popen PID can be reused. Never target its replacement group.
+        if not root_alive and known.get(process.pid) != birth:
+            return ["root-pid-reused-or-unobserved"]
+        if os.getpgid(process.pid) != process.pid or os.getsid(process.pid) != process.pid:
+            return ["owned-process-group-unconfirmed"]
+    except (psutil.NoSuchProcess, ProcessLookupError):
+        pass  # descendants may retain the original session/group after root exit
+    except (psutil.Error, PermissionError):
+        return ["group-leader-inspection-unconfirmed"]
+    if not root_alive and process.pid not in known:
+        # An unsampled child might already have changed session and been
+        # reparented. Draining the old group cannot establish its absence.
+        unconfirmed.append("root-ancestry-never-sampled")
     try:
         _tree(process.pid, known)
+        _group(process.pid, known)
     except (psutil.Error, PermissionError):
-        inspection_failed = True
-    if process.poll() is None:
-        try:
-            os.killpg(process.pid, signal.SIGKILL)
-        except ProcessLookupError:
-            pass
+        unconfirmed.append("tree-inspection-unconfirmed")
+    try:
+        os.killpg(process.pid, signal.SIGKILL)
+    except ProcessLookupError:
+        pass
     end = S.clock() + 5
     while True:
+        try:
+            _group(process.pid, known)
+        except (psutil.Error, PermissionError):
+            unconfirmed.append("group-inspection-unconfirmed")
         active = _running(known)
         for child in active:
             try:
@@ -113,9 +144,9 @@ def _stop(process, known):
                 pass
         if not active:
             process.wait(timeout=1)
-            return ['tree-inspection-unconfirmed'] if inspection_failed else []
+            return sorted(set(unconfirmed))
         if S.clock() >= end:
-            return [p.pid for p in _running(known)]
+            return [*sorted(set(unconfirmed)), *[p.pid for p in _running(known)]]
         time.sleep(0.02)
 
 

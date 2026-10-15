@@ -486,6 +486,13 @@ def wp_round(out, name, standin, hint_set, record, mode="wp-smoke", timeout=7200
             return None
         timeout = min(timeout, remaining_s())
     wlog, ws = verifier(out, d, mode, timeout=timeout)
+    if CLOCK_KIND[0] == "continuous_monotonic":
+        import staged_search
+        try:
+            record["checked_run"] = staged_search.check_run(d, wlog, round_mode=False)
+        except RuntimeError as exc:
+            record.update(proven=False, outcome=str(exc))
+            return None
     a = assess(d, wlog)
     completed_in_time = remaining_s is None or remaining_s() > 0
     if not completed_in_time:

@@ -118,3 +118,33 @@ def test_rss_limit_stops_an_overbudget_child_before_releasing_the_lease(tmp_path
     assert _stopped(int(pids.read_text())) and not lock.exists()
     summary=json.loads(Path(str(output)+'.summary.json').read_text())
     assert summary['killed_by_watchdog'] and summary['unconfirmed_children']==[]
+
+
+def test_exited_root_with_empty_snapshot_stops_owned_group_but_cannot_certify_unseen_escapes(tmp_path):
+    import counted_verifier as V
+    import psutil
+    code=('import subprocess,sys,json; '
+          'child=subprocess.Popen([sys.executable,"-c","import time; time.sleep(30)"]); '
+          'escaped=subprocess.Popen([sys.executable,"-c","import time; time.sleep(30)"],start_new_session=True); '
+          'print(json.dumps([child.pid,escaped.pid]),flush=True)')
+    root=subprocess.Popen([sys.executable,'-c',code],stdout=subprocess.PIPE,text=True,start_new_session=True)
+    children=json.loads(root.stdout.readline())
+    root.wait(timeout=5)
+    assert root.returncode==0 and all(not _stopped(pid) for pid in children)
+    try:
+        known={}
+        unconfirmed=V._stop(root,known)
+        assert _stopped(children[0]), 'same owned process group survived cleanup'
+        assert unconfirmed, 'an empty ancestry snapshot cannot certify escaped unseen descendants'
+    finally:
+        for pid in children:
+            try:psutil.Process(pid).kill()
+            except psutil.NoSuchProcess:pass
+
+
+def test_reused_or_unobserved_root_pid_never_targets_another_process_group():
+    import counted_verifier as V
+    from types import SimpleNamespace
+    # This live PID is not the old Popen child. Cleanup must stop before killpg.
+    old=SimpleNamespace(pid=os.getpid(),poll=lambda:0)
+    assert V._stop(old,{os.getpid():-1})==['root-pid-reused-or-unobserved']
