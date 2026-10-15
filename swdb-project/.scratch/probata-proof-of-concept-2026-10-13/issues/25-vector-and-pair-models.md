@@ -528,3 +528,38 @@ Only the same n=3 bounded maximum is replaying at frozen`ce94128b`, node0generat
 (started12:51:01ET; exact lane metadata authoritative). One worker,8GiB/1800s and1GiB
 planned output; node1 remains free. No broader batch or theorem success is claimed.
 [Repair, intermediate refusal and launch metadata](../evidence/t25-canonical-header-repair-20261015.json).
+
+
+### Fresh original bounded maximum accepted — 2026-10-15 13:11 ET
+
+The third historical attempt at `ce94128b` passed both earlier repairs but refused
+prelaunch on the platform getopt header's own guard. Its one record/two artifacts,
+1,569 declared physical-file pins and201 runtime/test pins match; no verifier ran.
+The targeted repair now binds actual inclusion spellings and physical targets,
+probes safe angle includes with the clean driver without project includes/defines/
+include environment, and requires exact physical/hash matches. Clean platform
+closures supply **macro-origin trust only**; declaration/body checks remain closed.
+No `/usr/include` whitelist is added. Project include-next hooks, same-name guards,
+spoofed system-header pragmas, custom symlinks and source/build macros refuse. A
+separate RED showed a fileless explicit-D guard had escaped the prior macro screen;
+the final check also covers those definitions. The 25 compiler/context controls pass
+103.79 s, with four WP stand-ins excluded; coordinator independent review is green.
+
+Only the original n=3 maximum was replayed at frozen`d874c4dc`: **1 passed in 224.48 s**,
+guarded wall 224.91 s, peak 512,581,632 bytes under 8 GiB. CBMC proves 310 ordinary properties
+and its reachability assertion fails as expected, retaining unwind 4, unwinding
+assertions, pointer-overflow checks and allocation-success policy. Native C/C++
+outputs agree on 625 recorded grid cases with zero UB; that differential is not a
+formal C++ proof. Matched libc++ 22.1.8, standard-model2/library/allocation premises,
+passed setup and true invocation metadata remain explicit. Original fixture bytes
+match the historical 0cc source; no contract/domain change or finite WP projection
+was introduced.
+
+One record/eight artifact references, 1,599 declared absolute physical-file pins,
+202 runtime/test/fixture/reader/schema pins and the certificate self-hash match.
+Source remains clean/unchanged; node 0 generation 565 released 13:08:59 ET. Raw 11.8 MB
+remains remote for named readers. The earlier three refusals retain their own
+records/pins. No stale/at batch, allocating member-body proof, general origin or
+whole-ticket completion is claimed.
+[Actual audit](../evidence/t25-bounded-max-accepted-20261015.json),
+[repair controls and historical refusals](../evidence/t25-canonical-header-repair-20261015.json).
