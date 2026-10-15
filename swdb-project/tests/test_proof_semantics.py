@@ -384,6 +384,41 @@ def dx(dx_seed, tmp_path):
     return Seed(tmp_path, {"dx": candidate})
 
 
+
+# 2026-10-15 ET: these are explicit WP input-contract qualifications. They are
+# deliberately separate from the original bounded contracts and no-domain controls.
+# Neither validity, initializedness nor the concurrency array inventory creates one.
+WP_ENTRY_WINDOWS = {
+    "three_reads": {"q": "n", "base": "n"},
+    "size": {"q": "n"},
+    "cpu_write": {"q": "n", "base": "n"},
+    "store_source_wait": {"q": "n", "p": "n"},
+    "transitive": {"q": "n", "base": "n"},
+    "stall_condition": {"q": "n", "p": "n", "base": "n"},
+    "register_write": {"q": "n"},
+    "range_exception": {"q": "n", "offs": "n"},
+    "condition_wait": {"q": "n", "p": "n"},
+    "unrelated_wait": {"q": "n"},
+    "value_stream": {"q": "n"},
+    "value_gather": {"q": "n", "base": "n"},
+    "value_range": {"q": "n", "offs": "n"},
+    "footprint": {"q": "n", "base": "n"},
+    "capacity": {"q": "n"},
+}
+
+
+@pytest.fixture
+def qualified_dx(dx):
+    """The original sources with explicitly advertised WP entry windows."""
+    for name, windows in WP_ENTRY_WINDOWS.items():
+        path = dx.root / "library" / "rewrite_contracts" / f"fixture_dx_{name}.yaml"
+        contract = yaml.safe_load(path.read_text())
+        contract["proof_unit"]["array_domains"] = {
+            parameter: {"extent": extent} for parameter, extent in windows.items()}
+        path.write_text(yaml.safe_dump(contract, sort_keys=False))
+    return dx
+
+
 def prove(dx, name, *defines, bound=None, ok=True):
     """One `swdb prove --adapter cbmc` job. The timeout allows for waiting on the machine-wide verifier lock."""
     import json
@@ -506,13 +541,11 @@ def prove_wp(dx, name, *defines, hints=None):
     function = FIXTURES[name][0]
     extra = [arg for define in defines for arg in ("--define", define)]
     if hints is None and name in {"store_source_wait", "stall_condition", "condition_wait"}:
-        from test_wp_adapter import _hints
-        statement = 7 if name == "store_source_wait" else 9
-        hints = _hints(f"{function}.s{statement}.before",
-            "assert \\forall integer k; 0 <= k < dx_tile_size[0] && k < DX_TS ==> "
-            "0 <= (unsigned int)dx_tile_data[0][k] < n;")
-        hints.insert(0, {"anchor": f"{function}.entry", "kind": "ghost", "text": "ghost dx_store_bound = n;",
-                         "provenance": {"source": "agent"}})
+        # The original entry witness is transported through checked source views.
+        # Index bounds remain independent obligations of the unchanged call
+        # contracts/window guards, rather than an extra source-statement cut.
+        hints = [{"anchor": f"{function}.entry", "kind": "ghost", "text": "ghost dx_store_bound = n;",
+                  "provenance": {"source": "agent"}}]
     if hints:
         hint_path = dx.root / "wp-hints.yaml"
         hint_path.write_text(yaml.safe_dump({"hints": hints}, sort_keys=False))
@@ -551,7 +584,8 @@ WP_FAULTS = [("three_reads", "SWDB_EARLY_READ_1", "swdb_tile_read_probe"),
 
 @needs_wp
 @pytest.mark.parametrize("name", WP_SAFE)
-def test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics(dx, name):
+def test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics(qualified_dx, name):
+    dx = qualified_dx
     record = prove_wp(dx, name)
     assert record["verdict"] == "proven", (record.get("failure_class"), record.get("unproven_properties"))
     if name in {"store_source_wait", "stall_condition"}:
@@ -569,7 +603,8 @@ def test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics(dx, name
 
 @needs_wp
 @pytest.mark.parametrize("name,define,call", WP_FAULTS)
-def test_wp_leaves_every_unit_cbmc_refutes_not_proven_never_refuted(dx, name, define, call):
+def test_wp_leaves_every_unit_cbmc_refutes_not_proven_never_refuted(qualified_dx, name, define, call):
+    dx = qualified_dx
     record = prove_wp(dx, name, *([define] if define else []))
     assert record["verdict"] == "not_proven" and "counterexample" not in record
     unproven = json.dumps(record.get("unproven_properties"))
@@ -578,7 +613,8 @@ def test_wp_leaves_every_unit_cbmc_refutes_not_proven_never_refuted(dx, name, de
 
 
 @needs_wp
-def test_a_store_frame_bound_that_omits_a_possible_write_stays_not_proven(dx):
+def test_a_store_frame_bound_that_omits_a_possible_write_stays_not_proven(qualified_dx):
+    dx = qualified_dx
     record = prove_wp(dx, "store_source_wait", hints=[
         {"anchor": "dxf_store_source_wait.entry", "kind": "ghost", "text": "ghost dx_store_bound = n - 1;",
          "provenance": {"source": "agent"}}])
@@ -603,7 +639,8 @@ def test_a_ghost_capacity_outside_the_command_mask_width_is_rejected_before_tool
 
 @needs_wp
 @pytest.mark.parametrize("commands", [32, 33])
-def test_wp_capacity_agrees_at_32_and_leaves_33_not_proven(dx, commands):
+def test_wp_capacity_agrees_at_32_and_leaves_33_not_proven(qualified_dx, commands):
+    dx = qualified_dx
     from swdb import proof_semantics
     from swdb.library import Library
     from test_wp_adapter import _hints

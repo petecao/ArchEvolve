@@ -1,0 +1,392 @@
+{
+  "created": "2026-10-15 ET",
+  "entry": "semantics.dx100_bfs_0_1",
+  "entry_sha256": "c8130de97acd75e416c4b12ab12beb03e3fc99233693ed393bbd08b9e63d72b9",
+  "generated_model_sha256": "059dd1c422b0ca17384a7911ad53011cb42871a3b6d532e5a630243f4bfb622f",
+  "source_sha256": "ae5962d7b774db98c56acc6ee70c30697f3f58f7cba8891ba0f737c406601062",
+  "clang": "22.1.8",
+  "source_files": {
+    "c": "88298dbb9176640fd8ec2d0c6e31386dd51849411b08df7cebf7f12eab1d22ce",
+    "state": "b371131b4a3a7ef21ad654b0eaffac94b4c63252d63397ee8b67a6b017610701",
+    "logic": "4f5d4780d7ed6f08ee24ff34391a1d1c8c5edf06c9e9deef014c217f579211d1"
+  },
+  "closure": [
+    {
+      "function": "dx_bit",
+      "calls": [],
+      "writes": []
+    },
+    {
+      "function": "dx_closure",
+      "calls": [],
+      "writes": [
+        {
+          "root": "covered",
+          "depth": 0,
+          "kind": "scalar_local"
+        },
+        {
+          "root": "round",
+          "depth": 0,
+          "kind": "scalar_local"
+        },
+        {
+          "root": "s",
+          "depth": 0,
+          "kind": "scalar_local"
+        },
+        {
+          "root": "next",
+          "depth": 0,
+          "kind": "scalar_local"
+        },
+        {
+          "root": "next",
+          "depth": 0,
+          "kind": "scalar_local"
+        },
+        {
+          "root": "covered",
+          "depth": 0,
+          "kind": "scalar_local"
+        }
+      ]
+    },
+    {
+      "function": "dx_cover",
+      "calls": [
+        "dx_closure"
+      ],
+      "writes": [
+        {
+          "root": "dx_live",
+          "depth": 0,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "s",
+          "depth": 0,
+          "kind": "scalar_local"
+        },
+        {
+          "root": "dx_deps",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_count",
+          "depth": 0,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "t",
+          "depth": 0,
+          "kind": "scalar_local"
+        },
+        {
+          "root": "dx_tile_writer",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_tile_readers",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "r",
+          "depth": 0,
+          "kind": "scalar_local"
+        },
+        {
+          "root": "dx_reg_writer",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_reg_named",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        }
+      ]
+    },
+    {
+      "function": "dx_dispatch",
+      "calls": [
+        "dx_bit",
+        "dx_cover",
+        "dx_naming"
+      ],
+      "writes": [
+        {
+          "root": "stall",
+          "depth": 0,
+          "kind": "scalar_local"
+        },
+        {
+          "root": "stall",
+          "depth": 0,
+          "kind": "scalar_local"
+        },
+        {
+          "root": "s",
+          "depth": 0,
+          "kind": "scalar_local"
+        },
+        {
+          "root": "s",
+          "depth": 0,
+          "kind": "scalar_local"
+        },
+        {
+          "root": "slot",
+          "depth": 0,
+          "kind": "scalar_local"
+        },
+        {
+          "root": "deps",
+          "depth": 0,
+          "kind": "scalar_local"
+        },
+        {
+          "root": "deps",
+          "depth": 0,
+          "kind": "scalar_local"
+        },
+        {
+          "root": "deps",
+          "depth": 0,
+          "kind": "scalar_local"
+        },
+        {
+          "root": "dx_live",
+          "depth": 0,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_kind",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_dst1",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_dst2",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_src1",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_src2",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_cond",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_regs_in",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_regs_out",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_region",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_base",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_lo",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_hi",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_stride",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_index",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_deps",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_writes_memory",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_tile_writer",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_tile_writer",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_tile_readers",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_tile_readers",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_tile_readers",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_reg_a",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_reg_b",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_reg_c",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "r",
+          "depth": 0,
+          "kind": "scalar_local"
+        },
+        {
+          "root": "dx_reg_writer",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_reg_named",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_reg_a",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_reg_b",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_reg_c",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_count",
+          "depth": 0,
+          "kind": "fixed_model_state"
+        }
+      ]
+    },
+    {
+      "function": "dx_naming",
+      "calls": [
+        "dx_bit"
+      ],
+      "writes": [
+        {
+          "root": "s",
+          "depth": 0,
+          "kind": "scalar_local"
+        },
+        {
+          "root": "m",
+          "depth": 0,
+          "kind": "scalar_local"
+        }
+      ]
+    },
+    {
+      "function": "dx_tile_ok",
+      "calls": [],
+      "writes": []
+    },
+    {
+      "function": "maa_indirect_store_vector",
+      "calls": [
+        "dx_dispatch",
+        "dx_tile_ok"
+      ],
+      "writes": [
+        {
+          "root": "k",
+          "depth": 0,
+          "kind": "scalar_local"
+        },
+        {
+          "root": "data",
+          "depth": 1,
+          "kind": "host_write_kernel"
+        },
+        {
+          "root": "dx_tile_data",
+          "depth": 2,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_tile_size",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_base",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_index",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        },
+        {
+          "root": "dx_writes_memory",
+          "depth": 1,
+          "kind": "fixed_model_state"
+        }
+      ]
+    }
+  ],
+  "boundary": "Returning-path structural effect audit. Checks are evaluated; failing nonreturning harness paths are excluded. No functional/hazard theorem or generic whole-model UB claim."
+}

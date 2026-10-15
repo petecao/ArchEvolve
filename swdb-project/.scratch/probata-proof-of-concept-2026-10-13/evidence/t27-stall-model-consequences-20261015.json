@@ -1,0 +1,633 @@
+{
+  "created": "2026-10-15 ET",
+  "status": "checked consequences; original qualified stall replay pending",
+  "boundary": "No whole-model UB/hazard theorem or ticket29 three-form agreement. Explicit input windows remain conditional contract qualifications. C model, source fixture, preconditions and genuine old-value read initialization checks are unchanged.",
+  "proofs": [
+    {
+      "name": "store_initializedness",
+      "producer_source": "cc7e747b",
+      "process_result": "Result(exit_code=0, peak_rss_bytes=319094784, out_of_memory=False, timed_out=False, wall_seconds=56.46167916600825, cpu_seconds=48.751929)",
+      "command": [
+        "opam",
+        "exec",
+        "--switch=framac-33",
+        "--",
+        "frama-c",
+        "-machdep",
+        "x86_64",
+        "/private/tmp/probata-dx-store-kernel-check-v4/input.c",
+        "-print",
+        "-ocode",
+        "/private/tmp/probata-dx-store-kernel-check-v4/normalized.c",
+        "-then",
+        "-wp",
+        "-wp-rte",
+        "-rte-initialized",
+        "@all",
+        "-wp-no-filter-init",
+        "-wp-model",
+        "+real",
+        "-wp-fct",
+        "store_kernel",
+        "-wp-cache",
+        "none",
+        "-wp-session",
+        "/private/tmp/probata-dx-store-kernel-check-v4/session",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-wp-timeout",
+        "10",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-report-json",
+        "/private/tmp/probata-dx-store-kernel-check-v4/goals.json",
+        "-then",
+        "-load-module",
+        "/private/tmp/probata-dx-store-kernel-check-v4/proof_report.cmxs",
+        "-report",
+        "-report-untried",
+        "-report-csv",
+        "/private/tmp/probata-dx-store-kernel-check-v4/properties.csv"
+      ],
+      "boundary": "Exact host store/read kernel with added checked loop invariants; removed fixed-state helper effects need independent footprint audit before any production consequence.",
+      "entry_sha256": "c8130de97acd75e416c4b12ab12beb03e3fc99233693ed393bbd08b9e63d72b9",
+      "generated_input": "prototype/27-proof-semantics/checks/store_initializedness.c",
+      "ordinary_valid": 56,
+      "smoke_pass": 6,
+      "files": [
+        {
+          "path": "/private/tmp/probata-dx-store-kernel-check-v4/manifest.json",
+          "sha256": "7fb23ca454866fd2b2b122367a3554278cbeb3587134a5513a3db5d632b36b80"
+        },
+        {
+          "path": "/private/tmp/probata-dx-store-kernel-check-v4/input.c",
+          "sha256": "b42c8b69b252cb4d22d455fb3eee5e23d9c53ec82c4f8ace3c4e179aeb6c7131"
+        },
+        {
+          "path": "/private/tmp/probata-dx-store-kernel-check-v4/normalized.c",
+          "sha256": "19bf0eb02971bd09173a30c9a00e1de7ca03e0a773a5d9c7124f535f56963a3f"
+        },
+        {
+          "path": "/private/tmp/probata-dx-store-kernel-check-v4/goals.json",
+          "sha256": "18c9baabd95d4035fba863c502d6e0b65b2f4d15bd6c8181bcb47a0992cf3c4b"
+        },
+        {
+          "path": "/private/tmp/probata-dx-store-kernel-check-v4/inventory.json",
+          "sha256": "75b295f7cf77aaa3e7ccd9472367d93aedc94dfed5ff6c015d34a425d51d552e"
+        },
+        {
+          "path": "/private/tmp/probata-dx-store-kernel-check-v4/properties.csv",
+          "sha256": "a25dda10d3221783c2f988114f27133172e78ddddbba46aec524ef905fd43419"
+        },
+        {
+          "path": "/private/tmp/probata-dx-store-kernel-check-v4/frama.log",
+          "sha256": "6c86365bcf93d5a2cf7298ab294c96a55bb17190d53a34e924ea1103e6db95df"
+        }
+      ],
+      "goals": [
+        {
+          "goal": "typed_real_store_kernel_wp_smoke_default_requires",
+          "status": "valid",
+          "smoke": true,
+          "solver": "alt-ergo"
+        },
+        {
+          "goal": "typed_real_store_kernel_wp_smoke_dead_loop_s5",
+          "status": "valid",
+          "smoke": true,
+          "solver": "alt-ergo"
+        },
+        {
+          "goal": "typed_real_store_kernel_wp_smoke_dead_code_s19",
+          "status": "valid",
+          "smoke": true,
+          "solver": "alt-ergo"
+        },
+        {
+          "goal": "typed_real_store_kernel_wp_smoke_dead_code_s22",
+          "status": "valid",
+          "smoke": true,
+          "solver": "alt-ergo"
+        },
+        {
+          "goal": "typed_real_store_kernel_wp_smoke_dead_code_s26",
+          "status": "valid",
+          "smoke": true,
+          "solver": "alt-ergo"
+        },
+        {
+          "goal": "typed_real_store_kernel_wp_smoke_dead_code_s29",
+          "status": "valid",
+          "smoke": true,
+          "solver": "alt-ergo"
+        },
+        {
+          "goal": "typed_real_store_kernel_terminates",
+          "status": "valid",
+          "smoke": false,
+          "solver": null
+        },
+        {
+          "goal": "typed_real_store_kernel_ensures_host_initialized",
+          "status": "valid",
+          "smoke": false,
+          "solver": "alt-ergo"
+        },
+        {
+          "goal": "typed_real_store_kernel_exits",
+          "status": "valid",
+          "smoke": false,
+          "solver": null
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_index_bound",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_index_bound_2",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_initialization",
+          "status": "valid",
+          "smoke": false,
+          "solver": "alt-ergo"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_loop_invariant_established",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_loop_invariant_preserved",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_loop_invariant_2_established",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_loop_invariant_2_preserved",
+          "status": "valid",
+          "smoke": false,
+          "solver": "alt-ergo"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_initialization_2",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_initialization_3",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_initialization_4",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_index_bound_3",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_index_bound_4",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_initialization_5",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_initialization_6",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_initialization_7",
+          "status": "valid",
+          "smoke": false,
+          "solver": "alt-ergo"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_mem_access",
+          "status": "valid",
+          "smoke": false,
+          "solver": "alt-ergo"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_index_bound_5",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_index_bound_6",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_initialization_8",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_initialization_9",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_initialization_10",
+          "status": "valid",
+          "smoke": false,
+          "solver": "alt-ergo"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_mem_access_2",
+          "status": "valid",
+          "smoke": false,
+          "solver": "alt-ergo"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_initialization_11",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_initialization_12",
+          "status": "valid",
+          "smoke": false,
+          "solver": "alt-ergo"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_mem_access_3",
+          "status": "valid",
+          "smoke": false,
+          "solver": "alt-ergo"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_index_bound_7",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_index_bound_8",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_initialization_13",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_initialization_14",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_initialization_15",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_initialization_16",
+          "status": "valid",
+          "smoke": false,
+          "solver": "alt-ergo"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_mem_access_4",
+          "status": "valid",
+          "smoke": false,
+          "solver": "alt-ergo"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_mem_access_5",
+          "status": "valid",
+          "smoke": false,
+          "solver": "alt-ergo"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_index_bound_9",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_index_bound_10",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_initialization_17",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_initialization_18",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_initialization_19",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_mem_access_6",
+          "status": "valid",
+          "smoke": false,
+          "solver": "alt-ergo"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_initialization_20",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_signed_overflow",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_index_bound_11",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_index_bound_12",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_assert_rte_initialization_21",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_loop_assigns_part1",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_loop_assigns_part2",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_loop_assigns_part3",
+          "status": "valid",
+          "smoke": false,
+          "solver": "alt-ergo"
+        },
+        {
+          "goal": "typed_real_store_kernel_loop_assigns_part4",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_assigns_part1",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_assigns_part2",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_loop_variant_positive",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_store_kernel_loop_variant_decrease",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        }
+      ]
+    },
+    {
+      "name": "alu_memory_domain",
+      "producer_source": "cc7e747b",
+      "process_result": "Result(exit_code=0, peak_rss_bytes=338198528, out_of_memory=False, timed_out=False, wall_seconds=10.873661166988313, cpu_seconds=9.094566)",
+      "command": [
+        "opam",
+        "exec",
+        "--switch=framac-33",
+        "--",
+        "frama-c",
+        "-machdep",
+        "x86_64",
+        "/private/tmp/probata-dx-alu-consequence-v3/input.c",
+        "-print",
+        "-ocode",
+        "/private/tmp/probata-dx-alu-consequence-v3/normalized.c",
+        "-then",
+        "-wp",
+        "-wp-rte",
+        "-rte-initialized",
+        "@all",
+        "-wp-no-filter-init",
+        "-wp-model",
+        "+real",
+        "-wp-fct",
+        "alu_consequence",
+        "-wp-cache",
+        "none",
+        "-wp-session",
+        "/private/tmp/probata-dx-alu-consequence-v3/session",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-wp-timeout",
+        "15",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-report-json",
+        "/private/tmp/probata-dx-alu-consequence-v3/goals.json",
+        "-then",
+        "-load-module",
+        "/private/tmp/probata-dx-alu-consequence-v3/proof_report.cmxs",
+        "-report",
+        "-report-untried",
+        "-report-csv",
+        "/private/tmp/probata-dx-alu-consequence-v3/properties.csv"
+      ],
+      "boundary": "Standalone checked consequence of existing pinned trusted contracts; not a new model-body proof or unit acceptance.",
+      "entry_sha256": "c8130de97acd75e416c4b12ab12beb03e3fc99233693ed393bbd08b9e63d72b9",
+      "generated_input": "prototype/27-proof-semantics/checks/alu_memory_domain.c",
+      "ordinary_valid": 8,
+      "smoke_pass": 2,
+      "files": [
+        {
+          "path": "/private/tmp/probata-dx-alu-consequence-v3/manifest.json",
+          "sha256": "b7dcbabec3e4ff3fd54b526a63446c1f7bbe43c101e3fb9e6f7700db119b0cd5"
+        },
+        {
+          "path": "/private/tmp/probata-dx-alu-consequence-v3/input.c",
+          "sha256": "750303357ebec5effb22ead1297f7cc4527869f5d816b561318ac1c346bcc9a1"
+        },
+        {
+          "path": "/private/tmp/probata-dx-alu-consequence-v3/normalized.c",
+          "sha256": "820249192aa1dfe5db5ea2bffb055829dea32927508659f2d4935fde8b1fa2fb"
+        },
+        {
+          "path": "/private/tmp/probata-dx-alu-consequence-v3/goals.json",
+          "sha256": "2f27d9f40d83b45f199b2188bf7356199ff2fdb2c4c5ac63327030982b2eb621"
+        },
+        {
+          "path": "/private/tmp/probata-dx-alu-consequence-v3/inventory.json",
+          "sha256": "90de32f88812edb1b17293afd9eb499861e34a5d7a4dcff9e9c422f6993256e3"
+        },
+        {
+          "path": "/private/tmp/probata-dx-alu-consequence-v3/properties.csv",
+          "sha256": "0c053a6aad0a37aa80498e6741a111f808d9d5e6811e630d1dda253d704a78d9"
+        },
+        {
+          "path": "/private/tmp/probata-dx-alu-consequence-v3/frama.log",
+          "sha256": "28cc9030712aaa8dee9f5f2449627e02941d596fdecaedc31b68d74e7868bb98"
+        }
+      ],
+      "goals": [
+        {
+          "goal": "typed_real_alu_consequence_wp_smoke_default_requires",
+          "status": "valid",
+          "smoke": true,
+          "solver": "alt-ergo"
+        },
+        {
+          "goal": "typed_real_maa_alu_scalar_wp_smoke_dead_call_s1",
+          "status": "valid",
+          "smoke": true,
+          "solver": "alt-ergo"
+        },
+        {
+          "goal": "typed_real_alu_consequence_terminates",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_alu_consequence_ensures_memory_domain_preserved",
+          "status": "valid",
+          "smoke": false,
+          "solver": "alt-ergo"
+        },
+        {
+          "goal": "typed_real_alu_consequence_exits",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_alu_consequence_call_maa_alu_scalar_requires_initialized_state",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_alu_consequence_call_maa_alu_scalar_requires",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_alu_consequence_call_maa_alu_scalar_requires_2",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_alu_consequence_call_maa_alu_scalar_requires_ghost_capacity",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        },
+        {
+          "goal": "typed_real_alu_consequence_call_maa_alu_scalar_requires_3",
+          "status": "valid",
+          "smoke": false,
+          "solver": "qed"
+        }
+      ]
+    }
+  ],
+  "effect_audit": {
+    "path": "prototype/27-proof-semantics/checks/store_effect_closure.json",
+    "sha256": "974bbf811ed2c58f7cee854e5dd3efdb67458e5fb84f14f6b395e90d0a3ef7f8"
+  },
+  "durable_inputs": [
+    {
+      "path": "prototype/27-proof-semantics/checks/store_initializedness.c",
+      "sha256": "b42c8b69b252cb4d22d455fb3eee5e23d9c53ec82c4f8ace3c4e179aeb6c7131"
+    },
+    {
+      "path": "prototype/27-proof-semantics/checks/alu_memory_domain.c",
+      "sha256": "750303357ebec5effb22ead1297f7cc4527869f5d816b561318ac1c346bcc9a1"
+    },
+    {
+      "path": "prototype/27-proof-semantics/checks/store_effect_closure.json",
+      "sha256": "974bbf811ed2c58f7cee854e5dd3efdb67458e5fb84f14f6b395e90d0a3ef7f8"
+    }
+  ],
+  "raw_diagnostic_failures": [
+    "/private/tmp/probata-dx-contract-consequences-v2",
+    "/private/tmp/probata-dx-store-kernel-check",
+    "/private/tmp/probata-dx-store-kernel-check-v2"
+  ],
+  "retention": "Raw reports retained outside repository for root/merger review; frozen C theorem inputs and complete compact effect inventory retained here."
+}
