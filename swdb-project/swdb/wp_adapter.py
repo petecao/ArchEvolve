@@ -39,7 +39,7 @@ import shutil
 import subprocess
 from pathlib import Path
 
-from swdb import artifacts, c_lowering, framac, hint_check, paths, proof_semantics, rss_watchdog, vocab
+from swdb import artifacts, c_lowering, framac, hint_check, paths, proof_semantics, rss_watchdog, std_models, vocab
 from swdb.proof import MODEL_PREFIX, AdapterError, Verdict
 
 NAME = "wp"
@@ -101,6 +101,9 @@ class WpAdapter:
             text = c_lowering.model_text(job.unit.function)
             if text is None:
                 raise AdapterError(f"the C lowering has no C model {job.unit.function}")
+            if re.search(r"\b(?:allocates|frees)\b|\\(?:fresh|freeable)\b", text):
+                return self._not_proven("unsupported_construct",
+                    "WP 33.0 does not model allocation lifetime; this C model needs allocates/frees support", context)
             input_path = wp_dir / "wp_input.c"
             input_path.write_text("\n".join([*c_lowering.HEADERS, text]) + "\n")
             context["reports"].append(("wp_input", input_path))
@@ -126,6 +129,15 @@ class WpAdapter:
             return self._not_proven("parse_error", str(exc), context)
         except c_lowering.LoweringError as exc:
             raise AdapterError(str(exc)) from None
+        problem = std_models.method_problem(self.method, lowering)
+        if problem:
+            raise AdapterError(problem)
+        if any(name == "swdb_free" or name.startswith("swdb_alloc_delete_array_") for name in lowering.models):
+            return self._not_proven("unsupported_construct",
+                "WP 33.0 does not model allocation lifetime; reachable free/delete or vector growth needs it", context)
+        lowering_tool = c_lowering.identity()["c_lowering"]
+        context["assumed"] = std_models.assumptions(lowering, tools["identities"]["clang"][2], lowering_tool)
+        context["pins"].update(std_models.pins(lowering))
         if unit.get("function") not in (None, job.unit.function):
             raise AdapterError(f"contract {self.contract} states the proof unit {unit.get('function')}, not "
                                f"{job.unit.function}")
@@ -288,7 +300,7 @@ class WpAdapter:
             assumed.append({"kind": "summary", "reference": {"id": name, "sha256": sha},
                             "sentence": f"The C model {name} stands for the call it models (one thread); proof record "
                                         f"{record} proves its contract on its text."})
-        context["assumed"] = assumed
+        context.setdefault("assumed", []).extend(assumed)
         if summaries:
             context["pins"]["summaries"] = summaries
         if models:

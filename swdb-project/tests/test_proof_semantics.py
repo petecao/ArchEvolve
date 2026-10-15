@@ -420,7 +420,7 @@ def test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics(dx, name
     probes = record["settings"]["proof_semantics"]["probes"]
     wp_input = open(dx.report(record, "wp_input")).read()
     assert wp_input.count("SWDB_TILE_READ(&(") + wp_input.count("SWDB_TILE_WRITE(&(") == len(probes)
-    assert "ghost unsigned int dx_live;" in wp_input            # ghost.acsl as written
+    assert wp_input.count("unsigned int dx_live;") == 1 and "/*@ ghost" in wp_input
 
 
 @needs_wp
