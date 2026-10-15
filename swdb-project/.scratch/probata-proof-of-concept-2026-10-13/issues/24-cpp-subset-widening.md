@@ -20,6 +20,7 @@ Updated: 2026-10-15 ET (original Ring/allocation actual pairs and public unsuppo
 - [ ] An OpenMP fixture (`parallel for` with a `reduction`, a `critical` section, an `atomic`, a `barrier`) and an atomics fixture (`__sync_*`, `__atomic_*`) lower and prove at threads = 1.
 - [ ] A fixture with a `__dxc_*` call and one with a `maa_*` call keep each as a call whose contract comes from a fixture summary. The record lists the summary used.
 - [x] Unsupported constructs: inheritance, a virtual function, an exception, a lambda, RTTI, another standard container (such as `std::map`) and a stream each read not proven, "unsupported construct", naming the construct and its source location.
+- [x] Once ticket22 lands, run its accepted finite native C++/C agreement subcheck on every original construct fixture; record undefined-input exclusions separately and retain a planted disagreement stop control.
 - [ ] Naming rules carry a version. Every proof record pins it in its content-hash set, and bumping the version gives a different pin.
 - [ ] Each diagnosed failure joins 21's regression corpus. Fixtures use no BC, PR or SSSP code. Tests that need Frama-C or LLVM 22 skip cleanly.
 
@@ -799,3 +800,30 @@ launch. Their `not_proven` result is deliberate prelaunch refusal, distinct from
 the actual original semantic negative jobs. Remaining groups, lifetime actuals,
 dependency closure, corrected-DXC actuals and accepted ticket22 finite agreement
 profile are still pending. Status remains **claimed**.
+
+### Accepted ticket22 finite agreement limb — 2026-10-15 ET
+
+The reviewed original nine-group safe/current-seeded profile at `e48a302e`
+records **112,589 defined input comparisons**, all equal between C++ and the
+ordinary C lowering. All 18 case classifications are present: 17 agree on
+defined inputs; the allocation seed is explicitly UB-only with zero defined
+comparisons. The **2,207 known UB exclusions** (500 allocation, 1,702 standard
+copy at `n==0`, 5 seeded maa overflow) remain separate from **47,164 original
+precondition exclusions**. No runtime sanitizer asymmetry was observed.
+
+Independent review reconstructed every domain/classification and all retained
+defined results, rehashed 15,768 references across 1,363 physical files, and
+found zero discrepancies. The shared planted C-only lowering mismatch stops
+comparison and emits no proof verdict. This completes the separate agreement
+limb under the accepted ticket22 decision; it is finite native evidence, not
+formal C++ equivalence, a proof of a WP checking view, or device semantics.
+[Accepted profile and exact pins](../evidence/t24-finite-agreement-20261015.md),
+[independent final review](../evidence/t24-finite-agreement-final-review-20261015.md).
+
+Provenance stays explicit: original Ring/allocation actual records use frozen
+`71771f09`; pending remaining actual jobs use `9b75f4a2`; finite agreement uses
+`e48a302e`. Production runtime bytes match across those freezes, while shared
+seeded artifacts retain their distinct old-DXC+2/corrected-DXC+4 identities.
+No historical record is relabeled current. Remaining actual construct pairs,
+lifetime controls and fresh model/summary closure still gate ticket completion.
+Status remains **claimed**.
