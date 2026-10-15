@@ -432,3 +432,15 @@ Records retain `nested_read_check`, `nested_read_certificate`, `nested_read_orig
 `nested_read_original_lowering`, and `nested_read_view_source` pins, the persistent source view,
 and `settings.nested_entry_reads` with an empty added-input-premise list. This supplies no
 origin permission to other source forms, helpers or models.
+
+Qualified standard range body (2026-10-15): the exact audited `std_copy_int` body may be
+proved under an explicit standard-library typed valid-range domain. Its source endpoints
+must belong to one live typed array range, and the destination supplies the same element
+count. This qualification adds no ACSL input premise and removes no original body operation.
+Named numerical assertions, ordinary validity/initializedness obligations, RTE checks and
+smoke tests remain mandatory. Records retain `standard_range_model_check` and
+`standard_range_model_certificate` pins and `settings.standard_range_model`, including the
+unchanged contract hashes, explicit range domain and original/view body hashes. Setup
+rebuilds the exact qualified input before launch. This standalone body result supplies no
+unrestricted opaque-pointer permission: WP callers still refuse importing `std_copy_int`
+until their typed roots/subobjects, endpoint offsets and destination capacity are checked.

@@ -4,7 +4,7 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 10:00 ET. Integration checkpoint `1ece49b8` includes checked helper merge `4d2fcc23` on
+Updated: 2026-10-15 10:51 ET. Integration checkpoint `636b2080` includes declaration attributes, qualified copy and checked nested reads on
 `codex/probata-poc-integration`, based on `yanrujhou_main` at `150930b4`.
 The source-bound summary fix is merged: fresh callee closure, current proof/method
 and evidence, finite call bounds and pointer-buffer alignment are checked before
@@ -22,9 +22,9 @@ These checks establish source admission/composition, not a new actual proof.
 | Ticket | Current evidence | Next action |
 |---|---|---|
 | 07 | Run17 unproven; run18 launched 09:50:53 ET at isolated `996bd62c`, reviewed 85 offline controls and strict initialization/deadline policy | Finish fresh baseline, counted hint search and final proof within 60 minutes; no success claimed |
-| 24 | Frozen `fddb1462` native replay 132 passed/1 deselected; current `1ece49b8` construct proofs running on node 0 | Diagnose the first failure before a broader rerun; retain positive acceptance |
-| 25 | Qualified at/data actual pairs pass; shadow-header prelaunch control exposes source-provenance gap | Check canonical full-TU declarations/allocation hooks, then wider vector/pair acceptance |
-| 27 | Direct DX controls pass; helper safe/initialization-negative actual pair retains `7f9e3621` evidence; checked helper view merged as `4d2fcc23` | Complete ordered nested-index reads; original three_reads still refused |
+| 24 | Frozen native replay 132 passed/1 deselected; qualified standalone copy body has 36 ordinary Valid + 7 smoke PASS at `1f760ba8`; declaration-attribute guard merged | Complete current-policy construct acceptance; retain the closed copy caller gate |
+| 25 | Qualified at/data actual pairs retain their original pins; isolated stdlib gate fixes both independent provenance findings at `00b16733` | Await root-owned final acceptance before gate integration, then wider vector/pair acceptance |
+| 27 | Checked nested views merged; original `a185bc8b` fixture has 112 ordinary Valid + 31 smoke PASS; final `18e7a7f0` guard controls retain separate method pins | Complete combined-policy and remaining DX acceptance; preserve entry-window refusals |
 | 36 | Frozen remote bounded/source-summary 17 checks pass; 27 proof records audited with only intended mutation mismatch | Complete general setup/verdict acceptance as helper/model coverage grows |
 | 41 /42 | Resolved; approved composition statement and 209 production Rocq Qed | Preserve exact evidence boundary; no DX reduction claim |
 
@@ -33,9 +33,8 @@ Ticket 28 remains gated by 27; 43 remains blocked by 29. Held-out kernels and me
 freeze remain gated by their dependencies. Existing user authorization covers
 implementation, commits/pushes, two remote lanes and scoped BFS source export.
 
-Next: close source-header provenance, complete nested-read admission and combined
-acceptance, then create a new method draft after runtime
-identities settle. Last 30-minute status table 09:35 ET; next due 10:05 ET.
+Next: integrate source-header provenance after its final acceptance, complete combined
+construct/DX/model acceptance, then create a new method draft after runtime identities settle. Last 30-minute status table 09:35 ET; next due 10:05 ET.
 
 ## Host coordination
 

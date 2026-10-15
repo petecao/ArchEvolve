@@ -9,6 +9,13 @@ Updated: 2026-10-15 ET. Resumed under Yan-Ru's ongoing implementation, push and 
 Current integration branch: `codex/probata-poc-integration`, based on `yanrujhou_main` at `150930b4`.
 Current dispatch, evidence and blockers: [resume.md](resume.md).
 
+- **Integration checkpoint 2026-10-15 ET:** `636b2080` includes the declaration-attribute
+  guard, qualified standalone copy model, and hardened nested-read view. Historical
+  actual proofs retain their exact source/method pins; copy callers remain closed
+  pending typed-range discharge. Tickets24/25/27/36 remain claimed.
+  [Copy evidence](evidence/t24-std-copy-qualified-body-mac-20261015.json);
+  [nested evidence](evidence/wp-nested-entry-reads-20261015.json).
+
 - **Checkpoint 2026-10-15 09:53 ET:** source-bound summary admission merged as
   `45560225`; frozen mbit10 `fddb1462` replay passed 132 native checks/1 deselected
   and 17 bounded/source-summary checks. [Remote evidence](evidence/summary-source-binding-mbit10-20261015.json).
