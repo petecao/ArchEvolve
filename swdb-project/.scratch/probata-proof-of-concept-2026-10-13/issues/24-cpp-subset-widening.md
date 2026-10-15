@@ -409,3 +409,9 @@ failures inside the sandbox. The first failed case passes alone with the authori
 permissions; only the35 remaining cases were replayed and all pass. The evidence
 records this split rather than calling the interrupted run clean. No guard was
 disabled, and this does not cover ticket36's later pointer changes.
+
+The two core adapter tests now expect the current lowerer9 tool ID. Their actual
+public safe WP/bounded jobs both pass (**2 passed,311.74s**); bounded native
+agreement includes4,375 C++/C executions. Exact trusted-tool sets are asserted.
+Report:`/private/tmp/probata-t24-lowerer9-tool-pins.jsonl`. This focused replay
+precedes ticket36's later pointer policy and does not upgrade historical records.
