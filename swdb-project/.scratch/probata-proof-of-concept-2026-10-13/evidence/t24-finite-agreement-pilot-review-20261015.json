@@ -1,0 +1,71 @@
+{
+  "created": "2026-10-15 ET",
+  "kind": "independent_read_only_finite_pilot_admission",
+  "admission": "admissible_to_scale_all_nine_finite_only_at_reviewed_freeze",
+  "new_executions": false,
+  "worktree_head": "e48a302e0081ce46d8c2f865568951913833d276",
+  "worktree_status_porcelain": "",
+  "pilot": {
+    "path": "/private/tmp/probata-agreement-pilot-e48a302e/native/agreement.json",
+    "sha256": "1f1bb4e026f814cb277094248040afef3cbd44046c049e779ee0cd3b03ef65a1"
+  },
+  "physical_reference_count": 2040,
+  "unique_resolved_paths": 1059,
+  "physical_hash_errors": [],
+  "independently_reconstructed_rows": [
+    {
+      "case": "safe",
+      "oracle_exact_ticket22_cartesian": true,
+      "raw_requested_rows": 49,
+      "observed_rows": 49,
+      "streams_identical": true,
+      "defined": 25,
+      "precondition_excluded": 24,
+      "known_undefined": 0,
+      "sanitizer_or_known_undefined": 0,
+      "independent_expected_results_match": true,
+      "manifest_counts_match": true
+    },
+    {
+      "case": "seeded",
+      "oracle_exact_ticket22_cartesian": true,
+      "raw_requested_rows": 49,
+      "observed_rows": 49,
+      "streams_identical": true,
+      "defined": 25,
+      "precondition_excluded": 24,
+      "known_undefined": 0,
+      "sanitizer_or_known_undefined": 0,
+      "independent_expected_results_match": true,
+      "manifest_counts_match": true
+    }
+  ],
+  "retained_resources": {
+    "exit_code": 0,
+    "peak_rss_bytes": 1108099072,
+    "out_of_memory": false,
+    "timed_out": false,
+    "wall_seconds": 9.785996291029733,
+    "cpu_seconds": 7.640567
+  },
+  "retained_cli_controls": {
+    "log": {
+      "path": "/private/tmp/probata-agreement-controls-green/pytest.log",
+      "sha256": "40b47e8c3246da7824f1cc506f92a0a6e6cfa8448c0835bbf2fd1a90e2976274"
+    },
+    "reported_tests_passed": 5,
+    "not_rerun": true
+  },
+  "review": {
+    "path": "/private/tmp/probata-t24-agreement-pilot-review.md",
+    "sha256": "c27410f9ebc492ff53b24cbc43a0eace362580441699ad258e9eeaabaa220ebe"
+  },
+  "boundaries": [
+    "templates-only actual pilot; all other rows unrun",
+    "finite native ordinary-C/C++ observations",
+    "no formal verifier launch, no proof record, no formal C++ equivalence",
+    "separate actual WP/view evidence required",
+    "dynamic-loader cache bytes not independently hashed",
+    "new_array seeded all-UB row is excluded, never numeric agreement"
+  ]
+}
