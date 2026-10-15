@@ -153,6 +153,7 @@ class WpAdapter:
         covered = proof_semantics.covered_names(self.library)
         semantics_options = proof_semantics.lowering_options(self.library)
         semantics_options.setdefault("semantics", {})["array_origins"] = wp_pointer_bounds.semantic_origins(self.library, self.defines)
+        semantics_options["semantics"]["array_call_policies"] = proof_semantics.array_call_policies(self.library, self.defines)
         summaries.update(semantics_options.pop("summaries", {}))
         context["covered"] = covered
         try:
@@ -162,7 +163,8 @@ class WpAdapter:
                              "array_domain_contract": {"id": self.contract, "sha256": job.unit.contract_sha256},
                              **semantics_options}
             lowering = c_lowering.lower(source, job.unit.function, **source_kwargs)
-            if unit.get("array_domains") or (lowering.pointer_bounds or {}).get("owner"):
+            if (unit.get("array_domains") or (lowering.pointer_bounds or {}).get("owner") or
+                    any(row.get("kind") in {"call", "producer"} for row in lowering.pointer_bounds.get("sites", []))):
                 context["pointer_source_plan"] = {"source": str(source), "kwargs": source_kwargs}
         except c_lowering.Unsupported as exc:
             return self._not_proven("unsupported_construct", str(exc), context)

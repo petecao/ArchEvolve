@@ -25,7 +25,7 @@ CHECK_SOURCES = ("proof_setup.py", "proof_report.ml", "proof.py", "cbmc_adapter.
                  "cbmc_product.py", "wp_adapter.py", "crux_adapter.py", "rocq_adapter.py", "rss_watchdog.py",
                  "vocab.py", "formal_frame.py", "acsl_subset.py", "framac.py", "hint_check.py", "hint_tree.ml",
                  "wp_pointer_bounds.py", "proof_semantics.py", "vector_ownership.py", "standard_model_view.py",
-                 "array_domains.py", "model_domains.py", "bounded_entry_windows.py")
+                 "array_domains.py", "model_domains.py", "dx_array_domains.py", "bounded_entry_windows.py")
 REQUIRED_WP_SWITCHES = (("-wp-no-filter-init", "-wp-filter-init"),)
 _COMPILED_MODULES = {}
 _ASSUME = re.compile(r"\b(?:llvm_assume|crucible_assume|__VERIFIER_assume)\b|\b(?:__CPROVER_assume|SWDB_ASSUME|assume)\s*\(")
@@ -339,7 +339,8 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
                 if generated != context["wp_expected_text"] or report != context["pointer_bounds_report"]:
                     _fail("pointer_bounds", "generated C model pointer checks changed after planning")
             else:
-                if (lowering.pointer_bounds or {}).get("entry_windows") or (lowering.pointer_bounds or {}).get("owner"):
+                if ((lowering.pointer_bounds or {}).get("entry_windows") or (lowering.pointer_bounds or {}).get("owner") or
+                        any(row.get("kind") in {"call", "producer"} for row in lowering.pointer_bounds.get("sites", []))):
                     wp_pointer_bounds.recheck_source(lowering, context.get("pointer_source_plan"))
                 if (lowering.pointer_bounds or {}).get("owner"):
                     from swdb import vector_ownership

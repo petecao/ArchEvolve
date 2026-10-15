@@ -287,7 +287,8 @@ def identity():
                             + wp_pointer_bounds.identity()["sha256"].encode()
                             + here.with_name("array_domains.py").read_bytes()
                             + here.with_name("vector_ownership.py").read_bytes()
-                            + here.with_name("model_domains.py").read_bytes()).hexdigest()
+                            + here.with_name("model_domains.py").read_bytes()
+                            + here.with_name("dx_array_domains.py").read_bytes()).hexdigest()
     found = {"c_lowering": {"id": f"{TOOL_ID}-{TOOL_VERSION}", "sha256": digest},
              "naming_rules": naming_rules()}
     if not tool.missing:
@@ -567,6 +568,7 @@ class _Unit:
         self.probe_nodes = set()
         self.pointer_sites = []
         self.pointer_nodes = set()
+        self.pointer_calls = []
         self._dumps = {}
         self.structs, self.struct_order, self.classes = {}, [], {}
         self.functions, self.order, self.pending = {}, [], []
@@ -1853,6 +1855,26 @@ class _Printer:
                                   self.line)
             cname = name
             node_found = unit.function_node(name, qual_type, self.line) if "<" not in name else None
+            policy = self.semantics.get("array_call_policies", {}).get(name)
+            producer = self.semantics.get("array_origins", {}).get(name)
+            if producer:
+                policy = {"model": producer["policy"]}
+            if policy:
+                statement, anchor = self.pointer_contexts[-1] if self.pointer_contexts else (None, "")
+                site = wp_pointer_bounds.call_site(node, statement=statement, anchor=anchor,
+                    function=self.function, line=_where(node) or self.line)
+                site["producer"] = bool(producer)
+                if producer:
+                    # No duplicated argument evaluation or derived guard for
+                    # row producers: their original call/RTE obligations remain.
+                    site["reason"] = ""
+                    site["placement"] = "original producer call; no derived expression evaluation"
+                try:
+                    site["binding"] = wp_pointer_bounds.imported_binding(node, unit.dump(""), name,
+                        summary=unit.summaries[name], policy=policy)
+                except wp_pointer_bounds.Refused as exc:
+                    site["reason"] = str(exc)
+                unit.pointer_calls.append(site)
             if node_found is not None and _children_kind(node_found, "TemplateArgument"):
                 cname = f"{name}_{'_'.join(_mangle_text(a) for a in unit._spec_args(node_found, self.line))}"
             names = [p.get("name") for p in _children(node_found or {}) if p.get("kind") == "ParmVarDecl"]
@@ -2440,9 +2462,11 @@ def lower(source, function, includes=(), defines=(), summaries=None, semantics=N
                             external_calls=unit.summaries_used,
                             known_pointer_calls=(semantics or {}).get("tile_pointer", ()),
                             global_nodes=unit.global_nodes.values(), known_origins=(semantics or {}).get("array_origins"),
-                            terminal=certificate, entry_windows=windows, entry_function=function, owner=owner),
+                            terminal=certificate, entry_windows=windows, entry_function=function, owner=owner,
+                            call_sites=unit.pointer_calls, call_policies=(semantics or {}).get("array_call_policies")),
                         source_sha256=_file_sha256(source), text=text, entry_windows=windows,
-                        entry_contract=array_domain_contract, owner=owner),
+                        entry_contract=array_domain_contract, owner=owner,
+                        source_entries=wp_pointer_bounds.function_entries(definition_nodes, source)),
                     terminal_release=certificate)
 
 

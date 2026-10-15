@@ -296,3 +296,48 @@ The merged setup/strict-reader controls also pass (63 scripted cases, 102.29 s; 
 including initialization-filter override refusal and the combined pointer/ownership checker-source closure.
 Report log: `/private/tmp/probata-t27-merged-setup.jsonl`. The unfinished member-contract acceptance module
 from the policy donor branch remains with ticket 25 rather than being copied into this ticket's handoff.
+
+## Checked DX100 input-window frontier — 2026-10-15 07:44 ET
+
+Status remains `claimed`. The prior initializedness checkpoint does not establish typed array origins at
+opaque device calls. A unit declaration such as `q: n` is an explicit formal input-window addition; it is
+not inferred from `\valid`, initializedness, a larger backing allocation or the accelerator register state.
+
+- `ea1c75b0` adds the scoped `dx_array_domains` checker and a proof-semantics policy factory. Eligibility
+  requires the exact audited C/ghost/state components, current entry and generated model hashes, geometry
+  and checker identity. It supports the host-pointer footprints of stream load, indirect load and vector
+  store. A checked assertion reads the call-prestate register range/stride or unsigned index-tile values
+  and requires every selected address, including the actual pointer offset, to lie in the frozen input
+  window. It adds no requires or assumptions. Unknown call forms, operand effects, incomplete origins and
+  unsupported placement remain refused.
+- The first checker accepts only certified entry-window origins. It never defaults a missing offset to
+  zero for aliases, concrete arrays or semantic rows. Only an individually validated imported call AST node
+  can be exempted from pointer-binding escape invalidation; source definitions and other calls remain
+  closed. Ticket 36 owns the lowering, placement, complete-inventory and fresh source/policy replay hooks.
+- Seventeen component controls pass in 0.88 s, including real Clang call ASTs, stale component pins, missing
+  or wrong origins, operand effects, capture-free quantifiers, geometry changes and Frama-C typechecking
+  of the generated guards. Report: `/private/tmp/probata-dx-call-component.jsonl`. These are component
+  checks, not end-to-end proof acceptance.
+- `d7d5aa66` and `8201b783` add separately named direct stream, three-read and offset-gather fixtures with
+  explicit input windows. The original `dxf_load` helper fixture is retained; top-level metadata does not
+  invent a helper entry domain. The direct three-read frontier observes three tile values and consistency,
+  and does not replace the original functional-observation fixture. Additional controls keep a larger valid
+  memory range from rescuing a smaller advertised window, reject a gather read through a legal one-past
+  offset and retain the independent initialized-input obligation. The WP capacity test explicitly adds its
+  `q: n` declaration in that contract fork.
+- The public direct-stream positive is RED at the expected old factory boundary (51.36 s): the declaration
+  is refused before WP because the source-origin call certificate is not integrated yet. Report:
+  `/private/tmp/probata-dx-domain-public-red.jsonl`. Seven new frontier cases collect. No real WP job was
+  launched for this RED control, and no new model body was substituted into a running evaluation.
+
+Remaining: integrate ticket 36's exact call-site/placement and fresh-replay hooks, run the public frontier
+and capacity controls with the real WP adapter under the shared lock, review the combined source, then
+freeze the next method before coordinated remote acceptance. Existing native agreement remains separate
+from this pending proof-admission frontier.
+
+After merging reviewed entry/owner integration `7e15176f` into this branch, the same direct-stream control
+is RED at the next prelaunch boundary (64.68 s): `unsupported_construct`, `verifier_launched: false`, with
+an unstable entry binding caused by the not-yet-audited device pointer call. No WP log is produced. Report:
+`/private/tmp/probata-dx-domain-call-red.jsonl`. An additional pending control fixes the entry window at
+n==2, grows the call-state end register to three, and supplies a larger valid/initialized physical range;
+its checked stream footprint must still reject the third cell. Eight frontier controls now collect.
