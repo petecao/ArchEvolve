@@ -437,3 +437,7 @@ All report hashes and runtime manifest entries match. Test-only assertion change
 are explicit. [Evidence](../evidence/wp-nested-initializers-20261015.json).
 Helper/nested statement-anchor hints and the full store/capacity acceptance remain
 open; this checkpoint does not resolve the ticket.
+
+### Entry hints and original store proof — 2026-10-15 ET
+
+At frozen `593c35d6`, checked helper/nested views admit only original-unit entry assertions and ghost hints, retaining normal noninterference checks. Eight public/component controls passed (234.60s); all five stand-in records and 70 report references match. Independent review found no blocker. The original store-source-wait fixture, with explicit q/p:n windows and entry witness `dx_store_bound=n`, proves all90ordinary goals and passes29smoke checks. The shortened witness `n-1` stays not proven with one open `store_indices` obligation and29smokes passed. The old-source premature CPU read stops prelaunch because scalar assignment was not yet supported; its test failure is retained and a separate composed-source replay is required. All three records,59report references and10runtime pins match. [Compact evidence](../evidence/wp-source-view-entry-hints-20261015.json). Ticket remains claimed.
