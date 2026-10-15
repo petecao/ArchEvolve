@@ -1,7 +1,7 @@
 # 24 — C++ subset widening
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-15 ET (original Ring actual pair accepted; eight-group current-method matrix remains open)
+Updated: 2026-10-15 ET (original Ring/allocation actual pairs and public unsupported controls accepted; remaining matrix open)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 21
@@ -19,7 +19,7 @@ Updated: 2026-10-15 ET (original Ring actual pair accepted; eight-group current-
 - [ ] Each of `std::min`, `std::max`, `std::copy`, `std::swap` lowers to a call of its C model. Each model's ACSL contract is proven once (one proof record each, subject: a library entry's summary). A unit that uses a model pins that record.
 - [ ] An OpenMP fixture (`parallel for` with a `reduction`, a `critical` section, an `atomic`, a `barrier`) and an atomics fixture (`__sync_*`, `__atomic_*`) lower and prove at threads = 1.
 - [ ] A fixture with a `__dxc_*` call and one with a `maa_*` call keep each as a call whose contract comes from a fixture summary. The record lists the summary used.
-- [ ] Unsupported constructs: inheritance, a virtual function, an exception, a lambda, RTTI, another standard container (such as `std::map`) and a stream each read not proven, "unsupported construct", naming the construct and its source location.
+- [x] Unsupported constructs: inheritance, a virtual function, an exception, a lambda, RTTI, another standard container (such as `std::map`) and a stream each read not proven, "unsupported construct", naming the construct and its source location.
 - [ ] Naming rules carry a version. Every proof record pins it in its content-hash set, and bumping the version gives a different pin.
 - [ ] Each diagnosed failure joins 21's regression corpus. Fixtures use no BC, PR or SSSP code. Tests that need Frama-C or LLVM 22 skip cleanly.
 
@@ -782,3 +782,20 @@ control goes RED (old+2) to GREEN (corrected+4), 2.06 s / 1.71 s. This is native
 fixture evidence, not a solver refutation or production DX100 semantics claim.
 Frozen `71771f09` records keep their exact old source identities; fresh corrected-seed
 actual acceptance remains required. [Native source/binary hashes and outcomes](../evidence/t24-dxc-native-negative-control-20261015.json).
+
+### Original allocation pair and public unsupported controls — 2026-10-15 ET
+
+The original new-array safe/seeded pair now has actual frozen `71771f09`
+evidence. Safe proves 42 ordinary + 7 smoke goals. The original `i<=n` seed
+reads `not_proven`: 40 ordinary Valid, ordinary invariant-preservation and
+memory-access timeouts, 4 smoke Valid and 3 failed smoke. Both retain 11
+initialization goals. Independent physical/source/certificate/view auditing
+finds no errors; no timeout is labeled a counterexample and no invalid native
+write is executed. [Compact actual audit](../evidence/t24-original-allocation-pair-mbit10-20261015.json).
+
+All seven original unsupported groups also pass public proof refusal controls
+(7/7, 30.27 s), with named source-line diagnostics, no goals and no verifier
+launch. Their `not_proven` result is deliberate prelaunch refusal, distinct from
+the actual original semantic negative jobs. Remaining groups, lifetime actuals,
+dependency closure, corrected-DXC actuals and accepted ticket22 finite agreement
+profile are still pending. Status remains **claimed**.

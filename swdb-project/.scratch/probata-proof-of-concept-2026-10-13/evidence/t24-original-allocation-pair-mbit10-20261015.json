@@ -1,0 +1,302 @@
+{
+  "created": "2026-10-15 ET",
+  "errors": [],
+  "physical_sources_checked": 980,
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-t24-remaining-71771f09",
+  "rows": [
+    {
+      "candidate_file_count": 46,
+      "certificate": {
+        "allocation_line": 19,
+        "checker": {
+          "id": "terminal-release-check-2",
+          "sha256": "51c3bcdfe64b057642dfb2eab549fb49181d23b9ccb635ff8a193fd4ab8e09da"
+        },
+        "count": "n",
+        "function": "swdb_new_unit",
+        "initialization": "canonical complete fill before every array read",
+        "initialization_loop_comparison": "<",
+        "model": "swdb_alloc_delete_array_int",
+        "owner": "buf",
+        "release_anchor": "swdb_new_unit.s7.before",
+        "release_line": 41,
+        "scope": "one nonescaping initialized new int[] owner; terminal delete[]; scalar int parameters, locals, and return",
+        "source_sha256": "0f3b70807ae74c4b4dad5ea9c487b8cf2e861fdc75751b958fbb573d085cb30f"
+      },
+      "errors": [],
+      "exact_original_clauses": true,
+      "exact_original_hints": true,
+      "exact_wp_view_reconstructed": true,
+      "full_settings_sha256": "7f877b40ab3845d2848457f8765ce4cc65a048a5b3e3a1d48f244077b6b23ad3",
+      "id": "proof.wp24-safe.candidate-1.20261015t193835z.6408940b",
+      "initialization_goals": 11,
+      "job": {
+        "adapter": "wp",
+        "batch": "batch.proof.wp24-safe.candidate-1.20261015t193835z.6408940b",
+        "batch_load": {
+          "end": 2.534,
+          "start": 2.765
+        },
+        "cpu_seconds": 70.57699,
+        "host": "swdb-fixture-host",
+        "peak_rss_bytes": 311631872,
+        "position": 1,
+        "wall_seconds": 68.927224,
+        "worker_core": "unpinned"
+      },
+      "label": "new_array:safe",
+      "ordinary_open": [],
+      "ordinary_valid": 42,
+      "proof_setup_check": {
+        "check": {
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833",
+          "version": "1"
+        },
+        "hashes": {
+          "contract": "68edd09d91d7faf3da58fcbdae47d3ed2a09c627047ff18aafa5597494bfc522",
+          "lowering": "91bf6c1894af9a100c1e701cf30aaa69812fc03399d29c7b50a24bc0669ec045",
+          "run_plan": "e3e808e39797785c9988744ba4425d2ded333e4e6a40538955aeb83d12e92bbc",
+          "stdlib_provenance": "78e0dcb3825e612f39792552841e6183ff940f2dd6e96074dc38e59ddef587ad",
+          "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "terminal_release_view.c": "8e14c582d055c3a3e5ada3c7acec9a0c637a7b8895c4c3c886b4db64fe0d5311",
+          "wp_input.c": "059e4346705a95266d980fe456a85350f12b682a3b72c3851c04112934bad12f"
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "2042834da380c82b0faec9150b876fc1e497f6e1b100f337d6632958d59059ec"
+        },
+        "runs": [
+          {
+            "hashes": {
+              "lowering": "91bf6c1894af9a100c1e701cf30aaa69812fc03399d29c7b50a24bc0669ec045",
+              "stdlib_provenance": "78e0dcb3825e612f39792552841e6183ff940f2dd6e96074dc38e59ddef587ad",
+              "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "terminal_release_view.c": "8e14c582d055c3a3e5ada3c7acec9a0c637a7b8895c4c3c886b4db64fe0d5311",
+              "wp_input.c": "059e4346705a95266d980fe456a85350f12b682a3b72c3851c04112934bad12f"
+            },
+            "run_plan_sha256": "2cf1ea2c58d94d8bb8a8e9dbdf9069caebec45751de4ab9d358eaf5dd8239f25",
+            "tool": "wp",
+            "verdict": "passed"
+          }
+        ],
+        "verdict": "passed"
+      },
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-t24-remaining-71771f09/matrix/seed/records/proofs/proof.wp24-safe.candidate-1.20261015t193835z.6408940b.yaml",
+        "sha256": "fba06e2bc432563c70285382c206afff32752a90cb1801c6cb75942d56d1d8fd"
+      },
+      "report_count": 13,
+      "settings": {
+        "flags": [
+          "-wp",
+          "-wp-rte",
+          "-wp-cache",
+          "none",
+          "-wp-model",
+          "+real",
+          "-wp-par",
+          "1",
+          "-machdep",
+          "x86_64",
+          "-rte-initialized",
+          "@all",
+          "-wp-no-filter-init",
+          "-machdep",
+          "x86_64",
+          "-wp-prover",
+          "alt-ergo,z3,cvc5",
+          "-wp-timeout",
+          "30",
+          "-wp-par",
+          "1",
+          "-wp-smoke-tests",
+          "-wp-fct=swdb_new_unit"
+        ],
+        "hint_count": 10,
+        "machdep": "x86_64",
+        "rss_cap_bytes": 8589934592,
+        "verifier_launched": true
+      },
+      "smoke_open": [],
+      "smoke_total": 7,
+      "smoke_valid": 7,
+      "verdict": "proven"
+    },
+    {
+      "candidate_file_count": 46,
+      "certificate": {
+        "allocation_line": 19,
+        "checker": {
+          "id": "terminal-release-check-2",
+          "sha256": "51c3bcdfe64b057642dfb2eab549fb49181d23b9ccb635ff8a193fd4ab8e09da"
+        },
+        "count": "n",
+        "function": "swdb_new_unit",
+        "initialization": "canonical complete fill before every array read",
+        "initialization_loop_comparison": "<=",
+        "model": "swdb_alloc_delete_array_int",
+        "owner": "buf",
+        "release_anchor": "swdb_new_unit.s7.before",
+        "release_line": 41,
+        "scope": "one nonescaping initialized new int[] owner; terminal delete[]; scalar int parameters, locals, and return",
+        "source_sha256": "4fe7c8f8fe12479c9f82b58673bc669868a08afb976f8d0f015019b29269d8e2"
+      },
+      "errors": [],
+      "exact_original_clauses": true,
+      "exact_original_hints": true,
+      "exact_wp_view_reconstructed": true,
+      "full_settings_sha256": "d42e44ffc3de0f67f20358e3a4f8ed4a24a5c1d14f547aa91577622864f9fd69",
+      "id": "proof.wp24-bug.candidate-1.20261015t194151z.f53af5f0",
+      "initialization_goals": 11,
+      "job": {
+        "adapter": "wp",
+        "batch": "batch.proof.wp24-bug.candidate-1.20261015t194151z.f53af5f0",
+        "batch_load": {
+          "end": 2.55,
+          "start": 2.679
+        },
+        "cpu_seconds": 176.498543,
+        "host": "swdb-fixture-host",
+        "peak_rss_bytes": 757567488,
+        "position": 1,
+        "wall_seconds": 156.511461,
+        "worker_core": "unpinned"
+      },
+      "label": "new_array:seeded",
+      "ordinary_open": [
+        {
+          "function": "swdb_new_unit",
+          "goal": "typed_real_swdb_new_unit_loop_invariant_preserved",
+          "property": "swdb_new_unit_loop_invariant_5",
+          "seconds": null,
+          "smoke": false,
+          "solver": null,
+          "source": "wp_json",
+          "status": "timeout"
+        },
+        {
+          "function": "swdb_new_unit",
+          "goal": "typed_real_swdb_new_unit_assert_rte_mem_access",
+          "property": "swdb_new_unit_assert_rte_mem_access",
+          "seconds": null,
+          "smoke": false,
+          "solver": null,
+          "source": "wp_json",
+          "status": "timeout"
+        }
+      ],
+      "ordinary_valid": 40,
+      "proof_setup_check": {
+        "check": {
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833",
+          "version": "1"
+        },
+        "hashes": {
+          "contract": "68edd09d91d7faf3da58fcbdae47d3ed2a09c627047ff18aafa5597494bfc522",
+          "lowering": "e61b3ccb4427677e3f0d6c916d954937e8791637bcd397331ca73ee75142a955",
+          "run_plan": "e3e808e39797785c9988744ba4425d2ded333e4e6a40538955aeb83d12e92bbc",
+          "stdlib_provenance": "78e677ff53c5770b1dc39be13ad82f6c96f8982c54e5dabef288a3e1e8c6519e",
+          "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "terminal_release_view.c": "ba596e7abc0ef940012abf452c2694b354995c9b8c612643122b5957f9eb62e8",
+          "wp_input.c": "473421e84b4b3837dfeb80bb75a0fd0846485bd281be903ff49e0b9f309802f8"
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "2042834da380c82b0faec9150b876fc1e497f6e1b100f337d6632958d59059ec"
+        },
+        "runs": [
+          {
+            "hashes": {
+              "lowering": "e61b3ccb4427677e3f0d6c916d954937e8791637bcd397331ca73ee75142a955",
+              "stdlib_provenance": "78e677ff53c5770b1dc39be13ad82f6c96f8982c54e5dabef288a3e1e8c6519e",
+              "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "terminal_release_view.c": "ba596e7abc0ef940012abf452c2694b354995c9b8c612643122b5957f9eb62e8",
+              "wp_input.c": "473421e84b4b3837dfeb80bb75a0fd0846485bd281be903ff49e0b9f309802f8"
+            },
+            "run_plan_sha256": "be47a271f48956261b11926165d0bdb8e40459360302185bfa0c672ae39e887d",
+            "tool": "wp",
+            "verdict": "passed"
+          }
+        ],
+        "verdict": "passed"
+      },
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-t24-remaining-71771f09/matrix/seed/records/proofs/proof.wp24-bug.candidate-1.20261015t194151z.f53af5f0.yaml",
+        "sha256": "9c6220eed6264e334381b9d13c28440bb6476976d88fd668052f455f3af5515b"
+      },
+      "report_count": 14,
+      "settings": {
+        "flags": [
+          "-wp",
+          "-wp-rte",
+          "-wp-cache",
+          "none",
+          "-wp-model",
+          "+real",
+          "-wp-par",
+          "1",
+          "-machdep",
+          "x86_64",
+          "-rte-initialized",
+          "@all",
+          "-wp-no-filter-init",
+          "-machdep",
+          "x86_64",
+          "-wp-prover",
+          "alt-ergo,z3,cvc5",
+          "-wp-timeout",
+          "30",
+          "-wp-par",
+          "1",
+          "-wp-smoke-tests",
+          "-wp-fct=swdb_new_unit"
+        ],
+        "hint_count": 10,
+        "machdep": "x86_64",
+        "rss_cap_bytes": 8589934592,
+        "verifier_launched": true
+      },
+      "smoke_open": [
+        {
+          "function": "swdb_new_unit",
+          "goal": "typed_real_swdb_new_unit_wp_smoke_dead_loop_s22",
+          "property": "swdb_new_unit_wp_smoke_dead_loop_s22",
+          "seconds": null,
+          "smoke": true,
+          "solver": null,
+          "source": "wp_json",
+          "status": "failed_smoke"
+        },
+        {
+          "function": "swdb_new_unit",
+          "goal": "typed_real_swdb_new_unit_wp_smoke_dead_code_s27",
+          "property": "swdb_new_unit_wp_smoke_dead_code_s27",
+          "seconds": null,
+          "smoke": true,
+          "solver": null,
+          "source": "wp_json",
+          "status": "failed_smoke"
+        },
+        {
+          "function": "swdb_new_unit",
+          "goal": "typed_real_swdb_new_unit_wp_smoke_dead_code_s30",
+          "property": "swdb_new_unit_wp_smoke_dead_code_s30",
+          "seconds": null,
+          "smoke": true,
+          "solver": null,
+          "source": "wp_json",
+          "status": "failed_smoke"
+        }
+      ],
+      "smoke_total": 7,
+      "smoke_valid": 4,
+      "verdict": "not_proven"
+    }
+  ],
+  "scope": "Original new_array safe/seeded actual WP and exact terminal view; timeout is not a counterexample",
+  "source_commit": "71771f097feb83338928430bdf78a4de8384e63b"
+}
