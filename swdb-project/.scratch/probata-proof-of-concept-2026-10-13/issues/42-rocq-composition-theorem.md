@@ -210,3 +210,15 @@ Rocq compile: `owner-proof-6.log.summary.json`, exit 0, 5.36 s, peak 451.7 MB,
 8 GB watchdog. No approved statement edit. Remaining: finite constructive window
 partition, global serialization, and iteration-count/conclusion assembly. The
 main theorem is still open, so this remains checked progress only.
+
+### Conclusion assembly checked — 2026-10-15 02:20 ET
+
+`t42_iterations_once` is Qed: uniform worksharing reachability, per-thread chunk
+coverage/disjointness/NoDup, and OpenMP scheduling give each global iteration
+exactly once. `t42_serialization_suffices` is Qed and assembles every serial-outcome
+conjunct from a valid observational reordering with contiguous critical sections.
+`t42_reorder` has Qed reflexivity/transitivity and the checked critical-window
+adjacent-swap interpretation. Compile `iterations-3.log.summary.json`: exit 0,
+4.46 s, peak 476.6 MB, 8 GB watchdog. The outstanding mathematical step is now
+constructive global critical-section serialization. No fallback or completed
+method-part theorem record is claimed.

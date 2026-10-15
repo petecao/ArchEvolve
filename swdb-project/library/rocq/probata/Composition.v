@@ -2982,6 +2982,259 @@ Proof.
       Hswp Hswsp ltac:(congruence) Hsame' (or_intror Hnosh) Hnotexitd).
 Qed.
 
+Definition t42_observations (X Y : run) : Prop :=
+  (forall t, proj Y t = proj X t) /\
+  (forall l v, final_is X l v <-> final_is Y l v) /\
+  (forall w i, count_iter Y w i = count_iter X w i).
+
+Definition t42_reorder (X Y : run) : Prop :=
+  forall rf, model_run X rf -> all_fit X -> complete X ->
+    exists rf', model_run Y rf' /\ all_fit Y /\ complete Y /\ t42_observations X Y.
+
+Lemma t42_observations_refl X : t42_observations X X.
+Proof.
+  split; [intro t; reflexivity |]. split; [intros l v; reflexivity |].
+  intros w i. reflexivity.
+Qed.
+
+Lemma t42_observations_trans X Y Z :
+  t42_observations X Y -> t42_observations Y Z -> t42_observations X Z.
+Proof.
+  intros [Hproj [Hfinal Hcount]] [Hproj' [Hfinal' Hcount']].
+  split; [intro t; now rewrite Hproj', Hproj |].
+  split; [intros l v; now rewrite Hfinal, Hfinal' |].
+  intros w i. now rewrite Hcount', Hcount.
+Qed.
+
+Lemma t42_reorder_refl X : t42_reorder X X.
+Proof.
+  intros rf Hmodel Hfit Hcomplete. exists rf.
+  split; [exact Hmodel |]. split; [exact Hfit |]. split; [exact Hcomplete |].
+  apply t42_observations_refl.
+Qed.
+
+Lemma t42_reorder_trans X Y Z :
+  t42_reorder X Y -> t42_reorder Y Z -> t42_reorder X Z.
+Proof.
+  intros Hxy Hyz rf Hmodel Hfit Hcomplete.
+  destruct (Hxy rf Hmodel Hfit Hcomplete) as [rf' [Hmy [Hfy [Hcy Hoxy]]]].
+  destruct (Hyz rf' Hmy Hfy Hcy) as [rf'' [Hmz [Hfz [Hcz Hoyz]]]].
+  exists rf''. split; [exact Hmz |]. split; [exact Hfz |]. split; [exact Hcz |].
+  eapply t42_observations_trans; eauto.
+Qed.
+
+Lemma t42_window_swap_reorder X i x t p u e d :
+  obl_team_size -> obl_owned_disjoint -> obl_atomic_blocks -> obl_dx100_quiet ->
+  at_ X i t Enter -> at_ X x t Exit -> i < x ->
+  (forall r, i < r < x -> ~ at_ X r t Enter /\ ~ at_ X r t Exit) ->
+  i <= p -> S p < x -> t42_adjacent X p t e u d -> t <> u ->
+  t42_reorder X (t42_swap_run X p).
+Proof.
+  intros Hteam Hdis Hatomic Hquiet Henter Hexit Hix Hwindow Hip Hpx Hadj Htu
+    rf Hmodel Hfit Hcomplete.
+  pose proof (t42_window_adjacent_indep X rf i x t p u e d Hteam Hdis Hatomic
+    Hmodel Hfit Henter Hexit Hix Hwindow Hip Hpx Hadj Htu) as Hindep.
+  pose proof (t42_window_device_safe X rf i x t p u e d Hteam Hdis Hatomic Hquiet
+    Hmodel Hcomplete Hfit Henter Hexit Hix Hwindow Hip Hpx Hadj Htu) as Hsafe.
+  destruct (t42_indep_model_all_fit_swap X rf p Hindep Hsafe Hmodel Hfit) as [Hmy Hfy].
+  destruct Hindep as [a [b [a' [b' [Hadj' [Hdiff [_ [_ Hconflict]]]]]]]].
+  exists (t42_swap_rf p rf). split; [exact Hmy |]. split; [exact Hfy |].
+  split; [eapply t42_complete_swap; eauto |].
+  split.
+  - intro v. eapply t42_proj_swap; eauto.
+  - split.
+    + intros l v. symmetry. eapply t42_final_is_swap_iff; eauto.
+    + intros w v. eapply t42_count_iter_swap; eauto.
+Qed.
+
+(** Iteration accounting is independent of the chosen event interleaving. *)
+Lemma t42_iters_in w i tr : In i (iters w tr) <-> In (Iter w i) tr.
+Proof.
+  induction tr as [|e tr IH]; [simpl; tauto |].
+  destruct e; simpl; try (rewrite IH; intuition congruence).
+  destruct (Nat.eqb w w0) eqn:Heq.
+  - apply Nat.eqb_eq in Heq. subst w0. simpl. rewrite IH. intuition congruence.
+  - apply Nat.eqb_neq in Heq. rewrite IH. intuition congruence.
+Qed.
+
+Lemma t42_iters_cons_nodup w e tr :
+  NoDup (iters w (e :: tr)) -> NoDup (iters w tr).
+Proof.
+  destruct e; simpl; try tauto.
+  destruct (Nat.eqb w w0); intro H; [now inversion H | exact H].
+Qed.
+
+Lemma t42_iters_proj_cons_in X p t w i :
+  In i (iters w (proj X t)) -> In i (iters w (proj (p :: X) t)).
+Proof.
+  repeat rewrite t42_iters_in. repeat rewrite t42_in_proj. simpl. auto.
+Qed.
+
+Lemma t42_iters_map_in X w i :
+  In i (iters w (map snd X)) <-> exists t, In i (iters w (proj X t)).
+Proof.
+  split.
+  - intro Hin. apply t42_iters_in in Hin. apply in_map_iff in Hin.
+    destruct Hin as [[t e] [He Hin]]. simpl in He. subst e.
+    exists t. apply t42_iters_in. apply t42_in_proj. exact Hin.
+  - intros [t Hin]. apply t42_iters_in in Hin. apply t42_in_proj in Hin.
+    apply t42_iters_in. apply in_map_iff. exists (t,Iter w i). auto.
+Qed.
+
+Lemma t42_iters_global_nodup X w :
+  (forall t, NoDup (iters w (proj X t))) ->
+  (forall t u i, t <> u -> In i (iters w (proj X t)) ->
+    ~ In i (iters w (proj X u))) -> NoDup (iters w (map snd X)).
+Proof.
+  induction X as [|[t e] X IH]; intros Hnodup Hdis; [constructor |].
+  assert (Hndtail : forall u, NoDup (iters w (proj X u))).
+  { intro u. specialize (Hnodup u). unfold proj in Hnodup. simpl in Hnodup.
+    destruct (Nat.eqb t u); [eapply t42_iters_cons_nodup; exact Hnodup | exact Hnodup]. }
+  assert (Hdistail : forall u v i, u <> v -> In i (iters w (proj X u)) ->
+    ~ In i (iters w (proj X v))).
+  { intros u v i Huv Hi Hj. eapply (Hdis u v i Huv);
+      eapply t42_iters_proj_cons_in; eauto. }
+  pose proof (IH Hndtail Hdistail) as Htail.
+  destruct e; simpl; try exact Htail.
+  destruct (Nat.eqb w w0) eqn:Heq; [|exact Htail].
+  apply Nat.eqb_eq in Heq. subst w0. constructor; [|exact Htail].
+  intro Hin. apply t42_iters_map_in in Hin. destruct Hin as [u Hin].
+  destruct (Nat.eq_dec t u) as [<- | Htu].
+  - specialize (Hnodup t). rewrite t42_proj_cons_same in Hnodup.
+    simpl in Hnodup. rewrite Nat.eqb_refl in Hnodup.
+    inversion Hnodup. contradiction.
+  - apply (Hdis t u i Htu).
+    + rewrite t42_proj_cons_same. simpl. rewrite Nat.eqb_refl. now left.
+    + eapply t42_iters_proj_cons_in; eauto.
+Qed.
+
+Lemma t42_count_iter_occ X w i :
+  count_iter X w i = count_occ Nat.eq_dec (iters w (map snd X)) i.
+Proof.
+  induction X as [|[t e] X IH]; [reflexivity |].
+  unfold count_iter in IH |- *. destruct e; simpl; try exact IH.
+  destruct (Nat.eqb w w0) eqn:Hw; simpl; [|exact IH].
+  destruct (Nat.eqb i i0) eqn:Hi;
+    [apply Nat.eqb_eq in Hi | apply Nat.eqb_neq in Hi]; simpl;
+    destruct (Nat.eq_dec i0 i); try congruence; simpl; now rewrite IH.
+Qed.
+
+Lemma t42_proj_large_nil X rf t :
+  obl_team_size -> omp_ok X rf -> N <= t -> proj X t = [].
+Proof.
+  intros Hteam Homp Hlarge.
+  destruct (proj X t) as [|e rest] eqn:Hp; [reflexivity |].
+  exfalso. assert (Hin : In e (proj X t)) by (rewrite Hp; now left).
+  apply t42_in_proj in Hin. destruct (t42_in_nth_error X (t,e) Hin) as [i Hi].
+  pose proof (t42_threads_below_N Hteam X rf Homp i t e Hi). lia.
+Qed.
+
+Lemma t42_uniform_workshare X rf w t u :
+  obl_uniform_control -> model_run X rf -> complete X -> all_fit X ->
+  t < N -> u < N -> In (Workshare w) (proj X t) -> In (Workshare w) (proj X u).
+Proof.
+  intros Huniform Hmodel Hcomplete Hfit Ht Hu Hreach.
+  pose proof (Huniform X rf t u Hmodel Hcomplete Hfit Ht Hu) as Heq.
+  assert (Hin : In (Workshare w) (filter is_sync_point (proj X t))).
+  { apply filter_In. split; [exact Hreach | reflexivity]. }
+  rewrite Heq in Hin. apply filter_In in Hin. exact (proj1 Hin).
+Qed.
+
+Lemma t42_split_iterations_once X rf w t :
+  obl_team_size -> obl_chunk_cover -> obl_uniform_control ->
+  model_run X rf -> complete X -> all_fit X -> t < N ->
+  In (Workshare w) (proj X t) -> split_by_tid w = true ->
+  forall i, count_iter X w i = if in_dec Nat.eq_dec i (space w) then 1 else 0.
+Proof.
+  intros Hteam [Hchunks Hthread] Huniform Hmodel Hcomplete Hfit Ht Hreach Hsplit.
+  destruct (Hchunks w Hsplit) as [Hcoverage [Hdis Hnd]].
+  pose proof Hmodel as [_ [_ [_ Homp]]].
+  assert (Hiter : forall u, u < N -> iters w (proj X u) = chunk w u).
+  { intros u Hu. apply (Hthread X rf u w Hmodel Hcomplete Hfit Hu Hsplit).
+    exact (t42_uniform_workshare X rf w t u Huniform Hmodel Hcomplete Hfit Ht Hu Hreach). }
+  assert (Hallnd : forall u, NoDup (iters w (proj X u))).
+  { intro u. destruct (Nat.lt_ge_cases u N) as [Hu | Hu].
+    - rewrite Hiter by exact Hu. apply Hnd.
+    - rewrite (t42_proj_large_nil X rf u Hteam Homp ltac:(lia)). constructor. }
+  assert (Halldis : forall u v i, u <> v -> In i (iters w (proj X u)) ->
+    ~ In i (iters w (proj X v))).
+  { intros u v i Huv Hi Hj.
+    destruct (Nat.lt_ge_cases u N) as [Hu | Hu].
+    - destruct (Nat.lt_ge_cases v N) as [Hv | Hv].
+      + rewrite Hiter in Hi by exact Hu. rewrite Hiter in Hj by exact Hv.
+        exact (Hdis u v i Hu Hv Huv Hi Hj).
+      + rewrite (t42_proj_large_nil X rf v Hteam Homp ltac:(lia)) in Hj.
+        contradiction.
+    - rewrite (t42_proj_large_nil X rf u Hteam Homp ltac:(lia)) in Hi.
+      contradiction. }
+  pose proof (t42_iters_global_nodup X w Hallnd Halldis) as Hglobalnd.
+  assert (Hmembers : forall i, In i (iters w (map snd X)) <-> In i (space w)).
+  { intro i. rewrite t42_iters_map_in. split.
+    - intros [u Hu]. destruct (Nat.lt_ge_cases u N) as [Hun | Hun].
+      + apply (proj2 (Hcoverage i)). exists u. split; [exact Hun |].
+        rewrite <- (Hiter u Hun). exact Hu.
+      + rewrite (t42_proj_large_nil X rf u Hteam Homp ltac:(lia)) in Hu.
+        contradiction.
+    - intro Hi. destruct (proj1 (Hcoverage i) Hi) as [u [Hu Hchunk]].
+      exists u. rewrite Hiter by exact Hu. exact Hchunk. }
+  intro i. rewrite t42_count_iter_occ.
+  destruct (in_dec Nat.eq_dec i (space w)) as [Hin | Hnotin].
+  - apply (proj1 (NoDup_count_occ' Nat.eq_dec (iters w (map snd X))) Hglobalnd).
+    apply (proj2 (Hmembers i)). exact Hin.
+  - apply (proj1 (count_occ_not_In Nat.eq_dec (iters w (map snd X)) i)).
+    intro Hin. apply Hnotin. apply (proj1 (Hmembers i)). exact Hin.
+Qed.
+
+Lemma t42_iterations_once X rf :
+  obl_team_size -> obl_chunk_cover -> obl_uniform_control ->
+  model_run X rf -> complete X -> all_fit X -> iterations_once X.
+Proof.
+  intros Hteam Hchunks Huniform Hmodel Hcomplete Hfit w [t [Ht Hreach]] i.
+  destruct (split_by_tid w) eqn:Hsplit.
+  - eapply t42_split_iterations_once; eauto.
+  - pose proof Hmodel as [_ [_ [_ [_ [_ [_ [_ [Hsched _]]]]]]]].
+    apply Hsched; [|exact Hsplit |].
+    + intros u Hu. apply Hcomplete. unfold obl_team_size in Hteam. lia.
+    + intros u Hu. eapply (t42_uniform_workshare X rf w t u Huniform Hmodel
+        Hcomplete Hfit Ht); [|exact Hreach].
+      unfold obl_team_size in Hteam. lia.
+Qed.
+
+Lemma t42_critical_implements X rf :
+  obl_team_size -> obl_atomic_blocks -> model_run X rf ->
+  forall t blk, critical_block (proj X t) blk -> implements_shared_action blk.
+Proof.
+  intros Hteam Hatomic [Hprogram [_ [_ Homp]]] t blk Hblock.
+  assert (Hin : In Enter (proj X t)).
+  { destruct Hblock as [pre [post [Heq _]]]. rewrite Heq.
+    apply in_or_app. right. now left. }
+  apply t42_in_proj in Hin.
+  destruct (t42_in_nth_error X (t,Enter) Hin) as [i Hi].
+  pose proof (t42_threads_below_N Hteam X rf Homp i t Enter Hi) as Ht.
+  exact (proj1 (Hatomic t (proj X t) blk Ht (Hprogram t) Hblock)).
+Qed.
+
+(** The remaining constructive serialization step need provide only R and
+    contiguous critical sections; every other conjunct now follows here. *)
+Lemma t42_serialization_suffices X rf Y :
+  obl_team_size -> obl_owned_disjoint -> obl_atomic_blocks -> obl_chunk_cover ->
+  obl_uniform_control -> model_run X rf -> all_fit X -> complete X ->
+  t42_reorder X Y -> critical_sections_contiguous Y ->
+  exists rf', serial_outcome X Y rf'.
+Proof.
+  intros Hteam Hdis Hatomic Hchunks Huniform Hmodel Hfit Hcomplete Hreorder Hcrit.
+  destruct (Hreorder rf Hmodel Hfit Hcomplete) as [rf' [Hmy [Hfy [Hcy Hobs]]]].
+  destruct Hobs as [Hproj [Hfinal Hcount]].
+  pose proof Hmy as [_ [Hmemory [Hdevice Homp]]].
+  exists rf'. split; [exact Hproj |].
+  split; [eapply t42_intervals_contiguous; eauto |].
+  split; [exact Hcrit |].
+  split; [eapply t42_critical_implements; eauto |].
+  split; [eapply t42_reads_latest; eauto |].
+  split; [exact Hmemory |]. split; [exact Homp |]. split; [exact Hdevice |].
+  split; [exact Hfinal |]. eapply t42_iterations_once; eauto.
+Qed.
+
 (* END t42 lemmas *)
 (** * 8. The parallel composition theorem.  OPEN: proof is ticket 42. *)
 Theorem parallel_composition :
