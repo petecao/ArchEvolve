@@ -608,3 +608,20 @@ after 11 old-source rows at a completed-row boundary; the new-source phase never
 started, so it establishes no old/new equality. Its compiler slot was released
 to the coordinator's next diagnosis. Root retains dispatch ownership for both
 remote lanes and will compose the reviewed repairs before final acceptance.
+
+### Current capacity diagnosis checkpoint — 2026-10-15 ET
+
+Status remains `claimed`. The first exact `0e7f2327` capacity case (WP32) naturally
+failed: 45/47 ordinary goals Valid, 11/11 smoke checks passed; old memory-clear
+preservation and stream memory-domain precondition timed out. WP33 and the
+CBMC32/33 pair remain unrun. All required RTE/initialization/setup checks remain
+in force; no counterexample or source refutation is claimed.
+
+The test-only repair adds an ordinary invariant exposing that every valid tile
+writer comes from this loop's stream loads, with explicit agent provenance.
+Existing hints, source, contracts, preconditions, assertions and semantics are
+preserved. The RED/GREEN compiler/merge replay verifies placement and C erasure;
+it does not establish the new invariant or close capacity acceptance. Independent
+review and a real 32/33 rerun are still required. Exact retained failure,
+diagnosis and controls are in
+[`t27-capacity-hint-repair-20261015.json`](../evidence/t27-capacity-hint-repair-20261015.json).

@@ -1,0 +1,387 @@
+{
+  "created": "2026-10-15 ET",
+  "scope": "retained fixture outcomes and physical-byte audit only",
+  "run": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-capacity",
+  "source_commit": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+  "shard": "capacity",
+  "selection": "/data1/yanruj/venvs/swdb-test/bin/python -m pytest tests/test_proof_semantics.py::test_wp_capacity_agrees_at_32_and_leaves_33_not_proven tests/test_proof_semantics.py::test_32_uncovered_commands_prove_and_33_end_not_proven_ghost_capacity --maxfail=1 --junitxml=/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-capacity/junit.xml",
+  "exit_code": "1",
+  "pytest_call_outcomes": {
+    "failed": 1
+  },
+  "records": [
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-capacity/pytest/test_wp_capacity_agrees_at_32_0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t214821z.d460cd76.yaml",
+      "sha256": "e358e61937fded3fd12f44b68f0e515580623a7d3c013e643b7ad58a4aa88bee",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t214821z.d460cd76",
+      "test": "test_wp_capacity_agrees_at_32_0",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_capacity"
+      },
+      "bounds": {
+        "threads": 1,
+        "input_size": "unbounded"
+      },
+      "adapter": "wp",
+      "verdict": "not_proven",
+      "failure_class": "memory_domain",
+      "evidence_kind": "contract_fixture",
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "verdict_reading": {
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "verdict": "not_proven"
+      },
+      "ordinary": {
+        "valid": 45,
+        "total": 47
+      },
+      "smoke": {
+        "valid": 11,
+        "total": 11
+      },
+      "open": [
+        {
+          "goal": "typed_real_dxf_capacity_loop_invariant_4_preserved",
+          "property": "dxf_capacity_loop_invariant_4",
+          "function": "dxf_capacity",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_dxf_capacity_call_maa_stream_load_requires_memory_domain",
+          "property": "maa_stream_load_requires_memory_domain_2",
+          "function": "dxf_capacity",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "pins": {
+        "code": {
+          "id": "dx100-fixtures.candidate-1",
+          "sha256": "8a1f26596a62c9aa392745237ccf16359765f996ed790e2502806df4021d2c1a"
+        },
+        "contract": {
+          "id": "contract.fixture_dx_capacity",
+          "sha256": "f42d53d5d4f8fa77047a658d44789ace7c6adab352a24b5f8cfe6b2e4d7fb2cb"
+        },
+        "baseline_function": {
+          "id": "test-source",
+          "function": "dxf_capacity",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "id": "semantics.dx100_bfs_0_1",
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "dc6ff76cba59f5112d308c99c6ad7194c0500fe5c63bd1eaf596a3b7c7929380"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "build_constants": [
+          {
+            "name": "DX_NT",
+            "value": "40"
+          },
+          {
+            "name": "DX_TS",
+            "value": "1"
+          }
+        ],
+        "c_lowering": {
+          "id": "dxf_capacity.c",
+          "sha256": "fd4cbebf3ff30f6cc3b5657efd6bc87c5410264353f9b1b5f70d1ae185f01330"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        }
+      },
+      "tools": [
+        "swdb-c-lowering-9",
+        "clang-22.1.8",
+        "frama-c-wp-33.0",
+        "z3-5.1.0",
+        "cvc5-1.2.1",
+        "alt-ergo-2.6.4"
+      ],
+      "initialized_goals": 5,
+      "rte_goals": 4,
+      "assumption_kinds": [
+        "assumed_clause",
+        "proof_semantics",
+        "reduction",
+        "trusted_tool"
+      ],
+      "flags": [
+        "-wp",
+        "-wp-rte",
+        "-wp-cache",
+        "none",
+        "-wp-model",
+        "+real",
+        "-wp-par",
+        "1",
+        "-machdep",
+        "x86_64",
+        "-rte-initialized",
+        "@all",
+        "-wp-no-filter-init",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-machdep",
+        "x86_64",
+        "-wp-timeout",
+        "30",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-fct=dxf_capacity"
+      ],
+      "verifier_launched": true,
+      "build_constants": [
+        "DX_NT=40",
+        "DX_TS=1"
+      ],
+      "forms": null,
+      "counterexample": null,
+      "job": {
+        "adapter": "wp",
+        "host": "swdb-fixture-host",
+        "worker_core": "unpinned",
+        "wall_seconds": 314.625159,
+        "cpu_seconds": 351.986624,
+        "batch_load": {
+          "start": 3.638,
+          "end": 3.21
+        },
+        "peak_rss_bytes": 1334759424,
+        "batch": "batch.proof.dx100-fixtures.candidate-1.20261015t214821z.d460cd76",
+        "position": 1
+      },
+      "artifacts": 12
+    }
+  ],
+  "physical_pins": {
+    "references": 13,
+    "unique_files": 14,
+    "mismatches": []
+  },
+  "metadata_audit": "passed",
+  "at_utc": "2026-10-15T22:05:35.679998+00:00",
+  "retained_files": {
+    "lane.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-capacity/lane.json",
+      "sha256": "0a0ed1b13e1957644004aed15bd0c8183ba8ecf9eaff0fa617a933d703aade8c",
+      "content": {
+        "socket_lane": {
+          "aligned_cell_age_s": "",
+          "aligned_to": "no_gapbs_batch_running",
+          "command": [
+            "timeout",
+            "--signal=TERM",
+            "--kill-after=60",
+            "1920",
+            "bash",
+            "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-capacity/run.sh"
+          ],
+          "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+          "ended_utc": "2026-10-15T21:53:38Z",
+          "exit_code": 1,
+          "host": "mbit10",
+          "job": "probata-composed-0e7f2327-t27-capacity",
+          "lease_generation": 573,
+          "lease_name": "mbit10-evaluation-node0",
+          "load1_at_start": 1.97,
+          "load1_max": 32,
+          "node": 0,
+          "numa_memory_policy": "bind:0",
+          "numactl": "--cpunodebind=0 --membind=0",
+          "preregistration_sha256": null,
+          "started_utc": "2026-10-15T21:46:58Z"
+        }
+      }
+    },
+    "resources.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-capacity/resources.json",
+      "sha256": "e4eab8aa04c7cb1630b90866e312a5dacfd7c2dcac4cc516e0b34007d6b8fdd3",
+      "content": {
+        "cpu_seconds": 434.69638399999997,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 2929098752,
+        "timed_out": false,
+        "wall_seconds": 397.4209706801921
+      }
+    },
+    "outer-resources.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-capacity/outer-resources.json",
+      "sha256": "a1cb53ae99f948e58934f2e3301d80517cbc23c243e8c3d56f83bcd2ba9ff740",
+      "content": {
+        "exit_code": 1,
+        "peak_rss_bytes": 2980478976,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 399.4585698544979,
+        "cpu_seconds": 516.031877
+      }
+    },
+    "junit.xml": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-capacity/junit.xml",
+      "sha256": "1965fe6c9ce1d0a0fe6bcf8966f8afcc55026c1a07af1e666e3f4925c2958033"
+    },
+    "source-after.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-capacity/source-after.json",
+      "sha256": "53a46be3c357337f05b0ffa45a1ddcedbb313414550758526ba87c2104ea2ad7",
+      "content": {
+        "commit": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+        "source_unchanged": true,
+        "tracked_changes": ""
+      }
+    }
+  },
+  "errors": [],
+  "unrun": [
+    "WP33",
+    "CBMC32/33 pair"
+  ],
+  "boundary": "Actual source-qualified failure, no counterexample/refutation; deficient inductive-hint hypothesis pending actual rerun.",
+  "hint_repair": {
+    "baseline_checkout": "82064d3a",
+    "production_source_unchanged_from": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+    "scope": "test-only ordinary invariant; old memory-clear/count/register/frame/variant retained; no source/contracts/preconditions/assertions/semantics/policy edits",
+    "invariant": "loop invariant \\forall integer u; 0 <= u < DX_NT && 0 <= dx_tile_writer[u] < DX_K ==> dx_kind[dx_tile_writer[u]] == DX_STREAM_LOAD;",
+    "provenance": {
+      "source": "agent"
+    },
+    "reasoning": "Initial idle writers are -1; each call assigns STREAM_LOAD to the destination writer and preserves the kind of non-destination writer slots via dx_kept/dx_same_slot. This history exposes the no-store fact to the DX_NT=40 quantified memory-clear obligation. Establishment/preservation remain ordinary WP goals, not assumptions.",
+    "compiler_controls": {
+      "red": {
+        "resources": {
+          "exit_code": 1,
+          "peak_rss_bytes": 179322880,
+          "out_of_memory": false,
+          "timed_out": false,
+          "wall_seconds": 1.1645127499941736,
+          "cpu_seconds": 0.908315
+        },
+        "files": {
+          "command.json": {
+            "path": "/private/tmp/probata-t27-capacity-hints-red/command.json",
+            "sha256": "51eb6f6015b03aa517d37328bb5f89dd100094964dcee33a80a8a7c14c04044f"
+          },
+          "compiler.log": {
+            "path": "/private/tmp/probata-t27-capacity-hints-red/compiler.log",
+            "sha256": "1a5fb53f003b5b0f1f77ab5ca3a51b867450f4a663e7eb1c326675c8758a1377"
+          },
+          "resources.json": {
+            "path": "/private/tmp/probata-t27-capacity-hints-red/resources.json",
+            "sha256": "66cd36aa79ee76806efcb88cf60d8bbe9d954b5fe249f00f71a2a234b7111833"
+          }
+        }
+      },
+      "green": {
+        "resources": {
+          "exit_code": 0,
+          "peak_rss_bytes": 140443648,
+          "out_of_memory": false,
+          "timed_out": false,
+          "wall_seconds": 0.8244334170012735,
+          "cpu_seconds": 0.791435
+        },
+        "files": {
+          "command.json": {
+            "path": "/private/tmp/probata-t27-capacity-hints-green/command.json",
+            "sha256": "7bec2e0a24e6bdbb90102cfcb4f819a09dc910fe5e3ce15f8fa7f14e1502cabf"
+          },
+          "compiler.log": {
+            "path": "/private/tmp/probata-t27-capacity-hints-green/compiler.log",
+            "sha256": "8a5d3f8c1b452931de963c4bdff9775f7404361fdf3f79b4d740fb5a4f7e6e92"
+          },
+          "resources.json": {
+            "path": "/private/tmp/probata-t27-capacity-hints-green/resources.json",
+            "sha256": "8fbf388a90ec45f050c1be04552c18971b198b6ba4f7c4106a56a3a96d635189"
+          }
+        }
+      },
+      "final-green": {
+        "resources": {
+          "exit_code": 0,
+          "peak_rss_bytes": 173113344,
+          "out_of_memory": false,
+          "timed_out": false,
+          "wall_seconds": 0.8690123329870403,
+          "cpu_seconds": 0.834104
+        },
+        "files": {
+          "command.json": {
+            "path": "/private/tmp/probata-t27-capacity-hints-final-green/command.json",
+            "sha256": "07ae3636299dc7007e3da74fc2ec71aceb7f13e6bc7c38936bd33f8988644e26"
+          },
+          "compiler.log": {
+            "path": "/private/tmp/probata-t27-capacity-hints-final-green/compiler.log",
+            "sha256": "1ab9905d8b0f34f6d791ff7da4efa2de0f7f3e282a078758cc0496cc0230c0f0"
+          },
+          "resources.json": {
+            "path": "/private/tmp/probata-t27-capacity-hints-final-green/resources.json",
+            "sha256": "3ac8925040b2169fee36cdf203eac16db3bf1801607e799ad8a44395e57c7765"
+          }
+        }
+      }
+    },
+    "files": {
+      "tests/test_proof_semantics.py": {
+        "path": "/private/tmp/probata-resume-t27/swdb-project/tests/test_proof_semantics.py",
+        "sha256": "50b7aee7ba9c71d93adb88ae45d38ff416bd8503e430f245e7775b24b83af8c5"
+      },
+      "tests/test_capacity_memory_hints.py": {
+        "path": "/private/tmp/probata-resume-t27/swdb-project/tests/test_capacity_memory_hints.py",
+        "sha256": "03d21cc527fe60608c0be8fd1fae4593ec1f110148ddc4108365372301b22244"
+      },
+      "tests/fixtures/proof/regression_corpus/wp-capacity-stream-writer-history.yaml": {
+        "path": "/private/tmp/probata-resume-t27/swdb-project/tests/fixtures/proof/regression_corpus/wp-capacity-stream-writer-history.yaml",
+        "sha256": "1f422ba67c9436408d1d79a08357b99caeeec934ae8e9f629ec7215ae5864d6c"
+      },
+      "tests/fixtures/proof/dx100/fixture_units.cc": {
+        "path": "/private/tmp/probata-resume-t27/swdb-project/tests/fixtures/proof/dx100/fixture_units.cc",
+        "sha256": "9efbb35205bf4ec93920659e1193dc78f59196d17e2c1fcc5188d87cf58ff0b2"
+      },
+      "library/proof_semantics/dx100_bfs/logic.acsl": {
+        "path": "/private/tmp/probata-resume-t27/swdb-project/library/proof_semantics/dx100_bfs/logic.acsl",
+        "sha256": "34c9971965b53e04cf5ef2dd66abeaecd4d8772660f47def86158bc47624351d"
+      },
+      "library/proof_semantics/dx100_bfs_0_1.yaml": {
+        "path": "/private/tmp/probata-resume-t27/swdb-project/library/proof_semantics/dx100_bfs_0_1.yaml",
+        "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+      }
+    },
+    "acceptance": "PENDING independent review and actual WP32/WP33/CBMC32/33 rerun. Compiler/merge replay establishes placement and erasure only."
+  }
+}

@@ -1,0 +1,20 @@
+# Created: 2026-10-15 ET. Compiler/merge replay; actual capacity remains WP acceptance.
+id: wp-capacity-stream-writer-history
+adapter: wp_subset_hints
+input:
+  source: tests/fixtures/proof/dx100/fixture_units.cc
+  function: dxf_capacity
+  anchor: dxf_capacity.loop1.head
+  invariant: >-
+    loop invariant \forall integer u; 0 <= u < DX_NT && 0 <= dx_tile_writer[u] < DX_K ==> dx_kind[dx_tile_writer[u]] == DX_STREAM_LOAD;
+historical_failure_class: memory_domain
+historical_goals:
+  - typed_real_dxf_capacity_loop_invariant_4_preserved
+  - typed_real_dxf_capacity_call_maa_stream_load_requires_memory_domain
+cause: >-
+  The original unit enqueues only stream loads. DX_NT=40 selects the quantified
+  memory-clear predicate; the old hints omit explicit writer-kind history.
+  State that fact as an ordinary loop invariant with establishment and
+  preservation obligations. Retain memory-clear, source, preconditions, frame,
+  capacity checks, initialization and all RTE goals. Compiler replay does not
+  establish this invariant or the capacity theorem; actual WP rerun is required.
