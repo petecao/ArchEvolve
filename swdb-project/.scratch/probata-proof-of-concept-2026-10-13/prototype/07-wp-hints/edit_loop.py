@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # PROTOTYPE (Probata PoC ticket 07, continuation 2 "t07d"), throwaway. Created 2026-10-14 ET.
+# Updated 2026-10-15 ET: fail-closed ghost-witness ownership guard.
 # The spike's proof-hint loop, version 4, with three method changes (each a flag, recorded in meta.json):
 #   (a) --monotone: Codex never returns a whole hint set. Through the in-call tool (edit_tool_mcp.py) it
 #       proposes small edits (<= edit_core.MAX_OPS operations, each tied to an open goal) against the best
@@ -306,6 +307,7 @@ def main():
              "goal_print.py"]
     meta = {"started": L.now(), "pin": L.PIN,
             "codex_version": subprocess.run([L.CODEX, "--version"], capture_output=True, text=True).stdout.strip(),
+            "ghost_hint_guard": H.GHOST_HINT_RULE,
             "standin_sha256": {f: L.sha(L.STANDIN_DIR / f) for f in [L.UNIT] + L.HEADERS},
             "cpp_unit_sha256": L.sha(L.CPP_UNIT), "rounds": a.rounds, "budget_min": a.budget_min,
             "round_timeout_s": a.round_timeout, "final_reserve_min": a.final_reserve_min,
