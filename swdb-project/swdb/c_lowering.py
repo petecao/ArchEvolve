@@ -568,7 +568,7 @@ class _Unit:
         self.structs, self.struct_order, self.classes = {}, [], {}
         self.functions, self.order, self.pending = {}, [], []
         self.prototypes_only = {}
-        self.globals, self.global_text = [], {}
+        self.globals, self.global_text, self.global_nodes = [], {}, {}
         self.models, self.model_order = {}, []
         self.summaries_used = []
         self.names = {}
@@ -2405,7 +2405,9 @@ def lower(source, function, includes=(), defines=(), summaries=None, semantics=N
                     pointer_bounds=wp_pointer_bounds.inventory(
                         wp_pointer_bounds.complete(unit.pointer_sites, definition_nodes, unit.pointer_nodes,
                             external_calls=unit.summaries_used,
-                            known_pointer_calls=(semantics or {}).get("tile_pointer", ())),
+                            known_pointer_calls=(semantics or {}).get("tile_pointer", ()),
+                            global_nodes=unit.global_nodes.values(), known_origins=(semantics or {}).get("array_origins"),
+                            terminal=certificate),
                         source_sha256=_file_sha256(source), text=text),
                     terminal_release=certificate)
 
@@ -2514,6 +2516,7 @@ def _global(unit, name):
     if len({_where(n) for n in definitions}) != 1:
         raise Unsupported(f"global variable {name} (not one plain declaration)")
     node = definitions[0]
+    unit.global_nodes[name] = node
     printer = _Printer(name, unit)
     printer._at(node)
     if node.get("tls"):

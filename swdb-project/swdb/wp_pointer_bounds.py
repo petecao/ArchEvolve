@@ -36,14 +36,127 @@ def _pointer(node):
                           str((node.get("type") or {}).get("qualType", ""))))
 
 
-def complete(sites, definitions, observed, *, external_calls=(), known_pointer_calls=()):
+def _strip_origin(node):
+    while node.get("kind") in {"ParenExpr", "ImplicitCastExpr", "ExprWithCleanups"} and node.get("inner"):
+        if node.get("kind") == "ImplicitCastExpr" and node.get("castKind") not in {
+                "NoOp", "LValueToRValue", "ArrayToPointerDecay", "NullToPointer"}:
+            break
+        node = node["inner"][0]
+    return node
+
+
+def semantic_origins(library, defines=()):
+    """Origins of exact audited independent tile rows, with live content/entry pins."""
+    from swdb import bounded_initialization, proof_semantics
+    origins = {}
+    for entry in proof_semantics.current(library):
+        model = proof_semantics.model_for(library, entry, defines)
+        policy = bounded_initialization._dx100_policy(library, model, defines)
+        if policy is None or proof_semantics.TILE_POINTER not in policy["calls"]:
+            continue
+        extents = {row["elements"] for row in policy["tile_objects"]}
+        if len(extents) != 1 or next(iter(extents)) <= 0:
+            continue
+        origins[proof_semantics.TILE_POINTER] = {
+            "kind": "semantic_rows", "producer": proof_semantics.TILE_POINTER,
+            "element_type": "int", "elements": next(iter(extents)), "policy": policy}
+    return origins
+
+
+def check_semantic_origins(lowering, library, defines=()):
+    fresh = semantic_origins(library, defines)
+    for row in (lowering.pointer_bounds or {}).get("sites", []):
+        origin = row.get("origin") or {}
+        if origin.get("kind") == "semantic_rows" and origin != fresh.get(origin.get("producer")):
+            raise Refused("array-object origin model content, entry or geometry changed after planning")
+
+
+class _Origins:
+    """Conservative source origins; no allocation-validity-to-array inference."""
+    def __init__(self, definitions, globals=(), known=None, terminal=None):
+        self.definitions, self.known, self.terminal = definitions, known or {}, terminal or {}
+        self.declarations = {function: {n.get("id"): n for n in _walk(root)
+                                     if n.get("kind") in {"VarDecl", "ParmVarDecl"}}
+                             for function, root in definitions.items()}
+        self.globals = {n.get("name"): n for n in globals}
+        self.unstable = set()
+        for function, root in definitions.items():
+            for node in _walk(root):
+                children = [n for n in node.get("inner", []) if isinstance(n, dict) and n.get("kind")]
+                kind, opcode = node.get("kind"), node.get("opcode")
+                if children and (kind == "CompoundAssignOperator" or kind == "BinaryOperator" and opcode == "="
+                                 or kind == "UnaryOperator" and opcode in {"++", "--", "&"}):
+                    target = _strip_origin(children[0])
+                    if target.get("kind") == "DeclRefExpr" and _pointer(target):
+                        self.unstable.add((function, (target.get("referencedDecl") or {}).get("id")))
+                if kind == "VarDecl" and "&" in str((node.get("type") or {}).get("qualType", "")):
+                    self.unstable.update((function, (n.get("referencedDecl") or {}).get("id")) for n in _walk(node)
+                                         if n.get("kind") == "DeclRefExpr" and _pointer(n))
+                # A by-reference parameter can change an alias without an explicit
+                # assignment in this closure. Unknown calls receive no exemption.
+                if kind in {"CallExpr", "CXXMemberCallExpr", "CXXOperatorCallExpr"} and children:
+                    refs = [(n.get("referencedDecl") or {}).get("name") for n in _walk(children[0])]
+                    if not any(name in self.known for name in refs):
+                        for arg in children[1:]:
+                            self.unstable.update((function, (n.get("referencedDecl") or {}).get("id")) for n in _walk(arg)
+                                                 if n.get("kind") == "DeclRefExpr" and _pointer(n))
+
+    def get(self, node, function, seen=()):
+        node = _strip_origin(node)
+        kind, children = node.get("kind"), [n for n in node.get("inner", []) if isinstance(n, dict) and n.get("kind")]
+        if kind == "BinaryOperator" and node.get("opcode") in {"+", "-"}:
+            pointers = [n for n in children if _pointer(n)]
+            if len(pointers) == 1:
+                return self.get(pointers[0], function, seen)
+        if kind == "CallExpr" and children:
+            refs = [(n.get("referencedDecl") or {}).get("name") for n in _walk(children[0])]
+            return next((self.known[name] for name in refs if name in self.known), None)
+        if kind != "DeclRefExpr":
+            return None
+        ref = node.get("referencedDecl") or {}
+        key, name = ref.get("id"), ref.get("name")
+        declaration = self.declarations.get(function, {}).get(key)
+        if declaration is None and ref.get("kind") == "VarDecl":
+            declaration = self.globals.get(name)
+        if declaration is None or key in seen or declaration.get("kind") == "ParmVarDecl":
+            return None
+        qual = str((declaration.get("type") or {}).get("qualType", ""))
+        match = re.fullmatch(r"((?:const )?(?:unsigned |signed )?(?:int|long|long long|short|char|float|double|bool))\s*\[(\d+)\]", qual)
+        if match and int(match[2]) > 0 and declaration.get("storageClass") != "extern":
+            return {"kind": "one_dimensional_array", "name": name,
+                    "element_type": match[1], "elements": int(match[2])}
+        if (function, key) in self.unstable or declaration.get("storageClass") or not _pointer(declaration):
+            return None
+        if function == self.terminal.get("function") and name == self.terminal.get("owner"):
+            from swdb import terminal_release
+            if self.terminal.get("checker") == terminal_release.identity():
+                return {"kind": "certified_terminal_allocation", "name": name, "element_type": "int",
+                        "elements": self.terminal["count"], "certificate": self.terminal}
+        initializers = [n for n in declaration.get("inner", []) if isinstance(n, dict) and n.get("kind")]
+        if len(initializers) != 1:
+            return None
+        return self.get(initializers[0], function, (*seen, key))
+
+
+def _origin_base(node):
+    children = [n for n in node.get("inner", []) if isinstance(n, dict) and n.get("kind")]
+    if node.get("kind") == "UnaryOperator" and node.get("opcode") == "&" and children:
+        return _origin_base(children[0])
+    return next((n for n in children if _pointer(n)), None)
+
+
+def complete(sites, definitions, observed, *, external_calls=(), known_pointer_calls=(),
+             global_nodes=(), known_origins=None, terminal=None):
     """Refuse source operations omitted by printing and untracked subobject origins.
 
     The printer owns normalizations. This independent closure walk ensures that
     wrapper expressions cannot hide an operation from that inventory. Pointer
     casts and array subobjects need a typed extent policy beyond block bounds.
     """
-    rows = list(sites)
+    rows = [dict(row) for row in sites]
+    # Clang dumps for separate functions may reuse process-local AST IDs.
+    by_node = {(row["function"], row.pop("_ast_id", None)): row for row in rows}
+    origins = _Origins(definitions, global_nodes, known_origins, terminal)
     has_arithmetic = bool(rows)
     external = {row.get("name") if isinstance(row, dict) else row for row in external_calls}
     for function, root in definitions.items():
@@ -57,6 +170,27 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
                          (node.get("opcode") in {"++", "--"} and _pointer(children[0])
                           or node.get("opcode") == "&" and children[0].get("kind") == "ArraySubscriptExpr"))
             reason = ""
+            indexed = kind == "ArraySubscriptExpr"
+            if operation or indexed:
+                base = _origin_base(node)
+                origin = origins.get(base, function) if base is not None else None
+                row = by_node.get((function, node.get("id"))) if operation else None
+                offset_nodes = [c for c in children if not _pointer(c)]
+                null_zero = (kind == "BinaryOperator" and node.get("opcode") in {"+", "-"}
+                             and len(offset_nodes) == 1 and _strip_origin(offset_nodes[0]).get("kind") == "IntegerLiteral"
+                             and _strip_origin(offset_nodes[0]).get("value") == "0")
+                if origin is None and null_zero and row is not None:
+                    # The checked assertion will require an actual null pointer;
+                    # invalid nonnull pointers receive no zero-offset exemption.
+                    row["null_only"] = True
+                elif origin is None:
+                    reason = "pointer arithmetic/indexing needs a certified array-object origin; incoming pointer domains are unsupported"
+                elif row is not None:
+                    row["origin"] = origin
+                elif indexed:
+                    rows.append({"function": function, "source_line": ((node.get("loc") or {}).get("line") or
+                                                 ((node.get("range") or {}).get("begin") or {}).get("line")),
+                                 "admission_only": True, "origin": origin, "reason": ""})
             if operation and (function, node.get("id")) not in observed:
                 reason = "pointer operation was not captured at a checked source statement"
             if kind.endswith("CastExpr") and _pointer(node) and node.get("castKind") not in {
@@ -80,7 +214,8 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
                 if any(name in external and name not in known_pointer_calls for name in refs):
                     reason = "opaque summary pointer results need a checked typed object-origin policy"
             if reason:
-                rows.append({"function": function, "source_line": (node.get("loc") or {}).get("line"),
+                rows.append({"function": function, "source_line": ((node.get("loc") or {}).get("line") or
+                                                 ((node.get("range") or {}).get("begin") or {}).get("line")),
                              "anchor": "", "base": "", "expression": "", "offset": None,
                              "reason": reason, "normalized_expression": None})
     return rows
@@ -109,7 +244,7 @@ def site(node, *, expression, base, statement, anchor, function, line, reason=""
             reason = reason or "pointer formation depends on a binding inside its containing statement"
     return {"function": function, "anchor": anchor, "source_line": line, "base": base,
             "expression": expression, "offset": offset, "reason": reason,
-            "normalized_expression": normalize(expression, base, offset) if not reason else None}
+            "normalized_expression": normalize(expression, base, offset) if not reason else None, "_ast_id": node.get("id")}
 
 
 def normalize(expression, base, offset):
@@ -121,8 +256,8 @@ def normalize(expression, base, offset):
 def inventory(sites, *, source_sha256, text):
     report = {"check": identity(), "source_sha256": source_sha256,
               "lowering_sha256": hashlib.sha256(text.encode()).hexdigest(), "sites": list(sites),
-              "domain_boundary": "Checked primitive-object pointer arithmetic including C++ null-plus-zero; "
-                                 "zero-sized nonnull object arithmetic remains outside this conservative slice."}
+              "domain_boundary": "Only certified whole one-dimensional arrays, exact audited semantic rows and terminal typed allocations; "
+                                 "opaque incoming pointer arithmetic/indexing is unsupported; exact C++ null-plus-zero is checked."}
     report["certificate_sha256"] = _hash(report)
     return report
 
@@ -137,6 +272,8 @@ def check(lowering):
     for row in report["sites"]:
         if row["reason"]:
             raise Refused(f"{row['function']}:{row['source_line']}: {row['reason']}")
+        if row.get("admission_only"):
+            continue
         normalized = normalize(row["expression"], row["base"], row.get("offset"))
         if normalized != row.get("normalized_expression") or normalized not in lowering.text:
             raise Refused("pointer formation normalization differs from its generated lowering")
@@ -157,10 +294,14 @@ def prepare(lowering, text):
     report = check(lowering)
     additions = {}
     for i, row in enumerate(report["sites"], 1):
+        if row.get("admission_only"):
+            continue
         base, result = f"({row['base']})", f"({row['expression']})"
         predicate = f"{_in_object_or_one_past(base, base)} && {_in_object_or_one_past(result, base)}"
         if row.get("offset") is not None:
             predicate = f"(({base} == \\null && ({row['offset']}) == 0) || ({predicate}))"
+        if row.get("null_only"):
+            predicate = f"{base} == \\null && ({row['offset']}) == 0"
         assertion = f"/*@ assert swdb_pointer_formation_{i}: {predicate}; */"
         additions.setdefault(row["anchor"], []).append(assertion)
     for anchor, assertions in additions.items():
@@ -215,6 +356,8 @@ def model_view(text, scratch):
     if {n["name"] for n in functions} != names:
         raise Refused("clang omitted a generated C model function definition")
     raw, sites = text.encode(), []
+    model_definitions = {n["name"]: n for n in functions}
+    model_origins = _Origins(model_definitions, [n for n in ast.get("inner", []) if n.get("kind") == "VarDecl"])
 
     def span(node):
         begin, end = (node.get("range") or {}).get("begin") or {}, (node.get("range") or {}).get("end") or {}
@@ -273,6 +416,10 @@ def model_view(text, scratch):
             kind == "UnaryOperator" and node.get("opcode") in {"++", "--"} and children and pointer(children[0])
         address = kind == "UnaryOperator" and node.get("opcode") == "&" and children and \
             children[0].get("kind") == "ArraySubscriptExpr"
+        if arithmetic or address or kind == "ArraySubscriptExpr":
+            base = _origin_base(node)
+            if base is None or model_origins.get(base, function) is None:
+                raise Refused("generated C model pointer arithmetic/indexing needs a certified array-object origin; opaque parameter domains are unsupported")
         if mutation:
             raise Refused("generated C model pointer mutation needs a checked transition policy")
         if arithmetic or address:

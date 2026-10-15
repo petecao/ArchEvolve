@@ -129,6 +129,7 @@ class WpAdapter:
         summaries = self._summarized()
         covered = proof_semantics.covered_names(self.library)
         semantics_options = proof_semantics.lowering_options(self.library)
+        semantics_options.setdefault("semantics", {})["array_origins"] = wp_pointer_bounds.semantic_origins(self.library, self.defines)
         summaries.update(semantics_options.pop("summaries", {}))
         context["covered"] = covered
         try:

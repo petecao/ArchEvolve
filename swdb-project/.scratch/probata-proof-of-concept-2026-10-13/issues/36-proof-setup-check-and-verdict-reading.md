@@ -229,3 +229,49 @@ handoff; the combined identity is recorded there. The post-merge public proof,
 equivalence, tile, native-query and signed-stream CBMC recheck passed **14 tests
 in 230.78 s** (35 unrelated cases deselected). This remains a scoped safety
 repair, not general C++ undefined-behavior freedom. Ticket 27 still blocks resolution.
+
+### WP pointer formation and array-origin boundary — 2026-10-15 ET
+
+The same row-extent issue also affected WP's original two-dimensional state. The shared
+WP prelude and annotation typecheck input now use independent static tile arrays with a
+constant pointer table; every caller/store separation clause quantifies over all rows.
+The public negative retains a failed final memory-access goal, while all four legal setup
+writes are Valid. The legal in-row positive proves. Static storage and the existing pinned
+semantics supply these objects; no allocation-success or hidden input premise was added.
+
+Generic discarded pointer arithmetic was separately red: WP33 RTE could prove an unused
+out-of-range `p + 3`. The lowering now inventories formation across the emitted closure;
+its WP view adds checked named bounds obligations and preserves C++17 null-plus-zero with
+conditional C normalization. Mutation, casts, pointer subtraction, effectful placement and
+unmodeled subobjects refuse. Generated C model definitions receive their own Clang inventory.
+
+An additional uncached audit found the precise provenance limit: allocation validity can
+prove an imported summary's three-element precondition for a two-element local/global row.
+Struct-member variants instead fail. `object_pointer` proves target liveness even across
+rows; WP33 reports `pointer_comparable` undefined and cannot prove even a genuine flat
+one-past comparison. No unsupported predicate, axiom, smoke waiver or new assumption is used.
+
+The resulting conservative gate requires an origin certificate for arithmetic **and ordinary
+indexing**, including retained callees. It admits concrete one-dimensional local/global
+primitive arrays, immutable aliases, the existing certified terminal typed allocation, and
+exact-content/entry/geometry-pinned DX100 rows. Rebinding, references, address escapes and
+unknown calls invalidate aliases. Incoming pointer parameters and opaque generated C-model
+parameter operations refuse until an explicit array-window domain and caller discharge
+exist. Existing concurrency array lists and numeric `valid` ranges do not supply that domain.
+Exact null-plus-zero remains checked; invalid nonnull pointers get no zero-offset exemption.
+
+Validation: **8 public proof controls passed in 449.11s** (tile negative/positive, exact null,
+local/global flat one-past, opaque arithmetic/indexing and rebound-alias refusal). After the
+final internal AST-ID map was scoped by function, **8 public lowering controls passed in 2.75s**;
+IDs never enter records. A new sequence 3 fixture method pins the final checker hashes: its
+actual flat one-past replay proves and its copy model refuses before verifier launch. The
+old methods remain unchanged. Three desired generic/copy positive acceptance cases remain
+strict expected failures pending the explicit domain slice; no acceptance is replaced by a
+refusal and called complete. Broader old fixture expectations still need that domain work.
+
+Compact commands, uncached raw goal outcomes, source/log/inventory hashes, identities and
+validated records: `evidence/wp-pointer-origins-20261015.json`. Full raw evidence is retained
+under `/private/tmp/probata-cbmc-pointers/`; final fixture artifacts use the dedicated
+`/private/tmp/probata-t36-tests/origin-final/` root. The next slice must pin/export explicit
+array windows and independently discharge imported-summary/model domains from caller
+origins. Ticket 36 stays **claimed**, blocked by ticket 27 and combined method/acceptance.
