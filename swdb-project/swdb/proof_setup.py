@@ -25,7 +25,7 @@ CHECK_SOURCES = ("proof_setup.py", "proof_report.ml", "proof.py", "cbmc_adapter.
                  "cbmc_product.py", "wp_adapter.py", "crux_adapter.py", "rocq_adapter.py", "rss_watchdog.py",
                  "vocab.py", "formal_frame.py", "acsl_subset.py", "framac.py", "hint_check.py", "hint_tree.ml",
                  "wp_pointer_bounds.py", "proof_semantics.py", "vector_ownership.py", "standard_model_view.py",
-                 "array_domains.py", "model_domains.py")
+                 "array_domains.py", "model_domains.py", "bounded_entry_windows.py")
 REQUIRED_WP_SWITCHES = (("-wp-no-filter-init", "-wp-filter-init"),)
 _COMPILED_MODULES = {}
 _ASSUME = re.compile(r"\b(?:llvm_assume|crucible_assume|__VERIFIER_assume)\b|\b(?:__CPROVER_assume|SWDB_ASSUME|assume)\s*\(")
@@ -359,6 +359,11 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
         _wp_flags(list(command) if command else flags, scratch or job.scratch)
     elif adapter.name == "cbmc":
         check_cbmc_flags(list(command) if command else flags)
+        from swdb import bounded_entry_windows, c_lowering
+        try:
+            adapter.check_entry_windows(job, context, inputs)
+        except (bounded_entry_windows.Refused, c_lowering.LoweringError) as exc:
+            _fail('pointer_bounds', str(exc))
     method = job.setup.get("method")
     tools = context.get("tools") or {}
     if method is not None:

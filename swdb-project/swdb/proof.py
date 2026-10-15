@@ -437,7 +437,8 @@ def _adapter(args, script, library, contract, method):
     """The adapter of one job: a real adapter builds itself from the call (ticket 21), the scripted one from its script."""
     entry = library.get(contract) if library is not None else None
     if (isinstance(entry, dict) and (entry.get('proof_unit') or {}).get('array_domains')
-            and not (args.adapter == 'wp' and script is None)):
+            and not (script is None and (args.adapter == 'wp'
+                or args.adapter == 'cbmc' and not getattr(args, 'whole_function', None)))):
         raise UsageError('proof_unit.array_domains requires a checked source-origin certificate; '
                          'declaration validation alone does not admit a proof job')
     kind = ADAPTERS[args.adapter]
