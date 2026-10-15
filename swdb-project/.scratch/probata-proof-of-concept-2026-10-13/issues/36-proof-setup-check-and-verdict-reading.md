@@ -621,3 +621,24 @@ Two focused existing regressions also pass at `18e7a7f0` (166.98 s, peak
 5,134,909,440 bytes): original three-read source without declared entry windows
 still refuses before WP, and the existing legal one-past entry-window fixture
 still proves. The manifest includes both records and their checked report hashes.
+
+
+### Original-TU parser context repair — 2026-10-15 ET
+
+Linux's original 134-pass/1-failure native shard exposed a reconstructed CAPI
+header order mismatch: its implicit driver defaults preceded captured libc++
+paths. Suppressing those defaults fixes the original compatibility-header failure.
+Independent follow-up found a second, material CPATH/CPLUS_INCLUDE_PATH ordering
+gap: repeated environment search could hide an explicit-include allocation hook
+even with identical physical dependency sets. Its public lower control reproduced
+RED; no verifier was launched. The parser now runs in an isolated child with
+include environment variables removed. All original driver queries retain the
+original environment explicitly, and worker failures refuse.
+
+At `7e663aaf`, 13 targeted Mac controls pass (36.47 s), and six Linux public
+compiler/stand-in controls pass (87.005 s; peak 374,874,112 bytes under 8 GiB).
+The earlier header-only `b5855894` checkpoint separately passes three Linux
+controls. Both reserved node-0 leases released; the frozen primary remote source
+and concurrent node-1 job were untouched. These results do not upgrade historical
+proof pins or close ticket 36.
+[Compact evidence](../evidence/stdlib-parser-context-20261015.json).
