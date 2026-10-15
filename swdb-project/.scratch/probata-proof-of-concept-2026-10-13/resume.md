@@ -4,7 +4,7 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 16:22 ET. **Implementation is active under the user's ongoing approval.**
+Updated: 2026-10-15 16:39 ET. **Implementation is active under the user's ongoing approval.**
 Integration: `codex/probata-resume-20261015`, based on `yanrujhou_main` at
 `d94d629b`. One remote integration ref is published. Production `swdb/` bytes
 still match `71771f09`; each evaluation retains its exact source identity below.
@@ -15,9 +15,9 @@ Drafts 1/2 remain immutable. Draft 3 and the final production freeze have not ha
 
 | Ticket / owner | Verified checkpoint | Active work |
 |---|---|---|
-| 07 / `ticket07` | Scoped CLI approval repair: 169 controls and neutral actual CLI probe pass. Runs 20/21 remain aborted. | Run 22 at `703ff3d7` aborted before provider work: baseline completed in 15.04 minutes, then process inspection raised AccessDenied during seed checking. Targeted guard diagnosis and representative pipeline checks precede another counted run. |
-| 24 / `ticket24` | Original Ring and allocation safe/seeded pairs audited at `71771f09`; details below. Seven public unsupported-construct controls pass. | Node 0 generation 571 runs seven remaining pairs, fresh dependencies and ten allocation/lifetime controls at `9b75f4a2`. Completed pairs are skipped. Fresh DXC summary (4 ordinary + 1 smoke) and safe caller (9 ordinary + 3 smoke) are Valid; corrected seed is active. |
-| 27 / `ticket27` | Seven of eleven safe cases pass at `71771f09`; stall-condition retains 111 ordinary + 35 smoke Valid, no open goals. | Node 1 generation 602 continues safe cases; remaining safe cases continue. Negative, capacity and bounded/native profiles remain. |
+| 07 / `ticket07` | Scoped CLI repair and neutral actual probe pass. Final resource revision `79d6f338` passes 183 controls; runs 20–22 remain aborted. | Run 22 at `703ff3d7` aborted before provider work: baseline completed in 15.04 minutes, then process inspection raised AccessDenied during seed checking. Fresh five-seed component at `79d6f338` passed at 16:36:59 ET (150.48 seconds, cleanup confirmed). No provider or scientific success; reviewed receipt and fresh freeze precede counted run 23. |
+| 24 / `ticket24` | Original Ring and allocation safe/seeded pairs audited at `71771f09`; details below. Seven public unsupported-construct controls pass. | Node 0 generation 571 runs seven remaining pairs, fresh dependencies and ten allocation/lifetime controls at `9b75f4a2`. Completed pairs are skipped. Fresh DXC summary (4 ordinary + 1 smoke) and safe caller (9 ordinary + 3 smoke) are Valid; corrected +4 seed has one ensures timeout, all 3 smoke Valid, and fresh dependency pins audited. |
+| 27 / `ticket27` | Nine of eleven safe cases pass at `71771f09`; stall-condition retains 111 ordinary + 35 smoke Valid, no open goals. | Node 1 generation 602 continues safe cases; remaining safe cases continue. Negative, capacity and bounded/native profiles remain. |
 | 36 / dependency-gated | Mandatory RTE, complete-command and mutation checks integrated; 122 compiler/scripted controls pass, 13 actual-WP cases excluded. | Waits on 27; no full setup acceptance or production method freeze. |
 
 Ticket 24 evidence: [Ring pair](evidence/t24-original-template-pair-mbit10-20261015.json)
@@ -39,6 +39,8 @@ Raw evidence stays outside Git:
 
 - Mac: aborted `/private/tmp/probata-t07-20261015-run22` (driver 38318 stopped);
   aborted runs 20/21 retain their separate folders. No provider ran in run 22.
+  Completed guard components: `/private/tmp/probata-t07-seed-resource-check-v4` at `e52e3011` and
+  `/private/tmp/probata-t07-seed-resource-check-v5` at `79d6f338`. Both are non-counted diagnostics.
 - Ticket 24: accepted Ring at `/data/yanruj/EvolveSWDB_runs/probata-resume-t24-templates-71771f09`;
   allocation and interrupted out-of-range at `probata-resume-t24-remaining-71771f09`
   under the same root; active retry at `probata-resume-t24-pending-9b75f4a2`.
@@ -68,8 +70,15 @@ The coordinator owns merges, graph updates and remote dispatch. The Mac's actual
 verifier slot belongs to 07; remote jobs are serial within each leased socket.
 This chat's 30-minute heartbeat is active; the old chat's remains paused.
 
-Next: audit each selected original pair and the pending out-of-range record as
-it completes. [Map](map.md), ticket acceptance text and compact evidence remain
+A new compiler-only countercontrol found erased atomic order/weak argument
+evaluation: four defined C++/C mismatches, including 119 versus 19. Current
+constant-order fixture proofs retain their exact old source identities. A narrow
+refusal fix is being reviewed; it must preserve those fixtures while rejecting
+unsupported operands and weak CAS. Fresh composed-source acceptance follows the
+fix; old reports will not be relabeled. Audit: `/private/tmp/probata-t24-atomic-operand-audit.md`.
+
+Next: review the atomic repair and run 23 freeze while auditing each selected
+original pair and the pending out-of-range record as it completes. [Map](map.md), ticket acceptance text and compact evidence remain
 authoritative. Research-only next-ticket notes remain in
 `/private/tmp/probata-ticket25-resume-exploration.md`,
 `/private/tmp/probata-ticket25-lifetime-capabilities.md` and
