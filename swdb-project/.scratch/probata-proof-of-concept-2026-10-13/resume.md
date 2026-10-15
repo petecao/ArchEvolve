@@ -4,7 +4,7 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 16:08 ET. **Implementation is active under the user's ongoing approval.**
+Updated: 2026-10-15 16:22 ET. **Implementation is active under the user's ongoing approval.**
 Integration: `codex/probata-resume-20261015`, based on `yanrujhou_main` at
 `d94d629b`. One remote integration ref is published. Production `swdb/` bytes
 still match `71771f09`; each evaluation retains its exact source identity below.
@@ -15,9 +15,9 @@ Drafts 1/2 remain immutable. Draft 3 and the final production freeze have not ha
 
 | Ticket / owner | Verified checkpoint | Active work |
 |---|---|---|
-| 07 / `ticket07` | Scoped CLI approval repair: 169 controls and neutral actual CLI probe pass. Runs 20/21 remain aborted. | Fresh run 22 at `703ff3d7`, started 15:55:16 ET. Baseline, provider search, final all-goal/smoke replay and covering-wait negative remain. |
-| 24 / `ticket24` | Original Ring and allocation safe/seeded pairs audited at `71771f09`; details below. Seven public unsupported-construct controls pass. | Node 0 generation 571 runs seven remaining pairs, fresh dependencies and ten allocation/lifetime controls at `9b75f4a2`. Completed pairs are skipped. |
-| 27 / `ticket27` | Four of eleven safe cases pass at `71771f09`, including store/wait: 90 ordinary + 29 smoke Valid. | Node 1 generation 602 continues safe cases; stall-condition is in actual WP. Negative, capacity and bounded/native profiles remain. |
+| 07 / `ticket07` | Scoped CLI approval repair: 169 controls and neutral actual CLI probe pass. Runs 20/21 remain aborted. | Run 22 at `703ff3d7` aborted before provider work: baseline completed in 15.04 minutes, then process inspection raised AccessDenied during seed checking. Targeted guard diagnosis and representative pipeline checks precede another counted run. |
+| 24 / `ticket24` | Original Ring and allocation safe/seeded pairs audited at `71771f09`; details below. Seven public unsupported-construct controls pass. | Node 0 generation 571 runs seven remaining pairs, fresh dependencies and ten allocation/lifetime controls at `9b75f4a2`. Completed pairs are skipped. Fresh DXC summary (4 ordinary + 1 smoke) and safe caller (9 ordinary + 3 smoke) are Valid; corrected seed is active. |
+| 27 / `ticket27` | Seven of eleven safe cases pass at `71771f09`; stall-condition retains 111 ordinary + 35 smoke Valid, no open goals. | Node 1 generation 602 continues safe cases; remaining safe cases continue. Negative, capacity and bounded/native profiles remain. |
 | 36 / dependency-gated | Mandatory RTE, complete-command and mutation checks integrated; 122 compiler/scripted controls pass, 13 actual-WP cases excluded. | Waits on 27; no full setup acceptance or production method freeze. |
 
 Ticket 24 evidence: [Ring pair](evidence/t24-original-template-pair-mbit10-20261015.json)
@@ -37,8 +37,8 @@ process-tree cap and a four-hour whole-profile limit.
 
 Raw evidence stays outside Git:
 
-- Mac: active `/private/tmp/probata-t07-20261015-run22` (driver 38318);
-  aborted runs 20/21 retain their separate folders.
+- Mac: aborted `/private/tmp/probata-t07-20261015-run22` (driver 38318 stopped);
+  aborted runs 20/21 retain their separate folders. No provider ran in run 22.
 - Ticket 24: accepted Ring at `/data/yanruj/EvolveSWDB_runs/probata-resume-t24-templates-71771f09`;
   allocation and interrupted out-of-range at `probata-resume-t24-remaining-71771f09`
   under the same root; active retry at `probata-resume-t24-pending-9b75f4a2`.
@@ -46,7 +46,7 @@ Raw evidence stays outside Git:
   old controlled-stop diagnostic remains `probata-resume-t27-diagnostic-20261015-1512`.
 
 Keep the baseline archive and node 1 checkout at `71771f09`, active node 0 at
-`9b75f4a2`, and Mac run 22 at `703ff3d7` while their jobs/readers need them. Node 0
+`9b75f4a2`, and retain Mac run 22 at `703ff3d7` while audit readers need it. Node 0
 uses `/data1/yanruj/probata-t24-corrected-20261015`. Latest preflight: 19 GiB free
 on `/data1`, 95 GiB on `/data`. Both lanes are held by this coordinator; raw output
 stays on `/data`. Recheck live before dispatch. The lane wrapper matches freshly
@@ -57,9 +57,12 @@ A native audit found old DXC seed `+2` satisfies its stand-in contract. Its old 
 timeout is a modular-summary precision control. Corrected seed `+4` has a concrete
 C++/C violation and is selected for fresh actual acceptance. OMP/float negative
 readers accept attributable invariant failures. These changes never relabel old
-records. A separate finite native agreement runner now has a successful template
-pilot and five controls; independent admission review precedes all-nine scaling.
-It reuses ticket 22's accepted native subcheck and emits no proof verdict.
+records. The finite native agreement runner completed its independently admitted full
+nine-group run: 17 rows agree on 112,589 defined input comparisons (samples may
+repeat); the allocation seed is UB-only. Final independent review reconstructed
+every defined observation and all exclusions with zero errors; 15,768 physical
+references match. This reuses ticket 22's accepted native subcheck and emits no
+proof verdict. [Accepted finite agreement and bounds](evidence/t24-finite-agreement-20261015.md).
 
 The coordinator owns merges, graph updates and remote dispatch. The Mac's actual
 verifier slot belongs to 07; remote jobs are serial within each leased socket.

@@ -5,18 +5,18 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-re
 
 ## Current state (resume here)
 
-Updated: 2026-10-15 16:08 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
+Updated: 2026-10-15 16:22 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
 Integration: `codex/probata-resume-20261015`. Production runtime bytes match
 `71771f09`; exact sources: node 0 `9b75f4a2`, node 1 `71771f09`, Mac `703ff3d7`.
 [Current resume and evidence](resume.md).
 
 - **24:** Ring and allocation pairs audited. Node 0 generation 571 runs selected
   remaining pairs/dependencies/controls; prior outer timeout retains an incomplete
-  out-of-range row. Finite native agreement pilot is under independent review.
-- **27:** Four of eleven safe cases pass. Node 1 generation 602 continues; negatives,
+  out-of-range row. Full nine-group finite native agreement is independently accepted.
+- **27:** Seven of eleven safe cases pass. Node 1 generation 602 continues; negatives,
   capacity and bounded/native agreement remain open.
-- **07:** Fresh run 22 active after scoped CLI approval repair and 169 controls.
-  Runs 20/21 remain aborted. No qualifying BFS proof.
+- **07:** Run 22 aborted before provider on a process-inspection error after baseline.
+  Guard diagnosis precedes another counted run; no qualifying BFS proof.
 - **36:** Still dependency-gated. 122 focused compiler/scripted controls pass;
   13 actual-WP cases excluded. Drafts 1/2, final method freeze and held-out gates remain.
 
