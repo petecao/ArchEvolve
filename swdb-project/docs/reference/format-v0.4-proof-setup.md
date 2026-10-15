@@ -34,6 +34,16 @@ checked against the planned input, rather than hand-written harness premises.
 A caller condition belongs in the contract and its lifting obligations. Adding
 `assume(parent[v] >= -1)` to a harness does not make an undeclared premise legal.
 
+Semantics jobs also protect the trusted model's ghost state. Frama-C's kernel
+checks interference with real C state; it permits ghost-to-ghost writes. Hints
+therefore use a smaller language: fresh scalar declarations and simple scalar
+assignments to those witnesses or `dx_store_bound`. The latter is a caller's
+store-frame witness whose adequacy remains a generated proof obligation. Model
+state writes, shadowing existing names, pointer or indexed writes, address-taking,
+calls, mutation expressions, control flow and macro expansion are refused before
+hint goal generation and again before final WP launch. Other hint forms still
+pass the regular syntax-tree hint check.
+
 WP always uses cache mode `none`, the x86_64 machine model, the frozen solver
 lineup and budgets, smoke tests, and default warning levels. Existing sessions,
 script/cache loading, property suppression and every `FRAMAC_WP*` environment

@@ -521,3 +521,54 @@ def test_a_record_that_pins_an_older_proof_semantics_version_stops_counting(dx):
     assert level["level"] != "proven_within_bounds_threads_1"
     stale = json.dumps(level)
     assert record["id"] in stale and "proof_semantics" in stale
+
+@needs_wp
+@pytest.mark.parametrize("text", [
+    "ghost dx_tile_writer[0] = -1;",
+    "ghost dx_count = 0;",
+    "ghost wait_ready(0);",
+    "ghost int *alias = &dx_count; *alias = 0;",
+    "ghost int dx_count = 0;",
+    "ghost dx_store_bound = wait_ready(0);",
+    "ghost dx_store_bound = RESET;",
+    "ghost dx_store_bound = (dx_count = 0);",
+    "ghost int witness = 0; witness++;",
+    "ghost int witness = 0; witness = (*wait_ready)(0);",
+])
+def test_wp_refuses_hint_that_mutates_the_trusted_semantics_ghost_state(dx, text):
+    from test_wp_adapter import fake
+    if "RESET" in text:
+        import hashlib
+        state_path = dx.root / "library" / "proof_semantics" / "dx100_bfs" / "state.h"
+        state_path.write_text("#define RESET (dx_count = 0)\n" + state_path.read_text())
+        entry_path = dx.root / "library" / "proof_semantics" / "dx100_bfs_0_1.yaml"
+        entry = yaml.safe_load(entry_path.read_text())
+        entry["model"]["state"]["sha256"] = hashlib.sha256(state_path.read_bytes()).hexdigest()
+        entry_path.write_text(yaml.safe_dump(entry, sort_keys=False))
+    hint_path = dx.root / "model-state-forgery.yaml"
+    hint_path.write_text(yaml.safe_dump({"hints": [{"anchor": "dxf_three_reads.entry", "kind": "ghost",
+        "text": text, "provenance": {"source": "agent"}}]}))
+    result = run_swdb("prove", "--records", dx.records, "--candidate", dx.candidates["dx"],
+        "--function", "dxf_three_reads", "--contract", "contract.fixture_dx_three_reads", "--adapter", "wp",
+        "--runs-dir", dx.runs, "--hint-file", hint_path, "--format", "json", env=fake("unknown"), timeout=120)
+    assert result.returncode != 0 and "semantics_ghost_ownership" in result.stderr, result.stderr + result.stdout
+    assert not list((dx.records / "proofs").glob("*.yaml"))
+    assert not list(dx.runs.glob("*/wp/frama-c.log"))
+
+
+@needs_wp
+@pytest.mark.parametrize("text", ["ghost int hint_ready = 0; hint_ready = hint_ready + 1;",
+                                  "ghost dx_store_bound = n;"])
+def test_wp_allows_fresh_scalar_witnesses_without_trusting_them_as_model_updates(dx, text):
+    from test_wp_adapter import fake
+    hint_path = dx.root / "scalar-witness.yaml"
+    hint_path.write_text(yaml.safe_dump({"hints": [{"anchor": "dxf_three_reads.entry", "kind": "ghost",
+        "text": text, "provenance": {"source": "agent"}}]}))
+    result = run_swdb("prove", "--records", dx.records, "--candidate", dx.candidates["dx"],
+        "--function", "dxf_three_reads", "--contract", "contract.fixture_dx_three_reads", "--adapter", "wp",
+        "--runs-dir", dx.runs, "--hint-file", hint_path, "--format", "json", env=fake("unknown"), timeout=120)
+    assert result.returncode == 0, result.stderr + result.stdout
+    record = dx.read(json.loads(result.stdout))
+    assert record["hint_check"]["verdict"] == "accepted", record["hint_check"]
+    assert record["verdict"] == "not_proven" and record["failure_class"] == "unknown"
+    assert record["proof_setup_check"]["runs"]

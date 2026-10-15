@@ -18,7 +18,7 @@ if "-version" in args:
     print("33.0 (Arsenic)")
     sys.exit(0)
 mode = os.environ.get("FAKE_WP_MODE", "")
-no_prover = "-wp-prover" in args and args[args.index("-wp-prover") + 1] == "none"
+no_prover = any(args[i + 1] == "none" for i, flag in enumerate(args[:-1]) if flag == "-wp-prover")
 if "-wp" not in args or no_prover:        # not a WP job (a parse-only check, the hint check): the real Frama-C
     sys.exit(subprocess.run([*shlex.split(os.environ["FAKE_WP_REAL"]), *args]).returncode)
 
