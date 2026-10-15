@@ -12,12 +12,14 @@ lock (on the Mac: verifier_run.py).
 
 import hashlib
 import json
+import subprocess
+import sys
 from pathlib import Path
 
 import pytest
 import yaml
 
-from conftest import FIXTURES
+from conftest import FIXTURES, run_swdb
 from test_wp_adapter import FILL, Seed, build_wp_seed, fake, needs_wp
 
 HINTS = FIXTURES / "proof" / "hints"
@@ -52,7 +54,8 @@ class HintSeed(Seed):
         path.write_text(yaml.safe_dump({"hints": hints}, sort_keys=False))
         args = ["--candidate", self.candidates["safe"], "--function", "swdb_fixture_fill", "--contract", FILL,
                 "--adapter", "wp", "--runs-dir", self.runs, "--format", "json", "--hint-file", path]
-        result = self.swdb("prove", *args, *extra, env=env or fake("unknown"))
+        result = run_swdb("prove", "--records", self.records, *args, *extra, env=env or fake("unknown"),
+                          timeout=3600)                   # the job may queue behind others for the verifier lock
         assert (result.returncode == 0) is ok, result.stderr + result.stdout
         return self.read(json.loads(result.stdout)) if ok else result
 
@@ -244,9 +247,13 @@ def test_the_proof_hinting_wrapper_runs_this_check_and_answers_each_rejection_by
                                       {"kind": "external_fixture", "emulates": "codex"})
     good = {"anchor": "f.loop1.head", "kind": "loop_invariant", "text": "loop invariant 0 <= i <= n;"}
     bad = {"anchor": "f.entry", "kind": "assert", "text": "admit n >= 0;"}
-    process, replies = role.mcp_session(workspace.folder / "wrapper", [("check_hints", {"hints": [good]}),
-                                                                       ("check_hints", {"hints": [good, bad]})])
-    texts = [r["result"]["content"][0]["text"] for r in replies]
+    calls = [("check_hints", {"hints": [good]}), ("check_hints", {"hints": [good, bad]})]
+    process = subprocess.run(                         # as role.mcp_session, with time to queue for the verifier lock
+        [sys.executable, "-I", str(proof_hinting.WRAPPER), "--state", str(workspace.folder / "wrapper")],
+        input="\n".join(json.dumps({"jsonrpc": "2.0", "id": n, "method": "tools/call",
+                                    "params": {"name": t, "arguments": a}}) for n, (t, a) in enumerate(calls)) + "\n",
+        capture_output=True, text=True, timeout=3600)
+    texts = [json.loads(line)["result"]["content"][0]["text"] for line in process.stdout.splitlines()]
     assert texts[0].startswith("Proof hint check passed."), process.stderr
     assert "FAILED" in texts[1] and "hint 1: rule admit" in texts[1] and "never a verdict" in texts[1]
 
