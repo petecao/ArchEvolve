@@ -31,6 +31,7 @@ import frame_seeds as FS
 import hints as H
 import loop as L
 import staged_search as S
+import focused_probe as F
 
 HERE = Path(__file__).resolve().parent
 OPS_SCHEMA = {"type": "object", "additionalProperties": False, "required": ["ops", "notes"],
@@ -179,7 +180,7 @@ def phase_text(counted_s):
     if E.STAGED[0] is None:
         return ""
     phase = S.phase(E.STAGED[0], counted_s)
-    return (f"METHOD19 PHASE {phase['index']+1}/3: {phase['name']}; "
+    return (f"METHOD{20 if E.STAGED[0].get('method') == F.METHOD else 19} PHASE {phase['index']+1}/3: {phase['name']}; "
             f"counted interval {phase['start_s']:.1f}..{phase['end_s']:.1f} seconds. " + phase['guidance'])
 
 
@@ -297,7 +298,7 @@ def tool_state(out, r, a, t0, mode, allowed):
         "round": r, "pin": L.PIN, "mode": mode, "allowed_kinds": sorted(allowed), "accept": E.ACCEPT[0], "hint_cap": E.CAP[0],
         "baseline_passed": sorted(L.BASELINE_PASSED), "two_phase": E.TWO_PHASE[0], "show_goal": a.show_goal,
         "live_file": str(state / "lockwait_live.json") if (a.budget_deadline or a.bounded_debt or a.staged_induction) else None,
-        "bounded_debt": a.bounded_debt, "staged_search": E.STAGED[0],
+        "bounded_debt": a.bounded_debt, "staged_search": E.STAGED[0], "method20": a.design_probes,
         "clock_kind": L.CLOCK_KIND[0], "clock_info": S.clock_info() if a.staged_induction else None}, indent=1))
     return state
 
@@ -316,6 +317,8 @@ def read_tool(state):
             "check_calls": sum(1 for s in subs if s["tool"] == "check_edit"),
             "propose_calls": sum(1 for s in subs if s["tool"] == "propose_edit"),
             "show_goal_calls": sum(1 for s in subs if s["tool"] == "show_goal"),
+            "focused_calls": sum(1 for s in subs if s["tool"] == "focused_probe"),
+            "design_calls": sum(1 for s in subs if s["tool"] == "record_design"),
             "accepted": sum(1 for s in subs if str(s.get("result", "")).startswith("accepted")),
             "staged": sum(1 for s in subs if str(s.get("result", "")).startswith("staged")),
             "reverted": sum(1 for s in subs if str(s.get("result", "")).startswith("reverted")),
@@ -367,11 +370,14 @@ def main():
     ap.add_argument("--tool-timeout-s", type=int, default=3600, help="t07e (c2): MCP tool timeout")
     ap.add_argument("--bounded-debt", action="store_true", help="method18: +4 temporary hint goals, 4 repairs/5 counted minutes; incumbent remains separate")
     ap.add_argument("--staged-induction", action="store_true", help="method19: counted three-phase search, +8 temporary total goals; unchanged final acceptance")
+    ap.add_argument("--design-probes", action="store_true", help="method20: explicit state design plus diagnostic-only focused probes; requires staged-induction")
     ap.add_argument("--owner", default="t07d")
     ap.add_argument("--dev-effort", help="DEV ONLY (never a counted run): override the pinned effort")
     ap.add_argument("--dev-no-codex", action="store_true", help="DEV ONLY: stop after the seed round")
     ap.add_argument("--dev-skip-round0", action="store_true", help="DEV ONLY: no no-hint run (no REGRESSION marks)")
     a = ap.parse_args()
+    if a.design_probes and not a.staged_induction:
+        ap.error("method20 design-probes requires the strict staged-induction foundation")
     assert a.monotone, "this loop implements method change (a) only"
     E.ACCEPT[0] = a.accept
     E.CAP[0] = a.hint_cap
@@ -411,13 +417,15 @@ def main():
         allowed -= {"strategy", "proof"}
     standin = (L.STANDIN_DIR / L.UNIT).read_text()
     files = ["loop.py", "hints.py", "wp_run.sh", "edit_loop.py", "edit_core.py", "edit_tool_mcp.py", "frame_seeds.py",
-             "goal_print.py"] + (["staged_search.py", "counted_verifier.py", "test_debt.py", "standin/tdstep_standin.c"] if a.staged_induction else [])
+             "goal_print.py", "focused_probe.py"] + (["staged_search.py", "counted_verifier.py", "test_debt.py", "standin/tdstep_standin.c"] if a.staged_induction else [])
+    if a.design_probes:
+        files += ["test_focused_probe.py"]
     meta = {"started": L.now(), "pin": L.PIN,
             "codex_version": subprocess.run([L.CODEX, "--version"], capture_output=True, text=True).stdout.strip(),
             "ghost_hint_guard": H.GHOST_HINT_RULE,
             "frozen_wp_flags": FROZEN_WP_FLAGS,
             "initialization_filtering": "disabled; all resulting obligations remain mandatory",
-            "diagnostic_guidance": "staged-cas-queue-consumption-v6" if a.staged_induction else "bridge-first-consumed-prefix-cas-v5",
+            "diagnostic_guidance": "state-design-focused-v7" if a.design_probes else "staged-cas-queue-consumption-v6" if a.staged_induction else "bridge-first-consumed-prefix-cas-v5",
             "method18": {"id": "bridge-first-bounded-debt-v1", "added_anchor": "stmt:after_neighbor_gather",
                          "bounded_debt": a.bounded_debt, "hint_debt": E.DEBT_HINTS,
                          "repair_proposals": E.DEBT_REPAIRS, "counted_seconds": E.DEBT_SECONDS,
@@ -448,6 +456,11 @@ def main():
             "historical_input_sha256": S.HISTORICAL_INPUTS,
             "covering_wait_negative": "separate mandatory acceptance control after a proven incumbent; not implied by summary.proven",
             "prototype_rte_boundary": "no production -wp-rte/-rte-initialized @all; no production safety claim"}
+    if a.design_probes:
+        meta["method20"] = {"check": F.identity(), "focused_results": "diagnostic_only",
+            "can_promote": False, "milestones": "complete checked rounds only",
+            "design_objectives": list(F.OBJECTIVES), "phase_fractions": [.55,.35,.10],
+            "prototype_rte_boundary": "unchanged; no production RTE/initializedness claim"}
     (out / "meta.json").write_text(json.dumps(meta, indent=1))
     # Round 0 is outside the legacy budget; methods18/19 count the fresh baseline.
     # Own run, or reused from an
@@ -544,8 +557,8 @@ def main():
     if a.staged_induction:
         if E.SEARCH_REMAINING_S[0]() <= 0:
             raise SystemExit("seed round exhausted search time; no provider launch")
-        E.STAGED[0] = S.schedule(budget_s(t0), (a.budget_min-a.final_reserve_min)*60)
-        meta["method19"]["schedule"] = E.STAGED[0]
+        E.STAGED[0] = (F.schedule if a.design_probes else S.schedule)(budget_s(t0), (a.budget_min-a.final_reserve_min)*60)
+        meta["method20" if a.design_probes else "method19"]["schedule"] = E.STAGED[0]
         (out / "meta.json").write_text(json.dumps(meta, indent=1))
     proven, r, thread, final = False, 0, None, None
     if best["n_open"] == 0:
@@ -565,7 +578,7 @@ def main():
         if thread is None:
             prompt = PROMPT.format(
                 max_ops=E.MAX_OPS, max_text=E.MAX_TEXT, kinds=", ".join(sorted(allowed)),
-                accept_rule=ACCEPT_RULE[a.accept].format(cap=a.hint_cap) + (PHASE2_RULE if a.two_phase else "") + (STAGED_RULE if a.staged_induction else DEBT_RULE if a.bounded_debt else ""),
+                accept_rule=ACCEPT_RULE[a.accept].format(cap=a.hint_cap) + (PHASE2_RULE if a.two_phase else "") + (F.rule(STAGED_RULE) if a.design_probes else STAGED_RULE if a.staged_induction else DEBT_RULE if a.bounded_debt else ""),
                 tool_notes=SHOW_GOAL_NOTE if a.show_goal else "",
                 budget_clock_note=(" (time your tool calls wait for the shared verifier queue is not counted)"
                                    if (a.budget_deadline or a.bounded_debt or a.staged_induction) else ""),
@@ -643,6 +656,9 @@ def main():
                               sum(bool(h.get("final_answer_edit")) for h in history),
                "tokens": {}, "final": {k: v for k, v in (final or {}).items() if k != "failing_goals"} or None,
                "finished": L.now(), "bounded_debt": a.bounded_debt, "staged_induction": a.staged_induction,
+               "method20": a.design_probes,
+               "focused_calls": sum((h.get("tool") or {}).get("focused_calls",0) for h in history),
+               "design_calls": sum((h.get("tool") or {}).get("design_calls",0) for h in history),
                "debt_events_sha256": L.sha(out / "debt-events.jsonl") if (out / "debt-events.jsonl").exists() else None}
     for h in history:
         for k, v in ((h.get("codex") or {}).get("usage") or {}).items():

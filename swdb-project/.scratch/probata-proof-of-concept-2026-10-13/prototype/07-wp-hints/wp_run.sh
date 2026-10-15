@@ -38,6 +38,21 @@ case "$mode" in
     exec env -i HOME="$HOME" PATH="$PATH" TMPDIR="${TMPDIR:-/tmp}" opam exec --switch=framac-33 -- frama-c "$@" \
       -wp -wp-cache none -wp-session session -wp-prover tip,alt-ergo,z3,cvc5 -wp-script dry -wp-timeout 30 -wp-par 12 \
       -wp-smoke-tests -wp-report-json goals.json -then -report -report-untried ;;
+  # Method20: full generation with no prover, then an explicitly diagnostic class run.
+  # No result from these modes is an incumbent or final verdict.
+  probe-gen) rm -rf session && mkdir session
+    exec env -i HOME="$HOME" PATH="$PATH" TMPDIR="${TMPDIR:-/tmp}" opam exec --switch=framac-33 -- frama-c "$@" \
+      -wp -wp-gen -wp-fct TDStep -wp-cache none -wp-session session -wp-prover alt-ergo,z3,cvc5 -wp-report-json goals.json \
+      -then -wp-fct= -wp-prop=@lemma -wp-report-json lemmas.json -then -report -report-untried ;;
+  focused)
+    case "$cache_arg" in
+      '-wp-fct TDStep -wp-prop=@assigns'|'-wp-fct TDStep -wp-prop=@invariant'|'-wp-fct TDStep -wp-prop=@assert'|'-wp-fct TDStep -wp-prop=@check'|'-wp-fct TDStep -wp-prop=@ensures'|'-wp-fct TDStep -wp-prop=@variant'|'-wp-fct TDStep -wp-prop=@requires'|'-wp-fct TDStep -wp-prop=@terminates') ;;
+      *) echo 'refusing unrecognized focused diagnostic selection'; exit 2 ;;
+    esac
+    rm -rf session && mkdir session
+    exec env -i HOME="$HOME" PATH="$PATH" TMPDIR="${TMPDIR:-/tmp}" opam exec --switch=framac-33 -- frama-c "$@" \
+      -wp $cache_arg -wp-cache none -wp-session session -wp-prover tip,alt-ergo,z3,cvc5 \
+      -wp-script dry -wp-timeout "$tmo_arg" -wp-par 12 -wp-report-json goals.json -then -report -report-untried ;;
   # t07e method change (c1): print one goal class after Qed (no prover, nothing proven, never a verdict),
   # for the in-call show_goal tool. $4 = WP selection, e.g. "-wp-fct TDStep -wp-prop=@invariant".
   print) rm -rf session && mkdir session
