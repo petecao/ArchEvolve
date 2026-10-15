@@ -227,7 +227,11 @@ def build_dx_seed(path):
     methods = path / "library" / "methods"
     methods.mkdir(exist_ok=True)
     shutil.copy(FIX / "proof" / "methods" / "contract-fixture-1.yaml", methods)
-    (methods / "cbmc-fixture.yaml").write_text(yaml.safe_dump(method_version(c_lowering.identity()), sort_keys=False))
+    fixture_method = method_version(c_lowering.identity())
+    for tool in fixture_method["lineup"]:
+        if tool["tool"] == "frama-c-wp":
+            tool["flags"] += ["-wp-prover", "z3,cvc5,alt-ergo"]
+    (methods / "cbmc-fixture.yaml").write_text(yaml.safe_dump(fixture_method, sort_keys=False))
     (path / "library" / "proof_units").mkdir()
     (path / "library" / "proof_units" / "dx100_fixture_units.cc").write_text(UNITS)
     for name, data in _dx_contracts().items():
@@ -378,6 +382,14 @@ def prove_wp(dx, name, *defines, hints=None):
     import json
     function = FIXTURES[name][0]
     extra = [arg for define in defines for arg in ("--define", define)]
+    if hints is None and name in {"store_source_wait", "stall_condition", "condition_wait"}:
+        from test_wp_adapter import _hints
+        statement = 7 if name == "store_source_wait" else 9
+        hints = _hints(f"{function}.s{statement}.before",
+            "assert \\forall integer k; 0 <= k < dx_tile_size[0] && k < DX_TS ==> "
+            "0 <= (unsigned int)dx_tile_data[0][k] < n;")
+        hints.insert(0, {"anchor": f"{function}.entry", "kind": "ghost", "text": "ghost dx_store_bound = n;",
+                         "provenance": {"source": "agent"}})
     if hints:
         hint_path = dx.root / "wp-hints.yaml"
         hint_path.write_text(yaml.safe_dump({"hints": hints}, sort_keys=False))
@@ -419,8 +431,13 @@ WP_FAULTS = [("three_reads", "SWDB_EARLY_READ_1", "swdb_tile_read_probe"),
 def test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics(dx, name):
     record = prove_wp(dx, name)
     assert record["verdict"] == "proven", (record.get("failure_class"), record.get("unproven_properties"))
+    if name in {"store_source_wait", "stall_condition"}:
+        assert record["hint_check"]["verdict"] == "accepted", record["hint_check"]
     assert record["pins"]["proof_semantics"]["id"] == ENTRY
     assert {a["kind"] for a in record["assumptions"]} >= {"proof_semantics", "reduction"}
+    flags = record["settings"]["flags"]
+    assert flags.count("-wp-prover") == 1 and flags[flags.index("-wp-prover") + 1] == "z3,cvc5,alt-ergo"
+    assert record["settings"]["proof_semantics"]["unit_requires"]
     probes = record["settings"]["proof_semantics"]["probes"]
     wp_input = open(dx.report(record, "wp_input")).read()
     assert wp_input.count("SWDB_TILE_READ(&(") + wp_input.count("SWDB_TILE_WRITE(&(") == len(probes)
@@ -435,6 +452,30 @@ def test_wp_leaves_every_unit_cbmc_refutes_not_proven_never_refuted(dx, name, de
     unproven = json.dumps(record.get("unproven_properties"))
     if call:                                                  # the probe's (or call's) precondition is the one
         assert call in unproven or "precondition" in unproven, unproven
+
+
+@needs_wp
+def test_a_store_frame_bound_that_omits_a_possible_write_stays_not_proven(dx):
+    record = prove_wp(dx, "store_source_wait", hints=[
+        {"anchor": "dxf_store_source_wait.entry", "kind": "ghost", "text": "ghost dx_store_bound = n - 1;",
+         "provenance": {"source": "agent"}}])
+    assert record["hint_check"]["verdict"] == "accepted", record["hint_check"]
+    assert record["verdict"] == "not_proven" and "counterexample" not in record
+    assert any("store_indices" in str(g["goal"]) and g["status"] != "valid" for g in record["goals"])
+
+
+@needs_wp
+@pytest.mark.parametrize("adapter", ["cbmc", "wp"])
+@pytest.mark.parametrize("capacity", [0, 33])
+def test_a_ghost_capacity_outside_the_command_mask_width_is_rejected_before_tools(dx, adapter, capacity):
+    result = run_swdb("prove", "--records", dx.records, "--candidate", dx.candidates["dx"],
+        "--function", "dxf_three_reads", "--contract", "contract.fixture_dx_three_reads", "--adapter", adapter,
+        "--runs-dir", dx.runs, "--format", "json", "--define", f"DX_K={capacity}",
+        env={"SWDB_FRAMA_C": "none", "SWDB_CLANG": "none", "SWDB_CBMC": "none"})
+    assert result.returncode == 1 and "DX_K must be in 1..32" in result.stderr, result.stderr + result.stdout
+    assert not result.stdout.strip()
+    assert not list(dx.runs.glob("*/wp/frama-c.log"))
+    assert not list(dx.runs.glob("*/cbmc/cbmc_input.c"))
 
 
 @needs_wp

@@ -25,6 +25,8 @@ void dxf_load(int *q, int n, int t) {
   maa_stream_load(q, 0, 1, 2, t, -1);
 }
 
+// Boolean result predicates use eager, side-effect-free conjunctions so WP smoke tests do not add
+// provably unreachable short-circuit false branches. All operand reads are valid under the fixture contract.
 // Three tile-pointer reads, each after its covering wait (SWDB_EARLY_READ_<N> moves read N before it).
 int dxf_three_reads(int *q, int *base, int n) {
   int *t0 = get_cacheable_tile_pointer(0);
@@ -57,7 +59,7 @@ int dxf_three_reads(int *q, int *base, int n) {
 #ifndef SWDB_EARLY_READ_3
   c = t2[0];
 #endif
-  return a == q[0] && b == base[q[0]] && c == base[q[0]];
+  return (a == q[0]) & (b == base[q[0]]) & (c == base[q[0]]);
 }
 
 // get_tile_size after (or, with SWDB_EARLY_SIZE, before) the covering wait.
@@ -105,7 +107,7 @@ int dxf_transitive(int *q, int *base, int n) {
   dxf_load(q, n, 0);
   maa_indirect_load(base, 0, 1, -1);
   wait_ready(1);
-  return t0[0] == q[0] && t1[0] == base[q[0]];
+  return (t0[0] == q[0]) & (t1[0] == base[q[0]]);
 }
 
 // Issuing a command whose destination is tile 4 first covers every uncovered command naming tile 4 in any
@@ -212,9 +214,9 @@ int dxf_value_range(int *q, int *offs, int n) {
   wait_ready(7);
   int count = get_tile_size(7);
 #ifdef SWDB_WRONG_VALUE
-  return count >= 1 && t6[0] == 0 && t7[0] == offs[q[0]] + 1;
+  return (count >= 1) & (t6[0] == 0) & (t7[0] == offs[q[0]] + 1);
 #else
-  return count >= 1 && t6[0] == 0 && t7[0] == offs[q[0]];
+  return (count >= 1) & (t6[0] == 0) & (t7[0] == offs[q[0]]);
 #endif
 }
 

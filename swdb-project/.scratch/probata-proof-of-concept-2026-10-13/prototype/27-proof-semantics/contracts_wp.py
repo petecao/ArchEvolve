@@ -136,12 +136,17 @@ ensures \\forall integer k; 0 <= k < \\old(dx_tile_size[src_tile]) && k < DX_TS 
      ["operands", "store_operands", "store_vector_values", "store_duplicate_order", "dispatch_stall"], f"""\
 requires 0 <= idx_tile < DX_NT && 0 <= src_tile < DX_NT && (cond_tile == -1 || 0 <= cond_tile < DX_NT);
 requires 0 <= dst_tile < DX_NT && dst_tile != idx_tile && dst_tile != src_tile && dst_tile != cond_tile;
+requires \\base_addr(data) != \\base_addr(&dx_tile_data[0][0]) &&
+  \\base_addr(data) != \\base_addr(&dx_tile_size[0]) && \\base_addr(data) != \\base_addr(&dx_reg_value[0]);
 requires dx_tile_size[src_tile] == dx_tile_size[idx_tile] &&
   (cond_tile == -1 || dx_tile_size[cond_tile] == dx_tile_size[idx_tile]);
 {store_req}requires \\forall integer k; 0 <= k < dx_tile_size[idx_tile] && k < DX_TS &&
   (cond_tile == -1 || dx_tile_data[cond_tile][k] != 0) ==> \\valid(data + (unsigned int)dx_tile_data[idx_tile][k]);
-assigns data[(unsigned int)dx_tile_data[idx_tile][0 ..
-  (dx_tile_size[idx_tile] < DX_TS ? dx_tile_size[idx_tile] : DX_TS) - 1]],
+requires store_frame_bound: 0 <= dx_store_bound;
+requires store_indices: \\forall integer k; 0 <= k < dx_tile_size[idx_tile] && k < DX_TS &&
+  (cond_tile == -1 || dx_tile_data[cond_tile][k] != 0) ==>
+  0 <= (unsigned int)dx_tile_data[idx_tile][k] < dx_store_bound;
+assigns data[0 .. dx_store_bound - 1],
   dx_tile_data[dst_tile][0 .. DX_TS - 1], dx_tile_size[dst_tile], {GHOST};
 {store_ens}ensures dx_base[dx_tile_writer[dst_tile]] == data && dx_index[dx_tile_writer[dst_tile]] == idx_tile;
 ensures dx_tile_size[dst_tile] == \\old(dx_tile_size[idx_tile]);

@@ -169,3 +169,36 @@ out once under contention, with CBMC itself at 0.3 s).
   `-inline-calls` for lowered callees; check it covers this).
 - **Next step.** Port the adapter changes (4), check (5), fix (1), then run `pytest tests/test_proof_semantics.py -k wp` with the sandbox off, record the
   numbers here, and resolve.
+
+## Resumed implementation — 2026-10-15 02:02 ET
+
+Status remains `claimed`; the WP acceptance is running. Integration branch
+`codex/probata-poc-integration`; implementer branch `codex/probata-t27`.
+
+- Restored proof-semantics lowering, call contracts, probes, pins and assumptions in the current WP adapter,
+  preserving ticket 25's summary/model interfaces (`8344da11`, then integration merge `3ed49971`).
+- Fixed a trusted-contract frame defect: command contracts omitted `dx_reg_a/b/c` even though their C model
+  writes those arrays and their postconditions read them. The frame now includes all three (`9b429230`).
+- Added every previously excluded WP store/wait fixture and the 32/33 capacity pair. A real Mac WP run proved
+  capacity 32 with a checked loop hint set; 33 remained not proven, `timeout` before a named capacity obligation
+  was added (`b6bc3009`). The named obligation's new classification still needs its green run.
+- Seven entry/citation/Frama-C validation controls passed after the contract edits. The first real mbit10
+  diagnostic at `9b429230` passed `three_reads`, `size`, and `cpu_write`; `store_source_wait` timed out on its
+  assigns inclusion. That diagnostic was stopped after this red result; it is not a full acceptance run.
+- The next store attempt uses a checked assertion that all active index-tile elements are in `[0,n)`
+  (`c466499e`). It runs through ticket 36's independent generated-goal inventory, smoke tests and setup check
+  (`d9e10634`). Raw output: `/data/yanruj/EvolveSWDB_runs/probata-t27-20261015/store-hint`, tmux
+  `probata-t27-hint`, coordinated socket 0. Source is frozen while the run is active.
+- Remaining: finish that exact-frame attempt (use a conservative allocation frame if necessary); rerun all
+  proof-semantics acceptance and WP regressions on the combined integration; record actual outcomes here.
+  The serial portfolio order is now Z3, CVC5, Alt-Ergo (`7378075c`), with the same tools and budgets; the next
+  run will test this scheduling choice. No runtime speed claim is established.
+
+2026-10-15 follow-up: the checked index assertion proved, but the exact indirect frame still timed out
+(74/76 generated goals valid, two assigns goals not proven). The next form uses a checked ghost frame
+witness `dx_store_bound = n` and a named obligation that every selected store index lies within it. The
+unit's original formal half is unchanged; the store frame is conservatively `data[0 .. dx_store_bound-1]`.
+The proof-only scalar is declared once in `ghost.acsl`; the C model ignores it. Its insufficient-bound
+control and safe fixtures remain pending. Also closed a generated-model validity gap: overriding `DX_K`
+outside `1..32` is refused before any tool, consistent with the 32-bit slot masks. All four public controls
+(0/33, CBMC/WP), including disabled tool executables, pass; Frama-C validates the updated entry and contracts.
