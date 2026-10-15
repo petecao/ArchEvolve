@@ -120,6 +120,7 @@ void TDStep(const Graph *g, struct pvector_SGOffset *VertexOffsets, struct pvect
           if (count == 0) break;
           /* @anchor stmt:after_count */
           __dxc_gather(g->out_neighbors_, c.tile[7], c.tile[0]);
+          /* @anchor stmt:after_neighbor_gather */
           __dxc_gather(queue->shared + begin, c.tile[6], c.tile[3]);
           __dxc_gather(pvector_NodeID_data(parent), c.tile[0], c.tile[5]);
           /* @anchor stmt:after_gathers */

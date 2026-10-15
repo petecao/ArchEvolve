@@ -95,7 +95,8 @@ class _Plan:
         self.reserved = {s.decode("ascii") for s in reserved}
         self.edits, self.captures, self.targets = [], [], {}
         def scan(node, parent=None):
-            if node.get("kind") in {"ReturnStmt", "DeclStmt"}:
+            if node.get("kind") in {"ReturnStmt", "DeclStmt"} or (
+                    node.get("kind") == "BinaryOperator" and node.get("opcode") == "="):
                 nested = []
                 for outer in ast._walk(node):
                     if outer.get("kind") != "ArraySubscriptExpr":
@@ -140,6 +141,14 @@ class _Plan:
 
     def capture_return(self, statement, nested):
         declaration = statement.get("kind") == "DeclStmt"
+        assignment = statement.get("kind") == "BinaryOperator"
+        if assignment:
+            operands = ast._children(statement)
+            destination = _strip(operands[0]) if len(operands) == 2 else {}
+            if (destination.get("kind") != "DeclRefExpr" or
+                    destination.get("referencedDecl", {}).get("kind") != "VarDecl" or
+                    destination.get("type", {}).get("qualType") != "int"):
+                raise Refused("nested assignment needs one plain int local destination")
         if declaration:
             declarations = ast._children(statement)
             if (len(declarations) != 1 or declarations[0].get("kind") != "VarDecl" or
@@ -154,7 +163,8 @@ class _Plan:
             kind = node.get("kind")
             if kind not in allowed or "volatile" in node.get("type", {}).get("qualType", ""):
                 raise Refused("nested return must contain only nonvolatile pure primitive expressions")
-            if kind == "BinaryOperator" and node.get("opcode") not in {"+", "-", "*", "/", "%", "&", "|", "^", "==", "!=", "<", ">", "<=", ">="}:
+            if (kind == "BinaryOperator" and node.get("opcode") not in {"+", "-", "*", "/", "%", "&", "|", "^", "==", "!=", "<", ">", "<=", ">="}
+                    and not (assignment and node is statement and node.get("opcode") == "=")):
                 raise Refused("nested return cannot reorder conditional evaluation or mutation")
             if kind == "UnaryOperator" and node.get("opcode") not in {"+", "-", "!", "~"}:
                 raise Refused("nested return cannot transport address, dereference, or mutation operators")
@@ -234,6 +244,11 @@ class _Plan:
         if output[view_cursor:] != self.raw[original_cursor:]:
             raise Refused("nested renderer changed bytes after its source statements")
         actual = ast._Tree(path, self.tool, self.includes, self.defines)
+        rewritten_entry = actual.entry(self.entry["name"])
+        if (ast._signature(self.entry) != ast._signature(rewritten_entry) or
+                [ast._signature(n) for n in ast._children(self.entry) if n.get("kind") == "ParmVarDecl"] !=
+                [ast._signature(n) for n in ast._children(rewritten_entry) if n.get("kind") == "ParmVarDecl"]):
+            raise Refused("nested view changed the original unit entry signature or parameter scope")
         headers = lambda deps, source: {p: h for p, h in deps.items() if p != str(source)}
         original_headers = headers(self.dependencies, self.source)
         if headers(ast._dependencies(path, self.tool, self.includes, self.defines), Path(path).resolve()) != original_headers:
@@ -336,7 +351,7 @@ def prepare(source, function, *, entry_windows, includes=(), defines=(), scratch
         certificate = plan.certificate(plan.verify(path))
         pins = {"nested_read_check": identity(), "nested_read_certificate":
                 {"id": "swdb-nested-read-certificate-1", "sha256": ast._hash(certificate)}}
-        assumption = {"kind": "trusted_tool", "text": "The checked nested-read view evaluates each original plain int index read once in an effect-free return, before its outer read; all input-window, validity and initializedness obligations remain checked."}
+        assumption = {"kind": "trusted_tool", "text": "The checked nested-read view evaluates each original plain int index read once before its outer read in an effect-free return, automatic int initializer or plain local int assignment; original declaration scope and bindings are preserved, and all input-window, validity and initializedness obligations remain checked."}
         return View(path, plan.output, plan.includes, certificate, pins, assumption)
     except (ast.Refused, UnicodeError) as exc:
         raise Refused(str(exc)) from None

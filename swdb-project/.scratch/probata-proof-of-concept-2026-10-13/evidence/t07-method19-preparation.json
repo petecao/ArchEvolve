@@ -1,0 +1,181 @@
+{
+  "created_et": "2026-10-15",
+  "status": "implementation_prepared_review_pending",
+  "counted_run_launched": false,
+  "provider_or_solver_launched_by_controls": false,
+  "base": "8797dc6d",
+  "ported_reviewed_baseline": "917ef800",
+  "historical_source": "996bd62c1dd361845a7d6041167ca762e6d0ee32",
+  "method": {
+    "id": "staged-induction-working-v1",
+    "total_budget_seconds": 3600,
+    "final_reserve_seconds": 480,
+    "phases": [
+      "bridges",
+      "consumption",
+      "recovery"
+    ],
+    "phase_allocation": "equal thirds after fresh counted baseline and seeds",
+    "temporary_total_debt": 8,
+    "stage_lifetime_counted_seconds": 300,
+    "repair_proposals": 4,
+    "new_stage_in_recovery": false,
+    "incumbent": "best.json",
+    "working": "debt.json",
+    "promotion": "total open goals <= captured incumbent; completed before all applicable deadlines",
+    "clock": "suspend-inclusive continuous monotonic; same serialized implementation/timebase required for excluded waits",
+    "negative_control": "covering-wait removal remains mandatory separate acceptance after proven incumbent; summary.proven alone does not establish ticket pass"
+  },
+  "historical_input_sha256": {
+    "tdstep_standin.c": "b4a820bd20b197eee293616af17da884bbc63ed92f9252e77f261092387024de",
+    "dxc_summaries.h": "d708c0ef974e5ede1aaadd2b5e66dd785affa5e1dc6ef37419bf9e72517ae0d2",
+    "gapbs_models.h": "401d8ccfa8fdc1ef3734c97563a1c110d003d8847508aaa24ec3f300a33eed3e",
+    "bfs_unit.h": "1bcbf4dac683d6a46269fcd5f896fefc2571adc49d059b46f93fb25eb0f7b235"
+  },
+  "harness_sha256": {
+    "loop.py": "92bff5987d6073f5a06482fddc95ad362dd3dd871ce2bc4cfa52f66a00fbf481",
+    "hints.py": "48bafc2eab6caf40bb921e773212dff3efbbbc652aa2d120d87da4704b021bca",
+    "wp_run.sh": "80340ca19f516ac1da217aedb54309fd8ff127f04ec1165c82d61565254eaff1",
+    "edit_loop.py": "e3b23af513fcc8fe11389a9e4fe4c8c8788842585c6109810961e6a0e3827265",
+    "edit_core.py": "4b782c2e85c67eccd697f1fba16f6e99c4bda778c2cb47e3826b107b98a8990c",
+    "edit_tool_mcp.py": "c8605ccea17126df24d578c82d3fe8110fb6f37dfc4708b622b0820d03e6d203",
+    "frame_seeds.py": "7c8bec31b2be840218545a3370cafde8431ddd4699a363ebe3e391fb56c519c2",
+    "goal_print.py": "9494e8d457f0d28d055c109ea4fbaada278c15e3088466096dc2a407a89a358f",
+    "staged_search.py": "473a4a0583032b45c27d179f120fbc47c89d16ca589b761a8b38daea21a5d216",
+    "counted_verifier.py": "504e22b88a04b65c604903b0b67751c0a69b2e6c1424a9c0c64a8ba64f5d1942",
+    "test_debt.py": "8bf8ccd58625ae289e082c0bb217543ebb34d8920ec7b94467a75fed36373721",
+    "standin/tdstep_standin.c": "b4a820bd20b197eee293616af17da884bbc63ed92f9252e77f261092387024de"
+  },
+  "control_source_sha256": {
+    "test_staged_search.py": "db6f83f41abc120ad59a23682c81a451253f6f1965bdadc20d3e9825222c567d",
+    "test_counted_verifier.py": "a3d622548566597757f56f411040287a13b063feec6c3097a6468e440520d2f1"
+  },
+  "plan": {
+    "path": "/private/tmp/probata-method19-plan.md",
+    "sha256": "50f3462ebb6d7faa12b3ada013a749d7ccf230ea5bc4f4b24e16d572eb311fb0"
+  },
+  "reports": [
+    {
+      "path": "/private/tmp/probata-method19-port.jsonl",
+      "sha256": "40a24ecd8c066a5f3f35dba9c6a08b7b4f8472f853f39b8d64d56b7a86401d45",
+      "call_outcomes": {
+        "passed": 85,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "path": "/private/tmp/probata-method19-state-green.jsonl",
+      "sha256": "3787d377c2dc8c13914b13c7f999145fc282d460fbbec8320a5c1766b934f102",
+      "call_outcomes": {
+        "passed": 32,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "path": "/private/tmp/probata-method19-clock-policy.jsonl",
+      "sha256": "6ca13d3fb2d9cff11a9828abb8a55450f85b4839b7113ec36c5c992d67ce9059",
+      "call_outcomes": {
+        "passed": 10,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "path": "/private/tmp/probata-method19-driver-red.jsonl",
+      "sha256": "b2d4969026066bcd28f67f076a1f825609722e451379bcaca5502ce0ecf3242b",
+      "call_outcomes": {
+        "passed": 0,
+        "failed": 1,
+        "skipped": 0
+      }
+    },
+    {
+      "path": "/private/tmp/probata-method19-driver-green2.jsonl",
+      "sha256": "ded3a6bcaad6db0a26445f232f05142ed863180180811087b3ea7b5b03f5482a",
+      "call_outcomes": {
+        "passed": 10,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "path": "/private/tmp/probata-method19-pins-red.jsonl",
+      "sha256": "f3027375de6bedb174a34888d2ecefb9d1afd91223a97f7c4518c59a0b388d61",
+      "call_outcomes": {
+        "passed": 11,
+        "failed": 2,
+        "skipped": 0
+      }
+    },
+    {
+      "path": "/private/tmp/probata-method19-clocks-green.jsonl",
+      "sha256": "bddd85eaaa29db416831215a6b0634ab33ac01b46f14f02bb7d8732c311b9d3e",
+      "call_outcomes": {
+        "passed": 44,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "path": "/private/tmp/probata-method19-source-red.jsonl",
+      "sha256": "3f6981f67300b6311b8637be3bd2d94712b49798b8563e695bf57fc9d9e1beea",
+      "call_outcomes": {
+        "passed": 0,
+        "failed": 1,
+        "skipped": 0
+      }
+    },
+    {
+      "path": "/private/tmp/probata-method19-source-green2.jsonl",
+      "sha256": "f3fb33012a59ad2ea14200827399a87b7674f2381296c5310a7b13a742aa5fd1",
+      "call_outcomes": {
+        "passed": 19,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "path": "/private/tmp/probata-method19-final.jsonl",
+      "sha256": "9da8f91f4dcd539f953b54998f9f044dec62251c2e6de6801fba2f82052f47aa",
+      "call_outcomes": {
+        "passed": 108,
+        "failed": 1,
+        "skipped": 0
+      }
+    },
+    {
+      "path": "/private/tmp/probata-method19-fifo-green.jsonl",
+      "sha256": "ca94ac8050659a16e63bcdc2f149cbe448dbe353bf47dac757f9b6a854484aa4",
+      "call_outcomes": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "path": "/private/tmp/probata-method19-final-green.jsonl",
+      "sha256": "a56b1e91a916787d9370dbd12cb1836fa44d1843d63b8d8946cedeeccab026fd",
+      "call_outcomes": {
+        "passed": 110,
+        "failed": 0,
+        "skipped": 0
+      }
+    }
+  ],
+  "diagnosed_preparation_failure": {
+    "report": "/private/tmp/probata-method19-final.jsonl",
+    "failure": "FIFO third waiter could overtake second after first acquired owner removed its ticket",
+    "repair": "eligibility subtracts occupied slots before choosing oldest queued tickets",
+    "replay": "/private/tmp/probata-method19-final-green.jsonl"
+  },
+  "boundaries": [
+    "No counted evaluation or concrete proof hint was authored/launched by this preparation.",
+    "Root or independent agent must review clocks, rollback, process cleanup and source pins before launch.",
+    "External verifier_run.py remains unchanged; scoped runner shares queue/atomic lease/owner protocol, defaults to 8 GiB and refuses unconfirmed cleanup by quarantining its own lease.",
+    "Legacy peers retain their own ordering policy; this scoped runner observes older live tickets and available slots.",
+    "Strict -wp-no-filter-init remains in every proof mode; prototype lacks production -wp-rte/-rte-initialized @all.",
+    "All ordinary/hint goals, fresh full cache-none replay, smoke and covering-wait negative acceptance remain mandatory; ticket07 remains claimed."
+  ]
+}

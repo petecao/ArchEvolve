@@ -648,6 +648,9 @@ are explicit. [Evidence](../evidence/wp-nested-initializers-20261015.json).
 Helper/nested statement-anchor hints and the full store/capacity acceptance remain
 open; this checkpoint does not resolve the ticket.
 
+### Checked scalar assignment reads — 2026-10-15 ET
+
+At frozen `71382aff`, the original local int assignment keeps its destination and later use. The safe WP fixture proves (14 ordinary/1 smoke); removing source initializedness leaves its RTE initialization obligation open (13 ordinary Valid/1 timeout, 1 smoke passed). Both controls passed in 51.39s under the 8 GiB guard. Independent source checks reject memory destinations, parameter writes, inner effects and unbraced conditional placement. Component controls: 31 passed; public stand-in admission: one passed. [Compact evidence](../evidence/wp-nested-assignments-20261015.json). This is a bounded slice checkpoint; ticket status remains claimed.
 
 ### Original-TU parser context repair — 2026-10-15 ET
 
@@ -704,3 +707,26 @@ prelaunch source refusal retains false. The public stand-in regression first
 reproduces1failed/1passed; the correction gives2passed in47.06s under8GiB
 (peak408,092,672bytes), with no actual solver. Historical5c records are unchanged.
 [Evidence](../evidence/wp-launch-metadata-20261015.json). Ticket36 stays claimed.
+
+
+### Entry hints and original store proof — 2026-10-15 ET
+
+At frozen `593c35d6`, checked helper/nested views admit only original-unit entry assertions and ghost hints, retaining normal noninterference checks. Eight public/component controls passed (234.60s); all five stand-in records and 70 artifact references including adapter logs match. Independent review found no blocker. The original store-source-wait fixture, with explicit q/p:n windows and entry witness `dx_store_bound=n`, proves all 90 ordinary goals and passes 29 smoke checks. The shortened witness `n-1` stays not proven with one open `store_indices` obligation and 29 smoke tests passed. The old-source premature CPU read stops prelaunch because scalar assignment was not yet supported; its test failure is retained and a separate composed-source replay is required. All three records, 59 artifact references including adapter logs and 10 runtime pins match. [Compact evidence](../evidence/wp-source-view-entry-hints-20261015.json). Ticket remains claimed.
+
+
+Composed `aead7909` passes 37 component/public controls (56.55s). Its premature ordinary CPU read is intentionally refused before WP by the existing semantics0.1 policy; overlap hazards belong to ticket28. The new test incorrectly expected a WP result and failed on absent hint metadata. A test-only correction now checks that documented refusal, and strengthens the shortened-frame assertion to the specific open store_indices obligation. Offline assertions pass all three frozen593 records and the frozenaead refusal; runtime and historical artifacts are unchanged. No overlap theorem is claimed.
+
+
+### Focused Linux final setup audit — 2026-10-15 12:14 ET
+
+Frozen `d3a5dd48` finishes node 0 with 167 passing compiler/stand-in controls and
+node 1 with 20 passing owner/binding/copy controls, both exit0. Actual owner and
+qualified copy positives prove; stale alias, missing initialization and short
+capacity remain not_proven. Invocation metadata is true for attempts and false
+for prelaunch refusal. Historical5c failures and later entry/assignment pins stay
+separate; no whole-ticket or production-method claim is made.
+
+All 17 records, 90 report references plus 17 adapter logs (107 total), 19,946
+absolute file-pin references, 196 runtime source files per lane and 16 certificate
+self-hashes match. Both source-after checks remain clean atd3a. Ticket stays claimed.
+[Final audit](../evidence/focused-parser-owner-final-20261015.json).

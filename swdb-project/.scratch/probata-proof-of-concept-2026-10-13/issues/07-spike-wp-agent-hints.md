@@ -1,7 +1,7 @@
 # 07 — Spike (c): WP with agent hints
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-15 ET (run 18 completed unproven; frozen inputs and outcome audited); 2026-10-14 22:50 ET (continuation 3: runs 10-12 fail, verdict fail so far, effort paused); 2026-10-14 17:10 ET (continuation 2: runs 7-9 fail, verdict fail so far); 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-15 ET (method19 prepared; review pending, no launch; run18 remains unproven); 2026-10-14 22:50 ET (continuation 3: runs 10-12 fail, verdict fail so far, effort paused); 2026-10-14 17:10 ET (continuation 2: runs 7-9 fail, verdict fail so far); 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 03
@@ -1045,3 +1045,49 @@ hazard evidence, not production initializedness/UB-safety acceptance or a result
 for tickets 27/36/39. Ticket 07 stays **claimed** within the authorized shared
 two-week box; run18 does not satisfy its passing criteria or independently decide
 ticket 09's box-end stop condition.
+
+
+### Prospective method19 prepared, not launched — 2026-10-15 ET
+
+The unchanged method18 retry is rejected. Method19 now implements one fresh
+conversation with three counted search intervals: local/CAS/history/queue bridges,
+saved-pre-issue-cursor consumption induction, then recovery. Its separate working
+candidate may expose at most eight additional **total** obligations, including unit
+goals, for 300 counted seconds and four repair proposals. Rejected/invalid proposals
+consume repairs; no edit or phase transition resets age. The recovery interval
+admits no new stage. Only recovery of the captured incumbent total promotes hints;
+otherwise rollback preserves `best.json`. This is a prospectively named search
+change, not a relaxation of proof acceptance.
+
+The fresh baseline, seeds, provider/tools, rejected proposals, rollback and final
+replay share one 60-minute clock with an eight-minute final reserve. Sleep-inclusive
+continuous clocks replace wall-clock duration accounting in this named mode only.
+A scoped pinned runner preserves shared atomic leases and excludes only exactly
+tagged clock-compatible waits. A final control run reproduced FIFO overtaking;
+eligibility now subtracts occupied slots, and the full **110-control union passes**.
+Tests launch Python stand-ins with private locks, never a provider or solver.
+
+[Preparation evidence](../evidence/t07-method19-preparation.json) pins the reports,
+the exact four reviewed `996bd62c` stand-in/model files, seven ported paths and new
+policy/runner helpers. [Policy and boundaries](../prototype/07-wp-hints/method19.md)
+explain the staged candidate, phase clock and cleanup protocol. No prior hints,
+audit counterstates or finite projections enter the provider workspace. Every
+concrete hint must come from its fresh conversation.
+
+**Independent clock/rollback/source-pin review is pending; no method19 counted run
+has launched.** Fresh all-goal/cache-none/smoke acceptance and the covering-wait
+negative remain mandatory. Strict no-filter-init is retained; the existing prototype
+RTE boundary is unchanged. Ticket 07 stays **claimed**. This preparation does not
+close the ticket or decide the shared two-week stop condition.
+
+Method19 prelaunch review found and reproduced an exited-root cleanup gap at
+`8af8956b`: an unsampled same-group child could survive after the root exited.
+The scoped runner now drains/checks the owned group after root exit and keeps
+unsampled ancestry explicitly unconfirmed; it never claims unseen escaped children
+stopped. PID/birth/group checks prevent targeting a replacement root. Baseline,
+seed, candidate and final run-integrity gates also reject process/cleanup failure
+and incomplete goal/property inventories, while retaining completed runs with
+ordinary open/unknown goals. The revised **137-control union passes** using only
+Python stand-ins/private locks. [Review-fix evidence](../evidence/t07-method19-review-fixes.json)
+retains the RED and revised pins. Independent re-review remains pending; no counted
+method19 run has launched and ticket status is unchanged.
