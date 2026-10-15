@@ -1383,3 +1383,17 @@ a future provider. The allotted diagnostic did not complete even the positive re
 establishes that a complete positive plus same-strength negative fits12minutes. Scheduling alone has no
 evidence of all-goal success; a future zero-seed structural method needs separate
 prospective budget, provenance, accounting tests/review and launch authorization.
+
+
+### Prospective method22 protocol — 2026-10-15 ET
+
+[Method22](../prototype/07-wp-hints/METHOD22.md) is a separately named, zero-seed
+Codex-only plan with bounded pages of fresh active WP tasks and raw-operation to
+record/edit-parent provenance. A natural complete usage receipt for every scoped
+provider call is required. The proposed allocation stops proof tools at33minutes,
+allows natural return through hard36, and reserves the remaining total60minute
+budget for full30positive plus identical-hints full30negative (at least8minutes
+reserved for negative). Its sufficiency is unproven. No historical hint, baseline,
+conversation or telemetry is supplied to the new provider. Independent composed
+review, clean freeze, live preflight and coordinator launch are still required;
+no counted method22 run or qualifying success has occurred.

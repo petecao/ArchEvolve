@@ -12,6 +12,7 @@ from pathlib import Path
 import hints as H
 import staged_search as S
 import loop as L
+import provider_origin as O
 
 MAX_OPS = 8           # size limit per edit
 MAX_TEXT = 6000       # total characters of new hint text per edit
@@ -208,6 +209,8 @@ def debt_status(out):
 
 def working_text(out, working):
     text = best_text(working)
+    if O.REQUIRED[0]:
+        text = text.replace("; ids with prefix 'seed' are the fixed frame seeds", "")
     return text.replace("Current best hint set", "Temporary working hint set", 1) if _debt(out) else text
 
 
@@ -253,6 +256,9 @@ def _checked_attempt(out, best, ops, tag, provenance, mode, round_timeout, allow
                      timeout_s=2400, defer_decision=False):
     """One edit attempt. Returns (record, new_best or None)."""
     rec = {"tag": tag, "ops": ops, "time": L.now(), "n_open_before": best["n_open"]}
+    origin = O.begin(out, best, ops, tag) if O.REQUIRED[0] else None
+    if origin:
+        rec["provider_receipt_sha256"] = origin["receipt_sha256"]
     if STAGED[0] and STAGED[0].get('method') == 'design-focused-diagnostics-v1':
         import focused_probe
         if not focused_probe.has_design(out):
@@ -273,6 +279,8 @@ def _checked_attempt(out, best, ops, tag, provenance, mode, round_timeout, allow
     d = None
     if prev is not None:
         hs = apply(ops, best, prev["tag"], provenance)
+        if origin:
+            hs = O.bind(out, best, hs, ops, origin, prev["tag"])
         merged = H.merge(standin, hs).encode()
         pd = Path(prev["dir"])
         if (pd / L.UNIT).exists() and not (pd / ".frama-c").exists() and (pd / L.UNIT).read_bytes() == merged:
@@ -280,6 +288,8 @@ def _checked_attempt(out, best, ops, tag, provenance, mode, round_timeout, allow
             rec["check_reused_from"] = str(pd)
     if d is None:
         hs = apply(ops, best, tag, provenance)
+        if origin:
+            hs = O.bind(out, best, hs, ops, origin, tag)
         d = L.precheck(Path(out), f"attempt-{tag}", standin, hs, chk,
                        **({"remaining_s": lambda: search_remaining(out)} if DEBT[0] else {}))
         if d is not None and not run_wp:
@@ -360,7 +370,7 @@ def is_hint_goal(g):
     if name.startswith("typed_lemma"):
         return True
     kind = g.get("kind") or H.goal_kind(name)
-    if kind == "loop assigns":
+    if kind == "loop assigns" and not O.REQUIRED[0]:
         return False
     return any(not i.startswith(SEED_PREFIX) for i in g.get("hint_ids") or [])
 

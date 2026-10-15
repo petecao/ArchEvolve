@@ -3,6 +3,8 @@
 # generates it (after Qed simplification, no prover, nothing proven: wp_run.sh print). A human WP user
 # reads the failed goal before fixing an invariant; the agent so far saw only the goal's name and line.
 # Reads only the best set's merged stand-in. Never a verdict.
+import hashlib
+import json
 import re
 from pathlib import Path
 
@@ -125,3 +127,64 @@ def show(out, best, goal_name, tag, timeout_s=600):
     head = (f"WP goal for {goal_name} ({g.get('kind')} at merged line {g.get('line')}), as WP generates it after Qed "
             "simplification (no prover ran; 'Assume'/'Have' are hypotheses, 'Prove' is the conclusion):\n")
     return head + "\n\n".join(parts), rec
+
+
+def show_paged(out, best, goal_name, tag, *, offset=0, task_sha256=None, timeout_s=600):
+    """Method22: bounded pages of one fresh active task, never arbitrary paths.
+
+    Created: 2026-10-15 ET. A page receipt pins the complete selected task and
+    merged candidate; later pages reuse that artifact without a verifier job.
+    """
+    refused = lambda why: ("Refused goal task: " + why, {"result": "refused: " + why})
+    if type(offset) is not int or offset < 0:
+        return refused("offset must be a nonnegative integer")
+    if offset and not task_sha256:
+        return refused("a later page requires the exact task hash")
+    g = next((x for x in best["failing_goals"] if x["goal"] == goal_name), None)
+    if g is None:
+        return refused("goal not open in active candidate")
+    base = (L.STANDIN_DIR / L.UNIT).read_text()
+    merged = (Path(best["dir"]) / L.UNIT).read_text()
+    if H.check(base, best["hints"]) or H.merge(base, best["hints"]) != merged or H.erase(merged) != base:
+        return refused("candidate/source identity mismatch")
+    if any((Path(best["dir"]) / h).read_bytes() != (L.STANDIN_DIR / h).read_bytes() for h in L.HEADERS):
+        return refused("candidate headers changed")
+    source_sha = hashlib.sha256(merged.encode()).hexdigest()
+    candidate_sha = hashlib.sha256(json.dumps(best["hints"], sort_keys=True).encode()).hexdigest()
+    headers = {h: L.sha(L.STANDIN_DIR / h) for h in L.HEADERS}
+    identity = {"source_sha256": source_sha, "candidate_sha256": candidate_sha, "headers_sha256": headers}
+    key = hashlib.sha256(json.dumps([identity, goal_name], sort_keys=True).encode()).hexdigest()
+    cache = Path(out) / "goal-pages"
+    cache.mkdir(exist_ok=True)
+    metadata, artifact = cache / (key + ".json"), cache / (key + ".task.txt")
+    if not metadata.exists():
+        if offset or task_sha256 is not None:
+            return refused("task identity is stale or no first page was requested")
+        d = L.run_dir(Path(out), f"goal-{tag}", merged)
+        sel = selection(goal_name, g.get("kind") or H.goal_kind(goal_name))
+        log, ws = L.verifier(Path(out), d, "print", timeout=timeout_s, extra=(sel,))
+        selected = pick(blocks(log.read_text(errors="replace")), g)
+        if ws["exit_code"] != 0 or not selected:
+            return refused("fresh WP task generation failed")
+        task = "\n\n".join(header + "\n" + body for header, body in selected)
+        artifact.write_text(task)
+        receipt = {**identity, "goal": goal_name, "dir": str(d), "selection": sel,
+                   "log_sha256": ws["log_sha256"], "log": str(log),
+                   "full_task_sha256": L.sha(artifact), "full_task_artifact": str(artifact),
+                   "total_chars": len(task)}
+        metadata.write_text(json.dumps(receipt, indent=1))
+    receipt = json.loads(metadata.read_text())
+    if any(receipt.get(k) != v for k, v in identity.items()) or receipt.get("goal") != goal_name:
+        return refused("stored task candidate identity mismatch")
+    if L.sha(artifact) != receipt["full_task_sha256"] or L.sha(Path(receipt["log"])) != receipt["log_sha256"]:
+        return refused("retained task artifact changed")
+    if task_sha256 is not None and task_sha256 != receipt["full_task_sha256"]:
+        return refused("requested task hash differs from active task")
+    task = artifact.read_text()
+    if offset > len(task):
+        return refused("offset exceeds task length")
+    end = min(len(task), offset + MAX_CHARS)
+    rec = {**receipt, "result": "printed scoped task page", "offset": offset,
+           "returned_chars": end-offset, "earlier_chars_omitted": offset,
+           "remaining_chars": len(task)-end, "truncated": end < len(task)}
+    return json.dumps(rec, sort_keys=True) + "\n" + task[offset:end], rec
