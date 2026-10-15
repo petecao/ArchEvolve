@@ -5,19 +5,20 @@ Updated: 2026-10-15 ET.
 ## Current state
 
 Checkpoint: `codex/probata-poc-integration` starts at `150930b4` on `yanrujhou_main`;
-ticket 25 is merged at `cd610c86` and ticket 41 at `a65e8cb1`.
-The integration source is pushed through `cd610c86`. User approval covers scoped implementation, commits,
+ticket 25 is merged at `cd610c86`, WP semantics are staged at `a41bcd39`, and the latest
+ownership-lifetime statement repair is merged at `3f559789`.
+The integration source is pushed through `3f559789`. User approval covers scoped implementation, commits,
 pushes, remote source synchronization and two mbit10 CPU lanes.
 
 | Ticket | Current work | Evidence or next action |
 |---|---|---|
 | 07 | Coordinator; counted run 13 | Started 2026-10-15 01:45 ET, `/private/tmp/probata-t07-20261015`; unchanged run-10 method and pinned Codex, fresh hints, verified no-hint baseline reused. User explicitly approved this scoped BFS source export. |
-| 24 | Coordinator; reproduce construct-group WP acceptance | Node 1 baseline `r4` is active after isolated C++ differential passes. Keep inheritance and `omp simd` excluded as the declared subset requires. |
+| 24 | Coordinator; reproduce construct-group WP acceptance | Node 1 baseline `r4` is active. New lifetime safety controls: 3 passed; positive safe-deallocation acceptance is still expected-failing. Keep inheritance and `omp simd` excluded as the declared subset requires. |
 | 25 | Model recovery merged; ticket remains claimed | 65 lowering tests, 6 bounded model tests, pair constructor WP proof, matching-library admission and mismatch refusal pass. WP lifetime modeling remains an acceptance gap. |
-| 27 | `codex/probata-t27`; restore WP semantics and store cases | mbit10 node 0, tmux `probata-t27-frame`, output `/data/yanruj/EvolveSWDB_runs/probata-t27-20261015/frame-fix`; corrected missing ghost assignments before acceptance. |
+| 27 | `codex/probata-t27`; restore WP semantics and store cases | Node 0's first replay passed 3 safe cases, then store-frame inclusion timed out; checked index hint also failed. Broaden the frame soundly and retain explicit preservation facts before final acceptance. Output `/data/yanruj/EvolveSWDB_runs/probata-t27-20261015/`. |
 | 36 | `codex/probata-t36`; proof setup checks | Implement independent check machinery while 27 acceptance is running; resolution still depends on 27. |
-| 41 | Resolved; agent review and approval under delegation | Protected reads and read-class lifetime checks; four Rocq regression lemmas, exact statement guard and changed-hypothesis refusal pass. The theorem remains open. |
-| 42 | `codex/probata-t42`; proof resumed | Approved reconstructed statement `ffb5bda714b9fce5a13927a4860f6c85438821cdcdf3b4f1560f26a91eefd4f4`; 122 existing lemmas retained, full theorem unchecked. |
+| 41 | Resolved; agent review and approval under delegation | Protected reads, read-class lifetime and ownership-handoff checks; regression lemmas and exact statement guard pass. The theorem remains open. |
+| 42 | `codex/probata-t42`; proof resumed | Approved reconstructed statement `e23f37153fadb8c3307384b4ec074422e0af6ebc121ff673688b6d321485e513`; original 122 lemmas plus additional latest-read and swap-safety lemmas checked; full theorem unchecked. |
 
 Blockers: WP 33 does not implement deallocation, so the old read-after-delete expected
 failure cannot support a completed ticket. Affected proofs must fail closed until a
@@ -55,3 +56,16 @@ and runtime-library configuration. No cross-library model agreement is inferred.
 
 The 30-minute progress heartbeat is `probata-implementation-progress`; its reports do
 not substitute for reading incremental run artifacts.
+
+## Validation and progress reporting
+
+The 2026-10-15 02:01 ET report covered every active ticket and both lanes; next report is
+due around 02:31 ET. Counts are observations of incremental reports, not completed suites.
+
+The early structural run disabled clang as well as WP/CBMC; four formal-frame assertions
+therefore failed for the wrong tool configuration. One isolated failure passes with clang
+restored, and the affected module gives 64 passed, 4 skipped (WP still disabled). A separate
+checkout-integrity failure observed the coordinator's Rocq merge, not a test mutation.
+That exact test passes in `/private/tmp/probata-validation-20261015` at frozen `3f559789`.
+Future validation runs must use an unchanged source worktree. Logs and incremental reports:
+`/private/tmp/probata-integration-20261015/`. No whole-catalog validation is claimed.
