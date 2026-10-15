@@ -29,6 +29,30 @@ swdb prove --summary <library entry> --adapter cbmc --runs-dir <outside the repo
   dimension names an integer parameter of the proof unit and bounds it from above (the contract's `requires`
   bound it from below). Every interface array is that many elements long (the largest size bound). A unit
   that takes arrays needs at least one size bound. The record's `bounds` are exactly the bounds asked for.
+- **Initializedness admission (2026-10-15 ET).** CBMC's nondeterministic treatment of an uninitialized
+  read does not prove that the C++ read is defined. Before either native agreement or CBMC, the lowering
+  supplies a checked AST inventory of the entire retained function/callee closure. Primitive automatic
+  locals require an explicit initializer checked before their binding (self-initialization is refused).
+  Candidate heap storage, arrays, aggregates, references, address escapes, pointer reassignment and
+  unknown pointer producers/effects currently return `not_proven/unsupported_construct`. These are
+  conservative language restrictions, including some safe programs; they are not UB refutations.
+  Whole-function jobs check candidate and baseline independently. WP's initializedness obligations are
+  separate from this bounded admission rule.
+  `settings.bounded_initialization` records the checker content hash, generated certificate, source and
+  lowering hashes, admitted functions, input domain and actual harness capacity. The checker source is
+  part of the C lowering tool identity. The final setup check validates the certificate and capacity
+  again immediately before invocation. A zero-capacity pointer job is refused: its dummy allocation
+  has no initialized elements.
+  The bounded input domain consists of initialized scalar values and, for each pointer parameter, its
+  own nonnull, distinct primitive buffer of exactly the largest size bound. A smaller logical size
+  does not shorten that allocation. Null, shorter, uninitialized or aliased caller objects are outside
+  this generated domain; a success makes no memory-safety claim for those excluded objects.
+  DX100 model calls additionally require an audited exact-content policy for the ghost/state/C model
+  files, a fresh entry pin and identical regenerated model bytes. Model globals have static initialization;
+  the harness initializes bookkeeping and draws every tile element. Every source argument is checked,
+  and only the audited tile-pointer producer may introduce a model buffer origin. Changed model bytes
+  require a new audit and checker identity. This policy does not grant arbitrary opaque summaries an
+  initializedness exemption.
 - **Unwinding.** `--unwind K --unwinding-assertions`, with K = the largest size bound + 1 (CBMC's K is
   iterations + 1). A loop that runs longer fails its unwinding assertion: not proven,
   `unwinding_bound_too_small`, never proven.

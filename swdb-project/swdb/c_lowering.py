@@ -44,10 +44,10 @@ import subprocess
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from swdb import cpu_effects, std_models, terminal_release
+from swdb import bounded_initialization, cpu_effects, std_models, terminal_release
 
 TOOL_ID = "swdb-c-lowering"
-TOOL_VERSION = "5"                   # conservative CPU effects and pinned admission policy; names unchanged
+TOOL_VERSION = "6"                   # generated bounded initializedness admission; names unchanged
 NAMING_RULES = "kept-names.3"        # bump on any change to RULES
 RULES = (
     "A function, parameter, local, global or field keeps its C++ name.",
@@ -197,6 +197,7 @@ class Lowering:
     std_models: tuple = ()      # ticket 25: the modeled std types the C uses (struct names, e.g. std_vector_int)
     allocation: bool = False    # ticket 25: the C allocates (new[] or a std model): "allocation succeeds" applies
     cpu_effects: dict = field(default_factory=dict)  # source/model memory effects and sequenced call sites
+    bounded_initialization: dict = field(default_factory=dict)
     terminal_release: dict | None = None  # checked ownership certificate; native lowering retains delete[]
 
     @property
@@ -216,6 +217,7 @@ class Lowering:
         if self.allocation:
             data["allocation"] = True
         data["cpu_effects"] = self.cpu_effects
+        data["bounded_initialization"] = self.bounded_initialization
         if self.terminal_release:
             data["terminal_release"] = self.terminal_release
         return json.dumps(data, indent=1, sort_keys=True) + "\n"
@@ -278,7 +280,8 @@ def identity():
     admission = here.with_name("cpu_memory_admission.py")
     policy = admission.read_bytes() if admission.exists() else b"cpu-memory-admission:absent"
     digest = hashlib.sha256(here.read_bytes() + Path(terminal_release.__file__).read_bytes()
-                            + Path(cpu_effects.__file__).read_bytes() + policy).hexdigest()
+                            + Path(cpu_effects.__file__).read_bytes() + policy
+                            + Path(bounded_initialization.__file__).read_bytes()).hexdigest()
     found = {"c_lowering": {"id": f"{TOOL_ID}-{TOOL_VERSION}", "sha256": digest},
              "naming_rules": naming_rules()}
     if not tool.missing:
@@ -2246,6 +2249,9 @@ def lower(source, function, includes=(), defines=(), summaries=None, semantics=N
                     std_models=tuple(sorted(unit.std_types)), allocation=unit.allocates or any(n.startswith("std_vector_") for n in unit.std_types) or any(n.startswith("swdb_alloc_new_array_") for n in unit.model_order),
                     cpu_effects=cpu_effects.collect(definition_nodes, unit.probes, unit.models,
                                                     unit.summaries_used, INTEGER_TYPES | FLOAT_TYPES),
+                    bounded_initialization=bounded_initialization.analyze(definition_nodes,
+                        scalar_types=INTEGER_TYPES | FLOAT_TYPES, source_sha256=_file_sha256(source), text=text,
+                        external_calls=unit.summaries_used),
                     terminal_release=certificate)
 
 
@@ -2425,6 +2431,7 @@ def _cli(args):
     if lowering.allocation:
         out["allocation"] = True
     out["cpu_effects"] = lowering.cpu_effects
+    out["bounded_initialization"] = lowering.bounded_initialization
     if lowering.terminal_release:
         out["terminal_release"] = lowering.terminal_release
     return out

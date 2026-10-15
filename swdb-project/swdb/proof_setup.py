@@ -269,6 +269,26 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
         if pin["sha256"] != _sha(baseline.text):
             _fail("lowering_hash", "baseline C lowering differs from its planned pin")
         hashes["baseline_lowering"] = _sha(baseline.text)
+    if adapter.name == "cbmc":
+        from swdb import bounded_initialization
+        admissions = context.get("settings", {}).get("bounded_initialization") or {}
+        sides = {"candidate": lowering, "baseline": baseline} if baseline is not None else {"unit": lowering}
+        for side, lowered in sides.items():
+            expected = admissions if side == "unit" else admissions.get(side, {})
+            if lowered is None or not expected:
+                _fail("bounded_initialization", "CBMC has no generated initializedness admission")
+            try:
+                cap = max((value for name, value in job.bounds.items() if name != "threads"), default=0)
+                actual = bounded_initialization.check(lowered, cap, library=getattr(adapter, "library", None),
+                                                       model=context.get("model"))
+                bounded_initialization.check_model_input(actual, context.get("model"),
+                    getattr(adapter, "library", None), lowered.defines,
+                    "\n".join(Path(path).read_text() for path, _expected in inputs))
+            except ValueError as exc:
+                _fail("bounded_initialization", str(exc))
+            if actual != expected or actual.get("verdict") != "passed":
+                _fail("bounded_initialization", f"{side} initializedness admission changed or refused")
+        hashes["bounded_initialization"] = _digest(admissions)
     if adapter.name == "wp" and context.get("semantics"):
         base = context.get("semantics_hint_base")
         if base is None:
