@@ -18,7 +18,7 @@ Drafts 1/2 remain immutable. No draft 3 or final production freeze exists.
 
 | Ticket / owner | Verified checkpoint | Active work |
 |---|---|---|
-| 07 / `ticket07` | Run 24 ended unproven at 18:44:19 ET: 52.03 counted minutes, 29 open (14 unit / 15 hint), 41 records (5 mechanical / 36 Codex). No final replay/wait-negative; interrupted provider usage unknown. | Mac slot released; final independent audit and one separately guarded posthoc 30-second diagnosis pending. Method 22 prospective terminal replay schedule in a new worktree; no actual counted launch. |
+| 07 / `ticket07` | Run 24 ended unproven at 18:44:19 ET: 52.03 counted minutes, 29 open (14 unit / 15 hint), 41 records (5 mechanical / 36 Codex). No final replay/wait-negative; interrupted provider usage unknown. | Mac slot released; final independent audit and one separately guarded posthoc 30-second diagnosis pending. Method 22 prospective terminal replay and zero-seed provenance changes in a new worktree; no actual counted launch. |
 | 24 / `ticket24` | Fresh finite 112,589 native comparisons accepted; current float pair and 5 standard models accepted. Original standard caller retains pointer-origin timeout; first qualified profile `6221` refused before WP. Writable v2 public validation + 13 controls + independent review pass at `bf7a`. | Node 0 generation 577 evaluates 7 remaining original groups/lifetime controls at `0e7`; first atomic model has 6 ordinary + 1 smoke Valid. Qualified v2 actual queued on next free lane. |
 | 27 / `ticket27` | Current bounded/native 35/35 and repaired capacity 3/3 accepted. Current negative 9/13 independently audited at `868eff7b`; ordinary open/failed-smoke evidence retained. Historical safe 11/11 remains `717` only. | Node 1 generation 603 continues remaining 4 negatives at `0e7`. Fresh safe 11 queued as disjoint 5 + 6 shards, about 50 minutes each by historical case weights, excluding setup and runtime drift. |
 | 36 / dependency-gated | 122 compiler/scripted controls pass; 13 actual-WP cases excluded. | Waits on 27; runtime fallback research remains prospective. |
@@ -99,6 +99,11 @@ was unused because method 21 required zero diagnostic-open goals before replay.
 A separate posthoc full-30-second diagnostic may assess this scheduling gate; it cannot
 upgrade run 24, and its concrete hints/results cannot seed another fresh provider.
 Method 22 design/TDD/review proceeds separately; no blind method 21 rerun.
+Independent literal acceptance review found the five mechanical frame hints cannot
+satisfy ticket 07's every-hint-Codex criterion. The explicitly undecided seed
+assumption does not override that criterion. Method 22 must start without mechanical
+seeds and let the fresh scoped Codex session independently author allowed frames;
+old concrete frame payloads are excluded. Existing provenance is not relabeled.
 
 Qualified std at6221 stopped before WP: public formal-half vocabulary excludes
 valid_read/base_addr. Its zero-row failure and unchanged inputs remain retained;
@@ -121,10 +126,11 @@ negative/fresh-safe profiles. The prospective two-shard safe plan covers all11
 without overlap; historical weights project about50minutes each plus setup
 if two lanes are available. No fresh-safe success or ETA guarantee is claimed. No full ticket
 or final method success is claimed from these checkpoints. This chat's30-minute
-heartbeat stays active; last full table18:20 ET, next due18:50 ET.
+heartbeat stays active; last full table 18:49 ET, next due 19:19 ET.
 Research-only notes remain `/private/tmp/probata-ticket25-resume-exploration.md`,
 `/private/tmp/probata-ticket25-lifetime-capabilities.md`,
 `/private/tmp/probata-ticket25-heap-bridge-tcb-addendum.md`,
+`/private/tmp/probata-ticket25-heap-import-entrypoints-20261015.md`,
 `/private/tmp/probata-ticket28-resume-exploration.md` and
 `/private/tmp/probata-t36-runtime-fallback-review.md`.
 

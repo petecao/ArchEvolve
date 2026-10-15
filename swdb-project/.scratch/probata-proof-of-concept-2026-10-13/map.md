@@ -39,7 +39,8 @@ remains `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
   requests reached candidate WP; 14 completed and 1 was deadline-censored.
   The interrupted provider turn has unknown token usage. Actual Mac slot released;
   independent final audit and one separate posthoc full-30-second diagnosis are pending.
-  Prospective method 22 changes the final-replay schedule only after TDD/review;
+  Prospective method 22 changes the final-replay schedule and omits mechanical
+  seeds to meet the literal every-hint-Codex criterion, only after TDD/review;
   no fresh counted run or success is claimed.
 - **36:** Dependency-gated by 27. Its 122 focused controls exclude 13 actual-WP
   cases. Drafts 1/2 remain immutable; final method freeze and held-out gates remain.
