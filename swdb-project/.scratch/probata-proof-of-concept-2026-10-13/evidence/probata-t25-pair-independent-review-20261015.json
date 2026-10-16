@@ -1,0 +1,383 @@
+{
+  "created": "2026-10-16 00:01 ET",
+  "reviewer": "/root/t07_source_feasibility",
+  "decision": "PASS",
+  "scope": "source/control review and prospective profile only; no actual WP acceptance",
+  "checkout": "/private/tmp/probata-resume-t25-pair",
+  "final_packet_commit": "592891abf6d679e895756a226169b371f45141ef",
+  "runtime_commit": "a1ee0cf1836bf31bd6508457434d0615fefce696",
+  "integration_diff_base": "ac899748caa6719b8c4c1cd54e220b64eb77a940",
+  "clean": true,
+  "changed_paths": [
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-pair-preparation-20261015.json",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-pair-workflow.md",
+    "swdb-project/scripts/probata_pair_profile.py",
+    "swdb-project/swdb/bounded_std_initialization.py",
+    "swdb-project/tests/fixtures/proof/lowering/pair_only.cc",
+    "swdb-project/tests/test_pair_workflow.py"
+  ],
+  "post_runtime_docs_only_paths": [
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-pair-preparation-20261015.json",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-pair-workflow.md"
+  ],
+  "source_pins": [
+    {
+      "path": "/private/tmp/probata-resume-t25-pair/swdb-project/scripts/probata_pair_profile.py",
+      "sha256": "c80c0566fde1f0925c3332d09b75a87d6723990a5a6c4696fa653e8acd180ded",
+      "expected_sha256": "c80c0566fde1f0925c3332d09b75a87d6723990a5a6c4696fa653e8acd180ded",
+      "runtime_git_sha256": "c80c0566fde1f0925c3332d09b75a87d6723990a5a6c4696fa653e8acd180ded"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25-pair/swdb-project/tests/test_pair_workflow.py",
+      "sha256": "baa2882950feb9ccd5da6bbec973dc6735e66120ad5b6e835bf79b0680dacb24",
+      "expected_sha256": "baa2882950feb9ccd5da6bbec973dc6735e66120ad5b6e835bf79b0680dacb24",
+      "runtime_git_sha256": "baa2882950feb9ccd5da6bbec973dc6735e66120ad5b6e835bf79b0680dacb24"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25-pair/swdb-project/tests/fixtures/proof/lowering/pair_only.cc",
+      "sha256": "60452123141c7603c633c1128536ec1397173b459045bedeceb63fb0d4801569",
+      "expected_sha256": "60452123141c7603c633c1128536ec1397173b459045bedeceb63fb0d4801569",
+      "runtime_git_sha256": "60452123141c7603c633c1128536ec1397173b459045bedeceb63fb0d4801569"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25-pair/swdb-project/swdb/bounded_std_initialization.py",
+      "sha256": "480bf38b3333639c62d8f89aff129208abccdc63351d63cfa6b23d7cb3d84607",
+      "expected_sha256": "480bf38b3333639c62d8f89aff129208abccdc63351d63cfa6b23d7cb3d84607",
+      "runtime_git_sha256": "480bf38b3333639c62d8f89aff129208abccdc63351d63cfa6b23d7cb3d84607"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25-pair/swdb-project/swdb/bounded_initialization.py",
+      "sha256": "12885e27dc1cb62b6c89ed4c2b5728c350dc6b0a5781b09ab70ff058e83b287d",
+      "expected_sha256": "12885e27dc1cb62b6c89ed4c2b5728c350dc6b0a5781b09ab70ff058e83b287d",
+      "runtime_git_sha256": "12885e27dc1cb62b6c89ed4c2b5728c350dc6b0a5781b09ab70ff058e83b287d"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25-pair/swdb-project/swdb/std_models.py",
+      "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2",
+      "expected_sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2",
+      "runtime_git_sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25-pair/swdb-project/swdb/c_lowering.py",
+      "sha256": "e10b33f4d310e3097eb84b34ed53e03daf4df690dcf0c8c160f38d907c91e08c",
+      "expected_sha256": "e10b33f4d310e3097eb84b34ed53e03daf4df690dcf0c8c160f38d907c91e08c",
+      "runtime_git_sha256": "e10b33f4d310e3097eb84b34ed53e03daf4df690dcf0c8c160f38d907c91e08c"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25-pair/swdb-project/swdb/wp_adapter.py",
+      "sha256": "aa03842938a19d22fe6c3fb466007cfa57544c55fddc3c19b1784b047271ee43",
+      "expected_sha256": "aa03842938a19d22fe6c3fb466007cfa57544c55fddc3c19b1784b047271ee43",
+      "runtime_git_sha256": "aa03842938a19d22fe6c3fb466007cfa57544c55fddc3c19b1784b047271ee43"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25-pair/swdb-project/swdb/proof_setup.py",
+      "sha256": "dad41c8714cd3bfa3cbc472c82e2130f639a04ece008d641eec47512d7098e11",
+      "expected_sha256": "dad41c8714cd3bfa3cbc472c82e2130f639a04ece008d641eec47512d7098e11",
+      "runtime_git_sha256": "dad41c8714cd3bfa3cbc472c82e2130f639a04ece008d641eec47512d7098e11"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25-pair/swdb-project/library/methods/probata-draft-1.yaml",
+      "sha256": "497aa683887094e3217945132134112469e028c2a50a7966838bbebf902d3ae5",
+      "expected_sha256": "497aa683887094e3217945132134112469e028c2a50a7966838bbebf902d3ae5",
+      "runtime_git_sha256": "497aa683887094e3217945132134112469e028c2a50a7966838bbebf902d3ae5"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25-pair/swdb-project/tests/fixtures/proof/methods/contract-fixture-1.yaml",
+      "sha256": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29",
+      "expected_sha256": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29",
+      "runtime_git_sha256": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25-pair/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-pair-preparation-20261015.json",
+      "sha256": "54971ca4e1c7bd94a7b86f96faba498fa5b594fe2cb1c2bbcca9ea7b79c15f8d",
+      "role": "supporting source/evidence read"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25-pair/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-pair-workflow.md",
+      "sha256": "33d3fe3354b4e7864cd1081c44af5b831e1630af02e30f7f32b737bdb16cf773",
+      "role": "supporting source/evidence read"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25-pair/swdb-project/swdb/proof.py",
+      "sha256": "c1f0bb937ff43c6db9c20d04f79079d1568dc90e5faf121c45722ff735e45808",
+      "role": "supporting source/evidence read"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25-pair/swdb-project/swdb/proof_semantics.py",
+      "sha256": "2354b1be662a4a9fe4985110ce657c9a432b27f288639f661e13aa5bad5ea5b6",
+      "role": "supporting source/evidence read"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25-pair/swdb-project/tests/conftest.py",
+      "sha256": "f70dea4668fc1c2a2234b3bed4d8630734e8eec4f756fbb9be0e8d79a66b6a7a",
+      "role": "supporting source/evidence read"
+    }
+  ],
+  "unchanged_core_modules": [
+    {
+      "path": "swdb/std_models.py",
+      "same_as_integration_base": true,
+      "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+    },
+    {
+      "path": "swdb/c_lowering.py",
+      "same_as_integration_base": true,
+      "sha256": "e10b33f4d310e3097eb84b34ed53e03daf4df690dcf0c8c160f38d907c91e08c"
+    },
+    {
+      "path": "swdb/wp_adapter.py",
+      "same_as_integration_base": true,
+      "sha256": "aa03842938a19d22fe6c3fb466007cfa57544c55fddc3c19b1784b047271ee43"
+    }
+  ],
+  "retained_artifact_pins": [
+    {
+      "path": "/private/tmp/probata-t25-pair-review-fixed-green/resources.json",
+      "sha256": "5243b01248f5a38a6e38a24709b8dbad0fd905627faceadb8d83873028d264bd",
+      "expected_sha256": "5243b01248f5a38a6e38a24709b8dbad0fd905627faceadb8d83873028d264bd"
+    },
+    {
+      "path": "/private/tmp/probata-t25-pair-review-fixed-green/command.json",
+      "sha256": "452b617eb25792bf9035d26f122bc31cc3e3be00a55db340cfdbe45e7b324956",
+      "expected_sha256": "452b617eb25792bf9035d26f122bc31cc3e3be00a55db340cfdbe45e7b324956"
+    },
+    {
+      "path": "/private/tmp/probata-t25-pair-review-fixed-green/profile/profile.json",
+      "sha256": "3d93291fa7d54e7e63f8e18d2dbdd2ce0ef9aa23fe467fb79c1d843bb3a824db",
+      "expected_sha256": "3d93291fa7d54e7e63f8e18d2dbdd2ce0ef9aa23fe467fb79c1d843bb3a824db"
+    },
+    {
+      "path": "/private/tmp/probata-t25-pair-review-fixed-green/profile/result.json",
+      "sha256": "4e38ccd35c7bcf2b6e1a9c360d2ac6fbd80299e9f62d172ae30aa391bbb253f4",
+      "expected_sha256": "4e38ccd35c7bcf2b6e1a9c360d2ac6fbd80299e9f62d172ae30aa391bbb253f4"
+    },
+    {
+      "path": "/private/tmp/probata-t25-pair-review-fixed-green/profile/pytest.log",
+      "sha256": "db3f7c48af318afdb4e4bd0e84fc77c70979a26f331ed71871974fd406009534",
+      "expected_sha256": "db3f7c48af318afdb4e4bd0e84fc77c70979a26f331ed71871974fd406009534"
+    },
+    {
+      "path": "/private/tmp/probata-t25-pair-review-fixed-green/profile/junit.xml",
+      "sha256": "864ed146fbdca9c2da64bd17235523c16c236479e9aef753a0d86e053109f743",
+      "expected_sha256": "864ed146fbdca9c2da64bd17235523c16c236479e9aef753a0d86e053109f743"
+    },
+    {
+      "path": "/private/tmp/probata-t25-pair-profile-frozen-green/resources.json",
+      "sha256": "a34be12e9173cb5aa0a2f6643689de09e6250dd037d24593289cdaaa4f8c3659",
+      "expected_sha256": "a34be12e9173cb5aa0a2f6643689de09e6250dd037d24593289cdaaa4f8c3659"
+    },
+    {
+      "path": "/private/tmp/probata-t25-pair-profile-frozen-green/command.json",
+      "sha256": "e10d430ce8d439f031abcfe7fbfecf269ce36ee3ca833d516093b0586d2371a7",
+      "expected_sha256": "e10d430ce8d439f031abcfe7fbfecf269ce36ee3ca833d516093b0586d2371a7"
+    },
+    {
+      "path": "/private/tmp/probata-t25-pair-profile-frozen-green/profile/profile.json",
+      "sha256": "10e4a5f81d958084a97ab9c54a5fd721160e6b713b159909549f72c46bf588fc",
+      "expected_sha256": "10e4a5f81d958084a97ab9c54a5fd721160e6b713b159909549f72c46bf588fc"
+    },
+    {
+      "path": "/private/tmp/probata-t25-pair-profile-frozen-green/profile/result.json",
+      "sha256": "85d36ef90190d580853dbd149437683dbe8c9173eea1a70669096d3f3b191003",
+      "expected_sha256": "85d36ef90190d580853dbd149437683dbe8c9173eea1a70669096d3f3b191003"
+    },
+    {
+      "path": "/private/tmp/probata-t25-pair-profile-frozen-green/profile/pytest.log",
+      "sha256": "124665d48d1a36e23037784c5afc31eb011e70989968b428cc0db745542f2ea0",
+      "expected_sha256": "124665d48d1a36e23037784c5afc31eb011e70989968b428cc0db745542f2ea0"
+    },
+    {
+      "path": "/private/tmp/probata-t25-pair-profile-frozen-green/profile/junit.xml",
+      "sha256": "a3a123f8e8304cdaae4940b238c1b28b0f283a3c0dc5a03952bd52f3de529c86",
+      "expected_sha256": "a3a123f8e8304cdaae4940b238c1b28b0f283a3c0dc5a03952bd52f3de529c86"
+    },
+    {
+      "path": "/private/tmp/probata-t25-pair-output-guard-green/resources.json",
+      "sha256": "094e08dc7953c6cb83e080199175f335106007fd3584030d42d33c6acd8c3bd5",
+      "role": "supporting retained control; no rerun"
+    },
+    {
+      "path": "/private/tmp/probata-t25-pair-output-guard-green/command.json",
+      "sha256": "ca5e6c63960a99ba1f99b814bc0d720cdb31c0c8d21d61728ba1edac2a71894b",
+      "role": "supporting retained control; no rerun"
+    },
+    {
+      "path": "/private/tmp/probata-t25-pair-output-guard-green/control.log",
+      "sha256": "99a24796443a1d07f66a424f8116a06a2079063af758e7d3c87801c191ad2ecd",
+      "role": "supporting retained control; no rerun"
+    },
+    {
+      "path": "/private/tmp/probata-t25-pair-output-guard-green/junit.xml",
+      "sha256": "2d152637286599977d18aaa1b6c95bd18b035b9fbe44179035f982edf9f29604",
+      "role": "supporting retained control; no rerun"
+    },
+    {
+      "path": "/private/tmp/probata-t25-pair-vector-regression/resources.json",
+      "sha256": "c7dfc8059bf223a03ea76fcb09d1bbe98e611a409175814923e665719698ed1b",
+      "role": "supporting retained control; no rerun"
+    },
+    {
+      "path": "/private/tmp/probata-t25-pair-vector-regression/command.json",
+      "sha256": "6da92a87a86e1a228a2485c6dc18b6c50c5431514c4af2d3a43c1930177446e3",
+      "role": "supporting retained control; no rerun"
+    },
+    {
+      "path": "/private/tmp/probata-t25-pair-vector-regression/control.log",
+      "sha256": "cb541fcc1260b70f08235b82bb0ac6b3a98b7abf992de923fb41fff94d72adba",
+      "role": "supporting retained control; no rerun"
+    },
+    {
+      "path": "/private/tmp/probata-t25-pair-vector-regression/junit.xml",
+      "sha256": "18f0e222baf0bcc4d762c25662cfce71af0c6949725348d82b82cc45c3d3241a",
+      "role": "supporting retained control; no rerun"
+    },
+    {
+      "path": "/private/tmp/probata-t25-pair-source-mutation2/resources.json",
+      "sha256": "4b6b068a2028deb3decc024f7aa1abf5f1146f0834d398bde1054b83b3096a32",
+      "role": "supporting retained control; no rerun"
+    },
+    {
+      "path": "/private/tmp/probata-t25-pair-source-mutation2/command.json",
+      "sha256": "9c88504c205bc8d180b6ae79af03063bfd42f36d0a2579c9f1468ff487109948",
+      "role": "supporting retained control; no rerun"
+    },
+    {
+      "path": "/private/tmp/probata-t25-pair-source-mutation2/control.log",
+      "sha256": "aa11d11d505464b3696c2d3bb3ed35b6e70483020ba78710f25b64dcc52993bb",
+      "role": "supporting retained control; no rerun"
+    },
+    {
+      "path": "/private/tmp/probata-t25-pair-source-mutation2/junit.xml",
+      "sha256": "8cba1cf8e8a3cd81e21c4bf36e542fee16aef6a576a73b59da9980880d413837",
+      "role": "supporting retained control; no rerun"
+    },
+    {
+      "path": "/private/tmp/probata-t25-pair-first-red/resources.json",
+      "sha256": "00ed42d4fb6c3c5c224c388cfdeb591e3af0b09d1f4911a1083f08fc9b67187d",
+      "role": "supporting retained control; no rerun"
+    },
+    {
+      "path": "/private/tmp/probata-t25-pair-first-red/command.json",
+      "sha256": "7095726e9bc3f89f8fb8b9a85dd3a71a7d9c7cf2ee54a1177a8f1a0f7954a97c",
+      "role": "supporting retained control; no rerun"
+    },
+    {
+      "path": "/private/tmp/probata-t25-pair-first-red/control.log",
+      "sha256": "d298f8bbbc074df80a2e0412d2545c13b39df15fe70c3d9b92f93307f7a09d38",
+      "role": "supporting retained control; no rerun"
+    },
+    {
+      "path": "/private/tmp/probata-t25-pair-first-red/junit.xml",
+      "sha256": "b7a2e2154675b651a60b94238ca5d7014eab2fd871c87eb98cd6ef8df973c4c5",
+      "role": "supporting retained control; no rerun"
+    }
+  ],
+  "final_junit": [
+    {
+      "name": "test_public_pair_lowering_preserves_values_copies_fields_and_self_assignment",
+      "skipped": false,
+      "failure": false,
+      "error": false
+    },
+    {
+      "name": "test_uninitialized_pair_constructor_input_is_refused_by_public_lowering",
+      "skipped": false,
+      "failure": false,
+      "error": false
+    },
+    {
+      "name": "test_pair_copy_and_assignment_do_not_initialize_unknown_source_storage[copy]",
+      "skipped": false,
+      "failure": false,
+      "error": false
+    },
+    {
+      "name": "test_pair_copy_and_assignment_do_not_initialize_unknown_source_storage[assignment]",
+      "skipped": false,
+      "failure": false,
+      "error": false
+    },
+    {
+      "name": "test_pair_copy_and_assignment_do_not_initialize_unknown_source_storage[field_write]",
+      "skipped": false,
+      "failure": false,
+      "error": false
+    },
+    {
+      "name": "test_wrong_pair_field_has_a_defined_concrete_witness",
+      "skipped": false,
+      "failure": false,
+      "error": false
+    },
+    {
+      "name": "test_pair_caller_without_current_member_proofs_never_launches_standin",
+      "skipped": false,
+      "failure": false,
+      "error": false
+    },
+    {
+      "name": "test_changed_initializedness_source_invalidates_frozen_translator_before_standin",
+      "skipped": false,
+      "failure": false,
+      "error": false
+    },
+    {
+      "name": "test_profile_refuses_output_anywhere_inside_full_checkout_before_creation",
+      "skipped": false,
+      "failure": false,
+      "error": false
+    },
+    {
+      "name": "test_each_original_pair_body_reaches_public_parser_with_initialization_rte_and_smoke[std_pair_int_int_ctor_default]",
+      "skipped": false,
+      "failure": false,
+      "error": false
+    },
+    {
+      "name": "test_each_original_pair_body_reaches_public_parser_with_initialization_rte_and_smoke[std_pair_int_int_ctor]",
+      "skipped": false,
+      "failure": false,
+      "error": false
+    },
+    {
+      "name": "test_each_original_pair_body_reaches_public_parser_with_initialization_rte_and_smoke[std_pair_int_int_copy_ctor]",
+      "skipped": false,
+      "failure": false,
+      "error": false
+    },
+    {
+      "name": "test_each_original_pair_body_reaches_public_parser_with_initialization_rte_and_smoke[std_pair_int_int_operator_assign]",
+      "skipped": false,
+      "failure": false,
+      "error": false
+    },
+    {
+      "name": "test_actual_four_pair_bodies_then_unchanged_caller_pin_current_proof_dependencies",
+      "skipped": true,
+      "failure": false,
+      "error": false
+    }
+  ],
+  "final_resources": {
+    "exit_code": 0,
+    "peak_rss_bytes": 319684608,
+    "out_of_memory": false,
+    "timed_out": false,
+    "wall_seconds": 47.542960999999195,
+    "cpu_seconds": 45.568847999999996
+  },
+  "final_profile_result": {
+    "pytest_exit_code": 0,
+    "source_unchanged": true,
+    "elapsed_seconds": 47.495162833016366,
+    "within_prospective_wall_budget": true,
+    "actual_proof_claim": "requires retained records and independent cold audit"
+  },
+  "review_finding": {
+    "initial": "output restriction covered project subtree, not complete checkout",
+    "fixed_runtime": "a1ee0cf1836bf31bd6508457434d0615fefce696",
+    "status": "closed by source rereview and public CLI refusal control"
+  },
+  "actual_profile": "NOT RUN; coordinator admission, six actual records and independent cold audit still required",
+  "errors": []
+}
