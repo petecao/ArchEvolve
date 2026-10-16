@@ -15,7 +15,16 @@ case "$PROBATA_STREAM_COMMIT" in *[!0-9a-f]*|'') exit 2 ;; esac
 : "${PROBATA_PYTHON:?pinned pytest interpreter}"
 PROBATA_STREAM_ROOT="$(git rev-parse --show-toplevel)"
 case "$PROBATA_OUTPUT" in /*) ;; *) exit 2 ;; esac
-case "$PROBATA_OUTPUT/" in "$PROBATA_STREAM_ROOT/"*) exit 2 ;; esac
+PROBATA_STREAM_ROOT="$(cd "$PROBATA_STREAM_ROOT" && pwd -P)" || exit 2
+PROBATA_OUTPUT="$("$PROBATA_PYTHON" -c '
+from pathlib import Path
+import sys
+root=Path(sys.argv[1]).resolve()
+output=Path(sys.argv[2]).resolve()
+if output.is_relative_to(root) or root.is_relative_to(output):
+    raise SystemExit("stream output and source must be disjoint resolved paths")
+print(output)
+' "$PROBATA_STREAM_ROOT" "$PROBATA_OUTPUT")" || exit 2
 case "$PROBATA_STREAM_PROFILE" in
   positive) PROBATA_STREAM_TESTS=('tests/test_dx100_stream_actual.py::test_actual_wp_source_partial_stream_gate[correct-size]') ;;
   negative) PROBATA_STREAM_TESTS=('tests/test_dx100_stream_actual.py::test_actual_wp_source_partial_stream_gate[wrong-size]') ;;
