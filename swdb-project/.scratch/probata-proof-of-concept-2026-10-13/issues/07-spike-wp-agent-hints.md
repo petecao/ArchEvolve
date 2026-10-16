@@ -8,7 +8,7 @@ Updated: 2026-10-16 12:50 ET (resumed by Yan-Ru; method24 plan approved, claimed
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Proof-of-concept plan", A1 row (c); "Proof-hint loop"; "Verifier lineup and order", unbounded verifier; "Providers and machines"); decisions: [07](../../formal-verification-2026-10-09/issues/07-install-verifiers.md), [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md), [12](../../formal-verification-2026-10-09/issues/12-dx100-proof-semantics.md), [13](../../formal-verification-2026-10-09/issues/13-proof-hint-loop.md), [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md), [19](../../formal-verification-2026-10-09/issues/19-bounded-verdict-bounds.md), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md), [27](../../formal-verification-2026-10-09/issues/27-proof-of-concept-stages.md)
 **Time estimate:** about 3 days, inside the 2-week box
 
-## Current resume checkpoint — paused for Yan-Ru's fallback decision, 2026-10-16 17:00 ET
+## Current resume checkpoint — paused for Yan-Ru's fallback decision, 2026-10-16 16:54 ET
 
 Status **claimed**; no job, no Codex call, no heartbeat running. Work lives on local branch
 `probata-poc/t07-m24` (worktree `/tmp/claude/probata-wt/t07-m24`), not yet merged into `yanrujhou_main`
