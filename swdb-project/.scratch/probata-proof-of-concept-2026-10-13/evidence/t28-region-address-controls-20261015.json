@@ -1,0 +1,1343 @@
+{
+  "created": "2026-10-15 ET",
+  "ticket": "28",
+  "status": "prototype-only",
+  "base_revision": "bcdd2dec",
+  "sources": [
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/deferred_state.py",
+      "bytes": 12009,
+      "sha256": "eaeb1ace3cae1f0c4bc8cc189c35153bc3b5963658dd20841b4b144bcd0c5af8"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/command_state.py",
+      "bytes": 9549,
+      "sha256": "d0f54ffd3696c75fa0bcb8d3993273735702f0e94e9bc859ce4f2f067cc87f14"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/typed_state.py",
+      "bytes": 2068,
+      "sha256": "28a2864142ac8575c8eba54033c5a129395162ae446f7892bf34e346ca3525a2"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/action_state.py",
+      "bytes": 4474,
+      "sha256": "24c03e5fdb5eeb525928591ee0a17c58eeb15109520a83952788eb48124757a1"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/numeric_values.py",
+      "bytes": 15575,
+      "sha256": "f49ebff7a85a88d93c20c78ad313b67a3459f0620254bba9b3cd91fcbd3ba018"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/region_state.py",
+      "bytes": 4011,
+      "sha256": "c80bc03d0045b47fa680a14fd0ca9d42602920e5322337cb4f85d31a9ea9e017"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/tests/test_dx100_deferred_state.py",
+      "bytes": 21068,
+      "sha256": "183e4f7f026d0fc7a17ecea20c2e4a331cf68b483ecc5980401cff9a73731468"
+    }
+  ],
+  "upstream": [
+    {
+      "path": "/private/tmp/probata-ticket28-interface-upstream-20261015/MAA.cc",
+      "bytes": 72419,
+      "sha256": "058395cbd171ccf3746fb524967d2d205cb8d622d4aa06e8eef530b00dc21299"
+    },
+    {
+      "path": "/private/tmp/probata-ticket28-interface-upstream-20261015/IndirectAccess.cc",
+      "bytes": 68660,
+      "sha256": "7e238a370f25ff5a7a1211548630a291d6358c32d8a199fc58bfacd37d1d35db"
+    },
+    {
+      "path": "/private/tmp/probata-ticket28-numeric-upstream-20261015/IndirectAccess.hh",
+      "bytes": 5394,
+      "sha256": "276bf31afe38c5877020ca706b4bce1922a1d6ae4cde387a1301a78d4c026249"
+    }
+  ],
+  "final": {
+    "raw": "/private/tmp/probata-t28-region-physical-composition-green",
+    "tests": 43,
+    "resources": {
+      "exit_code": 0,
+      "peak_rss_bytes": 209747968,
+      "out_of_memory": false,
+      "timed_out": false,
+      "wall_seconds": 15.303310916991904,
+      "cpu_seconds": 11.520979
+    },
+    "native_receipts": [
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_a_dependent_command_captu0/native-receipt.json",
+        "bytes": 26441,
+        "sha256": "fc6a7d66da15fe0ce42a1872a0430cf9d352b176456ca394c991137c4eddc353"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_consumer_completion_cover0/native-receipt.json",
+        "bytes": 26441,
+        "sha256": "10901a82fdb3af6bee8a8a275caf9263376ec3914a7c36f3f3c37389721c138c"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_conditions_do_no0/native-receipt.json",
+        "bytes": 26441,
+        "sha256": "07ffc366b13e1b63c46f9d6914a569a2365e889abe8a9a1d1871a539dd339185"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_conditions_do_no1/native-receipt.json",
+        "bytes": 26441,
+        "sha256": "f3e5819aaa659ddbfeae38567d5bceb2849db017e60f2fe7659b195f6f07b85a"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_numeric_values_k0/native-receipt.json",
+        "bytes": 30175,
+        "sha256": "591c1504d1337c0b29cc75c7ef43b91265871b5e05b879373d19709e78510ff6"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_numeric_values_k1/native-receipt.json",
+        "bytes": 30175,
+        "sha256": "5b97d4b61d588b58ccc3d3aa17ddbcc61a8a1222d627e1c2b40b52ecc46224ac"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_numeric_values_k2/native-receipt.json",
+        "bytes": 30175,
+        "sha256": "18557fc433397a9fe569c370792d5aba1c92e6d7356167f4a7ead43e2df9b5d9"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_numeric_values_k3/native-receipt.json",
+        "bytes": 30175,
+        "sha256": "76f98113ad2977df02de39c1ec950bed86628db1ba43e27f6932fa1dae4d5b9c"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_numeric_values_k4/native-receipt.json",
+        "bytes": 30175,
+        "sha256": "fc58bbf46fc46024a05d5dc4864bdb629b8e7f039d43c2d046dfcc25a4eeb2a8"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_numeric_values_k5/native-receipt.json",
+        "bytes": 30175,
+        "sha256": "5576a985d3868fa24b85a63f05fad194ad505f935ce69533d642719728cb3eea"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_different_regions_do_not_0/native-receipt.json",
+        "bytes": 26475,
+        "sha256": "8fae35f39574cde4c2a5a909ec4e79aac5d4c7e470bbfa8276af36898dd02dca"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_duplicate_rmw_old_results0/native-receipt.json",
+        "bytes": 30175,
+        "sha256": "3e693ef8048a80f5aa8ba04e3898de4ad9b4c0f59cdca6c896f66612b7947074"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_explicit_start_tile_wait_0/native-receipt.json",
+        "bytes": 26441,
+        "sha256": "e43e9b004ff6771be766789018dfe8a9cd037a35304ea4ea70336f7d3596bfc8"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_explicit_start_tile_wait_1/native-receipt.json",
+        "bytes": 26461,
+        "sha256": "b9790a5496b774fa545b58496f848c0339d8548d8afb639002698a4645518083"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_explicit_start_tile_wait_2/native-receipt.json",
+        "bytes": 26441,
+        "sha256": "7e5318428159b03d09624ad4a6c37ef70e6e83462e0ca4861a8c84f950b4ae29"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_failed_cas_expected_and_d0/native-receipt.json",
+        "bytes": 26441,
+        "sha256": "2f912c38dc3c42ba46a6364cc47769d7f9b7434a8419516453529eec7b598182"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_gather_interval_values_fr0/native-receipt.json",
+        "bytes": 26441,
+        "sha256": "e7a874f9f74ad8b731141db30f27246d42008210f684b1a168a1da373a241b38"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_global_tile_ownership_rej0/native-receipt.json",
+        "bytes": 26457,
+        "sha256": "6b8a6b8827ab00f1db619cbfc97aa7e82bc002f0f6f87dd0c2c93ff37928f654"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_inactive_arithmetic_skips0/native-receipt.json",
+        "bytes": 30175,
+        "sha256": "07a72c24d07019097461f694c472db2ec1c296b72e24878fa5700ef8d4161cac"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_inactive_arithmetic_skips1/native-receipt.json",
+        "bytes": 30198,
+        "sha256": "d3dd5b03d2e3af404c1ec70c9a8eecad55ae3f7f0398c99bb4fe2b175f6a5059"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_logical_region_assignment0/native-receipt.json",
+        "bytes": 26441,
+        "sha256": "8da403e452458b36d7dc18374edcdc0feec5aac76a379821dbe0f8f709d59854"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_logical_region_assignment1/native-receipt.json",
+        "bytes": 26475,
+        "sha256": "17a039e962027556879f6e790cd15a31899b04a6a96a8fa74d55cb2215355ca4"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_new_explicit_destination_0/native-receipt.json",
+        "bytes": 26441,
+        "sha256": "422fb76675c36fe18f5afe470354b90bb59c3676cb993a7be6e90563447bd3db"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_new_explicit_destination_1/native-receipt.json",
+        "bytes": 26461,
+        "sha256": "0a6d297143463fb95180f4cc601566d219b7a7b3acdb5bd9c03be7bcddaeb3ef"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_pending_8byte_destination0/native-receipt.json",
+        "bytes": 26461,
+        "sha256": "fafb43d564a396771dfcc594ca8dce1820c26e0bfc6e4f80e907adc6390d1866"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_raw_device_offset_wrap_is0/native-receipt.json",
+        "bytes": 26470,
+        "sha256": "032eb6831bf5cc74d39f8fcf4130d505bd21a75322f395fac396390a6d5f873e"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_raw_device_offset_wrap_is1/native-receipt.json",
+        "bytes": 26441,
+        "sha256": "1144f152b27fe475bea483064bc552570812ca8dda9ec83dbaa3ed9d14411c9f"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_raw_device_offset_wrap_is2/native-receipt.json",
+        "bytes": 26441,
+        "sha256": "91967b7817f19ab6e921f646fe82a3ad0c460c4ff6816a3ba224164102560b84"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_read_read_overlap_and_oth0/native-receipt.json",
+        "bytes": 26441,
+        "sha256": "629eb345a7110d4e8bb7be78d350d11c45c0fecc1b77851d22f39713fbd905ac"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_ready_query_can_return_ei0/native-receipt.json",
+        "bytes": 26461,
+        "sha256": "39b384384778ea874bea5b25223a6eecc34929f8107788a15b66a795dce4a143"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_ready_query_can_return_ei1/native-receipt.json",
+        "bytes": 26441,
+        "sha256": "a3888d5e26c46b0763d223c769837e5603116ce7422be0f88462e28b12324b1a"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_region_assignment_uses_fi0/native-receipt.json",
+        "bytes": 26441,
+        "sha256": "0ae1d79de73ede2dca1227480b505f28970da63ffcb0880f1483cf7051fd1c9c"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_region_assignment_uses_fi1/native-receipt.json",
+        "bytes": 26474,
+        "sha256": "25c91d99826381062f17c1ab00a17b12405acfd9156f871d9c83fe54fc58017f"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_region_stall_covers_cross0/native-receipt.json",
+        "bytes": 26441,
+        "sha256": "992f3f8fd3597fd0b3d7d06148371264411f7e8019b80678c00f53854fe8367b"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_region_stall_covers_cross1/native-receipt.json",
+        "bytes": 26461,
+        "sha256": "c7f061014b430a2a546561b2ea84ad36fb7f5463db8f270223ee9b6dfc2e3db9"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_region_stall_covers_cross2/native-receipt.json",
+        "bytes": 26461,
+        "sha256": "7d1df81bfa06b15351a7fe1d431b54ed09b2b7ea3d700e854b3e75660a9aacac"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_rmw_publishes_old_value_o0/native-receipt.json",
+        "bytes": 30175,
+        "sha256": "28863b63ec5152a7ead047f40bcd8b97598bb78fde2a3d7cd00cdaccd88f3173"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_rmw_publishes_old_value_o1/native-receipt.json",
+        "bytes": 30175,
+        "sha256": "f13acedea1c8a1c7b3a6d4b1c652cdd13fd1996a4cf80264992700ac265381e8"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_store_effect_waits_for_ca0/native-receipt.json",
+        "bytes": 30175,
+        "sha256": "ae4af6cc0b35780ba0d658f1017b6478b981fecc65981e867689e2f357d2d558"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_store_hazards_cover_the_f0/native-receipt.json",
+        "bytes": 26469,
+        "sha256": "b5efeba0bca340ced9f5ec64a05ca16b9d4a41ccb12fbe79ac478f0995c0e20c"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_store_hazards_cover_the_f1/native-receipt.json",
+        "bytes": 26469,
+        "sha256": "238024a9fdb0465007f4d3c5033c07eefe1f72475a427472a3a18570add537ee"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_the_issuing_thread_cannot0/native-receipt.json",
+        "bytes": 26475,
+        "sha256": "82d9df80840e087bb79d1b78a610d74489773c7027281a9e9256c3505aaa0eb7"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_unresolved_indices_captur0/native-receipt.json",
+        "bytes": 26441,
+        "sha256": "6009de93699aa6973501b5ef50ab60ffefd8b4ed9f7752a914837ee6e4df638e"
+      }
+    ],
+    "physical_native_pin_errors": [],
+    "files": [
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/command.json",
+        "bytes": 325,
+        "sha256": "b4dd50558840d8c4814eaf61e98a7c22a1d2fc9342d5320ada00b9755892d978"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/control.log",
+        "bytes": 100,
+        "sha256": "9e94d03531a4d516b34d82f84b8aa8e22813e50336212854f0a1f917a6d988dc"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/junit.xml",
+        "bytes": 7285,
+        "sha256": "6af72c8a3590f8cc75bcee068dab561db2e9bfa8c326747388cdb8707d5d8674"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_a_dependent_command_captu0/model.bin",
+        "bytes": 72088,
+        "sha256": "e0e12691eca2895842d1f92be42c7b39a0572a08b9d941d5b2e4c81d3d1ba061"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_a_dependent_command_captu0/model.c",
+        "bytes": 12559,
+        "sha256": "9f3057e85b083f35ca905e978da4a85fe9bdddf478d87dcdd368c35a1693afbd"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_a_dependent_command_captu0/model.d",
+        "bytes": 8260,
+        "sha256": "046190ba11ff8de48f5b9bc632bcf4fed841d588da9b7c2fb2d4ea332f023b83"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_a_dependent_command_captu0/native-receipt.json",
+        "bytes": 26441,
+        "sha256": "fc6a7d66da15fe0ce42a1872a0430cf9d352b176456ca394c991137c4eddc353"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_consumer_completion_cover0/model.bin",
+        "bytes": 74088,
+        "sha256": "914ea9c90fc2ec09b8264ae76d5f1c7ea8f9a733c074a9b5e1b7ad71161ee6ef"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_consumer_completion_cover0/model.c",
+        "bytes": 21843,
+        "sha256": "3585122d964df5a6565e5edc490aca8b9bb27b7d25a3b1ec1333ea4ca65aeb8a"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_consumer_completion_cover0/model.d",
+        "bytes": 8260,
+        "sha256": "7f4ccbea935873dc5227cdba031db6658a553ad8d3e0e6abe393aa69dc33f89e"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_consumer_completion_cover0/native-receipt.json",
+        "bytes": 26441,
+        "sha256": "10901a82fdb3af6bee8a8a275caf9263376ec3914a7c36f3f3c37389721c138c"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_conditions_do_no0/model.bin",
+        "bytes": 71624,
+        "sha256": "9ea694fdf6fc7daf90992a14ec30d7b1ab25c6ba1903a60d6f89f84061f056dd"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_conditions_do_no0/model.c",
+        "bytes": 12163,
+        "sha256": "7a10dbd4a0d7a53adc7d7ac847ec8624bcbaed0e6559bd854a1f9073066f9ebf"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_conditions_do_no0/model.d",
+        "bytes": 8260,
+        "sha256": "9e577ebcd09733069bcf144ad5d153598adb2a6d0f142995e4f6ae76f74af25c"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_conditions_do_no0/native-receipt.json",
+        "bytes": 26441,
+        "sha256": "07ffc366b13e1b63c46f9d6914a569a2365e889abe8a9a1d1871a539dd339185"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_conditions_do_no1/model.bin",
+        "bytes": 71624,
+        "sha256": "a7fc74d4d28508dc86523e01ace67ce09dc9e89e35bba8c04db42b593dac62e7"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_conditions_do_no1/model.c",
+        "bytes": 12161,
+        "sha256": "b99c7a9d8a3d20df2ea62f8cbfaaf5dd650e2b8d15a2a6fa2bb87e5b7b92ebcb"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_conditions_do_no1/model.d",
+        "bytes": 8260,
+        "sha256": "e6c97da8c31db317e460983abee3eb3d9fe48bc8616172b5f2d4748a4fdb193e"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_conditions_do_no1/native-receipt.json",
+        "bytes": 26441,
+        "sha256": "f3e5819aaa659ddbfeae38567d5bceb2849db017e60f2fe7659b195f6f07b85a"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_numeric_values_k0/model.bin",
+        "bytes": 73464,
+        "sha256": "2395add6fa99376511eadfff9e3545ab0aad51c9749e099c257ce1d88454cbf9"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_numeric_values_k0/model.c",
+        "bytes": 28537,
+        "sha256": "fc3b2a9b6b71c95de03bd45d3429309f03d49fc5bd3ea15325a231476fda0efb"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_numeric_values_k0/model.d",
+        "bytes": 9646,
+        "sha256": "fba654193d409b194e18d384ce487c5a1c7a0cf6a0f8319754dbf7cde96efe79"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_numeric_values_k0/native-receipt.json",
+        "bytes": 30175,
+        "sha256": "591c1504d1337c0b29cc75c7ef43b91265871b5e05b879373d19709e78510ff6"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_numeric_values_k1/model.bin",
+        "bytes": 73464,
+        "sha256": "ebc68bf89fd10ada730e6702d5a430fe0d559be9816a3915bd21b502ee05d677"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_numeric_values_k1/model.c",
+        "bytes": 28537,
+        "sha256": "306063084e3ba7726e321308a96d5bb536b12600ef4ed155c3bca3970cadefc6"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_numeric_values_k1/model.d",
+        "bytes": 9646,
+        "sha256": "f2b2d402bc769c5b196cbcd1064d8c170c80fc786758390e0ec3d7ba3f0006ed"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_numeric_values_k1/native-receipt.json",
+        "bytes": 30175,
+        "sha256": "5b97d4b61d588b58ccc3d3aa17ddbcc61a8a1222d627e1c2b40b52ecc46224ac"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_numeric_values_k2/model.bin",
+        "bytes": 73464,
+        "sha256": "8fac05a397fe375188be2480563e24ea41e89eb320f4bad69e892fb703bd2602"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_numeric_values_k2/model.c",
+        "bytes": 28555,
+        "sha256": "ff1f835fe8737be4e1aa2e2322c4792f2dd0fca364017c91bc4dac18d60b24e9"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_numeric_values_k2/model.d",
+        "bytes": 9646,
+        "sha256": "3b16ffc1dfdc806470bdc98e6af5dbc36b1a0a75c82b7011f4ceaca3996d5fdc"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_numeric_values_k2/native-receipt.json",
+        "bytes": 30175,
+        "sha256": "18557fc433397a9fe569c370792d5aba1c92e6d7356167f4a7ead43e2df9b5d9"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_numeric_values_k3/model.bin",
+        "bytes": 73464,
+        "sha256": "ef8ff993eab24eb250cb7114a7f080683633152c7e6e5b8c1ed5b7e5f92aea65"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_numeric_values_k3/model.c",
+        "bytes": 28545,
+        "sha256": "2e7c4e7498b6d00861082dc87daf78750380f8cc19c644e8f77d6d27dc352603"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_numeric_values_k3/model.d",
+        "bytes": 9646,
+        "sha256": "b4239c2edbfb7d40a0e613e7473b3e60eed3c43401c770550c51be0f9c1b851c"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_numeric_values_k3/native-receipt.json",
+        "bytes": 30175,
+        "sha256": "76f98113ad2977df02de39c1ec950bed86628db1ba43e27f6932fa1dae4d5b9c"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_numeric_values_k4/model.bin",
+        "bytes": 73464,
+        "sha256": "c717a4c9c863270a76e274627e50906f2cd593ba4ab47fe3dfe06b32cfffc919"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_numeric_values_k4/model.c",
+        "bytes": 28545,
+        "sha256": "8304c26dc069cc351bb1b00f88d1286de2a67b1312eae71f5490fa6a6c3c1966"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_numeric_values_k4/model.d",
+        "bytes": 9646,
+        "sha256": "41bd0e7a709908da8034a25c5aa5fe1df619deefafa43693fb14e064c8868449"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_numeric_values_k4/native-receipt.json",
+        "bytes": 30175,
+        "sha256": "fc58bbf46fc46024a05d5dc4864bdb629b8e7f039d43c2d046dfcc25a4eeb2a8"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_numeric_values_k5/model.bin",
+        "bytes": 73464,
+        "sha256": "06a0ee13b7b7a7dcf930426c1bfb08bfe0564d96008e627c696a4b8866cde583"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_numeric_values_k5/model.c",
+        "bytes": 28579,
+        "sha256": "6ef0507086b247ba2a83d6883957e1380d8b39ac19ea9bcb56adff252ec0b2b4"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_numeric_values_k5/model.d",
+        "bytes": 9646,
+        "sha256": "2894c37f53878c90dec1650442664dcb33dd24ba235dd4b28c37f94562c17321"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_deferred_numeric_values_k5/native-receipt.json",
+        "bytes": 30175,
+        "sha256": "5576a985d3868fa24b85a63f05fad194ad505f935ce69533d642719728cb3eea"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_different_regions_do_not_0/model.bin",
+        "bytes": 72408,
+        "sha256": "d55179029bf954a3f01081b2544f766b4ae4ed53736cfef05ea2d5b52d9d7758"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_different_regions_do_not_0/model.c",
+        "bytes": 21231,
+        "sha256": "12da633e9a956d50c06a0fd613047b5047aecc3200c0c30cba91bad617bdfb80"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_different_regions_do_not_0/model.d",
+        "bytes": 8260,
+        "sha256": "592f146b7e462c8241136960c3c35ca376abe98befa86dbf304af95ecdeaa74c"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_different_regions_do_not_0/native-receipt.json",
+        "bytes": 26475,
+        "sha256": "8fae35f39574cde4c2a5a909ec4e79aac5d4c7e470bbfa8276af36898dd02dca"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_duplicate_rmw_old_results0/model.bin",
+        "bytes": 93368,
+        "sha256": "dd315ef453dbd6f2239e144d5b1e8ed03cc28c6d2965c616d73c7a1835945d09"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_duplicate_rmw_old_results0/model.c",
+        "bytes": 42128,
+        "sha256": "a354f22a8a1ce91756792b2e1a751cb65c62a177499737d1a0fa6f045c488169"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_duplicate_rmw_old_results0/model.d",
+        "bytes": 9646,
+        "sha256": "1cc19d298ce6068dfcc6a3fe75b1d0b20035dbe25a2e45fdad5c5a3c91469ad6"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_duplicate_rmw_old_results0/native-receipt.json",
+        "bytes": 30175,
+        "sha256": "3e693ef8048a80f5aa8ba04e3898de4ad9b4c0f59cdca6c896f66612b7947074"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_explicit_start_tile_wait_0/model.bin",
+        "bytes": 71992,
+        "sha256": "1b0be9de87e978224c9bec162948318403db80819a40d8422034d3381db352e9"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_explicit_start_tile_wait_0/model.c",
+        "bytes": 21212,
+        "sha256": "795fbe551f6bfd7ab3a22c0b8a83199acc560c9a00e65a9f1285bcaf66536332"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_explicit_start_tile_wait_0/model.d",
+        "bytes": 8260,
+        "sha256": "09591feeb47e153ed179289ba3d056548f3a13099836fdadc2d5a5c97044fc4e"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_explicit_start_tile_wait_0/native-receipt.json",
+        "bytes": 26441,
+        "sha256": "e43e9b004ff6771be766789018dfe8a9cd037a35304ea4ea70336f7d3596bfc8"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_explicit_start_tile_wait_1/model.bin",
+        "bytes": 71992,
+        "sha256": "6b42702764faf5e3424052de3c66f14817e161824b490c511f26c472c17ee768"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_explicit_start_tile_wait_1/model.c",
+        "bytes": 21212,
+        "sha256": "a8df09de978d3d71ac8bf9dbb9281c6c25c31503c45cfc5325af461eaf7bc2ab"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_explicit_start_tile_wait_1/model.d",
+        "bytes": 8260,
+        "sha256": "ac087c40fdaf83deb1e7c971dcd333257b1013eec6b95984ddf149fed740cb86"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_explicit_start_tile_wait_1/native-receipt.json",
+        "bytes": 26461,
+        "sha256": "b9790a5496b774fa545b58496f848c0339d8548d8afb639002698a4645518083"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_explicit_start_tile_wait_2/model.bin",
+        "bytes": 71896,
+        "sha256": "dc538acffc8e9ba7aeb5a849d9d23bd02b4dd22bd2dd836163210e97561ee5fb"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_explicit_start_tile_wait_2/model.c",
+        "bytes": 21212,
+        "sha256": "d9370a04b0f642dd73f0ef2587816fc7582dd96c2a7bc179b3db2c21ed7fa9f9"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_explicit_start_tile_wait_2/model.d",
+        "bytes": 8260,
+        "sha256": "a7c26f7d0657c7b5d90fbc6d7662f0b2d04db64cecde7a517f524816858a09b1"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_explicit_start_tile_wait_2/native-receipt.json",
+        "bytes": 26441,
+        "sha256": "7e5318428159b03d09624ad4a6c37ef70e6e83462e0ca4861a8c84f950b4ae29"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_failed_cas_expected_and_d0/model.bin",
+        "bytes": 72056,
+        "sha256": "88d261d71e0eb6fe25d1bdfd0edab1575cfdb2a28c8aab7835bd83af703c61ac"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_failed_cas_expected_and_d0/model.c",
+        "bytes": 12193,
+        "sha256": "703f33ca6cb36a04c2abf8a56cce5ca5a21bf97d6c0fd7eadf13599688aef37a"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_failed_cas_expected_and_d0/model.d",
+        "bytes": 8260,
+        "sha256": "2d509aa7e5d29719cae935473cccd7fe5f42ea90ab08f4bc26ffed8725458eca"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_failed_cas_expected_and_d0/native-receipt.json",
+        "bytes": 26441,
+        "sha256": "2f912c38dc3c42ba46a6364cc47769d7f9b7434a8419516453529eec7b598182"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_gather_interval_values_fr0/model.bin",
+        "bytes": 55240,
+        "sha256": "d562ecb433e9c99d0442092b061b9ce5c7b353ea5b7ec2b6886ef73b67edce97"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_gather_interval_values_fr0/model.c",
+        "bytes": 12211,
+        "sha256": "f70ba89d7e70612e85b182ce99ff93ba67d94e1f66b85f3cf00eed394bd2cea4"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_gather_interval_values_fr0/model.d",
+        "bytes": 8260,
+        "sha256": "6dae184ad2c37769d3e8c6ce2301d3f617a0ad52824a5927c7e99ea91415fa7c"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_gather_interval_values_fr0/native-receipt.json",
+        "bytes": 26441,
+        "sha256": "e7a874f9f74ad8b731141db30f27246d42008210f684b1a168a1da373a241b38"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_global_tile_ownership_rej0/model.bin",
+        "bytes": 51800,
+        "sha256": "e99d271d3351ee6779167a794db26acba61ddfb6c56d7a3b020ebb24482b3807"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_global_tile_ownership_rej0/model.c",
+        "bytes": 11965,
+        "sha256": "e2c0981101cc98f7db12baf711942a1c34abb8ff6dbe40449224ec463ee263ff"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_global_tile_ownership_rej0/model.d",
+        "bytes": 8260,
+        "sha256": "c01e8edfe80458e9c5f87038ba75c8e47b903ecec6ee7ba1e1f0cc824489d335"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_global_tile_ownership_rej0/native-receipt.json",
+        "bytes": 26457,
+        "sha256": "6b8a6b8827ab00f1db619cbfc97aa7e82bc002f0f6f87dd0c2c93ff37928f654"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_inactive_arithmetic_skips0/model.bin",
+        "bytes": 73304,
+        "sha256": "351a116f5608a1139927b8a16a34d1c925340cc3af80db70c998965a01ad8140"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_inactive_arithmetic_skips0/model.c",
+        "bytes": 28569,
+        "sha256": "3b57c2de3f2f38274025c6a1ff8668ddde27ca052931ec15b2bffd3d4b47766d"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_inactive_arithmetic_skips0/model.d",
+        "bytes": 9646,
+        "sha256": "b58dee1a63eb25fc12c6eb833ecdd57ef36b848e7424ce896ac646fb62ad22da"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_inactive_arithmetic_skips0/native-receipt.json",
+        "bytes": 30175,
+        "sha256": "07a72c24d07019097461f694c472db2ec1c296b72e24878fa5700ef8d4161cac"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_inactive_arithmetic_skips1/model.bin",
+        "bytes": 51976,
+        "sha256": "6c43fdceb668a80c78ff95020402539b510aa50721dbef59c4e3ea8a96f6416a"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_inactive_arithmetic_skips1/model.c",
+        "bytes": 28570,
+        "sha256": "bb03544221021df154e07ea4ab8dae8fc1882cef234deefafa8bb5ecb47dbe23"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_inactive_arithmetic_skips1/model.d",
+        "bytes": 9646,
+        "sha256": "23df9a06d9bfc5f543656a0c917c1a4555dd801ada32525ea9dad68cc1c6d71d"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_inactive_arithmetic_skips1/native-receipt.json",
+        "bytes": 30198,
+        "sha256": "d3dd5b03d2e3af404c1ec70c9a8eecad55ae3f7f0398c99bb4fe2b175f6a5059"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_logical_region_assignment0/model.bin",
+        "bytes": 73144,
+        "sha256": "2f1a26aa88bd33c5ef304020f397389a1604dfa76739b421ec7c7615e8331721"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_logical_region_assignment0/model.c",
+        "bytes": 24932,
+        "sha256": "13f3584e5004eb3e186f69668500fbd7319627036eedf4d110c3f352ec700ef9"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_logical_region_assignment0/model.d",
+        "bytes": 8260,
+        "sha256": "5ed623fee5929ee65f779895a826ff590203cbe9fe5ab80a788b2bfc04147e3b"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_logical_region_assignment0/native-receipt.json",
+        "bytes": 26441,
+        "sha256": "8da403e452458b36d7dc18374edcdc0feec5aac76a379821dbe0f8f709d59854"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_logical_region_assignment1/model.bin",
+        "bytes": 73144,
+        "sha256": "301302a607e2bad0f6d370ea37cd42085caf522fe738d30001ceed1c0866f8e5"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_logical_region_assignment1/model.c",
+        "bytes": 24932,
+        "sha256": "07e93fee591d0215bd93a16fba7f1abc924780d0e5ecdf6cf19448bc16ac9167"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_logical_region_assignment1/model.d",
+        "bytes": 8260,
+        "sha256": "d9bf5ff821e002a5e7e031104162f9d3576396e0c0ec51de6f176fe46ad96dfb"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_logical_region_assignment1/native-receipt.json",
+        "bytes": 26475,
+        "sha256": "17a039e962027556879f6e790cd15a31899b04a6a96a8fa74d55cb2215355ca4"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_new_explicit_destination_0/model.bin",
+        "bytes": 72264,
+        "sha256": "363947c27de1c2b33ffbc7404b40ddd9f50f7dcde2500a723f2ddee2626a1e00"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_new_explicit_destination_0/model.c",
+        "bytes": 21329,
+        "sha256": "998ddc17dc1dc543a5576c28ff38d970c557e92094da812bae07c84ec0648172"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_new_explicit_destination_0/model.d",
+        "bytes": 8260,
+        "sha256": "64d2837224633b57bc423a6fe264cc4245a398ae08bd50b2f7fb410ff2b48a6e"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_new_explicit_destination_0/native-receipt.json",
+        "bytes": 26441,
+        "sha256": "422fb76675c36fe18f5afe470354b90bb59c3676cb993a7be6e90563447bd3db"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_new_explicit_destination_1/model.bin",
+        "bytes": 72264,
+        "sha256": "f44d6917bbe2cfaa0156498565af3fd3cd94b0525283a8cc4ef0fbd4a40ae109"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_new_explicit_destination_1/model.c",
+        "bytes": 21329,
+        "sha256": "3f4bd5bc8d25902a26fc6f98481a7f1e3fb1f3ee1b7a9c38c720f1fae655f920"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_new_explicit_destination_1/model.d",
+        "bytes": 8260,
+        "sha256": "42938e0e7b50e51a5bae41e5a8d216aab21dcbbccd9af2fa3083688c38f34276"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_new_explicit_destination_1/native-receipt.json",
+        "bytes": 26461,
+        "sha256": "0a6d297143463fb95180f4cc601566d219b7a7b3acdb5bd9c03be7bcddaeb3ef"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_pending_8byte_destination0/model.bin",
+        "bytes": 55560,
+        "sha256": "1e4dd14dd1fa617672566857d1006e79aad46a46910fe640f11d122272f4caee"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_pending_8byte_destination0/model.c",
+        "bytes": 21192,
+        "sha256": "ff4d5199a4bce4029997c198969a6af356573d7682a2e9dfbdf9ea6b957ab041"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_pending_8byte_destination0/model.d",
+        "bytes": 8260,
+        "sha256": "44c2f245031eac20e79486d7b914053629a645500a9656f69e0cdc01f1dd6101"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_pending_8byte_destination0/native-receipt.json",
+        "bytes": 26461,
+        "sha256": "fafb43d564a396771dfcc594ca8dce1820c26e0bfc6e4f80e907adc6390d1866"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_raw_device_offset_wrap_is0/model.bin",
+        "bytes": 51672,
+        "sha256": "71e0f17cc430f8dee03061221f28647381eb34abcf55aa75a1e90c8eea5e45cf"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_raw_device_offset_wrap_is0/model.c",
+        "bytes": 24724,
+        "sha256": "de6a721ce95f491720971e7d445d5ca4e5daf296bd79e659fbdb31fd5c0e5c8e"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_raw_device_offset_wrap_is0/model.d",
+        "bytes": 8260,
+        "sha256": "3752a58a1c3e575b09b83a976b6fb56f552ddf55bc073f40f9f73f5f2a2e6310"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_raw_device_offset_wrap_is0/native-receipt.json",
+        "bytes": 26470,
+        "sha256": "032eb6831bf5cc74d39f8fcf4130d505bd21a75322f395fac396390a6d5f873e"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_raw_device_offset_wrap_is1/model.bin",
+        "bytes": 51160,
+        "sha256": "39078efcc057847d8fe0cbb45abdb5aa23e39c9c43c2ddcc955bf2c78539c431"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_raw_device_offset_wrap_is1/model.c",
+        "bytes": 24706,
+        "sha256": "9ad44357ccf8b2ef8eb7445dcd1d60a2934b693304033f0ef16dcf09daba298e"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_raw_device_offset_wrap_is1/model.d",
+        "bytes": 8260,
+        "sha256": "471ad3b27fdb6e08a44f8434b1bdea6c666aa5ca7939cf08997f93c46f9d00cf"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_raw_device_offset_wrap_is1/native-receipt.json",
+        "bytes": 26441,
+        "sha256": "1144f152b27fe475bea483064bc552570812ca8dda9ec83dbaa3ed9d14411c9f"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_raw_device_offset_wrap_is2/model.bin",
+        "bytes": 51160,
+        "sha256": "7130de07affa6d9c0d412a430601919a9e210cd44291f9bf676376731b6d21c7"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_raw_device_offset_wrap_is2/model.c",
+        "bytes": 24721,
+        "sha256": "ba6876b456e1a452225c5c9df1b68a4ce91239672d5d74f520fd8f286273e84e"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_raw_device_offset_wrap_is2/model.d",
+        "bytes": 8260,
+        "sha256": "3ce1360a1e197a625c763ccf37d0e2b9e392778c11b615f062f3389e8317b0aa"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_raw_device_offset_wrap_is2/native-receipt.json",
+        "bytes": 26441,
+        "sha256": "91967b7817f19ab6e921f646fe82a3ad0c460c4ff6816a3ba224164102560b84"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_read_read_overlap_and_oth0/model.bin",
+        "bytes": 73480,
+        "sha256": "b61caac94531646d8d065499100a8c559b7bcd1501060fedd559098f38369910"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_read_read_overlap_and_oth0/model.c",
+        "bytes": 21435,
+        "sha256": "796e5b68e7b93bd463b2221e47813a62a97142bd4e14f1985066c54939814cc7"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_read_read_overlap_and_oth0/model.d",
+        "bytes": 8260,
+        "sha256": "215193d5c8526860bea929e775312e82d5cba00ae0580ace0259a09b2d671fff"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_read_read_overlap_and_oth0/native-receipt.json",
+        "bytes": 26441,
+        "sha256": "629eb345a7110d4e8bb7be78d350d11c45c0fecc1b77851d22f39713fbd905ac"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_ready_query_can_return_ei0/model.bin",
+        "bytes": 72216,
+        "sha256": "18c5751324873862bf6f90f89621e9087a1dda128399f59b4b43a3c36f7cd846"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_ready_query_can_return_ei0/model.c",
+        "bytes": 21223,
+        "sha256": "b7e177bff8cf1578221f49fa1accf13f15915dbad3f6c9abd75d62d85d8ad87f"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_ready_query_can_return_ei0/model.d",
+        "bytes": 8260,
+        "sha256": "4baf9b03ee918658f8bde5a86504045412388d51638c88f2d47913557edd3208"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_ready_query_can_return_ei0/native-receipt.json",
+        "bytes": 26461,
+        "sha256": "39b384384778ea874bea5b25223a6eecc34929f8107788a15b66a795dce4a143"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_ready_query_can_return_ei1/model.bin",
+        "bytes": 72088,
+        "sha256": "aae1467c8183ef225a432b69a371b5bb6504e2b09fa00709c4514faf4b91c895"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_ready_query_can_return_ei1/model.c",
+        "bytes": 21223,
+        "sha256": "a03ccecbe03534fabab5759e04f46195dd91009cd813f69c92f7e02f8abf78c3"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_ready_query_can_return_ei1/model.d",
+        "bytes": 8260,
+        "sha256": "9f27d31ff3d211223a51e1027d2949d9de9acbaed3dce9ae4ce742ea589d6ccd"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_ready_query_can_return_ei1/native-receipt.json",
+        "bytes": 26441,
+        "sha256": "a3888d5e26c46b0763d223c769837e5603116ce7422be0f88462e28b12324b1a"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_region_assignment_uses_fi0/model.bin",
+        "bytes": 52632,
+        "sha256": "e3d099c1e6d279b7570271fc9746579f336fcc748a0b03e96d816cfe8caa3a7d"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_region_assignment_uses_fi0/model.c",
+        "bytes": 24795,
+        "sha256": "2073834ed135236140ac5e3441641a69efa95aea848b76007f71842311114acf"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_region_assignment_uses_fi0/model.d",
+        "bytes": 8260,
+        "sha256": "27befaff497d356a24e64af18d310769cda2162d61a489fe5bd0bfaa175f4949"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_region_assignment_uses_fi0/native-receipt.json",
+        "bytes": 26441,
+        "sha256": "0ae1d79de73ede2dca1227480b505f28970da63ffcb0880f1483cf7051fd1c9c"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_region_assignment_uses_fi1/model.bin",
+        "bytes": 52632,
+        "sha256": "e7b48b0314f1717ea98b66133090a52f5263d0587d98ac3f1ad4d6d2b6e79a32"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_region_assignment_uses_fi1/model.c",
+        "bytes": 24795,
+        "sha256": "c4716cf5a06eccdbd2a776c7d9670dcf8b50c313678cbe9882b7cac4be91417c"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_region_assignment_uses_fi1/model.d",
+        "bytes": 8260,
+        "sha256": "7fab1fbdc9af71b4c5bc01356cc6f826ef08920eb5e4ff7b846f1d4da0ac3644"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_region_assignment_uses_fi1/native-receipt.json",
+        "bytes": 26474,
+        "sha256": "25c91d99826381062f17c1ab00a17b12405acfd9156f871d9c83fe54fc58017f"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_region_stall_covers_cross0/model.bin",
+        "bytes": 73336,
+        "sha256": "ba26e778a83fcb354828207969a5006dc88f5954a64187604c6b7a708d5b01b6"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_region_stall_covers_cross0/model.c",
+        "bytes": 21347,
+        "sha256": "f6b0e1a204f35abc15dbb9359cb59eb11384f978214c21f38caf7377865cdf5a"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_region_stall_covers_cross0/model.d",
+        "bytes": 8260,
+        "sha256": "13e9c089de293819699dd01b0944955573455aa9aa5689d8fd7d30fac6329827"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_region_stall_covers_cross0/native-receipt.json",
+        "bytes": 26441,
+        "sha256": "992f3f8fd3597fd0b3d7d06148371264411f7e8019b80678c00f53854fe8367b"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_region_stall_covers_cross1/model.bin",
+        "bytes": 73336,
+        "sha256": "7f03b8e8e7aa4477a768e1771184bd850c8adc0caadb07130c9c4ce8b7783566"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_region_stall_covers_cross1/model.c",
+        "bytes": 21347,
+        "sha256": "cfb332d306ad0adb169b0635a1ae30c3f5f9fac60db06f3e242b36034884d297"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_region_stall_covers_cross1/model.d",
+        "bytes": 8260,
+        "sha256": "8e67dbacf76c4be443bfe8980ce24f8c80fcb23db9079d0732790dc6e2907600"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_region_stall_covers_cross1/native-receipt.json",
+        "bytes": 26461,
+        "sha256": "c7f061014b430a2a546561b2ea84ad36fb7f5463db8f270223ee9b6dfc2e3db9"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_region_stall_covers_cross2/model.bin",
+        "bytes": 73336,
+        "sha256": "65dee025810bfa465b0806c666999e2609e0cfc368f614eeecc790e3ebcca8d3"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_region_stall_covers_cross2/model.c",
+        "bytes": 21347,
+        "sha256": "daf5e3e6bb4cca49b90016fb848a5d7cacae3bcd25c7c20ff414bf7fa1a0081a"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_region_stall_covers_cross2/model.d",
+        "bytes": 8260,
+        "sha256": "24ba678dcaf94f4cd75c746e809bcb189768da3ced6dc3c3611352f9ae887e1d"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_region_stall_covers_cross2/native-receipt.json",
+        "bytes": 26461,
+        "sha256": "7d1df81bfa06b15351a7fe1d431b54ed09b2b7ea3d700e854b3e75660a9aacac"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_rmw_publishes_old_value_o0/model.bin",
+        "bytes": 93176,
+        "sha256": "74f3b7510e09495663d709c17c909d2b3b01b2759c3d927b9217559684629e5a"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_rmw_publishes_old_value_o0/model.c",
+        "bytes": 41965,
+        "sha256": "f20ed80330e1254eb0919a0ebf36d7ac400c4cbdc1eb89f8c6ab746715b35954"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_rmw_publishes_old_value_o0/model.d",
+        "bytes": 9646,
+        "sha256": "441bcc3cfbc63817117159f13b9e250d4e362926a29e3df6355337c4971b538f"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_rmw_publishes_old_value_o0/native-receipt.json",
+        "bytes": 30175,
+        "sha256": "28863b63ec5152a7ead047f40bcd8b97598bb78fde2a3d7cd00cdaccd88f3173"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_rmw_publishes_old_value_o1/model.bin",
+        "bytes": 93176,
+        "sha256": "a194124c0aceb057520acee495b19e871b33c57dacfc1bacb16b4040448ceb0e"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_rmw_publishes_old_value_o1/model.c",
+        "bytes": 41965,
+        "sha256": "219666b86bc95f0f12e66b885a07fdb0865defc3aaab6d613833d755c96821f8"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_rmw_publishes_old_value_o1/model.d",
+        "bytes": 9646,
+        "sha256": "5a67a881161eff037261197114617bb806ad67bed78e0b9036823cd9d4926107"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_rmw_publishes_old_value_o1/native-receipt.json",
+        "bytes": 30175,
+        "sha256": "f13acedea1c8a1c7b3a6d4b1c652cdd13fd1996a4cf80264992700ac265381e8"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_store_effect_waits_for_ca0/model.bin",
+        "bytes": 93720,
+        "sha256": "a7169267274b5a4a0bfce0b2b4ad286c853fec3b7ffe4feee0e205bfce9f48a1"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_store_effect_waits_for_ca0/model.c",
+        "bytes": 42167,
+        "sha256": "1b830965374e373eef033fb2020b813d14da61e65ed3caa0bbecd2a93fc69d2c"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_store_effect_waits_for_ca0/model.d",
+        "bytes": 9646,
+        "sha256": "c74e1601a5c76912e11dbc32b6343060812c62d684f2955033b9e6df9f9aca47"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_store_effect_waits_for_ca0/native-receipt.json",
+        "bytes": 30175,
+        "sha256": "ae4af6cc0b35780ba0d658f1017b6478b981fecc65981e867689e2f357d2d558"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_store_hazards_cover_the_f0/model.bin",
+        "bytes": 55352,
+        "sha256": "375d50652bb06276f71230a7f0ac6591b68d272f382402cf0dd4ab8c3d308523"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_store_hazards_cover_the_f0/model.c",
+        "bytes": 21267,
+        "sha256": "245d91785c313317b0df06254e6876a941f0d96685ed0c0c168e2edde7c9c7eb"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_store_hazards_cover_the_f0/model.d",
+        "bytes": 8260,
+        "sha256": "df7ba695b69c9234e78dbc46e4c1903ef7391104765759bf9c42f9032d5a9c26"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_store_hazards_cover_the_f0/native-receipt.json",
+        "bytes": 26469,
+        "sha256": "b5efeba0bca340ced9f5ec64a05ca16b9d4a41ccb12fbe79ac478f0995c0e20c"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_store_hazards_cover_the_f1/model.bin",
+        "bytes": 55352,
+        "sha256": "10749ef94a6704825517865c67d0c79ba9e7482082e3bc6d26b8abda07754726"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_store_hazards_cover_the_f1/model.c",
+        "bytes": 21267,
+        "sha256": "a2e4c8c70b5ced275905bea13a6b31d86315cc9e638c1c6426885ee7cb7a5b74"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_store_hazards_cover_the_f1/model.d",
+        "bytes": 8260,
+        "sha256": "b15f65458aea227d8e4ec0d2ca4bb0895a3d5d524f1f25cadd22d2b7872fb470"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_store_hazards_cover_the_f1/native-receipt.json",
+        "bytes": 26469,
+        "sha256": "238024a9fdb0465007f4d3c5033c07eefe1f72475a427472a3a18570add537ee"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_the_issuing_thread_cannot0/model.bin",
+        "bytes": 52648,
+        "sha256": "b37d37605c1a891efc69cad51eb867838cc7ca175ed4a77ae9c2b5348b761dcd"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_the_issuing_thread_cannot0/model.c",
+        "bytes": 11917,
+        "sha256": "089329563fa82c3df089c755dabab91d854f8787732c204e38a53a7cea31331d"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_the_issuing_thread_cannot0/model.d",
+        "bytes": 8260,
+        "sha256": "e9e66e158f13ba464c7c147f79affb8be43de5f58efe5faea4c453ef6637e014"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_the_issuing_thread_cannot0/native-receipt.json",
+        "bytes": 26475,
+        "sha256": "82d9df80840e087bb79d1b78a610d74489773c7027281a9e9256c3505aaa0eb7"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_unresolved_indices_captur0/model.bin",
+        "bytes": 72024,
+        "sha256": "efa25705518ea8c8789587a613d26551497fea2b6deb8900c921a5cf1cf0a4b7"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_unresolved_indices_captur0/model.c",
+        "bytes": 12824,
+        "sha256": "74a8034a0afde1a2a6fff5ad44a5dbda6c1ee8125b58a1f3a0bae8934349b2bd"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_unresolved_indices_captur0/model.d",
+        "bytes": 8260,
+        "sha256": "fcc8aae175eeb20bac2f8ab326cbe36d23889bbd2d21a8af4e94cdb52d9a00cb"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/pytest/test_unresolved_indices_captur0/native-receipt.json",
+        "bytes": 26441,
+        "sha256": "6009de93699aa6973501b5ef50ab60ffefd8b4ed9f7752a914837ee6e4df638e"
+      },
+      {
+        "path": "/private/tmp/probata-t28-region-physical-composition-green/resources.json",
+        "bytes": 166,
+        "sha256": "968a3ce4fc1465013713612a42ac0ade29c20787003f7e3bcbb2ca8094653cd0"
+      }
+    ]
+  },
+  "red_profiles": [
+    {
+      "name": "region-registration",
+      "resources": {
+        "exit_code": 1,
+        "peak_rss_bytes": 76939264,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 0.4905275420169346,
+        "cpu_seconds": 0.45047299999999996
+      },
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-region-registration-red/command.json",
+          "bytes": 392,
+          "sha256": "b68e5df0dd24a790e379b017dacbaf663edf10f42810eb75b6b13c2a21eb5814"
+        },
+        {
+          "path": "/private/tmp/probata-t28-region-registration-red/control.log",
+          "bytes": 4009,
+          "sha256": "e2e5129db2cf7fc693788d5dbcdd7acbf268cd022b2b3eee0d008e65da781ab6"
+        },
+        {
+          "path": "/private/tmp/probata-t28-region-registration-red/junit.xml",
+          "bytes": 4397,
+          "sha256": "9192c8d7e65eb22dd3a7710fcd97d7ce6bde052ab7a0f7d58010c4a8a7831534"
+        },
+        {
+          "path": "/private/tmp/probata-t28-region-registration-red/resources.json",
+          "bytes": 175,
+          "sha256": "f4a7c859cdcf7dddc6bf1bf6e8b4b760fb0674fb8dfa03039c8eb8859016adb8"
+        }
+      ]
+    },
+    {
+      "name": "raw-offset",
+      "resources": {
+        "exit_code": 1,
+        "peak_rss_bytes": 108937216,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 0.727329708985053,
+        "cpu_seconds": 0.701014
+      },
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-raw-offset-red/command.json",
+          "bytes": 381,
+          "sha256": "414b1ba3f13652e23763e1790a4b8a4f99d59802a93bc7d4fb465a8403b8e869"
+        },
+        {
+          "path": "/private/tmp/probata-t28-raw-offset-red/control.log",
+          "bytes": 16813,
+          "sha256": "f8d6aa2c451103d212d10f74300f02a2144a2441859ae25c092c6e84129b4cc2"
+        },
+        {
+          "path": "/private/tmp/probata-t28-raw-offset-red/junit.xml",
+          "bytes": 19961,
+          "sha256": "4f737a10ae95ff07dfd5848b8f820c94102be2a1b6e873253cfaf60822487cbd"
+        },
+        {
+          "path": "/private/tmp/probata-t28-raw-offset-red/pytest/test_raw_device_offset_wrap_is0/model.c",
+          "bytes": 22906,
+          "sha256": "7be531c3aeb3f527512edda84f2cc85cdf3c49d75e0e699c9423bc01f6bccc2a"
+        },
+        {
+          "path": "/private/tmp/probata-t28-raw-offset-red/pytest/test_raw_device_offset_wrap_is0/model.d",
+          "bytes": 8222,
+          "sha256": "28e84d48973129fd8e3270442059613fd73c7ebc5edb04537c92a339e477cd79"
+        },
+        {
+          "path": "/private/tmp/probata-t28-raw-offset-red/pytest/test_raw_device_offset_wrap_is1/model.c",
+          "bytes": 22888,
+          "sha256": "e8b9522e2cf3e0657b9392b28c8e95e0d54d494ccb01b2cd811388e5e726f192"
+        },
+        {
+          "path": "/private/tmp/probata-t28-raw-offset-red/pytest/test_raw_device_offset_wrap_is1/model.d",
+          "bytes": 8222,
+          "sha256": "bd834528a1acb8be7d3c67d461e7196332e319a6d83050aed9d3cf0f91cdbb00"
+        },
+        {
+          "path": "/private/tmp/probata-t28-raw-offset-red/pytest/test_raw_device_offset_wrap_is2/model.c",
+          "bytes": 22903,
+          "sha256": "2bc9ab3be2d8dc6199d5841708f8e3b7535e78a9cc112997db64dc818ba6c1dc"
+        },
+        {
+          "path": "/private/tmp/probata-t28-raw-offset-red/pytest/test_raw_device_offset_wrap_is2/model.d",
+          "bytes": 8222,
+          "sha256": "5b61914b621d615dd2800cb80059a28711a7f517ad5636a6eee89c2d261f2b30"
+        },
+        {
+          "path": "/private/tmp/probata-t28-raw-offset-red/resources.json",
+          "bytes": 164,
+          "sha256": "af24a285671977426ef0db63c5c809be05bc315cdb3fd99638fa2c4f64e75f6e"
+        }
+      ]
+    },
+    {
+      "name": "region-physical-composition",
+      "resources": {
+        "exit_code": 1,
+        "peak_rss_bytes": 77676544,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 0.7907697919872589,
+        "cpu_seconds": 0.6962119999999999
+      },
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-region-physical-composition-red/command.json",
+          "bytes": 396,
+          "sha256": "b563cc6fb46668bfa8ecc2720234c7e54c2afec253a8086f48e50c1d6a562f95"
+        },
+        {
+          "path": "/private/tmp/probata-t28-region-physical-composition-red/control.log",
+          "bytes": 11525,
+          "sha256": "725ed6ec2fe30cde22896570503253cfb887fd9557e5c09298fa84fae25654be"
+        },
+        {
+          "path": "/private/tmp/probata-t28-region-physical-composition-red/junit.xml",
+          "bytes": 13823,
+          "sha256": "ff6ca3ef7b7c04cf3543d50c06a2be66b985ed8fbbb4b7c13e40649b181af3fe"
+        },
+        {
+          "path": "/private/tmp/probata-t28-region-physical-composition-red/pytest/test_logical_region_assignment0/model.c",
+          "bytes": 24125,
+          "sha256": "2d9eaa485e93cdc027aa9c8563b495db4e9dea5a1ac055634a5babedbe5658b7"
+        },
+        {
+          "path": "/private/tmp/probata-t28-region-physical-composition-red/pytest/test_logical_region_assignment0/model.d",
+          "bytes": 8256,
+          "sha256": "5ebb014c004d56fb3ea03a54a7d7cf8910d738fd5b0fccf085e24c03c5310bdf"
+        },
+        {
+          "path": "/private/tmp/probata-t28-region-physical-composition-red/pytest/test_logical_region_assignment1/model.c",
+          "bytes": 24125,
+          "sha256": "9738942b5451c470f77cc29814361d9562b35d0e365a075e314898bb8171864b"
+        },
+        {
+          "path": "/private/tmp/probata-t28-region-physical-composition-red/pytest/test_logical_region_assignment1/model.d",
+          "bytes": 8256,
+          "sha256": "056f9cfe161f0222f3f6c938706eb133fee91e25a3096f5327388d89685ad283"
+        },
+        {
+          "path": "/private/tmp/probata-t28-region-physical-composition-red/resources.json",
+          "bytes": 174,
+          "sha256": "1628b8e14c0b40680b702128a825b083f7cfb1924acb5b4039ecf7bec8d09170"
+        }
+      ]
+    }
+  ],
+  "worker": {
+    "path": "/private/tmp/probata-mac-compiler-worker-b.py",
+    "bytes": 695,
+    "sha256": "873ac0b65eaa7edd4e0f624a86e68141c0e340f9ab1ca6816a07598538548a0e"
+  },
+  "guard": {
+    "path": "/private/tmp/probata-t28-compiler-guard.py",
+    "bytes": 874,
+    "sha256": "0cdc8a9c541f6234afa99129e7e0a8d7433efba6c7a1007cce2fbe021b9edf0a"
+  },
+  "scope": [
+    "Native generated-C API only; no actual formal/public-prove/current0.2acceptance.",
+    "Source region-registration rejection is intentionally one-sided; first matching ID assigns the command base. Logical footprint must retain that ID.",
+    "Logical/source addresses and physical hazard addresses are separate inputs; no address-translation or C-object correspondence is inferred.",
+    "Raw uint32 index product and uint64 Addr addition wrap are defined and preserved; no-offset-wrap is a separate checked ordinary-array correspondence domain, never source UB or strengthened original-unit requires.",
+    "Register/F2 wrappers, reserved6MMIOranges, exact source geometry/type/ABI and source CPU-probe closure remain incomplete.",
+    "Readiness remains demonic absent an owned finite-progress premise; future total-poll proof must record that environment assumption pending59review.",
+    "Earlier38-test intermediate run changed test-file bytes after collection and is excluded from exact-source acceptance; final43 stationary-source profile is authoritative.",
+    "All0.1library/proofpaths unchanged; ticket28 remains claimed."
+  ]
+}

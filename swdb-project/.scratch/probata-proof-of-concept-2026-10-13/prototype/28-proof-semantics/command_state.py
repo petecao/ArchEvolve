@@ -22,6 +22,9 @@ def render_header(values_header):
 #ifndef DXC_ON_COMPLETE
 #define DXC_ON_COMPLETE(id) ((void)(id))
 #endif
+#ifndef DXR_ON_RESET
+#define DXR_ON_RESET() ((void)0)
+#endif
 struct dxc_command {
   unsigned thread, pending, bound, root, access;
   int region;
@@ -48,6 +51,7 @@ static void dxc_reset(void) {
   DXM_CHECK(DXC_COMMANDS <= 64, "command-mask-capacity");
   dxm_reset(); dxc_count=0; dxc_constructing=0;
   DXC_ON_RESET();
+  DXR_ON_RESET();
 }
 static uint64_t dxc_tile_mask(unsigned tile, unsigned bytes) {
   unsigned halves=dxm_tile_halves(tile,bytes);
