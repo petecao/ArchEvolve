@@ -159,3 +159,12 @@ def test_run27_constructs_are_evaluated(fz):
     ]
     v = verdicts(fz, hints)
     assert v == {"b1": "not_refuted", "b2": "refuted", "a1": "not_refuted", "a2": "refuted"}, v
+
+
+def test_sizeof_follows_the_machdep(fz):
+    hints = [h("z1", "stmt:entry", "assert",
+               "assert sizeof(char) == 1 && sizeof(short) == 2 && sizeof(unsigned long) == 8 && "
+               "sizeof(long long) == 8 && sizeof(NodeID) == 4 && sizeof(int *) == 8;"),
+             h("z2", "stmt:entry", "assert", "assert sizeof(char) == 4;"),
+             h("z3", "stmt:entry", "assert", "assert sizeof(struct QueueBuffer_NodeID) == 4;")]
+    assert verdicts(fz, hints) == {"z1": "not_refuted", "z2": "refuted", "z3": "unchecked"}

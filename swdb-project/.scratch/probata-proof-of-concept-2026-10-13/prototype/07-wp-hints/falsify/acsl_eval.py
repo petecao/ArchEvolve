@@ -262,7 +262,7 @@ class Parser:
                 self.expect("(")
                 ty = self.parse_type()
                 self.expect(")")
-                return ("num", 8 if ty[1] or ty[0] in ("size_t", "long", "uint64_t", "int64_t") else 4, "sizeof")
+                return ("sizeof", ty, "sizeof")
             labels = None
             if self.at("{"):
                 self.next()
@@ -389,6 +389,16 @@ def convert(ty, v):
         return v % m
     v %= m
     return v - m if v >= m // 2 else v
+
+
+def sizeof(ty):
+    """Byte size on the x86_64 machdep; Unknown for any type not listed (code review 2026-10-16)."""
+    if ty[1]:
+        return 8
+    t = ctype(ty)
+    if t is None:
+        raise Unknown(f"sizeof {ty[0]}")
+    return 1 if t[0] == "bool" else t[1] // 8
 
 
 def type_range(ty):
@@ -771,6 +781,8 @@ def eval_term(ctx, e):
     k = e[0]
     if k == "num":
         return e[1]
+    if k == "sizeof":
+        return sizeof(e[1])
     if k == "id":
         n = e[1]
         if n == "\\true":
