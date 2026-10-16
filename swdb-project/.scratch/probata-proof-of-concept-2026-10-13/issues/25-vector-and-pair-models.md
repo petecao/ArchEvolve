@@ -1145,3 +1145,9 @@ It reports 7 source pins, 18 schema-valid scripted records and 941 report refere
 with zero mismatches. Root-owned selected compiler/setup controls passed 40/40;
 all Frama processes in that profile were named stand-ins. No actual qualified
 model/caller proof or ticket acceptance checkbox is claimed by this preparation.
+
+## Reviewed caller source preparation — 2026-10-16 03:51 ET
+
+Exact42844b9aafe2a8af860e09bf5a6fbbec25a42c74 including248 lifetime is integrated after [independent source PASS](../evidence/t25-caller-source-independent-review-42844b9a-20261016.md):10 immutable source-pin instances/23 anchor instances/31 run/header references match. Complete lowered scalar capture, one normal-return cleanup, unreachable fallback and lexical lifetime-end duties are bound without origins/premises/adopted dependencies. Capacity==count is only an admitted libc++22.1.8 C++17 source witness; its model post and caller branches still require proof. Original v2 caller model selection and unsupported generic composition remain. The older03:32 held248 note is superseded only for source preparation, never actual caller proof.
+
+Root reports exact017 representative WP/Why3 import/task generation ended03:45:36 ET with actual tool generation but entry exit1 because of a legitimate empty-ID imported module property and multiline check-lemma description. Task log20,647B,1goal/2properties/results[], sentinel absent; guard7.153422s/207.421875MiB/no events. Pure reader repair and complete task cold audit are pending; no actual rerun, original-exit rewrite, body/caller proof or whole-ticket acceptance. The frozen017 control checkout/artifacts remain untouched by integration.
