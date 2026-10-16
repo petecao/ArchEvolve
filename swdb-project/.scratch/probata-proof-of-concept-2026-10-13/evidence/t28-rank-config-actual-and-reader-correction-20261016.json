@@ -1,0 +1,140 @@
+{
+  "created_et": "2026-10-16 01:23 ET",
+  "scope": "Four read-only actual metadata calls each exit0. Entry/guardexit1 after collection due multiline RC parser; original failure retained, separately corrected PURE reader/cold audit accepts metadata observations only. No solver/version/config mutation/VC/proof acceptance.",
+  "raw_root": "/private/tmp/probata-t28-rank-config-v2-9704c54b-20261016",
+  "entry_result": {
+    "all_metadata_calls_pass": false,
+    "config_mutation_requested": false,
+    "elapsed_seconds": 0.3468159589683637,
+    "first_failure": {
+      "class": "AssertionError",
+      "message": "unrecognized expanded configuration syntax"
+    },
+    "proof_claim": false,
+    "rows": [
+      {
+        "argv": [
+          "/Users/yanrujhou/.opam/framac-33/bin/why3",
+          "--print-datadir"
+        ],
+        "name": "datadir",
+        "returncode": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "a417957997253af5b4a7d2578394fc9516451f7cb77e07200c74689ff8ac9f4a"
+      },
+      {
+        "argv": [
+          "/Users/yanrujhou/.opam/framac-33/bin/why3",
+          "--print-libdir"
+        ],
+        "name": "libdir",
+        "returncode": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "afac1516a9bf3f0316f7d612374101a768a3586bcc5764cc34f2445424b20642"
+      },
+      {
+        "argv": [
+          "/Users/yanrujhou/.opam/framac-33/bin/why3",
+          "config",
+          "--config",
+          "/Users/yanrujhou/.why3.conf",
+          "--no-load-default-plugins",
+          "--no-stdlib",
+          "-L",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib",
+          "show"
+        ],
+        "name": "show",
+        "returncode": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "a0d7342b62cd7b6c054b9859127c3ec52dd846650ab9f5fecce9504c8647a215"
+      },
+      {
+        "argv": [
+          "/Users/yanrujhou/.opam/framac-33/bin/why3",
+          "config",
+          "--config",
+          "/Users/yanrujhou/.why3.conf",
+          "--no-load-default-plugins",
+          "--no-stdlib",
+          "-L",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib",
+          "list-provers"
+        ],
+        "name": "list-provers",
+        "returncode": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "7c3005ac0b33a3dcd71aea5db768b4d27baa69837416e90998d15e71e1880db5"
+      }
+    ],
+    "solver_invocations": 0,
+    "source_commit": "9704c54b838863dd838d18a20dd0ade1633d5027",
+    "stage": "expanded_config_metadata",
+    "version_probes": 0
+  },
+  "guard": {
+    "cmd": [
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+      "/private/tmp/probata-t28-rank-config-entry-v2-20261016.py",
+      "/private/tmp/probata-t28-rank-config-v2-9704c54b-20261016/component"
+    ],
+    "exit_code": 1,
+    "wall_s": 0.731260166678112,
+    "peak_rss_mb": 95.515625,
+    "cap_gb": 8.0,
+    "killed_by_watchdog": false,
+    "timed_out": false,
+    "queue_timed_out": false,
+    "timeout_s": 60.0,
+    "queue_timeout_s": 30.0,
+    "lock_wait_s": 0.00058562500635162,
+    "runner_pid": 46936,
+    "clock": "continuous_monotonic",
+    "clock_info": {
+      "kind": "continuous_monotonic",
+      "implementation": "mach_continuous_time",
+      "includes_sleep": true,
+      "numer": 125,
+      "denom": 3
+    },
+    "log": "/private/tmp/probata-t28-rank-config-v2-9704c54b-20261016/guard.log",
+    "inspection_events": [],
+    "inspection_failure": null,
+    "primary_inspection_failure": null,
+    "cleanup_inspection_failure": null,
+    "cleanup_inspection_failures": [],
+    "inspection_retry_boundary": "AccessDenied uses a 200 ms environ retry admission window and 21-attempt cap, or three attempts for other operations; only the exact proc_environ SystemError raised by the requested environ operation shares that policy; individual OS calls are not forcibly timed; all pauses count and RSS/deadline checks remain mandatory after inspection; only independently confirmed gone/zombie or changed birth is skipped; persistent live or unknown failure fails closed",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "unconfirmed_children": [],
+    "error": null,
+    "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment",
+    "rss_scope": "live union of current ancestry, retained PID/birth identities and periodic inherited-marker matches; sampled, not a kernel quota",
+    "finished": "2026-10-16 01:15:29 EDT"
+  },
+  "supplemental_cold_audit": {
+    "path": "probata-t28-rank-config-cold-audit-v1-20261016.json",
+    "sha256": "1d520973db524f90fd8099ff533247905b04271aafeecb0cc60630d31695c2dd"
+  },
+  "recipe_pins": [
+    {
+      "path": "/private/tmp/probata-t28-rank-config-command-v2-20261016.json",
+      "sha256": "d783072267b6ce270537501e892fc683337de9b5c5ba1fbbc3a70bd986887f77"
+    },
+    {
+      "path": "/private/tmp/probata-t28-rank-config-entry-v2-20261016.py",
+      "sha256": "00f0e2935fda144dbebfc85496ac1c174b8c692354382d3c6df5c5874b03b529"
+    },
+    {
+      "path": "/private/tmp/probata-t28-rank-config-expected-v2-20261016.json",
+      "sha256": "b86ac077c0fdb08e978e2fe618dc5bc85bd8cca9c1bee03cfb461b522e3afa1b"
+    },
+    {
+      "path": "/private/tmp/probata-t28-rank-config-root-preflight-v2-20261016.json",
+      "sha256": "a2f24d84ccf9385be960294babe3c17ef84d415ac5e93e1bd9a28ee293c7e1d5"
+    },
+    {
+      "path": "/private/tmp/probata-t28-rank-config-root-exit-v2-20261016.json",
+      "sha256": "f5634708d52d02d7a50016fbad758add8262ff4cbaeeaef0cd46fb4d55dedf85"
+    }
+  ]
+}

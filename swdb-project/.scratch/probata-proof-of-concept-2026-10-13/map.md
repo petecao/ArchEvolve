@@ -5,16 +5,16 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-re
 
 ## Current state (resume here)
 
-Updated: 2026-10-16 01:17 ET. **35 resolved / 25 ready-for-agent / 3 claimed.**
+Updated: 2026-10-16 01:24 ET. **35 resolved / 25 ready-for-agent / 3 claimed.**
 Implementation remains active on `codex/probata-resume-20261015`, published
-`f8dcb102`, based on `yanrujhou_main`. The eligible frontier is **07, 25, 28**;
+`65bb4b1f`, based on `yanrujhou_main`. The eligible frontier is **07, 25, 28**;
 other unresolved tickets retain their dependencies. [All 63 statuses](ticket-status-20261015.md).
 
 | Ticket | Current evidence | Next gate |
 | --- | --- | --- |
-| **07 claimed** | Run 26 remains UNPROVEN. Exact `7930f3a1` preserves executable C. Helper generation v4 passed independent cold review: 245 goals/352 properties, 212 ordinary/33 smoke, 31 initialization properties, all 19 helper bodies and three normalized snapshots; 1,005 selected pins and 29 artifacts match. These are generation results, not solver proofs. | Review the separate 900-second complete helper-proof packet before admission. Alignment remains unresolved, with no full C RTE, helper or TD proof acceptance. [Actual generation](evidence/t07-helper-stage1-v4-actual-20261016.json), [cold review](evidence/probata-t07-stage1-v4-independent-cold-review-20261016.md). |
+| **07 claimed** | Run 26 remains UNPROVEN. Helper generation v4 passed cold review for all 19 bodies and 245 goals/352 properties. A separate helper proof now runs at exact `7930f3a1` under the reviewed v2 packet: 900s outer/880s inner, one 8 GiB worker, wp-par1 and full three-prover 30s portfolio. | Await final guard settlement and independent complete ordinary/smoke/dependency audit. Early snapshots and journals are provisional; no helper, TD, full C RTE or counted-provider acceptance. [Admission](evidence/t07-helper-stage2-v2-admission-20261016.json), [static review](evidence/probata-t07-helper-stage2-independent-static-review-v2-20261016.md). |
 | **25 claimed** | Pair `1278f2d9` and public heap CEA are accepted in scope. Fresh original count constructor at exact `bb7170ac` also passes independent cold review: one record, 27 targets, 36 ordinary Valid plus one smoke; 1,031 checks/342 references with zero mismatch. All 84 tasks are identical universal-value streams or exact zero specialization. | Continue separate growth/receiver/storage ownership and caller work. No generic caller, production-store, formal C++ or whole-ticket acceptance follows. [Count cold review](evidence/t25-count-ctor-cold-review-bb7170ac-20261016.md), [heap cold review](evidence/t25-public-heap-cold-review-cea5652b-20261016.md). |
-| **28 claimed** | Setup81 and size86 native controls are reviewed/published. Mathematical-rank artifact9704c54b passed3/3 actual syntax/type checks;83 physical pins independently match. First public real-header enum selector is under implementation with scripted compiler controls only. | Read-only expanded-config metadata, then separately reviewed complete rank VCs and independent absent-premise negative. Public interface/state/IEEE/source correspondence remain open; no current0.2 or full-ticket formal acceptance. [Rank type gate](evidence/t28-rank-type-actual-20261016.json), [progress premise](evidence/t28-finite-progress-decision-20261016.md). |
+| **28 claimed** | Setup/size prototypes and rank syntax/type gate are accepted only in scope. Four read-only Why3 metadata calls exited 0; the original entry/guard exit 1 is preserved. A corrected offline Rc reader passes 25 pure controls and a 483-check cold audit, accepting all ten expanded prover variants and driver closures as metadata only. | Review a separate whole-module rank VC recipe with complete positive and absent-premise negative tasks. No solver/version/VC/proof result follows from metadata; source/IEEE/caller correspondence and current 0.2 remain open. [Actual and correction](evidence/t28-rank-config-actual-and-reader-correction-20261016.json), [cold audit](evidence/probata-t28-rank-config-cold-audit-v1-20261016.md). |
 | **24 / 27 / 36 resolved** | Published29709232/af10a946/8b0c2e27 with scoped acceptance; ticket36 retains its historical checker identity. | Preserve exact evidence for final integration review. |
 
 Root owns actual admissions: at most two remote measurements, one per socket,
@@ -27,10 +27,18 @@ The count run used one 8 GiB-RSS worker and an actual monitored 8 GiB raw-output
 allowance, not a filesystem quota. The [budget clarification](evidence/t25-count-ctor-admission-budget-clarification-20261016.md)
 retains the earlier 1 GiB proposal; all 614 raw files remain remote for readers.
 
-Mac helper generation v4 completed under a 120s/8 GiB guard in 3.521s/172.78125 MiB,
-with no OOM/timeout/inspection/cleanup failure; independent cold review passed
-for diagnostic generation only. The rank type gate completed in 0.669s with no
-VC/proof acceptance. No new Mac helper proof or counted run is admitted here.
+The separate Mac helper v2 proof is active following the 01:21 ET root preflight
+with no competing selected verifier, both shared leases absent and 74% memory
+free at that finite observation. It freshly compiles both observer/report modules
+inside the same 900s/8 GiB guard and retains every obligation; no early artifact
+is final proof evidence. Inner 880s and wp-par1/30s solver limits remain unchanged.
+Root alone owns guard/child settlement and final cold review; no provider/TD or
+automatic later stage is admitted.
+
+The rank type gate remains syntax/type acceptance only. Expanded-config collection
+retains its original exit 1 after a multiline Rc-reader failure; a separately
+corrected pure reader accepts the four captured exit-0 metadata observations
+without rerunning collection. No solver, version probe or rank VC proof follows.
 Recheck live leases, processes, memory and storage before every dispatch.
 
 Raw remote evidence stays on `/data`; source moves by Git with full protocolv3
@@ -39,7 +47,7 @@ admitted. Every result keeps its exact source/checker/runtime; runtime-dependent
 translator composites are not source-only identities. No completed checkpoint
 resolves the three frontier tickets.
 
-[Current resume](resume.md). Last full status table:00:49 ET; next:**01:19 ET**.
+[Current resume](resume.md). Last full status table:01:19 ET; next:**01:49 ET**.
 
 ## Historical remote checkpoints
 

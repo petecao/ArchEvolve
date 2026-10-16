@@ -1,0 +1,66 @@
+{
+  "packet": {
+    "command": {
+      "path": "/private/tmp/probata-t07-helper-stage2-command-20261016.json",
+      "sha256": "918af01e8766712b1c8dd66796fc3d31cc0228d79afd49ace6393e15c7d32a39"
+    },
+    "entry": {
+      "path": "/private/tmp/probata-t07-helper-stage2-entry-20261016.py",
+      "sha256": "600c36345eb6fc2f725d840b88a2afa9a76fea4fdc2a7da3f19a43eed42c55e8"
+    },
+    "expected": {
+      "path": "/private/tmp/probata-t07-helper-stage2-expected-20261016.json",
+      "sha256": "e7664dbbdbed6c49c7a1d649a42594bd08a9d7897dab0c7fc50362fc186d8548"
+    },
+    "observer": {
+      "path": "/private/tmp/probata-t07-helper-result-journal-20261016.ml",
+      "sha256": "0468ec62ecc0a270b966ca30fd32c6744a5a894963eb0111d1ef6fcd575a631d"
+    },
+    "plan": {
+      "path": "/private/tmp/probata-t07-helper-stage2-plan-20261016.md",
+      "sha256": "085472b636af8e433719008a5b0a051b9d5aa8ffd56d0ca6f3bda0a33dfcc528"
+    }
+  },
+  "selected_pin_entries": 1299,
+  "unique_physical_paths": 1296,
+  "selected_trees": 8,
+  "pin_or_membership_errors": [],
+  "actual_execution": false,
+  "date_et": "2026-10-16",
+  "verdict": "REQUEST_CHANGES_BEFORE_ADMISSION",
+  "blockers": [
+    {
+      "id": "B1",
+      "priority": 1,
+      "file": "/private/tmp/probata-t07-helper-result-journal-20261016.ml",
+      "line": 36,
+      "finding": "pp_model receives r:Wp.VCS.result, but pinned vCS.mli95 expects model; result.prover_model is the model field. Concrete static compile blocker.",
+      "repair": "Pass r.prover_model and re-pin all dependent packet files."
+    },
+    {
+      "id": "B2",
+      "priority": 2,
+      "file": "/private/tmp/probata-t07-helper-stage2-entry-20261016.py",
+      "line": 295,
+      "finding": "Final property identity signature excludes extern; in-allowlist bodyless properties may change Extern classification without rejection.",
+      "repair": "Require exact per-property baseline Extern flags/set, retaining evolving proof dependencies for separate closure audit; add a pure mutation-sensitive control."
+    },
+    {
+      "id": "B3",
+      "priority": 2,
+      "file": "/private/tmp/probata-t07-helper-stage2-entry-20261016.py",
+      "line": 326,
+      "finding": "Final smoke rows with passed=false and only fresh external non-valid results are not rejected. Pinned wpo.ml757 requires not(is_trivial) for smoke passage independently of raw verdicts.",
+      "repair": "Reject final smoke passed!=true in addition to current valid/error/unobserved checks; add a pure mutation-sensitive control."
+    }
+  ],
+  "review_execution": "Passive source, API, text, JSON, file-byte hashing and tree-membership review only; no entry/compiler/OCaml/Frama/Why3/prover/version/SSH execution.",
+  "preserved_scope": [
+    "Exact7930 source and all19 helpers; TD provenance only",
+    "All245/352 baseline identities retained; fresh complete ordinary/smoke/per-prover/native reports mandatory",
+    "900s outer/880s inner; 8GiB one worker; wp-par1; full alt-ergo,z3,cvc5 portfolio30s",
+    "Interrupted journal remains provisional until outer guard settles owned children and root passively rehashes/reparses",
+    "No proof acceptance/full C RTE/TD/counted run or automatic next stage"
+  ],
+  "remaining_checks": "Author is preparing preserved v2 with repairs and independent native serializer comparison; v1 must not launch."
+}
