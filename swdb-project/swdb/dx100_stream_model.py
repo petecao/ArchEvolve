@@ -197,24 +197,24 @@ requires \valid_read(data+(0..15)) && \initialized(data+(0..15));
 requires __swdb_dx_stream_meta.phase==0 && __swdb_dx_stream_meta.ack==0 && __swdb_dx_stream_meta.status==2 && __swdb_dx_stream_meta.ready==0;
 requires __swdb_dx_stream_meta.size==0 && __swdb_dx_stream_meta.sent==0 && __swdb_dx_stream_meta.received==0;
 requires __swdb_dx_stream_meta.lane0_finished==1 && __swdb_dx_stream_meta.other_lanes_finished==1 && __swdb_dx_stream_meta.payload_initialized==1;
+terminates \false;
 assigns __swdb_dx_stream_meta;
 ensures __swdb_dx_stream_meta.phase==1 && __swdb_dx_stream_meta.ack==1 && __swdb_dx_stream_meta.status==0;
 ensures __swdb_dx_stream_meta.ready==255 && __swdb_dx_stream_meta.size==0 && __swdb_dx_stream_meta.target_size==1;
 ensures __swdb_dx_stream_meta.lane0_finished==0 && __swdb_dx_stream_meta.other_lanes_finished==0;
-ensures __swdb_dx_stream_meta.sent==0 && __swdb_dx_stream_meta.received==0 && __swdb_dx_stream_meta.payload_initialized==1;
-terminates \false;''',
+ensures __swdb_dx_stream_meta.sent==0 && __swdb_dx_stream_meta.received==0 && __swdb_dx_stream_meta.payload_initialized==1;''',
         'wait_ready':r'''requires SPD_id==0 && __swdb_dx_stream_meta.phase==1 && __swdb_dx_stream_meta.ack==1 && __swdb_dx_stream_meta.status==0;
 requires __swdb_dx_stream_meta.ready==255 && __swdb_dx_stream_meta.size==0 && __swdb_dx_stream_meta.target_size==1;
 requires __swdb_dx_stream_meta.sent==0 && __swdb_dx_stream_meta.received==0 && __swdb_dx_stream_meta.payload_initialized==1;
 requires __swdb_dx_stream_meta.lane0_finished==0 && __swdb_dx_stream_meta.other_lanes_finished==0;
+terminates \false;
 assigns __swdb_dx_stream_meta;
 ensures __swdb_dx_stream_meta.phase==5 && __swdb_dx_stream_meta.status==2 && __swdb_dx_stream_meta.ready==0;
 ensures __swdb_dx_stream_meta.size==1 && __swdb_dx_stream_meta.lane0_finished==1 && __swdb_dx_stream_meta.other_lanes_finished==0;
-ensures __swdb_dx_stream_meta.target_size==1 && __swdb_dx_stream_meta.sent==1 && __swdb_dx_stream_meta.received==1 && __swdb_dx_stream_meta.payload_initialized==1;
-terminates \false;''',
+ensures __swdb_dx_stream_meta.target_size==1 && __swdb_dx_stream_meta.sent==1 && __swdb_dx_stream_meta.received==1 && __swdb_dx_stream_meta.payload_initialized==1;''',
         'get_tile_size':r'''requires SPD_id==0 && __swdb_dx_stream_meta.phase==5 && __swdb_dx_stream_meta.status==2;
+terminates \false;
 assigns \nothing;
-ensures \result==__swdb_dx_stream_meta.size;
-terminates \false;'''}
+ensures \result==__swdb_dx_stream_meta.size;'''}
     return {'state':state,'entry':entry,'c':c,'contracts':contracts,
             'termination_policy':'conditional normal return; no hardware liveness'}

@@ -1,6 +1,23 @@
 """2026-10-16 ET. Public closed stream source/certificate controls; no actual WP."""
 import pytest
 
+def test_public_stream_places_partial_policy_inside_combined_original_contract(tmp_path):
+    import json,re,yaml
+    from pathlib import Path
+    from testkit.dx100_stream import prove_stream
+    def combined(contract):
+        contract['clauses'][0]['acsl']['text']=r'requires \true; assigns \nothing; ensures \result == 1;'
+    result,records,entry,marker=prove_stream(tmp_path,1,contract_mutate=combined)
+    assert result.returncode==0,result.stdout+result.stderr
+    record=yaml.safe_load((records.path/json.loads(result.stdout)['path']).read_text())
+    assert marker.exists() and record['failure_class']=='tool_crash'
+    wp=next(p for p in record['evidence']['reports'] if p.get('name')=='wp_input')
+    text=Path(wp['path']).read_text()
+    unit=next(m[1]for m in re.finditer(r'/\*@((?:(?!\*/).)+)\*/\s*int trust_fixture\(',text,re.S))
+    # The original predicate and frame still appear, with terminates in its
+    # grammar position even when all original clauses share one formal half.
+    assert re.search(r'requires\s+\\true\s*;\s*terminates\s+\\false\s*;\s*assigns\s+__swdb_dx_stream_meta\s*;\s*ensures\s+\\result\s*==\s*1\s*;',unit),unit
+
 def test_public_stream_refuses_missing_explicit_isolated_entry_certificate_before_adapter(tmp_path):
     from testkit.dx100_stream import prove_stream
     result,records,entry,marker=prove_stream(tmp_path,1,certificate=False)
@@ -44,6 +61,15 @@ def test_public_stream_binds_source_entry_and_partial_return_before_scripted_ada
     assert compiled.returncode==0,compiled.stdout+compiled.stderr
     text=Path(wp['path']).read_text()
     assert text.count(r'terminates \false;')==4
+    # ACSL33 requires terminates after requires and before assigns/postconditions.
+    # This checks emitted syntax order only; root owns the real parser gate.
+    import re
+    partial_blocks=[m[1]for m in re.finditer(r'/\*@(.+?)\*/',text,re.S)if r'terminates \false;'in m[1]]
+    assert len(partial_blocks)==4
+    ranks={'requires':0,'terminates':1,'assigns':2,'ensures':3}
+    for block in partial_blocks:
+        clauses=re.findall(r'\b(requires|terminates|assigns|ensures)\b',block)
+        assert [ranks[c]for c in clauses]==sorted(ranks[c]for c in clauses),block
     assert 'unsigned int stream_input[16] = {7};' in text
     assert '(wait_ready(0) + 0)' not in text
     if expected==1:
