@@ -114,4 +114,3 @@ def run_semantics_fixture(tmp_path, adapter, mark=True, mutate=False, *, source=
                       '--bounds', '{"threads": 1, "input_size": 1}', '--runs-dir', tmp_path / 'runs',
                       '--format', 'json', env=environment, timeout=1200)
     return result, records, semantics, marker
-
