@@ -33,3 +33,25 @@ issue. Future CAS must never change values already observed. Pending stores/RMW
 must retain conservative full physical-line interference unless an explicit,
 checked address-space/line correspondence supports greater precision. A line
 size or virtual-to-physical relation is never inferred from C object validity.
+
+Typed call ABI slice — 2026-10-15 ET: public `swdb lower` is the existing compiler
+prerequisite seam for the authorized synthetic `prove` cases. RED reproduced
+both initialized/uninitialized template allocation sharing a C symbol and six
+zero-argument type specializations silently collapsing to the first type. The
+repair resolves the actual source call in one full-TU AST, using exact file/span
+and its enclosing stable mangled function, then follows its declaration ID only
+inside that TU. Different-arity template families receive deterministic arity
+suffixes, independent of first-use order. Existing single-arity/non-template
+names remain. Same-arity collisions and unsupported macro coordinates fail closed.
+
+Ten compiler/native controls pass, including both call orders, nested template
+owners, the six distinct scalar types and native C++/C width results under
+ASan/UBSan, plus existing deterministic/summary/template controls. No actual
+formal tool ran. [Exact sources, outputs and resources](../../evidence/t28-typed-call-abi-controls-20261015.json).
+These are compiler prerequisites; no semantics0.2call behavior or whole-interface
+acceptance is inferred. Full typed model/import/initializedness policy remains
+pending.
+
+Source correction: [indirect old-value alias](indirect-old-value-correction-20261015.md).
+Optional old-result reads alias the progressively modified `new_data` buffer,
+not the untouched response payload. Global lane/packet order remains unproven.

@@ -57,3 +57,16 @@ unchanged. Typed contracts/models, memory/history/pair rules and actual syntheti
 acceptance remain incomplete; status stays **claimed**.
 [Implementation boundaries and next slices](../prototype/28-proof-semantics/README.md),
 [exact RED/GREEN evidence](../evidence/t28-declaration-inventory-controls-20261015.json).
+
+Typed-call compiler prerequisite — 2026-10-15 ET: two public `swdb lower` RED
+controls exposed a template-allocation overload collision and silent collapse of
+six zero-argument type specializations. Both are repaired through exact same-TU
+source-call/declaration binding and deterministic arity suffixes. Ten
+compiler/native controls pass, including native C++/C width behavior under
+ASan/UBSan. No actual verifier or new semantics0.2call acceptance is claimed.
+[Exact compiler evidence](../evidence/t28-typed-call-abi-controls-20261015.json).
+The separate source-reading correction to optional indirect old-value results is
+recorded [here](../prototype/28-proof-semantics/indirect-old-value-correction-20261015.md);
+future contracts must use the alias to the modified copied line. Ticket remains
+**claimed**; all substantive memory/history/ownership/pair and full-call actual
+acceptance criteria remain active.
