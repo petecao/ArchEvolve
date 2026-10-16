@@ -1439,3 +1439,10 @@ Ticket remains claimed; dependency/status counts are unchanged. [Compact checkpo
 
 
 Independent review found the pending caller test still expected58 reserve duties after the total changed127. That dict/comment now expect67; a new AST-only control compares the real test literals with current canonical35/67/11 body inventories and127total without invoking caller lowering or conftest. Genuine RED5pass/1fail becomes6pass, then35affectedpure cases pass under1GiB/60s with no external/native attempts/events. Original productionf466 is byte-identical; actual caller127 and public61 workflow remain unexecuted. See `../evidence/t25-copy-prefix-caller-count-correction-20261016.json`.
+
+
+## 2026-10-16 11:34 ET — combined preparation and preserved public failure
+
+Reviewed combined candidate `e99d09b1699b32525cd4c44cead21ed2fc6f4917` is integrated as preparation. Prefix source `e0e8a435` replaces the one advanced-prefix duty with ten duties: both exhaustive integer cases, each requiring all five exact source-definition conclusions under the full original antecedent and range. There are no sibling, prefix or new helper premises; the other 51 generated C inputs and the theory/body/contracts remain unchanged. The [initial REQUEST_CHANGES](../evidence/t25-copy-prefix-ten-case-independent-source-review-v1-f46607ce-20261016.md) is preserved; the [final source PASS](../evidence/t25-copy-prefix-ten-case-independent-source-review-v2-e0e8a435-20261016.md) closes the stale caller-test count with the narrow 58-to-67 reserve expectation correction and total127 pending applications. Retained pure controls pass35/35; this integration runs no tests or project functions. Fresh focused10, complete public61/67 and caller127 gates remain unexecuted here. No new mathematical, full-model, body, caller or ticket acceptance follows. The earlier scoped constructor35 decision is unchanged.
+
+Ticket remains claimed. [Current compact checkpoint](../evidence/combined-prefix-initialized-checkpoint-20261016-1134.md).
