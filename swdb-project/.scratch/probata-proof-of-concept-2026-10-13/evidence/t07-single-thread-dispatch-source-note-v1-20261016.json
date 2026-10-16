@@ -1,0 +1,34 @@
+{
+  "scope": "passive source supplement; explicit compiler/runtime TCB; no new premise",
+  "pins": [
+    {
+      "url": "https://raw.githubusercontent.com/llvm/llvm-project/llvmorg-22.1.8/openmp/runtime/src/kmp_dispatch.cpp",
+      "path": "/private/tmp/probata-t07-omp-dispatch-primary-20261016/kmp_dispatch.cpp",
+      "bytes": 113352,
+      "sha256": "3d1c825782db7bd2ad6f22aba82d48c66150b448ae30cf45f2f77f5103b542de"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/llvm/llvm-project/llvmorg-22.1.8/clang/lib/CodeGen/CGOpenMPRuntime.cpp",
+      "path": "/private/tmp/probata-t07-omp-dispatch-primary-20261016/CGOpenMPRuntime.cpp",
+      "bytes": 578026,
+      "sha256": "350034930197913770b39c8b7f53d99da8bb9af464ecda3a2d2f7c72f97b1429"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/llvm/llvm-project/llvmorg-22.1.8/openmp/runtime/src/kmp_runtime.cpp",
+      "path": "/private/tmp/probata-t07-omp-dispatch-primary-20261016/kmp_runtime.cpp",
+      "bytes": 339617,
+      "sha256": "0feaca52c42826554298f4ed5fa4783b07926ca6dd7c3fda3abc2986788734f5"
+    },
+    {
+      "path": "/private/tmp/probata-t07-single-thread-dispatch-source-note-v1-20261016.md",
+      "bytes": 3483,
+      "sha256": "9a383b7a48be9ddad7ef15cf44a8cce2d8237bf42f8050483113e0fdb2258f11"
+    },
+    {
+      "path": "/opt/homebrew/Cellar/libomp/22.1.8/INSTALL_RECEIPT.json",
+      "bytes": 928,
+      "sha256": "d65b08913ba89718415d35674351ff3b8dba750503b162e91c54d29134eb6a00"
+    }
+  ],
+  "runtime_or_TD_proof_accepted": false
+}

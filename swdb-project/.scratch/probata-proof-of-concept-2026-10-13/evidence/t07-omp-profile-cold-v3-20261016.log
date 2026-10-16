@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/private/tmp/probata-t07-omp-profile-cold-reader-v3-20261016.py", line 20, in <module>
+    rootpath=Path('/private/tmp/probata-root-t07-omp-profile-native-execution-v3-20261016.json');need('root-receipt-identity',H(rootpath)=='b867d8ac9fe19687ee82a5088629e080802e0c12f185447db62d81d6f719089f10');root=load(rootpath)
+                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/probata-t07-omp-profile-cold-reader-v3-20261016.py", line 14, in need
+    if not value:raise AssertionError(name)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: root-receipt-identity
