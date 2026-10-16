@@ -1,9 +1,9 @@
 # 27 — Proof semantics for the BFS read-offload calls
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-15 ET (resumed exact-source matrix; first diagnostic accepted; full matrix incomplete); 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-15 ET (current 62-case matrix complete; scoped acceptance resolved); 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 22
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("DX100 proof semantics", "Formal-half language and the C++ subset", "Modules" (library content), "Testing Decisions", S1, S2, S3); decisions: [12](../../formal-verification-2026-10-09/issues/12-dx100-proof-semantics.md), [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md), [14](../../formal-verification-2026-10-09/issues/14-dx100-wait-rule.md)
 **Time estimate:** about 1 week
@@ -12,15 +12,39 @@ Updated: 2026-10-15 ET (resumed exact-source matrix; first diagnostic accepted; 
 
 ## Acceptance
 
-- [ ] **Coverage and citations.** The proof-semantics entry has a version and a content hash. It lists the calls it covers: every `dx100-mmio 1.0-e4fc4af` call that the BFS read offload's lowerings or `TDStepMAA` make, one ACSL contract each. Every rule, values included, cites gem5 DX100 source at `e4fc4af` or is assumed with an owner. `swdb validate` accepts the entry. Negative controls: `swdb validate` refuses a rule with neither `cites:` (gem5 commit, path, lines) nor `assumed: {owner}`, a citation at any other commit, and a listed call with no contract.
-- [ ] **Unready read is a hazard** (map 12 item 3). Through `swdb prove` with the real bounded-verifier adapter, a fixture unit that reads a tile through a tile pointer before its covering wait is refuted, and the counterexample names the hazard probe. The same unit with the wait proves. `get_tile_size` before the covering wait is refuted the same way. A CPU write into a tile that an unfinished command reads is refuted; a CPU read of that tile is not flagged.
-- [ ] **A probe at every tile-pointer read.** On a fixture with three tile-pointer reads, moving any one read before its wait is refuted at that read's probe, on the C++ path and on the C lowering, with agreeing verdicts. WP proves the safe unit and leaves each unsafe one "not proven", never refuted.
-- [ ] **Wait rule as gem5 runs it** (map 14). These fixtures prove: a wait on a store's source tile covers the store and its result tile; a wait covers a command transitively through the tile and register producers it reads; issuing a command whose destination is tile t first covers every uncovered command that names t in any role, condition included (the tile dispatch stall); writing a constant into a register first covers every uncovered command that names that register (the device holds the write). These are refuted: reading an input producer's tile after waiting only on a range loop that filled its output tile (the range-loop exception); reading a command's output after a wait on a tile it names only as its condition; reading after a wait on an unrelated tile.
-- [ ] **Values at issue.** A gather, stream-load or range-loop fixture whose read after the covering wait equals the call's computed value proves. The same fixture asserting a wrong value is refuted.
-- [ ] **Footprints.** Each unfinished command's footprint is a logic predicate over ghost state and the current index-tile contents (indirect: the addresses its index tile names; stream: its range), with no per-element copy. A fixture asserting that an address in an uncovered gather's footprint is a member proves; asserting membership of an address outside it is refuted. (Overlap verdicts are ticket 28.)
-- [ ] **Ghost capacity** (S3). A safe fixture with 32 uncovered commands in one thread proves. With 33 it ends "not proven", failure class ghost capacity, never refuted.
-- [ ] **One ghost state, declared once** (map 16 item 10). The ghost arrays are declared once, in the ACSL source: per tile {owner, uncovered writer, uncovered readers as a bitmask over command slots}; per register {owner, writer}; per thread K = 32 command slots {kind, tiles, region, base, range or index tile, dependencies}. SAW (generated SAWScript) and WP (the ACSL as written) agree on every fixture above: both prove the safe ones, and WP leaves "not proven" each one SAW refutes. (The C-stub form is ticket 29's three-form check.)
-- [ ] **Versioned.** Every proof record `swdb prove` writes with these contracts pins the proof-semantics version and lists the proof semantics in its assumption set. Through `swdb candidate-level`, a fixture record that pins an older version stops counting.
+- [x] **Coverage and citations.** The proof-semantics entry has a version and a content hash. It lists the calls it covers: every `dx100-mmio 1.0-e4fc4af` call that the BFS read offload's lowerings or `TDStepMAA` make, one ACSL contract each. Every rule, values included, cites gem5 DX100 source at `e4fc4af` or is assumed with an owner. `swdb validate` accepts the entry. Negative controls: `swdb validate` refuses a rule with neither `cites:` (gem5 commit, path, lines) nor `assumed: {owner}`, a citation at any other commit, and a listed call with no contract.
+- [x] **Unready read is a hazard** (map 12 item 3). Through `swdb prove` with the real bounded-verifier adapter, a fixture unit that reads a tile through a tile pointer before its covering wait is refuted, and the counterexample names the hazard probe. The same unit with the wait proves. `get_tile_size` before the covering wait is refuted the same way. A CPU write into a tile that an unfinished command reads is refuted; a CPU read of that tile is not flagged.
+- [x] **A probe at every tile-pointer read.** On a fixture with three tile-pointer reads, moving any one read before its wait is refuted at that read's probe, on the C++ path and on the C lowering, with agreeing verdicts. WP proves the safe unit and leaves each unsafe one "not proven", never refuted.
+- [x] **Wait rule as gem5 runs it** (map 14). These fixtures prove: a wait on a store's source tile covers the store and its result tile; a wait covers a command transitively through the tile producers it reads (adopted F6 makes register overlap a hazard); issuing a command whose destination is tile t first covers every uncovered command that names t in any role, condition included (the tile dispatch stall); writing a constant into a register first covers every uncovered command that names that register (the device holds the write). These are refuted: reading an input producer's tile after waiting only on a range loop that filled its output tile (the range-loop exception); reading a command's output after a wait on a tile it names only as its condition; reading after a wait on an unrelated tile.
+- [x] **Values at issue.** A gather, stream-load or range-loop fixture whose read after the covering wait equals the call's computed value proves. The same fixture asserting a wrong value is refuted.
+- [x] **Footprints.** Each unfinished command's footprint is a logic predicate over ghost state and the current index-tile contents (indirect: the addresses its index tile names; stream: its range), with no per-element copy. A fixture asserting that an address in an uncovered gather's footprint is a member proves; asserting membership of an address outside it is refuted. (Overlap verdicts are ticket 28.)
+- [x] **Ghost capacity** (S3). A safe fixture with 32 uncovered commands in one thread proves. With 33 it ends "not proven", failure class ghost capacity, never refuted.
+- [x] **One ghost state, declared once** (map 16 item 10). The ghost arrays are declared once, in the ACSL source: per tile {owner, uncovered writer, uncovered readers as a bitmask over command slots}; per register {owner, writer}; per thread K = 32 command slots {kind, tiles, region, base, range or index tile, dependencies}. The approved CBMC bounded-verifier replacement (with C++ replay) and WP (the ACSL as written) agree on the fixture outcomes above: both prove the safe ones, and WP leaves "not proven" each one CBMC refutes. (The C-stub form is ticket 29's three-form check.)
+- [x] **Versioned.** Every proof record `swdb prove` writes with these contracts pins the proof-semantics version and lists the proof semantics in its assumption set. Through `swdb candidate-level`, a fixture record that pins an older version stops counting.
+
+## Current acceptance — 2026-10-15 ET
+
+**Resolved within the approved CBMC/WP fixture scope.** The fresh disjoint matrix
+completed 62/62 cases with 52 unique actual records: 25 proven, 12 bounded
+refutations with C++ replay, and 15 not proven. All 11 safe WP units prove
+792/792 ordinary goals and pass 252/252 smoke checks, including
+143 initialization and 141 RTE obligations. Current passed setup, exact
+provenance, mandatory initializedness/RTE and all original assertions remain.
+
+The approved CBMC-for-SAW substitution and F6 register-hazard decision govern the
+checked acceptance wording. All 13 unsafe WP records remain not proven; their
+35 failed smoke checks are retained, including outside-footprint's vacuous_pass
+with independent ensures timeout. Capacity 32 proves in WP/CBMC; capacity 33 is
+not_proven/ghost_capacity with no source counterexample. The reviewed ordinary
+capacity hint changes no source premise or contract. Source `0e7f2327` and the
+test-only capacity source `b9a34bbb` share the same pinned production/runtime identity.
+
+[Final matrix and evidence boundaries](../evidence/t27-current-matrix-completed-independent-20261015.md),
+[exact 62-case/52-record inventory](../evidence/t27-current-matrix-completed-independent-20261015.json).
+Typed entry windows, ordinary/ghost separation, trusted contracts and reduction
+assumptions remain explicit. This closure does not discharge tickets 28/29/43/59.
+All chronological answers/checkpoints below are historical; their pending and
+failed outcomes are preserved without upgrading them to current evidence.
 
 ## Notes
 
@@ -36,7 +60,7 @@ Updated: 2026-10-15 ET (resumed exact-source matrix; first diagnostic accepted; 
 - Risk: splitting values from hazards rests on the reduction lemma. It is an assumption entry of kind reduction until Rocq checks it (ticket 43; map 12 item 2). Ticket 29 adds its written proof and bounded check, which do not remove the entry.
 - Fixture proof records carry `contract_fixture` evidence. Mac: one real verifier job at a time under the ~8 GB RSS watchdog; tests skip cleanly when a verifier is missing.
 
-## Answer
+## Historical answer — 2026-10-14 ET
 
 2026-10-14 18:10 ET. **Resolved with the bounded verifier CBMC (Yan-Ru's 13:19 ET decision); the WP half of
 two boxes is not met** (below). Branch `probata-poc/t27`. Interface doc:
