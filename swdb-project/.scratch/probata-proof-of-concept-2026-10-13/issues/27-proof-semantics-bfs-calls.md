@@ -727,3 +727,15 @@ explicit entry premises, clean source and natural guard exits.
 [Exact Arest closure](../evidence/t27-composed-safe-a-rest-completed-independent-20261015.md).
 Including the completed CPU case, fresh safe acceptance is 5/11. B1/B2's six
 remaining units are still required; status remains `claimed`.
+
+### Fresh B1 safe completion: 8/11 total — 2026-10-15 ET
+
+The exact `0e7f2327` B1 profile completed naturally 3/3, exit 0: size, stream-value
+and range-value units are all actual `proven` records, with 189/189 ordinary
+goals Valid, 67/67 smoke checks passed, 37 initializedness and 29 RTE goals.
+Independent strict closure verified 3,447 physical references / 897 files without
+mismatch, exact collectors/current policy/pins/entry premises, clean source and
+natural guard exits.
+[Exact B1 closure](../evidence/t27-composed-safe-b1-completed-independent-20261015.md).
+Fresh safe acceptance is 8/11. Only B2's three_reads, value_gather and footprint
+remain; status stays `claimed` pending that final disjoint subset.
