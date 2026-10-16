@@ -136,3 +136,7 @@ Tests:
 ```sh
 .venv/bin/python -m unittest discover -s tests -p 'test_dx100_parameter_adapter.py' -v
 ```
+
+## Reference-point validation preparation
+
+The [standalone 16K validation workflow](../dx100-reference-validation/README.md) now prepares build/run manifests and evidence collection. It records stock-launcher packet-capacity overrides separately from declared defaults. The six proposals above remain unvalidated; no receipt is silently rebound to a different effective tuple.

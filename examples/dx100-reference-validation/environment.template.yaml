@@ -1,0 +1,42 @@
+format: dx100-validation-environment-v0.1
+workflow_sha256: 4a7cec231102d795015e85da7ddc8434f3819b689f1967d289771babee8850f8
+source_root: null
+platform:
+  host: null
+  os: null
+  architecture: null
+  toolchain_version: null
+tools:
+  cxx: null
+  cc: null
+  cmake: null
+  make: null
+  scons: null
+  gem5: null
+build_root: null
+run_root: null
+build_jobs: null
+great_lakes:
+  account: null
+  partition: null
+  cpus_per_task: null
+  memory: null
+  walltime: null
+target:
+  memory_size_bytes: null
+  cpu_model: null
+  cpu_clock: null
+  cache_configuration: null
+  ramulator_config: null
+  ramulator_config_sha256: null
+  dram_topology: null
+  guest_env_file: null
+  guest_env_sha256: ae12933e46f0d1023049a7b9f8c5c329e148a56c9a58eb3db850691922e9a61a
+  system_argv: null
+  launcher: null
+  launcher_sha256: null
+  checkpoint_policy: null
+  verifier_continuation_review: null
+  resource_address_review: null
+note: Unbound site/target settings are blockers, not inferred defaults. No job submission
+  is implemented.

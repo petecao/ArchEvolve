@@ -1,0 +1,30 @@
+format: dx100-validation-receipt-v0.1
+workflow_sha256: 4a7cec231102d795015e85da7ddc8434f3819b689f1967d289771babee8850f8
+environment_sha256: null
+workload_id: null
+mode: null
+variant: null
+completion: not_run
+exit_code: null
+benchmark_argv: null
+command_argv: null
+guest_environment: null
+stats_block_index: null
+artifacts:
+  stdout: null
+  stderr: null
+  binary: null
+  graph: null
+  graph_receipt: null
+  build_receipt: null
+  macro_dump: null
+  config_ini: null
+  stats: null
+  launcher: null
+  exit_events: null
+  simulator: null
+  ramulator_config: null
+  ramulator_library: null
+  guest_env_file: null
+note: Each artifact is {path, sha256}; use absolute paths or paths relative to this
+  receipt. Native and gem5 runs use separate receipts.

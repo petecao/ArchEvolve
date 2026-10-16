@@ -1,0 +1,82 @@
+format: dx100-reference-run-plan-v0.1
+workflow_sha256: 4a7cec231102d795015e85da7ddc8434f3819b689f1967d289771babee8850f8
+execute: false
+sequence:
+- Bind environment/source/build provenance
+- Build and pin converter/functional/target artifacts
+- Generate and hash each .sg once
+- Run functional baseline and functional DX100 on identical graphs
+- Resolve target topology/config and verifier exit handling
+- Run target baseline and target DX100 separately
+- Collect raw evidence and compare frontiers
+- Request independent timing review before performance claims
+guest_environment:
+  OMP_NUM_THREADS: '4'
+  OMP_DYNAMIC: 'FALSE'
+  OMP_PROC_BIND: 'false'
+workloads:
+- id: kronecker18-root0
+  generator_argv:
+  - '{converter}'
+  - -g
+  - '18'
+  - -k
+  - '16'
+  - -b
+  - '{graph}'
+  generator_seed: 27491095
+  root: 0
+  trials: 1
+  benchmark_options:
+  - -f
+  - '{graph}'
+  - -r
+  - '0'
+  - -n
+  - '1'
+  - -v
+  - -l
+  - -a
+  input_binding: Generate once, hash the serialized .sg, and use the identical file
+    in baseline and DX100 runs.
+- id: uniform18-root0
+  generator_argv:
+  - '{converter}'
+  - -u
+  - '18'
+  - -k
+  - '16'
+  - -b
+  - '{graph}'
+  generator_seed: 27491095
+  root: 0
+  trials: 1
+  benchmark_options:
+  - -f
+  - '{graph}'
+  - -r
+  - '0'
+  - -n
+  - '1'
+  - -v
+  - -l
+  - -a
+  input_binding: Generate once, hash the serialized .sg, and use the identical file
+    in baseline and DX100 runs.
+target_argv: null
+target_argv_status: Requires reviewed complete CPU/cache/clock/Ramulator/MAA and exit/checkpoint
+  launcher settings.
+required_target_settings:
+  maa_enabled_for_both_variants: true
+  num_cpus: 4
+  mem_channels: 2
+  mem_size_bytes: 17179869184
+  maa_num_maas: 1
+  maa_num_tile_elements: 16384
+  maa_num_initial_row_table_slices: 32
+  maa_reconfigure_row_table: false
+  maa_no_reorder: false
+  maa_force_cache_access: false
+  guest_environment_option: --env {guest_env_file}
+note: Simulated cores/workers are not a Slurm CPU allocation. Resource requests stay
+  unbound.

@@ -1,0 +1,46 @@
+format: dx100-validation-preflight-v0.1
+workflow_sha256: 4a7cec231102d795015e85da7ddc8434f3819b689f1967d289771babee8850f8
+environment_sha256: 1fbab77d878341c498aa6f925ba032873ed4036e4036f2dadfb2a98a62753a4a
+status: blocked_unbound_environment
+missing:
+- source_root
+- build_root
+- run_root
+- build_jobs
+- platform.host
+- platform.os
+- platform.architecture
+- platform.toolchain_version
+- tools.cxx
+- tools.cc
+- tools.cmake
+- tools.make
+- tools.scons
+- tools.gem5
+- great_lakes.account
+- great_lakes.partition
+- great_lakes.cpus_per_task
+- great_lakes.memory
+- great_lakes.walltime
+- target.memory_size_bytes
+- target.cpu_model
+- target.cpu_clock
+- target.cache_configuration
+- target.ramulator_config
+- target.ramulator_config_sha256
+- target.dram_topology
+- target.system_argv
+- target.launcher
+- target.launcher_sha256
+- target.checkpoint_policy
+- target.verifier_continuation_review
+- target.resource_address_review
+- target.guest_env_file
+failures: []
+verified_source_files: {}
+geometry:
+  status: unresolved
+  reason: Actual DRAM topology is unbound.
+ready_to_execute: false
+target_validated: false
+note: This preparatory checker never submits jobs or certifies a target.

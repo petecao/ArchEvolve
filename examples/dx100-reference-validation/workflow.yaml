@@ -1,0 +1,188 @@
+format: dx100-reference-validation-v0.1
+source_commit: e4fc4afdf894f295442cef3604667a469fab8e62
+domain_contract_sha256: fa319fb12f930b523d6983b05eef530c54bdd547f01a5d83be83cbccf39a273f
+published_evidence_sha256: c2407448ed6fb8c67fe1eb70aa9ce38afaf1a785f0b4acc3bae8c6e1da2fd4d8
+source_files:
+  benchmarks/API/MAA.hpp: 4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd
+  benchmarks/API/MAA_gem5.hpp: 5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174
+  benchmarks/gapbs/src/bfs.cc: 6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465
+  configs/common/MAA.py: bec35223a643ca784c77047297543f52c5aebe4935a7a5c9adda29a732c7e14e
+  configs/common/MAAConfig.py: 9fd396d36edf29da0ef846d4b13c3c255db0620a45aa577bf783abd8261f1f01
+  configs/common/Options.py: 91e2f35957b62b2d331d490c76858b36c6d779886dc20fa3b11f17226b80916c
+  configs/run_gem5_all.py: cacb8428934083119153d52b16ad1a19e60ef5264678b650a362b9877c4b4973
+  src/mem/MAA/ALU.cc: 3eab45bf9847d5b1a97df2149ad2aa67b46f8e72c000d54bd01c384fa608e0e6
+  src/mem/MAA/IndirectAccess.cc: 7e238a370f25ff5a7a1211548630a291d6358c32d8a199fc58bfacd37d1d35db
+  src/mem/MAA/MAA.cc: 058395cbd171ccf3746fb524967d2d205cb8d622d4aa06e8eef530b00dc21299
+  src/mem/MAA/MAA.hh: fbf6a8bf8d9bc47b218afca6ea64d5ea1728bdac6754814aa83d4b7465366419
+  src/mem/MAA/MAA.py: 347f0e08124bf9d951fb3ee24654074b5d681b71bc6168538c82dbd0b35856f2
+  src/mem/MAA/SPD.cc: 9e6bb3672be95954e8816c054b4032f95811a3085ca6df418aed90ad1e852b4a
+  src/mem/MAA/SPD.hh: 70e02b0fea7693585fd9b8f318381c09e352df2fff58bb3f84021f4ea02e9737
+  src/mem/MAA/Tables.cc: 9bd8aa4103fb6e7617fdd4c514a917329b8e7b8345738ed6e5d82f818df7dfa6
+  src/mem/MAA/Tables.hh: 5ea6a7caff7ca690aa9ce19096c0e686dfa52716e4dbf19d17348c9235011b43
+  src/mem/MAA/CpuSidePort.cc: 886a0c1bbd437916d2fac62a2aa194e01f6996fae65dc56241fad601c5f0103b
+  benchmarks/gapbs/Makefile: cc5a39f4950dc8bdfbbc32834043e379b13d9db79e4f96158d7960ac561f9daa
+  benchmarks/gapbs/src/benchmark.h: 87c20752c8437dd5152d00e7c995bedfab15b8929219f85846f47e0f9a4b339f
+  benchmarks/gapbs/src/command_line.h: de1415dfe29eb6ba436d57523b2dee8fa3268a0785ae690bde9e94e9444172b2
+  benchmarks/gapbs/src/converter.cc: 8c5ce5fc37304103c16390f67f27b565aa4f7d3d178dc02cf12b3f5e25b42648
+  benchmarks/gapbs/src/util.h: a103e6c5767d724adc9b6b421ecade4b2d2c4351e5ea0da5d2c9bf16a9fcecf6
+  benchmarks/gapbs/src/generator.h: 24bfdab312afdf6e552ef9a23d124332984761cdb94f109bb15009710d1dbafe
+  benchmarks/gapbs/src/builder.h: 2d3646e12dc2ae9776cfa429aaec699d031b4826c79a356983cf109753f1eb01
+  benchmarks/gapbs/src/writer.h: 3fd16ac75a8c069c7cf09d540ca35b66ec51813406b5fd2f8149253bebd9ebea
+  benchmarks/API/MAA_functional.hpp: ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc
+  configs/common/Simulation.py: 8e19c4ccbd1dcad555016e9e7479e9e89d3e0ada75cd5a444098a4e41c2c83b2
+  configs/common/MemConfig.py: b86a10d1e42bed8558f78fc928f499b141995d269a45e0f157da34c6e791f352
+  src/mem/ramulator2.cc: 66ada813cea0c2391dae5561e67aa6449922af9ecbc1d1e883b21d56f0ce39e1
+  configs/deprecated/example/se.py: aacc6e624b7ab0e7b032d5cb913974fa790efdca84598bf468c11f14b9575d0f
+  scripts/sim.py: 82c8d78e4339f1be9249c0e92db8a8d5f9654310f1fe4dc91680da6a9e0f7681
+  ext/ramulator2/SConscript: a77181c00f3f14f3238d6e7d570b39a92424c44bf40288668e4ac3cdb579c31c
+  ext/ramulator2/ramulator2/CMakeLists.txt: 19a7a50236b5a2daf7a304af2995eeba11b00c97e8e709ead619dd0177f0db75
+  benchmarks/API/MAA_atomics.hpp: 896459489ded4a790a2b52da62b337f00b7310a4bafc6d3ceaa9d8c4f1eb026a
+  benchmarks/API/MAA_gem5_magic.hpp: e3353661cce76167a2f986385e448c2a6aef471fc8424762183bae11ba769c32
+  benchmarks/API/MAA_utility.hpp: 3fb818fff3a37e14d77ea009a2246788213c1e938a05515b361aceb010a2b10e
+  benchmarks/gapbs/src/bitmap.h: 6f6e444c82b0e7d797cc9218ba85be7f5f702e95d4c134715c90e6a5b1288465
+  benchmarks/gapbs/src/graph.h: 79a271a3e3b01d6f02750b2b828ad94b3696eff080eb068bc3fcf80bc81139e0
+  benchmarks/gapbs/src/platform_atomics.h: 9c8dbe6419b34d850af33ef14ea724c1c64de369d052a8f3c6e20038dcabe9cd
+  benchmarks/gapbs/src/pvector.h: b3280b03eb774fdd27bbc1967c4f274e46d42179f149275e1b2c394986ebe03d
+  benchmarks/gapbs/src/reader.h: 951fb6e82df079389b953f35363e8a502d79da4f3c56b8ce6eab7faac38800e1
+  benchmarks/gapbs/src/sliding_queue.h: 3d5a1d3cff924737c2fc7c6b4fcbb859270f1fcc626c25aac4c780b7b6f4c02c
+  benchmarks/gapbs/src/timer.h: 3337a59a57341585d296ed01b3eb64ca7f5e02d8c0871f4920ab9d1cd7e63bcb
+tile_elements: 16384
+tool_sha256:
+  archevolve/dx100_validation.py: 4f1861d577318d291a1f53f12edaa24eed6c03d44b781c5406233f1fbb4a4f7f
+  archevolve/dx100_validation_cli.py: e33cb7e7c610c412377e83161c9ce08d5abcbb6a3c803df7f5c6faa27685b327
+scope: Pinned authors standalone TDStepMAA and TDStep control; not the hybrid or proposed
+  CPU-CAS read-offload rewrite.
+declared_model_defaults:
+  num_tiles_per_core: 8
+  num_tile_elements: 16384
+  num_regs_per_core: 8
+  num_instructions_per_core: 8
+  num_row_table_rows_per_slice: 64
+  num_row_table_entries_per_subslice_row: 8
+  num_row_table_config_cache_entries: 16
+  num_request_table_addresses: 128
+  num_request_table_entries_per_address: 16
+  reconfigure_row_table: false
+  no_reorder: false
+  force_cache_access: false
+  num_initial_row_table_slices: 32
+  spd_read_latency: 1
+  spd_write_latency: 1
+  num_spd_read_ports_per_maa: 4
+  num_spd_write_ports_per_maa: 4
+  rowtable_latency: 1
+  ALU_lane_latency: 1
+  num_ALU_lanes: 16
+  cache_snoop_latency: 1
+  max_outstanding_cache_side_packets: 512
+  max_outstanding_cpu_side_packets: 512
+  num_memory_channels: 2
+  num_cores: 4
+  num_maas: 1
+expected_effective_model_parameters:
+  num_tiles_per_core: 8
+  num_tile_elements: 16384
+  num_regs_per_core: 8
+  num_instructions_per_core: 8
+  num_row_table_rows_per_slice: 64
+  num_row_table_entries_per_subslice_row: 8
+  num_row_table_config_cache_entries: 16
+  num_request_table_addresses: 128
+  num_request_table_entries_per_address: 16
+  reconfigure_row_table: false
+  no_reorder: false
+  force_cache_access: false
+  num_initial_row_table_slices: 32
+  spd_read_latency: 1
+  spd_write_latency: 1
+  num_spd_read_ports_per_maa: 4
+  num_spd_write_ports_per_maa: 4
+  rowtable_latency: 1
+  ALU_lane_latency: 1
+  num_ALU_lanes: 16
+  cache_snoop_latency: 1
+  max_outstanding_cache_side_packets: 32768
+  max_outstanding_cpu_side_packets: 32768
+  num_memory_channels: 2
+  num_cores: 4
+  num_maas: 1
+effective_override_basis:
+  source: configs/common/MAAConfig.py:143-156
+  formula: max(512, 2 * num_maas * num_tile_elements)
+  note: Stock launcher overrides both packet capacities. Do not blindly freeze the
+    SimObject default 512.
+compile_constants:
+  TILE_SIZE: 16384
+  NUM_CORES: 4
+  NUM_TILES_PER_CORE: 8
+  NUM_REGS_PER_CORE: 8
+  MEM_SIZE: 17179869184
+guest_environment:
+  OMP_NUM_THREADS: '4'
+  OMP_DYNAMIC: 'FALSE'
+  OMP_PROC_BIND: 'false'
+workloads:
+- id: kronecker18-root0
+  generator_argv:
+  - '{converter}'
+  - -g
+  - '18'
+  - -k
+  - '16'
+  - -b
+  - '{graph}'
+  generator_seed: 27491095
+  root: 0
+  trials: 1
+  benchmark_options:
+  - -f
+  - '{graph}'
+  - -r
+  - '0'
+  - -n
+  - '1'
+  - -v
+  - -l
+  - -a
+  input_binding: Generate once, hash the serialized .sg, and use the identical file
+    in baseline and DX100 runs.
+- id: uniform18-root0
+  generator_argv:
+  - '{converter}'
+  - -u
+  - '18'
+  - -k
+  - '16'
+  - -b
+  - '{graph}'
+  generator_seed: 27491095
+  root: 0
+  trials: 1
+  benchmark_options:
+  - -f
+  - '{graph}'
+  - -r
+  - '0'
+  - -n
+  - '1'
+  - -v
+  - -l
+  - -a
+  input_binding: Generate once, hash the serialized .sg, and use the identical file
+    in baseline and DX100 runs.
+required_target_counters:
+- system.maa.numInst_INDRD
+- system.maa.numInst_RANGE
+stats_policy: Select one complete ROI stats block explicitly; never silently use the
+  final block or divide ticks by 313.
+verifier_exit_issue: Both GEM5 kernels call m5_exit before returning to BenchmarkKernel/BFSVerifier.
+  Stock benchCheckpoints stops on non-checkpoint exit. A separately reviewed continuation/verification
+  method is required for target correctness.
+baseline_issue: Stock DOBFS also allocates/initializes MAA before ROI. Target CPU
+  control needs the same MAA memory mapping, with read/range instruction counters
+  zero inside ROI; a no-MAA baseline requires a separately reviewed source change.
+timing_validation: Independent timing/model validation remains outstanding even if
+  correctness and intended-path checks pass.
+execution_performed: false
+target_validated: false
+speedup: null

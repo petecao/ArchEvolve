@@ -24,6 +24,8 @@ The default catalog is `catalog/hardware-v0.1.yaml` (format v0.1, data revision 
 
 ## Results and handoff
 
+- **[Standalone DX100 16K validation preparation](docs/designs/dx100-reference-validation/README.md)**: pinned build/run manifests, Great Lakes environment template, effective-configuration/ROI checks and evidence collection. No target run has occurred.
+
 - **[Optional generalizations](docs/designs/optional-generalizations/README.md)**: source-bound configurable-offset/scale proposals, paired minimum/extension queries, and review diagrams. Additional hardware requirements, legal values and costs remain unresolved.
 
 - **[DX100 parameter-domain adapter](docs/designs/dx100-parameter-domain/explorer-adapter.md)**: imports Eric's six tile-size candidates with frozen reference geometry, rebuild/validation requests and explicit unresolved execution/cost fields.
