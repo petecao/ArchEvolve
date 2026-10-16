@@ -1,0 +1,92 @@
+{
+  "actual_external_provers_requested": [],
+  "artifacts": [
+    {
+      "bytes": 380,
+      "path": "/private/tmp/probata-t07-helper-stage1-c9b4ef08-20261016/component/result.json",
+      "sha256": "4cce5c7633e9c4c2b6c4984071d1970d4e74cd19b764f848f1398a3398033829"
+    },
+    {
+      "bytes": 2030,
+      "path": "/private/tmp/probata-t07-helper-stage1-c9b4ef08-20261016/guard.log.summary.json",
+      "sha256": "90db7602a5cfa0fa82078eb754af52ff1376223d710a7ba406c3be6f03ff2021"
+    },
+    {
+      "bytes": 181,
+      "path": "/private/tmp/probata-t07-helper-stage1-c9b4ef08-20261016/component/frama-generation.log",
+      "sha256": "66ef63cc366dfef136cde6d1bf1bc0b51028d7c81ef5bb1fc3aa1f82aeb1e192"
+    },
+    {
+      "bytes": 2418,
+      "path": "/private/tmp/probata-t07-helper-stage1-c9b4ef08-20261016/component/artifact-manifest.json",
+      "sha256": "31c2ff739fdb29606439cd80e81db351cd83e0bb5a181aa77748fbac71be2162"
+    },
+    {
+      "bytes": 2846,
+      "path": "/private/tmp/probata-t07-helper-stage1-c9b4ef08-20261016/component/commands.json",
+      "sha256": "07172e16d20bfc4cc3abe683ca38335db1acbfccbf1517768635b59fdafdcc78"
+    }
+  ],
+  "attempt": "v1",
+  "date_et": "2026-10-16",
+  "failure_boundary": "Unsupported direct-I before parsing",
+  "raw_root": "/private/tmp/probata-t07-helper-stage1-c9b4ef08-20261016",
+  "reader": "root and independent helper source reviewer; retain for repair/coldaudit",
+  "resources": {
+    "cap_gb": 8.0,
+    "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment",
+    "cleanup_inspection_failure": null,
+    "cleanup_inspection_failures": [],
+    "clock": "continuous_monotonic",
+    "clock_info": {
+      "denom": 3,
+      "implementation": "mach_continuous_time",
+      "includes_sleep": true,
+      "kind": "continuous_monotonic",
+      "numer": 125
+    },
+    "cmd": [
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+      "/private/tmp/probata-t07-helper-stage1-entry-20261016.py",
+      "--expected",
+      "/private/tmp/probata-t07-helper-stage1-expected-20261016.json",
+      "--output",
+      "/private/tmp/probata-t07-helper-stage1-c9b4ef08-20261016/component"
+    ],
+    "error": null,
+    "exit_code": 1,
+    "finished": "2026-10-16 00:32:12 EDT",
+    "inspection_events": [],
+    "inspection_failure": null,
+    "inspection_retry_boundary": "AccessDenied uses a 200 ms environ retry admission window and 21-attempt cap, or three attempts for other operations; only the exact proc_environ SystemError raised by the requested environ operation shares that policy; individual OS calls are not forcibly timed; all pauses count and RSS/deadline checks remain mandatory after inspection; only independently confirmed gone/zombie or changed birth is skipped; persistent live or unknown failure fails closed",
+    "killed_by_watchdog": false,
+    "lock_wait_s": 0.0003980000037699938,
+    "log": "/private/tmp/probata-t07-helper-stage1-c9b4ef08-20261016/guard.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "peak_rss_mb": 162.953125,
+    "primary_inspection_failure": null,
+    "queue_timed_out": false,
+    "queue_timeout_s": 30.0,
+    "rss_scope": "live union of current ancestry, retained PID/birth identities and periodic inherited-marker matches; sampled, not a kernel quota",
+    "runner_pid": 8594,
+    "timed_out": false,
+    "timeout_s": 120.0,
+    "unconfirmed_children": [],
+    "wall_s": 1.5210279999882914
+  },
+  "result": {
+    "elapsed_seconds": 1.1734514590352774,
+    "error": "frama-generation exited 1",
+    "error_type": "RuntimeError",
+    "external_provers_requested": [],
+    "generation_completed": false,
+    "marker_inherited_and_preserved": true,
+    "proof_acceptance": false,
+    "source_commit": "c9b4ef08c7626e46ae30b6719d5367280ed953b7",
+    "stage": "generation_only",
+    "within_internal110s": true
+  },
+  "scope": "Finite19helper no-prover generation; failedgate; no proof/countedadmission",
+  "source_commit": "c9b4ef08c7626e46ae30b6719d5367280ed953b7",
+  "source_unchanged": true
+}

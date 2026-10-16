@@ -1,0 +1,104 @@
+{
+  "actual_external_provers_requested": [],
+  "artifacts": [
+    {
+      "bytes": 425,
+      "path": "/private/tmp/probata-t07-helper-stage1-v2-c9b4ef08-20261016/component/result.json",
+      "sha256": "c1ae3c09f8ff3fb3f6cb9059106d766275a0b0354f0a9eb313b5a3bc7c5a02ec"
+    },
+    {
+      "bytes": 2041,
+      "path": "/private/tmp/probata-t07-helper-stage1-v2-c9b4ef08-20261016/guard.log.summary.json",
+      "sha256": "3ced2a2225406604096c3551c6ee3a3444156f714ec22f17f4e1e002e2d8c3e1"
+    },
+    {
+      "bytes": 53322,
+      "path": "/private/tmp/probata-t07-helper-stage1-v2-c9b4ef08-20261016/component/frama-generation.log",
+      "sha256": "5ecdd4045d3b7b884f80bb9661b3a3ba4c0fd58baabe10e09a53eebceeca3345"
+    },
+    {
+      "bytes": 2845,
+      "path": "/private/tmp/probata-t07-helper-stage1-v2-c9b4ef08-20261016/component/artifact-manifest.json",
+      "sha256": "55bb3b63584e720451180f6d30e85f2bbce9011472c451a994a116419a86455c"
+    },
+    {
+      "bytes": 2758,
+      "path": "/private/tmp/probata-t07-helper-stage1-v2-c9b4ef08-20261016/component/commands.json",
+      "sha256": "8643429f0684913998f286699f11b7b9cb5109f699730b2fdf864b38ba5da293"
+    },
+    {
+      "bytes": 157756,
+      "path": "/private/tmp/probata-t07-helper-stage1-v2-c9b4ef08-20261016/component/wp-inventory.json",
+      "sha256": "515713ba83466a4a7765702f51729e95a6ad601db4a3be0b2eeb612fff95de34"
+    }
+  ],
+  "attempt": "v2",
+  "date_et": "2026-10-16",
+  "failure_boundary": "WP generated inventory but pointer_comparable unsupported; default unaligned/function-pointer guard capability warnings also retained",
+  "generated_inventory": {
+    "goals": 245,
+    "initialization_properties": 31,
+    "properties": 352,
+    "scope": "Generation/Qed simplification only; no accepted all-goals verdict.",
+    "smoke_goals": 33
+  },
+  "raw_root": "/private/tmp/probata-t07-helper-stage1-v2-c9b4ef08-20261016",
+  "reader": "root and independent helper source reviewer; retain for repair/coldaudit",
+  "resources": {
+    "cap_gb": 8.0,
+    "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment",
+    "cleanup_inspection_failure": null,
+    "cleanup_inspection_failures": [],
+    "clock": "continuous_monotonic",
+    "clock_info": {
+      "denom": 3,
+      "implementation": "mach_continuous_time",
+      "includes_sleep": true,
+      "kind": "continuous_monotonic",
+      "numer": 125
+    },
+    "cmd": [
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+      "/private/tmp/probata-t07-helper-stage1-entry-v2-20261016.py",
+      "--expected",
+      "/private/tmp/probata-t07-helper-stage1-expected-20261016.json",
+      "--output",
+      "/private/tmp/probata-t07-helper-stage1-v2-c9b4ef08-20261016/component"
+    ],
+    "error": null,
+    "exit_code": 1,
+    "finished": "2026-10-16 00:34:37 EDT",
+    "inspection_events": [],
+    "inspection_failure": null,
+    "inspection_retry_boundary": "AccessDenied uses a 200 ms environ retry admission window and 21-attempt cap, or three attempts for other operations; only the exact proc_environ SystemError raised by the requested environ operation shares that policy; individual OS calls are not forcibly timed; all pauses count and RSS/deadline checks remain mandatory after inspection; only independently confirmed gone/zombie or changed birth is skipped; persistent live or unknown failure fails closed",
+    "killed_by_watchdog": false,
+    "lock_wait_s": 0.00040591671131551266,
+    "log": "/private/tmp/probata-t07-helper-stage1-v2-c9b4ef08-20261016/guard.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "peak_rss_mb": 179.203125,
+    "primary_inspection_failure": null,
+    "queue_timed_out": false,
+    "queue_timeout_s": 30.0,
+    "rss_scope": "live union of current ancestry, retained PID/birth identities and periodic inherited-marker matches; sampled, not a kernel quota",
+    "runner_pid": 11216,
+    "timed_out": false,
+    "timeout_s": 120.0,
+    "unconfirmed_children": [],
+    "wall_s": 1.4331615833798423
+  },
+  "result": {
+    "elapsed_seconds": 1.1340257080155425,
+    "error": "generation emitted an unsupported/error boundary; inspect retained log",
+    "error_type": "RuntimeError",
+    "external_provers_requested": [],
+    "generation_completed": false,
+    "marker_inherited_and_preserved": true,
+    "proof_acceptance": false,
+    "source_commit": "c9b4ef08c7626e46ae30b6719d5367280ed953b7",
+    "stage": "generation_only",
+    "within_internal110s": true
+  },
+  "scope": "Finite19helper no-prover generation; failedgate; no proof/countedadmission",
+  "source_commit": "c9b4ef08c7626e46ae30b6719d5367280ed953b7",
+  "source_unchanged": true
+}
