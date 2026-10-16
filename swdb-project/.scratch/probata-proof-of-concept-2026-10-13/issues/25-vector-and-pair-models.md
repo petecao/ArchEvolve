@@ -1233,3 +1233,27 @@ This accepts merged preparation only. The coordinator-owned scripted public
 21-target/schema/persistence controls and any fresh actual projection/full-model
 run remain pending. No original v2 or generic caller admission follows, and the
 old 017 partial producer remains immutable. All acceptance boxes stay open.
+
+### Merged full-21 scripted persistence accepted — 2026-10-16 ET
+
+The coordinator's exact clean `0f10e088` compiler/native profile passed all three
+public controls, with production and test bytes identical to runtime candidate
+`2e01d27d`. Native OCaml setup was exercised; all Frama/WP commands targeted
+named Python stand-ins. The synthetic successful record persists all 21 runs,
+30 synthetic ordinary goals and one healthy smoke observation, with the normal
+two-key reader attestation and schema. The named parser-error and prelaunch
+self-consistent axiom-refusal controls also pass. A passive cold read checks
+both schema-valid records, all 240 record/report references and all 21 normal reader
+results; source-before/after match across 1,898 exact tracked inputs.
+
+The worker tree completed in 16.03 seconds, with no timeout, OOM, inspection
+event or unconfirmed child. Its 180-second inner and 240-second outer worker
+guards exclude source preflight/final hashing from that timing claim. Retained
+raw is 41.59 MB, within the 256 MiB planning allowance. Evidence:
+`../evidence/t25-grow21-scripted-public-controls-20261016.json`.
+
+This completes the current workflow/schema preparation gate only. The independently
+reviewed inert full-21 packet still needs coordinator admission, fresh actual
+results and complete task/import/hypothesis cold review. No old 017 partial
+record is promoted. Original v2, generic caller composition, remaining members
+and element/type breadth remain open; this ticket is still claimed.
