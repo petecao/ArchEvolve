@@ -1,0 +1,85 @@
+format: dx100-provisional-parameter-exploration-v0.1
+bindings:
+  candidate_sha256: 4b5f1f48a13270afceb1f727366f462a1c828a136040572c8aa0fb4a6c90eaea
+  input_sha256: 379fd11addd1dc681bc39a40867b7b4c6e5baf7517cac03362ab00d01ba267a3
+  catalog_sha256: 7adeb7f901b546955bd8fd9327ea55c373958a4998aa949317d37b5145d2b85d
+  contract_sha256: fa319fb12f930b523d6983b05eef530c54bdd547f01a5d83be83cbccf39a273f
+  published_results_sha256: c2407448ed6fb8c67fe1eb70aa9ce38afaf1a785f0b4acc3bae8c6e1da2fd4d8
+  source_commit: e4fc4afdf894f295442cef3604667a469fab8e62
+candidate_domain_sha256: e90f7b07b1aabfe47aff3a478831aead15c8bfffb7ba567ae4bd726982f58a53
+status: candidates_pending_validation
+candidate_count: 6
+total_source_candidates: 6
+admitted_configurations: []
+selected_winner: null
+evaluation_performed: false
+ready_to_execute: false
+candidate_summary:
+- id: dx100-tile-1024-265370a0983c24c5
+  sha256: 265370a0983c24c511dc9c94c4c724ff852542b97dbfd8588b29ef72b08f9bf8
+  num_tile_elements: 1024
+  TILE_SIZE: 1024
+  status: candidate_pending_validation
+  independently_validated: false
+  ready_to_execute: false
+  metrics:
+    latency_ms: null
+    area_mm2: null
+    power_w: null
+- id: dx100-tile-2048-6c77ba265f871845
+  sha256: 6c77ba265f8718456104fcfc0f2b1dc38619b50af6266b8316a264a9f3629569
+  num_tile_elements: 2048
+  TILE_SIZE: 2048
+  status: candidate_pending_validation
+  independently_validated: false
+  ready_to_execute: false
+  metrics:
+    latency_ms: null
+    area_mm2: null
+    power_w: null
+- id: dx100-tile-4096-90454037a7c3c7ac
+  sha256: 90454037a7c3c7ac63025415a15c37d45212840b4fd90d5b02c72ae5723a9861
+  num_tile_elements: 4096
+  TILE_SIZE: 4096
+  status: candidate_pending_validation
+  independently_validated: false
+  ready_to_execute: false
+  metrics:
+    latency_ms: null
+    area_mm2: null
+    power_w: null
+- id: dx100-tile-8192-4051e3a5a8e4bf53
+  sha256: 4051e3a5a8e4bf53056d248454edce06674a19500e7fb63d5203ddaeb66e8a6c
+  num_tile_elements: 8192
+  TILE_SIZE: 8192
+  status: candidate_pending_validation
+  independently_validated: false
+  ready_to_execute: false
+  metrics:
+    latency_ms: null
+    area_mm2: null
+    power_w: null
+- id: dx100-tile-16384-b17d56fd5e347277
+  sha256: b17d56fd5e3472776b263313d8e639c7d6f5deae871c3bbb17fc16c20f7b83e3
+  num_tile_elements: 16384
+  TILE_SIZE: 16384
+  status: candidate_pending_validation
+  independently_validated: false
+  ready_to_execute: false
+  metrics:
+    latency_ms: null
+    area_mm2: null
+    power_w: null
+- id: dx100-tile-32768-3a30f01021687fa8
+  sha256: 3a30f01021687fa8868f4bfb67f1bcf09502215ff183063be39a44a164e52c36
+  num_tile_elements: 32768
+  TILE_SIZE: 32768
+  status: candidate_pending_validation
+  independently_validated: false
+  ready_to_execute: false
+  metrics:
+    latency_ms: null
+    area_mm2: null
+    power_w: null
+note: Derived from Eric's source-supported candidate handoff. No legal-domain admission,
+  target validation, area estimate, build or simulation occurred.

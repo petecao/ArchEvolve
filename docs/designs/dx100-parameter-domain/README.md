@@ -71,3 +71,7 @@ The existing physical cost proxy `0.495 + 3.566×N/16384` mm² is bound to 32 ti
 The YAML pins source files to their Git object content, independently of the live DX100 checkout. Source defaults were extracted from the SimObject AST, CLI names checked against Options.py, coupling constraints inspected in the implementation and BFS/API allocations checked directly. [Published performance provenance](published-dx100-calibration.json) retains the author-reported evidence tier.
 
 Before calling a point validated, retain the complete tuple, source/binary/config.ini/input/root/thread/ROI identities, correctness result and intended-path witness. Use actual DRAM organization for slice checks and match API/kernel geometry to the effective simulator configuration. Unresolved dimensions stay fixed or explicitly blocked until their domains are established.
+
+## Explorer integration
+
+The [explorer adapter](explorer-adapter.md) imports this contract into six explicitly unvalidated tile candidates with rebuild/validation requests. It preserves null legal domains, unresolved execution prerequisites and unknown costs; no target configurations are admitted automatically.

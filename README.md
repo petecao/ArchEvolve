@@ -24,6 +24,8 @@ The default catalog is `catalog/hardware-v0.1.yaml` (format v0.1, data revision 
 
 ## Results and handoff
 
+- **[DX100 parameter-domain adapter](docs/designs/dx100-parameter-domain/explorer-adapter.md)**: imports Eric's six tile-size candidates with frozen reference geometry, rebuild/validation requests and explicit unresolved execution/cost fields.
+
 - **[Saved proposals through the planning loop](docs/designs/planning-loop-integration/README.md)**: real BFS/catalog handoffs, structural feedback in experiment memory, and context-bound saved reflection. No live model calls or performance ranking.
 
 - **[Bounded parameter exploration](docs/designs/bounded-parameters/README.md)**: reviewed finite domains, coupled constraints, configuration handoffs and evaluator-record comparison. Unknown ranges block enumeration; unknown costs remain null.

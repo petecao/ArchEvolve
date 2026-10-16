@@ -55,6 +55,16 @@ def main(argv=None):
     t.add_argument('--catalog-sha256',required=True)
     t.add_argument('--output',type=Path,required=True)
     t.add_argument('--synthetic',action='store_true')
+    dx=sub.add_parser('dx100-candidates',help="Import Eric's source-supported tile candidates without admitting a legal domain")
+    dx.add_argument('--candidate',type=Path,required=True)
+    dx.add_argument('--input-sha256',required=True)
+    dx.add_argument('--catalog-sha256',required=True)
+    handoff=Path(__file__).resolve().parents[1]/'docs/designs/dx100-parameter-domain'
+    dx.add_argument('--contract',type=Path,default=handoff/'contract.yaml')
+    dx.add_argument('--verification',type=Path,default=handoff/'verification.json')
+    dx.add_argument('--published-results',type=Path,default=handoff/'published-dx100-calibration.json')
+    dx.add_argument('--max-candidates',type=int,default=6)
+    dx.add_argument('--output-dir',type=Path,required=True)
     for name in ('enumerate','compare'):
         p=sub.add_parser(name)
         p.add_argument('--candidate',type=Path,required=True)
@@ -66,7 +76,14 @@ def main(argv=None):
     args=parser.parse_args(argv)
     try:
         candidate,_=load_request(args.candidate)
-        if args.command=='template':
+        if args.command=='dx100-candidates':
+            from archevolve.dx100_parameter_adapter import prepare_candidates
+            output,result=prepare_candidates(candidate,args.input_sha256,args.catalog_sha256,
+                args.contract,args.verification,args.published_results,args.max_candidates)
+            write_fresh(args.output_dir,output)
+            print(json.dumps({'output':str(args.output_dir),'status':result['status'],
+                              'candidates':result['candidate_count'],'admitted_configurations':0}))
+        elif args.command=='template':
             if args.output.exists(): raise RequestError('Template output exists; choose a new file.')
             value=template(candidate,args.input_sha256,args.catalog_sha256,args.synthetic)
             args.output.parent.mkdir(parents=True,exist_ok=True)
