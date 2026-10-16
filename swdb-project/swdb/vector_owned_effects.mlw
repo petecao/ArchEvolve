@@ -32,7 +32,7 @@ module OwnedEffects
   predicate reserved (h:H.heap) (s:O.state) (ready:phases) (r:int) =
     O.active_owner s r /\ ready[r] = False /\ O.buffer s r = 0 /\ receiver h r
   predicate world (h:H.heap) (s:O.state) (ready:phases) =
-    H.well_formed h /\ O.valid s h.next /\
+    H.well_formed h /\ O.valid s (H.fresh_id h) /\
     (forall r:int. O.active_owner s r ->
       receiver h r /\
       (ready[r] = True -> exists n,c:int. header h r (O.buffer s r) n c)) /\
@@ -51,7 +51,7 @@ module OwnedEffects
   (* Exact C temporary order: fresh automatic t = *this; *this = *other;
      *other = t; end t. The temporary is not a second vector owner. *)
   function swap (h:H.heap) (left right a:int) : H.heap =
-    let temporary = h.next in
+    let temporary = H.fresh_id h in
     let h1 = H.begin_automatic h 24 a in
     let h2 = copy_header h1 temporary left in
     let h3 = copy_header h2 left right in
