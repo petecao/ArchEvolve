@@ -25,6 +25,9 @@ def render_header(values_header):
 #ifndef DXR_ON_RESET
 #define DXR_ON_RESET() ((void)0)
 #endif
+#ifndef DXP_ON_RESET
+#define DXP_ON_RESET() ((void)0)
+#endif
 struct dxc_command {
   unsigned thread, pending, bound, root, access;
   int region;
@@ -52,6 +55,7 @@ static void dxc_reset(void) {
   dxm_reset(); dxc_count=0; dxc_constructing=0;
   DXC_ON_RESET();
   DXR_ON_RESET();
+  DXP_ON_RESET();
 }
 static uint64_t dxc_tile_mask(unsigned tile, unsigned bytes) {
   unsigned halves=dxm_tile_halves(tile,bytes);
@@ -85,6 +89,9 @@ static unsigned dxc_prepare(unsigned thread, int region, unsigned access,
     DXM_CHECK(begin < end, "memory-footprint-domain");
   }
   dxc_check_mask(thread,physical_write | physical_read);
+  /* Software pair-disjointness obligation; distinct hardware starting IDs
+     alone do not exclude a destination's second-half alias with an input. */
+  DXM_CHECK(!(physical_read & physical_write), "intra-command-physical-alias");
   DXM_CHECK((explicit_write & ~physical_write) == 0 && (explicit_read & ~physical_read) == 0,
             "explicit-tile-footprint");
   /* IF.cc:193-218: new explicit destinations stall matching old operands;

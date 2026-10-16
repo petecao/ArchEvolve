@@ -125,3 +125,32 @@ Source public wrappers, reserved six MMIO regions and full geometry/type/ABI
 bindings remain incomplete; no production proof or current0.2claim is made.
 The approved prospective progress rule is an explicitly owned environment
 assumption, pending human freeze review59, not a proved source liveness fact.
+
+## Typed physical byte image — 2026-10-16 ET
+
+`tile_image.py` separates the source physical uint32 tile stride from the bounded
+value prefix. A sparse byte image stores immutable producer IDs and byte offsets;
+8-byte and neighboring4-byte views share those bytes. It binds command outputs
+without settling them, so a narrower dependent operation captures the producer
+version and later CPU writes cannot rewrite an observed scalar. Native controls
+use an explicit little-endian toy geometry (8 source words,6 prefix elements), not
+the actual default16384-word source geometry. All six scalar helpers copy through
+legal scalar objects with `memcpy`; this is no certificate for an arbitrary T*
+cast, source pointer escape, platform ABI or IEEE proof relation.
+
+The command layer now rejects read/write physical-half alias inside one command,
+even when explicit starting IDs differ. This is a software no-alias obligation;
+no even-ID hardware restriction or extra second-half wait is invented. Output
+binding requires the constructing command, its explicit starting output and both
+physical halves for8bytes. CPU observations still enforce pending-output and
+ownership guards. Byte initializedness and sparse capacity are checked; command
+output views may remain unresolved until their covering completion.
+
+Final53/53 native C11/C++17 controls pass under ASan/UBSan and the shared workerB
+8GiB guard (19.56s,221495296B peak). Four genuine RED profiles and all retained
+native source/executable/header references are pinned in
+[the compact receipt](../../evidence/t28-tile-byte-image-controls-20261016.json).
+This is a backend prototype slice, not public proof acceptance. Source CPU pointer
+routing, inactive preserved uninitialized payloads, full wrappers/register/setup
+semantics, source ABI/geometry binding, formal IEEE relations and the explicitly
+owned finite-progress assumption remain required before whole28 closure.
