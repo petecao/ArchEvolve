@@ -1,0 +1,27 @@
+{
+  "verdict": "PASS_SCOPED_SOURCE_AND_RETAINED_CONTROLS",
+  "source_commit": "029e50e5d01c3c1ef23677d45ec438c6d15edaaf",
+  "source_module_sha256": "229a47016d1c239927fca0420c0d2be7cf8cd8a37e30b3d5f0d3ecbed8c53681",
+  "evidence_sha256": "c5db9175fd7c9be041bb8b36b2223416d1641163513faf8bb97b11c39854ead3",
+  "artifact_ledger_sha256": "16cbde082bde4a87eb86bf3afb569ed35fa97f38c865757a0754d0c5ed5bc899",
+  "local_pinned_files_rehashed": 526,
+  "ledger_files": 519,
+  "ledger_bytes": 148649689,
+  "source_Git_blobs_verified": 4,
+  "normalized_actual_assertions_exact": 8,
+  "normalization_keys_only": [
+    "id",
+    "loc",
+    "range"
+  ],
+  "retained_controls": {
+    "pure": 18,
+    "public_Linux_compiler_exit99": 5,
+    "public_host_compiler_exit99": 1
+  },
+  "scripted_records_tool_crash_not_proven": 2,
+  "findings": [],
+  "qualification": "Only exact pure fourth __assert_fail diagnostic subtree/FunctionDecl signature exemption. Original executable predicate/branch/callee/operator/body/LLVM checks remain. OriginalTOTAL102vs101/frame3/noextraunitpremise unchanged.",
+  "not_claimed": "Fresh actual Linux pair/model/body/source-refinement/current0.2/whole28/hardware/proof acceptance; no priorG597failure upgrade.",
+  "reviewer_execution": "Passive exactGit text/JSON/source/hash/retainedartifact inspection only; no compiler/native/probe/projectimport/controls/formal/SSH/job."
+}
