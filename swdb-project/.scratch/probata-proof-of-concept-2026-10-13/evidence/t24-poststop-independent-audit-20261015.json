@@ -1,0 +1,289 @@
+{
+  "date_et": "2026-10-15",
+  "scope": "Independent read-only natural resource/lane/source closure plus three exact run/source prefix absence scans in readable same-UID cmdline, cwd and environment. No signals. Prefix absence is bounded observation, not a universal cleanup theorem.",
+  "run": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-23933f8a-t24-continuation",
+  "scans": [
+    {
+      "utc": "2026-10-16T01:01:35.638091+00:00",
+      "same_uid_processes_seen": 31,
+      "prefix_matches": [
+        {
+          "pid": 3788086,
+          "birth": 1792112438.42,
+          "name": "python3",
+          "matching_fields": [
+            "cmdline"
+          ]
+        }
+      ],
+      "inspection_denials": [
+        {
+          "pid": 3261267,
+          "birth": 1791950177.88,
+          "field": "cwd"
+        },
+        {
+          "pid": 3261267,
+          "birth": 1791950177.88,
+          "field": "environment"
+        },
+        {
+          "pid": 3788037,
+          "birth": 1792112438.15,
+          "field": "cwd"
+        },
+        {
+          "pid": 3788037,
+          "birth": 1792112438.15,
+          "field": "environment"
+        },
+        {
+          "pid": 3788258,
+          "birth": 1792112494.77,
+          "field": "cwd"
+        },
+        {
+          "pid": 3788258,
+          "birth": 1792112494.77,
+          "field": "environment"
+        }
+      ]
+    },
+    {
+      "utc": "2026-10-16T01:01:36.686727+00:00",
+      "same_uid_processes_seen": 32,
+      "prefix_matches": [
+        {
+          "pid": 3788086,
+          "birth": 1792112438.42,
+          "name": "python3",
+          "matching_fields": [
+            "cmdline"
+          ]
+        }
+      ],
+      "inspection_denials": [
+        {
+          "pid": 3261267,
+          "birth": 1791950177.88,
+          "field": "cwd"
+        },
+        {
+          "pid": 3261267,
+          "birth": 1791950177.88,
+          "field": "environment"
+        },
+        {
+          "pid": 3788037,
+          "birth": 1792112438.15,
+          "field": "cwd"
+        },
+        {
+          "pid": 3788037,
+          "birth": 1792112438.15,
+          "field": "environment"
+        },
+        {
+          "pid": 3788258,
+          "birth": 1792112494.77,
+          "field": "cwd"
+        },
+        {
+          "pid": 3788258,
+          "birth": 1792112494.77,
+          "field": "environment"
+        }
+      ]
+    },
+    {
+      "utc": "2026-10-16T01:01:37.733272+00:00",
+      "same_uid_processes_seen": 32,
+      "prefix_matches": [
+        {
+          "pid": 3788086,
+          "birth": 1792112438.42,
+          "name": "python3",
+          "matching_fields": [
+            "cmdline"
+          ]
+        }
+      ],
+      "inspection_denials": [
+        {
+          "pid": 3261267,
+          "birth": 1791950177.88,
+          "field": "cwd"
+        },
+        {
+          "pid": 3261267,
+          "birth": 1791950177.88,
+          "field": "environment"
+        },
+        {
+          "pid": 3788037,
+          "birth": 1792112438.15,
+          "field": "cwd"
+        },
+        {
+          "pid": 3788037,
+          "birth": 1792112438.15,
+          "field": "environment"
+        },
+        {
+          "pid": 3788258,
+          "birth": 1792112494.77,
+          "field": "cwd"
+        },
+        {
+          "pid": 3788258,
+          "birth": 1792112494.77,
+          "field": "environment"
+        }
+      ]
+    }
+  ],
+  "files": {
+    "lane.json": {
+      "sha256": "7056a11a8640bb805fe0347d20cd6533595ce487488d0bca6dfba390f153e56b",
+      "content": {
+        "socket_lane": {
+          "aligned_cell_age_s": "",
+          "aligned_to": "no_gapbs_batch_running",
+          "command": [
+            "timeout",
+            "--signal=TERM",
+            "--kill-after=60",
+            "14520",
+            "bash",
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-23933f8a-t24-continuation/run.sh"
+          ],
+          "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+          "ended_utc": "2026-10-16T00:58:07Z",
+          "exit_code": 0,
+          "host": "mbit10",
+          "job": "probata-reviewed-23933f8a-t24-continuation",
+          "lease_generation": 580,
+          "lease_name": "mbit10-evaluation-node0",
+          "load1_at_start": 2.22,
+          "load1_max": 32,
+          "node": 0,
+          "numa_memory_policy": "bind:0",
+          "numactl": "--cpunodebind=0 --membind=0",
+          "preregistration_sha256": null,
+          "started_utc": "2026-10-15T23:31:53Z"
+        }
+      }
+    },
+    "resources.json": {
+      "sha256": "0e23065152032f0ce77da1d9108d72518643e797d0bc3dcb6e81378339a11b3d",
+      "content": {
+        "cpu_seconds": 5420.217706,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 3175112704,
+        "timed_out": false,
+        "wall_seconds": 5171.755996002816
+      }
+    },
+    "outer-resources.json": {
+      "sha256": "543895f0979221f80661cd349d793e740268543bc397aece36c4b12261ccda3c",
+      "content": {
+        "exit_code": 0,
+        "peak_rss_bytes": 3226492928,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 5173.65259507671,
+        "cpu_seconds": 6447.734119000001
+      }
+    },
+    "source-after.json": {
+      "sha256": "de4b0b104b42d33a64c31d59035a9fe083bffebac86093c6026ae5448441017d",
+      "content": {
+        "commit": "23933f8a6f08d5c6d10a4f6155021a9a83f159ec",
+        "source_unchanged": true,
+        "tracked_changes": ""
+      }
+    }
+  },
+  "leases": {
+    "mbit10-evaluation.meta.json": {
+      "active_session": null,
+      "heartbeat_at": "2026-09-12T04:49:11Z",
+      "lease": {
+        "acquired_at": "2026-09-12T01:35:42Z",
+        "daemon_pid": 209457,
+        "daemon_start_token": "sh209457-1789176942",
+        "generation": 77,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation",
+        "mode": "measure",
+        "session_id": null
+      },
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "recovered_from_generation": null,
+      "released_at": "2026-09-12T04:49:11Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation-node1.meta.json": {
+      "active_session": null,
+      "heartbeat_at": "2026-10-16T00:44:49Z",
+      "lease": {
+        "acquired_at": "2026-10-16T00:44:49Z",
+        "daemon_pid": 3780270,
+        "daemon_start_token": "sh3780270-1792111489",
+        "generation": 606,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node1",
+        "mode": "measure",
+        "session_id": null
+      },
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "recovered_from_generation": null,
+      "released_at": null,
+      "session_note": null,
+      "session_state": "none",
+      "state": "held",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation-node0.meta.json": {
+      "active_session": null,
+      "heartbeat_at": "2026-10-16T00:58:07Z",
+      "lease": {
+        "acquired_at": "2026-10-15T23:31:53Z",
+        "daemon_pid": 3751560,
+        "daemon_start_token": "sh3751560-1792107113",
+        "generation": 580,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node0",
+        "mode": "measure",
+        "session_id": null
+      },
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "recovered_from_generation": null,
+      "released_at": "2026-10-16T00:58:07Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    }
+  },
+  "source": {
+    "branch": "HEAD",
+    "commit": "23933f8a6f08d5c6d10a4f6155021a9a83f159ec",
+    "changes": ""
+  },
+  "errors": [
+    "remaining prefix process",
+    "process observability incomplete",
+    "remaining prefix process",
+    "process observability incomplete",
+    "remaining prefix process",
+    "process observability incomplete"
+  ]
+}

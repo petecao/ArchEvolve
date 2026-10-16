@@ -1,36 +1,42 @@
 # 24 — C++ subset widening
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-15 ET (historical Ring/allocation/DXC/classes/OMP accepted; repaired-source actual matrix open)
+Updated: 2026-10-15 ET (combined current actual matrix and independent closure accepted)
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 21
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Formal-half language and the C++ subset": the subset by construct and kept names; "Verifier lineup and order": failure classes; "Records and levels": method-version file contents; "Testing Decisions", seam 1; choice S1); decisions: [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md) items 3, 9; [13](../../formal-verification-2026-10-09/issues/13-proof-hint-loop.md) item 2; [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md) items 3, 6
 **Time estimate:** about 4 days
 
-**Current soundness follow-up (2026-10-15 ET):** independent review found that
+**Completed soundness follow-up (2026-10-15 ET):** independent review found that
 generic atomic lowering dropped evaluated order/weak operands and admitted weak
 CAS into a deterministic strong model. The scoped constant-operand/strong-only
 fix and the independently discovered enum-scope repair pass 86 recorded compiler/native
-controls and 29 public/corpus controls; independent final review and fresh method
-pins/replay remain required. [Enum repair evidence](../evidence/t24-enum-scope-repair-20261015.md). Existing remote/finite records keep their
+controls and 29 public/corpus controls. Independent final review, fresh finite
+agreement and the complete actual matrix now pass at the repaired runtime. [Enum repair evidence](../evidence/t24-enum-scope-repair-20261015.md). Existing remote/finite records keep their
 historical freezes. [Fix, TDD and exact evidence boundary](../evidence/t24-atomic-operand-fix-20261015.md).
 
 **What to build:** The C lowering tool grows from 21's core (functions, arrays, loops) to the declared C++ subset, construct by construct, so GAPBS-style candidate artifacts can reach WP. Accepted: C plus references; classes without inheritance or virtual functions; member functions and operators; constructors and destructors as explicit calls; instantiated templates; `new[]` and `delete[]`; `enum class`, `constexpr`, `static_assert`; `std::min`, `std::max`, `std::copy`, `std::swap` through C models proven once; the OpenMP constructs (`parallel`, `for` with static, dynamic and `nowait`, `critical`, `atomic`, `barrier`, `reduction`); `__sync_*` and `__atomic_*`; `__dxc_*` and `maa_*` calls through summaries. The C lowering keeps C++ names: a class becomes a struct with the same name and fields, references become pointers, operators become named functions. So formal halves type-check unchanged. Anything outside the subset gives failure class "unsupported construct", never a crash or a partial C lowering. The naming rules are versioned and belong to the content-hash set.
 
 ## Acceptance
 
-- [ ] One fixture per construct group lowers deterministically (twice, identical C and anchors). Its ACSL type-checks over the kept names. `swdb prove` with the real WP adapter proves the safe version, and a seeded bug reads not proven.
-- [ ] Kept names: a class fixture's formal half, written over the class's field names, type-checks against the C lowering with no renaming. A reference parameter becomes a pointer; an operator and a member function become named functions under the naming rules; constructors and destructors appear as explicit calls.
-- [ ] Templates: a template instantiated at two types lowers to two C functions, named by the naming rules. `enum class` lowers to `int`.
-- [ ] `new[]` and `delete[]`: a fixture that indexes out of range, or reads after `delete[]`, reads not proven; the in-range fixture proves.
-- [ ] Each of `std::min`, `std::max`, `std::copy`, `std::swap` lowers to a call of its C model. Each model's ACSL contract is proven once (one proof record each, subject: a library entry's summary). A unit that uses a model pins that record.
-- [ ] An OpenMP fixture (`parallel for` with a `reduction`, a `critical` section, an `atomic`, a `barrier`) and an atomics fixture (`__sync_*`, `__atomic_*`) lower and prove at threads = 1.
-- [ ] A fixture with a `__dxc_*` call and one with a `maa_*` call keep each as a call whose contract comes from a fixture summary. The record lists the summary used.
+- [x] One fixture per construct group lowers deterministically (twice, identical C and anchors). Its ACSL type-checks over the kept names. `swdb prove` with the real WP adapter proves the safe version, and a seeded bug reads not proven.
+- [x] Kept names: a class fixture's formal half, written over the class's field names, type-checks against the C lowering with no renaming. A reference parameter becomes a pointer; an operator and a member function become named functions under the naming rules; constructors and destructors appear as explicit calls.
+- [x] Templates: a template instantiated at two types lowers to two C functions, named by the naming rules. `enum class` lowers to `int`.
+- [x] `new[]` and `delete[]`: a fixture that indexes out of range, or reads after `delete[]`, reads not proven; the in-range fixture proves.
+- [x] Each of `std::min`, `std::max`, `std::copy`, `std::swap` lowers to a call of its C model. Each model's ACSL contract is proven once (one proof record each, shared ticket25 subject `c_model`, interface `--model` / `pins.models`). A unit that uses a model pins that record.
+- [x] An OpenMP fixture (`parallel for` with a `reduction`, a `critical` section, an `atomic`, a `barrier`) and an atomics fixture (`__sync_*`, `__atomic_*`) lower and prove at threads = 1.
+- [x] A fixture with a `__dxc_*` call and one with a `maa_*` call keep each as a call whose contract comes from a fixture summary. The record lists the summary used.
 - [x] Unsupported constructs: inheritance, a virtual function, an exception, a lambda, RTTI, another standard container (such as `std::map`) and a stream each read not proven, "unsupported construct", naming the construct and its source location.
 - [x] Once ticket22 lands, run its accepted finite native C++/C agreement subcheck on every original construct fixture; record undefined-input exclusions separately and retain a planted disagreement stop control.
-- [ ] Naming rules carry a version. Every proof record pins it in its content-hash set, and bumping the version gives a different pin.
-- [ ] Each diagnosed failure joins 21's regression corpus. Fixtures use no BC, PR or SSSP code. Tests that need Frama-C or LLVM 22 skip cleanly.
+- [x] Naming rules carry a version. Every generated C++ proof product pins it explicitly in its content-hash set, and bumping the version gives a different pin. Pure C models and prelaunch refusals retain hash-covered translator/checker provenance.
+- [x] Each diagnosed failure joins 21's regression corpus. Fixtures use no BC, PR or SSSP code. Tests that need Frama-C or LLVM 22 skip cleanly.
+
+The checked boxes use the approved representative-fixture interpretation: the std group
+uses the separately named narrower writable-neighbor contract, while the unchanged
+original contract remains not proven. The model-subject and naming clarifications
+above record the adopted interface and generated-product boundary explicitly.
+[Independent item-by-item closure and full inventory](../evidence/t24-combined-current-independent-review-20261015.md).
 
 ## Notes
 
@@ -54,6 +60,52 @@ historical freezes. [Fix, TDD and exact evidence boundary](../evidence/t24-atomi
 - WP runs fail inside the Bash sandbox (the Why3 socket is blocked); run WP jobs outside it.
 
 ## Answer
+
+2026-10-15 ET. **Resolved under the disclosed representative-fixture interpretation.**
+The repaired production runtime at `0e7f2327` now has **36 accepted actual WP
+records: 26 proven and 10 attributable not-proven negatives**, plus **nine
+prelaunch lifetime refusals**. The actual set contains nine safe/seeded caller
+pairs, fourteen C models, three fixture summaries and the dedicated original
+out-of-range case. The independently completed continuation at `23933f8a` reuses
+normally eligible exact records and adds the remaining rows; the separately
+qualified std pair uses `bf7a404c`. All three retain identical production runtime
+bytes. Historical results do not substitute for these records.
+
+The final independent audit checks complete ordinary/smoke/initialization
+inventories, mandatory RTE/init/cache/machdep flags, physical source/report/artifact
+hashes, current method/setup/reader pins, naming and selected dependencies. A
+separate cold reader reproduces every actual record's full goals, verdict,
+failure class and reader receipt. The continuation exits 0 under its 8 GiB guard
+in 5,173.653 s, peak 3,226,492,928 B, with no OOM/whole timeout and unchanged source.
+[Full 45-record inventory, eleven-item review and ended-run receipts](../evidence/t24-combined-current-independent-review-20261015.md).
+
+The original std contract `13fd` remains **not proven**. The distinct `d586`
+writable-neighbor empty-domain contract supplies the approved representative
+witness; read-only and live zero-size empty inputs are conservatively excluded,
+not classified as UB. DXC's old `+2` was not a concrete bug; its disclosed `+4`
+seed has both a native violating witness and an actual ordinary open goal. The
+original no-op MAA summary retains three ordinary Valid goals and zero own
+smoke; its narrowly checked acceptance additionally requires the unchanged
+actual caller's precondition and both per-call reachability smoke witnesses.
+No arbitrary zero-smoke rule or production eligibility exception was added.
+
+The current accepted ticket22 finite check records 112,589 defined comparisons,
+17 agreeing classifications and one UB-only allocation seed, with precondition
+and known-UB exclusions separate. Compiler/public controls retain deterministic
+C/anchors, kept-name ACSL checks, source-located unsupported refusals, naming
+version invalidation and diagnosed corpus entries. Raw evidence and all stopped
+runs, failed qualifications and auditor correction receipts remain preserved.
+
+The evidence remains scoped: standard copy is range-qualified; allocation assumes
+success and handles a closed certified terminal shape plus refusals; atomics and
+OpenMP use one thread with strong-only CAS; float `+real` retains the rounding
+assumption; DXC/MAA are fixture stand-ins. Finite source observations establish
+neither formal C++ equivalence nor a general WP-view/device theorem. Inheritance,
+`omp simd`, general lifetime semantics and symbolic-thread meanings remain outside
+this slice. The following dated answers are historical checkpoints, not current
+acceptance claims.
+
+## Historical first-pass answer
 
 2026-10-14 17:10 ET (first pass; superseded in part by "Progress (paused)" below). The C lowering tool now covers the declared C++ subset (plus
 `float`/`double`, asked by ticket 26), and its lowering of spike (b)'s proof unit 1 agrees with ticket 06's
