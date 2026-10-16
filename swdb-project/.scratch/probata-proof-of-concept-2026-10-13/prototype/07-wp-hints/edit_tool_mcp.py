@@ -178,13 +178,24 @@ def call(tool, args):
     if tool == "show_goal":
         t = L.clock()
         page_args = {"offset": args.get("offset", 0), "task_sha256": args.get("task_sha256")} if CFG.get("method22") else {}
+        if CFG.get("method23"):
+            page_args["machine_ids"] = True
         text, rec = (G.show_paged if CFG.get("method22") else G.show)(
             OUT, best, str(args.get("goal", "")), tag, **page_args,
             **({"timeout_s": max(1, E.search_remaining(OUT))} if E.DEBT[0] else {}))
         rec["wall_s"] = round(L.clock() - t, 1)
+        active_after_generation = (E.load_working(OUT, counted_s=budget_used_min() * 60,
+                                                  remaining_s=remaining_min() * 60) if E.DEBT[0] else best)
+        remaining_after_generation = remaining_min() * 60
+        if CFG.get("method22") and remaining_after_generation <= 0:
+            rec.update(result="refused: proof search ended during task read", deadline_censored=True,
+                       remaining_after_generation_s=remaining_after_generation)
+            text = "Refused goal task: proof search ended during task read. Return final JSON with empty ops now."
+        elif CFG.get("method22") and active_after_generation != best:
+            rec.update(result="refused: active candidate changed during task read", candidate_censored=True,
+                       remaining_after_generation_s=remaining_after_generation)
+            text = "Refused goal task: active candidate changed during task read. Refresh show_best before selecting an active goal."
         record(tool, rec)
-        if E.DEBT[0]:
-            E.load_working(OUT, counted_s=budget_used_min() * 60, remaining_s=remaining_min() * 60)
         return text + E.debt_text(OUT) + phase_note + f"\nBudget left for in-call work: {remaining_min():.1f} min."
     ops = args.get("ops") or []
     prov = f"codex {PIN['model']} {PIN['effort']} round {CFG['round']} tool call {N[0] + 1}"

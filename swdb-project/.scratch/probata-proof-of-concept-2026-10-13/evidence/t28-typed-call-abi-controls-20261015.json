@@ -1,0 +1,613 @@
+{
+  "created": "2026-10-15 ET",
+  "scope": "Public lower + sanitizer-backed native C++/C compiler evidence only; no formal tools or source-model theorem.",
+  "sources": [
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/swdb/c_lowering.py",
+      "sha256": "741e1c24ace7c0fc8e89b56a660b0b155099170bd9d870c46617452de78e126c",
+      "bytes": 157518
+    },
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/tests/test_dx100_typed_calls.py",
+      "sha256": "ae5dc164907766894f37a2d5c50ba1d84b0d74ae9cae2e6dcfd7f29218d61f2f",
+      "bytes": 5668
+    }
+  ],
+  "runs": [
+    {
+      "run": "/private/tmp/probata-t28-register-abi-red",
+      "resources": {
+        "exit_code": 1,
+        "peak_rss_bytes": 128778240,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 0.8546970420284197,
+        "cpu_seconds": 0.807924
+      },
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-register-abi-red/command.json",
+          "sha256": "d5f1e40df2d684a4fdf00c552adf5714d93ecd6e5648f1d744d36e91aa67710a",
+          "bytes": 288
+        },
+        {
+          "path": "/private/tmp/probata-t28-register-abi-red/control.log",
+          "sha256": "32928d0041a9f9e7f2f2a22b5a807ba15054aebcd232713feffda47043d863ab",
+          "bytes": 1772
+        },
+        {
+          "path": "/private/tmp/probata-t28-register-abi-red/junit.xml",
+          "sha256": "efe9adfde7a9c4a737db9cb6dd55697617c2d86f7137651469854d0245443486",
+          "bytes": 2206
+        },
+        {
+          "path": "/private/tmp/probata-t28-register-abi-red/pytest/test_typed_initialized_and_uni0/typed_calls.cc",
+          "sha256": "0aef6fd1cd424dd73466f4f63b1570de0fc3eb79f5f77099e2ebe345990bfa37",
+          "bytes": 202
+        },
+        {
+          "path": "/private/tmp/probata-t28-register-abi-red/resources.json",
+          "sha256": "712beec3c22bc6de9436131e03596fa6dc5380827843a130fb89599b348cbc90",
+          "bytes": 165
+        }
+      ]
+    },
+    {
+      "run": "/private/tmp/probata-t28-register-abi-green",
+      "resources": {
+        "exit_code": 1,
+        "peak_rss_bytes": 129695744,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 0.8221922910306603,
+        "cpu_seconds": 0.8131609999999999
+      },
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-register-abi-green/command.json",
+          "sha256": "6ee03d0ff85ff9793a022e4f4a69eaebbb2bf1f948c45b7cfb66f66dc1e4984f",
+          "bytes": 292
+        },
+        {
+          "path": "/private/tmp/probata-t28-register-abi-green/control.log",
+          "sha256": "f89771e162c141bf53f572a29192596d0ddcb8566a020e4df1286845dfe6553f",
+          "bytes": 4970
+        },
+        {
+          "path": "/private/tmp/probata-t28-register-abi-green/junit.xml",
+          "sha256": "c6fdd1b46a181a88b6c061c3b4f89a3fa82a21b05d393e555fbbe4ce1335405c",
+          "bytes": 8661
+        },
+        {
+          "path": "/private/tmp/probata-t28-register-abi-green/pytest/test_typed_initialized_and_uni0/typed_calls.cc",
+          "sha256": "0aef6fd1cd424dd73466f4f63b1570de0fc3eb79f5f77099e2ebe345990bfa37",
+          "bytes": 202
+        },
+        {
+          "path": "/private/tmp/probata-t28-register-abi-green/resources.json",
+          "sha256": "488259decfc0860ca7881ed43552fcfd060a5ac72909df8469873bd1ec571e74",
+          "bytes": 175
+        }
+      ]
+    },
+    {
+      "run": "/private/tmp/probata-t28-register-abi-green2",
+      "resources": {
+        "exit_code": 0,
+        "peak_rss_bytes": 156614656,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 1.116116166987922,
+        "cpu_seconds": 0.9412849999999999
+      },
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-register-abi-green2/command.json",
+          "sha256": "3d04f12a732ed9f5fb8ea1b98c3f261e187fa78eab1c84c4a4a08b4385d432a1",
+          "bytes": 294
+        },
+        {
+          "path": "/private/tmp/probata-t28-register-abi-green2/control.log",
+          "sha256": "142e711fac20a466998c8bbeb42619edb1e1722cf84dfe39f564f9b894494392",
+          "bytes": 98
+        },
+        {
+          "path": "/private/tmp/probata-t28-register-abi-green2/junit.xml",
+          "sha256": "38ed1f4d4841db94e249104585e4ff5a3ae533a08cc55a16529b7fa3e8c4a404",
+          "bytes": 417
+        },
+        {
+          "path": "/private/tmp/probata-t28-register-abi-green2/pytest/test_typed_initialized_and_uni0/out/allocation_pair.anchors.json",
+          "sha256": "ec50dc18465f887a364721392a840e4c2000c3cb36e8ce384be7650227144ed4",
+          "bytes": 4443
+        },
+        {
+          "path": "/private/tmp/probata-t28-register-abi-green2/pytest/test_typed_initialized_and_uni0/out/allocation_pair.c",
+          "sha256": "08f97f0c66532f769ed3218f8a61d777f0ff171fcd70f0eb70304721178fadee",
+          "bytes": 889
+        },
+        {
+          "path": "/private/tmp/probata-t28-register-abi-green2/pytest/test_typed_initialized_and_uni0/typed_calls.cc",
+          "sha256": "0aef6fd1cd424dd73466f4f63b1570de0fc3eb79f5f77099e2ebe345990bfa37",
+          "bytes": 202
+        },
+        {
+          "path": "/private/tmp/probata-t28-register-abi-green2/resources.json",
+          "sha256": "36920a025f7c5041fa26334b3f692820b6479c5bd2cf6517ecbe5425965e0642",
+          "bytes": 174
+        }
+      ]
+    },
+    {
+      "run": "/private/tmp/probata-t28-zero-template-red",
+      "resources": {
+        "exit_code": 1,
+        "peak_rss_bytes": 156123136,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 1.1641687920200638,
+        "cpu_seconds": 0.985718
+      },
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-zero-template-red/command.json",
+          "sha256": "e02e82b8068f09666ed1cbd4c84c777331f34873eeb2e0afe6af3249ffe2af88",
+          "bytes": 362
+        },
+        {
+          "path": "/private/tmp/probata-t28-zero-template-red/control.log",
+          "sha256": "92b828217c6852130b1ed8de7086714e37993041cb6f2f62b9b418b390f04e88",
+          "bytes": 2052
+        },
+        {
+          "path": "/private/tmp/probata-t28-zero-template-red/junit.xml",
+          "sha256": "1a409a37d28b62490a27a927b51b567ead831ab9691ed8806a094ee09abdc199",
+          "bytes": 2391
+        },
+        {
+          "path": "/private/tmp/probata-t28-zero-template-red/pytest/test_zero_argument_template_ca0/out/device_types.anchors.json",
+          "sha256": "44aeb2de7a76d0d7225136838536feb1595348801d48e2e719678acbdaab13a2",
+          "bytes": 7411
+        },
+        {
+          "path": "/private/tmp/probata-t28-zero-template-red/pytest/test_zero_argument_template_ca0/out/device_types.c",
+          "sha256": "d824b199879e566e99a75d9a3eb56b9c21f022a9f1dd5631a809dab8ecb979e1",
+          "bytes": 1347
+        },
+        {
+          "path": "/private/tmp/probata-t28-zero-template-red/pytest/test_zero_argument_template_ca0/typed_zero_arguments.cc",
+          "sha256": "0fa9811b5735db517612a3fa435df87834749ddb72c9ea399f88f0923159ca2b",
+          "bytes": 311
+        },
+        {
+          "path": "/private/tmp/probata-t28-zero-template-red/resources.json",
+          "sha256": "512b0a63408ec85afcaa4f5ea6320ea0d22a0ae2c3b5bb6fb1747e01516663a3",
+          "bytes": 165
+        }
+      ]
+    },
+    {
+      "run": "/private/tmp/probata-t28-zero-template-green",
+      "resources": {
+        "exit_code": 0,
+        "peak_rss_bytes": 155123712,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 1.6184795830049552,
+        "cpu_seconds": 1.461438
+      },
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-zero-template-green/command.json",
+          "sha256": "4844bcf477f2d661fdd9aaea1b5844ad6daf11aa18ddfa9f2c881d9f719de9fa",
+          "bytes": 294
+        },
+        {
+          "path": "/private/tmp/probata-t28-zero-template-green/control.log",
+          "sha256": "98cddc7f95fd18f1a5965fe9014ed620882e6c41c1e7d2dbd0243ef2d4466b62",
+          "bytes": 98
+        },
+        {
+          "path": "/private/tmp/probata-t28-zero-template-green/junit.xml",
+          "sha256": "4aca48923d979511392867e929f0dcd89b8fa2e75903f9098f0cdf0d7f594273",
+          "bytes": 561
+        },
+        {
+          "path": "/private/tmp/probata-t28-zero-template-green/pytest/test_typed_initialized_and_uni0/out/allocation_pair.anchors.json",
+          "sha256": "ec50dc18465f887a364721392a840e4c2000c3cb36e8ce384be7650227144ed4",
+          "bytes": 4443
+        },
+        {
+          "path": "/private/tmp/probata-t28-zero-template-green/pytest/test_typed_initialized_and_uni0/out/allocation_pair.c",
+          "sha256": "08f97f0c66532f769ed3218f8a61d777f0ff171fcd70f0eb70304721178fadee",
+          "bytes": 889
+        },
+        {
+          "path": "/private/tmp/probata-t28-zero-template-green/pytest/test_typed_initialized_and_uni0/typed_calls.cc",
+          "sha256": "0aef6fd1cd424dd73466f4f63b1570de0fc3eb79f5f77099e2ebe345990bfa37",
+          "bytes": 202
+        },
+        {
+          "path": "/private/tmp/probata-t28-zero-template-green/pytest/test_zero_argument_template_ca0/out/device_types.anchors.json",
+          "sha256": "7d21e7741ca062b2d16ab30037a2aed880aa2d89838935ef89fd56d61f4c1ad0",
+          "bytes": 7963
+        },
+        {
+          "path": "/private/tmp/probata-t28-zero-template-green/pytest/test_zero_argument_template_ca0/out/device_types.c",
+          "sha256": "650ebc67821e0ef9a69b8714a25c5bcb4516993bea4473eecd49a2988ff97ba4",
+          "bytes": 1479
+        },
+        {
+          "path": "/private/tmp/probata-t28-zero-template-green/pytest/test_zero_argument_template_ca0/typed_zero_arguments.cc",
+          "sha256": "0fa9811b5735db517612a3fa435df87834749ddb72c9ea399f88f0923159ca2b",
+          "bytes": 311
+        },
+        {
+          "path": "/private/tmp/probata-t28-zero-template-green/resources.json",
+          "sha256": "d3596e18b27e419ea9be835387381ced3fafd120c9f59d0121387f90b0b7bf1b",
+          "bytes": 165
+        }
+      ]
+    },
+    {
+      "run": "/private/tmp/probata-t28-typed-abi-controls",
+      "resources": {
+        "exit_code": 0,
+        "peak_rss_bytes": 185286656,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 5.390208125056233,
+        "cpu_seconds": 4.8527260000000005
+      },
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-controls/command.json",
+          "sha256": "3aebc1ed3cda87a64d1541e6afcca1f001ccb4c82d816b837e65f28299218bfc",
+          "bytes": 626
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-controls/control.log",
+          "sha256": "38013c1acc3af573dd8b479cd9e6a5e237cfd751ef12699508e7c2a35f97b867",
+          "bytes": 98
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-controls/junit.xml",
+          "sha256": "7e87158c5c34cfb0bfe91df16eec0d743debbeaa5829ebe26c3592db02fe25fc",
+          "bytes": 1408
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-controls/pytest/test_a_template_at_two_types_l0/swdb_template_unit.anchors.json",
+          "sha256": "3f0efb48c1b8a91792cf3b9ed9232474340d0cd0337a28063a4560be704d7f23",
+          "bytes": 17069
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-controls/pytest/test_a_template_at_two_types_l0/swdb_template_unit.c",
+          "sha256": "2178f68fab50bb4a19dbb991d632f186211b55cb6c93b437408b976bfd1b4323",
+          "bytes": 3573
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-controls/pytest/test_defined_zero_argument_tem0/c++.bin",
+          "sha256": "ae5866c4b01c351bb5013f0c16394346d526367a7567b35d957a54c3537b1907",
+          "bytes": 33624
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-controls/pytest/test_defined_zero_argument_tem0/c++.txt",
+          "sha256": "eb7c614d333a2e6f3a08d57e690bd542b41302f49e9b15bcf884a424b362db5b",
+          "bytes": 293
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-controls/pytest/test_defined_zero_argument_tem0/c.bin",
+          "sha256": "86bcdac242709429c9319c909e096c7433ff4a638df57fd56e00f0f36ef1fa7a",
+          "bytes": 33944
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-controls/pytest/test_defined_zero_argument_tem0/c.txt",
+          "sha256": "5472e8f91a5b27a0b26eca6f6fd7d17ba5eb55a7bc9dc144365598f5a44066ab",
+          "bytes": 2375
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-controls/pytest/test_defined_zero_argument_tem0/out/all_widths.anchors.json",
+          "sha256": "ff99e22a24d01fe081283f8fa08bbbbc14582a8ce768a7ee77f25f7aaee5839d",
+          "bytes": 7180
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-controls/pytest/test_defined_zero_argument_tem0/out/all_widths.c",
+          "sha256": "c2710ea32bdb5e979a6e5eacd23e9d62f2ee4ac0815f3359b49aa5a35fe65e82",
+          "bytes": 2320
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-controls/pytest/test_defined_zero_argument_tem0/type_widths.cc",
+          "sha256": "7a99ab9cda6f6a5cdf832660739e9b055810c4301932973fcdca109c47ddaad9",
+          "bytes": 238
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-controls/pytest/test_dxc_and_maa_calls_stay_ca0/swdb_dxc_unit.anchors.json",
+          "sha256": "8737316aaed0465bccf952e631b31218627ff217bf9f2063d24c8381b8c649bf",
+          "bytes": 3298
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-controls/pytest/test_dxc_and_maa_calls_stay_ca0/swdb_dxc_unit.c",
+          "sha256": "3581953e8a3445d3415e688cfd27213635c2601194c0c4440b3530aaafbf04cb",
+          "bytes": 601
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-controls/pytest/test_dxc_and_maa_calls_stay_ca1/swdb_maa_unit.anchors.json",
+          "sha256": "8bf2383c0f9e0a73c15d4afa51e01aaf71e1824bf0dc9ca5e568cb8d45b3f46e",
+          "bytes": 4460
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-controls/pytest/test_dxc_and_maa_calls_stay_ca1/swdb_maa_unit.c",
+          "sha256": "fbe34ef1d51898a62ce7f1d080e4369293fe488c23fc149f5c1345962a217d6e",
+          "bytes": 911
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-controls/pytest/test_lowering_twice_gives_byte0/one/swdb_core_kernel.anchors.json",
+          "sha256": "ec96fc667ea2e406f884bc0120db3c703e393ddd54d5e1a4da7b505adc02e97b",
+          "bytes": 18881
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-controls/pytest/test_lowering_twice_gives_byte0/one/swdb_core_kernel.c",
+          "sha256": "9f978c847f6cfdf3bb05fff4ef11dfd65eb87309f89fb5429f4ffc3bbf7d2019",
+          "bytes": 5437
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-controls/pytest/test_lowering_twice_gives_byte0/two/swdb_core_kernel.anchors.json",
+          "sha256": "ec96fc667ea2e406f884bc0120db3c703e393ddd54d5e1a4da7b505adc02e97b",
+          "bytes": 18881
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-controls/pytest/test_lowering_twice_gives_byte0/two/swdb_core_kernel.c",
+          "sha256": "9f978c847f6cfdf3bb05fff4ef11dfd65eb87309f89fb5429f4ffc3bbf7d2019",
+          "bytes": 5437
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-controls/pytest/test_typed_initialized_and_uni0/out/allocation_pair.anchors.json",
+          "sha256": "ec50dc18465f887a364721392a840e4c2000c3cb36e8ce384be7650227144ed4",
+          "bytes": 4443
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-controls/pytest/test_typed_initialized_and_uni0/out/allocation_pair.c",
+          "sha256": "08f97f0c66532f769ed3218f8a61d777f0ff171fcd70f0eb70304721178fadee",
+          "bytes": 889
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-controls/pytest/test_typed_initialized_and_uni0/typed_calls.cc",
+          "sha256": "0aef6fd1cd424dd73466f4f63b1570de0fc3eb79f5f77099e2ebe345990bfa37",
+          "bytes": 202
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-controls/pytest/test_zero_argument_template_ca0/out/device_types.anchors.json",
+          "sha256": "7d21e7741ca062b2d16ab30037a2aed880aa2d89838935ef89fd56d61f4c1ad0",
+          "bytes": 7963
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-controls/pytest/test_zero_argument_template_ca0/out/device_types.c",
+          "sha256": "650ebc67821e0ef9a69b8714a25c5bcb4516993bea4473eecd49a2988ff97ba4",
+          "bytes": 1479
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-controls/pytest/test_zero_argument_template_ca0/typed_zero_arguments.cc",
+          "sha256": "0fa9811b5735db517612a3fa435df87834749ddb72c9ea399f88f0923159ca2b",
+          "bytes": 311
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-controls/resources.json",
+          "sha256": "15b3dd88da0607b48931067add12891a67980782cbd0041ce53111f025388fce",
+          "bytes": 174
+        }
+      ]
+    },
+    {
+      "run": "/private/tmp/probata-t28-typed-abi-final",
+      "resources": {
+        "exit_code": 0,
+        "peak_rss_bytes": 182927360,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 6.715667040960398,
+        "cpu_seconds": 6.285731999999999
+      },
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/command.json",
+          "sha256": "f3970721e116734383693c046ac4bee3f22d64a0a74f983e6997be92366a98ef",
+          "bytes": 620
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/control.log",
+          "sha256": "7057318c50a57d87ce5b081826a2455fc3a74be8e04468735c34fa6711549b17",
+          "bytes": 99
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/junit.xml",
+          "sha256": "98d25ccec9e936f27f91e7008766676b39ec3cca1ffd5f5e96906a3dedc2ee1d",
+          "bytes": 1927
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/pytest/test_a_shared_template_body_bi0/nested_template_calls.cc",
+          "sha256": "de013654286cf32b3946804188ff6c8052145e26f64fb8c3fb9a505a1871900f",
+          "bytes": 174
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/pytest/test_a_shared_template_body_bi0/out/nested_types.anchors.json",
+          "sha256": "c00e724b9d71e65303b25a2f525855291a2523268bf2f328cc0c80f9e689e606",
+          "bytes": 5434
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/pytest/test_a_shared_template_body_bi0/out/nested_types.c",
+          "sha256": "218dac56349baa8a04afb1746db6858f2dabea26b1c79682f3a0cdf93b1427b6",
+          "bytes": 1151
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/pytest/test_a_template_at_two_types_l0/swdb_template_unit.anchors.json",
+          "sha256": "3f0efb48c1b8a91792cf3b9ed9232474340d0cd0337a28063a4560be704d7f23",
+          "bytes": 17069
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/pytest/test_a_template_at_two_types_l0/swdb_template_unit.c",
+          "sha256": "2178f68fab50bb4a19dbb991d632f186211b55cb6c93b437408b976bfd1b4323",
+          "bytes": 3573
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/pytest/test_defined_zero_argument_tem0/c++.bin",
+          "sha256": "ae5866c4b01c351bb5013f0c16394346d526367a7567b35d957a54c3537b1907",
+          "bytes": 33624
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/pytest/test_defined_zero_argument_tem0/c++.txt",
+          "sha256": "eb7c614d333a2e6f3a08d57e690bd542b41302f49e9b15bcf884a424b362db5b",
+          "bytes": 293
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/pytest/test_defined_zero_argument_tem0/c.bin",
+          "sha256": "86bcdac242709429c9319c909e096c7433ff4a638df57fd56e00f0f36ef1fa7a",
+          "bytes": 33944
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/pytest/test_defined_zero_argument_tem0/c.txt",
+          "sha256": "5472e8f91a5b27a0b26eca6f6fd7d17ba5eb55a7bc9dc144365598f5a44066ab",
+          "bytes": 2375
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/pytest/test_defined_zero_argument_tem0/out/all_widths.anchors.json",
+          "sha256": "ff99e22a24d01fe081283f8fa08bbbbc14582a8ce768a7ee77f25f7aaee5839d",
+          "bytes": 7180
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/pytest/test_defined_zero_argument_tem0/out/all_widths.c",
+          "sha256": "c2710ea32bdb5e979a6e5eacd23e9d62f2ee4ac0815f3359b49aa5a35fe65e82",
+          "bytes": 2320
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/pytest/test_defined_zero_argument_tem0/type_widths.cc",
+          "sha256": "7a99ab9cda6f6a5cdf832660739e9b055810c4301932973fcdca109c47ddaad9",
+          "bytes": 238
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/pytest/test_dxc_and_maa_calls_stay_ca0/swdb_dxc_unit.anchors.json",
+          "sha256": "8737316aaed0465bccf952e631b31218627ff217bf9f2063d24c8381b8c649bf",
+          "bytes": 3298
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/pytest/test_dxc_and_maa_calls_stay_ca0/swdb_dxc_unit.c",
+          "sha256": "3581953e8a3445d3415e688cfd27213635c2601194c0c4440b3530aaafbf04cb",
+          "bytes": 601
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/pytest/test_dxc_and_maa_calls_stay_ca1/swdb_maa_unit.anchors.json",
+          "sha256": "8bf2383c0f9e0a73c15d4afa51e01aaf71e1824bf0dc9ca5e568cb8d45b3f46e",
+          "bytes": 4460
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/pytest/test_dxc_and_maa_calls_stay_ca1/swdb_maa_unit.c",
+          "sha256": "fbe34ef1d51898a62ce7f1d080e4369293fe488c23fc149f5c1345962a217d6e",
+          "bytes": 911
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/pytest/test_lowering_twice_gives_byte0/one/swdb_core_kernel.anchors.json",
+          "sha256": "ec96fc667ea2e406f884bc0120db3c703e393ddd54d5e1a4da7b505adc02e97b",
+          "bytes": 18881
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/pytest/test_lowering_twice_gives_byte0/one/swdb_core_kernel.c",
+          "sha256": "9f978c847f6cfdf3bb05fff4ef11dfd65eb87309f89fb5429f4ffc3bbf7d2019",
+          "bytes": 5437
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/pytest/test_lowering_twice_gives_byte0/two/swdb_core_kernel.anchors.json",
+          "sha256": "ec96fc667ea2e406f884bc0120db3c703e393ddd54d5e1a4da7b505adc02e97b",
+          "bytes": 18881
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/pytest/test_lowering_twice_gives_byte0/two/swdb_core_kernel.c",
+          "sha256": "9f978c847f6cfdf3bb05fff4ef11dfd65eb87309f89fb5429f4ffc3bbf7d2019",
+          "bytes": 5437
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/pytest/test_register_overload_names_a0/allocation_order.cc",
+          "sha256": "9916935f25a477b9b33154ca402a1d15b0cf172ca8fb7718e20ab0e1a37ccd8a",
+          "bytes": 173
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/pytest/test_register_overload_names_a0/out/pair_order.anchors.json",
+          "sha256": "de1d18cb13347f9984b19a41c8b46f3900590ccbd729dd70d9e4174dfb5b7cde",
+          "bytes": 4317
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/pytest/test_register_overload_names_a0/out/pair_order.c",
+          "sha256": "8ea9888346c53ee39a5893f0e8d5a79f16fc6f922c69900beba6a50664248506",
+          "bytes": 821
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/pytest/test_register_overload_names_a1/allocation_order.cc",
+          "sha256": "274d3432bc49ff417af351aa6cf4903309ca6d3dcd885a65ab4cd36e393d1f32",
+          "bytes": 173
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/pytest/test_register_overload_names_a1/out/pair_order.anchors.json",
+          "sha256": "021e06efd66b8582010d3c6ad8cdefd424c5740678218fd75419a4d9b295179a",
+          "bytes": 4317
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/pytest/test_register_overload_names_a1/out/pair_order.c",
+          "sha256": "30601f7ac8ca679bb6971e699a7a57dc064c515d928d2932cacc82a9b5526300",
+          "bytes": 821
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/pytest/test_typed_initialized_and_uni0/out/allocation_pair.anchors.json",
+          "sha256": "ec50dc18465f887a364721392a840e4c2000c3cb36e8ce384be7650227144ed4",
+          "bytes": 4443
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/pytest/test_typed_initialized_and_uni0/out/allocation_pair.c",
+          "sha256": "08f97f0c66532f769ed3218f8a61d777f0ff171fcd70f0eb70304721178fadee",
+          "bytes": 889
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/pytest/test_typed_initialized_and_uni0/typed_calls.cc",
+          "sha256": "0aef6fd1cd424dd73466f4f63b1570de0fc3eb79f5f77099e2ebe345990bfa37",
+          "bytes": 202
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/pytest/test_zero_argument_template_ca0/out/device_types.anchors.json",
+          "sha256": "7d21e7741ca062b2d16ab30037a2aed880aa2d89838935ef89fd56d61f4c1ad0",
+          "bytes": 7963
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/pytest/test_zero_argument_template_ca0/out/device_types.c",
+          "sha256": "650ebc67821e0ef9a69b8714a25c5bcb4516993bea4473eecd49a2988ff97ba4",
+          "bytes": 1479
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/pytest/test_zero_argument_template_ca0/typed_zero_arguments.cc",
+          "sha256": "0fa9811b5735db517612a3fa435df87834749ddb72c9ea399f88f0923159ca2b",
+          "bytes": 311
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-abi-final/resources.json",
+          "sha256": "e6b72ffff7b1b8c50c4da477ccf724d095b650168c19fee96446b17f90eed1d8",
+          "bytes": 173
+        }
+      ]
+    }
+  ],
+  "final_passed": 10,
+  "worker": {
+    "path": "/private/tmp/probata-mac-compiler-worker-b.py",
+    "sha256": "873ac0b65eaa7edd4e0f624a86e68141c0e340f9ab1ca6816a07598538548a0e",
+    "bytes": 695
+  },
+  "guard": {
+    "path": "/private/tmp/probata-t28-compiler-guard.py",
+    "sha256": "0cdc8a9c541f6234afa99129e7e0a8d7433efba6c7a1007cce2fbe021b9edf0a",
+    "bytes": 874
+  },
+  "boundaries": [
+    "Two behavior RED controls: allocation overload C-symbol collision and silent six-type zero-argument summary collapse.",
+    "First overload GREEN attempt had a child-count helper TypeError; corrected second GREEN passes. Retained failed attempt is not proof evidence.",
+    "Source-call span and enclosing stable mangled function identify the unique call in one full-TU AST; its referenced ID is resolved only inside that same TU.",
+    "Same-arity/type collisions still fail closed; macro coordinates outside the new direct-source resolver remain unsupported. Existing non-template and single-arity summary names retain their spelling.",
+    "Original0.1 semantics library bytes remain unchanged. New0.2per-call contracts/models, new initializedness policy and actual full-interface/rule acceptance remain incomplete.",
+    "Native sanitizer success is finite compiler evidence; configured dynamic link/transitive DSO closure is not audited here."
+  ]
+}

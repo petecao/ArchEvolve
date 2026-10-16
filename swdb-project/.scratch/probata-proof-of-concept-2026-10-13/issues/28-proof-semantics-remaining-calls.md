@@ -42,3 +42,31 @@ The coordinator owns both mbit10 lanes and actual verifier scheduling.
 - Risk: research 12 read gem5 source only. Two corners stay open: a write reaching L3 after the snoop filter dropped the line, and a write passed below L3 when no block can be allocated. The region stall spans one instance; the paper's scalability runs use two.
 - Evidence: [research 12](../../formal-verification-2026-10-09/research/12-dx100-memory-visibility.md), [research 14](../../formal-verification-2026-10-09/research/14-dx100-wait-rule.md). No message to Eric or the DX100 authors (out of scope).
 - Fixture proof records carry `contract_fixture` evidence. Mac: one real verifier job at a time under the ~8 GB RSS watchdog; tests skip cleanly when a verifier is missing.
+
+## Implementation checkpoint — 2026-10-15 ET
+
+The first public validation slice now checks the complete immutable two-header
+surface independently of the BFS-use regex: 26 names / 27 declarations, including
+`print_tile`, `get_data_type`, noncacheable pointer and both register-allocation
+overloads. Three RED/GREEN cycles demonstrate refusal of the smaller BFS set and
+the missing initialized overload. Eighteen scripted controls pass with compiler
+and verifier tools disabled, under workerB and the 8GiB/time guard. The accepted
+structural fixture uses explicitly unreachable added contracts, so it establishes
+no new call behavior. No semantics0.2 entry is current; all0.1 library bytes remain
+unchanged. Typed contracts/models, memory/history/pair rules and actual synthetic
+acceptance remain incomplete; status stays **claimed**.
+[Implementation boundaries and next slices](../prototype/28-proof-semantics/README.md),
+[exact RED/GREEN evidence](../evidence/t28-declaration-inventory-controls-20261015.json).
+
+Typed-call compiler prerequisite — 2026-10-15 ET: two public `swdb lower` RED
+controls exposed a template-allocation overload collision and silent collapse of
+six zero-argument type specializations. Both are repaired through exact same-TU
+source-call/declaration binding and deterministic arity suffixes. Ten
+compiler/native controls pass, including native C++/C width behavior under
+ASan/UBSan. No actual verifier or new semantics0.2call acceptance is claimed.
+[Exact compiler evidence](../evidence/t28-typed-call-abi-controls-20261015.json).
+The separate source-reading correction to optional indirect old-value results is
+recorded [here](../prototype/28-proof-semantics/indirect-old-value-correction-20261015.md);
+future contracts must use the alias to the modified copied line. Ticket remains
+**claimed**; all substantive memory/history/ownership/pair and full-call actual
+acceptance criteria remain active.

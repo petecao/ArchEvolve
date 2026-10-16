@@ -1,0 +1,248 @@
+{
+  "created": "2026-10-15 ET",
+  "scope": "Public CLI validate structural declaration/overload controls only; no compiler, formal solver or proof admission.",
+  "base": "53b73e73c6b64a99b1c419e58ce01d0937e0bc48",
+  "counts": {
+    "upstream_names": 26,
+    "upstream_declarations": 27,
+    "final_passed": 18
+  },
+  "runs": [
+    {
+      "run": "/private/tmp/probata-t28-inventory-red-run",
+      "resources": {
+        "exit_code": 1,
+        "peak_rss_bytes": 130236416,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 0.8169382499763742,
+        "cpu_seconds": 0.802555
+      },
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-inventory-red-run/control.log",
+          "sha256": "634137854c2d3f55426dbc2b281f26106fb1ec09d73435fe1122c7f88a698e23"
+        },
+        {
+          "path": "/private/tmp/probata-t28-inventory-red-run/resources.json",
+          "sha256": "f2b178081062ad2e7a6cff233974a1a5a62e8fc5a0e05037aaceea9881335bfe"
+        },
+        {
+          "path": "/private/tmp/probata-t28-inventory-red-run/command.json",
+          "sha256": "356ec5270bdc404a49ecad26e6e2cf1e1683a76db1aade33683246e8422abfc4"
+        },
+        {
+          "path": "/private/tmp/probata-t28-inventory-red-run/junit.xml",
+          "sha256": "98a194c34e16a82862ea313e49dcf28a435c9b5c6eafda9cea6934b1030ad794"
+        }
+      ]
+    },
+    {
+      "run": "/private/tmp/probata-t28-inventory-green",
+      "resources": {
+        "exit_code": 0,
+        "peak_rss_bytes": 131399680,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 0.8984681660076603,
+        "cpu_seconds": 0.861377
+      },
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-inventory-green/control.log",
+          "sha256": "0c33791aa03cbc8826ba04efd1b062adb3baa875c47625e4de7090bd753d7635"
+        },
+        {
+          "path": "/private/tmp/probata-t28-inventory-green/resources.json",
+          "sha256": "faf846ff765b6a64e8c16e6deaf55159ed5e2b56e07a3489995e3ca1f2810cdf"
+        },
+        {
+          "path": "/private/tmp/probata-t28-inventory-green/command.json",
+          "sha256": "cdd6cbeacb2be6e7d80c7b4102b7a3b27e0a8411e2f3672ed41a0ca7d7de374c"
+        },
+        {
+          "path": "/private/tmp/probata-t28-inventory-green/junit.xml",
+          "sha256": "0ea3fc75c0eca81e2c75fded17c47a6a0df6c4ff2cf8d1a0738964efee7abe44"
+        }
+      ]
+    },
+    {
+      "run": "/private/tmp/probata-t28-overload-red",
+      "resources": {
+        "exit_code": 1,
+        "peak_rss_bytes": 129974272,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 0.8375592499505728,
+        "cpu_seconds": 0.830233
+      },
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-overload-red/control.log",
+          "sha256": "6542c3c751de068401bbed1d7f9ccc3e4e5476b0fdc1e2633ee5f1fb4c977c87"
+        },
+        {
+          "path": "/private/tmp/probata-t28-overload-red/resources.json",
+          "sha256": "6745c7ca519bd9aba88f55d5fc8ed1aaad6a8f28a25e943700c04c1d8e7dd137"
+        },
+        {
+          "path": "/private/tmp/probata-t28-overload-red/command.json",
+          "sha256": "3cb89b0ef6824e286742a4c9a2257d059236b8a946510cb85b0ef66e375fbd20"
+        },
+        {
+          "path": "/private/tmp/probata-t28-overload-red/junit.xml",
+          "sha256": "1d0a9e075224a61984a4082b9b3ecdd9ee3cb92be801e811c9455da42da4d5ff"
+        }
+      ]
+    },
+    {
+      "run": "/private/tmp/probata-t28-overload-green",
+      "resources": {
+        "exit_code": 0,
+        "peak_rss_bytes": 129318912,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 1.2256591669865884,
+        "cpu_seconds": 1.195242
+      },
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-overload-green/control.log",
+          "sha256": "3fcb38e1fcfa38dc1085502533c71aa59ca438c8f584e3256efb4ba9c28a5474"
+        },
+        {
+          "path": "/private/tmp/probata-t28-overload-green/resources.json",
+          "sha256": "c87a6ad289e1c160a872e705c73774beba2cac29938a485139c9122c598ff34f"
+        },
+        {
+          "path": "/private/tmp/probata-t28-overload-green/command.json",
+          "sha256": "256c0e699b943176950a2aee6756554edf0809c6611cd3efd7272f90164adeb9"
+        },
+        {
+          "path": "/private/tmp/probata-t28-overload-green/junit.xml",
+          "sha256": "76a99d4b868ed6c81a97b48b0b60f167dc33b10c700e5de00f709daea27e3cdb"
+        }
+      ]
+    },
+    {
+      "run": "/private/tmp/probata-t28-inventory-controls",
+      "resources": {
+        "exit_code": 0,
+        "peak_rss_bytes": 141279232,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 6.0892675839713775,
+        "cpu_seconds": 6.026879
+      },
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-inventory-controls/control.log",
+          "sha256": "473377b0ce65c48db15851f6f83548722ec2aceb6a2142523d33191447dcb446"
+        },
+        {
+          "path": "/private/tmp/probata-t28-inventory-controls/resources.json",
+          "sha256": "3529ae4d357b36ebceaebcf582bca46dc06e8cc3aa84236d5b8369a9b2deb035"
+        },
+        {
+          "path": "/private/tmp/probata-t28-inventory-controls/command.json",
+          "sha256": "58d7ea8e8fea7d02a53b63765c73a284a0ee615d82010fd0f6b6ea4387e4c396"
+        },
+        {
+          "path": "/private/tmp/probata-t28-inventory-controls/junit.xml",
+          "sha256": "1f0630bd114550314e988c7c668249607a07eb6f7be65cbb05311f1f0e05f4e3"
+        }
+      ]
+    },
+    {
+      "run": "/private/tmp/probata-t28-overload-malformed-red",
+      "resources": {
+        "exit_code": 1,
+        "peak_rss_bytes": 129843200,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 0.9211407080292702,
+        "cpu_seconds": 0.856943
+      },
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-overload-malformed-red/control.log",
+          "sha256": "68e6a8dac672a3bbf2dfc3eed239a08121122aad3f67663180a35d0c7762a011"
+        },
+        {
+          "path": "/private/tmp/probata-t28-overload-malformed-red/resources.json",
+          "sha256": "d56041bacb14cd8bfdc51352e519d1c5cc740c09f26143226bc6e415c25030c5"
+        },
+        {
+          "path": "/private/tmp/probata-t28-overload-malformed-red/command.json",
+          "sha256": "6203d5525c53f377e9ad7c685435961e2f2aa883927166f8235ab8c5c91eb428"
+        },
+        {
+          "path": "/private/tmp/probata-t28-overload-malformed-red/junit.xml",
+          "sha256": "8c717d117e5eaf4bcfd5a48da24a6554bb8fc23606162bf32c919fc002f0047f"
+        }
+      ]
+    },
+    {
+      "run": "/private/tmp/probata-t28-inventory-final-green",
+      "resources": {
+        "exit_code": 0,
+        "peak_rss_bytes": 142950400,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 6.945608375011943,
+        "cpu_seconds": 6.86025
+      },
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-inventory-final-green/control.log",
+          "sha256": "428c34847e4a87aa6e0212da437892f92b7fddfc0e34935625d9a6c57871e0d7"
+        },
+        {
+          "path": "/private/tmp/probata-t28-inventory-final-green/resources.json",
+          "sha256": "735768a019c0a9bd3ac70fb1c5a487dabddfbea1a1b3d6c2bf5f281837ebe3c6"
+        },
+        {
+          "path": "/private/tmp/probata-t28-inventory-final-green/command.json",
+          "sha256": "518eac4a51b61913d12624d1e00fa71494aa2324bbe0ba103a96e674e2743641"
+        },
+        {
+          "path": "/private/tmp/probata-t28-inventory-final-green/junit.xml",
+          "sha256": "9b249ab52e031d3cc7e0fe5792fb73f0c2018075f2909ad1243d6968f1d8ba50"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/swdb/dx100_interface.py",
+      "sha256": "d2c88c0f6eebb429225c9a6ee2463e39cd0a908b4772a5ec9a19cdd454cfbc8b"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/swdb/proof_semantics.py",
+      "sha256": "8612d3b871e5607933a8b13c241857660fd9f27c9ed927bd6cf7d5e68371d934"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/tests/test_dx100_interface_inventory.py",
+      "sha256": "5b14e0a201d2955d969148bffd67bd239878cf2cef04f938495a07a56dd1ea94"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/tests/fixtures/proof/dx100/interface-declarations-e4fc4af.json",
+      "sha256": "d48a3971f2e9421e736d72ff160074f22e9cbbb7c9c756ef52457a5c4314b3b6"
+    }
+  ],
+  "worker": {
+    "path": "/private/tmp/probata-mac-compiler-worker-b.py",
+    "sha256": "873ac0b65eaa7edd4e0f624a86e68141c0e340f9ab1ca6816a07598538548a0e"
+  },
+  "guard": {
+    "path": "/private/tmp/probata-t28-scripted-guard.py",
+    "sha256": "d15f8ec7076b39791b196e7dfdb3be9b8bb63dfbf7930ceb5b34b8795a140cfd"
+  },
+  "boundaries": [
+    "No new current semantics entry is installed; original0.1 library files remain unchanged.",
+    "Positive complete-header validation fixture uses explicitly unreachable added contracts; accepted means structurally accepted/ACSL unchecked, never semantically proven.",
+    "Typed contract/prototype binding, all0.2call implementations, physical line footprints, history/dependency semantics and actual rule acceptance remain incomplete.",
+    "Initial sandbox watchdog permission failure is retained at /private/tmp/probata-t28-inventory-red; it is infrastructure failure, not a RED feature test.",
+    "Malformed-overload RED was queued behind workerB. The prematurely queued GREEN wrapper was canceled before its guard/child/output directory existed; unrepaired source was restored before RED ran, then repaired after observed RED. This canceled queue is not test evidence."
+  ]
+}

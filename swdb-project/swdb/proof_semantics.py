@@ -155,13 +155,20 @@ def check(library, entry_id, data, error):
     if not isinstance(calls, list) or not calls:
         error("calls", "an entry that covers calls lists them: call, prototype, contract (ACSL), rules")
         return []
-    names = []
+    names, malformed_overloads = [], False
     for i, row in enumerate(calls):
         where = f"calls[{i}]"
         if not isinstance(row, dict) or not isinstance(row.get("call"), str):
             error(where, "a call row names its call")
             continue
         names.append(row["call"])
+        if "overloads" in row and (not isinstance(row["overloads"], list) or not row["overloads"] or
+                any(not isinstance(variant, dict) or
+                    not isinstance(variant.get("prototype"), str) or not variant["prototype"].strip() or
+                    not isinstance(variant.get("contract"), str) or not variant["contract"].strip()
+                    for variant in row["overloads"])):
+            error(f"{where}.overloads", "overloads must list a C prototype and contract for each declaration")
+            malformed_overloads = True
         if not isinstance(row.get("contract"), str) or not row["contract"].strip():
             error(f"{where}.contract", f"call {row['call']} has no ACSL contract (one contract per covered call)")
         if not isinstance(row.get("prototype"), str) or not re.search(rf"\b{re.escape(row['call'])}\s*\(",
@@ -181,6 +188,8 @@ def check(library, entry_id, data, error):
                                             f"{interface['id']} {interface['version']}")
     if len(set(names)) != len(names):
         error("calls", "each call is listed once")
+    from swdb import dx100_interface
+    dx100_interface.check(library, data, error)
     found = data.get("inventory")
     if not isinstance(found, dict) or not isinstance(found.get("sources"), list) or \
             not isinstance(found.get("calls"), list):
@@ -196,7 +205,7 @@ def check(library, entry_id, data, error):
                 error("calls", f"inventory call {name} has no call row (every call the inventory found needs a "
                                "contract)")
     texts = _files(library, data, error)
-    if len(texts) < 4:
+    if len(texts) < 4 or malformed_overloads:
         return []
     return _typecheck(library, entry_id, data, texts, error)
 
@@ -212,7 +221,8 @@ def acsl_source(data, texts, rows=None, *, constants=None):
     parts += ["*/", state, "/*@", texts["model.logic"], "*/"]
     for row in rows if rows is not None else [*(data.get("calls") or []), *(data.get("queries") or []),
                                               *((data.get("wp") or {}).get("probes") or [])]:
-        parts += ["/*@", row.get("contract") or "", "*/", f"{row.get('prototype')};"]
+        for variant in row.get("overloads") or [row]:
+            parts += ["/*@", variant.get("contract") or "", "*/", f"{variant.get('prototype')};"]
     return "\n".join(parts) + "\n"
 
 
@@ -281,7 +291,8 @@ def _typecheck(library, entry_id, data, texts, error):
     """Frama-C type-checks the ghost state, the logic and every contract; missing Frama-C: each contract unchecked."""
     from swdb import framac
     from swdb.problems import Problem
-    rows = [*(data.get("calls") or []), *(data.get("queries") or [])]
+    rows = [variant for row in [*(data.get("calls") or []), *(data.get("queries") or [])]
+            for variant in row.get("overloads") or [row]]
     tool = framac.locate()
     path = str(library.files[entry_id])
     if tool.missing:

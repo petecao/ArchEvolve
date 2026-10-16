@@ -1,0 +1,94 @@
+{
+  "created": "2026-10-15 ET",
+  "method": "codex-only-machine-tasks-fresh-baseline-v1",
+  "state": "reviewed prospective implementation; counted launch not admitted by this evidence",
+  "scientific_acceptance": false,
+  "ticket_status": "claimed",
+  "source_pin_count": 32,
+  "controlled_validation": {
+    "composed_pre_final_localized_repair": {
+      "passed": 264,
+      "wall_s": 82.87
+    },
+    "final_affected": {
+      "passed": 26,
+      "wall_s": 16.36
+    },
+    "full_suite_repeated_after_last_repair": false,
+    "unchanged_files_from_composed_snapshot": 29
+  },
+  "runtime_component": {
+    "verdict": "PASS: tiny generic API/exporter/context/resource agreement only",
+    "goal_ids": 15,
+    "printed_goals": 15,
+    "nontrivial_contexts": 5,
+    "wall_s": 0.591254,
+    "peak_rss_mib": 101.265625,
+    "native_solver_session_report": "absent under none-prover; retained explicitly",
+    "boundary": "Both hooks share Wpo database; no independent completeness theorem, external-prover identity inference, exact marker absence or proof credit."
+  },
+  "protocol": {
+    "mechanical_hints": 0,
+    "old_hints_or_history_import": false,
+    "initial_diagnostic": "current fresh full baseline non-smoke TDStep/global-lemma subset only; empty hint set",
+    "cross_mode_formula_equivalence_claimed": false,
+    "baseline_timeout_s": 10,
+    "final_positive_and_negative_timeout_s": 30,
+    "proof_stop_min": 33,
+    "provider_hard_stop_min": 36,
+    "continuous_total_min": 60,
+    "negative_reserve_min": 8,
+    "complete_provider_origin_and_usage_required": true,
+    "actual_preprovider_source_prompt_workspace_audit_required": true,
+    "timing_sufficiency_proven": false
+  },
+  "resolved_findings": [
+    "self-anchored old baseline root",
+    "post-generation soft-stop task disclosure",
+    "generated source/header/exporter copies not revalidated",
+    "expired temporary candidate task disclosed after rollback"
+  ],
+  "raw_receipts": {
+    "/private/tmp/probata-t07-method23-final-composed-independent-review-manifest.json": {
+      "sha256": "71d53230c655126d105e7eb63acc2844c1d1977639682896135a4a935e6586a3",
+      "bytes": 26569
+    },
+    "/private/tmp/probata-t07-method23-final-composed-independent-review.md": {
+      "sha256": "f87c164d8bbd1fcb7dacb5612d11459baf55412248a248c2c6b83ffd8c771c41",
+      "bytes": 5325
+    },
+    "/private/tmp/probata-t07-method23-component3-independent-runtime-review.json": {
+      "sha256": "d545b5f1ada6974661ae4de8eaac3772788d1815e5ea2e24d6a760584aa5a512",
+      "bytes": 8348
+    },
+    "/private/tmp/probata-t07-method23-initial-static-findings.json": {
+      "sha256": "0309e4e9a24ba3bdc3ecce63f1689ba58b4aac1fe419a31111838f2dbc5b45b1",
+      "bytes": 4052
+    },
+    "/private/tmp/probata-t07-method23-repaired-264-review-manifest.json": {
+      "sha256": "e2144114547af6de63756ce3eb68c7f1bc12b5bed51775f07eef6c89ca8fb81b",
+      "bytes": 14532
+    },
+    "/private/tmp/probata-t07-method23-old-root-red.txt": {
+      "sha256": "079d0b30d0ab24728659de6795301d5179815e39b28bb357e9102b20d5ca185a",
+      "bytes": 6351
+    },
+    "/private/tmp/probata-t07-method23-task-softstop-red.txt": {
+      "sha256": "99cc053a7154afecff31e1e9f93ea0742a2e5635bb3341fe429b174a8872ed52",
+      "bytes": 1650
+    },
+    "/private/tmp/probata-t07-method23-actual-inputs-red.txt": {
+      "sha256": "b3d3c442019604932cf8a22fb459171c21fbb469a94c0abe5933dc74bb43fd02",
+      "bytes": 13430
+    },
+    "/private/tmp/probata-t07-method23-active-debt-red.txt": {
+      "sha256": "64a6d0c0abb5cca3fa6ff0cb0e38130731cc8a5c5eaeecf5e7dc6c70b11f6cba",
+      "bytes": 1817
+    },
+    "/private/tmp/probata-t07-method23-active-debt-green.txt": {
+      "sha256": "aa1d522a87363f78821b3180e69f8d65c52aa7e38f1bb7cb0fbfc97cea0695a7",
+      "bytes": 100
+    }
+  },
+  "raw_policy": "Raw logs/tasks/snapshots stay outside Git; only compact metadata and exact independent reviews are committed."
+}

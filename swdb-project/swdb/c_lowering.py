@@ -910,6 +910,72 @@ class _Unit:
             raise Unsupported(f"overloaded function {name}", line)
         return defined[0] if defined else (candidates[0] if candidates else None)
 
+    def call_declaration(self, name, qual_type, call, caller, line):
+        """Resolve template calls through one TU, never filtered-dump IDs.
+
+        Equal function types do not identify template specializations (for
+        example get_data_type<int>() and get_data_type<double>()). Source spans
+        and the enclosing stable mangled name locate the actual call; only then
+        can its declaration ID be followed inside the SAME full-TU dump.
+        """
+        if not any(n.get("kind") == "FunctionTemplateDecl" and n.get("name") == name
+                   for n in self.dump(name)):
+            return self.function_node(name, qual_type, line)
+
+        def span(node):
+            points = [(node.get("range") or {}).get(k) or {} for k in ("begin", "end")]
+            if any("offset" not in p or not p.get("_file", p.get("file")) or
+                   "spellingLoc" in p or "expansionLoc" in p for p in points):
+                raise Unsupported(f"template call {name} without direct unique source coordinates", line)
+            return tuple((str(Path(p.get("_file", p.get("file"))).resolve()), p["offset"], p.get("tokLen", 0))
+                         for p in points)
+
+        if not caller or not caller.get("mangledName"):
+            raise Unsupported(f"template call {name} without an enclosing source function", line)
+        wanted = span(call)
+        declarations, templates, owners = {}, {}, []
+
+        def visit(part):
+            if part.get("kind") in {"FunctionDecl", "CXXMethodDecl", "CXXConstructorDecl", "CXXDestructorDecl"}:
+                declarations[part.get("id")] = part
+                if part.get("mangledName") == caller["mangledName"] and _has_body(part):
+                    owners.append(part)
+            if part.get("kind") == "FunctionTemplateDecl":
+                for child in _children(part):
+                    if child.get("kind") == "FunctionDecl":
+                        templates[child.get("id")] = part
+            for child in _children(part):
+                visit(child)
+
+        for root in self.dump(""):
+            visit(root)
+        if len(owners) != 1:
+            raise Unsupported(f"template call {name} has no unique enclosing full-TU function", line)
+        references = []
+
+        def calls(part):
+            if part.get("kind") == "CallExpr":
+                try:
+                    same = span(part) == wanted
+                except Unsupported:
+                    same = False
+                if same:
+                    callee = _children(part)[0]
+                    while callee.get("kind") in {"ImplicitCastExpr", "ParenExpr"} and len(_children(callee)) == 1:
+                        callee = _children(callee)[0]
+                    ref = callee.get("referencedDecl") or {}
+                    if callee.get("kind") == "DeclRefExpr" and ref.get("name") == name and _qual(ref) == qual_type:
+                        references.append(ref)
+            for child in _children(part):
+                calls(child)
+
+        calls(owners[0])
+        target = declarations.get(references[0].get("id")) if len(references) == 1 else None
+        if not target or target.get("name") != name or _qual(target) != qual_type:
+            raise Unsupported(f"template call {name} has no unique full-TU specialization binding", line)
+        parent = templates.get(target.get("id"))
+        return _with_params(parent, [target])[0] if parent else target
+
     def lower_function(self, node, cname, owner=None, line=None):
         """Queue a function (or member function of struct `owner`) for lowering; returns its C name."""
         key = ("function", owner, node.get("mangledName") or node.get("name"), _qual(node))
@@ -932,6 +998,24 @@ class _Unit:
             texts = [self.ctype(p, name=names[i], line=line) for i, p in enumerate(params)]
             self.prototypes_only[cname] = f"{_join(self.ctype(returns, line=line), cname)}({', '.join(texts) or 'void'})"
             self.summaries_used.append({"name": name, "c_name": cname, "summary": self.summaries[name]})
+        return cname
+
+    def summary_c_name(self, name, declaration, line):
+        """Keep template overloads with different arities at distinct C ABIs.
+
+        Inspect the whole source family, rather than whichever call appeared
+        first. A single-arity family retains its existing emitted bytes. Same
+        arity/type collisions still fail through claim; no overload is guessed.
+        """
+        if declaration is None or not _children_kind(declaration, "TemplateArgument"):
+            return name
+        cname = f"{name}_{'_'.join(_mangle_text(a) for a in self._spec_args(declaration, line))}"
+        arities = {sum(child.get("kind") == "ParmVarDecl" for child in _children(function))
+                   for template in self.dump(name)
+                   if template.get("kind") == "FunctionTemplateDecl" and template.get("name") == name
+                   for function in _children(template) if function.get("kind") == "FunctionDecl"}
+        if len(arities) > 1:
+            cname += f"_args{sum(child.get('kind') == 'ParmVarDecl' for child in _children(declaration))}"
         return cname
 
     def model(self, cname, text, line):
@@ -1071,6 +1155,7 @@ def _explicit_enum_value(node):
 class _Printer:
     def __init__(self, function, unit):
         self.function = function
+        self.source_declaration = None
         self.unit = unit
         self.lines = []
         self.anchors = []
@@ -1910,7 +1995,8 @@ class _Printer:
                 raise Unsupported(f"call to {name} with no summary (__dxc_* and maa_* calls go through summaries)",
                                   self.line)
             cname = name
-            node_found = unit.function_node(name, qual_type, self.line) if "<" not in name else None
+            node_found = unit.call_declaration(name, qual_type, node, self.source_declaration, self.line) \
+                if "<" not in name else None
             if node_found is not None:
                 _function_attributes(node_found, self.line)
             policy = self.semantics.get("array_call_policies", {}).get(name)
@@ -1938,8 +2024,7 @@ class _Printer:
                 except wp_pointer_bounds.Refused as exc:
                     site["reason"] = str(exc)
                 unit.pointer_calls.append(site)
-            if node_found is not None and _children_kind(node_found, "TemplateArgument"):
-                cname = f"{name}_{'_'.join(_mangle_text(a) for a in unit._spec_args(node_found, self.line))}"
+            cname = unit.summary_c_name(name, node_found, self.line)
             names = [p.get("name") for p in _children(node_found or {}) if p.get("kind") == "ParmVarDecl"]
             unit.summary(name, cname, qual_type, self.line, names)
             returns, params, _ = _return_and_params(qual_type, self.line)
@@ -1959,7 +2044,7 @@ class _Printer:
             target = unit.function_node(name, qual_type, self.line)
             if target is not None and _is_std(target):
                 return self._std(name, target, args, node)
-        target = unit.function_node(name, qual_type, self.line)
+        target = unit.call_declaration(name, qual_type, node, self.source_declaration, self.line)
         if target is None or not _has_body(target):
             if name in OMP_RUNTIME and not args:
                 return self._omp_runtime(name), True
@@ -2617,6 +2702,7 @@ def _callees_first(function, definitions):
 def _define(unit, cname, node, owner):
     """(prototype, printer, parameters, callees) of one lowered function, method, constructor or destructor."""
     printer = _Printer(cname, unit)
+    printer.source_declaration = node
     printer._at(node)
     line = printer.line
     kind = node.get("kind")
