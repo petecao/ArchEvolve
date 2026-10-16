@@ -274,7 +274,6 @@ def prove(job, adapter, context):
                  'foundation': foundation, 'report_module': reader, 'tool_command': tool,
                  'why3_config': config, 'deadline': deadline}
         context['heap_model_view'] = state
-        readings = []
         cap = int(os.environ.get('SWDB_VERIFIER_RSS_CAP_BYTES') or wp_adapter.DEFAULT_CAP_BYTES)
         for index, row in enumerate(view.certificate['obligations']):
             _remaining(deadline)
@@ -336,11 +335,10 @@ def prove(job, adapter, context):
                 raise Refused('the numeric kernel must retain all ordinary and generated smoke obligations')
             if not ordinary:
                 raise Refused('the source-mapped proof generated no ordinary obligation')
-            readings.append(outcome['reading'])
         _remaining(deadline)
         check(job.unit.function, view, inputs)
         context['verdict_reading'] = {'check': proof_setup.identity()['verdict_reading'],
-                                     'verdict': 'proven', 'heap_model_runs': readings}
+                                     'verdict': 'proven'}
         return adapter._verdict('proven', None, context)
     except (TimeoutError, subprocess.TimeoutExpired):
         return adapter._not_proven('timeout', 'the whole public heap-model budget was spent', context)

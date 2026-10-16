@@ -1,7 +1,8 @@
 """Public heap-model proof preparation; created 2026-10-15 ET (ticket25).
 
-The scripted Frama-C command reports a deliberate parse error. These controls
-exercise real public planning/prelaunch checks and never establish a proof.
+External stand-ins report deliberate parse errors, sleep, or labeled synthetic
+results. These controls exercise public planning, prelaunch and record writing;
+they never establish an actual proof.
 """
 from pathlib import Path
 import os
@@ -139,6 +140,44 @@ def test_public_serial_heap_targets_share_one_remaining_budget(tmp_path):
     assert runs[1]['resources']['timed_out'] is True
     assert 0 < runs[1]['timeout_seconds'] < runs[0]['timeout_seconds'] < 6
     assert record['settings']['whole_public_budget_seconds'] == 6
+
+
+def test_complete_synthetic_heap_success_serializes_a_schema_valid_public_record(tmp_path):
+    """Exercise aggregation only; every formal result is a labeled external stand-in."""
+    _library, prove, _marker = _heap_public_seed(tmp_path)
+    frama = tmp_path / 'frama.py'
+    metadata_prefix = frama.read_text().split('if "-wp" in sys.argv:')[0]
+    frama.write_text(metadata_prefix + '''if "-wp" in sys.argv:
+ import json,os,re
+ name=re.search(r"check lemma (\\w+)",Path("wp_input.c").read_text()).group(1)
+ prop="check_lemma_"+name
+ goal="typed_"+prop
+ row={"goal":goal,"property":prop,"function":None,"line":34,"smoke":False,
+      "passed":True,"verdict":"valid","proved":1,
+      "provers":[{"prover":"CVC5:1.2.1","time":0,"success":1}]}
+ Path("SYNTHETIC-ONLY.txt").write_text("External stand-in; no actual proof or solver execution")
+ Path("wp-goals.json").write_text(json.dumps([row]))
+ Path("wp-normalized.c").write_text(Path("wp_input.c").read_text())
+ Path("wp-properties.csv").write_text("directory\\tfile\\tline\\tfunction\\tproperty kind\\tstatus\\tproperty\\n")
+ inv={"version":"1","complete":True,
+      "goals":[{"goal":goal,"property":prop,"function":None,"line":34,"smoke":False,
+                "passed":True,"targets":[],"results":["valid"]}],
+      "properties":[{"property":prop,"function":None,"kind":"lemma","line":34,
+                     "extern":False,"dependencies":[],"origin":None,
+                     "generated_smoke_failure":False,"description":"synthetic check lemma"}]}
+ Path(os.environ["SWDB_PROOF_REPORT_OUT"]).write_text(json.dumps(inv))
+ sys.exit(0)
+''')
+    # The public command validates the complete record against proof.schema.json.
+    record = prove('--model', 'std_vector_int_dtor')
+    assert record['verdict'] == 'proven', record
+    assert set(record['verdict_reading']) == {'check', 'verdict'}
+    assert record['verdict_reading']['verdict'] == 'proven'
+    runs = record['settings']['heap_model_runs']
+    assert len(runs) == 11 and all(r['reading']['verdict'] == 'proven' for r in runs)
+    assert len(record['proof_setup_check']['runs']) == 11
+    assert len(record['goals']) == 11
+    assert all((Path(r['cwd']) / 'SYNTHETIC-ONLY.txt').is_file() for r in runs)
 
 
 @pytest.mark.skipif(os.environ.get('SWDB_HEAP_MODEL_ACTUAL') != '1',
