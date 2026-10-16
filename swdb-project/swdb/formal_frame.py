@@ -154,10 +154,12 @@ def _entry(library, entry_id, data, error, vocabs, logic, rules, pending):
                     unit, with_acsl = None, []
                     break
     if unit is not None and 'correctness_policy' in unit:
-        from swdb import dx100_stream_source
+        from swdb import dx100_stream_source, dx100_register_source
         try:
-            dx100_stream_source.unit_policy(library,data)
-        except dx100_stream_source.Refused as exc:
+            declared=(data.get('proof_unit')or{}).get('correctness_policy')
+            module=dx100_register_source if isinstance(declared,dict)and declared.get('source_policy')==dx100_register_source.KIND else dx100_stream_source
+            module.unit_policy(library,data)
+        except (dx100_stream_source.Refused,dx100_register_source.Refused) as exc:
             error('proof_unit.correctness_policy',str(exc))
             unit,with_acsl=None,[]
     if unit is not None and 'array_domains' in unit:

@@ -1,0 +1,49 @@
+{
+  "created": "2026-10-16 ET",
+  "state": "INERT parser inputs only; no actual parser/prover invocation",
+  "parser_flags": [
+    "-machdep",
+    "x86_64",
+    "-kernel-warn-key",
+    "annot-error=abort"
+  ],
+  "inputs": [
+    {
+      "name": "wp-correct.c",
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-register-parser/inputs/wp-correct.c",
+      "sha256": "a926d67cc1b153c610879935cac1d3c99c89f99970424e087d9e8c9ea8b0c74e",
+      "bytes": 1562,
+      "producer": {
+        "path": "/private/tmp/probata-t28-register-refusal-and-pair-green/pytest/test_wrong_crossregister_resul0/711/runs/proof.contract.dx100_register_partial_fixture.v1.20261016t105824z.f241a951/wp/wp_input.c",
+        "sha256": "a926d67cc1b153c610879935cac1d3c99c89f99970424e087d9e8c9ea8b0c74e",
+        "bytes": 1562
+      }
+    },
+    {
+      "name": "wp-wrong.c",
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-register-parser/inputs/wp-wrong.c",
+      "sha256": "0c81fbda127aa0edd380036e54d6d2485a23d9864079e9f48c37c615be9c34a6",
+      "bytes": 1563,
+      "producer": {
+        "path": "/private/tmp/probata-t28-register-refusal-and-pair-green/pytest/test_wrong_crossregister_resul0/1107/runs/proof.contract.dx100_register_partial_fixture.v1.20261016t105843z.ed0d6472/wp/wp_input.c",
+        "sha256": "0c81fbda127aa0edd380036e54d6d2485a23d9864079e9f48c37c615be9c34a6",
+        "bytes": 1563
+      }
+    },
+    {
+      "name": "all-contracts.c",
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-register-parser/inputs/all-contracts.c",
+      "sha256": "1e58b182d36e771ec394ba7a880964d7a6ccb35a811ead874ab32c0278acde68",
+      "bytes": 2205,
+      "producer": "normal proof_semantics.acsl_source; same exact model/contract C bytes, no source validation/prover invocation"
+    },
+    {
+      "name": "ordinary-model.c",
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-register-parser/inputs/ordinary-model.c",
+      "sha256": "44dcd31b69c616256a9dbe72713079a2c769d41254e893db1c9c8b5237967eb9",
+      "bytes": 408,
+      "producer": "exact ordinary state+model with parse-only assert declaration"
+    }
+  ],
+  "scope": "Two exact public WP inputs, normal all-contract ACSL source, ordinary C model. Historical scripted record C bytes only; no old record upgraded to current source. Final public input byte equality must be checked before freeze."
+}
