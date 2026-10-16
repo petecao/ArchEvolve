@@ -1,0 +1,7 @@
+# Independent static delta review: T07 root wrong-cell V4
+
+2026-10-16 ET. PASS, subject to fresh root admission. Exact launcher9a012e1bc99e8525c59a3756f1e6f9592720c39e11d97d3d146bb204132601e2 was read in full and parsed passively. No launch, compiler/tool/probe/test/SSH was executed by reviewer.
+
+Diff against reviewed continuation rootV3/64e445 changes only immutable inner packet/command/entry/expected/plan bindings, new receipt prefix and truthful326-goal453-property wrong-cell-only/ML8b84 descriptions. Control flow, runtime/guard pins, no-optimization assertion, source published-origin ancestry, fresh raw guard, two lease paths, fail-closed finite sameUID/name/birth/denial scan, memory-pressure capture,50GiB plus output reserve, immutable Git producer staging and three postscans remain unchanged. Whole300/internal280 seconds,8GiB sampled RSS/oneworker/256MiB between-child budget remain explicit. Normal wait390 plus TERM cleanup30 is420maximum after Popen; preflight is separate. No B worker is claimed: actual command is directc6. Root must inspect final guard cleanup/resource and lease observations, not infer them from entry status.
+
+Inner packet has a separate scoped PASS64e769 review. Only wrong-cell may execute; no positive/missing-store replay or proof/Init/lifetime/TD/count promotion. Root native/API compile is supporting preparation, not fresh complete output. Finite scans and sampled guard are trusted coordination, not atomic host exclusion or hostile-process containment.
