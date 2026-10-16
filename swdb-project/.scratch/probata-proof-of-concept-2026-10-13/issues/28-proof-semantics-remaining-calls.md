@@ -447,3 +447,10 @@ See [settled producers and passive evidence](../evidence/frontier-settled-produc
 Root's separate scopeddecision accepts the original TOTAL closed software-counter102/101 fixture under declared compiler/ABI/source-model/Extern TCB only. Complete root audit13,303checks0errors and independent local reconciliation retain positive33ordinaryValid, negative32Valid+ensuresT/U/T (not refuted), ten healthy raw nonvalid smokes each,67props50CSV11Extern/DAG175/159. Helper exits/defaulttermination Unknown, unsupported initialized-u32, missing scratch/binary posthash/submitted-SMT and body/hardware/liveness/current0.2/full28 boundaries remain explicit. [Decision](../evidence/t28-allocation-root-scoped-acceptance-v1-20261016.json), [independent reconciliation](../evidence/t28-allocation-independent-cold-reconciliation-v1-6216fc94-20261016.md), [root audit](../evidence/t28-allocation-cold-root-execution-v1-6216fc94-20261016.json). Ticket remains claimed; no source adoption or status closure.
 
 [Current checkpoint](../evidence/frontier-scoped-checkpoint-20261016-1036.md). Counts35resolved/25ready/3claimed; lastfulltable10:30 ET, next11:00 ET.
+
+
+## 2026-10-16 11:17 ET — scoped settled checkpoint
+
+Reviewed initialized-u32 source97 is a published ancestor of188a478e. This is distinct partial initialized-u32 source preparation only, with its earlier REQUEST_CHANGES, corrected PASS and final4policy+3routing controls preserved; no fresh compiler/scripted/public proof workflow is accepted here. Exact6216 originalTOTAL allocator102/101 scoped acceptance remains separate:33/32ordinaryValid, sole negative ensuresT/U/T, ten healthy raw nonvalid smokes each. Negative is not refuted; hardware, source/body refinement, implicit-helper totality TCB, current0.2 and full28 remain open.
+
+Ticket remains claimed; dependency/status counts are unchanged. [Compact checkpoint](../evidence/frontier-scoped-checkpoint-20261016-1117.md).

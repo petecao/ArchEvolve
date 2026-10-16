@@ -1756,3 +1756,10 @@ See [settled producers and passive evidence](../evidence/frontier-settled-produc
 Weak generation cold is independently reconciled only:85/176,50 exports+35 internal; line39 pointer-slot internalValid differs from the empty-result nontrivial payload goal. All21 smokes remain unattempted; conditional Typed/From/alignment residuals are not discharged. Root reports exactbd two-TU/six-root proof diagnostic started about10:34 ET/session25220,780s active/760s internal/8GiB, no accepted result. [Static review](../evidence/t07-device-diagnostic-proof-independent-static-review-v2-20261016.md), [weak review](../evidence/t07-device-weak-independent-cold-review-v1-20261016.md), [root admission](../evidence/t07-device-diagnostic-proof-root-admission-v1-20261016.md). Originalnormal exit1 remains. No source/Init/lifetime/allocator/TD/count or ticket acceptance.
 
 [Current checkpoint](../evidence/frontier-scoped-checkpoint-20261016-1036.md). Counts35resolved/25ready/3claimed; lastfulltable10:30 ET, next11:00 ET.
+
+
+## 2026-10-16 11:17 ET — scoped settled checkpoint
+
+The settled device proof diagnostic remains partial. The [independent cold reconciliation](../evidence/t07-device-proof-independent-cold-reconciliation-v2-20261016.md) passes697 local checks with0 mismatches, including317 raw regular files/10,752,569B and16 directories. Exact707 journal events produce328 latest IDs;107 retain source/property identity differences. The final normal inventory is0goals/152properties, so no complete proof inventory is accepted. Weak is unexecuted. Original normal TimeoutExpired/entry+guard1,760.559556s, six recovered inspection events and original lease-present snapshot remain unchanged. The [later clearance](../evidence/root-t07-device-proof-post-handoff-clearance-v1-20261016.json) is separate. Reader V1 REQUEST_CHANGES and41 retained pure V2 controls are preserved; no actual rerun or Typed/source/Init/lifetime/TD/count qualification follows.
+
+Ticket remains claimed; dependency/status counts are unchanged. [Compact checkpoint](../evidence/frontier-scoped-checkpoint-20261016-1117.md).

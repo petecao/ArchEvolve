@@ -1,0 +1,41 @@
+{
+  "acceptance": {
+    "body_promotion": false,
+    "caller": false,
+    "model": false,
+    "original_v2": false,
+    "ticket": false
+  },
+  "input_capture": {
+    "bytes": 5079265,
+    "path": "/private/tmp/probata-root-ctor35-metadata-execution-v2-20261016.json",
+    "sha256": "75c6a8ed4c3864ecaf4eb3ccb935a1be4f3d5ea210a6b6f8b0cf777bd98cab3f"
+  },
+  "plan": {
+    "bytes": 6978,
+    "path": "/private/tmp/probata-t25-ctor35-cold-plan-v1-20261016.json",
+    "sha256": "2112ee40fd21152f3f54eb303ebe46238301338e6fe24fcfe4eab2a6a9479164"
+  },
+  "policy": {
+    "bytes": 466530,
+    "path": "/private/tmp/probata-t25-ctor35-cold-policy-v1-20261016.json",
+    "sha256": "6ba4a6308b82352dab30f6a4083707789da2fd4b481bf867dd94e176642f6cd2"
+  },
+  "pure_controls": {
+    "bytes": 3946,
+    "path": "/private/tmp/probata-t25-ctor35-cold-mutation-controls-v2-20261016.json",
+    "sha256": "d09ad265108a506cab5af9290374beed46a134f37770f037447896cd8d8d1263"
+  },
+  "reader": {
+    "bytes": 48158,
+    "path": "/private/tmp/probata-t25-ctor35-cold-reader-v5-20261016.py",
+    "sha256": "99ddec8aa60f661082378e39fa55bd0200924d3d79252267ee0665ea6d44ea1f"
+  },
+  "root_dispatcher": {
+    "bytes": 692385,
+    "path": "/private/tmp/probata-t25-ctor35-cold-root-dispatcher-v1-20261016.py",
+    "sha256": "9d8c2fd8943a167cd9d7304478a148f1168e8fa579701acc3063f956307bc1f9"
+  },
+  "source_commit": "6216fc9440897bebc16a09eeb124ce76f202f185",
+  "status": "INERT; independent source/policy/reader/root review and root execution required. Reader/main/SSH never run by author."
+}

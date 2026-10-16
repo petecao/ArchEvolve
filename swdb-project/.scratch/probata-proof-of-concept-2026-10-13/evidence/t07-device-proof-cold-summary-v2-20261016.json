@@ -1,0 +1,848 @@
+{
+  "date_ET": "2026-10-16",
+  "scope": "PASSIVE_SETTLED_DIAGNOSTIC_EVIDENCE_ONLY",
+  "producer_result": {
+    "purpose": "full two-TU six-root device proof diagnostic; no generation-only replay",
+    "source_commit": "bd2610b6b7cff511c046206a78088cf693cee874",
+    "execution_completed": false,
+    "proof_acceptance": false,
+    "whole_TU_proof_acceptance": false,
+    "Typed_source_Init_lifetime_TD_count_qualified": false,
+    "no_generation_only_replay": true,
+    "no_old_proof_result_reuse": true,
+    "no_goal_or_function_filter": true,
+    "cases": [],
+    "post_errors": [
+      {
+        "case": "normal",
+        "partial_journal_reader_error": "fresh result goal/property/source identity outside cold complete inventory"
+      }
+    ],
+    "published_tip": "c25195b83f0409cb437285e3f1b31fec0ab19e88",
+    "error_type": "TimeoutExpired",
+    "error": "Command '['/opt/homebrew/Cellar/opam/2.6.1/bin/opam', 'exec', '--root=/Users/yanrujhou/.opam', '--switch=framac-33', '--', '/Users/yanrujhou/.opam/framac-33/bin/frama-c', '-machdep', 'x86_64', '-kernel-warn-key', 'annot-error=abort', 'site_input.c', '-print', '-ocode', 'normalized.c', '-then', '-load-module', '/private/tmp/probata-t07-device-diagnostic-proof-v2-bd2610b6-20261016/component/helper_backend_bindings.cmxs', '-load-module', '/private/tmp/probata-t07-device-diagnostic-proof-v2-bd2610b6-20261016/component/helper_results.cmxs', '-wp', '-wp-model', 'Typed', '-wp-rte', '-rte-initialized', 'swdb_device_pipeline_safe,swdb_device_missing_source,swdb_device_wrong_prefix,swdb_device_index_safe,swdb_device_missing_index', '-wp-no-filter-init', '-wp-cache', 'none', '-wp-smoke-tests', '-wp-par', '1', '-wp-timeout', '30', '-wp-smoke-timeout', '2', '-wp-prover', 'alt-ergo,z3,cvc5', '-wp-no-why3-detect', '-wp-why3-config', '/private/tmp/probata-t07-device-diagnostic-proof-v2-bd2610b6-20261016/component/why3.conf', '-wp-session', 'session', '-wp-out', 'prover-files', '-wp-print', '-wp-status-all', '-wp-report-json', 'wp-native-goals.json', '-then', '-load-module', '/private/tmp/probata-t07-device-diagnostic-proof-v2-bd2610b6-20261016/component/proof_report.cmxs', '-report', '-report-untried', '-report-csv', 'wp-properties.csv']' timed out after 758.1394187079859 seconds",
+    "elapsed_seconds": 760.1998795419931,
+    "within_internal_deadline": false
+  },
+  "root_settlement": {
+    "path": "/private/tmp/probata-root-t07-device-diagnostic-proof-execution-v1-20261016.json",
+    "bytes": 16662,
+    "sha256": "1a34280a210040e44a7d2b2f00659a8e69de2f003bffe7330d0f27eb06c9893a"
+  },
+  "guard_summary": {
+    "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-bd2610b6-20261016/guard.log.summary.json",
+    "bytes": 10932,
+    "sha256": "7b348d53544abc769a78c1c280a525bfd7a595643e8701405ac32464e15050df"
+  },
+  "settlement_context": {
+    "root_provenance_bound": true,
+    "guard_present": true,
+    "producer_result_present": true,
+    "source_after": {
+      "commit": "bd2610b6b7cff511c046206a78088cf693cee874",
+      "status": ""
+    },
+    "source_clean_at_original_settlement": true,
+    "guard_resource_cleanup_healthy": true,
+    "original_finite_sweeps_empty_no_denials": true,
+    "original_lease_snapshot": [
+      "/tmp/claude/swdb-verifier.lock"
+    ],
+    "original_leases_absent": false,
+    "outer_termination": null,
+    "original_guard_inspection_events": [
+      {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 29779,
+        "expected_birth": 1792161515.972105,
+        "snapshot_birth": 1792161515.972105,
+        "exception": {
+          "type": "AccessDenied",
+          "module": "psutil",
+          "relation": "raised",
+          "pid": 29779
+        },
+        "exception_chain": [
+          {
+            "type": "AccessDenied",
+            "module": "psutil",
+            "relation": "raised",
+            "pid": 29779
+          },
+          {
+            "type": "PermissionError",
+            "module": "builtins",
+            "relation": "cause",
+            "errno": 13
+          }
+        ],
+        "traceback": [
+          {
+            "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py",
+            "function": "_inspect",
+            "line": 156
+          },
+          {
+            "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/__init__.py",
+            "function": "environ",
+            "line": 921
+          },
+          {
+            "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/_psosx.py",
+            "function": "wrapper",
+            "line": 353
+          }
+        ],
+        "known_native_environ_signature": false,
+        "exception_pid": 29779,
+        "observed_birth": 1792161515.972105,
+        "identity_state": "live",
+        "attempt": 1,
+        "retry_elapsed_s": 0.0001246666070073843,
+        "retry_window_s": 0.2,
+        "retry_limit_attempts": 21,
+        "clock_s": 403684.60540875,
+        "wall_unix_s": 1792161546.35243,
+        "outcome": "denied"
+      },
+      {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 29779,
+        "expected_birth": 1792161515.972105,
+        "snapshot_birth": 1792161515.972105,
+        "exception": {
+          "type": "AccessDenied",
+          "module": "psutil",
+          "relation": "raised",
+          "pid": 29779
+        },
+        "exception_chain": [
+          {
+            "type": "AccessDenied",
+            "module": "psutil",
+            "relation": "raised",
+            "pid": 29779
+          },
+          {
+            "type": "PermissionError",
+            "module": "builtins",
+            "relation": "cause",
+            "errno": 13
+          }
+        ],
+        "traceback": [
+          {
+            "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py",
+            "function": "_inspect",
+            "line": 156
+          },
+          {
+            "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/__init__.py",
+            "function": "environ",
+            "line": 921
+          },
+          {
+            "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/_psosx.py",
+            "function": "wrapper",
+            "line": 353
+          }
+        ],
+        "known_native_environ_signature": false,
+        "exception_pid": 29779,
+        "observed_birth": 1792161515.972105,
+        "identity_state": "live",
+        "attempt": 2,
+        "retry_elapsed_s": 0.01528645830694586,
+        "retry_window_s": 0.2,
+        "retry_limit_attempts": 21,
+        "clock_s": 403684.62057,
+        "wall_unix_s": 1792161546.367591,
+        "outcome": "denied"
+      },
+      {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 30465,
+        "expected_birth": 1792161697.141212,
+        "snapshot_birth": 1792161697.141212,
+        "exception": {
+          "type": "AccessDenied",
+          "module": "psutil",
+          "relation": "raised",
+          "pid": 30465
+        },
+        "exception_chain": [
+          {
+            "type": "AccessDenied",
+            "module": "psutil",
+            "relation": "raised",
+            "pid": 30465
+          },
+          {
+            "type": "PermissionError",
+            "module": "builtins",
+            "relation": "cause",
+            "errno": 13
+          }
+        ],
+        "traceback": [
+          {
+            "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py",
+            "function": "_inspect",
+            "line": 156
+          },
+          {
+            "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/__init__.py",
+            "function": "environ",
+            "line": 921
+          },
+          {
+            "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/_psosx.py",
+            "function": "wrapper",
+            "line": 353
+          }
+        ],
+        "known_native_environ_signature": false,
+        "exception_pid": 30465,
+        "observed_birth": 1792161697.141212,
+        "identity_state": "live",
+        "attempt": 1,
+        "retry_elapsed_s": 8.820835500955582e-05,
+        "retry_window_s": 0.2,
+        "retry_limit_attempts": 21,
+        "clock_s": 403837.44808629167,
+        "wall_unix_s": 1792161699.1958568,
+        "outcome": "denied"
+      },
+      {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 31439,
+        "expected_birth": 1792161916.553041,
+        "snapshot_birth": 1792161916.553041,
+        "exception": {
+          "type": "AccessDenied",
+          "module": "psutil",
+          "relation": "raised",
+          "pid": 31439
+        },
+        "exception_chain": [
+          {
+            "type": "AccessDenied",
+            "module": "psutil",
+            "relation": "raised",
+            "pid": 31439
+          },
+          {
+            "type": "PermissionError",
+            "module": "builtins",
+            "relation": "cause",
+            "errno": 13
+          }
+        ],
+        "traceback": [
+          {
+            "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py",
+            "function": "_inspect",
+            "line": 156
+          },
+          {
+            "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/__init__.py",
+            "function": "environ",
+            "line": 921
+          },
+          {
+            "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/_psosx.py",
+            "function": "wrapper",
+            "line": 353
+          }
+        ],
+        "known_native_environ_signature": false,
+        "exception_pid": 31439,
+        "observed_birth": 1792161916.553041,
+        "identity_state": "live",
+        "attempt": 1,
+        "retry_elapsed_s": 9.00417217053473e-05,
+        "retry_window_s": 0.2,
+        "retry_limit_attempts": 21,
+        "clock_s": 404085.21243016666,
+        "wall_unix_s": 1792161946.961409,
+        "outcome": "denied"
+      },
+      {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 31541,
+        "expected_birth": 1792161956.220691,
+        "snapshot_birth": 1792161956.220691,
+        "exception": {
+          "type": "AccessDenied",
+          "module": "psutil",
+          "relation": "raised",
+          "pid": 31541
+        },
+        "exception_chain": [
+          {
+            "type": "AccessDenied",
+            "module": "psutil",
+            "relation": "raised",
+            "pid": 31541
+          },
+          {
+            "type": "PermissionError",
+            "module": "builtins",
+            "relation": "cause",
+            "errno": 13
+          }
+        ],
+        "traceback": [
+          {
+            "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py",
+            "function": "_inspect",
+            "line": 156
+          },
+          {
+            "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/__init__.py",
+            "function": "environ",
+            "line": 921
+          },
+          {
+            "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/_psosx.py",
+            "function": "wrapper",
+            "line": 353
+          }
+        ],
+        "known_native_environ_signature": false,
+        "exception_pid": 31541,
+        "observed_birth": 1792161956.220691,
+        "identity_state": "live",
+        "attempt": 1,
+        "retry_elapsed_s": 9.283330291509628e-05,
+        "retry_window_s": 0.2,
+        "retry_limit_attempts": 21,
+        "clock_s": 404094.66005775,
+        "wall_unix_s": 1792161956.409083,
+        "outcome": "denied"
+      },
+      {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 31549,
+        "expected_birth": 1792161956.470736,
+        "snapshot_birth": 1792161956.470736,
+        "exception": {
+          "type": "AccessDenied",
+          "module": "psutil",
+          "relation": "raised",
+          "pid": 31549
+        },
+        "exception_chain": [
+          {
+            "type": "AccessDenied",
+            "module": "psutil",
+            "relation": "raised",
+            "pid": 31549
+          },
+          {
+            "type": "PermissionError",
+            "module": "builtins",
+            "relation": "cause",
+            "errno": 13
+          }
+        ],
+        "traceback": [
+          {
+            "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py",
+            "function": "_inspect",
+            "line": 156
+          },
+          {
+            "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/__init__.py",
+            "function": "environ",
+            "line": 921
+          },
+          {
+            "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/_psosx.py",
+            "function": "wrapper",
+            "line": 353
+          }
+        ],
+        "known_native_environ_signature": false,
+        "exception_pid": 31549,
+        "observed_birth": 1792161956.470736,
+        "identity_state": "live",
+        "attempt": 1,
+        "retry_elapsed_s": 0.00010370829841122031,
+        "retry_window_s": 0.2,
+        "retry_limit_attempts": 21,
+        "clock_s": 404094.88067033334,
+        "wall_unix_s": 1792161956.629697,
+        "outcome": "denied"
+      }
+    ],
+    "original_guard_exit": 1,
+    "original_root_exit": 1,
+    "diagnostic_execution_completed": false,
+    "fully_healthy_complete_original_settlement": false,
+    "proof_acceptance": false
+  },
+  "later_clearance": {
+    "path": "/private/tmp/probata-root-t07-device-proof-post-handoff-clearance-v1-20261016.json",
+    "bytes": 1086,
+    "sha256": "6729a43a272a12225221cc9b9a104b045c6a6fe8a54b65f290e26ff606ba242d"
+  },
+  "later_clearance_scope": "Separate later finite idle observation; never rewrites original lease/guard/result snapshot",
+  "module_source_validation": {
+    "modules": [
+      {
+        "module": "proof_report",
+        "source_present": true,
+        "source_hash": "8b84bec6a12669d877205ec60d46d149f41fa921d08b6640161b4896b9c4df16",
+        "source_equals_frozen": true,
+        "compile_command_recorded": true,
+        "compile_log_present": true,
+        "compiled_artifact_present": true
+      },
+      {
+        "module": "helper_backend_bindings",
+        "source_present": true,
+        "source_hash": "15d0a5807fb6e492c2f80b34badbf969006b877ba58d479946078c00579f50f7",
+        "source_equals_frozen": true,
+        "compile_command_recorded": true,
+        "compile_log_present": true,
+        "compiled_artifact_present": true
+      },
+      {
+        "module": "helper_results",
+        "source_present": true,
+        "source_hash": "6b68382ced78505c6504e8b362ad8b77574bb6b6fd77f17e4f89be667c7e6372",
+        "source_equals_frozen": true,
+        "compile_command_recorded": true,
+        "compile_log_present": true,
+        "compiled_artifact_present": true
+      }
+    ],
+    "all_actual_source_copies_bound": true,
+    "all_fresh_compilation_artifacts_present": true
+  },
+  "guard_resource_healthy": true,
+  "all_guard_events": [
+    {
+      "stage": "supervision",
+      "operation": "environ",
+      "requested_operation": "environ",
+      "pid": 29779,
+      "expected_birth": 1792161515.972105,
+      "snapshot_birth": 1792161515.972105,
+      "exception": {
+        "type": "AccessDenied",
+        "module": "psutil",
+        "relation": "raised",
+        "pid": 29779
+      },
+      "exception_chain": [
+        {
+          "type": "AccessDenied",
+          "module": "psutil",
+          "relation": "raised",
+          "pid": 29779
+        },
+        {
+          "type": "PermissionError",
+          "module": "builtins",
+          "relation": "cause",
+          "errno": 13
+        }
+      ],
+      "traceback": [
+        {
+          "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py",
+          "function": "_inspect",
+          "line": 156
+        },
+        {
+          "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/__init__.py",
+          "function": "environ",
+          "line": 921
+        },
+        {
+          "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/_psosx.py",
+          "function": "wrapper",
+          "line": 353
+        }
+      ],
+      "known_native_environ_signature": false,
+      "exception_pid": 29779,
+      "observed_birth": 1792161515.972105,
+      "identity_state": "live",
+      "attempt": 1,
+      "retry_elapsed_s": 0.0001246666070073843,
+      "retry_window_s": 0.2,
+      "retry_limit_attempts": 21,
+      "clock_s": 403684.60540875,
+      "wall_unix_s": 1792161546.35243,
+      "outcome": "denied"
+    },
+    {
+      "stage": "supervision",
+      "operation": "environ",
+      "requested_operation": "environ",
+      "pid": 29779,
+      "expected_birth": 1792161515.972105,
+      "snapshot_birth": 1792161515.972105,
+      "exception": {
+        "type": "AccessDenied",
+        "module": "psutil",
+        "relation": "raised",
+        "pid": 29779
+      },
+      "exception_chain": [
+        {
+          "type": "AccessDenied",
+          "module": "psutil",
+          "relation": "raised",
+          "pid": 29779
+        },
+        {
+          "type": "PermissionError",
+          "module": "builtins",
+          "relation": "cause",
+          "errno": 13
+        }
+      ],
+      "traceback": [
+        {
+          "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py",
+          "function": "_inspect",
+          "line": 156
+        },
+        {
+          "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/__init__.py",
+          "function": "environ",
+          "line": 921
+        },
+        {
+          "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/_psosx.py",
+          "function": "wrapper",
+          "line": 353
+        }
+      ],
+      "known_native_environ_signature": false,
+      "exception_pid": 29779,
+      "observed_birth": 1792161515.972105,
+      "identity_state": "live",
+      "attempt": 2,
+      "retry_elapsed_s": 0.01528645830694586,
+      "retry_window_s": 0.2,
+      "retry_limit_attempts": 21,
+      "clock_s": 403684.62057,
+      "wall_unix_s": 1792161546.367591,
+      "outcome": "denied"
+    },
+    {
+      "stage": "supervision",
+      "operation": "environ",
+      "requested_operation": "environ",
+      "pid": 30465,
+      "expected_birth": 1792161697.141212,
+      "snapshot_birth": 1792161697.141212,
+      "exception": {
+        "type": "AccessDenied",
+        "module": "psutil",
+        "relation": "raised",
+        "pid": 30465
+      },
+      "exception_chain": [
+        {
+          "type": "AccessDenied",
+          "module": "psutil",
+          "relation": "raised",
+          "pid": 30465
+        },
+        {
+          "type": "PermissionError",
+          "module": "builtins",
+          "relation": "cause",
+          "errno": 13
+        }
+      ],
+      "traceback": [
+        {
+          "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py",
+          "function": "_inspect",
+          "line": 156
+        },
+        {
+          "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/__init__.py",
+          "function": "environ",
+          "line": 921
+        },
+        {
+          "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/_psosx.py",
+          "function": "wrapper",
+          "line": 353
+        }
+      ],
+      "known_native_environ_signature": false,
+      "exception_pid": 30465,
+      "observed_birth": 1792161697.141212,
+      "identity_state": "live",
+      "attempt": 1,
+      "retry_elapsed_s": 8.820835500955582e-05,
+      "retry_window_s": 0.2,
+      "retry_limit_attempts": 21,
+      "clock_s": 403837.44808629167,
+      "wall_unix_s": 1792161699.1958568,
+      "outcome": "denied"
+    },
+    {
+      "stage": "supervision",
+      "operation": "environ",
+      "requested_operation": "environ",
+      "pid": 31439,
+      "expected_birth": 1792161916.553041,
+      "snapshot_birth": 1792161916.553041,
+      "exception": {
+        "type": "AccessDenied",
+        "module": "psutil",
+        "relation": "raised",
+        "pid": 31439
+      },
+      "exception_chain": [
+        {
+          "type": "AccessDenied",
+          "module": "psutil",
+          "relation": "raised",
+          "pid": 31439
+        },
+        {
+          "type": "PermissionError",
+          "module": "builtins",
+          "relation": "cause",
+          "errno": 13
+        }
+      ],
+      "traceback": [
+        {
+          "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py",
+          "function": "_inspect",
+          "line": 156
+        },
+        {
+          "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/__init__.py",
+          "function": "environ",
+          "line": 921
+        },
+        {
+          "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/_psosx.py",
+          "function": "wrapper",
+          "line": 353
+        }
+      ],
+      "known_native_environ_signature": false,
+      "exception_pid": 31439,
+      "observed_birth": 1792161916.553041,
+      "identity_state": "live",
+      "attempt": 1,
+      "retry_elapsed_s": 9.00417217053473e-05,
+      "retry_window_s": 0.2,
+      "retry_limit_attempts": 21,
+      "clock_s": 404085.21243016666,
+      "wall_unix_s": 1792161946.961409,
+      "outcome": "denied"
+    },
+    {
+      "stage": "supervision",
+      "operation": "environ",
+      "requested_operation": "environ",
+      "pid": 31541,
+      "expected_birth": 1792161956.220691,
+      "snapshot_birth": 1792161956.220691,
+      "exception": {
+        "type": "AccessDenied",
+        "module": "psutil",
+        "relation": "raised",
+        "pid": 31541
+      },
+      "exception_chain": [
+        {
+          "type": "AccessDenied",
+          "module": "psutil",
+          "relation": "raised",
+          "pid": 31541
+        },
+        {
+          "type": "PermissionError",
+          "module": "builtins",
+          "relation": "cause",
+          "errno": 13
+        }
+      ],
+      "traceback": [
+        {
+          "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py",
+          "function": "_inspect",
+          "line": 156
+        },
+        {
+          "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/__init__.py",
+          "function": "environ",
+          "line": 921
+        },
+        {
+          "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/_psosx.py",
+          "function": "wrapper",
+          "line": 353
+        }
+      ],
+      "known_native_environ_signature": false,
+      "exception_pid": 31541,
+      "observed_birth": 1792161956.220691,
+      "identity_state": "live",
+      "attempt": 1,
+      "retry_elapsed_s": 9.283330291509628e-05,
+      "retry_window_s": 0.2,
+      "retry_limit_attempts": 21,
+      "clock_s": 404094.66005775,
+      "wall_unix_s": 1792161956.409083,
+      "outcome": "denied"
+    },
+    {
+      "stage": "supervision",
+      "operation": "environ",
+      "requested_operation": "environ",
+      "pid": 31549,
+      "expected_birth": 1792161956.470736,
+      "snapshot_birth": 1792161956.470736,
+      "exception": {
+        "type": "AccessDenied",
+        "module": "psutil",
+        "relation": "raised",
+        "pid": 31549
+      },
+      "exception_chain": [
+        {
+          "type": "AccessDenied",
+          "module": "psutil",
+          "relation": "raised",
+          "pid": 31549
+        },
+        {
+          "type": "PermissionError",
+          "module": "builtins",
+          "relation": "cause",
+          "errno": 13
+        }
+      ],
+      "traceback": [
+        {
+          "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py",
+          "function": "_inspect",
+          "line": 156
+        },
+        {
+          "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/__init__.py",
+          "function": "environ",
+          "line": 921
+        },
+        {
+          "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/_psosx.py",
+          "function": "wrapper",
+          "line": 353
+        }
+      ],
+      "known_native_environ_signature": false,
+      "exception_pid": 31549,
+      "observed_birth": 1792161956.470736,
+      "identity_state": "live",
+      "attempt": 1,
+      "retry_elapsed_s": 0.00010370829841122031,
+      "retry_window_s": 0.2,
+      "retry_limit_attempts": 21,
+      "clock_s": 404094.88067033334,
+      "wall_unix_s": 1792161956.629697,
+      "outcome": "denied"
+    }
+  ],
+  "cases": [
+    {
+      "case": "normal",
+      "directory_present": true,
+      "proof_command_recorded": true,
+      "proof_attempt_recorded": true,
+      "attempt_boundary": "command journal is written immediately before subprocess call; directory/command/log alone is not proof that Frama executed",
+      "proof_log_present": true,
+      "proof_acceptance": false,
+      "whole_TU_acceptance": false,
+      "present_files": [
+        "per-prover-journal.jsonl",
+        "wp-inventory.json",
+        "site_input.c",
+        "dxc_summaries.h",
+        "normalized.c",
+        "per-prover-final.json",
+        "backend-bindings.json"
+      ],
+      "all_job_source_inputs_present": true,
+      "actual_universe_counts": {
+        "goals": 0,
+        "properties": 152
+      },
+      "partial_journal_summary": {
+        "parse_errors": [],
+        "truncated_last_record": false,
+        "observed_goal_count": 328,
+        "baseline_goal_count": 328,
+        "baseline_unobserved_goal_ids": [],
+        "actual_nonbaseline_goal_ids": [],
+        "external_prover_ids_observed": [
+          "Alt-Ergo:2.6.4",
+          "CVC5:1.2.1",
+          "Z3:5.1.0"
+        ],
+        "unexpected_external_prover_ids": [],
+        "cached_observations": [],
+        "scope": "partial callback prefix only; no status/identity rewrites, baseline property mismatch stays unresolved, no final inventory/graph or proof acceptance",
+        "proof_acceptance": false
+      },
+      "partial_identity_difference_count": 107,
+      "proof_callback_observation_present": true,
+      "journal_reader_refusal": "fresh result goal/property/source identity outside cold complete inventory",
+      "complete_artifacts_available": false
+    },
+    {
+      "case": "omitted-output",
+      "directory_present": false,
+      "proof_command_recorded": false,
+      "proof_attempt_recorded": false,
+      "attempt_boundary": "command journal is written immediately before subprocess call; directory/command/log alone is not proof that Frama executed",
+      "proof_log_present": false,
+      "proof_acceptance": false,
+      "whole_TU_acceptance": false
+    }
+  ],
+  "raw_unchanged": true,
+  "selected_runtime_source_preserved": true,
+  "actual_proof_seconds": 760.559555875021,
+  "actual_generation_plus_proof_seconds": 807.6774662500247,
+  "proof_acceptance": false,
+  "Typed_applicability_or_source_Init_lifetime_allocator_Graph_TD_count_qualified": false,
+  "reader": {
+    "path": "/private/tmp/probata-t07-device-proof-cold-reader-v2-20261016.py",
+    "bytes": 14353,
+    "sha256": "40b9ec010491cef0aaa7467bc6f3dc15bc2eb59f9ce3ab0ea760d0ab22fba0e7"
+  },
+  "actual_entry": {
+    "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-20261016-entry.py",
+    "bytes": 74616,
+    "sha256": "e7deacf1e271c291a3b40f3da4d917df8f8b5dc5bc12b07a361bb18af12aecba"
+  }
+}
