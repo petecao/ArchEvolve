@@ -1,17 +1,14 @@
-"""2026-10-15 ET. Public prove trust plumbing; version-only external stand-in.
+"""2026-10-16 ET. Public prove trust plumbing; version-only external stand-in.
 
 No formal tool runs: ordinary CPU writes deliberately stop this fixture before
 launch. The semantics clone tests records, not any new DX100 behavior.
 """
 import hashlib
 import json
-import shutil
-import sys
 
 import pytest
 import yaml
 
-from conftest import FIXTURES, REPO, make_records, run_swdb
 from test_level_rule import CLANG, TOP, proof_seed, seed, template  # noqa: F401 (scripted record fixtures)
 
 

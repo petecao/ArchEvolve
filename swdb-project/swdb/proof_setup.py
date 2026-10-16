@@ -299,7 +299,7 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
         hashes['summary_bindings'] = _digest(checked_summaries)
         from swdb import dx100_source_selector
         try:
-            hashes['dx100_source_selector'] = _digest(dx100_source_selector.recheck(lowering))
+            hashes['dx100_source_selector'] = _digest(dx100_source_selector.recheck(lowering or context.get("lowering")))
         except dx100_source_selector.Refused as exc:
             _fail('dx100_source_selector', str(exc))
     for path, expected in inputs:

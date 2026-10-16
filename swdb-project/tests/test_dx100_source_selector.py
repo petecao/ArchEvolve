@@ -149,7 +149,7 @@ def test_first_gate_pair_uses_identical_source_and_records_its_exact_partial_sco
     assert record['failure_class']=='tool_crash' and marker.exists()
     assert record['settings']['proof_semantics']['unit_requires']==[]
     assert record['settings']['proof_semantics']['unit_ensures']==[]
-    assert record['proof_setup_check']['hashes']['dx100_source_selector']
+    assert record['proof_setup_check']['hashes']['dx100_source_selector'] != hashlib.sha256(b'[]').hexdigest(), 'prelaunch check must bind the actual nonempty source selector witness'
     definition=record['settings']['proof_semantics']['instances'][0]['definition']
     assert hashlib.sha256(definition['preprocessed_source'].encode()).hexdigest()==definition['preprocessed_source_sha256']
     assert definition['preprocess_command'][-1]==definition['source_path']

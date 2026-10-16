@@ -18,6 +18,7 @@ def test_actual_wp_source_selector_first_gate(tmp_path,expected):
     record=yaml.safe_load((records.path/json.loads(result.stdout)['path']).read_text())
     assert not marker.exists(), 'an external stand-in cannot satisfy actual admission'
     assert record['proof_setup_check']['verdict']=='passed'
+    assert record['proof_setup_check']['hashes']['dx100_source_selector'] != hashlib.sha256(b'[]').hexdigest()
     settings=record['settings']
     assert settings['verifier_launched'] is True
     flags=settings['flags']

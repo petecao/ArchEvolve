@@ -1,7 +1,6 @@
 """2026-10-16 ET. Fixture-only partial interface, never installed as current0.2."""
 import hashlib
 import json
-from pathlib import Path
 
 from conftest import FIXTURES
 from testkit.dx100_trust import TRUST
@@ -31,7 +30,7 @@ def pure_selector(data, library):
     data['inventory'] = {'sources': manifest['sources'], 'calls': sorted({d['name'] for d in manifest['declarations']})}
     data['rules'] = [
         {'id':'selector_value','statement':'The actual pinned u32 selector folds to UINT32_TYPE0 under the checked compiler context.',
-         'cites':{'gem5_commit':manifest['upstream_commit'],'path':'apps/MAA/MAA_gem5.hpp','lines':'165-171'}},
+         'cites':{'gem5_commit':manifest['upstream_commit'],'path':'benchmarks/API/MAA_gem5.hpp','lines':'165-171'}},
         {'id':'selector_scope','statement':STATEMENT,
          'assumed':{'owner':'Probata proof-semantics maintainer; pending Yan-Ru freeze review (59)'}}]
     data['rules'] += [{'id': name,'statement':sentence,'record_assumption':True,
