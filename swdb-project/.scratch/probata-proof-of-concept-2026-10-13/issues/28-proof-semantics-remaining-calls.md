@@ -427,3 +427,6 @@ Shared2e2 allocator/register [entry review](../evidence/t28-shared-2e2-pairs-ind
 
 
 2026-10-16 — [Allocator37 actual namespace refusal](../evidence/t28-allocation37-pre-solver-checkpoint-20261016.md) preserves G600 pre-WP unbound REG_count, zero records and negative unexecuted. Two V5 admission audits each retain217module physical/Gitchecks/zeroerrors; no pair acceptance. Separate allocator namespace repair and registerG599 complete cold remain pending.
+
+
+2026-10-16 09:07 ET — Exact3d allocator declaration namespace is integrated after [independent review](../evidence/t28-allocation-namespace-independent-source-review-v1-3d784c7f-20261016.md) and realFrama33 syntaxPASS oldunboundRED/correct102+wrong101parse. No helpercontract/frame/totality/premise/library/API change; initialized-u32 successor excluded. Future sharedfreeze/pair requires newcompleteactualcold; G600presolverfailure unchanged.
