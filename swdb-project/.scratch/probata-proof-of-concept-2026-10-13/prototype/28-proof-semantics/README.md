@@ -178,3 +178,10 @@ RF excerpt control expects native alignment UB; odd64allocation itself remains
 allowed. No source ABI/public proof admission follows from these finite controls.
 [Exact evidence](../../evidence/t28-register-state-controls-20261016.json).
 [Read-only installed IEEE/progress source map](../../evidence/t28-wp-ieee-progress-source-map-20261016.md).
+
+Setup successor — 2026-10-16 ET:81/81 native controls retain exact six MMIO
+regions, source32tile×16384word geometry, separate prefix2, nonclearing alloc/init,
+int8 region conversion and last-pair/ownership boundaries. Receiver/source initial
+state distinctions are recorded explicitly; no support is inferred from the
+noncacheable range comment. Source wrappers and public/formal admission remain
+open. [Exact evidence](../../evidence/t28-setup-state-controls-20261016.json).
