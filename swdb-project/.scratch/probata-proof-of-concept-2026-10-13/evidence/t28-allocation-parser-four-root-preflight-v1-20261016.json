@@ -1,0 +1,83 @@
+{
+  "active_guard_seconds": 120,
+  "argv": [
+    "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+    "/private/tmp/probata-mac-compiler-worker-b.py",
+    "--",
+    "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+    "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py",
+    "--log",
+    "/private/tmp/probata-t28-allocation-parser-four-v1-20261016/guard.log",
+    "--cap-gb",
+    "8",
+    "--timeout",
+    "120",
+    "--queue-timeout",
+    "30",
+    "--owner",
+    "t28-allocation-parser-four",
+    "--lock",
+    "/tmp/claude/swdb-verifier.lock",
+    "--",
+    "/opt/homebrew/Cellar/opam/2.6.1/bin/opam",
+    "exec",
+    "--switch=framac-33",
+    "--",
+    "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+    "-B",
+    "/private/tmp/probata-t28-allocation-parser-four-v1-20261016/parse.py"
+  ],
+  "cap_bytes": 8589934592,
+  "date_et": "2026-10-16",
+  "entry": {
+    "bytes": 2531,
+    "path": "/private/tmp/probata-t28-allocation-parser-four-v1-20261016/parse.py",
+    "sha256": "d4cf8ccd358c54920c91d433e32aaa1f2442c55e54af567e90e6ec9d8638ed72"
+  },
+  "frama": {
+    "bytes": 30192400,
+    "path": "/Users/yanrujhou/.opam/framac-33/bin/frama-c",
+    "sha256": "412ccd77e77caf5bceb5ca1fd4e0a3efab04cda64af07706126cd5409cb05475"
+  },
+  "free_bytes": 54295171072,
+  "guard": {
+    "bytes": 28501,
+    "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py",
+    "sha256": "c6f0d4b8c60fab912dd768c4c8c7e7737d8feca3a110d0de02dec4d38785db57"
+  },
+  "guard_boundary": "B/c6 covers native probes+header snapshots+fourparser commands; preceding Git/input/preflight and finalreceipt hashing outside active budget",
+  "memory_pressure": "The system has 38654705664 (2359296 pages with a page size of 16384).\nSystem-wide memory free percentage: 73%\n",
+  "outer_entry": {
+    "bytes": 6889,
+    "path": "/private/tmp/probata-root-t28-allocation-parser-four-v1-20261016.py",
+    "sha256": "5450d920888c9e32acccc5bba5f2eb03c41a3f5b8270e82f1f402bf5165bce7c"
+  },
+  "outer_tree_seconds": 180,
+  "planned_raw_bytes": 67108864,
+  "preprocessors": [
+    {
+      "bytes": 200560,
+      "path": "/usr/bin/gcc",
+      "sha256": "34129c71a01a74f7f3b2443521519b2e5447553fa187f5fcafaaf8c42cc192e2"
+    },
+    {
+      "bytes": 200560,
+      "path": "/usr/bin/clang",
+      "sha256": "34129c71a01a74f7f3b2443521519b2e5447553fa187f5fcafaaf8c42cc192e2"
+    }
+  ],
+  "queue_seconds": 30,
+  "recipe_source_commit": "6aabd01feaa563aa5078e3e818ef4efbacc59944",
+  "review": {
+    "bytes": 1207,
+    "path": "/private/tmp/probata-t28-allocation-root-parser-input-review-v1-20261016.md",
+    "sha256": "ebdce891229a98576af434c7a1dfad390f4bda4948301aad80de43bdf61c7712"
+  },
+  "source_commit": "9022f2f4312266a18253d55e87f3fb045491211e",
+  "worker": {
+    "bytes": 695,
+    "path": "/private/tmp/probata-mac-compiler-worker-b.py",
+    "sha256": "873ac0b65eaa7edd4e0f624a86e68141c0e340f9ab1ca6816a07598538548a0e"
+  },
+  "workers": 1
+}

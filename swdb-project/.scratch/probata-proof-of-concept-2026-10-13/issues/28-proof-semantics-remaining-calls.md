@@ -361,3 +361,11 @@ The [root E4 retention receipt](../evidence/e4-source-retention-root-v1-20261016
 ### 2026-10-16 06:25 ET — current-stream settled, cold acceptance pending
 
 Root reports exactc241/node0G592 currentstream pair settled06:06:35ET with2pytestPASS. This is not yet accepted proof evidence: complete independent source/runtime/property/native/smoke/task cold audit is pending. PriorE4failure/raw/source-retention history remains unchanged. Root alone owns further actual admissions. Inert negative-size2048 innerpacket has independent staticPASS with rootouter/freshadmission still required; it changes a new private method budget only, not source/config/old records or priornegative/pair acceptance. No ticket resolution or source/hardware/fairness/current0.2/full28 claim.
+
+### 2026-10-16 06:39 ET — software allocation preparation/parser gate
+
+Exact9022 software-counter source/entry preparation is integrated after [independent source review](../evidence/t28-allocation-independent-source-entry-review-9022f2f4-20261016.md) and [integration/parser review](../evidence/t28-allocation-parser-independent-integration-review-20261016.md). Sixproduction source blobs/125physicalrefs match; originalAPI/library and046fcell inputs unchanged. Closed total caller retains three explicit counterassigns, width/capacity assertions, signeddomains and odd64IDs; unsupported calls/types/initializedoverload andCBMC refuse. Compiler/model contract-body correspondence remains ownedTCB pending59; no hardware/initialization/ownership/liveness proof.
+
+Root actual fourinput Frama33/x86_64 parser gate PASS8886B,194libcheaderprepostequal,28artifactpinsmatch; guard1.439493667s116.890625MiB/outer1.540030792s163086336B,0events/noOOMtimeout/children. NoWP/prover request or actualpair/modelproof. Exact ordinary-model.c retains documented pinned EOFblankwarning(line16,SHA d540dd34...8d23); no format/repin after evaluation. Source preparation and parser success do not close28.
+
+The inert size2048V2 prior staticPASS is [withdrawn for dispatch](../evidence/t28-sizewrong1-mem2048-v2-review-correction-20261016.md):postcheck incorrectly equates generated-C pin with translator composite and would refuse afterrun. PreserveV2/oldreview; newV3must separate generatedC evidence and method/runtime translator identities with controls. Noactualrerun or negative/pair acceptance follows.
