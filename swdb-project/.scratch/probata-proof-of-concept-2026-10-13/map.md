@@ -5,11 +5,13 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-re
 
 ## Current state (resume here)
 
-Updated: 2026-10-15 21:19 ET. **Active: 34 resolved / 25 ready-for-agent / 4 claimed.**
+Updated: 2026-10-15 21:57 ET. **Active: 34 resolved / 25 ready-for-agent / 4 claimed.**
 Integration: `codex/probata-resume-20261015`; audited run 23 is published at
 `6dc94905`; method21 prototype merged at `14c2a298`. Remote actual jobs retain
 exact `0e7f2327` and `23933f8a` source freezes; production lowerer SHA256
 remains `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
+Reviewed runtime/setup candidate2033 is published465fd069; earlier0e7 evaluations
+retain their historical runtime rather than becoming current by merge.
 [Current resume and evidence](resume.md).
 
 - **24 resolved:** Published `29709232`, all eleven scoped acceptance items independently
@@ -38,15 +40,19 @@ remains `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
   Independent poststop scans pass; the Mac slot is free. Frozen `798e9bb3` and
   all 34 source pins remain unchanged. Closeout is published at `07e9c08f`.
   Narrow guard repair is integrated at `7a66d146` (37 controls); machine-ID task
-  reader and same-run baseline optimization remain under development. No fresh actual admission.
+  reader and same-run baseline optimization remain under final review. Component3
+  independently matches15 task IDs/5 contextual tasks; no proof claim or counted admission.
   Earlier run24 remains unproven; its censored posthoc replay is not upgraded.
   [Run25 closeout](evidence/t07-counted-run25-20261015.json),
   [independent review](evidence/t07-run25-final-independent-review-20261015.md),
   [earlier run24](evidence/t07-counted-24-20261015.json).
 - **28 / 36 claimed:** New complete-interface semantics and setup/reader closure
   proceed in separate own worktrees after27. The verified interface has26 names /
-  27 declarations. Historical122 setup controls exclude13 actual-WP facts; fresh
-  acceptance remains required. Drafts1/2, final freeze59 and held-out gates remain.
+  27 declarations. Runtime candidate2033/465fd069 has13 compiler/stand-in controls;
+  prior126 also used real parsing, and the later affected batch stopped-15.
+  First remote setup/facts dispatches collected no tests due to cwd; corrected
+  command/count/context preflight is pending. Fresh actual acceptance remains
+  required. Drafts1/2, final freeze59 and held-out gates remain.
 
 Node 0 generation 572 released after the caller timeout at 17:43:14 ET.
 Node0 generation573 capacity profile released at17:53:38 ET after its first failure.
