@@ -25,10 +25,10 @@ def test_canonical_caller_preparation_binds_existing_contract_without_enabling_p
     rows=plan['obligations']
     body_counts={member:sum(row['id'].startswith('body.'+member+'.') for row in rows)
                  for member in ('ctor_count_value','reserve','dtor')}
-    assert body_counts=={'ctor_count_value':35,'reserve':44,'dtor':11}
+    assert body_counts=={'ctor_count_value':35,'reserve':58,'dtor':11}
     assert {row['id'] for row in rows if row['id'].startswith('apply.')}=={
         'apply.ctor.entry','apply.ctor.zero','apply.ctor.positive_entry'}
-    assert len(rows)==104 and len(rows)-sum(body_counts.values())-3==11
+    assert len(rows)==118 and len(rows)-sum(body_counts.values())-3==11
     assert packets.check(SOURCE,'vector_realloc_v3_safe',CONTRACT,stage)==plan
 
 
@@ -59,7 +59,7 @@ def prepared_caller(tmp_path_factory):
     from swdb import vector_reallocation_caller_packets as packets
     stage=tmp_path_factory.mktemp('caller-packets')/'source'
     plan=packets.prepare(SOURCE,'vector_realloc_v3_safe',CONTRACT,stage)
-    assert len(plan['obligations'])==104 # 35ctor +44reserve +11dtor +10local +1numeric +3pending applications
+    assert len(plan['obligations'])==118 # 35ctor +58reserve +11dtor +10local +1numeric +3pending applications
     assert len(plan['required_models'])==5
     assert all(row['proof_record'] is None for row in plan['required_models'])
     return stage
@@ -75,10 +75,10 @@ def test_caller_packet_check_reconstructs_source_and_contract_after_self_consist
         path=stage/row['path'];path.write_text(path.read_text().replace(row['statement'],r'\true'))
         row['statement']=r'\true';row['sha256']=hashlib.sha256(path.read_bytes()).hexdigest()
     elif mutation=='body_step':
-        row=next(r for r in plan['obligations'] if r['id']=='body.reserve.grow.copy.step')
+        row=next(r for r in plan['obligations'] if r['id']=='body.reserve.grow.copy.step.uninitialized_tail')
         (stage/row['path']).unlink();plan['obligations'].remove(row)
         body=stage/'bodies/reserve/manifest.json';body_plan=json.loads(body.read_bytes())
-        body_plan['obligations']=[r for r in body_plan['obligations'] if r['id']!='grow.copy.step']
+        body_plan['obligations']=[r for r in body_plan['obligations'] if r['id']!='grow.copy.step.uninitialized_tail']
         body.write_text(json.dumps(body_plan,sort_keys=True,indent=2)+'\n')
     elif mutation=='contract':
         path=stage/'contract.json';contract=json.loads(path.read_bytes())
@@ -126,7 +126,7 @@ def test_whole_clauses_may_share_one_actual_annotation_without_splitting_tokens(
     plan=packets.prepare(SOURCE,'vector_realloc_v3_safe',clauses,tmp_path/'whole')
     assert plan['contract']['clauses']==clauses
     assert plan['contract']['ordinary_contract_identity'].startswith('pending:')
-    assert plan['current_proof_records_admitted']==[] and len(plan['obligations'])==104
+    assert plan['current_proof_records_admitted']==[] and len(plan['obligations'])==118
 
 
 def test_constructor_entry_application_maps_source_storage_and_existing_count_clause(tmp_path):

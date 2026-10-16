@@ -1,0 +1,434 @@
+{
+  "AND15_design": {
+    "all_other37grow_and43reserve_payloads_must_remain_identical": true,
+    "arithmetic_parentheses_required": "(k+1)",
+    "binder_capture_refused": true,
+    "conclusion_only_expansion": true,
+    "full_A": "t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s",
+    "heap_update": "Heap::copy_int(h,b,bo+4*k,f,4*k)",
+    "nested_binders_disjoint": [
+      "x",
+      "p",
+      "j"
+    ],
+    "new_hypotheses": [],
+    "original_whole_reference_only": true,
+    "parts_jointly_required": 15,
+    "planned_counts": {
+      "caller_with_three_pending_applications": 118,
+      "constructor": 35,
+      "current_main_caller_without_applications": 115,
+      "destructor": 11,
+      "grow": 52,
+      "reserve": 58
+    },
+    "sibling_theorem_dependencies": [],
+    "simultaneous_substitution": true,
+    "substitution_arguments": [
+      "entry",
+      "Heap::copy_int(h,b,bo+4*k,f,4*k)",
+      "r",
+      "o",
+      "b",
+      "bo",
+      "s",
+      "c",
+      "f",
+      "cap",
+      "k+1"
+    ],
+    "unchanged_theory_PRELUDE_body_contract_domain_required": true
+  },
+  "blockers": [],
+  "caller_acceptance": false,
+  "complete_model_acceptance": false,
+  "created": "2026-10-16 ET",
+  "implementation_admission": false,
+  "inputs_rehashed": [
+    {
+      "bytes": 57387,
+      "path": "/private/tmp/probata-t25-copy-step-actual-binding-v3-20261016.json",
+      "sha256": "4517124c5d25ecc6f9671b02fec194893e100e472c56f37c56b73a15a2f7ef04"
+    },
+    {
+      "bytes": 11954,
+      "path": "/private/tmp/probata-t25-copy-step-actual-binding-v3-20261016.py",
+      "sha256": "8f1237c6c9dc4bca7b9545f1116f47fb7b2bdaaae194604e77ea2efea79e7e4a"
+    },
+    {
+      "bytes": 2611,
+      "path": "/private/tmp/probata-t25-copy-step-and-design-v1-20261016.json",
+      "sha256": "3f622222c54bae793eff45037fc449cf1376d54187ef3a676710c107bd381b0f"
+    },
+    {
+      "bytes": 6233,
+      "path": "/private/tmp/probata-t25-copy-step-and-design-v1-20261016.md",
+      "sha256": "4f528c6efb149b054c9b7ee221606a3844a7e5ee90c9e1ea95a0dca427977efc"
+    },
+    {
+      "bytes": 3484048,
+      "path": "/private/tmp/probata-root-grow38-metadata-execution-v1-20261016.json",
+      "sha256": "bf0407baafbab5415a2a78f3df372bec791f685aac13ccd9c74e784413e9480e"
+    },
+    {
+      "bytes": 2611,
+      "path": "/private/tmp/probata-t25-copy-step-and-design-v1-20261016.json",
+      "sha256": "3f622222c54bae793eff45037fc449cf1376d54187ef3a676710c107bd381b0f"
+    },
+    {
+      "bytes": 24187,
+      "path": "/private/tmp/probata-t25-historical-support-hash-ledger-v1-20261016.json",
+      "sha256": "99520a25dc3ee71ae85beaa9bfcbfdc37248807745addc6200aec2dbd64a66c0"
+    },
+    {
+      "bytes": 148160,
+      "path": "/private/tmp/probata-t25-grow21-task-metadata-root-execution-v1-20261016.json",
+      "sha256": "2dfa600b8d744eaa886e5b1c8c9c945b2e8377f7d61d3a6382008360b947a9e5"
+    },
+    {
+      "bytes": 1529999,
+      "path": "/private/tmp/probata-t25-dtor11-cold-policy-v1-20261016.json",
+      "sha256": "f192259354615a1a1604c9777cfdafdb0794fa142b2d3b287b3a8b46cd0c608c"
+    },
+    {
+      "bytes": 145259,
+      "path": "/private/tmp/probata-t25-representative-cold-snapshot-reviewer-v2-20261015.json",
+      "sha256": "437d95eb1046a06a606e1f7ea886628d0869fbae59f96d7da4f72aa7eb58e2b9"
+    },
+    {
+      "bytes": 5365,
+      "path": "/private/tmp/probata-t25-representative-task-closure-and-v5-review-v2-20261015.json",
+      "sha256": "d7ba6dec176d971086fe5ca4a7341f39af93fee946d6279f3d2bb959e1bd024d"
+    }
+  ],
+  "materialized_goals_bound": [
+    {
+      "actual_submission_attested": false,
+      "all_non_goal_assertions_attributed": true,
+      "file_sha256": "f9f758b12df13c4ceadcb7425a7c7a6ee3c477109358788c20128d31ac78a1c3",
+      "forall_hash": "dab7aeedd17efb6659ed70739a7732d8be1f0719823ad6649c66de222d8faf54",
+      "goal_hash": "036a8ca234ffd89c0a3e903038a7848de3f53147b11496e37efa7ba63bb8f8cc",
+      "let_name": "x",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-37ffe407-t25-qualified-grow38-public-v1/qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.step/prover-files/typed_real/check_lemma_t25v3_grow_copy_step_Why3_Alt_Ergo_2_6_4.psmt2",
+      "support_assertion_count": 42,
+      "support_families": {
+        "generated datatype encoding": 8,
+        "trusted standard arithmetic": 34
+      },
+      "typed_Why3_AST_claimed": false
+    },
+    {
+      "actual_submission_attested": false,
+      "all_non_goal_assertions_attributed": true,
+      "file_sha256": "e013df30c323df672a56153fe94b960b2b256b155dead2c74546e3e2bab6d0a7",
+      "forall_hash": "dab7aeedd17efb6659ed70739a7732d8be1f0719823ad6649c66de222d8faf54",
+      "goal_hash": "a1635cfbfa22d137ffa80fa54019f47c9902f627213fce0fa0c7b0d2e3d6b557",
+      "let_name": "x3",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-37ffe407-t25-qualified-grow38-public-v1/qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.step/prover-files/typed_real/check_lemma_t25v3_grow_copy_step_Why3_CVC5_1_2_1.smt2",
+      "support_assertion_count": 22,
+      "support_families": {
+        "trusted standard arithmetic": 22
+      },
+      "typed_Why3_AST_claimed": false
+    },
+    {
+      "actual_submission_attested": false,
+      "all_non_goal_assertions_attributed": true,
+      "file_sha256": "58b56c744e95b5d09da5aae0fc7beef2a8ab99ba2b28e54338e8a9237019ec51",
+      "forall_hash": "dab7aeedd17efb6659ed70739a7732d8be1f0719823ad6649c66de222d8faf54",
+      "goal_hash": "a1635cfbfa22d137ffa80fa54019f47c9902f627213fce0fa0c7b0d2e3d6b557",
+      "let_name": "x3",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-37ffe407-t25-qualified-grow38-public-v1/qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.step/prover-files/typed_real/check_lemma_t25v3_grow_copy_step_Why3_Z3_5_1_0.smt2",
+      "support_assertion_count": 21,
+      "support_families": {
+        "trusted standard arithmetic": 21
+      },
+      "typed_Why3_AST_claimed": false
+    },
+    {
+      "actual_submission_attested": false,
+      "all_non_goal_assertions_attributed": true,
+      "file_sha256": "68972e7c1fb6780badd6e1ebc5f108aaca136fd82034bb85356a531d360cfe02",
+      "forall_hash": "dab7aeedd17efb6659ed70739a7732d8be1f0719823ad6649c66de222d8faf54",
+      "goal_hash": "036a8ca234ffd89c0a3e903038a7848de3f53147b11496e37efa7ba63bb8f8cc",
+      "let_name": "x",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-37ffe407-t25-qualified-grow38-public-v1/qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.step/prover-files/typed_real/zilch-typed_real_check_lemma_t25v3_grow_copy_step_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+      "support_assertion_count": 42,
+      "support_families": {
+        "generated datatype encoding": 8,
+        "trusted standard arithmetic": 34
+      },
+      "typed_Why3_AST_claimed": false
+    },
+    {
+      "actual_submission_attested": false,
+      "all_non_goal_assertions_attributed": true,
+      "file_sha256": "78c662be044270750ee1ae75616eb2715c8f4f5cd0360ecbca0ec289796244a0",
+      "forall_hash": "dab7aeedd17efb6659ed70739a7732d8be1f0719823ad6649c66de222d8faf54",
+      "goal_hash": "a1635cfbfa22d137ffa80fa54019f47c9902f627213fce0fa0c7b0d2e3d6b557",
+      "let_name": "x3",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-37ffe407-t25-qualified-grow38-public-v1/qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.step/prover-files/typed_real/zilch-typed_real_check_lemma_t25v3_grow_copy_step_CVC5_1dt2dt1-wp_goal.smt2",
+      "support_assertion_count": 22,
+      "support_families": {
+        "trusted standard arithmetic": 22
+      },
+      "typed_Why3_AST_claimed": false
+    },
+    {
+      "actual_submission_attested": false,
+      "all_non_goal_assertions_attributed": true,
+      "file_sha256": "4f447dc5e42f33522e36488dbe193f24547482c0ad76e0d95fcd8688029dbe30",
+      "forall_hash": "dab7aeedd17efb6659ed70739a7732d8be1f0719823ad6649c66de222d8faf54",
+      "goal_hash": "a1635cfbfa22d137ffa80fa54019f47c9902f627213fce0fa0c7b0d2e3d6b557",
+      "let_name": "x3",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-37ffe407-t25-qualified-grow38-public-v1/qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.step/prover-files/typed_real/zilch-typed_real_check_lemma_t25v3_grow_copy_step_Z3_5dt1dt0-wp_goal.smt2",
+      "support_assertion_count": 21,
+      "support_families": {
+        "trusted standard arithmetic": 21
+      },
+      "typed_Why3_AST_claimed": false
+    }
+  ],
+  "original_v2_acceptance": false,
+  "printed_project_declarations": {
+    "axiom": 0,
+    "goal": 1,
+    "lemma": 0,
+    "old_normalized_definitions_role": "corroboration only; source/input/compiler translation remain explicit trusted boundary",
+    "physical_PRELUDE_definition_spans": [
+      {
+        "kind": "predicate",
+        "name": "P_t25v3_copy_frame",
+        "printed_canonical_body_sha256": "8fcb19fec12c8b67d25648977fdd973a99e2a4436c246fc2e22f007fe3e23020",
+        "printed_lexical_tokens_sha256": "288c007a64da70c6ab70ffe6c74601613370312602f43374bec23f415ec4af99",
+        "prior_proof_result_reused": false,
+        "prior_same_normalized_definition_only": true,
+        "source_definition": {
+          "PRELUDE_literal_begin": 515,
+          "PRELUDE_literal_end": 3034,
+          "begin": 1186,
+          "container": "vector_reallocation_vcs.py",
+          "container_sha256": "4bba8a7885570b6228d383e9abcd1e40c85dbd0dbff75e24f170dd4556493340",
+          "end": 1571,
+          "sha256": "577ff29196a607c30a94175acdbfd8fbfcdc0cdb3f4c16a14dbc7e7991ce8ffa"
+        }
+      },
+      {
+        "kind": "predicate",
+        "name": "P_t25_fields",
+        "printed_canonical_body_sha256": "8e754d74ec88c14fa1f2adb7d95a8ab7c4d54a7514139a98d8f8083f738abd1e",
+        "printed_lexical_tokens_sha256": "25380c6a4110a7685cd21cc2304b40dfc8e85525d78a8f4cc3dbc21c8cb516e2",
+        "prior_proof_result_reused": false,
+        "prior_same_normalized_definition_only": true,
+        "source_definition": {
+          "PRELUDE_literal_begin": 252,
+          "PRELUDE_literal_end": 2258,
+          "begin": 818,
+          "container": "heap_model_vcs.py",
+          "container_sha256": "f20e0ec130222aeda96b4fbb8e72eef8d922d3f33e84077777203f7e6d159092",
+          "end": 1194,
+          "sha256": "20708163247b000dfc87f924281eab95738ecee7e5cf8874e9a8959726f050e6"
+        }
+      },
+      {
+        "kind": "predicate",
+        "name": "P_t25_repr",
+        "printed_canonical_body_sha256": "f6e7adc3bf6c6d5d25f63d8bc5e84f4b6b8d62ecad2f665840d45cce83d9230a",
+        "printed_lexical_tokens_sha256": "c0a7ab0537c439f57e02d5621722fc46c8f96af80610a437d60a8451d374c08f",
+        "prior_proof_result_reused": false,
+        "prior_same_normalized_definition_only": true,
+        "source_definition": {
+          "PRELUDE_literal_begin": 252,
+          "PRELUDE_literal_end": 2258,
+          "begin": 1199,
+          "container": "heap_model_vcs.py",
+          "container_sha256": "f20e0ec130222aeda96b4fbb8e72eef8d922d3f33e84077777203f7e6d159092",
+          "end": 1545,
+          "sha256": "fbe2e835d872f90b9a38a475ffa3646eb51fe1718d6ad2aa70de8a77542b5a03"
+        }
+      },
+      {
+        "kind": "predicate",
+        "name": "P_t25v3_repr",
+        "printed_canonical_body_sha256": "82edd93555bd91656fc4f9a05d56e16213f01fe2e3702c5e771530cf25eae134",
+        "printed_lexical_tokens_sha256": "a1fe9eb0ff6ef19a307ed03565866e654b4572c0563eed9dd17fd8f4e781f145",
+        "prior_proof_result_reused": false,
+        "prior_same_normalized_definition_only": true,
+        "source_definition": {
+          "PRELUDE_literal_begin": 515,
+          "PRELUDE_literal_end": 3034,
+          "begin": 524,
+          "container": "vector_reallocation_vcs.py",
+          "container_sha256": "4bba8a7885570b6228d383e9abcd1e40c85dbd0dbff75e24f170dd4556493340",
+          "end": 716,
+          "sha256": "0061ac023cb12a5f63f8d72450ebc02caf10467a92a6b703aa40e75ca6b77163"
+        }
+      },
+      {
+        "kind": "predicate",
+        "name": "P_t25v3_eligible",
+        "printed_canonical_body_sha256": "b01de0b0ff77aa9fdf1e9bbb0b3b41e55fb34d044435c51b84ebcee82a576e47",
+        "printed_lexical_tokens_sha256": "0870ce2702973ff73963deb3184d8d411c599ee81940929823b9913097366b2d",
+        "prior_proof_result_reused": false,
+        "prior_same_normalized_definition_only": true,
+        "source_definition": {
+          "PRELUDE_literal_begin": 515,
+          "PRELUDE_literal_end": 3034,
+          "begin": 955,
+          "container": "vector_reallocation_vcs.py",
+          "container_sha256": "4bba8a7885570b6228d383e9abcd1e40c85dbd0dbff75e24f170dd4556493340",
+          "end": 1181,
+          "sha256": "4a86cc595ad87475a0e5e0bd6aa610dbb8d9926f20981778658d242189a4787b"
+        }
+      },
+      {
+        "kind": "predicate",
+        "name": "P_t25v3_copy_inv",
+        "printed_canonical_body_sha256": "a70ae02bb0821ca2fc6ab7561a6a32394febcaab9e76936207d6359fc4cf4020",
+        "printed_lexical_tokens_sha256": "19a26c98790d9478aba5c0763396f95b581e6062a22fc15f8a713b7a5006d39b",
+        "prior_proof_result_reused": false,
+        "prior_same_normalized_definition_only": true,
+        "source_definition": {
+          "PRELUDE_literal_begin": 515,
+          "PRELUDE_literal_end": 3034,
+          "begin": 1576,
+          "container": "vector_reallocation_vcs.py",
+          "container_sha256": "4bba8a7885570b6228d383e9abcd1e40c85dbd0dbff75e24f170dd4556493340",
+          "end": 2314,
+          "sha256": "ac8e672f38914c8161b9735b1a50e6df3b77b3d133769b09b008193c260cd9dc"
+        }
+      }
+    ],
+    "predicate": 6
+  },
+  "printed_query": {
+    "all_actual_hashes_match": true,
+    "bytes": 274,
+    "canonical_sha256": "e85dff93e60b7117774f06b5de0687943062d6970a611a52385e87f06ad27734",
+    "currying_and_commutative_integer_normalization_only": true,
+    "delimiter_tree_sha256": "6e3e230069a1bd7e68d517c5c370b67afa2a0223b5cb5a73b8bd4fcdb7c7e256",
+    "forall_binding_sha256": "dab7aeedd17efb6659ed70739a7732d8be1f0719823ad6649c66de222d8faf54",
+    "heap_variables": 2,
+    "integer_variables": 9,
+    "lexical_sha256": "8ad4ad9d39311da397c4ecef28fb275d8e820528c99e4e747772e74640262625",
+    "query_text_exported": false,
+    "source_A_not_strengthened": true,
+    "typed_Why3_AST_claimed": false,
+    "typed_alpha_bijection": {
+      "b": "i",
+      "bo": "i1",
+      "c": "i2",
+      "cap": "i3",
+      "entry": "heap1",
+      "f": "i4",
+      "h": "heap2",
+      "k": "i5",
+      "o": "i6",
+      "r": "i7",
+      "s": "i8"
+    },
+    "variables": 11
+  },
+  "proof_acceptance": false,
+  "reader_history_preserved": [
+    "V1 portable row-order refusal; exact membership/hash comparison accepted instead.",
+    "V2 duplicate repr spelling refused; uniquely bound inside physical PRELUDE AST literal inV3."
+  ],
+  "remaining": [
+    "Root-authorized narrow source implementation with exact fifteen conclusions/fullA and independent source-equivalence review.",
+    "Compiler-free transformation/coverage/tamper and untouched-payload checks, then separately admitted complete ordinary setup/native/property/smoke controls.",
+    "Fresh complete public model and independent current source/runtime/import/task/hypothesis/foundation/lifecycle cold audit; no partial old verdict promotion."
+  ],
+  "retained_failure_scope": {
+    "attempted": 28,
+    "materialized_files_not_solver_submissions": true,
+    "native_open_outcomes": [
+      "timeout",
+      "unknown",
+      "timeout"
+    ],
+    "numeric_or_C_smoke_executed": false,
+    "open": "grow.copy.step",
+    "producer_proven_prefix": 27,
+    "proof_or_causal_solver_diagnosis": false,
+    "raw_pre_post_preserved": true,
+    "root_profile_exit": 1,
+    "unexecuted": 10
+  },
+  "reviewer_actions": "Passive Git/AST/hash/local retained metadata only. Parent reader/collector/main/project/tests/compiler/native/prover/SSH not executed; no source edits.",
+  "source_commit": "37ffe407a10888ff9628c75f37ba770995a3ecd5",
+  "source_target": {
+    "copy_and_increment_event_owners": [
+      {
+        "function": "std_vector_int_grow",
+        "id": "grow.copy",
+        "obligations": [
+          "grow.entry.reads",
+          "grow.copy.read",
+          "grow.copy.write",
+          "grow.copy.step"
+        ],
+        "source": {
+          "begin": 3770,
+          "end": 3795,
+          "sha256": "4707efe06a81fc43cb5c7cd35eef06022b0934d71d583ac51fba85d46e37c11d"
+        }
+      },
+      {
+        "function": "std_vector_int_grow",
+        "id": "grow.loop.increment",
+        "obligations": [
+          "grow.numeric",
+          "grow.copy.step"
+        ],
+        "source": {
+          "begin": 3765,
+          "end": 3769,
+          "sha256": "164d038f44139f62f2a431cd858747884ca6be0adcaaa84fcd84426d61c00697"
+        }
+      }
+    ],
+    "input_sha256": "5e46d1eee055960726f99ab13a172f1f4963270617255d7797c5ae5c79920a0e",
+    "old_index_copy_then_advance": true,
+    "source_groups": [
+      "G5",
+      "G6",
+      "G9"
+    ],
+    "source_spans": [
+      {
+        "begin": 3770,
+        "end": 3795,
+        "sha256": "4707efe06a81fc43cb5c7cd35eef06022b0934d71d583ac51fba85d46e37c11d"
+      }
+    ],
+    "source_statement_sha256": "abdb7cb30f08bc4b401d1f5b391299a3de597049fe7313426ab6d6a118e7658f"
+  },
+  "support_attribution": {
+    "AE": 42,
+    "CVC5": 22,
+    "WP_native_META_pins_equal": 2,
+    "Z3": 21,
+    "allowed_families_actually_used": [
+      "trusted standard arithmetic",
+      "generated datatype encoding"
+    ],
+    "current_future_desired_project_lemma_assertions": 0,
+    "ledger": {
+      "bytes": 24187,
+      "path": "/private/tmp/probata-t25-historical-support-hash-ledger-v1-20261016.json",
+      "sha256": "99520a25dc3ee71ae85beaa9bfcbfdc37248807745addc6200aec2dbd64a66c0"
+    },
+    "prior_negated_goal_or_constant_map_hash_used_as_support": false,
+    "prior_proof_results_reused": false,
+    "scope": "Snapshot-specific assertion-body hash attribution under byte-equal source/tool/driver foundation. Not a generic validator or complete independent compiler/Why3 typed-AST soundness theorem.",
+    "surface_counts": {
+      "why3_drivers": 93,
+      "why3_stdlib": 57,
+      "wp_why3_support": 30
+    },
+    "tool_pins_equal": 9
+  },
+  "ticket_closure": false,
+  "verdict": "PASS_SCOPED_ACTUAL_SOURCE_QUERY_BINDING_AND_AND15_DESIGN"
+}

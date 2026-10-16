@@ -96,7 +96,9 @@ def test_full_original_premise_distributes_over_exact_six_conclusions():
   for premise in [False,True]:assert (not premise or all(terms))==all(not premise or term for term in terms)
 
 
-def test_constructor_term_extension_preserves_all_thirty_eight_reviewed_grow_inputs(tmp_path):
+def test_constructor_term_extension_preserves_other_reviewed_grow_inputs_beyond_current_copy_step(tmp_path):
  baseline=json.loads((Path(__file__).parent/'fixtures/proof/vector-reallocation-grow-and15-a20.json').read_bytes())
  plan=packets.prepare('std_vector_int_realloc_v3_grow',tmp_path/'grow')
- assert [{key:row[key]for key in ['id','path','sha256']}for row in plan['obligations']]==baseline['targets']
+ expected=[row for row in baseline['targets']if row['id']!='grow.copy.step']
+ assert [{key:row[key]for key in ['id','path','sha256']}for row in plan['obligations']if not row['id'].startswith('grow.copy.step.')]==expected
+ assert len(expected)==37

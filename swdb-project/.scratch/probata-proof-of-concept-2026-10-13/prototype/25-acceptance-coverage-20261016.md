@@ -153,3 +153,8 @@ Prospective AND15 empty-prefix decomposition now requires grow38/reserve44/const
 
 
 The prospective constructor final-postcondition split now requires constructor35/grow38/reserve44/destructor11 and101 pending caller duties. Six exact-definition conclusions retain the same original invariant premise; all29 other constructor and all38 grow C inputs are unchanged. Forty compiler-free cases pass. The constructor35 scripted public/native control, independent source review and all fresh actual successor results remain pending. This supersedes preparation counts only. See `25-ctor-positive-six-20261016.md`.
+
+
+### 2026-10-16 ET — prospective copy-step AND15 preparation
+
+Actual source37 grow38 remains partial:27 successful targets, open copy step and10 unexecuted, including numeric C. Independently bound source/query evidence authorizes an exact15-conjunct conclusion expansion under the same full invariant and `k < s`. Other37 grow inputs, model bodies/contracts and theory are unchanged; no sibling theorem or added premise is used. Five real RED→GREEN controls and29 affected compiler-free cases pass. Successor inventories52grow/58reserve/35ctor/11dtor/118pendingcaller are preparation counts only. Source review, focused15 diagnostic and fresh full52 public model with all numeric/RTE/init/smoke obligations remain required. No model/caller/ticket acceptance. See `25-copy-step-and15-20261016.md` and `../evidence/t25-copy-step-and15-preparation-20261016.json`.
