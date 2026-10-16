@@ -1,6 +1,6 @@
 """2026-10-15 ET. Command completion is distinct from knowing output values.
 
-Physical tile halves and explicit hardware tile IDs remain separate masks.
+Physical tile halves, counted readiness roles and dispatch starting IDs are separate masks.
 Region IDs are checked assignments supplied by the call wrapper; registration,
 physical-line correspondence and deferred write actions are not supplied here.
 """
@@ -40,7 +40,7 @@ def render_header(values_header):
 struct dxc_command {
   unsigned thread, pending, bound, root, access;
   int region;
-  uint64_t explicit_read, explicit_write, physical_read, physical_write, begin, end, dependencies;
+  uint64_t explicit_read, explicit_write, physical_read, physical_write, ready_roles, begin, end, dependencies;
 };
 static struct dxc_command dxc_commands[DXC_COMMANDS];
 static unsigned dxc_count, dxc_constructing;
@@ -88,9 +88,10 @@ static void dxc_check_mask(unsigned thread, uint64_t mask) {
 }
 /* Preparation is before issue-time memory snapshots. Binding follows without
    an intervening source action; wrappers must use this pair as one call. */
-static unsigned dxc_prepare(unsigned thread, int region, unsigned access,
+static unsigned dxc_prepare_counted(unsigned thread, int region, unsigned access,
     uint64_t explicit_read, uint64_t explicit_write,
-    uint64_t physical_read, uint64_t physical_write, uint64_t begin, uint64_t end) {
+    uint64_t physical_read, uint64_t physical_write, uint64_t begin, uint64_t end,
+    uint64_t ready_roles) {
   DXM_CHECK(!dxc_constructing, "unbound-command");
   DXM_CHECK(DXC_COMMANDS <= 64, "command-mask-capacity");
   DXM_CHECK(access <= 2, "access-kind-domain");
@@ -101,6 +102,12 @@ static unsigned dxc_prepare(unsigned thread, int region, unsigned access,
     DXM_CHECK(begin < end, "memory-footprint-domain");
   }
   dxc_check_mask(thread,physical_write | physical_read);
+  /* MAA.cc:563-580 counts src1/src2/dst1/dst2, not condition-only
+     roles; SPD.cc:120-137 counts both physical halves for 8-byte roles.
+     A checked call wrapper must derive this mask from resolved role widths.
+     These subset checks alone cannot distinguish a condition from a source. */
+  DXM_CHECK(!(ready_roles & ~(physical_read | physical_write))
+            && !(physical_write & ~ready_roles), "ready-role-footprint");
   /* Software pair-disjointness obligation; distinct hardware starting IDs
      alone do not exclude a destination's second-half alias with an input. */
   DXM_CHECK(!(physical_read & physical_write), "intra-command-physical-alias");
@@ -134,8 +141,18 @@ static unsigned dxc_prepare(unsigned thread, int region, unsigned access,
   c->dependencies=dependencies;
   c->explicit_read=explicit_read; c->physical_read=physical_read;
   c->explicit_write=explicit_write; c->physical_write=physical_write;
+  c->ready_roles=ready_roles;
   dxc_constructing=id+1;
   return id;
+}
+/* Condition-free native prototype convenience only. Callers with a condition
+   operand must use the precise counted-role entry; no production call admission
+   or source-role inference is provided by this convenience wrapper. */
+static unsigned dxc_prepare(unsigned thread, int region, unsigned access,
+    uint64_t explicit_read, uint64_t explicit_write,
+    uint64_t physical_read, uint64_t physical_write, uint64_t begin, uint64_t end) {
+  return dxc_prepare_counted(thread,region,access,explicit_read,explicit_write,
+      physical_read,physical_write,begin,end,physical_read | physical_write);
 }
 static void dxc_bind(unsigned id, unsigned root) {
   DXM_CHECK(dxc_constructing == id+1 && id < dxc_count, "command-binding");
@@ -164,15 +181,16 @@ static void dxc_cover(unsigned id) {
     }
   }
 }
-/* gem5 compares explicit starting IDs. No thread-owner check: this is one
-   global instance and a wait observes matching commands from either thread. */
+/* A source ready-range MMIO read waits for the per-physical-tile counter.
+   This differs from IF dispatch starting-ID matching. No thread-owner filter:
+   one global instance observes counted commands from either thread. */
 static void dxc_wait_tile(unsigned tile) {
   DXM_CHECK(!dxc_constructing, "unbound-command");
   DXM_CHECK(DXM_TILES <= 64, "tile-mask-capacity");
   DXM_CHECK(tile < DXM_TILES, "tile-domain");
   uint64_t mask=UINT64_C(1) << tile;
   for (unsigned i=0; i<dxc_count; ++i)
-    if (dxc_commands[i].pending && ((dxc_commands[i].explicit_read | dxc_commands[i].explicit_write) & mask)) dxc_cover(i);
+    if (dxc_commands[i].pending && (dxc_commands[i].ready_roles & mask)) dxc_cover(i);
 }
 /* Logical query absent from the pinned source header. Both pending answers
    are permitted; returning one has exactly the covering-wait effect. This
@@ -184,7 +202,7 @@ static unsigned dxc_get_tile_ready(unsigned tile) {
   uint64_t mask=UINT64_C(1) << tile;
   unsigned pending=0;
   for (unsigned i=0; i<dxc_count; ++i)
-    if (dxc_commands[i].pending && ((dxc_commands[i].explicit_read | dxc_commands[i].explicit_write) & mask)) pending=1;
+    if (dxc_commands[i].pending && (dxc_commands[i].ready_roles & mask)) pending=1;
   if (!pending) return 1;
   unsigned ready=DXM_CHOOSE(2);
   DXM_CHECK(ready < 2, "nondeterministic-choice-domain");

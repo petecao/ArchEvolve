@@ -206,6 +206,17 @@ root admission. A stateful size/readiness vertical follows this first gate.
 All whole-ticket acceptance boxes remain open.
 
 
+2026-10-16 readiness correction checkpoint (prototype only): the prior86-native
+packet incorrectly expected an8-byte role's second-half wait not to cover. That
+expectation is retracted; historical raw files and receipts remain unchanged.
+Pinned MAA dispatch/finish and SPD counter code count both halves of src/dst
+roles, excluding condition-only roles. The successor separates counted masks
+from condition-inclusive hazards and starting-ID dispatch stalls. Source-backed
+RED3fail/2pass becomes96native GREEN under ASan/UBSan. A checked source-role
+wrapper, actual stateful proof and full interface acceptance are still open.
+The real header supplies a blocking ready-range read returning1, not the logical
+demonic query used by this prototype. All acceptance boxes remain unchecked.
+
 ## Conditional mathematical rank gate and selector publication — 2026-10-16 01:49 ET
 
 The whole-module rank gate at exact `9704c54b838863dd838d18a20dd0ade1633d5027` completed all eight actual Why3 calls. Core5, arbitrary-finite-delay family4 and all-false1 are directly Valid; the separate absent-premise negative retains native sat, healthy solver exit0, Why3 `Unknown` + LF + `(sat)` and expected proof-command exit2. Original actual entry/guard/root exit1 and complete=false remain immutable: the original offline reader rejected that formatting before recording its negative submission receipt. Independent cold reconstruction binds all11 actual submitted SMT inputs to complete emitted bytes and native outputs. [Actual and complete reviews](../evidence/t28-rank-whole-actual-and-cold-acceptance-20261016.json), [independent mathematical/context audit](../evidence/t28-rank-whole-independent-cold-review-20261016.md), [supplemental v3 cold audit](../evidence/t28-rank-whole-cold-audit-v3-20261016.md).
