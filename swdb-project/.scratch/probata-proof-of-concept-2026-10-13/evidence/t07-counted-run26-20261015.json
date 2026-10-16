@@ -1,0 +1,248 @@
+{
+  "date": "2026-10-15 ET",
+  "recorded": "2026-10-15T23:07:27.905502-04:00",
+  "ticket": "07",
+  "status": "claimed",
+  "scientific_result": "UNPROVEN",
+  "acceptance_satisfied": false,
+  "source": {
+    "commit": "ac6bb42ead0beb38da954c3528a1821c6d9f78eb",
+    "producer": "/private/tmp/probata-resume-t07-method23",
+    "published_implementation_integration": "f439edf03d9369c51c5658abe1961af75a52e45f",
+    "closeout_base": "bb6e7fedf268fa76bde688c51d42481ddf500c74",
+    "source_pins": 42,
+    "review_pins": 32,
+    "source_clean_and_all_disk_and_Git_pins_match": true,
+    "tool_binary_pins": 9,
+    "WP_native_META_pins": 2,
+    "frozen_source_manifest": {
+      "path": "/private/tmp/probata-t07-20261015-run26/source-manifest.json",
+      "sha256": "cbeedb00525ef526bc3a86e93d7f29cdb6182787f3f14e56259649e1f385d246"
+    }
+  },
+  "raw": {
+    "root": "/private/tmp/probata-t07-20261015-run26",
+    "file_count": 1066,
+    "bytes": 6328856,
+    "all_files_stable_during_independent_audit": true,
+    "full_file_manifest": {
+      "path": "/private/tmp/probata-t07-run26-final-independent-manifest.json",
+      "sha256": "88072d3c5d6ee754f519e3bd3705998eb39addbf85adcdbfd63877ce65bab1e0"
+    },
+    "provider_payloads_retained_outside_repo": true
+  },
+  "execution": {
+    "started": "2026-10-15T22:15:49.295643-04:00",
+    "finished": "2026-10-15T22:58:02.371662-04:00",
+    "driver_exit": 0,
+    "elapsed_counted_s": 2532.991928499774,
+    "elapsed_min_reported": 42.22,
+    "limit_s": 3600,
+    "summary_reported_excluded_queue_s": 0.0,
+    "sum_matching_resource_queue_wait_s": 0.010547625191975385,
+    "summary_within_budget": false,
+    "publication": "not admitted",
+    "false_is_nonadmission_not_60_minute_overrun": true,
+    "summary_completion_exit_chain": "PASS clean driver0, exact summary/completion/log hashes and returned clock observation"
+  },
+  "baseline": {
+    "full_goal_inventory": 393,
+    "ordinary_goals": 254,
+    "ordinary_passed": 151,
+    "ordinary_open": 103,
+    "smoke_checks": 139,
+    "smoke_checks_passed": 139,
+    "elapsed_min": 6.17,
+    "diagnostic_subset": 155,
+    "own_fresh_baseline_only": true,
+    "second_empty_diagnostic_round_launched": false,
+    "cross_mode_formula_equivalence_claimed": false,
+    "all_original_final_obligations_mandatory": true
+  },
+  "provider": {
+    "calls": 1,
+    "natural_exit": 0,
+    "complete_usage_receipts": 1,
+    "late_or_forced": false,
+    "one_fresh_conversation": "01a14284-2985-79c2-8dff-10ac3275d11c",
+    "raw_usage": {
+      "input_tokens": 6483554,
+      "cached_input_tokens": 6350976,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 22729,
+      "reasoning_output_tokens": 11728
+    },
+    "token_totals_are_lower_bounds": false,
+    "usage_boundary": "reported CLI turn counters; cached and reasoning fields are subsets, not additional totals or billing",
+    "exact_initial_prompt_reconstructed": true,
+    "prompt_sha256": "18bf1c6a4fc2f880055e71917497358ea073e18dbd021e2d92ac4fb304ba8cb7",
+    "schema_argv_config_and_workspace_integrity": "PASS; first-input artifact hashes rechecked; no resume",
+    "first_input_timing": "Retained original observer established pre-candidate observation; not independently recreated past time."
+  },
+  "origin": {
+    "frozen_readonly_Oaudit_matches": true,
+    "independent_raw_CLI_request_multiset_matches": true,
+    "attempt_receipts": 11,
+    "materialized_sets": 11,
+    "full_candidate_transform_and_chronological_base_lineage": "PASS",
+    "authoritative_records": 4,
+    "record_kind_counts": {
+      "assert": 3,
+      "loop_variant": 1
+    },
+    "all_attempted_and_retained_records_exact_scoped_Codex_origin": true,
+    "mechanical_seeds": 0,
+    "trust_boundary": "pinned local harness/scoped transport, not hostile sameUID authentication"
+  },
+  "counters": {
+    "raw_MCP_requests": 18,
+    "raw_by_tool": {
+      "record_design": 4,
+      "show_goal": 4,
+      "check_edit": 3,
+      "propose_edit": 7
+    },
+    "recorded_submissions": 15,
+    "recorded_by_tool": {
+      "record_design": 1,
+      "show_goal": 4,
+      "check_edit": 3,
+      "propose_edit": 7
+    },
+    "unrecorded_tool_errors": "3 record_design schema/value refusals confirmed raw CLI result failed; no proof credit",
+    "proposals_MCP": 7,
+    "final_answer_checked_proposals": 1,
+    "completed_candidate_WP_runs": 8,
+    "focused_probes": 0,
+    "show_goal_calls": 4,
+    "fresh_task_generations": 2,
+    "guard_reports": 30,
+    "guard_exit_counts": {
+      "0": 29,
+      "1": 1
+    },
+    "retained_inspection_events": 83,
+    "peak_rss_mb": 4046.3125,
+    "total_matching_queue_wait_s": 0.010547625191975385
+  },
+  "exact_task_reader": {
+    "completed_pages": 4,
+    "fresh_generation_jobs": 2,
+    "page_lengths": [
+      14000,
+      4573,
+      14000,
+      624
+    ],
+    "complete_task_lengths": [
+      18573,
+      14624
+    ],
+    "all_retained_task_index_log_generated_inputs_exporter_and_binary_hashes_verified": true,
+    "two_14000_character_first_pages_followed_by_complete_tails": true,
+    "scoped_current_run_only": true
+  },
+  "best_diagnostic": {
+    "open": 102,
+    "goals": 159,
+    "unit_open": 102,
+    "hint_open": 0,
+    "hints": 4,
+    "kinds": {
+      "assert": 3,
+      "loop_variant": 1
+    },
+    "source": "r1c18",
+    "final_response_candidate_open": 105,
+    "final_response_candidate_reverted": true,
+    "diagnostic_is_not_final_acceptance": true
+  },
+  "final_positive": {
+    "exit_code": 1,
+    "wall_s": 569.1460498333327,
+    "peak_rss_mb": 4046.3125,
+    "cap_gb": 8,
+    "timeout_s": 1156.2334025418386,
+    "timed_out": false,
+    "killed_by_watchdog": false,
+    "unconfirmed_children": [],
+    "error": "SystemError: <built-in function proc_environ> returned a result with an exception set",
+    "inspection_failure": null,
+    "failed_PID_ownership_and_cause": "not retained/unknown; no PID/cause inferred from neighboring earlier AccessDenied events",
+    "scheduled": 397,
+    "partial_timeout_lines": 58,
+    "goals_json_present": false,
+    "complete_property_report_present": false
+  },
+  "negative": {
+    "launched": false,
+    "reason": "positive did not qualify",
+    "identical_hints_covering_wait_requirement_unchanged": true
+  },
+  "resource": {
+    "reports": 30,
+    "exit_counts": {
+      "0": 29,
+      "1": 1
+    },
+    "sampled_peak_MiB": 4046.3125,
+    "cap_GiB": 8,
+    "all_retained_unconfirmed_children_empty": true,
+    "inspection_failure_null_does_not_mean_no_error": true,
+    "native_SystemError_original_PID_phase_ownership_and_cause_not_identified": true,
+    "poststop": {
+      "receipt": {
+        "path": "/private/tmp/probata-t07-run26-poststop-independent.json",
+        "sha256": "6e83b7d11ca7510eed619dbd8860a6c5861e92a56a7964db427113b80aed3006",
+        "bytes": 1904
+      },
+      "three_scans_zero_matches_denials_leases": true,
+      "exact_token_scan": false,
+      "boundary": "Three finite metadata-only recent sameUID observations; own auditor ancestry excluded. Authentic random run marker not retained, so no environments inspected and no exact-token absence claim. SameUID process metadata and retained guard cleanup complement but do not atomically certify arbitrary unseen descendants; no hostile containment. No signals or lease mutations."
+    },
+    "sampling_boundary": "finite non-atomic trusted-marker discovery and settling; sampled RSS is not a hard quota or hostile-process containment"
+  },
+  "future_work": {
+    "native_error_context_and_cause_chain_not_retained": true,
+    "diagnose_and_publicly_test_narrow_guard_repair_before_new_reviewed_freeze": true,
+    "new_actual_launch_not_authorized_by_this_closeout": true,
+    "no_current_or_historical_hints_results_conversations_or_telemetry_to_future_fresh_provider": true
+  },
+  "outside_repo_receipts_sha256": {
+    "/private/tmp/probata-t07-run26-closeout-own-audit.json": "0f0141747e1ee60f1b7d260f54c5f10f6876760dc3a7df99e41241ab04d51430",
+    "/private/tmp/probata-t07-run26-closeout-audit.py": "53aaff549582dfcc0797f336595bcc82a2a579c015c6c732e937b2f0c8bd9e16",
+    "/private/tmp/probata-t07-run26-completed-independent-audit.json": "e57cf12eae687aa190fde3727dd94d79d4b04a9f9a35d619c89ca1d69f709441",
+    "/private/tmp/probata-t07-run26-final-independent-review.md": "455b9e26260258ed067ba7430e8519e1fab6b65eac00bda10a02863beb4e75b7",
+    "/private/tmp/probata-t07-run26-final-independent-review-manifest.json": "209e6ddf792f2dbb90796287ba324c57ad78da4471dccd99f162bf5f1769b36e",
+    "/private/tmp/probata-t07-run26-final-independent-manifest.json": "88072d3c5d6ee754f519e3bd3705998eb39addbf85adcdbfd63877ce65bab1e0",
+    "/private/tmp/probata-t07-run26-poststop-independent.json": "6e83b7d11ca7510eed619dbd8860a6c5861e92a56a7964db427113b80aed3006",
+    "/private/tmp/probata-t07-run26-independent-audit-preparation.json": "4d7588418638da85a3cf5c5d8ef1de58424f1b155853a54254619acee1be0e38"
+  },
+  "raw_admission_and_terminal_artifacts_sha256": {
+    "/private/tmp/probata-t07-20261015-run26/source-manifest.json": "cbeedb00525ef526bc3a86e93d7f29cdb6182787f3f14e56259649e1f385d246",
+    "/private/tmp/probata-t07-20261015-run26/launch.json": "1d76e2e22455fa78eb2ecb2b2c5d84a4ee56296f3711c3bb5e6059df79720362",
+    "/private/tmp/probata-t07-20261015-run26/exit.json": "26431c1ac10829a7f8f00d79de09ca517c70615eec18b1d414c2b095d0e3e7ec",
+    "/private/tmp/probata-t07-20261015-run26/driver.log": "e3cc988395907f8e82845463d8542f3ff30e32c283e0eb677c426da944a42c53",
+    "/private/tmp/probata-t07-20261015-run26/counted-26/summary.json": "48730b58c500dcbad08ae1ec9efe50f43834b29aee0eb181346a78159644af78",
+    "/private/tmp/probata-t07-20261015-run26/counted-26/completion.json": "497b6262ee400e512ef337707473dcd54683e1497f9a0a25f872e70563427ac2",
+    "/private/tmp/probata-t07-20261015-run26/counted-26/history.json": "25c9f0e9eee8d562c2fe3f803ae6080ab24621fbb5e0b0f1b7951ca2d7031112",
+    "/private/tmp/probata-t07-20261015-run26/counted-26/best.json": "06705db267ad6bc3604a495b99af33091b493382ebc478e77ecd3567f935e579",
+    "/private/tmp/probata-t07-20261015-run26/counted-26/meta.json": "45e1fff8d2992fb0b9e3bd6a884506cdf9ceae2568fc46ce7fa6c0a43ce6c02f",
+    "/private/tmp/probata-t07-20261015-run26/counted-26/baseline-initial.json": "7d22fe57c86f0acc516da191e27910e5f1fe58e825c7fe7c2d0daaec3b660f43",
+    "/private/tmp/probata-t07-20261015-run26/counted-26/provider-origin.jsonl": "3cf17939fb62e8db40c9823878127ca0893f240c0f41261c1f3d3f808794a192",
+    "/private/tmp/probata-t07-20261015-run26/counted-26/debt-events.jsonl": "3b85bef1ec481430a6d0d35f06956512a51baf4d95beb65e1544cc2b73721f8b",
+    "/private/tmp/probata-t07-20261015-run26/counted-26/loop.log": "e3cc988395907f8e82845463d8542f3ff30e32c283e0eb677c426da944a42c53",
+    "/private/tmp/probata-t07-20261015-run26/counted-26/codex-r1/stdout.jsonl": "2748b05fe2b5529395db6753ea64676ddd06d97a47f46c8d6449dbeaca79643e",
+    "/private/tmp/probata-t07-20261015-run26/counted-26/codex-r1/final.json": "96bcd530abffe08c408c4e478ede17328f03a406660737a5f05fb11ef9059cb3",
+    "/private/tmp/probata-t07-20261015-run26/counted-26/codex-r1/argv.json": "461297e26dc0f288c827d0e705e28c59de0844a0921abcbd8292f1ecbe035d4a",
+    "/private/tmp/probata-t07-20261015-run26/counted-26/codex-r1/schema.json": "09ae29e2c2e116e96a4a139e1e4b64f14d8af7bd9d72e1a1d92f6dc4350b6fda",
+    "/private/tmp/probata-t07-20261015-run26/counted-26/tool-r1/config.json": "8e7a6ad1550dfafd6990ad3eb7f01a8f4e64e022cec5e7612bb05e941b2d18c3",
+    "/private/tmp/probata-t07-20261015-run26/counted-26/tool-r1/provider-requests.jsonl": "cda4616a15a4fcbd957528183f6ff3e406dbb8ffb178da25b93f8b28c0322f37",
+    "/private/tmp/probata-t07-20261015-run26/counted-26/tool-r1/submissions.jsonl": "3c21bfed6f826cf9d948f641b3c7914c0cec1cecc3a0e130498d3aaada2f23ad",
+    "/private/tmp/probata-t07-20261015-run26/counted-26/codex-r1/workspace/PROMPT.txt": "18bf1c6a4fc2f880055e71917497358ea073e18dbd021e2d92ac4fb304ba8cb7",
+    "/private/tmp/probata-t07-20261015-run26/counted-26/round-0/goals.json": "f666bb815d98fd41abbce3d2c31c4ed951dc78c1da6843f1c02b58b84e2eba31",
+    "/private/tmp/probata-t07-20261015-run26/counted-26/round-0/baseline-smoke10.log": "9b487516275db02856a9389bf767c40ec0891e4aaf02199378a8a97793baef52",
+    "/private/tmp/probata-t07-20261015-run26/counted-26/final-r1/wp-smoke-s.log": "f1f6eb4c7c377085888a6833ae943255862eb7dd6f05a5223fa2931a52b28328",
+    "/private/tmp/probata-t07-20261015-run26/counted-26/final-r1/wp-smoke-s.log.summary.json": "4fc1e26593afe00cda59945083c79481d3343fbfd8efc9b3805a55d383038ba5"
+  }
+}
