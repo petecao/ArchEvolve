@@ -1,0 +1,62 @@
+{
+  "date_et": "2026-10-16",
+  "scope": "Passive exact Git/files/retained metadata; no tools/jobs",
+  "source": "590e05e25a5733e51052de8d257a8d608d6047e0",
+  "physical_unique_files": 1156,
+  "git_source_pins": [
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/run_stream_acceptance.sh",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/stream-first-gate.md",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/stream_state.py",
+    "swdb-project/swdb/c_lowering.py",
+    "swdb-project/swdb/dx100_size_source.py",
+    "swdb-project/swdb/dx100_stream_model.py",
+    "swdb-project/swdb/dx100_stream_source.py",
+    "swdb-project/swdb/formal_frame.py",
+    "swdb-project/swdb/proof.py",
+    "swdb-project/swdb/proof_semantics.py",
+    "swdb-project/swdb/proof_setup.py",
+    "swdb-project/swdb/wp_adapter.py",
+    "swdb-project/tests/fixtures/proof/dx100/gem5-e4fc4af-stream/IF.hh",
+    "swdb-project/tests/fixtures/proof/dx100/gem5-e4fc4af-stream/README.md",
+    "swdb-project/tests/fixtures/proof/dx100/gem5-e4fc4af-stream/StreamAccess.cc",
+    "swdb-project/tests/fixtures/proof/dx100/gem5-e4fc4af-stream/StreamAccess.hh",
+    "swdb-project/tests/fixtures/proof/dx100/gem5-e4fc4af-stream/Tables.cc",
+    "swdb-project/tests/fixtures/proof/dx100/gem5-e4fc4af-stream/Tables.hh",
+    "swdb-project/tests/test_dx100_stream_actual.py",
+    "swdb-project/tests/test_dx100_stream_array_initialization.py",
+    "swdb-project/tests/test_dx100_stream_source.py",
+    "swdb-project/tests/test_dx100_stream_state.py",
+    "swdb-project/tests/test_proof_setup.py",
+    "swdb-project/tests/testkit/dx100_stream.py",
+    "swdb-project/tests/testkit/dx100_stream_native.py",
+    "swdb-project/tests/testkit/dx100_stream_outcomes.py",
+    "swdb-project/vocab/proof_subject_kinds.yaml"
+  ],
+  "legacy_paths_unchanged": 25,
+  "producer_audit_attributed": {
+    "instances": 20774,
+    "unique_files": 1156,
+    "errors": [],
+    "boundary": "Producer physical audit of final records and JSON receipt references; no fresh remote audit, formal theorem or full link-DSO closure claim."
+  },
+  "final_profile": [
+    {
+      "directory": "/private/tmp/probata-t28-stream-nonzero-final",
+      "resources": {
+        "exit_code": 0,
+        "peak_rss_bytes": 2918973440,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 193.33993016701424,
+        "cpu_seconds": 196.87302699999998
+      },
+      "junit": {
+        "tests": 43,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 3
+      }
+    }
+  ],
+  "errors": []
+}

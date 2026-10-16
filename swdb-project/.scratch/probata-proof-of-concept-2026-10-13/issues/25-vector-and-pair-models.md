@@ -1161,3 +1161,28 @@ Actual inventory has one ordinary goal passed=false/results[], two properties an
 The passive audit reports723 checks; independent review rehashed1376 unique local files (1371 input pins+5 derived outputs), zero mismatch. The complete printed theory contains three source predicate definitions and one unproved wp_goal, retaining bounded values/representation/size-zero-or-distinct allocation premises and project_int_region conclusion. Project Heap adds zero axioms/lemmas. Complete imports/clones retain30 modules/56 source proposition declarations, explicitly not a flattened instantiated Task axiom count or an independent foundational proof. Arithmetic/map/Qed/BuiltIn remain declared trusted foundations. Driver-prepared/solver-submitted task bytes do not exist in this path. No ordinary Valid, smoke/nonvacuity, model-body, original-v2, generic source/C++ caller/lifetime/cleanup or full-ticket proof follows. A fresh normal public20-target qualified-grow profile remains inert and unadmitted. Ticket stays claimed. [Census](../evidence/t25-qualified-generation-passive-v3-generation-census.json), [full import source closure](../evidence/t25-qualified-generation-passive-v3-import-source-closure.json), [preservation manifest](../evidence/t07-t25-generation-cold-preservation-20261016.json).
 
 The exact retained printed task SHA c4a1d9071061d193256423265ebecfab58caceb26cf3d9cc803c377fd5776cb3 has13 whitespace-only lines. They are preserved as actual evidence; this publication does not claim blanket diffcheck cleanliness. All other staged paths pass. Historical07 artifacts retain their separately documented47 warnings, and the prior size reader its2 warnings, unchanged.
+
+### Caller count conversion and request target — 2026-10-16 ET
+
+The public lowering now retains the physical signed-count parameter span and
+maps its constructor conversion and reserve request to an explicit numeric C
+kernel. Growth preserves `(size_t)n + 1`; no-growth preserves `(size_t)n`.
+Selected signed-int and size representations, exact conversion, capacity bound
+and request arithmetic are separate pending obligations. The source input's
+`0 <= n` remains a pending discharge from a caller contract. It is not inferred
+from typing or samples, inserted into the executable source, or accepted as an
+unproved global premise.
+
+One real public-lowering RED failed on the missing target, then the same control
+passed after implementation. Seven scoped compiler/native controls pass in
+31.45s (guard 31.8043s, 366,837,760-byte peak, no OOM/timeout). Nine defined numeric
+observations cover 0, 7 and INT_MAX for both growth functions and the no-growth
+function under UBSan; no stale-pointer branch executes. These are preparation
+controls, not formal arithmetic, model or caller proofs. Exact sources, raw
+commands/logs/resources and native artifacts are pinned in
+`evidence/t25-caller-numeric-controls-20261016.json`.
+
+Frozen 017 standalone source and every existing actual producer remain untouched.
+Full caller state/frame/typed-image/cleanup composition, current ordinary model
+dependency eligibility and actual ordinary/smoke proof records remain open. All
+original acceptance boxes stay open.
