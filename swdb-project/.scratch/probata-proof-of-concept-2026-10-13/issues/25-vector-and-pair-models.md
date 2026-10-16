@@ -1052,3 +1052,22 @@ remain open, and the owner's separate ownership/domain work is excluded.
 [Independent review](../evidence/t25-count-ctor-cold-review-bb7170ac-20261016.md),
 [exact review metadata](../evidence/t25-count-ctor-cold-review-bb7170ac-20261016.json),
 [compact final snapshot](../evidence/t25-count-ctor-cold-snapshot-final-bb7170ac-20261016.json).
+
+### Qualified reallocation source/caller preparation — 2026-10-16 ET
+
+The explicit v3 preparation now binds every emitted executable helper and
+inverse-restores the complete original v2 source after the disclosed domain/name
+edits. Public lowering separately records exact physical source/C/header pins
+and pending constructor, data, reserve, index/read and destructor obligations
+for the three original qualified-vertical caller fixtures. It grants no origins,
+adds no caller premise and never selects v3 models or launches a verifier.
+Eleven serial compiler/native controls pass; the real source-byte, signed-count
+and missing-call REDs remain retained. The independent f32 preparation review
+passed 78 physical references; its scope remains unsupported preparation.
+Evidence: `../evidence/t25-reallocation-caller-source-preparation-20261016.json`.
+
+The independent `../evidence/t25-v3-vertical-domain-review-20261016.md` inventories
+all new copy/frame/qualification/caller/lifetime duties. Typed source-int loads
+and automatic receiver lifetime mapping remain necessary before fresh public
+proof. No original growth contract, qualified body, caller domain, exclusive
+ownership or wider type/member acceptance is claimed. Ticket25 remains claimed.

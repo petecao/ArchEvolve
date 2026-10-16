@@ -202,6 +202,7 @@ class Lowering:
     terminal_release: dict | None = None  # checked ownership certificate; native lowering retains delete[]
     stdlib_provenance: dict = field(default_factory=dict)  # original full-TU declarations and header closure
     stdlib_substitutions: tuple = ()  # printer-requested free std calls, independently bound in the original TU
+    vector_reallocation_candidate: dict = field(default_factory=dict)  # pending obligations; grants no origin
 
     @property
     def sha256(self):
@@ -227,6 +228,8 @@ class Lowering:
         if self.stdlib_provenance:
             data["stdlib_provenance"] = self.stdlib_provenance
             data["stdlib_substitutions"] = list(self.stdlib_substitutions)
+        if self.vector_reallocation_candidate:
+            data["vector_reallocation_candidate"] = self.vector_reallocation_candidate
         return json.dumps(data, indent=1, sort_keys=True) + "\n"
 
     @property
@@ -293,6 +296,7 @@ def identity():
                             + here.with_name("array_domains.py").read_bytes()
                             + here.with_name("vector_ownership.py").read_bytes()
                             + here.with_name("vector_reallocation_model.py").read_bytes()
+                            + here.with_name("vector_reallocation_calls.py").read_bytes()
                             + here.with_name("vector_pipeline.py").read_bytes()
                             + here.with_name("model_domains.py").read_bytes()
                             + here.with_name("standard_model_view.py").read_bytes()
@@ -2710,6 +2714,9 @@ def lower(source, function, includes=(), defines=(), summaries=None, semantics=N
     provenance = (stdlib_provenance.certify(tool, source, includes=includes, defines=defines,
                                           models=provenance_models, substitutions=unit.stdlib_substitutions)
                   if stdlib_provenance.needed(provenance_models, allocation) else {})
+    from swdb import vector_reallocation_calls
+    candidate = vector_reallocation_calls.certify(node, source=source.read_bytes().decode('utf-8'), text=text,
+                    defines=defines, models=models, provenance=provenance)
     return Lowering(function=function, text=text, anchors=tuple(anchors), declaration=declaration,
                     parameters=tuple(unit_params), source_sha256=_file_sha256(source), defines=defines,
                     tool={"id": TOOL_ID, "version": TOOL_VERSION, "naming_rules": NAMING_RULES,
@@ -2717,6 +2724,7 @@ def lower(source, function, includes=(), defines=(), summaries=None, semantics=N
                     summaries=tuple(unit.summaries_used), models=models, probes=tuple(unit.probes),
                     std_models=tuple(sorted(unit.std_types)), allocation=allocation, stdlib_provenance=provenance,
                     stdlib_substitutions=tuple(unit.stdlib_substitutions),
+                    vector_reallocation_candidate=candidate,
                     cpu_effects=cpu_effects.collect(definition_nodes, unit.probe_nodes, unit.models,
                                                     unit.summaries_used, INTEGER_TYPES | FLOAT_TYPES),
                     bounded_initialization=bounded_initialization.analyze(definition_nodes,
@@ -2923,4 +2931,6 @@ def _cli(args):
     out["pointer_bounds"] = lowering.pointer_bounds
     if lowering.terminal_release:
         out["terminal_release"] = lowering.terminal_release
+    if lowering.vector_reallocation_candidate:
+        out["vector_reallocation_candidate"] = lowering.vector_reallocation_candidate
     return out

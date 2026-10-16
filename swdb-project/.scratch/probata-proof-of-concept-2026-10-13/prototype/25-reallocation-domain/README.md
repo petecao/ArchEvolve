@@ -47,3 +47,30 @@ mandatory. No finite allocation pool/epoch replaces those obligations.
 See [preparation controls](../../evidence/t25-reallocation-domain-preparation-controls-20261016.json),
 [prospective domain review](../../evidence/t25-reallocation-domain-prospective-review-20261016.md)
 and [complete coverage matrix](../25-acceptance-coverage-20261016.md).
+
+## Source-backed caller inventory
+
+Public `swdb lower` now emits a separate `vector_reallocation_candidate`
+receipt for the exact construction/capture/reserve/guarded-read source shape.
+It binds physical UTF-8 source bytes (including CRLF), the generated C, actual
+standard-header provenance and every evaluated member call. Constructor,
+`data()`, reserve, `operator[]` when present, guarded scalar read and implicit
+destructor obligations remain pending. The receipt grants no origin, inserts
+no caller premise and does not select qualified v3 calls. Unsupported shapes
+retain an explicit refusal. Signed `n+1` before conversion cannot masquerade
+as the admitted widened request.
+
+The qualified model receipt also reverses the disclosed contract/name edits
+and requires exact restoration of the complete original source. Every emitted
+executable helper, including unused allocator helpers in a destructor unit,
+has its own body/fragment correspondence. This binds source coverage; it does
+not prove those bodies. Eleven serial compiler/native controls pass. Real RED
+failures and the earlier collection/test-inventory corrections are preserved
+separately in [source preparation evidence](../../evidence/t25-reallocation-caller-source-preparation-20261016.json).
+
+The [independent vertical design inventory](../../evidence/t25-v3-vertical-domain-review-20261016.md)
+identifies all constructor/destructor templates and new qualification, copy,
+frame, branch, observation, lifetime and binding duties. Before actual handoff,
+the translation still needs a source-derived typed-int load embedding and an
+automatic receiver's fresh non-dynamic identity/lifetime mapping. Neither is
+supplied by initialized bits or by a concrete empty-heap witness.

@@ -87,7 +87,15 @@ def test_public_minimal_qualified_composition_has_explicit_contracts_and_pending
     assert not marker.exists()
     report = next(r for r in record['evidence']['reports'] if r['name'] == 'vector_reallocation_model')
     text = Path(report['path']).read_text()
-    assert record['settings']['vector_reallocation_domain']['caller_discharge'] == 'required; not assumed'
+    certificate = record['settings']['vector_reallocation_domain']
+    assert certificate['caller_discharge'] == 'required; not assumed'
+    functions = {row['original_function'] for row in certificate['executable_bodies']}
+    required = {'std_vector_int_' + member, 'swdb_free', 'swdb_alloc_int'}
+    if member == 'reserve':
+        required.add('std_vector_int_grow')
+    assert functions == required
+    assert all(row['body_sha256'] == row['inverse_qualified_body_sha256']
+               for row in certificate['executable_bodies'])
     if member == 'ctor_count_value':
         assert r'requires \valid(this) && n <=' in text
         assert 'ensures std_vector_int_reallocatable_v3(this)' in text
