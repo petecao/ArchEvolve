@@ -1,5 +1,8 @@
 # Bounded parameter exploration
 
+DX100 owner handoff: [defaults, candidate values, topology/resource constraints and API/kernel changes](../dx100-parameter-domain/README.md), with a [machine-readable source contract](../dx100-parameter-domain/contract.yaml). The handoff preserves unresolved legal domains and distinguishes source-supported candidates from target-validated settings.
+
+
 The offline framework now enumerates configuration proposals from **explicit,
 reviewed finite domains**, filters declared coupled constraints, and emits
 configuration-specific software handoffs. Unknown ranges and costs remain unknown.

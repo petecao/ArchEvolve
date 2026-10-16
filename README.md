@@ -1,5 +1,8 @@
 # ArchEvolve — hardware exploration prototype
 
+October 16: [DX100 parameter-explorer handoff](docs/designs/dx100-parameter-domain/README.md) — source defaults, candidate values, coupling constraints, software changes and unresolved domains.
+
+
 The active target is the **DX100-modified GAP BFS**, using Peter's v1.2 sparse and fully connected reports. Eric's [hardware evidence catalog](docs/hardware-catalog-handoff.md) is the default hardware knowledge input: **20 source/version/configuration/mapping records, 62 operations and 204 located claims** (data revision **0.1.17**). TMU, COBRA and AXI-Pack are scoped mapping records, not generic gather replacements.
 
 The [current mechanism handoff](docs/mechanism-handoff-2026-10-06/README.md) explains scheduling, grouping, response association, credits, completion and unresolved implementation details. It includes a small executable association scaffold; no cycle model, RTL or target-performance validation is implied.

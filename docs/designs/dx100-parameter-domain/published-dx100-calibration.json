@@ -1,0 +1,908 @@
+{
+  "format": "published-dx100-calibration-audit-v1",
+  "source_commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+  "sources": {
+    "results/results_main.csv": {
+      "url": "https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/results/results_main.csv",
+      "sha256": "3f1047d76694cbe4ef047d1fff966696ae4d1cabb4dd4caeee5711063e656a25"
+    },
+    "results/results_TS.csv": {
+      "url": "https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/results/results_TS.csv",
+      "sha256": "3160c2d5458218ebcf0d3efbc8715609270a5c06a05903cbd24a50482a27df59"
+    },
+    "results/results_SC.csv": {
+      "url": "https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/results/results_SC.csv",
+      "sha256": "4386e4f39d9dea93a5ae362d542cf47ce4e6fea37e82732c7c9cccf25c162c4f"
+    },
+    "scripts/parse.py": {
+      "url": "https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/scripts/parse.py",
+      "sha256": "8fba702b4927ce38f59ab323075f44dbcbd27a417e8cbe8894857d032c5cfc0b"
+    },
+    "scripts/benchmark.py": {
+      "url": "https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/scripts/benchmark.py",
+      "sha256": "2a65d6551ea1b5c61a2273086b5c68f2d87ddb37bed030019fb7794f486c7d2c"
+    },
+    "src/cpu/o3/commit.cc": {
+      "url": "https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/src/cpu/o3/commit.cc",
+      "sha256": "0fa28365f5084a5ffe34383d022a5b0e125addecf3f331300822f202a2d7f657"
+    }
+  },
+  "analysis_runtime": "3.10.12",
+  "extractor_sha256": "b30f148d31526c316b0d239f3d7400fde2a3efa1943175d5f1c0639ae7979106",
+  "counter_semantics": {
+    "retirement_classes": {
+      "LDFP": "commitStats0.committedInstType::FloatMemRead",
+      "STFP": "commitStats0.committedInstType::FloatMemWrite",
+      "VFP": "commitStats0.committedInstType::SIMDFloat",
+      "SFP": "commitStats0.committedInstType::Float",
+      "SINT": "commitStats0.committedInstType::Int",
+      "VINT": "commitStats0.committedInstType::SIMD",
+      "LDINT": "commitStats0.committedInstType::MemRead",
+      "STINT": "commitStats0.committedInstType::MemWrite",
+      "VEC": "commitStats0.committedInstType::Vector",
+      "Total": "commitStats0.committedInstType::total"
+    },
+    "csv_Total_column_indices_zero_based": {
+      "maa_cycle_total": 13,
+      "cpu_committed_op_class_total": 196
+    },
+    "cycles": "Author parser converts simTicks/313. Speedup uses the within-table baseline/accelerator ratio, so common conversion cancels.",
+    "cpu_work": "commitStats0.committedInstType counts summed across switch CPUs; x86 op-class retirement counts are not logical element accesses or an offloaded-time fraction.",
+    "memory_work": "Sum of the four explicitly named FloatMemRead/FloatMemWrite/MemRead/MemWrite classes; not physical DRAM packets or all possible vector-memory classes."
+  },
+  "main_pairs": [
+    {
+      "kernel": "BFS",
+      "size_label": "22",
+      "family": "GAP",
+      "baseline_reported_cycles": 1989023612.0,
+      "accelerated_reported_cycles": 696428870.0,
+      "baseline_committed_ops": 3138043299,
+      "accelerated_committed_ops": 6678103620,
+      "baseline_selected_memory_ops": 874308810.0,
+      "accelerated_selected_memory_ops": 510366189.0,
+      "baseline_memory_op_share": 0.2786159165740689,
+      "net_cpu_committed_op_reduction": -1.128110731336343,
+      "net_selected_memory_op_reduction": 0.4162632434185354,
+      "reported_speedup": 2.856032679977784,
+      "evidence_tier": "author_reported_table_without_independent_run_receipts"
+    },
+    {
+      "kernel": "PR",
+      "size_label": "22",
+      "family": "GAP",
+      "baseline_reported_cycles": 801338996.0,
+      "accelerated_reported_cycles": 645160613.0,
+      "baseline_committed_ops": 1609952376,
+      "accelerated_committed_ops": 220075213,
+      "baseline_selected_memory_ops": 319069401.0,
+      "accelerated_selected_memory_ops": 38873432.0,
+      "baseline_memory_op_share": 0.19818561452901015,
+      "net_cpu_committed_op_reduction": 0.8633032776119832,
+      "net_selected_memory_op_reduction": 0.8781662175120327,
+      "reported_speedup": 1.2420767477942736,
+      "evidence_tier": "author_reported_table_without_independent_run_receipts"
+    },
+    {
+      "kernel": "BC",
+      "size_label": "20",
+      "family": "GAP",
+      "baseline_reported_cycles": 1409804594.0,
+      "accelerated_reported_cycles": 630381986.0,
+      "baseline_committed_ops": 2096965847,
+      "accelerated_committed_ops": 1673770562,
+      "baseline_selected_memory_ops": 480501645.0,
+      "accelerated_selected_memory_ops": 319815033.0,
+      "baseline_memory_op_share": 0.22914137857200875,
+      "net_cpu_committed_op_reduction": 0.20181315094160424,
+      "net_selected_memory_op_reduction": 0.3344142807253032,
+      "reported_speedup": 2.2364290625525585,
+      "evidence_tier": "author_reported_table_without_independent_run_receipts"
+    },
+    {
+      "kernel": "IS",
+      "size_label": "b",
+      "family": "NAS",
+      "baseline_reported_cycles": 1300988954.0,
+      "accelerated_reported_cycles": 383612766.0,
+      "baseline_committed_ops": 519788344,
+      "accelerated_committed_ops": 117993741,
+      "baseline_selected_memory_ops": 132099752.0,
+      "accelerated_selected_memory_ops": 31536755.0,
+      "baseline_memory_op_share": 0.25414142799631534,
+      "net_cpu_committed_op_reduction": 0.7729965622314916,
+      "net_selected_memory_op_reduction": 0.761265600256388,
+      "reported_speedup": 3.3914120417984215,
+      "evidence_tier": "author_reported_table_without_independent_run_receipts"
+    },
+    {
+      "kernel": "CG",
+      "size_label": "c",
+      "family": "NAS",
+      "baseline_reported_cycles": 337805158.0,
+      "accelerated_reported_cycles": 175709320.0,
+      "baseline_committed_ops": 2427429797,
+      "accelerated_committed_ops": 58685921,
+      "baseline_selected_memory_ops": 465955500.0,
+      "accelerated_selected_memory_ops": 8284864.0,
+      "baseline_memory_op_share": 0.19195426396094453,
+      "net_cpu_committed_op_reduction": 0.9758238441859252,
+      "net_selected_memory_op_reduction": 0.9822196239769677,
+      "reported_speedup": 1.922522709666169,
+      "evidence_tier": "author_reported_table_without_independent_run_receipts"
+    },
+    {
+      "kernel": "PRH",
+      "size_label": "2M",
+      "family": "HashJoin",
+      "baseline_reported_cycles": 283032048.0,
+      "accelerated_reported_cycles": 128006637.0,
+      "baseline_committed_ops": 1151450649,
+      "accelerated_committed_ops": 514006016,
+      "baseline_selected_memory_ops": 515355246.0,
+      "accelerated_selected_memory_ops": 204681911.0,
+      "baseline_memory_op_share": 0.4475704160204959,
+      "net_cpu_committed_op_reduction": 0.5536013493531845,
+      "net_selected_memory_op_reduction": 0.6028333608929635,
+      "reported_speedup": 2.2110732273983573,
+      "evidence_tier": "author_reported_table_without_independent_run_receipts"
+    },
+    {
+      "kernel": "PRO",
+      "size_label": "2M",
+      "family": "HashJoin",
+      "baseline_reported_cycles": 218517507.0,
+      "accelerated_reported_cycles": 65290899.0,
+      "baseline_committed_ops": 903315070,
+      "accelerated_committed_ops": 272965194,
+      "baseline_selected_memory_ops": 415137546.0,
+      "accelerated_selected_memory_ops": 105046546.0,
+      "baseline_memory_op_share": 0.4595711505178365,
+      "net_cpu_committed_op_reduction": 0.6978183990664519,
+      "net_selected_memory_op_reduction": 0.7469596594859671,
+      "reported_speedup": 3.346829502225111,
+      "evidence_tier": "author_reported_table_without_independent_run_receipts"
+    },
+    {
+      "kernel": "XRAGE",
+      "size_label": "--",
+      "family": "XRAGE",
+      "baseline_reported_cycles": 75479404.0,
+      "accelerated_reported_cycles": 42141196.0,
+      "baseline_committed_ops": 260625719,
+      "accelerated_committed_ops": 8853856,
+      "baseline_selected_memory_ops": 61754568.0,
+      "accelerated_selected_memory_ops": 781291.0,
+      "baseline_memory_op_share": 0.23694732905465865,
+      "net_cpu_committed_op_reduction": 0.9660284639828658,
+      "net_selected_memory_op_reduction": 0.9873484500774097,
+      "reported_speedup": 1.7911073050703166,
+      "evidence_tier": "author_reported_table_without_independent_run_receipts"
+    },
+    {
+      "kernel": "GZP",
+      "size_label": "2M",
+      "family": "UME",
+      "baseline_reported_cycles": 162725043.0,
+      "accelerated_reported_cycles": 30444155.0,
+      "baseline_committed_ops": 178577809,
+      "accelerated_committed_ops": 46508916,
+      "baseline_selected_memory_ops": 47061678.0,
+      "accelerated_selected_memory_ops": 9517239.0,
+      "baseline_memory_op_share": 0.2635359805540004,
+      "net_cpu_committed_op_reduction": 0.7395593760476701,
+      "net_selected_memory_op_reduction": 0.7977709379593307,
+      "reported_speedup": 5.345033981071244,
+      "evidence_tier": "author_reported_table_without_independent_run_receipts"
+    },
+    {
+      "kernel": "GZZ",
+      "size_label": "2M",
+      "family": "UME",
+      "baseline_reported_cycles": 154373942.0,
+      "accelerated_reported_cycles": 32218355.0,
+      "baseline_committed_ops": 198855296,
+      "accelerated_committed_ops": 59346199,
+      "baseline_selected_memory_ops": 50028687.0,
+      "accelerated_selected_memory_ops": 10634571.0,
+      "baseline_memory_op_share": 0.2515833774927473,
+      "net_cpu_committed_op_reduction": 0.7015608827436006,
+      "net_selected_memory_op_reduction": 0.7874305396022087,
+      "reported_speedup": 4.791490502851557,
+      "evidence_tier": "author_reported_table_without_independent_run_receipts"
+    },
+    {
+      "kernel": "GZPI",
+      "size_label": "2M",
+      "family": "UME",
+      "baseline_reported_cycles": 85563833.0,
+      "accelerated_reported_cycles": 31895204.0,
+      "baseline_committed_ops": 140102316,
+      "accelerated_committed_ops": 101916672,
+      "baseline_selected_memory_ops": 32050968.0,
+      "accelerated_selected_memory_ops": 25735192.0,
+      "baseline_memory_op_share": 0.22876829530783774,
+      "net_cpu_committed_op_reduction": 0.27255540872001005,
+      "net_selected_memory_op_reduction": 0.19705414201530513,
+      "reported_speedup": 2.682655141506541,
+      "evidence_tier": "author_reported_table_without_independent_run_receipts"
+    },
+    {
+      "kernel": "GZZI",
+      "size_label": "2M",
+      "family": "UME",
+      "baseline_reported_cycles": 56387247.0,
+      "accelerated_reported_cycles": 24898216.0,
+      "baseline_committed_ops": 128932000,
+      "accelerated_committed_ops": 79612371,
+      "baseline_selected_memory_ops": 21480456.0,
+      "accelerated_selected_memory_ops": 14176585.0,
+      "baseline_memory_op_share": 0.16660298451897124,
+      "net_cpu_committed_op_reduction": 0.38252434616697173,
+      "net_selected_memory_op_reduction": 0.34002401997425014,
+      "reported_speedup": 2.2647103310534376,
+      "evidence_tier": "author_reported_table_without_independent_run_receipts"
+    }
+  ],
+  "reported_geomean_speedup": 2.624256660894751,
+  "models": [
+    {
+      "feature": "baseline_memory_op_share",
+      "availability": "baseline-observable subset-of-op-class share",
+      "fit_form": "log(speedup)=intercept+slope*x",
+      "fit": {
+        "intercept": 0.6589238437848833,
+        "slope": 1.1446595352526407,
+        "training_r_squared_log_speedup": 0.06585116786570122
+      },
+      "validation": "leave one entire benchmark family out, five folds",
+      "mean_absolute_relative_error_percent": 115.65608443876806,
+      "median_absolute_relative_error_percent": 36.4350179456265,
+      "worst_absolute_relative_error_percent": 586.1390296059,
+      "held_out_predictions": [
+        {
+          "kernel": "BFS",
+          "held_out_family": "GAP",
+          "reported_speedup": 2.856032679977784,
+          "predicted_speedup": 2.87666425198248,
+          "heldout_feature": 0.2786159165740689,
+          "training_feature_range": [
+            0.16660298451897124,
+            0.4595711505178365
+          ],
+          "heldout_feature_in_training_range": true,
+          "absolute_relative_error_percent": 0.7223857118069166
+        },
+        {
+          "kernel": "PR",
+          "held_out_family": "GAP",
+          "reported_speedup": 1.2420767477942736,
+          "predicted_speedup": 2.7705673241142694,
+          "heldout_feature": 0.19818561452901015,
+          "training_feature_range": [
+            0.16660298451897124,
+            0.4595711505178365
+          ],
+          "heldout_feature_in_training_range": true,
+          "absolute_relative_error_percent": 123.05926981036772
+        },
+        {
+          "kernel": "BC",
+          "held_out_family": "GAP",
+          "reported_speedup": 2.2364290625525585,
+          "predicted_speedup": 2.81093031306464,
+          "heldout_feature": 0.22914137857200875,
+          "training_feature_range": [
+            0.16660298451897124,
+            0.4595711505178365
+          ],
+          "heldout_feature_in_training_range": true,
+          "absolute_relative_error_percent": 25.68832877964713
+        },
+        {
+          "kernel": "PRH",
+          "held_out_family": "HashJoin",
+          "reported_speedup": 2.2110732273983573,
+          "predicted_speedup": 15.171036386346943,
+          "heldout_feature": 0.4475704160204959,
+          "training_feature_range": [
+            0.16660298451897124,
+            0.2786159165740689
+          ],
+          "heldout_feature_in_training_range": false,
+          "absolute_relative_error_percent": 586.1390296059
+        },
+        {
+          "kernel": "PRO",
+          "held_out_family": "HashJoin",
+          "reported_speedup": 3.346829502225111,
+          "predicted_speedup": 16.718917827640727,
+          "heldout_feature": 0.4595711505178365,
+          "training_feature_range": [
+            0.16660298451897124,
+            0.2786159165740689
+          ],
+          "heldout_feature_in_training_range": false,
+          "absolute_relative_error_percent": 399.544951917189
+        },
+        {
+          "kernel": "IS",
+          "held_out_family": "NAS",
+          "reported_speedup": 3.3914120417984215,
+          "predicted_speedup": 2.5816377476856798,
+          "heldout_feature": 0.25414142799631534,
+          "training_feature_range": [
+            0.16660298451897124,
+            0.4595711505178365
+          ],
+          "heldout_feature_in_training_range": true,
+          "absolute_relative_error_percent": 23.87720171222041
+        },
+        {
+          "kernel": "CG",
+          "held_out_family": "NAS",
+          "reported_speedup": 1.922522709666169,
+          "predicted_speedup": 2.426437828834444,
+          "heldout_feature": 0.19195426396094453,
+          "training_feature_range": [
+            0.16660298451897124,
+            0.4595711505178365
+          ],
+          "heldout_feature_in_training_range": true,
+          "absolute_relative_error_percent": 26.211140010708945
+        },
+        {
+          "kernel": "GZP",
+          "held_out_family": "UME",
+          "reported_speedup": 5.345033981071244,
+          "predicted_speedup": 2.1770463753115283,
+          "heldout_feature": 0.2635359805540004,
+          "training_feature_range": [
+            0.19195426396094453,
+            0.4595711505178365
+          ],
+          "heldout_feature_in_training_range": true,
+          "absolute_relative_error_percent": 59.26973742316213
+        },
+        {
+          "kernel": "GZZ",
+          "held_out_family": "UME",
+          "reported_speedup": 4.791490502851557,
+          "predicted_speedup": 2.134990761248977,
+          "heldout_feature": 0.2515833774927473,
+          "training_feature_range": [
+            0.19195426396094453,
+            0.4595711505178365
+          ],
+          "heldout_feature_in_training_range": true,
+          "absolute_relative_error_percent": 55.44203291275688
+        },
+        {
+          "kernel": "GZPI",
+          "held_out_family": "UME",
+          "reported_speedup": 2.682655141506541,
+          "predicted_speedup": 2.056957362070701,
+          "heldout_feature": 0.22876829530783774,
+          "training_feature_range": [
+            0.19195426396094453,
+            0.4595711505178365
+          ],
+          "heldout_feature_in_training_range": true,
+          "absolute_relative_error_percent": 23.32382458538659
+        },
+        {
+          "kernel": "GZZI",
+          "held_out_family": "UME",
+          "reported_speedup": 2.2647103310534376,
+          "predicted_speedup": 1.8585070188615491,
+          "heldout_feature": 0.16660298451897124,
+          "training_feature_range": [
+            0.19195426396094453,
+            0.4595711505178365
+          ],
+          "heldout_feature_in_training_range": false,
+          "absolute_relative_error_percent": 17.93621491552704
+        },
+        {
+          "kernel": "XRAGE",
+          "held_out_family": "XRAGE",
+          "reported_speedup": 1.7911073050703166,
+          "predicted_speedup": 2.626818197651894,
+          "heldout_feature": 0.23694732905465865,
+          "training_feature_range": [
+            0.16660298451897124,
+            0.4595711505178365
+          ],
+          "heldout_feature_in_training_range": true,
+          "absolute_relative_error_percent": 46.65889588054406
+        }
+      ],
+      "feature_extrapolation_cases": 3,
+      "in_range_mean_absolute_relative_error_percent": 42.69475742517786,
+      "deployment_status": "descriptive_diagnostic_requires_independent_matched_evidence"
+    },
+    {
+      "feature": "net_cpu_committed_op_reduction",
+      "availability": "post-treatment diagnostic; unavailable to a baseline-only online predictor",
+      "fit_form": "log(speedup)=intercept+slope*x",
+      "fit": {
+        "intercept": 1.0030277148253404,
+        "slope": -0.07646677075660639,
+        "training_r_squared_log_speedup": 0.011182455754912057
+      },
+      "validation": "leave one entire benchmark family out, five folds",
+      "mean_absolute_relative_error_percent": 38.63627222831157,
+      "median_absolute_relative_error_percent": 29.32881976881979,
+      "worst_absolute_relative_error_percent": 126.14707173956164,
+      "held_out_predictions": [
+        {
+          "kernel": "BFS",
+          "held_out_family": "GAP",
+          "reported_speedup": 2.856032679977784,
+          "predicted_speedup": 3.5938933085947364,
+          "heldout_feature": -1.128110731336343,
+          "training_feature_range": [
+            0.27255540872001005,
+            0.9758238441859252
+          ],
+          "heldout_feature_in_training_range": false,
+          "absolute_relative_error_percent": 25.835160563453073
+        },
+        {
+          "kernel": "PR",
+          "held_out_family": "GAP",
+          "reported_speedup": 1.2420767477942736,
+          "predicted_speedup": 2.80892019389473,
+          "heldout_feature": 0.8633032776119832,
+          "training_feature_range": [
+            0.27255540872001005,
+            0.9758238441859252
+          ],
+          "heldout_feature_in_training_range": true,
+          "absolute_relative_error_percent": 126.14707173956164
+        },
+        {
+          "kernel": "BC",
+          "held_out_family": "GAP",
+          "reported_speedup": 2.2364290625525585,
+          "predicted_speedup": 3.048528562319435,
+          "heldout_feature": 0.20181315094160424,
+          "training_feature_range": [
+            0.27255540872001005,
+            0.9758238441859252
+          ],
+          "heldout_feature_in_training_range": false,
+          "absolute_relative_error_percent": 36.31232992652953
+        },
+        {
+          "kernel": "PRH",
+          "held_out_family": "HashJoin",
+          "reported_speedup": 2.2110732273983573,
+          "predicted_speedup": 2.587250163316162,
+          "heldout_feature": 0.5536013493531845,
+          "training_feature_range": [
+            -1.128110731336343,
+            0.9758238441859252
+          ],
+          "heldout_feature_in_training_range": true,
+          "absolute_relative_error_percent": 17.01331874749488
+        },
+        {
+          "kernel": "PRO",
+          "held_out_family": "HashJoin",
+          "reported_speedup": 3.346829502225111,
+          "predicted_speedup": 2.554255917276783,
+          "heldout_feature": 0.6978183990664519,
+          "training_feature_range": [
+            -1.128110731336343,
+            0.9758238441859252
+          ],
+          "heldout_feature_in_training_range": true,
+          "absolute_relative_error_percent": 23.681325398302842
+        },
+        {
+          "kernel": "IS",
+          "held_out_family": "NAS",
+          "reported_speedup": 3.3914120417984215,
+          "predicted_speedup": 2.584562005135046,
+          "heldout_feature": 0.7729965622314916,
+          "training_feature_range": [
+            -1.128110731336343,
+            0.9660284639828658
+          ],
+          "heldout_feature_in_training_range": true,
+          "absolute_relative_error_percent": 23.790976346109606
+        },
+        {
+          "kernel": "CG",
+          "held_out_family": "NAS",
+          "reported_speedup": 1.922522709666169,
+          "predicted_speedup": 2.553542321820308,
+          "heldout_feature": 0.9758238441859252,
+          "training_feature_range": [
+            -1.128110731336343,
+            0.9660284639828658
+          ],
+          "heldout_feature_in_training_range": false,
+          "absolute_relative_error_percent": 32.82247897418651
+        },
+        {
+          "kernel": "GZP",
+          "held_out_family": "UME",
+          "reported_speedup": 5.345033981071244,
+          "predicted_speedup": 2.165742675746257,
+          "heldout_feature": 0.7395593760476701,
+          "training_feature_range": [
+            -1.128110731336343,
+            0.9758238441859252
+          ],
+          "heldout_feature_in_training_range": true,
+          "absolute_relative_error_percent": 59.48121782918577
+        },
+        {
+          "kernel": "GZZ",
+          "held_out_family": "UME",
+          "reported_speedup": 4.791490502851557,
+          "predicted_speedup": 2.180023243335471,
+          "heldout_feature": 0.7015608827436006,
+          "training_feature_range": [
+            -1.128110731336343,
+            0.9758238441859252
+          ],
+          "heldout_feature_in_training_range": true,
+          "absolute_relative_error_percent": 54.50219003798349
+        },
+        {
+          "kernel": "GZPI",
+          "held_out_family": "UME",
+          "reported_speedup": 2.682655141506541,
+          "predicted_speedup": 2.3479347080856785,
+          "heldout_feature": 0.27255540872001005,
+          "training_feature_range": [
+            -1.128110731336343,
+            0.9758238441859252
+          ],
+          "heldout_feature_in_training_range": true,
+          "absolute_relative_error_percent": 12.477206937336282
+        },
+        {
+          "kernel": "GZZI",
+          "held_out_family": "UME",
+          "reported_speedup": 2.2647103310534376,
+          "predicted_speedup": 2.3036986178173238,
+          "heldout_feature": 0.38252434616697173,
+          "training_feature_range": [
+            -1.128110731336343,
+            0.9758238441859252
+          ],
+          "heldout_feature_in_training_range": true,
+          "absolute_relative_error_percent": 1.7215573324889988
+        },
+        {
+          "kernel": "XRAGE",
+          "held_out_family": "XRAGE",
+          "reported_speedup": 1.7911073050703166,
+          "predicted_speedup": 2.6839820504786736,
+          "heldout_feature": 0.9660284639828658,
+          "training_feature_range": [
+            -1.128110731336343,
+            0.9758238441859252
+          ],
+          "heldout_feature_in_training_range": true,
+          "absolute_relative_error_percent": 49.850432907106246
+        }
+      ],
+      "feature_extrapolation_cases": 3,
+      "in_range_mean_absolute_relative_error_percent": 40.96281080839664,
+      "deployment_status": "descriptive_diagnostic_requires_independent_matched_evidence"
+    },
+    {
+      "feature": "net_selected_memory_op_reduction",
+      "availability": "post-treatment diagnostic; unavailable to a baseline-only online predictor",
+      "fit_form": "log(speedup)=intercept+slope*x",
+      "fit": {
+        "intercept": 1.0372884603816852,
+        "slope": -0.1110721571138795,
+        "training_r_squared_log_speedup": 0.0052259985310365575
+      },
+      "validation": "leave one entire benchmark family out, five folds",
+      "mean_absolute_relative_error_percent": 38.920419048191334,
+      "median_absolute_relative_error_percent": 25.193750615417613,
+      "worst_absolute_relative_error_percent": 132.9845178814705,
+      "held_out_predictions": [
+        {
+          "kernel": "BFS",
+          "held_out_family": "GAP",
+          "reported_speedup": 2.856032679977784,
+          "predicted_speedup": 2.849539360962305,
+          "heldout_feature": 0.4162632434185354,
+          "training_feature_range": [
+            0.19705414201530513,
+            0.9873484500774097
+          ],
+          "heldout_feature_in_training_range": true,
+          "absolute_relative_error_percent": 0.22735450686544034
+        },
+        {
+          "kernel": "PR",
+          "held_out_family": "GAP",
+          "reported_speedup": 1.2420767477942736,
+          "predicted_speedup": 2.8938465225663363,
+          "heldout_feature": 0.8781662175120327,
+          "training_feature_range": [
+            0.19705414201530513,
+            0.9873484500774097
+          ],
+          "heldout_feature_in_training_range": true,
+          "absolute_relative_error_percent": 132.9845178814705
+        },
+        {
+          "kernel": "BC",
+          "held_out_family": "GAP",
+          "reported_speedup": 2.2364290625525585,
+          "predicted_speedup": 2.8417592091964923,
+          "heldout_feature": 0.3344142807253032,
+          "training_feature_range": [
+            0.19705414201530513,
+            0.9873484500774097
+          ],
+          "heldout_feature_in_training_range": true,
+          "absolute_relative_error_percent": 27.06681632696355
+        },
+        {
+          "kernel": "PRH",
+          "held_out_family": "HashJoin",
+          "reported_speedup": 2.2110732273983573,
+          "predicted_speedup": 2.623629230910415,
+          "heldout_feature": 0.6028333608929635,
+          "training_feature_range": [
+            0.19705414201530513,
+            0.9873484500774097
+          ],
+          "heldout_feature_in_training_range": true,
+          "absolute_relative_error_percent": 18.658631401253434
+        },
+        {
+          "kernel": "PRO",
+          "held_out_family": "HashJoin",
+          "reported_speedup": 3.346829502225111,
+          "predicted_speedup": 2.566325939741376,
+          "heldout_feature": 0.7469596594859671,
+          "training_feature_range": [
+            0.19705414201530513,
+            0.9873484500774097
+          ],
+          "heldout_feature_in_training_range": true,
+          "absolute_relative_error_percent": 23.32068490387168
+        },
+        {
+          "kernel": "IS",
+          "held_out_family": "NAS",
+          "reported_speedup": 3.3914120417984215,
+          "predicted_speedup": 2.6317046549090004,
+          "heldout_feature": 0.761265600256388,
+          "training_feature_range": [
+            0.19705414201530513,
+            0.9873484500774097
+          ],
+          "heldout_feature_in_training_range": true,
+          "absolute_relative_error_percent": 22.400916713339203
+        },
+        {
+          "kernel": "CG",
+          "held_out_family": "NAS",
+          "reported_speedup": 1.922522709666169,
+          "predicted_speedup": 2.6216650499908383,
+          "heldout_feature": 0.9822196239769677,
+          "training_feature_range": [
+            0.19705414201530513,
+            0.9873484500774097
+          ],
+          "heldout_feature_in_training_range": true,
+          "absolute_relative_error_percent": 36.365882015826486
+        },
+        {
+          "kernel": "GZP",
+          "held_out_family": "UME",
+          "reported_speedup": 5.345033981071244,
+          "predicted_speedup": 2.158028184720946,
+          "heldout_feature": 0.7977709379593307,
+          "training_feature_range": [
+            0.3344142807253032,
+            0.9873484500774097
+          ],
+          "heldout_feature_in_training_range": true,
+          "absolute_relative_error_percent": 59.625547894301
+        },
+        {
+          "kernel": "GZZ",
+          "held_out_family": "UME",
+          "reported_speedup": 4.791490502851557,
+          "predicted_speedup": 2.1705620660845493,
+          "heldout_feature": 0.7874305396022087,
+          "training_feature_range": [
+            0.3344142807253032,
+            0.9873484500774097
+          ],
+          "heldout_feature_in_training_range": true,
+          "absolute_relative_error_percent": 54.69964795312057
+        },
+        {
+          "kernel": "GZPI",
+          "held_out_family": "UME",
+          "reported_speedup": 2.682655141506541,
+          "predicted_speedup": 3.0211308148111686,
+          "heldout_feature": 0.19705414201530513,
+          "training_feature_range": [
+            0.3344142807253032,
+            0.9873484500774097
+          ],
+          "heldout_feature_in_training_range": false,
+          "absolute_relative_error_percent": 12.617189144727137
+        },
+        {
+          "kernel": "GZZI",
+          "held_out_family": "UME",
+          "reported_speedup": 2.2647103310534376,
+          "predicted_speedup": 2.788656036869029,
+          "heldout_feature": 0.34002401997425014,
+          "training_feature_range": [
+            0.3344142807253032,
+            0.9873484500774097
+          ],
+          "heldout_feature_in_training_range": true,
+          "absolute_relative_error_percent": 23.135219486188173
+        },
+        {
+          "kernel": "XRAGE",
+          "held_out_family": "XRAGE",
+          "reported_speedup": 1.7911073050703166,
+          "predicted_speedup": 2.793099664813526,
+          "heldout_feature": 0.9873484500774097,
+          "training_feature_range": [
+            0.19705414201530513,
+            0.9822196239769677
+          ],
+          "heldout_feature_in_training_range": false,
+          "absolute_relative_error_percent": 55.94262035036881
+        }
+      ],
+      "feature_extrapolation_cases": 2,
+      "in_range_mean_absolute_relative_error_percent": 39.84852190832,
+      "deployment_status": "descriptive_diagnostic_requires_independent_matched_evidence"
+    }
+  ],
+  "tile_sensitivity": [
+    {
+      "tile_elements": 1024,
+      "workloads": 12,
+      "author_table_geomean_speedup": 1.6854972300920392,
+      "normalized_runtime_geomean": 0.5932967329441374,
+      "single_anchor_linear_area_proxy_28nm_mm2": 0.717875,
+      "area_basis": "assumed linear scratchpad scaling at fixed32tiles and4-byte elements; independent memory-screen sensitivity is separate"
+    },
+    {
+      "tile_elements": 2048,
+      "workloads": 12,
+      "author_table_geomean_speedup": 1.8844651305922637,
+      "normalized_runtime_geomean": 0.5306545521941881,
+      "single_anchor_linear_area_proxy_28nm_mm2": 0.94075,
+      "area_basis": "assumed linear scratchpad scaling at fixed32tiles and4-byte elements; independent memory-screen sensitivity is separate"
+    },
+    {
+      "tile_elements": 4096,
+      "workloads": 12,
+      "author_table_geomean_speedup": 2.158346407734308,
+      "normalized_runtime_geomean": 0.46331765671004366,
+      "single_anchor_linear_area_proxy_28nm_mm2": 1.3864999999999998,
+      "area_basis": "assumed linear scratchpad scaling at fixed32tiles and4-byte elements; independent memory-screen sensitivity is separate"
+    },
+    {
+      "tile_elements": 8192,
+      "workloads": 12,
+      "author_table_geomean_speedup": 2.346630411853889,
+      "normalized_runtime_geomean": 0.42614294732930624,
+      "single_anchor_linear_area_proxy_28nm_mm2": 2.278,
+      "area_basis": "assumed linear scratchpad scaling at fixed32tiles and4-byte elements; independent memory-screen sensitivity is separate"
+    },
+    {
+      "tile_elements": 16384,
+      "workloads": 12,
+      "author_table_geomean_speedup": 2.623882573751504,
+      "normalized_runtime_geomean": 0.3811146161812596,
+      "single_anchor_linear_area_proxy_28nm_mm2": 4.061,
+      "area_basis": "assumed linear scratchpad scaling at fixed32tiles and4-byte elements; independent memory-screen sensitivity is separate"
+    },
+    {
+      "tile_elements": 32768,
+      "workloads": 12,
+      "author_table_geomean_speedup": 2.95803944008903,
+      "normalized_runtime_geomean": 0.338061753486932,
+      "single_anchor_linear_area_proxy_28nm_mm2": 7.627,
+      "area_basis": "assumed linear scratchpad scaling at fixed32tiles and4-byte elements; independent memory-screen sensitivity is separate"
+    }
+  ],
+  "main_vs_tile16k_differences": [
+    {
+      "kernel": "IS",
+      "main_cycles": 383612766.0,
+      "tile_table_16k_cycles": 387110923.0
+    },
+    {
+      "kernel": "PRH",
+      "main_cycles": 128006637.0,
+      "tile_table_16k_cycles": 127943759.0
+    },
+    {
+      "kernel": "PRO",
+      "main_cycles": 65290899.0,
+      "tile_table_16k_cycles": 65208145.0
+    },
+    {
+      "kernel": "XRAGE",
+      "main_cycles": 42141196.0,
+      "tile_table_16k_cycles": 42192159.0
+    },
+    {
+      "kernel": "GZP",
+      "main_cycles": 30444155.0,
+      "tile_table_16k_cycles": 30458024.0
+    },
+    {
+      "kernel": "GZZ",
+      "main_cycles": 32218355.0,
+      "tile_table_16k_cycles": 32207979.0
+    },
+    {
+      "kernel": "GZPI",
+      "main_cycles": 31895204.0,
+      "tile_table_16k_cycles": 31725373.0
+    },
+    {
+      "kernel": "GZZI",
+      "main_cycles": 24898216.0,
+      "tile_table_16k_cycles": 24858152.0
+    }
+  ],
+  "scalability_cohorts": [
+    {
+      "mode": "BASE",
+      "cores": "4",
+      "accelerators": "0",
+      "rows": 12
+    },
+    {
+      "mode": "BASE",
+      "cores": "8",
+      "accelerators": "0",
+      "rows": 12
+    },
+    {
+      "mode": "MAA",
+      "cores": "4",
+      "accelerators": "1",
+      "rows": 12
+    },
+    {
+      "mode": "MAA",
+      "cores": "8",
+      "accelerators": "1",
+      "rows": 12
+    },
+    {
+      "mode": "MAA",
+      "cores": "8",
+      "accelerators": "2",
+      "rows": 12
+    }
+  ],
+  "promotion_status": "exploratory_source_reported_analysis",
+  "independent_calibration_requirements": [
+    "Correct, terminal, paired runs with source/binary/config/input/checkpoint/ROI/clock/correctness receipts.",
+    "Direct baseline-region accounting or an independently estimated assigned-work metric; CPU work reduction may be negative and is not an offload fraction.",
+    "Preserve authors area-equivalent LLC difference and exact other non-treatment settings; avoid pooling main/tile/scalability cohorts.",
+    "Repeat/check held-out families on the chosen target; add confidence only from actual independent repetitions.",
+    "An online feature must be available before target evaluation; post-treatment counters cannot be used as free proposal-time inputs."
+  ],
+  "scope": "Descriptive fits of pinned published data; no new simulator performance or independently reproduced architecture result is asserted."
+}
