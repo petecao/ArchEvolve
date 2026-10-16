@@ -1,9 +1,9 @@
 # 36 — Proof setup check and verdict reading
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-15 ET (partial mandatory-RTE admission and post-plan mutation controls)
+Updated: 2026-10-15 ET (reviewed ticket-local acceptance closure)
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 11, 21, 27
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Proof-hint loop": Three checks; "Verifier lineup and order": one summary source, failure classes; "What a proven verdict asserts": harness `assume`s; "Records and levels": method-version file; "Testing Decisions", seam 1; user stories 15, 21, 30, 31, 33; S1, S3, S7); decisions: [13](../../formal-verification-2026-10-09/issues/13-proof-hint-loop.md) (items 7, 10), [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md) (item 4), [09](../../formal-verification-2026-10-09/issues/09-what-proven-asserts.md) (item 10), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md) (items 3, 10)
 **Time estimate:** about 3 days
@@ -31,39 +31,39 @@ The coordinator owns actual verifier admission and remote scheduling.
 
 ## Acceptance
 
-- [ ] **Always first.** `swdb prove` runs the proof setup check before every verifier run it makes,
+- [x] **Always first.** `swdb prove` runs the proof setup check before every verifier run it makes,
       bounded runs included (scripted-adapter control: a non-summary `assume` on a SAW job is
       refused). On a pass, the proof record carries the result and the check's version. On a fail,
       no verifier runs and `swdb prove` stops the batch, naming the failing rule (assumption below).
-- [ ] **`assume`s.** Only `assume`s a summary generates pass (map 11 item 4). Controls: the 08
+- [x] **`assume`s.** Only `assume`s a summary generates pass (map 11 item 4). Controls: the 08
       prototype's harness `assume` (`parent[v] >= -1`, which real callers violate); a hand-added
       `assume` in the C lowering. Both refused.
-- [ ] **Hazard probes and placements.** Controls: a fixture unit with one generated hazard probe
+- [x] **Hazard probes and placements.** Controls: a fixture unit with one generated hazard probe
       deleted; a probe supplied as a hint instead of by the generator; a clause with no proof
       placement. Each refused.
-- [ ] **Hashes.** The check records the hashes of contract, summaries, lowering and run plan, and
+- [x] **Hashes.** The check records the hashes of contract, summaries, lowering and run plan, and
       each must match the hash pinned for the job. Changing any one after the job is planned →
       refused.
-- [ ] **Frozen flags.** Each control refused: `-wp-cache update` and `-wp-cache offline` (only
+- [x] **Frozen flags.** Each control refused: `-wp-cache update` and `-wp-cache offline` (only
       `-wp-cache none` passes); an existing WP session in the working folder (not a fresh session); a
       Frama-C warning key moved off its default (for example `ghost:bad-use`, or `annot-error` below
       abort, which drops ill-formed annotations, research 13 Q7); a machdep other than
       x86_64; any WP environment variable set (`FRAMAC_WP_CACHE`, `FRAMAC_WP_CACHEDIR`,
       `FRAMAC_WP_SCRIPT`).
-- [ ] **Method-version match.** A tool, solver or flag that differs from the method-version file
+- [x] **Method-version match.** A tool, solver or flag that differs from the method-version file
       is refused. On a pass, the record names the method version's ID and hash.
-- [ ] **Per-property reading.** No fact-file control reads as proven, though WP prints its target
+- [x] **Per-property reading.** No fact-file control reads as proven, though WP prints its target
       `[ Valid ]`. A goal resting on an unproven lemma, on a failed call-site precondition, or on a
       callee whose termination fails reads "not proven" with the failing goal's class. A goal resting
       on an `admit` or an `axiom` (an unexpected `Extern`) stops the batch. `Extern` on a summary's
       or a `maa_*` call's contract is accepted, each one an assumption entry (S7). The consolidated
       status is never read.
-- [ ] **Doctored cache.** The tampered cache entry from map ticket 13's facts (a false goal edited to
+- [x] **Doctored cache.** The tampered cache entry from map ticket 13's facts (a false goal edited to
       `valid`) cannot make a goal Valid: the verdict comes only from the loop's own fresh run.
-- [ ] **Smoke tests.** Every smoke test must pass (S7: a smoke goal WP proves Valid signals dead
+- [x] **Smoke tests.** Every smoke test must pass (S7: a smoke goal WP proves Valid signals dead
       code). A failed smoke test voids the proof with failure class "vacuous pass". Controls:
       contradictory preconditions; contradictory loop invariants.
-- [ ] **Failure classes.** A "not proven" reading carries the class the WP adapter (21) gave each
+- [x] **Failure classes.** A "not proven" reading carries the class the WP adapter (21) gave each
       unproven goal, or "vacuous pass" for a failed smoke test. Timeout and unknown are marked for
       the proof-hint loop (37 routes them). Any not-Valid property with no class stops the batch.
 
@@ -892,3 +892,72 @@ See [compact closure](../evidence/t36-facts-production-cold-20261015.json).
 Setup129 and the two bounded continuation cases remain pending; this is not
 ticket closure. Source2033/checker b493 records are never upgraded to later
 checker identities by this evidence.
+
+## Answer — 2026-10-15 ET
+
+Implemented and accepted the versioned setup and fresh per-property reading checks
+through the public `swdb prove` seam. The compiler/runtime repair preserves exact
+selected command, wrapper, resolved driver and frontend context even when optional
+libclang/header discovery fails; unresolved drivers refuse before proof launch.
+Full original-TU standard/allocation certificates remain mandatory.
+
+All ten acceptance items are complete within the reviewed ticket-local freeze:
+
+| Acceptance | Concrete acceptance evidence |
+|---|---|
+| Always first | Setup129 includes batch-stop/no-later-command and successful versioned attestation controls. Actual WP3 and bounded4 records retain passed final generated-run checks before verifier launch. |
+| Generated assumptions only | Setup129 rejects the prototype harness premise and hand-added lowering assumptions. Bounded summary-first/caller records pin the proven summary/content and exactly two generated postcondition assumption IDs. |
+| Hazard probes and placements | Setup129 refuses deleted/mis-originated probes and missing clause placement. Independently reviewed [ticket27](27-proof-semantics-bfs-calls.md) supplies its exact historical generator/source evidence; its records are not relabeled to this checker. |
+| Contract/summary/lowering/plan hashes | Setup129 covers post-plan contract/used-summary mutation and wrong input/plan pins. A focused external report-compiler control changes copied `wp_input.c` at the production adapter's final prelaunch seam: `input_hash` refusal, changed-byte/compiler markers, no WP marker or new record. Actual records retain final input, lowering, contract, summary, plan and method hashes. |
+| Frozen flags/session/environment | Setup129 rejects cache update/offline, nonfresh sessions, warning/machdep/WP-environment overrides, reordered solvers, RTE disabling/prefix overrides and initializedness filtering. Actual WP records retain cache-none/fresh, RTE/init, smoke, default warnings and frozen solver/budget flags. |
+| Method version | Setup129 and runtime controls reject changed tool/solver/flag/checker/reader dependencies, same-version driver replacement, opaque driver and selected-command/frontend-context drift. Successful records pin method ID/hash and exact compiler runtime. |
+| Per-property reading | All13 fresh actual facts pass. Cold replay uses same-run inventory/JSON/CSV: hidden/untried/lemma/call-precondition/termination obligations remain visible; unexpected admit/axiom/header Externs stop without records; the exact allowed maa-summary Extern is a sourced assumption. |
+| Doctored cache | Actual fact11 retains poisoned real cache/offline evidence, then reads only its fresh cache-none run; the false target stays not_proven. |
+| Smoke | Actual facts6/7 retain vacuous_pass for contradictory preconditions/invariants and original failing goal classes. Safe fill has three passing smoke goals. The unconditional scalar has zero generated smoke goals, with smoke generation enabled and all four ordinary goals Valid; its test-only assertion replay is independently reviewed. |
+| Failure classes | Actual reader replay retains timeout/unknown and vacuity classes; unclassified/Extern controls stop batch. The WP seeded timeout remains not_proven; only the separate bounded bug is refuted with recorded C++ replay at x=41. |
+
+[Setup/bounded closure](../evidence/t36-setup-bounded-cold-20261015.json):
+**129 passed, 13 deselected in702.19s** at exact `74edefd0`, including admitted real
+formal-half parsing and synthetic report controls; **2 bounded tests passed
+in129.60s** at exact `2033c174`, producing three proven records and one replayed
+refutation. Their cold audits report respectively55physical files/129JUnit nodes
+and29artifact references/88physical files, with0errors.
+
+[Facts/production closure](../evidence/t36-facts-production-cold-20261015.json):
+**13 actual facts passed in114.40s**, cold audit40references/126files/0errors.
+Actual production WP retains safe20ordinary/3smoke allValid, bug21ordinary/3smoke
+not_proven/timeout, and scalar4ordinary/0smoke allValid; cold audit34references/
+94files/0errors. Original production pytest remains **one failed/two passed**
+after five collected: the scalar failure was only the overly strong nonempty-
+smoke assertion, and maxfail left bounded2 unexecuted there. The separate bounded
+continuation and reviewed scalar cold assertion replay complete that acceptance;
+the original failed pytest and proven scalar record remain immutable. No extra
+WP run is claimed.
+
+[Generated-input control](../evidence/t36-generated-input-control-20261015.json)
+passes alone in2.80s under workerB/8GiB/180s with parent Frama explicitly disabled
+and only selected external report stand-ins. It closes a test-coverage gap; no
+production vulnerability or implementation repair was needed. The initial sandbox
+watchdog visibility error and test scratch-cleanup assertion failure are retained.
+[Independent control review](../evidence/t36-generated-input-independent-review-20261015.md)
+and [final acceptance review](../evidence/t36-final-acceptance-independent-review-20261015.md)
+and its [timing-only addendum](../evidence/t36-final-acceptance-timing-addendum-20261015.md)
+record the scoped disposition.
+
+All accepted profiles terminate naturally, exit0 and retain no OOM/timeout, clean
+unchanged source and exact runtime provenance. The production5 exit1 above is
+preserved separately. Original relative-path dispatches that collected no tests,
+the historical compiler/parser scheduling error and interrupted profile retain
+their original evidence boundaries; none count as acceptance. Root coordinates
+remote admission/leases: setup node0 generation583 released22:21:17ET and bounded
+node1 generation609 released22:16:09ET; both were observed released22:22:37ET.
+Observation time is distinct from release time. No provider or held-out
+BC/PR/SSSP workload was used.
+
+Assumption: closure means reviewed ticket-local source/checker/runtime acceptance,
+not final production freeze59. Requiring59 here would create a dependency cycle
+through37/38/58. Actual records remain exact2033/74 and checker
+`b493fec5c0c7f5e43ea7f0d45426e73f689c696ea16d35f5abc34b7476d28104`. Later
+ticket28 source/checker changes, including its new imported-generator dependency
+pin, do not upgrade those records. Final source/reproduction review remains58/59;
+drafts1/2 stay immutable, with no draft3 created. Root owns map/resume updates.

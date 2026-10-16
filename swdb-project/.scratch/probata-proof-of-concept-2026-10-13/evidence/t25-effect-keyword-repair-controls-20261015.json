@@ -1,0 +1,82 @@
+{
+  "alpha_normalization": [
+    {
+      "after_sha256": "5186c27f5a7a339352e3f62dc3a0d3efb1c7bd12f8a456cc61b0d7a52566638d",
+      "before_sha256": "44cd626d07a93d105be791bff82fa201b525e09523a8f6598b92312a6a0b1eac",
+      "inverse_alpha_byte_equal": true,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-heap-capability/heap_bridge.mlw"
+    },
+    {
+      "after_sha256": "f20e0ec130222aeda96b4fbb8e72eef8d922d3f33e84077777203f7e6d159092",
+      "before_sha256": "5b6353263114ea31bf7ee9408b81a356b10ba1206ee4f21167c67d7d96f1a362",
+      "inverse_alpha_byte_equal": true,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-heap-capability/source_vcs.py"
+    },
+    {
+      "after_sha256": "4e4f71e247e899f625e2433b3f7019382f985b01ccdbeb60958f285befd23995",
+      "before_sha256": "3299b9eb5f24d37228d26c18dc8a795c812b2410384899d680657d86fbdcead5",
+      "inverse_alpha_byte_equal": true,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-heap-capability/packets.py"
+    }
+  ],
+  "controls": [
+    {
+      "id": "effect-keyword-red",
+      "pins": [
+        {
+          "path": "/private/tmp/probata-t25-effect-keyword-red-20261015/command.json",
+          "sha256": "b67393b66081d98fe2b04681b30b8755f889fd15e8dca9a0fcc3eec0d5ec8d1a"
+        },
+        {
+          "path": "/private/tmp/probata-t25-effect-keyword-red-20261015/controls.log",
+          "sha256": "6c63b9ba6fe33be00a39841ae8e681dae236079bab518de85bda7091f948141b"
+        },
+        {
+          "path": "/private/tmp/probata-t25-effect-keyword-red-20261015/resources.json",
+          "sha256": "9bf215a5437f2fde4a61990a8683f1418a1e0a1cfa45c66eed02c0c5672915ef"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 0.637643,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 72482816,
+        "timed_out": false,
+        "wall_seconds": 0.7323327920166776
+      }
+    },
+    {
+      "id": "effect-keyword-green",
+      "pins": [
+        {
+          "path": "/private/tmp/probata-t25-effect-keyword-green-20261015/command.json",
+          "sha256": "55ed70e0dcd828778b9e1273b1250ffc564ac0da672b2c96f8d33adb609d0593"
+        },
+        {
+          "path": "/private/tmp/probata-t25-effect-keyword-green-20261015/controls.log",
+          "sha256": "e9f5512415517e8f6cb2b8da4f90bdcddb71843940bb266214efe792d2528bce"
+        },
+        {
+          "path": "/private/tmp/probata-t25-effect-keyword-green-20261015/resources.json",
+          "sha256": "933ce17ad8a654d9f8872c5f7ed044c7c9f32e18712536327d5f0074ba2498ff"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 4.076571,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 127533056,
+        "timed_out": false,
+        "wall_seconds": 5.062778334016912
+      }
+    }
+  ],
+  "created": "2026-10-15 ET",
+  "scope": "Compiler-free alpha-renaming RED/GREEN; formal syntax/type validation pending.",
+  "source_reference": {
+    "section": "6.4 function specification effect grammar, reads/writes keywords",
+    "url": "https://why3.org/doc/syntaxref.html",
+    "why3_version": "1.8.2"
+  },
+  "unchanged": "No original model/clauses, formulas, primitive meaning, obligations, IDs, expectation classes, command flags or runtime production code changed."
+}

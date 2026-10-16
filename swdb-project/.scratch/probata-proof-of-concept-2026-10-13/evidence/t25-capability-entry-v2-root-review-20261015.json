@@ -1,0 +1,31 @@
+{
+  "date_et": "2026-10-15",
+  "reviewer": "root",
+  "verdict": "PASS for first capability launch; actual imports/tasks/results pending",
+  "source_commit": "024db66c9ec4da43901f6662771a389b4567b334",
+  "entry": {
+    "path": "/private/tmp/probata-t25-capability-entry-v2-20261015.py",
+    "sha256": "f765e6e70bea6b1471ada303386cc9d1a332eb3db03c23b3b97c5624cb73f33d"
+  },
+  "command": {
+    "path": "/private/tmp/probata-t25-capability-command-v2-024db66c-20261015.json",
+    "sha256": "2210a246b49f94e6988a371cdf0bc1d3f526ab28a6f30d417a321e1306261b62"
+  },
+  "scope": "42 canonical source-mapped heap packets. No c_model record or whole-ticket acceptance.",
+  "checks": [
+    "Exact clean024 source and isolated rawroot/projectcwd; canonical source/VC mapping rebuilt and42/41/37/4/1 packet counts checked.",
+    "Pinned actual opam bootstrap,9 resolved executable hashes and2 native WP/META hashes; selected versions recorded under actual opam switch.",
+    "Fresh reader OCaml packages bound within selected switch/lib; WP core equals pinned native module directory.",
+    "Ambient FRAMAC_WP variables refused before probes. Explicit Why3 config files are hashed without environment/config content disclosure.",
+    "Exact seconds10/leaf180; one worker,8GiB and9000 whole/9120 outer via existingv3lane/watchdogs; stop at first unmatched expected result.",
+    "Prototype expectation policy requires exact intended ordinary lemma, allowed nonproof class and healthy resources; numeric kernel requires real smoke."
+  ],
+  "resolved_v1_findings": [
+    "Package queries now checked against pinned selected-library paths.",
+    "Forbidden ambient WP settings now fail closed."
+  ],
+  "limitations": [
+    "Selected tool/plugin identity is not full transitive hermetic OS/dynamic-library closure.",
+    "Actual Why3 import closure, proposition/task assumptions and source obligation correspondence must be independently audited before capability acceptance."
+  ]
+}

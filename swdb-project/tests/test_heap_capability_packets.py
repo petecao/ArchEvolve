@@ -290,3 +290,37 @@ def test_actual_output_inside_checkout_is_rejected_before_source_or_tool_probe(t
     assert result.returncode != 0
     assert 'outside the source checkout' in result.stdout + result.stderr
     assert not output.exists()
+
+
+def test_import_search_path_is_available_to_initial_parse_before_then(tmp_path):
+    inputs = tmp_path / 'packets'
+    made = subprocess.run([sys.executable, str(CLI), 'prepare', '--output', str(inputs)],
+                          capture_output=True, text=True, timeout=30)
+    assert made.returncode == 0, made.stderr
+    output = tmp_path / 'plan'
+    planned = subprocess.run([sys.executable, str(EXPERIMENT), '--plan-only', '--input', str(inputs),
+                              '--output', str(output)], capture_output=True, text=True, timeout=30)
+    assert planned.returncode == 0, planned.stderr
+    for row in json.loads((output / 'plan.json').read_text())['rows']:
+        command = row['command']
+        before_parse = command[:command.index('wp_input.c')]
+        assert '-wp-library' in before_parse
+        assert before_parse[before_parse.index('-wp-library')+1] == str(inputs / 'theory')
+        after_then = command[command.index('-then')+1:]
+        assert after_then[after_then.index('-wp-library')+1] == str(inputs / 'theory')
+
+
+def test_heap_exported_names_avoid_why3_effect_keywords_and_bind_packet_references(tmp_path):
+    import re
+    inputs = tmp_path / 'packets'
+    made = subprocess.run([sys.executable, str(CLI), 'prepare', '--output', str(inputs)],
+                          capture_output=True, text=True, timeout=30)
+    assert made.returncode == 0, made.stderr
+    theory = (inputs / 'theory/heap_bridge.mlw').read_text()
+    declared = set(re.findall(r'\b(?:predicate|function|type)\s+([A-Za-z_]\w*)', theory))
+    assert not declared & {'reads', 'writes'}  # Why3 1.8.2 effect-clause keywords.
+    manifest = json.loads((inputs / 'manifest.json').read_text())
+    used = set()
+    for goal in manifest['obligations']:
+        used.update(re.findall(r'Heap::([A-Za-z_]\w*)', (inputs / goal['path']).read_text()))
+    assert used <= declared

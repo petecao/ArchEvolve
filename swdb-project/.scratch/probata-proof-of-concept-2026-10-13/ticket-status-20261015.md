@@ -1,8 +1,8 @@
 # Current Probata ticket status
 
-Updated: 2026-10-15 22:11 ET.
+Updated: 2026-10-15 22:35 ET.
 
-34 resolved / 25 ready-for-agent / 4 claimed. Active frontier: **07, 25, 28, 36**.
+35 resolved / 25 ready-for-agent / 3 claimed. Active frontier: **07, 25, 28**.
 Derived from authoritative ticket frontmatter; unresolved dependencies still gate later work.
 [Current resume](resume.md). Historical proof evidence retains its exact source pins.
 
@@ -43,8 +43,8 @@ Derived from authoritative ticket frontmatter; unresolved dependencies still gat
 | [33 — Minimum-bounds script and A2 exit](issues/33-minimum-bounds-and-a2-exit.md) | ready-for-agent | 29, 32 |
 | [34 — proof_hinting role and workspace](issues/34-proof-hinting-role.md) | resolved | none |
 | [35 — Hint records, merger and proof hint check](issues/35-hint-records-and-proof-hint-check.md) | resolved | none |
-| [36 — Proof setup check and verdict reading](issues/36-proof-setup-check-and-verdict-reading.md) | claimed | none |
-| [37 — The proof-hint loop](issues/37-proof-hint-loop.md) | ready-for-agent | 33, 36 |
+| [36 — Proof setup check and verdict reading](issues/36-proof-setup-check-and-verdict-reading.md) | resolved | none |
+| [37 — The proof-hint loop](issues/37-proof-hint-loop.md) | ready-for-agent | 33 |
 | [38 — Calibration on the public C suites](issues/38-calibration-public-suites.md) | ready-for-agent | 37 |
 | [39 — BFS unit proven unbounded at one thread; A3 exit](issues/39-bfs-unit-unbounded-and-a3-exit.md) | ready-for-agent | 33, 37, 38, 40 |
 | [40 — Bucketed-relaxation fixture](issues/40-bucketed-relaxation-fixture.md) | ready-for-agent | 37 |

@@ -1,0 +1,34 @@
+{
+  "blockers": [],
+  "created": "2026-10-15 ET",
+  "expected_execution_commit": "024db66c9ec4da43901f6662771a389b4567b334",
+  "formal_tools_launched": false,
+  "inputs": [
+    {
+      "path": "/private/tmp/probata-t25-capability-entry-v2-20261015.py",
+      "sha256": "f765e6e70bea6b1471ada303386cc9d1a332eb3db03c23b3b97c5624cb73f33d"
+    },
+    {
+      "path": "/private/tmp/probata-t25-capability-command-v2-024db66c-20261015.json",
+      "sha256": "2210a246b49f94e6988a371cdf0bc1d3f526ab28a6f30d417a321e1306261b62"
+    },
+    {
+      "path": "/private/tmp/probata-t25-remote-tool-path-metadata-20261015.json",
+      "sha256": "c1f18660c983164aeb4637c790f3fdb04e06d5ab577d0e85cf1b796e0b5f5166"
+    }
+  ],
+  "pending": [
+    "actual execution and resource receipts",
+    "WP33 syntax/import acceptance",
+    "actual resolved import/driver/task-hypothesis audit",
+    "all ordinary/RTE/init/smoke results",
+    "full ticket25 body proof and generic composition"
+  ],
+  "review_markdown": {
+    "path": "/private/tmp/probata-t25-capability-entry-review-v2-20261015.md",
+    "sha256": "a7e33b7ca6f733ab3825a67d9d438dc89b88f3fb4c0c51f033193a1f5cfb4d92"
+  },
+  "review_method": "inert AST/text/JSON/hash and local Git diff only",
+  "tests_run": false,
+  "verdict": "PASS_FOR_CAPABILITY_ADMISSION"
+}

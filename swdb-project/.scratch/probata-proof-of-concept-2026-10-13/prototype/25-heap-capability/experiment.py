@@ -62,6 +62,7 @@ def plan(manifest, inputs, output, seconds, public_timeout, command=('frama-c',)
             flags += ['-wp-fct=t25_ctor_numeric']
         invocation = [
             *command, '-machdep', 'x86_64', '-kernel-warn-key', 'annot-error=abort',
+            '-wp-library', str(inputs / 'theory'),
             'wp_input.c', '-print', '-ocode', 'wp-normalized.c', '-then',
             '-machdep', 'x86_64', *flags, '-wp-report-json', 'wp-goals.json',
             '-then', '-load-module', str(report_module), '-report', '-report-untried',

@@ -1,0 +1,149 @@
+{
+  "all_package_bindings_accepted": true,
+  "all_result_expectations_matched": false,
+  "all_version_queries_zero": true,
+  "ambient_wp": {
+    "checked_absent": [
+      "FRAMAC_WP_CACHE",
+      "FRAMAC_WP_CACHEDIR",
+      "FRAMAC_WP_SCRIPT"
+    ],
+    "policy": "no ambient FRAMAC_WP* variables, matching proof_setup._environment",
+    "present_names": []
+  },
+  "canonical_counts": {
+    "global_check_lemmas": 41,
+    "negative_global_lemmas": 4,
+    "numeric_kernels": 1,
+    "packets": 42,
+    "positive_global_lemmas": 37
+  },
+  "complete": false,
+  "created": "2026-10-15 ET",
+  "diagnostic_excerpt": "[kernel] Parsing wp_input.c (with preprocessing)\n[wp] User Error: Library Heap not found\n[kernel:annot-error] wp_input.c:3: Failure: \n  no such type Heap::heap. Ignoring global annotation\n[kernel] User Error: warning annot-error treated as fatal error.\n[kernel] Frama-C aborted: invalid user input.\n",
+  "errors": [],
+  "goal_inventory_present": false,
+  "lane": {
+    "socket_lane": {
+      "aligned_cell_age_s": "",
+      "aligned_to": "no_gapbs_batch_running",
+      "command": [
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=60",
+        "9120",
+        "bash",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-024db66c-t25-heap-capability-v2/run.sh"
+      ],
+      "cpus_allowed_list": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63",
+      "ended_utc": "2026-10-16T02:25:09Z",
+      "exit_code": 1,
+      "host": "mbit10",
+      "job": "probata-reviewed-024db66c-t25-heap-capability-v2",
+      "lease_generation": 610,
+      "lease_name": "mbit10-evaluation-node1",
+      "load1_at_start": 0.53,
+      "load1_max": 32,
+      "node": 1,
+      "numa_memory_policy": "bind:1",
+      "numactl": "--cpunodebind=1 --membind=1",
+      "preregistration_sha256": null,
+      "started_utc": "2026-10-16T02:25:05Z"
+    }
+  },
+  "pins": [
+    {
+      "bytes": 1924,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-024db66c-t25-heap-capability-v2/canonical-packet-precheck.json",
+      "sha256": "67fc5eee25e1c20f5fdb064975552360758f477226cccc3fa74e119c62b9d384"
+    },
+    {
+      "bytes": 207,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-024db66c-t25-heap-capability-v2/ambient-wp-precheck.json",
+      "sha256": "55387ec92751537cab2dd296776f6e328a09f74a54e728823024b95cc274a232"
+    },
+    {
+      "bytes": 8569,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-024db66c-t25-heap-capability-v2/selected-formal-tool-metadata.json",
+      "sha256": "d2022bc69b8dcdb33f30318811c1da861bb91a641cab83063dd4190d8941b27b"
+    },
+    {
+      "bytes": 18026,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-024db66c-t25-heap-capability-v2/capability/profile.json",
+      "sha256": "3fb360be9b7c2c093d66b07eddedd82e24dd1aaf017685e2b5962432c411056b"
+    },
+    {
+      "bytes": 299,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-024db66c-t25-heap-capability-v2/capability/jobs/control.ctor.premises_feasible/frama-c.log",
+      "sha256": "7dc127a2633d6d786e48ab47e1cbaba0ee83d9f82fa4b571323d50c02301292e"
+    },
+    {
+      "bytes": 2277,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-024db66c-t25-heap-capability-v2/capability/jobs/control.ctor.premises_feasible/wp_input.c",
+      "sha256": "54b7b254e0d1b4884e8303054036f73e15704c4cb2aaf3a589df08aa932467d6"
+    },
+    {
+      "bytes": 176,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-024db66c-t25-heap-capability-v2/capability/jobs/control.ctor.premises_feasible/resources.json",
+      "sha256": "46eb996bfb8f0ae4ff5731095439ef3247d88f6a9c7509073c823f5320204399"
+    },
+    {
+      "bytes": 175,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-024db66c-t25-heap-capability-v2/resources.json",
+      "sha256": "74b76f80b8df58397d2c5ae94618af31dfb32612643a16cc8893e696f49ac797"
+    },
+    {
+      "bytes": 112,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-024db66c-t25-heap-capability-v2/source-after.json",
+      "sha256": "c5ca97acc50c190974ea98547d91c380198bde3902f8757691d013182d16fe4a"
+    },
+    {
+      "bytes": 818,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-024db66c-t25-heap-capability-v2/lane.json",
+      "sha256": "8522d465d0e30c2c54caa6b54ae8dd9f34b81b3b957a6ac41c240bd300734db0"
+    },
+    {
+      "bytes": 437,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-024db66c-t25-heap-capability-v2/dispatch-argv.json",
+      "sha256": "3dc5662bb29a16316ab0b8d7a595a7047a952f44f2fd731510b60f78cf2aae2a"
+    },
+    {
+      "bytes": 10219,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-024db66c-t25-heap-capability-v2/launch.json",
+      "sha256": "70798a45c39e617e5b727c2baf16bba7a2721f4e5e08f29d3063df1acc095be7"
+    }
+  ],
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-024db66c-t25-heap-capability-v2",
+  "resources": {
+    "cpu_seconds": 2.2835099999999997,
+    "exit_code": 1,
+    "out_of_memory": false,
+    "peak_rss_bytes": 166588416,
+    "timed_out": false,
+    "wall_seconds": 1.9411315498873591
+  },
+  "rows": [
+    {
+      "id": "control.ctor.premises_feasible",
+      "matches_expected": false,
+      "report_error": "nonzero exit, timeout/OOM, or incomplete fresh report set",
+      "resources": {
+        "cpu_seconds": 0.41376899999999994,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 116436992,
+        "timed_out": false,
+        "wall_seconds": 0.4305647350847721
+      }
+    }
+  ],
+  "scope": "First real import capability RED; no generated proof goals or capability acceptance.",
+  "source_after": {
+    "commit": "024db66c9ec4da43901f6662771a389b4567b334",
+    "source_unchanged": true,
+    "tracked_changes": ""
+  },
+  "source_commit": "024db66c9ec4da43901f6662771a389b4567b334",
+  "tool_count": 9,
+  "wp_artifacts": 2
+}

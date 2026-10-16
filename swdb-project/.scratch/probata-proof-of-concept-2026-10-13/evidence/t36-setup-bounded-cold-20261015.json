@@ -1,0 +1,925 @@
+{
+  "created": "2026-10-15 ET",
+  "scope": "Setup129 is compiler+actual formal-half parser+stand-in acceptance at74edef; bounded2 is actual CBMC/native agreement/source replay at2033. Root admitted each exact source/command. Neither is upgraded to later ticket28 checker identities.",
+  "reports": [
+    {
+      "profile": "setup129",
+      "cold_audit": {
+        "path": "/private/tmp/probata-t36-setup129-v3-cold-audit-20261015.json",
+        "sha256": "1c9020d28a568cb19f137ed729f4b7be6fa504c347d7e7ac2b6883f523148827",
+        "physical_files": 55,
+        "artifact_references": null,
+        "errors": []
+      },
+      "raw": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-74edefd0-t36-setup129-v3",
+      "source": {
+        "path": "/data1/yanruj/probata-reviewed-74edefd0",
+        "commit": "74edefd0df0ff984b327da2e5f34cd85f82a7461",
+        "branch": "HEAD"
+      },
+      "checks": {
+        "proof_setup_check": {
+          "version": "1",
+          "sha256": "b493fec5c0c7f5e43ea7f0d45426e73f689c696ea16d35f5abc34b7476d28104"
+        },
+        "verdict_reading": {
+          "version": "1",
+          "sha256": "b493fec5c0c7f5e43ea7f0d45426e73f689c696ea16d35f5abc34b7476d28104"
+        }
+      },
+      "collection": {
+        "cwd": "/data1/yanruj/probata-reviewed-74edefd0/swdb-project",
+        "expected": 129,
+        "selected": 129,
+        "exit_code": 0
+      },
+      "resources": {
+        "cpu_seconds": 707.74909,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 380825600,
+        "timed_out": false,
+        "wall_seconds": 706.3055040193722
+      },
+      "outer_resources": {
+        "exit_code": 0,
+        "peak_rss_bytes": 433778688,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 708.3711373526603,
+        "cpu_seconds": 853.004492
+      },
+      "source_after": {
+        "commit": "74edefd0df0ff984b327da2e5f34cd85f82a7461",
+        "source_unchanged": true,
+        "tracked_changes": ""
+      },
+      "project_runtime_sha256": "3de47e98b84adb0b5486d33e14102cfc91d2c1dea11a52a066f784bac39f4d2e",
+      "nodes": [
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_wp_rte_cannot_be_missing_disabled_duplicated_or_boolean_overridden[flags0]",
+          "time": "20.589"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_wp_rte_cannot_be_missing_disabled_duplicated_or_boolean_overridden[flags1]",
+          "time": "3.659"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_wp_rte_cannot_be_missing_disabled_duplicated_or_boolean_overridden[flags2]",
+          "time": "3.744"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_wp_rte_cannot_be_missing_disabled_duplicated_or_boolean_overridden[flags3]",
+          "time": "3.710"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_wp_rte_cannot_be_missing_disabled_duplicated_or_boolean_overridden[flags4]",
+          "time": "3.805"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_wp_rte_cannot_be_missing_disabled_duplicated_or_boolean_overridden[flags5]",
+          "time": "3.780"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_production_wp_refuses_weak_frozen_rte_method_before_launch[flags0]",
+          "time": "3.986"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_production_wp_refuses_weak_frozen_rte_method_before_launch[flags1]",
+          "time": "3.857"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_production_wp_refuses_weak_frozen_rte_method_before_launch[flags2]",
+          "time": "3.429"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_production_wp_checks_rte_in_complete_command_including_tool_prefix[prefix0]",
+          "time": "6.523"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_production_wp_checks_rte_in_complete_command_including_tool_prefix[prefix1]",
+          "time": "6.569"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_production_wp_checks_rte_in_complete_command_including_tool_prefix[prefix2]",
+          "time": "6.552"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_production_wp_preserves_one_rte_switch_in_the_executed_command",
+          "time": "6.767"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_post_plan_contract_or_used_summary_mutation_refuses_before_wp[unit-contract_hash]",
+          "time": "10.899"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_post_plan_contract_or_used_summary_mutation_refuses_before_wp[helper-summary_hash]",
+          "time": "10.948"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_bounded_flags_cannot_omit_pointer_formation_or_hide_safety_properties[flags0]",
+          "time": "3.953"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_bounded_flags_cannot_omit_pointer_formation_or_hide_safety_properties[flags1]",
+          "time": "3.885"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_bounded_flags_cannot_omit_pointer_formation_or_hide_safety_properties[flags2]",
+          "time": "3.959"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_bounded_flags_cannot_omit_pointer_formation_or_hide_safety_properties[flags3]",
+          "time": "3.985"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_bounded_flags_cannot_omit_pointer_formation_or_hide_safety_properties[flags4]",
+          "time": "3.895"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_bounded_flags_cannot_omit_pointer_formation_or_hide_safety_properties[flags5]",
+          "time": "3.803"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_scripted_bounded_job_rejects_unattributed_harness_assume_before_command[void f(int parent) { __CPROVER_assume(parent >= -1); }\\n]",
+          "time": "3.829"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_scripted_bounded_job_rejects_unattributed_harness_assume_before_command[llvm_assume (llvm_term {{ parent_v >= -1 }});\\n]",
+          "time": "3.711"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_successful_scripted_proof_records_versioned_setup_and_method_hash",
+          "time": "3.955"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_fresh_reader_accepts_directly_proved_automatic_goals_omitted_by_wp_json",
+          "time": "4.177"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_fresh_reader_keeps_multiline_csv_properties_attached_to_their_function",
+          "time": "4.393"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_locally_valid_target_cannot_hide_an_unproved_premise[lemma]",
+          "time": "4.228"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_locally_valid_target_cannot_hide_an_unproved_premise[call_precondition]",
+          "time": "4.445"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_locally_valid_target_cannot_hide_an_unproved_premise[callee_termination]",
+          "time": "3.902"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_locally_valid_target_cannot_hide_an_unproved_premise[missing_goal]",
+          "time": "4.425"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_unexpected_extern_stops_batch_even_when_target_valid[admit]",
+          "time": "3.804"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_unexpected_extern_stops_batch_even_when_target_valid[axiom]",
+          "time": "3.959"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_unexpected_extern_stops_batch_even_when_target_valid[lemma]",
+          "time": "3.768"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_failed_smoke_goal_voids_locally_valid_proof[contradictory_preconditions]",
+          "time": "4.106"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_failed_smoke_goal_voids_locally_valid_proof[contradictory_invariants]",
+          "time": "4.086"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_wp_setup_refuses_overrides_before_any_verifier_runs[flags0-frozen_flags]",
+          "time": "3.961"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_wp_setup_refuses_overrides_before_any_verifier_runs[flags1-frozen_flags]",
+          "time": "3.936"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_wp_setup_refuses_overrides_before_any_verifier_runs[flags2-frozen_flags]",
+          "time": "3.766"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_wp_setup_refuses_overrides_before_any_verifier_runs[flags3-warning_defaults]",
+          "time": "3.925"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_wp_setup_refuses_overrides_before_any_verifier_runs[flags4-warning_defaults]",
+          "time": "3.956"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_wp_setup_refuses_overrides_before_any_verifier_runs[flags5-property_selection]",
+          "time": "3.900"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_setup_refuses_wp_environment_even_for_scripted_bounded_job[FRAMAC_WP_CACHE]",
+          "time": "3.966"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_setup_refuses_wp_environment_even_for_scripted_bounded_job[FRAMAC_WP_CACHEDIR]",
+          "time": "3.906"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_setup_refuses_wp_environment_even_for_scripted_bounded_job[FRAMAC_WP_SCRIPT]",
+          "time": "3.928"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_setup_refuses_missing_placement_or_non_generated_probe[control0-proof_placement]",
+          "time": "3.918"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_setup_refuses_missing_placement_or_non_generated_probe[control1-hazard_probes]",
+          "time": "3.952"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_setup_refuses_missing_placement_or_non_generated_probe[control2-hazard_probes]",
+          "time": "3.807"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_planned_input_hash_detects_changed_lowering",
+          "time": "3.900"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_an_unclassified_property_cannot_hide_behind_an_unrelated_timeout",
+          "time": "3.955"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_existing_wp_session_stops_before_invoking_verifier",
+          "time": "3.934"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_setup_failure_stops_batch_without_starting_later_jobs",
+          "time": "3.877"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_job_plan_pin_cannot_be_replaced_with_different_run_settings",
+          "time": "3.934"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_solver_portfolio_reordering_is_refused_even_with_the_same_solver_set",
+          "time": "3.701"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_execution_method_must_pin_the_running_checks_version_and_content[version]",
+          "time": "3.831"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_execution_method_must_pin_the_running_checks_version_and_content[sha256]",
+          "time": "3.511"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation[swdb/cbmc_adapter.py]",
+          "time": "3.861"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation[swdb/cbmc_equivalence.py]",
+          "time": "3.685"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation[swdb/wp_adapter.py]",
+          "time": "4.066"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation[swdb/crux_adapter.py]",
+          "time": "3.927"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation[swdb/rocq_adapter.py]",
+          "time": "3.706"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation[swdb/proof.py]",
+          "time": "3.806"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation[vocab/proof_failure_classes.yaml]",
+          "time": "3.976"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation[swdb/cbmc_product.py]",
+          "time": "3.965"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation[swdb/rss_watchdog.py]",
+          "time": "3.953"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation[swdb/vocab.py]",
+          "time": "4.022"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation[swdb/formal_frame.py]",
+          "time": "4.177"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation[swdb/acsl_subset.py]",
+          "time": "3.956"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation[swdb/framac.py]",
+          "time": "3.945"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation[swdb/hint_check.py]",
+          "time": "4.058"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation[swdb/hint_tree.ml]",
+          "time": "4.158"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation[swdb/wp_pointer_bounds.py]",
+          "time": "4.033"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation[swdb/proof_semantics.py]",
+          "time": "3.843"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation[swdb/vector_ownership.py]",
+          "time": "3.925"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation[swdb/standard_model_view.py]",
+          "time": "3.816"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation[swdb/array_domains.py]",
+          "time": "4.040"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation[swdb/model_domains.py]",
+          "time": "3.624"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation[swdb/dx_array_domains.py]",
+          "time": "4.017"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation[swdb/bounded_entry_windows.py]",
+          "time": "4.082"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation[swdb/bounded_chain.py]",
+          "time": "4.054"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation[swdb/summary_bindings.py]",
+          "time": "4.058"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation[swdb/helper_windows.py]",
+          "time": "3.931"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_wp_initialization_facts_cannot_be_filtered_or_boolean_override_hidden[flags0]",
+          "time": "3.543"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_wp_initialization_facts_cannot_be_filtered_or_boolean_override_hidden[flags1]",
+          "time": "3.598"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_wp_initialization_facts_cannot_be_filtered_or_boolean_override_hidden[flags2]",
+          "time": "3.526"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_wp_initialization_facts_cannot_be_filtered_or_boolean_override_hidden[flags3]",
+          "time": "3.772"
+        },
+        {
+          "class": "tests.test_proof_setup",
+          "name": "test_wp_initialization_facts_cannot_be_filtered_or_boolean_override_hidden[flags4]",
+          "time": "3.811"
+        },
+        {
+          "class": "tests.test_proof_compiler_identity",
+          "name": "test_public_lowering_accepts_a_bare_compiler_command_under_path",
+          "time": "0.927"
+        },
+        {
+          "class": "tests.test_proof_compiler_identity",
+          "name": "test_unchanged_command_cannot_hide_same_version_driver_change_without_optional_provenance[wrapper-parser]",
+          "time": "4.005"
+        },
+        {
+          "class": "tests.test_proof_compiler_identity",
+          "name": "test_unchanged_command_cannot_hide_same_version_driver_change_without_optional_provenance[wrapper-headers]",
+          "time": "5.805"
+        },
+        {
+          "class": "tests.test_proof_compiler_identity",
+          "name": "test_unchanged_command_cannot_hide_same_version_driver_change_without_optional_provenance[direct-parser]",
+          "time": "4.003"
+        },
+        {
+          "class": "tests.test_proof_compiler_identity",
+          "name": "test_unchanged_command_cannot_hide_same_version_driver_change_without_optional_provenance[direct-headers]",
+          "time": "6.221"
+        },
+        {
+          "class": "tests.test_proof_compiler_identity",
+          "name": "test_unresolvable_frontend_refuses_even_a_freshly_pinned_method[opaque]",
+          "time": "2.365"
+        },
+        {
+          "class": "tests.test_proof_compiler_identity",
+          "name": "test_unresolvable_frontend_refuses_even_a_freshly_pinned_method[multiple]",
+          "time": "2.477"
+        },
+        {
+          "class": "tests.test_proof_compiler_identity",
+          "name": "test_unresolvable_frontend_refuses_even_a_freshly_pinned_method[missing_binary]",
+          "time": "2.454"
+        },
+        {
+          "class": "tests.test_proof_compiler_identity",
+          "name": "test_unresolvable_frontend_refuses_even_a_freshly_pinned_method[changed_source]",
+          "time": "2.504"
+        },
+        {
+          "class": "tests.test_proof_compiler_identity",
+          "name": "test_missing_optional_parser_never_waives_original_standard_source_certificate[standard-model]",
+          "time": "5.037"
+        },
+        {
+          "class": "tests.test_proof_compiler_identity",
+          "name": "test_missing_optional_parser_never_waives_original_standard_source_certificate[allocation]",
+          "time": "4.151"
+        },
+        {
+          "class": "tests.test_proof_compiler_identity",
+          "name": "test_driver_change_after_planning_refuses_before_verifier_invocation",
+          "time": "2.711"
+        },
+        {
+          "class": "tests.test_proof_compiler_identity",
+          "name": "test_unchanged_executables_cannot_hide_compiler_semantic_flag_changes[arguments]",
+          "time": "4.307"
+        },
+        {
+          "class": "tests.test_proof_compiler_identity",
+          "name": "test_unchanged_executables_cannot_hide_compiler_semantic_flag_changes[frontend]",
+          "time": "6.439"
+        },
+        {
+          "class": "tests.test_standard_header_provenance",
+          "name": "test_a_local_standard_header_with_an_allocation_override_refuses_before_verification[vector]",
+          "time": "14.356"
+        },
+        {
+          "class": "tests.test_standard_header_provenance",
+          "name": "test_a_local_standard_header_with_an_allocation_override_refuses_before_verification[utility]",
+          "time": "14.499"
+        },
+        {
+          "class": "tests.test_standard_header_provenance",
+          "name": "test_a_transitive_header_new_handler_registration_refuses_before_verification[std::set_new_handler(project_handler);]",
+          "time": "28.172"
+        },
+        {
+          "class": "tests.test_standard_header_provenance",
+          "name": "test_a_transitive_header_new_handler_registration_refuses_before_verification[auto install=std::set_new_handler; install(project_handler);]",
+          "time": "27.536"
+        },
+        {
+          "class": "tests.test_standard_header_provenance",
+          "name": "test_an_ordinary_transitive_project_header_keeps_canonical_model_admission",
+          "time": "11.026"
+        },
+        {
+          "class": "tests.test_standard_header_provenance",
+          "name": "test_a_gapbs_project_header_is_not_a_standard_header_shadow",
+          "time": "10.005"
+        },
+        {
+          "class": "tests.test_standard_header_provenance",
+          "name": "test_original_tu_preserves_the_drivers_c_compatibility_header_order",
+          "time": "9.927"
+        },
+        {
+          "class": "tests.test_standard_header_provenance",
+          "name": "test_environment_search_cannot_hide_an_explicit_include_allocation_hook[CPATH]",
+          "time": "10.105"
+        },
+        {
+          "class": "tests.test_standard_header_provenance",
+          "name": "test_environment_search_cannot_hide_an_explicit_include_allocation_hook[CPLUS_INCLUDE_PATH]",
+          "time": "10.173"
+        },
+        {
+          "class": "tests.test_standard_header_provenance",
+          "name": "test_a_compiler_wrapper_cannot_hide_undeclared_definitions[injected0-refused]",
+          "time": "2.174"
+        },
+        {
+          "class": "tests.test_standard_header_provenance",
+          "name": "test_a_compiler_wrapper_cannot_hide_undeclared_definitions[injected1-passed]",
+          "time": "10.150"
+        },
+        {
+          "class": "tests.test_standard_header_provenance",
+          "name": "test_bare_new_array_provenance_needs_no_standard_header_version_macro",
+          "time": "1.974"
+        },
+        {
+          "class": "tests.test_standard_header_provenance",
+          "name": "test_original_include_environment_remains_in_driver_context",
+          "time": "9.978"
+        },
+        {
+          "class": "tests.test_standard_header_provenance",
+          "name": "test_isolated_parser_failure_refuses_without_changing_parent_environment[nonzero]",
+          "time": "0.017"
+        },
+        {
+          "class": "tests.test_standard_header_provenance",
+          "name": "test_isolated_parser_failure_refuses_without_changing_parent_environment[timeout]",
+          "time": "0.011"
+        },
+        {
+          "class": "tests.test_standard_header_provenance",
+          "name": "test_isolated_parser_failure_refuses_without_changing_parent_environment[invalid-json]",
+          "time": "0.011"
+        },
+        {
+          "class": "tests.test_standard_header_provenance",
+          "name": "test_isolated_parser_failure_refuses_without_changing_parent_environment[invalid-hash]",
+          "time": "0.012"
+        },
+        {
+          "class": "tests.test_standard_header_provenance",
+          "name": "test_a_platform_integer_format_header_keeps_its_canonical_physical_identity",
+          "time": "10.206"
+        },
+        {
+          "class": "tests.test_standard_header_provenance",
+          "name": "test_an_integer_header_shadow_cannot_borrow_the_clean_canonical_baseline[inttypes.h]",
+          "time": "3.787"
+        },
+        {
+          "class": "tests.test_standard_header_provenance",
+          "name": "test_an_integer_header_shadow_cannot_borrow_the_clean_canonical_baseline[cinttypes]",
+          "time": "3.678"
+        },
+        {
+          "class": "tests.test_standard_header_provenance",
+          "name": "test_a_canonical_iostream_guard_is_not_a_candidate_header_macro",
+          "time": "11.489"
+        },
+        {
+          "class": "tests.test_standard_header_provenance",
+          "name": "test_a_project_iostream_guard_cannot_borrow_canonical_header_macro_trust",
+          "time": "10.467"
+        },
+        {
+          "class": "tests.test_standard_header_provenance",
+          "name": "test_a_platform_getopt_include_keeps_its_physical_header_and_macros",
+          "time": "9.913"
+        },
+        {
+          "class": "tests.test_standard_header_provenance",
+          "name": "test_a_project_getopt_twin_cannot_borrow_platform_macro_trust[project_guard]",
+          "time": "10.611"
+        },
+        {
+          "class": "tests.test_standard_header_provenance",
+          "name": "test_a_project_getopt_twin_cannot_borrow_platform_macro_trust[include_next_hook]",
+          "time": "10.441"
+        },
+        {
+          "class": "tests.test_standard_header_provenance",
+          "name": "test_a_project_getopt_twin_cannot_borrow_platform_macro_trust[system_header]",
+          "time": "9.990"
+        },
+        {
+          "class": "tests.test_standard_header_provenance",
+          "name": "test_a_project_getopt_twin_cannot_borrow_platform_macro_trust[symlink]",
+          "time": "9.999"
+        },
+        {
+          "class": "tests.test_standard_header_provenance",
+          "name": "test_a_candidate_platform_macro_is_not_a_default_driver_header_definition[source]",
+          "time": "9.742"
+        },
+        {
+          "class": "tests.test_standard_header_provenance",
+          "name": "test_a_candidate_platform_macro_is_not_a_default_driver_header_definition[build_flag]",
+          "time": "9.909"
+        }
+      ],
+      "records": [],
+      "closure_files": {
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-74edefd0-t36-setup129-v3/launch.json": "b4fb56a0a265ca2ee57fb60204bf10e16365375624d9138de9545e9c9cd3679e",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-74edefd0-t36-setup129-v3/collection.json": "0bd615f3661e121b5597daf3acc53a4ff482f30f3eacb47a26f0c127e0d9eaee",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-74edefd0-t36-setup129-v3/project-runtime-provenance.json": "3de47e98b84adb0b5486d33e14102cfc91d2c1dea11a52a066f784bac39f4d2e",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-74edefd0-t36-setup129-v3/resources.json": "78ca8c69de8f186712316751a259e43b413fcd21253b1de0d212ce0d8cf964e4",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-74edefd0-t36-setup129-v3/outer-resources.json": "8058ad01e793ab494d0c4ce8737c63415e33bc0bb4972a1f1121d6015d3c7637",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-74edefd0-t36-setup129-v3/source-after.json": "f706796bd88f3489845c3afbf870a908d5a3716d3f75be8d9878e529b6630b09",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-74edefd0-t36-setup129-v3/junit.xml": "0c39968aa93a4c090ad7450c6c8ec9dc23e7be5588587c3134ea63317867db7f",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-74edefd0-t36-setup129-v3/acceptance.log": "32eb2dc2484d4c53b10b87d4b073d7f82d8f4afa248ebb20082ea33887aecf9e"
+      }
+    },
+    {
+      "profile": "bounded2",
+      "cold_audit": {
+        "path": "/private/tmp/probata-t36-bounded2-v3-cold-audit-20261015.json",
+        "sha256": "8cc80bdb4968b96ca322634e1655a71d52dafd87fcc64db04984facfb82fbf98",
+        "physical_files": 88,
+        "artifact_references": 29,
+        "errors": []
+      },
+      "raw": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-bounded2-v3",
+      "source": {
+        "path": "/data1/yanruj/probata-reviewed-2033c174",
+        "commit": "2033c1746eeab02b1d59d4d910a4e31b3e726da8",
+        "branch": "HEAD"
+      },
+      "checks": {
+        "proof_setup_check": {
+          "version": "1",
+          "sha256": "b493fec5c0c7f5e43ea7f0d45426e73f689c696ea16d35f5abc34b7476d28104"
+        },
+        "verdict_reading": {
+          "version": "1",
+          "sha256": "b493fec5c0c7f5e43ea7f0d45426e73f689c696ea16d35f5abc34b7476d28104"
+        }
+      },
+      "collection": {
+        "cwd": "/data1/yanruj/probata-reviewed-2033c174/swdb-project",
+        "expected": 2,
+        "selected": 2,
+        "exit_code": 0
+      },
+      "resources": {
+        "cpu_seconds": 135.761785,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 2137690112,
+        "timed_out": false,
+        "wall_seconds": 133.21082709077746
+      },
+      "outer_resources": {
+        "exit_code": 0,
+        "peak_rss_bytes": 2183303168,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 135.1663300478831,
+        "cpu_seconds": 165.230531
+      },
+      "source_after": {
+        "commit": "2033c1746eeab02b1d59d4d910a4e31b3e726da8",
+        "source_unchanged": true,
+        "tracked_changes": ""
+      },
+      "project_runtime_sha256": "2a00a126f1b14c4e2eef2c4eef0e02ba0270ac30083389343c5ff94094c03f95",
+      "nodes": null,
+      "records": [
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-bounded2-v3/pytest/test_a_callee_summary_is_prove0/records/proofs/proof.cbmc-safe.candidate-1.20261016t021527z.398070f3.yaml",
+          "sha256": "5ce7a94b028a738a67cb5fd90d2f7b45656935357ccf12330ba309511bf10154",
+          "verdict": "proven",
+          "subject": {
+            "kind": "candidate_proof_unit",
+            "candidate": "cbmc-safe.candidate-1",
+            "function": "swdb_fixture_clamp_all"
+          },
+          "goals": 93,
+          "summary_pins": [
+            {
+              "id": "contract.fixture_cbmc_clamp",
+              "sha256": "ef667368d5de66ed7b93861302ab04e2c42b2274eb343097296cf6e3a161d507",
+              "proof_record": "proof.contract.fixture_cbmc_clamp.20261016t021520z.8148f375",
+              "assumes": [
+                "contract.fixture_cbmc_clamp#clamp_post.ensures1",
+                "contract.fixture_cbmc_clamp#clamp_post.ensures2"
+              ]
+            }
+          ],
+          "counterexample": null,
+          "flags": [
+            "-DSWDB_CBMC",
+            "--unwind",
+            "3",
+            "--unwinding-assertions",
+            "--pointer-overflow-check",
+            "--sat-solver",
+            "cadical"
+          ],
+          "bounds": {
+            "threads": 1,
+            "n": 2
+          }
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-bounded2-v3/pytest/test_a_callee_summary_is_prove0/records/proofs/proof.contract.fixture_cbmc_clamp.20261016t021520z.8148f375.yaml",
+          "sha256": "b3f0c3b14c1cd5f5023fa871b684121031040cb02f25ccb26ab4f445e598100c",
+          "verdict": "proven",
+          "subject": {
+            "kind": "library_summary",
+            "id": "contract.fixture_cbmc_clamp"
+          },
+          "goals": 19,
+          "summary_pins": [],
+          "counterexample": null,
+          "flags": [
+            "-DSWDB_CBMC",
+            "--unwind",
+            "1",
+            "--unwinding-assertions",
+            "--pointer-overflow-check",
+            "--sat-solver",
+            "cadical"
+          ],
+          "bounds": {
+            "threads": 1
+          }
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-bounded2-v3/pytest/test_map_07_smoke_pair_proves_0/records/proofs/proof.cbmc-safe.candidate-1.20261016t021458z.35f347b4.yaml",
+          "sha256": "ce818cd9d987460938a097850a75b9917a8c8442441ac4631bf163e14e4c9f51",
+          "verdict": "proven",
+          "subject": {
+            "kind": "candidate_proof_unit",
+            "candidate": "cbmc-safe.candidate-1",
+            "function": "smoke_main"
+          },
+          "goals": 19,
+          "summary_pins": [],
+          "counterexample": null,
+          "flags": [
+            "-DSWDB_CBMC",
+            "--unwind",
+            "1",
+            "--unwinding-assertions",
+            "--pointer-overflow-check",
+            "--sat-solver",
+            "cadical"
+          ],
+          "bounds": {
+            "threads": 1
+          }
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-bounded2-v3/pytest/test_map_07_smoke_pair_proves_0/records/proofs/proof.cbmc-safe.candidate-1.20261016t021505z.86fcdaf6.yaml",
+          "sha256": "ab6a148c33e1a0da8409bea96148a8552997be08aefec9ea6927044535421077",
+          "verdict": "refuted",
+          "subject": {
+            "kind": "candidate_proof_unit",
+            "candidate": "cbmc-safe.candidate-1",
+            "function": "smoke_main"
+          },
+          "goals": 19,
+          "summary_pins": [],
+          "counterexample": {
+            "property": "contract.fixture_cbmc_smoke#smoke_post.ensures1",
+            "check": "swdb_run.assertion.2",
+            "function": "swdb_run",
+            "inputs": {
+              "x": 41
+            },
+            "oracle": [
+              41
+            ],
+            "replay": {
+              "form": "cxx",
+              "replayed": true,
+              "failed": [
+                "contract.fixture_cbmc_smoke#smoke_post.ensures1"
+              ],
+              "sanitizer": null,
+              "sanitizer_matches_check": null,
+              "end": "done"
+            }
+          },
+          "flags": [
+            "-DSWDB_CBMC",
+            "--unwind",
+            "1",
+            "--unwinding-assertions",
+            "--pointer-overflow-check",
+            "--sat-solver",
+            "cadical"
+          ],
+          "bounds": {
+            "threads": 1
+          }
+        }
+      ],
+      "closure_files": {
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-bounded2-v3/launch.json": "21889ef03d4797b67c7849efcb72728c183eca993b86edb59a5b24eac16e61bf",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-bounded2-v3/collection.json": "3497f98c124cb0fd4b44238aadccae92408b03e3df0d3e1bc84655272fc15a75",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-bounded2-v3/project-runtime-provenance.json": "2a00a126f1b14c4e2eef2c4eef0e02ba0270ac30083389343c5ff94094c03f95",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-bounded2-v3/resources.json": "00544eb4056b3b93e53cb1d8d0b1a3431f6277526f003cd904ca177f3ab4e812",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-bounded2-v3/outer-resources.json": "5ef499b2dbaf1fced0ed7b1e07b6cdcc009c4f0b306207ca68267588c2cca3bb",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-bounded2-v3/source-after.json": "c4ece1e4848855313a40312e3d7f2261ea0a0dd05d462aaa3a15bd04a6955a8f",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-bounded2-v3/junit.xml": "4e185a54c6e9e9bcef0df5048f2a356c954138e637b58c3b5f41b850442ab723",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-bounded2-v3/acceptance.log": "931c20e07837ffb69c17aebcb11e65f6605d0b253a42e8a6eb31b13bc2503c6a"
+      }
+    }
+  ],
+  "lease_closure": {
+    "observation_et": "2026-10-15 22:22:37",
+    "meaning": "Both ticket36 lease generations observed released; observation time is not release time.",
+    "root_verified_release_et": {
+      "setup129_node0_generation583": "2026-10-15 22:21:17",
+      "bounded2_node1_generation609": "2026-10-15 22:16:09"
+    },
+    "root_release_observation_et": "2026-10-15 22:24:36",
+    "source": "Root direct lease metadata verification; setup inner/outer durations independently retained."
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "actual_replay": "Pending new reviewed published exact source and coordinator admission.",
+  "controls": [
+    {
+      "id": "initial-import-path-red",
+      "pins": [
+        {
+          "path": "/private/tmp/probata-t25-initial-import-path-red-20261015/command.json",
+          "sha256": "14b17a3f9dc109411b6935b6eadeec352233b1107fab9d1d3b6d3fb18389c3fe"
+        },
+        {
+          "path": "/private/tmp/probata-t25-initial-import-path-red-20261015/controls.log",
+          "sha256": "84e7000ec58e8ac7d7e49c16995367c7404d0c17b0415cf24f19f34a19449d9a"
+        },
+        {
+          "path": "/private/tmp/probata-t25-initial-import-path-red-20261015/resources.json",
+          "sha256": "cdf6dc0b258158507ff070dbfa1dd8d844eceb89b0a86620a87defff6276ce72"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 0.8296,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 109658112,
+        "timed_out": false,
+        "wall_seconds": 0.9216641249950044
+      }
+    },
+    {
+      "id": "initial-import-path-green",
+      "pins": [
+        {
+          "path": "/private/tmp/probata-t25-initial-import-path-green-20261015/command.json",
+          "sha256": "8aba7d54174dcf41b7e89dedf62bd117816388fe3f7f68d320ab1fd44f530774"
+        },
+        {
+          "path": "/private/tmp/probata-t25-initial-import-path-green-20261015/controls.log",
+          "sha256": "8e30877f92e110d7821747ca88e84bda5ec5ab160a100124122db8bb02ca181b"
+        },
+        {
+          "path": "/private/tmp/probata-t25-initial-import-path-green-20261015/resources.json",
+          "sha256": "a46146d8266c8b5ab80ec0292aeb7d4207ea523b7b4c1fc218fae737c4afcb39"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 4.912135,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 129384448,
+        "timed_out": false,
+        "wall_seconds": 6.192492207977921
+      }
+    }
+  ],
+  "created": "2026-10-15 ET",
+  "green": "22 passed, no skipped; no compiler/formal tools executed by these tests",
+  "red_expected": "first-stage argv lacks -wp-library before wp_input.c",
+  "scope": "Compiler-free RED/GREEN after first admitted import failure; not an actual import success.",
+  "source_fix": "Add the same pinned -wp-library path before initial wp_input.c parse; retain later-phase flag and every selected target.",
+  "unchanged_mapping_sha256": {
+    "heap_bridge.mlw": "44cd626d07a93d105be791bff82fa201b525e09523a8f6598b92312a6a0b1eac",
+    "packets.py": "3299b9eb5f24d37228d26c18dc8a795c812b2410384899d680657d86fbdcead5",
+    "source_vcs.py": "5b6353263114ea31bf7ee9408b81a356b10ba1206ee4f21167c67d7d96f1a362"
+  }
+}

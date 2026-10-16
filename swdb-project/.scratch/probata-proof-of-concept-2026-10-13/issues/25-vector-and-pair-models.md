@@ -41,6 +41,48 @@ completed acceptance item. Evidence:
 `../evidence/t25-heap-capability-preparation-20261015.json`; final review:
 `../evidence/t25-capability-final-review-v5-024db66c.md`.
 
+### First admitted import failure and stage-order repair — 2026-10-15 ET
+
+The coordinator admitted exact `024db66c` on node1/lane610 with the reviewed v2
+entry. Canonical 42 packets, nine selected executable hashes/versions, two WP
+artifact hashes, three package bindings and absent ambient WP settings passed.
+The first actual Frama-C command exited 1 during initial parsing: `Library Heap
+not found` / `no such type Heap::heap`. No generated goal inventory exists; this
+is a retained capability failure, not an accepted negative or body proof. The
+whole guarded command naturally exited 1 in 1.941s, peak 166,588,416 bytes, without
+OOM/timeout; source remained unchanged and the lane released.
+
+The command configured `-wp-library` only after the first `-then`; initial parsing
+already imports the heap. The minimal repair supplies the identical pinned path
+before the first input parse, retaining it in the later WP phase. A real public
+plan RED fails on the old phase ordering; all 22 compiler-free controls then pass.
+The heap semantics, all 42 targets, source/event map, original model bytes and
+result policy are unchanged. Independent source/entry-v3 diff review passed at `c5216796`; a fresh admitted
+actual replay remains required. Review: `../evidence/t25-import-stage-review-c5216796-v3-20261015.md`. Evidence: `../evidence/t25-first-import-failure-v1-20261015.json`
+and `../evidence/t25-import-stage-repair-controls-20261015.json`.
+
+### Second admitted import failure and lexical repair — 2026-10-15 ET
+
+The v3 replay at `c5216796` passed the exact canonical manifest comparison with
+`024db66c` (`31edfdaf...657ab`), tool/package/ambient checks, and reached the custom
+Why3 file. It stopped at `heap_bridge.mlw:72` on the predicate identifier `reads`;
+Why3 1.8.2 reserves `reads` and `writes` for effect clauses. Frama-C exited 125,
+with no generated goal inventory. The whole run naturally exited 1 in 1.899s,
+peak 169,115,648 bytes, without timeout/OOM; source remained unchanged and lane 611
+released. This is a preserved syntax failure, not a negative proof result.
+
+The repair uniformly renames these two exported predicates to `can_read` and
+`can_write`, including every mapped reference. Inverse substitution recovers all
+three changed translation files byte-for-byte. A public lexical RED catches the
+old declarations; all 23 compiler-free controls then pass. The original clauses,
+mathematical formulas, primitive meanings and 42 target identities remain intact.
+Independent alpha review passed at `9d8ca764`: all three source files and 42
+packets inverse-restore exactly. A separate coordinator-admitted Why3
+`prove --type-only` gate over the exact new Git blob is next, using the existing frozen bootstrap to avoid another full source
+clone before grammar/type feasibility is known. No solver/model-record success
+is claimed. Evidence: `../evidence/t25-reserved-name-failure-v1-20261015.json` and
+`../evidence/t25-effect-keyword-repair-controls-20261015.json`.
+
 ## Acceptance
 
 - [ ] Each modeled member has a C function and an ACSL contract citing the standard's clause for it (`[vector]` for vector members). `swdb prove` proves every contract against its C function once, recorded with subject "a library entry's summary".
