@@ -1,0 +1,7 @@
+# Ticket28 inactive-byte integration review — 2026-10-16 ET
+
+PASS for exactf7e7a1cbeab358df0dda564ddb2554f40a941169 prototype increment. StaticGit/source/test review plus331direct and5827nested58native unit/binary/header pin checks; evidence088c5b6c147ae240690480480c73b093e4d06810e9190c02a83781f034a5d24b exact. Native compile/expected-exit receipts match. No tests/compiler/formal/provider/remote jobs by reviewer.
+
+An immutable undefined node now represents captured missing tile bytes without prematurely evaluating them. Inactive RMW completion publishes a descending once-only alias and leaves inactive index/value/preserved output unevaluated; selected later observation still encounters initializedness failure. Conditional output captures each old byte before replacing the image, then selects only its active or preserved version. This preserves initialized narrow views while wider reads correctly reject undefined neighbors; it does not synthesize zero bytes. Lazy byte selection and alias edges retain strict prior-ID bounds and repeated result publication refusal.
+
+Retained58native controls22.056358s222150656B/noOOMtimeout and two genuineREDprofiles establish finite synthetic behavior only. Call-specific false-condition rules remain wrapper duties: ALU false writes zero while fake data paths preserve; no universal preservation theorem is installed. Source CPU routing/full wrappers/source ABIgeometry/runtime/IEEE/formal/current0.2/whole28 admission remain open. No production/library/proofpolicy change or newactualclaim.
