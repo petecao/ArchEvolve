@@ -76,7 +76,18 @@ class _IdentityChanged(psutil.NoSuchProcess):
 def _inspect(process, operation, born=None, **kwargs):
     """Retry transient OS inspection denial; persistent live/unknown denial fails closed."""
     snapshot_birth = None
-    for attempt in range(1, 4):
+    # The environment observation may be briefly unavailable on a fresh process.
+    # This bounded availability policy does not establish the cause of a denial.
+    # Every retry still revalidates the immutable identity; no denied observation
+    # is treated as an absent marker. The existing RSS/deadline checks follow this
+    # counted pause, so it grants no proof time or hard sampling-latency guarantee.
+    retry_window = .2 if operation == 'environ' else None
+    retry_limit = 21 if retry_window is not None else 3
+    retry_started = S.clock()
+    last_denial = last_denial_event = None
+    for attempt in range(1, retry_limit + 1):
+        if attempt > 1 and retry_window is not None and S.clock()-retry_started >= retry_window:
+            break
         try:
             # Preserve children/process_iter snapshot identity. Refreshing the
             # target before retaining its birth could adopt an unrelated PID.
@@ -86,6 +97,10 @@ def _inspect(process, operation, born=None, **kwargs):
             observing = 'identity_before.create_time'
             if snapshot_birth != expected or psutil.Process(process.pid).create_time() != expected:
                 raise _IdentityChanged(process.pid)
+            # Revalidation is an OS operation too: it may cross the deadline.
+            # Admit the requested retry only after the last identity check.
+            if attempt > 1 and retry_window is not None and S.clock()-retry_started >= retry_window:
+                break
             observing = operation
             result = getattr(process, operation)(**kwargs)
             observing = 'identity_after.create_time'
@@ -107,21 +122,25 @@ def _inspect(process, operation, born=None, **kwargs):
                 state = 'gone'
             except psutil.AccessDenied:
                 pass
+            retry_elapsed = S.clock() - retry_started
             event = {'stage':_INSPECTION_STAGE, 'operation':observing, 'requested_operation':operation, 'pid':process.pid,
                      'exception_pid':getattr(exc, 'pid', None),
                      'expected_birth':born if born is not None else snapshot_birth, 'observed_birth':observed, 'identity_state':state,
-                     'attempt':attempt, 'clock_s':S.clock(), 'wall_unix_s':time.time(), 'outcome':'denied'}
+                     'attempt':attempt, 'retry_elapsed_s':retry_elapsed, 'retry_window_s':retry_window,
+                     'retry_limit_attempts':retry_limit,
+                     'clock_s':S.clock(), 'wall_unix_s':time.time(), 'outcome':'denied'}
             _INSPECTION_EVENTS.append(event)
             del _INSPECTION_EVENTS[:-128]
+            last_denial, last_denial_event = exc, dict(event)
             if state in {'gone', 'reused'}:
                 event['outcome'] = 'confirmed-'+state
                 if state == 'reused':
                     raise _IdentityChanged(process.pid) from exc
                 raise psutil.NoSuchProcess(process.pid) from exc
-            if attempt == 3:
+            if attempt == retry_limit or (retry_window is not None and retry_elapsed >= retry_window):
                 exc.inspection_detail = dict(event)
                 raise
-            time.sleep(.01)
+            time.sleep(.01 if retry_window is None else min(.01, max(0, retry_window-retry_elapsed)))
         else:
             if attempt > 1:
                 _INSPECTION_EVENTS.append({'stage':_INSPECTION_STAGE, 'operation':operation,
@@ -129,6 +148,21 @@ def _inspect(process, operation, born=None, **kwargs):
                     'clock_s':S.clock(), 'wall_unix_s':time.time(), 'outcome':'recovered'})
                 del _INSPECTION_EVENTS[:-128]
             return result
+    # A delayed retry was never started. Retain the original denial observation
+    # separately from this later admission decision; do not invent a fresh denial
+    # or claim its old live/gone state was observed at the expiry timestamp.
+    decision = S.clock()
+    expiry = {'stage':_INSPECTION_STAGE, 'operation':operation, 'pid':process.pid,
+              'expected_birth':last_denial_event['expected_birth'],
+              'clock_s':decision, 'wall_unix_s':time.time(),
+              'retry_elapsed_s':decision-retry_started, 'retry_window_s':retry_window,
+              'retry_expired_before_attempt':attempt,
+              'last_denial_clock_s':last_denial_event['clock_s'],
+              'outcome':'retry-window-expired'}
+    _INSPECTION_EVENTS.append(expiry)
+    del _INSPECTION_EVENTS[:-128]
+    last_denial.inspection_detail = {**last_denial_event, 'retry_expiry':dict(expiry)}
+    raise last_denial
 
 
 def _tree(root, known):
@@ -423,7 +457,7 @@ def main():
         'timeout_s':a.timeout,'queue_timeout_s':a.queue_timeout,'lock_wait_s':wait_s,
         'runner_pid':os.getpid(),'clock':clock_info['kind'],'clock_info':clock_info,'log':str(log),
         'inspection_events':_INSPECTION_EVENTS, 'inspection_failure':inspection_failure,
-        'inspection_retry_boundary':'three attempts separated by10ms; only independently confirmed gone/zombie or changed birth is skipped; persistent live or unknown denial fails closed',
+        'inspection_retry_boundary':'environ retries bounded by200ms and21attempts; other operations three attempts separated by10ms; all pauses count and RSS/deadline checks remain mandatory after inspection; only independently confirmed gone/zombie or changed birth is skipped; persistent live or unknown denial fails closed',
         'log_sha256':hashlib.sha256(log.read_bytes()).hexdigest(),'unconfirmed_children':cleanup_failed,'error':error,
         'cleanup_boundary':'owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment',
         'rss_scope':'live union of current ancestry, retained PID/birth identities and periodic inherited-marker matches; sampled, not a kernel quota',
