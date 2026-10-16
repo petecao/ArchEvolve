@@ -1,0 +1,600 @@
+{
+  "classification": "PASS_COMPLETE_PINNED_GOAL_CSV_SEAMS_ONLY",
+  "full_source_runtime_cold_closure": false,
+  "record_audit_executed": false,
+  "records": [
+    {
+      "closure": {
+        "CSV_crosswalk": {
+          "CSV_column_elision_groups": [
+            {
+              "mapping": "CSV multiplicity only; distinct exact inventory/native callsite identities retained",
+              "properties": [
+                "get_reg_unsigned_int_requires_2",
+                "get_reg_unsigned_int_requires_3"
+              ],
+              "statement_ids": [
+                7,
+                8
+              ]
+            }
+          ],
+          "CSV_rows": 26,
+          "Extern_contract_properties": [
+            "get_new_reg_unsigned_int_args1_terminates",
+            "get_new_reg_unsigned_int_args1_assigns",
+            "get_new_reg_unsigned_int_args1_ensures",
+            "get_reg_unsigned_int_terminates",
+            "get_reg_unsigned_int_ensures",
+            "get_reg_unsigned_int_assigns",
+            "init_MAA_assigns",
+            "init_MAA_ensures"
+          ],
+          "implicit_helper_exits_unknown": [
+            "get_new_reg_unsigned_int_args1_exits",
+            "get_reg_unsigned_int_exits",
+            "init_MAA_exits"
+          ],
+          "implicit_implementation_verified": false,
+          "mapped_properties": 24,
+          "source_initialization_reads": {
+            "initialization_omitted_or_assumed": false,
+            "ordinary_direct_valid": 2,
+            "properties": [
+              "trust_fixture_assert_rte_initialization",
+              "trust_fixture_assert_rte_initialization_2"
+            ],
+            "source_line": 47,
+            "source_locals": [
+              "first",
+              "second"
+            ]
+          },
+          "unproved_init_termination": {
+            "CSV_status": "Unknown",
+            "Extern": false,
+            "native_goals": 0,
+            "partial_normal_return_scope_unchanged": true,
+            "property": "init_MAA_terminates",
+            "termination_proven": false
+          },
+          "unused_requires_false_overload": {
+            "CSV_rows": [
+              {
+                "directory": ".",
+                "file": "wp_input.c",
+                "function": "get_new_reg_unsigned_int_args0",
+                "line": "17",
+                "property": "\\false",
+                "property kind": "precondition",
+                "status": "Ignored"
+              },
+              {
+                "directory": ".",
+                "file": "wp_input.c",
+                "function": "get_new_reg_unsigned_int_args0",
+                "line": "19",
+                "property": "assigns \\nothing;",
+                "property kind": "assigns clause",
+                "status": "Considered valid"
+              }
+            ],
+            "active_helper": false,
+            "function": "get_new_reg_unsigned_int_args0",
+            "implementation_proven": false,
+            "native_goals": 0,
+            "precondition_proven": false,
+            "property_ids": [
+              "get_new_reg_unsigned_int_args0",
+              "get_new_reg_unsigned_int_args0_assigns",
+              "get_new_reg_unsigned_int_args0_requires"
+            ],
+            "source_is_unused_requires_false_declaration": true
+          }
+        },
+        "Extern": 9,
+        "dependency_DAG": {
+          "acyclic": true,
+          "dependency_edges": 29,
+          "origin_edges": "separate source/callsite attribution; not dependency edges",
+          "properties": 41
+        },
+        "failed_ordinary": [],
+        "goals": 33,
+        "healthy_negative": false,
+        "helper_context_bridges": [
+          "typed_real_get_new_reg_unsigned_int_args1_wp_smoke_dead_call_s2",
+          "typed_real_get_new_reg_unsigned_int_args1_wp_smoke_dead_call_s4",
+          "typed_real_get_reg_unsigned_int_wp_smoke_dead_call_s7",
+          "typed_real_get_reg_unsigned_int_wp_smoke_dead_call_s8",
+          "typed_real_init_MAA_wp_smoke_dead_call_s1"
+        ],
+        "ordinary": 23,
+        "properties": 41,
+        "refuted": false,
+        "smoke": 10,
+        "smoke_display_stats": [
+          {
+            "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+            "goal": "typed_real_get_new_reg_unsigned_int_args1_wp_smoke_dead_call_s2",
+            "native_display_provers": [
+              {
+                "prover": "qed",
+                "success": 0,
+                "time": 0.00391
+              },
+              {
+                "prover": "Alt-Ergo:2.6.4",
+                "success": 1,
+                "time": 0
+              }
+            ],
+            "normalized_smoke_proved": 1,
+            "raw_best_verdict": "timeout"
+          },
+          {
+            "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+            "goal": "typed_real_get_new_reg_unsigned_int_args1_wp_smoke_dead_call_s4",
+            "native_display_provers": [
+              {
+                "prover": "qed",
+                "success": 0,
+                "time": 0.0139
+              },
+              {
+                "prover": "Alt-Ergo:2.6.4",
+                "success": 1,
+                "time": 0
+              }
+            ],
+            "normalized_smoke_proved": 1,
+            "raw_best_verdict": "timeout"
+          },
+          {
+            "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+            "goal": "typed_real_get_reg_unsigned_int_wp_smoke_dead_call_s7",
+            "native_display_provers": [
+              {
+                "prover": "qed",
+                "success": 0,
+                "time": 0.0145
+              },
+              {
+                "prover": "Alt-Ergo:2.6.4",
+                "success": 1,
+                "time": 0
+              }
+            ],
+            "normalized_smoke_proved": 1,
+            "raw_best_verdict": "timeout"
+          },
+          {
+            "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+            "goal": "typed_real_get_reg_unsigned_int_wp_smoke_dead_call_s8",
+            "native_display_provers": [
+              {
+                "prover": "qed",
+                "success": 0,
+                "time": 0.0152
+              },
+              {
+                "prover": "Alt-Ergo:2.6.4",
+                "success": 1,
+                "time": 0
+              }
+            ],
+            "normalized_smoke_proved": 1,
+            "raw_best_verdict": "timeout"
+          },
+          {
+            "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+            "goal": "typed_real_init_MAA_wp_smoke_dead_call_s1",
+            "native_display_provers": [
+              {
+                "prover": "qed",
+                "success": 0,
+                "time": 0.00884
+              },
+              {
+                "prover": "Alt-Ergo:2.6.4",
+                "success": 1,
+                "time": 0
+              }
+            ],
+            "normalized_smoke_proved": 1,
+            "raw_best_verdict": "timeout"
+          },
+          {
+            "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+            "goal": "typed_real_trust_fixture_wp_smoke_dead_code_s2",
+            "native_display_provers": [
+              {
+                "prover": "qed",
+                "success": 0,
+                "time": 0.0089
+              },
+              {
+                "prover": "Alt-Ergo:2.6.4",
+                "success": 1,
+                "time": 0
+              }
+            ],
+            "normalized_smoke_proved": 1,
+            "raw_best_verdict": "timeout"
+          },
+          {
+            "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+            "goal": "typed_real_trust_fixture_wp_smoke_dead_code_s4",
+            "native_display_provers": [
+              {
+                "prover": "qed",
+                "success": 0,
+                "time": 0.0128
+              },
+              {
+                "prover": "Alt-Ergo:2.6.4",
+                "success": 1,
+                "time": 0
+              }
+            ],
+            "normalized_smoke_proved": 1,
+            "raw_best_verdict": "timeout"
+          },
+          {
+            "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+            "goal": "typed_real_trust_fixture_wp_smoke_dead_code_s7",
+            "native_display_provers": [
+              {
+                "prover": "qed",
+                "success": 0,
+                "time": 0.0145
+              },
+              {
+                "prover": "Alt-Ergo:2.6.4",
+                "success": 1,
+                "time": 0
+              }
+            ],
+            "normalized_smoke_proved": 1,
+            "raw_best_verdict": "timeout"
+          },
+          {
+            "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+            "goal": "typed_real_trust_fixture_wp_smoke_dead_code_s8",
+            "native_display_provers": [
+              {
+                "prover": "qed",
+                "success": 0,
+                "time": 0.0141
+              },
+              {
+                "prover": "Alt-Ergo:2.6.4",
+                "success": 1,
+                "time": 0
+              }
+            ],
+            "normalized_smoke_proved": 1,
+            "raw_best_verdict": "timeout"
+          },
+          {
+            "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+            "goal": "typed_real_trust_fixture_wp_smoke_dead_code_s9",
+            "native_display_provers": [
+              {
+                "prover": "qed",
+                "success": 0,
+                "time": 0.0144
+              },
+              {
+                "prover": "Alt-Ergo:2.6.4",
+                "success": 1,
+                "time": 0
+              }
+            ],
+            "normalized_smoke_proved": 1,
+            "raw_best_verdict": "timeout"
+          }
+        ]
+      },
+      "expected_result": 711
+    },
+    {
+      "closure": {
+        "CSV_crosswalk": {
+          "CSV_column_elision_groups": [
+            {
+              "mapping": "CSV multiplicity only; distinct exact inventory/native callsite identities retained",
+              "properties": [
+                "get_reg_unsigned_int_requires_2",
+                "get_reg_unsigned_int_requires_3"
+              ],
+              "statement_ids": [
+                7,
+                8
+              ]
+            }
+          ],
+          "CSV_rows": 26,
+          "Extern_contract_properties": [
+            "get_new_reg_unsigned_int_args1_terminates",
+            "get_new_reg_unsigned_int_args1_assigns",
+            "get_new_reg_unsigned_int_args1_ensures",
+            "get_reg_unsigned_int_terminates",
+            "get_reg_unsigned_int_ensures",
+            "get_reg_unsigned_int_assigns",
+            "init_MAA_assigns",
+            "init_MAA_ensures"
+          ],
+          "implicit_helper_exits_unknown": [
+            "get_new_reg_unsigned_int_args1_exits",
+            "get_reg_unsigned_int_exits",
+            "init_MAA_exits"
+          ],
+          "implicit_implementation_verified": false,
+          "mapped_properties": 24,
+          "source_initialization_reads": {
+            "initialization_omitted_or_assumed": false,
+            "ordinary_direct_valid": 2,
+            "properties": [
+              "trust_fixture_assert_rte_initialization",
+              "trust_fixture_assert_rte_initialization_2"
+            ],
+            "source_line": 47,
+            "source_locals": [
+              "first",
+              "second"
+            ]
+          },
+          "unproved_init_termination": {
+            "CSV_status": "Unknown",
+            "Extern": false,
+            "native_goals": 0,
+            "partial_normal_return_scope_unchanged": true,
+            "property": "init_MAA_terminates",
+            "termination_proven": false
+          },
+          "unused_requires_false_overload": {
+            "CSV_rows": [
+              {
+                "directory": ".",
+                "file": "wp_input.c",
+                "function": "get_new_reg_unsigned_int_args0",
+                "line": "17",
+                "property": "\\false",
+                "property kind": "precondition",
+                "status": "Ignored"
+              },
+              {
+                "directory": ".",
+                "file": "wp_input.c",
+                "function": "get_new_reg_unsigned_int_args0",
+                "line": "19",
+                "property": "assigns \\nothing;",
+                "property kind": "assigns clause",
+                "status": "Considered valid"
+              }
+            ],
+            "active_helper": false,
+            "function": "get_new_reg_unsigned_int_args0",
+            "implementation_proven": false,
+            "native_goals": 0,
+            "precondition_proven": false,
+            "property_ids": [
+              "get_new_reg_unsigned_int_args0",
+              "get_new_reg_unsigned_int_args0_assigns",
+              "get_new_reg_unsigned_int_args0_requires"
+            ],
+            "source_is_unused_requires_false_declaration": true
+          }
+        },
+        "Extern": 9,
+        "dependency_DAG": {
+          "acyclic": true,
+          "dependency_edges": 27,
+          "origin_edges": "separate source/callsite attribution; not dependency edges",
+          "properties": 41
+        },
+        "failed_ordinary": [
+          "typed_real_trust_fixture_ensures"
+        ],
+        "goals": 33,
+        "healthy_negative": true,
+        "helper_context_bridges": [
+          "typed_real_get_new_reg_unsigned_int_args1_wp_smoke_dead_call_s2",
+          "typed_real_get_new_reg_unsigned_int_args1_wp_smoke_dead_call_s4",
+          "typed_real_get_reg_unsigned_int_wp_smoke_dead_call_s7",
+          "typed_real_get_reg_unsigned_int_wp_smoke_dead_call_s8",
+          "typed_real_init_MAA_wp_smoke_dead_call_s1"
+        ],
+        "ordinary": 23,
+        "properties": 41,
+        "refuted": false,
+        "smoke": 10,
+        "smoke_display_stats": [
+          {
+            "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+            "goal": "typed_real_get_new_reg_unsigned_int_args1_wp_smoke_dead_call_s2",
+            "native_display_provers": [
+              {
+                "prover": "qed",
+                "success": 0,
+                "time": 0.0042
+              },
+              {
+                "prover": "Alt-Ergo:2.6.4",
+                "success": 1,
+                "time": 0
+              }
+            ],
+            "normalized_smoke_proved": 1,
+            "raw_best_verdict": "timeout"
+          },
+          {
+            "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+            "goal": "typed_real_get_new_reg_unsigned_int_args1_wp_smoke_dead_call_s4",
+            "native_display_provers": [
+              {
+                "prover": "qed",
+                "success": 0,
+                "time": 0.0148
+              },
+              {
+                "prover": "Alt-Ergo:2.6.4",
+                "success": 1,
+                "time": 0
+              }
+            ],
+            "normalized_smoke_proved": 1,
+            "raw_best_verdict": "timeout"
+          },
+          {
+            "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+            "goal": "typed_real_get_reg_unsigned_int_wp_smoke_dead_call_s7",
+            "native_display_provers": [
+              {
+                "prover": "qed",
+                "success": 0,
+                "time": 0.0141
+              },
+              {
+                "prover": "Alt-Ergo:2.6.4",
+                "success": 1,
+                "time": 0
+              }
+            ],
+            "normalized_smoke_proved": 1,
+            "raw_best_verdict": "timeout"
+          },
+          {
+            "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+            "goal": "typed_real_get_reg_unsigned_int_wp_smoke_dead_call_s8",
+            "native_display_provers": [
+              {
+                "prover": "qed",
+                "success": 0,
+                "time": 0.0159
+              },
+              {
+                "prover": "Alt-Ergo:2.6.4",
+                "success": 1,
+                "time": 0
+              }
+            ],
+            "normalized_smoke_proved": 1,
+            "raw_best_verdict": "timeout"
+          },
+          {
+            "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+            "goal": "typed_real_init_MAA_wp_smoke_dead_call_s1",
+            "native_display_provers": [
+              {
+                "prover": "qed",
+                "success": 0,
+                "time": 0.00908
+              },
+              {
+                "prover": "Alt-Ergo:2.6.4",
+                "success": 1,
+                "time": 0
+              }
+            ],
+            "normalized_smoke_proved": 1,
+            "raw_best_verdict": "timeout"
+          },
+          {
+            "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+            "goal": "typed_real_trust_fixture_wp_smoke_dead_code_s2",
+            "native_display_provers": [
+              {
+                "prover": "qed",
+                "success": 0,
+                "time": 0.00899
+              },
+              {
+                "prover": "Alt-Ergo:2.6.4",
+                "success": 1,
+                "time": 0
+              }
+            ],
+            "normalized_smoke_proved": 1,
+            "raw_best_verdict": "timeout"
+          },
+          {
+            "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+            "goal": "typed_real_trust_fixture_wp_smoke_dead_code_s4",
+            "native_display_provers": [
+              {
+                "prover": "qed",
+                "success": 0,
+                "time": 0.0141
+              },
+              {
+                "prover": "Alt-Ergo:2.6.4",
+                "success": 1,
+                "time": 0
+              }
+            ],
+            "normalized_smoke_proved": 1,
+            "raw_best_verdict": "timeout"
+          },
+          {
+            "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+            "goal": "typed_real_trust_fixture_wp_smoke_dead_code_s7",
+            "native_display_provers": [
+              {
+                "prover": "qed",
+                "success": 0,
+                "time": 0.0166
+              },
+              {
+                "prover": "Alt-Ergo:2.6.4",
+                "success": 1,
+                "time": 0
+              }
+            ],
+            "normalized_smoke_proved": 1,
+            "raw_best_verdict": "timeout"
+          },
+          {
+            "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+            "goal": "typed_real_trust_fixture_wp_smoke_dead_code_s8",
+            "native_display_provers": [
+              {
+                "prover": "qed",
+                "success": 0,
+                "time": 0.0149
+              },
+              {
+                "prover": "Alt-Ergo:2.6.4",
+                "success": 1,
+                "time": 0
+              }
+            ],
+            "normalized_smoke_proved": 1,
+            "raw_best_verdict": "timeout"
+          },
+          {
+            "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+            "goal": "typed_real_trust_fixture_wp_smoke_dead_code_s9",
+            "native_display_provers": [
+              {
+                "prover": "qed",
+                "success": 0,
+                "time": 0.0152
+              },
+              {
+                "prover": "Alt-Ergo:2.6.4",
+                "success": 1,
+                "time": 0
+              }
+            ],
+            "normalized_smoke_proved": 1,
+            "raw_best_verdict": "timeout"
+          }
+        ]
+      },
+      "expected_result": 1107
+    }
+  ],
+  "scientific_reexecution": false
+}

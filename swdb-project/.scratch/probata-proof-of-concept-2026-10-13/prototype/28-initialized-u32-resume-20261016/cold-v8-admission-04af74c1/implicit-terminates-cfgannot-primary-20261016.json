@@ -1,0 +1,389 @@
+{
+  "bytes": 23525,
+  "classification": "PASSIVE_PRIMARY_SOURCE_ONLY",
+  "excerpt": [
+    {
+      "line": 170,
+      "text": "       L.preproc_annot L.labels_fct_pre @@ Ast_info.disjoint_behaviors spec bs"
+    },
+    {
+      "line": 171,
+      "text": "    ) spec.spec_disjoint_behaviors"
+    },
+    {
+      "line": 172,
+      "text": ""
+    },
+    {
+      "line": 173,
+      "text": "let normalize_terminates p ="
+    },
+    {
+      "line": 174,
+      "text": "  let module L = NormAtLabels in"
+    },
+    {
+      "line": 175,
+      "text": "  L.preproc_annot L.labels_fct_pre @@"
+    },
+    {
+      "line": 176,
+      "text": "  Logic_const.pat (p.ip_content.tp_statement, BuiltinLabel Pre)"
+    },
+    {
+      "line": 177,
+      "text": ""
+    },
+    {
+      "line": 178,
+      "text": "let get_terminates_goal kf ="
+    },
+    {
+      "line": 179,
+      "text": "  let make_pred_info p ="
+    },
+    {
+      "line": 180,
+      "text": "    WpPropId.mk_terminates_id kf Kglobal p, normalize_terminates p in"
+    },
+    {
+      "line": 181,
+      "text": "  Option.map make_pred_info @@ Annotations.terminates kf"
+    },
+    {
+      "line": 182,
+      "text": ""
+    },
+    {
+      "line": 183,
+      "text": "let get_terminates_hyp kf ="
+    },
+    {
+      "line": 184,
+      "text": "  match get_terminates_goal kf with"
+    },
+    {
+      "line": 185,
+      "text": "  | None -> true, Logic_const.pfalse"
+    },
+    {
+      "line": 186,
+      "text": "  | Some (_, p) -> false, p"
+    },
+    {
+      "line": 187,
+      "text": ""
+    },
+    {
+      "line": 188,
+      "text": "let check_variant_relation = function"
+    },
+    {
+      "line": 189,
+      "text": "  | (_, None) -> ()"
+    },
+    {
+      "line": 190,
+      "text": "  | ({ term_loc }, Some rel) ->"
+    },
+    {
+      "line": 191,
+      "text": "    Wp_parameters.hypothesis"
+    },
+    {
+      "line": 192,
+      "text": "      ~source:(fst term_loc) ~once:true"
+    },
+    {
+      "line": 193,
+      "text": "      \"'%a' relation must be well-founded\" Cil_printer.pp_logic_info rel"
+    },
+    {
+      "line": 194,
+      "text": ""
+    },
+    {
+      "line": 195,
+      "text": "let get_decreases_goal kf ="
+    },
+    {
+      "line": 207,
+      "text": ""
+    },
+    {
+      "line": 208,
+      "text": "type contract = {"
+    },
+    {
+      "line": 209,
+      "text": "  contract_cond : WpPropId.pred_info list ;"
+    },
+    {
+      "line": 210,
+      "text": "  contract_hpre : WpPropId.pred_info list ;"
+    },
+    {
+      "line": 211,
+      "text": "  contract_post : WpPropId.pred_info list ;"
+    },
+    {
+      "line": 212,
+      "text": "  contract_exit : WpPropId.pred_info list ;"
+    },
+    {
+      "line": 213,
+      "text": "  contract_smoke : WpPropId.pred_info list ;"
+    },
+    {
+      "line": 214,
+      "text": "  contract_assigns : Cil_types.assigns ;"
+    },
+    {
+      "line": 215,
+      "text": "  contract_terminates : bool * Cil_types.predicate ;"
+    },
+    {
+      "line": 216,
+      "text": "  contract_decreases : Cil_types.variant option ;"
+    },
+    {
+      "line": 217,
+      "text": "}"
+    },
+    {
+      "line": 218,
+      "text": ""
+    },
+    {
+      "line": 219,
+      "text": "let default_assigns behaviors ="
+    },
+    {
+      "line": 220,
+      "text": "  try (List.find Cil.is_default_behavior behaviors).b_assigns"
+    },
+    {
+      "line": 221,
+      "text": "  with Not_found -> WritesAny"
+    },
+    {
+      "line": 222,
+      "text": ""
+    },
+    {
+      "line": 223,
+      "text": "let unguarded_behavior_assigns behaviors ="
+    },
+    {
+      "line": 224,
+      "text": "  let unguarded_assigns b = b.b_assumes = [] && b.b_assigns <> WritesAny in"
+    },
+    {
+      "line": 225,
+      "text": "  try (List.find unguarded_assigns behaviors).b_assigns"
+    },
+    {
+      "line": 226,
+      "text": "  with Not_found -> WritesAny"
+    },
+    {
+      "line": 311,
+      "text": "            List.iter (add whpre @@ mk_hpre) bhv.b_requires ;"
+    },
+    {
+      "line": 312,
+      "text": "            List.iter (add wpost @@ mk_post Normal) bhv.b_post_cond ;"
+    },
+    {
+      "line": 313,
+      "text": "            List.iter (add wexit @@ mk_post Exits) bhv.b_post_cond ;"
+    },
+    {
+      "line": 314,
+      "text": "          end behaviors ;"
+    },
+    {
+      "line": 315,
+      "text": "        let assigns = match assigns_upper_bound behaviors completes with"
+    },
+    {
+      "line": 316,
+      "text": "          | WritesAny -> WritesAny"
+    },
+    {
+      "line": 317,
+      "text": "          | Writes froms -> Writes (normalize_froms Normal froms)"
+    },
+    {
+      "line": 318,
+      "text": "        in"
+    },
+    {
+      "line": 319,
+      "text": "        let terminates = get_terminates_hyp kf in"
+    },
+    {
+      "line": 320,
+      "text": "        let decreases = Option.map normalize_decreases @@ get_decreases_hyp kf in"
+    },
+    {
+      "line": 321,
+      "text": "        {"
+    },
+    {
+      "line": 322,
+      "text": "          contract_cond = List.rev !wcond ;"
+    },
+    {
+      "line": 323,
+      "text": "          contract_hpre = List.rev !whpre ;"
+    },
+    {
+      "line": 324,
+      "text": "          contract_post = List.rev !wpost ;"
+    },
+    {
+      "line": 325,
+      "text": "          contract_exit = List.rev !wexit ;"
+    },
+    {
+      "line": 326,
+      "text": "          contract_smoke = [] ;"
+    },
+    {
+      "line": 327,
+      "text": "          contract_assigns = assigns ;"
+    },
+    {
+      "line": 328,
+      "text": "          contract_terminates = terminates ;"
+    },
+    {
+      "line": 329,
+      "text": "          contract_decreases = decreases ;"
+    },
+    {
+      "line": 330,
+      "text": "        }"
+    },
+    {
+      "line": 331,
+      "text": "    end)"
+    },
+    {
+      "line": 332,
+      "text": ""
+    },
+    {
+      "line": 333,
+      "text": "let get_call_contract ?smoking kf stmt ="
+    },
+    {
+      "line": 334,
+      "text": "  let cc = CallContract.get kf in"
+    },
+    {
+      "line": 335,
+      "text": "  let preconds = List.map (get_precond_at kf stmt) cc.contract_cond in"
+    },
+    {
+      "line": 336,
+      "text": "  match smoking with"
+    },
+    {
+      "line": 337,
+      "text": "  | None ->"
+    },
+    {
+      "line": 338,
+      "text": "    { cc with contract_cond = preconds }"
+    },
+    {
+      "line": 339,
+      "text": "  | Some s ->"
+    },
+    {
+      "line": 492,
+      "text": "      let name = \"Wp.CfgAnnot.LoopContract\""
+    },
+    {
+      "line": 493,
+      "text": "      let compile (kf,stmt) ="
+    },
+    {
+      "line": 494,
+      "text": "        let labels = NormAtLabels.labels_loop stmt in"
+    },
+    {
+      "line": 495,
+      "text": "        let normalize_pred p = NormAtLabels.preproc_annot labels p in"
+    },
+    {
+      "line": 496,
+      "text": "        let normalize_annot (i,p) = i, normalize_pred p in"
+    },
+    {
+      "line": 497,
+      "text": "        let normalize_assigns w = NormAtLabels.preproc_assigns labels w in"
+    },
+    {
+      "line": 498,
+      "text": "        let intro_terminates_variant ~loc (pid, v) ="
+    },
+    {
+      "line": 499,
+      "text": "          pid,"
+    },
+    {
+      "line": 500,
+      "text": "          let t = snd @@ get_terminates_hyp kf in"
+    },
+    {
+      "line": 501,
+      "text": "          if Wp_parameters.TerminatesVariantHyp.get () then begin"
+    },
+    {
+      "line": 502,
+      "text": "            if Logic_utils.is_same_predicate t Logic_const.pfalse then"
+    },
+    {
+      "line": 503,
+      "text": "              Wp_parameters.warning"
+    },
+    {
+      "line": 504,
+      "text": "                ~source:(fst loc) ~once:true"
+    },
+    {
+      "line": 505,
+      "text": "                \"Loop variant is always trivially verified \\"
+    },
+    {
+      "line": 506,
+      "text": "                 (terminates \\\\false)\" ;"
+    },
+    {
+      "line": 507,
+      "text": "            Logic_const.pimplies (t, v)"
+    },
+    {
+      "line": 508,
+      "text": "          end else v"
+    },
+    {
+      "line": 509,
+      "text": "        in"
+    },
+    {
+      "line": 510,
+      "text": "        let variant_as_inv ~loc (i, p) ="
+    },
+    {
+      "line": 511,
+      "text": "          let i, p = intro_terminates_variant ~loc @@ normalize_annot (i, p) in"
+    }
+  ],
+  "native_execution": false,
+  "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/cfgAnnot.ml",
+  "sha256": "b28d95a0f032d23b6bb56908fc30c19fecf8a265d6d0536ebfe9703d68e55602"
+}

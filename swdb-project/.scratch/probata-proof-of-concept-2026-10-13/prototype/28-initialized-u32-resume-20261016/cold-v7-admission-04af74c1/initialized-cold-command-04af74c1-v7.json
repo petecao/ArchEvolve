@@ -1,0 +1,84 @@
+{
+  "command": [
+    "/data1/yanruj/venvs/swdb-test/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-cold-04af74c1-v7/reader-source-cache",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-cold-04af74c1-v7/control/initialized_cold_audit_v7.py",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-cold-04af74c1-v7/control/initialized-cold-policy-04af74c1-v7.json",
+    "c1661a048f446d1bc62d468d364b25641b27c2f29a9613b838b630a62c0b90fb"
+  ],
+  "conditions": [
+    "No extra PYTHON* environment variables; unset the three explicit null-valued selectors",
+    "Create outer cache if needed, but reader-source-cache must remain absent before and after",
+    "No writes inside original initialized pair raw; stdout/stderr captured only under this fresh cold raw",
+    "Root supplies exact guarded launch and confirms finite process/lease settlement independently"
+  ],
+  "control_files": {
+    "closed_python_surface.py": {
+      "bytes": 18385,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-cold-04af74c1-v7/control/closed_python_surface.py",
+      "sha256": "748423c27ac8c1f9810c08d3f0ffc71548da703b4b4f95cedc31d4f8bc0418af"
+    },
+    "cold-reference-wp-correct.c": {
+      "bytes": 2149,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-cold-04af74c1-v7/control/cold-reference-wp-correct.c",
+      "sha256": "a324f08bed8b8101fcff22461e408b440f2f227f0d4d4ac6f5dcbed1611bccdb"
+    },
+    "cold-reference-wp-wrong.c": {
+      "bytes": 2150,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-cold-04af74c1-v7/control/cold-reference-wp-wrong.c",
+      "sha256": "46244c04dd878c93606add23f68a68732a5fe550d3d6b7ca308fedd4312fe094"
+    },
+    "initialized-cold-policy-04af74c1-v7.json": {
+      "bytes": 52511,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-cold-04af74c1-v7/control/initialized-cold-policy-04af74c1-v7.json",
+      "sha256": "c1661a048f446d1bc62d468d364b25641b27c2f29a9613b838b630a62c0b90fb"
+    },
+    "initialized_cold_audit_v7.py": {
+      "bytes": 52185,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-cold-04af74c1-v7/control/initialized_cold_audit_v7.py",
+      "sha256": "1dce0400784b056877af6ba9cfb30f9249a66110782e07e1227db612a2a1b1d3"
+    },
+    "initialized_cold_identities_v2.py": {
+      "bytes": 8765,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-cold-04af74c1-v7/control/initialized_cold_identities_v2.py",
+      "sha256": "0c248fc3b50e69629fed8ab9a187dc5a947cc9aee3fb628aa8d604a6e79c5cc9"
+    },
+    "initialized_cold_obligations_v2.py": {
+      "bytes": 17592,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-cold-04af74c1-v7/control/initialized_cold_obligations_v2.py",
+      "sha256": "dfc647552f4a1bbfd33cc4745289257a9aca4e8b587ce45ca9aa757066950dc9"
+    },
+    "passive_initialized_certificate_rechecker_v2.py": {
+      "bytes": 59415,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-cold-04af74c1-v7/control/passive_initialized_certificate_rechecker_v2.py",
+      "sha256": "d469b5168f4403c36d03fcacee6bce5eb4113ac55670c403b5c4a2a5682dad6e"
+    },
+    "python_startup_roles_v2.py": {
+      "bytes": 9610,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-cold-04af74c1-v7/control/python_startup_roles_v2.py",
+      "sha256": "5e9d2e6dfa2aaa7999f4670a979d3cc32736b852a612f77d4e2f7c71bc229618"
+    },
+    "t28-initialized-v5-root-execution-20261016.json": {
+      "bytes": 5623,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-cold-04af74c1-v7/control/t28-initialized-v5-root-execution-20261016.json",
+      "sha256": "832980ed68bdcd9654e82e9e6e33debdf8021054a7e7e03f8dfb794e86754665"
+    }
+  },
+  "control_total_bytes": 228385,
+  "date": "2026-10-16 ET",
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONNOUSERSITE": null,
+    "PYTHONPATH": "/data1/yanruj/probata-resume-20261016-04af74c1/swdb-project",
+    "PYTHONPYCACHEPREFIX": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-cold-04af74c1-v7/cache",
+    "PYTHONSAFEPATH": null,
+    "SETUPTOOLS_USE_DISTUTILS": null
+  },
+  "raw": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-cold-04af74c1-v7",
+  "scientific_execution": false,
+  "source_commit": "04af74c121a733589fbe1a2087ad602deaef598b",
+  "status": "PREPARED_AWAITING_INDEPENDENT_REVIEW_AND_ROOT_ADMISSION"
+}

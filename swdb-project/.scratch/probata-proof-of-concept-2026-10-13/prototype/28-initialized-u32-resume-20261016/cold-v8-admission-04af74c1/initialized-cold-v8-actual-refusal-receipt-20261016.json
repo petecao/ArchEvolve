@@ -1,0 +1,30 @@
+{
+  "RTE_metadata": {
+    "bytes": 7177,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v8-admission-04af74c1/retained-rte-metadata-20261016.json",
+    "sha256": "c3fe8e7c283694e4fa2ca8d168286b7504af0a725d9483ea7229311393253cdf"
+  },
+  "actual_exit": 1,
+  "classification": "RETAINED_ACTUAL_COLD_V8_RTE_CENSUS_REFUSAL",
+  "complete_cheap_pipeline_additional_findings": "The complete CSV seam also contains init_MAA_terminates: registered non-Extern terminates true, Unknown CSV, no native goal/active dependency. V8 assumed every non-Extern helper property beyond exits was a called requires. This implicit unproved termination must stay unproved and cannot become a premise.",
+  "complete_obligation_metadata": {
+    "bytes": 222254,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v8-admission-04af74c1/complete-obligation-input-metadata-20261016.json",
+    "sha256": "f4a36928d25f0cd2252e418131da5aa7947cb712fc4e6842e3e9746b1440d0b5"
+  },
+  "date": "2026-10-16 ET",
+  "failed_predicate": "current_csv_active_v2 line74 admits only the first RTE initialization property ID; original query has separately checked first and second local reads on line47.",
+  "full_cold_acceptance": false,
+  "invocation": {
+    "bytes": 2267,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v8-admission-04af74c1/initialized-cold-v8-actual-invocation-20261016.json",
+    "sha256": "83b69f91a15e5259bf6b9d6c6a1e7a04ebe21c788c7b1cb0565f93948ef5db7d"
+  },
+  "local_wall_seconds": 16.80970597267151,
+  "reader_stdout": {
+    "bytes": 1228,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v8-admission-04af74c1/initialized-cold-v8-actual-stdout-20261016.json",
+    "sha256": "b31fd74c690dfde01ec0583a2bf239d549b03ea8f8fca2d2915c9d1cfc50f7b0"
+  },
+  "scientific_reexecution": false
+}

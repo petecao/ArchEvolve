@@ -1,0 +1,310 @@
+{
+  "captured_utc": "2026-10-16T20:24:33.172401+00:00",
+  "date": "2026-10-16 ET",
+  "files": {
+    "initialized-project-runtime-provenance.json": {
+      "pin": {
+        "bytes": 5501,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-project-runtime-provenance.json",
+        "sha256": "380bed209a45c635ae4ff1350f8aa9968516ff8a8907a1d5f9b1a7ead0ae89e5"
+      },
+      "schema": {
+        "accepted_linux_components": {
+          "command": {
+            "element_types": [
+              "str"
+            ],
+            "kind": "list",
+            "length": 1
+          },
+          "command_executable": {
+            "path": "str",
+            "sha256": "str"
+          },
+          "driver": {
+            "path": "str",
+            "sha256": "str"
+          },
+          "headers": {
+            "files": "int",
+            "id": "str",
+            "sha256": "str"
+          },
+          "parser": {
+            "id": "str",
+            "sha256": "str"
+          }
+        },
+        "admission_basis": "str",
+        "cold_audit_requirement": "str",
+        "cwd": "str",
+        "lowering_identity": {
+          "c_lowering": {
+            "id": "str",
+            "sha256": "str"
+          },
+          "clang": {
+            "id": "str",
+            "sha256": "str"
+          },
+          "naming_rules": {
+            "id": "str",
+            "sha256": "str"
+          }
+        },
+        "reporter": {
+          "path": "str",
+          "preparation_commit": "str",
+          "scope": "str",
+          "sha256": "str"
+        },
+        "retained_basis": {
+          "path": "str",
+          "scope": "str",
+          "sha256": "str"
+        },
+        "runtime": {
+          "check": {
+            "id": "str",
+            "sha256": "str"
+          },
+          "command": {
+            "element_types": [
+              "str"
+            ],
+            "kind": "list",
+            "length": 1
+          },
+          "command_executable": {
+            "path": "str",
+            "sha256": "str"
+          },
+          "driver": {
+            "path": "str",
+            "sha256": "str"
+          },
+          "frontend": {
+            "element_types": [
+              "str"
+            ],
+            "kind": "list",
+            "length": 59
+          },
+          "headers": {
+            "files": "int",
+            "id": "str",
+            "sha256": "str"
+          },
+          "parser": {
+            "id": "str",
+            "sha256": "str"
+          }
+        },
+        "scope": "str"
+      },
+      "selected_accepted_linux_components": {
+        "command": [
+          "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++"
+        ],
+        "command_executable": {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+          "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+        },
+        "driver": {
+          "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang-22",
+          "sha256": "31a40dc31f3c15a47aa119aa148f339bf363d8f61202ddbdacbd3f24b71ba113"
+        },
+        "headers": {
+          "files": 1983,
+          "id": "llvm-standard-resource-headers",
+          "sha256": "d37aec646b1e6e1748d40690c60436f905f55852ee578e79c43a3199c4a16e23"
+        },
+        "parser": {
+          "id": "libclang-22.1.8",
+          "sha256": "8b03ee2c60f0699651869fea5135cb5a144777a10c6e4b9b7835283ac9ca3f7d"
+        }
+      },
+      "selected_scalars": {
+        "accepted_linux_components.command": [
+          "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++"
+        ],
+        "accepted_linux_components.command_executable": {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+          "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+        },
+        "accepted_linux_components.driver": {
+          "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang-22",
+          "sha256": "31a40dc31f3c15a47aa119aa148f339bf363d8f61202ddbdacbd3f24b71ba113"
+        },
+        "accepted_linux_components.headers": {
+          "files": 1983,
+          "id": "llvm-standard-resource-headers",
+          "sha256": "d37aec646b1e6e1748d40690c60436f905f55852ee578e79c43a3199c4a16e23"
+        },
+        "accepted_linux_components.parser": {
+          "id": "libclang-22.1.8",
+          "sha256": "8b03ee2c60f0699651869fea5135cb5a144777a10c6e4b9b7835283ac9ca3f7d"
+        },
+        "cwd": "/data1/yanruj/probata-resume-20261016-04af74c1/swdb-project",
+        "lowering_identity.c_lowering": {
+          "id": "swdb-c-lowering-9",
+          "sha256": "3941e5464a8fa30981314a03f6b63bf285d08e160ad63da4ac2669510096665b"
+        },
+        "lowering_identity.clang": {
+          "id": "clang-22.1.8",
+          "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+        },
+        "lowering_identity.naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "runtime.check": {
+          "id": "swdb-stdlib-provenance-1",
+          "sha256": "4a7ca7d9b05a992e8172125fcbbfd175bb7ade2aec47cfb349126c9739b6e8e4"
+        },
+        "runtime.command": [
+          "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++"
+        ],
+        "runtime.command_executable": {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+          "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+        },
+        "runtime.driver": {
+          "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang-22",
+          "sha256": "31a40dc31f3c15a47aa119aa148f339bf363d8f61202ddbdacbd3f24b71ba113"
+        },
+        "runtime.headers": {
+          "files": 1983,
+          "id": "llvm-standard-resource-headers",
+          "sha256": "d37aec646b1e6e1748d40690c60436f905f55852ee578e79c43a3199c4a16e23"
+        },
+        "runtime.parser": {
+          "id": "libclang-22.1.8",
+          "sha256": "8b03ee2c60f0699651869fea5135cb5a144777a10c6e4b9b7835283ac9ca3f7d"
+        }
+      }
+    },
+    "runtime-provenance.json": {
+      "pin": {
+        "bytes": 3368,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/runtime-provenance.json",
+        "sha256": "91c0d489b2c90d6a452c28a2ffaa8f98ff7e0563fd1fe63ba92c082e2d448500"
+      },
+      "schema": {
+        "lowering_identity": {
+          "c_lowering": {
+            "id": "str",
+            "sha256": "str"
+          },
+          "clang": {
+            "id": "str",
+            "sha256": "str"
+          },
+          "naming_rules": {
+            "id": "str",
+            "sha256": "str"
+          }
+        },
+        "runtime": {
+          "check": {
+            "id": "str",
+            "sha256": "str"
+          },
+          "command": {
+            "element_types": [
+              "str"
+            ],
+            "kind": "list",
+            "length": 1
+          },
+          "command_executable": {
+            "path": "str",
+            "sha256": "str"
+          },
+          "driver": {
+            "path": "str",
+            "sha256": "str"
+          },
+          "frontend": {
+            "element_types": [
+              "str"
+            ],
+            "kind": "list",
+            "length": 59
+          },
+          "headers": {
+            "files": "int",
+            "id": "str",
+            "sha256": "str"
+          },
+          "parser": {
+            "id": "str",
+            "sha256": "str"
+          }
+        },
+        "tool": {
+          "command": {
+            "element_types": [
+              "str"
+            ],
+            "kind": "list",
+            "length": 1
+          },
+          "missing": "str",
+          "version": "str"
+        }
+      },
+      "selected_scalars": {
+        "lowering_identity.c_lowering": {
+          "id": "swdb-c-lowering-9",
+          "sha256": "d0491abfe8eaee241febf8b2a9b6b87190681446bc6d1e3a157d16cb515c936a"
+        },
+        "lowering_identity.clang": {
+          "id": "clang-22.1.8",
+          "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+        },
+        "lowering_identity.naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "runtime.check": {
+          "id": "swdb-stdlib-provenance-1",
+          "sha256": "4a7ca7d9b05a992e8172125fcbbfd175bb7ade2aec47cfb349126c9739b6e8e4"
+        },
+        "runtime.command": [
+          "clang++"
+        ],
+        "runtime.command_executable": {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+          "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+        },
+        "runtime.driver": {
+          "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang-22",
+          "sha256": "31a40dc31f3c15a47aa119aa148f339bf363d8f61202ddbdacbd3f24b71ba113"
+        },
+        "runtime.headers": {
+          "files": 1983,
+          "id": "llvm-standard-resource-headers",
+          "sha256": "d37aec646b1e6e1748d40690c60436f905f55852ee578e79c43a3199c4a16e23"
+        },
+        "runtime.parser": {
+          "id": "libclang-22.1.8",
+          "sha256": "8b03ee2c60f0699651869fea5135cb5a144777a10c6e4b9b7835283ac9ca3f7d"
+        },
+        "tool.command": [
+          "clang++"
+        ],
+        "tool.version": "22.1.8"
+      },
+      "selected_tool_descriptor": {
+        "command": [
+          "clang++"
+        ],
+        "missing": "",
+        "version": "22.1.8"
+      }
+    }
+  },
+  "raw": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5",
+  "scope": "Two retained runtime JSON schema/key/selected scalar observations only; no actual reader, records, project import or scientific/tool process"
+}

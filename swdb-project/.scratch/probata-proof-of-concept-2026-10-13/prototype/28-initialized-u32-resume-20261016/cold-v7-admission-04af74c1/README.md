@@ -1,0 +1,7 @@
+# Exact producer function selector
+
+2026-10-16 ET. Unexecuted cold V7 successor; all historical refusals remain.
+
+V6 located its failure at the exact flags predicate. Both retained records contain the expected 20-element list followed only by -wp-fct=trust_fixture. Exact source 04af wp_adapter.py lines 487–488 construct that selector from job.unit.function; lines 965–966 append it to mandatory settings flags. The cold expectation omitted it. V7 adds exactly that selector to the closed expected list. It does not admit another selected function, inline callees, missing initialization/RTE/smoke flags or additional options. The unchanged contract and complete query/goal/function checks still require trust_fixture. No flags, proof premise, goals or support class is dropped.
+
+Five no-child controls reproduce the original RED and actual-shape GREEN for both records, execute the exact hash-bound producer AST assignments against inert inputs, reject selector/inline/mandatory-option mutations and reconstruct V6 through a complete AST/policy inverse. The original method hash remains cfe01c98; no production source, method, proof record or measurement raw is edited. Root and independent source review must admit a fresh exact passive invocation; no audit or scientific rerun occurred in preparation. A complete cold PASS is still pending, and the false 1107 result remains unproved after timeout, never refuted.

@@ -1,0 +1,30 @@
+{
+  "classification": "PASSIVE_PRIMARY_REPORT_SOURCE_METADATA",
+  "files": [
+    {
+      "bytes": 3253,
+      "excerpts": [
+        {
+          "end": 67,
+          "start": 23,
+          "text": "\nlet to_string ip =\n  let status = Description.status_feedback (Property_status.Feedback.get ip) in\n  let loc = Property.location ip in\n  match Description.property_kind_and_node ip with\n  | None -> raise Skip\n  | Some (kind, txt) ->\n    let kf = kf_of_property ip in\n    let loc =\n      if Fileloc.is_empty loc then\n        Kernel_function.get_location kf\n      else loc\n    in\n    let loc = split_pos (fst loc) in\n    (loc, Kernel_function.get_name kf, kind, status, txt)\n\n(* Compute the lines to export as a .csv, then sorts them *)\nlet lines () =\n  let do_one_ip ip l =\n    if Scan.report_ip ip then\n      try to_string ip :: l\n      with Skip -> l\n    else l\n  in\n  let l = Property_status.fold do_one_ip [] in\n  (* This [sort] removes fully identical lines, including identical alarms\n     emitted on statements copied through loop unrolling. This is the desired\n     semantics for now. However, since we compare entire locations, textually\n     identical lines that refer to different expressions are kept separate *)\n  List.sort_uniq Stdlib.compare l\n\nlet output file =\n  let open Filesystem.Operators in\n  let$ fmt = Filesystem.with_formatter_exn file in\n  Format.pp_set_margin fmt 1000000;\n  Format.fprintf fmt \"@[<v>\";\n  Format.fprintf fmt\n    \"@[directory\\tfile\\tline\\tfunction\\tproperty kind\\tstatus\\tproperty@]@ \";\n  let pp ((dir, file, lnum, _), kf, kind, status, txt) =\n    Format.fprintf fmt \"@[<h>%s\\t%s\\t%d\\t%s\\t%s\\t%s\\t%s@]@ \"\n      dir file lnum kf kind status txt;\n  in\n  List.iter pp (lines ());\n  Format.fprintf fmt \"@]%!\"\n"
+        }
+      ],
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-report/core/csv.ml",
+      "sha256": "3ac71b35403ac50ed40951bdb974edc59a42ce362e9c75a2b80c2a29788dc21d"
+    },
+    {
+      "bytes": 20490,
+      "excerpts": [
+        {
+          "end": 419,
+          "start": 373,
+          "text": "    Some (\"loop invariant\", to_string Printer.pp_predicate_node pred_content)\n  | _ -> None\n\nlet property_kind_and_node property =\n  let default kind = Some (kind, to_string Property.pretty property) in\n  let open Property in\n  match property with\n  | IPCodeAnnot {ica_ca} -> code_annot_kind_and_node ica_ca\n  | IPPredicate {ip_kind; ip_pred} ->\n    let kind = match ip_kind with\n      | PKRequires _ -> \"precondition\"\n      | PKAssumes _  -> \"behavior assumption\"\n      | PKEnsures _  -> \"postcondition\"\n      | PKTerminates -> \"termination clause\"\n    in\n    Some (kind, to_string Printer.pp_identified_predicate ip_pred)\n  | IPPropertyInstance {ii_ip=IPPredicate {ip_kind=PKRequires _; ip_kf;\n                                           ip_kinstr=Kglobal; ip_pred}} ->\n    let kind = \"precondition of \" ^ Kernel_function.get_name ip_kf in\n    Some (kind, to_string Printer.pp_identified_predicate ip_pred)\n  | IPAssigns _  -> default \"assigns clause\"\n  | IPFrom _     -> default \"from clause\"\n  | IPComplete _ -> default \"complete behaviors\"\n  | IPDisjoint _ -> default \"disjoint behaviors\"\n  | _ -> None\n\nlet status_feedback status =\n  let open Property_status.Feedback in\n  match status with\n  | Never_tried       -> \"Ignored\"\n  | Considered_valid  -> \"Considered valid\"\n  | Valid             -> \"Valid\"\n  | Valid_under_hyp   -> \"Partially proven\"\n  | Unknown           -> \"Unknown\"\n  | Invalid           -> \"Invalid\"\n  | Invalid_under_hyp -> \"Invalid or unreachable\"\n  | Inconsistent      -> \"Inconsistent\"\n  | Invalid_but_dead | Valid_but_dead | Unknown_but_dead -> \"Dead\"\n\n(* -------------------------------------------------------------------------- *)\n(* --- Property Comparison                                                --- *)\n(* -------------------------------------------------------------------------- *)\n\ntype order =\n  | I of int\n  | S of string\n  | F of Kernel_function.t"
+        }
+      ],
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c/kernel/kernel_services/ast_printing/description.ml",
+      "sha256": "b6d14101aa358ee74b64b85db43bd8bb31e9577dc8852629bee2160b3ac8c8b9"
+    }
+  ],
+  "native_or_prover_execution": false
+}

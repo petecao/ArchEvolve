@@ -1,0 +1,67 @@
+{
+  "actual_launched": false,
+  "date": "2026-10-16 ET",
+  "files": [
+    {
+      "bytes": 9093,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/prepare_source_04af_packets_v1.py",
+      "sha256": "37ef92a97fa9d29e85190a5c2985b176e6153c1fcca5baedfa9d6ab15e7346d7"
+    },
+    {
+      "bytes": 7097,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/test_source_04af_packets_v1.py",
+      "sha256": "b7526e9b47db1a71b18c8ac694b0095683eea4cd875ab98bd2a4eea857516a95"
+    },
+    {
+      "bytes": 521578,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/linux_pair_policy_04af74c1_v5.json",
+      "sha256": "bae7dc4c11e44bfd763ece9178dcc99f1aaffac3e492efdd3477137fae846637"
+    },
+    {
+      "bytes": 7076,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/linux_pair_command_04af74c1_v5.json",
+      "sha256": "58067d2f84fe7263e2aba6cd48854a0c721d306ea5dbe525c200839cba1c9511"
+    },
+    {
+      "bytes": 542216,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/linux_trace_policy_04af74c1_v3.json",
+      "sha256": "47629d9c974d9352f208764a2c93186da119b810b8750980461ac6de1600e214"
+    },
+    {
+      "bytes": 11294,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/linux_trace_command_04af74c1_v3.json",
+      "sha256": "c97559d11049d2a534332e5bfb8d1a877dbb8163597735cb0e3010b32c8c1d80"
+    }
+  ],
+  "old_outcomes_preserved": true,
+  "pair": {
+    "control_bytes": 700193,
+    "node": 0,
+    "profile_revision": 5,
+    "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5",
+    "runtime_controller_version": 4,
+    "source_files": 496
+  },
+  "pure_controls": {
+    "changed_unlisted_staged_helper_refused": true,
+    "command": "python3 -I -B swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/test_source_04af_packets_v1.py",
+    "elapsed_s": 0.028,
+    "no_child_or_native_events": true,
+    "passed": 5,
+    "source_and_runtime_policy_inverse": true
+  },
+  "runtime_entries_unchanged": {
+    "initialized": "9a6246962ed8288829b609711c2fc3d77f436b9411de5bbad58148937895bf6d",
+    "trace": "d319185131bd708c57229fe16e269da6e6298d1afba3c057a8fcc0f89aa43c93"
+  },
+  "source_commit": "04af74c121a733589fbe1a2087ad602deaef598b",
+  "status": "SOURCE_BINDING_ONLY_PREPARATION; independent review/root admission pending",
+  "trace": {
+    "control_bytes": 741903,
+    "node": 1,
+    "profile_revision": 3,
+    "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v3",
+    "runtime_entry_version": 2,
+    "source_files": 609
+  }
+}

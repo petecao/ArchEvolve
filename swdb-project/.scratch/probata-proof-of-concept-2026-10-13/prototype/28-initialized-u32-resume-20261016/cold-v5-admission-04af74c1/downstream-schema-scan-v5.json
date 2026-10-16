@@ -1,0 +1,19 @@
+{
+  "actual_reader_executed": false,
+  "certificate_descriptor_has_explicit_version": true,
+  "date": "2026-10-16 ET",
+  "forbidden_flat_version_reads": 0,
+  "old_bad_projection_nodes": 0,
+  "producer_recipe_preserved": "runtime={command:command,version:unit.tool.version,driver:_pin(command[0])}",
+  "reader": {
+    "bytes": 51625,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v5-admission-04af74c1/initialized_cold_audit_v5.py",
+    "sha256": "17fbffb48d689a9c6ead2d15fd6968184fd85d0c78ca46f3287e4d9b90abb894"
+  },
+  "scanned": [
+    "project_contexts and context consumers",
+    "audit_record compiler/runtime projections",
+    "all AST Subscript nodes on compiler/runtime for flat version",
+    "all DictComp nodes for old command/version/driver projection"
+  ]
+}

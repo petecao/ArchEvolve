@@ -1,0 +1,99 @@
+{
+  "classification": "PASS_SCOPED_PARTIAL_INITIALIZED_U32_PAIR",
+  "cold_local_wall_seconds": 30.535785913467407,
+  "cold_reader_exit": 0,
+  "current_0_2": false,
+  "date": "2026-10-16 ET",
+  "evidence": {
+    "complete-obligation-replay-result-v9.json": {
+      "bytes": 21806,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v9-admission-04af74c1/complete-obligation-replay-result-v9.json",
+      "sha256": "8ce4b7482505030c5c0caa5b600102171d82271aab33c30e623daa39d7d23028"
+    },
+    "initialized-cold-env-command-v9.json": {
+      "bytes": 2142,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v9-admission-04af74c1/initialized-cold-env-command-v9.json",
+      "sha256": "daaab9570ccdc6698ac3a20aedb9934603da64871c9ff2d319652f18cd6dfe78"
+    },
+    "initialized-cold-v9-actual-invocation-20261016.json": {
+      "bytes": 2271,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v9-admission-04af74c1/initialized-cold-v9-actual-invocation-20261016.json",
+      "sha256": "7249ebc827390dc97f25d71ea9ade4828dca62c15adc016cc30647951d468ca2"
+    },
+    "initialized-cold-v9-actual-stdout-20261016.json": {
+      "bytes": 1491580,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v9-admission-04af74c1/initialized-cold-v9-actual-stdout-20261016.json",
+      "sha256": "8c7903240cd0c53acd796e1161944d74a5812c34f4f00c8f1dd72ba576cb6bd6"
+    },
+    "initialized-cold-v9-source-packet.json": {
+      "bytes": 6584,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v9-admission-04af74c1/initialized-cold-v9-source-packet.json",
+      "sha256": "f34010a91e2ad1f1b07ef72d8eba55255060744d7464554fc13a95f6cd5ef50d"
+    },
+    "preflight-v9-actual-20261016.json": {
+      "bytes": 420089,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v9-admission-04af74c1/preflight-v9-actual-20261016.json",
+      "sha256": "055b7a5a4b24d438df878e9d140de972dfd801bdd747162cf736c382252d4c88"
+    }
+  },
+  "full_ticket28": false,
+  "hardware_or_liveness": false,
+  "indexed_physical_files": 3813,
+  "model_contract_body_refinement": false,
+  "negative_refuted": false,
+  "opaque_source_consumer_files": 1566,
+  "original_measurement": "node0 generation613; 2026-10-16T19:42:24Z\u201319:47:37Z",
+  "physical_checks": 15587,
+  "raw_bytes": 62761931,
+  "raw_files": 184,
+  "records": [
+    {
+      "CSV_rows": 26,
+      "Extern_contract_properties": 9,
+      "expected_result": 711,
+      "failure_class": null,
+      "id": "proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194320z.17d8a1e8",
+      "native_goals": 33,
+      "ordinary_direct_Valid": 23,
+      "ordinary_timeout": 0,
+      "passing_healthy_smokes": 10,
+      "properties": 41,
+      "refuted": false,
+      "separate_direct_Valid_initialization_reads": 2,
+      "unproved_init_termination": "Unknown/non-Extern/no native goal/no active premise; never credited",
+      "verdict": "proven"
+    },
+    {
+      "CSV_rows": 26,
+      "Extern_contract_properties": 9,
+      "expected_result": 1107,
+      "failure_class": "timeout",
+      "id": "proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194501z.d4e9fdf7",
+      "native_goals": 33,
+      "ordinary_direct_Valid": 22,
+      "ordinary_timeout": 1,
+      "passing_healthy_smokes": 10,
+      "properties": 41,
+      "refuted": false,
+      "separate_direct_Valid_initialization_reads": 2,
+      "unproved_init_termination": "Unknown/non-Extern/no native goal/no active premise; never credited",
+      "verdict": "not_proven"
+    }
+  ],
+  "retained_boundaries": [
+    "This is the original conditional normal-return partial initialized-register contract fixture. Source/model contract-body and disjoint-address duties remain explicit TCB; no source-body/refinement, hardware, liveness, current0.2 or full28 theorem is asserted.",
+    "The original 2569 declared runtime inventory and other selected closure checks are reconciled as recorded. Why3server was omitted from that historical inventory; its behavior remains a historical trusted-tool premise, with no retroactive before/after pin or universal dynamic-helper completeness claim.",
+    "Exact nine Extern properties and corresponding assumptions, including the unused requires-false overload assigns property, remain reconciled. No unused precondition or implicit helper termination is credited as proven.",
+    "Finite original-process/target/legacy lease observations are separate evidence. A distinct generation620 node0 job was active at preflight; no global empty-host, continuing process absence or invented final-null watchdog is asserted."
+  ],
+  "scientific_reexecution": false,
+  "source_commit": "04af74c121a733589fbe1a2087ad602deaef598b",
+  "source_event_refinement": false,
+  "workflow": {
+    "errors": 0,
+    "failures": 0,
+    "scope": "workflow only; complete native/source record audit is separate",
+    "skipped": 0,
+    "tests": 2
+  }
+}

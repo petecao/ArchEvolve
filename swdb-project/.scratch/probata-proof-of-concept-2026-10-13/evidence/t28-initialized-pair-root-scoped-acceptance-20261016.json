@@ -1,0 +1,80 @@
+{
+  "candidate": {
+    "bytes": 13498,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/publication-initialized-cold-v9-20261016/root-adoption-candidate-20261016.json",
+    "sha256": "91579657a7974b922cf542163d67157e602a8ac39df9894fc85a1644a4dbc212"
+  },
+  "cold_decision": {
+    "bytes": 5538,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v9-admission-04af74c1/initialized-cold-v9-actual-cold-decision-20261016.json",
+    "sha256": "880844761de03cd5ec609cc27bdcd412de3d155fd7639b91587e71d81adfa454"
+  },
+  "created_utc": "2026-10-16T21:48:57.613274+00:00",
+  "current_0_2": false,
+  "decision": "ADOPT_SCOPED_PARTIAL_INITIALIZED_U32_PAIR",
+  "finite_settlement": {
+    "bytes": 420089,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v9-admission-04af74c1/preflight-v9-actual-20261016.json",
+    "sha256": "055b7a5a4b24d438df878e9d140de972dfd801bdd747162cf736c382252d4c88"
+  },
+  "full_ticket28": false,
+  "hardware_or_liveness": false,
+  "negative_refuted": false,
+  "original_source": "04af74c121a733589fbe1a2087ad602deaef598b",
+  "physical_checks": 15587,
+  "raw_bytes": 62761931,
+  "raw_files": 184,
+  "records": [
+    {
+      "CSV_rows": 26,
+      "Extern_contract_properties": 9,
+      "expected_result": 711,
+      "failure_class": null,
+      "id": "proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194320z.17d8a1e8",
+      "native_goals": 33,
+      "ordinary_direct_Valid": 23,
+      "ordinary_timeout": 0,
+      "passing_healthy_smokes": 10,
+      "properties": 41,
+      "refuted": false,
+      "separate_direct_Valid_initialization_reads": 2,
+      "unproved_init_termination": "Unknown/non-Extern/no native goal/no active premise; never credited",
+      "verdict": "proven"
+    },
+    {
+      "CSV_rows": 26,
+      "Extern_contract_properties": 9,
+      "expected_result": 1107,
+      "failure_class": "timeout",
+      "id": "proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194501z.d4e9fdf7",
+      "native_goals": 33,
+      "ordinary_direct_Valid": 22,
+      "ordinary_timeout": 1,
+      "passing_healthy_smokes": 10,
+      "properties": 41,
+      "refuted": false,
+      "separate_direct_Valid_initialization_reads": 2,
+      "unproved_init_termination": "Unknown/non-Extern/no native goal/no active premise; never credited",
+      "verdict": "not_proven"
+    }
+  ],
+  "retained_boundaries": [
+    "This is the original conditional normal-return partial initialized-register contract fixture. Source/model contract-body and disjoint-address duties remain explicit TCB; no source-body/refinement, hardware, liveness, current0.2 or full28 theorem is asserted.",
+    "The original 2569 declared runtime inventory and other selected closure checks are reconciled as recorded. Why3server was omitted from that historical inventory; its behavior remains a historical trusted-tool premise, with no retroactive before/after pin or universal dynamic-helper completeness claim.",
+    "Exact nine Extern properties and corresponding assumptions, including the unused requires-false overload assigns property, remain reconciled. No unused precondition or implicit helper termination is credited as proven.",
+    "Finite original-process/target/legacy lease observations are separate evidence. A distinct generation620 node0 job was active at preflight; no global empty-host, continuing process absence or invented final-null watchdog is asserted."
+  ],
+  "root_original_execution": {
+    "bytes": 5623,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-initialized-v5-root-execution-20261016.json",
+    "sha256": "832980ed68bdcd9654e82e9e6e33debdf8021054a7e7e03f8dfb794e86754665"
+  },
+  "root_passive_admission": {
+    "bytes": 3680,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-initialized-cold-v9-root-admission-20261016.json",
+    "sha256": "64b97f8be160463f1c3cacce509257bacf4236884e0e324520f9f49c23e68f58"
+  },
+  "root_review": "Rehashed all19 candidate evidence pins; reconciled actual isolated invocation, preflight finite selected-process/read-failure census, original root execution, exact source/cold policy, full cold verdicts and native/CSV/property/initialization censuses. No proof reexecution.",
+  "source_consumer_count": 1566,
+  "source_model_body_theorem": false
+}

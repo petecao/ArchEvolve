@@ -1,0 +1,67 @@
+{
+  "SSH": false,
+  "actual_reader_audit": false,
+  "basis_and_packet_pins_checked": 11,
+  "before_after_packet_pin_unchanged": true,
+  "classification": "PASS_INDEPENDENT_SOURCE_ONLY_INITIALIZED_COLD_V8_REVIEW",
+  "compiler_native_verifier_solver_or_version": false,
+  "date": "2026-10-16 ET",
+  "findings": [],
+  "obligations": {
+    "bytes": 21380,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v8-admission-04af74c1/initialized_cold_obligations_v3.py",
+    "sha256": "817c4041cae251e8c2002f7ea9858bc85e5d6f0adc37d174390367c3261b138f"
+  },
+  "packet_mutated": false,
+  "preserved_v7_refusal": {
+    "bytes": 3326,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v7-admission-04af74c1/initialized-cold-v7-actual-refusal-receipt-20261016.json",
+    "sha256": "c5ab29e4c966cf40e542e41bfca5d8550bdb86ce6336ef2ca8901e6f721c48cf"
+  },
+  "primary_source_metadata": {
+    "bytes": 4395,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v7-admission-04af74c1/unused-arity0-linux-primary-report-20261016.json",
+    "sha256": "0140b0296f000082a3b4bc36c8ddc53a5bda557bc7d4f01264aabcb593f286a6"
+  },
+  "project_import": false,
+  "pure_controls": {
+    "additional_independent_controls": 4,
+    "additional_tests_source": {
+      "bytes": 8598,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/independent-cold-v8-review-20261016/test_independent_v8.py",
+      "sha256": "e9d91fc71a9a2a9c012baa82334469cd03b30ef9d89f79218b510a2784f58742"
+    },
+    "author_controls_independently_rerun": 6,
+    "errors": 0,
+    "extra_dependency_origin_goal_mutations_refused": 30,
+    "failures": 0,
+    "skips": 0
+  },
+  "reader": {
+    "bytes": 52208,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v8-admission-04af74c1/initialized_cold_audit_v8.py",
+    "sha256": "c34a2541db95fc00a9d396019bedcaaf2facb403d7aafcd83a4f462ab62f1276"
+  },
+  "retained_metadata": {
+    "bytes": 21443,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v7-admission-04af74c1/retained-arity0-property-metadata-20261016.json",
+    "sha256": "a2c584f2f7b2f8ae4caa1aa812984e540c9695cb3588bf944c405ad230d6b171"
+  },
+  "review_checks": [
+    "complete obligations AST inverse restores V2 with only the exact unused declaration branch removed",
+    "full reader byte inverse permits only invocation/module pin/key and validated query handoff",
+    "complete policy and command JSON inverses",
+    "HELPERS remains the same three active functions",
+    "only three exact unused properties and two exact status/site/text CSV rows are removed from the unchanged active checker; full row count reconciles",
+    "unused prototype cannot attach a native goal, target, active origin, dependency or instance",
+    "entire ACSL-bearing canonical source and no-call false prototype checks remain; Extern assumption counted against same pinned semantics",
+    "ordinary Valid/prover/init/frame/smoke/partial-negative/source/runtime/record closure gates unchanged"
+  ],
+  "runtime_boundary": "Only the original declared runtime inventory is checked. The historical Why3server was outside the original 2569-file inventory; this review supplies no retroactive complete dynamic-helper inventory or source/compiled-runtime equivalence.",
+  "scientific_boundary": "Source-only unused-declaration reconciliation, not actual complete cold acceptance; 711 and 1107 retain their original distinct provisional verdicts. Root must admit the exact passive reader invocation and independently settle it.",
+  "source_packet": {
+    "bytes": 4509,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v8-admission-04af74c1/initialized-cold-v8-source-packet.json",
+    "sha256": "15a55233088f3fc5b7647865d255cb23896d1f6cfa47060b9c14c9860112e45f"
+  }
+}

@@ -1,0 +1,251 @@
+{
+  "classification": "PASS_SCOPED_PARTIAL_INITIALIZED_U32_PAIR",
+  "cold_decision": {
+    "bytes": 5538,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v9-admission-04af74c1/initialized-cold-v9-actual-cold-decision-20261016.json",
+    "sha256": "880844761de03cd5ec609cc27bdcd412de3d155fd7639b91587e71d81adfa454"
+  },
+  "continuing_process_absence_or_final_null_claim": false,
+  "date": "2026-10-16 ET",
+  "evidence": {
+    "actual_invocation": {
+      "bytes": 2271,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v9-admission-04af74c1/initialized-cold-v9-actual-invocation-20261016.json",
+      "sha256": "7249ebc827390dc97f25d71ea9ade4828dca62c15adc016cc30647951d468ca2"
+    },
+    "actual_staging": {
+      "bytes": 2411,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v9-admission-04af74c1/staged-context-v9-actual-20261016.json",
+      "sha256": "04c489bf66dbd564b062ec49d86ec9ff9f3aae2269ec71dbe13895a89a13f7ca"
+    },
+    "actual_stderr": {
+      "bytes": 0,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v9-admission-04af74c1/initialized-cold-v9-actual-stderr-20261016.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "actual_stdout": {
+      "bytes": 1491580,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v9-admission-04af74c1/initialized-cold-v9-actual-stdout-20261016.json",
+      "sha256": "8c7903240cd0c53acd796e1161944d74a5812c34f4f00c8f1dd72ba576cb6bd6"
+    },
+    "cold_command": {
+      "bytes": 4700,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v9-admission-04af74c1/initialized-cold-command-04af74c1-v9.json",
+      "sha256": "9679ff1d2d01c8fe9171e9b9f962e994b76f6e9d1f8750cc166623c6357e08db"
+    },
+    "cold_obligations": {
+      "bytes": 25257,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v9-admission-04af74c1/initialized_cold_obligations_v4.py",
+      "sha256": "8c12e04de82ef4d3698b4bda133616a070d6202c0d56d1a5dd4c5a5ca86ec3af"
+    },
+    "cold_policy": {
+      "bytes": 54842,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v9-admission-04af74c1/initialized-cold-policy-04af74c1-v9.json",
+      "sha256": "15f69d6a4a7a09f952bcf020f9619e43f107ae105980ed0cbe7e75ffc97313f3"
+    },
+    "cold_reader": {
+      "bytes": 52208,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v9-admission-04af74c1/initialized_cold_audit_v9.py",
+      "sha256": "5f84cb78e8ff220e4738ee4d33a94ff125b1dce64fc61b7d96d2ec090149dfcf"
+    },
+    "cold_source_packet": {
+      "bytes": 6584,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v9-admission-04af74c1/initialized-cold-v9-source-packet.json",
+      "sha256": "f34010a91e2ad1f1b07ef72d8eba55255060744d7464554fc13a95f6cd5ef50d"
+    },
+    "compact_cold_decision": {
+      "bytes": 5538,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v9-admission-04af74c1/initialized-cold-v9-actual-cold-decision-20261016.json",
+      "sha256": "880844761de03cd5ec609cc27bdcd412de3d155fd7639b91587e71d81adfa454"
+    },
+    "complete_cheap_goal_CSV_replay": {
+      "bytes": 21806,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v9-admission-04af74c1/complete-obligation-replay-result-v9.json",
+      "sha256": "8ce4b7482505030c5c0caa5b600102171d82271aab33c30e623daa39d7d23028"
+    },
+    "exact_environment": {
+      "bytes": 2142,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v9-admission-04af74c1/initialized-cold-env-command-v9.json",
+      "sha256": "daaab9570ccdc6698ac3a20aedb9934603da64871c9ff2d319652f18cd6dfe78"
+    },
+    "independent_cold_review": {
+      "bytes": 11210,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-initialized-cold-v9-independent-static-review-20261016.json",
+      "sha256": "b91ceb9d755a483a76734e698fabe8220652862bb5e07e062189537e6f5b0887"
+    },
+    "original_pair_command": {
+      "bytes": 7076,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/linux_pair_command_04af74c1_v5.json",
+      "sha256": "58067d2f84fe7263e2aba6cd48854a0c721d306ea5dbe525c200839cba1c9511"
+    },
+    "original_pair_policy": {
+      "bytes": 521578,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/linux_pair_policy_04af74c1_v5.json",
+      "sha256": "bae7dc4c11e44bfd763ece9178dcc99f1aaffac3e492efdd3477137fae846637"
+    },
+    "original_root_execution": {
+      "bytes": 5623,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-initialized-v5-root-execution-20261016.json",
+      "sha256": "832980ed68bdcd9654e82e9e6e33debdf8021054a7e7e03f8dfb794e86754665"
+    },
+    "preflight": {
+      "bytes": 420089,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v9-admission-04af74c1/preflight-v9-actual-20261016.json",
+      "sha256": "055b7a5a4b24d438df878e9d140de972dfd801bdd747162cf736c382252d4c88"
+    },
+    "published_source_packet": {
+      "bytes": 2981,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/fresh-source-04af-packets-source-manifest-v1.json",
+      "sha256": "57ac235d0b50fde85af7836c4416a37c04590bfe483bb07edbc0b1b7aaa6b62f"
+    },
+    "root_passive_admission": {
+      "bytes": 3680,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-initialized-cold-v9-root-admission-20261016.json",
+      "sha256": "64b97f8be160463f1c3cacce509257bacf4236884e0e324520f9f49c23e68f58"
+    }
+  },
+  "full_ticket28": false,
+  "hardware_or_liveness": false,
+  "negative_refuted": false,
+  "new_current_0_2": false,
+  "no_scientific_reexecution": true,
+  "original_measurement_lane": {
+    "command": [
+      "/data1/yanruj/probata-verifiers/opam-2.6.1/opam",
+      "exec",
+      "--switch=framac-33",
+      "--",
+      "/data1/yanruj/venvs/swdb-test/bin/python",
+      "-I",
+      "-B",
+      "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/control/linux_pair_entry_v4.py",
+      "/data1/yanruj/probata-resume-20261016-04af74c1/swdb-project",
+      "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5",
+      "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/control/linux_pair_policy_04af74c1_v5.json",
+      "bae7dc4c11e44bfd763ece9178dcc99f1aaffac3e492efdd3477137fae846637"
+    ],
+    "lane": {
+      "aligned_cell_age_s": "",
+      "aligned_to": "no_gapbs_batch_running",
+      "command": [
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=60",
+        "1320",
+        "bash",
+        "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/run.sh"
+      ],
+      "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+      "ended_utc": "2026-10-16T19:47:37Z",
+      "exit_code": 0,
+      "host": "mbit10",
+      "job": "probata-resume-20261016-04af74c1-t28-initialized-pair-v5",
+      "lease_generation": 613,
+      "lease_name": "mbit10-evaluation-node0",
+      "load1_at_start": 0.01,
+      "load1_max": 32,
+      "node": 0,
+      "numa_memory_policy": "bind:0",
+      "numactl": "--cpunodebind=0 --membind=0",
+      "preregistration_sha256": null,
+      "started_utc": "2026-10-16T19:42:24Z"
+    },
+    "resources": {
+      "outer-resources.json": {
+        "cpu_seconds": 396.794567,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 1997959168,
+        "timed_out": false,
+        "wall_seconds": 312.80045202653855
+      },
+      "resources.json": {
+        "cpu_seconds": 334.46351300000003,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 1944481792,
+        "timed_out": false,
+        "wall_seconds": 310.712161869742
+      }
+    },
+    "settlement_boundary": "root supplies independent finite process/lease settlement; no universal process-absence inference"
+  },
+  "original_measurement_raw": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5",
+  "original_record_pins": [
+    {
+      "expected_result": 711,
+      "id": "proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194320z.17d8a1e8",
+      "record": {
+        "bytes": 14742162,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-profile/pytest/test_actual_initialized_u32_or0/records/proofs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194320z.17d8a1e8.yaml",
+        "sha256": "ba307168e4cf18f59afecee5e95177f3f6b8a0aebcc90604d06a37d0716cb09d"
+      }
+    },
+    {
+      "expected_result": 1107,
+      "id": "proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194501z.d4e9fdf7",
+      "record": {
+        "bytes": 14742869,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-profile/pytest/test_actual_initialized_u32_or1/records/proofs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194501z.d4e9fdf7.yaml",
+        "sha256": "f1716318e0ecba8af829214f342ed264083a20f9b0343a0e05c2d3c4d0d517ad"
+      }
+    }
+  ],
+  "passive_exit": 0,
+  "physical_checks": 15587,
+  "raw_bytes": 62761931,
+  "raw_files": 184,
+  "records": [
+    {
+      "CSV_rows": 26,
+      "Extern_contract_properties": 9,
+      "expected_result": 711,
+      "failure_class": null,
+      "id": "proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194320z.17d8a1e8",
+      "native_goals": 33,
+      "ordinary_direct_Valid": 23,
+      "ordinary_timeout": 0,
+      "passing_healthy_smokes": 10,
+      "properties": 41,
+      "refuted": false,
+      "separate_direct_Valid_initialization_reads": 2,
+      "unproved_init_termination": "Unknown/non-Extern/no native goal/no active premise; never credited",
+      "verdict": "proven"
+    },
+    {
+      "CSV_rows": 26,
+      "Extern_contract_properties": 9,
+      "expected_result": 1107,
+      "failure_class": "timeout",
+      "id": "proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194501z.d4e9fdf7",
+      "native_goals": 33,
+      "ordinary_direct_Valid": 22,
+      "ordinary_timeout": 1,
+      "passing_healthy_smokes": 10,
+      "properties": 41,
+      "refuted": false,
+      "separate_direct_Valid_initialization_reads": 2,
+      "unproved_init_termination": "Unknown/non-Extern/no native goal/no active premise; never credited",
+      "verdict": "not_proven"
+    }
+  ],
+  "remaining_TCB_and_limits": [
+    "This is the original conditional normal-return partial initialized-register contract fixture. Source/model contract-body and disjoint-address duties remain explicit TCB; no source-body/refinement, hardware, liveness, current0.2 or full28 theorem is asserted.",
+    "The original 2569 declared runtime inventory and other selected closure checks are reconciled as recorded. Why3server was omitted from that historical inventory; its behavior remains a historical trusted-tool premise, with no retroactive before/after pin or universal dynamic-helper completeness claim.",
+    "Exact nine Extern properties and corresponding assumptions, including the unused requires-false overload assigns property, remain reconciled. No unused precondition or implicit helper termination is credited as proven.",
+    "Finite original-process/target/legacy lease observations are separate evidence. A distinct generation620 node0 job was active at preflight; no global empty-host, continuing process absence or invented final-null watchdog is asserted."
+  ],
+  "retained_historical_Why3_boundary": "The exact original declared runtime inventories were checked. The original2569-file inventory omitted Why3server. Its behavior remains a historical trusted-tool premise; no original before/after pin, full dynamic-loader/helper closure, or retroactive completeness is claimed. Prospective closure repairs do not relabel this run.",
+  "source_commit": "04af74c121a733589fbe1a2087ad602deaef598b",
+  "source_consumer_count": 1566,
+  "source_model_body_theorem": false,
+  "status": "CANDIDATE_FOR_ROOT_SCOPED_ADOPTION_NOT_SELF_ADOPTED",
+  "unproved_implicit_init_termination": "Unknown, non-Extern, no native goal or active premise; not credited.",
+  "workflow": {
+    "errors": 0,
+    "failures": 0,
+    "scope": "workflow only; complete native/source record audit is separate",
+    "skipped": 0,
+    "tests": 2
+  }
+}
