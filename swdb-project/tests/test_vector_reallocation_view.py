@@ -69,7 +69,7 @@ def test_complete_synthetic_qualified_success_persists_schema_and_all_current_ta
     assert set(record['verdict_reading'])=={'check','verdict'}
     assert len(record['settings']['heap_model_runs'])==21
     assert len(record['proof_setup_check']['runs'])==21
-    assert len(record['goals'])==30 and sum(bool(g.get('smoke')) for g in record['goals'])==1
+    assert len(record['goals'])==31 and sum(bool(g.get('smoke')) for g in record['goals'])==1
     assert all((Path(r['cwd'])/'SYNTHETIC-ONLY.txt').is_file() for r in record['settings']['heap_model_runs'])
     assert any('does not prove the original v2 raw contract' in a['sentence'] for a in record['assumptions'])
 
