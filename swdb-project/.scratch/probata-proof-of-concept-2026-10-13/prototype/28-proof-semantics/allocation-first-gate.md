@@ -22,6 +22,11 @@ interface value types. The full26-name/27-declaration inventory remains
 validated, with other calls and the initialized overload unreachable/refused.
 This is a smaller type/call matrix, not whole28 closure.
 
+The public unit is the recorded one-thread sequential call sequence. It does
+not establish concurrent software-counter allocation or cross-thread ownership;
+the source counters are ordinary non-atomic globals. Later per-thread/shared
+action work must supply its own concurrency premises and obligations.
+
 The original caller resets counters, allocates tile32 then tile64, register64
 then register32 and returns `1000*t0+100*t1+10*r0+r1`. Expected IDs0,1,0,2
 give102; final counters are3,3,6. The wrong101 contract uses identical source,

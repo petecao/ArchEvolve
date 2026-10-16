@@ -1,0 +1,733 @@
+{
+  "date_et": "2026-10-16",
+  "status": "prepared only; independent review and root actual admission pending",
+  "checkpoint": "c32689f5",
+  "scope_repair_commit": "c6ce2800",
+  "composed_code_freeze": "6aabd01feaa563aa5078e3e818ef4efbacc59944",
+  "source_pins": [
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/swdb/c_lowering.py",
+      "sha256": "b5dc02fe3ef1a920c45f47e77faec1acda4e015197447c2be7d628c323f8eb6e",
+      "bytes": 169053
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/swdb/cbmc_adapter.py",
+      "sha256": "8e903980620f02b13095beaa43a00896d8b0923654a983affbcc321f3c87d4b6",
+      "bytes": 68263
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/swdb/dx100_allocation_source.py",
+      "sha256": "45b26cf29c755865d7cabffd0fa2a085d0eef77b52849bc9edfb99b4442b36d9",
+      "bytes": 20142
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/swdb/proof_semantics.py",
+      "sha256": "52df507ea1e932cd12de07b337e48d96a72f927efab74222071ca384a92148e2",
+      "bytes": 32516
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/swdb/proof_setup.py",
+      "sha256": "3d3f7ef06814955ef6b7f27cd385f223ea79da9eb76d9462a4a593e11eafdb23",
+      "bytes": 48020
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/swdb/wp_adapter.py",
+      "sha256": "bb55de75e62a4389c749170f6a6c1ee41e8f28597b05321a085758e8b203e419",
+      "bytes": 90033
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/swdb/proof_report.ml",
+      "sha256": "8b84bec6a12669d877205ec60d46d149f41fa921d08b6640161b4896b9c4df16",
+      "bytes": 12925
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/tests/test_dx100_allocation_source.py",
+      "sha256": "ef75774c6c4f6796e9cfb3c1be6568d11d92ddf5743fd3399cb3a3caa00eb9dd",
+      "bytes": 6339
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/tests/test_dx100_allocation_native.py",
+      "sha256": "d9e3d2fee01953b10b7cd2ce6c7479ec13da2b45c4aefd75b0272f4617e64877",
+      "bytes": 3188
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/tests/test_dx100_allocation_actual.py",
+      "sha256": "aedcc426474dc6f970f02f1ff5c15db920dbfd00ce12aedb7c2f48a9b1ccd369",
+      "bytes": 2276
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/tests/test_dx100_allocation_runner.py",
+      "sha256": "8fd446e431a5a2c1720a6eef023112664083761e1c93f01d683f8a0bcabaadd5",
+      "bytes": 2575
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/tests/test_dx100_allocation_parser.py",
+      "sha256": "0cf04aabef7c02a60fcf3a477db075cd37517125712b35f882feadab06afe788",
+      "bytes": 1754
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/tests/testkit/dx100_allocation.py",
+      "sha256": "32798f4a33eea43ec7ae3df1bc33a3804ec4060fb1529e2dad4d1b12268448e6",
+      "bytes": 4389
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/tests/testkit/dx100_allocation_native.py",
+      "sha256": "91a7b8d01b4fc3038fa9337df1062580eb4cf20e41c015e7f398f397b5716724",
+      "bytes": 1411
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/tests/test_proof_setup.py",
+      "sha256": "73f0452f1f8e4379f391e4b48e54c3681db18f6b85133005810b95992b3a488c",
+      "bytes": 26421
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/apps/dx100/benchmarks/API/MAA.hpp",
+      "sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd",
+      "bytes": 1323
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/apps/dx100/benchmarks/API/MAA_gem5.hpp",
+      "sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+      "bytes": 27473
+    }
+  ],
+  "profiles": [
+    {
+      "name": "public-red",
+      "scope": "initial public source/layout RED",
+      "junit_counts": {
+        "tests": 1,
+        "failures": 1,
+        "errors": 0,
+        "skipped": 0
+      },
+      "resources": {
+        "exit_code": 1,
+        "peak_rss_bytes": 2214838272,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 7.051336250035092,
+        "cpu_seconds": 7.268143
+      },
+      "retained": [
+        {
+          "path": "/private/tmp/probata-t28-allocation-public-red/resources.json",
+          "sha256": "8809653ba9b5ab5a58c6ab531cffdd3c75cb81b215f36e35ab3d5acc17eda9ab",
+          "bytes": 165
+        },
+        {
+          "path": "/private/tmp/probata-t28-allocation-public-red/command.json",
+          "sha256": "eb98f70acf2bf9ac1798d4a448a1e5100c6923f5b1b0666b73abebacf060155e",
+          "bytes": 304
+        },
+        {
+          "path": "/private/tmp/probata-t28-allocation-public-red/junit.xml",
+          "sha256": "8e7cdccc1cc9c524bc7d17ceb98335eb6e797ea73310bee0a33256507ea44bcd",
+          "bytes": 7380
+        },
+        {
+          "path": "/private/tmp/probata-t28-allocation-public-red/control.log",
+          "sha256": "df3318fb72d2230073bade97c4797bfb25712e3467ed6915858d1c3a04fc25ca",
+          "bytes": 4144
+        }
+      ]
+    },
+    {
+      "name": "original-frame-red",
+      "scope": "genuine original assigns-nothing silently widened RED",
+      "junit_counts": {
+        "tests": 1,
+        "failures": 1,
+        "errors": 0,
+        "skipped": 0
+      },
+      "resources": {
+        "exit_code": 1,
+        "peak_rss_bytes": 2371125248,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 23.310517374949995,
+        "cpu_seconds": 23.635944
+      },
+      "retained": [
+        {
+          "path": "/private/tmp/probata-t28-allocation-original-frame-red/resources.json",
+          "sha256": "c6472b1f4835a1ad95b7caa5a17a9537c74c0adb9f2bc570db519ddfa6a784b8",
+          "bytes": 167
+        },
+        {
+          "path": "/private/tmp/probata-t28-allocation-original-frame-red/command.json",
+          "sha256": "1a17c6df1e1ecef8e16bcaa42a5e1a960b26f2988456df2dabc6b9fb7790c445",
+          "bytes": 400
+        },
+        {
+          "path": "/private/tmp/probata-t28-allocation-original-frame-red/junit.xml",
+          "sha256": "b6890aa77bc13f37d89b7cbb919344f81651af9304495b490dc9b4b28e4440f4",
+          "bytes": 52415494
+        },
+        {
+          "path": "/private/tmp/probata-t28-allocation-original-frame-red/control.log",
+          "sha256": "fb352ae144dfa349047f5670b9e030c41de08e177daf61dc97932721a56c2a95",
+          "bytes": 24408455
+        }
+      ]
+    },
+    {
+      "name": "cbmc-scope-red",
+      "scope": "genuine unadmitted CBMC route RED",
+      "junit_counts": {
+        "tests": 1,
+        "failures": 1,
+        "errors": 0,
+        "skipped": 0
+      },
+      "resources": {
+        "exit_code": 1,
+        "peak_rss_bytes": 2353348608,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 15.16102741699433,
+        "cpu_seconds": 15.535573
+      },
+      "retained": [
+        {
+          "path": "/private/tmp/probata-t28-allocation-cbmc-scope-red/resources.json",
+          "sha256": "5308b4974e687cd058e0ed93c6b837dcb9cfe51d419f575ea4959e904bb35719",
+          "bytes": 166
+        },
+        {
+          "path": "/private/tmp/probata-t28-allocation-cbmc-scope-red/command.json",
+          "sha256": "232ab225f150edfc2362393e35546087386ca0d1c12c9f2f4c20d5fabdbe9f11",
+          "bytes": 391
+        },
+        {
+          "path": "/private/tmp/probata-t28-allocation-cbmc-scope-red/junit.xml",
+          "sha256": "3534a32439d914fef7cdaaf2e43402b21aea375db1ea8922ac43f5db4d2175d6",
+          "bytes": 35946
+        },
+        {
+          "path": "/private/tmp/probata-t28-allocation-cbmc-scope-red/control.log",
+          "sha256": "36cb62bc6bdb28159f9b9861f0283a885d685bdceda5d14d390c2b7273bd6e4a",
+          "bytes": 16747
+        }
+      ]
+    },
+    {
+      "name": "cbmc-scope-green",
+      "scope": "early CBMC refusal GREEN",
+      "junit_counts": {
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "resources": {
+        "exit_code": 0,
+        "peak_rss_bytes": 2333212672,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 8.758784790989012,
+        "cpu_seconds": 8.525806
+      },
+      "retained": [
+        {
+          "path": "/private/tmp/probata-t28-allocation-cbmc-scope-green/resources.json",
+          "sha256": "014b4c956e4d7054510acd5ba497cab68549620972a4074196d9872f8e433ac1",
+          "bytes": 165
+        },
+        {
+          "path": "/private/tmp/probata-t28-allocation-cbmc-scope-green/command.json",
+          "sha256": "5ac068eb4946bc08b80fc8521c0439380bb5b7c5b83a80c83eb120d53e844a31",
+          "bytes": 395
+        },
+        {
+          "path": "/private/tmp/probata-t28-allocation-cbmc-scope-green/junit.xml",
+          "sha256": "3b6f19504ff8d097c69a9c09ed9cef3109e28f4bb344783711dfb3b1e82ec98c",
+          "bytes": 416
+        },
+        {
+          "path": "/private/tmp/probata-t28-allocation-cbmc-scope-green/control.log",
+          "sha256": "d2a596b9fded3af56c8d972724e2bd9f115cb0d7bdd67c1e803eff76e034b260",
+          "bytes": 98
+        }
+      ]
+    },
+    {
+      "name": "current-final-green",
+      "scope": "current compiler/scripted/native/dependency controls",
+      "junit_counts": {
+        "tests": 17,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 2
+      },
+      "resources": {
+        "exit_code": 0,
+        "peak_rss_bytes": 2593734656,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 141.8843547910219,
+        "cpu_seconds": 142.785257
+      },
+      "retained": [
+        {
+          "path": "/private/tmp/probata-t28-allocation-current-final-green/resources.json",
+          "sha256": "d007ac5e1c8c23b21ee72d45ddc4eb30f0f90c73e7cc18b7d49b41b9017cc16e",
+          "bytes": 167
+        },
+        {
+          "path": "/private/tmp/probata-t28-allocation-current-final-green/command.json",
+          "sha256": "91e2b74ff9757a737e03f68d5159c5e801e4a4b0fb1438f4aede9f811e75e607",
+          "bytes": 567
+        },
+        {
+          "path": "/private/tmp/probata-t28-allocation-current-final-green/junit.xml",
+          "sha256": "c03ade24bcd0654368e5a4c3cb26db9f78e84d85fde443772966b46e5ba54635",
+          "bytes": 3552
+        },
+        {
+          "path": "/private/tmp/probata-t28-allocation-current-final-green/control.log",
+          "sha256": "d124ff9315fdf9948a6d68c762f84c41dc8391fefd5a48a2a88a942da1170ebd",
+          "bytes": 122
+        }
+      ]
+    },
+    {
+      "name": "current-legacy-regression",
+      "scope": "four narrow legacy public regressions",
+      "junit_counts": {
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "resources": {
+        "exit_code": 0,
+        "peak_rss_bytes": 2812854272,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 51.512468125030864,
+        "cpu_seconds": 52.359107
+      },
+      "retained": [
+        {
+          "path": "/private/tmp/probata-t28-allocation-current-legacy-regression/resources.json",
+          "sha256": "ca8cb0154bd9a8eead7d57b9a67218de499bcdbe51a8cadaba2708d0e4beb18b",
+          "bytes": 167
+        },
+        {
+          "path": "/private/tmp/probata-t28-allocation-current-legacy-regression/command.json",
+          "sha256": "94c66d818f4f1bfda6bc23d182bf28f28f507b554e6ef123e567a25b1babfc39",
+          "bytes": 814
+        },
+        {
+          "path": "/private/tmp/probata-t28-allocation-current-legacy-regression/junit.xml",
+          "sha256": "5dae19404afb2bdc1bdc6bd1a37b4a295e2c449df737f537a687a0d495be9c04",
+          "bytes": 925
+        },
+        {
+          "path": "/private/tmp/probata-t28-allocation-current-legacy-regression/control.log",
+          "sha256": "1e3cbf90988d25da633aa2a59770576ddb0e66790fe2bc53d3b8517ea6b60320",
+          "bytes": 99
+        }
+      ]
+    },
+    {
+      "name": "runner-isolation-green",
+      "scope": "real resolved output guard with explicit no-tool stand-ins",
+      "junit_counts": {
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "resources": {
+        "exit_code": 0,
+        "peak_rss_bytes": 72515584,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 1.3930122920428403,
+        "cpu_seconds": 0.6018619999999999
+      },
+      "retained": [
+        {
+          "path": "/private/tmp/probata-t28-allocation-runner-isolation-green/resources.json",
+          "sha256": "a616fce680e46b2ad1001cb915a9cff80c9e4781bb1da4fac91cdb888eec9a8e",
+          "bytes": 174
+        },
+        {
+          "path": "/private/tmp/probata-t28-allocation-runner-isolation-green/command.json",
+          "sha256": "acc29458ddc3b63b98c8e7c2b7ae2d4e0e5d354a04c61ae553f9f3aebf306503",
+          "bytes": 328
+        },
+        {
+          "path": "/private/tmp/probata-t28-allocation-runner-isolation-green/junit.xml",
+          "sha256": "60cb13788a477b3a1f8ae127415fcfa42625f7ae7fd0cfcd6744e791a0cd20bd",
+          "bytes": 924
+        },
+        {
+          "path": "/private/tmp/probata-t28-allocation-runner-isolation-green/control.log",
+          "sha256": "00313f812180a456ffe7937fb2b03b4b821aaf1ef4e4604dbf9ca8f66d21b731",
+          "bytes": 98
+        }
+      ]
+    },
+    {
+      "name": "parser-portable-syntax",
+      "scope": "four exact portable C inputs, native syntax only",
+      "junit_counts": {
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "resources": {
+        "exit_code": 0,
+        "peak_rss_bytes": 83787776,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 0.5988263749750331,
+        "cpu_seconds": 0.586993
+      },
+      "retained": [
+        {
+          "path": "/private/tmp/probata-t28-allocation-parser-portable-syntax/resources.json",
+          "sha256": "5f17a6b246648567ea62795ac23170156de74ff0b22bacce710b86164756b9ec",
+          "bytes": 164
+        },
+        {
+          "path": "/private/tmp/probata-t28-allocation-parser-portable-syntax/command.json",
+          "sha256": "f5c594fdc6e56b070364366815fef62f97b4788d7a7a9b85d02699143f941b1a",
+          "bytes": 328
+        },
+        {
+          "path": "/private/tmp/probata-t28-allocation-parser-portable-syntax/junit.xml",
+          "sha256": "6e7ed3590a2a24b8f0b9bd606534409b7c3d02745b3297b1bf2bff4883ba5b2a",
+          "bytes": 409
+        },
+        {
+          "path": "/private/tmp/probata-t28-allocation-parser-portable-syntax/control.log",
+          "sha256": "d907fec0e0445cfe67a7272e864304e81194b234052d6bdfcb6ec87c0b123e62",
+          "bytes": 98
+        }
+      ]
+    }
+  ],
+  "current_retained": [
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/command.json",
+      "sha256": "91e2b74ff9757a737e03f68d5159c5e801e4a4b0fb1438f4aede9f811e75e607",
+      "bytes": 567
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_allocator_refuses_unbound0/refusal.stderr",
+      "sha256": "142b2961ab2482fb6f15759d2138a41c70be1ea9e7479021561cc6cd248d304a",
+      "bytes": 589
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_allocator_refuses_unbound0/refusal.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_allocator_refuses_unbound1/refusal.stderr",
+      "sha256": "75043a9a87a00a2bb9029c6c0f3205d8fa9e688a78879e96626fd545b289cd0d",
+      "bytes": 386
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_allocator_refuses_unbound1/refusal.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_allocator_refuses_unbound2/refusal.stderr",
+      "sha256": "99bb53ed42efc951aaae1b69bf3f7b135013aabed16f7c02dc233365f62a24e8",
+      "bytes": 599
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_allocator_refuses_unbound2/refusal.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_allocator_refuses_unbound3/refusal.stderr",
+      "sha256": "817f56e7b00bd8bb0c4af509b798fbb2af6bad10239557e899c7111333e7f656",
+      "bytes": 270
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_allocator_refuses_unbound3/refusal.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_allocator_refuses_unbound4/refusal.stderr",
+      "sha256": "f3c61499f21c1c895bccfd233fb9cc583f0def0d6f2ab940b15e7fb0f7fc9918",
+      "bytes": 258
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_allocator_refuses_unbound4/refusal.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_correct_and_wrong_counter0/101/records/proofs/proof.contract.dx100_software_allocation_fixture.v1.20261016t100731z.40787fbe.yaml",
+      "sha256": "0f69aea981c3b652b287c3d5b7b1b212ab771c5070029f5bb85cfd7b3c67638c",
+      "bytes": 26315412
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_correct_and_wrong_counter0/102/records/proofs/proof.contract.dx100_software_allocation_fixture.v1.20261016t100705z.0f59e138.yaml",
+      "sha256": "de4aee5e3e5ccb7aba43b76c7a927296aeb2d79cbb0e28217ac7e6a855854eb8",
+      "bytes": 26315410
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_native_allocator_source_a0/c++.compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_native_allocator_source_a0/c++.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_native_allocator_source_a0/c++.stdout",
+      "sha256": "a2a24cbb9ac2cbcacf78e11f4a2cb2b5a14fe1a61e2e2dcce10b2d7ae2d3047a",
+      "bytes": 12
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_native_allocator_source_a0/c.compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_native_allocator_source_a0/c.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_native_allocator_source_a0/c.stdout",
+      "sha256": "a2a24cbb9ac2cbcacf78e11f4a2cb2b5a14fe1a61e2e2dcce10b2d7ae2d3047a",
+      "bytes": 12
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_native_allocator_source_a0/commands.json",
+      "sha256": "6d40af3031d54a6bb03cd1661cdf0c09e64e090c9f2d1935d0a0755042689820",
+      "bytes": 786
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_native_allocator_source_a1/c++.compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_native_allocator_source_a1/c++.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_native_allocator_source_a1/c++.stdout",
+      "sha256": "57db7713ed79c26d600d5a94954a85774f7072b4f3e39e4ad0819e9ba4e4c811",
+      "bytes": 12
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_native_allocator_source_a1/c.compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_native_allocator_source_a1/c.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_native_allocator_source_a1/c.stdout",
+      "sha256": "57db7713ed79c26d600d5a94954a85774f7072b4f3e39e4ad0819e9ba4e4c811",
+      "bytes": 12
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_native_allocator_source_a1/commands.json",
+      "sha256": "bee8045f077bcaee97070d2be522f4ff68d6f12432daacfa901fd3afd642e071",
+      "bytes": 786
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_native_allocator_source_a2/c++.compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_native_allocator_source_a2/c++.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_native_allocator_source_a2/c++.stdout",
+      "sha256": "58aab3eaf51c1be430e1b8c8a6330fbde6a08d96f00a501d2f2a71609d8f4f80",
+      "bytes": 8
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_native_allocator_source_a2/c.compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_native_allocator_source_a2/c.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_native_allocator_source_a2/c.stdout",
+      "sha256": "58aab3eaf51c1be430e1b8c8a6330fbde6a08d96f00a501d2f2a71609d8f4f80",
+      "bytes": 8
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_native_allocator_source_a2/commands.json",
+      "sha256": "2426f6a247c32064318b5808d6fb99a53b817cc1aa779716d794bfcf1f5beec9",
+      "bytes": 786
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_native_source_capacity33_0/command.json",
+      "sha256": "456c3a51e74493284ea27cfa85088b6a9b7bbd325601343a9ce93e2cda0cfd0f",
+      "bytes": 353
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_native_source_capacity33_0/compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_native_source_capacity33_1/command.json",
+      "sha256": "42b2807a149e57c777a4ff4f2c3c61e075c0a8441882bff4958059517eae7f3d",
+      "bytes": 353
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_native_source_capacity33_1/compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_public_allocator_binds_or0/c++.compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_public_allocator_binds_or0/c++.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_public_allocator_binds_or0/c++.stdout",
+      "sha256": "bb48c26010664f83ec3abe9f8619e0aa53abfc0cfcd4eb9a05900e320cdf542b",
+      "bytes": 10
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_public_allocator_binds_or0/c.compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_public_allocator_binds_or0/c.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_public_allocator_binds_or0/c.stdout",
+      "sha256": "bb48c26010664f83ec3abe9f8619e0aa53abfc0cfcd4eb9a05900e320cdf542b",
+      "bytes": 10
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_public_allocator_binds_or0/native-commands.json",
+      "sha256": "86ddcc354d8df29c12d50afc4dd0f71ee01745e85034b19bbe4288b2b5ef1f11",
+      "bytes": 1030
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_public_allocator_binds_or0/records/proofs/proof.contract.dx100_software_allocation_fixture.v1.20261016t100554z.1e75af31.yaml",
+      "sha256": "8233a176a97d2721bfcab07a03a6f2ada04ee66290f3cf7c2f08600e8854538a",
+      "bytes": 26291608
+    }
+  ],
+  "model_content_sha256": {
+    "state": "257d70199cbd37225c8992329f9257f1cddb8a84a890557ca505f61afb023c9c",
+    "model": "24d7d4deff716f10f7e12c682dcbeca27a4b93dc152516b1a81cc2906b504330",
+    "contracts": "f3205878360b358bf914813978f6f88102124b75a65bade00a6f29f693c4696c",
+    "prototypes": "11fc0b9374acdd5757b165be3f1347942899962e2cf0fd9228c7f7328fa0d21e",
+    "scope": "d4a29c468fd95c216a7ea87ce42cd95c250db39350f051e71db1523a6f6f4ebc"
+  },
+  "parser_bundle": [
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-allocation-parser/README.md",
+      "sha256": "fcbb0982b514092fa4ed7fb6a0b6d1d09b167fe2666cf8b4c773b0edca5591cd",
+      "bytes": 2015
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-allocation-parser/export_bundle.py",
+      "sha256": "061c87b0d54fdd2d0a627d0947eb21921083f0715f90a85c4e6fccd84cad6e8f",
+      "bytes": 4172
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-allocation-parser/inputs/all-contracts.c",
+      "sha256": "a7f603442764ac145852bdb05fe05ab4a081b319c5a4a81fd59b248c0a83ba5b",
+      "bytes": 2600
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-allocation-parser/inputs/manifest.json",
+      "sha256": "0325eb93eeb99d5455b4dbee520c5fa41a6364112926f5d2e6dca2b0d87cc625",
+      "bytes": 6042
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-allocation-parser/inputs/ordinary-model.c",
+      "sha256": "d540dd34c90dc2935ca14c6975b392c3f2b0f075b534f337672a2c8373188d23",
+      "bytes": 1146
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-allocation-parser/inputs/wp-correct.c",
+      "sha256": "dcc1b3c97c38ebe0a39a618e449cda1f7f72a97a978b4c01c29bee3499741b0a",
+      "bytes": 2570
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-allocation-parser/inputs/wp-wrong.c",
+      "sha256": "6e184fc338e9fa0e8aace370f9d339727ddb0fdcbf601a06f8f29a23b7d9c57b",
+      "bytes": 2570
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-allocation-parser/root-recipe.json",
+      "sha256": "79c2200faecc68bd8048feda81141079f8c0ec4def51becbaf92574d3e4e1550",
+      "bytes": 1426
+    }
+  ],
+  "runner": {
+    "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/run_allocation_acceptance.sh",
+    "sha256": "3d04c24af0480078b6a54d43c5f7a202367eefd6903734223c22cb26653ac388",
+    "bytes": 4658
+  },
+  "design": {
+    "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/allocation-first-gate.md",
+    "sha256": "88e59e7cb1f713d9304940e58f308a3af4fa38b48a7851af0327eb9e89c16d7c",
+    "bytes": 4684
+  },
+  "current_unique_controls": {
+    "passed": 24,
+    "actual_skipped": 2,
+    "composition": "15current+4legacy+4runner+1parser; separate CBMC1GREEN repeats a current case and is not double-counted"
+  },
+  "finite_native_domain": {
+    "compilations_and_runs": 10,
+    "cases": "closed original caller C++/generated C102/3/3/6; paired source/model lastu32,lastu64,oddu64; two source capacity33 assertion failures",
+    "sanitizers": [
+      "address",
+      "undefined"
+    ],
+    "limitations": "Exact pure counter source excerpts for native execution; full original header is compiler-preprocessed/AST/LLVM certified, not natively executed on ARM. No full mathematical agreement theorem."
+  },
+  "historical_preparation_failures": "Full-header native build hit unrelated ARM mfence; exact pure excerpts replace that native route. Probe initially referenced macros unavailable after frozen preprocessing; explicit checked ABI/probe fixed. Initial macro extraction matched NUM_TILES_PER_CORE prefix; exact macro-name boundary fixed. Earlier private-state/original-frame widening was superseded by genuine frame RED and unchanged explicit original globals/frame. These historical preparations are not current acceptance.",
+  "legacy_library_api_bytes_unchanged": true,
+  "boundaries": [
+    "Two exact builtins and three call families only; complete inventory validation is not full26call/type acceptance",
+    "Original total software-counter unit; no new unit requires/ensures/partial policy; exact original counter assigns frame required",
+    "Source assertions and signed arithmetic duties retained; odd64-bit allocation start allowed; source capacity33 is assertion failure, not source UB or a normal allocation result",
+    "No alloc/init-implied hardware freshness, MMIO mapping, register/payload initialization, ownership or liveness",
+    "Compiler equality is a trusted observation; source/model contract-body agreement remains owned TCB duty pending59",
+    "Five inherited TRUST metadata retained; legacy at-issue/reduction route not used; this fixture refuses CBMC",
+    "No actual Frama/WP/CBMC/solver execution, formal-tool version/config probe, SSH or remote evaluation by author; compiler/native metadata and controls ran under B; scripted proof records remain not_proven/tool_crash",
+    "All0.1 library bytes unchanged; no current production0.2/full28 acceptance"
+  ]
+}
