@@ -174,6 +174,43 @@ entry at published `e56c62dd` changes only its expected commit and passes static
 review; it has not run. No acceptance box closes and no `c_model` record is
 created by this representative result.
 
+### Complete first-pair capability accepted — 2026-10-15 ET
+
+The coordinator's fresh full run at exact published `e56c62dd` completed all 42
+expectations: 37 positive global check lemmas are Valid; the original arithmetic
+kernel has ten Valid ordinary goals and one passing normal-reader smoke; four
+negative controls remain `not_proven/timeout`. These are 42 matching outcomes,
+not 42 proved statements or four refutations. The whole worker exited 0 in
+248.222s, peak 535,871,488 bytes; the outer guard exited 0 in 250.254s, peak
+587,251,712 bytes, with no watchdog timeout/OOM. Source-after and independent Git
+reads confirm exact clean source; lane 613 naturally ended at 03:42:11Z.
+
+Independent cold review verified 508 unique physical references with zero
+mismatches, catalogued 500 raw files and reconciled all 132 task files as 66
+solver/diagnostic pairs equal after their headers. Every task's hypotheses and
+source-specific definitions were checked. Standard support formula bodies match
+the representative audit; the numeric kernel additionally uses pinned Frama-C
+Cint range/conversion/projection lemmas. Its local dependency graph is acyclic;
+seven of its 13 properties have dependencies, all referencing separately Valid
+goals. The global
+check-lemma rows have no Extern or property dependencies.
+
+The reviewed 12-event original-body map covers initial stores, arbitrary incoming
+heap, old-buffer retention, allocation identity/extent/init/frame, unbounded
+prefix establishment/step/exit, numeric arithmetic, final post/frame and
+destructor read/free/lifetime/frame, including receiver-buffer overlap. No
+original caller premise or desired-result axiom was added. This accepts the
+capability for the exact original int count/value constructor and destructor
+under the explicitly inventoried trusted lowerer/allocator/standard-support TCB.
+Evidence: `../evidence/t25-full42-cold-summary-v1-e56c62dd-20261015.json` and
+`../evidence/t25-full42-cold-closure-review-e56c62dd-20261015.md`.
+
+The run creates zero production `c_model` records. Public source-mapped heap-view
+integration, other members/types, generic caller composition and all ticket
+acceptance boxes remain open. The next vertical slice is fresh public
+`swdb prove --model` evidence; this capability profile is never promoted from a
+cache into such a record.
+
 ## Acceptance
 
 - [ ] Each modeled member has a C function and an ACSL contract citing the standard's clause for it (`[vector]` for vector members). `swdb prove` proves every contract against its C function once, recorded with subject "a library entry's summary".
