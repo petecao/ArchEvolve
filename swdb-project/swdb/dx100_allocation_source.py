@@ -115,6 +115,25 @@ def _strip_expr(node):
  while node.get('kind')in {'ParenExpr','ImplicitCastExpr','CXXStaticCastExpr','CStyleCastExpr','CXXFunctionalCastExpr'}and len(_children(node))==1:node=_children(node)[0]
  return node
 
+def _assert_function_diagnostic(call):
+ # glibc's GNU marker occurs only around its fourth, diagnostic argument.
+ # Qualify that exact pure subtree; never erase a marker in executable code.
+ if _callee(call)!='__assert_fail' or len(_children(call))!=5:return None
+ reference=_strip_expr(_children(call)[0])
+ declaration=reference.get('referencedDecl',{})
+ signature='void (const char *, const char *, unsigned int, const char *) __attribute__((noreturn)) noexcept(true)'
+ if reference.get('kind')!='DeclRefExpr' or declaration.get('kind')!='FunctionDecl' or declaration.get('type',{}).get('qualType')!=signature or reference.get('type',{}).get('qualType')!=signature:return None
+ argument=_children(call)[4]
+ if argument.get('kind')!='ImplicitCastExpr' or argument.get('castKind')!='ArrayToPointerDecay' or argument.get('type',{}).get('qualType')!='const char *' or len(_children(argument))!=1:return None
+ wrapper=_children(argument)[0]
+ if wrapper.get('kind')!='UnaryOperator' or wrapper.get('opcode')!='__extension__' or wrapper.get('isPostfix')is not False or wrapper.get('canOverflow')is not False or len(_children(wrapper))!=1:return None
+ predefined=_children(wrapper)[0]
+ if predefined.get('kind')!='PredefinedExpr' or predefined.get('name')!='__PRETTY_FUNCTION__' or len(_children(predefined))!=1:return None
+ literal=_children(predefined)[0]
+ if literal.get('kind')!='StringLiteral' or _children(literal) or not re.fullmatch(r'"int get_new_(tile|reg)\(\) \[T1 = unsigned (int|long long)\]"',literal.get('value','')):return None
+ if not wrapper.get('type')==predefined.get('type')==literal.get('type') or not re.fullmatch(r'const char\[\d+\]',literal.get('type',{}).get('qualType','')):return None
+ return wrapper
+
 def _assertion(node,expected,variable):
  # The source assert must still be present. Within the admitted arithmetic
  # domain it is true; outside it no assertion-failure behavior is summarized.
@@ -124,7 +143,8 @@ def _assertion(node,expected,variable):
   refs=[n for n in _walk(_children(call)[0])if n.get('kind')=='DeclRefExpr']
   names.append(refs[0].get('referencedDecl',{}).get('name')if len(refs)==1 else None)
  if names.count('__assert_rtn')+names.count('__assert_fail')!=1 or any(n not in {'__assert_rtn','__assert_fail','__builtin_expect'}for n in names):raise Refused('allocator source assertion is absent or has unbound effects')
- operators=[n.get('opcode')for n in _walk(node)if n.get('kind')in {'BinaryOperator','CompoundAssignOperator','UnaryOperator'}]
+ diagnostic=next((_assert_function_diagnostic(c)for c in calls if _callee(c)=='__assert_fail'),None)
+ operators=[n.get('opcode')for n in _walk(node)if n is not diagnostic and n.get('kind')in {'BinaryOperator','CompoundAssignOperator','UnaryOperator'}]
  if any(o not in {'==','||','<=','*','!'}for o in operators):raise Refused('allocator source assertion contains unbound effects')
  # Exact original predicate text appears once as executable operators and as
  # diagnostic text. Bounds/width behavior also independently matches LLVM.
