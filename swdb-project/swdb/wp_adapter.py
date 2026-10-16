@@ -977,6 +977,7 @@ class WpAdapter:
         pins.update(context.get("pins") or {})                 # ticket 24: summaries and C models
         semantics = context.get("semantics")
         if semantics:                               # ticket 27: as the CBMC adapter records it
+            assumptions += proof_semantics.record_assumptions(self.library, semantics['id'], semantics['sha256'])
             pins["proof_semantics"] = {"id": semantics["id"], "sha256": semantics["sha256"]}
             fields.setdefault("settings", {})["proof_semantics"] = {
                 **context["semantics_settings"], "unit_requires": semantics.get("unit_requires", []),

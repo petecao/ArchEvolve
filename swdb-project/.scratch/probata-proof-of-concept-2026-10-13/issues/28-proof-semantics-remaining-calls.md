@@ -70,3 +70,13 @@ recorded [here](../prototype/28-proof-semantics/indirect-old-value-correction-20
 future contracts must use the alias to the modified copied line. Ticket remains
 **claimed**; all substantive memory/history/ownership/pair and full-call actual
 acceptance criteria remain active.
+
+Trust-record prerequisite — 2026-10-15 ET: both public adapter paths now list
+explicitly marked per-rule trust entries on every verdict using the version,
+including prelaunch refusal records. Thirteen controls pass using version/parse
+stand-ins and scripted fixture level records; all five entries remain noncapping.
+A reproduced post-validation entry mutation is refused, preventing cached text
+from receiving a new file hash. WP's earlier validation-time probe consistently
+records the subsequently loaded version. No actual verifier ran, no new
+production semantics version is current and the substantive acceptance boxes
+remain open. [Exact evidence](../evidence/t28-trust-record-controls-20261015.json).
