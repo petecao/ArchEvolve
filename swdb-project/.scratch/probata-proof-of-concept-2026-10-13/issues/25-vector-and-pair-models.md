@@ -1413,3 +1413,6 @@ Actual source37 grow38 remains partial:27 successful targets, open copy step and
 ## Active checkpoint — 2026-10-16 10:06 ET
 
 See [settled producers and passive evidence](../evidence/frontier-settled-producers-checkpoint-20261016-1006.md) and its exact-pin ledger. Ticket remains claimed; existing acceptance criteria and dependencies are unchanged. Original exits, pending proof/cold/source gates and historical trust boundaries are preserved.
+
+
+Independent source-equivalence review passes exacte2326954; merged3a48da2f incorporates current published08e5236b and preserves identical production/library/tests/records/schema/vocabulary bytes. All15 full-premise leaves reconstruct the original source invariant, and other37 grow inputs remain exact. The focused15 diagnostic is inert and independently reviewed separately; no actual successor proof or public52 workflow result is claimed. See `../evidence/t25-copy-step-and15-independent-source-review-e2326954-20261016.md`.
