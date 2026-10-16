@@ -1,0 +1,9 @@
+# Stream cold V3 launch representation — independent passive review
+
+PASS_STATIC_ONLY, 2026-10-16 ET. Narrow follow-up to V2 independent review8e7a4389/3e90777f. No actual reader/control/project/compiler/prover/probe/SSH execution by this reviewer.
+
+Rehashed all frozen V3 packet local references with zero mismatches. The only policy addition is launch_physical_pin, exactly equal to launch.json's87396-byte/SHAe9f937e75a34c6a03fc322b5c6f00c58d941f62e0dc21ea456a90008c40db1aa entry in the unchanged full raw manifest. Reader checks that exact full physical file, then derives the compact marker from the complete inline entry: exact9-token shape, -c slot,86046UTF8 bytes and selected f16bbb entrySHA. It substitutes only this slot and compares every remaining launch field against the complete captured metadata; extra keys and changed wrappers/arguments refuse. Original explicit source/node/1200/8GiB/oneworker checks remain. The immutable full physical hash also binds original JSON types; this is not a partial-dict or digest waiver.
+
+All source/certificate/runtime/native/52-property/23-goal/42CSV and exact scratch attribution policies are unchanged from independently reviewedV2. Retained genuine representation RED1failure71passes and V3GREEN84passes are author pure controls, not rerun here. The first root V2 passive refusal exit1 remains immutable; it establishes a launch representation mismatch only, not a stream proof failure. No formal rerun occurred or is needed to repair this passive reader.
+
+Eligible for a fresh bounded root-owned passive audit only. Scientific acceptance still waits for complete actual cold PASS; conditional partial-normal-return, owned Extern/boot TCB, healthy raw nonvalid smoke observations, no body/event refinement, no hardware liveness/payloadCPUread, no negative refutation/current0.2/full28 boundaries remain unchanged.

@@ -1,0 +1,5 @@
+# Register parser preservation — 2026-10-16 ET
+
+[Root actual four-input receipt](t28-register-parser-root-execution-v1-20261016.json) passes at exactfcfc6135 with all4/5,738B matching frozenGit inputs, no Ignoring, no WP/prover or autoloaded plugins. Whole0.765079s; c6guard0/0.703978s78.46875MiB, noOOM/timeout/inspection events/children, final leases absent. Root checks194libcheaders before/after; this integration review rehashes exact4Git inputs and pins receipt/packet only, with no native rerun. Parser/type syntax feasibility does not establish model/source/body/hardware/termination correctness.
+
+[Independent register source preparation review](t28-register-independent-source-review-5b21cdf6-20261016.md) retains exactc9b4controls/5b21CBMCguard/fcfccomposedpacket,23Gitpins and9,872localreferences3,533unique0mismatch. The integration merge preserves all reviewed source bytes, currentreporter, default0.1library/API and held-out boundary. Actual healthy u32register pair remains unexecuted and separately root-admitted; ticket28 stays claimed.

@@ -1,0 +1,47 @@
+{
+  "actual_fixture_capture": {
+    "bytes": 188378,
+    "path": "/private/tmp/probata-t28-stream-method-capture-root-execution-v1-20261016.json",
+    "sha256": "e6c7bb5a5912fb630dde75b411b9c74872db75fdbb2ed12b5701967fc2a9f7fd"
+  },
+  "actual_formal_rerun": false,
+  "author_actual_or_SSH_or_tool_execution": false,
+  "changes_from_v5": [
+    "Compare complete actual method to exact pinned source fixture transformations, preserving proof_hint_check/version0, both translators and all opaque fields.",
+    "Physically hash retained contract YAML separately; use artifacts.digest(parsed contract) for contract/code/setup pins. Method and semantics pins remain physical YAML hashes.",
+    "Extract exact public --bounds JSON from pinned testkit source: launch job bounds threads1/input_size1, separate from WP record unbounded input bounds. Bind actual command/flags/inputs/method in launch run-plan."
+  ],
+  "controls": {
+    "combined_final": "180passed includes147 prior controls, complete schema tests,16 actual run-plan mutation refusals and2 canonical-contract tests",
+    "complete_retained_schema": "15passed:both full generated methods,11 method mutations,both downstream metadata predicate suites",
+    "exact_original_v5_RED": "6failed:method/canonical-contract/run-plan assertions for both actual records",
+    "honest_scope": "Source/IR/input payload checks remain duties of actual passive reader; local full-schema tests use independently root-captured metadata and explicit source/schema checks, not raw compiler/IR execution. Exploratory harness NameError batches retained and never acceptance.",
+    "resources": {
+      "cpu_seconds": 1.491117,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 108593152,
+      "timed_out": false,
+      "wall_seconds": 1.513442291005049
+    }
+  },
+  "date": "2026-10-16 ET",
+  "policy_unchanged_from_v5": true,
+  "prior_note_correction": "V5 note inferred launch job bounds None from default. Actual pinned testkit public invocation explicitly passes threads1/input_size1, and both captured run-plan hashes match only that input. Original note preserved as history, corrected here.",
+  "retained_boundaries": [
+    "exact source/consumer/runtime/complete raw preservation",
+    "current8b84 source and exact native/property input contexts",
+    "15 unique native source bindings+current reporter and17 historical occurrences",
+    "cleanup-ephemeral compiled module attested by source/checker only; binary digest not persisted or independently posthashed",
+    "conditional partial normal return; all owned source/event/environment TCB retained",
+    "no source refinement, model body, hardware liveness, payload CPU read, refutation, current02/full28 claim"
+  ],
+  "scientific_acceptance_pending": true,
+  "source_commit": "c241c5477b5afee1c02e789b141ea596bdfed1e7",
+  "status": "INERT_V6_PENDING_INDEPENDENT_STATIC_REVIEW_ROOT_PASSIVE_ONLY",
+  "v5_actual_refusal": {
+    "bytes": 2199,
+    "path": "/private/tmp/probata-t28-stream-current-cold-root-execution-v5-20261016.json",
+    "sha256": "402584f994f68ceb2c6d97116a77cd049dcfe9f292920eb723d514e37b609527"
+  }
+}

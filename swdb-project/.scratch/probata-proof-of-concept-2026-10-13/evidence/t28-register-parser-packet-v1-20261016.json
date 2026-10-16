@@ -1,0 +1,1110 @@
+{
+  "created": "2026-10-16 ET",
+  "state": "INERT/UNLAUNCHED; root sole actual parser admission",
+  "entry": {
+    "path": "/private/tmp/probata-t28-register-parser-entry-v1-20261016.py",
+    "sha256": "ac82604c6c1b8c0e6b9c614d3500b23360a20cdc6749da17f5f1d6941b1fdfdb",
+    "bytes": 32881
+  },
+  "command": {
+    "path": "/private/tmp/probata-t28-register-parser-command-v1-20261016.json",
+    "sha256": "fbc28c4dadae072137cce67012fcc4d58eb4696a86f0c52c21dbfb304d4927b4",
+    "bytes": 735
+  },
+  "expected": {
+    "date_et": "2026-10-16",
+    "source_commit": "fcfc6135f3c2822bfd7bef8f3675f42554cb2e55",
+    "source_tree": "475f68c4d70cf37d1d12ed4e61ace5aa6076630f",
+    "executable_source": "5b21cdf6c4ba476c05ed8d9894c131e7a4c24e71",
+    "tested_ancestor": "c9b4d65520d52ebd57d58625f2f582b29bce4113",
+    "inputs": [
+      {
+        "name": "wp-correct.c",
+        "repository_path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-register-parser/inputs/wp-correct.c",
+        "sha256": "a926d67cc1b153c610879935cac1d3c99c89f99970424e087d9e8c9ea8b0c74e",
+        "bytes": 1562,
+        "git_blob": "ee4ce111a35b78e3dd58f32ebad119a8b001f3f0"
+      },
+      {
+        "name": "wp-wrong.c",
+        "repository_path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-register-parser/inputs/wp-wrong.c",
+        "sha256": "0c81fbda127aa0edd380036e54d6d2485a23d9864079e9f48c37c615be9c34a6",
+        "bytes": 1563,
+        "git_blob": "69f6984e0cf7550331dcedba5d47d9b93f6bb356"
+      },
+      {
+        "name": "all-contracts.c",
+        "repository_path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-register-parser/inputs/all-contracts.c",
+        "sha256": "1e58b182d36e771ec394ba7a880964d7a6ccb35a811ead874ab32c0278acde68",
+        "bytes": 2205,
+        "git_blob": "eb828e26f5b85346e0fbc7ea03920684129c82dd"
+      },
+      {
+        "name": "ordinary-model.c",
+        "repository_path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-register-parser/inputs/ordinary-model.c",
+        "sha256": "44dcd31b69c616256a9dbe72713079a2c769d41254e893db1c9c8b5237967eb9",
+        "bytes": 408,
+        "git_blob": "00d8d0fea6d25531cb4d21be92bc4e75bdb529f1"
+      }
+    ],
+    "bytes": 5738,
+    "frama": {
+      "bytes": 30192400,
+      "path": "/Users/yanrujhou/.opam/framac-33/bin/frama-c",
+      "sha256": "412ccd77e77caf5bceb5ca1fd4e0a3efab04cda64af07706126cd5409cb05475"
+    },
+    "preprocessors": [
+      {
+        "bytes": 200560,
+        "path": "/usr/bin/gcc",
+        "sha256": "34129c71a01a74f7f3b2443521519b2e5447553fa187f5fcafaaf8c42cc192e2"
+      },
+      {
+        "bytes": 200560,
+        "path": "/usr/bin/clang",
+        "sha256": "34129c71a01a74f7f3b2443521519b2e5447553fa187f5fcafaaf8c42cc192e2"
+      }
+    ],
+    "share": "/Users/yanrujhou/.opam/framac-33/share/frama-c/share",
+    "headers": [
+      {
+        "bytes": 1204,
+        "relative": "libc/__fc_alloc_axiomatic.h",
+        "sha256": "fa5f7d9a646b4cc6c39298b8e6968d4e1e925b9d3c81cc821fbc49be08c250eb"
+      },
+      {
+        "bytes": 5827,
+        "relative": "libc/__fc_builtin.c",
+        "sha256": "e0a4e54d44f5169a78483ee88cc5c17304703586d2bb02c9180dbe7313e77ae4"
+      },
+      {
+        "bytes": 10460,
+        "relative": "libc/__fc_builtin.h",
+        "sha256": "1967943ea6b3b6b74bde9461ed14747dc453ed87e0b159ad4aed2e827b268b3c"
+      },
+      {
+        "bytes": 1070,
+        "relative": "libc/__fc_define_at.h",
+        "sha256": "dafd6372566da1bf4a9487c08c9017194713e36a1da23389f4b3b23173c583be"
+      },
+      {
+        "bytes": 788,
+        "relative": "libc/__fc_define_blkcnt_t.h",
+        "sha256": "f640321e1f881303a3d569feeb8c5e0c36fe90c380e4328a5d86a46c81d52dd2"
+      },
+      {
+        "bytes": 793,
+        "relative": "libc/__fc_define_blksize_t.h",
+        "sha256": "3a4e05262f8b6874e106c4a7fa985d6a562117329cf1529af8d2226fd223a3fc"
+      },
+      {
+        "bytes": 718,
+        "relative": "libc/__fc_define_clockid_t.h",
+        "sha256": "e822b8ffeea7cc57d95786d968ae1c98e838cac0d0a05a567183a0bdd52b62c2"
+      },
+      {
+        "bytes": 773,
+        "relative": "libc/__fc_define_dev_t.h",
+        "sha256": "fc1e775acf6116ebe5479c2f431982e375e9f0a333e584c00225d0eadff9af47"
+      },
+      {
+        "bytes": 730,
+        "relative": "libc/__fc_define_eof.h",
+        "sha256": "9d0867c5820cc91c8eadccb8f26ce43ac333e27278c480466a62c009e2a66434"
+      },
+      {
+        "bytes": 832,
+        "relative": "libc/__fc_define_fd_set_t.h",
+        "sha256": "0d7fa1cf64704d1da2f234009c758181b1ee22490b5576e48a1ad82cf79b8f68"
+      },
+      {
+        "bytes": 842,
+        "relative": "libc/__fc_define_fds.h",
+        "sha256": "eb633d69573b9903ee51c90b4f9abaa2d7aca7117169acb564b502cb5acf804f"
+      },
+      {
+        "bytes": 918,
+        "relative": "libc/__fc_define_file.h",
+        "sha256": "e4d1977fa8540dddcad8795f5aec30f27ba890b84fa4b66899cd454794631407"
+      },
+      {
+        "bytes": 784,
+        "relative": "libc/__fc_define_fpos_t.h",
+        "sha256": "8192370a781a1db99aeb562d6e565f3b2ea6e38301dac0754f67e023c98e6c55"
+      },
+      {
+        "bytes": 891,
+        "relative": "libc/__fc_define_fs_cnt.h",
+        "sha256": "74e9c2de0ea097b78740bec612dfc9919b73f389c04c2729c44ee0e6a0abac58"
+      },
+      {
+        "bytes": 768,
+        "relative": "libc/__fc_define_id_t.h",
+        "sha256": "d2830164bf423c85b74626019281fc77adccbe245ff439a966236355b1ff453b"
+      },
+      {
+        "bytes": 773,
+        "relative": "libc/__fc_define_ino_t.h",
+        "sha256": "c651e59a8295ef592c30184a120a6367c3e8e9c5678e48cb9dfe8380953e9e63"
+      },
+      {
+        "bytes": 910,
+        "relative": "libc/__fc_define_intptr_t.h",
+        "sha256": "09b816133c06e623f8c513a49cd8e79fffd8cfdfe8d3bdd5446a2bbdf8c3c66e"
+      },
+      {
+        "bytes": 1309,
+        "relative": "libc/__fc_define_ioctl.h",
+        "sha256": "3951d60c5ec60c9a0052a26748ceeb20f2a45b8a8dad3efe128276f0c988d61f"
+      },
+      {
+        "bytes": 777,
+        "relative": "libc/__fc_define_iovec.h",
+        "sha256": "0e351ef98f6f7d2d8673348400c78bac1c9bf11b1c93d8e6b0f5820b85830715"
+      },
+      {
+        "bytes": 772,
+        "relative": "libc/__fc_define_key_t.h",
+        "sha256": "f60949053198e11f024bbb2643cea94e6a20daeee5f889cd7a7a891fecc15776"
+      },
+      {
+        "bytes": 795,
+        "relative": "libc/__fc_define_locale_t.h",
+        "sha256": "ee14fc7053d585025d403ba3f4ef6ffc53edefdf2d8b198e1cdbf7ad5a257199"
+      },
+      {
+        "bytes": 758,
+        "relative": "libc/__fc_define_max_open_files.h",
+        "sha256": "b653aae6afc297f1b833eb5388664c6b952dfad1b4e15c3034df0edb037fba6b"
+      },
+      {
+        "bytes": 861,
+        "relative": "libc/__fc_define_mbstate_t.h",
+        "sha256": "b590502b9d7bd2357a18e84b32096c792b1c740d23ab3e46bfbf940d457ba9e7"
+      },
+      {
+        "bytes": 1861,
+        "relative": "libc/__fc_define_mode_t.h",
+        "sha256": "62ed5b6e0c22b0687b7f6b24e4a2d4f0fb2441959345646e937ad3ef5aa980ec"
+      },
+      {
+        "bytes": 783,
+        "relative": "libc/__fc_define_nlink_t.h",
+        "sha256": "03391fd42fe2b22c7b9f9449432f2b340e1838da808636b664b38d78bd7144ad"
+      },
+      {
+        "bytes": 688,
+        "relative": "libc/__fc_define_null.h",
+        "sha256": "8ebf9a268909f2fe7f222f3611cf0925be933675df9ae0d90c331aa5b9b8b040"
+      },
+      {
+        "bytes": 883,
+        "relative": "libc/__fc_define_off_t.h",
+        "sha256": "5d3351ff8a4dc5f9830becad7c6d9bd86245b17f89c3a311ac72a58677f1588e"
+      },
+      {
+        "bytes": 765,
+        "relative": "libc/__fc_define_pid_t.h",
+        "sha256": "d6470d65ff5eea3e7572c266bb07f75e51ab8fe687ade0a0762b5c0c21c48b15"
+      },
+      {
+        "bytes": 1891,
+        "relative": "libc/__fc_define_pthread_types.h",
+        "sha256": "7f752c64c0aaeff71a2b51b63a44c314ea9d731085789118d909cd8256add09f"
+      },
+      {
+        "bytes": 763,
+        "relative": "libc/__fc_define_sa_family_t.h",
+        "sha256": "aeb5cd2ba535e57d6c75a846e38e62f07882716d9f98a1ab9c60b82411a601cf"
+      },
+      {
+        "bytes": 828,
+        "relative": "libc/__fc_define_seek_macros.h",
+        "sha256": "24831e76cf533e141bf2a20d017a3fc068269bea90578e34e2e6a073411d90a0"
+      },
+      {
+        "bytes": 788,
+        "relative": "libc/__fc_define_sigset_t.h",
+        "sha256": "0e1e53d95ab050efe5da7ac050a355b8fd3511d57a69dd48bb98bc0eefafb8ce"
+      },
+      {
+        "bytes": 740,
+        "relative": "libc/__fc_define_size_t.h",
+        "sha256": "1870d9e4a786a411d1c3bc96a1d1ba224dd4621dae668f070281dab5eda05ee5"
+      },
+      {
+        "bytes": 864,
+        "relative": "libc/__fc_define_sockaddr.h",
+        "sha256": "0076fc408e2f21fc89ebd8ecd651f326c63d9b3907c218e48aa8fd906253f2d7"
+      },
+      {
+        "bytes": 928,
+        "relative": "libc/__fc_define_ssize_t.h",
+        "sha256": "6bd24ff61d627c329e1934e7c7ac87bcef783a5cfe853b4ea5a10bb3f497223d"
+      },
+      {
+        "bytes": 1787,
+        "relative": "libc/__fc_define_stat.h",
+        "sha256": "ad0a447bc2d3558783f910877ea065bf32cc8a76ad680ecfb4e5aa6b41aa5668"
+      },
+      {
+        "bytes": 800,
+        "relative": "libc/__fc_define_suseconds_t.h",
+        "sha256": "e89fd3f4162a94a1f5b365e356d4b4e1d8b7b62b3e047e809be7e32c76eef592"
+      },
+      {
+        "bytes": 1304,
+        "relative": "libc/__fc_define_sys_wait_macros.h",
+        "sha256": "7282e669623e6e4942f8e5d7fb4337f1f3cea21cd9b5b3e65793e04361507450"
+      },
+      {
+        "bytes": 802,
+        "relative": "libc/__fc_define_time_t.h",
+        "sha256": "81a362e271cc161bc0b9b3a2fae39cf82b405db62442ac99a1834bd06d1d396a"
+      },
+      {
+        "bytes": 714,
+        "relative": "libc/__fc_define_timer_t.h",
+        "sha256": "34eafc5696f1072c6d16ce65815924dde1b0324438baca6c07ed1d1f28c9e22e"
+      },
+      {
+        "bytes": 751,
+        "relative": "libc/__fc_define_timespec.h",
+        "sha256": "4d69894def8cd3594239ee517c213829899b9810f7135cb97c08c475c48afa2c"
+      },
+      {
+        "bytes": 831,
+        "relative": "libc/__fc_define_timeval.h",
+        "sha256": "8563f5d3175901cf1d8b2bc1835be8b529b1c679ec45602b2cfe9d9d37dd7887"
+      },
+      {
+        "bytes": 870,
+        "relative": "libc/__fc_define_uid_and_gid.h",
+        "sha256": "fe8f9e82fc064efee6d89172105c4303c97e4aa2b754013388daa6c9703cc5c8"
+      },
+      {
+        "bytes": 798,
+        "relative": "libc/__fc_define_useconds_t.h",
+        "sha256": "0d1e96c9a390115bd2d6fda10e6f740408cae34a66ab9118f888c25f1596331f"
+      },
+      {
+        "bytes": 875,
+        "relative": "libc/__fc_define_wchar_t.h",
+        "sha256": "0e39e629a3e4fff8447036b06d21e3c81c5b7424449132b5ff024b8923dd2362"
+      },
+      {
+        "bytes": 734,
+        "relative": "libc/__fc_define_weof.h",
+        "sha256": "a99c891b5f6ddfc5912431af075ad9c5c8a26de665ad0c681188d5b662c7352e"
+      },
+      {
+        "bytes": 740,
+        "relative": "libc/__fc_define_wint_t.h",
+        "sha256": "e924b17f41048a195db4dbefee152779fb9f50cef18336057b8a99c48591549b"
+      },
+      {
+        "bytes": 1156,
+        "relative": "libc/__fc_file.c",
+        "sha256": "2991f623aeebfd3a448bcdf39bb0a4f756ccb204d36ea433b5fa9883599ded1b"
+      },
+      {
+        "bytes": 9841,
+        "relative": "libc/__fc_gcc_builtin_macros.h",
+        "sha256": "288de59b4dd2145847ec13ffd89e0d95ed43b1a75ed6033a2d2f34f192f80185"
+      },
+      {
+        "bytes": 28220,
+        "relative": "libc/__fc_gcc_builtins.h",
+        "sha256": "bc87e548891a332ef08af1940be9918d9e22ba110a8ea8bc01fb0f07b67d1ede"
+      },
+      {
+        "bytes": 12324,
+        "relative": "libc/__fc_inet.h",
+        "sha256": "26d786782122b6e7af1bdfd95a557a7d626b4cbdb00cfe02a413fe6020506c60"
+      },
+      {
+        "bytes": 766,
+        "relative": "libc/__fc_integer.h",
+        "sha256": "cb5c3fd0cd92c8b1f5ddbf1370e791afe244429d3734a5e5c19288e245088e5a"
+      },
+      {
+        "bytes": 3028,
+        "relative": "libc/__fc_libc.h",
+        "sha256": "89dcb5a96bc6e799dfd3ded222b14f23cff79793963fb719c73482829c738969"
+      },
+      {
+        "bytes": 1101,
+        "relative": "libc/__fc_runtime.c",
+        "sha256": "3f4350145df5fd2cbabe26cade0e861936744e1c537d69b1e8753418ccb61c74"
+      },
+      {
+        "bytes": 715,
+        "relative": "libc/__fc_scanf_stub_helper.h",
+        "sha256": "a846ec0eff8530e1ac263a9bc2e29c2c8c247ca6a0ed7b1778d73d7495dcf810"
+      },
+      {
+        "bytes": 3774,
+        "relative": "libc/__fc_select.h",
+        "sha256": "a557986f5f9e8a6c2746a772ec75ca803fd424c72e025eb7e4dce7baa0a366a6"
+      },
+      {
+        "bytes": 9968,
+        "relative": "libc/__fc_string_axiomatic.h",
+        "sha256": "a6fb0dc9236f583fa6eaed1515ea1ab18cea95980432c9a10628a89938d4ae36"
+      },
+      {
+        "bytes": 1961,
+        "relative": "libc/__fc_strto_axiomatic.h",
+        "sha256": "c2deb6d81190ab653098b694ae5ee941e9d5dd61e3a55ea6570dcf8dfc819441"
+      },
+      {
+        "bytes": 1511,
+        "relative": "libc/__fc_utmp_constants.h",
+        "sha256": "66314bbeaa3c935ba6e44a29a3e41a24033a8dcb4e4c5de89a7d7a3ea03f1bd1"
+      },
+      {
+        "bytes": 2672,
+        "relative": "libc/aio.h",
+        "sha256": "47f8bd067dc9e36aa084eab77d87ec47a968d39e88e6aea7a09d2f5cdcd28792"
+      },
+      {
+        "bytes": 1251,
+        "relative": "libc/alloca.h",
+        "sha256": "cba1938751b2d10248340e059c5ae08fe67ce2a20fb5fe3d5522798c8cef72f8"
+      },
+      {
+        "bytes": 7358,
+        "relative": "libc/argz.c",
+        "sha256": "0bed1bb34ddc5e5564a4b1511c5be5c615e647a52aa8e4477ea065d6f73a2aaa"
+      },
+      {
+        "bytes": 4183,
+        "relative": "libc/argz.h",
+        "sha256": "01fbe058c6446d48bfad87e8eb9b07042c7210e4f8161344b5ecafed6a2f54bb"
+      },
+      {
+        "bytes": 837,
+        "relative": "libc/arpa/inet.h",
+        "sha256": "612c3f04c5ceb83c782e1477d9225a9f980770f16c91475f830f9c2076173e50"
+      },
+      {
+        "bytes": 906,
+        "relative": "libc/assert.c",
+        "sha256": "2e7f5f675164ff02743840d69a9b51bfff04065c5eeb345d8a1e94dfbfe8f115"
+      },
+      {
+        "bytes": 1055,
+        "relative": "libc/assert.h",
+        "sha256": "baf1d09955c0765e2e67b1fc42092f4fc75a7b285c70bfdd01f140bae0a70770"
+      },
+      {
+        "bytes": 3503,
+        "relative": "libc/byteswap.h",
+        "sha256": "363af7a353b2b3ffc848eff01d497667bb098dc47eb80087d770cec0d0490bc3"
+      },
+      {
+        "bytes": 682,
+        "relative": "libc/complex.h",
+        "sha256": "7b2e87afbe7ca92edaffb31cf17d90e9eddf6f4be770a645b6213217cba172c1"
+      },
+      {
+        "bytes": 1116,
+        "relative": "libc/cpio.h",
+        "sha256": "85bdd74d4740907ad194ff4b45871e7032c965a4cd0f4360f8cdaf8bd39ab530"
+      },
+      {
+        "bytes": 2154,
+        "relative": "libc/ctype.c",
+        "sha256": "16fc5fab9f8f9f23048c4075fc821e29302ddb05c9552daee5e0831c67ce2cd4"
+      },
+      {
+        "bytes": 7524,
+        "relative": "libc/ctype.h",
+        "sha256": "dadb743790e7143ff2f15d11ed1d56d05a2e48c11834c96a37b74ea8544e5575"
+      },
+      {
+        "bytes": 4584,
+        "relative": "libc/dirent.h",
+        "sha256": "b3e8d85b9e10ae8a47d49272d23262580d0055928848040a48c396e7266621e0"
+      },
+      {
+        "bytes": 1299,
+        "relative": "libc/dlfcn.h",
+        "sha256": "2337d3e0a580f1f2173bce1cad7c959b1343b2809e84a9a47fa1165cb90c1069"
+      },
+      {
+        "bytes": 2411,
+        "relative": "libc/endian.h",
+        "sha256": "856913bfb65fdf86465ac544e724b46bc4eb76095f2232159c98d50e0e53e63d"
+      },
+      {
+        "bytes": 2383,
+        "relative": "libc/err.h",
+        "sha256": "c7e5ee108dc46c135c3b1d223a5154f2719fc52f8ad2ca846337eba347722839"
+      },
+      {
+        "bytes": 617,
+        "relative": "libc/errno.c",
+        "sha256": "c5dd0edc18ea2a99a7b15630b162fbbab9ec84995cb39812923a6ea978f17e0f"
+      },
+      {
+        "bytes": 4631,
+        "relative": "libc/errno.h",
+        "sha256": "aad982247d0a8be4245eacb4dee95182efe654a7eaf96171c3d8c1559f7e121f"
+      },
+      {
+        "bytes": 663,
+        "relative": "libc/error.c",
+        "sha256": "b6e22a77b632e7dcce373d234581f099f4e1f64ea29247f9f8db19f5fccba39c"
+      },
+      {
+        "bytes": 1212,
+        "relative": "libc/error.h",
+        "sha256": "f003dc0c08925ef892f8cc0bfad3fc5fa829d7b9369b32e6ae83a328ea542261"
+      },
+      {
+        "bytes": 1347,
+        "relative": "libc/eva_stubs.c",
+        "sha256": "4e6fe16ce68c7c09255a9739ee46fc3ce7997abf4ba799661b4a5200d23c336f"
+      },
+      {
+        "bytes": 5735,
+        "relative": "libc/fcntl.h",
+        "sha256": "d4c931cdcc26a7b4be75b110f705ab3ad1a640e1733cc2fc5dceb129e3a2c57e"
+      },
+      {
+        "bytes": 5022,
+        "relative": "libc/features.h",
+        "sha256": "5906267a783717b3fc3649cb80677353e886a0e98e6b1523798376fd6dc2b628"
+      },
+      {
+        "bytes": 2149,
+        "relative": "libc/fenv.c",
+        "sha256": "2f758f400471e15a79eecd1d2c0c015ef2eaf8a42553abd2a27d07c0f863b1b2"
+      },
+      {
+        "bytes": 4381,
+        "relative": "libc/fenv.h",
+        "sha256": "67caeb6a15dad48b461d0f1221b57f36493693eb88a38b026927a4f8da8c21f2"
+      },
+      {
+        "bytes": 2746,
+        "relative": "libc/float.h",
+        "sha256": "91d3abf4f6e10d5225017727229d47d374d0096d48316db5f1ff26b1e4f52caf"
+      },
+      {
+        "bytes": 1647,
+        "relative": "libc/fmtmsg.h",
+        "sha256": "e6cd7cba1945220da2e82715b1e2a87655f459f1436f9596a193f6a0b2faa8a9"
+      },
+      {
+        "bytes": 1108,
+        "relative": "libc/fnmatch.h",
+        "sha256": "c1738f1530d7f7090c230754b835af7e14126fc3c5a5f25ab1a9c13c0ba8ccc6"
+      },
+      {
+        "bytes": 2020,
+        "relative": "libc/ftw.h",
+        "sha256": "e6ba4c42a3f34765c035f8e5a9e544afe7f762b06e9f6e022d22a801b945bfb9"
+      },
+      {
+        "bytes": 2283,
+        "relative": "libc/getopt.h",
+        "sha256": "2ce3ff66c181afd7f66c784ffc5891953741c7cbccd023fc172500005c35f818"
+      },
+      {
+        "bytes": 3270,
+        "relative": "libc/glob.c",
+        "sha256": "f3c2976b6c384e2caa951e457b04c2f79a6dc8642a72eb76aefb9e55a7a23717"
+      },
+      {
+        "bytes": 3144,
+        "relative": "libc/glob.h",
+        "sha256": "bcbddfd1d6494ff0f86fc8f1a7326bd8f92fa8f57122ad82d62f8fdd66996aa4"
+      },
+      {
+        "bytes": 3221,
+        "relative": "libc/grp.h",
+        "sha256": "ceaafb7a564f5845d90860f234a6779b81bb0f1a4049f802e71eb6a9ca1b4fc7"
+      },
+      {
+        "bytes": 1283,
+        "relative": "libc/iconv.h",
+        "sha256": "0e117239575a87dd3e7ad954225324dffa4482620c56f1758222db98e5093dd2"
+      },
+      {
+        "bytes": 1873,
+        "relative": "libc/ifaddrs.h",
+        "sha256": "092a80ff4ad8a64905d31a6f16984ed1008a99336b815cb35b265ff1b75b2405"
+      },
+      {
+        "bytes": 799,
+        "relative": "libc/inttypes.c",
+        "sha256": "1d0e2062230c56b0f6e6d7da0427706a011bb03c40274b79383c3e9937b77071"
+      },
+      {
+        "bytes": 21921,
+        "relative": "libc/inttypes.h",
+        "sha256": "ec6e0d2156ba185986dabb7ab4a77f6ffc9240b8898ad0c571ff6d2473afe50f"
+      },
+      {
+        "bytes": 807,
+        "relative": "libc/iso646.h",
+        "sha256": "a3ad5679f889aedd9c94d4b9af8b810ad711019be25cfc47c93927c30fb01b56"
+      },
+      {
+        "bytes": 3548,
+        "relative": "libc/langinfo.h",
+        "sha256": "a8ef2c5cfff20d5b0facd903f5c2e7a4243bd59d8d93b631726b40a430053c5b"
+      },
+      {
+        "bytes": 1668,
+        "relative": "libc/libgen.h",
+        "sha256": "656fb27810c9811da00cf7304a58bacc0f3ceb88ef794dd1edceb50fe86934a5"
+      },
+      {
+        "bytes": 10103,
+        "relative": "libc/limits.h",
+        "sha256": "cf82352d6da7c4e7ea716c1f79f55ad46fba2da11a56ed69f95974e3cbf4eea2"
+      },
+      {
+        "bytes": 1327,
+        "relative": "libc/locale.c",
+        "sha256": "ad00ffdc3a496b8607544df3107d26884bc4645cb343d3618877543b349d49ab"
+      },
+      {
+        "bytes": 6475,
+        "relative": "libc/locale.h",
+        "sha256": "ab8011c4e067fdadb2d4aae05c590bd7da6c9540729925b81c4cd2e5a90c22be"
+      },
+      {
+        "bytes": 639,
+        "relative": "libc/malloc.h",
+        "sha256": "b22b831282d90e8b5c90b244f75e630008b06d66ab3aaf1bdb2e66af228b5d2e"
+      },
+      {
+        "bytes": 1588,
+        "relative": "libc/math.c",
+        "sha256": "795e2ef6155896ab594cb7636e94595fec0ac1bf375c4e3977bbdfea9953589b"
+      },
+      {
+        "bytes": 65172,
+        "relative": "libc/math.h",
+        "sha256": "a19550e943402141efc5d654f3ea5e9db8edd4de5261e8599e44673549f3a940"
+      },
+      {
+        "bytes": 639,
+        "relative": "libc/memory.h",
+        "sha256": "bed2332903f80ba31712832f7157b57c907ac591387e3a625bd3aabc9e9a6f15"
+      },
+      {
+        "bytes": 1268,
+        "relative": "libc/monetary.h",
+        "sha256": "87303fa27723590eb573e6c4adca751c7364e86b6c6c131b3942f0e85133e4e2"
+      },
+      {
+        "bytes": 3106,
+        "relative": "libc/mqueue.h",
+        "sha256": "10e92e1cadf63ba38fe941923b446300d57be611a31252bd47b1d828fa4266e7"
+      },
+      {
+        "bytes": 3597,
+        "relative": "libc/naming-conventions.md",
+        "sha256": "29be5c45ca64f3fae4f69bac6cf8c3e98133f5557fa2b630e865a7c91f12911c"
+      },
+      {
+        "bytes": 1976,
+        "relative": "libc/ndbm.h",
+        "sha256": "a8ca7cba8c7d29954f2213140b85e13367daa927d4e98a015dcf75693ae595cf"
+      },
+      {
+        "bytes": 6527,
+        "relative": "libc/net/if.h",
+        "sha256": "21afcf4e42dea89724ebe8a54c4ce3955b6a3016501e8f0d94edf0507b1825fe"
+      },
+      {
+        "bytes": 5145,
+        "relative": "libc/netdb.c",
+        "sha256": "0a625cf94088c1e783d8f45816b05cf505d94edcfced928ac0208bb729c4056e"
+      },
+      {
+        "bytes": 8898,
+        "relative": "libc/netdb.h",
+        "sha256": "8712ac5e5f9b46534225ebeb26979418b0afcca1b2191fa68032760cc60e1021"
+      },
+      {
+        "bytes": 674,
+        "relative": "libc/netinet/in.c",
+        "sha256": "d0b6a21775b3be2f0896ebe4ae8db4589f854e57aa0e63aead149fd66ac01291"
+      },
+      {
+        "bytes": 839,
+        "relative": "libc/netinet/in.h",
+        "sha256": "86259172c6f38a591b1861cbf218136043d4c5682486552c417bac16e76b13ed"
+      },
+      {
+        "bytes": 4710,
+        "relative": "libc/netinet/ip.h",
+        "sha256": "3422b3d99fc4ba38cc844b70bda800db60fc0e28fa16c3a5fe118ac39e78fee5"
+      },
+      {
+        "bytes": 10241,
+        "relative": "libc/netinet/tcp.h",
+        "sha256": "c8deaa8a25c7f828dbddc778f09a0649227179638102f9e66b0f5ae0290bcde3"
+      },
+      {
+        "bytes": 1246,
+        "relative": "libc/nl_types.h",
+        "sha256": "edecc8e59a3ad35f2b77b36f00eda9d52a81c4265cbb5c5cf2516afdb63f3ae3"
+      },
+      {
+        "bytes": 2008,
+        "relative": "libc/poll.h",
+        "sha256": "b92c993df6b09a596117d76dd44579c1a2682577ec2f3db2d43223f848002164"
+      },
+      {
+        "bytes": 21976,
+        "relative": "libc/pthread.h",
+        "sha256": "eab29d95e8b4d9828af50e5527d47ab91f30a63c5738f8c5a1f2320aa67a3e28"
+      },
+      {
+        "bytes": 3810,
+        "relative": "libc/pwd.c",
+        "sha256": "efe83f84449a65dbcfd2de522decfc2afa71cd7f75a156cdcf169dea69ee4eef"
+      },
+      {
+        "bytes": 3890,
+        "relative": "libc/pwd.h",
+        "sha256": "0f87f789d862cb93a2b1f274badfd23d2083cc1c3f8f24bed651ad58a28aa67f"
+      },
+      {
+        "bytes": 2819,
+        "relative": "libc/regex.h",
+        "sha256": "2573543363abd91520be3cd2dc4bd14d2c2e77e77fdfa7642327784796b9d79f"
+      },
+      {
+        "bytes": 7186,
+        "relative": "libc/resolv.h",
+        "sha256": "51b6942565c9aa3a05593813608ed327d68bb93df65befbf5816ec3ec24465b8"
+      },
+      {
+        "bytes": 2597,
+        "relative": "libc/sched.h",
+        "sha256": "62fb240ba3380831231b04a388753cfebfee30ccc60078023d5319237e40b294"
+      },
+      {
+        "bytes": 3880,
+        "relative": "libc/search.h",
+        "sha256": "8b0e3d090edd2e3aa5248472c029921893ff5bb79a0770efbf470cf4457cd95a"
+      },
+      {
+        "bytes": 1943,
+        "relative": "libc/semaphore.h",
+        "sha256": "6efc76278f5e60d6fc2e22a73ee1f40c98f5ca337aceeb589d9225a285156300"
+      },
+      {
+        "bytes": 1882,
+        "relative": "libc/setjmp.h",
+        "sha256": "5cd18f52f51b3b7f2e3373ce51332ed51cf16f99eff0b576ac9928fbd965924f"
+      },
+      {
+        "bytes": 1930,
+        "relative": "libc/signal.c",
+        "sha256": "1d0730e02fa04bcb36a507adad70502c5755d79a2aa798f7c2f8af57c5f0808b"
+      },
+      {
+        "bytes": 10347,
+        "relative": "libc/signal.h",
+        "sha256": "45915367479d552655c5429c111b266c90f0d3ef8ff627371cc443d675926764"
+      },
+      {
+        "bytes": 6076,
+        "relative": "libc/spawn.h",
+        "sha256": "91e3e9440ae279d17717789f999887fc908c68762d0431501b00f150b9ae2691"
+      },
+      {
+        "bytes": 877,
+        "relative": "libc/stdalign.h",
+        "sha256": "6a5467c35e85f548544f5fb40dea1045503dd0e337016afb6e9958fd97c4c986"
+      },
+      {
+        "bytes": 943,
+        "relative": "libc/stdarg.h",
+        "sha256": "f5b0d1664d98104f8a21d0b1bf8ce81035ec9ab17518a53826e1121f590abc0b"
+      },
+      {
+        "bytes": 11276,
+        "relative": "libc/stdatomic.c",
+        "sha256": "3319d89c98e06929a4c119a7913b604c9e7a9eb194c16c4e9ed5bcef9d1bed32"
+      },
+      {
+        "bytes": 16191,
+        "relative": "libc/stdatomic.h",
+        "sha256": "6394dc7c5b79f6b7c41a218c5181a89500840e7618e2f90694c3a84d44d044aa"
+      },
+      {
+        "bytes": 888,
+        "relative": "libc/stdbool.h",
+        "sha256": "e56033f49958db0a50f5a9061e9f84306d2050487f69b79d7f626f28032b88fe"
+      },
+      {
+        "bytes": 1170,
+        "relative": "libc/stddef.h",
+        "sha256": "468eb646f3981abd08caced70034f1fe442998f676acd791bc21c1bf7f148014"
+      },
+      {
+        "bytes": 4282,
+        "relative": "libc/stdint.h",
+        "sha256": "c298305e3e41960c4feb4459aff081574d76c7aa24de0b70e28e4b718d6026e5"
+      },
+      {
+        "bytes": 14498,
+        "relative": "libc/stdio.c",
+        "sha256": "c209aba3a8b86628c3227c78f3846632435e00da36c08fcd15d35d0b070dd146"
+      },
+      {
+        "bytes": 23683,
+        "relative": "libc/stdio.h",
+        "sha256": "09b484d32ff22e24e616df1273b1d8bf565b20f4829782c01bab30e6e2387bff"
+      },
+      {
+        "bytes": 5631,
+        "relative": "libc/stdlib.c",
+        "sha256": "fff18ce9aa7926e821b7c957ad11ba3e9fb9edae9f27182b062a19de7c4bcb05"
+      },
+      {
+        "bytes": 46198,
+        "relative": "libc/stdlib.h",
+        "sha256": "0c15b8caa3f8622d2abdbee5d84d309c4cfd28621722b968e3dbc5462c22f9af"
+      },
+      {
+        "bytes": 775,
+        "relative": "libc/stdnoreturn.h",
+        "sha256": "1e993b3052eefb685131eb5f6e060261033f192d5fd1fc4c40f8dbdc90dd55a7"
+      },
+      {
+        "bytes": 9058,
+        "relative": "libc/string.c",
+        "sha256": "6a0bd9fdb50f2ed08be1ffbe4bbde5bcc71f9ac6096653176cc301d1176e66ef"
+      },
+      {
+        "bytes": 28377,
+        "relative": "libc/string.h",
+        "sha256": "172a0edb54fac8b88599ca0966c97dba88f88a5822841923f1c8bd9140efa0d0"
+      },
+      {
+        "bytes": 2237,
+        "relative": "libc/strings.h",
+        "sha256": "4ec5f4c224a91bdca1dddf75d057c54c32541fd707560e028b3819367d72010c"
+      },
+      {
+        "bytes": 5408,
+        "relative": "libc/stropts.h",
+        "sha256": "16e758b444a88d05d68810bd2d350911196b86f76d1411a5c22ff5dd44c7c774"
+      },
+      {
+        "bytes": 1239,
+        "relative": "libc/sys/file.h",
+        "sha256": "f391d1324c1ac108ca38b73802200e14e7dc4033273f3e960bdf14ec576cfaf4"
+      },
+      {
+        "bytes": 6350,
+        "relative": "libc/sys/ioctl.h",
+        "sha256": "6688196b7b95664e98b2f3526b14ebafd23edb9ee83d421fc95c61064d227b33"
+      },
+      {
+        "bytes": 1250,
+        "relative": "libc/sys/ipc.h",
+        "sha256": "9be77f255e2241abe30fb024f2e0a98d1d0c0853cca65e8cef30a9256ecbc6ce"
+      },
+      {
+        "bytes": 3262,
+        "relative": "libc/sys/mman.h",
+        "sha256": "f246809a85a733cc814bb7609fae41e0b22e42318dfe041f477d81d03b579291"
+      },
+      {
+        "bytes": 1668,
+        "relative": "libc/sys/msg.h",
+        "sha256": "d0d14dd1abe7aa9bdf456605f368ddd3ddfb7f7d9faeef7663fd6a723d742919"
+      },
+      {
+        "bytes": 1039,
+        "relative": "libc/sys/param.h",
+        "sha256": "7ef577fa6b6d860b8770637e6a34baefb08d0f2f1f3329ac0adc9aaac0413d38"
+      },
+      {
+        "bytes": 561,
+        "relative": "libc/sys/poll.h",
+        "sha256": "d10e61b7ed72c5a7d5bef9ec25ca3b286128df8b48a329842c3745565225c464"
+      },
+      {
+        "bytes": 1153,
+        "relative": "libc/sys/random.h",
+        "sha256": "d100964a5e997486bcdc563de774b710a1aa9d00bf8056e45530849b589d01cb"
+      },
+      {
+        "bytes": 2141,
+        "relative": "libc/sys/resource.h",
+        "sha256": "6652fdf8733f89a4f74d1ac9cb72174497e3ba0bf18e1667efb7f63b4db9216a"
+      },
+      {
+        "bytes": 1664,
+        "relative": "libc/sys/select.h",
+        "sha256": "d4304f0fc9ab144f8c80080c4b97071a29cfd21704bc71ba9c5ce7de83ef0dbd"
+      },
+      {
+        "bytes": 1784,
+        "relative": "libc/sys/sem.h",
+        "sha256": "c610de0f6da6e052216aeaf12e42af383ebb82ed51bd63e4e8925f3d0f7e9de9"
+      },
+      {
+        "bytes": 1735,
+        "relative": "libc/sys/sendfile.h",
+        "sha256": "8a863404748ba4461ecb52cacab2cb579f6c842c9f1d7ef56fe0156c7afd94cc"
+      },
+      {
+        "bytes": 1860,
+        "relative": "libc/sys/shm.h",
+        "sha256": "db96263f6b7f045dd947a5d3cff9ff4a0fac7cd3b94307dd146ca8c8c6b84641"
+      },
+      {
+        "bytes": 563,
+        "relative": "libc/sys/signal.h",
+        "sha256": "f3ebd1ccd88ea0a0504ca9aa5e3be80caa386754ada44c47f3f93d6615a0ea5b"
+      },
+      {
+        "bytes": 2728,
+        "relative": "libc/sys/socket.c",
+        "sha256": "0a370017acea155e43163721d5786f19c1206254a84e066992c4fe2e526c8d0a"
+      },
+      {
+        "bytes": 21420,
+        "relative": "libc/sys/socket.h",
+        "sha256": "d7ea66896158602785c53e9196e3b2c5c33c28193ca621f594d5606cc759b01a"
+      },
+      {
+        "bytes": 9766,
+        "relative": "libc/sys/stat.h",
+        "sha256": "c7b4a70690f7081d85f14b64f615c3f67bd54de219e4f4ea554b54d1f7d5ccfa"
+      },
+      {
+        "bytes": 1939,
+        "relative": "libc/sys/statvfs.h",
+        "sha256": "39e8821136d8cf7ef0ba39628589facca8cf6d6efb83db7f18d37118042e8ef9"
+      },
+      {
+        "bytes": 813,
+        "relative": "libc/sys/sysmacros.h",
+        "sha256": "e120f6ce692c1d45bcdb97f3db1cef32130dbeb73f48ec4e1f6c6fefae40be43"
+      },
+      {
+        "bytes": 9248,
+        "relative": "libc/sys/time.h",
+        "sha256": "d4d370f6c431ceb482a204327d1008313904e48a08644520a94aaa98e7420424"
+      },
+      {
+        "bytes": 943,
+        "relative": "libc/sys/times.h",
+        "sha256": "ea38f80cfc1a351e5de09ef40cd1e8a9a87d7cc34f3ab38ea4b625db6b349280"
+      },
+      {
+        "bytes": 2456,
+        "relative": "libc/sys/timex.h",
+        "sha256": "bfbb8e85e7e5aefd0f0d2d336406d72e9d375b14bddad1b6b09909561700d752"
+      },
+      {
+        "bytes": 1632,
+        "relative": "libc/sys/types.h",
+        "sha256": "6e324ce5f92766240dfbf244313512105afda263b6c0cdd949fcf14fe3e57f50"
+      },
+      {
+        "bytes": 2711,
+        "relative": "libc/sys/uio.h",
+        "sha256": "b81ccceafbb9b9b4c65a3bbc2b7d015e4adc65738bb7b8d375208a5e37f90b98"
+      },
+      {
+        "bytes": 973,
+        "relative": "libc/sys/un.h",
+        "sha256": "1bbcd7429592631200c0517398f68bcc75ec08605fe160019c6bb02c647080a0"
+      },
+      {
+        "bytes": 1259,
+        "relative": "libc/sys/utsname.h",
+        "sha256": "ebf4e1c86fad693eacabca06f0b88cff22e69d00383cea207a59c826a5a7fbba"
+      },
+      {
+        "bytes": 664,
+        "relative": "libc/sys/vfs.h",
+        "sha256": "7c0bfba3465f6999efba03fe4c5ad4931b761ae2b67fa913f3f2317599c926ed"
+      },
+      {
+        "bytes": 2914,
+        "relative": "libc/sys/wait.h",
+        "sha256": "c4ef56aa67824b4e10fcbb3d2b8439c9c12e49698691cb1230ece9a5d2a1ae79"
+      },
+      {
+        "bytes": 4597,
+        "relative": "libc/syslog.h",
+        "sha256": "9a63fb931c7bf64587b35f6df3dfa6baa6ec3c01bd291ff617ece52d11e4a718"
+      },
+      {
+        "bytes": 1131,
+        "relative": "libc/tar.h",
+        "sha256": "2b0cf79ff23999857b8c634095502cf7065af63a6115ae4b833ec42067acdb92"
+      },
+      {
+        "bytes": 7309,
+        "relative": "libc/termios.h",
+        "sha256": "4a2c34e56a263d7354e0c286e47508a3a1065003750ef7799032aea5cac25d05"
+      },
+      {
+        "bytes": 629,
+        "relative": "libc/tgmath.h",
+        "sha256": "9417a4d93febf5fb0f1ae7659715af50fa2dc310386ccf26916482306f8d5762"
+      },
+      {
+        "bytes": 886,
+        "relative": "libc/time.c",
+        "sha256": "3347802503952b05a043430c1c648084c6e9cb6f5d72a107ab689adf4642dcb3"
+      },
+      {
+        "bytes": 14395,
+        "relative": "libc/time.h",
+        "sha256": "04962d9d5d70ae04f7dac1d73e6c27f4d94a75b00c310f58e45fb1bf2fbf0e0c"
+      },
+      {
+        "bytes": 11834,
+        "relative": "libc/trace.h",
+        "sha256": "f8be68691926eda73bfcd3ace7a880b1129ed3f6eb297e8f3079a1daf1bd87cc"
+      },
+      {
+        "bytes": 4720,
+        "relative": "libc/uchar.h",
+        "sha256": "68cce94eb1397d42f4a042ce55e7fe051310fe90422ecb9f6af12a59d554affa"
+      },
+      {
+        "bytes": 865,
+        "relative": "libc/ulimit.h",
+        "sha256": "7dfbdd94fc6cf8e30b17f03b4277a3956f9f835cf62edc786d2773db23581fe2"
+      },
+      {
+        "bytes": 3509,
+        "relative": "libc/unistd.c",
+        "sha256": "0ce44cbc0ff6b825e777b78410ace9fc82a02f71bdc4655ff9b3193ff2e37d1c"
+      },
+      {
+        "bytes": 48063,
+        "relative": "libc/unistd.h",
+        "sha256": "22d6a3af12eb27663403ab74231b575fa1fe5436293feeff26f973b30ddd937b"
+      },
+      {
+        "bytes": 1036,
+        "relative": "libc/utime.h",
+        "sha256": "875927bff902b3a8ad2e64b3f70963c74ccd5af26171216a2f84e2ee2eb7cee9"
+      },
+      {
+        "bytes": 3882,
+        "relative": "libc/utmp.h",
+        "sha256": "482a3f57dd174fb800bbc7b8fa9222123f21d08314b05d8939f6d2fc9decb85b"
+      },
+      {
+        "bytes": 2215,
+        "relative": "libc/utmpx.h",
+        "sha256": "05db5f13f4967622f0392cef3ca5ecb703c34b8a00571af5fc7fd5b84f9974b8"
+      },
+      {
+        "bytes": 661,
+        "relative": "libc/wait.h",
+        "sha256": "10773c793f255784f2431b3d21e5457e7ac5087a69c445378dfa7e63b8dae718"
+      },
+      {
+        "bytes": 10111,
+        "relative": "libc/wchar.c",
+        "sha256": "0746d6802563dd938f42a87d76187e68fbddefb5030fa0bcdfbd6761de2ee8d3"
+      },
+      {
+        "bytes": 33183,
+        "relative": "libc/wchar.h",
+        "sha256": "1f3cf8e5406f4d600a53846fea49ab26238947896fd58d23dd769942ba8d81d6"
+      },
+      {
+        "bytes": 3406,
+        "relative": "libc/wctype.h",
+        "sha256": "9acf3a114191387b5acf284312fe6abe53cf4f6d97bea3725973adb2c6187aa5"
+      },
+      {
+        "bytes": 1683,
+        "relative": "libc/wordexp.h",
+        "sha256": "6dc85566fb9a2e63bbc9f65ecf41e88ba7d050a84181881bd4bd644e4b903e18"
+      }
+    ],
+    "header_basis": {
+      "path": "/private/tmp/probata-t28-allocation-parser-four-v1-20261016/headers-before.json",
+      "sha256": "fa1bcd8ee73e8e6ccfee97c5d1d7f4ee4d7839b5d92258affbb15e3235af4c81",
+      "bytes": 28305
+    },
+    "flags": [
+      "-no-autoload-plugins",
+      "-machdep",
+      "x86_64",
+      "-kernel-warn-key",
+      "annot-error=abort"
+    ],
+    "normal_parser_flags": [
+      "-machdep",
+      "x86_64",
+      "-kernel-warn-key",
+      "annot-error=abort"
+    ],
+    "autoload_source": {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c/kernel/kernel_services/plugin_entry_points/kernel.ml",
+      "sha256": "25cd21918d3e4ab42ff3ed11b562dafc770a79464da7cee1c9714d24ad57f1e1",
+      "bytes": 67663
+    },
+    "review": {
+      "path": "/private/tmp/probata-t28-register-independent-source-review-5b21cdf6-20261016.md",
+      "sha256": "0f0fb1d9c01285698bc1fdd555d8fb1519f438dded36adc827f6f716713ee124",
+      "bytes": 4916
+    },
+    "scope": "Parser/type syntax only; no WP/plugin/solver/model execution/source-body refinement/termination/hardware or whole28 acceptance"
+  },
+  "guard": {
+    "bytes": 28501,
+    "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py",
+    "sha256": "c6f0d4b8c60fab912dd768c4c8c7e7737d8feca3a110d0de02dec4d38785db57"
+  },
+  "worker": {
+    "bytes": 695,
+    "path": "/private/tmp/probata-mac-compiler-worker-b.py",
+    "sha256": "873ac0b65eaa7edd4e0f624a86e68141c0e340f9ab1ca6816a07598538548a0e"
+  },
+  "guard_support": {
+    "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/staged_search.py",
+    "sha256": "125e2562342e6ba684d1189ca29fb48476b73bee30d0fd368f7f7c6b4c6b2419",
+    "bytes": 8284
+  },
+  "budgets": {
+    "whole_active_seconds": 15,
+    "rss_bytes": 8589934592,
+    "workers": 1,
+    "queue_seconds": 30,
+    "planned_raw_bytes": 1048576
+  },
+  "root_required": [
+    "read/review complete entry+command/input source/pins",
+    "fresh global primary/legacy leases and owned process/c6/B preflight",
+    "run under exactly pinned B+c6 guard; outer watchdog if used remains root-owned",
+    "retain all native argv/stdout/stderr/exits/header snapshots/whole resource and actual lease receipts"
+  ],
+  "author_execution": false,
+  "not_requested": [
+    "WP",
+    "WP plugin autoload or explicit loading",
+    "Why3",
+    "solvers",
+    "model execution",
+    "proof/source refinement/termination/hardware theorem",
+    "current0.2 or whole28 acceptance"
+  ],
+  "scope": "Four exact portable C/ACSL inputs only; normal parser flags plus explicit no-autoload-plugins at pinned Frama33. Other production source/catalog/library consumers are not executed."
+}

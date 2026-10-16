@@ -1,0 +1,122 @@
+{
+  "classification": "RECONCILED_ROOT_SCOPED_PARTIAL_NORMAL_RETURN_STREAM_PAIR",
+  "current02_or_full28_or_ticket_closure": false,
+  "date": "2026-10-16 ET",
+  "decision_static_review": {
+    "otherwise_consistent": true,
+    "requested_wording_correction": "Original root decision says nonvolatile MMIO; source certificates instead bind volatile MMIO accesses. Root notified to preserve original and correct wording separately."
+  },
+  "ephemeral_limit": "Exact command/native scratch paths and source-backed prelaunch checker attest input/module context; input export is retained and matches setup. Compiled binary digest was checked in memory, not persisted; no independent historical binary posthash or reconstructed submission claim.",
+  "hardware_liveness": false,
+  "model_contract_body_refinement": false,
+  "negative_refuted": false,
+  "owned_TCB_and_normal_return_only": true,
+  "payload_CPU_read": false,
+  "physical_MMIO_correctness": false,
+  "reader_history": {
+    "V4_never_dispatched": true,
+    "V6_local_corrections": [
+      "Full public source-derived fixture method",
+      "Canonical contract digest versus physical YAML",
+      "Exact public job threads1/input_size1 versus persisted WP record unbounded bounds"
+    ],
+    "actual_refusals": [
+      "V2 launch full/compact equality",
+      "V3 archival/case Linux source path binding",
+      "V5 complete method check-map equality"
+    ],
+    "formal_reruns_for_reader_repairs": 0
+  },
+  "record_census": [
+    {
+      "CSV_rows": 42,
+      "Extern_clauses": 14,
+      "direct_valid_ordinary": 17,
+      "failed_ordinary": [],
+      "failure_class": null,
+      "id": "proof.contract.dx100_stream_partial_fixture.v1.20261016t100311z.728432ae",
+      "ordinary": 17,
+      "owned_semantic_rules": 8,
+      "properties": 52,
+      "smoke_attempted_healthy_nonvalid": 6,
+      "source_certificates_rechecked": 3,
+      "verdict": "proven"
+    },
+    {
+      "CSV_rows": 42,
+      "Extern_clauses": 14,
+      "direct_valid_ordinary": 16,
+      "failed_ordinary": [
+        "typed_real_trust_fixture_ensures"
+      ],
+      "failure_class": "timeout",
+      "id": "proof.contract.dx100_stream_partial_fixture.v1.20261016t100432z.cd656299",
+      "ordinary": 17,
+      "owned_semantic_rules": 8,
+      "properties": 52,
+      "smoke_attempted_healthy_nonvalid": 6,
+      "source_certificates_rechecked": 3,
+      "verdict": "not_proven"
+    }
+  ],
+  "references": [
+    {
+      "bytes": 34015,
+      "path": "/private/tmp/probata-t28-stream-current-cold-root-execution-v6-20261016.json",
+      "sha256": "53f2c6932a1851da1810b74915c4755128d498710a57e61511b91bee57a0b0bd"
+    },
+    {
+      "bytes": 7495,
+      "path": "/private/tmp/probata-t28-stream-current-cold-packet-v6-20261016.json",
+      "sha256": "e3b5d97301633bb0ec4b3cd435a57f01c2d00e984b58f90104a220ed60845867"
+    },
+    {
+      "bytes": 3531,
+      "path": "/private/tmp/probata-t28-stream-current-cold-independent-static-review-v6-20261016.md",
+      "sha256": "2b25b916b616d397fcecbe60aa407c5b20b2658bdf2a677ace1a5bc9b2584f0f"
+    },
+    {
+      "bytes": 896,
+      "path": "/private/tmp/probata-t28-stream-current-cold-independent-static-review-v6-20261016.json",
+      "sha256": "e9c04212c899cf517054fca310533a7faed579fd870e71e81730e418f89fa72e"
+    },
+    {
+      "bytes": 188378,
+      "path": "/private/tmp/probata-t28-stream-method-capture-root-execution-v1-20261016.json",
+      "sha256": "e6c7bb5a5912fb630dde75b411b9c74872db75fdbb2ed12b5701967fc2a9f7fd"
+    },
+    {
+      "bytes": 2928,
+      "path": "/private/tmp/probata-root-stream-current-scoped-decision-v1-20261016.md",
+      "sha256": "04ff2879659c628cb79dbbc6469a7155f986bedc0ec130bd0ea17349710eff98"
+    }
+  ],
+  "reporter_sha256": "8b84bec6a12669d877205ec60d46d149f41fa921d08b6640161b4896b9c4df16",
+  "reviewer_actual_remote_execution": false,
+  "root_executed_passive": {
+    "checks": 9970,
+    "consumer_bytes": 1339045737,
+    "consumer_files": 1542,
+    "indexed_physical_files": 2972,
+    "integrity_errors": [],
+    "module_files": 214,
+    "resources": {
+      "address_space_cap_bytes": 8589934592,
+      "exit_code": 0,
+      "inspection_denials": [],
+      "out_of_memory": false,
+      "peak_rss_bytes": 131162112,
+      "scope": "passive reader only; no formal tools",
+      "timed_out": false,
+      "timeout_seconds": 60,
+      "wall_seconds": 13.605995154939592,
+      "workers": 1
+    },
+    "selected_source_files": 465,
+    "whole_raw_regular_bytes": 52096231,
+    "whole_raw_regular_files": 176
+  },
+  "root_owns_resource_lease_process_settlement": true,
+  "source_commit": "c241c5477b5afee1c02e789b141ea596bdfed1e7",
+  "source_event_refinement": false
+}

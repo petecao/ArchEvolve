@@ -1367,3 +1367,8 @@ Root launched exact046f/node0G593 cell4 diagnostic06:35:50ET; [admission only](.
 [ObsoleteMaccontrols017 retention](../evidence/mac-controls017-retention-preservation-20261016.md) removes only the clean completed root-owned detached source after fsyncedfull9858filemanifest/ref/restore; raw/active/primary unchanged. Source now reconstructable, not physically present. No scientificresult/ticketstatus changes.
 
 Root subsequently dispatched [full24 normalpublicG596 admission](../evidence/reviewed-t25-qualified-grow24-public-v1-launch-046f6b9e-20261016.json) at07:19:10ET/node0, exact046,1800whole1920outer/8GiB1worker,214physical/Git modules0errors. Running at root handoff with no result/acceptance yet. No4leafrecord is imported; all24fresh obligations remain mandatory.
+
+
+### 2026-10-16 07:36 ET — full24 G596 partial producer checkpoint
+
+Root reports fresh normalpublicG596 at exact046 settled with10targetsproven then grow.copy.establishTimeout;13targets remainunexecuted, including numericC. Guardexit1/266.526063s867,831,808B,outerexit1/268.625474s921,309,184B,sourceclean/naturalrelease. This is a partial producer handoff, not independently accepted task/hypothesis/native evidence; owner passiveauditpending. [Original admission](../evidence/reviewed-t25-qualified-grow24-public-v1-launch-046f6b9e-20261016.json) stays unchanged. No full24model/caller/originalv2/full25 acceptance or earlier4leafreuse.
