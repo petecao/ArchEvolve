@@ -33,7 +33,7 @@ TYPE_IMAGE = {
     'id': 'wp-typed-int32-source-image-1',
     'raw_effective_type_safety_proved': False,
     'caller_discharge': 'source-derived typed int objects; opaque raw storage unsupported',
-    'runtime_source_binding': 'pending selected-tool verification; not assumed',
+    'runtime_source_binding': 'required selected-tool verification before every launch; not assumed',
     'required_wp_integer_model': 'Machine; Natural/NAT is outside this bounded-int projection',
     'projection': 'selected WP Typed bounded integer chunk -> Integer(value); pointer chunks are not integer cells',
     'required_source_files': [
@@ -143,4 +143,4 @@ def certificate(name):
                     'role': 'no buffer element load; original pointer/free domain retained'}),
             'pending': ['complete original source/clause/RTE/init/frame/lifetime map under the new contract',
                         'fresh unbounded body proof', 'source-derived caller eligibility and cross-view liveness accounting'],
-            'proof_status': 'unsupported preparation; no verifier launch or model-body proof'}
+            'proof_status': 'qualification certificate only; a proof verdict requires fresh checked execution'}

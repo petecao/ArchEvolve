@@ -2,8 +2,23 @@
 
 Created: 2026-10-16 ET. Preparation only; no body/caller proof is claimed.
 
+Current successor: the prospective standalone qualified model route reuses the
+existing heap engine and normal reader. It reconstructs each complete source
+packet before launch, binds the selected WP Typed/Machine source package, and
+retains all current targets/RTE/init/smoke under the whole public deadline.
+The broad-domain destructor needs no int-element image. Seven scripted controls
+pass, including one explicitly synthetic complete 20-target persistence/schema
+exercise; this is adapter evidence, not an actual model proof. A broader test
+run was rejected before launch because of a newly introduced executable metadata
+query. That new query was replaced with pinned source metadata; the coordinator
+is reviewing the remaining existing native setup boundary before any retry.
+Actual WP/task closure and caller composition remain pending, and original v2
+call lowering remains unchanged. See
+[prospective public-view evidence](../../evidence/t25-qualified-public-view-preparation-20261016.json).
+
 The public candidate names are `std_vector_int_realloc_v3_` followed by
-`ctor_count_value`, `grow`, `reserve` or `dtor`. `swdb prove --model` records the
+`ctor_count_value`, `grow`, `reserve` or `dtor`. The earlier preparation freezes'
+`swdb prove --model` records the
 qualified source, original v2 source and explicit contract/domain certificate,
 then returns not proven before a verifier launch. The original v2 catalog and
 its broader contracts remain unchanged; this new ID never certifies them.
