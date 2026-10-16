@@ -1,0 +1,91 @@
+{
+  "actual_Frama_Why3_solver_execution": false,
+  "caller_acceptance": false,
+  "complete_model_acceptance": false,
+  "created": "2026-10-16 ET",
+  "no_skips": true,
+  "original_root_producer_unchanged": true,
+  "parent_reader_initial_failures": [
+    "Optional failure_class indexing raised KeyError; corrected get handles proven record schema absence.",
+    "Initial stand-in command check assumed script in argv0; actual pinned Python argv0 and frama.py argv1 now required."
+  ],
+  "persisted": {
+    "all_positive_children_have_scripted_sentinel": true,
+    "parser_error_setup_passed": true,
+    "reading_schema_keys": [
+      "check",
+      "verdict"
+    ],
+    "records": 2,
+    "run_setup_count": 38,
+    "synthetic_goals": 48,
+    "synthetic_smokes": 1,
+    "tamper_prelaunch_refusal": true
+  },
+  "physical_artifact_pins_checked": 653,
+  "physical_hash_errors": 0,
+  "references": [
+    {
+      "bytes": 1680,
+      "path": "/private/tmp/probata-t25-root-grow38-public-controls-v1-20261016/result.json",
+      "sha256": "3e143dc7fb4572434044e38e8adb6fae923563b87364ed458224f5ae5694004c"
+    },
+    {
+      "bytes": 232103,
+      "path": "/private/tmp/probata-t25-root-grow38-public-controls-v1-20261016/artifact-manifest.json",
+      "sha256": "6923c3ad9410a2219d1a990ddda71e7e1f7b3ca475058f68792241106f990520"
+    },
+    {
+      "bytes": 504061,
+      "path": "/private/tmp/probata-t25-root-grow38-public-controls-v1-20261016/source-before.json",
+      "sha256": "f1e9c08639b2b876ed68d81cb35d905ed5ee96c00758d7562a4fbc8ef3f00e95"
+    },
+    {
+      "bytes": 504061,
+      "path": "/private/tmp/probata-t25-root-grow38-public-controls-v1-20261016/source-after.json",
+      "sha256": "f1e9c08639b2b876ed68d81cb35d905ed5ee96c00758d7562a4fbc8ef3f00e95"
+    },
+    {
+      "bytes": 4466,
+      "path": "/private/tmp/probata-t25-root-grow38-public-controls-v1-20261016/preflight.json",
+      "sha256": "fbc1a27a078c14ea8d6fea89937de49b2023e3a9bebb22c2cd843954057f28ed"
+    },
+    {
+      "bytes": 165,
+      "path": "/private/tmp/probata-t25-root-grow38-public-controls-v1-20261016/outer-receipt.json",
+      "sha256": "2308fb74521e91c3683f4a980f4e2744c4bf939bce65568523747d220ee5360e"
+    },
+    {
+      "bytes": 2676,
+      "path": "/private/tmp/probata-t25-root-grow38-public-controls-v1-20261016/inner.log.summary.json",
+      "sha256": "345b568341c7bbf6403fc7737f35bb893bdcd6c3f42b78d546f00de3a007f022"
+    },
+    {
+      "bytes": 744,
+      "path": "/private/tmp/probata-t25-root-grow38-public-controls-v1-20261016/junit.xml",
+      "sha256": "ec1ad63dc42dee62700d00c3595b8dd6962352b7af9c57fe942f9a240ada1277"
+    },
+    {
+      "bytes": 2590,
+      "path": "/private/tmp/probata-t25-root-grow38-public-controls-v1-20261016/outer.log",
+      "sha256": "e7115db7e3e725ba24c946102a005a42735c6440658af4259935c09ce2b22739"
+    }
+  ],
+  "resource_boundaries": {
+    "actual_raw_bytes": 42984264,
+    "cap_bytes": 8589934592,
+    "inner_seconds": 180,
+    "one_worker": true,
+    "outer_seconds": 240,
+    "planned_raw_bytes": 67108864
+  },
+  "reviewed_math_source": "a20f7a98fd3906983e989765a2dae492866189ed",
+  "root_owned_native_boundary": "Existing OCaml package metadata/foundation helper/report compilation+execution; all Frama/WP commands named Python stand-ins",
+  "runtime_source": "4babafd2cd30c876c7ffc3cf880e35f0396ef9a0",
+  "scientific_proof": false,
+  "source_before_after_equal": true,
+  "source_consumer_count": 1919,
+  "status": "PASS scripted public workflow/persistence controls only",
+  "test_cases": 3,
+  "ticket_closure": false
+}
