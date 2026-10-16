@@ -1,0 +1,38 @@
+{
+  "date_ET": "2026-10-16",
+  "purpose": "root-only formal syntax/initializedness diagnostic, never native negative execution",
+  "normal_roots": [
+    "swdb_device_pipeline_safe",
+    "swdb_device_missing_source",
+    "swdb_device_wrong_prefix",
+    "swdb_device_index_safe",
+    "swdb_device_missing_index"
+  ],
+  "omitted_output_roots": [
+    "swdb_device_pipeline_safe"
+  ],
+  "unit_qualified_goal_identity": "(unit, raw goal ID); helper/root IDs may legitimately recur across separate TUs",
+  "default_tile_size": "fixture-only2; canonical TD TILE_SIZE and all public dimensions remain symbolic",
+  "normal_source": {
+    "path": "normal.c",
+    "sha256": "d7ae9477c6c7bd9d090d71e6b4e4b0d01b19baa2f851300c184af090c5a96bdc"
+  },
+  "weak_source": {
+    "path": "omitted-output.c",
+    "sha256": "31bfce4101bf7fa459af68cf09c2829fb8adbb522fd8f24cac01aaf24cf051e3"
+  },
+  "normal_header_sha256": "5bd692de0323ee209304ffdc9e9ca477ae809aad88761ed1815622e1caeb9f24",
+  "weak_header_sha256": "cadb31112edaaddf288b758696249de799bc19e9ab82387570940f00387626ca",
+  "only_weak_contract_delta": {
+    "function": "__dxc_gather",
+    "removed": "    ensures \\initialized(dxc_tile_data[dst] + (0 .. dxc_tile_len[dst] - 1));\n"
+  },
+  "byteidentical_safe_pipeline": true,
+  "weak_output_outcome": "No predetermined failure: retain backend-derived init if any; source produced-write contract still required independently.",
+  "missing_index_boundary": "Incoming index length1 selects a read cell; no initialized/value premise is added. Valid-base-index side obligations may also remain open; do not infer causal Init failure from aggregate nonproof.",
+  "negative_expected": "Never execute UB. Inspect exact ordinary input-init / produced-cell-read goals and every other goal; no status/result fabrication.",
+  "helper_scope": "Explicit device-only component: no gapbs header/functions present. All5normal/1weak root bodies retained without filters; accepted full20 separate, no helper proof/result reuse.",
+  "proof_acceptance": false,
+  "TD_or_counted_admissible": false,
+  "preserved_full_body_fixture_freeze": "4be73397630a14b6b177624da41a49bdff8b0370 / merged65f0950813f3399f1dd0100ac234b85959cf1202 retains original25/21-body source profile"
+}

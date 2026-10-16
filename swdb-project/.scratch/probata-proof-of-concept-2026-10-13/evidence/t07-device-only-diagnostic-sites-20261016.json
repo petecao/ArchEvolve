@@ -1,0 +1,153 @@
+{
+  "date_ET": "2026-10-16",
+  "scope": "explicit separate device-only component; no helper/whole-TD acceptance",
+  "parent_fixture_freeze": "65f0950813f3399f1dd0100ac234b85959cf1202",
+  "C_include_only_changes": [
+    {
+      "git_path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/checks/device_init/normal.c",
+      "old_sha256": "b976afd644468e0b30a4930d5c3f65b61342b0c55a51f52d17b1c9359c359806",
+      "new_sha256": "d7ae9477c6c7bd9d090d71e6b4e4b0d01b19baa2f851300c184af090c5a96bdc",
+      "only_delta": "delete unused gapbs include"
+    },
+    {
+      "git_path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/checks/device_init/omitted-output.c",
+      "old_sha256": "ec40b6cffe51039cd794fe35e0c64a44e2d294b9cc8161e49c1a874ad40732f4",
+      "new_sha256": "31bfce4101bf7fa459af68cf09c2829fb8adbb522fd8f24cac01aaf24cf051e3",
+      "only_delta": "delete unused gapbs include"
+    }
+  ],
+  "weak_header_unchanged": {
+    "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/checks/device_init/omitted-output-dxc_summaries.h",
+    "bytes": 12617,
+    "sha256": "cadb31112edaaddf288b758696249de799bc19e9ab82387570940f00387626ca"
+  },
+  "normal_bodies": 5,
+  "weak_bodies": 1,
+  "all_roots_unfiltered": true,
+  "sources": [
+    {
+      "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/checks/device_init/README.md",
+      "bytes": 4005,
+      "sha256": "e9df64613c177345a697412d7d5363fcd780bb0bd4b89d0a801bc89be9dc5c33"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/checks/device_init/normal.c",
+      "bytes": 6667,
+      "sha256": "d7ae9477c6c7bd9d090d71e6b4e4b0d01b19baa2f851300c184af090c5a96bdc"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/checks/device_init/omitted-output-dxc_summaries.h",
+      "bytes": 12617,
+      "sha256": "cadb31112edaaddf288b758696249de799bc19e9ab82387570940f00387626ca"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/checks/device_init/omitted-output.c",
+      "bytes": 1556,
+      "sha256": "31bfce4101bf7fa459af68cf09c2829fb8adbb522fd8f24cac01aaf24cf051e3"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/checks/device_init/sites-map.json",
+      "bytes": 2239,
+      "sha256": "f3e8d0bf241ff2f77c61c1e8c41ae5a1a44d1303203b8ede69ae574d171a931d"
+    }
+  ],
+  "compiler_controls": {
+    "summary": {
+      "path": "/private/tmp/probata-t07-device-only-site-compiler-controls-20261016.log.summary.json",
+      "bytes": 1938,
+      "sha256": "844162dee6da01ef9f96ab7513f9e791a1ca07449148a16221bb76da9b3519ab"
+    },
+    "log": {
+      "path": "/private/tmp/probata-t07-device-only-site-compiler-controls-20261016.log",
+      "bytes": 68,
+      "sha256": "82ad66a4a65725ee1e39f03e6f4dc286f6642a2e1a2b501bd60f11fe9d3f7f2c"
+    },
+    "wait": {
+      "path": "/private/tmp/probata-t07-device-only-site-compiler-controls-20261016.log.wait.json",
+      "bytes": 273,
+      "sha256": "4b8ba9369d874c4c6b5bf4658c235b96fef710a93387da642d506c8f709f310c"
+    },
+    "script": {
+      "path": "/private/tmp/probata-t07-device-only-site-compiler-controls-20261016.py",
+      "bytes": 2599,
+      "sha256": "ff5a97377f7ea310ed655449c90576f5b47818edd39fcb791cd7f424cb97d1cb"
+    },
+    "files": [
+      {
+        "path": "/private/tmp/probata-t07-device-only-site-compiler-controls-20261016/controls.json",
+        "bytes": 1256,
+        "sha256": "8dac3ea69d59d8ff618da7afc1292645fad5d9d47b4ea92e07d8441a1dc68ceb"
+      },
+      {
+        "path": "/private/tmp/probata-t07-device-only-site-compiler-controls-20261016/normal/bfs_unit.h",
+        "bytes": 2077,
+        "sha256": "a9f3bb9954057676acd2216e05c4051f0782198ed44c7f3088cb309d09eb1d69"
+      },
+      {
+        "path": "/private/tmp/probata-t07-device-only-site-compiler-controls-20261016/normal/compile.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/private/tmp/probata-t07-device-only-site-compiler-controls-20261016/normal/compile.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/private/tmp/probata-t07-device-only-site-compiler-controls-20261016/normal/dxc_summaries.h",
+        "bytes": 12694,
+        "sha256": "5bd692de0323ee209304ffdc9e9ca477ae809aad88761ed1815622e1caeb9f24"
+      },
+      {
+        "path": "/private/tmp/probata-t07-device-only-site-compiler-controls-20261016/normal/gapbs_models.h",
+        "bytes": 17905,
+        "sha256": "eb71f37abca6accc9d50242e50f6affd5e1621508f0529cecadda9fb746b5ddb"
+      },
+      {
+        "path": "/private/tmp/probata-t07-device-only-site-compiler-controls-20261016/normal/site.c",
+        "bytes": 6667,
+        "sha256": "d7ae9477c6c7bd9d090d71e6b4e4b0d01b19baa2f851300c184af090c5a96bdc"
+      },
+      {
+        "path": "/private/tmp/probata-t07-device-only-site-compiler-controls-20261016/omitted-output/bfs_unit.h",
+        "bytes": 2077,
+        "sha256": "a9f3bb9954057676acd2216e05c4051f0782198ed44c7f3088cb309d09eb1d69"
+      },
+      {
+        "path": "/private/tmp/probata-t07-device-only-site-compiler-controls-20261016/omitted-output/compile.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/private/tmp/probata-t07-device-only-site-compiler-controls-20261016/omitted-output/compile.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/private/tmp/probata-t07-device-only-site-compiler-controls-20261016/omitted-output/dxc_summaries.h",
+        "bytes": 12617,
+        "sha256": "cadb31112edaaddf288b758696249de799bc19e9ab82387570940f00387626ca"
+      },
+      {
+        "path": "/private/tmp/probata-t07-device-only-site-compiler-controls-20261016/omitted-output/gapbs_models.h",
+        "bytes": 17905,
+        "sha256": "eb71f37abca6accc9d50242e50f6affd5e1621508f0529cecadda9fb746b5ddb"
+      },
+      {
+        "path": "/private/tmp/probata-t07-device-only-site-compiler-controls-20261016/omitted-output/site.c",
+        "bytes": 1556,
+        "sha256": "31bfce4101bf7fa459af68cf09c2829fb8adbb522fd8f24cac01aaf24cf051e3"
+      }
+    ],
+    "passed": 6,
+    "wall_s": 0.5730791250243783,
+    "peak_rss_mb": 63.28125,
+    "inspection_events": [],
+    "unconfirmed_children": []
+  },
+  "accepted_full20": "separate scoped certificate; none of its proof results reused by this component",
+  "weak_output_outcome_unconstrained": true,
+  "actual_formal_or_native_execution": false,
+  "proof_acceptance": false,
+  "TD_or_counted_admissible": false
+}
