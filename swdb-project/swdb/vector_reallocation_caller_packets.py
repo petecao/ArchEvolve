@@ -26,7 +26,7 @@ def _json(value):
 def identity():
     names=('vector_reallocation_caller_packets.py','vector_reallocation_calls.py',
            'vector_reallocation_caller_vcs.py','vector_reallocation_lifetime.py',
-           'vector_reallocation_capacity.py','vector_reallocation_vcs.py',
+           'vector_reallocation_capacity.py','vector_reallocation_composition.py','vector_reallocation_vcs.py',
            'vector_reallocation_model.py','vector_reallocation_inventory.py',
            'heap_model_vcs.py','heap_reallocation.mlw')
     return {'id':'vector-reallocation-caller-packets-1','sha256':_sha(_json([
@@ -81,6 +81,27 @@ def declaration(source,function,formal_texts):
     numeric=local['numeric_kernel'];path='local/caller-count-numeric.c'
     files[path]=numeric['c_source'].encode()
     rows.append({**numeric,'path':path})
+    from swdb.vector_reallocation_composition import constructor_entry
+    application,application_receipt=constructor_entry(candidate,contract)
+    goal='t25v3_caller_'+application['id'].replace('.','_')
+    text=('//@ import \\wp::why3: heap_reallocation::Heap;\n'+bodies.PRELUDE+
+          '/*@ check lemma '+goal+': '+application['statement']+';\n*/\n').encode()
+    path='applications/000-'+goal+'.c';files[path]=text
+    rows.append({**application,'goal':goal,'path':path,'kind':'check_lemma','sha256':_sha(text)})
+    from swdb.vector_reallocation_composition import zero_constructor
+    zero_application,zero_receipt=zero_constructor(candidate)
+    zero_goal='t25v3_caller_'+zero_application['id'].replace('.','_')
+    zero_text=('//@ import \\wp::why3: heap_reallocation::Heap;\n'+bodies.PRELUDE+
+               '/*@ check lemma '+zero_goal+': '+zero_application['statement']+';\n*/\n').encode()
+    zero_path='applications/001-'+zero_goal+'.c';files[zero_path]=zero_text
+    rows.append({**zero_application,'goal':zero_goal,'path':zero_path,'kind':'check_lemma','sha256':_sha(zero_text)})
+    from swdb.vector_reallocation_composition import positive_constructor_entry
+    positive,positive_receipt=positive_constructor_entry(candidate)
+    positive_goal='t25v3_caller_'+positive['id'].replace('.','_')
+    positive_text=('//@ import \\wp::why3: heap_reallocation::Heap;\n'+bodies.PRELUDE+
+                   '/*@ check lemma '+positive_goal+': '+positive['statement']+';\n*/\n').encode()
+    positive_path='applications/002-'+positive_goal+'.c';files[positive_path]=positive_text
+    rows.append({**positive,'goal':positive_goal,'path':positive_path,'kind':'check_lemma','sha256':_sha(positive_text)})
     calls={row['call']:row['source']for row in candidate['call_obligations']}
     events={row['event']:row for row in candidate['lowered_lifetime']['events']
             if row['reachable_on_normal_return']}
@@ -108,7 +129,7 @@ def declaration(source,function,formal_texts):
           'proof_admission':'unsupported: complete caller composition remains pending',
           'function':function,'checker':identity(),'source':{'path':'original.cc','sha256':_sha(files['original.cc'])},
           'lowering':{'path':'lowering.c','sha256':lowering.sha256,'tool':lowering.tool},
-          'contract':contract,'candidate':candidate,'model':model.identity(),
+          'contract':contract,'candidate':candidate,'composition':{'constructor_entry':application_receipt,'zero_constructor':zero_receipt,'positive_constructor_entry':positive_receipt},'model':model.identity(),
           'semantics':{'path':'theory/heap_reallocation.mlw','sha256':_sha(files['theory/heap_reallocation.mlw'])},
           'caller_premises_added':[],'incoming_pointer_maps_restricted':False,
           'required_models':required,'current_proof_records_admitted':[],
