@@ -1,0 +1,48 @@
+{
+  "actual_import_success": false,
+  "blockers": [],
+  "created": "2026-10-15 ET",
+  "formal_tools_run_by_reviewer": false,
+  "inputs": [
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-heap-capability/experiment.py",
+      "sha256": "868d9ef1e480862ad048b5cf0f3434a0e89c103b4c69e377ebb18003a2e7ec48"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/tests/test_heap_capability_packets.py",
+      "sha256": "e3d5e6a5aa7e30fb3f2ddf518cc5c4b82bb355ea385b70838781faccf549f525"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-first-import-failure-v1-20261015.json",
+      "sha256": "5fbb6c5e508c0697069b86ddbfd9acf3bb745c630331dfe141101713eef23b98"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-import-stage-repair-controls-20261015.json",
+      "sha256": "f6d0001e8bf1880db87f1f1e99c844946aded74aca905628eebe11a9db4fe396"
+    },
+    {
+      "path": "/private/tmp/probata-t25-capability-entry-v3-20261015.py",
+      "sha256": "ab2b9d7610970bc26dbef56e1d03bd4226212ef904e40777c8368b9614c36bbc"
+    },
+    {
+      "path": "/private/tmp/probata-t25-capability-command-v3-c5216796-20261015.json",
+      "sha256": "a9f3b606af3d6336faa8ee2777d016e1594d2c2b8901e66c2999f63448721315"
+    }
+  ],
+  "local_control_pins_verified": 6,
+  "remote_raw_pins_independently_rehashed": false,
+  "retained_plan_rows_checked": 42,
+  "review_markdown": {
+    "path": "/private/tmp/probata-t25-import-stage-review-c5216796-v3-20261015.md",
+    "sha256": "5acc9f8beb070f607517d2d9ab2366ab00a575613b227f887b9114e2276206a3"
+  },
+  "review_method": "inert source/AST/JSON/log/hash and Git diff only",
+  "source_commit": "c5216796dde05680acd237a97d4f0c7b3788e605",
+  "tests_run_by_reviewer": false,
+  "unchanged_mapping_sha256": {
+    "heap_bridge.mlw": "44cd626d07a93d105be791bff82fa201b525e09523a8f6598b92312a6a0b1eac",
+    "packets.py": "3299b9eb5f24d37228d26c18dc8a795c812b2410384899d680657d86fbdcead5",
+    "source_vcs.py": "5b6353263114ea31bf7ee9408b81a356b10ba1206ee4f21167c67d7d96f1a362"
+  },
+  "verdict": "PASS_FOR_FRESH_CAPABILITY_REPLAY"
+}

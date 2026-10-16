@@ -290,3 +290,21 @@ def test_actual_output_inside_checkout_is_rejected_before_source_or_tool_probe(t
     assert result.returncode != 0
     assert 'outside the source checkout' in result.stdout + result.stderr
     assert not output.exists()
+
+
+def test_import_search_path_is_available_to_initial_parse_before_then(tmp_path):
+    inputs = tmp_path / 'packets'
+    made = subprocess.run([sys.executable, str(CLI), 'prepare', '--output', str(inputs)],
+                          capture_output=True, text=True, timeout=30)
+    assert made.returncode == 0, made.stderr
+    output = tmp_path / 'plan'
+    planned = subprocess.run([sys.executable, str(EXPERIMENT), '--plan-only', '--input', str(inputs),
+                              '--output', str(output)], capture_output=True, text=True, timeout=30)
+    assert planned.returncode == 0, planned.stderr
+    for row in json.loads((output / 'plan.json').read_text())['rows']:
+        command = row['command']
+        before_parse = command[:command.index('wp_input.c')]
+        assert '-wp-library' in before_parse
+        assert before_parse[before_parse.index('-wp-library')+1] == str(inputs / 'theory')
+        after_then = command[command.index('-then')+1:]
+        assert after_then[after_then.index('-wp-library')+1] == str(inputs / 'theory')
