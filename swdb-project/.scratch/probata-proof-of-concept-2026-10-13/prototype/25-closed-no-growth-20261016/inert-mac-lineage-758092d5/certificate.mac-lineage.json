@@ -1,0 +1,438 @@
+{
+  "caller_premises_added": [],
+  "cfg": {
+    "complete_lowered_body": {
+      "begin": 5995,
+      "end": 6927,
+      "sha256": "03c82b43f998c1205343bf05826158768f333d7d41ddc1996a24caa2a5d2238d"
+    },
+    "fallback": {
+      "event": "unreachable fallthrough destructor",
+      "lowered_source": {
+        "begin": 6845,
+        "end": 6869,
+        "sha256": "4a5c7f3c22e99bacc8e73c10bb620f2a38b438d160dc8e602d6ba8e6f42cf56f"
+      },
+      "reachable_on_normal_return": false
+    },
+    "fallback_reachable": false,
+    "reason": "exact canonical compound ends in unconditional scalar return",
+    "return": {
+      "event": "return scalar",
+      "lowered_source": {
+        "begin": 6704,
+        "end": 6723,
+        "sha256": "371e7d00d3084b2fa5a6bc202c45e840ba72080cc72fa4a1a9572af7b7bbe354"
+      },
+      "reachable_on_normal_return": true
+    },
+    "scalar_capture": {
+      "event": "guarded scalar capture",
+      "lowered_source": {
+        "begin": 6629,
+        "end": 6670,
+        "sha256": "4999cb071d27f755d77aa68977a9cb5e748cd194e088f2a59241556bb3b5fe87"
+      },
+      "reachable_on_normal_return": true
+    },
+    "terminal_destructor": {
+      "event": "destructor",
+      "lowered_source": {
+        "begin": 6675,
+        "end": 6699,
+        "sha256": "4a5c7f3c22e99bacc8e73c10bb620f2a38b438d160dc8e602d6ba8e6f42cf56f"
+      },
+      "reachable_on_normal_return": true
+    }
+  },
+  "checker": {
+    "id": "vector-closed-no-growth-view-1",
+    "sha256": "168f1634f18fc2833955fc292dea987f91ad0d4ed8a71a21e5fdca386a6612ba"
+  },
+  "constructor": {
+    "call_retained": true,
+    "current_body_proof_dependency_required": true,
+    "fresh_private_output": "pending source-defined allocation/fill/frame correspondence under the existing allocator TCB",
+    "model_sha256": "57cf2a6f3f9049f8edf41633f9ef60d0bb7c804e5ee937af796217a2a018c594",
+    "source_call": {
+      "event": "constructor",
+      "lowered_source": {
+        "begin": 6130,
+        "end": 6187,
+        "sha256": "0777bd96121df46a7bf7ed4f89b1b95d8464d3708645647760cc871e90946859"
+      },
+      "reachable_on_normal_return": true
+    }
+  },
+  "created": "2026-10-16 ET",
+  "current_proof_records_admitted": [],
+  "data": {
+    "body": "static int *std_vector_int_data(const std_vector_int *this) { return this->data; }",
+    "model_sha256": "ee4f867911135688f5b76932243b38aaff73a56d85ffeb24229725c7d4ec6f3f",
+    "original_precondition_retained_as_assertion": true,
+    "source_call": {
+      "event": "data capture",
+      "lowered_source": {
+        "begin": 6305,
+        "end": 6342,
+        "sha256": "bd32da59e0ef92b8160ca40482de49fc06b2dddb2a8739acf1498b3218f4fced"
+      },
+      "reachable_on_normal_return": true
+    }
+  },
+  "edits": [
+    {
+      "new": "/*@ assert swdb_closed_data_requires: std_vector_int_readable(&v); */\n  int *saved = v.data;",
+      "offset_in_preceding_view": 6981,
+      "old": "int *saved = std_vector_int_data(&v);"
+    },
+    {
+      "new": "/*@ assert swdb_closed_reserve_requires: std_vector_int_valid(&v) && (unsigned long)n <= ((size_t)PTRDIFF_MAX < SIZE_MAX / sizeof(int) ? (size_t)PTRDIFF_MAX : SIZE_MAX / sizeof(int)); */\n  /*@ assert swdb_reserve_no_growth: (unsigned long)n <= v.capacity; */\n  /* checked false reserve branch: the preceding ordinary assertion must be proved */",
+      "offset_in_preceding_view": 7191,
+      "old": "/*@ assert swdb_reserve_no_growth: (unsigned long)n <= v.capacity; */\n  if ((unsigned long)n > v.capacity) std_vector_int_grow(&v, (unsigned long)n);"
+    },
+    {
+      "new": "/*@ assert swdb_closed_dtor_repr_requires: std_vector_int_valid(&v); */\n    /* checked private terminal cleanup: release/freeable/frame duties remain in the source bridge */",
+      "offset_in_preceding_view": 7705,
+      "old": "std_vector_int_dtor(&v);"
+    },
+    {
+      "new": "/* certified unreachable fallback cleanup after unconditional scalar return */",
+      "offset_in_preceding_view": 8024,
+      "old": "std_vector_int_dtor(&v);"
+    }
+  ],
+  "formal_texts_sha256": "b81513aa3436dc35faf913700274bec17427b8ab88b05356b24c6c50501f3cdd",
+  "function": "vector_realloc_v3_no_growth",
+  "library_allocator_binding": {
+    "certificate_sha256": "6671573d49e88ac7d292f5c8e60c19d43149e84cc359faaf2d64a0a7e535057a",
+    "default_allocator": "source checker accepts only std::vector<int[,std::allocator<int>]>; canonical full-TU bindings",
+    "environment_boundary": "TU provenance does not attest a linked replacement-free allocator environment; no new absence-of-effects premise is inferred",
+    "existing_trusted_policy": [
+      "pinned standard library implements the modeled members as stated by the pinned model",
+      "allocation succeeds; existing allocator/deallocator fresh/freeable and frame contracts are trusted"
+    ],
+    "model": {
+      "id": "swdb-std-models-2",
+      "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+    },
+    "original_substitutions": [],
+    "required_before_launch": "fresh original-TU/header/compiler recheck and explicit existing allocator/library TCB scope"
+  },
+  "original_assigns": "assigns \\nothing;",
+  "original_lowering_inverse_equal": true,
+  "original_lowering_sha256": "7082d6fc081e23547bf792f8029277695b83d933913545f290f66353ee5841ec",
+  "proof_admission": "unsupported: source allocation/Typed/lifetime bridge, current constructor dependency and fresh complete ordinary proofs required",
+  "reserve": {
+    "branch_elimination_requires_fresh_valid_assertion": true,
+    "model_sha256": "bbb1ea332771898dba5a3b7e4e5e23fe0b916f325b22f213095c36285321421f",
+    "ordinary_false_branch_assertion": "swdb_reserve_no_growth",
+    "source_call": {
+      "event": "reserve",
+      "lowered_source": {
+        "begin": 6460,
+        "end": 6505,
+        "sha256": "553f51115f35ff2ebbd887b96730d48fd50d9b4319318fd9a6af0a8d7c0c6f57"
+      },
+      "reachable_on_normal_return": true
+    }
+  },
+  "source_typed_bridge_established": false,
+  "source_view": {
+    "address_coordinates": {
+      "address_identity_mapping": "pending injective source-local identity relation; no address-to-integer observation",
+      "buffer": {
+        "byte_alignment": 4,
+        "byte_stride": 4,
+        "element": "int32",
+        "typed_cell_stride": 1
+      },
+      "receiver": {
+        "byte_alignment": 8,
+        "byte_extent": 24,
+        "fields": [
+          {
+            "byte_offset": 0,
+            "field": "data",
+            "typed_cell_offset": 0
+          },
+          {
+            "byte_offset": 8,
+            "field": "size",
+            "typed_cell_offset": 1
+          },
+          {
+            "byte_offset": 16,
+            "field": "capacity",
+            "typed_cell_offset": 2
+          }
+        ],
+        "type": "std_vector_int",
+        "typed_cell_extent": 3
+      }
+    },
+    "caller_premises_added": [],
+    "check": {
+      "id": "vector-reallocation-source-view-1",
+      "sha256": "37aceab703350e4a25a3788afa88a35fa8f00d159ba409534cf2d1c387b9470b"
+    },
+    "current_proof_records_admitted": [],
+    "dependency_replacement_performed": false,
+    "formal_texts_sha256": "b81513aa3436dc35faf913700274bec17427b8ab88b05356b24c6c50501f3cdd",
+    "function": "vector_realloc_v3_no_growth",
+    "inverse_original_lowering_equal": true,
+    "original_lowering_sha256": "7082d6fc081e23547bf792f8029277695b83d933913545f290f66353ee5841ec",
+    "original_reserve_summary_imported": false,
+    "original_source_sha256": "1172e62dbff5076d25471285afcfa17927707dbe6fae121d9570109d39e62b57",
+    "pending": [
+      "actual generated Typed+Var task-term correspondence",
+      "type-directed address identity/layout, value and separate initialization relation",
+      "constructor fill, captured alias, cleanup and final incoming-frame proof",
+      "current qualified body dependency admission and complete public ordinary/smoke proof"
+    ],
+    "proof_admission": "unsupported: actual Typed+Var source/lifetime correspondence and current dependencies pending",
+    "reserve_inline": {
+      "model_branch": {
+        "begin": 3836,
+        "end": 3889,
+        "sha256": "d6c04b54d20453951cb18699013ea5ba9f06173de646f0524bb13154782041c5"
+      },
+      "model_source_sha256": "bbb1ea332771898dba5a3b7e4e5e23fe0b916f325b22f213095c36285321421f",
+      "original_call": "std_vector_int_reserve(&v, (unsigned long)n);",
+      "replacement": "/*@ assert swdb_reserve_no_growth: (unsigned long)n <= v.capacity; */\n  if ((unsigned long)n > v.capacity) std_vector_int_grow(&v, (unsigned long)n);",
+      "source_call": {
+        "begin": 6460,
+        "end": 6505,
+        "sha256": "553f51115f35ff2ebbd887b96730d48fd50d9b4319318fd9a6af0a8d7c0c6f57"
+      }
+    },
+    "runtime_bridge_proved": false,
+    "selected_runtime_requirements": {
+      "integer_model": "Machine",
+      "memory_model": "Typed",
+      "source_pins": [
+        {
+          "name": "MemTyped.ml",
+          "sha256": "ad0d3c4e8e568a09d47bb658767e5ba476cc9e957f16b14981370642c5e235b5"
+        },
+        {
+          "name": "MemVar.ml",
+          "sha256": "43b8979a169ccfb7c6e7183970a8d3022d27d410487f139b397073f06a7476f6"
+        },
+        {
+          "name": "MemLoader.ml",
+          "sha256": "b59407d1220f7c0871bc556aaebf4748e9229053463881467ca6a3da851c9fe8"
+        },
+        {
+          "name": "Ctypes.ml",
+          "sha256": "a9f2a2f05e9e4e7ecabfd1324bff52ebd74f382e0db0989dba246a5ebfee8bec"
+        },
+        {
+          "name": "Cint.ml",
+          "sha256": "3b2a00bb65f4c785265c2295c323459e3dce66bb6c82e3d70ff3a659a3660156"
+        },
+        {
+          "name": "Factory.ml",
+          "sha256": "d2f4da6cb7b2f4a674880f4760680e84fe0a1c58ece95d0f2ff889b7902efcc5"
+        }
+      ],
+      "status": "prospective requirement; actual selected runtime/task binding pending",
+      "variable_model": "Var"
+    },
+    "source_calls": [
+      {
+        "call": "ctor_count_value",
+        "source": {
+          "begin": 633,
+          "end": 671,
+          "sha256": "35c372980c4e014be8e2e74698a443c9b89b45d8ab9b9e89a5ed10fff9167f39"
+        },
+        "status": "pending"
+      },
+      {
+        "call": "data",
+        "source": {
+          "begin": 687,
+          "end": 695,
+          "sha256": "64409fe0d34fecc1b6d50a8de34b95455d9d55f125b00dc4da11c9a380f0abee"
+        },
+        "status": "pending"
+      },
+      {
+        "call": "reserve",
+        "source": {
+          "begin": 699,
+          "end": 724,
+          "sha256": "fc500967de42663e894dae58d9bfcc1a267e2b0e1dea9124516ec7503099b618"
+        },
+        "status": "pending"
+      },
+      {
+        "call": "dtor",
+        "source": {
+          "begin": 590,
+          "end": 756,
+          "sha256": "b28aedb24cec67cf7dfb2d6e9e0e8b79dcae1df29275d8d06d9d9a78dce0cf32"
+        },
+        "status": "pending"
+      }
+    ],
+    "source_lifetime": {
+      "allocation_origins_granted": [],
+      "domain_facts_assumed": [],
+      "events": [
+        {
+          "event": "automatic declaration",
+          "lowered_source": {
+            "begin": 6110,
+            "end": 6127,
+            "sha256": "19963b79f76424a490ac2c7bd56e88b8160dd4982baf734fba692aecc06d0d74"
+          },
+          "reachable_on_normal_return": true
+        },
+        {
+          "event": "constructor",
+          "lowered_source": {
+            "begin": 6130,
+            "end": 6187,
+            "sha256": "0777bd96121df46a7bf7ed4f89b1b95d8464d3708645647760cc871e90946859"
+          },
+          "reachable_on_normal_return": true
+        },
+        {
+          "event": "data capture",
+          "lowered_source": {
+            "begin": 6305,
+            "end": 6342,
+            "sha256": "bd32da59e0ef92b8160ca40482de49fc06b2dddb2a8739acf1498b3218f4fced"
+          },
+          "reachable_on_normal_return": true
+        },
+        {
+          "event": "reserve",
+          "lowered_source": {
+            "begin": 6460,
+            "end": 6505,
+            "sha256": "553f51115f35ff2ebbd887b96730d48fd50d9b4319318fd9a6af0a8d7c0c6f57"
+          },
+          "reachable_on_normal_return": true
+        },
+        {
+          "event": "guarded scalar capture",
+          "lowered_source": {
+            "begin": 6629,
+            "end": 6670,
+            "sha256": "4999cb071d27f755d77aa68977a9cb5e748cd194e088f2a59241556bb3b5fe87"
+          },
+          "reachable_on_normal_return": true
+        },
+        {
+          "event": "destructor",
+          "lowered_source": {
+            "begin": 6675,
+            "end": 6699,
+            "sha256": "4a5c7f3c22e99bacc8e73c10bb620f2a38b438d160dc8e602d6ba8e6f42cf56f"
+          },
+          "reachable_on_normal_return": true
+        },
+        {
+          "event": "return scalar",
+          "lowered_source": {
+            "begin": 6704,
+            "end": 6723,
+            "sha256": "371e7d00d3084b2fa5a6bc202c45e840ba72080cc72fa4a1a9572af7b7bbe354"
+          },
+          "reachable_on_normal_return": true
+        },
+        {
+          "event": "automatic lifetime end",
+          "lowered_source": {
+            "begin": 6927,
+            "end": 6928,
+            "sha256": "d10b36aa74a59bcf4a88185837f658afaf3646eff2bb16c3928d0e9335e945d2"
+          },
+          "reachable_on_normal_return": true,
+          "role": "source scope-end event to map; no dynamic-free permission or proof granted"
+        },
+        {
+          "event": "unreachable fallthrough destructor",
+          "lowered_source": {
+            "begin": 6845,
+            "end": 6869,
+            "sha256": "4a5c7f3c22e99bacc8e73c10bb620f2a38b438d160dc8e602d6ba8e6f42cf56f"
+          },
+          "reachable_on_normal_return": false
+        }
+      ],
+      "lowered_function": "vector_realloc_v3_no_growth",
+      "lowered_function_body": {
+        "begin": 5995,
+        "end": 6927,
+        "sha256": "03c82b43f998c1205343bf05826158768f333d7d41ddc1996a24caa2a5d2238d"
+      },
+      "normal_return_cleanup_count": 1,
+      "order": [
+        "automatic declaration",
+        "constructor",
+        "data capture",
+        "reserve",
+        "guarded scalar capture",
+        "destructor",
+        "return scalar",
+        "automatic lifetime end"
+      ],
+      "pending": [
+        "source-local storage/image and layout embedding",
+        "all caller/model/cleanup obligations",
+        "current dependency eligibility and actual proof/task closure"
+      ],
+      "raw_alias_rewritten": false,
+      "return_scalar_before_destruction": true,
+      "unreachable_fallthrough_cleanup_count": 1,
+      "verdict": "checked source order; semantic proof pending"
+    },
+    "unreachable_fallthrough_cleanup_retained": true,
+    "version": 1,
+    "view_sha256": "b69a72c9ff7be43de41825d474ca0558d43b779c175c736a8eb35a783056b9e8"
+  },
+  "terminal_cleanup": {
+    "body": "static void std_vector_int_dtor(std_vector_int *this) { swdb_free(this->data); }",
+    "freeable_duty": {
+      "native_wp_status": "WP33 does not implement freeable/fresh/dangling; no native proof claimed",
+      "origin": "existing successful fresh allocator; automatic receiver is not dynamically freeable",
+      "status": "pending source-allocation/lifetime bridge"
+    },
+    "incoming_observation": "complete identity, contents and initialization of every incoming live object",
+    "model_sha256": "1056f4f83c59a30941ec9417c36aada8eab4b62160087ae10315cd2ac9778317",
+    "noescape_duty": "closed source AST and complete lowering order; source-created identities still require the model/allocator bridge",
+    "original_precondition": "requires std_vector_int_valid(this) && (this->capacity == 0 || \\freeable(this->data));",
+    "private_frame": {
+      "id": "vector-private-lifetime-frame-1",
+      "sha256": "d821607eba3ac35dbbc212f141c372faf0ed947d56805a612bcc4270e3ab844d"
+    },
+    "required_mathematical_goals": [
+      "t25_private_entry_reflexive",
+      "t25_private_automatic_frame",
+      "t25_private_allocation_frame",
+      "t25_private_integer_store_frame",
+      "t25_private_pointer_store_frame",
+      "t25_private_release_frame",
+      "t25_private_automatic_end_frame",
+      "t25_private_cleanup_observation",
+      "t25_private_cleanup_exists_scalar"
+    ],
+    "scalar_capture_before_cleanup": true,
+    "source_call": {
+      "event": "destructor",
+      "lowered_source": {
+        "begin": 6675,
+        "end": 6699,
+        "sha256": "4a5c7f3c22e99bacc8e73c10bb620f2a38b438d160dc8e602d6ba8e6f42cf56f"
+      },
+      "reachable_on_normal_return": true
+    },
+    "transition": "Heap.end_automatic(Heap.release(now,buffer),receiver)"
+  },
+  "version": 1,
+  "view_sha256": "e97874959eaf6d9596e0ff32e25a55099c5c7f0c22f09ddda7b70723e69e03c8"
+}

@@ -1,0 +1,78 @@
+{
+  "at_utc": "2026-10-16T18:14:57.853566+00:00",
+  "created": "2026-10-16 ET",
+  "decision": "PASS: final Standards review after fixture-only consolidation",
+  "fixture_function_AST_unchanged": true,
+  "physical_pins": [
+    {
+      "bytes": 11840,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_reallocation_closed_view.py",
+      "relative": "swdb/vector_reallocation_closed_view.py",
+      "sha256": "758092d5997274b29e22f2196c46af361b7cfdfd5c9eb83ee328ae6a877eb757"
+    },
+    {
+      "bytes": 588,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/testkit/vector_reallocation.py",
+      "relative": "tests/testkit/vector_reallocation.py",
+      "sha256": "57c8477de43d129c3fc7426548eed35ee7be106680f684787285d14bb7cff908"
+    },
+    {
+      "bytes": 12448,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/conftest.py",
+      "relative": "tests/conftest.py",
+      "sha256": "7c3d36f8c0b6e23e6eacf622b31ce3e051fc31af1c494d1dfab97bf1012165bb"
+    },
+    {
+      "bytes": 3448,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_reallocation_closed_view.py",
+      "relative": "tests/test_vector_reallocation_closed_view.py",
+      "sha256": "7fd7be64c9b99903a152793ff5c6263423fd3aaa99fde7d922c1f95107398d7b"
+    },
+    {
+      "bytes": 5006,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_reallocation_caller_view.py",
+      "relative": "tests/test_vector_reallocation_caller_view.py",
+      "sha256": "97abc42871a367f380e7aa3ea518449b2130cc1387e34446df471cf1c4c27ec3"
+    }
+  ],
+  "production_unchanged": true,
+  "proof_or_caller_acceptance": false,
+  "recorded_control_results_read_not_run": [
+    {
+      "bytes": 4333,
+      "caller_acceptance": false,
+      "external_native_attempts": [],
+      "failed": 0,
+      "passed": 5,
+      "path": "/private/tmp/probata-resume-20261016-t25-closed-view-green-v3/result.json",
+      "proof_acceptance": false,
+      "sha256": "01508ee836ee831991405b1674b555d6f92bd7225f2bbfd220bd95005c99e5f5"
+    },
+    {
+      "bytes": 3874,
+      "caller_acceptance": false,
+      "external_native_attempts": [],
+      "failed": 0,
+      "passed": 5,
+      "path": "/private/tmp/probata-resume-20261016-t25-caller-view-green-v5/result.json",
+      "proof_acceptance": false,
+      "sha256": "71b0d4827132d0eff27720c147bd8e32186f2cfbc4bd9100ccdc7c4c134e3a26"
+    }
+  ],
+  "remaining_findings": [],
+  "report": {
+    "bytes": 2126,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-closed-no-growth-view-standards-review-v2-20261016.md",
+    "sha256": "ace3eda929cee2a3c388e3a26f13245dca0e3bcd9f519f6145e67bedfc048d2b"
+  },
+  "resolved_findings": [
+    {
+      "prior_file": "tests/test_vector_reallocation_closed_view.py:8",
+      "priority": 2,
+      "resolution": "Shared registered testkit fixture/data, exact existing function/skip semantics and public test AST retained."
+    }
+  ],
+  "reviewer_executed_tests_compilers_native_SSH": false,
+  "single_conftest_plugin_AST_delta": true,
+  "test_function_ASTs_unchanged": true
+}

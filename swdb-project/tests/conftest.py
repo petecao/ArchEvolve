@@ -28,7 +28,8 @@ DB_COMMANDS = {"build", "sql", "find", "implementations", "add", "profile"}
 pytest.register_assert_rewrite("testkit")
 pytest_plugins = ["testkit.certification_records", "testkit.proposals", "testkit.bfs_native", "testkit.bfs_protocol", "testkit.extensa",
                   "testkit.extensa_targets", "testkit.bfs_native_scalable", "testkit.provider_workspace",
-                  "testkit.toolchain", "testkit.native_pilot", "testkit.profile_packages", "testkit.analytic"]
+                  "testkit.toolchain", "testkit.native_pilot", "testkit.profile_packages", "testkit.analytic",
+                  "testkit.vector_reallocation"]
 
 
 #: 2026-10-13 ET: the suite runs as this fixture host on every machine, mbit10 included.

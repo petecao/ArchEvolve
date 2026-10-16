@@ -1,0 +1,50 @@
+{
+  "at_utc": "2026-10-16T18:12:11.385043+00:00",
+  "created": "2026-10-16 ET",
+  "decision": "CHANGES REQUESTED: new duplicated shared test seed; production Standards PASS within unsupported preparation scope",
+  "finding": {
+    "file": "tests/test_vector_reallocation_closed_view.py",
+    "line": 8,
+    "priority": 2,
+    "summary": "Consolidate the newly copied SOURCE/CONTRACT and lowered_no_growth compiler seed through tests/testkit under documented conventions."
+  },
+  "physical_input_pins": [
+    {
+      "bytes": 11840,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_reallocation_closed_view.py",
+      "sha256": "758092d5997274b29e22f2196c46af361b7cfdfd5c9eb83ee328ae6a877eb757"
+    },
+    {
+      "bytes": 3876,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_reallocation_closed_view.py",
+      "sha256": "99be4b68a902bf278b5dbb9e25ce57e2eabf51a4be9dd41f7d24bf26956925dd"
+    },
+    {
+      "bytes": 5434,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_reallocation_caller_view.py",
+      "sha256": "b2bec084f1f3f9386b3e81a39c2772473b4ee7560e439143aea99a87c002f3c1"
+    },
+    {
+      "bytes": 12399,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/conftest.py",
+      "sha256": "f70dea4668fc1c2a2234b3bed4d8630734e8eec4f756fbb9be0e8d79a66b6a7a"
+    },
+    {
+      "bytes": 2924,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-closed-no-growth-view-preparation-20261016.json",
+      "sha256": "122a9210486dda8a13f899478ecd461ab87219554b58ffd5c5c67f981d02345e"
+    },
+    {
+      "bytes": 7285,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-prefix10-resume-20261016/run_pure_closed_view.py",
+      "sha256": "6d4bcb40fc2d6efdfba8a37777c7c7c2931f431c0ad874f24cc7b406d55a9def"
+    }
+  ],
+  "production_semantics_or_proof_admitted": false,
+  "report": {
+    "bytes": 3851,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-closed-no-growth-view-standards-review-20261016.md",
+    "sha256": "ca58ab8853b741f587d1898d64932957f00f5a9b33e802f8d6a3a2fe56b02fc1"
+  },
+  "tests_or_runtime_executed": false
+}

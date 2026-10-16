@@ -1,20 +1,9 @@
 """2026-10-16 ET. Source-derived no-growth diagnostic view; no caller admission."""
 import copy
-from pathlib import Path
 
 import pytest
 
-SOURCE = Path(__file__).parent / 'fixtures/proof/vector_reallocation_v3.cc'
-CONTRACT = [r'requires 0 <= n;', r'assigns \nothing;',
-            r'ensures \result == (n > 0 ? 7 : 0);']
-
-
-@pytest.fixture(scope='module')
-def lowered_no_growth():
-    from swdb import c_lowering
-    if c_lowering.locate().missing:
-        pytest.skip('the selected Clang22 lowerer is unavailable')
-    return SOURCE, c_lowering.lower(SOURCE, 'vector_realloc_v3_no_growth')
+from testkit.vector_reallocation import CONTRACT
 
 
 def test_no_growth_source_view_retains_construction_alias_scalar_and_cleanup(lowered_no_growth):
