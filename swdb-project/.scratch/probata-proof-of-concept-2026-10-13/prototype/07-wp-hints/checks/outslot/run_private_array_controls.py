@@ -46,6 +46,9 @@ def main():
     generated = out / "generated"
     run("generate", [sys.executable, GENERATOR, "--output", generated])
     manifest = json.loads((generated / "private-array-map.json").read_bytes())
+    record("exact-ten-site-families", set(manifest["same_path_controls"]) == {
+        "positive", "missing-store", "wrong-cell", "uninitialized-scalar", "copy-positive", "history-positive",
+        "reentry-positive", "reentry-missing-store", "modular-entry-positive", "modular-entry-missing-store"})
     for name in (*manifest["output_pins"], "private-array-map.json"):
         record("reproduce-" + name, (generated / name).read_bytes() == (POC / "standin_private_array" / name).read_bytes())
     refusal = out / "allocator-refused"

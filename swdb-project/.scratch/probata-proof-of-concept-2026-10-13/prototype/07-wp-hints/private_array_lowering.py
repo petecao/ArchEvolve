@@ -145,6 +145,44 @@ void swdb_bind_private_NodeID_array(swdb_private_NodeID_array *storage, size_t n
             '  struct QueueBuffer_NodeID buffer;\n'
             '  QueueBuffer_NodeID_QueueBuffer(&buffer, queue, 16384, &storage);\n  '
             + operation + '\n  QueueBuffer_NodeID_destroy(&buffer);\n}\n')
+    site_domain = ('/*@ requires gapbs_queue_domain(queue) && \\valid(out);\n'
+                   '    requires \\separated(out, queue, queue->shared + (0 .. queue->shared_max_size - 1));\n'
+                   '    assigns *out;')
+    control_functions = {name: ["swdb_allocation_site"] for name in operations}
+    for positive in (False, True):
+        name = "reentry-positive" if positive else "reentry-missing-store"
+        store = "QueueBuffer_NodeID_push_back(&buffer, 17);" if positive else "if (lifetime == 0) QueueBuffer_NodeID_push_back(&buffer, 17);"
+        operations[name] = "two loop lifetimes: " + ("both store then read" if positive else "first stores; second omits store then reads")
+        control_functions[name] = ["swdb_allocation_site"]
+        files["sites/" + name + ".c"] = (
+            '// Prospective same-path lexical retirement/reentry. Undefined negative is never executed.\n'
+            '#include "gapbs_models.h"\n\n' + site_domain
+            + ('\n    ensures *out == 17;' if positive else '') + ' */\n'
+            'void swdb_allocation_site(struct SlidingQueue_NodeID *queue, NodeID *out) {\n'
+            '  for (unsigned lifetime = 0; lifetime < 2; ++lifetime) {\n'
+            '    swdb_private_NodeID_array storage; /* new uninitialized lifetime each iteration */\n'
+            '    struct QueueBuffer_NodeID buffer;\n'
+            '    QueueBuffer_NodeID_QueueBuffer(&buffer, queue, 16384, &storage);\n    '
+            + store + '\n    *out = buffer.local_queue[0];\n'
+            '    QueueBuffer_NodeID_destroy(&buffer);\n  }\n}\n')
+        name = "modular-entry-positive" if positive else "modular-entry-missing-store"
+        operations[name] = "two modular entries: " + ("both store then read" if positive else "first stores; second omits store then reads")
+        control_functions[name] = ["swdb_lifetime_entry", "swdb_allocation_site"]
+        store = "(void)write; QueueBuffer_NodeID_push_back(&buffer, 17);" if positive else "if (write) QueueBuffer_NodeID_push_back(&buffer, 17);"
+        files["sites/" + name + ".c"] = (
+            '// Prospective same-path repeated modular entry. Undefined negative is never executed.\n'
+            '#include "gapbs_models.h"\n\n' + site_domain
+            + ('\n    ensures *out == 17;' if positive else '\n    ensures write ==> *out == 17;') + ' */\n'
+            'void swdb_lifetime_entry(struct SlidingQueue_NodeID *queue, bool write, NodeID *out) {\n'
+            '  swdb_private_NodeID_array storage; /* new uninitialized function lifetime */\n'
+            '  struct QueueBuffer_NodeID buffer;\n'
+            '  QueueBuffer_NodeID_QueueBuffer(&buffer, queue, 16384, &storage);\n  '
+            + store + '\n  *out = buffer.local_queue[0];\n'
+            '  QueueBuffer_NodeID_destroy(&buffer);\n}\n\n' + site_domain
+            + ('\n    ensures *out == 17;' if positive else '') + ' */\n'
+            'void swdb_allocation_site(struct SlidingQueue_NodeID *queue, NodeID *out) {\n'
+            '  NodeID first;\n  swdb_lifetime_entry(queue, true, &first);\n'
+            '  swdb_lifetime_entry(queue, false, out);\n}\n')
     def contract(text, name):
         pos = text.index("void " + name + "(")
         begin = text.rfind("/*@", 0, pos)
@@ -156,7 +194,7 @@ void swdb_bind_private_NodeID_array(swdb_private_NodeID_array *storage, size_t n
         begin = text.index(first)
         return text[begin:text.index(last, begin)]
     manifest = {
-        "method": "t07-lexical-private-array-prospective-v1", "parent_outslot_source_pins": PINS,
+        "method": "t07-lexical-private-array-prospective-v2-reentry", "parent_outslot_source_pins": PINS,
         "actual_unit_sha256": UNIT_PIN, "removed_static_allocator_source": removed,
         "introduced_private_binding_source": replacement,
         "helper_bodies": 20, "original_helper_bodies_retained": 19, "new_binding_bodies": 1,
@@ -187,8 +225,9 @@ void swdb_bind_private_NodeID_array(swdb_private_NodeID_array *storage, size_t n
         "destructor_projection": "no observable source state effect; actual private-array block retirement immediately follows marker at every admitted call site; not a generic delete or danglingness proof",
         "unit_postconditions_sha256": hashlib.sha256(old_post.encode()).hexdigest(),
         "source_qualification": "exact default successful-normal allocation, one 16384-element NodeID array, nonescape/address-insensitive single lifetime; generic n/new/delete/hooks/failure/exceptions unsupported",
+        "physical_source_header_macro_include_closure_gate": "REFUSED_NOT_IMPLEMENTED; producer hash below is recorded source research, not the selected C++ build closure. This packet only qualifies hand-model feasibility.",
         "same_path_controls": {name: {"expected": "ordinary positive proof candidate" if "positive" in name else "source-read initializedness must remain non-valid; no proof accepted",
-                                     "operation": operation} for name, operation in operations.items()},
+                                     "operation": operation, "root_functions": control_functions[name]} for name, operation in operations.items()},
         "output_pins": {n: hashlib.sha256(v.encode("utf-8")).hexdigest() for n, v in files.items()},
         "proof_acceptance": False, "allocator_correspondence": "PENDING_INIT_MAP_SAME_PATH_AND_SOURCE_REFINEMENT_GATES",
         "TD_or_counted_admissible": False,

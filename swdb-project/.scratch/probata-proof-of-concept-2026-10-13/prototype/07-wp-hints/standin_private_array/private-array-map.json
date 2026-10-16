@@ -1,5 +1,5 @@
 {
-  "method": "t07-lexical-private-array-prospective-v1",
+  "method": "t07-lexical-private-array-prospective-v2-reentry",
   "parent_outslot_source_pins": {
     "gapbs_models.h": "7fcafa5498481b4ecce20c36ba167a00b9c5f9231b460c162268b814f14f19ec",
     "tdstep_standin.c": "3af025040802b2c018a7a192738c276863f7c489e4c3ce238443b9f2a3f6bcfa",
@@ -75,30 +75,79 @@
   "destructor_projection": "no observable source state effect; actual private-array block retirement immediately follows marker at every admitted call site; not a generic delete or danglingness proof",
   "unit_postconditions_sha256": "bb7ed9a054f6f396ce9247087ca72df3517bd23a759d4cad85f7e2c55a6f0b20",
   "source_qualification": "exact default successful-normal allocation, one 16384-element NodeID array, nonescape/address-insensitive single lifetime; generic n/new/delete/hooks/failure/exceptions unsupported",
+  "physical_source_header_macro_include_closure_gate": "REFUSED_NOT_IMPLEMENTED; producer hash below is recorded source research, not the selected C++ build closure. This packet only qualifies hand-model feasibility.",
   "same_path_controls": {
     "positive": {
       "expected": "ordinary positive proof candidate",
-      "operation": "QueueBuffer_NodeID_push_back(&buffer, 17);\n  *out = buffer.local_queue[0];"
+      "operation": "QueueBuffer_NodeID_push_back(&buffer, 17);\n  *out = buffer.local_queue[0];",
+      "root_functions": [
+        "swdb_allocation_site"
+      ]
     },
     "missing-store": {
       "expected": "source-read initializedness must remain non-valid; no proof accepted",
-      "operation": "*out = buffer.local_queue[0];"
+      "operation": "*out = buffer.local_queue[0];",
+      "root_functions": [
+        "swdb_allocation_site"
+      ]
     },
     "wrong-cell": {
       "expected": "source-read initializedness must remain non-valid; no proof accepted",
-      "operation": "QueueBuffer_NodeID_push_back(&buffer, 17);\n  *out = buffer.local_queue[1];"
+      "operation": "QueueBuffer_NodeID_push_back(&buffer, 17);\n  *out = buffer.local_queue[1];",
+      "root_functions": [
+        "swdb_allocation_site"
+      ]
     },
     "uninitialized-scalar": {
       "expected": "source-read initializedness must remain non-valid; no proof accepted",
-      "operation": "NodeID uninitialized;\n  *out = uninitialized;"
+      "operation": "NodeID uninitialized;\n  *out = uninitialized;",
+      "root_functions": [
+        "swdb_allocation_site"
+      ]
     },
     "copy-positive": {
       "expected": "ordinary positive proof candidate",
-      "operation": "size_t prior = queue->shared_in;\n  QueueBuffer_NodeID_push_back(&buffer, 17);\n  QueueBuffer_NodeID_flush(&buffer);\n  *out = queue->shared[prior];"
+      "operation": "size_t prior = queue->shared_in;\n  QueueBuffer_NodeID_push_back(&buffer, 17);\n  QueueBuffer_NodeID_flush(&buffer);\n  *out = queue->shared[prior];",
+      "root_functions": [
+        "swdb_allocation_site"
+      ]
     },
     "history-positive": {
       "expected": "ordinary positive proof candidate",
-      "operation": "QueueBuffer_NodeID_push_back(&buffer, 17);\n  QueueBuffer_NodeID_flush(&buffer);\n  *out = buffer.local_queue[0];"
+      "operation": "QueueBuffer_NodeID_push_back(&buffer, 17);\n  QueueBuffer_NodeID_flush(&buffer);\n  *out = buffer.local_queue[0];",
+      "root_functions": [
+        "swdb_allocation_site"
+      ]
+    },
+    "reentry-missing-store": {
+      "expected": "source-read initializedness must remain non-valid; no proof accepted",
+      "operation": "two loop lifetimes: first stores; second omits store then reads",
+      "root_functions": [
+        "swdb_allocation_site"
+      ]
+    },
+    "modular-entry-missing-store": {
+      "expected": "source-read initializedness must remain non-valid; no proof accepted",
+      "operation": "two modular entries: first stores; second omits store then reads",
+      "root_functions": [
+        "swdb_lifetime_entry",
+        "swdb_allocation_site"
+      ]
+    },
+    "reentry-positive": {
+      "expected": "ordinary positive proof candidate",
+      "operation": "two loop lifetimes: both store then read",
+      "root_functions": [
+        "swdb_allocation_site"
+      ]
+    },
+    "modular-entry-positive": {
+      "expected": "ordinary positive proof candidate",
+      "operation": "two modular entries: both store then read",
+      "root_functions": [
+        "swdb_lifetime_entry",
+        "swdb_allocation_site"
+      ]
     }
   },
   "output_pins": {
@@ -111,7 +160,11 @@
     "sites/wrong-cell.c": "0a265eb1ed3436dd8cf251b73c15bc71b54a9181910fc5d7fac45a820b673ca7",
     "sites/uninitialized-scalar.c": "688fd83ba3a0ee4136738bde9ab0e286255f344de67e052db5efe1b3500635fb",
     "sites/copy-positive.c": "041240b6e4c320f50bbefdae145cbadf04672e2b9fac6754da08a7de015bc9fa",
-    "sites/history-positive.c": "7b061fe6d12696cf9a0e7a49bb73ea614cf897605c2c1bca4785ed6ca082e343"
+    "sites/history-positive.c": "7b061fe6d12696cf9a0e7a49bb73ea614cf897605c2c1bca4785ed6ca082e343",
+    "sites/reentry-missing-store.c": "2e7652e52ce6c650d1f4373dc25bb52932cef26f098fa94088d206f2833d6617",
+    "sites/modular-entry-missing-store.c": "5bccd0a72c3d9ee77e0b8be6ec780f3de71d96d64ba4ddeeaba03b89aeefb7a9",
+    "sites/reentry-positive.c": "64d366a7c9d2a9e2ff691ad2499f6fe873fdad4a08415198b4ee00ecf8b9e1d0",
+    "sites/modular-entry-positive.c": "99f2135b212a8003b2c35490a1f16ebc236e541566481b39f5194af67c927b77"
   },
   "proof_acceptance": false,
   "allocator_correspondence": "PENDING_INIT_MAP_SAME_PATH_AND_SOURCE_REFINEMENT_GATES",

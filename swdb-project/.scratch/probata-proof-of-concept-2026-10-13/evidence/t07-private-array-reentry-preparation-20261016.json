@@ -1,0 +1,64 @@
+{
+  "created": "2026-10-16 ET",
+  "supersedes_fixture_scope_only": "3940afd067464ea0e9d30f09dba7552af4f77ca2",
+  "source": {
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/private_array_lowering.py": "ce1875975ea6de73f3acd5647a8451cb7287481c3e0a6f746c44180e336e04e2",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/PRIVATE-ARRAY-REENTRY-20261016.md": "a45b25dda02858f7806975157592a74be258f943dc8a874695144eb0ecef586e",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/checks/outslot/run_private_array_controls.py": "863032cf6aeee0a14b72a954cc08012f3dcbc97213012b7e0579803300796b7b",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array/bfs_unit.h": "a9f3bb9954057676acd2216e05c4051f0782198ed44c7f3088cb309d09eb1d69",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array/dxc_summaries.h": "724f5b0fa31c0b601d4a5780df3d6514d3a308a99e0c9a8eed04a29cde9060c1",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array/gapbs_models.h": "77b579f9d90a4775c8bd2cb5a91a7896dcf0cc17b0743a098dc14e6bc30f7d5f",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array/private-array-map.json": "09818b187388a050f986e5eabcb0773150a6b256885de801f2004709ecec7412",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array/sites/copy-positive.c": "041240b6e4c320f50bbefdae145cbadf04672e2b9fac6754da08a7de015bc9fa",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array/sites/history-positive.c": "7b061fe6d12696cf9a0e7a49bb73ea614cf897605c2c1bca4785ed6ca082e343",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array/sites/missing-store.c": "01434f91cf191c47ce012e12cdcc3c766c778a5be17b3daa8e637e78f75e6b9f",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array/sites/modular-entry-missing-store.c": "5bccd0a72c3d9ee77e0b8be6ec780f3de71d96d64ba4ddeeaba03b89aeefb7a9",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array/sites/modular-entry-positive.c": "99f2135b212a8003b2c35490a1f16ebc236e541566481b39f5194af67c927b77",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array/sites/positive.c": "7e7a23698dc44961f6cb2410079aa12c0024d300333e959dd545f691de5fd09e",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array/sites/reentry-missing-store.c": "2e7652e52ce6c650d1f4373dc25bb52932cef26f098fa94088d206f2833d6617",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array/sites/reentry-positive.c": "64d366a7c9d2a9e2ff691ad2499f6fe873fdad4a08415198b4ee00ecf8b9e1d0",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array/sites/uninitialized-scalar.c": "688fd83ba3a0ee4136738bde9ab0e286255f344de67e052db5efe1b3500635fb",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array/sites/wrong-cell.c": "0a265eb1ed3436dd8cf251b73c15bc71b54a9181910fc5d7fac45a820b673ca7",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array/tdstep_standin.c": "ab8e1f4c833805c21d291a152e8fcebd62b66bfc945b16d19c344063657b07c5"
+  },
+  "site_families": 10,
+  "new_families": [
+    "reentry-positive",
+    "reentry-missing-store",
+    "modular-entry-positive",
+    "modular-entry-missing-store"
+  ],
+  "header_bodies_per_TU": 20,
+  "site_root_functions": {
+    "normal": 1,
+    "modular-entry": 2
+  },
+  "controls": {
+    "path": "/private/tmp/probata-t07-private-array-reentry-controls1-20261016",
+    "sha256": "e41b06cc9109661c44329497302590debf7e843b90f946e280eb4d29da18205c",
+    "passed": 56,
+    "undefined_negatives_executed": false,
+    "new_negative_diagnostics": "one core.uninitialized.Assign at intended fixture source for each omitted-store family",
+    "new_positive_diagnostics": "none"
+  },
+  "guard": {
+    "path": "/private/tmp/probata-t07-private-array-reentry-controls1-20261016.log.summary.json",
+    "sha256": "c0b7f8fbd8ec31fa8321dc1e82bb3169f8aaab8c049dd9ff230f87720a69ab79",
+    "wall_s": 1.6652171250316314,
+    "peak_rss_mb": 75.140625,
+    "cap_gb": 8.0,
+    "timeout_s": 120.0,
+    "inspection_failure": null,
+    "unconfirmed_children": []
+  },
+  "artifact_manifest": {
+    "path": "/private/tmp/probata-t07-private-array-reentry-artifacts-20261016.json",
+    "sha256": "b389696ee633ae2c8f8250f77fdfe7655428bc8ced8db50c72b29dcd4d2c4925"
+  },
+  "physical_fork_header_macro_include_closure_gate": "REFUSED_NOT_IMPLEMENTED",
+  "scope": "hand-model compiler/native feasibility only; actual unit bytes are pinned, selected C++ source closure is not qualified",
+  "allocator_correspondence": "REFUSED_PENDING_ACTUAL_INIT_MAP_REENTRY_AND_SOURCE_GATES",
+  "TD_or_counted_admissible": false,
+  "proof_acceptance": false,
+  "formal_Why3_solver_provider_SSH_called": false
+}
