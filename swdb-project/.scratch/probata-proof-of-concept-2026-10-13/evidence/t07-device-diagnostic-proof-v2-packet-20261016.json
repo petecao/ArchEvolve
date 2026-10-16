@@ -1,0 +1,104 @@
+{
+  "date_ET": "2026-10-16",
+  "status": "INERT_UNADMITTED_FULL_DEVICE_PROOF_DIAGNOSTIC",
+  "entry": {
+    "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-20261016-entry.py",
+    "resolved": "/private/tmp/probata-t07-device-diagnostic-proof-v2-20261016-entry.py",
+    "bytes": 74616,
+    "sha256": "e7deacf1e271c291a3b40f3da4d917df8f8b5dc5bc12b07a361bb18af12aecba"
+  },
+  "expected": {
+    "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-20261016-expected.json",
+    "resolved": "/private/tmp/probata-t07-device-diagnostic-proof-v2-20261016-expected.json",
+    "bytes": 794273,
+    "sha256": "2a3a02e017e636abdcb8327505087adc2c8572d47bf5fdf8aab794e03ebb32d0"
+  },
+  "command": {
+    "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-20261016-command.json",
+    "resolved": "/private/tmp/probata-t07-device-diagnostic-proof-v2-20261016-command.json",
+    "bytes": 2025,
+    "sha256": "b08868ad3dd2a65f6e3f7e51cbccaa64f32b6c4d0daa46b99a75fd75f222d5a6"
+  },
+  "plan": {
+    "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-20261016-plan.md",
+    "resolved": "/private/tmp/probata-t07-device-diagnostic-proof-v2-20261016-plan.md",
+    "bytes": 6851,
+    "sha256": "13cc551fcf2fdff7bd65a81a9f77f4c5f3b37e3ed091c32c08faaabe3350a861"
+  },
+  "controls": {
+    "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-20261016-controls.json",
+    "resolved": "/private/tmp/probata-t07-device-diagnostic-proof-v2-20261016-controls.json",
+    "bytes": 2863,
+    "sha256": "b3ddd789455cb429ed752279e96c60e0c4476934ac3db3d993397d00e3c4340e"
+  },
+  "control_source": {
+    "path": "/private/tmp/probata-t07-device-proof-controls-v2-20261016.py",
+    "resolved": "/private/tmp/probata-t07-device-proof-controls-v2-20261016.py",
+    "bytes": 7982,
+    "sha256": "8390d3028951ab16f288b2ddcd4da8de632ccc378856c7d422e36b2756287f8b"
+  },
+  "control_guard": {
+    "path": "/private/tmp/probata-t07-device-proof-controls-v2-20261016.log.summary.json",
+    "resolved": "/private/tmp/probata-t07-device-proof-controls-v2-20261016.log.summary.json",
+    "bytes": 1919,
+    "sha256": "73bf27fd520b9a9c2bad9b10d6306adc1ab13c1157f9360618441c00204f825d"
+  },
+  "journal": {
+    "path": "/private/tmp/probata-t07-helper-result-journal-v2-20261016.ml",
+    "resolved": "/private/tmp/probata-t07-helper-result-journal-v2-20261016.ml",
+    "bytes": 3430,
+    "sha256": "6b68382ced78505c6504e8b362ad8b77574bb6b6fd77f17e4f89be667c7e6372"
+  },
+  "ipc_accounting_source": {
+    "path": "/private/tmp/probata-t07-ipc-output-accounting-v1-20261016.py",
+    "resolved": "/private/tmp/probata-t07-ipc-output-accounting-v1-20261016.py",
+    "bytes": 882,
+    "sha256": "6eed7b5b20e603b7853242a86feec8f56d6da5bbe13ebb930eb67405feea5062"
+  },
+  "source_commit": "bd2610b6b7cff511c046206a78088cf693cee874",
+  "source_blobs": 9,
+  "whole_TUs": 2,
+  "root_bodies": [
+    5,
+    1
+  ],
+  "all_goal_source_baselines": [
+    328,
+    85
+  ],
+  "original_generation_seconds": 47.1179103750037,
+  "proof_seconds_maximum": 780,
+  "combined_actual_formal_seconds_maximum": 827.1179103750037,
+  "controls_passed": 30,
+  "old_device_functions_AST_identical": 20,
+  "actual_tested_full20_reader_functions_AST_identical": 8,
+  "actual_entry_compiler_native_formal_or_solver_executed": false,
+  "proof_acceptance": false,
+  "no_auto_run": true,
+  "preserved_V1": [
+    {
+      "path": "/private/tmp/probata-t07-device-diagnostic-proof-v1-20261016-entry.py",
+      "resolved": "/private/tmp/probata-t07-device-diagnostic-proof-v1-20261016-entry.py",
+      "bytes": 73777,
+      "sha256": "c4f330e5a3a62464db7519efa3caa03115ae54f31e607d6e18ce2ca049110b22"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-diagnostic-proof-v1-20261016-expected.json",
+      "resolved": "/private/tmp/probata-t07-device-diagnostic-proof-v1-20261016-expected.json",
+      "bytes": 794273,
+      "sha256": "6cb75c4090fbf4b41681dfb43bfd114a6caef2da8ce8d92edf9dca62193de2a5"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-diagnostic-proof-v1-20261016-controls.json",
+      "resolved": "/private/tmp/probata-t07-device-diagnostic-proof-v1-20261016-controls.json",
+      "bytes": 2712,
+      "sha256": "89ce238fb0eefdce8ac8d8f6a5d47cc3e1d73817fceb1af0b514a5adb8decd97"
+    }
+  ],
+  "preserved_V1_control_guard": {
+    "path": "/private/tmp/probata-t07-device-proof-controls-v1-20261016.log.summary.json",
+    "resolved": "/private/tmp/probata-t07-device-proof-controls-v1-20261016.log.summary.json",
+    "bytes": 1916,
+    "sha256": "afaff6a4d408b41bddb254b781cd0695be654d54a7c026d828f168e9dceaf8c8"
+  }
+}

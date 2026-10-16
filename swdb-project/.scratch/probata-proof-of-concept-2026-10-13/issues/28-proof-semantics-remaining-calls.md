@@ -440,3 +440,10 @@ Shared2e2 allocator/register [entry review](../evidence/t28-shared-2e2-pairs-ind
 ## Active checkpoint — 2026-10-16 10:06 ET
 
 See [settled producers and passive evidence](../evidence/frontier-settled-producers-checkpoint-20261016-1006.md) and its exact-pin ledger. Ticket remains claimed; existing acceptance criteria and dependencies are unchanged. Original exits, pending proof/cold/source gates and historical trust boundaries are preserved.
+
+
+## Active scoped checkpoint — 2026-10-16 10:36 ET
+
+Root's separate scopeddecision accepts the original TOTAL closed software-counter102/101 fixture under declared compiler/ABI/source-model/Extern TCB only. Complete root audit13,303checks0errors and independent local reconciliation retain positive33ordinaryValid, negative32Valid+ensuresT/U/T (not refuted), ten healthy raw nonvalid smokes each,67props50CSV11Extern/DAG175/159. Helper exits/defaulttermination Unknown, unsupported initialized-u32, missing scratch/binary posthash/submitted-SMT and body/hardware/liveness/current0.2/full28 boundaries remain explicit. [Decision](../evidence/t28-allocation-root-scoped-acceptance-v1-20261016.json), [independent reconciliation](../evidence/t28-allocation-independent-cold-reconciliation-v1-6216fc94-20261016.md), [root audit](../evidence/t28-allocation-cold-root-execution-v1-6216fc94-20261016.json). Ticket remains claimed; no source adoption or status closure.
+
+[Current checkpoint](../evidence/frontier-scoped-checkpoint-20261016-1036.md). Counts35resolved/25ready/3claimed; lastfulltable10:30 ET, next11:00 ET.
