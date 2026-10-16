@@ -9,7 +9,7 @@ int swdb_pair_pointer_values(int x, int y) {
   empty = copied;
   original.first = y;
   copied.second = &right;
-  return empty.first + (empty.second == &left ? 3 : 9);
+  return empty.first + 9 - 6 * (empty.second == &left);
 }
 
 int swdb_pair_pointer_self_assign(int x, int y) {
@@ -38,5 +38,5 @@ int swdb_pair_pointer_wrong_identity(int x, int y) {
   empty = copied;
   original.first = y;
   copied.second = &right;
-  return empty.first + (empty.second == &right ? 3 : 9);
+  return empty.first + 9 - 6 * (empty.second == &right);
 }
