@@ -1,0 +1,5 @@
+2026-10-16 ET. PASS source-only for root admission. The exact V4 controller inverse and six changed policy keys preserve the existing runtime/lane/role checks. The diagnostic leaf delegates the original compiler arguments/results, temporary paths/cleanup and source validators unchanged. Its completion gate now requires an actual original assertion Refused, retained subtree, one full observation, all five ASTs, preprocess/LLVM/temporary inputs, and seven distinct zero-exit phases with output hash links. Five independent stdlib controls pass; no child or project import ran.
+
+The leaf permits only selected Clang children. The unchanged V4 bootstrap also uses Git, OCaml package queries, pytest collection and compiler runtime/provenance workers; no WP/solver/proof is requested. Retention is capped at64MiB under the256MiB raw budget.
+
+Remote fixture pins remain root-provided passive metadata; this reviewer did not read mbit10 or execute the entry, compiler or any actual diagnostic. Existing runtime/role/lane admission is required. This is diagnostic source readiness, not proof/public/body/hardware acceptance.

@@ -1,0 +1,182 @@
+{
+  "created": "2026-10-16 ET",
+  "kind": "closed-lifetime6-public-v1",
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-fb197c5d-t25-closed-lifetime6-public-v1",
+  "outer-resources.json": {
+    "exit_code": 0,
+    "peak_rss_bytes": 1066860544,
+    "out_of_memory": false,
+    "timed_out": false,
+    "wall_seconds": 222.55604431591928,
+    "cpu_seconds": 345.949081
+  },
+  "resources.json": {
+    "cpu_seconds": 301.778847,
+    "exit_code": 0,
+    "out_of_memory": false,
+    "peak_rss_bytes": 1013907456,
+    "timed_out": false,
+    "wall_seconds": 220.55684205982834
+  },
+  "source-after.json": {
+    "commit": "fb197c5ddd173065ca781766886c6a797684a838",
+    "source_unchanged": true,
+    "tracked_changes": ""
+  },
+  "lane.json": {
+    "socket_lane": {
+      "aligned_cell_age_s": "",
+      "aligned_to": "no_gapbs_batch_running",
+      "command": [
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=60",
+        "1620",
+        "bash",
+        "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-fb197c5d-t25-closed-lifetime6-public-v1/run.sh"
+      ],
+      "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+      "ended_utc": "2026-10-16T19:03:25Z",
+      "exit_code": 0,
+      "host": "mbit10",
+      "job": "probata-resume-20261016-fb197c5d-t25-closed-lifetime6-public-v1",
+      "lease_generation": 611,
+      "lease_name": "mbit10-evaluation-node0",
+      "load1_at_start": 0.69,
+      "load1_max": 32,
+      "node": 0,
+      "numa_memory_policy": "bind:0",
+      "numactl": "--cpunodebind=0 --membind=0",
+      "preregistration_sha256": null,
+      "started_utc": "2026-10-16T18:59:42Z"
+    }
+  },
+  "producer": {
+    "all_six_producer_proven": false,
+    "body_acceptance": false,
+    "caller_acceptance": false,
+    "classification": "Six fresh mathematical producer outcomes retained. Independent complete source/runtime/resource/task/hypothesis review required; no constructor/destructor dependency, source/Typed/body/caller/public-record acceptance.",
+    "created": "2026-10-16 ET",
+    "elapsed_seconds": 219.41025053150952,
+    "independent_task_hypothesis_review_pending": true,
+    "producer_complete": true,
+    "proof_acceptance": false,
+    "public_proof_record_created": false,
+    "raw_bytes": 23385091,
+    "scope": "Standalone six source-bound constructor/private-frame/lifetime gluing mathematical duties. Actual fresh original caller lowering/provenance and public prepare/check, normal complete WP flags/portfolio/native reports. No imported body/private-frame theorem, model/View or source/Typed/caller admission, universal setup attestation or public record.",
+    "source_after_clean": true,
+    "source_commit": "fb197c5ddd173065ca781766886c6a797684a838",
+    "source_typed_bridge_established": false,
+    "universal_proof_setup_attested": false,
+    "within_profile_budget": true
+  },
+  "runs": [
+    {
+      "id": "receiver.entry",
+      "verdict": "proven",
+      "failure_class": null,
+      "goals": [
+        {
+          "function": null,
+          "goal": "typed_real_check_lemma_t25_closed_receiver_entry",
+          "property": "check_lemma_t25_closed_receiver_entry",
+          "seconds": 0.0695,
+          "smoke": false,
+          "solver": "cvc5",
+          "source": "wp_json",
+          "status": "valid"
+        }
+      ]
+    },
+    {
+      "id": "constructor.frame",
+      "verdict": "proven",
+      "failure_class": null,
+      "goals": [
+        {
+          "function": null,
+          "goal": "typed_real_check_lemma_t25_closed_constructor_frame",
+          "property": "check_lemma_t25_closed_constructor_frame",
+          "seconds": 0.0398,
+          "smoke": false,
+          "solver": "cvc5",
+          "source": "wp_json",
+          "status": "valid"
+        }
+      ]
+    },
+    {
+      "id": "buffer.identity",
+      "verdict": "proven",
+      "failure_class": null,
+      "goals": [
+        {
+          "function": null,
+          "goal": "typed_real_check_lemma_t25_closed_buffer_identity",
+          "property": "check_lemma_t25_closed_buffer_identity",
+          "seconds": 0.0514,
+          "smoke": false,
+          "solver": "alt-ergo",
+          "source": "wp_json",
+          "status": "valid"
+        }
+      ]
+    },
+    {
+      "id": "zero.cleanup",
+      "verdict": "proven",
+      "failure_class": null,
+      "goals": [
+        {
+          "function": null,
+          "goal": "typed_real_check_lemma_t25_closed_zero_cleanup",
+          "property": "check_lemma_t25_closed_zero_cleanup",
+          "seconds": 0.181,
+          "smoke": false,
+          "solver": "alt-ergo",
+          "source": "wp_json",
+          "status": "valid"
+        }
+      ]
+    },
+    {
+      "id": "positive.exit_image",
+      "verdict": "not_proven",
+      "failure_class": "timeout",
+      "goals": [
+        {
+          "function": null,
+          "goal": "typed_real_check_lemma_t25_closed_positive_exit_image",
+          "property": "check_lemma_t25_closed_positive_exit_image",
+          "seconds": null,
+          "smoke": false,
+          "solver": null,
+          "source": "wp_json",
+          "status": "timeout"
+        }
+      ]
+    },
+    {
+      "id": "positive.cleanup",
+      "verdict": "not_proven",
+      "failure_class": "timeout",
+      "goals": [
+        {
+          "function": null,
+          "goal": "typed_real_check_lemma_t25_closed_positive_cleanup",
+          "property": "check_lemma_t25_closed_positive_cleanup",
+          "seconds": null,
+          "smoke": false,
+          "solver": null,
+          "source": "wp_json",
+          "status": "timeout"
+        }
+      ]
+    }
+  ],
+  "result_pin": {
+    "sha256": "d91ab4ab367a08cd0387d1fae18d9e207b09d9a0971c90ba0c3f9a5a4d7043df",
+    "bytes": 14768
+  },
+  "scope": "Producer completed; four native Valid and two positive-path normal timeouts. Independent cold integrity review pending. No all-six/body/source/caller/ticket acceptance."
+}

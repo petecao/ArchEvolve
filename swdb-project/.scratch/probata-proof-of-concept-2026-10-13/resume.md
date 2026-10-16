@@ -9,23 +9,19 @@ authorization. External Claude Code owns ticket 7. Root coordinates actual
 tool admission, mbit10 lanes, publication, and final tracker synchronization.
 See [active execution](execution-20261016.md) for the current checklist.
 
-At the 14:50 ET checkpoint, independently audited qualified grow61, reserve67
-and nine private-lifetime lemmas have scoped root acceptance. Six source-bound
-constructor/cleanup gluing duties are reviewed and published at `fb197c5d`.
-Projected C has 17 ordinary native Valid results and a complete independently
-reconciled metadata inventory; its original entry refusal and ordinary
-`not_proven` result are preserved. Current constructor dependency and
-source/Typed/lifetime composition remain open, so caller admission refuses.
+At 15:34 ET, scoped vector math profiles remain accepted. The actual six-duty
+lifetime run has four Valid and two positive timeouts, independently cold-audited.
+A reviewed 23-leaf equivalent decomposition is ready for fresh evaluation. The
+projected-C 17 native Valid goals retain the unadmitted constructor premise and
+original not-proven result. A separate source effect/frame rule is in review.
 
-Ticket 28's memory53 preparation passed C11/C++17 sanitizers and independent
-cold audit. Initialized-register V4 passed complete runtime/role checks but
-refused an unchecked AST effect before WP; a minimal retained-AST compiler-only
-diagnostic is under review. Abstract public trace25 passed final controller
-review and awaits socket 1, where focused regressions V3 are progressing.
-All eleven whole-interface value-builder families are in independent review.
-No new 0.2/full-interface acceptance is claimed. Both tickets remain claimed;
-full default tests and final whole-change review remain pending. Tracker census
-is 35 resolved / 26 ready-for-agent / 2 claimed; external ticket 7 is untouched.
+Ticket 28 has reviewed source fixes for actual initialized AST/LLVM forms and
+trace fixture bounds. Complete retained-observer replay passes; fresh formal
+runs remain pending. Whole-interface value families and binder V3 are reviewed;
+private native86 awaits exact guard/lane admission. Focused regressions completed
+80 passed; full defaults and final whole-change reviews remain pending. Neither
+ticket is complete. Tracker census is 35 resolved / 26 ready-for-agent / 2 claimed;
+external ticket 7 is untouched. See active execution for current evidence.
 
 The 11:35 ET pause and all snapshots below are historical. Their evidence and
 runtime boundaries remain intact; their stop instruction is superseded for

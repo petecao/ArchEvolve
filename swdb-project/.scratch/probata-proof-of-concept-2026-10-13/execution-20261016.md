@@ -38,25 +38,23 @@ Baseline: `c978393b119a3614229a37f0f2c8ca2a097c750b` on `yanrujhou_main`.
 - Preserve uncommitted ticket 7 and unrelated cleanup scratch. Do not resurrect
   the retired integration branch or blindly execute historical tmp commands.
 
-## Current checkpoint — 2026-10-16 14:44 ET
+## Current checkpoint — 2026-10-16 15:34 ET
 
 | Item | Evidence and next action |
 | --- | --- |
-| Vector mathematical profiles | Focused10, qualified grow61 and reserve67 independently audited; scoped root acceptance recorded. No original/default body or caller promotion. |
-| Private lifetime | All nine fresh mathematical lemmas directly Valid; complete cold audit and scoped root decision recorded. Six source-bound constructor/cleanup gluing duties passed Standards and Spec review and are published at `fb197c5d`; no new formal/source admission. |
-| Projected caller | Source `615ddf50` published/read back. Node-1 generation 630 settled with outer exit 1, 62.902 seconds, 439,300,096-byte peak RSS, no timeout/OOM. Its 17 ordinary goals are native Valid; registered constructor-smoke metadata is under passive review. Original not-proven outcome and unsupported source/Typed bridge remain. |
-| Ticket 28 native preparation | Memory53 passed in C11 and C++17 under ASan/UBSan; independent cold audit passed. This establishes private preparation behavior only. |
-| Initialized u32 | V4 node-0 generation 609 settled with outer exit 1, 62.054 seconds, 454,885,376-byte peak RSS and no timeout/OOM. Runtime/role postchecks passed; source validation refused an unchecked AST effect before WP. A minimal compiler-only retained-AST diagnostic is being prepared. |
-| Public trace / whole interface | Trace25 source checkpoint `57c22ba6` published; final guarded runtime controller and per-call typed/value packets in progress. No full-interface acceptance. |
-| Focused regressions | V2 stopped before pytest at its cwd assertion; source unchanged. Reviewed V3 is active on node 1 at source `615ddf50`, with incremental per-case outcomes. Full default suite remains pending. |
+| Vector mathematics | Focused10, qualified grow61, reserve67 and private-lifetime9 have independently audited scoped acceptance. Original/default member and caller acceptance remain open. |
+| Lifetime gluing | Actual six-target run finished: four Valid, positive exit-image and cleanup timeout. Independent complete cold audit retains both timeouts. Reviewed 23-leaf decomposition preserves the original antecedents and reassembly witnesses; source publication and fresh evaluation are next. |
+| Projected C | Complete independent term/context audit reconciles 17 ordinary native Valid goals, four nonproof smokes and all support assertions. The unadmitted constructor summary remains a premise; original not-proven outcome is preserved. A separate direct-source effect/frame evidence seam is in review. |
+| Initialized u32 | Compiler-only diagnostic retained the actual rejected AST/LLVM. Narrow SourceLoc diagnostic-argument and paired signed-counter branch checks passed independent review and complete retained-observer replay. Exact production repair is staged for publication; no fresh formal pair result yet. |
+| Public trace25 | Original actual run failed all 25 call phases before CBMC because its fixture supplied a nonexistent input_size bound. Reviewed fixture-only repair retains the production guard and is staged for publication. Fresh source-bound run remains pending. |
+| Whole interface | Eleven value families and binder V3 passed scoped source reviews. The 86-control C11/C++17 sanitizer controller passed independent review; actual run awaits matching 4 GiB outer guard and fresh lane admission. No full-interface/public acceptance. |
+| Tests and resources | Focused V3 completed 80 passed, no failures/errors/skips. Full default suite remains pending after final source changes. Prior owned jobs settled; each future admission rechecks live leases. |
 
-Both assigned tickets remain claimed, with acceptance boxes evidence-gated.
-Current ticket-file census: 35 resolved / 26 ready-for-agent / 2 claimed.
-External ticket 7 work is user-reported active; its tracker file is not changed
-by this effort.
-External Claude Code continues to own ticket 7. The mbit10 primary checkout has
-not yet been fast-forwarded; detached source freezes and all required raw remain
-retained. Source `fb197c5d` is verified on GitHub.
+Both assigned tickets remain claimed with acceptance boxes open. The authoritative
+census is 35 resolved / 26 ready-for-agent / 2 claimed. External Claude Code owns
+ticket 7; its tracker and work remain untouched. Main-source checkpoint `069a0ebc`
+is verified on GitHub; primary mbit10 synchronization is still pending. Historical
+source freezes, failures, raw evidence and independent decisions remain retained.
 
 ## Historical admission checkpoints
 

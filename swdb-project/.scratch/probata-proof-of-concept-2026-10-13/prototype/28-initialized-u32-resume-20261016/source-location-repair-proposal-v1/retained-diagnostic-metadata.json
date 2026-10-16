@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-16 ET",
+  "authority": "Parent-provided root diagnostic metadata; exact retained initialized AST remains remote and was not read by this control author.",
+  "retained_width_assertion_sha256": "160c6b76a6a241cd730ceaa5c25b93ec27fbfe7ef7403df38cc106b122ad4a09",
+  "observed_source_location_shape": {
+    "callee": "__assert_fail",
+    "file_child_index": 2,
+    "line_child_index": 3,
+    "file_type": "const char *",
+    "line_type": "unsigned int",
+    "value_category": "prvalue",
+    "inner_present": false,
+    "file_tokens": "__builtin_FILE ()",
+    "line_tokens": "__builtin_LINE ()",
+    "original_file_basename": "MAA_gem5.hpp",
+    "width_line": 121,
+    "bound_line": 125
+  },
+  "boundary": "The synthetic local fixtures exercise this shape and its refusal boundary. They do not hash-match or reproduce the retained remote initialized AST, and are not compiler, proof, native, or hardware observations."
+}

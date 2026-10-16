@@ -1,0 +1,109 @@
+{
+  "at_utc": "2026-10-16T18:59:25.868552+00:00",
+  "case_reports": {
+    "call_reports": 25,
+    "failed_calls": 25,
+    "first_failure_utc": "2026-10-16T18:53:27.836017+00:00",
+    "last_call_utc": "2026-10-16T18:55:11.585338+00:00",
+    "same_input_size_refusal": 25,
+    "total_events": 100,
+    "unique_calls": 25
+  },
+  "collection": {
+    "exact_equal": true,
+    "exit_code": 0,
+    "expected_count": 25,
+    "selected_count": 25
+  },
+  "files": {
+    "entry-isolated-startup.json": {
+      "bytes": 6051,
+      "sha256": "ae2975440ba836d0d821499af8adfd6d06814b563aef338d099a9530d91069b4"
+    },
+    "memory-trace-final-physical-check.json": {
+      "bytes": 1348738,
+      "sha256": "d32176f249ff5d4cbf848494c901fb11c0cd2ea2638659a324c513c4405df2e6"
+    },
+    "memory-trace-profile/actual-pytest-child-startup.json": {
+      "bytes": 4535,
+      "sha256": "8cb71edfe93ddc880097f0b8d6d48b2ba0f87a701670542d47388d9296a347be"
+    },
+    "memory-trace-profile/case-reports.jsonl": {
+      "bytes": 65456,
+      "sha256": "ed0608174ccaffa63b137ed7b1693d579520ba6a4cda0d363386234f9c1dd7ce"
+    },
+    "memory-trace-profile/collection.json": {
+      "bytes": 9927,
+      "sha256": "327da8c6884ff3b5ff1b55dfc04ac1a2f386c6f8aa1ebf96a9665b2b28c82ad3"
+    },
+    "memory-trace-profile/junit.xml": {
+      "bytes": 47134,
+      "sha256": "ccfea03b9fbfe0f8a41623acfd96fa57cdb2889eeb223c5a9d107b99f19ea7a1"
+    },
+    "memory-trace-profile/pytest.log": {
+      "bytes": 30668,
+      "sha256": "1825ca442465a9005c3202dd366c9cc3ab419a5c9c24e3950a80942b1ee8857e"
+    },
+    "outer-resources.json": {
+      "bytes": 166,
+      "sha256": "f826a0dc16d44a3415fe9d495e890f49080d5c90fbb3c3c5490ed29db07464c0"
+    },
+    "pytest-child-startup.json": {
+      "bytes": 6323,
+      "sha256": "e4eabe8ce510740f1ad1c99bcaa128fc4402b1ec7344ff53f5100034f012d691"
+    },
+    "resources.json": {
+      "bytes": 167,
+      "sha256": "c7aaa1a16f5ee2b7b0e52a72d551e6574c5feeeaebc409516d8c84c13c1eef35"
+    },
+    "source-after.json": {
+      "bytes": 112,
+      "sha256": "a835f118153659f547b9ad832cbe8a4b92da06464c7a5866cf67a499322fafe2"
+    }
+  },
+  "final_physical_unchanged": true,
+  "junit": {
+    "acceptance": false,
+    "attributes": {
+      "errors": "0",
+      "failures": "25",
+      "hostname": "mbit10",
+      "name": "pytest",
+      "skipped": "0",
+      "tests": "25",
+      "time": "108.200",
+      "timestamp": "2026-10-16T14:53:23.388633-04:00"
+    },
+    "errors": 0,
+    "failures": 25,
+    "root": "testsuites",
+    "skips": 0,
+    "suites": 1,
+    "testcases": 25
+  },
+  "limits": "All25cases were selected/executed but refused an irrelevant input_size bound for their zeroargument synthetic proof unit. No predicted formal proof/refutation is accepted. Raw failures/source/runtime remain unchanged; only an optional fixture bounds override is proposed.",
+  "outer-resources.json": {
+    "cpu_seconds": 183.71024,
+    "exit_code": 1,
+    "out_of_memory": false,
+    "peak_rss_bytes": 406470656,
+    "timed_out": false,
+    "wall_seconds": 153.06356856878847
+  },
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-57c22ba6-v2",
+  "resources.json": {
+    "cpu_seconds": 151.384504,
+    "exit_code": 1,
+    "out_of_memory": false,
+    "peak_rss_bytes": 352993280,
+    "timed_out": false,
+    "wall_seconds": 151.01567574497312
+  },
+  "source-after.json": {
+    "commit": "57c22ba6fe1707c9b40a910ed1c19c3ef99e9e84",
+    "source_unchanged": true,
+    "tracked_changes": ""
+  },
+  "source_commit": "57c22ba6fe1707c9b40a910ed1c19c3ef99e9e84",
+  "status": "ACTUAL_25_FIXTURE_BOUND_REFUSALS_BEFORE_CBMC"
+}

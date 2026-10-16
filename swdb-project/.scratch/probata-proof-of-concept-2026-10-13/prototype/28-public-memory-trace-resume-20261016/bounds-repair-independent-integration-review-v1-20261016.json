@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-16 ET",
+  "files": {
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace_cases.py": {
+      "bytes": 8555,
+      "prior_sha256": "a2c0b90f919bcfe01f1941449aad030ec4bcd63f53f7362539e86265df6014c9",
+      "sha256": "2db304123fc8a35faeac4bbbd9d569907670cfc6f4acbef21ddb84537f4da3ee"
+    },
+    "swdb-project/tests/testkit/dx100_trust.py": {
+      "bytes": 7672,
+      "prior_sha256": "a5da4f079d300d2da9a4928c51c2d9713c03810706b8189ba213d8308a041d67",
+      "sha256": "4d55a093a7a92eeb57c9878760bc48ae71c6d5683bbdbf50760be15997cb0982"
+    }
+  },
+  "inverse_to_two_exact_frozen_bases": true,
+  "next": "Root publishes selected exact source and admits fresh raw namespace; old25 failures remain failures",
+  "old_actual_failures_retained": "linux-trace-v2-actual-bounds-refusal-20261016.json",
+  "patch_sha256": "8efe4abf66fa3e91eeed06fa8732a2dcaa3f1de59949f3153a397f445be30d22",
+  "physical_bases_checked_before_integration": true,
+  "preserved": [
+    "zero-argument original proof unit",
+    "all25case predicates/native/reachability/replay/assumption/JUnit criteria",
+    "production _bounds_argument/_sizes/_build checks",
+    "all model and evidence hashes"
+  ],
+  "public_call_controls": {
+    "all25_original_generated_source_bytes_unchanged": true,
+    "cases": 5,
+    "command": "python3 -I -B swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/bounds-repair-proposal-v1/test_fixture_bounds_seam.py",
+    "default_CLI_string_unchanged": true,
+    "elapsed_s": 0.163,
+    "explicit_invalid_bounds_still_refused": true,
+    "fixed_trace_calls_reach_inert_harness": 25,
+    "old_trace_calls_refused": 25,
+    "passed": true
+  },
+  "reviewer": "ticket28 lead; independent of proposal author memory_public_trace",
+  "scope": "Fixture CLI bounds only; no compiler/native/CBMC/proof or current0.2 acceptance",
+  "source_packet_sha256": "e94b4fc882afda709b88ef14cea4579af8c408f83938729645c020e7b4b1902e",
+  "status": "INDEPENDENT_SOURCE_REVIEW_AND_EXACT_INTEGRATION_PASS"
+}

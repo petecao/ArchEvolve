@@ -11,20 +11,18 @@ source publication, guarded actual admissions, mbit10 lane coordination, and
 final synchronization. [Active execution](execution-20261016.md),
 [current ticket status](ticket-status-20261015.md), [resume](resume.md).
 
-Ticket 25 has scoped acceptance of independently audited focused10, qualified
-grow61, reserve67 and nine private-lifetime lemmas. Original/default body and
-caller acceptance remain open. The projected-C diagnostic's 17 ordinary native
-Valid results and complete metadata inventory are reconciled; its original
-not-proven verdict remains. Six source-bound constructor/cleanup gluing duties
-are reviewed and published at `fb197c5d`, with source/Typed admission unsupported.
+Ticket 25 retains scoped acceptance for focused10, qualified grow61, reserve67
+and private-lifetime9. The six-duty producer has four Valid and two positive
+timeouts; complete cold audit preserves those outcomes. A reviewed 23-leaf
+conjunction decomposition is ready for publication/evaluation. Projected-C's
+17 native Valid goals retain the unadmitted constructor premise and original
+not-proven verdict; direct source effect/frame evidence remains in review.
 
-Ticket 28's public V3 compiler/scripted control and memory53 native preparation
-passed their scoped audits. Initialized-u32 V4 passed runtime/role checks but
-source validation refused before WP; a retained-AST compiler-only diagnostic is
-in review. Abstract public trace25 is reviewed and awaiting socket 1, currently
-running focused regressions. All eleven whole-interface value families are in
-source review. No current 0.2/full-interface or full-ticket acceptance is claimed.
-See the active execution checklist; lane availability is live state.
+Ticket 28 has reviewed initialized SourceLoc/IR and trace fixture-bound fixes;
+complete retained-observer replay passes. Fresh formal runs remain pending.
+Eleven whole-interface value families and binder V3 are reviewed; native86 awaits
+matching actual guards and lane admission. Focused regressions completed 80
+passed. No current 0.2/full-interface or full-ticket acceptance is claimed.
 
 Read the [saved pause handoff](PAUSED-HANDOFF-20261016.md) for recovery evidence.
 Its stop instruction is superseded for these assigned tickets. All historical

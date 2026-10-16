@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-16 ET",
+  "status": "ACTUAL_SOURCE_VALIDATION_REFUSAL_BEFORE_WP",
+  "source_commit": "2baf722fdaa6cba24b859eae3172a6f597417d72",
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-2baf722f-v4",
+  "node": 0,
+  "lease_generation": 609,
+  "root_reported_resources": {
+    "started_utc": "2026-10-16T18:37:08Z",
+    "ended_utc": "2026-10-16T18:38:10Z",
+    "exit_code": 1,
+    "wall_seconds": 62.0539,
+    "peak_rss_bytes": 454885376,
+    "out_of_memory": false,
+    "timed_out": false,
+    "runner_exit_code": 1,
+    "origin": "Root actual job observation; no independent resource replay in this receipt"
+  },
+  "passively_read_files": {
+    "initialized-profile/pytest.log": {
+      "bytes": 1401,
+      "sha256": "4417139140455df6b13fbb51e90cc1f76d2303dd0c63911bfc9aa9561722bd9b"
+    },
+    "initialized-profile/junit-census.json": {
+      "bytes": 143,
+      "sha256": "aacaea32b1092adb5581b29fefa15e77a375d2d0154d733c803aff1910387dcc"
+    },
+    "initialized-profile/exit-code.txt": {
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    }
+  },
+  "failure": {
+    "selected_case": "correct-initialized-result",
+    "phase": "Public validate baseline C lowering, original-source initialized assertion validator",
+    "message": "initialized assertion contains an unchecked AST effect",
+    "positive": "failed before WP proof",
+    "negative": "unexecuted because frozen runner preserves maxfail=1",
+    "junit_acceptance": false,
+    "formal_pair_acceptance": false
+  },
+  "evidence_retention_limit": "Production certify uses a TemporaryDirectory and builds the certificate only after observation succeeds. This refusal left no AST/LLVM/preprocessed certificate payload in the retained profile. A passive census found only eight JSON/YAML/log metadata files, with no .ii/.ll/.d or AST/certificate files. No exact offending AST kind is inferred from the error text.",
+  "next_action": "A separately reviewed diagnostic-only compiler observation will retain exact original five-family AST, preprocess, LLVM and assertion subtree before delegating unchanged validation. No rerun or production repair is authorized by this receipt.",
+  "limits": "This is a source-admission refusal, not a solver failure, a refutation, or a successful initialized pair. Raw V4 and all earlier attempts remain unchanged."
+}

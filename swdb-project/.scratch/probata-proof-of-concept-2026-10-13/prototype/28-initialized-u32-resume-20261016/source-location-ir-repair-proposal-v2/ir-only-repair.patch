@@ -1,0 +1,57 @@
+--- a/swdb-project/swdb/dx100_initialized_register_source.py
++++ b/swdb-project/swdb/dx100_initialized_register_source.py
+@@ -192,6 +192,36 @@
+ _ABORT=r'(?:tail )?call void @__(?:assert_rtn|assert_fail)\(ptr noundef nonnull @[\w.]+, ptr noundef nonnull @[\w.]+, i32 noundef 125, ptr noundef nonnull @[\w.]+\)'
+ 
+ 
++def _counter_bound_flow(function, body, patterns, parameters, profile):
++    """Keep signed counter comparisons paired with their exact branch roles."""
++    guards = {
++        'bounded': [('late', 'reload', 'bad', 'finish')],
++        'caller': [('late_first', 'reload_first', 'bad_first', 'good_first'),
++                   ('late_second', 'reload_second', 'bad_second', 'good_second')],
++    }
++    if profile not in guards: raise Refused('initialized counter guard profile is not closed')
++    alternate = list(patterns)
++    for result, operand, bad, good in guards[profile]:
++        comparison = '{' + result + '} = icmp sgt i32 {' + operand + '}, 32'
++        branch = 'br i1 {' + result + '}, label {' + bad + '}, label {' + good + '}'
++        if patterns.count(comparison) != 1: raise Refused('initialized signed counter comparison anchor changed')
++        index = patterns.index(comparison)
++        if index + 1 >= len(patterns) or patterns[index + 1] != branch:
++            raise Refused('initialized signed counter branch anchor changed')
++        alternate[index] = '{' + result + '} = icmp slt i32 {' + operand + '}, 33'
++        alternate[index + 1] = 'br i1 {' + result + '}, label {' + good + '}, label {' + bad + '}'
++    try:
++        bindings = _flow(function, body, patterns, parameters)
++    except Refused:
++        bindings = _flow(function, body, alternate, parameters)
++    for result, _operand, _bad, _good in guards[profile]:
++        # Every instruction is checked by _flow; also bind this comparison's
++        # sole consumer rather than admitting a value-bearing extra use.
++        uses = re.findall(r'(?<![\w.])' + re.escape(bindings[result]) + r'(?![\w.])', body)
++        if len(uses) != 2: raise Refused('initialized counter comparison does not have one exact branch consumer')
++    return bindings
++
++
+ def _operations(module):
+     if not re.search(r'^target datalayout = "e-',module,re.M):raise Refused('initialized register requires observed little-endian ABI')
+     signature,body=_function(module,'__dx_initialized_bounded_source')
+@@ -205,7 +235,7 @@
+         r'br i1 {late}, label {bad}, label {finish}',r'LABEL {bad}',_ABORT,r'unreachable',
+         r'LABEL {finish}',r'{result} = phi i32 \[ -1, {entry} \], \[ {old}, {good} \]',r'ret i32 {result}',
+     ]
+-    initialized=_flow(signature,body,bounded,['old','data'])
++    initialized=_counter_bound_flow(signature,body,bounded,['old','data'],'bounded')
+     initialized_signature=signature
+     signature,getter=_function(module,'__dx_initialized_get_source')
+     getpatterns=[
+@@ -248,7 +278,7 @@
+         r'call void @llvm\.lifetime\.end\.p0\((?:i64 4, )?ptr(?: nonnull)? {local_second}\)',
+         r'{result} = add i32 {value_second}, {scaled}',r'ret i32 {result}',
+     ]
+-    closed=_flow(signature,caller,callerpatterns,[])
++    closed=_counter_bound_flow(signature,caller,callerpatterns,[],'caller')
+     alloc_signature,alloc=_function(module,'_Z9alloc_MAAv')
+     addresses={'SPD_data_cacheable':17179869184,'SPD_data_noncacheable':17181966336,'SPD_size_noncacheable':17184063488,
+                'SPD_ready_noncacheable':17184063552,'REG_noncacheable':17184063616,'INSTR_opcode_datatype_optype_tdst1_tdst2':17184063744,

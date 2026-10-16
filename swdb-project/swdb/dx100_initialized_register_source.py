@@ -192,6 +192,36 @@ _FENCE=r'(?:tail )?call void asm sideeffect "mfence;", "(?:~\{dirflag\},~\{fpsr\
 _ABORT=r'(?:tail )?call void @__(?:assert_rtn|assert_fail)\(ptr noundef nonnull @[\w.]+, ptr noundef nonnull @[\w.]+, i32 noundef 125, ptr noundef nonnull @[\w.]+\)'
 
 
+def _counter_bound_flow(function, body, patterns, parameters, profile):
+    """Keep signed counter comparisons paired with their exact branch roles."""
+    guards = {
+        'bounded': [('late', 'reload', 'bad', 'finish')],
+        'caller': [('late_first', 'reload_first', 'bad_first', 'good_first'),
+                   ('late_second', 'reload_second', 'bad_second', 'good_second')],
+    }
+    if profile not in guards: raise Refused('initialized counter guard profile is not closed')
+    alternate = list(patterns)
+    for result, operand, bad, good in guards[profile]:
+        comparison = '{' + result + '} = icmp sgt i32 {' + operand + '}, 32'
+        branch = 'br i1 {' + result + '}, label {' + bad + '}, label {' + good + '}'
+        if patterns.count(comparison) != 1: raise Refused('initialized signed counter comparison anchor changed')
+        index = patterns.index(comparison)
+        if index + 1 >= len(patterns) or patterns[index + 1] != branch:
+            raise Refused('initialized signed counter branch anchor changed')
+        alternate[index] = '{' + result + '} = icmp slt i32 {' + operand + '}, 33'
+        alternate[index + 1] = 'br i1 {' + result + '}, label {' + good + '}, label {' + bad + '}'
+    try:
+        bindings = _flow(function, body, patterns, parameters)
+    except Refused:
+        bindings = _flow(function, body, alternate, parameters)
+    for result, _operand, _bad, _good in guards[profile]:
+        # Every instruction is checked by _flow; also bind this comparison's
+        # sole consumer rather than admitting a value-bearing extra use.
+        uses = re.findall(r'(?<![\w.])' + re.escape(bindings[result]) + r'(?![\w.])', body)
+        if len(uses) != 2: raise Refused('initialized counter comparison does not have one exact branch consumer')
+    return bindings
+
+
 def _operations(module):
     if not re.search(r'^target datalayout = "e-',module,re.M):raise Refused('initialized register requires observed little-endian ABI')
     signature,body=_function(module,'__dx_initialized_bounded_source')
@@ -205,7 +235,7 @@ def _operations(module):
         r'br i1 {late}, label {bad}, label {finish}',r'LABEL {bad}',_ABORT,r'unreachable',
         r'LABEL {finish}',r'{result} = phi i32 \[ -1, {entry} \], \[ {old}, {good} \]',r'ret i32 {result}',
     ]
-    initialized=_flow(signature,body,bounded,['old','data'])
+    initialized=_counter_bound_flow(signature,body,bounded,['old','data'],'bounded')
     initialized_signature=signature
     signature,getter=_function(module,'__dx_initialized_get_source')
     getpatterns=[
@@ -248,7 +278,7 @@ def _operations(module):
         r'call void @llvm\.lifetime\.end\.p0\((?:i64 4, )?ptr(?: nonnull)? {local_second}\)',
         r'{result} = add i32 {value_second}, {scaled}',r'ret i32 {result}',
     ]
-    closed=_flow(signature,caller,callerpatterns,[])
+    closed=_counter_bound_flow(signature,caller,callerpatterns,[],'caller')
     alloc_signature,alloc=_function(module,'_Z9alloc_MAAv')
     addresses={'SPD_data_cacheable':17179869184,'SPD_data_noncacheable':17181966336,'SPD_size_noncacheable':17184063488,
                'SPD_ready_noncacheable':17184063552,'REG_noncacheable':17184063616,'INSTR_opcode_datatype_optype_tdst1_tdst2':17184063744,
@@ -404,7 +434,34 @@ def _assert_function_diagnostic(call):
     return wrapper
 
 
-def _assertion(node, expected, variable):
+def _assert_source_location_diagnostics(call, tokens, expected):
+    """Admit only frozen-TU file/line builtins in glibc abort diagnostics."""
+    arguments = _children(call)[1:]
+    if len(arguments) != 4 or not any(item.get('kind') == 'SourceLocExpr' for item in arguments): return ()
+    if _assert_function_diagnostic(call) is None or not isinstance(tokens, str):
+        raise Refused('initialized source-location diagnostics lack their exact abort/source binding')
+    file, line = arguments[1:3]
+    start, stop, _ = _slice(call, tokens); previous_end = start
+    for item, builtin, result_type in ((file, '__builtin_FILE', 'const char *'), (line, '__builtin_LINE', 'unsigned int')):
+        if set(item) != {'id', 'kind', 'range', 'type', 'valueCategory'} or not isinstance(item.get('id'), str) or not re.fullmatch(r'0x[0-9a-f]+', item['id']) or item.get('kind') != 'SourceLocExpr' or _children(item) or item.get('valueCategory') != 'prvalue' or item.get('type') != {'qualType': result_type} or set(item.get('range', {})) != {'begin', 'end'}:
+            raise Refused('initialized source-location diagnostic is not an exact typed leaf')
+        begin, end, text = _slice(item, tokens)
+        if not previous_end <= begin < end <= stop or _clean(text) != builtin + '()':
+            raise Refused('initialized source-location diagnostic builtin/extent changed')
+        previous_end = end
+        prefix = tokens.encode()[:begin].decode()
+        markers = list(re.finditer(r'(?m)^#[ \t]+([1-9][0-9]*)[ \t]+("(?:\\.|[^"\\])*")(?:[ \t]+[1-4])*[ \t]*\n', prefix))
+        if not markers: raise Refused('initialized source-location diagnostic has no frozen line marker')
+        marker = markers[-1]
+        try: source_file = json.loads(marker[2])
+        except (ValueError, TypeError): raise Refused('initialized source-location diagnostic file marker is malformed') from None
+        source_line = int(marker[1]) + prefix[marker.end():].count('\n')
+        if not isinstance(source_file, str) or Path(source_file).name != 'MAA_gem5.hpp' or source_line != (121 if expected == 'width' else 125):
+            raise Refused('initialized source-location diagnostic original file/line changed')
+    return file, line
+
+
+def _assertion(node, expected, variable, tokens=None):
     tree = list(_walk(node)); calls = [item for item in tree if item.get('kind') == 'CallExpr']
     names = [_callee(call) for call in calls]
     if names.count('__assert_rtn') + names.count('__assert_fail') != 1 or any(name not in {'__assert_rtn', '__assert_fail', '__builtin_expect'} for name in names) or names.count('__builtin_expect') > 1:
@@ -412,10 +469,11 @@ def _assertion(node, expected, variable):
     abort = next(call for call in calls if _callee(call) in {'__assert_rtn', '__assert_fail'})
     diagnostic = _assert_function_diagnostic(abort)
     if _callee(abort) == '__assert_fail' and diagnostic is None: raise Refused('initialized Linux assertion diagnostic is not exact arity1 u32')
+    source_locations = _assert_source_location_diagnostics(abort, tokens, expected)
     allowed = {'ParenExpr', 'ImplicitCastExpr', 'CXXStaticCastExpr', 'CStyleCastExpr', 'CXXFunctionalCastExpr',
                'UnaryOperator', 'BinaryOperator', 'ConditionalOperator', 'CallExpr', 'DeclRefExpr',
                'IntegerLiteral', 'PredefinedExpr', 'StringLiteral'}
-    if any(item.get('kind') not in allowed for item in tree): raise Refused('initialized assertion contains an unchecked AST effect')
+    if any(item.get('kind') not in allowed and not any(item is bound for bound in source_locations) for item in tree): raise Refused('initialized assertion contains an unchecked AST effect')
     for item in tree:
         kind = item.get('kind')
         if kind == 'UnaryOperator' and item is not diagnostic and item.get('opcode') != '!':
@@ -462,7 +520,7 @@ def _assertion(node, expected, variable):
             raise Refused('initialized Mac assertion function diagnostic changed')
         file, line, message = arguments[1:]
     else: message, file, line, _function = arguments
-    if Path(_string(file)).name != 'MAA_gem5.hpp' or _expression(line) != (121 if expected == 'width' else 125) or _string(message) != predicate_text:
+    if (not source_locations and (Path(_string(file)).name != 'MAA_gem5.hpp' or _expression(line) != (121 if expected == 'width' else 125))) or _string(message) != predicate_text:
         raise Refused('initialized assertion original source diagnostic changed')
 
 
@@ -501,7 +559,7 @@ def _bodies(tokens, dumps, sources):
                 raise Refused('initialized register store must retain its exact arity1-u32 source call')
             replacements = []
             for index, kind, variable in [(1, 'width', 'num_regs_needed'), (5, 'bound', 'REG_count')]:
-                statement = statements[index]; _assertion(statement, kind, variable)
+                statement = statements[index]; _assertion(statement, kind, variable, tokens)
                 start, stop, _ = _slice(statement, tokens)
                 if not begin <= start < stop <= end: raise Refused('initialized assertion leaves its source body')
                 replacement = 'assert(num_regs_needed == 1 || num_regs_needed == 2)' if kind == 'width' else 'assert(REG_count <= NUM_SCALAR_REGS)'

@@ -1,0 +1,67 @@
+{
+  "author_of_reviewed_reader_and_production_proposal": false,
+  "controls": {
+    "child_network_native_audit_events": [],
+    "errors": 0,
+    "failures": 0,
+    "local_interpreter": {
+      "executable": "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+      "isolated": 1,
+      "version": "3.12.6 (main, Jun 13 2025, 13:08:55) [Clang 17.0.0 (clang-1700.0.13.5)]"
+    },
+    "output": {
+      "bytes": 1609,
+      "sha256": "6ab96d5cee5eb398176726a67235856a3ee58cdefa2a8a5c8f63953f3adb56b8"
+    },
+    "skips": 0,
+    "tests_run": 9
+  },
+  "date": "2026-10-16 ET",
+  "finding": {
+    "control": "Real original main-prefix statements reject an attempted unpinned reread; revised main-prefix consumes each project source exactly once, with exact expected digest, before namespace construction.",
+    "original_reader_sha256": "4f9088d9ec93df1b1a9ce9d0022089b1c81593f33a5152907bfee6ba7dfcda9f",
+    "problem": "Project and retained inputs were re-read without expected digests after the first hash checks, before compilation/consumption.",
+    "resolution": "Cache the three checked project module bytes and all 32 checked retained artifact bytes. Derive literals and namespaces from cached inputs. Bind the unchanged _bodies header read through an exact canonical seven-source digest/size adapter. Preserve before/after physical hashes and complete retained membership."
+  },
+  "not_claimed": [
+    "Actual retained AST/token/LLVM replay success",
+    "Fresh compiler/native/WP/solver/public proof success",
+    "Hardware/body source refinement beyond the original explicit source/compiler observation boundary"
+  ],
+  "reviewed": {
+    "exact_production_patch": {
+      "bytes": 5415,
+      "sha256": "bca162ea0f5a40a34033005d83cb966b523e18c9560373768f48d1627631c205"
+    },
+    "original_reader_before_finding": {
+      "bytes": 11217,
+      "sha256": "4f9088d9ec93df1b1a9ce9d0022089b1c81593f33a5152907bfee6ba7dfcda9f"
+    },
+    "production_base": {
+      "bytes": 47822,
+      "sha256": "c023a4a6298fab7a34f4213f888b6c0fb4fe5c405e5a53741942e3e2accb81cb"
+    },
+    "proposed_production_source": {
+      "bytes": 50236,
+      "sha256": "63d8fff0599d409b7cd89af28d5a52ddc4fd38972057645abc5ede5b9a50237c"
+    },
+    "reader": {
+      "bytes": 12437,
+      "sha256": "22f398e01d19c4be1646e3469f225e6f97cf0bf3f02628ec95cb496c5143eed0"
+    },
+    "review_tests": {
+      "bytes": 12523,
+      "sha256": "7ca2ff3d4056c132fa3bf0dd896d0315c440dcd006f9d910aa22644cb64d5db2"
+    }
+  },
+  "reviewer": "/root/ticket28/memory_public_trace",
+  "standards_and_scope": {
+    "output": "Compact file hashes, assertion outcomes, body family names and operation summary only; no full AST/token/LLVM payload. Source-body proof remains false and owned source-model TCB is explicit.",
+    "read_only_boundary": "Known selected passive source functions contain no project import or child/native launch. Audit guard rejects child/network/content-write operations used by the reader. No actual reader main or remote input was run by reviewer.",
+    "required_external_admission": "Root owns isolated selected-Python/runtime admission, remote command and source/hash verification, retained replay, and any subsequent production integration/fresh proof run.",
+    "retained_binding": "Exact proposal digest, diagnostic-result digest, complete 32-file census, three source basis modules, and seven source pins; cached checked inputs and physical before/after closures.",
+    "source_location_allowance": "Only two exact direct glibc __assert_fail diagnostic leaves; strict keys, types, tokens, source ranges/order, and original MAA_gem5.hpp line 121/125 bindings. Qualified object identities only; executable expressions remain refused.",
+    "unchanged_production": "All definitions except _assertion and _bodies are AST-identical; only new diagnostic helper and actual token forwarding added. No CALLER/model/certificate/operation/proof criteria changes."
+  },
+  "status": "PASS FOR ROOT-ADMITTED READ-ONLY RETAINED DIAGNOSTIC REPLAY"
+}

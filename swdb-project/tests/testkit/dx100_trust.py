@@ -18,7 +18,7 @@ TRUST = {
 
 
 def run_semantics_fixture(tmp_path, adapter, mark=True, mutate=False, *, source=None, extra_calls=(), source_files=None,
-                          postcondition=None, semantics_transform=None, contract_transform=None, tool_environment=None, method_transform=None):
+                          postcondition=None, semantics_transform=None, contract_transform=None, tool_environment=None, method_transform=None, bounds=None):
     """Public fixture; default tools are explicit stand-ins. Root-admitted actual tests supply their environment."""
     from swdb import c_lowering, cbmc_adapter, cbmc_translator
     library = tmp_path / 'library'
@@ -113,6 +113,6 @@ def run_semantics_fixture(tmp_path, adapter, mark=True, mutate=False, *, source=
     if tool_environment is not None:
         environment = dict(tool_environment)
     result = run_swdb('prove', '--records', records.path, '--summary', contract['id'], '--adapter', adapter,
-                      '--bounds', '{"threads": 1, "input_size": 1}', '--runs-dir', tmp_path / 'runs',
+                      '--bounds', json.dumps({'threads': 1, 'input_size': 1} if bounds is None else bounds), '--runs-dir', tmp_path / 'runs',
                       '--format', 'json', env=environment, timeout=1200)
     return result, records, semantics, marker

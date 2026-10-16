@@ -148,4 +148,4 @@ def prove(tmp_path, row, *, actual_environment):
     return run_semantics_fixture(tmp_path, 'cbmc', source=source(row), semantics_transform=transform,
                                  contract_transform=contract_transform,
                                  postcondition=r'assigns \nothing; ensures \result == 1;',
-                                 tool_environment=actual_environment)
+                                 tool_environment=actual_environment, bounds={'threads': 1})
