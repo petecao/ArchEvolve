@@ -1,0 +1,88 @@
+{
+  "verdict": "PASS_STATIC_ONLY",
+  "packet": {
+    "path": "/private/tmp/probata-t25-cell4-smt-supplement-packet-v1-20261016.json",
+    "sha256": "332bba373a31857c611b399e4728f0f9578853f0e421b7f2dfb0b2e072eecd51"
+  },
+  "refs_rehashed": [
+    {
+      "bytes": 263409,
+      "path": "/private/tmp/probata-t25-cell4-smt-supplement-entry-v1-20261016.py",
+      "sha256": "62ab64ab6e07a7b7efa07eb6497dcc6eed43c0b1e910f0cd3191bea2c57af21b"
+    },
+    {
+      "bytes": 2875,
+      "path": "/private/tmp/probata-t25-cell4-smt-supplement-plan-v1-20261016.json",
+      "sha256": "052e0db419e02c7191aeca742f90569aa00af0de9c3e885a2068001e213fb7a6"
+    },
+    {
+      "bytes": 2064,
+      "path": "/private/tmp/probata-t25-cell4-smt-supplement-plan-v1-20261016.md",
+      "sha256": "f72e18bccbe5a3747c6180c48900d69258b896b7b336c4c303134c6f811231fb"
+    },
+    {
+      "bytes": 3148,
+      "path": "/private/tmp/probata-t25-cell4-smt-supplement-controls-v1-20261016.py",
+      "sha256": "deb9e0666178eb5629d487b6e42f6bcb50cdc2c838658eb5b779e5c8596589c0"
+    },
+    {
+      "bytes": 541082,
+      "path": "/private/tmp/probata-t25-cell4-root-metadata-v4-20261016.json",
+      "sha256": "cdd006366d4e61ddd35e1c3448b7c65e8112c4d11ab4fe2008f6184979d10f89"
+    },
+    {
+      "bytes": 19928,
+      "path": "/private/tmp/probata-t25-cell4-metadata-extractor-v4-20261016.py",
+      "sha256": "6e976a37d85d323d9b8706d004f55a2dda4de5d7f0fee5af9a9c0d83cb09a624"
+    },
+    {
+      "bytes": 122055,
+      "path": "/private/tmp/probata-t25-cell4-diagnostic-expected-v5-046f6b9e-20261016.json",
+      "sha256": "89354ee2608825ba184a59e649582d7e6ecbaa678a6396742e509b9173f067ba"
+    },
+    {
+      "bytes": 163,
+      "path": "/private/tmp/probata-t25-cell4-smt-supplement-controls-final-v1-20261016/resources.json",
+      "sha256": "f424e5fe0d3f3dd14a4d0981a7ca15350dc2b112b0d13042307fb73d91f45451"
+    },
+    {
+      "bytes": 99,
+      "path": "/private/tmp/probata-t25-cell4-smt-supplement-controls-final-v1-20261016/control.log",
+      "sha256": "7d79dbdd92b95508ac801051a21ce47663454c0efdc85fcc1838d3be594f9392"
+    },
+    {
+      "bytes": 4607,
+      "path": "/private/tmp/probata-t25-cell4-smt-supplement-controls-final-v1-20261016/junit.xml",
+      "sha256": "28f0084e5dc5edc50a25147fa9e9fa32302785ade0dde64615bd4a0fc61c11de"
+    },
+    {
+      "bytes": 391,
+      "path": "/private/tmp/probata-t25-cell4-smt-supplement-controls-final-v1-20261016/command.json",
+      "sha256": "0223b55ace016ac9e0ab0a44edcb48b720950ee2e191c8420ff90b12fd5d9d93"
+    }
+  ],
+  "findings": [],
+  "checks": {
+    "V4_parser_functions_AST_identical": [
+      "smt_tokens",
+      "smt_forms",
+      "materialized_smt"
+    ],
+    "raw_manifest_equal_prior_v4": 341,
+    "task_path_SHA_byte_tuple_set_equal_prior_v4": 10,
+    "source_package_Git_blobs_verified": 324,
+    "runtime_foundation_primary_expected_pins": 749,
+    "consumer_expected_files": 1584,
+    "consumer_receipts_same_SHA": "021f8a2d20bf5db4733fe89bf9f85c32cef5bc05fafa51a301a87732cd25c770"
+  },
+  "scope": "Root passive materialized-SMT metadata capture only. Actual remote physical rehash and output remain future root execution duties.",
+  "limits": [
+    "Only final negated assertion canonical formula <=12288UTF8bytes each is emitted. Other assertion/definition bodies represented by hashes and bounded identifier/application/quantifier/shape metadata.",
+    "Single check-sat/final unary not/no later assertion required; sibling theorem symbol refuses; named annotations bounded atomic labels only.",
+    "No subprocess, production imports, compiler, configuration query, tool/prover or process inspection in reader.55sinneralarm8GiBRLIMIT_AS; root60s8GiB1worker guard separately required.",
+    "Raw full341hashes pre/post, ten task pins,324source pins,749runtime/foundation/primary pins and1584consumer physicalGitblob checks expected during root capture. Consumer final stability is stat-based after streaming, not a second full hash.",
+    "actual_submission_attested=false; support_attribution_accepted=false; proof/model/caller/ticket acceptance=false.",
+    "Original G593/G595/full24 producers and historical refusals unchanged; no proof rerun."
+  ],
+  "reviewer_execution": "Passive Python AST/JSON/hash/Git object reads only. No reader main/function, controls, project import, compiler/prover/tool, SSH or actual job execution."
+}

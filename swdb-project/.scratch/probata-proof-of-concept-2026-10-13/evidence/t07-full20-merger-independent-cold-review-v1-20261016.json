@@ -1,0 +1,41 @@
+{
+  "verdict": "PASS_SCOPED_CHANGED_HELPER_DISCHARGE_COLD_RECONCILIATION",
+  "packet_sha256": "29a92a515b9a9b49d85ed40ad5d566fb99e94790487df5e79e38637e2a2c61c3",
+  "source_commit": "9c30233e90a2cf8840aff4357c9c95b64603457b",
+  "unique_local_files_rehashed": 279,
+  "raw_files": 263,
+  "component_files": 257,
+  "raw_bytes": 11714773,
+  "complete_source_goals": 297,
+  "properties": 428,
+  "ordinary_Valid": 260,
+  "smokes_healthy_nonvalid": 37,
+  "smoke_attempt_observations": 111,
+  "ordinary_valid_partition": {
+    "qed": 144,
+    "Alt-Ergo:2.6.4": 85,
+    "cfg": 30,
+    "Z3:5.1.0": 1
+  },
+  "smoke_verdicts": {
+    "timeout": 72,
+    "unknown": 39
+  },
+  "native_rows": 267,
+  "exact_CFG_native_omissions": 30,
+  "journal_events": 670,
+  "backend_bindings": 297,
+  "native_caller_vs_property_owner_exact_source_contexts": 6,
+  "unchanged_baseline_Extern": 27,
+  "guard_events_recovered": 2,
+  "root_finite_settlement_scans": 3,
+  "findings": [],
+  "scope": "Changed-source20 Typed helpers under exact declared storage/span/summary domains. No source bridge/allocator/lifetime/thread1/Graph/fullTD/count/c_model certificate.",
+  "TCB": [
+    "Frama/WP/Why3 translation and explicit installed prover configurations",
+    "27declared Extern properties across4families,3live bodyless contexts",
+    "Unsupported physical unaligned checks; direct-call-only function-pointer guard inapplicability",
+    "Opaque ordinary return ABI/store relation, conditional storage domains"
+  ],
+  "execution": "Bounded local metadata/hash/filesystem membership reconciliation only; no project code reader main, solver/compiler/native/profile/probe/SSH execution."
+}

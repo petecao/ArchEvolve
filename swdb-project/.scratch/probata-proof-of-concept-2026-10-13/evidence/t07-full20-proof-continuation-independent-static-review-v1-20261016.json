@@ -1,0 +1,91 @@
+{
+  "verdict": "PASS_STATIC_ONLY",
+  "packet": {
+    "path": "/private/tmp/probata-t07-full20-proof-continuation-v1-20261016-packet.json",
+    "sha256": "2184df215c572675c3e76fa98feeee9185a660e249e4a3163fd5339618b9da68"
+  },
+  "files_rechecked": [
+    {
+      "path": "/private/tmp/probata-t07-full20-proof-continuation-v1-20261016-entry.py",
+      "bytes": 53801,
+      "sha256": "9723613a6fa464564bcfe7d1c2a57141c36694f9a7633a2d6ee7290fbcd69dd6"
+    },
+    {
+      "path": "/private/tmp/probata-t07-full20-proof-continuation-v1-20261016-expected.json",
+      "bytes": 980431,
+      "sha256": "5ed91589916c17b242b13cf3b3a52475df470ea3c5cda7063d667b7a3da05bdb"
+    },
+    {
+      "path": "/private/tmp/probata-t07-full20-proof-continuation-v1-20261016-command.json",
+      "bytes": 1845,
+      "sha256": "9ce950bb5e056558b1ad503309969936008c475f64de40c77bb039d8f91c86a6"
+    },
+    {
+      "path": "/private/tmp/probata-t07-full20-proof-continuation-v1-20261016-plan.md",
+      "bytes": 7385,
+      "sha256": "c8688d1f9c5193c71c6f03ecdc2f1ed5657cd895b63b2cb68120d2f823671846"
+    },
+    {
+      "path": "/private/tmp/probata-t07-full20-proof-continuation-v1-20261016-controls.py",
+      "bytes": 7761,
+      "sha256": "00c9830edf1a53c3900d7df629c6f76c4310688ce7d1f99da355f8d12a9850b3"
+    },
+    {
+      "path": "/private/tmp/probata-t07-full20-proof-continuation-v1-20261016-controls.json",
+      "bytes": 1911,
+      "sha256": "c2f547573d7240eee4155afdcf41564c7b823232c756f2f27aa292cec80cd0ea"
+    },
+    {
+      "path": "/private/tmp/probata-t07-full20-proof-continuation-v1-controls-20261016.log",
+      "bytes": 15,
+      "sha256": "597d9b1f9d1acf588fb9ab6448d11df7d1e988e2af213c557e9653e5621ec7d8"
+    },
+    {
+      "path": "/private/tmp/probata-t07-full20-proof-continuation-v1-controls-20261016.log.summary.json",
+      "bytes": 1943,
+      "sha256": "5ec34deef7070220e47b5a7327a8f5bb9fd8b8ff4c2130443127510a90540392"
+    },
+    {
+      "path": "/private/tmp/probata-t07-full20-first-partial-cold-v2-20261016.md",
+      "bytes": 3460,
+      "sha256": "3a1a516e5b6a470b28da3342dbee55e467d134b817465f55da66ac1afdb61138"
+    },
+    {
+      "path": "/private/tmp/probata-t07-full20-first-partial-cold-v2-20261016.json",
+      "bytes": 37218,
+      "sha256": "94c35448b2a1b5b0be580321e64205e6f1481833bcf7b220df2bd6790b0f7c58"
+    },
+    {
+      "path": "/private/tmp/probata-t07-ipc-output-accounting-v1-20261016.py",
+      "bytes": 882,
+      "sha256": "6eed7b5b20e603b7853242a86feec8f56d6da5bbe13ebb930eb67405feea5062"
+    }
+  ],
+  "prior_passive_inspection": {
+    "file_reference_occurrences": 2310,
+    "unique_physical_files": 2294,
+    "mismatches": 0,
+    "retained_first_attempt": {
+      "regular_files": 73,
+      "directories": 15,
+      "exact_owned_socket": 1
+    }
+  },
+  "findings": [],
+  "scope": "Proof-only full20 continuation, no generation replay and no old proof verdict reuse. Root outer recipe/live admission remains separate.",
+  "checks": [
+    "All prior reader and phase_command ASTs unchanged from reviewed full20 V2.",
+    "IPC accounting function AST-identical to pinned root helper; only exact owned zero-byte AF_UNIX why3server[0-9a-f]{6}sock in exact temporary root allowed as metadata. No socket payload access, connection or deletion.",
+    "Why3 1.8.2 cached primary source archive and extracted prove_client/server-unix bytes agree; OCaml temporary-name hexadecimal format supports exact six-hex naming.",
+    "Complete retained generation universe: 297 goals, 428 properties, 260 ordinary, 37 smoke, 36 init; new main executes only proof phase.",
+    "Fresh proof/journal/native/backend/source/dependency closure mandatory; attempted healthy nonvalid smokes required; no incomplete/vacuous/error acceptance.",
+    "Candidate/return success cleared on final pin/journal/artifact errors; retained genuine old-AST false-success RED is not an actual theorem acceptance.",
+    "Explicit private Why3 config and no-detect in both phase builder branches retained, all three 30-second provers, one worker, full initialization/RTE/smokes/no cache."
+  ],
+  "qualification": [
+    "Manual Z3 5.1.0 plus z3_487 driver is an explicit configuration boundary, not detected-version equivalence.",
+    "Original interrupted proof attempt and partial incomplete inventory remain unaccepted.",
+    "No proof, Init, allocator, source correspondence, lifetime, TD or counted-run acceptance."
+  ],
+  "reviewer_execution": "Passive text/AST/JSON/Git/filesystem-byte inspections only. No project reader/main/control/compiler/prover/version/probe/SSH/job executed."
+}
