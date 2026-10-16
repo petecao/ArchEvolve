@@ -154,11 +154,12 @@ class IntrinsicHandoffTests(unittest.TestCase):
         self.assertTrue(all(o["concrete_signature"] is None for o in draft["operations"]))
 
     def test_draft_cas_and_assistance_do_not_change_semantics(self):
-        request = self.choose()
-        cas = draft_intrinsics(request, request["candidates"][2])
+        request = self.choose(budget=8)
+        cas_candidate = next(c for c in request["candidates"] if c.get("candidate_scope") == "update_execute")
+        cas = draft_intrinsics(request, cas_candidate)
         self.assertEqual(cas["operations"][0]["postconditions"]["catalog_result"]["form"], "success_flag")
         self.assertIn("payload_types", cas["operations"][0]["missing_capability_evidence"])
-        assist_candidate = request["candidates"][3]
+        assist_candidate = next(c for c in request["candidates"] if c.get("candidate_scope") == "read_assist")
         assist = draft_intrinsics(request, assist_candidate)
         self.assertTrue(all(o["postconditions"]["satisfies_program_result"] == "no_assistance_only" for o in assist["operations"]))
         assist["operations"][0]["postconditions"]["satisfies_program_result"] = "conditional_on_mapping_proof"

@@ -1,0 +1,233 @@
+format: block-catalog-summary-v0.1
+catalog_ref: catalog/hardware-v0.1.yaml
+catalog_sha256: 7adeb7f901b546955bd8fd9327ea55c373958a4998aa949317d37b5145d2b85d
+results:
+- block_id: block-indexed-read-5d48e03303
+  member_request_ids:
+  - access-02-read
+  - access-03-read
+  - access-04-read
+  options:
+  - missing_capability_evidence: []
+    missing_workload_evidence: []
+    design_id: dx100-artifact-e4fc4af
+    execution_role: execute
+    covered_clause_ids:
+    - block-indexed-read-5d48e03303-cap-01
+    - block-indexed-read-5d48e03303-cap-02
+    missing_clause_ids: []
+    satisfies_returned_value_request: null
+    joint_execution_status: requires_mapping_and_resource_review
+    status: conditional_capability_cover
+  - missing_capability_evidence:
+    - index_width_bits
+    - payload_types
+    missing_workload_evidence: []
+    design_id: dx100-paper-v2
+    execution_role: execute
+    covered_clause_ids:
+    - block-indexed-read-5d48e03303-cap-01
+    - block-indexed-read-5d48e03303-cap-02
+    missing_clause_ids: []
+    satisfies_returned_value_request: null
+    joint_execution_status: requires_mapping_and_resource_review
+    status: candidate_cover_needs_evidence
+  - missing_capability_evidence:
+    - index_width_bits
+    - payload_types
+    missing_workload_evidence: []
+    design_id: maple-isca2022
+    execution_role: assist
+    covered_clause_ids:
+    - block-indexed-read-5d48e03303-cap-01
+    - block-indexed-read-5d48e03303-cap-02
+    missing_clause_ids: []
+    satisfies_returned_value_request: false
+    joint_execution_status: requires_mapping_and_resource_review
+    status: assist_alternative_not_executor
+  - missing_capability_evidence:
+    - index_width_bits
+    - payload_types
+    missing_workload_evidence: []
+    design_id: maple-isca2022
+    execution_role: execute
+    covered_clause_ids:
+    - block-indexed-read-5d48e03303-cap-01
+    - block-indexed-read-5d48e03303-cap-02
+    missing_clause_ids: []
+    satisfies_returned_value_request: null
+    joint_execution_status: requires_mapping_and_resource_review
+    status: candidate_cover_needs_evidence
+  - missing_capability_evidence:
+    - index_width_bits
+    - payload_types
+    missing_workload_evidence: []
+    design_id: prodigy-hpca2021
+    execution_role: assist
+    covered_clause_ids:
+    - block-indexed-read-5d48e03303-cap-01
+    - block-indexed-read-5d48e03303-cap-02
+    missing_clause_ids: []
+    satisfies_returned_value_request: false
+    joint_execution_status: requires_mapping_and_resource_review
+    status: assist_alternative_not_executor
+  partial_designs:
+  - missing_capability_evidence:
+    - index_width_bits
+    - payload_types
+    missing_workload_evidence: []
+    design_id: spzip-isca2021-push
+    execution_role: assist
+    covered_clause_ids:
+    - block-indexed-read-5d48e03303-cap-01
+    missing_clause_ids:
+    - block-indexed-read-5d48e03303-cap-02
+    satisfies_returned_value_request: false
+    joint_execution_status: requires_mapping_and_resource_review
+    status: partial_not_a_block_solution
+  - missing_capability_evidence:
+    - index_width_bits
+    - payload_types
+    missing_workload_evidence: []
+    design_id: spzip-isca2021-push
+    execution_role: execute
+    covered_clause_ids:
+    - block-indexed-read-5d48e03303-cap-02
+    missing_clause_ids:
+    - block-indexed-read-5d48e03303-cap-01
+    satisfies_returned_value_request: null
+    joint_execution_status: requires_mapping_and_resource_review
+    status: partial_not_a_block_solution
+  - missing_capability_evidence:
+    - index_width_bits
+    - payload_types
+    missing_workload_evidence: []
+    design_id: terminus-micro2024-cas
+    execution_role: execute
+    covered_clause_ids:
+    - block-indexed-read-5d48e03303-cap-02
+    missing_clause_ids:
+    - block-indexed-read-5d48e03303-cap-01
+    satisfies_returned_value_request: null
+    joint_execution_status: requires_mapping_and_resource_review
+    status: partial_not_a_block_solution
+  - missing_capability_evidence:
+    - index_width_bits
+    - payload_types
+    missing_workload_evidence: []
+    design_id: terminus-micro2024-deferred
+    execution_role: execute
+    covered_clause_ids:
+    - block-indexed-read-5d48e03303-cap-02
+    missing_clause_ids:
+    - block-indexed-read-5d48e03303-cap-01
+    satisfies_returned_value_request: null
+    joint_execution_status: requires_mapping_and_resource_review
+    status: partial_not_a_block_solution
+  status: options_for_review
+  scope: Operation evidence for every clause from one catalog record and role. Mapping,
+    resources, mutability and composition remain unproved.
+- block_id: block-effect-read_modify_write-cas-6e560e8702
+  member_request_ids:
+  - access-04-update
+  options:
+  - missing_capability_evidence:
+    - index_width_bits
+    - payload_types
+    missing_workload_evidence: []
+    design_id: terminus-micro2024-cas
+    execution_role: execute
+    covered_clause_ids:
+    - block-effect-read_modify_write-cas-6e560e8702-cap-01
+    missing_clause_ids: []
+    satisfies_returned_value_request: null
+    joint_execution_status: requires_mapping_and_resource_review
+    status: candidate_cover_needs_evidence
+  - missing_capability_evidence:
+    - index_width_bits
+    - payload_types
+    missing_workload_evidence: []
+    design_id: terminus-micro2024-deferred
+    execution_role: assist
+    covered_clause_ids:
+    - block-effect-read_modify_write-cas-6e560e8702-cap-01
+    missing_clause_ids: []
+    satisfies_returned_value_request: false
+    joint_execution_status: requires_mapping_and_resource_review
+    status: assist_alternative_not_executor
+  partial_designs: []
+  status: options_for_review
+  scope: Operation evidence for every clause from one catalog record and role. Mapping,
+    resources, mutability and composition remain unproved.
+- block_id: block-stream-read-bf7778b743
+  member_request_ids:
+  - access-01-read
+  options:
+  - missing_capability_evidence: []
+    missing_workload_evidence: []
+    design_id: dx100-artifact-e4fc4af
+    execution_role: execute
+    covered_clause_ids:
+    - block-stream-read-bf7778b743-cap-01
+    missing_clause_ids: []
+    satisfies_returned_value_request: null
+    joint_execution_status: requires_mapping_and_resource_review
+    status: conditional_capability_cover
+  - missing_capability_evidence: []
+    missing_workload_evidence: []
+    design_id: dx100-paper-v2
+    execution_role: execute
+    covered_clause_ids:
+    - block-stream-read-bf7778b743-cap-01
+    missing_clause_ids: []
+    satisfies_returned_value_request: null
+    joint_execution_status: requires_mapping_and_resource_review
+    status: conditional_capability_cover
+  - missing_capability_evidence:
+    - payload_types
+    missing_workload_evidence: []
+    design_id: maple-isca2022
+    execution_role: assist
+    covered_clause_ids:
+    - block-stream-read-bf7778b743-cap-01
+    missing_clause_ids: []
+    satisfies_returned_value_request: false
+    joint_execution_status: requires_mapping_and_resource_review
+    status: assist_alternative_not_executor
+  - missing_capability_evidence:
+    - payload_types
+    missing_workload_evidence: []
+    design_id: maple-isca2022
+    execution_role: execute
+    covered_clause_ids:
+    - block-stream-read-bf7778b743-cap-01
+    missing_clause_ids: []
+    satisfies_returned_value_request: null
+    joint_execution_status: requires_mapping_and_resource_review
+    status: candidate_cover_needs_evidence
+  - missing_capability_evidence:
+    - payload_types
+    missing_workload_evidence: []
+    design_id: terminus-micro2024-cas
+    execution_role: execute
+    covered_clause_ids:
+    - block-stream-read-bf7778b743-cap-01
+    missing_clause_ids: []
+    satisfies_returned_value_request: null
+    joint_execution_status: requires_mapping_and_resource_review
+    status: candidate_cover_needs_evidence
+  - missing_capability_evidence:
+    - payload_types
+    missing_workload_evidence: []
+    design_id: terminus-micro2024-deferred
+    execution_role: execute
+    covered_clause_ids:
+    - block-stream-read-bf7778b743-cap-01
+    missing_clause_ids: []
+    satisfies_returned_value_request: null
+    joint_execution_status: requires_mapping_and_resource_review
+    status: candidate_cover_needs_evidence
+  partial_designs: []
+  status: options_for_review
+  scope: Operation evidence for every clause from one catalog record and role. Mapping,
+    resources, mutability and composition remain unproved.

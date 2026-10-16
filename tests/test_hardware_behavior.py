@@ -18,7 +18,7 @@ class HardwareBehaviorTests(unittest.TestCase):
         self.catalog, self.digest = load_request(self.catalog_path)
         self.case = load_normalized(self.input, reference_context(ROOT))
         self.request, _ = select_candidates(self.case, self.catalog, str(self.catalog_path), self.digest,
-                                            4, ["dx100-artifact-e4fc4af", "maple-isca2022"])
+                                            8, ["dx100-artifact-e4fc4af", "maple-isca2022"])
 
     def test_dx100_benefit_is_conditional_and_preserves_logical_consumers(self):
         c = self.request["candidates"][1]
@@ -41,7 +41,9 @@ class HardwareBehaviorTests(unittest.TestCase):
         self.assertIn("No source-supported payoff hypothesis", render_behavior(r))
 
     def test_maple_catalog_hypothesis_and_modes_remain_separate(self):
-        for c in self.request["candidates"][2:]:
+        maple = [c for c in self.request["candidates"] if c.get("catalog_design_id") == "maple-isca2022"]
+        self.assertEqual({c["candidate_scope"] for c in maple}, {"read_execute", "read_assist"})
+        for c in maple:
             r = describe_behavior(self.request, c)
             self.assertTrue(all(h["basis"] == "catalog_conditional_hypothesis" for h in r["why_it_may_accelerate"]))
             roles = {o["execution_role"] for o in r["desired_observable_semantics"]}

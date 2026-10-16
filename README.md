@@ -6,7 +6,7 @@ The [current mechanism handoff](docs/mechanism-handoff-2026-10-06/README.md) exp
 
 ## Current offline forward path
 
-**Feature reports → normalized evidence → typed operation queries → conditional candidates → intrinsic-description packages, YAML and Mermaid.**
+**Feature reports → normalized evidence → capability groups → per-block catalog queries → conditional candidates → intrinsic-description packages, YAML and Mermaid.**
 
 The pipeline makes no LLM/API or evaluator calls. It preserves scope, source uncertainty, result validity, ordering/completion obligations and parameter states. It does not generate an executable rewrite or prove performance/composition.
 
@@ -20,6 +20,8 @@ python3 -m venv .venv
 The default catalog is `catalog/hardware-v0.1.yaml` (format v0.1, data revision 0.1.17); `--catalog` may be omitted. The received feature files still use schema 1.1 despite being report revision v1.2.
 
 ## Results and handoff
+
+- **[Pre-lookup hardware planning](docs/designs/prelookup-planning/README.md)**: BFS before/after diagrams, a mixed-access grouping example, conjunctive per-block queries, and source-preserving handoffs.
 
 - **[Architecture evolution and adaptive prompts](docs/designs/evolution-loop/README.md)**: two-loop design and [runnable offline memory/reflector prototype](docs/designs/evolution-loop/offline-runtime.md), including learned rules, paired trials and rollback. The demo is scripted and synthetic; live models and hardware evaluation remain unconnected.
 - **[October 8 feature-interface audit](docs/audits/peter-features-20261008/README.md)**: minimum additions requested from Peter for region cost/phase accounting, helper findings and a null-valued discussion template.

@@ -1,0 +1,117 @@
+format: synthetic-planning-input-v0.1
+synthetic: true
+scope: Four selected target reads only; not a complete kernel feature extraction or
+  benchmark.
+case:
+  case_id: synthetic-mixed-access
+  input_sha256: 07016fb1b229e1f3f1ab993c4a1732e97d5fc3b42dd1560afd62e7bc4d92a340
+  source_binding:
+    status: synthetic_fixture_only
+    source_ref: examples/planning/mixed-access.pseudo.cpp
+  accesses:
+  - id: gather-a
+    array: A
+    reported_index_expression: B[i]
+    evidence_refs:
+    - synthetic-source:examples/planning/mixed-access.pseudo.cpp
+  - id: gather-c
+    array: C
+    reported_index_expression: D[2*i+1]
+    evidence_refs:
+    - synthetic-source:examples/planning/mixed-access.pseudo.cpp
+  - id: stream-x
+    array: X
+    reported_index_expression: i
+    evidence_refs:
+    - synthetic-source:examples/planning/mixed-access.pseudo.cpp
+  - id: stream-y
+    array: Y
+    reported_index_expression: i+2
+    evidence_refs:
+    - synthetic-source:examples/planning/mixed-access.pseudo.cpp
+capability_requests:
+- id: gather-a-read
+  access_id: gather-a
+  array: A
+  purpose: read
+  operation: read
+  subtype: gather
+  address_pattern: indirect
+  payload_type: int32
+  index_width_bits: 32
+  require_old_value: false
+  mapping_basis: Hand-authored synthetic target load, no measured profile.
+  mapping_status: synthetic_fixture
+  missing_workload_evidence: []
+  statement_ids:
+  - gather-a
+  source_locations:
+  - file: examples/planning/mixed-access.pseudo.cpp
+    start_line: 6
+    end_line: 6
+  statement_binding_status: synthetic_source_fixture
+  mutable_target: false
+- id: gather-c-read
+  access_id: gather-c
+  array: C
+  purpose: read
+  operation: read
+  subtype: gather
+  address_pattern: indirect
+  payload_type: int32
+  index_width_bits: 32
+  require_old_value: false
+  mapping_basis: Hand-authored synthetic target load, no measured profile.
+  mapping_status: synthetic_fixture
+  missing_workload_evidence: []
+  statement_ids:
+  - gather-c
+  source_locations:
+  - file: examples/planning/mixed-access.pseudo.cpp
+    start_line: 7
+    end_line: 7
+  statement_binding_status: synthetic_source_fixture
+  mutable_target: false
+- id: stream-x-read
+  access_id: stream-x
+  array: X
+  purpose: read
+  operation: read
+  subtype: stream_load
+  address_pattern: sequential
+  payload_type: float32
+  index_width_bits: null
+  require_old_value: false
+  mapping_basis: Hand-authored synthetic target load, no measured profile.
+  mapping_status: synthetic_fixture
+  missing_workload_evidence: []
+  statement_ids:
+  - stream-x
+  source_locations:
+  - file: examples/planning/mixed-access.pseudo.cpp
+    start_line: 8
+    end_line: 8
+  statement_binding_status: synthetic_source_fixture
+  mutable_target: false
+- id: stream-y-read
+  access_id: stream-y
+  array: Y
+  purpose: read
+  operation: read
+  subtype: stream_load
+  address_pattern: sequential
+  payload_type: float32
+  index_width_bits: null
+  require_old_value: false
+  mapping_basis: Hand-authored synthetic target load, no measured profile.
+  mapping_status: synthetic_fixture
+  missing_workload_evidence: []
+  statement_ids:
+  - stream-y
+  source_locations:
+  - file: examples/planning/mixed-access.pseudo.cpp
+    start_line: 9
+    end_line: 9
+  statement_binding_status: synthetic_source_fixture
+  mutable_target: false
+source_groups: []

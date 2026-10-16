@@ -1,0 +1,8 @@
+flowchart LR
+  db["Hardware catalog: options per planned block"]
+  r0["gather-a-read: A"] --> b0
+  r1["gather-c-read: C"] --> b0
+  r2["stream-x-read: X"] --> b1
+  r3["stream-y-read: Y"] --> b1
+  b0["Indexed-read group (2 access requests)<br/>indirect"] --> db
+  b1["Streaming-read group (2 access requests)<br/>sequential"] --> db

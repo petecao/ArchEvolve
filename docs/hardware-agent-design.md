@@ -175,3 +175,17 @@ Source documents provide evidence, not authorization to create repositories, sen
 ## October 11: offline evolution and reflector trials
 
 The separate [offline evolution runtime](designs/evolution-loop/offline-runtime.md) adds persistent experiment history, learned rules linked to catalog snapshots, and versioned strategy/reflector comparisons with review and rollback. Its synthetic demo makes no hardware-performance or autonomous-learning claim. The forward matcher and Peter/Yan-Ru handoff remain unchanged; the runtime has no live model or evaluator connection.
+
+## October 15: plan capability groups before catalog lookup
+
+The active offline forward path now groups compatible requests before retrieval.
+The [implementation and before/after diagrams](designs/prelookup-planning/README.md)
+show the BFS indexed-read group, separate streaming/update requests, and a synthetic
+mixed-access example. Each catalog option must cover one whole block's clauses
+within one source-scoped design and execution role. Source dependency groups are
+preserved separately; grouping does not prove concurrent execution or composition.
+Candidates and intrinsic drafts carry stable planned-block identities. Candidate
+IDs have changed for newly generated packages; historical handoffs stay frozen.
+
+This implements the meeting's front-side planning priority. Architecture synthesis,
+costed generalizations, parameter search and hybrid simulator work are separate.

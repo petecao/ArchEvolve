@@ -125,7 +125,10 @@ class EvidencePipelineTests(unittest.TestCase):
         sparse_dx = sparse_request["candidates"][1]
         dense_dx = dense_request["candidates"][1]
         self.assertEqual(sparse_dx["operation_options"][0]["operation"]["id"], "dxc-gather")
-        self.assertEqual(dense_dx["operation_options"][0]["operation"]["id"], "dxc-stream_load")
+        self.assertEqual(dense_dx["operation_options"][0]["operation"]["id"], "dxc-gather")
+        # Near-unit data does not merge the separately planned frontier stream.
+        self.assertEqual(dense_dx["planned_block"]["family"], "indexed-read")
+        self.assertNotIn("access-01-read", dense_dx["planned_block"]["member_request_ids"])
 
     def test_end_to_end_is_offline_deterministic_and_does_not_mutate_catalog(self):
         before = deepcopy(self.catalog)

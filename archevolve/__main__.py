@@ -78,6 +78,9 @@ def prepare_run(input_paths, catalog_path, root=ROOT, max_candidates=3, methods_
         for name, content in diagrams.items():
             artifacts[f"{folder}/diagrams/{name}"] = content
         if evidence_catalog:
+            from archevolve.hardware_planning import planning_artifacts
+            for name, content in planning_artifacts(trace["hardware_plan"], trace["block_catalog_results"]).items():
+                artifacts[f"{folder}/{name}"] = content
             from archevolve.intrinsic_handoff import build_handoff_artifacts
             from archevolve.comparison import build_comparison_artifacts
             for name, content in build_handoff_artifacts(request, request_digest).items():
@@ -88,11 +91,11 @@ def prepare_run(input_paths, catalog_path, root=ROOT, max_candidates=3, methods_
                       "input_sha256":case["input_sha256"], "selected_entries":[c["catalog_entry"] for c in request["candidates"]],
                       "issues":case["issues"], "hardware_request_sha256":request_digest})
     code_hash = hashlib.sha256(b"".join((root / name).read_bytes() for name in (
-        "archevolve/normalize.py", "archevolve/measurement_methods.py", "archevolve/select.py", "archevolve/evidence_select.py", "archevolve/hardware_catalog.py", "archevolve/mechanisms.py", "archevolve/workload_context.py", "archevolve/intrinsic_handoff.py", "archevolve/hardware_behavior.py", "archevolve/comparison.py", "archevolve/__main__.py", "tools/render_mermaid.py"))).hexdigest()
+        "archevolve/hardware_planning.py", "archevolve/normalize.py", "archevolve/measurement_methods.py", "archevolve/select.py", "archevolve/evidence_select.py", "archevolve/hardware_catalog.py", "archevolve/mechanisms.py", "archevolve/workload_context.py", "archevolve/intrinsic_handoff.py", "archevolve/hardware_behavior.py", "archevolve/comparison.py", "archevolve/__main__.py", "tools/render_mermaid.py"))).hexdigest()
     run_key = {"inputs":[c["input_sha256"] for c in cases], "catalog_sha256":catalog_digest,
                "max_candidates":max_candidates, "code_sha256":code_hash, "reference":reference, "methodology_sha256":methods_digest,
                "source_context_sha256":context_digest, "comparison_design_ids":compare_design_ids, "focus_design_ids":focus_design_ids}
-    manifest = {"pipeline_version":"offline-0.3" if evidence_catalog else "offline-0.1", "backend":"offline_evidence_lookup" if evidence_catalog else "offline_rules", "llm_calls":0, "evaluation_performed":False,
+    manifest = {"pipeline_version":"offline-0.4" if evidence_catalog else "offline-0.1", "backend":"offline_evidence_lookup" if evidence_catalog else "offline_rules", "llm_calls":0, "evaluation_performed":False,
                 "run_id":hashlib.sha256(json.dumps(run_key,sort_keys=True).encode()).hexdigest(),
                 "identity":run_key, "catalog_ref":str(catalog_path), "catalog_revision":catalog["revision"], "cases":cases}
     artifacts["catalog.snapshot.yaml"] = catalog_path.read_text()
@@ -105,7 +108,7 @@ def prepare_run(input_paths, catalog_path, root=ROOT, max_candidates=3, methods_
     if source_context_path is not None:
         artifacts["source-context.snapshot.yaml"] = source_context_path.read_text()
     artifacts["manifest.json"] = json.dumps(manifest, indent=2, ensure_ascii=False) + "\n"
-    catalog_note = ("Eric's source/version/configuration catalog is queried per operation. Interfaces and requirements remain scoped to the cited evidence; the diagrams do not establish physical partitioning, legal composition, or performance."
+    catalog_note = ("Capability groups are planned before querying Eric's source/version/configuration catalog. Each option must cover one complete group's typed clauses within a single design and role. Interfaces and requirements remain scoped to the cited evidence; the diagrams do not establish physical partitioning, legal composition, or performance."
                     if evidence_catalog else "The catalog is the historical provisional family seed; its hardware partitions/ports have not been reviewed as implementations.")
     report = ["# Offline BFS exploration", "", "**Offline prototype: no LLM calls, no benchmark execution, and no evaluated speedups.**", "",
               "Each case is normalized separately. The original reports are retained unchanged. " + catalog_note, "",
@@ -113,7 +116,7 @@ def prepare_run(input_paths, catalog_path, root=ROOT, max_candidates=3, methods_
     for c in cases:
         f = c["folder"]
         selected = ", ".join(c["selected_entries"]) or "none"
-        handoff_links = f", [intrinsic drafts]({f}/handoffs/README.md), [comparison]({f}/hardware-comparison.md)" if evidence_catalog else ""
+        handoff_links = f", [planning and before/after diagrams]({f}/planning.md), [intrinsic drafts]({f}/handoffs/README.md), [comparison]({f}/hardware-comparison.md)" if evidence_catalog else ""
         report.append(f"| {table_text(c['case_id'])} | {table_text(selected)} | [Diagrams]({f}/diagrams/README.md), [normalized input]({f}/normalized.yaml), [request YAML]({f}/hardware-request.yaml), [selection trace]({f}/selection-trace.yaml){handoff_links} |")
     report += ["", "## Input findings", ""]
     for i, c in enumerate(cases, 1):

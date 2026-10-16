@@ -61,6 +61,8 @@ def draft_intrinsics(request, candidate):
             "source_context_sha256": (request["workload_summary"].get("source_context") or {}).get("sha256"),
             "evidence_ref": "candidate.yaml#source_evidence"},
         "operations": operations, "request_groups": deepcopy(candidate["request_groups"]),
+        "planned_block_id": candidate.get("planned_block_id"),
+        "planned_block": deepcopy(candidate.get("planned_block")),
         "workload_semantics": {"reported_rmw": deepcopy(request["workload_summary"].get("rmw")),
             "source_binding": deepcopy(request["workload_summary"].get("source_binding")),
             "evidence_status": request["workload_summary"].get("evidence_status")},
@@ -90,6 +92,8 @@ def validate_draft(draft, candidate):
         if not condition:
             raise RequestError("Intrinsic draft: " + message)
     require(draft.get("format") == FORMAT and draft.get("status") == "draft_requires_review", "unsupported format/status")
+    require(draft.get("planned_block_id") == candidate.get("planned_block_id") and
+            draft.get("planned_block") == candidate.get("planned_block"), "planned capability contract changed")
     originals = {o["operation"]["id"]: o["operation"] for o in candidate["operation_options"]}
     projected = draft.get("operations", [])
     ids = [o["id"] for o in projected]
@@ -112,6 +116,9 @@ def description_markdown(draft, candidate):
     lines = ["# Draft intrinsic descriptions", "", f"Candidate: **{md(candidate['catalog_entry'])}** ({md(candidate['status'])}).",
              "", "Generated from located catalog contracts. Peter owns the concrete software spec; Eric resolves hardware constraints. ABI and implementation are pending review.", "",
              "[Candidate and evidence](candidate.yaml) · [Structured draft](intrinsic-draft.yaml) · [Interface diagram](interface.mmd) · [Workload context](context.mmd) · [Mechanism checklist](mechanisms.mmd)", ""]
+    if draft.get("planned_block_id"):
+        lines += ["Planned capability group: **" + md(draft["planned_block_id"]) + "**. Members: " +
+                  md(", ".join(draft["planned_block"]["member_request_ids"])) + ". Sharing and joint execution remain unproved.", ""]
     for item in draft["operations"]:
         lines += [f"## {md(item['id'])}", "", md(item["intent"]), "",
                   f"Role: **{md(item['execution_role'])}**. Source support: **{md(item['support'])}**. Realization: **{md(item['realization']['kind'] or 'unrecorded')}**.", "",
@@ -206,12 +213,12 @@ def build_handoff_artifacts(request, request_digest):
         files["manifest.json"] = json.dumps(manifest, indent=2) + "\n"
         for name, content in files.items():
             artifacts[f"{folder}/{name}"] = content
-        packages.append({"candidate_id": candidate["id"], "catalog_entry": candidate["catalog_entry"], "folder": folder})
+        packages.append({"candidate_id": candidate["id"], "catalog_entry": candidate["catalog_entry"], "planned_block_id":candidate.get("planned_block_id"), "folder": folder})
     lines = ["# Candidate intrinsic handoffs", "", "Draft descriptions and source contracts for Peter/Yan-Ru; one option per package. The unchanged CPU comparison needs no new intrinsic.", "",
-             "| Option | Package | Draft contract | Interface diagram |", "|---|---|---|---|"]
+             "| Option | Planned block | Package | Draft contract | Interface diagram |", "|---|---|---|---|---|"]
     for p in packages:
         f = p["folder"]
-        lines.append(f"| {md(p['catalog_entry'])} | [Description]({f}/README.md) | [YAML]({f}/intrinsic-draft.yaml) | [Mermaid]({f}/interface.mmd) |")
+        lines.append(f"| {md(p['catalog_entry'])} | {md(p.get('planned_block_id'))} | [Description]({f}/README.md) | [YAML]({f}/intrinsic-draft.yaml) | [Mermaid]({f}/interface.mmd) |")
     lines += ["", "Review one option at a time. A package may list multiple operation alternatives or a documented sequence; it does not declare a composed accelerator or a finalized ABI.", ""]
     artifacts["README.md"] = "\n".join(lines)
     artifacts["manifest.json"] = json.dumps({"format": FORMAT, "packages": packages}, indent=2) + "\n"

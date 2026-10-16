@@ -1,0 +1,10 @@
+flowchart LR
+  db["Hardware catalog"]
+  r0["gather-a-read: A"] --> q0["Independent access query"]
+  q0 --> db
+  r1["gather-c-read: C"] --> q1["Independent access query"]
+  q1 --> db
+  r2["stream-x-read: X"] --> q2["Independent access query"]
+  q2 --> db
+  r3["stream-y-read: Y"] --> q3["Independent access query"]
+  q3 --> db
