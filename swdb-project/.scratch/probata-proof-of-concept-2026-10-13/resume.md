@@ -4,7 +4,7 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 19:59 ET. **Implementation is active under the user's ongoing approval.**
+Updated: 2026-10-15 20:09 ET. **Implementation is active under the user's ongoing approval.**
 Integration `codex/probata-resume-20261015` is based on `yanrujhou_main` at `d94d629b`.
 Audited run23 documentation is published at `6dc94905`; reviewed method21 prototype
 is published at `14c2a298`. Only `swdb/c_lowering.py`
@@ -18,9 +18,9 @@ Drafts 1/2 remain immutable. No draft 3 or final production freeze exists.
 
 | Ticket / owner | Verified checkpoint | Active work |
 |---|---|---|
-| 07 / `ticket07` | Run 24 remains unproven; posthoc replay remains censored. Method 22 independent review passes 221 controls + 17 final affected checks; all 34 source pins match. Integrated at `7c6b11b8`. | Run 25 started 19:59:01 ET at clean published ancestor `798e9bb3`. Fresh baseline, zero hints; proof stop about 20:32, provider hard stop about 20:35, original 60-minute endpoint about 20:59, subject only to valid matched queue exclusions. |
-| 24 / `ticket24` | Current float, atomic and qualified std pairs accepted; 14 models accepted. Original MAA safe now proves 6 ordinary + 5 smoke goals, including both per-callee reachability witnesses; seed remains not_proven. Original std gap is retained. | Node 0 generation 580 continues at `23933f8a`: 12 reused + 5 fresh rows observed. The first 3 fresh MAA rows are independently audited; latest DXC summary/safe rows await the next batch audit. DXC seed active. |
-| 27 / `ticket27` | Current negative 13/13, bounded/native 35/35 and repaired capacity 3/3 accepted. Fresh CPU and store-source safe cases accepted, 2/11 safe units; historical `717` evidence remains separate. | Node 1 generation 604 runs remaining A-rest cases; stall-condition active. B1/B2 groups of 3 are queued. Exact disjoint safe union 1 + 4 + 3 + 3 = 11; original A5/B6 unlaunched. Nine safe units pending. |
+| 07 / `ticket07` | Run 24 remains unproven; posthoc replay remains censored. Method 22 independent review passes 221 controls + 17 final affected checks; all 34 source pins match. Run 25 baseline completed in 6.09 counted minutes: 254 ordinary (103 open), 139 smoke passed. | Run 25 started 19:59:01 ET at clean published ancestor `798e9bb3`. Empty-hint diagnostic active, provider not yet launched. Proof stop about 20:32, provider hard stop about 20:35, total endpoint about 20:59, subject only to valid matched queue exclusions. |
+| 24 / `ticket24` | Seven caller pairs, 14 models and all 3 fixture summaries independently accepted: 31/36 qualifying actual WP rows. Ring safe 89 ordinary + 1 smoke; class safe 146 ordinary + 11 smoke, all Valid. Their seeds each retain one attributable ordinary timeout. Original std gap is retained. | Node 0 generation 580 continues at `23933f8a`: 12 reused + 10 fresh rows independently accepted. OMP/allocation pairs, dedicated bounds negative and 9 lifetime refusals remain. Full continuation and ticket remain open. |
+| 27 / `ticket27` | Current negative 13/13, bounded/native 35/35 and repaired capacity 3/3 accepted. Fresh CPU/store-source/stall cases accepted, 3/11 safe units; stall proves 111 ordinary + 35 smoke goals. Historical `717` evidence remains separate. | Node 1 generation 604 continues A-rest, transitive next. B1/B2 groups of 3 are queued. Exact disjoint safe union 1 + 4 + 3 + 3 = 11; original A5/B6 unlaunched. Eight safe units pending. |
 | 36 / dependency-gated | 122 compiler/scripted controls pass; 13 actual-WP cases excluded. | Waits on 27; runtime fallback research remains prospective. |
 
 At17:43:14 ET node0 generation572 released after the standard caller safe timeout;
