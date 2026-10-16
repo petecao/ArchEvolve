@@ -430,3 +430,6 @@ Shared2e2 allocator/register [entry review](../evidence/t28-shared-2e2-pairs-ind
 
 
 2026-10-16 09:07 ET — Exact3d allocator declaration namespace is integrated after [independent review](../evidence/t28-allocation-namespace-independent-source-review-v1-3d784c7f-20261016.md) and realFrama33 syntaxPASS oldunboundRED/correct102+wrong101parse. No helpercontract/frame/totality/premise/library/API change; initialized-u32 successor excluded. Future sharedfreeze/pair requires newcompleteactualcold; G600presolverfailure unchanged.
+
+
+2026-10-16 — Root accepts [exacta3 partial711/1107 register fixture](../evidence/t28-register-scoped-root-decision-v1-20261016.md) after actualcold8,243checks/zeroerrors and independentlocalreconciliation:13ordinaryValid versus12+ensuresT/U/T,8healthysmokes each,6sourceExtern/ownedTCB. [Checkpoint](../evidence/register-partial-acceptance-and-grow38-partial-checkpoint-20261016.md) preserves34Bprosecorrection,32pure/oldreaderfailures and noSMT/binaryposthash/body/hardware/current0.2/full28 acceptance. Ticket remains claimed.

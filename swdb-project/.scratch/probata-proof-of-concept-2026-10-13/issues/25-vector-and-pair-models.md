@@ -1398,3 +1398,6 @@ Independent source-equivalence review at merged6802 now passes. Forty merged com
 
 
 2026-10-16 09:07 ET — Exactctor6 source6802/final4919 is now integrated after independent equivalence review and root35scriptedworkflowPASS;391 retainedartifactpins match. [Shared preparation checkpoint](../evidence/joint-ctor35-allocator-namespace-preparation-checkpoint-20261016.md) retains ctor35/grow38/reserve44/dtor11/101pendingcaller inventories without actual model/caller acceptance. Separate caller checkpoint resume stays unreviewed/unadopted.
+
+
+2026-10-16 — [Root grow38 coarse settled state](../evidence/t25-grow38-settled-root-progress-state-v2-20261016.json) preserves exact37/G624 normalpublicCLI0/not_proven and entry/guard1:27nativeValid, grow.copy.stepTimeout,10unexecuted inclnumeric. NoOOM/whole-timeout/sourcechange. Fullraw/task/ordinary/smoke/hypothesiscoldpending; no targetproofrepair/model/caller/ticket acceptance from progress counts.

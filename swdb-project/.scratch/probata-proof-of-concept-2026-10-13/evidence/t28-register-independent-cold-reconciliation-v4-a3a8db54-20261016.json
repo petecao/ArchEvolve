@@ -1,0 +1,73 @@
+{
+  "date": "2026-10-16 ET",
+  "verdict": "PASS_SCOPED_PARTIAL_REGISTER_EVIDENCE_RECONCILIATION_ROOT_DECISION_SEPARATE",
+  "root_receipt": {
+    "path": "/private/tmp/probata-root-register-cold-execution-v4-a3a8db54-20261016.json",
+    "bytes": 37967,
+    "sha256": "3829ff54c7f0a96da7d01288822d3f1866d1cf38312337cb164e4dceb94890c0"
+  },
+  "reviewed_packet": {
+    "path": "/private/tmp/probata-t28-register-cold-packet-v4-a3a8db54-20261016.json",
+    "sha256": "70bc1120e7e4da5e736fe947ccda3b49851c7458d3f23642546e41869b443780"
+  },
+  "static_review": {
+    "path": "/private/tmp/probata-t28-register-cold-independent-static-review-v4-a3a8db54-20261016.json",
+    "sha256": "1b31b44b74b7c57082a62a576585a4b862ec48e198b5670d530c46345c040085"
+  },
+  "independent_local_reconciliation": {
+    "receipt_hash_size_and_exact_reader_policy": true,
+    "source_lane_fullraw_policy_identity": true,
+    "raw_files": 166,
+    "raw_bytes": 37051897,
+    "consumer_Git_membership_files": 1549,
+    "consumer_Git_and_captured_physical_bytes": 1339107322,
+    "old_plan_prose_bytes_correction": {
+      "old": 1339107356,
+      "actual": 1339107322,
+      "difference": 34,
+      "policy_consumer_capture_and_frozen_Git_confirm_actual": true,
+      "original_plan_preserved": true
+    },
+    "positive_ordinary_directValid": 13,
+    "negative_ordinary_directValid": 12,
+    "negative_only_open": "trust_fixture_ensures timeout/unknown/timeout",
+    "per_record": {
+      "goals": 21,
+      "properties": 29,
+      "ordinary": 13,
+      "healthy_attempted_smokes": 8,
+      "Extern": 6,
+      "CSV_rows": 18,
+      "dependency_edges": 13,
+      "CSV_elision_statementIDs": [
+        4,
+        5
+      ]
+    },
+    "root_source_after_clean": true,
+    "original_producer_exit_unchanged": true
+  },
+  "root_actual_audit_only": {
+    "checks": 8243,
+    "indexed_physical_files": 2985,
+    "consumer_files": 1549,
+    "selected_source_files": 486,
+    "module_files": 217,
+    "errors": [],
+    "seconds": 11.321209573186934,
+    "peak_rss_bytes": 102715392,
+    "exit_code": 0,
+    "OOM": false,
+    "timeout": false
+  },
+  "scientific_scope": "Exact originalpartial711vs1107/closed2cell frame under explicitlyownedsourceExtern/transport/RFtypedstorage/compilerWP/runtime/contract-bodyTCB. No freshRF/reentrant/interference/MMIOordering/hardwareliveness orsourcebodyclaim.",
+  "limits": [
+    "Reviewerhashes/compares local rootreceipt/policy/capturedmetadata/frozenGit only; root alone rehashed remote physicalraw/source/runtime and executed passive cold. No reviewerSSH/main/tools/tests/formal/native.",
+    "Rawsmokes nonemptyhealthy nonvalid+passedtrue; normalizedStatsproved/success/time are neither directValid nor measuredproverruntime. TwoimplicithelperexitsUnknown remain unverified.",
+    "NosolverSMT/taskbytes survivedscratchcleanup; no submittedtask/foundationtranslation attestation. Ephemeralscratch/compiledreportmodule lacks binaryposthash, source/prelaunchcontextTCBexplicit.",
+    "Rootscope acceptance and recovery-safe exactsource-retirement remain separate decisions; no removal/lease/source mutation byreviewer. Futurework needs Git/restoration notphysicala3 once root preservesallcompletedraw/readers.",
+    "No current0.2/full28/ticket,hardware,modelcontractbody,eventrefinement or negative refutation. Counts35resolved/3claimed/25ready remain."
+  ],
+  "refuted": false,
+  "full28_or_ticket_closure": false
+}

@@ -1,0 +1,385 @@
+{
+  "at_utc": "2026-10-16T13:08:54.822471+00:00",
+  "raw": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-37ffe407-t25-qualified-grow38-public-v1",
+  "uptime": "09:08:54 up 77 days,  1:27,  8 users,  load average: 0.00, 0.36, 0.45",
+  "disk": "Filesystem      Size  Used Avail Use% Mounted on\n/dev/sdd1       1.8T  1.7T   22G  99% /data1\n/dev/sdb1       1.8T  1.7T   69G  97% /data\n",
+  "source_branch": "HEAD",
+  "source_commit": "37ffe407a10888ff9628c75f37ba770995a3ecd5",
+  "source_status": "",
+  "leases": {
+    "mbit10-evaluation.meta.json": {
+      "active_session": null,
+      "heartbeat_at": "2026-09-12T04:49:11Z",
+      "lease": {
+        "acquired_at": "2026-09-12T01:35:42Z",
+        "daemon_pid": 209457,
+        "daemon_start_token": "sh209457-1789176942",
+        "generation": 77,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation",
+        "mode": "measure",
+        "session_id": null
+      },
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "recovered_from_generation": null,
+      "released_at": "2026-09-12T04:49:11Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation-node1.meta.json": {
+      "active_session": null,
+      "heartbeat_at": "2026-10-16T13:02:06Z",
+      "lease": {
+        "acquired_at": "2026-10-16T12:55:54Z",
+        "daemon_pid": 3872877,
+        "daemon_start_token": "sh3872877-1792155354",
+        "generation": 624,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node1",
+        "mode": "measure",
+        "session_id": null
+      },
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "recovered_from_generation": null,
+      "released_at": "2026-10-16T13:02:06Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation-node0.meta.json": {
+      "active_session": null,
+      "heartbeat_at": "2026-10-16T12:43:41Z",
+      "lease": {
+        "acquired_at": "2026-10-16T12:43:01Z",
+        "daemon_pid": 3871441,
+        "daemon_start_token": "sh3871441-1792154581",
+        "generation": 600,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node0",
+        "mode": "measure",
+        "session_id": null
+      },
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "recovered_from_generation": null,
+      "released_at": "2026-10-16T12:43:41Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    }
+  },
+  "free_bytes": {
+    "/data1": 23001124864,
+    "/data": 73260273664
+  },
+  "lane.json": {
+    "socket_lane": {
+      "aligned_cell_age_s": "",
+      "aligned_to": "no_gapbs_batch_running",
+      "command": [
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=60",
+        "2520",
+        "bash",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-37ffe407-t25-qualified-grow38-public-v1/run.sh"
+      ],
+      "cpus_allowed_list": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63",
+      "ended_utc": "2026-10-16T13:02:06Z",
+      "exit_code": 1,
+      "host": "mbit10",
+      "job": "probata-reviewed-37ffe407-t25-qualified-grow38-public-v1",
+      "lease_generation": 624,
+      "lease_name": "mbit10-evaluation-node1",
+      "load1_at_start": 0.18,
+      "load1_max": 32,
+      "node": 1,
+      "numa_memory_policy": "bind:1",
+      "numactl": "--cpunodebind=1 --membind=1",
+      "preregistration_sha256": null,
+      "started_utc": "2026-10-16T12:55:54Z"
+    }
+  },
+  "resources.json": {
+    "cpu_seconds": 419.233674,
+    "exit_code": 1,
+    "out_of_memory": false,
+    "peak_rss_bytes": 1091170304,
+    "timed_out": false,
+    "wall_seconds": 369.08290122821927
+  },
+  "outer-resources.json": {
+    "exit_code": 1,
+    "peak_rss_bytes": 1145688064,
+    "out_of_memory": false,
+    "timed_out": false,
+    "wall_seconds": 371.135539338924,
+    "cpu_seconds": 493.862745
+  },
+  "qualified-grow-profile/result.json": {
+    "ambient_wp_names": [],
+    "caller_acceptance": false,
+    "cold_task_hypothesis_closure_pending": true,
+    "elapsed_seconds": 367.9143334059045,
+    "error": "complete qualified public model not proven",
+    "error_type": "ValueError",
+    "external_guard_required": {
+      "cap_bytes": 8589934592,
+      "output_budget_bytes": 2147483648,
+      "profile_seconds": 2200,
+      "public_timeout_seconds": 2100,
+      "root_outer_seconds": 2520,
+      "root_whole_seconds": 2400,
+      "workers": 1
+    },
+    "linux_launch_binding": {
+      "Mac_counted_token_required": false,
+      "command_sha256": "41b1e0beb1695cf74c2fded0d4c9284081bf2020013581966fdd8dd035954c88",
+      "launch": {
+        "bytes": 78606,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-37ffe407-t25-qualified-grow38-public-v1/launch.json",
+        "sha256": "e4fd0eb7ef7c70b3acf3b0904f96fa517ccc6b08822fe392f7caf0235bd542a1"
+      },
+      "lock_path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-37ffe407-t25-qualified-grow38-public-v1/verifier.lock",
+      "marker_path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-37ffe407-t25-qualified-grow38-public-v1",
+      "rss_cap_bytes": 8589934592,
+      "scope": "Linux root socket-lane + reviewed watch/execute ownership, not a Mac c6 token or lock claim",
+      "source_commit": "37ffe407a10888ff9628c75f37ba770995a3ecd5",
+      "whole_seconds": 2400
+    },
+    "member": "std_vector_int_realloc_v3_grow",
+    "model_proof_acceptance": false,
+    "original_v2_acceptance": false,
+    "public_command_launched": true,
+    "public_complete": false,
+    "public_exit_code": 0,
+    "scope": "One complete qualified v3 grow mathematical C-body profile, all38 fresh targets including fifteen exact copy-invariant conjuncts and numeric C kernel. Two top-level logical groups and three physical reference C files retained. Normal public CLI, canonical/source/setup, ordinary/RTE/init/smoke/dependency/schema/persistence checks. Original-v2, generic caller and ticket acceptance remain false.",
+    "source_commit": "37ffe407a10888ff9628c75f37ba770995a3ecd5",
+    "source_consumer_receipts": [
+      {
+        "bytes": 621142,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-37ffe407-t25-qualified-grow38-public-v1/qualified-grow-profile/source-consumer-closure-0.json",
+        "sha256": "dca1f3fbc9b66fa89bb3590704e47c5dfdff24a3ea1660b4c9ab2d64eb9d87ec"
+      },
+      {
+        "bytes": 621142,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-37ffe407-t25-qualified-grow38-public-v1/qualified-grow-profile/source-consumer-closure-1.json",
+        "sha256": "dca1f3fbc9b66fa89bb3590704e47c5dfdff24a3ea1660b4c9ab2d64eb9d87ec"
+      }
+    ],
+    "within_whole_budget": true
+  },
+  "live_native_goal_reports": [
+    {
+      "path": "qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-control.grow.premises_feasible/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.alloc.frame/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.alloc.identity/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.alloc.output/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.establish.allocated_eligible/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.establish.allocated_well_formed/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.establish.allocation_frame/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.establish.destination_extent/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.establish.destination_freeability/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.establish.destination_write_domain/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.establish.empty_copied_prefix/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.establish.entry_eligible/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.establish.entry_well_formed/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.establish.fresh_identity/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.establish.index_size_capacity_bounds/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.establish.old_buffer_distinct/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.establish.receiver_distinct/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.establish.uninitialized_tail/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.establish.unissued_identity/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.read/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.step/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "timeout": 1
+      }
+    },
+    {
+      "path": "qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.write/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.entry.int_projection.cells.access/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.entry.int_projection.cells.bounds/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.entry.int_projection.cells.initialization/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.entry.int_projection.cells.integer/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.entry.int_projection.repr/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.entry.reads/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    }
+  ],
+  "record_paths": [
+    "/data/yanruj/EvolveSWDB_runs/probata-reviewed-37ffe407-t25-qualified-grow38-public-v1/qualified-grow-profile/workspace/records/proofs/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2.yaml"
+  ],
+  "acceptance.log_tail": "",
+  "qualified-grow-profile/public.stderr_tail": "",
+  "qualified-grow-profile/public.stdout_tail": "h\": \"/data/yanruj/EvolveSWDB_runs/probata-reviewed-37ffe407-t25-qualified-grow38-public-v1/qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.step/prover-files/typed_real/zilch-typed_real_check_lemma_t25v3_grow_copy_step_Z3_5dt1dt0-wp_goal.smt2\",\n          \"sha256\": \"4f447dc5e42f33522e36488dbe193f24547482c0ad76e0d95fcd8688029dbe30\"\n        },\n        {\n          \"name\": \"heap_27_resources.json\",\n          \"path\": \"/data/yanruj/EvolveSWDB_runs/probata-reviewed-37ffe407-t25-qualified-grow38-public-v1/qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.step/resources.json\",\n          \"sha256\": \"604ffd22b0834164d9a3411e91e351b4768e93ecf4be43e08f2cf9ddbc277096\"\n        },\n        {\n          \"name\": \"heap_27_wp-goals.json\",\n          \"path\": \"/data/yanruj/EvolveSWDB_runs/probata-reviewed-37ffe407-t25-qualified-grow38-public-v1/qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.step/wp-goals.json\",\n          \"sha256\": \"6fe953f82f734fb2f0b3424b7f0cca1f520e6026c47b88052a9b60cab41d39f4\"\n        },\n        {\n          \"name\": \"heap_27_wp-inventory.json\",\n          \"path\": \"/data/yanruj/EvolveSWDB_runs/probata-reviewed-37ffe407-t25-qualified-grow38-public-v1/qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.step/wp-inventory.json\",\n          \"sha256\": \"3077a099370cb78ea6ce411f5748554212db3165ec48ba715b2adb570584ee43\"\n        },\n        {\n          \"name\": \"heap_27_wp-normalized.c\",\n          \"path\": \"/data/yanruj/EvolveSWDB_runs/probata-reviewed-37ffe407-t25-qualified-grow38-public-v1/qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.step/wp-normalized.c\",\n          \"sha256\": \"6339e986283d8fac95ac77333d0b7d99ec588de0ab9b0f6e852765657d41a30a\"\n        },\n        {\n          \"name\": \"heap_27_wp-properties.csv\",\n          \"path\": \"/data/yanruj/EvolveSWDB_runs/probata-reviewed-37ffe407-t25-qualified-grow38-public-v1/qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.step/wp-properties.csv\",\n          \"sha256\": \"e80744db37896e1ca09718363ee8d52b497fb4614a19d542a94d10d9eb8f5653\"\n        },\n        {\n          \"name\": \"heap_27_wp_input.c\",\n          \"path\": \"/data/yanruj/EvolveSWDB_runs/probata-reviewed-37ffe407-t25-qualified-grow38-public-v1/qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.step/wp_input.c\",\n          \"sha256\": \"5e46d1eee055960726f99ab13a172f1f4963270617255d7797c5ae5c79920a0e\"\n        },\n        {\n          \"name\": \"handler\",\n          \"path\": \"/data/yanruj/EvolveSWDB_runs/probata-reviewed-37ffe407-t25-qualified-grow38-public-v1/qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/handler.json\",\n          \"sha256\": \"d55adbabd25b9b171a1e5c021ad7e71482d6febcac620217d91fa87c768fdca0\"\n        }\n      ]\n    },\n    \"evidence_kind\": \"contract_fixture\"\n  },\n  \"path\": \"proofs/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2.yaml\"\n}\n",
+  "finite_selected_processes": [],
+  "inspection_denials": [],
+  "scope": "Mutable progress snapshot only; no scientific result or task acceptance"
+}
