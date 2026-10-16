@@ -25,7 +25,7 @@ def test_canonical_caller_preparation_binds_existing_contract_without_enabling_p
     rows=plan['obligations']
     body_counts={member:sum(row['id'].startswith('body.'+member+'.') for row in rows)
                  for member in ('ctor_count_value','reserve','dtor')}
-    assert body_counts=={'ctor_count_value':35,'reserve':58,'dtor':11}
+    assert body_counts=={'ctor_count_value':35,'reserve':67,'dtor':11}
     assert {row['id'] for row in rows if row['id'].startswith('apply.')}=={
         'apply.ctor.entry','apply.ctor.zero','apply.ctor.positive_entry'}
     assert len(rows)==127 and len(rows)-sum(body_counts.values())-3==11
@@ -59,7 +59,7 @@ def prepared_caller(tmp_path_factory):
     from swdb import vector_reallocation_caller_packets as packets
     stage=tmp_path_factory.mktemp('caller-packets')/'source'
     plan=packets.prepare(SOURCE,'vector_realloc_v3_safe',CONTRACT,stage)
-    assert len(plan['obligations'])==127 # 35ctor +58reserve +11dtor +10local +1numeric +3pending applications
+    assert len(plan['obligations'])==127 # 35ctor +67reserve +11dtor +10local +1numeric +3pending applications
     assert len(plan['required_models'])==5
     assert all(row['proof_record'] is None for row in plan['required_models'])
     return stage

@@ -1436,3 +1436,6 @@ Root accepts only the standalone35-target qualified signed32 count/value constru
 Focused copy-step diagnostics retain14/15 successful producer leaves and the sole open `grow.copy.step.advanced_copied_prefix` Timeout;37 other model targets remain unexecuted. [Compact metadata V2](../evidence/t25-copy-step15-metadata-capture-compact-v2-20261016.json) records capture only, not query/hypothesis or full52 acceptance. Original V1 singleton-par reader refusal fc956 and exact command00b1 with two `-wp-par 1` pairs are retained alongside the narrow V2 static repair. No proof result is changed or reused.
 
 Ticket remains claimed; dependency/status counts are unchanged. [Compact checkpoint](../evidence/frontier-scoped-checkpoint-20261016-1117.md).
+
+
+Independent review found the pending caller test still expected58 reserve duties after the total changed127. That dict/comment now expect67; a new AST-only control compares the real test literals with current canonical35/67/11 body inventories and127total without invoking caller lowering or conftest. Genuine RED5pass/1fail becomes6pass, then35affectedpure cases pass under1GiB/60s with no external/native attempts/events. Original productionf466 is byte-identical; actual caller127 and public61 workflow remain unexecuted. See `../evidence/t25-copy-prefix-caller-count-correction-20261016.json`.
