@@ -1,0 +1,58 @@
+{
+  "date_ET": "2026-10-16",
+  "at_utc": "2026-10-16T17:03:10.326831+00:00",
+  "scope": "Static4GiB B+c6 compiler/scripted profile resource review and selected Python runtime metadata supplement; no actual workflow",
+  "resource_review": {
+    "status": "PASS for finite positive --cap-gb4 preserving timeout240, entry220 and unchanged source/entry/scientific criteria",
+    "guard": {
+      "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py",
+      "sha256": "c6f0d4b8c60fab912dd768c4c8c7e7737d8feca3a110d0de02dec4d38785db57",
+      "bytes": 28501
+    },
+    "entry": {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/public_entry_v3.py",
+      "sha256": "5001ea91d78d92ddc3f336fc70be253845992bb05d2a447a12fce9579d3a7099",
+      "bytes": 10021
+    },
+    "actual_guard_cap_bytes": 4294967296,
+    "propagate_if_set": {
+      "SWDB_VERIFIER_RSS_CAP_BYTES": "4294967296"
+    },
+    "root_fresh_preflight_required": {
+      "available_ram_min_bytes": 4831838208,
+      "shared_slot_available_or_fifo_admitted": true
+    },
+    "failure_boundary": "OOM, timeout, inspection or child-cleanup failure remains unsuccessful; smaller cap is no proof or acceptance waiver"
+  },
+  "runtime_inventory": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-python-package-physical-inventory.json",
+    "sha256": "5721454afff53af0d1adfbede93bb519233b1b9d4f61f84c0123f3447dd2059f",
+    "bytes": 757949
+  },
+  "compiler_template": {
+    "path": "/private/tmp/probata-t28-initialized-u32-public-runtime-policy-template-v1-20261016.json",
+    "sha256": "67804e55f69b188983493033ec8180f6c784b181831d0db12919b401bea7e0c0",
+    "bytes": 950187
+  },
+  "merged_runtime_policy": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-public-v3-runtime-policy-with-python-packages.json",
+    "sha256": "4171556ed48f8612eb364a88741831a3bfc9259d34c25750e8717dadeab408a1",
+    "bytes": 1640971
+  },
+  "merged_policy_shape": [
+    "clang_command",
+    "ocamlfind_command",
+    "opam_switch_prefix",
+    "path",
+    "pins"
+  ],
+  "original_pins": 4489,
+  "python_pins": 3130,
+  "overlap_equal_pins": 14,
+  "merged_unique_pins": 7605,
+  "merged_unique_physical_bytes": 465364367,
+  "all_observed_python_module_origins_covered": true,
+  "fresh_prefix_created": false,
+  "source_runtime_integration_admitted": false,
+  "boundary": "Selected stdlib/package and active Requires-Dist closure, .pth selectors and observed external package roots pinned. Does not claim full native dynamic-loader closure, arbitrary future Python imports, actual compiler use or workflow acceptance. Root must pin/select policy and recheck memberships before actual public V3 admission."
+}

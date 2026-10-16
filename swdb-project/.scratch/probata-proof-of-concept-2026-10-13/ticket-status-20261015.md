@@ -1,10 +1,11 @@
 # Current Probata ticket status
 
-Updated: 2026-10-16 ET — user-requested PAUSE11:35 ET.
+Updated: 2026-10-16 ET — tickets 25 and 28 resumed.
 
-35 resolved / 28 ready-for-agent / 0 claimed. **PAUSED**; claims07,25,28 released. No scheduled next status. Read [paused handoff](PAUSED-HANDOFF-20261016.md) before resuming.
-Derived from authoritative ticket frontmatter; unresolved dependencies still gate later work.
-[Current resume](resume.md). Historical proof evidence retains its exact source pins.
+35 resolved / 25 ready-for-agent / 3 claimed.
+Tickets 25 and 28 are owned by this Codex chat; ticket 7 is owned by external Claude Code.
+Derived from authoritative frontmatter; open dependencies still gate later work.
+[Current execution](execution-20261016.md). [Current resume](resume.md). Historical proofs keep their exact source pins.
 
 | Ticket | Status | Unresolved blockers |
 |---|---|---|
@@ -14,7 +15,7 @@ Derived from authoritative ticket frontmatter; unresolved dependencies still gat
 | [04 — Proof record tracer](issues/04-proof-record-tracer.md) | resolved | none |
 | [05 — Spike (a): SAW on clang 22 bitcode](issues/05-spike-saw-clang22.md) | resolved | none |
 | [06 — Spike (b): 2 lanes under 15 minutes](issues/06-spike-two-lanes.md) | resolved | none |
-| [07 — Spike (c): WP with agent hints](issues/07-spike-wp-agent-hints.md) | ready-for-agent | none |
+| [07 — Spike (c): WP with agent hints](issues/07-spike-wp-agent-hints.md) | claimed | none |
 | [08 — Spike (d): sums over reals](issues/08-spike-sums-over-reals.md) | resolved | none |
 | [09 — Spike verdict](issues/09-spike-verdict.md) | resolved | 07 |
 | [10 — Level rule](issues/10-level-rule.md) | resolved | none |
@@ -32,10 +33,10 @@ Derived from authoritative ticket frontmatter; unresolved dependencies still gat
 | [22 — SAW adapter and SAWScript translator](issues/22-saw-adapter-and-translator.md) | resolved | none |
 | [23 — C-stub translator, fallbacks and check mode](issues/23-stub-translator-fallbacks-check-mode.md) | resolved | none |
 | [24 — C++ subset widening](issues/24-cpp-subset-widening.md) | resolved | none |
-| [25 — std::vector and std::pair models](issues/25-vector-and-pair-models.md) | ready-for-agent | none |
+| [25 — std::vector and std::pair models](issues/25-vector-and-pair-models.md) | claimed | none |
 | [26 — Logic and sum libraries](issues/26-logic-and-sum-libraries.md) | resolved | none |
 | [27 — Proof semantics for the BFS read-offload calls](issues/27-proof-semantics-bfs-calls.md) | resolved | none |
-| [28 — Proof semantics for the remaining maa_* calls](issues/28-proof-semantics-remaining-calls.md) | ready-for-agent | none |
+| [28 — Proof semantics for the remaining maa_* calls](issues/28-proof-semantics-remaining-calls.md) | claimed | none |
 | [29 — Proof-semantics checks](issues/29-proof-semantics-checks.md) | ready-for-agent | 28 |
 | [30 — Reference definitions, per-call summaries and new intrinsic versions](issues/30-reference-definitions-and-summaries.md) | ready-for-agent | 25, 28 |
 | [31 — Five-gate drafting and the new bfs_read_offload version](issues/31-five-gate-drafting-and-read-offload-version.md) | ready-for-agent | 30 |
@@ -65,8 +66,8 @@ Derived from authoritative ticket frontmatter; unresolved dependencies still gat
 | [55 — End-to-end fixture campaign with real verifiers](issues/55-end-to-end-fixture-campaign.md) | ready-for-agent | 39, 48, 60 |
 | [56 — Verifier lineup on mbit10](issues/56-lineup-on-mbit10.md) | resolved | none |
 | [57 — Proof workers in a socket lane](issues/57-proof-workers-in-socket-lane.md) | resolved | none |
-| [58 — Mac verdicts reproduced on mbit10](issues/58-reproduce-on-mbit10.md) | ready-for-agent | 38, 40, 49, 51, 53, 54, 51, 53, 54 |
-| [59 — Method-version review and freeze](issues/59-method-version-freeze.md) | ready-for-agent | 43, 58, 62, 62 |
+| [58 — Mac verdicts reproduced on mbit10](issues/58-reproduce-on-mbit10.md) | ready-for-agent | 38, 40, 49, 51, 53, 54 |
+| [59 — Method-version review and freeze](issues/59-method-version-freeze.md) | ready-for-agent | 43, 58, 62 |
 | [60 — Strict-layer replay and whole-kernel reproduction](issues/60-strict-layer-replay-and-kernel-reproduction.md) | ready-for-agent | 29 |
 | [61 — SAW whole-function equivalence (bounded direct route)](issues/61-saw-whole-function-equivalence.md) | resolved | none |
 | [62 — Route choice and predecessor proofs in the campaign](issues/62-route-choice-and-predecessor-proofs.md) | ready-for-agent | 53 |

@@ -1,0 +1,49 @@
+{
+  "date_ET": "2026-10-16",
+  "at_utc": "2026-10-16T17:00:03.004094+00:00",
+  "review": "PASS for sole outer-PYTHONPATH metadata repair; previous review and refusal preserved",
+  "launcher": {
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/launch_reviewed_main_v4.py",
+    "sha256": "26e2833843b0b77a7e5390977bb70cfb499332b942282313cbeb637fa072a30d",
+    "bytes": 9343
+  },
+  "prior_review": {
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/v4-final-independent-static-review.json",
+    "sha256": "a67c85767e4857ae6490500c349e3df1ea65e2d0973f17cdbd9a1bef180be23c",
+    "bytes": 1688
+  },
+  "inverse_narrow_diff_matches_prior_reviewed_source": true,
+  "prior_launcher_sha256": "46effb9a33fb0b93d3cb4f5a4922d2a2a1c5bc3a3e259cd06ce6737dfa821de4",
+  "failed_preflight": {
+    "receipt": {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/t25-prefix10-attempt1-refused.json",
+      "sha256": "814f1dc72c3b145f4bf88ae945064ff33bb682023cce220fd0485fb5285252a2",
+      "bytes": 354
+    },
+    "content": {
+      "created": "2026-10-16 ET",
+      "exit_code": 1,
+      "stage": "SSH metadata environment preflight",
+      "refusal": "unreviewed ambient runtime selectors: PYTHONPATH",
+      "solver_or_compiler_run": false,
+      "raw_directory_created": false,
+      "lease_acquired": false,
+      "source_checkout_created": false,
+      "scope": "Guard preflight refusal; no proof attempt."
+    },
+    "attribution": "Root-written refusal receipt, corroborated by guard ordering before worktree/raw creation and before native/compiler/proof commands"
+  },
+  "repair": [
+    "actual remote process still starts python3 -I -B",
+    "explicit isolated/nonoptimized metadata interpreter assertion",
+    "sole permitted outer selector name PYTHONPATH is ignored by isolated interpreter",
+    "all other forbidden selector names remain refused",
+    "only selector names recorded; no environment values disclosed",
+    "actual tmux direct exec env-i whitelist remains unchanged",
+    "reviewed run.sh later sets exact admitted source PYTHONPATH"
+  ],
+  "outer_and_embedded_ast_parse": true,
+  "launcher_or_compiler_or_guard_executed_by_reviewer": false,
+  "formal_acceptance": false,
+  "remaining_admission": "Fresh exact packet/source/runtime/current lane/resource checks and result audit remain root-owned."
+}

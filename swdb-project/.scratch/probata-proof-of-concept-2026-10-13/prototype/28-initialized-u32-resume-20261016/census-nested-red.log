@@ -1,0 +1,13 @@
+..........F.....
+======================================================================
+FAIL: test_nested_suite_is_refused (__main__.PublicResultTests.test_nested_suite_is_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/test_public_result.py", line 80, in test_nested_suite_is_refused
+    self.assertFalse(self.census(self.suite().replace('</testsuite>', '<testsuite tests="99" skipped="99"/></testsuite>'))['accepted'])
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.010s
+
+FAILED (failures=1)

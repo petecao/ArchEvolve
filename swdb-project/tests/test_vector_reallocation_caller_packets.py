@@ -8,6 +8,24 @@ SOURCE=FIXTURES/'proof/vector_reallocation_v3.cc'
 CONTRACT=[r'requires 0 <= n;',r'assigns \nothing;',r'ensures \result == (n > 0 ? 7 : 0);']
 
 
+def test_reserve_entry_application_is_canonical_and_never_grants_a_poststate(tmp_path):
+    from swdb import vector_reallocation_caller_packets as packets
+    stage=tmp_path/'reserve-entry'
+    plan=packets.prepare(SOURCE,'vector_realloc_v3_safe',CONTRACT,stage)
+    row=next((row for row in plan['obligations']if row['id']=='apply.reserve.entry'),None)
+    assert row is not None, 'the caller requires a source-bound reserve precondition/branch application'
+    receipt=plan['composition']['reserve_entry']
+    assert receipt['source_call']==next(row['source']for row in plan['candidate']['call_obligations']if row['call']=='reserve')
+    assert receipt['growth_branch']is True and receipt['request_term']=='(n+1)'
+    assert row['dependencies']==[]and row['status']=='pending'
+    assert receipt['caller_premises_added']==[]and receipt['current_proof_records_admitted']==[]
+    assert receipt['state_after']=='pending current qualified grow application'
+    assert row['path'].startswith('applications/003-')and (stage/row['path']).is_file()
+    assert plan['proof_admission'].startswith('unsupported:')and plan['current_proof_records_admitted']==[]
+    assert len(plan['obligations'])==128
+    assert packets.check(SOURCE,'vector_realloc_v3_safe',CONTRACT,stage)==plan
+
+
 def test_canonical_caller_preparation_binds_existing_contract_without_enabling_proof(tmp_path):
     from swdb import vector_reallocation_caller_packets as packets
     stage=tmp_path/'caller'
@@ -27,8 +45,8 @@ def test_canonical_caller_preparation_binds_existing_contract_without_enabling_p
                  for member in ('ctor_count_value','reserve','dtor')}
     assert body_counts=={'ctor_count_value':35,'reserve':67,'dtor':11}
     assert {row['id'] for row in rows if row['id'].startswith('apply.')}=={
-        'apply.ctor.entry','apply.ctor.zero','apply.ctor.positive_entry'}
-    assert len(rows)==127 and len(rows)-sum(body_counts.values())-3==11
+        'apply.ctor.entry','apply.ctor.zero','apply.ctor.positive_entry','apply.reserve.entry'}
+    assert len(rows)==128 and len(rows)-sum(body_counts.values())-4==11
     assert packets.check(SOURCE,'vector_realloc_v3_safe',CONTRACT,stage)==plan
 
 
@@ -59,13 +77,14 @@ def prepared_caller(tmp_path_factory):
     from swdb import vector_reallocation_caller_packets as packets
     stage=tmp_path_factory.mktemp('caller-packets')/'source'
     plan=packets.prepare(SOURCE,'vector_realloc_v3_safe',CONTRACT,stage)
-    assert len(plan['obligations'])==127 # 35ctor +67reserve +11dtor +10local +1numeric +3pending applications
+    assert len(plan['obligations'])==128 # 35ctor +67reserve +11dtor +10local +1numeric +4pending applications
     assert len(plan['required_models'])==5
     assert all(row['proof_record'] is None for row in plan['required_models'])
     return stage
 
 
-@pytest.mark.parametrize('mutation',['target','body_step','contract','original','extra_import','symlink'])
+@pytest.mark.parametrize('mutation',['target','body_step','contract','original','extra_import','symlink',
+                                      'reserve_application','reserve_receipt'])
 def test_caller_packet_check_reconstructs_source_and_contract_after_self_consistent_tampering(tmp_path,prepared_caller,mutation):
     from swdb import vector_reallocation_caller_packets as packets
     stage=tmp_path/'changed';shutil.copytree(prepared_caller,stage)
@@ -91,6 +110,11 @@ def test_caller_packet_check_reconstructs_source_and_contract_after_self_consist
     elif mutation=='symlink':
         path=stage/'local/caller-count-numeric.c';data=path.read_bytes()
         other=tmp_path/'same-bytes.c';other.write_bytes(data);path.unlink();path.symlink_to(other)
+    elif mutation=='reserve_application':
+        row=next(r for r in plan['obligations']if r['id']=='apply.reserve.entry')
+        path=stage/row['path'];path.write_text(path.read_text().replace(row['statement'],r'\true'))
+        row['statement']=r'\true';row['sha256']=hashlib.sha256(path.read_bytes()).hexdigest()
+    elif mutation=='reserve_receipt':plan['composition']['reserve_entry']['growth_branch']=False
     (stage/'manifest.json').write_text(json.dumps(plan,sort_keys=True,indent=2)+'\n')
     with pytest.raises(ValueError):packets.check(SOURCE,'vector_realloc_v3_safe',CONTRACT,stage)
 
@@ -126,7 +150,7 @@ def test_whole_clauses_may_share_one_actual_annotation_without_splitting_tokens(
     plan=packets.prepare(SOURCE,'vector_realloc_v3_safe',clauses,tmp_path/'whole')
     assert plan['contract']['clauses']==clauses
     assert plan['contract']['ordinary_contract_identity'].startswith('pending:')
-    assert plan['current_proof_records_admitted']==[] and len(plan['obligations'])==127
+    assert plan['current_proof_records_admitted']==[] and len(plan['obligations'])==128
 
 
 def test_constructor_entry_application_maps_source_storage_and_existing_count_clause(tmp_path):

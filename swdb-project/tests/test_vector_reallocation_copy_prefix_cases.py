@@ -87,4 +87,4 @@ def test_caller_count_literals_follow_current_body_packets_without_running_calle
  actual={member:len(packets.declaration('std_vector_int_realloc_v3_'+member)[0]['obligations'])for member in ['ctor_count_value','reserve','dtor']}
  assert expected==actual
  totals=[n.comparators[0].value for a in assertions for n in ast.walk(a)if isinstance(n,ast.Compare)and isinstance(n.left,ast.Call)and isinstance(n.left.func,ast.Name)and n.left.func.id=='len'and len(n.left.args)==1 and isinstance(n.left.args[0],ast.Name)and n.left.args[0].id=='rows'and isinstance(n.comparators[0],ast.Constant)]
- assert totals==[sum(actual.values())+3+11]
+ assert totals==[sum(actual.values())+4+11]

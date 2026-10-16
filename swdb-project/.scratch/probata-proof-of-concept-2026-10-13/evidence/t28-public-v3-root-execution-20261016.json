@@ -1,0 +1,69 @@
+{
+  "created": "2026-10-16 ET",
+  "scope": "Actual compiler and named-stand-in persistence workflow only; no actual formal theorem, native caller, body/hardware/current0.2/full-ticket acceptance.",
+  "source_commit": "c978393b119a3614229a37f0f2c8ca2a097c750b",
+  "raw": "/private/tmp/probata-resume-20261016-t28-public-v3-c978393b",
+  "passed": true,
+  "junit": {
+    "accepted": true,
+    "cases": 1,
+    "reason": "exactly one selected execution; zero failures/errors/skips"
+  },
+  "guard": {
+    "exit_code": 0,
+    "wall_s": 52.66118579165777,
+    "peak_rss_mb": 2452.453125,
+    "cap_gb": 4.0,
+    "killed_by_watchdog": false,
+    "timed_out": false,
+    "queue_timed_out": false,
+    "inspection_failure": null,
+    "cleanup_inspection_failure": null,
+    "unconfirmed_children": []
+  },
+  "inspection_event_count": 1,
+  "inspection_boundary": "One recovered AccessDenied event; final inspection/cleanup failure null; no unconfirmed owned children. External Claude slot ownership unaffected.",
+  "source_unchanged": true,
+  "runtime_pins_unchanged": true,
+  "private_caches_absent": true,
+  "pins": [
+    {
+      "path": "/private/tmp/probata-resume-20261016-t28-public-v3-c978393b/source-consumer-admission.json",
+      "bytes": 753339,
+      "sha256": "56ddca25715fb34ba000c0162a9a206bde83de887c5aa2a6495bb88ba401ccfa"
+    },
+    {
+      "path": "/private/tmp/probata-resume-20261016-t28-public-v3-c978393b/root-runtime-and-resource-admission.json",
+      "bytes": 1870,
+      "sha256": "3e0836984209e4c45ed69872a3509746c15d143b1c4f3be35a41ec8f2fb02b69"
+    },
+    {
+      "path": "/private/tmp/probata-resume-20261016-t28-public-v3-c978393b/guard.log.summary.json",
+      "bytes": 4334,
+      "sha256": "dfec2e82bfa1409f3ba3d2f8a562f0546ba75ed7c3950bb575a1dd478f927ae8"
+    },
+    {
+      "path": "/private/tmp/probata-resume-20261016-t28-public-v3-c978393b/component/result.json",
+      "bytes": 826,
+      "sha256": "0976dde488cfb786e8921cbfde5736a51da38a4f0c500710c9d62584b3887443"
+    },
+    {
+      "path": "/private/tmp/probata-resume-20261016-t28-public-v3-c978393b/component/junit.xml",
+      "bytes": 429,
+      "sha256": "814de8085beb6681e4864ec57c0d83003b84cc4022419a526c818c4780e93fec"
+    },
+    {
+      "path": "/private/tmp/probata-resume-20261016-t28-public-v3-c978393b/component/command.json",
+      "bytes": 1701,
+      "sha256": "8e5c1a251fd50e36fbbe4a2fb87db94714bd29c9a35bfe29c52dbd560548645d"
+    },
+    {
+      "path": "/private/tmp/probata-resume-20261016-t28-public-v3-c978393b/component/artifact-manifest.json",
+      "bytes": 28792,
+      "sha256": "9804039b0a5d1a269c745dec862001dccffc3b1c96efa50a4dce19ecbefff2d8"
+    }
+  ],
+  "original_v1": "Still failed under its original frozen identity; no prior result relabeled.",
+  "formal_acceptance": false,
+  "ticket_closure": false
+}

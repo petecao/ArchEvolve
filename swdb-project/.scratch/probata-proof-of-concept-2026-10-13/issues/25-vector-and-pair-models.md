@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-16 ET (four original int/int pair bodies and exact-dependency caller profile accepted; wider ticket remains open); 2026-10-15 ET (original vector/pair maximum workflow WP view accepted; member/bounded frontier remains open); 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 22, 24
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Formal-half language and the C++ subset": the C++ subset and the standard-library model; "Modules", library content: the `std::vector` and `std::pair` models; "What a proven verdict asserts": the assumption set; "Records and levels": the method-version file lists the `std::vector` model; "Testing Decisions", seam 1; choice S1); decisions: [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md) items 6, 7; also [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md) item 11 (undefined behavior is a proof obligation)
 **Time estimate:** about 1 week
@@ -1455,3 +1455,25 @@ The user explicitly requested STOP and progress synchronization. The claim is re
 The focused10 entry/expectation/command/packet and authoring/preparer snapshots are preserved under [STOP checkpoint](../prototype/25-prefix10-stop-checkpoint-20261016/README.md), explicitly DRAFT/UNREVIEWED/NOTEXECUTED. Its independent entry review was not requested/completed before interruption. Previous inert full52 remains historical/deferred; no reserve58 packet was prepared. Historical focused15G602 still has14successful conditional leaves and one open advancedcopiedprefix. No old success becomes a premise, record or caller dependency.
 
 After the user resumes: inspect current root/map/resume and snapshot manifest; reclaim this ticket; review/version the inert focused10 command with current source/compiler/runtime pins and independent entry review; root alone admits actual execution. Fresh complete61grow/67reserve proofs,127caller duties, remaining member/type/bounded breadth, numeric/RTE/init/smoke and full source/import/hypothesis/runtime/caller closure are still mandatory. Do not run unchanged absolute-path draft scripts or treat source review as formal acceptance. Known author-owned processes and actual jobs: none; all original tmp/source/raw producers are retained. Root owns final yanrujhou_main merge and cleanup.
+
+## Explicit resumption — 2026-10-16 ET
+
+The user resumed tickets 25 and 28; external Claude Code retains ticket 7.
+Ticket 25 is claimed. The fresh copied-prefix diagnostic at published source
+`c978393b` completed ten of ten selected leaves as proven on mbit10 node 0,
+generation 603 (12:59:03–13:00:31 ET). Outer guard exit 0 / 88.003 seconds /
+790,986,752-byte peak RSS, no timeout or OOM. Independent cold audit is pending;
+no complete grow/reserve/member/caller result follows from these ten leaves.
+
+The source-local reserve-entry application has genuine public preparation
+RED/GREEN controls and independent [Spec](../evidence/t25-reserve-entry-composition-spec-review-c978393b-20261016.md)
+and [Standards](../evidence/t25-reserve-entry-composition-standards-review-c978393b-20261016.md)
+reviews. It adds a pending fourth application, making the prospective caller
+inventory 128. Historical 127-target packets remain historical. Caller admission
+stays unsupported: construction's post-state and the type-directed Typed+Var
+to byte-heap mapping still need actual source/task correspondence and proof.
+No new axiom, caller premise, historical proof reuse or public route is admitted.
+
+Current work: independently audit the ten-leaf result, admit complete fresh
+grow61/reserve67 profiles, and observe original no-growth WP tasks before
+implementing the caller bridge. See [active execution](../execution-20261016.md).

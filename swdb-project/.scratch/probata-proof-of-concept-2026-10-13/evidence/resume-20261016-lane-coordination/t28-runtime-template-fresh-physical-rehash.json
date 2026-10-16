@@ -1,0 +1,83 @@
+{
+  "date_ET": "2026-10-16",
+  "started_utc": "2026-10-16T16:59:09.245286+00:00",
+  "finished_utc": "2026-10-16T16:59:11.229303+00:00",
+  "wall_seconds": 1.981345375010278,
+  "scope": "Fresh read-only physical SHA256/size and six runtime-tree memberships for historical ticket28 runtime inventory. No tool/version/compiler/guard/workflow execution.",
+  "policy": {
+    "path": "/private/tmp/probata-t28-initialized-u32-public-runtime-policy-template-v1-20261016.json",
+    "sha256": "67804e55f69b188983493033ec8180f6c784b181831d0db12919b401bea7e0c0",
+    "bytes": 950187
+  },
+  "context": {
+    "path": "/private/tmp/probata-t28-initialized-u32-public-runtime-template-context-v1-20261016.json",
+    "sha256": "f6127b7081b316874ad55e816588d5170e9dd23d6bda5ba3785ca157b954e86b",
+    "bytes": 718602
+  },
+  "expected_pin_count": 4489,
+  "checked_pin_count": 4489,
+  "expected_pin_bytes": 371183650,
+  "actual_io_bytes_including_repeat_tree_and_inventory_hashes": 642188540,
+  "pin_errors": [],
+  "unstable_paths": [],
+  "trees": [
+    {
+      "files": 771,
+      "membership_sha256": "a8274dbf5a37ecda99b5465568a7ba8665a0799e038b05cbaf616da6fe937959",
+      "role": "selected package",
+      "root": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core",
+      "actual_files": 771,
+      "actual_membership_sha256": "a8274dbf5a37ecda99b5465568a7ba8665a0799e038b05cbaf616da6fe937959",
+      "passed": true
+    },
+    {
+      "files": 1427,
+      "membership_sha256": "7fed2cfc783a1c3eeb519ead6400ad21524e0fb91e09c2197546a59c333bd0b6",
+      "role": "selected package",
+      "root": "/Users/yanrujhou/.opam/framac-33/lib/frama-c/kernel",
+      "actual_files": 1427,
+      "actual_membership_sha256": "7fed2cfc783a1c3eeb519ead6400ad21524e0fb91e09c2197546a59c333bd0b6",
+      "passed": true
+    },
+    {
+      "files": 57,
+      "membership_sha256": "5e64acaaada6f3ce8634acf21521c76d43c36e188643695fe4c4a97d2b4dd176",
+      "role": "selected package",
+      "root": "/Users/yanrujhou/.opam/framac-33/lib/yojson",
+      "actual_files": 57,
+      "actual_membership_sha256": "5e64acaaada6f3ce8634acf21521c76d43c36e188643695fe4c4a97d2b4dd176",
+      "passed": true
+    },
+    {
+      "files": 43,
+      "membership_sha256": "48c6df8d07d1f9aac4b67561a28cea70098d17bab64c11045ddd99eaadfe01cf",
+      "role": "selected package",
+      "root": "/Users/yanrujhou/.opam/framac-33/lib/why3",
+      "actual_files": 43,
+      "actual_membership_sha256": "48c6df8d07d1f9aac4b67561a28cea70098d17bab64c11045ddd99eaadfe01cf",
+      "passed": true
+    },
+    {
+      "files": 1679,
+      "membership_sha256": "2d0bfbee022ba3d9b57060ca5309cd787d33af7ad6683d4e0e26744ee7bc480d",
+      "role": "libc++",
+      "root": "/opt/homebrew/Cellar/llvm/22.1.8/include/c++/v1",
+      "actual_files": 1679,
+      "actual_membership_sha256": "2d0bfbee022ba3d9b57060ca5309cd787d33af7ad6683d4e0e26744ee7bc480d",
+      "passed": true
+    },
+    {
+      "files": 303,
+      "membership_sha256": "b802a09a86622c9b9b9ff5ee2b521c531c88effc1b3e54a1bbaecaffb7d47ecb",
+      "role": "clang-resource",
+      "root": "/opt/homebrew/Cellar/llvm/22.1.8/lib/clang/22/include",
+      "actual_files": 303,
+      "actual_membership_sha256": "b802a09a86622c9b9b9ff5ee2b521c531c88effc1b3e54a1bbaecaffb7d47ecb",
+      "passed": true
+    }
+  ],
+  "all_pins_and_memberships_match": true,
+  "runtime_policy_for_current_source_or_public_v3_admitted": false,
+  "actual_workflow_or_formal_acceptance": false,
+  "boundary": "Historical runtime package/hash identity only. Does not bind current source policy, entry/command, fresh cache prefix, actual driver/header inputs, loader/OS, method record or result."
+}

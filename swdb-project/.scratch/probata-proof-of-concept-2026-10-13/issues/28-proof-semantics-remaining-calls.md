@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-16 ET (user-requested stop and next-session handoff)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 27
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("DX100 proof semantics", "Concurrency" (history read), "What a proven verdict asserts" (the seven assumption kinds), "Testing Decisions", S1, S2); decisions: [12](../../formal-verification-2026-10-09/issues/12-dx100-proof-semantics.md), [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md), [14](../../formal-verification-2026-10-09/issues/14-dx100-wait-rule.md), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md)
 **Time estimate:** about 1 week
@@ -500,3 +500,29 @@ SMT payload was copied into this checkpoint. No author actual job, pending
 process session or owned lease is known. The last pure metadata-author guard
 settled11:35:25ET exit0 with no events/failures/unconfirmed children; this is
 historical settlement evidence, not a new live host census.
+
+## Explicit resumption and public V3 pass — 2026-10-16 ET
+
+The user resumed tickets 25 and 28; external Claude Code retains ticket 7.
+Ticket 28 is claimed. The reviewed public V3 compiler and named-stand-in
+persistence workflow passed exactly one selected JUnit case, with zero failures,
+errors or skips, against clean published `c978393b`. Guard exit 0 / 52.661 seconds /
+2452.453 MiB peak RSS under 4 GiB. Complete selected source and 7605 physical
+runtime pins matched; source/runtime remained unchanged and private caches
+remained absent. One recovered inspection denial ended with no final inspection
+or cleanup failure and no unconfirmed owned children.
+[Root evidence](../evidence/t28-public-v3-root-execution-20261016.json),
+[source review and next formal gate](../prototype/28-initialized-u32-resume-20261016/README.md).
+
+The original V1 failure stays failed under its original identity. This V3 result
+establishes real compiler plus scripted persistence behavior only: the persisted
+stand-in verdict remains not_proven/tool_crash. It grants no actual formal/body,
+native-caller, hardware, current0.2, whole-interface or full-ticket acceptance.
+
+The original partial 711/1107 formal test pair and native-health reader have
+independent source review and pure controls; execution awaits the separately
+published source/runtime/lane admission. Seven source-derived memory preparers
+and a 53-case C/C++ native harness are prepared for independent review. Synthetic
+public memory/history/concurrency fixtures are the next integration seam; actual
+pinned-header source/body and hardware correspondence remain separate boundaries.
+See [active execution](../execution-20261016.md).

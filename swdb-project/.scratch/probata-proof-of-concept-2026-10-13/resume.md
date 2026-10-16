@@ -1,13 +1,22 @@
 # Probata implementation resumption
 
-Updated: 2026-10-16 ET — PAUSED at user request11:35 ET.
+Updated: 2026-10-16 ET — tickets 25 and 28 explicitly resumed by user.
 
 ## Current state
 
-Updated: 2026-10-16 ET. **PAUSED by user request at 11:35 ET.**
-**35 resolved / 28 ready-for-agent / 0 claimed.** All three active claims07,25,28 are released. No next status is scheduled; progress automations are PAUSED.
+Tickets **25 and 28 are claimed and active** under the user's explicit new
+authorization. External Claude Code owns ticket 7. Root coordinates actual
+tool admission, mbit10 lanes, publication, and final tracker synchronization.
+See [active execution](execution-20261016.md) for the current checklist.
 
-**Next session: read [PAUSED handoff](PAUSED-HANDOFF-20261016.md) first. Do not restart work until the user resumes it.** The primary checkout is now `yanrujhou_main`; main contains the paused integration, all47 Probata heads and the three pause checkpoints. Source snapshotc278 is verified on GitHub and mbit10 primary; final delivery metadata is separately published/synchronized. [Current ticket status](ticket-status-20261015.md).
+The 11:35 ET pause and all snapshots below are historical. Their evidence and
+runtime boundaries remain intact; their stop instruction is superseded for
+tickets 25 and 28 by the user's resumption. Refresh live resources before runs.
+
+Read the [saved pause handoff](PAUSED-HANDOFF-20261016.md) as historical recovery
+context. The primary checkout is `yanrujhou_main`; source snapshot c278 was
+previously verified on GitHub and mbit10. Current Git and host state require
+fresh readback. The following table records the saved pause boundaries.
 
 | Ticket | Paused state | Resume boundary |
 | --- | --- | --- |

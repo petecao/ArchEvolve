@@ -1,0 +1,380 @@
+{
+  "calls": [
+    {
+      "access": 1,
+      "declaration": "inline void maa_stream_load(T1 *data, int min_reg, int max_reg, int stride_reg, int dst_tile, int cond_tile = -1)",
+      "name": "maa_stream_load",
+      "opcode": "STREAM_LD",
+      "register_parameters_not_yet_bound": [
+        "min_reg",
+        "max_reg",
+        "stride_reg"
+      ],
+      "roles": {
+        "condition": {
+          "optional": true,
+          "parameter": "cond_tile"
+        },
+        "dst1": {
+          "optional": false,
+          "parameter": "dst_tile"
+        },
+        "dst2": null,
+        "rdst1": null,
+        "rdst2": null,
+        "rsrc1": {
+          "optional": false,
+          "parameter": "min_reg"
+        },
+        "rsrc2": {
+          "optional": false,
+          "parameter": "max_reg"
+        },
+        "rsrc3": {
+          "optional": false,
+          "parameter": "stride_reg"
+        },
+        "src1": null,
+        "src2": null
+      },
+      "source": {
+        "line_end": 249,
+        "line_start": 232,
+        "relative": "apps/dx100/benchmarks/API/MAA_gem5.hpp"
+      },
+      "tile_parameters": [
+        "dst_tile",
+        "cond_tile"
+      ]
+    },
+    {
+      "access": 2,
+      "declaration": "inline void maa_stream_store(T1 *data, int min_reg, int max_reg, int stride_reg, int src_tile, int cond_tile = -1)",
+      "name": "maa_stream_store",
+      "opcode": "STREAM_ST",
+      "register_parameters_not_yet_bound": [
+        "min_reg",
+        "max_reg",
+        "stride_reg"
+      ],
+      "roles": {
+        "condition": {
+          "optional": true,
+          "parameter": "cond_tile"
+        },
+        "dst1": null,
+        "dst2": null,
+        "rdst1": null,
+        "rdst2": null,
+        "rsrc1": {
+          "optional": false,
+          "parameter": "min_reg"
+        },
+        "rsrc2": {
+          "optional": false,
+          "parameter": "max_reg"
+        },
+        "rsrc3": {
+          "optional": false,
+          "parameter": "stride_reg"
+        },
+        "src1": {
+          "optional": false,
+          "parameter": "src_tile"
+        },
+        "src2": null
+      },
+      "source": {
+        "line_end": 268,
+        "line_start": 251,
+        "relative": "apps/dx100/benchmarks/API/MAA_gem5.hpp"
+      },
+      "tile_parameters": [
+        "src_tile",
+        "cond_tile"
+      ]
+    },
+    {
+      "access": 1,
+      "declaration": "inline void maa_indirect_load(T1 *data, int idx_tile, int dst_tile, int cond_tile = -1)",
+      "name": "maa_indirect_load",
+      "opcode": "INDIR_LD",
+      "register_parameters_not_yet_bound": [],
+      "roles": {
+        "condition": {
+          "optional": true,
+          "parameter": "cond_tile"
+        },
+        "dst1": {
+          "optional": false,
+          "parameter": "dst_tile"
+        },
+        "dst2": null,
+        "rdst1": null,
+        "rdst2": null,
+        "rsrc1": null,
+        "rsrc2": null,
+        "rsrc3": null,
+        "src1": {
+          "optional": false,
+          "parameter": "idx_tile"
+        },
+        "src2": null
+      },
+      "source": {
+        "line_end": 287,
+        "line_start": 270,
+        "relative": "apps/dx100/benchmarks/API/MAA_gem5.hpp"
+      },
+      "tile_parameters": [
+        "idx_tile",
+        "dst_tile",
+        "cond_tile"
+      ]
+    },
+    {
+      "access": 2,
+      "declaration": "inline void maa_indirect_store_vector(T1 *data, int idx_tile, int src_tile, int cond_tile = -1, int dst_tile = -1)",
+      "name": "maa_indirect_store_vector",
+      "opcode": "INDIR_ST_VECTOR",
+      "register_parameters_not_yet_bound": [],
+      "roles": {
+        "condition": {
+          "optional": true,
+          "parameter": "cond_tile"
+        },
+        "dst1": {
+          "optional": true,
+          "parameter": "dst_tile"
+        },
+        "dst2": null,
+        "rdst1": null,
+        "rdst2": null,
+        "rsrc1": null,
+        "rsrc2": null,
+        "rsrc3": null,
+        "src1": {
+          "optional": false,
+          "parameter": "idx_tile"
+        },
+        "src2": {
+          "optional": false,
+          "parameter": "src_tile"
+        }
+      },
+      "source": {
+        "line_end": 306,
+        "line_start": 289,
+        "relative": "apps/dx100/benchmarks/API/MAA_gem5.hpp"
+      },
+      "tile_parameters": [
+        "idx_tile",
+        "src_tile",
+        "cond_tile",
+        "dst_tile"
+      ]
+    },
+    {
+      "access": 2,
+      "declaration": "inline void maa_indirect_store_scalar(T1 *data, int idx_tile, int src_reg, int cond_tile = -1, int dst_tile = -1)",
+      "name": "maa_indirect_store_scalar",
+      "opcode": "INDIR_ST_SCALAR",
+      "register_parameters_not_yet_bound": [
+        "src_reg"
+      ],
+      "roles": {
+        "condition": {
+          "optional": true,
+          "parameter": "cond_tile"
+        },
+        "dst1": {
+          "optional": true,
+          "parameter": "dst_tile"
+        },
+        "dst2": null,
+        "rdst1": null,
+        "rdst2": null,
+        "rsrc1": {
+          "optional": false,
+          "parameter": "src_reg"
+        },
+        "rsrc2": null,
+        "rsrc3": null,
+        "src1": {
+          "optional": false,
+          "parameter": "idx_tile"
+        },
+        "src2": null
+      },
+      "source": {
+        "line_end": 325,
+        "line_start": 308,
+        "relative": "apps/dx100/benchmarks/API/MAA_gem5.hpp"
+      },
+      "tile_parameters": [
+        "idx_tile",
+        "cond_tile",
+        "dst_tile"
+      ]
+    },
+    {
+      "access": 2,
+      "declaration": "inline void maa_indirect_rmw_vector(T1 *data, int idx_tile, int src_tile, Operation_t o_type, int cond_tile = -1, int dst_tile = -1)",
+      "name": "maa_indirect_rmw_vector",
+      "opcode": "INDIR_RMW_VECTOR",
+      "register_parameters_not_yet_bound": [],
+      "roles": {
+        "condition": {
+          "optional": true,
+          "parameter": "cond_tile"
+        },
+        "dst1": {
+          "optional": true,
+          "parameter": "dst_tile"
+        },
+        "dst2": null,
+        "rdst1": null,
+        "rdst2": null,
+        "rsrc1": null,
+        "rsrc2": null,
+        "rsrc3": null,
+        "src1": {
+          "optional": false,
+          "parameter": "idx_tile"
+        },
+        "src2": {
+          "optional": false,
+          "parameter": "src_tile"
+        }
+      },
+      "source": {
+        "line_end": 344,
+        "line_start": 327,
+        "relative": "apps/dx100/benchmarks/API/MAA_gem5.hpp"
+      },
+      "tile_parameters": [
+        "idx_tile",
+        "src_tile",
+        "cond_tile",
+        "dst_tile"
+      ]
+    },
+    {
+      "access": 2,
+      "declaration": "inline void maa_indirect_rmw_scalar(T1 *data, int idx_tile, int src_reg, Operation_t o_type, int cond_tile = -1, int dst_tile = -1)",
+      "name": "maa_indirect_rmw_scalar",
+      "opcode": "INDIR_RMW_SCALAR",
+      "register_parameters_not_yet_bound": [
+        "src_reg"
+      ],
+      "roles": {
+        "condition": {
+          "optional": true,
+          "parameter": "cond_tile"
+        },
+        "dst1": {
+          "optional": true,
+          "parameter": "dst_tile"
+        },
+        "dst2": null,
+        "rdst1": null,
+        "rdst2": null,
+        "rsrc1": {
+          "optional": false,
+          "parameter": "src_reg"
+        },
+        "rsrc2": null,
+        "rsrc3": null,
+        "src1": {
+          "optional": false,
+          "parameter": "idx_tile"
+        },
+        "src2": null
+      },
+      "source": {
+        "line_end": 363,
+        "line_start": 346,
+        "relative": "apps/dx100/benchmarks/API/MAA_gem5.hpp"
+      },
+      "tile_parameters": [
+        "idx_tile",
+        "cond_tile",
+        "dst_tile"
+      ]
+    }
+  ],
+  "citations": [
+    {
+      "lines": [
+        66,
+        154
+      ],
+      "relative": "tests/fixtures/proof/dx100/gem5-e4fc4af/IF.cc",
+      "rule": "word widths and explicit-ID priority"
+    },
+    {
+      "lines": [
+        193,
+        218
+      ],
+      "relative": "tests/fixtures/proof/dx100/gem5-e4fc4af/IF.cc",
+      "rule": "explicit destination and region conflict stalls"
+    },
+    {
+      "lines": [
+        200,
+        241
+      ],
+      "relative": "tests/fixtures/proof/dx100/gem5-e4fc4af/MAA.cc",
+      "rule": "registration and first containing region"
+    },
+    {
+      "lines": [
+        563,
+        580
+      ],
+      "relative": "tests/fixtures/proof/dx100/gem5-e4fc4af/MAA.cc",
+      "rule": "src/dst counted roles exclude condition-only role"
+    },
+    {
+      "lines": [
+        120,
+        137
+      ],
+      "relative": "tests/fixtures/proof/dx100/gem5-e4fc4af/SPD.cc",
+      "rule": "eight-byte roles count both physical halves"
+    }
+  ],
+  "current_0_2": false,
+  "date": "2026-10-16 ET",
+  "public_support": false,
+  "scope": "private source-derived tile/memory preparation only; no value/history/public proof support",
+  "source_commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+  "sources": [
+    {
+      "bytes": 1323,
+      "relative": "apps/dx100/benchmarks/API/MAA.hpp",
+      "sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd"
+    },
+    {
+      "bytes": 27473,
+      "relative": "apps/dx100/benchmarks/API/MAA_gem5.hpp",
+      "sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174"
+    },
+    {
+      "bytes": 23772,
+      "relative": "tests/fixtures/proof/dx100/gem5-e4fc4af/IF.cc",
+      "sha256": "fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561"
+    },
+    {
+      "bytes": 72419,
+      "relative": "tests/fixtures/proof/dx100/gem5-e4fc4af/MAA.cc",
+      "sha256": "058395cbd171ccf3746fb524967d2d205cb8d622d4aa06e8eef530b00dc21299"
+    },
+    {
+      "bytes": 10059,
+      "relative": "tests/fixtures/proof/dx100/gem5-e4fc4af/SPD.cc",
+      "sha256": "9e6bb3672be95954e8816c054b4032f95811a3085ca6df418aed90ad1e852b4a"
+    }
+  ]
+}

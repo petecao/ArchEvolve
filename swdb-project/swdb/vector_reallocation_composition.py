@@ -130,3 +130,78 @@ def positive_constructor_entry(candidate):
              'caller_entry_restricted':False,
              'remaining':'fill establishment/step/exit, postcondition, frame, source-runtime embedding and current body-record eligibility remain pending'}
     return row,receipt
+
+
+def reserve_entry(candidate):
+    """Derive the source request/branch under a pending constructor post-state.
+
+    The local antecedent must be discharged by the completed constructor and
+    source-runtime relation. It is never appended to the public caller contract.
+    This duty grants no reserve post-state, alias liveness or scalar result.
+    """
+    from swdb import vector_reallocation_model as model
+    if candidate.get('count', {}).get('type') != 'int':
+        raise ValueError('reserve application requires the checked signed-int count')
+    request = candidate.get('reserve_request')
+    if request not in {'count', 'count+1'}:
+        raise ValueError('reserve application requires exact count or widened count+1')
+    capacity = candidate.get('capacity_qualification', {})
+    if capacity.get('id') != 'vector-cpp17-capacity-1' or \
+            capacity.get('model_postcondition_to_prove') != 'capacity == count':
+        raise ValueError('reserve branch requires the pending exact constructor capacity predecessor')
+    callee = 'std_vector_int_realloc_v3_reserve'
+    source = model.model_text(callee)
+    constructor = model.model_text('std_vector_int_realloc_v3_ctor_count_value')
+
+    def span(text, whole):
+        if whole.count(text) != 1:
+            raise ValueError('the source reserve precondition/branch or constructor capacity changed')
+        begin = len(whole[:whole.index(text)].encode())
+        raw = text.encode()
+        return {'begin': begin, 'end': begin + len(raw),
+                'sha256': hashlib.sha256(raw).hexdigest(),
+                'source_sha256': hashlib.sha256(whole.encode()).hexdigest()}
+
+    precondition = span(
+        'requires std_vector_int_reallocatable_v3(this) && n <= '
+        '((size_t)PTRDIFF_MAX < SIZE_MAX / sizeof(int) ? '
+        '(size_t)PTRDIFF_MAX : SIZE_MAX / sizeof(int));', source)
+    branch = span('if (n > this->capacity) std_vector_int_realloc_v3_grow(this, n);', source)
+    exact_capacity = span('ensures this->capacity == n;', constructor)
+    calls = [row['source'] for row in candidate['call_obligations'] if row['call'] == 'reserve']
+    events = [row for row in candidate['lowered_lifetime']['events']
+              if row['event'] == 'reserve' and row['reachable_on_normal_return']]
+    if len(calls) != 1 or len(events) != 1:
+        raise ValueError('reserve application needs one checked source call and lowered event')
+    growing = request == 'count+1'
+    term = '(n+1)' if growing else 'n'
+    comparison = term + ' > n' if growing else 'n <= n'
+    predicate = 't25v3_eligible(h,r,o,b,bo,n,n)'
+    statement = (r'\forall Heap::heap h; \forall integer r,o,b,bo,n; '
+                 + predicate + ' && 0 <= n <= 2147483647 ==> '
+                 + predicate + ' && 0 <= ' + term + ' <= 4611686018427387903 && '
+                 + comparison)
+    row = {'id': 'apply.reserve.entry', 'status': 'pending', 'dependencies': [],
+           'source_groups': ['QC2', 'R1', 'R2'], 'source': calls[0],
+           'lowered_events': events, 'statement': statement}
+    receipt = {
+        'callee': callee, 'source_parameter': candidate['count'], 'source_call': calls[0],
+        'source_request': request, 'request_term': term, 'growth_branch': growing,
+        'callee_precondition': precondition, 'branch_and_call': branch,
+        'constructor_exact_capacity': exact_capacity,
+        'predecessor_discharge': 'pending completed constructor state, exact capacity and typed-source relation; not a caller-entry premise',
+        'callee_precondition_correspondence': 'pending selected Typed source image, automatic placement and model layout',
+        'state_before': 'h',
+        'state_after': 'pending current qualified grow application' if growing else 'h',
+        'source_effect': ('branch true; current grow call still requires discharge' if growing
+                          else 'branch false; no body store or call'),
+        'buffer_element_loads': 0, 'caller_premises_added': [],
+        'current_proof_records_admitted': [],
+        'proof_status': 'unexecuted source-local entry/branch duty; no reserve or caller theorem granted',
+        'remaining': [
+            'completed constructor state/capacity/typed-image source-runtime discharge',
+            'current reserve/grow body-record admission and branch application',
+            'observation, stale-alias liveness, cleanup and final incoming frame',
+        ],
+    }
+    return row, receipt

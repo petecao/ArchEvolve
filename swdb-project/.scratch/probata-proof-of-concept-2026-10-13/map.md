@@ -1,22 +1,30 @@
 # Map: Extensa Probata proof of concept
 
 Created: 2026-10-14 00:45 ET
-Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-resume-20261015`; base: `yanrujhou_main`; archived effort history: `probata-source-recovery-20261015`.
+Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `yanrujhou_main`; base: `yanrujhou_main`; archived effort history: `probata-source-recovery-20261015`.
 
 ## Current state (resume here)
 
-Updated: 2026-10-16 ET. **PAUSED by user request at 11:35 ET.**
-**35 resolved / 28 ready-for-agent / 0 claimed.** All three active claims07,25,28 are released. No next status is scheduled; progress automations are PAUSED.
+Updated: 2026-10-16 ET. Tickets **25 and 28 are claimed and active** under the
+user's explicit resumption. External Claude Code owns ticket 7. Root owns
+source publication, guarded actual admissions, mbit10 lane coordination, and
+final synchronization. [Active execution](execution-20261016.md),
+[current ticket status](ticket-status-20261015.md), [resume](resume.md).
 
-**Next session: read [PAUSED handoff](PAUSED-HANDOFF-20261016.md) first. Do not restart work until the user resumes it.** The primary checkout is now `yanrujhou_main`; main contains the paused integration, all47 Probata heads and the three pause checkpoints. Source snapshotc278 is verified on GitHub and mbit10 primary; final delivery metadata is separately published/synchronized. [Current ticket status](ticket-status-20261015.md).
+Ticket 25 resumes at the reviewed copied-prefix source and unexecuted focused10
+packet; complete grow61, reserve67, caller discharge, and remaining member/type
+acceptance stay open. Ticket 28 resumes at failed public V1, reviewed frame test
+repair, and unfinished public/formal initialized-u32 workflows; full-interface,
+memory, concurrency, and current-version acceptance stay open.
 
-| Ticket | Paused state | Resume boundary |
-| --- | --- | --- |
-| 07 ready-for-agent | Device proof partial timeout; weak unexecuted; original identity differences/events retained. New index-source9a is UNREVIEWED and observer UNCOMPILED/UNEXECUTED. | Index generation/proof recipes NOT AUTHORED/NOT EXECUTED; read exact source/triage handoff first. No source/Init/TD/count qualification. |
-| 25 ready-for-agent | Constructor35 narrow scoped result retained; focused15 has sole advanced-prefix Timeout. Ten-case source preparation reviewed; focused10 draft packet UNREVIEWED/NOT EXECUTED. | Full61/67/caller127 still pending; fresh shared-source admission only after resume. |
-| 28 ready-for-agent | Initialized public V1 FAILED; token-aware test repair reviewed. V2 workflow UNREVIEWED/NOT ADMITTED/NOT EXECUTED and formal pair incomplete. | Preserve all old scoped decisions/failures; no current0.2/full28/hardware/body acceptance. |
+Read the [saved pause handoff](PAUSED-HANDOFF-20261016.md) for recovery evidence.
+Its stop instruction is superseded for these assigned tickets. All historical
+results retain their original source/runtime identities; current host state must
+be rechecked before every dispatch. The 30-minute progress heartbeat is active
+in this chat; old paused-chat heartbeats stay paused.
 
-Root's finite pause closure records Mac/mbit10 empty selected-tool scans, released leases/available locks at that observation. Raw, required source paths, recovery refs and unrelated settings/scratch are preserved. This STOP checkpoint performs only Git/docs synchronization; no new experiments, tests or evaluations. Historical sections below retain their original dates and exits.
+The following sections are historical checkpoints, not current lane ownership,
+proof admission, or acceptance of the resumed tickets.
 
 ## Verified delivery and bounded cleanup — 2026-10-16 ET
 

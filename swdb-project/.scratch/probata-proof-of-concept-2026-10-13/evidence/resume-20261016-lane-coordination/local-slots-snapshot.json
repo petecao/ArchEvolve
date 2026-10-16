@@ -1,0 +1,107 @@
+{
+  "at_utc": "2026-10-16T16:53:19.095884+00:00",
+  "scope": "Read-only external-Claude coordination; no lock acquisition/release, signals or environment inspection",
+  "leases": [
+    {
+      "path": "/private/tmp/claude/swdb-verifier.lock",
+      "exists": true,
+      "entries": [
+        "owner"
+      ],
+      "owner": "owner=t07f pid=58501 since=2026-10-16 12:49:20 EDT cmd=/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/wp_run.sh wp-smoke /tmp/claude/probata-runs/t07f/s1-nohint-full tdstep_standin.c\n",
+      "pid": 58501,
+      "alive": true,
+      "name": "python3.12",
+      "birth": 1792169360.046397
+    },
+    {
+      "path": "/private/tmp/claude/swdb-verifier.slot2.lock",
+      "exists": true,
+      "entries": [
+        "owner"
+      ],
+      "owner": "owner=t07d pid=63873 clock=continuous_monotonic\n",
+      "pid": 63873,
+      "alive": true,
+      "name": "python3.12",
+      "birth": 1792169597.88898
+    },
+    {
+      "path": "/private/tmp/claude/swdb-native-b.lock",
+      "exists": false
+    }
+  ],
+  "slots_policy": "2\n",
+  "queue": [],
+  "selected_tools": [
+    {
+      "pid": 58502,
+      "name": "frama-c",
+      "rss": 1628569600
+    },
+    {
+      "pid": 58524,
+      "name": "why3server",
+      "rss": 1933312
+    },
+    {
+      "pid": 63284,
+      "name": "alt-ergo",
+      "rss": 135544832
+    },
+    {
+      "pid": 63296,
+      "name": "cvc5",
+      "rss": 64847872
+    },
+    {
+      "pid": 63630,
+      "name": "z3",
+      "rss": 172474368
+    },
+    {
+      "pid": 63775,
+      "name": "cvc5",
+      "rss": 42729472
+    },
+    {
+      "pid": 63783,
+      "name": "alt-ergo",
+      "rss": 87130112
+    },
+    {
+      "pid": 63791,
+      "name": "z3",
+      "rss": 69304320
+    },
+    {
+      "pid": 63817,
+      "name": "cvc5",
+      "rss": 43696128
+    },
+    {
+      "pid": 63819,
+      "name": "alt-ergo",
+      "rss": 67780608
+    },
+    {
+      "pid": 63860,
+      "name": "z3",
+      "rss": 119488512
+    },
+    {
+      "pid": 63888,
+      "name": "alt-ergo",
+      "rss": 44285952
+    },
+    {
+      "pid": 63891,
+      "name": "cvc5",
+      "rss": 28196864
+    }
+  ],
+  "inspection_denials": [],
+  "available_ram": 10420731904,
+  "disk_free_tmp": 58473689088,
+  "watchdog_sha256": "8cbe4f803951cee080581862b69a0b7bf21e35c554dc5cfde4db7d9f2779e5b6"
+}

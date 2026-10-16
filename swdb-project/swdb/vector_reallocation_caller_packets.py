@@ -102,6 +102,13 @@ def declaration(source,function,formal_texts):
                    '/*@ check lemma '+positive_goal+': '+positive['statement']+';\n*/\n').encode()
     positive_path='applications/002-'+positive_goal+'.c';files[positive_path]=positive_text
     rows.append({**positive,'goal':positive_goal,'path':positive_path,'kind':'check_lemma','sha256':_sha(positive_text)})
+    from swdb.vector_reallocation_composition import reserve_entry
+    reserve,reserve_receipt=reserve_entry(candidate)
+    reserve_goal='t25v3_caller_'+reserve['id'].replace('.','_')
+    reserve_text=('//@ import \\wp::why3: heap_reallocation::Heap;\n'+bodies.PRELUDE+
+                  '/*@ check lemma '+reserve_goal+': '+reserve['statement']+';\n*/\n').encode()
+    reserve_path='applications/003-'+reserve_goal+'.c';files[reserve_path]=reserve_text
+    rows.append({**reserve,'goal':reserve_goal,'path':reserve_path,'kind':'check_lemma','sha256':_sha(reserve_text)})
     calls={row['call']:row['source']for row in candidate['call_obligations']}
     events={row['event']:row for row in candidate['lowered_lifetime']['events']
             if row['reachable_on_normal_return']}
@@ -129,7 +136,7 @@ def declaration(source,function,formal_texts):
           'proof_admission':'unsupported: complete caller composition remains pending',
           'function':function,'checker':identity(),'source':{'path':'original.cc','sha256':_sha(files['original.cc'])},
           'lowering':{'path':'lowering.c','sha256':lowering.sha256,'tool':lowering.tool},
-          'contract':contract,'candidate':candidate,'composition':{'constructor_entry':application_receipt,'zero_constructor':zero_receipt,'positive_constructor_entry':positive_receipt},'model':model.identity(),
+          'contract':contract,'candidate':candidate,'composition':{'constructor_entry':application_receipt,'zero_constructor':zero_receipt,'positive_constructor_entry':positive_receipt,'reserve_entry':reserve_receipt},'model':model.identity(),
           'semantics':{'path':'theory/heap_reallocation.mlw','sha256':_sha(files['theory/heap_reallocation.mlw'])},
           'caller_premises_added':[],'incoming_pointer_maps_restricted':False,
           'required_models':required,'current_proof_records_admitted':[],
