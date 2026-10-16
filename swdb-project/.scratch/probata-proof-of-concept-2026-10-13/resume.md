@@ -4,28 +4,28 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 22:28 ET. **Implementation is active under the user's ongoing approval.**
+Updated: 2026-10-15 22:37 ET. **Implementation is active under the user's ongoing approval.**
 Integration `codex/probata-resume-20261015` is based on `yanrujhou_main` at `d94d629b`.
 The current lowerer file SHA256 is
-`741e1c24ace7c0fc8e89b56a660b0b155099170bd9d870c46617452de78e126c`
-after reviewed28 template ABI repairs. Historical actual source freezes keep their
+`e8a427bcafec10d6299f57236bfcb949c554931ea77b3cd01615ed972ffdf152`
+after reviewed28 template ABI/typed-instance repairs. Historical actual source freezes keep their
 own `0e185b...` lowerer; merging does not upgrade their evidence.
 Reviewed setup/compiler-identity candidate `2033c174` is published at `465fd069`;
 its changed production files are `proof_setup.py` and `stdlib_provenance.py`.
 Each evaluation retains its exact source/runtime. Historical `0e7` evidence is
 not upgraded by this merge.
 
-**34 resolved / 25 ready-for-agent / 4 claimed**, derived from ticket frontmatter.
-The active frontier is **07, 25, 28, 36**. Tickets 24 and 27 are resolved and published.
+**35 resolved / 25 ready-for-agent / 3 claimed**, derived from ticket frontmatter.
+The active frontier is **07, 25, 28**. Tickets 24,27 and36 are resolved and published.
 Drafts 1/2 remain immutable. No draft 3 or final production freeze exists.
 
 | Ticket / owner | Verified checkpoint | Active work |
 |---|---|---|
 | 24 + 27 / resolved | Published `29709232` and `af10a946`. Ticket24: 36 actual records + nine no-launch refusals, all eleven scoped items; ticket27: 62 cases / 52 records, safe11 has 792 ordinary + 252 smoke Valid. Both independently reviewed. | Raw/producers/history and scientific limits retained. Their completed lanes have been reused for ticket36. [24 closure](evidence/t24-combined-current-independent-review-20261015.md), [27 review](evidence/t27-ticket-closure-independent-review-20261015.md). |
 | 07 / `ticket07` | Run25 remains UNPROVEN. Narrow guard repair integrated `7a66d146`, 37 controls pass. Component3 independently matches15 exact goal IDs and5 nontrivial contextual tasks; no proof claim. | METHOD23 final independent review and264+26 controls published atf439edf0. Fresh run26 started22:15:49ET atcleanac6/42 pins after repeated source/tool/environment/OCaml/lease preflight; baseline completed6.17min (254ordinary/103open;139smoke pass), provider started22:21:59; nominal60-minute end23:15:49. Historical798/run25 retained; sole Mac actual slot is07. |
-| 25 / `ticket24` | Claimed at `e3e91b8e`; own worktree `/private/tmp/probata-resume-t25`. Prior bounded maximum/stale/at controls retain their own pins. | Reviewed024db66c first-pair capability published27353c32:42 packets,21 preparation controls. Actualv2 G610 exact024 passed canonical42/tool precheck, then first parse refused missingHeap/no goals; naturalexit1/noOOM/timeout. Initial-parse library-path placement repair in TDD. No body certification/import acceptance. |
-| 28 / `ticket27` | Ticket27 gate released. Complete upstream header inventory verified: 26 names / 27 declarations; old0.1 remains preserved. | Prerequisite inventory/ABI repairs published atf439edf0 after independent review;28 composed controls pass. Trust recording/mutation guard published27353c32 with13 stand-in controls. Typed-instance routing and complete per-call/history semantics continue; no0.2 selection/actual admission. |
-| 36 / `ticket36` | Runtime repair published `465fd069`,13 compiler/stand-in controls pass. Earlier126 batch included real Frama parsing; later affected batch stopped with -15 and no full pass. | Corrected facts13 accepted by cold audit (40refs/126files/0errors). Production3 WP records cold-audit34refs/94files/0errors; scalar4ordinary/0smoke assertion correction published2f1ab7ce, original pytest failure retained. Separate bounded2/G609 passes,4records/29refs/88files/0errors. Setup129 passes129/702.19s; G583 released22:21:17, cold audit55files/129JUnit nodes/0errors. Extra generated-input stand-in control passes; final36 acceptance reviewed, pending merger/graph update. |
+| 25 / `ticket24` | Claimed at `e3e91b8e`; own worktree `/private/tmp/probata-resume-t25`. Prior bounded maximum/stale/at controls retain their own pins. | Reviewed024db66c first-pair capability published27353c32:42 packets,21 preparation controls. Actualv2 G610 exact024 passed canonical42/tool precheck, then first parse refused missingHeap/no goals; naturalexit1/noOOM/timeout. Single initial-parse library-path fix published45334518; c521/v3 G611 loaded theory then refused reserved reads/writes names, no goals. Alpha-renaming is reviewed; exact Git-blob typecheck next, no new source clone. No body certification/import acceptance. |
+| 28 / `ticket27` | Ticket27 gate released. Complete upstream header inventory verified: 26 names / 27 declarations; old0.1 remains preserved. | Prerequisite inventory/ABI repairs published atf439edf0 after independent review;28 composed controls pass. Trust recording/mutation guard published27353c32. Typed-instance/schema/refusal and dx100_interface CHECK_SOURCES pin published8b0c2e27 after39+29 controls; futurechecker76e1. Synthetic typed contracts/history remain open; old0.1 unchanged/no0.2 actual admission. |
+| 36 / resolved | All ten criteria independently reviewed; closure published8b0c2e27, exact2033/74+B493. Historical parser/no-test/scalar failures retained. | Corrected facts13 accepted by cold audit (40refs/126files/0errors). Production3 WP records cold-audit34refs/94files/0errors; scalar4ordinary/0smoke assertion correction published2f1ab7ce, original pytest failure retained. Separate bounded2/G609 passes,4records/29refs/88files/0errors. Setup129 passes129/702.19s; G583 released22:21:17, cold audit55files/129JUnit nodes/0errors. Extra generated-input stand-in control passes; final36 acceptance resolved/published8b0c2e27. Later28 checker changes are not retroactive actual acceptance. |
 
 Current admission receipts: [facts13](evidence/reviewed-t36-facts-v3-launch-2033c174-20261015.json),
 [production5](evidence/reviewed-t36-production-v3-launch-2033c174-20261015.json),
