@@ -1,0 +1,410 @@
+{
+  "created": "2026-10-15 ET",
+  "ticket": "07",
+  "status": "claimed",
+  "experiment": "run25",
+  "method": "codex-only-paged-terminal30-v1",
+  "scientific_verdict": "UNPROVEN; terminal full30 incomplete after inspection refusal",
+  "source_commit": "798e9bb3bf95118e7eb6d4688227f6014fdffd60",
+  "producer_worktree_immutable": "/private/tmp/probata-resume-t07-method22",
+  "source_manifest": {
+    "path": "/private/tmp/probata-t07-20261015-run25/source-manifest.json",
+    "sha256": "a2e5fa88d148bfee60e3a7daf6a4973a005a6df3b4382686e7177f2b97819012",
+    "bytes": 15332
+  },
+  "source_pins_verified": 34,
+  "independent_prelaunch_manifest": {
+    "path": "/private/tmp/probata-t07-method22-final-independent-review-manifest.json",
+    "sha256": "9b0a15a0b1ae7112b5b31ae49a0739b623c8d706684db9c714444a17f275f48d",
+    "bytes": 25458
+  },
+  "full_raw_artifact_manifest": {
+    "path": "/private/tmp/probata-t07-run25-final-independent-review-manifest.json",
+    "sha256": "c80e7bb7ae1aa346ac37e298839aaff826fd68c510104dd175b8d6d203fc3f98",
+    "bytes": 314646,
+    "raw_file_count": 1265,
+    "raw_total_bytes": 8595330,
+    "external_artifacts": 20
+  },
+  "independent_final_review": {
+    "path": "/private/tmp/probata-t07-run25-final-independent-review.md",
+    "sha256": "9e00d9ad178169cb34a39f36365f59fa6aa2fa6cb10551b60ca9d375d2f19c9f",
+    "bytes": 4223
+  },
+  "independent_final_audit": {
+    "path": "/private/tmp/probata-t07-run25-final-independent-audit.json",
+    "sha256": "b3b74a5d11087532e5ad1b08670e98b60b54baa59416df1f7a9b75287e160e67",
+    "bytes": 42561
+  },
+  "launch": {
+    "path": "/private/tmp/probata-t07-20261015-run25/launch.json",
+    "sha256": "9c32196ec1ff2237c0a0ebf99b0274f0c5ba4efe3b96056650bf01e139eec39a",
+    "bytes": 1091
+  },
+  "exit": {
+    "path": "/private/tmp/probata-t07-20261015-run25/exit.json",
+    "sha256": "126e776cc0611e8124ec8e916fc114c785ae6eb2eb4e90679f78521683f61d7a",
+    "bytes": 283
+  },
+  "driver_log": {
+    "path": "/private/tmp/probata-t07-20261015-run25/driver.log",
+    "sha256": "d376f9dc2c85f9becc2361b441c570846cac2ae890cb3bc2d1932125cbc4a25e",
+    "bytes": 3392
+  },
+  "started": "2026-10-15T19:59:01.224248-04:00",
+  "finished": "2026-10-15T20:38:30.304114-04:00",
+  "driver_exit": 0,
+  "clock": {
+    "kind": "continuous_monotonic",
+    "implementation": "mach_continuous_time",
+    "includes_sleep": true,
+    "measured_finish_s": 2369.0047109166044,
+    "elapsed_min_reported": 39.48,
+    "total_limit_s": 3600,
+    "observed_finish_within_original60": true,
+    "raw_scientific_within_budget_flag": false,
+    "raw_flag_interpretation": "Scientific publication not admitted because unproven; not a60-minute overrun",
+    "reported_excluded_queue_wait_s": 0.0,
+    "no_budget_reset": true
+  },
+  "fresh_baseline": {
+    "timeout_s": 10,
+    "counted_elapsed_min": 6.09,
+    "goals": 393,
+    "ordinary_goals": 254,
+    "ordinary_passed": 151,
+    "ordinary_open": 103,
+    "open_failure_classes": {
+      "timeout": 103
+    },
+    "smoke_goals": 139,
+    "smoke_all_passed": true,
+    "property_report_not_valid": 100,
+    "guard_exit": 0,
+    "guard_cleanup": []
+  },
+  "fresh_empty_diagnostic": {
+    "hints": 0,
+    "mechanical_seeds": 0,
+    "goals": 155,
+    "open": 103,
+    "completed_at_counted_min": 10.49,
+    "additional_after_baseline_min": 4.4,
+    "inventory_not_same_as_all_function_baseline": true
+  },
+  "provider": {
+    "model": "gpt-5.6-sol",
+    "effort": "xhigh",
+    "cli": "0.153.0",
+    "calls": 1,
+    "fresh_conversations": 1,
+    "natural_exit0": true,
+    "usage_complete": true,
+    "usage_deadline_admissible": true,
+    "raw_usage": {
+      "input_tokens": 2979289,
+      "cached_input_tokens": 2875264,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 16972,
+      "reasoning_output_tokens": 7951
+    },
+    "input_plus_output": 2996261,
+    "subset_fields": [
+      "cached_input_tokens within input_tokens",
+      "reasoning_output_tokens within output_tokens"
+    ],
+    "billing_reconciliation_claim": false,
+    "first_input_pre_candidate_audit": {
+      "path": "/private/tmp/probata-t07-run25-first-provider-independent-review-manifest.json",
+      "sha256": "8765ccf6779d08763479c0f3aa33e27b2f5f27b6b82f0356a3bb790cc48300e9",
+      "bytes": 2024
+    },
+    "completed_provider_origin_audit": {
+      "path": "/private/tmp/probata-t07-run25-completed-provider-independent-audit.json",
+      "sha256": "a917ea324b1809b7ef996c889ceb2e42633a23d9d1d745d467361b3b3ed43781",
+      "bytes": 10298
+    }
+  },
+  "origin": {
+    "mechanical_frames_inserted": 0,
+    "raw_edit_requests": 11,
+    "materializations": 11,
+    "coverage": "all attempted records/materializations exactly traced to scoped raw Codex operations with immutable edit ancestry",
+    "origin_complete": true,
+    "historical_payload_supplied": false,
+    "hint_payloads_in_this_evidence": false,
+    "trace": {
+      "path": "/private/tmp/probata-t07-20261015-run25/counted-25/provider-origin.jsonl",
+      "sha256": "25d92ec72744ae3acf4661236833de5b87a32a6316d9dad512c160d85dd31b7b",
+      "bytes": 235539
+    }
+  },
+  "incumbent": {
+    "hints": 12,
+    "diagnostic_goals": 168,
+    "diagnostic_open": 101,
+    "unit_hint_open": [
+      95,
+      6
+    ],
+    "source_header_erasure_vocabulary_verified": true,
+    "best_artifact": {
+      "path": "/private/tmp/probata-t07-20261015-run25/counted-25/best.json",
+      "sha256": "9c7abd3b14a6291618c4f13ae9a0cb8ba5118b22ab6e34643a5429ea2f51fb90",
+      "bytes": 40999
+    },
+    "hints_fingerprint_sha256": "0d2d6afbf82f0dfb94a2806f3ab216a793acc2e147b049eff98b0d5c268c9f5b",
+    "diagnostic_not_final_acceptance": true
+  },
+  "counts": {
+    "raw_mcp_requests": 20,
+    "raw_mcp_request_names": {
+      "record_design": 2,
+      "show_goal": 6,
+      "show_best": 1,
+      "check_edit": 5,
+      "propose_edit": 6
+    },
+    "recorded_tool_submissions": 18,
+    "raw_requests_and_recorded_submissions_have_different_refusal_boundaries": true,
+    "parser_vc_checks_requested": 5,
+    "recorded_proposal_requests": 6,
+    "candidate_wp_attempts_with_report": 6,
+    "candidate_wp_completed_checks": 5,
+    "candidate_wp_deadline_censored": 1,
+    "candidate_wp_other_incomplete": 0,
+    "provider_turns_with_usage": 1,
+    "provider_turns_without_usage": 0,
+    "token_totals_are_lower_bounds": false,
+    "proposal_outcomes": {
+      "accepted": 3,
+      "staged": 1,
+      "reverted": 2
+    },
+    "origin_attempt_receipts_not_wp_runs": 11
+  },
+  "terminal_positive": {
+    "complete": false,
+    "qualifying": false,
+    "guard": {
+      "exit_code": 1,
+      "wall_s": 383.6154596666456,
+      "timeout_s": 1134.7869159167167,
+      "killed_by_watchdog": false,
+      "timed_out": false,
+      "queue_timed_out": false,
+      "peak_rss_mb": 3916.671875,
+      "unconfirmed_children": [],
+      "error": "AccessDenied: (pid=39659)",
+      "inspection_failure": {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 39659,
+        "exception_pid": 39659,
+        "expected_birth": 1792111109.33101,
+        "observed_birth": 1792111109.33101,
+        "identity_state": "live",
+        "attempt": 3,
+        "clock_s": 353248.091711,
+        "wall_unix_s": 1792111109.599159,
+        "outcome": "denied"
+      }
+    },
+    "partial_diagnostics": {
+      "scheduled_counts": [
+        406
+      ],
+      "emitted_status_line_counts": {
+        "Timeout": 31
+      },
+      "goals_json_present": false,
+      "complete_report": false,
+      "diagnostic_only": true
+    },
+    "denied_process_executable_and_ownership_not_established": true,
+    "denial_underlying_os_or_exec_cause_established": false,
+    "denial_identity_events": [
+      {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 39659,
+        "exception_pid": 39659,
+        "expected_birth": 1792111109.33101,
+        "observed_birth": 1792111109.33101,
+        "identity_state": "live",
+        "attempt": 1,
+        "clock_s": 353248.05947133334,
+        "wall_unix_s": 1792111109.566921,
+        "outcome": "denied"
+      },
+      {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 39659,
+        "exception_pid": 39659,
+        "expected_birth": 1792111109.33101,
+        "observed_birth": 1792111109.33101,
+        "identity_state": "live",
+        "attempt": 2,
+        "clock_s": 353248.0706394583,
+        "wall_unix_s": 1792111109.578088,
+        "outcome": "denied"
+      },
+      {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 39659,
+        "exception_pid": 39659,
+        "expected_birth": 1792111109.33101,
+        "observed_birth": 1792111109.33101,
+        "identity_state": "live",
+        "attempt": 3,
+        "clock_s": 353248.091711,
+        "wall_unix_s": 1792111109.599159,
+        "outcome": "denied"
+      }
+    ],
+    "observed_denial_retry_window_s": 0.03223966667428613
+  },
+  "denied_identity_observation": {
+    "pid": 39659,
+    "birth": 1792111109.33101,
+    "operation": "environ",
+    "events": [
+      {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 39659,
+        "exception_pid": 39659,
+        "expected_birth": 1792111109.33101,
+        "observed_birth": 1792111109.33101,
+        "identity_state": "live",
+        "attempt": 1,
+        "clock_s": 353248.05947133334,
+        "wall_unix_s": 1792111109.566921,
+        "outcome": "denied"
+      },
+      {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 39659,
+        "exception_pid": 39659,
+        "expected_birth": 1792111109.33101,
+        "observed_birth": 1792111109.33101,
+        "identity_state": "live",
+        "attempt": 2,
+        "clock_s": 353248.0706394583,
+        "wall_unix_s": 1792111109.578088,
+        "outcome": "denied"
+      },
+      {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 39659,
+        "exception_pid": 39659,
+        "expected_birth": 1792111109.33101,
+        "observed_birth": 1792111109.33101,
+        "identity_state": "live",
+        "attempt": 3,
+        "clock_s": 353248.091711,
+        "wall_unix_s": 1792111109.599159,
+        "outcome": "denied"
+      }
+    ],
+    "first_process_age_s": 0.23591089248657227,
+    "observed_retry_span_s": 0.032238006591796875,
+    "retry_policy": "three attempts separated by10ms;32ms observed total span",
+    "ownership_executable_parent_lineage_and_exec_cause": "not established by retained metadata",
+    "persistent_means": "denied throughout this bounded retry window; no long-lived OS-denial inference"
+  },
+  "negative": {
+    "executed": false,
+    "reason": "positive did not qualify",
+    "original_acceptance_gate_satisfied": false,
+    "criterion_waiver": false,
+    "raw_auditor_status_label": "NOT REQUIRED refers only to conditional execution"
+  },
+  "resource_summary": {
+    "reports": 30,
+    "peak_sampled_rss_mb": 3916.671875,
+    "observed_peak_above8GiB": 0,
+    "inspection_events": 55,
+    "terminal_inspection_failures": 1,
+    "categories": {
+      "deadline censored": 1,
+      "exit0": 28,
+      "inspection/runner error": 1
+    }
+  },
+  "cleanup": {
+    "all_report_unconfirmed_children_empty": true,
+    "poststop": {
+      "absence_confirmed": true,
+      "matching_process_counts": [
+        0,
+        0,
+        0
+      ],
+      "denial_counts": [
+        0,
+        0,
+        0
+      ],
+      "both_leases_absent_each_scan": true,
+      "coordinator_reserved_slot_clear_to_release": true,
+      "lease_mutation_by_reviewer": false
+    },
+    "receipt": {
+      "path": "/private/tmp/probata-t07-run25-poststop-independent-process-audit.json",
+      "sha256": "68aa31e70282554f3bf7f98d5b5aca271c6eeee40ac4b4f3519b971a27368c77",
+      "bytes": 2268
+    },
+    "slot_released_by_coordinator_after_audit": true,
+    "boundary": "sampled8GiB/trusted inherited marker, immutable PID/birth, finite non-atomic scans; no hard quota or hostile containment claim"
+  },
+  "publication": {
+    "summary": {
+      "path": "/private/tmp/probata-t07-20261015-run25/counted-25/summary.json",
+      "sha256": "9820770858c6a65269f7a0ab32c672caeeb8feb387c231f4a72e562ce845253c",
+      "bytes": 2657
+    },
+    "completion": {
+      "path": "/private/tmp/probata-t07-20261015-run25/counted-25/completion.json",
+      "sha256": "d79daedb47f95ee5ca188e58860f63570f802533918485f04d8b4e1ebee4186c",
+      "bytes": 595
+    },
+    "clean_driver_exit0": true,
+    "summary_completion_and_log_hash_chain": true,
+    "observed_finish_s": 2369.0047109166044,
+    "observed_finish_within_original60": true,
+    "scientific_within_budget_flag": false,
+    "reported_elapsed_min": 39.48,
+    "excluded_queue_wait_s": 0.0,
+    "source_level_measured_boundary": true,
+    "hard_realtime_bound": false
+  },
+  "task_reader_availability": {
+    "requests": 6,
+    "first_four_refused_after_clean_print": true,
+    "later_two_scoped_pages_succeeded": true,
+    "limits": [
+      "unsuffixed call requires names unsupported",
+      "callee precondition lines ranges omitted from ordinal indexing"
+    ],
+    "proof_criteria_or_source_weakened": false,
+    "receipt": {
+      "path": "/private/tmp/probata-t07-run25-goal-availability-review.json",
+      "sha256": "ef84f950ce3d1a9ec8272f1fc63625168f449cd12222025ac91efcf8ba45b3aa",
+      "bytes": 7408
+    }
+  },
+  "timing_sufficiency": "not established; positive replay interrupted before complete inventory, no negative executed",
+  "next_work": "Separate prospective scoped control-only retry-window diagnosis; real-format exact task mapping and fresh same-run baseline-subset initialization assessment. No current-run change, result reuse or fresh actual launch implied."
+}
