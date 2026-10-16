@@ -1,0 +1,172 @@
+{
+  "method": "t07-lexical-private-array-prospective-v3-canonical",
+  "parent_outslot_source_pins": {
+    "gapbs_models.h": "e2248bbe1e7dd47c6a46f8645aca9f065900c7205b066fbd5956b2c7c5fcf95c",
+    "tdstep_standin.c": "3af025040802b2c018a7a192738c276863f7c489e4c3ce238443b9f2a3f6bcfa",
+    "bfs_unit.h": "52d40d00b0a7462eed164deec3a8958a855de5763e7f20fefb8e2f257f09bd34",
+    "dxc_summaries.h": "c70a4644a4cd27feabcacd3633a1135bcb46a8f36d86a08b2fee4a469a868c71",
+    "abi-map.json": "e6dca1c772e1ba7d0e54fe43e95c203e4c72302e72b439f48ee86c5b9cb673e7"
+  },
+  "actual_unit_sha256": "3c5867a2b8919806f681603836bd0cff448f21634485abf84e49ed71f25515ef",
+  "removed_static_allocator_source": "/* operator new NodeID[n] for the QueueBuffer of thread 0. WP does not implement \\fresh\n   (\"Allocation ... not yet implemented\"), so the lowering gives each thread's QueueBuffer its\n   own storage block; TDStep's precondition separates it from the unit's arrays.\n   Scope: exactly one thread-zero QueueBuffer construction/destruction lifetime\n   per TDStep, no escaped local-buffer view, no overlapping live construction and\n   no repeated destruction. This fixed-storage abstraction does not model a\n   general allocator, dangling pointers or reuse across simultaneous instances. */\n#define SWDB_LQUEUE_CAPACITY 16384\nNodeID swdb_lqueue_storage[SWDB_LQUEUE_CAPACITY];\n/*@\n  predicate gapbs_buffer_domain{L}(struct QueueBuffer_NodeID *self) =\n    \\valid(self) &&\n    \\initialized(&self->sq) && \\initialized(&self->local_size) &&\n    \\initialized(&self->in) && \\initialized(&self->local_queue) &&\n    gapbs_queue_domain(self->sq) &&\n    1 <= self->local_size <= SWDB_LQUEUE_CAPACITY && self->in <= self->local_size &&\n    self->local_queue == &swdb_lqueue_storage[0] &&\n    \\separated(self, self->sq,\n      self->local_queue + (0 .. self->local_size - 1),\n      self->sq->shared + (0 .. self->sq->shared_max_size - 1));\n*/\n/*@ requires \\valid(swdb_out); requires \\separated(swdb_out, swdb_lqueue_storage + (0 .. SWDB_LQUEUE_CAPACITY - 1));\n requires n <= SWDB_LQUEUE_CAPACITY;\n    terminates \\true;\n    assigns *swdb_out;\n    ensures (*swdb_out) == &swdb_lqueue_storage[0];\n    exits \\false;\n    ensures \\initialized(swdb_out); */\nvoid swdb_new_NodeID_array_out(size_t n, NodeID * *swdb_out);\n\n/*@ requires p == &swdb_lqueue_storage[0];\n    terminates \\true;\n    assigns \\nothing;\n    exits \\false; */\nvoid swdb_delete_NodeID_array(NodeID *p);\n\n",
+  "introduced_private_binding_source": "/* Private storage for the source's one default QueueBuffer lifetime.\n   Caller creates one uninitialized typed automatic object. This adapter only\n   binds its address; it does not initialize payload or implement an allocator.\n   Source refinement, lifetime and actual initialization-map gates remain open. */\n#define SWDB_LQUEUE_CAPACITY 16384\ntypedef NodeID swdb_private_NodeID_array[SWDB_LQUEUE_CAPACITY];\n/*@\n  predicate gapbs_buffer_domain{L}(struct QueueBuffer_NodeID *self) =\n    \\valid(self) &&\n    \\initialized(&self->sq) && \\initialized(&self->local_size) &&\n    \\initialized(&self->in) && \\initialized(&self->local_queue) &&\n    gapbs_queue_domain(self->sq) &&\n    self->local_size == SWDB_LQUEUE_CAPACITY && self->in <= self->local_size &&\n    gapbs_nodeid_span(self->local_queue, self->local_size) &&\n    \\separated(self, self->sq,\n      self->local_queue + (0 .. self->local_size - 1),\n      self->sq->shared + (0 .. self->sq->shared_max_size - 1));\n*/\n/*@ requires \\valid(storage) && \\valid(swdb_out);\n    requires n == SWDB_LQUEUE_CAPACITY;\n    requires gapbs_nodeid_span(&(*storage)[0], n);\n    requires \\separated(storage, swdb_out);\n    assigns *swdb_out;\n    ensures *swdb_out == &(*storage)[0];\n    ensures \\initialized(swdb_out); */\nvoid swdb_bind_private_NodeID_array(swdb_private_NodeID_array *storage, size_t n, NodeID **swdb_out) {\n  (void)n;\n  *swdb_out = &(*storage)[0];\n}\n\n",
+  "helper_bodies": 20,
+  "original_helper_bodies_retained": 19,
+  "new_binding_bodies": 1,
+  "default_local_capacity": 16384,
+  "incoming_SlidingQueue_capacity": "symbolic num_nodes; unchanged",
+  "exact_source_producers": {
+    "repository": "arkhadem/DX100",
+    "commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+    "sliding_queue.h": {
+      "sha256": "3d5a1d3cff924737c2fc7c6b4fcbb859270f1fcc626c25aac4c780b7b6f4c02c",
+      "git_blob_sha1": "fed319ea556423c55db8d995a97ea21a0f950da8",
+      "allocation_lines": [
+        98,
+        101
+      ],
+      "destruction_lines": [
+        104,
+        105
+      ]
+    },
+    "actual_project_unit": {
+      "sha256": "3c5867a2b8919806f681603836bd0cff448f21634485abf84e49ed71f25515ef",
+      "construction_line": 21,
+      "push_lines": [
+        53,
+        63
+      ],
+      "flush_line": 67,
+      "scope_exit_line": 68
+    }
+  },
+  "contract_changes": {
+    "QueueBuffer_NodeID_QueueBuffer": {
+      "old": "requires \\valid(self) && gapbs_queue_domain(master);\n    requires 1 <= given_size <= SWDB_LQUEUE_CAPACITY;\n    requires \\separated(self, master, swdb_lqueue_storage + (0 .. SWDB_LQUEUE_CAPACITY - 1),\n      master->shared + (0 .. master->shared_max_size - 1));\n    assigns self->sq, self->local_size, self->in, self->local_queue;\n    ensures self->sq == master && self->local_size == given_size && self->in == 0;\n    ensures self->local_queue == &swdb_lqueue_storage[0];\n    ensures gapbs_buffer_domain(self);",
+      "new": "requires \\valid(self) && gapbs_queue_domain(master);\n    requires given_size == SWDB_LQUEUE_CAPACITY;\n    requires \\valid(storage) && gapbs_nodeid_span(&(*storage)[0], given_size);\n    requires \\separated(self, master, storage,\n      master->shared + (0 .. master->shared_max_size - 1));\n    assigns self->sq, self->local_size, self->in, self->local_queue;\n    ensures self->sq == master && self->local_size == given_size && self->in == 0;\n    ensures self->local_queue == &(*storage)[0];\n    ensures gapbs_buffer_domain(self);"
+    },
+    "QueueBuffer_NodeID_destroy": {
+      "old": "requires gapbs_buffer_domain(self);\n    assigns \\nothing;",
+      "new": "requires gapbs_buffer_domain(self);\n    assigns \\nothing;"
+    },
+    "QueueBuffer_NodeID_flush": {
+      "old": "requires gapbs_buffer_domain(self);\n    requires self->in <= self->sq->shared_max_size - self->sq->shared_in;\n    requires \\valid_read(self->local_queue + (0 .. self->in - 1));\n    requires \\initialized(self->local_queue + (0 .. self->in - 1));\n    assigns self->in, self->sq->shared_in,\n            self->sq->shared[self->sq->shared_in .. self->sq->shared_in + self->in - 1];\n    ensures self->sq->shared_in == \\old(self->sq->shared_in) + \\old(self->in);\n    ensures \\initialized(self->sq->shared +\n      (\\old(self->sq->shared_in) .. \\old(self->sq->shared_in) + \\old(self->in) - 1));\n    ensures \\forall integer i; 0 <= i < \\old(self->in) ==>\n              self->sq->shared[\\old(self->sq->shared_in) + i] == \\old(self->local_queue[i]);\n    ensures self->in == 0;\n    ensures gapbs_buffer_domain(self);",
+      "new": "requires gapbs_buffer_domain(self);\n    requires self->in <= self->sq->shared_max_size - self->sq->shared_in;\n    requires \\valid_read(self->local_queue + (0 .. self->in - 1));\n    requires \\initialized(self->local_queue + (0 .. self->in - 1));\n    assigns self->in, self->sq->shared_in,\n            self->sq->shared[self->sq->shared_in .. self->sq->shared_in + self->in - 1];\n    ensures self->sq->shared_in == \\old(self->sq->shared_in) + \\old(self->in);\n    ensures \\initialized(self->sq->shared +\n      (\\old(self->sq->shared_in) .. \\old(self->sq->shared_in) + \\old(self->in) - 1));\n    ensures \\forall integer i; 0 <= i < \\old(self->in) ==>\n              self->sq->shared[\\old(self->sq->shared_in) + i] == \\old(self->local_queue[i]);\n    ensures self->in == 0;\n    ensures gapbs_buffer_domain(self);"
+    },
+    "QueueBuffer_NodeID_push_back": {
+      "old": "requires gapbs_buffer_domain(self);\n    requires self->in == self->local_size ==>\n      self->in <= self->sq->shared_max_size - self->sq->shared_in;\n    requires \\valid_read(self->local_queue + (0 .. self->in - 1));\n    requires \\initialized(self->local_queue + (0 .. self->in - 1));\n    assigns self->in, self->local_queue[0 .. self->local_size - 1], self->sq->shared_in,\n            self->sq->shared[self->sq->shared_in .. self->sq->shared_in + self->in - 1];\n    ensures gapbs_buffer_domain(self);\n    behavior buffered:\n      assumes self->in < self->local_size;\n      ensures self->in == \\old(self->in) + 1;\n      ensures self->local_queue[\\old(self->in)] == to_add;\n      ensures \\initialized(self->local_queue + (0 .. self->in - 1));\n      ensures \\forall integer i; 0 <= i < \\old(self->in) ==> self->local_queue[i] == \\old(self->local_queue[i]);\n      ensures self->sq->shared_in == \\old(self->sq->shared_in);\n    behavior flushed:\n      assumes self->in == self->local_size;\n      ensures self->sq->shared_in == \\old(self->sq->shared_in) + \\old(self->in);\n      ensures \\initialized(self->sq->shared +\n        (\\old(self->sq->shared_in) .. \\old(self->sq->shared_in) + \\old(self->in) - 1));\n      ensures \\forall integer i; 0 <= i < \\old(self->in) ==>\n                self->sq->shared[\\old(self->sq->shared_in) + i] == \\old(self->local_queue[i]);\n      ensures self->in == 1;\n      ensures self->local_queue[0] == to_add;\n      ensures \\initialized(self->local_queue);\n    complete behaviors;\n    disjoint behaviors;",
+      "new": "requires gapbs_buffer_domain(self);\n    requires self->in == self->local_size ==>\n      self->in <= self->sq->shared_max_size - self->sq->shared_in;\n    requires \\valid_read(self->local_queue + (0 .. self->in - 1));\n    requires \\initialized(self->local_queue + (0 .. self->in - 1));\n    assigns self->in, self->local_queue[0 .. self->local_size - 1], self->sq->shared_in,\n            self->sq->shared[self->sq->shared_in .. self->sq->shared_in + self->in - 1];\n    ensures gapbs_buffer_domain(self);\n    behavior buffered:\n      assumes self->in < self->local_size;\n      ensures self->in == \\old(self->in) + 1;\n      ensures self->local_queue[\\old(self->in)] == to_add;\n      ensures \\initialized(self->local_queue + (0 .. self->in - 1));\n      ensures \\forall integer i; 0 <= i < \\old(self->in) ==> self->local_queue[i] == \\old(self->local_queue[i]);\n      ensures self->sq->shared_in == \\old(self->sq->shared_in);\n    behavior flushed:\n      assumes self->in == self->local_size;\n      ensures self->sq->shared_in == \\old(self->sq->shared_in) + \\old(self->in);\n      ensures \\initialized(self->sq->shared +\n        (\\old(self->sq->shared_in) .. \\old(self->sq->shared_in) + \\old(self->in) - 1));\n      ensures \\forall integer i; 0 <= i < \\old(self->in) ==>\n                self->sq->shared[\\old(self->sq->shared_in) + i] == \\old(self->local_queue[i]);\n      ensures self->in == 1;\n      ensures self->local_queue[0] == to_add;\n      ensures \\initialized(self->local_queue);\n    complete behaviors;\n    disjoint behaviors;"
+    }
+  },
+  "entry_frame_change": {
+    "old": "    assigns parent->start_[0 .. num_nodes - 1], queue->shared_in, queue->shared[queue->shared_in .. 36893488147419103231],\n      swdb_lqueue_storage[0 .. SWDB_LQUEUE_CAPACITY - 1],\n      dxc_tile_data[0 .. DXC_NUM_TILES - 1][0 .. TILE_SIZE - 1], dxc_tile_len[0 .. DXC_NUM_TILES - 1],\n      dxc_reg[0 .. DXC_NUM_REGS - 1], dxc_pending[0 .. DXC_NUM_TILES - 1],\n      dxc_dep[0 .. DXC_NUM_TILES * DXC_NUM_TILES - 1];\n",
+    "new": "    assigns parent->start_[0 .. num_nodes - 1], queue->shared_in, queue->shared[queue->shared_in .. 36893488147419103231],\n      dxc_tile_data[0 .. DXC_NUM_TILES - 1][0 .. TILE_SIZE - 1], dxc_tile_len[0 .. DXC_NUM_TILES - 1],\n      dxc_reg[0 .. DXC_NUM_REGS - 1], dxc_pending[0 .. DXC_NUM_TILES - 1],\n      dxc_dep[0 .. DXC_NUM_TILES * DXC_NUM_TILES - 1];\n"
+  },
+  "entry_separation_change": {
+    "old": "    requires separation: bfs_distinct_blocks(\\base_addr(VertexOffsets->start_), \\base_addr(g->out_neighbors_),\n      \\base_addr(parent->start_), \\base_addr(queue->shared), \\base_addr(&swdb_lqueue_storage[0]),\n      \\base_addr(g), \\base_addr(VertexOffsets), \\base_addr(parent), \\base_addr(queue));\n",
+    "new": "    requires separation: bfs_distinct_blocks(\\base_addr(VertexOffsets->start_), \\base_addr(g->out_neighbors_),\n      \\base_addr(parent->start_), \\base_addr(queue->shared),\n      \\base_addr(g), \\base_addr(VertexOffsets), \\base_addr(parent), \\base_addr(queue));\n"
+  },
+  "device_separation_change": {
+    "old": "    requires spd: \\forall integer t; 0 <= t < DXC_NUM_TILES ==>\n      \\valid(dxc_tile_data[t] + (0 .. TILE_SIZE - 1)) && 0 <= dxc_tile_len[t] <= TILE_SIZE &&\n      \\base_addr(dxc_tile_data[t]) != \\base_addr(VertexOffsets->start_) &&\n      \\base_addr(dxc_tile_data[t]) != \\base_addr(g->out_neighbors_) &&\n      \\base_addr(dxc_tile_data[t]) != \\base_addr(parent->start_) &&\n      \\base_addr(dxc_tile_data[t]) != \\base_addr(queue->shared) &&\n      \\base_addr(dxc_tile_data[t]) != \\base_addr(&swdb_lqueue_storage[0]) &&\n      (\\forall integer t2; 0 <= t2 < t ==> \\base_addr(dxc_tile_data[t]) != \\base_addr(dxc_tile_data[t2]));\n",
+    "new": "    requires spd: \\forall integer t; 0 <= t < DXC_NUM_TILES ==>\n      \\valid(dxc_tile_data[t] + (0 .. TILE_SIZE - 1)) && 0 <= dxc_tile_len[t] <= TILE_SIZE &&\n      \\base_addr(dxc_tile_data[t]) != \\base_addr(VertexOffsets->start_) &&\n      \\base_addr(dxc_tile_data[t]) != \\base_addr(g->out_neighbors_) &&\n      \\base_addr(dxc_tile_data[t]) != \\base_addr(parent->start_) &&\n      \\base_addr(dxc_tile_data[t]) != \\base_addr(queue->shared) &&\n      (\\forall integer t2; 0 <= t2 < t ==> \\base_addr(dxc_tile_data[t]) != \\base_addr(dxc_tile_data[t2]));\n"
+  },
+  "old_global_frame_projection": "old artificial global buffer -> fresh caller-private automatic array; remove only artificial entry separation/frame, retain all preexisting source objects and internal payload helper frames",
+  "destructor_projection": "no observable source state effect; actual private-array block retirement immediately follows marker at every admitted call site; not a generic delete or danglingness proof",
+  "unit_postconditions_sha256": "bb7ed9a054f6f396ce9247087ca72df3517bd23a759d4cad85f7e2c55a6f0b20",
+  "source_qualification": "exact default successful-normal allocation, one 16384-element NodeID array, nonescape/address-insensitive single lifetime; generic n/new/delete/hooks/failure/exceptions unsupported",
+  "physical_source_header_macro_include_closure_gate": "REFUSED_NOT_IMPLEMENTED; producer hash below is recorded source research, not the selected C++ build closure. This packet only qualifies hand-model feasibility.",
+  "same_path_controls": {
+    "positive": {
+      "expected": "ordinary positive proof candidate",
+      "operation": "QueueBuffer_NodeID_push_back(&buffer, 17);\n  *out = buffer.local_queue[0];",
+      "root_functions": [
+        "swdb_allocation_site"
+      ]
+    },
+    "missing-store": {
+      "expected": "source-read initializedness must remain non-valid; no proof accepted",
+      "operation": "*out = buffer.local_queue[0];",
+      "root_functions": [
+        "swdb_allocation_site"
+      ]
+    },
+    "wrong-cell": {
+      "expected": "source-read initializedness must remain non-valid; no proof accepted",
+      "operation": "QueueBuffer_NodeID_push_back(&buffer, 17);\n  *out = buffer.local_queue[1];",
+      "root_functions": [
+        "swdb_allocation_site"
+      ]
+    },
+    "uninitialized-scalar": {
+      "expected": "source-read initializedness must remain non-valid; no proof accepted",
+      "operation": "NodeID uninitialized;\n  *out = uninitialized;",
+      "root_functions": [
+        "swdb_allocation_site"
+      ]
+    },
+    "copy-positive": {
+      "expected": "ordinary positive proof candidate",
+      "operation": "size_t prior = queue->shared_in;\n  QueueBuffer_NodeID_push_back(&buffer, 17);\n  QueueBuffer_NodeID_flush(&buffer);\n  *out = queue->shared[prior];",
+      "root_functions": [
+        "swdb_allocation_site"
+      ]
+    },
+    "history-positive": {
+      "expected": "ordinary positive proof candidate",
+      "operation": "QueueBuffer_NodeID_push_back(&buffer, 17);\n  QueueBuffer_NodeID_flush(&buffer);\n  *out = buffer.local_queue[0];",
+      "root_functions": [
+        "swdb_allocation_site"
+      ]
+    },
+    "reentry-missing-store": {
+      "expected": "source-read initializedness must remain non-valid; no proof accepted",
+      "operation": "two loop lifetimes: first stores; second omits store then reads",
+      "root_functions": [
+        "swdb_allocation_site"
+      ]
+    },
+    "modular-entry-missing-store": {
+      "expected": "source-read initializedness must remain non-valid; no proof accepted",
+      "operation": "two modular entries: first stores; second omits store then reads",
+      "root_functions": [
+        "swdb_lifetime_entry",
+        "swdb_allocation_site"
+      ]
+    },
+    "reentry-positive": {
+      "expected": "ordinary positive proof candidate",
+      "operation": "two loop lifetimes: both store then read",
+      "root_functions": [
+        "swdb_allocation_site"
+      ]
+    },
+    "modular-entry-positive": {
+      "expected": "ordinary positive proof candidate",
+      "operation": "two modular entries: both store then read",
+      "root_functions": [
+        "swdb_lifetime_entry",
+        "swdb_allocation_site"
+      ]
+    }
+  },
+  "output_pins": {
+    "gapbs_models.h": "eb71f37abca6accc9d50242e50f6affd5e1621508f0529cecadda9fb746b5ddb",
+    "tdstep_standin.c": "ab8e1f4c833805c21d291a152e8fcebd62b66bfc945b16d19c344063657b07c5",
+    "bfs_unit.h": "a9f3bb9954057676acd2216e05c4051f0782198ed44c7f3088cb309d09eb1d69",
+    "dxc_summaries.h": "fc575618bfa6217e23808cc7f9c8963b6059b666b4a0e058e4115e0ad869199e",
+    "sites/positive.c": "7e7a23698dc44961f6cb2410079aa12c0024d300333e959dd545f691de5fd09e",
+    "sites/missing-store.c": "01434f91cf191c47ce012e12cdcc3c766c778a5be17b3daa8e637e78f75e6b9f",
+    "sites/wrong-cell.c": "0a265eb1ed3436dd8cf251b73c15bc71b54a9181910fc5d7fac45a820b673ca7",
+    "sites/uninitialized-scalar.c": "688fd83ba3a0ee4136738bde9ab0e286255f344de67e052db5efe1b3500635fb",
+    "sites/copy-positive.c": "041240b6e4c320f50bbefdae145cbadf04672e2b9fac6754da08a7de015bc9fa",
+    "sites/history-positive.c": "7b061fe6d12696cf9a0e7a49bb73ea614cf897605c2c1bca4785ed6ca082e343",
+    "sites/reentry-missing-store.c": "2e7652e52ce6c650d1f4373dc25bb52932cef26f098fa94088d206f2833d6617",
+    "sites/modular-entry-missing-store.c": "5bccd0a72c3d9ee77e0b8be6ec780f3de71d96d64ba4ddeeaba03b89aeefb7a9",
+    "sites/reentry-positive.c": "64d366a7c9d2a9e2ff691ad2499f6fe873fdad4a08415198b4ee00ecf8b9e1d0",
+    "sites/modular-entry-positive.c": "99f2135b212a8003b2c35490a1f16ebc236e541566481b39f5194af67c927b77"
+  },
+  "proof_acceptance": false,
+  "allocator_correspondence": "PENDING_INIT_MAP_SAME_PATH_AND_SOURCE_REFINEMENT_GATES",
+  "TD_or_counted_admissible": false
+}

@@ -1,0 +1,409 @@
+{
+  "at_utc": "2026-10-16T06:49:29.119570+00:00",
+  "connection": {
+    "disk": "Filesystem      Size  Used Avail Use% Mounted on\n/dev/sdd1       1.8T  1.7T   25G  99% /data1\n/dev/sdb1       1.8T  1.7T   69G  97% /data",
+    "uptime": "02:49:21 up 76 days, 19:08,  8 users,  load average: 0.00, 0.00, 0.01",
+    "users": ""
+  },
+  "csv_primary_sources": {
+    "lib/frama-c-report/core/csv.ml": {
+      "matches_mac": true,
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-report/core/csv.ml",
+      "sha256": "3ac71b35403ac50ed40951bdb974edc59a42ce362e9c75a2b80c2a29788dc21d"
+    },
+    "lib/frama-c/kernel/kernel_services/ast_printing/description.ml": {
+      "matches_mac": true,
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c/kernel/kernel_services/ast_printing/description.ml",
+      "sha256": "b6d14101aa358ee74b64b85db43bd8bb31e9577dc8852629bee2160b3ac8c8b9"
+    }
+  },
+  "exit_code": 0,
+  "extra_primary_sources": {
+    "ProofEngine.ml": {
+      "matches_mac": true,
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/ProofEngine.ml",
+      "sha256": "9bfc9ccaf58cd1ca5b5ff1d5f764c34bf93a798bf0aea7a97825ade5dd2edd75"
+    },
+    "Stats.ml": {
+      "matches_mac": true,
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/Stats.ml",
+      "sha256": "fe212d872116b22b01cb70a4852854b9268a49099abc3fbda95e28cb16d73186"
+    },
+    "cfgAnnot.ml": {
+      "matches_mac": true,
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/cfgAnnot.ml",
+      "sha256": "b28d95a0f032d23b6bb56908fc30c19fecf8a265d6d0536ebfe9703d68e55602"
+    },
+    "register.ml": {
+      "matches_mac": true,
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/register.ml",
+      "sha256": "e4e0b524e4364f475f33fd618c542d4ddc86c2c35f8b6ba223ea704896bc019e"
+    },
+    "wpPropId.ml": {
+      "matches_mac": true,
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/wpPropId.ml",
+      "sha256": "eb637a45864b07030a826d3a5657634fad3db07304bd5eb2a9d30f7dd3fcb0b5"
+    },
+    "wpo.ml": {
+      "matches_mac": true,
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/wpo.ml",
+      "sha256": "37f3cdbe80caeca6de7dae787e4eb06e3b548a8c6191d81ceda5420c923869d3"
+    }
+  },
+  "leases": {
+    "mbit10-evaluation-node0.meta.json": "released",
+    "mbit10-evaluation-node1.meta.json": "released",
+    "mbit10-evaluation.meta.json": "released"
+  },
+  "limits": "Passive single-process reader60s+5s timeout,8GiB hard address-space cap. Actual proof and raw artifacts untouched.",
+  "reader_sha256": "04c777729fd08a25239c2baf98a3990fb1916d299c7c0f76cf5a2a67a97936bb",
+  "records": [
+    {
+      "census": {
+        "csv_attribution": {
+          "rows": [
+            {
+              "function": "get_data_type_unsigned_int",
+              "kind": "postcondition",
+              "line": "10",
+              "property": "get_data_type_unsigned_int_ensures",
+              "status": "Considered valid"
+            },
+            {
+              "function": "get_data_type_unsigned_int",
+              "kind": "postcondition",
+              "line": "12",
+              "property": "get_data_type_unsigned_int_exits",
+              "status": "Unknown"
+            },
+            {
+              "function": "get_data_type_unsigned_int",
+              "kind": "termination clause",
+              "line": "12",
+              "property": "get_data_type_unsigned_int_terminates",
+              "status": "Unknown"
+            },
+            {
+              "function": "get_data_type_unsigned_int",
+              "kind": "assigns clause",
+              "line": "12",
+              "property": "get_data_type_unsigned_int_assigns",
+              "status": "Considered valid"
+            },
+            {
+              "function": "trust_fixture",
+              "kind": "postcondition",
+              "line": "17",
+              "property": "trust_fixture_ensures",
+              "status": "Valid"
+            },
+            {
+              "function": "trust_fixture",
+              "kind": "postcondition",
+              "line": "18",
+              "property": "trust_fixture_exits",
+              "status": "Valid"
+            },
+            {
+              "function": "trust_fixture",
+              "kind": "termination clause",
+              "line": "18",
+              "property": "trust_fixture_terminates",
+              "status": "Valid"
+            },
+            {
+              "function": "trust_fixture",
+              "kind": "assigns clause",
+              "line": "18",
+              "property": "trust_fixture_assigns",
+              "status": "Valid"
+            },
+            {
+              "function": "trust_fixture",
+              "kind": "initialization",
+              "line": "24",
+              "property": "trust_fixture_assert_rte_initialization",
+              "status": "Valid"
+            }
+          ],
+          "selected_failed": [],
+          "unselected_implicit_unknown": [
+            {
+              "boundary": "Unselected implicit helper clause; not a proven implementation or an added Extern assumption.",
+              "description": "exits\n\\false",
+              "generated_goals": [],
+              "implementation_verified": false,
+              "property": "get_data_type_unsigned_int_exits",
+              "status": "Unknown"
+            },
+            {
+              "boundary": "Unselected implicit helper clause; not a proven implementation or an added Extern assumption.",
+              "description": "terminates\n\\true",
+              "generated_goals": [],
+              "implementation_verified": false,
+              "property": "get_data_type_unsigned_int_terminates",
+              "status": "Unknown"
+            }
+          ]
+        },
+        "dependency_edges": 7,
+        "extern_properties": [
+          "get_data_type_unsigned_int_ensures",
+          "get_data_type_unsigned_int_assigns"
+        ],
+        "failed_ordinary": [],
+        "goals": 9,
+        "initialized_property_descriptions": 1,
+        "ordinary": 7,
+        "owner_context_distinctions": [
+          {
+            "basis": "Exact source-certified helper dead-call smoke only",
+            "goal": "typed_real_get_data_type_unsigned_int_wp_smoke_dead_call_s1",
+            "inventory_property_owner": "get_data_type_unsigned_int",
+            "line": 21,
+            "native_record_context": "trust_fixture",
+            "property": "get_data_type_unsigned_int_wp_smoke_dead_call_s1"
+          }
+        ],
+        "properties": 13,
+        "smoke_native_stats": [
+          {
+            "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+            "goal": "typed_real_get_data_type_unsigned_int_wp_smoke_dead_call_s1",
+            "native_display_provers": [
+              {
+                "prover": "qed",
+                "success": 0,
+                "time": 0.000821
+              },
+              {
+                "prover": "Alt-Ergo:2.6.4",
+                "success": 1,
+                "time": 0
+              }
+            ],
+            "normalized_smoke_proved": 1,
+            "raw_best_verdict": "timeout"
+          },
+          {
+            "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+            "goal": "typed_real_trust_fixture_wp_smoke_dead_code_s4",
+            "native_display_provers": [
+              {
+                "prover": "qed",
+                "success": 0,
+                "time": 0.00204
+              },
+              {
+                "prover": "Alt-Ergo:2.6.4",
+                "success": 1,
+                "time": 0
+              }
+            ],
+            "normalized_smoke_proved": 1,
+            "raw_best_verdict": "timeout"
+          }
+        ],
+        "smokes": 2
+      },
+      "contract_result": 0,
+      "failure_class": null,
+      "id": "proof.contract.dx100_trust_fixture.20261016t060824z.9cc082e7",
+      "verdict": "proven"
+    },
+    {
+      "census": {
+        "csv_attribution": {
+          "rows": [
+            {
+              "function": "get_data_type_unsigned_int",
+              "kind": "postcondition",
+              "line": "10",
+              "property": "get_data_type_unsigned_int_ensures",
+              "status": "Considered valid"
+            },
+            {
+              "function": "get_data_type_unsigned_int",
+              "kind": "postcondition",
+              "line": "12",
+              "property": "get_data_type_unsigned_int_exits",
+              "status": "Unknown"
+            },
+            {
+              "function": "get_data_type_unsigned_int",
+              "kind": "termination clause",
+              "line": "12",
+              "property": "get_data_type_unsigned_int_terminates",
+              "status": "Unknown"
+            },
+            {
+              "function": "get_data_type_unsigned_int",
+              "kind": "assigns clause",
+              "line": "12",
+              "property": "get_data_type_unsigned_int_assigns",
+              "status": "Considered valid"
+            },
+            {
+              "function": "trust_fixture",
+              "kind": "postcondition",
+              "line": "17",
+              "property": "trust_fixture_ensures",
+              "status": "Unknown"
+            },
+            {
+              "function": "trust_fixture",
+              "kind": "postcondition",
+              "line": "18",
+              "property": "trust_fixture_exits",
+              "status": "Valid"
+            },
+            {
+              "function": "trust_fixture",
+              "kind": "termination clause",
+              "line": "18",
+              "property": "trust_fixture_terminates",
+              "status": "Valid"
+            },
+            {
+              "function": "trust_fixture",
+              "kind": "assigns clause",
+              "line": "18",
+              "property": "trust_fixture_assigns",
+              "status": "Valid"
+            },
+            {
+              "function": "trust_fixture",
+              "kind": "initialization",
+              "line": "24",
+              "property": "trust_fixture_assert_rte_initialization",
+              "status": "Valid"
+            }
+          ],
+          "selected_failed": [
+            {
+              "goals": [
+                "typed_real_trust_fixture_ensures"
+              ],
+              "payload": "\\result \u2261 1",
+              "property": "trust_fixture_ensures",
+              "status": "Unknown"
+            }
+          ],
+          "unselected_implicit_unknown": [
+            {
+              "boundary": "Unselected implicit helper clause; not a proven implementation or an added Extern assumption.",
+              "description": "exits\n\\false",
+              "generated_goals": [],
+              "implementation_verified": false,
+              "property": "get_data_type_unsigned_int_exits",
+              "status": "Unknown"
+            },
+            {
+              "boundary": "Unselected implicit helper clause; not a proven implementation or an added Extern assumption.",
+              "description": "terminates\n\\true",
+              "generated_goals": [],
+              "implementation_verified": false,
+              "property": "get_data_type_unsigned_int_terminates",
+              "status": "Unknown"
+            }
+          ]
+        },
+        "dependency_edges": 6,
+        "extern_properties": [
+          "get_data_type_unsigned_int_ensures",
+          "get_data_type_unsigned_int_assigns"
+        ],
+        "failed_ordinary": [
+          "typed_real_trust_fixture_ensures"
+        ],
+        "goals": 9,
+        "initialized_property_descriptions": 1,
+        "ordinary": 7,
+        "owner_context_distinctions": [
+          {
+            "basis": "Exact source-certified helper dead-call smoke only",
+            "goal": "typed_real_get_data_type_unsigned_int_wp_smoke_dead_call_s1",
+            "inventory_property_owner": "get_data_type_unsigned_int",
+            "line": 21,
+            "native_record_context": "trust_fixture",
+            "property": "get_data_type_unsigned_int_wp_smoke_dead_call_s1"
+          }
+        ],
+        "properties": 13,
+        "smoke_native_stats": [
+          {
+            "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+            "goal": "typed_real_get_data_type_unsigned_int_wp_smoke_dead_call_s1",
+            "native_display_provers": [
+              {
+                "prover": "qed",
+                "success": 0,
+                "time": 0.000798
+              },
+              {
+                "prover": "Alt-Ergo:2.6.4",
+                "success": 1,
+                "time": 0
+              }
+            ],
+            "normalized_smoke_proved": 1,
+            "raw_best_verdict": "timeout"
+          },
+          {
+            "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+            "goal": "typed_real_trust_fixture_wp_smoke_dead_code_s4",
+            "native_display_provers": [
+              {
+                "prover": "qed",
+                "success": 0,
+                "time": 0.00204
+              },
+              {
+                "prover": "Alt-Ergo:2.6.4",
+                "success": 1,
+                "time": 0
+              }
+            ],
+            "normalized_smoke_proved": 1,
+            "raw_best_verdict": "timeout"
+          }
+        ],
+        "smokes": 2
+      },
+      "contract_result": 1,
+      "failure_class": "timeout",
+      "id": "proof.contract.dx100_trust_fixture.20261016t060909z.42d1da40",
+      "verdict": "not_proven"
+    }
+  ],
+  "source_commit": "770df40eeb5e3034862f61b79b6bcaad5fa620a7",
+  "stderr": {
+    "bytes": 0,
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-selector-cold-readers-770df40e-20261016/v5/supplement.stderr.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stderr_tail": "",
+  "stdout": {
+    "bytes": 549929,
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-selector-cold-readers-770df40e-20261016/v5/supplement.stdout.json",
+    "sha256": "a015147776a94f79a1208ef393e8f5d5cbd7ba5e57b78fd5ac3ff4a64ac64e94"
+  },
+  "summary": {
+    "counts": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 2
+    },
+    "integrity_errors": [],
+    "physical_files": 2589,
+    "physical_pin_checks": 6005,
+    "source_commit": "770df40eeb5e3034862f61b79b6bcaad5fa620a7"
+  },
+  "vcs_primary_source": {
+    "matches_mac": true,
+    "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/VCS.ml",
+    "sha256": "95688db279e59b61f7e5068beb07b460778d91c5adf72be06a8e1e19e520b821"
+  },
+  "wall_seconds": 7.542233509942889
+}

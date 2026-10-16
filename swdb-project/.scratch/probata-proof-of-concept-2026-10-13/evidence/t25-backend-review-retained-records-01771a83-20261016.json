@@ -1,0 +1,227 @@
+{
+  "date_et": "2026-10-16",
+  "records": [
+    {
+      "path": "/private/tmp/probata-root-t25-017-native-controls-20261016/pytest/test_complete_synthetic_heap_s0/records/proofs/proof.model.std_vector_int_dtor.20261016t071049z.abe2d71d.yaml",
+      "sha256": "5a09c491f630583d74c0c3696285731ce59ca61d4a0bf84199018a07a8c3216e",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_vector_int_dtor"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "qualified": false,
+      "goals": 11
+    },
+    {
+      "path": "/private/tmp/probata-root-t25-017-native-controls-20261016/pytest/test_complete_synthetic_heap_s1/records/proofs/proof.model.std_vector_int_ctor_count.20261016t071056z.0ffe0c7e.yaml",
+      "sha256": "b45edeab9a525e6914a32623ad6d85d26861f5308e1d27c2c22a8f94bc688195",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_vector_int_ctor_count"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "qualified": false,
+      "goals": 37
+    },
+    {
+      "path": "/private/tmp/probata-root-t25-017-native-controls-20261016/pytest/test_complete_synthetic_qualif0/records/proofs/proof.model.std_vector_int_realloc_v3_grow.20261016t070942z.e60a96f9.yaml",
+      "sha256": "405b24235ac36bfce327b826308e45cc7ef82ac3c4521a5cad905553ae0dc3a5",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_vector_int_realloc_v3_grow"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "qualified": true,
+      "goals": 30
+    },
+    {
+      "path": "/private/tmp/probata-root-t25-017-native-controls-20261016/pytest/test_public_candidate_retains_0/records/proofs/proof.model.std_vector_int_realloc_v3_grow.20261016t070956z.fe894e1b.yaml",
+      "sha256": "f0229545d76cc74b1bc4666a09994db847c694539250fcf21ff84a5ca2988cbb",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_vector_int_realloc_v3_grow"
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "qualified": true,
+      "goals": 0
+    },
+    {
+      "path": "/private/tmp/probata-root-t25-017-native-controls-20261016/pytest/test_public_grow_numeric_packe0/records/proofs/proof.model.std_vector_int_realloc_v3_grow.20261016t070959z.b1dc1c57.yaml",
+      "sha256": "9f24a7bd4b65982857ad7060914d8032751786950468e3dbc51b1e3ce11650fe",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_vector_int_realloc_v3_grow"
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "qualified": true,
+      "goals": 0
+    },
+    {
+      "path": "/private/tmp/probata-root-t25-017-native-controls-20261016/pytest/test_public_minimal_qualified_0/records/proofs/proof.model.std_vector_int_realloc_v3_ctor_count_value.20261016t071005z.adec6ed8.yaml",
+      "sha256": "f0bbd4382695d95a5657aebd5d2d81adcdd2e322e8d617e6db5f8b84fa1ba828",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_vector_int_realloc_v3_ctor_count_value"
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "qualified": true,
+      "goals": 0
+    },
+    {
+      "path": "/private/tmp/probata-root-t25-017-native-controls-20261016/pytest/test_public_minimal_qualified_1/records/proofs/proof.model.std_vector_int_realloc_v3_reserve.20261016t071006z.d10d97fd.yaml",
+      "sha256": "5f4fa8c3571f40e277176f825bc364389fa4ad69e0cabd23a9f44a5f0b7f2a14",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_vector_int_realloc_v3_reserve"
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "qualified": true,
+      "goals": 0
+    },
+    {
+      "path": "/private/tmp/probata-root-t25-017-native-controls-20261016/pytest/test_public_minimal_qualified_2/records/proofs/proof.model.std_vector_int_realloc_v3_dtor.20261016t071007z.bc481ec7.yaml",
+      "sha256": "a7b5a47ac212f7fcc873b5c975d997425897e33382fd048508a3ec9e1469e17b",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_vector_int_realloc_v3_dtor"
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "qualified": true,
+      "goals": 0
+    },
+    {
+      "path": "/private/tmp/probata-root-t25-017-native-controls-20261016/pytest/test_public_original_count_con0/records/proofs/proof.model.std_vector_int_ctor_count.20261016t071113z.ed249ac2.yaml",
+      "sha256": "94e2612c01e74a265c98578e9ed81b14ed1d5d4e907ba9f54092ea73b0f1bd16",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_vector_int_ctor_count"
+      },
+      "verdict": "not_proven",
+      "failure_class": "parse_error",
+      "qualified": false,
+      "goals": 0
+    },
+    {
+      "path": "/private/tmp/probata-root-t25-017-native-controls-20261016/pytest/test_public_original_model_rea0/records/proofs/proof.model.std_vector_int_ctor_count_value.20261016t071109z.768903a1.yaml",
+      "sha256": "b02d035fa542e7fff452a900a82009b18fd4e0a50e1626a5509316de006729eb",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_vector_int_ctor_count_value"
+      },
+      "verdict": "not_proven",
+      "failure_class": "parse_error",
+      "qualified": false,
+      "goals": 0
+    },
+    {
+      "path": "/private/tmp/probata-root-t25-017-native-controls-20261016/pytest/test_public_original_model_rea1/records/proofs/proof.model.std_vector_int_dtor.20261016t071111z.f065f96c.yaml",
+      "sha256": "9d59ab243d33b7b965a9bcac185f9c3a07a973ac634d0f9e476cc7722cc1a7ec",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_vector_int_dtor"
+      },
+      "verdict": "not_proven",
+      "failure_class": "parse_error",
+      "qualified": false,
+      "goals": 0
+    },
+    {
+      "path": "/private/tmp/probata-root-t25-017-native-controls-20261016/pytest/test_public_qualified_grow_exp0/records/proofs/proof.model.std_vector_int_realloc_v3_grow.20261016t070958z.c3d22de1.yaml",
+      "sha256": "5bd52c87581e5474d15783ecdcd9e8ae320c688e17b8b455a2f8a2dd342ed06f",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_vector_int_realloc_v3_grow"
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "qualified": true,
+      "goals": 0
+    },
+    {
+      "path": "/private/tmp/probata-root-t25-017-native-controls-20261016/pytest/test_public_qualified_grow_rea0/records/proofs/proof.model.std_vector_int_realloc_v3_grow.20261016t070940z.1ea6dfeb.yaml",
+      "sha256": "6a0408114a0ebc4cd751ff34f8a04ad87e51421d4409748ef476c8684e47dc56",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_vector_int_realloc_v3_grow"
+      },
+      "verdict": "not_proven",
+      "failure_class": "parse_error",
+      "qualified": true,
+      "goals": 0
+    },
+    {
+      "path": "/private/tmp/probata-root-t25-017-native-controls-20261016/pytest/test_public_qualified_grow_rec0/records/proofs/proof.model.std_vector_int_realloc_v3_grow.20261016t070955z.d0650815.yaml",
+      "sha256": "bb2ff8c34ed73f08a1136121fe4ad04a0322c71e5493b79a39a7dc44dd102164",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_vector_int_realloc_v3_grow"
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "qualified": true,
+      "goals": 0
+    },
+    {
+      "path": "/private/tmp/probata-root-t25-017-native-controls-20261016/pytest/test_public_qualified_model_ma0/records/proofs/proof.model.std_vector_int_realloc_v3_ctor_count_value.20261016t071001z.ce5dba4a.yaml",
+      "sha256": "1e08150364611a8da6c32f3ed89c9f8011dedbea7ab918b2c42a7df17a38ea8c",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_vector_int_realloc_v3_ctor_count_value"
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "qualified": true,
+      "goals": 0
+    },
+    {
+      "path": "/private/tmp/probata-root-t25-017-native-controls-20261016/pytest/test_public_qualified_model_ma1/records/proofs/proof.model.std_vector_int_realloc_v3_reserve.20261016t071002z.69705263.yaml",
+      "sha256": "48db0f009f0d56085609248a761fc1137b28e8515eb05a66a433597fde859df0",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_vector_int_realloc_v3_reserve"
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "qualified": true,
+      "goals": 0
+    },
+    {
+      "path": "/private/tmp/probata-root-t25-017-native-controls-20261016/pytest/test_public_qualified_model_ma2/records/proofs/proof.model.std_vector_int_realloc_v3_dtor.20261016t071004z.8e3a9e6a.yaml",
+      "sha256": "14a894f2fd5bd5476e26c18750eaf575810675a8f4c5ee7fc45eaa09bb854155",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_vector_int_realloc_v3_dtor"
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "qualified": true,
+      "goals": 0
+    },
+    {
+      "path": "/private/tmp/probata-root-t25-017-native-controls-20261016/pytest/test_public_reserve_inventory_0/records/proofs/proof.model.std_vector_int_realloc_v3_reserve.20261016t071000z.1ea99a67.yaml",
+      "sha256": "cd9b8dd7b6948594f04493c2928e53f79564f13a4b8e6c639930b6b5caaec759",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_vector_int_realloc_v3_reserve"
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "qualified": true,
+      "goals": 0
+    }
+  ],
+  "report_reference_instances_checked": 941,
+  "schema": {
+    "source_commit": "01771a839893975bba389ee0adcbec2aecdb88ac",
+    "sha256": "05bccdafa723c253fe8e3faf251992e2862b5451ad89907a155d2c251dbab871"
+  },
+  "errors": []
+}

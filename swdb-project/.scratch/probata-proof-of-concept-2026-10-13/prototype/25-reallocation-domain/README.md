@@ -2,8 +2,40 @@
 
 Created: 2026-10-16 ET. Preparation only; no body/caller proof is claimed.
 
+Current successor: the prospective standalone qualified model route reuses the
+existing heap engine and normal reader. It reconstructs each complete source
+packet before launch, binds the selected WP Typed/Machine source package, and
+retains all current targets/RTE/init/smoke under the whole public deadline.
+The broad-domain destructor needs no int-element image. Seven scripted controls
+pass, including one explicitly synthetic complete 20-target persistence/schema
+exercise; this is adapter evidence, not an actual model proof. A broader test
+run was rejected before launch because of a newly introduced executable metadata
+query. That new query was replaced with pinned source metadata; the coordinator
+is reviewing the remaining existing native setup boundary before any retry.
+Actual WP/task closure and caller composition remain pending, and original v2
+call lowering remains unchanged. See
+[prospective public-view evidence](../../evidence/t25-qualified-public-view-preparation-20261016.json).
+
+The coordinator then admitted and ran the exact-01771a83 detached 40-control
+profile, including the existing native metadata/helper/report compilation
+boundary. All 40 passed in 95.71 seconds with source clean before/after; every
+Frama invocation was an explicit Python stand-in. This separate result preserves
+the earlier denied attempt and establishes no scientific proof. See
+[root-owned controls](../../evidence/t25-qualified-public-view-root-controls-01771a83-20261016.json).
+
+The caller successor binds the complete actual lowered declaration, constructor,
+alias capture, reserve, guarded scalar capture, destructor and return order.
+Exactly one destructor executes on normal return; the generated fallthrough
+destructor is unreachable. The closing scope token is an anchor for storage end
+on return, not a claim that the token itself executes. All ten pending local
+lifetime duties now retain these physical spans. Nineteen composed Clang/native
+and pure packet controls pass after two genuine missing-binding REDs; no origin,
+ownership fact or source-image/lifetime theorem is granted. See
+[lowered lifetime controls](../../evidence/t25-caller-lowered-lifetime-controls-20261016.json).
+
 The public candidate names are `std_vector_int_realloc_v3_` followed by
-`ctor_count_value`, `grow`, `reserve` or `dtor`. `swdb prove --model` records the
+`ctor_count_value`, `grow`, `reserve` or `dtor`. The earlier preparation freezes'
+`swdb prove --model` records the
 qualified source, original v2 source and explicit contract/domain certificate,
 then returns not proven before a verifier launch. The original v2 catalog and
 its broader contracts remain unchanged; this new ID never certifies them.
@@ -105,3 +137,35 @@ dependencies, typed-source admission, import/task closure and fresh normal-reade
 proofs are still required. A coordinator-admitted exact-Git-blob type-only gate
 is being prepared; grammar/types alone will not discharge those requirements.
 Evidence: [pending map controls](../../evidence/t25-reallocation-pending-heap-map-controls-v2-20261016.json).
+
+The next preparation slice adds a closed exact-source inventory for every
+constructor/grow/reserve/destructor event, each emitted contract/loop clause,
+and both trusted allocation helpers. Parent-catalog and inverse-qualified body
+digests bind the entire source before event ownership is assigned; this is an
+explicit trusted map rather than a generic C completeness parser. Entry clauses
+remain caller/source-image duties, and allocator helpers retain the existing
+allocation policy rather than being relabeled as proved bodies. Twenty composed
+controls pass in 52.74 seconds after a real missing-inventory RED. Independent
+completeness review, canonical prelaunch reconstruction and public composition
+remain pending, and the actual proof route is still closed. See
+[source-inventory controls](../../evidence/t25-reallocation-source-inventory-controls-20261016.json).
+
+Canonical `prepare`/`check` now rebuilds the complete declaration from current
+source, rather than trusting staged hashes. It binds original/qualified C,
+each statement and packet, source ownership, theory, translation components and
+exact file/directory membership. Changed desired statements, missing copy steps
+or clauses, altered source/theory, shadow `.why` files and symlinks refuse.
+Eight pure controls pass after RED; the composed public preparation profile is
+28 passed in 53.02 seconds. Its route still returns unsupported before launch.
+See [reconstruction controls](../../evidence/t25-reallocation-canonical-rebuild-controls-20261016.json)
+and the [independent source inventory review](../../evidence/t25-source-inventory-independent-review-32df8de7-20261016.md).
+
+The coordinator's exact-304e03ac Mac Why3 type-only run exited zero on the new
+theory in 0.377 seconds (50.53 MiB), with exactly one unused `dummy` warning.
+The retained v2 warning regex omitted Why3's comma-format warning; a separately
+pinned passive reader classifies that existing output without rerunning or
+rewriting it. A prospective v3 parser captures unknown/continued warnings and
+passes nine pure controls after the real v2 parser failed seven. This closes
+grammar/types and retained-warning classification only. WP import/task closure,
+typed-source image, model bodies and caller composition remain unproved. See
+the [passive addendum](../../evidence/t25-mac-typecheck-passive-warning-audit-v1-304e03ac-20261016.json).

@@ -1,0 +1,201 @@
+{
+  "date": "2026-10-16 ET",
+  "prior_primary": {
+    "boundary": "All prior WP source bindings retained; Report CSV/Description sources pinned from selected Mac Frama33. Root independently checks corresponding Linux bytes; no equivalence asserted solely from version.",
+    "date": "2026-10-16 ET",
+    "files": [
+      {
+        "bytes": 23525,
+        "excerpts": [
+          {
+            "end": 19,
+            "start": 15,
+            "text": "let smoke kf ~id ?doomed ?unreachable () =\n  WpPropId.mk_smoke kf ~id ?doomed ?unreachable () , Logic_const.pfalse\n\nlet get_unreachable kf stmt =\n  WpPropId.mk_smoke kf ~id:\"unreachabled\" ~unreachable:stmt ()"
+          },
+          {
+            "end": 341,
+            "start": 333,
+            "text": "let get_call_contract ?smoking kf stmt =\n  let cc = CallContract.get kf in\n  let preconds = List.map (get_precond_at kf stmt) cc.contract_cond in\n  match smoking with\n  | None ->\n    { cc with contract_cond = preconds }\n  | Some s ->\n    let g = smoke kf ~id:\"dead_call\" ~unreachable:s () in\n    { cc with contract_cond = preconds ; contract_smoke = [ g ] }"
+          }
+        ],
+        "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/cfgAnnot.ml",
+        "sha256": "b28d95a0f032d23b6bb56908fc30c19fecf8a265d6d0536ebfe9703d68e55602"
+      },
+      {
+        "bytes": 39344,
+        "excerpts": [
+          {
+            "end": 194,
+            "start": 181,
+            "text": "  mk_prop kind called_pre_p\n\nlet mk_smoke kf ~id ?(doomed=[]) ?unreachable () =\n  let oloc = match unreachable with\n    | None -> Property.OLContract kf\n    | Some stmt -> Property.OLStmt(kf,stmt)\n  in {\n    p_kind = PKSmoke;\n    p_prop = Property.ip_other (\"wp_smoke_\" ^id) oloc ;\n    p_doomed = doomed ;\n    p_unreachable = oloc ;\n    p_part = None ;\n  }\n"
+          }
+        ],
+        "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/wpPropId.ml",
+        "sha256": "eb637a45864b07030a826d3a5657634fad3db07304bd5eb2a9d30f7dd3fcb0b5"
+      },
+      {
+        "bytes": 27317,
+        "excerpts": [
+          {
+            "end": 316,
+            "start": 304,
+            "text": "    po_idx   : index ;   (* goal index *)\n    po_model : WpContext.model ;\n    po_pid   : WpPropId.prop_id ; (* goal target property *)\n    po_formula : VC_Annot.t ; (* proof obligation *)\n  }\n\nlet get_index w = w.po_idx\nlet get_label w = WpPropId.label_of_prop_id w.po_pid\nlet get_model x = x.po_model\nlet get_scope w = match w.po_idx with\n  | Axiomatic _ -> WpContext.Global\n  | Function(kf,_) -> WpContext.Kf kf\nlet get_context w = w.po_model , get_scope w"
+          },
+          {
+            "end": 413,
+            "start": 413,
+            "text": "let get_property g = WpPropId.property_of_id g.po_pid"
+          },
+          {
+            "end": 761,
+            "start": 748,
+            "text": "let is_locally_valid g =\n  is_trivial g ||\n  List.exists\n    (fun (p,r) -> not (Prover.is_tactical p) && VCS.is_valid r) @@ get_results g\n\nlet all_not_valid g =\n  not (is_trivial g) &&\n  List.for_all (fun (_,r) -> VCS.is_not_valid r) @@ get_results g\n\nlet is_passed g =\n  if is_smoke_test g then\n    all_not_valid g\n  else\n    is_fully_valid g"
+          }
+        ],
+        "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/wpo.ml",
+        "sha256": "37f3cdbe80caeca6de7dae787e4eb06e3b548a8c6191d81ceda5420c923869d3"
+      },
+      {
+        "bytes": 63415,
+        "excerpts": [
+          {
+            "end": 1562,
+            "start": 1552,
+            "text": "  let make_oblig index pid vcq =\n    {\n      po_model = WpContext.get_model () ;\n      po_pid = pid ;\n      po_sid = \"\" ;\n      po_gid = \"\" ;\n      po_name = \"\" ;\n      po_idx = index ;\n      po_formula = vcq ;\n    }\n"
+          }
+        ],
+        "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/CfgWP.ml",
+        "sha256": "490ab8a263f85e50e304d6cd4ee9ff7a5137f1c7f00e4ec7cd7555b68483256c"
+      },
+      {
+        "bytes": 4909,
+        "excerpts": [
+          {
+            "end": 43,
+            "start": 19,
+            "text": "let function_of p = match Property.get_kf p with\n  | None -> \"null\" | Some kf -> esc (Kernel_function.get_name kf)\nlet loc p =\n  let a, _ = Property.location p in\n  Filepath.to_string_abs (Filepos.path a), Filepos.line a\nlet verdict = function\n  | Wp.VCS.NoResult -> \"untried\" | Unknown -> \"unknown\" | Timeout -> \"timeout\"\n  | Stepout -> \"stepout\" | Computing _ -> \"computing\" | Valid -> \"valid\"\n  | Invalid -> \"invalid\" | Failed -> \"failed\"\nlet bool b = if b then \"true\" else \"false\"\n\nlet run () = match Sys.getenv_opt \"SWDB_PROOF_REPORT_OUT\" with\n  | None -> ()\n  | Some path ->\n    let goals = ref [] in\n    Wp.Wpo.iter_on_goals (fun w ->\n        let p = Wp.Wpo.get_property w in\n        let _, line = loc p in\n        let targets = List.map (fun p -> esc (Property.Names.get_prop_name_id p))\n            (Wp.WpPropId.doomed_if_valid w.Wp.Wpo.po_pid) in\n        let best = List.map (fun (_, (r : Wp.VCS.result)) -> verdict r.verdict) (Wp.Wpo.get_results w) in\n        goals := Printf.sprintf\n            \"{\\\"goal\\\":%s,\\\"property\\\":%s,\\\"function\\\":%s,\\\"line\\\":%d,\\\"smoke\\\":%s,\\\"passed\\\":%s,\\\"targets\\\":[%s],\\\"results\\\":[%s]}\"\n            (esc (Wp.Wpo.get_gid w)) (esc (Property.Names.get_prop_name_id p))\n            (function_of p) line (bool (Wp.Wpo.is_smoke_test w)) (bool (Wp.Wpo.is_passed w))"
+          }
+        ],
+        "path": "/private/tmp/probata-t28-selector-frozen-review-21edecf2-20261016/swdb/proof_report.ml",
+        "sha256": "0c00ed3567f3803f16735dbf95daa0f997c2f6bddefcf6fb2133fff7a862cc0d"
+      },
+      {
+        "bytes": 8107,
+        "excerpts": [
+          {
+            "end": 83,
+            "start": 68,
+            "text": "\nlet pmerge = Plist.union (fun _ a b -> padd a b)\n\nlet ptime t valid =\n  if t < Rformat.epsilon then\n    { pzero with tnbr = 1.0 ; success = if valid then 1.0 else 0.0 }\n  else\n    { tmin = t ; tval = t ; tmax = t ; time = t ; tnbr = 1.0 ;\n      success = if valid then 1.0 else 0.0 }\n\nlet psolver r = ptime r.solver_time false\nlet pqed r = if VCS.is_valid r then ptime r.solver_time true else pzero\nlet presult r = if VCS.is_valid r then ptime r.prover_time true else pzero\nlet qsmoked r = if VCS.is_valid r then ptime r.solver_time false else ptime 0.0 true\nlet psmoked r = if VCS.is_valid r then ptime r.prover_time false else ptime 0.0 true\nlet vsmoked v = if VCS.is_proved ~smoke:true v then VCS.Valid else VCS.Failed"
+          },
+          {
+            "end": 127,
+            "start": 108,
+            "text": "let results ~smoke results =\n  let (p,r) = VCS.best results in\n  let verdict = if smoke then vsmoked r.verdict else r.verdict in\n  let is v = if verdict == v then 1 else 0 in\n  let proved = is Valid in\n  let timeout = is Timeout + is Stepout in\n  let failed = is Failed in\n  let unknown = is Unknown in\n  let noresult = 1 - proved - timeout - failed - unknown in\n  (* ENSURES: noresult <= 0 && subgoals result == 1 *)\n  { (* returns verdict of provers, not verdict for the (smoked) goal *)\n    best = r.verdict ; tactics = 0 ;\n    proved ; timeout ; unknown ; failed ; noresult ;\n    cached = List.fold_left add_cached 0 results ;\n    cacheable = List.fold_left add_cacheable 0 results ;\n    provers =\n      if p = Qed then [Qed,if smoke then qsmoked r else pqed r]\n      else\n        pmerge [Qed,psolver r] [p,if smoke then psmoked r else presult r] ;\n  }"
+          }
+        ],
+        "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/Stats.ml",
+        "sha256": "fe212d872116b22b01cb70a4852854b9268a49099abc3fbda95e28cb16d73186"
+      },
+      {
+        "bytes": 18517,
+        "excerpts": [
+          {
+            "end": 316,
+            "start": 263,
+            "text": "let is_prover (p,_) = not @@ Prover.is_tactical p\n\nlet prover_stats ~smoke goal =\n  Stats.results ~smoke @@\n  List.filter is_prover @@\n  Wpo.get_results goal\n\nlet rec consolidate ~smoke n =\n  match n.stats with\n  | Some s -> s\n  | None -> let s = compute ~smoke n in n.stats <- Some s ; s\n\nand compute ~smoke n =\n  if Wpo.is_locally_valid n.goal then\n    prover_stats ~smoke n.goal\n  else\n    match n.script with\n    | Opened | Script _ -> prover_stats ~smoke n.goal\n    | Tactic(_,children) ->\n      Stats.tactical ~qed:(Wpo.qed_time n.goal) @@\n      List.map (fun (_,n) -> consolidate ~smoke n) children\n\nlet tactical tree =\n  match tree.root with\n  | None -> VCS.no_result\n  | Some root ->\n    let smoke = Wpo.is_smoke_test tree.main in\n    Stats.script @@ consolidate ~smoke root\n\nlet validate tree =\n  if tree.dirty then\n    let result =\n      if Wpo.is_locally_valid tree.main then VCS.no_result else tactical tree\n    in\n    try\n      self_updating := true ;\n      Wpo.set_result tree.main Prover.Tactical result ;\n      tree.dirty <- false ;\n      self_updating := false ;\n    with exn ->\n      self_updating := false ;\n      raise exn\n\nlet consolidated wpo =\n  let smoke = Wpo.is_smoke_test wpo in\n  try\n    match (PROOFS.find wpo).root with\n    | Some node -> consolidate ~smoke node\n    | _ -> raise Not_found\n  with Not_found -> prover_stats ~smoke wpo\n\nlet consolidate wpo =\n  try validate (PROOFS.find wpo) with Not_found -> ()\n"
+          }
+        ],
+        "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/proofEngine.ml",
+        "sha256": "9bfc9ccaf58cd1ca5b5ff1d5f764c34bf93a798bf0aea7a97825ade5dd2edd75"
+      },
+      {
+        "bytes": 9406,
+        "excerpts": [
+          {
+            "end": 100,
+            "start": 81,
+            "text": "let is_result = function\n  | Valid | Invalid | Unknown | Timeout | Stepout | Failed -> true\n  | NoResult | Computing _ -> false\nlet is_verdict r = is_result r.verdict\nlet is_valid = function { verdict = Valid } -> true | _ -> false\nlet is_trivial r = is_valid r && r.prover_time = 0.0\nlet is_not_valid r = is_verdict r && not (is_valid r)\nlet is_computing = function { verdict=Computing _ } -> true | _ -> false\nlet has_model r = not @@ Probe.Map.is_empty r.prover_model\nlet is_cacheable r =\n  match r.verdict with\n  | Valid -> r.prover_time <> 0.0\n  | Invalid | Unknown | Timeout | Stepout -> not (has_model r)\n  | Failed | NoResult | Computing _ -> false\n\nlet is_none = function { verdict=NoResult } -> true | _ -> false\nlet is_proved ~smoke = function\n  | NoResult | Computing _ | Failed -> false\n  | Valid -> not smoke\n  | Unknown | Timeout | Stepout | Invalid -> smoke"
+          },
+          {
+            "end": 204,
+            "start": 196,
+            "text": "let name_of_verdict ?(computing=false) = function\n  | NoResult -> \"none\"\n  | Computing _ -> if computing then \"computing\" else \"none\"\n  | Valid -> \"valid\"\n  | Invalid -> \"invalid\"\n  | Failed -> \"failed\"\n  | Unknown -> \"unknown\"\n  | Stepout -> \"stepout\"\n  | Timeout -> \"timeout\""
+          }
+        ],
+        "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/vCS.ml",
+        "sha256": "95688db279e59b61f7e5068beb07b460778d91c5adf72be06a8e1e19e520b821"
+      },
+      {
+        "bytes": 36565,
+        "excerpts": [
+          {
+            "end": 342,
+            "start": 285,
+            "text": "let pstats_to_json (p,r) : Json.t = `Assoc [\n    \"prover\", `String (Prover.ident p) ;\n    \"time\", `Float r.Stats.time ;\n    \"success\", `Int (truncate r.Stats.success) ;\n  ]\n\nlet stats_to_json g (s : Stats.stats) : Json.t =\n  let smoke = Wpo.is_smoke_test g in\n  let target = Wpo.get_target g in\n  let source = fst (Property.location target) in\n  let script = match ProofSession.get g with\n    | NoScript -> []\n    | Script file | Deprecated file ->\n      [ \"script\", `String (Filepath.to_string_abs file) ]\n  in\n  let index =\n    match g.po_idx with\n    | Axiomatic None -> []\n    | Axiomatic (Some ax) ->\n      [ \"axiomatic\", `String ax ]\n    | Function(kf,None) ->\n      [ \"function\", `String (Kernel_function.get_name kf) ]\n    | Function(kf,Some bhv) -> [\n        \"function\", `String (Kernel_function.get_name kf);\n        \"behavior\", `String bhv ;\n      ] in\n  let subgoals = Stats.subgoals s in\n  let subgoals = if subgoals > 1 then [\"subgoals\", `Int subgoals] else [] in\n  `Assoc\n    ([\n      \"goal\", `String g.po_gid ;\n      \"property\", `String (Property.Names.get_prop_name_id target) ;\n      \"file\", `String (Filepos.path source |> Filepath.to_string_abs) ;\n      \"line\", `Int (Filepos.line source) ;\n    ] @ index @ [\n        \"smoke\", `Bool smoke ;\n        \"passed\", `Bool (Wpo.is_passed g) ;\n        \"verdict\", `String (VCS.name_of_verdict s.best) ;\n      ] @ script @ [\n        \"provers\", `List (List.map pstats_to_json s.provers) ;\n      ] @ subgoals @\n      List.filter (function (_,`Int n) -> n > 0 | _ -> true) [\n        \"tactics\", `Int s.tactics;\n        \"proved\", `Int s.proved;\n        \"timeout\", `Int s.timeout;\n        \"unknown\", `Int s.unknown ;\n        \"failed\", `Int s.failed ;\n        \"cached\", `Int s.cached ;\n      ])\n\nlet do_report_json () =\n  let file = Wp_parameters.ReportJson.get () in\n  if not (Filepath.is_empty file) then\n    let json = List.rev @@\n      GOALS.fold\n        (fun g json ->\n           let s = ProofEngine.consolidated g in\n           let js = stats_to_json g s in"
+          }
+        ],
+        "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/register.ml",
+        "sha256": "e4e0b524e4364f475f33fd618c542d4ddc86c2c35f8b6ba223ea704896bc019e"
+      },
+      {
+        "bytes": 3253,
+        "excerpts": [
+          {
+            "end": 67,
+            "start": 23,
+            "text": "\nlet to_string ip =\n  let status = Description.status_feedback (Property_status.Feedback.get ip) in\n  let loc = Property.location ip in\n  match Description.property_kind_and_node ip with\n  | None -> raise Skip\n  | Some (kind, txt) ->\n    let kf = kf_of_property ip in\n    let loc =\n      if Fileloc.is_empty loc then\n        Kernel_function.get_location kf\n      else loc\n    in\n    let loc = split_pos (fst loc) in\n    (loc, Kernel_function.get_name kf, kind, status, txt)\n\n(* Compute the lines to export as a .csv, then sorts them *)\nlet lines () =\n  let do_one_ip ip l =\n    if Scan.report_ip ip then\n      try to_string ip :: l\n      with Skip -> l\n    else l\n  in\n  let l = Property_status.fold do_one_ip [] in\n  (* This [sort] removes fully identical lines, including identical alarms\n     emitted on statements copied through loop unrolling. This is the desired\n     semantics for now. However, since we compare entire locations, textually\n     identical lines that refer to different expressions are kept separate *)\n  List.sort_uniq Stdlib.compare l\n\nlet output file =\n  let open Filesystem.Operators in\n  let$ fmt = Filesystem.with_formatter_exn file in\n  Format.pp_set_margin fmt 1000000;\n  Format.fprintf fmt \"@[<v>\";\n  Format.fprintf fmt\n    \"@[directory\\tfile\\tline\\tfunction\\tproperty kind\\tstatus\\tproperty@]@ \";\n  let pp ((dir, file, lnum, _), kf, kind, status, txt) =\n    Format.fprintf fmt \"@[<h>%s\\t%s\\t%d\\t%s\\t%s\\t%s\\t%s@]@ \"\n      dir file lnum kf kind status txt;\n  in\n  List.iter pp (lines ());\n  Format.fprintf fmt \"@]%!\"\n"
+          }
+        ],
+        "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-report/core/csv.ml",
+        "sha256": "3ac71b35403ac50ed40951bdb974edc59a42ce362e9c75a2b80c2a29788dc21d"
+      },
+      {
+        "bytes": 20490,
+        "excerpts": [
+          {
+            "end": 402,
+            "start": 362,
+            "text": "      | Some alarm -> Alarms.get_name alarm\n      | None ->\n        if List.exists ((=) \"missing_return\") pred_name then \"missing_return\"\n        else\n          match tp_kind with\n          | Assert -> \"user assertion\"\n          | Check -> \"user check\"\n          | Admit -> \"user hypothesis\"\n    in\n    Some (kind, to_string Printer.pp_predicate_node pred_content)\n  | AInvariant (_, _, {tp_statement = {pred_content}}) ->\n    Some (\"loop invariant\", to_string Printer.pp_predicate_node pred_content)\n  | _ -> None\n\nlet property_kind_and_node property =\n  let default kind = Some (kind, to_string Property.pretty property) in\n  let open Property in\n  match property with\n  | IPCodeAnnot {ica_ca} -> code_annot_kind_and_node ica_ca\n  | IPPredicate {ip_kind; ip_pred} ->\n    let kind = match ip_kind with\n      | PKRequires _ -> \"precondition\"\n      | PKAssumes _  -> \"behavior assumption\"\n      | PKEnsures _  -> \"postcondition\"\n      | PKTerminates -> \"termination clause\"\n    in\n    Some (kind, to_string Printer.pp_identified_predicate ip_pred)\n  | IPPropertyInstance {ii_ip=IPPredicate {ip_kind=PKRequires _; ip_kf;\n                                           ip_kinstr=Kglobal; ip_pred}} ->\n    let kind = \"precondition of \" ^ Kernel_function.get_name ip_kf in\n    Some (kind, to_string Printer.pp_identified_predicate ip_pred)\n  | IPAssigns _  -> default \"assigns clause\"\n  | IPFrom _     -> default \"from clause\"\n  | IPComplete _ -> default \"complete behaviors\"\n  | IPDisjoint _ -> default \"disjoint behaviors\"\n  | _ -> None\n\nlet status_feedback status =\n  let open Property_status.Feedback in\n  match status with\n  | Never_tried       -> \"Ignored\""
+          }
+        ],
+        "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c/kernel/kernel_services/ast_printing/description.ml",
+        "sha256": "b6d14101aa358ee74b64b85db43bd8bb31e9577dc8852629bee2160b3ac8c8b9"
+      }
+    ],
+    "linux_owner_bridge_receipt": {
+      "bytes": 6711,
+      "path": "/private/tmp/probata-t28-selector-native-owner-source-bridge-v1-20261016.json",
+      "sha256": "077c9f7b5ba538442a18393e6abe4986a7b5c36351d520de7d34fab25aaccf09"
+    }
+  },
+  "production_copy": {
+    "extracted": [
+      {
+        "first_line": 24,
+        "function": "Refused",
+        "last_line": 25,
+        "sha256": "508737932b6b6f2e19e185da1da287e853ae2d8c36484ee458b75fdf537571e6"
+      },
+      {
+        "first_line": 28,
+        "function": "constructor_projection",
+        "last_line": 40,
+        "sha256": "bc210795ab2100f44b7a36525e75eabedbc2597e300a4192fbc08d5032617c14"
+      },
+      {
+        "first_line": 127,
+        "function": "_function_ir",
+        "last_line": 131,
+        "sha256": "fc394e512edde0ef2b36d20961267b7292933bf873a1180e80bb672e01410f85"
+      },
+      {
+        "first_line": 134,
+        "function": "_check_getter_ir",
+        "last_line": 179,
+        "sha256": "aebeb4af19c9e866d008ea3d483516b0ee82c2ba61abf40773920ee891378948"
+      }
+    ],
+    "path": "swdb/dx100_size_source.py",
+    "sha256": "1855b69dee333e23e0f628060f0de1cdf86455d3cd7a2c458db241149d7644fb"
+  }
+}

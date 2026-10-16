@@ -1,0 +1,559 @@
+{
+  "actual_tools_or_entry_executed_by_reviewer": false,
+  "canonical_checks_reported": 110,
+  "canonical_evidence_sha256": "7c36efff1fff18c1a9e08bf3a5a6529c94842ee31bb90a931cf4375a3fdd9db2",
+  "canonical_manifest_groups": {
+    "artifacts": 48
+  },
+  "canonical_raw_manifest_sha256": "157423debbb5d7c09c618e10aeaae7cf2fdb5bcc7d2fbaeaedc47ee365c56308",
+  "canonical_source_payloads": [
+    {
+      "lines": 38,
+      "old_sha256": "52d40d00b0a7462eed164deec3a8958a855de5763e7f20fefb8e2f257f09bd34",
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_outslot_canonical/bfs_unit.h",
+      "sha256": "52d40d00b0a7462eed164deec3a8958a855de5763e7f20fefb8e2f257f09bd34"
+    },
+    {
+      "lines": 198,
+      "old_sha256": "6b109e09239be71e252ee25e4cfa720c1cf37b651a8f586423f0c8d43f2b37e5",
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_outslot_canonical/dxc_summaries.h",
+      "sha256": "c70a4644a4cd27feabcacd3633a1135bcb46a8f36d86a08b2fee4a469a868c71"
+    },
+    {
+      "lines": 373,
+      "old_sha256": "7fcafa5498481b4ecce20c36ba167a00b9c5f9231b460c162268b814f14f19ec",
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_outslot_canonical/gapbs_models.h",
+      "sha256": "e2248bbe1e7dd47c6a46f8645aca9f065900c7205b066fbd5956b2c7c5fcf95c"
+    },
+    {
+      "lines": 263,
+      "old_sha256": "3af025040802b2c018a7a192738c276863f7c489e4c3ce238443b9f2a3f6bcfa",
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_outslot_canonical/tdstep_standin.c",
+      "sha256": "3af025040802b2c018a7a192738c276863f7c489e4c3ce238443b9f2a3f6bcfa"
+    },
+    {
+      "lines": 60,
+      "old_sha256": "a9f3bb9954057676acd2216e05c4051f0782198ed44c7f3088cb309d09eb1d69",
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/bfs_unit.h",
+      "sha256": "a9f3bb9954057676acd2216e05c4051f0782198ed44c7f3088cb309d09eb1d69"
+    },
+    {
+      "lines": 199,
+      "old_sha256": "724f5b0fa31c0b601d4a5780df3d6514d3a308a99e0c9a8eed04a29cde9060c1",
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/dxc_summaries.h",
+      "sha256": "fc575618bfa6217e23808cc7f9c8963b6059b666b4a0e058e4115e0ad869199e"
+    },
+    {
+      "lines": 371,
+      "old_sha256": "77b579f9d90a4775c8bd2cb5a91a7896dcf0cc17b0743a098dc14e6bc30f7d5f",
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/gapbs_models.h",
+      "sha256": "eb71f37abca6accc9d50242e50f6affd5e1621508f0529cecadda9fb746b5ddb"
+    },
+    {
+      "lines": 18,
+      "old_sha256": "041240b6e4c320f50bbefdae145cbadf04672e2b9fac6754da08a7de015bc9fa",
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/sites/copy-positive.c",
+      "sha256": "041240b6e4c320f50bbefdae145cbadf04672e2b9fac6754da08a7de015bc9fa"
+    },
+    {
+      "lines": 17,
+      "old_sha256": "7b061fe6d12696cf9a0e7a49bb73ea614cf897605c2c1bca4785ed6ca082e343",
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/sites/history-positive.c",
+      "sha256": "7b061fe6d12696cf9a0e7a49bb73ea614cf897605c2c1bca4785ed6ca082e343"
+    },
+    {
+      "lines": 13,
+      "old_sha256": "01434f91cf191c47ce012e12cdcc3c766c778a5be17b3daa8e637e78f75e6b9f",
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/sites/missing-store.c",
+      "sha256": "01434f91cf191c47ce012e12cdcc3c766c778a5be17b3daa8e637e78f75e6b9f"
+    },
+    {
+      "lines": 24,
+      "old_sha256": "5bccd0a72c3d9ee77e0b8be6ec780f3de71d96d64ba4ddeeaba03b89aeefb7a9",
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/sites/modular-entry-missing-store.c",
+      "sha256": "5bccd0a72c3d9ee77e0b8be6ec780f3de71d96d64ba4ddeeaba03b89aeefb7a9"
+    },
+    {
+      "lines": 25,
+      "old_sha256": "99f2135b212a8003b2c35490a1f16ebc236e541566481b39f5194af67c927b77",
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/sites/modular-entry-positive.c",
+      "sha256": "99f2135b212a8003b2c35490a1f16ebc236e541566481b39f5194af67c927b77"
+    },
+    {
+      "lines": 15,
+      "old_sha256": "7e7a23698dc44961f6cb2410079aa12c0024d300333e959dd545f691de5fd09e",
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/sites/positive.c",
+      "sha256": "7e7a23698dc44961f6cb2410079aa12c0024d300333e959dd545f691de5fd09e"
+    },
+    {
+      "lines": 16,
+      "old_sha256": "2e7652e52ce6c650d1f4373dc25bb52932cef26f098fa94088d206f2833d6617",
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/sites/reentry-missing-store.c",
+      "sha256": "2e7652e52ce6c650d1f4373dc25bb52932cef26f098fa94088d206f2833d6617"
+    },
+    {
+      "lines": 17,
+      "old_sha256": "64d366a7c9d2a9e2ff691ad2499f6fe873fdad4a08415198b4ee00ecf8b9e1d0",
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/sites/reentry-positive.c",
+      "sha256": "64d366a7c9d2a9e2ff691ad2499f6fe873fdad4a08415198b4ee00ecf8b9e1d0"
+    },
+    {
+      "lines": 14,
+      "old_sha256": "688fd83ba3a0ee4136738bde9ab0e286255f344de67e052db5efe1b3500635fb",
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/sites/uninitialized-scalar.c",
+      "sha256": "688fd83ba3a0ee4136738bde9ab0e286255f344de67e052db5efe1b3500635fb"
+    },
+    {
+      "lines": 14,
+      "old_sha256": "0a265eb1ed3436dd8cf251b73c15bc71b54a9181910fc5d7fac45a820b673ca7",
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/sites/wrong-cell.c",
+      "sha256": "0a265eb1ed3436dd8cf251b73c15bc71b54a9181910fc5d7fac45a820b673ca7"
+    },
+    {
+      "lines": 263,
+      "old_sha256": "ab8e1f4c833805c21d291a152e8fcebd62b66bfc945b16d19c344063657b07c5",
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/tdstep_standin.c",
+      "sha256": "ab8e1f4c833805c21d291a152e8fcebd62b66bfc945b16d19c344063657b07c5"
+    }
+  ],
+  "cases": [
+    {
+      "helpers": [
+        "swdb_bind_private_NodeID_array",
+        "compare_and_swap_out",
+        "fetch_and_add_size_t_out",
+        "std_min_size_t_out",
+        "omp_get_thread_num_out",
+        "pvector_NodeID_operator_index_out",
+        "pvector_NodeID_data_out",
+        "pvector_NodeID_beginp_out",
+        "pvector_NodeID_endp_out",
+        "pvector_SGOffset_operator_index_out",
+        "pvector_SGOffset_data_out",
+        "pvector_SGOffset_beginp_out",
+        "pvector_SGOffset_endp_out",
+        "SlidingQueue_NodeID_beginp_out",
+        "SlidingQueue_NodeID_endp_out",
+        "SlidingQueue_NodeID_size_out",
+        "QueueBuffer_NodeID_QueueBuffer",
+        "QueueBuffer_NodeID_destroy",
+        "QueueBuffer_NodeID_flush",
+        "QueueBuffer_NodeID_push_back",
+        "swdb_allocation_site"
+      ],
+      "intended_read_anchors": [
+        {
+          "function": "swdb_allocation_site",
+          "line": 13,
+          "line_sha256": "92f2a5ac9cea9d8dee734dce4e3102319dc406bc40fff6b460c9e4783ef59608",
+          "source_file": "site_input.c",
+          "text": "*out = buffer.local_queue[0];"
+        }
+      ],
+      "name": "positive",
+      "root_functions": [
+        "swdb_allocation_site"
+      ]
+    },
+    {
+      "helpers": [
+        "swdb_bind_private_NodeID_array",
+        "compare_and_swap_out",
+        "fetch_and_add_size_t_out",
+        "std_min_size_t_out",
+        "omp_get_thread_num_out",
+        "pvector_NodeID_operator_index_out",
+        "pvector_NodeID_data_out",
+        "pvector_NodeID_beginp_out",
+        "pvector_NodeID_endp_out",
+        "pvector_SGOffset_operator_index_out",
+        "pvector_SGOffset_data_out",
+        "pvector_SGOffset_beginp_out",
+        "pvector_SGOffset_endp_out",
+        "SlidingQueue_NodeID_beginp_out",
+        "SlidingQueue_NodeID_endp_out",
+        "SlidingQueue_NodeID_size_out",
+        "QueueBuffer_NodeID_QueueBuffer",
+        "QueueBuffer_NodeID_destroy",
+        "QueueBuffer_NodeID_flush",
+        "QueueBuffer_NodeID_push_back",
+        "swdb_allocation_site"
+      ],
+      "intended_read_anchors": [
+        {
+          "function": "swdb_allocation_site",
+          "line": 11,
+          "line_sha256": "92f2a5ac9cea9d8dee734dce4e3102319dc406bc40fff6b460c9e4783ef59608",
+          "source_file": "site_input.c",
+          "text": "*out = buffer.local_queue[0];"
+        }
+      ],
+      "name": "missing-store",
+      "root_functions": [
+        "swdb_allocation_site"
+      ]
+    },
+    {
+      "helpers": [
+        "swdb_bind_private_NodeID_array",
+        "compare_and_swap_out",
+        "fetch_and_add_size_t_out",
+        "std_min_size_t_out",
+        "omp_get_thread_num_out",
+        "pvector_NodeID_operator_index_out",
+        "pvector_NodeID_data_out",
+        "pvector_NodeID_beginp_out",
+        "pvector_NodeID_endp_out",
+        "pvector_SGOffset_operator_index_out",
+        "pvector_SGOffset_data_out",
+        "pvector_SGOffset_beginp_out",
+        "pvector_SGOffset_endp_out",
+        "SlidingQueue_NodeID_beginp_out",
+        "SlidingQueue_NodeID_endp_out",
+        "SlidingQueue_NodeID_size_out",
+        "QueueBuffer_NodeID_QueueBuffer",
+        "QueueBuffer_NodeID_destroy",
+        "QueueBuffer_NodeID_flush",
+        "QueueBuffer_NodeID_push_back",
+        "swdb_allocation_site"
+      ],
+      "intended_read_anchors": [
+        {
+          "function": "swdb_allocation_site",
+          "line": 12,
+          "line_sha256": "9174ca7c576532f19a83ff07af93f77ab36235406130c6d1adc9ecae49dce221",
+          "source_file": "site_input.c",
+          "text": "*out = buffer.local_queue[1];"
+        }
+      ],
+      "name": "wrong-cell",
+      "root_functions": [
+        "swdb_allocation_site"
+      ]
+    },
+    {
+      "helpers": [
+        "swdb_bind_private_NodeID_array",
+        "compare_and_swap_out",
+        "fetch_and_add_size_t_out",
+        "std_min_size_t_out",
+        "omp_get_thread_num_out",
+        "pvector_NodeID_operator_index_out",
+        "pvector_NodeID_data_out",
+        "pvector_NodeID_beginp_out",
+        "pvector_NodeID_endp_out",
+        "pvector_SGOffset_operator_index_out",
+        "pvector_SGOffset_data_out",
+        "pvector_SGOffset_beginp_out",
+        "pvector_SGOffset_endp_out",
+        "SlidingQueue_NodeID_beginp_out",
+        "SlidingQueue_NodeID_endp_out",
+        "SlidingQueue_NodeID_size_out",
+        "QueueBuffer_NodeID_QueueBuffer",
+        "QueueBuffer_NodeID_destroy",
+        "QueueBuffer_NodeID_flush",
+        "QueueBuffer_NodeID_push_back",
+        "swdb_allocation_site"
+      ],
+      "intended_read_anchors": [
+        {
+          "function": "swdb_allocation_site",
+          "line": 12,
+          "line_sha256": "222d27fee6365b990e9216535191af79ec8f87521155efe2be056e86aa8ee15b",
+          "source_file": "site_input.c",
+          "text": "*out = uninitialized;"
+        }
+      ],
+      "name": "uninitialized-scalar",
+      "root_functions": [
+        "swdb_allocation_site"
+      ]
+    },
+    {
+      "helpers": [
+        "swdb_bind_private_NodeID_array",
+        "compare_and_swap_out",
+        "fetch_and_add_size_t_out",
+        "std_min_size_t_out",
+        "omp_get_thread_num_out",
+        "pvector_NodeID_operator_index_out",
+        "pvector_NodeID_data_out",
+        "pvector_NodeID_beginp_out",
+        "pvector_NodeID_endp_out",
+        "pvector_SGOffset_operator_index_out",
+        "pvector_SGOffset_data_out",
+        "pvector_SGOffset_beginp_out",
+        "pvector_SGOffset_endp_out",
+        "SlidingQueue_NodeID_beginp_out",
+        "SlidingQueue_NodeID_endp_out",
+        "SlidingQueue_NodeID_size_out",
+        "QueueBuffer_NodeID_QueueBuffer",
+        "QueueBuffer_NodeID_destroy",
+        "QueueBuffer_NodeID_flush",
+        "QueueBuffer_NodeID_push_back",
+        "swdb_allocation_site"
+      ],
+      "intended_read_anchors": [
+        {
+          "function": "swdb_allocation_site",
+          "line": 16,
+          "line_sha256": "7a7b46a3fc067da484011b1fe872a1cb91e2698d407f3345f4e56c5e5a1c3303",
+          "source_file": "site_input.c",
+          "text": "*out = queue->shared[prior];"
+        }
+      ],
+      "name": "copy-positive",
+      "root_functions": [
+        "swdb_allocation_site"
+      ]
+    },
+    {
+      "helpers": [
+        "swdb_bind_private_NodeID_array",
+        "compare_and_swap_out",
+        "fetch_and_add_size_t_out",
+        "std_min_size_t_out",
+        "omp_get_thread_num_out",
+        "pvector_NodeID_operator_index_out",
+        "pvector_NodeID_data_out",
+        "pvector_NodeID_beginp_out",
+        "pvector_NodeID_endp_out",
+        "pvector_SGOffset_operator_index_out",
+        "pvector_SGOffset_data_out",
+        "pvector_SGOffset_beginp_out",
+        "pvector_SGOffset_endp_out",
+        "SlidingQueue_NodeID_beginp_out",
+        "SlidingQueue_NodeID_endp_out",
+        "SlidingQueue_NodeID_size_out",
+        "QueueBuffer_NodeID_QueueBuffer",
+        "QueueBuffer_NodeID_destroy",
+        "QueueBuffer_NodeID_flush",
+        "QueueBuffer_NodeID_push_back",
+        "swdb_allocation_site"
+      ],
+      "intended_read_anchors": [
+        {
+          "function": "swdb_allocation_site",
+          "line": 15,
+          "line_sha256": "92f2a5ac9cea9d8dee734dce4e3102319dc406bc40fff6b460c9e4783ef59608",
+          "source_file": "site_input.c",
+          "text": "*out = buffer.local_queue[0];"
+        }
+      ],
+      "name": "history-positive",
+      "root_functions": [
+        "swdb_allocation_site"
+      ]
+    },
+    {
+      "helpers": [
+        "swdb_bind_private_NodeID_array",
+        "compare_and_swap_out",
+        "fetch_and_add_size_t_out",
+        "std_min_size_t_out",
+        "omp_get_thread_num_out",
+        "pvector_NodeID_operator_index_out",
+        "pvector_NodeID_data_out",
+        "pvector_NodeID_beginp_out",
+        "pvector_NodeID_endp_out",
+        "pvector_SGOffset_operator_index_out",
+        "pvector_SGOffset_data_out",
+        "pvector_SGOffset_beginp_out",
+        "pvector_SGOffset_endp_out",
+        "SlidingQueue_NodeID_beginp_out",
+        "SlidingQueue_NodeID_endp_out",
+        "SlidingQueue_NodeID_size_out",
+        "QueueBuffer_NodeID_QueueBuffer",
+        "QueueBuffer_NodeID_destroy",
+        "QueueBuffer_NodeID_flush",
+        "QueueBuffer_NodeID_push_back",
+        "swdb_allocation_site"
+      ],
+      "intended_read_anchors": [
+        {
+          "function": "swdb_allocation_site",
+          "line": 13,
+          "line_sha256": "d9147042771a8f768e460b012383d131b6f767a1232f45745e5b63c7b75e8dd6",
+          "source_file": "site_input.c",
+          "text": "*out = buffer.local_queue[0];"
+        }
+      ],
+      "name": "reentry-missing-store",
+      "root_functions": [
+        "swdb_allocation_site"
+      ]
+    },
+    {
+      "helpers": [
+        "swdb_bind_private_NodeID_array",
+        "compare_and_swap_out",
+        "fetch_and_add_size_t_out",
+        "std_min_size_t_out",
+        "omp_get_thread_num_out",
+        "pvector_NodeID_operator_index_out",
+        "pvector_NodeID_data_out",
+        "pvector_NodeID_beginp_out",
+        "pvector_NodeID_endp_out",
+        "pvector_SGOffset_operator_index_out",
+        "pvector_SGOffset_data_out",
+        "pvector_SGOffset_beginp_out",
+        "pvector_SGOffset_endp_out",
+        "SlidingQueue_NodeID_beginp_out",
+        "SlidingQueue_NodeID_endp_out",
+        "SlidingQueue_NodeID_size_out",
+        "QueueBuffer_NodeID_QueueBuffer",
+        "QueueBuffer_NodeID_destroy",
+        "QueueBuffer_NodeID_flush",
+        "QueueBuffer_NodeID_push_back",
+        "swdb_lifetime_entry",
+        "swdb_allocation_site"
+      ],
+      "intended_read_anchors": [
+        {
+          "function": "swdb_lifetime_entry",
+          "line": 13,
+          "line_sha256": "92f2a5ac9cea9d8dee734dce4e3102319dc406bc40fff6b460c9e4783ef59608",
+          "source_file": "site_input.c",
+          "text": "*out = buffer.local_queue[0];"
+        }
+      ],
+      "name": "modular-entry-missing-store",
+      "root_functions": [
+        "swdb_lifetime_entry",
+        "swdb_allocation_site"
+      ]
+    },
+    {
+      "helpers": [
+        "swdb_bind_private_NodeID_array",
+        "compare_and_swap_out",
+        "fetch_and_add_size_t_out",
+        "std_min_size_t_out",
+        "omp_get_thread_num_out",
+        "pvector_NodeID_operator_index_out",
+        "pvector_NodeID_data_out",
+        "pvector_NodeID_beginp_out",
+        "pvector_NodeID_endp_out",
+        "pvector_SGOffset_operator_index_out",
+        "pvector_SGOffset_data_out",
+        "pvector_SGOffset_beginp_out",
+        "pvector_SGOffset_endp_out",
+        "SlidingQueue_NodeID_beginp_out",
+        "SlidingQueue_NodeID_endp_out",
+        "SlidingQueue_NodeID_size_out",
+        "QueueBuffer_NodeID_QueueBuffer",
+        "QueueBuffer_NodeID_destroy",
+        "QueueBuffer_NodeID_flush",
+        "QueueBuffer_NodeID_push_back",
+        "swdb_allocation_site"
+      ],
+      "intended_read_anchors": [
+        {
+          "function": "swdb_allocation_site",
+          "line": 14,
+          "line_sha256": "d9147042771a8f768e460b012383d131b6f767a1232f45745e5b63c7b75e8dd6",
+          "source_file": "site_input.c",
+          "text": "*out = buffer.local_queue[0];"
+        }
+      ],
+      "name": "reentry-positive",
+      "root_functions": [
+        "swdb_allocation_site"
+      ]
+    },
+    {
+      "helpers": [
+        "swdb_bind_private_NodeID_array",
+        "compare_and_swap_out",
+        "fetch_and_add_size_t_out",
+        "std_min_size_t_out",
+        "omp_get_thread_num_out",
+        "pvector_NodeID_operator_index_out",
+        "pvector_NodeID_data_out",
+        "pvector_NodeID_beginp_out",
+        "pvector_NodeID_endp_out",
+        "pvector_SGOffset_operator_index_out",
+        "pvector_SGOffset_data_out",
+        "pvector_SGOffset_beginp_out",
+        "pvector_SGOffset_endp_out",
+        "SlidingQueue_NodeID_beginp_out",
+        "SlidingQueue_NodeID_endp_out",
+        "SlidingQueue_NodeID_size_out",
+        "QueueBuffer_NodeID_QueueBuffer",
+        "QueueBuffer_NodeID_destroy",
+        "QueueBuffer_NodeID_flush",
+        "QueueBuffer_NodeID_push_back",
+        "swdb_lifetime_entry",
+        "swdb_allocation_site"
+      ],
+      "intended_read_anchors": [
+        {
+          "function": "swdb_lifetime_entry",
+          "line": 13,
+          "line_sha256": "92f2a5ac9cea9d8dee734dce4e3102319dc406bc40fff6b460c9e4783ef59608",
+          "source_file": "site_input.c",
+          "text": "*out = buffer.local_queue[0];"
+        }
+      ],
+      "name": "modular-entry-positive",
+      "root_functions": [
+        "swdb_lifetime_entry",
+        "swdb_allocation_site"
+      ]
+    }
+  ],
+  "generation_packet_files": [
+    {
+      "bytes": 25761,
+      "path": "/private/tmp/probata-t07-private-array-generation-entry-v2-20261016.py",
+      "sha256": "69c840b2151cf408d0234f3c2e5e369d387df73c686e979a776dbecc00f006b1"
+    },
+    {
+      "bytes": 443541,
+      "path": "/private/tmp/probata-t07-private-array-generation-expected-v2-20261016.json",
+      "sha256": "e4fc76c7ff858710e208151cae4c2d89a94529f95534611da1874b3882c6f2a8"
+    },
+    {
+      "bytes": 6623,
+      "path": "/private/tmp/probata-t07-private-array-generation-plan-v2-20261016.md",
+      "sha256": "27c98369a76b5af19ab78dc2868c7334460ef35866b26db3fb6fa32761f457b2"
+    },
+    {
+      "bytes": 3405,
+      "path": "/private/tmp/probata-t07-private-array-generation-command-v2-20261016.json",
+      "sha256": "a85d80f3a357bdab4427cc16c119aaa4b8de074ceb2ec650fa00acb92f4cecc3"
+    },
+    {
+      "bytes": 3268,
+      "path": "/private/tmp/probata-t07-private-array-generation-v2-label-controls-20261016.py",
+      "sha256": "01535f60d103eb52b00e0a2b252394897180f72b15d1e366bb356d63c509f1f5"
+    },
+    {
+      "bytes": 1510,
+      "path": "/private/tmp/probata-t07-private-array-generation-v2-label-controls-20261016/controls.json",
+      "sha256": "1bc68778ceddddb9569c8e71031c7e3a4a7c5fc5f0337a4807c4a97471a5c9b9"
+    },
+    {
+      "bytes": 230,
+      "path": "/private/tmp/probata-t07-private-array-generation-v2-label-controls-20261016/summary.json",
+      "sha256": "dc80501e2269cb26e43dc5149a46a6237beb53ec4b43550978faa40eced2cfa1"
+    },
+    {
+      "bytes": 1896,
+      "path": "/private/tmp/probata-t07-private-array-generation-v2-label-controls-20261016.log.summary.json",
+      "sha256": "7869c2e402d59fb18e93cb47b2e567de8c86331e80510334653a71039484d77d"
+    },
+    {
+      "bytes": 377,
+      "path": "/private/tmp/probata-t07-private-array-generation-static-controls-final-20261016/summary.json",
+      "sha256": "b27c436a29d9179e24844c31efb9016b9719a8bc577435f7c70ac0bc7c07330a"
+    }
+  ],
+  "generation_packet_sha256": "880b57fc296e464a8b52699e299234abe5ec78d035b96d2d874c0919bb595724",
+  "git_blobs_checked": 31,
+  "hash_errors": [],
+  "historical_files_unchanged": 20,
+  "runtime_physical_reference_instances_checked": 1008,
+  "source": "b9b96fb85573c0292d2f7171b984cd2ee4076443",
+  "static_control_records": 31
+}

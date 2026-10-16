@@ -1,0 +1,44 @@
+{
+  "argv": [
+    "ROOT_SELECTED_PYTHON",
+    "-B",
+    "/private/tmp/probata-t28-size-supplement-v1-20261016.py",
+    "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1",
+    "ROOT_FROZEN_7e64298f_CHECKOUT",
+    "7e64298fd1d81359e8db586883243b31d57bef3b",
+    "/private/tmp/probata-t28-size-supplement-policy-v1-20261016.json"
+  ],
+  "date": "2026-10-16 ET",
+  "exit_semantics": {
+    "0": "Complete clean pair acceptance",
+    "1": "Integrity refusal; preserve output and diagnose without formal rerun",
+    "2": "Complete classification audit; positive conditional scoped acceptance plus recognized negative solver_error; negative_clean_acceptance=false and pair_acceptance=false"
+  },
+  "expected_actual_partial_classification": {
+    "negative_clean_acceptance": false,
+    "negative_refuted": false,
+    "pair_acceptance": false,
+    "positive_scoped_acceptance": true
+  },
+  "guard": {
+    "address_space_cap_bytes": 8589934592,
+    "no_formal_tools_or_probes": true,
+    "no_optimized_python": true,
+    "retained_stdout_stderr": "fresh external root-controlled reader directory",
+    "seconds": 60,
+    "workers": 1
+  },
+  "policy": {
+    "bytes": 81494,
+    "path": "/private/tmp/probata-t28-size-supplement-policy-v1-20261016.json",
+    "sha256": "a922d10881a6faa9ecef1dde013f4b914caaaabc303aa4c3926dd1de4f497cc1"
+  },
+  "reader": {
+    "bytes": 53818,
+    "path": "/private/tmp/probata-t28-size-supplement-v1-20261016.py",
+    "sha256": "3b5faa69e77933542a074312e66b0d54f37a952151a4ae1e664af6c3597e0a15"
+  },
+  "root_responsibility": "Coarse original guard, whole raw membership, process/lease settlement and actual source/tool admission remain root checks",
+  "scope_boundary": "Original actual pytest2pass/exit0 is retained; no clean negative/full pair/current0.2/interface/MMIO implementation/physical boot/hardware fairness/ticket28 closure claim",
+  "state": "INERT; root alone dispatches passive reader on settled actual raw"
+}

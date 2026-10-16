@@ -1,0 +1,883 @@
+{
+  "boundary": "Transitive source declaration/clone inventory; clone substitutions retained in complete module text. No solver proof or flattened instantiated-task-axiom claim. All project current/future desired lemmas absent.",
+  "direct_configured_or_emitted_roots": [
+    "bool.Bool",
+    "frama_c_wp.qed.Qed",
+    "heap_reallocation.Heap",
+    "int.Abs",
+    "int.ComputerDivision",
+    "int.Int",
+    "map.Map",
+    "real.RealInfix",
+    "why3.BuiltIn.BuiltIn"
+  ],
+  "modules": {
+    "algebra.Assoc": {
+      "classification": "selected standard arithmetic/maps/Qed trusted foundation",
+      "complete_module_text": "\n  type t\n  function op t t : t\n  axiom Assoc : forall x y z : t. op (op x y) z = op x (op y z)\n\n",
+      "dependencies": [],
+      "module_body_sha256": "fe0261f6de3799d89a8f658fde7778c565f4c5abc3ce0020169278074ec46764",
+      "proposition_declarations": [
+        {
+          "kind": "axiom",
+          "line": 10,
+          "name": "Assoc"
+        }
+      ],
+      "source": {
+        "bytes": 4910,
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/algebra.mlw",
+        "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4"
+      }
+    },
+    "algebra.Comm": {
+      "classification": "selected standard arithmetic/maps/Qed trusted foundation",
+      "complete_module_text": "\n  type t\n  function op t t : t\n  axiom Comm : forall x y : t. op x y = op y x\n\n",
+      "dependencies": [],
+      "module_body_sha256": "344c8403c2dd3774ad2c93ba95811de9391d4bf52678e6ebec3346558d589d40",
+      "proposition_declarations": [
+        {
+          "kind": "axiom",
+          "line": 20,
+          "name": "Comm"
+        }
+      ],
+      "source": {
+        "bytes": 4910,
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/algebra.mlw",
+        "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4"
+      }
+    },
+    "algebra.CommutativeGroup": {
+      "classification": "selected standard arithmetic/maps/Qed trusted foundation",
+      "complete_module_text": "\n  clone export Group with axiom .\n  clone export Comm with type t = t, function op = op, axiom Comm\n  meta AC function op\n\n",
+      "dependencies": [
+        {
+          "kind": "clone",
+          "source_line": 73,
+          "target": "algebra.Group"
+        },
+        {
+          "kind": "clone",
+          "source_line": 75,
+          "target": "algebra.Comm"
+        }
+      ],
+      "module_body_sha256": "14957823070b0a53be14101070be03b372bd91cec7ecb0eabaadc5d45c2f8c33",
+      "proposition_declarations": [],
+      "source": {
+        "bytes": 4910,
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/algebra.mlw",
+        "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4"
+      }
+    },
+    "algebra.CommutativeRing": {
+      "classification": "selected standard arithmetic/maps/Qed trusted foundation",
+      "complete_module_text": "\n  clone export Ring with axiom .\n  clone Comm as MulComm with type t = t, function op = (*), axiom Comm\n  meta AC function (*)\n\n",
+      "dependencies": [
+        {
+          "kind": "clone",
+          "source_line": 106,
+          "target": "algebra.Ring"
+        },
+        {
+          "kind": "clone",
+          "source_line": 108,
+          "target": "algebra.Comm"
+        }
+      ],
+      "module_body_sha256": "47c21eec758d4a9c947bf95ceb7c007775c779a832c8e976207493f920359308",
+      "proposition_declarations": [],
+      "source": {
+        "bytes": 4910,
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/algebra.mlw",
+        "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4"
+      }
+    },
+    "algebra.Field": {
+      "classification": "selected standard arithmetic/maps/Qed trusted foundation",
+      "complete_module_text": "\n  clone export UnitaryCommutativeRing with axiom .\n\n  function inv t : t\n\n  axiom Inverse : forall x:t. x <> zero -> x * inv x = one\n\n  function (-) (x y : t) : t = x + -y\n  function (/) (x y : t) : t = x * inv y\n\n  lemma add_div :\n    forall x y z : t. z <> zero -> (x+y)/z = x/z + y/z\n  meta \"remove_unused:dependency\" lemma add_div, function (/)\n\n  lemma sub_div :\n    forall x y z : t. z <> zero -> (x-y)/z = x/z - y/z\n  meta \"remove_unused:dependency\" lemma sub_div, function (/)\n\n  lemma neg_div :\n    forall x y : t. y <> zero -> (-x)/y = -(x/y)\n  meta \"remove_unused:dependency\" lemma neg_div, function (/)\n\n  lemma assoc_mul_div: forall x y z:t.\n                                        \n     z <> zero -> (x*y)/z = x*(y/z)\n  meta \"remove_unused:dependency\" lemma assoc_mul_div, function (/)\n\n  lemma assoc_div_mul: forall x y z:t.\n                                        \n     y <> zero /\\ z <> zero -> (x/y)/z = x/(y*z)\n  meta \"remove_unused:dependency\" lemma assoc_div_mul, function (/)\n\n  lemma assoc_div_div: forall x y z:t.\n                                        \n     y <> zero /\\ z <> zero -> x/(y/z) = (x*z)/y\n  meta \"remove_unused:dependency\" lemma assoc_div_div, function (/)\n\n",
+      "dependencies": [
+        {
+          "kind": "clone",
+          "source_line": 149,
+          "target": "algebra.UnitaryCommutativeRing"
+        }
+      ],
+      "module_body_sha256": "4b09c0f197dd4b443746291ecd24dd60122645de8cd3b649d8fd0b5369624b5f",
+      "proposition_declarations": [
+        {
+          "kind": "axiom",
+          "line": 153,
+          "name": "Inverse"
+        },
+        {
+          "kind": "lemma",
+          "line": 158,
+          "name": "add_div"
+        },
+        {
+          "kind": "lemma",
+          "line": 162,
+          "name": "sub_div"
+        },
+        {
+          "kind": "lemma",
+          "line": 166,
+          "name": "neg_div"
+        },
+        {
+          "kind": "lemma",
+          "line": 170,
+          "name": "assoc_mul_div"
+        },
+        {
+          "kind": "lemma",
+          "line": 175,
+          "name": "assoc_div_mul"
+        },
+        {
+          "kind": "lemma",
+          "line": 180,
+          "name": "assoc_div_div"
+        }
+      ],
+      "source": {
+        "bytes": 4910,
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/algebra.mlw",
+        "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4"
+      }
+    },
+    "algebra.Group": {
+      "classification": "selected standard arithmetic/maps/Qed trusted foundation",
+      "complete_module_text": "\n  clone export Monoid with axiom Assoc, axiom Unit_def_l, axiom Unit_def_r\n  function inv t : t\n  axiom Inv_def_l : forall x:t. op (inv x) x = unit\n  axiom Inv_def_r : forall x:t. op x (inv x) = unit\n\n    \n                                                             \n  \n\n",
+      "dependencies": [
+        {
+          "kind": "clone",
+          "source_line": 58,
+          "target": "algebra.Monoid"
+        }
+      ],
+      "module_body_sha256": "a2ed3e16290f07d2cba5140fe2c40d2a51728ef249e7f180afb61a8f31c2b50d",
+      "proposition_declarations": [
+        {
+          "kind": "axiom",
+          "line": 61,
+          "name": "Inv_def_l"
+        },
+        {
+          "kind": "axiom",
+          "line": 62,
+          "name": "Inv_def_r"
+        }
+      ],
+      "source": {
+        "bytes": 4910,
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/algebra.mlw",
+        "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4"
+      }
+    },
+    "algebra.Monoid": {
+      "classification": "selected standard arithmetic/maps/Qed trusted foundation",
+      "complete_module_text": "\n  clone export Assoc with axiom Assoc\n  constant unit : t\n  axiom Unit_def_l : forall x:t. op unit x = x\n  axiom Unit_def_r : forall x:t. op x unit = x\n\n",
+      "dependencies": [
+        {
+          "kind": "clone",
+          "source_line": 37,
+          "target": "algebra.Assoc"
+        }
+      ],
+      "module_body_sha256": "b138fd92c3bb4f428723781487a0af1b4601a3601e37b43642d5572c9acb068c",
+      "proposition_declarations": [
+        {
+          "kind": "axiom",
+          "line": 40,
+          "name": "Unit_def_l"
+        },
+        {
+          "kind": "axiom",
+          "line": 41,
+          "name": "Unit_def_r"
+        }
+      ],
+      "source": {
+        "bytes": 4910,
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/algebra.mlw",
+        "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4"
+      }
+    },
+    "algebra.OrderedField": {
+      "classification": "selected standard arithmetic/maps/Qed trusted foundation",
+      "complete_module_text": "\n  clone export Field with axiom .\n\n  predicate (<=) t t\n\n  clone export relations.TotalOrder with\n    type t = t, predicate rel = (<=), axiom .\n\n  axiom ZeroLessOne : zero <= one\n\n  axiom CompatOrderAdd  : forall x y z : t. x <= y -> x + z <= y + z\n\n  axiom CompatOrderMult :\n    forall x y z : t. x <= y -> zero <= z -> x * z <= y * z\n\n",
+      "dependencies": [
+        {
+          "kind": "clone",
+          "source_line": 191,
+          "target": "algebra.Field"
+        },
+        {
+          "kind": "clone",
+          "source_line": 195,
+          "target": "relations.TotalOrder"
+        }
+      ],
+      "module_body_sha256": "586145b4ec01f6a20034a2aeccaa1d8011162ec7ec9b09c1ec0f177988a89573",
+      "proposition_declarations": [
+        {
+          "kind": "axiom",
+          "line": 198,
+          "name": "ZeroLessOne"
+        },
+        {
+          "kind": "axiom",
+          "line": 200,
+          "name": "CompatOrderAdd"
+        },
+        {
+          "kind": "axiom",
+          "line": 202,
+          "name": "CompatOrderMult"
+        }
+      ],
+      "source": {
+        "bytes": 4910,
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/algebra.mlw",
+        "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4"
+      }
+    },
+    "algebra.OrderedUnitaryCommutativeRing": {
+      "classification": "selected standard arithmetic/maps/Qed trusted foundation",
+      "complete_module_text": "\n  clone export UnitaryCommutativeRing with axiom .\n\n  predicate (<=) t t\n\n  clone export relations.TotalOrder with\n    type t = t, predicate rel = (<=), axiom .\n\n  axiom ZeroLessOne : zero <= one\n\n  axiom CompatOrderAdd  :\n    forall x y z : t. x <= y -> x + z <= y + z\n\n  axiom CompatOrderMult :\n    forall x y z : t. x <= y -> zero <= z -> x * z <= y * z\n  meta \"remove_unused:dependency\" axiom CompatOrderMult, function (*)\n\n",
+      "dependencies": [
+        {
+          "kind": "clone",
+          "source_line": 127,
+          "target": "algebra.UnitaryCommutativeRing"
+        },
+        {
+          "kind": "clone",
+          "source_line": 131,
+          "target": "relations.TotalOrder"
+        }
+      ],
+      "module_body_sha256": "0d10623b46e055213e9479da67a6b89ec2925c12a8b09b31b5e55728bda08065",
+      "proposition_declarations": [
+        {
+          "kind": "axiom",
+          "line": 134,
+          "name": "ZeroLessOne"
+        },
+        {
+          "kind": "axiom",
+          "line": 136,
+          "name": "CompatOrderAdd"
+        },
+        {
+          "kind": "axiom",
+          "line": 139,
+          "name": "CompatOrderMult"
+        }
+      ],
+      "source": {
+        "bytes": 4910,
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/algebra.mlw",
+        "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4"
+      }
+    },
+    "algebra.Ring": {
+      "classification": "selected standard arithmetic/maps/Qed trusted foundation",
+      "complete_module_text": "\n  type t\n  constant zero : t\n  function (+) t t : t\n  function (-_) t : t\n  function (*) t t : t\n\n  clone export CommutativeGroup with type t = t,\n                                constant unit = zero,\n                                function op = (+),\n                                function inv = (-_),\n                                axiom .\n\n  clone Assoc as MulAssoc with type t = t, function op = (*), axiom Assoc\n\n  axiom Mul_distr_l : forall x y z : t. x * (y + z) = x * y + x * z\n  axiom Mul_distr_r : forall x y z : t. (y + z) * x = y * x + z * x\n\n",
+      "dependencies": [
+        {
+          "kind": "clone",
+          "source_line": 89,
+          "target": "algebra.CommutativeGroup"
+        },
+        {
+          "kind": "clone",
+          "source_line": 95,
+          "target": "algebra.Assoc"
+        }
+      ],
+      "module_body_sha256": "e0dc3b40110eb982b6a89ff7f5156f2884ae990c38e9c151df719c8f45205b1a",
+      "proposition_declarations": [
+        {
+          "kind": "axiom",
+          "line": 97,
+          "name": "Mul_distr_l"
+        },
+        {
+          "kind": "axiom",
+          "line": 99,
+          "name": "Mul_distr_r"
+        }
+      ],
+      "source": {
+        "bytes": 4910,
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/algebra.mlw",
+        "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4"
+      }
+    },
+    "algebra.UnitaryCommutativeRing": {
+      "classification": "selected standard arithmetic/maps/Qed trusted foundation",
+      "complete_module_text": "\n  clone export CommutativeRing with axiom .\n  constant one : t\n  axiom Unitary : forall x:t. one * x = x\n  axiom NonTrivialRing : zero <> one\n\n",
+      "dependencies": [
+        {
+          "kind": "clone",
+          "source_line": 116,
+          "target": "algebra.CommutativeRing"
+        }
+      ],
+      "module_body_sha256": "94efda8e37fea365e0ad89224f83d838dddeae2fd5457e781b8df175cb4e8bca",
+      "proposition_declarations": [
+        {
+          "kind": "axiom",
+          "line": 119,
+          "name": "Unitary"
+        },
+        {
+          "kind": "axiom",
+          "line": 120,
+          "name": "NonTrivialRing"
+        }
+      ],
+      "source": {
+        "bytes": 4910,
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/algebra.mlw",
+        "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4"
+      }
+    },
+    "bool.Bool": {
+      "classification": "selected standard arithmetic/maps/Qed trusted foundation",
+      "complete_module_text": "\n  let function andb (x y : bool) : bool =\n    match x with\n    | True -> y\n    | False -> False\n    end\n\n  let function orb (x y : bool) : bool =\n    match x with\n    | False -> y\n    | True -> True\n    end\n\n  let function notb (x : bool) : bool =\n    match x with\n    | False -> True\n    | True  -> False\n    end\n\n  let function xorb (x y : bool) : bool =\n    match x with\n    | False -> y\n    | True -> notb y\n    end\n\n  let function implb (x y : bool) : bool =\n    match x with\n    | False -> True\n    | True -> y\n    end\n\n  val (=) (x y : bool) : bool ensures { result <-> x = y }\n\n",
+      "dependencies": [],
+      "module_body_sha256": "1007b492364252fed302f8d44d59c1de83cd9efe22e051d7c4b2a0c737017af7",
+      "proposition_declarations": [],
+      "source": {
+        "bytes": 819,
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/bool.mlw",
+        "sha256": "b7072fdd8dd5004d0627b82a66b054518ee54eb4dd66f0883988e363bed251fa"
+      }
+    },
+    "frama_c_wp.qed.Qed": {
+      "classification": "selected standard arithmetic/maps/Qed trusted foundation",
+      "complete_module_text": "\n  use bool.Bool\n  use int.Int\n  use real.RealInfix\n  use real.FromInt\n  use int.ComputerDivision as CD\n\n                                                                   \n                                                                         \n\n  function eqb (x y : 'a) : bool = if x = y then True else False\n  function neqb (x y : 'a) : bool = if x <> y then True else False\n\n  function zlt  (x y : int) : bool = if x < y  then True else False\n  function zleq (x y : int) : bool = if x <= y then True else False\n\n  function rlt  (x y : real) : bool = if x <. y  then True else False\n  function rleq (x y : real) : bool = if x <=. y then True else False\n\n  function real_of_int (x:int) : real = FromInt.from_int x\n  meta \"inline:no\" function real_of_int\n\n  lemma c_euclidian : forall n d:int [(CD.div n d),(CD.mod n d)].\n    d <> 0 -> n = CD.div n d * d + CD.mod n d\n\n  lemma cmod_remainder : forall n d:int [CD.mod n d].\n    ((n >= 0) -> (d > 0) ->  0 <= CD.mod n d <  d) /\\\n    ((n <= 0) -> (d > 0) -> -d <  CD.mod n d <= 0) /\\\n    ((n >= 0) -> (d < 0) ->  0 <= CD.mod n d < -d) /\\\n    ((n <= 0) -> (d < 0) ->  d <  CD.mod n d <= 0)\n\n  lemma cdiv_neutral : forall a:int [CD.div a 1]. CD.div a 1 = a\n  lemma cdiv_inv : forall a:int [CD.div a a]. a<>0 -> CD.div a a = 1\n\n  lemma cdiv_closed_remainder :\n    forall a,b,n:int.\n    0 <= a -> 0 <= b -> 0 <= b-a < n ->\n    CD.mod a n = CD.mod b n -> a = b\n  by b - a = n * (CD.div (b - a) n) + CD.mod (b - a) n\n  so (CD.div b n) - (CD.div a n) = CD.div (b - a) n\n",
+      "dependencies": [
+        {
+          "kind": "use",
+          "source_line": 10,
+          "target": "bool.Bool"
+        },
+        {
+          "kind": "use",
+          "source_line": 12,
+          "target": "int.Int"
+        },
+        {
+          "kind": "use",
+          "source_line": 13,
+          "target": "real.RealInfix"
+        },
+        {
+          "kind": "use",
+          "source_line": 14,
+          "target": "real.FromInt"
+        },
+        {
+          "kind": "use",
+          "source_line": 15,
+          "target": "int.ComputerDivision"
+        }
+      ],
+      "module_body_sha256": "ea9991d793efb881c618b28b67af5b418afbb410620f6904ef4ddeccfbb99951",
+      "proposition_declarations": [
+        {
+          "kind": "lemma",
+          "line": 31,
+          "name": "c_euclidian"
+        },
+        {
+          "kind": "lemma",
+          "line": 34,
+          "name": "cmod_remainder"
+        },
+        {
+          "kind": "lemma",
+          "line": 40,
+          "name": "cdiv_neutral"
+        },
+        {
+          "kind": "lemma",
+          "line": 42,
+          "name": "cdiv_inv"
+        },
+        {
+          "kind": "lemma",
+          "line": 43,
+          "name": "cdiv_closed_remainder"
+        }
+      ],
+      "source": {
+        "bytes": 2071,
+        "path": "/Users/yanrujhou/.opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/qed.mlw",
+        "sha256": "54d50c3e40ea87b2bb0fd7195341c6c8bfc5ebcf300cb7b18752fae28e622efe"
+      }
+    },
+    "heap_reallocation.Heap": {
+      "classification": "uniform project definitions",
+      "complete_module_text": "  use int.Int\n  use map.Map\n\n  type cell = Integer int | Pointer int int\n  type heap = {\n    next : int;\n    allocated : map int bool;\n    alive : map int bool;\n    dynamic : map int bool;\n    writable : map int bool;\n    extent : map int int;\n    address : map int int;\n    memory : map int (map int cell);\n    initialized : map int (map int bool)\n  }\n\n                                                                            \n                                                                         \n  function empty (dummy:int) : heap =\n    { next = 1; allocated = (fun _ -> False); alive = (fun _ -> False);\n      dynamic = (fun _ -> False); writable = (fun _ -> False);\n      extent = (fun _ -> 0); address = (fun _ -> 0);\n      memory = (fun _ -> (fun _ -> Integer 0));\n      initialized = (fun _ -> (fun _ -> False)) }\n\n  predicate live (h:heap) (b:int) = b <> 0 /\\ h.alive[b] = True\n  predicate issued (h:heap) (b:int) = h.allocated[b] = True\n  predicate separated (h:heap) (b c:int) =\n    h.address[b] + h.extent[b] <= h.address[c] \\/\n    h.address[c] + h.extent[c] <= h.address[b]\n  predicate aligned (p alignment:int) = exists q:int. p = alignment*q\n  predicate well_formed (h:heap) =\n    0 < h.next /\\\n    (forall b:int. issued h b -> 0 < b < h.next) /\\\n    (forall b:int. live h b ->\n      issued h b /\\ 0 <= h.extent[b] /\\ 0 < h.address[b]) /\\\n    (forall b,c:int. live h b /\\ live h c /\\ b <> c ->\n      h.address[b] <> h.address[c] /\\ separated h b c)\n\n                                                                         \n                                                                              \n                                                                            \n  predicate available (h:heap) (n a:int) =\n    0 <= n /\\ 0 < a /\\ aligned a 4 /\\\n    (forall b:int. live h b ->\n      a <> h.address[b] /\\\n      (a + 4*n <= h.address[b] \\/ h.address[b] + h.extent[b] <= a))\n\n  function fresh_id (h:heap) : int = h.next\n  function bytes (h:heap) (b:int) : int = h.extent[b]\n  function numerical_address (h:heap) (b:int) : int = h.address[b]\n  predicate same_object (before after:heap) (b:int) =\n    before.allocated[b] = after.allocated[b] /\\\n    before.alive[b] = after.alive[b] /\\\n    before.dynamic[b] = after.dynamic[b] /\\\n    before.writable[b] = after.writable[b] /\\\n    before.extent[b] = after.extent[b] /\\\n    before.address[b] = after.address[b]\n  function contents (h:heap) (b o:int) : cell = h.memory[b][o]\n  predicate initialized_at (h:heap) (b o:int) = h.initialized[b][o] = True\n  predicate integer_at (h:heap) (b o v:int) = contents h b o = Integer v\n  predicate pointer_at (h:heap) (b o target offset:int) =\n    contents h b o = Pointer target offset\n  predicate forms (h:heap) (b o:int) =\n    live h b /\\ 0 <= o <= h.extent[b]\n  predicate can_read (h:heap) (b o width:int) =\n    live h b /\\ 0 <= o /\\ 0 < width /\\ o + width <= h.extent[b]\n  predicate can_write (h:heap) (b o width:int) =\n    can_read h b o width /\\ h.writable[b] = True\n  predicate typed_reads (h:heap) (b o width alignment:int) =\n    can_read h b o width /\\ aligned (h.address[b]+o) alignment\n  predicate typed_writes (h:heap) (b o width alignment:int) =\n    can_write h b o width /\\ aligned (h.address[b]+o) alignment\n  predicate typed_forms (h:heap) (b o alignment:int) =\n    forms h b o /\\ aligned (h.address[b]+o) alignment\n  predicate freeable (h:heap) (b o:int) =\n    live h b /\\ h.dynamic[b] = True /\\ o = 0\n\n                                                                            \n                                                                               \n  function allocate (h:heap) (n a:int) : heap =\n    { h with next = h.next + 1;\n      allocated = set h.allocated h.next True;\n      alive = set h.alive h.next True;\n      dynamic = set h.dynamic h.next True;\n      writable = set h.writable h.next True;\n      extent = set h.extent h.next (4*n);\n      address = set h.address h.next a;\n      initialized = set h.initialized h.next (fun _ -> False) }\n\n                                                                         \n                                                             \n  function put_integer (h:heap) (b o v:int) : heap =\n    { h with memory = set h.memory b (set h.memory[b] o (Integer v));\n      initialized = set h.initialized b (set h.initialized[b] o True) }\n  function put_pointer (h:heap) (b o target offset:int) : heap =\n    { h with memory = set h.memory b (set h.memory[b] o (Pointer target offset));\n      initialized = set h.initialized b (set h.initialized[b] o True) }\n\n                                                                         \n  function release (h:heap) (b:int) : heap =\n    if b = 0 then h else { h with alive = set h.alive b False }\n\n  predicate filled_prefix (h:heap) (b k v:int) =\n    forall j:int. 0 <= j < k ->\n      initialized_at h b (4*j) /\\ integer_at h b (4*j) v\n\n                                                                      \n                                                                              \n                                                                              \n                                                                          \n  function load_int (h:heap) (b o:int) : int =\n    match contents h b o with\n    | Integer v -> v\n    | Pointer _ _ -> 0\n    end\n\n  predicate int32_at (h:heap) (b o:int) =\n    typed_reads h b o 4 4 /\\ initialized_at h b o /\\\n    integer_at h b o (load_int h b o) /\\\n    -2147483648 <= load_int h b o <= 2147483647\n  predicate int32_region (h:heap) (b offset count:int) =\n    forall j:int. 0 <= j < count -> int32_at h b (offset+4*j)\n\n                                                                             \n                                                                           \n                                                                               \n  type int_values = map int int\n  function int_chunk_value (values:int_values) (offset:int) : int = values[offset]\n  predicate int_slot (offset count p:int) =\n    exists j:int. 0 <= j < count /\\ p = offset+4*j\n  predicate bounded_int_values (values:int_values) (offset count:int) =\n    forall j:int. 0 <= j < count ->\n      -2147483648 <= values[offset+4*j] <= 2147483647\n  function project_int_region (h:heap) (values:int_values) (b offset count:int) : heap =\n    { h with memory = set h.memory b\n      (fun p -> if int_slot offset count p then Integer values[p] else h.memory[b][p]) }\n\n                                                                         \n                                                                             \n                                           \n  function copy_int (h:heap) (source source_offset target target_offset:int) : heap =\n    put_integer h target target_offset (load_int h source source_offset)\n  predicate copied_prefix (entry now:heap) (source source_offset target count:int) =\n    forall j:int. 0 <= j < count ->\n      int32_at now target (4*j) /\\\n      load_int now target (4*j) = load_int entry source (source_offset+4*j)\n\n                                                                              \n                                                                            \n                                                                                \n                                                                                  \n  predicate automatic_available (h:heap) (width alignment a:int) =\n    0 <= width /\\ 0 < a /\\ 0 < alignment /\\ aligned a alignment /\\\n    (forall b:int. live h b -> a <> h.address[b] /\\\n      (a+width <= h.address[b] \\/ h.address[b]+h.extent[b] <= a))\n  function begin_automatic (h:heap) (width a:int) : heap =\n    { h with next = h.next+1;\n      allocated = set h.allocated h.next True;\n      alive = set h.alive h.next True;\n      dynamic = set h.dynamic h.next False;\n      writable = set h.writable h.next True;\n      extent = set h.extent h.next width;\n      address = set h.address h.next a;\n      initialized = set h.initialized h.next (fun _ -> False) }\n  function end_automatic (h:heap) (b:int) : heap = release h b\n",
+      "dependencies": [
+        {
+          "kind": "use",
+          "source_line": 7,
+          "target": "int.Int"
+        },
+        {
+          "kind": "use",
+          "source_line": 8,
+          "target": "map.Map"
+        }
+      ],
+      "module_body_sha256": "63e1fd36af313679cb19023af55a592721b0adc546315e06d2a261e6eff7a8bb",
+      "proposition_declarations": [],
+      "source": {
+        "bytes": 8386,
+        "path": "/private/tmp/probata-t25-mac-qualified-generation-v1-01771a83-20261016/component/inputs/theory/heap_reallocation.mlw",
+        "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5"
+      }
+    },
+    "int.Abs": {
+      "classification": "selected standard arithmetic/maps/Qed trusted foundation",
+      "complete_module_text": "\n  use Int\n\n  let function abs (x:int) : int = if x >= 0 then x else -x\n\n  lemma Abs_le: forall x y:int. abs x <= y <-> -y <= x <= y\n  meta \"remove_unused:dependency\" lemma Abs_le, function abs\n\n  lemma Abs_pos: forall x:int. abs x >= 0\n  meta \"remove_unused:dependency\" lemma Abs_pos, function abs\n\n    \n                                                  \n  \n\n",
+      "dependencies": [
+        {
+          "kind": "use",
+          "source_line": 49,
+          "target": "int.Int"
+        }
+      ],
+      "module_body_sha256": "bd0ceec460654b5a90049798f6971d20ae7a313593626ac6d851189b856ec2be",
+      "proposition_declarations": [
+        {
+          "kind": "lemma",
+          "line": 53,
+          "name": "Abs_le"
+        },
+        {
+          "kind": "lemma",
+          "line": 56,
+          "name": "Abs_pos"
+        }
+      ],
+      "source": {
+        "bytes": 18553,
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/int.mlw",
+        "sha256": "eb5bc9d4a46e1b6a298d24fd36dcf9dfb8f35cbc75b2f44007cfe1a24550ce8d"
+      }
+    },
+    "int.ComputerDivision": {
+      "classification": "selected standard arithmetic/maps/Qed trusted foundation",
+      "complete_module_text": "\n  use Int\n  use Abs\n\n  function div (x y: int) : int\n  function mod (x y: int) : int\n\n  axiom Div_mod:\n    forall x y:int. y <> 0 -> x = y * div x y + mod x y\n  meta \"remove_unused:dependency\" axiom Div_mod, function div\n  meta \"remove_unused:dependency\" axiom Div_mod, function mod\n\n  axiom Div_bound:\n    forall x y:int. x >= 0 /\\ y > 0 -> 0 <= div x y <= x\n  meta \"remove_unused:dependency\" axiom Div_bound, function div\n  meta \"remove_unused:dependency\" axiom Div_bound, function mod\n\n  axiom Mod_bound:\n    forall x y:int. y <> 0 -> - abs y < mod x y < abs y\n  meta \"remove_unused:dependency\" axiom Mod_bound, function div\n  meta \"remove_unused:dependency\" axiom Mod_bound, function mod\n\n  axiom Div_sign_pos:\n    forall x y:int. x >= 0 /\\ y > 0 -> div x y >= 0\n  meta \"remove_unused:dependency\" axiom Div_sign_pos, function div\n  meta \"remove_unused:dependency\" axiom Div_sign_pos, function mod\n\n  axiom Div_sign_neg:\n    forall x y:int. x <= 0 /\\ y > 0 -> div x y <= 0\n  meta \"remove_unused:dependency\" axiom Div_sign_neg, function div\n  meta \"remove_unused:dependency\" axiom Div_sign_neg, function mod\n\n  axiom Mod_sign_pos:\n    forall x y:int. x >= 0 /\\ y <> 0 -> mod x y >= 0\n  meta \"remove_unused:dependency\" axiom Mod_sign_pos, function div\n  meta \"remove_unused:dependency\" axiom Mod_sign_pos, function mod\n\n  axiom Mod_sign_neg:\n    forall x y:int. x <= 0 /\\ y <> 0 -> mod x y <= 0\n  meta \"remove_unused:dependency\" axiom Mod_sign_neg, function div\n  meta \"remove_unused:dependency\" axiom Mod_sign_neg, function mod\n\n  lemma Rounds_toward_zero:\n    forall x y:int. y <> 0 -> abs (div x y * y) <= abs x\n  meta \"remove_unused:dependency\" lemma Rounds_toward_zero, function div\n  meta \"remove_unused:dependency\" lemma Rounds_toward_zero, function mod\n\n  lemma Div_1: forall x:int. div x 1 = x\n  meta \"remove_unused:dependency\" lemma Div_1, function div\n  meta \"remove_unused:dependency\" lemma Div_1, function mod\n\n  lemma Mod_1: forall x:int. mod x 1 = 0\n  meta \"remove_unused:dependency\" lemma Mod_1, function div\n  meta \"remove_unused:dependency\" lemma Mod_1, function mod\n\n  lemma Div_inf: forall x y:int. 0 <= x < y -> div x y = 0\n  meta \"remove_unused:dependency\" lemma Div_inf, function div\n  meta \"remove_unused:dependency\" lemma Div_inf, function mod\n\n  lemma Mod_inf: forall x y:int. 0 <= x < y -> mod x y = x\n  meta \"remove_unused:dependency\" lemma Mod_inf, function div\n  meta \"remove_unused:dependency\" lemma Mod_inf, function mod\n\n  lemma Div_mult: forall x y z:int [div (x * y + z) x].\n          x > 0 /\\ y >= 0 /\\ z >= 0 ->\n          div (x * y + z) x = y + div z x\n  meta \"remove_unused:dependency\" lemma Div_mult, function div\n  meta \"remove_unused:dependency\" lemma Div_mult, function mod\n\n  lemma Mod_mult: forall x y z:int [mod (x * y + z) x].\n          x > 0 /\\ y >= 0 /\\ z >= 0 ->\n          mod (x * y + z) x = mod z x\n  meta \"remove_unused:dependency\" lemma Mod_mult, function div\n  meta \"remove_unused:dependency\" lemma Mod_mult, function mod\n\n  val div (x y:int) : int\n    requires { y <> 0 }\n    ensures { result = div x y }\n\n  val mod (x y:int) : int\n    requires { y <> 0 }\n    ensures { result = mod x y }\n\n",
+      "dependencies": [
+        {
+          "kind": "use",
+          "source_line": 205,
+          "target": "int.Int"
+        },
+        {
+          "kind": "use",
+          "source_line": 207,
+          "target": "int.Abs"
+        }
+      ],
+      "module_body_sha256": "d5819ea9eb8024b300044d8eb6547a2a8bcef8f57c219140da47575db88cc823",
+      "proposition_declarations": [
+        {
+          "kind": "axiom",
+          "line": 211,
+          "name": "Div_mod"
+        },
+        {
+          "kind": "axiom",
+          "line": 216,
+          "name": "Div_bound"
+        },
+        {
+          "kind": "axiom",
+          "line": 221,
+          "name": "Mod_bound"
+        },
+        {
+          "kind": "axiom",
+          "line": 226,
+          "name": "Div_sign_pos"
+        },
+        {
+          "kind": "axiom",
+          "line": 231,
+          "name": "Div_sign_neg"
+        },
+        {
+          "kind": "axiom",
+          "line": 236,
+          "name": "Mod_sign_pos"
+        },
+        {
+          "kind": "axiom",
+          "line": 241,
+          "name": "Mod_sign_neg"
+        },
+        {
+          "kind": "lemma",
+          "line": 246,
+          "name": "Rounds_toward_zero"
+        },
+        {
+          "kind": "lemma",
+          "line": 251,
+          "name": "Div_1"
+        },
+        {
+          "kind": "lemma",
+          "line": 255,
+          "name": "Mod_1"
+        },
+        {
+          "kind": "lemma",
+          "line": 259,
+          "name": "Div_inf"
+        },
+        {
+          "kind": "lemma",
+          "line": 263,
+          "name": "Mod_inf"
+        },
+        {
+          "kind": "lemma",
+          "line": 267,
+          "name": "Div_mult"
+        },
+        {
+          "kind": "lemma",
+          "line": 273,
+          "name": "Mod_mult"
+        }
+      ],
+      "source": {
+        "bytes": 18553,
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/int.mlw",
+        "sha256": "eb5bc9d4a46e1b6a298d24fd36dcf9dfb8f35cbc75b2f44007cfe1a24550ce8d"
+      }
+    },
+    "int.Int": {
+      "classification": "selected standard arithmetic/maps/Qed trusted foundation",
+      "complete_module_text": "\n  let constant zero : int = 0\n  let constant one  : int = 1\n\n  val (=) (x y : int) : bool ensures { result <-> x = y }\n\n  val function  (-_) int : int\n  val function  (+)  int int : int\n  val function  (*)  int int : int\n  val predicate (<)  int int : bool\n\n  let function  (-)  (x y : int) = x + -y\n  let predicate (>)  (x y : int) = y < x\n  let predicate (<=) (x y : int) = x < y || x = y\n  let predicate (>=) (x y : int) = y <= x\n\n  clone export algebra.OrderedUnitaryCommutativeRing with\n    type t = int, constant zero = zero, constant one = one,\n    function (-_) = (-_), function (+) = (+),\n    function (*) = (*), predicate (<=) = (<=)\n\n  meta \"remove_unused:keep\" function (+)\n  meta \"remove_unused:keep\" function (-)\n                                                               \n                                        \n*)\n  meta \"remove_unused:keep\" function (-_)\n  meta \"remove_unused:keep\" predicate (<)\n  meta \"remove_unused:keep\" predicate (<=)\n  meta \"remove_unused:keep\" predicate (>)\n  meta \"remove_unused:keep\" predicate (>=)\n\n",
+      "dependencies": [
+        {
+          "kind": "clone",
+          "source_line": 27,
+          "target": "algebra.OrderedUnitaryCommutativeRing"
+        }
+      ],
+      "module_body_sha256": "2295ff50d2cb6273280da8326d40cc2d5df0a325ad359caaabdf498ab8679b49",
+      "proposition_declarations": [],
+      "source": {
+        "bytes": 18553,
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/int.mlw",
+        "sha256": "eb5bc9d4a46e1b6a298d24fd36dcf9dfb8f35cbc75b2f44007cfe1a24550ce8d"
+      }
+    },
+    "map.Map": {
+      "classification": "selected standard arithmetic/maps/Qed trusted foundation",
+      "complete_module_text": "\n  type map 'a 'b = 'a -> 'b\n\n  let function get (f: map 'a 'b) (x: 'a) : 'b = f x\n\n  let ghost function set (f: map 'a 'b) (x: 'a) (v: 'b) : map 'a 'b =\n    fun y -> if pure {y = x} then v else f y\n\n                        \n  let function ([]) (f: map 'a 'b) (x: 'a) : 'b = f x\n  let ghost function ([<-]) (f: map 'a 'b) (x: 'a) (v: 'b) : map 'a 'b = set f x v\n\n",
+      "dependencies": [],
+      "module_body_sha256": "e835884af79dec6aa7c9b85b901bc8e9b084866d0ddbae0b9f4709a97ae2683a",
+      "proposition_declarations": [],
+      "source": {
+        "bytes": 5517,
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/map.mlw",
+        "sha256": "c4cd7b90e39f8407fd714d0e46ce4c6496a98afd32bd69c71237b35a4b7c08a0"
+      }
+    },
+    "real.FromInt": {
+      "classification": "selected standard arithmetic/maps/Qed trusted foundation",
+      "complete_module_text": "\n  use int.Int as Int\n  use Real\n\n  function from_int int : real\n\n  axiom Zero: from_int 0 = 0.0\n  axiom One: from_int 1 = 1.0\n\n  axiom Add:\n    forall x y:int. from_int (Int.(+) x y) = from_int x + from_int y\n  axiom Sub:\n    forall x y:int. from_int (Int.(-) x y) = from_int x - from_int y\n  axiom Mul:\n    forall x y:int. from_int (Int.(*) x y) = from_int x * from_int y\n  axiom Neg:\n    forall x:int. from_int (Int.(-_) (x)) = - from_int x\n\n  lemma Injective:\n    forall x y: int. from_int x = from_int y -> x = y\n  axiom Monotonic:\n    forall x y:int. Int.(<=) x y -> from_int x <= from_int y\n\n",
+      "dependencies": [
+        {
+          "kind": "use",
+          "source_line": 125,
+          "target": "int.Int"
+        },
+        {
+          "kind": "use",
+          "source_line": 127,
+          "target": "real.Real"
+        }
+      ],
+      "module_body_sha256": "487272dac107cb2cf9f65aeb412586e55a44c838d0a865d47dbd631bf7cb0ddd",
+      "proposition_declarations": [
+        {
+          "kind": "axiom",
+          "line": 130,
+          "name": "Zero"
+        },
+        {
+          "kind": "axiom",
+          "line": 132,
+          "name": "One"
+        },
+        {
+          "kind": "axiom",
+          "line": 133,
+          "name": "Add"
+        },
+        {
+          "kind": "axiom",
+          "line": 136,
+          "name": "Sub"
+        },
+        {
+          "kind": "axiom",
+          "line": 138,
+          "name": "Mul"
+        },
+        {
+          "kind": "axiom",
+          "line": 140,
+          "name": "Neg"
+        },
+        {
+          "kind": "lemma",
+          "line": 142,
+          "name": "Injective"
+        },
+        {
+          "kind": "axiom",
+          "line": 145,
+          "name": "Monotonic"
+        }
+      ],
+      "source": {
+        "bytes": 11047,
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/real.mlw",
+        "sha256": "50940038bba54f6bd57501e5af6439af8c4f081274eb79a19d888a4cd419b8a2"
+      }
+    },
+    "real.Real": {
+      "classification": "selected standard arithmetic/maps/Qed trusted foundation",
+      "complete_module_text": "\n  constant zero : real = 0.0\n  constant one  : real = 1.0\n\n  val (=) (x y : real) : bool ensures { result <-> x = y }\n\n  val function  (-_) real : real\n  val function  (+)  real real : real\n  val function  (*)  real real : real\n  val predicate (<)  real real : bool\n\n  let predicate (>)  (x y : real) = y < x\n  let predicate (<=) (x y : real) = x < y || x = y\n  let predicate (>=) (x y : real) = y <= x\n\n  clone export algebra.OrderedField with type t = real,\n    constant zero = zero, constant one = one,\n    function (-_) = (-_), function (+) = (+),\n    function (*) = (*), predicate (<=) = (<=)\n\n  meta \"remove_unused:keep\" function (+)\n  meta \"remove_unused:keep\" function (-)\n                                                               \n                                        \n  meta \"remove_unused:keep\" function (/)\n*)\n  meta \"remove_unused:keep\" function (-_)\n  meta \"remove_unused:keep\" predicate (<)\n  meta \"remove_unused:keep\" predicate (<=)\n  meta \"remove_unused:keep\" predicate (>)\n  meta \"remove_unused:keep\" predicate (>=)\n\n let (-) (x y : real)\n    ensures { result = x - y }\n  = x + -y\n\n  val (/) (x y:real) : real\n    requires { y <> 0.0 }\n    ensures  { result = x / y }\n\n    \n                                                       \n  \n\n",
+      "dependencies": [
+        {
+          "kind": "clone",
+          "source_line": 26,
+          "target": "algebra.OrderedField"
+        }
+      ],
+      "module_body_sha256": "c07a7da2b705278754184195adb0e84c59c91c5294f8a53465fc546b58181bc2",
+      "proposition_declarations": [],
+      "source": {
+        "bytes": 11047,
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/real.mlw",
+        "sha256": "50940038bba54f6bd57501e5af6439af8c4f081274eb79a19d888a4cd419b8a2"
+      }
+    },
+    "real.RealInfix": {
+      "classification": "selected standard arithmetic/maps/Qed trusted foundation",
+      "complete_module_text": "\n  use Real\n\n  let function (+.) (x:real) (y:real) : real = x + y\n  let function (-.) (x:real) (y:real) : real = x - y\n  let function ( *.) (x:real) (y:real) : real = x * y\n  function (/.) (x:real) (y:real) : real = x / y\n  let function (-._) (x:real) : real = - x\n  function inv (x:real) : real = Real.inv x\n\n  let (=.) (x:real) (y:real) = x = y\n  let predicate (<=.) (x:real) (y:real) = x <= y\n  let predicate (>=.) (x:real) (y:real) = x >= y\n  let predicate ( <.) (x:real) (y:real) = x < y\n  let predicate ( >.) (x:real) (y:real) = x > y\n\n  val (/.) (x y:real) : real\n    requires { y <> 0.0 }\n    ensures  { result = x /. y }\n\n",
+      "dependencies": [
+        {
+          "kind": "use",
+          "source_line": 66,
+          "target": "real.Real"
+        }
+      ],
+      "module_body_sha256": "f6ad1c1e07280a59c22ec098accb8309e62bd31450c5a8bd99dbf9b9af16b789",
+      "proposition_declarations": [],
+      "source": {
+        "bytes": 11047,
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/real.mlw",
+        "sha256": "50940038bba54f6bd57501e5af6439af8c4f081274eb79a19d888a4cd419b8a2"
+      }
+    },
+    "relations.Antisymmetric": {
+      "classification": "selected standard arithmetic/maps/Qed trusted foundation",
+      "complete_module_text": "  clone export EndoRelation\n  axiom Antisymm : forall x y:t. rel x y -> rel y x -> x = y\n",
+      "dependencies": [
+        {
+          "kind": "clone",
+          "source_line": 37,
+          "target": "relations.EndoRelation"
+        }
+      ],
+      "module_body_sha256": "6ced6a8b2df42773a13c53404fee40af0382dff8b7ff99a3da1fd11e9b7f6a2a",
+      "proposition_declarations": [
+        {
+          "kind": "axiom",
+          "line": 38,
+          "name": "Antisymm"
+        }
+      ],
+      "source": {
+        "bytes": 4033,
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/relations.mlw",
+        "sha256": "0a367aecd2cd627de87d5f4011ddbf930bf49283e0b94b792a338faf921b2cae"
+      }
+    },
+    "relations.EndoRelation": {
+      "classification": "selected standard arithmetic/maps/Qed trusted foundation",
+      "complete_module_text": "  type t\n  predicate rel t t\n",
+      "dependencies": [],
+      "module_body_sha256": "c8d39d1686a694b30ffe7174ace1da2522ab917a95893bdbf09542972b8a1eb9",
+      "proposition_declarations": [],
+      "source": {
+        "bytes": 4033,
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/relations.mlw",
+        "sha256": "0a367aecd2cd627de87d5f4011ddbf930bf49283e0b94b792a338faf921b2cae"
+      }
+    },
+    "relations.PartialOrder": {
+      "classification": "selected standard arithmetic/maps/Qed trusted foundation",
+      "complete_module_text": "  clone export PreOrder with axiom Refl, axiom Trans\n  clone export Antisymmetric with\n    type t = t, predicate rel = rel, axiom Antisymm\n",
+      "dependencies": [
+        {
+          "kind": "clone",
+          "source_line": 62,
+          "target": "relations.PreOrder"
+        },
+        {
+          "kind": "clone",
+          "source_line": 63,
+          "target": "relations.Antisymmetric"
+        }
+      ],
+      "module_body_sha256": "43e73a2cc6c8fe864b074eccb4e794b6df0ba305b5bd2ff7843a9fbc42cfd917",
+      "proposition_declarations": [],
+      "source": {
+        "bytes": 4033,
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/relations.mlw",
+        "sha256": "0a367aecd2cd627de87d5f4011ddbf930bf49283e0b94b792a338faf921b2cae"
+      }
+    },
+    "relations.PreOrder": {
+      "classification": "selected standard arithmetic/maps/Qed trusted foundation",
+      "complete_module_text": "  clone export Reflexive with axiom Refl\n  clone export Transitive with type t = t, predicate rel = rel, axiom Trans\n",
+      "dependencies": [
+        {
+          "kind": "clone",
+          "source_line": 47,
+          "target": "relations.Reflexive"
+        },
+        {
+          "kind": "clone",
+          "source_line": 48,
+          "target": "relations.Transitive"
+        }
+      ],
+      "module_body_sha256": "4ddaf37e022f0c6b1843762edf7fe49d40538c82188288ab6f73c7bc2361db94",
+      "proposition_declarations": [],
+      "source": {
+        "bytes": 4033,
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/relations.mlw",
+        "sha256": "0a367aecd2cd627de87d5f4011ddbf930bf49283e0b94b792a338faf921b2cae"
+      }
+    },
+    "relations.Reflexive": {
+      "classification": "selected standard arithmetic/maps/Qed trusted foundation",
+      "complete_module_text": "  clone export EndoRelation\n  axiom Refl : forall x:t. rel x x\n",
+      "dependencies": [
+        {
+          "kind": "clone",
+          "source_line": 12,
+          "target": "relations.EndoRelation"
+        }
+      ],
+      "module_body_sha256": "6b1bff952f7f76de9a920528ee87cc8db082b37a5cdae59eead3230b2d5b7a98",
+      "proposition_declarations": [
+        {
+          "kind": "axiom",
+          "line": 13,
+          "name": "Refl"
+        }
+      ],
+      "source": {
+        "bytes": 4033,
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/relations.mlw",
+        "sha256": "0a367aecd2cd627de87d5f4011ddbf930bf49283e0b94b792a338faf921b2cae"
+      }
+    },
+    "relations.Total": {
+      "classification": "selected standard arithmetic/maps/Qed trusted foundation",
+      "complete_module_text": "  clone export EndoRelation\n  axiom Total : forall x y:t. rel x y \\/ rel y x\n",
+      "dependencies": [
+        {
+          "kind": "clone",
+          "source_line": 42,
+          "target": "relations.EndoRelation"
+        }
+      ],
+      "module_body_sha256": "78d3d7e1a1dc79a1e76cd3c134dc3a29064bf145a3e87dd8800d7ae42b9b3df9",
+      "proposition_declarations": [
+        {
+          "kind": "axiom",
+          "line": 43,
+          "name": "Total"
+        }
+      ],
+      "source": {
+        "bytes": 4033,
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/relations.mlw",
+        "sha256": "0a367aecd2cd627de87d5f4011ddbf930bf49283e0b94b792a338faf921b2cae"
+      }
+    },
+    "relations.TotalOrder": {
+      "classification": "selected standard arithmetic/maps/Qed trusted foundation",
+      "complete_module_text": "  clone export PartialOrder with axiom .\n  clone export Total with type t = t, predicate rel = rel, axiom Total\n",
+      "dependencies": [
+        {
+          "kind": "clone",
+          "source_line": 68,
+          "target": "relations.PartialOrder"
+        },
+        {
+          "kind": "clone",
+          "source_line": 69,
+          "target": "relations.Total"
+        }
+      ],
+      "module_body_sha256": "ca18dc624ffe29cb4ef62e4cff1cfe8bbd96cd94c0e8b98f7d2205844f5319d1",
+      "proposition_declarations": [],
+      "source": {
+        "bytes": 4033,
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/relations.mlw",
+        "sha256": "0a367aecd2cd627de87d5f4011ddbf930bf49283e0b94b792a338faf921b2cae"
+      }
+    },
+    "relations.Transitive": {
+      "classification": "selected standard arithmetic/maps/Qed trusted foundation",
+      "complete_module_text": "  clone export EndoRelation\n  axiom Trans : forall x y z:t. rel x y -> rel y z -> rel x z\n",
+      "dependencies": [
+        {
+          "kind": "clone",
+          "source_line": 22,
+          "target": "relations.EndoRelation"
+        }
+      ],
+      "module_body_sha256": "eee1977ac18b194f7763dbef201f185d05023dbe665ddae96bade630073ada3a",
+      "proposition_declarations": [
+        {
+          "kind": "axiom",
+          "line": 23,
+          "name": "Trans"
+        }
+      ],
+      "source": {
+        "bytes": 4033,
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/relations.mlw",
+        "sha256": "0a367aecd2cd627de87d5f4011ddbf930bf49283e0b94b792a338faf921b2cae"
+      }
+    },
+    "why3.BuiltIn.BuiltIn": {
+      "scope": "Why3 intrinsic typed core; selected compiled package trust, not project desired propositions"
+    }
+  }
+}

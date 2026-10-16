@@ -1099,3 +1099,65 @@ jobs. Evidence: `../evidence/t25-reallocation-pending-heap-map-controls-v2-20261
 Exact304e03ac097352e78c3d3a637e13e951bef51dd0 is published as prospective source for the separately planned exact-Git-blob type-only gate. The original v2 catalog and accepted heap bridge/VC/packet/view remain unchanged. New explicit qualified constructor/grow/reserve/dtor lookup records the candidate model/domain/theory and emits30/20/26/11 pending targets, but always returns not_proven/unsupported_construct before verifier launch. Caller AST receipts retain original v2 calls, no known origins and no added premises; ten source-local placement/history/frame/data/guard duties are pending. [Preparation README](../prototype/25-reallocation-domain/README.md), [integration review](../evidence/t07-t25-preparation-integration-review-20261016.md).
 
 Typed WP integer-source embedding and non-dynamic automatic-object lifetime definitions are drafts, with selected-runtime/source binding and full source/clause/frame/type/import/task/body/caller completeness unproved. Arbitrary entry-snapshot copying is not uniform-fill reuse; constructor capacity/eligibility are qualified postconditions to prove and destructor overlap scope stays broad. The latest preparation packet's407 references rehash without mismatch. Retained19 compiler/native controls and34 defined C/C++ caller comparisons are finite evidence, not a universal or stale-alias/UB proof. No formal/compiler job was run by integration; no type/proof result follows merely from publication. Status remains claimed and no dependency/default/current-catalog record is upgraded. Selector770's separate final cold record audit remains pending.
+
+## Qualified-v3 grammar/type-only cold acceptance — 2026-10-16 03:02 ET
+
+[Independent cold review](../evidence/t25-typecheck-independent-cold-review-304e03ac-20261016.md) accepts only Why3 grammar/types for exact source`304e03ac097352e78c3d3a637e13e951bef51dd0` and Git blob`af3f31aefa824f6f407a5124b9acf5a21e4d0b09`.153 local reference instances/86 unique files and all9 raw files/33,685B match with zero errors. Actual guard exit0/0.377270875s/50.53125MiB,600s whole/8GiB, no recorded timeout/inspection failure/unconfirmed child. Finite post-exit scans/absent leases are historical bounded observations only.
+
+Exactly one known unused-variable dummy warning is present at line25. The immutable [original receipt](../evidence/t25-mac-typecheck-original-receipt-v2-304e03ac-20261016.json) SHA f458c60a83e184ab015b6ac7f4ab81ceac1d12356a5183fa3832129e708c00e8 incorrectly says warnings=[] because its parser missed comma/location-form diagnostics. Independent complete retained-output comparison classifies that warning; the old receipt is not rewritten and no actual rerun occurred. Future parser/canonical rebuild successors remain separate and are not adopted by this closeout.
+
+No solver, imported WP task/hypothesis, source-image,87 model/10 caller duties, model/body/caller composition, public model dependency or whole-ticket acceptance follows. Qualified-v3 public models still return not_proven/unsupported_construct before verifier launch. Existing pair/heap/count accepted records retain their own identities. Ticket25 stays claimed; no frontier resolves.
+
+<!-- 2026-10-16 ET scoped preparation addendum; no acceptance checkbox change. -->
+
+The qualified v3 reallocation preparation now reconstructs the exact source,
+event/clause/helper map, packets and import directory independently of staged
+hash claims. Eight tamper controls and the composed 28-control compiler/native
+profile pass; the public route remains unsupported before launch. The root's
+exact-304e03ac Why3 type-only run exited zero with one known unused-parameter
+warning, classified in a separate passive addendum after the original regex
+missed its format. This is grammar/type evidence only. Full WP import/task,
+selected typed-source image, model bodies, caller cleanup/dependencies and wider
+member/type coverage remain open. See
+[canonical reconstruction](../evidence/t25-reallocation-canonical-rebuild-controls-20261016.json)
+and [passive warning addendum](../evidence/t25-mac-typecheck-passive-warning-audit-v1-304e03ac-20261016.json).
+
+2026-10-16 03:10 ET canonical preparation publication: exactd22bc6c5 (packetd1d3b3e0) passes the [independent canonical review](../evidence/t25-canonical-rebuild-independent-review-d22bc6c5-20261016.md). Complete canonical reconstruction rejects staged-source/statement/theory hash forgery, dropped coverage rows, extra import files and symlinks; it retains the trusted finite source-owner map boundary. The changed compound model identity does not promote old records. Public routes remain unsupported/no-launch, all source-image/import/task/body/caller duties open. Backend01771 remains separate/unreviewed and excluded. The earlier03:02 note's future canonical source is now published only as preparation; its old actual304 warning-parser defect/result remain immutable. Ticket25 stays claimed.
+
+## Qualified standalone backend preparation published — 2026-10-16 03:32 ET
+
+Exact01771a839893975bba389ee0adcbec2aecdb88ac is published through43d652b5 after [independent static PASS](../evidence/t25-qualified-backend-independent-review-01771a83-20261016.md). The distinct qualified model route now reaches the existing serial ordinary engine after canonical packet/subject hash/import membership and selected WP Typed/Machine source checks before every launch. Earlier304/d22 no-launch records remain historical. Qualified positive records cannot serve as original-v2 body contracts or C++ caller proofs; generic caller/lifetime/type/eligibility discharge stays unsupported/pending. Destructor broad pointer/free domain adds no element image restriction. Root40-pass profile is compiler/native metadata plus named Python Frama stand-ins; one synthetic20-target success remains synthetic.18 retained records/schema and941 report-reference pins match, not actual model proof evidence. [Root admission](../evidence/root-t25-017-native-control-admission-20261016.json) and [outer receipt](../evidence/root-t25-017-native-control-outer-20261016.json) retain explicit scope and prior direct-query refusal history. Source successor248 is excluded pending review. All actual import/task/body/caller/cleanup/dependency/fullticket gates remain open; status claimed.
+
+### 2026-10-16 ET — C++17 capacity and caller correspondence preparation
+
+The public lowerer now binds the prospective caller's exact-capacity witness to
+the actual admitted libc++22.1.8 constructor/allocation headers under C++17. It
+refuses changed language, macro, omitted-header, hash and physical-header inputs.
+This is implementation-specific correspondence, with no new caller premise and
+no assumption of the qualified C model's pending `capacity == count` postcondition.
+The composed Clang/native caller and pure canonical-packet profile passed 21/21
+in 59.96s (guard 60.72s, 371 MB, no OOM/timeout). Public capacity RED and all controls
+are retained in `evidence/t25-caller-capacity-controls-20261016.json`.
+
+Frozen017's separate backend static review is retained in
+`evidence/t25-qualified-backend-independent-review-01771a83-20261016.{md,json}`.
+It reports 7 source pins, 18 schema-valid scripted records and 941 report references
+with zero mismatches. Root-owned selected compiler/setup controls passed 40/40;
+all Frama processes in that profile were named stand-ins. No actual qualified
+model/caller proof or ticket acceptance checkbox is claimed by this preparation.
+
+## Reviewed caller source preparation — 2026-10-16 03:51 ET
+
+Exact42844b9aafe2a8af860e09bf5a6fbbec25a42c74 including248 lifetime is integrated after [independent source PASS](../evidence/t25-caller-source-independent-review-42844b9a-20261016.md):10 immutable source-pin instances/23 anchor instances/31 run/header references match. Complete lowered scalar capture, one normal-return cleanup, unreachable fallback and lexical lifetime-end duties are bound without origins/premises/adopted dependencies. Capacity==count is only an admitted libc++22.1.8 C++17 source witness; its model post and caller branches still require proof. Original v2 caller model selection and unsupported generic composition remain. The older03:32 held248 note is superseded only for source preparation, never actual caller proof.
+
+Root reports exact017 representative WP/Why3 import/task generation ended03:45:36 ET with actual tool generation but entry exit1 because of a legitimate empty-ID imported module property and multiline check-lemma description. Task log20,647B,1goal/2properties/results[], sentinel absent; guard7.153422s/207.421875MiB/no events. Pure reader repair and complete task cold audit are pending; no actual rerun, original-exit rewrite, body/caller proof or whole-ticket acceptance. The frozen017 control checkout/artifacts remain untouched by integration.
+
+## Representative017 WP/Why3 generation cold closeout — 2026-10-16 04:06 ET
+
+[Independent cold PASS](../evidence/t25-qualified-generation-independent-cold-review-01771a83-20261016.md) accepts one exact import/task-generation feasibility observation at01771a839893975bba389ee0adcbec2aecdb88ac, selected grow.entry.int_projection packetb5dbe9939b460efa5503b1cbba8a891f5cdb940a8d44835f3fd04da307a74b3f. Frama child returned0 and printed the complete20,647B task log; original entryv3/guard exit1 and generation_completed=false remain immutable. The refusal was the legitimate empty-ID imported IPModule property and newline-formatted check-lemma description. Separate reader-v4 accepts exactly that source-bound module row and check lemma, retaining both. Retained schema controls reproduce RED1+12 negative refusals then13GREEN; no actual v4 rerun occurred. [Parent passive review](../evidence/t25-qualified-generation-passive-review-v1-01771a83-20261016.md).
+
+Actual inventory has one ordinary goal passed=false/results[], two properties and no smoke, native verdict none/all prover successes0, header-only CSV and three identical normalized snapshots. Exactly two unused-dummy warnings at the selected Heap theory line25/characters18–23 remain classified without a general warning waiver. Actual -wp-gen/config/no-autodetection/sentinel and primary Generate control flow bind task construction before prover execution; sentinel absence alone is not universal process evidence. Guard7.153422s/207.421875MiB had no timeout/inspection/child failure. Root settlement has three historical finite empty sweeps and leases absent. Entryv3's final runtime/config postchecks were not reached after the refusal; later passive rehashes are later snapshots, not evidence those checks ran or an atomic immutability claim.
+
+The passive audit reports723 checks; independent review rehashed1376 unique local files (1371 input pins+5 derived outputs), zero mismatch. The complete printed theory contains three source predicate definitions and one unproved wp_goal, retaining bounded values/representation/size-zero-or-distinct allocation premises and project_int_region conclusion. Project Heap adds zero axioms/lemmas. Complete imports/clones retain30 modules/56 source proposition declarations, explicitly not a flattened instantiated Task axiom count or an independent foundational proof. Arithmetic/map/Qed/BuiltIn remain declared trusted foundations. Driver-prepared/solver-submitted task bytes do not exist in this path. No ordinary Valid, smoke/nonvacuity, model-body, original-v2, generic source/C++ caller/lifetime/cleanup or full-ticket proof follows. A fresh normal public20-target qualified-grow profile remains inert and unadmitted. Ticket stays claimed. [Census](../evidence/t25-qualified-generation-passive-v3-generation-census.json), [full import source closure](../evidence/t25-qualified-generation-passive-v3-import-source-closure.json), [preservation manifest](../evidence/t07-t25-generation-cold-preservation-20261016.json).
+
+The exact retained printed task SHA c4a1d9071061d193256423265ebecfab58caceb26cf3d9cc803c377fd5776cb3 has13 whitespace-only lines. They are preserved as actual evidence; this publication does not claim blanket diffcheck cleanliness. All other staged paths pass. Historical07 artifacts retain their separately documented47 warnings, and the prior size reader its2 warnings, unchanged.

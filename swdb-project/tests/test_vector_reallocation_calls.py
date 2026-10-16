@@ -99,6 +99,49 @@ def test_public_caller_lifetime_plan_derives_local_history_without_global_pointe
     assert all(row['status'] == 'pending' and not row['dependencies'] for row in rows.values())
 
 
+def test_public_lower_binds_scalar_capture_cleanup_and_unreachable_fallthrough(tmp_path):
+    result=lower(SOURCE,'vector_realloc_v3_safe',tmp_path)
+    candidate=result['vector_reallocation_candidate']
+    lifecycle=candidate['lowered_lifetime']
+    assert lifecycle['verdict']=='checked source order; semantic proof pending'
+    assert lifecycle['normal_return_cleanup_count']==1
+    assert lifecycle['unreachable_fallthrough_cleanup_count']==1
+    assert lifecycle['order']==['automatic declaration','constructor','data capture','reserve',
+                                'guarded scalar capture','destructor','return scalar','automatic lifetime end']
+    assert lifecycle['return_scalar_before_destruction'] is True
+    assert lifecycle['raw_alias_rewritten'] is False
+    raw=Path(result['c_lowering']['path']).read_bytes()
+    for event in lifecycle['events']:
+        span=event['lowered_source']
+        assert hashlib.sha256(raw[span['begin']:span['end']]).hexdigest()==span['sha256']
+    assert candidate['known_origins_granted']==[]
+
+
+def test_public_caller_lifetime_duties_bind_the_actual_lowered_scope_events(tmp_path):
+    result=lower(SOURCE,'vector_realloc_v3_no_growth',tmp_path)
+    candidate=result['vector_reallocation_candidate']
+    duties={row['id']:row for row in candidate['heap_lifetime_plan']['obligations']}
+    assert [event['event'] for event in duties['local.begin.storage']['lowered_events']]==['automatic declaration']
+    assert [event['event'] for event in duties['local.end.aliases']['lowered_events']]==[
+        'destructor','return scalar','automatic lifetime end']
+    assert [event['event'] for event in duties['caller.guard.nonempty']['lowered_events']]==['guarded scalar capture']
+    assert all(row['status']=='pending' and not row['dependencies'] for row in duties.values())
+    assert candidate['heap_lifetime_plan']['incoming_pointer_maps_restricted'] is False
+
+
+def test_public_caller_exact_capacity_is_qualified_by_the_actual_cpp17_headers(tmp_path):
+    result=lower(SOURCE,'vector_realloc_v3_safe',tmp_path)
+    bound=result['vector_reallocation_candidate']['capacity_qualification']
+    assert bound['language']=='C++17' and bound['library']=='libc++-22.1.8'
+    assert bound['scope']=='implementation-specific count/value capacity; not a universal vector standard theorem'
+    assert bound['caller_premises_added']==[]
+    assert {row['header_suffix'] for row in bound['sources']}=={
+        '__vector/vector.h','__memory/allocate_at_least.h'}
+    assert bound['model_postcondition_to_prove']=='capacity == count'
+    for row in bound['sources']:
+        assert hashlib.sha256(Path(row['path']).read_bytes()).hexdigest()==row['sha256']
+
+
 @pytest.mark.parametrize('function', ['vector_realloc_v3_safe', 'vector_realloc_v3_no_growth'])
 def test_defined_native_caller_observations_match_original_cpp_after_public_lower(tmp_path, function):
     """Finite source controls only; the stale branch is never executed."""
@@ -125,3 +168,30 @@ def test_defined_native_caller_observations_match_original_cpp_after_public_lowe
         assert run.returncode == 0, run.stdout + run.stderr
         outputs.append(run.stdout)
     assert outputs[0] == outputs[1] == '0\n' + '7\n' * 16
+
+
+def test_public_capacity_qualification_refuses_changed_language_macros_or_header_evidence(tmp_path):
+    """Public compiler receipt feeds the qualification API; no provenance stand-in."""
+    import copy
+    from swdb import vector_reallocation_capacity
+    result=lower(SOURCE,'vector_realloc_v3_safe',tmp_path/'lower')
+    provenance=json.loads(Path(result['anchors']['path']).read_text())['stdlib_provenance']
+    assert vector_reallocation_capacity.bind(provenance)['model_postcondition_to_prove']=='capacity == count'
+    changes=[]
+    wrong_language=copy.deepcopy(provenance)
+    wrong_language['context']['command']=[x.replace('-std=c++17','-std=c++23') for x in wrong_language['context']['command']]
+    changes.append(wrong_language)
+    macro=copy.deepcopy(provenance);macro['context']['command'].append('-D_LIBCPP_STD_VER=23');changes.append(macro)
+    omitted=copy.deepcopy(provenance)
+    omitted['headers']=[x for x in omitted['headers'] if not x['path'].endswith('/__memory/allocate_at_least.h')]
+    changes.append(omitted)
+    renamed=copy.deepcopy(provenance)
+    row=next(x for x in renamed['headers'] if x['path'].endswith('/__vector/vector.h'))
+    row['sha256']='0'*64;changes.append(renamed)
+    physical=copy.deepcopy(provenance)
+    row=next(x for x in physical['headers'] if x['path'].endswith('/__vector/vector.h'))
+    substitute=tmp_path/'changed/__vector/vector.h';substitute.parent.mkdir(parents=True)
+    substitute.write_bytes(Path(row['path']).read_bytes()+b'\n// changed header input\n');row['path']=str(substitute)
+    changes.append(physical)
+    for changed in changes:
+        with pytest.raises(ValueError):vector_reallocation_capacity.bind(changed)

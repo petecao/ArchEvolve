@@ -42,6 +42,17 @@ def once(text: str, old: str, new: str) -> str:
     return text.replace(old, new, 1)
 
 
+def canonical_generated_text(text: str) -> str:
+    """Strip only line-end spaces/tabs; never create a C line splice."""
+    lines = text.split("\n")
+    for index, line in enumerate(lines):
+        trimmed = line.rstrip(" \t")
+        if index < len(lines) - 1 and trimmed.endswith("\\") and trimmed != line:
+            raise ValueError("canonicalization would introduce a backslash-newline splice")
+        lines[index] = trimmed
+    return "\n".join(lines)
+
+
 def interface(text: str, name: str, result_type: str) -> tuple[str, dict]:
     # Finite source recognizer: exact pinned input, simple top-level signatures,
     # and brace-free return expressions. It never guesses at arbitrary C syntax.
@@ -162,7 +173,7 @@ def build(source: Path) -> tuple[dict[str, str], dict]:
     td = lower_td(files["tdstep_standin.c"])
     files["tdstep_standin.c"] = td
     for name in files:
-        files[name] = "// Prospective private out-slot ABI, 2026-10-16 ET. Not a proof record.\n" + files[name]
+        files[name] = canonical_generated_text("// Prospective private out-slot ABI, 2026-10-16 ET. Not a proof record.\n" + files[name])
     for row in inventory:
         text = original[row["file"]]
         pos = re.search(r"\b" + re.escape(row["name"]) + r"\s*\(", text).start()
@@ -176,7 +187,7 @@ def build(source: Path) -> tuple[dict[str, str], dict]:
         row.pop("old_contract")
         row.pop("old_declaration")
         row.pop("new_declaration")
-    manifest = {"method": "t07-private-outslot-v1", "source_pins": source_pins,
+    manifest = {"method": "t07-private-outslot-v2-canonical", "source_pins": source_pins,
                 "interfaces": inventory, "helper_bodies": 19,
                 "returning_helpers": 15, "returning_standard_summaries": 5,
                 "returning_device_summaries": 2, "proof_acceptance": False}

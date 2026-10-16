@@ -1,0 +1,660 @@
+{
+  "actual_pytest_status": "Original producer pytest2pass/exit0 preserved; clean negative acceptance separately refused if solver_error",
+  "artifacts": [
+    {
+      "bytes": 591781,
+      "path": "/private/tmp/probata-t28-size-supplemental-actual-v1-7e64298f-20261016.json",
+      "sha256": "3e6935862999b2a6c7a64f54a2cc3deeaba8d7156123211f8c86324eef4b37b4"
+    },
+    {
+      "bytes": 41112,
+      "path": "/private/tmp/probata-t28-size-root-settlement-v1-7e64298f-20261016.json",
+      "sha256": "fd48386cee1dbaa67b0334f2fc05305170a33ee21538122101bec8f9ad2c7e50"
+    },
+    {
+      "bytes": 10619,
+      "path": "/private/tmp/probata-t28-size-supplement-manifest-v1-20261016.json",
+      "sha256": "9b3c4ae0cf16ce6a91aa2975abeb5ad2904c454abc222b0d0679b5f3975af681"
+    }
+  ],
+  "boundary": "Passive supplemental actual size record/property/smoke/certificate/runtime audit only; coordinator separately owns admission/resources/leases/whole-raw membership",
+  "checks": 6663,
+  "date": "2026-10-16 ET",
+  "errors": [],
+  "files": 2605,
+  "full_ticket28_acceptance": false,
+  "negative_clean_acceptance": false,
+  "negative_refuted": false,
+  "original_resource_raw_settlement": "/private/tmp/probata-t28-size-root-settlement-v1-7e64298f-20261016.json",
+  "pair_acceptance": false,
+  "passive_resource_boundary": "Passive60s/8GiB address-space/one process; no formal probes. Original raw untouched.",
+  "positive_scoped_acceptance": true,
+  "records": [
+    {
+      "census": {
+        "clean_acceptance": true,
+        "csv_attribution": {
+          "rows": [
+            {
+              "function": "get_tile_size",
+              "kind": "precondition",
+              "line": "10",
+              "property": "get_tile_size_requires",
+              "status": "Valid"
+            },
+            {
+              "function": "get_tile_size",
+              "kind": "postcondition",
+              "line": "10",
+              "property": "get_tile_size_ensures",
+              "status": "Considered valid"
+            },
+            {
+              "function": "get_tile_size",
+              "kind": "postcondition",
+              "line": "12",
+              "property": "get_tile_size_exits",
+              "status": "Unknown"
+            },
+            {
+              "function": "get_tile_size",
+              "kind": "termination clause",
+              "line": "12",
+              "property": "get_tile_size_terminates",
+              "status": "Unknown"
+            },
+            {
+              "function": "get_tile_size",
+              "kind": "assigns clause",
+              "line": "12",
+              "property": "get_tile_size_assigns",
+              "status": "Considered valid"
+            },
+            {
+              "function": "trust_fixture",
+              "kind": "assigns clause",
+              "line": "17",
+              "property": "trust_fixture_assigns",
+              "status": "Valid"
+            },
+            {
+              "function": "trust_fixture",
+              "kind": "postcondition",
+              "line": "17",
+              "property": "trust_fixture_ensures",
+              "status": "Valid"
+            },
+            {
+              "function": "trust_fixture",
+              "kind": "postcondition",
+              "line": "18",
+              "property": "trust_fixture_exits",
+              "status": "Valid"
+            },
+            {
+              "function": "trust_fixture",
+              "kind": "termination clause",
+              "line": "18",
+              "property": "trust_fixture_terminates",
+              "status": "Valid"
+            },
+            {
+              "function": "trust_fixture",
+              "kind": "precondition of get_tile_size",
+              "line": "86",
+              "property": "get_tile_size_requires_2",
+              "status": "Valid"
+            },
+            {
+              "function": "trust_fixture",
+              "kind": "initialization",
+              "line": "89",
+              "property": "trust_fixture_assert_rte_initialization",
+              "status": "Valid"
+            }
+          ],
+          "selected_failed": [],
+          "unselected_implicit_unknown": [
+            {
+              "boundary": "Unselected implicit helper clause; not a proven implementation or an added Extern assumption.",
+              "description": "exits\n\\false",
+              "generated_goals": [],
+              "implementation_verified": false,
+              "property": "get_tile_size_exits",
+              "status": "Unknown"
+            },
+            {
+              "boundary": "Unselected implicit helper clause; not a proven implementation or an added Extern assumption.",
+              "description": "terminates\n\\true",
+              "generated_goals": [],
+              "implementation_verified": false,
+              "property": "get_tile_size_terminates",
+              "status": "Unknown"
+            }
+          ]
+        },
+        "dependency_edges": 9,
+        "diagnostic_solver_error_goals": [],
+        "extern_properties": [
+          "get_tile_size_assigns",
+          "get_tile_size_ensures"
+        ],
+        "failed_ordinary": [],
+        "goals": 10,
+        "initialized_property_descriptions": 1,
+        "ordinary": 8,
+        "owner_context_distinctions": [
+          {
+            "basis": "Exact source-certified helper dead-call smoke only",
+            "goal": "typed_real_get_tile_size_wp_smoke_dead_call_s65",
+            "inventory_property_owner": "get_tile_size",
+            "line": 86,
+            "native_record_context": "trust_fixture",
+            "property": "get_tile_size_wp_smoke_dead_call_s65"
+          }
+        ],
+        "properties": 15,
+        "refuted": false,
+        "smoke_native_stats": [
+          {
+            "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+            "goal": "typed_real_get_tile_size_wp_smoke_dead_call_s65",
+            "native_display_provers": [
+              {
+                "prover": "qed",
+                "success": 0,
+                "time": 0.124
+              },
+              {
+                "prover": "Alt-Ergo:2.6.4",
+                "success": 1,
+                "time": 0
+              }
+            ],
+            "normalized_smoke_proved": 1,
+            "raw_best_verdict": "timeout"
+          },
+          {
+            "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+            "goal": "typed_real_trust_fixture_wp_smoke_dead_code_s68",
+            "native_display_provers": [
+              {
+                "prover": "qed",
+                "success": 0,
+                "time": 0.154
+              },
+              {
+                "prover": "Alt-Ergo:2.6.4",
+                "success": 1,
+                "time": 0
+              }
+            ],
+            "normalized_smoke_proved": 1,
+            "raw_best_verdict": "timeout"
+          }
+        ],
+        "smokes": 2,
+        "solver_error_boundary": null
+      },
+      "certificate": {
+        "ast_boundary": "Producer AST object was not retained. Exact pinned producer AST checker bytes and returned binding metadata are checked; no independent discarded-AST replay is claimed.",
+        "bindings": {
+          "caller": {
+            "function": "trust_fixture",
+            "initializer_call": "get_tile_size",
+            "literal_int_argument": 0,
+            "local": "observed",
+            "other_statements": 0,
+            "parameter_count": 0,
+            "return_local": "observed",
+            "return_type": "int"
+          },
+          "getter": {
+            "body_statements": "DeclStmt,GCCAsmStmt,ReturnStmt",
+            "covering_wait": false,
+            "function": "get_tile_size",
+            "index_bits": 32,
+            "packet_bytes": 2,
+            "packet_core": 0,
+            "ready_read_scope": "separate blocking read returns1; not admitted here",
+            "required_status": "Finished",
+            "source_body_macros": 0,
+            "volatile_metadata_bits": 16
+          }
+        },
+        "boot_entry": {
+          "byte_order": "little",
+          "core": 0,
+          "epoch": "after-constructor-and-address-setup-before-any-command",
+          "guest_address_bits": 64,
+          "kind": "synthetic-fresh-spd-core0-v1",
+          "tile_words": 16384,
+          "tiles": 32
+        },
+        "compiler_input_count": 847,
+        "independently_replayed_frozen_llvm": true,
+        "independently_replayed_original_ast": false,
+        "llvm_module_sha256": "03f42dcbc9d1fe14f061f53da0f92d40f25ecfbbf5a105a7a6eb5c4c77d1de9c",
+        "preprocessed_source_sha256": "eabff480d0e8a56422b09ae15cb235f72d4af8c7724792ec723ebb45910e1ac2",
+        "projection": {
+          "entry_assignments": [
+            "__swdb_dx_size_bytes[0] = 0;",
+            "__swdb_dx_size_bytes[1] = 0;",
+            "__swdb_dx_size_bytes[2] = 0;",
+            "__swdb_dx_size_bytes[3] = 0;",
+            "__swdb_dx_size_bytes[4] = 0;",
+            "__swdb_dx_size_bytes[5] = 0;",
+            "__swdb_dx_size_bytes[6] = 0;",
+            "__swdb_dx_size_bytes[7] = 0;",
+            "__swdb_dx_size_bytes[8] = 0;",
+            "__swdb_dx_size_bytes[9] = 0;",
+            "__swdb_dx_size_bytes[10] = 0;",
+            "__swdb_dx_size_bytes[11] = 0;",
+            "__swdb_dx_size_bytes[12] = 0;",
+            "__swdb_dx_size_bytes[13] = 0;",
+            "__swdb_dx_size_bytes[14] = 0;",
+            "__swdb_dx_size_bytes[15] = 0;",
+            "__swdb_dx_size_bytes[16] = 0;",
+            "__swdb_dx_size_bytes[17] = 0;",
+            "__swdb_dx_size_bytes[18] = 0;",
+            "__swdb_dx_size_bytes[19] = 0;",
+            "__swdb_dx_size_bytes[20] = 0;",
+            "__swdb_dx_size_bytes[21] = 0;",
+            "__swdb_dx_size_bytes[22] = 0;",
+            "__swdb_dx_size_bytes[23] = 0;",
+            "__swdb_dx_size_bytes[24] = 0;",
+            "__swdb_dx_size_bytes[25] = 0;",
+            "__swdb_dx_size_bytes[26] = 0;",
+            "__swdb_dx_size_bytes[27] = 0;",
+            "__swdb_dx_size_bytes[28] = 0;",
+            "__swdb_dx_size_bytes[29] = 0;",
+            "__swdb_dx_size_bytes[30] = 0;",
+            "__swdb_dx_size_bytes[31] = 0;",
+            "__swdb_dx_size_bytes[32] = 0;",
+            "__swdb_dx_size_bytes[33] = 0;",
+            "__swdb_dx_size_bytes[34] = 0;",
+            "__swdb_dx_size_bytes[35] = 0;",
+            "__swdb_dx_size_bytes[36] = 0;",
+            "__swdb_dx_size_bytes[37] = 0;",
+            "__swdb_dx_size_bytes[38] = 0;",
+            "__swdb_dx_size_bytes[39] = 0;",
+            "__swdb_dx_size_bytes[40] = 0;",
+            "__swdb_dx_size_bytes[41] = 0;",
+            "__swdb_dx_size_bytes[42] = 0;",
+            "__swdb_dx_size_bytes[43] = 0;",
+            "__swdb_dx_size_bytes[44] = 0;",
+            "__swdb_dx_size_bytes[45] = 0;",
+            "__swdb_dx_size_bytes[46] = 0;",
+            "__swdb_dx_size_bytes[47] = 0;",
+            "__swdb_dx_size_bytes[48] = 0;",
+            "__swdb_dx_size_bytes[49] = 0;",
+            "__swdb_dx_size_bytes[50] = 0;",
+            "__swdb_dx_size_bytes[51] = 0;",
+            "__swdb_dx_size_bytes[52] = 0;",
+            "__swdb_dx_size_bytes[53] = 0;",
+            "__swdb_dx_size_bytes[54] = 0;",
+            "__swdb_dx_size_bytes[55] = 0;",
+            "__swdb_dx_size_bytes[56] = 0;",
+            "__swdb_dx_size_bytes[57] = 0;",
+            "__swdb_dx_size_bytes[58] = 0;",
+            "__swdb_dx_size_bytes[59] = 0;",
+            "__swdb_dx_size_bytes[60] = 0;",
+            "__swdb_dx_size_bytes[61] = 0;",
+            "__swdb_dx_size_bytes[62] = 0;",
+            "__swdb_dx_size_bytes[63] = 0;"
+          ],
+          "metadata_bytes": 64,
+          "source_initial_values": {
+            "ready": 0,
+            "size": 0,
+            "status": 2
+          }
+        },
+        "source_sha256": "007b3944ebab95621aa5b509cf67e05e877783e2805a7588377a965da8f3cfbf"
+      },
+      "contract_result": 0,
+      "failure_class": null,
+      "formal_input": {
+        "formal_private_frame": "__swdb_dx_size_bytes[0 .. 63]",
+        "helper_requires": "0 <= SPD_id < 32",
+        "hidden_frame_boundary": "Only private representation initialization is adapted; original public memory write allowance remains empty.",
+        "model_definition_injected": false,
+        "ordinary_private_initialization_assignments": 64,
+        "original_unit_assigns": "\\nothing",
+        "unit_requires": []
+      },
+      "id": "proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75",
+      "record": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir0/records/proofs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75.yaml",
+      "trust_metadata_fragments": [
+        "semantics.dx100_size_fixture_0_2#mmio_ordering",
+        "semantics.dx100_size_fixture_0_2#cross_core_filter",
+        "semantics.dx100_size_fixture_0_2#cross_core_write_buffer",
+        "semantics.dx100_size_fixture_0_2#no_stale_cpu_copy",
+        "semantics.dx100_size_fixture_0_2#one_instance",
+        "semantics.dx100_size_fixture_0_2#fresh_spd_epoch"
+      ],
+      "verdict": "proven"
+    },
+    {
+      "census": {
+        "clean_acceptance": false,
+        "csv_attribution": {
+          "rows": [
+            {
+              "function": "get_tile_size",
+              "kind": "precondition",
+              "line": "10",
+              "property": "get_tile_size_requires",
+              "status": "Valid"
+            },
+            {
+              "function": "get_tile_size",
+              "kind": "postcondition",
+              "line": "10",
+              "property": "get_tile_size_ensures",
+              "status": "Considered valid"
+            },
+            {
+              "function": "get_tile_size",
+              "kind": "postcondition",
+              "line": "12",
+              "property": "get_tile_size_exits",
+              "status": "Unknown"
+            },
+            {
+              "function": "get_tile_size",
+              "kind": "termination clause",
+              "line": "12",
+              "property": "get_tile_size_terminates",
+              "status": "Unknown"
+            },
+            {
+              "function": "get_tile_size",
+              "kind": "assigns clause",
+              "line": "12",
+              "property": "get_tile_size_assigns",
+              "status": "Considered valid"
+            },
+            {
+              "function": "trust_fixture",
+              "kind": "assigns clause",
+              "line": "17",
+              "property": "trust_fixture_assigns",
+              "status": "Valid"
+            },
+            {
+              "function": "trust_fixture",
+              "kind": "postcondition",
+              "line": "17",
+              "property": "trust_fixture_ensures",
+              "status": "Unknown"
+            },
+            {
+              "function": "trust_fixture",
+              "kind": "postcondition",
+              "line": "18",
+              "property": "trust_fixture_exits",
+              "status": "Valid"
+            },
+            {
+              "function": "trust_fixture",
+              "kind": "termination clause",
+              "line": "18",
+              "property": "trust_fixture_terminates",
+              "status": "Valid"
+            },
+            {
+              "function": "trust_fixture",
+              "kind": "precondition of get_tile_size",
+              "line": "86",
+              "property": "get_tile_size_requires_2",
+              "status": "Valid"
+            },
+            {
+              "function": "trust_fixture",
+              "kind": "initialization",
+              "line": "89",
+              "property": "trust_fixture_assert_rte_initialization",
+              "status": "Valid"
+            }
+          ],
+          "selected_failed": [
+            {
+              "goals": [
+                "typed_real_trust_fixture_ensures"
+              ],
+              "payload": "\\result \u2261 1",
+              "property": "trust_fixture_ensures",
+              "status": "Unknown"
+            }
+          ],
+          "unselected_implicit_unknown": [
+            {
+              "boundary": "Unselected implicit helper clause; not a proven implementation or an added Extern assumption.",
+              "description": "exits\n\\false",
+              "generated_goals": [],
+              "implementation_verified": false,
+              "property": "get_tile_size_exits",
+              "status": "Unknown"
+            },
+            {
+              "boundary": "Unselected implicit helper clause; not a proven implementation or an added Extern assumption.",
+              "description": "terminates\n\\true",
+              "generated_goals": [],
+              "implementation_verified": false,
+              "property": "get_tile_size_terminates",
+              "status": "Unknown"
+            }
+          ]
+        },
+        "dependency_edges": 8,
+        "diagnostic_solver_error_goals": [
+          "typed_real_trust_fixture_ensures"
+        ],
+        "extern_properties": [
+          "get_tile_size_assigns",
+          "get_tile_size_ensures"
+        ],
+        "failed_ordinary": [
+          "typed_real_trust_fixture_ensures"
+        ],
+        "goals": 10,
+        "initialized_property_descriptions": 1,
+        "ordinary": 8,
+        "owner_context_distinctions": [
+          {
+            "basis": "Exact source-certified helper dead-call smoke only",
+            "goal": "typed_real_get_tile_size_wp_smoke_dead_call_s65",
+            "inventory_property_owner": "get_tile_size",
+            "line": 86,
+            "native_record_context": "trust_fixture",
+            "property": "get_tile_size_wp_smoke_dead_call_s65"
+          }
+        ],
+        "properties": 15,
+        "refuted": false,
+        "smoke_native_stats": [
+          {
+            "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+            "goal": "typed_real_get_tile_size_wp_smoke_dead_call_s65",
+            "native_display_provers": [
+              {
+                "prover": "qed",
+                "success": 0,
+                "time": 0.122
+              },
+              {
+                "prover": "Alt-Ergo:2.6.4",
+                "success": 1,
+                "time": 0
+              }
+            ],
+            "normalized_smoke_proved": 1,
+            "raw_best_verdict": "timeout"
+          },
+          {
+            "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+            "goal": "typed_real_trust_fixture_wp_smoke_dead_code_s68",
+            "native_display_provers": [
+              {
+                "prover": "qed",
+                "success": 0,
+                "time": 0.152
+              },
+              {
+                "prover": "Alt-Ergo:2.6.4",
+                "success": 1,
+                "time": 0
+              }
+            ],
+            "normalized_smoke_proved": 1,
+            "raw_best_verdict": "timeout"
+          }
+        ],
+        "smokes": 2,
+        "solver_error_boundary": "Failed portfolio verdict is retained; the frozen reporter did not retain the per-prover error detail, so the cause remains undiagnosed."
+      },
+      "certificate": {
+        "ast_boundary": "Producer AST object was not retained. Exact pinned producer AST checker bytes and returned binding metadata are checked; no independent discarded-AST replay is claimed.",
+        "bindings": {
+          "caller": {
+            "function": "trust_fixture",
+            "initializer_call": "get_tile_size",
+            "literal_int_argument": 0,
+            "local": "observed",
+            "other_statements": 0,
+            "parameter_count": 0,
+            "return_local": "observed",
+            "return_type": "int"
+          },
+          "getter": {
+            "body_statements": "DeclStmt,GCCAsmStmt,ReturnStmt",
+            "covering_wait": false,
+            "function": "get_tile_size",
+            "index_bits": 32,
+            "packet_bytes": 2,
+            "packet_core": 0,
+            "ready_read_scope": "separate blocking read returns1; not admitted here",
+            "required_status": "Finished",
+            "source_body_macros": 0,
+            "volatile_metadata_bits": 16
+          }
+        },
+        "boot_entry": {
+          "byte_order": "little",
+          "core": 0,
+          "epoch": "after-constructor-and-address-setup-before-any-command",
+          "guest_address_bits": 64,
+          "kind": "synthetic-fresh-spd-core0-v1",
+          "tile_words": 16384,
+          "tiles": 32
+        },
+        "compiler_input_count": 847,
+        "independently_replayed_frozen_llvm": true,
+        "independently_replayed_original_ast": false,
+        "llvm_module_sha256": "d789b8879234b5c215c0e566e1b647434b9d57165c01570d0c8dae2911a737e3",
+        "preprocessed_source_sha256": "f07b0fb6be252a3abc02912abd970c215f8f11fc27e4360a90dd2b8001729ab5",
+        "projection": {
+          "entry_assignments": [
+            "__swdb_dx_size_bytes[0] = 0;",
+            "__swdb_dx_size_bytes[1] = 0;",
+            "__swdb_dx_size_bytes[2] = 0;",
+            "__swdb_dx_size_bytes[3] = 0;",
+            "__swdb_dx_size_bytes[4] = 0;",
+            "__swdb_dx_size_bytes[5] = 0;",
+            "__swdb_dx_size_bytes[6] = 0;",
+            "__swdb_dx_size_bytes[7] = 0;",
+            "__swdb_dx_size_bytes[8] = 0;",
+            "__swdb_dx_size_bytes[9] = 0;",
+            "__swdb_dx_size_bytes[10] = 0;",
+            "__swdb_dx_size_bytes[11] = 0;",
+            "__swdb_dx_size_bytes[12] = 0;",
+            "__swdb_dx_size_bytes[13] = 0;",
+            "__swdb_dx_size_bytes[14] = 0;",
+            "__swdb_dx_size_bytes[15] = 0;",
+            "__swdb_dx_size_bytes[16] = 0;",
+            "__swdb_dx_size_bytes[17] = 0;",
+            "__swdb_dx_size_bytes[18] = 0;",
+            "__swdb_dx_size_bytes[19] = 0;",
+            "__swdb_dx_size_bytes[20] = 0;",
+            "__swdb_dx_size_bytes[21] = 0;",
+            "__swdb_dx_size_bytes[22] = 0;",
+            "__swdb_dx_size_bytes[23] = 0;",
+            "__swdb_dx_size_bytes[24] = 0;",
+            "__swdb_dx_size_bytes[25] = 0;",
+            "__swdb_dx_size_bytes[26] = 0;",
+            "__swdb_dx_size_bytes[27] = 0;",
+            "__swdb_dx_size_bytes[28] = 0;",
+            "__swdb_dx_size_bytes[29] = 0;",
+            "__swdb_dx_size_bytes[30] = 0;",
+            "__swdb_dx_size_bytes[31] = 0;",
+            "__swdb_dx_size_bytes[32] = 0;",
+            "__swdb_dx_size_bytes[33] = 0;",
+            "__swdb_dx_size_bytes[34] = 0;",
+            "__swdb_dx_size_bytes[35] = 0;",
+            "__swdb_dx_size_bytes[36] = 0;",
+            "__swdb_dx_size_bytes[37] = 0;",
+            "__swdb_dx_size_bytes[38] = 0;",
+            "__swdb_dx_size_bytes[39] = 0;",
+            "__swdb_dx_size_bytes[40] = 0;",
+            "__swdb_dx_size_bytes[41] = 0;",
+            "__swdb_dx_size_bytes[42] = 0;",
+            "__swdb_dx_size_bytes[43] = 0;",
+            "__swdb_dx_size_bytes[44] = 0;",
+            "__swdb_dx_size_bytes[45] = 0;",
+            "__swdb_dx_size_bytes[46] = 0;",
+            "__swdb_dx_size_bytes[47] = 0;",
+            "__swdb_dx_size_bytes[48] = 0;",
+            "__swdb_dx_size_bytes[49] = 0;",
+            "__swdb_dx_size_bytes[50] = 0;",
+            "__swdb_dx_size_bytes[51] = 0;",
+            "__swdb_dx_size_bytes[52] = 0;",
+            "__swdb_dx_size_bytes[53] = 0;",
+            "__swdb_dx_size_bytes[54] = 0;",
+            "__swdb_dx_size_bytes[55] = 0;",
+            "__swdb_dx_size_bytes[56] = 0;",
+            "__swdb_dx_size_bytes[57] = 0;",
+            "__swdb_dx_size_bytes[58] = 0;",
+            "__swdb_dx_size_bytes[59] = 0;",
+            "__swdb_dx_size_bytes[60] = 0;",
+            "__swdb_dx_size_bytes[61] = 0;",
+            "__swdb_dx_size_bytes[62] = 0;",
+            "__swdb_dx_size_bytes[63] = 0;"
+          ],
+          "metadata_bytes": 64,
+          "source_initial_values": {
+            "ready": 0,
+            "size": 0,
+            "status": 2
+          }
+        },
+        "source_sha256": "007b3944ebab95621aa5b509cf67e05e877783e2805a7588377a965da8f3cfbf"
+      },
+      "contract_result": 1,
+      "failure_class": "solver_error",
+      "formal_input": {
+        "formal_private_frame": "__swdb_dx_size_bytes[0 .. 63]",
+        "helper_requires": "0 <= SPD_id < 32",
+        "hidden_frame_boundary": "Only private representation initialization is adapted; original public memory write allowance remains empty.",
+        "model_definition_injected": false,
+        "ordinary_private_initialization_assignments": 64,
+        "original_unit_assigns": "\\nothing",
+        "unit_requires": []
+      },
+      "id": "proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367",
+      "record": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir1/records/proofs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367.yaml",
+      "trust_metadata_fragments": [
+        "semantics.dx100_size_fixture_0_2#mmio_ordering",
+        "semantics.dx100_size_fixture_0_2#cross_core_filter",
+        "semantics.dx100_size_fixture_0_2#cross_core_write_buffer",
+        "semantics.dx100_size_fixture_0_2#no_stale_cpu_copy",
+        "semantics.dx100_size_fixture_0_2#one_instance",
+        "semantics.dx100_size_fixture_0_2#fresh_spd_epoch"
+      ],
+      "verdict": "not_proven"
+    }
+  ],
+  "source_certificate_scope": "Original literal-zero closed caller; owned synthetic fresh-SPD core0 constructor/setup epoch, pending59; declared getter ensures/assigns Extern summaries, no helper-body/hardware/physicalboot theorem. Frozen LLVM independently replayed; original AST discarded and not independently replayed.",
+  "source_commit": "7e64298fd1d81359e8db586883243b31d57bef3b",
+  "status": "root scoped positive acceptance, independent compact review pending"
+}

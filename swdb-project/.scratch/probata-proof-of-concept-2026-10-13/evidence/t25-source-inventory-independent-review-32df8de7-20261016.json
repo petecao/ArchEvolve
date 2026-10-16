@@ -1,0 +1,168 @@
+{
+  "actual_proof_acceptance": false,
+  "blockers": [],
+  "canonical_successor_excluded": true,
+  "clause_ownership": "per-function union; not per-clause weakest-precondition derivation",
+  "counts": {
+    "std_vector_int_realloc_v3_ctor_count_value": {
+      "clauses": 18,
+      "coverage_complete": false,
+      "events": 11,
+      "targets": 30,
+      "trusted_helpers": 2
+    },
+    "std_vector_int_realloc_v3_dtor": {
+      "clauses": 11,
+      "coverage_complete": false,
+      "events": 1,
+      "targets": 11,
+      "trusted_helpers": 2
+    },
+    "std_vector_int_realloc_v3_grow": {
+      "clauses": 20,
+      "coverage_complete": false,
+      "events": 8,
+      "targets": 20,
+      "trusted_helpers": 2
+    },
+    "std_vector_int_realloc_v3_reserve": {
+      "clauses": 28,
+      "coverage_complete": false,
+      "events": 9,
+      "targets": 26,
+      "trusted_helpers": 2
+    }
+  },
+  "evidence_sha256": "330d0c5547220a28eb6d513c7ae5883d8fafa96d590c1bd9931d89b54626ae0b",
+  "hash_errors": [],
+  "inventory_blob": "d0179ed9ecc22e1951f9f379b8a7d78e38b787ab",
+  "literal_source_span_instances_checked": 567,
+  "model_identity": {
+    "id": "vector-reallocation-domain-3",
+    "sha256": "b963638038da9643827034861514ccdb12a4224e4bbdbdf25c60413048309fee"
+  },
+  "reference_instances_checked": 37,
+  "repository_edits": false,
+  "resources": [
+    {
+      "cpu_seconds": 1.642399,
+      "exit_code": 1,
+      "out_of_memory": false,
+      "peak_rss_bytes": 196788224,
+      "timed_out": false,
+      "wall_seconds": 1.7460557500016876
+    },
+    {
+      "cpu_seconds": 1.555384,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 196837376,
+      "timed_out": false,
+      "wall_seconds": 1.5714262499823235
+    },
+    {
+      "cpu_seconds": 52.428406,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 394559488,
+      "timed_out": false,
+      "wall_seconds": 53.112185332982335
+    }
+  ],
+  "retained_record_report_packet_instances_checked": 546,
+  "review_md_sha256": "53cf00ca18e4bf4a662bc71b575faaf35d4c1bd122ace8d6a62651eea22ec912",
+  "source": "32df8de7ff46e75dceeaaf584d826defe525f0d9",
+  "source_pins": [
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/vector_reallocation_inventory.py",
+      "sha256": "543e5523d6f05fad7f336ede476b85aa30e068dee8d07489f3a4351da54c75cf"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/vector_reallocation_vcs.py",
+      "sha256": "f021479d2efedbd295818a480b2b23f4b74c6f71c1fb4d22322fbdf9f4eb0459"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/vector_reallocation_model.py",
+      "sha256": "59547b4b6c8121d900980653dffb23e9d2c072632b72eabc16c62fb819f1d254"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/c_lowering.py",
+      "sha256": "df121b86a6978732bade5e07c7dc50c9ec4b9b79737030e2a3a2903bb3892211"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/proof_setup.py",
+      "sha256": "f20e39d722f5aae6987922d0480fccf138aa156f6e861f748994141b4f3128f8"
+    }
+  ],
+  "theory_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+  "unmapped_lists": "trusted finite-map assertions; not generic parser result",
+  "unsupported_record_instances": [
+    {
+      "sha256": "fe58ca2890051d6bfa5e6f50c9ef4a137b3551488cc8cac01d5722395e7cd1af",
+      "subject": "std_vector_int_realloc_v3_grow",
+      "verdict": "not_proven",
+      "verifier_launched": false
+    },
+    {
+      "sha256": "014cc7cb8191d79247074c93540e15a0a806edbec29654c1c6a995b2f4b1cdbe",
+      "subject": "std_vector_int_realloc_v3_grow",
+      "verdict": "not_proven",
+      "verifier_launched": false
+    },
+    {
+      "sha256": "9482c67c07fe90d04cc9d05a2845174cbbe1dc6d756c42300c3608a475c28530",
+      "subject": "std_vector_int_realloc_v3_ctor_count_value",
+      "verdict": "not_proven",
+      "verifier_launched": false
+    },
+    {
+      "sha256": "94163dc22e652de5bcd97da1f6e64b6a26080dd0ab154090422284d74ddc6593",
+      "subject": "std_vector_int_realloc_v3_reserve",
+      "verdict": "not_proven",
+      "verifier_launched": false
+    },
+    {
+      "sha256": "f089095731775563c288dd951f126dc1e2565c0a409d7ce104ca3a7380f6a98d",
+      "subject": "std_vector_int_realloc_v3_dtor",
+      "verdict": "not_proven",
+      "verifier_launched": false
+    },
+    {
+      "sha256": "13aaec4ec75b8274fde4bb0ae1cac590a52ab97cac642bad308d0754540c8b16",
+      "subject": "std_vector_int_realloc_v3_grow",
+      "verdict": "not_proven",
+      "verifier_launched": false
+    },
+    {
+      "sha256": "4619f7fe2c414a2938942ebaffd5bf8ef1bd2b77362827a9f1c6a7a9fa86594c",
+      "subject": "std_vector_int_realloc_v3_grow",
+      "verdict": "not_proven",
+      "verifier_launched": false
+    },
+    {
+      "sha256": "bf22ef0d7184ae90b278131f01f2a624c4e274636db6ec72b168007d8e080d15",
+      "subject": "std_vector_int_realloc_v3_ctor_count_value",
+      "verdict": "not_proven",
+      "verifier_launched": false
+    },
+    {
+      "sha256": "d95a72fe01875a6ec2574366c797214247ca01de826ac3de8e7697af21fe2d9f",
+      "subject": "std_vector_int_realloc_v3_reserve",
+      "verdict": "not_proven",
+      "verifier_launched": false
+    },
+    {
+      "sha256": "73d86e497c65ff409aee0550a3ab1594d5d9a1433773c74970985d002e6ceb8a",
+      "subject": "std_vector_int_realloc_v3_dtor",
+      "verdict": "not_proven",
+      "verifier_launched": false
+    },
+    {
+      "sha256": "f53838ef367d04ace296c8b214012a32fec5114acd9b21ea9154229f1c06e961",
+      "subject": "std_vector_int_realloc_v3_reserve",
+      "verdict": "not_proven",
+      "verifier_launched": false
+    }
+  ],
+  "verdict": "PASS_CLOSED_EXACT_SOURCE_PREPARATION_ONLY"
+}

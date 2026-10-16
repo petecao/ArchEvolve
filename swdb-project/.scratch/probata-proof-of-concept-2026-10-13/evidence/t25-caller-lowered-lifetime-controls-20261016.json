@@ -1,0 +1,199 @@
+{
+  "actual_formal_tools_executed": [],
+  "anchors": [
+    {
+      "path": "/private/tmp/probata-t25-caller-lifetime-composed-green-20261016/pytest/test_defined_native_caller_obs0/lower/vector_realloc_v3_safe.anchors.json",
+      "sha256": "ccfe09bb43a4261b22ac363344d854a1b44ba9edcc3bb2ededdbafdab2728628"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller-lifetime-composed-green-20261016/pytest/test_defined_native_caller_obs1/lower/vector_realloc_v3_no_growth.anchors.json",
+      "sha256": "aa81756510f8b995132a4dd08e355915d7739a4de7ff3487f3dd79a1da4dc61d"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller-lifetime-composed-green-20261016/pytest/test_public_alias_controls_kee0/vector_realloc_v3_stale.anchors.json",
+      "sha256": "0beb1cbca21571223a2f0a07d98e43ff99348691ec68dbd2a16435f36cca097f"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller-lifetime-composed-green-20261016/pytest/test_public_alias_controls_kee1/vector_realloc_v3_no_growth.anchors.json",
+      "sha256": "aa81756510f8b995132a4dd08e355915d7739a4de7ff3487f3dd79a1da4dc61d"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller-lifetime-composed-green-20261016/pytest/test_public_caller_lifetime_du0/vector_realloc_v3_no_growth.anchors.json",
+      "sha256": "aa81756510f8b995132a4dd08e355915d7739a4de7ff3487f3dd79a1da4dc61d"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller-lifetime-composed-green-20261016/pytest/test_public_caller_lifetime_pl0/vector_realloc_v3_safe.anchors.json",
+      "sha256": "ccfe09bb43a4261b22ac363344d854a1b44ba9edcc3bb2ededdbafdab2728628"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller-lifetime-composed-green-20261016/pytest/test_public_caller_retains_crl0/lower/vector_realloc_v3_safe.anchors.json",
+      "sha256": "649cd3f1d64a446768ebcc94d4220b643e2c7b42fbf7606029583d15f70fb1ee"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller-lifetime-composed-green-20261016/pytest/test_public_caller_source_span0/lower/vector_realloc_v3_safe.anchors.json",
+      "sha256": "8339f8b3d89fa8107d4496bd363097699870d75f5ae6828599ef01fda009b6ae"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller-lifetime-composed-green-20261016/pytest/test_public_lower_binds_scalar0/vector_realloc_v3_safe.anchors.json",
+      "sha256": "ccfe09bb43a4261b22ac363344d854a1b44ba9edcc3bb2ededdbafdab2728628"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller-lifetime-composed-green-20261016/pytest/test_public_reserve_caller_rec0/vector_realloc_v3_safe.anchors.json",
+      "sha256": "ccfe09bb43a4261b22ac363344d854a1b44ba9edcc3bb2ededdbafdab2728628"
+    }
+  ],
+  "base_source": "01771a839893975bba389ee0adcbec2aecdb88ac",
+  "correspondence": "exact closed whole lowered body inclscalar capture/destructor/return and unreachable fallback; all ten pending lifetime duties have physical lowered event spans",
+  "created": "2026-10-16 ET",
+  "limits": [
+    "scope-end closing brace is a source anchor for return-induced storage end, not a claim that that token executes",
+    "one destructor on normalreturn; fallback destructor has zero executions",
+    "no origin/ownership/new caller premise granted; body/typeimage/caller/dependency/task proofs remain pending"
+  ],
+  "native_metadata_queries_executed_in_this_slice": [],
+  "result": "19 Clang/native caller and purepacket controls passed49.14s; guard49.5138s367329280B, noOOMtimeout",
+  "runs": [
+    {
+      "command": {
+        "path": "/private/tmp/probata-t25-caller-cleanup-lowering-red-20261016/command.json",
+        "sha256": "3cfe95eeac3db312db06c0e8f66323364d9c3936f681ce29e81ff93aa96b0e05"
+      },
+      "label": "caller-cleanup-lowering-red",
+      "log": {
+        "path": "/private/tmp/probata-t25-caller-cleanup-lowering-red-20261016/controls.log",
+        "sha256": "cb2898d1f3beabf3b81b97484e407a646c0307143ec61362c4d763de4ffc02fb"
+      },
+      "resources": {
+        "cpu_seconds": 4.917167999999999,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 331268096,
+        "timed_out": false,
+        "wall_seconds": 5.253120334004052
+      },
+      "resources_pin": {
+        "path": "/private/tmp/probata-t25-caller-cleanup-lowering-red-20261016/resources.json",
+        "sha256": "1ac4ecde2d8a9f9e6ee659d2b2a8f3d8675fbe2d771e5b612dadb4af7a3f2015"
+      }
+    },
+    {
+      "command": {
+        "path": "/private/tmp/probata-t25-caller-cleanup-lowering-green-20261016/command.json",
+        "sha256": "4127297dfc5f1e07b74edd9889197f7ff1374d00bae95035fd3b528eb9bd3da2"
+      },
+      "label": "caller-cleanup-lowering-green",
+      "log": {
+        "path": "/private/tmp/probata-t25-caller-cleanup-lowering-green-20261016/controls.log",
+        "sha256": "02ffead0d206db7735e26c5ce86e1492178feca19cd3bfba84891b661446b09d"
+      },
+      "resources": {
+        "cpu_seconds": 4.812936,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 344145920,
+        "timed_out": false,
+        "wall_seconds": 4.835205500014126
+      },
+      "resources_pin": {
+        "path": "/private/tmp/probata-t25-caller-cleanup-lowering-green-20261016/resources.json",
+        "sha256": "55015a7f6e6837f788067ce844d0a3bad148ced6e4ad2aa9bb317a205634fb8b"
+      }
+    },
+    {
+      "command": {
+        "path": "/private/tmp/probata-t25-caller-lifetime-binding-red-20261016/command.json",
+        "sha256": "a3c5b3b955bf313ce6dd70479418b824862df5fc74253fa46b7d834d7cdc2798"
+      },
+      "label": "caller-lifetime-binding-red",
+      "log": {
+        "path": "/private/tmp/probata-t25-caller-lifetime-binding-red-20261016/controls.log",
+        "sha256": "f2dc5144ed75113affb66758edc1783cb9fc2dcb13c61b26fde7429d53072413"
+      },
+      "resources": {
+        "cpu_seconds": 4.835057,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 356253696,
+        "timed_out": false,
+        "wall_seconds": 4.925820917007513
+      },
+      "resources_pin": {
+        "path": "/private/tmp/probata-t25-caller-lifetime-binding-red-20261016/resources.json",
+        "sha256": "58597c329e29f4e38d39d5fee44b6f395511bac2abd8647a12d471e0db7217a6"
+      }
+    },
+    {
+      "command": {
+        "path": "/private/tmp/probata-t25-caller-lifetime-binding-green-20261016/command.json",
+        "sha256": "bd11780cb14c5fabc228f9c2df7c404a1034f3eda59c03bed1b441d137daa00f"
+      },
+      "label": "caller-lifetime-binding-green",
+      "log": {
+        "path": "/private/tmp/probata-t25-caller-lifetime-binding-green-20261016/controls.log",
+        "sha256": "61ea2449edda8352eb1232e017da985775bda60a8bb9deecc1680212cb026f26"
+      },
+      "resources": {
+        "cpu_seconds": 4.844203,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 345391104,
+        "timed_out": false,
+        "wall_seconds": 4.864676250028424
+      },
+      "resources_pin": {
+        "path": "/private/tmp/probata-t25-caller-lifetime-binding-green-20261016/resources.json",
+        "sha256": "b021c4c1b32e504bc117870850651833f9f23213bf65e1665b94f5b6c8aaf58b"
+      }
+    },
+    {
+      "command": {
+        "path": "/private/tmp/probata-t25-caller-lifetime-composed-green-20261016/command.json",
+        "sha256": "fc69390da1b7d3ec4d28c46d8dceaef98eb122492ca2b3432439e12a46376b74"
+      },
+      "label": "caller-lifetime-composed-green",
+      "log": {
+        "path": "/private/tmp/probata-t25-caller-lifetime-composed-green-20261016/controls.log",
+        "sha256": "7f3a879a124baab1ac133e8916ba45cca2bf0af99a1ab8f1c45c318a9bfa5e76"
+      },
+      "resources": {
+        "cpu_seconds": 49.245,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 367329280,
+        "timed_out": false,
+        "wall_seconds": 49.51375266601099
+      },
+      "resources_pin": {
+        "path": "/private/tmp/probata-t25-caller-lifetime-composed-green-20261016/resources.json",
+        "sha256": "0f3f15762f24128d823dc9b4199965e235d1b5b56619c9401df7f76e7aa27379"
+      }
+    }
+  ],
+  "scope": "caller source/lowered cleanup event correspondence only; no lifetime/model proof admission",
+  "source_pins": [
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/vector_reallocation_lifetime.py",
+      "sha256": "d20ac49e7896ed47632ad05f6f0610caee805649da81d3f469da2b6237051159"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/vector_reallocation_calls.py",
+      "sha256": "b5c21c8c32c01e80fb03f011cf7b3ca6f76eb831b70b2c3033a738f51d468897"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/vector_reallocation_caller_vcs.py",
+      "sha256": "93085c7d0f6569d313beb7946ef5c2e915d589f46b40d0d40155a48051986535"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/c_lowering.py",
+      "sha256": "cd6febf3523382f4049eb6952718e60f175c674135f32d4a3db8285209f77ac5"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/proof_setup.py",
+      "sha256": "20f9b588856a0f631e75d6e7cd91e5785ed7f64ee3b4f7b7af949281710d511f"
+    }
+  ],
+  "tests": {
+    "path": "/private/tmp/probata-resume-t25/swdb-project/tests/test_vector_reallocation_calls.py",
+    "sha256": "eab9b893b30202341c305046fef9dde17e97fa93b6d4ea939ead40dda525d080"
+  }
+}

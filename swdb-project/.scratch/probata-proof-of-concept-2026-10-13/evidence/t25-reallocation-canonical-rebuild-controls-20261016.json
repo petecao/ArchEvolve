@@ -1,0 +1,103 @@
+{
+  "actual_formal_tools_executed": [],
+  "base_commit": "32df8de7ff46e75dceeaaf584d826defe525f0d9",
+  "composed_result": "28 passed in53.02s; guard53.396s395624448B, noOOM/timeout",
+  "controls": [
+    "canonical valid input",
+    "self-consistent changed statement/hash",
+    "dropped copy step",
+    "removed contract clause",
+    "changed qualified source and manifest hash",
+    "project desired-result axiom and new theory hash",
+    "extra shadow .why import",
+    "symlink"
+  ],
+  "created": "2026-10-16 ET",
+  "proof_admission": "still unsupported before launch; canonical reconstruction is not source-image/caller/actual proof acceptance",
+  "runs": [
+    {
+      "command": {
+        "path": "/private/tmp/probata-t25-reallocation-packet-rebuild-red-20261016/command.json",
+        "sha256": "c52c295945ce04b18bf53914d55c424d705bf1043551efc285a04098af1edfcb"
+      },
+      "label": "red",
+      "log": {
+        "path": "/private/tmp/probata-t25-reallocation-packet-rebuild-red-20261016/controls.log",
+        "sha256": "75920923233c6ed29c7aedd1e4e61bb74d24e859e672bf5ae93b65f00f30da8b"
+      },
+      "resources": {
+        "cpu_seconds": 0.515358,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 78512128,
+        "timed_out": false,
+        "wall_seconds": 0.5310016659786925
+      },
+      "resources_pin": {
+        "path": "/private/tmp/probata-t25-reallocation-packet-rebuild-red-20261016/resources.json",
+        "sha256": "dda2cbe2bc7ba23f2a7e9a74e3f578b721d2056087ed36807bbc80028cc4967b"
+      }
+    },
+    {
+      "command": {
+        "path": "/private/tmp/probata-t25-reallocation-packet-rebuild-green-20261016/command.json",
+        "sha256": "09d68f9ac0006264da6c380b88c6a28d8d5f08f59d29c68a6e07ac645121a87d"
+      },
+      "label": "green",
+      "log": {
+        "path": "/private/tmp/probata-t25-reallocation-packet-rebuild-green-20261016/controls.log",
+        "sha256": "3e581f92c5a63354a9091ee51e37e73e779045ac4069a73a069db9dd6f0cfef2"
+      },
+      "resources": {
+        "cpu_seconds": 0.507029,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 78512128,
+        "timed_out": false,
+        "wall_seconds": 0.5464156250236556
+      },
+      "resources_pin": {
+        "path": "/private/tmp/probata-t25-reallocation-packet-rebuild-green-20261016/resources.json",
+        "sha256": "653437774dd8c1119fae41d08b1b2e213a2f88501da8c42e90eceb0a007606e6"
+      }
+    },
+    {
+      "command": {
+        "path": "/private/tmp/probata-t25-reallocation-packet-rebuild-composed-green-20261016/command.json",
+        "sha256": "99ba80d2636943466bf898f62931a423f5868af2777bb0100ad5e313e0aabb77"
+      },
+      "label": "composed-green",
+      "log": {
+        "path": "/private/tmp/probata-t25-reallocation-packet-rebuild-composed-green-20261016/controls.log",
+        "sha256": "43db44a0ab2912eb1ec902c5f96e961adf27e1ee989d6d1af7396c7717d45cb1"
+      },
+      "resources": {
+        "cpu_seconds": 52.720721000000005,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 395624448,
+        "timed_out": false,
+        "wall_seconds": 53.39638654096052
+      },
+      "resources_pin": {
+        "path": "/private/tmp/probata-t25-reallocation-packet-rebuild-composed-green-20261016/resources.json",
+        "sha256": "744b8666357db78b8452ecf982b149b0cae002bab60eb27aa956398721ccb01b"
+      }
+    }
+  ],
+  "scope": "canonical qualified preparation/check API and public unsupported route, no actual proof admission",
+  "source_pins": [
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/vector_reallocation_vcs.py",
+      "sha256": "e6f0a5a8c98f6c9f7ede76fae708c6f97602dfc6ff4a68f7b2f044edeeb842bd"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/wp_adapter.py",
+      "sha256": "3287bd30748cac21ba3186149a9e8be43c33eab2774517a007f754acfb641298"
+    }
+  ],
+  "test": {
+    "path": "/private/tmp/probata-resume-t25/swdb-project/tests/test_vector_reallocation_packets.py",
+    "sha256": "075025cf7586a4fc92cc2898123615f47ceafb02cf4609b7262cbb249a626e1f"
+  }
+}

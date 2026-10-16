@@ -49,10 +49,16 @@ def prepare(candidate):
     calls = {row['call']: row['source'] for row in candidate['call_obligations']}
     sources = {**calls, 'receiver':candidate['receiver']['source'],
                'read':candidate['scalar_read_obligation']['source']}
+    lowered={e['event']:e for e in candidate['lowered_lifetime']['events']
+             if e['reachable_on_normal_return']}
+    lower_events={'receiver':['automatic declaration'],
+                  'dtor':['destructor','return scalar','automatic lifetime end'],
+                  'data':['data capture'],'read':['guarded scalar capture']}
     return {'preparation_only':True, 'caller_premises_added':[], 'incoming_pointer_maps_restricted':False,
             'pointer_history_scope':'only source-created local storage and the explicit data capture; no global map premise',
-            'source_binding':'closed declaration/data/guard/return AST and exact lowered cleanup order remain to be checked before proof',
+            'source_binding':'closed source AST and exact lowered declaration/scalar-capture/destructor/return order; semantic lifetime proof remains pending',
             'obligations':[{'id':name,'source_groups':groups,'source':sources[event],
+                            'lowered_events':[lowered[key] for key in lower_events[event]],
                             'statement':statement,'status':'pending','dependencies':[]}
                            for name,groups,event,statement in clauses],
             'missing':['exact ordinary contract and model-dependency admission',
