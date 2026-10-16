@@ -1218,3 +1218,18 @@ and all remaining member/type acceptance remain open.
 [Original G589 pre-public failure](../evidence/t25-qualified-grow-prepublic-failure-v1-20261016.md) preserves workspace/records FileNotFoundError, no public proof command/record, original49raw files and entry/outer1.1553consumer equality was pre-seed only; final public postchecks were not reached. Root's later416module physical/Git checks are later snapshots, not executed original postchecks.
 
 Second node0G590 exact017 attempt reached the normal public CLI and stopped at target3:2producer-reported successes, grow.entry.int_projection timeout,17unexecuted. PublicCLI returned0 and persisted one not_proven/timeout record with3goals; profile/guard exit1 in121.500689s568,692,736B, outer123.580s621,645,824B, no guardOOM/whole timeout. Complete378-file/23,369,201B remote manifest and21embedded selected metadata rows reconcile locally; no remote raw rehash/copy by integration. Source-consumer1553-file pre/post equality,416module physical/Git checks and three finite empty poststop sweeps/leases released are retained root observations. [Immutable partial metadata](../evidence/t25-qualified-grow-partial-actual-metadata-v2-20261016.json). Full task/hypothesis/ordinary/smoke cold audit and diagnosis remain pending. These2success rows do not establish the complete20target/model, original-v2 or caller theorem. Numeric0e78 is pending preparation only. Ticket stays claimed.
+
+### Current reporter merge and projection preparation — 2026-10-16 ET
+
+The prospective source is merged with the current reporter/property-closure and
+smoke-observation policy at exact `2e01d27d`. Forty-two canonical packet and Clang
+controls pass in 40.88 seconds; the 8 GiB serial guard reports no timeout or OOM.
+Independent merged-source review confirms all 21 targets, the 19 unchanged 017
+inputs, exact original projection reference and both source-definition bindings.
+Model/theory bytes and the full projection premise stay unchanged. Evidence:
+`../evidence/t25-merged-projection-controls-2e01d27d-20261016.json`.
+
+This accepts merged preparation only. The coordinator-owned scripted public
+21-target/schema/persistence controls and any fresh actual projection/full-model
+run remain pending. No original v2 or generic caller admission follows, and the
+old 017 partial producer remains immutable. All acceptance boxes stay open.
