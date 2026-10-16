@@ -1,0 +1,228 @@
+{
+  "artifact_ledger": {
+    "bytes": 63662,
+    "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-allocation-formal-half-artifact-ledger-20261016.json",
+    "sha256": "b4961fd7644f9d36a8f8faba3ccd070ecaeb18f45e0d279107f802947c09327a"
+  },
+  "case_outcomes": {
+    "superseded-semantics": {
+      "framed": 1,
+      "path": {
+        "bytes": 37519,
+        "path": "/private/tmp/probata-t28-allocation-formalhalf-gates/pytest/test_total_allocator_namespace0/superseded-semantics.validation.json",
+        "sha256": "c315a86bdfabb44ce3114ca4547112caa49e8ed57fbcba9b82e96cc17cff8d89"
+      },
+      "returncode": 1,
+      "visible": false
+    },
+    "unknown-counter": {
+      "framed": 1,
+      "path": {
+        "bytes": 37693,
+        "path": "/private/tmp/probata-t28-allocation-formalhalf-gates/pytest/test_total_allocator_namespace0/unknown-counter.validation.json",
+        "sha256": "cccaffee796a3bd69f84616e8de6b8ad6fb150d64b9e39d0cdd2b1ca44cca2c8"
+      },
+      "returncode": 1,
+      "visible": false
+    },
+    "wrong-layout": {
+      "framed": 1,
+      "path": {
+        "bytes": 37441,
+        "path": "/private/tmp/probata-t28-allocation-formalhalf-gates/pytest/test_total_allocator_namespace0/wrong-layout.validation.json",
+        "sha256": "a365dfbda46efef8ba943dcf37f7003dd5138b8ffa0d3849ff318e443a54d920"
+      },
+      "returncode": 1,
+      "visible": false
+    },
+    "wrong-result": {
+      "framed": 1,
+      "path": {
+        "bytes": 37396,
+        "path": "/private/tmp/probata-t28-allocation-formalhalf-gates/pytest/test_total_allocator_namespace0/wrong-result.validation.json",
+        "sha256": "2860bcc312730d1eceeb380e78eead2765b6d41fecd91ad15c226930528a5b67"
+      },
+      "returncode": 0,
+      "visible": true
+    },
+    "wrong-semantics": {
+      "framed": 1,
+      "path": {
+        "bytes": 37519,
+        "path": "/private/tmp/probata-t28-allocation-formalhalf-gates/pytest/test_total_allocator_namespace0/wrong-semantics.validation.json",
+        "sha256": "c315a86bdfabb44ce3114ca4547112caa49e8ed57fbcba9b82e96cc17cff8d89"
+      },
+      "returncode": 1,
+      "visible": false
+    },
+    "wrong-subject": {
+      "framed": 1,
+      "path": {
+        "bytes": 37519,
+        "path": "/private/tmp/probata-t28-allocation-formalhalf-gates/pytest/test_total_allocator_namespace0/wrong-subject.validation.json",
+        "sha256": "c315a86bdfabb44ce3114ca4547112caa49e8ed57fbcba9b82e96cc17cff8d89"
+      },
+      "returncode": 1,
+      "visible": false
+    }
+  },
+  "cause": "Declaration-only source lowering has no software-counter globals because the closed caller uses summarized init/allocation calls; its unchanged original assigns frame still names REG_count, SPD_count and region_count.",
+  "created": "2026-10-16 ET",
+  "exporter": {
+    "bytes": 7985,
+    "path": "/private/tmp/probata-t28-allocation-formalhalf-evidence-export-20261016.py",
+    "sha256": "ae2ba7e8eb898504914b77c4bcaf2807c0f125a36768d4ba5cd1554c28ee46f5"
+  },
+  "green_scope": {
+    "correct102_declaration_visibility": true,
+    "namespace_scenarios": 7,
+    "negative_namespace_refusals": 5,
+    "unique_pytest_tests": 2,
+    "wrong101_syntax_visibility_only": true
+  },
+  "implementation_commit": "d1b4fb79",
+  "integration_ancestor": "46377494b1ce57004a12da32853b61fe95426972",
+  "kind": "total-allocator-formal-half-namespace-repair",
+  "limits": [
+    "Scripted visibility parser is not Frama-C; compiler/plumbing checks and intentional exit99 do not establish proof or a healthy negative.",
+    "Root actual37 stopped pre-solver; no record, wrong case unexecuted. Repaired real-parser/proof acceptance remains root-only pending independent source review.",
+    "No author native program/formal/SSH/provider execution, no remote raw rehash.",
+    "All batches B+180s8GiB one worker, each owned raw<64MiB; source/runtime pins in retained records remain scoped to their producing source."
+  ],
+  "preservation": [
+    "Original total subject, caller/source/helper predicates and102/101 formula remain unchanged.",
+    "Original three-counter assigns, unit requires/ensures, ordinary call duties and termination policy unchanged.",
+    "No introduced helper contracts or desired-result assumptions; only ordinary declarations precede the original formal half.",
+    "Existing partial-register namespace branch unchanged; unknown/noncurrent/unrelated allocator scope is refused.",
+    "API/library0.1 bytes unchanged; initialized-u32 WIP03f3d1ee preserved on separate branch and absent from this packet."
+  ],
+  "profiles": {
+    "gates": {
+      "command": {
+        "bytes": 351,
+        "path": "/private/tmp/probata-t28-allocation-formalhalf-gates/command.json",
+        "sha256": "aa7600fc745f98eb14d1a9919abd6b7444160bb30ddef90cb4f2e8a4871d6f10"
+      },
+      "files": 76,
+      "junit": {
+        "bytes": 428,
+        "path": "/private/tmp/probata-t28-allocation-formalhalf-gates/junit.xml",
+        "sha256": "41ad34ff9c7ae0cbcdb5ae3feda3d8d0ba5487cd384ecdb57da876ee3e362103"
+      },
+      "log": {
+        "bytes": 123,
+        "path": "/private/tmp/probata-t28-allocation-formalhalf-gates/control.log",
+        "sha256": "0a7362de919622457f31d7a5458f4a7a90a318e73eae0851d14134c183b08e3f"
+      },
+      "path": "/private/tmp/probata-t28-allocation-formalhalf-gates",
+      "raw_bytes": 50957467,
+      "resources": {
+        "cpu_seconds": 73.503688,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 2419834880,
+        "timed_out": false,
+        "wall_seconds": 72.17421645898139
+      }
+    },
+    "green": {
+      "command": {
+        "bytes": 322,
+        "path": "/private/tmp/probata-t28-allocation-formalhalf-green/command.json",
+        "sha256": "c647da1f228dcc5e5d1d7acf397bade999f21c4acdbfd91c6c86235ff9e9c6de"
+      },
+      "files": 69,
+      "junit": {
+        "bytes": 430,
+        "path": "/private/tmp/probata-t28-allocation-formalhalf-green/junit.xml",
+        "sha256": "1250172df18f82ece762d6fa3e19ddf882935910b1df634b995d5830e7723358"
+      },
+      "log": {
+        "bytes": 99,
+        "path": "/private/tmp/probata-t28-allocation-formalhalf-green/control.log",
+        "sha256": "fd76a5bf9835252d9ccbcee1dd9ff3e0cf4ea35dca25d63bf1e4edf473b47a51"
+      },
+      "path": "/private/tmp/probata-t28-allocation-formalhalf-green",
+      "raw_bytes": 50550016,
+      "resources": {
+        "cpu_seconds": 31.398989,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 2444378112,
+        "timed_out": false,
+        "wall_seconds": 30.908790583955124
+      }
+    },
+    "red": {
+      "command": {
+        "bytes": 318,
+        "path": "/private/tmp/probata-t28-allocation-formalhalf-red/command.json",
+        "sha256": "322425a508f3564ff4dd21e5c810dc040d38de71f27fb422dc8195aa184f75f9"
+      },
+      "files": 69,
+      "junit": {
+        "bytes": 2560,
+        "path": "/private/tmp/probata-t28-allocation-formalhalf-red/junit.xml",
+        "sha256": "48a49f43db8580802a7d61a19956cf8dcfb083c2dc1738ddfcff6852427ae5f8"
+      },
+      "log": {
+        "bytes": 1902,
+        "path": "/private/tmp/probata-t28-allocation-formalhalf-red/control.log",
+        "sha256": "dc7a49b88cf738264782229e2c81c11dbbcc81a33fc5bee1af3e340b748d7249"
+      },
+      "path": "/private/tmp/probata-t28-allocation-formalhalf-red",
+      "raw_bytes": 50529975,
+      "resources": {
+        "cpu_seconds": 31.300018,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 2488336384,
+        "timed_out": false,
+        "wall_seconds": 31.323616542038508
+      }
+    }
+  },
+  "prospective_parser_inputs": {
+    "actual_parser_run": false,
+    "inputs": [
+      {
+        "bytes": 325,
+        "path": "/private/tmp/probata-t28-allocation-formalhalf-parser-inputs-20261016/correct-counter.c",
+        "sha256": "fc790fd14eed434f9f2df4aeb460b7ebab6de37587d878b6580f18424161cd5b"
+      },
+      {
+        "bytes": 325,
+        "path": "/private/tmp/probata-t28-allocation-formalhalf-parser-inputs-20261016/wrong-counter.c",
+        "sha256": "27b9c49bb708eb6f63039455d7b4f0bae6344da0b0e9f99c7c2a12c683fa993b"
+      }
+    ],
+    "manifest": {
+      "bytes": 679,
+      "path": "/private/tmp/probata-t28-allocation-formalhalf-parser-inputs-20261016/manifest.json",
+      "sha256": "24477a8bf5f4ce561ceebd62802646bf3f708226e7b681776ccbffda35073075"
+    }
+  },
+  "repair": "Prefix only the exact current admitted allocator namespace via wp_prelude(called=[]). Gates: original-total contract ID/version0.1/function trust_fixture, no partial policy, exact current semantics ID and closed allocator layout. No helper prototype/contract/axiom or unit clause is imported/rewritten.",
+  "root_actual_failure": {
+    "bytes": 7898,
+    "path": "/private/tmp/probata-root-allocation37-state-v1-20261016.json",
+    "sha256": "2a5bf2a4d3961a6dc870ccc0b51f485e4f44b8fa655e51af1a233a180b8ca008"
+  },
+  "source_commit": "d92a69f33e12718f439f87a562f3654132e578f6",
+  "source_pins": [
+    {
+      "bytes": 25727,
+      "git_blob": "9b42cc727ac65e5a160c2c86ec60468477b541f9",
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/swdb/formal_frame.py",
+      "relative": "swdb/formal_frame.py",
+      "sha256": "cfc37e22af04f2e5451b67948bf0641316eed73e3a59ad1428a024ddb7d908db"
+    },
+    {
+      "bytes": 5644,
+      "git_blob": "43af2f639fb5ffea550b5ba54b6221a37d324518",
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/tests/test_dx100_allocation_formal_frame.py",
+      "relative": "tests/test_dx100_allocation_formal_frame.py",
+      "sha256": "961e1c6fb2cc86cbac0ae1c9b0ee201ceb159e35f7ae070651dc04ece8be97b1"
+    }
+  ]
+}

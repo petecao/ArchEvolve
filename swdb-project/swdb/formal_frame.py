@@ -412,10 +412,19 @@ def _typecheck(library, logic, files, pending, report):
         # 2026-10-16 ET: the original register assigns frame names model state,
         # which is absent from the source caller's declaration-only lowering.
         # Use its exact admitted semantics namespace, without helper contracts.
-        from swdb import dx100_register_source, proof_semantics
+        from swdb import dx100_register_source, dx100_allocation_source, proof_semantics
         policy = unit.get('correctness_policy')
         if isinstance(policy, dict) and policy.get('source_policy') == dx100_register_source.KIND:
             declaration = proof_semantics.wp_prelude(library, policy['semantics']['id'], []) + declaration
+        # The original TOTAL allocator also names ordinary model counters in
+        # its frame. Import only its exact current namespace, not call contracts.
+        allocator_id = 'semantics.dx100_allocation_fixture_0_2'
+        allocator = proof_semantics.current(library).get(allocator_id)
+        if (policy is None and entry_id == 'contract.dx100_software_allocation_fixture.v1'
+                and (library.get(entry_id) or {}).get('version') == '0.1'
+                and unit.get('function') == 'trust_fixture' and isinstance(allocator, dict)
+                and dx100_allocation_source.allocation_layout(allocator)):
+            declaration = proof_semantics.wp_prelude(library, allocator_id, []) + declaration
         if framac.typecheck(tool, _source(unit, logic, clauses, declaration), includes) is None:
             report.checked += len(clauses)
             continue
