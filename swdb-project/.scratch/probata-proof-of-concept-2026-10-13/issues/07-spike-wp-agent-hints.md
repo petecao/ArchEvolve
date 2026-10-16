@@ -1,14 +1,34 @@
 # 07 — Spike (c): WP with agent hints
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-15 ET (prospective method23 independently reviewed; run25 remains unproven and no new counted launch is implied); 2026-10-14 22:50 ET (continuation 3: runs 10-12 fail, verdict fail so far, effort paused); 2026-10-14 17:10 ET (continuation 2: runs 7-9 fail, verdict fail so far); 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-16 12:50 ET (resumed by Yan-Ru; method24 plan approved, claimed); 2026-10-15 ET (prospective method23 independently reviewed; run25 remains unproven and no new counted launch is implied); 2026-10-14 22:50 ET (continuation 3: runs 10-12 fail, verdict fail so far, effort paused); 2026-10-14 17:10 ET (continuation 2: runs 7-9 fail, verdict fail so far); 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 03
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Proof-of-concept plan", A1 row (c); "Proof-hint loop"; "Verifier lineup and order", unbounded verifier; "Providers and machines"); decisions: [07](../../formal-verification-2026-10-09/issues/07-install-verifiers.md), [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md), [12](../../formal-verification-2026-10-09/issues/12-dx100-proof-semantics.md), [13](../../formal-verification-2026-10-09/issues/13-proof-hint-loop.md), [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md), [19](../../formal-verification-2026-10-09/issues/19-bounded-verdict-bounds.md), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md), [27](../../formal-verification-2026-10-09/issues/27-proof-of-concept-stages.md)
 **Time estimate:** about 3 days, inside the 2-week box
 
-## Current resume checkpoint — user stop 2026-10-16 11:36 ET
+## Current resume checkpoint — method24, resumed 2026-10-16 12:50 ET
+
+Yan-Ru resumed ticket 07 at 12:46 ET and approved the method24 plan ("agree go ahead"):
+
+1. **Provable stand-in first (uncounted).** Close the three helper goals that hints cannot reach
+   (hint anchors exist only in TDStep) with C-standard-equivalent forms; keep the stand-in at this
+   ticket's fidelity bar (deeper fidelity belongs to ticket 21). Check: no-hint WP, every helper goal Valid.
+2. **Timeout ladder and conjunct splitting in rounds** (3 s, open goals rechecked at 10 s;
+   `-wp-split-conj`). The verdict replay stays fresh, cache-none, 30 s. Evidence: 98% of 28,272 Valid
+   proofs in t07, t07c-e attempts took <= 3 s.
+3. **Bounded falsifier for hints (CBMC).** Candidate loop invariants and asserts become bounded
+   assertions on the stand-in; a false hint returns a concrete counterexample in seconds. A filter
+   only: WP gives the verdict. Yan-Ru approved returning these hint counterexamples to Codex.
+4. **Generic proof-structure prompt guidance** (no BFS-specific text; every hint stays Codex's).
+5. **Counted runs** until a pass or the box ends (about 2026-10-27 ET).
+
+Process (approved): one independent review per method before launch, not one per inert packet.
+Fallbacks if about five counted runs fail are Yan-Ru's call (120-minute budget; contract-proof seeds).
+Active owner: main session 11d49a0d. Raw output: `/tmp/claude/probata-runs/t07f/` (host `mac`).
+
+## Historical checkpoint — user stop 2026-10-16 11:36 ET
 
 Status is **ready-for-agent**; the active claim is released at the user's request.
 Do not resume implementation/evaluation until the user resumes. Root owns the final

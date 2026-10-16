@@ -131,7 +131,10 @@ void swdb_delete_NodeID_array(NodeID *p);
 /*@ requires \object_pointer(first) && \object_pointer(last);
     requires \base_addr(first) == \base_addr(last);
     requires first <= last;
-    requires \offset(last) - \offset(first) <= (integer)PTRDIFF_MAX * sizeof(NodeID);
+    // Method24 (2026-10-16 ET): C11 6.5.6p9 defines pointer subtraction as the element-index
+    // difference, which must fit ptrdiff_t. WP 33's Typed model keeps byte offsets abstract, so
+    // the earlier byte form was unprovable at every call.
+    requires last - first <= PTRDIFF_MAX;
     requires \valid_read(first + (0 .. last - first - 1));
     requires \initialized(first + (0 .. last - first - 1));
     requires gapbs_nodeid_span(d_first, last - first);
@@ -255,6 +258,14 @@ size_t SlidingQueue_NodeID_size(struct SlidingQueue_NodeID *self) {
   return (size_t)((self->shared + self->shared_out_end) - (self->shared + self->shared_out_start));
 }
 
+/* Method24 (2026-10-16 ET): lowering idiom for storing a call result into a field. WP 33 binds a
+   call result to its destination by value only (CfgWP.ml:1360-1373), so the destination's
+   initializedness is lost; a store through a formal parameter keeps it. Same C semantics. */
+/*@ requires \valid(self);
+    assigns self->local_queue;
+    ensures self->local_queue == p && \initialized(&self->local_queue); */
+static void swdb_store_local_queue(struct QueueBuffer_NodeID *self, NodeID *p) { self->local_queue = p; }
+
 /* sliding_queue.h:89-94 */
 /*@ requires \valid(self) && gapbs_queue_domain(master);
     requires 1 <= given_size <= SWDB_LQUEUE_CAPACITY;
@@ -268,7 +279,7 @@ void QueueBuffer_NodeID_QueueBuffer(struct QueueBuffer_NodeID *self, struct Slid
   self->sq = master;
   self->local_size = given_size;
   self->in = 0;
-  self->local_queue = swdb_new_NodeID_array(self->local_size);
+  swdb_store_local_queue(self, swdb_new_NodeID_array(self->local_size));
 }
 
 /* sliding_queue.h:96-98 */

@@ -96,8 +96,11 @@ extern const unsigned SWDB_CHUNK_SIZE;        /* knob: symbolic, 1 .. TILE_SIZE 
       parent->start_[v] == \old(parent->start_[v]);
     ensures parent_is_frontier_neighbor: \forall integer v; 0 <= v < num_nodes && \old(parent->start_[v]) < 0 && parent->start_[v] >= 0 ==>
       bfs_frontier_edge{Pre}(queue, VertexOffsets->start_, g->out_neighbors_, parent->start_[v], v);
+    // Method24 fix (2026-10-16 ET): \old(parent->start_[queue->shared[i]]) read queue->shared[i] in the
+    // pre-state, where positions past shared_in are arbitrary; the falsifier refuted that clause on a
+    // concrete run. The pushed vertex is the post-state queue entry; only its parent is read at Pre.
     ensures pushed_are_new: \forall integer i; \old(queue->shared_in) <= i < queue->shared_in ==>
-      0 <= queue->shared[i] < num_nodes && \old(parent->start_[queue->shared[i]]) < 0 && parent->start_[queue->shared[i]] >= 0;
+      \let w = queue->shared[i]; 0 <= w < num_nodes && \at(parent->start_[w], Pre) < 0 && parent->start_[w] >= 0;
     ensures new_are_pushed: \forall integer v; 0 <= v < num_nodes && \old(parent->start_[v]) < 0 && parent->start_[v] >= 0 ==>
       \exists integer i; \old(queue->shared_in) <= i < queue->shared_in && queue->shared[i] == v;
     ensures pushed_once: \forall integer i, j; \old(queue->shared_in) <= i < j < queue->shared_in ==>
