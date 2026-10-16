@@ -1,0 +1,30 @@
+{
+  "baseline": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+  "date_et": "2026-10-15",
+  "entry": {
+    "command_sha256": "fcde9166a844af87af892914863dded48d50155278027954caf3a04c62fec4e3",
+    "sha256": "06372846c5dbd990acfd9a99a766a4d01d4b214d63762538cd37ba8b4fb9ce34"
+  },
+  "files_after": {
+    "swdb-project/swdb/c_lowering.py": "e10b33f4d310e3097eb84b34ed53e03daf4df690dcf0c8c160f38d907c91e08c",
+    "swdb-project/swdb/cbmc_adapter.py": "d63b7f6547fa3b7655a59db0f26f1e0a957c7916bf8d9b7d77ef4142ef3e9a27",
+    "swdb-project/swdb/dx100_interface.py": "9a50ad98a26169b2ff60766e351a3be28e2b511901edd09701489720c8e9a451",
+    "swdb-project/swdb/formal_frame.py": "b89aaffb60217db66ba09630fced8f8c547304a2d12ca125a6174def02ff70f1",
+    "swdb-project/swdb/proof_semantics.py": "2354b1be662a4a9fe4985110ce657c9a432b27f288639f661e13aa5bad5ea5b6",
+    "swdb-project/swdb/proof_setup.py": "dad41c8714cd3bfa3cbc472c82e2130f639a04ece008d641eec47512d7098e11",
+    "swdb-project/swdb/stdlib_provenance.py": "4a7ca7d9b05a992e8172125fcbbfd175bb7ade2aec47cfb349126c9739b6e8e4",
+    "swdb-project/swdb/wp_adapter.py": "aa03842938a19d22fe6c3fb466007cfa57544c55fddc3c19b1784b047271ee43"
+  },
+  "readers": [
+    "root",
+    "ticket24",
+    "merger",
+    "independent reviewer"
+  ],
+  "review_evidence": {
+    "path": "/private/tmp/probata-t25-source-allowlist-e56c62dd-root-review-20261015.md",
+    "sha256": "bd11812b451ddc845932a83661af579631b803ee0f5a322680fc45583173944b"
+  },
+  "scope": "Full42 capability after ONE-lemma actual feasibility; FULL-layoutv3, exact e56/9881runner, import/task acceptance still mandatory; no body certification.",
+  "source_commit": "e56c62dd4af709eed914aff32b8d4504edcc46d6"
+}
