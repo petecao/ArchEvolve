@@ -292,6 +292,7 @@ def identity():
                             + wp_pointer_bounds.identity()["sha256"].encode()
                             + here.with_name("array_domains.py").read_bytes()
                             + here.with_name("vector_ownership.py").read_bytes()
+                            + here.with_name("vector_reallocation_model.py").read_bytes()
                             + here.with_name("vector_pipeline.py").read_bytes()
                             + here.with_name("model_domains.py").read_bytes()
                             + here.with_name("standard_model_view.py").read_bytes()
@@ -2564,6 +2565,10 @@ def model_definition(family, op, ctype):
 
 def model_text(name):
     """The C text of the C model a lowering calls `name`, or None: what `swdb prove --model NAME` proves."""
+    from swdb import vector_reallocation_model
+    qualified = vector_reallocation_model.model_text(name)
+    if qualified is not None:
+        return qualified
     modeled = std_models.model_text(name)
     if modeled is not None:
         return modeled

@@ -316,6 +316,34 @@ composition remain separate. See
 [preparation evidence](../evidence/t25-count-ctor-preparation-controls-20261016.json)
 and [preserved packet hashes](../evidence/t25-count-ctor-canonical-comparison-20261016.json).
 
+### Qualified reallocation-domain preparation — 2026-10-16 ET
+
+A separately named `vector-reallocation-domain-3` candidate now prepares public
+count/value constructor, grow, reserve and destructor model sources. The original
+v2 catalog, contracts and accepted freezes remain unchanged. Every candidate
+currently returns not proven before verifier launch; this is preparation toward
+a complete public caller composition, not acceptance of a repaired body.
+
+Nonempty backing must be freeable and have a distinct allocation base from the
+receiver. Byte-range separation alone does not prevent a free from killing a
+receiver in the same larger allocation. This is unary reallocation eligibility,
+not exclusive ownership. Cross-view rights and liveness remain caller
+obligations, and raw escaped aliases remain legal until release. Construction
+keeps its original precondition and adds eligibility/exact-capacity results;
+grow/reserve require and preserve eligibility. Destruction retains its original
+broader overlap domain. No source premise is silently added to an old contract.
+
+Public RED/GREEN controls retain missing-model, record-schema, original-source
+binding and exact-capacity failures. The final preparation envelope passes seven
+controls, including two unchanged original heap paths. Four defined native
+growth states per original/qualified C body preserve behavior; no invalid-growth,
+ASan or actual formal diagnostic ran. Complete unbounded source/VC mapping, fresh
+body proofs and source-backed caller discharge are still pending. The full
+source fixture includes safe, growth-stale and no-growth alias paths with guarded
+empty behavior. See [coverage matrix](../prototype/25-acceptance-coverage-20261016.md),
+[candidate/caller plan](../prototype/25-reallocation-domain/README.md) and
+[preparation evidence](../evidence/t25-reallocation-domain-preparation-controls-20261016.json).
+
 ## Acceptance
 
 - [ ] Each modeled member has a C function and an ACSL contract citing the standard's clause for it (`[vector]` for vector members). `swdb prove` proves every contract against its C function once, recorded with subject "a library entry's summary".
