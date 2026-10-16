@@ -76,3 +76,22 @@ def test_source_attributed_empty_module_identity_is_preserved(tmp_path):
                                    "line": 0, "description": "module\nfixture::Heap",
                                    "extern": False, "dependencies": [], "origin": None})
     assert reports(tmp_path, module)["verdict"] == "proven"  # actual WP module naming shape
+
+
+@pytest.mark.parametrize("reference", ["goal", "target", "dependency", "origin"])
+def test_empty_module_identity_cannot_substitute_for_a_proof_reference(tmp_path, reference):
+    def empty_reference(data):
+        data["properties"].append({"property": "", "kind": "other", "function": None,
+                                   "line": 0, "description": "module\nfixture::Heap",
+                                   "extern": False, "dependencies": [], "origin": None})
+        if reference == "goal":
+            data["goals"][0]["property"] = ""
+        elif reference == "target":
+            data["goals"][0]["targets"] = [""]
+        elif reference == "dependency":
+            data["properties"][0]["dependencies"] = [""]
+        else:
+            data["properties"][0]["origin"] = ""
+    result = reports(tmp_path, empty_reference)
+    assert result["verdict"] == "not_proven"
+    assert result["failure_class"] == "unclassified_wp_outcome"
