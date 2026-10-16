@@ -1,0 +1,21 @@
+(* 2026-10-16 ET. Explicit consistency family for every mathematical n >= 0.
+   Readiness is defined independently of the rank witness.
+   delay_rank n poll is max(0, n - poll), with no machine-integer ceiling. *)
+module ArbitraryFiniteDelay
+  use int.Int
+
+  let function delay_ready (n poll: int) : bool = n <= poll
+
+  let function delay_rank (n poll: int) : int =
+    if poll < n then n - poll else 0
+
+  let lemma consistency_for_every_nonnegative_delay (n: int)
+    requires { 0 <= n }
+    ensures { forall poll: int. 0 <= poll -> 0 <= delay_rank n poll }
+    ensures { forall poll: int.
+      0 <= poll -> not (delay_ready n poll) ->
+      delay_rank n (poll + 1) < delay_rank n poll }
+    ensures { forall poll: int. 0 <= poll < n -> not (delay_ready n poll) }
+    ensures { delay_ready n n }
+  = ()
+end
