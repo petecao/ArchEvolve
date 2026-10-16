@@ -1625,6 +1625,20 @@ class _Printer:
                 if re.search(r"\[[^]]*\]\s*=",re.sub(r"/\*.*?\*/|//[^\n]*","",spelled,flags=re.S)):
                     raise Unsupported("designated array_filler initializer",self.line)
                 elements=filler[1:]
+                # C++ list initialization sequences elements; C initializer
+                # evaluation does not preserve that order. Admit only this
+                # closed literal-constant syntax, never reads/calls/effects.
+                def constant_prefix(e):
+                    children=_children(e)
+                    kind=e.get("kind")
+                    if kind in {"IntegerLiteral","FloatingLiteral","CXXBoolLiteralExpr","CharacterLiteral"}:
+                        return not children
+                    if (kind in {"ParenExpr","ConstantExpr","ImplicitCastExpr","CStyleCastExpr","CXXStaticCastExpr"}
+                            or kind=="UnaryOperator" and e.get("opcode") in {"+","-","!","~"}):
+                        return len(children)==1 and constant_prefix(children[0])
+                    return False
+                if not all(constant_prefix(e) for e in elements):
+                    raise Unsupported("source-proven constant array_filler prefix required to preserve initialization sequencing",self.line)
                 if not elements:return "{0}"
             return "{" + ", ".join(self.initializer(e, "list") for e in elements) + "}"
         if style not in ("c", "call", "list", None):
