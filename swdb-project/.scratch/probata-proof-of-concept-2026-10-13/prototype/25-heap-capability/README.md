@@ -59,8 +59,13 @@ margin, an 8 GiB process-tree RSS cap and one worker. Expected raw output is und
 1 GiB but has not been measured; coordinator disk monitoring remains required.
 The run stops at the first unmatched result and retains all partial evidence.
 
-Actual import syntax and one source-entry feasibility lemma have passed the
-coordinator's representative gate. Full 42-packet capability remains unvalidated.
+Actual import syntax, one source-entry feasibility lemma and the full 42-packet
+capability gate have passed coordinator-admitted runs and independent cold task
+audits. The full run is frozen at `e56c62dd`; it contains 37 Valid positive
+global claims, one numeric kernel (ten Valid ordinary goals and one normal-reader
+passing smoke), and four timeout-only negative controls. The numeric kernel's
+local dependency DAG is closed and acyclic; global check lemmas remain isolated.
+Production model records and the remaining ticket25 work remain open.
 A zero command exit or
 all expected statuses cannot close this gate: independently inspect the actual
 resolved import closure, all imported propositions, emitted task hypotheses and
@@ -72,6 +77,10 @@ shorthand in the theory comment. These standard arithmetic foundations require
 an explicit source and emitted-proposition inventory; the definitional heap
 does not import any project-specific desired theorem. No additional external
 compiler-correctness theorem is required by this TCB.
+The full gate additionally inventories Frama-C Cint conversion/range/projection
+support used by the numeric kernel. Exact sources, every task hypothesis and the
+original source/event/clause/RTE/init/frame/lifetime map are reviewed in
+`../../evidence/t25-full42-cold-closure-review-e56c62dd-20261015.md`.
 
 The preparation evidence is `../../evidence/t25-heap-capability-preparation-20261015.json`.
 Independent intermediate reviews are retained in `reviews/`; the runner review's
