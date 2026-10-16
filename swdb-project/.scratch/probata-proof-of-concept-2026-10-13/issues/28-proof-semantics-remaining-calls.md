@@ -145,3 +145,10 @@ insufficient physical output masks and sparse capacity refuse. This supplies no
 source pointer/ABI or formal IEEE certificate; full-call wrappers and public
 actual acceptance remain incomplete. All boxes stay open and status stays
 **claimed**. [Exact RED/GREEN and physical pins](../evidence/t28-tile-byte-image-controls-20261016.json).
+
+Inactive byte preservation — 2026-10-16 ET:58/58 native controls pass after two
+RED profiles. Inactive completion preserves undefined payload without observing
+it; later reads still fail as appropriate. Byte-wise conditional versions retain
+initialized32-bit subviews without inventing upper64-bit initializedness. No
+public/actual proof or whole-interface closure is claimed; all boxes remain open.
+[Exact evidence](../evidence/t28-inactive-byte-preservation-controls-20261016.json).

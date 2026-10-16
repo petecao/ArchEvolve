@@ -53,33 +53,41 @@ static int dxp_find(uint64_t offset) {
   for (unsigned i=0; i<dxp_count; ++i) if (dxp_image[i].offset == offset) return (int)i;
   return -1;
 }
-/* Each byte points to an immutable value version, not a mutable row object. */
-static void dxp_set_version(unsigned tile,unsigned lane,unsigned dtype,unsigned root) {
-  DXM_CHECK(root < dxm_count, "image-producer-version-domain");
-  unsigned bytes=dxp_width(dtype);
-  uint64_t offset=dxp_offset(tile,lane,dtype);
+static void dxp_set_bytes(uint64_t offset,unsigned bytes,const unsigned *parents,const unsigned *shifts) {
   unsigned extra=0;
   for (unsigned j=0; j<bytes; ++j) if (dxp_find(offset+j) < 0) ++extra;
   DXM_CHECK(dxp_count <= DXP_IMAGE_BYTES && extra <= DXP_IMAGE_BYTES-dxp_count, "tile-image-capacity");
   for (unsigned j=0; j<bytes; ++j) {
     int slot=dxp_find(offset+j);
     if (slot < 0) { slot=(int)dxp_count++; dxp_image[slot].offset=offset+j; }
-    dxp_image[slot].parent=root; dxp_image[slot].shift=j;
+    DXM_CHECK(parents[j] < dxm_count && shifts[j] < 8, "image-producer-version-domain");
+    dxp_image[slot].parent=parents[j]; dxp_image[slot].shift=shifts[j];
   }
+}
+/* Each byte points to an immutable value version, not a mutable row object. */
+static void dxp_set_version(unsigned tile,unsigned lane,unsigned dtype,unsigned root) {
+  DXM_CHECK(root < dxm_count, "image-producer-version-domain");
+  unsigned bytes=dxp_width(dtype), parents[8]={0}, shifts[8]={0};
+  uint64_t offset=dxp_offset(tile,lane,dtype);
+  for (unsigned j=0; j<bytes; ++j) { parents[j]=root; shifts[j]=j; }
+  dxp_set_bytes(offset,bytes,parents,shifts);
 }
 static unsigned dxp_capture_bits(unsigned tile,unsigned lane,unsigned dtype) {
   unsigned bytes=dxp_width(dtype), parents[8]={0}, shifts[8]={0};
+  unsigned missing=UINT_MAX;
   uint64_t offset=dxp_offset(tile,lane,dtype);
   for (unsigned j=0; j<bytes; ++j) {
     int slot=dxp_find(offset+j);
-    DXM_CHECK(slot >= 0, "tile-value-initialized");
-    parents[j]=dxp_image[slot].parent; shifts[j]=dxp_image[slot].shift;
+    if (slot < 0) {
+      if (missing == UINT_MAX) missing=dxm_uninitialized();
+      parents[j]=missing; shifts[j]=0;
+    } else { parents[j]=dxp_image[slot].parent; shifts[j]=dxp_image[slot].shift; }
   }
   return dxm_bytes(parents,shifts,bytes);
 }
 /* Install a deferred version while constructing its owning command.  A device
    consumer captures these immutable IDs; CPU observations still require cover. */
-static void dxp_bind_output(unsigned command,unsigned tile,unsigned lane,unsigned dtype,unsigned root) {
+static void dxp_check_output(unsigned command,unsigned tile,unsigned dtype) {
   DXM_CHECK(command < dxc_count && dxc_constructing == command+1, "command-binding");
   struct dxc_command *c=&dxc_commands[command];
   unsigned bytes=dxp_width(dtype);
@@ -87,7 +95,28 @@ static void dxp_bind_output(unsigned command,unsigned tile,unsigned lane,unsigne
   uint64_t needed=dxc_tile_mask(tile,bytes);
   DXM_CHECK((c->physical_write & needed) == needed && (c->explicit_write & (UINT64_C(1)<<tile)),
             "image-command-output-domain");
+}
+static void dxp_bind_output(unsigned command,unsigned tile,unsigned lane,unsigned dtype,unsigned root) {
+  dxp_check_output(command,tile,dtype);
   dxp_set_version(tile,lane,dtype,root);
+}
+/* Fake/inactive data preserves each prior byte, including its initializedness;
+   preserving an8-byte view must not force an uninitialized neighboring byte. */
+static void dxp_bind_conditional_output(unsigned command,unsigned tile,unsigned lane,unsigned dtype,
+    unsigned condition,unsigned active_root) {
+  dxp_check_output(command,tile,dtype);
+  unsigned bytes=dxp_width(dtype), parents[8]={0}, shifts[8]={0}, missing=UINT_MAX;
+  uint64_t offset=dxp_offset(tile,lane,dtype);
+  for (unsigned j=0; j<bytes; ++j) {
+    int slot=dxp_find(offset+j);
+    unsigned old,shift;
+    if (slot < 0) {
+      if (missing == UINT_MAX) missing=dxm_uninitialized();
+      old=missing; shift=0;
+    } else { old=dxp_image[slot].parent; shift=dxp_image[slot].shift; }
+    parents[j]=dxm_byte_select(condition,active_root,j,old,shift);
+  }
+  dxp_set_bytes(offset,bytes,parents,shifts);
 }
 static void dxp_cpu_write_bits(unsigned thread,unsigned tile,unsigned lane,unsigned dtype,uint64_t value) {
   unsigned bytes=dxp_width(dtype);

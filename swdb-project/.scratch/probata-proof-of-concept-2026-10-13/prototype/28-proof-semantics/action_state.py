@@ -49,12 +49,11 @@ static unsigned dxa_rmw(unsigned command,unsigned dtype,unsigned op,unsigned bas
   DXM_CHECK(old_result < dxm_count && dxm_nodes[old_result].kind == 6 && !dxm_nodes[old_result].settled,
             "action-result-domain");
   DXM_CHECK(preserved < dxm_count, "producer-version-domain");
+  DXM_CHECK(preserved < old_result, "acyclic-producer-version");
   unsigned root=dxa_store(command,dtype,base,extent,index,value,active);
   struct dxa_action *a=&dxa_actions[dxa_count-1];
   a->kind=1; a->op=op; a->old_result=old_result; a->preserved=preserved;
-  unsigned zero=dxm_constant(0);
-  unsigned inactive_old=dxm_select(dxc_commands[command].thread,active,zero,preserved);
-  return dxm_join(root,inactive_old);
+  return root;
 }
 static void dxa_complete(unsigned command) {
   unsigned candidates[DXA_ACTIONS], count=0;
@@ -85,7 +84,7 @@ static void dxa_complete(unsigned command) {
         }
         dxm_device_write(cell,value);
       } else if (a->kind == 1) {
-        dxm_publish(a->old_result,dxm_value(a->preserved));
+        dxm_publish_alias(a->old_result,a->preserved);
       }
       a->done=1;
   }

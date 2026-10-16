@@ -664,6 +664,50 @@ int main(void) {
 ''', commands=True, image=True, cpp=True)
 
 
+@pytest.mark.parametrize('observe,exit_code', [(False, 0), (True, 42)])
+def test_inactive_rmw_preserves_undefined_tile_bytes_without_reading_them_at_completion(tmp_path, observe, exit_code):
+    result = run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset(); chosen=0;
+  dxm_claim_tile(0,1,4); dxm_claim_tile(0,2,4);
+  dxm_cpu_write(1,0,10);
+  unsigned command=dxc_prepare(0,0,2,2,4,2,4,64,128);
+  unsigned inactive=dxm_constant(0), unused=dxm_result();
+  unsigned preserved=dxp_capture_bits(2,0,0), old=dxm_result();
+  unsigned root=dxa_rmw(command,0,0,0,1,unused,unused,inactive,old,preserved);
+  dxp_bind_output(command,2,0,0,old); dxc_bind(command,root);
+  dxc_wait_tile(2);
+  assert(dxc_cpu_read(1,0,64,68) == 10);
+  puts("COVERED");
+  {'(void)dxp_load_u32(0,2,0);' if observe else ''}
+  return 0;
+}}
+''', commands=True, numeric=True, actions=True, image=True, exit_code=exit_code)
+    assert result.stdout == 'COVERED\n'
+    assert result.stderr == ('tile-value-initialized' if observe else '')
+
+
+@pytest.mark.parametrize('active,wide_read,exit_code', [(0,False,0),(0,True,42),(1,True,0)])
+def test_conditional_output_preserves_initializedness_independently_for_each_physical_byte(tmp_path, active, wide_read, exit_code):
+    result = run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset(); dxm_claim_tile(0,1,8);
+  dxp_store_u32(0,1,0,UINT32_C(0x12345678));
+  unsigned command=dxc_prepare(0,-1,0,0,2,0,6,0,0);
+  unsigned condition=dxm_constant({active});
+  unsigned payload={f'dxm_constant(UINT64_C(0xaabbccdd55667788))' if active else 'dxm_result()'};
+  unsigned root=dxm_select(0,condition,payload,dxm_constant(0));
+  dxp_bind_conditional_output(command,1,0,3,condition,payload); dxc_bind(command,root);
+  dxc_wait_tile(1); puts("COVERED");
+  assert(dxp_load_u32(0,1,0) == UINT32_C({0x55667788 if active else 0x12345678}));
+  {'assert(dxp_load_u64(0,1,0) == UINT64_C(0xaabbccdd55667788));' if wide_read else ''}
+  return 0;
+}}
+''', commands=True, image=True, exit_code=exit_code)
+    assert result.stdout == 'COVERED\n'
+    assert result.stderr == ('tile-value-initialized' if exit_code else '')
+
+
 def test_failed_cas_expected_and_desired_values_do_not_enter_gather_history(tmp_path):
     run_model(tmp_path, r'''
 int main(void) {

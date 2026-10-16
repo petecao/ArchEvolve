@@ -154,3 +154,26 @@ This is a backend prototype slice, not public proof acceptance. Source CPU point
 routing, inactive preserved uninitialized payloads, full wrappers/register/setup
 semantics, source ABI/geometry binding, formal IEEE relations and the explicitly
 owned finite-progress assumption remain required before whole28 closure.
+
+## Inactive byte preservation — 2026-10-16 ET
+
+Uninitialized tile bytes now have an immutable undefined value node. Capturing a
+producer version is not a value read; evaluation of a selected undefined byte
+still fails initializedness. Inactive RMW completion publishes a descending,
+once-only alias to the captured old version without evaluating it, and its
+completion root evaluates neither inactive index/value nor preserved output.
+This also avoids forcing an unnecessary value read merely to finish a command.
+
+`dxp_bind_conditional_output` preserves each prior byte independently. In
+particular, a false8-byte output can preserve initialized lower32bits and undefined
+upper32bits: the narrower read succeeds and the full64-bit read fails. It never
+fills undefined bytes with zero. The active branch writes the complete payload;
+an inactive unfulfilled payload node is not evaluated. Source wrappers must use
+the call-specific rule (ALU false lanes write zero; fake stream/indirect data
+preserve payload), not apply this preservation rule universally. Source CPU
+routing, complete wrappers and public/formal admission remain separate work.
+
+Two genuine RED profiles precede final58/58 native controls under ASan/UBSan,
+workerB and the8GiB cap (22.06s,222150656B peak), with all raw source/executable/
+header references pinned in
+[the preservation receipt](../../evidence/t28-inactive-byte-preservation-controls-20261016.json).

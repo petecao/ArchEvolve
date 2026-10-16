@@ -163,3 +163,10 @@ initializedness and image-capacity boundaries. C11 and C++17 builds use ASan/UBS
 No public/actual proof or source typed-pointer admission is claimed. The native
 geometry is explicitly8sourcewords/6prefixelements, not a hardware configuration.
 [Exact sources/RED/native/resource evidence](../../evidence/t28-tile-byte-image-controls-20261016.json).
+
+Inactive byte preservation — 2026-10-16 ET:58/58 native controls now preserve
+undefined output payload without eagerly reading it at inactive completion, while
+later observations still check initializedness. Byte-wise conditional versions
+retain initialized32-bit subviews of a partially initialized64-bit output.
+[Exact RED/GREEN and physical pins](../../evidence/t28-inactive-byte-preservation-controls-20261016.json).
+Whole-call/source/public proof acceptance remains open.
