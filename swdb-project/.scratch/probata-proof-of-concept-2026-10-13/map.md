@@ -5,44 +5,31 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-re
 
 ## Current state (resume here)
 
-Updated: 2026-10-15 21:03 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
+Updated: 2026-10-15 21:14 ET. **Active: 33 resolved / 27 ready-for-agent / 3 claimed.**
 Integration: `codex/probata-resume-20261015`; audited run 23 is published at
 `6dc94905`; method21 prototype merged at `14c2a298`. Remote actual jobs retain
 exact `0e7f2327` and `23933f8a` source freezes; production lowerer SHA256
 remains `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
 [Current resume and evidence](resume.md).
 
-- **24:** Current float, atomic and qualified standard caller pairs accepted;
-  all five standard and nine atomic models accepted. Qualified std safe has 47
-  ordinary + 13 smoke Valid; seed remains not_proven/vacuous_pass with four
-  ordinary timeouts and two failed smoke checks. The original standard caller
-  gap stays unchanged. Reviewed no-op policy now has its independently audited
-  unchanged MAA caller witness (6 ordinary + 5 smoke Valid); seed remains not_proven.
-  Continuation at `23933f8a` naturally finished on node 0
-  generation 580 at 20:58:07 ET: 12 retained rows + 24 fresh rows (15 WP / 9 deliberate refusals).
-  All 36 actual target rows independently pass their criteria: nine caller pairs,
-  14 models, 3 summaries, 1 dedicated bounds negative. All nine deliberate lifetime
-  refusals are accepted. Ended inner/outer resources pass without OOM or timeout;
-  source-after remains clean and exact. The combined cold replay and eleven-item
-  closure review remain pending. Root's first poststop scan observes the active
-  read-only cold reader and unrelated process-visibility limits; no zero-denial
-  cleanup claim is made.
-  Finite evidence stays finite.
-  [Qualified std](evidence/t24-std-object-domain-v2-20261015.json),
-  [continuation launch](evidence/reviewed-t24-continuation-launch-23933f8a-20261015.json).
-- **27:** Current negative profile accepted 13/13 at exact `0e7f2327`: all 13
-  intended ordinary timeouts and 35 failed smoke checks remain explicit. Fresh
-  bounded/native 35/35 and repaired capacity 3/3 remain accepted. First current
-  safe CPU case proves 58 ordinary + 19 smoke goals; store-source proves 90 ordinary
-  + 29 smoke; A-rest4 is independently accepted with 316 ordinary + 100 smoke
-  goals, all Valid, 6,027-reference / 925-file audit clean. B1's three cases also pass:
-  189 ordinary + 67 smoke Valid, 3,447 references / 897 files clean, natural
-  release at 20:43:22 ET. Final B2 runs on node 1 generation 606 from 20:44:49 ET.
-  Its three_reads case proves 112 ordinary + 31 smoke goals, all Valid;
-  fresh safe coverage is 9/11, with gather and footprint pending. Original A5/B6 jobs are unlaunched; selected union is
-  1 + 4 + 3 + 3 = 11. Historical `717` safe evidence is separate.
-  [Final negatives](evidence/t27-composed-negative-completed-independent-20261015.json),
-  [selected schedule](evidence/t27-selected-safe-shard-schedule-20261015.json).
+- **24 resolved:** Published `29709232`, all eleven scoped acceptance items independently
+  checked. Full cold goal/dependency replay accepts 36 actual records (26 proven /
+  10 attributable negatives) plus nine no-launch lifetime refusals. Original std
+  gap, distinct qualified domain, exact no-op caller witness, finite agreement and
+  process-visibility limits remain explicit. All raw/producers/history retained.
+  [Closure and inventory](evidence/t24-combined-current-independent-review-20261015.md).
+- **25 claimed:** Ticket 24 releases the dependency gate. First slice: original
+  count-value constructor/destructor through a source-mapped unbounded heap view,
+  with explicit trusted definitions, complete source obligations and dependency
+  closure. Existing bounded controls stay separate. Own worktree/TDD; no new
+  actual verifier admission yet.
+- **27:** All 62 cases / 52 actual records meet their criteria across seven closed
+  profiles: 25 proven, 12 replayed refuted, 15 not_proven. All eleven safe units
+  prove 792 ordinary + 252 smoke goals, retaining 143 init / 141 RTE. Final B2
+  naturally released at 21:10:17 ET, with clean source/resources. Final five-file
+  packet `2b4cc6e7` awaits independent review and publication; ticket remains
+  claimed until then. Historical `717` evidence remains separate.
+  [Selected schedule](evidence/t27-selected-safe-shard-schedule-20261015.json).
 - **07:** Run 25 ended **UNPROVEN** at 20:38:30 ET / 39.48 counted minutes.
   Complete natural provider usage and all 12 Codex-origin records pass independent
   audit. Full30 positive was aborted after 383.62s on a recent same-UID candidate's
@@ -68,7 +55,7 @@ refusal. Generation 578 starts qualified std v2 at 19:09:05 ET (`bf7a404c`);
 node 1 generation 603 completed negatives at 19:26:43 ET. Node 0 generation
 579 completed CPU safe at 19:30:02 ET. Generation 604 started four safe cases on
 node 1 at 19:29:42 ET; generation 580 started continuation on node 0 at
-19:31:53 ET. Both active producers retain their own exact source identities.
+19:31:53 ET. Both completed producers retain their own exact source identities.
 [Remaining matrix launch](evidence/reviewed-t24-remaining-launch-0e7f2327-20261015.json).
 [Capacity repair launch](evidence/reviewed-t27-capacity-launch-b9a34bbb-20261015.json).
 [Initial launch audit](evidence/composed-launch-0e7f2327-20261015.json),

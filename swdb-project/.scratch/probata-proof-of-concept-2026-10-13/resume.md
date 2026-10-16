@@ -4,7 +4,7 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 21:03 ET. **Implementation is active under the user's ongoing approval.**
+Updated: 2026-10-15 21:14 ET. **Implementation is active under the user's ongoing approval.**
 Integration `codex/probata-resume-20261015` is based on `yanrujhou_main` at `d94d629b`.
 Audited run23 documentation is published at `6dc94905`; reviewed method21 prototype
 is published at `14c2a298`. Only `swdb/c_lowering.py`
@@ -12,15 +12,16 @@ differs in production from `71771f09`; its reviewed SHA256 remains
 `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
 Every evaluation retains its own source identity.
 
-**32 resolved / 28 ready-for-agent / 3 claimed**, derived from ticket frontmatter.
-The active frontier is **07, 24, 27**. Ticket 25 waits on 24; ticket 36 waits on 27.
+**33 resolved / 27 ready-for-agent / 3 claimed**, derived from ticket frontmatter.
+The active frontier is **07, 25, 27**. Ticket 24 is resolved; tickets 28/36 wait on 27.
 Drafts 1/2 remain immutable. No draft 3 or final production freeze exists.
 
 | Ticket / owner | Verified checkpoint | Active work |
 |---|---|---|
 | 07 / `ticket07` | Run 25 ended UNPROVEN at 20:38:30 ET / 39.48 counted minutes. Complete usage and exact 12-record Codex origin pass. Full30 positive aborted on an inspection denial, no complete report; negative not run. Closeout published at `07e9c08f`. | Frozen `798e9bb3`; all 34 source pins retained. Independent three-scan poststop audit passes; both leases absent, Mac slot free. Controlled method23 guard/reader diagnosis only; no fresh actual admission. |
-| 24 / `ticket24` | Nine caller pairs, 14 models, 3 summaries and dedicated bounds negative independently accepted: 36/36 actual WP rows. All nine lifetime refusals have no verifier launch/goals. Original std gap and qualified domains remain explicit. | Node 0 generation 580 naturally released at 20:58:07 ET, exact `23933f8a`: 12 reused + 24 fresh rows accepted; resources/source-after pass. Combined 36-actual/9-refusal/11-item cold review pending. Initial root process scan sees the read-only cold reader and unrelated visibility denials; no universal cleanup claim. |
-| 27 / `ticket27` | Negative 13/13, bounded/native 35/35 and repaired capacity 3/3 accepted. CPU + A-rest4 + B1 + B2 three_reads accepted: 9/11 fresh safe units. Three_reads proves 112 ordinary + 31 smoke, retaining 18 init/27 RTE; prefix audit clean. | Node 1 generation 606 runs final B2, started 20:44:49 ET; gather and footprint remain. Disjoint union 1 + 4 + 3 + 3 = 11; original A5/B6 unlaunched. Whole-B2 and 62-case closure remain pending. |
+| 24 / resolved | Published `29709232`: all eleven scoped acceptance items independently checked, 36 actual records (26 proven / 10 attributable negatives) plus nine no-launch refusals. Full cold goal/dependency replay passes. | All raw/producers/history retained. Original std gap, qualified domains, finite agreement and process-visibility limits remain explicit. [Closure](evidence/t24-combined-current-independent-review-20261015.md). |
+| 25 / `ticket24` | Dependency gate released by published ticket 24. Earlier bounded maximum/stale/at controls retain their exact pins. | Claimed: first original count-value/dtor heap-import/source-to-VC capability slice; own worktree/TDD, no actual admission yet. |
+| 27 / `ticket27` | All 62 cases / 52 actual records pass their criteria across seven closed profiles: 25 proven, 12 replayed refuted, 15 not_proven. Safe11 has 792 ordinary + 252 smoke Valid, 143 init / 141 RTE. B2 naturally released at 21:10:17 ET. | Final five-file closure packet `2b4cc6e7` awaits independent review/publication. Both remote evaluation lanes are free; no new job is admitted. |
 | 36 / dependency-gated | 122 compiler/scripted controls pass; 13 actual-WP cases excluded. | Waits on 27; runtime fallback research remains prospective. |
 
 At17:43:14 ET node0 generation572 released after the standard caller safe timeout;
