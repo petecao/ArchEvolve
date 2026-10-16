@@ -1739,3 +1739,6 @@ Root accepts complete changed-source20Typed-helper discharge only:260ordinaryVal
 
 
 2026-10-16 — Reviewed exact649b8cd2 device-init source is integrated as preparation only. [Independent review](../evidence/t07-device-init-independent-source-review-v1-649b8cd2-20261016.md) rehashes331 physical pins/44 historical Gitfiles; three read/write initializedness contract insertions preserve all C tokens and previous clauses, no output-tail/initreset premise. New same-path fixtures and parser/formal controls are unadopted/pending; no TD/count qualification.
+
+
+2026-10-16 — Exact bd2610b6 device-only diagnostic fixture preparation is integrated after independent65f/bd source reviews and inert-entry static PASS. [Preparation checkpoint](../evidence/t07-device-generation-preparation-checkpoint-20261016.md) preserves5/1unfiltered roots/36+10calls, weak-output unconstrained outcome and the corrected13common-AST-function count. Actual generation/cold/any later proof remain separate root gates; no fullTD/count/source qualification or status change.
