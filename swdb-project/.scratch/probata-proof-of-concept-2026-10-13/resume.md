@@ -1,21 +1,21 @@
 # Probata implementation resumption
 
-Updated: 2026-10-16 06:06 ET.
+Updated: 2026-10-16 06:25 ET.
 
 ## Current state
 
-Updated: 2026-10-16 06:06 ET. **35 resolved / 25 ready-for-agent / 3 claimed.**
+Updated: 2026-10-16 06:25 ET. **35 resolved / 25 ready-for-agent / 3 claimed.**
 Implementation remains active on `codex/probata-resume-20261015`, based on
-`yanrujhou_main`. Last published source checkpoint:`c241c547`; reviewed caller lifetime/capacity source`42844b9a` and finite selected BFS source`9ef0603a` are integrated here. Canonical generator`b9b96fb8`, qualified backend`01771a83` and test-only health packet`83b90ed5` remain ancestors; exact conditional size actual producer`7e64298f` stays immutable. The eligible frontier is **07, 25, 28**;
+`yanrujhou_main`. Source checkpoints:`c241c547` stream/reporting and reviewed`046f6b9e` cell decomposition now integrated; reviewed caller lifetime/capacity source`42844b9a` and finite selected BFS source`9ef0603a` are integrated here. Canonical generator`b9b96fb8`, qualified backend`01771a83` and test-only health packet`83b90ed5` remain ancestors; exact conditional size actual producer`7e64298f` stays immutable. The eligible frontier is **07, 25, 28**;
 other unresolved tickets retain their dependencies. [All 63 statuses](ticket-status-20261015.md).
 
-Current dispatch checkpoint: 2026-10-16 06:06 ET. Last user full table05:52 ET; next06:22 ET. Root owns actual jobs; this update is passive Git/docs only.
+Current dispatch checkpoint: 2026-10-16 06:25 ET. Last user full table06:22 ET; next06:52 ET. Root owns actual jobs; this update is passive Git/docs only.
 
 | Ticket | Current evidence | Next gate |
 | --- | --- | --- |
-| **07 claimed** | Run26 remains UNPROVEN; exact7930 helper actual has209/212 ordinary Valid and three open. Diagnostic all-ten export integrity and old1395 missing-store refusal remain unchanged; wrong-cell has not executed. | Reporter0cfa/ML8b84 is integrated and native compilation passed. [Wrong-cell V3 inert packet review](evidence/t07-backend-export-v3-independent-static-review-20261016.md) passes exact32 source blobs/326goals453properties; root outer/fresh admission and complete actual output qualification remain required. No positive/missing-store replay, Init/SINIT/source/lifetime/TD/count acceptance. |
-| **25 claimed** | Exact2e01 grow21 G591 partial cold classification passes:3isolated Valid leaves, cells Timeout/Unknown/Unknown,17unexecuted,0Csmokes; full model/caller false. [Cold closeout](evidence/t25-grow21-partial-final-cold-audit-v1-20261016.md), root5653checks0errors. | Separate dtor11 G619 ended05:48:41 ET with producer11/11nativeValid and0Csmokes; independent complete cold/model acceptance remains pending. [Actual metadata](evidence/t25-dtor11-actual-metadata-v1-20261016.json). Both exact2e01/oldML229 producers remain unchanged by integratedML8b84. Caller TDD and full25 remain open. |
-| **28 claimed** | Prior rank/selector/size positive retain their stated TCB limits. E4 prepublic parser refusal and all raw remain preserved; obsolete clean checkout is [retained/reconstructable](evidence/e4-source-retention-root-v1-20261016.json). | Root launched a distinct current stream pair exactc241/node0G59206:02:30 ET,1200whole1320outer/8GiB1worker, with reporter8b84 and parser ordering fix. [Admission](evidence/reviewed-t28-stream-current-v2-launch-c241c547-20261016.json):214module checks0errors; no result at this checkpoint. No stream/pair/refinement/hardware fairness/current0.2/full28 acceptance. |
+| **07 claimed** | [Wrong-cell cold decision](evidence/t07-wrong-cell-independent-cold-decision-20261016.md) accepts complete export integrity only at0cfa:326goals453properties,140backend tasks186internal shortcuts; cell1initialization stays open in a real task. Guard0/30.889813s363.859375MiB, no events. Old positive/missing-store partial production reports remain refused. | Separate selected-single-activation source gate preparation continues. No Init/SINIT/proof/negative/lifetime/source/TD/count qualification; no positive/missing-store replay. |
+| **25 claimed** | [Root scoped decision](evidence/t25-dtor11-scoped-root-decision-20261016.json) accepts exact2e01 destructor D1-D7/11nativeValid source-VC evidence under declaredTCB only; root6097checks3303refs0errors. Grow21 remains3Valid/oneopen/17unexecuted. | Reviewed046f four-cell AND preparation is integrated:24targets,20oldCinputs unchanged; root3native/public controls pass with24synthetic runs34goals1smoke, not actual proof. Four-leaf diagnostic/root admission and full24current proof pending. No original-v2/C++body/caller/full25 or genericzero-smoke waiver. |
+| **28 claimed** | Prior rank/selector/sizepositive retain explicitTCB limits; E4raw/ref/restore preserved. Root current-stream exactc241/node0G592 settled06:06:35 ET with2pytest passes; complete independent cold audit still pending, no accepted stream result yet. | Current reporter8b84/parser composition and strict native ordinary/healthy smoke/property closure need final cold acceptance. Inert negative-size2048 profile review passes subject to root outer/staging/fresh admission; it grants no proof/pair/refutation. No source/MMIO/refinement/fairness/current0.2/full28 acceptance. |
 | **24 / 27 / 36 resolved** | Scoped accepted evidence remains pinned; ticket36 retains historical checker identity. | Preserve exact receipts and boundaries for final integration review. |
 
 Root owns actual admissions: at most two remote measurements, one per socket,

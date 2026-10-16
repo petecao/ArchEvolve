@@ -1340,3 +1340,9 @@ Evidence: `evidence/t25-cell-components-independent-source-review-046f6b9e-20261
 `evidence/t25-cell-components-merged-controls-v1-046f6b9e-20261016.json`,
 `evidence/t25-grow24-scripted-public-cold-v1-20261016.json` and
 `evidence/t25-cell4-diagnostic-independent-review-v4-046f6b9e-20261016.{md,json}`.
+
+### 2026-10-16 06:25 ET — scoped destructor11 root acceptance
+
+[Separate root decision](../evidence/t25-dtor11-scoped-root-decision-20261016.json) ACCEPTS exact2e01 qualified destructor D1-D7 source-VC evidence:all11nativeValid(10Alt-Ergo,1CVC5) under explicit translation/FramaWP/Why3/solver/standardmap/QedTCB. [Independent cold decision](../evidence/t25-dtor11-independent-cold-decision-20261016.md) preserves root6097physicalchecks3303indexedrefs0errors/1582opaqueconsumers and all417raw24183685B+378priorraw, complete11owner/property graph closures/source queries. Broadreceiver overlap/aliases remain; no bufferintimage/numericC target or genericzero-smoke waiver.24materialized SMTs are not certified submissions. Original coldreader model_acceptance=false/root_acceptance_required=true stays immutable; this separate decision supplies only narrow source-bound eligibility after normal current-code/canonicalchecks, with no original-v2/C++body/caller/full25 promotion.
+
+Reviewed046f cellconjunction preparation and docs d013 are integrated after root3native/public controlsPASS:24runs/setup34syntheticgoals1smoke persisted, no actualformal/modelproof. Allfour full-A cells and unchangedrepr are required;20other2e01Cfiles/theory unchanged. The separate fourleafdiagnostic/native lifecycle/rootadmission and full24proof remain pending. Grow21partial source/checker/3Valid+cellsopen/17unexecuted evidence is unchanged.

@@ -1,0 +1,41 @@
+{
+  "at_et": "2026-10-16T06:08:40.914008-04:00",
+  "source_commit": "0cfaad70854eaf8c836445f3bc3db1e8e0378d6d",
+  "command": [
+    "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+    "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py",
+    "--log",
+    "/private/tmp/probata-t07-backend-export-wrong-cell-v3-0cfaad70-20261016/guard.log",
+    "--cap-gb",
+    "8",
+    "--timeout",
+    "300",
+    "--queue-timeout",
+    "30",
+    "--owner",
+    "t07-wrong-cell-export-v3-0cfaad70",
+    "--lock",
+    "/tmp/claude/swdb-verifier.lock",
+    "--",
+    "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+    "/private/tmp/probata-t07-backend-export-entry-v3-20261016.py",
+    "--expected",
+    "/private/tmp/probata-t07-backend-export-expected-v3-20261016.json"
+  ],
+  "command_recipe_sha256": "e111d30b94265f9c3ec917d4be1ef0f93d1281d022e7f6a139674047ba05c1e8",
+  "entry_sha256": "87e865b3c2a34a5601b6ab63301cad4d1521edf668baef36a10b48965221e564",
+  "expected_sha256": "ed7d202a594ef88ccb3f64f830fce94a45cf6d4b78835508bc6ee94c7c2c0fcd",
+  "guard_sha256": "c6f0d4b8c60fab912dd768c4c8c7e7737d8feca3a110d0de02dec4d38785db57",
+  "staged_search_sha256": "125e2562342e6ba684d1189ca29fb48476b73bee30d0fd368f7f7c6b4c6b2419",
+  "source_mode": "32immutableGitblobs;31old32unchangedexceptreporterML8b84;physicalworktreenotCproducerinput",
+  "shared_leases_absent": true,
+  "pre_scan": {
+    "at_et": "2026-10-16T06:08:40.913949-04:00",
+    "selected_same_uid_metadata": [],
+    "inspection_denial_pids": []
+  },
+  "lease_wait_seconds": 0.03134204196976498,
+  "free_bytes": 55030374400,
+  "memory_pressure": "The system has 38654705664 (2359296 pages with a page size of 16384).\nSystem-wide memory free percentage: 68%\n",
+  "scope": "Only remaining wrong-cell private-array TU/all326sourcegoals453properties; no positive or missing-store replay. Fresh ML8b84 production reader and unchanged read-only observer compile plus internalWP/Why3export. FreshCVC5sentinel mustneverexecute. No solver/initmap/lifetime/source/TD/countacceptance.300sactivewhole/280internal/420soutermaximumafterPopen(390snormalwait+30sTERMcleanup;preflightseparate)/8GiBsampledRSS/oneworker;256MiBbetween-child checksnotquota."
+}
