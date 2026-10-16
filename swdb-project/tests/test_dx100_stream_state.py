@@ -28,7 +28,7 @@ def native(tmp_path,body):
     assert built.returncode==0,built.stderr
     assert ran.returncode==0,ran.stdout+ran.stderr
 
-def test_stream_packet_acknowledgement_leaves_tile_unfinished_and_wait_blocked(tmp_path):
+def test_selected_dispatch_prefix_has_no_completion_and_blocked_wait(tmp_path):
     native(tmp_path,r'''
 int main(void) {
  struct dxl_state s;
@@ -101,3 +101,78 @@ int main(void) {
 def test_stream_metadata_transitions_match_pinned_spd_source_excerpts(tmp_path):
     from testkit.dx100_stream_native import run_spd_transitions
     run_spd_transitions(tmp_path,stream_module().render_header())
+
+def test_public_stream_model_exposes_only_conditional_return_and_preserves_arbitrary_stuttering(tmp_path):
+    from swdb import dx100_stream_model
+    model=dx100_stream_model.normal_return_model()
+    assert set(model)=={'state','c','entry','contracts','termination_policy'}
+    assert model['termination_policy']=='conditional normal return; no hardware liveness'
+    assert set(model['contracts'])=={'maa_stream_load_unsigned_int','wait_ready','get_tile_size'}
+    assert all(r'terminates \false;' in text for text in model['contracts'].values())
+    native(tmp_path,model['state']+r'''
+#include <assert.h>
+#define DX_ASSERT(c) assert(c)
+static unsigned stutters=17,choices;
+static unsigned __swdb_dx_stream_choose(void) { ++choices; if(stutters) {--stutters;return 0;} return 1; }
+'''+model['c']+r'''
+int main(void) {
+ uint32_t input[16]={7};
+'''+ '\n'.join(model['entry'])+r'''
+ maa_stream_load_unsigned_int(input,0,1,2,0,-1);
+ if(__swdb_dx_stream_meta.phase!=1 || __swdb_dx_stream_meta.ready!=255 || __swdb_dx_stream_meta.size!=0) return 1;
+ __swdb_dx_stream_step(0,0,0);
+ if(__swdb_dx_stream_meta.phase!=1 || __swdb_dx_stream_meta.ready!=255 || __swdb_dx_stream_meta.size!=0) return 2;
+ wait_ready(0);
+ if(choices<=17 || get_tile_size(0)!=1 || __swdb_dx_stream_meta.status!=2 || __swdb_dx_stream_meta.ready!=0) return 3;
+ if(!__swdb_dx_stream_meta.lane0_finished || __swdb_dx_stream_meta.other_lanes_finished) return 4;
+ return 0;
+}
+''')
+
+
+def test_all_closed_projected_cpu_device_prefixes_require_completion_for_a_returned_wait(tmp_path):
+    # Complete finite CPU/device event graph for this selected projection. Self
+    # stutters add no new state; infinite stutters remain allowed. Coverage of
+    # arbitrary gem5 schedules by this projection is a separate unverified duty.
+    native(tmp_path,r'''
+#include <stdio.h>
+static int advance(struct dxl_state *s,unsigned stage) {
+ if(stage==0) return dxl_start(s,0,1,1);
+ if(stage==1) return dxl_request(s,UINT64_C(0x2000),64,0,0);
+ if(stage==2) return dxl_response(s,UINT64_C(0x2000),64,0,0,7);
+ return dxl_finish(s,1,1);
+}
+int main(void) {
+ struct item { struct dxl_state state;unsigned cpu,device; } queue[25];
+ unsigned head=0,tail=1,seen[5][5]={{0}},returned=0,late_ack=0,unsafe_without_wait=0;
+ struct dxl_state initial;uint32_t input[16]={7};
+ if(dxl_fresh(&initial,UINT64_C(0x1000),UINT64_C(0x2000)) || dxl_bind_input(&initial,input,16) ||
+    dxl_packet(&initial,0,UINT64_C(0x00ff00ff)) || dxl_packet(&initial,1,UINT64_C(0xffffffff000102ff)) ||
+    dxl_packet(&initial,2,UINT64_C(0x1000)) || dxl_dispatch(&initial)) return 1;
+ queue[0]=(struct item){initial,0,0};seen[0][0]=1;
+ while(head<tail) {
+  struct item n=queue[head++];uint16_t out=99;
+  if(n.cpu==0 && n.device==4) late_ack=1; /* completion before CPU observes ack */
+  if(n.cpu==1 && n.device<4 && dxl_get_size(&n.state,&out)==DXL_BLOCKED) unsafe_without_wait=1;
+  if(n.cpu==4) {
+   if(n.device!=4 || dxl_get_size(&n.state,&out)!=DXL_OK || out!=1 || n.state.ready!=0 ||
+      n.state.received_responses!=1 || !n.state.lane0_finished || n.state.other_lanes_finished) return 2;
+   returned++;
+  }
+  if(n.device<4) {
+   struct item next=n;if(advance(&next.state,n.device)!=DXL_OK) return 3;next.device++;
+   if(!seen[next.cpu][next.device]) { seen[next.cpu][next.device]=1;queue[tail++]=next; }
+  }
+  if(n.cpu<4) {
+   int enabled=n.cpu!=2 || dxl_wait_response(&n.state,&out)==DXL_OK;
+   if(enabled) {
+    struct item next=n;next.cpu++;
+    if(!seen[next.cpu][next.device]) { seen[next.cpu][next.device]=1;queue[tail++]=next; }
+   }
+  }
+ }
+ if(!returned || !late_ack || !unsafe_without_wait || tail>25) return 4;
+ printf("closed projected states=%u returned=%u; late-ack and missing-wait counterpaths present\n",tail,returned);
+ return 0;
+}
+''')

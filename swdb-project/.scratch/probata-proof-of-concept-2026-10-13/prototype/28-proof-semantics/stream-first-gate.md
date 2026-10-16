@@ -29,3 +29,56 @@ conditional source/environment bindings, not claims of physical boot, proved
 MMU/coherence implementation, or all-caller safety. The full interface/current
 production0.2 and ticket28 remain open. Source notes and29 checked pins:
 `/private/tmp/probata-t28-stream-load-correspondence-20261016.{md,json}`.
+
+The post-issue model phase is logically uncovered, not a theorem that physical
+hardware remains Idle when the CPU receives its acknowledgement. Completion may
+already have occurred. An isolated no-observation/no-interference correspondence
+can defer its unobserved events to returned wait; that relation remains an
+explicit source-model obligation with maintainer ownership/pending59. Native
+SPD snapshots compare selected event prefixes only, not every possible schedule.
+The real wait's conditional return must establish completion in either case.
+
+Additional immutable RequestTable closure source was read on2026-10-16:
+Tables.hh SHA5ea6a7caff7ca690aa9ce19096c0e686dfa52716e4dbf19d17348c9235011b43
+and Tables.cc SHA9bd8aa4103fb6e7617fdd4c514a917329b8e7b8345738ed6e5d82f818df7dfa6,
+at the samee4fc4af commit. RequestTable::get_entries matches exactly by physical
+line, removes only that line's valid entries and leaves unmatched entries intact.
+The selected empty positive-capacity table maps one lane0/word0 entry. Full MMU
+translation/coherence closure is still separate: StreamAccess::translatePacket
+asserts synchronous completed fault-free translation, so that source-domain
+condition must be explicit, never silently assumed for arbitrary timing MMUs.
+
+## Explicit partial subject — 2026-10-16 ET
+
+The original total-correctness summary is refused. This fixture declares a
+separately versioned original unit `contract.dx100_stream_partial_fixture.v1`,
+an exact `proof_unit.correctness_policy` binding the current fixture semantics
+ID/hash and source policy, and its own partial fixture method. Its record subject
+is `partial_library_summary`; existing generic `library_summary` dependency
+readers cannot consume that record. Only this explicitly qualified original
+contract admits `terminates \false` for the enclosing unit as well as all three
+MMIO helpers. A successful conditional postcondition would establish no total
+correctness, progress or hardware liveness result.
+
+The event compression still has an unverified all-schedule source-refinement
+duty. The source epoch, stable mapped coherent full64-byte line, absence of
+competing commands/writes from every core and lack of intermediate observations
+are explicit owned environment premises pending59. Native source-event prefix
+agreement establishes finite feasibility and metadata projection only. The
+assumed contract/body and compression relation are identified as unverified TCB
+duties in every touched record. They are not desired-result premises or a source
+refinement theorem. Whole ticket28 remains incomplete.
+
+The early native test name about an acknowledgement leaving the tile unfinished
+meant the selected immediate dispatch prefix. It has been renamed to say that
+explicitly: hardware may already complete before the CPU observes its ack. No
+claim equates the logical uncovered phase with the physical state at ack return.
+
+Two preformal compiler controls exposed inherited lowering gaps: void source
+calls were incorrectly given integer identity arithmetic; partial array
+initializers serialized through Clang's `array_filler` lost their explicit
+prefix. Type-driven integer identity and a checked scalar-prefix representation
+repair these paths. Native C++/C ASan+UBSan controls retain `{7}` and `{7,2}` with
+zero-filled remainders. Ambiguous, nested-filler or designated forms refuse.
+The input's original64-byte extent/alignment is independently source-bound;
+ordinary modular function entry does not assume that its current value is7.

@@ -70,6 +70,7 @@ class ProofUnit:
     tree_sha256: str
     contract: str
     contract_sha256: str
+    correctness_policy: dict | None = None  # explicit original-unit partial policy; never inferred
 
 
 @dataclass(frozen=True)
@@ -376,7 +377,16 @@ def _prove_summary(args, store):
         raise UsageError("--summary runs one job on a library entry: no --candidate, --skip or batch of scripts")
     source = library.resolve(unit_of["source"])
     content = library.content_sha256(entry_id)
-    unit = ProofUnit(None, function, str(Path(source).parent), _sha256(source), entry_id, content)
+    policy=unit_of.get('correctness_policy')
+    if policy is not None:
+        from swdb import dx100_stream_source
+        try:
+            dx100_stream_source.unit_policy(library,entry)
+        except dx100_stream_source.Refused as exc:
+            raise Failure(str(exc)) from None
+        if args.adapter!='wp':
+            raise UsageError('the closed partial-normal-return unit is admitted only through its WP fixture route')
+    unit = ProofUnit(None, function, str(Path(source).parent), _sha256(source), entry_id, content, policy)
     method = _current_method(args.records)
     pins = {"code": {"id": entry_id, "sha256": content}, "contract": {"id": entry_id, "sha256": content},
             "baseline_function": {"not_applicable": "A library summary is proven on the entry's own code."},
@@ -600,7 +610,7 @@ def _head(rid, unit, description):
             "subject": {"kind": "candidate_proof_unit", "candidate": unit.candidate, "function": unit.function}
             if unit.candidate is not None else
             {"kind": "c_model", "id": unit.function} if unit.contract.startswith(MODEL_PREFIX) else
-            {"kind": "library_summary", "id": unit.contract}}
+            {"kind": "partial_library_summary" if unit.correctness_policy is not None else "library_summary", "id": unit.contract}}
 
 
 def _write(records, record):

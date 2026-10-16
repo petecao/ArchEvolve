@@ -3,6 +3,9 @@
 name: proof_subject_kinds
 description: What one proof record proves or refutes.
 values:
+  # 2026-10-16 ET: explicit original-unit policy; never counts as a total library_summary.
+  - value: partial_library_summary
+    meaning: A separately versioned library unit on normal return only; no termination or liveness result, and ineligible as a generic library_summary dependency.
   - value: candidate_proof_unit
     meaning: One call of the function that holds a candidate artifact's rewrite site.
   - value: library_summary

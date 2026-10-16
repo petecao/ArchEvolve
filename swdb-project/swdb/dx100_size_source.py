@@ -329,7 +329,7 @@ def certify(unit,declaration,selected,caller,*,standard,timeout):
 
 
 def bindings(lowering):
-    return [row['semantic_source'] for row in getattr(lowering,'summaries',()) if 'semantic_source' in row]
+    return [row['semantic_source'] for row in getattr(lowering,'summaries',()) if row.get('semantic_source',{}).get('kind')==KIND]
 
 
 def recheck(lowering):

@@ -194,8 +194,9 @@ def check(library, entry_id, data, error):
         error("calls", "each call is listed once")
     from swdb import dx100_interface
     malformed_instances = not dx100_interface.check_instances(data, error)
-    from swdb import dx100_source_selector
-    malformed_instances = not dx100_source_selector.check(library, data, error) or malformed_instances
+    from swdb import dx100_source_selector, dx100_stream_source
+    if not dx100_stream_source.stream_layout(data):
+        malformed_instances = not dx100_source_selector.check(library, data, error) or malformed_instances
     dx100_interface.check(library, data, error)
     found = data.get("inventory")
     if not isinstance(found, dict) or not isinstance(found.get("sources"), list) or \
@@ -213,9 +214,11 @@ def check(library, entry_id, data, error):
                                "contract)")
     texts = _files(library, data, error)
     from swdb import dx100_size_source
-    malformed_layout = not dx100_size_source.check(library, data, texts, error)
-    if not dx100_size_source.size_layout(data):
-        malformed_layout = not dx100_source_selector.check_layout(data, texts, error) or malformed_layout
+    malformed_layout = not dx100_stream_source.check(library, data, texts, error)
+    if not dx100_stream_source.stream_layout(data):
+        malformed_layout = not dx100_size_source.check(library, data, texts, error) or malformed_layout
+        if not dx100_size_source.size_layout(data):
+            malformed_layout = not dx100_source_selector.check_layout(data, texts, error) or malformed_layout
     if len(texts) < 4 or malformed_overloads or malformed_instances or malformed_layout:
         return []
     return _typecheck(library, entry_id, data, texts, error)
@@ -227,10 +230,11 @@ def acsl_source(data, texts, rows=None, *, constants=None):
     parts = [f"#define {name} {value}" for name, value in (data.get("constants") or {}).items()]
     from swdb.dx100_source_selector import pure_layout
     from swdb.dx100_size_source import size_layout
+    from swdb.dx100_stream_source import stream_layout
     parts.append("#include <stdint.h>")
     state, _objects = _model_state(data, texts["model.state"], constants or data.get("constants") or {},
                                    constant_table=True)
-    if pure_layout(data) or size_layout(data):
+    if pure_layout(data) or size_layout(data) or stream_layout(data):
         parts.append(state)  # Closed plain C state; no empty/nested ACSL ghost or logic block.
     else:
         parts += ["/*@ ghost"]
@@ -350,7 +354,8 @@ def _files(library, data, error):
     ghost = ghost_declarations(texts["ghost.acsl"])
     from swdb.dx100_source_selector import pure_layout
     from swdb.dx100_size_source import size_layout
-    if not ghost and not pure_layout(data) and not size_layout(data):
+    from swdb.dx100_stream_source import stream_layout
+    if not ghost and not pure_layout(data) and not size_layout(data) and not stream_layout(data):
         error("ghost.acsl", "the ghost file declares no ghost array")
     for key in ("model.state", "model.c"):
         for name, _decl in ghost:
@@ -433,8 +438,8 @@ def lowering_options(library):
                  "refused_calls": {row["call"] for data in current(library).values()
                                    for row in data.get("calls", []) if row.get("supported") is False}}
     if instances:
-        from swdb import dx100_source_selector
-        instances = {name: [{**v, 'definition': dx100_source_selector.policy(library, v['definition'])}
+        from swdb import dx100_source_selector, dx100_stream_source
+        instances = {name: [{**v, 'definition': (dx100_stream_source.policy if isinstance(v['definition'],dict) and v['definition'].get('kind')==dx100_stream_source.KIND else dx100_source_selector.policy)(library, v['definition'])}
                             if 'definition' in v else v for v in variants]
                      for name, variants in instances.items()}
         semantics['template_instances'] = instances
@@ -442,6 +447,10 @@ def lowering_options(library):
     semantics['source_definitions'] = {r['call']: dx100_size_source.policy(library,r['definition'])
         for data in current(library).values() if dx100_size_source.size_layout(data)
         for r in data.get('calls',[]) if r.get('supported') is True}
+    from swdb import dx100_stream_source
+    semantics['source_definitions'].update({r['call']: dx100_stream_source.policy(library,r['definition'])
+        for data in current(library).values() if dx100_stream_source.stream_layout(data)
+        for r in data.get('calls',[]) if r.get('supported') is True and 'definition' in r})
     return {"summaries": dict(covered), "semantics": semantics}
 
 
@@ -467,7 +476,8 @@ def contract_names(library, entry_id, called):
 def _model_state(data, text, constants, *, constant_table=False):
     from swdb.dx100_source_selector import pure_layout
     from swdb.dx100_size_source import size_layout
-    if pure_layout(data) or size_layout(data):
+    from swdb.dx100_stream_source import stream_layout
+    if pure_layout(data) or size_layout(data) or stream_layout(data):
         return text, ()
     return _bounded_state(text, constants, constant_table=constant_table)
 
@@ -563,7 +573,8 @@ def state_draws(library, entry_id, defines=()):
     data = library.get(entry_id)
     from swdb.dx100_source_selector import pure_layout
     from swdb.dx100_size_source import size_layout
-    if pure_layout(data) or size_layout(data):
+    from swdb.dx100_stream_source import stream_layout
+    if pure_layout(data) or size_layout(data) or stream_layout(data):
         return []
     constants = _constants(data, defines)
     return [f"dx_tile_data[{t}][{k}]" for t in range(int(constants["DX_NT"])) for k in range(int(constants["DX_TS"]))]
