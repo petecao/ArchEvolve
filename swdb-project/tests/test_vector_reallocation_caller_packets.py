@@ -52,7 +52,7 @@ def prepared_caller(tmp_path_factory):
     from swdb import vector_reallocation_caller_packets as packets
     stage=tmp_path_factory.mktemp('caller-packets')/'source'
     plan=packets.prepare(SOURCE,'vector_realloc_v3_safe',CONTRACT,stage)
-    assert len(plan['obligations'])==84 # 30ctor +30reserve(with four cell conjuncts) +11dtor +10local +1numeric +2applications
+    assert len(plan['obligations'])==85 # 30ctor +30reserve(with four cell conjuncts) +11dtor +10local +1numeric +3applications
     assert len(plan['required_models'])==5
     assert all(row['proof_record'] is None for row in plan['required_models'])
     return stage
@@ -119,7 +119,7 @@ def test_whole_clauses_may_share_one_actual_annotation_without_splitting_tokens(
     plan=packets.prepare(SOURCE,'vector_realloc_v3_safe',clauses,tmp_path/'whole')
     assert plan['contract']['clauses']==clauses
     assert plan['contract']['ordinary_contract_identity'].startswith('pending:')
-    assert plan['current_proof_records_admitted']==[] and len(plan['obligations'])==84
+    assert plan['current_proof_records_admitted']==[] and len(plan['obligations'])==85
 
 
 def test_constructor_entry_application_maps_source_storage_and_existing_count_clause(tmp_path):
@@ -172,3 +172,68 @@ def test_zero_constructor_application_retains_empty_buffer_and_actual_store_path
     assert plan['caller_premises_added']==[] and plan['current_proof_records_admitted']==[]
     assert plan['proof_admission'].startswith('unsupported:')
     assert packets.check(SOURCE,'vector_realloc_v3_safe',CONTRACT,tmp_path/'zero')==plan
+
+
+def test_positive_constructor_application_binds_actual_allocation_and_zero_prefix(tmp_path):
+    from swdb import vector_reallocation_caller_packets as packets
+    plan=packets.prepare(SOURCE,'vector_realloc_v3_safe',CONTRACT,tmp_path/'positive')
+    row=next((r for r in plan['obligations']if r['id']=='apply.ctor.positive_entry'),None)
+    assert row is not None, 'positive construction needs its source allocation/loop-entry state, not the zero branch or an assumed callee postcondition'
+    entry='Heap::begin_automatic(h,24,a)';receiver='Heap::fresh_id(h)'
+    initial='t25_initial('+entry+','+receiver+',0)'
+    allocated='t25_allocated('+entry+','+receiver+',0,n,q)'
+    assert row['statement']==(
+        r'\forall Heap::heap h; \forall integer a,q,n; Heap::well_formed(h) && '
+        r'Heap::automatic_available(h,24,8,a) && 0 < n <= 2147483647 && '
+        'Heap::available('+initial+',n,q) ==> '
+        't25v3_ctor_inv('+allocated+','+receiver+',0,Heap::fresh_id('+entry+'),n,0,7)')
+    application=plan['composition']['positive_constructor_entry']
+    assert application['state_before']==entry and application['state_after']==allocated
+    assert application['receiver_identity']==receiver
+    assert application['buffer_identity']=='Heap::fresh_id('+entry+')'
+    assert application['source_path_condition']=='source count > 0; allocation returns normally'
+    assert application['allocation_relation']['statement']=='Heap::available('+initial+',n,q)'
+    assert application['allocation_relation']['discharge']=='pending source allocator normal-return embedding; never a caller-entry premise'
+    assert application['initial_prefix_length']==0 and application['fill_value']==7
+    body=(tmp_path/'positive/bodies/ctor_count_value/qualified.c').read_bytes()
+    for key,text in [('initial_stores',b'this->data = NULL; this->size = 0; this->capacity = 0;'),
+                     ('zero_return',b'if (n == 0) return;'),
+                     ('allocation',b'this->data = swdb_alloc_int(n);'),
+                     ('capacity_store',b'this->capacity = n;'),
+                     ('loop_entry',b'for (size_t k = 0; k < n; ++k)')]:
+        span=application[key]
+        assert body[span['begin']:span['end']]==text
+        assert hashlib.sha256(text).hexdigest()==span['sha256']
+    assert application['source_prefix']['begin']==application['initial_stores']['begin']
+    assert application['source_prefix']['end']==application['loop_entry']['end']
+    span=application['source_prefix']
+    assert hashlib.sha256(body[span['begin']:span['end']]).hexdigest()==span['sha256']
+    assert row['dependencies']==[] and row['status']=='pending'
+    assert plan['caller_premises_added']==[] and plan['incoming_pointer_maps_restricted']is False
+    assert plan['current_proof_records_admitted']==[] and plan['proof_admission'].startswith('unsupported:')
+    assert packets.check(SOURCE,'vector_realloc_v3_safe',CONTRACT,tmp_path/'positive')==plan
+
+
+@pytest.mark.parametrize('attack',['entry_premise','initialized_buffer','receiver_alias','sibling_result','prefix_rebinding'])
+def test_positive_constructor_application_cannot_launder_normal_return_or_source_state(tmp_path,prepared_caller,attack):
+    from swdb import vector_reallocation_caller_packets as packets
+    stage=tmp_path/'changed-positive';shutil.copytree(prepared_caller,stage)
+    plan=json.loads((stage/'manifest.json').read_bytes())
+    row=next(r for r in plan['obligations']if r['id']=='apply.ctor.positive_entry')
+    application=plan['composition']['positive_constructor_entry'];old=row['statement']
+    if attack=='entry_premise':
+        plan['caller_premises_added']=[application['allocation_relation']['statement']]
+        application['allocation_relation']['discharge']='assumed at caller entry'
+    elif attack=='initialized_buffer':
+        row['statement']=old.replace(',n,0,7)',',n,n,7)')
+        application['initial_prefix_length']='n'
+    elif attack=='receiver_alias':
+        row['statement']=old.replace('Heap::fresh_id(Heap::begin_automatic(h,24,a))','Heap::fresh_id(h)')
+        application['buffer_identity']=application['receiver_identity']
+    elif attack=='sibling_result':row['dependencies']=['body.ctor_count_value.ctor.qualified.positive_post']
+    elif attack=='prefix_rebinding':application['source_prefix']=application['allocation']
+    if row['statement']!=old:
+        path=stage/row['path'];path.write_text(path.read_text().replace(old,row['statement']))
+        row['sha256']=hashlib.sha256(path.read_bytes()).hexdigest()
+    (stage/'manifest.json').write_text(json.dumps(plan,sort_keys=True,indent=2)+'\n')
+    with pytest.raises(ValueError):packets.check(SOURCE,'vector_realloc_v3_safe',CONTRACT,stage)
