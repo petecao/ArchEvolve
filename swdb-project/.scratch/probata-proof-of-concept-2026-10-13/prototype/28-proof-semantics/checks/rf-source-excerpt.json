@@ -1,0 +1,22 @@
+{
+  "upstream": [
+    {
+      "path": "/private/tmp/probata-ticket28-interface-upstream-20261015/SPD.hh",
+      "bytes": 5117,
+      "sha256": "70e02b0fea7693585fd9b8f318381c09e352df2fff58bb3f84021f4ea02e9737"
+    },
+    {
+      "path": "/private/tmp/probata-ticket28-interface-upstream-20261015/SPD.cc",
+      "bytes": 10059,
+      "sha256": "9e6bb3672be95954e8816c054b4032f95811a3085ca6df418aed90ad1e852b4a"
+    }
+  ],
+  "class_sha256": "5d54b72448bb9efe015d8b14e5d065bf10383cf9b1f595a73f9644b0fe36f271",
+  "constructors_sha256": "b6f7a5f0405a167af3b21b6bb1ff7aef622e30a34280eb484fbb62042b774edb",
+  "fixture": {
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/checks/rf-source-excerpt.hpp",
+    "bytes": 1304,
+    "sha256": "c98ff061d6f87b72d9cf83e2cc00efcb9ed332685a1275cd1df1774a75a69f88"
+  },
+  "boundary": "Exact RF class/constructors; dependency includes/debug scaffolding replaced by ordinary includes and aborting panic_if stub. No full gem5 execution claimed."
+}

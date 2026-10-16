@@ -28,7 +28,7 @@ def compiler_context(tool):
     return runtime_identity(tool)
 
 
-def run_model(tmp_path, body, *, exit_code=0, prelude='', commands=False, numeric=False, actions=False, regions=False, image=False, cpp=False):
+def run_model(tmp_path, body, *, exit_code=0, prelude='', commands=False, numeric=False, actions=False, regions=False, image=False, cpp=False, registers=False):
     spec = importlib.util.spec_from_file_location('dx_deferred_state', ROOT / 'deferred_state.py')
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
@@ -61,6 +61,11 @@ def run_model(tmp_path, body, *, exit_code=0, prelude='', commands=False, numeri
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         header = module.render_header(header, source_tile_words=8, value_bound=6, byte_order='little')
+    if registers:
+        spec = importlib.util.spec_from_file_location('dx_register_state', ROOT / 'register_state.py')
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        header = module.render_header(header, register_words=8, alignment_by_dtype=[4,4,4,8,8,8])
     unit = tmp_path / 'model.c'
     unit.write_text('#include <assert.h>\n#include <stdint.h>\n#include <stdlib.h>\n#include <stdio.h>\n'
                     '#define DXM_CHECK(c,r) do { if (!(c)) { fputs(r,stderr); exit(42); } } while (0)\n'
@@ -77,13 +82,16 @@ def run_model(tmp_path, body, *, exit_code=0, prelude='', commands=False, numeri
     built = subprocess.run(command,
                            capture_output=True, text=True, timeout=60)
     assert built.returncode == 0, built.stderr
+    sanitizer_environment = {'ASAN_OPTIONS': 'detect_leaks=0:abort_on_error=0',
+                             'UBSAN_OPTIONS': 'halt_on_error=1:abort_on_error=0:exitcode=1'}
     ran = subprocess.run([str(exe)], capture_output=True, text=True, timeout=30,
-                         env={**os.environ, 'ASAN_OPTIONS': 'detect_leaks=0', 'UBSAN_OPTIONS': 'halt_on_error=1'})
+                         env={**os.environ, **sanitizer_environment})
     dependencies = (tmp_path / 'model.d').read_text().replace('\\\n', '').split(':', 1)[1]
     (tmp_path / 'native-receipt.json').write_text(json.dumps({
         'compile_command': command, 'compiler_version': compiler.version, 'runtime_context': compiler_context(compiler),
         'compile_returncode': built.returncode, 'compile_stdout': built.stdout, 'compile_stderr': built.stderr,
         'native_command': [str(exe)], 'native_returncode': ran.returncode,
+        'native_environment_overrides': sanitizer_environment,
         'native_stdout': ran.stdout, 'native_stderr': ran.stderr,
         'expected_exit_code': exit_code, 'unit': file_pin(unit), 'executable': file_pin(exe),
         'headers': [file_pin(path) for path in sorted(set(shlex.split(dependencies)))]}, indent=2) + '\n')
@@ -706,6 +714,132 @@ int main(void) {{
 ''', commands=True, image=True, exit_code=exit_code)
     assert result.stdout == 'COVERED\n'
     assert result.stderr == ('tile-value-initialized' if exit_code else '')
+
+
+def test_register_allocation_does_not_clear_values_or_invent_an_even_start_id(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  dxc_reset();
+  assert(dxg_new(0,0) == 0);
+  assert(dxg_new(0,3) == 1);
+  dxg_cpu_write_bits(0,2,0,UINT32_C(0xaabbccdd));
+  dxg_cpu_write_bits(0,1,0,UINT32_C(0x11223344));
+  assert(dxg_cpu_read_bits(0,1,0) == UINT32_C(0x11223344));
+  dxg_init_counters();
+  assert(dxg_new(0,0) == 0);
+  assert(dxg_cpu_read_bits(0,2,0) == UINT32_C(0xaabbccdd));
+  return 0;
+}
+''', commands=True, registers=True)
+
+
+def test_register_pair_views_share_bytes_but_odd_64bit_dereference_retains_source_alignment_rte(tmp_path):
+    result = run_model(tmp_path, r'''
+int main(void) {
+  dxc_reset();
+  (void)dxg_new(0,3); (void)dxg_new(0,3);
+  dxg_cpu_write_bits(0,2,3,UINT64_C(0x1122334455667788));
+  assert(dxg_cpu_read_bits(0,2,0) == UINT32_C(0x55667788));
+  assert(dxg_cpu_read_bits(0,3,0) == UINT32_C(0x11223344));
+  puts("PAIR");
+  (void)dxg_cpu_read_bits(0,3,3);
+  return 0;
+}
+''', commands=True, registers=True, exit_code=42)
+    assert result.stdout == 'PAIR\n'
+    assert result.stderr == 'register-source-alignment'
+
+
+def test_register_write_covers_a_pending_explicit_start_id_before_replacing_the_value(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  dxc_reset(); dxm_claim_tile(0,1,4);
+  (void)dxg_new(0,3); (void)dxg_new(0,3);
+  dxg_cpu_write_bits(0,2,0,7);
+  unsigned command=dxc_prepare(0,-1,0,0,2,0,2,0,0);
+  dxg_bind_roles(command,4,0,4,0);
+  unsigned captured=dxg_capture_bits(2,0); dxc_bind(command,captured);
+  dxg_cpu_write_bits(0,2,0,99);
+  assert(!dxc_commands[command].pending && dxm_value(captured) == 7);
+  assert(dxg_cpu_read_bits(0,2,0) == 99);
+  return 0;
+}
+''', commands=True, registers=True)
+
+
+@pytest.mark.parametrize('read_dtype,read_reg,write_dtype,write_reg', [(3,2,0,3),(0,3,3,2)])
+def test_register_second_half_conflict_is_a_software_refusal_not_a_hardware_start_id_stall(tmp_path, read_dtype, read_reg, write_dtype, write_reg):
+    result = run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset(); dxm_claim_tile(0,1,4);
+  (void)dxg_new(0,3); (void)dxg_new(0,3);
+  dxg_cpu_write_bits(0,2,3,7);
+  unsigned command=dxc_prepare(0,-1,0,0,2,0,2,0,0);
+  dxg_bind_roles(command,UINT64_C(1)<<{read_reg},0,dxg_mask({read_reg},{read_dtype}),0);
+  unsigned captured=dxg_capture_bits({read_reg},{read_dtype}); dxc_bind(command,captured);
+  dxg_cpu_write_bits(0,{write_reg},{write_dtype},99);
+  return 0;
+}}
+''', commands=True, registers=True, exit_code=42)
+    assert result.stderr == 'pending-register-pair'
+
+
+@pytest.mark.parametrize('dtype,read_reg', [(0,0),(3,1)])
+def test_register_cpu_read_of_pending_reduction_output_does_not_invent_a_covering_wait(tmp_path, dtype, read_reg):
+    result = run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset(); dxm_claim_tile(0,1,4);
+  (void)dxg_new(0,{dtype});
+  dxg_cpu_write_bits(0,0,{dtype},7);
+  unsigned command=dxc_prepare(0,-1,0,2,0,2,0,0,0);
+  dxg_bind_roles(command,0,1,0,dxg_mask(0,{dtype}));
+  unsigned output=dxm_constant(99);
+  dxg_bind_output(command,0,{dtype},output); dxc_bind(command,output);
+  (void)dxg_cpu_read_bits(0,{read_reg},0);
+  return 0;
+}}
+''', commands=True, registers=True, exit_code=42)
+    assert result.stderr == 'pending-register-write'
+
+
+@pytest.mark.parametrize('dtype,bits', [(0,0xffffffff),(1,0x80000000),(2,0x80000000),
+                                      (3,0xffffffffffffffff),(4,0x8000000000000000),(5,0x8000000000000000)])
+def test_initialized_register_allocation_preserves_each_raw_type_and_overload_effect(tmp_path, dtype, bits):
+    run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset();
+  unsigned reg=dxg_new_initialized(0,{dtype},UINT64_C({bits}));
+  assert(reg == 0 && dxg_next == {1 if dtype < 3 else 2});
+  assert(dxg_cpu_read_bits(0,reg,{dtype}) == UINT64_C({bits}));
+  return 0;
+}}
+''', commands=True, registers=True)
+
+
+@pytest.mark.parametrize('body,expected', [
+    ('(void)dxg_new(0,0); (void)dxg_cpu_read_bits(0,0,0);','register-value-initialized'),
+    ('(void)dxg_new_initialized(0,0,7); (void)dxg_cpu_read_bits(1,0,0);','register-ownership'),
+    ('for(unsigned i=0;i<4;++i) (void)dxg_new(0,3); (void)dxg_new_initialized(0,0,7);','register-pair-domain'),
+])
+def test_register_allocation_retains_initializedness_ownership_and_prewrite_capacity_guards(tmp_path, body, expected):
+    result = run_model(tmp_path, 'int main(void) { dxc_reset(); '+body+' return 0; }',
+                       commands=True, registers=True, exit_code=42)
+    assert result.stderr == expected
+
+
+def test_exact_rf_source_excerpt_reproduces_configured_abi_alignment_ub_for_odd_64bit_access(tmp_path):
+    excerpt = ROOT / 'checks/rf-source-excerpt.hpp'
+    record = json.loads(excerpt.with_suffix('.json').read_text())
+    assert hashlib.sha256(excerpt.read_bytes()).hexdigest() == record['fixture']['sha256']
+    result = run_model(tmp_path, excerpt.read_text()+r'''
+int main(void) {
+  gem5::RF rf(8);
+  (void)rf.getData<uint64_t>(1);
+  return 0;
+}
+''', cpp=True, exit_code=1)
+    assert 'runtime error: load of misaligned address' in result.stderr
+    assert "type 'unsigned long long'" in result.stderr or "type 'unsigned long'" in result.stderr
 
 
 def test_failed_cas_expected_and_desired_values_do_not_enter_gather_history(tmp_path):

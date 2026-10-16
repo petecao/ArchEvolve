@@ -152,3 +152,12 @@ it; later reads still fail as appropriate. Byte-wise conditional versions retain
 initialized32-bit subviews without inventing upper64-bit initializedness. No
 public/actual proof or whole-interface closure is claimed; all boxes remain open.
 [Exact evidence](../evidence/t28-inactive-byte-preservation-controls-20261016.json).
+
+Register successor — 2026-10-16 ET:75/75 native controls pass for source-shaped
+register allocation/storage and exact explicit-ID CPU-write stalls, preserving
+conservative second-half conflicts and noncovering reads. One deliberately
+expected RF excerpt UBSan case establishes the configured native alignment
+counterexample, not general source agreement. Setup/source wrappers, formal
+IEEE/raw-image coherence, unbounded readiness progress and public actual acceptance
+remain active. No boxes are checked; status remains **claimed**.
+[Exact evidence](../evidence/t28-register-state-controls-20261016.json).
