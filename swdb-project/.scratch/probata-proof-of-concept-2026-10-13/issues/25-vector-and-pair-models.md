@@ -1409,3 +1409,7 @@ Independent source-equivalence review at merged6802 now passes. Forty merged com
 ### 2026-10-16 ET — prospective copy-step AND15 preparation
 
 Actual source37 grow38 remains partial:27 successful targets, open copy step and10 unexecuted, including numeric C. Independently bound source/query evidence authorizes an exact15-conjunct conclusion expansion under the same full invariant and `k < s`. Other37 grow inputs, model bodies/contracts and theory are unchanged; no sibling theorem or added premise is used. Five real RED→GREEN controls and29 affected compiler-free cases pass. Successor inventories52grow/58reserve/35ctor/11dtor/118pendingcaller are preparation counts only. Source review, focused15 diagnostic and fresh full52 public model with all numeric/RTE/init/smoke obligations remain required. No model/caller/ticket acceptance. See `../prototype/25-copy-step-and15-20261016.md` and `../evidence/t25-copy-step-and15-preparation-20261016.json`.
+
+## Active checkpoint — 2026-10-16 10:06 ET
+
+See [settled producers and passive evidence](../evidence/frontier-settled-producers-checkpoint-20261016-1006.md) and its exact-pin ledger. Ticket remains claimed; existing acceptance criteria and dependencies are unchanged. Original exits, pending proof/cold/source gates and historical trust boundaries are preserved.
