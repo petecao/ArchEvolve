@@ -1,32 +1,67 @@
 # 07 — Spike (c): WP with agent hints
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-16 12:50 ET (resumed by Yan-Ru; method24 plan approved, claimed); 2026-10-15 ET (prospective method23 independently reviewed; run25 remains unproven and no new counted launch is implied); 2026-10-14 22:50 ET (continuation 3: runs 10-12 fail, verdict fail so far, effort paused); 2026-10-14 17:10 ET (continuation 2: runs 7-9 fail, verdict fail so far); 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-16 19:05 ET (resolved: spike verdict FAIL, method24 family runs 27-30); 2026-10-16 12:50 ET (resumed by Yan-Ru; method24 plan approved, claimed); 2026-10-15 ET (prospective method23 independently reviewed; run25 remains unproven and no new counted launch is implied); 2026-10-14 22:50 ET (continuation 3: runs 10-12 fail, verdict fail so far, effort paused); 2026-10-14 17:10 ET (continuation 2: runs 7-9 fail, verdict fail so far); 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 03
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Proof-of-concept plan", A1 row (c); "Proof-hint loop"; "Verifier lineup and order", unbounded verifier; "Providers and machines"); decisions: [07](../../formal-verification-2026-10-09/issues/07-install-verifiers.md), [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md), [12](../../formal-verification-2026-10-09/issues/12-dx100-proof-semantics.md), [13](../../formal-verification-2026-10-09/issues/13-proof-hint-loop.md), [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md), [19](../../formal-verification-2026-10-09/issues/19-bounded-verdict-bounds.md), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md), [27](../../formal-verification-2026-10-09/issues/27-proof-of-concept-stages.md)
 **Time estimate:** about 3 days, inside the 2-week box
 
-## Current resume checkpoint — counted run 30 (120-minute budget) running, 2026-10-16 ET
+## Final Answer — 2026-10-16 19:05 ET: spike (c) verdict **FAIL**
 
-Status **claimed**. **Yan-Ru chose fallback (a), 2026-10-16 ET:** one method26 counted run with a 120-minute
-budget (run plan `method26-b120`; everything else unchanged, including the 9-minute final reserve and 10
-rounds). If it fails, 07 closes as fail (fallback c). Heartbeat every 30 minutes while it runs. The
-`pushed_are_new` correction is taken as accepted with this choice (it was part of the recommendation). Work lives on local branch
-`probata-poc/t07-m24` (worktree `/tmp/claude/probata-wt/t07-m24`), not yet merged into `yanrujhou_main`
-(the root session is active in the main checkout). Raw output: `/tmp/claude/probata-runs/t07f/` (host `mac`).
+**For ticket 09: (c) fails.** No counted run proved the unit within its budget. Mac results (host `mac`).
 
-Method24-family counted runs (zero seeds, Codex only, 60 minutes): run 27 FAIL 96 open, run 28 FAIL 81 open,
-run 29 FAIL 75 open, each after about 50 counted minutes (the final-replay reserve kept the rest). The
-best set improves slowly and stays far from zero. **Decision needed (Yan-Ru):** the fallbacks of the
-approved plan: (a) a 120-minute budget (map 13 item 11 allows tuning as a new run plan); (b) start from
-the contract proof's hints as seeds (map 13 item 9, the design's per-candidate flow); (c) close 07 as fail
-and carry the falsifier, the parallel rounds and the stand-in corrections into A3. Also for sign-off: the
-`pushed_are_new` correction below.
+| Run | Method | Budget | Best set at stop | Final replay |
+|---|---|---|---|---|
+| 27 | method24 | 60 min | 96 of 617 open | not reached |
+| 28 | method25 (parallel rounds) | 60 min | 81 of 658 open | not reached |
+| 29 | method26 (no strategy hints) | 60 min | 75 of 584 open | not reached |
+| 30 | method26, run plan `method26-b120` (Yan-Ru's fallback a) | 120 min | 2 of 653 open, but under a **false lemma** | not reached |
 
-Resume: read this section and the three run entries below; `python3 m24.py --out <new empty folder>` in
-`prototype/07-wp-hints/` (sandbox off: Why3 socket and Codex network) starts a method26 counted run.
+Runs 1-26 (earlier methods) are below; all failed. Per Yan-Ru's rule (fallback a, then c if it fails), 07
+closes as fail.
+
+**Why run 30's "2 open" was not near a proof.** Its incumbent's lemma `td_rank_nonnegative` is false
+(n = i = 0, j = e = 0; Codex found this itself). WP makes every lemma a hypothesis of every goal, so the 651
+proven goals may rest on an inconsistent context. An uncounted diagnostic replaced only that lemma by a true
+guarded version (`... && (i < n || j == -1) ==> ...`, edited by the implementing agent, so never countable):
+the final replay (all functions, 30 s, smoke tests) left at least 62 TDStep goals open and hit its 900 s
+limit before finishing (`/tmp/claude/probata-runs/t07f/diag-30-guarded/`).
+
+**Acceptance, item by item:**
+- Stand-in (C++ names, hazard checks, DX100 calls only through ACSL summaries, threads = 1, symbolic sizes):
+  met; three corrections this session (below).
+- No-hint WP run recorded with failure classes: met (171 of 447 open, all TDStep, all timeout).
+- A counted run proving everything in 60 minutes: **not met**.
+- Vocabulary, erase-and-diff, Codex-only provenance: met in runs 27-30 (no seeds, no implementing-agent hints).
+- Verdict from a fresh per-property report, smoke tests, negative control: never reached in a counted run.
+- Portfolio Alt-Ergo, Z3, CVC5 with the prover recorded per goal: met.
+- Workspace and provider pin (`gpt-5.6-sol`, `xhigh`, Codex CLI 0.153.0): met.
+
+**What this session found that A2/A3 need:**
+1. **The stand-in's own postcondition `pushed_are_new` was false.** `\old(parent->start_[queue->shared[i]])`
+   reads the queue entry in the pre-state. Every earlier run tried to prove a false clause. Fixed with
+   `\let w = queue->shared[i]` (accepted by Yan-Ru with fallback a). Lesson for ticket 31's unit
+   postcondition: `\old`/`\at` evaluate their whole argument, indices included.
+2. **A bounded falsifier pays off** (`prototype/07-wp-hints/falsify/`): executes the hint-free stand-in on
+   2000 precondition-satisfying inputs and evaluates asserts, invariants, variants and loop assigns in about
+   10 s. It found the false postcondition and run 13's false invariant, and refuted false hints within
+   seconds in every counted run. **Gap:** it did not evaluate lemmas; the false lemma of run 30 would have
+   been caught. Ticket 35/37 should add lemma instances and treat a refuted lemma as voiding every goal.
+3. **WP throughput is the bottleneck.** Goal generation and Qed run sequentially per process; three
+   concurrent processes over an exact goal partition cut a round from 360 s to 219 s. Even so, a 60-minute
+   run holds only 4-6 WP passes.
+4. **Strategy hints are inert without the `tip` prover**; they wasted most failed checks in run 28.
+5. **The in-call tool needs `show_best` and a patch operation.** In run 30, Codex had proved replacement
+   lemmas but could not combine them with the incumbent; rounds 3-10 were wasted short calls.
+6. Helper-model corrections: `std_copy`'s bound as an element count (C11 6.5.6p9) and a store through a
+   formal for call results (WP 33 drops call-result initializedness).
+
+Evidence: [run 27](../evidence/t07-counted-27-20261016.json), [run 28](../evidence/t07-counted-28-20261016.json),
+[run 29](../evidence/t07-counted-29-20261016.json), [run 30](../evidence/t07-counted-30-20261016.json); raw
+output in `/tmp/claude/probata-runs/t07f/` (host `mac`, 196 MB, kept for audit). Code: local branch
+`probata-poc/t07-m24` (worktree `/tmp/claude/probata-wt/t07-m24`), not yet merged into `yanrujhou_main`.
 
 The approved method24 plan (Yan-Ru, 2026-10-16 12:46 ET), kept for reference:
 

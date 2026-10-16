@@ -1,0 +1,381 @@
+{
+ "run": "counted-30 (method26, 120-minute run plan method26-b120)",
+ "host": "mac",
+ "raw": "/tmp/claude/probata-runs/t07f/counted-30/",
+ "verdict": {
+  "pass": false,
+  "reason": "no qualifying final replay within the budget"
+ },
+ "minutes": 105.98,
+ "provider_calls": 10,
+ "usage": {
+  "input_tokens": 25280463,
+  "cached_input_tokens": 24519040,
+  "cache_write_input_tokens": 0,
+  "output_tokens": 81943,
+  "reasoning_output_tokens": 47135
+ },
+ "excluded_lock_wait_s": 0.0,
+ "pin": {
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh"
+ },
+ "codex_version": "codex-cli 0.153.0",
+ "git_head": "67abe735b530425e8afccfe4e74993d1f57fd0fc",
+ "inputs": {
+  "bfs_unit.h": "1bcbf4dac683d6a46269fcd5f896fefc2571adc49d059b46f93fb25eb0f7b235",
+  "dxc_summaries.h": "d708c0ef974e5ede1aaadd2b5e66dd785affa5e1dc6ef37419bf9e72517ae0d2",
+  "gapbs_models.h": "ab1b7c8e4a5f0a447cec6fdf180326ad24b14bd0dffd03f2a42e370cb6d0995d",
+  "tdstep_standin.c": "0871f2a820f10d675bd5a78c7b0b13e951b985c40bd0f76d2097ff428bc80760"
+ },
+ "scripts": {
+  "m24.py": "0227a1322a398b426599ec701be7ae6d6fa7878f9e249a3782fa4a516021bc3f",
+  "m24_tool.py": "9a7cbb968ec105eb11ef3a5b37ee422ac87ced19e1e97ea06f1fb04f109cb4d6",
+  "hints.py": "bd5b089b72de57f237f63513ce1c58ef0d1520516f9dd7adc3d9229ebe3c67aa",
+  "loop.py": "0b8b8d81360733870f91746691b8bbf19d9ada8744ce173df8f909e884afc279",
+  "wp_run.sh": "c0dda0c5d16c57c6db7f8c79258e66513242d2a34c2b6d15badf84bc9277a682",
+  "goal_print.py": "565fea12e6e3382ff06ce708799cd0abac02c52f69a9d219ef511d92dae2991f",
+  "falsify/falsify.py": "4203e3faacd1981360e598e56e6f876e936759df09c216c8d96253072aba2bf4",
+  "falsify/acsl_eval.py": "9e2ca0114c1aaa8179d713b07924f70be201ad73ba822bfc077e288b9db2292b",
+  "falsify/build.py": "42803e5691b76e1d7f2e519f5a55a5e7be7a74eb668ac531a7ab5e3df3d9a156",
+  "falsify/harness.c": "31044c2052b4cb92192fc98e17d5fda44ec6b9fceb1e44109686c048f9097aec",
+  "falsify/instances.py": "beee23887d9e7137223ae2d500022500a93c05546cb8dab0b6c6085d6b4288e3"
+ },
+ "baseline": {
+  "runs": [
+   {
+    "timeout_s": 3,
+    "wall_s": 302.22,
+    "open": 171,
+    "n_goals": 314
+   }
+  ],
+  "open": 171,
+  "minutes": 5.04
+ },
+ "rounds": [
+  {
+   "round": 1,
+   "codex": {
+    "exit": 0,
+    "wall_s": 5218.1,
+    "usage": {
+     "input_tokens": 21587435,
+     "cached_input_tokens": 21220608,
+     "cache_write_input_tokens": 0,
+     "output_tokens": 58376,
+     "reasoning_output_tokens": 30593
+    },
+    "error": null,
+    "killed_at_deadline": false,
+    "thread": "01a14686-a830-7790-874a-6c0418894781"
+   },
+   "tool_calls": 56,
+   "tool_results": [
+    "check failed",
+    "check failed",
+    "check passed",
+    "falsified",
+    "check failed",
+    "check passed",
+    "falsified",
+    "falsified",
+    "check failed",
+    "check failed",
+    "check failed",
+    "check failed",
+    "check passed",
+    "falsified",
+    "check passed",
+    "not all proven",
+    "printed 1 goal block(s)",
+    "printed 1 goal block(s)",
+    "check passed",
+    "falsified",
+    "not all proven",
+    "falsified",
+    "check passed",
+    "not all proven",
+    "check passed",
+    "check passed",
+    "refused: goal not open",
+    "printed 1 goal block(s)",
+    "check passed",
+    "falsified",
+    "not all proven",
+    "falsified",
+    "check passed",
+    "not all proven",
+    "check passed",
+    "falsified",
+    "not all proven",
+    "check passed",
+    "falsified",
+    "not all proven",
+    "falsified",
+    "check passed",
+    "not all proven",
+    "falsified",
+    "not all proven",
+    "check passed",
+    "falsified",
+    "not all proven",
+    "check passed",
+    "not all proven",
+    "check passed",
+    "falsified",
+    "check failed",
+    "check passed",
+    "falsified",
+    "not all proven"
+   ],
+   "minutes": 92.01,
+   "best_open": 2
+  },
+  {
+   "round": 2,
+   "codex": {
+    "exit": 0,
+    "wall_s": 513.5,
+    "usage": {
+     "input_tokens": 1069289,
+     "cached_input_tokens": 797952,
+     "cache_write_input_tokens": 0,
+     "output_tokens": 9641,
+     "reasoning_output_tokens": 7957
+    },
+    "error": null,
+    "killed_at_deadline": false,
+    "thread": "01a14686-a830-7790-874a-6c0418894781"
+   },
+   "tool_calls": 12,
+   "tool_results": [
+    "printed 1 goal block(s)",
+    "refused: goal not open",
+    "refused: goal not open",
+    "refused: goal not open",
+    "refused: goal not open",
+    "printed 1 goal block(s)",
+    "not all proven",
+    "refused: goal not open",
+    "refused: goal not open",
+    "refused: goal not open",
+    "refused: goal not open",
+    "refused: goal not open"
+   ],
+   "minutes": 100.57,
+   "best_open": 2
+  },
+  {
+   "round": 3,
+   "codex": {
+    "exit": 0,
+    "wall_s": 51.6,
+    "usage": {
+     "input_tokens": 303958,
+     "cached_input_tokens": 225792,
+     "cache_write_input_tokens": 0,
+     "output_tokens": 2778,
+     "reasoning_output_tokens": 1809
+    },
+    "error": null,
+    "killed_at_deadline": false,
+    "thread": "01a14686-a830-7790-874a-6c0418894781"
+   },
+   "tool_calls": 1,
+   "tool_results": [
+    "check passed"
+   ],
+   "minutes": 101.43,
+   "best_open": 2
+  },
+  {
+   "round": 4,
+   "codex": {
+    "exit": 0,
+    "wall_s": 66.0,
+    "usage": {
+     "input_tokens": 258815,
+     "cached_input_tokens": 249344,
+     "cache_write_input_tokens": 0,
+     "output_tokens": 3363,
+     "reasoning_output_tokens": 2461
+    },
+    "error": null,
+    "killed_at_deadline": false,
+    "thread": "01a14686-a830-7790-874a-6c0418894781"
+   },
+   "tool_calls": 2,
+   "tool_results": [
+    "falsified",
+    "check passed"
+   ],
+   "minutes": 102.53,
+   "best_open": 2
+  },
+  {
+   "round": 5,
+   "codex": {
+    "exit": 0,
+    "wall_s": 41.1,
+    "usage": {
+     "input_tokens": 272839,
+     "cached_input_tokens": 266112,
+     "cache_write_input_tokens": 0,
+     "output_tokens": 1787,
+     "reasoning_output_tokens": 1228
+    },
+    "error": null,
+    "killed_at_deadline": false,
+    "thread": "01a14686-a830-7790-874a-6c0418894781"
+   },
+   "tool_calls": 1,
+   "tool_results": [
+    "printed 1 goal block(s)"
+   ],
+   "minutes": 103.22,
+   "best_open": 2
+  },
+  {
+   "round": 6,
+   "codex": {
+    "exit": 0,
+    "wall_s": 30.5,
+    "usage": {
+     "input_tokens": 422314,
+     "cached_input_tokens": 416512,
+     "cache_write_input_tokens": 0,
+     "output_tokens": 1097,
+     "reasoning_output_tokens": 464
+    },
+    "error": null,
+    "killed_at_deadline": false,
+    "thread": "01a14686-a830-7790-874a-6c0418894781"
+   },
+   "tool_calls": 4,
+   "tool_results": [
+    "refused: goal not open",
+    "refused: goal not open",
+    "refused: goal not open",
+    "refused: goal not open"
+   ],
+   "minutes": 103.73,
+   "best_open": 2
+  },
+  {
+   "round": 7,
+   "codex": {
+    "exit": 0,
+    "wall_s": 46.5,
+    "usage": {
+     "input_tokens": 434352,
+     "cached_input_tokens": 428800,
+     "cache_write_input_tokens": 0,
+     "output_tokens": 1074,
+     "reasoning_output_tokens": 433
+    },
+    "error": null,
+    "killed_at_deadline": false,
+    "thread": "01a14686-a830-7790-874a-6c0418894781"
+   },
+   "tool_calls": 6,
+   "tool_results": [
+    "check passed",
+    "check passed",
+    "check passed",
+    "falsified",
+    "falsified",
+    "check passed"
+   ],
+   "minutes": 104.5,
+   "best_open": 2
+  },
+  {
+   "round": 8,
+   "codex": {
+    "exit": 0,
+    "wall_s": 41.4,
+    "usage": {
+     "input_tokens": 299423,
+     "cached_input_tokens": 294400,
+     "cache_write_input_tokens": 0,
+     "output_tokens": 1907,
+     "reasoning_output_tokens": 1440
+    },
+    "error": null,
+    "killed_at_deadline": false,
+    "thread": "01a14686-a830-7790-874a-6c0418894781"
+   },
+   "tool_calls": 1,
+   "tool_results": [
+    "printed 1 goal block(s)"
+   ],
+   "minutes": 105.19,
+   "best_open": 2
+  },
+  {
+   "round": 9,
+   "codex": {
+    "exit": 0,
+    "wall_s": 21.7,
+    "usage": {
+     "input_tokens": 309859,
+     "cached_input_tokens": 303488,
+     "cache_write_input_tokens": 0,
+     "output_tokens": 1028,
+     "reasoning_output_tokens": 363
+    },
+    "error": null,
+    "killed_at_deadline": false,
+    "thread": "01a14686-a830-7790-874a-6c0418894781"
+   },
+   "tool_calls": 2,
+   "tool_results": [
+    "falsified",
+    "check passed"
+   ],
+   "minutes": 105.55,
+   "best_open": 2
+  },
+  {
+   "round": 10,
+   "codex": {
+    "exit": 0,
+    "wall_s": 25.7,
+    "usage": {
+     "input_tokens": 322179,
+     "cached_input_tokens": 316032,
+     "cache_write_input_tokens": 0,
+     "output_tokens": 892,
+     "reasoning_output_tokens": 387
+    },
+    "error": null,
+    "killed_at_deadline": false,
+    "thread": "01a14686-a830-7790-874a-6c0418894781"
+   },
+   "tool_calls": 1,
+   "tool_results": [
+    "printed 1 goal block(s)"
+   ],
+   "minutes": 105.98,
+   "best_open": 2
+  }
+ ],
+ "best": {
+  "n_open": 2,
+  "n_goals": 653,
+  "n_hints": 119,
+  "best_json_sha256": "7491f3a36ee73a5326ea6f089eeb0180dacad16e72cda74dddc06c9fb2e6a40f",
+  "open_goals": [
+   "typed_lemma_td_rank_nonnegative",
+   "typed_lemma_td_rank_strict"
+  ],
+  "reached_at_budget_min": 61.53
+ },
+ "harness_defects": [
+  "no tool returns the incumbent's hint payload or applies a patch, so Codex could not combine its proved replacement lemmas with the 119-hint incumbent",
+  "malformed tool arguments raised exceptions (hints passed as a string or bool)",
+  "rounds 3-10 were short calls (20-60 s) that used up the 10-round cap at minute 106"
+ ],
+ "soundness_note": "the incumbent's lemma td_rank_nonnegative is false (n=i=0, j=e=0; Codex found it); every lemma is a hypothesis of every goal, so the incumbent's 651 proven goals may rest on an inconsistent context"
+}
