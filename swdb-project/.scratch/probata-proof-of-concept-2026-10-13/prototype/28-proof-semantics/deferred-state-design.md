@@ -222,8 +222,9 @@ ID to6; it does not reset host tile/register counters, byte payloads or pending
 commands. `init_MAA` resets only host counters/next region. Existing user range
 definitions, payloads, ownership and pending commands survive. The source int8
 region counter narrows127+1 to-128 in the explicit static-checked native
-conversion profile; it is not signed-overflow UB. A subsequent negative hardware
-ID refuses, and clear restores the six reserved ranges/counter. Whole-span F2
+conversion profile; it is not signed-overflow UB. The prototype rejects a subsequent negative ID as a software caller guard before
+source array access: MAA::addAddrRegion checks only the upper bound, so this is
+not a source hardware rejection/panic. Clear restores the six reserved ranges/counter. Whole-span F2
 and physical store-line domains remain separate from this registration state.
 
 Source boundary corrections for future wrappers: `CpuSidePort.cc` implements no
