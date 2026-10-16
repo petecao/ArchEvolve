@@ -212,10 +212,25 @@ static unsigned dxm_result(void) {
   dxm_nodes[id].kind=6; dxm_nodes[id].settled=0;
   return id;
 }
+static unsigned dxm_uninitialized(void) {
+  DXM_CHECK(dxm_count < DXM_NODES, "node-capacity");
+  unsigned id=dxm_count++;
+  dxm_nodes[id].kind=8; dxm_nodes[id].settled=0;
+  return id;
+}
 static void dxm_publish(unsigned id,uint64_t value) {
   DXM_CHECK(id < dxm_count && dxm_nodes[id].kind == 6, "action-result-domain");
   DXM_CHECK(!dxm_nodes[id].settled, "immutable-action-result");
   dxm_nodes[id].value=value; dxm_nodes[id].settled=1;
+}
+/* Inactive old-result lanes retain the captured version without evaluating it.
+   The edge must descend even when its target is uninitialized. */
+static void dxm_publish_alias(unsigned id,unsigned parent) {
+  DXM_CHECK(id < dxm_count && dxm_nodes[id].kind == 6, "action-result-domain");
+  DXM_CHECK(!dxm_nodes[id].settled, "immutable-action-result");
+  DXM_CHECK(parent < id, "acyclic-producer-version");
+  if (dxm_nodes[parent].settled) dxm_publish(id,dxm_nodes[parent].value);
+  else { dxm_nodes[id].kind=9; dxm_nodes[id].left=parent; }
 }
 static unsigned dxm_bytes(const unsigned *parents,const unsigned *shifts,unsigned count) {
   DXM_CHECK(count == 4 || count == 8, "image-width-domain");
@@ -227,6 +242,16 @@ static unsigned dxm_bytes(const unsigned *parents,const unsigned *shifts,unsigne
     DXM_CHECK(parents[i] < id && shifts[i] < 8, "image-producer-version-domain");
     n->byte_parent[i]=parents[i]; n->byte_shift[i]=shifts[i];
   }
+  return id;
+}
+static unsigned dxm_byte_select(unsigned condition,unsigned yes,unsigned yes_shift,unsigned no,unsigned no_shift) {
+  DXM_CHECK(condition < dxm_count && yes < dxm_count && no < dxm_count, "producer-version-domain");
+  DXM_CHECK(yes_shift < 8 && no_shift < 8, "image-byte-domain");
+  DXM_CHECK(dxm_count < DXM_NODES, "node-capacity");
+  unsigned id=dxm_count++;
+  struct dxm_node *n=&dxm_nodes[id];
+  n->kind=10; n->left=condition; n->right=yes; n->otherwise=no; n->settled=0;
+  n->byte_shift[0]=yes_shift; n->byte_shift[1]=no_shift;
   return id;
 }
 static void dxm_cover(unsigned id) {
@@ -242,13 +267,14 @@ static void dxm_cover(unsigned id) {
     struct dxm_node *n=&dxm_nodes[i];
     if (n->settled) { --depth; continue; }
     if (n->kind == 6) { DXM_CHECK(0, "action-result-before-completion"); return; }
+    if (n->kind == 8) { DXM_CHECK(0, "tile-value-initialized"); return; }
     unsigned parent=0, visit=0;
     if ((n->kind == 2 || n->kind == 5) && phase[frame] < 2) {
       parent=phase[frame] == 0 ? n->left : n->right;
       ++phase[frame]; visit=1;
-    } else if (n->kind == 3 && phase[frame] == 0) {
+    } else if ((n->kind == 3 || n->kind == 9) && phase[frame] == 0) {
       parent=n->left; ++phase[frame]; visit=1;
-    } else if (n->kind == 4 && phase[frame] < 2) {
+    } else if ((n->kind == 4 || n->kind == 10) && phase[frame] < 2) {
       parent=phase[frame] == 0 ? n->left : (dxm_nodes[n->left].value ? n->right : n->otherwise);
       ++phase[frame]; visit=1;
     } else if (n->kind == 7 && phase[frame] < n->byte_count) {
@@ -284,6 +310,13 @@ static void dxm_cover(unsigned id) {
         n->value=candidates[pick];
       } else if (n->kind == 5) {
         n->value=0;
+      } else if (n->kind == 9) {
+        n->value=dxm_nodes[n->left].value;
+      } else if (n->kind == 10) {
+        unsigned yes=dxm_nodes[n->left].value != 0;
+        unsigned parent=yes ? n->right : n->otherwise;
+        unsigned shift=n->byte_shift[yes ? 0 : 1];
+        n->value=(dxm_nodes[parent].value >> (8*shift)) & UINT64_C(255);
       } else if (n->kind == 7) {
         n->value=0;
         for (unsigned j=0; j<n->byte_count; ++j) {
