@@ -4,7 +4,7 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 20:19 ET. **Implementation is active under the user's ongoing approval.**
+Updated: 2026-10-15 20:49 ET. **Implementation is active under the user's ongoing approval.**
 Integration `codex/probata-resume-20261015` is based on `yanrujhou_main` at `d94d629b`.
 Audited run23 documentation is published at `6dc94905`; reviewed method21 prototype
 is published at `14c2a298`. Only `swdb/c_lowering.py`
@@ -18,9 +18,9 @@ Drafts 1/2 remain immutable. No draft 3 or final production freeze exists.
 
 | Ticket / owner | Verified checkpoint | Active work |
 |---|---|---|
-| 07 / `ticket07` | Run 25 fresh baseline 6.09 minutes; empty diagnostic 10.49 minutes. Independent first-provider input/argv/scope audit passes before any candidate. First accepted candidate has 102 open goals and 5 Codex-authored records; second proposal active. | Clean frozen `798e9bb3`, one fresh provider. Six goal-view requests: first 4 safely refused on real header formats, then 2 pages succeeded; availability gap retained. All 16 completed guards have clean cleanup. Proof stop about 20:32, hard return about 20:35, total endpoint about 20:59 ET. |
-| 24 / `ticket24` | Eight caller pairs, 14 models and all 3 fixture summaries independently accepted: 33/36 qualifying actual WP rows. OMP safe 67 ordinary + 8 smoke Valid; seed has one invariant timeout, both retain 18 init goals. Original std gap is retained. | Node 0 generation 580 continues at `23933f8a`: 12 reused + 12 fresh rows independently accepted. Allocation pair, dedicated bounds negative and 9 lifetime refusals remain. Combined 36-actual/9-refusal closure audit is prepared, not yet run. |
-| 27 / `ticket27` | Current negative 13/13, bounded/native 35/35 and repaired capacity 3/3 accepted. Fresh CPU + A-rest4 accepted, 5/11 safe units. A-rest proves 316 ordinary + 100 smoke goals, retaining 58 init/55 RTE. | Node 1 generation 605 runs B1 three-case group, started 20:17:15 ET; B2 three-case group queued. Exact disjoint safe union 1 + 4 + 3 + 3 = 11; original A5/B6 unlaunched. Six safe units pending. |
+| 07 / `ticket07` | Run 25 ended UNPROVEN at 20:38:30 ET / 39.48 counted minutes. Complete provider usage and exact 12-record Codex origin pass. Full30 positive aborted on an environment-inspection denial, no complete goal report; negative not run. | Frozen `798e9bb3`; all 34 source pins retained. Independent three-scan poststop audit passes; both leases absent, Mac slot released. Separate closeout packet ready; only controlled guard/reader diagnosis, no fresh actual admission. |
+| 24 / `ticket24` | Nine caller pairs, 14 models, 3 fixture summaries and dedicated bounds negative independently accepted: 36/36 actual WP rows. All 5 published lifetime refusals have no verifier launch/goals. Original std gap and qualified representative domains remain explicit. | Node 0 generation 580 continues at `23933f8a`: 12 reused + 20 fresh rows accepted. Four lifetime refusals remain, then ended resources/source-after and combined 36-actual/9-refusal/11-item review. Ticket remains claimed. |
+| 27 / `ticket27` | Current negative 13/13, bounded/native 35/35 and repaired capacity 3/3 accepted. CPU + A-rest4 + B1three accepted: 8/11 fresh safe units. B1 proves 189 ordinary + 67 smoke, retaining 37 init/29 RTE; full audit clean. | Node 1 generation 606 runs final B2 group, started 20:44:49 ET: three_reads/value_gather/footprint. Exact disjoint union 1 + 4 + 3 + 3 = 11; original A5/B6 unlaunched. Three safe units pending. |
 | 36 / dependency-gated | 122 compiler/scripted controls pass; 13 actual-WP cases excluded. | Waits on 27; runtime fallback research remains prospective. |
 
 At17:43:14 ET node0 generation572 released after the standard caller safe timeout;
@@ -154,6 +154,27 @@ historical hints; fixed Codex provider, full positive/identical-hints wait-negat
 complete usage and post-persistence publication gates remain mandatory.
 [Exact launch and artifact hashes](evidence/t07-run25-launch-20261015.json).
 
+Run 25 ended20:38:30 ET /2369.004711 counted seconds: **UNPROVEN**, not a
+60-minute overrun. One fresh provider returned naturally with complete usage:
+2,979,289 input (2,875,264 cached subset), 16,972 output (7,951 reasoning subset).
+Independent exact raw-request/CLI/attempt transformation and ancestry checks pass
+for all12 retained Codex records. Diagnostic incumbent has101open/168ordinary
+(95unit/6hint); six proposals gave3accepted/1staged/2reverted outcomes.
+Final full30 scheduled406goals but guard aborted after383.615460s on
+supervision/environ AccessDenied for candidatePID39659/birth1792111109.33101.
+Three retries span32.240ms; its executable, ownership and denial cause were not
+retained and remain unknown. No timeout/OOM; peak3916.671875MiB. Partial31Timeout
+lines and absent goals.json establish no full verdict. Negative correctly did
+not run because the positive never qualified; its acceptance criterion is not waived.
+`within_budget=false` means unsuccessful admission here, not elapsed60minutes.
+All30guard reports audited:28exit0, one search-deadline censor, one terminal
+inspection error. Cleanup inventories empty; three independent fresh poststop
+scans found0matches/0denials and both leases absent. Root released the Macslot.
+Final independent manifest`c80e7bb7ae1aa346ac37e298839aaff826fd68c510104dd175b8d6d203fc3f98`
+pins1,265rawfiles/20external audit artifacts; source798 remains frozen. Compact
+closeout publication is pending. Prospective bounded-retry/real-format goal-reader
+and same-run baseline optimization work is controlled only; no blind rerun.
+
 Qualified std at6221 stopped before WP: public formal-half vocabulary excludes
 valid_read/base_addr. Its zero-row failure and unchanged inputs remain retained;
 no ordinary model eligibility/semantic result is claimed. V2 uses only allowed
@@ -219,7 +240,7 @@ lanes after the active jobs; every launch still needs fresh all-lease/resource
 admission. Historical weights are not a fresh ETA or success guarantee.
 [Selected schedule and exact commands](evidence/t27-selected-safe-shard-schedule-20261015.json).
 No full ticket or method success is claimed from these checkpoints. This chat's
-30-minute heartbeat stays active; last full table 20:19 ET, next due 20:49 ET.
+30-minute heartbeat stays active; last full table 20:49 ET, next due 21:19 ET.
 Root live readback at 19:50 ET: both lanes held (580/604), exact detached source
 identities unchanged, active solver processes on both profiles, load 2.81 and
 12 GiB free on `/data1` / 94 GiB on `/data`. No third evaluation job.
@@ -238,6 +259,19 @@ raw `/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t27-safe-b1`.
 197 physical/Git module checks pass; full runtime equals prior accepted`0e7`.
 [B1 actual admission](evidence/reviewed-t27-safe-b1-launch-0e7f2327-20261015.json).
 The remaining B2 group is prospective until a fresh naturally free lane admission.
+
+B1 naturally released20:43:22 ET,3/3tests passed. Independent closure:
+189ordinary+67smoke Valid,37init/29RTE;3,447references/897files,0mismatch.
+Guard1564.733s/3,995,893,760B peak, outer1566.619s/4,046,749,696B peak,
+noOOM/timeout. Published with its exact scope at`98bb12d0`.
+Root20:44:34 preflight: node0held580, node1released605, legacyreleased77,
+clean detached0e7, no residual B1 evaluation, load2.34,12/94GiBfree.
+B2 started20:44:49 ET on node1 generation606, exact reused0e7source;
+raw `/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t27-safe-b2`.
+Three_reads/value_gather/footprint, whole7200s/outer7320s, one worker,
+sampled8GiB process tree/planned8GiB raw output.197physical/Git module checks
+pass and full runtime equals prior accepted0e7. Both remote lanes remain occupied.
+[B2 actual admission](evidence/reviewed-t27-safe-b2-launch-0e7f2327-20261015.json).
 Research-only notes remain `/private/tmp/probata-ticket25-resume-exploration.md`,
 `/private/tmp/probata-ticket25-lifetime-capabilities.md`,
 `/private/tmp/probata-ticket25-heap-bridge-tcb-addendum.md`,
