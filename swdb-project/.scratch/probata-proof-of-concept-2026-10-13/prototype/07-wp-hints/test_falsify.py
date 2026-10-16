@@ -139,3 +139,23 @@ def test_review_s1_casts_and_types_still_refute_false_hints(fz):
     ]
     v = verdicts(fz, hints)
     assert v["c2"] == "refuted" and v["v2"] == "refuted"
+
+
+def test_run27_constructs_are_evaluated(fz):
+    # Run 27 hints the first falsifier could not evaluate: a local struct's address and nested slices.
+    hints = [
+        h("b1", "loop:k_loop", "loop_invariant", "loop invariant gapbs_buffer_domain(&lqueue) && lqueue.in <= lqueue.local_size;"),
+        h("b2", "loop:k_loop", "loop_invariant", "loop invariant (&lqueue)->in < lqueue.in;"),
+        h("a1", "loop:chunk_loop", "loop_assigns",
+          "loop assigns begin, parent->start_[0 .. num_nodes-1], lqueue.in, lqueue.local_queue[0 .. lqueue.local_size-1], "
+          "queue->shared_in, queue->shared[\\at(queue->shared_in,Pre) .. num_nodes-1], "
+          "dxc_tile_data[0 .. DXC_NUM_TILES-1][0 .. TILE_SIZE-1], dxc_tile_len[0 .. DXC_NUM_TILES-1], "
+          "dxc_reg[0 .. DXC_NUM_REGS-1], dxc_pending[0 .. DXC_NUM_TILES-1], dxc_dep[0 .. DXC_NUM_TILES*DXC_NUM_TILES-1];"),
+        h("a2", "loop:chunk_loop", "loop_assigns",
+          "loop assigns begin, parent->start_[0 .. num_nodes-1], lqueue.in, lqueue.local_queue[0 .. lqueue.local_size-1], "
+          "queue->shared_in, queue->shared[\\at(queue->shared_in,Pre) .. num_nodes-1], "
+          "dxc_tile_data[0 .. 1][0 .. TILE_SIZE-1], dxc_tile_len[0 .. DXC_NUM_TILES-1], "
+          "dxc_reg[0 .. DXC_NUM_REGS-1], dxc_pending[0 .. DXC_NUM_TILES-1], dxc_dep[0 .. DXC_NUM_TILES*DXC_NUM_TILES-1];"),
+    ]
+    v = verdicts(fz, hints)
+    assert v == {"b1": "not_refuted", "b2": "refuted", "a1": "not_refuted", "a2": "refuted"}, v

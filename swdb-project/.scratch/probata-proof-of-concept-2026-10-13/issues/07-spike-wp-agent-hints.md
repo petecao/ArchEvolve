@@ -76,6 +76,27 @@ Active owner: main session 11d49a0d. Raw output: `/tmp/claude/probata-runs/t07f/
   `pushed_are_new` text correction keeps the unit postcondition's intended meaning and is flagged to
   Yan-Ru for sign-off.
 
+### Counted run 27 (method24 run 1) — 2026-10-16 13:47–14:37 ET: FAIL
+
+No set reached zero open goals; no final replay. 50.1 counted minutes (the driver stops when only the
+9-minute final reserve is left), 0 s excluded lock wait. Baseline (no hints, 3 s): 171 of 314 open, 3.0 min.
+3 Codex calls in one resumed session (`gpt-5.6-sol`, `xhigh`, CLI 0.153.0), 24 tool calls, 4 WP proofs;
+17.19M input tokens (16.72M cached), 51.7k output (21.0k reasoning). Best set: 74 hints, **96 of 617 goals
+open** (34 unit, 62 hint; all timeout). Goal counts are with `-wp-split-conj`, so they are not comparable
+with earlier runs. Each `prove_hints` call took 6.0–7.6 min, so Codex got 4 WP passes; WP time was about
+60% of the run. [Compact evidence](../evidence/t07-counted-27-20261016.json).
+
+### Method25 — 2026-10-16 ET (prospective; search-only changes, verdict path unchanged)
+
+Cause of run 27's slow search: WP's goal generation and Qed simplification run sequentially in one
+process. Per-category timing on run 27's best set (3 s): invariants 113 s, call preconditions 95 s,
+assigns 74 s, asserts 47 s, the rest under 20 s; the sum (366 s) equals the full round. Method25 runs the
+rounds as three concurrent WP processes over an exact partition of TDStep's goals (`@invariant`;
+`@requires,@check,@terminates`; the complement; 104 + 209 + 304 = 617, checked) inside one verifier job:
+360 s -> 219 s, 3.3 GB peak (a 4-way split gave 215 s: CPU-bound). The falsifier now also evaluates
+local-struct addresses (`&lqueue`) and nested slices in loop assigns (every run 27 hint is now checked).
+In run 27 it refuted 3 false hints in seconds, each of which would have cost a WP pass.
+
 ## Historical checkpoint — user stop 2026-10-16 11:36 ET
 
 Status is **ready-for-agent**; the active claim is released at the user's request.

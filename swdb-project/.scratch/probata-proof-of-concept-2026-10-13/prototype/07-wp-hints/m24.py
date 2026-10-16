@@ -18,7 +18,7 @@ sys.path.insert(0, str(HERE))
 import hints as H  # noqa: E402
 import loop as L  # noqa: E402
 
-METHOD = "method24"
+METHOD = "method25"  # method24 plus the parallel round (round24p) and falsifier construct support
 LADDER = [3, 10]
 # The 10 s rung runs only when few goals stay open: a measured no-hint 10 s rerun took 483 s and closed
 # none of 171 goals (s2-ladder, 2026-10-16), while 98% of past Valid proofs took <= 3 s.
@@ -103,7 +103,7 @@ def baseline(out):
     for k, tmo in enumerate(LADDER):
         if k and len(ar["failing_goals"]) > SECOND_RUNG_MAX_OPEN:
             break
-        wlog, ws = L.verifier(out, d, "round24", timeout=1200, extra=(out / "round-cache", tmo))
+        wlog, ws = L.verifier(out, d, "round24p", timeout=1200, extra=(out / "round-cache", tmo))
         if ws["exit_code"] != 0:
             raise RuntimeError(f"baseline WP failed: {wlog}")
         ar = L.assess_round(d, wlog)
@@ -211,7 +211,7 @@ def main():
             break
         write(state / "config.json", {"out": str(out), "t0": t0, "budget_min": a.budget_min,
                                       "final_reserve_min": FINAL_RESERVE_MIN, "round": r, "ladder": LADDER, "second_rung_max_open": SECOND_RUNG_MAX_OPEN,
-                                      "lockwait_before_s": L.LOCKWAIT[0], "pin": L.PIN, "owner": "t07f"})
+                                      "lockwait_before_s": L.LOCKWAIT[0], "pin": L.PIN, "owner": "t07f", "method": METHOD})
         files = L.workspace_files((L.STANDIN_DIR / L.UNIT).read_text())
         prompt = PROMPT.format(budget=a.budget_min, reserve=FINAL_RESERVE_MIN, minutes=used(), round=r,
                                rounds=a.rounds, feedback=feedback, files=files) if thread is None else (

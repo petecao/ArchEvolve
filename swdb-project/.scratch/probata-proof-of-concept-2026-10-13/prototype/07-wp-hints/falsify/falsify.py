@@ -336,6 +336,19 @@ def cover(ctx, e, mem, loc, struct):
             mem.add((p.b, p.i + i))
             return
         raise A.Unknown("location")
+    if k == "slice" and e[1][0] == "slice":
+        # a[l1 .. h1][l2 .. h2]: the inner slice selects pointer cells (e.g. dxc_tile_data[0 .. 7]).
+        base = A.eval_term(ctx, e[1][1])
+        l1, h1 = A.eval_term(ctx, e[1][2]), A.eval_term(ctx, e[1][3])
+        lo, hi = A.eval_term(ctx, e[2]), A.eval_term(ctx, e[3])
+        if not all(isinstance(x, int) for x in (l1, h1, lo, hi)) or h1 - l1 > 64:
+            raise A.Unknown("location")
+        for t in range(l1, h1 + 1):
+            p = A.read(ctx, base, t)
+            if not isinstance(p, A.Ptr):
+                raise A.Unknown("location")
+            mem.add((p.b, ("range", p.i + lo, p.i + hi)))
+        return
     if k == "slice":
         p = A.eval_term(ctx, e[1])
         lo, hi = A.eval_term(ctx, e[2]), A.eval_term(ctx, e[3])

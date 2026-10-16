@@ -88,7 +88,7 @@ class Server:
         r = self.cfg["round"]
         return [{"id": f"r{r}c{self.n}h{i}", "anchor": h.get("anchor"), "kind": h.get("kind"),
                  "text": h.get("text", ""),
-                 "provenance": f"codex {self.pin['model']} {self.pin['effort']} method24 round {r} tool call {self.n}"}
+                 "provenance": f"codex {self.pin['model']} {self.pin['effort']} {self.cfg.get('method', 'method24')} round {r} tool call {self.n}"}
                 for i, h in enumerate(raw, 1)]
 
     def incumbent(self):
@@ -137,7 +137,7 @@ class Server:
                              len(ar["failing_goals"]) > self.cfg.get("second_rung_max_open", 40)):
                 break
             remaining_s = max(60, int(self.left_min() * 60))
-            wlog, ws = L.verifier(self.out, d, "round24", timeout=remaining_s + 60,
+            wlog, ws = L.verifier(self.out, d, "round24p", timeout=remaining_s + 60,
                                   extra=(self.out / "round-cache", tmo))
             if ws["exit_code"] != 0:
                 self.record("prove_hints", hs, "wp failed", dir=str(d), wp=ws)

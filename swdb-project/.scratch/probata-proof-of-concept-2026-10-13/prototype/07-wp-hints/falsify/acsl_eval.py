@@ -463,6 +463,10 @@ def read(ctx, p, idx=0):
     if not isinstance(p, Ptr) or p.b is None:
         raise Unknown("read through a non-pointer")
     st = ctx.state()
+    if p.b.startswith("&"):
+        if p.i + idx != 0 or not isinstance(st.loc.get(p.b[1:]), dict):
+            raise Unknown("local struct address")
+        return st.loc[p.b[1:]]
     blk = st.mem.get(p.b)
     i = p.i + idx
     if isinstance(blk, dict):
@@ -567,7 +571,7 @@ def valid(ctx, v, read_only=False):
         raise Unknown("\\valid of a non-pointer")
     if p.b is None:
         return False
-    n = ctx.state().count.get(p.b)
+    n = 1 if p.b.startswith("&") else ctx.state().count.get(p.b)
     if n is None:
         raise Unknown("validity of an unknown block")
     return 0 <= p.i + lo and p.i + hi < n
@@ -864,6 +868,10 @@ def eval_term(ctx, e):
 
 
 def address(ctx, e):
+    if e[0] == "id" and e[1] not in ctx.binds:
+        st = ctx.state()
+        if isinstance(st.loc.get(e[1]), dict):
+            return Ptr("&" + e[1], 0)  # address of a local struct (e.g. &lqueue)
     if e[0] == "idx":
         base = eval_term(ctx, e[1])
         i = eval_term(ctx, e[2])
