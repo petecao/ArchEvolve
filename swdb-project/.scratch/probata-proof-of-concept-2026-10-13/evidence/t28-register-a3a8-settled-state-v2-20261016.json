@@ -1,0 +1,127 @@
+{
+  "at_utc": "2026-10-16T12:28:17.397271+00:00",
+  "dispatch.log_tail": "hostlock: acquired lease=mbit10-evaluation-node0 mode=measure generation=599 pid=3869783 by probata-reviewed-a3a8db54-t28-register-pair-v1 at 2026-10-16T12:21:48Z\nsocket_lane: node 0, cpus 0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62, policy bind:0, lease generation 599, aligned to no_gapbs_batch_running, load1 0.27, starting at 2026-10-16T12:21:48Z\n{\"aligned_cell_age_s\": \"\", \"aligned_to\": \"no_gapbs_batch_running\", \"command\": [\"timeout\", \"--signal=TERM\", \"--kill-after=60\", \"1320\", \"bash\", \"/data/yanruj/EvolveSWDB_runs/probata-reviewed-a3a8db54-t28-register-pair-v1/run.sh\"], \"cpus_allowed_list\": \"0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62\", \"ended_utc\": \"\", \"exit_code\": -1, \"host\": \"mbit10\", \"job\": \"probata-reviewed-a3a8db54-t28-register-pair-v1\", \"lease_generation\": 599, \"lease_name\": \"mbit10-evaluation-node0\", \"load1_at_start\": 0.27, \"load1_max\": 32, \"node\": 0, \"numa_memory_policy\": \"bind:0\", \"numactl\": \"--cpunodebind=0 --membind=0\", \"preregistration_sha256\": null, \"started_utc\": \"2026-10-16T12:21:48Z\"}\n{\"aligned_cell_age_s\": \"\", \"aligned_to\": \"no_gapbs_batch_running\", \"command\": [\"timeout\", \"--signal=TERM\", \"--kill-after=60\", \"1320\", \"bash\", \"/data/yanruj/EvolveSWDB_runs/probata-reviewed-a3a8db54-t28-register-pair-v1/run.sh\"], \"cpus_allowed_list\": \"0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62\", \"ended_utc\": \"2026-10-16T12:25:50Z\", \"exit_code\": 0, \"host\": \"mbit10\", \"job\": \"probata-reviewed-a3a8db54-t28-register-pair-v1\", \"lease_generation\": 599, \"lease_name\": \"mbit10-evaluation-node0\", \"load1_at_start\": 0.27, \"load1_max\": 32, \"node\": 0, \"numa_memory_policy\": \"bind:0\", \"numactl\": \"--cpunodebind=0 --membind=0\", \"preregistration_sha256\": null, \"started_utc\": \"2026-10-16T12:21:48Z\"}\nhostlock: released lease=mbit10-evaluation-node0 generation=599 pid=3869783 at 2026-10-16T12:25:50Z\n",
+  "lane.json": {
+    "socket_lane": {
+      "aligned_cell_age_s": "",
+      "aligned_to": "no_gapbs_batch_running",
+      "command": [
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=60",
+        "1320",
+        "bash",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-a3a8db54-t28-register-pair-v1/run.sh"
+      ],
+      "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+      "ended_utc": "2026-10-16T12:25:50Z",
+      "exit_code": 0,
+      "host": "mbit10",
+      "job": "probata-reviewed-a3a8db54-t28-register-pair-v1",
+      "lease_generation": 599,
+      "lease_name": "mbit10-evaluation-node0",
+      "load1_at_start": 0.27,
+      "load1_max": 32,
+      "node": 0,
+      "numa_memory_policy": "bind:0",
+      "numactl": "--cpunodebind=0 --membind=0",
+      "preregistration_sha256": null,
+      "started_utc": "2026-10-16T12:21:48Z"
+    }
+  },
+  "leases": {
+    "mbit10-evaluation-node0.meta.json": {
+      "active_session": null,
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "heartbeat_at": "2026-10-16T12:25:50Z",
+      "lease": {
+        "acquired_at": "2026-10-16T12:21:48Z",
+        "daemon_pid": 3869783,
+        "daemon_start_token": "sh3869783-1792153308",
+        "generation": 599,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node0",
+        "mode": "measure",
+        "session_id": null
+      },
+      "recovered_from_generation": null,
+      "released_at": "2026-10-16T12:25:50Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation-node1.meta.json": {
+      "active_session": null,
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "heartbeat_at": "2026-10-16T12:10:24Z",
+      "lease": {
+        "acquired_at": "2026-10-16T12:10:15Z",
+        "daemon_pid": 3868552,
+        "daemon_start_token": "sh3868552-1792152615",
+        "generation": 623,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node1",
+        "mode": "measure",
+        "session_id": null
+      },
+      "recovered_from_generation": null,
+      "released_at": "2026-10-16T12:10:24Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation.meta.json": {
+      "active_session": null,
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "heartbeat_at": "2026-09-12T04:49:11Z",
+      "lease": {
+        "acquired_at": "2026-09-12T01:35:42Z",
+        "daemon_pid": 209457,
+        "daemon_start_token": "sh209457-1789176942",
+        "generation": 77,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation",
+        "mode": "measure",
+        "session_id": null
+      },
+      "recovered_from_generation": null,
+      "released_at": "2026-09-12T04:49:11Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    }
+  },
+  "outer-resources.json": {
+    "cpu_seconds": 310.65076,
+    "exit_code": 0,
+    "out_of_memory": false,
+    "peak_rss_bytes": 2174566400,
+    "timed_out": false,
+    "wall_seconds": 241.65676224790514
+  },
+  "raw": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-a3a8db54-t28-register-pair-v1",
+  "record_paths": [
+    "/data/yanruj/EvolveSWDB_runs/probata-reviewed-a3a8db54-t28-register-pair-v1/register-profile/pytest/test_actual_wp_original_partia0/records/proofs/proof.contract.dx100_register_partial_fixture.v1.20261016t122226z.d75d266e.yaml",
+    "/data/yanruj/EvolveSWDB_runs/probata-reviewed-a3a8db54-t28-register-pair-v1/register-profile/pytest/test_actual_wp_original_partia1/records/proofs/proof.contract.dx100_register_partial_fixture.v1.20261016t122346z.ccdada99.yaml"
+  ],
+  "register-profile/pytest.log_tail": "..                                                                       [100%]\n- generated report log file: /data/yanruj/EvolveSWDB_runs/probata-reviewed-a3a8db54-t28-register-pair-v1/register-profile/report.jsonl -\n2 passed in 221.18s (0:03:41)\n",
+  "resources.json": {
+    "cpu_seconds": 261.14421699999997,
+    "exit_code": 0,
+    "out_of_memory": false,
+    "peak_rss_bytes": 2120040448,
+    "timed_out": false,
+    "wall_seconds": 239.09231723286211
+  },
+  "source-after.json": {
+    "commit": "a3a8db5411680f227f5cf0fe3f0ca473d9accae4",
+    "source_unchanged": true,
+    "tracked_changes": ""
+  }
+}
