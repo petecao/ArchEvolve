@@ -148,3 +148,10 @@ No public proof or new current version is claimed. Readiness termination remains
 open pending a distinct source/trust-bound progress domain.
 [Design](deferred-state-design.md),
 [successor RED/GREEN evidence](../../evidence/t28-deferred-actions-numeric-controls-20261015.json).
+
+Region/address successor — 2026-10-15 ET:43/43 native controls now include
+source first-ID region assignment/F2 and separation of logical membership from
+full physical-line hazards. Raw unsigned32 offset and unsigned64 Addr wrap remain
+defined; ordinary-array correspondence is a separate checked domain. Complete
+source wrappers, MMIO setup, typed geometry and proof integration remain open.
+[Exact source/RED/native evidence](../../evidence/t28-region-address-controls-20261015.json).
