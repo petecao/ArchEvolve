@@ -734,5 +734,39 @@
     "path": "prototype/28-allocation-parser/inputs/ordinary-model.c",
     "diagnostic": "new blank line at EOF",
     "reason": "Preserve exact normal model_for C output plus explicit parse-only prelude; no semantic source whitespace mutation"
+  },
+  "orchestration": {
+    "shared_scheduler": {
+      "path": "/private/tmp/probata-mac-compiler-worker-b.py",
+      "sha256": "873ac0b65eaa7edd4e0f624a86e68141c0e340f9ab1ca6816a07598538548a0e",
+      "bytes": 695
+    },
+    "guard": {
+      "path": "/private/tmp/probata-t28-allocation-final-guard.py",
+      "sha256": "a9559139c627698c2a4f4454965277d8aa80cbb9ee08cc4ef58c5b45a81bb709",
+      "bytes": 1011
+    },
+    "pinned_python": {
+      "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+      "sha256": "08fa4dbadc420090dfee2acf433b827ae05541f728d1478d96879122f53b4328",
+      "bytes": 33816
+    },
+    "outer_command_template": [
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+      "/private/tmp/probata-mac-compiler-worker-b.py",
+      "--",
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+      "/private/tmp/probata-t28-allocation-final-guard.py",
+      "<retained-profile-directory>",
+      "<explicit pytest selection from its command.json>"
+    ],
+    "guard_seconds": 300,
+    "rss_bytes": 8589934592,
+    "actual_formal_flags": "All actual fixture toggles0; Frama/CBMC disabled except explicit version/parse/exit99 stand-ins authored by fixture"
+  },
+  "producer_compact_pin_check": {
+    "references": 73,
+    "mismatches": 0,
+    "scope": "Producer hash check only; independent review pending; no formal or remote claim"
   }
 }
