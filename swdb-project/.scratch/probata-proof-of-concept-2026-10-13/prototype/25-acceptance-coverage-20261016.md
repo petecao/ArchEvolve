@@ -147,3 +147,6 @@ The separately reviewed external four-leaf diagnostic v4 and complete fresh
 24-target public model remain pending; no original-v2/caller/ticket promotion.
 See `evidence/t25-grow24-scripted-public-cold-v1-20261016.json` and the046f
 independent source/entry reviews. The pending caller checkpoint remains separate.
+
+
+Prospective AND15 empty-prefix decomposition now requires grow38/reserve44/constructor30/destructor11 and96 pending caller duties. Every copy-establishment leaf retains the complete original premise; none imports a sibling theorem. The old whole target is reference-only, other23 grow inputs and semantic theory remain unchanged. Thirty-three compiler-free cases pass; public/native/schema controls and all actual successor proofs are pending. This supersedes preparation counts only, preserves all partial046 producers and excludes the separate caller checkpoint da2518. See `25-copy-establish-and15-20261016.md`.

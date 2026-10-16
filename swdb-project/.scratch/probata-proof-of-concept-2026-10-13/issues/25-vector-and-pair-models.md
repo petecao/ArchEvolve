@@ -1377,3 +1377,10 @@ Root reports fresh normalpublicG596 at exact046 settled with10targetsproven then
 ## 2026-10-16 08:05 ET scoped cold checkpoint
 
 Root accepts only [four math diagnostics](../evidence/t25-cell4-scoped-root-decision-v1-20261016.md), with [independent support/goal reconciliation](../evidence/t25-cell4-merger-independent-cold-review-v1-20261016.md). ZeroCsmokes/publicrecordfalse/legacychecker0 versus fresh8c42 remain explicit. Separate full24G596 remains10producer-proven/copy.establishTimeout/13unexecuted including numeric; ctor30G621reports29producer-proven/one positive-posttimeout/0unexecuted, final cold pending. No fullmodel/caller/originalv2/body/ticket acceptance. [Combined evidence](../evidence/probata-frontier-cold-checkpoint-20261016-0805.md).
+
+
+### 2026-10-16 ET — prospective copy-establishment AND15 preparation
+
+The original046 full public grow run remains not_proven after ten successful targets, open `grow.copy.establish`, and thirteen unexecuted targets. Its actual query is bound to the unchanged source formula. A source-definition transformation now expands the conclusion into fifteen independent full-premise obligations, with exact conjunction reconstruction and capture-free simultaneous substitution. The original whole target is retained as an unexecuted reference; no sibling theorem, extra premise, C body/contract or heap-theory change is introduced. The other23 grow inputs are byte-identical.
+
+Seven new compiler-free tests plus26 affected packet cases pass. Prospective inventories are grow38/reserve44/constructor30/destructor11 and96 pending caller duties. Public/native/schema controls and independent equivalence review remain pending; there is no successor actual proof or new model/caller acceptance. See `../prototype/25-copy-establish-and15-20261016.md` and `../evidence/t25-copy-establish-and15-preparation-20261016.json`. Ticket25 remains claimed with all final acceptance criteria open.
