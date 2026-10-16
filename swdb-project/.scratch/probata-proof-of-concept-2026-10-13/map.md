@@ -5,12 +5,12 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-re
 
 ## Current state (resume here)
 
-Updated: 2026-10-16 06:40 ET. **35 resolved / 25 ready-for-agent / 3 claimed.**
+Updated: 2026-10-16 06:43 ET. **35 resolved / 25 ready-for-agent / 3 claimed.**
 Implementation remains active on `codex/probata-resume-20261015`, based on
 `yanrujhou_main`. Source checkpoints:`c241c547` stream/reporting and reviewed`046f6b9e` cell decomposition now integrated; reviewed caller lifetime/capacity source`42844b9a` and finite selected BFS source`9ef0603a` are integrated here. Canonical generator`b9b96fb8`, qualified backend`01771a83` and test-only health packet`83b90ed5` remain ancestors; exact conditional size actual producer`7e64298f` stays immutable. The eligible frontier is **07, 25, 28**;
 other unresolved tickets retain their dependencies. [All 63 statuses](ticket-status-20261015.md).
 
-Current dispatch checkpoint: 2026-10-16 06:40 ET. Last user full table06:22 ET; next06:52 ET. Root owns actual jobs; this update is passive Git/docs only.
+Current dispatch checkpoint: 2026-10-16 06:43 ET. Last user full table06:22 ET; next06:52 ET. Root owns actual jobs; this update is passive Git/docs only.
 
 | Ticket | Current evidence | Next gate |
 | --- | --- | --- |
