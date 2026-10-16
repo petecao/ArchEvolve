@@ -1,0 +1,40 @@
+{
+  "additional_primary_source": {
+    "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/Why3Import.ml",
+    "sha256": "47692fd544fb750e178c0a4787a1b3dcf3d97ff02c90e575777ae839d1ee13f2"
+  },
+  "blockers": [],
+  "created": "2026-10-15 ET",
+  "inputs": [
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-heap-capability/experiment.py",
+      "sha256": "27dd4aa5c49ca1d773892ed784d1dc34e7cb82e8406cf8549ca5b70d6dc29493"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-message-category-repair-controls-20261015.json",
+      "sha256": "0a3b7a06b919dde6f612d43ca3063412ad1af52f1aefa0184e3f430a4b1933b1"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-diagnostic-option-failure-v2-20261015.json",
+      "sha256": "85e0b0329bb00d372076f26286f04903b629219bac83bac939eddbf72d2d6c99"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/tests/test_heap_capability_packets.py",
+      "sha256": "2546fe5aa0520404c69a8f1ac351569483c65fdaf280445442a9bf205c1f5e74"
+    }
+  ],
+  "local_control_pins_verified": 6,
+  "primary_source_pins_verified": 3,
+  "remote_raw_independently_rehashed": false,
+  "retained_plan_rows_checked": 42,
+  "review_markdown": {
+    "path": "/private/tmp/probata-t25-message-category-review-9881fff2-20261015.md",
+    "sha256": "717545cc742c50a7400c231eefd43f11d5813cd26256a3cb09ff1b762dc26a4d"
+  },
+  "runner_blob": "8c3c00ac9f231ee56047d6e03f6493d9e1288738",
+  "runner_sha256": "27dd4aa5c49ca1d773892ed784d1dc34e7cb82e8406cf8549ca5b70d6dc29493",
+  "source_commit": "9881fff2fcb558365dc1c61b65d72f7ada707de4",
+  "tests_formal_tools_or_launches_by_reviewer": false,
+  "unchanged_manifest_obligations": 42,
+  "verdict": "PASS_NARROW_DIAGNOSTIC_REPAIR"
+}

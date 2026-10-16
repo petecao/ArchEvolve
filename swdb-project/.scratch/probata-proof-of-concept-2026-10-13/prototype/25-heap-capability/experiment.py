@@ -17,6 +17,7 @@ import sys
 import packets
 
 CAP = 8589934592
+DIAGNOSTICS = "print-generated,why3:compile,why3:import,prover:pp_task"
 
 
 def pin(path):
@@ -54,7 +55,7 @@ def plan(manifest, inputs, output, seconds, public_timeout, command=('frama-c',)
             '-wp-timeout', str(seconds), '-wp-prover', 'qed,alt-ergo,z3,cvc5',
             '-wp-status-all', '-wp-library', str(inputs / 'theory'),
             '-wp-out', 'prover-files', '-wp-print',
-            '-wp-dkey', 'print-generated,why3:compile,prover:pp_task',
+            '-wp-msg-key', DIAGNOSTICS,
         ]
         if goal['kind'] == 'check_lemma':
             flags += ['-wp-prop', '+' + goal['goal']]
@@ -62,7 +63,7 @@ def plan(manifest, inputs, output, seconds, public_timeout, command=('frama-c',)
             flags += ['-wp-fct=t25_ctor_numeric']
         invocation = [
             *command, '-machdep', 'x86_64', '-kernel-warn-key', 'annot-error=abort',
-            '-wp-library', str(inputs / 'theory'),
+            '-wp-library', str(inputs / 'theory'), '-wp-msg-key', DIAGNOSTICS,
             'wp_input.c', '-print', '-ocode', 'wp-normalized.c', '-then',
             '-machdep', 'x86_64', *flags, '-wp-report-json', 'wp-goals.json',
             '-then', '-load-module', str(report_module), '-report', '-report-untried',

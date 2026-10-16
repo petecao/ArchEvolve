@@ -324,3 +324,21 @@ def test_heap_exported_names_avoid_why3_effect_keywords_and_bind_packet_referenc
     for goal in manifest['obligations']:
         used.update(re.findall(r'Heap::([A-Za-z_]\w*)', (inputs / goal['path']).read_text()))
     assert used <= declared
+
+
+def test_import_and_task_diagnostics_use_the_supported_wp_message_category_option(tmp_path):
+    inputs = tmp_path / 'packets'
+    made = subprocess.run([sys.executable, str(CLI), 'prepare', '--output', str(inputs)],
+                          capture_output=True, text=True, timeout=30)
+    assert made.returncode == 0, made.stderr
+    output = tmp_path / 'plan'
+    planned = subprocess.run([sys.executable, str(EXPERIMENT), '--plan-only', '--input', str(inputs),
+                              '--output', str(output)], capture_output=True, text=True, timeout=30)
+    assert planned.returncode == 0, planned.stderr
+    required = {'print-generated', 'why3:compile', 'why3:import', 'prover:pp_task'}
+    for row in json.loads((output / 'plan.json').read_text())['rows']:
+        command = row['command']
+        assert '-wp-dkey' not in command
+        for phase in (command[:command.index('wp_input.c')], command[command.index('-then')+1:]):
+            assert '-wp-msg-key' in phase
+            assert set(phase[phase.index('-wp-msg-key')+1].split(',')) == required
