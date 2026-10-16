@@ -1,0 +1,818 @@
+{
+  "at_utc": "2026-10-16T07:27:28.465630+00:00",
+  "boundary": "Raw stays remote. Sampled RSS/monitored raw allowance are not kernel/filesystem quotas. Three finite same-UID PID/name/start observations do not establish universal process/environment absence.",
+  "checks": 810,
+  "connection": {
+    "disk": "Filesystem      Size  Used Avail Use% Mounted on\n/dev/sdd1       1.8T  1.7T   24G  99% /data1\n/dev/sdb1       1.8T  1.7T   69G  97% /data",
+    "uptime": "03:27:22 up 76 days, 19:46,  8 users,  load average: 0.00, 0.05, 0.09",
+    "users": ""
+  },
+  "errors": [],
+  "finite_process_observations": [
+    {
+      "at_utc": "2026-10-16T07:27:28.149901+00:00",
+      "denials": [],
+      "selected": []
+    },
+    {
+      "at_utc": "2026-10-16T07:27:28.211665+00:00",
+      "denials": [],
+      "selected": []
+    },
+    {
+      "at_utc": "2026-10-16T07:27:28.273815+00:00",
+      "denials": [],
+      "selected": []
+    }
+  ],
+  "leases": {
+    "mbit10-evaluation-node0.meta.json": "released",
+    "mbit10-evaluation-node1.meta.json": "released",
+    "mbit10-evaluation.meta.json": "released"
+  },
+  "outer_resources": {
+    "cpu_seconds": 172.001537,
+    "exit_code": 0,
+    "out_of_memory": false,
+    "peak_rss_bytes": 1164005376,
+    "timed_out": false,
+    "wall_seconds": 134.0106747560203
+  },
+  "production_delta_paths": 21,
+  "raw_bytes": 17515385,
+  "raw_count": 167,
+  "raw_files": {
+    "acceptance.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "dispatch-argv.json": {
+      "bytes": 404,
+      "sha256": "dce8ce24dc090a1efd3a3f66e69cd7b7f4ddd7b5d9ceae149165225f3bd53077"
+    },
+    "dispatch.log": {
+      "bytes": 1904,
+      "sha256": "2431cb2293212bd4f9235a1de2f8a4df3f2607aded44d898563b52d63bf3360d"
+    },
+    "execute.py": {
+      "bytes": 1603,
+      "sha256": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612"
+    },
+    "lane.json": {
+      "bytes": 796,
+      "sha256": "cc2f0ffe647babfb52fe9041e29ecaf0f449d0926d19bda3cfce07a82b4450fd"
+    },
+    "launch.json": {
+      "bytes": 46247,
+      "sha256": "c43457dcf508b3baa92afd026efb7a40c0d8e82b0d21e1bd621dcbb4c05cadf5"
+    },
+    "outer-resources.json": {
+      "bytes": 167,
+      "sha256": "ef5e1dc81e225e5b13ba2492f20e89bdefb01a6f60571ded6bfc5da74f6dfabd"
+    },
+    "preflight.json": {
+      "bytes": 11483,
+      "sha256": "f7e678b577122952b5f9792ab3cb98a150277ac3de0ce3b278d8d702e29b16e0"
+    },
+    "resources.json": {
+      "bytes": 168,
+      "sha256": "21f001a63f34424b76787b7e49167154b1f8eebeb10ad96dfe2bf05d0b8ef6ed"
+    },
+    "run.sh": {
+      "bytes": 1082,
+      "sha256": "874ed2f27093c95dda1498f216f375e33d7bda607ab3047c5eadd44231a5c7d9"
+    },
+    "runtime-provenance.json": {
+      "bytes": 3354,
+      "sha256": "886a487b68b036b70c23efef9bd6d4c200de4550b64a0877432b57bc8400b2b7"
+    },
+    "selected-size-tool-metadata.json": {
+      "bytes": 39852,
+      "sha256": "64e2921f68f43cf72cc076ebaf4cecbf153d2c44880dc0a007532a1d225138eb"
+    },
+    "size-collection.json": {
+      "bytes": 490,
+      "sha256": "6264a4d392e261d98e7b6ca48e5eea66d021349ed7dbf0bf297391453e25454c"
+    },
+    "size-collection.log": {
+      "bytes": 196,
+      "sha256": "50d068979ace727a178eeee3bcf9d1f4a60eb7d0ab31e14ba0ab21be96dbcea3"
+    },
+    "size-exec-argv.json": {
+      "bytes": 229,
+      "sha256": "d80e7b6bc72469ae8288e63163add225f5b67cedce83cc8aaa7e8453ea149cc9"
+    },
+    "size-profile/exit-code.txt": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "size-profile/junit.xml": {
+      "bytes": 494,
+      "sha256": "a013a8a375fc0b383cabb9f89f0b110d530633748b8dfbb1383a63284b91fc5c"
+    },
+    "size-profile/profile.txt": {
+      "bytes": 5,
+      "sha256": "677370b173692bf8cfe4303b41876625956be18d7d5d9144c368c9ae0d76980d"
+    },
+    "size-profile/pytest.log": {
+      "bytes": 234,
+      "sha256": "0a78b79e8fa05a423888302d3aaff16bd913f500e0ad5ee40500a22baa22d85c"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/bc-forward-pass.patch": {
+      "bytes": 10915,
+      "sha256": "253739930fea295f6bb8754fe8b5df7f87515c5353b098f50389fcd7cebba07a"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/bc_read_offload.inc": {
+      "bytes": 4260,
+      "sha256": "3898b439b0121954474b5012ff2a6fff65bf90ba4166d20d8eb276a96d013b5c"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/bfs_read_offload.inc": {
+      "bytes": 3157,
+      "sha256": "3c5867a2b8919806f681603836bd0cff448f21634485abf84e49ed71f25515ef"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/README.md": {
+      "bytes": 3798,
+      "sha256": "b0df07ee337ff8c1a83dcdb2f91038dcab2ac88b05a61c793f84bfe14d743e40"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/bc_driver.inc": {
+      "bytes": 1528,
+      "sha256": "95f92ebc2943e713783d90ffe703982266239524380343a8035b89b425b6e3df"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/bfs_driver.inc": {
+      "bytes": 1383,
+      "sha256": "ad9a5a647614000a0716075e0a4d661df9453b5ff9365db9d239bd1b06416d3a"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/candidate_prelude.hpp": {
+      "bytes": 5432,
+      "sha256": "87da9d08f1d13ec5961a5999c377bca94d10fa86b0a7ed3b540a4ab9832d37ff"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/record.cc": {
+      "bytes": 3852,
+      "sha256": "5095bcbac7e5f7b3e9b33533fc7c74dc664d8bb655c3dfbe92ffd2afed5d85b0"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/seams.cc": {
+      "bytes": 6003,
+      "sha256": "483a6978acd86a3aa6e9e4c6a0b07eee728eabad85e2e60a9660fdbf2a9d89c3"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/v1_4/bc_driver.inc": {
+      "bytes": 1713,
+      "sha256": "9034e2ad715fbabcd9fc0c842ad9c06543447eb9b476a9f3dc9014231043b1f4"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/v1_4/bfs_driver.inc": {
+      "bytes": 1806,
+      "sha256": "6c104ea0227283599920c97d388026594434ceb74516d0fe82187e8f7e98ea8f"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/v1_4/prelude.hpp": {
+      "bytes": 6496,
+      "sha256": "dd5d2917aa093b91c2abecd0ecb7221289d9e3b8e9469c506f2392ec6db7f079"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/v1_4/record.cc": {
+      "bytes": 6239,
+      "sha256": "c0b0221c2080117761f82566c7801a457aa31d3dedd21ec2600670e61bdd4fa6"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/v1_4/seams.cc": {
+      "bytes": 12876,
+      "sha256": "1a1deb79cff58ccae5ee5d9cc08bdae123c1c821b0a675e62d80c2033ec23eef"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/v1_5/arena.hpp": {
+      "bytes": 4479,
+      "sha256": "0a85a60e9f514b755ee05e0daba683c32682c97b67a31f22c911c2591f33ce42"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/v1_5/bc_driver.inc": {
+      "bytes": 1614,
+      "sha256": "b8dd9d52400551247a8daf2818e86ad49022bac30f51ac2b39cf30a42a36ef4b"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/v1_5/bfs_driver.inc": {
+      "bytes": 1563,
+      "sha256": "8bb2ba0ab100fda0b73e39e667635f747378ce1b2a527228365a42a8d164eb3e"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/v1_5/client.cc": {
+      "bytes": 5261,
+      "sha256": "f7917a984afd6b547c696f23300e1609400f4c045aefdb463a3987e8ae7a378c"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/v1_5/client/MAA_functional.hpp": {
+      "bytes": 5797,
+      "sha256": "cce4deff6692bbc1175ac61eca1b03a532f620915e999fc0c5e0f08e6d624ec0"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/v1_5/client_core.inc": {
+      "bytes": 7569,
+      "sha256": "b21188bb1067f3018ea2a0fa0bc2153b2177511800dbb211993c512369a352e8"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/v1_5/evaluator.cc": {
+      "bytes": 9296,
+      "sha256": "89a025c0869bbebd155d7c207bed62dca669b35eb793a95d6c29950e482b695e"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/v1_5/evaluator_context.hpp": {
+      "bytes": 1658,
+      "sha256": "3ff8432841d29f80aeec22df7be4a9330d7c6f2ab1f3578f3870e95516564fe0"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/v1_5/evaluator_core.inc": {
+      "bytes": 7717,
+      "sha256": "d8a77bdb2b309e04c3acb27de7b8cb3547c45f53a09b2411d9997ee9eadd7ece"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/v1_5/prelude.hpp": {
+      "bytes": 1050,
+      "sha256": "d77698926a5fb528e666def15b5220749ac4c11e9b421ba654d3294d334dc1cf"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/drivers/differential.cc": {
+      "bytes": 4707,
+      "sha256": "5a30fd75e7a23db709eb7e112d9202f46037cadc8b8c9d667ac472fd77f5e976"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/dxc_lowering.hpp": {
+      "bytes": 3153,
+      "sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/peter-section5.patch": {
+      "bytes": 8699,
+      "sha256": "cc99ca4d024983ab02c17f5db74db5210a7450968787ccad25562da4d9873cff"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/reference.hpp": {
+      "bytes": 1398,
+      "sha256": "75b80bc3d0027b1700e2fc1f075683e617d059ca4bbef761bfeb31839d9fa897"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/strict/MAA_functional.hpp": {
+      "bytes": 19587,
+      "sha256": "a24a81631c9365b114395bab65c73048269765a2862a98f4ccb4609eb80fbfa5"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/strict/gem5/m5ops.h": {
+      "bytes": 356,
+      "sha256": "b1eb7d074231782a943faa9cc249f6027152b6c727c5f70b71808e122e97867f"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/methods/dx100-size-fixture-0-2.yaml": {
+      "bytes": 3765,
+      "sha256": "5058637472627789dc4958c0a54b5f4986997430e4a7e589f0e62f54d16a014e"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/dx100_bfs/ghost.acsl": {
+      "bytes": 2740,
+      "sha256": "5fa3f12850eba75ccb254b1c1e8ab5c143488046949fbe0e4c965b55ecdb48e9"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/dx100_bfs/logic.acsl": {
+      "bytes": 14346,
+      "sha256": "34c9971965b53e04cf5ef2dd66abeaecd4d8772660f47def86158bc47624351d"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/dx100_bfs/model.h": {
+      "bytes": 20089,
+      "sha256": "88298dbb9176640fd8ec2d0c6e31386dd51849411b08df7cebf7f12eab1d22ce"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/dx100_bfs/state.h": {
+      "bytes": 949,
+      "sha256": "b371131b4a3a7ef21ad654b0eaffac94b4c63252d63397ee8b67a6b017610701"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/dx100_bfs_0_1.yaml": {
+      "bytes": 31989,
+      "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/dx100_trust_fixture.yaml": {
+      "bytes": 14293,
+      "sha256": "7995dd2a33682f45062747cb24b84760e194779520e8f923ddee0d973474d175"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/fresh-spd-size/CpuSidePort.cc": {
+      "bytes": 22141,
+      "sha256": "886a0c1bbd437916d2fac62a2aa194e01f6996fae65dc56241fad601c5f0103b"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/fresh-spd-size/IF.cc": {
+      "bytes": 23772,
+      "sha256": "fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/fresh-spd-size/MAA.cc": {
+      "bytes": 72419,
+      "sha256": "058395cbd171ccf3746fb524967d2d205cb8d622d4aa06e8eef530b00dc21299"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/fresh-spd-size/SPD.cc": {
+      "bytes": 10059,
+      "sha256": "9e6bb3672be95954e8816c054b4032f95811a3085ca6df418aed90ad1e852b4a"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/fresh-spd-size/SPD.hh": {
+      "bytes": 5117,
+      "sha256": "70e02b0fea7693585fd9b8f318381c09e352df2fff58bb3f84021f4ea02e9737"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/fresh-spd-size/ghost.acsl": {
+      "bytes": 41,
+      "sha256": "8cf4d6710d53320afc17a0c144776280a76a3e840651277e71bf65d27779160b"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/fresh-spd-size/logic.acsl": {
+      "bytes": 23,
+      "sha256": "b7f8c7f0b5a70cdcdf6ee864199c6d7b07bc2fed87e2fdeaafd6f0e770b0ceb8"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/fresh-spd-size/model.h": {
+      "bytes": 194,
+      "sha256": "0868d031051704132697c87536c0c6358cd11aa7a9ac559da798c2fdde4dc78c"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/fresh-spd-size/state.h": {
+      "bytes": 47,
+      "sha256": "3f8dcb1a5002c0cb525888ef60a9e48de1b0b95d68d05a5891953b475eef1db1"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/pure-selector/ghost.acsl": {
+      "bytes": 37,
+      "sha256": "0dffdc2cb273e85b2675258948535f3ec0f8b46f8080dd1481967f3a61f78db9"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/pure-selector/logic.acsl": {
+      "bytes": 23,
+      "sha256": "b7f8c7f0b5a70cdcdf6ee864199c6d7b07bc2fed87e2fdeaafd6f0e770b0ceb8"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/pure-selector/model.h": {
+      "bytes": 61,
+      "sha256": "9d6474eeb40d96ddca0090b6e1375a9bd46e2e6aafd4f740cbe302f949338166"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/pure-selector/state.h": {
+      "bytes": 38,
+      "sha256": "a57ee157e0975b44f2d3829b80ee82694f1d8ed66605fa811fc83999d3303a29"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_units/gem5/m5ops.h": {
+      "bytes": 133,
+      "sha256": "4caae6752583fd058e911da16305fe5bebec0fa08d3242242af85494b2b90d7a"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_units/trust.cc": {
+      "bytes": 180,
+      "sha256": "007b3944ebab95621aa5b509cf67e05e877783e2805a7588377a965da8f3cfbf"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/library/rewrite_contracts/trust.yaml": {
+      "bytes": 1212,
+      "sha256": "f3efff3fc3e4d2278f9dc2cd36604a6f2284921b291749a0298b31f034074984"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/records/.swdb.lock": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/records/proofs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75.yaml": {
+      "bytes": 4295709,
+      "sha256": "1a6f6215a1a3a791d3aa7cd7dd4a7bed51ffbd51cb364334d7cd71b898ad77e2"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/adapter.log": {
+      "bytes": 1177,
+      "sha256": "b42997ba185b8d5bc3a60acad3ff65518b011330d91b956db00290b3b421b51c"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/wp/frama-c.log": {
+      "bytes": 3002,
+      "sha256": "6fdab6385d0cae0d0d35805acd6a6c12c11f6c6095cb669b0e7b8ab37a98e1a0"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/wp/trust_fixture.anchors.json": {
+      "bytes": 3952157,
+      "sha256": "f2b371bd9bd9488a0b88332e96e188fc407ecf86c5e853d74f25f9e7c90c9c0b"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/wp/trust_fixture.c": {
+      "bytes": 714,
+      "sha256": "f2f4f74f6e3a74a9f63862effa82fb9fb92ceaac4f3bafb0d73428528d32d2cd"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/wp/wp-goals.json": {
+      "bytes": 5241,
+      "sha256": "99592504f45a6d599c35a104994cf674ea97a6ae02a9e3231e0515fd18f91b01"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/wp/wp-inventory.json": {
+      "bytes": 5755,
+      "sha256": "4fd23d661e988110028e671d6c77736efb8253804b3eaecc1ee0ed26528653b5"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/wp/wp-normalized.c": {
+      "bytes": 10885,
+      "sha256": "29e6fb68c21bd7b5971fd43f8ea01b8865668295da4dcb5686dc3928c4877c48"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/wp/wp-properties.csv": {
+      "bytes": 922,
+      "sha256": "e2f8f1ef459e7093cb7e2e7d72f7a26a0251796a503ce8245c950110047a5d07"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/wp/wp_input.c": {
+      "bytes": 3247,
+      "sha256": "d2cd70c6b640df5f46d901fd183fba5acb381bf4820dd868dfa63b30b01c9cae"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/scripted-why3.conf": {
+      "bytes": 206,
+      "sha256": "249b6d29567e6c83393d864b36ee6e2a69b8d8295d2c5b30975f2258fd62d738"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/t28-scripted-typechecker.py": {
+      "bytes": 314,
+      "sha256": "5cec4da72461c3b3740b461d280fb99e75ea736763bf9e5fa364b44803531da1"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir0/t28-version-only-adapter.py": {
+      "bytes": 280,
+      "sha256": "06f083b3b510dcb4f0f390ab3b620e96532d09b0df74a853be8f72155d3f52c0"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/bc-forward-pass.patch": {
+      "bytes": 10915,
+      "sha256": "253739930fea295f6bb8754fe8b5df7f87515c5353b098f50389fcd7cebba07a"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/bc_read_offload.inc": {
+      "bytes": 4260,
+      "sha256": "3898b439b0121954474b5012ff2a6fff65bf90ba4166d20d8eb276a96d013b5c"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/bfs_read_offload.inc": {
+      "bytes": 3157,
+      "sha256": "3c5867a2b8919806f681603836bd0cff448f21634485abf84e49ed71f25515ef"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/README.md": {
+      "bytes": 3798,
+      "sha256": "b0df07ee337ff8c1a83dcdb2f91038dcab2ac88b05a61c793f84bfe14d743e40"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/bc_driver.inc": {
+      "bytes": 1528,
+      "sha256": "95f92ebc2943e713783d90ffe703982266239524380343a8035b89b425b6e3df"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/bfs_driver.inc": {
+      "bytes": 1383,
+      "sha256": "ad9a5a647614000a0716075e0a4d661df9453b5ff9365db9d239bd1b06416d3a"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/candidate_prelude.hpp": {
+      "bytes": 5432,
+      "sha256": "87da9d08f1d13ec5961a5999c377bca94d10fa86b0a7ed3b540a4ab9832d37ff"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/record.cc": {
+      "bytes": 3852,
+      "sha256": "5095bcbac7e5f7b3e9b33533fc7c74dc664d8bb655c3dfbe92ffd2afed5d85b0"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/seams.cc": {
+      "bytes": 6003,
+      "sha256": "483a6978acd86a3aa6e9e4c6a0b07eee728eabad85e2e60a9660fdbf2a9d89c3"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/v1_4/bc_driver.inc": {
+      "bytes": 1713,
+      "sha256": "9034e2ad715fbabcd9fc0c842ad9c06543447eb9b476a9f3dc9014231043b1f4"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/v1_4/bfs_driver.inc": {
+      "bytes": 1806,
+      "sha256": "6c104ea0227283599920c97d388026594434ceb74516d0fe82187e8f7e98ea8f"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/v1_4/prelude.hpp": {
+      "bytes": 6496,
+      "sha256": "dd5d2917aa093b91c2abecd0ecb7221289d9e3b8e9469c506f2392ec6db7f079"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/v1_4/record.cc": {
+      "bytes": 6239,
+      "sha256": "c0b0221c2080117761f82566c7801a457aa31d3dedd21ec2600670e61bdd4fa6"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/v1_4/seams.cc": {
+      "bytes": 12876,
+      "sha256": "1a1deb79cff58ccae5ee5d9cc08bdae123c1c821b0a675e62d80c2033ec23eef"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/v1_5/arena.hpp": {
+      "bytes": 4479,
+      "sha256": "0a85a60e9f514b755ee05e0daba683c32682c97b67a31f22c911c2591f33ce42"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/v1_5/bc_driver.inc": {
+      "bytes": 1614,
+      "sha256": "b8dd9d52400551247a8daf2818e86ad49022bac30f51ac2b39cf30a42a36ef4b"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/v1_5/bfs_driver.inc": {
+      "bytes": 1563,
+      "sha256": "8bb2ba0ab100fda0b73e39e667635f747378ce1b2a527228365a42a8d164eb3e"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/v1_5/client.cc": {
+      "bytes": 5261,
+      "sha256": "f7917a984afd6b547c696f23300e1609400f4c045aefdb463a3987e8ae7a378c"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/v1_5/client/MAA_functional.hpp": {
+      "bytes": 5797,
+      "sha256": "cce4deff6692bbc1175ac61eca1b03a532f620915e999fc0c5e0f08e6d624ec0"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/v1_5/client_core.inc": {
+      "bytes": 7569,
+      "sha256": "b21188bb1067f3018ea2a0fa0bc2153b2177511800dbb211993c512369a352e8"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/v1_5/evaluator.cc": {
+      "bytes": 9296,
+      "sha256": "89a025c0869bbebd155d7c207bed62dca669b35eb793a95d6c29950e482b695e"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/v1_5/evaluator_context.hpp": {
+      "bytes": 1658,
+      "sha256": "3ff8432841d29f80aeec22df7be4a9330d7c6f2ab1f3578f3870e95516564fe0"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/v1_5/evaluator_core.inc": {
+      "bytes": 7717,
+      "sha256": "d8a77bdb2b309e04c3acb27de7b8cb3547c45f53a09b2411d9997ee9eadd7ece"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/v1_5/prelude.hpp": {
+      "bytes": 1050,
+      "sha256": "d77698926a5fb528e666def15b5220749ac4c11e9b421ba654d3294d334dc1cf"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/drivers/differential.cc": {
+      "bytes": 4707,
+      "sha256": "5a30fd75e7a23db709eb7e112d9202f46037cadc8b8c9d667ac472fd77f5e976"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/dxc_lowering.hpp": {
+      "bytes": 3153,
+      "sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/peter-section5.patch": {
+      "bytes": 8699,
+      "sha256": "cc99ca4d024983ab02c17f5db74db5210a7450968787ccad25562da4d9873cff"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/reference.hpp": {
+      "bytes": 1398,
+      "sha256": "75b80bc3d0027b1700e2fc1f075683e617d059ca4bbef761bfeb31839d9fa897"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/strict/MAA_functional.hpp": {
+      "bytes": 19587,
+      "sha256": "a24a81631c9365b114395bab65c73048269765a2862a98f4ccb4609eb80fbfa5"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/strict/gem5/m5ops.h": {
+      "bytes": 356,
+      "sha256": "b1eb7d074231782a943faa9cc249f6027152b6c727c5f70b71808e122e97867f"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/methods/dx100-size-fixture-0-2.yaml": {
+      "bytes": 3765,
+      "sha256": "5058637472627789dc4958c0a54b5f4986997430e4a7e589f0e62f54d16a014e"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/dx100_bfs/ghost.acsl": {
+      "bytes": 2740,
+      "sha256": "5fa3f12850eba75ccb254b1c1e8ab5c143488046949fbe0e4c965b55ecdb48e9"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/dx100_bfs/logic.acsl": {
+      "bytes": 14346,
+      "sha256": "34c9971965b53e04cf5ef2dd66abeaecd4d8772660f47def86158bc47624351d"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/dx100_bfs/model.h": {
+      "bytes": 20089,
+      "sha256": "88298dbb9176640fd8ec2d0c6e31386dd51849411b08df7cebf7f12eab1d22ce"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/dx100_bfs/state.h": {
+      "bytes": 949,
+      "sha256": "b371131b4a3a7ef21ad654b0eaffac94b4c63252d63397ee8b67a6b017610701"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/dx100_bfs_0_1.yaml": {
+      "bytes": 31989,
+      "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/dx100_trust_fixture.yaml": {
+      "bytes": 14293,
+      "sha256": "7995dd2a33682f45062747cb24b84760e194779520e8f923ddee0d973474d175"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/fresh-spd-size/CpuSidePort.cc": {
+      "bytes": 22141,
+      "sha256": "886a0c1bbd437916d2fac62a2aa194e01f6996fae65dc56241fad601c5f0103b"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/fresh-spd-size/IF.cc": {
+      "bytes": 23772,
+      "sha256": "fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/fresh-spd-size/MAA.cc": {
+      "bytes": 72419,
+      "sha256": "058395cbd171ccf3746fb524967d2d205cb8d622d4aa06e8eef530b00dc21299"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/fresh-spd-size/SPD.cc": {
+      "bytes": 10059,
+      "sha256": "9e6bb3672be95954e8816c054b4032f95811a3085ca6df418aed90ad1e852b4a"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/fresh-spd-size/SPD.hh": {
+      "bytes": 5117,
+      "sha256": "70e02b0fea7693585fd9b8f318381c09e352df2fff58bb3f84021f4ea02e9737"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/fresh-spd-size/ghost.acsl": {
+      "bytes": 41,
+      "sha256": "8cf4d6710d53320afc17a0c144776280a76a3e840651277e71bf65d27779160b"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/fresh-spd-size/logic.acsl": {
+      "bytes": 23,
+      "sha256": "b7f8c7f0b5a70cdcdf6ee864199c6d7b07bc2fed87e2fdeaafd6f0e770b0ceb8"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/fresh-spd-size/model.h": {
+      "bytes": 194,
+      "sha256": "0868d031051704132697c87536c0c6358cd11aa7a9ac559da798c2fdde4dc78c"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/fresh-spd-size/state.h": {
+      "bytes": 47,
+      "sha256": "3f8dcb1a5002c0cb525888ef60a9e48de1b0b95d68d05a5891953b475eef1db1"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/pure-selector/ghost.acsl": {
+      "bytes": 37,
+      "sha256": "0dffdc2cb273e85b2675258948535f3ec0f8b46f8080dd1481967f3a61f78db9"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/pure-selector/logic.acsl": {
+      "bytes": 23,
+      "sha256": "b7f8c7f0b5a70cdcdf6ee864199c6d7b07bc2fed87e2fdeaafd6f0e770b0ceb8"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/pure-selector/model.h": {
+      "bytes": 61,
+      "sha256": "9d6474eeb40d96ddca0090b6e1375a9bd46e2e6aafd4f740cbe302f949338166"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/pure-selector/state.h": {
+      "bytes": 38,
+      "sha256": "a57ee157e0975b44f2d3829b80ee82694f1d8ed66605fa811fc83999d3303a29"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_units/gem5/m5ops.h": {
+      "bytes": 133,
+      "sha256": "4caae6752583fd058e911da16305fe5bebec0fa08d3242242af85494b2b90d7a"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_units/trust.cc": {
+      "bytes": 180,
+      "sha256": "007b3944ebab95621aa5b509cf67e05e877783e2805a7588377a965da8f3cfbf"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/library/rewrite_contracts/trust.yaml": {
+      "bytes": 1212,
+      "sha256": "e5706a9354c6417b904d9299e712958b7ceeeb869f5d27880d082acca50e1154"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/records/.swdb.lock": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/records/proofs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367.yaml": {
+      "bytes": 4296373,
+      "sha256": "25f925c11a2ace80784ceee9bb6e83b226db554b585640f05b471fb4a9ced9b5"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/adapter.log": {
+      "bytes": 1285,
+      "sha256": "1929b0fb998a3c5043197aa4bce66bb64a6e971efef89b818f8e54aa13c1d8d8"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/wp/frama-c.log": {
+      "bytes": 3106,
+      "sha256": "16a10833374024a66028c5bfbbe78f5983ee52b1803bb0a05843c67f94aa5d08"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/wp/handler.json": {
+      "bytes": 389,
+      "sha256": "dc7cce7db330401485b5ba54e44bc0185e73a8affd194841a32791ba0fcd186e"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/wp/reproduction/command.txt": {
+      "bytes": 218,
+      "sha256": "122cd38bbbcb6b9dbb5f8fb65176423a46f781a8d3618435059c5b41992ee1b0"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/wp/reproduction/trust_fixture.c": {
+      "bytes": 714,
+      "sha256": "f2f4f74f6e3a74a9f63862effa82fb9fb92ceaac4f3bafb0d73428528d32d2cd"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/wp/reproduction/wp_input.c": {
+      "bytes": 3247,
+      "sha256": "ec00b1ffa5020f3f8b4bb0fb926028d812ccb6c59e60ec84f1d95b1f89c937f3"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/wp/trust_fixture.anchors.json": {
+      "bytes": 3952157,
+      "sha256": "50d2e6e72204ce75792dd87bab4d85342f6b27977214099606949238e3f3cc8d"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/wp/trust_fixture.c": {
+      "bytes": 714,
+      "sha256": "f2f4f74f6e3a74a9f63862effa82fb9fb92ceaac4f3bafb0d73428528d32d2cd"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/wp/wp-goals.json": {
+      "bytes": 5317,
+      "sha256": "fa0caaecaec3ef9367e59da84311749f921e1ab3628a899f3cac6b504a859124"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/wp/wp-inventory.json": {
+      "bytes": 5736,
+      "sha256": "c5e5126ad8fcc11278809c50fe4b8b7a1ff742d1036db121b0afb690f8e80549"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/wp/wp-normalized.c": {
+      "bytes": 10885,
+      "sha256": "ef8334b1b6810cacd223d8e997198f6f1183c8aa9a1dd5dac63364ac80632bf5"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/wp/wp-properties.csv": {
+      "bytes": 924,
+      "sha256": "e0710ebc107d5e916cd2942dae39669aad7afd739210e1d77befdae911b6318a"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/wp/wp_input.c": {
+      "bytes": 3247,
+      "sha256": "ec00b1ffa5020f3f8b4bb0fb926028d812ccb6c59e60ec84f1d95b1f89c937f3"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/scripted-why3.conf": {
+      "bytes": 206,
+      "sha256": "249b6d29567e6c83393d864b36ee6e2a69b8d8295d2c5b30975f2258fd62d738"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/t28-scripted-typechecker.py": {
+      "bytes": 314,
+      "sha256": "d3b67de84f6ae65c4041e30541824c8ca3dee661a9cfafe199e69bf3b2834c54"
+    },
+    "size-profile/pytest/test_actual_wp_source_size_fir1/t28-version-only-adapter.py": {
+      "bytes": 280,
+      "sha256": "3792de5f1f7768bf05071203669dd70e52221c0d9d92926e69fb460e1fee7607"
+    },
+    "size-profile/report.jsonl": {
+      "bytes": 3991,
+      "sha256": "e479dfd0a26aa4435805f64ed21556d4f079d04499d282a52a84422724aa6add"
+    },
+    "size-profile/runtime-provenance.json": {
+      "bytes": 3882,
+      "sha256": "b62570e300cd913a6dd4ec9d5b6443efea5fcfed650185a80680f41d23fe7a2a"
+    },
+    "size-profile/selected-tests.txt": {
+      "bytes": 168,
+      "sha256": "f78c4f95f6c3add5c048e840df3a660b6edc8bc246db6f19f292fb79fa97de35"
+    },
+    "size-profile/source-commit.txt": {
+      "bytes": 41,
+      "sha256": "8ae66216ee26fd4ccdc60dff48878ef214b4c955a5905fbae6b9b04100c76cf7"
+    },
+    "size-profile/source-manifest.json": {
+      "bytes": 52713,
+      "sha256": "e902db16b84eac4b2ba941353d69e69d8d731726aa4c1460686d1b78793360f2"
+    },
+    "size-project-runtime-provenance.json": {
+      "bytes": 3773,
+      "sha256": "1a6c5989798adfc50d3b76d007a56fc2c94d443b85ccd5fa35c0b5e07b874099"
+    },
+    "source-after.json": {
+      "bytes": 112,
+      "sha256": "5938cfc1991b519df7c24729aa50435113f1ac1358345e65e9335745bbdad2ec"
+    },
+    "source-manifest.json": {
+      "bytes": 22744,
+      "sha256": "3f7dc78459658d418d6a1df92ff9f36117a1a9d1474c1f7c0b928e41ca5ffb35"
+    },
+    "watch.py": {
+      "bytes": 470,
+      "sha256": "4485ae66aa50c65f2b579f84836576aa67b54431978da71cac6eea6a68ecd07c"
+    },
+    "worker.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "raw_membership_sha256": "33807353791de3192b4434ebc6513f5d165eaab12331301b3cfbfa5b8f5cfdf5",
+  "records": [
+    {
+      "failure_class": null,
+      "id": "proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75",
+      "open_goals": [],
+      "ordinary": 8,
+      "ordinary_valid": 8,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir0/records/proofs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75.yaml",
+      "setup_check": {
+        "sha256": "e4f7ffd31662c393fe398e789653584c4b3e8992507f09991fb289195eef004a",
+        "version": "1"
+      },
+      "setup_hashes": {
+        "compiler_runtime": "dc7221eb6c094ae32566030da42efcacd910a4a4962ffce3ab8b4439049d30e7",
+        "contract": "7ed3f21d4402ed5354c173d17e7c1e05471ff9a84f4724ce926dfce0b9eeef5e",
+        "dx100_size_source": "aacece34ca8609e3ea52cc8b5703823302ce9dcd29dc45d99478d379915987b4",
+        "dx100_source_selector": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "lowering": "f2f4f74f6e3a74a9f63862effa82fb9fb92ceaac4f3bafb0d73428528d32d2cd",
+        "run_plan": "247f866da2a25a06f14cfc4e78b7e4492e61d5f1025093d94fad075d9e948d2e",
+        "stdlib_provenance": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "wp_input.c": "d2cd70c6b640df5f46d901fd183fba5acb381bf4820dd868dfa63b30b01c9cae"
+      },
+      "sha256": "1a6f6215a1a3a791d3aa7cd7dd4a7bed51ffbd51cb364334d7cd71b898ad77e2",
+      "smoke_valid": 2,
+      "smokes": 2,
+      "verdict": "proven"
+    },
+    {
+      "failure_class": "solver_error",
+      "id": "proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367",
+      "open_goals": [
+        "typed_real_trust_fixture_ensures"
+      ],
+      "ordinary": 8,
+      "ordinary_valid": 7,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir1/records/proofs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367.yaml",
+      "setup_check": {
+        "sha256": "e4f7ffd31662c393fe398e789653584c4b3e8992507f09991fb289195eef004a",
+        "version": "1"
+      },
+      "setup_hashes": {
+        "compiler_runtime": "dc7221eb6c094ae32566030da42efcacd910a4a4962ffce3ab8b4439049d30e7",
+        "contract": "1f0cf253267862fada4618a97843e2ada875c11e0386ca1deb168b3d022dfde5",
+        "dx100_size_source": "a0eeef79e8d70849c2049edc72e8994deaee2bba0c179493bad3c82728af584c",
+        "dx100_source_selector": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "lowering": "f2f4f74f6e3a74a9f63862effa82fb9fb92ceaac4f3bafb0d73428528d32d2cd",
+        "run_plan": "04211b0918df63db42d16d6b39b88fd106c4992867d2958bdf2bcd173af88aee",
+        "stdlib_provenance": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "wp_input.c": "ec00b1ffa5020f3f8b4bb0fb926028d812ccb6c59e60ec84f1d95b1f89c937f3"
+      },
+      "sha256": "25f925c11a2ace80784ceee9bb6e83b226db554b585640f05b471fb4a9ced9b5",
+      "smoke_valid": 2,
+      "smokes": 2,
+      "verdict": "not_proven"
+    }
+  ],
+  "resources": {
+    "cpu_seconds": 143.502316,
+    "exit_code": 0,
+    "out_of_memory": false,
+    "peak_rss_bytes": 1111162880,
+    "timed_out": false,
+    "wall_seconds": 131.44381140265614
+  },
+  "scope": "Root source/admission/guard/lane/raw settlement only. Negative solver_error is a preserved diagnostic, not clean negative acceptance. Complete independent record/property/dependency/certificate/runtime audit is separate and must pass before acceptance.",
+  "selected_source_pins": 353,
+  "socket_lane": {
+    "aligned_cell_age_s": "",
+    "aligned_to": "no_gapbs_batch_running",
+    "command": [
+      "timeout",
+      "--signal=TERM",
+      "--kill-after=60",
+      "1320",
+      "bash",
+      "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/run.sh"
+    ],
+    "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+    "ended_utc": "2026-10-16T07:15:22Z",
+    "exit_code": 0,
+    "host": "mbit10",
+    "job": "probata-reviewed-7e64298f-t28-size-v1",
+    "lease_generation": 588,
+    "lease_name": "mbit10-evaluation-node0",
+    "load1_at_start": 0.49,
+    "load1_max": 32,
+    "node": 0,
+    "numa_memory_policy": "bind:0",
+    "numactl": "--cpunodebind=0 --membind=0",
+    "preregistration_sha256": null,
+    "started_utc": "2026-10-16T07:13:08Z"
+  },
+  "source_after": {
+    "commit": "7e64298fd1d81359e8db586883243b31d57bef3b",
+    "source_unchanged": true,
+    "tracked_changes": ""
+  },
+  "source_commit": "7e64298fd1d81359e8db586883243b31d57bef3b",
+  "source_modules": 207
+}
