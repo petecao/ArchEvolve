@@ -1425,6 +1425,10 @@ Publishedc25195b8 retains exact3a48 full-A copy-step AND15 preparation. Root3 sc
 [Current checkpoint](../evidence/frontier-scoped-checkpoint-20261016-1036.md). Counts35resolved/25ready/3claimed; lastfulltable10:30 ET, next11:00 ET.
 
 
+### 2026-10-16 ET — prospective copied-prefix ten-case preparation
+
+Retained3a focused15attempted15 with14conditionalmath successes and advancedcopiedprefixopen. Independent actual-query/source equivalence authorizes ten fresh full-A/range duties: five source conclusions in each exhaustive integercasej<k/j==k. No caller premise, sibling result, theory/body/contract change or old proof reuse. All51othergrowC inputs remain exact; oldprefixreference1839dda1 retained. Genuine5RED, corrected5GREEN and34affectedpureGREEN pass under1GiB/60s; the intermediate4pass/1physical-spanfailure remains preserved. Pending counts61grow/67reserve/127caller/35ctor/11dtor do not close acceptance. Source review, current merge, root focused10 and full fresh public61/reserve67 with allnumeric/RTE/init/smoke/schema/cold/caller obligations remain required. See `../prototype/25-copy-prefix-ten-case-20261016.md` and `../evidence/t25-copy-prefix-ten-case-preparation-20261016.json`.
+
 ## 2026-10-16 11:17 ET — scoped settled checkpoint
 
 Root accepts only the standalone35-target qualified signed32 count/value constructor mathematical/numeric profile under explicit source-to-VC/WP/Typed/foundation/solver TCB. The [scoped root decision](../evidence/t25-ctor35-root-scoped-acceptance-v1-20261016.json) and [independent reconciliation](../evidence/t25-ctor35-independent-cold-reconciliation-v1-20261016.md) distinguish44 normalized ordinary goals+1smoke from42 direct nativeValid+1healthy attempted Timeout smoke+2inventory-only ordinary exits/terminates goals. All six full-antecedent conclusion duties are mandatory; no sibling/prefix premise. The740raw/102materialized-task evidence is not a submission census or submitted-byte attestation. C++ body/source refinement, original-v2, generic/current caller dependency and full25 remain false.
@@ -1432,3 +1436,6 @@ Root accepts only the standalone35-target qualified signed32 count/value constru
 Focused copy-step diagnostics retain14/15 successful producer leaves and the sole open `grow.copy.step.advanced_copied_prefix` Timeout;37 other model targets remain unexecuted. [Compact metadata V2](../evidence/t25-copy-step15-metadata-capture-compact-v2-20261016.json) records capture only, not query/hypothesis or full52 acceptance. Original V1 singleton-par reader refusal fc956 and exact command00b1 with two `-wp-par 1` pairs are retained alongside the narrow V2 static repair. No proof result is changed or reused.
 
 Ticket remains claimed; dependency/status counts are unchanged. [Compact checkpoint](../evidence/frontier-scoped-checkpoint-20261016-1117.md).
+
+
+Independent review found the pending caller test still expected58 reserve duties after the total changed127. That dict/comment now expect67; a new AST-only control compares the real test literals with current canonical35/67/11 body inventories and127total without invoking caller lowering or conftest. Genuine RED5pass/1fail becomes6pass, then35affectedpure cases pass under1GiB/60s with no external/native attempts/events. Original productionf466 is byte-identical; actual caller127 and public61 workflow remain unexecuted. See `../evidence/t25-copy-prefix-caller-count-correction-20261016.json`.

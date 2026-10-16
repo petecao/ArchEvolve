@@ -44,7 +44,7 @@ def test_projection_conjunction_is_completely_split_without_changing_other_targe
     from pathlib import Path
     baseline=json.loads((Path(__file__).parent/'fixtures/proof/vector-reallocation-projection-017.json').read_bytes())
     plan=packets.prepare('std_vector_int_realloc_v3_grow',tmp_path/'split')
-    assert len(plan['obligations'])==52
+    assert len(plan['obligations'])==61
     group=plan['logical_obligations'][0]
     assert group['id']=='grow.entry.int_projection'
     assert group['original_statement']==baseline['original_projection']['statement']
@@ -102,7 +102,7 @@ def test_projection_group_requires_both_isolated_pieces_and_original_definitions
     (stage/'manifest.json').write_text(json.dumps(plan,sort_keys=True,indent=2)+'\n')
     if attack=='none':
         checked=vector_reallocation_view.check('std_vector_int_realloc_v3_grow',view,stage)
-        assert len(checked.certificate['obligations'])==52
+        assert len(checked.certificate['obligations'])==61
         assert checked.certificate['logical_obligations'][0]['parts']==group['parts']
         assert all(rows[part]['expected']=='proven' and not rows[part]['dependencies'] for part in group['parts'])
     else:
@@ -114,7 +114,7 @@ def test_projected_cells_expand_exact_definition_and_keep_other_twenty_inputs(tm
     from pathlib import Path
     baseline=json.loads((Path(__file__).parent/'fixtures/proof/vector-reallocation-projection-cells-2e01.json').read_bytes())
     plan=packets.prepare('std_vector_int_realloc_v3_grow',tmp_path/'components')
-    assert len(plan['obligations'])==52
+    assert len(plan['obligations'])==61
     logical=plan['logical_obligations'][0]
     expansion=logical['component_expansions'][0]
     assert expansion['id']=='grow.entry.int_projection.cells'

@@ -1,0 +1,2857 @@
+{
+  "actual_native_observation": {
+    "actual_reader_executed": false,
+    "goal": {
+      "function": null,
+      "goal": "typed_real_check_lemma_t25v3_grow_copy_step_advanced_copied_prefix",
+      "inventory_results": [
+        "timeout",
+        "unknown",
+        "timeout"
+      ],
+      "native_passed": false,
+      "native_verdict": "timeout",
+      "normalized_source": "wp_json",
+      "normalized_status": "timeout",
+      "property": "check_lemma_t25v3_grow_copy_step_advanced_copied_prefix",
+      "smoke": false
+    },
+    "ordinary": 1,
+    "per_leaf_identity_only": true,
+    "proof_acceptance": false,
+    "smoke": 0
+  },
+  "actual_submission_count_attested": false,
+  "caller_acceptance": false,
+  "canonical_file_pin_count": 60,
+  "complete_import_surface_matches": {
+    "why3_drivers": {
+      "count": 93,
+      "full_membership_hashes_equal": true,
+      "prior_proof_reused": false
+    },
+    "why3_stdlib": {
+      "count": 57,
+      "full_membership_hashes_equal": true,
+      "prior_proof_reused": false
+    },
+    "wp_why3_support": {
+      "count": 30,
+      "full_membership_hashes_equal": true,
+      "prior_proof_reused": false
+    }
+  },
+  "current_51_untouched_payload_hashes_for_future_control": [
+    {
+      "id": "control.grow.premises_feasible",
+      "path": "000-t25v3_control_grow_premises_feasible.c",
+      "sha256": "e9912022fad11f1fe2ea45e80ba9909673c287ce41d0114d707ca8e6d1d19579"
+    },
+    {
+      "id": "grow.entry.reads",
+      "path": "001-t25v3_grow_entry_reads.c",
+      "sha256": "18263b731752f297cedcaf3b0a64564b689992dac89a0b382b7acfb70ef4b492"
+    },
+    {
+      "id": "grow.entry.int_projection.repr",
+      "path": "002a-t25v3_grow_entry_int_projection_repr.c",
+      "sha256": "1e895aec561e8840764b43c3056ff3eae7e26f4a370cb18b67e08a43437b562d"
+    },
+    {
+      "id": "grow.entry.int_projection.cells.access",
+      "path": "002b1-t25v3_grow_entry_int_projection_cells_access.c",
+      "sha256": "a934f4850d80b1ea8fb47bb832db8a52ab59a03c70c695b324ac825c92c475b3"
+    },
+    {
+      "id": "grow.entry.int_projection.cells.initialization",
+      "path": "002b2-t25v3_grow_entry_int_projection_cells_initialization.c",
+      "sha256": "a24148fae0db6882aa47b8ec7d7c477d2f061bbe8472ba8b79a3e72c0897fe73"
+    },
+    {
+      "id": "grow.entry.int_projection.cells.integer",
+      "path": "002b3-t25v3_grow_entry_int_projection_cells_integer.c",
+      "sha256": "fcd63426784f41d2a654ea36073e898f8ceaad498f126715e5580c7d0fa7c0b1"
+    },
+    {
+      "id": "grow.entry.int_projection.cells.bounds",
+      "path": "002b4-t25v3_grow_entry_int_projection_cells_bounds.c",
+      "sha256": "0bfb29f943335aa6258302949a8f01b5c5b68c9c17d9206e5f8f26c6635aad4e"
+    },
+    {
+      "id": "grow.alloc.identity",
+      "path": "003-t25v3_grow_alloc_identity.c",
+      "sha256": "ea3a5a1296e046da142f68541fed405c673537448d46a6324d755285aad21099"
+    },
+    {
+      "id": "grow.alloc.output",
+      "path": "004-t25v3_grow_alloc_output.c",
+      "sha256": "1198c24918718565409f8e995a25eb92e9f870a893f901393efbed990f1537cc"
+    },
+    {
+      "id": "grow.alloc.frame",
+      "path": "005-t25v3_grow_alloc_frame.c",
+      "sha256": "ac824da28573588e41ac18d4eac8926d40963cc655a06279e6bc9fba80dabf14"
+    },
+    {
+      "id": "grow.copy.establish.entry_well_formed",
+      "path": "006c01-t25v3_grow_copy_establish_entry_well_formed.c",
+      "sha256": "b7c98e6ef9553909c44a526257e15066c2385835969d1071b782f0ec275a703c"
+    },
+    {
+      "id": "grow.copy.establish.allocated_well_formed",
+      "path": "006c02-t25v3_grow_copy_establish_allocated_well_formed.c",
+      "sha256": "e6f7f7fea8176f9941b30b595520f35d563b2026997f15bacbcf00a652f42d0c"
+    },
+    {
+      "id": "grow.copy.establish.entry_eligible",
+      "path": "006c03-t25v3_grow_copy_establish_entry_eligible.c",
+      "sha256": "4a0a1327d5b41d02f05c4af72c04231250d96a09d69d52262d18ce9c6b598a5f"
+    },
+    {
+      "id": "grow.copy.establish.allocated_eligible",
+      "path": "006c04-t25v3_grow_copy_establish_allocated_eligible.c",
+      "sha256": "722168c20e8c04e3233447eef9b21212461f55b655297978d89a9ac44e6e1fd0"
+    },
+    {
+      "id": "grow.copy.establish.index_size_capacity_bounds",
+      "path": "006c05-t25v3_grow_copy_establish_index_size_capacity_bounds.c",
+      "sha256": "9263de60ab87fe24a64d828604ef01c9d1d530cfe5d6bcffe2f7e9430aac9852"
+    },
+    {
+      "id": "grow.copy.establish.fresh_identity",
+      "path": "006c06-t25v3_grow_copy_establish_fresh_identity.c",
+      "sha256": "870fa4a7d294305adcff56cfa2471960e846bd8f67f4d8392fa496bd9448e953"
+    },
+    {
+      "id": "grow.copy.establish.unissued_identity",
+      "path": "006c07-t25v3_grow_copy_establish_unissued_identity.c",
+      "sha256": "04017307900ab4980f62f588a42457a18df5467227bcdbe242dea14081f0b1f4"
+    },
+    {
+      "id": "grow.copy.establish.receiver_distinct",
+      "path": "006c08-t25v3_grow_copy_establish_receiver_distinct.c",
+      "sha256": "daf3410bdc66826c5f89d15c0dcbc076e31e37a3259e3e116a8087359e58921c"
+    },
+    {
+      "id": "grow.copy.establish.old_buffer_distinct",
+      "path": "006c09-t25v3_grow_copy_establish_old_buffer_distinct.c",
+      "sha256": "8b67a16f7ea331c2ba7e5539f10b67197f0d104422ac04666d9cebfb2ace6079"
+    },
+    {
+      "id": "grow.copy.establish.destination_write_domain",
+      "path": "006c10-t25v3_grow_copy_establish_destination_write_domain.c",
+      "sha256": "2680b2e30c89fb5b3e13870ff288e1aad59e5a30d5d9b92dd967f1525b3c6702"
+    },
+    {
+      "id": "grow.copy.establish.destination_freeability",
+      "path": "006c11-t25v3_grow_copy_establish_destination_freeability.c",
+      "sha256": "cc66a8a8cc16ce3613b2f659a432ceecb087df093158aa1e20cfbb9391c0b985"
+    },
+    {
+      "id": "grow.copy.establish.destination_extent",
+      "path": "006c12-t25v3_grow_copy_establish_destination_extent.c",
+      "sha256": "c181d573a9da065bd3216885fc1e2a00b634a48e914ec6797bd7eb72ba843334"
+    },
+    {
+      "id": "grow.copy.establish.allocation_frame",
+      "path": "006c13-t25v3_grow_copy_establish_allocation_frame.c",
+      "sha256": "e7b0aba1c137a4d3780736d66a112ed92aa96c266f103939546fa4b1db2d8835"
+    },
+    {
+      "id": "grow.copy.establish.empty_copied_prefix",
+      "path": "006c14-t25v3_grow_copy_establish_empty_copied_prefix.c",
+      "sha256": "e66ddddafe2217516b6b33e04b3d98cac4cb87d7bed70f1885b13b83f9fd59e1"
+    },
+    {
+      "id": "grow.copy.establish.uninitialized_tail",
+      "path": "006c15-t25v3_grow_copy_establish_uninitialized_tail.c",
+      "sha256": "c23e451b34131297aa462858b432a7cabb085b2429d681a0c414867e0ee926fc"
+    },
+    {
+      "id": "grow.copy.read",
+      "path": "007-t25v3_grow_copy_read.c",
+      "sha256": "7c90efa88d04fe2ebd52f63b2d03d26f9fab1028499546b4b8f9079b7e19a359"
+    },
+    {
+      "id": "grow.copy.write",
+      "path": "008-t25v3_grow_copy_write.c",
+      "sha256": "8cb31cb0ca397d1af45989a20b86daf800f4917d85f7e7629cbfe20ca5b7643c"
+    },
+    {
+      "id": "grow.copy.step.entry_well_formed",
+      "path": "009s01-t25v3_grow_copy_step_entry_well_formed.c",
+      "sha256": "12eb0863d3fc37174ed67c9ab63abaac4a21710276740137b3d05f8e1ebf24c9"
+    },
+    {
+      "id": "grow.copy.step.updated_well_formed",
+      "path": "009s02-t25v3_grow_copy_step_updated_well_formed.c",
+      "sha256": "8b1b238b28c4d00ebf16c321c8f30d4a41a686dbaefbf89a8a7868f8a0a9cbde"
+    },
+    {
+      "id": "grow.copy.step.entry_eligible",
+      "path": "009s03-t25v3_grow_copy_step_entry_eligible.c",
+      "sha256": "ec6be998ea102346619e471900faba833872d9b358b2c4529fdac437246cb9a8"
+    },
+    {
+      "id": "grow.copy.step.updated_eligible",
+      "path": "009s04-t25v3_grow_copy_step_updated_eligible.c",
+      "sha256": "f78a4afe9eb7c68bc990a5f522b648ed92647b04e9b1068618e6ce8b66b41412"
+    },
+    {
+      "id": "grow.copy.step.advanced_index_size_capacity_bounds",
+      "path": "009s05-t25v3_grow_copy_step_advanced_index_size_capacity_bounds.c",
+      "sha256": "f45d9eb8f8c87c62151a73ea36926c5b2589daa69e81311ab8b56e67b981b6f7"
+    },
+    {
+      "id": "grow.copy.step.fresh_identity",
+      "path": "009s06-t25v3_grow_copy_step_fresh_identity.c",
+      "sha256": "d2f46a3b6cc83ae4b034c3adbea352f6752b7de9684fb7deb1180f3c6357a12d"
+    },
+    {
+      "id": "grow.copy.step.unissued_identity",
+      "path": "009s07-t25v3_grow_copy_step_unissued_identity.c",
+      "sha256": "16ec9b37e3e5b8cfab01f07582e7e29201cc4effd027864e9f350ff92ffd109f"
+    },
+    {
+      "id": "grow.copy.step.receiver_distinct",
+      "path": "009s08-t25v3_grow_copy_step_receiver_distinct.c",
+      "sha256": "4082c9adfde78d3ea435d7d1cb546bf0f2ac21db502f3540245bdb91da82efe3"
+    },
+    {
+      "id": "grow.copy.step.old_buffer_distinct",
+      "path": "009s09-t25v3_grow_copy_step_old_buffer_distinct.c",
+      "sha256": "e3befcdda0ecbc028c925145f57e458854f12717b46a4a2238b664cdadc572e9"
+    },
+    {
+      "id": "grow.copy.step.destination_write_domain",
+      "path": "009s10-t25v3_grow_copy_step_destination_write_domain.c",
+      "sha256": "e43050763308b2aec31f63361dca664cf71b7cfa6fb80e08468fb5ae937a9717"
+    },
+    {
+      "id": "grow.copy.step.destination_freeability",
+      "path": "009s11-t25v3_grow_copy_step_destination_freeability.c",
+      "sha256": "cbd40231a7fd77a24f4144e148d4437a4deb7ce21125a4d0acedacb7cc536419"
+    },
+    {
+      "id": "grow.copy.step.destination_extent",
+      "path": "009s12-t25v3_grow_copy_step_destination_extent.c",
+      "sha256": "f7ca7039d489eb38094c504987c97dd71077385fd4a20ee97b6eab49c89410f9"
+    },
+    {
+      "id": "grow.copy.step.allocation_frame",
+      "path": "009s13-t25v3_grow_copy_step_allocation_frame.c",
+      "sha256": "11aac92ac4019ab9b9ce8524706ca22ca49b1d309818ed65a8ef0657939d462c"
+    },
+    {
+      "id": "grow.copy.step.uninitialized_tail",
+      "path": "009s15-t25v3_grow_copy_step_uninitialized_tail.c",
+      "sha256": "9a653929b0ffd462a61c2f38e1f1102260c125660769e49f9dacbe9104e281ee"
+    },
+    {
+      "id": "grow.copy.exit",
+      "path": "010-t25v3_grow_copy_exit.c",
+      "sha256": "a82e1a2d18ce960a19f522f8501d387e3426ef93361101aa84a8c20ae8b64a56"
+    },
+    {
+      "id": "grow.free.argument",
+      "path": "011-t25v3_grow_free_argument.c",
+      "sha256": "e34e62929b1883a7e331d607891e0867f67255aa76f13144aa3599db4ce4fcb6"
+    },
+    {
+      "id": "grow.free.survival",
+      "path": "012-t25v3_grow_free_survival.c",
+      "sha256": "379322038e0f7d2464b40d9d9ecc31820b667ffc535b789d6072ef83fbeba2ab"
+    },
+    {
+      "id": "grow.free.aliases",
+      "path": "013-t25v3_grow_free_aliases.c",
+      "sha256": "c8af180b05b93f59898c1c9f70a1d66669a532470e7c1ddf8439ec566cb72fe3"
+    },
+    {
+      "id": "grow.store.capacity",
+      "path": "014-t25v3_grow_store_capacity.c",
+      "sha256": "58205ae5015b20dfe0ed078b910139e4c02c520fbcdf3890a43d4608d13bce55"
+    },
+    {
+      "id": "grow.post.eligibility",
+      "path": "015-t25v3_grow_post_eligibility.c",
+      "sha256": "385c5a3abc142bd86609143250fbf1d5c915180a807b714047f1a57b9a3bcb3a"
+    },
+    {
+      "id": "grow.post.values",
+      "path": "016-t25v3_grow_post_values.c",
+      "sha256": "54bfb0689114aaee966679853bf9315a1efb4a09c9e234bdf3b9ca6693fe662a"
+    },
+    {
+      "id": "grow.post.old_invalid",
+      "path": "017-t25v3_grow_post_old_invalid.c",
+      "sha256": "c837d4ba9dfc151533c52b3bc2c62009aaa414160141fc1708bad65a505412ff"
+    },
+    {
+      "id": "grow.post.frame",
+      "path": "018-t25v3_grow_post_frame.c",
+      "sha256": "f893974f292f317c49e2c5b10b8d636e68b53be843e3e3b39ae60115e0042209"
+    },
+    {
+      "id": "grow.numeric",
+      "path": "019-t25v3_grow_numeric.c",
+      "sha256": "59d1e899773f54e3bc3b1087bef201b298c52703fcbf5506b3a4f9443b086b70"
+    }
+  ],
+  "date_ET": "2026-10-16",
+  "decision": "PASS_ACTUAL_SOURCE_QUERY_BINDING_AND_PROSPECTIVE_TEN_CASE_EQUIVALENCE",
+  "design_equivalence": {
+    "all_exact_ten_statements_independently_reconstructed": true,
+    "case_guards": [
+      "j < k",
+      "j == k"
+    ],
+    "decision": "PASS for exact proposed source-only ten-case decomposition",
+    "five_source_conclusions": [
+      "access",
+      "initialization",
+      "integer",
+      "bounds",
+      "value"
+    ],
+    "fresh_integer_binder": "j",
+    "full_original_A_preserved": true,
+    "future_counts": {
+      "caller_pending": 127,
+      "ctor": 35,
+      "dtor": 11,
+      "grow": 61,
+      "reserve": 67
+    },
+    "future_counts_are_conditional_not_acceptance": true,
+    "machine_int_overflow_claimed": false,
+    "original_range_in_each_leaf": "0 <= j < (k+1)",
+    "other51_C_payloads_preservation": "Prospective mandatory regression; current design is not implementation. Preserve all51 original target input byte hashes, theory/body/contracts and original open target as reference-only.",
+    "proof_argument": [
+      "Expand copied_prefix at the unchanged updated heap and count k+1 using its pinned definition: forall mathematical integer j, range implies int32_at and source-value equality.",
+      "Expand int32_at using its pinned definition into typed access, initializedness, Integer-tag/load consistency and signed32 range; include source-value equality as the fifth conjunct. Universal quantification and implication distribute over finite conjunction.",
+      "For mathematical integer j and k, j<k+1 iff j<=k. On the unchanged range exactly one of j<k or j=k holds. Each implication is therefore equivalent to both guarded case implications. Outside the range all antecedents are false, including negative/empty ranges.",
+      "Both directions are direct propositional/integer-order reasoning: the original conjunction implies each guarded part; the ten guarded parts recover each five-part conjunction by the exhaustive partition and hence the original definition.",
+      "Every leaf retains original Q, full A and original range. j is absent from original Q/A. Predicate-local bound j remains lexically scoped; simultaneous source substitution must avoid capture. No caller-entry premise, desired theorem or earlier/sibling proof is assumed."
+    ],
+    "solver_success_predicted": false
+  },
+  "direct_imports": [
+    "bool.Bool",
+    "frama_c_wp.qed.Qed",
+    "heap_reallocation.Heap",
+    "int.Abs",
+    "int.ComputerDivision",
+    "int.Int",
+    "map.Map",
+    "real.RealInfix",
+    "why3.BuiltIn.BuiltIn"
+  ],
+  "foundation_source_pins_unchanged": true,
+  "fresh_remote_rehash_by_reviewer": false,
+  "full_typed_AST_or_semantic_translation_theorem": false,
+  "imported_heap_source_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+  "inputs": [
+    {
+      "bytes": 4233355,
+      "path": "/private/tmp/probata-root-copy-step15-metadata-execution-v2-20261016.json",
+      "sha256": "f897424b2a2e48112446843bceec34cef337fd96f39e08de79933d47ec8ae324"
+    },
+    {
+      "bytes": 14260,
+      "path": "/private/tmp/probata-t25-prefix-refinement-design-v1-3a48da2f-20261016.json",
+      "sha256": "6fd12a7b72da93e76a8cb0f05c0907d13009119e1d09844e016b3be1d9a0364f"
+    },
+    {
+      "bytes": 3484048,
+      "path": "/private/tmp/probata-root-grow38-metadata-execution-v1-20261016.json",
+      "sha256": "bf0407baafbab5415a2a78f3df372bec791f685aac13ccd9c74e784413e9480e"
+    },
+    {
+      "bytes": 24187,
+      "path": "/private/tmp/probata-t25-historical-support-hash-ledger-v1-20261016.json",
+      "sha256": "99520a25dc3ee71ae85beaa9bfcbfdc37248807745addc6200aec2dbd64a66c0"
+    },
+    {
+      "bytes": 57387,
+      "path": "/private/tmp/probata-t25-copy-step-actual-binding-v3-20261016.json",
+      "sha256": "4517124c5d25ecc6f9671b02fec194893e100e472c56f37c56b73a15a2f7ef04"
+    }
+  ],
+  "materialized_goals": [
+    {
+      "actual_submission_attested": false,
+      "all_actual_goal_hashes_matched": true,
+      "all_declaration_signature_and_body_hashes_equal_prior_context": true,
+      "bytes": 14772,
+      "declaration_count": 40,
+      "declaration_metadata": [
+        {
+          "form_sha256": "ce2ba2b92eb7d1fabb1e744b18bd6ba82509dfbee0e310692da12faafa888abe",
+          "index": 3,
+          "kind": "define-fun",
+          "name": "abs1"
+        },
+        {
+          "form_sha256": "00a01b0f65fa025d6004b410c30a4336abc273ef1f471f8c8bc2b14f835278a3",
+          "index": 8,
+          "kind": "declare-fun",
+          "name": "div1"
+        },
+        {
+          "form_sha256": "0f1b2ee73a0c6d69e1720c9c71b4181cd196a669f68e70cfecb0e349cf515351",
+          "index": 9,
+          "kind": "declare-fun",
+          "name": "mod1"
+        },
+        {
+          "form_sha256": "4dc1417dc251838a50941e820c97612b73746300334e8768829fdad6b75a474c",
+          "index": 39,
+          "kind": "declare-sort",
+          "name": "cell"
+        },
+        {
+          "form_sha256": "fd1b4ded12a09b7198e97444fc10e570d8975cd7781c70424d8acd130bd422ea",
+          "index": 40,
+          "kind": "declare-fun",
+          "name": "Integer"
+        },
+        {
+          "form_sha256": "8a5c3f69277a724a951f6e4d5a604b535201b2e1df01b7b5afa95685ed97a6eb",
+          "index": 41,
+          "kind": "declare-fun",
+          "name": "Pointer"
+        },
+        {
+          "form_sha256": "644fdeed3668ecbfedf25d78e44b350526a8ac227cf0529b96d50e3794084998",
+          "index": 42,
+          "kind": "declare-fun",
+          "name": "match_cell"
+        },
+        {
+          "form_sha256": "fab5e88a567ff0668aa76c959a4daae3e35e3d257b5651da505ae66672499122",
+          "index": 45,
+          "kind": "declare-fun",
+          "name": "index_cell"
+        },
+        {
+          "form_sha256": "95305d7bc559ee789bb9155c3a25a66d4249ede519dc791c1838270bed927962",
+          "index": 48,
+          "kind": "declare-fun",
+          "name": "Integer_proj_1"
+        },
+        {
+          "form_sha256": "88c55fb3f4a10079560c9592c1dfd78a40e2fac8dfd2bcd6702f35d93c390918",
+          "index": 50,
+          "kind": "declare-fun",
+          "name": "Pointer_proj_1"
+        },
+        {
+          "form_sha256": "2e1e0117b39b290eb1d89a6a7c350b85c97eca263b9142937861cb3e1831ee76",
+          "index": 52,
+          "kind": "declare-fun",
+          "name": "Pointer_proj_2"
+        },
+        {
+          "form_sha256": "70eea6da6224927827d5f68211b95a76c5d533e02b8f73bd8877d797beb74d56",
+          "index": 55,
+          "kind": "declare-datatypes",
+          "name": null
+        },
+        {
+          "form_sha256": "da5064d11e616602419ab7f29e1436fe20b1aba20eb1316d4177e7ebb1254f0f",
+          "index": 56,
+          "kind": "define-fun",
+          "name": "live"
+        },
+        {
+          "form_sha256": "4fc144f1be6d0890f15da6d075d9c1cb36c5999960dbe4274f73e5ae07dd3fe6",
+          "index": 57,
+          "kind": "define-fun",
+          "name": "issued"
+        },
+        {
+          "form_sha256": "3b7a7e92683fb74b06d05e0d00c852059f2c575c633874e6e93a4d213f7e9bcb",
+          "index": 58,
+          "kind": "define-fun",
+          "name": "separated"
+        },
+        {
+          "form_sha256": "99e0f715af1976701349df0f01ac39e542acd36145d67d5fd66fe31f86783abd",
+          "index": 59,
+          "kind": "define-fun",
+          "name": "aligned"
+        },
+        {
+          "form_sha256": "ff2e45ae756d013a0a980449d8f0df296c050aeaa5700c0c4fa0fb461464f253",
+          "index": 60,
+          "kind": "define-fun",
+          "name": "well_formed"
+        },
+        {
+          "form_sha256": "f7bbd36a46cc07898f3904236ce638136ae7086451270102d81fbd10e58793bb",
+          "index": 61,
+          "kind": "define-fun",
+          "name": "bytes"
+        },
+        {
+          "form_sha256": "17bb046c4d664a254f80a03d3de86d594253ed6ad74fff7b62969cebb95c2cef",
+          "index": 62,
+          "kind": "define-fun",
+          "name": "same_object"
+        },
+        {
+          "form_sha256": "001ea213a25a99841709c68ebd86944fef5485f5d50716ecaf790ce35413cbb7",
+          "index": 63,
+          "kind": "define-fun",
+          "name": "contents"
+        },
+        {
+          "form_sha256": "c1ed523334c97cb84fb6159efc0d5c9ce6a94ccb4219b6916f298a7af898d9ac",
+          "index": 64,
+          "kind": "define-fun",
+          "name": "initialized_at"
+        },
+        {
+          "form_sha256": "62102f253247555306c896f3f279a95ad932f7827f076e70370d10d36acc8d94",
+          "index": 65,
+          "kind": "define-fun",
+          "name": "integer_at"
+        },
+        {
+          "form_sha256": "a55860b4c382517ec17fbb0900f6603afd6067e56a657ab7450209ada1011db4",
+          "index": 66,
+          "kind": "define-fun",
+          "name": "pointer_at"
+        },
+        {
+          "form_sha256": "90f1951e82fc0ff16f016270b9de0bcda28eb77e9b8e06dfd157c1c6390b89d4",
+          "index": 67,
+          "kind": "define-fun",
+          "name": "can_read"
+        },
+        {
+          "form_sha256": "7c50ca601fece1772e0e3811c34163da3d360271c397801d0b5fec1356017f95",
+          "index": 68,
+          "kind": "define-fun",
+          "name": "can_write"
+        },
+        {
+          "form_sha256": "e60f1204aeeaa9eda7cfd782c25ddfa50acdc90520c2e87a506e98f8446721b9",
+          "index": 69,
+          "kind": "define-fun",
+          "name": "typed_reads"
+        },
+        {
+          "form_sha256": "b3fe2301e8a8a27cde7e649c99f72e665c4c050fead07a679a9533e215b89881",
+          "index": 70,
+          "kind": "define-fun",
+          "name": "typed_writes"
+        },
+        {
+          "form_sha256": "422107de349dd36499f842677f46c17a3c29a2a493f9cf3bd3527a528fbbd265",
+          "index": 71,
+          "kind": "define-fun",
+          "name": "freeable"
+        },
+        {
+          "form_sha256": "57b5e8367e18b9774d984e5698fa74bba8c013e7094d1561d578585da79028e5",
+          "index": 72,
+          "kind": "define-fun",
+          "name": "put_integer"
+        },
+        {
+          "form_sha256": "150e84847ed48b6a547c5fd2d2b2e300e98ffce143cd647c5f1f8ab646acf03c",
+          "index": 73,
+          "kind": "define-fun",
+          "name": "load_int"
+        },
+        {
+          "form_sha256": "7cb4fc031e0531b7c6bb79419ace7565d5b35407b11a9a8d2f89928fe9edb32b",
+          "index": 74,
+          "kind": "define-fun",
+          "name": "int32_at"
+        },
+        {
+          "form_sha256": "46f6a2121fb05913d21cdd378ba1282dc91752e1eaff8853ad28e5e05a25dd53",
+          "index": 75,
+          "kind": "define-fun",
+          "name": "int32_region"
+        },
+        {
+          "form_sha256": "2051f8d25177d7fb33df1bba716e997a95698db83106ea504bd37d13dcfc4d73",
+          "index": 76,
+          "kind": "define-fun",
+          "name": "copy_int"
+        },
+        {
+          "form_sha256": "3a4baf64f962a1374246a97247217159d405fa88f55411fc66dd331c63d0c1fb",
+          "index": 77,
+          "kind": "define-fun",
+          "name": "copied_prefix"
+        },
+        {
+          "form_sha256": "2b549d323f6cc9050a8bc8bfebd986de797a6827d61cd782d43750005f5ebf5f",
+          "index": 78,
+          "kind": "define-fun",
+          "name": "P_t25v3_copy_frame"
+        },
+        {
+          "form_sha256": "596c58c9a8575045ac131bb5e628eae975b3c684f4cd991206272a3b5e349190",
+          "index": 79,
+          "kind": "define-fun",
+          "name": "P_t25_fields"
+        },
+        {
+          "form_sha256": "c34e321c857231887c92ada246b222b2811a355a4b81b3e307209b1d9c9e104e",
+          "index": 80,
+          "kind": "define-fun",
+          "name": "P_t25_repr"
+        },
+        {
+          "form_sha256": "07f0391fcbbcf7dcc726a53c610be31495ec84ee8fe5945d5023b1e20c62004c",
+          "index": 81,
+          "kind": "define-fun",
+          "name": "P_t25v3_repr"
+        },
+        {
+          "form_sha256": "efb12f8087d9cf7816f0c8586a6ca821e576ca4960185db3197db55ed66f94dc",
+          "index": 82,
+          "kind": "define-fun",
+          "name": "P_t25v3_eligible"
+        },
+        {
+          "form_sha256": "ca45db2add72e9707f7e49279b7f63ea2a69a9b3be4c4bc4fbfbbd61a09d0337",
+          "index": 83,
+          "kind": "define-fun",
+          "name": "P_t25v3_copy_inv"
+        }
+      ],
+      "driver_family": "alt-ergo",
+      "forall_binding_sha256": "dab7aeedd17efb6659ed70739a7732d8be1f0719823ad6649c66de222d8faf54",
+      "goal_hash": "ebee205ea9ca5574b23423e21d0bba16000b4734185eadfe3dbd9c8089c76cfb",
+      "goal_node_count": 88,
+      "let_name": "x",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.advanced_copied_prefix/prover-files/typed_real/check_lemma_t25v3_grow_copy_step_advanced_copied_prefix_Why3_Alt_Ergo_2_6_4.psmt2",
+      "sha256": "049b60660f7f3474fa73aa245c6bec09c4cbbc99f25ee70561597cbb35aca477",
+      "support_assertions": 42,
+      "support_attribution": [
+        {
+          "body_sha256": "3076bc3f8d7485f553d2b0e382697d0424d26dca7ded0dea396c78f142f19463",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "integer/real ordered algebra"
+        },
+        {
+          "body_sha256": "0c363d3d6b94ab0460b36d16b61d2c9353fb6d2f82695bc4637d7184ac6edc34",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs"
+        },
+        {
+          "body_sha256": "ae18950f2236d5fd2e5aa1b445e800db9c86fb53dff06fbb9a60dee3a4d0e52c",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs"
+        },
+        {
+          "body_sha256": "9cf357ff89bfce98187e00c32b11c8f366a32c5fd210ea875690238c3f03b293",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs"
+        },
+        {
+          "body_sha256": "d83d59933cb8428fc118e396ac88d4b946da1e38c8442d3d51ad2853881701c2",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs"
+        },
+        {
+          "body_sha256": "3b91d4d3fd3ee8b435876ad46c558b8170bea759937396edd9251e0e85c9d8ae",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "4ffe57766ac7158e9bf22d49c2b6912e04ebd41c33149305cd1fd23fac56611a",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "9dda58f417232ee21aa0f6eb3f2a06786a9bc76e80ae3e7a02baf300b3a74b5b",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "230dac86f15e25f054f86acd1c634df7bfa14be5171dbf396701d518e32873b2",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "e0fcaa13183bd7133b0a8bb910509bc040c4486ac0710a67ff365fb38a3306f5",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "4ffe57766ac7158e9bf22d49c2b6912e04ebd41c33149305cd1fd23fac56611a",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a1dfed6d389be5a4dab9ecc490efbd14e26af33d143a92ba9f52ed15098e33fc",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "d2b030072e2e3631d5f96fbdec4a6a16d91053b067f82caff0c43e2434f9d75b",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "5224d38dacf79571be4ade6de5e5b401266cf89925615c14bfb48391489f70ad",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a2040454bce97f74d227cd239fc13ce62a686ed18398870f9e745eb3b4e69893",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "3f8db6925daa96931e8403b27e09722f50246f506060f57d7f1d628e0e756419",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "e8e9d90e3921f5c2eb9080962f083d57b45ade790b114130b5d1f967823ac255",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a5cf980bdcd3e0e9a1684f60f33fc384a03aa30fcc42463f801a6423f1dc4a64",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "14e5a1d4743372c20da40f718aa6c59a3a29d21b29c075b161cbf7be0b525777",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "85c607d4a3ded15667c39e11ecf7f13402f7ecd70c42542c1f6072cf6dc4ea12",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "68e28b32268321dbcc63c814cca5150ab655adf5656fc3121b93a0761bc58874",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "9b78960d1ed583ce26a1f6cbaf956a5753dfbbff448f3e1d26a90b7e1b854db8",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "integer/real ordered algebra"
+        },
+        {
+          "body_sha256": "58e1862d880068ce87e2fedb81a486f6858dd276c358e8c47045b680718794fb",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "4522f5d152877beda0a24ff172adcbe65457c924eae516daa054aa8bc6865b73",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "6caa6bc49e66c2c555aa2daf5b5455b199a88c5494a3937ac6aa31e31a6d96d6",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "b4fc4ac5ec69834965592f4a8a6fa40e6e8039c5249e74ee687d3a98a5e80035",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "e833deb13f611bf1d05aa7024d431400eae6ed2121ca9e27ebadf8616d1a189b",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "512da087aea287397b02298cbcb5d5f14a44d259881ff232fc4b643605977aaa",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "2519083ff7eae4b41036ac0ed69933cc7111ff707235caa3b76b9fb6b20295c1",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "dfc6a8665385ea7fc932eb7d43531861a7df141139b3bd7af3729660e6162cd2",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "1e788d34e70c45a93c5624e6f5499bb880bbc09f3ce78960c5a29aaf8a1ec526",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "68587350e4436a612440ab8e05fc309620c421c8d2672a47407c4617fd44c563",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "39fdb0caf203dd0fb8bc5d392736d4596d73fc06bfbe23baf7ae38a8d4b80e2a",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "451777247802989db373cc5c07812ce8f33f87f54ed883fb43e9f9ea720e0749",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "f76641cfe67719d9202d73ba93c813bbd56e58fad1389802f5cbadd4b363467b",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver"
+        },
+        {
+          "body_sha256": "1e12b2297921333a4b9e5662aefa61be9f32409270d4b8769dc8f3afe1e50ea9",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver"
+        },
+        {
+          "body_sha256": "4fa248013de091760fd304d3ebffb6564c823dc19d9f251e3f5b364c1ba55679",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver"
+        },
+        {
+          "body_sha256": "ca7f150707a74b16829d8e2ad7724aec87a279621dcb07e94410518ef4f32966",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver"
+        },
+        {
+          "body_sha256": "41c7af5f3553cfe5c0897a763293c8816285c40c210433c7bf4b7273a08f5a9e",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver"
+        },
+        {
+          "body_sha256": "8fbb971af9140aacd1d4a43c7d2bb0b40a258069e08f0870e5f3210d3aeb0817",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver"
+        },
+        {
+          "body_sha256": "136b1ccb44b9c4e504fc9009fae32e39f89d59628a31404e3a6a77a6392597d8",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver"
+        },
+        {
+          "body_sha256": "c6d3017050fb0dd646bf55e2fc75faf59098859292506f5cf86d230a21aa08a9",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver"
+        }
+      ],
+      "support_family_census": {
+        "generated datatype encoding": 8,
+        "trusted standard arithmetic": 34
+      },
+      "unclassified_support_assertions": []
+    },
+    {
+      "actual_submission_attested": false,
+      "all_actual_goal_hashes_matched": true,
+      "all_declaration_signature_and_body_hashes_equal_prior_context": true,
+      "bytes": 12624,
+      "declaration_count": 33,
+      "declaration_metadata": [
+        {
+          "form_sha256": "ce2ba2b92eb7d1fabb1e744b18bd6ba82509dfbee0e310692da12faafa888abe",
+          "index": 3,
+          "kind": "define-fun",
+          "name": "abs1"
+        },
+        {
+          "form_sha256": "00a01b0f65fa025d6004b410c30a4336abc273ef1f471f8c8bc2b14f835278a3",
+          "index": 6,
+          "kind": "declare-fun",
+          "name": "div1"
+        },
+        {
+          "form_sha256": "0f1b2ee73a0c6d69e1720c9c71b4181cd196a669f68e70cfecb0e349cf515351",
+          "index": 7,
+          "kind": "declare-fun",
+          "name": "mod1"
+        },
+        {
+          "form_sha256": "1511fc1373c048c71f29a383bcf51fbf0afb90ea3efa878bce2c4ab7d2cb5676",
+          "index": 27,
+          "kind": "declare-datatypes",
+          "name": null
+        },
+        {
+          "form_sha256": "70eea6da6224927827d5f68211b95a76c5d533e02b8f73bd8877d797beb74d56",
+          "index": 28,
+          "kind": "declare-datatypes",
+          "name": null
+        },
+        {
+          "form_sha256": "da5064d11e616602419ab7f29e1436fe20b1aba20eb1316d4177e7ebb1254f0f",
+          "index": 29,
+          "kind": "define-fun",
+          "name": "live"
+        },
+        {
+          "form_sha256": "4fc144f1be6d0890f15da6d075d9c1cb36c5999960dbe4274f73e5ae07dd3fe6",
+          "index": 30,
+          "kind": "define-fun",
+          "name": "issued"
+        },
+        {
+          "form_sha256": "3b7a7e92683fb74b06d05e0d00c852059f2c575c633874e6e93a4d213f7e9bcb",
+          "index": 31,
+          "kind": "define-fun",
+          "name": "separated"
+        },
+        {
+          "form_sha256": "99e0f715af1976701349df0f01ac39e542acd36145d67d5fd66fe31f86783abd",
+          "index": 32,
+          "kind": "define-fun",
+          "name": "aligned"
+        },
+        {
+          "form_sha256": "ff2e45ae756d013a0a980449d8f0df296c050aeaa5700c0c4fa0fb461464f253",
+          "index": 33,
+          "kind": "define-fun",
+          "name": "well_formed"
+        },
+        {
+          "form_sha256": "f7bbd36a46cc07898f3904236ce638136ae7086451270102d81fbd10e58793bb",
+          "index": 34,
+          "kind": "define-fun",
+          "name": "bytes"
+        },
+        {
+          "form_sha256": "17bb046c4d664a254f80a03d3de86d594253ed6ad74fff7b62969cebb95c2cef",
+          "index": 35,
+          "kind": "define-fun",
+          "name": "same_object"
+        },
+        {
+          "form_sha256": "001ea213a25a99841709c68ebd86944fef5485f5d50716ecaf790ce35413cbb7",
+          "index": 36,
+          "kind": "define-fun",
+          "name": "contents"
+        },
+        {
+          "form_sha256": "c1ed523334c97cb84fb6159efc0d5c9ce6a94ccb4219b6916f298a7af898d9ac",
+          "index": 37,
+          "kind": "define-fun",
+          "name": "initialized_at"
+        },
+        {
+          "form_sha256": "62102f253247555306c896f3f279a95ad932f7827f076e70370d10d36acc8d94",
+          "index": 38,
+          "kind": "define-fun",
+          "name": "integer_at"
+        },
+        {
+          "form_sha256": "a55860b4c382517ec17fbb0900f6603afd6067e56a657ab7450209ada1011db4",
+          "index": 39,
+          "kind": "define-fun",
+          "name": "pointer_at"
+        },
+        {
+          "form_sha256": "90f1951e82fc0ff16f016270b9de0bcda28eb77e9b8e06dfd157c1c6390b89d4",
+          "index": 40,
+          "kind": "define-fun",
+          "name": "can_read"
+        },
+        {
+          "form_sha256": "7c50ca601fece1772e0e3811c34163da3d360271c397801d0b5fec1356017f95",
+          "index": 41,
+          "kind": "define-fun",
+          "name": "can_write"
+        },
+        {
+          "form_sha256": "e60f1204aeeaa9eda7cfd782c25ddfa50acdc90520c2e87a506e98f8446721b9",
+          "index": 42,
+          "kind": "define-fun",
+          "name": "typed_reads"
+        },
+        {
+          "form_sha256": "b3fe2301e8a8a27cde7e649c99f72e665c4c050fead07a679a9533e215b89881",
+          "index": 43,
+          "kind": "define-fun",
+          "name": "typed_writes"
+        },
+        {
+          "form_sha256": "422107de349dd36499f842677f46c17a3c29a2a493f9cf3bd3527a528fbbd265",
+          "index": 44,
+          "kind": "define-fun",
+          "name": "freeable"
+        },
+        {
+          "form_sha256": "57b5e8367e18b9774d984e5698fa74bba8c013e7094d1561d578585da79028e5",
+          "index": 45,
+          "kind": "define-fun",
+          "name": "put_integer"
+        },
+        {
+          "form_sha256": "6e2b1606421ca68723ddeb5245a1d8b12fe700e899fd59bbda30b53697d437e0",
+          "index": 46,
+          "kind": "define-fun",
+          "name": "load_int"
+        },
+        {
+          "form_sha256": "7cb4fc031e0531b7c6bb79419ace7565d5b35407b11a9a8d2f89928fe9edb32b",
+          "index": 47,
+          "kind": "define-fun",
+          "name": "int32_at"
+        },
+        {
+          "form_sha256": "46f6a2121fb05913d21cdd378ba1282dc91752e1eaff8853ad28e5e05a25dd53",
+          "index": 48,
+          "kind": "define-fun",
+          "name": "int32_region"
+        },
+        {
+          "form_sha256": "2051f8d25177d7fb33df1bba716e997a95698db83106ea504bd37d13dcfc4d73",
+          "index": 49,
+          "kind": "define-fun",
+          "name": "copy_int"
+        },
+        {
+          "form_sha256": "3a4baf64f962a1374246a97247217159d405fa88f55411fc66dd331c63d0c1fb",
+          "index": 50,
+          "kind": "define-fun",
+          "name": "copied_prefix"
+        },
+        {
+          "form_sha256": "2b549d323f6cc9050a8bc8bfebd986de797a6827d61cd782d43750005f5ebf5f",
+          "index": 51,
+          "kind": "define-fun",
+          "name": "P_t25v3_copy_frame"
+        },
+        {
+          "form_sha256": "0ef57111c4bf19ec0c9df87ffbaaa525f2d976135e8d6abe83c173fed02230e0",
+          "index": 52,
+          "kind": "define-fun",
+          "name": "P_t25_fields"
+        },
+        {
+          "form_sha256": "c34e321c857231887c92ada246b222b2811a355a4b81b3e307209b1d9c9e104e",
+          "index": 53,
+          "kind": "define-fun",
+          "name": "P_t25_repr"
+        },
+        {
+          "form_sha256": "07f0391fcbbcf7dcc726a53c610be31495ec84ee8fe5945d5023b1e20c62004c",
+          "index": 54,
+          "kind": "define-fun",
+          "name": "P_t25v3_repr"
+        },
+        {
+          "form_sha256": "efb12f8087d9cf7816f0c8586a6ca821e576ca4960185db3197db55ed66f94dc",
+          "index": 55,
+          "kind": "define-fun",
+          "name": "P_t25v3_eligible"
+        },
+        {
+          "form_sha256": "af01da92856ce8c6d206cc71e4cde5fa27051293c805e90287a3902a6cd10ca9",
+          "index": 56,
+          "kind": "define-fun",
+          "name": "P_t25v3_copy_inv"
+        }
+      ],
+      "driver_family": "cvc5",
+      "forall_binding_sha256": "dab7aeedd17efb6659ed70739a7732d8be1f0719823ad6649c66de222d8faf54",
+      "goal_hash": "d870cbe15b7614b0355b81c8b33c6b3b607baec398cc5a969782b632bd50b376",
+      "goal_node_count": 88,
+      "let_name": "x3",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.advanced_copied_prefix/prover-files/typed_real/check_lemma_t25v3_grow_copy_step_advanced_copied_prefix_Why3_CVC5_1_2_1.smt2",
+      "sha256": "82786ced4b3f3418ba05da00e7e79b1ad1a11c5a0a6b152edbc9ea2f7da0c8f9",
+      "support_assertions": 22,
+      "support_attribution": [
+        {
+          "body_sha256": "3076bc3f8d7485f553d2b0e382697d0424d26dca7ded0dea396c78f142f19463",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "integer/real ordered algebra"
+        },
+        {
+          "body_sha256": "92ed3b6387a2ea7adfb0281282ed3f10092b199ffe0c64ac751db7f08385dad7",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs"
+        },
+        {
+          "body_sha256": "d83d59933cb8428fc118e396ac88d4b946da1e38c8442d3d51ad2853881701c2",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs"
+        },
+        {
+          "body_sha256": "3b91d4d3fd3ee8b435876ad46c558b8170bea759937396edd9251e0e85c9d8ae",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "b10a675182a54bd3e05baba0fae2deec3825802ec0c246d6ff6211f8f382cdf6",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "54870e5c89b533678e220be22537d8796ab107f992c8d45a7cf79a926108d378",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "4ffe57766ac7158e9bf22d49c2b6912e04ebd41c33149305cd1fd23fac56611a",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a1dfed6d389be5a4dab9ecc490efbd14e26af33d143a92ba9f52ed15098e33fc",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "d2b030072e2e3631d5f96fbdec4a6a16d91053b067f82caff0c43e2434f9d75b",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "5224d38dacf79571be4ade6de5e5b401266cf89925615c14bfb48391489f70ad",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a2040454bce97f74d227cd239fc13ce62a686ed18398870f9e745eb3b4e69893",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "3f8db6925daa96931e8403b27e09722f50246f506060f57d7f1d628e0e756419",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "e8e9d90e3921f5c2eb9080962f083d57b45ade790b114130b5d1f967823ac255",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a5cf980bdcd3e0e9a1684f60f33fc384a03aa30fcc42463f801a6423f1dc4a64",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "14e5a1d4743372c20da40f718aa6c59a3a29d21b29c075b161cbf7be0b525777",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "85c607d4a3ded15667c39e11ecf7f13402f7ecd70c42542c1f6072cf6dc4ea12",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "68e28b32268321dbcc63c814cca5150ab655adf5656fc3121b93a0761bc58874",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "58e1862d880068ce87e2fedb81a486f6858dd276c358e8c47045b680718794fb",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "f0128a61c0627c057a80014c6828d71960dea19dc00202eeb22d7fea7964bc2f",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "68587350e4436a612440ab8e05fc309620c421c8d2672a47407c4617fd44c563",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "39fdb0caf203dd0fb8bc5d392736d4596d73fc06bfbe23baf7ae38a8d4b80e2a",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "451777247802989db373cc5c07812ce8f33f87f54ed883fb43e9f9ea720e0749",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        }
+      ],
+      "support_family_census": {
+        "trusted standard arithmetic": 22
+      },
+      "unclassified_support_assertions": []
+    },
+    {
+      "actual_submission_attested": false,
+      "all_actual_goal_hashes_matched": true,
+      "all_declaration_signature_and_body_hashes_equal_prior_context": true,
+      "bytes": 12432,
+      "declaration_count": 33,
+      "declaration_metadata": [
+        {
+          "form_sha256": "ce2ba2b92eb7d1fabb1e744b18bd6ba82509dfbee0e310692da12faafa888abe",
+          "index": 0,
+          "kind": "define-fun",
+          "name": "abs1"
+        },
+        {
+          "form_sha256": "00a01b0f65fa025d6004b410c30a4336abc273ef1f471f8c8bc2b14f835278a3",
+          "index": 3,
+          "kind": "declare-fun",
+          "name": "div1"
+        },
+        {
+          "form_sha256": "0f1b2ee73a0c6d69e1720c9c71b4181cd196a669f68e70cfecb0e349cf515351",
+          "index": 4,
+          "kind": "declare-fun",
+          "name": "mod1"
+        },
+        {
+          "form_sha256": "1511fc1373c048c71f29a383bcf51fbf0afb90ea3efa878bce2c4ab7d2cb5676",
+          "index": 24,
+          "kind": "declare-datatypes",
+          "name": null
+        },
+        {
+          "form_sha256": "70eea6da6224927827d5f68211b95a76c5d533e02b8f73bd8877d797beb74d56",
+          "index": 25,
+          "kind": "declare-datatypes",
+          "name": null
+        },
+        {
+          "form_sha256": "da5064d11e616602419ab7f29e1436fe20b1aba20eb1316d4177e7ebb1254f0f",
+          "index": 26,
+          "kind": "define-fun",
+          "name": "live"
+        },
+        {
+          "form_sha256": "4fc144f1be6d0890f15da6d075d9c1cb36c5999960dbe4274f73e5ae07dd3fe6",
+          "index": 27,
+          "kind": "define-fun",
+          "name": "issued"
+        },
+        {
+          "form_sha256": "3b7a7e92683fb74b06d05e0d00c852059f2c575c633874e6e93a4d213f7e9bcb",
+          "index": 28,
+          "kind": "define-fun",
+          "name": "separated"
+        },
+        {
+          "form_sha256": "99e0f715af1976701349df0f01ac39e542acd36145d67d5fd66fe31f86783abd",
+          "index": 29,
+          "kind": "define-fun",
+          "name": "aligned"
+        },
+        {
+          "form_sha256": "ff2e45ae756d013a0a980449d8f0df296c050aeaa5700c0c4fa0fb461464f253",
+          "index": 30,
+          "kind": "define-fun",
+          "name": "well_formed"
+        },
+        {
+          "form_sha256": "f7bbd36a46cc07898f3904236ce638136ae7086451270102d81fbd10e58793bb",
+          "index": 31,
+          "kind": "define-fun",
+          "name": "bytes"
+        },
+        {
+          "form_sha256": "17bb046c4d664a254f80a03d3de86d594253ed6ad74fff7b62969cebb95c2cef",
+          "index": 32,
+          "kind": "define-fun",
+          "name": "same_object"
+        },
+        {
+          "form_sha256": "001ea213a25a99841709c68ebd86944fef5485f5d50716ecaf790ce35413cbb7",
+          "index": 33,
+          "kind": "define-fun",
+          "name": "contents"
+        },
+        {
+          "form_sha256": "c1ed523334c97cb84fb6159efc0d5c9ce6a94ccb4219b6916f298a7af898d9ac",
+          "index": 34,
+          "kind": "define-fun",
+          "name": "initialized_at"
+        },
+        {
+          "form_sha256": "62102f253247555306c896f3f279a95ad932f7827f076e70370d10d36acc8d94",
+          "index": 35,
+          "kind": "define-fun",
+          "name": "integer_at"
+        },
+        {
+          "form_sha256": "a55860b4c382517ec17fbb0900f6603afd6067e56a657ab7450209ada1011db4",
+          "index": 36,
+          "kind": "define-fun",
+          "name": "pointer_at"
+        },
+        {
+          "form_sha256": "90f1951e82fc0ff16f016270b9de0bcda28eb77e9b8e06dfd157c1c6390b89d4",
+          "index": 37,
+          "kind": "define-fun",
+          "name": "can_read"
+        },
+        {
+          "form_sha256": "7c50ca601fece1772e0e3811c34163da3d360271c397801d0b5fec1356017f95",
+          "index": 38,
+          "kind": "define-fun",
+          "name": "can_write"
+        },
+        {
+          "form_sha256": "e60f1204aeeaa9eda7cfd782c25ddfa50acdc90520c2e87a506e98f8446721b9",
+          "index": 39,
+          "kind": "define-fun",
+          "name": "typed_reads"
+        },
+        {
+          "form_sha256": "b3fe2301e8a8a27cde7e649c99f72e665c4c050fead07a679a9533e215b89881",
+          "index": 40,
+          "kind": "define-fun",
+          "name": "typed_writes"
+        },
+        {
+          "form_sha256": "422107de349dd36499f842677f46c17a3c29a2a493f9cf3bd3527a528fbbd265",
+          "index": 41,
+          "kind": "define-fun",
+          "name": "freeable"
+        },
+        {
+          "form_sha256": "57b5e8367e18b9774d984e5698fa74bba8c013e7094d1561d578585da79028e5",
+          "index": 42,
+          "kind": "define-fun",
+          "name": "put_integer"
+        },
+        {
+          "form_sha256": "6e2b1606421ca68723ddeb5245a1d8b12fe700e899fd59bbda30b53697d437e0",
+          "index": 43,
+          "kind": "define-fun",
+          "name": "load_int"
+        },
+        {
+          "form_sha256": "7cb4fc031e0531b7c6bb79419ace7565d5b35407b11a9a8d2f89928fe9edb32b",
+          "index": 44,
+          "kind": "define-fun",
+          "name": "int32_at"
+        },
+        {
+          "form_sha256": "46f6a2121fb05913d21cdd378ba1282dc91752e1eaff8853ad28e5e05a25dd53",
+          "index": 45,
+          "kind": "define-fun",
+          "name": "int32_region"
+        },
+        {
+          "form_sha256": "2051f8d25177d7fb33df1bba716e997a95698db83106ea504bd37d13dcfc4d73",
+          "index": 46,
+          "kind": "define-fun",
+          "name": "copy_int"
+        },
+        {
+          "form_sha256": "3a4baf64f962a1374246a97247217159d405fa88f55411fc66dd331c63d0c1fb",
+          "index": 47,
+          "kind": "define-fun",
+          "name": "copied_prefix"
+        },
+        {
+          "form_sha256": "2b549d323f6cc9050a8bc8bfebd986de797a6827d61cd782d43750005f5ebf5f",
+          "index": 48,
+          "kind": "define-fun",
+          "name": "P_t25v3_copy_frame"
+        },
+        {
+          "form_sha256": "0ef57111c4bf19ec0c9df87ffbaaa525f2d976135e8d6abe83c173fed02230e0",
+          "index": 49,
+          "kind": "define-fun",
+          "name": "P_t25_fields"
+        },
+        {
+          "form_sha256": "c34e321c857231887c92ada246b222b2811a355a4b81b3e307209b1d9c9e104e",
+          "index": 50,
+          "kind": "define-fun",
+          "name": "P_t25_repr"
+        },
+        {
+          "form_sha256": "07f0391fcbbcf7dcc726a53c610be31495ec84ee8fe5945d5023b1e20c62004c",
+          "index": 51,
+          "kind": "define-fun",
+          "name": "P_t25v3_repr"
+        },
+        {
+          "form_sha256": "efb12f8087d9cf7816f0c8586a6ca821e576ca4960185db3197db55ed66f94dc",
+          "index": 52,
+          "kind": "define-fun",
+          "name": "P_t25v3_eligible"
+        },
+        {
+          "form_sha256": "af01da92856ce8c6d206cc71e4cde5fa27051293c805e90287a3902a6cd10ca9",
+          "index": 53,
+          "kind": "define-fun",
+          "name": "P_t25v3_copy_inv"
+        }
+      ],
+      "driver_family": "z3",
+      "forall_binding_sha256": "dab7aeedd17efb6659ed70739a7732d8be1f0719823ad6649c66de222d8faf54",
+      "goal_hash": "d870cbe15b7614b0355b81c8b33c6b3b607baec398cc5a969782b632bd50b376",
+      "goal_node_count": 88,
+      "let_name": "x3",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.advanced_copied_prefix/prover-files/typed_real/check_lemma_t25v3_grow_copy_step_advanced_copied_prefix_Why3_Z3_5_1_0.smt2",
+      "sha256": "13e90dbb460f3bbb560ea65f07471138e928207aa392eed911da159b147bbb00",
+      "support_assertions": 21,
+      "support_attribution": [
+        {
+          "body_sha256": "92ed3b6387a2ea7adfb0281282ed3f10092b199ffe0c64ac751db7f08385dad7",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs"
+        },
+        {
+          "body_sha256": "d83d59933cb8428fc118e396ac88d4b946da1e38c8442d3d51ad2853881701c2",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs"
+        },
+        {
+          "body_sha256": "3b91d4d3fd3ee8b435876ad46c558b8170bea759937396edd9251e0e85c9d8ae",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "b10a675182a54bd3e05baba0fae2deec3825802ec0c246d6ff6211f8f382cdf6",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "54870e5c89b533678e220be22537d8796ab107f992c8d45a7cf79a926108d378",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "4ffe57766ac7158e9bf22d49c2b6912e04ebd41c33149305cd1fd23fac56611a",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a1dfed6d389be5a4dab9ecc490efbd14e26af33d143a92ba9f52ed15098e33fc",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "d2b030072e2e3631d5f96fbdec4a6a16d91053b067f82caff0c43e2434f9d75b",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "5224d38dacf79571be4ade6de5e5b401266cf89925615c14bfb48391489f70ad",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a2040454bce97f74d227cd239fc13ce62a686ed18398870f9e745eb3b4e69893",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "3f8db6925daa96931e8403b27e09722f50246f506060f57d7f1d628e0e756419",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "e8e9d90e3921f5c2eb9080962f083d57b45ade790b114130b5d1f967823ac255",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a5cf980bdcd3e0e9a1684f60f33fc384a03aa30fcc42463f801a6423f1dc4a64",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "14e5a1d4743372c20da40f718aa6c59a3a29d21b29c075b161cbf7be0b525777",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "85c607d4a3ded15667c39e11ecf7f13402f7ecd70c42542c1f6072cf6dc4ea12",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "68e28b32268321dbcc63c814cca5150ab655adf5656fc3121b93a0761bc58874",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "58e1862d880068ce87e2fedb81a486f6858dd276c358e8c47045b680718794fb",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "f0128a61c0627c057a80014c6828d71960dea19dc00202eeb22d7fea7964bc2f",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "68587350e4436a612440ab8e05fc309620c421c8d2672a47407c4617fd44c563",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "39fdb0caf203dd0fb8bc5d392736d4596d73fc06bfbe23baf7ae38a8d4b80e2a",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "451777247802989db373cc5c07812ce8f33f87f54ed883fb43e9f9ea720e0749",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        }
+      ],
+      "support_family_census": {
+        "trusted standard arithmetic": 21
+      },
+      "unclassified_support_assertions": []
+    },
+    {
+      "actual_submission_attested": false,
+      "all_actual_goal_hashes_matched": true,
+      "all_declaration_signature_and_body_hashes_equal_prior_context": true,
+      "bytes": 14736,
+      "declaration_count": 40,
+      "declaration_metadata": [
+        {
+          "form_sha256": "ce2ba2b92eb7d1fabb1e744b18bd6ba82509dfbee0e310692da12faafa888abe",
+          "index": 3,
+          "kind": "define-fun",
+          "name": "abs1"
+        },
+        {
+          "form_sha256": "00a01b0f65fa025d6004b410c30a4336abc273ef1f471f8c8bc2b14f835278a3",
+          "index": 8,
+          "kind": "declare-fun",
+          "name": "div1"
+        },
+        {
+          "form_sha256": "0f1b2ee73a0c6d69e1720c9c71b4181cd196a669f68e70cfecb0e349cf515351",
+          "index": 9,
+          "kind": "declare-fun",
+          "name": "mod1"
+        },
+        {
+          "form_sha256": "4dc1417dc251838a50941e820c97612b73746300334e8768829fdad6b75a474c",
+          "index": 39,
+          "kind": "declare-sort",
+          "name": "cell"
+        },
+        {
+          "form_sha256": "fd1b4ded12a09b7198e97444fc10e570d8975cd7781c70424d8acd130bd422ea",
+          "index": 40,
+          "kind": "declare-fun",
+          "name": "Integer"
+        },
+        {
+          "form_sha256": "8a5c3f69277a724a951f6e4d5a604b535201b2e1df01b7b5afa95685ed97a6eb",
+          "index": 41,
+          "kind": "declare-fun",
+          "name": "Pointer"
+        },
+        {
+          "form_sha256": "644fdeed3668ecbfedf25d78e44b350526a8ac227cf0529b96d50e3794084998",
+          "index": 42,
+          "kind": "declare-fun",
+          "name": "match_cell"
+        },
+        {
+          "form_sha256": "fab5e88a567ff0668aa76c959a4daae3e35e3d257b5651da505ae66672499122",
+          "index": 45,
+          "kind": "declare-fun",
+          "name": "index_cell"
+        },
+        {
+          "form_sha256": "95305d7bc559ee789bb9155c3a25a66d4249ede519dc791c1838270bed927962",
+          "index": 48,
+          "kind": "declare-fun",
+          "name": "Integer_proj_1"
+        },
+        {
+          "form_sha256": "88c55fb3f4a10079560c9592c1dfd78a40e2fac8dfd2bcd6702f35d93c390918",
+          "index": 50,
+          "kind": "declare-fun",
+          "name": "Pointer_proj_1"
+        },
+        {
+          "form_sha256": "2e1e0117b39b290eb1d89a6a7c350b85c97eca263b9142937861cb3e1831ee76",
+          "index": 52,
+          "kind": "declare-fun",
+          "name": "Pointer_proj_2"
+        },
+        {
+          "form_sha256": "70eea6da6224927827d5f68211b95a76c5d533e02b8f73bd8877d797beb74d56",
+          "index": 55,
+          "kind": "declare-datatypes",
+          "name": null
+        },
+        {
+          "form_sha256": "da5064d11e616602419ab7f29e1436fe20b1aba20eb1316d4177e7ebb1254f0f",
+          "index": 56,
+          "kind": "define-fun",
+          "name": "live"
+        },
+        {
+          "form_sha256": "4fc144f1be6d0890f15da6d075d9c1cb36c5999960dbe4274f73e5ae07dd3fe6",
+          "index": 57,
+          "kind": "define-fun",
+          "name": "issued"
+        },
+        {
+          "form_sha256": "3b7a7e92683fb74b06d05e0d00c852059f2c575c633874e6e93a4d213f7e9bcb",
+          "index": 58,
+          "kind": "define-fun",
+          "name": "separated"
+        },
+        {
+          "form_sha256": "99e0f715af1976701349df0f01ac39e542acd36145d67d5fd66fe31f86783abd",
+          "index": 59,
+          "kind": "define-fun",
+          "name": "aligned"
+        },
+        {
+          "form_sha256": "ff2e45ae756d013a0a980449d8f0df296c050aeaa5700c0c4fa0fb461464f253",
+          "index": 60,
+          "kind": "define-fun",
+          "name": "well_formed"
+        },
+        {
+          "form_sha256": "f7bbd36a46cc07898f3904236ce638136ae7086451270102d81fbd10e58793bb",
+          "index": 61,
+          "kind": "define-fun",
+          "name": "bytes"
+        },
+        {
+          "form_sha256": "17bb046c4d664a254f80a03d3de86d594253ed6ad74fff7b62969cebb95c2cef",
+          "index": 62,
+          "kind": "define-fun",
+          "name": "same_object"
+        },
+        {
+          "form_sha256": "001ea213a25a99841709c68ebd86944fef5485f5d50716ecaf790ce35413cbb7",
+          "index": 63,
+          "kind": "define-fun",
+          "name": "contents"
+        },
+        {
+          "form_sha256": "c1ed523334c97cb84fb6159efc0d5c9ce6a94ccb4219b6916f298a7af898d9ac",
+          "index": 64,
+          "kind": "define-fun",
+          "name": "initialized_at"
+        },
+        {
+          "form_sha256": "62102f253247555306c896f3f279a95ad932f7827f076e70370d10d36acc8d94",
+          "index": 65,
+          "kind": "define-fun",
+          "name": "integer_at"
+        },
+        {
+          "form_sha256": "a55860b4c382517ec17fbb0900f6603afd6067e56a657ab7450209ada1011db4",
+          "index": 66,
+          "kind": "define-fun",
+          "name": "pointer_at"
+        },
+        {
+          "form_sha256": "90f1951e82fc0ff16f016270b9de0bcda28eb77e9b8e06dfd157c1c6390b89d4",
+          "index": 67,
+          "kind": "define-fun",
+          "name": "can_read"
+        },
+        {
+          "form_sha256": "7c50ca601fece1772e0e3811c34163da3d360271c397801d0b5fec1356017f95",
+          "index": 68,
+          "kind": "define-fun",
+          "name": "can_write"
+        },
+        {
+          "form_sha256": "e60f1204aeeaa9eda7cfd782c25ddfa50acdc90520c2e87a506e98f8446721b9",
+          "index": 69,
+          "kind": "define-fun",
+          "name": "typed_reads"
+        },
+        {
+          "form_sha256": "b3fe2301e8a8a27cde7e649c99f72e665c4c050fead07a679a9533e215b89881",
+          "index": 70,
+          "kind": "define-fun",
+          "name": "typed_writes"
+        },
+        {
+          "form_sha256": "422107de349dd36499f842677f46c17a3c29a2a493f9cf3bd3527a528fbbd265",
+          "index": 71,
+          "kind": "define-fun",
+          "name": "freeable"
+        },
+        {
+          "form_sha256": "57b5e8367e18b9774d984e5698fa74bba8c013e7094d1561d578585da79028e5",
+          "index": 72,
+          "kind": "define-fun",
+          "name": "put_integer"
+        },
+        {
+          "form_sha256": "150e84847ed48b6a547c5fd2d2b2e300e98ffce143cd647c5f1f8ab646acf03c",
+          "index": 73,
+          "kind": "define-fun",
+          "name": "load_int"
+        },
+        {
+          "form_sha256": "7cb4fc031e0531b7c6bb79419ace7565d5b35407b11a9a8d2f89928fe9edb32b",
+          "index": 74,
+          "kind": "define-fun",
+          "name": "int32_at"
+        },
+        {
+          "form_sha256": "46f6a2121fb05913d21cdd378ba1282dc91752e1eaff8853ad28e5e05a25dd53",
+          "index": 75,
+          "kind": "define-fun",
+          "name": "int32_region"
+        },
+        {
+          "form_sha256": "2051f8d25177d7fb33df1bba716e997a95698db83106ea504bd37d13dcfc4d73",
+          "index": 76,
+          "kind": "define-fun",
+          "name": "copy_int"
+        },
+        {
+          "form_sha256": "3a4baf64f962a1374246a97247217159d405fa88f55411fc66dd331c63d0c1fb",
+          "index": 77,
+          "kind": "define-fun",
+          "name": "copied_prefix"
+        },
+        {
+          "form_sha256": "2b549d323f6cc9050a8bc8bfebd986de797a6827d61cd782d43750005f5ebf5f",
+          "index": 78,
+          "kind": "define-fun",
+          "name": "P_t25v3_copy_frame"
+        },
+        {
+          "form_sha256": "596c58c9a8575045ac131bb5e628eae975b3c684f4cd991206272a3b5e349190",
+          "index": 79,
+          "kind": "define-fun",
+          "name": "P_t25_fields"
+        },
+        {
+          "form_sha256": "c34e321c857231887c92ada246b222b2811a355a4b81b3e307209b1d9c9e104e",
+          "index": 80,
+          "kind": "define-fun",
+          "name": "P_t25_repr"
+        },
+        {
+          "form_sha256": "07f0391fcbbcf7dcc726a53c610be31495ec84ee8fe5945d5023b1e20c62004c",
+          "index": 81,
+          "kind": "define-fun",
+          "name": "P_t25v3_repr"
+        },
+        {
+          "form_sha256": "efb12f8087d9cf7816f0c8586a6ca821e576ca4960185db3197db55ed66f94dc",
+          "index": 82,
+          "kind": "define-fun",
+          "name": "P_t25v3_eligible"
+        },
+        {
+          "form_sha256": "ca45db2add72e9707f7e49279b7f63ea2a69a9b3be4c4bc4fbfbbd61a09d0337",
+          "index": 83,
+          "kind": "define-fun",
+          "name": "P_t25v3_copy_inv"
+        }
+      ],
+      "driver_family": "alt-ergo",
+      "forall_binding_sha256": "dab7aeedd17efb6659ed70739a7732d8be1f0719823ad6649c66de222d8faf54",
+      "goal_hash": "ebee205ea9ca5574b23423e21d0bba16000b4734185eadfe3dbd9c8089c76cfb",
+      "goal_node_count": 88,
+      "let_name": "x",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.advanced_copied_prefix/prover-files/typed_real/zilch-typed_real_check_lemma_t25v3_grow_copy_step_advanced_copied_prefix_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+      "sha256": "c0516216fc8b55958e7dd3dd54a9645e93616f791af82abb34d78efa810c402e",
+      "support_assertions": 42,
+      "support_attribution": [
+        {
+          "body_sha256": "3076bc3f8d7485f553d2b0e382697d0424d26dca7ded0dea396c78f142f19463",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "integer/real ordered algebra"
+        },
+        {
+          "body_sha256": "0c363d3d6b94ab0460b36d16b61d2c9353fb6d2f82695bc4637d7184ac6edc34",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs"
+        },
+        {
+          "body_sha256": "ae18950f2236d5fd2e5aa1b445e800db9c86fb53dff06fbb9a60dee3a4d0e52c",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs"
+        },
+        {
+          "body_sha256": "9cf357ff89bfce98187e00c32b11c8f366a32c5fd210ea875690238c3f03b293",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs"
+        },
+        {
+          "body_sha256": "d83d59933cb8428fc118e396ac88d4b946da1e38c8442d3d51ad2853881701c2",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs"
+        },
+        {
+          "body_sha256": "3b91d4d3fd3ee8b435876ad46c558b8170bea759937396edd9251e0e85c9d8ae",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "4ffe57766ac7158e9bf22d49c2b6912e04ebd41c33149305cd1fd23fac56611a",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "9dda58f417232ee21aa0f6eb3f2a06786a9bc76e80ae3e7a02baf300b3a74b5b",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "230dac86f15e25f054f86acd1c634df7bfa14be5171dbf396701d518e32873b2",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "e0fcaa13183bd7133b0a8bb910509bc040c4486ac0710a67ff365fb38a3306f5",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "4ffe57766ac7158e9bf22d49c2b6912e04ebd41c33149305cd1fd23fac56611a",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a1dfed6d389be5a4dab9ecc490efbd14e26af33d143a92ba9f52ed15098e33fc",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "d2b030072e2e3631d5f96fbdec4a6a16d91053b067f82caff0c43e2434f9d75b",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "5224d38dacf79571be4ade6de5e5b401266cf89925615c14bfb48391489f70ad",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a2040454bce97f74d227cd239fc13ce62a686ed18398870f9e745eb3b4e69893",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "3f8db6925daa96931e8403b27e09722f50246f506060f57d7f1d628e0e756419",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "e8e9d90e3921f5c2eb9080962f083d57b45ade790b114130b5d1f967823ac255",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a5cf980bdcd3e0e9a1684f60f33fc384a03aa30fcc42463f801a6423f1dc4a64",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "14e5a1d4743372c20da40f718aa6c59a3a29d21b29c075b161cbf7be0b525777",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "85c607d4a3ded15667c39e11ecf7f13402f7ecd70c42542c1f6072cf6dc4ea12",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "68e28b32268321dbcc63c814cca5150ab655adf5656fc3121b93a0761bc58874",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "9b78960d1ed583ce26a1f6cbaf956a5753dfbbff448f3e1d26a90b7e1b854db8",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "integer/real ordered algebra"
+        },
+        {
+          "body_sha256": "58e1862d880068ce87e2fedb81a486f6858dd276c358e8c47045b680718794fb",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "4522f5d152877beda0a24ff172adcbe65457c924eae516daa054aa8bc6865b73",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "6caa6bc49e66c2c555aa2daf5b5455b199a88c5494a3937ac6aa31e31a6d96d6",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "b4fc4ac5ec69834965592f4a8a6fa40e6e8039c5249e74ee687d3a98a5e80035",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "e833deb13f611bf1d05aa7024d431400eae6ed2121ca9e27ebadf8616d1a189b",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "512da087aea287397b02298cbcb5d5f14a44d259881ff232fc4b643605977aaa",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "2519083ff7eae4b41036ac0ed69933cc7111ff707235caa3b76b9fb6b20295c1",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "dfc6a8665385ea7fc932eb7d43531861a7df141139b3bd7af3729660e6162cd2",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "1e788d34e70c45a93c5624e6f5499bb880bbc09f3ce78960c5a29aaf8a1ec526",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "68587350e4436a612440ab8e05fc309620c421c8d2672a47407c4617fd44c563",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "39fdb0caf203dd0fb8bc5d392736d4596d73fc06bfbe23baf7ae38a8d4b80e2a",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "451777247802989db373cc5c07812ce8f33f87f54ed883fb43e9f9ea720e0749",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "f76641cfe67719d9202d73ba93c813bbd56e58fad1389802f5cbadd4b363467b",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver"
+        },
+        {
+          "body_sha256": "1e12b2297921333a4b9e5662aefa61be9f32409270d4b8769dc8f3afe1e50ea9",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver"
+        },
+        {
+          "body_sha256": "4fa248013de091760fd304d3ebffb6564c823dc19d9f251e3f5b364c1ba55679",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver"
+        },
+        {
+          "body_sha256": "ca7f150707a74b16829d8e2ad7724aec87a279621dcb07e94410518ef4f32966",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver"
+        },
+        {
+          "body_sha256": "41c7af5f3553cfe5c0897a763293c8816285c40c210433c7bf4b7273a08f5a9e",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver"
+        },
+        {
+          "body_sha256": "8fbb971af9140aacd1d4a43c7d2bb0b40a258069e08f0870e5f3210d3aeb0817",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver"
+        },
+        {
+          "body_sha256": "136b1ccb44b9c4e504fc9009fae32e39f89d59628a31404e3a6a77a6392597d8",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver"
+        },
+        {
+          "body_sha256": "c6d3017050fb0dd646bf55e2fc75faf59098859292506f5cf86d230a21aa08a9",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver"
+        }
+      ],
+      "support_family_census": {
+        "generated datatype encoding": 8,
+        "trusted standard arithmetic": 34
+      },
+      "unclassified_support_assertions": []
+    },
+    {
+      "actual_submission_attested": false,
+      "all_actual_goal_hashes_matched": true,
+      "all_declaration_signature_and_body_hashes_equal_prior_context": true,
+      "bytes": 12592,
+      "declaration_count": 33,
+      "declaration_metadata": [
+        {
+          "form_sha256": "ce2ba2b92eb7d1fabb1e744b18bd6ba82509dfbee0e310692da12faafa888abe",
+          "index": 3,
+          "kind": "define-fun",
+          "name": "abs1"
+        },
+        {
+          "form_sha256": "00a01b0f65fa025d6004b410c30a4336abc273ef1f471f8c8bc2b14f835278a3",
+          "index": 6,
+          "kind": "declare-fun",
+          "name": "div1"
+        },
+        {
+          "form_sha256": "0f1b2ee73a0c6d69e1720c9c71b4181cd196a669f68e70cfecb0e349cf515351",
+          "index": 7,
+          "kind": "declare-fun",
+          "name": "mod1"
+        },
+        {
+          "form_sha256": "1511fc1373c048c71f29a383bcf51fbf0afb90ea3efa878bce2c4ab7d2cb5676",
+          "index": 27,
+          "kind": "declare-datatypes",
+          "name": null
+        },
+        {
+          "form_sha256": "70eea6da6224927827d5f68211b95a76c5d533e02b8f73bd8877d797beb74d56",
+          "index": 28,
+          "kind": "declare-datatypes",
+          "name": null
+        },
+        {
+          "form_sha256": "da5064d11e616602419ab7f29e1436fe20b1aba20eb1316d4177e7ebb1254f0f",
+          "index": 29,
+          "kind": "define-fun",
+          "name": "live"
+        },
+        {
+          "form_sha256": "4fc144f1be6d0890f15da6d075d9c1cb36c5999960dbe4274f73e5ae07dd3fe6",
+          "index": 30,
+          "kind": "define-fun",
+          "name": "issued"
+        },
+        {
+          "form_sha256": "3b7a7e92683fb74b06d05e0d00c852059f2c575c633874e6e93a4d213f7e9bcb",
+          "index": 31,
+          "kind": "define-fun",
+          "name": "separated"
+        },
+        {
+          "form_sha256": "99e0f715af1976701349df0f01ac39e542acd36145d67d5fd66fe31f86783abd",
+          "index": 32,
+          "kind": "define-fun",
+          "name": "aligned"
+        },
+        {
+          "form_sha256": "ff2e45ae756d013a0a980449d8f0df296c050aeaa5700c0c4fa0fb461464f253",
+          "index": 33,
+          "kind": "define-fun",
+          "name": "well_formed"
+        },
+        {
+          "form_sha256": "f7bbd36a46cc07898f3904236ce638136ae7086451270102d81fbd10e58793bb",
+          "index": 34,
+          "kind": "define-fun",
+          "name": "bytes"
+        },
+        {
+          "form_sha256": "17bb046c4d664a254f80a03d3de86d594253ed6ad74fff7b62969cebb95c2cef",
+          "index": 35,
+          "kind": "define-fun",
+          "name": "same_object"
+        },
+        {
+          "form_sha256": "001ea213a25a99841709c68ebd86944fef5485f5d50716ecaf790ce35413cbb7",
+          "index": 36,
+          "kind": "define-fun",
+          "name": "contents"
+        },
+        {
+          "form_sha256": "c1ed523334c97cb84fb6159efc0d5c9ce6a94ccb4219b6916f298a7af898d9ac",
+          "index": 37,
+          "kind": "define-fun",
+          "name": "initialized_at"
+        },
+        {
+          "form_sha256": "62102f253247555306c896f3f279a95ad932f7827f076e70370d10d36acc8d94",
+          "index": 38,
+          "kind": "define-fun",
+          "name": "integer_at"
+        },
+        {
+          "form_sha256": "a55860b4c382517ec17fbb0900f6603afd6067e56a657ab7450209ada1011db4",
+          "index": 39,
+          "kind": "define-fun",
+          "name": "pointer_at"
+        },
+        {
+          "form_sha256": "90f1951e82fc0ff16f016270b9de0bcda28eb77e9b8e06dfd157c1c6390b89d4",
+          "index": 40,
+          "kind": "define-fun",
+          "name": "can_read"
+        },
+        {
+          "form_sha256": "7c50ca601fece1772e0e3811c34163da3d360271c397801d0b5fec1356017f95",
+          "index": 41,
+          "kind": "define-fun",
+          "name": "can_write"
+        },
+        {
+          "form_sha256": "e60f1204aeeaa9eda7cfd782c25ddfa50acdc90520c2e87a506e98f8446721b9",
+          "index": 42,
+          "kind": "define-fun",
+          "name": "typed_reads"
+        },
+        {
+          "form_sha256": "b3fe2301e8a8a27cde7e649c99f72e665c4c050fead07a679a9533e215b89881",
+          "index": 43,
+          "kind": "define-fun",
+          "name": "typed_writes"
+        },
+        {
+          "form_sha256": "422107de349dd36499f842677f46c17a3c29a2a493f9cf3bd3527a528fbbd265",
+          "index": 44,
+          "kind": "define-fun",
+          "name": "freeable"
+        },
+        {
+          "form_sha256": "57b5e8367e18b9774d984e5698fa74bba8c013e7094d1561d578585da79028e5",
+          "index": 45,
+          "kind": "define-fun",
+          "name": "put_integer"
+        },
+        {
+          "form_sha256": "6e2b1606421ca68723ddeb5245a1d8b12fe700e899fd59bbda30b53697d437e0",
+          "index": 46,
+          "kind": "define-fun",
+          "name": "load_int"
+        },
+        {
+          "form_sha256": "7cb4fc031e0531b7c6bb79419ace7565d5b35407b11a9a8d2f89928fe9edb32b",
+          "index": 47,
+          "kind": "define-fun",
+          "name": "int32_at"
+        },
+        {
+          "form_sha256": "46f6a2121fb05913d21cdd378ba1282dc91752e1eaff8853ad28e5e05a25dd53",
+          "index": 48,
+          "kind": "define-fun",
+          "name": "int32_region"
+        },
+        {
+          "form_sha256": "2051f8d25177d7fb33df1bba716e997a95698db83106ea504bd37d13dcfc4d73",
+          "index": 49,
+          "kind": "define-fun",
+          "name": "copy_int"
+        },
+        {
+          "form_sha256": "3a4baf64f962a1374246a97247217159d405fa88f55411fc66dd331c63d0c1fb",
+          "index": 50,
+          "kind": "define-fun",
+          "name": "copied_prefix"
+        },
+        {
+          "form_sha256": "2b549d323f6cc9050a8bc8bfebd986de797a6827d61cd782d43750005f5ebf5f",
+          "index": 51,
+          "kind": "define-fun",
+          "name": "P_t25v3_copy_frame"
+        },
+        {
+          "form_sha256": "0ef57111c4bf19ec0c9df87ffbaaa525f2d976135e8d6abe83c173fed02230e0",
+          "index": 52,
+          "kind": "define-fun",
+          "name": "P_t25_fields"
+        },
+        {
+          "form_sha256": "c34e321c857231887c92ada246b222b2811a355a4b81b3e307209b1d9c9e104e",
+          "index": 53,
+          "kind": "define-fun",
+          "name": "P_t25_repr"
+        },
+        {
+          "form_sha256": "07f0391fcbbcf7dcc726a53c610be31495ec84ee8fe5945d5023b1e20c62004c",
+          "index": 54,
+          "kind": "define-fun",
+          "name": "P_t25v3_repr"
+        },
+        {
+          "form_sha256": "efb12f8087d9cf7816f0c8586a6ca821e576ca4960185db3197db55ed66f94dc",
+          "index": 55,
+          "kind": "define-fun",
+          "name": "P_t25v3_eligible"
+        },
+        {
+          "form_sha256": "af01da92856ce8c6d206cc71e4cde5fa27051293c805e90287a3902a6cd10ca9",
+          "index": 56,
+          "kind": "define-fun",
+          "name": "P_t25v3_copy_inv"
+        }
+      ],
+      "driver_family": "cvc5",
+      "forall_binding_sha256": "dab7aeedd17efb6659ed70739a7732d8be1f0719823ad6649c66de222d8faf54",
+      "goal_hash": "d870cbe15b7614b0355b81c8b33c6b3b607baec398cc5a969782b632bd50b376",
+      "goal_node_count": 88,
+      "let_name": "x3",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.advanced_copied_prefix/prover-files/typed_real/zilch-typed_real_check_lemma_t25v3_grow_copy_step_advanced_copied_prefix_CVC5_1dt2dt1-wp_goal.smt2",
+      "sha256": "cda89917bdad5a28652b60eb7dcf45fbbb454d687af88aa2155b9168b426928e",
+      "support_assertions": 22,
+      "support_attribution": [
+        {
+          "body_sha256": "3076bc3f8d7485f553d2b0e382697d0424d26dca7ded0dea396c78f142f19463",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "integer/real ordered algebra"
+        },
+        {
+          "body_sha256": "92ed3b6387a2ea7adfb0281282ed3f10092b199ffe0c64ac751db7f08385dad7",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs"
+        },
+        {
+          "body_sha256": "d83d59933cb8428fc118e396ac88d4b946da1e38c8442d3d51ad2853881701c2",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs"
+        },
+        {
+          "body_sha256": "3b91d4d3fd3ee8b435876ad46c558b8170bea759937396edd9251e0e85c9d8ae",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "b10a675182a54bd3e05baba0fae2deec3825802ec0c246d6ff6211f8f382cdf6",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "54870e5c89b533678e220be22537d8796ab107f992c8d45a7cf79a926108d378",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "4ffe57766ac7158e9bf22d49c2b6912e04ebd41c33149305cd1fd23fac56611a",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a1dfed6d389be5a4dab9ecc490efbd14e26af33d143a92ba9f52ed15098e33fc",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "d2b030072e2e3631d5f96fbdec4a6a16d91053b067f82caff0c43e2434f9d75b",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "5224d38dacf79571be4ade6de5e5b401266cf89925615c14bfb48391489f70ad",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a2040454bce97f74d227cd239fc13ce62a686ed18398870f9e745eb3b4e69893",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "3f8db6925daa96931e8403b27e09722f50246f506060f57d7f1d628e0e756419",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "e8e9d90e3921f5c2eb9080962f083d57b45ade790b114130b5d1f967823ac255",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a5cf980bdcd3e0e9a1684f60f33fc384a03aa30fcc42463f801a6423f1dc4a64",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "14e5a1d4743372c20da40f718aa6c59a3a29d21b29c075b161cbf7be0b525777",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "85c607d4a3ded15667c39e11ecf7f13402f7ecd70c42542c1f6072cf6dc4ea12",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "68e28b32268321dbcc63c814cca5150ab655adf5656fc3121b93a0761bc58874",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "58e1862d880068ce87e2fedb81a486f6858dd276c358e8c47045b680718794fb",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "f0128a61c0627c057a80014c6828d71960dea19dc00202eeb22d7fea7964bc2f",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "68587350e4436a612440ab8e05fc309620c421c8d2672a47407c4617fd44c563",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "39fdb0caf203dd0fb8bc5d392736d4596d73fc06bfbe23baf7ae38a8d4b80e2a",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "451777247802989db373cc5c07812ce8f33f87f54ed883fb43e9f9ea720e0749",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        }
+      ],
+      "support_family_census": {
+        "trusted standard arithmetic": 22
+      },
+      "unclassified_support_assertions": []
+    },
+    {
+      "actual_submission_attested": false,
+      "all_actual_goal_hashes_matched": true,
+      "all_declaration_signature_and_body_hashes_equal_prior_context": true,
+      "bytes": 12402,
+      "declaration_count": 33,
+      "declaration_metadata": [
+        {
+          "form_sha256": "ce2ba2b92eb7d1fabb1e744b18bd6ba82509dfbee0e310692da12faafa888abe",
+          "index": 0,
+          "kind": "define-fun",
+          "name": "abs1"
+        },
+        {
+          "form_sha256": "00a01b0f65fa025d6004b410c30a4336abc273ef1f471f8c8bc2b14f835278a3",
+          "index": 3,
+          "kind": "declare-fun",
+          "name": "div1"
+        },
+        {
+          "form_sha256": "0f1b2ee73a0c6d69e1720c9c71b4181cd196a669f68e70cfecb0e349cf515351",
+          "index": 4,
+          "kind": "declare-fun",
+          "name": "mod1"
+        },
+        {
+          "form_sha256": "1511fc1373c048c71f29a383bcf51fbf0afb90ea3efa878bce2c4ab7d2cb5676",
+          "index": 24,
+          "kind": "declare-datatypes",
+          "name": null
+        },
+        {
+          "form_sha256": "70eea6da6224927827d5f68211b95a76c5d533e02b8f73bd8877d797beb74d56",
+          "index": 25,
+          "kind": "declare-datatypes",
+          "name": null
+        },
+        {
+          "form_sha256": "da5064d11e616602419ab7f29e1436fe20b1aba20eb1316d4177e7ebb1254f0f",
+          "index": 26,
+          "kind": "define-fun",
+          "name": "live"
+        },
+        {
+          "form_sha256": "4fc144f1be6d0890f15da6d075d9c1cb36c5999960dbe4274f73e5ae07dd3fe6",
+          "index": 27,
+          "kind": "define-fun",
+          "name": "issued"
+        },
+        {
+          "form_sha256": "3b7a7e92683fb74b06d05e0d00c852059f2c575c633874e6e93a4d213f7e9bcb",
+          "index": 28,
+          "kind": "define-fun",
+          "name": "separated"
+        },
+        {
+          "form_sha256": "99e0f715af1976701349df0f01ac39e542acd36145d67d5fd66fe31f86783abd",
+          "index": 29,
+          "kind": "define-fun",
+          "name": "aligned"
+        },
+        {
+          "form_sha256": "ff2e45ae756d013a0a980449d8f0df296c050aeaa5700c0c4fa0fb461464f253",
+          "index": 30,
+          "kind": "define-fun",
+          "name": "well_formed"
+        },
+        {
+          "form_sha256": "f7bbd36a46cc07898f3904236ce638136ae7086451270102d81fbd10e58793bb",
+          "index": 31,
+          "kind": "define-fun",
+          "name": "bytes"
+        },
+        {
+          "form_sha256": "17bb046c4d664a254f80a03d3de86d594253ed6ad74fff7b62969cebb95c2cef",
+          "index": 32,
+          "kind": "define-fun",
+          "name": "same_object"
+        },
+        {
+          "form_sha256": "001ea213a25a99841709c68ebd86944fef5485f5d50716ecaf790ce35413cbb7",
+          "index": 33,
+          "kind": "define-fun",
+          "name": "contents"
+        },
+        {
+          "form_sha256": "c1ed523334c97cb84fb6159efc0d5c9ce6a94ccb4219b6916f298a7af898d9ac",
+          "index": 34,
+          "kind": "define-fun",
+          "name": "initialized_at"
+        },
+        {
+          "form_sha256": "62102f253247555306c896f3f279a95ad932f7827f076e70370d10d36acc8d94",
+          "index": 35,
+          "kind": "define-fun",
+          "name": "integer_at"
+        },
+        {
+          "form_sha256": "a55860b4c382517ec17fbb0900f6603afd6067e56a657ab7450209ada1011db4",
+          "index": 36,
+          "kind": "define-fun",
+          "name": "pointer_at"
+        },
+        {
+          "form_sha256": "90f1951e82fc0ff16f016270b9de0bcda28eb77e9b8e06dfd157c1c6390b89d4",
+          "index": 37,
+          "kind": "define-fun",
+          "name": "can_read"
+        },
+        {
+          "form_sha256": "7c50ca601fece1772e0e3811c34163da3d360271c397801d0b5fec1356017f95",
+          "index": 38,
+          "kind": "define-fun",
+          "name": "can_write"
+        },
+        {
+          "form_sha256": "e60f1204aeeaa9eda7cfd782c25ddfa50acdc90520c2e87a506e98f8446721b9",
+          "index": 39,
+          "kind": "define-fun",
+          "name": "typed_reads"
+        },
+        {
+          "form_sha256": "b3fe2301e8a8a27cde7e649c99f72e665c4c050fead07a679a9533e215b89881",
+          "index": 40,
+          "kind": "define-fun",
+          "name": "typed_writes"
+        },
+        {
+          "form_sha256": "422107de349dd36499f842677f46c17a3c29a2a493f9cf3bd3527a528fbbd265",
+          "index": 41,
+          "kind": "define-fun",
+          "name": "freeable"
+        },
+        {
+          "form_sha256": "57b5e8367e18b9774d984e5698fa74bba8c013e7094d1561d578585da79028e5",
+          "index": 42,
+          "kind": "define-fun",
+          "name": "put_integer"
+        },
+        {
+          "form_sha256": "6e2b1606421ca68723ddeb5245a1d8b12fe700e899fd59bbda30b53697d437e0",
+          "index": 43,
+          "kind": "define-fun",
+          "name": "load_int"
+        },
+        {
+          "form_sha256": "7cb4fc031e0531b7c6bb79419ace7565d5b35407b11a9a8d2f89928fe9edb32b",
+          "index": 44,
+          "kind": "define-fun",
+          "name": "int32_at"
+        },
+        {
+          "form_sha256": "46f6a2121fb05913d21cdd378ba1282dc91752e1eaff8853ad28e5e05a25dd53",
+          "index": 45,
+          "kind": "define-fun",
+          "name": "int32_region"
+        },
+        {
+          "form_sha256": "2051f8d25177d7fb33df1bba716e997a95698db83106ea504bd37d13dcfc4d73",
+          "index": 46,
+          "kind": "define-fun",
+          "name": "copy_int"
+        },
+        {
+          "form_sha256": "3a4baf64f962a1374246a97247217159d405fa88f55411fc66dd331c63d0c1fb",
+          "index": 47,
+          "kind": "define-fun",
+          "name": "copied_prefix"
+        },
+        {
+          "form_sha256": "2b549d323f6cc9050a8bc8bfebd986de797a6827d61cd782d43750005f5ebf5f",
+          "index": 48,
+          "kind": "define-fun",
+          "name": "P_t25v3_copy_frame"
+        },
+        {
+          "form_sha256": "0ef57111c4bf19ec0c9df87ffbaaa525f2d976135e8d6abe83c173fed02230e0",
+          "index": 49,
+          "kind": "define-fun",
+          "name": "P_t25_fields"
+        },
+        {
+          "form_sha256": "c34e321c857231887c92ada246b222b2811a355a4b81b3e307209b1d9c9e104e",
+          "index": 50,
+          "kind": "define-fun",
+          "name": "P_t25_repr"
+        },
+        {
+          "form_sha256": "07f0391fcbbcf7dcc726a53c610be31495ec84ee8fe5945d5023b1e20c62004c",
+          "index": 51,
+          "kind": "define-fun",
+          "name": "P_t25v3_repr"
+        },
+        {
+          "form_sha256": "efb12f8087d9cf7816f0c8586a6ca821e576ca4960185db3197db55ed66f94dc",
+          "index": 52,
+          "kind": "define-fun",
+          "name": "P_t25v3_eligible"
+        },
+        {
+          "form_sha256": "af01da92856ce8c6d206cc71e4cde5fa27051293c805e90287a3902a6cd10ca9",
+          "index": 53,
+          "kind": "define-fun",
+          "name": "P_t25v3_copy_inv"
+        }
+      ],
+      "driver_family": "z3",
+      "forall_binding_sha256": "dab7aeedd17efb6659ed70739a7732d8be1f0719823ad6649c66de222d8faf54",
+      "goal_hash": "d870cbe15b7614b0355b81c8b33c6b3b607baec398cc5a969782b632bd50b376",
+      "goal_node_count": 88,
+      "let_name": "x3",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.advanced_copied_prefix/prover-files/typed_real/zilch-typed_real_check_lemma_t25v3_grow_copy_step_advanced_copied_prefix_Z3_5dt1dt0-wp_goal.smt2",
+      "sha256": "72d2f9669703adfde66a45a65c33af5a1b7e06f606e833666cbf4da7e4dc45fb",
+      "support_assertions": 21,
+      "support_attribution": [
+        {
+          "body_sha256": "92ed3b6387a2ea7adfb0281282ed3f10092b199ffe0c64ac751db7f08385dad7",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs"
+        },
+        {
+          "body_sha256": "d83d59933cb8428fc118e396ac88d4b946da1e38c8442d3d51ad2853881701c2",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs"
+        },
+        {
+          "body_sha256": "3b91d4d3fd3ee8b435876ad46c558b8170bea759937396edd9251e0e85c9d8ae",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "b10a675182a54bd3e05baba0fae2deec3825802ec0c246d6ff6211f8f382cdf6",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "54870e5c89b533678e220be22537d8796ab107f992c8d45a7cf79a926108d378",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "4ffe57766ac7158e9bf22d49c2b6912e04ebd41c33149305cd1fd23fac56611a",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a1dfed6d389be5a4dab9ecc490efbd14e26af33d143a92ba9f52ed15098e33fc",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "d2b030072e2e3631d5f96fbdec4a6a16d91053b067f82caff0c43e2434f9d75b",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "5224d38dacf79571be4ade6de5e5b401266cf89925615c14bfb48391489f70ad",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a2040454bce97f74d227cd239fc13ce62a686ed18398870f9e745eb3b4e69893",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "3f8db6925daa96931e8403b27e09722f50246f506060f57d7f1d628e0e756419",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "e8e9d90e3921f5c2eb9080962f083d57b45ade790b114130b5d1f967823ac255",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a5cf980bdcd3e0e9a1684f60f33fc384a03aa30fcc42463f801a6423f1dc4a64",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "14e5a1d4743372c20da40f718aa6c59a3a29d21b29c075b161cbf7be0b525777",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "85c607d4a3ded15667c39e11ecf7f13402f7ecd70c42542c1f6072cf6dc4ea12",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "68e28b32268321dbcc63c814cca5150ab655adf5656fc3121b93a0761bc58874",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "58e1862d880068ce87e2fedb81a486f6858dd276c358e8c47045b680718794fb",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "f0128a61c0627c057a80014c6828d71960dea19dc00202eeb22d7fea7964bc2f",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "68587350e4436a612440ab8e05fc309620c421c8d2672a47407c4617fd44c563",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "39fdb0caf203dd0fb8bc5d392736d4596d73fc06bfbe23baf7ae38a8d4b80e2a",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "451777247802989db373cc5c07812ce8f33f87f54ed883fb43e9f9ea720e0749",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        }
+      ],
+      "support_family_census": {
+        "trusted standard arithmetic": 21
+      },
+      "unclassified_support_assertions": []
+    }
+  ],
+  "open_canonical_source": {
+    "bytes": 4820,
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/canonical-inputs/009s14-t25v3_grow_copy_step_advanced_copied_prefix.c",
+    "sha256": "1839dda1ae013bc884c1fc6492c8839609f9df07769ced542d72330739d63aed"
+  },
+  "original_statement_sha256": "00666376822ecc3d03aa8e9485f7f3fc13c4693bcf48de8194bbc82c1c57d963",
+  "printed_query": {
+    "actual_forall_binding_sha256": "dab7aeedd17efb6659ed70739a7732d8be1f0719823ad6649c66de222d8faf54",
+    "all_actual_hashes_matched": true,
+    "canonical_sha256": "c5c848c70ba114f7b6e2096688a013b592ba66d273c88879ebc141232b38991e",
+    "canonical_utf8_bytes": 256,
+    "delimiter_tree_sha256": "5991631b5b8a964f13d45783868edf100d64063733b6a5f249d7b8e8cf2525d6",
+    "full_A": "Original invariant and k<size only; curried bound then invariant, no additional premise.",
+    "lexical_tokens_sha256": "4d5b33feb3a1bd1bedb7aca577cfd6396510b29baf58ab289b6d832c853b3fa1",
+    "printed_to_SMT_heap_alpha_renaming": {
+      "heap": "heap1",
+      "heap1": "heap2"
+    },
+    "signature_scope": "The source-shaped eleven-binder typed formula hashes match all six materialized negated goals; imported function declaration signatures/bodies equal the previously source-bound byte-identical context. No full typed Why3 AST proof or translation correctness theorem.",
+    "source_heap_variables": [
+      "entry",
+      "h"
+    ],
+    "source_integer_variables": [
+      "r",
+      "o",
+      "b",
+      "bo",
+      "s",
+      "c",
+      "f",
+      "cap",
+      "k"
+    ],
+    "source_to_SMT_typed_variable_bijection": {
+      "b": "i",
+      "bo": "i1",
+      "c": "i2",
+      "cap": "i3",
+      "entry": "heap1",
+      "f": "i4",
+      "h": "heap2",
+      "k": "i5",
+      "o": "i6",
+      "r": "i7",
+      "s": "i8"
+    },
+    "text_exported": false
+  },
+  "reviewer_test_compiler_native_formal_collector_or_ssh_execution": false,
+  "root_capture_identity": {
+    "actual_bytes": 4233355,
+    "local_initial_digest_attribution": "Initial local assertion accidentally included first digit4 of the adjacent4,233,355-byte count in the compact handoff digest. Corrected to independently computed64-character digest; no artifact change or actual result failure.",
+    "provided_hash_matches": true,
+    "sha256": "f897424b2a2e48112446843bceec34cef337fd96f39e08de79933d47ec8ae324"
+  },
+  "root_raw_source_runtime_prepost_preservation_reported": true,
+  "scope": "Independent passive attribution and mathematical design equivalence review only. Metadata hashes/signatures/definitions/hypothesis inventory are bound to retained actual capture and exact current source, not proof validity or a submitted-task attestation. Current source timeout remains open; no prior result or future split result is promoted.",
+  "selected_tool_identity_matches_prior_context": [
+    {
+      "name": "alt-ergo",
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/bin/alt-ergo",
+      "sha256": "ef5b893597fedd2bc5b215a40118b6a2297e1d9293d3a5296f4fe5bf7e43b6af"
+    },
+    {
+      "name": "cvc5",
+      "path": "/data1/yanruj/probata-verifiers/cvc5-1.2.1/cvc5-Linux-x86_64-static/bin/cvc5",
+      "sha256": "ee4c6787a95218a571080a599bdf579aca5b0f1e4f27687f70f46d4d12148974"
+    },
+    {
+      "name": "frama-c",
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/bin/frama-c",
+      "sha256": "39368e41f6a0edbd3902fa0e7b119689a7281fd25965c74b53abd88adeca9ea7"
+    },
+    {
+      "name": "gcc",
+      "path": "/usr/bin/x86_64-linux-gnu-gcc-13",
+      "sha256": "1b99826121ae6682a634e5efe09bd3e3df58ce58e0b28f849114ab5b89139c26"
+    },
+    {
+      "name": "ocamlfind",
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/bin/ocamlfind",
+      "sha256": "285b6b308c7dd042bd87d918a67fecbb3346435c86d9da49c06c8b815f8beddc"
+    },
+    {
+      "name": "ocamlopt",
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/bin/ocamlopt.opt",
+      "sha256": "f8976bb7b53ca30ec4bda901dda00ca354abf571ab292aea70cf29f984e06d0d"
+    },
+    {
+      "name": "opam",
+      "path": "/data1/yanruj/probata-verifiers/opam-2.6.1/opam",
+      "sha256": "b533d393a6967150d6ef41cb3d71e147e93ecbabeb59e921aa412c0ae79ebe3d"
+    },
+    {
+      "name": "why3",
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/bin/why3",
+      "sha256": "98c58e874b1e3ac0baef8d288f4ce93f1333907995f1db2844116521fd3ce858"
+    },
+    {
+      "name": "z3",
+      "path": "/data1/yanruj/probata-verifiers/z3-5.1.0/z3-5.1.0-x64-glibc-2.39/bin/z3",
+      "sha256": "b4e0b3483ce37817230b20d6cad48390eb6a3aefde1d93342ad6dc763f24bc23"
+    }
+  ],
+  "source_commit": "3a48da2f44dd2066c2ac0bf42c4d873490044a99",
+  "source_definition_spans": [
+    {
+      "begin": 7104,
+      "container_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+      "end": 7335,
+      "relative": "swdb/heap_reallocation.mlw",
+      "sha256": "ccab9af0570f7363c265230cebdac38a9e33f3a01f56ff5204af1c6031cff371"
+    },
+    {
+      "begin": 5623,
+      "container_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+      "end": 5806,
+      "relative": "swdb/heap_reallocation.mlw",
+      "sha256": "b659f9be16c81c149591d83d852b03a1c411b0b4444a7818822e36ae9bc69301"
+    },
+    {
+      "begin": 6945,
+      "container_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+      "end": 7103,
+      "relative": "swdb/heap_reallocation.mlw",
+      "sha256": "f36185721459640491e6e417609fc1714621223369e5817814b1a8942732106c"
+    },
+    {
+      "begin": 4451,
+      "container_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+      "end": 4645,
+      "relative": "swdb/heap_reallocation.mlw",
+      "sha256": "1dbf1371e9074def8ea5998150636e778755c3a83d9f816b92a1706b0afaecab"
+    }
+  ],
+  "source_predicate_definitions": [
+    {
+      "name": "P_t25v3_copy_frame",
+      "printed_canonical_body_sha256": "8fcb19fec12c8b67d25648977fdd973a99e2a4436c246fc2e22f007fe3e23020",
+      "printed_lexical_tokens_sha256": "288c007a64da70c6ab70ffe6c74601613370312602f43374bec23f415ec4af99",
+      "prior_normalized_definition_equality_only": true,
+      "proof_result_reused": false,
+      "source_begin": 1197,
+      "source_container": "vector_reallocation_vcs.py",
+      "source_container_sha256": "065375743e7150d8e189e8bb158d8754862c78de5e16e3e3bc8d47bbd72c8a69",
+      "source_definition_sha256": "577ff29196a607c30a94175acdbfd8fbfcdc0cdb3f4c16a14dbc7e7991ce8ffa",
+      "source_end": 1582
+    },
+    {
+      "name": "P_t25_fields",
+      "printed_canonical_body_sha256": "8e754d74ec88c14fa1f2adb7d95a8ab7c4d54a7514139a98d8f8083f738abd1e",
+      "printed_lexical_tokens_sha256": "25380c6a4110a7685cd21cc2304b40dfc8e85525d78a8f4cc3dbc21c8cb516e2",
+      "prior_normalized_definition_equality_only": true,
+      "proof_result_reused": false,
+      "source_begin": 818,
+      "source_container": "heap_model_vcs.py",
+      "source_container_sha256": "f20e0ec130222aeda96b4fbb8e72eef8d922d3f33e84077777203f7e6d159092",
+      "source_definition_sha256": "20708163247b000dfc87f924281eab95738ecee7e5cf8874e9a8959726f050e6",
+      "source_end": 1194
+    },
+    {
+      "name": "P_t25_repr",
+      "printed_canonical_body_sha256": "f6e7adc3bf6c6d5d25f63d8bc5e84f4b6b8d62ecad2f665840d45cce83d9230a",
+      "printed_lexical_tokens_sha256": "c0a7ab0537c439f57e02d5621722fc46c8f96af80610a437d60a8451d374c08f",
+      "prior_normalized_definition_equality_only": true,
+      "proof_result_reused": false,
+      "source_begin": 1199,
+      "source_container": "heap_model_vcs.py",
+      "source_container_sha256": "f20e0ec130222aeda96b4fbb8e72eef8d922d3f33e84077777203f7e6d159092",
+      "source_definition_sha256": "fbe2e835d872f90b9a38a475ffa3646eb51fe1718d6ad2aa70de8a77542b5a03",
+      "source_end": 1545
+    },
+    {
+      "name": "P_t25v3_repr",
+      "printed_canonical_body_sha256": "82edd93555bd91656fc4f9a05d56e16213f01fe2e3702c5e771530cf25eae134",
+      "printed_lexical_tokens_sha256": "a1fe9eb0ff6ef19a307ed03565866e654b4572c0563eed9dd17fd8f4e781f145",
+      "prior_normalized_definition_equality_only": true,
+      "proof_result_reused": false,
+      "source_begin": 535,
+      "source_container": "vector_reallocation_vcs.py",
+      "source_container_sha256": "065375743e7150d8e189e8bb158d8754862c78de5e16e3e3bc8d47bbd72c8a69",
+      "source_definition_sha256": "0061ac023cb12a5f63f8d72450ebc02caf10467a92a6b703aa40e75ca6b77163",
+      "source_end": 727
+    },
+    {
+      "name": "P_t25v3_eligible",
+      "printed_canonical_body_sha256": "b01de0b0ff77aa9fdf1e9bbb0b3b41e55fb34d044435c51b84ebcee82a576e47",
+      "printed_lexical_tokens_sha256": "0870ce2702973ff73963deb3184d8d411c599ee81940929823b9913097366b2d",
+      "prior_normalized_definition_equality_only": true,
+      "proof_result_reused": false,
+      "source_begin": 966,
+      "source_container": "vector_reallocation_vcs.py",
+      "source_container_sha256": "065375743e7150d8e189e8bb158d8754862c78de5e16e3e3bc8d47bbd72c8a69",
+      "source_definition_sha256": "4a86cc595ad87475a0e5e0bd6aa610dbb8d9926f20981778658d242189a4787b",
+      "source_end": 1192
+    },
+    {
+      "name": "P_t25v3_copy_inv",
+      "printed_canonical_body_sha256": "a70ae02bb0821ca2fc6ab7561a6a32394febcaab9e76936207d6359fc4cf4020",
+      "printed_lexical_tokens_sha256": "19a26c98790d9478aba5c0763396f95b581e6062a22fc15f8a713b7a5006d39b",
+      "prior_normalized_definition_equality_only": true,
+      "proof_result_reused": false,
+      "source_begin": 1587,
+      "source_container": "vector_reallocation_vcs.py",
+      "source_container_sha256": "065375743e7150d8e189e8bb158d8754862c78de5e16e3e3bc8d47bbd72c8a69",
+      "source_definition_sha256": "ac8e672f38914c8161b9735b1a50e6df3b77b3d133769b09b008193c260cd9dc",
+      "source_end": 2325
+    }
+  ],
+  "ticket_closure": false,
+  "whole_model_acceptance": false
+}
