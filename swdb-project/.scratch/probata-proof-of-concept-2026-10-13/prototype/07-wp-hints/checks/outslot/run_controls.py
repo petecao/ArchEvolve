@@ -47,6 +47,25 @@ def main():
 
     generated = out / "generated"
     run("generate", [sys.executable, GENERATOR, "--output", generated])
+    for filename in ("gapbs_models.h", "tdstep_standin.c", "bfs_unit.h", "dxc_summaries.h"):
+        source = out / ("crlf-" + filename)
+        shutil.copytree(POC / "standin", source)
+        target = source / filename
+        target.write_bytes(target.read_bytes().replace(b"\n", b"\r\n"))
+        refused = out / ("crlf-" + filename + "-output")
+        run("crlf-" + filename, [sys.executable, GENERATOR, "--source", source, "--output", refused],
+            expect=-1, diagnostic="unsupported changed source")
+        record("crlf-" + filename + "-no-emission", not refused.exists())
+    for name, mutate in (("altered-byte", lambda raw: b"!" + raw[1:]),
+                         ("non-utf8", lambda raw: raw + b"\xff")):
+        source = out / (name + "-source")
+        shutil.copytree(POC / "standin", source)
+        target = source / "gapbs_models.h"
+        target.write_bytes(mutate(target.read_bytes()))
+        refused = out / (name + "-output")
+        run(name, [sys.executable, GENERATOR, "--source", source, "--output", refused],
+            expect=-1, diagnostic="unsupported changed source")
+        record(name + "-no-emission", not refused.exists())
     allocator_output = out / "allocator-correspondence-refused"
     run("allocator-correspondence-refused", [sys.executable, GENERATOR, "--require-allocator-correspondence",
         "--output", allocator_output], expect=-1, diagnostic="allocator source correspondence pending")
@@ -55,6 +74,14 @@ def main():
         record("reproduce-" + name, (generated / name).read_bytes() == (POC / "standin_outslot" / name).read_bytes())
     run("no-overwrite", [sys.executable, GENERATOR, "--output", generated], expect=-1,
         diagnostic="output must be absent")
+    refresh = out / "refresh-corrupt"
+    shutil.copytree(generated, refresh)
+    corrupted = refresh / "gapbs_models.h"
+    corrupted.write_bytes(corrupted.read_bytes().replace(b"\n", b"\r\n"))
+    prior = corrupted.read_bytes()
+    run("refresh-physical-byte-edit", [sys.executable, GENERATOR, "--refresh-generated", "--output", refresh],
+        expect=-1, diagnostic="edited generated output")
+    record("refresh-refusal-no-mutation", corrupted.read_bytes() == prior)
     for name, mutation in (
         ("unknown-return", "\nint unsupported(void) { return 1; }\n"),
         ("aggregate-return", "\nstruct unsupported {int x;}; struct unsupported f(void);\n"),

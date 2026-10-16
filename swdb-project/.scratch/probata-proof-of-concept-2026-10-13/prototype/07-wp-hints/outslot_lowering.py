@@ -130,11 +130,15 @@ def spans(text: str) -> str:
 
 
 def build(source: Path) -> tuple[dict[str, str], dict]:
-    files = {n: (source / n).read_text() for n in PINNED}
+    # Physical bytes are the admission boundary. Text I/O would normalize CRLF
+    # and admit an input whose actual SHA differs from its declared source pin.
+    raw = {n: (source / n).read_bytes() for n in PINNED}
     for name, pin in PINNED.items():
-        if hashlib.sha256(files[name].encode()).hexdigest() != pin:
+        if hashlib.sha256(raw[name]).hexdigest() != pin:
             raise ValueError(f"unsupported changed source: {name}")
-    source_pins = {n: hashlib.sha256(v.encode()).hexdigest() for n, v in files.items()}
+    files = {n: value.decode("utf-8", errors="strict") for n, value in raw.items()}
+    original = dict(files)
+    source_pins = {n: hashlib.sha256(value).hexdigest() for n, value in raw.items()}
     g = spans(files["gapbs_models.h"])
     inventory = []
     for name, typ in RETURNS.items():
@@ -159,7 +163,6 @@ def build(source: Path) -> tuple[dict[str, str], dict]:
     files["tdstep_standin.c"] = td
     for name in files:
         files[name] = "// Prospective private out-slot ABI, 2026-10-16 ET. Not a proof record.\n" + files[name]
-    original = {n: (source / n).read_text() for n in PINNED}
     for row in inventory:
         text = original[row["file"]]
         pos = re.search(r"\b" + re.escape(row["name"]) + r"\s*\(", text).start()
@@ -282,9 +285,9 @@ def main() -> None:
                 raise ValueError("edited generated output")
     else:
         args.output.mkdir(parents=True)
-    for name, value in files.items(): (args.output / name).write_text(value)
+    for name, value in files.items(): (args.output / name).write_bytes(value.encode("utf-8"))
     manifest["output_pins"] = {n: hashlib.sha256(v.encode()).hexdigest() for n, v in files.items()}
-    (args.output / "abi-map.json").write_text(json.dumps(manifest, indent=2) + "\n")
+    (args.output / "abi-map.json").write_bytes((json.dumps(manifest, indent=2) + "\n").encode("utf-8"))
 
 
 if __name__ == "__main__":
