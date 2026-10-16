@@ -105,3 +105,15 @@ dependencies, typed-source admission, import/task closure and fresh normal-reade
 proofs are still required. A coordinator-admitted exact-Git-blob type-only gate
 is being prepared; grammar/types alone will not discharge those requirements.
 Evidence: [pending map controls](../../evidence/t25-reallocation-pending-heap-map-controls-v2-20261016.json).
+
+The next preparation slice adds a closed exact-source inventory for every
+constructor/grow/reserve/destructor event, each emitted contract/loop clause,
+and both trusted allocation helpers. Parent-catalog and inverse-qualified body
+digests bind the entire source before event ownership is assigned; this is an
+explicit trusted map rather than a generic C completeness parser. Entry clauses
+remain caller/source-image duties, and allocator helpers retain the existing
+allocation policy rather than being relabeled as proved bodies. Twenty composed
+controls pass in 52.74 seconds after a real missing-inventory RED. Independent
+completeness review, canonical prelaunch reconstruction and public composition
+remain pending, and the actual proof route is still closed. See
+[source-inventory controls](../../evidence/t25-reallocation-source-inventory-controls-20261016.json).

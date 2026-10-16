@@ -52,6 +52,7 @@ def digest(text):
 def identity():
     here = Path(__file__).parent
     components = ('vector_reallocation_model.py', 'vector_reallocation_vcs.py',
+                  'vector_reallocation_inventory.py',
                   'heap_reallocation.mlw', 'heap_model_vcs.py')
     return {'id': 'vector-reallocation-domain-3',
             'sha256': hashlib.sha256(b''.join((here/p).read_bytes() for p in components) +

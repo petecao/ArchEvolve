@@ -248,7 +248,9 @@ def prepare(member, directory):
     stage.mkdir()
     staged_theory = stage/theory.name
     staged_theory.write_bytes(theory.read_bytes())
+    from swdb.vector_reallocation_inventory import build
     plan = {'preparation_only':True,'coverage_complete':False,
+            'source_inventory':build(member, source, rows),
             'source_sha256':hashlib.sha256(source.encode()).hexdigest(),
             'semantics':{'path':'theory/' + theory.name,'sha256':hashlib.sha256(staged_theory.read_bytes()).hexdigest()},
             'caller_premises_added':[], 'typed_memory_role':'explicit typed int source-image domain; source-derived caller discharge required',
