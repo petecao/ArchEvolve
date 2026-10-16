@@ -1151,3 +1151,28 @@ model/caller proof or ticket acceptance checkbox is claimed by this preparation.
 Exact42844b9aafe2a8af860e09bf5a6fbbec25a42c74 including248 lifetime is integrated after [independent source PASS](../evidence/t25-caller-source-independent-review-42844b9a-20261016.md):10 immutable source-pin instances/23 anchor instances/31 run/header references match. Complete lowered scalar capture, one normal-return cleanup, unreachable fallback and lexical lifetime-end duties are bound without origins/premises/adopted dependencies. Capacity==count is only an admitted libc++22.1.8 C++17 source witness; its model post and caller branches still require proof. Original v2 caller model selection and unsupported generic composition remain. The older03:32 held248 note is superseded only for source preparation, never actual caller proof.
 
 Root reports exact017 representative WP/Why3 import/task generation ended03:45:36 ET with actual tool generation but entry exit1 because of a legitimate empty-ID imported module property and multiline check-lemma description. Task log20,647B,1goal/2properties/results[], sentinel absent; guard7.153422s/207.421875MiB/no events. Pure reader repair and complete task cold audit are pending; no actual rerun, original-exit rewrite, body/caller proof or whole-ticket acceptance. The frozen017 control checkout/artifacts remain untouched by integration.
+
+### Caller count conversion and request target — 2026-10-16 ET
+
+The public lowering now retains the physical signed-count parameter span and
+maps its constructor conversion and reserve request to an explicit numeric C
+kernel. Growth preserves `(size_t)n + 1`; no-growth preserves `(size_t)n`.
+Selected signed-int and size representations, exact conversion, capacity bound
+and request arithmetic are separate pending obligations. The source input's
+`0 <= n` remains a pending discharge from a caller contract. It is not inferred
+from typing or samples, inserted into the executable source, or accepted as an
+unproved global premise.
+
+One real public-lowering RED failed on the missing target, then the same control
+passed after implementation. Seven scoped compiler/native controls pass in
+31.45s (guard 31.8043s, 366,837,760-byte peak, no OOM/timeout). Nine defined numeric
+observations cover 0, 7 and INT_MAX for both growth functions and the no-growth
+function under UBSan; no stale-pointer branch executes. These are preparation
+controls, not formal arithmetic, model or caller proofs. Exact sources, raw
+commands/logs/resources and native artifacts are pinned in
+`evidence/t25-caller-numeric-controls-20261016.json`.
+
+Frozen 017 standalone source and every existing actual producer remain untouched.
+Full caller state/frame/typed-image/cleanup composition, current ordinary model
+dependency eligibility and actual ordinary/smoke proof records remain open. All
+original acceptance boxes stay open.

@@ -195,3 +195,55 @@ def test_public_capacity_qualification_refuses_changed_language_macros_or_header
     changes.append(physical)
     for changed in changes:
         with pytest.raises(ValueError):vector_reallocation_capacity.bind(changed)
+
+
+def test_public_caller_numeric_target_preserves_source_conversion_and_pending_entry_discharge(tmp_path):
+    """The signed input premise is a caller duty, never inferred from C++ typing."""
+    result=lower(SOURCE,'vector_realloc_v3_safe',tmp_path)
+    candidate=result['vector_reallocation_candidate']
+    numeric=candidate['heap_lifetime_plan']['numeric_kernel']
+    assert numeric['status']=='pending' and numeric['dependencies']==[]
+    assert numeric['caller_entry_discharge']=='pending: existing caller contract must imply 0 <= n'
+    assert numeric['source_request']=='count+1'
+    assert numeric['source']==next(row['source'] for row in candidate['call_obligations'] if row['call']=='reserve')
+    assert [event['event'] for event in numeric['lowered_events']]==['constructor','reserve']
+    assert 'requires 0 <= count;' in numeric['c_source']
+    assert 'size_t requested = n + 1;' in numeric['c_source']
+    assert '(integer)count + 1' in numeric['c_source']
+    assert '4611686018427387903' in numeric['c_source']
+    assert numeric['sha256']==hashlib.sha256(numeric['c_source'].encode()).hexdigest()
+    assert candidate['original_caller_premises_added']==[]
+
+
+@pytest.mark.parametrize('function,expression,expected', [
+    ('vector_realloc_v3_safe','n + 1','1\n8\n2147483648\n'),
+    ('vector_realloc_v3_stale','n + 1','1\n8\n2147483648\n'),
+    ('vector_realloc_v3_no_growth','n','0\n7\n2147483647\n'),
+])
+def test_source_mapped_numeric_kernel_replays_defined_boundary_counts(tmp_path,function,expression,expected):
+    """Finite arithmetic controls; no stale alias, allocation or theorem claim."""
+    from swdb import c_lowering
+    candidate=lower(SOURCE,function,tmp_path/'lower')['vector_reallocation_candidate']
+    kernel=candidate['heap_lifetime_plan']['numeric_kernel']
+    assert kernel['parameter_mapping']['count']==candidate['count']
+    span=candidate['count']['source'];raw=SOURCE.read_bytes()
+    assert raw[span['begin']:span['end']]==b'int n'
+    assert span['sha256']==hashlib.sha256(b'int n').hexdigest()
+    assert 'size_t requested = '+expression+';' in kernel['c_source']
+    source=tmp_path/'numeric.c'
+    source.write_text(kernel['c_source']+'\n#include <stdio.h>\nint main(void) {\n'
+                      '  printf("%zu\\n%zu\\n%zu\\n", t25v3_caller_request(0),\n'
+                      '         t25v3_caller_request(7),t25v3_caller_request(INT_MAX));\n'
+                      '  return 0;\n}\n')
+    executable=tmp_path/'numeric'
+    command=[*c_lowering.locate().command,'-x','c','-std=c11','-fsanitize=undefined',
+             '-fno-sanitize-recover=all',str(source),'-o',str(executable)]
+    (tmp_path/'compile.command.json').write_text(json.dumps(command,indent=2)+'\n')
+    built=subprocess.run(command,capture_output=True,text=True,timeout=30)
+    (tmp_path/'compile.stdout').write_text(built.stdout);(tmp_path/'compile.stderr').write_text(built.stderr)
+    assert built.returncode==0,built.stdout+built.stderr
+    run=subprocess.run([str(executable)],capture_output=True,text=True,timeout=10)
+    (tmp_path/'native.stdout').write_text(run.stdout);(tmp_path/'native.stderr').write_text(run.stderr)
+    assert run.returncode==0 and run.stderr==''
+    assert run.stdout==expected
+    assert kernel['status']=='pending' and 'existing caller contract' in kernel['caller_entry_discharge']

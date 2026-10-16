@@ -88,3 +88,13 @@ the qualified model's `capacity == count` postcondition. That postcondition,
 branch arithmetic, initialized int image, all ordinary proof dependencies,
 cleanup/frame/liveness and safe/no-growth/stale outcomes remain duties to prove.
 No global incoming pointer-map invariant or exclusive-ownership premise is added.
+
+The next caller numeric slice binds the actual signed-count parameter and its
+constructor/reserve events to a separate C arithmetic target. It preserves the
+widen-before-increment order and the zero/maximum signed-count cases. Seven
+compiler/native controls pass, including nine defined UBSan arithmetic
+observations; this is finite preparation evidence only. The `0 <= n` requirement
+remains a pending discharge from the eventual caller contract, and the target
+has no formal proof result. The candidate adds no caller premise or origin.
+See `evidence/t25-caller-numeric-controls-20261016.json`. Full state composition,
+current dependency eligibility and all ordinary/smoke proofs remain required.
