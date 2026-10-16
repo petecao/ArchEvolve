@@ -987,3 +987,40 @@ No environment/token scan, universal process-absence or cleanup claim is made.
 Raw reports remain remote for the coordinator, ticket acceptance and independent
 review. Ticket 25 stays **claimed**: wider standard-model/member types, heap and
 lifetime integration, and eventual combined-method acceptance remain open.
+
+
+### Fresh original count constructor accepted — 2026-10-16 01:17 ET
+
+One fresh public `std_vector_int_ctor_count` fixture record is accepted at exact
+`bb7170ac09081cd02562b747d7cccb17ba8c6ced` under the declared source-translation,
+allocator, tool and standard-support TCB. Record SHA256
+`b8e999897786e46ce516ddbad952ae4ab130fa42b81569cbc71263732e3be687`
+is schema-valid and proven: all 27 fresh targets, 36 ordinary Valid goals and
+one passing numeric smoke, with complete current setup/normal-reader bindings.
+Original body/contract, caller domain and model version remain unchanged.
+
+Independent cold review passes all 1,031 checks and 342 physical reference
+instances with zero mismatch. All 84 parsed task streams match the previously
+audited universal-value tasks: 58 identical and 26 differ only by capture-free
+specialization of the quantified value to zero. No other logical command,
+heap definition or support assertion differs. Linux project runtime, method,
+source, foundation/import bindings and the closed numeric dependency DAG match.
+No cached or synthetic result is promoted, and no original caller premise or
+finite heap identity bound is added.
+
+All 614 raw files (23,021,394 bytes) remain remote. Whole/outer guards exit 0 in
+371.990/374.078 seconds, peak 1,067,044,864/1,118,425,088 bytes, with one 8 GiB
+worker and no OOM/watchdog timeout. Exact source stays clean. Node 0 generation
+587 naturally releases at 2026-10-16T05:10:04Z = 01:10:04 ET; node 1 and legacy
+leases are released at the final finite observation. Process cwd permission and
+vanished-read limits remain explicit; no universal absence or new GPU state is
+claimed. The actual monitored raw budget remains 8 GiB, with its earlier 1 GiB
+proposal preserved in the separate clarification.
+
+This accepts only the original count-constructor public-body limb under its TCB.
+No production-store adoption, generic caller/growth proof, formal C++ equivalence
+or ticket closure follows. Ticket25 remains **claimed**, all acceptance boxes
+remain open, and the owner's separate ownership/domain work is excluded.
+[Independent review](../evidence/t25-count-ctor-cold-review-bb7170ac-20261016.md),
+[exact review metadata](../evidence/t25-count-ctor-cold-review-bb7170ac-20261016.json),
+[compact final snapshot](../evidence/t25-count-ctor-cold-snapshot-final-bb7170ac-20261016.json).

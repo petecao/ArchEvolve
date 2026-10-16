@@ -5,26 +5,27 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-re
 
 ## Current state (resume here)
 
-Updated: 2026-10-16 01:05 ET. **35 resolved / 25 ready-for-agent / 3 claimed.**
+Updated: 2026-10-16 01:17 ET. **35 resolved / 25 ready-for-agent / 3 claimed.**
 Implementation remains active on `codex/probata-resume-20261015`, published
-`e2a8c96b`, based on `yanrujhou_main`. The eligible frontier is **07, 25, 28**;
+`f8dcb102`, based on `yanrujhou_main`. The eligible frontier is **07, 25, 28**;
 other unresolved tickets retain their dependencies. [All 63 statuses](ticket-status-20261015.md).
 
 | Ticket | Current evidence | Next gate |
 | --- | --- | --- |
 | **07 claimed** | Run 26 remains UNPROVEN. Exact `7930f3a1` preserves executable C. Helper generation v4 passed independent cold review: 245 goals/352 properties, 212 ordinary/33 smoke, 31 initialization properties, all 19 helper bodies and three normalized snapshots; 1,005 selected pins and 29 artifacts match. These are generation results, not solver proofs. | Review the separate 900-second complete helper-proof packet before admission. Alignment remains unresolved, with no full C RTE, helper or TD proof acceptance. [Actual generation](evidence/t07-helper-stage1-v4-actual-20261016.json), [cold review](evidence/probata-t07-stage1-v4-independent-cold-review-20261016.md). |
-| **25 claimed** | Pair `1278f2d9` and public heap CEA are independently accepted in scope; heap has two original records/38 targets/47 ordinary Valid plus one smoke. The new original count-constructor evaluation runs at exact `bb7170ac` on node 0 generation 587, launched 01:03 ET; 201 admitted source-module checks pass. | Complete one fresh count record with 27 targets, expected 36 ordinary plus one smoke, then independently audit every task/runtime/dependency. No count result is accepted yet; growth receiver/storage ownership and wrappers remain open. [Heap cold review](evidence/t25-public-heap-cold-review-cea5652b-20261016.md), [count launch](evidence/reviewed-t25-count-ctor-v1-launch-bb7170ac-20261015.json). |
+| **25 claimed** | Pair `1278f2d9` and public heap CEA are accepted in scope. Fresh original count constructor at exact `bb7170ac` also passes independent cold review: one record, 27 targets, 36 ordinary Valid plus one smoke; 1,031 checks/342 references with zero mismatch. All 84 tasks are identical universal-value streams or exact zero specialization. | Continue separate growth/receiver/storage ownership and caller work. No generic caller, production-store, formal C++ or whole-ticket acceptance follows. [Count cold review](evidence/t25-count-ctor-cold-review-bb7170ac-20261016.md), [heap cold review](evidence/t25-public-heap-cold-review-cea5652b-20261016.md). |
 | **28 claimed** | Setup81 and size86 native controls are reviewed/published. Mathematical-rank artifact9704c54b passed3/3 actual syntax/type checks;83 physical pins independently match. First public real-header enum selector is under implementation with scripted compiler controls only. | Read-only expanded-config metadata, then separately reviewed complete rank VCs and independent absent-premise negative. Public interface/state/IEEE/source correspondence remain open; no current0.2 or full-ticket formal acceptance. [Rank type gate](evidence/t28-rank-type-actual-20261016.json), [progress premise](evidence/t28-finite-progress-decision-20261016.md). |
 | **24 / 27 / 36 resolved** | Published29709232/af10a946/8b0c2e27 with scoped acceptance; ticket36 retains its historical checker identity. | Preserve exact evidence for final integration review. |
 
 Root owns actual admissions: at most two remote measurements, one per socket,
-and one actual Mac verifier. Pair node 0 generation 586 and heap node 1 generation 614
-naturally released before the new count-only node 0 generation 587 launch at
-01:03 ET. The count profile uses 1800s public/2100s profile/2400s whole/2520s outer
-limits and one worker with an 8 GiB RSS cap; its actual monitored raw-output allowance is 8 GiB,
-not a filesystem quota. The [budget clarification](evidence/t25-count-ctor-admission-budget-clarification-20261016.md)
-retains the earlier 1 GiB proposal and exact launch value. Node 1 was free at this
-admission; no new job is admitted there by this checkpoint.
+and one actual Mac verifier. Count-only node 0 generation 587 naturally released
+at 01:10:04 ET after 371.990 seconds under the whole guard; source remained exact
+and clean. Its final finite observation also records node 1 and legacy leases
+released, with process-inspection limits retained. Pair generation 586 and heap
+generation 614 remain completed. No new remote job is admitted by this checkpoint.
+The count run used one 8 GiB-RSS worker and an actual monitored 8 GiB raw-output
+allowance, not a filesystem quota. The [budget clarification](evidence/t25-count-ctor-admission-budget-clarification-20261016.md)
+retains the earlier 1 GiB proposal; all 614 raw files remain remote for readers.
 
 Mac helper generation v4 completed under a 120s/8 GiB guard in 3.521s/172.78125 MiB,
 with no OOM/timeout/inspection/cleanup failure; independent cold review passed
