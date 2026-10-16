@@ -1,0 +1,63 @@
+{
+  "all_raw_manifest_rows_equal": true,
+  "boundary": "Native17Valid+4smokehealth is conditional metadata. Five allocator/free assumptions and missing current constructor/source-Typed/lifetime/whole-caller proof remain; original entry and ordinary reader verdicts unchanged.",
+  "caller_acceptance": false,
+  "complete_common_exports": 19,
+  "complete_goal_coverage": true,
+  "constructor_whitelisted": false,
+  "created": "2026-10-16 ET",
+  "current_constructor_body_record_admitted": false,
+  "decision": "PASS_CONDITIONAL_PASSIVE630_RECONCILIATION_ONLY",
+  "external_native_or_proof_runs": 0,
+  "failure_class": "unclassified_wp_outcome",
+  "full_task_hypothesis_semantic_audit_performed": false,
+  "goals": 21,
+  "independent_log_ranges": {
+    "bytes": 307,
+    "path": "evidence/t25-closed-no-growth-passive630-independent-log-ranges-v1-20261016.json",
+    "sha256": "a112aa6f1897c6cf21d249c0ffa91a2401524fb3f539796dc8b62e84f0e2e782"
+  },
+  "independent_log_source": {
+    "bytes": 6294,
+    "path": "prototype/25-closed-no-growth-20261016/independent-passive-630-log-ranges-v1.py",
+    "sha256": "13d60ea32af47c1f24119d6baba6def57194504c65a1ba90f8047baca5691f5d"
+  },
+  "independent_metadata": {
+    "bytes": 147735,
+    "path": "evidence/t25-closed-no-growth-passive630-independent-metadata-v1-20261016.json",
+    "sha256": "6b5dd51227122904238f7100e6ba98f0caa7900baf27dd2665c83c019cb05c51"
+  },
+  "independent_metadata_source": {
+    "bytes": 5934,
+    "path": "prototype/25-closed-no-growth-20261016/independent-passive-630-metadata-v1.py",
+    "sha256": "ec2f45b57f111768082a71905eaef151504bab4b34b795ba0cc4bcfdf80545ba"
+  },
+  "independent_read_only_SSH_metadata_sessions": 2,
+  "internal_Qed_inventory_only": 10,
+  "native_ordinary_Valid": 17,
+  "native_smoke_healthy_nonproof": 4,
+  "normalized_CSV_rows": 52,
+  "observer_result": {
+    "bytes": 208001,
+    "path": "evidence/t25-closed-no-growth-passive630-result-v4-20261016.json",
+    "sha256": "5e6502da20a8ce098f3ce1218a04eee6bfd86742df3090721b3b044144c3cdd1"
+  },
+  "observer_source": {
+    "bytes": 17086,
+    "path": "prototype/25-closed-no-growth-20261016/passive-630-observer-v4.py",
+    "sha256": "bca320c2fd9ea6f4082f99a953828f51f90807f92ede42725f11a70d06c08706"
+  },
+  "ordinary_reader_verdict": "not_proven",
+  "original_entry_refusal_preserved": true,
+  "proof_acceptance": false,
+  "properties": 72,
+  "public_proof_record_created": false,
+  "raw_C_AST_SMT_transferred": false,
+  "raw_bytes": 23681513,
+  "raw_files": 314,
+  "source_consumer_bytes_checked_by_reviewed_observer": 1338043021,
+  "source_consumer_files_checked_by_reviewed_observer": 1623,
+  "source_pins_checked_by_reviewed_observer": 333,
+  "source_typed_bridge_established": false,
+  "unique_export_owners": 11
+}

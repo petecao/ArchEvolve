@@ -1,0 +1,26 @@
+{
+  "body_sha256": "49ee7ccd8d7fe50abc5c4937e7fe1259b37c2b34d3e4f295fd0999f495b3a792",
+  "date": "2026-10-16 ET",
+  "entry_sha256": "4654bd036fa3db1455e49a76f061cd8a955aec335fae322b44300776b9e462ae",
+  "helper_basis": {
+    "functions": [
+      "consumer_closure",
+      "pin",
+      "ambient_check",
+      "validate_linux_launch",
+      "verified_linux_lane",
+      "import_surface",
+      "compiler_preflight",
+      "compiler_components"
+    ],
+    "relative": ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/linux_pair_entry_v1.py",
+    "sha256": "615f6c867a29101e1dee2072893fea212f6c2843c77f6bbd3d18538fc891300a"
+  },
+  "intentional_helper_change": "compiler_preflight refuses nonabsolute singleton compiler commands before child execution",
+  "normalizer_basis": {
+    "relative": ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/linux_pair_selector_v3.py.inc",
+    "review": "parent reviewed exact V3 source helper; no producer weakening",
+    "sha256": "c3dd0a66efec3559c51265bfaffe307f2efc4b628230bb5f529ef7691299dca0"
+  },
+  "status": "INERT; root commit/source/runtime/CBMC admission unknown"
+}

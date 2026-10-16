@@ -1,0 +1,102 @@
+{
+  "created": "2026-10-16 ET",
+  "scope": "Pure source/JSON reconstruction against existing inert canonical metadata; no project/preparer, native/compiler/solver/test framework execution",
+  "checks": 90,
+  "six_reserve_formulas_and_source_spans_reconstructed": true,
+  "body_and_both_branches_preserved": true,
+  "first61_helper_input_source_hashes_equal": true,
+  "prior_result_reused": false,
+  "reconstruction": {
+    "whole_original_reserve_body_equal": true,
+    "both_branches_preserved": true,
+    "all61_helper_inputs_fresh_and_source_equal": true,
+    "six_extra_duties": [
+      {
+        "id": "reserve.entry.capacity",
+        "groups": [
+          "R1"
+        ],
+        "statement_sha256": "6043348b88ecef1ec04a797943718731ac2623c314fbecbf9166531d9201968d",
+        "source_span": {
+          "begin": 4754,
+          "end": 4818,
+          "sha256": "b027fed4c80800e1073123e0aafa891c16bc8208de128937349a7ad610137243"
+        },
+        "no_prior_or_sibling_result_premise": true
+      },
+      {
+        "id": "reserve.no_growth",
+        "groups": [
+          "R2"
+        ],
+        "statement_sha256": "debaf9af3eadb586833fabebeb443af22bf79f5a1571c65071067f510c8034aa",
+        "source_span": {
+          "begin": 4754,
+          "end": 4818,
+          "sha256": "b027fed4c80800e1073123e0aafa891c16bc8208de128937349a7ad610137243"
+        },
+        "no_prior_or_sibling_result_premise": true
+      },
+      {
+        "id": "reserve.growing.pre",
+        "groups": [
+          "R1"
+        ],
+        "statement_sha256": "c76a4f395300e09bba7113408342b7700d8e6dfe97d4a4b57fb8c0c0b4f03c2e",
+        "source_span": {
+          "begin": 4754,
+          "end": 4818,
+          "sha256": "b027fed4c80800e1073123e0aafa891c16bc8208de128937349a7ad610137243"
+        },
+        "no_prior_or_sibling_result_premise": true
+      },
+      {
+        "id": "reserve.growing.post",
+        "groups": [
+          "R3"
+        ],
+        "statement_sha256": "de25de437f01f084dbc8b68be604392e1967802daece2556ab4ad87c57b63fa4",
+        "source_span": {
+          "begin": 4754,
+          "end": 4818,
+          "sha256": "b027fed4c80800e1073123e0aafa891c16bc8208de128937349a7ad610137243"
+        },
+        "no_prior_or_sibling_result_premise": true
+      },
+      {
+        "id": "reserve.growing.old_invalid",
+        "groups": [
+          "R3"
+        ],
+        "statement_sha256": "f74c7f9e56d07128f9f275cab47024698da93c69d1c9839d2891b7af63e25f92",
+        "source_span": {
+          "begin": 4754,
+          "end": 4818,
+          "sha256": "b027fed4c80800e1073123e0aafa891c16bc8208de128937349a7ad610137243"
+        },
+        "no_prior_or_sibling_result_premise": true
+      },
+      {
+        "id": "reserve.growing.frame",
+        "groups": [
+          "R3"
+        ],
+        "statement_sha256": "856bb61508554c10311ae41dbb8a5555bf742b068dce917f09d054d53c829cea",
+        "source_span": {
+          "begin": 4754,
+          "end": 4818,
+          "sha256": "b027fed4c80800e1073123e0aafa891c16bc8208de128937349a7ad610137243"
+        },
+        "no_prior_or_sibling_result_premise": true
+      }
+    ],
+    "source_to_VC_translation_TCB_explicit": true,
+    "prior_grow_result_imported": false
+  },
+  "auditor": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-reserve67-passive-independent-cold-audit-20261016.py",
+    "sha256": "d5087ddbb9b69fff23380adbbf9253b76363d30811631028a6dd0be0533677be",
+    "bytes": 55440
+  },
+  "actual67_producer_audit_pending": true
+}

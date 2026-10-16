@@ -1,0 +1,100 @@
+{
+  "actual_pair_acceptance": false,
+  "current_0_2": false,
+  "date": "2026-10-16 ET",
+  "extra_sanitizer_runtime_pins": [
+    {
+      "bytes": 4009712,
+      "path": "/opt/homebrew/Cellar/llvm/22.1.8/lib/clang/22/lib/darwin/libclang_rt.asan_osx_dynamic.dylib",
+      "sha256": "939a094a9760d0e46506ce3c273c21183b06771629ace48d006baec87d49108b"
+    },
+    {
+      "bytes": 1341856,
+      "path": "/opt/homebrew/Cellar/llvm/22.1.8/lib/clang/22/lib/darwin/libclang_rt.ubsan_osx_dynamic.dylib",
+      "sha256": "16c15251c2ad0494b44ef8309aeed51501c134fe9ab87fbc8f33a95c383fc97f"
+    },
+    {
+      "bytes": 180208,
+      "path": "/opt/homebrew/Cellar/llvm/22.1.8/lib/clang/22/lib/darwin/libclang_rt.asan_abi_osx.a",
+      "sha256": "092d73c0f58fdfcec26cc52e6932a9fc19a92e08d490e2ea78b6aed83a7f45a1"
+    }
+  ],
+  "full_ticket28": false,
+  "hardware_acceptance": false,
+  "header_dependency_timing_tcb": "Dependency files are emitted by original preprocessing; physical dependency hashes are first collected afterward, then checked after capture/compile/run. This does not reconstruct bytes read before the first capture or close concurrent modification-and-restoration/compiler-loader TCB.",
+  "native_controls_each_language": 53,
+  "scope": "memory53 private native preparation controls only; no source call/value/history/public/formal/hardware acceptance",
+  "source_body_proof": false,
+  "source_pins": [
+    {
+      "bytes": 6988,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/native_prepare_cases.c",
+      "sha256": "9427897251358876ff8e75db200ce933fe67a3ade99b45885321dfef34a97429"
+    },
+    {
+      "bytes": 28802,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/backend_for_prepare.h",
+      "sha256": "e0875d948287f50a184b621dd7a0f08627e710205df3766c24f7e72b5c8dac66"
+    },
+    {
+      "bytes": 7421,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/interface_memory_prepare.h",
+      "sha256": "5dfff0a2e384def90c657f008e15f43c94ffa82b2dee6096d04181c9d9c8253f"
+    },
+    {
+      "bytes": 14636,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/interface_memory.py",
+      "sha256": "cf8a2d74aae805ffa07266d920b7f016d26dff9f8dc5f8582a91cad8345c1454"
+    },
+    {
+      "bytes": 9836,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/binding.json",
+      "sha256": "638b4864b95072b003daa8c0d694684b0423e125b3fadd6d62907752c950ac65"
+    },
+    {
+      "bytes": 4729,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/source-manifest.json",
+      "sha256": "16c5fcf20bf0bbfa7eca4f91ee72a9029fb26363041c7c2cafe9d50c6665a9dc"
+    },
+    {
+      "bytes": 6200,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/independent-source-review-20261016.json",
+      "sha256": "4134aef63ee69e397979847d144539b4fffc538311acbdf6cdb0aab5206b5eec"
+    },
+    {
+      "bytes": 1984,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/independent-source-review-20261016.md",
+      "sha256": "ac7e0f43afd6d7e76719005d8c4be86dec89d81094820320ed55f0c66771da34"
+    },
+    {
+      "bytes": 9663,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/test_source_preparation.py",
+      "sha256": "5f920a7e334aee41cb80944b3788a71c8fd20b145a59118762f7c099179d3d15"
+    },
+    {
+      "bytes": 5089,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/prepare_artifacts.py",
+      "sha256": "9430ac50031481bb4e02aa70cf18103ff632ef9c134b15fb0d80b58deda3388d"
+    },
+    {
+      "bytes": 1899,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/pure-tests.log",
+      "sha256": "85af9d1f852ae9f35aacc31183344b22e56677a167606229510a940742b223b7"
+    },
+    {
+      "bytes": 14920,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/deferred_state.py",
+      "sha256": "7dd77d2d5ff38391ab1475d5a0695279ead70fc96ee5a4db4ba17f6679ec9c01"
+    },
+    {
+      "bytes": 11226,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/command_state.py",
+      "sha256": "e50b667cb0bfe4f25fa01cbdb892f2bac35135073b01b4bf582835c6e7931670"
+    },
+    {
+      "bytes": 4011,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/region_state.py",
+      "sha256": "c80bc03d0045b47fa680a14fd0ca9d42602920e5322337cb4f85d31a9ea9e017"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "V2_root_report_not_a_native_result": true,
+  "command_v3": {
+    "bytes": 6393,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/command_v3.json",
+    "sha256": "b3ff4e46288d36d5fa3e690e8bc50ee1caac7f71030bd5974b3ec44f2b6841f5"
+  },
+  "compiler_native_or_entry_main_executed": false,
+  "criteria_unchanged": {
+    "languages": [
+      "C11",
+      "C++17"
+    ],
+    "preparation_controls_each": 53,
+    "rss_cap_bytes": 4294967296,
+    "sanitizers": [
+      "ASan",
+      "UBSan"
+    ],
+    "whole_tree_seconds": 180,
+    "workers": 1
+  },
+  "date": "2026-10-16 ET",
+  "delta": "one RAW_ROOT string constant v2 to v3; inverse substitution exactly reproduces reviewed V2 entry bytes",
+  "entry_v2": {
+    "bytes": 12657,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/native_entry_v2.py",
+    "sha256": "fab5fab5fe7e3149c3c6c961c1bd97ac8e83a54cd7f4c89b133eda4ca2b11a29"
+  },
+  "entry_v3": {
+    "bytes": 12657,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/native_entry_v3.py",
+    "sha256": "8d68c96a474aeada232e531c5635400e69abd9a4fc269734845628e41666dd4d"
+  },
+  "plan_v3": {
+    "bytes": 4066,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/plan_v3.md",
+    "sha256": "15ddb7dff951d40fe56f74008777921bf5997101ce326f2f8b506a59550f7022"
+  },
+  "queue_timeout_seconds_prospective": 300,
+  "root_queue_receipt_review_pending": true,
+  "runtime_policy_reused_unchanged": {
+    "bytes": 1640971,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-public-v3-runtime-policy-with-python-packages.json",
+    "sha256": "4171556ed48f8612eb364a88741831a3bfc9259d34c25750e8717dadeab408a1"
+  },
+  "source_policy_reused_unchanged": {
+    "bytes": 7200,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/source_policy_v2.json",
+    "sha256": "a9630edaf8586c22ba4f9896e618eae5548df20c8659d95fc447eb346644080a"
+  },
+  "status": "PASS_INVERSE_DELTA_SOURCE_REVIEW; root fresh admission required"
+}

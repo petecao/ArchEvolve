@@ -1,0 +1,263 @@
+{
+  "accepted_cbmc_release_family": "6.11",
+  "admitted": false,
+  "cbmc_version_output": {
+    "stderr": "",
+    "stdout": "6.11.0 (cbmc-6.11.0)\n"
+  },
+  "compiler_selector_normalization": {
+    "accepted_inherited_alias": [
+      "clang++"
+    ],
+    "reviewed_helper_sha256": "c3dd0a66efec3559c51265bfaffe307f2efc4b628230bb5f529ef7691299dca0",
+    "scope": "normalize only after exact admitted wrapper path/bytes; then unchanged absolute singleton preflight before project import"
+  },
+  "config": {
+    "path": null,
+    "sha256": null
+  },
+  "control_files": {
+    "cbmc_release_gate.py": "681ad7be43312e224529a03d42b939305010795becd2fc203724a59c63db3dfc",
+    "closed_python_surface.py": "748423c27ac8c1f9810c08d3f0ffc71548da703b4b4f95cedc31d4f8bc0418af",
+    "python-physical-metadata-v2.json": "9d90835f12dfb89a43ac0e0661681159ec8ab563e9cf664548162a7357299eda",
+    "python_role_observer_v2.py": "9b100cbe2fdef3e7d429ccdf05d6489d44855a84328e2dd8532eb547beeaf43b",
+    "python_startup_roles_v2.py": "5e9d2e6dfa2aaa7999f4670a979d3cc32736b852a612f77d4e2f7c71bc229618",
+    "t28-linux-runtime-observer-v2-actual-20261016.json": "092397608fe3a08c42d85e9c8e121ed139f0d94e345a12ae3aaa57ad6e93a5f0",
+    "trace_pytest_child_v2.py": "e3957b2f358b7e446a6a61e80d3d761539e14a9fd1fae5323c2abfd7937f3493"
+  },
+  "date": "2026-10-16 ET",
+  "guard": {
+    "rss_cap_bytes": 8589934592,
+    "timeout_seconds": 1200,
+    "workers": 1
+  },
+  "junit": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 25
+  },
+  "junit_classname": ".scratch.probata-proof-of-concept-2026-10-13.prototype.28-public-memory-trace-resume-20261016.test_public_actual",
+  "linux_clang_components": {
+    "command": null,
+    "command_executable": null,
+    "driver": null,
+    "headers": null,
+    "parser": null
+  },
+  "linux_header_surfaces": {
+    "clang-resource": {
+      "count": 305,
+      "inventory_sha256": "92ca67ff62ebd3ef640f717dd09f19558898d0b464951ee481700e33355594ca",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/include"
+    },
+    "libc++": {
+      "count": 1678,
+      "inventory_sha256": "27b8282afa005d9706b0f019f3b3fdc051fcee7ad6b8c5ae0685a0fc95a8d67a",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/include/c++/v1"
+    }
+  },
+  "linux_launch_binding": {
+    "entry_sha256": "d319185131bd708c57229fe16e269da6e6298d1afba3c057a8fcc0f89aa43c93",
+    "node": null,
+    "python": null,
+    "scope": "root-reviewed Linux whole-tree/socket lease; no Mac counted-slot assertion",
+    "wrappers": {
+      "execute.py": null,
+      "watch.py": null
+    }
+  },
+  "linux_parser_physical": {
+    "bytes": 216591928,
+    "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/libclang.so.22.1.8",
+    "sha256": "8b03ee2c60f0699651869fea5135cb5a144777a10c6e4b9b7835283ac9ca3f7d"
+  },
+  "naming": null,
+  "ocaml_kernel_meta_provenance": {
+    "actual_package_query_executed": false,
+    "boundary": "passive exact physical bytes only; future actual query must equal the exact admitted package root",
+    "pin": {
+      "bytes": 2318,
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c/META",
+      "sha256": "1d41605b5220bc71779ffac319ff9b06950245f5eab9f61894e865ddd9658002"
+    },
+    "source": "Root fresh passive META observation supplied through /root/ticket28 on 2026-10-16 ET"
+  },
+  "ocaml_packages": {
+    "findlib": null,
+    "frama-c-wp.core": null,
+    "frama-c.kernel": null
+  },
+  "portable_import_surfaces": {
+    "why3_drivers": {
+      "files": [],
+      "path": null
+    },
+    "why3_stdlib": {
+      "files": [],
+      "path": null
+    },
+    "wp_why3_support": {
+      "files": [],
+      "path": null
+    }
+  },
+  "python_startup_roles_v2": {
+    "admitted": false,
+    "base_prefix": "/usr",
+    "covered_descendants": [
+      {
+        "path": "/usr/lib/python3.12/lib-dynload",
+        "root": "/usr/lib/python3.12"
+      },
+      {
+        "path": "/usr/lib/python3.12/dist-packages",
+        "root": "/usr/lib/python3.12"
+      }
+    ],
+    "executable": "/data1/yanruj/venvs/swdb-test/bin/python",
+    "module_origins": {
+      "_distutils_hack": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/_distutils_hack/__init__.py",
+        "sha256": "46849a60a7cc85189cf6b5ac62b3f135004862ce6a96540a81c95ef6fbc4dc3e",
+        "spec_origin": "/usr/lib/python3/dist-packages/_distutils_hack/__init__.py"
+      },
+      "jsonschema": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/jsonschema/__init__.py",
+        "sha256": "87497644f54cf648a653bfa34d22a812782e577406bebad0be59c937717a50f9",
+        "spec_origin": "/usr/lib/python3/dist-packages/jsonschema/__init__.py"
+      },
+      "psutil": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/psutil/__init__.py",
+        "sha256": "6167ff8b6663b89a842d17cd97a9d7d2766ea22d3d197a8c64f255b0c24c0904",
+        "spec_origin": "/usr/lib/python3/dist-packages/psutil/__init__.py"
+      },
+      "pytest": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/pytest/__init__.py",
+        "sha256": "ee37885c9583f843390684dfb496907f87a0905128e7a3cf4ad227f49ff34c2d",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/pytest/__init__.py"
+      },
+      "site": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/site.py",
+        "sha256": "619436355cbe91c3b29681ab486ee63f5f2e0a7d6274dfae747bdb94e60bca55",
+        "spec_origin": "frozen"
+      },
+      "sitecustomize": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/etc/python3.12/sitecustomize.py",
+        "sha256": "43d81125d92376b1a69d53a71126a041cc9a18d8080e92dea0a2ae23be138b1e",
+        "spec_origin": "/usr/lib/python3.12/sitecustomize.py"
+      },
+      "yaml": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/yaml/__init__.py",
+        "sha256": "6e1974e6a49e3bed59c654918c6aef9769bd9eb5dbd67f7e1906ad4cdd0caea7",
+        "spec_origin": "/usr/lib/python3/dist-packages/yaml/__init__.py"
+      }
+    },
+    "package_sys_path": [
+      "/usr/lib/python312.zip",
+      "/usr/lib/python3.12",
+      "/usr/lib/python3.12/lib-dynload",
+      "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages",
+      "/usr/local/lib/python3.12/dist-packages",
+      "/usr/lib/python3/dist-packages",
+      "/usr/lib/python3.12/dist-packages"
+    ],
+    "packages": [
+      "pytest",
+      "yaml",
+      "jsonschema",
+      "psutil"
+    ],
+    "physical_metadata_sha256": "aa8cc8bffb8ae7dda9f283a0054e5746fa5ab7c39b76fc18ba6c783db51f2746",
+    "prefix": "/data1/yanruj/venvs/swdb-test",
+    "root_observer_selection": "observation",
+    "root_observer_sha256": "092397608fe3a08c42d85e9c8e121ed139f0d94e345a12ae3aaa57ad6e93a5f0",
+    "schema": "python-startup-roles-plan-2",
+    "source_project": null
+  },
+  "raw_name": null,
+  "runtime_files": {
+    "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c/META": "1d41605b5220bc71779ffac319ff9b06950245f5eab9f61894e865ddd9658002"
+  },
+  "selection": [
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[same_thread_read_read]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[same_thread_write_during_gather]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[same_thread_read_during_store]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[other_thread_read_during_store]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[other_thread_cas_history_union]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[other_thread_cas_issue_only]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[failed_cas_adds_no_history]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[preissue_visibility_excludes_older_value]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[preissue_visibility_old_value]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[history_result_freezes_at_cover]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[region_stall_cross_thread_covers_store]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[region_read_read_does_not_cover]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[region_other_write_does_not_cover]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[other_thread_ownership_command]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[other_thread_ownership_tile_read]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[disjoint_thread_tiles]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[pair_8byte_second_half_cpu_read]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[pair_4byte_other_half_cpu_read]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[pair_8byte_second_half_command]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[pair_4byte_other_half_command]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[pair_8byte_missing_second_owner]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[pair_4byte_one_owner]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[pair_second_half_wait_covers]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[logical_ready_one_covers_zero_requires_wait]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[logical_ready_may_not_be_assumed_zero]"
+  ],
+  "source_commit": null,
+  "source_consumer_trees": {
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016": {
+      "oid": null
+    },
+    "apps/dx100/benchmarks/API": {
+      "oid": null
+    },
+    "library": {
+      "oid": null
+    },
+    "pyproject.toml": {
+      "oid": null
+    },
+    "records": {
+      "oid": null
+    },
+    "schemas": {
+      "oid": null
+    },
+    "swdb": {
+      "oid": null
+    },
+    "tests/conftest.py": {
+      "oid": null
+    },
+    "tests/fixtures": {
+      "oid": null
+    },
+    "tests/testkit": {
+      "oid": null
+    },
+    "vocab": {
+      "oid": null
+    }
+  },
+  "source_files": {},
+  "source_root": null,
+  "status": "INERT V2; next published source/runtime/lane/control admission remains root-owned",
+  "tools": {
+    "cbmc": {
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/cbmc",
+      "sha256": "a62af25d27425610608221d79c202f993efe1d5a85cece186119bec196382995",
+      "version": "6.11.0"
+    }
+  },
+  "wp_artifacts": {}
+}

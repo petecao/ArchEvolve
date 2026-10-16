@@ -1,0 +1,36 @@
+{
+  "V1_boundary_resolved": "V1 allowed recorded skipped cases with pytest0; V2 prevents that from becoming overall command success. V1 remains preserved and was not executed.",
+  "argv": {
+    "bytes": 4145,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/focused-regressions-command-v2.json",
+    "sha256": "03d99dbcc9db821fdc47d73f122308b72358ab14385ae7e75cf274660e6fcd1c"
+  },
+  "at_utc": "2026-10-16T18:24:55.745121+00:00",
+  "command_unchanged_except_exact_embedded_V2_source": true,
+  "created": "2026-10-16 ET",
+  "decision": "PASS narrow V2 final success gate; zero-skip focused CI admissible under separately reviewed root V6 dispatch",
+  "exact_inverse_only_final_gate_and_message_changed": true,
+  "failure_semantics": "Original nonzero pytest status is propagated. A pytest0 census with no cases, any skip/failure/error or a created source cache raises nonzero SystemExit. Census exit_code remains the original pytest status; outer resources/exit must also be read to evaluate final command success.",
+  "prior_V1_review": {
+    "bytes": 3992,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-focused-regressions-v1-independent-static-review-20261016.json",
+    "sha256": "ebcf62cc003bd4346a2265c868f4fa77d1096977da96445d82098c9e843b0dfd"
+  },
+  "reviewer_executed_recipe_tests_native_SSH": false,
+  "scope": "Focused regression CI only, not complete ticket/scientific proof/caller acceptance. All V1 source615/eight-selection/tool/env/cache and separate V6 source/lease/NUMA/8GiB/900s+1020s/2GiBraw boundaries remain.",
+  "script": {
+    "bytes": 3844,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/focused_regressions_v2.py",
+    "sha256": "1af33a65f6c14826ab69c8f904548e767d9ebe06a36178fb0b928a6cfce5e61f"
+  },
+  "source_selection_flags_tool_pins_and_budgets_unchanged": true,
+  "success_requires": [
+    "pytest exit status0",
+    "at least one JUnit testcase",
+    "zero skipped testcases",
+    "zero failed testcases",
+    "zero errored testcases",
+    "fresh bytecode cache prefix still absent",
+    "outer wrapper status0, including custom post-pytest gate"
+  ]
+}

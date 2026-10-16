@@ -1,0 +1,46 @@
+{
+  "actual_startup_observed_by_this_agent": false,
+  "candidate_sys_path_promoted": false,
+  "control_packet_bytes": 45003,
+  "date": "2026-10-16 ET",
+  "files": [
+    {
+      "bytes": 18385,
+      "relative": "closed_python_surface.py",
+      "sha256": "748423c27ac8c1f9810c08d3f0ffc71548da703b4b4f95cedc31d4f8bc0418af"
+    },
+    {
+      "bytes": 1905,
+      "relative": "cbmc_release_gate.py",
+      "sha256": "681ad7be43312e224529a03d42b939305010795becd2fc203724a59c63db3dfc"
+    },
+    {
+      "bytes": 18844,
+      "relative": "test_closed_python_surface.py",
+      "sha256": "95fcf42bfc26c61bbf95c0c0dd76006317e20a8037d4c94a0927560399aa7732"
+    },
+    {
+      "bytes": 1571,
+      "relative": "pure-python-surface-controls.log",
+      "sha256": "275aed41b080877aaa1c359f4fb431f7f63626ce05004537f22cb10342ecc97e"
+    },
+    {
+      "bytes": 3616,
+      "relative": "python_surface_gate_plan.md",
+      "sha256": "bdaab021036719fcf5553f40890859652725ee5717b5e81c252fbb063eba76cb"
+    },
+    {
+      "bytes": 682,
+      "relative": "guarded_python_startup_template.json",
+      "sha256": "2ae39d379a4c0d1759833c1d22ea0e983545e8acc5105456bf1aa0ea6e269e5e"
+    }
+  ],
+  "physical_metadata_source": {
+    "canonical_used_fields_sha256": "aa8cc8bffb8ae7dda9f283a0054e5746fa5ab7c39b76fc18ba6c783db51f2746",
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-abstract25-linux-canonical-python-policy-fields.json",
+    "sha256": "9d90835f12dfb89a43ac0e0661681159ec8ab563e9cf664548162a7357299eda"
+  },
+  "pure_controls_passed": 14,
+  "scope": "new helper/policy controls only; root review then separately versioned successor wiring required",
+  "status": "INERT/source-only, no old entry or frozen static source change"
+}

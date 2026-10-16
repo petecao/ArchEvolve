@@ -1,0 +1,144 @@
+{
+  "admitted": false,
+  "compiler_selector_normalization": {
+    "accepted_inherited_alias": [
+      "clang++"
+    ],
+    "reviewed_helper_sha256": "c3dd0a66efec3559c51265bfaffe307f2efc4b628230bb5f529ef7691299dca0",
+    "scope": "normalize only after exact admitted wrapper path/bytes; then unchanged absolute singleton preflight before project import"
+  },
+  "config": {
+    "path": null,
+    "sha256": null
+  },
+  "date": "2026-10-16 ET",
+  "guard": {
+    "rss_cap_bytes": 8589934592,
+    "timeout_seconds": 1200,
+    "workers": 1
+  },
+  "junit": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 25
+  },
+  "junit_classname": ".scratch.probata-proof-of-concept-2026-10-13.prototype.28-public-memory-trace-resume-20261016.test_public_actual",
+  "linux_clang_components": {
+    "command": null,
+    "command_executable": null,
+    "driver": null,
+    "headers": null,
+    "parser": null
+  },
+  "linux_launch_binding": {
+    "entry_sha256": null,
+    "node": null,
+    "python": null,
+    "scope": "root-reviewed Linux whole-tree/socket lease; no Mac counted-slot assertion",
+    "wrappers": {
+      "execute.py": null,
+      "watch.py": null
+    }
+  },
+  "naming": null,
+  "ocaml_packages": {
+    "findlib": null,
+    "frama-c-wp.core": null,
+    "frama-c.kernel": null
+  },
+  "portable_import_surfaces": {
+    "why3_drivers": {
+      "files": [],
+      "path": null
+    },
+    "why3_stdlib": {
+      "files": [],
+      "path": null
+    },
+    "wp_why3_support": {
+      "files": [],
+      "path": null
+    }
+  },
+  "python_import_surfaces": {
+    "site_packages": {
+      "files": [],
+      "path": null
+    },
+    "stdlib": {
+      "files": [],
+      "path": null
+    }
+  },
+  "raw_name": null,
+  "runtime_files": {},
+  "selection": [
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[same_thread_read_read]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[same_thread_write_during_gather]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[same_thread_read_during_store]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[other_thread_read_during_store]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[other_thread_cas_history_union]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[other_thread_cas_issue_only]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[failed_cas_adds_no_history]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[preissue_visibility_excludes_older_value]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[preissue_visibility_old_value]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[history_result_freezes_at_cover]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[region_stall_cross_thread_covers_store]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[region_read_read_does_not_cover]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[region_other_write_does_not_cover]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[other_thread_ownership_command]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[other_thread_ownership_tile_read]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[disjoint_thread_tiles]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[pair_8byte_second_half_cpu_read]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[pair_4byte_other_half_cpu_read]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[pair_8byte_second_half_command]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[pair_4byte_other_half_command]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[pair_8byte_missing_second_owner]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[pair_4byte_one_owner]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[pair_second_half_wait_covers]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[logical_ready_one_covers_zero_requires_wait]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[logical_ready_may_not_be_assumed_zero]"
+  ],
+  "source_commit": null,
+  "source_consumer_trees": {
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016": {
+      "oid": null
+    },
+    "apps/dx100/benchmarks/API": {
+      "oid": null
+    },
+    "library": {
+      "oid": null
+    },
+    "pyproject.toml": {
+      "oid": null
+    },
+    "records": {
+      "oid": null
+    },
+    "schemas": {
+      "oid": null
+    },
+    "swdb": {
+      "oid": null
+    },
+    "tests/conftest.py": {
+      "oid": null
+    },
+    "tests/fixtures": {
+      "oid": null
+    },
+    "tests/testkit": {
+      "oid": null
+    },
+    "vocab": {
+      "oid": null
+    }
+  },
+  "source_files": {},
+  "source_root": null,
+  "status": "INERT; exact next commit/source root, complete fresh Linux runtime, CBMC6.11 and root review remain unknown",
+  "tools": {},
+  "wp_artifacts": {}
+}

@@ -1,0 +1,173 @@
+(* 2026-10-15 ET. Prospective trusted heap semantics, not an admitted theorem.
+   There are no source-specific propositions or recursive equations here.
+   Allocation identities are mathematical integers, never machine epochs.
+   Imported int.Int arithmetic is a separately inventoried trusted foundation.
+*)
+module Heap
+  use int.Int
+  use map.Map
+
+  type cell = Integer int | Pointer int int
+  type heap = {
+    next : int;
+    allocated : map int bool;
+    alive : map int bool;
+    dynamic : map int bool;
+    writable : map int bool;
+    extent : map int int;
+    address : map int int;
+    memory : map int (map int cell);
+    initialized : map int (map int bool)
+  }
+
+  (* A concrete empty heap used only to prove feasibility of source entries.
+     Arbitrary incoming heaps in member obligations remain quantified. *)
+  function empty (dummy:int) : heap =
+    { next = 1; allocated = (fun _ -> False); alive = (fun _ -> False);
+      dynamic = (fun _ -> False); writable = (fun _ -> False);
+      extent = (fun _ -> 0); address = (fun _ -> 0);
+      memory = (fun _ -> (fun _ -> Integer 0));
+      initialized = (fun _ -> (fun _ -> False)) }
+
+  predicate live (h:heap) (b:int) = b <> 0 /\ h.alive[b] = True
+  predicate issued (h:heap) (b:int) = h.allocated[b] = True
+  predicate separated (h:heap) (b c:int) =
+    h.address[b] + h.extent[b] <= h.address[c] \/
+    h.address[c] + h.extent[c] <= h.address[b]
+  predicate aligned (p alignment:int) = exists q:int. p = alignment*q
+  predicate well_formed (h:heap) =
+    0 < h.next /\
+    (forall b:int. issued h b -> 0 < b < h.next) /\
+    (forall b:int. live h b ->
+      issued h b /\ 0 <= h.extent[b] /\ 0 < h.address[b]) /\
+    (forall b,c:int. live h b /\ live h c /\ b <> c ->
+      h.address[b] <> h.address[c] /\ separated h b c)
+
+  (* Allocator output relation from the existing fresh-allocation policy.
+     This is a uniform semantic primitive, not a new constructor precondition.
+     Incoming receiver/buffer subobjects may overlap within one identity. *)
+  predicate available (h:heap) (n a:int) =
+    0 <= n /\ 0 < a /\ aligned a 4 /\
+    (forall b:int. live h b ->
+      a <> h.address[b] /\
+      (a + 4*n <= h.address[b] \/ h.address[b] + h.extent[b] <= a))
+
+  function fresh_id (h:heap) : int = h.next
+  function bytes (h:heap) (b:int) : int = h.extent[b]
+  function numerical_address (h:heap) (b:int) : int = h.address[b]
+  predicate same_object (before after:heap) (b:int) =
+    before.allocated[b] = after.allocated[b] /\
+    before.alive[b] = after.alive[b] /\
+    before.dynamic[b] = after.dynamic[b] /\
+    before.writable[b] = after.writable[b] /\
+    before.extent[b] = after.extent[b] /\
+    before.address[b] = after.address[b]
+  function contents (h:heap) (b o:int) : cell = h.memory[b][o]
+  predicate initialized_at (h:heap) (b o:int) = h.initialized[b][o] = True
+  predicate integer_at (h:heap) (b o v:int) = contents h b o = Integer v
+  predicate pointer_at (h:heap) (b o target offset:int) =
+    contents h b o = Pointer target offset
+  predicate forms (h:heap) (b o:int) =
+    live h b /\ 0 <= o <= h.extent[b]
+  predicate can_read (h:heap) (b o width:int) =
+    live h b /\ 0 <= o /\ 0 < width /\ o + width <= h.extent[b]
+  predicate can_write (h:heap) (b o width:int) =
+    can_read h b o width /\ h.writable[b] = True
+  predicate typed_reads (h:heap) (b o width alignment:int) =
+    can_read h b o width /\ aligned (h.address[b]+o) alignment
+  predicate typed_writes (h:heap) (b o width alignment:int) =
+    can_write h b o width /\ aligned (h.address[b]+o) alignment
+  predicate typed_forms (h:heap) (b o alignment:int) =
+    forms h b o /\ aligned (h.address[b]+o) alignment
+  predicate freeable (h:heap) (b o:int) =
+    live h b /\ h.dynamic[b] = True /\ o = 0
+
+  (* Uniform allocator primitive. Fresh cells are uninitialized, not filled.
+     Address is separate from identity, so reuse never revives an old alias. *)
+  function allocate (h:heap) (n a:int) : heap =
+    { h with next = h.next + 1;
+      allocated = set h.allocated h.next True;
+      alive = set h.alive h.next True;
+      dynamic = set h.dynamic h.next True;
+      writable = set h.writable h.next True;
+      extent = set h.extent h.next (4*n);
+      address = set h.address h.next a;
+      initialized = set h.initialized h.next (fun _ -> False) }
+
+  (* Uniform typed stores. Access checks are separate mapped obligations,
+     never pre-proven by these total transition functions. *)
+  function put_integer (h:heap) (b o v:int) : heap =
+    { h with memory = set h.memory b (set h.memory[b] o (Integer v));
+      initialized = set h.initialized b (set h.initialized[b] o True) }
+  function put_pointer (h:heap) (b o target offset:int) : heap =
+    { h with memory = set h.memory b (set h.memory[b] o (Pointer target offset));
+      initialized = set h.initialized b (set h.initialized[b] o True) }
+
+  (* No field reset and no alias rewriting. The null identity is zero. *)
+  function release (h:heap) (b:int) : heap =
+    if b = 0 then h else { h with alive = set h.alive b False }
+
+  predicate filled_prefix (h:heap) (b k v:int) =
+    forall j:int. 0 <= j < k ->
+      initialized_at h b (4*j) /\ integer_at h b (4*j) v
+
+  (* 2026-10-16 ET. Source-int embedding, not a new C caller requires.
+     Only initialized typed int objects map to Integer cells in range. Pointer
+     cells, padding, partial bytes and type-punned objects are not admitted by
+     this relation. Every evaluated load has a separate access/type VC. *)
+  function load_int (h:heap) (b o:int) : int =
+    match contents h b o with
+    | Integer v -> v
+    | Pointer _ _ -> 0
+    end
+
+  predicate int32_at (h:heap) (b o:int) =
+    typed_reads h b o 4 4 /\ initialized_at h b o /\
+    integer_at h b o (load_int h b o) /\
+    -2147483648 <= load_int h b o <= 2147483647
+  predicate int32_region (h:heap) (b offset count:int) =
+    forall j:int. 0 <= j < count -> int32_at h b (offset+4*j)
+
+  (* Logical image construction from WP Typed's integer chunk, not a C store.
+     Machine-range/source-object admission is checked separately. This does
+     not assert that old initialized Pointer-tag cells were integer objects. *)
+  type int_values = map int int
+  function int_chunk_value (values:int_values) (offset:int) : int = values[offset]
+  predicate int_slot (offset count p:int) =
+    exists j:int. 0 <= j < count /\ p = offset+4*j
+  predicate bounded_int_values (values:int_values) (offset count:int) =
+    forall j:int. 0 <= j < count ->
+      -2147483648 <= values[offset+4*j] <= 2147483647
+  function project_int_region (h:heap) (values:int_values) (b offset count:int) : heap =
+    { h with memory = set h.memory b
+      (fun p -> if int_slot offset count p then Integer values[p] else h.memory[b][p]) }
+
+  (* The entry snapshot contains arbitrary index-specific int values. The
+     source stays live/unchanged until release; no uniformly filled input law
+     or desired copy theorem is assumed. *)
+  function copy_int (h:heap) (source source_offset target target_offset:int) : heap =
+    put_integer h target target_offset (load_int h source source_offset)
+  predicate copied_prefix (entry now:heap) (source source_offset target count:int) =
+    forall j:int. 0 <= j < count ->
+      int32_at now target (4*j) /\
+      load_int now target (4*j) = load_int entry source (source_offset+4*j)
+
+  (* Source automatic-object placement is a distinct semantic output relation.
+     It ranges over arbitrary incoming heaps and unbounded fresh identities;
+     no finite pool, epoch limit, dynamic-free permission or empty-heap premise.
+     The caller map must bind the actual declaration/cleanup and target layout. *)
+  predicate automatic_available (h:heap) (width alignment a:int) =
+    0 <= width /\ 0 < a /\ 0 < alignment /\ aligned a alignment /\
+    (forall b:int. live h b -> a <> h.address[b] /\
+      (a+width <= h.address[b] \/ h.address[b]+h.extent[b] <= a))
+  function begin_automatic (h:heap) (width a:int) : heap =
+    { h with next = h.next+1;
+      allocated = set h.allocated h.next True;
+      alive = set h.alive h.next True;
+      dynamic = set h.dynamic h.next False;
+      writable = set h.writable h.next True;
+      extent = set h.extent h.next width;
+      address = set h.address h.next a;
+      initialized = set h.initialized h.next (fun _ -> False) }
+  function end_automatic (h:heap) (b:int) : heap = release h b
+end

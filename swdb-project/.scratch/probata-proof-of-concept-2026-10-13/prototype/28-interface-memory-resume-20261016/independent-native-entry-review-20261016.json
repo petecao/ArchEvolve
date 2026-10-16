@@ -1,0 +1,50 @@
+{
+  "actual_acceptance": false,
+  "controller_pins": {
+    "entry": {
+      "bytes": 12676,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/native_entry_v1.py",
+      "sha256": "c7395c2318f3afa305aa8cde1175ecfbf19efde3c32958511ce68041d072c09f"
+    },
+    "plan": {
+      "bytes": 2811,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/native_plan_v1.md",
+      "sha256": "e8ed79baf271d3024ca02f253e227aab9e000bf27d5ea3908bc8b43f0a75e2ef"
+    },
+    "runtime_policy": {
+      "bytes": 1640971,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-public-v3-runtime-policy-with-python-packages.json",
+      "sha256": "4171556ed48f8612eb364a88741831a3bfc9259d34c25750e8717dadeab408a1"
+    },
+    "source_policy": {
+      "bytes": 5600,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/native_source_policy_v1.json",
+      "sha256": "2839325562d35ae52b55e95e2967aa630589a7de382ffcc9dc1e9a9aeafb26bd"
+    }
+  },
+  "current_0_2": false,
+  "date": "2026-10-16 ET",
+  "formal_or_source_body_or_hardware": false,
+  "full_ticket28": false,
+  "matched_additional_sanitizer_pins": 3,
+  "matched_runtime_pins": 7605,
+  "matched_source_pins": 14,
+  "no_execution_by_reviewer": {
+    "compiler": true,
+    "entry_main": true,
+    "native": true,
+    "project_imports": true,
+    "ssh": true
+  },
+  "reviewer": "ticket28 parent independent of native entry author public_review",
+  "scope": "independent inert native controller preparation review; root must freshly admit actual guard/runtime/resources and independently audit retained result",
+  "source_review": [
+    "exact LLVM22+Python, source/runtime policy digests, fatal guardtoken/tag/cap4GiB and fresh external namespace",
+    "165s entry below mandatory180s4GiB whole-tree root guard;128MiBstage/256MiBfinal checks and50GiBfloor",
+    "closed environment with leakchecking disabled onMac, ASan/UBSan halt/error result checks, symbolization disabled",
+    "originalC/C++ preprocess-MD dependencycapture afterward, frozeninput compile, everyusedinput/binary pinned beforeafter; preprocessing timing/loaderTCBexplicit",
+    "exact53 JSON/empty stderr eachC11andC++17; input/runtime/cache checks required before accepted result",
+    "token only passes to children; retained receipt redacts value and records presence"
+  ],
+  "status": "PASS_SOURCE_REVIEW"
+}

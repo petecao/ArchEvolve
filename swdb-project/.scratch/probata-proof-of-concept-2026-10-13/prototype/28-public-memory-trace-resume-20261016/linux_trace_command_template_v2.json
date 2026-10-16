@@ -1,0 +1,58 @@
+{
+  "Mac_counted_token_required": false,
+  "actual_launched": false,
+  "argv_pattern": [
+    "<pinned absolute opam>",
+    "exec",
+    "--switch=framac-33",
+    "--",
+    "<pinned absolute Python>",
+    "-I",
+    "-B",
+    "<raw>/control/linux_trace_entry_v2.py",
+    "<exact published checkout>/swdb-project",
+    "<raw>",
+    "<raw>/control/linux_trace_policy.json",
+    "<root policy SHA256>"
+  ],
+  "compiler_selector_normalization": {
+    "accepted_inherited_alias": [
+      "clang++"
+    ],
+    "reviewed_helper_sha256": "c3dd0a66efec3559c51265bfaffe307f2efc4b628230bb5f529ef7691299dca0",
+    "scope": "normalize only after exact admitted wrapper path/bytes; then unchanged absolute singleton preflight before project import"
+  },
+  "control_files": {
+    "cbmc_release_gate.py": "681ad7be43312e224529a03d42b939305010795becd2fc203724a59c63db3dfc",
+    "closed_python_surface.py": "748423c27ac8c1f9810c08d3f0ffc71548da703b4b4f95cedc31d4f8bc0418af",
+    "python-physical-metadata-v2.json": "9d90835f12dfb89a43ac0e0661681159ec8ab563e9cf664548162a7357299eda",
+    "python_role_observer_v2.py": "9b100cbe2fdef3e7d429ccdf05d6489d44855a84328e2dd8532eb547beeaf43b",
+    "python_startup_roles_v2.py": "5e9d2e6dfa2aaa7999f4670a979d3cc32736b852a612f77d4e2f7c71bc229618",
+    "t28-linux-runtime-observer-v2-actual-20261016.json": "092397608fe3a08c42d85e9c8e121ed139f0d94e345a12ae3aaa57ad6e93a5f0",
+    "trace_pytest_child_v2.py": "e3957b2f358b7e446a6a61e80d3d761539e14a9fd1fae5323c2abfd7937f3493"
+  },
+  "date": "2026-10-16 ET",
+  "entry": "linux_trace_entry_v2.py",
+  "entry_sha256": "d319185131bd708c57229fe16e269da6e6298d1afba3c057a8fcc0f89aa43c93",
+  "junit": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 25
+  },
+  "policy": "linux_trace_policy_template_v2.json",
+  "raw_name_pattern": "probata-resume-20261016-t28-memory-trace-<commit8>-v2",
+  "root_dispatches_only_after_fresh_admission": true,
+  "root_guard": {
+    "rss_cap_bytes": 8589934592,
+    "timeout_seconds": 1200,
+    "workers": 1
+  },
+  "root_selects_free_lane": true,
+  "root_socket_lane_only": true,
+  "scope": "25 abstract model witnesses only; no source/body/hardware/current0.2/whole28 acceptance",
+  "source_commit": null,
+  "source_root": null,
+  "startup_roles": "Actual isolated and sanitized child observers before compiler/project import; actual test child repeats startup check",
+  "status": "INERT; root supplies next published source commit, checkout, fresh raw root, policy hash and runtime admission"
+}

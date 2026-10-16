@@ -1,0 +1,74 @@
+{
+  "admission_attribution": "Parent/root explicitly authorized32GiB prospective floor; this reviewer did not inspect actual free bytes, V3 raw refusal, or launch state.",
+  "criteria": {
+    "child_whole_tree_seconds": 180,
+    "controls_each_language": 53,
+    "entry_seconds": 165,
+    "languages": [
+      "C11",
+      "C++17"
+    ],
+    "rss_cap_bytes": 4294967296,
+    "sanitizers": [
+      "ASan",
+      "UBSan"
+    ],
+    "stage_output_mib": 128,
+    "total_output_mib": 256,
+    "workers": 1
+  },
+  "date": "2026-10-16 ET",
+  "entry_inverse_delta_exact": [
+    "single RAW_ROOT v3 to v4 namespace",
+    "single floor expression50GiB to32GiB",
+    "single corresponding refusal text50GiB to32GiB"
+  ],
+  "entry_main_or_compiler_native_executed": false,
+  "remaining_gate": "Fresh root resource/runtime admission, actual execution and retained-evidence review; no native or proof acceptance from this source-only receipt.",
+  "reviewed": [
+    {
+      "bytes": 12657,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/native_entry_v3.py",
+      "sha256": "8d68c96a474aeada232e531c5635400e69abd9a4fc269734845628e41666dd4d"
+    },
+    {
+      "bytes": 12657,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/native_entry_v4.py",
+      "sha256": "9368f6ca7afa55b82670dd3c1a55cc5c5dcfa897adb938af59f921d4408ca315"
+    },
+    {
+      "bytes": 6393,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/command_v3.json",
+      "sha256": "b3ff4e46288d36d5fa3e690e8bc50ee1caac7f71030bd5974b3ec44f2b6841f5"
+    },
+    {
+      "bytes": 7866,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/command_v4.json",
+      "sha256": "8d74019083bef17dc0c36a5b675a7e8064144fb8901e6c64beeba8946a6fdc25"
+    },
+    {
+      "bytes": 4513,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/plan_v4.md",
+      "sha256": "4b4f3346e2add26d5cdfcbc2d6c5c1d41458995462e8b6b580aae4dbadbf52be"
+    }
+  ],
+  "reviewer": "/root/ticket28/public_review",
+  "source_only": true,
+  "status": "PASS_INDEPENDENT_V4_INVERSE_DELTA_SOURCE_REVIEW",
+  "storage_admission": {
+    "free_floor_bytes": 34359738368,
+    "prospective_raw_allowance_bytes": 268435456,
+    "rationale": "50GiB was a prospective packet floor, not a governing local rule. Root observed49GiB and explicitly approved32GiB free floor plus256MiB allowance for fresh V4; no cleanup/deletion or compiler/test criteria change. Root must recheck actual free bytes at admission.",
+    "required_free_bytes": 34628173824
+  },
+  "unchanged_runtime_policy": {
+    "bytes": 1640971,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-public-v3-runtime-policy-with-python-packages.json",
+    "sha256": "4171556ed48f8612eb364a88741831a3bfc9259d34c25750e8717dadeab408a1"
+  },
+  "unchanged_source_policy": {
+    "bytes": 7200,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/source_policy_v2.json",
+    "sha256": "a9630edaf8586c22ba4f9896e618eae5548df20c8659d95fc447eb346644080a"
+  }
+}

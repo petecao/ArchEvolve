@@ -267,13 +267,23 @@ def verify_python_metadata(policy):
         raise Refused('closed Python metadata refused: ' + str(error)) from None
 
 
-def check_guarded_startup(expected, observed, *, metadata):
+def _guarded_startup(expected, observed, *, metadata, root_receipt_bytes):
     """Only root-admitted actual metadata, never candidate_expected_sys_path."""
-    _keys(expected, ('admitted', 'root_metadata_sha256', 'sys_path', 'flags', 'executable',
-                     'prefix', 'base_prefix', 'startup_environment'), 'guarded Python startup policy')
+    _keys(expected, ('admitted', 'root_metadata_sha256', 'physical_metadata_sha256', 'sys_path', 'flags', 'executable',
+                     'prefix', 'base_prefix', 'pycache_prefix', 'startup_environment'), 'guarded Python startup policy')
     if expected['admitted'] is not True:
         raise Refused('guarded actual Python startup admission is unknown')
     _sha(expected['root_metadata_sha256'])
+    _sha(expected['physical_metadata_sha256'])
+    if type(root_receipt_bytes) is not bytes or hashlib.sha256(root_receipt_bytes).hexdigest() != expected['root_metadata_sha256']:
+        raise Refused('actual root startup receipt bytes differ from separate pin')
+    try:
+        root_receipt = json.loads(root_receipt_bytes)
+    except (ValueError, UnicodeError):
+        raise Refused('actual root startup receipt is not JSON') from None
+    _keys(root_receipt, ('schema', 'startup'), 'root-observed startup receipt')
+    if root_receipt['schema'] != 'root-guarded-python-startup-1' or root_receipt['startup'] != observed:
+        raise Refused('root receipt startup differs from actual observed state')
     if not isinstance(expected['sys_path'], list) or not expected['sys_path'] or any(not isinstance(path, str) for path in expected['sys_path']):
         raise Refused('explicit root-observed actual sys.path required')
     for path in expected['sys_path']:
@@ -283,15 +293,24 @@ def check_guarded_startup(expected, observed, *, metadata):
             any(type(expected['flags'][name]) is not int for name in ('isolated', 'no_user_site', 'optimize')) or
             type(expected['flags']['dont_write_bytecode']) is not bool):
         raise Refused('actual isolated nonoptimized no-bytecode startup required')
-    if not isinstance(expected['startup_environment'], dict) or 'SETUPTOOLS_USE_DISTUTILS' not in expected['startup_environment']:
+    namespace_fields = {'SETUPTOOLS_USE_DISTUTILS', 'PYTHONPATH', 'PYTHONPYCACHEPREFIX', 'PYTHONDONTWRITEBYTECODE',
+                        'PYTEST_DISABLE_PLUGIN_AUTOLOAD', 'PROBATA_OUTPUT', 'SWDB_VERIFIER_LOCK', 'SWDB_VERIFIER_RSS_CAP_BYTES'}
+    if (not isinstance(expected['startup_environment'], dict) or not namespace_fields <= expected['startup_environment'].keys() or
+            any(value is not None and not isinstance(value, str) for value in expected['startup_environment'].values())):
         raise Refused('explicit startup environment bindings required')
+    if expected['pycache_prefix'] is not None:
+        _absolute(expected['pycache_prefix'])
     for name in ('executable', 'prefix', 'base_prefix'):
         _absolute(expected[name])
-    wanted = {key: value for key, value in expected.items() if key not in ('admitted', 'root_metadata_sha256')}
+    wanted = {key: value for key, value in expected.items() if key not in ('admitted', 'root_metadata_sha256', 'physical_metadata_sha256')}
     if observed != wanted:
         raise Refused('guarded actual Python sys.path/flags/prefix/startup environment differs')
     if not isinstance(metadata, dict) or metadata.get('schema') != SCHEMA:
         raise Refused('guarded startup needs its exact closed physical metadata')
+    physical_digest = canonical_digest({key: metadata[key] for key in
+                                      ('schema', 'surfaces', 'startup_pins', 'pth', 'interpreter', 'absence')})
+    if physical_digest != expected['physical_metadata_sha256']:
+        raise Refused('guarded startup physical metadata pin differs')
     if expected['executable'] != metadata['interpreter']['path']:
         raise Refused('guarded startup executable differs from pinned interpreter chain')
     startup_paths = {row['path'] for row in metadata['startup_pins']}
@@ -305,5 +324,14 @@ def check_guarded_startup(expected, observed, *, metadata):
                 raise Refused('guarded startup missing sys.path input appeared')
         elif not any(path == root or root in path.parents for root in roots) or _resolution(path, []) != path or not path.is_dir():
             raise Refused('guarded actual sys.path input lacks closed physical coverage')
-    return {'root_metadata_sha256': expected['root_metadata_sha256'], 'actual_startup_sha256': canonical_digest(observed),
+    return {'root_metadata_sha256': expected['root_metadata_sha256'], 'physical_metadata_sha256': physical_digest,
+            'actual_startup_sha256': canonical_digest(observed),
             'scope': 'exact root-admitted observed startup state; no inferred path substitution'}
+
+
+def check_guarded_startup(expected, observed, *, metadata, root_receipt_bytes):
+    """Mandatory static closure plus independently pinned actual root receipt."""
+    try:
+        return _guarded_startup(expected, observed, metadata=metadata, root_receipt_bytes=root_receipt_bytes)
+    except (OSError, RuntimeError, KeyError, TypeError, AttributeError) as error:
+        raise Refused('guarded startup refused: ' + str(error)) from None

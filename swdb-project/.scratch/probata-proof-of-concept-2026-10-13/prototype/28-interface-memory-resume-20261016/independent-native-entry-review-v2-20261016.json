@@ -1,0 +1,60 @@
+{
+  "actual_execution_by_reviewer": false,
+  "actual_formal_or_hardware_acceptance": false,
+  "controller_pins": {
+    "entry": {
+      "bytes": 12657,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/native_entry_v2.py",
+      "sha256": "fab5fab5fe7e3149c3c6c961c1bd97ac8e83a54cd7f4c89b133eda4ca2b11a29"
+    },
+    "plan": {
+      "bytes": 3676,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/plan_v2.md",
+      "sha256": "86f070fc151e4999e7b58188e730e0daa000ce4057b02e21e60dee9d10036306"
+    },
+    "runtime_policy": {
+      "bytes": 1640971,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-public-v3-runtime-policy-with-python-packages.json",
+      "sha256": "4171556ed48f8612eb364a88741831a3bfc9259d34c25750e8717dadeab408a1"
+    },
+    "source_policy": {
+      "bytes": 7200,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/source_policy_v2.json",
+      "sha256": "a9630edaf8586c22ba4f9896e618eae5548df20c8659d95fc447eb346644080a"
+    }
+  },
+  "date": "2026-10-16 ET",
+  "exact_guard_contract": {
+    "B": "serializes compiler workers only",
+    "WATCHDOG_TAG": "optional real inherited context only; never manufactured",
+    "c6": {
+      "bytes": 28501,
+      "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py",
+      "sha256": "c6f0d4b8c60fab912dd768c4c8c7e7737d8feca3a110d0de02dec4d38785db57"
+    },
+    "containment_boundary": "sampled ancestry/PID-birth/token discovery and finite cleanup sweeps; not kernel containment",
+    "exports_and_scans": "SWDB_VERIFIER_RUN_TOKEN only",
+    "root_cli_required": [
+      "--cap-gb",
+      "4",
+      "--timeout",
+      "180"
+    ],
+    "root_supplied_RSS_environment_if_present": "policy context only; actual enforcement is c6 CLI and independently reviewed live guard/summary"
+  },
+  "matched_counts": {
+    "extra_sanitizer": 3,
+    "guard_sources": 3,
+    "runtime": 7605,
+    "sources": 14
+  },
+  "reviewer": "ticket28 parent independent of native controller author public_review",
+  "root_fresh_admission_required": true,
+  "status": "PASS_SOURCE_REVIEW_V2",
+  "supersedes_v1_admission_claim": "V1 source review incorrectly accepted mandatory tag/RSS markers as c6 exports; root caught prelaunch. V1 stays unexecuted and its guard-admission PASS is superseded. No scientific result was upgraded.",
+  "unchanged": [
+    "C11andC++17 original preprocess/dependency postcapture/frozencompile/runtime53 predicates",
+    "ASanUBSanhalt policies/sourcephysicalpins/caches/rawbudgets",
+    "proof/body/hardware/current0.2/full28 exclusions"
+  ]
+}

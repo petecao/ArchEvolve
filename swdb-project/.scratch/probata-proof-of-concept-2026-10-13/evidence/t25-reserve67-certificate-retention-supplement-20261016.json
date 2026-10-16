@@ -1,0 +1,136 @@
+{
+  "actual_typed_AST_correspondence_or_submitted_bytes_proved": false,
+  "all9_explicit_TCB_assumptions_selected_hash_bound": true,
+  "all_materialized_tasks_referenced": 164,
+  "at_utc": "2026-10-16T17:57:43.171302+00:00",
+  "certificate": {
+    "bytes": 138905,
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-qualified-reserve67-public-v1/qualified-reserve67-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_reserve.20261016t174418z.55ff1fb7/wp/heap-model-view.json",
+    "sha256": "debf79659a3d06cbed25a93d729fa55aa630e7e9f1a8f9af3dac4b69fff05140"
+  },
+  "checks": 3348,
+  "complete_certificate_reconstructed": true,
+  "created": "2026-10-16 ET",
+  "entire_original_source_inverse_equal": true,
+  "fixed_reference_count_assumption": false,
+  "lease_snapshot": {
+    "mbit10-evaluation-node0.meta.json": {
+      "active_session": null,
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "heartbeat_at": "2026-10-16T17:54:13Z",
+      "lease": {
+        "acquired_at": "2026-10-16T17:44:03Z",
+        "daemon_pid": 3894792,
+        "daemon_start_token": "sh3894792-1792172643",
+        "generation": 606,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node0",
+        "mode": "measure",
+        "session_id": null
+      },
+      "recovered_from_generation": null,
+      "released_at": "2026-10-16T17:54:13Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation-node1.meta.json": {
+      "active_session": null,
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "heartbeat_at": "2026-10-16T17:53:44Z",
+      "lease": {
+        "acquired_at": "2026-10-16T17:53:35Z",
+        "daemon_pid": 3898813,
+        "daemon_start_token": "sh3898813-1792173215",
+        "generation": 628,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node1",
+        "mode": "measure",
+        "session_id": null
+      },
+      "recovered_from_generation": null,
+      "released_at": "2026-10-16T17:53:44Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation.meta.json": {
+      "active_session": null,
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "heartbeat_at": "2026-09-12T04:49:11Z",
+      "lease": {
+        "acquired_at": "2026-09-12T01:35:42Z",
+        "daemon_pid": 209457,
+        "daemon_start_token": "sh209457-1789176942",
+        "generation": 77,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation",
+        "mode": "measure",
+        "session_id": null
+      },
+      "recovered_from_generation": null,
+      "released_at": "2026-09-12T04:49:11Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    }
+  },
+  "qualification_keeps_executable_reserve_body_equal": true,
+  "qualified_view_checker": {
+    "id": "qualified-vector-heap-view-1",
+    "sha256": "97c4745e40e0b6c21e5906409dbf29d1dc8955e7ee88faa066dceea58fd72d57"
+  },
+  "record_evidence_references": 713,
+  "record_reference_pin_digest": "d78ad5696c165ef4ff35b76f9136df2451c6ab55d55fde11db90f350a4477c3a",
+  "retained_reader_source": {
+    "bytes": 12925,
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-qualified-reserve67-public-v1/qualified-reserve67-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_reserve.20261016t174418z.55ff1fb7/wp/heap-reader/proof_report.ml",
+    "sha256": "8b84bec6a12669d877205ec60d46d149f41fa921d08b6640161b4896b9c4df16"
+  },
+  "retained_reporter_binaries": [
+    {
+      "bytes": 5798,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-qualified-reserve67-public-v1/qualified-reserve67-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_reserve.20261016t174418z.55ff1fb7/wp/heap-reader/proof_report.cmi",
+      "sha256": "669fb972615894f0eb487dfb7ef23f30adcd246a69858c32ad1f26849f9e7c45"
+    },
+    {
+      "bytes": 6426,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-qualified-reserve67-public-v1/qualified-reserve67-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_reserve.20261016t174418z.55ff1fb7/wp/heap-reader/proof_report.cmx",
+      "sha256": "f66fad01ea218cf991c42fbdaf85e138a544af01218f7c983b650ead1e14b742"
+    },
+    {
+      "bytes": 61384,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-qualified-reserve67-public-v1/qualified-reserve67-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_reserve.20261016t174418z.55ff1fb7/wp/heap-reader/proof_report.o",
+      "sha256": "f951b1cf9f63a030ba64782e4fc7d8ce3c7fff57f0429aff122f7a6b47868738"
+    },
+    {
+      "bytes": 78088,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-qualified-reserve67-public-v1/qualified-reserve67-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_reserve.20261016t174418z.55ff1fb7/wp/heap-reader/proof_report.cmxs",
+      "sha256": "b23463230df8505f6d57d025e6e8c03255aff7150f038faca3fcef7d0fdcf917"
+    }
+  ],
+  "scope": "Additional certificate/reference retention binding only; no compiler, helper/native reporter, project reader, test or solver executed.",
+  "source_derived_leaf_reference_roles": 633,
+  "source_events": 9,
+  "source_groups": [
+    "G1",
+    "G2",
+    "G3",
+    "G4",
+    "G5",
+    "G6",
+    "G7",
+    "G8",
+    "G9",
+    "R1",
+    "R2",
+    "R3"
+  ],
+  "wall_seconds": 0.2927600797265768
+}

@@ -1,12 +1,37 @@
 # Read-only lane and launcher preflight — 2026-10-16 ET
 
-Use node 0 for ticket 25 and node 1 for ticket 28, subject to a fresh lease/load
-check immediately before each root-owned launch. These are recommendations;
-this agent acquired no lease, launched no compiler/test/evaluation, and changed
-no remote source checkout. The only remote Git mutation was a safe fetch of
-MemAcc's main remote-tracking ref.
+## Current coordination — 2026-10-16 14:40 ET
 
-## Current observations
+Root assigns either free socket according to each reviewed packet's exact node
+binding and freshly checks the target/legacy leases before dispatch. At most two
+measurement jobs run, one per socket. Initial recommendations below are historical.
+
+- Source `fb197c5d` is published and independently read back on GitHub; frozen
+  remote sources retain their exact older commits. The primary remote checkout
+  still awaits the final Git-only fast-forward.
+- Initialized V4 ran on node 0 generation 609, 14:37:08–14:38:10 ET, with complete
+  runtime/role postchecks. Outer exit 1, 62.054 seconds, 454,885,376-byte peak RSS,
+  no timeout/OOM. Source validation refused an unchecked AST effect before WP;
+  positive failed and negative was unexecuted under the original `-x` rule.
+  The exact AST cause is being diagnosed; no success or new run is inferred.
+- Focused regressions V3 are active on node 1 at source `615ddf50`. V2 stopped
+  before pytest on a controller cwd assertion; the independently reviewed V3
+  verifies repository root then explicitly enters its project child.
+- Projected C node-1 generation 630 settled at 14:34:04 ET. Its 17 ordinary goals
+  are directly native Valid; the original entry refused a registered constructor
+  smoke report form. A passive observer repair is under independent review;
+  the original not-proven reader result and missing constructor/source bridge
+  remain unchanged. No rerun is needed for metadata reconciliation.
+- Reviewed launcher V6 uses a 10 GiB source-mount floor plus 2 GiB for each new
+  frozen source, and a 24 GiB raw-mount floor. V7 adds exact bounded control-file
+  staging. These reviewed policies supersede the earlier blanket 20 GiB source
+  floor in the initial snapshot. Fresh per-launch disk checks remain mandatory.
+
+Runtime/source/raw readers remain active; no cleanup is authorized by this
+checkpoint. Ticket 7's external Mac work and leases are preserved. The GPU NVML
+mismatch is recorded and no repair is attempted for these CPU evaluations.
+
+## Historical initial observations
 
 The retained `mbit10-preflight-and-wrapper-snapshots.json` is a finite live
 snapshot, not perpetual clearance. Both socket leases and the legacy lease
@@ -192,3 +217,20 @@ command-line `-X pycache_prefix=<fresh nonexistent prefix>` with `-B`, or a
 separate inventory of their existing bytecode consumers. `-I -B` alone can read
 old bytecode and ignores an environment-only prefix. The prospective pytest
 child already supplies its own fresh prefix. No workflow was launched here.
+
+## V5 source-budget and stdout review — 2026-10-16 ET
+
+`v5-source-budget-independent-static-review.json` accepts inert V5 launcher
+SHA256 `d24b6cf69f152425d4f22a3979d239cacf9d29b7c3c512af9c20f6a561c7b71d`.
+Inverting exactly its docstring, source-floor and worktree-stdout changes
+reproduces preserved V4 byte-for-byte; both outer/embedded Python bodies parse.
+No prior launcher or receipt was modified.
+
+The host rule's 20 GB condition selects the raw-output mount. Because V5 keeps
+raw output on `/data` with its unchanged 24 GiB preflight gate, a separate
+`/data1` source floor of 10 GiB plus 2 GiB for a missing detached source fits
+that rule. This is source planning, not a quota or atomic space reservation.
+Worktree-add stdout now goes to stderr so the remote launcher's stdout remains
+JSON. Source publication/size/live capacity were root-reported, not independently
+SSH-verified in this static review. All prior source, environment, wrapper,
+lease, watchdog and result-admission boundaries remain. No actual job ran here.

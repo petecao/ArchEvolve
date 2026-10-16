@@ -10,7 +10,10 @@ import re
 def check_cbmc_version(policy, returncode, stdout, stderr):
     if not isinstance(policy, dict) or policy.get('accepted_cbmc_release_family') != '6.11':
         raise ValueError('unchanged method CBMC6.11 release family required')
-    version = ((policy.get('tools') or {}).get('cbmc') or {}).get('version')
+    tools = policy.get('tools')
+    if not isinstance(tools, dict) or not isinstance(tools.get('cbmc'), dict):
+        raise ValueError('exact root-observed CBMC tool metadata is unknown')
+    version = tools['cbmc'].get('version')
     if not isinstance(version, str) or re.fullmatch(r'6\.11(?:\.[0-9]+)?', version) is None:
         raise ValueError('exact root-observed CBMC6.11[.patch] version is unknown')
     if type(returncode) is not int or returncode != 0 or not isinstance(stdout, str) or not isinstance(stderr, str):

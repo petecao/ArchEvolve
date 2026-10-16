@@ -1,0 +1,56 @@
+{
+  "argv": {
+    "bytes": 4057,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/focused-regressions-command-v1.json",
+    "sha256": "456426eb8958376886133fb285f100e483d3fb7bf1e88d8f75a66a5db4815c65"
+  },
+  "argv_embeds_exact_reviewed_source": true,
+  "at_utc": "2026-10-16T18:23:41.220490+00:00",
+  "blocking_change_requests": [],
+  "created": "2026-10-16 ET",
+  "decision": "PASS static focused CI regression recipe, with explicit skipped-coverage accounting boundary",
+  "limits": [
+    "Bare argv recipe does not encode source HEAD/cleanliness, held socket lease, live NUMA placement, full-tree RSS/time watchdog or storage cap. Those remain separately enforced by the reviewed root V6 launch packet.",
+    "Pytest exit0 permits skipped cases. V1 records skips but does not fail for them; unexpected skips must be reported as incomplete coverage, not complete all-selected-test success. A zero-skip gate would need an explicit final check.",
+    "Selected tests may call real compiler/verifier/version commands and existing fixture helpers during guarded execution. A green CI result does not replace per-profile cold proof/task/runtime audits or admit caller/scientific claims.",
+    "Linux fixture host handling inside tests does not establish the outer actual kernel socket lease; root V6 supplies that separate exclusion."
+  ],
+  "production_or_scientific_acceptance": false,
+  "reviewed_guards": [
+    "Root argv invokes exact swdb-test interpreter with -I -B and -X fresh cache prefix before Python startup; source code asserts isolated/nonoptimized/no-bytecode flags, expected working checkout path and8GiB marker.",
+    "Python, Clang wrapper and CBMC physical hashes match the fresh reviewed metadata. SWDB_CLANG/SWDB_CBMC use exact paths.",
+    "Spawned Python processes receive PYTHONNOUSERSITE=1, PYTHONSAFEPATH=1, exact selected project PYTHONPATH, fresh PYTHONPYCACHEPREFIX and PYTHONDONTWRITEBYTECODE=1; pytest plugin autoload disabled.",
+    "In-process pytest has only selected project/tests inserted in sys.path, no xdist/parallel flags. Existing project addopts disables cache and excludes whole_store; none of the eight selected sources carries that marker.",
+    "Six affected vector modules, complete bounded-initialization module and one exact existing safe-both-forms CBMC test are selected. No full catalog/full suite is requested.",
+    "Arguments/progress/final census/JUnit persist under raw. Pytest exit status is propagated; empty status0 selection and created bytecode cache are refused.",
+    "Census records skipped names separately; recipe labels result focused regression evidence only, not whole ticket or scientific proof acceptance."
+  ],
+  "reviewer_test_native_SSH_execution": false,
+  "root_dispatch_contract_from_assignment": {
+    "launcher": "reviewed V6",
+    "node": 0,
+    "outer_seconds": 1020,
+    "raw_budget_bytes": 2147483648,
+    "rss_cap_bytes": 8589934592,
+    "whole_seconds": 900,
+    "workers": 1
+  },
+  "script": {
+    "bytes": 3756,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/focused_regressions_v1.py",
+    "sha256": "824523d96d8bae2116482be5ebd94919a71651555f4b6d30360fb8d098746614"
+  },
+  "selection_count": 8,
+  "selections": [
+    "tests/test_vector_reallocation_caller_view.py",
+    "tests/test_vector_reallocation_private_frame.py",
+    "tests/test_vector_reallocation_closed_view.py",
+    "tests/test_vector_reallocation_reserve_application.py",
+    "tests/test_vector_reallocation_caller_packets.py",
+    "tests/test_vector_reallocation_copy_prefix_cases.py",
+    "tests/test_bounded_initialization.py",
+    "tests/test_cbmc_adapter.py::test_the_safe_fixture_is_proven_within_its_bounds_on_both_forms"
+  ],
+  "source_commit": "615ddf504fed61b9f6c6e4663760d006ecaf255b",
+  "source_selection_exists_at_exact_commit": true
+}

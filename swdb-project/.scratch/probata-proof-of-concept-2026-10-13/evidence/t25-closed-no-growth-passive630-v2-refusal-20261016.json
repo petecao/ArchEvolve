@@ -1,0 +1,21 @@
+{
+  "created": "2026-10-16 ET",
+  "entry_refusal_preserved": true,
+  "exit_code": 1,
+  "failure": "AssertionError at observer line122: all smoke solver-outcome arrays incorrectly required three timeout outcomes",
+  "native_or_formal_reruns": 0,
+  "observed_root_requires_smoke_results": [
+    "timeout",
+    "unknown",
+    "timeout"
+  ],
+  "observer_v2_sha256": "4acfa5118c4541206289fcd833f686f9afbc5e9ad0ce413ed230ec0e2981ecb1",
+  "ordinary_reader_verdict": "not_proven",
+  "other_three_smokes_results": [
+    "timeout",
+    "timeout",
+    "timeout"
+  ],
+  "raw_writes": 0,
+  "scope": "passive observer assumption failure, not an actual proof failure or acceptance"
+}

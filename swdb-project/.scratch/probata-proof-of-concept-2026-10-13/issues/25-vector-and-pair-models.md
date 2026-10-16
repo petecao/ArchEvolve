@@ -1,7 +1,7 @@
 # 25 — std::vector and std::pair models
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-16 ET (four original int/int pair bodies and exact-dependency caller profile accepted; wider ticket remains open); 2026-10-15 ET (original vector/pair maximum workflow WP view accepted; member/bounded frontier remains open); 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-16 ET (active implementation under renewed user approval)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 22, 24
@@ -9,6 +9,23 @@ Updated: 2026-10-16 ET (four original int/int pair bodies and exact-dependency c
 **Time estimate:** about 1 week
 
 **What to build:** Candidate artifacts that use `std::vector<T>` (not `bool`) or `std::pair` can be proven, and no verifier ever runs libc++ internals. Each type is modeled: a C struct (for the vector: data, size, capacity) plus one C function per member, each with an ACSL contract citing the standard's clauses (`[vector]` for the vector). Vector members: construction by count, by count and value, copy, move; destruction; `operator[]`, `at`, `data`, `size`, `empty`; `begin`, `end` and range-for; `push_back`, `resize`, `reserve`, `clear`, `swap`. The C lowering tool lowers each use to a model call; WP reads the ACSL; 22's translator turns the same contracts into SAW overrides. The model catches what tests miss. Growth frees the old buffer, so a stale pointer or iterator fails the proof. `at` out of range is a proof obligation. Growing a shared vector outside `critical` is stated here as a sharing-class obligation of the model. Its tests live elsewhere: the WP obligation in 45 — Per-thread lowering (it reads not proven, since WP never refutes), and the refutation at threads ≥ 2 in 46 — CIVL adapter. Proof records gain two assumption entries: "the pinned standard library implements the modeled members as the standard says" (trusted tool) and "allocation succeeds".
+
+## Current resumed checkpoint — 2026-10-16 14:40 ET
+
+Qualified grow61/reserve67 and nine private-lifetime mathematical duties have
+independent cold audits and scoped root decisions. They do not establish the
+original/default member bodies or a C++ caller. Closed-view source `615ddf50`
+and six source-bound constructor/cleanup gluing duties at `fb197c5d` are reviewed,
+pushed and independently read back. The projected-C diagnostic produced 17
+ordinary native Valid goals; its registered constructor-smoke metadata is being
+reconciled passively while the original not-proven outcome remains unchanged.
+Current constructor/destructor dependencies, explicit allocator/model TCB and
+source/Typed correspondence remain pending; caller admission still refuses.
+Full ticket acceptance and default/other-type/pair/bounded breadth remain active.
+Ticket 22 records the user-accepted A2 replacement of SAW by CBMC on the C lowering,
+bounded native C/C++ agreement and C++ counterexample replay; the historical SAW
+wording below is interpreted through that accepted translation, not new SAW work.
+See [active execution](../execution-20261016.md) for current coordination.
 
 ## Active implementation — 2026-10-15 21:14 ET
 
@@ -1477,3 +1494,49 @@ No new axiom, caller premise, historical proof reuse or public route is admitted
 Current work: independently audit the ten-leaf result, admit complete fresh
 grow61/reserve67 profiles, and observe original no-growth WP tasks before
 implementing the caller bridge. See [active execution](../execution-20261016.md).
+
+## Active scoped progress — 2026-10-16 13:48 ET
+
+The independent focused10 cold audit passes. The full qualified-v3 grow61 public
+profile also passes independent cold review: 71 normalized ordinary goals,
+69 direct native Valid plus two inventory-only CFG goals, one healthy raw
+Timeout smoke. All 150 materialized tasks and 6,630 non-goal assertion instances
+are attributed; these are not submitted-byte attestations.
+[Root scoped decision](../evidence/t25-grow61-root-scoped-acceptance-20261016.json).
+This accepts only the stated qualified source-image/translation/foundation/solver
+TCB, without original-v2/default catalog/C++/caller/ticket promotion.
+
+A complete fresh reserve67 public workflow runs at `c978393b` on node 0,
+generation 606, from 13:44:03 ET. All grow duties are freshly reproved; no older
+result is imported. Original no-growth task-generation V2 refused missing
+case-sensitive installed Ctypes source before compiler/solver execution; exact
+Linux basenames are being corrected under unchanged content hashes.
+
+The pure source-view and nine private lifetime/frame duties retain exact reserve
+code, actual release/end-automatic cleanup and scalar capture before destruction.
+Both independent review axes pass as preparation only. No new premise/axiom or
+caller route is enabled; Typed+Var/source and existing allocator/library TCB
+bindings remain mandatory. [Active execution](../execution-20261016.md).
+
+## Complete qualified reserve gate — 2026-10-16 ET
+
+The fresh reserve67 public workflow has independent cold PASS and root scoped
+acceptance. It freshly discharged all67targets, including every grow duty:
+77normalized ordinary goals consist of75direct nativeValid plus2inventory-only
+CFG goals, with one healthy rawTimeout smoke. All7,178non-goal support instances,
+164materialized task files, both branches, six additional reserve duties and
+713persisted references reconcile;1,135raw files/33,484,682B remain unchanged.
+Outer exit0/609.945seconds/1,150,005,248B, no timeout/OOM, node0generation606
+released17:54:13Z. [Root decision](../evidence/t25-reserve67-root-scoped-acceptance-20261016.json),
+[independent review](../evidence/t25-reserve67-independent-cold-review-20261016.md).
+
+Acceptance is the qualified-v3 source-image/translation/foundation/solver bundle.
+Original-v2/default catalog, C++ source refinement, effective-type generality,
+caller composition and fullticket25 remain open. Materialized task count is not
+a submitted-query census or submitted-byte attestation.
+
+The original caller's native generation succeeded, but WP33 reports freeable/
+fresh/dangling as unsupported. These original false/ignored obligations remain
+retained. A separately checked source-allocation/lifetime interpretation and
+private-frame proof are being implemented; they do not widen the caller's
+assigns clause or silently count the native freeability goal as proved.

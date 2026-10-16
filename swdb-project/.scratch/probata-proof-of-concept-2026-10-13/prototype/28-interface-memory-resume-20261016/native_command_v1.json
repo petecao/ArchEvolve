@@ -1,0 +1,61 @@
+{
+  "date": "2026-10-16 ET",
+  "entry": {
+    "bytes": 12676,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/native_entry_v1.py",
+    "sha256": "c7395c2318f3afa305aa8cde1175ecfbf19efde3c32958511ce68041d072c09f"
+  },
+  "entry_argv": [
+    "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/private/tmp/probata-resume-20261016-t28-memory53-native-v1/entry-cache",
+    "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/native_entry_v1.py",
+    "--output",
+    "/private/tmp/probata-resume-20261016-t28-memory53-native-v1/component",
+    "--source-policy",
+    "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/native_source_policy_v1.json",
+    "--runtime-policy",
+    "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-public-v3-runtime-policy-with-python-packages.json"
+  ],
+  "guard_required": {
+    "independent_guard_cleanup_and_settlement_required": true,
+    "rss_cap_bytes": 4294967296,
+    "shared_slot": "fresh compatible root admission required",
+    "whole_tree_seconds": 180,
+    "workers": 1
+  },
+  "header_dependency_timing_tcb": "Dependency files are emitted by original preprocessing; physical dependency hashes are first collected afterward, then checked after capture/compile/run. This does not reconstruct bytes read before the first capture or close concurrent modification-and-restoration/compiler-loader TCB.",
+  "plan": {
+    "bytes": 2811,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/native_plan_v1.md",
+    "sha256": "e8ed79baf271d3024ca02f253e227aab9e000bf27d5ea3908bc8b43f0a75e2ef"
+  },
+  "raw_root": "/private/tmp/probata-resume-20261016-t28-memory53-native-v1",
+  "root_runtime_admission_context": {
+    "bytes": 1870,
+    "path": "/private/tmp/probata-resume-20261016-t28-public-v3-c978393b/root-runtime-and-resource-admission.json",
+    "sha256": "3e0836984209e4c45ed69872a3509746c15d143b1c4f3be35a41ec8f2fb02b69"
+  },
+  "runtime_policy": {
+    "bytes": 1640971,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-public-v3-runtime-policy-with-python-packages.json",
+    "sha256": "4171556ed48f8612eb364a88741831a3bfc9259d34c25750e8717dadeab408a1"
+  },
+  "scope": "Mac private53 preparation controls per language; no public source/value/history/proof/hardware acceptance",
+  "source_author_checks": {
+    "child_guard_run_token_preserved": true,
+    "compiler_native_runtime_executed": false,
+    "entry_ast_parsed": true,
+    "pure_make_dependency_parser_checks": 6,
+    "retained_receipt_omits_guard_run_token": true,
+    "source_and_extra_sanitizer_pins_match": true
+  },
+  "source_policy": {
+    "bytes": 5600,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/native_source_policy_v1.json",
+    "sha256": "2839325562d35ae52b55e95e2967aa630589a7de382ffcc9dc1e9a9aeafb26bd"
+  },
+  "status": "INERT_NOT_EXECUTED"
+}

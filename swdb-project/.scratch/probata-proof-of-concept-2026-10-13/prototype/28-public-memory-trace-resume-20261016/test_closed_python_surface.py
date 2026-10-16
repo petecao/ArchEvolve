@@ -254,25 +254,60 @@ class PythonSurfaceControls(unittest.TestCase):
         observed = {'sys_path': [str(root) for root in self.roots],
                     'flags': {'isolated': 1, 'no_user_site': 1, 'dont_write_bytecode': True, 'optimize': 0},
                     'executable': str(self.alias), 'prefix': str(self.external), 'base_prefix': str(self.base),
-                    'startup_environment': {'SETUPTOOLS_USE_DISTUTILS': None, 'PYTHONPATH': None}}
-        expected = {'admitted': True, 'root_metadata_sha256': 'a' * 64, **observed}
-        self.assertEqual(gate.check_guarded_startup(expected, observed, metadata=self.policy)['root_metadata_sha256'], 'a' * 64)
+                    'pycache_prefix': str(self.base / 'fresh-raw/bootstrap-cache'),
+                    'startup_environment': {'SETUPTOOLS_USE_DISTUTILS': None, 'PYTHONPATH': None,
+                        'PYTHONPYCACHEPREFIX': str(self.base / 'fresh-raw/bootstrap-cache'), 'PYTHONDONTWRITEBYTECODE': '1',
+                        'PYTEST_DISABLE_PLUGIN_AUTOLOAD': '1', 'PROBATA_OUTPUT': str(self.base / 'fresh-raw'),
+                        'SWDB_VERIFIER_LOCK': str(self.base / 'fresh-raw/verifier.lock'), 'SWDB_VERIFIER_RSS_CAP_BYTES': '8589934592'}}
+        physical = digest({key: self.policy[key] for key in ('schema', 'surfaces', 'startup_pins', 'pth', 'interpreter', 'absence')})
+        receipt = json.dumps({'schema': 'root-guarded-python-startup-1', 'startup': observed}, sort_keys=True).encode()
+        receipt_sha = hashlib.sha256(receipt).hexdigest()
+        expected = {'admitted': True, 'root_metadata_sha256': receipt_sha, 'physical_metadata_sha256': physical, **observed}
+        def rebind_observation(value):
+            raw = json.dumps({'schema': 'root-guarded-python-startup-1', 'startup': value}, sort_keys=True).encode()
+            return {**expected, **value, 'root_metadata_sha256': hashlib.sha256(raw).hexdigest()}, raw
+        self.assertEqual(gate.check_guarded_startup(expected, observed, metadata=self.policy, root_receipt_bytes=receipt)['root_metadata_sha256'], receipt_sha)
         changed = copy.deepcopy(observed)
         changed['sys_path'].append('/unadmitted/path')
-        with self.assertRaises(gate.Refused): gate.check_guarded_startup(expected, changed, metadata=self.policy)
+        with self.assertRaises(gate.Refused): gate.check_guarded_startup(expected, changed, metadata=self.policy, root_receipt_bytes=receipt)
         changed = copy.deepcopy(observed)
         changed['startup_environment']['SETUPTOOLS_USE_DISTUTILS'] = 'stdlib'
-        with self.assertRaises(gate.Refused): gate.check_guarded_startup(expected, changed, metadata=self.policy)
+        with self.assertRaises(gate.Refused): gate.check_guarded_startup(expected, changed, metadata=self.policy, root_receipt_bytes=receipt)
         unpinned = copy.deepcopy(observed)
         unpinned['sys_path'].append(str(self.external))
-        changed_policy = {**expected, **unpinned}
+        changed_policy, changed_receipt = rebind_observation(unpinned)
         with self.assertRaisesRegex(gate.Refused, 'lacks closed physical coverage'):
-            gate.check_guarded_startup(changed_policy, unpinned, metadata=self.policy)
+            gate.check_guarded_startup(changed_policy, unpinned, metadata=self.policy, root_receipt_bytes=changed_receipt)
+        for field, value in [('executable', str(self.binary)), ('prefix', str(self.base)),
+                             ('pycache_prefix', str(self.base / 'previous-probe/bootstrap-cache'))]:
+            changed = copy.deepcopy(observed)
+            changed[field] = value
+            with self.subTest(field=field), self.assertRaises(gate.Refused):
+                gate.check_guarded_startup(expected, changed, metadata=self.policy, root_receipt_bytes=receipt)
+        zip_observation = copy.deepcopy(observed)
+        zip_observation['sys_path'].append(str(self.external / 'unlisted.zip'))
+        changed_policy, changed_receipt = rebind_observation(zip_observation)
+        with self.assertRaisesRegex(gate.Refused, 'lacks closed physical coverage'):
+            gate.check_guarded_startup(changed_policy, zip_observation, metadata=self.policy, root_receipt_bytes=changed_receipt)
+        for field, value, reason in [('executable', str(self.binary), 'pinned interpreter'),
+                                     ('prefix', str(self.base), 'venv configuration')]:
+            changed = copy.deepcopy(observed)
+            changed[field] = value
+            changed_policy, changed_receipt = rebind_observation(changed)
+            with self.subTest(field=field), self.assertRaisesRegex(gate.Refused, reason):
+                gate.check_guarded_startup(changed_policy, changed, metadata=self.policy, root_receipt_bytes=changed_receipt)
+        with self.assertRaisesRegex(gate.Refused, 'receipt bytes differ'):
+            gate.check_guarded_startup(expected, observed, metadata=self.policy, root_receipt_bytes=receipt + b' ')
+        for field in ('physical_metadata_sha256', 'root_metadata_sha256'):
+            changed = copy.deepcopy(expected)
+            changed[field] = 'unknown'
+            with self.subTest(field=field), self.assertRaises(gate.Refused):
+                gate.check_guarded_startup(changed, observed, metadata=self.policy, root_receipt_bytes=receipt)
         expected['admitted'] = False
         with self.assertRaisesRegex(gate.Refused, 'admission is unknown'):
-            gate.check_guarded_startup(expected, observed, metadata=self.policy)
+            gate.check_guarded_startup(expected, observed, metadata=self.policy, root_receipt_bytes=receipt)
         with self.assertRaises(gate.Refused):
-            gate.check_guarded_startup(self.policy, observed, metadata=self.policy)
+            gate.check_guarded_startup(self.policy, observed, metadata=self.policy, root_receipt_bytes=receipt)
 
     def test_exact_root_observed_cbmc_patch_keeps_unchanged_method_family(self):
         policy = {'accepted_cbmc_release_family': '6.11', 'tools': {'cbmc': {'version': '6.11.0'}}}

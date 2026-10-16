@@ -1,0 +1,40 @@
+{
+  "created": "2026-10-16 ET",
+  "root_decision": "Retain independently reconciled projected-C diagnostic observation only",
+  "source_commit": "615ddf504fed61b9f6c6e4663760d006ecaf255b",
+  "node": 1,
+  "generation": 630,
+  "actual_outer_guard": {
+    "exit_code": 1,
+    "wall_seconds": 62.90175072848797,
+    "peak_rss_bytes": 439300096,
+    "timed_out": false,
+    "out_of_memory": false
+  },
+  "independent_decision": {
+    "path": "evidence/t25-closed-no-growth-passive630-independent-decision-20261016.json",
+    "sha256": "ce4b3646b404628a282aed580c46f35b1c6546bf4bcb5e0bd0dc4f086eba354c"
+  },
+  "counts": {
+    "goals": 21,
+    "properties": 72,
+    "normalized_CSV_rows": 52,
+    "native_ordinary_Valid": 17,
+    "native_smoke_healthy_nonproof": 4,
+    "complete_common_exports": 19,
+    "unique_export_owners": 11,
+    "internal_Qed_inventory_only": 10,
+    "raw_files": 314,
+    "raw_bytes": 23681513
+  },
+  "original_entry_refusal_preserved": true,
+  "ordinary_reader_verdict": "not_proven",
+  "failure_class": "unclassified_wp_outcome",
+  "constructor_whitelisted": false,
+  "full_task_hypothesis_semantic_audit_performed": false,
+  "source_typed_bridge_established": false,
+  "body_or_caller_acceptance": false,
+  "public_proof_record_created": false,
+  "ticket_closure": false,
+  "scope": "All native/property/CSV/source-site and materialized-log inventories are reconciled; solver native Valid statuses remain conditional observations, with five allocator/free assumptions and current constructor/source/Typed/lifetime composition unresolved. The passive repair does not change the original run or its not-proven verdict."
+}

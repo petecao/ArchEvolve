@@ -9,6 +9,24 @@ authorization. External Claude Code owns ticket 7. Root coordinates actual
 tool admission, mbit10 lanes, publication, and final tracker synchronization.
 See [active execution](execution-20261016.md) for the current checklist.
 
+At the 14:50 ET checkpoint, independently audited qualified grow61, reserve67
+and nine private-lifetime lemmas have scoped root acceptance. Six source-bound
+constructor/cleanup gluing duties are reviewed and published at `fb197c5d`.
+Projected C has 17 ordinary native Valid results and a complete independently
+reconciled metadata inventory; its original entry refusal and ordinary
+`not_proven` result are preserved. Current constructor dependency and
+source/Typed/lifetime composition remain open, so caller admission refuses.
+
+Ticket 28's memory53 preparation passed C11/C++17 sanitizers and independent
+cold audit. Initialized-register V4 passed complete runtime/role checks but
+refused an unchecked AST effect before WP; a minimal retained-AST compiler-only
+diagnostic is under review. Abstract public trace25 passed final controller
+review and awaits socket 1, where focused regressions V3 are progressing.
+All eleven whole-interface value-builder families are in independent review.
+No new 0.2/full-interface acceptance is claimed. Both tickets remain claimed;
+full default tests and final whole-change review remain pending. Tracker census
+is 35 resolved / 26 ready-for-agent / 2 claimed; external ticket 7 is untouched.
+
 The 11:35 ET pause and all snapshots below are historical. Their evidence and
 runtime boundaries remain intact; their stop instruction is superseded for
 tickets 25 and 28 by the user's resumption. Refresh live resources before runs.

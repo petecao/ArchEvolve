@@ -1,0 +1,130 @@
+{
+  "actual_typed_AST_correspondence_or_submitted_bytes_proved": false,
+  "all9_explicit_TCB_assumptions_selected_hash_bound": true,
+  "at_utc": "2026-10-16T17:41:59.867637+00:00",
+  "certificate": {
+    "bytes": 128300,
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-grow61-public-v1/qualified-grow61-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t171459z.1258e6cf/wp/heap-model-view.json",
+    "sha256": "a89a59c81fd98fd9250a4d89d3b7fcff0c37706070907e12c3a9176d34be1dad"
+  },
+  "checks": 2051,
+  "complete_certificate_reconstructed": true,
+  "created": "2026-10-16 ET",
+  "entire_original_source_inverse_equal": true,
+  "lease_snapshot": {
+    "mbit10-evaluation-node0.meta.json": {
+      "active_session": null,
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "heartbeat_at": "2026-10-16T17:37:37Z",
+      "lease": {
+        "acquired_at": "2026-10-16T17:37:27Z",
+        "daemon_pid": 3893095,
+        "daemon_start_token": "sh3893095-1792172247",
+        "generation": 605,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node0",
+        "mode": "measure",
+        "session_id": null
+      },
+      "recovered_from_generation": null,
+      "released_at": "2026-10-16T17:37:37Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation-node1.meta.json": {
+      "active_session": null,
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "heartbeat_at": "2026-10-16T13:45:40Z",
+      "lease": {
+        "acquired_at": "2026-10-16T13:38:11Z",
+        "daemon_pid": 3877321,
+        "daemon_start_token": "sh3877321-1792157891",
+        "generation": 625,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node1",
+        "mode": "measure",
+        "session_id": null
+      },
+      "recovered_from_generation": null,
+      "released_at": "2026-10-16T13:45:40Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation.meta.json": {
+      "active_session": null,
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "heartbeat_at": "2026-09-12T04:49:11Z",
+      "lease": {
+        "acquired_at": "2026-09-12T01:35:42Z",
+        "daemon_pid": 209457,
+        "daemon_start_token": "sh209457-1789176942",
+        "generation": 77,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation",
+        "mode": "measure",
+        "session_id": null
+      },
+      "recovered_from_generation": null,
+      "released_at": "2026-09-12T04:49:11Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    }
+  },
+  "qualification_keeps_executable_grow_body_equal": true,
+  "qualified_view_checker": {
+    "id": "qualified-vector-heap-view-1",
+    "sha256": "97c4745e40e0b6c21e5906409dbf29d1dc8955e7ee88faa066dceea58fd72d57"
+  },
+  "record_evidence_references": 651,
+  "record_reference_pin_digest": "ec5c585107327b18cbd97ed1fa29388ca7df6466e01af76eff078ac1a969b6a2",
+  "retained_reader_source": {
+    "bytes": 12925,
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-grow61-public-v1/qualified-grow61-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t171459z.1258e6cf/wp/heap-reader/proof_report.ml",
+    "sha256": "8b84bec6a12669d877205ec60d46d149f41fa921d08b6640161b4896b9c4df16"
+  },
+  "retained_reporter_binaries": [
+    {
+      "bytes": 5798,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-grow61-public-v1/qualified-grow61-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t171459z.1258e6cf/wp/heap-reader/proof_report.cmi",
+      "sha256": "8a400197e6a6f4ab6987fb932bc3665c050f9535faf8ce06a6219afb8dd85781"
+    },
+    {
+      "bytes": 6426,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-grow61-public-v1/qualified-grow61-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t171459z.1258e6cf/wp/heap-reader/proof_report.cmx",
+      "sha256": "4eb054fb302ea61b4920327a5baaa5fe812788e4b5c04b30bf01a0a65918380d"
+    },
+    {
+      "bytes": 61368,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-grow61-public-v1/qualified-grow61-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t171459z.1258e6cf/wp/heap-reader/proof_report.o",
+      "sha256": "a7cb54caf1a48fcb2dd00b15dfb772f7683e37f76a21518144d80a5349bf3a1b"
+    },
+    {
+      "bytes": 78072,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-grow61-public-v1/qualified-grow61-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t171459z.1258e6cf/wp/heap-reader/proof_report.cmxs",
+      "sha256": "b6fb49a2ed1e81ec89cfe1389c3d5cc851b2d0170bc0614e33d5e21e52356e79"
+    }
+  ],
+  "scope": "Additional certificate/reference retention binding only; no compiler, helper/native reporter, project reader, test or solver executed.",
+  "source_events": 8,
+  "source_groups": [
+    "G1",
+    "G2",
+    "G3",
+    "G4",
+    "G5",
+    "G6",
+    "G7",
+    "G8",
+    "G9"
+  ],
+  "wall_seconds": 0.19575094897300005
+}

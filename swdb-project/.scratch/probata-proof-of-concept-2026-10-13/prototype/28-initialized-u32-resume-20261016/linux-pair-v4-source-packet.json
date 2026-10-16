@@ -1,0 +1,42 @@
+{
+  "compiler_native_verifier_or_ssh_launched": false,
+  "date": "2026-10-16 ET",
+  "files": [
+    {
+      "bytes": 17134,
+      "relative": "prepare_linux_pair_v4.py",
+      "sha256": "44547c998df94840a95ab1e81467b7bbbbbaf4bed884a529943c5025f67c6c7c"
+    },
+    {
+      "bytes": 31408,
+      "relative": "linux_pair_entry_v4.py",
+      "sha256": "9a6246962ed8288829b609711c2fc3d77f436b9411de5bbad58148937895bf6d"
+    },
+    {
+      "bytes": 521578,
+      "relative": "linux_pair_policy_2baf722f_v4.json",
+      "sha256": "44b5746071fbbd5db6852e6fd27f14abfdb3216395f73b6c99f047729c8b2b35"
+    },
+    {
+      "bytes": 6798,
+      "relative": "linux_pair_command_2baf722f_v4.json",
+      "sha256": "39346b58d963edc9cd2a8e33da34b8cabcb10b649f004fc53e8ea79afc1cdfc1"
+    },
+    {
+      "bytes": 10171,
+      "relative": "test_linux_runtime_packet_v4.py",
+      "sha256": "2f646aea75647e11bdfe0c80a43371c1c447e361d7d1ccedf8a4c96c56613c5e"
+    },
+    {
+      "bytes": 656,
+      "relative": "pure-linux-runtime-v4-controls.log",
+      "sha256": "3f1f089d8521889835802531c72957c7c34724d17802ad16a1939788479d0765"
+    }
+  ],
+  "immutable_criteria": "Original partial caller,711/1107,all mandatory native health and exact2 no-skip JUnit unchanged",
+  "lane_delta": "Root reserves node1 for projected-C diagnostic; only policy launch node and command node changed from node1 to node0. Entry bytes and all scientific/source/runtime criteria identical.",
+  "pure_controls_passed": 5,
+  "root_selected_lane": 0,
+  "source_commit": "2baf722fdaa6cba24b859eae3172a6f597417d72",
+  "status": "FROZEN_SOURCE_PREPARATION_ONLY; independent controller review and root fresh actual admission pending"
+}

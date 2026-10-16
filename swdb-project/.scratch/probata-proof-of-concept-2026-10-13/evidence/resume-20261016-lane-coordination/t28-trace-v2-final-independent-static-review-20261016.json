@@ -1,0 +1,279 @@
+{
+  "annotation_fields_not_used_as_role_policy": true,
+  "at_utc": "2026-10-16T18:44:26.935871+00:00",
+  "case_count": 25,
+  "case_expected_results": [
+    [
+      "same_thread_read_read",
+      "proven",
+      null
+    ],
+    [
+      "same_thread_write_during_gather",
+      "refuted",
+      "same_thread_read_footprint_write"
+    ],
+    [
+      "same_thread_read_during_store",
+      "refuted",
+      "store_footprint_cpu_access"
+    ],
+    [
+      "other_thread_read_during_store",
+      "refuted",
+      "store_footprint_cpu_access"
+    ],
+    [
+      "other_thread_cas_history_union",
+      "proven",
+      null
+    ],
+    [
+      "other_thread_cas_issue_only",
+      "refuted",
+      "postcondition"
+    ],
+    [
+      "failed_cas_adds_no_history",
+      "proven",
+      null
+    ],
+    [
+      "preissue_visibility_excludes_older_value",
+      "proven",
+      null
+    ],
+    [
+      "preissue_visibility_old_value",
+      "refuted",
+      "postcondition"
+    ],
+    [
+      "history_result_freezes_at_cover",
+      "proven",
+      null
+    ],
+    [
+      "region_stall_cross_thread_covers_store",
+      "proven",
+      null
+    ],
+    [
+      "region_read_read_does_not_cover",
+      "refuted",
+      "postcondition"
+    ],
+    [
+      "region_other_write_does_not_cover",
+      "refuted",
+      "postcondition"
+    ],
+    [
+      "other_thread_ownership_command",
+      "refuted",
+      "tile_ownership"
+    ],
+    [
+      "other_thread_ownership_tile_read",
+      "refuted",
+      "tile_ownership"
+    ],
+    [
+      "disjoint_thread_tiles",
+      "proven",
+      null
+    ],
+    [
+      "pair_8byte_second_half_cpu_read",
+      "refuted",
+      "pending_tile_write"
+    ],
+    [
+      "pair_4byte_other_half_cpu_read",
+      "proven",
+      null
+    ],
+    [
+      "pair_8byte_second_half_command",
+      "refuted",
+      "pending_tile_write"
+    ],
+    [
+      "pair_4byte_other_half_command",
+      "proven",
+      null
+    ],
+    [
+      "pair_8byte_missing_second_owner",
+      "refuted",
+      "tile_ownership"
+    ],
+    [
+      "pair_4byte_one_owner",
+      "proven",
+      null
+    ],
+    [
+      "pair_second_half_wait_covers",
+      "proven",
+      null
+    ],
+    [
+      "logical_ready_one_covers_zero_requires_wait",
+      "proven",
+      null
+    ],
+    [
+      "logical_ready_may_not_be_assumed_zero",
+      "refuted",
+      "postcondition"
+    ]
+  ],
+  "case_expected_verdict_counts": {
+    "proven": 12,
+    "refuted": 13
+  },
+  "consumer_tree_pins_Git_verified": 11,
+  "control_total_bytes": 731216,
+  "controls": 9,
+  "created": "2026-10-16 ET",
+  "decision": "PASS independent final static traceV2 controller/policy review; root owns fresh lane admission and execution",
+  "exact_CBMC_version": "6.11.0",
+  "four_closed_Python_roots": 4,
+  "header_helper_AST_equal_initializedV4": true,
+  "input_pins": [
+    {
+      "bytes": 35681,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/linux_trace_entry_v2.py",
+      "sha256": "d319185131bd708c57229fe16e269da6e6298d1afba3c057a8fcc0f89aa43c93"
+    },
+    {
+      "bytes": 531529,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/linux_trace_policy_57c22ba6_v2.json",
+      "sha256": "130a1569e75c1bee434270dc964c0771d8b4c3b1cce278e0cb193a7d25a8feca"
+    },
+    {
+      "bytes": 11261,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/linux_trace_command_57c22ba6_v2.json",
+      "sha256": "9f339b928d42496826f7a305bc5147eb645801c816f1f31369aa2474fb1a95b7"
+    },
+    {
+      "bytes": 8573,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/prepare_actual_linux_trace_57c_v2.py",
+      "sha256": "185156cab25b6936be814d3eeed633e7eb129fc568fe38463fd4a5bb022dd46f"
+    }
+  ],
+  "node": 1,
+  "observed_sys_paths": 7,
+  "physical_admission_sixfields_match_reviewed_metadata": true,
+  "preserved_guard_reader_function_ASTs": [
+    "consumer_closure",
+    "pin",
+    "ambient_check",
+    "validate_linux_launch",
+    "verified_linux_lane",
+    "import_surface",
+    "compiler_preflight",
+    "compiler_components",
+    "normalize_compiler_selector",
+    "junit_census"
+  ],
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-57c22ba6-v2",
+  "record_payload_read": false,
+  "remaining_findings": [],
+  "retained_pure_metadata_read_not_rerun": {
+    "bytes": 407,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/pure-final-trace-policy-v2-control.json",
+    "sha256": "1337ae8156085440a922080b1a7fd1f068848d804fc1ffc9ce4fc10ce4586d5c"
+  },
+  "reviewed_admission": [
+    "Exact nine regular staged inputs/control membership and entry/policy/helper/observer physical hashes before/after.",
+    "Full4root/link/startup/.pth/interpreter closure; seven literal paths/two covered descendants; raw provenance and canonical metadata digests separate; frozen TCB explicit.",
+    "Companion entry/child initial+post-package roles precede compiler use; actual test child repeats its role gate before project import. Exact source-PYTHONPATH/NOUSERSITE/SAFEPATH/no-bytecode/freshcache/plugin environment.",
+    "All2569runtime/native tool pins,3OCaml memberships+exact query roots,180Why3/WP surfaces,1983LLVM headers, kernel META and parser physical pin; final common source/runtime/Python/control comparisons.",
+    "ExactCBMC6.11.0 stdout/stderr plus unchanged6.11family; separate Frama33 version check; no production method/adapter weakening.",
+    "Exact launch/wrapper/1200s8GiB1worker/node1 live socket ancestry/fd9/leasegeneration/NUMA; whole child relies on root whole-tree watchdog."
+  ],
+  "reviewed_scientific_contract": [
+    "All25immutable fixed-order public nodes/source hashes match exact source57c and case policy. No skip path; exact collection and25/no-error/no-failure/no-skip JUnit gate.",
+    "Public tests retain complete success/failure goal status checks, positive ordinary success plus failed end-reachability, no failed unwind/domain/capacity-bookkeeping goal, and each negative expected property with real sanitizer-free C++ replay.",
+    "Real C/C++ differential agreement, public setup/initialization/semantic pins, original synthetic/history/domain plus five explicitly unused inherited assumptions remain required. Query prototypes/26unsupported calls and abstract-only scope unchanged.",
+    "Every setup/call/teardown outcome, internal error/exception flushes and fsyncs incremental JSONL. Final pytest exit and strict JUnit census remain separate from proof acceptance."
+  ],
+  "reviewer_actual_execution": false,
+  "root_guard": {
+    "external_timeout_seconds": 1320,
+    "raw_budget_bytes": 268435456,
+    "rss_cap_bytes": 8589934592,
+    "whole_tree_seconds": 1200,
+    "workers": 1
+  },
+  "runtime_file_pins": 2569,
+  "scope_limits": [
+    "Controller readiness only. No actual25verdicts/native records/replay outcomes produced by this review; independent cold audit required after run.",
+    "Synthetic abstract scalar traces only: no API/header/source-body/nativecaller pointer mapping, hardware counterexample/progress/fairness, current0.2 promotion or fullticket28 acceptance.",
+    "Interpreter/frozen bootstrap and OS/loader/plugin behavior remain explicit TCB. __file__ pins prove no frozen-source equivalence or historical pre-import timing.",
+    "Socket lease supplies Linux exclusion; verifier-lock path alone proves no advisory lock. Root performs fresh resource admission after current jobs settle.",
+    "OldV1/previous failed raw remain preserved. Reviewer used source/Git/AST/hash only; no controller/helper/test/compiler/native/solver/SSH execution."
+  ],
+  "shared_helpers_equal_reviewed_initializedV4": true,
+  "source_commit": "57c22ba6fe1707c9b40a910ed1c19c3ef99e9e84",
+  "source_pins_opaque_Git_hash_verified": 557,
+  "staged_controller_pins": [
+    {
+      "bytes": 35681,
+      "name": "linux_trace_entry_v2.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/linux_trace_entry_v2.py",
+      "sha256": "d319185131bd708c57229fe16e269da6e6298d1afba3c057a8fcc0f89aa43c93"
+    },
+    {
+      "bytes": 531529,
+      "name": "linux_trace_policy_57c22ba6_v2.json",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/linux_trace_policy_57c22ba6_v2.json",
+      "sha256": "130a1569e75c1bee434270dc964c0771d8b4c3b1cce278e0cb193a7d25a8feca"
+    },
+    {
+      "bytes": 1905,
+      "name": "cbmc_release_gate.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/cbmc_release_gate.py",
+      "sha256": "681ad7be43312e224529a03d42b939305010795becd2fc203724a59c63db3dfc"
+    },
+    {
+      "bytes": 18385,
+      "name": "closed_python_surface.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/closed_python_surface.py",
+      "sha256": "748423c27ac8c1f9810c08d3f0ffc71548da703b4b4f95cedc31d4f8bc0418af"
+    },
+    {
+      "bytes": 9416,
+      "name": "python-physical-metadata-v2.json",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/python-physical-metadata-v2.json",
+      "sha256": "9d90835f12dfb89a43ac0e0661681159ec8ab563e9cf664548162a7357299eda"
+    },
+    {
+      "bytes": 2709,
+      "name": "python_role_observer_v2.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/python_role_observer_v2.py",
+      "sha256": "9b100cbe2fdef3e7d429ccdf05d6489d44855a84328e2dd8532eb547beeaf43b"
+    },
+    {
+      "bytes": 9610,
+      "name": "python_startup_roles_v2.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/python_startup_roles_v2.py",
+      "sha256": "5e9d2e6dfa2aaa7999f4670a979d3cc32736b852a612f77d4e2f7c71bc229618"
+    },
+    {
+      "bytes": 116503,
+      "name": "t28-linux-runtime-observer-v2-actual-20261016.json",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-linux-runtime-observer-v2-actual-20261016.json",
+      "sha256": "092397608fe3a08c42d85e9c8e121ed139f0d94e345a12ae3aaa57ad6e93a5f0"
+    },
+    {
+      "bytes": 5478,
+      "name": "trace_pytest_child_v2.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace_pytest_child_v2.py",
+      "sha256": "e3957b2f358b7e446a6a61e80d3d761539e14a9fd1fae5323c2abfd7937f3493"
+    }
+  ],
+  "unchanged_method_release_family": "6.11"
+}

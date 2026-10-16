@@ -1,7 +1,7 @@
 # 28 — Proof semantics for the remaining maa_* calls
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-16 ET (user-requested stop and next-session handoff)
+Updated: 2026-10-16 ET (active implementation under renewed user approval)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 27
@@ -9,6 +9,18 @@ Updated: 2026-10-16 ET (user-requested stop and next-session handoff)
 **Time estimate:** about 1 week
 
 **What to build:** The proof semantics grows to the whole DX100 interface, so DX100 code of any kernel can be proven against it, not only BFS. Every remaining `maa_*` call of `dx100-mmio 1.0-e4fc4af` gets its contract, written per call from the interface and the gem5 source, never from a kernel. The new version adds the memory rules ticket 27 left out: a CPU access that overlaps an unfinished command's footprint (split by thread and by what DX100 does), device-against-device ordering by gem5's region stall, tile ownership as a proof obligation, the 8-byte tile pair, and a `get_tile_ready` that may answer either way. It also writes down what proofs trust at the call boundary and across cores: the MMIO code and the visibility entries of map 12 item 7. End to end: `swdb prove` on synthetic fixtures gives the verdict each rule predicts, and every verdict lists the matching assumption entries.
+
+## Current resumed checkpoint — 2026-10-16 14:40 ET
+
+Memory53 private preparations passed C11/C++17 ASan/UBSan runs and independent
+cold audit. The initialized-u32 V4 run passed complete startup/runtime/postchecks
+but source validation refused an unchecked AST effect before WP; its original
+positive failed and negative was unexecuted under `-x`. Exact retained AST repair
+and deterministic regression are in progress. The final source-57c abstract
+25-case public trace packet is under independent review, with whole-interface
+typed/value bindings in parallel. No current 0.2/full-interface acceptance is
+claimed; version 0.1 and every substantive acceptance criterion remain intact.
+See [active execution](../execution-20261016.md) for current coordination.
 
 ## Active implementation — 2026-10-15 21:19 ET
 
@@ -526,3 +538,47 @@ and a 53-case C/C++ native harness are prepared for independent review. Syntheti
 public memory/history/concurrency fixtures are the next integration seam; actual
 pinned-header source/body and hardware correspondence remain separate boundaries.
 See [active execution](../execution-20261016.md).
+
+## Active guarded execution — 2026-10-16 13:48 ET
+
+The independent actual public V3 audit reconciles the one passing compiler and
+scripted-persistence test, full physical source/runtime and retained evidence.
+The stand-in verdict remains not_proven/tool_crash; no theorem is inferred.
+
+The separately reviewed actual initialized-register 711/1107 pair runs on mbit10
+node 1, generation 626, from 13:44:39 ET, clean published `2baf722f`. Exact Linux
+controller/policy staging and live socket/NUMA role are independently reviewed,
+with 8 GiB/one worker/1,200-second whole guard/256 MiB raw budget. An earlier
+local command-format refusal occurred before SSH and stays preserved. Complete
+native ordinary/RTE/init/smoke, partial contract/frame, compiler certificate,
+source/runtime and cold acceptance gates follow actual settlement.
+
+The memory53 V2 C/C++ harness was never admitted: external ticket 7 held both
+Mac slots and the compatible queue timed out after 30 seconds, with zero native/
+compiler execution. Source/preparation success is unchanged; a fresh namespace
+and normal shared-slot admission are next. Synthetic memory/history/ownership/
+readiness public fixtures remain in implementation, with actual pinned-header
+and hardware refinement explicitly separate. No acceptance box closes yet.
+[Active execution](../execution-20261016.md).
+
+## Private memory preparation gate — 2026-10-16 ET
+
+NativeV4 and its independent cold audit pass53preparation cases in each ofC11
+andC++17 underASan/UBSan. All7,628input/runtime/sanitizer/guard/control pins,
+30raw artifacts,99/116used dependencies, frozen inputs and binaries reconcile.
+Guard0/3.660seconds/145.141MiB under4GiB/180seconds; one recovered inspection
+event has no final failure or unconfirmed child. No formal/public/per-call or
+hardware acceptance is inferred. Earlier queue/storage refusals stay unchanged.
+
+The exact experimental scalar-trace admission and honest record-scope wording
+are integrated in only bounded_initialization.py and cbmc_adapter.py after
+independent Spec/Standards review. Public25actual traces await a published
+freeze and complete fresh Linux runtime admission. The copied Python policy
+omits system-site imports and rejects legitimate stdlib symlinks; these are
+being explicitly pinned before any next actual run. InitializedV3 remains
+unexecuted; prior two actual initialized attempts stopped before WP.
+
+Per-call/MMIO correctness may use ticket28's explicitly owned trust assumptions;
+a hardware-body theorem is not an additional ticket acceptance criterion. Full
+interface/version dispatch and every requested public verdict still remain
+required; no whole-ticket box is closed by abstract ghost-query fixtures.

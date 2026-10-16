@@ -1,0 +1,25 @@
+{
+  "created": "2026-10-16 ET",
+  "source_commit": "615ddf504fed61b9f6c6e4663760d006ecaf255b",
+  "baseline": "c978393b119a3614229a37f0f2c8ca2a097c750b",
+  "files_after": {
+    "swdb-project/swdb/bounded_initialization.py": "d6586a771548f46423595eb971a63bffb00f23e559cfe576adee5a2abeb6b3cc",
+    "swdb-project/swdb/cbmc_adapter.py": "2ef59469412c287b174f085e2c08c8a969435ccf1bc129fe34ea89bbb78cac4a",
+    "swdb-project/swdb/vector_reallocation_caller_packets.py": "a30b633404723d99c84ee3473eb0a352fe6641274e036524451826940abc59f0",
+    "swdb-project/swdb/vector_reallocation_caller_view.py": "47c286034927b11db471c45ebce061856c4bc73008f0baf2cbdae255a2293413",
+    "swdb-project/swdb/vector_reallocation_closed_view.py": "758092d5997274b29e22f2196c46af361b7cfdfd5c9eb83ee328ae6a877eb757",
+    "swdb-project/swdb/vector_reallocation_composition.py": "fbce29f010d92be33b09a0f31c440f8db97c7f0dfd0769a41a59e71bdfe6e108",
+    "swdb-project/swdb/vector_reallocation_private_frame.py": "062c68a138b4aeb0887f50490d405f3b1fdd50284e6e8404e096df02568982da"
+  },
+  "readers": [
+    "root",
+    "ticket25",
+    "ticket28"
+  ],
+  "planned_raw_budget_bytes": 2147483648,
+  "review_evidence": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-closed-no-growth-inert-independent-review-20261016.md",
+    "sha256": "1542d1bf4c90c7350464d945ccbf135f7d37f963c2d3ed892aa7995c5a1ea26b"
+  },
+  "scope": "One complete projected C diagnostic preserving original caller clauses and normal proof readers; no source Typed, allocator, constructor, caller or ticket acceptance"
+}

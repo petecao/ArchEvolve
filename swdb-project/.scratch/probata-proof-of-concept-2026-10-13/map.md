@@ -11,11 +11,20 @@ source publication, guarded actual admissions, mbit10 lane coordination, and
 final synchronization. [Active execution](execution-20261016.md),
 [current ticket status](ticket-status-20261015.md), [resume](resume.md).
 
-Ticket 25 resumes at the reviewed copied-prefix source and unexecuted focused10
-packet; complete grow61, reserve67, caller discharge, and remaining member/type
-acceptance stay open. Ticket 28 resumes at failed public V1, reviewed frame test
-repair, and unfinished public/formal initialized-u32 workflows; full-interface,
-memory, concurrency, and current-version acceptance stay open.
+Ticket 25 has scoped acceptance of independently audited focused10, qualified
+grow61, reserve67 and nine private-lifetime lemmas. Original/default body and
+caller acceptance remain open. The projected-C diagnostic's 17 ordinary native
+Valid results and complete metadata inventory are reconciled; its original
+not-proven verdict remains. Six source-bound constructor/cleanup gluing duties
+are reviewed and published at `fb197c5d`, with source/Typed admission unsupported.
+
+Ticket 28's public V3 compiler/scripted control and memory53 native preparation
+passed their scoped audits. Initialized-u32 V4 passed runtime/role checks but
+source validation refused before WP; a retained-AST compiler-only diagnostic is
+in review. Abstract public trace25 is reviewed and awaiting socket 1, currently
+running focused regressions. All eleven whole-interface value families are in
+source review. No current 0.2/full-interface or full-ticket acceptance is claimed.
+See the active execution checklist; lane availability is live state.
 
 Read the [saved pause handoff](PAUSED-HANDOFF-20261016.md) for recovery evidence.
 Its stop instruction is superseded for these assigned tickets. All historical

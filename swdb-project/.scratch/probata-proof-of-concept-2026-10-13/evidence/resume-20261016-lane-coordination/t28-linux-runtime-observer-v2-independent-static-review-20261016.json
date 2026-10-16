@@ -1,0 +1,57 @@
+{
+  "argv": {
+    "bytes": 3741,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/observe-linux-runtime-command-v2.json",
+    "sha256": "a82929ac883958063b543f316566971f9de4d6fc5f3fcf81fb364678b1cd5e16"
+  },
+  "at_utc": "2026-10-16T18:13:01.165270+00:00",
+  "boundaries": [
+    "The two reviewed files are an argv recipe, not the outer launcher source-review packet. The stated source/node/60s/180s/8GiB/one-worker/16MiB/live socket enforcement remains the root-reviewed V6 dispatch responsibility.",
+    "Physical __file__ hashes identify reported source paths; frozen/builtin code remains pinned interpreter TCB and is not misrepresented as executed source equivalence.",
+    "This recipe obtains version/sys.path observations only; it does not grant actual profile/runtime/proof/source admission."
+  ],
+  "confirmed": [
+    "Exact selected venv invocation is isolated/nonoptimized/no-bytecode and uses a fresh -X pycache_prefix before Python startup.",
+    "Interpreter target hash matches fresh passive e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f pin; user-site is asserted disabled.",
+    "Fixed four package imports observe actual isolated sys.path and loaded physical module origins; source/frozen/builtin interpreter TCB boundary is explicit.",
+    "Only subprocess invocation is exact pinned CBMCa62af25d27425610608221d79c202f993efe1d5a85cece186119bec196382995 --version with DEVNULL stdin, captured stdout/stderr and10s timeout; child env is the closed PATH/LANG/LC_ALL map.",
+    "No project import, test invocation, compiler, proof, CBMC verification input or lease mutation appears in the recipe.",
+    "Observation output is exclusive-create in the supplied fresh raw directory; cache is absent before/after; all proof/source acceptance flags remain false."
+  ],
+  "created": "2026-10-16 ET",
+  "decision": "PASS static observational recipe review, within separately enforced root launcher/watchdog/socket bounds",
+  "fixed_module_imports": [
+    "hashlib",
+    "importlib",
+    "json",
+    "os",
+    "pathlib",
+    "site",
+    "subprocess",
+    "sys"
+  ],
+  "reviewer_executed_recipe_or_tools": false,
+  "root_dispatch_contract_from_assignment": {
+    "launcher": "reviewed V6",
+    "node": 0,
+    "outer_seconds": 180,
+    "raw_budget_bytes": 16777216,
+    "rss_cap_bytes": 8589934592,
+    "source_commit": "c978393b119a3614229a37f0f2c8ca2a097c750b",
+    "whole_seconds": 60,
+    "workers": 1
+  },
+  "script": {
+    "bytes": 3448,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/observe_linux_runtime_v2.py",
+    "sha256": "af963a7b69cfc19a2a60d1e218bdbaaf4d520b980d4ab76a6d6d8e5741d5c7a5"
+  },
+  "selected_package_names": [
+    "pytest",
+    "yaml",
+    "jsonschema",
+    "psutil"
+  ],
+  "source_argv_exact_equal": true,
+  "static_AST_parse": true
+}

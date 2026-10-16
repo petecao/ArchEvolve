@@ -2,8 +2,10 @@
 
 Updated: 2026-10-16 ET — tickets 25 and 28 resumed.
 
-35 resolved / 25 ready-for-agent / 3 claimed.
-Tickets 25 and 28 are owned by this Codex chat; ticket 7 is owned by external Claude Code.
+35 resolved / 26 ready-for-agent / 2 claimed.
+Tickets 25 and 28 are owned by this Codex chat. The user reports active external
+Claude Code work on ticket 7; its authoritative file currently remains ready-for-agent
+and is preserved by this effort.
 Derived from authoritative frontmatter; open dependencies still gate later work.
 [Current execution](execution-20261016.md). [Current resume](resume.md). Historical proofs keep their exact source pins.
 
@@ -15,7 +17,7 @@ Derived from authoritative frontmatter; open dependencies still gate later work.
 | [04 — Proof record tracer](issues/04-proof-record-tracer.md) | resolved | none |
 | [05 — Spike (a): SAW on clang 22 bitcode](issues/05-spike-saw-clang22.md) | resolved | none |
 | [06 — Spike (b): 2 lanes under 15 minutes](issues/06-spike-two-lanes.md) | resolved | none |
-| [07 — Spike (c): WP with agent hints](issues/07-spike-wp-agent-hints.md) | claimed | none |
+| [07 — Spike (c): WP with agent hints](issues/07-spike-wp-agent-hints.md) | ready-for-agent | none |
 | [08 — Spike (d): sums over reals](issues/08-spike-sums-over-reals.md) | resolved | none |
 | [09 — Spike verdict](issues/09-spike-verdict.md) | resolved | 07 |
 | [10 — Level rule](issues/10-level-rule.md) | resolved | none |
