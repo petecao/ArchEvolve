@@ -21,7 +21,7 @@ def test_canonical_qualified_packet_check_rejects_self_consistent_tampering(tmp_
         path.write_text(path.read_text().replace(row['statement'],'\\true'))
         row['statement']=r'\true';row['sha256']=hashlib.sha256(path.read_bytes()).hexdigest()
     elif attack=='drop_step':
-        plan['obligations']=[row for row in plan['obligations'] if row['id']!='grow.copy.step']
+        plan['obligations']=[row for row in plan['obligations'] if row['id']!='grow.copy.step.uninitialized_tail']
     elif attack=='clause':plan['source_inventory']['clauses'].pop()
     elif attack=='original':
         path=stage/'qualified.c';path.write_text('/* forged body */\n')
@@ -44,7 +44,7 @@ def test_projection_conjunction_is_completely_split_without_changing_other_targe
     from pathlib import Path
     baseline=json.loads((Path(__file__).parent/'fixtures/proof/vector-reallocation-projection-017.json').read_bytes())
     plan=packets.prepare('std_vector_int_realloc_v3_grow',tmp_path/'split')
-    assert len(plan['obligations'])==38
+    assert len(plan['obligations'])==52
     group=plan['logical_obligations'][0]
     assert group['id']=='grow.entry.int_projection'
     assert group['original_statement']==baseline['original_projection']['statement']
@@ -53,9 +53,9 @@ def test_projection_conjunction_is_completely_split_without_changing_other_targe
     assert group['dependencies']==[] and group['premises_added']==[]
     old=baseline['original_projection'];reference=tmp_path/'split'/group['reference']['path']
     assert hashlib.sha256(reference.read_bytes()).hexdigest()==old['sha256']==group['reference']['sha256']
-    expected={r['id']:(r['path'],r['sha256'])for r in baseline['targets'] if r['id'] not in {old['id'],'grow.copy.establish'}}
+    expected={r['id']:(r['path'],r['sha256'])for r in baseline['targets'] if r['id'] not in {old['id'],'grow.copy.establish','grow.copy.step'}}
     observed={r['id']:(r['path'],r['sha256'])for r in plan['obligations'] if r['id'] in expected}
-    assert observed==expected and len(observed)==18
+    assert observed==expected and len(observed)==17
     for row in plan['obligations']:
         if row['id'] not in group['parts']:continue
         assert row['dependencies']==[] and row['statement'].startswith(group['quantifiers'])
@@ -102,7 +102,7 @@ def test_projection_group_requires_both_isolated_pieces_and_original_definitions
     (stage/'manifest.json').write_text(json.dumps(plan,sort_keys=True,indent=2)+'\n')
     if attack=='none':
         checked=vector_reallocation_view.check('std_vector_int_realloc_v3_grow',view,stage)
-        assert len(checked.certificate['obligations'])==38
+        assert len(checked.certificate['obligations'])==52
         assert checked.certificate['logical_obligations'][0]['parts']==group['parts']
         assert all(rows[part]['expected']=='proven' and not rows[part]['dependencies'] for part in group['parts'])
     else:
@@ -114,7 +114,7 @@ def test_projected_cells_expand_exact_definition_and_keep_other_twenty_inputs(tm
     from pathlib import Path
     baseline=json.loads((Path(__file__).parent/'fixtures/proof/vector-reallocation-projection-cells-2e01.json').read_bytes())
     plan=packets.prepare('std_vector_int_realloc_v3_grow',tmp_path/'components')
-    assert len(plan['obligations'])==38
+    assert len(plan['obligations'])==52
     logical=plan['logical_obligations'][0]
     expansion=logical['component_expansions'][0]
     assert expansion['id']=='grow.entry.int_projection.cells'
@@ -125,9 +125,9 @@ def test_projected_cells_expand_exact_definition_and_keep_other_twenty_inputs(tm
     assert logical['parts']==['grow.entry.int_projection.repr',*expansion['parts']]
     old=baseline['original_cells'];reference=tmp_path/'components'/expansion['reference']['path']
     assert hashlib.sha256(reference.read_bytes()).hexdigest()==old['sha256']==expansion['reference']['sha256']
-    expected={r['id']:(r['path'],r['sha256'])for r in baseline['targets']if r['id'] not in {old['id'],'grow.copy.establish'}}
+    expected={r['id']:(r['path'],r['sha256'])for r in baseline['targets']if r['id'] not in {old['id'],'grow.copy.establish','grow.copy.step'}}
     actual={r['id']:(r['path'],r['sha256'])for r in plan['obligations']if r['id']in expected}
-    assert actual==expected and len(actual)==19
+    assert actual==expected and len(actual)==18
     conjuncts=[
         'Heap::typed_reads(Heap::project_int_region(h,values,b,bo,s),b,bo+4*j,4,4)',
         'Heap::initialized_at(Heap::project_int_region(h,values,b,bo,s),b,bo+4*j)',

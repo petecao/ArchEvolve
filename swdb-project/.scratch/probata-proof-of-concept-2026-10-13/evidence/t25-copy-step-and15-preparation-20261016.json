@@ -1,0 +1,209 @@
+{
+  "base": "d6fc0b2258e090b3cdf7c5e91caf75051b321ae3",
+  "binding_refs": [
+    {
+      "repository_copy": {
+        "bytes": 2751,
+        "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-copy-step-independent-source-query-review-v1-20261016.md",
+        "sha256": "ad197ecc32a502b75a45ee4faa35d9ee4da7d7c98b10a5f2abbf926e3ed72e8e"
+      },
+      "retained_original": {
+        "bytes": 2751,
+        "path": "/private/tmp/probata-t25-copy-step-independent-source-query-review-v1-20261016.md",
+        "sha256": "ad197ecc32a502b75a45ee4faa35d9ee4da7d7c98b10a5f2abbf926e3ed72e8e"
+      }
+    },
+    {
+      "repository_copy": {
+        "bytes": 18798,
+        "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-copy-step-independent-source-query-review-v1-20261016.json",
+        "sha256": "0d28eb0724ffce7515af39b9cf60646840fbc53921caf21ec9965d042f44e848"
+      },
+      "retained_original": {
+        "bytes": 18798,
+        "path": "/private/tmp/probata-t25-copy-step-independent-source-query-review-v1-20261016.json",
+        "sha256": "0d28eb0724ffce7515af39b9cf60646840fbc53921caf21ec9965d042f44e848"
+      }
+    },
+    {
+      "repository_copy": {
+        "bytes": 6233,
+        "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-copy-step-and-design-v1-20261016.md",
+        "sha256": "4f528c6efb149b054c9b7ee221606a3844a7e5ee90c9e1ea95a0dca427977efc"
+      },
+      "retained_original": {
+        "bytes": 6233,
+        "path": "/private/tmp/probata-t25-copy-step-and-design-v1-20261016.md",
+        "sha256": "4f528c6efb149b054c9b7ee221606a3844a7e5ee90c9e1ea95a0dca427977efc"
+      }
+    },
+    {
+      "repository_copy": {
+        "bytes": 2611,
+        "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-copy-step-and-design-v1-20261016.json",
+        "sha256": "3f622222c54bae793eff45037fc449cf1376d54187ef3a676710c107bd381b0f"
+      },
+      "retained_original": {
+        "bytes": 2611,
+        "path": "/private/tmp/probata-t25-copy-step-and-design-v1-20261016.json",
+        "sha256": "3f622222c54bae793eff45037fc449cf1376d54187ef3a676710c107bd381b0f"
+      }
+    },
+    {
+      "repository_copy": {
+        "bytes": 57387,
+        "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-copy-step-actual-binding-v3-20261016.json",
+        "sha256": "4517124c5d25ecc6f9671b02fec194893e100e472c56f37c56b73a15a2f7ef04"
+      },
+      "retained_original": {
+        "bytes": 57387,
+        "path": "/private/tmp/probata-t25-copy-step-actual-binding-v3-20261016.json",
+        "sha256": "4517124c5d25ecc6f9671b02fec194893e100e472c56f37c56b73a15a2f7ef04"
+      }
+    }
+  ],
+  "control_boundary": "Direct pure functions, no pytest.main/fixtures/hooks/project-native imports; AST-literal preparer-only type sets and audit refusal of process/native launch. The actual lowerer/engine/proof runtime is not overlaid.",
+  "controls": [
+    {
+      "external_native_attempts": [],
+      "failed": 5,
+      "guard_peak_rss_mb": 44.21875,
+      "guard_seconds": 0.408680958324112,
+      "inspection_events": [],
+      "inspection_failure": null,
+      "label": "RED",
+      "passed": 0,
+      "refs": [
+        {
+          "bytes": 3012,
+          "path": "/private/tmp/probata-t25-copy-step-red-v1-20261016/control/result.json",
+          "sha256": "8c90098fb64dcf8ace3eb17b3ea919f8e5479ecc9c676d06e4ae24200b7316e3"
+        },
+        {
+          "bytes": 489,
+          "path": "/private/tmp/probata-t25-copy-step-red-v1-20261016/control/controls.log",
+          "sha256": "8e6b80c547fdc8db6833545e5b22e48343f76f9a3cab6faf6a7f99202bba74a2"
+        },
+        {
+          "bytes": 113,
+          "path": "/private/tmp/probata-t25-copy-step-red-v1-20261016/guard.log",
+          "sha256": "5e81c0ce37d364faa03f3fec70369c5e87492339470f36c6a878f7f4e4e03f5b"
+        },
+        {
+          "bytes": 1966,
+          "path": "/private/tmp/probata-t25-copy-step-red-v1-20261016/guard.log.summary.json",
+          "sha256": "4730e15c2fc53b345bf59e9f714cacd4a9fe6bf5dc4ba57fccc84a57cf023eac"
+        }
+      ],
+      "source_before_after_equal": true,
+      "unconfirmed_children": []
+    },
+    {
+      "external_native_attempts": [],
+      "failed": 0,
+      "guard_peak_rss_mb": 44.25,
+      "guard_seconds": 0.5889327083714306,
+      "inspection_events": [],
+      "inspection_failure": null,
+      "label": "GREEN",
+      "passed": 5,
+      "refs": [
+        {
+          "bytes": 2580,
+          "path": "/private/tmp/probata-t25-copy-step-green-v1-20261016/control/result.json",
+          "sha256": "c064ce4acd403b5a171d675afa38d397e83e45213bee77ea796a8609a7ea0393"
+        },
+        {
+          "bytes": 420,
+          "path": "/private/tmp/probata-t25-copy-step-green-v1-20261016/control/controls.log",
+          "sha256": "8248723ca8bf9f139b07eb8854f41127e4475871866a56504c47aae90e42ecf9"
+        },
+        {
+          "bytes": 114,
+          "path": "/private/tmp/probata-t25-copy-step-green-v1-20261016/guard.log",
+          "sha256": "9b299ce1095bbe3b5095b96e7277c0a77d5f8fe82643aa67d2eafef48cea67e7"
+        },
+        {
+          "bytes": 1970,
+          "path": "/private/tmp/probata-t25-copy-step-green-v1-20261016/guard.log.summary.json",
+          "sha256": "65f0ee16fd418f5b65298004d00daa3376fd2b5991207a13152b8c5be74c8b75"
+        }
+      ],
+      "source_before_after_equal": true,
+      "unconfirmed_children": []
+    },
+    {
+      "external_native_attempts": [],
+      "failed": 0,
+      "guard_peak_rss_mb": 49.9375,
+      "guard_seconds": 1.3570921666687354,
+      "inspection_events": [],
+      "inspection_failure": null,
+      "label": "affected GREEN",
+      "passed": 29,
+      "refs": [
+        {
+          "bytes": 8321,
+          "path": "/private/tmp/probata-t25-copy-step-regression-v1-20261016/control/result.json",
+          "sha256": "c7274b95063cd20825c2ba4e0b80dbf61ddcb495c23724222f609b074c139bff"
+        },
+        {
+          "bytes": 3658,
+          "path": "/private/tmp/probata-t25-copy-step-regression-v1-20261016/control/controls.log",
+          "sha256": "a0a5987eafcd0e9494b0e2aec00273355d21f0d301e7dfbd44fa19d6b83974b0"
+        },
+        {
+          "bytes": 115,
+          "path": "/private/tmp/probata-t25-copy-step-regression-v1-20261016/guard.log",
+          "sha256": "471fa707c562791562855fb951066f435ac397ea94f7f9fee3c2f995bd9fdb7b"
+        },
+        {
+          "bytes": 1984,
+          "path": "/private/tmp/probata-t25-copy-step-regression-v1-20261016/guard.log.summary.json",
+          "sha256": "e81a1c56e89400eff8e7caf6e01090357e859527583e23661fe69edc4b6ab523"
+        }
+      ],
+      "source_before_after_equal": true,
+      "unconfirmed_children": []
+    }
+  ],
+  "date_eastern": "2026-10-16",
+  "equivalence": "A implies conjunction(C1..C15) iff conjunction(A implies C1,..,A implies C15); exact source predicate substitution",
+  "expected_pending_counts": {
+    "caller": 118,
+    "ctor_count_value": 35,
+    "dtor": 11,
+    "grow": 52,
+    "reserve": 58
+  },
+  "full_antecedent": "t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s",
+  "full_model_acceptance": false,
+  "harness_refs": [
+    {
+      "bytes": 4483,
+      "path": "/private/tmp/probata-t25-copy-step-pure-controls-v1-20261016.py",
+      "sha256": "671208bc12120aa152fa6e839dba6606767a9dd5681009d757477859db261e4c"
+    },
+    {
+      "bytes": 5367,
+      "path": "/private/tmp/probata-t25-copy-step-pure-regression-v1-20261016.py",
+      "sha256": "6e60013775be7bbeb2669ecfbc5829657e1fca50cfa2c46f888c49e380ef8dcb"
+    }
+  ],
+  "kind": "prospective source-bound copy-step AND15 preparation; not a proof",
+  "premises_added": [],
+  "proof_claim": false,
+  "required_next": [
+    "independent source-equivalence review",
+    "fresh focused15 diagnostic with unchanged30-second/full-three portfolio/cache-none",
+    "fresh full52 public model with numeric RTE/initialization/smoke and complete current source/runtime/task closure"
+  ],
+  "sibling_dependencies": [],
+  "source_reference": "37ffe407a10888ff9628c75f37ba770995a3ecd5",
+  "ticket_acceptance": false,
+  "unchanged_other_grow_payloads": 37,
+  "unexecuted_controls": [
+    "native/public52 persistence and schema",
+    "caller118 compiler/native profile"
+  ]
+}

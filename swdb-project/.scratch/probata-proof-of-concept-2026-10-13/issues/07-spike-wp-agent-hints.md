@@ -1745,3 +1745,7 @@ Root accepts complete changed-source20Typed-helper discharge only:260ordinaryVal
 
 
 2026-10-16 09:40 ET — Actual bd normal-TU generation artifacts were produced, then unclassified Typed memory-model hypotheses warnings caused entry/guard1; weak TU unexecuted/no external solver. Complete two-TU generation/proof/Init/source/TD/count acceptance remains false. [Current scoped checkpoint](../evidence/frontier-current-dispatch-and-caller-preparation-checkpoint-20261016-0940.md). Ticket stays claimed; frontier counts35/25/3 unchanged.
+
+## Active checkpoint — 2026-10-16 10:06 ET
+
+See [settled producers and passive evidence](../evidence/frontier-settled-producers-checkpoint-20261016-1006.md) and its exact-pin ledger. Ticket remains claimed; existing acceptance criteria and dependencies are unchanged. Original exits, pending proof/cold/source gates and historical trust boundaries are preserved.

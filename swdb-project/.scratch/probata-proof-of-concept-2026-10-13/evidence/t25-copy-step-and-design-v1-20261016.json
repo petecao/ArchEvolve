@@ -1,0 +1,83 @@
+{
+  "actual_partial_source": "37ffe407a10888ff9628c75f37ba770995a3ecd5",
+  "created": "2026-10-16 ET",
+  "design_owner": "/root/ticket24",
+  "expected_target_counts_if_implemented": {
+    "caller_with_three_pending_applications": 118,
+    "constructor": 35,
+    "current_main_caller_without_applications": 115,
+    "destructor": 11,
+    "grow": 52,
+    "reserve": 58
+  },
+  "heap_after": "Heap::copy_int(h,b,bo+4*k,f,4*k)",
+  "original_statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s ==> t25v3_copy_inv(entry,Heap::copy_int(h,b,bo+4*k,f,4*k),r,o,b,bo,s,c,f,cap,k+1)",
+  "prospective_current_source": "6216fc9440897bebc16a09eeb124ce76f202f185",
+  "quantifiers": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; ",
+  "required_controlled_symbols": {
+    "nested_binders": [
+      "x",
+      "p",
+      "j"
+    ],
+    "no_argument_binder_capture": true,
+    "protected_arithmetic_argument": "(k+1)"
+  },
+  "required_proof_policy": {
+    "actual_still_required": true,
+    "antecedents_added": [],
+    "desired_axioms": [],
+    "individual_goal_budget_changes": false,
+    "old_proof_reuse": false,
+    "sibling_results_used": []
+  },
+  "source_definition": {
+    "begin": 1576,
+    "end": 2314,
+    "physical_unique": true,
+    "sha256": "ac8e672f38914c8161b9735b1a50e6df3b77b3d133769b09b008193c260cd9dc"
+  },
+  "source_group_owners": [
+    "G5",
+    "G6",
+    "G9"
+  ],
+  "source_pins": [
+    {
+      "relative": "swdb/vector_reallocation_vcs.py",
+      "sha256": "4bba8a7885570b6228d383e9abcd1e40c85dbd0dbff75e24f170dd4556493340"
+    },
+    {
+      "relative": "swdb/vector_reallocation_inventory.py",
+      "sha256": "0a0474084a17b84788585a62a9e0b63b88eb43efd858101769db267579af5f07"
+    },
+    {
+      "relative": "swdb/heap_reallocation.mlw",
+      "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5"
+    }
+  ],
+  "source_semantics_equal_37_to6216": {
+    "PRELUDE_right_literal": true,
+    "heap_theory": true
+  },
+  "source_target_AST": {
+    "end_lineno": 126,
+    "lineno": 124,
+    "source_text_sha256": "9fcc3db8fc2f42ca8f3844b49f2553a85a0098b4f56bdffa61d165f57d8696f6"
+  },
+  "status": "PASSIVE DESIGN ONLY; actual retained query/task binding still pending; no production edits/transformation/tests/proofs",
+  "substitution_arguments": [
+    "entry",
+    "Heap::copy_int(h,b,bo+4*k,f,4*k)",
+    "r",
+    "o",
+    "b",
+    "bo",
+    "s",
+    "c",
+    "f",
+    "cap",
+    "k+1"
+  ],
+  "unchanged_full_antecedent": "t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s"
+}
