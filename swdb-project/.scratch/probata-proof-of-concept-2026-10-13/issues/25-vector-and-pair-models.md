@@ -306,9 +306,12 @@ checked parse-error stand-in. Final controls pass 39 cases with two actual-only
 targets skipped. Nonzero fill/postcondition, extra-write and omitted-prefix
 tampering refuse before launch; the full 27-target synthetic record passes
 normal reading and schema persistence with numeric/smoke reports. These are
-preparation controls, never actual proof evidence. Independent mapping review
-and a coordinator-admitted fresh one-record profile remain required; no
-successful first-pair formal run is repeated. Growth-domain repair and caller
+preparation controls, never actual proof evidence. Independent source/mapping review passes at clean `bb7170ac`: all 70 canonical
+payloads were reconstructed independently, all 51 retained references match,
+and the literal-zero specialization, complete source mapping and public
+record/deadline checks have no blocker. A coordinator-admitted fresh one-record
+profile and actual cold audit remain required; no successful first-pair formal
+run is repeated. Review: [source review](../evidence/t25-count-ctor-source-review-bb7170ac-20261016.md). Growth-domain repair and caller
 composition remain separate. See
 [preparation evidence](../evidence/t25-count-ctor-preparation-controls-20261016.json)
 and [preserved packet hashes](../evidence/t25-count-ctor-canonical-comparison-20261016.json).
