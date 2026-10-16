@@ -185,3 +185,10 @@ int8 region conversion and last-pair/ownership boundaries. Receiver/source initi
 state distinctions are recorded explicitly; no support is inferred from the
 noncacheable range comment. Source wrappers and public/formal admission remain
 open. [Exact evidence](../../evidence/t28-setup-state-controls-20261016.json).
+
+Size-version successor — 2026-10-16 ET:86/86 native controls preserve separate
+immutable metadata versions, deferred producer capture and later reuse, exact
+starting-tile updates and noncovering CPU size queries. Metadata physical bounds
+remain independent of the value prefix; initial valid/quiescent state is an
+explicit unadmitted correspondence domain. No public/actual acceptance is claimed.
+[Exact evidence](../../evidence/t28-size-state-controls-20261016.json).

@@ -1622,3 +1622,20 @@ negative, not an admitted-state failure. All raw checks and hashes are retained.
 No actual component or new counted run follows from these checks. Next: fresh
 all19helper no-hint/RTE component, with no function/property filters and complete
 ordinary/init/smoke inventory. Run26 remains UNPROVEN and ticket stays claimed.
+
+
+## Supported helper domains — 2026-10-16 00:44 ET
+
+Actual no-prover generation at frozen c9 produced245goals/352properties, including
+31initialization properties, but refused an undefined pointer_comparable builtin.
+The new exact-byte-reviewed freeze removes only eight redundant conjuncts while
+retaining live endpoints, same-base, array/range/init domains, ordering and
+pre-subtraction byte bounds. Executable C and TDStep postconditions are unchanged.
+[Review](../evidence/probata-t07-supported-domains-freeze-independent-review-20261016.md),
+[scope and residual alignment boundary](../prototype/07-wp-hints/SUPPORTED-DOMAINS-20261016.md).
+
+WP omits alignment/indirect-call RTE classes. The helper TU has direct named calls
+only; alignment remains an explicit source/caller correspondence limit. No full
+C RTE, helper proof or counted acceptance is claimed. The next separately reviewed
+generation must retain all19ordinary helper functions, every contextual bodyless
+call smoke and the exact capability warnings. No historical hints are imported.

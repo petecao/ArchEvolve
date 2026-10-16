@@ -46,14 +46,12 @@ extern const unsigned SWDB_CHUNK_SIZE;        /* knob: symbolic, 1 .. TILE_SIZE 
       VertexOffsets->end_size_ == VertexOffsets->start_ + num_nodes + 1 &&
       \object_pointer(VertexOffsets->end_capacity_) &&
       \base_addr(VertexOffsets->start_) == \base_addr(VertexOffsets->end_capacity_) &&
-      \pointer_comparable(VertexOffsets->start_, VertexOffsets->end_capacity_) &&
       VertexOffsets->end_size_ <= VertexOffsets->end_capacity_ &&
       \offset(VertexOffsets->end_capacity_) - \offset(VertexOffsets->start_) <= (integer)PTRDIFF_MAX * sizeof(SGOffset) &&
       gapbs_nodeid_span(parent->start_, num_nodes) &&
       parent->end_size_ == parent->start_ + num_nodes &&
       \object_pointer(parent->end_capacity_) &&
       \base_addr(parent->start_) == \base_addr(parent->end_capacity_) &&
-      \pointer_comparable(parent->start_, parent->end_capacity_) &&
       parent->end_size_ <= parent->end_capacity_ &&
       \offset(parent->end_capacity_) - \offset(parent->start_) <= (integer)PTRDIFF_MAX * sizeof(NodeID) &&
       gapbs_nodeid_span(g->out_neighbors_, num_edges);
