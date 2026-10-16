@@ -1127,3 +1127,21 @@ and [passive warning addendum](../evidence/t25-mac-typecheck-passive-warning-aud
 ## Qualified standalone backend preparation published — 2026-10-16 03:32 ET
 
 Exact01771a839893975bba389ee0adcbec2aecdb88ac is published through43d652b5 after [independent static PASS](../evidence/t25-qualified-backend-independent-review-01771a83-20261016.md). The distinct qualified model route now reaches the existing serial ordinary engine after canonical packet/subject hash/import membership and selected WP Typed/Machine source checks before every launch. Earlier304/d22 no-launch records remain historical. Qualified positive records cannot serve as original-v2 body contracts or C++ caller proofs; generic caller/lifetime/type/eligibility discharge stays unsupported/pending. Destructor broad pointer/free domain adds no element image restriction. Root40-pass profile is compiler/native metadata plus named Python Frama stand-ins; one synthetic20-target success remains synthetic.18 retained records/schema and941 report-reference pins match, not actual model proof evidence. [Root admission](../evidence/root-t25-017-native-control-admission-20261016.json) and [outer receipt](../evidence/root-t25-017-native-control-outer-20261016.json) retain explicit scope and prior direct-query refusal history. Source successor248 is excluded pending review. All actual import/task/body/caller/cleanup/dependency/fullticket gates remain open; status claimed.
+
+### 2026-10-16 ET — C++17 capacity and caller correspondence preparation
+
+The public lowerer now binds the prospective caller's exact-capacity witness to
+the actual admitted libc++22.1.8 constructor/allocation headers under C++17. It
+refuses changed language, macro, omitted-header, hash and physical-header inputs.
+This is implementation-specific correspondence, with no new caller premise and
+no assumption of the qualified C model's pending `capacity == count` postcondition.
+The composed Clang/native caller and pure canonical-packet profile passed 21/21
+in 59.96s (guard 60.72s, 371 MB, no OOM/timeout). Public capacity RED and all controls
+are retained in `evidence/t25-caller-capacity-controls-20261016.json`.
+
+Frozen017's separate backend static review is retained in
+`evidence/t25-qualified-backend-independent-review-01771a83-20261016.{md,json}`.
+It reports 7 source pins, 18 schema-valid scripted records and 941 report references
+with zero mismatches. Root-owned selected compiler/setup controls passed 40/40;
+all Frama processes in that profile were named stand-ins. No actual qualified
+model/caller proof or ticket acceptance checkbox is claimed by this preparation.
