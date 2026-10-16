@@ -28,7 +28,7 @@ def compiler_context(tool):
     return runtime_identity(tool)
 
 
-def run_model(tmp_path, body, *, exit_code=0, prelude='', commands=False, numeric=False, actions=False):
+def run_model(tmp_path, body, *, exit_code=0, prelude='', commands=False, numeric=False, actions=False, regions=False):
     spec = importlib.util.spec_from_file_location('dx_deferred_state', ROOT / 'deferred_state.py')
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
@@ -48,6 +48,11 @@ def run_model(tmp_path, body, *, exit_code=0, prelude='', commands=False, numeri
         header = module.render_header(header)
     if actions:
         spec = importlib.util.spec_from_file_location('dx_action_state', ROOT / 'action_state.py')
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        header = module.render_header(header)
+    if regions:
+        spec = importlib.util.spec_from_file_location('dx_region_state', ROOT / 'region_state.py')
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         header = module.render_header(header)
@@ -468,6 +473,55 @@ int main(void) {
   return 0;
 }
 ''', commands=True, numeric=True, actions=True)
+
+
+@pytest.mark.parametrize('end,exit_code', [(180,0),(230,42)])
+def test_region_assignment_uses_first_matching_id_and_f2_checks_the_complete_logical_span(tmp_path, end, exit_code):
+    result = run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset();
+  dxr_add(0,100,200); dxr_add(1,120,180); dxr_add(2,220,300);
+  assert(dxr_find(150) == 0); assert(dxr_find(250) == 2);
+  int assigned=dxr_assign(121);
+  assert(assigned == 0);
+  dxr_check_span(assigned,120,{end});
+  return 0;
+}}
+''', commands=True, regions=True, exit_code=exit_code)
+    assert result.stderr == ('region-footprint-correspondence' if exit_code else '')
+
+
+@pytest.mark.parametrize('base,index,bytes,address,exit_code', [
+    ('64','1073741824',4,'64',42), ('64','3',8,'88',0),
+    ('0xfffffffffffffffc','1',8,'4',0)])
+def test_raw_device_offset_wrap_is_defined_and_array_correspondence_is_a_separate_checked_domain(tmp_path, base, index, bytes, address, exit_code):
+    result = run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset();
+  assert(dxr_device_address(UINT64_C({base}),UINT32_C({index}),{bytes}) == UINT64_C({address}));
+  dxr_array_offset_correspondence(UINT32_C({index}),{bytes});
+  return 0;
+}}
+''', commands=True, regions=True, exit_code=exit_code)
+    assert result.stderr == ('index-offset-correspondence' if exit_code else '')
+
+
+@pytest.mark.parametrize('separate,exit_code', [(0,0),(1,42)])
+def test_logical_region_assignment_never_shrinks_the_full_physical_store_line(tmp_path, separate, exit_code):
+    result = run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset(); dxm_claim_tile(0,2,4); dxm_claim_tile(1,3,4);
+  if ({separate}) {{ dxr_add(0,64,68); dxr_add(1,96,100); }}
+  else {{ dxr_add(0,64,128); }}
+  unsigned store=dxr_prepare(0,2,64,64,68,4,0,4,0,64,128);
+  dxc_bind(store,dxm_constant(1));
+  unsigned read=dxr_prepare(1,1,96,96,100,0,8,0,8,96,100);
+  dxc_bind(read,dxm_constant(2));
+  dxc_cpu_memory_access(1,96,100,0);
+  return 0;
+}}
+''', commands=True, regions=True, exit_code=exit_code)
+    assert result.stderr == ('device-memory-footprint-conflict' if exit_code else '')
 
 
 def test_failed_cas_expected_and_desired_values_do_not_enter_gather_history(tmp_path):

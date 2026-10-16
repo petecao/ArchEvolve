@@ -98,3 +98,30 @@ paths and library0.1 remain unchanged. Public proof, source mapping, complete
 call/type and tile-image acceptance remain open. Readiness still permits
 unbounded polling: termination needs a separate source/trust-bound progress
 domain; no extra wait or desired-postcondition assumption has been introduced.
+
+## Region/address successor — 2026-10-15 ET
+
+`region_state.py` follows `MAA.cc:200-241`: registration has the source's
+one-sided overlap refusal and lookup returns the first containing ID. F2 checks
+the complete logical span against the base-selected ID, including earlier-ID
+interference. The preparation bridge checks logical membership before invoking
+command stalls and preserves the separate full physical hazard span. Distinct
+logical regions inside one physical store line therefore retain a conflict;
+registration never shrinks a physical write footprint.
+
+The raw indirect-address helper reproduces `IndirectAccess.cc:492-494` with the
+int32 word-size ABI from `IndirectAccess.hh:113`: uint32 multiplication wraps
+before widening, and unsigned64 Addr addition can wrap too. The ordinary-array
+no-offset-wrap condition is a separate checked correspondence obligation. It is
+not source UB, an assumed equation, or a strengthened original-unit precondition.
+Object/translation/Addr and physical-line correspondence remain separate.
+
+Final43/43 native controls pass in15.30s at209,747,968B peak, with43 rehashed
+native/compiler/header receipts and no pin errors. Three new RED profiles are
+retained. An intermediate38-case run changed the test file after collection;
+it is excluded from exact-source acceptance. The final43-case source was held
+stationary. [Exact evidence](../../evidence/t28-region-address-controls-20261015.json).
+Source public wrappers, reserved six MMIO regions and full geometry/type/ABI
+bindings remain incomplete; no production proof or current0.2claim is made.
+The approved prospective progress rule is an explicitly owned environment
+assumption, pending human freeze review59, not a proved source liveness fact.

@@ -126,3 +126,14 @@ allows zero forever, so mandatory polling termination remains unproven until a
 source/trust-bound progress domain is established. No extra wait or desired
 postcondition is assumed. All acceptance boxes stay open and status stays
 **claimed**. [Exact successor evidence](../evidence/t28-deferred-actions-numeric-controls-20261015.json).
+
+Region/address successor — 2026-10-15 ET:43/43 native prototype controls retain
+source registration/first-ID lookup and F2 logical footprint checks separately
+from physical store-line hazards. The raw address helper preserves defined
+unsigned product/Addr wrap; the array correspondence guard is a caller obligation,
+not source UB or a new original-unit precondition. Complete MMIO setup/source
+wrappers/typed storage and public proofs remain open. A prospective finite-progress
+environment assumption has explicit maintainer ownership and pending59freeze
+review; current demonic readiness remains without a termination claim. All boxes
+stay open and status stays **claimed**.
+[Exact evidence and intermediate-run exclusion](../evidence/t28-region-address-controls-20261015.json).
