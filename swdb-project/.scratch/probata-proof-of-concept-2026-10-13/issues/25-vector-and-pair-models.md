@@ -34,11 +34,12 @@ composition and byte/partial-store translation remain unsupported.
 
 Twenty-one compiler-free public preparation/runner controls pass after merging
 integration `f439edf0`; no formal tool has been launched. The first runner review's
-four findings are fixed, with final independent review and coordinator admission
-pending. Actual WP33 import syntax, imported proposition/task hypotheses and all
+four findings are fixed and final independent review passed at `024db66c`
+(29 retained pins verified, zero mismatches). Coordinator admission is pending. Actual WP33 import syntax, imported proposition/task hypotheses and all
 mapped results remain unvalidated. This is not a model-body proof record or a
 completed acceptance item. Evidence:
-`../evidence/t25-heap-capability-preparation-20261015.json`.
+`../evidence/t25-heap-capability-preparation-20261015.json`; final review:
+`../evidence/t25-capability-final-review-v5-024db66c.md`.
 
 ## Acceptance
 
