@@ -1,0 +1,232 @@
+{
+  "created": "2026-10-16 ET",
+  "verdict": "PASS_EXACT_SOURCE_EQUIVALENCE_PREPARATION_ONLY",
+  "source_commit": "a20f7a98fd3906983e989765a2dae492866189ed",
+  "base_commit": "ca1a3067f10e6110f09c1c6751411388039b0538",
+  "independent_static_checks": {
+    "path": "/private/tmp/probata-t25-copy-establish-and15-independent-static-checks-a20f7a98-20261016.json",
+    "sha256": "cc2ce39e397962b12d86d589f189b9d3d478e6e5b8b952124cb32df2f8cfba0c",
+    "bytes": 22885
+  },
+  "source_and_evidence_pins": [
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-copy-establish-and15-preparation-20261016.json",
+      "git_blob": "868e351ee4c80e5c972c6624dee46e48f78bb74f",
+      "sha256": "d51c7dac55142843465b17e3f94f96509d2b97f776343f038f79ab035b0cdb81",
+      "bytes": 5462
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/issues/25-vector-and-pair-models.md",
+      "git_blob": "2936f314b8f6869534534823b02d941261996225",
+      "sha256": "405a18f0815c1f31a5ea31a792470aa7bc4c67a10a54392d2ef8f1acfbeb5ab2",
+      "bytes": 116711
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-acceptance-coverage-20261016.md",
+      "git_blob": "749872bb763e2f5d7e3258e237b4c9735da98256",
+      "sha256": "81c92e1f42953d2547ef725632ef3ecc6d277995e63032cd6d98f09189d1e719",
+      "bytes": 12396
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-copy-establish-and15-20261016.md",
+      "git_blob": "29e33e53ce8ce9b79c45e4a1a04390a9ee52a2e9",
+      "sha256": "ce44b6538c356ea6300bb2dddf4a64615b7371f1f6cceb11be7675ec8729b995",
+      "bytes": 2770
+    },
+    {
+      "path": "swdb-project/swdb/vector_reallocation_inventory.py",
+      "git_blob": "970352ec8709dd62253211119fc3db6cc47960ef",
+      "sha256": "0a0474084a17b84788585a62a9e0b63b88eb43efd858101769db267579af5f07",
+      "bytes": 7516
+    },
+    {
+      "path": "swdb-project/swdb/vector_reallocation_vcs.py",
+      "git_blob": "ab19ecaa6f19ad41d48957495fca45cbc4f6d172",
+      "sha256": "4bba8a7885570b6228d383e9abcd1e40c85dbd0dbff75e24f170dd4556493340",
+      "bytes": 34176
+    },
+    {
+      "path": "swdb-project/tests/fixtures/proof/vector-reallocation-copy-establish-046f.json",
+      "git_blob": "ec1000ef80ce6a6d8daa6a40ed18be398825d9dc",
+      "sha256": "8ea0623d7f1a482664e0f201b6e652d2aeff61fdc6f13bdb98bf86a1f3b009c7",
+      "bytes": 5875
+    },
+    {
+      "path": "swdb-project/tests/test_vector_reallocation_caller_packets.py",
+      "git_blob": "6dc6a2629cf16f3593c6e3f2b7aa6696a5f619ea",
+      "sha256": "7f920019db4faef236801f20a53abd78ab94a9f4af0ed3f9084c524369b9a24c",
+      "bytes": 6759
+    },
+    {
+      "path": "swdb-project/tests/test_vector_reallocation_conjunctions.py",
+      "git_blob": "5f69f8de43145cf7222983077edd0db5c7909b26",
+      "sha256": "ceb1703b57d75bd0431e73d1ea55afe70ecdcf56c30c67cadaf18a45a9e70739",
+      "bytes": 7156
+    },
+    {
+      "path": "swdb-project/tests/test_vector_reallocation_packets.py",
+      "git_blob": "4b9ff32faf6e515b120277e1dfe235fd0926bd50",
+      "sha256": "2d22e067cd02cd0fbbe83b4ffa60a774d26d1d09b5cc03f463188b1867d948a3",
+      "bytes": 9773
+    },
+    {
+      "path": "swdb-project/tests/test_vector_reallocation_view.py",
+      "git_blob": "c91cc4f92e12cd868ae11518ea3013058088b398",
+      "sha256": "04c65ec467c4b0a46efb5b2a6dbfabb515decf59ae3a36e80e5b82e47dc4be68",
+      "bytes": 6677
+    }
+  ],
+  "physical_evidence_refs": [
+    {
+      "path": "/private/tmp/probata-t25-and15-preparation-red-v1-20261016/result.json",
+      "bytes": 534,
+      "sha256": "85a407783f09e8d1cd4fb02596c37693de76cfa9d930c4056f0da3c6f9a2d57c"
+    },
+    {
+      "path": "/private/tmp/probata-t25-and15-preparation-red-v1-20261016/controls.log",
+      "bytes": 356,
+      "sha256": "12bbd8ff7a26ad1670ae623343f6eee7656dc9365671a77950fbd8d966b243ca"
+    },
+    {
+      "path": "/private/tmp/probata-t25-and15-final-pure-controls-v1-20261016.py",
+      "bytes": 2057,
+      "sha256": "f7c81bb044a4a66a15242993fbcc6ba7dc4b4364dfe8e86f48030f5ea35b84e0"
+    },
+    {
+      "path": "/private/tmp/probata-t25-and15-final-pure-controls-v1-20261016/result.json",
+      "bytes": 5624,
+      "sha256": "e0dfb0406087cdd3c9299b8ba99e90ee82d597181b39f885a049bf6787e64a29"
+    },
+    {
+      "path": "/private/tmp/probata-t25-and15-final-pure-controls-v1-20261016/controls.log",
+      "bytes": 4499,
+      "sha256": "67d440fe2c39ce3fb931452401a9a6c9d3254c5a23991344680853f87d94b504"
+    },
+    {
+      "path": "/private/tmp/probata-t25-grow24-partial-metadata-root-execution-v2-20261016.json",
+      "bytes": 1037522,
+      "sha256": "4802f8d15009dd47443652cdc2a0f3accd72419eba24dca2c17172cd22bd5376"
+    },
+    {
+      "path": "/private/tmp/probata-t25-copy-establish-definition-analysis-v1-046f6b9e-20261016.json",
+      "bytes": 11924,
+      "sha256": "a7461f3068ad656e6b268d42754f42c78589604347326066de789bbf2cdaa504"
+    }
+  ],
+  "current_model_identity_reconstructed": {
+    "id": "vector-reallocation-domain-3",
+    "sha256": "81ac91a345a3e9e5420f3629525dc8e3f87d26ebfe0fe516ef1864634eebb742"
+  },
+  "findings": [],
+  "equivalence": {
+    "law": "forall x. (A(x) implies AND_i C_i(x)) iff AND_i forall x. (A(x) implies C_i(x));15 finite conjuncts, complete A unchanged",
+    "terms": 15,
+    "all_outer_quantifiers_unchanged": true,
+    "full_antecedent_unchanged": true,
+    "new_premises": [],
+    "sibling_theorem_dependencies": [],
+    "simultaneous_substitution": {
+      "entry": "entry",
+      "h": "Heap::allocate(entry,cap,a)",
+      "r": "r",
+      "o": "o",
+      "b": "b",
+      "bo": "bo",
+      "s": "s",
+      "c": "c",
+      "f": "Heap::fresh_id(entry)",
+      "cap": "cap",
+      "k": "0"
+    },
+    "only_nested_quantifier": "j local to final parenthesized uninitialized-tail conjunct; absent from A and all substitution arguments",
+    "source_definition": {
+      "path": "swdb-project/swdb/vector_reallocation_vcs.py",
+      "begin": 1576,
+      "end": 2314,
+      "sha256": "ac8e672f38914c8161b9735b1a50e6df3b77b3d133769b09b008193c260cd9dc",
+      "container_sha256": "4bba8a7885570b6228d383e9abcd1e40c85dbd0dbff75e24f170dd4556493340",
+      "conjuncts": 15,
+      "substitution": {
+        "entry": "entry",
+        "h": "Heap::allocate(entry,cap,a)",
+        "r": "r",
+        "o": "o",
+        "b": "b",
+        "bo": "bo",
+        "s": "s",
+        "c": "c",
+        "f": "Heap::fresh_id(entry)",
+        "cap": "cap",
+        "k": "0"
+      },
+      "nested_local_name": "j"
+    },
+    "original_reference_input_SHA256": "cac2722ab4199a0862b64192b5e91e43fd3a6260593cb32f7cc2312e06e5e435",
+    "actual046_query_predicate_materialized_binding": {
+      "negated_final_goal_ast_sha256": "3c267828fd152c2528522d90875b12d7396c7f533f7bea16bf06dd80971e58e4",
+      "predicate_definition_digest": "a70ae02bb0821ca2fc6ab7561a6a32394febcaab9e76936207d6359fc4cf4020",
+      "query_sha256": "13f8fb1e5bacd8695f4fe70bd08a9d55c609567c80ec0344481ddccb2da72b52",
+      "same_original_A": true,
+      "solver_timeout_cause": "No unsupported solver-cause inference. This is exact definition/AND proof-structure decomposition.",
+      "source_to_actual_variables": {
+        "a": "i",
+        "b": "i1",
+        "bo": "i2",
+        "c": "i3",
+        "cap": "i4",
+        "entry": "heap",
+        "o": "i5",
+        "r": "i6",
+        "s": "i7"
+      },
+      "task_submission_bytes_attested": false
+    },
+    "actual_materialized_query_count": 6,
+    "actual_submission_bytes_attested": false
+  },
+  "source_preservation": {
+    "changed_production_modules": 2,
+    "other23grow_inputs": "18 independently reconstructed from frozen literal source+5 prior projection inputs preserved by identical formula/lemma-source AST and PRELUDE; baseline fixture matches actual046 input hashes",
+    "heap_theory_original_qualified_C_and_contracts": "unchanged; model/std_models/theory source bytes unchanged046, target text PRELUDE unchanged",
+    "source_loop_init_owners": "all15grow.copy.establish leaves plus grow.numeric",
+    "reference_only": "old whole C target is under references, canonical receipt retained, absent from executed obligation rows and not imported as a theorem",
+    "runtime_flags_readers_engine_setup": "unchanged from base; none of the source delta opens a proof/caller route"
+  },
+  "prospective_counts": {
+    "grow": 38,
+    "reserve": 44,
+    "constructor": 30,
+    "destructor": 11,
+    "caller_pending": 96,
+    "caller_current_proof_records_admitted": 0
+  },
+  "caller_boundary": {
+    "da2518_commit_is_ancestor": false,
+    "caller_production_modules_unchanged_from_base": true,
+    "ordinary_contract_identity": "pending",
+    "proof_admission": "unsupported",
+    "all_required_model_proof_refs": null
+  },
+  "verification": {
+    "retained_author_preparation_cases": 33,
+    "new_test_functions": 7,
+    "existing_packet_cases": 26,
+    "retained_boolean_cases": 65536,
+    "reviewer_reran_tests": false,
+    "public_native_schema_38run_48syntheticGoal_1smoke_controls_executed": false,
+    "compiler_native_formal_SSH_by_reviewer": false,
+    "production_functions_or_generators_executed_by_reviewer": false,
+    "repo_or_source_mutated": false
+  },
+  "limits": [
+    "The reusable transformer is a limited closed-source lexical/scope/substitution transformation, not a general ACSL parser, type checker or source-C++ soundness theorem. The exact valid frozen definition and substitution were independently inspected.",
+    "No successor compiled WP task/import/hypothesis equivalence or proof result has been established. Existing G596 remains10producer-positive/copy.establish timeout/13unexecuted; no solver-cause inference.",
+    "Updated native/public/schema controls remain unexecuted for this source. Root must admit them and any15-leaf diagnostic separately; even15successful leaves cannot replace fresh complete38 public proof and full ordinary/RTE/init/smoke/task/source/resource cold closure.",
+    "Constructor30 and destructor11 target bytes are unchanged, but current source/model identity differs. No old proof/model/caller/original-v2/ticket promotion is granted."
+  ],
+  "proof_acceptance": false,
+  "complete_model_acceptance": false,
+  "original_v2_acceptance": false,
+  "caller_acceptance": false,
+  "ticket_closure": false
+}
