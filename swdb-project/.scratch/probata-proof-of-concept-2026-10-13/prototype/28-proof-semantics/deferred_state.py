@@ -44,6 +44,7 @@ static uint64_t dxm_missing_numeric_binding(unsigned dtype, unsigned op, uint64_
    Native controls enumerate it. It is not a candidate entry precondition. */
 struct dxm_node {
   unsigned kind, issuer, cell, count, settled, dtype, op, left, right, otherwise, extent, event_start;
+  unsigned byte_count, byte_parent[8], byte_shift[8];
   uint64_t value, history[DXM_HISTORY];
   uint64_t issue_values[DXM_CELLS];
   unsigned issue_initialized[DXM_CELLS];
@@ -216,15 +217,27 @@ static void dxm_publish(unsigned id,uint64_t value) {
   DXM_CHECK(!dxm_nodes[id].settled, "immutable-action-result");
   dxm_nodes[id].value=value; dxm_nodes[id].settled=1;
 }
+static unsigned dxm_bytes(const unsigned *parents,const unsigned *shifts,unsigned count) {
+  DXM_CHECK(count == 4 || count == 8, "image-width-domain");
+  DXM_CHECK(dxm_count < DXM_NODES, "node-capacity");
+  unsigned id=dxm_count++;
+  struct dxm_node *n=&dxm_nodes[id];
+  n->kind=7; n->byte_count=count; n->settled=0;
+  for (unsigned i=0; i<count; ++i) {
+    DXM_CHECK(parents[i] < id && shifts[i] < 8, "image-producer-version-domain");
+    n->byte_parent[i]=parents[i]; n->byte_shift[i]=shifts[i];
+  }
+  return id;
+}
 static void dxm_cover(unsigned id) {
   DXM_CHECK(id < dxm_count, "node-domain");
-  DXM_CHECK(DXM_NODES > 0 && DXM_NODES <= UINT_MAX/8, "node-capacity-domain");
+  DXM_CHECK(DXM_NODES > 0 && DXM_NODES <= UINT_MAX/20, "node-capacity-domain");
   unsigned stack[DXM_NODES], phase[DXM_NODES], depth=1, steps=0;
   stack[0]=id; phase[0]=0;
   /* Explicit DFS: immutable parent IDs strictly decrease. Conditions settle
      before choosing a branch; unused operands have no evaluation side effect. */
   while (depth) {
-    DXM_CHECK(steps++ < 8*DXM_NODES, "evaluation-step-capacity");
+    DXM_CHECK(steps++ < 20*DXM_NODES, "evaluation-step-capacity");
     unsigned frame=depth-1, i=stack[frame];
     struct dxm_node *n=&dxm_nodes[i];
     if (n->settled) { --depth; continue; }
@@ -238,6 +251,8 @@ static void dxm_cover(unsigned id) {
     } else if (n->kind == 4 && phase[frame] < 2) {
       parent=phase[frame] == 0 ? n->left : (dxm_nodes[n->left].value ? n->right : n->otherwise);
       ++phase[frame]; visit=1;
+    } else if (n->kind == 7 && phase[frame] < n->byte_count) {
+      parent=n->byte_parent[phase[frame]++]; visit=1;
     }
     if (visit) {
       DXM_CHECK(parent < i, "acyclic-producer-version");
@@ -269,6 +284,12 @@ static void dxm_cover(unsigned id) {
         n->value=candidates[pick];
       } else if (n->kind == 5) {
         n->value=0;
+      } else if (n->kind == 7) {
+        n->value=0;
+        for (unsigned j=0; j<n->byte_count; ++j) {
+          uint64_t byte=(dxm_nodes[n->byte_parent[j]].value >> (8*n->byte_shift[j])) & UINT64_C(255);
+          n->value |= byte << (8*j);
+        }
       } else {
         DXM_CHECK(n->kind == 4, "value-node-kind-domain");
         n->value=dxm_nodes[dxm_nodes[n->left].value ? n->right : n->otherwise].value;
