@@ -99,6 +99,36 @@ def test_public_caller_lifetime_plan_derives_local_history_without_global_pointe
     assert all(row['status'] == 'pending' and not row['dependencies'] for row in rows.values())
 
 
+def test_public_lower_binds_scalar_capture_cleanup_and_unreachable_fallthrough(tmp_path):
+    result=lower(SOURCE,'vector_realloc_v3_safe',tmp_path)
+    candidate=result['vector_reallocation_candidate']
+    lifecycle=candidate['lowered_lifetime']
+    assert lifecycle['verdict']=='checked source order; semantic proof pending'
+    assert lifecycle['normal_return_cleanup_count']==1
+    assert lifecycle['unreachable_fallthrough_cleanup_count']==1
+    assert lifecycle['order']==['automatic declaration','constructor','data capture','reserve',
+                                'guarded scalar capture','destructor','return scalar','automatic lifetime end']
+    assert lifecycle['return_scalar_before_destruction'] is True
+    assert lifecycle['raw_alias_rewritten'] is False
+    raw=Path(result['c_lowering']['path']).read_bytes()
+    for event in lifecycle['events']:
+        span=event['lowered_source']
+        assert hashlib.sha256(raw[span['begin']:span['end']]).hexdigest()==span['sha256']
+    assert candidate['known_origins_granted']==[]
+
+
+def test_public_caller_lifetime_duties_bind_the_actual_lowered_scope_events(tmp_path):
+    result=lower(SOURCE,'vector_realloc_v3_no_growth',tmp_path)
+    candidate=result['vector_reallocation_candidate']
+    duties={row['id']:row for row in candidate['heap_lifetime_plan']['obligations']}
+    assert [event['event'] for event in duties['local.begin.storage']['lowered_events']]==['automatic declaration']
+    assert [event['event'] for event in duties['local.end.aliases']['lowered_events']]==[
+        'destructor','return scalar','automatic lifetime end']
+    assert [event['event'] for event in duties['caller.guard.nonempty']['lowered_events']]==['guarded scalar capture']
+    assert all(row['status']=='pending' and not row['dependencies'] for row in duties.values())
+    assert candidate['heap_lifetime_plan']['incoming_pointer_maps_restricted'] is False
+
+
 @pytest.mark.parametrize('function', ['vector_realloc_v3_safe', 'vector_realloc_v3_no_growth'])
 def test_defined_native_caller_observations_match_original_cpp_after_public_lower(tmp_path, function):
     """Finite source controls only; the stale branch is never executed."""

@@ -16,6 +16,23 @@ Actual WP/task closure and caller composition remain pending, and original v2
 call lowering remains unchanged. See
 [prospective public-view evidence](../../evidence/t25-qualified-public-view-preparation-20261016.json).
 
+The coordinator then admitted and ran the exact-01771a83 detached 40-control
+profile, including the existing native metadata/helper/report compilation
+boundary. All 40 passed in 95.71 seconds with source clean before/after; every
+Frama invocation was an explicit Python stand-in. This separate result preserves
+the earlier denied attempt and establishes no scientific proof. See
+[root-owned controls](../../evidence/t25-qualified-public-view-root-controls-01771a83-20261016.json).
+
+The caller successor binds the complete actual lowered declaration, constructor,
+alias capture, reserve, guarded scalar capture, destructor and return order.
+Exactly one destructor executes on normal return; the generated fallthrough
+destructor is unreachable. The closing scope token is an anchor for storage end
+on return, not a claim that the token itself executes. All ten pending local
+lifetime duties now retain these physical spans. Nineteen composed Clang/native
+and pure packet controls pass after two genuine missing-binding REDs; no origin,
+ownership fact or source-image/lifetime theorem is granted. See
+[lowered lifetime controls](../../evidence/t25-caller-lowered-lifetime-controls-20261016.json).
+
 The public candidate names are `std_vector_int_realloc_v3_` followed by
 `ctor_count_value`, `grow`, `reserve` or `dtor`. The earlier preparation freezes'
 `swdb prove --model` records the
