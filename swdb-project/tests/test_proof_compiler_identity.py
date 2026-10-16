@@ -4,14 +4,38 @@ External compiler/report stand-ins exercise admission only. Synthetic reports
 never establish a theorem. No installed compiler or parser is modified.
 """
 import hashlib
+import os
 from pathlib import Path
 import shlex
+import shutil
 import subprocess
 import sys
 
 import pytest
 
 from test_proof_setup import wp_setup
+
+
+def test_public_lowering_accepts_a_bare_compiler_command_under_path(tmp_path, monkeypatch):
+    from conftest import run_swdb
+    from swdb import c_lowering
+    selected = c_lowering.locate().command
+    real = [shutil.which(selected[0]) or selected[0], *selected[1:]]
+    directory = tmp_path / "compiler-bin"
+    directory.mkdir()
+    command = directory / "clang++"
+    command.write_text("#!/bin/sh\nexec " + shlex.join(real) + ' "$@"\n')
+    command.chmod(0o755)
+    monkeypatch.setenv("PATH", str(directory) + os.pathsep + os.environ.get("PATH", ""))
+    monkeypatch.setenv("SWDB_CLANG", "clang++")
+    _driver, wrapper = _compiler(tmp_path)
+    source = tmp_path / "identity.cc"
+    source.write_text("int identity_unit(int n) { return n; }\n")
+    output = tmp_path / "lowered"
+    result = run_swdb("lower", "--source", source, "--function", "identity_unit",
+                      "--out", output, "--format", "json", env={"SWDB_CLANG": str(wrapper)})
+    assert result.returncode == 0, result.stderr + result.stdout
+    assert "return n;" in (output / "identity_unit.c").read_text()
 
 
 def _compiler(tmp_path, optional_failure="parser"):
@@ -38,7 +62,7 @@ if "-print-resource-dir" in args:
 if "-###" in args:
     print(shlex.join([{str(driver)!r}, "-cc1", args[-1]]), file=sys.stderr)
     sys.exit(0)
-os.execv({real[0]!r}, {real!r} + args)
+os.execvp({real[0]!r}, {real!r} + args)
 ''')
     driver.chmod(0o755)
     wrapper = root / "wrapped-clang++"
@@ -87,9 +111,9 @@ def test_unresolvable_frontend_refuses_even_a_freshly_pinned_method(tmp_path, mo
     if trace == "opaque":
         text = text.replace('"-cc1"', '"opaque-job"')
     elif trace == "multiple":
-        text = text.replace('    sys.exit(0)\nos.execv',
+        text = text.replace('    sys.exit(0)\nos.execvp',
                             f'    print(shlex.join([{str(driver)!r}, "-cc1", args[-1]]), file=sys.stderr)\n'
-                            '    sys.exit(0)\nos.execv')
+                            '    sys.exit(0)\nos.execvp')
     elif trace == "missing_binary":
         text = text.replace(repr(str(driver)) + ', "-cc1"', repr(str(driver) + "-missing") + ', "-cc1"')
     else:
