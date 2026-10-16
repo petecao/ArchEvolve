@@ -41,6 +41,26 @@ completed acceptance item. Evidence:
 `../evidence/t25-heap-capability-preparation-20261015.json`; final review:
 `../evidence/t25-capability-final-review-v5-024db66c.md`.
 
+### First admitted import failure and stage-order repair — 2026-10-15 ET
+
+The coordinator admitted exact `024db66c` on node1/lane610 with the reviewed v2
+entry. Canonical 42 packets, nine selected executable hashes/versions, two WP
+artifact hashes, three package bindings and absent ambient WP settings passed.
+The first actual Frama-C command exited 1 during initial parsing: `Library Heap
+not found` / `no such type Heap::heap`. No generated goal inventory exists; this
+is a retained capability failure, not an accepted negative or body proof. The
+whole guarded command naturally exited 1 in 1.941s, peak 166,588,416 bytes, without
+OOM/timeout; source remained unchanged and the lane released.
+
+The command configured `-wp-library` only after the first `-then`; initial parsing
+already imports the heap. The minimal repair supplies the identical pinned path
+before the first input parse, retaining it in the later WP phase. A real public
+plan RED fails on the old phase ordering; all 22 compiler-free controls then pass.
+The heap semantics, all 42 targets, source/event map, original model bytes and
+result policy are unchanged. Independent diff review and a fresh admitted actual
+replay remain required. Evidence: `../evidence/t25-first-import-failure-v1-20261015.json`
+and `../evidence/t25-import-stage-repair-controls-20261015.json`.
+
 ## Acceptance
 
 - [ ] Each modeled member has a C function and an ACSL contract citing the standard's clause for it (`[vector]` for vector members). `swdb prove` proves every contract against its C function once, recorded with subject "a library entry's summary".
