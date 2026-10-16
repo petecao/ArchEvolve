@@ -256,3 +256,29 @@ Helper ensures/assigns remain explicit source-certified Extern assumptions, not 
 Root's pinned [v5 passive reader execution](../evidence/t28-selector-cold-readers-execution-v5-770df40e-20261016.json) reports6005 pin checks/2589 files/zero errors; [settlement](../evidence/t28-selector-root-settlement-v1-770df40e-20261016.json) reports471 checks and all146 raw files/17,364,662B stable twice. The independent reviewer locally checked171 manifest pins,66 exact770 source-policy blobs,11 primary sources and complete two-record CSV/property/goal attribution, without remote rehash, compiler/formal/native/probe/SSH calls. Nine primary sources are reported equal on Linux/Mac; two additional source references are local only. Raw remains remote. Guard exit0/156.995s/1,811,578,880B; outer159.017s/1,864,515,584B, no recorded OOM/timeout. Three finite settlement sweeps and absent leases do not establish universal current process absence.
 
 All failed attempts remain unchanged: original21edG615 pre-WP method mismatch (launcher0/local pretty-printer1/actual guard1); passive reader v1 owner-context refusal, v3b wrong smoke-normalization demand, v4b CSV implicit-property/predicate-payload refusal. Local zero-byte v3/v4 JSON receipts and stderr are pre-SSH wrapper failures, distinct from v3b/v4b. V5's unchanged-policy pure correction has100 retained controls and needs no formal rerun. [Preservation manifest](../evidence/t28-selector-770-closeout-preservation-manifest-20261016.json) binds byte-identical archived readers/reviews/metadata. Later integration source changes do not upgrade the immutable770 producer. Status stays claimed;35 resolved/25 ready-for-agent/3 claimed overall.
+
+
+## First stateful fresh-SPD size preparation — 2026-10-16 ET
+
+Source7e64298fd1d81359e8db586883243b31d57bef3b binds one unchanged
+`get_tile_size(0)` caller to actual header/ABI/original AST/frozen preprocessing,
+volatile-load/fence/MMIO operations and pinned SPD constructor byte projection.
+Its explicit synthetic core0/configured boot epoch is a recorded maintainer-owned
+environment/source-model premise pending Yan-Ru59, never arbitrary-caller or
+physical-boot freshness. All64 read bytes derive ordinary constructor assignments;
+no desired-result original-unit precondition/axiom is inserted. Other25 names
+remain explicitly refused in the complete26-name/27-declaration fixture;0.1 is
+unchanged. Same-AST caller and getter gates reject macro/string lures, including
+source UB hidden by optimization; a coherently rehashed getter-fence mutation is
+rechecked before launch.
+
+Final compiler/native/scripted controls pass34 with3actualSKIP (75.57s/341MB),
+then4 post-integration controls pass (26.88s/345MB). Named exit99 records stay
+not_proven/tool_crash, with no actual stateful verifier execution. See
+[evidence packet](../evidence/t28-size-first-vertical-controls-20261016.md) and
+[obligation map](../prototype/28-proof-semantics/size-first-gate.md). An inert
+Linux correct0/wrong1 entry,353-source allowlist and explicit method/runtime
+closure are prepared; pure runtime refusal controls retain RED6fail/4pass and
+GREEN10pass. Root owns independent review/publication/fresh preflight/actual
+admission. Actual source-model agreement, remaining interface/state transitions,
+production current0.2 and all whole-ticket acceptance boxes remain open.

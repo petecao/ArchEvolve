@@ -212,7 +212,10 @@ def check(library, entry_id, data, error):
                 error("calls", f"inventory call {name} has no call row (every call the inventory found needs a "
                                "contract)")
     texts = _files(library, data, error)
-    malformed_layout = not dx100_source_selector.check_layout(data, texts, error)
+    from swdb import dx100_size_source
+    malformed_layout = not dx100_size_source.check(library, data, texts, error)
+    if not dx100_size_source.size_layout(data):
+        malformed_layout = not dx100_source_selector.check_layout(data, texts, error) or malformed_layout
     if len(texts) < 4 or malformed_overloads or malformed_instances or malformed_layout:
         return []
     return _typecheck(library, entry_id, data, texts, error)
@@ -223,11 +226,12 @@ def acsl_source(data, texts, rows=None, *, constants=None):
     call's (and query's) contract on its prototype. `rows` limits it to some call or query rows."""
     parts = [f"#define {name} {value}" for name, value in (data.get("constants") or {}).items()]
     from swdb.dx100_source_selector import pure_layout
+    from swdb.dx100_size_source import size_layout
     parts.append("#include <stdint.h>")
     state, _objects = _model_state(data, texts["model.state"], constants or data.get("constants") or {},
                                    constant_table=True)
-    if pure_layout(data):
-        parts.append(state)  # Empty comment-only state; no empty/nested ACSL ghost or logic block.
+    if pure_layout(data) or size_layout(data):
+        parts.append(state)  # Closed plain C state; no empty/nested ACSL ghost or logic block.
     else:
         parts += ["/*@ ghost"]
         parts += [f"  {decl};" for _name, decl in ghost_declarations(texts["ghost.acsl"])]
@@ -345,7 +349,8 @@ def _files(library, data, error):
         return texts
     ghost = ghost_declarations(texts["ghost.acsl"])
     from swdb.dx100_source_selector import pure_layout
-    if not ghost and not pure_layout(data):
+    from swdb.dx100_size_source import size_layout
+    if not ghost and not pure_layout(data) and not size_layout(data):
         error("ghost.acsl", "the ghost file declares no ghost array")
     for key in ("model.state", "model.c"):
         for name, _decl in ghost:
@@ -433,6 +438,10 @@ def lowering_options(library):
                             if 'definition' in v else v for v in variants]
                      for name, variants in instances.items()}
         semantics['template_instances'] = instances
+    from swdb import dx100_size_source
+    semantics['source_definitions'] = {r['call']: dx100_size_source.policy(library,r['definition'])
+        for data in current(library).values() if dx100_size_source.size_layout(data)
+        for r in data.get('calls',[]) if r.get('supported') is True}
     return {"summaries": dict(covered), "semantics": semantics}
 
 
@@ -457,7 +466,8 @@ def contract_names(library, entry_id, called):
 
 def _model_state(data, text, constants, *, constant_table=False):
     from swdb.dx100_source_selector import pure_layout
-    if pure_layout(data):
+    from swdb.dx100_size_source import size_layout
+    if pure_layout(data) or size_layout(data):
         return text, ()
     return _bounded_state(text, constants, constant_table=constant_table)
 
@@ -552,7 +562,8 @@ def state_draws(library, entry_id, defines=()):
     """The device-state elements the harness draws from the oracle at the start (havoc): tile elements."""
     data = library.get(entry_id)
     from swdb.dx100_source_selector import pure_layout
-    if pure_layout(data):
+    from swdb.dx100_size_source import size_layout
+    if pure_layout(data) or size_layout(data):
         return []
     constants = _constants(data, defines)
     return [f"dx_tile_data[{t}][{k}]" for t in range(int(constants["DX_NT"])) for k in range(int(constants["DX_TS"]))]
