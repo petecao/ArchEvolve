@@ -1749,3 +1749,10 @@ Root accepts complete changed-source20Typed-helper discharge only:260ordinaryVal
 ## Active checkpoint — 2026-10-16 10:06 ET
 
 See [settled producers and passive evidence](../evidence/frontier-settled-producers-checkpoint-20261016-1006.md) and its exact-pin ledger. Ticket remains claimed; existing acceptance criteria and dependencies are unchanged. Original exits, pending proof/cold/source gates and historical trust boundaries are preserved.
+
+
+## Active scoped checkpoint — 2026-10-16 10:36 ET
+
+Weak generation cold is independently reconciled only:85/176,50 exports+35 internal; line39 pointer-slot internalValid differs from the empty-result nontrivial payload goal. All21 smokes remain unattempted; conditional Typed/From/alignment residuals are not discharged. Root reports exactbd two-TU/six-root proof diagnostic started about10:34 ET/session25220,780s active/760s internal/8GiB, no accepted result. [Static review](../evidence/t07-device-diagnostic-proof-independent-static-review-v2-20261016.md), [weak review](../evidence/t07-device-weak-independent-cold-review-v1-20261016.md), [root admission](../evidence/t07-device-diagnostic-proof-root-admission-v1-20261016.md). Originalnormal exit1 remains. No source/Init/lifetime/allocator/TD/count or ticket acceptance.
+
+[Current checkpoint](../evidence/frontier-scoped-checkpoint-20261016-1036.md). Counts35resolved/25ready/3claimed; lastfulltable10:30 ET, next11:00 ET.

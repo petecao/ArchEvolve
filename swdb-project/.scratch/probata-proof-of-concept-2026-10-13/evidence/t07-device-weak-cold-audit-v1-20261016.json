@@ -1,0 +1,186 @@
+{
+  "date_ET": "2026-10-16",
+  "status": "PASSIVE_GENERATION_METADATA_ONLY",
+  "summary": {
+    "date_ET": "2026-10-16",
+    "status": "COMPLETE_WEAK_GENERATION_EXPORT_METADATA_RECONCILED",
+    "goals": 85,
+    "properties": 176,
+    "ordinary": 64,
+    "smoke": 21,
+    "initialization_properties": 2,
+    "native_rows": 85,
+    "backend_tasks": 50,
+    "internal_closures": 35,
+    "normalized_snapshots": 3,
+    "bodies": 1,
+    "direct_calls": 10,
+    "extern_properties": 54,
+    "dependency_edges": 85,
+    "dependency_graph_acyclic": true,
+    "additional_exact_warning_blocks": 6,
+    "capability_warnings": 2,
+    "raw_files": 176,
+    "raw_unchanged": true,
+    "retained_normal_66_files_and_cold304_unchanged": true,
+    "normal_replayed": false,
+    "controls": 8,
+    "slot_goal": {
+      "goal": "typed_swdb_device_pipeline_safe_assert_rte_initialization",
+      "property": "swdb_device_pipeline_safe_assert_rte_initialization",
+      "function": "swdb_device_pipeline_safe",
+      "line": 39,
+      "smoke": false,
+      "passed": true,
+      "targets": [],
+      "results": [
+        "valid"
+      ]
+    },
+    "payload_goal": {
+      "goal": "typed_swdb_device_pipeline_safe_assert_rte_initialization_2",
+      "property": "swdb_device_pipeline_safe_assert_rte_initialization_2",
+      "function": "swdb_device_pipeline_safe",
+      "line": 39,
+      "smoke": false,
+      "passed": false,
+      "targets": [],
+      "results": []
+    },
+    "slot_trivial": true,
+    "payload_trivial": false,
+    "slot_export_present": false,
+    "payload_export_present": true,
+    "goal_status_observations": [
+      {
+        "smoke": true,
+        "passed": true,
+        "results": "",
+        "count": 21
+      },
+      {
+        "smoke": false,
+        "passed": true,
+        "results": "valid",
+        "count": 35
+      },
+      {
+        "smoke": false,
+        "passed": false,
+        "results": "",
+        "count": 29
+      }
+    ],
+    "actual_generation_seconds": 47.1179103750037,
+    "later_proof_maximum_seconds": 780,
+    "aggregate_generation_plus_max_proof_seconds": 827.1179103750037,
+    "proof_acceptance": false,
+    "smoke_attempt_evidence": false,
+    "Typed_applicability_discharged": false,
+    "Init_source_lifetime_TD_count_qualified": false,
+    "reader_sha256": "01b24b55cbc5236cad5a1ea8ea1bae861168a5f755509214b115cdc57257b8c8",
+    "actual_entry_sha256": "9d3a70f0a4f6700521c9122421309f72119be8f156d60652e583fc24808b7f03",
+    "root_receipt_sha256": "7046d3b67192c94c6c99466196a61e4e32ba7a44832d53c779e316f11a7dd27a"
+  },
+  "references": [
+    {
+      "path": "/private/tmp/probata-t07-device-weak-cold-audit-v1-20261016.md",
+      "bytes": 4107,
+      "sha256": "a76d464593734ab424b5e49d33f938cb1cd5a38a9cc907f053d8765e22452733"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-weak-cold-reader-v1-20261016.py",
+      "bytes": 10787,
+      "sha256": "01b24b55cbc5236cad5a1ea8ea1bae861168a5f755509214b115cdc57257b8c8"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-weak-cold-v1-20261016.log.summary.json",
+      "bytes": 1918,
+      "sha256": "597bf122aa7b1e818e6ad84a16dbbc0cbd4129706f629055c4aef57c2fb96b2a"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-weak-cold-v1-20261016.log",
+      "bytes": 2039,
+      "sha256": "6c33dea3eb6f543308e3f498fa3a2a25add702b1ae9c447cf0bcb1d6462b0eca"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-weak-cold-v1-20261016.log.wait.json",
+      "bytes": 274,
+      "sha256": "5dead09743ad9237ef4f074269f33b3d24db19837de143563b5aacfc68c48be2"
+    },
+    {
+      "path": "/private/tmp/probata-root-t07-device-weak-generation-execution-v1-20261016.json",
+      "bytes": 4221,
+      "sha256": "7046d3b67192c94c6c99466196a61e4e32ba7a44832d53c779e316f11a7dd27a"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-weak-continuation-independent-static-review-v2-20261016.md",
+      "bytes": 3150,
+      "sha256": "6e3510afbaa0d9ed2c554651985dbe227f67d81e671d1d01c73e101dc769f106"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-weak-continuation-independent-static-review-v2-20261016.json",
+      "bytes": 4072,
+      "sha256": "8978e24fb0a006d6b3c1dba0c63d12db9527b20f32ffd4788ebf4c7c58a1cafc"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "/private/tmp/probata-t07-device-weak-cold-v1-20261016/backend-closure.json",
+      "bytes": 40949,
+      "sha256": "d2e3b0a50e642ec8013849b4b1389cd55897c8d5589b7a6bcc01309d07f13ec9"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-weak-cold-v1-20261016/controls.json",
+      "bytes": 689,
+      "sha256": "a7ee5a8ce70f6b30adc85df817f679de73bcb81722a1bd53aa1efd1c194c8331"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-weak-cold-v1-20261016/exact-slot-versus-payload.json",
+      "bytes": 47294,
+      "sha256": "f3b87f6b6b5ea6dcd3e44c56fef4a492aca129e9cc88e74862cd46873feb88a1"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-weak-cold-v1-20261016/extern-properties.json",
+      "bytes": 34471,
+      "sha256": "9df7d567e6894376051e53beed65d8d926a4e6601c24cb328fb251ce5998c21f"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-weak-cold-v1-20261016/native-census.json",
+      "bytes": 3478,
+      "sha256": "5919c2fbad03deb3d70ca925eac0fb6ae220c89f97b76545e8fec7982dbe1080"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-weak-cold-v1-20261016/property-census.json",
+      "bytes": 1180,
+      "sha256": "8066f53f871152afbdf66be443304a7752adc16b24dea4f88cca978b8ddfb055"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-weak-cold-v1-20261016/retained-raw-after.json",
+      "bytes": 31169,
+      "sha256": "a9e3213f81a336b8718c73b88e7b18559746f2048eb11b77e0082abdb83d70d1"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-weak-cold-v1-20261016/retained-raw-before.json",
+      "bytes": 31169,
+      "sha256": "a9e3213f81a336b8718c73b88e7b18559746f2048eb11b77e0082abdb83d70d1"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-weak-cold-v1-20261016/source-operation-goals.json",
+      "bytes": 472994,
+      "sha256": "53621a77d663e2f73f47e2d2b0d0cf21ab418f1d1f533c22b867dc48a22ab22e"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-weak-cold-v1-20261016/summary.json",
+      "bytes": 2311,
+      "sha256": "446615adf2aacbcb9cdca21224a05ebfd660e1ec63644a4e7011b52efc0efc2d"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-weak-cold-v1-20261016/warning-census.json",
+      "bytes": 6956,
+      "sha256": "4ff96d0d38292c44fee31df61a3237d95e6be49eea7b5666fb2f42a0a03e5801"
+    }
+  ],
+  "proof_acceptance": false,
+  "normal_replayed": false
+}

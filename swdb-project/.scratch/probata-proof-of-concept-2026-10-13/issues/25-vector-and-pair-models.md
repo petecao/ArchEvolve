@@ -1416,3 +1416,10 @@ See [settled producers and passive evidence](../evidence/frontier-settled-produc
 
 
 Independent source-equivalence review passes exacte2326954; merged3a48da2f incorporates current published08e5236b and preserves identical production/library/tests/records/schema/vocabulary bytes. All15 full-premise leaves reconstruct the original source invariant, and other37 grow inputs remain exact. The focused15 diagnostic is inert and independently reviewed separately; no actual successor proof or public52 workflow result is claimed. See `../evidence/t25-copy-step-and15-independent-source-review-e2326954-20261016.md`.
+
+
+## Active scoped checkpoint — 2026-10-16 10:36 ET
+
+Publishedc25195b8 retains exact3a48 full-A copy-step AND15 preparation. Root3 scripted public controls pass52 runs/62synthetic goals/one smoke/two schema-valid records; no formal proof. Constructor35 passiveV1 refuses a cross-leaf duplicate native short goal; tiny capture retains distinct initialization/integer properties and originalproducer unchanged. Leaf-scoped collector repair and full task/hypothesis cold remain pending. [Workflow controls](../evidence/t25-grow52-scripted-public-root-result-v1-20261016.json), [focused static review](../evidence/t25-copy-step15-independent-static-review-v3-3a48da2f-20261016.md), [constructor refusal](../evidence/t25-ctor35-metadata-root-refusal-v1-20261016.json), [duplicate capture](../evidence/t25-ctor35-cross-leaf-duplicate-metadata-v1-20261016.json). No model/body/caller/original-v2/ticket promotion.
+
+[Current checkpoint](../evidence/frontier-scoped-checkpoint-20261016-1036.md). Counts35resolved/25ready/3claimed; lastfulltable10:30 ET, next11:00 ET.
