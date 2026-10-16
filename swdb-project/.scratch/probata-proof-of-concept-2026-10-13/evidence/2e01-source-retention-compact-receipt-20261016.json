@@ -1,0 +1,60 @@
+{
+  "date_et": "2026-10-16",
+  "status": "root-executed source retention; local metadata passively checked by author",
+  "root_execution": {
+    "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/2e01-source-retention-root-v1-20261016.json",
+    "bytes": 11380,
+    "sha256": "4e5ac97637f207168a3050a9fd0be228b1bebdeae55c63d7c0fb3077a9105dd5"
+  },
+  "preparation": {
+    "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/2e01-source-retention-preparation-v1-20261016.json",
+    "bytes": 6384,
+    "sha256": "b5123535b79e22a1cfd7d71ecf264a56ee579582ca391be8566798f43643ae94"
+  },
+  "source_commit": "2e01d27d0aea7f3c2056d3abb06600b4cefa29be",
+  "source_removed": "/data1/yanruj/probata-reviewed-2e01d27d",
+  "source_files": 10130,
+  "source_payload_bytes": 1606735882,
+  "retention_ref": "refs/probata/retained-source/2e01d27d",
+  "restore_argv": [
+    "git",
+    "-C",
+    "/data1/yanruj/ArchEvolve",
+    "worktree",
+    "add",
+    "--detach",
+    "/data1/yanruj/probata-reviewed-2e01d27d",
+    "2e01d27d0aea7f3c2056d3abb06600b4cefa29be"
+  ],
+  "remote_preservation_directory": "/data/yanruj/EvolveSWDB_runs/probata-clean-source-retention-2e01d27d-v1-20261016",
+  "remote_saved_manifest_pins": {
+    "cold-reader-preservation-pin.json": {
+      "bytes": 773,
+      "sha256": "d9bdb3fab4f32f5491f4b232028adfe156b2319c05ce23b7a81583f25f7865f6"
+    },
+    "raw-preservation-manifest.json": {
+      "bytes": 236154,
+      "sha256": "4dc192416a61ddbebe06b42ba24a353e66311ed510a7f0cddefc966a37bafa8d"
+    },
+    "restoration.json": {
+      "bytes": 1157,
+      "sha256": "80ea08e1a6f1f9c898b3a73c10d31b7f3fa599af8add4829ac151ed74e03d12f"
+    },
+    "source-tree-manifest.json": {
+      "bytes": 6559810,
+      "sha256": "a87717ed750480195fccb2bcf858172f223d629fae0f72db71d0bc01799f9017"
+    }
+  },
+  "raw_roots": [
+    "probata-reviewed-2e01d27d-t25-qualified-dtor11-public-v1",
+    "probata-reviewed-2e01d27d-t25-qualified-grow21-public-v1"
+  ],
+  "raw_entries": 1001,
+  "raw_unchanged": true,
+  "reclaimed_bytes": 1635606528,
+  "free_bytes_after_observed_retention": 24672038912,
+  "finite_scans": 6,
+  "primary_head_branch_status_unchanged": true,
+  "all_three_leases_released_before_after": true,
+  "scope": "Historical root observation only; not live host state. Clean obsolete source is reconstructable at its original path from reachable Git/ref and full saved manifests. Both raw trees/empty dirs/literal symlink targets remain preserved; raw links into source may need reconstruction to dereference. No author SSH/removal/raw rehash. No proof acceptance upgraded; grow21 remains partial; future046 ctor/reserve needs fresh source-bound records."
+}

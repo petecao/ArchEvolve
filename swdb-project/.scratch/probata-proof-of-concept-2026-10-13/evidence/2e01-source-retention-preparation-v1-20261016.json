@@ -1,0 +1,129 @@
+{
+  "date_et": "2026-10-16",
+  "status": "INERT; root sole execution; no author SSH or removal",
+  "baseline": {
+    "path": "/private/tmp/probata-root-retain-clean-e4-source-v1-20261016.py",
+    "sha256": "3924639ae72da207232f4633d8ad28a740f9197432c692a8aadbab3511d4bb9d",
+    "bytes": 9723
+  },
+  "remote_payload": {
+    "path": "/private/tmp/probata-retain-clean-2e01-source-remote-v1-20261016.py",
+    "sha256": "8d786140ef520abcccf33178da85b72a22eca65f3557ca35ce9bfcfdb234d545",
+    "bytes": 13866
+  },
+  "root_wrapper": {
+    "path": "/private/tmp/probata-root-retain-clean-2e01-source-v1-20261016.py",
+    "sha256": "6822b21672a41d3b213de14e8fde05665588bdd541afa7a7c6c81507b8f15901",
+    "bytes": 1370
+  },
+  "pure_controls": {
+    "path": "/private/tmp/test_probata_2e01_retention_inert_v1.py",
+    "sha256": "67addcc31c6c45a8962d83e7613638c287774d7bc4d2a3529896d8283725f35f",
+    "bytes": 4579
+  },
+  "controls_result": {
+    "passed": 19,
+    "pytest_seconds": 0.3,
+    "resources": {
+      "exit_code": 0,
+      "peak_rss_bytes": 47497216,
+      "out_of_memory": false,
+      "timed_out": false,
+      "wall_seconds": 0.5703909999574535,
+      "cpu_seconds": 0.37430199999999997
+    },
+    "retained": [
+      {
+        "path": "/private/tmp/probata-2e01-retention-pure-controls-v1/command.json",
+        "sha256": "aebfae25c4a6669aa834447e44da76e54169f1447ad9f81f181c47659e161ece",
+        "bytes": 331
+      },
+      {
+        "path": "/private/tmp/probata-2e01-retention-pure-controls-v1/control.log",
+        "sha256": "408093f06ea4ae7097cc84b8612de462ff0b91c8867a24307c55c4430a4a098f",
+        "bytes": 99
+      },
+      {
+        "path": "/private/tmp/probata-2e01-retention-pure-controls-v1/junit.xml",
+        "sha256": "9ab0b62f83a27e5788d37f372944c66bfd8754e70fbbe76de52b52af814e737a",
+        "bytes": 2787
+      },
+      {
+        "path": "/private/tmp/probata-2e01-retention-pure-controls-v1/resources.json",
+        "sha256": "cbc59a2fb7884896d4c2a81391e67598f0eab9907c0436a48d42e836519d52b8",
+        "bytes": 175
+      }
+    ]
+  },
+  "source": "/data1/yanruj/probata-reviewed-2e01d27d",
+  "source_commit": "2e01d27d0aea7f3c2056d3abb06600b4cefa29be",
+  "retention_ref": "refs/probata/retained-source/2e01d27d",
+  "published_ancestor_ref": "refs/remotes/origin/codex/probata-resume-20261015",
+  "preservation_directory": "/data/yanruj/EvolveSWDB_runs/probata-clean-source-retention-2e01d27d-v1-20261016",
+  "raw_selection": "All /data/yanruj/EvolveSWDB_runs/probata-reviewed-2e01d27d-* entries, with full membership/empty dirs/regular byte hashes/literal symlink targets before and after; no target traversal or raw writes/deletion",
+  "cold_ledgers": [
+    {
+      "scope": "complete dtor11 cold",
+      "local_root_execution": {
+        "path": "/private/tmp/probata-t25-dtor11-cold-root-execution-v1-20261016.json",
+        "sha256": "adc094a21ed920420db24894fbc9755495de5cf9fb2ab2d0aa65015a749c2568",
+        "bytes": 260133
+      },
+      "remote_audit": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-root-t25-dtor11-cold-v1-20261016/audit.json",
+        "bytes": 245045,
+        "sha256": "6a3665725399467bc115a4faf53dd32d046614e9363dcb70a73008a868663c22"
+      },
+      "physical_checks": 6097,
+      "integrity_errors": [],
+      "classification": "PASS_COMPLETE_DTOR11_COLD_EVIDENCE_UNDER_DECLARED_TCB"
+    },
+    {
+      "scope": "partial grow21 cold; not whole acceptance",
+      "local_root_execution": {
+        "path": "/private/tmp/probata-t25-grow21-partial-cold-root-execution-v1-20261016.json",
+        "sha256": "c789f0ccd40a87dec5e65dc92b884aba37dc7bdd26f34155431abba4c1ec65d6",
+        "bytes": 181032
+      },
+      "remote_audit": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-root-t25-grow21-partial-cold-v1-20261016/audit.json",
+        "bytes": 170279,
+        "sha256": "8415906c5e2e9b5e070a666950e0665b740f84f21c34b6e08666b9959f0cc31a"
+      },
+      "physical_checks": 5653,
+      "integrity_errors": [],
+      "classification": "PASS_PARTIAL_CLASSIFICATION_ONLY"
+    }
+  ],
+  "root_command": [
+    "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+    "/private/tmp/probata-root-retain-clean-2e01-source-v1-20261016.py",
+    "--root-execute"
+  ],
+  "budget": {
+    "ssh_controller_timeout_seconds": 60,
+    "remote_address_space_bytes": 8589934592,
+    "workers": 1,
+    "formal_jobs": 0
+  },
+  "pre_removal_gates": [
+    "exact detached commit, correct common Gitdir, published ancestry, clean no ignored/untracked/submodules",
+    "every tracked byte/type/executable bit equals Git and every blob already present; full physical membership exactly reconstructable",
+    "completed cold audit physical byte hashes pinned from root manifests",
+    "exact3globalleases all released; finite same-UID source cwd/argv and every matching raw cwd/prefix argv scans; unknown inspection denial refuses",
+    "durable full source/raw/cold manifests, dedicated verified ref, restoration recipe, fsync/readback BEFORE no-force git worktree remove",
+    "full source/raw byte/membership recheck and second finite source/raw process scans immediately before removal",
+    "raw full membership/bytes/link-target equality, primary HEAD/branch/status unchanged, leases released after removal"
+  ],
+  "mutation_boundary": [
+    "Only dedicated ref and new preservation output are created, then exact obsolete source removed with git worktree remove and no --force",
+    "No rm/rmtree/reset/clean/prune, no primary/c241/7e changes, no raw changes/deletion, no formal evaluation/probes"
+  ],
+  "recovery": "If interrupted/timeout/refusal, root must inspect source/ref/restoration/manifests/retention phase before any retry. No blind repeat. Reconstruct at original path with saved worktree-add argv from reachable dedicated ref/commit.",
+  "scope": "Reconstructable clean Git source only. Historical cold results unchanged; partial grow21 not upgraded. Link targets into removed source may require restoration; literal raw symlinks preserved. Finite scans are not atomic or universal reader exclusion. Future ctor/reserve/new046 requires fresh source-bound records. Live host state not verified by author.",
+  "root_recipe": {
+    "path": "/private/tmp/probata-2e01-clean-source-retention-root-recipe-v1-20261016.md",
+    "bytes": 2814,
+    "sha256": "0a2684cf65a7a794b301d9d993ece7cc86ce83dc961868c830560272b176b64f"
+  }
+}
