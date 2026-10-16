@@ -1,9 +1,9 @@
 # 28 — Proof semantics for the remaining maa_* calls
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-16 ET (user-requested stop and next-session handoff)
 **Type:** slice
-**Status:** claimed
+**Status:** ready-for-agent
 **Blocked by:** 27
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("DX100 proof semantics", "Concurrency" (history read), "What a proven verdict asserts" (the seven assumption kinds), "Testing Decisions", S1, S2); decisions: [12](../../formal-verification-2026-10-09/issues/12-dx100-proof-semantics.md), [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md), [14](../../formal-verification-2026-10-09/issues/14-dx100-wait-rule.md), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md)
 **Time estimate:** about 1 week
@@ -463,3 +463,40 @@ Initialized-u32 production remains byte-identical to reviewed source97. The only
 [Public V1 remains FAILED](../evidence/t28-initialized-u32-public-v1-independent-failure-reconciliation-20261016.md): one selected JUnit case, one assertion failure, no errors/skips. It failed the old unspaced substring after a named stand-in had persisted a `not_proven/tool_crash` record; the stand-in exited99, not an actual prover result. Root outer exit1/33.508934s/2,837,250,048B and c6 exit1/33.373201s/2,691.8125MiB retain no OOM/timeout or inspection events/failure/children. The retained three finite empty sweeps and absent leases are historical observations, not live host claims. The [independent failure reconciliation](../evidence/t28-initialized-u32-public-v1-independent-failure-reconciliation-20261016.json) preserves exact source/runtime/record/report pins and original failed exits. A fresh combined-source V2 workflow and formal pair are still inert pending root admission. No old failure is upgraded, and no native caller, body, hardware, current0.2 or full28 result is granted.
 
 Ticket remains claimed. [Current compact checkpoint](../evidence/combined-prefix-initialized-checkpoint-20261016-1134.md).
+
+## User-requested stop and released claim — 2026-10-16 ET
+
+Work is stopped at the user's request; the active claim is released to
+**ready-for-agent** for the next session. This supersedes historical "claimed"
+checkpoints above without changing their evidence or closing any acceptance box.
+Root owns final synchronization/merge to `yanrujhou_main`, map/dependency
+reconciliation and cleanup. No further implementation, test, compiler, native,
+formal or SSH work is authorized by this checkpoint itself.
+
+The [frozen stop inventory](../prototype/28-initialized-u32-stop-20261016/checkpoint-index.json)
+and [handoff](../prototype/28-initialized-u32-stop-20261016/README.md) preserve52
+existing compact artifacts, original V1 failure, narrow test RED/GREEN, cache
+controls, source policy and inert entry/command/packet. Initialized production97
+is unchanged. Combined candidate `e99d09b1` is published through `3ed7291f`; the
+worktree was fast-forwarded to `3ed7291f` before this checkpoint. The stored V2
+command still expects `e99d09b1` and must be deliberately repinned to root's
+chosen clean source, fresh raw namespace and complete runtime/consumer/config
+admission before execution. Runtime policy67804 remains a template, not a fresh
+admission. Original V1 public workflow remains **FAILED**, never upgraded.
+
+Public V2 is **UNREVIEWED / NOT ADMITTED / NOT EXECUTED**. Only a preliminary
+external initialized-u32711/1107 formal-pair harness exists; its entry, command,
+expected/runtime packet and whole-boundary review are **INCOMPLETE**. Do not run
+the preserved harness. Resume with independent V2 source/entry/cache review,
+then root-only fresh compiler/scripted-persistence admission requiring exactly
+one passing JUnit case/no skips. Only after that gate may the new formal-pair
+packet be finished/reviewed and separately admitted, coordinating one source
+freeze with ticket25 prefix10. No native caller, actual initialized proof,
+source/body/hardware/liveness/current0.2/full28 acceptance is claimed.
+
+Original public V1 raw and compiler-observation AST/LLVM/header provenance stay
+on the host at the exact paths in the inventory; no raw C/AST/LLVM/certificate or
+SMT payload was copied into this checkpoint. No author actual job, pending
+process session or owned lease is known. The last pure metadata-author guard
+settled11:35:25ET exit0 with no events/failures/unconfirmed children; this is
+historical settlement evidence, not a new live host census.
