@@ -1,0 +1,4110 @@
+{
+  "audit_directory": "/data/yanruj/EvolveSWDB_runs/probata-root-stream-method-capture-v1-20261016",
+  "manifest": {
+    "command.json": {
+      "bytes": 223,
+      "sha256": "49998d47c5bc7a7070f77d3015ab93d3bc46db2f7ac00f4e8c32da9289db062a"
+    },
+    "entry.py": {
+      "bytes": 44701,
+      "sha256": "916919c7a5ff52fe10e971d7e400e733daf1002fdfc13e86cecdf941387333cc"
+    },
+    "metadata.json": {
+      "bytes": 176422,
+      "sha256": "1059a8f03affe281215b295c67c06c4f292ea0718713bd176ae6b9c4314910d3"
+    },
+    "preflight.json": {
+      "bytes": 2535,
+      "sha256": "34ca18e9e8a8f30036126798a3ba9570e3b544d4106b0232d1134d4a85061510"
+    },
+    "resources.json": {
+      "bytes": 304,
+      "sha256": "cf4138ea8d6702cf4633d46da695e404aa94c1b10352c036599c006c069b1b42"
+    },
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "metadata": {
+    "checker_and_fixture_source_pins": [
+      {
+        "bytes": 47687,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/proof_setup.py",
+        "relative": "swdb/proof_setup.py",
+        "sha256": "256dd13eb4129403a18552e25dfd1ef7eef6c3fba306bb7066f62ce1e3d0b563"
+      },
+      {
+        "bytes": 12925,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/proof_report.ml",
+        "relative": "swdb/proof_report.ml",
+        "sha256": "8b84bec6a12669d877205ec60d46d149f41fa921d08b6640161b4896b9c4df16"
+      },
+      {
+        "bytes": 50399,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/proof.py",
+        "relative": "swdb/proof.py",
+        "sha256": "69980f5899cac87cb19f4044d3358372db3c16f8a5202773be816252aaa526cb"
+      },
+      {
+        "bytes": 67775,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/cbmc_adapter.py",
+        "relative": "swdb/cbmc_adapter.py",
+        "sha256": "d63b7f6547fa3b7655a59db0f26f1e0a957c7916bf8d9b7d77ef4142ef3e9a27"
+      },
+      {
+        "bytes": 29771,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/cbmc_equivalence.py",
+        "relative": "swdb/cbmc_equivalence.py",
+        "sha256": "07edb9685ec3cfa222c30800f80ea781d46816d5db797dfaf6e8b1e0dcd017dd"
+      },
+      {
+        "bytes": 11131,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/cbmc_product.py",
+        "relative": "swdb/cbmc_product.py",
+        "sha256": "df4af62add9747a5c107d314b9235d08de2d22d04265d6aedf30726516891fee"
+      },
+      {
+        "bytes": 87959,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/wp_adapter.py",
+        "relative": "swdb/wp_adapter.py",
+        "sha256": "7ca02fa61138f7854f45f9d519f4cd82263a9118933edd319ed9bafd86696d27"
+      },
+      {
+        "bytes": 35729,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/crux_adapter.py",
+        "relative": "swdb/crux_adapter.py",
+        "sha256": "29f212e6d0a79ac43864fa8684edaf0b12e2f555eebe381c12bd72e2af711768"
+      },
+      {
+        "bytes": 10331,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/rocq_adapter.py",
+        "relative": "swdb/rocq_adapter.py",
+        "sha256": "833c886a5b359d34e0a71489556403249c0ca8c0d15fa3c4a95940700729b45b"
+      },
+      {
+        "bytes": 7623,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/rss_watchdog.py",
+        "relative": "swdb/rss_watchdog.py",
+        "sha256": "8cbe4f803951cee080581862b69a0b7bf21e35c554dc5cfde4db7d9f2779e5b6"
+      },
+      {
+        "bytes": 3333,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/vocab.py",
+        "relative": "swdb/vocab.py",
+        "sha256": "c554826daf3cdcf215dee0ebfb71b09f52774c5c42ab3b61cbec0b3cf6679e43"
+      },
+      {
+        "bytes": 24152,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/formal_frame.py",
+        "relative": "swdb/formal_frame.py",
+        "sha256": "62bcbbdba7e9858bbfe59e83f59077c1a21dcfbc0e03ddd7ef0f2cf90cde4254"
+      },
+      {
+        "bytes": 25477,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/acsl_subset.py",
+        "relative": "swdb/acsl_subset.py",
+        "sha256": "59c1cb99afc9f5d10349e9ec53875da5962379c39365b2c38252388858b6efe8"
+      },
+      {
+        "bytes": 4763,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/framac.py",
+        "relative": "swdb/framac.py",
+        "sha256": "94db2a360fb0d29bf6f35f90b12f53b04e1a9a768139c88bbe8f7605fd8c2889"
+      },
+      {
+        "bytes": 31769,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/hint_check.py",
+        "relative": "swdb/hint_check.py",
+        "sha256": "9d3f3fc90219723ab9e4fca280dec773f1c954827f632cfc13087cfbd22d13aa"
+      },
+      {
+        "bytes": 10157,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/hint_tree.ml",
+        "relative": "swdb/hint_tree.ml",
+        "sha256": "b9ce42a7a7ae6f6ba896b563d0d1559802482cbcf6dcd77faa1a85cd75ce59e6"
+      },
+      {
+        "bytes": 63133,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/wp_pointer_bounds.py",
+        "relative": "swdb/wp_pointer_bounds.py",
+        "sha256": "7033e8e8338d0fc39a5359fd5ceff304842d9df7c8223cffef967246c5f530a0"
+      },
+      {
+        "bytes": 31405,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/proof_semantics.py",
+        "relative": "swdb/proof_semantics.py",
+        "sha256": "a91a321c820eda4e7620226d4e59a63135161cb0f79650f6671e68daac44a67f"
+      },
+      {
+        "bytes": 8098,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/dx100_interface.py",
+        "relative": "swdb/dx100_interface.py",
+        "sha256": "6e88200412cada2678d3f65f442d0cf11e39fecdb744fa490e6397e0e0d37cdf"
+      },
+      {
+        "bytes": 13018,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/dx100_source_selector.py",
+        "relative": "swdb/dx100_source_selector.py",
+        "sha256": "4c788c11a80c1478323229bba12997995dcad30699dc78d7085b52a14fc09190"
+      },
+      {
+        "bytes": 23156,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/dx100_size_source.py",
+        "relative": "swdb/dx100_size_source.py",
+        "sha256": "fe070713b91257d73a77112a7114c3ec049d2dc3ca8dbe0c1dfa6404c35a70f3"
+      },
+      {
+        "bytes": 25359,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/dx100_stream_source.py",
+        "relative": "swdb/dx100_stream_source.py",
+        "sha256": "28715eb5b7171244ca18027412db4e119d858812638ad32ce06dfe213c229e62"
+      },
+      {
+        "bytes": 12575,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/dx100_stream_model.py",
+        "relative": "swdb/dx100_stream_model.py",
+        "sha256": "4f512d0c51dbc4f72a7ed0cdf34e4b6ea850d736ca4ae1e35efe72ae850ab2ba"
+      },
+      {
+        "bytes": 27179,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/vector_ownership.py",
+        "relative": "swdb/vector_ownership.py",
+        "sha256": "58bf8bbd370cd735bb5eceb6e6c49a6f08e97d97b4c73207ca7fe8727c6c6595"
+      },
+      {
+        "bytes": 31815,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/vector_pipeline.py",
+        "relative": "swdb/vector_pipeline.py",
+        "sha256": "fc7c06e21b10b71a2b6ac89dca409f0fe6237b530286ace110f791b8d330e382"
+      },
+      {
+        "bytes": 6177,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/standard_model_view.py",
+        "relative": "swdb/standard_model_view.py",
+        "sha256": "a9b0ac93e830fa966114f0a853b638d93a2274f64cf48a0cd5fe14c1bd2774b1"
+      },
+      {
+        "bytes": 8085,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/array_domains.py",
+        "relative": "swdb/array_domains.py",
+        "sha256": "4ce7f64892b3e63c8dba65ef3c4f532e47842a287c38e0f5cc5f69d27e7780bd"
+      },
+      {
+        "bytes": 35548,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/model_domains.py",
+        "relative": "swdb/model_domains.py",
+        "sha256": "0abeb81edf3a7c92b0465d9a617ef272f85f9263cc50427e3e46a1743d51e17a"
+      },
+      {
+        "bytes": 13234,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/dx_array_domains.py",
+        "relative": "swdb/dx_array_domains.py",
+        "sha256": "ec8b1585fc64bb0a672f352a79cbfc1ed6e4ec03150bd438be93445855a5c5fe"
+      },
+      {
+        "bytes": 13198,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/bounded_entry_windows.py",
+        "relative": "swdb/bounded_entry_windows.py",
+        "sha256": "39354107afc0c96e075dbc8e0c321b1caad3086887254f5bb404dd6eb875fa58"
+      },
+      {
+        "bytes": 7907,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/bounded_chain.py",
+        "relative": "swdb/bounded_chain.py",
+        "sha256": "b63f7eb03e32c27ab8f27eaefbe9fe5fdc0e3b2aa5bcbfd998bb6022204bdf26"
+      },
+      {
+        "bytes": 12679,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/summary_bindings.py",
+        "relative": "swdb/summary_bindings.py",
+        "sha256": "1c5d99b99753eb8c92f039722c15ece12b488af99003047b7cc9b2a81b2a6100"
+      },
+      {
+        "bytes": 24757,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/helper_windows.py",
+        "relative": "swdb/helper_windows.py",
+        "sha256": "6ab445ad4ac32a1b72899f6debcf445c8afb7cd29d21503f21a2ab4a4bc145d5"
+      },
+      {
+        "bytes": 9006,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/standard_range_model.py",
+        "relative": "swdb/standard_range_model.py",
+        "sha256": "5c8d385b2e506c77db69cfc664b5d33dc2514cd14d09ef79a8a1810f4c16084f"
+      },
+      {
+        "bytes": 24407,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/nested_entry_reads.py",
+        "relative": "swdb/nested_entry_reads.py",
+        "sha256": "f194cc302cb20b2a4c5881699d756e0a7c301ad937098e0f244d0b6048cfbc11"
+      },
+      {
+        "bytes": 14444,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/standard_range_calls.py",
+        "relative": "swdb/standard_range_calls.py",
+        "sha256": "c6e6d076a7e0337736b0f84a2d1537f99db2b16c0e1ab50b35911c6eca384f4b"
+      },
+      {
+        "bytes": 41874,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/member_windows.py",
+        "relative": "swdb/member_windows.py",
+        "sha256": "e0966df226e758e588bc3f78e45def32bf0221dfdba9ff153a22f7e74cdc048d"
+      },
+      {
+        "bytes": 30455,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/stdlib_provenance.py",
+        "relative": "swdb/stdlib_provenance.py",
+        "sha256": "4a7ca7d9b05a992e8172125fcbbfd175bb7ade2aec47cfb349126c9739b6e8e4"
+      },
+      {
+        "bytes": 4978,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/stdlib_source_admission.py",
+        "relative": "swdb/stdlib_source_admission.py",
+        "sha256": "151d41a22f68fc07613657f6484a408444f49a519d612f792e053a2bb0b9d1b4"
+      },
+      {
+        "bytes": 23986,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/heap_model_view.py",
+        "relative": "swdb/heap_model_view.py",
+        "sha256": "52b41faefd37d585fb2c8ff15c82e74fb602c6063848ec7808cbea816ea44451"
+      },
+      {
+        "bytes": 15468,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/heap_model_packets.py",
+        "relative": "swdb/heap_model_packets.py",
+        "sha256": "805b00fe78373102b600506833f86c28fce2cf494baef7a68afd63641c1de185"
+      },
+      {
+        "bytes": 14470,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/heap_model_vcs.py",
+        "relative": "swdb/heap_model_vcs.py",
+        "sha256": "f20e0ec130222aeda96b4fbb8e72eef8d922d3f33e84077777203f7e6d159092"
+      },
+      {
+        "bytes": 5192,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/heap_bridge.mlw",
+        "relative": "swdb/heap_bridge.mlw",
+        "sha256": "5186c27f5a7a339352e3f62dc3a0d3efb1c7bd12f8a456cc61b0d7a52566638d"
+      },
+      {
+        "bytes": 375,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/heap_model_environment.ml",
+        "relative": "swdb/heap_model_environment.ml",
+        "sha256": "ba52941e7ab96a8ebbe4efdb8fde0c1b19daa3d6ccb8804efc87b027a68caf7b"
+      },
+      {
+        "bytes": 8185,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/vector_reallocation_model.py",
+        "relative": "swdb/vector_reallocation_model.py",
+        "sha256": "92ad23030531650924a51b0a3bd1abb479afa373a7d1dd2a543b9ae225ab8b89"
+      },
+      {
+        "bytes": 10760,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/vector_reallocation_calls.py",
+        "relative": "swdb/vector_reallocation_calls.py",
+        "sha256": "d1d7ea169a50b82d5545ab0a3fa02910849d944b9104a5839e0955dd5a283a95"
+      },
+      {
+        "bytes": 21588,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/vector_reallocation_vcs.py",
+        "relative": "swdb/vector_reallocation_vcs.py",
+        "sha256": "0ec4e168754b6f2ad1b6e659c4988855c89d2ae18fe8863eed39a290c1c706b1"
+      },
+      {
+        "bytes": 8386,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/heap_reallocation.mlw",
+        "relative": "swdb/heap_reallocation.mlw",
+        "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5"
+      },
+      {
+        "bytes": 6775,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/vector_reallocation_caller_vcs.py",
+        "relative": "swdb/vector_reallocation_caller_vcs.py",
+        "sha256": "e8e514a1208d6653e8ae424b37309a3ce299690050ecac2710aed580b9ab397a"
+      },
+      {
+        "bytes": 7323,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/vector_reallocation_inventory.py",
+        "relative": "swdb/vector_reallocation_inventory.py",
+        "sha256": "543e5523d6f05fad7f336ede476b85aa30e068dee8d07489f3a4351da54c75cf"
+      },
+      {
+        "bytes": 5207,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/vector_reallocation_view.py",
+        "relative": "swdb/vector_reallocation_view.py",
+        "sha256": "05eaa7414580b11a54b7f6ebf63db20b28fd6aea0c5de4da00fc70a3bd0c57d4"
+      },
+      {
+        "bytes": 3768,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/vector_reallocation_lifetime.py",
+        "relative": "swdb/vector_reallocation_lifetime.py",
+        "sha256": "d20ac49e7896ed47632ad05f6f0610caee805649da81d3f469da2b6237051159"
+      },
+      {
+        "bytes": 2235,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/vector_reallocation_capacity.py",
+        "relative": "swdb/vector_reallocation_capacity.py",
+        "sha256": "e4aa221acb78151895fa5c5d3cbdab6050b151b42a7096521a90fcdf3c95f617"
+      },
+      {
+        "bytes": 7619,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/tests/testkit/dx100_trust.py",
+        "relative": "tests/testkit/dx100_trust.py",
+        "sha256": "a5da4f079d300d2da9a4928c51c2d9713c03810706b8189ba213d8308a041d67"
+      },
+      {
+        "bytes": 8253,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/tests/testkit/dx100_stream.py",
+        "relative": "tests/testkit/dx100_stream.py",
+        "sha256": "e8ce7d867caeb2b0db032911952419d1d209578d5cd5511f3359b5c936c703df"
+      },
+      {
+        "bytes": 4037,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/tests/fixtures/proof/methods/contract-fixture-1.yaml",
+        "relative": "tests/fixtures/proof/methods/contract-fixture-1.yaml",
+        "sha256": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29"
+      },
+      {
+        "bytes": 63276,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/cbmc_translator.py",
+        "relative": "swdb/cbmc_translator.py",
+        "sha256": "61a25090b66a5bd86a332a600973a048d3f38936dea2c6a088c8456d53d2e4d3"
+      },
+      {
+        "bytes": 6226,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/vocab/proof_failure_classes.yaml",
+        "relative": "vocab/proof_failure_classes.yaml",
+        "sha256": "77d89f4528bcefb5dfc56184c1f7a4504402942b3beb84167fa15ebf0ec432ac"
+      },
+      {
+        "bytes": 1492,
+        "path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/vocab/proof_subject_kinds.yaml",
+        "relative": "vocab/proof_subject_kinds.yaml",
+        "sha256": "87170568275144921df5c4f79713fbcba5ac30c4f1154f8403ca20a6b3efe41d"
+      }
+    ],
+    "classification": "PASSIVE_STREAM_METHOD_SCHEMA_CAPTURE_ONLY",
+    "formal_rerun": false,
+    "no_model_state_source_LLVM_or_inline_bootstrap_payload": true,
+    "raw_manifest": {
+      "files": {
+        "acceptance.log": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "dispatch-argv.json": {
+          "bytes": 434,
+          "sha256": "8132415f1218ecf1bc2c4ca91c02b5658a63a706ed9daa6271a17cd62feba55b"
+        },
+        "dispatch.log": {
+          "bytes": 1952,
+          "sha256": "09f5f4d354e53147b143b3d16571583a12617fe0963a1a0e3c4f69c1f17f23d7"
+        },
+        "execute.py": {
+          "bytes": 1603,
+          "sha256": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612"
+        },
+        "lane.json": {
+          "bytes": 815,
+          "sha256": "93ec40b9c3816d16f9e6ff924c6b2cdf4331c46fa3dfb7ee6946e0b1b036252a"
+        },
+        "launch.json": {
+          "bytes": 87396,
+          "sha256": "e9f937e75a34c6a03fc322b5c6f00c58d941f62e0dc21ea456a90008c40db1aa"
+        },
+        "outer-resources.json": {
+          "bytes": 168,
+          "sha256": "a064020ea4d0e056158966f6d889cb5a58b25dde164dee8669335296e68a3dee"
+        },
+        "preflight.json": {
+          "bytes": 14036,
+          "sha256": "308f8d42f9a42d2fc98e3b68d08e6b92ef03c3b481125f2ad8003d7c1994e98a"
+        },
+        "resources.json": {
+          "bytes": 168,
+          "sha256": "7c52428827dcde72dc9f9486ccccb5dba0bbb0fccf2544033245e9a087856a3c"
+        },
+        "run.sh": {
+          "bytes": 1092,
+          "sha256": "b12a1e5c60d92335a20e867c07d1c8809037bcd78011710b38c6b89a9baaa725"
+        },
+        "runtime-provenance.json": {
+          "bytes": 3354,
+          "sha256": "4b7e16eed8932f62798def5d9c42f8b5e56b6842af3d62949eb9c4c52eef92a4"
+        },
+        "selected-stream-tool-metadata.json": {
+          "bytes": 80256,
+          "sha256": "71479e13d463cb5f3aee646b17f9bc901cd13a057214a224e1f7e7b5730d348b"
+        },
+        "source-after.json": {
+          "bytes": 112,
+          "sha256": "0b4cd17fe067f4dc20f04f1bfe68b85def5c4342dcaa3d980fe446b4d727bd8e"
+        },
+        "source-manifest.json": {
+          "bytes": 23589,
+          "sha256": "f51b71cea3b8fb2abb4d1f40d01b4a064a916dbcb281033d80e4297c83678085"
+        },
+        "stream-collection.json": {
+          "bytes": 514,
+          "sha256": "8abdb715443366904c7c9a7c279e62c31fbae8a0ead7dd9927c67ba903e9ddd3"
+        },
+        "stream-collection.log": {
+          "bytes": 208,
+          "sha256": "40a9fb293a49a8eae6c54cb35af73c8037a07554f96edd165c3bb4f5cce44cd4"
+        },
+        "stream-exec-argv.json": {
+          "bytes": 231,
+          "sha256": "9d1d1900e0f3999514196fe81b2185ea8faa2c1f8084ea41e75cb4c76a399d11"
+        },
+        "stream-profile/exit-code.txt": {
+          "bytes": 2,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "stream-profile/junit.xml": {
+          "bytes": 507,
+          "sha256": "f62e0bf462d084db7a7eace43690eb3c4d8b888f4bd677bfb7d25000f1e116d0"
+        },
+        "stream-profile/profile.txt": {
+          "bytes": 5,
+          "sha256": "677370b173692bf8cfe4303b41876625956be18d7d5d9144c368c9ae0d76980d"
+        },
+        "stream-profile/pytest.log": {
+          "bytes": 246,
+          "sha256": "35187211f6dabe085e910ccdbd0e58f64abbee5ddb2d17e9c1165353d3fb2a31"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/dx100/bc-forward-pass.patch": {
+          "bytes": 10915,
+          "sha256": "253739930fea295f6bb8754fe8b5df7f87515c5353b098f50389fcd7cebba07a"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/dx100/bc_read_offload.inc": {
+          "bytes": 4260,
+          "sha256": "3898b439b0121954474b5012ff2a6fff65bf90ba4166d20d8eb276a96d013b5c"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/dx100/bfs_read_offload.inc": {
+          "bytes": 3157,
+          "sha256": "3c5867a2b8919806f681603836bd0cff448f21634485abf84e49ed71f25515ef"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/dx100/certification/README.md": {
+          "bytes": 3798,
+          "sha256": "b0df07ee337ff8c1a83dcdb2f91038dcab2ac88b05a61c793f84bfe14d743e40"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/dx100/certification/bc_driver.inc": {
+          "bytes": 1528,
+          "sha256": "95f92ebc2943e713783d90ffe703982266239524380343a8035b89b425b6e3df"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/dx100/certification/bfs_driver.inc": {
+          "bytes": 1383,
+          "sha256": "ad9a5a647614000a0716075e0a4d661df9453b5ff9365db9d239bd1b06416d3a"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/dx100/certification/candidate_prelude.hpp": {
+          "bytes": 5432,
+          "sha256": "87da9d08f1d13ec5961a5999c377bca94d10fa86b0a7ed3b540a4ab9832d37ff"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/dx100/certification/record.cc": {
+          "bytes": 3852,
+          "sha256": "5095bcbac7e5f7b3e9b33533fc7c74dc664d8bb655c3dfbe92ffd2afed5d85b0"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/dx100/certification/seams.cc": {
+          "bytes": 6003,
+          "sha256": "483a6978acd86a3aa6e9e4c6a0b07eee728eabad85e2e60a9660fdbf2a9d89c3"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/dx100/certification/v1_4/bc_driver.inc": {
+          "bytes": 1713,
+          "sha256": "9034e2ad715fbabcd9fc0c842ad9c06543447eb9b476a9f3dc9014231043b1f4"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/dx100/certification/v1_4/bfs_driver.inc": {
+          "bytes": 1806,
+          "sha256": "6c104ea0227283599920c97d388026594434ceb74516d0fe82187e8f7e98ea8f"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/dx100/certification/v1_4/prelude.hpp": {
+          "bytes": 6496,
+          "sha256": "dd5d2917aa093b91c2abecd0ecb7221289d9e3b8e9469c506f2392ec6db7f079"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/dx100/certification/v1_4/record.cc": {
+          "bytes": 6239,
+          "sha256": "c0b0221c2080117761f82566c7801a457aa31d3dedd21ec2600670e61bdd4fa6"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/dx100/certification/v1_4/seams.cc": {
+          "bytes": 12876,
+          "sha256": "1a1deb79cff58ccae5ee5d9cc08bdae123c1c821b0a675e62d80c2033ec23eef"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/dx100/certification/v1_5/arena.hpp": {
+          "bytes": 4479,
+          "sha256": "0a85a60e9f514b755ee05e0daba683c32682c97b67a31f22c911c2591f33ce42"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/dx100/certification/v1_5/bc_driver.inc": {
+          "bytes": 1614,
+          "sha256": "b8dd9d52400551247a8daf2818e86ad49022bac30f51ac2b39cf30a42a36ef4b"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/dx100/certification/v1_5/bfs_driver.inc": {
+          "bytes": 1563,
+          "sha256": "8bb2ba0ab100fda0b73e39e667635f747378ce1b2a527228365a42a8d164eb3e"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/dx100/certification/v1_5/client.cc": {
+          "bytes": 5261,
+          "sha256": "f7917a984afd6b547c696f23300e1609400f4c045aefdb463a3987e8ae7a378c"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/dx100/certification/v1_5/client/MAA_functional.hpp": {
+          "bytes": 5797,
+          "sha256": "cce4deff6692bbc1175ac61eca1b03a532f620915e999fc0c5e0f08e6d624ec0"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/dx100/certification/v1_5/client_core.inc": {
+          "bytes": 7569,
+          "sha256": "b21188bb1067f3018ea2a0fa0bc2153b2177511800dbb211993c512369a352e8"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/dx100/certification/v1_5/evaluator.cc": {
+          "bytes": 9296,
+          "sha256": "89a025c0869bbebd155d7c207bed62dca669b35eb793a95d6c29950e482b695e"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/dx100/certification/v1_5/evaluator_context.hpp": {
+          "bytes": 1658,
+          "sha256": "3ff8432841d29f80aeec22df7be4a9330d7c6f2ab1f3578f3870e95516564fe0"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/dx100/certification/v1_5/evaluator_core.inc": {
+          "bytes": 7717,
+          "sha256": "d8a77bdb2b309e04c3acb27de7b8cb3547c45f53a09b2411d9997ee9eadd7ece"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/dx100/certification/v1_5/prelude.hpp": {
+          "bytes": 1050,
+          "sha256": "d77698926a5fb528e666def15b5220749ac4c11e9b421ba654d3294d334dc1cf"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/dx100/drivers/differential.cc": {
+          "bytes": 4707,
+          "sha256": "5a30fd75e7a23db709eb7e112d9202f46037cadc8b8c9d667ac472fd77f5e976"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/dx100/dxc_lowering.hpp": {
+          "bytes": 3153,
+          "sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/dx100/peter-section5.patch": {
+          "bytes": 8699,
+          "sha256": "cc99ca4d024983ab02c17f5db74db5210a7450968787ccad25562da4d9873cff"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/dx100/reference.hpp": {
+          "bytes": 1398,
+          "sha256": "75b80bc3d0027b1700e2fc1f075683e617d059ca4bbef761bfeb31839d9fa897"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/dx100/strict/MAA_functional.hpp": {
+          "bytes": 19587,
+          "sha256": "a24a81631c9365b114395bab65c73048269765a2862a98f4ccb4609eb80fbfa5"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/dx100/strict/gem5/m5ops.h": {
+          "bytes": 356,
+          "sha256": "b1eb7d074231782a943faa9cc249f6027152b6c727c5f70b71808e122e97867f"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/methods/dx100-stream-partial-fixture-v1.yaml": {
+          "bytes": 3774,
+          "sha256": "409f286936d8b10cccaecf447e73c60c750a89fba8a592f4721434baad74b843"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/proof_semantics/dx100_bfs/ghost.acsl": {
+          "bytes": 2740,
+          "sha256": "5fa3f12850eba75ccb254b1c1e8ab5c143488046949fbe0e4c965b55ecdb48e9"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/proof_semantics/dx100_bfs/logic.acsl": {
+          "bytes": 14346,
+          "sha256": "34c9971965b53e04cf5ef2dd66abeaecd4d8772660f47def86158bc47624351d"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/proof_semantics/dx100_bfs/model.h": {
+          "bytes": 20089,
+          "sha256": "88298dbb9176640fd8ec2d0c6e31386dd51849411b08df7cebf7f12eab1d22ce"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/proof_semantics/dx100_bfs/state.h": {
+          "bytes": 949,
+          "sha256": "b371131b4a3a7ef21ad654b0eaffac94b4c63252d63397ee8b67a6b017610701"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/proof_semantics/dx100_bfs_0_1.yaml": {
+          "bytes": 31989,
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/proof_semantics/dx100_trust_fixture.yaml": {
+          "bytes": 21412,
+          "sha256": "e190dc5b8734ed50c1cd58417d244771662eda47ef688051d2576f06e4825cb7"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/proof_semantics/one-u32-stream/CpuSidePort.cc": {
+          "bytes": 22141,
+          "sha256": "886a0c1bbd437916d2fac62a2aa194e01f6996fae65dc56241fad601c5f0103b"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/proof_semantics/one-u32-stream/IF.cc": {
+          "bytes": 23772,
+          "sha256": "fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/proof_semantics/one-u32-stream/IF.hh": {
+          "bytes": 5988,
+          "sha256": "9dee4c4803a1780a41fb30b760775169000785019e6f5848689fc3f3034a1795"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/proof_semantics/one-u32-stream/MAA.cc": {
+          "bytes": 72419,
+          "sha256": "058395cbd171ccf3746fb524967d2d205cb8d622d4aa06e8eef530b00dc21299"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/proof_semantics/one-u32-stream/SPD.cc": {
+          "bytes": 10059,
+          "sha256": "9e6bb3672be95954e8816c054b4032f95811a3085ca6df418aed90ad1e852b4a"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/proof_semantics/one-u32-stream/SPD.hh": {
+          "bytes": 5117,
+          "sha256": "70e02b0fea7693585fd9b8f318381c09e352df2fff58bb3f84021f4ea02e9737"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/proof_semantics/one-u32-stream/StreamAccess.cc": {
+          "bytes": 26166,
+          "sha256": "5fe78a94f0d690396cdfbcdd9b0082e57cbdb4a6b445a7282b2533a33852d47b"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/proof_semantics/one-u32-stream/StreamAccess.hh": {
+          "bytes": 4396,
+          "sha256": "9ac9feb68adb525ca2d5c7d6e9046b5b0e399ad4c63a718fcca8f78cd521a3ec"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/proof_semantics/one-u32-stream/Tables.cc": {
+          "bytes": 18963,
+          "sha256": "9bd8aa4103fb6e7617fdd4c514a917329b8e7b8345738ed6e5d82f818df7dfa6"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/proof_semantics/one-u32-stream/Tables.hh": {
+          "bytes": 4632,
+          "sha256": "5ea6a7caff7ca690aa9ce19096c0e686dfa52716e4dbf19d17348c9235011b43"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/proof_semantics/one-u32-stream/ghost.acsl": {
+          "bytes": 49,
+          "sha256": "cef6352ffe5ce76236ec837ef2f3015f98070c41b37a9455ef3c53c363e408fc"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/proof_semantics/one-u32-stream/logic.acsl": {
+          "bytes": 23,
+          "sha256": "b7f8c7f0b5a70cdcdf6ee864199c6d7b07bc2fed87e2fdeaafd6f0e770b0ceb8"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/proof_semantics/one-u32-stream/model.h": {
+          "bytes": 2417,
+          "sha256": "4a12723f504cab4b485e25d59e2ea2afbcc2bd0bd1af95281949351aefaf325b"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/proof_semantics/one-u32-stream/state.h": {
+          "bytes": 225,
+          "sha256": "ac91330aa6805bcb27f97b2460da48f702f43dca7a17c6dca0dc6083f567c45c"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/proof_semantics/pure-selector/ghost.acsl": {
+          "bytes": 37,
+          "sha256": "0dffdc2cb273e85b2675258948535f3ec0f8b46f8080dd1481967f3a61f78db9"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/proof_semantics/pure-selector/logic.acsl": {
+          "bytes": 23,
+          "sha256": "b7f8c7f0b5a70cdcdf6ee864199c6d7b07bc2fed87e2fdeaafd6f0e770b0ceb8"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/proof_semantics/pure-selector/model.h": {
+          "bytes": 61,
+          "sha256": "9d6474eeb40d96ddca0090b6e1375a9bd46e2e6aafd4f740cbe302f949338166"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/proof_semantics/pure-selector/state.h": {
+          "bytes": 38,
+          "sha256": "a57ee157e0975b44f2d3829b80ee82694f1d8ed66605fa811fc83999d3303a29"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/proof_units/gem5/m5ops.h": {
+          "bytes": 133,
+          "sha256": "4caae6752583fd058e911da16305fe5bebec0fa08d3242242af85494b2b90d7a"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/proof_units/trust.cc": {
+          "bytes": 290,
+          "sha256": "071df1d875e38dcccf798b9cfbdf9064f909c7220965f339936fd99d7dc79eab"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/library/rewrite_contracts/trust.yaml": {
+          "bytes": 1463,
+          "sha256": "d2b6ac9f3f5703f0edabf37e9ba7fc9db3b45a9edbb7a0e464ed4b815a564ba9"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/records/.swdb.lock": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/records/proofs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100311z.728432ae.yaml": {
+          "bytes": 12890223,
+          "sha256": "2e9f60fe560c57de8fde1753696b5aeade5d6b5aab7861efc3831fd4791d3fcd"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100311z.728432ae/adapter.log": {
+          "bytes": 1244,
+          "sha256": "58157eb69d0b8366c04a20404c13723e7dd68ec170c4f9d766878c283c8dafcd"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100311z.728432ae/wp/frama-c.log": {
+          "bytes": 7826,
+          "sha256": "d652292ed0d71701565a33c85550a567825c7a7f93c91a6c145e250cf140dc57"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100311z.728432ae/wp/trust_fixture.anchors.json": {
+          "bytes": 11878509,
+          "sha256": "14fe51af5604f6f400b65a2150beb3bc1c72f618674bcd94ac763feeaac61726"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100311z.728432ae/wp/trust_fixture.c": {
+          "bytes": 1159,
+          "sha256": "53aec727d01ec4d7cdd6dc67dd98ea34806c3231998aaab3784c14e393d07f7c"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100311z.728432ae/wp/wp-goals.json": {
+          "bytes": 13004,
+          "sha256": "a3f8bab886c42257e8db54989c4b4b3c95fcf509aae93414c9791bcf44e447a4"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100311z.728432ae/wp/wp-inventory.json": {
+          "bytes": 45300,
+          "sha256": "a6743a970cde8ee40e4654b827862a03e255b8646479d312052d8939085cd87a"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100311z.728432ae/wp/wp-normalized.c": {
+          "bytes": 12111,
+          "sha256": "e97feb47555332e763bfe625f6775093aa31293b1b122dad3507c4d206acba48"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100311z.728432ae/wp/wp-properties.csv": {
+          "bytes": 6051,
+          "sha256": "e10b2db61a94c9dece2fe298420111300cc8aa47ee9c22e67b20baa8dcbc71e2"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100311z.728432ae/wp/wp_input.c": {
+          "bytes": 4218,
+          "sha256": "e849a01e2ca42241fbcf71799c3df9fae9142eca916cc285d6a2a4b58647987a"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/scripted-why3.conf": {
+          "bytes": 206,
+          "sha256": "249b6d29567e6c83393d864b36ee6e2a69b8d8295d2c5b30975f2258fd62d738"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/t28-scripted-typechecker.py": {
+          "bytes": 326,
+          "sha256": "086086737b8265279d62ab91a9939e60d9854dc5579f23819f90d3e0cd69855e"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_0/t28-version-only-adapter.py": {
+          "bytes": 292,
+          "sha256": "8d3ecef793a003b4c08c7cdd6fa2dfa5d4063088377533e336b9067e29e35f45"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/dx100/bc-forward-pass.patch": {
+          "bytes": 10915,
+          "sha256": "253739930fea295f6bb8754fe8b5df7f87515c5353b098f50389fcd7cebba07a"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/dx100/bc_read_offload.inc": {
+          "bytes": 4260,
+          "sha256": "3898b439b0121954474b5012ff2a6fff65bf90ba4166d20d8eb276a96d013b5c"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/dx100/bfs_read_offload.inc": {
+          "bytes": 3157,
+          "sha256": "3c5867a2b8919806f681603836bd0cff448f21634485abf84e49ed71f25515ef"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/dx100/certification/README.md": {
+          "bytes": 3798,
+          "sha256": "b0df07ee337ff8c1a83dcdb2f91038dcab2ac88b05a61c793f84bfe14d743e40"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/dx100/certification/bc_driver.inc": {
+          "bytes": 1528,
+          "sha256": "95f92ebc2943e713783d90ffe703982266239524380343a8035b89b425b6e3df"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/dx100/certification/bfs_driver.inc": {
+          "bytes": 1383,
+          "sha256": "ad9a5a647614000a0716075e0a4d661df9453b5ff9365db9d239bd1b06416d3a"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/dx100/certification/candidate_prelude.hpp": {
+          "bytes": 5432,
+          "sha256": "87da9d08f1d13ec5961a5999c377bca94d10fa86b0a7ed3b540a4ab9832d37ff"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/dx100/certification/record.cc": {
+          "bytes": 3852,
+          "sha256": "5095bcbac7e5f7b3e9b33533fc7c74dc664d8bb655c3dfbe92ffd2afed5d85b0"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/dx100/certification/seams.cc": {
+          "bytes": 6003,
+          "sha256": "483a6978acd86a3aa6e9e4c6a0b07eee728eabad85e2e60a9660fdbf2a9d89c3"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/dx100/certification/v1_4/bc_driver.inc": {
+          "bytes": 1713,
+          "sha256": "9034e2ad715fbabcd9fc0c842ad9c06543447eb9b476a9f3dc9014231043b1f4"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/dx100/certification/v1_4/bfs_driver.inc": {
+          "bytes": 1806,
+          "sha256": "6c104ea0227283599920c97d388026594434ceb74516d0fe82187e8f7e98ea8f"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/dx100/certification/v1_4/prelude.hpp": {
+          "bytes": 6496,
+          "sha256": "dd5d2917aa093b91c2abecd0ecb7221289d9e3b8e9469c506f2392ec6db7f079"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/dx100/certification/v1_4/record.cc": {
+          "bytes": 6239,
+          "sha256": "c0b0221c2080117761f82566c7801a457aa31d3dedd21ec2600670e61bdd4fa6"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/dx100/certification/v1_4/seams.cc": {
+          "bytes": 12876,
+          "sha256": "1a1deb79cff58ccae5ee5d9cc08bdae123c1c821b0a675e62d80c2033ec23eef"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/dx100/certification/v1_5/arena.hpp": {
+          "bytes": 4479,
+          "sha256": "0a85a60e9f514b755ee05e0daba683c32682c97b67a31f22c911c2591f33ce42"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/dx100/certification/v1_5/bc_driver.inc": {
+          "bytes": 1614,
+          "sha256": "b8dd9d52400551247a8daf2818e86ad49022bac30f51ac2b39cf30a42a36ef4b"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/dx100/certification/v1_5/bfs_driver.inc": {
+          "bytes": 1563,
+          "sha256": "8bb2ba0ab100fda0b73e39e667635f747378ce1b2a527228365a42a8d164eb3e"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/dx100/certification/v1_5/client.cc": {
+          "bytes": 5261,
+          "sha256": "f7917a984afd6b547c696f23300e1609400f4c045aefdb463a3987e8ae7a378c"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/dx100/certification/v1_5/client/MAA_functional.hpp": {
+          "bytes": 5797,
+          "sha256": "cce4deff6692bbc1175ac61eca1b03a532f620915e999fc0c5e0f08e6d624ec0"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/dx100/certification/v1_5/client_core.inc": {
+          "bytes": 7569,
+          "sha256": "b21188bb1067f3018ea2a0fa0bc2153b2177511800dbb211993c512369a352e8"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/dx100/certification/v1_5/evaluator.cc": {
+          "bytes": 9296,
+          "sha256": "89a025c0869bbebd155d7c207bed62dca669b35eb793a95d6c29950e482b695e"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/dx100/certification/v1_5/evaluator_context.hpp": {
+          "bytes": 1658,
+          "sha256": "3ff8432841d29f80aeec22df7be4a9330d7c6f2ab1f3578f3870e95516564fe0"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/dx100/certification/v1_5/evaluator_core.inc": {
+          "bytes": 7717,
+          "sha256": "d8a77bdb2b309e04c3acb27de7b8cb3547c45f53a09b2411d9997ee9eadd7ece"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/dx100/certification/v1_5/prelude.hpp": {
+          "bytes": 1050,
+          "sha256": "d77698926a5fb528e666def15b5220749ac4c11e9b421ba654d3294d334dc1cf"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/dx100/drivers/differential.cc": {
+          "bytes": 4707,
+          "sha256": "5a30fd75e7a23db709eb7e112d9202f46037cadc8b8c9d667ac472fd77f5e976"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/dx100/dxc_lowering.hpp": {
+          "bytes": 3153,
+          "sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/dx100/peter-section5.patch": {
+          "bytes": 8699,
+          "sha256": "cc99ca4d024983ab02c17f5db74db5210a7450968787ccad25562da4d9873cff"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/dx100/reference.hpp": {
+          "bytes": 1398,
+          "sha256": "75b80bc3d0027b1700e2fc1f075683e617d059ca4bbef761bfeb31839d9fa897"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/dx100/strict/MAA_functional.hpp": {
+          "bytes": 19587,
+          "sha256": "a24a81631c9365b114395bab65c73048269765a2862a98f4ccb4609eb80fbfa5"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/dx100/strict/gem5/m5ops.h": {
+          "bytes": 356,
+          "sha256": "b1eb7d074231782a943faa9cc249f6027152b6c727c5f70b71808e122e97867f"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/methods/dx100-stream-partial-fixture-v1.yaml": {
+          "bytes": 3774,
+          "sha256": "409f286936d8b10cccaecf447e73c60c750a89fba8a592f4721434baad74b843"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/proof_semantics/dx100_bfs/ghost.acsl": {
+          "bytes": 2740,
+          "sha256": "5fa3f12850eba75ccb254b1c1e8ab5c143488046949fbe0e4c965b55ecdb48e9"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/proof_semantics/dx100_bfs/logic.acsl": {
+          "bytes": 14346,
+          "sha256": "34c9971965b53e04cf5ef2dd66abeaecd4d8772660f47def86158bc47624351d"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/proof_semantics/dx100_bfs/model.h": {
+          "bytes": 20089,
+          "sha256": "88298dbb9176640fd8ec2d0c6e31386dd51849411b08df7cebf7f12eab1d22ce"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/proof_semantics/dx100_bfs/state.h": {
+          "bytes": 949,
+          "sha256": "b371131b4a3a7ef21ad654b0eaffac94b4c63252d63397ee8b67a6b017610701"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/proof_semantics/dx100_bfs_0_1.yaml": {
+          "bytes": 31989,
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/proof_semantics/dx100_trust_fixture.yaml": {
+          "bytes": 21412,
+          "sha256": "e190dc5b8734ed50c1cd58417d244771662eda47ef688051d2576f06e4825cb7"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/proof_semantics/one-u32-stream/CpuSidePort.cc": {
+          "bytes": 22141,
+          "sha256": "886a0c1bbd437916d2fac62a2aa194e01f6996fae65dc56241fad601c5f0103b"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/proof_semantics/one-u32-stream/IF.cc": {
+          "bytes": 23772,
+          "sha256": "fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/proof_semantics/one-u32-stream/IF.hh": {
+          "bytes": 5988,
+          "sha256": "9dee4c4803a1780a41fb30b760775169000785019e6f5848689fc3f3034a1795"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/proof_semantics/one-u32-stream/MAA.cc": {
+          "bytes": 72419,
+          "sha256": "058395cbd171ccf3746fb524967d2d205cb8d622d4aa06e8eef530b00dc21299"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/proof_semantics/one-u32-stream/SPD.cc": {
+          "bytes": 10059,
+          "sha256": "9e6bb3672be95954e8816c054b4032f95811a3085ca6df418aed90ad1e852b4a"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/proof_semantics/one-u32-stream/SPD.hh": {
+          "bytes": 5117,
+          "sha256": "70e02b0fea7693585fd9b8f318381c09e352df2fff58bb3f84021f4ea02e9737"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/proof_semantics/one-u32-stream/StreamAccess.cc": {
+          "bytes": 26166,
+          "sha256": "5fe78a94f0d690396cdfbcdd9b0082e57cbdb4a6b445a7282b2533a33852d47b"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/proof_semantics/one-u32-stream/StreamAccess.hh": {
+          "bytes": 4396,
+          "sha256": "9ac9feb68adb525ca2d5c7d6e9046b5b0e399ad4c63a718fcca8f78cd521a3ec"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/proof_semantics/one-u32-stream/Tables.cc": {
+          "bytes": 18963,
+          "sha256": "9bd8aa4103fb6e7617fdd4c514a917329b8e7b8345738ed6e5d82f818df7dfa6"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/proof_semantics/one-u32-stream/Tables.hh": {
+          "bytes": 4632,
+          "sha256": "5ea6a7caff7ca690aa9ce19096c0e686dfa52716e4dbf19d17348c9235011b43"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/proof_semantics/one-u32-stream/ghost.acsl": {
+          "bytes": 49,
+          "sha256": "cef6352ffe5ce76236ec837ef2f3015f98070c41b37a9455ef3c53c363e408fc"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/proof_semantics/one-u32-stream/logic.acsl": {
+          "bytes": 23,
+          "sha256": "b7f8c7f0b5a70cdcdf6ee864199c6d7b07bc2fed87e2fdeaafd6f0e770b0ceb8"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/proof_semantics/one-u32-stream/model.h": {
+          "bytes": 2417,
+          "sha256": "4a12723f504cab4b485e25d59e2ea2afbcc2bd0bd1af95281949351aefaf325b"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/proof_semantics/one-u32-stream/state.h": {
+          "bytes": 225,
+          "sha256": "ac91330aa6805bcb27f97b2460da48f702f43dca7a17c6dca0dc6083f567c45c"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/proof_semantics/pure-selector/ghost.acsl": {
+          "bytes": 37,
+          "sha256": "0dffdc2cb273e85b2675258948535f3ec0f8b46f8080dd1481967f3a61f78db9"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/proof_semantics/pure-selector/logic.acsl": {
+          "bytes": 23,
+          "sha256": "b7f8c7f0b5a70cdcdf6ee864199c6d7b07bc2fed87e2fdeaafd6f0e770b0ceb8"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/proof_semantics/pure-selector/model.h": {
+          "bytes": 61,
+          "sha256": "9d6474eeb40d96ddca0090b6e1375a9bd46e2e6aafd4f740cbe302f949338166"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/proof_semantics/pure-selector/state.h": {
+          "bytes": 38,
+          "sha256": "a57ee157e0975b44f2d3829b80ee82694f1d8ed66605fa811fc83999d3303a29"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/proof_units/gem5/m5ops.h": {
+          "bytes": 133,
+          "sha256": "4caae6752583fd058e911da16305fe5bebec0fa08d3242242af85494b2b90d7a"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/proof_units/trust.cc": {
+          "bytes": 290,
+          "sha256": "071df1d875e38dcccf798b9cfbdf9064f909c7220965f339936fd99d7dc79eab"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/library/rewrite_contracts/trust.yaml": {
+          "bytes": 1463,
+          "sha256": "a4ae0acc6dc1708438a994433eaed9b271cc93d84e17fd2f88a6d372961c1bfd"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/records/.swdb.lock": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/records/proofs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100432z.cd656299.yaml": {
+          "bytes": 12890898,
+          "sha256": "faed9f288ea7b338bb9c96d8ccceca37429d55c1227422042a5eb8efcc7abef9"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100432z.cd656299/adapter.log": {
+          "bytes": 1337,
+          "sha256": "84d613b3f4a1877f970ce1484c432dd8ccd9f62e2672da41ea7fe7e573179e54"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100432z.cd656299/wp/frama-c.log": {
+          "bytes": 7935,
+          "sha256": "dc5d5b8e652eb7d9016d89bb6e99aaceb38795afd65fc748ad93ef47b4e3f7aa"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100432z.cd656299/wp/handler.json": {
+          "bytes": 253,
+          "sha256": "ecaab12666ec010d1dfaad0abd0f8c542e0a46c0ba4410e2f82d6a2ed77ee626"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100432z.cd656299/wp/trust_fixture.anchors.json": {
+          "bytes": 11878509,
+          "sha256": "ef3371e10ef1296af4cf1082ebf9eec45fee8ecf46fba4c3928375e424c238c7"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100432z.cd656299/wp/trust_fixture.c": {
+          "bytes": 1159,
+          "sha256": "53aec727d01ec4d7cdd6dc67dd98ea34806c3231998aaab3784c14e393d07f7c"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100432z.cd656299/wp/wp-goals.json": {
+          "bytes": 13088,
+          "sha256": "9925d29c104e8025c1e87ab52553d7cae34a6d08ba1b9c49d00d48e4c77e1130"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100432z.cd656299/wp/wp-inventory.json": {
+          "bytes": 45282,
+          "sha256": "e7b22a3e0906e4cb38b5e1ccbe0afd36b06869df325c9c45a4faa385621dd8fb"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100432z.cd656299/wp/wp-normalized.c": {
+          "bytes": 12111,
+          "sha256": "1db2e002cc715fbb13a2e1f769373b20acb19323436e335867dcfa50701643f8"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100432z.cd656299/wp/wp-properties.csv": {
+          "bytes": 6053,
+          "sha256": "ccd2e5bac2441fbd7018dd37e6c1e98a62afd6824e30dfe9d1681f25279d8cd2"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100432z.cd656299/wp/wp_input.c": {
+          "bytes": 4218,
+          "sha256": "bad552c2a4ee7af438b5474fe5f76e24edd70efcf27540244724ec192ce7b763"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/scripted-why3.conf": {
+          "bytes": 206,
+          "sha256": "249b6d29567e6c83393d864b36ee6e2a69b8d8295d2c5b30975f2258fd62d738"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/t28-scripted-typechecker.py": {
+          "bytes": 326,
+          "sha256": "3f435c327db4a0a87c48b25b1948658c21d3d0e6be08f53b00b8ce462df70aa3"
+        },
+        "stream-profile/pytest/test_actual_wp_source_partial_1/t28-version-only-adapter.py": {
+          "bytes": 292,
+          "sha256": "f086d213645beb582ba4a6e2a32df232be39dafb47023772ff212ccf52590c3a"
+        },
+        "stream-profile/report.jsonl": {
+          "bytes": 4098,
+          "sha256": "f3c8fb114b427bcc2160587b6601b7e7cadf95794faae5e28ead31003793580d"
+        },
+        "stream-profile/runtime-provenance.json": {
+          "bytes": 3884,
+          "sha256": "b0bbde85923a61784ab60a63b4f5e9ade4d911068e58502c0ade63905904c270"
+        },
+        "stream-profile/selected-tests.txt": {
+          "bytes": 180,
+          "sha256": "418776ed9297791e6c92512756db8d27be5018f03901618730fd1da4a0c86b93"
+        },
+        "stream-profile/source-commit.txt": {
+          "bytes": 41,
+          "sha256": "436c750733981ada4a2e03515029da0d447bc61ba0830372b87ffb39c82df134"
+        },
+        "stream-profile/source-manifest.json": {
+          "bytes": 55553,
+          "sha256": "c1ea51f21859bc30c2647c3b24aac1b57d914c7dab50e3f728268b2631a61011"
+        },
+        "stream-project-runtime-provenance.json": {
+          "bytes": 5279,
+          "sha256": "e09b95a015070b78fd8a7f34661d2fa2068d380a4f897676beaf72b492713561"
+        },
+        "stream-source-consumer-closure-after-bootstrap.json": {
+          "bytes": 596878,
+          "sha256": "cd4ccd3c4e76b016f5ca70365fe768f115620f7fa89f299b3ade1b3b3ae81dd6"
+        },
+        "stream-source-consumer-closure-before.json": {
+          "bytes": 596878,
+          "sha256": "cd4ccd3c4e76b016f5ca70365fe768f115620f7fa89f299b3ade1b3b3ae81dd6"
+        },
+        "watch.py": {
+          "bytes": 470,
+          "sha256": "4485ae66aa50c65f2b579f84836576aa67b54431978da71cac6eea6a68ecd07c"
+        },
+        "worker.log": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "symlinks": {
+        "stream-profile/pytest/test_actual_wp_source_partial_current": {
+          "target": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c241c547-t28-stream-current-v2/stream-profile/pytest/test_actual_wp_source_partial_1"
+        }
+      }
+    },
+    "raw_unchanged": true,
+    "records": [
+      {
+        "adapter_log": {
+          "bytes": 1244,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c241c547-t28-stream-current-v2/stream-profile/pytest/test_actual_wp_source_partial_0/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100311z.728432ae/adapter.log",
+          "sha256": "58157eb69d0b8366c04a20404c13723e7dd68ec170c4f9d766878c283c8dafcd"
+        },
+        "bounds": {
+          "input_size": "unbounded",
+          "threads": 1
+        },
+        "commands": [
+          [
+            "/data1/yanruj/probata-verifiers/opam/framac-33/bin/frama-c",
+            "-machdep",
+            "x86_64",
+            "wp_input.c",
+            "-print",
+            "-ocode",
+            "wp-normalized.c",
+            "-then",
+            "-wp",
+            "-wp-rte",
+            "-wp-cache",
+            "none",
+            "-wp-model",
+            "+real",
+            "-rte-initialized",
+            "@all",
+            "-wp-no-filter-init",
+            "-machdep",
+            "x86_64",
+            "-wp-prover",
+            "z3,cvc5,alt-ergo",
+            "-machdep",
+            "x86_64",
+            "-wp-timeout",
+            "30",
+            "-wp-par",
+            "1",
+            "-wp-smoke-tests",
+            "-wp-fct=trust_fixture",
+            "-wp-report-json",
+            "wp-goals.json",
+            "-then",
+            "-load-module",
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c241c547-t28-stream-current-v2/stream-profile/pytest/test_actual_wp_source_partial_0/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100311z.728432ae/scratch/proof_report.cmxs",
+            "-report",
+            "-report-untried",
+            "-report-csv",
+            "wp-properties.csv"
+          ]
+        ],
+        "contract": {
+          "content": {
+            "clauses": [
+              {
+                "acsl": {
+                  "text": "assigns \\nothing; ensures \\result == 1;",
+                  "uses": []
+                },
+                "discharge_mode": "runtime_guard",
+                "id": "result",
+                "negative_control": {
+                  "check": "result",
+                  "id": "wrong-result"
+                },
+                "proof_placement": {
+                  "once": "self"
+                },
+                "role": "postcondition",
+                "statement": "Synthetic trust-record fixture."
+              }
+            ],
+            "concurrency_frame": [],
+            "correctness_check": {
+              "check": "fixture",
+              "kernel": "fixture"
+            },
+            "execution_witness": {
+              "check": "fixture"
+            },
+            "formal_frame": 1,
+            "id": "contract.dx100_stream_partial_fixture.v1",
+            "kind": "rewrite_contract",
+            "knobs": [],
+            "negative_controls": [
+              {
+                "check": "fixture",
+                "id": "overlapping_pointer",
+                "kind": "overlapping_pointer"
+              },
+              {
+                "check": "fixture",
+                "id": "double_claim",
+                "kind": "double_claim"
+              },
+              {
+                "check": "fixture",
+                "id": "dropped_operand",
+                "kind": "dropped_operand"
+              }
+            ],
+            "pattern_key": [
+              {
+                "address_shapes": [
+                  "stream",
+                  "single_valued_indirect"
+                ],
+                "roles": [
+                  "index",
+                  "target"
+                ],
+                "update_kind": "read"
+              }
+            ],
+            "preservation_obligations": [],
+            "proof_unit": {
+              "correctness_policy": {
+                "kind": "partial-normal-return-v1",
+                "semantics": {
+                  "id": "semantics.dx100_stream_fixture_0_2",
+                  "sha256": "e190dc5b8734ed50c1cd58417d244771662eda47ef688051d2576f06e4825cb7"
+                },
+                "source_policy": "dx100-one-u32-stream-v1"
+              },
+              "function": "trust_fixture",
+              "source": {
+                "path": "proof_units/trust.cc",
+                "root": "library",
+                "sha256": "071df1d875e38dcccf798b9cfbdf9064f909c7220965f339936fd99d7dc79eab"
+              }
+            },
+            "provenance": {
+              "origin": {
+                "intrinsic_specification": "ticket28-record-plumbing-fixture"
+              }
+            },
+            "requirement_map": [],
+            "runtime_guards": [],
+            "strategies": [],
+            "uses_intrinsics": [],
+            "uses_library_operations": [],
+            "version": "0.1"
+          },
+          "pin": {
+            "bytes": 1463,
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c241c547-t28-stream-current-v2/stream-profile/pytest/test_actual_wp_source_partial_0/library/rewrite_contracts/trust.yaml",
+            "sha256": "d2b6ac9f3f5703f0edabf37e9ba7fc9db3b45a9edbb7a0e464ed4b815a564ba9"
+          }
+        },
+        "cwd_lines": [
+          "scratch"
+        ],
+        "id": "proof.contract.dx100_stream_partial_fixture.v1.20261016t100311z.728432ae",
+        "input_pins": {
+          "c_lowering": {
+            "bytes": 1159,
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c241c547-t28-stream-current-v2/stream-profile/pytest/test_actual_wp_source_partial_0/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100311z.728432ae/wp/trust_fixture.c",
+            "sha256": "53aec727d01ec4d7cdd6dc67dd98ea34806c3231998aaab3784c14e393d07f7c"
+          },
+          "wp_input": {
+            "bytes": 4218,
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c241c547-t28-stream-current-v2/stream-profile/pytest/test_actual_wp_source_partial_0/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100311z.728432ae/wp/wp_input.c",
+            "sha256": "e849a01e2ca42241fbcf71799c3df9fae9142eca916cc285d6a2a4b58647987a"
+          }
+        },
+        "method": {
+          "content": {
+            "acsl_version": "1.22",
+            "budgets": {
+              "bounded_job_minutes": 15,
+              "civl_k": 3,
+              "counterexample_repair_rounds": 5,
+              "hint_loop_wall_minutes": 60,
+              "hint_rounds": 10,
+              "wp_seconds_per_solver": 30
+            },
+            "c_lowering": {
+              "naming_rules": {
+                "id": "kept-names.3",
+                "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+              },
+              "subset": {
+                "id": "fixture.cpp-subset",
+                "sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+              },
+              "translators": [
+                {
+                  "id": "swdb-c-lowering-9",
+                  "sha256": "54dfd90ba7ce0b4584828ac3826c779eab16bdf8b0c9f9a4a2720f749c0604ce"
+                },
+                {
+                  "id": "swdb-cbmc-translator-4",
+                  "sha256": "b67a4fc23c70a1d39269de563ade63a3d655665d3ba3394dd12d5eb4650eff63"
+                }
+              ]
+            },
+            "checks": {
+              "proof_hint_check": {
+                "version": "0"
+              },
+              "proof_setup_check": {
+                "sha256": "0db61b23428b7fee70841a7a9535aa66cf225429bad52881484ecce22ae0886f",
+                "version": "1"
+              },
+              "verdict_reading": {
+                "sha256": "0db61b23428b7fee70841a7a9535aa66cf225429bad52881484ecce22ae0886f",
+                "version": "1"
+              }
+            },
+            "civl": {
+              "java": {
+                "flags": [
+                  "-Xmx4g"
+                ],
+                "tool": "openjdk",
+                "version": "21.0.12.1"
+              },
+              "memory_model": "sequential_consistency",
+              "result_line": "All errors marked with '+' are absent"
+            },
+            "created": "2026-10-14",
+            "description": "Fixture method version with every section, for tests of swdb validate and swdb prove.",
+            "evidence_kind": "contract_fixture",
+            "genmc": {
+              "error_exit_code": 42,
+              "memory_model": "rc11",
+              "memory_model_detector": "disabled"
+            },
+            "ghost_capacity_k": 8,
+            "id": "method.dx100-stream-partial-fixture-v1",
+            "kind": "method_version",
+            "lineup": [
+              {
+                "flags": [
+                  "-c",
+                  "-emit-llvm",
+                  "-g",
+                  "-O0"
+                ],
+                "role": "front_end",
+                "tool": "clang",
+                "version": "22.1.8"
+              },
+              {
+                "flags": [],
+                "role": "bounded_verifier",
+                "tool": "saw",
+                "version": "1.6"
+              },
+              {
+                "flags": [
+                  "--no-compile"
+                ],
+                "role": "bounded_verifier_fallback",
+                "tool": "crux-llvm",
+                "version": "0.12"
+              },
+              {
+                "flags": [
+                  "--unwinding-assertions",
+                  "--pointer-overflow-check"
+                ],
+                "role": "bounded_verifier_fallback",
+                "tool": "cbmc",
+                "version": "6.11"
+              },
+              {
+                "flags": [
+                  "verify"
+                ],
+                "role": "concurrent_bounded_verifier",
+                "tool": "civl",
+                "version": "1.23"
+              },
+              {
+                "flags": [
+                  "--rc11",
+                  "--disable-mm-detector",
+                  "--print-error-trace"
+                ],
+                "role": "second_refuter",
+                "tool": "genmc",
+                "version": "0.19.0"
+              },
+              {
+                "flags": [
+                  "-wp",
+                  "-wp-rte",
+                  "-wp-cache",
+                  "none",
+                  "-wp-model",
+                  "+real",
+                  "-rte-initialized",
+                  "@all",
+                  "-wp-no-filter-init",
+                  "-machdep",
+                  "x86_64",
+                  "-wp-prover",
+                  "z3,cvc5,alt-ergo"
+                ],
+                "role": "unbounded_verifier",
+                "tool": "frama-c-wp",
+                "version": "33.0"
+              },
+              {
+                "flags": [],
+                "role": "solver",
+                "tool": "alt-ergo",
+                "version": "2.6.4"
+              },
+              {
+                "flags": [],
+                "role": "solver",
+                "tool": "z3",
+                "version": "5.1.0"
+              },
+              {
+                "flags": [],
+                "role": "solver",
+                "tool": "cvc5",
+                "version": "1.2.1"
+              },
+              {
+                "flags": [],
+                "role": "proof_assistant",
+                "tool": "rocq",
+                "version": "9.3.0"
+              }
+            ],
+            "logic_library": {
+              "id": "fixture.logic-library",
+              "sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+              "sum_library": {
+                "id": "fixture.sum-library",
+                "sha256": "6666666666666666666666666666666666666666666666666666666666666666"
+              }
+            },
+            "models": {
+              "std_pair": {
+                "id": "fixture.std-pair-model",
+                "sha256": "8888888888888888888888888888888888888888888888888888888888888888"
+              },
+              "std_vector": {
+                "id": "fixture.std-vector-model",
+                "sha256": "7777777777777777777777777777777777777777777777777777777777777777"
+              }
+            },
+            "openmp_runtime": {
+              "name": "libomp",
+              "version": "22.1.8"
+            },
+            "prompts": [
+              {
+                "id": "fixture.proof-hint-agent-prompt",
+                "sha256": "4444444444444444444444444444444444444444444444444444444444444444"
+              }
+            ],
+            "proof_hint_vocabulary": [
+              "loop_invariant",
+              "loop_assigns",
+              "loop_variant",
+              "assert",
+              "ghost_declaration",
+              "ghost_statement",
+              "non_recursive_definition",
+              "same_run_lemma",
+              "wp_strategy"
+            ],
+            "rocq_development": {
+              "composition_theorem": "parallel_composition",
+              "dx100_reduction_lemma": "dx100_reduction",
+              "id": "fixture.rocq-development",
+              "sha256": "9999999999999999999999999999999999999999999999999999999999999999"
+            },
+            "sequence": 2,
+            "shared_action_kinds": [
+              "claim",
+              "min_update",
+              "atomic_add_or",
+              "openmp_reduction",
+              "queue_reserve"
+            ],
+            "sharing_classes": [
+              "read_only",
+              "thread_owned",
+              "shared_actions_only",
+              "lock_protected"
+            ],
+            "status": "frozen"
+          },
+          "pin": {
+            "bytes": 3774,
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c241c547-t28-stream-current-v2/stream-profile/pytest/test_actual_wp_source_partial_0/library/methods/dx100-stream-partial-fixture-v1.yaml",
+            "sha256": "409f286936d8b10cccaecf447e73c60c750a89fba8a592f4721434baad74b843"
+          }
+        },
+        "model_file_metadata": {
+          "c": {
+            "comment_or_whitespace_only": false,
+            "pin": {
+              "bytes": 2417,
+              "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c241c547-t28-stream-current-v2/stream-profile/pytest/test_actual_wp_source_partial_0/library/proof_semantics/one-u32-stream/model.h",
+              "sha256": "4a12723f504cab4b485e25d59e2ea2afbcc2bd0bd1af95281949351aefaf325b"
+            }
+          },
+          "ghost": {
+            "comment_or_whitespace_only": true,
+            "pin": {
+              "bytes": 49,
+              "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c241c547-t28-stream-current-v2/stream-profile/pytest/test_actual_wp_source_partial_0/library/proof_semantics/one-u32-stream/ghost.acsl",
+              "sha256": "cef6352ffe5ce76236ec837ef2f3015f98070c41b37a9455ef3c53c363e408fc"
+            }
+          },
+          "logic": {
+            "comment_or_whitespace_only": true,
+            "pin": {
+              "bytes": 23,
+              "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c241c547-t28-stream-current-v2/stream-profile/pytest/test_actual_wp_source_partial_0/library/proof_semantics/one-u32-stream/logic.acsl",
+              "sha256": "b7f8c7f0b5a70cdcdf6ee864199c6d7b07bc2fed87e2fdeaafd6f0e770b0ceb8"
+            }
+          },
+          "state": {
+            "comment_or_whitespace_only": false,
+            "pin": {
+              "bytes": 225,
+              "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c241c547-t28-stream-current-v2/stream-profile/pytest/test_actual_wp_source_partial_0/library/proof_semantics/one-u32-stream/state.h",
+              "sha256": "ac91330aa6805bcb27f97b2460da48f702f43dca7a17c6dca0dc6083f567c45c"
+            }
+          }
+        },
+        "pins": {
+          "baseline_function": {
+            "not_applicable": "A library summary is proven on the entry's own code."
+          },
+          "build_constants": [],
+          "c_lowering": {
+            "id": "trust_fixture.c",
+            "sha256": "53aec727d01ec4d7cdd6dc67dd98ea34806c3231998aaab3784c14e393d07f7c"
+          },
+          "code": {
+            "id": "contract.dx100_stream_partial_fixture.v1",
+            "sha256": "033e79c5acf545e44660e14771f6e66f1a993a5a644ca07b78c2055ab8f3d163"
+          },
+          "contract": {
+            "id": "contract.dx100_stream_partial_fixture.v1",
+            "sha256": "033e79c5acf545e44660e14771f6e66f1a993a5a644ca07b78c2055ab8f3d163"
+          },
+          "method_version": {
+            "id": "method.dx100-stream-partial-fixture-v1",
+            "sha256": "409f286936d8b10cccaecf447e73c60c750a89fba8a592f4721434baad74b843"
+          },
+          "minimum_bounds": {
+            "not_applicable": "No minimum-bounds version exists before ticket 33."
+          },
+          "naming_rules": {
+            "id": "kept-names.3",
+            "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+          },
+          "predecessor_snapshot": {
+            "not_applicable": "A library summary has no predecessor."
+          },
+          "proof_semantics": {
+            "id": "semantics.dx100_stream_fixture_0_2",
+            "sha256": "e190dc5b8734ed50c1cd58417d244771662eda47ef688051d2576f06e4825cb7"
+          },
+          "reference_semantics": {
+            "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+          },
+          "summaries": []
+        },
+        "record": {
+          "bytes": 12890223,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c241c547-t28-stream-current-v2/stream-profile/pytest/test_actual_wp_source_partial_0/records/proofs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100311z.728432ae.yaml",
+          "sha256": "2e9f60fe560c57de8fde1753696b5aeade5d6b5aab7861efc3831fd4791d3fcd"
+        },
+        "semantics": {
+          "content": {
+            "calls": [
+              {
+                "call": "add_mem_region",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int add_mem_region(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "alloc_MAA",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int alloc_MAA(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "clear_mem_region",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int clear_mem_region(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "get_cacheable_tile_pointer",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int get_cacheable_tile_pointer(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "get_data_type",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int get_data_type(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "get_new_reg",
+                "contract": "requires \\false; assigns \\nothing;",
+                "overloads": [
+                  {
+                    "contract": "requires \\false; assigns \\nothing;",
+                    "declaration": "inline int get_new_reg(T1 data)",
+                    "prototype": "int swdb_refused_get_new_reg_0(void)"
+                  },
+                  {
+                    "contract": "requires \\false; assigns \\nothing;",
+                    "declaration": "inline int get_new_reg()",
+                    "prototype": "int swdb_refused_get_new_reg_1(void)"
+                  }
+                ],
+                "prototype": "int get_new_reg(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "get_new_tile",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int get_new_tile(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "get_noncacheable_tile_pointer",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int get_noncacheable_tile_pointer(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "get_reg",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int get_reg(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "get_tile_size",
+                "contract": "requires SPD_id==0 && __swdb_dx_stream_meta.phase==5 && __swdb_dx_stream_meta.status==2;\nterminates \\false;\nassigns \\nothing;\nensures \\result==__swdb_dx_stream_meta.size;",
+                "definition": {
+                  "call": "get_tile_size",
+                  "entry": {
+                    "byte_order": "little",
+                    "commands": "exactly one u32 stream load, no condition or competing command",
+                    "core": 0,
+                    "epoch": "after-constructor-and-configured-quiescent-RF-before-one-command",
+                    "guest_address_bits": 64,
+                    "input": {
+                      "alignment": 64,
+                      "bytes": 64,
+                      "nonzero_guest_base": true,
+                      "region": "registered normal-memory line disjoint from MMIO",
+                      "storage": "initialized C static array",
+                      "symbol": "stream_input",
+                      "translation": "stable synchronous fault-free64-byte mapping",
+                      "visibility": "coherent stable full physical line; no competing CPU/device writes from any core through return"
+                    },
+                    "kind": "isolated-one-u32-stream-core0-v1",
+                    "register_words": 32,
+                    "rf_i32": {
+                      "0": 0,
+                      "1": 1,
+                      "2": 1
+                    },
+                    "tile_words": 16384,
+                    "tiles": 32
+                  },
+                  "kind": "dx100-one-u32-stream-v1",
+                  "sources": [
+                    {
+                      "path": "proof_semantics/one-u32-stream/CpuSidePort.cc",
+                      "root": "library",
+                      "sha256": "886a0c1bbd437916d2fac62a2aa194e01f6996fae65dc56241fad601c5f0103b"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/IF.cc",
+                      "root": "library",
+                      "sha256": "fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/MAA.cc",
+                      "root": "library",
+                      "sha256": "058395cbd171ccf3746fb524967d2d205cb8d622d4aa06e8eef530b00dc21299"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/SPD.cc",
+                      "root": "library",
+                      "sha256": "9e6bb3672be95954e8816c054b4032f95811a3085ca6df418aed90ad1e852b4a"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/SPD.hh",
+                      "root": "library",
+                      "sha256": "70e02b0fea7693585fd9b8f318381c09e352df2fff58bb3f84021f4ea02e9737"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/IF.hh",
+                      "root": "library",
+                      "sha256": "9dee4c4803a1780a41fb30b760775169000785019e6f5848689fc3f3034a1795"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/StreamAccess.cc",
+                      "root": "library",
+                      "sha256": "5fe78a94f0d690396cdfbcdd9b0082e57cbdb4a6b445a7282b2533a33852d47b"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/StreamAccess.hh",
+                      "root": "library",
+                      "sha256": "9ac9feb68adb525ca2d5c7d6e9046b5b0e399ad4c63a718fcca8f78cd521a3ec"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/Tables.cc",
+                      "root": "library",
+                      "sha256": "9bd8aa4103fb6e7617fdd4c514a917329b8e7b8345738ed6e5d82f818df7dfa6"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/Tables.hh",
+                      "root": "library",
+                      "sha256": "5ea6a7caff7ca690aa9ce19096c0e686dfa52716e4dbf19d17348c9235011b43"
+                    },
+                    {
+                      "path": "apps/dx100/benchmarks/API/MAA.hpp",
+                      "root": "project",
+                      "sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd"
+                    },
+                    {
+                      "path": "apps/dx100/benchmarks/API/MAA_gem5.hpp",
+                      "root": "project",
+                      "sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174"
+                    }
+                  ]
+                },
+                "prototype": "volatile unsigned short get_tile_size(int SPD_id)",
+                "rules": [
+                  "stream_epoch",
+                  "stream_normal_return",
+                  "stream_event_compression",
+                  "stream_count_response"
+                ],
+                "supported": true
+              },
+              {
+                "call": "init_MAA",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int init_MAA(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "maa_alu_reduce",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int maa_alu_reduce(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "maa_alu_scalar",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int maa_alu_scalar(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "maa_alu_vector",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int maa_alu_vector(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "maa_const",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int maa_const(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "maa_indirect_load",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int maa_indirect_load(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "maa_indirect_rmw_scalar",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int maa_indirect_rmw_scalar(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "maa_indirect_rmw_vector",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int maa_indirect_rmw_vector(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "maa_indirect_store_scalar",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int maa_indirect_store_scalar(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "maa_indirect_store_vector",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int maa_indirect_store_vector(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "maa_range_loop",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int maa_range_loop(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "maa_stream_load",
+                "instances": [
+                  {
+                    "arguments": [
+                      "unsigned int"
+                    ],
+                    "arity": 6,
+                    "contract": "requires min_reg==0 && max_reg==1 && stride_reg==2 && dst_tile==0 && cond_tile==-1;\nrequires \\valid_read(data+(0..15)) && \\initialized(data+(0..15));\nrequires __swdb_dx_stream_meta.phase==0 && __swdb_dx_stream_meta.ack==0 && __swdb_dx_stream_meta.status==2 && __swdb_dx_stream_meta.ready==0;\nrequires __swdb_dx_stream_meta.size==0 && __swdb_dx_stream_meta.sent==0 && __swdb_dx_stream_meta.received==0;\nrequires __swdb_dx_stream_meta.lane0_finished==1 && __swdb_dx_stream_meta.other_lanes_finished==1 && __swdb_dx_stream_meta.payload_initialized==1;\nterminates \\false;\nassigns __swdb_dx_stream_meta;\nensures __swdb_dx_stream_meta.phase==1 && __swdb_dx_stream_meta.ack==1 && __swdb_dx_stream_meta.status==0;\nensures __swdb_dx_stream_meta.ready==255 && __swdb_dx_stream_meta.size==0 && __swdb_dx_stream_meta.target_size==1;\nensures __swdb_dx_stream_meta.lane0_finished==0 && __swdb_dx_stream_meta.other_lanes_finished==0;\nensures __swdb_dx_stream_meta.sent==0 && __swdb_dx_stream_meta.received==0 && __swdb_dx_stream_meta.payload_initialized==1;",
+                    "definition": {
+                      "call": "maa_stream_load",
+                      "entry": {
+                        "byte_order": "little",
+                        "commands": "exactly one u32 stream load, no condition or competing command",
+                        "core": 0,
+                        "epoch": "after-constructor-and-configured-quiescent-RF-before-one-command",
+                        "guest_address_bits": 64,
+                        "input": {
+                          "alignment": 64,
+                          "bytes": 64,
+                          "nonzero_guest_base": true,
+                          "region": "registered normal-memory line disjoint from MMIO",
+                          "storage": "initialized C static array",
+                          "symbol": "stream_input",
+                          "translation": "stable synchronous fault-free64-byte mapping",
+                          "visibility": "coherent stable full physical line; no competing CPU/device writes from any core through return"
+                        },
+                        "kind": "isolated-one-u32-stream-core0-v1",
+                        "register_words": 32,
+                        "rf_i32": {
+                          "0": 0,
+                          "1": 1,
+                          "2": 1
+                        },
+                        "tile_words": 16384,
+                        "tiles": 32
+                      },
+                      "kind": "dx100-one-u32-stream-v1",
+                      "sources": [
+                        {
+                          "path": "proof_semantics/one-u32-stream/CpuSidePort.cc",
+                          "root": "library",
+                          "sha256": "886a0c1bbd437916d2fac62a2aa194e01f6996fae65dc56241fad601c5f0103b"
+                        },
+                        {
+                          "path": "proof_semantics/one-u32-stream/IF.cc",
+                          "root": "library",
+                          "sha256": "fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561"
+                        },
+                        {
+                          "path": "proof_semantics/one-u32-stream/MAA.cc",
+                          "root": "library",
+                          "sha256": "058395cbd171ccf3746fb524967d2d205cb8d622d4aa06e8eef530b00dc21299"
+                        },
+                        {
+                          "path": "proof_semantics/one-u32-stream/SPD.cc",
+                          "root": "library",
+                          "sha256": "9e6bb3672be95954e8816c054b4032f95811a3085ca6df418aed90ad1e852b4a"
+                        },
+                        {
+                          "path": "proof_semantics/one-u32-stream/SPD.hh",
+                          "root": "library",
+                          "sha256": "70e02b0fea7693585fd9b8f318381c09e352df2fff58bb3f84021f4ea02e9737"
+                        },
+                        {
+                          "path": "proof_semantics/one-u32-stream/IF.hh",
+                          "root": "library",
+                          "sha256": "9dee4c4803a1780a41fb30b760775169000785019e6f5848689fc3f3034a1795"
+                        },
+                        {
+                          "path": "proof_semantics/one-u32-stream/StreamAccess.cc",
+                          "root": "library",
+                          "sha256": "5fe78a94f0d690396cdfbcdd9b0082e57cbdb4a6b445a7282b2533a33852d47b"
+                        },
+                        {
+                          "path": "proof_semantics/one-u32-stream/StreamAccess.hh",
+                          "root": "library",
+                          "sha256": "9ac9feb68adb525ca2d5c7d6e9046b5b0e399ad4c63a718fcca8f78cd521a3ec"
+                        },
+                        {
+                          "path": "proof_semantics/one-u32-stream/Tables.cc",
+                          "root": "library",
+                          "sha256": "9bd8aa4103fb6e7617fdd4c514a917329b8e7b8345738ed6e5d82f818df7dfa6"
+                        },
+                        {
+                          "path": "proof_semantics/one-u32-stream/Tables.hh",
+                          "root": "library",
+                          "sha256": "5ea6a7caff7ca690aa9ce19096c0e686dfa52716e4dbf19d17348c9235011b43"
+                        },
+                        {
+                          "path": "apps/dx100/benchmarks/API/MAA.hpp",
+                          "root": "project",
+                          "sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd"
+                        },
+                        {
+                          "path": "apps/dx100/benchmarks/API/MAA_gem5.hpp",
+                          "root": "project",
+                          "sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174"
+                        }
+                      ]
+                    },
+                    "prototype": "void maa_stream_load_unsigned_int(unsigned int *data, int min_reg, int max_reg, int stride_reg, int dst_tile, int cond_tile)"
+                  }
+                ],
+                "rules": [
+                  "stream_epoch",
+                  "stream_normal_return",
+                  "stream_event_compression",
+                  "stream_count_response"
+                ],
+                "supported": true
+              },
+              {
+                "call": "maa_stream_store",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int maa_stream_store(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "print_tile",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int print_tile(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "set_reg",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int set_reg(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "wait_ready",
+                "contract": "requires SPD_id==0 && __swdb_dx_stream_meta.phase==1 && __swdb_dx_stream_meta.ack==1 && __swdb_dx_stream_meta.status==0;\nrequires __swdb_dx_stream_meta.ready==255 && __swdb_dx_stream_meta.size==0 && __swdb_dx_stream_meta.target_size==1;\nrequires __swdb_dx_stream_meta.sent==0 && __swdb_dx_stream_meta.received==0 && __swdb_dx_stream_meta.payload_initialized==1;\nrequires __swdb_dx_stream_meta.lane0_finished==0 && __swdb_dx_stream_meta.other_lanes_finished==0;\nterminates \\false;\nassigns __swdb_dx_stream_meta;\nensures __swdb_dx_stream_meta.phase==5 && __swdb_dx_stream_meta.status==2 && __swdb_dx_stream_meta.ready==0;\nensures __swdb_dx_stream_meta.size==1 && __swdb_dx_stream_meta.lane0_finished==1 && __swdb_dx_stream_meta.other_lanes_finished==0;\nensures __swdb_dx_stream_meta.target_size==1 && __swdb_dx_stream_meta.sent==1 && __swdb_dx_stream_meta.received==1 && __swdb_dx_stream_meta.payload_initialized==1;",
+                "definition": {
+                  "call": "wait_ready",
+                  "entry": {
+                    "byte_order": "little",
+                    "commands": "exactly one u32 stream load, no condition or competing command",
+                    "core": 0,
+                    "epoch": "after-constructor-and-configured-quiescent-RF-before-one-command",
+                    "guest_address_bits": 64,
+                    "input": {
+                      "alignment": 64,
+                      "bytes": 64,
+                      "nonzero_guest_base": true,
+                      "region": "registered normal-memory line disjoint from MMIO",
+                      "storage": "initialized C static array",
+                      "symbol": "stream_input",
+                      "translation": "stable synchronous fault-free64-byte mapping",
+                      "visibility": "coherent stable full physical line; no competing CPU/device writes from any core through return"
+                    },
+                    "kind": "isolated-one-u32-stream-core0-v1",
+                    "register_words": 32,
+                    "rf_i32": {
+                      "0": 0,
+                      "1": 1,
+                      "2": 1
+                    },
+                    "tile_words": 16384,
+                    "tiles": 32
+                  },
+                  "kind": "dx100-one-u32-stream-v1",
+                  "sources": [
+                    {
+                      "path": "proof_semantics/one-u32-stream/CpuSidePort.cc",
+                      "root": "library",
+                      "sha256": "886a0c1bbd437916d2fac62a2aa194e01f6996fae65dc56241fad601c5f0103b"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/IF.cc",
+                      "root": "library",
+                      "sha256": "fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/MAA.cc",
+                      "root": "library",
+                      "sha256": "058395cbd171ccf3746fb524967d2d205cb8d622d4aa06e8eef530b00dc21299"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/SPD.cc",
+                      "root": "library",
+                      "sha256": "9e6bb3672be95954e8816c054b4032f95811a3085ca6df418aed90ad1e852b4a"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/SPD.hh",
+                      "root": "library",
+                      "sha256": "70e02b0fea7693585fd9b8f318381c09e352df2fff58bb3f84021f4ea02e9737"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/IF.hh",
+                      "root": "library",
+                      "sha256": "9dee4c4803a1780a41fb30b760775169000785019e6f5848689fc3f3034a1795"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/StreamAccess.cc",
+                      "root": "library",
+                      "sha256": "5fe78a94f0d690396cdfbcdd9b0082e57cbdb4a6b445a7282b2533a33852d47b"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/StreamAccess.hh",
+                      "root": "library",
+                      "sha256": "9ac9feb68adb525ca2d5c7d6e9046b5b0e399ad4c63a718fcca8f78cd521a3ec"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/Tables.cc",
+                      "root": "library",
+                      "sha256": "9bd8aa4103fb6e7617fdd4c514a917329b8e7b8345738ed6e5d82f818df7dfa6"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/Tables.hh",
+                      "root": "library",
+                      "sha256": "5ea6a7caff7ca690aa9ce19096c0e686dfa52716e4dbf19d17348c9235011b43"
+                    },
+                    {
+                      "path": "apps/dx100/benchmarks/API/MAA.hpp",
+                      "root": "project",
+                      "sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd"
+                    },
+                    {
+                      "path": "apps/dx100/benchmarks/API/MAA_gem5.hpp",
+                      "root": "project",
+                      "sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174"
+                    }
+                  ]
+                },
+                "prototype": "void wait_ready(int SPD_id)",
+                "rules": [
+                  "stream_epoch",
+                  "stream_normal_return",
+                  "stream_event_compression",
+                  "stream_count_response"
+                ],
+                "supported": true
+              }
+            ],
+            "clauses": [],
+            "constants": {},
+            "declaration_inventory": {
+              "declarations": [
+                {
+                  "declaration": "inline T1 *get_cacheable_tile_pointer(int SPD_id)",
+                  "file": "MAA.hpp",
+                  "line": 57,
+                  "name": "get_cacheable_tile_pointer"
+                },
+                {
+                  "declaration": "inline volatile T1 *get_noncacheable_tile_pointer(int SPD_id)",
+                  "file": "MAA.hpp",
+                  "line": 61,
+                  "name": "get_noncacheable_tile_pointer"
+                },
+                {
+                  "declaration": "void add_mem_region(void *start, void *end)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 56,
+                  "name": "add_mem_region"
+                },
+                {
+                  "declaration": "void clear_mem_region()",
+                  "file": "MAA_gem5.hpp",
+                  "line": 60,
+                  "name": "clear_mem_region"
+                },
+                {
+                  "declaration": "void alloc_MAA()",
+                  "file": "MAA_gem5.hpp",
+                  "line": 71,
+                  "name": "alloc_MAA"
+                },
+                {
+                  "declaration": "inline void init_MAA()",
+                  "file": "MAA_gem5.hpp",
+                  "line": 93,
+                  "name": "init_MAA"
+                },
+                {
+                  "declaration": "void wait_ready(int SPD_id)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 98,
+                  "name": "wait_ready"
+                },
+                {
+                  "declaration": "inline volatile uint16_t get_tile_size(int SPD_id)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 102,
+                  "name": "get_tile_size"
+                },
+                {
+                  "declaration": "inline volatile T1 get_reg(int reg_id)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 108,
+                  "name": "get_reg"
+                },
+                {
+                  "declaration": "inline void set_reg(int reg_id, T1 data)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 114,
+                  "name": "set_reg"
+                },
+                {
+                  "declaration": "inline int get_new_reg(T1 data)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 119,
+                  "name": "get_new_reg"
+                },
+                {
+                  "declaration": "inline int get_new_reg()",
+                  "file": "MAA_gem5.hpp",
+                  "line": 129,
+                  "name": "get_new_reg"
+                },
+                {
+                  "declaration": "inline int get_new_tile()",
+                  "file": "MAA_gem5.hpp",
+                  "line": 138,
+                  "name": "get_new_tile"
+                },
+                {
+                  "declaration": "void maa_const(T1 data, int dst_reg)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 147,
+                  "name": "maa_const"
+                },
+                {
+                  "declaration": "void print_tile(int SPD_id)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 152,
+                  "name": "print_tile"
+                },
+                {
+                  "declaration": "DataType get_data_type()",
+                  "file": "MAA_gem5.hpp",
+                  "line": 165,
+                  "name": "get_data_type"
+                },
+                {
+                  "declaration": "inline void maa_alu_scalar(int src1_tile, int src2_reg, int dst_tile, Operation_t op, int cond_tile = -1)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 175,
+                  "name": "maa_alu_scalar"
+                },
+                {
+                  "declaration": "inline void maa_alu_vector(int src1_tile, int src2_tile, int dst_tile, Operation_t op, int cond_tile = -1)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 194,
+                  "name": "maa_alu_vector"
+                },
+                {
+                  "declaration": "inline void maa_alu_reduce(int src1_tile, int dst_reg, Operation_t op, int cond_tile = -1)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 213,
+                  "name": "maa_alu_reduce"
+                },
+                {
+                  "declaration": "inline void maa_stream_load(T1 *data, int min_reg, int max_reg, int stride_reg, int dst_tile, int cond_tile = -1)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 232,
+                  "name": "maa_stream_load"
+                },
+                {
+                  "declaration": "inline void maa_stream_store(T1 *data, int min_reg, int max_reg, int stride_reg, int src_tile, int cond_tile = -1)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 251,
+                  "name": "maa_stream_store"
+                },
+                {
+                  "declaration": "inline void maa_indirect_load(T1 *data, int idx_tile, int dst_tile, int cond_tile = -1)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 270,
+                  "name": "maa_indirect_load"
+                },
+                {
+                  "declaration": "inline void maa_indirect_store_vector(T1 *data, int idx_tile, int src_tile, int cond_tile = -1, int dst_tile = -1)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 289,
+                  "name": "maa_indirect_store_vector"
+                },
+                {
+                  "declaration": "inline void maa_indirect_store_scalar(T1 *data, int idx_tile, int src_reg, int cond_tile = -1, int dst_tile = -1)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 308,
+                  "name": "maa_indirect_store_scalar"
+                },
+                {
+                  "declaration": "inline void maa_indirect_rmw_vector(T1 *data, int idx_tile, int src_tile, Operation_t o_type, int cond_tile = -1, int dst_tile = -1)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 327,
+                  "name": "maa_indirect_rmw_vector"
+                },
+                {
+                  "declaration": "inline void maa_indirect_rmw_scalar(T1 *data, int idx_tile, int src_reg, Operation_t o_type, int cond_tile = -1, int dst_tile = -1)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 346,
+                  "name": "maa_indirect_rmw_scalar"
+                },
+                {
+                  "declaration": "inline void maa_range_loop(int last_i_reg, int last_j_reg, int min_tile, int max_tile, int stride_reg, int dst_i_tile, int dst_j_tile, int cond_tile = -1)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 366,
+                  "name": "maa_range_loop"
+                }
+              ],
+              "sources": [
+                {
+                  "path": "apps/dx100/benchmarks/API/MAA.hpp",
+                  "root": "project",
+                  "sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd"
+                },
+                {
+                  "path": "apps/dx100/benchmarks/API/MAA_gem5.hpp",
+                  "root": "project",
+                  "sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174"
+                }
+              ]
+            },
+            "description": "One source-bound u32 stream metadata observation on conditional normal return.",
+            "formal_frame": 1,
+            "ghost": {
+              "acsl": {
+                "path": "proof_semantics/one-u32-stream/ghost.acsl",
+                "root": "library",
+                "sha256": "cef6352ffe5ce76236ec837ef2f3015f98070c41b37a9455ef3c53c363e408fc"
+              }
+            },
+            "hardware_interface": {
+              "gem5_commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+              "id": "dx100-mmio",
+              "version": "1.0-e4fc4af"
+            },
+            "id": "semantics.dx100_stream_fixture_0_2",
+            "inventory": {
+              "calls": [
+                "add_mem_region",
+                "alloc_MAA",
+                "clear_mem_region",
+                "get_cacheable_tile_pointer",
+                "get_data_type",
+                "get_new_reg",
+                "get_new_tile",
+                "get_noncacheable_tile_pointer",
+                "get_reg",
+                "get_tile_size",
+                "init_MAA",
+                "maa_alu_reduce",
+                "maa_alu_scalar",
+                "maa_alu_vector",
+                "maa_const",
+                "maa_indirect_load",
+                "maa_indirect_rmw_scalar",
+                "maa_indirect_rmw_vector",
+                "maa_indirect_store_scalar",
+                "maa_indirect_store_vector",
+                "maa_range_loop",
+                "maa_stream_load",
+                "maa_stream_store",
+                "print_tile",
+                "set_reg",
+                "wait_ready"
+              ],
+              "sources": [
+                {
+                  "path": "apps/dx100/benchmarks/API/MAA.hpp",
+                  "root": "project",
+                  "sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd"
+                },
+                {
+                  "path": "apps/dx100/benchmarks/API/MAA_gem5.hpp",
+                  "root": "project",
+                  "sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174"
+                }
+              ]
+            },
+            "kind": "proof_semantics",
+            "model": {
+              "c": {
+                "path": "proof_semantics/one-u32-stream/model.h",
+                "root": "library",
+                "sha256": "4a12723f504cab4b485e25d59e2ea2afbcc2bd0bd1af95281949351aefaf325b"
+              },
+              "layout": "dx100-one-u32-stream-partial-v1",
+              "logic": {
+                "path": "proof_semantics/one-u32-stream/logic.acsl",
+                "root": "library",
+                "sha256": "b7f8c7f0b5a70cdcdf6ee864199c6d7b07bc2fed87e2fdeaafd6f0e770b0ceb8"
+              },
+              "state": {
+                "path": "proof_semantics/one-u32-stream/state.h",
+                "root": "library",
+                "sha256": "ac91330aa6805bcb27f97b2460da48f702f43dca7a17c6dca0dc6083f567c45c"
+              }
+            },
+            "provenance": {
+              "origin": {
+                "created": "2026-10-14 ET",
+                "probata_ticket": "27",
+                "research": ".scratch/formal-verification-2026-10-09/research/14-dx100-wait-rule.md",
+                "rocq": "library/rocq/probata/Reduction.v (ticket 41: F2, F5, F6)"
+              }
+            },
+            "queries": [],
+            "rules": [
+              {
+                "assumed": {
+                  "owner": "Probata proof-semantics maintainer; pending Yan-Ru freeze review (59)"
+                },
+                "id": "mmio_ordering",
+                "record_assumption": true,
+                "statement": "The pinned MMIO implements call semantics including ordering; its wait fence lacks a memory clobber, a portability note independent of candidate artifacts."
+              },
+              {
+                "assumed": {
+                  "owner": "Probata proof-semantics maintainer; pending Yan-Ru freeze review (59)"
+                },
+                "id": "cross_core_filter",
+                "record_assumption": true,
+                "statement": "A DX100 store remains visible if the snoop filter drops its line before the write reaches L3."
+              },
+              {
+                "assumed": {
+                  "owner": "Probata proof-semantics maintainer; pending Yan-Ru freeze review (59)"
+                },
+                "id": "cross_core_write_buffer",
+                "record_assumption": true,
+                "statement": "A DX100 store remains visible when L3 passes a write below it because no block can be allocated."
+              },
+              {
+                "assumed": {
+                  "owner": "Eric"
+                },
+                "id": "no_stale_cpu_copy",
+                "record_assumption": true,
+                "statement": "No stale CPU copy survives a DX100 store (owner Eric)."
+              },
+              {
+                "assumed": {
+                  "owner": "Probata proof-semantics maintainer; pending Yan-Ru freeze review (59)"
+                },
+                "id": "one_instance",
+                "record_assumption": true,
+                "statement": "All commands belong to one DX100 instance."
+              },
+              {
+                "assumed": {
+                  "owner": "Probata proof-semantics maintainer; pending Yan-Ru freeze review (59)"
+                },
+                "id": "stream_epoch",
+                "record_assumption": true,
+                "statement": "This synthetic core0 unit starts with the pinned32-tile/16384-word SPD constructor state and configured4-core MMIO mapping, quiescent initialized signed-int32 RF values0/1/1 at registers0/1/2, and one registered initialized64-byte aligned normal-memory input line whose virtual base is nonzero, with stable synchronous fault-free translation and coherent no-interference visibility through normal return. These are conditional environment/source-model premises owned by the Probata proof-semantics maintainer, pending Yan-Ru freeze review (59); alloc/init do not establish them and arbitrary callers or physical boot are not established."
+              },
+              {
+                "assumed": {
+                  "owner": "Probata proof-semantics maintainer; pending Yan-Ru freeze review (59)"
+                },
+                "id": "stream_normal_return",
+                "record_assumption": true,
+                "statement": "All three MMIO helpers and this source unit are interpreted only on normal return; no termination, fairness or hardware-liveness theorem is claimed."
+              },
+              {
+                "assumed": {
+                  "owner": "Probata proof-semantics maintainer; pending Yan-Ru freeze review (59)"
+                },
+                "id": "stream_event_compression",
+                "record_assumption": true,
+                "statement": "An acknowledgement establishes dispatch, not completion or still-unfinished hardware. In this isolated no-observation/no-interference caller, unobserved device events may be represented by a logically uncovered command and settled only at the returned real ready read; this source-model correspondence is owned by the Probata proof-semantics maintainer, pending Yan-Ru freeze review (59). All-schedule event refinement and contract/body agreement remain unverified owned TCB duties, not conclusions of finite native prefixes."
+              },
+              {
+                "cites": {
+                  "gem5_commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+                  "lines": "138-342",
+                  "path": "src/mem/MAA/StreamAccess.cc"
+                },
+                "id": "stream_count_response",
+                "statement": "For defined signed-int RF0/1/1, the nonempty u32 stream has one lane; a matched completed response sets starting-tile size1 before Finished/ready restoration."
+              },
+              {
+                "assumed": {
+                  "owner": "Probata proof-semantics maintainer; pending Yan-Ru freeze review (59)"
+                },
+                "id": "stream_scope",
+                "statement": "Only the unchanged one-command stream/wait/size synthetic caller is admitted; no payload CPU read or full interface acceptance."
+              }
+            ],
+            "sequence": 2,
+            "target": "dx100-mmio",
+            "version": "0.2",
+            "wp": {}
+          },
+          "pin": {
+            "bytes": 21412,
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c241c547-t28-stream-current-v2/stream-profile/pytest/test_actual_wp_source_partial_0/library/proof_semantics/dx100_trust_fixture.yaml",
+            "sha256": "e190dc5b8734ed50c1cd58417d244771662eda47ef688051d2576f06e4825cb7"
+          }
+        },
+        "settings_flags": [
+          "-wp",
+          "-wp-rte",
+          "-wp-cache",
+          "none",
+          "-wp-model",
+          "+real",
+          "-rte-initialized",
+          "@all",
+          "-wp-no-filter-init",
+          "-machdep",
+          "x86_64",
+          "-wp-prover",
+          "z3,cvc5,alt-ergo",
+          "-machdep",
+          "x86_64",
+          "-wp-timeout",
+          "30",
+          "-wp-par",
+          "1",
+          "-wp-smoke-tests",
+          "-wp-fct=trust_fixture"
+        ],
+        "setup": {
+          "check": {
+            "sha256": "0db61b23428b7fee70841a7a9535aa66cf225429bad52881484ecce22ae0886f",
+            "version": "1"
+          },
+          "hashes": {
+            "compiler_runtime": "d7a0b81613fdee059f9567d68eaf41de58f83257ef606711a85de1529d606ced",
+            "contract": "033e79c5acf545e44660e14771f6e66f1a993a5a644ca07b78c2055ab8f3d163",
+            "dx100_size_source": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "dx100_source_selector": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "dx100_stream_source": "c425fd7121f8fc575a7bda7e6ba480101ee5208b6cd30bfb1aed135564c6210c",
+            "lowering": "53aec727d01ec4d7cdd6dc67dd98ea34806c3231998aaab3784c14e393d07f7c",
+            "run_plan": "453275f36820de479f0338b3a0d3cc54324b6542ce6e5ee9b4d09339811c790f",
+            "stdlib_provenance": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+            "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "wp_input.c": "e849a01e2ca42241fbcf71799c3df9fae9142eca916cc285d6a2a4b58647987a"
+          },
+          "method_version": {
+            "id": "method.dx100-stream-partial-fixture-v1",
+            "sha256": "409f286936d8b10cccaecf447e73c60c750a89fba8a592f4721434baad74b843"
+          },
+          "runs": [
+            {
+              "hashes": {
+                "compiler_runtime": "d7a0b81613fdee059f9567d68eaf41de58f83257ef606711a85de1529d606ced",
+                "dx100_size_source": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+                "dx100_source_selector": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+                "dx100_stream_source": "c425fd7121f8fc575a7bda7e6ba480101ee5208b6cd30bfb1aed135564c6210c",
+                "lowering": "53aec727d01ec4d7cdd6dc67dd98ea34806c3231998aaab3784c14e393d07f7c",
+                "stdlib_provenance": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+                "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+                "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+                "wp_input.c": "e849a01e2ca42241fbcf71799c3df9fae9142eca916cc285d6a2a4b58647987a"
+              },
+              "run_plan_sha256": "2c3bcf61412a4a5ffc0cd3c3cd1cb3b31abfb28f339e7493ff98135dd6e2be52",
+              "tool": "wp",
+              "verdict": "passed"
+            }
+          ],
+          "verdict": "passed"
+        },
+        "source": {
+          "bytes": 290,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c241c547-t28-stream-current-v2/stream-profile/pytest/test_actual_wp_source_partial_0/library/proof_units/trust.cc",
+          "sha256": "071df1d875e38dcccf798b9cfbdf9064f909c7220965f339936fd99d7dc79eab"
+        },
+        "verdict": "proven",
+        "verdict_reading": {
+          "check": {
+            "sha256": "0db61b23428b7fee70841a7a9535aa66cf225429bad52881484ecce22ae0886f",
+            "version": "1"
+          },
+          "verdict": "proven"
+        }
+      },
+      {
+        "adapter_log": {
+          "bytes": 1337,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c241c547-t28-stream-current-v2/stream-profile/pytest/test_actual_wp_source_partial_1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100432z.cd656299/adapter.log",
+          "sha256": "84d613b3f4a1877f970ce1484c432dd8ccd9f62e2672da41ea7fe7e573179e54"
+        },
+        "bounds": {
+          "input_size": "unbounded",
+          "threads": 1
+        },
+        "commands": [
+          [
+            "/data1/yanruj/probata-verifiers/opam/framac-33/bin/frama-c",
+            "-machdep",
+            "x86_64",
+            "wp_input.c",
+            "-print",
+            "-ocode",
+            "wp-normalized.c",
+            "-then",
+            "-wp",
+            "-wp-rte",
+            "-wp-cache",
+            "none",
+            "-wp-model",
+            "+real",
+            "-rte-initialized",
+            "@all",
+            "-wp-no-filter-init",
+            "-machdep",
+            "x86_64",
+            "-wp-prover",
+            "z3,cvc5,alt-ergo",
+            "-machdep",
+            "x86_64",
+            "-wp-timeout",
+            "30",
+            "-wp-par",
+            "1",
+            "-wp-smoke-tests",
+            "-wp-fct=trust_fixture",
+            "-wp-report-json",
+            "wp-goals.json",
+            "-then",
+            "-load-module",
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c241c547-t28-stream-current-v2/stream-profile/pytest/test_actual_wp_source_partial_1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100432z.cd656299/scratch/proof_report.cmxs",
+            "-report",
+            "-report-untried",
+            "-report-csv",
+            "wp-properties.csv"
+          ]
+        ],
+        "contract": {
+          "content": {
+            "clauses": [
+              {
+                "acsl": {
+                  "text": "assigns \\nothing; ensures \\result == 0;",
+                  "uses": []
+                },
+                "discharge_mode": "runtime_guard",
+                "id": "result",
+                "negative_control": {
+                  "check": "result",
+                  "id": "wrong-result"
+                },
+                "proof_placement": {
+                  "once": "self"
+                },
+                "role": "postcondition",
+                "statement": "Synthetic trust-record fixture."
+              }
+            ],
+            "concurrency_frame": [],
+            "correctness_check": {
+              "check": "fixture",
+              "kernel": "fixture"
+            },
+            "execution_witness": {
+              "check": "fixture"
+            },
+            "formal_frame": 1,
+            "id": "contract.dx100_stream_partial_fixture.v1",
+            "kind": "rewrite_contract",
+            "knobs": [],
+            "negative_controls": [
+              {
+                "check": "fixture",
+                "id": "overlapping_pointer",
+                "kind": "overlapping_pointer"
+              },
+              {
+                "check": "fixture",
+                "id": "double_claim",
+                "kind": "double_claim"
+              },
+              {
+                "check": "fixture",
+                "id": "dropped_operand",
+                "kind": "dropped_operand"
+              }
+            ],
+            "pattern_key": [
+              {
+                "address_shapes": [
+                  "stream",
+                  "single_valued_indirect"
+                ],
+                "roles": [
+                  "index",
+                  "target"
+                ],
+                "update_kind": "read"
+              }
+            ],
+            "preservation_obligations": [],
+            "proof_unit": {
+              "correctness_policy": {
+                "kind": "partial-normal-return-v1",
+                "semantics": {
+                  "id": "semantics.dx100_stream_fixture_0_2",
+                  "sha256": "e190dc5b8734ed50c1cd58417d244771662eda47ef688051d2576f06e4825cb7"
+                },
+                "source_policy": "dx100-one-u32-stream-v1"
+              },
+              "function": "trust_fixture",
+              "source": {
+                "path": "proof_units/trust.cc",
+                "root": "library",
+                "sha256": "071df1d875e38dcccf798b9cfbdf9064f909c7220965f339936fd99d7dc79eab"
+              }
+            },
+            "provenance": {
+              "origin": {
+                "intrinsic_specification": "ticket28-record-plumbing-fixture"
+              }
+            },
+            "requirement_map": [],
+            "runtime_guards": [],
+            "strategies": [],
+            "uses_intrinsics": [],
+            "uses_library_operations": [],
+            "version": "0.1"
+          },
+          "pin": {
+            "bytes": 1463,
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c241c547-t28-stream-current-v2/stream-profile/pytest/test_actual_wp_source_partial_1/library/rewrite_contracts/trust.yaml",
+            "sha256": "a4ae0acc6dc1708438a994433eaed9b271cc93d84e17fd2f88a6d372961c1bfd"
+          }
+        },
+        "cwd_lines": [
+          "scratch"
+        ],
+        "id": "proof.contract.dx100_stream_partial_fixture.v1.20261016t100432z.cd656299",
+        "input_pins": {
+          "c_lowering": {
+            "bytes": 1159,
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c241c547-t28-stream-current-v2/stream-profile/pytest/test_actual_wp_source_partial_1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100432z.cd656299/wp/trust_fixture.c",
+            "sha256": "53aec727d01ec4d7cdd6dc67dd98ea34806c3231998aaab3784c14e393d07f7c"
+          },
+          "wp_input": {
+            "bytes": 4218,
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c241c547-t28-stream-current-v2/stream-profile/pytest/test_actual_wp_source_partial_1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100432z.cd656299/wp/wp_input.c",
+            "sha256": "bad552c2a4ee7af438b5474fe5f76e24edd70efcf27540244724ec192ce7b763"
+          }
+        },
+        "method": {
+          "content": {
+            "acsl_version": "1.22",
+            "budgets": {
+              "bounded_job_minutes": 15,
+              "civl_k": 3,
+              "counterexample_repair_rounds": 5,
+              "hint_loop_wall_minutes": 60,
+              "hint_rounds": 10,
+              "wp_seconds_per_solver": 30
+            },
+            "c_lowering": {
+              "naming_rules": {
+                "id": "kept-names.3",
+                "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+              },
+              "subset": {
+                "id": "fixture.cpp-subset",
+                "sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+              },
+              "translators": [
+                {
+                  "id": "swdb-c-lowering-9",
+                  "sha256": "54dfd90ba7ce0b4584828ac3826c779eab16bdf8b0c9f9a4a2720f749c0604ce"
+                },
+                {
+                  "id": "swdb-cbmc-translator-4",
+                  "sha256": "b67a4fc23c70a1d39269de563ade63a3d655665d3ba3394dd12d5eb4650eff63"
+                }
+              ]
+            },
+            "checks": {
+              "proof_hint_check": {
+                "version": "0"
+              },
+              "proof_setup_check": {
+                "sha256": "0db61b23428b7fee70841a7a9535aa66cf225429bad52881484ecce22ae0886f",
+                "version": "1"
+              },
+              "verdict_reading": {
+                "sha256": "0db61b23428b7fee70841a7a9535aa66cf225429bad52881484ecce22ae0886f",
+                "version": "1"
+              }
+            },
+            "civl": {
+              "java": {
+                "flags": [
+                  "-Xmx4g"
+                ],
+                "tool": "openjdk",
+                "version": "21.0.12.1"
+              },
+              "memory_model": "sequential_consistency",
+              "result_line": "All errors marked with '+' are absent"
+            },
+            "created": "2026-10-14",
+            "description": "Fixture method version with every section, for tests of swdb validate and swdb prove.",
+            "evidence_kind": "contract_fixture",
+            "genmc": {
+              "error_exit_code": 42,
+              "memory_model": "rc11",
+              "memory_model_detector": "disabled"
+            },
+            "ghost_capacity_k": 8,
+            "id": "method.dx100-stream-partial-fixture-v1",
+            "kind": "method_version",
+            "lineup": [
+              {
+                "flags": [
+                  "-c",
+                  "-emit-llvm",
+                  "-g",
+                  "-O0"
+                ],
+                "role": "front_end",
+                "tool": "clang",
+                "version": "22.1.8"
+              },
+              {
+                "flags": [],
+                "role": "bounded_verifier",
+                "tool": "saw",
+                "version": "1.6"
+              },
+              {
+                "flags": [
+                  "--no-compile"
+                ],
+                "role": "bounded_verifier_fallback",
+                "tool": "crux-llvm",
+                "version": "0.12"
+              },
+              {
+                "flags": [
+                  "--unwinding-assertions",
+                  "--pointer-overflow-check"
+                ],
+                "role": "bounded_verifier_fallback",
+                "tool": "cbmc",
+                "version": "6.11"
+              },
+              {
+                "flags": [
+                  "verify"
+                ],
+                "role": "concurrent_bounded_verifier",
+                "tool": "civl",
+                "version": "1.23"
+              },
+              {
+                "flags": [
+                  "--rc11",
+                  "--disable-mm-detector",
+                  "--print-error-trace"
+                ],
+                "role": "second_refuter",
+                "tool": "genmc",
+                "version": "0.19.0"
+              },
+              {
+                "flags": [
+                  "-wp",
+                  "-wp-rte",
+                  "-wp-cache",
+                  "none",
+                  "-wp-model",
+                  "+real",
+                  "-rte-initialized",
+                  "@all",
+                  "-wp-no-filter-init",
+                  "-machdep",
+                  "x86_64",
+                  "-wp-prover",
+                  "z3,cvc5,alt-ergo"
+                ],
+                "role": "unbounded_verifier",
+                "tool": "frama-c-wp",
+                "version": "33.0"
+              },
+              {
+                "flags": [],
+                "role": "solver",
+                "tool": "alt-ergo",
+                "version": "2.6.4"
+              },
+              {
+                "flags": [],
+                "role": "solver",
+                "tool": "z3",
+                "version": "5.1.0"
+              },
+              {
+                "flags": [],
+                "role": "solver",
+                "tool": "cvc5",
+                "version": "1.2.1"
+              },
+              {
+                "flags": [],
+                "role": "proof_assistant",
+                "tool": "rocq",
+                "version": "9.3.0"
+              }
+            ],
+            "logic_library": {
+              "id": "fixture.logic-library",
+              "sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+              "sum_library": {
+                "id": "fixture.sum-library",
+                "sha256": "6666666666666666666666666666666666666666666666666666666666666666"
+              }
+            },
+            "models": {
+              "std_pair": {
+                "id": "fixture.std-pair-model",
+                "sha256": "8888888888888888888888888888888888888888888888888888888888888888"
+              },
+              "std_vector": {
+                "id": "fixture.std-vector-model",
+                "sha256": "7777777777777777777777777777777777777777777777777777777777777777"
+              }
+            },
+            "openmp_runtime": {
+              "name": "libomp",
+              "version": "22.1.8"
+            },
+            "prompts": [
+              {
+                "id": "fixture.proof-hint-agent-prompt",
+                "sha256": "4444444444444444444444444444444444444444444444444444444444444444"
+              }
+            ],
+            "proof_hint_vocabulary": [
+              "loop_invariant",
+              "loop_assigns",
+              "loop_variant",
+              "assert",
+              "ghost_declaration",
+              "ghost_statement",
+              "non_recursive_definition",
+              "same_run_lemma",
+              "wp_strategy"
+            ],
+            "rocq_development": {
+              "composition_theorem": "parallel_composition",
+              "dx100_reduction_lemma": "dx100_reduction",
+              "id": "fixture.rocq-development",
+              "sha256": "9999999999999999999999999999999999999999999999999999999999999999"
+            },
+            "sequence": 2,
+            "shared_action_kinds": [
+              "claim",
+              "min_update",
+              "atomic_add_or",
+              "openmp_reduction",
+              "queue_reserve"
+            ],
+            "sharing_classes": [
+              "read_only",
+              "thread_owned",
+              "shared_actions_only",
+              "lock_protected"
+            ],
+            "status": "frozen"
+          },
+          "pin": {
+            "bytes": 3774,
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c241c547-t28-stream-current-v2/stream-profile/pytest/test_actual_wp_source_partial_1/library/methods/dx100-stream-partial-fixture-v1.yaml",
+            "sha256": "409f286936d8b10cccaecf447e73c60c750a89fba8a592f4721434baad74b843"
+          }
+        },
+        "model_file_metadata": {
+          "c": {
+            "comment_or_whitespace_only": false,
+            "pin": {
+              "bytes": 2417,
+              "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c241c547-t28-stream-current-v2/stream-profile/pytest/test_actual_wp_source_partial_1/library/proof_semantics/one-u32-stream/model.h",
+              "sha256": "4a12723f504cab4b485e25d59e2ea2afbcc2bd0bd1af95281949351aefaf325b"
+            }
+          },
+          "ghost": {
+            "comment_or_whitespace_only": true,
+            "pin": {
+              "bytes": 49,
+              "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c241c547-t28-stream-current-v2/stream-profile/pytest/test_actual_wp_source_partial_1/library/proof_semantics/one-u32-stream/ghost.acsl",
+              "sha256": "cef6352ffe5ce76236ec837ef2f3015f98070c41b37a9455ef3c53c363e408fc"
+            }
+          },
+          "logic": {
+            "comment_or_whitespace_only": true,
+            "pin": {
+              "bytes": 23,
+              "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c241c547-t28-stream-current-v2/stream-profile/pytest/test_actual_wp_source_partial_1/library/proof_semantics/one-u32-stream/logic.acsl",
+              "sha256": "b7f8c7f0b5a70cdcdf6ee864199c6d7b07bc2fed87e2fdeaafd6f0e770b0ceb8"
+            }
+          },
+          "state": {
+            "comment_or_whitespace_only": false,
+            "pin": {
+              "bytes": 225,
+              "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c241c547-t28-stream-current-v2/stream-profile/pytest/test_actual_wp_source_partial_1/library/proof_semantics/one-u32-stream/state.h",
+              "sha256": "ac91330aa6805bcb27f97b2460da48f702f43dca7a17c6dca0dc6083f567c45c"
+            }
+          }
+        },
+        "pins": {
+          "baseline_function": {
+            "not_applicable": "A library summary is proven on the entry's own code."
+          },
+          "build_constants": [],
+          "c_lowering": {
+            "id": "trust_fixture.c",
+            "sha256": "53aec727d01ec4d7cdd6dc67dd98ea34806c3231998aaab3784c14e393d07f7c"
+          },
+          "code": {
+            "id": "contract.dx100_stream_partial_fixture.v1",
+            "sha256": "2a53575c4b3dd5a5b9dbba2971e1892b71ec7de36b2559fa8ac5976935cd7e35"
+          },
+          "contract": {
+            "id": "contract.dx100_stream_partial_fixture.v1",
+            "sha256": "2a53575c4b3dd5a5b9dbba2971e1892b71ec7de36b2559fa8ac5976935cd7e35"
+          },
+          "method_version": {
+            "id": "method.dx100-stream-partial-fixture-v1",
+            "sha256": "409f286936d8b10cccaecf447e73c60c750a89fba8a592f4721434baad74b843"
+          },
+          "minimum_bounds": {
+            "not_applicable": "No minimum-bounds version exists before ticket 33."
+          },
+          "naming_rules": {
+            "id": "kept-names.3",
+            "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+          },
+          "predecessor_snapshot": {
+            "not_applicable": "A library summary has no predecessor."
+          },
+          "proof_semantics": {
+            "id": "semantics.dx100_stream_fixture_0_2",
+            "sha256": "e190dc5b8734ed50c1cd58417d244771662eda47ef688051d2576f06e4825cb7"
+          },
+          "reference_semantics": {
+            "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+          },
+          "summaries": []
+        },
+        "record": {
+          "bytes": 12890898,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c241c547-t28-stream-current-v2/stream-profile/pytest/test_actual_wp_source_partial_1/records/proofs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100432z.cd656299.yaml",
+          "sha256": "faed9f288ea7b338bb9c96d8ccceca37429d55c1227422042a5eb8efcc7abef9"
+        },
+        "semantics": {
+          "content": {
+            "calls": [
+              {
+                "call": "add_mem_region",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int add_mem_region(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "alloc_MAA",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int alloc_MAA(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "clear_mem_region",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int clear_mem_region(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "get_cacheable_tile_pointer",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int get_cacheable_tile_pointer(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "get_data_type",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int get_data_type(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "get_new_reg",
+                "contract": "requires \\false; assigns \\nothing;",
+                "overloads": [
+                  {
+                    "contract": "requires \\false; assigns \\nothing;",
+                    "declaration": "inline int get_new_reg(T1 data)",
+                    "prototype": "int swdb_refused_get_new_reg_0(void)"
+                  },
+                  {
+                    "contract": "requires \\false; assigns \\nothing;",
+                    "declaration": "inline int get_new_reg()",
+                    "prototype": "int swdb_refused_get_new_reg_1(void)"
+                  }
+                ],
+                "prototype": "int get_new_reg(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "get_new_tile",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int get_new_tile(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "get_noncacheable_tile_pointer",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int get_noncacheable_tile_pointer(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "get_reg",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int get_reg(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "get_tile_size",
+                "contract": "requires SPD_id==0 && __swdb_dx_stream_meta.phase==5 && __swdb_dx_stream_meta.status==2;\nterminates \\false;\nassigns \\nothing;\nensures \\result==__swdb_dx_stream_meta.size;",
+                "definition": {
+                  "call": "get_tile_size",
+                  "entry": {
+                    "byte_order": "little",
+                    "commands": "exactly one u32 stream load, no condition or competing command",
+                    "core": 0,
+                    "epoch": "after-constructor-and-configured-quiescent-RF-before-one-command",
+                    "guest_address_bits": 64,
+                    "input": {
+                      "alignment": 64,
+                      "bytes": 64,
+                      "nonzero_guest_base": true,
+                      "region": "registered normal-memory line disjoint from MMIO",
+                      "storage": "initialized C static array",
+                      "symbol": "stream_input",
+                      "translation": "stable synchronous fault-free64-byte mapping",
+                      "visibility": "coherent stable full physical line; no competing CPU/device writes from any core through return"
+                    },
+                    "kind": "isolated-one-u32-stream-core0-v1",
+                    "register_words": 32,
+                    "rf_i32": {
+                      "0": 0,
+                      "1": 1,
+                      "2": 1
+                    },
+                    "tile_words": 16384,
+                    "tiles": 32
+                  },
+                  "kind": "dx100-one-u32-stream-v1",
+                  "sources": [
+                    {
+                      "path": "proof_semantics/one-u32-stream/CpuSidePort.cc",
+                      "root": "library",
+                      "sha256": "886a0c1bbd437916d2fac62a2aa194e01f6996fae65dc56241fad601c5f0103b"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/IF.cc",
+                      "root": "library",
+                      "sha256": "fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/MAA.cc",
+                      "root": "library",
+                      "sha256": "058395cbd171ccf3746fb524967d2d205cb8d622d4aa06e8eef530b00dc21299"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/SPD.cc",
+                      "root": "library",
+                      "sha256": "9e6bb3672be95954e8816c054b4032f95811a3085ca6df418aed90ad1e852b4a"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/SPD.hh",
+                      "root": "library",
+                      "sha256": "70e02b0fea7693585fd9b8f318381c09e352df2fff58bb3f84021f4ea02e9737"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/IF.hh",
+                      "root": "library",
+                      "sha256": "9dee4c4803a1780a41fb30b760775169000785019e6f5848689fc3f3034a1795"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/StreamAccess.cc",
+                      "root": "library",
+                      "sha256": "5fe78a94f0d690396cdfbcdd9b0082e57cbdb4a6b445a7282b2533a33852d47b"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/StreamAccess.hh",
+                      "root": "library",
+                      "sha256": "9ac9feb68adb525ca2d5c7d6e9046b5b0e399ad4c63a718fcca8f78cd521a3ec"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/Tables.cc",
+                      "root": "library",
+                      "sha256": "9bd8aa4103fb6e7617fdd4c514a917329b8e7b8345738ed6e5d82f818df7dfa6"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/Tables.hh",
+                      "root": "library",
+                      "sha256": "5ea6a7caff7ca690aa9ce19096c0e686dfa52716e4dbf19d17348c9235011b43"
+                    },
+                    {
+                      "path": "apps/dx100/benchmarks/API/MAA.hpp",
+                      "root": "project",
+                      "sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd"
+                    },
+                    {
+                      "path": "apps/dx100/benchmarks/API/MAA_gem5.hpp",
+                      "root": "project",
+                      "sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174"
+                    }
+                  ]
+                },
+                "prototype": "volatile unsigned short get_tile_size(int SPD_id)",
+                "rules": [
+                  "stream_epoch",
+                  "stream_normal_return",
+                  "stream_event_compression",
+                  "stream_count_response"
+                ],
+                "supported": true
+              },
+              {
+                "call": "init_MAA",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int init_MAA(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "maa_alu_reduce",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int maa_alu_reduce(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "maa_alu_scalar",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int maa_alu_scalar(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "maa_alu_vector",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int maa_alu_vector(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "maa_const",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int maa_const(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "maa_indirect_load",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int maa_indirect_load(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "maa_indirect_rmw_scalar",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int maa_indirect_rmw_scalar(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "maa_indirect_rmw_vector",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int maa_indirect_rmw_vector(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "maa_indirect_store_scalar",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int maa_indirect_store_scalar(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "maa_indirect_store_vector",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int maa_indirect_store_vector(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "maa_range_loop",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int maa_range_loop(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "maa_stream_load",
+                "instances": [
+                  {
+                    "arguments": [
+                      "unsigned int"
+                    ],
+                    "arity": 6,
+                    "contract": "requires min_reg==0 && max_reg==1 && stride_reg==2 && dst_tile==0 && cond_tile==-1;\nrequires \\valid_read(data+(0..15)) && \\initialized(data+(0..15));\nrequires __swdb_dx_stream_meta.phase==0 && __swdb_dx_stream_meta.ack==0 && __swdb_dx_stream_meta.status==2 && __swdb_dx_stream_meta.ready==0;\nrequires __swdb_dx_stream_meta.size==0 && __swdb_dx_stream_meta.sent==0 && __swdb_dx_stream_meta.received==0;\nrequires __swdb_dx_stream_meta.lane0_finished==1 && __swdb_dx_stream_meta.other_lanes_finished==1 && __swdb_dx_stream_meta.payload_initialized==1;\nterminates \\false;\nassigns __swdb_dx_stream_meta;\nensures __swdb_dx_stream_meta.phase==1 && __swdb_dx_stream_meta.ack==1 && __swdb_dx_stream_meta.status==0;\nensures __swdb_dx_stream_meta.ready==255 && __swdb_dx_stream_meta.size==0 && __swdb_dx_stream_meta.target_size==1;\nensures __swdb_dx_stream_meta.lane0_finished==0 && __swdb_dx_stream_meta.other_lanes_finished==0;\nensures __swdb_dx_stream_meta.sent==0 && __swdb_dx_stream_meta.received==0 && __swdb_dx_stream_meta.payload_initialized==1;",
+                    "definition": {
+                      "call": "maa_stream_load",
+                      "entry": {
+                        "byte_order": "little",
+                        "commands": "exactly one u32 stream load, no condition or competing command",
+                        "core": 0,
+                        "epoch": "after-constructor-and-configured-quiescent-RF-before-one-command",
+                        "guest_address_bits": 64,
+                        "input": {
+                          "alignment": 64,
+                          "bytes": 64,
+                          "nonzero_guest_base": true,
+                          "region": "registered normal-memory line disjoint from MMIO",
+                          "storage": "initialized C static array",
+                          "symbol": "stream_input",
+                          "translation": "stable synchronous fault-free64-byte mapping",
+                          "visibility": "coherent stable full physical line; no competing CPU/device writes from any core through return"
+                        },
+                        "kind": "isolated-one-u32-stream-core0-v1",
+                        "register_words": 32,
+                        "rf_i32": {
+                          "0": 0,
+                          "1": 1,
+                          "2": 1
+                        },
+                        "tile_words": 16384,
+                        "tiles": 32
+                      },
+                      "kind": "dx100-one-u32-stream-v1",
+                      "sources": [
+                        {
+                          "path": "proof_semantics/one-u32-stream/CpuSidePort.cc",
+                          "root": "library",
+                          "sha256": "886a0c1bbd437916d2fac62a2aa194e01f6996fae65dc56241fad601c5f0103b"
+                        },
+                        {
+                          "path": "proof_semantics/one-u32-stream/IF.cc",
+                          "root": "library",
+                          "sha256": "fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561"
+                        },
+                        {
+                          "path": "proof_semantics/one-u32-stream/MAA.cc",
+                          "root": "library",
+                          "sha256": "058395cbd171ccf3746fb524967d2d205cb8d622d4aa06e8eef530b00dc21299"
+                        },
+                        {
+                          "path": "proof_semantics/one-u32-stream/SPD.cc",
+                          "root": "library",
+                          "sha256": "9e6bb3672be95954e8816c054b4032f95811a3085ca6df418aed90ad1e852b4a"
+                        },
+                        {
+                          "path": "proof_semantics/one-u32-stream/SPD.hh",
+                          "root": "library",
+                          "sha256": "70e02b0fea7693585fd9b8f318381c09e352df2fff58bb3f84021f4ea02e9737"
+                        },
+                        {
+                          "path": "proof_semantics/one-u32-stream/IF.hh",
+                          "root": "library",
+                          "sha256": "9dee4c4803a1780a41fb30b760775169000785019e6f5848689fc3f3034a1795"
+                        },
+                        {
+                          "path": "proof_semantics/one-u32-stream/StreamAccess.cc",
+                          "root": "library",
+                          "sha256": "5fe78a94f0d690396cdfbcdd9b0082e57cbdb4a6b445a7282b2533a33852d47b"
+                        },
+                        {
+                          "path": "proof_semantics/one-u32-stream/StreamAccess.hh",
+                          "root": "library",
+                          "sha256": "9ac9feb68adb525ca2d5c7d6e9046b5b0e399ad4c63a718fcca8f78cd521a3ec"
+                        },
+                        {
+                          "path": "proof_semantics/one-u32-stream/Tables.cc",
+                          "root": "library",
+                          "sha256": "9bd8aa4103fb6e7617fdd4c514a917329b8e7b8345738ed6e5d82f818df7dfa6"
+                        },
+                        {
+                          "path": "proof_semantics/one-u32-stream/Tables.hh",
+                          "root": "library",
+                          "sha256": "5ea6a7caff7ca690aa9ce19096c0e686dfa52716e4dbf19d17348c9235011b43"
+                        },
+                        {
+                          "path": "apps/dx100/benchmarks/API/MAA.hpp",
+                          "root": "project",
+                          "sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd"
+                        },
+                        {
+                          "path": "apps/dx100/benchmarks/API/MAA_gem5.hpp",
+                          "root": "project",
+                          "sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174"
+                        }
+                      ]
+                    },
+                    "prototype": "void maa_stream_load_unsigned_int(unsigned int *data, int min_reg, int max_reg, int stride_reg, int dst_tile, int cond_tile)"
+                  }
+                ],
+                "rules": [
+                  "stream_epoch",
+                  "stream_normal_return",
+                  "stream_event_compression",
+                  "stream_count_response"
+                ],
+                "supported": true
+              },
+              {
+                "call": "maa_stream_store",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int maa_stream_store(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "print_tile",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int print_tile(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "set_reg",
+                "contract": "requires \\false; assigns \\nothing;",
+                "prototype": "int set_reg(void)",
+                "rules": [
+                  "stream_scope"
+                ],
+                "supported": false
+              },
+              {
+                "call": "wait_ready",
+                "contract": "requires SPD_id==0 && __swdb_dx_stream_meta.phase==1 && __swdb_dx_stream_meta.ack==1 && __swdb_dx_stream_meta.status==0;\nrequires __swdb_dx_stream_meta.ready==255 && __swdb_dx_stream_meta.size==0 && __swdb_dx_stream_meta.target_size==1;\nrequires __swdb_dx_stream_meta.sent==0 && __swdb_dx_stream_meta.received==0 && __swdb_dx_stream_meta.payload_initialized==1;\nrequires __swdb_dx_stream_meta.lane0_finished==0 && __swdb_dx_stream_meta.other_lanes_finished==0;\nterminates \\false;\nassigns __swdb_dx_stream_meta;\nensures __swdb_dx_stream_meta.phase==5 && __swdb_dx_stream_meta.status==2 && __swdb_dx_stream_meta.ready==0;\nensures __swdb_dx_stream_meta.size==1 && __swdb_dx_stream_meta.lane0_finished==1 && __swdb_dx_stream_meta.other_lanes_finished==0;\nensures __swdb_dx_stream_meta.target_size==1 && __swdb_dx_stream_meta.sent==1 && __swdb_dx_stream_meta.received==1 && __swdb_dx_stream_meta.payload_initialized==1;",
+                "definition": {
+                  "call": "wait_ready",
+                  "entry": {
+                    "byte_order": "little",
+                    "commands": "exactly one u32 stream load, no condition or competing command",
+                    "core": 0,
+                    "epoch": "after-constructor-and-configured-quiescent-RF-before-one-command",
+                    "guest_address_bits": 64,
+                    "input": {
+                      "alignment": 64,
+                      "bytes": 64,
+                      "nonzero_guest_base": true,
+                      "region": "registered normal-memory line disjoint from MMIO",
+                      "storage": "initialized C static array",
+                      "symbol": "stream_input",
+                      "translation": "stable synchronous fault-free64-byte mapping",
+                      "visibility": "coherent stable full physical line; no competing CPU/device writes from any core through return"
+                    },
+                    "kind": "isolated-one-u32-stream-core0-v1",
+                    "register_words": 32,
+                    "rf_i32": {
+                      "0": 0,
+                      "1": 1,
+                      "2": 1
+                    },
+                    "tile_words": 16384,
+                    "tiles": 32
+                  },
+                  "kind": "dx100-one-u32-stream-v1",
+                  "sources": [
+                    {
+                      "path": "proof_semantics/one-u32-stream/CpuSidePort.cc",
+                      "root": "library",
+                      "sha256": "886a0c1bbd437916d2fac62a2aa194e01f6996fae65dc56241fad601c5f0103b"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/IF.cc",
+                      "root": "library",
+                      "sha256": "fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/MAA.cc",
+                      "root": "library",
+                      "sha256": "058395cbd171ccf3746fb524967d2d205cb8d622d4aa06e8eef530b00dc21299"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/SPD.cc",
+                      "root": "library",
+                      "sha256": "9e6bb3672be95954e8816c054b4032f95811a3085ca6df418aed90ad1e852b4a"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/SPD.hh",
+                      "root": "library",
+                      "sha256": "70e02b0fea7693585fd9b8f318381c09e352df2fff58bb3f84021f4ea02e9737"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/IF.hh",
+                      "root": "library",
+                      "sha256": "9dee4c4803a1780a41fb30b760775169000785019e6f5848689fc3f3034a1795"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/StreamAccess.cc",
+                      "root": "library",
+                      "sha256": "5fe78a94f0d690396cdfbcdd9b0082e57cbdb4a6b445a7282b2533a33852d47b"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/StreamAccess.hh",
+                      "root": "library",
+                      "sha256": "9ac9feb68adb525ca2d5c7d6e9046b5b0e399ad4c63a718fcca8f78cd521a3ec"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/Tables.cc",
+                      "root": "library",
+                      "sha256": "9bd8aa4103fb6e7617fdd4c514a917329b8e7b8345738ed6e5d82f818df7dfa6"
+                    },
+                    {
+                      "path": "proof_semantics/one-u32-stream/Tables.hh",
+                      "root": "library",
+                      "sha256": "5ea6a7caff7ca690aa9ce19096c0e686dfa52716e4dbf19d17348c9235011b43"
+                    },
+                    {
+                      "path": "apps/dx100/benchmarks/API/MAA.hpp",
+                      "root": "project",
+                      "sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd"
+                    },
+                    {
+                      "path": "apps/dx100/benchmarks/API/MAA_gem5.hpp",
+                      "root": "project",
+                      "sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174"
+                    }
+                  ]
+                },
+                "prototype": "void wait_ready(int SPD_id)",
+                "rules": [
+                  "stream_epoch",
+                  "stream_normal_return",
+                  "stream_event_compression",
+                  "stream_count_response"
+                ],
+                "supported": true
+              }
+            ],
+            "clauses": [],
+            "constants": {},
+            "declaration_inventory": {
+              "declarations": [
+                {
+                  "declaration": "inline T1 *get_cacheable_tile_pointer(int SPD_id)",
+                  "file": "MAA.hpp",
+                  "line": 57,
+                  "name": "get_cacheable_tile_pointer"
+                },
+                {
+                  "declaration": "inline volatile T1 *get_noncacheable_tile_pointer(int SPD_id)",
+                  "file": "MAA.hpp",
+                  "line": 61,
+                  "name": "get_noncacheable_tile_pointer"
+                },
+                {
+                  "declaration": "void add_mem_region(void *start, void *end)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 56,
+                  "name": "add_mem_region"
+                },
+                {
+                  "declaration": "void clear_mem_region()",
+                  "file": "MAA_gem5.hpp",
+                  "line": 60,
+                  "name": "clear_mem_region"
+                },
+                {
+                  "declaration": "void alloc_MAA()",
+                  "file": "MAA_gem5.hpp",
+                  "line": 71,
+                  "name": "alloc_MAA"
+                },
+                {
+                  "declaration": "inline void init_MAA()",
+                  "file": "MAA_gem5.hpp",
+                  "line": 93,
+                  "name": "init_MAA"
+                },
+                {
+                  "declaration": "void wait_ready(int SPD_id)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 98,
+                  "name": "wait_ready"
+                },
+                {
+                  "declaration": "inline volatile uint16_t get_tile_size(int SPD_id)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 102,
+                  "name": "get_tile_size"
+                },
+                {
+                  "declaration": "inline volatile T1 get_reg(int reg_id)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 108,
+                  "name": "get_reg"
+                },
+                {
+                  "declaration": "inline void set_reg(int reg_id, T1 data)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 114,
+                  "name": "set_reg"
+                },
+                {
+                  "declaration": "inline int get_new_reg(T1 data)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 119,
+                  "name": "get_new_reg"
+                },
+                {
+                  "declaration": "inline int get_new_reg()",
+                  "file": "MAA_gem5.hpp",
+                  "line": 129,
+                  "name": "get_new_reg"
+                },
+                {
+                  "declaration": "inline int get_new_tile()",
+                  "file": "MAA_gem5.hpp",
+                  "line": 138,
+                  "name": "get_new_tile"
+                },
+                {
+                  "declaration": "void maa_const(T1 data, int dst_reg)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 147,
+                  "name": "maa_const"
+                },
+                {
+                  "declaration": "void print_tile(int SPD_id)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 152,
+                  "name": "print_tile"
+                },
+                {
+                  "declaration": "DataType get_data_type()",
+                  "file": "MAA_gem5.hpp",
+                  "line": 165,
+                  "name": "get_data_type"
+                },
+                {
+                  "declaration": "inline void maa_alu_scalar(int src1_tile, int src2_reg, int dst_tile, Operation_t op, int cond_tile = -1)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 175,
+                  "name": "maa_alu_scalar"
+                },
+                {
+                  "declaration": "inline void maa_alu_vector(int src1_tile, int src2_tile, int dst_tile, Operation_t op, int cond_tile = -1)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 194,
+                  "name": "maa_alu_vector"
+                },
+                {
+                  "declaration": "inline void maa_alu_reduce(int src1_tile, int dst_reg, Operation_t op, int cond_tile = -1)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 213,
+                  "name": "maa_alu_reduce"
+                },
+                {
+                  "declaration": "inline void maa_stream_load(T1 *data, int min_reg, int max_reg, int stride_reg, int dst_tile, int cond_tile = -1)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 232,
+                  "name": "maa_stream_load"
+                },
+                {
+                  "declaration": "inline void maa_stream_store(T1 *data, int min_reg, int max_reg, int stride_reg, int src_tile, int cond_tile = -1)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 251,
+                  "name": "maa_stream_store"
+                },
+                {
+                  "declaration": "inline void maa_indirect_load(T1 *data, int idx_tile, int dst_tile, int cond_tile = -1)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 270,
+                  "name": "maa_indirect_load"
+                },
+                {
+                  "declaration": "inline void maa_indirect_store_vector(T1 *data, int idx_tile, int src_tile, int cond_tile = -1, int dst_tile = -1)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 289,
+                  "name": "maa_indirect_store_vector"
+                },
+                {
+                  "declaration": "inline void maa_indirect_store_scalar(T1 *data, int idx_tile, int src_reg, int cond_tile = -1, int dst_tile = -1)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 308,
+                  "name": "maa_indirect_store_scalar"
+                },
+                {
+                  "declaration": "inline void maa_indirect_rmw_vector(T1 *data, int idx_tile, int src_tile, Operation_t o_type, int cond_tile = -1, int dst_tile = -1)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 327,
+                  "name": "maa_indirect_rmw_vector"
+                },
+                {
+                  "declaration": "inline void maa_indirect_rmw_scalar(T1 *data, int idx_tile, int src_reg, Operation_t o_type, int cond_tile = -1, int dst_tile = -1)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 346,
+                  "name": "maa_indirect_rmw_scalar"
+                },
+                {
+                  "declaration": "inline void maa_range_loop(int last_i_reg, int last_j_reg, int min_tile, int max_tile, int stride_reg, int dst_i_tile, int dst_j_tile, int cond_tile = -1)",
+                  "file": "MAA_gem5.hpp",
+                  "line": 366,
+                  "name": "maa_range_loop"
+                }
+              ],
+              "sources": [
+                {
+                  "path": "apps/dx100/benchmarks/API/MAA.hpp",
+                  "root": "project",
+                  "sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd"
+                },
+                {
+                  "path": "apps/dx100/benchmarks/API/MAA_gem5.hpp",
+                  "root": "project",
+                  "sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174"
+                }
+              ]
+            },
+            "description": "One source-bound u32 stream metadata observation on conditional normal return.",
+            "formal_frame": 1,
+            "ghost": {
+              "acsl": {
+                "path": "proof_semantics/one-u32-stream/ghost.acsl",
+                "root": "library",
+                "sha256": "cef6352ffe5ce76236ec837ef2f3015f98070c41b37a9455ef3c53c363e408fc"
+              }
+            },
+            "hardware_interface": {
+              "gem5_commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+              "id": "dx100-mmio",
+              "version": "1.0-e4fc4af"
+            },
+            "id": "semantics.dx100_stream_fixture_0_2",
+            "inventory": {
+              "calls": [
+                "add_mem_region",
+                "alloc_MAA",
+                "clear_mem_region",
+                "get_cacheable_tile_pointer",
+                "get_data_type",
+                "get_new_reg",
+                "get_new_tile",
+                "get_noncacheable_tile_pointer",
+                "get_reg",
+                "get_tile_size",
+                "init_MAA",
+                "maa_alu_reduce",
+                "maa_alu_scalar",
+                "maa_alu_vector",
+                "maa_const",
+                "maa_indirect_load",
+                "maa_indirect_rmw_scalar",
+                "maa_indirect_rmw_vector",
+                "maa_indirect_store_scalar",
+                "maa_indirect_store_vector",
+                "maa_range_loop",
+                "maa_stream_load",
+                "maa_stream_store",
+                "print_tile",
+                "set_reg",
+                "wait_ready"
+              ],
+              "sources": [
+                {
+                  "path": "apps/dx100/benchmarks/API/MAA.hpp",
+                  "root": "project",
+                  "sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd"
+                },
+                {
+                  "path": "apps/dx100/benchmarks/API/MAA_gem5.hpp",
+                  "root": "project",
+                  "sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174"
+                }
+              ]
+            },
+            "kind": "proof_semantics",
+            "model": {
+              "c": {
+                "path": "proof_semantics/one-u32-stream/model.h",
+                "root": "library",
+                "sha256": "4a12723f504cab4b485e25d59e2ea2afbcc2bd0bd1af95281949351aefaf325b"
+              },
+              "layout": "dx100-one-u32-stream-partial-v1",
+              "logic": {
+                "path": "proof_semantics/one-u32-stream/logic.acsl",
+                "root": "library",
+                "sha256": "b7f8c7f0b5a70cdcdf6ee864199c6d7b07bc2fed87e2fdeaafd6f0e770b0ceb8"
+              },
+              "state": {
+                "path": "proof_semantics/one-u32-stream/state.h",
+                "root": "library",
+                "sha256": "ac91330aa6805bcb27f97b2460da48f702f43dca7a17c6dca0dc6083f567c45c"
+              }
+            },
+            "provenance": {
+              "origin": {
+                "created": "2026-10-14 ET",
+                "probata_ticket": "27",
+                "research": ".scratch/formal-verification-2026-10-09/research/14-dx100-wait-rule.md",
+                "rocq": "library/rocq/probata/Reduction.v (ticket 41: F2, F5, F6)"
+              }
+            },
+            "queries": [],
+            "rules": [
+              {
+                "assumed": {
+                  "owner": "Probata proof-semantics maintainer; pending Yan-Ru freeze review (59)"
+                },
+                "id": "mmio_ordering",
+                "record_assumption": true,
+                "statement": "The pinned MMIO implements call semantics including ordering; its wait fence lacks a memory clobber, a portability note independent of candidate artifacts."
+              },
+              {
+                "assumed": {
+                  "owner": "Probata proof-semantics maintainer; pending Yan-Ru freeze review (59)"
+                },
+                "id": "cross_core_filter",
+                "record_assumption": true,
+                "statement": "A DX100 store remains visible if the snoop filter drops its line before the write reaches L3."
+              },
+              {
+                "assumed": {
+                  "owner": "Probata proof-semantics maintainer; pending Yan-Ru freeze review (59)"
+                },
+                "id": "cross_core_write_buffer",
+                "record_assumption": true,
+                "statement": "A DX100 store remains visible when L3 passes a write below it because no block can be allocated."
+              },
+              {
+                "assumed": {
+                  "owner": "Eric"
+                },
+                "id": "no_stale_cpu_copy",
+                "record_assumption": true,
+                "statement": "No stale CPU copy survives a DX100 store (owner Eric)."
+              },
+              {
+                "assumed": {
+                  "owner": "Probata proof-semantics maintainer; pending Yan-Ru freeze review (59)"
+                },
+                "id": "one_instance",
+                "record_assumption": true,
+                "statement": "All commands belong to one DX100 instance."
+              },
+              {
+                "assumed": {
+                  "owner": "Probata proof-semantics maintainer; pending Yan-Ru freeze review (59)"
+                },
+                "id": "stream_epoch",
+                "record_assumption": true,
+                "statement": "This synthetic core0 unit starts with the pinned32-tile/16384-word SPD constructor state and configured4-core MMIO mapping, quiescent initialized signed-int32 RF values0/1/1 at registers0/1/2, and one registered initialized64-byte aligned normal-memory input line whose virtual base is nonzero, with stable synchronous fault-free translation and coherent no-interference visibility through normal return. These are conditional environment/source-model premises owned by the Probata proof-semantics maintainer, pending Yan-Ru freeze review (59); alloc/init do not establish them and arbitrary callers or physical boot are not established."
+              },
+              {
+                "assumed": {
+                  "owner": "Probata proof-semantics maintainer; pending Yan-Ru freeze review (59)"
+                },
+                "id": "stream_normal_return",
+                "record_assumption": true,
+                "statement": "All three MMIO helpers and this source unit are interpreted only on normal return; no termination, fairness or hardware-liveness theorem is claimed."
+              },
+              {
+                "assumed": {
+                  "owner": "Probata proof-semantics maintainer; pending Yan-Ru freeze review (59)"
+                },
+                "id": "stream_event_compression",
+                "record_assumption": true,
+                "statement": "An acknowledgement establishes dispatch, not completion or still-unfinished hardware. In this isolated no-observation/no-interference caller, unobserved device events may be represented by a logically uncovered command and settled only at the returned real ready read; this source-model correspondence is owned by the Probata proof-semantics maintainer, pending Yan-Ru freeze review (59). All-schedule event refinement and contract/body agreement remain unverified owned TCB duties, not conclusions of finite native prefixes."
+              },
+              {
+                "cites": {
+                  "gem5_commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+                  "lines": "138-342",
+                  "path": "src/mem/MAA/StreamAccess.cc"
+                },
+                "id": "stream_count_response",
+                "statement": "For defined signed-int RF0/1/1, the nonempty u32 stream has one lane; a matched completed response sets starting-tile size1 before Finished/ready restoration."
+              },
+              {
+                "assumed": {
+                  "owner": "Probata proof-semantics maintainer; pending Yan-Ru freeze review (59)"
+                },
+                "id": "stream_scope",
+                "statement": "Only the unchanged one-command stream/wait/size synthetic caller is admitted; no payload CPU read or full interface acceptance."
+              }
+            ],
+            "sequence": 2,
+            "target": "dx100-mmio",
+            "version": "0.2",
+            "wp": {}
+          },
+          "pin": {
+            "bytes": 21412,
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c241c547-t28-stream-current-v2/stream-profile/pytest/test_actual_wp_source_partial_1/library/proof_semantics/dx100_trust_fixture.yaml",
+            "sha256": "e190dc5b8734ed50c1cd58417d244771662eda47ef688051d2576f06e4825cb7"
+          }
+        },
+        "settings_flags": [
+          "-wp",
+          "-wp-rte",
+          "-wp-cache",
+          "none",
+          "-wp-model",
+          "+real",
+          "-rte-initialized",
+          "@all",
+          "-wp-no-filter-init",
+          "-machdep",
+          "x86_64",
+          "-wp-prover",
+          "z3,cvc5,alt-ergo",
+          "-machdep",
+          "x86_64",
+          "-wp-timeout",
+          "30",
+          "-wp-par",
+          "1",
+          "-wp-smoke-tests",
+          "-wp-fct=trust_fixture"
+        ],
+        "setup": {
+          "check": {
+            "sha256": "0db61b23428b7fee70841a7a9535aa66cf225429bad52881484ecce22ae0886f",
+            "version": "1"
+          },
+          "hashes": {
+            "compiler_runtime": "d7a0b81613fdee059f9567d68eaf41de58f83257ef606711a85de1529d606ced",
+            "contract": "2a53575c4b3dd5a5b9dbba2971e1892b71ec7de36b2559fa8ac5976935cd7e35",
+            "dx100_size_source": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "dx100_source_selector": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "dx100_stream_source": "7ab05e171599e525ac72bfcc0562ed459ff2487b2be6657204d4f0c443deebdf",
+            "lowering": "53aec727d01ec4d7cdd6dc67dd98ea34806c3231998aaab3784c14e393d07f7c",
+            "run_plan": "efd4d03868d71b3de3cd0486bea252e702e48598815729890d82669f1140344b",
+            "stdlib_provenance": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+            "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "wp_input.c": "bad552c2a4ee7af438b5474fe5f76e24edd70efcf27540244724ec192ce7b763"
+          },
+          "method_version": {
+            "id": "method.dx100-stream-partial-fixture-v1",
+            "sha256": "409f286936d8b10cccaecf447e73c60c750a89fba8a592f4721434baad74b843"
+          },
+          "runs": [
+            {
+              "hashes": {
+                "compiler_runtime": "d7a0b81613fdee059f9567d68eaf41de58f83257ef606711a85de1529d606ced",
+                "dx100_size_source": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+                "dx100_source_selector": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+                "dx100_stream_source": "7ab05e171599e525ac72bfcc0562ed459ff2487b2be6657204d4f0c443deebdf",
+                "lowering": "53aec727d01ec4d7cdd6dc67dd98ea34806c3231998aaab3784c14e393d07f7c",
+                "stdlib_provenance": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+                "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+                "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+                "wp_input.c": "bad552c2a4ee7af438b5474fe5f76e24edd70efcf27540244724ec192ce7b763"
+              },
+              "run_plan_sha256": "ea0e3d2075290ee87be6b371019a53bd2bef73b43e2493adbb76bf8c26431c8b",
+              "tool": "wp",
+              "verdict": "passed"
+            }
+          ],
+          "verdict": "passed"
+        },
+        "source": {
+          "bytes": 290,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c241c547-t28-stream-current-v2/stream-profile/pytest/test_actual_wp_source_partial_1/library/proof_units/trust.cc",
+          "sha256": "071df1d875e38dcccf798b9cfbdf9064f909c7220965f339936fd99d7dc79eab"
+        },
+        "verdict": "not_proven",
+        "verdict_reading": {
+          "check": {
+            "sha256": "0db61b23428b7fee70841a7a9535aa66cf225429bad52881484ecce22ae0886f",
+            "version": "1"
+          },
+          "verdict": "not_proven"
+        }
+      }
+    ],
+    "scientific_acceptance": false,
+    "source_commit": "c241c5477b5afee1c02e789b141ea596bdfed1e7"
+  },
+  "preflight": {
+    "disk": "Filesystem      Size  Used Avail Use% Mounted on\n/dev/sdd1       1.8T  1.7T   22G  99% /data1\n/dev/sdb1       1.8T  1.7T   69G  97% /data",
+    "free_bytes": {
+      "/data": 73406324736,
+      "/data1": 23031386112
+    },
+    "leases": {
+      "mbit10-evaluation-node0.meta.json": {
+        "active_session": null,
+        "attempt_pid": null,
+        "attempt_start_token": null,
+        "heartbeat_at": "2026-10-16T11:19:10Z",
+        "lease": {
+          "acquired_at": "2026-10-16T11:19:10Z",
+          "daemon_pid": 3861364,
+          "daemon_start_token": "sh3861364-1792149550",
+          "generation": 596,
+          "host": "mbit10",
+          "lease_name": "mbit10-evaluation-node0",
+          "mode": "measure",
+          "session_id": null
+        },
+        "recovered_from_generation": null,
+        "released_at": null,
+        "session_note": null,
+        "session_state": "none",
+        "state": "held",
+        "writer": "hostlock.sh"
+      },
+      "mbit10-evaluation-node1.meta.json": {
+        "active_session": null,
+        "attempt_pid": null,
+        "attempt_start_token": null,
+        "heartbeat_at": "2026-10-16T10:40:39Z",
+        "lease": {
+          "acquired_at": "2026-10-16T10:38:40Z",
+          "daemon_pid": 3857436,
+          "daemon_start_token": "sh3857436-1792147120",
+          "generation": 620,
+          "host": "mbit10",
+          "lease_name": "mbit10-evaluation-node1",
+          "mode": "measure",
+          "session_id": null
+        },
+        "recovered_from_generation": null,
+        "released_at": "2026-10-16T10:40:39Z",
+        "session_note": null,
+        "session_state": "none",
+        "state": "released",
+        "writer": "hostlock.sh"
+      },
+      "mbit10-evaluation.meta.json": {
+        "active_session": null,
+        "attempt_pid": null,
+        "attempt_start_token": null,
+        "heartbeat_at": "2026-09-12T04:49:11Z",
+        "lease": {
+          "acquired_at": "2026-09-12T01:35:42Z",
+          "daemon_pid": 209457,
+          "daemon_start_token": "sh209457-1789176942",
+          "generation": 77,
+          "host": "mbit10",
+          "lease_name": "mbit10-evaluation",
+          "mode": "measure",
+          "session_id": null
+        },
+        "recovered_from_generation": null,
+        "released_at": "2026-09-12T04:49:11Z",
+        "session_note": null,
+        "session_state": "none",
+        "state": "released",
+        "writer": "hostlock.sh"
+      }
+    },
+    "sha": "c241c5477b5afee1c02e789b141ea596bdfed1e7",
+    "uptime": "07:21:55 up 76 days, 23:40,  8 users,  load average: 1.54, 0.81, 0.36",
+    "users": "yanruj   pts/0        2026-10-16 07:19 (tmux(359742).%881)"
+  },
+  "resources": {
+    "address_space_cap_bytes": 8589934592,
+    "exit_code": 0,
+    "inspection_denials": [],
+    "out_of_memory": false,
+    "peak_rss_bytes": 125571072,
+    "scope": "Passive raw metadata only; no formal tools",
+    "timed_out": false,
+    "timeout_seconds": 60,
+    "wall_seconds": 9.374516003765166,
+    "workers": 1
+  }
+}

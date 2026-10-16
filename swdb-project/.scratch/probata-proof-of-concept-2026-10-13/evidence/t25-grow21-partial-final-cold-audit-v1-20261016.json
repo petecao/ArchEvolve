@@ -1,0 +1,203 @@
+{
+  "acceptance": {
+    "all21_complete": false,
+    "caller_acceptance": false,
+    "model_acceptance": false,
+    "original_v2_acceptance": false,
+    "refuted": false
+  },
+  "actual_target_censuses": [
+    {
+      "CSV_rows": 0,
+      "direct_valid": true,
+      "goal": "typed_real_check_lemma_t25v3_control_grow_premises_feasible",
+      "native_best": "valid",
+      "ordinary": 1,
+      "portfolio_results": [
+        "timeout",
+        "valid"
+      ],
+      "properties": 2,
+      "registered_property_closure": true,
+      "scope": "Isolated check lemma, no C body or generated smoke attempt in this target.",
+      "smokes": 0,
+      "solver": "cvc5"
+    },
+    {
+      "CSV_rows": 0,
+      "direct_valid": true,
+      "goal": "typed_real_check_lemma_t25v3_grow_entry_reads",
+      "native_best": "valid",
+      "ordinary": 1,
+      "portfolio_results": [
+        "timeout",
+        "valid"
+      ],
+      "properties": 2,
+      "registered_property_closure": true,
+      "scope": "Isolated check lemma, no C body or generated smoke attempt in this target.",
+      "smokes": 0,
+      "solver": "cvc5"
+    },
+    {
+      "CSV_rows": 0,
+      "direct_valid": true,
+      "goal": "typed_real_check_lemma_t25v3_grow_entry_int_projection_repr",
+      "native_best": "valid",
+      "ordinary": 1,
+      "portfolio_results": [
+        "timeout",
+        "unknown",
+        "valid"
+      ],
+      "properties": 2,
+      "registered_property_closure": true,
+      "scope": "Isolated check lemma, no C body or generated smoke attempt in this target.",
+      "smokes": 0,
+      "solver": "z3"
+    },
+    {
+      "CSV_rows": 0,
+      "direct_valid": false,
+      "goal": "typed_real_check_lemma_t25v3_grow_entry_int_projection_cells",
+      "native_best": "timeout",
+      "ordinary": 1,
+      "portfolio_results": [
+        "timeout",
+        "unknown",
+        "unknown"
+      ],
+      "properties": 2,
+      "registered_property_closure": true,
+      "scope": "Isolated check lemma, no C body or generated smoke attempt in this target.",
+      "smokes": 0,
+      "solver": null
+    }
+  ],
+  "author_scope": "Local passive receipt, artifact hashes, source/context metadata reconciliation only; root executed remote physical checks. No author SSH, tools, compiler or formal execution.",
+  "checks": [
+    "root receipt exact",
+    "retained artifact /private/tmp/probata-t25-grow21-partial-cold-reader-v1-20261016.py",
+    "retained artifact /private/tmp/probata-t25-grow21-partial-cold-policy-v1-20261016.json",
+    "retained artifact /private/tmp/probata-t25-grow21-partial-cold-command-v1-20261016.json",
+    "retained artifact /private/tmp/probata-t25-grow21-partial-cold-plan-v1-20261016.md",
+    "retained artifact /private/tmp/probata-t25-grow21-partial-cold-controls-v1-20261016.py",
+    "retained artifact /private/tmp/probata-t25-grow21-partial-cold-controls-v1-final-20261016/resources.json",
+    "retained artifact /private/tmp/probata-t25-grow21-partial-cold-controls-v1-final-20261016/junit.xml",
+    "retained artifact /private/tmp/probata-t25-grow21-partial-cold-controls-v1-final-20261016/control.log",
+    "retained artifact /private/tmp/probata-t25-grow21-partial-actual-metadata-v1-20261016.json",
+    "retained artifact /private/tmp/probata-t25-grow21-task-metadata-root-execution-v1-20261016.json",
+    "retained artifact /private/tmp/probata-t25-grow21-task-metadata-extractor-v1-20261016.py",
+    "retained artifact /private/tmp/probata-t25-qualified-grow21-public-expected-v1-2e01d27d-20261016.json",
+    "reader/policy actual identity",
+    "source exact",
+    "root counted success",
+    "source distinct files/checks",
+    "source consumer streamed census",
+    "raw preservation census",
+    "classification partial",
+    "all21_complete false",
+    "model_acceptance false",
+    "caller_acceptance false",
+    "original_v2_acceptance false",
+    "refuted false",
+    "4/3/17 leaves",
+    "portfolio winners",
+    "AND incomplete/old proof unpromoted",
+    "exact portfolio shapes",
+    "ordinary registered goals/zero C smokes",
+    "no submission certification",
+    "30 import modules",
+    "project imports definitions only",
+    "root bounded passive healthy",
+    "dispatcher exact"
+  ],
+  "classification": "PASS_PARTIAL_CLASSIFICATION_ONLY",
+  "classification_detail": {
+    "CVC5_direct_valid": 2,
+    "Z3_direct_valid": 1,
+    "attempted": 4,
+    "caller_acceptance": false,
+    "direct_valid": 3,
+    "logical_projection_AND_complete": false,
+    "model_acceptance": false,
+    "old017proof_promoted": false,
+    "original_v2_acceptance": false,
+    "timeout_target": "grow.entry.int_projection.cells",
+    "unexecuted": [
+      "grow.alloc.identity",
+      "grow.alloc.output",
+      "grow.alloc.frame",
+      "grow.copy.establish",
+      "grow.copy.read",
+      "grow.copy.write",
+      "grow.copy.step",
+      "grow.copy.exit",
+      "grow.free.argument",
+      "grow.free.survival",
+      "grow.free.aliases",
+      "grow.store.capacity",
+      "grow.post.eligibility",
+      "grow.post.values",
+      "grow.post.old_invalid",
+      "grow.post.frame",
+      "grow.numeric"
+    ]
+  },
+  "date": "2026-10-16 ET",
+  "earlier_017_boundary": "Earlier 017 reader V1 416-vs-208 file-count bug was caught statically and never dispatched; its V2 correction is provenance only. Fresh21 uses 214 source files and 428 physical/Git checks, new source/method/reporter/runtime receipts, and promotes no old proof.",
+  "frozen_packet": {
+    "bytes": 3797,
+    "path": "/private/tmp/probata-t25-grow21-partial-cold-packet-v1-20261016.json",
+    "sha256": "4faa02ed516cb5e323d17c7e5ca9e74c7fc082661362b4bf1ae1f0fc6fac4fa8"
+  },
+  "independent_compact_checks": 35,
+  "root_dispatcher": {
+    "bytes": 4655,
+    "path": "/private/tmp/probata-root-t25-grow21-partial-cold-dispatch-v1-20261016.py",
+    "sha256": "33940fd3589cd51c787398e8294a873130085d8fcffa0fb67d958845075801a9"
+  },
+  "root_integrity": {
+    "integrity_errors": [],
+    "module_physical_git_checks": 428,
+    "module_source_files": 214,
+    "physical_checks": 5653,
+    "physical_files": 3272,
+    "prior017_378_unchanged": true,
+    "source_consumer_bytes": 1337753427,
+    "source_consumer_files": 1582,
+    "whole_raw_bytes": 23630648,
+    "whole_raw_files": 397
+  },
+  "root_receipt": {
+    "bytes": 181032,
+    "path": "/private/tmp/probata-t25-grow21-partial-cold-root-execution-v1-20261016.json",
+    "sha256": "c789f0ccd40a87dec5e65dc92b884aba37dc7bdd26f34155431abba4c1ec65d6"
+  },
+  "root_resources": {
+    "address_space_cap_bytes": 8589934592,
+    "exit_code": 0,
+    "inspection_denials": [],
+    "out_of_memory": false,
+    "peak_rss_bytes": 42364928,
+    "scope": "passive reader only; no formal tools",
+    "timed_out": false,
+    "timeout_seconds": 60,
+    "wall_seconds": 4.047779098153114,
+    "workers": 1
+  },
+  "source_commit": "2e01d27d0aea7f3c2056d3abb06600b4cefa29be",
+  "task_boundary": {
+    "TCB": "Selected standard arithmetic/maps/Qed/intrinsic foundation, not independently reproved. Project imports contain definitions, no desired-result axioms/lemmas.",
+    "actual_submission_count": null,
+    "materialized_SMT_files": 20,
+    "partition": [
+      4,
+      4,
+      6,
+      6
+    ],
+    "printed_queries": 4,
+    "transitive_import_modules": 30
+  }
+}

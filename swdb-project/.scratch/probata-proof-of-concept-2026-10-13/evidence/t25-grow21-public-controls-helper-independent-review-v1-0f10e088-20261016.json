@@ -1,0 +1,46 @@
+{
+  "Frama_CBMC_disabled_before_import_and_child": true,
+  "JUnit_requires_three_without_fail_error_skip": true,
+  "actual_native_scope": "existing OCaml metadata/helper/report builds plus scripted public persistence tests",
+  "actual_result_claimed": false,
+  "author_source": "0f10e08877e351b940a465fb2ece45e8e1591ab2",
+  "blocking_findings": [],
+  "command_packet": {
+    "bytes": 919,
+    "path": "/private/tmp/probata-root-t25-grow21-public-controls-command-v1-0f10e088-20261016.json",
+    "sha256": "ca5185096c9d611dc561a9cf255255447c86352dff4bb59dda911ea506c99e02"
+  },
+  "date": "2026-10-16 ET",
+  "entry": {
+    "bytes": 8755,
+    "path": "/private/tmp/probata-root-t25-grow21-public-controls-v1-0f10e088-20261016.py",
+    "sha256": "6b98929567aba1fe6374521aefd65d2a1f60d71450d1de8a4eecc704ff2a399d"
+  },
+  "formal_prover_scope": false,
+  "notes_sha256": "359759d471b0e59a57cb02d458e90b233f55fb758de0f77b08f7b588473bd414",
+  "remaining": [
+    "Root actual three-test/skip/guards/source/runtime/result cold review",
+    "Natural process/lease settlement by root",
+    "Separate actual diagnostic/full21 admission and proof audit"
+  ],
+  "resource_scope": {
+    "disk_floor_bytes": 53687091200,
+    "inner_seconds": 180,
+    "outer_worker_tree_seconds": 240,
+    "planned_raw_bytes": 268435456,
+    "queue_seconds": 30,
+    "raw_continuous_quota": false,
+    "whole_entry_hard_deadline": false,
+    "worker_rss_bytes": 8589934592,
+    "workers": 1
+  },
+  "reviewer": "/root/ticket24/std_contract_review",
+  "reviewer_evolving_root_output_read": false,
+  "reviewer_project_generators_main_tests_compilers_formal_provers_native_probes_SSH": false,
+  "reviewer_repo_edits": false,
+  "root_reported_already_admitted_running": true,
+  "runtime_candidate": "2e01d27d0aea7f3c2056d3abb06600b4cefa29be",
+  "selectors_count": 3,
+  "seven_consumer_Git_roots_equal": true,
+  "verdict": "PASS_STATIC_ROOT_HELPER_ONLY_NO_RESULT"
+}

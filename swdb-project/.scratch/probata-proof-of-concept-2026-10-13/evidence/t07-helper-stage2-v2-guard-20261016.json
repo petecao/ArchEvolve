@@ -1,0 +1,267 @@
+{
+ "cmd": [
+  "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+  "/private/tmp/probata-t07-helper-stage2-entry-v2-20261016.py",
+  "--expected",
+  "/private/tmp/probata-t07-helper-stage2-expected-v2-20261016.json",
+  "--output",
+  "/private/tmp/probata-t07-helper-stage2-v2-7930f3a1-20261016/component"
+ ],
+ "exit_code": 1,
+ "wall_s": 383.135438791709,
+ "peak_rss_mb": 1261.625,
+ "cap_gb": 8.0,
+ "killed_by_watchdog": false,
+ "timed_out": false,
+ "queue_timed_out": false,
+ "timeout_s": 900.0,
+ "queue_timeout_s": 30.0,
+ "lock_wait_s": 0.0004458333132788539,
+ "runner_pid": 49298,
+ "clock": "continuous_monotonic",
+ "clock_info": {
+  "kind": "continuous_monotonic",
+  "implementation": "mach_continuous_time",
+  "includes_sleep": true,
+  "numer": 125,
+  "denom": 3
+ },
+ "log": "/private/tmp/probata-t07-helper-stage2-v2-7930f3a1-20261016/guard.log",
+ "inspection_events": [
+  {
+   "stage": "supervision",
+   "operation": "environ",
+   "requested_operation": "environ",
+   "pid": 50379,
+   "expected_birth": 1792128168.236483,
+   "snapshot_birth": 1792128168.236483,
+   "exception": {
+    "type": "AccessDenied",
+    "module": "psutil",
+    "relation": "raised",
+    "pid": 50379
+   },
+   "exception_chain": [
+    {
+     "type": "AccessDenied",
+     "module": "psutil",
+     "relation": "raised",
+     "pid": 50379
+    },
+    {
+     "type": "PermissionError",
+     "module": "builtins",
+     "relation": "cause",
+     "errno": 13
+    }
+   ],
+   "traceback": [
+    {
+     "path": "/private/tmp/probata-resume-t07-supported-domains/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py",
+     "function": "_inspect",
+     "line": 156
+    },
+    {
+     "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/__init__.py",
+     "function": "environ",
+     "line": 921
+    },
+    {
+     "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/_psosx.py",
+     "function": "wrapper",
+     "line": 353
+    }
+   ],
+   "known_native_environ_signature": false,
+   "exception_pid": 50379,
+   "observed_birth": 1792128168.236483,
+   "identity_state": "live",
+   "attempt": 1,
+   "retry_elapsed_s": 0.00013350002700462937,
+   "retry_window_s": 0.2,
+   "retry_limit_attempts": 21,
+   "clock_s": 370306.7616662917,
+   "wall_unix_s": 1792128168.348798,
+   "outcome": "denied"
+  },
+  {
+   "stage": "supervision",
+   "operation": "environ",
+   "requested_operation": "environ",
+   "pid": 50857,
+   "expected_birth": 1792128181.745911,
+   "snapshot_birth": 1792128181.745911,
+   "exception": {
+    "type": "AccessDenied",
+    "module": "psutil",
+    "relation": "raised",
+    "pid": 50857
+   },
+   "exception_chain": [
+    {
+     "type": "AccessDenied",
+     "module": "psutil",
+     "relation": "raised",
+     "pid": 50857
+    },
+    {
+     "type": "PermissionError",
+     "module": "builtins",
+     "relation": "cause",
+     "errno": 13
+    }
+   ],
+   "traceback": [
+    {
+     "path": "/private/tmp/probata-resume-t07-supported-domains/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py",
+     "function": "_inspect",
+     "line": 156
+    },
+    {
+     "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/__init__.py",
+     "function": "environ",
+     "line": 921
+    },
+    {
+     "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/_psosx.py",
+     "function": "wrapper",
+     "line": 353
+    }
+   ],
+   "known_native_environ_signature": false,
+   "exception_pid": 50857,
+   "observed_birth": 1792128181.745911,
+   "identity_state": "live",
+   "attempt": 1,
+   "retry_elapsed_s": 0.0001145416172221303,
+   "retry_window_s": 0.2,
+   "retry_limit_attempts": 21,
+   "clock_s": 370327.4638875417,
+   "wall_unix_s": 1792128189.051115,
+   "outcome": "denied"
+  },
+  {
+   "stage": "supervision",
+   "operation": "environ",
+   "requested_operation": "environ",
+   "pid": 51010,
+   "expected_birth": 1792128211.378127,
+   "snapshot_birth": 1792128211.378127,
+   "exception": {
+    "type": "AccessDenied",
+    "module": "psutil",
+    "relation": "raised",
+    "pid": 51010
+   },
+   "exception_chain": [
+    {
+     "type": "AccessDenied",
+     "module": "psutil",
+     "relation": "raised",
+     "pid": 51010
+    },
+    {
+     "type": "PermissionError",
+     "module": "builtins",
+     "relation": "cause",
+     "errno": 13
+    }
+   ],
+   "traceback": [
+    {
+     "path": "/private/tmp/probata-resume-t07-supported-domains/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py",
+     "function": "_inspect",
+     "line": 156
+    },
+    {
+     "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/__init__.py",
+     "function": "environ",
+     "line": 921
+    },
+    {
+     "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/_psosx.py",
+     "function": "wrapper",
+     "line": 353
+    }
+   ],
+   "known_native_environ_signature": false,
+   "exception_pid": 51010,
+   "observed_birth": 1792128211.378127,
+   "identity_state": "live",
+   "attempt": 1,
+   "retry_elapsed_s": 9.770836913958192e-05,
+   "retry_window_s": 0.2,
+   "retry_limit_attempts": 21,
+   "clock_s": 370349.9927224583,
+   "wall_unix_s": 1792128211.580054,
+   "outcome": "denied"
+  },
+  {
+   "stage": "supervision",
+   "operation": "environ",
+   "requested_operation": "environ",
+   "pid": 51350,
+   "expected_birth": 1792128251.065477,
+   "snapshot_birth": 1792128251.065477,
+   "exception": {
+    "type": "AccessDenied",
+    "module": "psutil",
+    "relation": "raised",
+    "pid": 51350
+   },
+   "exception_chain": [
+    {
+     "type": "AccessDenied",
+     "module": "psutil",
+     "relation": "raised",
+     "pid": 51350
+    },
+    {
+     "type": "PermissionError",
+     "module": "builtins",
+     "relation": "cause",
+     "errno": 13
+    }
+   ],
+   "traceback": [
+    {
+     "path": "/private/tmp/probata-resume-t07-supported-domains/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py",
+     "function": "_inspect",
+     "line": 156
+    },
+    {
+     "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/__init__.py",
+     "function": "environ",
+     "line": 921
+    },
+    {
+     "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/_psosx.py",
+     "function": "wrapper",
+     "line": 353
+    }
+   ],
+   "known_native_environ_signature": false,
+   "exception_pid": 51350,
+   "observed_birth": 1792128251.065477,
+   "identity_state": "live",
+   "attempt": 1,
+   "retry_elapsed_s": 9.937497088685632e-05,
+   "retry_window_s": 0.2,
+   "retry_limit_attempts": 21,
+   "clock_s": 370404.3871435417,
+   "wall_unix_s": 1792128265.974726,
+   "outcome": "denied"
+  }
+ ],
+ "inspection_failure": null,
+ "primary_inspection_failure": null,
+ "cleanup_inspection_failure": null,
+ "cleanup_inspection_failures": [],
+ "inspection_retry_boundary": "AccessDenied uses a 200 ms environ retry admission window and 21-attempt cap, or three attempts for other operations; only the exact proc_environ SystemError raised by the requested environ operation shares that policy; individual OS calls are not forcibly timed; all pauses count and RSS/deadline checks remain mandatory after inspection; only independently confirmed gone/zombie or changed birth is skipped; persistent live or unknown failure fails closed",
+ "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+ "unconfirmed_children": [],
+ "error": null,
+ "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment",
+ "rss_scope": "live union of current ancestry, retained PID/birth identities and periodic inherited-marker matches; sampled, not a kernel quota",
+ "finished": "2026-10-16 01:27:36 EDT"
+}

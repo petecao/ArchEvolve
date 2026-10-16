@@ -1,0 +1,57 @@
+{
+  "created": "2026-10-16 ET",
+  "implementation_base": "4bb53cd7ddab6400def1cb0ea840038223a6a8aa",
+  "scope": "prospective finite hand-model private output-slot ABI and element-span domain; old standin unchanged",
+  "helper_bodies": 19,
+  "returning_helpers": 15,
+  "returning_standard_summaries": 5,
+  "returning_device_summaries": 2,
+  "source": {
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/outslot_lowering.py": "81398d0aad415fd345fa18f7ddae935c4294fc4de256d01cbef542e2a1206f35",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/OUTSLOT-ABI-20261016.md": "484b3a225108b9f1b49c814fd20d75ceb07817501703a7f2cb64f59238da5f89",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_outslot/abi-map.json": "5c280a18d4efdeb8fbf3b7b833c7f550bc74121a54838a9b02a78556254ad578",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_outslot/bfs_unit.h": "52d40d00b0a7462eed164deec3a8958a855de5763e7f20fefb8e2f257f09bd34",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_outslot/dxc_summaries.h": "6b109e09239be71e252ee25e4cfa720c1cf37b651a8f586423f0c8d43f2b37e5",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_outslot/gapbs_models.h": "7fcafa5498481b4ecce20c36ba167a00b9c5f9231b460c162268b814f14f19ec",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_outslot/tdstep_standin.c": "3af025040802b2c018a7a192738c276863f7c489e4c3ce238443b9f2a3f6bcfa",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/checks/outslot/control.c": "aa3d79d3a214a5406aa2d4829816a0082193bcd094c5d55ce98dbfe49b5fe5b6",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/checks/outslot/run_controls.py": "d72540c8756aa53755e5046532fded296cd76b0ea8b8718fee8fcd0252aca8f6",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/checks/outslot/td_behavior.c": "050fb8dead1b8a31e6b5ba4e9ef5ff02e07f411b9c059ef6d136f50675c9250f"
+  },
+  "control_profile": {
+    "path": "/private/tmp/probata-t07-outslot-controls-final-20261016/controls.json",
+    "sha256": "91530243536fda78424af2ba08a005c66c6e525d64234da0da93cc553e8024f7",
+    "passed": 30,
+    "native": "ASan+UBSan helper/TD fixtures; original and generated TD outputs+event counts identical",
+    "compiler": "wrong output type and uninitialized return/out-store refused; separate analyzer detects uninitialized pointed payload",
+    "allocator_negative_boundary": "separate pointee example is NOT same-allocation-path evidence; allocator correspondence explicitly refused"
+  },
+  "guard": {
+    "path": "/private/tmp/probata-t07-outslot-controls-final-20261016.log.summary.json",
+    "sha256": "34579be27cbe3826d5ef908b8e13763a11c902194731c4333a447d882abacd60",
+    "wall_s": 1.197764125012327,
+    "peak_rss_mb": 41.671875,
+    "cap_gb": 8.0,
+    "timeout_s": 120.0,
+    "exit_code": 0,
+    "inspection_failure": null,
+    "unconfirmed_children": []
+  },
+  "red": {
+    "public_interface": "/private/tmp/probata-t07-outslot-red3-20261016.log",
+    "allocator_gate": "/private/tmp/probata-t07-outslot-allocator-gate-red-20261016",
+    "infrastructure_failures_preserved": [
+      "/private/tmp/probata-t07-outslot-red-20261016.log.summary.json",
+      "/private/tmp/probata-t07-outslot-red2-20261016.log.summary.json"
+    ],
+    "quarantine_settlement": "/private/tmp/probata-t07-outslot-native-lease-settlement-20261016.json"
+  },
+  "full_artifact_manifest": {
+    "path": "/private/tmp/probata-t07-outslot-native-artifacts-20261016.json",
+    "sha256": "ccb2aad673123fa4ba02855e1deb3333fcda329dbca8276b35092febe7beeb8b"
+  },
+  "allocator_correspondence": "REFUSED_PENDING_SEPARATE_REPAIR",
+  "proof_acceptance": false,
+  "TD_or_counted_source_admissible": false,
+  "Frama_Why3_solver_provider_SSH_called": false
+}

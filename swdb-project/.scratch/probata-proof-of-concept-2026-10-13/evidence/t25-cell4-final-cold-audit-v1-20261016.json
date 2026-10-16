@@ -1,0 +1,354 @@
+{
+  "actual_root_metadata_resources": {
+    "address_space_cap_bytes": 8589934592,
+    "exit_code": 0,
+    "inspection_denials": [],
+    "out_of_memory": false,
+    "peak_rss_bytes": 26263552,
+    "scope": "Passive raw metadata only; no formal tools",
+    "timed_out": false,
+    "timeout_seconds": 60,
+    "wall_seconds": 0.4974110657349229,
+    "workers": 1
+  },
+  "actual_root_supplement_resources": {
+    "address_space_cap_bytes": 8589934592,
+    "exit_code": 0,
+    "inspection_denials": [],
+    "out_of_memory": false,
+    "peak_rss_bytes": 28725248,
+    "scope": "Passive raw metadata only; no formal tools",
+    "timed_out": false,
+    "timeout_seconds": 60,
+    "wall_seconds": 3.085747718811035,
+    "workers": 1
+  },
+  "actual_submission_count": null,
+  "caller_acceptance": false,
+  "classification": "PASS_SCOPED_FOUR_CELL_DIAGNOSTICS_UNDER_EXPLICIT_SOURCE_AND_FOUNDATION_TCB",
+  "closure": {
+    "consumer_physical_Git_blob_equal_and_stat_stable": true,
+    "raw_bytes": 22878653,
+    "raw_files": 341,
+    "raw_pre_post_equal": true,
+    "runtime_foundation_primary_pins": 749,
+    "source_consumer_bytes": 1337765741,
+    "source_consumers": 1584,
+    "source_package_and_helper_files": 324
+  },
+  "date": "2026-10-16 ET",
+  "diagnostic_method_boundary": {
+    "actual_fresh_setup_reading_checker": {
+      "sha256": "8c42e618fdc2e380aeadabd97dfd76e1cad71dd8e5f2aa871b72ce00fd097741",
+      "version": "1"
+    },
+    "all4_source_explicit_job_bounds_None_run_plans_reconciled": true,
+    "legacy_fixture_method_checker_versions": {
+      "proof_hint_check": {
+        "version": "0"
+      },
+      "proof_setup_check": {
+        "version": "0"
+      },
+      "verdict_reading": {
+        "version": "0"
+      }
+    },
+    "method_pin": {
+      "id": "method.wp-cell4-diagnostic-v1",
+      "sha256": "79c4f104fd4d223529489d37b53ccc35da02c274bca6e564af7f88fe9c63ef32"
+    },
+    "public_method_certification_claimed": false,
+    "retained_compiled_reporter_sha256": "153438dd2a716b59aa6e422d9df330e1226af326d8b3a00476f6159e36c26241"
+  },
+  "full24_model_acceptance": false,
+  "local_reconciliation_only": true,
+  "original_v2_acceptance": false,
+  "record_census": [
+    {
+      "CSV_rows": 0,
+      "WP_query_sha256": "37410c3ba15f6da66ce1fb5ce77a6a3e22d87e06243c262721d73a59da260359",
+      "direct_ordinary_Valid": 1,
+      "id": "grow.entry.int_projection.cells.access",
+      "properties": 2,
+      "seconds": 0.0376,
+      "smoke": 0,
+      "solver": "CVC5:1.2.1",
+      "source_component": "access"
+    },
+    {
+      "CSV_rows": 0,
+      "WP_query_sha256": "d93ce388522290d991e5336d97e991549dce42a95ca9cffc524615a1c1a911ef",
+      "direct_ordinary_Valid": 1,
+      "id": "grow.entry.int_projection.cells.initialization",
+      "properties": 2,
+      "seconds": 0.0261,
+      "smoke": 0,
+      "solver": "Alt-Ergo:2.6.4",
+      "source_component": "initialization"
+    },
+    {
+      "CSV_rows": 0,
+      "WP_query_sha256": "dd09ccad5a882a715d9cc2999bdf908d5b115b4c6f1f7ba28a067d48a7d6d5dc",
+      "direct_ordinary_Valid": 1,
+      "id": "grow.entry.int_projection.cells.integer",
+      "properties": 2,
+      "seconds": 0.0449,
+      "smoke": 0,
+      "solver": "Alt-Ergo:2.6.4",
+      "source_component": "integer"
+    },
+    {
+      "CSV_rows": 0,
+      "WP_query_sha256": "6c423328d4384992d56a9742abbf0a5f52f35ab1d64f461872320977dad26993",
+      "direct_ordinary_Valid": 1,
+      "id": "grow.entry.int_projection.cells.bounds",
+      "properties": 2,
+      "seconds": 0.0454,
+      "smoke": 0,
+      "solver": "Alt-Ergo:2.6.4",
+      "source_component": "bounds"
+    }
+  ],
+  "references": [
+    {
+      "bytes": 541082,
+      "path": "/private/tmp/probata-t25-cell4-root-metadata-v4-20261016.json",
+      "sha256": "cdd006366d4e61ddd35e1c3448b7c65e8112c4d11ab4fe2008f6184979d10f89"
+    },
+    {
+      "bytes": 947859,
+      "path": "/private/tmp/probata-t25-cell4-smt-supplement-root-execution-v1-20261016.json",
+      "sha256": "6f4076cd3102d4114f5e7890ea056f0e6699ca121663047584bacab5e94008ec"
+    },
+    {
+      "bytes": 122055,
+      "path": "/private/tmp/probata-t25-cell4-diagnostic-expected-v5-046f6b9e-20261016.json",
+      "sha256": "89354ee2608825ba184a59e649582d7e6ecbaa678a6396742e509b9173f067ba"
+    },
+    {
+      "bytes": 227438,
+      "path": "/private/tmp/probata-t25-cell4-prior-support-comparison-v1-20261016.json",
+      "sha256": "0c48ca1ec365509dde88e9695f5251d5d20815117c04afb589770bc0c3ba9319"
+    },
+    {
+      "bytes": 24187,
+      "path": "/private/tmp/probata-t25-historical-support-hash-ledger-v1-20261016.json",
+      "sha256": "99520a25dc3ee71ae85beaa9bfcbfdc37248807745addc6200aec2dbd64a66c0"
+    },
+    {
+      "bytes": 145259,
+      "path": "/private/tmp/probata-t25-representative-cold-snapshot-reviewer-v2-20261015.json",
+      "sha256": "437d95eb1046a06a606e1f7ea886628d0869fbae59f96d7da4f72aa7eb58e2b9"
+    },
+    {
+      "bytes": 5365,
+      "path": "/private/tmp/probata-t25-representative-task-closure-and-v5-review-v2-20261015.json",
+      "sha256": "d7ba6dec176d971086fe5ca4a7341f39af93fee946d6279f3d2bb959e1bd024d"
+    },
+    {
+      "bytes": 2029,
+      "path": "/private/tmp/probata-t25-cell4-smt-supplement-independent-static-review-v1-20261016.md",
+      "sha256": "547e33347684e85b65d0d1df61e695c113fd04e77d2bedc7e8727580dbb46cd6"
+    },
+    {
+      "bytes": 2509,
+      "path": "/private/tmp/probata-t25-cell4-smt-supplement-packet-v1-20261016.json",
+      "sha256": "332bba373a31857c611b399e4728f0f9578853f0e421b7f2dfb0b2e072eecd51"
+    }
+  ],
+  "reviewer_SSH_native_compiler_formal_or_capture_main_executed": false,
+  "scientific_boundary": [
+    "Four source-derived mathematical check-lemma diagnostics only. No C body/smoke reachability or independent feasibility theorem in this gate.",
+    "Source-to-WP/Why3 transformations, selected standard arithmetic/map/array/datatype support and solvers remain explicit TCB.",
+    "No actual submitted task count/byte identity; ten materialized files only.",
+    "No prior proof/result promotion. Twenty other24model targets unexecuted by this producer; later public producer is separate.",
+    "No model/body/caller/originalV2/public proof record/ticket closure."
+  ],
+  "source_alias_crosswalk": {
+    "b": "i",
+    "bo": "i1",
+    "c": "i2",
+    "h": "heap1",
+    "j": "i3",
+    "o": "i4",
+    "r": "i5",
+    "s": "i6",
+    "values": "t"
+  },
+  "source_commit": "046f6b9e64d45777a8032951ced04f942fc9c3c2",
+  "source_primary": [
+    {
+      "bytes": 14470,
+      "path": "/private/tmp/probata-t25-cell4-cold-source-046f6b9e-20261016/heap_model_vcs.py",
+      "sha256": "f20e0ec130222aeda96b4fbb8e72eef8d922d3f33e84077777203f7e6d159092"
+    },
+    {
+      "bytes": 8386,
+      "path": "/private/tmp/probata-t25-cell4-cold-source-046f6b9e-20261016/heap_reallocation.mlw",
+      "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5"
+    },
+    {
+      "bytes": 8185,
+      "path": "/private/tmp/probata-t25-cell4-cold-source-046f6b9e-20261016/vector_reallocation_model.py",
+      "sha256": "92ad23030531650924a51b0a3bd1abb479afa373a7d1dd2a543b9ae225ab8b89"
+    },
+    {
+      "bytes": 24091,
+      "path": "/private/tmp/probata-t25-cell4-cold-source-046f6b9e-20261016/vector_reallocation_vcs.py",
+      "sha256": "ea7c743519cef009637b3aee8691233cfd316d86088402cd6a889ca1f29fa4ca"
+    }
+  ],
+  "support_attribution": {
+    "Alt_Ergo_non_goal": {
+      "datatype_encoding": 8,
+      "source_lambda_definition": 1,
+      "standard_arithmetic": 34
+    },
+    "CVC5_non_goal": {
+      "source_lambda_definition": 1,
+      "standard_arithmetic": 22
+    },
+    "all10_final_goal_ASTs_exact_source_conjunct": true,
+    "all_non_goal_assertions_attributed_under_TCB": true,
+    "exact_selected_tool_and_all_stdlib_WP_driver_bytes": true,
+    "per_task": [
+      {
+        "final_goal_source_mapping_exact": true,
+        "final_goal_tree_sha256": "8300cb202aed91ee3f4139946683153a36f4f72206b737584168bfb964bc7406",
+        "matched_primary_assertions": 42,
+        "solver": "Alt-Ergo",
+        "source_lambda_assertions": 1,
+        "task": {
+          "bytes": 10461,
+          "id": "grow.entry.int_projection.cells.access",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-cell4-diagnostic-v2/cell4-diagnostic-profile/leaf-grow.entry.int_projection.cells.access/prover-files/typed_real/check_lemma_t25v3_grow_entry_int_projection_cells_access_Why3_Alt_Ergo_2_6_4.psmt2",
+          "sha256": "980062b1f7a3660e3801298a79d42ff73a2b5f8fb8897885b8e8fa1339940217"
+        }
+      },
+      {
+        "final_goal_source_mapping_exact": true,
+        "final_goal_tree_sha256": "8300cb202aed91ee3f4139946683153a36f4f72206b737584168bfb964bc7406",
+        "matched_primary_assertions": 22,
+        "solver": "CVC5",
+        "source_lambda_assertions": 1,
+        "task": {
+          "bytes": 8307,
+          "id": "grow.entry.int_projection.cells.access",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-cell4-diagnostic-v2/cell4-diagnostic-profile/leaf-grow.entry.int_projection.cells.access/prover-files/typed_real/check_lemma_t25v3_grow_entry_int_projection_cells_access_Why3_CVC5_1_2_1.smt2",
+          "sha256": "08dc643914be61ae0a69f4fdff3d39c2cd8ad7d89be309acdd49bfacd5019cc8"
+        }
+      },
+      {
+        "final_goal_source_mapping_exact": true,
+        "final_goal_tree_sha256": "8300cb202aed91ee3f4139946683153a36f4f72206b737584168bfb964bc7406",
+        "matched_primary_assertions": 42,
+        "solver": "Alt-Ergo",
+        "source_lambda_assertions": 1,
+        "task": {
+          "bytes": 10425,
+          "id": "grow.entry.int_projection.cells.access",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-cell4-diagnostic-v2/cell4-diagnostic-profile/leaf-grow.entry.int_projection.cells.access/prover-files/typed_real/zilch-typed_real_check_lemma_t25v3_grow_entry_int_projection_cells_access_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+          "sha256": "976387d68728ac4d7ebecb245d69138e19a8ce70618e5b0114751876c65698f9"
+        }
+      },
+      {
+        "final_goal_source_mapping_exact": true,
+        "final_goal_tree_sha256": "8300cb202aed91ee3f4139946683153a36f4f72206b737584168bfb964bc7406",
+        "matched_primary_assertions": 22,
+        "solver": "CVC5",
+        "source_lambda_assertions": 1,
+        "task": {
+          "bytes": 8275,
+          "id": "grow.entry.int_projection.cells.access",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-cell4-diagnostic-v2/cell4-diagnostic-profile/leaf-grow.entry.int_projection.cells.access/prover-files/typed_real/zilch-typed_real_check_lemma_t25v3_grow_entry_int_projection_cells_access_CVC5_1dt2dt1-wp_goal.smt2",
+          "sha256": "bf9143531eee5595cf8c2178a20d8667cb45390631120e2d62f8f0c83cc4e4d8"
+        }
+      },
+      {
+        "final_goal_source_mapping_exact": true,
+        "final_goal_tree_sha256": "5bb02bbf9fac26e58fab759c556d486805259985ceec0fe3f3e639cbb6f2f6c6",
+        "matched_primary_assertions": 42,
+        "solver": "Alt-Ergo",
+        "source_lambda_assertions": 1,
+        "task": {
+          "bytes": 10237,
+          "id": "grow.entry.int_projection.cells.initialization",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-cell4-diagnostic-v2/cell4-diagnostic-profile/leaf-grow.entry.int_projection.cells.initialization/prover-files/typed_real/check_lemma_t25v3_grow_entry_int_projection_cells_Why3_Alt_Ergo_2_6_4.psmt2",
+          "sha256": "72cecf98275c0e2185fd62d72609d5cb866875ad50d2685275370e0d09f95d28"
+        }
+      },
+      {
+        "final_goal_source_mapping_exact": true,
+        "final_goal_tree_sha256": "5bb02bbf9fac26e58fab759c556d486805259985ceec0fe3f3e639cbb6f2f6c6",
+        "matched_primary_assertions": 42,
+        "solver": "Alt-Ergo",
+        "source_lambda_assertions": 1,
+        "task": {
+          "bytes": 10201,
+          "id": "grow.entry.int_projection.cells.initialization",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-cell4-diagnostic-v2/cell4-diagnostic-profile/leaf-grow.entry.int_projection.cells.initialization/prover-files/typed_real/zilch-typed_real_check_lemma_t25v3_grow_entry_int_projection_cells_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+          "sha256": "ce4e7c35ac02597a6804a704525ddf40f3f556ab1b20329bfd8849259a69f455"
+        }
+      },
+      {
+        "final_goal_source_mapping_exact": true,
+        "final_goal_tree_sha256": "2da55103fc34beae96be90602963b8d483d36205aafc269c4d3eabe5df2a19b9",
+        "matched_primary_assertions": 42,
+        "solver": "Alt-Ergo",
+        "source_lambda_assertions": 1,
+        "task": {
+          "bytes": 10423,
+          "id": "grow.entry.int_projection.cells.integer",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-cell4-diagnostic-v2/cell4-diagnostic-profile/leaf-grow.entry.int_projection.cells.integer/prover-files/typed_real/check_lemma_t25v3_grow_entry_int_projection_cells_integer_Why3_Alt_Ergo_2_6_4.psmt2",
+          "sha256": "7ddd249a1dbad97e92ea56b7d940653a2a05abd0df7f79d3de9a5358874fdbf8"
+        }
+      },
+      {
+        "final_goal_source_mapping_exact": true,
+        "final_goal_tree_sha256": "2da55103fc34beae96be90602963b8d483d36205aafc269c4d3eabe5df2a19b9",
+        "matched_primary_assertions": 42,
+        "solver": "Alt-Ergo",
+        "source_lambda_assertions": 1,
+        "task": {
+          "bytes": 10387,
+          "id": "grow.entry.int_projection.cells.integer",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-cell4-diagnostic-v2/cell4-diagnostic-profile/leaf-grow.entry.int_projection.cells.integer/prover-files/typed_real/zilch-typed_real_check_lemma_t25v3_grow_entry_int_projection_cells_integer_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+          "sha256": "fae37bcd67651f6450005da902bead0c7bce2147db36bc10e73ef3afcb86e559"
+        }
+      },
+      {
+        "final_goal_source_mapping_exact": true,
+        "final_goal_tree_sha256": "a79fe16d802fc58d9be6dc30fe9c416b260f7a57a37f4bc17c235450ca78d456",
+        "matched_primary_assertions": 42,
+        "solver": "Alt-Ergo",
+        "source_lambda_assertions": 1,
+        "task": {
+          "bytes": 10448,
+          "id": "grow.entry.int_projection.cells.bounds",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-cell4-diagnostic-v2/cell4-diagnostic-profile/leaf-grow.entry.int_projection.cells.bounds/prover-files/typed_real/check_lemma_t25v3_grow_entry_int_projection_cells_bounds_Why3_Alt_Ergo_2_6_4.psmt2",
+          "sha256": "b37f707137329a78fd246f5100f6135bc6210e3a99e278ed46c500d130cfef00"
+        }
+      },
+      {
+        "final_goal_source_mapping_exact": true,
+        "final_goal_tree_sha256": "a79fe16d802fc58d9be6dc30fe9c416b260f7a57a37f4bc17c235450ca78d456",
+        "matched_primary_assertions": 42,
+        "solver": "Alt-Ergo",
+        "source_lambda_assertions": 1,
+        "task": {
+          "bytes": 10412,
+          "id": "grow.entry.int_projection.cells.bounds",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-cell4-diagnostic-v2/cell4-diagnostic-profile/leaf-grow.entry.int_projection.cells.bounds/prover-files/typed_real/zilch-typed_real_check_lemma_t25v3_grow_entry_int_projection_cells_bounds_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+          "sha256": "70ed65718eb49d1025462f7b249e14c3ca5171d64f9770245f73c03b33fcd77d"
+        }
+      }
+    ],
+    "prior_schema_reused_not_proof_results": true,
+    "project_source_lemmas_or_axioms_imported": 0,
+    "residual_source": "heap_reallocation.mlw141\u2013143 project_int_region map lambda; independent source-derived typed AST hash equals every actual residual, not an injected premise",
+    "residual_source_equation_tree_sha256": "ad2aa9cc46e9567fb47c341895b8ca31c465dcb1b4251eee700ca41d30b85aec",
+    "transforms_or_foundations_reproved": false
+  },
+  "ticket_closure": false
+}

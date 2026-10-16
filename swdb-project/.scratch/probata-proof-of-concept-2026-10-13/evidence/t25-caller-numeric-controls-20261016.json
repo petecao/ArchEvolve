@@ -1,0 +1,300 @@
+{
+  "boundary_green": {
+    "UBSan": "three numeric C kernels compiled and executed with -fsanitize=undefined -fno-sanitize-recover=all; no diagnostics; stale pointer/allocation branch never executed",
+    "expected_growth_requests": [
+      1,
+      8,
+      2147483648
+    ],
+    "expected_no_growth_requests": [
+      0,
+      7,
+      2147483647
+    ],
+    "inputs_each": [
+      0,
+      7,
+      2147483647
+    ],
+    "native_arithmetic_observations": 9,
+    "resources": {
+      "bytes": 166,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/resources.json",
+      "sha256": "d1592e5fe005357d73e7bb5e46c15de51018fe7985d3106318f57da4caa91340"
+    },
+    "tests_passed": 7,
+    "tests_skipped": 0
+  },
+  "date": "2026-10-16 ET",
+  "entry_boundary": "0 <= source signed count remains a pending existing caller-contract discharge; it is not inferred, added to the caller, or discharged by finite samples",
+  "frozen_standalone_source_unchanged": "01771a839893975bba389ee0adcbec2aecdb88ac",
+  "green": {
+    "resources": {
+      "bytes": 164,
+      "path": "/private/tmp/probata-t25-caller-numeric-green-20261016/resources.json",
+      "sha256": "e82978deb77061e577851e14d9dfd3ae6579fd032f76f468c6cbc69512edecdc"
+    },
+    "result": "same public lower passed"
+  },
+  "kernel_boundary": "c_kernel source is an unexecuted formal target with no proof dependencies or result. Selected target ABI assertions, physical parameter span, constructor/reserve source and lowered event bindings are explicit.",
+  "production_sources": [
+    {
+      "bytes": 6775,
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/vector_reallocation_caller_vcs.py",
+      "sha256": "e8e514a1208d6653e8ae424b37309a3ce299690050ecac2710aed580b9ab397a"
+    },
+    {
+      "bytes": 10760,
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/vector_reallocation_calls.py",
+      "sha256": "d1d7ea169a50b82d5545ab0a3fa02910849d944b9104a5839e0955dd5a283a95"
+    }
+  ],
+  "raw_references": [
+    {
+      "bytes": 330,
+      "path": "/private/tmp/probata-t25-caller-numeric-red-20261016/command.json",
+      "sha256": "3308763835b1fa57d68eb70f752279b59105da4f3243d1e70876f2ba2ca37813"
+    },
+    {
+      "bytes": 1151,
+      "path": "/private/tmp/probata-t25-caller-numeric-red-20261016/controls.log",
+      "sha256": "3e74dd91b1c4a04cb7dbf9d9e5990b587d0365aad1f2471589cc27b6f10c48f0"
+    },
+    {
+      "bytes": 353098,
+      "path": "/private/tmp/probata-t25-caller-numeric-red-20261016/pytest/test_public_caller_numeric_tar0/vector_realloc_v3_safe.anchors.json",
+      "sha256": "1db69ad7af01febb9e8f6da450276eb0fc0193c079acbecf17cc3c91e1615efb"
+    },
+    {
+      "bytes": 7304,
+      "path": "/private/tmp/probata-t25-caller-numeric-red-20261016/pytest/test_public_caller_numeric_tar0/vector_realloc_v3_safe.c",
+      "sha256": "e03ffea7ca47dd8f6196972ca93682886c67fb5ab1a9e3451b1b1babd0642afe"
+    },
+    {
+      "bytes": 173,
+      "path": "/private/tmp/probata-t25-caller-numeric-red-20261016/resources.json",
+      "sha256": "d4c47d6023e5797de40301ded6336ace657b40846549aa10dd0b66a780d7e18b"
+    },
+    {
+      "bytes": 332,
+      "path": "/private/tmp/probata-t25-caller-numeric-green-20261016/command.json",
+      "sha256": "a18d9d9fc54dfe080ed2439c7eacae5bf9a00da5146c5f1802f5e7481eded9b5"
+    },
+    {
+      "bytes": 98,
+      "path": "/private/tmp/probata-t25-caller-numeric-green-20261016/controls.log",
+      "sha256": "e4cc0d1775d866203d8df879d84bef60f330b1c2074e9a95565eeaec64f429c2"
+    },
+    {
+      "bytes": 355695,
+      "path": "/private/tmp/probata-t25-caller-numeric-green-20261016/pytest/test_public_caller_numeric_tar0/vector_realloc_v3_safe.anchors.json",
+      "sha256": "5c2987d261dd4d1e05cb6b264b3fe6ed92897c0edb87027d88fa5a0b56484f91"
+    },
+    {
+      "bytes": 7304,
+      "path": "/private/tmp/probata-t25-caller-numeric-green-20261016/pytest/test_public_caller_numeric_tar0/vector_realloc_v3_safe.c",
+      "sha256": "e03ffea7ca47dd8f6196972ca93682886c67fb5ab1a9e3451b1b1babd0642afe"
+    },
+    {
+      "bytes": 164,
+      "path": "/private/tmp/probata-t25-caller-numeric-green-20261016/resources.json",
+      "sha256": "e82978deb77061e577851e14d9dfd3ae6579fd032f76f468c6cbc69512edecdc"
+    },
+    {
+      "bytes": 836,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/command.json",
+      "sha256": "96fc82a585d6ba6e640d9e68fcbc53eb3e193b6ec15e1de6e3c669bad40fc99d"
+    },
+    {
+      "bytes": 99,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/controls.log",
+      "sha256": "e60570509c3cb6427d4fa5dab9eed946499a7c4ec81848c36426a11ee1247bf6"
+    },
+    {
+      "bytes": 355068,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/pytest/test_public_caller_lifetime_du0/vector_realloc_v3_no_growth.anchors.json",
+      "sha256": "4d0d7b837e9c3b9edbf7be9ed2827a121f8457a1c45acfe8e0dd1690617b71c1"
+    },
+    {
+      "bytes": 6929,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/pytest/test_public_caller_lifetime_du0/vector_realloc_v3_no_growth.c",
+      "sha256": "7082d6fc081e23547bf792f8029277695b83d933913545f290f66353ee5841ec"
+    },
+    {
+      "bytes": 355695,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/pytest/test_public_caller_lifetime_pl0/vector_realloc_v3_safe.anchors.json",
+      "sha256": "5c2987d261dd4d1e05cb6b264b3fe6ed92897c0edb87027d88fa5a0b56484f91"
+    },
+    {
+      "bytes": 7304,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/pytest/test_public_caller_lifetime_pl0/vector_realloc_v3_safe.c",
+      "sha256": "e03ffea7ca47dd8f6196972ca93682886c67fb5ab1a9e3451b1b1babd0642afe"
+    },
+    {
+      "bytes": 355695,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/pytest/test_public_caller_numeric_tar0/vector_realloc_v3_safe.anchors.json",
+      "sha256": "5c2987d261dd4d1e05cb6b264b3fe6ed92897c0edb87027d88fa5a0b56484f91"
+    },
+    {
+      "bytes": 7304,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/pytest/test_public_caller_numeric_tar0/vector_realloc_v3_safe.c",
+      "sha256": "e03ffea7ca47dd8f6196972ca93682886c67fb5ab1a9e3451b1b1babd0642afe"
+    },
+    {
+      "bytes": 355695,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/pytest/test_public_capacity_qualifica0/lower/vector_realloc_v3_safe.anchors.json",
+      "sha256": "5c2987d261dd4d1e05cb6b264b3fe6ed92897c0edb87027d88fa5a0b56484f91"
+    },
+    {
+      "bytes": 7304,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/pytest/test_public_capacity_qualifica0/lower/vector_realloc_v3_safe.c",
+      "sha256": "e03ffea7ca47dd8f6196972ca93682886c67fb5ab1a9e3451b1b1babd0642afe"
+    },
+    {
+      "bytes": 371,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/pytest/test_source_mapped_numeric_ker0/compile.command.json",
+      "sha256": "07936f80949d765ceda5b9b2e986058b38e5c461e3a914ff54c7959c7e516055"
+    },
+    {
+      "bytes": 0,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/pytest/test_source_mapped_numeric_ker0/compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/pytest/test_source_mapped_numeric_ker0/compile.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 355695,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/pytest/test_source_mapped_numeric_ker0/lower/vector_realloc_v3_safe.anchors.json",
+      "sha256": "5c2987d261dd4d1e05cb6b264b3fe6ed92897c0edb87027d88fa5a0b56484f91"
+    },
+    {
+      "bytes": 7304,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/pytest/test_source_mapped_numeric_ker0/lower/vector_realloc_v3_safe.c",
+      "sha256": "e03ffea7ca47dd8f6196972ca93682886c67fb5ab1a9e3451b1b1babd0642afe"
+    },
+    {
+      "bytes": 0,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/pytest/test_source_mapped_numeric_ker0/native.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 15,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/pytest/test_source_mapped_numeric_ker0/native.stdout",
+      "sha256": "92358085784700aacc7849a1c7bfe1c2d57bb8573722d2e8de5e681e6800689e"
+    },
+    {
+      "bytes": 1195,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/pytest/test_source_mapped_numeric_ker0/numeric.c",
+      "sha256": "bdbbbabbbfb8dda900d8241103341bc03204fa8d4d8f86b57d55c981f055bff7"
+    },
+    {
+      "bytes": 371,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/pytest/test_source_mapped_numeric_ker1/compile.command.json",
+      "sha256": "f303675ff66639b85f02c33324def8b57d8493555ba2dbc071165d9e0ee9c682"
+    },
+    {
+      "bytes": 0,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/pytest/test_source_mapped_numeric_ker1/compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/pytest/test_source_mapped_numeric_ker1/compile.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 354948,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/pytest/test_source_mapped_numeric_ker1/lower/vector_realloc_v3_stale.anchors.json",
+      "sha256": "6a88e7e4f30bfea51072552d1c5328f8e0cbf3c56a4f8fd2c2cee556bcf3507b"
+    },
+    {
+      "bytes": 6875,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/pytest/test_source_mapped_numeric_ker1/lower/vector_realloc_v3_stale.c",
+      "sha256": "e57677c60690085660559825bb520309cfa171c6198341be85653a8eee944896"
+    },
+    {
+      "bytes": 0,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/pytest/test_source_mapped_numeric_ker1/native.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 15,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/pytest/test_source_mapped_numeric_ker1/native.stdout",
+      "sha256": "92358085784700aacc7849a1c7bfe1c2d57bb8573722d2e8de5e681e6800689e"
+    },
+    {
+      "bytes": 1195,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/pytest/test_source_mapped_numeric_ker1/numeric.c",
+      "sha256": "bdbbbabbbfb8dda900d8241103341bc03204fa8d4d8f86b57d55c981f055bff7"
+    },
+    {
+      "bytes": 371,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/pytest/test_source_mapped_numeric_ker2/compile.command.json",
+      "sha256": "928572dc38d95e8f343c27a8833a8579620edecf39268744cc2cc1c79fd9b4a2"
+    },
+    {
+      "bytes": 0,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/pytest/test_source_mapped_numeric_ker2/compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/pytest/test_source_mapped_numeric_ker2/compile.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 355068,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/pytest/test_source_mapped_numeric_ker2/lower/vector_realloc_v3_no_growth.anchors.json",
+      "sha256": "4d0d7b837e9c3b9edbf7be9ed2827a121f8457a1c45acfe8e0dd1690617b71c1"
+    },
+    {
+      "bytes": 6929,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/pytest/test_source_mapped_numeric_ker2/lower/vector_realloc_v3_no_growth.c",
+      "sha256": "7082d6fc081e23547bf792f8029277695b83d933913545f290f66353ee5841ec"
+    },
+    {
+      "bytes": 0,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/pytest/test_source_mapped_numeric_ker2/native.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 15,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/pytest/test_source_mapped_numeric_ker2/native.stdout",
+      "sha256": "0e312decbb43cf3d264882dc30b7767f0a8448a3c6e513385a0bf66989d88257"
+    },
+    {
+      "bytes": 1183,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/pytest/test_source_mapped_numeric_ker2/numeric.c",
+      "sha256": "71ccd9c265fd14b8f9a8dba883c7b0080786c47a237746ad9799d0f050402e5c"
+    },
+    {
+      "bytes": 166,
+      "path": "/private/tmp/probata-t25-caller-numeric-boundary-green-20261016/resources.json",
+      "sha256": "d1592e5fe005357d73e7bb5e46c15de51018fe7985d3106318f57da4caa91340"
+    }
+  ],
+  "red": {
+    "resources": {
+      "bytes": 173,
+      "path": "/private/tmp/probata-t25-caller-numeric-red-20261016/resources.json",
+      "sha256": "d4c47d6023e5797de40301ded6336ace657b40846549aa10dd0b66a780d7e18b"
+    },
+    "result": "one public lower failed KeyError numeric_kernel before implementation"
+  },
+  "scope": "public source-mapped caller numeric preparation only; no formal execution, model/caller acceptance or original-v2 promotion",
+  "source_base": "60839d8ef180fad2dd6a65c951289444caf0fb8f",
+  "still_pending": [
+    "ordinary eligible qualified constructor/reserve/destructor and observation summaries",
+    "complete source-local caller state/frame/typed-image/lifetime composition",
+    "all actual mathematical/numeric body proofs and hypothesis/runtime/source audits",
+    "safe and no-growth caller proofs, stale expected failure, original member/type acceptance breadth"
+  ],
+  "tests": {
+    "bytes": 14883,
+    "path": "/private/tmp/probata-resume-t25/swdb-project/tests/test_vector_reallocation_calls.py",
+    "sha256": "f703fd988b84b34b79ec00e908fd2c8ea493eb7acdf1d09dc8f4d9d3abc122e2"
+  }
+}

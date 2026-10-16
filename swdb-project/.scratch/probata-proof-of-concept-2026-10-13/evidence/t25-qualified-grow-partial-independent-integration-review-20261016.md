@@ -1,0 +1,11 @@
+# Independent partial017 cold integration review
+
+2026-10-16 ET. PASS partial classification only. Reviewed frozen d0d77e4a/fe2f6d29 and root b87a30f2 metadata. No reviewer SSH, remote raw rehash, compiler, native/formal job, tool probe or tests.
+
+Nineteen local packet/publication/helper/history pin references match. Root and compact manifests, resources, source, reader/policy, classifications and exact target censuses reconcile. Root reports5267 checks/2919 indexed references plus1553 streamed opaque consumer files, not the reviewer independently repeating remote checks. Exact source017 and its378 new/49 prior raw preservation,208 modules/416 physical+Git comparisons remain bound by that receipt.
+
+The three printed query canonical strings/hash identities preserve their original source statements and variable map: concrete premise feasibility; eligible receiver field reads; bounded-int projection with the full receiver/buffer disjunction and quantified assumptions. Project contexts have concrete definitions, no desired-result axioms/lemmas. Thirty transitive source modules remain explicit trusted standard/Qed arithmetic/map foundations; no independently flattened instantiated foundation proof is claimed. Fourteen materialized SMT identity receipts are not fourteen submissions or submitted-byte attestation.
+
+Two isolated ordinary check lemmas have CVC5Valid after Alt-ErgoTimeout; projection has Alt-ErgoTimeout/CVC5Unknown/Z3Unknown. There are zero C smokes and17 unexecuted targets. PublicCLI0 persisted draft not_proven/timeout; profile/guard1 correctly retains incomplete full20. This accepts scoped partial evidence integrity/context correspondence, not model/body/all20/original-v2/caller/refutation/ticket25 completion.
+
+V1's208-versus416 count defect was caught before dispatch; its exact reader remains retained. V2 separately validates208 module files and416 physical/Git checks with identical policy. Sixty-eight producer pure controls are attributed, not rerun. Root passive V2 took3.889979s/36,397,056B without reported resource/inspection errors. Historical actual exits/source/raw remain immutable. New projection source and exact merged controls are prospective; no result transfers to them.

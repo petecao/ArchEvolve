@@ -1,0 +1,328 @@
+{
+  "coverage": [
+    "original fullsource+contract pin",
+    "zero literal instantiation and27positiveinventory",
+    "nonzero fill/postcondition/extra write/self-consistent source pins/missing prefix refuse before WP",
+    "full27target normal-reader aggregation+numeric10ordinary/1smoke+schema persistence with explicit stand-ins",
+    "existingfirstpairpayloads/budget/import/source gates retained"
+  ],
+  "created": "2026-10-16 ET",
+  "existing42_payloads_unchanged": {
+    "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-count-ctor-canonical-comparison-20261016.json",
+    "sha256": "fefd67e17f9bd0e635d07afd5ee8d8fa803729acfd81978f4b19a0b2462094b4"
+  },
+  "formal_boundary": "ParentSWDB_FRAMA_C=none/SWDB_CBMC=none. Child Frama command is explicit parse-error or synthetic result stand-in; no actual WP/prover/solver/SSH execution. Synthetic persisted records never constitute proof evidence. Native OCaml metadata and fresh report reader compile under workerB/8GiB180s watchdog.",
+  "model_unchanged": true,
+  "original_caller_premises_added": [],
+  "original_member": "std_vector_int_ctor_count",
+  "original_source_sha256": "bc6c76c9fe74a568bd81973eafba48e24b9f2f42604ad3c9994f742572c11358",
+  "prospective_actual": {
+    "entry": "scripts/probata_heap_model_profile.py",
+    "external_guard_root_owned": true,
+    "member_argument": "std_vector_int_ctor_count",
+    "ordinary_expected": 36,
+    "profile_seconds": 2100,
+    "public_seconds": 1800,
+    "records": 1,
+    "smoke_expected": 1,
+    "targets": 27
+  },
+  "public_count_control_records": [
+    {
+      "failure_class": null,
+      "ordinary": 36,
+      "record": {
+        "path": "/private/tmp/probata-t25-count-ctor-final-controls-20261016/pytest/test_complete_synthetic_heap_s1/records/proofs/proof.model.std_vector_int_ctor_count.20261016t045303z.81ec0a4b.yaml",
+        "sha256": "4931c195baed364615d2a9c5c28e4035aeb1ef014e891f00914fe9143836e32c"
+      },
+      "setup_count": 27,
+      "smoke": 1,
+      "synthetic_markers": [
+        {
+          "path": "/private/tmp/probata-t25-count-ctor-final-controls-20261016/pytest/test_complete_synthetic_heap_s1/runs/proof.model.std_vector_int_ctor_count.20261016t045303z.81ec0a4b/wp/heap-job-control.count.premises_feasible/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-count-ctor-final-controls-20261016/pytest/test_complete_synthetic_heap_s1/runs/proof.model.std_vector_int_ctor_count.20261016t045303z.81ec0a4b/wp/heap-job-count.rte.zero_data/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-count-ctor-final-controls-20261016/pytest/test_complete_synthetic_heap_s1/runs/proof.model.std_vector_int_ctor_count.20261016t045303z.81ec0a4b/wp/heap-job-count.rte.zero_size/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-count-ctor-final-controls-20261016/pytest/test_complete_synthetic_heap_s1/runs/proof.model.std_vector_int_ctor_count.20261016t045303z.81ec0a4b/wp/heap-job-count.rte.zero_capacity/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-count-ctor-final-controls-20261016/pytest/test_complete_synthetic_heap_s1/runs/proof.model.std_vector_int_ctor_count.20261016t045303z.81ec0a4b/wp/heap-job-count.fields.initialized/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-count-ctor-final-controls-20261016/pytest/test_complete_synthetic_heap_s1/runs/proof.model.std_vector_int_ctor_count.20261016t045303z.81ec0a4b/wp/heap-job-count.zero.post/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-count-ctor-final-controls-20261016/pytest/test_complete_synthetic_heap_s1/runs/proof.model.std_vector_int_ctor_count.20261016t045303z.81ec0a4b/wp/heap-job-count.zero.frame/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-count-ctor-final-controls-20261016/pytest/test_complete_synthetic_heap_s1/runs/proof.model.std_vector_int_ctor_count.20261016t045303z.81ec0a4b/wp/heap-job-count.alloc.identity/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-count-ctor-final-controls-20261016/pytest/test_complete_synthetic_heap_s1/runs/proof.model.std_vector_int_ctor_count.20261016t045303z.81ec0a4b/wp/heap-job-count.alloc.well_formed/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-count-ctor-final-controls-20261016/pytest/test_complete_synthetic_heap_s1/runs/proof.model.std_vector_int_ctor_count.20261016t045303z.81ec0a4b/wp/heap-job-count.alloc.separation/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-count-ctor-final-controls-20261016/pytest/test_complete_synthetic_heap_s1/runs/proof.model.std_vector_int_ctor_count.20261016t045303z.81ec0a4b/wp/heap-job-count.alloc.extent/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-count-ctor-final-controls-20261016/pytest/test_complete_synthetic_heap_s1/runs/proof.model.std_vector_int_ctor_count.20261016t045303z.81ec0a4b/wp/heap-job-count.alloc.uninitialized/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-count-ctor-final-controls-20261016/pytest/test_complete_synthetic_heap_s1/runs/proof.model.std_vector_int_ctor_count.20261016t045303z.81ec0a4b/wp/heap-job-count.capacity.entry/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-count-ctor-final-controls-20261016/pytest/test_complete_synthetic_heap_s1/runs/proof.model.std_vector_int_ctor_count.20261016t045303z.81ec0a4b/wp/heap-job-count.rte.allocated_data/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-count-ctor-final-controls-20261016/pytest/test_complete_synthetic_heap_s1/runs/proof.model.std_vector_int_ctor_count.20261016t045303z.81ec0a4b/wp/heap-job-count.rte.allocated_capacity/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-count-ctor-final-controls-20261016/pytest/test_complete_synthetic_heap_s1/runs/proof.model.std_vector_int_ctor_count.20261016t045303z.81ec0a4b/wp/heap-job-count.prefix.establish/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-count-ctor-final-controls-20261016/pytest/test_complete_synthetic_heap_s1/runs/proof.model.std_vector_int_ctor_count.20261016t045303z.81ec0a4b/wp/heap-job-count.store.access/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-count-ctor-final-controls-20261016/pytest/test_complete_synthetic_heap_s1/runs/proof.model.std_vector_int_ctor_count.20261016t045303z.81ec0a4b/wp/heap-job-count.prefix.step/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-count-ctor-final-controls-20261016/pytest/test_complete_synthetic_heap_s1/runs/proof.model.std_vector_int_ctor_count.20261016t045303z.81ec0a4b/wp/heap-job-count.prefix.exit/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-count-ctor-final-controls-20261016/pytest/test_complete_synthetic_heap_s1/runs/proof.model.std_vector_int_ctor_count.20261016t045303z.81ec0a4b/wp/heap-job-count.final.post/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-count-ctor-final-controls-20261016/pytest/test_complete_synthetic_heap_s1/runs/proof.model.std_vector_int_ctor_count.20261016t045303z.81ec0a4b/wp/heap-job-count.rte.final_size/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-count-ctor-final-controls-20261016/pytest/test_complete_synthetic_heap_s1/runs/proof.model.std_vector_int_ctor_count.20261016t045303z.81ec0a4b/wp/heap-job-count.frame.preexisting/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-count-ctor-final-controls-20261016/pytest/test_complete_synthetic_heap_s1/runs/proof.model.std_vector_int_ctor_count.20261016t045303z.81ec0a4b/wp/heap-job-count.frame.loop_step/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-count-ctor-final-controls-20261016/pytest/test_complete_synthetic_heap_s1/runs/proof.model.std_vector_int_ctor_count.20261016t045303z.81ec0a4b/wp/heap-job-count.frame.final/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-count-ctor-final-controls-20261016/pytest/test_complete_synthetic_heap_s1/runs/proof.model.std_vector_int_ctor_count.20261016t045303z.81ec0a4b/wp/heap-job-count.numeric/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-count-ctor-final-controls-20261016/pytest/test_complete_synthetic_heap_s1/runs/proof.model.std_vector_int_ctor_count.20261016t045303z.81ec0a4b/wp/heap-job-control.count.zero_size.formation/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-count-ctor-final-controls-20261016/pytest/test_complete_synthetic_heap_s1/runs/proof.model.std_vector_int_ctor_count.20261016t045303z.81ec0a4b/wp/heap-job-control.count.live_zero_base.not_fresh/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        }
+      ],
+      "synthetic_only": true,
+      "targets": 27,
+      "verdict": "proven",
+      "verdict_reading": {
+        "check": {
+          "sha256": "21237f3fbee8dc9eb8f52c8b860a5098a3132bfe1c892ed6f5ea09cd3f03950e",
+          "version": "1"
+        },
+        "verdict": "proven"
+      }
+    },
+    {
+      "failure_class": "parse_error",
+      "ordinary": 0,
+      "record": {
+        "path": "/private/tmp/probata-t25-count-ctor-final-controls-20261016/pytest/test_public_original_count_con0/records/proofs/proof.model.std_vector_int_ctor_count.20261016t045232z.a5f9ed99.yaml",
+        "sha256": "91ba88b5845084844c2d4cadb666cbcec9f642d026177e7f6ba967db2258640c"
+      },
+      "setup_count": 1,
+      "smoke": 0,
+      "synthetic_markers": [],
+      "synthetic_only": false,
+      "targets": 1,
+      "verdict": "not_proven",
+      "verdict_reading": null
+    }
+  ],
+  "runs": {
+    "final": {
+      "command": {
+        "path": "/private/tmp/probata-t25-count-ctor-final-controls-20261016/command.json",
+        "sha256": "adbd1dad146971c7bf98b3c797c750dd68e002dfee6b739e91f0fa1986ff5a4d"
+      },
+      "log": {
+        "path": "/private/tmp/probata-t25-count-ctor-final-controls-20261016/controls.log",
+        "sha256": "cdf720bbbada369ecb1d69294776cc4aa82a55fb4d99adbf6e01307e2ec2f9dd"
+      },
+      "resource_values": {
+        "cpu_seconds": 47.02023,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 388431872,
+        "timed_out": false,
+        "wall_seconds": 52.912122958980035
+      },
+      "resources": {
+        "path": "/private/tmp/probata-t25-count-ctor-final-controls-20261016/resources.json",
+        "sha256": "dbc1dc707971bb637be239c82fe8c1b6ab595dcaf0e0b3345639540ec49f026b"
+      }
+    },
+    "full_public": {
+      "command": {
+        "path": "/private/tmp/probata-t25-count-ctor-full-controls-20261016/command.json",
+        "sha256": "4d0ec59460c4275f4f676d96aa73675db18ee15af1ef48ed18ddcbfc9f302c78"
+      },
+      "log": {
+        "path": "/private/tmp/probata-t25-count-ctor-full-controls-20261016/controls.log",
+        "sha256": "c6692abc15a848f67fec557634a66af9b5c618033f4225abad956d5ef0a471a8"
+      },
+      "resource_values": {
+        "cpu_seconds": 44.891039,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 358498304,
+        "timed_out": false,
+        "wall_seconds": 49.682875042024534
+      },
+      "resources": {
+        "path": "/private/tmp/probata-t25-count-ctor-full-controls-20261016/resources.json",
+        "sha256": "05d292135b1c39276afd936ab3f70c61e8c4b78a116936f8c790c44175516207"
+      }
+    },
+    "green": {
+      "command": {
+        "path": "/private/tmp/probata-t25-count-ctor-public-green-20261016/command.json",
+        "sha256": "b7073d6cf7438fbb607cfdebcea610bace9cb36d01eb546fa739a8d74a2b5f37"
+      },
+      "log": {
+        "path": "/private/tmp/probata-t25-count-ctor-public-green-20261016/controls.log",
+        "sha256": "112cf07500ee123a9f8378ec6c740d3b5da5ea152baf972040a6586cc194d38a"
+      },
+      "resource_values": {
+        "cpu_seconds": 2.586767,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 349798400,
+        "timed_out": false,
+        "wall_seconds": 2.906837333983276
+      },
+      "resources": {
+        "path": "/private/tmp/probata-t25-count-ctor-public-green-20261016/resources.json",
+        "sha256": "976e77706902c3e2e7f3431d09ebae64db4d686928a085e9275adb6224017499"
+      }
+    },
+    "red": {
+      "command": {
+        "path": "/private/tmp/probata-t25-count-ctor-public-red-20261016/command.json",
+        "sha256": "f8a0d26562d9dde02bbeb14d823172ea431c3e30af2185ea40510de1f2583dbb"
+      },
+      "log": {
+        "path": "/private/tmp/probata-t25-count-ctor-public-red-20261016/controls.log",
+        "sha256": "b14e26398c812e6078cd98ebe075501645f06a15e4feee0e6dc710fe2eb95504"
+      },
+      "resource_values": {
+        "cpu_seconds": 1.693589,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 194641920,
+        "timed_out": false,
+        "wall_seconds": 2.104830458993092
+      },
+      "resources": {
+        "path": "/private/tmp/probata-t25-count-ctor-public-red-20261016/resources.json",
+        "sha256": "e2a1b872da22fcf56047aa878a7eca8aa133e2f5d9cc976b754b22e7cbd61e49"
+      }
+    }
+  },
+  "scope_exclusions": [
+    "generic caller composition",
+    "growth-domain repair",
+    "new model version",
+    "byte/partial-store or new elementtypes",
+    "formal C++ equivalence",
+    "production-store adoption"
+  ],
+  "source_pins": {
+    "scripts/probata_heap_model_profile.py": {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/scripts/probata_heap_model_profile.py",
+      "sha256": "2abc5fe12e0eac1c04f9b3634df5303f37547cea5a960ef6c813db3110ff9c14"
+    },
+    "swdb/heap_bridge.mlw": {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/heap_bridge.mlw",
+      "sha256": "5186c27f5a7a339352e3f62dc3a0d3efb1c7bd12f8a456cc61b0d7a52566638d"
+    },
+    "swdb/heap_model_packets.py": {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/heap_model_packets.py",
+      "sha256": "805b00fe78373102b600506833f86c28fce2cf494baef7a68afd63641c1de185"
+    },
+    "swdb/heap_model_vcs.py": {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/heap_model_vcs.py",
+      "sha256": "f20e0ec130222aeda96b4fbb8e72eef8d922d3f33e84077777203f7e6d159092"
+    },
+    "swdb/heap_model_view.py": {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/heap_model_view.py",
+      "sha256": "ecb6e1476accaee2b275c9bf078bb14fc4b3c8ad81ed17d97d98b1699d2c1e22"
+    },
+    "swdb/std_models.py": {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/std_models.py",
+      "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+    },
+    "tests/test_heap_model_view.py": {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/tests/test_heap_model_view.py",
+      "sha256": "5e31c9a125ef3b2386ea175dd0199818b04e2515e313dc6dfa7458892771be39"
+    }
+  },
+  "status": "PREPARATION ONLY; independent review and exact-source coordinator actual admission pending",
+  "target_inventory": {
+    "canonical_total": 70,
+    "full_original_source_events": 11,
+    "new_count_negative_control": 1,
+    "new_count_positive": 27,
+    "required_groups": [
+      "C1",
+      "C2",
+      "C3",
+      "C4",
+      "C5",
+      "C6",
+      "C7",
+      "C8",
+      "C9"
+    ]
+  },
+  "tdd": "RED original public allocation refusal1failure/1.57s; GREEN checked parse-error stand-in1pass/2.53s. Final39pass/2actual-onlyskips52.40s; watchdog52.912s/388431872B/noOOM/timeouts.",
+  "value_instantiation": {
+    "mathematical_value": 0,
+    "source_expression": "(int)0"
+  }
+}

@@ -1,0 +1,342 @@
+{
+  "at_utc": "2026-10-16T13:17:40.790998+00:00",
+  "clean_no_changed_untracked_ignored_submodules": true,
+  "connection": {
+    "disk": "Filesystem      Size  Used Avail Use% Mounted on\n/dev/sdd1       1.8T  1.7T   22G  99% /data1\n/dev/sdb1       1.8T  1.7T   69G  97% /data",
+    "uptime": "09:17:25 up 77 days,  1:36,  8 users,  load average: 0.00, 0.08, 0.26",
+    "users": ""
+  },
+  "date_et": "2026-10-16",
+  "finite_source_raw_observations": [
+    {
+      "boundary": "Finite same-UID cwd/argv scans only, not universal/atomic reader exclusion. Exact user-PAM and own root-parented SSH ancestry exceptions inherited from reviewed e4 recipe.",
+      "explicit_trusted_OS_service_exclusions": [
+        {
+          "name": "(sd-pam)",
+          "parent_name": "systemd",
+          "parent_uid": 114316761,
+          "pid": 3261267,
+          "ppid": 3261266,
+          "start_ticks": "645211088"
+        },
+        {
+          "name": "sshd",
+          "parent_name": "sshd",
+          "parent_uid": 0,
+          "pid": 3874799,
+          "ppid": 3874751,
+          "start_ticks": "665857819"
+        }
+      ],
+      "inspection_denials": [],
+      "source_raw_matches": []
+    },
+    {
+      "boundary": "Finite same-UID cwd/argv scans only, not universal/atomic reader exclusion. Exact user-PAM and own root-parented SSH ancestry exceptions inherited from reviewed e4 recipe.",
+      "explicit_trusted_OS_service_exclusions": [
+        {
+          "name": "(sd-pam)",
+          "parent_name": "systemd",
+          "parent_uid": 114316761,
+          "pid": 3261267,
+          "ppid": 3261266,
+          "start_ticks": "645211088"
+        },
+        {
+          "name": "sshd",
+          "parent_name": "sshd",
+          "parent_uid": 0,
+          "pid": 3874799,
+          "ppid": 3874751,
+          "start_ticks": "665857819"
+        }
+      ],
+      "inspection_denials": [],
+      "source_raw_matches": []
+    },
+    {
+      "boundary": "Finite same-UID cwd/argv scans only, not universal/atomic reader exclusion. Exact user-PAM and own root-parented SSH ancestry exceptions inherited from reviewed e4 recipe.",
+      "explicit_trusted_OS_service_exclusions": [
+        {
+          "name": "(sd-pam)",
+          "parent_name": "systemd",
+          "parent_uid": 114316761,
+          "pid": 3261267,
+          "ppid": 3261266,
+          "start_ticks": "645211088"
+        },
+        {
+          "name": "sshd",
+          "parent_name": "sshd",
+          "parent_uid": 0,
+          "pid": 3874799,
+          "ppid": 3874751,
+          "start_ticks": "665857819"
+        }
+      ],
+      "inspection_denials": [],
+      "source_raw_matches": []
+    },
+    {
+      "boundary": "Finite same-UID cwd/argv scans only, not universal/atomic reader exclusion. Exact user-PAM and own root-parented SSH ancestry exceptions inherited from reviewed e4 recipe.",
+      "explicit_trusted_OS_service_exclusions": [
+        {
+          "name": "(sd-pam)",
+          "parent_name": "systemd",
+          "parent_uid": 114316761,
+          "pid": 3261267,
+          "ppid": 3261266,
+          "start_ticks": "645211088"
+        },
+        {
+          "name": "sshd",
+          "parent_name": "sshd",
+          "parent_uid": 0,
+          "pid": 3874799,
+          "ppid": 3874751,
+          "start_ticks": "665857819"
+        }
+      ],
+      "inspection_denials": [],
+      "source_raw_matches": []
+    },
+    {
+      "boundary": "Finite same-UID cwd/argv scans only, not universal/atomic reader exclusion. Exact user-PAM and own root-parented SSH ancestry exceptions inherited from reviewed e4 recipe.",
+      "explicit_trusted_OS_service_exclusions": [
+        {
+          "name": "(sd-pam)",
+          "parent_name": "systemd",
+          "parent_uid": 114316761,
+          "pid": 3261267,
+          "ppid": 3261266,
+          "start_ticks": "645211088"
+        },
+        {
+          "name": "sshd",
+          "parent_name": "sshd",
+          "parent_uid": 0,
+          "pid": 3874799,
+          "ppid": 3874751,
+          "start_ticks": "665857819"
+        }
+      ],
+      "inspection_denials": [],
+      "source_raw_matches": []
+    },
+    {
+      "boundary": "Finite same-UID cwd/argv scans only, not universal/atomic reader exclusion. Exact user-PAM and own root-parented SSH ancestry exceptions inherited from reviewed e4 recipe.",
+      "explicit_trusted_OS_service_exclusions": [
+        {
+          "name": "(sd-pam)",
+          "parent_name": "systemd",
+          "parent_uid": 114316761,
+          "pid": 3261267,
+          "ppid": 3261266,
+          "start_ticks": "645211088"
+        },
+        {
+          "name": "sshd",
+          "parent_name": "sshd",
+          "parent_uid": 0,
+          "pid": 3874799,
+          "ppid": 3874751,
+          "start_ticks": "665857819"
+        }
+      ],
+      "inspection_denials": [],
+      "source_raw_matches": []
+    }
+  ],
+  "free_bytes_after": 24645963776,
+  "free_bytes_before": 23001124864,
+  "leases_after": {
+    "mbit10-evaluation-node0.meta.json": {
+      "active_session": null,
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "heartbeat_at": "2026-10-16T12:43:41Z",
+      "lease": {
+        "acquired_at": "2026-10-16T12:43:01Z",
+        "daemon_pid": 3871441,
+        "daemon_start_token": "sh3871441-1792154581",
+        "generation": 600,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node0",
+        "mode": "measure",
+        "session_id": null
+      },
+      "recovered_from_generation": null,
+      "released_at": "2026-10-16T12:43:41Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation-node1.meta.json": {
+      "active_session": null,
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "heartbeat_at": "2026-10-16T13:02:06Z",
+      "lease": {
+        "acquired_at": "2026-10-16T12:55:54Z",
+        "daemon_pid": 3872877,
+        "daemon_start_token": "sh3872877-1792155354",
+        "generation": 624,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node1",
+        "mode": "measure",
+        "session_id": null
+      },
+      "recovered_from_generation": null,
+      "released_at": "2026-10-16T13:02:06Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation.meta.json": {
+      "active_session": null,
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "heartbeat_at": "2026-09-12T04:49:11Z",
+      "lease": {
+        "acquired_at": "2026-09-12T01:35:42Z",
+        "daemon_pid": 209457,
+        "daemon_start_token": "sh209457-1789176942",
+        "generation": 77,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation",
+        "mode": "measure",
+        "session_id": null
+      },
+      "recovered_from_generation": null,
+      "released_at": "2026-09-12T04:49:11Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    }
+  },
+  "leases_before": {
+    "mbit10-evaluation-node0.meta.json": {
+      "active_session": null,
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "heartbeat_at": "2026-10-16T12:43:41Z",
+      "lease": {
+        "acquired_at": "2026-10-16T12:43:01Z",
+        "daemon_pid": 3871441,
+        "daemon_start_token": "sh3871441-1792154581",
+        "generation": 600,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node0",
+        "mode": "measure",
+        "session_id": null
+      },
+      "recovered_from_generation": null,
+      "released_at": "2026-10-16T12:43:41Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation-node1.meta.json": {
+      "active_session": null,
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "heartbeat_at": "2026-10-16T13:02:06Z",
+      "lease": {
+        "acquired_at": "2026-10-16T12:55:54Z",
+        "daemon_pid": 3872877,
+        "daemon_start_token": "sh3872877-1792155354",
+        "generation": 624,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node1",
+        "mode": "measure",
+        "session_id": null
+      },
+      "recovered_from_generation": null,
+      "released_at": "2026-10-16T13:02:06Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation.meta.json": {
+      "active_session": null,
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "heartbeat_at": "2026-09-12T04:49:11Z",
+      "lease": {
+        "acquired_at": "2026-09-12T01:35:42Z",
+        "daemon_pid": 209457,
+        "daemon_start_token": "sh209457-1789176942",
+        "generation": 77,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation",
+        "mode": "measure",
+        "session_id": null
+      },
+      "recovered_from_generation": null,
+      "released_at": "2026-09-12T04:49:11Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    }
+  },
+  "manifest_pins": {
+    "cold-reader-preservation-pin.json": {
+      "bytes": 1025,
+      "sha256": "638503345d537f5699b266357c6c08672ded4c542f9d46256e98b8ba63323ef1"
+    },
+    "raw-preservation-manifest.json": {
+      "bytes": 48064,
+      "sha256": "d97036dec9162c0d4da106d5b6e2c0897f00c6a7bcd0112be1fb72c9462884b7"
+    },
+    "restoration.json": {
+      "bytes": 1157,
+      "sha256": "2a6bbcc7c4f4b493b91869897ec47a2b82913221a479a1a2529122bde785f833"
+    },
+    "source-tree-manifest.json": {
+      "bytes": 6729475,
+      "sha256": "d6e6fdda055b07eaf884f5c3d0dbe25f4d1b72c84fb623348224bb5a0a9736a7"
+    }
+  },
+  "primary_after": {
+    "branch": "yanrujhou_main",
+    "head": "680298a3370b72ed2f8aed15cd29e67aa056229d",
+    "status": "?? swdb-project/records/.retention.lock"
+  },
+  "primary_before": {
+    "branch": "yanrujhou_main",
+    "head": "680298a3370b72ed2f8aed15cd29e67aa056229d",
+    "status": "?? swdb-project/records/.retention.lock"
+  },
+  "published_ancestor": true,
+  "raw_entries": 236,
+  "raw_roots": [
+    "probata-reviewed-a3a8db54-t28-register-pair-v1",
+    "probata-reviewed-a3a8db54-t28-register-pair-v1-passive-cold-v4",
+    "probata-reviewed-a3a8db54-t28-register-pair-v1-passive-metadata-v1"
+  ],
+  "raw_unchanged": true,
+  "reclaimed_bytes": 1644838912,
+  "restore_argv": [
+    "git",
+    "-C",
+    "/data1/yanruj/ArchEvolve",
+    "worktree",
+    "add",
+    "--detach",
+    "/data1/yanruj/probata-reviewed-a3a8db54",
+    "a3a8db5411680f227f5cf0fe3f0ca473d9accae4"
+  ],
+  "retention_ref": "refs/probata/retained-source/a3a8db54",
+  "scope": "Only the exact clean completed a3a8 register Git checkout removed without force. All tracked bytes/Git blobs and full physical membership retained for reconstruction. Every matching raw path and all files/empty dirs/literal symlink targets preserved; link referents are not asserted present after source removal. Current046/37/6216/7e/primary sources unchanged. Historical cold acceptance stays scoped; future source and member proofs require fresh current records.",
+  "source_commit": "a3a8db5411680f227f5cf0fe3f0ca473d9accae4",
+  "source_files": 10405,
+  "source_payload_bytes": 1615280721,
+  "source_removed": "/data1/yanruj/probata-reviewed-a3a8db54",
+  "source_tree": "7991a4e04afae6847b420b863a00a579b93ecb46"
+}

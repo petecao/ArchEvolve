@@ -1,0 +1,665 @@
+{
+  "acceptance_blockers": [
+    {
+      "errors": [
+        "unexpected verdict",
+        "safe proof lacks all-goal/smoke Valid acceptance"
+      ],
+      "independent_errors": [
+        "all-goal safe acceptance"
+      ],
+      "label": "std_models:safe",
+      "ordinary_open": [
+        {
+          "function": "swdb_std_unit",
+          "goal": "typed_real_swdb_std_unit_assert_swdb_pointer_formation_1",
+          "property": "swdb_std_unit_assert_swdb_pointer_formation_1",
+          "seconds": null,
+          "smoke": false,
+          "solver": null,
+          "source": "wp_json",
+          "status": "timeout"
+        }
+      ]
+    }
+  ],
+  "created": "2026-10-15 ET",
+  "deallocation_boundary": "No lifetime acceptance inferred from this stopped matrix; remaining allocation/lifetime profiles pending.",
+  "explicit_contract_correction": {
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t24-std-object-domain-20261015.json",
+    "sha256": "bfc452028415a8d90f7f06f05f95908b0195c60db45d0976a654e280b1f79563"
+  },
+  "frozen_source": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+  "full_snapshot": {
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t24-current-std-frontier-0e7f2327-20261015.json",
+    "sha256": "faf684b643563fae216e2a4ae85b4070f1dc70a34bc6687f8a43808de4102f67"
+  },
+  "integrity_counts": {
+    "artifact_file_instances_verified": 276,
+    "evidence_instances_verified": 76,
+    "physical_sources_checked": 1003,
+    "record_hashes_verified": 8
+  },
+  "integrity_errors": [],
+  "matrix_complete": false,
+  "matrix_success": false,
+  "method_boundary": "Exact runtime production0e7 and launch-env aggregateb1ddaa111bec5d19843b69fd7571530859acb1382947d96692894bfc29b0b993. PureCmodel subjects have no generatedC++ naming mapping; generated callers pin kept-names.3.",
+  "method_pin": {
+    "id": "method.wp-tracer-fixture",
+    "sha256": "ac4fe5ea50ebb15eddc88e239cb340d9fca41306df41e0cdda8432c9d0d88c5c"
+  },
+  "naming_pin_for_generated_callers": {
+    "id": "kept-names.3",
+    "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+  },
+  "native_diagnosis": {
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t24-std-empty-domain-native-20261015.json",
+    "sha256": "8be8b346f448e1978d8cfb97e5d26c36656a08fd8b2bbea7210f94c97729970b"
+  },
+  "outer_resources": {
+    "data": {
+      "cpu_seconds": 2198.3950409999998,
+      "exit_code": 1,
+      "out_of_memory": false,
+      "peak_rss_bytes": 1010438144,
+      "timed_out": false,
+      "wall_seconds": 1805.6908649886027
+    },
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/outer-resources.json",
+    "sha256": "e74297cdb1a2efae94aa2cd27017043a39cf2ce59cbcc0db38679986263217dd"
+  },
+  "producer": {
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/audit-0eb6ac0f167be373b462ccfd7b35342d020aa0b8c40254d0ca56da2f818bb9d4.py",
+    "sha256": "0eb6ac0f167be373b462ccfd7b35342d020aa0b8c40254d0ca56da2f818bb9d4"
+  },
+  "qualified_actual_status": "pending; never relabel original failed contract",
+  "remote_snapshot": {
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/current-audit-7088085bfe119af99c4ea7d73bf140b5e4537021c03c47bb21f8d203703ab40f.json",
+    "sha256": "faf684b643563fae216e2a4ae85b4070f1dc70a34bc6687f8a43808de4102f67"
+  },
+  "rows": [
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "failure_class": null,
+      "frozen_case_accepted": true,
+      "id": "proof.wp24-safe.candidate-1.20261015t212324z.db377b81",
+      "initialization_goals": 12,
+      "label": "floats:safe",
+      "ordinary_open": [],
+      "ordinary_valid": 48,
+      "pins": {
+        "code": {
+          "id": "wp24-safe.candidate-1",
+          "sha256": "4b3cef39b12eb3ec213895ee9f124461b9ca77829883c32f4a2be58ca133237b"
+        },
+        "contract": {
+          "id": "contract.fixture_wp24_floats",
+          "sha256": "6296b348a7bed6f5cb610bba671761ff266fae0fc4835ef682425d3c911274d5"
+        }
+      },
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/matrix/seed/records/proofs/proof.wp24-safe.candidate-1.20261015t212324z.db377b81.yaml",
+        "sha256": "560c76e40561475712b300c34de4a5d24d11a6f2addb88b1b875bee4f36c69c3"
+      },
+      "smoke_open": [],
+      "smoke_valid": 5,
+      "subject": {
+        "candidate": "wp24-safe.candidate-1",
+        "function": "swdb_float_unit",
+        "kind": "candidate_proof_unit"
+      },
+      "verdict": "proven"
+    },
+    {
+      "dependencies": [],
+      "expected": "not_proven",
+      "failure_class": "vacuous_pass",
+      "frozen_case_accepted": true,
+      "id": "proof.wp24-bug.candidate-1.20261015t212559z.6233b2da",
+      "initialization_goals": 12,
+      "label": "floats:seeded",
+      "ordinary_open": [
+        {
+          "function": "swdb_float_unit",
+          "goal": "typed_real_swdb_float_unit_loop_invariant_2_established",
+          "property": "swdb_float_unit_loop_invariant",
+          "seconds": null,
+          "smoke": false,
+          "solver": null,
+          "source": "wp_json",
+          "status": "timeout"
+        }
+      ],
+      "ordinary_valid": 47,
+      "pins": {
+        "code": {
+          "id": "wp24-bug.candidate-1",
+          "sha256": "ee8adaae9aeb0bada01bb405802b0bb63a2c9f7655a7752e6c0ae4a3f3e6133d"
+        },
+        "contract": {
+          "id": "contract.fixture_wp24_floats",
+          "sha256": "6296b348a7bed6f5cb610bba671761ff266fae0fc4835ef682425d3c911274d5"
+        }
+      },
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/matrix/seed/records/proofs/proof.wp24-bug.candidate-1.20261015t212559z.6233b2da.yaml",
+        "sha256": "dff628d92a3a8393857f223f2cb94c24a860cde56d1de527a15e9cd70d27b209"
+      },
+      "smoke_open": [
+        {
+          "function": "swdb_float_unit",
+          "goal": "typed_real_swdb_float_unit_wp_smoke_dead_loop_s6",
+          "property": "swdb_float_unit_wp_smoke_dead_loop_s6",
+          "seconds": null,
+          "smoke": true,
+          "solver": null,
+          "source": "wp_json",
+          "status": "failed_smoke"
+        },
+        {
+          "function": "swdb_float_unit",
+          "goal": "typed_real_swdb_float_unit_wp_smoke_dead_code_s12",
+          "property": "swdb_float_unit_wp_smoke_dead_code_s12",
+          "seconds": null,
+          "smoke": true,
+          "solver": null,
+          "source": "wp_json",
+          "status": "failed_smoke"
+        },
+        {
+          "function": "swdb_float_unit",
+          "goal": "typed_real_swdb_float_unit_wp_smoke_dead_code_s20",
+          "property": "swdb_float_unit_wp_smoke_dead_code_s20",
+          "seconds": null,
+          "smoke": true,
+          "solver": null,
+          "source": "wp_json",
+          "status": "failed_smoke"
+        },
+        {
+          "function": "swdb_float_unit",
+          "goal": "typed_real_swdb_float_unit_wp_smoke_dead_code_s21",
+          "property": "swdb_float_unit_wp_smoke_dead_code_s21",
+          "seconds": null,
+          "smoke": true,
+          "solver": null,
+          "source": "wp_json",
+          "status": "failed_smoke"
+        }
+      ],
+      "smoke_valid": 1,
+      "subject": {
+        "candidate": "wp24-bug.candidate-1",
+        "function": "swdb_float_unit",
+        "kind": "candidate_proof_unit"
+      },
+      "verdict": "not_proven"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "failure_class": null,
+      "frozen_case_accepted": true,
+      "id": "proof.model.std_min_int.20261015t212915z.949d8187",
+      "initialization_goals": 0,
+      "label": "model:std_min_int",
+      "ordinary_open": [],
+      "ordinary_valid": 5,
+      "pins": {
+        "code": {
+          "id": "std_min_int",
+          "sha256": "b3eb6c0e6792c3d4b5d2afbbb3f8da4c828de7d2467aa7eea70a743d388bc571"
+        },
+        "contract": {
+          "id": "std_min_int",
+          "sha256": "b3eb6c0e6792c3d4b5d2afbbb3f8da4c828de7d2467aa7eea70a743d388bc571"
+        }
+      },
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/matrix/seed/records/proofs/proof.model.std_min_int.20261015t212915z.949d8187.yaml",
+        "sha256": "7028e9105fdb92ecf8ba1bc1974f456a5084676cdfc1e08161b861978bd7523a"
+      },
+      "smoke_open": [],
+      "smoke_valid": 2,
+      "subject": {
+        "id": "std_min_int",
+        "kind": "c_model"
+      },
+      "verdict": "proven"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "failure_class": null,
+      "frozen_case_accepted": true,
+      "id": "proof.model.std_max_int.20261015t213126z.f8b8689c",
+      "initialization_goals": 0,
+      "label": "model:std_max_int",
+      "ordinary_open": [],
+      "ordinary_valid": 5,
+      "pins": {
+        "code": {
+          "id": "std_max_int",
+          "sha256": "2f8a32131a588ca8da62172a4d42af129a3de4eb2c5e0c11d72cdd7ec256f3f6"
+        },
+        "contract": {
+          "id": "std_max_int",
+          "sha256": "2f8a32131a588ca8da62172a4d42af129a3de4eb2c5e0c11d72cdd7ec256f3f6"
+        }
+      },
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/matrix/seed/records/proofs/proof.model.std_max_int.20261015t213126z.f8b8689c.yaml",
+        "sha256": "714be0d2ec0f6017544af81a067c7a60ffafa6ae389109b313a161f73ede6707"
+      },
+      "smoke_open": [],
+      "smoke_valid": 2,
+      "subject": {
+        "id": "std_max_int",
+        "kind": "c_model"
+      },
+      "verdict": "proven"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "failure_class": null,
+      "frozen_case_accepted": true,
+      "id": "proof.model.std_swap_int.20261015t213339z.c0ed4542",
+      "initialization_goals": 3,
+      "label": "model:std_swap_int",
+      "ordinary_open": [],
+      "ordinary_valid": 13,
+      "pins": {
+        "code": {
+          "id": "std_swap_int",
+          "sha256": "18c72f0fe28452c1f6fb22a3806e90a3056078a0e93edec8cb14454b28bf8483"
+        },
+        "contract": {
+          "id": "std_swap_int",
+          "sha256": "18c72f0fe28452c1f6fb22a3806e90a3056078a0e93edec8cb14454b28bf8483"
+        }
+      },
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/matrix/seed/records/proofs/proof.model.std_swap_int.20261015t213339z.c0ed4542.yaml",
+        "sha256": "c06d6a934ae68fcb72e164c38444faa6b40868119e04d4d96673ce346d6a3b32"
+      },
+      "smoke_open": [],
+      "smoke_valid": 1,
+      "subject": {
+        "id": "std_swap_int",
+        "kind": "c_model"
+      },
+      "verdict": "proven"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "failure_class": null,
+      "frozen_case_accepted": true,
+      "id": "proof.model.std_copy_int.20261015t213547z.ea97bd04",
+      "initialization_goals": 7,
+      "label": "model:std_copy_int",
+      "ordinary_open": [],
+      "ordinary_valid": 36,
+      "pins": {
+        "code": {
+          "id": "std_copy_int",
+          "sha256": "efcf958c7433473e0478d53b60d2aab648124e87df8e04f13b41f1087c94da26"
+        },
+        "contract": {
+          "id": "std_copy_int",
+          "sha256": "efcf958c7433473e0478d53b60d2aab648124e87df8e04f13b41f1087c94da26"
+        },
+        "standard_range_model_certificate": {
+          "id": "standard-range-model-certificate-1",
+          "sha256": "900ad4ea61e5b4ac45c7efa1b5aa652b320a7c3668dc1e313f3de512b71f8b4a"
+        },
+        "standard_range_model_check": {
+          "id": "standard-range-model-check-1",
+          "sha256": "5c8d385b2e506c77db69cfc664b5d33dc2514cd14d09ef79a8a1810f4c16084f"
+        }
+      },
+      "qualifications": {
+        "standard_range_model": {
+          "acsl_input_premises_added": [],
+          "body_operations_removed": [],
+          "check": {
+            "id": "standard-range-model-check-1",
+            "sha256": "5c8d385b2e506c77db69cfc664b5d33dc2514cd14d09ef79a8a1810f4c16084f"
+          },
+          "domain_role": "explicit standard-library valid-range domain; caller discharge required",
+          "model": "std_copy_int",
+          "obligations": [
+            "std_copy_range_entry",
+            "std_copy_range_access",
+            "std_copy_range_return"
+          ],
+          "original_contract_sha256": "f27314968466482710d239625c0d906574f5790ffe9bbb8891bdf4fc4635d73a",
+          "original_text_sha256": "efcf958c7433473e0478d53b60d2aab648124e87df8e04f13b41f1087c94da26",
+          "range_domain": {
+            "caller_rule": "same typed array root/subobject and live lifetime; ordered endpoint offsets and destination capacity",
+            "destination": {
+              "first": "d_first",
+              "offset_first": "0",
+              "same_count_as_source": true
+            },
+            "element_type": "int",
+            "empty": "equal endpoints execute no C pointer subtraction, indexing or addition",
+            "extent_acsl": "(\\at(first,Pre) == \\at(last,Pre) ? 0 : (\\at(last,Pre) - \\at(first,Pre)))",
+            "extent_environment": "entry pointer values; mathematical element count",
+            "lifetime": "both typed arrays remain live throughout the call; no allocation inference",
+            "model": "std_copy_int",
+            "source": {
+              "first": "first",
+              "last": "last",
+              "offset_first": "0",
+              "offset_last": "(\\at(first,Pre) == \\at(last,Pre) ? 0 : (\\at(last,Pre) - \\at(first,Pre)))",
+              "same_array_required": true
+            }
+          },
+          "references": [
+            "https://eel.is/c++draft/alg.copy",
+            "https://eel.is/c++draft/iterator.requirements.general"
+          ],
+          "source_ast": {
+            "count": "first == last ? 0 : last - first",
+            "count_binding": "immutable local n",
+            "loop": {
+              "body": "d_first[i] = first[i]",
+              "condition": "i < n",
+              "index": "i",
+              "initial": 0,
+              "step": "++i"
+            },
+            "parameters": [
+              [
+                "first",
+                "const int *"
+              ],
+              [
+                "last",
+                "const int *"
+              ],
+              [
+                "d_first",
+                "int *"
+              ]
+            ],
+            "parser": {
+              "id": "clang-22.1.8",
+              "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+            },
+            "pointer_rebinding": false,
+            "return": "n == 0 ? d_first : d_first + n"
+          },
+          "standalone_scope": "range-qualified body contract; not unrestricted opaque-pointer admission",
+          "typed_input_domain": {
+            "caller_rule": "same typed array root/subobject and live lifetime; ordered endpoint offsets and destination capacity",
+            "destination": {
+              "first": "d_first",
+              "offset_first": "0",
+              "same_count_as_source": true
+            },
+            "element_type": "int",
+            "empty": "equal endpoints execute no C pointer subtraction, indexing or addition",
+            "extent_acsl": "(\\at(first,Pre) == \\at(last,Pre) ? 0 : (\\at(last,Pre) - \\at(first,Pre)))",
+            "extent_environment": "entry pointer values; mathematical element count",
+            "lifetime": "both typed arrays remain live throughout the call; no allocation inference",
+            "model": "std_copy_int",
+            "source": {
+              "first": "first",
+              "last": "last",
+              "offset_first": "0",
+              "offset_last": "(\\at(first,Pre) == \\at(last,Pre) ? 0 : (\\at(last,Pre) - \\at(first,Pre)))",
+              "same_array_required": true
+            }
+          },
+          "version": 1,
+          "view_contract_sha256": "f27314968466482710d239625c0d906574f5790ffe9bbb8891bdf4fc4635d73a",
+          "view_text_sha256": "264f904440667eaf643243a138f8573a669b86c01d5c17e42af9b97239a9121e"
+        }
+      },
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/matrix/seed/records/proofs/proof.model.std_copy_int.20261015t213547z.ea97bd04.yaml",
+        "sha256": "ab86fab89802a166bad0263c5235b9b17f84552467a067af1da0fc3887940130"
+      },
+      "smoke_open": [],
+      "smoke_valid": 7,
+      "subject": {
+        "id": "std_copy_int",
+        "kind": "c_model"
+      },
+      "verdict": "proven"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "failure_class": null,
+      "frozen_case_accepted": true,
+      "id": "proof.model.std_max_long.20261015t213829z.89f04fca",
+      "initialization_goals": 0,
+      "label": "model:std_max_long",
+      "ordinary_open": [],
+      "ordinary_valid": 5,
+      "pins": {
+        "code": {
+          "id": "std_max_long",
+          "sha256": "208bcdd37a5da65a9d92edaad46ca3351e56ade9642fdf32f906d40d4699c750"
+        },
+        "contract": {
+          "id": "std_max_long",
+          "sha256": "208bcdd37a5da65a9d92edaad46ca3351e56ade9642fdf32f906d40d4699c750"
+        }
+      },
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/matrix/seed/records/proofs/proof.model.std_max_long.20261015t213829z.89f04fca.yaml",
+        "sha256": "00e5e0404b786243aeba6426a2f8ae7d9bec37a14294ddd5460426d2b86d0037"
+      },
+      "smoke_open": [],
+      "smoke_valid": 2,
+      "subject": {
+        "id": "std_max_long",
+        "kind": "c_model"
+      },
+      "verdict": "proven"
+    },
+    {
+      "dependencies": [
+        {
+          "kind": "models",
+          "pin": {
+            "id": "std_min_int",
+            "proof_record": "proof.model.std_min_int.20261015t212915z.949d8187",
+            "sha256": "b3eb6c0e6792c3d4b5d2afbbb3f8da4c828de7d2467aa7eea70a743d388bc571"
+          },
+          "record": {
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/matrix/seed/records/proofs/proof.model.std_min_int.20261015t212915z.949d8187.yaml",
+            "sha256": "7028e9105fdb92ecf8ba1bc1974f456a5084676cdfc1e08161b861978bd7523a"
+          }
+        },
+        {
+          "kind": "models",
+          "pin": {
+            "id": "std_max_int",
+            "proof_record": "proof.model.std_max_int.20261015t213126z.f8b8689c",
+            "sha256": "2f8a32131a588ca8da62172a4d42af129a3de4eb2c5e0c11d72cdd7ec256f3f6"
+          },
+          "record": {
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/matrix/seed/records/proofs/proof.model.std_max_int.20261015t213126z.f8b8689c.yaml",
+            "sha256": "714be0d2ec0f6017544af81a067c7a60ffafa6ae389109b313a161f73ede6707"
+          }
+        },
+        {
+          "kind": "models",
+          "pin": {
+            "id": "std_swap_int",
+            "proof_record": "proof.model.std_swap_int.20261015t213339z.c0ed4542",
+            "sha256": "18c72f0fe28452c1f6fb22a3806e90a3056078a0e93edec8cb14454b28bf8483"
+          },
+          "record": {
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/matrix/seed/records/proofs/proof.model.std_swap_int.20261015t213339z.c0ed4542.yaml",
+            "sha256": "c06d6a934ae68fcb72e164c38444faa6b40868119e04d4d96673ce346d6a3b32"
+          }
+        },
+        {
+          "kind": "models",
+          "pin": {
+            "id": "std_copy_int",
+            "proof_record": "proof.model.std_copy_int.20261015t213547z.ea97bd04",
+            "sha256": "efcf958c7433473e0478d53b60d2aab648124e87df8e04f13b41f1087c94da26"
+          },
+          "record": {
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/matrix/seed/records/proofs/proof.model.std_copy_int.20261015t213547z.ea97bd04.yaml",
+            "sha256": "ab86fab89802a166bad0263c5235b9b17f84552467a067af1da0fc3887940130"
+          }
+        },
+        {
+          "kind": "models",
+          "pin": {
+            "id": "std_max_long",
+            "proof_record": "proof.model.std_max_long.20261015t213829z.89f04fca",
+            "sha256": "208bcdd37a5da65a9d92edaad46ca3351e56ade9642fdf32f906d40d4699c750"
+          },
+          "record": {
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/matrix/seed/records/proofs/proof.model.std_max_long.20261015t213829z.89f04fca.yaml",
+            "sha256": "00e5e0404b786243aeba6426a2f8ae7d9bec37a14294ddd5460426d2b86d0037"
+          }
+        }
+      ],
+      "expected": "proven",
+      "failure_class": "timeout",
+      "frozen_case_accepted": false,
+      "id": "proof.wp24-safe.candidate-1.20261015t214040z.c309a2c9",
+      "initialization_goals": 5,
+      "label": "std_models:safe",
+      "ordinary_open": [
+        {
+          "function": "swdb_std_unit",
+          "goal": "typed_real_swdb_std_unit_assert_swdb_pointer_formation_1",
+          "property": "swdb_std_unit_assert_swdb_pointer_formation_1",
+          "seconds": null,
+          "smoke": false,
+          "solver": null,
+          "source": "wp_json",
+          "status": "timeout"
+        }
+      ],
+      "ordinary_valid": 46,
+      "pins": {
+        "code": {
+          "id": "wp24-safe.candidate-1",
+          "sha256": "4b3cef39b12eb3ec213895ee9f124461b9ca77829883c32f4a2be58ca133237b"
+        },
+        "contract": {
+          "id": "contract.fixture_wp24_std_models",
+          "sha256": "13fd0509e48eb0d9f45e8e6edc9a0fd5a4fec66d45f3e3cc525ee072b09c57d9"
+        },
+        "models": [
+          {
+            "id": "std_min_int",
+            "proof_record": "proof.model.std_min_int.20261015t212915z.949d8187",
+            "sha256": "b3eb6c0e6792c3d4b5d2afbbb3f8da4c828de7d2467aa7eea70a743d388bc571"
+          },
+          {
+            "id": "std_max_int",
+            "proof_record": "proof.model.std_max_int.20261015t213126z.f8b8689c",
+            "sha256": "2f8a32131a588ca8da62172a4d42af129a3de4eb2c5e0c11d72cdd7ec256f3f6"
+          },
+          {
+            "id": "std_swap_int",
+            "proof_record": "proof.model.std_swap_int.20261015t213339z.c0ed4542",
+            "sha256": "18c72f0fe28452c1f6fb22a3806e90a3056078a0e93edec8cb14454b28bf8483"
+          },
+          {
+            "id": "std_copy_int",
+            "proof_record": "proof.model.std_copy_int.20261015t213547z.ea97bd04",
+            "sha256": "efcf958c7433473e0478d53b60d2aab648124e87df8e04f13b41f1087c94da26"
+          },
+          {
+            "id": "std_max_long",
+            "proof_record": "proof.model.std_max_long.20261015t213829z.89f04fca",
+            "sha256": "208bcdd37a5da65a9d92edaad46ca3351e56ade9642fdf32f906d40d4699c750"
+          }
+        ],
+        "standard_range_call_check": {
+          "id": "standard-range-calls-1",
+          "sha256": "0bbacc63269090dc8e8db0e997954545ce39cbe907fcbe8100d26bafd904d19f"
+        }
+      },
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/matrix/seed/records/proofs/proof.wp24-safe.candidate-1.20261015t214040z.c309a2c9.yaml",
+        "sha256": "e03a86746f27c7815aeb4b3765fb3d84da21e1079f8170b4f1a21ae881b6a194"
+      },
+      "smoke_open": [],
+      "smoke_valid": 13,
+      "subject": {
+        "candidate": "wp24-safe.candidate-1",
+        "function": "swdb_std_unit",
+        "kind": "candidate_proof_unit"
+      },
+      "verdict": "not_proven"
+    }
+  ],
+  "run_receipts": {
+    "execute.py": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/execute.py",
+      "sha256": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612"
+    },
+    "lane.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/lane.json",
+      "sha256": "0f9658f2a0c134ffbd494f211e331292e6fe1520e014a892725a9f796ebacbe2"
+    },
+    "launch.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/launch.json",
+      "sha256": "80556337a6ec1eb2bfd11e4d9684228518654316d0ddc22e6fefad0c9e8fdb86"
+    },
+    "matrix.log": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/matrix.log",
+      "sha256": "df50dc492b5f34a6d65db0c5b322585e82d55cdd04374533df2f3e2408afef6b"
+    },
+    "matrix/matrix.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/matrix/matrix.json",
+      "sha256": "7088085bfe119af99c4ea7d73bf140b5e4537021c03c47bb21f8d203703ab40f"
+    },
+    "matrix/source-manifest.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/matrix/source-manifest.json",
+      "sha256": "aac799b8414b1369b15a43cefbbab5f5ace8cba4044c2fd973c5e09cb3f43d7e"
+    },
+    "resources.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/resources.json",
+      "sha256": "8723e7427a76890af98cde505111c233cc1170a14280ee7b7c6723c69b2e6229"
+    },
+    "run.sh": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/run.sh",
+      "sha256": "47adc1a404479131549e3794ed5456daa260fb76c30b79cd7a25edbbf3b91829"
+    },
+    "source-after.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/source-after.json",
+      "sha256": "53a46be3c357337f05b0ffa45a1ddcedbb313414550758526ba87c2104ea2ad7"
+    },
+    "source-manifest.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/source-manifest.json",
+      "sha256": "2f4e30d04a99eaddd7cff2361f591ac065491dbe01b52e7025ba82e1c9d06f1d"
+    }
+  },
+  "scope": "Stopped original0e7 matrix closure receipt; immutable producer remains unchanged. No new proof results.",
+  "unrun": [
+    "std_models:seeded",
+    "atomics:safe",
+    "atomics:seeded",
+    "maa_summary:safe",
+    "maa_summary:seeded",
+    "dxc_summary:safe",
+    "dxc_summary:seeded",
+    "templates:safe",
+    "templates:seeded",
+    "classes:safe",
+    "classes:seeded",
+    "omp:safe",
+    "omp:seeded",
+    "new_array:safe",
+    "new_array:seeded",
+    "new_array terminal allocation/lifetime controls"
+  ]
+}

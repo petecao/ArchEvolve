@@ -1,6 +1,7 @@
 # Proof setup and fresh WP verdicts
 
 Created: 2026-10-15 ET. Probata proof of concept ticket 36.
+Updated: 2026-10-15 ET (compiler runtime identity and final prelaunch replay).
 
 Every `swdb prove` job passes a setup preflight before the adapter runs. Each
 WP, CBMC, crux-llvm, and whole-function CBMC proof checks its generated inputs
@@ -12,11 +13,24 @@ pin, input `hashes` and individual generated-run checks. A job that returns an
 unsupported-subset outcome without starting a verifier has a preflight result
 and an empty `runs` list. A skipped job runs no check or verifier.
 
-The checks are implemented by `swdb.proof_setup`. Their identity covers both
-that Python module and the Frama-C inventory reader, `swdb/proof_report.ml`.
+The checks are implemented by `swdb.proof_setup`. Their content identity frames
+the names and hashes of the setup policy, Frama-C inventory reader, adapter
+verdict readers, domain checks, resource accounting and failure vocabulary.
 An execution method must pin both checks' versions and hashes under `checks`.
 Historical `contract_fixture` method files keep their fixture status; they do
 not establish execution evidence for the current checks.
+
+The lowering identity pins the selected command arguments, exact frontend
+argument vector, actual frontend binary and selected command executable,
+including a wrapper. Its canonical frontend probe always uses source `-`;
+working-directory-sensitive frontend arguments remain part of the exact context.
+Methods need a translator pin for the context in which they run. Missing optional libclang or standard-header
+provenance never removes those base identities. The final generated-input check
+refuses an unresolvable frontend, rechecks the lowering/runtime against the
+method's translator pin, and records the exact `compiler_runtime` identity under
+`settings` plus its digest in the setup hashes. Ordinary scalar subjects may use
+an explicitly recorded optional-parser fallback. Standard-model substitutions
+and allocation still require their complete original-TU provenance certificate.
 
 ## Frozen inputs
 

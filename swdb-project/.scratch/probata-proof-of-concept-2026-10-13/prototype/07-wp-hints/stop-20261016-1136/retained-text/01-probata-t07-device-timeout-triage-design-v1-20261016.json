@@ -1,0 +1,1049 @@
+{
+  "date_ET": "2026-10-16",
+  "scope": "PASSIVE TRIAGE AND NEXT COMPONENT DESIGN ONLY",
+  "decision": "Recommend exact-source standalone index_safe/missing_index full-root worlds before another blended pipeline run; root review/admission required",
+  "roots": [
+    {
+      "root": "swdb_device_index_safe",
+      "goals": 41,
+      "ordinary": 34,
+      "smoke": 7,
+      "families": [
+        {
+          "key": "RTE initialization",
+          "count": 3
+        },
+        {
+          "key": "callee precondition",
+          "count": 11
+        },
+        {
+          "key": "frame/assigns",
+          "count": 13
+        },
+        {
+          "key": "other",
+          "count": 1
+        },
+        {
+          "key": "other RTE",
+          "count": 3
+        },
+        {
+          "key": "postcondition",
+          "count": 1
+        },
+        {
+          "key": "read readiness check",
+          "count": 1
+        },
+        {
+          "key": "smoke",
+          "count": 7
+        },
+        {
+          "key": "termination",
+          "count": 1
+        }
+      ],
+      "raw_status": [
+        {
+          "key": [
+            false,
+            false,
+            ""
+          ],
+          "count": 27
+        },
+        {
+          "key": [
+            false,
+            true,
+            ""
+          ],
+          "count": 7
+        },
+        {
+          "key": [
+            true,
+            true,
+            ""
+          ],
+          "count": 1
+        },
+        {
+          "key": [
+            true,
+            true,
+            "timeout,unknown,timeout"
+          ],
+          "count": 6
+        }
+      ],
+      "latest_unique_external_results": 18,
+      "external_states": [
+        {
+          "key": [
+            "Alt-Ergo:2.6.4",
+            true,
+            "timeout"
+          ],
+          "count": 6
+        },
+        {
+          "key": [
+            "CVC5:1.2.1",
+            true,
+            "unknown"
+          ],
+          "count": 6
+        },
+        {
+          "key": [
+            "Z3:5.1.0",
+            true,
+            "timeout"
+          ],
+          "count": 6
+        }
+      ],
+      "reported_external_prover_time_sum": 24,
+      "reported_qed_time_sum_once_per_goal": 0.03571800000000014,
+      "ordinary_without_any_raw_valid": [
+        "typed_swdb_device_index_safe_terminates",
+        "typed_swdb_device_index_safe_ensures",
+        "typed_swdb_device_index_safe_exits",
+        "typed_swdb_device_index_safe_assert_rte_initialization",
+        "typed_swdb_device_index_safe_assert_rte_mem_access",
+        "typed_swdb_device_index_safe_check_fixture_read_ready",
+        "typed_swdb_device_index_safe_assert_rte_initialization_2",
+        "typed_swdb_device_index_safe_assert_rte_initialization_3",
+        "typed_swdb_device_index_safe_assert_rte_mem_access_2",
+        "typed_swdb_device_index_safe_assert_rte_mem_access_3",
+        "typed_swdb_device_index_safe_assigns_normal_part1",
+        "typed_swdb_device_index_safe_assigns_normal_part2",
+        "typed_swdb_device_index_safe_assigns_normal_part3",
+        "typed_swdb_device_index_safe_assigns_normal_part4",
+        "typed_swdb_device_index_safe_assigns_normal_part5",
+        "typed_swdb_device_index_safe_assigns_normal_part6",
+        "typed_swdb_device_index_safe_assigns_normal_part7",
+        "typed_swdb_device_index_safe_assigns_exit_part1",
+        "typed_swdb_device_index_safe_assigns_exit_part2",
+        "typed_swdb_device_index_safe_assigns_exit_part3",
+        "typed_swdb_device_index_safe_assigns_exit_part4",
+        "typed_swdb_device_index_safe_assigns_exit_part5",
+        "typed_swdb_device_index_safe_assigns_exit_part6",
+        "typed_swdb_device_index_safe_call___dxc_gather_dxc_gather_requires",
+        "typed_swdb_device_index_safe_call___dxc_gather_dxc_gather_requires_2",
+        "typed_swdb_device_index_safe_call___dxc_gather_dxc_gather_requires_3",
+        "typed_swdb_device_index_safe_call___dxc_gather_dxc_gather_requires_4",
+        "typed_swdb_device_index_safe_call___dxc_gather_dxc_gather_requires_5",
+        "typed_swdb_device_index_safe_call___dxc_gather_dxc_gather_requires_6",
+        "typed_swdb_device_index_safe_call___dxc_gather_dxc_gather_requires_7",
+        "typed_swdb_device_index_safe_call___dxc_wait_dxc_wait_requires",
+        "typed_swdb_device_index_safe_call___dxc_tile_pointer_out_dxc_tile_pointer_out_requires",
+        "typed_swdb_device_index_safe_call___dxc_tile_pointer_out_dxc_tile_pointer_out_requires_2",
+        "typed_swdb_device_index_safe_call___dxc_tile_pointer_out_dxc_tile_pointer_out_requires_3"
+      ],
+      "smoke_raw_valid_or_failedpassed": [],
+      "unattempted_smokes": [
+        "typed_swdb_device_index_safe_wp_smoke_dead_code_s61"
+      ]
+    },
+    {
+      "root": "swdb_device_missing_index",
+      "goals": 36,
+      "ordinary": 29,
+      "smoke": 7,
+      "families": [
+        {
+          "key": "RTE initialization",
+          "count": 2
+        },
+        {
+          "key": "callee precondition",
+          "count": 11
+        },
+        {
+          "key": "frame/assigns",
+          "count": 11
+        },
+        {
+          "key": "other",
+          "count": 1
+        },
+        {
+          "key": "other RTE",
+          "count": 2
+        },
+        {
+          "key": "read readiness check",
+          "count": 1
+        },
+        {
+          "key": "smoke",
+          "count": 7
+        },
+        {
+          "key": "termination",
+          "count": 1
+        }
+      ],
+      "raw_status": [
+        {
+          "key": [
+            false,
+            false,
+            ""
+          ],
+          "count": 23
+        },
+        {
+          "key": [
+            false,
+            true,
+            ""
+          ],
+          "count": 6
+        },
+        {
+          "key": [
+            true,
+            true,
+            ""
+          ],
+          "count": 7
+        }
+      ],
+      "latest_unique_external_results": 0,
+      "external_states": [],
+      "reported_external_prover_time_sum": 0,
+      "reported_qed_time_sum_once_per_goal": 0,
+      "ordinary_without_any_raw_valid": [
+        "typed_swdb_device_missing_index_terminates",
+        "typed_swdb_device_missing_index_exits",
+        "typed_swdb_device_missing_index_check_fixture_read_ready",
+        "typed_swdb_device_missing_index_assert_rte_initialization",
+        "typed_swdb_device_missing_index_assert_rte_initialization_2",
+        "typed_swdb_device_missing_index_assert_rte_mem_access",
+        "typed_swdb_device_missing_index_assert_rte_mem_access_2",
+        "typed_swdb_device_missing_index_assigns_normal_part1",
+        "typed_swdb_device_missing_index_assigns_normal_part2",
+        "typed_swdb_device_missing_index_assigns_normal_part3",
+        "typed_swdb_device_missing_index_assigns_normal_part4",
+        "typed_swdb_device_missing_index_assigns_normal_part5",
+        "typed_swdb_device_missing_index_assigns_normal_part6",
+        "typed_swdb_device_missing_index_assigns_exit_part1",
+        "typed_swdb_device_missing_index_assigns_exit_part2",
+        "typed_swdb_device_missing_index_assigns_exit_part3",
+        "typed_swdb_device_missing_index_assigns_exit_part4",
+        "typed_swdb_device_missing_index_assigns_exit_part5",
+        "typed_swdb_device_missing_index_call___dxc_gather_dxc_gather_requires",
+        "typed_swdb_device_missing_index_call___dxc_gather_dxc_gather_requires_2",
+        "typed_swdb_device_missing_index_call___dxc_gather_dxc_gather_requires_3",
+        "typed_swdb_device_missing_index_call___dxc_gather_dxc_gather_requires_4",
+        "typed_swdb_device_missing_index_call___dxc_gather_dxc_gather_requires_5",
+        "typed_swdb_device_missing_index_call___dxc_gather_dxc_gather_requires_6",
+        "typed_swdb_device_missing_index_call___dxc_gather_dxc_gather_requires_7",
+        "typed_swdb_device_missing_index_call___dxc_wait_dxc_wait_requires",
+        "typed_swdb_device_missing_index_call___dxc_tile_pointer_out_dxc_tile_pointer_out_requires",
+        "typed_swdb_device_missing_index_call___dxc_tile_pointer_out_dxc_tile_pointer_out_requires_2",
+        "typed_swdb_device_missing_index_call___dxc_tile_pointer_out_dxc_tile_pointer_out_requires_3"
+      ],
+      "smoke_raw_valid_or_failedpassed": [],
+      "unattempted_smokes": [
+        "typed_swdb_device_missing_index_wp_smoke_default_requires",
+        "typed_dxc_gather_wp_smoke_dead_call_s66",
+        "typed_dxc_wait_wp_smoke_dead_call_s67",
+        "typed_dxc_tile_pointer_out_wp_smoke_dead_call_s68",
+        "typed_swdb_device_missing_index_wp_smoke_dead_code_s67",
+        "typed_swdb_device_missing_index_wp_smoke_dead_code_s68",
+        "typed_swdb_device_missing_index_wp_smoke_dead_code_s70"
+      ]
+    },
+    {
+      "root": "swdb_device_missing_source",
+      "goals": 82,
+      "ordinary": 61,
+      "smoke": 21,
+      "families": [
+        {
+          "key": "RTE initialization",
+          "count": 2
+        },
+        {
+          "key": "callee precondition",
+          "count": 37
+        },
+        {
+          "key": "frame/assigns",
+          "count": 17
+        },
+        {
+          "key": "other",
+          "count": 1
+        },
+        {
+          "key": "other RTE",
+          "count": 2
+        },
+        {
+          "key": "read readiness check",
+          "count": 1
+        },
+        {
+          "key": "smoke",
+          "count": 21
+        },
+        {
+          "key": "termination",
+          "count": 1
+        }
+      ],
+      "raw_status": [
+        {
+          "key": [
+            false,
+            false,
+            "timeout,unknown,timeout"
+          ],
+          "count": 1
+        },
+        {
+          "key": [
+            false,
+            true,
+            "valid"
+          ],
+          "count": 60
+        },
+        {
+          "key": [
+            true,
+            false,
+            "valid"
+          ],
+          "count": 14
+        },
+        {
+          "key": [
+            true,
+            true,
+            "timeout,unknown,timeout"
+          ],
+          "count": 7
+        }
+      ],
+      "latest_unique_external_results": 29,
+      "external_states": [
+        {
+          "key": [
+            "Alt-Ergo:2.6.4",
+            false,
+            "timeout"
+          ],
+          "count": 1
+        },
+        {
+          "key": [
+            "Alt-Ergo:2.6.4",
+            false,
+            "valid"
+          ],
+          "count": 5
+        },
+        {
+          "key": [
+            "Alt-Ergo:2.6.4",
+            true,
+            "timeout"
+          ],
+          "count": 7
+        },
+        {
+          "key": [
+            "CVC5:1.2.1",
+            false,
+            "unknown"
+          ],
+          "count": 1
+        },
+        {
+          "key": [
+            "CVC5:1.2.1",
+            true,
+            "unknown"
+          ],
+          "count": 7
+        },
+        {
+          "key": [
+            "Z3:5.1.0",
+            false,
+            "timeout"
+          ],
+          "count": 1
+        },
+        {
+          "key": [
+            "Z3:5.1.0",
+            true,
+            "timeout"
+          ],
+          "count": 7
+        }
+      ],
+      "reported_external_prover_time_sum": 88.052638,
+      "reported_qed_time_sum_once_per_goal": 0.0718800000000015,
+      "ordinary_without_any_raw_valid": [
+        "typed_swdb_device_missing_source_call___dxc_stream_load_dxc_stream_load_requires_6"
+      ],
+      "smoke_raw_valid_or_failedpassed": [
+        "typed_dxc_const_i32_wp_smoke_dead_call_s27",
+        "typed_dxc_const_i32_wp_smoke_dead_call_s28",
+        "typed_dxc_stream_load_wp_smoke_dead_call_s25",
+        "typed_dxc_gather_wp_smoke_dead_call_s26",
+        "typed_dxc_range_loop_wp_smoke_dead_call_s29",
+        "typed_dxc_wait_wp_smoke_dead_call_s30",
+        "typed_dxc_tile_pointer_out_wp_smoke_dead_call_s31",
+        "typed_swdb_device_missing_source_wp_smoke_dead_code_s26",
+        "typed_swdb_device_missing_source_wp_smoke_dead_code_s27",
+        "typed_swdb_device_missing_source_wp_smoke_dead_code_s28",
+        "typed_swdb_device_missing_source_wp_smoke_dead_code_s29",
+        "typed_swdb_device_missing_source_wp_smoke_dead_code_s30",
+        "typed_swdb_device_missing_source_wp_smoke_dead_code_s31",
+        "typed_swdb_device_missing_source_wp_smoke_dead_code_s33"
+      ],
+      "unattempted_smokes": [
+        "typed_dxc_const_i32_wp_smoke_dead_call_s27",
+        "typed_dxc_const_i32_wp_smoke_dead_call_s28",
+        "typed_dxc_stream_load_wp_smoke_dead_call_s25",
+        "typed_dxc_gather_wp_smoke_dead_call_s26",
+        "typed_dxc_range_loop_wp_smoke_dead_call_s29",
+        "typed_dxc_wait_wp_smoke_dead_call_s30",
+        "typed_dxc_tile_pointer_out_wp_smoke_dead_call_s31",
+        "typed_swdb_device_missing_source_wp_smoke_dead_code_s26",
+        "typed_swdb_device_missing_source_wp_smoke_dead_code_s27",
+        "typed_swdb_device_missing_source_wp_smoke_dead_code_s28",
+        "typed_swdb_device_missing_source_wp_smoke_dead_code_s29",
+        "typed_swdb_device_missing_source_wp_smoke_dead_code_s30",
+        "typed_swdb_device_missing_source_wp_smoke_dead_code_s31",
+        "typed_swdb_device_missing_source_wp_smoke_dead_code_s33"
+      ]
+    },
+    {
+      "root": "swdb_device_pipeline_safe",
+      "goals": 85,
+      "ordinary": 64,
+      "smoke": 21,
+      "families": [
+        {
+          "key": "RTE initialization",
+          "count": 2
+        },
+        {
+          "key": "callee precondition",
+          "count": 37
+        },
+        {
+          "key": "frame/assigns",
+          "count": 19
+        },
+        {
+          "key": "other",
+          "count": 1
+        },
+        {
+          "key": "other RTE",
+          "count": 2
+        },
+        {
+          "key": "postcondition",
+          "count": 1
+        },
+        {
+          "key": "read readiness check",
+          "count": 1
+        },
+        {
+          "key": "smoke",
+          "count": 21
+        },
+        {
+          "key": "termination",
+          "count": 1
+        }
+      ],
+      "raw_status": [
+        {
+          "key": [
+            false,
+            false,
+            "timeout,timeout,timeout"
+          ],
+          "count": 2
+        },
+        {
+          "key": [
+            false,
+            true,
+            "timeout,valid"
+          ],
+          "count": 2
+        },
+        {
+          "key": [
+            false,
+            true,
+            "valid"
+          ],
+          "count": 60
+        },
+        {
+          "key": [
+            true,
+            true,
+            "timeout,timeout,timeout"
+          ],
+          "count": 6
+        },
+        {
+          "key": [
+            true,
+            true,
+            "timeout,unknown,timeout"
+          ],
+          "count": 15
+        }
+      ],
+      "latest_unique_external_results": 97,
+      "external_states": [
+        {
+          "key": [
+            "Alt-Ergo:2.6.4",
+            false,
+            "timeout"
+          ],
+          "count": 4
+        },
+        {
+          "key": [
+            "Alt-Ergo:2.6.4",
+            false,
+            "valid"
+          ],
+          "count": 24
+        },
+        {
+          "key": [
+            "Alt-Ergo:2.6.4",
+            true,
+            "timeout"
+          ],
+          "count": 21
+        },
+        {
+          "key": [
+            "CVC5:1.2.1",
+            false,
+            "timeout"
+          ],
+          "count": 2
+        },
+        {
+          "key": [
+            "CVC5:1.2.1",
+            false,
+            "valid"
+          ],
+          "count": 2
+        },
+        {
+          "key": [
+            "CVC5:1.2.1",
+            true,
+            "timeout"
+          ],
+          "count": 6
+        },
+        {
+          "key": [
+            "CVC5:1.2.1",
+            true,
+            "unknown"
+          ],
+          "count": 15
+        },
+        {
+          "key": [
+            "Z3:5.1.0",
+            false,
+            "timeout"
+          ],
+          "count": 2
+        },
+        {
+          "key": [
+            "Z3:5.1.0",
+            true,
+            "timeout"
+          ],
+          "count": 21
+        }
+      ],
+      "reported_external_prover_time_sum": 337.223888,
+      "reported_qed_time_sum_once_per_goal": 0.8565980000000014,
+      "ordinary_without_any_raw_valid": [
+        "typed_swdb_device_pipeline_safe_ensures",
+        "typed_swdb_device_pipeline_safe_assert_rte_initialization_2"
+      ],
+      "smoke_raw_valid_or_failedpassed": [],
+      "unattempted_smokes": []
+    },
+    {
+      "root": "swdb_device_wrong_prefix",
+      "goals": 84,
+      "ordinary": 63,
+      "smoke": 21,
+      "families": [
+        {
+          "key": "RTE initialization",
+          "count": 2
+        },
+        {
+          "key": "callee precondition",
+          "count": 37
+        },
+        {
+          "key": "frame/assigns",
+          "count": 19
+        },
+        {
+          "key": "other",
+          "count": 1
+        },
+        {
+          "key": "other RTE",
+          "count": 2
+        },
+        {
+          "key": "read readiness check",
+          "count": 1
+        },
+        {
+          "key": "smoke",
+          "count": 21
+        },
+        {
+          "key": "termination",
+          "count": 1
+        }
+      ],
+      "raw_status": [
+        {
+          "key": [
+            false,
+            false,
+            "timeout,timeout,timeout"
+          ],
+          "count": 1
+        },
+        {
+          "key": [
+            false,
+            true,
+            "timeout,valid"
+          ],
+          "count": 2
+        },
+        {
+          "key": [
+            false,
+            true,
+            "valid"
+          ],
+          "count": 60
+        },
+        {
+          "key": [
+            true,
+            true,
+            "timeout,timeout,timeout"
+          ],
+          "count": 6
+        },
+        {
+          "key": [
+            true,
+            true,
+            "timeout,unknown,timeout"
+          ],
+          "count": 15
+        }
+      ],
+      "latest_unique_external_results": 94,
+      "external_states": [
+        {
+          "key": [
+            "Alt-Ergo:2.6.4",
+            false,
+            "timeout"
+          ],
+          "count": 3
+        },
+        {
+          "key": [
+            "Alt-Ergo:2.6.4",
+            false,
+            "valid"
+          ],
+          "count": 24
+        },
+        {
+          "key": [
+            "Alt-Ergo:2.6.4",
+            true,
+            "timeout"
+          ],
+          "count": 21
+        },
+        {
+          "key": [
+            "CVC5:1.2.1",
+            false,
+            "timeout"
+          ],
+          "count": 1
+        },
+        {
+          "key": [
+            "CVC5:1.2.1",
+            false,
+            "valid"
+          ],
+          "count": 2
+        },
+        {
+          "key": [
+            "CVC5:1.2.1",
+            true,
+            "timeout"
+          ],
+          "count": 6
+        },
+        {
+          "key": [
+            "CVC5:1.2.1",
+            true,
+            "unknown"
+          ],
+          "count": 15
+        },
+        {
+          "key": [
+            "Z3:5.1.0",
+            false,
+            "timeout"
+          ],
+          "count": 1
+        },
+        {
+          "key": [
+            "Z3:5.1.0",
+            true,
+            "timeout"
+          ],
+          "count": 21
+        }
+      ],
+      "reported_external_prover_time_sum": 247.23751700000003,
+      "reported_qed_time_sum_once_per_goal": 0.8161570000000031,
+      "ordinary_without_any_raw_valid": [
+        "typed_swdb_device_wrong_prefix_assert_rte_initialization_2"
+      ],
+      "smoke_raw_valid_or_failedpassed": [],
+      "unattempted_smokes": []
+    }
+  ],
+  "observed_events": 707,
+  "observed_GIDs": 328,
+  "drift_count": 107,
+  "drift_fields": [
+    {
+      "key": [
+        "property"
+      ],
+      "count": 107
+    }
+  ],
+  "first_latest_actual_identity_changes": {},
+  "naming_explanation_is_not_alias_admission": true,
+  "old_final_files_are_early_parse_shot_snapshots": true,
+  "file_times": [
+    {
+      "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-20261016-expected.json",
+      "mtime_ns": 1792160309331517824,
+      "birthtime": 1792160309.3313928,
+      "ctime_ns": 1792160309331517824
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-bd2610b6-20261016/component/normal/per-prover-journal.jsonl",
+      "mtime_ns": 1792161975502783467,
+      "birthtime": 1792161219.163189,
+      "ctime_ns": 1792161975502783467
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-proof-cold-v2-20261016-output/normal-partial-journal-observations.json",
+      "mtime_ns": 1792163316444829411,
+      "birthtime": 1792163316.444742,
+      "ctime_ns": 1792163316444829411
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-bd2610b6-20261016/component/normal/wp-inventory.json",
+      "mtime_ns": 1792161219072592450,
+      "birthtime": 1792161219.0725193,
+      "ctime_ns": 1792161219072592450
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-bd2610b6-20261016/component/normal/backend-bindings.json",
+      "mtime_ns": 1792161219070582149,
+      "birthtime": 1792161219.0705044,
+      "ctime_ns": 1792161219070582149
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-bd2610b6-20261016/component/normal/per-prover-final.json",
+      "mtime_ns": 1792161219070668816,
+      "birthtime": 1792161219.0706282,
+      "ctime_ns": 1792161219070723149
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-bd2610b6-20261016/component/normal/normalized.c",
+      "mtime_ns": 1792161219074202458,
+      "birthtime": 1792161219.0726533,
+      "ctime_ns": 1792161219074202458
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-bd2610b6-20261016/component/normal/site_input.c",
+      "mtime_ns": 1792161218211491103,
+      "birthtime": 1792161218.2114346,
+      "ctime_ns": 1792161218211498603
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-bd2610b6-20261016/component/normal/dxc_summaries.h",
+      "mtime_ns": 1792161218211322436,
+      "birthtime": 1792161218.211191,
+      "ctime_ns": 1792161218211330603
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-bd2610b6-20261016/component/normal-proof.log",
+      "mtime_ns": 1792161879647473772,
+      "birthtime": 1792161218.2162223,
+      "ctime_ns": 1792161879647473772
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-bd2610b6-20261016/component/result.json",
+      "mtime_ns": 1792161976559198170,
+      "birthtime": 1792161976.5591655,
+      "ctime_ns": 1792161976559198170
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-init-generation-v1-bd2610b6-20261016/component/normal/wp-inventory.json",
+      "mtime_ns": 1792157514348508854,
+      "birthtime": 1792157482.669429,
+      "ctime_ns": 1792157514348508854
+    },
+    {
+      "path": "/private/tmp/probata-root-t07-device-diagnostic-proof-execution-v1-20261016.json",
+      "mtime_ns": 1792161977252084014,
+      "birthtime": 1792161977.252006,
+      "ctime_ns": 1792161977252084014
+    }
+  ],
+  "pins": [
+    {
+      "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-20261016-expected.json",
+      "bytes": 794273,
+      "sha256": "2a3a02e017e636abdcb8327505087adc2c8572d47bf5fdf8aab794e03ebb32d0"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-bd2610b6-20261016/component/normal/per-prover-journal.jsonl",
+      "bytes": 275847,
+      "sha256": "1476017ea2ebbed53517e3f7ffcaf1337b3cb942c6edc57d0383c9a2b9c543d8"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-proof-cold-v2-20261016-output/normal-partial-journal-observations.json",
+      "bytes": 413097,
+      "sha256": "acc2afc4f8e373535e42de9629b24b72cf5a20f4f69e03d178b099341074a9f1"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-bd2610b6-20261016/component/normal/wp-inventory.json",
+      "bytes": 80758,
+      "sha256": "e4946a5fb5d7e1bd5c3ec9c144a098554685f9f93ce1574a64dee4bd62701885"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-bd2610b6-20261016/component/normal/backend-bindings.json",
+      "bytes": 85,
+      "sha256": "abe90d1381f5532223616b3d928d922f9f0bb1719237932d25c6be2db03f33c5"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-bd2610b6-20261016/component/normal/per-prover-final.json",
+      "bytes": 50,
+      "sha256": "6748cf743b4d0dd84ac9822f32937e1bfb95a93e534a5bf47815c5647cdc7f6e"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-bd2610b6-20261016/component/normal/normalized.c",
+      "bytes": 17207,
+      "sha256": "29646477baf1175427cc8d27e73025a61972b306003fcea412bf08a99b8fb66b"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-bd2610b6-20261016/component/normal/site_input.c",
+      "bytes": 6667,
+      "sha256": "d7ae9477c6c7bd9d090d71e6b4e4b0d01b19baa2f851300c184af090c5a96bdc"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-bd2610b6-20261016/component/normal/dxc_summaries.h",
+      "bytes": 12694,
+      "sha256": "5bd692de0323ee209304ffdc9e9ca477ae809aad88761ed1815622e1caeb9f24"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-bd2610b6-20261016/component/normal-proof.log",
+      "bytes": 4738,
+      "sha256": "b2964e1365baf33b923edc0f92de41c74b353b1c125951e98b13ba05c56b4eac"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-bd2610b6-20261016/component/result.json",
+      "bytes": 2188,
+      "sha256": "36b73909c636721d93b07f5593a4bb42645f4977bdecb6f498c21f86a620c844"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-init-generation-v1-bd2610b6-20261016/component/normal/wp-inventory.json",
+      "bytes": 349943,
+      "sha256": "97aef897d8b93fa5403d91d7db544b934054b2e928bfe3f2302d0e66a4eb28e0"
+    },
+    {
+      "path": "/private/tmp/probata-root-t07-device-diagnostic-proof-execution-v1-20261016.json",
+      "bytes": 16662,
+      "sha256": "1a34280a210040e44a7d2b2f00659a8e69de2f003bffe7330d0f27eb06c9893a"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c/kernel/kernel_services/ast_data/property.ml",
+      "bytes": 53089,
+      "sha256": "de1b4754b20782e7a372519e5cd04341594c3221bbbf29d11b9e17b161600ed9"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/wpPropId.ml",
+      "bytes": 39344,
+      "sha256": "eb637a45864b07030a826d3a5657634fad3db07304bd5eb2a9d30f7dd3fcb0b5"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/wpo.ml",
+      "bytes": 27317,
+      "sha256": "37f3cdbe80caeca6de7dae787e4eb06e3b548a8c6191d81ceda5420c923869d3"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/ProverTask.ml",
+      "bytes": 6233,
+      "sha256": "0ae5556785d03a00c3b0caec20da1db43738002fb40fb5d3f15a5eac692730c4"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/ProverWhy3.ml",
+      "bytes": 63257,
+      "sha256": "18413bff579ac1557c0b5060a679d80d55cfce49099b9557a85ea8c66fe88526"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/register.ml",
+      "bytes": 36565,
+      "sha256": "e4e0b524e4364f475f33fd618c542d4ddc86c2c35f8b6ba223ea704896bc019e"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-bd2610b6-20261016/component/helper_backend_bindings.ml",
+      "bytes": 3843,
+      "sha256": "15d0a5807fb6e492c2f80b34badbf969006b877ba58d479946078c00579f50f7"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-bd2610b6-20261016/component/helper_results.ml",
+      "bytes": 3430,
+      "sha256": "6b68382ced78505c6504e8b362ad8b77574bb6b6fd77f17e4f89be667c7e6372"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-bd2610b6-20261016/component/proof_report.ml",
+      "bytes": 12925,
+      "sha256": "8b84bec6a12669d877205ec60d46d149f41fa921d08b6640161b4896b9c4df16"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-timeout-triage-design-v1-20261016.md",
+      "bytes": 11108,
+      "sha256": "84df8bb64004571831aa7fc3528da894f014104997a0f4e4de8e327ef30862ba"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-timeout-triage-v1-20261016/analysis/triage.json",
+      "bytes": 127551,
+      "sha256": "7f5e64dc110ca7649760f9212057673634bd2f876467de8986bff97333747e1c"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-timeout-triage-v1-20261016/resources.json",
+      "bytes": 499,
+      "sha256": "e8144db03e1457016c4c311e636cba0303ffde50f4e7f81218cf8f044b80724c"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-timeout-triage-v1-20261016/preflight.json",
+      "bytes": 815,
+      "sha256": "8a32dbd5fcddd17fc9012db71bad6f0b5ffe17bd3378e64568758318c9fe8adc"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-timeout-triage-v1-20261016.py",
+      "bytes": 7182,
+      "sha256": "e6a8ff30f03cf43b5a9010d30648dce4435cc2eb4dc211d7149589b0f4b2df6c"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-timeout-triage-dispatch-v1-20261016.py",
+      "bytes": 1866,
+      "sha256": "fc1d8adf959fa181a24a967694afc788c970f35cee63fd061c8dcead08a2e6c8"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c/kernel/kernel_internals/runtime/boot.ml",
+      "bytes": 2235,
+      "sha256": "14c89689fbbdec5f9e73ac079f27e69a2573d45f5d1ad255f9176b8e2b6b6178"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c/kernel/kernel_services/cmdline_parameters/cmdline.ml",
+      "bytes": 43504,
+      "sha256": "64c7f363ecb9ebd080d1e7296d0c1643bfd2c4406e8d507f6b70de8f29617b3a"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c/kernel/kernel_services/plugin_entry_points/kernel.ml",
+      "bytes": 67663,
+      "sha256": "25cd21918d3e4ab42ff3ed11b562dafc770a79464da7cee1c9714d24ad57f1e1"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-bd2610b6-20261016/component/normal/prover-files/typed/swdb_device_pipeline_safe_assert_rte_initialization_2_Why3_Alt_Ergo_2_6_4.psmt2",
+      "bytes": 64075,
+      "sha256": "25d2b4e5eb2e29c1add238aba54b62aff555083d7cf8979663384acdbaafc0d6"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-bd2610b6-20261016/component/normal/prover-files/typed/swdb_device_pipeline_safe_ensures_Why3_Alt_Ergo_2_6_4.psmt2",
+      "bytes": 64833,
+      "sha256": "b04e6fdb8bccaf5084e0f5cfb3dfacebc0cb808a0c3f4ea08836c076b3e764d2"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-bd2610b6-20261016/component/normal/prover-files/typed/swdb_device_wrong_prefix_assert_rte_initialization_2_Why3_Alt_Ergo_2_6_4.psmt2",
+      "bytes": 64221,
+      "sha256": "a5d4bd2172c2a214cdd85b4974cdff18f4253a83b3aeb58b300c7f2edfaf7f44"
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-bd2610b6-20261016/component/normal/prover-files/typed/swdb_device_missing_source_call___dxc_stream_load_dxc_stream_load_requires_6_Why3_Alt_Ergo_2_6_4.psmt2",
+      "bytes": 25511,
+      "sha256": "973b566b84c085f4bcd3d50fa6249117a4b4f39880de634544aa2f5e05bfe108"
+    }
+  ],
+  "proposed_changes_not_implemented": [
+    "exact-root source extraction, all six original worlds conserved",
+    "first-observation append-only backend snapshot stream; no proof facts or new early Property.Names calls",
+    "same observer/journal hooks for future fresh generation and proof",
+    "per-root complete ordinary/RTE/init/smoke universes; no function/property filters"
+  ],
+  "actual_runs_authorized_or_launched": false,
+  "new_budget_admitted": false,
+  "proof_or_Init_or_source_or_TD_or_count_accepted": false,
+  "all_original_source_raw_and_refusals_preserved": true
+}

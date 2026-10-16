@@ -1,0 +1,104 @@
+{
+  "created": "2026-10-15ET",
+  "outcome": "harness-aborted: active process inspection AccessDenied at seedstage",
+  "source_commit": "703ff3d7696fd0080ad3293768afb1a15b24c9c1",
+  "source_file_checks_before_new_edits": 27,
+  "source_artifact_errors_at_stop": [],
+  "abort": {
+    "created_unix": 1792095175.1026042,
+    "source_commit": "703ff3d7696fd0080ad3293768afb1a15b24c9c1",
+    "reason": "seedstage active process inspection AccessDenied(pid44755); exact operation unavailable in historical summary",
+    "provider_called": false,
+    "same_user_tools_remaining": [],
+    "shared_locks": {
+      "/tmp/claude/swdb-verifier.lock": false,
+      "/tmp/claude/swdb-verifier.slot2.lock": false
+    },
+    "status": "failedclosedbeforeprovider; completebaseline, incomplete seedstage, no scientific hint result"
+  },
+  "provider_called": false,
+  "summary": null,
+  "process_reports": [
+    {
+      "path": "/private/tmp/probata-t07-20261015-run22/counted-22/round-0/parse.log.summary.json",
+      "exit_code": 0,
+      "unconfirmed_children": [],
+      "timed_out": false,
+      "killed_by_watchdog": false,
+      "peak_rss_mb": 102.28125,
+      "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment"
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run22/counted-22/round-0/wp-gen.log.summary.json",
+      "exit_code": 0,
+      "unconfirmed_children": [],
+      "timed_out": false,
+      "killed_by_watchdog": false,
+      "peak_rss_mb": 131.140625,
+      "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment"
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run22/counted-22/round-0/wp-smoke.log.summary.json",
+      "exit_code": 0,
+      "unconfirmed_children": [],
+      "timed_out": false,
+      "killed_by_watchdog": false,
+      "peak_rss_mb": 3725.8125,
+      "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment"
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run22/counted-22/seeds/parse.log.summary.json",
+      "exit_code": 0,
+      "unconfirmed_children": [],
+      "timed_out": false,
+      "killed_by_watchdog": false,
+      "peak_rss_mb": 102.46875,
+      "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment"
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run22/counted-22/seeds/round-s.log.summary.json",
+      "exit_code": 1,
+      "unconfirmed_children": [],
+      "timed_out": false,
+      "killed_by_watchdog": false,
+      "peak_rss_mb": 1801.296875,
+      "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment"
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run22/counted-22/seeds/wp-gen.log.summary.json",
+      "exit_code": 0,
+      "unconfirmed_children": [],
+      "timed_out": false,
+      "killed_by_watchdog": false,
+      "peak_rss_mb": 146.109375,
+      "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "/private/tmp/probata-t07-20261015-run22/source-manifest.json",
+      "sha256": "0f40d5b9e54d21084182e1feca7effa36f611cd43c848df244c7f9247a97f715",
+      "bytes": 12168
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run22/launch.json",
+      "sha256": "420d848dc0940fb54320f649a9a26d5cfc285847c8d0ea4199453c5ceddc16a7",
+      "bytes": 631
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run22/counted-22/meta.json",
+      "sha256": "bffa36cfcd8d5415137de329004727cb7edb8d8a68761365ee61467308830340",
+      "bytes": 5256
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run22/counted-22/history.json",
+      "sha256": "b95d7d307fb6b9ecc726fcfeddcda1450c6e84a72c4ec5faa6b81b846831ccad",
+      "bytes": 22796
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run22/abort.json",
+      "sha256": "87d79603d2e745d30cd87113e68d750e49e8a7108d1d650284fdae39bce9d238"
+    }
+  ],
+  "boundary": "No qualifying fresh proof/smoke or covering-wait negative; process inspection failure is not source refutation. Prior baseline/seeds/clock must not be reused."
+}

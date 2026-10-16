@@ -1,0 +1,685 @@
+{
+  "all_metadata_file_pins": {
+    "lane.json": {
+      "bytes": 830,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-01771a83-t25-qualified-grow-public-v1/lane.json",
+      "sha256": "a1c86de942cdc92771aa8fc956b5ba7da478d508d5f0e023438fc62ffefa698f"
+    },
+    "launch.json": {
+      "bytes": 62160,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-01771a83-t25-qualified-grow-public-v1/launch.json",
+      "sha256": "5005d3ccc849398d505a30a2ee68d73d91a1c0236e8319f427d9ec8b5bb202f0"
+    },
+    "outer-resources.json": {
+      "bytes": 174,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-01771a83-t25-qualified-grow-public-v1/outer-resources.json",
+      "sha256": "d467212ba51332ef6e6f352198ff9b1a9937a3eba1d1e8e694d559636c34126e"
+    },
+    "preflight.json": {
+      "bytes": 12446,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-01771a83-t25-qualified-grow-public-v1/preflight.json",
+      "sha256": "33f42e45b0268fa1139e1fb76596804f2404b60ba3d43c713b8f10c658d1a6bd"
+    },
+    "qualified-grow-profile/artifact-manifest.json": {
+      "bytes": 10238,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-01771a83-t25-qualified-grow-public-v1/qualified-grow-profile/artifact-manifest.json",
+      "sha256": "927ac89324ad5c8542c5465b6d916166409f557caa2db55f038a8d54cc8c572c"
+    },
+    "qualified-grow-profile/canonical-precheck.json": {
+      "bytes": 1009,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-01771a83-t25-qualified-grow-public-v1/qualified-grow-profile/canonical-precheck.json",
+      "sha256": "34b7c0ef84c51062e66cb602833fb1401c2e2c75205c48e291ecf7eef1f82982"
+    },
+    "qualified-grow-profile/heap-project-runtime-provenance.json": {
+      "bytes": 3476,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-01771a83-t25-qualified-grow-public-v1/qualified-grow-profile/heap-project-runtime-provenance.json",
+      "sha256": "ff804122cc5c1cd3fb848bf10ae702711ed0b46a4388e47583252053c9dec646"
+    },
+    "qualified-grow-profile/result.json": {
+      "bytes": 2224,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-01771a83-t25-qualified-grow-public-v1/qualified-grow-profile/result.json",
+      "sha256": "e5969ce20fa782408e5826e505e5be5edb304648e8b927adb8536a47effe01c2"
+    },
+    "qualified-grow-profile/selected-runtime.json": {
+      "bytes": 28468,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-01771a83-t25-qualified-grow-public-v1/qualified-grow-profile/selected-runtime.json",
+      "sha256": "6ebfc239b67b3e06245dfc28749168ea92737a99fa8f0952473ce449d01e212f"
+    },
+    "qualified-grow-profile/source-consumer-closure-0.json": {
+      "bytes": 603317,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-01771a83-t25-qualified-grow-public-v1/qualified-grow-profile/source-consumer-closure-0.json",
+      "sha256": "b514013783c3b10a23912de609e517d6a6876643185eae1baedc6a9b6fe2b98c"
+    },
+    "resources.json": {
+      "bytes": 163,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-01771a83-t25-qualified-grow-public-v1/resources.json",
+      "sha256": "1d6770d679547798043cfae81ad6447e5e76d8a1e3e63dd2dec690e2e7712826"
+    },
+    "runtime-provenance.json": {
+      "bytes": 3354,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-01771a83-t25-qualified-grow-public-v1/runtime-provenance.json",
+      "sha256": "e6be979297a42a229a2347c2f3020eba9ce100588b4549f105e754e5dee79c1f"
+    },
+    "source-after.json": {
+      "bytes": 112,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-01771a83-t25-qualified-grow-public-v1/source-after.json",
+      "sha256": "cf8d21c770926766bdfc7fe82a99112585fd367480f5565d5d0da8824dcff767"
+    },
+    "source-manifest.json": {
+      "bytes": 22875,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-01771a83-t25-qualified-grow-public-v1/source-manifest.json",
+      "sha256": "27519ad77e2c7f8f0ff42614ed7c8c5af27695e21b9dfb490949ada63aea06a5"
+    }
+  },
+  "at_utc": "2026-10-16T08:37:01.908642+00:00",
+  "connection": {
+    "branch": "HEAD",
+    "disk": "Filesystem      Size  Used Avail Use% Mounted on\n/dev/sdd1       1.8T  1.7T   22G  99% /data1\n/dev/sdb1       1.8T  1.7T   69G  97% /data",
+    "sha": "01771a839893975bba389ee0adcbec2aecdb88ac",
+    "uptime": "04:37:00 up 76 days, 20:55,  8 users,  load average: 0.62, 0.60, 0.31",
+    "users": ""
+  },
+  "date_et": "2026-10-16",
+  "files": {
+    "lane.json": {
+      "bytes": 830,
+      "content": {
+        "socket_lane": {
+          "aligned_cell_age_s": "",
+          "aligned_to": "no_gapbs_batch_running",
+          "command": [
+            "timeout",
+            "--signal=TERM",
+            "--kill-after=60",
+            "4320",
+            "bash",
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-01771a83-t25-qualified-grow-public-v1/run.sh"
+          ],
+          "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+          "ended_utc": "2026-10-16T08:34:45Z",
+          "exit_code": 1,
+          "host": "mbit10",
+          "job": "probata-reviewed-01771a83-t25-qualified-grow-public-v1",
+          "lease_generation": 589,
+          "lease_name": "mbit10-evaluation-node0",
+          "load1_at_start": 3.12,
+          "load1_max": 32,
+          "node": 0,
+          "numa_memory_policy": "bind:0",
+          "numactl": "--cpunodebind=0 --membind=0",
+          "preregistration_sha256": null,
+          "started_utc": "2026-10-16T08:34:35Z"
+        }
+      },
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-01771a83-t25-qualified-grow-public-v1/lane.json",
+      "sha256": "a1c86de942cdc92771aa8fc956b5ba7da478d508d5f0e023438fc62ffefa698f"
+    },
+    "outer-resources.json": {
+      "bytes": 174,
+      "content": {
+        "cpu_seconds": 12.520045999999999,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 151470080,
+        "timed_out": false,
+        "wall_seconds": 10.75889452174306
+      },
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-01771a83-t25-qualified-grow-public-v1/outer-resources.json",
+      "sha256": "d467212ba51332ef6e6f352198ff9b1a9937a3eba1d1e8e694d559636c34126e"
+    },
+    "qualified-grow-profile/canonical-precheck.json": {
+      "bytes": 1009,
+      "content": {
+        "fresh_targets": 20,
+        "manifest": {
+          "bytes": 37217,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-01771a83-t25-qualified-grow-public-v1/qualified-grow-profile/canonical-inputs/manifest.json",
+          "sha256": "dc180f92e08c94b4aa40e48040e72f6851d034153c92273be99942ad198bb411"
+        },
+        "model": {
+          "id": "vector-reallocation-domain-3",
+          "sha256": "59e8cb9cba5bd45a7665a3b0bfc1c6686e1028e5bf59c5b41c20073b461a0b7e"
+        },
+        "old_records_imported": 0,
+        "target_ids": [
+          "control.grow.premises_feasible",
+          "grow.entry.reads",
+          "grow.entry.int_projection",
+          "grow.alloc.identity",
+          "grow.alloc.output",
+          "grow.alloc.frame",
+          "grow.copy.establish",
+          "grow.copy.read",
+          "grow.copy.write",
+          "grow.copy.step",
+          "grow.copy.exit",
+          "grow.free.argument",
+          "grow.free.survival",
+          "grow.free.aliases",
+          "grow.store.capacity",
+          "grow.post.eligibility",
+          "grow.post.values",
+          "grow.post.old_invalid",
+          "grow.post.frame",
+          "grow.numeric"
+        ]
+      },
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-01771a83-t25-qualified-grow-public-v1/qualified-grow-profile/canonical-precheck.json",
+      "sha256": "34b7c0ef84c51062e66cb602833fb1401c2e2c75205c48e291ecf7eef1f82982"
+    },
+    "qualified-grow-profile/heap-project-runtime-provenance.json": {
+      "bytes": 3476,
+      "content": {
+        "cwd": "/data1/yanruj/probata-reviewed-01771a83/swdb-project",
+        "lowering_identity": {
+          "c_lowering": {
+            "id": "swdb-c-lowering-9",
+            "sha256": "d5d926ac29230b8f9cbbe7ab8660989d0a82e3a311df2e648d075750b86c87d4"
+          },
+          "clang": {
+            "id": "clang-22.1.8",
+            "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+          },
+          "naming_rules": {
+            "id": "kept-names.3",
+            "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+          }
+        },
+        "runtime": {
+          "check": {
+            "id": "swdb-stdlib-provenance-1",
+            "sha256": "4a7ca7d9b05a992e8172125fcbbfd175bb7ade2aec47cfb349126c9739b6e8e4"
+          },
+          "command": [
+            "clang++"
+          ],
+          "command_executable": {
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+            "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+          },
+          "driver": {
+            "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang-22",
+            "sha256": "31a40dc31f3c15a47aa119aa148f339bf363d8f61202ddbdacbd3f24b71ba113"
+          },
+          "frontend": [
+            "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang-22",
+            "-cc1",
+            "-triple",
+            "x86_64-unknown-linux-gnu",
+            "-fsyntax-only",
+            "-disable-free",
+            "-clear-ast-before-backend",
+            "-disable-llvm-verifier",
+            "-discard-value-names",
+            "-main-file-name",
+            "-",
+            "-mrelocation-model",
+            "pic",
+            "-pic-level",
+            "2",
+            "-pic-is-pie",
+            "-mframe-pointer=all",
+            "-fmath-errno",
+            "-ffp-contract=on",
+            "-fno-rounding-math",
+            "-mconstructor-aliases",
+            "-funwind-tables=2",
+            "-target-cpu",
+            "x86-64",
+            "-tune-cpu",
+            "generic",
+            "-debugger-tuning=gdb",
+            "-fdebug-compilation-dir=/data1/yanruj/probata-reviewed-01771a83/swdb-project",
+            "-fcoverage-compilation-dir=/data1/yanruj/probata-reviewed-01771a83/swdb-project",
+            "-resource-dir",
+            "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22",
+            "-internal-isystem",
+            "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/../include/x86_64-unknown-linux-gnu/c++/v1",
+            "-internal-isystem",
+            "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/../include/c++/v1",
+            "-internal-isystem",
+            "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/include",
+            "-internal-isystem",
+            "/usr/local/include",
+            "-internal-isystem",
+            "/usr/lib/gcc/x86_64-linux-gnu/13/../../../../x86_64-linux-gnu/include",
+            "-internal-externc-isystem",
+            "/usr/include/x86_64-linux-gnu",
+            "-internal-externc-isystem",
+            "/include",
+            "-internal-externc-isystem",
+            "/usr/include",
+            "-fdeprecated-macro",
+            "-ferror-limit",
+            "19",
+            "-fgnuc-version=4.2.1",
+            "-fskip-odr-check-in-gmf",
+            "-fcxx-exceptions",
+            "-fexceptions",
+            "-faddrsig",
+            "-fdwarf2-cfi-asm",
+            "-x",
+            "c++",
+            "-"
+          ],
+          "headers": {
+            "files": 1983,
+            "id": "llvm-standard-resource-headers",
+            "sha256": "d37aec646b1e6e1748d40690c60436f905f55852ee578e79c43a3199c4a16e23"
+          },
+          "parser": {
+            "id": "libclang-22.1.8",
+            "sha256": "8b03ee2c60f0699651869fea5135cb5a144777a10c6e4b9b7835283ac9ca3f7d"
+          }
+        },
+        "scope": "fresh project-context compiler identity; every actual record/method must match, no Mac/old source composite expected"
+      },
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-01771a83-t25-qualified-grow-public-v1/qualified-grow-profile/heap-project-runtime-provenance.json",
+      "sha256": "ff804122cc5c1cd3fb848bf10ae702711ed0b46a4388e47583252053c9dec646"
+    },
+    "qualified-grow-profile/result.json": {
+      "bytes": 2224,
+      "content": {
+        "ambient_wp_names": [],
+        "caller_acceptance": false,
+        "cold_task_hypothesis_closure_pending": true,
+        "elapsed_seconds": 8.085173815488815,
+        "error": "[Errno 2] No such file or directory: '/data/yanruj/EvolveSWDB_runs/probata-reviewed-01771a83-t25-qualified-grow-public-v1/qualified-grow-profile/workspace/records'",
+        "error_type": "FileNotFoundError",
+        "external_guard_required": {
+          "cap_bytes": 8589934592,
+          "output_budget_bytes": 2147483648,
+          "profile_seconds": 3900,
+          "public_timeout_seconds": 3600,
+          "root_outer_seconds": 4320,
+          "root_whole_seconds": 4200,
+          "workers": 1
+        },
+        "linux_launch_binding": {
+          "Mac_counted_token_required": false,
+          "command_sha256": "5987aaafd1ea209858c36f7413668ffabec656b039b8ed07c1f36e4a121d0638",
+          "launch": {
+            "bytes": 62160,
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-01771a83-t25-qualified-grow-public-v1/launch.json",
+            "sha256": "5005d3ccc849398d505a30a2ee68d73d91a1c0236e8319f427d9ec8b5bb202f0"
+          },
+          "lock_path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-01771a83-t25-qualified-grow-public-v1/verifier.lock",
+          "marker_path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-01771a83-t25-qualified-grow-public-v1",
+          "rss_cap_bytes": 8589934592,
+          "scope": "Linux root socket-lane + reviewed watch/execute ownership, not a Mac c6 token or lock claim",
+          "source_commit": "01771a839893975bba389ee0adcbec2aecdb88ac",
+          "whole_seconds": 4200
+        },
+        "member": "std_vector_int_realloc_v3_grow",
+        "model_proof_acceptance": false,
+        "original_v2_acceptance": false,
+        "public_complete": false,
+        "scope": "one complete qualified v3 grow C-body mathematical model, all20 targets and complete normal ordinary/smoke/dependency/schema/persistence checks; no original-v2 contract or caller promotion",
+        "source_commit": "01771a839893975bba389ee0adcbec2aecdb88ac",
+        "source_consumer_receipts": [
+          {
+            "bytes": 603317,
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-01771a83-t25-qualified-grow-public-v1/qualified-grow-profile/source-consumer-closure-0.json",
+            "sha256": "b514013783c3b10a23912de609e517d6a6876643185eae1baedc6a9b6fe2b98c"
+          }
+        ],
+        "within_whole_budget": true
+      },
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-01771a83-t25-qualified-grow-public-v1/qualified-grow-profile/result.json",
+      "sha256": "e5969ce20fa782408e5826e505e5be5edb304648e8b927adb8536a47effe01c2"
+    },
+    "resources.json": {
+      "bytes": 163,
+      "content": {
+        "cpu_seconds": 8.299668,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 98824192,
+        "timed_out": false,
+        "wall_seconds": 8.237849215976894
+      },
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-01771a83-t25-qualified-grow-public-v1/resources.json",
+      "sha256": "1d6770d679547798043cfae81ad6447e5e76d8a1e3e63dd2dec690e2e7712826"
+    },
+    "source-after.json": {
+      "bytes": 112,
+      "content": {
+        "commit": "01771a839893975bba389ee0adcbec2aecdb88ac",
+        "source_unchanged": true,
+        "tracked_changes": ""
+      },
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-01771a83-t25-qualified-grow-public-v1/source-after.json",
+      "sha256": "cf8d21c770926766bdfc7fe82a99112585fd367480f5565d5d0da8824dcff767"
+    }
+  },
+  "finite_process_sweeps": [
+    {
+      "inspection_denial_pids": [],
+      "selected_same_uid": []
+    },
+    {
+      "inspection_denial_pids": [],
+      "selected_same_uid": []
+    },
+    {
+      "inspection_denial_pids": [],
+      "selected_same_uid": []
+    }
+  ],
+  "leases": {
+    "mbit10-evaluation-node0.meta.json": {
+      "active_session": null,
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "heartbeat_at": "2026-10-16T08:34:45Z",
+      "lease": {
+        "acquired_at": "2026-10-16T08:34:34Z",
+        "daemon_pid": 3837212,
+        "daemon_start_token": "sh3837212-1792139674",
+        "generation": 589,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node0",
+        "mode": "measure",
+        "session_id": null
+      },
+      "recovered_from_generation": null,
+      "released_at": "2026-10-16T08:34:45Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation-node1.meta.json": {
+      "active_session": null,
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "heartbeat_at": "2026-10-16T08:15:35Z",
+      "lease": {
+        "acquired_at": "2026-10-16T08:14:24Z",
+        "daemon_pid": 3835648,
+        "daemon_start_token": "sh3835648-1792138464",
+        "generation": 617,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node1",
+        "mode": "measure",
+        "session_id": null
+      },
+      "recovered_from_generation": null,
+      "released_at": "2026-10-16T08:15:35Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation.meta.json": {
+      "active_session": null,
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "heartbeat_at": "2026-09-12T04:49:11Z",
+      "lease": {
+        "acquired_at": "2026-09-12T01:35:42Z",
+        "daemon_pid": 209457,
+        "daemon_start_token": "sh209457-1789176942",
+        "generation": 77,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation",
+        "mode": "measure",
+        "session_id": null
+      },
+      "recovered_from_generation": null,
+      "released_at": "2026-09-12T04:49:11Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    }
+  },
+  "module_physical_git_checks": 416,
+  "postcheck_boundary": "Original public profile final source_check/runtime_check were not reached. Root later explicitly rehashed208 package modules against physical/Git bytes (416checks), checked clean entire checkout and outer source-after. Full1553 consumer explicit streaming equality is a retained pre-seed observation, not an original completed public postcheck.",
+  "scope": "Pre-public fixture setup failure, original attempt preserved. Runtime/compiler identity probes occurred, but no public proof/OCaml formal reporting/solver execution reached. No scientific acceptance. Raw C and tasks remain remote.",
+  "settlement_metadata": {
+    "bytes": 842275,
+    "path": "/private/tmp/probata-t25-prepublic-failure-settlement-v1-20261016.json",
+    "sha256": "ad7c0dc65fedb00f3d034536f77ca8f304542b8aa4c355853841f2bdf5b20814"
+  },
+  "source_commit": "01771a839893975bba389ee0adcbec2aecdb88ac",
+  "source_consumer_before": {
+    "bytes": 603317,
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-01771a83-t25-qualified-grow-public-v1/qualified-grow-profile/source-consumer-closure-0.json",
+    "sha256": "b514013783c3b10a23912de609e517d6a6876643185eae1baedc6a9b6fe2b98c",
+    "summary": {
+      "count": 1553,
+      "physical_git_blob_equality": true,
+      "scope": "Opaque source-byte identity only. Existing fixture helper selects/parses YAML header/reference closure; no unrelated scientific evidence or held-out source semantics inspected.",
+      "source_commit": "01771a839893975bba389ee0adcbec2aecdb88ac",
+      "total_bytes": 1337447798,
+      "trees": {
+        "library": {
+          "kind": "tree",
+          "oid": "2a499122a756b457333d6619d28f8893a38e839d"
+        },
+        "pyproject.toml": {
+          "kind": "blob",
+          "oid": "b8cacc5b150c2364224e0168e149cd0bc1791f99"
+        },
+        "records": {
+          "kind": "tree",
+          "oid": "f2158ba461f694c93f39b782b76981b52de08471"
+        },
+        "schemas": {
+          "kind": "tree",
+          "oid": "ae703dc49a3cb939fbe493b1b991b7bc0d52a731"
+        },
+        "tests": {
+          "kind": "tree",
+          "oid": "6e92f55c37b14acc966af8d3184e8c74309a528d"
+        },
+        "vocab": {
+          "kind": "tree",
+          "oid": "e536674b8e8f49b489e84b250746aee0b4b78aa4"
+        }
+      }
+    }
+  },
+  "status": "pre-public setup failure preserved; no model/caller proof acceptance",
+  "whole_raw_bytes": 1174937,
+  "whole_raw_files": 49,
+  "whole_raw_manifest": {
+    "acceptance.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "dispatch-argv.json": {
+      "bytes": 455,
+      "sha256": "4ccff0ba8d01cfcd03037d27a9f26b91a71efbc970e11fd7fb9f0aae1bc4114c"
+    },
+    "dispatch.log": {
+      "bytes": 1989,
+      "sha256": "0a0c79425c98a6cb8c03d132cf637b0e6206df46ce9fb1d05b13f1e56b4ed2c5"
+    },
+    "execute.py": {
+      "bytes": 1603,
+      "sha256": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612"
+    },
+    "lane.json": {
+      "bytes": 830,
+      "sha256": "a1c86de942cdc92771aa8fc956b5ba7da478d508d5f0e023438fc62ffefa698f"
+    },
+    "launch.json": {
+      "bytes": 62160,
+      "sha256": "5005d3ccc849398d505a30a2ee68d73d91a1c0236e8319f427d9ec8b5bb202f0"
+    },
+    "outer-resources.json": {
+      "bytes": 174,
+      "sha256": "d467212ba51332ef6e6f352198ff9b1a9937a3eba1d1e8e694d559636c34126e"
+    },
+    "preflight.json": {
+      "bytes": 12446,
+      "sha256": "33f42e45b0268fa1139e1fb76596804f2404b60ba3d43c713b8f10c658d1a6bd"
+    },
+    "qualified-grow-entry.py": {
+      "bytes": 21050,
+      "sha256": "d15ad9daa4f6156c94e6876c36ebb8ce8b016768e81514eca460dc044fc76240"
+    },
+    "qualified-grow-expected.json": {
+      "bytes": 115291,
+      "sha256": "91a59b4568c74b846af045416c89a830f3cfb7f3e28a9a41a7d15863610703c3"
+    },
+    "qualified-grow-profile/artifact-manifest.json": {
+      "bytes": 10238,
+      "sha256": "927ac89324ad5c8542c5465b6d916166409f557caa2db55f038a8d54cc8c572c"
+    },
+    "qualified-grow-profile/canonical-inputs/000-t25v3_control_grow_premises_feasible.c": {
+      "bytes": 4821,
+      "sha256": "e9912022fad11f1fe2ea45e80ba9909673c287ce41d0114d707ca8e6d1d19579"
+    },
+    "qualified-grow-profile/canonical-inputs/001-t25v3_grow_entry_reads.c": {
+      "bytes": 4885,
+      "sha256": "18263b731752f297cedcaf3b0a64564b689992dac89a0b382b7acfb70ef4b492"
+    },
+    "qualified-grow-profile/canonical-inputs/002-t25v3_grow_entry_int_projection.c": {
+      "bytes": 4855,
+      "sha256": "b5dbe9939b460efa5503b1cbba8a891f5cdb940a8d44835f3fd04da307a74b3f"
+    },
+    "qualified-grow-profile/canonical-inputs/003-t25v3_grow_alloc_identity.c": {
+      "bytes": 4818,
+      "sha256": "ea3a5a1296e046da142f68541fed405c673537448d46a6324d755285aad21099"
+    },
+    "qualified-grow-profile/canonical-inputs/004-t25v3_grow_alloc_output.c": {
+      "bytes": 4960,
+      "sha256": "1198c24918718565409f8e995a25eb92e9f870a893f901393efbed990f1537cc"
+    },
+    "qualified-grow-profile/canonical-inputs/005-t25v3_grow_alloc_frame.c": {
+      "bytes": 4734,
+      "sha256": "ac824da28573588e41ac18d4eac8926d40963cc655a06279e6bc9fba80dabf14"
+    },
+    "qualified-grow-profile/canonical-inputs/006-t25v3_grow_copy_establish.c": {
+      "bytes": 4891,
+      "sha256": "cac2722ab4199a0862b64192b5e91e43fd3a6260593cb32f7cc2312e06e5e435"
+    },
+    "qualified-grow-profile/canonical-inputs/007-t25v3_grow_copy_read.c": {
+      "bytes": 4850,
+      "sha256": "7c90efa88d04fe2ebd52f63b2d03d26f9fab1028499546b4b8f9079b7e19a359"
+    },
+    "qualified-grow-profile/canonical-inputs/008-t25v3_grow_copy_write.c": {
+      "bytes": 4789,
+      "sha256": "8cb31cb0ca397d1af45989a20b86daf800f4917d85f7e7629cbfe20ca5b7643c"
+    },
+    "qualified-grow-profile/canonical-inputs/009-t25v3_grow_copy_step.c": {
+      "bytes": 4802,
+      "sha256": "5e46d1eee055960726f99ab13a172f1f4963270617255d7797c5ae5c79920a0e"
+    },
+    "qualified-grow-profile/canonical-inputs/010-t25v3_grow_copy_exit.c": {
+      "bytes": 4775,
+      "sha256": "a82e1a2d18ce960a19f522f8501d387e3426ef93361101aa84a8c20ae8b64a56"
+    },
+    "qualified-grow-profile/canonical-inputs/011-t25v3_grow_free_argument.c": {
+      "bytes": 4765,
+      "sha256": "e34e62929b1883a7e331d607891e0867f67255aa76f13144aa3599db4ce4fcb6"
+    },
+    "qualified-grow-profile/canonical-inputs/012-t25v3_grow_free_survival.c": {
+      "bytes": 4873,
+      "sha256": "379322038e0f7d2464b40d9d9ecc31820b667ffc535b789d6072ef83fbeba2ab"
+    },
+    "qualified-grow-profile/canonical-inputs/013-t25v3_grow_free_aliases.c": {
+      "bytes": 4830,
+      "sha256": "c8af180b05b93f59898c1c9f70a1d66669a532470e7c1ddf8439ec566cb72fe3"
+    },
+    "qualified-grow-profile/canonical-inputs/014-t25v3_grow_store_capacity.c": {
+      "bytes": 4797,
+      "sha256": "58205ae5015b20dfe0ed078b910139e4c02c520fbcdf3890a43d4608d13bce55"
+    },
+    "qualified-grow-profile/canonical-inputs/015-t25v3_grow_post_eligibility.c": {
+      "bytes": 4779,
+      "sha256": "385c5a3abc142bd86609143250fbf1d5c915180a807b714047f1a57b9a3bcb3a"
+    },
+    "qualified-grow-profile/canonical-inputs/016-t25v3_grow_post_values.c": {
+      "bytes": 4780,
+      "sha256": "54bfb0689114aaee966679853bf9315a1efb4a09c9e234bdf3b9ca6693fe662a"
+    },
+    "qualified-grow-profile/canonical-inputs/017-t25v3_grow_post_old_invalid.c": {
+      "bytes": 4782,
+      "sha256": "c837d4ba9dfc151533c52b3bc2c62009aaa414160141fc1708bad65a505412ff"
+    },
+    "qualified-grow-profile/canonical-inputs/018-t25v3_grow_post_frame.c": {
+      "bytes": 4773,
+      "sha256": "f893974f292f317c49e2c5b10b8d636e68b53be843e3e3b39ae60115e0042209"
+    },
+    "qualified-grow-profile/canonical-inputs/019-t25v3_grow_numeric.c": {
+      "bytes": 1780,
+      "sha256": "59d1e899773f54e3bc3b1087bef201b298c52703fcbf5506b3a4f9443b086b70"
+    },
+    "qualified-grow-profile/canonical-inputs/manifest.json": {
+      "bytes": 37217,
+      "sha256": "dc180f92e08c94b4aa40e48040e72f6851d034153c92273be99942ad198bb411"
+    },
+    "qualified-grow-profile/canonical-inputs/original.c": {
+      "bytes": 2983,
+      "sha256": "dc2049fa6f88a958fb88aee1e0a401f584630e8c302ad2e60b069ced2b587b1b"
+    },
+    "qualified-grow-profile/canonical-inputs/qualified.c": {
+      "bytes": 3868,
+      "sha256": "abbc59a1e71c9597c00379706f917de26b2ad0edd25d0aa19c8c52f2414e81ba"
+    },
+    "qualified-grow-profile/canonical-inputs/theory/heap_reallocation.mlw": {
+      "bytes": 8386,
+      "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5"
+    },
+    "qualified-grow-profile/canonical-precheck.json": {
+      "bytes": 1009,
+      "sha256": "34b7c0ef84c51062e66cb602833fb1401c2e2c75205c48e291ecf7eef1f82982"
+    },
+    "qualified-grow-profile/entry.py": {
+      "bytes": 21050,
+      "sha256": "d15ad9daa4f6156c94e6876c36ebb8ce8b016768e81514eca460dc044fc76240"
+    },
+    "qualified-grow-profile/expected.json": {
+      "bytes": 115291,
+      "sha256": "91a59b4568c74b846af045416c89a830f3cfb7f3e28a9a41a7d15863610703c3"
+    },
+    "qualified-grow-profile/heap-project-runtime-provenance.json": {
+      "bytes": 3476,
+      "sha256": "ff804122cc5c1cd3fb848bf10ae702711ed0b46a4388e47583252053c9dec646"
+    },
+    "qualified-grow-profile/result.json": {
+      "bytes": 2224,
+      "sha256": "e5969ce20fa782408e5826e505e5be5edb304648e8b927adb8536a47effe01c2"
+    },
+    "qualified-grow-profile/selected-runtime.json": {
+      "bytes": 28468,
+      "sha256": "6ebfc239b67b3e06245dfc28749168ea92737a99fa8f0952473ce449d01e212f"
+    },
+    "qualified-grow-profile/source-consumer-closure-0.json": {
+      "bytes": 603317,
+      "sha256": "b514013783c3b10a23912de609e517d6a6876643185eae1baedc6a9b6fe2b98c"
+    },
+    "resources.json": {
+      "bytes": 163,
+      "sha256": "1d6770d679547798043cfae81ad6447e5e76d8a1e3e63dd2dec690e2e7712826"
+    },
+    "run.sh": {
+      "bytes": 1099,
+      "sha256": "e9190734c37f1ea5ec09d25aeb5f428cc54e41728e36255c8eebd499702777c9"
+    },
+    "runtime-provenance.json": {
+      "bytes": 3354,
+      "sha256": "e6be979297a42a229a2347c2f3020eba9ce100588b4549f105e754e5dee79c1f"
+    },
+    "source-after.json": {
+      "bytes": 112,
+      "sha256": "cf8d21c770926766bdfc7fe82a99112585fd367480f5565d5d0da8824dcff767"
+    },
+    "source-manifest.json": {
+      "bytes": 22875,
+      "sha256": "27519ad77e2c7f8f0ff42614ed7c8c5af27695e21b9dfb490949ada63aea06a5"
+    },
+    "watch.py": {
+      "bytes": 470,
+      "sha256": "4485ae66aa50c65f2b579f84836576aa67b54431978da71cac6eea6a68ecd07c"
+    },
+    "worker.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

@@ -1,0 +1,186 @@
+{
+  "actual_admission_requested": false,
+  "actual_body_proof_accepted": false,
+  "all_static_executable_bodies_preserved_after_inverse_aliases": {
+    "std_vector_int_realloc_v3_ctor_count_value": 3,
+    "std_vector_int_realloc_v3_dtor": 3,
+    "std_vector_int_realloc_v3_grow": 3,
+    "std_vector_int_realloc_v3_reserve": 4
+  },
+  "blockers": [],
+  "boundary": "All qualified public records are schema-valid not_proven/unsupported_construct, verifier_launched false and no goals. Original v2 std_models and accepted heap theory/VCS/packet/view bytes unchanged. Original-name lowering remains v2; no default caller rebinding.",
+  "caller_proof_accepted": false,
+  "data_audit": {
+    "path": "/private/tmp/probata-t25-reallocation-preparation-review-data-f32d9dcf-20261016.json",
+    "sha256": "f7cab3544f61bc2d3336aa8f7272999b3f07a7d42a2b6297a031d7b4b57911de"
+  },
+  "date_et": "2026-10-16",
+  "domain": "Unary reallocation eligibility correctly requires original valid prefix/domain plus guarded freeable backing and different receiver/backing allocation bases for nonzero capacity. No exclusive ownership or alias ban asserted. Constructor retains original precondition and adds proved-later eligibility/exact-capacity postconditions. Grow/reserve strengthen explicit qualified contracts. Dtor retains original broader overlap contract.",
+  "evidence": "All78 references including10 resource/command/log groups,5record instances, native artifacts and three primary-header pin instances match. Final7pass10.69s includes2existing original heap preparation controls; guard11.19862225s272809984B exit0/noOOM/timeout. Native4definedcases per old/new grow=8observations, outputs equal; no invalid-growth/ASan/C++ equivalence evidence.",
+  "fixture_scope": "Full safe/stale/no-growth C++ source retained, but its future qualified public binding, n>=0 caller contract, source-derived automatic receiver lifetime/eligibility, scalar bounds, current dependencies, all calls/returns/destruction and frame obligations are pending. Negative stale member has feasible n>0 cases; guarded n0 is legitimate and must not be silently excluded.",
+  "frozen_git_files_sha256": {
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-reallocation-domain-preparation-controls-20261016.json": "52f7393b588ecc61d49b03e0b7fb3e80e4c00c397774577ef0cf336a1c65b9b8",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-reallocation-domain-prospective-review-20261016.json": "c5dd77c411664eafe28874ab2713f84461d51b1e50b79cb8eeeae76e882a8d09",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-reallocation-domain-prospective-review-20261016.md": "511ca888da6fde080889d6d0d1822cf0fd1d1507f47647d3a1bc88aa28258670",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-v3-constructor-capacity-primary-source-20261016.json": "5c8c39ceae8134cedce418b632743d76be95672faa078ac67a3ce2a3edde2bcd",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/issues/25-vector-and-pair-models.md": "468244cb7eb88c1708f852f786fe160598a609f77e7030fa88c936d633ef5ca5",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-acceptance-coverage-20261016.md": "7ee4197e2eb2565356cff0ce9942c7223fb23d9804dea89a036d80c0a028bdb3",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-reallocation-domain/README.md": "ad6f9a89c830e905639c28fb6a298ef0a2a27729d679119cace9c460fb53a513",
+    "swdb-project/schemas/proof.schema.json": "05bccdafa723c253fe8e3faf251992e2862b5451ad89907a155d2c251dbab871",
+    "swdb-project/swdb/c_lowering.py": "9dda44a4f2868138da3c302a313719e25d226246ea8931185c4f35ab03f12dd4",
+    "swdb-project/swdb/proof_setup.py": "82c13e70831a10515caea2211468ba3463c07e898decde4078fa1e6a44c571c6",
+    "swdb-project/swdb/vector_reallocation_model.py": "f73ff7fc76ea4a06a91e93b9f945827bfef1e510ec40b3825a4841b7a8430b16",
+    "swdb-project/swdb/wp_adapter.py": "a34d639338c129a09e56adae844642d398438f3c8d68db52e4119f6d0642341c",
+    "swdb-project/tests/fixtures/proof/vector_reallocation_v3.cc": "1172e62dbff5076d25471285afcfa17927707dbe6fae121d9570109d39e62b57",
+    "swdb-project/tests/test_vector_reallocation_domain.py": "14d25359b473ee84e9f27ae111e9dff922a894fdca154ced832585071b0a2501"
+  },
+  "future_admission_requirements": [
+    "Complete qualified arbitrary-prefix grow/reserve body mapping and fresh unbounded proof; no uniformly-filled-buffer theorem substituted for arbitrary old values",
+    "Full receiver/backing identity, prefix/copy/release/finalwrite and assigns/frees/allocates/surviving-frame obligations, plus current standard-support/task ownership and no desired axioms",
+    "Caller derives domain from construction/local storage and exact current qualified model dependencies rather than added caller assumptions; cross-view rights/liveness not inferred from unary freeability",
+    "Certificate currently compares selected member body suffix; preserve whole-source pins and explicitly cover preceding reserve helper bodies in complete formal equivalence/shape gate",
+    "Existing public ACSL memory-vocabulary restrictions and local automatic lifetime limitations remain; this unsupported preparation branch does not waive them",
+    "Frozen historical CEA/bb717 source/results remain separate; new lowerer/checker identities do not silently requalify old records"
+  ],
+  "hash_mismatches": 0,
+  "identity": {
+    "id": "vector-reallocation-domain-3",
+    "sha256": "32f3606873c27b5d057a71ffbe0edfb30ffbdca4c8abf68eb968db37c9b1d6c7"
+  },
+  "pin_propagation": "Qualified module+parent identity3, qualified source code/contract hashes, retained original/certificate artifacts, CHECK_SOURCES inclusion, c_lowering identity inclusion and optional closed-schema pin are coherent for preparation. No accepted record/current method/caller dependency adoption inferred.",
+  "public_record_instances": [
+    {
+      "body_sha256": "b2eca9461bf9a92c03bbd4d9e891ad1fbc26b85c67443417e38e1d04886614c3",
+      "id": "proof.model.std_vector_int_realloc_v3_reserve.20261016t052819z.0119a25e",
+      "original_sha256": "bbb1ea332771898dba5a3b7e4e5e23fe0b916f325b22f213095c36285321421f",
+      "qualified_sha256": "1c77c118f67e35f605dde19f41a01b521d91295d1f429019dd4df9a22a0b4a4a",
+      "subject": "std_vector_int_realloc_v3_reserve",
+      "verdict": "not_proven",
+      "verifier_launched": false
+    },
+    {
+      "body_sha256": "b2a65ba2e721e87eda94ded1bd37e05ba0d5f8b9a405f97a46d3da977965623e",
+      "id": "proof.model.std_vector_int_realloc_v3_ctor_count_value.20261016t052818z.c04d2a32",
+      "original_sha256": "57cf2a6f3f9049f8edf41633f9ef60d0bb7c804e5ee937af796217a2a018c594",
+      "qualified_sha256": "e59c0f2658a3adc94112e7852ccda6b1d7302c1300a2e84f0121f4d726e090e3",
+      "subject": "std_vector_int_realloc_v3_ctor_count_value",
+      "verdict": "not_proven",
+      "verifier_launched": false
+    },
+    {
+      "body_sha256": "8541a40590f0233500f7fe06ea69221a5b884ab07aa033988ec109a7383b2c7f",
+      "id": "proof.model.std_vector_int_realloc_v3_grow.20261016t052816z.29799d5f",
+      "original_sha256": "dc2049fa6f88a958fb88aee1e0a401f584630e8c302ad2e60b069ced2b587b1b",
+      "qualified_sha256": "371281207e3a40a56755043e866e8af016b6c23e7f7dd163336a57a08a0528dd",
+      "subject": "std_vector_int_realloc_v3_grow",
+      "verdict": "not_proven",
+      "verifier_launched": false
+    },
+    {
+      "body_sha256": "ff60f7bb4cfc6d2bfcfe1e898b75a6c685da6d711e5da0d6afb9920fc756b263",
+      "id": "proof.model.std_vector_int_realloc_v3_dtor.20261016t052820z.e457c724",
+      "original_sha256": "1056f4f83c59a30941ec9417c36aada8eab4b62160087ae10315cd2ac9778317",
+      "qualified_sha256": "3534212640de4ea9b7fdb85a66ea1d39df77a8e532c55f75ef55a9940de21dd1",
+      "subject": "std_vector_int_realloc_v3_dtor",
+      "verdict": "not_proven",
+      "verifier_launched": false
+    },
+    {
+      "body_sha256": "8541a40590f0233500f7fe06ea69221a5b884ab07aa033988ec109a7383b2c7f",
+      "id": "proof.model.std_vector_int_realloc_v3_grow.20261016t052815z.51c159d4",
+      "original_sha256": "dc2049fa6f88a958fb88aee1e0a401f584630e8c302ad2e60b069ced2b587b1b",
+      "qualified_sha256": "371281207e3a40a56755043e866e8af016b6c23e7f7dd163336a57a08a0528dd",
+      "subject": "std_vector_int_realloc_v3_grow",
+      "verdict": "not_proven",
+      "verifier_launched": false
+    }
+  ],
+  "qualified_members": 4,
+  "reference_instances_verified": 78,
+  "resources": {
+    "capacity_green": {
+      "cpu_seconds": 1.700053,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 197246976,
+      "timed_out": false,
+      "wall_seconds": 1.7215579999610782
+    },
+    "capacity_red": {
+      "cpu_seconds": 1.74418,
+      "exit_code": 1,
+      "out_of_memory": false,
+      "peak_rss_bytes": 198639616,
+      "timed_out": false,
+      "wall_seconds": 1.818743292009458
+    },
+    "composition_green": {
+      "cpu_seconds": 6.171303,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 197328896,
+      "timed_out": false,
+      "wall_seconds": 6.8676132499822415
+    },
+    "composition_red": {
+      "cpu_seconds": 2.242882,
+      "exit_code": 1,
+      "out_of_memory": false,
+      "peak_rss_bytes": 168116224,
+      "timed_out": false,
+      "wall_seconds": 2.5490882080048323
+    },
+    "final": {
+      "cpu_seconds": 10.308668,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 272809984,
+      "timed_out": false,
+      "wall_seconds": 11.198622249998152
+    },
+    "native_green": {
+      "cpu_seconds": 2.8473040000000003,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 196575232,
+      "timed_out": false,
+      "wall_seconds": 3.277705915970728
+    },
+    "original_binding_red": {
+      "cpu_seconds": 1.593801,
+      "exit_code": 1,
+      "out_of_memory": false,
+      "peak_rss_bytes": 199671808,
+      "timed_out": false,
+      "wall_seconds": 1.629416375013534
+    },
+    "public_green": {
+      "cpu_seconds": 1.568949,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 194363392,
+      "timed_out": false,
+      "wall_seconds": 1.6531239169999026
+    },
+    "public_red": {
+      "cpu_seconds": 1.114747,
+      "exit_code": 1,
+      "out_of_memory": false,
+      "peak_rss_bytes": 156663808,
+      "timed_out": false,
+      "wall_seconds": 1.495333999977447
+    },
+    "schema_red": {
+      "cpu_seconds": 1.5757320000000001,
+      "exit_code": 1,
+      "out_of_memory": false,
+      "peak_rss_bytes": 193773568,
+      "timed_out": false,
+      "wall_seconds": 1.6893832909991033
+    }
+  },
+  "reviewer_execution": "Exact frozen-Git/text/hash/AST and retained YAML/schema data only. Closed int string definitions reconstructed without project imports or tool lookup; initial unsatisfied nested import encountered before any tool code and was replaced by statically checked int metadata resolution. No tests/compiler/formal/prover/SSH/actual launch or repository edits.",
+  "source_commit": "f32d9dcf9e3f833c45ae2815ab4b90eb06487fc8",
+  "ticket25_closed": false,
+  "verdict": "PASS_EXPLICIT_UNSUPPORTED_PREPARATION_CHECKPOINT_ONLY"
+}

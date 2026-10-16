@@ -140,6 +140,20 @@ class CbmcAdapter:
 
     @classmethod
     def from_args(cls, args, script, *, library, contract, method):
+        # This fixture binds original software-counter source and a WP-only
+        # contract route. The legacy CBMC model/assumptions are not admitted.
+        from swdb import dx100_initialized_register_source
+        if library is not None and any(dx100_initialized_register_source.initialized_register_layout(data)
+                                       for data in proof_semantics.current(library).values()):
+            raise AdapterError("the partial initialized register fixture is admitted only through its WP route")
+        from swdb import dx100_register_source
+        if library is not None and any(dx100_register_source.register_layout(data)
+                                       for data in proof_semantics.current(library).values()):
+            raise AdapterError("the partial register fixture is admitted only through its WP route")
+        from swdb import dx100_allocation_source
+        if library is not None and any(dx100_allocation_source.allocation_layout(data)
+                                       for data in proof_semantics.current(library).values()):
+            raise AdapterError("the software allocator fixture is admitted only through its WP route")
         if getattr(args, "whole_function", None):          # ticket 61: whole-function equivalence
             from swdb.cbmc_equivalence import EquivalenceAdapter
             return EquivalenceAdapter.from_args(args, script, library=library, contract=contract, method=method)
@@ -207,6 +221,8 @@ class CbmcAdapter:
                 "exit_check": "no pending device store before formal poststate observations; pending reads allowed",
                 "native_address_abi": "flat 64-bit uintptr_t data addresses, 32-bit int; CBMC retains object IDs",
                 "probes": [{k: p[k] for k in ("id", "function", "access", "line")} for p in lowering.probes]}
+            if proof_semantics.instance_bindings(lowering):
+                context['settings']['proof_semantics']['instances'] = proof_semantics.instance_bindings(lowering)
             context["model"] = model
         problem = std_models.method_problem(self.method, lowering)
         if problem:
@@ -657,6 +673,7 @@ class CbmcAdapter:
             tools.append(ident)
         model = context.get("model")
         if model is not None:                        # ticket 27: the proof semantics and the reduction it rests on
+            assumptions += proof_semantics.record_assumptions(self.library, model.entry, model.sha256)
             assumptions.append({"kind": "proof_semantics", "reference": {"id": model.entry, "sha256": model.sha256},
                                 "sentence": f"The DX100 behaves as its proof semantics {model.entry} says: each "
                                             "command's values as if it finished at issue, hazards as its rules state."})

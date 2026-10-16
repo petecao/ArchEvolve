@@ -1,0 +1,178 @@
+{
+  "created": "2026-10-15T23:45:43.187164-04:00",
+  "verdict": "PASS narrow resource guard only; no scientific/actual-run admission",
+  "repository": "/private/tmp/probata-resume-t07-method24",
+  "comparison_base": "648924d707396ef4f083e506beacb0f8c999e976",
+  "head_at_review": "648924d707396ef4f083e506beacb0f8c999e976",
+  "review": {
+    "path": "/private/tmp/probata-t07-method24-final-independent-review.md",
+    "sha256": "a59bcd1c143c632fc5eb975bc1fb58341a1806c02a6ed0f9d433aa74b2af5cdd",
+    "bytes": 4610
+  },
+  "source_files": [
+    {
+      "path": "/private/tmp/probata-resume-t07-method24/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py",
+      "sha256": "c6f0d4b8c60fab912dd768c4c8c7e7737d8feca3a110d0de02dec4d38785db57",
+      "snapshot": "/private/tmp/probata-t07-method24-guard-review-v2-snapshot-20261015/counted_verifier.py",
+      "bytes": 28501
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-method24/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/staged_search.py",
+      "sha256": "125e2562342e6ba684d1189ca29fb48476b73bee30d0fd368f7f7c6b4c6b2419",
+      "snapshot": "/private/tmp/probata-t07-method24-guard-review-v2-snapshot-20261015/staged_search.py",
+      "bytes": 8284
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-method24/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/wp_run.sh",
+      "sha256": "97130fcc3d087961484cddaad7b4ab798f7cf00920eab8b94ecdb64a285f9f1f",
+      "snapshot": "/private/tmp/probata-t07-method24-guard-review-v2-snapshot-20261015/wp_run.sh",
+      "bytes": 7389
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-method24/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_counted_verifier.py",
+      "sha256": "b5dbd068d40320738fe6f9b4a7a76e013ba402cb42376f3f1483f2aa8d1e676a",
+      "snapshot": "/private/tmp/probata-t07-method24-guard-review-v2-snapshot-20261015/test_counted_verifier.py",
+      "bytes": 22058
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-method24/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_inspection_retry.py",
+      "sha256": "e013f72e6ce3504dee8870ceb39b5b9cec7f8e5868b5d2966637e7b3b3a9c60b",
+      "snapshot": "/private/tmp/probata-t07-method24-guard-review-v2-snapshot-20261015/test_inspection_retry.py",
+      "bytes": 17652
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-method24/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_native_inspection_error.py",
+      "sha256": "adb5e048670de75be695e20a3b6a0a3c409add97ff1fef975c02fb01061736b9",
+      "snapshot": "/private/tmp/probata-t07-method24-guard-review-v2-snapshot-20261015/test_native_inspection_error.py",
+      "bytes": 12120
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-method24/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/native-inspection-errors-20261015.md",
+      "sha256": "c21c65ee1f15294061da9c6f8d4be00f0521e0df1887a380491eb4a090d2c2f6",
+      "snapshot": "/private/tmp/probata-t07-method24-guard-review-v2-snapshot-20261015/native-inspection-errors-20261015.md",
+      "bytes": 6653
+    }
+  ],
+  "source_sha256": {
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py": "c6f0d4b8c60fab912dd768c4c8c7e7737d8feca3a110d0de02dec4d38785db57",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/staged_search.py": "125e2562342e6ba684d1189ca29fb48476b73bee30d0fd368f7f7c6b4c6b2419",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/wp_run.sh": "97130fcc3d087961484cddaad7b4ab798f7cf00920eab8b94ecdb64a285f9f1f",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_counted_verifier.py": "b5dbd068d40320738fe6f9b4a7a76e013ba402cb42376f3f1483f2aa8d1e676a",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_inspection_retry.py": "e013f72e6ce3504dee8870ceb39b5b9cec7f8e5868b5d2966637e7b3b3a9c60b",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_native_inspection_error.py": "adb5e048670de75be695e20a3b6a0a3c409add97ff1fef975c02fb01061736b9",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/native-inspection-errors-20261015.md": "c21c65ee1f15294061da9c6f8d4be00f0521e0df1887a380491eb4a090d2c2f6"
+  },
+  "review_input_manifest": {
+    "path": "/private/tmp/probata-t07-method24-guard-review-v2-manifest-20261015.json",
+    "sha256": "5f065ab5595e97212b0ef7a268f56af039673ef34e35cce5b14f69b46867d8cc",
+    "bytes": 3260
+  },
+  "controls": {
+    "initial_composed_passed": 50,
+    "initial_composed_reported_wall_s": 19.97,
+    "independent_secondary_RED_failed": 1,
+    "independent_secondary_RED_reported_wall_s": 1.48,
+    "final_passed": 60,
+    "final_reported_wall_s": 25.28,
+    "final_composition": "58repository controls +2independent public CLI regressions",
+    "command": "PYTHONDONTWRITEBYTECODE=1 /Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -B -m pytest -q -p no:cacheprovider test_counted_verifier.py test_inspection_retry.py test_native_inspection_error.py /private/tmp/test_probata_method24_secondary_identity_independent.py /private/tmp/test_probata_method24_secondary_runtime_independent.py --basetemp=/private/tmp/probata-t07-method24-v2-independent-controls-20261015 --junitxml=/private/tmp/probata-t07-method24-v2-independent-controls-20261015.xml > /private/tmp/probata-t07-method24-v2-independent-controls-20261015.txt 2>&1",
+    "cwd": "/private/tmp/probata-resume-t07-method24/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints",
+    "real_formal_compiler_version_parser_solver_provider_calls": false
+  },
+  "retained_owner_raw_control_manifest": {
+    "path": "/private/tmp/probata-t07-method24-controls-v2-raw-manifest-20261015.json",
+    "sha256": "164621d7c5bfb9758c132ff7aee219a0afe1bcb0d34d461f04ab6042cd014ca5",
+    "files_rehashed": 661,
+    "bytes": 2062724,
+    "errors": []
+  },
+  "runtime_artifact_pins": {
+    "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12": "08fa4dbadc420090dfee2acf433b827ae05541f728d1478d96879122f53b4328",
+    "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/__init__.py": "d138a5786b163b56ba86ea0b2d5589dfca37e1bcdf8de1057fe1e933d6ab808a",
+    "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/_psosx.py": "89f0ea0e9c1fe38f224b612792bf31d07c8880d79281806e5379c00514f6b3f2",
+    "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/_common.py": "1bbce9fd97e6f5439a0d385f28401f527c5a9d978d9d062593d7ef6fe215fc75",
+    "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/_psutil_osx.abi3.so": "ff4568b9187ca7b37c5134aaf614ffb061e7fedccebd84158343afb05991b8e2"
+  },
+  "resolved_findings": [
+    "Secondary native identity failure incorrectly inherited environ retry and recovered.",
+    "Secondary different exception escaped sanitized context and could expose raw message."
+  ],
+  "artifacts": [
+    {
+      "path": "/private/tmp/probata-t07-method24-guard-review-v2-manifest-20261015.json",
+      "sha256": "5f065ab5595e97212b0ef7a268f56af039673ef34e35cce5b14f69b46867d8cc",
+      "bytes": 3260
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-method24/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t07-native-inspection-controls-20261015.json",
+      "sha256": "f24db1c66569e775bd6de0fe89c44ce4c119e7f496b9d973e10d10012e7cd87b",
+      "bytes": 6911
+    },
+    {
+      "path": "/private/tmp/probata-t07-method24-controls-v2-raw-manifest-20261015.json",
+      "sha256": "164621d7c5bfb9758c132ff7aee219a0afe1bcb0d34d461f04ab6042cd014ca5",
+      "bytes": 142196
+    },
+    {
+      "path": "/private/tmp/probata-t07-method24-guard-review-manifest-20261015.json",
+      "sha256": "fa8ac15176255cbd887d1e65e818150343f4656a391c2e9b96e9eca504bb60c3",
+      "bytes": 2820
+    },
+    {
+      "path": "/private/tmp/probata-t07-method24-initial-control-evidence-20261015.json",
+      "sha256": "defd4842a0795293a377821541e0f7c1a3964b970582781721a8763a4bd8fb30",
+      "bytes": 6251
+    },
+    {
+      "path": "/private/tmp/probata-t07-method24-independent-controls-20261015.txt",
+      "sha256": "520d58dcd8b33c1d2ff7d5cddaf906506d39f05b29d778cacb73a199683684cb",
+      "bytes": 100
+    },
+    {
+      "path": "/private/tmp/probata-t07-method24-independent-controls-20261015.xml",
+      "sha256": "45f451e38cb7f8c97e4a2634dbf60068e11245181413bfa5e85196c87b37cb40",
+      "bytes": 10896
+    },
+    {
+      "path": "/private/tmp/probata-t07-method24-secondary-identity-red.txt",
+      "sha256": "c39507e0a6500f0eef607a8d437651105c91f3ad54942bce5256c5d08b595ebe",
+      "bytes": 3246
+    },
+    {
+      "path": "/private/tmp/probata-t07-method24-secondary-identity-red.xml",
+      "sha256": "d95ffa4285e86c154076f2ee7bf06fd303a650e48e02cdeec227e24b068274d7",
+      "bytes": 3745
+    },
+    {
+      "path": "/private/tmp/probata-t07-method24-v2-independent-controls-20261015.txt",
+      "sha256": "bb6901a504f7a1a763bb26ed1a77faae3378694185bff39c224fd350b7c9144b",
+      "bytes": 100
+    },
+    {
+      "path": "/private/tmp/probata-t07-method24-v2-independent-controls-20261015.xml",
+      "sha256": "6e22e578007873a491fa339e3ad3090d25dbf49871784f7866e7080cc9f3c8bb",
+      "bytes": 13064
+    },
+    {
+      "path": "/private/tmp/test_probata_method24_secondary_identity_independent.py",
+      "sha256": "adf6db9a2e69e0117d99dc4a3ac923066cbf033463015c71f55126e6463cb39e",
+      "bytes": 2712
+    },
+    {
+      "path": "/private/tmp/test_probata_method24_secondary_runtime_independent.py",
+      "sha256": "9c1b56137c51a35f4fa70deba0d68a054a01d463eb4b4f6d3ae84e45a705d249",
+      "bytes": 2755
+    }
+  ],
+  "diff_check": "PASS",
+  "reviewer_source_mutation": false,
+  "actual_admission": false,
+  "scientific_upgrade": false,
+  "separate_source_model_defects": "remain unresolved and block future actual admission",
+  "boundary": [
+    "finite sampled trusted-marker identity supervision; no hostile containment or hard quota",
+    "200ms/21retry admission does not forcibly bound synchronous OS calls",
+    "all pauses counted; unchanged post-inspection RSS/deadline checks",
+    "no original run26 PID/phase/ownership/native cause or recovery counterfactual inferred"
+  ]
+}

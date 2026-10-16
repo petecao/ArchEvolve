@@ -1,0 +1,297 @@
+{
+  "audit_errors": [],
+  "commit": "71771f097feb83338928430bdf78a4de8384e63b",
+  "created": "2026-10-15 ET",
+  "exact_original_nine_seed_transforms_match": true,
+  "finite_template_witness": {
+    "a": 0,
+    "b": 0,
+    "contract_result": 2,
+    "kind": "worked source arithmetic; not a solver counterexample",
+    "safe_result": 2,
+    "seeded_result": 0
+  },
+  "physical_git_source_files_checked": 980,
+  "raw_output": "/data/yanruj/EvolveSWDB_runs/probata-resume-t24-templates-71771f09",
+  "rows": [
+    {
+      "audit_errors": [],
+      "failure_class": null,
+      "initialization_goals": 25,
+      "input_premises_added": [],
+      "job_wall_seconds": 40.618209,
+      "label": "templates:safe",
+      "normalized_selected_entry_sha256": "38c39555336a67fca7f53b6d9993b89eed150293510b1daba13808b464d25ad3",
+      "ordinary_open": [],
+      "ordinary_valid": 89,
+      "peak_rss_bytes": 314548224,
+      "physical_pins": [
+        {
+          "artifact_sha256": "4b3cef39b12eb3ec213895ee9f124461b9ca77829883c32f4a2be58ca133237b",
+          "file_count": 46,
+          "kind": "code",
+          "record_sha256": "094901ee714e0ba2a0a8374f473cb04ab0722e8c4fe945b2c8ad07039faee966"
+        },
+        {
+          "artifact_sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056",
+          "file_count": 46,
+          "kind": "baseline_function",
+          "record_sha256": "e971de148edc97e2008fdb1f25aade8094ed3fac84aefdb1872979766c9fcd9e"
+        },
+        {
+          "file_sha256": "2042834da380c82b0faec9150b876fc1e497f6e1b100f337d6632958d59059ec",
+          "kind": "method_version",
+          "pin_sha256": "2042834da380c82b0faec9150b876fc1e497f6e1b100f337d6632958d59059ec"
+        },
+        {
+          "file_sha256": "7137d9f7293b8a2320878dc7a9e0b88bdba1ae566a6cd6b7326fb370b52fcef6",
+          "kind": "contract",
+          "pin_sha256": "c20bb06c97a41bf0759537e5e53513a0a7a15838cc65af3f609f9cc6f994e220"
+        }
+      ],
+      "pins": {
+        "baseline_function": {
+          "function": "swdb_template_unit",
+          "id": "test-source",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "build_constants": [],
+        "c_lowering": {
+          "id": "swdb_template_unit.c",
+          "sha256": "00992f59e3e925931b6f1982dcbad1df94cb388c0de5fba909f6539b965c7943"
+        },
+        "code": {
+          "id": "wp24-safe.candidate-1",
+          "sha256": "4b3cef39b12eb3ec213895ee9f124461b9ca77829883c32f4a2be58ca133237b"
+        },
+        "contract": {
+          "id": "contract.fixture_wp24_templates",
+          "sha256": "c20bb06c97a41bf0759537e5e53513a0a7a15838cc65af3f609f9cc6f994e220"
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "2042834da380c82b0faec9150b876fc1e497f6e1b100f337d6632958d59059ec"
+        },
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "proof_semantics": {
+          "not_applicable": "No proof-semantics version exists before ticket 27."
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "summaries": []
+      },
+      "public_command_wall_seconds": 162.54144144803286,
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-t24-templates-71771f09/matrix/seed/records/proofs/proof.wp24-safe.candidate-1.20261015t191857z.009c0dd4.yaml",
+        "sha256": "70a529d259898c28760c3e7b9202fcb4563e7ce613b595a971511f9d5ba4820c"
+      },
+      "reports": [
+        {
+          "name": "anchors",
+          "sha256": "c274f29fa13a7d36fd502035c855e6651adc4e61065e3a423a2dbdb425f37c74"
+        },
+        {
+          "name": "c_lowering",
+          "sha256": "00992f59e3e925931b6f1982dcbad1df94cb388c0de5fba909f6539b965c7943"
+        },
+        {
+          "name": "hint_check",
+          "sha256": "1dbbf3d1dba8bf65274106ad676ae54621fdfafe17626d5d905e3be1119e9061"
+        },
+        {
+          "name": "hints",
+          "sha256": "3bb68fb5d6b07ec6937920c98bfbe567af3c492e7f7894aa21e3d44feb211c1e"
+        },
+        {
+          "name": "hints_merged",
+          "sha256": "8ec83d7fde23fb595242a0b50ab9872c3477b97b2ae2d404eb60ece8628a371c"
+        },
+        {
+          "name": "wp_goals",
+          "sha256": "89886f0b8a001eac4f85c21a01b16b8410604ef39a2e90e4f17c7033257d84b1"
+        },
+        {
+          "name": "wp_input",
+          "sha256": "8ec83d7fde23fb595242a0b50ab9872c3477b97b2ae2d404eb60ece8628a371c"
+        },
+        {
+          "name": "wp_inventory",
+          "sha256": "277d5c311583fc16b6be19840b789f03d6ce3ed8255f76bae58c9b2b25908307"
+        },
+        {
+          "name": "wp_log",
+          "sha256": "179517923393c2178fefea6ef8372f784ff0c10652ba2a3189e81e63caceac24"
+        },
+        {
+          "name": "wp_normalized",
+          "sha256": "a1407b6c9c3e1acf24e8331abc9e7f4a2a8cbdb6eadc5c83c5bcb0cab33b3b7a"
+        },
+        {
+          "name": "wp_properties",
+          "sha256": "777949c15b6b893bb971eb6fcbfd653b5b7856aa7369628e3d61dd285f61e194"
+        }
+      ],
+      "residual_calls": [],
+      "smoke_open": [],
+      "smoke_valid": 1,
+      "verdict": "proven"
+    },
+    {
+      "audit_errors": [],
+      "failure_class": "timeout",
+      "initialization_goals": 25,
+      "input_premises_added": [],
+      "job_wall_seconds": 72.7991,
+      "label": "templates:seeded",
+      "normalized_selected_entry_sha256": "62356f994abf71dee1346d7e12af61802a3b2721b5f0edd443531d5e60095d73",
+      "ordinary_open": [
+        {
+          "function": "swdb_template_unit",
+          "goal": "typed_real_swdb_template_unit_ensures",
+          "property": "swdb_template_unit_ensures_2",
+          "seconds": null,
+          "smoke": false,
+          "solver": null,
+          "source": "wp_json",
+          "status": "timeout"
+        }
+      ],
+      "ordinary_valid": 88,
+      "peak_rss_bytes": 649666560,
+      "physical_pins": [
+        {
+          "artifact_sha256": "c9a4857b376ec6c3bdb1556d75d75f8c96efc3521414684c7a7383b6766b7524",
+          "file_count": 46,
+          "kind": "code",
+          "record_sha256": "be280f4eb4f2c3b2b3079cacca875f126e57e6138d9e5b6be72ee2dc36cf408c"
+        },
+        {
+          "artifact_sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056",
+          "file_count": 46,
+          "kind": "baseline_function",
+          "record_sha256": "e971de148edc97e2008fdb1f25aade8094ed3fac84aefdb1872979766c9fcd9e"
+        },
+        {
+          "file_sha256": "2042834da380c82b0faec9150b876fc1e497f6e1b100f337d6632958d59059ec",
+          "kind": "method_version",
+          "pin_sha256": "2042834da380c82b0faec9150b876fc1e497f6e1b100f337d6632958d59059ec"
+        },
+        {
+          "file_sha256": "7137d9f7293b8a2320878dc7a9e0b88bdba1ae566a6cd6b7326fb370b52fcef6",
+          "kind": "contract",
+          "pin_sha256": "c20bb06c97a41bf0759537e5e53513a0a7a15838cc65af3f609f9cc6f994e220"
+        }
+      ],
+      "pins": {
+        "baseline_function": {
+          "function": "swdb_template_unit",
+          "id": "test-source",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "build_constants": [],
+        "c_lowering": {
+          "id": "swdb_template_unit.c",
+          "sha256": "6dd927461dbff108ccc31a3c11cf70829bb23cbecf318ece28d4ca6687cff019"
+        },
+        "code": {
+          "id": "wp24-bug.candidate-1",
+          "sha256": "c9a4857b376ec6c3bdb1556d75d75f8c96efc3521414684c7a7383b6766b7524"
+        },
+        "contract": {
+          "id": "contract.fixture_wp24_templates",
+          "sha256": "c20bb06c97a41bf0759537e5e53513a0a7a15838cc65af3f609f9cc6f994e220"
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "2042834da380c82b0faec9150b876fc1e497f6e1b100f337d6632958d59059ec"
+        },
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "proof_semantics": {
+          "not_applicable": "No proof-semantics version exists before ticket 27."
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "summaries": []
+      },
+      "public_command_wall_seconds": 197.09553871583194,
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-t24-templates-71771f09/matrix/seed/records/proofs/proof.wp24-bug.candidate-1.20261015t192142z.2bb6af85.yaml",
+        "sha256": "f14faea5eaf704ade35407d14d1318d5eb0bbe74092b7cebffa4762a00148747"
+      },
+      "reports": [
+        {
+          "name": "anchors",
+          "sha256": "d63946e8c60915464ffe242d7d6b05de235d4e1f917d0452deeea54935992349"
+        },
+        {
+          "name": "c_lowering",
+          "sha256": "6dd927461dbff108ccc31a3c11cf70829bb23cbecf318ece28d4ca6687cff019"
+        },
+        {
+          "name": "handler",
+          "sha256": "a10449657e01295aaa451e0c05aa64cdb8f6e698fe0bdd399e5f81596497ad20"
+        },
+        {
+          "name": "hint_check",
+          "sha256": "ecd2ffacc832c05366e45c5d975823398524b262d46f399634c55e211cf7248e"
+        },
+        {
+          "name": "hints",
+          "sha256": "3bb68fb5d6b07ec6937920c98bfbe567af3c492e7f7894aa21e3d44feb211c1e"
+        },
+        {
+          "name": "hints_merged",
+          "sha256": "5edbe267c1f37e054d281efcabae11272580591c5d9cfc115e9f2506206589a2"
+        },
+        {
+          "name": "wp_goals",
+          "sha256": "b6b69f44e01be459851224d92d972b5572ad343a6c82e452bc7a7fcd251fe633"
+        },
+        {
+          "name": "wp_input",
+          "sha256": "5edbe267c1f37e054d281efcabae11272580591c5d9cfc115e9f2506206589a2"
+        },
+        {
+          "name": "wp_inventory",
+          "sha256": "8054f717bb17b2c23b25cd444695320775c6cf747297032cee6503302a614e6b"
+        },
+        {
+          "name": "wp_log",
+          "sha256": "eeffcdca0294838e0cfd339e0e3c58e6355a31849e410929c464025c8ecc85ac"
+        },
+        {
+          "name": "wp_normalized",
+          "sha256": "b6bc5d2d8c0ce26b135529ad803cf1521b85d2174a48e38e79fba83d61085bc5"
+        },
+        {
+          "name": "wp_properties",
+          "sha256": "a0e66b9f08eaefeb426d0d241d119e102d3ccf7a487b6fd8cb784ba32278dd3a"
+        }
+      ],
+      "residual_calls": [],
+      "smoke_open": [],
+      "smoke_valid": 1,
+      "verdict": "not_proven"
+    }
+  ]
+}

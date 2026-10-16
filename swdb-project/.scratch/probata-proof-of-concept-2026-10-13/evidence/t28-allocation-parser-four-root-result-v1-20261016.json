@@ -1,0 +1,85 @@
+{
+  "accepted": true,
+  "headers_unchanged": true,
+  "inputs_checked": 4,
+  "runs": [
+    {
+      "Ignoring": false,
+      "argv": [
+        "/Users/yanrujhou/.opam/framac-33/bin/frama-c",
+        "-machdep",
+        "x86_64",
+        "-kernel-warn-key",
+        "annot-error=abort",
+        "/private/tmp/probata-t28-allocation-parser-four-v1-20261016/inputs/wp-correct.c"
+      ],
+      "elapsed_seconds": 0.4782122910255566,
+      "exit_code": 0,
+      "input": {
+        "bytes": 2570,
+        "name": "wp-correct.c",
+        "role": "exact public WP input; parser only",
+        "sha256": "dcc1b3c97c38ebe0a39a618e449cda1f7f72a97a978b4c01c29bee3499741b0a"
+      }
+    },
+    {
+      "Ignoring": false,
+      "argv": [
+        "/Users/yanrujhou/.opam/framac-33/bin/frama-c",
+        "-machdep",
+        "x86_64",
+        "-kernel-warn-key",
+        "annot-error=abort",
+        "/private/tmp/probata-t28-allocation-parser-four-v1-20261016/inputs/wp-wrong.c"
+      ],
+      "elapsed_seconds": 0.1735807919758372,
+      "exit_code": 0,
+      "input": {
+        "bytes": 2570,
+        "name": "wp-wrong.c",
+        "role": "exact public WP input; parser only",
+        "sha256": "6e184fc338e9fa0e8aace370f9d339727ddb0fdcbf601a06f8f29a23b7d9c57b"
+      }
+    },
+    {
+      "Ignoring": false,
+      "argv": [
+        "/Users/yanrujhou/.opam/framac-33/bin/frama-c",
+        "-machdep",
+        "x86_64",
+        "-kernel-warn-key",
+        "annot-error=abort",
+        "/private/tmp/probata-t28-allocation-parser-four-v1-20261016/inputs/all-contracts.c"
+      ],
+      "elapsed_seconds": 0.1854995419853367,
+      "exit_code": 0,
+      "input": {
+        "bytes": 2600,
+        "name": "all-contracts.c",
+        "role": "normal all-contract validation input",
+        "sha256": "a7f603442764ac145852bdb05fe05ab4a081b319c5a4a81fd59b248c0a83ba5b"
+      }
+    },
+    {
+      "Ignoring": false,
+      "argv": [
+        "/Users/yanrujhou/.opam/framac-33/bin/frama-c",
+        "-machdep",
+        "x86_64",
+        "-kernel-warn-key",
+        "annot-error=abort",
+        "/private/tmp/probata-t28-allocation-parser-four-v1-20261016/inputs/ordinary-model.c"
+      ],
+      "elapsed_seconds": 0.16154570801882073,
+      "exit_code": 0,
+      "input": {
+        "bytes": 1146,
+        "name": "ordinary-model.c",
+        "role": "normal ordinary C model with explicitly parse-only assertion declaration",
+        "sha256": "d540dd34c90dc2935ca14c6975b392c3f2b0f075b534f337672a2c8373188d23"
+      }
+    }
+  ],
+  "scope": "Parser/type checking only; no WP/solver/model/source-refinement/termination/hardware acceptance",
+  "source_commit": "9022f2f4312266a18253d55e87f3fb045491211e"
+}

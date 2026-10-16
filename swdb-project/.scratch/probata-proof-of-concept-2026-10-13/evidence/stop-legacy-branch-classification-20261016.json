@@ -1,0 +1,59 @@
+{
+  "date_ET": "2026-10-16",
+  "user_requested_stop": true,
+  "legacy_head": "d9ac390b6d9d77031c224c40df6d5c62595efbe3",
+  "legacy_unique_commits": [
+    {
+      "commit": "a148e94d491c830e6457798b74b4fd94e6891d4f",
+      "title": "feat(swdb): std::vector and std::pair C models in the C lowering (Probata PoC 25, part 1)",
+      "classification": "original vector/pair implementation recovered by95869c03 through shared c_model/pins.models architecture; current successor retained"
+    },
+    {
+      "commit": "67bae3d1c237c5087a88ac76f50f1000783f3283",
+      "title": "feat(swdb): std::vector and std::pair models through CBMC and WP records, draft method version 2 (Probata PoC 25)",
+      "classification": "original vector/pair implementation recovered by95869c03 through shared c_model/pins.models architecture; current successor retained"
+    },
+    {
+      "commit": "5c55731bf29e39e03f79f7ee6630e8f393b1fac8",
+      "title": "Merge branch 'probata-poc/integration' into probata-poc/t25",
+      "classification": "historical integration merge; no current feature restoration"
+    },
+    {
+      "commit": "19d7af121ac92883394c5c127aeee3ffe7918470",
+      "title": "docs(swdb): Probata 25 answer, post-merge test evidence",
+      "classification": "historical answer/pause prose, not current acceptance/status"
+    },
+    {
+      "commit": "2289d66965196f096d7afb8627c17518b616552a",
+      "title": "wip(swdb): Probata 25 allocator stubs, model proof units, one-slot lock in the overlap test",
+      "classification": "old allocator/model-proof stub alternative superseded by explicit WP lifetime refusals and qualified v3 source/TCB; obsolete swdb.models/--summary route intentionally not restored"
+    },
+    {
+      "commit": "ef19491e1c2556df423a47dc72e9d5ffa40b1a05",
+      "title": "feat(swdb): allocator stubs, model proof records for every C model (Probata PoC 25, paused)",
+      "classification": "old allocator/model-proof stub alternative superseded by explicit WP lifetime refusals and qualified v3 source/TCB; obsolete swdb.models/--summary route intentionally not restored"
+    },
+    {
+      "commit": "5ce3643a608c9802dec86254dd1bdb91f075e9d2",
+      "title": "Merge branch 'probata-poc/integration' into probata-poc/t25",
+      "classification": "historical integration merge; no current feature restoration"
+    },
+    {
+      "commit": "d9ac390b6d9d77031c224c40df6d5c62595efbe3",
+      "title": "docs(swdb): Probata 25 paused: progress, open items, merge of integration 8132c92b pending",
+      "classification": "historical answer/pause prose, not current acceptance/status"
+    }
+  ],
+  "recovery_implementation": "95869c033f330ead51c008093e8f23886d3a1cbf",
+  "source_recovery_tag": "probata-source-recovery-20261015",
+  "source_recovery_tag_boundary": "historical archive, not current integration",
+  "primary_pointer": "issues/25-vector-and-pair-models.md: Resume checkpoint2026-10-15 explicitly records recovered models and excluded obsolete API",
+  "old_caller": {
+    "head": "df8dda2f4f16e35640235b41b1fcebf0ad0f1a6a",
+    "integrated_equivalent": "3808f6dcbf3cb5fac0e59aa0e4f0fcef9759bdf9",
+    "production_and_checkpoint_evidence_identical": true,
+    "difference": "two obsolete test census81 corrected84; later current caller127 remains pending"
+  },
+  "preservation_plan": "Explicit history-only ours merges after this classification commit. Keep tree byte-identical and do not assert legacy code is current accepted.",
+  "scientific_acceptance_upgraded": false
+}

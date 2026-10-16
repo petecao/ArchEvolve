@@ -1,0 +1,69 @@
+{
+  "baseline": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+  "command": {
+    "bytes": 100975,
+    "path": "/private/tmp/probata-t28-sizewrong1-mem2048-outer-command-v3-20261016.json",
+    "sha256": "9f78b7c94382a2b7a029a8bff5a0f78b6c8d3224f80123e6596ab3e657a0fc4f"
+  },
+  "corrected_inner_review": {
+    "bytes": 1670,
+    "path": "/private/tmp/probata-t28-sizewrong1-mem2048-inner-v3-root-review-20261016.md",
+    "sha256": "53ef22979da4d90fa516eaf003ef26f7de3c2f8e2bc6b098ca41d359ed542c5e"
+  },
+  "date_et": "2026-10-16",
+  "entry": {
+    "bytes": 16275,
+    "path": "/private/tmp/probata-t28-sizewrong1-mem2048-outer-entry-v3-20261016.py",
+    "sha256": "6f1d5bbfe6668773cb249b6886b3ca0a88141282be650e55314a410fcc1475d4"
+  },
+  "files_after": {
+    "swdb-project/swdb/bounded_std_initialization.py": "480bf38b3333639c62d8f89aff129208abccdc63351d63cfa6b23d7cb3d84607",
+    "swdb-project/swdb/c_lowering.py": "c7e54dc8f5e208ad04c5d0f949ca0132b4174628b04ca7b8044413eb02c0003b",
+    "swdb-project/swdb/cbmc_adapter.py": "d63b7f6547fa3b7655a59db0f26f1e0a957c7916bf8d9b7d77ef4142ef3e9a27",
+    "swdb-project/swdb/dx100_interface.py": "6e88200412cada2678d3f65f442d0cf11e39fecdb744fa490e6397e0e0d37cdf",
+    "swdb-project/swdb/dx100_size_source.py": "1855b69dee333e23e0f628060f0de1cdf86455d3cd7a2c458db241149d7644fb",
+    "swdb-project/swdb/dx100_source_selector.py": "4c788c11a80c1478323229bba12997995dcad30699dc78d7085b52a14fc09190",
+    "swdb-project/swdb/formal_frame.py": "b89aaffb60217db66ba09630fced8f8c547304a2d12ca125a6174def02ff70f1",
+    "swdb-project/swdb/heap_bridge.mlw": "5186c27f5a7a339352e3f62dc3a0d3efb1c7bd12f8a456cc61b0d7a52566638d",
+    "swdb-project/swdb/heap_model_environment.ml": "ba52941e7ab96a8ebbe4efdb8fde0c1b19daa3d6ccb8804efc87b027a68caf7b",
+    "swdb-project/swdb/heap_model_packets.py": "805b00fe78373102b600506833f86c28fce2cf494baef7a68afd63641c1de185",
+    "swdb-project/swdb/heap_model_vcs.py": "f20e0ec130222aeda96b4fbb8e72eef8d922d3f33e84077777203f7e6d159092",
+    "swdb-project/swdb/heap_model_view.py": "ecb6e1476accaee2b275c9bf078bb14fc4b3c8ad81ed17d97d98b1699d2c1e22",
+    "swdb-project/swdb/heap_reallocation.mlw": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+    "swdb-project/swdb/proof_semantics.py": "92e9b7f484e074b0c178cecf5bb97034885b03c5b41ee86a4436efe2df779365",
+    "swdb-project/swdb/proof_setup.py": "d7bcc9cf929c074b2e967ffd0da528cc18df4692722c309b8e77663d2345242e",
+    "swdb-project/swdb/stdlib_provenance.py": "4a7ca7d9b05a992e8172125fcbbfd175bb7ade2aec47cfb349126c9739b6e8e4",
+    "swdb-project/swdb/vector_reallocation_caller_vcs.py": "9f59dc6e9b889e9fc888c7b3c2664ba9c0d64b3c690c36a330714b95ce7cc773",
+    "swdb-project/swdb/vector_reallocation_calls.py": "c3c5808a5d1bc52666e59b242358818b5c8a61822d482ed5e7d08d5a939f8c56",
+    "swdb-project/swdb/vector_reallocation_model.py": "315bce80ac1205d3147541b8dbf6438dd215d2607d9c0434c94ee2a271e0eda8",
+    "swdb-project/swdb/vector_reallocation_vcs.py": "ba6a1bf8e1ea4a213fe3d1a2513a55afb5bc8d046fb2b966d4073c3f0ac1779b",
+    "swdb-project/swdb/wp_adapter.py": "e58a7cf58a08cbf32067c6b2bb4e09dc24ab85fbcc19793b64bee403aa523d4f"
+  },
+  "outer_packet": {
+    "bytes": 2985,
+    "path": "/private/tmp/probata-t28-sizewrong1-mem2048-outer-packet-v3-20261016.json",
+    "sha256": "c3aaecf7dff543906834d6f36198cf8e0a58d0a311a2816a13b10f97eea65e4d"
+  },
+  "readers": [
+    "root",
+    "merger-prior-source-only",
+    "ticket24/std_contract_review"
+  ],
+  "review_evidence": {
+    "bytes": 3601,
+    "path": "/private/tmp/probata-t28-sizewrong1-mem2048-outer-root-review-v3-20261016.md",
+    "sha256": "0034517528b135f35a9100d22ff68f42e48e3124d0ee9ff50362cca6f5de9527"
+  },
+  "root_review_json": {
+    "path": "/private/tmp/probata-t28-size-root-static-review-v2-7e64298f-20261016.json",
+    "sha256": "dfa12e0a577d2dc1461a76351c9472f7366fbef88f53ece34b682e8b1f91f0a6"
+  },
+  "scope": "New negative-only memory2048 diagnostic at unchanged7e; whole600 outer720 one worker8GiB, corrected inner-v3, no scientific acceptance",
+  "source_commit": "7e64298fd1d81359e8db586883243b31d57bef3b",
+  "source_only_prior_review": {
+    "bytes": 3632,
+    "path": "/private/tmp/probata-t28-size-source-change-review-7e64298f-20261016.json",
+    "sha256": "14b8244acd93355b16f0a2db0b131c4a08b9ba35b544243b2a6f347017d4cb75"
+  },
+  "source_pin_count": 353
+}

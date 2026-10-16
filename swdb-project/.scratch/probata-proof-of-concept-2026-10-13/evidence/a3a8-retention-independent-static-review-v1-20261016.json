@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-16 ET",
+  "verdict": "PASS_EXACT_RECOVERY_SAFE_RECIPE_ONLY_NO_EXECUTION",
+  "remote": {
+    "path": "/private/tmp/probata-retain-clean-a3a8-source-remote-v1-20261016.py",
+    "sha256": "b91bf306f70ec5cf8ac9baa4848d4c18dfda2fef4595d7af1324f2dc9ce26a20"
+  },
+  "root": {
+    "path": "/private/tmp/probata-root-retain-clean-a3a8-source-v1-20261016.py",
+    "sha256": "235d3f6193728e8ef728768d9395622033ae6b000292b6a1a0f74635e1820104"
+  },
+  "root_review_sha256": "ce29aaf34a11f6b1eb81ea224eea8c8f5f3cbdcb6ebda58e6bcc1cda79ea6d50",
+  "baseline_remote_sha256": "cdf4818cb93f594e8c051449b71f044f93f9b0b7adff5feb727c88edaa3936c2",
+  "independent_checks": {
+    "11guard_function_ASTs_identical": true,
+    "source_manifest_only_protected_path_constant_changed": true,
+    "main_only_scope_literal_changes": true,
+    "top_level_deltas_only_exact_source_commit_ref_out_rawroots_coldpins": true,
+    "audit_log_exact_local_root_audit_encoding_hash_bytes_match": true,
+    "three_rawroots_exact": true,
+    "completed_rootcold_and_scopeddecision_reviewed": true
+  },
+  "findings": [],
+  "guards": "All3leases released; finiteUIDcwd/argv/birth scans unknownfailclosed with explicit narrowOSexceptions; exactdetachedclean/noignoreduntrackedsubmodules; alltrackedGitmode/bytes/fullphysicalmembership/objectavailability/no-lazyfetch;ref/fullmanifests/fsyncedrestore+readbackBEFOREno-forceworktreeremove;originalrawfullmembership/literalsymlinksunchanged;primaryunchanged;protected046/37/6216/7e/source nottouched.",
+  "envelope": "Rootonlyexplicit--root-execute;payloadSHA;freshoutput;remote55alarm8GiBRLIMIT_AS/root60sSSH;actualstatechecks mandatory, no remoteexecution byreviewer.",
+  "reader_clearance": "Independentregistercoldclosed; no current/futurephysicala3 reader frommerger; allraw/readers/refs/restoration mustpersist.",
+  "limits": [
+    "RecipePASS is not actualcleanupreceipt or liveidle/capacityobservation. Root must preserve first refusal/partialout, never retry blindly.",
+    "Rawsymlink literal targets kept; source removal doesnotpromise oldsource linkreferents remainpresent.",
+    "No rawdeletion/reset/prune/activecheckout/sourcebody/proofacceptance upgrade."
+  ],
+  "executed_by_reviewer": false
+}

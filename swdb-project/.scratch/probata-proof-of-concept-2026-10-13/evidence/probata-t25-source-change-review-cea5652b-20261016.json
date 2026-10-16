@@ -1,0 +1,36 @@
+{
+  "baseline": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+  "date_et": "2026-10-16",
+  "entry": {
+    "command_sha256": "22b97944bab9cef792aca31b46b6ee49da9e469da1e7759962f6104341c9bc29",
+    "sha256": "7fff6761b03c0eaa86fddb4dba031f9a4aaec145ce35cb244df9f67513751c8e"
+  },
+  "files_after": {
+    "swdb-project/swdb/bounded_std_initialization.py": "480bf38b3333639c62d8f89aff129208abccdc63351d63cfa6b23d7cb3d84607",
+    "swdb-project/swdb/c_lowering.py": "e10b33f4d310e3097eb84b34ed53e03daf4df690dcf0c8c160f38d907c91e08c",
+    "swdb-project/swdb/cbmc_adapter.py": "d63b7f6547fa3b7655a59db0f26f1e0a957c7916bf8d9b7d77ef4142ef3e9a27",
+    "swdb-project/swdb/dx100_interface.py": "9a50ad98a26169b2ff60766e351a3be28e2b511901edd09701489720c8e9a451",
+    "swdb-project/swdb/formal_frame.py": "b89aaffb60217db66ba09630fced8f8c547304a2d12ca125a6174def02ff70f1",
+    "swdb-project/swdb/heap_bridge.mlw": "5186c27f5a7a339352e3f62dc3a0d3efb1c7bd12f8a456cc61b0d7a52566638d",
+    "swdb-project/swdb/heap_model_environment.ml": "ba52941e7ab96a8ebbe4efdb8fde0c1b19daa3d6ccb8804efc87b027a68caf7b",
+    "swdb-project/swdb/heap_model_packets.py": "93a07782af0ae152f2cff2a6178b9745c922c42f8b73eeec3affe12567e0e93d",
+    "swdb-project/swdb/heap_model_vcs.py": "f20e0ec130222aeda96b4fbb8e72eef8d922d3f33e84077777203f7e6d159092",
+    "swdb-project/swdb/heap_model_view.py": "53f680c24644ebec7a1d1071a9bd8d0b559ec310e4148e516e26c015e343b2d8",
+    "swdb-project/swdb/proof_semantics.py": "2354b1be662a4a9fe4985110ce657c9a432b27f288639f661e13aa5bad5ea5b6",
+    "swdb-project/swdb/proof_setup.py": "b9b5b1eef444be7e6656cbd5d5ce76b7393f28eae1f55a8c47b5e4028154f7ee",
+    "swdb-project/swdb/stdlib_provenance.py": "4a7ca7d9b05a992e8172125fcbbfd175bb7ade2aec47cfb349126c9739b6e8e4",
+    "swdb-project/swdb/wp_adapter.py": "fe4590b5b9eeaa41701fb4b48d17a0c1d6ade176783f46918de99151cda2faa5"
+  },
+  "readers": [
+    "root",
+    "ticket24",
+    "merger",
+    "independent reviewer"
+  ],
+  "review_evidence": {
+    "path": "/private/tmp/probata-t25-source-allowlist-cea5652b-root-review-20261016.md",
+    "sha256": "27a82e9084fdb5c47a4ce8b45ad9f0b461067dad9b9ac3d3d6cf352841f80198"
+  },
+  "scope": "First public original int vector constructor/destructor heap-model records only; exactfull source; no genericcaller/whole25 acceptance.",
+  "source_commit": "cea5652b06a20696b59b643527c951ccc13122d3"
+}

@@ -1,0 +1,40 @@
+{
+  "created": "2026-10-15 15:22 ET",
+  "source_commit": "849c4a693f067c719819ea5c9c7cb483b6b511c2",
+  "evaluation_runtime_freeze": "71771f097feb83338928430bdf78a4de8384e63b",
+  "runtime_bytes_match_evaluation_freeze": true,
+  "command": [
+    "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+    "-m",
+    "pytest",
+    "tests/test_proof_setup.py",
+    "tests/test_fixed_member_arrays.py",
+    "tests/test_conditional_window_reads.py",
+    "tests/test_terminal_overrun.py",
+    "tests/test_standard_range_model.py",
+    "-k",
+    "not real_wp_facts and not actual",
+    "-q",
+    "--tb=short",
+    "--maxfail=1",
+    "--basetemp",
+    "/private/tmp/probata-resume-integrated-controls-20261015/pytest",
+    "--junitxml=/private/tmp/probata-resume-integrated-controls-20261015/junit.xml"
+  ],
+  "resources": {
+    "exit_code": 0,
+    "peak_rss_bytes": 355123200,
+    "out_of_memory": false,
+    "timed_out": false,
+    "wall_seconds": 194.7478842920391,
+    "cpu_seconds": 185.88228999999998
+  },
+  "files": {
+    "/private/tmp/probata-resume-integrated-controls-20261015/controls.log": "15161f732a35d55497dd8efe9fbb1238373a5e0b08164f1e75ae578ac9ff81aa",
+    "/private/tmp/probata-resume-integrated-controls-20261015/junit.xml": "34c6910a2c18f35586fb62f4e2e6dfc3c04d6b5a39672598a03c9a0e30ee4fef",
+    "/private/tmp/probata-resume-integrated-controls-20261015/command.json": "3015dcb162cd8fe9423c6f0cb7304d26385007a555d3a2c06eae86ec0133aa1c",
+    "/private/tmp/probata-resume-integrated-controls-20261015/resources.json": "9233049d39876ed5a24eb2db8c0338ee0beabff8c59636d4d4514eef6107fe6c"
+  },
+  "log_summary": "122 passed, 13 deselected in 194.33s (0:03:14)",
+  "boundary": "Focused compiler and scripted setup integration controls only; no actual WP/solver theorem or ticket completion implied."
+}

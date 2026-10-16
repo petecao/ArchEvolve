@@ -1,0 +1,124 @@
+{
+  "date_et": "2026-10-16",
+  "disposition": "PASS_TEST_ONLY_PROSPECTIVE_HEALTH_REPAIR",
+  "source_commit": "83b90ed57e8421d9b6551baed44548f97215bd6b",
+  "tested_source_commit": "2b25ee6c7021e467176d3086f2560f5e7c5da7e8",
+  "review_md_sha256": "673b5db6efbaa62ab2dbab75fe372f4a3f5522400a842d88cdeda043db2ad181",
+  "source_pins_checked": [
+    {
+      "bytes": 5715,
+      "path": "swdb-project/tests/test_dx100_size_actual.py",
+      "sha256": "5642cc417723c659801c3077cf2c786e285b8cb40e7e5e430e5ce77bf4299488"
+    },
+    {
+      "bytes": 3347,
+      "path": "swdb-project/tests/test_dx100_size_negative_health.py",
+      "sha256": "619ffcce78b3b621b04f6d63ef99eeff7aeabbe4f50b53bab39aed840ddaca87"
+    }
+  ],
+  "physical_references_checked": [
+    {
+      "bytes": 3666,
+      "path": "/private/tmp/probata-t28-size-negative-health-packet-20261016.py",
+      "sha256": "1b879f9d88509137f18180d63eedd783c4c91e9b00bf2eb477cd1e60746800e3"
+    },
+    {
+      "bytes": 950,
+      "path": "/private/tmp/probata-t28-size-negative-guard.py",
+      "sha256": "90214dffdf8b4c635326aa33140cf83fccee211707e74d70ee5bf3e7384d5421"
+    },
+    {
+      "bytes": 695,
+      "path": "/private/tmp/probata-mac-compiler-worker-b.py",
+      "sha256": "873ac0b65eaa7edd4e0f624a86e68141c0e340f9ab1ca6816a07598538548a0e"
+    },
+    {
+      "bytes": 313,
+      "path": "/private/tmp/probata-t28-size-negative-health-red/command.json",
+      "sha256": "c6cd4ffdcaaf7be89d3cd499488f7c7580dff04665731819a44c7f0dd37a1467"
+    },
+    {
+      "bytes": 14611,
+      "path": "/private/tmp/probata-t28-size-negative-health-red/control.log",
+      "sha256": "840d29e881385762adb990e3bc0bb17cac8104b92fde40eb2ab4942fb28917b6"
+    },
+    {
+      "bytes": 164,
+      "path": "/private/tmp/probata-t28-size-negative-health-red/resources.json",
+      "sha256": "e7d29c7eb4888d1e7a825a145c822936e8d993e5e3358ff401a22eebb64f61e6"
+    },
+    {
+      "bytes": 16061,
+      "path": "/private/tmp/probata-t28-size-negative-health-red/junit.xml",
+      "sha256": "57889fc2800ca0578e878deb35f1edafc823a3348b48dba07c7c78001d5db047"
+    },
+    {
+      "bytes": 354,
+      "path": "/private/tmp/probata-t28-size-negative-health-green/command.json",
+      "sha256": "fc97ccb3e9a1283fb4d4f27fdd966215c7ff0c49b04e81d14c6a23f8118d1464"
+    },
+    {
+      "bytes": 110,
+      "path": "/private/tmp/probata-t28-size-negative-health-green/control.log",
+      "sha256": "e0a195206d607a244311048790f7147826f2539a0b4ca20ff76187f1aceab021"
+    },
+    {
+      "bytes": 164,
+      "path": "/private/tmp/probata-t28-size-negative-health-green/resources.json",
+      "sha256": "ddb52ab932d0af6ced4795c9e396571707942c8d07a331f83620a547c45f7c70"
+    },
+    {
+      "bytes": 4800,
+      "path": "/private/tmp/probata-t28-size-negative-health-green/junit.xml",
+      "sha256": "2ea31bedbc562c0bc02e77b9605e50670b8ba5a20beb6918f767c6a6712ebfd4"
+    },
+    {
+      "bytes": 354,
+      "path": "/private/tmp/probata-t28-size-negative-health-final/command.json",
+      "sha256": "71a7b64df3bda438cc8917d74b732dc7c4f59c04820224e6d82fa035bc0db52d"
+    },
+    {
+      "bytes": 110,
+      "path": "/private/tmp/probata-t28-size-negative-health-final/control.log",
+      "sha256": "ebc0dbb2d2f5d22cebe94afae7dc78f73d15ce2223032c6e7b3b7d80c2900ad7"
+    },
+    {
+      "bytes": 174,
+      "path": "/private/tmp/probata-t28-size-negative-health-final/resources.json",
+      "sha256": "e92d7f612b6482b39dae26564adbcc1cc247820e590d8fa02ab00d647d1ddb21"
+    },
+    {
+      "bytes": 5301,
+      "path": "/private/tmp/probata-t28-size-negative-health-final/junit.xml",
+      "sha256": "4fcc84c7287825a754ccbddd307b83670bac6c8ea0998d73f8fe3e4a2d36c722"
+    }
+  ],
+  "physical_reference_instances": 15,
+  "junit_counts_verified": [
+    {
+      "errors": 0,
+      "failed": 13,
+      "skipped": 0,
+      "total": 18
+    },
+    {
+      "errors": 0,
+      "failed": 0,
+      "skipped": 3,
+      "total": 24
+    },
+    {
+      "errors": 0,
+      "failed": 0,
+      "skipped": 3,
+      "total": 27
+    }
+  ],
+  "production_library_api_change": false,
+  "actual_reviewer_invocations": 0,
+  "actual_remote_rehash": false,
+  "historical_actual_upgrade": false,
+  "clean_pair_acceptance": false,
+  "full_ticket_acceptance": false,
+  "blockers": []
+}

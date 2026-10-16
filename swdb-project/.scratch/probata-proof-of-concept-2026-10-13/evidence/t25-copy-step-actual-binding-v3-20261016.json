@@ -1,0 +1,1284 @@
+{
+  "caller_acceptance": false,
+  "complete_model_acceptance": false,
+  "complete_surface_equality": {
+    "why3_drivers": {
+      "files": 93,
+      "identical_to_prior_source_TCBind": true,
+      "metadata_sha256": "b4dd456e0554f7a847e159182c7fb2aec5fcb2e864d7aaf42c7bb39a0fce342f"
+    },
+    "why3_stdlib": {
+      "files": 57,
+      "identical_to_prior_source_TCBind": true,
+      "metadata_sha256": "eeccfb139e3b8ebb5b809b1d573ae4a0b4d530eecfe7f8d6d0d4a9a99a8ca0b9"
+    },
+    "wp_why3_support": {
+      "files": 30,
+      "identical_to_prior_source_TCBind": true,
+      "metadata_sha256": "b78829eaa7cc3b4b9e45bf9bc9168f011736e247dd6b9c9b9cf34927120f2f29"
+    }
+  },
+  "created": "2026-10-16 ET",
+  "direct_imports": [
+    "bool.Bool",
+    "frama_c_wp.qed.Qed",
+    "heap_reallocation.Heap",
+    "int.Abs",
+    "int.ComputerDivision",
+    "int.Int",
+    "map.Map",
+    "real.RealInfix",
+    "why3.BuiltIn.BuiltIn"
+  ],
+  "frontier": {
+    "attempted": [
+      "control.grow.premises_feasible",
+      "grow.entry.reads",
+      "grow.entry.int_projection.repr",
+      "grow.entry.int_projection.cells.access",
+      "grow.entry.int_projection.cells.initialization",
+      "grow.entry.int_projection.cells.integer",
+      "grow.entry.int_projection.cells.bounds",
+      "grow.alloc.identity",
+      "grow.alloc.output",
+      "grow.alloc.frame",
+      "grow.copy.establish.entry_well_formed",
+      "grow.copy.establish.allocated_well_formed",
+      "grow.copy.establish.entry_eligible",
+      "grow.copy.establish.allocated_eligible",
+      "grow.copy.establish.index_size_capacity_bounds",
+      "grow.copy.establish.fresh_identity",
+      "grow.copy.establish.unissued_identity",
+      "grow.copy.establish.receiver_distinct",
+      "grow.copy.establish.old_buffer_distinct",
+      "grow.copy.establish.destination_write_domain",
+      "grow.copy.establish.destination_freeability",
+      "grow.copy.establish.destination_extent",
+      "grow.copy.establish.allocation_frame",
+      "grow.copy.establish.empty_copied_prefix",
+      "grow.copy.establish.uninitialized_tail",
+      "grow.copy.read",
+      "grow.copy.write",
+      "grow.copy.step"
+    ],
+    "attempted_count": 28,
+    "model_acceptance": false,
+    "numeric_attempted": false,
+    "open_targets": [
+      "grow.copy.step"
+    ],
+    "producer_reports_complete": false,
+    "proven_prefix": [
+      "control.grow.premises_feasible",
+      "grow.entry.reads",
+      "grow.entry.int_projection.repr",
+      "grow.entry.int_projection.cells.access",
+      "grow.entry.int_projection.cells.initialization",
+      "grow.entry.int_projection.cells.integer",
+      "grow.entry.int_projection.cells.bounds",
+      "grow.alloc.identity",
+      "grow.alloc.output",
+      "grow.alloc.frame",
+      "grow.copy.establish.entry_well_formed",
+      "grow.copy.establish.allocated_well_formed",
+      "grow.copy.establish.entry_eligible",
+      "grow.copy.establish.allocated_eligible",
+      "grow.copy.establish.index_size_capacity_bounds",
+      "grow.copy.establish.fresh_identity",
+      "grow.copy.establish.unissued_identity",
+      "grow.copy.establish.receiver_distinct",
+      "grow.copy.establish.old_buffer_distinct",
+      "grow.copy.establish.destination_write_domain",
+      "grow.copy.establish.destination_freeability",
+      "grow.copy.establish.destination_extent",
+      "grow.copy.establish.allocation_frame",
+      "grow.copy.establish.empty_copied_prefix",
+      "grow.copy.establish.uninitialized_tail",
+      "grow.copy.read",
+      "grow.copy.write"
+    ],
+    "proven_prefix_count": 27,
+    "unexecuted": [
+      "grow.copy.exit",
+      "grow.free.argument",
+      "grow.free.survival",
+      "grow.free.aliases",
+      "grow.store.capacity",
+      "grow.post.eligibility",
+      "grow.post.values",
+      "grow.post.old_invalid",
+      "grow.post.frame",
+      "grow.numeric"
+    ],
+    "unexecuted_count": 10
+  },
+  "input_c": {
+    "bytes": 4802,
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-37ffe407-t25-qualified-grow38-public-v1/qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.step/wp_input.c",
+    "sha256": "5e46d1eee055960726f99ab13a172f1f4963270617255d7797c5ae5c79920a0e"
+  },
+  "inputs": [
+    {
+      "bytes": 3484048,
+      "path": "/private/tmp/probata-root-grow38-metadata-execution-v1-20261016.json",
+      "sha256": "bf0407baafbab5415a2a78f3df372bec791f685aac13ccd9c74e784413e9480e"
+    },
+    {
+      "bytes": 2611,
+      "path": "/private/tmp/probata-t25-copy-step-and-design-v1-20261016.json",
+      "sha256": "3f622222c54bae793eff45037fc449cf1376d54187ef3a676710c107bd381b0f"
+    },
+    {
+      "bytes": 24187,
+      "path": "/private/tmp/probata-t25-historical-support-hash-ledger-v1-20261016.json",
+      "sha256": "99520a25dc3ee71ae85beaa9bfcbfdc37248807745addc6200aec2dbd64a66c0"
+    },
+    {
+      "bytes": 148160,
+      "path": "/private/tmp/probata-t25-grow21-task-metadata-root-execution-v1-20261016.json",
+      "sha256": "2dfa600b8d744eaa886e5b1c8c9c945b2e8377f7d61d3a6382008360b947a9e5"
+    },
+    {
+      "bytes": 1529999,
+      "path": "/private/tmp/probata-t25-dtor11-cold-policy-v1-20261016.json",
+      "sha256": "f192259354615a1a1604c9777cfdafdb0794fa142b2d3b287b3a8b46cd0c608c"
+    }
+  ],
+  "materialized_not_submission": true,
+  "materialized_tasks": [
+    {
+      "actual_goal_hash_matched": true,
+      "actual_submission_attested": false,
+      "assertions_outside_known_support_and_source_goal": [],
+      "bytes": 14850,
+      "file_sha256": "f9f758b12df13c4ceadcb7425a7c7a6ee3c477109358788c20128d31ac78a1c3",
+      "forall_binding_sha256": "dab7aeedd17efb6659ed70739a7732d8be1f0719823ad6649c66de222d8faf54",
+      "let_name": "x",
+      "negated_goal_node_count": 93,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-37ffe407-t25-qualified-grow38-public-v1/qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.step/prover-files/typed_real/check_lemma_t25v3_grow_copy_step_Why3_Alt_Ergo_2_6_4.psmt2",
+      "source_derived_goal_hash": "036a8ca234ffd89c0a3e903038a7848de3f53147b11496e37efa7ba63bb8f8cc",
+      "support_assertion_count": 42,
+      "support_attribution": [
+        {
+          "body_sha256": "3076bc3f8d7485f553d2b0e382697d0424d26dca7ded0dea396c78f142f19463",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "integer/real ordered algebra"
+        },
+        {
+          "body_sha256": "0c363d3d6b94ab0460b36d16b61d2c9353fb6d2f82695bc4637d7184ac6edc34",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs"
+        },
+        {
+          "body_sha256": "ae18950f2236d5fd2e5aa1b445e800db9c86fb53dff06fbb9a60dee3a4d0e52c",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs"
+        },
+        {
+          "body_sha256": "9cf357ff89bfce98187e00c32b11c8f366a32c5fd210ea875690238c3f03b293",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs"
+        },
+        {
+          "body_sha256": "d83d59933cb8428fc118e396ac88d4b946da1e38c8442d3d51ad2853881701c2",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs"
+        },
+        {
+          "body_sha256": "3b91d4d3fd3ee8b435876ad46c558b8170bea759937396edd9251e0e85c9d8ae",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "4ffe57766ac7158e9bf22d49c2b6912e04ebd41c33149305cd1fd23fac56611a",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "9dda58f417232ee21aa0f6eb3f2a06786a9bc76e80ae3e7a02baf300b3a74b5b",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "230dac86f15e25f054f86acd1c634df7bfa14be5171dbf396701d518e32873b2",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "e0fcaa13183bd7133b0a8bb910509bc040c4486ac0710a67ff365fb38a3306f5",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "4ffe57766ac7158e9bf22d49c2b6912e04ebd41c33149305cd1fd23fac56611a",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a1dfed6d389be5a4dab9ecc490efbd14e26af33d143a92ba9f52ed15098e33fc",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "d2b030072e2e3631d5f96fbdec4a6a16d91053b067f82caff0c43e2434f9d75b",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "5224d38dacf79571be4ade6de5e5b401266cf89925615c14bfb48391489f70ad",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a2040454bce97f74d227cd239fc13ce62a686ed18398870f9e745eb3b4e69893",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "3f8db6925daa96931e8403b27e09722f50246f506060f57d7f1d628e0e756419",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "e8e9d90e3921f5c2eb9080962f083d57b45ade790b114130b5d1f967823ac255",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a5cf980bdcd3e0e9a1684f60f33fc384a03aa30fcc42463f801a6423f1dc4a64",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "14e5a1d4743372c20da40f718aa6c59a3a29d21b29c075b161cbf7be0b525777",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "85c607d4a3ded15667c39e11ecf7f13402f7ecd70c42542c1f6072cf6dc4ea12",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "68e28b32268321dbcc63c814cca5150ab655adf5656fc3121b93a0761bc58874",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "9b78960d1ed583ce26a1f6cbaf956a5753dfbbff448f3e1d26a90b7e1b854db8",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "integer/real ordered algebra"
+        },
+        {
+          "body_sha256": "58e1862d880068ce87e2fedb81a486f6858dd276c358e8c47045b680718794fb",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "4522f5d152877beda0a24ff172adcbe65457c924eae516daa054aa8bc6865b73",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "6caa6bc49e66c2c555aa2daf5b5455b199a88c5494a3937ac6aa31e31a6d96d6",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "b4fc4ac5ec69834965592f4a8a6fa40e6e8039c5249e74ee687d3a98a5e80035",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "e833deb13f611bf1d05aa7024d431400eae6ed2121ca9e27ebadf8616d1a189b",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "512da087aea287397b02298cbcb5d5f14a44d259881ff232fc4b643605977aaa",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "2519083ff7eae4b41036ac0ed69933cc7111ff707235caa3b76b9fb6b20295c1",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "dfc6a8665385ea7fc932eb7d43531861a7df141139b3bd7af3729660e6162cd2",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "1e788d34e70c45a93c5624e6f5499bb880bbc09f3ce78960c5a29aaf8a1ec526",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "68587350e4436a612440ab8e05fc309620c421c8d2672a47407c4617fd44c563",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "39fdb0caf203dd0fb8bc5d392736d4596d73fc06bfbe23baf7ae38a8d4b80e2a",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "451777247802989db373cc5c07812ce8f33f87f54ed883fb43e9f9ea720e0749",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "f76641cfe67719d9202d73ba93c813bbd56e58fad1389802f5cbadd4b363467b",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver"
+        },
+        {
+          "body_sha256": "1e12b2297921333a4b9e5662aefa61be9f32409270d4b8769dc8f3afe1e50ea9",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver"
+        },
+        {
+          "body_sha256": "4fa248013de091760fd304d3ebffb6564c823dc19d9f251e3f5b364c1ba55679",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver"
+        },
+        {
+          "body_sha256": "ca7f150707a74b16829d8e2ad7724aec87a279621dcb07e94410518ef4f32966",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver"
+        },
+        {
+          "body_sha256": "41c7af5f3553cfe5c0897a763293c8816285c40c210433c7bf4b7273a08f5a9e",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver"
+        },
+        {
+          "body_sha256": "8fbb971af9140aacd1d4a43c7d2bb0b40a258069e08f0870e5f3210d3aeb0817",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver"
+        },
+        {
+          "body_sha256": "136b1ccb44b9c4e504fc9009fae32e39f89d59628a31404e3a6a77a6392597d8",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver"
+        },
+        {
+          "body_sha256": "c6d3017050fb0dd646bf55e2fc75faf59098859292506f5cf86d230a21aa08a9",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver"
+        }
+      ],
+      "support_families": {
+        "generated datatype encoding": 8,
+        "trusted standard arithmetic": 34
+      }
+    },
+    {
+      "actual_goal_hash_matched": true,
+      "actual_submission_attested": false,
+      "assertions_outside_known_support_and_source_goal": [],
+      "bytes": 12702,
+      "file_sha256": "e013df30c323df672a56153fe94b960b2b256b155dead2c74546e3e2bab6d0a7",
+      "forall_binding_sha256": "dab7aeedd17efb6659ed70739a7732d8be1f0719823ad6649c66de222d8faf54",
+      "let_name": "x3",
+      "negated_goal_node_count": 93,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-37ffe407-t25-qualified-grow38-public-v1/qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.step/prover-files/typed_real/check_lemma_t25v3_grow_copy_step_Why3_CVC5_1_2_1.smt2",
+      "source_derived_goal_hash": "a1635cfbfa22d137ffa80fa54019f47c9902f627213fce0fa0c7b0d2e3d6b557",
+      "support_assertion_count": 22,
+      "support_attribution": [
+        {
+          "body_sha256": "3076bc3f8d7485f553d2b0e382697d0424d26dca7ded0dea396c78f142f19463",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "integer/real ordered algebra"
+        },
+        {
+          "body_sha256": "92ed3b6387a2ea7adfb0281282ed3f10092b199ffe0c64ac751db7f08385dad7",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs"
+        },
+        {
+          "body_sha256": "d83d59933cb8428fc118e396ac88d4b946da1e38c8442d3d51ad2853881701c2",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs"
+        },
+        {
+          "body_sha256": "3b91d4d3fd3ee8b435876ad46c558b8170bea759937396edd9251e0e85c9d8ae",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "b10a675182a54bd3e05baba0fae2deec3825802ec0c246d6ff6211f8f382cdf6",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "54870e5c89b533678e220be22537d8796ab107f992c8d45a7cf79a926108d378",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "4ffe57766ac7158e9bf22d49c2b6912e04ebd41c33149305cd1fd23fac56611a",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a1dfed6d389be5a4dab9ecc490efbd14e26af33d143a92ba9f52ed15098e33fc",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "d2b030072e2e3631d5f96fbdec4a6a16d91053b067f82caff0c43e2434f9d75b",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "5224d38dacf79571be4ade6de5e5b401266cf89925615c14bfb48391489f70ad",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a2040454bce97f74d227cd239fc13ce62a686ed18398870f9e745eb3b4e69893",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "3f8db6925daa96931e8403b27e09722f50246f506060f57d7f1d628e0e756419",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "e8e9d90e3921f5c2eb9080962f083d57b45ade790b114130b5d1f967823ac255",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a5cf980bdcd3e0e9a1684f60f33fc384a03aa30fcc42463f801a6423f1dc4a64",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "14e5a1d4743372c20da40f718aa6c59a3a29d21b29c075b161cbf7be0b525777",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "85c607d4a3ded15667c39e11ecf7f13402f7ecd70c42542c1f6072cf6dc4ea12",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "68e28b32268321dbcc63c814cca5150ab655adf5656fc3121b93a0761bc58874",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "58e1862d880068ce87e2fedb81a486f6858dd276c358e8c47045b680718794fb",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "f0128a61c0627c057a80014c6828d71960dea19dc00202eeb22d7fea7964bc2f",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "68587350e4436a612440ab8e05fc309620c421c8d2672a47407c4617fd44c563",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "39fdb0caf203dd0fb8bc5d392736d4596d73fc06bfbe23baf7ae38a8d4b80e2a",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "451777247802989db373cc5c07812ce8f33f87f54ed883fb43e9f9ea720e0749",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        }
+      ],
+      "support_families": {
+        "trusted standard arithmetic": 22
+      }
+    },
+    {
+      "actual_goal_hash_matched": true,
+      "actual_submission_attested": false,
+      "assertions_outside_known_support_and_source_goal": [],
+      "bytes": 12510,
+      "file_sha256": "58b56c744e95b5d09da5aae0fc7beef2a8ab99ba2b28e54338e8a9237019ec51",
+      "forall_binding_sha256": "dab7aeedd17efb6659ed70739a7732d8be1f0719823ad6649c66de222d8faf54",
+      "let_name": "x3",
+      "negated_goal_node_count": 93,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-37ffe407-t25-qualified-grow38-public-v1/qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.step/prover-files/typed_real/check_lemma_t25v3_grow_copy_step_Why3_Z3_5_1_0.smt2",
+      "source_derived_goal_hash": "a1635cfbfa22d137ffa80fa54019f47c9902f627213fce0fa0c7b0d2e3d6b557",
+      "support_assertion_count": 21,
+      "support_attribution": [
+        {
+          "body_sha256": "92ed3b6387a2ea7adfb0281282ed3f10092b199ffe0c64ac751db7f08385dad7",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs"
+        },
+        {
+          "body_sha256": "d83d59933cb8428fc118e396ac88d4b946da1e38c8442d3d51ad2853881701c2",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs"
+        },
+        {
+          "body_sha256": "3b91d4d3fd3ee8b435876ad46c558b8170bea759937396edd9251e0e85c9d8ae",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "b10a675182a54bd3e05baba0fae2deec3825802ec0c246d6ff6211f8f382cdf6",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "54870e5c89b533678e220be22537d8796ab107f992c8d45a7cf79a926108d378",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "4ffe57766ac7158e9bf22d49c2b6912e04ebd41c33149305cd1fd23fac56611a",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a1dfed6d389be5a4dab9ecc490efbd14e26af33d143a92ba9f52ed15098e33fc",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "d2b030072e2e3631d5f96fbdec4a6a16d91053b067f82caff0c43e2434f9d75b",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "5224d38dacf79571be4ade6de5e5b401266cf89925615c14bfb48391489f70ad",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a2040454bce97f74d227cd239fc13ce62a686ed18398870f9e745eb3b4e69893",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "3f8db6925daa96931e8403b27e09722f50246f506060f57d7f1d628e0e756419",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "e8e9d90e3921f5c2eb9080962f083d57b45ade790b114130b5d1f967823ac255",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a5cf980bdcd3e0e9a1684f60f33fc384a03aa30fcc42463f801a6423f1dc4a64",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "14e5a1d4743372c20da40f718aa6c59a3a29d21b29c075b161cbf7be0b525777",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "85c607d4a3ded15667c39e11ecf7f13402f7ecd70c42542c1f6072cf6dc4ea12",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "68e28b32268321dbcc63c814cca5150ab655adf5656fc3121b93a0761bc58874",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "58e1862d880068ce87e2fedb81a486f6858dd276c358e8c47045b680718794fb",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "f0128a61c0627c057a80014c6828d71960dea19dc00202eeb22d7fea7964bc2f",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "68587350e4436a612440ab8e05fc309620c421c8d2672a47407c4617fd44c563",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "39fdb0caf203dd0fb8bc5d392736d4596d73fc06bfbe23baf7ae38a8d4b80e2a",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "451777247802989db373cc5c07812ce8f33f87f54ed883fb43e9f9ea720e0749",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        }
+      ],
+      "support_families": {
+        "trusted standard arithmetic": 21
+      }
+    },
+    {
+      "actual_goal_hash_matched": true,
+      "actual_submission_attested": false,
+      "assertions_outside_known_support_and_source_goal": [],
+      "bytes": 14814,
+      "file_sha256": "68972e7c1fb6780badd6e1ebc5f108aaca136fd82034bb85356a531d360cfe02",
+      "forall_binding_sha256": "dab7aeedd17efb6659ed70739a7732d8be1f0719823ad6649c66de222d8faf54",
+      "let_name": "x",
+      "negated_goal_node_count": 93,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-37ffe407-t25-qualified-grow38-public-v1/qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.step/prover-files/typed_real/zilch-typed_real_check_lemma_t25v3_grow_copy_step_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+      "source_derived_goal_hash": "036a8ca234ffd89c0a3e903038a7848de3f53147b11496e37efa7ba63bb8f8cc",
+      "support_assertion_count": 42,
+      "support_attribution": [
+        {
+          "body_sha256": "3076bc3f8d7485f553d2b0e382697d0424d26dca7ded0dea396c78f142f19463",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "integer/real ordered algebra"
+        },
+        {
+          "body_sha256": "0c363d3d6b94ab0460b36d16b61d2c9353fb6d2f82695bc4637d7184ac6edc34",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs"
+        },
+        {
+          "body_sha256": "ae18950f2236d5fd2e5aa1b445e800db9c86fb53dff06fbb9a60dee3a4d0e52c",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs"
+        },
+        {
+          "body_sha256": "9cf357ff89bfce98187e00c32b11c8f366a32c5fd210ea875690238c3f03b293",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs"
+        },
+        {
+          "body_sha256": "d83d59933cb8428fc118e396ac88d4b946da1e38c8442d3d51ad2853881701c2",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs"
+        },
+        {
+          "body_sha256": "3b91d4d3fd3ee8b435876ad46c558b8170bea759937396edd9251e0e85c9d8ae",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "4ffe57766ac7158e9bf22d49c2b6912e04ebd41c33149305cd1fd23fac56611a",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "9dda58f417232ee21aa0f6eb3f2a06786a9bc76e80ae3e7a02baf300b3a74b5b",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "230dac86f15e25f054f86acd1c634df7bfa14be5171dbf396701d518e32873b2",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "e0fcaa13183bd7133b0a8bb910509bc040c4486ac0710a67ff365fb38a3306f5",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "4ffe57766ac7158e9bf22d49c2b6912e04ebd41c33149305cd1fd23fac56611a",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a1dfed6d389be5a4dab9ecc490efbd14e26af33d143a92ba9f52ed15098e33fc",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "d2b030072e2e3631d5f96fbdec4a6a16d91053b067f82caff0c43e2434f9d75b",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "5224d38dacf79571be4ade6de5e5b401266cf89925615c14bfb48391489f70ad",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a2040454bce97f74d227cd239fc13ce62a686ed18398870f9e745eb3b4e69893",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "3f8db6925daa96931e8403b27e09722f50246f506060f57d7f1d628e0e756419",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "e8e9d90e3921f5c2eb9080962f083d57b45ade790b114130b5d1f967823ac255",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a5cf980bdcd3e0e9a1684f60f33fc384a03aa30fcc42463f801a6423f1dc4a64",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "14e5a1d4743372c20da40f718aa6c59a3a29d21b29c075b161cbf7be0b525777",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "85c607d4a3ded15667c39e11ecf7f13402f7ecd70c42542c1f6072cf6dc4ea12",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "68e28b32268321dbcc63c814cca5150ab655adf5656fc3121b93a0761bc58874",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "9b78960d1ed583ce26a1f6cbaf956a5753dfbbff448f3e1d26a90b7e1b854db8",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "integer/real ordered algebra"
+        },
+        {
+          "body_sha256": "58e1862d880068ce87e2fedb81a486f6858dd276c358e8c47045b680718794fb",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "4522f5d152877beda0a24ff172adcbe65457c924eae516daa054aa8bc6865b73",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "6caa6bc49e66c2c555aa2daf5b5455b199a88c5494a3937ac6aa31e31a6d96d6",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "b4fc4ac5ec69834965592f4a8a6fa40e6e8039c5249e74ee687d3a98a5e80035",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "e833deb13f611bf1d05aa7024d431400eae6ed2121ca9e27ebadf8616d1a189b",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "512da087aea287397b02298cbcb5d5f14a44d259881ff232fc4b643605977aaa",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "2519083ff7eae4b41036ac0ed69933cc7111ff707235caa3b76b9fb6b20295c1",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "dfc6a8665385ea7fc932eb7d43531861a7df141139b3bd7af3729660e6162cd2",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "1e788d34e70c45a93c5624e6f5499bb880bbc09f3ce78960c5a29aaf8a1ec526",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "68587350e4436a612440ab8e05fc309620c421c8d2672a47407c4617fd44c563",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "39fdb0caf203dd0fb8bc5d392736d4596d73fc06bfbe23baf7ae38a8d4b80e2a",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "451777247802989db373cc5c07812ce8f33f87f54ed883fb43e9f9ea720e0749",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "f76641cfe67719d9202d73ba93c813bbd56e58fad1389802f5cbadd4b363467b",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver"
+        },
+        {
+          "body_sha256": "1e12b2297921333a4b9e5662aefa61be9f32409270d4b8769dc8f3afe1e50ea9",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver"
+        },
+        {
+          "body_sha256": "4fa248013de091760fd304d3ebffb6564c823dc19d9f251e3f5b364c1ba55679",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver"
+        },
+        {
+          "body_sha256": "ca7f150707a74b16829d8e2ad7724aec87a279621dcb07e94410518ef4f32966",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver"
+        },
+        {
+          "body_sha256": "41c7af5f3553cfe5c0897a763293c8816285c40c210433c7bf4b7273a08f5a9e",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver"
+        },
+        {
+          "body_sha256": "8fbb971af9140aacd1d4a43c7d2bb0b40a258069e08f0870e5f3210d3aeb0817",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver"
+        },
+        {
+          "body_sha256": "136b1ccb44b9c4e504fc9009fae32e39f89d59628a31404e3a6a77a6392597d8",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver"
+        },
+        {
+          "body_sha256": "c6d3017050fb0dd646bf55e2fc75faf59098859292506f5cf86d230a21aa08a9",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver"
+        }
+      ],
+      "support_families": {
+        "generated datatype encoding": 8,
+        "trusted standard arithmetic": 34
+      }
+    },
+    {
+      "actual_goal_hash_matched": true,
+      "actual_submission_attested": false,
+      "assertions_outside_known_support_and_source_goal": [],
+      "bytes": 12670,
+      "file_sha256": "78c662be044270750ee1ae75616eb2715c8f4f5cd0360ecbca0ec289796244a0",
+      "forall_binding_sha256": "dab7aeedd17efb6659ed70739a7732d8be1f0719823ad6649c66de222d8faf54",
+      "let_name": "x3",
+      "negated_goal_node_count": 93,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-37ffe407-t25-qualified-grow38-public-v1/qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.step/prover-files/typed_real/zilch-typed_real_check_lemma_t25v3_grow_copy_step_CVC5_1dt2dt1-wp_goal.smt2",
+      "source_derived_goal_hash": "a1635cfbfa22d137ffa80fa54019f47c9902f627213fce0fa0c7b0d2e3d6b557",
+      "support_assertion_count": 22,
+      "support_attribution": [
+        {
+          "body_sha256": "3076bc3f8d7485f553d2b0e382697d0424d26dca7ded0dea396c78f142f19463",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "integer/real ordered algebra"
+        },
+        {
+          "body_sha256": "92ed3b6387a2ea7adfb0281282ed3f10092b199ffe0c64ac751db7f08385dad7",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs"
+        },
+        {
+          "body_sha256": "d83d59933cb8428fc118e396ac88d4b946da1e38c8442d3d51ad2853881701c2",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs"
+        },
+        {
+          "body_sha256": "3b91d4d3fd3ee8b435876ad46c558b8170bea759937396edd9251e0e85c9d8ae",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "b10a675182a54bd3e05baba0fae2deec3825802ec0c246d6ff6211f8f382cdf6",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "54870e5c89b533678e220be22537d8796ab107f992c8d45a7cf79a926108d378",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "4ffe57766ac7158e9bf22d49c2b6912e04ebd41c33149305cd1fd23fac56611a",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a1dfed6d389be5a4dab9ecc490efbd14e26af33d143a92ba9f52ed15098e33fc",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "d2b030072e2e3631d5f96fbdec4a6a16d91053b067f82caff0c43e2434f9d75b",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "5224d38dacf79571be4ade6de5e5b401266cf89925615c14bfb48391489f70ad",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a2040454bce97f74d227cd239fc13ce62a686ed18398870f9e745eb3b4e69893",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "3f8db6925daa96931e8403b27e09722f50246f506060f57d7f1d628e0e756419",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "e8e9d90e3921f5c2eb9080962f083d57b45ade790b114130b5d1f967823ac255",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a5cf980bdcd3e0e9a1684f60f33fc384a03aa30fcc42463f801a6423f1dc4a64",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "14e5a1d4743372c20da40f718aa6c59a3a29d21b29c075b161cbf7be0b525777",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "85c607d4a3ded15667c39e11ecf7f13402f7ecd70c42542c1f6072cf6dc4ea12",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "68e28b32268321dbcc63c814cca5150ab655adf5656fc3121b93a0761bc58874",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "58e1862d880068ce87e2fedb81a486f6858dd276c358e8c47045b680718794fb",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "f0128a61c0627c057a80014c6828d71960dea19dc00202eeb22d7fea7964bc2f",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "68587350e4436a612440ab8e05fc309620c421c8d2672a47407c4617fd44c563",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "39fdb0caf203dd0fb8bc5d392736d4596d73fc06bfbe23baf7ae38a8d4b80e2a",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "451777247802989db373cc5c07812ce8f33f87f54ed883fb43e9f9ea720e0749",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        }
+      ],
+      "support_families": {
+        "trusted standard arithmetic": 22
+      }
+    },
+    {
+      "actual_goal_hash_matched": true,
+      "actual_submission_attested": false,
+      "assertions_outside_known_support_and_source_goal": [],
+      "bytes": 12480,
+      "file_sha256": "4f447dc5e42f33522e36488dbe193f24547482c0ad76e0d95fcd8688029dbe30",
+      "forall_binding_sha256": "dab7aeedd17efb6659ed70739a7732d8be1f0719823ad6649c66de222d8faf54",
+      "let_name": "x3",
+      "negated_goal_node_count": 93,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-37ffe407-t25-qualified-grow38-public-v1/qualified-grow-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_grow.20261016t125610z.7a6a9dc2/wp/heap-job-grow.copy.step/prover-files/typed_real/zilch-typed_real_check_lemma_t25v3_grow_copy_step_Z3_5dt1dt0-wp_goal.smt2",
+      "source_derived_goal_hash": "a1635cfbfa22d137ffa80fa54019f47c9902f627213fce0fa0c7b0d2e3d6b557",
+      "support_assertion_count": 21,
+      "support_attribution": [
+        {
+          "body_sha256": "92ed3b6387a2ea7adfb0281282ed3f10092b199ffe0c64ac751db7f08385dad7",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs"
+        },
+        {
+          "body_sha256": "d83d59933cb8428fc118e396ac88d4b946da1e38c8442d3d51ad2853881701c2",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs"
+        },
+        {
+          "body_sha256": "3b91d4d3fd3ee8b435876ad46c558b8170bea759937396edd9251e0e85c9d8ae",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "b10a675182a54bd3e05baba0fae2deec3825802ec0c246d6ff6211f8f382cdf6",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "54870e5c89b533678e220be22537d8796ab107f992c8d45a7cf79a926108d378",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "4ffe57766ac7158e9bf22d49c2b6912e04ebd41c33149305cd1fd23fac56611a",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a1dfed6d389be5a4dab9ecc490efbd14e26af33d143a92ba9f52ed15098e33fc",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "d2b030072e2e3631d5f96fbdec4a6a16d91053b067f82caff0c43e2434f9d75b",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "5224d38dacf79571be4ade6de5e5b401266cf89925615c14bfb48391489f70ad",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a2040454bce97f74d227cd239fc13ce62a686ed18398870f9e745eb3b4e69893",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "3f8db6925daa96931e8403b27e09722f50246f506060f57d7f1d628e0e756419",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "e8e9d90e3921f5c2eb9080962f083d57b45ade790b114130b5d1f967823ac255",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "a5cf980bdcd3e0e9a1684f60f33fc384a03aa30fcc42463f801a6423f1dc4a64",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "14e5a1d4743372c20da40f718aa6c59a3a29d21b29c075b161cbf7be0b525777",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "85c607d4a3ded15667c39e11ecf7f13402f7ecd70c42542c1f6072cf6dc4ea12",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "68e28b32268321dbcc63c814cca5150ab655adf5656fc3121b93a0761bc58874",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision"
+        },
+        {
+          "body_sha256": "58e1862d880068ce87e2fedb81a486f6858dd276c358e8c47045b680718794fb",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "f0128a61c0627c057a80014c6828d71960dea19dc00202eeb22d7fea7964bc2f",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "68587350e4436a612440ab8e05fc309620c421c8d2672a47407c4617fd44c563",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "39fdb0caf203dd0fb8bc5d392736d4596d73fc06bfbe23baf7ae38a8d4b80e2a",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        },
+        {
+          "body_sha256": "451777247802989db373cc5c07812ce8f33f87f54ed883fb43e9f9ea720e0749",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw"
+        }
+      ],
+      "support_families": {
+        "trusted standard arithmetic": 21
+      }
+    }
+  ],
+  "native_open_outcomes": [
+    "timeout",
+    "unknown",
+    "timeout"
+  ],
+  "numeric_and_generated_C_smoke_executed": false,
+  "preparer_v1_refusal": "V1 incorrectly required portable metadata row order equality; all93/57/30members and hashes equal, but JSON dictionary ordering differs. V2 compares exact path-to-hash membership maps, preserving both inputs and V1.",
+  "preparer_v2_refusal": "V2 refused legitimate repeated repr spelling in the separate projection shape guard. V3 binds each definition uniquely inside the physical PRELUDE AST literal; no generic first-match lookup or source change.",
+  "printed_declaration_inventory": {
+    "goal": 1,
+    "predicate": 6
+  },
+  "printed_query": {
+    "all_actual_hashes_match": true,
+    "canonical_sha256": "e85dff93e60b7117774f06b5de0687943062d6970a611a52385e87f06ad27734",
+    "canonical_utf8_bytes": 274,
+    "delimiter_tree_sha256": "6e3e230069a1bd7e68d517c5c370b67afa2a0223b5cb5a73b8bd4fcdb7c7e256",
+    "full_antecedent": "original invariant and k<size, curried into bound then invariant; no added premise",
+    "lexical_tokens_sha256": "8ad4ad9d39311da397c4ecef28fb275d8e820528c99e4e747772e74640262625",
+    "original_source_symbol_mapping": {
+      "b": "i",
+      "bo": "i1",
+      "c": "i2",
+      "cap": "i3",
+      "entry": "heap1",
+      "f": "i4",
+      "h": "heap2",
+      "k": "i5",
+      "o": "i6",
+      "r": "i7",
+      "s": "i8"
+    },
+    "printed_to_SMT_heap_alpha_renaming": {
+      "heap": "heap1",
+      "heap1": "heap2"
+    },
+    "source_derived_text_exported": false,
+    "type_binding_sha256": "dab7aeedd17efb6659ed70739a7732d8be1f0719823ad6649c66de222d8faf54"
+  },
+  "proof_acceptance": false,
+  "raw_preserved": true,
+  "scope": "Passive source/query/asserted-support inventory binding for the one open actual grow.copy.step only. No source transformation, production change, project import, proof/test/compiler/native/SSH execution; no entire-model or typed Why3 AST theorem claimed.",
+  "selected_tool_hashes_equal_prior_foundation_context": {
+    "alt-ergo": "ef5b893597fedd2bc5b215a40118b6a2297e1d9293d3a5296f4fe5bf7e43b6af",
+    "cvc5": "ee4c6787a95218a571080a599bdf579aca5b0f1e4f27687f70f46d4d12148974",
+    "frama-c": "39368e41f6a0edbd3902fa0e7b119689a7281fd25965c74b53abd88adeca9ea7",
+    "gcc": "1b99826121ae6682a634e5efe09bd3e3df58ce58e0b28f849114ab5b89139c26",
+    "ocamlfind": "285b6b308c7dd042bd87d918a67fecbb3346435c86d9da49c06c8b815f8beddc",
+    "ocamlopt": "f8976bb7b53ca30ec4bda901dda00ca354abf571ab292aea70cf29f984e06d0d",
+    "opam": "b533d393a6967150d6ef41cb3d71e147e93ecbabeb59e921aa412c0ae79ebe3d",
+    "why3": "98c58e874b1e3ac0baef8d288f4ce93f1333907995f1db2844116521fd3ce858",
+    "z3": "b4e0b3483ce37817230b20d6cad48390eb6a3aefde1d93342ad6dc763f24bc23"
+  },
+  "source_commit": "37ffe407a10888ff9628c75f37ba770995a3ecd5",
+  "source_design_entailment": "Exactly AND-split the unchanged source-defined copy invariant at copy_int(h,...),k+1; all fifteen goals retain full A, no sibling assumptions. Query binding justifies this next preparation, not the truth or solvability of the unsplit/split goals.",
+  "source_groups": [
+    "G5",
+    "G6",
+    "G9"
+  ],
+  "source_original_statement_sha256": "abdb7cb30f08bc4b401d1f5b391299a3de597049fe7313426ab6d6a118e7658f",
+  "source_predicate_definitions": [
+    {
+      "kind": "predicate",
+      "name": "P_t25v3_copy_frame",
+      "printed_canonical_body_sha256": "8fcb19fec12c8b67d25648977fdd973a99e2a4436c246fc2e22f007fe3e23020",
+      "printed_lexical_tokens_sha256": "288c007a64da70c6ab70ffe6c74601613370312602f43374bec23f415ec4af99",
+      "prior_proof_result_reused": false,
+      "prior_same_normalized_definition_only": true,
+      "source_definition": {
+        "PRELUDE_literal_begin": 515,
+        "PRELUDE_literal_end": 3034,
+        "begin": 1186,
+        "container": "vector_reallocation_vcs.py",
+        "container_sha256": "4bba8a7885570b6228d383e9abcd1e40c85dbd0dbff75e24f170dd4556493340",
+        "end": 1571,
+        "sha256": "577ff29196a607c30a94175acdbfd8fbfcdc0cdb3f4c16a14dbc7e7991ce8ffa"
+      }
+    },
+    {
+      "kind": "predicate",
+      "name": "P_t25_fields",
+      "printed_canonical_body_sha256": "8e754d74ec88c14fa1f2adb7d95a8ab7c4d54a7514139a98d8f8083f738abd1e",
+      "printed_lexical_tokens_sha256": "25380c6a4110a7685cd21cc2304b40dfc8e85525d78a8f4cc3dbc21c8cb516e2",
+      "prior_proof_result_reused": false,
+      "prior_same_normalized_definition_only": true,
+      "source_definition": {
+        "PRELUDE_literal_begin": 252,
+        "PRELUDE_literal_end": 2258,
+        "begin": 818,
+        "container": "heap_model_vcs.py",
+        "container_sha256": "f20e0ec130222aeda96b4fbb8e72eef8d922d3f33e84077777203f7e6d159092",
+        "end": 1194,
+        "sha256": "20708163247b000dfc87f924281eab95738ecee7e5cf8874e9a8959726f050e6"
+      }
+    },
+    {
+      "kind": "predicate",
+      "name": "P_t25_repr",
+      "printed_canonical_body_sha256": "f6e7adc3bf6c6d5d25f63d8bc5e84f4b6b8d62ecad2f665840d45cce83d9230a",
+      "printed_lexical_tokens_sha256": "c0a7ab0537c439f57e02d5621722fc46c8f96af80610a437d60a8451d374c08f",
+      "prior_proof_result_reused": false,
+      "prior_same_normalized_definition_only": true,
+      "source_definition": {
+        "PRELUDE_literal_begin": 252,
+        "PRELUDE_literal_end": 2258,
+        "begin": 1199,
+        "container": "heap_model_vcs.py",
+        "container_sha256": "f20e0ec130222aeda96b4fbb8e72eef8d922d3f33e84077777203f7e6d159092",
+        "end": 1545,
+        "sha256": "fbe2e835d872f90b9a38a475ffa3646eb51fe1718d6ad2aa70de8a77542b5a03"
+      }
+    },
+    {
+      "kind": "predicate",
+      "name": "P_t25v3_repr",
+      "printed_canonical_body_sha256": "82edd93555bd91656fc4f9a05d56e16213f01fe2e3702c5e771530cf25eae134",
+      "printed_lexical_tokens_sha256": "a1fe9eb0ff6ef19a307ed03565866e654b4572c0563eed9dd17fd8f4e781f145",
+      "prior_proof_result_reused": false,
+      "prior_same_normalized_definition_only": true,
+      "source_definition": {
+        "PRELUDE_literal_begin": 515,
+        "PRELUDE_literal_end": 3034,
+        "begin": 524,
+        "container": "vector_reallocation_vcs.py",
+        "container_sha256": "4bba8a7885570b6228d383e9abcd1e40c85dbd0dbff75e24f170dd4556493340",
+        "end": 716,
+        "sha256": "0061ac023cb12a5f63f8d72450ebc02caf10467a92a6b703aa40e75ca6b77163"
+      }
+    },
+    {
+      "kind": "predicate",
+      "name": "P_t25v3_eligible",
+      "printed_canonical_body_sha256": "b01de0b0ff77aa9fdf1e9bbb0b3b41e55fb34d044435c51b84ebcee82a576e47",
+      "printed_lexical_tokens_sha256": "0870ce2702973ff73963deb3184d8d411c599ee81940929823b9913097366b2d",
+      "prior_proof_result_reused": false,
+      "prior_same_normalized_definition_only": true,
+      "source_definition": {
+        "PRELUDE_literal_begin": 515,
+        "PRELUDE_literal_end": 3034,
+        "begin": 955,
+        "container": "vector_reallocation_vcs.py",
+        "container_sha256": "4bba8a7885570b6228d383e9abcd1e40c85dbd0dbff75e24f170dd4556493340",
+        "end": 1181,
+        "sha256": "4a86cc595ad87475a0e5e0bd6aa610dbb8d9926f20981778658d242189a4787b"
+      }
+    },
+    {
+      "kind": "predicate",
+      "name": "P_t25v3_copy_inv",
+      "printed_canonical_body_sha256": "a70ae02bb0821ca2fc6ab7561a6a32394febcaab9e76936207d6359fc4cf4020",
+      "printed_lexical_tokens_sha256": "19a26c98790d9478aba5c0763396f95b581e6062a22fc15f8a713b7a5006d39b",
+      "prior_proof_result_reused": false,
+      "prior_same_normalized_definition_only": true,
+      "source_definition": {
+        "PRELUDE_literal_begin": 515,
+        "PRELUDE_literal_end": 3034,
+        "begin": 1576,
+        "container": "vector_reallocation_vcs.py",
+        "container_sha256": "4bba8a7885570b6228d383e9abcd1e40c85dbd0dbff75e24f170dd4556493340",
+        "end": 2314,
+        "sha256": "ac8e672f38914c8161b9735b1a50e6df3b77b3d133769b09b008193c260cd9dc"
+      }
+    }
+  ],
+  "source_spans": [
+    {
+      "begin": 3770,
+      "end": 3795,
+      "sha256": "4707efe06a81fc43cb5c7cd35eef06022b0934d71d583ac51fba85d46e37c11d"
+    }
+  ],
+  "support_taxonomy_scope": "Exact assertion-body hashes and byte-equal selected tools/stdlib/WP-support/drivers reuse attribution metadata, never earlier proof results. All actual non-goal assertion hashes are known standard arithmetic/datatype support; project current/future desired lemmas absent.",
+  "ticket_closure": false
+}

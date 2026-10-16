@@ -1,0 +1,73 @@
+{
+  "packet": [
+    {
+      "path": "/private/tmp/probata-t07-helper-stage2-entry-v2-20261016.py",
+      "sha256": "5b325d748744cda010a4debdb8c7b9b62ba4878e1de2c23365cfb74ed29009d7",
+      "bytes": 31247
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-stage2-expected-v2-20261016.json",
+      "sha256": "cdf86ab91502876047156123e146ea6b337a81075df2f76a9f380f3e15390f59",
+      "bytes": 493227
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-result-journal-v2-20261016.ml",
+      "sha256": "6b68382ced78505c6504e8b362ad8b77574bb6b6fd77f17e4f89be667c7e6372",
+      "bytes": 3430
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-stage2-command-v2-20261016.json",
+      "sha256": "fda13f987404208451bae57c47796ab9e8aa27ca0befd776f8ace7dfb6c7ca75",
+      "bytes": 3826
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-stage2-plan-v2-20261016.md",
+      "sha256": "3a3982635420bbf7e096e6f137f24f78869aae01ec87670c366699c63ba9b83a",
+      "bytes": 13623
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-stage2-v2-static-control-receipt-20261016.json",
+      "sha256": "bb69a833cd09ce21dabadc2646beddfeb315c2b1b75709d6460128d3f2cd519d",
+      "bytes": 6621
+    }
+  ],
+  "selected_pin_entries": 1301,
+  "unique_physical_paths": 1298,
+  "selected_tree_memberships": 8,
+  "errors": [],
+  "source_commit": "7930f3a1f8d59cb7b338f54844dea7728bc8864c",
+  "baseline_goals": 245,
+  "baseline_properties": 352,
+  "baseline_active": 219,
+  "actual_tool_execution": false,
+  "date_et": "2026-10-16",
+  "verdict": "PASS_STATIC_REVIEW_FOR_SEPARATE_ROOT_ADMISSION",
+  "open_blockers": [],
+  "closed_findings": [
+    "B1 observer uses result.prover_model with the model printer",
+    "B2 exact baseline Extern/generated-smoke flags and active fresh census",
+    "B3 smoke raw passed=true mandatory alongside fresh external nonvalid result"
+  ],
+  "retained_author_pure_controls": 34,
+  "reviewer_controls_executed": false,
+  "retained_native_serializer_reference": {
+    "rows": 393,
+    "unique_ids": 393,
+    "scope": "Historical actual serializer shape only, not current-source proof or universe; source universe remains245 complete/219active"
+  },
+  "reviewer_execution": "Passive source/API/Git/JSON/text/hash/tree-membership reads only. No entry, OCaml/compiler, Frama, Why3, prover/version/test/native/SSH execution.",
+  "root_requirements": [
+    "Fresh actual slot/lease/process/memory/disk and guard/import preflight",
+    "Only exact v2 command/entry/expected/observer pins",
+    "900s outer880s inner/8GiB sampled process tree/one worker/wp-par1/full3portfolio30s",
+    "Fresh observer+production inventory module compile/API load inside actual budget; no extra probe",
+    "All245/352 complete baseline and219 native active rows; no dropped ordinary/init/smoke/property rows",
+    "Full fresh per-prover snapshot, exact Extern/source identity and retained dependencies; cold closure review before proof claim",
+    "On interruption preserve provisional journal/manifest; settle owned descendants via outer guard, then passively rehash/reparse settled evidence",
+    "Alignment/trusted summaries/caller correspondence/TD/fullC/RTE remain outside proof acceptance"
+  ],
+  "proof_acceptance": false,
+  "full_C_RTE_claim": false,
+  "automatic_next_stage": false,
+  "prior_v1_retained_and_unadmitted": true
+}

@@ -1,0 +1,42 @@
+{
+  "created": "2026-10-15T22:08:01.279329-04:00",
+  "verdict": "PASS: prospective metadata-only freeze utility static review; utility execution/live state/manifest output and actual launch not certified",
+  "utility": {
+    "path": "/private/tmp/probata-t07-freeze26.py",
+    "sha256": "9f19b2c37a004d4d89d28c259eb4d09dc9accad7af87984ea6cb39a26dbfbf13",
+    "bytes": 8224
+  },
+  "immutable_source_snapshot": {
+    "path": "/private/tmp/probata-t07-freeze26-final-reviewed.py",
+    "sha256": "9f19b2c37a004d4d89d28c259eb4d09dc9accad7af87984ea6cb39a26dbfbf13",
+    "bytes": 8224
+  },
+  "producer_commit": "ac6bb42ead0beb38da954c3528a1821c6d9f78eb",
+  "current_producer_clean": true,
+  "all32_reviewed_disk_and_commit_pins_match": true,
+  "composed_review_manifest": {
+    "path": "/private/tmp/probata-t07-method23-final-composed-independent-review-manifest.json",
+    "sha256": "71d53230c655126d105e7eb63acc2844c1d1977639682896135a4a935e6586a3",
+    "bytes": 26569
+  },
+  "initial_finding_preserved": {
+    "path": "/private/tmp/probata-t07-freeze26-initial-static-finding.json",
+    "sha256": "efdc3603bdcd97f1ab7b49f0473e5d4420ac0d8841f4c8a12c360b9cfc063184",
+    "bytes": 989
+  },
+  "resolved_finding": "Ambient bootstrap opam now resolved/hashed under exact sanitized PATH, used by absolute path for utility exec/query commands, matched against inner opam resolution; bootstrap identity and exact sanitized environment retained.",
+  "checks": [
+    "Fixed reviewed-path producer binding,32-source count, independently pinned review digest, Git blob equality and imported repository source closure guard. Wrong tuple/source-root assumptions fail rather than silently widen.",
+    "Fresh absolute OUT check before creation; manifest/argv prospective only, no actual driver/prover/provider execution. No old-run manifest, hint, baseline, conversation or result import.",
+    "Recorded argv opts into full METHOD23/METHOD22 foundation, zero seeds/frame-filter/examples/old baseline, original33/36/60 clocks,24final allocation/8negative reserve,10diagnostic/round and30final strengths.",
+    "Frama/provers/OCaml/opam/gcc fresh paths/hashes/version probes, WPnative+META pins and core package path binding; Python and psutil recorded. This is selected trusted-toolchain pinning, not a claim of full transitive library or production lowering reproducibility.",
+    "Both actual shared lease paths checked; same-UID verifier name scan fails closed on inspection denial; disk minimum enforced. Memory-pressure output is recorded for coordinator interpretation, with no automatic healthy-pressure claim.",
+    "Actual metadata invocation still must pass current environment/tool resolution and root coordination; future launcher must reproduce/revalidate sanitized environment/bootstrap/tool/package/source pins and live leases before exact recorded argv."
+  ],
+  "limitations": [
+    "Static source review only: utility not executed, no version/tool/Frama/provider calls by reviewer.",
+    "No atomic process/lease snapshot, hard memory quota, OS/scheduler bound or reserved-slot sufficiency claim.",
+    "This review authorizes no counted run and provides no scientific acceptance; root controls publication/live preflight/admission."
+  ],
+  "source_or_lease_mutation_by_reviewer": false
+}

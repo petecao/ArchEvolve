@@ -582,11 +582,29 @@ WP_FAULTS = [("three_reads", "SWDB_EARLY_READ_1", "swdb_tile_read_probe"),
              ("footprint", "SWDB_OUTSIDE", None)]
 
 
+def _assert_actual_wp_run(dx, record):
+    """2026-10-15 ET: a prelaunch refusal cannot satisfy agreement acceptance."""
+    import hashlib
+    from pathlib import Path
+    assert record["proof_setup_check"]["verdict"] == "passed", record.get("proof_setup_check")
+    assert record["settings"]["verifier_launched"] is True, record.get("settings")
+    flags = record["settings"]["flags"]
+    for flag in ("-wp-rte", "-rte-initialized", "-wp-no-filter-init", "-wp-smoke-tests"):
+        assert flag in flags, flags
+    assert flags[flags.index("-rte-initialized") + 1] == "@all", flags
+    assert flags[flags.index("-wp-cache") + 1] == "none", flags
+    assert record["goals"] and any(goal.get("smoke") for goal in record["goals"]), record
+    assert record["pins"]["proof_semantics"]["id"] == ENTRY
+    for report in record["evidence"]["reports"]:
+        assert hashlib.sha256(Path(report["path"]).read_bytes()).hexdigest() == report["sha256"], report
+
+
 @needs_wp
 @pytest.mark.parametrize("name", WP_SAFE)
 def test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics(qualified_dx, name):
     dx = qualified_dx
     record = prove_wp(dx, name)
+    _assert_actual_wp_run(dx, record)
     assert record["verdict"] == "proven", (record.get("failure_class"), record.get("unproven_properties"))
     if name in {"store_source_wait", "stall_condition"}:
         assert record["hint_check"]["verdict"] == "accepted", record["hint_check"]
@@ -606,10 +624,22 @@ def test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics(qualifie
 def test_wp_leaves_every_unit_cbmc_refutes_not_proven_never_refuted(qualified_dx, name, define, call):
     dx = qualified_dx
     record = prove_wp(dx, name, *([define] if define else []))
+    _assert_actual_wp_run(dx, record)
     assert record["verdict"] == "not_proven" and "counterexample" not in record
     unproven = json.dumps(record.get("unproven_properties"))
-    if call:                                                  # the probe's (or call's) precondition is the one
-        assert call in unproven or "precondition" in unproven, unproven
+    assert any(not g.get("smoke") and g["status"] != "valid" for g in record["goals"]), record
+    if call is None:
+        assert any(not g.get("smoke") and "ensures" in g["goal"] and g["status"] != "valid"
+                   for g in record["goals"]), record
+    if call:                                                  # the named hazard obligation must remain open
+        assert any(not g.get("smoke") and call in g["goal"] and g["status"] != "valid"
+                   for g in record["goals"]), unproven
+    if name == "footprint":
+        # Retain the outside query's independent wrong-value failure even when
+        # its generated zero-offset branch also fails smoke (historical vacuous_pass).
+        assert record["failure_class"] in {"unknown", "timeout", "vacuous_pass"}, record
+        assert all(g["status"] == "valid" for g in record["goals"]
+                   if not g.get("smoke") and "ensures" not in g["goal"]), record
 
 
 @needs_wp
@@ -637,22 +667,10 @@ def test_a_ghost_capacity_outside_the_command_mask_width_is_rejected_before_tool
     assert not list(dx.runs.glob("*/cbmc/cbmc_input.c"))
 
 
-@needs_wp
-@pytest.mark.parametrize("commands", [32, 33])
-def test_wp_capacity_agrees_at_32_and_leaves_33_not_proven(qualified_dx, commands):
-    dx = qualified_dx
+def capacity_hints(library):
+    """Ordinary loop obligations for the original repeated-stream capacity unit."""
     from swdb import proof_semantics
-    from swdb.library import Library
     from test_wp_adapter import _hints
-    path = dx.root / "library" / "rewrite_contracts" / "fixture_dx_capacity.yaml"
-    contract = yaml.safe_load(path.read_text())
-    # The source reads q[0]; advertise its complete incoming typed window explicitly.
-    contract["proof_unit"]["array_domains"] = {"q": {"extent": "n"}}
-    for clause in contract["clauses"]:
-        if clause.get("acsl"):
-            clause["acsl"]["text"] = clause["acsl"]["text"].replace("32 <= n <= 33", f"n == {commands}")
-    path.write_text(yaml.safe_dump(contract, sort_keys=False))
-    library = Library(dx.root / "library")
     locations = proof_semantics.wp_locations(library, ENTRY)
     hints = _hints("dxf_capacity.loop1.head",
         "loop invariant 0 <= t <= n;",
@@ -663,7 +681,32 @@ def test_wp_capacity_agrees_at_32_and_leaves_33_not_proven(qualified_dx, command
         "loop invariant dx_reg_writer[0] == -1 && dx_reg_writer[1] == -1 && dx_reg_writer[2] == -1;",
         "loop assigns t, " + ", ".join(locations) + ";",
         "loop variant n - t;")
+    # Every enqueued command is a stream load. Keep this inductive fact explicit
+    # when DX_NT=40 selects the quantified memory-clear predicate.
+    hints.insert(4, {"anchor": "dxf_capacity.loop1.head", "kind": "loop_invariant",
+        "text": "loop invariant \\forall integer u; 0 <= u < DX_NT && "
+                "0 <= dx_tile_writer[u] < DX_K ==> dx_kind[dx_tile_writer[u]] == DX_STREAM_LOAD;",
+        "provenance": {"source": "agent"}})
+    return hints
+
+
+@needs_wp
+@pytest.mark.parametrize("commands", [32, 33])
+def test_wp_capacity_agrees_at_32_and_leaves_33_not_proven(qualified_dx, commands):
+    dx = qualified_dx
+    from swdb.library import Library
+    path = dx.root / "library" / "rewrite_contracts" / "fixture_dx_capacity.yaml"
+    contract = yaml.safe_load(path.read_text())
+    # The source reads q[0]; advertise its complete incoming typed window explicitly.
+    contract["proof_unit"]["array_domains"] = {"q": {"extent": "n"}}
+    for clause in contract["clauses"]:
+        if clause.get("acsl"):
+            clause["acsl"]["text"] = clause["acsl"]["text"].replace("32 <= n <= 33", f"n == {commands}")
+    path.write_text(yaml.safe_dump(contract, sort_keys=False))
+    library = Library(dx.root / "library")
+    hints = capacity_hints(library)
     record = prove_wp(dx, "capacity", "DX_NT=40", "DX_TS=1", hints=hints)
+    _assert_actual_wp_run(dx, record)
     assert record["hint_check"]["verdict"] == "accepted", record["hint_check"]
     if commands == 32:
         assert record["verdict"] == "proven", record.get("unproven_properties")

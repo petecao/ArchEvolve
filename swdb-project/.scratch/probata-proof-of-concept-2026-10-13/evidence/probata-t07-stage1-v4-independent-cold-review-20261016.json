@@ -1,0 +1,137 @@
+{
+  "date": "2026-10-16 ET",
+  "verdict": "PASS_DIAGNOSTIC_GENERATION_ONLY",
+  "source_commit": "7930f3a1f8d59cb7b338f54844dea7728bc8864c",
+  "counts": {
+    "goals": 245,
+    "properties": 352,
+    "ordinary": 212,
+    "smokes": 33,
+    "helpers": 19,
+    "init_RTE_properties": 31,
+    "extern_properties": 30,
+    "extern_by_summary": {
+      "__atomic_load_n_NodeID": 4,
+      "__sync_fetch_and_add_size_t": 6,
+      "std_copy_NodeID": 6,
+      "__sync_bool_compare_and_swap_NodeID": 7,
+      "swdb_delete_NodeID_array": 3,
+      "swdb_new_NodeID_array": 4
+    },
+    "ordinary_results": {
+      "[]": 186,
+      "['valid']": 26
+    },
+    "smoke_results": {
+      "[]": 33
+    },
+    "smoke_passed_true_empty_results": 33,
+    "logged_goal_IDs": 219,
+    "inventory_only_rows_retained": 26,
+    "scheduled_count_line_present": false,
+    "normalized_snapshots": 3,
+    "bodyless_contexts": 5
+  },
+  "resource": {
+    "wall_s": 3.5205526250065304,
+    "peak_rss_mb": 172.78125,
+    "peak_rss_bytes": 181174272.0,
+    "component_elapsed_s": 3.1369082080200315,
+    "watchdog_timeout": false,
+    "OOM": false,
+    "unconfirmed_children": []
+  },
+  "byte_pins_rechecked": 1005,
+  "artifact_manifest_files_verified": 29,
+  "bytes_in_raw_root": 935606,
+  "native_report": {
+    "present": false,
+    "required_for_stage1": false,
+    "explanation": "Pinned register.ml invokes native JSON reporting only through spawned-proof result branch; prover-none instead displays goals. Complete fresh production Wpo/property inventory is mandatory and verified. Absence is not proof evidence.",
+    "source_path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/register.ml",
+    "source_sha256": "e4e0b524e4364f475f33fd618c542d4ddc86c2c35f8b6ba223ea704896bc019e",
+    "lines": [
+      "register.ml:335-347",
+      "register.ml:507-512",
+      "register.ml:749-767"
+    ]
+  },
+  "capability_boundaries": {
+    "warnings": [
+      {
+        "message": "[wp] Warning: Skipped RTE guards: unaligned pointers (\\aligned not supported)",
+        "classification": "unresolved_alignment_source_caller_correspondence",
+        "full_RTE_claim": false,
+        "occurrences": 1,
+        "source_commit": "7930f3a1f8d59cb7b338f54844dea7728bc8864c"
+      },
+      {
+        "message": "[wp] Warning: Skipped RTE guards: invalid function pointer calls (\\valid_function not supported)",
+        "classification": "inapplicable_only_for_exact_direct_call_only_helper_source_and_census",
+        "full_RTE_claim": false,
+        "occurrences": 1,
+        "source_commit": "7930f3a1f8d59cb7b338f54844dea7728bc8864c"
+      }
+    ],
+    "alignment_qualified": false,
+    "direct_call_scope": "exact staged and every normalized snapshot direct-call maps match this finite helper TU",
+    "direct_call_applicability_verified": true,
+    "full_C_RTE_claim": false,
+    "proof_acceptance": false,
+    "status": "diagnostic generation; independent cold scope review required",
+    "staged_header_sha256": "eccc1c111f32698043682509be8effad02e8cec82957a889f7a4fb6c54ff490c",
+    "normalized_c_sha256": "47fd353459d0ec187d5ff8cf672f02767d6ca226ae4835d7d07c2fc48ff590ce",
+    "normalized_snapshots": 3
+  },
+  "source_runtime_artifact_closure": "exact selected manifest surfaces, source/header/report bytes, package binding logs, every component artifact and clean Git metadata rechecked; not all OS dynamic libraries",
+  "proof_accepted": false,
+  "full_C_RTE_claim": false,
+  "actual_tools_executed_by_auditor": false,
+  "pure_text_readers_only": true,
+  "inputs": [
+    {
+      "path": "/private/tmp/probata-t07-helper-stage1-v4-7930f3a1-20261016/guard.log.summary.json",
+      "sha256": "a6069fb5fd49c01c0e62d318e7378481a8dee74a8c0e2ef0f67b3759d58285b2"
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-stage1-root-preflight-v4-20261016.json",
+      "sha256": "abdf2f3ec5cebbaaa5703a70bf44aeb7bdedd4f1c909f5a6fc9ea1628ad72e91"
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-stage1-root-exit-v4-20261016.json",
+      "sha256": "212d6ec6006c6e125dda65b2c0949dcf60a52b8538bba45cc51ef4504d10e1aa"
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-stage1-v4-7930f3a1-20261016/component/expected.json",
+      "sha256": "2b78ba3ae7eb83c64a460aeb17f509ec0396f23fb4f82725355102ab305183cd"
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-stage1-v4-7930f3a1-20261016/component/artifact-manifest.json",
+      "sha256": "2a37af7b84d3074577d744e66cd29c65bd5a8a8eacd7d16b775f7fdfa8d37fe4"
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-stage1-v4-7930f3a1-20261016/component/result.json",
+      "sha256": "a9046a17acc64037c0abeb21f292d44433602010173b112a96afc9d7505f336e"
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-stage1-v4-7930f3a1-20261016/component/wp-inventory.json",
+      "sha256": "0812cb7f3eadfb6a95552aa7f7188b0d2cdf1028449838f3a36b8661331942ef"
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-stage1-v4-7930f3a1-20261016/component/frama-generation.log",
+      "sha256": "2c0bdc51c58a6b0a0c566d100ee83ac8e8b6cda00f5f4838a94d4cf03220f7d4"
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-stage1-v4-7930f3a1-20261016/component/capability-boundaries.json",
+      "sha256": "7147db7f2e4a307226f1ead0fff4fb91dce87891b69b9a070b2862fb9addd50e"
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-stage1-v4-7930f3a1-20261016/component/goal-log-census.json",
+      "sha256": "97d72048367ebe8f49dc902e794851481683738929fc778e6019d84cf7152b9b"
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-stage1-v4-7930f3a1-20261016/component/commands.json",
+      "sha256": "8643429f0684913998f286699f11b7b9cb5109f699730b2fdf864b38ba5da293"
+    }
+  ]
+}

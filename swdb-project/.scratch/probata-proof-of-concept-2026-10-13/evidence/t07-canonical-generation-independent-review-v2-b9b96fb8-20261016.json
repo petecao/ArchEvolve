@@ -1,0 +1,134 @@
+{
+  "accepted_scope": [
+    "Finite exact canonical source preparation, whitespace-only equivalence and physical input/output pins",
+    "Static V2 10-TU generation recipe and complete export readers, subject to root launch preflight/admission"
+  ],
+  "canonical_evidence_sha256": "7c36efff1fff18c1a9e08bf3a5a6529c94842ee31bb90a931cf4375a3fdd9db2",
+  "canonical_raw_manifest_sha256": "157423debbb5d7c09c618e10aeaae7cf2fdb5bcc7d2fbaeaedc47ee365c56308",
+  "command_scope": {
+    "RTE_initialized_functions": "all 21/22 definitions per TU",
+    "all_bodies_and_property_inventory_required": true,
+    "cache": "none",
+    "external_provers_requested": [],
+    "header_helper_definitions_each": 20,
+    "internal_seconds": 110,
+    "model": "Typed/x86_64",
+    "output_budget_boundary": "between child operations, not continuous quota",
+    "output_budget_bytes": 268435456,
+    "prover_request": "none",
+    "root_active_seconds": 120,
+    "root_function_counts": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      2,
+      1,
+      2
+    ],
+    "rss_cap_bytes": 8589934592,
+    "smoke_tests": true,
+    "translation_units": 10,
+    "workers": 1
+  },
+  "compiler_formal_prover_native_SSH_probes_executed_by_reviewer": false,
+  "controls_read_not_rerun": {
+    "all_guard_summaries_no_OOM_timeout_inspection_or_unconfirmed_children": true,
+    "canonical_records_passed": 110,
+    "canonical_resource": {
+      "exit_code": 0,
+      "peak_rss_MiB": 19.96875,
+      "wall_s": 0.42471091664629057
+    },
+    "count_boundary": "110 is recorded checks in one pure runner regenerating two stages, not 110 independent tests or formal proofs.",
+    "label_resource": {
+      "exit_code": 0,
+      "peak_rss_MiB": 25.75,
+      "wall_s": 0.34517558332299814
+    },
+    "recipe_resource": {
+      "exit_code": 0,
+      "peak_rss_MiB": 83.328125,
+      "wall_s": 1.0101415000390261
+    },
+    "static_recipe_records_passed": 31,
+    "v2_label_records_passed": 15
+  },
+  "date": "2026-10-16 ET",
+  "entrypoints_executed_by_reviewer": false,
+  "findings_remaining": [],
+  "not_accepted": [
+    "Any actual generation completion",
+    "Any positive or negative proof result",
+    "Typed T_init/SINIT payload initializedness and scope/reentry lifetime validity",
+    "Physical alignment or full C RTE",
+    "General allocator/new/delete/exception/escape semantics",
+    "C++ selected-build/include/macro source refinement, same-array/span qualifications, TD result or counted-provider admission"
+  ],
+  "physical_verification": {
+    "canonical_C_header_site_payloads_trim_only": 18,
+    "canonical_raw_artifact_refs": 48,
+    "canonical_source_refs": 25,
+    "hash_mismatches": [],
+    "historical_files_byte_unchanged": 20,
+    "immutable_Git_blobs": 31,
+    "runtime_physical_pin_instances": 1008,
+    "v2_packet_file_refs": 9
+  },
+  "pins": [
+    {
+      "bytes": 2174,
+      "path": "/private/tmp/probata-t07-private-array-generation-packet-v2-20261016.json",
+      "sha256": "880b57fc296e464a8b52699e299234abe5ec78d035b96d2d874c0919bb595724"
+    },
+    {
+      "bytes": 25761,
+      "path": "/private/tmp/probata-t07-private-array-generation-entry-v2-20261016.py",
+      "sha256": "69c840b2151cf408d0234f3c2e5e369d387df73c686e979a776dbecc00f006b1"
+    },
+    {
+      "bytes": 3405,
+      "path": "/private/tmp/probata-t07-private-array-generation-command-v2-20261016.json",
+      "sha256": "a85d80f3a357bdab4427cc16c119aaa4b8de074ceb2ec650fa00acb92f4cecc3"
+    },
+    {
+      "bytes": 443541,
+      "path": "/private/tmp/probata-t07-private-array-generation-expected-v2-20261016.json",
+      "sha256": "e4fc76c7ff858710e208151cae4c2d89a94529f95534611da1874b3882c6f2a8"
+    },
+    {
+      "bytes": 6623,
+      "path": "/private/tmp/probata-t07-private-array-generation-plan-v2-20261016.md",
+      "sha256": "27c98369a76b5af19ab78dc2868c7334460ef35866b26db3fb6fa32761f457b2"
+    },
+    {
+      "bytes": 21658,
+      "path": "/private/tmp/probata-t07-canonical-generation-passive-data-v2-b9b96fb8-20261016.json",
+      "sha256": "a7e8942ac34def66cb5a26ec4a9c0333a8e7b2ba696236de7f333e4371af827c"
+    },
+    {
+      "bytes": 5727,
+      "path": "/private/tmp/probata-t07-canonical-generation-passive-audit-v2-b9b96fb8-20261016.py",
+      "sha256": "7545e02b9c4cb43d2bd9162ef47fa8e1a453487415976b69eec6d8ecec32d7b0"
+    }
+  ],
+  "repo_edits_by_reviewer": false,
+  "reviewer": "/root/ticket24/std_contract_review",
+  "root_admission_remaining": [
+    "Rehash exact V2 packet/guard/runtime closure immediately before launch",
+    "Published ancestry of b9 and all31 blobs; fresh external output/disk/memory/shared formal lease",
+    "Single counted120s8GiB worker and preserved ownership token, finite root resource/settlement receipts",
+    "Cold audit all10 complete inventories/properties/normalized bodies/calls, exact warnings and initialization targets; preserve first failure and actual producer"
+  ],
+  "source_commit": "b9b96fb85573c0292d2f7171b984cd2ee4076443",
+  "v1_disposition": "REQUEST_CHANGES: normalized call rows incorrectly named gapbs_models.h instead of their actual normalized snapshot. V1 remains immutable/inert; V2 closes this narrow metadata defect.",
+  "verdict": "PASS_PROSPECTIVE_CANONICAL_SOURCE_AND_V2_GENERATION_PACKET_ONLY",
+  "warning_boundary": {
+    "alignment": "Retained unsupported capability, unresolved; no full RTE claim.",
+    "indirect_call": "Exact source and every normalized snapshot direct-call census only; retained global warning is not a general applicability waiver.",
+    "other_unsupported": "Refused; raw log and pedantic assigns continuations retained."
+  }
+}

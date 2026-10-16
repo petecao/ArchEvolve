@@ -1,0 +1,45 @@
+{
+  "acceptance_boxes_mapped": 11,
+  "actual_matrix_completion": "pending; independently audited records still required",
+  "blocking_findings": [],
+  "created": "2026-10-15 ET",
+  "hash_errors": [],
+  "native_guard": {
+    "exit_code": 0,
+    "out_of_memory": false,
+    "passed": 1,
+    "peak_rss_bytes": 140935168,
+    "pytest_seconds": 1.51,
+    "skipped": 0,
+    "timed_out": false,
+    "wall_seconds": 1.884581749967765
+  },
+  "native_new_corpus_assertions": 3,
+  "native_original_assertions_preserved": 6,
+  "original_lowering_fixture_diff_from_0e7": [],
+  "prior_corrected_native_binaries_matching": 4,
+  "prior_corrected_native_sources_matching": 4,
+  "production_diff_from_0e7": [],
+  "prospective_qualifying_inventory": {
+    "actual_wp_rows_total": 36,
+    "caller_breakdown": {
+      "current_float_pair": 2,
+      "distinct_std_v2_pair": 2,
+      "remaining_seven_groups": 14
+    },
+    "caller_rows": 18,
+    "dedicated_actual_rte_negative": 1,
+    "deliberate_no_launch_lifetime_refusals": 9,
+    "fixture_summary_proofs": 3,
+    "model_proofs": 14,
+    "original_std_gap": "retained separate not-proven record"
+  },
+  "review": {
+    "path": "/private/tmp/probata-t24-prospective-acceptance-review-06715d67.md",
+    "sha256": "3ab7d5fddb267ed3807bbc35ae85f30ef81d6af89302d75fb958ce0cb015b431"
+  },
+  "reviewed_commit": "06715d67d81732889d0dd0f34647c8a514b832fa",
+  "scope": "Read-only; no compiler/verifier/remote jobs",
+  "source_artifact_hashes_verified": 17,
+  "verdict": "passed prospective acceptance audit; no completion claim"
+}

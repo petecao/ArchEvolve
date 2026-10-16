@@ -1,0 +1,31 @@
+{
+  "acceptance_boundary": "Pure controls only so far; no actual selector record acceptance",
+  "argv": [
+    "ROOT_SELECTED_PYTHON",
+    "-B",
+    "/private/tmp/probata-t28-selector-supplement-v5-20261016.py",
+    "ROOT_SETTLED_SUCCESS_RAW_ROOT",
+    "ROOT_FROZEN_770df40e_CHECKOUT",
+    "770df40eeb5e3034862f61b79b6bcaad5fa620a7",
+    "/private/tmp/probata-t28-selector-supplement-policy-v5-20261016.json"
+  ],
+  "date": "2026-10-16 ET",
+  "guard": "Root counted passive-reader job; max60s,8GiB,one worker; capture stdout/stderr outside source; no -O; no actual tools",
+  "policy": {
+    "bytes": 14468,
+    "path": "/private/tmp/probata-t28-selector-supplement-policy-v5-20261016.json",
+    "sha256": "b0bb71936a841b48c786f54f5efa9a13a9b2b381af748ab174f69aac7db91c37"
+  },
+  "prerequisites": [
+    "Original failed21ed remains failed; never run this success reader there",
+    "Settled successful pair profile; root whole guard/lease/source/raw audit",
+    "Exact reader and embedded policy hashes verified before invocation"
+  ],
+  "reader": {
+    "bytes": 36698,
+    "path": "/private/tmp/probata-t28-selector-supplement-v5-20261016.py",
+    "sha256": "04c777729fd08a25239c2baf98a3990fb1916d299c7c0f76cf5a2a67a97936bb"
+  },
+  "scope": "Passive settled770 reader: exact CSV class/text/inventory mapping; unselected implicit helper Unknown explicitly unverified. Preserve prior refusals. No formal rerun.",
+  "state": "INERT; root alone supplies settled RAW_ROOT and exact FROZEN_CHECKOUT, reviews and executes"
+}

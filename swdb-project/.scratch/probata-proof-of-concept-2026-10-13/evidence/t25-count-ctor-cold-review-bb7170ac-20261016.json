@@ -1,0 +1,252 @@
+{
+  "actual_entry_sha256": "da35f072b08cf884bcdd42d0b93ec1360ed1fcddd6cdef6db2aca2b5d7a1119f",
+  "actual_linux_project_lowering_identity": {
+    "c_lowering": {
+      "id": "swdb-c-lowering-9",
+      "sha256": "ecdc24c38e0f5d72d3e71a7f0d904dd5cc74b429824083729fd67f492614141e"
+    },
+    "clang": {
+      "id": "clang-22.1.8",
+      "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+    },
+    "naming_rules": {
+      "id": "kept-names.3",
+      "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+    }
+  },
+  "audit_checks": 1031,
+  "audit_errors": [],
+  "budget_clarification": "Actual launch authoritative planned_raw_budget_bytes is8GiB (coordinator monitor, not filesystem quota). A separate prospective1GiB metadata mismatch is not rewritten into the actual recipe. Actual2400whole/2520outer,2100profile/1800public,8GiB1worker.",
+  "canonical_source_closure": {
+    "heap_checker_id": "heap-model-view-check-2",
+    "manifest_sha256": "11daf134e3c66150c2226709d9095401ec21da42ae5d73cdf988f15f906bafd2",
+    "model_version_unchanged": true,
+    "new_count_isolated_omitted_store_negative": 1,
+    "new_count_packets": 28,
+    "new_count_positive": 27,
+    "old42_match_accepted_source_payloads": true,
+    "packets_verified": 70,
+    "source_model_sha256": "bc6c76c9fe74a568bd81973eafba48e24b9f2f42604ad3c9994f742572c11358"
+  },
+  "collector": {
+    "path": "/private/tmp/probata-t25-count-ctor-cold-collector-bb7170ac-20261016.py",
+    "sha256": "8ec1913dc4b098a514f29a2c4123c8369102f7f1b153f38f30f7e589a104f0a0"
+  },
+  "current_checker_sha256": "21237f3fbee8dc9eb8f52c8b860a5098a3132bfe1c892ed6f5ea09cd3f03950e",
+  "date_et": "2026-10-16",
+  "entry_review": {
+    "path": "/private/tmp/probata-t25-count-ctor-entry-static-review-v1-20261016.md",
+    "sha256": "f88fac93b3de5c3c01c8443abb3187828c86a9f9dddf545ecc91873af04d5c27"
+  },
+  "exact_project_runtime_and_method_bindings": true,
+  "formal_cpp_equivalence": false,
+  "fresh_positive_targets": 27,
+  "generic_caller_adopted": false,
+  "growth_proved": false,
+  "launch_metadata": {
+    "created_utc": "2026-10-16T05:03:49.671787+00:00",
+    "log_name": "acceptance.log",
+    "node": 0,
+    "planned_raw_budget_bytes": 8589934592,
+    "raw_budget_enforcement": "coordinator monitors; not a filesystem quota",
+    "readers": [
+      "root",
+      "ticket24",
+      "merger",
+      "independent reviewer"
+    ],
+    "reviewed_wrapper_reuse": {
+      "execute.py": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612",
+      "watch.py": "4485ae66aa50c65f2b579f84836576aa67b54431978da71cac6eea6a68ecd07c"
+    },
+    "rss_cap_bytes": 8589934592,
+    "rss_scope": "outer watchdog covers worker bootstrap, compiler provenance probes, inner monitor and proof process tree; trusted outer monitor excluded",
+    "source": "/data1/yanruj/probata-reviewed-bb7170ac",
+    "source_commit": "bb7170ac09081cd02562b747d7cccb17ba8c6ced",
+    "timeout_seconds": 2400,
+    "workers": 1
+  },
+  "lease_observation": {
+    "mbit10-evaluation-node0.meta.json": {
+      "generation": 587,
+      "released_at": "2026-10-16T05:10:04Z",
+      "state": "released"
+    },
+    "mbit10-evaluation-node1.meta.json": {
+      "generation": 614,
+      "released_at": "2026-10-16T04:40:57Z",
+      "state": "released"
+    },
+    "mbit10-evaluation.meta.json": {
+      "generation": 77,
+      "released_at": "2026-09-12T04:49:11Z",
+      "state": "released"
+    }
+  },
+  "numeric": {
+    "cold_verdict": "proven",
+    "dependency_property_nodes": 7,
+    "id": "count.numeric",
+    "input_sha256": "f545ad0de4eb25926e8ea8f0b341c9763f61d9f15290a640487ba7586179e986",
+    "kind": "c_kernel",
+    "member": "std_vector_int_ctor_count",
+    "ordinary": 10,
+    "properties": 13,
+    "resources": {
+      "cpu_seconds": 5.074666000000001,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 292532224,
+      "timed_out": false,
+      "wall_seconds": 6.1716966368258
+    },
+    "smoke": 1
+  },
+  "observation_limits": "Three finite same-UID cmdline/cwd prefix observations show no visible matches; cwd permission-denied/vanished reads are explicit. No universal process absence or newly observed GPU state claimed.",
+  "ownership": "All26 global targets have sole independent check-lemma ownership, no Extern/dependencies. Numeric13propertynodes/seven with nonempty local dependencies form a closed acyclic graph;10ordinary goals directly Valid plus one passing smoke. Fresh normal current reader reapplied with no filter/Extern allowlist; closed schema,27freshsetup/readings and exact aggregate verified.",
+  "passing_numeric_smoke": 1,
+  "physical_hash_mismatches": 0,
+  "physical_reference_instances_verified": 342,
+  "process_observations": [
+    {
+      "created_utc": "2026-10-16T05:14:47.777419+00:00",
+      "denials": [
+        {
+          "errno": 13,
+          "operation": "cwd",
+          "pid": "3261267"
+        },
+        {
+          "errno": 2,
+          "operation": "cwd",
+          "pid": "3824958"
+        },
+        {
+          "errno": 13,
+          "operation": "cwd",
+          "pid": "3826863"
+        }
+      ],
+      "matches": [],
+      "same_uid_inspected": 12
+    },
+    {
+      "created_utc": "2026-10-16T05:14:47.884784+00:00",
+      "denials": [
+        {
+          "errno": 13,
+          "operation": "cwd",
+          "pid": "3261267"
+        },
+        {
+          "errno": 2,
+          "operation": "cwd",
+          "pid": "3824958"
+        },
+        {
+          "errno": 13,
+          "operation": "cwd",
+          "pid": "3826863"
+        }
+      ],
+      "matches": [],
+      "same_uid_inspected": 12
+    },
+    {
+      "created_utc": "2026-10-16T05:14:47.998053+00:00",
+      "denials": [
+        {
+          "errno": 13,
+          "operation": "cwd",
+          "pid": "3261267"
+        },
+        {
+          "errno": 2,
+          "operation": "cwd",
+          "pid": "3824958"
+        },
+        {
+          "errno": 13,
+          "operation": "cwd",
+          "pid": "3826863"
+        }
+      ],
+      "matches": [],
+      "same_uid_inspected": 12
+    }
+  ],
+  "production_store_adopted": false,
+  "profile_result": {
+    "actual_proof_claim": "requires retained records and independent cold audit",
+    "elapsed_seconds": 368.6776392729953,
+    "pytest_exit_code": 0,
+    "source_unchanged": true,
+    "within_whole_budget": true
+  },
+  "profile_source_pins_verified": 12,
+  "raw_bytes": 23021394,
+  "raw_file_count": 614,
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bb7170ac-t25-count-ctor-v1",
+  "record": {
+    "goal_counts": {
+      "ordinary:valid": 36,
+      "smoke:valid": 1
+    },
+    "goals": 37,
+    "record_path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bb7170ac-t25-count-ctor-v1/heap-profile/pytest/test_actual_public_original_co0/records/proofs/proof.model.std_vector_int_ctor_count.20261016t050401z.91c9848a.yaml",
+    "schema_errors": [],
+    "sha256": "b8e999897786e46ce516ddbad952ae4ab130fa42b81569cbc71263732e3be687",
+    "subject": "std_vector_int_ctor_count",
+    "targets": 27,
+    "verdict": "proven"
+  },
+  "record_foundation_sources": 8,
+  "resources": {
+    "outer-resources.json": {
+      "cpu_seconds": 501.94228,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 1118425088,
+      "timed_out": false,
+      "wall_seconds": 374.0779780820012
+    },
+    "resources.json": {
+      "cpu_seconds": 425.802719,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 1067044864,
+      "timed_out": false,
+      "wall_seconds": 371.99032816290855
+    }
+  },
+  "reviewer_execution": "Read-only SSH host/source/file/hash and pure AST/JSON/YAML/SMT/schema/normal-reader data interpretation. No tool/version probes,compiler/formal/prover/test/launch/signals or producer/source mutation. Raw payloads remain remote; only compact hashes/results retained locally.",
+  "selected_stdlib_files_verified": 57,
+  "snapshot": {
+    "path": "/private/tmp/probata-t25-count-ctor-cold-snapshot-final-bb7170ac-20261016.json",
+    "sha256": "48875ca7da9e40a7000f7b8e51dad1181202d0860d4d0b579ee2743127498f84"
+  },
+  "source_after": {
+    "commit": "bb7170ac09081cd02562b747d7cccb17ba8c6ced",
+    "source_unchanged": true,
+    "tracked_changes": ""
+  },
+  "source_commit": "bb7170ac09081cd02562b747d7cccb17ba8c6ced",
+  "source_domain": "Original whole body/contract and arbitrary heap/issued-dead identities/escaped aliases/old-buffer retention/prefix/init/frame/lifetime scope unchanged; no added original caller premise, finite heap/pool/epoch or new model version.",
+  "source_manifest_pins_verified": 201,
+  "source_review": {
+    "path": "/private/tmp/probata-t25-count-ctor-source-review-bb7170ac-20261016.md",
+    "sha256": "63d044c24b5fb7d78375adeb1a5e6ae3ea0139f6164e0a98516e0dd7322d4391"
+  },
+  "task_closure": {
+    "capture_avoiding_single_value_parameter_zero_specialization": 26,
+    "files": 84,
+    "identical_to_audited_universal_value_task": 58,
+    "other_logical_command_differences": 0,
+    "scope": "Compare inert parsed SMT command streams; only comments and set-info metadata excluded. One quantified Int scalar of final selected negated goal specialized to0; generic definitions/standard support and every other logical command remain unchanged. Source literal0 mapping independently reviewed and actual input/canonical hashes match."
+  },
+  "tcb": "Reviewed exact-source-to-unbounded-heap VC translation/zero specialization, existing allocator success/freshness/frame policy, selected compiler/Frama-C/Why3/provers and exact Boolean/map/datatype/integer/real/Abs/ComputerDivision/Qed/Cint support. No desired source/current/future project theorem imported as axiom.",
+  "ticket25_closed": false,
+  "unique_physical_files_hashed": 939,
+  "valid_ordinary": 36,
+  "verdict": "PASS_FRESH_PUBLIC_ORIGINAL_COUNT_CTOR_UNDER_DECLARED_TCB"
+}

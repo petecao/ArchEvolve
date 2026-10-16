@@ -1,0 +1,1738 @@
+{
+  "created": "2026-10-15 18:53:54 EDT",
+  "status": "completed counted method21: fail / not proven; no ticket acceptance",
+  "source_commit": "14c2a298f5692e273db8cf8c127f8248dc54714c",
+  "raw_output": "/private/tmp/probata-t07-20261015-run24",
+  "source_files": [
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py",
+      "sha256": "fe11e786ce3449178177208fe9291b135bf98e9c7ff511ac4644bcf9a64073c9"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/edit_core.py",
+      "sha256": "d4168260e3eb866e8bd127b4de56d8070e5806b74d39b4910d52e16379800d4e"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/edit_loop.py",
+      "sha256": "14f3cf460e8d5f84deb9c3886390749bd88b1ac2d08d506c6f6f5df9c2870407"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/edit_tool_mcp.py",
+      "sha256": "7ee77c0238f687fec845042a10a1e862f561726f1975703980644c95a203034f"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/focused_probe.py",
+      "sha256": "9ad86e2c61530a19f95ebb4d5aff639d489ef5a0788a6a1e00ddbdf0bd7c05db"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/frame_seeds.py",
+      "sha256": "7c8bec31b2be840218545a3370cafde8431ddd4699a363ebe3e391fb56c519c2"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/goal_print.py",
+      "sha256": "9494e8d457f0d28d055c109ea4fbaada278c15e3088466096dc2a407a89a358f"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/hint_tool_mcp.py",
+      "sha256": "a112d77899c122bd8e42c60abd8857b154047258230035c1dd2f58f2fe452211"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/hints.py",
+      "sha256": "48bafc2eab6caf40bb921e773212dff3efbbbc652aa2d120d87da4704b021bca"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/loop.py",
+      "sha256": "cb84fdca2b0d8dd0c77b286037513a4642835cd631ad9f87c74f0d736982d350"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/make_negctl.py",
+      "sha256": "d619ebd21ea62bb99ef1f3a089a2c9281067fb77c739d3de5e9c5e0dc76b1c78"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/per_goal.py",
+      "sha256": "3a134524f8f0bad7d4e0a62c5f3dc3e6f7e7da909d77d14c12086698aa12e1d4"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/staged_search.py",
+      "sha256": "125e2562342e6ba684d1189ca29fb48476b73bee30d0fd368f7f7c6b4c6b2419"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_counted_verifier.py",
+      "sha256": "b5dbd068d40320738fe6f9b4a7a76e013ba402cb42376f3f1483f2aa8d1e676a"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_debt.py",
+      "sha256": "8bf8ccd58625ae289e082c0bb217543ebb34d8920ec7b94467a75fed36373721"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_edit_loop.py",
+      "sha256": "a764a499a35896c2172f719f134bc8b9c8746903102631e08ec94b19b730412b"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_focused_probe.py",
+      "sha256": "0d01e57483b02a8480c1084e2b26783acc6ca4587964fa8a28cc2aa8ac60ded6"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_hints.py",
+      "sha256": "3d055135a94e8d559729fb7e3e3d47262b4352b1948a9287f4c1c36b28d02369"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_loop_tool.py",
+      "sha256": "0f72c59bba2e20e8ef8b0aaf32d0df3c7fa72bffa1b19ddd26a8c9373aa276ff"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_staged_search.py",
+      "sha256": "db1cef2a96c7bf2c0d29a21476886b994ed6c11874a217feae707fb3da93b4b1"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/wp_run.sh",
+      "sha256": "d7f9af83205c9510b366565976e2041830455c2c83232279c38b6a60aa147d6a"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/bfs_unit.h",
+      "sha256": "1bcbf4dac683d6a46269fcd5f896fefc2571adc49d059b46f93fb25eb0f7b235"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/dxc_summaries.h",
+      "sha256": "d708c0ef974e5ede1aaadd2b5e66dd785affa5e1dc6ef37419bf9e72517ae0d2"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/gapbs_models.h",
+      "sha256": "401d8ccfa8fdc1ef3734c97563a1c110d003d8847508aaa24ec3f300a33eed3e"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/tdstep_standin.c",
+      "sha256": "b4a820bd20b197eee293616af17da884bbc63ed92f9252e77f261092387024de"
+    },
+    {
+      "path": "swdb-project/library/dx100/bfs_read_offload.inc",
+      "sha256": "3c5867a2b8919806f681603836bd0cff448f21634485abf84e49ed71f25515ef"
+    },
+    {
+      "path": "swdb-project/swdb/provider_adapters.py",
+      "sha256": "5bf97c5bc4170e9a36cc853147bdc9f5c1ba43b22e51f6c11b8405101d26d5b8"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/run_report.py",
+      "sha256": "78b75cacbb7132e74c46e0a0011506f471ea4eddbfb250c615c072c9dd17687f"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_baseline_plan.py",
+      "sha256": "2e4a3a8395cd81d6a790206b7d231e60246f26a9076892f60e89fcf3f716b280"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/METHOD21.md",
+      "sha256": "d3f9c9d01c11bd565c75fd6a32f5a91c747bccc81a3206c870add56168635b78"
+    }
+  ],
+  "source_checks": 30,
+  "independent_review_source_checks": 34,
+  "independent_final_artifact_bindings": 178,
+  "source_and_artifact_errors": [],
+  "method_revision": "method21-diagnostic-baseline10-v1",
+  "resource_guard_revision": "sampled-trusted-marker-identity-preserving-inspection-v5",
+  "result": {
+    "proven": false,
+    "within_budget": false,
+    "rounds": 1,
+    "codex_calls": 1,
+    "elapsed_min": 52.03,
+    "lock_wait_excluded_s": 0.0,
+    "best_n_open": 29,
+    "best_hints": 41,
+    "best_sha256": "13b6af2f2b8ca8e63bfdf3b76e374974b8d0af001403b434ac3aae8cf63b41d3",
+    "tool_calls": 36,
+    "show_goal_calls": 12,
+    "best_unit_hint_open": [
+      14,
+      15
+    ],
+    "phase_at_end": 1,
+    "wp_attempts": 15,
+    "proposal_attempts_including_final": 15,
+    "tokens": {},
+    "final": null,
+    "finished": "2026-10-15 18:44:19 EDT",
+    "bounded_debt": false,
+    "staged_induction": true,
+    "method20": true,
+    "focused_calls": 0,
+    "design_calls": 1,
+    "debt_events_sha256": "1d57c8c93f14286110d70a23a7bac24939b905e2d339e15d51a8b097715e7deb",
+    "method21": true,
+    "attempt_counts": {
+      "recorded_proposal_requests": 15,
+      "candidate_wp_attempts_with_report": 15,
+      "candidate_wp_completed_checks": 14,
+      "candidate_wp_deadline_censored": 1,
+      "candidate_wp_other_incomplete": 0,
+      "provider_turns_with_usage": 0,
+      "provider_turns_without_usage": 1,
+      "token_totals_are_lower_bounds": true
+    },
+    "legacy_wp_attempts_meaning": "Recorded proposal requests, not completed candidate proof runs; use attempt_counts."
+  },
+  "timing_boundary": {
+    "counted_minutes": 52.03,
+    "budget_minutes": 60,
+    "final_reserve_minutes": 8,
+    "reserve_unused": true,
+    "overrun": false,
+    "within_budget_false_means": "No qualifying proof; not an elapsed count above60minutes."
+  },
+  "baseline": {
+    "inventory": 393,
+    "ordinary": 254,
+    "ordinary_open": 103,
+    "smoke": 139,
+    "smoke_failures": 0,
+    "elapsed_counted_min": 6.11
+  },
+  "seed_complete_counted_min": 8.64,
+  "observed_baseline_minutes": 6.11,
+  "run23_baseline_minutes": 14.97,
+  "observed_baseline_reduction_minutes": 8.86,
+  "comparison_boundary": "Observed single-run timing difference, not a controlled causal proof-rate comparison; fresh status/pass-set and schedule confounds retained. No prior result used as input.",
+  "best": {
+    "ordinary_goals": 259,
+    "passed": 230,
+    "open": 29,
+    "unit_open": 14,
+    "hint_open": 15,
+    "ordinary_verdicts": {
+      "valid": 230,
+      "unknown": 25,
+      "timeout": 4
+    },
+    "open_failure_classes": {
+      "unknown": 25,
+      "timeout": 4
+    },
+    "postconditions": {
+      "count": 9,
+      "open": 6
+    },
+    "hint_records": 41,
+    "provenance": {
+      "mechanical_frame_seeds": 5,
+      "codex_records": 36,
+      "all_records_codex_origin": false
+    },
+    "guards": {
+      "vocabulary": true,
+      "merge": true,
+      "erase": true,
+      "headers": true
+    },
+    "checked_inventory": {
+      "n_goals": 259,
+      "n_unit_goals": 259,
+      "n_properties": 382
+    },
+    "open_inventory": [
+      {
+        "goal": "typed_TDStep_ensures_visited_iff_reachable",
+        "kind": "ensures",
+        "failure_class": "unknown",
+        "origin": "unit"
+      },
+      {
+        "goal": "typed_TDStep_ensures_pushed_are_new",
+        "kind": "ensures",
+        "failure_class": "unknown",
+        "origin": "unit"
+      },
+      {
+        "goal": "typed_TDStep_ensures_new_are_pushed",
+        "kind": "ensures",
+        "failure_class": "unknown",
+        "origin": "unit"
+      },
+      {
+        "goal": "typed_TDStep_ensures_pushed_once",
+        "kind": "ensures",
+        "failure_class": "unknown",
+        "origin": "unit"
+      },
+      {
+        "goal": "typed_TDStep_ensures_queue_kept",
+        "kind": "ensures",
+        "failure_class": "unknown",
+        "origin": "unit"
+      },
+      {
+        "goal": "typed_TDStep_ensures_dx100_idle_after",
+        "kind": "ensures",
+        "failure_class": "unknown",
+        "origin": "unit"
+      },
+      {
+        "goal": "typed_TDStep_loop_invariant_2_preserved",
+        "kind": "loop invariant preserved",
+        "failure_class": "unknown",
+        "origin": "hint"
+      },
+      {
+        "goal": "typed_TDStep_loop_invariant_3_preserved",
+        "kind": "loop invariant preserved",
+        "failure_class": "unknown",
+        "origin": "hint"
+      },
+      {
+        "goal": "typed_TDStep_loop_invariant_4_preserved",
+        "kind": "loop invariant preserved",
+        "failure_class": "unknown",
+        "origin": "hint"
+      },
+      {
+        "goal": "typed_TDStep_assert",
+        "kind": "assert",
+        "failure_class": "unknown",
+        "origin": "hint"
+      },
+      {
+        "goal": "typed_TDStep_loop_invariant_8_preserved",
+        "kind": "loop invariant preserved",
+        "failure_class": "unknown",
+        "origin": "hint"
+      },
+      {
+        "goal": "typed_TDStep_assert_3",
+        "kind": "assert",
+        "failure_class": "unknown",
+        "origin": "hint"
+      },
+      {
+        "goal": "typed_TDStep_assert_4",
+        "kind": "assert",
+        "failure_class": "unknown",
+        "origin": "hint"
+      },
+      {
+        "goal": "typed_TDStep_loop_invariant_11_established",
+        "kind": "loop invariant established",
+        "failure_class": "unknown",
+        "origin": "hint"
+      },
+      {
+        "goal": "typed_TDStep_loop_invariant_11_preserved",
+        "kind": "loop invariant preserved",
+        "failure_class": "unknown",
+        "origin": "hint"
+      },
+      {
+        "goal": "typed_TDStep_assert_5",
+        "kind": "assert",
+        "failure_class": "unknown",
+        "origin": "hint"
+      },
+      {
+        "goal": "typed_TDStep_loop_invariant_15_established",
+        "kind": "loop invariant established",
+        "failure_class": "unknown",
+        "origin": "hint"
+      },
+      {
+        "goal": "typed_TDStep_assert_6",
+        "kind": "assert",
+        "failure_class": "unknown",
+        "origin": "hint"
+      },
+      {
+        "goal": "typed_TDStep_assert_7",
+        "kind": "assert",
+        "failure_class": "unknown",
+        "origin": "hint"
+      },
+      {
+        "goal": "typed_TDStep_loop_assigns_3_part11",
+        "kind": "loop assigns",
+        "failure_class": "unknown",
+        "origin": "unit"
+      },
+      {
+        "goal": "typed_TDStep_loop_assigns_5_part11",
+        "kind": "loop assigns",
+        "failure_class": "unknown",
+        "origin": "unit"
+      },
+      {
+        "goal": "typed_TDStep_assigns_normal_part16",
+        "kind": "assigns",
+        "failure_class": "unknown",
+        "origin": "unit"
+      },
+      {
+        "goal": "typed_TDStep_assigns_exit_part55",
+        "kind": "assigns",
+        "failure_class": "unknown",
+        "origin": "unit"
+      },
+      {
+        "goal": "typed_TDStep_loop_variant_2_positive",
+        "kind": "loop variant",
+        "failure_class": "unknown",
+        "origin": "hint"
+      },
+      {
+        "goal": "typed_TDStep_loop_variant_2_decrease",
+        "kind": "loop variant",
+        "failure_class": "unknown",
+        "origin": "hint"
+      },
+      {
+        "goal": "typed_TDStep_call___dxc_range_loop_dxc_range_loop_requires_8",
+        "kind": "call-site precondition",
+        "failure_class": "timeout",
+        "origin": "unit"
+      },
+      {
+        "goal": "typed_TDStep_call___dxc_gather_3_dxc_gather_requires_3",
+        "kind": "call-site precondition",
+        "failure_class": "timeout",
+        "origin": "unit"
+      },
+      {
+        "goal": "typed_TDStep_call___dxc_gather_4_dxc_gather_requires_3",
+        "kind": "call-site precondition",
+        "failure_class": "timeout",
+        "origin": "unit"
+      },
+      {
+        "goal": "typed_TDStep_call___dxc_gather_5_dxc_gather_requires_3",
+        "kind": "call-site precondition",
+        "failure_class": "timeout",
+        "origin": "unit"
+      }
+    ]
+  },
+  "inventory_boundary": "Full no-hint baseline393=254ordinary+139smoke differs from seed209 and best259 TDStep+lemmas+hint ordinary inventory. Round results do not replace final all-function replay.",
+  "attempt_counts": {
+    "recorded_proposal_requests": 15,
+    "candidate_wp_attempts_with_report": 15,
+    "candidate_wp_completed_checks": 14,
+    "candidate_wp_deadline_censored": 1,
+    "candidate_wp_other_incomplete": 0,
+    "provider_turns_with_usage": 0,
+    "provider_turns_without_usage": 1,
+    "token_totals_are_lower_bounds": true
+  },
+  "usage_boundary": "Raw CLI tokens{} retains missing turn.completed usage, not zero. Exact owned session has136 persisted partial token_count snapshots; latest cumulative total13,413,886 at22:44:18.019Z. Interrupted tail remains unknown; no completed accounting admission.",
+  "resources": {
+    "reports": 63,
+    "exit_counts": {
+      "0": 62,
+      "137": 1
+    },
+    "peak_rss_mib": 3552.90625,
+    "inspection_events": 44,
+    "terminal_errors": 0,
+    "unconfirmed_children": 0,
+    "poststop_clear_at": "2026-10-15 18:44:54 EDT",
+    "poststop_tools_and_owned_run_processes": [],
+    "poststop_leases": false,
+    "tool_hashes_after_match": true,
+    "boundary": "Sampled8GiB watchdog, inherited-marker preservation by trusted toolchain and finite non-atomic settlement; no hard quota/hostile containment."
+  },
+  "acceptance": {
+    "all_goals_proven": false,
+    "final_all_function_smoke": "not run; zero-open10s gate never met",
+    "covering_wait_negative": "not run; no qualifying positive",
+    "literal_every_hint_codex": "not satisfied by five mechanical records; historical undecided assumption cannot override explicit criterion",
+    "production_UB_initializedness_claim": false
+  },
+  "freshness": {
+    "baseline_or_seed_result_reused": false,
+    "earlier_run_hints_or_conversation_reused": false,
+    "historical_control_or_counterstate_exported": false
+  },
+  "tools": {
+    "frama-c": {
+      "path": "/Users/yanrujhou/.opam/framac-33/bin/frama-c",
+      "sha256": "412ccd77e77caf5bceb5ca1fd4e0a3efab04cda64af07706126cd5409cb05475",
+      "version": "33.0 (Arsenic)"
+    },
+    "alt-ergo": {
+      "path": "/Users/yanrujhou/.opam/framac-33/bin/alt-ergo",
+      "sha256": "0845fc162c1c8081841e38e45966854a3c72cde075cebd149bdf3d58be12f7ae",
+      "version": "v2.6.4"
+    },
+    "z3": {
+      "path": "/opt/homebrew/Cellar/z3/5.1.0/bin/z3",
+      "sha256": "b9a2c3a7dc833da652955116ad743cc733aa7938dbe64f528f71cb09066e2512",
+      "version": "Z3 version 5.1.0 - 64 bit"
+    },
+    "cvc5": {
+      "path": "/opt/homebrew/Cellar/cvc5/1.2.1/bin/cvc5",
+      "sha256": "28dd5e5d8b8828ec6eea7fdf2e1544a218551382ca19e6ec8c2967fd6230cf5f",
+      "version": "This is cvc5 version 1.2.1 [git tag 1.2.1 branch HEAD]\ncompiled with GCC version Apple LLVM 17.0.0 (clang-1700.0.13.5)\non Jan 27 2025 19:51:09\n\nCopyright (c) 2009-2025 by the authors and their institutional\naffiliations listed at https://cvc5.github.io/people.html\n\ncvc5 is open-source and is covered by the BSD license (modified).\n\nTHIS SOFTWARE IS PROVIDED AS-IS, WITHOUT ANY WARRANTIES.\nUSE AT YOUR OWN RISK.\n\nThis version of cvc5 is linked against the following non-(L)GPL'ed\nthird party libraries.\n\n  CaDiCaL - Simplified Satisfiability Solver\n  See https://github.com/arminbiere/cadical for copyright information.\n\n  SymFPU - The Symbolic Floating Point Unit\n  See https://github.com/martin-cs/symfpu/tree/CVC4 for copyright information.\n\nThis version of cvc5 is linked against the following third party\nlibraries covered by the LGPLv3 license.\nSee licenses/lgpl-3.0.txt for more information.\n\n  GMP - Gnu Multi Precision Arithmetic Library\n  See http://gmplib.org for copyright information.\n\n  LibPoly polynomial library\n  See https://github.com/SRI-CSL/libpoly for copyright and\n  licensing information.\n\ncvc5 is statically linked against these libraries. To recompile\nthis version of cvc5 with different versions of these libraries\nfollow the instructions on https://github.com/cvc5/cvc5/blob/main/INSTALL.md\n\nSee the file COPYING (distributed with the source code, and with\nall binaries) for the full cvc5 copyright, licensing, and (lack of)\nwarranty information."
+    },
+    "codex": {
+      "path": "/Users/yanrujhou/.codex/packages/standalone/releases/0.153.0-aarch64-apple-darwin/bin/codex",
+      "sha256": "a29d9e86eef88cbbd69f97ce8c590b1d0a287c8f77424f5eef226b883d7eaa22",
+      "version": "codex-cli 0.153.0"
+    },
+    "frame_seed_clang": {
+      "path": "/usr/bin/clang",
+      "sha256": "34129c71a01a74f7f3b2443521519b2e5447553fa187f5fcafaaf8c42cc192e2",
+      "version": "Apple clang version 21.0.0 (clang-2100.3.34.2)\nTarget: arm64-apple-darwin27.0.0\nThread model: posix\nInstalledDir: /Library/Developer/CommandLineTools/usr/bin"
+    }
+  },
+  "artifacts": [
+    {
+      "path": "/private/tmp/probata-t07-20261015-run24/source-manifest.json",
+      "sha256": "f5fbbe1aa3a63580f57e579975edf5da9d875ac7d7baaa3265e4f1b260445886",
+      "bytes": 13961
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run24/launch.json",
+      "sha256": "1cddd8325ee65d1a6f2e2e41dd416bb8bd0b75b071734658fe4f550309960a76",
+      "bytes": 636
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run24/audit.json",
+      "sha256": "f6bb2fdff9fd3b8fa00452b4609a8d15c5ec927ae098f7a038e919dbee0fb276",
+      "bytes": 46623
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run24/poststop-audit.json",
+      "sha256": "65ae27cfa7b091797c6e9bd9b830b55153bd4d86a5b83bed8002cfaea26ddbf4",
+      "bytes": 1238
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run24/counted-24/meta.json",
+      "sha256": "30f1cc3d28e98b0540e1bba8a8e4407dbdf6c94eda76cc003fec72e0538a661b",
+      "bytes": 6005
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run24/counted-24/history.json",
+      "sha256": "5ad10a0f96fd30fe3a7bfa682001cfdf050baf4f6ca5bd95ddcadd28a52e7177",
+      "bytes": 28687
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run24/counted-24/summary.json",
+      "sha256": "780fec0f6d2f7420e1b7f843ebabb5ff687044493d0492678175b021d23d21de",
+      "bytes": 1161
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run24/counted-24/best.json",
+      "sha256": "13b6af2f2b8ca8e63bfdf3b76e374974b8d0af001403b434ac3aae8cf63b41d3",
+      "bytes": 22585
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run24/counted-24/debt-events.jsonl",
+      "sha256": "1d57c8c93f14286110d70a23a7bac24939b905e2d339e15d51a8b097715e7deb",
+      "bytes": 1295
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run24/counted-24/state-design.json",
+      "sha256": "675ce62cbe8fe369a31956564ec878509852a806182e7710b10cdd6f81d460af",
+      "bytes": 4874
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c35/tdstep_standin.c",
+      "sha256": "887451854d0fefee59a638f6e2a78c389e6790db317b6412e7a3686a3554ebb8",
+      "bytes": 18397
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c35/goals.json",
+      "sha256": "c844701e1b34a42528b0a9c2ecb4c27c0cedb4f375a5a0d78e522ced59fa755f",
+      "bytes": 104687
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c35/lemmas.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "bytes": 3
+    },
+    {
+      "path": "/private/tmp/probata-t07-run24-launch-review.md",
+      "sha256": "0d2c6cc7310e154b59dd79d972d9bfc10a3322ad50d3d4468360131faf18ff77",
+      "bytes": 1800
+    },
+    {
+      "path": "/private/tmp/probata-t07-run24-launch-review.json",
+      "sha256": "886ac6e5418423998a7e4d2d6f69ee6087eda11cbbc57ae7b1c750f75706cb25",
+      "bytes": 1666
+    },
+    {
+      "path": "/private/tmp/probata-t07-run24-provider-review.md",
+      "sha256": "34ee833e9c8a1e5b728c776a8b55cf2b77b43827b3da98a7aaaec8094e676a9f",
+      "bytes": 3248
+    },
+    {
+      "path": "/private/tmp/probata-t07-run24-provider-review.json",
+      "sha256": "b27ca56fc92d3e18103ad3a091bfae6a91435299f2ef11b1ce26d0f80fba19ec",
+      "bytes": 3852
+    },
+    {
+      "path": "/private/tmp/probata-t07-run24-provider-review-manifest.json",
+      "sha256": "74ef49ffd7fcf0646b5e72c8925e2f440d6e8df66b6e1cf5bc8efba1199fc731",
+      "bytes": 1172
+    },
+    {
+      "path": "/private/tmp/probata-t07-run24-final-independent-review.md",
+      "sha256": "ed1f020211d4e69c86ca9bfeb3cead41595224156228217fa773b08acf8805ae",
+      "bytes": 4843
+    },
+    {
+      "path": "/private/tmp/probata-t07-run24-final-independent-review.json",
+      "sha256": "50c7e055687b3019751842e3f37fe4e2dffda39a2d4875f5fb272ca17e4fe3c5",
+      "bytes": 79595
+    },
+    {
+      "path": "/private/tmp/probata-t07-run24-final-independent-review-manifest.json",
+      "sha256": "2015f56a7ffc870c4795a566a7c14e1cf8572182d8e43460d0e281e49fed18f0",
+      "bytes": 38644
+    },
+    {
+      "path": "/private/tmp/probata-t07-run24-provenance-boundary.json",
+      "sha256": "0855b62ad966574627fc47a502236578d91aa35f3119d2388e6286c886dc170d",
+      "bytes": 2618
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run24/counted-24/codex-r1/argv.json",
+      "sha256": "e4b53ed58f701cc5eb0808e4aa529e07d7858511dea7dc484afcdef0e3a37b1f",
+      "bytes": 1837
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run24/counted-24/codex-r1/schema.json",
+      "sha256": "09ae29e2c2e116e96a4a139e1e4b64f14d8af7bd9d72e1a1d92f6dc4350b6fda",
+      "bytes": 487
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run24/counted-24/codex-r1/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run24/counted-24/codex-r1/stdout.jsonl",
+      "sha256": "074f22d14cd1e1185cd6cdd808be1c8727db8f661e8140d74cb368c4bf691e4c",
+      "bytes": 464590
+    }
+  ],
+  "process_reports": [
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c10/parse.log.summary.json",
+        "sha256": "6bf657cfdd28b153a21ba306895a5faff344a8fb697f8da17d52e6852a562db8",
+        "bytes": 1566
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c10/parse.log",
+        "sha256": "ce4c9abc2cacf96755c449b07100148ef0a31ac175bbde7ab4b765f664e34f62",
+        "bytes": 55
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 0.475780833279714,
+      "peak_rss_mib": 102.53125,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c10/round-s.log.summary.json",
+        "sha256": "978a2b9912dcf7132457aee1c6a47efe9ce0391ced45c674c268d6bc0614dfed",
+        "bytes": 2374
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c10/round-s.log",
+        "sha256": "7f3949f9eca0361ebee50480029642a7a307e43d9bce919f8e41c5a4e523a26c",
+        "bytes": 69656
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 149.98592912498862,
+      "peak_rss_mib": 2846.65625,
+      "inspection_events": 2
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c10/wp-gen.log.summary.json",
+        "sha256": "31919b2b842e713c40dd9a25751efc141a5a4f3844fcb3e275cebbe50a25a510",
+        "bytes": 1570
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c10/wp-gen.log",
+        "sha256": "6248191fbf51b6e88c9116fb89c7da908923bf410eb125ed68d59485468aa7a7",
+        "bytes": 28678
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 0.8007349165854976,
+      "peak_rss_mib": 148.796875,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c16/parse.log.summary.json",
+        "sha256": "26d96a1e5e43c8edb21acb699925ca6908f885a508e8b2f7b9eb015956b84e26",
+        "bytes": 1568
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c16/parse.log",
+        "sha256": "ce4c9abc2cacf96755c449b07100148ef0a31ac175bbde7ab4b765f664e34f62",
+        "bytes": 55
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 0.4595110000227578,
+      "peak_rss_mib": 102.484375,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c16/round-s.log.summary.json",
+        "sha256": "8a0591acfc4b03131c4ce6d8cea90575be5e0aa2c60c839e06cca0dd05ca81e4",
+        "bytes": 3101
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c16/round-s.log",
+        "sha256": "7ef341a4e7549d24ac453ee6dfd4a3659b3c2448a5644b00b925113f59ed0ef4",
+        "bytes": 95986
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 141.34488908335334,
+      "peak_rss_mib": 2603.546875,
+      "inspection_events": 4
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c16/wp-gen.log.summary.json",
+        "sha256": "80cd516aac47926747e441deda988a4ab4b3b1a0658b9060b14f0b8fdbdb9e14",
+        "bytes": 1570
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c16/wp-gen.log",
+        "sha256": "20ca6fc5090914c15e9816a0c78a95e6b90d54eac79cb9f2febce8d908e62f92",
+        "bytes": 29482
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 0.8841523333103396,
+      "peak_rss_mib": 152.578125,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c18/parse.log.summary.json",
+        "sha256": "616b35b4b1d1dae99d4a18717184f8e734372933ccfa4942a4ae7e8bc1915c68",
+        "bytes": 1580
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c18/parse.log",
+        "sha256": "ce4c9abc2cacf96755c449b07100148ef0a31ac175bbde7ab4b765f664e34f62",
+        "bytes": 55
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 0.49653858330566436,
+      "peak_rss_mib": 111.203125,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c18/round-s.log.summary.json",
+        "sha256": "15068a374cea6f0909f20dfdddc9af9ffcfb98aae6434bd6ca65986e255bc79d",
+        "bytes": 2021
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c18/round-s.log",
+        "sha256": "b94ba6ce9fc7aee1390eb632c0c865f5e7b1230bf8cfc8c182b2ba990f6c0f47",
+        "bytes": 90525
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 113.93055666668806,
+      "peak_rss_mib": 2512.609375,
+      "inspection_events": 1
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c18/wp-gen.log.summary.json",
+        "sha256": "8cfb188002e6b5408711063571326d6d170b761500cc36f9f535e994a3e39f99",
+        "bytes": 1578
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c18/wp-gen.log",
+        "sha256": "049f8d7385b9be79fd5e49dcf3acec98eeac53a604a845a230ada05da75f8d15",
+        "bytes": 29354
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 0.86274354159832,
+      "peak_rss_mib": 152.0625,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c19/parse.log.summary.json",
+        "sha256": "0a7a3838719fcabee528a4488607b98942cd71d6759e0f9348deed61a16d3c98",
+        "bytes": 1568
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c19/parse.log",
+        "sha256": "ce4c9abc2cacf96755c449b07100148ef0a31ac175bbde7ab4b765f664e34f62",
+        "bytes": 55
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 0.48542245832504705,
+      "peak_rss_mib": 111.15625,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c19/round-s.log.summary.json",
+        "sha256": "6eb43fef3293551ade9093bd114c2c93ce8d1cc210028466970325074e6a3675",
+        "bytes": 2371
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c19/round-s.log",
+        "sha256": "99bd99197c31bc03a47f758d027eded25850566fa063ea51f675eeaaf16268b1",
+        "bytes": 104196
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 80.01526270830072,
+      "peak_rss_mib": 2152.25,
+      "inspection_events": 2
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c19/wp-gen.log.summary.json",
+        "sha256": "a89f07b349e2586084da6507513d8489b888a97dc4ebac709c36eb3f0c8286d3",
+        "bytes": 1570
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c19/wp-gen.log",
+        "sha256": "caf6146ea524e8d9d1f2af2bec19a47f805226f172444f4f6911fee686f7e673",
+        "bytes": 29614
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 0.8764475415810011,
+      "peak_rss_mib": 153.265625,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c21/parse.log.summary.json",
+        "sha256": "b8725b32fa4488ed37318cd57d2e4757dc308f755eca96ac53e10c3398d92ab1",
+        "bytes": 1565
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c21/parse.log",
+        "sha256": "ce4c9abc2cacf96755c449b07100148ef0a31ac175bbde7ab4b765f664e34f62",
+        "bytes": 55
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 0.4994007917121053,
+      "peak_rss_mib": 103.5625,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c21/round-s.log.summary.json",
+        "sha256": "42f0a6cf6253b772372dda86833fd56713a685ef0f9cbf51c5f21a6ff2a18b40",
+        "bytes": 1647
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c21/round-s.log",
+        "sha256": "04d80b77e94564a61eb65eacb2c27a64c1a9590781fbd76238e9088f31b3e7b6",
+        "bytes": 106580
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 74.64409816660918,
+      "peak_rss_mib": 1767.609375,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c21/wp-gen.log.summary.json",
+        "sha256": "318f0318ad9b100be2d250b3fe952ae02f9412d0a4b10b3a0fe3eb5122de328c",
+        "bytes": 1567
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c21/wp-gen.log",
+        "sha256": "8db62f1802a5b52b743501d8b393a204a49ebff7d234e3baef82bdf1306c8191",
+        "bytes": 29934
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 0.808439708314836,
+      "peak_rss_mib": 155.15625,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c23/parse.log.summary.json",
+        "sha256": "64da5ce6b4ea4482f44b5449b2863afefe43ac0d1f2f9d449e46d065a9ae6cda",
+        "bytes": 1566
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c23/parse.log",
+        "sha256": "ce4c9abc2cacf96755c449b07100148ef0a31ac175bbde7ab4b765f664e34f62",
+        "bytes": 55
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 0.5304004583740607,
+      "peak_rss_mib": 111.34375,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c23/round-s.log.summary.json",
+        "sha256": "8c36b2a2f5f10b0fbecb89df1a07c5e2003c1ea79a822c27b33d6911a0ed255b",
+        "bytes": 3462
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c23/round-s.log",
+        "sha256": "a31e09b71d03afe26ca300135527e070170fe0e80a042d55eb3f6cff48aa9d23",
+        "bytes": 118152
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 150.15500949998386,
+      "peak_rss_mib": 2553.359375,
+      "inspection_events": 5
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c23/wp-gen.log.summary.json",
+        "sha256": "ce19a56dbe99c95a189a2c08a269e21c508c13a6e8f1211969fdd9ec04349ce6",
+        "bytes": 1569
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c23/wp-gen.log",
+        "sha256": "4d74c052994ab3032cb746bbabc74134b38ea011386e4f2c885b41ce30b7e610",
+        "bytes": 30746
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 0.8846480416250415,
+      "peak_rss_mib": 158.578125,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c25/parse.log.summary.json",
+        "sha256": "7ac9d58fc63eba0215c6b22e6be1fb9d18236243d1f59cce6150f851f88e48ed",
+        "bytes": 1577
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c25/parse.log",
+        "sha256": "ce4c9abc2cacf96755c449b07100148ef0a31ac175bbde7ab4b765f664e34f62",
+        "bytes": 55
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 0.49974379170453176,
+      "peak_rss_mib": 102.5625,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c25/round-s.log.summary.json",
+        "sha256": "4cab9823eb904a58bfdd3408c36334738b9085790e53612bc32c33e26a0838c5",
+        "bytes": 2376
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c25/round-s.log",
+        "sha256": "e95538bd6ef14398f266e54bc83aff49ce431f5d13d79ee77b3e761448a98d82",
+        "bytes": 118152
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 89.59497749997536,
+      "peak_rss_mib": 1951.4375,
+      "inspection_events": 2
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c25/wp-gen.log.summary.json",
+        "sha256": "8a821878e465f8edd33cde892e053cd523d112ef987be5a47d8d38906be4b833",
+        "bytes": 1579
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c25/wp-gen.log",
+        "sha256": "4d74c052994ab3032cb746bbabc74134b38ea011386e4f2c885b41ce30b7e610",
+        "bytes": 30746
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 0.8872040832648054,
+      "peak_rss_mib": 158.8125,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c26/parse.log.summary.json",
+        "sha256": "29e1b0b98eb333770a3e1babdf29e70dd6078d0d5a6b6b4c252112124572d543",
+        "bytes": 1577
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c26/parse.log",
+        "sha256": "ce4c9abc2cacf96755c449b07100148ef0a31ac175bbde7ab4b765f664e34f62",
+        "bytes": 55
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 0.5293875000206754,
+      "peak_rss_mib": 111.1875,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c26/round-s.log.summary.json",
+        "sha256": "593cbc90bc2acf505238ff08f5618239867d9972a59fa381a955045935bab9f4",
+        "bytes": 2017
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c26/round-s.log",
+        "sha256": "993d5989acd9c7aba9506cb2f9cb609a9b50c09e442f5b57dfcb86b9875ad494",
+        "bytes": 117364
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 84.44002616673242,
+      "peak_rss_mib": 1855.609375,
+      "inspection_events": 1
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c26/wp-gen.log.summary.json",
+        "sha256": "445a9d4832fab5f3ea7f9e20f3f53985a6eaf42b72f115390858cb49f733695d",
+        "bytes": 1578
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c26/wp-gen.log",
+        "sha256": "2a9f478e5e1db4e6ce71a6240a08346b69f3a6d0761616f6e7cd3c24cbddc36a",
+        "bytes": 30618
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 0.8541207499802113,
+      "peak_rss_mib": 157.65625,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c27/parse.log.summary.json",
+        "sha256": "5d2e4e5d155eca49a49b0952cef39eb27f88808600dff18c0a859c7ea6b1be22",
+        "bytes": 1565
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c27/parse.log",
+        "sha256": "ce4c9abc2cacf96755c449b07100148ef0a31ac175bbde7ab4b765f664e34f62",
+        "bytes": 55
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 0.5022529999841936,
+      "peak_rss_mib": 102.71875,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c27/round-s.log.summary.json",
+        "sha256": "95396da198889af780b06f902e4a56584506da78a17250631827abfb39874030",
+        "bytes": 2007
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c27/round-s.log",
+        "sha256": "cf2db5adf4e2c8827045d16f5c27a4f7505c6c3fdb830d8db4704cb18b6962e8",
+        "bytes": 117551
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 159.87515124998754,
+      "peak_rss_mib": 3552.90625,
+      "inspection_events": 1
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c27/wp-gen.log.summary.json",
+        "sha256": "efb9a57e938a7c6a094658a1a21d4071172bb57a24fe952d65f28ca8c31f2b9d",
+        "bytes": 1562
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c27/wp-gen.log",
+        "sha256": "b19fb233c9ae07b0204322a941145fcf3e56bd15d63f3e46cb59d60e59664fc8",
+        "bytes": 30618
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 0.8649378332775086,
+      "peak_rss_mib": 158.0,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c29/parse.log.summary.json",
+        "sha256": "761a54f27d67d9f8d98913873419173453c9f1166e882243a9e233568328ade7",
+        "bytes": 1567
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c29/parse.log",
+        "sha256": "ce4c9abc2cacf96755c449b07100148ef0a31ac175bbde7ab4b765f664e34f62",
+        "bytes": 55
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 0.46677129168529063,
+      "peak_rss_mib": 102.84375,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c29/round-s.log.summary.json",
+        "sha256": "9fc75146f4689a65c5bdead33201ee467a3edde9abb0f7bd4d63ab54670e68b6",
+        "bytes": 2369
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c29/round-s.log",
+        "sha256": "5b71f866d77a4c27ab6d40a432db1de422b967d0ca2b1ba8b196cd1ba60bfe54",
+        "bytes": 134084
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 137.7590391249978,
+      "peak_rss_mib": 3427.609375,
+      "inspection_events": 2
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c29/wp-gen.log.summary.json",
+        "sha256": "b428e8f2a73e93a93bff528d5b5069b3f88873d69d39c4994cca33f96a14b007",
+        "bytes": 1564
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c29/wp-gen.log",
+        "sha256": "8018af29b6d30605c328abffaf6a9e4a2665cb87d8826a259164379407ddafce",
+        "bytes": 31336
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 0.914856166637037,
+      "peak_rss_mib": 161.625,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c31/parse.log.summary.json",
+        "sha256": "0edbe02cf537874d076e8f9ec41b30c6787d5caddc43f05c1ec1c942ceb62c58",
+        "bytes": 1578
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c31/parse.log",
+        "sha256": "ce4c9abc2cacf96755c449b07100148ef0a31ac175bbde7ab4b765f664e34f62",
+        "bytes": 55
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 0.4997576249879785,
+      "peak_rss_mib": 102.6875,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c31/round-s.log.summary.json",
+        "sha256": "025e86a895824fd74fb64c18692c65c8db07eeba2dfad51e048b9918cfaaf630",
+        "bytes": 2381
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c31/round-s.log",
+        "sha256": "abae3f34b4afe52527402f474352d5d2205276eb16fe911b143badc3ac87f8db",
+        "bytes": 117551
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 106.74618212500354,
+      "peak_rss_mib": 2006.359375,
+      "inspection_events": 2
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c31/wp-gen.log.summary.json",
+        "sha256": "c57a8cad63ce12883ca7982d65575c0094bee59fabc086a76410dc05b9b53b08",
+        "bytes": 1575
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c31/wp-gen.log",
+        "sha256": "29cf52e69f889e17c175b07a412f207bbaf56a89e9e25ba6114f12dd5b5377b5",
+        "bytes": 30952
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 0.904872749990318,
+      "peak_rss_mib": 160.0,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c32/parse.log.summary.json",
+        "sha256": "6d56147f37de1a2ad395b32789a759e49881da54b5cef880d031b1314f2dc434",
+        "bytes": 1563
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c32/parse.log",
+        "sha256": "ce4c9abc2cacf96755c449b07100148ef0a31ac175bbde7ab4b765f664e34f62",
+        "bytes": 55
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 0.5252539166831411,
+      "peak_rss_mib": 102.75,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c32/round-s.log.summary.json",
+        "sha256": "05d0d7ac43f04e2c783181e9cee03672561f19856fefb79cea24a49a53a59664",
+        "bytes": 3088
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c32/round-s.log",
+        "sha256": "aaacac3d1c83b6cb54271f0b1c279f46343b79bd99b766793b7d66adbd1641d3",
+        "bytes": 140623
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 259.3397087084013,
+      "peak_rss_mib": 3092.59375,
+      "inspection_events": 4
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c32/wp-gen.log.summary.json",
+        "sha256": "d5922ba55a2df9072b83780100c86aff9bf0fc7e544f1bedb5bb919c596f984a",
+        "bytes": 1575
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c32/wp-gen.log",
+        "sha256": "d150350fa3d21d22280f58428b67d94ae98035a267688f6014257149d8eae31a",
+        "bytes": 31508
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 0.9000075833173469,
+      "peak_rss_mib": 162.0,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c34/parse.log.summary.json",
+        "sha256": "2d8be4ded4199eaf4ef3dc34b96b339f60c13a21c91cb01f7012f45418f334bc",
+        "bytes": 1579
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c34/parse.log",
+        "sha256": "ce4c9abc2cacf96755c449b07100148ef0a31ac175bbde7ab4b765f664e34f62",
+        "bytes": 55
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 0.5088301666546613,
+      "peak_rss_mib": 111.203125,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c34/round-s.log.summary.json",
+        "sha256": "d99b05184856c80cd806ca79c4bc2b56b8f39f83ff04a8212123e6fa06ea1bbf",
+        "bytes": 1657
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c34/round-s.log",
+        "sha256": "07e87d3a8959cdb2cebcf3ea1cc8f0d7f5ac60fa77d5d9968a4fd962e460b036",
+        "bytes": 117539
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 74.48659674997907,
+      "peak_rss_mib": 909.578125,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c34/wp-gen.log.summary.json",
+        "sha256": "823ee85a2881e7a6a4cb42e22a916e7cb820a8a827eecb196ec683fbb4ae6229",
+        "bytes": 1581
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c34/wp-gen.log",
+        "sha256": "29cf52e69f889e17c175b07a412f207bbaf56a89e9e25ba6114f12dd5b5377b5",
+        "bytes": 30952
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 0.8873524583759718,
+      "peak_rss_mib": 159.984375,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c35/parse.log.summary.json",
+        "sha256": "ceb5bc541af90b4ada212c2e16f8343e484b9ae891246d223a816bb6336be090",
+        "bytes": 1580
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c35/parse.log",
+        "sha256": "ce4c9abc2cacf96755c449b07100148ef0a31ac175bbde7ab4b765f664e34f62",
+        "bytes": 55
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 0.47855950001394376,
+      "peak_rss_mib": 102.65625,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c35/round-s.log.summary.json",
+        "sha256": "7986cb3456263342cc3334d680255aaedd351e4aa213be147b8baf453071557a",
+        "bytes": 2022
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c35/round-s.log",
+        "sha256": "e66f41b852eb1eed15789e7417a02f5fa606c08b84a1e0f6f577c893672f6c1a",
+        "bytes": 117503
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 128.79472458333476,
+      "peak_rss_mib": 2717.234375,
+      "inspection_events": 1
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c35/wp-gen.log.summary.json",
+        "sha256": "83dde1448e7c08f53d7d9d12105ca0214a507723d340cca205907fe729e79a67",
+        "bytes": 1581
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c35/wp-gen.log",
+        "sha256": "29cf52e69f889e17c175b07a412f207bbaf56a89e9e25ba6114f12dd5b5377b5",
+        "bytes": 30952
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 0.8894234166364186,
+      "peak_rss_mib": 160.140625,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c36/parse.log.summary.json",
+        "sha256": "0300c4e5b75fa53cc416634f04af7e574bbb8b03c1e6f9d109b9660110dfe7f7",
+        "bytes": 1576
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c36/parse.log",
+        "sha256": "ce4c9abc2cacf96755c449b07100148ef0a31ac175bbde7ab4b765f664e34f62",
+        "bytes": 55
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 0.5727106666890904,
+      "peak_rss_mib": 111.25,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c36/round-s.log.summary.json",
+        "sha256": "268aab935c947891a1487a1727d8e8194c181834237ef48f8c26eb7d896c97b1",
+        "bytes": 3098
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c36/round-s.log",
+        "sha256": "10a1e976583ff48e11802746502ca66f395ed50d432f2faa2da8b6a20d0b5896",
+        "bytes": 3408
+      },
+      "exit_code": 137,
+      "timed_out": true,
+      "wall_s": 156.40380104165524,
+      "peak_rss_mib": 3202.3125,
+      "inspection_events": 4
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c36/wp-gen.log.summary.json",
+        "sha256": "978dfaed75e2276878ccacfa78b944132322351dfed1ba2807aac7122670498b",
+        "bytes": 1577
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/attempt-r1c36/wp-gen.log",
+        "sha256": "ad6b98ac826424245cef7de68c189246e6e9ad99d712c0ae9258239f4b17d96f",
+        "bytes": 31168
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 0.8715768749825656,
+      "peak_rss_mib": 161.0,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/goal-r1c12/print.log.summary.json",
+        "sha256": "e2c8fa5a9b3c5ebacaef33372e4703cd593383273e693d30135a002e42e960e3",
+        "bytes": 1610
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/goal-r1c12/print.log",
+        "sha256": "ca17b0f22f0e7455076bd94db5f976316aeb37842d419ddaeec9af8292a69a6a",
+        "bytes": 110510
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 2.0414243749692105,
+      "peak_rss_mib": 197.703125,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/goal-r1c13/print.log.summary.json",
+        "sha256": "cbf14dac5c3a761e1636b6b16185cf23e5af811abef6617213540881ec505e2b",
+        "bytes": 1593
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/goal-r1c13/print.log",
+        "sha256": "59022f8f4a701652ab6b7c9df488c44df49697f38ff751c0caa74a77af2cb90f",
+        "bytes": 1464294
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 32.15924462501425,
+      "peak_rss_mib": 372.171875,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/goal-r1c14/print.log.summary.json",
+        "sha256": "faeecc5467c09e89a245f8a0063b412b0bf85300d30bbbdf80ed25518da920d5",
+        "bytes": 1592
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/goal-r1c14/print.log",
+        "sha256": "59022f8f4a701652ab6b7c9df488c44df49697f38ff751c0caa74a77af2cb90f",
+        "bytes": 1464294
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 31.86173858330585,
+      "peak_rss_mib": 370.46875,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/goal-r1c15/print.log.summary.json",
+        "sha256": "952bbd088524bf9d1993e316735248e3472aef724ce97fe553de6a74d811534a",
+        "bytes": 1612
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/goal-r1c15/print.log",
+        "sha256": "ca17b0f22f0e7455076bd94db5f976316aeb37842d419ddaeec9af8292a69a6a",
+        "bytes": 110510
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 2.0176210000063293,
+      "peak_rss_mib": 198.796875,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/goal-r1c2/print.log.summary.json",
+        "sha256": "408e2593bbcd5e07b79881b872b646d3d699ef0a893dd29a6577d9cbb108511d",
+        "bytes": 1591
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/goal-r1c2/print.log",
+        "sha256": "7a085bbdf23ca0aadbfafe762a7a0f682e7cf7cedf2bca1594135fe1f309ae3a",
+        "bytes": 1396138
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 29.57871587498812,
+      "peak_rss_mib": 358.765625,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/goal-r1c3/print.log.summary.json",
+        "sha256": "b7a92f9db4b0822e9afa9a74d569b5740fab5a55195174cfa54829d78049d110",
+        "bytes": 1608
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/goal-r1c3/print.log",
+        "sha256": "952999c89de2a68972056bbae251185f9a540fc457a4b0443fa917b797c87340",
+        "bytes": 71845
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 1.5322721666307189,
+      "peak_rss_mib": 185.265625,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/goal-r1c4/print.log.summary.json",
+        "sha256": "4e3d02471166defeff69f2c05d130105e17cca29de0e0e7e79461f751e2ab987",
+        "bytes": 1592
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/goal-r1c4/print.log",
+        "sha256": "7a085bbdf23ca0aadbfafe762a7a0f682e7cf7cedf2bca1594135fe1f309ae3a",
+        "bytes": 1396138
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 29.30273200001102,
+      "peak_rss_mib": 357.828125,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/goal-r1c5/print.log.summary.json",
+        "sha256": "99a8616437db694b41583ba4a36dc6a3da44a0149e561d55f1b5afa34232069d",
+        "bytes": 1592
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/goal-r1c5/print.log",
+        "sha256": "7a085bbdf23ca0aadbfafe762a7a0f682e7cf7cedf2bca1594135fe1f309ae3a",
+        "bytes": 1396138
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 29.930229041725397,
+      "peak_rss_mib": 359.390625,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/goal-r1c6/print.log.summary.json",
+        "sha256": "b9677f7d8a7543a6f5d2acffee2797680c6051123f40bce3cfd1b709b28d1501",
+        "bytes": 1589
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/goal-r1c6/print.log",
+        "sha256": "7a085bbdf23ca0aadbfafe762a7a0f682e7cf7cedf2bca1594135fe1f309ae3a",
+        "bytes": 1396138
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 28.90320591663476,
+      "peak_rss_mib": 357.65625,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/goal-r1c7/print.log.summary.json",
+        "sha256": "275a9fd238a6285e314208fe31d74694158c3000a3a14bcb6fd692a839f1b063",
+        "bytes": 1590
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/goal-r1c7/print.log",
+        "sha256": "7a085bbdf23ca0aadbfafe762a7a0f682e7cf7cedf2bca1594135fe1f309ae3a",
+        "bytes": 1396138
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 28.97754891664954,
+      "peak_rss_mib": 359.9375,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/goal-r1c8/print.log.summary.json",
+        "sha256": "8f37fdd749de6a6f098508ba758b86dc57c516d1a9a073b42a7e292fc485dbde",
+        "bytes": 1592
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/goal-r1c8/print.log",
+        "sha256": "7a085bbdf23ca0aadbfafe762a7a0f682e7cf7cedf2bca1594135fe1f309ae3a",
+        "bytes": 1396138
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 29.096716083353385,
+      "peak_rss_mib": 360.890625,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/goal-r1c9/print.log.summary.json",
+        "sha256": "f916a906e4534f539a221e04c71b08ca429ab52ff1e8c82629936b7844c22b63",
+        "bytes": 1590
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/goal-r1c9/print.log",
+        "sha256": "7a085bbdf23ca0aadbfafe762a7a0f682e7cf7cedf2bca1594135fe1f309ae3a",
+        "bytes": 1396138
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 28.8133871666505,
+      "peak_rss_mib": 359.953125,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/round-0/baseline-smoke10.log.summary.json",
+        "sha256": "accb1cc91e467fc55b266bb71d534a63020eac898a17dc80dce97da606210ef2",
+        "bytes": 5936
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/round-0/baseline-smoke10.log",
+        "sha256": "f176ebda0fed8c35a6886731342e90a7ad75e85237f30d1d19c56d8a1e5d7714",
+        "bytes": 81361
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 365.2582559583825,
+      "peak_rss_mib": 2913.8125,
+      "inspection_events": 12
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/round-0/parse.log.summary.json",
+        "sha256": "88462292b91dbd043bd4c81a936bc2cc72a1cad0f3b8b2fd4eac3ac2fef18f92",
+        "bytes": 1556
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/round-0/parse.log",
+        "sha256": "ce4c9abc2cacf96755c449b07100148ef0a31ac175bbde7ab4b765f664e34f62",
+        "bytes": 55
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 0.4885448749992065,
+      "peak_rss_mib": 102.265625,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/round-0/wp-gen.log.summary.json",
+        "sha256": "4b09a16035dd68ef333af51316ce73078d08bf370a18ef24e8b4f3d15eade136",
+        "bytes": 1553
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/round-0/wp-gen.log",
+        "sha256": "cffd2545456ab0158ea06f8bb4d0663d82bfc90856040140bbc09256e39517b1",
+        "bytes": 25368
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 0.6180080833728425,
+      "peak_rss_mib": 131.25,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/seeds/parse.log.summary.json",
+        "sha256": "a348e17cc61a6ccf11e45de09e3271b70b1362e172548f20188d1fc3a36dc3da",
+        "bytes": 1552
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/seeds/parse.log",
+        "sha256": "ce4c9abc2cacf96755c449b07100148ef0a31ac175bbde7ab4b765f664e34f62",
+        "bytes": 55
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 0.4998875833116472,
+      "peak_rss_mib": 102.453125,
+      "inspection_events": 0
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/seeds/round-s.log.summary.json",
+        "sha256": "96baa93ea5b01128f6d076ca65f43c3406bf01bdec2399aa4afdd35e7a369dd1",
+        "bytes": 2007
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/seeds/round-s.log",
+        "sha256": "cc1d2e114a7524a1b79c7445b181f0febb5adae7d300084aacc0edcc6b3307c6",
+        "bytes": 59652
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 150.32950020825956,
+      "peak_rss_mib": 2576.40625,
+      "inspection_events": 1
+    },
+    {
+      "summary": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/seeds/wp-gen.log.summary.json",
+        "sha256": "96016fd6e51479c576e39b8b3a608d28587c9e5f173f4c57f383ca6c611acac4",
+        "bytes": 1552
+      },
+      "log": {
+        "path": "/private/tmp/probata-t07-20261015-run24/counted-24/seeds/wp-gen.log",
+        "sha256": "bbce5119af1aa2dd7f3ef1aff2b0808446b802cd011aaab8673a2d4b02364794",
+        "bytes": 27966
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "wall_s": 0.7815992499818094,
+      "peak_rss_mib": 146.1875,
+      "inspection_events": 0
+    }
+  ],
+  "partial_token_receipt": {
+    "created": "2026-10-15 ET",
+    "session": "01a14195-2902-7902-9b41-cae860467a20",
+    "source_path": "/Users/yanrujhou/.codex/sessions/2026/10/15/rollout-2026-10-15T18-00-56-01a14195-2902-7902-9b41-cae860467a20.jsonl",
+    "source_sha256": "bf56048583c0b45fa76f12aebcda2e90ab12a2726a8ba0a38ccef3abb0ef7590",
+    "source_bytes": 1620094,
+    "token_count_records": 136,
+    "latest": {
+      "timestamp": "2026-10-15T22:44:18.019Z",
+      "offset_bytes": 1619260,
+      "receipt_sha256": "6aa5130808ebb9fb441c739bc69c348c81ee59910c7518030166623c6665d497",
+      "info": {
+        "total_token_usage": {
+          "input_tokens": 13386648,
+          "cached_input_tokens": 13099904,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 27238,
+          "reasoning_output_tokens": 12010,
+          "total_tokens": 13413886
+        },
+        "last_token_usage": {
+          "input_tokens": 169620,
+          "cached_input_tokens": 169344,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 115,
+          "reasoning_output_tokens": 14,
+          "total_tokens": 169735
+        },
+        "model_context_window": 258400
+      }
+    },
+    "usage_status": "partial",
+    "complete_cli_receipt": false,
+    "interrupted_tail": "unknown",
+    "aggregation": "latest cumulative snapshot only; cached input/reasoning output are subsets, never added twice",
+    "independent_addendum": {
+      "path": "/private/tmp/probata-t07-token-accounting-acceptance-addendum-20261015.md",
+      "sha256": "a0356917f93f184ba9cdbef8cb2940b3df5f2a8f4b6518d1d1e77f570455e1a5"
+    },
+    "receipt_path": "/private/tmp/probata-t07-run24-partial-token-receipt.json",
+    "receipt_sha256": "ded6542edd09306050fdd934059705bb8d3230ed63310733ae80f4aa3f20ebd9"
+  },
+  "independent_addenda": [
+    {
+      "path": "/private/tmp/probata-t07-run24-partial-token-independent-review.json",
+      "sha256": "d3974275b0b9b2834dda8d29806475f09a385e09722ef56a7cdc7b2ee9948947"
+    },
+    {
+      "path": "/private/tmp/probata-t07-run24-posthoc-full30-result-review.json",
+      "sha256": "73851024c839a36213886e84db40b47ad025bf26f2c1e3ef9a82ad6ead8b8fb2"
+    }
+  ]
+}

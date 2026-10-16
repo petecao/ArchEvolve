@@ -1,0 +1,59 @@
+{
+  "assumptions": [
+    "Only closed literal/enum order operands under recursively checked wrappers are admitted.",
+    "Only constant-false weak CAS uses the deterministic strong model.",
+    "Historical actual9b75/e48records retain their old translator/source pins; current-method replay is separately coordinated."
+  ],
+  "c_lowering_source_sha256": "305e3acc57158bd6c57710f57539cfbd0c01a368b20e3fcca8be651cb85ccd26",
+  "created": "2026-10-15 ET",
+  "focused_green_raw_root": "/private/tmp/probata-t24-atomic-stale-corpus-green",
+  "green_raw_root": "/private/tmp/probata-t24-atomic-full-green",
+  "local_tool_identity": {
+    "c_lowering": {
+      "id": "swdb-c-lowering-9",
+      "sha256": "4b3388af5249cff4b83da775ce7c7bfdc39d9d6d28923a7bfa771996ce0c137b"
+    },
+    "clang": {
+      "id": "clang-22.1.8",
+      "sha256": "305697d3868243dca6e4aabf4f628df7de135d701eb4fd78f6a5d7528fef4395"
+    },
+    "naming_rules": {
+      "id": "kept-names.3",
+      "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+    }
+  },
+  "native_counterevidence": {
+    "path": "/private/tmp/probata-atomic-audit-20261015/report.json",
+    "sha256": "0310077ad9b33bf276e4932380d99b878cffedf6087ef5012f264b5c29975194",
+    "undefined_division_executed": false
+  },
+  "prepatch_commit": "57df794f59e6416fdbc48089cca52653e72d53a6",
+  "red_controls": {
+    "cas_weak_and_failure_operands": "3did not refuse",
+    "fences": "2did not refuse",
+    "load_side_effect": "did not refuse",
+    "public_thread_fence": {
+      "failure_class": "unknown",
+      "goals": 1,
+      "raw_root": "/private/tmp/probata-t24-atomic-public-fence-red-valid-context",
+      "seconds": 37.83,
+      "verdict": "not_proven",
+      "verifier_launched": true,
+      "wp_input": true
+    }
+  },
+  "scope": "compiler admission and external-stand-in public controls; no actual WP proof claimed",
+  "tests": [
+    {
+      "note": "A separate stale-pin case hit duplicate sequence in its test fixture; corrected without production change.",
+      "passed": 69,
+      "profile": "atomic lowerer, constant-byte baseline and15public refusals",
+      "seconds": 227.92
+    },
+    {
+      "passed": 9,
+      "profile": "corrected stale-pin plus8new corpus controls",
+      "seconds": 43.93
+    }
+  ]
+}

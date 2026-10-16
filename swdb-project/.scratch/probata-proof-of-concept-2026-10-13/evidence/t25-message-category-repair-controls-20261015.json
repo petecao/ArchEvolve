@@ -1,0 +1,76 @@
+{
+  "controls": [
+    {
+      "id": "message-key-red",
+      "pins": [
+        {
+          "path": "/private/tmp/probata-t25-message-key-red-20261015/command.json",
+          "sha256": "9019258430c6fd304b0f9d3ec5a4c336f9be604c4605c869987be3f3fc20463f"
+        },
+        {
+          "path": "/private/tmp/probata-t25-message-key-red-20261015/controls.log",
+          "sha256": "b0836c93052b71b17a1e4e275e6995484326df5aae83123954081fab2aa6ae1e"
+        },
+        {
+          "path": "/private/tmp/probata-t25-message-key-red-20261015/resources.json",
+          "sha256": "406fc3497e70ee5f461a23880ba2c64f1a7c5961c02d0e7cfe6b0d2592c4a7b2"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 0.682504,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 111411200,
+        "timed_out": false,
+        "wall_seconds": 0.7196799590019509
+      }
+    },
+    {
+      "id": "message-key-green",
+      "pins": [
+        {
+          "path": "/private/tmp/probata-t25-message-key-green-20261015/command.json",
+          "sha256": "f1ffbec6680beb615248ab204f0f1ebbb81ef9d2eb3a332b999accbd2d7b73e9"
+        },
+        {
+          "path": "/private/tmp/probata-t25-message-key-green-20261015/controls.log",
+          "sha256": "84026e458f6c38ab35980b1aff390bba8e213539530a2211667cb27c42503040"
+        },
+        {
+          "path": "/private/tmp/probata-t25-message-key-green-20261015/resources.json",
+          "sha256": "5647972aceb9168fc20aa64c05d7a5b402ae41af2b113154952d348ccaf0b167"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 4.186822,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 123142144,
+        "timed_out": false,
+        "wall_seconds": 5.165562000009231
+      }
+    }
+  ],
+  "created": "2026-10-15 ET",
+  "next_gate": "Coordinator-admitted one genuine lemma with actual -wp-help option recognition and retained import/task/inventory/CSV evidence, before another full42 replay.",
+  "primary_sources": [
+    {
+      "lines": "669-705",
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c/kernel/kernel_services/plugin_entry_points/plugin.ml",
+      "sha256": "aeca428ddcadb0b0db7f2b411ff7d67e43de640dd4ad94df6ee93fd5fc778812"
+    },
+    {
+      "lines": "1117-1122",
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c/kernel/libraries/utils/log.ml",
+      "sha256": "c7ec27edef34cf66ed1c3698d8097e08dc60ea1f85d2838de006d6a9d79c2697"
+    },
+    {
+      "lines": "9-14,1177,1573-1575",
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/ProverWhy3.ml",
+      "sha256": "18413bff579ac1557c0b5060a679d80d55cfce49099b9557a85ea8c66fe88526"
+    }
+  ],
+  "reason": "Plugin.Message_category generates -wp-msg-key. Category-enabled diagnostics do not require a debug level; retained categories dump imports/generated theories/prover tasks.",
+  "scope": "Compiler-free command-plan RED/GREEN only; no WP proof success.",
+  "unchanged": "Every original formula/clause,42target IDs/expectations, heap/VC map, RTE/init/cache/machdep/smoke flags remain unchanged."
+}

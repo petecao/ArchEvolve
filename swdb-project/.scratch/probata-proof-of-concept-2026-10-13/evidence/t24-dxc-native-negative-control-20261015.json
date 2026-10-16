@@ -1,0 +1,105 @@
+{
+  "created": "2026-10-15 ET",
+  "green": "Corrected +4 seed returns 4 in-domain and violates original postcondition; unchanged safe source returns 1.",
+  "green_seconds": 1.71,
+  "historical_boundary": "Frozen 71771f09 +2 records retain their original source identity and can only establish modular-summary precision behavior for dxc, never this concrete seeded-bug acceptance.",
+  "original_contract": "requires 0 <= tile < 8; ensures 1 <= result <= 3;",
+  "red": "Old +2 seed returns 2 in-domain and still satisfies original postcondition; native negative control fails.",
+  "red_seconds": 2.06,
+  "rows": [
+    {
+      "artifact": "safe",
+      "binary_sha256": "bae98a41242d3d94dc3f2ae2a61babd8cdd4749becd250552d98c59a90c74799",
+      "language": "c",
+      "original_postcondition_holds": true,
+      "profile": "red_old_plus_two",
+      "result": 1,
+      "source_path": "/private/tmp/probata-t24-dxc-seed-red/test_the_shared_dxc_seed_viola0/safe.c",
+      "source_sha256": "ac46106607e4cae151639f98447e05af620807276f44770167332464e02b2c26",
+      "tile": 0
+    },
+    {
+      "artifact": "safe",
+      "binary_sha256": "2d962564462b86d3620de5e57026125adaed49104467c08e8e26cf99d271f989",
+      "language": "cxx",
+      "original_postcondition_holds": true,
+      "profile": "red_old_plus_two",
+      "result": 1,
+      "source_path": "/private/tmp/probata-t24-dxc-seed-red/test_the_shared_dxc_seed_viola0/safe.cc",
+      "source_sha256": "c1b3e56de760aa7101f1e0be1c69a2049d14e26c5405012d4c6bbf46212a419d",
+      "tile": 0
+    },
+    {
+      "artifact": "seeded",
+      "binary_sha256": "47fd04be37356e34fb8c27ff79e72c111be545599cd58482673075f733bb693b",
+      "language": "c",
+      "original_postcondition_holds": true,
+      "profile": "red_old_plus_two",
+      "result": 2,
+      "source_path": "/private/tmp/probata-t24-dxc-seed-red/test_the_shared_dxc_seed_viola0/seeded.c",
+      "source_sha256": "c3560dd5162a8108dbae7355a51bcfcb74959e2a6df6ec3b08af15a146ace103",
+      "tile": 0
+    },
+    {
+      "artifact": "seeded",
+      "binary_sha256": "176d10b3b74427c3f3048dd490513d7faaef545f88ce7f2316825667bcf7292c",
+      "language": "cxx",
+      "original_postcondition_holds": true,
+      "profile": "red_old_plus_two",
+      "result": 2,
+      "source_path": "/private/tmp/probata-t24-dxc-seed-red/test_the_shared_dxc_seed_viola0/seeded.cc",
+      "source_sha256": "c352b2e82622879e1ac869d75a90c001f213d3ebedd4666d3dec94b60e9a9085",
+      "tile": 0
+    },
+    {
+      "artifact": "safe",
+      "binary_sha256": "bae98a41242d3d94dc3f2ae2a61babd8cdd4749becd250552d98c59a90c74799",
+      "language": "c",
+      "original_postcondition_holds": true,
+      "profile": "green_plus_four",
+      "result": 1,
+      "source_path": "/private/tmp/probata-t24-dxc-seed-green/test_the_shared_dxc_seed_viola0/safe.c",
+      "source_sha256": "ac46106607e4cae151639f98447e05af620807276f44770167332464e02b2c26",
+      "tile": 0
+    },
+    {
+      "artifact": "safe",
+      "binary_sha256": "2d962564462b86d3620de5e57026125adaed49104467c08e8e26cf99d271f989",
+      "language": "cxx",
+      "original_postcondition_holds": true,
+      "profile": "green_plus_four",
+      "result": 1,
+      "source_path": "/private/tmp/probata-t24-dxc-seed-green/test_the_shared_dxc_seed_viola0/safe.cc",
+      "source_sha256": "c1b3e56de760aa7101f1e0be1c69a2049d14e26c5405012d4c6bbf46212a419d",
+      "tile": 0
+    },
+    {
+      "artifact": "seeded",
+      "binary_sha256": "388e9e01110a28b54d8a508ef715ff107160a7c74dbfd1af7250a52e04325a95",
+      "language": "c",
+      "original_postcondition_holds": false,
+      "profile": "green_plus_four",
+      "result": 4,
+      "source_path": "/private/tmp/probata-t24-dxc-seed-green/test_the_shared_dxc_seed_viola0/seeded.c",
+      "source_sha256": "3ed86a410a5329179c994e1398464f1029cc185bc0e959f9c9eb293ef73fc72e",
+      "tile": 0
+    },
+    {
+      "artifact": "seeded",
+      "binary_sha256": "736880940e7c3aabcd395bcfe02c5d60ffc5e42821150abd86a5d9649a4689bf",
+      "language": "cxx",
+      "original_postcondition_holds": false,
+      "profile": "green_plus_four",
+      "result": 4,
+      "source_path": "/private/tmp/probata-t24-dxc-seed-green/test_the_shared_dxc_seed_viola0/seeded.cc",
+      "source_sha256": "58df7d2775ff9c0cb33c8395c130f4e0edd86ba4876ee9beed9ed3f929325844",
+      "tile": 0
+    }
+  ],
+  "scope": "native fixture-body control; no solver refutation or production DX100 semantic claim",
+  "test": "tests/test_dxc_seeded_control.py",
+  "unchanged_sources": {
+    "tests/fixtures/proof/lowering/summaries.cc": "5a71ba2f6f7a53d96759edbfc3ff823d1073677450e08abeaa001c60f92ca7c0",
+    "tests/fixtures/proof/lowering/summary_impls.cc": "7954719a7ab3bd93f8da1eea7a028de9d1dfa524761f2ff5f56c92dd70712e25"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "verdict": "PASS_STATIC_ONLY",
+  "source_commit": "2e2dc451ca457bfc5a7a7cb977d672bd1de0983b",
+  "packet_sha256": "ed3e47f834c7d2c2db01b1093995626890ccb9fdbb354db7d7b4d3684a0715fb",
+  "allocation_entry_sha256": "1c46896f8220f75deaff4571da5d9449f387bee9590843e4d1ab6b154cdb346a",
+  "register_entry_sha256": "c11c0bc1410d3c42f34edca471bf7cd80f8ffd11eaa81e5db0192f565beb1b2d",
+  "pin_audit": {
+    "path": "/private/tmp/probata-t28-shared-2e2-pairs-independent-pin-audit-v1-20261016.json",
+    "sha256": "155d039a4a05e64df59fcac2027a3a48778cf8f5474101c460827c7a6d9cd672"
+  },
+  "findings": [],
+  "source_pins_verified": {
+    "allocation": 478,
+    "register": 485
+  },
+  "consumer_tree_oids_verified_each": 11,
+  "eight_guard_ASTs_equal_reviewed_allocator_baseline": true,
+  "runtime_bindings_unchanged": true,
+  "budget_each": {
+    "whole_seconds": 1200,
+    "outer_seconds": 1320,
+    "rss_bytes": 8589934592,
+    "workers": 1,
+    "provers": [
+      "z3",
+      "cvc5",
+      "alt-ergo"
+    ],
+    "solver_goal_seconds": 30,
+    "cache": "none",
+    "RTE": true,
+    "initialization": "@all/no-filter",
+    "smoke": true
+  },
+  "constraints": [
+    "Single clean exact source may be reused, with separate fresh raw/profile directories, exact per-profile lease/watchdog and independent results.",
+    "Root must perform fresh live lane/process/disk/RAM/clean-source/physical-consumer checks and actual project-context Linux runtime capture; no Mac composite substitution.",
+    "Allocation preserves original total software counter contract, result102 versus101, exact REG_count/SPD_count/region_count frame and no extra unit premise.",
+    "Register preserves original partial contract, result711 versus1107, two-cell frame, no fresh RF values or totality promotion.",
+    "Reporter8b84 structural/property/native completeness and actual healthy-smoke/negative-result census remain cold-audit duties; pytest/parser PASS alone cannot accept pair.",
+    "Register nonvolatile pointed accesses, mfence without memory clobber, exclusive-core epoch and RF object/alias/transport source correspondence remain explicit TCB/pending59."
+  ],
+  "not_claimed": [
+    "Actual launch or live host capacity",
+    "Healthy pair or proof outcome",
+    "Hardware/source-body refinement, current0.2, full ticket28 or other names/types"
+  ],
+  "reviewer_execution": "Passive text/AST/JSON/hash/Git object reads only; no project imports, controls, compiler, collection, prover, tools, SSH or actual jobs."
+}

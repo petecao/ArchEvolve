@@ -1,0 +1,232 @@
+{
+  "actual_formal_tools_executed": [],
+  "allocation_origins_granted": [],
+  "anchors": [
+    {
+      "path": "/private/tmp/probata-t25-caller-capacity-composed-green-20261016/pytest/test_defined_native_caller_obs0/lower/vector_realloc_v3_safe.anchors.json",
+      "sha256": "02321de345900be6d0207a91d917aa1a113e6567a50076205d1b607eba61c890"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller-capacity-composed-green-20261016/pytest/test_defined_native_caller_obs1/lower/vector_realloc_v3_no_growth.anchors.json",
+      "sha256": "0ddf8cc19d6d9ef999fe733741c0d3346845fadc7ae6e5b9b2d58bb5c1f62187"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller-capacity-composed-green-20261016/pytest/test_public_alias_controls_kee0/vector_realloc_v3_stale.anchors.json",
+      "sha256": "3b7b7fdf96afcbae91bf2d116c2a2df59140cfbb2aa21f6567e1ca7be877eff3"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller-capacity-composed-green-20261016/pytest/test_public_alias_controls_kee1/vector_realloc_v3_no_growth.anchors.json",
+      "sha256": "0ddf8cc19d6d9ef999fe733741c0d3346845fadc7ae6e5b9b2d58bb5c1f62187"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller-capacity-composed-green-20261016/pytest/test_public_caller_exact_capac0/vector_realloc_v3_safe.anchors.json",
+      "sha256": "02321de345900be6d0207a91d917aa1a113e6567a50076205d1b607eba61c890"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller-capacity-composed-green-20261016/pytest/test_public_caller_lifetime_du0/vector_realloc_v3_no_growth.anchors.json",
+      "sha256": "0ddf8cc19d6d9ef999fe733741c0d3346845fadc7ae6e5b9b2d58bb5c1f62187"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller-capacity-composed-green-20261016/pytest/test_public_caller_lifetime_pl0/vector_realloc_v3_safe.anchors.json",
+      "sha256": "02321de345900be6d0207a91d917aa1a113e6567a50076205d1b607eba61c890"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller-capacity-composed-green-20261016/pytest/test_public_caller_refuses_sig0/lower/vector_realloc_v3_safe.anchors.json",
+      "sha256": "45ee4b737e1737f44ab75dd2edbe591555e6f9471cd5e6157eec2c2927798cb1"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller-capacity-composed-green-20261016/pytest/test_public_caller_retains_crl0/lower/vector_realloc_v3_safe.anchors.json",
+      "sha256": "909c0decf662de25b9e5391ccafa5bf6c453464b5182d2a653cf96cd4d4ce384"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller-capacity-composed-green-20261016/pytest/test_public_caller_source_span0/lower/vector_realloc_v3_safe.anchors.json",
+      "sha256": "69f9d464d799f196573905d0ac74cc41664e6742107d6aed7e691c77e2c4b3f3"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller-capacity-composed-green-20261016/pytest/test_public_capacity_qualifica0/lower/vector_realloc_v3_safe.anchors.json",
+      "sha256": "02321de345900be6d0207a91d917aa1a113e6567a50076205d1b607eba61c890"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller-capacity-composed-green-20261016/pytest/test_public_lower_binds_scalar0/vector_realloc_v3_safe.anchors.json",
+      "sha256": "02321de345900be6d0207a91d917aa1a113e6567a50076205d1b607eba61c890"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller-capacity-composed-green-20261016/pytest/test_public_reserve_caller_rec0/vector_realloc_v3_safe.anchors.json",
+      "sha256": "02321de345900be6d0207a91d917aa1a113e6567a50076205d1b607eba61c890"
+    }
+  ],
+  "base_source": "248e51c5d135d4059845855835df88a3df8c587f",
+  "caller_premises_added": [],
+  "created": "2026-10-16 ET",
+  "excluded_boundaries": [
+    "all root-owned OCaml metadata/native proof-reader setup controls",
+    "actual Frama-C/WP/Why3/provers",
+    "original v2 raw growth contract proof",
+    "generic caller proof/dependency adoption"
+  ],
+  "frozen017_review": {
+    "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-qualified-backend-independent-review-01771a83-20261016.json",
+    "sha256": "139fa66661578c8edf6f1f0847801518fa5f78958799d184d4a23eb4ae96015b"
+  },
+  "native_metadata_queries_executed": [],
+  "negative_controls": [
+    "C++23 language selection",
+    "macro override",
+    "omitted header binding",
+    "changed header hash",
+    "changed physical header bytes"
+  ],
+  "primary_header_source": {
+    "path": "/private/tmp/probata-t25-v3-constructor-capacity-primary-source-20261016.json",
+    "sha256": "5c8c39ceae8134cedce418b632743d76be95672faa078ac67a3ce2a3edde2bcd"
+  },
+  "qualification": "only admitted libc++22.1.8 count/value constructor under exact C++17 macro selection; new model capacity postcondition still requires proof, not an assumed standard guarantee",
+  "real_red": "header-red1failure: public candidate lacked capacity_qualification; GREEN then records actual C++17 header witness",
+  "result": "21 composed controls passed59.96s; guard60.719153s370868224B,noOOMtimeout",
+  "runs": [
+    {
+      "command": {
+        "path": "/private/tmp/probata-t25-caller-capacity-header-red-20261016/command.json",
+        "sha256": "393b59cf2fdb5cf986d3d08380fc62f38c33b9ef7a9fd34dd16eb56954130714"
+      },
+      "label": "header-red",
+      "log": {
+        "path": "/private/tmp/probata-t25-caller-capacity-header-red-20261016/controls.log",
+        "sha256": "fbda40b55be8c8dc0a495b7c6ef1465b82cba491e25585fd0bde78d81e072c5a"
+      },
+      "resources": {
+        "cpu_seconds": 4.977334,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 357908480,
+        "timed_out": false,
+        "wall_seconds": 5.401971000013873
+      },
+      "resources_pin": {
+        "path": "/private/tmp/probata-t25-caller-capacity-header-red-20261016/resources.json",
+        "sha256": "5a7481d756894a489ca4d4a1f7c0d4fe1ee1ab9286e27b8c4f51bbb36b9417dd"
+      }
+    },
+    {
+      "command": {
+        "path": "/private/tmp/probata-t25-caller-capacity-header-green-20261016/command.json",
+        "sha256": "4c7435c30e61141a1b41dc53096a798fab29005c02e52e58d4e50b6b657ed64b"
+      },
+      "label": "header-green",
+      "log": {
+        "path": "/private/tmp/probata-t25-caller-capacity-header-green-20261016/controls.log",
+        "sha256": "36fe08e2829cde9a1e036d8b94e882148177428e1c2d7105c6fc0e2c1070c110"
+      },
+      "resources": {
+        "cpu_seconds": 4.851908,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 364756992,
+        "timed_out": false,
+        "wall_seconds": 4.881544500007294
+      },
+      "resources_pin": {
+        "path": "/private/tmp/probata-t25-caller-capacity-header-green-20261016/resources.json",
+        "sha256": "c54abe41b1430ff019ebba0adb49688302be1cc4056da885ba75ec039cd967b8"
+      }
+    },
+    {
+      "command": {
+        "path": "/private/tmp/probata-t25-caller-capacity-negative-green-20261016/command.json",
+        "sha256": "1eb721ec86bf59945e403800d52164d8e7f31b66997261ceb025926ee21198af"
+      },
+      "label": "negative-green",
+      "log": {
+        "path": "/private/tmp/probata-t25-caller-capacity-negative-green-20261016/controls.log",
+        "sha256": "46a1eacd2b072ff9e01c298b97987d24829f17335a1aed5d877aadbd5e5eaf4a"
+      },
+      "resources": {
+        "cpu_seconds": 5.0944780000000005,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 369819648,
+        "timed_out": false,
+        "wall_seconds": 5.5996964169899
+      },
+      "resources_pin": {
+        "path": "/private/tmp/probata-t25-caller-capacity-negative-green-20261016/resources.json",
+        "sha256": "412076ce0af9fbc59bdef47c257d5d7fe79a987038f57a7e609e0655731721df"
+      }
+    },
+    {
+      "command": {
+        "path": "/private/tmp/probata-t25-caller-capacity-negative-green2-20261016/command.json",
+        "sha256": "83f97dd61cae79d588cadd3a76389512680fd655e3cda1c5d23818bd82e76540"
+      },
+      "label": "negative-green2",
+      "log": {
+        "path": "/private/tmp/probata-t25-caller-capacity-negative-green2-20261016/controls.log",
+        "sha256": "348f6cb06379c4590902347907a97132409924f096b7a654e3170518e9750487"
+      },
+      "resources": {
+        "cpu_seconds": 4.964232,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 329465856,
+        "timed_out": false,
+        "wall_seconds": 5.4545668750070035
+      },
+      "resources_pin": {
+        "path": "/private/tmp/probata-t25-caller-capacity-negative-green2-20261016/resources.json",
+        "sha256": "f5c38ca0611fe7d9b531c855343b4c5f01f8bf6630c4d78f2593474b20f8d1bf"
+      }
+    },
+    {
+      "command": {
+        "path": "/private/tmp/probata-t25-caller-capacity-composed-green-20261016/command.json",
+        "sha256": "02e665a13231bdc5fe953c2e909c582146c6769db4999fcd4db546bbb11d77fe"
+      },
+      "label": "composed-green",
+      "log": {
+        "path": "/private/tmp/probata-t25-caller-capacity-composed-green-20261016/controls.log",
+        "sha256": "20f859d5c707060a7379bb0247322b0311367610b6217d67d81051d1ef7a0d65"
+      },
+      "resources": {
+        "cpu_seconds": 60.096195,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 370868224,
+        "timed_out": false,
+        "wall_seconds": 60.719153375015594
+      },
+      "resources_pin": {
+        "path": "/private/tmp/probata-t25-caller-capacity-composed-green-20261016/resources.json",
+        "sha256": "3d7e90cbea63bc47729c83852642a1d471056e44146bbd7e15db20d22d7a2d16"
+      }
+    }
+  ],
+  "seams": [
+    "public swdb lower and its actual anchors/provenance artifact",
+    "capacity qualification API fed by public compiler receipt",
+    "canonical packet prepare/check"
+  ],
+  "source_pins": [
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/vector_reallocation_capacity.py",
+      "sha256": "e4aa221acb78151895fa5c5d3cbdab6050b151b42a7096521a90fcdf3c95f617"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/vector_reallocation_calls.py",
+      "sha256": "5b7fe1e14a8ed541826c2750bee7840295d37e60a242305cccecd7b05df68184"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/c_lowering.py",
+      "sha256": "bcf25d461e6c31b631cfcd1968321ccf0bfef2d30fb8f67611fb84ed42f5ede4"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/proof_setup.py",
+      "sha256": "b53673b2a398660df5ed52a0c50db5079dd82c4b39f9b385750936f2b86d2e3f"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/tests/test_vector_reallocation_calls.py",
+      "sha256": "d98548530230036e4aac2bdf2ec7dffed0ca61fc80e445f74c35c5ebf6a7f41d"
+    }
+  ],
+  "status": "source/compiler preparation only; no actual v3 model or caller proof",
+  "test_repair": "negative-green first failed because the test read stdlib_provenance from the CLI summary instead of its public anchors artifact; negative-green2 passes. This test-wiring failure is not a production semantic RED."
+}

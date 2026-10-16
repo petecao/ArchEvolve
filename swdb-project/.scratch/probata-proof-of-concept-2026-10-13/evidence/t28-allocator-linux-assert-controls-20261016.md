@@ -1,0 +1,9 @@
+2026-10-16 ET. Scoped Linux allocator assertion qualification repair; no actual proof result.
+
+The actual G623 capture reproduces the original source refusal and identifies a GNU __extension__ marker only around __PRETTY_FUNCTION__ in the fourth __assert_fail diagnostic argument. The checker now qualifies exactly that pure diagnostic subtree and the captured FunctionDecl/noreturn/noexcept(true) signature. Executable guards, failure polarity/callee census, binary/operator checks and canonical source/LLVM equality stay intact; no general unary marker or side-effect exemption is admitted.
+
+Eight normalized actual compiler traces preserve every field except process-local IDs/locations/ranges. Original RED9 is retained; a first public test declaration omitted exact noexcept(true) and was correctly refused, then a missing test import was corrected after public CLI reached exit99. Neither intermediate run is called GREEN. Final18 pure trace/mutation controls,5 public Linux compiler controls and1 original-host public compiler control pass:24 unique. Unsafe diagnostic increments/calls, condition markers, wrong argument/signature and altered predicates refuse.
+
+All compiler controls ran serially through workerB and180s/8GiB watchdog, each final raw profile below64MiB. No native program or formal tool was run. Two actual public records are not_proven/tool_crash from intentional exit99 stand-ins. They establish source/plumbing controls only. Exact code source and runtime pins, commands, JUnit, resources, root captures and owned raw ledger are in the JSON companion.
+
+Original total caller/formula102 versus101, source assertions, three-counter frame, contract/model/library/API0.1 and existing owned source-body TCB boundary remain unchanged. Current source merges published integration a3a8db54, retaining the independent register namespace fix. Repaired actual Linux qualification/pair, theorem and full ticket28/current0.2 acceptance remain pending.

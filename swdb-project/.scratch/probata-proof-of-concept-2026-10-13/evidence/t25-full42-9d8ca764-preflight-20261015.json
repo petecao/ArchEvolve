@@ -1,0 +1,101 @@
+{
+  "time": "2026-10-16T03:05:51.106239+00:00",
+  "uptime": " 23:05:51 up 76 days, 15:24, 11 users,  load average: 0.01, 0.13, 0.25\n",
+  "disk": "Filesystem      Size  Used Avail Use% Mounted on\n/dev/sdd1       1.8T  1.7T   36G  98% /data1\n/dev/sdb1       1.8T  1.7T   69G  97% /data\n",
+  "users": "",
+  "leases": {
+    "mbit10-evaluation.meta.json": {
+      "active_session": null,
+      "heartbeat_at": "2026-09-12T04:49:11Z",
+      "lease": {
+        "acquired_at": "2026-09-12T01:35:42Z",
+        "daemon_pid": 209457,
+        "daemon_start_token": "sh209457-1789176942",
+        "generation": 77,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation",
+        "mode": "measure",
+        "session_id": null
+      },
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "recovered_from_generation": null,
+      "released_at": "2026-09-12T04:49:11Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation-node1.meta.json": {
+      "active_session": null,
+      "heartbeat_at": "2026-10-16T02:35:29Z",
+      "lease": {
+        "acquired_at": "2026-10-16T02:35:25Z",
+        "daemon_pid": 3807860,
+        "daemon_start_token": "sh3807860-1792118125",
+        "generation": 611,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node1",
+        "mode": "measure",
+        "session_id": null
+      },
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "recovered_from_generation": null,
+      "released_at": "2026-10-16T02:35:29Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation-node0.meta.json": {
+      "active_session": null,
+      "heartbeat_at": "2026-10-16T02:51:21Z",
+      "lease": {
+        "acquired_at": "2026-10-16T02:51:18Z",
+        "daemon_pid": 3809631,
+        "daemon_start_token": "sh3809631-1792119078",
+        "generation": 584,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node0",
+        "mode": "measure",
+        "session_id": null
+      },
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "recovered_from_generation": null,
+      "released_at": "2026-10-16T02:51:21Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    }
+  },
+  "source": {
+    "branch": "yanrujhou_main",
+    "commit": "680298a3370b72ed2f8aed15cd29e67aa056229d"
+  },
+  "new_source_already_exists": false,
+  "declared_stdlib": {
+    "count": 57,
+    "sha256": "520d9875983b41da80b89d7809cff4c76370e8445f8b49147f1423cfb7404c31"
+  },
+  "why3_config_sha256": "50061c22ad10615b4cd0103721869646155b681e0317a679682aed719f0967c9",
+  "processes": [
+    "USER         PID    PPID ELAPSED %CPU   RSS COMMAND",
+    "yanruj   3813446 3813440       0  300  4640 ps",
+    "yanruj   3813440 3813439       0 55.5 17224 python3",
+    "root     3813392 1439329       0  7.5 11140 sshd",
+    "root        1706    1684 6621873  3.6 1779500 falcon-sensor-b",
+    "root           1       0 6621883  0.5 12500 systemd",
+    "root     3811544       2     767  0.3     0 kworker/u128:1-ipv6_addrconf",
+    "message+    1903       1 6621872  0.3  6812 dbus-daemon",
+    "root     3807598       2    1897  0.2     0 kworker/u130:3-events_power_efficient",
+    "node_ex+    2512       1 6621862  0.1 20308 node_exporter",
+    "root     3808153       2    1809  0.1     0 kworker/u128:0-bnxt_pf_wq",
+    "root         411       2 6621883  0.1     0 kcompactd1",
+    "root     3798926       2    3328  0.1     0 kworker/u129:3-events_unbound",
+    "root        2349       1 6621868  0.1 21940 containerd",
+    "root          17       2 6621883  0.1     0 rcu_preempt"
+  ]
+}

@@ -109,3 +109,17 @@ controls: `tests/test_array_domains.py`.
 - 44: compare vocabulary `shared_action_kinds` with the Rocq constructors.
 - 52: check a lineage against `required_enabling_contracts` (range grammar: `swdb.formal_frame.RANGE`; each
   bound is `>=`, `>`, `<=`, `<` or `==` and a dotted version).
+
+## Closed partial-unit fixture policy — 2026-10-16 ET
+
+The synthetic one-u32-stream fixture additionally accepts
+`proof_unit.correctness_policy` only for its separately versioned closed partial
+unit. It declares `kind: partial-normal-return-v1`, the exact source policy and
+an exact semantics `{id, sha256}`. Validation refuses changed/missing pins and
+unrelated units; the WP adapter also requires that fixture's partial method.
+This is not a general formal-half syntax extension. Its original unit explicitly
+requests partial correctness before admission, and the generated unit and helper
+contracts use `terminates \false`. An original total request refuses rather than
+receiving a weaker contract. The record is a `partial_library_summary`, which
+cannot discharge a generic `library_summary` dependency. Source refinement and
+hardware progress are separate obligations.

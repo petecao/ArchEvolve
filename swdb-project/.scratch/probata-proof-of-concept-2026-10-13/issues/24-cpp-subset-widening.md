@@ -1,27 +1,42 @@
 # 24 — C++ subset widening
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-15 ET (original Bag/Counter scalar-lifetime checkpoint; whole construct acceptance remains open)
+Updated: 2026-10-15 ET (combined current actual matrix and independent closure accepted)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** resolved
 **Blocked by:** 21
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Formal-half language and the C++ subset": the subset by construct and kept names; "Verifier lineup and order": failure classes; "Records and levels": method-version file contents; "Testing Decisions", seam 1; choice S1); decisions: [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md) items 3, 9; [13](../../formal-verification-2026-10-09/issues/13-proof-hint-loop.md) item 2; [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md) items 3, 6
 **Time estimate:** about 4 days
+
+**Completed soundness follow-up (2026-10-15 ET):** independent review found that
+generic atomic lowering dropped evaluated order/weak operands and admitted weak
+CAS into a deterministic strong model. The scoped constant-operand/strong-only
+fix and the independently discovered enum-scope repair pass 86 recorded compiler/native
+controls and 29 public/corpus controls. Independent final review, fresh finite
+agreement and the complete actual matrix now pass at the repaired runtime. [Enum repair evidence](../evidence/t24-enum-scope-repair-20261015.md). Existing remote/finite records keep their
+historical freezes. [Fix, TDD and exact evidence boundary](../evidence/t24-atomic-operand-fix-20261015.md).
 
 **What to build:** The C lowering tool grows from 21's core (functions, arrays, loops) to the declared C++ subset, construct by construct, so GAPBS-style candidate artifacts can reach WP. Accepted: C plus references; classes without inheritance or virtual functions; member functions and operators; constructors and destructors as explicit calls; instantiated templates; `new[]` and `delete[]`; `enum class`, `constexpr`, `static_assert`; `std::min`, `std::max`, `std::copy`, `std::swap` through C models proven once; the OpenMP constructs (`parallel`, `for` with static, dynamic and `nowait`, `critical`, `atomic`, `barrier`, `reduction`); `__sync_*` and `__atomic_*`; `__dxc_*` and `maa_*` calls through summaries. The C lowering keeps C++ names: a class becomes a struct with the same name and fields, references become pointers, operators become named functions. So formal halves type-check unchanged. Anything outside the subset gives failure class "unsupported construct", never a crash or a partial C lowering. The naming rules are versioned and belong to the content-hash set.
 
 ## Acceptance
 
-- [ ] One fixture per construct group lowers deterministically (twice, identical C and anchors). Its ACSL type-checks over the kept names. `swdb prove` with the real WP adapter proves the safe version, and a seeded bug reads not proven.
-- [ ] Kept names: a class fixture's formal half, written over the class's field names, type-checks against the C lowering with no renaming. A reference parameter becomes a pointer; an operator and a member function become named functions under the naming rules; constructors and destructors appear as explicit calls.
-- [ ] Templates: a template instantiated at two types lowers to two C functions, named by the naming rules. `enum class` lowers to `int`.
-- [ ] `new[]` and `delete[]`: a fixture that indexes out of range, or reads after `delete[]`, reads not proven; the in-range fixture proves.
-- [ ] Each of `std::min`, `std::max`, `std::copy`, `std::swap` lowers to a call of its C model. Each model's ACSL contract is proven once (one proof record each, subject: a library entry's summary). A unit that uses a model pins that record.
-- [ ] An OpenMP fixture (`parallel for` with a `reduction`, a `critical` section, an `atomic`, a `barrier`) and an atomics fixture (`__sync_*`, `__atomic_*`) lower and prove at threads = 1.
-- [ ] A fixture with a `__dxc_*` call and one with a `maa_*` call keep each as a call whose contract comes from a fixture summary. The record lists the summary used.
-- [ ] Unsupported constructs: inheritance, a virtual function, an exception, a lambda, RTTI, another standard container (such as `std::map`) and a stream each read not proven, "unsupported construct", naming the construct and its source location.
-- [ ] Naming rules carry a version. Every proof record pins it in its content-hash set, and bumping the version gives a different pin.
-- [ ] Each diagnosed failure joins 21's regression corpus. Fixtures use no BC, PR or SSSP code. Tests that need Frama-C or LLVM 22 skip cleanly.
+- [x] One fixture per construct group lowers deterministically (twice, identical C and anchors). Its ACSL type-checks over the kept names. `swdb prove` with the real WP adapter proves the safe version, and a seeded bug reads not proven.
+- [x] Kept names: a class fixture's formal half, written over the class's field names, type-checks against the C lowering with no renaming. A reference parameter becomes a pointer; an operator and a member function become named functions under the naming rules; constructors and destructors appear as explicit calls.
+- [x] Templates: a template instantiated at two types lowers to two C functions, named by the naming rules. `enum class` lowers to `int`.
+- [x] `new[]` and `delete[]`: a fixture that indexes out of range, or reads after `delete[]`, reads not proven; the in-range fixture proves.
+- [x] Each of `std::min`, `std::max`, `std::copy`, `std::swap` lowers to a call of its C model. Each model's ACSL contract is proven once (one proof record each, shared ticket25 subject `c_model`, interface `--model` / `pins.models`). A unit that uses a model pins that record.
+- [x] An OpenMP fixture (`parallel for` with a `reduction`, a `critical` section, an `atomic`, a `barrier`) and an atomics fixture (`__sync_*`, `__atomic_*`) lower and prove at threads = 1.
+- [x] A fixture with a `__dxc_*` call and one with a `maa_*` call keep each as a call whose contract comes from a fixture summary. The record lists the summary used.
+- [x] Unsupported constructs: inheritance, a virtual function, an exception, a lambda, RTTI, another standard container (such as `std::map`) and a stream each read not proven, "unsupported construct", naming the construct and its source location.
+- [x] Once ticket22 lands, run its accepted finite native C++/C agreement subcheck on every original construct fixture; record undefined-input exclusions separately and retain a planted disagreement stop control.
+- [x] Naming rules carry a version. Every generated C++ proof product pins it explicitly in its content-hash set, and bumping the version gives a different pin. Pure C models and prelaunch refusals retain hash-covered translator/checker provenance.
+- [x] Each diagnosed failure joins 21's regression corpus. Fixtures use no BC, PR or SSSP code. Tests that need Frama-C or LLVM 22 skip cleanly.
+
+The checked boxes use the approved representative-fixture interpretation: the std group
+uses the separately named narrower writable-neighbor contract, while the unchanged
+original contract remains not proven. The model-subject and naming clarifications
+above record the adopted interface and generated-product boundary explicitly.
+[Independent item-by-item closure and full inventory](../evidence/t24-combined-current-independent-review-20261015.md).
 
 ## Notes
 
@@ -45,6 +60,52 @@ Updated: 2026-10-15 ET (original Bag/Counter scalar-lifetime checkpoint; whole c
 - WP runs fail inside the Bash sandbox (the Why3 socket is blocked); run WP jobs outside it.
 
 ## Answer
+
+2026-10-15 ET. **Resolved under the disclosed representative-fixture interpretation.**
+The repaired production runtime at `0e7f2327` now has **36 accepted actual WP
+records: 26 proven and 10 attributable not-proven negatives**, plus **nine
+prelaunch lifetime refusals**. The actual set contains nine safe/seeded caller
+pairs, fourteen C models, three fixture summaries and the dedicated original
+out-of-range case. The independently completed continuation at `23933f8a` reuses
+normally eligible exact records and adds the remaining rows; the separately
+qualified std pair uses `bf7a404c`. All three retain identical production runtime
+bytes. Historical results do not substitute for these records.
+
+The final independent audit checks complete ordinary/smoke/initialization
+inventories, mandatory RTE/init/cache/machdep flags, physical source/report/artifact
+hashes, current method/setup/reader pins, naming and selected dependencies. A
+separate cold reader reproduces every actual record's full goals, verdict,
+failure class and reader receipt. The continuation exits 0 under its 8 GiB guard
+in 5,173.653 s, peak 3,226,492,928 B, with no OOM/whole timeout and unchanged source.
+[Full 45-record inventory, eleven-item review and ended-run receipts](../evidence/t24-combined-current-independent-review-20261015.md).
+
+The original std contract `13fd` remains **not proven**. The distinct `d586`
+writable-neighbor empty-domain contract supplies the approved representative
+witness; read-only and live zero-size empty inputs are conservatively excluded,
+not classified as UB. DXC's old `+2` was not a concrete bug; its disclosed `+4`
+seed has both a native violating witness and an actual ordinary open goal. The
+original no-op MAA summary retains three ordinary Valid goals and zero own
+smoke; its narrowly checked acceptance additionally requires the unchanged
+actual caller's precondition and both per-call reachability smoke witnesses.
+No arbitrary zero-smoke rule or production eligibility exception was added.
+
+The current accepted ticket22 finite check records 112,589 defined comparisons,
+17 agreeing classifications and one UB-only allocation seed, with precondition
+and known-UB exclusions separate. Compiler/public controls retain deterministic
+C/anchors, kept-name ACSL checks, source-located unsupported refusals, naming
+version invalidation and diagnosed corpus entries. Raw evidence and all stopped
+runs, failed qualifications and auditor correction receipts remain preserved.
+
+The evidence remains scoped: standard copy is range-qualified; allocation assumes
+success and handles a closed certified terminal shape plus refusals; atomics and
+OpenMP use one thread with strong-only CAS; float `+real` retains the rounding
+assumption; DXC/MAA are fixture stand-ins. Finite source observations establish
+neither formal C++ equivalence nor a general WP-view/device theorem. Inheritance,
+`omp simd`, general lifetime semantics and symbolic-thread meanings remain outside
+this slice. The following dated answers are historical checkpoints, not current
+acceptance claims.
+
+## Historical first-pass answer
 
 2026-10-14 17:10 ET (first pass; superseded in part by "Progress (paused)" below). The C lowering tool now covers the declared C++ subset (plus
 `float`/`double`, asked by ticket 26), and its lowering of spike (b)'s proof unit 1 agrees with ticket 06's
@@ -731,3 +792,173 @@ current-policy construct/dependency matrix, including embedded template-array
 origins, conditional standard-call placement and broader allocation/lifetime
 coverage. See [class evidence](../evidence/t24-member-lifetimes-mac-20261015.json)
 and [condition closeout](../evidence/t24-condition-closeout-20261015.json).
+
+### Resumed original construct frontier — 2026-10-15 ET
+
+User resumed implementation and remote evaluation. The exact original Ring
+int/long fixtures now gain structural fixed-subobject identity through a closed
+live automatic receiver context; pure conditional-return reads carry ordinary
+path-conditioned numeric guards. No validity/init/numeric premise is added and
+no original source, contract or hint is replaced. Independent source review found
+and repaired a runner acceptance gap: original seeded prelaunch refusals cannot
+count as actual negative proofs. A separate narrow terminal `i<=n` fill grammar
+keeps the original off-by-one fixtures' invalid writes as actual RTE obligations.
+
+All 18 original safe/seeded combined-source compiler admissions now pass at
+`b801e5a2`. Original determinism/C11/bounded-native/name/refusal controls pass
+29/29; new fixed/conditional/public stand-in/setup controls pass16/16; terminal
+controls pass12/12. These overlapping profiles are compiler/stand-in coverage,
+not actual construct acceptance. The root coordinator owns fresh lane0 dispatch
+through the committed exact-source runner, after mandatory setup hardening is
+merged. Original all-goal/init/smoke safe+seeded acceptance and current dependency
+pins remain required. Status stays **claimed**.
+[Implementation assumptions, exact checkpoints and evidence](../evidence/t24-resume-compiler-20261015.md).
+
+### Original Ring per-candidate actual acceptance — 2026-10-15 ET
+
+Frozen `71771f09` passes the original template pair on mbit10 node0. Safe:
+**89 ordinary + 1 smoke Valid**. Seeded original `r.get(0)`: **not_proven,
+88 ordinary Valid, one ordinary ensures timeout, 1 smoke Valid**. Both retain
+**25 RTE initialization goals**, with zero residual Ring/twice calls in the
+normalized selected entry. No new validity/init/numeric requires or replacement
+fixture was used. All physical code/baseline/contract/method/checker/report pins,
+980 Git/source-manifest files and exact original source substitutions were
+independently checked. Raw evidence remains remote; compact audit is committed.
+This closes the original embedded-array compiler/proof gap, not the whole ticket.
+The remaining eight groups and lifetime/dependency actual matrix are pending;
+status remains **claimed**.
+[Exact pair audit](../evidence/t24-original-template-pair-mbit10-20261015.json).
+
+### Concrete dxc negative-control correction — 2026-10-15 ET
+
+The old `__dxc_tile_size(tile)+2` variant is not a concrete bug against the
+original stand-in: `tile&1` returns 0 or 1, so the variant returns 2 or 3 and still meets
+`1<=result<=3`. A modular ensures timeout from the looser proven summary
+`0<=result<=2` is a precision control, not genuine seeded semantic-bug acceptance.
+The root coordinator authorized changing only this seeded replacement to `+4`.
+Safe source, original contract, original summary and actual stand-in body remain
+unchanged. At in-domain `tile=0`, native C++ and its C lowering both return 1 for
+safe, 2 for the old seed and 4 for the corrected seed. The public native negative
+control goes RED (old+2) to GREEN (corrected+4), 2.06 s / 1.71 s. This is native
+fixture evidence, not a solver refutation or production DX100 semantics claim.
+Frozen `71771f09` records keep their exact old source identities; fresh corrected-seed
+actual acceptance remains required. [Native source/binary hashes and outcomes](../evidence/t24-dxc-native-negative-control-20261015.json).
+
+### Original allocation pair and public unsupported controls — 2026-10-15 ET
+
+The original new-array safe/seeded pair now has actual frozen `71771f09`
+evidence. Safe proves 42 ordinary + 7 smoke goals. The original `i<=n` seed
+reads `not_proven`: 40 ordinary Valid, ordinary invariant-preservation and
+memory-access timeouts, 4 smoke Valid and 3 failed smoke. Both retain 11
+initialization goals. Independent physical/source/certificate/view auditing
+finds no errors; no timeout is labeled a counterexample and no invalid native
+write is executed. [Compact actual audit](../evidence/t24-original-allocation-pair-mbit10-20261015.json).
+
+All seven original unsupported groups also pass public proof refusal controls
+(7/7, 30.27 s), with named source-line diagnostics, no goals and no verifier
+launch. Their `not_proven` result is deliberate prelaunch refusal, distinct from
+the actual original semantic negative jobs. Remaining groups, lifetime actuals,
+dependency closure, corrected-DXC actuals and accepted ticket22 finite agreement
+profile are still pending. Status remains **claimed**.
+
+### Accepted ticket22 finite agreement limb — 2026-10-15 ET
+
+The reviewed original nine-group safe/current-seeded profile at `e48a302e`
+records **112,589 defined input comparisons**, all equal between C++ and the
+ordinary C lowering. All 18 case classifications are present: 17 agree on
+defined inputs; the allocation seed is explicitly UB-only with zero defined
+comparisons. The **2,207 known UB exclusions** (500 allocation, 1,702 standard
+copy at `n==0`, 5 seeded maa overflow) remain separate from **47,164 original
+precondition exclusions**. No runtime sanitizer asymmetry was observed.
+
+Independent review reconstructed every domain/classification and all retained
+defined results, rehashed 15,768 references across 1,363 physical files, and
+found zero discrepancies. The shared planted C-only lowering mismatch stops
+comparison and emits no proof verdict. This completes the separate agreement
+limb under the accepted ticket22 decision; it is finite native evidence, not
+formal C++ equivalence, a proof of a WP checking view, or device semantics.
+[Accepted profile and exact pins](../evidence/t24-finite-agreement-20261015.md),
+[independent final review](../evidence/t24-finite-agreement-final-review-20261015.md).
+
+Provenance stays explicit: original Ring/allocation actual records use frozen
+`71771f09`; pending remaining actual jobs use `9b75f4a2`; finite agreement uses
+`e48a302e`. Production runtime bytes match across those freezes, while shared
+seeded artifacts retain their distinct old-DXC+2/corrected-DXC+4 identities.
+No historical record is relabeled current. Remaining actual construct pairs,
+lifetime controls and fresh model/summary closure still gate ticket completion.
+Status remains **claimed**.
+
+### Corrected dxc original caller pair accepted — 2026-10-15 ET
+
+Fresh frozen `9b75f4a2` proves the unchanged fixture summary (4 ordinary + 1
+smoke Valid) and safe caller (9 ordinary + 3 smoke Valid). The corrected `+4`
+seed reads `not_proven`, with 8 ordinary Valid, one ordinary ensures timeout
+and all 3 smoke Valid. Both callers bind the same newly proven summary ID and
+content, with current source-closure binding receipts. No prelaunch refusal or
+historical `+2` precision control substitutes for this actual negative.
+
+The independent compact audit finds zero errors across all 983 frozen source
+files, report/adapter-log hashes, candidate/baseline artifacts, original
+source/clauses/hints, current method/checker/naming pins and fresh dependency
+identity/content. Raw records remain remote. Timeout is not a counterexample;
+the separate native `tile=0` witness establishes the corrected seed's concrete
+result 4 against the unchanged `1<=result<=3` clause.
+[Exact corrected pair and dependency audit](../evidence/t24-corrected-dxc-pair-mbit10-20261015.json).
+Remaining original groups, allocation/lifetime controls and model/summary
+closure remain open; overall status stays **claimed**.
+
+
+## 2026-10-15 ET — Historical matrix final frontier and repaired-source replay
+
+The frozen `9b75f4a2` actual batch accepted corrected DXC safe/+4-seed,
+classes safe/seed and OpenMP safe/seed, then stopped at float-safe initializedness
+open goals. All launched rows retain setup/RTE/init/smoke/cache/machdep obligations;
+seeded acceptance is an attributable ordinary open goal, not a counterexample.
+[Final compact audit and resources/cleanup](../evidence/t24-historical-frontier-9b75-mbit10-20261015.md)
+checks 983 physical source hashes/Git blobs, eight records, 97 report/log instances,
+644 artifact instances and exact-launch translator components with zero integrity
+errors. The first default-reader environment mismatch receipt remains retained.
+
+The reviewed float hint repair is merged from integration `1fe30bb1`; atomic
+operand and enum ambiguity repairs are frozen separately for independent final
+review. The public controls refuse all 17 problematic operand shapes before
+launch, and stale translator pins create no proof record. Unique enums and
+original constant atomic C/anchors/models/names remain covered. No actual WP
+proof at this repaired translator is claimed yet. The finite agreement limb is
+accepted under ticket22's finite boundary; actual safe/seed/current-method and
+allocation/lifetime matrix obligations remain open. No shared map/resume or
+historical proof record was modified by this ticket update.
+
+### Fresh finite agreement at published 0e7f2327 — 2026-10-15 ET
+
+A new clean checkout of `0e7f232762e4555aa9435a3a3622923fad8ee928`
+completed the unchanged accepted ticket 22 native profile for all nine original
+construct groups, safe and seeded. All 18 case classifications are retained:
+17 agree on defined inputs; the allocation seed remains explicitly UB-only,
+with zero defined comparisons. **112,589 defined comparisons agree**. The
+**47,164 original precondition exclusions** and **2,207 known UB exclusions**
+remain separate; no runtime sanitizer UB or asymmetry was observed.
+
+The whole-worker 8 GiB/900 s guard exits 0 in 60.570 s, with peak
+1,310,572,544 B and approximately 349 MB retained under the monitored 2 GiB
+raw budget. Fresh frontend/parser/header/aggregate provenance is complete and
+all 8,550 tracked source files remain unchanged. The producer stays clean for
+current/final audit readers; this receipt is committed separately from it.
+Independent review rehashes 15,771 artifact references and all producer source
+files and reconstructs every defined source observation without discrepancies.
+This is finite ordinary C/C++ agreement only: no formal equivalence, WP checking-view agreement,
+device semantics theorem or fresh proof verdict is claimed. Actual WP pairs
+and dependency acceptance remain separate; **Status stays claimed**.
+[Fresh profile and exact pins](../evidence/t24-fresh-finite-agreement-0e7f2327-20261015.md).
+
+### Current atomic pair and exact no-op summary frontier — 2026-10-15 ET
+
+The current0e7 remaining matrix accepted all9 atomic models and the unchanged atomic safe/seed pair:86/85 ordinary Valid respectively,19 smoke Valid each,11 initialization goals each, and an attributable seeded ensures timeout. It stopped at `maa_const` because the original runner requires generated smoke for every summary. That actual unchanged no-op record has3 ordinary Valid goals and0 smoke; its original rejection is preserved. No later group in that stopped run is accepted.
+
+A separate fixture-only continuation policy is under independent review: exact source/contract/return-body/3VC binding, provisional no-op status, then mandatory actual unchanged MAA caller precondition and both per-call reachability smokes with original candidate/code/contract/dependency pins. It reuses ordinarily eligible accepted atomic records and retains all remaining allocation/lifetime obligations. No production checker or original source/contract changes, no arbitrary zero-smoke acceptance and no new actual witness are claimed. [Current atomic audit, RED/GREEN controls and continuation boundary](../evidence/t24-noop-summary-continuation-20261015.md). Status remains **claimed**.
+
+### Qualified stdv2 actual pair accepted — 2026-10-15 ET
+
+The separately named writable-object contract d586 at exact published bf7a completed actual safe/seeded proof rows. Safe has47 ordinary+13 smoke Valid; seeded has44 ordinary Valid+4 ordinary timeouts and11 smoke Valid+2 failed, with5 initialization goals retained in each. Ordinary public dependency selection chose exactly the5 accepted current0e7 model IDs and checked copy qualification. Independent metadata and cold reading reproduce all7 records' full goals/verdicts/checker receipts. Gen578 exits0 with no OOM/whole timeout and unchanged bf7a source.
+
+This qualifies the disclosed narrower representative fixture, not the unchanged original std contract13fd: its original failed recorde03a, first vocabulary-refused qualification, read-only/live-zero-size exclusions and same-base obligation remain explicit. Seed nonproof is not a solver counterexample. [Independent actual stdv2 audit](../evidence/t24-qualified-std-v2-actual-independent-review-20261015.md). Current float/atomic/qualified-std pairs are accepted; six original groups, their summaries and complete allocation/lifetime matrix remain pending. All original acceptance boxes remain open until the full current evidence closure; status stays **claimed**.

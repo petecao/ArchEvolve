@@ -24,11 +24,20 @@ REPORT_MODULE = Path(__file__).with_name("proof_report.ml")
 CHECK_SOURCES = ("proof_setup.py", "proof_report.ml", "proof.py", "cbmc_adapter.py", "cbmc_equivalence.py",
                  "cbmc_product.py", "wp_adapter.py", "crux_adapter.py", "rocq_adapter.py", "rss_watchdog.py",
                  "vocab.py", "formal_frame.py", "acsl_subset.py", "framac.py", "hint_check.py", "hint_tree.ml",
-                 "wp_pointer_bounds.py", "proof_semantics.py", "vector_ownership.py", "vector_pipeline.py", "standard_model_view.py",
+                 "wp_pointer_bounds.py", "proof_semantics.py", "dx100_interface.py", "dx100_source_selector.py", "dx100_size_source.py", "dx100_stream_source.py", "dx100_stream_model.py", "dx100_allocation_source.py", "dx100_register_source.py", "dx100_register_model.py", "vector_ownership.py", "vector_pipeline.py", "standard_model_view.py",
                  "array_domains.py", "model_domains.py", "dx_array_domains.py", "bounded_entry_windows.py",
                  "bounded_chain.py", "summary_bindings.py", "helper_windows.py", "standard_range_model.py",
                  "nested_entry_reads.py", "standard_range_calls.py", "member_windows.py", "stdlib_provenance.py", "stdlib_source_admission.py")
-REQUIRED_WP_SWITCHES = (("-wp-no-filter-init", "-wp-filter-init"),)
+CHECK_SOURCES += ("heap_model_view.py", "heap_model_packets.py", "heap_model_vcs.py",
+                  "heap_bridge.mlw", "heap_model_environment.ml", "vector_reallocation_model.py",
+                  "vector_reallocation_calls.py", "vector_reallocation_vcs.py", "heap_reallocation.mlw",
+                  "vector_reallocation_caller_vcs.py")
+CHECK_SOURCES += ("vector_reallocation_inventory.py",)
+CHECK_SOURCES += ("vector_reallocation_view.py",)
+CHECK_SOURCES += ("vector_reallocation_lifetime.py",)
+CHECK_SOURCES += ("vector_reallocation_capacity.py",)
+CHECK_SOURCES += ("dx100_initialized_register_source.py", "dx100_initialized_register_model.py")
+REQUIRED_WP_SWITCHES = (("-wp-no-filter-init", "-wp-filter-init"), ("-wp-rte", "-wp-no-rte"))
 _COMPILED_MODULES = {}
 _ASSUME = re.compile(r"\b(?:llvm_assume|crucible_assume|__VERIFIER_assume)\b|\b(?:__CPROVER_assume|SWDB_ASSUME|assume)\s*\(")
 
@@ -45,7 +54,7 @@ def identity():
     from swdb import paths
     folder = Path(__file__).parent
     dependencies = [("swdb/" + name, folder / name) for name in CHECK_SOURCES]
-    dependencies.append(("vocab/proof_failure_classes.yaml", paths.VOCAB / "proof_failure_classes.yaml"))
+    dependencies.extend(("vocab/"+name,paths.VOCAB/name) for name in ("proof_failure_classes.yaml","proof_subject_kinds.yaml"))
     # Frame each name and digest; concatenation must not blur dependency boundaries.
     sha = _digest([{"path": name, "sha256": _sha(path.read_bytes())} for name, path in dependencies])
     return {"proof_setup_check": {"version": SETUP_VERSION, "sha256": sha},
@@ -275,7 +284,15 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
                 _fail("summary_hash", f"summary {summary['id']} differs from its pinned content")
     hashes = {"summaries": _digest(summary_pins)}
     if adapter.name in {'cbmc', 'wp', 'crux-llvm-c', 'crux-llvm-cxx'}:
-        from swdb import stdlib_source_admission
+        from swdb import c_lowering, stdlib_provenance, stdlib_source_admission
+        runtime = stdlib_provenance.runtime_identity(c_lowering.locate())
+        if not runtime.get('driver') or not runtime.get('command_executable'):
+            _fail('compiler_runtime', runtime.get('unavailable', 'the compiler frontend cannot be pinned'))
+        translators = (adapter.method.data.get('c_lowering') or {}).get('translators') or []
+        if c_lowering.identity()['c_lowering'] not in translators:
+            _fail('compiler_runtime', 'the compiler runtime or lowering changed after method admission')
+        hashes['compiler_runtime'] = _digest(runtime)
+        context.setdefault('settings', {})['compiler_runtime'] = runtime
         try:
             hashes['stdlib_provenance'] = _digest(stdlib_source_admission.recheck(context, lowering))
         except stdlib_source_admission.Refused as exc:
@@ -287,6 +304,36 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
         except (summary_bindings.Refused, ValueError) as exc:
             _fail('summary_binding', str(exc))
         hashes['summary_bindings'] = _digest(checked_summaries)
+        from swdb import dx100_source_selector
+        try:
+            hashes['dx100_source_selector'] = _digest(dx100_source_selector.recheck(lowering or context.get("lowering")))
+        except dx100_source_selector.Refused as exc:
+            _fail('dx100_source_selector', str(exc))
+        from swdb import dx100_size_source, dx100_stream_source, dx100_allocation_source, dx100_register_source, dx100_initialized_register_source
+        for row in getattr(lowering or context.get('lowering'),'summaries',()):
+            if 'semantic_source' in row and (not isinstance(row['semantic_source'],dict)or row['semantic_source'].get('kind') not in (dx100_size_source.KIND,dx100_stream_source.KIND,dx100_allocation_source.KIND,dx100_register_source.KIND,dx100_initialized_register_source.KIND)):
+                _fail('dx100_source', 'unrecognized source-definition certificate kind')
+        try:
+            hashes['dx100_size_source'] = _digest(dx100_size_source.recheck(lowering or context.get('lowering')))
+        except dx100_size_source.Refused as exc:
+            _fail('dx100_size_source', str(exc))
+        from swdb import dx100_stream_source
+        try:
+            hashes['dx100_stream_source'] = _digest(dx100_stream_source.recheck(lowering or context.get('lowering')))
+        except dx100_stream_source.Refused as exc:
+            _fail('dx100_stream_source', str(exc))
+        try:
+            hashes['dx100_allocation_source'] = _digest(dx100_allocation_source.recheck(lowering or context.get('lowering')))
+        except dx100_allocation_source.Refused as exc:
+            _fail('dx100_allocation_source', str(exc))
+        try:
+            hashes['dx100_register_source'] = _digest(dx100_register_source.recheck(lowering or context.get('lowering')))
+        except dx100_register_source.Refused as exc:
+            _fail('dx100_register_source', str(exc))
+        try:
+            hashes['dx100_initialized_register_source'] = _digest(dx100_initialized_register_source.recheck(lowering or context.get('lowering')))
+        except dx100_initialized_register_source.Refused as exc:
+            _fail('dx100_initialized_register_source', str(exc))
     for path, expected in inputs:
         path = Path(path)
         actual = path.read_bytes()
@@ -339,7 +386,14 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
     if adapter.name == "wp":
         from swdb import standard_model_view, standard_range_model, standard_range_calls, wp_pointer_bounds
         try:
-            if "pointer_bounds_model_source" in context:
+            if context.get("heap_model_view"):
+                from swdb import heap_model_view
+                try:
+                    hashes['heap_model_view'] = heap_model_view.check_launch(
+                        job, adapter, context, command, flags, scratch or job.scratch)
+                except (heap_model_view.Refused, KeyError, OSError) as exc:
+                    _fail('heap_model_view', str(exc))
+            elif "pointer_bounds_model_source" in context:
                 from swdb import c_lowering
                 model = c_lowering.model_text(job.unit.function)
                 if context.get("standard_model_view"):
@@ -372,6 +426,7 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
                     except ValueError as exc:
                         _fail("nested_entry_reads", str(exc))
                 if ((lowering.pointer_bounds or {}).get("entry_windows") or (lowering.pointer_bounds or {}).get("owner") or
+                        (lowering.pointer_bounds or {}).get("member_windows") or
                         any(row.get("kind") in {"call", "producer", "import", "standard_range_call"} for row in lowering.pointer_bounds.get("sites", []))):
                     wp_pointer_bounds.recheck_source(lowering, context.get("pointer_source_plan"))
                 if (lowering.pointer_bounds or {}).get("owner"):
@@ -557,10 +612,54 @@ def read_wp_reports(goals_json, properties_csv, inventory_path, extern_contracts
         assumptions.append({"kind": "assumed_clause", "reference": reference,
                             "sentence": f"WP treats contract property {prop['property']} of {function} as Extern: "
                                         f"{prop.get('description') or prop['property']}."})
+    # A complete goal census is insufficient if its property graph is dangling.
+    # In particular, WP status selection can leave synthetic smoke properties
+    # outside Property_status.iter even though their Wpo goals still exist.
+    property_rows = inventory["properties"]
+    property_ids = [row.get("property") for row in property_rows]
+    if (any(not isinstance(name, str) for name in property_ids) or
+            len(property_ids) != len(set(property_ids))):
+        return outcome("not_proven", UNCLASSIFIED, "ambiguous or missing property identity")
+    property_set = set(property_ids)
+    for row in property_rows:
+        name = row["property"]
+        if not name and not (row.get("kind") == "other" and row.get("function") is None and
+                             row.get("line") == 0 and str(row.get("description", "")).startswith("module\n")):
+            return outcome("not_proven", UNCLASSIFIED, "empty property identity lacks source module context")
+        dependencies = row.get("dependencies")
+        origin = row.get("origin")
+        if ("origin" not in row or not isinstance(dependencies, list) or
+                any(not isinstance(dep, str) or not dep or dep not in property_set for dep in dependencies) or
+                (origin is not None and (not isinstance(origin, str) or not origin or origin not in property_set))):
+            return outcome("not_proven", UNCLASSIFIED, "incomplete property dependency or origin closure")
+    for row in generated.values():
+        targets = row.get("targets")
+        if (not isinstance(row.get("property"), str) or not row["property"] or row["property"] not in property_set or
+                not isinstance(targets, list) or
+                any(not isinstance(target, str) or not target or target not in property_set for target in targets)):
+            return outcome("not_proven", UNCLASSIFIED, "incomplete generated-goal property or smoke-target closure")
     smoke_failures = [p for p in inventory.get("properties", []) if p.get("generated_smoke_failure")]
     goals, unproven = [], []
     for name, expected in generated.items():
         raw_goal = reported.get(name)
+        if expected.get("smoke") and not isinstance(expected.get("passed"), bool):
+            return outcome("not_proven", UNCLASSIFIED, f"smoke goal {name} has a malformed pass flag", goals)
+        if expected.get("smoke") and expected.get("passed") is True:
+            # Wpo.all_not_valid accepts an empty result list vacuously. A raw
+            # passed flag therefore cannot establish an attempted smoke check.
+            # Healthy nonvalid observations are operational evidence only; they
+            # do not prove satisfiability or consistency of the assumptions.
+            observations = expected.get("results")
+            healthy = {"unknown", "timeout", "stepout", "invalid"}
+            if (not isinstance(observations, list) or not observations or
+                    any(not isinstance(state, str) or state not in healthy for state in observations)):
+                return outcome("not_proven", UNCLASSIFIED, f"smoke goal {name} lacks healthy nonvalid observations", goals)
+            if raw_goal is not None and (
+                    raw_goal.get("property") != expected["property"] or
+                    raw_goal.get("smoke") is not True or raw_goal.get("passed") is not True or
+                    not isinstance(raw_goal.get("verdict"), str) or
+                    raw_goal["verdict"] not in healthy or raw_goal["verdict"] not in observations):
+                return outcome("not_proven", UNCLASSIFIED, f"smoke goal {name}: native report disagrees with observed inventory", goals)
         if raw_goal is None:
             direct = expected.get("passed") is True and (expected.get("smoke") or "valid" in expected.get("results", []))
             goal = {"goal": name, "property": expected.get("property"), "function": expected.get("function"),
@@ -657,7 +756,7 @@ def read_wp_reports(goals_json, properties_csv, inventory_path, extern_contracts
                    goals, assumptions=assumptions)
 
 
-def compile_report_module(workdir):
+def compile_report_module(workdir, *, timeout=120):
     """Compile the inventory reader against this host's Frama-C/WP API."""
     import shlex
     import shutil
@@ -666,7 +765,7 @@ def compile_report_module(workdir):
     shutil.copyfile(REPORT_MODULE, source)
     command = shlex.split(os.environ.get("SWDB_OCAMLFIND") or "opam exec --switch=framac-33 -- ocamlfind")
     done = subprocess.run([*command, "ocamlopt", "-shared", "-linkall", "-package", "frama-c.kernel,frama-c-wp.core",
-                           "-o", str(out), str(source)], capture_output=True, text=True, timeout=120)
+                           "-o", str(out), str(source)], capture_output=True, text=True, timeout=timeout)
     if done.returncode:
         _fail("report_reader", f"cannot compile fresh inventory reader: {(done.stderr or done.stdout)[:800]}")
     _COMPILED_MODULES[str(out.resolve())] = (_sha(out.read_bytes()), _sha(REPORT_MODULE.read_bytes()))

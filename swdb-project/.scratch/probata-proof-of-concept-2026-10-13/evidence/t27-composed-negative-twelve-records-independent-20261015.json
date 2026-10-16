@@ -1,0 +1,433 @@
+{
+  "created_utc": "2026-10-15T23:15:48.040612+00:00",
+  "scope": "Independent read-only completed-record snapshot; not whole-profile/theorem acceptance.",
+  "source_commit": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+  "run": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative",
+  "profile": "wp-negative",
+  "pytest": {
+    "passed": 12
+  },
+  "records": [
+    {
+      "name": "three_reads",
+      "record": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/pytest/test_wp_leaves_every_unit_cbmc0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t211434z.dc9d8edf.yaml",
+      "sha256": "307379762508cffec749306119ed93c60b6e9f651c66900c450b447e3faa39f7",
+      "constants": [
+        "SWDB_EARLY_READ_1"
+      ],
+      "verdict": "not_proven",
+      "failure_class": "vacuous_pass",
+      "ordinary": {
+        "valid": 111,
+        "total": 112
+      },
+      "smoke": {
+        "valid": 15,
+        "total": 31
+      },
+      "ordinary_open": [
+        {
+          "goal": "typed_real_dxf_three_reads_call_swdb_tile_read_probe_requires",
+          "property": "swdb_tile_read_probe_requires_2",
+          "function": "dxf_three_reads",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open_count": 16,
+      "initialized_goals": 18,
+      "rte_goals": 27,
+      "errors": []
+    },
+    {
+      "name": "three_reads",
+      "record": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/pytest/test_wp_leaves_every_unit_cbmc1/records/proofs/proof.dx100-fixtures.candidate-1.20261015t212352z.983ae918.yaml",
+      "sha256": "52adbaeac42b98734dc0b54d16e4dd3454161e4c9cb3239e5cac63ca8c77b4ff",
+      "constants": [
+        "SWDB_EARLY_READ_2"
+      ],
+      "verdict": "not_proven",
+      "failure_class": "vacuous_pass",
+      "ordinary": {
+        "valid": 111,
+        "total": 112
+      },
+      "smoke": {
+        "valid": 21,
+        "total": 31
+      },
+      "ordinary_open": [
+        {
+          "goal": "typed_real_dxf_three_reads_call_swdb_tile_read_probe_2_requires",
+          "property": "swdb_tile_read_probe_requires_3",
+          "function": "dxf_three_reads",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open_count": 10,
+      "initialized_goals": 18,
+      "rte_goals": 27,
+      "errors": []
+    },
+    {
+      "name": "value_range",
+      "record": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/pytest/test_wp_leaves_every_unit_cbmc10/records/proofs/proof.dx100-fixtures.candidate-1.20261015t224908z.f6878c9d.yaml",
+      "sha256": "d74537557284c5bca6aa1122999a6473e18bbe139a111b7b77af35621aedfe43",
+      "constants": [
+        "SWDB_WRONG_VALUE"
+      ],
+      "verdict": "not_proven",
+      "failure_class": "timeout",
+      "ordinary": {
+        "valid": 106,
+        "total": 107
+      },
+      "smoke": {
+        "valid": 37,
+        "total": 37
+      },
+      "ordinary_open": [
+        {
+          "goal": "typed_real_dxf_value_range_ensures",
+          "property": "dxf_value_range_ensures",
+          "function": "dxf_value_range",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open_count": 0,
+      "initialized_goals": 21,
+      "rte_goals": 16,
+      "errors": []
+    },
+    {
+      "name": "footprint",
+      "record": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/pytest/test_wp_leaves_every_unit_cbmc11/records/proofs/proof.dx100-fixtures.candidate-1.20261015t230629z.0ec9f821.yaml",
+      "sha256": "45e039c3e2db08ead745ce0452739b4243192afcc23ee6ab2b2d0847e3fb4c9e",
+      "constants": [
+        "SWDB_OUTSIDE"
+      ],
+      "verdict": "not_proven",
+      "failure_class": "vacuous_pass",
+      "ordinary": {
+        "valid": 51,
+        "total": 52
+      },
+      "smoke": {
+        "valid": 17,
+        "total": 18
+      },
+      "ordinary_open": [
+        {
+          "goal": "typed_real_dxf_footprint_ensures",
+          "property": "dxf_footprint_ensures",
+          "function": "dxf_footprint",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open_count": 1,
+      "initialized_goals": 9,
+      "rte_goals": 4,
+      "errors": []
+    },
+    {
+      "name": "three_reads",
+      "record": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/pytest/test_wp_leaves_every_unit_cbmc2/records/proofs/proof.dx100-fixtures.candidate-1.20261015t213400z.7fb18b71.yaml",
+      "sha256": "21da101583c1196836a24a13cfbbf3c4e11ea93d2e021b5bd2f641ad4ee6ac8b",
+      "constants": [
+        "SWDB_EARLY_READ_3"
+      ],
+      "verdict": "not_proven",
+      "failure_class": "vacuous_pass",
+      "ordinary": {
+        "valid": 113,
+        "total": 114
+      },
+      "smoke": {
+        "valid": 27,
+        "total": 31
+      },
+      "ordinary_open": [
+        {
+          "goal": "typed_real_dxf_three_reads_call_swdb_tile_read_probe_3_requires",
+          "property": "swdb_tile_read_probe_requires_4",
+          "function": "dxf_three_reads",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open_count": 4,
+      "initialized_goals": 18,
+      "rte_goals": 27,
+      "errors": []
+    },
+    {
+      "name": "size",
+      "record": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/pytest/test_wp_leaves_every_unit_cbmc3/records/proofs/proof.dx100-fixtures.candidate-1.20261015t214443z.cd84b489.yaml",
+      "sha256": "6af7532ecb388587c114e726c839ae47e2275dd88e3096d9c65d96cda98c22b9",
+      "constants": [
+        "SWDB_EARLY_SIZE"
+      ],
+      "verdict": "not_proven",
+      "failure_class": "vacuous_pass",
+      "ordinary": {
+        "valid": 35,
+        "total": 36
+      },
+      "smoke": {
+        "valid": 9,
+        "total": 13
+      },
+      "ordinary_open": [
+        {
+          "goal": "typed_real_dxf_size_call_get_tile_size_requires_2",
+          "property": "get_tile_size_requires_4",
+          "function": "dxf_size",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open_count": 4,
+      "initialized_goals": 7,
+      "rte_goals": 4,
+      "errors": []
+    },
+    {
+      "name": "cpu_write",
+      "record": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/pytest/test_wp_leaves_every_unit_cbmc4/records/proofs/proof.dx100-fixtures.candidate-1.20261015t215013z.6df8753e.yaml",
+      "sha256": "1b6bfff8db05f0c26e60c75864dd22469dad14567f1ce14304f49afc14d14f4e",
+      "constants": [
+        "SWDB_CPU_WRITE"
+      ],
+      "verdict": "not_proven",
+      "failure_class": "timeout",
+      "ordinary": {
+        "valid": 64,
+        "total": 65
+      },
+      "smoke": {
+        "valid": 21,
+        "total": 21
+      },
+      "ordinary_open": [
+        {
+          "goal": "typed_real_dxf_cpu_write_call_swdb_tile_write_probe_requires",
+          "property": "swdb_tile_write_probe_requires_2",
+          "function": "dxf_cpu_write",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open_count": 0,
+      "initialized_goals": 11,
+      "rte_goals": 11,
+      "errors": []
+    },
+    {
+      "name": "range_exception",
+      "record": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/pytest/test_wp_leaves_every_unit_cbmc5/records/proofs/proof.dx100-fixtures.candidate-1.20261015t215738z.c9b2ebfc.yaml",
+      "sha256": "0923a605bbc77ba2000168363d39fd3f2ae79632dc24137fdf54579f0b51720b",
+      "constants": [],
+      "verdict": "not_proven",
+      "failure_class": "timeout",
+      "ordinary": {
+        "valid": 84,
+        "total": 85
+      },
+      "smoke": {
+        "valid": 27,
+        "total": 27
+      },
+      "ordinary_open": [
+        {
+          "goal": "typed_real_dxf_range_exception_call_swdb_tile_read_probe_requires",
+          "property": "swdb_tile_read_probe_requires_2",
+          "function": "dxf_range_exception",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open_count": 0,
+      "initialized_goals": 16,
+      "rte_goals": 11,
+      "errors": []
+    },
+    {
+      "name": "condition_wait",
+      "record": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/pytest/test_wp_leaves_every_unit_cbmc6/records/proofs/proof.dx100-fixtures.candidate-1.20261015t221236z.41b5fecc.yaml",
+      "sha256": "e330f6ee2cc1da4a0aad3d7224ed8a37cea78f09af351311fff8c3508f5856dd",
+      "constants": [],
+      "verdict": "not_proven",
+      "failure_class": "timeout",
+      "ordinary": {
+        "valid": 98,
+        "total": 99
+      },
+      "smoke": {
+        "valid": 33,
+        "total": 33
+      },
+      "ordinary_open": [
+        {
+          "goal": "typed_real_dxf_condition_wait_call_swdb_tile_read_probe_requires",
+          "property": "swdb_tile_read_probe_requires_2",
+          "function": "dxf_condition_wait",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open_count": 0,
+      "initialized_goals": 19,
+      "rte_goals": 15,
+      "errors": []
+    },
+    {
+      "name": "unrelated_wait",
+      "record": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/pytest/test_wp_leaves_every_unit_cbmc7/records/proofs/proof.dx100-fixtures.candidate-1.20261015t222821z.54495e94.yaml",
+      "sha256": "5640b339437dfa2cd2889e5d1871cec74391e3052053cbbbb8c9f0a5d4e80483",
+      "constants": [],
+      "verdict": "not_proven",
+      "failure_class": "timeout",
+      "ordinary": {
+        "valid": 42,
+        "total": 43
+      },
+      "smoke": {
+        "valid": 15,
+        "total": 15
+      },
+      "ordinary_open": [
+        {
+          "goal": "typed_real_dxf_unrelated_wait_call_swdb_tile_read_probe_requires",
+          "property": "swdb_tile_read_probe_requires_2",
+          "function": "dxf_unrelated_wait",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open_count": 0,
+      "initialized_goals": 8,
+      "rte_goals": 8,
+      "errors": []
+    },
+    {
+      "name": "value_stream",
+      "record": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/pytest/test_wp_leaves_every_unit_cbmc8/records/proofs/proof.dx100-fixtures.candidate-1.20261015t223429z.186d358e.yaml",
+      "sha256": "4c5549e4306a664e1b537b26b0d97fd152dd5ec8c9d2fe14add885f6bf70b215",
+      "constants": [
+        "SWDB_WRONG_VALUE"
+      ],
+      "verdict": "not_proven",
+      "failure_class": "timeout",
+      "ordinary": {
+        "valid": 44,
+        "total": 45
+      },
+      "smoke": {
+        "valid": 15,
+        "total": 15
+      },
+      "ordinary_open": [
+        {
+          "goal": "typed_real_dxf_value_stream_ensures",
+          "property": "dxf_value_stream_ensures",
+          "function": "dxf_value_stream",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open_count": 0,
+      "initialized_goals": 8,
+      "rte_goals": 10,
+      "errors": []
+    },
+    {
+      "name": "value_gather",
+      "record": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/pytest/test_wp_leaves_every_unit_cbmc9/records/proofs/proof.dx100-fixtures.candidate-1.20261015t224038z.16804f8c.yaml",
+      "sha256": "3c95a1f70df6c755ad4e6d3fc3a48e3c4a9ce8d425f0bc59389bf922e02310ac",
+      "constants": [
+        "SWDB_WRONG_VALUE"
+      ],
+      "verdict": "not_proven",
+      "failure_class": "timeout",
+      "ordinary": {
+        "valid": 59,
+        "total": 60
+      },
+      "smoke": {
+        "valid": 17,
+        "total": 17
+      },
+      "ordinary_open": [
+        {
+          "goal": "typed_real_dxf_value_gather_ensures",
+          "property": "dxf_value_gather_ensures",
+          "function": "dxf_value_gather",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open_count": 0,
+      "initialized_goals": 10,
+      "rte_goals": 13,
+      "errors": []
+    }
+  ],
+  "physical_pins": {
+    "references": 16368,
+    "unique_files": 1062,
+    "mismatches": []
+  },
+  "errors": [],
+  "audit_script": {
+    "path": "/private/tmp/probata-t27-audit-negative.py",
+    "sha256": "091423c4d1bb7ef270958dc4cdcc993d0fad0b5aa7a683e7c31c2f7f1f8bd6ed"
+  },
+  "outside_footprint_failed_smoke": {
+    "goal": "typed_real_dxf_footprint_wp_smoke_dead_code_s20",
+    "property": "dxf_footprint_wp_smoke_dead_code_s20",
+    "function": "dxf_footprint",
+    "status": "failed_smoke",
+    "smoke": true,
+    "source": "wp_json"
+  },
+  "boundary": "Twelve completed actual negative records only; final short-store-frame still active. Outside footprint retains independent original ensures timeout plus failed generated-branch smoke and not_proven/vacuous_pass. No source counterexample/refutation or whole-profile upgrade."
+}

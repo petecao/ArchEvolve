@@ -1,0 +1,790 @@
+{
+  "audit_md": {
+    "path": "/private/tmp/probata-t28-sizewrong1-debug-compact-cold-audit-v1-20261016.md",
+    "sha256": "49714285c6049a899cdaf16dfc82a65b4a5624a049c531093b30d8236fc0ac01"
+  },
+  "checks": [
+    "reader exact reviewed frozen bytes",
+    "policy exact reviewed frozen bytes",
+    "frozen exact source",
+    "healthy passive process",
+    "complete physical pass",
+    "original immutable and no new records",
+    "complete goal/property shape",
+    "exact own historical lane",
+    "bootstrap context independently derived",
+    "all ordinary outcomes",
+    "new replay exact stored failure",
+    "complete final goal/perprover census",
+    "failure-reason span exact",
+    "CSV all rows and one selected failure",
+    "smokes separately normalized",
+    "materialized not submission evidence",
+    "explicit refusal negative_clean_acceptance",
+    "explicit refusal pair_acceptance",
+    "explicit refusal refuted",
+    "explicit refusal old_generic_Failed_same_cause_proven",
+    "explicit refusal full_source_or_device_or_ticket_acceptance",
+    "diagnostic boundary reported_allocation_failure_is_watchdog_OOM",
+    "diagnostic boundary memory_cause_beyond_logged_reason_established",
+    "diagnostic boundary old_generic_Failed_same_cause_proven",
+    "diagnostic boundary negative_clean_acceptance",
+    "diagnostic boundary pair_acceptance",
+    "diagnostic boundary refuted",
+    "original guard healthy debug/resources.json",
+    "original guard healthy outer-resources.json",
+    "original guard healthy resources.json",
+    "new raw exact acceptance.log",
+    "new raw exact debug/argv.json",
+    "new raw exact debug/artifact-manifest.json",
+    "new raw exact debug/expected.json",
+    "new raw exact debug/frama-c-debug.log",
+    "new raw exact debug/fresh-report-module.json",
+    "new raw exact debug/old-raw-after.json",
+    "new raw exact debug/old-raw-before.json",
+    "new raw exact debug/old-raw-final.json",
+    "new raw exact debug/package-bindings.json",
+    "new raw exact debug/proof_report.cmi",
+    "new raw exact debug/proof_report.cmx",
+    "new raw exact debug/proof_report.cmxs",
+    "new raw exact debug/proof_report.ml",
+    "new raw exact debug/proof_report.o",
+    "new raw exact debug/resources.json",
+    "new raw exact debug/result.json",
+    "new raw exact debug/runtime-before.json",
+    "new raw exact debug/tasks/typed_real/get_tile_size_wp_smoke_dead_call_s65_Why3_Alt_Ergo_2_6_4.psmt2",
+    "new raw exact debug/tasks/typed_real/get_tile_size_wp_smoke_dead_call_s65_Why3_CVC5_1_2_1.smt2",
+    "new raw exact debug/tasks/typed_real/get_tile_size_wp_smoke_dead_call_s65_Why3_Z3_5_1_0.smt2",
+    "new raw exact debug/tasks/typed_real/trust_fixture_ensures_Why3_Alt_Ergo_2_6_4.psmt2",
+    "new raw exact debug/tasks/typed_real/trust_fixture_ensures_Why3_CVC5_1_2_1.smt2",
+    "new raw exact debug/tasks/typed_real/trust_fixture_ensures_Why3_Z3_5_1_0.smt2",
+    "new raw exact debug/tasks/typed_real/trust_fixture_wp_smoke_dead_code_s68_Why3_Alt_Ergo_2_6_4.psmt2",
+    "new raw exact debug/tasks/typed_real/trust_fixture_wp_smoke_dead_code_s68_Why3_CVC5_1_2_1.smt2",
+    "new raw exact debug/tasks/typed_real/trust_fixture_wp_smoke_dead_code_s68_Why3_Z3_5_1_0.smt2",
+    "new raw exact debug/tasks/typed_real/zilch-typed_real_get_tile_size_wp_smoke_dead_call_s65_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+    "new raw exact debug/tasks/typed_real/zilch-typed_real_get_tile_size_wp_smoke_dead_call_s65_CVC5_1dt2dt1-wp_goal.smt2",
+    "new raw exact debug/tasks/typed_real/zilch-typed_real_get_tile_size_wp_smoke_dead_call_s65_Z3_5dt1dt0-wp_goal.smt2",
+    "new raw exact debug/tasks/typed_real/zilch-typed_real_trust_fixture_ensures_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+    "new raw exact debug/tasks/typed_real/zilch-typed_real_trust_fixture_ensures_CVC5_1dt2dt1-wp_goal.smt2",
+    "new raw exact debug/tasks/typed_real/zilch-typed_real_trust_fixture_ensures_Z3_5dt1dt0-wp_goal.smt2",
+    "new raw exact debug/tasks/typed_real/zilch-typed_real_trust_fixture_wp_smoke_dead_code_s68_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+    "new raw exact debug/tasks/typed_real/zilch-typed_real_trust_fixture_wp_smoke_dead_code_s68_CVC5_1dt2dt1-wp_goal.smt2",
+    "new raw exact debug/tasks/typed_real/zilch-typed_real_trust_fixture_wp_smoke_dead_code_s68_Z3_5dt1dt0-wp_goal.smt2",
+    "new raw exact debug/wp-goals.json",
+    "new raw exact debug/wp-inventory.json",
+    "new raw exact debug/wp-normalized.c",
+    "new raw exact debug/wp-properties.csv",
+    "new raw exact debug/wp_input.c",
+    "new raw exact dispatch-argv.json",
+    "new raw exact dispatch.log",
+    "new raw exact execute.py",
+    "new raw exact lane.json",
+    "new raw exact launch.json",
+    "new raw exact outer-resources.json",
+    "new raw exact preflight.json",
+    "new raw exact resources.json",
+    "new raw exact run.sh",
+    "new raw exact runtime-provenance.json",
+    "new raw exact source-after.json",
+    "new raw exact source-manifest.json",
+    "new raw exact watch.py",
+    "new raw exact worker.log",
+    "old raw exact acceptance.log",
+    "old raw exact dispatch-argv.json",
+    "old raw exact dispatch.log",
+    "old raw exact execute.py",
+    "old raw exact lane.json",
+    "old raw exact launch.json",
+    "old raw exact outer-resources.json",
+    "old raw exact preflight.json",
+    "old raw exact resources.json",
+    "old raw exact run.sh",
+    "old raw exact runtime-provenance.json",
+    "old raw exact selected-size-tool-metadata.json",
+    "old raw exact size-collection.json",
+    "old raw exact size-collection.log",
+    "old raw exact size-exec-argv.json",
+    "old raw exact size-profile/exit-code.txt",
+    "old raw exact size-profile/junit.xml",
+    "old raw exact size-profile/profile.txt",
+    "old raw exact size-profile/pytest.log",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/bc-forward-pass.patch",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/bc_read_offload.inc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/bfs_read_offload.inc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/README.md",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/bc_driver.inc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/bfs_driver.inc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/candidate_prelude.hpp",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/record.cc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/seams.cc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/v1_4/bc_driver.inc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/v1_4/bfs_driver.inc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/v1_4/prelude.hpp",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/v1_4/record.cc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/v1_4/seams.cc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/v1_5/arena.hpp",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/v1_5/bc_driver.inc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/v1_5/bfs_driver.inc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/v1_5/client.cc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/v1_5/client/MAA_functional.hpp",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/v1_5/client_core.inc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/v1_5/evaluator.cc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/v1_5/evaluator_context.hpp",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/v1_5/evaluator_core.inc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/certification/v1_5/prelude.hpp",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/drivers/differential.cc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/dxc_lowering.hpp",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/peter-section5.patch",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/reference.hpp",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/strict/MAA_functional.hpp",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/dx100/strict/gem5/m5ops.h",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/methods/dx100-size-fixture-0-2.yaml",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/dx100_bfs/ghost.acsl",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/dx100_bfs/logic.acsl",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/dx100_bfs/model.h",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/dx100_bfs/state.h",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/dx100_bfs_0_1.yaml",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/dx100_trust_fixture.yaml",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/fresh-spd-size/CpuSidePort.cc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/fresh-spd-size/IF.cc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/fresh-spd-size/MAA.cc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/fresh-spd-size/SPD.cc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/fresh-spd-size/SPD.hh",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/fresh-spd-size/ghost.acsl",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/fresh-spd-size/logic.acsl",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/fresh-spd-size/model.h",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/fresh-spd-size/state.h",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/pure-selector/ghost.acsl",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/pure-selector/logic.acsl",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/pure-selector/model.h",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_semantics/pure-selector/state.h",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_units/gem5/m5ops.h",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/proof_units/trust.cc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/library/rewrite_contracts/trust.yaml",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/records/.swdb.lock",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/records/proofs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75.yaml",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/adapter.log",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/wp/frama-c.log",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/wp/trust_fixture.anchors.json",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/wp/trust_fixture.c",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/wp/wp-goals.json",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/wp/wp-inventory.json",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/wp/wp-normalized.c",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/wp/wp-properties.csv",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/wp/wp_input.c",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/scripted-why3.conf",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/t28-scripted-typechecker.py",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir0/t28-version-only-adapter.py",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/bc-forward-pass.patch",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/bc_read_offload.inc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/bfs_read_offload.inc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/README.md",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/bc_driver.inc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/bfs_driver.inc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/candidate_prelude.hpp",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/record.cc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/seams.cc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/v1_4/bc_driver.inc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/v1_4/bfs_driver.inc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/v1_4/prelude.hpp",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/v1_4/record.cc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/v1_4/seams.cc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/v1_5/arena.hpp",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/v1_5/bc_driver.inc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/v1_5/bfs_driver.inc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/v1_5/client.cc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/v1_5/client/MAA_functional.hpp",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/v1_5/client_core.inc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/v1_5/evaluator.cc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/v1_5/evaluator_context.hpp",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/v1_5/evaluator_core.inc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/certification/v1_5/prelude.hpp",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/drivers/differential.cc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/dxc_lowering.hpp",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/peter-section5.patch",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/reference.hpp",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/strict/MAA_functional.hpp",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/dx100/strict/gem5/m5ops.h",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/methods/dx100-size-fixture-0-2.yaml",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/dx100_bfs/ghost.acsl",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/dx100_bfs/logic.acsl",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/dx100_bfs/model.h",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/dx100_bfs/state.h",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/dx100_bfs_0_1.yaml",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/dx100_trust_fixture.yaml",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/fresh-spd-size/CpuSidePort.cc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/fresh-spd-size/IF.cc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/fresh-spd-size/MAA.cc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/fresh-spd-size/SPD.cc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/fresh-spd-size/SPD.hh",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/fresh-spd-size/ghost.acsl",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/fresh-spd-size/logic.acsl",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/fresh-spd-size/model.h",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/fresh-spd-size/state.h",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/pure-selector/ghost.acsl",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/pure-selector/logic.acsl",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/pure-selector/model.h",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_semantics/pure-selector/state.h",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_units/gem5/m5ops.h",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/proof_units/trust.cc",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/library/rewrite_contracts/trust.yaml",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/records/.swdb.lock",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/records/proofs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367.yaml",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/adapter.log",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/wp/frama-c.log",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/wp/handler.json",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/wp/reproduction/command.txt",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/wp/reproduction/trust_fixture.c",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/wp/reproduction/wp_input.c",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/wp/trust_fixture.anchors.json",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/wp/trust_fixture.c",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/wp/wp-goals.json",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/wp/wp-inventory.json",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/wp/wp-normalized.c",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/wp/wp-properties.csv",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/wp/wp_input.c",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/scripted-why3.conf",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/t28-scripted-typechecker.py",
+    "old raw exact size-profile/pytest/test_actual_wp_source_size_fir1/t28-version-only-adapter.py",
+    "old raw exact size-profile/report.jsonl",
+    "old raw exact size-profile/runtime-provenance.json",
+    "old raw exact size-profile/selected-tests.txt",
+    "old raw exact size-profile/source-commit.txt",
+    "old raw exact size-profile/source-manifest.json",
+    "old raw exact size-project-runtime-provenance.json",
+    "old raw exact source-after.json",
+    "old raw exact source-manifest.json",
+    "old raw exact watch.py",
+    "old raw exact worker.log",
+    "whole new raw count/bytes"
+  ],
+  "complete_census": {
+    "CSV_rows": 11,
+    "direct_valid_ordinary": 7,
+    "goals": 10,
+    "healthy_smokes": 2,
+    "native_why3_headers": 9,
+    "ordinary": 8,
+    "perprover_rows": 16,
+    "printed_sections": 10,
+    "properties": 15
+  },
+  "date": "2026-10-16 ET",
+  "device_source_liveness_or_ticket_acceptance": false,
+  "diagnostic": {
+    "failed": [
+      {
+        "error": "unrecognized prover answer",
+        "error_line": 308,
+        "goal": "typed_real_trust_fixture_ensures",
+        "prover": "Alt-Ergo 2.6.4",
+        "result_line": 307,
+        "section_span": {
+          "end_line": 313,
+          "sha256_utf8_lines": "617b4f9bfd369ce2c94fee253838ee94570c9e713a6db431a725b76c160a9dd3",
+          "start_line": 240
+        },
+        "verdict": "failed"
+      }
+    ],
+    "final_goal_sections": [
+      {
+        "goal": "typed_real_get_tile_size_wp_smoke_dead_call_s65",
+        "header": {
+          "line": 88,
+          "text": "Goal Wp_smoke_dead_call in 'get_tile_size' at call 'get_tile_size' (\"wp_input.c\", line 86):"
+        },
+        "per_prover": [
+          {
+            "display": "Prover Alt-Ergo 2.6.4 returns Timeout (Qed:122ms) (2s)",
+            "line": 155,
+            "prover": "Alt-Ergo 2.6.4",
+            "verdict": "timeout"
+          },
+          {
+            "display": "Prover CVC5 1.2.1 returns Unknown (Qed:122ms)",
+            "line": 156,
+            "prover": "CVC5 1.2.1",
+            "verdict": "unknown"
+          },
+          {
+            "display": "Prover Z3 5.1.0 returns Timeout (Qed:122ms) (2s)",
+            "line": 157,
+            "prover": "Z3 5.1.0",
+            "verdict": "timeout"
+          }
+        ],
+        "smoke": true,
+        "span": {
+          "end_line": 160,
+          "sha256_utf8_lines": "ee198fcb8c1e9b9b4d9bd353570ff182e7f4b45a6d4d48314509db157c1699ff",
+          "start_line": 88
+        }
+      },
+      {
+        "goal": "typed_real_trust_fixture_wp_smoke_dead_code_s68",
+        "header": {
+          "line": 161,
+          "text": "Goal Wp_smoke_dead_code in 'trust_fixture' at return (\"wp_input.c\", line 89):"
+        },
+        "per_prover": [
+          {
+            "display": "Prover Alt-Ergo 2.6.4 returns Timeout (Qed:149ms) (2s)",
+            "line": 228,
+            "prover": "Alt-Ergo 2.6.4",
+            "verdict": "timeout"
+          },
+          {
+            "display": "Prover CVC5 1.2.1 returns Unknown (Qed:149ms)",
+            "line": 229,
+            "prover": "CVC5 1.2.1",
+            "verdict": "unknown"
+          },
+          {
+            "display": "Prover Z3 5.1.0 returns Timeout (Qed:149ms) (2s)",
+            "line": 230,
+            "prover": "Z3 5.1.0",
+            "verdict": "timeout"
+          }
+        ],
+        "smoke": true,
+        "span": {
+          "end_line": 233,
+          "sha256_utf8_lines": "8fe3a3e4e31eb0795203cdc8c647d7136ddd11acdabc4495def921026fed9187",
+          "start_line": 161
+        }
+      },
+      {
+        "goal": "typed_real_trust_fixture_terminates",
+        "header": {
+          "line": 234,
+          "text": "Goal Termination-condition (generated by kernel from \"wp_input.c\", lines 18-91) in 'trust_fixture':"
+        },
+        "per_prover": [
+          {
+            "display": "Prover Qed returns Valid",
+            "line": 236,
+            "prover": "Qed",
+            "verdict": "valid"
+          }
+        ],
+        "smoke": false,
+        "span": {
+          "end_line": 239,
+          "sha256_utf8_lines": "545b71e57fa730e624b228856d24d895979f59ad839b1909916936640eaf0803",
+          "start_line": 234
+        }
+      },
+      {
+        "goal": "typed_real_trust_fixture_ensures",
+        "header": {
+          "line": 240,
+          "text": "Goal Post-condition (\"wp_input.c\", line 17) in 'trust_fixture':"
+        },
+        "per_prover": [
+          {
+            "display": "Prover Alt-Ergo 2.6.4 returns Failed",
+            "line": 307,
+            "prover": "Alt-Ergo 2.6.4",
+            "verdict": "failed"
+          },
+          {
+            "display": "Prover CVC5 1.2.1 returns Unknown (Qed:164ms)",
+            "line": 309,
+            "prover": "CVC5 1.2.1",
+            "verdict": "unknown"
+          },
+          {
+            "display": "Prover Z3 5.1.0 returns Timeout (Qed:164ms) (30s)",
+            "line": 310,
+            "prover": "Z3 5.1.0",
+            "verdict": "timeout"
+          }
+        ],
+        "smoke": false,
+        "span": {
+          "end_line": 313,
+          "sha256_utf8_lines": "617b4f9bfd369ce2c94fee253838ee94570c9e713a6db431a725b76c160a9dd3",
+          "start_line": 240
+        }
+      },
+      {
+        "goal": "typed_real_trust_fixture_exits",
+        "header": {
+          "line": 314,
+          "text": "Goal Exit-condition (generated by kernel from \"wp_input.c\", lines 18-91) in 'trust_fixture':"
+        },
+        "per_prover": [
+          {
+            "display": "Prover Qed returns Valid (6ms)",
+            "line": 316,
+            "prover": "Qed",
+            "verdict": "valid"
+          }
+        ],
+        "smoke": false,
+        "span": {
+          "end_line": 319,
+          "sha256_utf8_lines": "3808dc625e24770c88fb535665be20577bf5832831073d224286d18a0d3e1f83",
+          "start_line": 314
+        }
+      },
+      {
+        "goal": "typed_real_trust_fixture_assert_rte_initialization",
+        "header": {
+          "line": 320,
+          "text": "Goal Assertion 'rte,initialization' (\"wp_input.c\", line 89):"
+        },
+        "per_prover": [
+          {
+            "display": "Prover Qed returns Valid (43ms)",
+            "line": 322,
+            "prover": "Qed",
+            "verdict": "valid"
+          }
+        ],
+        "smoke": false,
+        "span": {
+          "end_line": 325,
+          "sha256_utf8_lines": "5eaeddd21cd62ccae52f9a7e998664ced31119dfcd2cc182a144ae9e1cd587f0",
+          "start_line": 320
+        }
+      },
+      {
+        "goal": "typed_real_trust_fixture_assigns_normal_part1",
+        "header": {
+          "line": 326,
+          "text": "Goal Assigns (\"wp_input.c\", line 17) in 'trust_fixture' (1/2):"
+        },
+        "per_prover": [
+          {
+            "display": "Prover Qed returns Valid",
+            "line": 328,
+            "prover": "Qed",
+            "verdict": "valid"
+          }
+        ],
+        "smoke": false,
+        "span": {
+          "end_line": 331,
+          "sha256_utf8_lines": "781538fe9d51d36eaa90ca4f9477f1eed6b626fe6eeccde8832badf62922fefd",
+          "start_line": 326
+        }
+      },
+      {
+        "goal": "typed_real_trust_fixture_assigns_normal_part2",
+        "header": {
+          "line": 332,
+          "text": "Goal Assigns (\"wp_input.c\", line 17) in 'trust_fixture' (2/2):"
+        },
+        "per_prover": [
+          {
+            "display": "Prover Qed returns Valid (44ms)",
+            "line": 335,
+            "prover": "Qed",
+            "verdict": "valid"
+          }
+        ],
+        "smoke": false,
+        "span": {
+          "end_line": 338,
+          "sha256_utf8_lines": "cb1e09305cbc26f1951b1de11d5d6e1489b46f90e68909ecbb45877d82ff89da",
+          "start_line": 332
+        }
+      },
+      {
+        "goal": "typed_real_trust_fixture_assigns_exit",
+        "header": {
+          "line": 339,
+          "text": "Goal Assigns (\"wp_input.c\", line 17) in 'trust_fixture':"
+        },
+        "per_prover": [
+          {
+            "display": "Prover Qed returns Valid",
+            "line": 341,
+            "prover": "Qed",
+            "verdict": "valid"
+          }
+        ],
+        "smoke": false,
+        "span": {
+          "end_line": 344,
+          "sha256_utf8_lines": "71006c4e60536cd238766300505c93c1f249184f4e0ea2c98aad7ba2232e91ab",
+          "start_line": 339
+        }
+      },
+      {
+        "goal": "typed_real_trust_fixture_call_get_tile_size_requires",
+        "header": {
+          "line": 345,
+          "text": "Goal Instance of 'Pre-condition (\"wp_input.c\", line 10) in 'get_tile_size'' in 'trust_fixture' at call 'get_tile_size' (\"wp_input.c\", line 86)"
+        },
+        "per_prover": [
+          {
+            "display": "Prover Qed returns Valid",
+            "line": 348,
+            "prover": "Qed",
+            "verdict": "valid"
+          }
+        ],
+        "smoke": false,
+        "span": {
+          "end_line": 402,
+          "sha256_utf8_lines": "22b10fc5d72378deb4b63f56b3ccc32503bb5a83da23bdafccc0bab1de2a67a4",
+          "start_line": 345
+        }
+      }
+    ],
+    "final_per_prover_result_count": 16,
+    "memory_cause_beyond_logged_reason_established": false,
+    "native_failure_reason_only_span": {
+      "binding_boundary": "Decisive attribution is stored final per-goal results. Following Qed header is an ordering/identity corroboration, not proof of original historical cause.",
+      "end_line": 62,
+      "following_Qed_target_hint": "typed_real_trust_fixture_ensures",
+      "logged_signal": 6,
+      "reason_lines": [
+        {
+          "line": 54,
+          "text": "  Why3 result for Alt-Ergo 2.6.4: High failure (unrecognized prover answer)"
+        },
+        {
+          "line": 55,
+          "text": "                                  (22.34s)HighFailure (unrecognized prover answer),"
+        },
+        {
+          "line": 56,
+          "text": "                                  Prover exit status: killed by signal 6"
+        },
+        {
+          "line": 57,
+          "text": "                                  prover"
+        },
+        {
+          "line": 58,
+          "text": "                                  output:"
+        },
+        {
+          "line": 59,
+          "text": "                                  Fatal error: allocation failure during minor GC"
+        },
+        {
+          "line": 61,
+          "text": "                                   and Failed unrecognized prover answer"
+        },
+        {
+          "line": 62,
+          "text": "[wp] [Qed] Goal typed_real_trust_fixture_ensures preprocessing"
+        }
+      ],
+      "reported_seconds": 22.34,
+      "sha256_utf8_lines": "30f8cf4a79825e134d681eeadd7d11d1dcfdd48df542aac1b33777ea00a37a9b",
+      "start_line": 54
+    },
+    "native_why3_headers": [
+      {
+        "line": 15,
+        "text": "  Why3 result for Alt-Ergo 2.6.4: Timeout (2.00s, 22347 steps) and Timeout (2s)"
+      },
+      {
+        "line": 21,
+        "text": "  Why3 result for CVC5 1.2.1: Unknown (unknown + incomplete)"
+      },
+      {
+        "line": 28,
+        "text": "  Why3 result for Z3 5.1.0: Timeout (2.00s, 3493267 steps) and Timeout (2s)"
+      },
+      {
+        "line": 34,
+        "text": "  Why3 result for Alt-Ergo 2.6.4: Timeout (2.00s, 23263 steps) and Timeout (2s)"
+      },
+      {
+        "line": 40,
+        "text": "  Why3 result for CVC5 1.2.1: Unknown (unknown + incomplete)"
+      },
+      {
+        "line": 47,
+        "text": "  Why3 result for Z3 5.1.0: Timeout (2.00s, 3495809 steps) and Timeout (2s)"
+      },
+      {
+        "line": 54,
+        "text": "  Why3 result for Alt-Ergo 2.6.4: High failure (unrecognized prover answer)"
+      },
+      {
+        "line": 67,
+        "text": "  Why3 result for CVC5 1.2.1: Unknown (unknown + incomplete)"
+      },
+      {
+        "line": 74,
+        "text": "  Why3 result for Z3 5.1.0: Timeout (30.00s, 62525554 steps) and Timeout (30s)"
+      }
+    ],
+    "negative_clean_acceptance": false,
+    "new_replay_attribution_qualified": true,
+    "old_generic_Failed_same_cause_proven": false,
+    "pair_acceptance": false,
+    "refuted": false,
+    "reported_allocation_failure_is_watchdog_OOM": false,
+    "why3_configured_memlimit_MB": 1000
+  },
+  "errors": [],
+  "independent_checks": 253,
+  "materialized_candidates": {
+    "actual_submission_count": null,
+    "files": [
+      {
+        "bytes": 13111,
+        "relative": "tasks/typed_real/get_tile_size_wp_smoke_dead_call_s65_Why3_Alt_Ergo_2_6_4.psmt2",
+        "sha256": "6127afc377cc424f0ff4be04f8cb67b8e5bed12651de483634449cf87979176a"
+      },
+      {
+        "bytes": 12216,
+        "relative": "tasks/typed_real/get_tile_size_wp_smoke_dead_call_s65_Why3_CVC5_1_2_1.smt2",
+        "sha256": "d57457f9dcd882060536cd378b18fa49beda9e30e1e9a9da45909b3d676d0619"
+      },
+      {
+        "bytes": 12024,
+        "relative": "tasks/typed_real/get_tile_size_wp_smoke_dead_call_s65_Why3_Z3_5_1_0.smt2",
+        "sha256": "0907a9fbaf85211184ee3bfd2bd03da83c7aa79ff932493a474a21641ef8af8b"
+      },
+      {
+        "bytes": 13111,
+        "relative": "tasks/typed_real/trust_fixture_ensures_Why3_Alt_Ergo_2_6_4.psmt2",
+        "sha256": "6127afc377cc424f0ff4be04f8cb67b8e5bed12651de483634449cf87979176a"
+      },
+      {
+        "bytes": 12216,
+        "relative": "tasks/typed_real/trust_fixture_ensures_Why3_CVC5_1_2_1.smt2",
+        "sha256": "d57457f9dcd882060536cd378b18fa49beda9e30e1e9a9da45909b3d676d0619"
+      },
+      {
+        "bytes": 12024,
+        "relative": "tasks/typed_real/trust_fixture_ensures_Why3_Z3_5_1_0.smt2",
+        "sha256": "0907a9fbaf85211184ee3bfd2bd03da83c7aa79ff932493a474a21641ef8af8b"
+      },
+      {
+        "bytes": 13111,
+        "relative": "tasks/typed_real/trust_fixture_wp_smoke_dead_code_s68_Why3_Alt_Ergo_2_6_4.psmt2",
+        "sha256": "6127afc377cc424f0ff4be04f8cb67b8e5bed12651de483634449cf87979176a"
+      },
+      {
+        "bytes": 12216,
+        "relative": "tasks/typed_real/trust_fixture_wp_smoke_dead_code_s68_Why3_CVC5_1_2_1.smt2",
+        "sha256": "d57457f9dcd882060536cd378b18fa49beda9e30e1e9a9da45909b3d676d0619"
+      },
+      {
+        "bytes": 12024,
+        "relative": "tasks/typed_real/trust_fixture_wp_smoke_dead_code_s68_Why3_Z3_5_1_0.smt2",
+        "sha256": "0907a9fbaf85211184ee3bfd2bd03da83c7aa79ff932493a474a21641ef8af8b"
+      },
+      {
+        "bytes": 13075,
+        "relative": "tasks/typed_real/zilch-typed_real_get_tile_size_wp_smoke_dead_call_s65_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+        "sha256": "9d52dbc9c96a71a9e4e4df43a2d7fc1216bc5ae50de15df27661f3bfaec150dd"
+      },
+      {
+        "bytes": 12184,
+        "relative": "tasks/typed_real/zilch-typed_real_get_tile_size_wp_smoke_dead_call_s65_CVC5_1dt2dt1-wp_goal.smt2",
+        "sha256": "6c16e3d3785293581fcacba26dccc9e6471a7713a519bfaa556dc400aad3c932"
+      },
+      {
+        "bytes": 11994,
+        "relative": "tasks/typed_real/zilch-typed_real_get_tile_size_wp_smoke_dead_call_s65_Z3_5dt1dt0-wp_goal.smt2",
+        "sha256": "7b3ef2b73360e6243f1df88295a6f8b2ca77e5742ecaa56013154d98e52931bc"
+      },
+      {
+        "bytes": 13075,
+        "relative": "tasks/typed_real/zilch-typed_real_trust_fixture_ensures_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+        "sha256": "9d52dbc9c96a71a9e4e4df43a2d7fc1216bc5ae50de15df27661f3bfaec150dd"
+      },
+      {
+        "bytes": 12184,
+        "relative": "tasks/typed_real/zilch-typed_real_trust_fixture_ensures_CVC5_1dt2dt1-wp_goal.smt2",
+        "sha256": "6c16e3d3785293581fcacba26dccc9e6471a7713a519bfaa556dc400aad3c932"
+      },
+      {
+        "bytes": 11994,
+        "relative": "tasks/typed_real/zilch-typed_real_trust_fixture_ensures_Z3_5dt1dt0-wp_goal.smt2",
+        "sha256": "7b3ef2b73360e6243f1df88295a6f8b2ca77e5742ecaa56013154d98e52931bc"
+      },
+      {
+        "bytes": 13075,
+        "relative": "tasks/typed_real/zilch-typed_real_trust_fixture_wp_smoke_dead_code_s68_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+        "sha256": "9d52dbc9c96a71a9e4e4df43a2d7fc1216bc5ae50de15df27661f3bfaec150dd"
+      },
+      {
+        "bytes": 12184,
+        "relative": "tasks/typed_real/zilch-typed_real_trust_fixture_wp_smoke_dead_code_s68_CVC5_1dt2dt1-wp_goal.smt2",
+        "sha256": "6c16e3d3785293581fcacba26dccc9e6471a7713a519bfaa556dc400aad3c932"
+      },
+      {
+        "bytes": 11994,
+        "relative": "tasks/typed_real/zilch-typed_real_trust_fixture_wp_smoke_dead_code_s68_Z3_5dt1dt0-wp_goal.smt2",
+        "sha256": "7b3ef2b73360e6243f1df88295a6f8b2ca77e5742ecaa56013154d98e52931bc"
+      }
+    ],
+    "materialized_candidate_count": 18,
+    "producer_legacy_submitted_task_files_field": 18,
+    "submitted_bytes_identity_qualified": false
+  },
+  "negative_clean_acceptance": false,
+  "new_records": 0,
+  "old_generic_Failed_same_cause_proven": false,
+  "pair_acceptance": false,
+  "physical_summary": {
+    "checks": 2732,
+    "files": 2638,
+    "new_raw_bytes": 752052,
+    "new_raw_files": 55,
+    "old_regular_files": 167,
+    "old_unchanged": true
+  },
+  "policy_sha256": "f745347860a2e47c55e8baa5f2342464f351348d0afade7bc28c9f6fa33074be",
+  "prospective_budget_assessment": {
+    "path": "/private/tmp/probata-t28-sizewrong1-prospective-budget-assessment-20261016.json",
+    "sha256": "4a65ac9fc9e95d413ada17769758c4c0da4bcf9321c8e32bbb6834ac933207a3"
+  },
+  "reader_sha256": "bbfc22cb9f959b8fca549d87e3054eb91c3fabc013215ba8d1c6a38862baa94c",
+  "refuted": false,
+  "resources": {
+    "address_space_cap_bytes": 8589934592,
+    "exit_code": 0,
+    "inspection_denials": [],
+    "out_of_memory": false,
+    "peak_rss_bytes": 324673536,
+    "scope": "passive reader only; no formal tools",
+    "timed_out": false,
+    "timeout_seconds": 60,
+    "wall_seconds": 2.474842141382396,
+    "workers": 1
+  },
+  "root_execution_receipt": {
+    "bytes": 607937,
+    "path": "/private/tmp/probata-t28-debug-cold-root-execution-v1-20261016.json",
+    "sha256": "1dec663031a6c55fad5665173199ec7d313aa06735029ff721702c36d4745111"
+  },
+  "root_remote_directory": "/data/yanruj/EvolveSWDB_runs/probata-root-t28-debug-cold-v1-20261016",
+  "root_remote_manifest": {
+    "audit.json": {
+      "bytes": 584226,
+      "sha256": "0fc73f11a4f956281d4eb805fd8abd108e020f2946a237f1abde22773887ef60"
+    },
+    "command.json": {
+      "bytes": 503,
+      "sha256": "8109990a7d937313387770c07cc1be5efd482f040be0a94b76c5727a7aa6d253"
+    },
+    "preflight.json": {
+      "bytes": 2524,
+      "sha256": "9c8e0b43c18349086e135bcbc67409597830b56fd65fcb299a202b2a9ac688a9"
+    },
+    "resources.json": {
+      "bytes": 298,
+      "sha256": "7eb29aa6d4ff77712be9db9527ccb4d4217b9a254f230024b8a89e1c82553d2e"
+    },
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "source_commit": "7e64298fd1d81359e8db586883243b31d57bef3b",
+  "status": "PASS_DIAGNOSTIC_ONLY"
+}

@@ -1,0 +1,147 @@
+{
+  "actual_formal_tools_executed": [],
+  "base_source_commit": "d1d3b3e0aafd003f9c444c02f4d931f77360ef87",
+  "created": "2026-10-16 ET",
+  "denied_broad_profile": {
+    "automatic_approval_review_rejected": true,
+    "launched": false,
+    "reason": "new explicit executable opam/ocamlfind query in runtime-validator fixture exceeded no-tool-probe scope",
+    "reroute_or_new_result_claim": false,
+    "safer_alternative": "new fixture now reads independently pinned source metadata; broader existing native setup/probe scope awaits coordinator admission"
+  },
+  "native_setup_scope": "existing selected ocamlfind package queries, native metadata helper/reader compiler and helper execution; all Frama argv are Python stand-ins",
+  "outcome": "RED unsupported -> first checked parse-error stand-in GREEN; seven controls pass15.45s/guard15.919s351158272B; one labeled synthetic20target success persists schema with29ordinary+1smoke; one self-consistent added axiom refuses",
+  "pending": [
+    "coordinator admission of the exact remaining compiler/native boundary",
+    "full selected regression at current test source",
+    "independent source/domain review",
+    "actual WP import/task closure and fresh model targets",
+    "source-derived caller/cleanup/dependency composition",
+    "all remaining ticket25 member/type routes"
+  ],
+  "production_source_pins": [
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/vector_reallocation_view.py",
+      "sha256": "b033b02bb7fcc6161d0218cba6e48f83636d27b12c526e351dc57691a54d6d07"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/heap_model_view.py",
+      "sha256": "52b41faefd37d585fb2c8ff15c82e74fb602c6063848ec7808cbea816ea44451"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/vector_reallocation_model.py",
+      "sha256": "92ad23030531650924a51b0a3bd1abb479afa373a7d1dd2a543b9ae225ab8b89"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/c_lowering.py",
+      "sha256": "364323c03d69197ba9ca2f89569f1ff6f073fc46a665daad189b0c1edffdde6a"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/proof_setup.py",
+      "sha256": "a6b44cb5347013446ddda1cb2294a448920634f2078249bc86aa30ae3fc4a750"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/wp_adapter.py",
+      "sha256": "9e951cd4069f69aad824ed718f5916107c66aec7485003accb73d7682ff91751"
+    }
+  ],
+  "records": [
+    {
+      "failure_class": null,
+      "record": {
+        "path": "/private/tmp/probata-t25-reallocation-public-view-profile-green-20261016/pytest/test_complete_synthetic_qualif0/records/proofs/proof.model.std_vector_int_realloc_v3_grow.20261016t070006z.0134ca60.yaml",
+        "sha256": "f7623f59331806724f59d66a18b4ad789ff71f69d311f7181316e01ad4703eb4"
+      },
+      "synthetic_only": true,
+      "target_runs": 20,
+      "verdict": "proven"
+    },
+    {
+      "failure_class": "parse_error",
+      "record": {
+        "path": "/private/tmp/probata-t25-reallocation-public-view-profile-green-20261016/pytest/test_public_qualified_grow_rea0/records/proofs/proof.model.std_vector_int_realloc_v3_grow.20261016t070004z.143c7272.yaml",
+        "sha256": "3ee8eaa138d3502a06c8ca86dc198cd71a94ca285f2623e95ff4454b3d6ace18"
+      },
+      "synthetic_only": false,
+      "target_runs": 1,
+      "verdict": "not_proven"
+    }
+  ],
+  "runs": [
+    {
+      "command": {
+        "path": "/private/tmp/probata-t25-reallocation-public-view-red-20261016/command.json",
+        "sha256": "badf9ab40161b0325a787d57ee68c69cfb6d945fe58d550b4783d733ba331a78"
+      },
+      "label": "red",
+      "log": {
+        "path": "/private/tmp/probata-t25-reallocation-public-view-red-20261016/controls.log",
+        "sha256": "1c8756a593d1b01094193c650a7f3cc35514c9753fc16f6aa5dab3663f2fc10b"
+      },
+      "resources": {
+        "cpu_seconds": 1.584415,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 196689920,
+        "timed_out": false,
+        "wall_seconds": 1.604403208999429
+      },
+      "resources_pin": {
+        "path": "/private/tmp/probata-t25-reallocation-public-view-red-20261016/resources.json",
+        "sha256": "7bbf39cfa5aaa93c16d44e3734dfdade6e43bd7afcfba93e8dd2f433cb2478a0"
+      }
+    },
+    {
+      "command": {
+        "path": "/private/tmp/probata-t25-reallocation-public-view-green-20261016/command.json",
+        "sha256": "315c8dc66d68156df2fcccf6637f221eb873606a3f601e0a36abc5a518479c8e"
+      },
+      "label": "green",
+      "log": {
+        "path": "/private/tmp/probata-t25-reallocation-public-view-green-20261016/controls.log",
+        "sha256": "a13f7c940b3d790c21bcfa35ee9a6c676918a4bd8c0b1ec5a0c1e00276cefe10"
+      },
+      "resources": {
+        "cpu_seconds": 2.62699,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 256278528,
+        "timed_out": false,
+        "wall_seconds": 2.878371375030838
+      },
+      "resources_pin": {
+        "path": "/private/tmp/probata-t25-reallocation-public-view-green-20261016/resources.json",
+        "sha256": "c0a91bd18be8212519d1120bd003b523a213e1d3924efc6bb64e42b23b305f3e"
+      }
+    },
+    {
+      "command": {
+        "path": "/private/tmp/probata-t25-reallocation-public-view-profile-green-20261016/command.json",
+        "sha256": "cfc2e898530e9ebeb16327d4ed7bfeb2f059362fa54205da90fb626fbcdd9368"
+      },
+      "label": "profile-green",
+      "log": {
+        "path": "/private/tmp/probata-t25-reallocation-public-view-profile-green-20261016/controls.log",
+        "sha256": "13ace55b65d72279e66384a3db80552c7c26a29c68abc2e32211acedc2f5bb6d"
+      },
+      "resources": {
+        "cpu_seconds": 15.154817000000001,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 351158272,
+        "timed_out": false,
+        "wall_seconds": 15.91869283298729
+      },
+      "resources_pin": {
+        "path": "/private/tmp/probata-t25-reallocation-public-view-profile-green-20261016/resources.json",
+        "sha256": "9c2bd2974a217701a11786d2026083c3b822617e472f1742fe5ae301b168a465"
+      }
+    }
+  ],
+  "scope": "prospective qualified standalone public view; scripted external outcomes only, no actual body proof",
+  "test_source_boundary": "seven-control run preceded portability-only test fixture change; current production bytes unchanged, current test-source profile not rerun",
+  "test_source_current": {
+    "path": "/private/tmp/probata-resume-t25/swdb-project/tests/test_vector_reallocation_view.py",
+    "sha256": "848ceda2cc9181bfc8a2329e7bd2d26315fc12d012553c94b3e025019219bc80"
+  }
+}

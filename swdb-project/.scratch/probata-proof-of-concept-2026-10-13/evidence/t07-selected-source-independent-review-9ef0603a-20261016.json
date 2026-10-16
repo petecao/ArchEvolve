@@ -1,0 +1,148 @@
+{
+  "audit_files": [
+    {
+      "path": "/private/tmp/probata-t07-selected-source-passive-data-9ef0603a-20261016.json",
+      "sha256": "b094539658f5877cd25c4bf77832bb96be8884497ff0943d014758230c26cce1"
+    },
+    {
+      "path": "/private/tmp/probata-t07-selected-source-passive-audit-9ef0603a-20261016.py",
+      "sha256": "192cbc9ef8a54b8856223b592099a900faf015952e0dcef1a928046040e9cf86"
+    }
+  ],
+  "blocking_findings": [],
+  "date": "2026-10-16 ET",
+  "interpretation_notes": [
+    "All901 include hashes were passively rechecked. Actual compiler pre/post rehash calls are supported by frozen code and retained successful flow; they are filesystem sampling, not atomic containment.",
+    "Repeated Clang serialization of the same local VarDecl is deduplicated by dump-local identity; no identity is compared between TDStep and QueueBuffer dumps.",
+    "Stable ranges are exclusive raw byte ranges and bound by the exact main SHA, function and AST kinds.",
+    "Capture entries require same-variable/dump and exact push-use range; this finite observed relation is not a general OpenMP/nonescape theorem.",
+    "Mutation controls primarily verify physical/source-reader refusal. Their healthy rejection is not a semantic counterexample or initializedness proof.",
+    "The selected compiler/dylib/OS context is a local trusted compiler observation, not a fully proved compiler or remote-runtime theorem.",
+    "The prior V2 generation packet is separately reviewed and unmodified; the evidence historical V1 path is a preservation reference, not a new dispatch authorization."
+  ],
+  "passive_audit": {
+    "compiler_and_SDK_settings_pins_checked": 2,
+    "compiler_commands_read": 6,
+    "composition_independently_reconstructed_without_project_execution": true,
+    "evidence_sha256": "8f292dd53bd98790efa5ae611947cbae8db2bccc3f0d136a23f2ba6a86782fe5",
+    "hash_errors": [],
+    "include_closure_files_checked": 901,
+    "independent_AST_observations": {
+      "constructor_default": 16384,
+      "delete_array_in_dtor": true,
+      "new_array_no_initializer": true,
+      "one_QueueBuffer_int_local": true,
+      "one_exact_main_TDStep": true,
+      "same_dump_captures": [
+        [
+          4539,
+          4545
+        ],
+        [
+          4931,
+          4937
+        ]
+      ],
+      "source_member_uses": [
+        {
+          "byte_range": [
+            4539,
+            4545
+          ],
+          "method": "push_back"
+        },
+        {
+          "byte_range": [
+            4931,
+            4937
+          ],
+          "method": "push_back"
+        },
+        {
+          "byte_range": [
+            4970,
+            4976
+          ],
+          "method": "flush"
+        }
+      ]
+    },
+    "passing_control_records": 35,
+    "physical_original_and_staged_source_pairs_checked": 22,
+    "project_producer_pins_checked": 4,
+    "raw_artifacts_checked": 495,
+    "raw_manifest_sha256": "6087e5125ba95294cb368d708d1060e098f7acd18b3cb84d0321e51b719dd8af",
+    "reviewer_actual_tool_execution": false,
+    "reviewer_source_edits": false,
+    "selected_main_sha256": "093c56b91837122380fd5e66766c92947e5f1c5194dd4c038936bc28934864dc",
+    "source_commit": "9ef0603a70f32a30f3556080891457355ad7a5b3",
+    "source_records_checked": 3,
+    "unchanged_directories": 5,
+    "unchanged_hand_model_files": 44
+  },
+  "remaining_obligations": [
+    "Successful allocation/freshness/masks and allocator replacement/failure/exception correspondence",
+    "C++ to C object/reference/member/layout/value/frame/same-array/span refinement and opaque ABI summaries",
+    "Runtime threads=1 caller discharge; NUM_CORES4 is compile-time API capacity",
+    "Nonescape and adjacent retirement/lifetime/reentry proof across caller/helper/OpenMP semantics",
+    "Actual Typed T_init/SINIT payload initialization and physical alignment/full C RTE",
+    "Graph/pvector/default producer domain; arbitrary raw Graph/-m and incoming symbolic queue capacity remain unqualified",
+    "Remote Linux/GEM5 compiler/runtime/ABI/source closure and atomic/device semantics",
+    "Full TD/source proof and counted-provider admission"
+  ],
+  "retained_controls": {
+    "active_timeout_s": 120,
+    "commands": [
+      "preprocessed",
+      "syntax",
+      "macros",
+      "tokens",
+      "TDStep-ast",
+      "QueueBuffer-ast"
+    ],
+    "formal_execution": false,
+    "guard_exit_code": 0,
+    "independent_reviewer_rerun": false,
+    "native_execution": false,
+    "no_OOM_timeout_inspection_or_unconfirmed_children": true,
+    "passed_records": 35,
+    "peak_rss_MiB": 161.34375,
+    "rss_cap_gb": 8,
+    "wall_s": 14.086562749987934
+  },
+  "reviewer": "/root/ticket24/std_contract_review",
+  "reviewer_executed_compiler_formal_prover_native_probes_SSH": false,
+  "reviewer_repo_edits": false,
+  "scope": [
+    "Exact scalar_source then peter_source derived main with selected fork headers and physical producer pins",
+    "Retained local Clang C++11/FUNC/OpenMP source-selection/AST observation and its public compiler/pure control evidence"
+  ],
+  "source_commit": "9ef0603a70f32a30f3556080891457355ad7a5b3",
+  "source_pins": [
+    {
+      "bytes": 17989,
+      "git_blob": "293ce3640fca2e5a222c95aec01a65813ff77b43",
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/selected_source.py",
+      "sha256": "d798c944f03a76c457e930fb3d613fddb5189cef40dc52b0f1713d0962bf7e7e"
+    },
+    {
+      "bytes": 8878,
+      "git_blob": "2b2e527b9c53af475620bf21a078d6d77a79c5a8",
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/checks/outslot/run_selected_source_controls.py",
+      "sha256": "9df5d22907b1580bf335d67fc3bbab180def96bcecc90fbf0f4fccc089dcc965"
+    },
+    {
+      "bytes": 5939,
+      "git_blob": "b32e7eca141e7851deed8a899742dfea60a6d432",
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/SELECTED-SOURCE-GATE-20261016.md",
+      "sha256": "b8ef0f48e20a3cad3c7b60bd34c73c1d2f52211e239118ecc7751d05327e729a"
+    },
+    {
+      "bytes": 7677,
+      "git_blob": "9e9909b64f903fa695e9ec624315f819dcd36329",
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t07-selected-source-preparation-20261016.json",
+      "sha256": "8f292dd53bd98790efa5ae611947cbae8db2bccc3f0d136a23f2ba6a86782fe5"
+    }
+  ],
+  "verdict": "PASS_SELECTED_LOCAL_SOURCE_COMPILER_PREPARATION_ONLY"
+}

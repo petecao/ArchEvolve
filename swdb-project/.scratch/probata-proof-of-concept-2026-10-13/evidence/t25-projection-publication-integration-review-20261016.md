@@ -1,0 +1,13 @@
+# Qualified projection publication integration review
+
+2026-10-16 ET. PASS prospective source/readiness only, exact candidate2e01d27d. Final docs-tip scope/ancestry and merge pins are checked separately at publication. No reviewer test, compiler/native/formal job, tool/version/config probe or SSH.
+
+Verified15 merged source/test/fixture Git pins,12 source/control/prior/full21-review references,316 package Git blob pins and403 retained root public-control artifact hashes/sizes, zero mismatch. Root source-before/after metadata is identical, with exact runtime candidate2e01 and author0f10. Root's three named public/schema/native-OCaml controls pass15.29s; inner16.034838s374.53125MiB, outer16.124014s309,821,440B, no recorded inspection events/children/OOM/timeout. These are scripted stand-ins and native helper readiness, not actual proof. Earlier42 canonical controls remain separately attributed40.88s, not rerun.
+
+The split retains the exact original full antecedent and outer quantifiers. Both represented-heap and fresh-j cell obligations are required as an AND; neither imports a desired companion result. Exact source definition spans/container hashes bind the equivalence. Original whole projection remains reference-only; other19 source payloads/indices remain unchanged. Public iteration follows obligation rows only. Whole-clause lexical matching preserves keyword/operator/token boundaries, while public contract identity/placement/actual dependency discharge remain unimplemented. Caller79 targets and five model requirements remain unadmitted.
+
+Fresh source2e01 includes1395 property-closure and healthy-smoke policy; both ordinary directValid and source/runtime/setup/method/dependency/schema gates remain mandatory. No empty generation smoke normalization promotes a proof. The full21 packet's exact source/bootstrap/runtime/project-context/cold checks remain separate root actual admission gates. Successful31-goal synthetic21-run schema controls do not become model/body/caller evidence.
+
+Original017 partial evidence remains unchanged: two isolated CVC5Valid check lemmas, projection unproved and17unexecuted; no result is transferred. No full21/model/original-v2/generic caller/ticket25 acceptance. Publication must retain exact2e01 ancestor, keep current root tracker facts, preserve unrelated files, and use only existing integration ref.
+
+Final publication composition: exact25301741 packet merged as573eea0c;15 physical reviewed source pins match. Exact2e01 and latestd1d9 root integration remain ancestors. The sole append-only issue25 conflict retains both sides; current preparation supersedes only dated pending source/control notes. No unresolved conflict or scientific gate is waived.

@@ -1,9 +1,9 @@
 # 36 — Proof setup check and verdict reading
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-15 ET (source-bound summary and remote replay checkpoint)
+Updated: 2026-10-15 ET (reviewed ticket-local acceptance closure)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** resolved
 **Blocked by:** 11, 21, 27
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Proof-hint loop": Three checks; "Verifier lineup and order": one summary source, failure classes; "What a proven verdict asserts": harness `assume`s; "Records and levels": method-version file; "Testing Decisions", seam 1; user stories 15, 21, 30, 31, 33; S1, S3, S7); decisions: [13](../../formal-verification-2026-10-09/issues/13-proof-hint-loop.md) (items 7, 10), [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md) (item 4), [09](../../formal-verification-2026-10-09/issues/09-what-proven-asserts.md) (item 10), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md) (items 3, 10)
 **Time estimate:** about 3 days
@@ -20,41 +20,50 @@ appear outside the contracts of summaries and `maa_*` calls (both readings are d
 never trusts the consolidated `[ Valid ]` or a cache. Smoke tests void a vacuous proof. Each check
 is tested with its negative controls.
 
+## Active implementation — 2026-10-15 21:19 ET
+
+Ticket 27's independently reviewed closure is published at `af10a946`, releasing
+this dependency gate. Work resumes with the driver-identity fallback repair and
+fresh setup/reader acceptance. A reviewed ticket-local source/checker/runtime
+freeze is required here; final production freeze remains ticket 59. Requiring
+59 before 36 would create a cycle through 37/38/58. Drafts 1/2 stay immutable.
+The coordinator owns actual verifier admission and remote scheduling.
+
 ## Acceptance
 
-- [ ] **Always first.** `swdb prove` runs the proof setup check before every verifier run it makes,
+- [x] **Always first.** `swdb prove` runs the proof setup check before every verifier run it makes,
       bounded runs included (scripted-adapter control: a non-summary `assume` on a SAW job is
       refused). On a pass, the proof record carries the result and the check's version. On a fail,
       no verifier runs and `swdb prove` stops the batch, naming the failing rule (assumption below).
-- [ ] **`assume`s.** Only `assume`s a summary generates pass (map 11 item 4). Controls: the 08
+- [x] **`assume`s.** Only `assume`s a summary generates pass (map 11 item 4). Controls: the 08
       prototype's harness `assume` (`parent[v] >= -1`, which real callers violate); a hand-added
       `assume` in the C lowering. Both refused.
-- [ ] **Hazard probes and placements.** Controls: a fixture unit with one generated hazard probe
+- [x] **Hazard probes and placements.** Controls: a fixture unit with one generated hazard probe
       deleted; a probe supplied as a hint instead of by the generator; a clause with no proof
       placement. Each refused.
-- [ ] **Hashes.** The check records the hashes of contract, summaries, lowering and run plan, and
+- [x] **Hashes.** The check records the hashes of contract, summaries, lowering and run plan, and
       each must match the hash pinned for the job. Changing any one after the job is planned →
       refused.
-- [ ] **Frozen flags.** Each control refused: `-wp-cache update` and `-wp-cache offline` (only
+- [x] **Frozen flags.** Each control refused: `-wp-cache update` and `-wp-cache offline` (only
       `-wp-cache none` passes); an existing WP session in the working folder (not a fresh session); a
       Frama-C warning key moved off its default (for example `ghost:bad-use`, or `annot-error` below
       abort, which drops ill-formed annotations, research 13 Q7); a machdep other than
       x86_64; any WP environment variable set (`FRAMAC_WP_CACHE`, `FRAMAC_WP_CACHEDIR`,
       `FRAMAC_WP_SCRIPT`).
-- [ ] **Method-version match.** A tool, solver or flag that differs from the method-version file
+- [x] **Method-version match.** A tool, solver or flag that differs from the method-version file
       is refused. On a pass, the record names the method version's ID and hash.
-- [ ] **Per-property reading.** No fact-file control reads as proven, though WP prints its target
+- [x] **Per-property reading.** No fact-file control reads as proven, though WP prints its target
       `[ Valid ]`. A goal resting on an unproven lemma, on a failed call-site precondition, or on a
       callee whose termination fails reads "not proven" with the failing goal's class. A goal resting
       on an `admit` or an `axiom` (an unexpected `Extern`) stops the batch. `Extern` on a summary's
       or a `maa_*` call's contract is accepted, each one an assumption entry (S7). The consolidated
       status is never read.
-- [ ] **Doctored cache.** The tampered cache entry from map ticket 13's facts (a false goal edited to
+- [x] **Doctored cache.** The tampered cache entry from map ticket 13's facts (a false goal edited to
       `valid`) cannot make a goal Valid: the verdict comes only from the loop's own fresh run.
-- [ ] **Smoke tests.** Every smoke test must pass (S7: a smoke goal WP proves Valid signals dead
+- [x] **Smoke tests.** Every smoke test must pass (S7: a smoke goal WP proves Valid signals dead
       code). A failed smoke test voids the proof with failure class "vacuous pass". Controls:
       contradictory preconditions; contradictory loop invariants.
-- [ ] **Failure classes.** A "not proven" reading carries the class the WP adapter (21) gave each
+- [x] **Failure classes.** A "not proven" reading carries the class the WP adapter (21) gave each
       unproven goal, or "vacuous pass" for a failed smoke test. Timeout and unknown are marked for
       the proof-hint loop (37 routes them). Any not-Valid property with no class stops the batch.
 
@@ -772,3 +781,183 @@ independent RTE admission check with a public no-launch control for an otherwise
 self-consistent method/plan omitting -wp-rte, and retain initialization and
 per-property obligations. This closeout records the requirement only; no runtime
 flag policy is changed. See [review decisions](../evidence/final-review-closeout-20261015.md).
+
+### Resume prerequisite hardening — 2026-10-15 ET
+
+The inherited mandatory-RTE admission gap is fixed. The content-pinned setup
+policy requires exactly one positive `-wp-rte`, rejects `-wp-no-rte`, and rejects
+boolean `=value` variants and duplicate positive flags. Both production method
+admission and the last prelaunch check use the rule; the latter checks the whole
+actual command, including `SWDB_FRAMA_C` prefix arguments. A self-consistent
+execution method with current checker hashes cannot weaken this requirement.
+Initializedness filtering, ordinary property reporting and smoke checks remain
+required by the existing controls.
+
+Dedicated public `swdb prove --adapter wp` controls now mutate the actual contract
+or an admitted used summary after planning and dependency admission. An external
+report-compiler stand-in performs the mutation; the unchanged setup checks refuse
+the launch with `contract_hash` or `summary_hash`. The attempted job writes no new
+proof record. A synthetic helper dependency is created through the same CLI only
+for the control; no stand-in outcome is scientific proof evidence.
+
+The setup source-reparse trigger also includes member-window certificates, paired
+with ticket 24's adapter-side source-plan trigger. These are prerequisite repairs,
+not ticket acceptance: ticket 36 remains `ready-for-agent`, blocked by ticket 27
+and the final method/source freeze. Historical exact-source runs keep their
+original boundary. The checker content hash changes, so later acceptance runs
+must use a method pin matching the integrated source.
+
+See [scoped evidence](../evidence/setup-rte-postplan-controls-20261015.json) for
+the red/green controls, compiler/tool boundary and regression command. Validation:
+**86 passed, 13 real-WP cases deselected in 189.24 s**, serial on the Mac. No
+verifier was run. This includes 15 new controls at the authorized public CLI seam.
+
+### Runtime identity hardening — 2026-10-15 ET
+
+Ticket 27's independently reviewed completion releases this ticket's implementation
+gate. The runtime identity now resolves and retains the selected command, exact
+frontend arguments, frontend binary and wrapper before optional parser/header
+discovery. Optional discovery failures retain the resolved identities. The final
+generated-input check refuses an unresolvable frontend and replays the current
+lowering/runtime against the method's translator pin. Its digest joins the setup
+hashes; the full runtime is retained in record settings. Standard substitutions and
+allocation still require their complete original-TU certificate.
+
+Public controls reproduced stale admission after a same-version driver replacement,
+an opaque frontend, a driver change after planning, and changed compiler semantic
+arguments/context with unchanged executable bytes. Each is red before its repair.
+All 13 focused compiler/report-stand-in controls pass. Their pytest collection can
+probe the real Frama-C version; their synthetic proof reports are admission
+controls, never scientific proof evidence. Scoped independent review
+found and then confirmed the repair of the command/context omission. Actual fact,
+production WP and bounded acceptance runs remain coordinator-gated and pending.
+
+The original fill fixture now declares the exact `a:n` incoming-array window
+already represented by its contract. Source, contract and preconditions are
+unchanged. A prepared actual scalar control forwards the real driver's trace and
+compilation while making only optional libclang discovery unavailable; it retains
+`contract_fixture` evidence classification.
+
+Assumption: this ticket closes on a reviewed ticket-local source/checker/runtime
+freeze and fresh pinned acceptance runs. Requiring production freeze 59 first
+would create a dependency cycle through 37, 38 and 58. Drafts 1/2 stay immutable;
+ticket 59 owns final production-method review/freeze. No draft 3 is created here.
+
+The earlier broad 126-pass validation is compiler + real formal-half parser +
+stand-in evidence; excluding actual WP fact cases did not exclude real Frama-C
+typechecks during library validation. It predates the final command/context pin.
+A subsequent affected profile was explicitly stopped by this implementer after
+that scheduling mistake was discovered: guard exit `-15`, 155.66 s, no OOM or
+timeout. The coordinator's let-finish instruction arrived after the stop.
+Three fresh scans find the five known stopped identities and matching commands
+absent; unrelated process visibility remains incomplete. The vanished process
+65785 observed separately by the coordinator cannot be attributed retrospectively.
+No exhaustive historical exec inventory exists. Current-source parser integration
+and all actual verifier acceptance require the coordinator's reviewed admission;
+this checkpoint does not retroactively admit earlier parser calls.
+
+### Bare compiler command control — 2026-10-15 ET
+
+Before dispatching the affected Linux setup profile, source review found a test
+stand-in portability bug: its `execv` could not find bare `clang++` through PATH.
+The stand-in now uses `execvp`; production source and checker identities are
+unchanged. A public `swdb lower` control with a compiler selected only by its
+PATH name is red before the repair and green afterward (1 passed in1.15s).
+Both guarded commands explicitly disable Frama-C and use worker B. No actual
+solver or producer is touched. Setup now expects129 selected controls; root's
+admitted collection gate must confirm the count. Exact evidence is retained in
+`evidence/t36-bare-compiler-command-20261015.json`.
+
+### Fresh reader and production WP acceptance checkpoint — 2026-10-15 ET
+
+Root admitted exact2033 profiles with project-context collection gates. All13
+reader cases pass; cold replay verifies13unique cases,40artifact references and
+126physical files with0errors. The records retain two proven results, eight
+not_proven results and three unexpected-Extern refusals. Hidden/untried goals,
+call-site/termination failures, vacuity and poisoned-cache controls keep their
+actual outcomes.
+
+Production collected5 cases and stopped after the first3: two passed, one failed.
+Safe fill is proven (20ordinary/3smoke;5RTE/3initialization); the seeded bug is
+not_proven/timeout (21ordinary/3smoke;6RTE/3initialization). The actual optional-
+parser scalar record is proven with4Valid ordinary goals and0generated smoke
+goals. Its unconditional identity contract has no requires; the original command
+retains -wp-smoke-tests. The test incorrectly demanded a nonempty smoke list.
+The narrow correction requires ordinary goals, all generated goals Valid and the
+smoke-generation flag. This is a test-only assertion replay, with original failed
+pytest and actual record retained unchanged; no WP rerun solely for that assertion.
+Cold production replay verifies34artifact references/94physical files with0errors.
+
+See [compact closure](../evidence/t36-facts-production-cold-20261015.json).
+Setup129 and the two bounded continuation cases remain pending; this is not
+ticket closure. Source2033/checker b493 records are never upgraded to later
+checker identities by this evidence.
+
+## Answer — 2026-10-15 ET
+
+Implemented and accepted the versioned setup and fresh per-property reading checks
+through the public `swdb prove` seam. The compiler/runtime repair preserves exact
+selected command, wrapper, resolved driver and frontend context even when optional
+libclang/header discovery fails; unresolved drivers refuse before proof launch.
+Full original-TU standard/allocation certificates remain mandatory.
+
+All ten acceptance items are complete within the reviewed ticket-local freeze:
+
+| Acceptance | Concrete acceptance evidence |
+|---|---|
+| Always first | Setup129 includes batch-stop/no-later-command and successful versioned attestation controls. Actual WP3 and bounded4 records retain passed final generated-run checks before verifier launch. |
+| Generated assumptions only | Setup129 rejects the prototype harness premise and hand-added lowering assumptions. Bounded summary-first/caller records pin the proven summary/content and exactly two generated postcondition assumption IDs. |
+| Hazard probes and placements | Setup129 refuses deleted/mis-originated probes and missing clause placement. Independently reviewed [ticket27](27-proof-semantics-bfs-calls.md) supplies its exact historical generator/source evidence; its records are not relabeled to this checker. |
+| Contract/summary/lowering/plan hashes | Setup129 covers post-plan contract/used-summary mutation and wrong input/plan pins. A focused external report-compiler control changes copied `wp_input.c` at the production adapter's final prelaunch seam: `input_hash` refusal, changed-byte/compiler markers, no WP marker or new record. Actual records retain final input, lowering, contract, summary, plan and method hashes. |
+| Frozen flags/session/environment | Setup129 rejects cache update/offline, nonfresh sessions, warning/machdep/WP-environment overrides, reordered solvers, RTE disabling/prefix overrides and initializedness filtering. Actual WP records retain cache-none/fresh, RTE/init, smoke, default warnings and frozen solver/budget flags. |
+| Method version | Setup129 and runtime controls reject changed tool/solver/flag/checker/reader dependencies, same-version driver replacement, opaque driver and selected-command/frontend-context drift. Successful records pin method ID/hash and exact compiler runtime. |
+| Per-property reading | All13 fresh actual facts pass. Cold replay uses same-run inventory/JSON/CSV: hidden/untried/lemma/call-precondition/termination obligations remain visible; unexpected admit/axiom/header Externs stop without records; the exact allowed maa-summary Extern is a sourced assumption. |
+| Doctored cache | Actual fact11 retains poisoned real cache/offline evidence, then reads only its fresh cache-none run; the false target stays not_proven. |
+| Smoke | Actual facts6/7 retain vacuous_pass for contradictory preconditions/invariants and original failing goal classes. Safe fill has three passing smoke goals. The unconditional scalar has zero generated smoke goals, with smoke generation enabled and all four ordinary goals Valid; its test-only assertion replay is independently reviewed. |
+| Failure classes | Actual reader replay retains timeout/unknown and vacuity classes; unclassified/Extern controls stop batch. The WP seeded timeout remains not_proven; only the separate bounded bug is refuted with recorded C++ replay at x=41. |
+
+[Setup/bounded closure](../evidence/t36-setup-bounded-cold-20261015.json):
+**129 passed, 13 deselected in702.19s** at exact `74edefd0`, including admitted real
+formal-half parsing and synthetic report controls; **2 bounded tests passed
+in129.60s** at exact `2033c174`, producing three proven records and one replayed
+refutation. Their cold audits report respectively55physical files/129JUnit nodes
+and29artifact references/88physical files, with0errors.
+
+[Facts/production closure](../evidence/t36-facts-production-cold-20261015.json):
+**13 actual facts passed in114.40s**, cold audit40references/126files/0errors.
+Actual production WP retains safe20ordinary/3smoke allValid, bug21ordinary/3smoke
+not_proven/timeout, and scalar4ordinary/0smoke allValid; cold audit34references/
+94files/0errors. Original production pytest remains **one failed/two passed**
+after five collected: the scalar failure was only the overly strong nonempty-
+smoke assertion, and maxfail left bounded2 unexecuted there. The separate bounded
+continuation and reviewed scalar cold assertion replay complete that acceptance;
+the original failed pytest and proven scalar record remain immutable. No extra
+WP run is claimed.
+
+[Generated-input control](../evidence/t36-generated-input-control-20261015.json)
+passes alone in2.80s under workerB/8GiB/180s with parent Frama explicitly disabled
+and only selected external report stand-ins. It closes a test-coverage gap; no
+production vulnerability or implementation repair was needed. The initial sandbox
+watchdog visibility error and test scratch-cleanup assertion failure are retained.
+[Independent control review](../evidence/t36-generated-input-independent-review-20261015.md)
+and [final acceptance review](../evidence/t36-final-acceptance-independent-review-20261015.md)
+and its [timing-only addendum](../evidence/t36-final-acceptance-timing-addendum-20261015.md)
+record the scoped disposition.
+
+All accepted profiles terminate naturally, exit0 and retain no OOM/timeout, clean
+unchanged source and exact runtime provenance. The production5 exit1 above is
+preserved separately. Original relative-path dispatches that collected no tests,
+the historical compiler/parser scheduling error and interrupted profile retain
+their original evidence boundaries; none count as acceptance. Root coordinates
+remote admission/leases: setup node0 generation583 released22:21:17ET and bounded
+node1 generation609 released22:16:09ET; both were observed released22:22:37ET.
+Observation time is distinct from release time. No provider or held-out
+BC/PR/SSSP workload was used.
+
+Assumption: closure means reviewed ticket-local source/checker/runtime acceptance,
+not final production freeze59. Requiring59 here would create a dependency cycle
+through37/38/58. Actual records remain exact2033/74 and checker
+`b493fec5c0c7f5e43ea7f0d45426e73f689c696ea16d35f5abc34b7476d28104`. Later
+ticket28 source/checker changes, including its new imported-generator dependency
+pin, do not upgrade those records. Final source/reproduction review remains58/59;
+drafts1/2 stay immutable, with no draft3 created. Root owns map/resume updates.

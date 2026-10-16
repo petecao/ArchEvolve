@@ -1,0 +1,156 @@
+{
+  "date_et": "2026-10-16",
+  "status": "prepared; actual parser unexecuted by author",
+  "parser_flags": [
+    "-machdep",
+    "x86_64",
+    "-kernel-warn-key",
+    "annot-error=abort"
+  ],
+  "inputs": [
+    {
+      "name": "wp-correct.c",
+      "sha256": "d20b9109455e7b1fc4cf3b88e995a78104cb4f5e5001afb074a159db929aa23e",
+      "bytes": 4218,
+      "role": "exact public WP input; parser only"
+    },
+    {
+      "name": "wp-wrong.c",
+      "sha256": "6983714329d7ba7186f602bad7ab568472beb8bbfb14523d9d9ee25e8a0d7c6a",
+      "bytes": 4218,
+      "role": "exact public WP input; parser only"
+    },
+    {
+      "name": "wp-combined.c",
+      "sha256": "b5ceab7f154a5be1f3ef90c0915d8e9cf56e2b71fc16574d705c75efbfdb3980",
+      "bytes": 4234,
+      "role": "exact public WP input; parser only"
+    },
+    {
+      "name": "all-contracts.c",
+      "sha256": "fa3a78996427c3e6ae1ca5834e33c3e7068079886dad126e3a18348037e01865",
+      "bytes": 4295,
+      "role": "normal all-contract validation input"
+    },
+    {
+      "name": "ordinary-model.c",
+      "sha256": "9667e339842c3a0649b9d361bb219f1c6ce7c71c802b9b04d202ed0bdf3b5310",
+      "bytes": 2984,
+      "role": "normal ordinary C model with explicitly parse-only assertion declaration"
+    }
+  ],
+  "origins": [
+    {
+      "label": "correct",
+      "record": {
+        "path": "/private/tmp/probata-t28-stream-parser-final-green/pytest/test_public_stream_binds_sourc0/records/proofs/proof.contract.dx100_stream_partial_fixture.v1.20261016t093932z.f1ac0dfb.yaml",
+        "sha256": "cf9c365ef1d28e8c0240d1f047c27e2321bc89904e1783fbdb1f933d28d50265",
+        "bytes": 12459062
+      },
+      "wp_input": {
+        "path": "/private/tmp/probata-t28-stream-parser-final-green/pytest/test_public_stream_binds_sourc0/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t093932z.f1ac0dfb/wp/wp_input.c",
+        "sha256": "d20b9109455e7b1fc4cf3b88e995a78104cb4f5e5001afb074a159db929aa23e",
+        "bytes": 4218
+      },
+      "source": {
+        "path": "/private/tmp/probata-t28-stream-parser-final-green/pytest/test_public_stream_binds_sourc0/library/proof_units/trust.cc",
+        "sha256": "13708db1fdd556a31e3b23bcdd5162ae89a3434c1f53c0e5a684a401767ba8fa",
+        "bytes": 291
+      },
+      "contract": {
+        "path": "/private/tmp/probata-t28-stream-parser-final-green/pytest/test_public_stream_binds_sourc0/library/rewrite_contracts/trust.yaml",
+        "sha256": "072b19d39237b2cc2d05d1f152869fbd69c7a1a5502c80cf8dd40fc00e6236cb",
+        "bytes": 1463
+      },
+      "semantics": {
+        "path": "/private/tmp/probata-t28-stream-parser-final-green/pytest/test_public_stream_binds_sourc0/library/proof_semantics/dx100_trust_fixture.yaml",
+        "sha256": "e190dc5b8734ed50c1cd58417d244771662eda47ef688051d2576f06e4825cb7",
+        "bytes": 21412
+      }
+    },
+    {
+      "label": "wrong",
+      "record": {
+        "path": "/private/tmp/probata-t28-stream-parser-final-green/pytest/test_public_stream_binds_sourc1/records/proofs/proof.contract.dx100_stream_partial_fixture.v1.20261016t093955z.1b1af308.yaml",
+        "sha256": "92ef265b37e973b659d20823306419b129aa2b54112d3783a3c5a2f70b730694",
+        "bytes": 12459064
+      },
+      "wp_input": {
+        "path": "/private/tmp/probata-t28-stream-parser-final-green/pytest/test_public_stream_binds_sourc1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t093955z.1b1af308/wp/wp_input.c",
+        "sha256": "6983714329d7ba7186f602bad7ab568472beb8bbfb14523d9d9ee25e8a0d7c6a",
+        "bytes": 4218
+      },
+      "source": {
+        "path": "/private/tmp/probata-t28-stream-parser-final-green/pytest/test_public_stream_binds_sourc1/library/proof_units/trust.cc",
+        "sha256": "13708db1fdd556a31e3b23bcdd5162ae89a3434c1f53c0e5a684a401767ba8fa",
+        "bytes": 291
+      },
+      "contract": {
+        "path": "/private/tmp/probata-t28-stream-parser-final-green/pytest/test_public_stream_binds_sourc1/library/rewrite_contracts/trust.yaml",
+        "sha256": "75a520a144b906d23b476110ee8ea54d035c63640f2f87c1a710f009c4e4f9af",
+        "bytes": 1463
+      },
+      "semantics": {
+        "path": "/private/tmp/probata-t28-stream-parser-final-green/pytest/test_public_stream_binds_sourc1/library/proof_semantics/dx100_trust_fixture.yaml",
+        "sha256": "e190dc5b8734ed50c1cd58417d244771662eda47ef688051d2576f06e4825cb7",
+        "bytes": 21412
+      }
+    },
+    {
+      "label": "combined",
+      "record": {
+        "path": "/private/tmp/probata-t28-stream-parser-final-green/pytest/test_public_stream_places_part0/records/proofs/proof.contract.dx100_stream_partial_fixture.v1.20261016t093910z.61508311.yaml",
+        "sha256": "47df8a6364bf848e3d36a235b4c17a319abbc96d07ba86de64ff462dafc3ad17",
+        "bytes": 12459062
+      },
+      "wp_input": {
+        "path": "/private/tmp/probata-t28-stream-parser-final-green/pytest/test_public_stream_places_part0/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t093910z.61508311/wp/wp_input.c",
+        "sha256": "b5ceab7f154a5be1f3ef90c0915d8e9cf56e2b71fc16574d705c75efbfdb3980",
+        "bytes": 4234
+      },
+      "source": {
+        "path": "/private/tmp/probata-t28-stream-parser-final-green/pytest/test_public_stream_places_part0/library/proof_units/trust.cc",
+        "sha256": "13708db1fdd556a31e3b23bcdd5162ae89a3434c1f53c0e5a684a401767ba8fa",
+        "bytes": 291
+      },
+      "contract": {
+        "path": "/private/tmp/probata-t28-stream-parser-final-green/pytest/test_public_stream_places_part0/library/rewrite_contracts/trust.yaml",
+        "sha256": "d40dbd994025339217c899ece8f06dbc843762417235b33eea25beb5b76c6783",
+        "bytes": 1479
+      },
+      "semantics": {
+        "path": "/private/tmp/probata-t28-stream-parser-final-green/pytest/test_public_stream_places_part0/library/proof_semantics/dx100_trust_fixture.yaml",
+        "sha256": "e190dc5b8734ed50c1cd58417d244771662eda47ef688051d2576f06e4825cb7",
+        "bytes": 21412
+      }
+    }
+  ],
+  "stdlib_headers": [
+    "stdbool.h",
+    "stddef.h",
+    "stdint.h"
+  ],
+  "generator_sources": [
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/swdb/framac.py",
+      "sha256": "94db2a360fb0d29bf6f35f90b12f53b04e1a9a768139c88bbe8f7605fd8c2889",
+      "bytes": 4763
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/swdb/proof_semantics.py",
+      "sha256": "a91a321c820eda4e7620226d4e59a63135161cb0f79650f6671e68daac44a67f",
+      "bytes": 31405
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/swdb/dx100_stream_model.py",
+      "sha256": "4f512d0c51dbc4f72a7ed0cdf34e4b6ea850d736ca4ae1e35efe72ae850ab2ba",
+      "bytes": 12575
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/swdb/wp_adapter.py",
+      "sha256": "7ca02fa61138f7854f45f9d519f4cd82263a9118933edd319ed9bafd86696d27",
+      "bytes": 87959
+    }
+  ],
+  "scope": "Parser/type check only. No WP, solvers, contract/body agreement, source refinement, totality, hardware liveness or full28 acceptance."
+}

@@ -1,0 +1,142 @@
+{
+  "author_docs_commit": "d0135b949bc660afcbfab6212dd9a3d7488c677e",
+  "caller_acceptance": false,
+  "created": "2026-10-16 ET",
+  "diagnostic_entry": {
+    "bytes": 21120,
+    "path": "/private/tmp/probata-t25-cell4-diagnostic-entry-v4-046f6b9e-20261016.py",
+    "sha256": "02b2ad068af48e2fa0a9fce7364d831b8adfccb107959a85d5db83b5f7602dc9"
+  },
+  "full24_model_acceptance": false,
+  "full_four_leaf_diagnostic_cold_acceptance": false,
+  "full_four_leaf_diagnostic_execution": false,
+  "inner": {
+    "cap_gb": 8.0,
+    "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment",
+    "cleanup_inspection_failure": null,
+    "cleanup_inspection_failures": [],
+    "clock": "continuous_monotonic",
+    "clock_info": {
+      "denom": 3,
+      "implementation": "mach_continuous_time",
+      "includes_sleep": true,
+      "kind": "continuous_monotonic",
+      "numer": 125
+    },
+    "cmd": [
+      "/opt/homebrew/Cellar/opam/2.6.1/bin/opam",
+      "exec",
+      "--switch=framac-33",
+      "--",
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+      "-B",
+      "/private/tmp/probata-root-t25-cell4-lifecycle-controls-v1-20261016.py"
+    ],
+    "error": null,
+    "exit_code": 0,
+    "finished": "2026-10-16 06:25:50 EDT",
+    "inspection_events": [],
+    "inspection_failure": null,
+    "inspection_retry_boundary": "AccessDenied uses a 200 ms environ retry admission window and 21-attempt cap, or three attempts for other operations; only the exact proc_environ SystemError raised by the requested environ operation shares that policy; individual OS calls are not forcibly timed; all pauses count and RSS/deadline checks remain mandatory after inspection; only independently confirmed gone/zombie or changed birth is skipped; persistent live or unknown failure fails closed",
+    "killed_by_watchdog": false,
+    "lock_wait_s": 0.0003714583581313491,
+    "log": "/private/tmp/probata-root-t25-cell4-lifecycle-v1-20261016/inner.log",
+    "log_sha256": "6e13ce176c3a37bd34b1692b7a59bbcd9dd4f080840f69a633057f543ad47348",
+    "peak_rss_mb": 75.046875,
+    "primary_inspection_failure": null,
+    "queue_timed_out": false,
+    "queue_timeout_s": 30.0,
+    "rss_scope": "live union of current ancestry, retained PID/birth identities and periodic inherited-marker matches; sampled, not a kernel quota",
+    "runner_pid": 53435,
+    "timed_out": false,
+    "timeout_s": 120.0,
+    "unconfirmed_children": [],
+    "wall_s": 1.1317351667094044
+  },
+  "original_v2_acceptance": false,
+  "outer": {
+    "cpu_seconds": 1.316355,
+    "exit_code": 0,
+    "out_of_memory": false,
+    "peak_rss_bytes": 119111680,
+    "timed_out": false,
+    "wall_seconds": 1.1991021250141785
+  },
+  "prior_dispatch_v1": {
+    "actual_formal": false,
+    "coordinator_reported": "Preflight stopped before worker because authorHEAD advanced046f to docs-onlyd013; no output created",
+    "raw_stderr_file": null,
+    "repair": "v2 expressly pins AUTHORd013/CANDIDATE046f and exact runtime/test/fixture byte equality"
+  },
+  "refs": [
+    {
+      "bytes": 286,
+      "path": "/private/tmp/probata-root-t25-cell4-lifecycle-v1-20261016/lifecycle-result.json",
+      "sha256": "abb7e93c4bd04ccfed25f439f8f31639ef95072bd94f2bb24f1f0a3b30471a9e"
+    },
+    {
+      "bytes": 165,
+      "path": "/private/tmp/probata-root-t25-cell4-lifecycle-v1-20261016/resources.json",
+      "sha256": "d1c88c139e3364a3896e40fd02e772ad02ed611cfe1419b677c6fb34a42d6e95"
+    },
+    {
+      "bytes": 1971,
+      "path": "/private/tmp/probata-root-t25-cell4-lifecycle-v1-20261016/inner.log.summary.json",
+      "sha256": "638f982e25b2fcf7a7b9bf912629a79ac84dc3a79ba2dd575f16f37c684e61be"
+    },
+    {
+      "bytes": 70,
+      "path": "/private/tmp/probata-root-t25-cell4-lifecycle-v1-20261016/inner.log",
+      "sha256": "6e13ce176c3a37bd34b1692b7a59bbcd9dd4f080840f69a633057f543ad47348"
+    },
+    {
+      "bytes": 499367,
+      "path": "/private/tmp/probata-root-t25-cell4-lifecycle-v1-20261016/source-before.json",
+      "sha256": "1c9eb0e3eeea162dea1f0c0bf941c0a05aad818dbd0e3742add0958f39ce06ca"
+    },
+    {
+      "bytes": 499367,
+      "path": "/private/tmp/probata-root-t25-cell4-lifecycle-v1-20261016/source-after.json",
+      "sha256": "1c9eb0e3eeea162dea1f0c0bf941c0a05aad818dbd0e3742add0958f39ce06ca"
+    },
+    {
+      "bytes": 2431,
+      "path": "/private/tmp/probata-root-t25-cell4-lifecycle-controls-v1-20261016.py",
+      "sha256": "b3505aa25767ecc411c982423d040c591559a036cfb842dc0185ad1850b61aad"
+    },
+    {
+      "bytes": 1637,
+      "path": "/private/tmp/probata-root-t25-cell4-lifecycle-dispatch-v1-20261016.py",
+      "sha256": "bf2a4f61f1532b49a3258fab355e51ae6896db26f036251d7e47abaf1b585050"
+    },
+    {
+      "bytes": 1793,
+      "path": "/private/tmp/probata-root-t25-cell4-lifecycle-dispatch-v2-20261016.py",
+      "sha256": "23a344e1c757f4fcbafd5eda1c84e510b4897ff74e66e8f72e4e2e32adcb1f8a"
+    }
+  ],
+  "result": {
+    "actual_formal_tools": false,
+    "created": "2026-10-16 ET",
+    "ownership_attacks_refused": 3,
+    "ownership_positive": true,
+    "real_seed_created": true,
+    "reused_workspace_refused": true,
+    "scientific_proof": false,
+    "source_commit": "046f6b9e64d45777a8032951ced04f942fc9c3c2"
+  },
+  "root3_passive_cold": {
+    "bytes": 104135,
+    "path": "/private/tmp/probata-t25-grow24-scripted-public-cold-v1-20261016.json",
+    "sha256": "de184fe6c1cf5f87d5c8abc60d78dd871f9a4f930247472bc4a6402b94187f6a"
+  },
+  "root3_public_native_result": {
+    "bytes": 1679,
+    "path": "/private/tmp/probata-t25-root-grow24-public-controls-v1-20261016/result.json",
+    "sha256": "3e181a5d9c8302f97404b167dcbc139b44ccd73b5741adf452e06c30c22fb4ab"
+  },
+  "scope": "Coordinator-owned exact AST helper plus real _member_seed native lifecycle and synthetic ownership controls only",
+  "source_commit": "046f6b9e64d45777a8032951ced04f942fc9c3c2",
+  "source_pre_post_equal": true,
+  "ticket_complete": false
+}

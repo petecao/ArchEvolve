@@ -1,0 +1,369 @@
+{
+  "admission_attestation": false,
+  "application_implementation_and_wiring_byteidentical_to_da2518": true,
+  "application_rows": [
+    {
+      "dependencies": [],
+      "id": "apply.ctor.entry",
+      "path": "applications/000-t25v3_caller_apply_ctor_entry.c",
+      "sha256": "52fad2b2f912cefd45002180154759f6dda437c954c646bbf81b94603b0fb9ab",
+      "statement": "\\forall Heap::heap h; \\forall integer a,n; Heap::well_formed(h) && Heap::automatic_available(h,24,8,a) && 0 <= n <= 2147483647 ==> Heap::typed_writes(Heap::begin_automatic(h,24,a),Heap::fresh_id(h),0,24,8) && !Heap::freeable(Heap::begin_automatic(h,24,a),Heap::fresh_id(h),0) && 0 <= n <= 4611686018427387903",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "id": "apply.ctor.zero",
+      "path": "applications/001-t25v3_caller_apply_ctor_zero.c",
+      "sha256": "50b795dbad759f82823ab74157405e27ae97337d6b2d84e9cf63b5e2763e56ba",
+      "statement": "\\forall Heap::heap h; \\forall integer a; Heap::well_formed(h) && Heap::automatic_available(h,24,8,a) ==> t25v3_eligible(t25_initial(Heap::begin_automatic(h,24,a),Heap::fresh_id(h),0),Heap::fresh_id(h),0,0,0,0,0) && Heap::pointer_at(t25_initial(Heap::begin_automatic(h,24,a),Heap::fresh_id(h),0),Heap::fresh_id(h),0,0,0)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "id": "apply.ctor.positive_entry",
+      "path": "applications/002-t25v3_caller_apply_ctor_positive_entry.c",
+      "sha256": "1a32cdcdf1f1b81a0d9e773ee46e1009422aa5124f611796e2fe8ad3a9c3aa25",
+      "statement": "\\forall Heap::heap h; \\forall integer a,q,n; Heap::well_formed(h) && Heap::automatic_available(h,24,8,a) && 0 < n <= 2147483647 && Heap::available(t25_initial(Heap::begin_automatic(h,24,a),Heap::fresh_id(h),0),n,q) ==> t25v3_ctor_inv(t25_allocated(Heap::begin_automatic(h,24,a),Heap::fresh_id(h),0,n,q),Heap::fresh_id(h),0,Heap::fresh_id(Heap::begin_automatic(h,24,a)),n,0,7)",
+      "status": "pending"
+    }
+  ],
+  "base": "62f286f1adf8b448cba0527874d55096dc940c65",
+  "blockers": [],
+  "caller_acceptance": false,
+  "created": "2026-10-16 ET",
+  "current_pending_census": {
+    "applications": 3,
+    "ctor": 35,
+    "dtor": 11,
+    "local_lifetime": 10,
+    "numeric": 1,
+    "reserve": 44,
+    "total": 104
+  },
+  "documentation_followup": [
+    "Copied old85 prose lacks an explicit historical qualifier in frozen6a. Parent acknowledged an append-only current reconciliation note after frozen source release; preserve originalda2518 blobs/raw.",
+    "Current50 account must retain five native cases/seven executables and one recovered environ AccessDenied; never call it compiler-only or zero inspection events."
+  ],
+  "historical85_evidence": {
+    "current104_qualification": false,
+    "git_json": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-caller-positive-construction-preparation-20261016.json",
+    "git_md": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-caller-positive-construction-preparation-20261016.md",
+    "historical_base": "3808f6dcbf3cb5fac0e59aa0e4f0fcef9759bdf9",
+    "json_sha256": "c0e840c6d5959f32600406fd349b93dd6f1955150a34de5b398fb3a715ddc752",
+    "md_sha256": "8725a9eafb51f5bc781097d05c340cdea1ef52bef439544518b14c9bc9f9ff69"
+  },
+  "model_acceptance": false,
+  "normal_public_caller_route": "unsupported; no adapter/proof_setup/c_lowering dispatch changed relative62f",
+  "original_v2_acceptance": false,
+  "preserved_checkpoint": "da2518a6c1c930eb35fb49a6d8f74691458be099",
+  "production_delta": [
+    "swdb-project/swdb/vector_reallocation_caller_packets.py",
+    "swdb-project/swdb/vector_reallocation_composition.py"
+  ],
+  "remaining": [
+    "Public ordinary contract identity and source proof placement.",
+    "Source/runtime signed32 conversion, automatic-object placement/layout and normal-return allocator output discharge.",
+    "Complete ctor/reserve/grow/dtor body eligibility under current ordinary records, observations and all branch/frame/alias/lifetime cleanup composition.",
+    "Fresh full safe/no-growth/stale caller outcomes and independent task/import/hypothesis/native/runtime closure."
+  ],
+  "required_models_without_admission": [
+    {
+      "id": "std_vector_int_realloc_v3_ctor_count_value",
+      "proof_record": null,
+      "role": "current ordinary qualified body dependency required; no record admitted",
+      "sha256": "a20cb8431cc975b034954666967398d8466745cd0bab9a92f45f60c19a837a1a"
+    },
+    {
+      "id": "std_vector_int_realloc_v3_reserve",
+      "proof_record": null,
+      "role": "current ordinary qualified body dependency required; no record admitted",
+      "sha256": "0ec01e3ca00e01d32a7a173da4cbee3083ca67daeedf037c0738af59377f8dc7"
+    },
+    {
+      "id": "std_vector_int_realloc_v3_dtor",
+      "proof_record": null,
+      "role": "current ordinary qualified body dependency required; no record admitted",
+      "sha256": "9ca9409923f9d39b4e35a0690c70256af56bfd1c37f1e389e406f615b0164e7f"
+    },
+    {
+      "id": "std_vector_int_data",
+      "path": "observations/data.c",
+      "proof_record": null,
+      "role": "current observation body dependency/application proof pending",
+      "sha256": "ee4f867911135688f5b76932243b38aaff73a56d85ffeb24229725c7d4ec6f3f"
+    },
+    {
+      "id": "std_vector_int_operator_index",
+      "path": "observations/operator_index.c",
+      "proof_record": null,
+      "role": "current observation body dependency/application proof pending",
+      "sha256": "7b3548b6db64e22cd6b39bd968b4bface472f01f0477731f82187e35e347718f"
+    }
+  ],
+  "retained_current_controls": {
+    "executables": 7,
+    "final_inspection_failure": null,
+    "inspection_events": 1,
+    "native_cases": 5,
+    "passed": 50,
+    "references_rehashed_by_reviewer": [
+      {
+        "bytes": 18596,
+        "path": "/private/tmp/probata-t25-caller104-passive-controls-summary-v3-20261016.json",
+        "sha256": "241cd4016a995129d8cd9bd691becbd4b7733c2b7366e56e63d0911e8d813e8f"
+      },
+      {
+        "bytes": 175406,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_canonical_caller_preparat0/caller/manifest.json",
+        "sha256": "c7f1e4c970a24aea328630cef93578421f48ef59d2947f9d94d69ca0de264a42"
+      },
+      {
+        "bytes": 653751,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/artifact-manifest.json",
+        "sha256": "2a85f223ae8f26df92a93907f3846ed78b3094822a0ca32a86da22bb3367be0c"
+      },
+      {
+        "bytes": 995,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/command.json",
+        "sha256": "d99238454edd3ab7776982e1ca08b0b95c00e3acb77f8518e9ed501d8aed1e47"
+      },
+      {
+        "bytes": 3336,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/controls.log",
+        "sha256": "0626845df735c250bf73c0b217cf98f46e452d14a3ad4dc531f82378fa74ab85"
+      },
+      {
+        "bytes": 111,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/inner.log",
+        "sha256": "5be13a7ce9c9c1142735612aa5284ccce6f97964ae946489fd3c1cf8eca5ae8c"
+      },
+      {
+        "bytes": 3637,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/inner.log.summary.json",
+        "sha256": "a0b55cb74f2cd3ab4df84c5837699ce5db7811b90e6a2d44ca0da0cdbeaae5d3"
+      },
+      {
+        "bytes": 9092,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/junit.xml",
+        "sha256": "ff58eb0c8cb6b747f1a09c9afe7d24b42e9ed81bfb15cf50d1b50400b62c79ad"
+      },
+      {
+        "bytes": 759,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/plan.json",
+        "sha256": "580dd2ab7b5053d0afb1ef24e2fe5f8f51635e8fae3b051b4d3bb137350016d1"
+      },
+      {
+        "bytes": 167,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/resources.json",
+        "sha256": "aae39ff2501b7bb25e36572062689d461d962a9ca882a9c1c441eece55f85f86"
+      },
+      {
+        "bytes": 451,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/result.json",
+        "sha256": "a035e5c117628882451dd522db16d6e5c5c55820b85e5549b068de7711c2cf0b"
+      },
+      {
+        "bytes": 206185,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/source-after.json",
+        "sha256": "bbe7a96c7ccdfd06671a0dbeac26ad857b1a622b2a7447ab05e3e36ac9ee4729"
+      },
+      {
+        "bytes": 206185,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/source-before.json",
+        "sha256": "bbe7a96c7ccdfd06671a0dbeac26ad857b1a622b2a7447ab05e3e36ac9ee4729"
+      }
+    ],
+    "reviewer_claims_all2279_rechecked": false,
+    "scope": "Current50 batch included native observations, not compiler-only. Root separately audits coordination/admission; reviewer makes no retroactive approval or mathematical proof claim.",
+    "selected_current_manifest_and_application_files_rehashed": true,
+    "summary": {
+      "bytes": 18596,
+      "path": "/private/tmp/probata-t25-caller104-passive-controls-summary-v3-20261016.json",
+      "sha256": "241cd4016a995129d8cd9bd691becbd4b7733c2b7366e56e63d0911e8d813e8f"
+    },
+    "summary_reports_total_pin_checks": 2279,
+    "unconfirmed_children": []
+  },
+  "reviewer_execution": "Read-only Git/source/AST/hash/retained JSON only; no production imports/generation/tests/compiler/native/formal/prover/SSH or source edits.",
+  "semantic_review": {
+    "entry": "Signed-int source count and prospective explicit0<=n clause are matched; selected ABI/layout, ordinary contract identity/placement and automatic storage embedding remain pending. No upper bound is invented as a caller clause.",
+    "frame_and_aliases": "Incoming arbitrary well-formed heap, escaped aliases/history and automatic layout/placement/frame/cleanup remain source-runtime obligations. These three VCs do not compose reserve/observations/guarded read/dtor or establish final incoming frame.",
+    "hypotheses": "All104 obligations are pending with empty dependencies and check-lemma outputs; no helper theorem axioms or current model records are admitted. Source data/operator_index observation records are also absent.",
+    "identities": "Receiver=fresh_id(h); begin_automatic increments next once; buffer=fresh_id(begin_automatic(h,24,a)). Definitions are unbounded and distinct, with automatic dynamic=false; no exclusive-owner claim or global incoming pointer-map restriction.",
+    "positive": "0<n is a source path condition. Heap.available at the initial state is a uniform normal-return allocation output relation with explicit pending discharge, not an added caller contract requirement. The allocated buffer starts at prefix0/value7; no initialized buffer or constructor postcondition is assumed.",
+    "zero": "Real field stores and n==0 return map to null data/size/capacity state without allocation or buffer reads. This branch does not restrict caller entry or grant positive construction."
+  },
+  "source_commit": "6a755742f0c210d2316134b2e5862d0608870144",
+  "source_pins": [
+    {
+      "blob": "e5232ef92deb335d6c0003d837c1eafd12cac3ae",
+      "path": "swdb-project/swdb/vector_reallocation_caller_packets.py",
+      "sha256": "3571f944aca9a44a8f6ed7cce2853c92fee3271a71fd75d7c1095e1da46d6f7a"
+    },
+    {
+      "blob": "8f5bf589fcef64755c7b7dd12f1a6d82b70a5508",
+      "path": "swdb-project/swdb/vector_reallocation_composition.py",
+      "sha256": "321663ae5caaeeeb62149447bab8c6b2bbb9469b67807145f1dc59c0ce332c43"
+    },
+    {
+      "blob": "015f84ea2bca3e1dca77b2240ac38fba5e4a3372",
+      "path": "swdb-project/swdb/vector_reallocation_caller_vcs.py",
+      "sha256": "e8e514a1208d6653e8ae424b37309a3ce299690050ecac2710aed580b9ab397a"
+    },
+    {
+      "blob": "2fad79d9843631b95d5a3f1d4077b808138443fe",
+      "path": "swdb-project/swdb/vector_reallocation_calls.py",
+      "sha256": "d1d7ea169a50b82d5545ab0a3fa02910849d944b9104a5839e0955dd5a283a95"
+    },
+    {
+      "blob": "4afe866fa937054d676ce9e6f0072b397d6242fb",
+      "path": "swdb-project/swdb/vector_reallocation_lifetime.py",
+      "sha256": "d20ac49e7896ed47632ad05f6f0610caee805649da81d3f469da2b6237051159"
+    },
+    {
+      "blob": "70eb88282b14f41218cb205ec800e9e0a6c474e6",
+      "path": "swdb-project/swdb/vector_reallocation_capacity.py",
+      "sha256": "e4aa221acb78151895fa5c5d3cbdab6050b151b42a7096521a90fcdf3c95f617"
+    },
+    {
+      "blob": "1e356070e75a547ea1a60d7a71755f648b8cdc39",
+      "path": "swdb-project/swdb/vector_reallocation_vcs.py",
+      "sha256": "1f7f110493a4fa291915987c53b0adbbc7f001c2d78cb901c36bbb2dc81c7209"
+    },
+    {
+      "blob": "4e47c7845a8c90216079e8475eae3d831ec4cc18",
+      "path": "swdb-project/swdb/vector_reallocation_model.py",
+      "sha256": "92ad23030531650924a51b0a3bd1abb479afa373a7d1dd2a543b9ae225ab8b89"
+    },
+    {
+      "blob": "36277e01e90ae0afb78ede4ad04a6a9ad66ccbf1",
+      "path": "swdb-project/swdb/heap_model_vcs.py",
+      "sha256": "f20e0ec130222aeda96b4fbb8e72eef8d922d3f33e84077777203f7e6d159092"
+    },
+    {
+      "blob": "af3f31aefa824f6f407a5124b9acf5a21e4d0b09",
+      "path": "swdb-project/swdb/heap_reallocation.mlw",
+      "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5"
+    },
+    {
+      "blob": "1bb90a02d3e61d1fed4dcef0a246107c003b4fec",
+      "path": "swdb-project/tests/test_vector_reallocation_caller_packets.py",
+      "sha256": "fbc214c04cf583e4b89e5a80889da79bd72371b3470fb4c14f114c0a94e4e4ac"
+    },
+    {
+      "blob": "d40632fc3b3937cccebc7e532d10109ac7899a38",
+      "path": "swdb-project/tests/fixtures/proof/vector_reallocation_v3.cc",
+      "sha256": "1172e62dbff5076d25471285afcfa17927707dbe6fae121d9570109d39e62b57"
+    }
+  ],
+  "source_spans_checked": [
+    {
+      "begin": 295,
+      "end": 333,
+      "label": "constructor_entry.source_call",
+      "literal_utf8": "std::vector<int> v((std::size_t)n, 7);",
+      "sha256": "35c372980c4e014be8e2e74698a443c9b89b45d8ab9b9e89a5ed10fff9167f39"
+    },
+    {
+      "begin": 284,
+      "end": 289,
+      "label": "constructor_entry.source_parameter",
+      "literal_utf8": "int n",
+      "sha256": "8daab0d5b6739a4dbc7ec3bee23a8aba59c79f8db10753325893b0f6d70d4ad9"
+    },
+    {
+      "begin": 2678,
+      "end": 2802,
+      "label": "constructor_entry.callee_precondition",
+      "literal_utf8": "requires \\valid(this) && n <= ((size_t)PTRDIFF_MAX < SIZE_MAX / sizeof(int) ? (size_t)PTRDIFF_MAX : SIZE_MAX / sizeof(int));",
+      "sha256": "6b71bd9286493e42beec5937ad54f2b5b79b4945da9d203c9e7c23c5f81ac12a",
+      "source_sha256": "a20cb8431cc975b034954666967398d8466745cd0bab9a92f45f60c19a837a1a"
+    },
+    {
+      "begin": 295,
+      "end": 333,
+      "label": "positive_constructor_entry.source_call",
+      "literal_utf8": "std::vector<int> v((std::size_t)n, 7);",
+      "sha256": "35c372980c4e014be8e2e74698a443c9b89b45d8ab9b9e89a5ed10fff9167f39"
+    },
+    {
+      "begin": 284,
+      "end": 289,
+      "label": "positive_constructor_entry.source_parameter",
+      "literal_utf8": "int n",
+      "sha256": "8daab0d5b6739a4dbc7ec3bee23a8aba59c79f8db10753325893b0f6d70d4ad9"
+    },
+    {
+      "begin": 3126,
+      "end": 3180,
+      "label": "positive_constructor_entry.initial_stores",
+      "literal_utf8": "this->data = NULL; this->size = 0; this->capacity = 0;",
+      "sha256": "be5adc0b4f3831687e8863884b01825ef1e2964425371ca72725f078f1d0f182"
+    },
+    {
+      "begin": 3183,
+      "end": 3202,
+      "label": "positive_constructor_entry.zero_return",
+      "literal_utf8": "if (n == 0) return;",
+      "sha256": "eb1b01c8bea6b13fb793d99de9248f2fcfb37947f78896a26d06f95e14779dfc"
+    },
+    {
+      "begin": 3205,
+      "end": 3236,
+      "label": "positive_constructor_entry.allocation",
+      "literal_utf8": "this->data = swdb_alloc_int(n);",
+      "sha256": "8af5e1eacd759735d291cbb90c35e7149cda8ee942a21330bd2399bef9f792aa"
+    },
+    {
+      "begin": 3286,
+      "end": 3305,
+      "label": "positive_constructor_entry.capacity_store",
+      "literal_utf8": "this->capacity = n;",
+      "sha256": "370511bba627b4227d83fcbaf20276c7773363240b524cc043b24e0c19048873"
+    },
+    {
+      "begin": 3558,
+      "end": 3588,
+      "label": "positive_constructor_entry.loop_entry",
+      "literal_utf8": "for (size_t k = 0; k < n; ++k)",
+      "sha256": "9d0d7077692497046781a2f3cb19ac57be11116fe39c499352e4f095fc590024"
+    },
+    {
+      "begin": 3126,
+      "end": 3588,
+      "label": "positive_constructor_entry.source_prefix",
+      "literal_utf8": "this->data = NULL; this->size = 0; this->capacity = 0;\n  if (n == 0) return;\n  this->data = swdb_alloc_int(n);   /* allocation succeeds (assumption entry) */\n  this->capacity = n;\n  /*@ loop invariant 0 <= k <= n;\n      loop invariant \\forall integer j; 0 <= j < k ==> this->data[j] == value;\n      loop invariant \\initialized(this->data + (0 .. k - 1));\n      loop assigns k, this->data[0 .. n - 1];\n      loop variant n - k; */\n  for (size_t k = 0; k < n; ++k)",
+      "sha256": "9283a034ef21244fc3dc9d90e71f2b07996a7e4cb067883d2d9cf7bf46295223"
+    },
+    {
+      "begin": 295,
+      "end": 333,
+      "label": "zero_constructor.source_call",
+      "literal_utf8": "std::vector<int> v((std::size_t)n, 7);",
+      "sha256": "35c372980c4e014be8e2e74698a443c9b89b45d8ab9b9e89a5ed10fff9167f39"
+    },
+    {
+      "begin": 284,
+      "end": 289,
+      "label": "zero_constructor.source_parameter",
+      "literal_utf8": "int n",
+      "sha256": "8daab0d5b6739a4dbc7ec3bee23a8aba59c79f8db10753325893b0f6d70d4ad9"
+    },
+    {
+      "begin": 3126,
+      "end": 3180,
+      "label": "zero_constructor.initial_stores",
+      "literal_utf8": "this->data = NULL; this->size = 0; this->capacity = 0;",
+      "sha256": "be5adc0b4f3831687e8863884b01825ef1e2964425371ca72725f078f1d0f182"
+    },
+    {
+      "begin": 3183,
+      "end": 3202,
+      "label": "zero_constructor.zero_return",
+      "literal_utf8": "if (n == 0) return;",
+      "sha256": "eb1b01c8bea6b13fb793d99de9248f2fcfb37947f78896a26d06f95e14779dfc"
+    }
+  ],
+  "ticket_closure": false,
+  "verdict": "PASS_SCOPED_PENDING_CALLER_SOURCE_PREPARATION"
+}

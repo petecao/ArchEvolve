@@ -1,0 +1,333 @@
+{
+  "SSH": false,
+  "actual_entry_executed": false,
+  "blockers": [],
+  "bootstrap": {
+    "bytes": 74840,
+    "early_Clang_ambient_guards_preserved": true,
+    "embedded_entry_expected_roundtrip": true,
+    "exact_inverse_to_hardened_cell4_V6": true,
+    "sha256": "43e6d5e81363f20a659c0567099815f77bc56fe1737fb35a1b41edf865f3e656"
+  },
+  "caller_acceptance": false,
+  "canonical_file_count": 60,
+  "canonical_manifest_sha256": "d7020c750adea99833900f720f693f6d221a10576f76c3e9201104772c250706",
+  "compiler": {
+    "actual_new_observation_required": true,
+    "old046_actual_identity_reconstructed": true,
+    "old_actual_metadata": {
+      "bytes": 198677,
+      "path": "/private/tmp/probata-t25-cell4-setup-only-metadata-v1-20261016.json",
+      "sha256": "4161bd70151a4d49ddb8ac282466bfec2311d81c55163932c441d4c141f661aa"
+    },
+    "prospective_current_identity": {
+      "c_lowering": {
+        "id": "swdb-c-lowering-9",
+        "sha256": "db3ba85bf4acf17f9433f9179723402380dc1efeb2fc353f7006b73768325309"
+      },
+      "clang": {
+        "id": "clang-22.1.8",
+        "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+      },
+      "naming_rules": {
+        "id": "kept-names.3",
+        "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+      }
+    },
+    "runtime_context_only_changes": [
+      "-fdebug-compilation-dir=",
+      "-fcoverage-compilation-dir=",
+      "check.sha256"
+    ]
+  },
+  "compiler_native_formal_prover_probes": false,
+  "complete_model_acceptance": false,
+  "created": "2026-10-16 ET",
+  "full_targets": 52,
+  "helper_pin_count": 8,
+  "inspection": {
+    "bytes": 89983,
+    "path": "/private/tmp/probata-t25-copy-step15-static-review-inspection-v1-20261016.json",
+    "sha256": "9537cd798a1cc027062d84428d65afc0367d1008d0e605f89756f5437aad1aa5"
+  },
+  "inspection_script": {
+    "bytes": 9813,
+    "path": "/private/tmp/probata-t25-copy-step15-static-review-inspect-v1-20261016.py",
+    "sha256": "a8bd9f29575ee73d3ee2d489387e1eb26d1aca509f02815119524180bfd8d698"
+  },
+  "no_record_writer_or_complete_model_verdict": true,
+  "nonmain_AST_helpers_unchanged": [
+    "sha",
+    "pin",
+    "write",
+    "surface",
+    "linux_admission",
+    "consumer_closure",
+    "initialize_workspace",
+    "source_lemma_ownership"
+  ],
+  "ordinary_setup_check_launch_native_reader_ownership_retained": true,
+  "original_v2_acceptance": false,
+  "packet_refs": [
+    {
+      "bytes": 2157,
+      "path": "/private/tmp/probata-t25-copy-step15-packet-v3-3a48da2f-20261016.json",
+      "sha256": "6459842ac43b9f12ae2b2d0e99fb89c8296c04fb59fbcb0a6d260a96b7edffb6"
+    },
+    {
+      "bytes": 21960,
+      "path": "/private/tmp/probata-t25-copy-step15-entry-v3-3a48da2f-20261016.py",
+      "sha256": "ed5305da5902d9cc238954875bd605effabee09a5930d112745304b6ae8ce8da"
+    },
+    {
+      "bytes": 149199,
+      "path": "/private/tmp/probata-t25-copy-step15-expected-v3-3a48da2f-20261016.json",
+      "sha256": "d902c0e1945aff6ed2ca6cd1be5b30502cc0512426e418cd1f998a83a835201b"
+    },
+    {
+      "bytes": 75106,
+      "path": "/private/tmp/probata-t25-copy-step15-root-command-v3-3a48da2f-20261016.json",
+      "sha256": "6c56a259c4f326f61af30537499f1c94a17c7e4bf90a47f906a44be8e3250a39"
+    },
+    {
+      "bytes": 5451,
+      "path": "/private/tmp/probata-t25-remote-tool-path-metadata-20261015.json",
+      "sha256": "c1f18660c983164aeb4637c790f3fdb04e06d5ab577d0e85cf1b796e0b5f5166"
+    },
+    {
+      "bytes": 553188,
+      "path": "/private/tmp/probata-t25-qualified-generation-expected-v3-01771a83-20261016.json",
+      "sha256": "866a8a3900722d86ae390e7f0e91cdb6e6b9d02524303e51777f7bc9008e7493"
+    },
+    {
+      "bytes": 21663,
+      "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/reviewed-t25-public-heap-v1-launch-cea5652b-20261015.json",
+      "sha256": "ed3a5c73db310d5e5a56c5b64c098cb77de205349e7e355f3230e5c9575a6bf5"
+    },
+    {
+      "bytes": 48366,
+      "git_commit": "3a48da2f44dd2066c2ac0bf42c4d873490044a99",
+      "git_path": "swdb-project/swdb/proof_setup.py",
+      "sha256": "7a247dc0243a84d4657ba2fe36726a657c307e2fcb191935e10863c510151daf"
+    },
+    {
+      "bytes": 23986,
+      "git_commit": "3a48da2f44dd2066c2ac0bf42c4d873490044a99",
+      "git_path": "swdb-project/swdb/heap_model_view.py",
+      "sha256": "52b41faefd37d585fb2c8ff15c82e74fb602c6063848ec7808cbea816ea44451"
+    },
+    {
+      "bytes": 5207,
+      "git_commit": "3a48da2f44dd2066c2ac0bf42c4d873490044a99",
+      "git_path": "swdb-project/swdb/vector_reallocation_view.py",
+      "sha256": "05eaa7414580b11a54b7f6ebf63db20b28fd6aea0c5de4da00fc70a3bd0c57d4"
+    },
+    {
+      "bytes": 92323,
+      "git_commit": "3a48da2f44dd2066c2ac0bf42c4d873490044a99",
+      "git_path": "swdb-project/swdb/wp_adapter.py",
+      "sha256": "9bf9e20cfa33450903d9f2c139febdcac6c81557fabb434f6c68d8f1c24617ac"
+    },
+    {
+      "bytes": 8129,
+      "git_commit": "3a48da2f44dd2066c2ac0bf42c4d873490044a99",
+      "git_path": "swdb-project/tests/test_standard_member_contracts.py",
+      "sha256": "dc62241267367f02f972c64eef397e9513962ee176bd9657df4104aec74b808a"
+    },
+    {
+      "bytes": 21597,
+      "git_commit": "3a48da2f44dd2066c2ac0bf42c4d873490044a99",
+      "git_path": "swdb-project/tests/test_wp_adapter.py",
+      "sha256": "576ae5c70c6fa48b88b7cc9b18122b23a4574b4559acbf4f3dcfbcd053c61e0e"
+    }
+  ],
+  "physical_reference_C_count": 4,
+  "predecessor_entry": {
+    "bytes": 21120,
+    "path": "/private/tmp/probata-t25-cell4-diagnostic-entry-v5-046f6b9e-20261016.py",
+    "sha256": "9d395bd15aac3f9a81e18ce3e87b62fd4a18e03b8862f5229401453d5968f0ee"
+  },
+  "predecessor_hardened_command": {
+    "bytes": 66718,
+    "path": "/private/tmp/probata-t25-cell4-diagnostic-root-command-v6-046f6b9e-20261016.json",
+    "sha256": "8a1e290cf0fa3daa32ba98cbc94989fab01d82bb1d178fcb5cf1bbaa05d41a40"
+  },
+  "project_imported": false,
+  "proof_acceptance": false,
+  "remaining": [
+    "Root physical source/publication/host/lane/whole-guard admission.",
+    "Fresh all15 actual outcomes with complete query/import/hypothesis/native/property/resource cold binding.",
+    "Fresh full52 normal public body proof including numeric/RTE/init/smoke, schema/persistence and full source/runtime/task closure."
+  ],
+  "resource_policy": {
+    "cap_bytes": 8589934592,
+    "leaf_timeout_seconds": 180,
+    "output_budget_bytes": 2147483648,
+    "profile_seconds": 1900,
+    "root_outer_seconds": 2220,
+    "root_whole_seconds": 2100,
+    "workers": 1
+  },
+  "review_md": {
+    "bytes": 4259,
+    "path": "/private/tmp/probata-t25-copy-step15-independent-static-review-v3-3a48da2f-20261016.md",
+    "sha256": "a1e830ed13b6fbb618fa800192672db0f4ede7574530ec13597540d926f76728"
+  },
+  "reviewer": "/root/ticket24/std_contract_review",
+  "scope": "Inert entry/expected/bootstrap/source/canonical/setup/API/ownership/resource review; root-only actual admission remains separate.",
+  "selected15": [
+    {
+      "formula_sha256": "ff5a61195365c14dba0627b77804faeb8c9780575e1e650b558dc00e208d20e3",
+      "id": "grow.copy.step.entry_well_formed",
+      "path": "009s01-t25v3_grow_copy_step_entry_well_formed.c",
+      "sha256": "12eb0863d3fc37174ed67c9ab63abaac4a21710276740137b3d05f8e1ebf24c9"
+    },
+    {
+      "formula_sha256": "e37c79c88065ebca7d66d5193b2ecae1f8b2c248035e6c09ce02cb974ec84a62",
+      "id": "grow.copy.step.updated_well_formed",
+      "path": "009s02-t25v3_grow_copy_step_updated_well_formed.c",
+      "sha256": "8b1b238b28c4d00ebf16c321c8f30d4a41a686dbaefbf89a8a7868f8a0a9cbde"
+    },
+    {
+      "formula_sha256": "31bdd946142807bf6b980e2d68cbc6dac1a9e70d1b724841c28f40fba8c4781d",
+      "id": "grow.copy.step.entry_eligible",
+      "path": "009s03-t25v3_grow_copy_step_entry_eligible.c",
+      "sha256": "ec6be998ea102346619e471900faba833872d9b358b2c4529fdac437246cb9a8"
+    },
+    {
+      "formula_sha256": "1d99311490377b68449365b08d02589f26160ed48c9738d8a704231a92b19e9a",
+      "id": "grow.copy.step.updated_eligible",
+      "path": "009s04-t25v3_grow_copy_step_updated_eligible.c",
+      "sha256": "f78a4afe9eb7c68bc990a5f522b648ed92647b04e9b1068618e6ce8b66b41412"
+    },
+    {
+      "formula_sha256": "d312f8a3450c18014dc3bce5701ce55eb0eb00f1f1c52c405d089743571870a1",
+      "id": "grow.copy.step.advanced_index_size_capacity_bounds",
+      "path": "009s05-t25v3_grow_copy_step_advanced_index_size_capacity_bounds.c",
+      "sha256": "f45d9eb8f8c87c62151a73ea36926c5b2589daa69e81311ab8b56e67b981b6f7"
+    },
+    {
+      "formula_sha256": "f1e119d42cab2b1292c4bf070141ab2da3371d9005b2258fde21027f2dbcab53",
+      "id": "grow.copy.step.fresh_identity",
+      "path": "009s06-t25v3_grow_copy_step_fresh_identity.c",
+      "sha256": "d2f46a3b6cc83ae4b034c3adbea352f6752b7de9684fb7deb1180f3c6357a12d"
+    },
+    {
+      "formula_sha256": "6e53e155dc8af7cfc8ebd026ad8b5ca8900fc153db25ae9c4265dc3af64e36c4",
+      "id": "grow.copy.step.unissued_identity",
+      "path": "009s07-t25v3_grow_copy_step_unissued_identity.c",
+      "sha256": "16ec9b37e3e5b8cfab01f07582e7e29201cc4effd027864e9f350ff92ffd109f"
+    },
+    {
+      "formula_sha256": "870d14f7f8b102641da1c89ef9a7dbbd286ce02406649acc2bf69816acf473e6",
+      "id": "grow.copy.step.receiver_distinct",
+      "path": "009s08-t25v3_grow_copy_step_receiver_distinct.c",
+      "sha256": "4082c9adfde78d3ea435d7d1cb546bf0f2ac21db502f3540245bdb91da82efe3"
+    },
+    {
+      "formula_sha256": "5de230bd0187126ac2e8c52e275876c7adc157ebb2b086d690b44a3460f54c5d",
+      "id": "grow.copy.step.old_buffer_distinct",
+      "path": "009s09-t25v3_grow_copy_step_old_buffer_distinct.c",
+      "sha256": "e3befcdda0ecbc028c925145f57e458854f12717b46a4a2238b664cdadc572e9"
+    },
+    {
+      "formula_sha256": "586650a3cf14287c73031d3727b4048978537016b58db23068b27b372e04979d",
+      "id": "grow.copy.step.destination_write_domain",
+      "path": "009s10-t25v3_grow_copy_step_destination_write_domain.c",
+      "sha256": "e43050763308b2aec31f63361dca664cf71b7cfa6fb80e08468fb5ae937a9717"
+    },
+    {
+      "formula_sha256": "282fbf9f46d38b14f27db41950185aed5459c8d2a0b2d2306154047b8e8c8ab3",
+      "id": "grow.copy.step.destination_freeability",
+      "path": "009s11-t25v3_grow_copy_step_destination_freeability.c",
+      "sha256": "cbd40231a7fd77a24f4144e148d4437a4deb7ce21125a4d0acedacb7cc536419"
+    },
+    {
+      "formula_sha256": "17f4f50cd7cea5ebdba185fd9489c97f9d756773a07345eb0a01b311582a8a51",
+      "id": "grow.copy.step.destination_extent",
+      "path": "009s12-t25v3_grow_copy_step_destination_extent.c",
+      "sha256": "f7ca7039d489eb38094c504987c97dd71077385fd4a20ee97b6eab49c89410f9"
+    },
+    {
+      "formula_sha256": "db560fbf4f33ac8d723114818ae7b277ccbd2158f9389b75c087352c8a855f35",
+      "id": "grow.copy.step.allocation_frame",
+      "path": "009s13-t25v3_grow_copy_step_allocation_frame.c",
+      "sha256": "11aac92ac4019ab9b9ce8524706ca22ca49b1d309818ed65a8ef0657939d462c"
+    },
+    {
+      "formula_sha256": "00666376822ecc3d03aa8e9485f7f3fc13c4693bcf48de8194bbc82c1c57d963",
+      "id": "grow.copy.step.advanced_copied_prefix",
+      "path": "009s14-t25v3_grow_copy_step_advanced_copied_prefix.c",
+      "sha256": "1839dda1ae013bc884c1fc6492c8839609f9df07769ced542d72330739d63aed"
+    },
+    {
+      "formula_sha256": "da4072d7b893b8d6a0f26d2b3a1f8b13b50e16d2cd7fcd1afa60ffc222fec842",
+      "id": "grow.copy.step.uninitialized_tail",
+      "path": "009s15-t25v3_grow_copy_step_uninitialized_tail.c",
+      "sha256": "9a653929b0ffd462a61c2f38e1f1102260c125660769e49f9dacbe9104e281ee"
+    }
+  ],
+  "selected_support_surfaces_unchanged": [
+    "tools",
+    "wp_artifacts",
+    "why3_config",
+    "portable_import_surfaces",
+    "typed_machine_sources",
+    "linux_clang_components",
+    "linux_launch_binding"
+  ],
+  "selected_targets": 15,
+  "source_commit": "3a48da2f44dd2066c2ac0bf42c4d873490044a99",
+  "source_consumer_root_count": 6,
+  "source_equivalence_review": {
+    "bytes": 12206,
+    "path": "/private/tmp/probata-t25-copy-step-and15-independent-source-review-e2326954-20261016.json",
+    "sha256": "d7a501cc3837609003511f09dd656df43eafe6721ad3138670468eafdddb33bd"
+  },
+  "source_mutation": false,
+  "source_pin_count": 320,
+  "tests_or_control_reruns": false,
+  "ticket_closure": false,
+  "top_level_logical_groups": 3,
+  "unexecuted37": [
+    "control.grow.premises_feasible",
+    "grow.entry.reads",
+    "grow.entry.int_projection.repr",
+    "grow.entry.int_projection.cells.access",
+    "grow.entry.int_projection.cells.initialization",
+    "grow.entry.int_projection.cells.integer",
+    "grow.entry.int_projection.cells.bounds",
+    "grow.alloc.identity",
+    "grow.alloc.output",
+    "grow.alloc.frame",
+    "grow.copy.establish.entry_well_formed",
+    "grow.copy.establish.allocated_well_formed",
+    "grow.copy.establish.entry_eligible",
+    "grow.copy.establish.allocated_eligible",
+    "grow.copy.establish.index_size_capacity_bounds",
+    "grow.copy.establish.fresh_identity",
+    "grow.copy.establish.unissued_identity",
+    "grow.copy.establish.receiver_distinct",
+    "grow.copy.establish.old_buffer_distinct",
+    "grow.copy.establish.destination_write_domain",
+    "grow.copy.establish.destination_freeability",
+    "grow.copy.establish.destination_extent",
+    "grow.copy.establish.allocation_frame",
+    "grow.copy.establish.empty_copied_prefix",
+    "grow.copy.establish.uninitialized_tail",
+    "grow.copy.read",
+    "grow.copy.write",
+    "grow.copy.exit",
+    "grow.free.argument",
+    "grow.free.survival",
+    "grow.free.aliases",
+    "grow.store.capacity",
+    "grow.post.eligibility",
+    "grow.post.values",
+    "grow.post.old_invalid",
+    "grow.post.frame",
+    "grow.numeric"
+  ],
+  "unexecuted_targets": 37,
+  "verdict": "PASS_SCOPED_INERT_STATIC_REVIEW"
+}

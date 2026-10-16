@@ -1,0 +1,557 @@
+{
+  "boundaries": {
+    "accepted_old_heap_theory_changed": false,
+    "actual_formal_execution": false,
+    "caller_domain_discharged": false,
+    "native_observations": "four defined native C growth cases for each original/qualified body; no invalid input or ASan fault, no C++ equivalence",
+    "original_v2_catalog_changed": false,
+    "ownership_token_granted": false,
+    "qualified_model_body_proved": false,
+    "remote_execution": false,
+    "source_premises_added": []
+  },
+  "caller_receipts": [
+    {
+      "anchors": {
+        "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_alias_controls_kee0/vector_realloc_v3_stale.anchors.json",
+        "sha256": "f6b070b2e7a6fbb53091976f7432efb057fbb7962251d80f59fdf092ee95b7b6"
+      },
+      "caller_premises_added": [],
+      "candidate_verdict": "pending",
+      "known_origins_granted": []
+    },
+    {
+      "anchors": {
+        "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_alias_controls_kee1/vector_realloc_v3_no_growth.anchors.json",
+        "sha256": "38dd12f1e0654f8fd8dedbb2cb8f89215e2fe59892c67a98fc2c2ae6f0f751bb"
+      },
+      "caller_premises_added": [],
+      "candidate_verdict": "pending",
+      "known_origins_granted": []
+    },
+    {
+      "anchors": {
+        "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_caller_refuses_sig0/lower/vector_realloc_v3_safe.anchors.json",
+        "sha256": "c2f3febe2bf968b9c8b29feceaee2d1707c82324f999a2512811a9c6a222711b"
+      },
+      "caller_premises_added": [],
+      "candidate_verdict": "refused",
+      "known_origins_granted": []
+    },
+    {
+      "anchors": {
+        "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_caller_retains_crl0/lower/vector_realloc_v3_safe.anchors.json",
+        "sha256": "b670a5b4e2a3a6814f82f6949b5512b6e7f47dbcc860f89ac40c641d6348b1a3"
+      },
+      "caller_premises_added": [],
+      "candidate_verdict": "pending",
+      "known_origins_granted": []
+    },
+    {
+      "anchors": {
+        "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_caller_source_span0/lower/vector_realloc_v3_safe.anchors.json",
+        "sha256": "fddf907354fae52905d164b2d01f1717794faa4f6efc149f844258308832a312"
+      },
+      "caller_premises_added": [],
+      "candidate_verdict": "pending",
+      "known_origins_granted": []
+    },
+    {
+      "anchors": {
+        "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_reserve_caller_rec0/vector_realloc_v3_safe.anchors.json",
+        "sha256": "3e1af7f5b6a03ef2558b6e8afbc960691f27821eb9b27d9b0d1f24b337f38549"
+      },
+      "caller_premises_added": [],
+      "candidate_verdict": "pending",
+      "known_origins_granted": []
+    }
+  ],
+  "created": "2026-10-16 ET",
+  "public_records": [
+    {
+      "failure_class": "unsupported_construct",
+      "record": {
+        "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_candidate_retains_0/records/proofs/proof.model.std_vector_int_realloc_v3_grow.20261016t054454z.2c15fb45.yaml",
+        "sha256": "61c771b9461fa855e4e01697808ed0c5cb6362dafbaacbacf4e188fe53ca3619"
+      },
+      "reports": [
+        {
+          "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_candidate_retains_0/runs/proof.model.std_vector_int_realloc_v3_grow.20261016t054454z.2c15fb45/wp/vector-reallocation-v3.c",
+          "sha256": "371281207e3a40a56755043e866e8af016b6c23e7f7dd163336a57a08a0528dd"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_candidate_retains_0/runs/proof.model.std_vector_int_realloc_v3_grow.20261016t054454z.2c15fb45/wp/vector-reallocation-v3.json",
+          "sha256": "fb97715c969f0651d425408a2fcfbc8b91344526ae461d3a04b941073cfd7532"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_candidate_retains_0/runs/proof.model.std_vector_int_realloc_v3_grow.20261016t054454z.2c15fb45/wp/vector-reallocation-v2.original.c",
+          "sha256": "dc2049fa6f88a958fb88aee1e0a401f584630e8c302ad2e60b069ced2b587b1b"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_candidate_retains_0/runs/proof.model.std_vector_int_realloc_v3_grow.20261016t054454z.2c15fb45/wp/handler.json",
+          "sha256": "e0462a9bb7dbb9208c6b026effe2fc77dd82262945bcea86bd2119df953a27b3"
+        }
+      ],
+      "verdict": "not_proven",
+      "verifier_launched": false
+    },
+    {
+      "failure_class": "unsupported_construct",
+      "record": {
+        "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_minimal_qualified_0/records/proofs/proof.model.std_vector_int_realloc_v3_ctor_count_value.20261016t054455z.a7136fd5.yaml",
+        "sha256": "cb5a009887242190b361ae6f79d77c65ef41154b84f287b7abd34fc350b2369f"
+      },
+      "reports": [
+        {
+          "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_minimal_qualified_0/runs/proof.model.std_vector_int_realloc_v3_ctor_count_value.20261016t054455z.a7136fd5/wp/vector-reallocation-v3.c",
+          "sha256": "e59c0f2658a3adc94112e7852ccda6b1d7302c1300a2e84f0121f4d726e090e3"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_minimal_qualified_0/runs/proof.model.std_vector_int_realloc_v3_ctor_count_value.20261016t054455z.a7136fd5/wp/vector-reallocation-v3.json",
+          "sha256": "3b0e65eaf0b86d7a26aea83bf55cfdc89fb54dd31dbc8e12883fda0ba3e435bb"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_minimal_qualified_0/runs/proof.model.std_vector_int_realloc_v3_ctor_count_value.20261016t054455z.a7136fd5/wp/vector-reallocation-v2.original.c",
+          "sha256": "57cf2a6f3f9049f8edf41633f9ef60d0bb7c804e5ee937af796217a2a018c594"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_minimal_qualified_0/runs/proof.model.std_vector_int_realloc_v3_ctor_count_value.20261016t054455z.a7136fd5/wp/handler.json",
+          "sha256": "e0462a9bb7dbb9208c6b026effe2fc77dd82262945bcea86bd2119df953a27b3"
+        }
+      ],
+      "verdict": "not_proven",
+      "verifier_launched": false
+    },
+    {
+      "failure_class": "unsupported_construct",
+      "record": {
+        "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_minimal_qualified_1/records/proofs/proof.model.std_vector_int_realloc_v3_reserve.20261016t054456z.a0d97ebc.yaml",
+        "sha256": "efbbd15be6a4e0569074c77a409ea0b8fc9bea1f994d94faa5b0df8891038ce4"
+      },
+      "reports": [
+        {
+          "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_minimal_qualified_1/runs/proof.model.std_vector_int_realloc_v3_reserve.20261016t054456z.a0d97ebc/wp/vector-reallocation-v3.c",
+          "sha256": "1c77c118f67e35f605dde19f41a01b521d91295d1f429019dd4df9a22a0b4a4a"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_minimal_qualified_1/runs/proof.model.std_vector_int_realloc_v3_reserve.20261016t054456z.a0d97ebc/wp/vector-reallocation-v3.json",
+          "sha256": "e3e25327c7dc46f4fe22c02c6028bf232ec561f63abc2c5d04169defa1914a69"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_minimal_qualified_1/runs/proof.model.std_vector_int_realloc_v3_reserve.20261016t054456z.a0d97ebc/wp/vector-reallocation-v2.original.c",
+          "sha256": "bbb1ea332771898dba5a3b7e4e5e23fe0b916f325b22f213095c36285321421f"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_minimal_qualified_1/runs/proof.model.std_vector_int_realloc_v3_reserve.20261016t054456z.a0d97ebc/wp/handler.json",
+          "sha256": "e0462a9bb7dbb9208c6b026effe2fc77dd82262945bcea86bd2119df953a27b3"
+        }
+      ],
+      "verdict": "not_proven",
+      "verifier_launched": false
+    },
+    {
+      "failure_class": "unsupported_construct",
+      "record": {
+        "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_minimal_qualified_2/records/proofs/proof.model.std_vector_int_realloc_v3_dtor.20261016t054457z.02ca9b6a.yaml",
+        "sha256": "d4fe7a9e91695e86bd081e8a94538fd467b6c6685cfd1470ff964d2ebbe208cc"
+      },
+      "reports": [
+        {
+          "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_minimal_qualified_2/runs/proof.model.std_vector_int_realloc_v3_dtor.20261016t054457z.02ca9b6a/wp/vector-reallocation-v3.c",
+          "sha256": "3534212640de4ea9b7fdb85a66ea1d39df77a8e532c55f75ef55a9940de21dd1"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_minimal_qualified_2/runs/proof.model.std_vector_int_realloc_v3_dtor.20261016t054457z.02ca9b6a/wp/vector-reallocation-v3.json",
+          "sha256": "9c37fb5ee35e46648de5f7b634f6225bc2b7a212a3fbfb506b5775cc6359dea1"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_minimal_qualified_2/runs/proof.model.std_vector_int_realloc_v3_dtor.20261016t054457z.02ca9b6a/wp/vector-reallocation-v2.original.c",
+          "sha256": "1056f4f83c59a30941ec9417c36aada8eab4b62160087ae10315cd2ac9778317"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_minimal_qualified_2/runs/proof.model.std_vector_int_realloc_v3_dtor.20261016t054457z.02ca9b6a/wp/handler.json",
+          "sha256": "e0462a9bb7dbb9208c6b026effe2fc77dd82262945bcea86bd2119df953a27b3"
+        }
+      ],
+      "verdict": "not_proven",
+      "verifier_launched": false
+    },
+    {
+      "failure_class": "unsupported_construct",
+      "record": {
+        "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_qualified_grow_rec0/records/proofs/proof.model.std_vector_int_realloc_v3_grow.20261016t054453z.c45dfff2.yaml",
+        "sha256": "a96ba9c962b8a603d8ad5d05e3e0c21ef83a2324a49663aeb8c9da5643c76eb0"
+      },
+      "reports": [
+        {
+          "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_qualified_grow_rec0/runs/proof.model.std_vector_int_realloc_v3_grow.20261016t054453z.c45dfff2/wp/vector-reallocation-v3.c",
+          "sha256": "371281207e3a40a56755043e866e8af016b6c23e7f7dd163336a57a08a0528dd"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_qualified_grow_rec0/runs/proof.model.std_vector_int_realloc_v3_grow.20261016t054453z.c45dfff2/wp/vector-reallocation-v3.json",
+          "sha256": "fb97715c969f0651d425408a2fcfbc8b91344526ae461d3a04b941073cfd7532"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_qualified_grow_rec0/runs/proof.model.std_vector_int_realloc_v3_grow.20261016t054453z.c45dfff2/wp/vector-reallocation-v2.original.c",
+          "sha256": "dc2049fa6f88a958fb88aee1e0a401f584630e8c302ad2e60b069ced2b587b1b"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_qualified_grow_rec0/runs/proof.model.std_vector_int_realloc_v3_grow.20261016t054453z.c45dfff2/wp/handler.json",
+          "sha256": "e0462a9bb7dbb9208c6b026effe2fc77dd82262945bcea86bd2119df953a27b3"
+        }
+      ],
+      "verdict": "not_proven",
+      "verifier_launched": false
+    }
+  ],
+  "red_corrections": {
+    "caller-complete-calls-red": "missing data/index call and guarded scalar-read obligations",
+    "caller-crlf-red": "raw source digest mismatch due to text newline normalization",
+    "caller-edges-red": "pytest collection error: request is reserved; corrected the parameter name before semantic RED",
+    "caller-edges-red-v2": "real signed n+1 classification and UTF-8 byte-span mismatches",
+    "caller-public-green": "operator[] function decay refused; fixed locally at callee",
+    "caller-public-red": "missing caller certificate",
+    "helper-bodies-green": "test incorrectly excluded unused allocator body emitted in original destructor unit; corrected exact inventory, retaining that helper",
+    "helper-bodies-red": "missing complete helper-body correspondence receipts"
+  },
+  "remaining": [
+    "typed source-int embedding and load bridge",
+    "arbitrary entry-snapshot copy prefix and full grow frame",
+    "fresh non-dynamic automatic receiver lifetime mapping",
+    "complete qualified model and caller VCs and current dependencies",
+    "independent review and coordinator admission before actual proof"
+  ],
+  "runs": [
+    {
+      "label": "caller-public-red",
+      "receipts": [
+        {
+          "path": "/private/tmp/probata-t25-reallocation-caller-public-red-20261016/command.json",
+          "sha256": "16a637c8a4c9dd6c21576a910fd41f1d5984dac0eaf6427b42ac6af5e671a244"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-caller-public-red-20261016/controls.log",
+          "sha256": "5ec04041a9d8ef6bdeaab708ca650c1610492956c2dcbf8883eda02961f26df4"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-caller-public-red-20261016/resources.json",
+          "sha256": "fec65086ebe44cad189d94e789acab4d2661745a8a60ea36a849f20bb8b08b20"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 4.9010370000000005,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 336953344,
+        "timed_out": false,
+        "wall_seconds": 4.938412208051886
+      }
+    },
+    {
+      "label": "caller-public-green",
+      "receipts": [
+        {
+          "path": "/private/tmp/probata-t25-reallocation-caller-public-green-20261016/command.json",
+          "sha256": "99ee0e5be08adf3f0244b05d40a99116ee53dfa926e09c81719be43bc526eff1"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-caller-public-green-20261016/controls.log",
+          "sha256": "4a79ccafed2df0c0f08f33b61371e283da9e1352432892afc35d9972f647f143"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-caller-public-green-20261016/resources.json",
+          "sha256": "299a1a89621c0007e20d61a68f36920bda01315f9de5c0aa8f9c1177d50ab59b"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 5.131001,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 364347392,
+        "timed_out": false,
+        "wall_seconds": 5.546632792043965
+      }
+    },
+    {
+      "label": "caller-public-green-v2",
+      "receipts": [
+        {
+          "path": "/private/tmp/probata-t25-reallocation-caller-public-green-v2-20261016/command.json",
+          "sha256": "8a19bec99920ca6dba69d441c70911783ddb0d4533a52df440ef6e7b5033316b"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-caller-public-green-v2-20261016/controls.log",
+          "sha256": "4fd07bcee9b5a8f0645ee8bc81e966b1fc7417a9a0ec85c8404455fe322cb09f"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-caller-public-green-v2-20261016/resources.json",
+          "sha256": "0d03ec6bea25522f0051ece3c39d47f8aab00854343031e51e0cd06a7d8799eb"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 5.0623249999999995,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 345915392,
+        "timed_out": false,
+        "wall_seconds": 5.126491124974564
+      }
+    },
+    {
+      "label": "caller-edges-red",
+      "receipts": [
+        {
+          "path": "/private/tmp/probata-t25-reallocation-caller-edges-red-20261016/command.json",
+          "sha256": "e5d3e4c27511406de2e5e0714f6339923031add816429bd87e1014bdaf286788"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-caller-edges-red-20261016/controls.log",
+          "sha256": "897f40933e9185003277a763345798649c27f7f6365f15911eda1fe6d6708d0f"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-caller-edges-red-20261016/resources.json",
+          "sha256": "e43e1b0326648f458c69a234e9d0b5ff049d55844cf2d4f805e47fff9aa79387"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 1.033478,
+        "exit_code": 2,
+        "out_of_memory": false,
+        "peak_rss_bytes": 101253120,
+        "timed_out": false,
+        "wall_seconds": 1.39565445802873
+      }
+    },
+    {
+      "label": "caller-edges-red-v2",
+      "receipts": [
+        {
+          "path": "/private/tmp/probata-t25-reallocation-caller-edges-red-v2-20261016/command.json",
+          "sha256": "712b8c4c1490f8bc26d16b2142e537b5d3d1ddaab078093a6e46d73d6e4e46ce"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-caller-edges-red-v2-20261016/controls.log",
+          "sha256": "99ab9bd2cbc45847694f6663c27eb2b34f6e3155ac3b029b5ec0a31fe5e5cdf8"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-caller-edges-red-v2-20261016/resources.json",
+          "sha256": "3aa4ed97a763a5d0ee32f785fdd4a1a01bfc497960748b711821839d54a4e82e"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 23.000192,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 354549760,
+        "timed_out": false,
+        "wall_seconds": 23.42649404099211
+      }
+    },
+    {
+      "label": "caller-edges-green",
+      "receipts": [
+        {
+          "path": "/private/tmp/probata-t25-reallocation-caller-edges-green-20261016/command.json",
+          "sha256": "bfe4faa70463537bb74c8372d02de269c032e63dd88c82f591b41e8a5f751a1e"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-caller-edges-green-20261016/controls.log",
+          "sha256": "c4bfab1513ed22900455226d21e5288f89a716af5103ec80212fabec28d59395"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-caller-edges-green-20261016/resources.json",
+          "sha256": "015b0bd2246dffb7a53beca50e5850aa42d5e09f4ed7ef3ea4756ebc355aea3a"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 22.977241,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 361529344,
+        "timed_out": false,
+        "wall_seconds": 23.1009878750192
+      }
+    },
+    {
+      "label": "caller-crlf-red",
+      "receipts": [
+        {
+          "path": "/private/tmp/probata-t25-reallocation-caller-crlf-red-20261016/command.json",
+          "sha256": "e1973fae2041ca6c6a56bdcd2e0b5f388d5a7071b5ee697143a336f0f00c75fb"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-caller-crlf-red-20261016/controls.log",
+          "sha256": "9a255df3cd3150fb62ba24c06bb9b534f2bb7afbb9237ae21cd7c45b8f1af6b8"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-caller-crlf-red-20261016/resources.json",
+          "sha256": "201d3e84df39238fd821fdc534b64fa727810edc49b532d5a6397531470bbce8"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 5.101533,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 351485952,
+        "timed_out": false,
+        "wall_seconds": 5.172295958967879
+      }
+    },
+    {
+      "label": "caller-complete-calls-red",
+      "receipts": [
+        {
+          "path": "/private/tmp/probata-t25-reallocation-caller-complete-calls-red-20261016/command.json",
+          "sha256": "4abf8a30d6ef33d967ab9eb41855e280abfcdf6cfe40b41ee85fb6958bfa1cfd"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-caller-complete-calls-red-20261016/controls.log",
+          "sha256": "5344a9f936392d3c621a5f6fcb2ea9304e259d7468bd097cd8e994ca2120ad20"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-caller-complete-calls-red-20261016/resources.json",
+          "sha256": "df2879bc762d7c62d7e1e11dcaae9be16c71f4bc54c910e9063af103e7f4e714"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 27.203566000000002,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 362889216,
+        "timed_out": false,
+        "wall_seconds": 27.319342542032246
+      }
+    },
+    {
+      "label": "caller-final-green",
+      "receipts": [
+        {
+          "path": "/private/tmp/probata-t25-reallocation-caller-final-green-20261016/command.json",
+          "sha256": "9483c67f40c0ac7d37d0766221830e7cf370ec6d6039d473849eebfef8866505"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-caller-final-green-20261016/controls.log",
+          "sha256": "d4c9fd3ab5decb6f7e4f84461516993b01730d1a26844c302cb0afc532565386"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-caller-final-green-20261016/resources.json",
+          "sha256": "600cd7f7356e109f4f4942ea04a67e80f69b9ca083cb4913a6ee1428da252930"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 27.174616999999998,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 363413504,
+        "timed_out": false,
+        "wall_seconds": 27.203789833991323
+      }
+    },
+    {
+      "label": "helper-bodies-red",
+      "receipts": [
+        {
+          "path": "/private/tmp/probata-t25-reallocation-helper-bodies-red-20261016/command.json",
+          "sha256": "c3298e00b927d0d932ec3ffb2b6bb6cde7ec5f96ef5b2875f0cea1d9de9ec12e"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-helper-bodies-red-20261016/controls.log",
+          "sha256": "048034381f21bd83a923f76a1cb0abfa0fdd02a30f787e5816f85f4313873468"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-helper-bodies-red-20261016/resources.json",
+          "sha256": "a2079e0b1af6c2d9984df129f45ef08b2608cb33452f6ca64f6b7795fc1fd3af"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 3.616177,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 216465408,
+        "timed_out": false,
+        "wall_seconds": 3.6729282080195844
+      }
+    },
+    {
+      "label": "helper-bodies-green",
+      "receipts": [
+        {
+          "path": "/private/tmp/probata-t25-reallocation-helper-bodies-green-20261016/command.json",
+          "sha256": "f77f26b17bd414398152f41633e9058400d99efdf5948b3457effb4cb558a75d"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-helper-bodies-green-20261016/controls.log",
+          "sha256": "d6c0827a90bfb885394448ccfce1d824bcf409d71626c9051ef17dfea7fe9d17"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-helper-bodies-green-20261016/resources.json",
+          "sha256": "f798952688d1bdb06ce7202b575f7adf1aae10efe1c13a35c8fe9329278f0bc7"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 6.1369050000000005,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 197132288,
+        "timed_out": false,
+        "wall_seconds": 6.561824375006836
+      }
+    },
+    {
+      "label": "source-preparation-final",
+      "receipts": [
+        {
+          "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/command.json",
+          "sha256": "7c285afa17498684f2502983670787fe89e8b576c93944744f790fc19c99cc39"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/controls.log",
+          "sha256": "6bee21ccdfd6ffeb36fb92c84113bf0b532ac95147a50c800b462593d20d1b65"
+        },
+        {
+          "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/resources.json",
+          "sha256": "af47edfdee0dab36216607332e46ac526361db05021decb44f1abc51aa4ead59"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 34.087233,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 396279808,
+        "timed_out": false,
+        "wall_seconds": 35.11714650003705
+      }
+    }
+  ],
+  "scope": "qualified v3 full-source correspondence and pending original-caller obligations; no proof acceptance",
+  "source_pins": [
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/c_lowering.py",
+      "sha256": "bb9baddbe0d1da4273577eb0a8c5e4e1eea120957c089db7bac0c5e0c48b91b8"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/proof_setup.py",
+      "sha256": "5dc2d9039ac4621bbd14f5ac3aa3965050b86d265bf5012cda41b1566f5ea7fe"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/vector_reallocation_model.py",
+      "sha256": "14bd6e865ccc3f7baa680cdce950b4c39f8c57d9eda39696621be0d310b931da"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/vector_reallocation_calls.py",
+      "sha256": "3077cb2e9aac5c00fdb4de2d0f9e92756c7f2db8df87a0cb596c5b9384b6751f"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/tests/test_vector_reallocation_domain.py",
+      "sha256": "0f482a71f6f54345a29d1c07466d59fb828483b6e075cf23132579d2cc814020"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/tests/test_vector_reallocation_calls.py",
+      "sha256": "32707d33b005d0d325d70edaf97c6f0649a861d464e2868df747c2102080575b"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/tests/fixtures/proof/vector_reallocation_v3.cc",
+      "sha256": "1172e62dbff5076d25471285afcfa17927707dbe6fae121d9570109d39e62b57"
+    }
+  ]
+}

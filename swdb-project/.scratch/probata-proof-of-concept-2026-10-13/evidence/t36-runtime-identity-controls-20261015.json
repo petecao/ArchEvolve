@@ -1,0 +1,493 @@
+{
+  "created": "2026-10-15 ET",
+  "scope": "Ticket36 runtime provenance hardening and prospective actual acceptance; ticket remains claimed.",
+  "base_commit": "53b73e73c6b64a99b1c419e58ce01d0937e0bc48",
+  "reviewed_runtime_commit": "2e152c50",
+  "integrated_ticket_branch_tip": "6be0142b0577e34fc02f3ec4994b62376da1f4cc",
+  "source_sha256": {
+    "swdb/proof_setup.py": "027bfec85fa6a5f10699ced20956b9ac76d7787cdb0e3033c68f9a673e47df2a",
+    "swdb/stdlib_provenance.py": "4a7ca7d9b05a992e8172125fcbbfd175bb7ade2aec47cfb349126c9739b6e8e4",
+    "tests/test_proof_compiler_identity.py": "d34646818c5bd05fa5fabfffbfe5b46a158e561a345b2305622889e326a57601",
+    "tests/test_proof_setup_actual.py": "b06dd95588435aa64fc2c83c7eb5885398cf833e5c38b2f4eef7569fd5ad13c2",
+    "tests/test_wp_adapter.py": "576ae5c70c6fa48b88b7cc9b18122b23a4574b4559acbf4f3dcfbcd053c61e0e",
+    "docs/reference/format-v0.4-proof-setup.md": "c35906da8df1d8539229ccbef2106c88fc0dc60213726a45551449f65e86f9fb"
+  },
+  "checker_identity": {
+    "proof_setup_check": {
+      "version": "1",
+      "sha256": "b493fec5c0c7f5e43ea7f0d45426e73f689c696ea16d35f5abc34b7476d28104"
+    },
+    "verdict_reading": {
+      "version": "1",
+      "sha256": "b493fec5c0c7f5e43ea7f0d45426e73f689c696ea16d35f5abc34b7476d28104"
+    }
+  },
+  "review": {
+    "path": "/private/tmp/probata-t36-runtime-independent-review-20261015.md",
+    "sha256": "094d04f2ae4d41679f5381ac157d76d937c34c816cc2963b2aef1d78115d0af0",
+    "disposition": "Scoped review passes runtime repair; actual verifier acceptance pending. New actual scalar fixture labeling corrected to contract_fixture."
+  },
+  "steps": [
+    {
+      "label": "driver RED",
+      "folder": "/private/tmp/probata-t36-driver-red",
+      "files": {
+        "command.json": {
+          "path": "/private/tmp/probata-t36-driver-red/command.json",
+          "sha256": "be98ae6b1d622adb42a4cb89ac61d9dd83987495ad75abb4b40f251a9bb8a7d0"
+        },
+        "controls.log": {
+          "path": "/private/tmp/probata-t36-driver-red/controls.log",
+          "sha256": "f19dce652be8de3255153392849632fd77ba13036ed28c902a97da930232db98"
+        },
+        "resources.json": {
+          "path": "/private/tmp/probata-t36-driver-red/resources.json",
+          "sha256": "0bd3f0a41642a99aaa508697994d16c6a7bf78e1d0f44e83e12af2f8750889e3"
+        },
+        "junit.xml": {
+          "path": "/private/tmp/probata-t36-driver-red/junit.xml",
+          "sha256": "2bbb05c2232865bf842f3a329c3ce7032d2d93f9f627386d3e66c2b4fa3369d1"
+        }
+      },
+      "resources": {
+        "exit_code": 1,
+        "peak_rss_bytes": 177242112,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 3.202752875047736,
+        "cpu_seconds": 2.650172
+      }
+    },
+    {
+      "label": "driver GREEN",
+      "folder": "/private/tmp/probata-t36-driver-green",
+      "files": {
+        "command.json": {
+          "path": "/private/tmp/probata-t36-driver-green/command.json",
+          "sha256": "610fe10642c94fea70c10446e0abc48d302486485f768fe3ce06681785d3ce7d"
+        },
+        "controls.log": {
+          "path": "/private/tmp/probata-t36-driver-green/controls.log",
+          "sha256": "a13f7c940b3d790c21bcfa35ee9a6c676918a4bd8c0b1ec5a0c1e00276cefe10"
+        },
+        "resources.json": {
+          "path": "/private/tmp/probata-t36-driver-green/resources.json",
+          "sha256": "a47ff0f1380287da5b37c7b31e642149385f1f04167005eccc6c13e6c0b015ac"
+        },
+        "junit.xml": {
+          "path": "/private/tmp/probata-t36-driver-green/junit.xml",
+          "sha256": "55631972943ad8a41b6a8665187e9f099c2dd9dca8defcc71056056928ca87cb"
+        }
+      },
+      "resources": {
+        "exit_code": 0,
+        "peak_rss_bytes": 168329216,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 2.9016061250003986,
+        "cpu_seconds": 2.519474
+      }
+    },
+    {
+      "label": "opaque RED",
+      "folder": "/private/tmp/probata-t36-opaque-red",
+      "files": {
+        "command.json": {
+          "path": "/private/tmp/probata-t36-opaque-red/command.json",
+          "sha256": "838fc085a61c6694f63f52b6e1c10dc95fc7cccfd5fdad4882890cbd86131804"
+        },
+        "controls.log": {
+          "path": "/private/tmp/probata-t36-opaque-red/controls.log",
+          "sha256": "7b3ef9596281c56c4fadac0c336302972f3933a00f7c7e1fbafeaa83e75f01c5"
+        },
+        "resources.json": {
+          "path": "/private/tmp/probata-t36-opaque-red/resources.json",
+          "sha256": "a4809e5e17ddeb7cff780fa05380cbef01c70ca07e932a242bbfa7a49fa029a4"
+        },
+        "junit.xml": {
+          "path": "/private/tmp/probata-t36-opaque-red/junit.xml",
+          "sha256": "579dc634624b06479f4594ee4f3800b6ef70751739e5947e363623a23b535197"
+        }
+      },
+      "resources": {
+        "exit_code": 1,
+        "peak_rss_bytes": 179027968,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 2.004032291995827,
+        "cpu_seconds": 1.7445249999999999
+      }
+    },
+    {
+      "label": "opaque GREEN",
+      "folder": "/private/tmp/probata-t36-opaque-green",
+      "files": {
+        "command.json": {
+          "path": "/private/tmp/probata-t36-opaque-green/command.json",
+          "sha256": "4628e429b48ab0683217a529d65a5ce81c2e7c4ba2f2a7df744ce2d29eaef3d4"
+        },
+        "controls.log": {
+          "path": "/private/tmp/probata-t36-opaque-green/controls.log",
+          "sha256": "3bb35428dce88a9988fbee75a5cb56e3702b6615748eb13df05dec7739e72785"
+        },
+        "resources.json": {
+          "path": "/private/tmp/probata-t36-opaque-green/resources.json",
+          "sha256": "48c4495869c591473a83bbab1c09acc757507d520e7c59e0a9522e432bd71e43"
+        },
+        "junit.xml": {
+          "path": "/private/tmp/probata-t36-opaque-green/junit.xml",
+          "sha256": "9d0c34a7e0e0344c4c2aff606c564aed3216ffcd2d386599ac95813c1e1a4d22"
+        }
+      },
+      "resources": {
+        "exit_code": 0,
+        "peak_rss_bytes": 171245568,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 4.030255666992161,
+        "cpu_seconds": 3.504813
+      }
+    },
+    {
+      "label": "postplan RED",
+      "folder": "/private/tmp/probata-t36-postplan-driver-red",
+      "files": {
+        "command.json": {
+          "path": "/private/tmp/probata-t36-postplan-driver-red/command.json",
+          "sha256": "e847c9f46e33f6938228daa26cb2bc30ce0c19fd458f4011126e5a978615dc7b"
+        },
+        "controls.log": {
+          "path": "/private/tmp/probata-t36-postplan-driver-red/controls.log",
+          "sha256": "758b084f87d92095c2acca812d284e3451ef124eca317191b3aa65ef9cc6a2f5"
+        },
+        "resources.json": {
+          "path": "/private/tmp/probata-t36-postplan-driver-red/resources.json",
+          "sha256": "c78f693dfa8ddf4de4cbfedf1bd78ced85dfa29be613714a79a3c228d3288881"
+        },
+        "junit.xml": {
+          "path": "/private/tmp/probata-t36-postplan-driver-red/junit.xml",
+          "sha256": "aec14bf28960287e63a764a6d791fb42f8d55ed8e7d5776fbe5343c75cef14f1"
+        }
+      },
+      "resources": {
+        "exit_code": 1,
+        "peak_rss_bytes": 191873024,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 2.125391916022636,
+        "cpu_seconds": 1.88679
+      }
+    },
+    {
+      "label": "postplan GREEN",
+      "folder": "/private/tmp/probata-t36-postplan-driver-green",
+      "files": {
+        "command.json": {
+          "path": "/private/tmp/probata-t36-postplan-driver-green/command.json",
+          "sha256": "3a769a74cb73a197699c64721818bf94d95ca532f64a058a5a6961daf53550f8"
+        },
+        "controls.log": {
+          "path": "/private/tmp/probata-t36-postplan-driver-green/controls.log",
+          "sha256": "259c788e434a47d238595d8b583bba468afd491a30b552cb28ee9135cc68aa4a"
+        },
+        "resources.json": {
+          "path": "/private/tmp/probata-t36-postplan-driver-green/resources.json",
+          "sha256": "46c32b96861ccb9e17f93444a6894595a7607265d4e81ccfd5e76b48a908834b"
+        },
+        "junit.xml": {
+          "path": "/private/tmp/probata-t36-postplan-driver-green/junit.xml",
+          "sha256": "13f565e6c2eb54b89b51328aec341ec619e3c9fa4e885c6325f68976c9b3edb7"
+        }
+      },
+      "resources": {
+        "exit_code": 0,
+        "peak_rss_bytes": 190578688,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 5.329366291989572,
+        "cpu_seconds": 4.602301
+      }
+    },
+    {
+      "label": "record RED",
+      "folder": "/private/tmp/probata-t36-runtime-record-red",
+      "files": {
+        "command.json": {
+          "path": "/private/tmp/probata-t36-runtime-record-red/command.json",
+          "sha256": "457944dc226fb2417853d047596a9cd7adfa8ca276a1294d0361b7493fd3b272"
+        },
+        "controls.log": {
+          "path": "/private/tmp/probata-t36-runtime-record-red/controls.log",
+          "sha256": "1100057c152066652969e8ca1964bcfac441829a818a32b99d489e7ef64bfa55"
+        },
+        "resources.json": {
+          "path": "/private/tmp/probata-t36-runtime-record-red/resources.json",
+          "sha256": "9b6732679824178b0ed9307c646f781419fa01f0361fb2aa32e20aba76a9805f"
+        },
+        "junit.xml": {
+          "path": "/private/tmp/probata-t36-runtime-record-red/junit.xml",
+          "sha256": "10bd97299b6ae8289554a353ff7f659a03955b18f7a688ae987d4dcc4f3dcf30"
+        }
+      },
+      "resources": {
+        "exit_code": 1,
+        "peak_rss_bytes": 201867264,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 2.1654165840009227,
+        "cpu_seconds": 1.853194
+      }
+    },
+    {
+      "label": "record GREEN",
+      "folder": "/private/tmp/probata-t36-runtime-record-green",
+      "files": {
+        "command.json": {
+          "path": "/private/tmp/probata-t36-runtime-record-green/command.json",
+          "sha256": "f078f1ad6346e56ec02ab6bf923bb1fafd48957a4dc48eb392261786f5449858"
+        },
+        "controls.log": {
+          "path": "/private/tmp/probata-t36-runtime-record-green/controls.log",
+          "sha256": "c8e69036a5ac628641474fabe93f7aea112d2779ed7a9470ad80a364eaaaea5c"
+        },
+        "resources.json": {
+          "path": "/private/tmp/probata-t36-runtime-record-green/resources.json",
+          "sha256": "5c4c595dbafd0d1128377202101d1dca66511edbb603725110c92e859eeef630"
+        },
+        "junit.xml": {
+          "path": "/private/tmp/probata-t36-runtime-record-green/junit.xml",
+          "sha256": "ecf69c64616a435c8fa8b5cfcd6c90b89bd725a145adbb409385fd6c0d819159"
+        }
+      },
+      "resources": {
+        "exit_code": 0,
+        "peak_rss_bytes": 225280000,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 19.07031162502244,
+        "cpu_seconds": 16.792192
+      }
+    },
+    {
+      "label": "command/context RED",
+      "folder": "/private/tmp/probata-t36-command-context-red",
+      "files": {
+        "command.json": {
+          "path": "/private/tmp/probata-t36-command-context-red/command.json",
+          "sha256": "84fcda2cda3c7a5882239cf3cde2582f4922a93f4e587bd3162d1b8d72264297"
+        },
+        "controls.log": {
+          "path": "/private/tmp/probata-t36-command-context-red/controls.log",
+          "sha256": "96693487fc06b218c35896f854be57d7533cadf60029e49175a1e89d313f94b3"
+        },
+        "resources.json": {
+          "path": "/private/tmp/probata-t36-command-context-red/resources.json",
+          "sha256": "95eeb8898c2d01f687b3ec6ece52edc71b1b9c23328d549356fd4924d08a21bf"
+        },
+        "junit.xml": {
+          "path": "/private/tmp/probata-t36-command-context-red/junit.xml",
+          "sha256": "8996bcbe4d3b14ba599b7d33c793ed1df44fe5148b5e204ebe09e9412feeb8c0"
+        }
+      },
+      "resources": {
+        "exit_code": 1,
+        "peak_rss_bytes": 193691648,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 5.681988832948264,
+        "cpu_seconds": 5.141427
+      }
+    },
+    {
+      "label": "truthful context RED",
+      "folder": "/private/tmp/probata-t36-real-context-red",
+      "files": {
+        "command.json": {
+          "path": "/private/tmp/probata-t36-real-context-red/command.json",
+          "sha256": "6e70c90c15fd463b1909e3ff6942a9c714bc50700d089e259a9bf92fb23961db"
+        },
+        "controls.log": {
+          "path": "/private/tmp/probata-t36-real-context-red/controls.log",
+          "sha256": "0afa4eec3960bcd9d07e3edab22a58f8a13a13d593fae658f86d7a577ec75986"
+        },
+        "resources.json": {
+          "path": "/private/tmp/probata-t36-real-context-red/resources.json",
+          "sha256": "0ed5973893d42fece53cb5a5d1b6b88e72d0ecf54c4e0edf8bdfa28f47afa2c5"
+        },
+        "junit.xml": {
+          "path": "/private/tmp/probata-t36-real-context-red/junit.xml",
+          "sha256": "fd0a763a63311441fbf2f1409a12bde45b43f75e9dee1ca373f9adcf2c95ffcf"
+        }
+      },
+      "resources": {
+        "exit_code": 1,
+        "peak_rss_bytes": 186712064,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 3.3305208749952726,
+        "cpu_seconds": 2.924113
+      }
+    },
+    {
+      "label": "final 13 GREEN",
+      "folder": "/private/tmp/probata-t36-command-context-green",
+      "files": {
+        "command.json": {
+          "path": "/private/tmp/probata-t36-command-context-green/command.json",
+          "sha256": "d3621f1b0e59b9c754e9c9bc52925e06893c2fe3cc94936f7db31f5e2cbfa442"
+        },
+        "controls.log": {
+          "path": "/private/tmp/probata-t36-command-context-green/controls.log",
+          "sha256": "74a2e893af2a6e3cc2aa8d6b1138ee6843f665244861262ad31b2a5f003053fa"
+        },
+        "resources.json": {
+          "path": "/private/tmp/probata-t36-command-context-green/resources.json",
+          "sha256": "fde88b435399ec6b93c5755b6053e6d4bc8a24c4d2d371925345de4878066b12"
+        },
+        "junit.xml": {
+          "path": "/private/tmp/probata-t36-command-context-green/junit.xml",
+          "sha256": "cb7d392b2d98990b629f667a7aa7c95b3537249b32aaa0adb08af9a8868605ae"
+        }
+      },
+      "resources": {
+        "exit_code": 0,
+        "peak_rss_bytes": 252329984,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 24.94012433302123,
+        "cpu_seconds": 22.013517
+      }
+    },
+    {
+      "label": "pre-context broad126",
+      "folder": "/private/tmp/probata-t36-setup-current-controls",
+      "files": {
+        "command.json": {
+          "path": "/private/tmp/probata-t36-setup-current-controls/command.json",
+          "sha256": "411903dc599f60a418304b883e80fb0f649e71e2997ff29687df84242f2ee1fe"
+        },
+        "controls.log": {
+          "path": "/private/tmp/probata-t36-setup-current-controls/controls.log",
+          "sha256": "a10edf40d477b8ca76768d3ef23fed0cffb56e8530dd8eaeb8746b0207f99f67"
+        },
+        "resources.json": {
+          "path": "/private/tmp/probata-t36-setup-current-controls/resources.json",
+          "sha256": "2118b105f499b6ead56987012aff65f539855bcda13894974ea8a3c1244f8527"
+        },
+        "junit.xml": {
+          "path": "/private/tmp/probata-t36-setup-current-controls/junit.xml",
+          "sha256": "a89570b9e8b616878211349b6c1142cad618e9980f8c99b9f38a76cdc4c82690"
+        }
+      },
+      "resources": {
+        "exit_code": 0,
+        "peak_rss_bytes": 458129408,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 316.4305758330156,
+        "cpu_seconds": 305.354845
+      }
+    },
+    {
+      "label": "interrupted final profile",
+      "folder": "/private/tmp/probata-t36-final-setup-controls",
+      "files": {
+        "command.json": {
+          "path": "/private/tmp/probata-t36-final-setup-controls/command.json",
+          "sha256": "6ea724ae9c3a4c89f1646173cfc4ba7faa5056b0a3052a1b5b42caf03051f1e7"
+        },
+        "controls.log": {
+          "path": "/private/tmp/probata-t36-final-setup-controls/controls.log",
+          "sha256": "81b6eef3ac4524f197033f1e3721a4e977d1595a04641bb176590ce4177a3f6c"
+        },
+        "resources.json": {
+          "path": "/private/tmp/probata-t36-final-setup-controls/resources.json",
+          "sha256": "dbebdb83bcf04935cf3a5dcd8f1d834da38a70fc3d75a80290c1b005b079d194"
+        },
+        "explicit-stop-audit.json": {
+          "path": "/private/tmp/probata-t36-final-setup-controls/explicit-stop-audit.json",
+          "sha256": "28a1ae9e2d6bf43516a06972375441007dd8cc47cbbba61851845d9893ed8b6c"
+        },
+        "poststop-process-audit.json": {
+          "path": "/private/tmp/probata-t36-final-setup-controls/poststop-process-audit.json",
+          "sha256": "508ae4109f9fd3eccda4f9a24d56b3019ec5944f8d4f6b151ada7340fb5a48f7"
+        }
+      },
+      "resources": {
+        "exit_code": -15,
+        "peak_rss_bytes": 288440320,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 155.66454462503316,
+        "cpu_seconds": 149.263743
+      }
+    }
+  ],
+  "prospective_actual_profiles": [
+    {
+      "profile": "facts",
+      "path": "/private/tmp/probata-t36-facts-command-20261015.json",
+      "sha256": "ce6fc940e862c2526195305822d3dc287bf5d85754ec51d9fffbd2577412a3d8",
+      "command": [
+        "/data1/yanruj/venvs/swdb-test/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_proof_setup.py::test_real_wp_facts_read_fresh_goals_and_premises",
+        "-q",
+        "--tb=short",
+        "--maxfail=1",
+        "--basetemp={OUTPUT}/pytest",
+        "--junitxml={OUTPUT}/junit.xml"
+      ]
+    },
+    {
+      "profile": "production",
+      "path": "/private/tmp/probata-t36-production-command-20261015.json",
+      "sha256": "ed92098d940690e2d1d79aee3c955aad3882f4fd6800a79d9ecc8551b48aa8df",
+      "command": [
+        "/data1/yanruj/venvs/swdb-test/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_wp_adapter.py::test_the_safe_fixture_is_proven_with_threads_1_bounds_per_goal_solvers_and_trusted_tools",
+        "tests/test_wp_adapter.py::test_the_seeded_bug_is_not_proven_with_a_class_and_its_unproven_properties_never_refuted",
+        "tests/test_proof_setup_actual.py::test_actual_wp_keeps_the_real_driver_when_optional_libclang_is_unavailable",
+        "tests/test_cbmc_adapter.py::test_map_07_smoke_pair_proves_the_safe_program_and_refutes_the_seeded_bug_at_41",
+        "tests/test_cbmc_adapter.py::test_a_callee_summary_is_proven_first_then_pinned_and_used_as_a_stub_in_place_of_its_code",
+        "-q",
+        "--tb=short",
+        "--maxfail=1",
+        "--basetemp={OUTPUT}/pytest",
+        "--junitxml={OUTPUT}/junit.xml"
+      ]
+    },
+    {
+      "profile": "setup",
+      "path": "/private/tmp/probata-t36-setup-command-20261015.json",
+      "sha256": "0595d9b2be27ef8502ec6e8132995cf01febebee9a3665c4c08c6e226c43c157",
+      "command": [
+        "/data1/yanruj/venvs/swdb-test/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_proof_setup.py",
+        "tests/test_proof_compiler_identity.py",
+        "tests/test_standard_header_provenance.py",
+        "-k",
+        "not real_wp_facts",
+        "-q",
+        "--tb=short",
+        "--maxfail=1",
+        "--basetemp={OUTPUT}/pytest",
+        "--junitxml={OUTPUT}/junit.xml"
+      ]
+    }
+  ],
+  "boundaries": [
+    "No actual WP/solver acceptance has been run by this implementation. Synthetic proof reports are not scientific evidence.",
+    "Earlier126-pass batch includes real Frama-C version/formal-half parser calls; it predates final command/context identity repair. Its compiler-only classification was incorrect.",
+    "Subsequent final-profile interruption is exit-15,155.6645s,noOOM/timeout. Coordinator let-finish instruction arrived after explicit owned-process stop; no retrospective admission.",
+    "Read-only live audit identified frama-c formal_half.c typecheck descendant69370 of owned pytest64590. Vanished65785 remains unattributed; no exhaustive historical exec inventory exists.",
+    "Three fresh poststop scans find five known stopped PIDs and matching command paths absent;172unreadable unrelated command lines per scan prevent a universal absence claim.",
+    "All future real parser and verifier profiles require root exact-source/runtime admission; do not replace meaningful parser validation with an always-pass stand-in.",
+    "Drafts1/2 immutable; final production freeze remains ticket59. Ticket-local reviewed freeze avoids dependency cycle through37/38/58."
+  ]
+}

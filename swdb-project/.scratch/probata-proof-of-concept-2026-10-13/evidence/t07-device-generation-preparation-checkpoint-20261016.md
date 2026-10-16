@@ -1,0 +1,9 @@
+# Device-only initialization generation preparation — 2026-10-16 ET
+
+Exact source bd2610b6b7cff511c046206a78088cf693cee874 is published as diagnostic preparation only. [Preserved65f source review](t07-device-init-sites-independent-source-review-v1-65f09508-20261016.md) binds the original25/21-body units. [Device-only successor review](t07-device-only-sites-independent-source-review-v1-bd2610b6-20261016.md) verifies only the unused helper include is removed, leaving all five normal and one weak root bodies/contracts unchanged. Both histories remain reachable. No helper proof is reused or source goal filtered.
+
+[Independent inert-entry review](t07-device-init-generation-independent-static-review-v1-20261016.md) passes packet13f11849: nine exact Git inputs, full5/1roots and36/10calls, mandatory complete source/property/registration/dependency/Extern/native/export closure, generation-only sentinel/private config/no autodetection,120s active/110s shared internal/8GiB/one worker/256MiB. It does not execute or admit actual generation. Root still owns the outer recipe, fresh leases/capacity/runtime and actual complete cold gate. No source/Init/lifetime/allocator/fullTD/count gate is discharged.
+
+New precision correction: thirteen common top-level functions are unchanged by AST relative to the retained previous export entry; the author prose/test label said fifteen. The two extra top-level helpers are new, not unchanged. Original receipts are retained byte-for-byte; this checkpoint corrects the count without relabeling historical controls.
+
+Production, library and test trees remain byte-identical to6216. All three frontier tickets remain claimed; counts remain35resolved/25ready-for-agent/3claimed. No compiler/native/formal/project test/reader execution or SSH was performed by this integration reviewer.

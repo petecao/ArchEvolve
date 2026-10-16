@@ -1,0 +1,30 @@
+{
+  "baseline": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+  "date_et": "2026-10-15",
+  "entry": {
+    "command_sha256": "a9f3b606af3d6336faa8ee2777d016e1594d2c2b8901e66c2999f63448721315",
+    "sha256": "ab2b9d7610970bc26dbef56e1d03bd4226212ef904e40777c8368b9614c36bbc"
+  },
+  "files_after": {
+    "swdb-project/swdb/c_lowering.py": "741e1c24ace7c0fc8e89b56a660b0b155099170bd9d870c46617452de78e126c",
+    "swdb-project/swdb/cbmc_adapter.py": "ad52b18c07e06e29a00b597dc5947e661aaa1ef5f9ca2ba7f5975d291afb2734",
+    "swdb-project/swdb/dx100_interface.py": "d2c88c0f6eebb429225c9a6ee2463e39cd0a908b4772a5ec9a19cdd454cfbc8b",
+    "swdb-project/swdb/formal_frame.py": "b89aaffb60217db66ba09630fced8f8c547304a2d12ca125a6174def02ff70f1",
+    "swdb-project/swdb/proof_semantics.py": "74fac5d56a5e471ff39742dc50a695afaa571d0ff4a8d84fcf4ef418f9542da4",
+    "swdb-project/swdb/proof_setup.py": "027bfec85fa6a5f10699ced20956b9ac76d7787cdb0e3033c68f9a673e47df2a",
+    "swdb-project/swdb/stdlib_provenance.py": "4a7ca7d9b05a992e8172125fcbbfd175bb7ade2aec47cfb349126c9739b6e8e4",
+    "swdb-project/swdb/wp_adapter.py": "e06ec44a94069074ea446b61e73ea2c6e0d976ec92c8da7fbdd0851f8c33f0b9"
+  },
+  "readers": [
+    "root",
+    "ticket24",
+    "merger",
+    "independent reviewer"
+  ],
+  "review_evidence": {
+    "path": "/private/tmp/probata-t25-source-allowlist-c5216796-root-review-20261015.md",
+    "sha256": "5468ef439c642ce57a721ef866002fc7c8fb5f300e25af4a76703cc7fe5ae271"
+  },
+  "scope": "First unbounded heap capability import-stage repair; eight reviewed prerequisite production files, no body certification/import acceptance.",
+  "source_commit": "c5216796dde05680acd237a97d4f0c7b3788e605"
+}

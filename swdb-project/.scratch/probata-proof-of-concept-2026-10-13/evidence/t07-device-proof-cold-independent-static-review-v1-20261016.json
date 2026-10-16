@@ -1,0 +1,85 @@
+{
+  "findings": [
+    {
+      "finding": "Settlement file is hashed and pinned but never parsed. Separate guard JSON is only minimally shape/cap checked and never equated with embedded settlement.guard or ROOT/guard.log.summary.json. Arbitrary correctly hashed settlement JSON can satisfy this stage without root/source/raw/command/result/lease/finite-settlement provenance.",
+      "id": "R1",
+      "lines": [
+        17,
+        99
+      ],
+      "requested_repair": "Before writing output, require exact known root launcher3f4f and ROOT/sourcebd context, validate settled root schema, compare embedded guard with exact physical final guard summary (and its expected command/cap/deadline), compare embedded root result with physical BASE/result.json, and validate/report source_after, termination, root exit and finite sweeps/lease state. Partial/unhealthy states may be retained as partial evidence but must never be silently called a settled healthy source-bound audit.",
+      "severity": "blocker"
+    },
+    {
+      "finding": "Cold reader validates staged nine Git blobs and helper_results.ml but does not bind actual compiled proof_report.ml and helper_backend_bindings.ml copies back to their staged blob hashes. Summary later asserts selected_runtime_source_preserved=True unconditionally after only staged-source/runtime checks.",
+      "id": "R2",
+      "lines": [
+        31,
+        42
+      ],
+      "requested_repair": "Hash actual BASE/proof_report.ml and helper_backend_bindings.ml against the matching frozen source_blobs, alongside the journal; either refuse source binding mismatch or explicitly report unqualified/missing copies for partial captures. Do not label actual module source preserved merely because git-source staging is intact.",
+      "severity": "blocker_for_source_qualification"
+    },
+    {
+      "finding": "Fresh output is checked only against current proof ROOT. A fresh child of a retained normal/weak generation or cold root is allowed and mkdir occurs before verify_preserved, so reader can itself alter historical membership before refusal.",
+      "id": "R3",
+      "lines": [
+        20,
+        22
+      ],
+      "requested_repair": "Before mkdir, resolve and reject output overlap in both directions with current ROOT, every expected preserved_roots entry, source_root and selected retained recipe/runtime source trees as applicable; root should select one fresh external sibling.",
+      "severity": "bounded_output_scope"
+    },
+    {
+      "finding": "case.executed is currently inferred from job-directory existence. The admitted entry creates a job directory and copies inputs before direct-call checks and before subprocess dispatch; this does not attest a proof invocation. Journal variable also is not reset per case.",
+      "id": "R4",
+      "lines": [
+        49,
+        63
+      ],
+      "requested_repair": "Report directory_present separately from proof_command_recorded/attempt evidence; do not infer execution from mkdir. Initialize journal=None in each case and require a successfully parsed current-case journal for complete structural reconciliation, while missing or invalid journals remain explicit partial/refused evidence.",
+      "severity": "reporting_precision"
+    }
+  ],
+  "inputs": [
+    {
+      "bytes": 9942,
+      "path": "/private/tmp/probata-t07-device-proof-cold-reader-v1-20261016.py",
+      "sha256": "68bcdfa4a9fa03fbf974b298310bfc109ccabf3af16b7024a525d48600bcae69"
+    },
+    {
+      "bytes": 7770,
+      "path": "/private/tmp/probata-root-t07-device-diagnostic-proof-launch-v1-20261016.py",
+      "sha256": "3f4f7564ccfdf03c079f1fbc20101239a510311ec2af1c6c054790f5e05eb7ec"
+    },
+    {
+      "bytes": 74616,
+      "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-20261016-entry.py",
+      "sha256": "e7deacf1e271c291a3b40f3da4d917df8f8b5dc5bc12b07a361bb18af12aecba"
+    },
+    {
+      "bytes": 794273,
+      "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-20261016-expected.json",
+      "sha256": "2a3a02e017e636abdcb8327505087adc2c8572d47bf5fdf8aab794e03ebb32d0"
+    },
+    {
+      "bytes": 7177,
+      "path": "/private/tmp/probata-t07-device-diagnostic-proof-independent-static-review-v2-20261016.json",
+      "sha256": "f367ddbba65b2405b8386d647761b6366a8e8e700dc4438ab41ee18659364afa"
+    }
+  ],
+  "preserved_good_boundaries": [
+    "Full source inventory/backend first-formula/native/journal/warning reconstruction reuses already reviewed functions.",
+    "Original exits and proof_acceptance=False retained; partial structural reader refusals are disclosed.",
+    "Raw before/after hashing, retained prefix/runtime checks and complete initializedness attribution are useful after provenance repair."
+  ],
+  "review_actions": [
+    "Read whole9942B reader and exact7770B root launcher/source recipe; AST and hashes only.",
+    "No import, main, actual reader, controls, project/compiler/native/formal/prover/config/version/SSH execution.",
+    "No mutable early actual proof artifacts were inspected as final."
+  ],
+  "reviewer": "/root/merger",
+  "root_dispatch_approved": false,
+  "source_or_Git_modified": false,
+  "verdict": "REQUEST_CHANGES_V1_INERT_HOLD"
+}

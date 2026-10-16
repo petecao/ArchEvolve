@@ -12,7 +12,7 @@ import re
 from swdb import std_models
 
 
-# Audited ctor/count/value, append/grow, accessors, scalar pair constructors and scope destructor.
+# Audited ctor/count/value, append/grow, accessors, scalar pair constructors/copy/assignment and scope destructor.
 # A body change requires a new audit; the method's model pin alone cannot grant this policy.
 AUDITED_MODEL = {"id": "swdb-std-models-2",
                  "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"}
@@ -130,6 +130,15 @@ class Policy:
                 if arg.get("kind") == "CXXDefaultArgExpr" and "allocator<" not in qual(arg):
                     self.refuse("unexpanded standard default argument needs an initializedness check", arg)
             args = [arg for arg in parts if arg.get("kind") != "CXXDefaultArgExpr"]
+            # 2026-10-15 ET: exact same-type local pair copies preserve the two
+            # initialized scalar fields. Unknown pointers/references/objects do
+            # not obtain initializedness from the copy operation itself.
+            if info["kind"] == "pair" and len(args) == 1:
+                source = visit(args[0])
+                self.info(source, "pair", node)
+                if source.ctype != name:
+                    self.refuse("pair copy has no checked same-type initialized source", node)
+                return Value("constructed_pair", name)
             for arg in args:
                 self.scalar(arg, visit)
             if info["kind"] == "vector" and len(args) in (0, 1, 2):
@@ -172,6 +181,13 @@ class Policy:
                 callee = children(callee)[0]
             operator = (callee.get("referencedDecl") or {}).get("name")
             args = parts[1:]
+            if operator == "operator=" and len(args) == 2 and self.classify(strip(args[0])):
+                target, source = visit(args[0]), visit(args[1])
+                self.info(target, "pair", node)
+                self.info(source, "pair", node)
+                if target.ctype != source.ctype:
+                    self.refuse("pair assignment has no checked same-type initialized source", node)
+                return target
             if operator == "operator[]" and len(args) == 2 and self.classify(strip(args[0])):
                 self.info(visit(args[0]), "vector", node)
                 self.scalar(args[1], visit)
@@ -250,7 +266,7 @@ def report(types):
     return {"id": POLICY_ID, "models": dict(AUDITED_MODEL), "types": sorted(types),
             "vector_members": ["ctor", "ctor_count", "ctor_count_value", "push_back", "operator_index", "at",
                                "size", "empty", "data", "begin", "end", "dtor", "scalar_range_for"],
-            "pair_members": ["ctor_default", "ctor", "first", "second"],
+            "pair_members": ["ctor_default", "ctor", "copy_ctor", "operator_assign", "first", "second"],
             "initialized": "scalar object representations and vector live elements only; spare capacity excluded",
             "raw_reads": "literal indices within a definite initialized live prefix captured from data/begin",
             "lifetime": "CBMC executes real allocation/free; growth does not add an assumed lifetime fact"}

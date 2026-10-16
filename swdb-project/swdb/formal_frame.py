@@ -140,7 +140,7 @@ def _entry(library, entry_id, data, error, vocabs, logic, rules, pending):
             error('proof_unit.prototype', 'a hand-written prototype is replaced by the C lowering of the baseline proof '
                                           'unit (ticket 21): give proof_unit.source (path, sha256) and function')
             unit, with_acsl = None, []
-        elif (not isinstance(unit, dict) or set(unit) - {'source', 'function', 'types', 'array_domains'}
+        elif (not isinstance(unit, dict) or set(unit) - {'source', 'function', 'types', 'array_domains', 'correctness_policy'}
                 or not isinstance(unit.get('function'), str) or not re.fullmatch(r'[A-Za-z_]\w*', unit['function'])):
             error('proof_unit', 'formal halves need proof_unit: {source: {path, sha256}, function}, the baseline proof '
                                 'unit whose C lowering they are type-checked against (kept C++ names)')
@@ -153,6 +153,17 @@ def _entry(library, entry_id, data, error, vocabs, logic, rules, pending):
                     error(f'proof_unit.{key}', str(exc))
                     unit, with_acsl = None, []
                     break
+    if unit is not None and 'correctness_policy' in unit:
+        from swdb import dx100_stream_source, dx100_register_source, dx100_initialized_register_source
+        try:
+            declared=(data.get('proof_unit')or{}).get('correctness_policy')
+            if not isinstance(declared,dict)or declared.get('source_policy')not in (dx100_stream_source.KIND,dx100_register_source.KIND,dx100_initialized_register_source.KIND):
+                raise dx100_stream_source.Refused('unknown partial-normal-return source policy')
+            module=dx100_initialized_register_source if declared.get('source_policy')==dx100_initialized_register_source.KIND else dx100_register_source if declared.get('source_policy')==dx100_register_source.KIND else dx100_stream_source
+            module.unit_policy(library,data)
+        except (dx100_stream_source.Refused,dx100_register_source.Refused,dx100_initialized_register_source.Refused) as exc:
+            error('proof_unit.correctness_policy',str(exc))
+            unit,with_acsl=None,[]
     if unit is not None and 'array_domains' in unit:
         findings = array_domains.problems(unit['array_domains'])
         for where, reason in findings:
@@ -285,9 +296,11 @@ def _rules(data, error):
             error(where, 'a rule has a unique id and a statement')
             continue
         seen.add(rule['id'])
-        unknown = sorted(set(rule) - {'id', 'statement', 'cites', 'assumed'})
+        unknown = sorted(set(rule) - {'id', 'statement', 'cites', 'assumed', 'record_assumption'})
         if unknown:
             error(where, f'unknown keys {", ".join(unknown)} (acsl text of rules comes with tickets 27 and 28)')
+        if 'record_assumption' in rule and type(rule['record_assumption']) is not bool:
+            error(f'{where}.record_assumption', 'record_assumption must be a boolean')
         has = [key for key in ('cites', 'assumed') if key in rule]
         if len(has) != 1:
             error(where, 'a proof-semantics rule carries exactly one of cites: {gem5_commit, path, lines} and '
@@ -398,6 +411,22 @@ def _typecheck(library, logic, files, pending, report):
             continue
         includes = [('proof_unit_types.h', library.resolve(unit['types']))] if 'types' in unit else []
         declaration = unit_lowering.declaration
+        # 2026-10-16 ET: the original register assigns frame names model state,
+        # which is absent from the source caller's declaration-only lowering.
+        # Use its exact admitted semantics namespace, without helper contracts.
+        from swdb import dx100_register_source, dx100_initialized_register_source, dx100_allocation_source, proof_semantics
+        policy = unit.get('correctness_policy')
+        if isinstance(policy, dict) and policy.get('source_policy') in (dx100_register_source.KIND,dx100_initialized_register_source.KIND):
+            declaration = proof_semantics.wp_prelude(library, policy['semantics']['id'], []) + declaration
+        # The original TOTAL allocator also names ordinary model counters in
+        # its frame. Import only its exact current namespace, not call contracts.
+        allocator_id = 'semantics.dx100_allocation_fixture_0_2'
+        allocator = proof_semantics.current(library).get(allocator_id)
+        if (policy is None and entry_id == 'contract.dx100_software_allocation_fixture.v1'
+                and (library.get(entry_id) or {}).get('version') == '0.1'
+                and unit.get('function') == 'trust_fixture' and isinstance(allocator, dict)
+                and dx100_allocation_source.allocation_layout(allocator)):
+            declaration = proof_semantics.wp_prelude(library, allocator_id, []) + declaration
         if framac.typecheck(tool, _source(unit, logic, clauses, declaration), includes) is None:
             report.checked += len(clauses)
             continue

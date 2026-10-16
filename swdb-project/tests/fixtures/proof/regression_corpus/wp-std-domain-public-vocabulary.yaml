@@ -1,0 +1,18 @@
+# Created: 2026-10-15 ET. Actual6221 admission failure; no verifier launched.
+id: wp-std-domain-public-vocabulary
+adapter: wp_std_object_domain
+input:
+  rejected_contract: contract.fixture_wp24_std_models_object_domain
+  rejected_contract_sha256: 762deba8e2d8dc8961500d26209a6857553993225eadb0da6a12a8ba3b0c341a
+  forbidden_builtins: ['\valid_read', '\base_addr']
+  errors: 8
+cause: >-
+  Frama-C typechecking alone admitted ACSL memory built-ins outside the existing
+  public formal-half vocabulary. Actual swdb prove stopped at public validation
+  before creating any record or selecting proof dependencies. Keep that refusal.
+correction: >-
+  A distinct v2 fixture uses only allowed valid/null built-ins and explicitly
+  narrows empty inputs to writable objects or their writable predecessors.
+  Read-only and live zero-size cases remain conservatively excluded, not UB.
+  The generated same-base pointer assertion remains an actual WP obligation.
+replay: tests/test_t24_std_object_domain.py::test_previous_readable_domain_retains_its_actual_public_admission_failure

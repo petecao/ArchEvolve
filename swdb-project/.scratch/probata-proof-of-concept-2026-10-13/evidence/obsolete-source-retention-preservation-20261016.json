@@ -1,0 +1,94 @@
+{
+  "date": "2026-10-16 ET",
+  "status": "PASS compact root-receipt preservation/local Git reconciliation only",
+  "reviewer_boundary": "No SSH/removal/remote rehash by reviewer; root performed cleanup. Remote ref/manifests/raw preservation are attributed to exact root receipts.",
+  "sources": [
+    {
+      "receipt": {
+        "path": "/private/tmp/probata-024-source-retention-root-v3-20261016.json",
+        "sha256": "884e827895fb4dd894bb8f6abda23795781185a337803a48eb183a98a028658a"
+      },
+      "source_commit": "024db66c9ec4da43901f6662771a389b4567b334",
+      "source_tree": "5a888cad0ea4aa609753d6a4a14ba52a5e2e7e36",
+      "local_Git_file_count": 9498,
+      "remote_removed_path": "/data1/yanruj/probata-reviewed-024db66c",
+      "retention_ref": "refs/probata/retained-source/024db66c",
+      "restore_argv": [
+        "git",
+        "-C",
+        "/data1/yanruj/ArchEvolve",
+        "worktree",
+        "add",
+        "--detach",
+        "/data1/yanruj/probata-reviewed-024db66c",
+        "024db66c9ec4da43901f6662771a389b4567b334"
+      ],
+      "remote_manifest_pins": {
+        "raw-preservation-manifest.json": {
+          "bytes": 13495,
+          "sha256": "420a86d63613816ff0f4dfd98f28939d7a249a4da233fdf24e369d862a6e0d83"
+        },
+        "restoration.json": {
+          "bytes": 984,
+          "sha256": "6fac2cf70f16b994ffaf99baec03e10396a6b2b40da7cd64e5e92d4f2c19ff53"
+        },
+        "source-tree-manifest.json": {
+          "bytes": 3444588,
+          "sha256": "5033c3a81127fde28ff6be424ef8fbfad955a40ef6377fc76b56c136b3d2d7d7"
+        }
+      },
+      "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-024db66c-t25-heap-capability-v2",
+      "cleanup_snapshot_raw_entries": 77,
+      "reclaimed_bytes": 1617608704,
+      "at_utc": "2026-10-16T09:13:10.822815+00:00"
+    },
+    {
+      "receipt": {
+        "path": "/private/tmp/probata-21ed-source-retention-root-v2-20261016.json",
+        "sha256": "d590a9c6e0b2f41beba9bd8b93dbee084fe584f66c08c53955403c6e5ebf88da"
+      },
+      "source_commit": "21edecf2d8a06234290e06861b6724dc76dd346e",
+      "source_tree": "f9ee28655f2e1ec07c9370159491fb7fbe62228b",
+      "local_Git_file_count": 9730,
+      "remote_removed_path": "/data1/yanruj/probata-reviewed-21edecf2",
+      "retention_ref": "refs/probata/retained-source/21edecf2",
+      "restore_argv": [
+        "git",
+        "-C",
+        "/data1/yanruj/ArchEvolve",
+        "worktree",
+        "add",
+        "--detach",
+        "/data1/yanruj/probata-reviewed-21edecf2",
+        "21edecf2d8a06234290e06861b6724dc76dd346e"
+      ],
+      "remote_manifest_pins": {
+        "raw-preservation-manifest.json": {
+          "bytes": 15990,
+          "sha256": "0039ad8edf9e0515194bfc6b30378a24f460a5d1e73050682d58a663cc3cf5ed"
+        },
+        "restoration.json": {
+          "bytes": 984,
+          "sha256": "00f1fd28b5d7f8ea6b9a1adf28616b6bba626f9b92f3838503e144c4c957f5b5"
+        },
+        "source-tree-manifest.json": {
+          "bytes": 3524835,
+          "sha256": "b4c595038dbeeaf9ed89205a1c6949add72e308fa234db6b0c4807ae4df18c28"
+        }
+      },
+      "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-21edecf2-t28-selector-v1",
+      "cleanup_snapshot_raw_entries": 78,
+      "reclaimed_bytes": 1622302720,
+      "at_utc": "2026-10-16T09:21:38.999779+00:00"
+    }
+  ],
+  "total_observed_reclaimed_bytes": 3239911424,
+  "limitations": [
+    "Original source paths no longer physically present; exact published commit+dedicated retained ref+remote full manifests and prewritten recovery recipe support restoration",
+    "Finite readable-cwd scans have explicit trusted ownSSHtransport/userPAM unreadable-cwd exclusions; no universal absence or zero global denial claim",
+    "Cleanup snapshot raw entries77/78 include later retained metadata; do not replace historical experiment file censuses",
+    "No active source or raw removed; no scientific outcome or historical source identity changes",
+    "Free-byte values are cleanup-time observations, not current available capacity or permission to skip fresh admission",
+    "Ordinary filesystem writes, no powerloss durability theorem"
+  ]
+}

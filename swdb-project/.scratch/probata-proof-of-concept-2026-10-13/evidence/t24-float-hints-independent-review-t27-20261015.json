@@ -1,0 +1,90 @@
+{
+  "created": "2026-10-15 ET",
+  "reviewer": "Codex ticket27 independent reviewer",
+  "scope": "Read-only source and retained compiler-control evidence; no new compiler/verifier jobs.",
+  "reviewed_commit": "e2a993b3949df78ae2161fa605a7a0777970dce4",
+  "patch_commit": "e2b5f9386f2c3a95422e4758fda57e1afea1e718",
+  "verdict": "pass_for_merge_and_fresh_actual_evaluation",
+  "findings": [],
+  "source_checks": [
+    "Only two field-specific initializedness loop invariants were added to the float hints.",
+    "Original float C++ source, contracts, numeric invariants, loop frame and variant remain unchanged.",
+    "Source assigns r.value and r.weight before loop; establishment and preservation remain ordinary WP obligations.",
+    "No assumption or aggregate padding initialization claim introduced.",
+    "The seeded initial value=1 remains initialized, so these invariants do not hide its n=0 numeric postcondition failure.",
+    "Compiler control uses public lower seam and deterministic hint merge; erasure recovers exact ordinary C and checks original explicit initializers."
+  ],
+  "evidence_checks": [
+    {
+      "path": "tests/test_t24_float_hints.py",
+      "expected": "bee2e69ef4a2fb4cf944663de715505ef4ae9e8005e56261c96da424ea059b76",
+      "actual": "bee2e69ef4a2fb4cf944663de715505ef4ae9e8005e56261c96da424ea059b76",
+      "matches": true
+    },
+    {
+      "path": "tests/test_wp_subset.py",
+      "expected": "49d1bdc46ab7c125e8637aa5b96a8b29817422820c6ede1dabf0753adfc1b23e",
+      "actual": "49d1bdc46ab7c125e8637aa5b96a8b29817422820c6ede1dabf0753adfc1b23e",
+      "matches": true
+    },
+    {
+      "path": "tests/fixtures/proof/lowering/floats.cc",
+      "expected": "c41740bfaced1d9f04a499865b0f09b0f7a34c38756581ffa8d13a66a4870d8d",
+      "actual": "c41740bfaced1d9f04a499865b0f09b0f7a34c38756581ffa8d13a66a4870d8d",
+      "matches": true
+    },
+    {
+      "path": "tests/fixtures/proof/regression_corpus/wp-float-loop-field-initialization.yaml",
+      "expected": "17c8efd4bcc41ea9b9c3a488c677ee0f40193e3bc81a00c1a6aa1ee61e80b862",
+      "actual": "17c8efd4bcc41ea9b9c3a488c677ee0f40193e3bc81a00c1a6aa1ee61e80b862",
+      "matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t24-float-init-20261015/old-hints.yaml",
+      "expected": "83fa1ae941e06ba9213b44d90bce3945bfb3466d0c73748330a9b7bd6e61e8d6",
+      "actual": "83fa1ae941e06ba9213b44d90bce3945bfb3466d0c73748330a9b7bd6e61e8d6",
+      "matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t24-float-init-20261015/new-hints.yaml",
+      "expected": "0d7e18cae18f823b5d8fd4b07ee988ea751ea21a4fbac647b048992055efd635",
+      "actual": "0d7e18cae18f823b5d8fd4b07ee988ea751ea21a4fbac647b048992055efd635",
+      "matches": true
+    }
+  ],
+  "retained_raw": {
+    "red.json": {
+      "sha256": "c20b810d5635759db508b35b5baa4b16d63b1a184bd8bed0f047b7193ab7140c"
+    },
+    "red.log": {
+      "sha256": "4fd7ed5108e52e0c2c767aa3d9429f2d4682b5f5bfa87f94e79c5f5ebaba0034"
+    },
+    "green.json": {
+      "sha256": "7d75788804577fd4271ef1e62b0272d1fc94ffd0701006436d6b30ef7b8f80e1"
+    },
+    "green.log": {
+      "sha256": "fedceb118a93f8e9bed4f5b262246c28f6bfdace0d13713f5045fa2fb6554486"
+    }
+  },
+  "evidence_sha256": "fa571b80e28ed9ebc6a09d23681ad99cb9cf34eb9e2ff32efbf8e591ef660ae1",
+  "controls": {
+    "red": {
+      "exit_code": 1,
+      "peak_rss_bytes": 140492800,
+      "out_of_memory": false,
+      "timed_out": false,
+      "wall_seconds": 1.9464262079563923,
+      "cpu_seconds": 1.543146
+    },
+    "green": {
+      "exit_code": 0,
+      "peak_rss_bytes": 157941760,
+      "out_of_memory": false,
+      "timed_out": false,
+      "wall_seconds": 1.2884646669845097,
+      "cpu_seconds": 1.229873
+    }
+  },
+  "boundary": "Compiler RED/GREEN is annotation placement/source-preservation evidence only. Historical timeout diagnosis does not prove new invariant sufficiency.",
+  "required_actual_acceptance": "Fresh merged-source safe/seeded WP pair; safe ordinary invariant establishment/preservation and all smoke goals Valid, at least12 original initialization RTE obligations represented; seeded original value=1 must retain an attributable ordinary failure."
+}

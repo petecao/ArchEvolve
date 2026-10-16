@@ -1,0 +1,1719 @@
+{
+  "at_utc": "2026-10-16T07:17:35.284752+00:00",
+  "connection": {
+    "branch": "HEAD",
+    "commit": "7e64298fd1d81359e8db586883243b31d57bef3b",
+    "disk": "Filesystem      Size  Used Avail Use% Mounted on\n/dev/sdd1       1.8T  1.7T   24G  99% /data1\n/dev/sdb1       1.8T  1.7T   69G  97% /data",
+    "uptime": "03:17:35 up 76 days, 19:36,  8 users,  load average: 0.18, 0.40, 0.20",
+    "users": ""
+  },
+  "leases": {
+    "mbit10-evaluation-node0.meta.json": "released",
+    "mbit10-evaluation-node1.meta.json": "released",
+    "mbit10-evaluation.meta.json": "released"
+  },
+  "records": [
+    {
+      "assumptions": [
+        {
+          "kind": "trusted_tool",
+          "reference": {
+            "id": "swdb-c-lowering-9",
+            "sha256": "884efc17e2e21eaa401d7d2f3b63b831035121a3e44d907278d2e1329fec09d2"
+          },
+          "sentence": "The C lowering tool (swdb lower, version 9) lowers the C++ proof unit to C that behaves the same; WP proves the C lowering, not the C++."
+        },
+        {
+          "kind": "trusted_tool",
+          "reference": {
+            "id": "clang-22.1.8",
+            "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+          },
+          "sentence": "clang 22.1.8 parses the C++ proof unit correctly for the C lowering tool."
+        },
+        {
+          "kind": "trusted_tool",
+          "reference": {
+            "id": "frama-c-wp-33.0",
+            "sha256": "39368e41f6a0edbd3902fa0e7b119689a7281fd25965c74b53abd88adeca9ea7"
+          },
+          "sentence": "Frama-C/WP 33.0 generates only sound proof obligations for the C lowering under its memory model and the x86_64 machdep."
+        },
+        {
+          "kind": "trusted_tool",
+          "reference": {
+            "id": "z3-5.1.0",
+            "sha256": "b4e0b3483ce37817230b20d6cad48390eb6a3aefde1d93342ad6dc763f24bc23"
+          },
+          "sentence": "Z3 5.1.0 answers valid only for valid proof obligations."
+        },
+        {
+          "kind": "trusted_tool",
+          "reference": {
+            "id": "cvc5-1.2.1",
+            "sha256": "ee4c6787a95218a571080a599bdf579aca5b0f1e4f27687f70f46d4d12148974"
+          },
+          "sentence": "CVC5 1.2.1 answers valid only for valid proof obligations."
+        },
+        {
+          "kind": "trusted_tool",
+          "reference": {
+            "id": "alt-ergo-2.6.4",
+            "sha256": "ef5b893597fedd2bc5b215a40118b6a2297e1d9293d3a5296f4fe5bf7e43b6af"
+          },
+          "sentence": "Alt-Ergo 2.6.4 answers valid only for valid proof obligations."
+        },
+        {
+          "kind": "assumed_clause",
+          "reference": {
+            "id": "semantics.dx100_size_fixture_0_2",
+            "sha256": "7995dd2a33682f45062747cb24b84760e194779520e8f923ddee0d973474d175"
+          },
+          "sentence": "WP treats contract property get_tile_size_assigns of get_tile_size as Extern: assigns \\nothing;."
+        },
+        {
+          "kind": "assumed_clause",
+          "reference": {
+            "id": "semantics.dx100_size_fixture_0_2",
+            "sha256": "7995dd2a33682f45062747cb24b84760e194779520e8f923ddee0d973474d175"
+          },
+          "sentence": "WP treats contract property get_tile_size_ensures of get_tile_size as Extern: ensures\n\\result \u2261\n__swdb_dx_size_bytes[2 * \\old(SPD_id)] +\n256 * __swdb_dx_size_bytes[2 * \\old(SPD_id) + 1]."
+        },
+        {
+          "kind": "proof_semantics",
+          "reference": {
+            "id": "semantics.dx100_size_fixture_0_2#mmio_ordering",
+            "sha256": "7995dd2a33682f45062747cb24b84760e194779520e8f923ddee0d973474d175"
+          },
+          "sentence": "The pinned MMIO implements call semantics including ordering; its wait fence lacks a memory clobber, a portability note independent of candidate artifacts."
+        },
+        {
+          "kind": "proof_semantics",
+          "reference": {
+            "id": "semantics.dx100_size_fixture_0_2#cross_core_filter",
+            "sha256": "7995dd2a33682f45062747cb24b84760e194779520e8f923ddee0d973474d175"
+          },
+          "sentence": "A DX100 store remains visible if the snoop filter drops its line before the write reaches L3."
+        },
+        {
+          "kind": "proof_semantics",
+          "reference": {
+            "id": "semantics.dx100_size_fixture_0_2#cross_core_write_buffer",
+            "sha256": "7995dd2a33682f45062747cb24b84760e194779520e8f923ddee0d973474d175"
+          },
+          "sentence": "A DX100 store remains visible when L3 passes a write below it because no block can be allocated."
+        },
+        {
+          "kind": "proof_semantics",
+          "reference": {
+            "id": "semantics.dx100_size_fixture_0_2#no_stale_cpu_copy",
+            "sha256": "7995dd2a33682f45062747cb24b84760e194779520e8f923ddee0d973474d175"
+          },
+          "sentence": "No stale CPU copy survives a DX100 store (owner Eric)."
+        },
+        {
+          "kind": "proof_semantics",
+          "reference": {
+            "id": "semantics.dx100_size_fixture_0_2#one_instance",
+            "sha256": "7995dd2a33682f45062747cb24b84760e194779520e8f923ddee0d973474d175"
+          },
+          "sentence": "All commands belong to one DX100 instance."
+        },
+        {
+          "kind": "proof_semantics",
+          "reference": {
+            "id": "semantics.dx100_size_fixture_0_2#fresh_spd_epoch",
+            "sha256": "7995dd2a33682f45062747cb24b84760e194779520e8f923ddee0d973474d175"
+          },
+          "sentence": "This synthetic fixture begins on core0 immediately after one pinned SPD constructor has completed with 32 tiles and 16,384 words per tile, and pinned 4-core MMIO-address setup has configured its globals, before commands or other accesses modify that instance. This is a conditional environment/source-model premise owned by the Probata proof-semantics maintainer, pending Yan-Ru freeze review (59); arbitrary callers and physical boot are not established. alloc_MAA/init_MAA do not establish freshness."
+        },
+        {
+          "kind": "proof_semantics",
+          "reference": {
+            "id": "semantics.dx100_size_fixture_0_2",
+            "sha256": "7995dd2a33682f45062747cb24b84760e194779520e8f923ddee0d973474d175"
+          },
+          "sentence": "Only the source-certified size getter in its explicit synthetic fresh-SPD boot epoch is admitted; no device commands, arbitrary-entry freshness or timing reduction is used."
+        }
+      ],
+      "csv": "directory\tfile\tline\tfunction\tproperty kind\tstatus\tproperty\n.\twp_input.c\t10\tget_tile_size\tprecondition\tValid\t0 \u2264 SPD_id < 32\n.\twp_input.c\t10\tget_tile_size\tpostcondition\tConsidered valid\t\\result \u2261 __swdb_dx_size_bytes[2 * \\old(SPD_id)] + 256 * __swdb_dx_size_bytes[2 * \\old(SPD_id) + 1]\n.\twp_input.c\t12\tget_tile_size\tpostcondition\tUnknown\t\\false\n.\twp_input.c\t12\tget_tile_size\ttermination clause\tUnknown\t\\true\n.\twp_input.c\t12\tget_tile_size\tassigns clause\tConsidered valid\tassigns \\nothing;\n.\twp_input.c\t17\ttrust_fixture\tassigns clause\tValid\tassigns __swdb_dx_size_bytes[0 .. 63];\n.\twp_input.c\t17\ttrust_fixture\tpostcondition\tValid\t\\result \u2261 0\n.\twp_input.c\t18\ttrust_fixture\tpostcondition\tValid\t\\false\n.\twp_input.c\t18\ttrust_fixture\ttermination clause\tValid\t\\true\n.\twp_input.c\t86\ttrust_fixture\tprecondition of get_tile_size\tValid\t0 \u2264 SPD_id < 32\n.\twp_input.c\t89\ttrust_fixture\tinitialization\tValid\t\\initialized(&observed)\n",
+      "failure_class": null,
+      "flags": [
+        "-wp",
+        "-wp-rte",
+        "-wp-cache",
+        "none",
+        "-wp-model",
+        "+real",
+        "-rte-initialized",
+        "@all",
+        "-wp-no-filter-init",
+        "-machdep",
+        "x86_64",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-machdep",
+        "x86_64",
+        "-wp-timeout",
+        "30",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-fct=trust_fixture"
+      ],
+      "id": "proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75",
+      "inventory": {
+        "complete": true,
+        "goals": [
+          {
+            "function": "get_tile_size",
+            "goal": "typed_real_get_tile_size_wp_smoke_dead_call_s65",
+            "line": 86,
+            "passed": true,
+            "property": "get_tile_size_wp_smoke_dead_call_s65",
+            "results": [
+              "timeout",
+              "unknown",
+              "timeout"
+            ],
+            "smoke": true,
+            "targets": []
+          },
+          {
+            "function": "trust_fixture",
+            "goal": "typed_real_trust_fixture_wp_smoke_dead_code_s68",
+            "line": 89,
+            "passed": true,
+            "property": "trust_fixture_wp_smoke_dead_code_s68",
+            "results": [
+              "timeout",
+              "unknown",
+              "timeout"
+            ],
+            "smoke": true,
+            "targets": []
+          },
+          {
+            "function": "trust_fixture",
+            "goal": "typed_real_trust_fixture_terminates",
+            "line": 18,
+            "passed": true,
+            "property": "trust_fixture_terminates",
+            "results": [
+              "valid"
+            ],
+            "smoke": false,
+            "targets": []
+          },
+          {
+            "function": "trust_fixture",
+            "goal": "typed_real_trust_fixture_ensures",
+            "line": 17,
+            "passed": true,
+            "property": "trust_fixture_ensures",
+            "results": [
+              "valid"
+            ],
+            "smoke": false,
+            "targets": []
+          },
+          {
+            "function": "trust_fixture",
+            "goal": "typed_real_trust_fixture_exits",
+            "line": 18,
+            "passed": true,
+            "property": "trust_fixture_exits",
+            "results": [
+              "valid"
+            ],
+            "smoke": false,
+            "targets": []
+          },
+          {
+            "function": "trust_fixture",
+            "goal": "typed_real_trust_fixture_assert_rte_initialization",
+            "line": 89,
+            "passed": true,
+            "property": "trust_fixture_assert_rte_initialization",
+            "results": [
+              "valid"
+            ],
+            "smoke": false,
+            "targets": []
+          },
+          {
+            "function": "trust_fixture",
+            "goal": "typed_real_trust_fixture_assigns_normal_part1",
+            "line": 17,
+            "passed": true,
+            "property": "trust_fixture_assigns",
+            "results": [
+              "valid"
+            ],
+            "smoke": false,
+            "targets": []
+          },
+          {
+            "function": "trust_fixture",
+            "goal": "typed_real_trust_fixture_assigns_normal_part2",
+            "line": 17,
+            "passed": true,
+            "property": "trust_fixture_assigns",
+            "results": [
+              "valid"
+            ],
+            "smoke": false,
+            "targets": []
+          },
+          {
+            "function": "trust_fixture",
+            "goal": "typed_real_trust_fixture_assigns_exit",
+            "line": 17,
+            "passed": true,
+            "property": "trust_fixture_assigns",
+            "results": [
+              "valid"
+            ],
+            "smoke": false,
+            "targets": []
+          },
+          {
+            "function": "trust_fixture",
+            "goal": "typed_real_trust_fixture_call_get_tile_size_requires",
+            "line": 86,
+            "passed": true,
+            "property": "get_tile_size_requires_2",
+            "results": [
+              "valid"
+            ],
+            "smoke": false,
+            "targets": []
+          }
+        ],
+        "properties": [
+          {
+            "dependencies": [
+              "get_tile_size_assigns",
+              "get_tile_size_ensures",
+              "get_tile_size_exits"
+            ],
+            "description": "default behavior",
+            "emitter": "",
+            "extern": false,
+            "function": "get_tile_size",
+            "generated_smoke_failure": false,
+            "kind": "other",
+            "line": 12,
+            "origin": null,
+            "property": "get_tile_size"
+          },
+          {
+            "dependencies": [
+              "trust_fixture_assigns",
+              "trust_fixture_ensures",
+              "trust_fixture_exits"
+            ],
+            "description": "default behavior",
+            "emitter": "",
+            "extern": false,
+            "function": "trust_fixture",
+            "generated_smoke_failure": false,
+            "kind": "other",
+            "line": 18,
+            "origin": null,
+            "property": "trust_fixture"
+          },
+          {
+            "dependencies": [],
+            "description": "assert rte: initialization: \\initialized(&observed);",
+            "emitter": "rte",
+            "extern": false,
+            "function": "trust_fixture",
+            "generated_smoke_failure": false,
+            "kind": "other",
+            "line": 89,
+            "origin": null,
+            "property": "trust_fixture_assert_rte_initialization"
+          },
+          {
+            "dependencies": [],
+            "description": "terminates\n\\true",
+            "emitter": "",
+            "extern": false,
+            "function": "get_tile_size",
+            "generated_smoke_failure": false,
+            "kind": "contract",
+            "line": 12,
+            "origin": null,
+            "property": "get_tile_size_terminates"
+          },
+          {
+            "dependencies": [
+              "get_tile_size_requires_2"
+            ],
+            "description": "requires\n0 \u2264 SPD_id < 32",
+            "emitter": "",
+            "extern": false,
+            "function": "get_tile_size",
+            "generated_smoke_failure": false,
+            "kind": "contract",
+            "line": 10,
+            "origin": null,
+            "property": "get_tile_size_requires"
+          },
+          {
+            "dependencies": [],
+            "description": "wp_smoke_dead_code",
+            "emitter": "",
+            "extern": false,
+            "function": "trust_fixture",
+            "generated_smoke_failure": false,
+            "kind": "other",
+            "line": 89,
+            "origin": null,
+            "property": "trust_fixture_wp_smoke_dead_code_s68"
+          },
+          {
+            "dependencies": [],
+            "description": "exits\n\\false",
+            "emitter": "",
+            "extern": false,
+            "function": "get_tile_size",
+            "generated_smoke_failure": false,
+            "kind": "contract",
+            "line": 12,
+            "origin": null,
+            "property": "get_tile_size_exits"
+          },
+          {
+            "dependencies": [
+              "trust_fixture_assert_rte_initialization"
+            ],
+            "description": "ensures\n\\result \u2261 0",
+            "emitter": "",
+            "extern": false,
+            "function": "trust_fixture",
+            "generated_smoke_failure": false,
+            "kind": "contract",
+            "line": 17,
+            "origin": null,
+            "property": "trust_fixture_ensures"
+          },
+          {
+            "dependencies": [],
+            "description": "status of 'requires\n0 \u2264 SPD_id < 32' of get_tile_size at stmt 65",
+            "emitter": "",
+            "extern": false,
+            "function": "trust_fixture",
+            "generated_smoke_failure": false,
+            "kind": "other",
+            "line": 86,
+            "origin": "get_tile_size_requires",
+            "property": "get_tile_size_requires_2"
+          },
+          {
+            "dependencies": [],
+            "description": "assigns \\nothing;",
+            "emitter": "",
+            "extern": true,
+            "function": "get_tile_size",
+            "generated_smoke_failure": false,
+            "kind": "contract",
+            "line": 12,
+            "origin": null,
+            "property": "get_tile_size_assigns"
+          },
+          {
+            "dependencies": [],
+            "description": "assigns __swdb_dx_size_bytes[0 .. 63];",
+            "emitter": "",
+            "extern": false,
+            "function": "trust_fixture",
+            "generated_smoke_failure": false,
+            "kind": "contract",
+            "line": 17,
+            "origin": null,
+            "property": "trust_fixture_assigns"
+          },
+          {
+            "dependencies": [],
+            "description": "exits\n\\false",
+            "emitter": "",
+            "extern": false,
+            "function": "trust_fixture",
+            "generated_smoke_failure": false,
+            "kind": "contract",
+            "line": 18,
+            "origin": null,
+            "property": "trust_fixture_exits"
+          },
+          {
+            "dependencies": [],
+            "description": "wp_smoke_dead_call",
+            "emitter": "",
+            "extern": false,
+            "function": "get_tile_size",
+            "generated_smoke_failure": false,
+            "kind": "other",
+            "line": 86,
+            "origin": null,
+            "property": "get_tile_size_wp_smoke_dead_call_s65"
+          },
+          {
+            "dependencies": [],
+            "description": "terminates\n\\true",
+            "emitter": "",
+            "extern": false,
+            "function": "trust_fixture",
+            "generated_smoke_failure": false,
+            "kind": "contract",
+            "line": 18,
+            "origin": null,
+            "property": "trust_fixture_terminates"
+          },
+          {
+            "dependencies": [],
+            "description": "ensures\n\\result \u2261\n__swdb_dx_size_bytes[2 * \\old(SPD_id)] +\n256 * __swdb_dx_size_bytes[2 * \\old(SPD_id) + 1]",
+            "emitter": "",
+            "extern": true,
+            "function": "get_tile_size",
+            "generated_smoke_failure": false,
+            "kind": "contract",
+            "line": 10,
+            "origin": null,
+            "property": "get_tile_size_ensures"
+          }
+        ],
+        "version": "1"
+      },
+      "native_goals": [
+        {
+          "file": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/scratch/wp_input.c",
+          "function": "trust_fixture",
+          "goal": "typed_real_get_tile_size_wp_smoke_dead_call_s65",
+          "line": 86,
+          "passed": true,
+          "property": "get_tile_size_wp_smoke_dead_call_s65",
+          "proved": 1,
+          "provers": [
+            {
+              "prover": "qed",
+              "success": 0,
+              "time": 0.124
+            },
+            {
+              "prover": "Alt-Ergo:2.6.4",
+              "success": 1,
+              "time": 0
+            }
+          ],
+          "smoke": true,
+          "verdict": "timeout"
+        },
+        {
+          "file": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/scratch/wp_input.c",
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_wp_smoke_dead_code_s68",
+          "line": 89,
+          "passed": true,
+          "property": "trust_fixture_wp_smoke_dead_code_s68",
+          "proved": 1,
+          "provers": [
+            {
+              "prover": "qed",
+              "success": 0,
+              "time": 0.154
+            },
+            {
+              "prover": "Alt-Ergo:2.6.4",
+              "success": 1,
+              "time": 0
+            }
+          ],
+          "smoke": true,
+          "verdict": "timeout"
+        },
+        {
+          "file": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/scratch/wp_input.c",
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_terminates",
+          "line": 18,
+          "passed": true,
+          "property": "trust_fixture_terminates",
+          "proved": 1,
+          "provers": [
+            {
+              "prover": "qed",
+              "success": 1,
+              "time": 0
+            }
+          ],
+          "smoke": false,
+          "verdict": "valid"
+        },
+        {
+          "file": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/scratch/wp_input.c",
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_ensures",
+          "line": 17,
+          "passed": true,
+          "property": "trust_fixture_ensures",
+          "proved": 1,
+          "provers": [
+            {
+              "prover": "qed",
+              "success": 1,
+              "time": 0
+            }
+          ],
+          "smoke": false,
+          "verdict": "valid"
+        },
+        {
+          "file": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/scratch/wp_input.c",
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_exits",
+          "line": 18,
+          "passed": true,
+          "property": "trust_fixture_exits",
+          "proved": 1,
+          "provers": [
+            {
+              "prover": "qed",
+              "success": 1,
+              "time": 0
+            }
+          ],
+          "smoke": false,
+          "verdict": "valid"
+        },
+        {
+          "file": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/scratch/wp_input.c",
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_assert_rte_initialization",
+          "line": 89,
+          "passed": true,
+          "property": "trust_fixture_assert_rte_initialization",
+          "proved": 1,
+          "provers": [
+            {
+              "prover": "qed",
+              "success": 1,
+              "time": 0
+            }
+          ],
+          "smoke": false,
+          "verdict": "valid"
+        },
+        {
+          "file": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/scratch/wp_input.c",
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_assigns_normal_part1",
+          "line": 17,
+          "passed": true,
+          "property": "trust_fixture_assigns",
+          "proved": 1,
+          "provers": [
+            {
+              "prover": "qed",
+              "success": 1,
+              "time": 0
+            }
+          ],
+          "smoke": false,
+          "verdict": "valid"
+        },
+        {
+          "file": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/scratch/wp_input.c",
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_assigns_normal_part2",
+          "line": 17,
+          "passed": true,
+          "property": "trust_fixture_assigns",
+          "proved": 1,
+          "provers": [
+            {
+              "prover": "qed",
+              "success": 1,
+              "time": 0
+            }
+          ],
+          "smoke": false,
+          "verdict": "valid"
+        },
+        {
+          "file": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/scratch/wp_input.c",
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_assigns_exit",
+          "line": 17,
+          "passed": true,
+          "property": "trust_fixture_assigns",
+          "proved": 1,
+          "provers": [
+            {
+              "prover": "qed",
+              "success": 1,
+              "time": 0
+            }
+          ],
+          "smoke": false,
+          "verdict": "valid"
+        },
+        {
+          "file": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/scratch/wp_input.c",
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_call_get_tile_size_requires",
+          "line": 86,
+          "passed": true,
+          "property": "get_tile_size_requires_2",
+          "proved": 1,
+          "provers": [
+            {
+              "prover": "qed",
+              "success": 1,
+              "time": 0
+            }
+          ],
+          "smoke": false,
+          "verdict": "valid"
+        }
+      ],
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir0/records/proofs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75.yaml",
+      "record_goals": [
+        {
+          "function": "trust_fixture",
+          "goal": "typed_real_get_tile_size_wp_smoke_dead_call_s65",
+          "property": "get_tile_size_wp_smoke_dead_call_s65",
+          "seconds": 0.0,
+          "smoke": true,
+          "solver": "alt-ergo",
+          "source": "wp_json",
+          "status": "valid"
+        },
+        {
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_wp_smoke_dead_code_s68",
+          "property": "trust_fixture_wp_smoke_dead_code_s68",
+          "seconds": 0.0,
+          "smoke": true,
+          "solver": "alt-ergo",
+          "source": "wp_json",
+          "status": "valid"
+        },
+        {
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_terminates",
+          "property": "trust_fixture_terminates",
+          "seconds": 0.0,
+          "smoke": false,
+          "solver": "qed",
+          "source": "wp_json",
+          "status": "valid"
+        },
+        {
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_ensures",
+          "property": "trust_fixture_ensures",
+          "seconds": 0.0,
+          "smoke": false,
+          "solver": "qed",
+          "source": "wp_json",
+          "status": "valid"
+        },
+        {
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_exits",
+          "property": "trust_fixture_exits",
+          "seconds": 0.0,
+          "smoke": false,
+          "solver": "qed",
+          "source": "wp_json",
+          "status": "valid"
+        },
+        {
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_assert_rte_initialization",
+          "property": "trust_fixture_assert_rte_initialization",
+          "seconds": 0.0,
+          "smoke": false,
+          "solver": "qed",
+          "source": "wp_json",
+          "status": "valid"
+        },
+        {
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_assigns_normal_part1",
+          "property": "trust_fixture_assigns",
+          "seconds": 0.0,
+          "smoke": false,
+          "solver": "qed",
+          "source": "wp_json",
+          "status": "valid"
+        },
+        {
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_assigns_normal_part2",
+          "property": "trust_fixture_assigns",
+          "seconds": 0.0,
+          "smoke": false,
+          "solver": "qed",
+          "source": "wp_json",
+          "status": "valid"
+        },
+        {
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_assigns_exit",
+          "property": "trust_fixture_assigns",
+          "seconds": 0.0,
+          "smoke": false,
+          "solver": "qed",
+          "source": "wp_json",
+          "status": "valid"
+        },
+        {
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_call_get_tile_size_requires",
+          "property": "get_tile_size_requires_2",
+          "seconds": 0.0,
+          "smoke": false,
+          "solver": "qed",
+          "source": "wp_json",
+          "status": "valid"
+        }
+      ],
+      "reports": {
+        "anchors": {
+          "name": "anchors",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/wp/trust_fixture.anchors.json",
+          "sha256": "f2b371bd9bd9488a0b88332e96e188fc407ecf86c5e853d74f25f9e7c90c9c0b"
+        },
+        "c_lowering": {
+          "name": "c_lowering",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/wp/trust_fixture.c",
+          "sha256": "f2f4f74f6e3a74a9f63862effa82fb9fb92ceaac4f3bafb0d73428528d32d2cd"
+        },
+        "wp_goals": {
+          "name": "wp_goals",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/wp/wp-goals.json",
+          "sha256": "99592504f45a6d599c35a104994cf674ea97a6ae02a9e3231e0515fd18f91b01"
+        },
+        "wp_input": {
+          "name": "wp_input",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/wp/wp_input.c",
+          "sha256": "d2cd70c6b640df5f46d901fd183fba5acb381bf4820dd868dfa63b30b01c9cae"
+        },
+        "wp_inventory": {
+          "name": "wp_inventory",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/wp/wp-inventory.json",
+          "sha256": "4fd23d661e988110028e671d6c77736efb8253804b3eaecc1ee0ed26528653b5"
+        },
+        "wp_log": {
+          "name": "wp_log",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/wp/frama-c.log",
+          "sha256": "6fdab6385d0cae0d0d35805acd6a6c12c11f6c6095cb669b0e7b8ab37a98e1a0"
+        },
+        "wp_normalized": {
+          "name": "wp_normalized",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/wp/wp-normalized.c",
+          "sha256": "29e6fb68c21bd7b5971fd43f8ea01b8865668295da4dcb5686dc3928c4877c48"
+        },
+        "wp_properties": {
+          "name": "wp_properties",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir0/runs/proof.contract.dx100_trust_fixture.20261016t071324z.f68eef75/wp/wp-properties.csv",
+          "sha256": "e2f8f1ef459e7093cb7e2e7d72f7a26a0251796a503ce8245c950110047a5d07"
+        }
+      },
+      "sha256": "1a6f6215a1a3a791d3aa7cd7dd4a7bed51ffbd51cb364334d7cd71b898ad77e2",
+      "unproven_properties": [],
+      "verdict": "proven"
+    },
+    {
+      "assumptions": [
+        {
+          "kind": "trusted_tool",
+          "reference": {
+            "id": "swdb-c-lowering-9",
+            "sha256": "884efc17e2e21eaa401d7d2f3b63b831035121a3e44d907278d2e1329fec09d2"
+          },
+          "sentence": "The C lowering tool (swdb lower, version 9) lowers the C++ proof unit to C that behaves the same; WP proves the C lowering, not the C++."
+        },
+        {
+          "kind": "trusted_tool",
+          "reference": {
+            "id": "clang-22.1.8",
+            "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+          },
+          "sentence": "clang 22.1.8 parses the C++ proof unit correctly for the C lowering tool."
+        },
+        {
+          "kind": "trusted_tool",
+          "reference": {
+            "id": "frama-c-wp-33.0",
+            "sha256": "39368e41f6a0edbd3902fa0e7b119689a7281fd25965c74b53abd88adeca9ea7"
+          },
+          "sentence": "Frama-C/WP 33.0 generates only sound proof obligations for the C lowering under its memory model and the x86_64 machdep."
+        },
+        {
+          "kind": "trusted_tool",
+          "reference": {
+            "id": "z3-5.1.0",
+            "sha256": "b4e0b3483ce37817230b20d6cad48390eb6a3aefde1d93342ad6dc763f24bc23"
+          },
+          "sentence": "Z3 5.1.0 answers valid only for valid proof obligations."
+        },
+        {
+          "kind": "trusted_tool",
+          "reference": {
+            "id": "cvc5-1.2.1",
+            "sha256": "ee4c6787a95218a571080a599bdf579aca5b0f1e4f27687f70f46d4d12148974"
+          },
+          "sentence": "CVC5 1.2.1 answers valid only for valid proof obligations."
+        },
+        {
+          "kind": "trusted_tool",
+          "reference": {
+            "id": "alt-ergo-2.6.4",
+            "sha256": "ef5b893597fedd2bc5b215a40118b6a2297e1d9293d3a5296f4fe5bf7e43b6af"
+          },
+          "sentence": "Alt-Ergo 2.6.4 answers valid only for valid proof obligations."
+        },
+        {
+          "kind": "assumed_clause",
+          "reference": {
+            "id": "semantics.dx100_size_fixture_0_2",
+            "sha256": "7995dd2a33682f45062747cb24b84760e194779520e8f923ddee0d973474d175"
+          },
+          "sentence": "WP treats contract property get_tile_size_assigns of get_tile_size as Extern: assigns \\nothing;."
+        },
+        {
+          "kind": "assumed_clause",
+          "reference": {
+            "id": "semantics.dx100_size_fixture_0_2",
+            "sha256": "7995dd2a33682f45062747cb24b84760e194779520e8f923ddee0d973474d175"
+          },
+          "sentence": "WP treats contract property get_tile_size_ensures of get_tile_size as Extern: ensures\n\\result \u2261\n__swdb_dx_size_bytes[2 * \\old(SPD_id)] +\n256 * __swdb_dx_size_bytes[2 * \\old(SPD_id) + 1]."
+        },
+        {
+          "kind": "proof_semantics",
+          "reference": {
+            "id": "semantics.dx100_size_fixture_0_2#mmio_ordering",
+            "sha256": "7995dd2a33682f45062747cb24b84760e194779520e8f923ddee0d973474d175"
+          },
+          "sentence": "The pinned MMIO implements call semantics including ordering; its wait fence lacks a memory clobber, a portability note independent of candidate artifacts."
+        },
+        {
+          "kind": "proof_semantics",
+          "reference": {
+            "id": "semantics.dx100_size_fixture_0_2#cross_core_filter",
+            "sha256": "7995dd2a33682f45062747cb24b84760e194779520e8f923ddee0d973474d175"
+          },
+          "sentence": "A DX100 store remains visible if the snoop filter drops its line before the write reaches L3."
+        },
+        {
+          "kind": "proof_semantics",
+          "reference": {
+            "id": "semantics.dx100_size_fixture_0_2#cross_core_write_buffer",
+            "sha256": "7995dd2a33682f45062747cb24b84760e194779520e8f923ddee0d973474d175"
+          },
+          "sentence": "A DX100 store remains visible when L3 passes a write below it because no block can be allocated."
+        },
+        {
+          "kind": "proof_semantics",
+          "reference": {
+            "id": "semantics.dx100_size_fixture_0_2#no_stale_cpu_copy",
+            "sha256": "7995dd2a33682f45062747cb24b84760e194779520e8f923ddee0d973474d175"
+          },
+          "sentence": "No stale CPU copy survives a DX100 store (owner Eric)."
+        },
+        {
+          "kind": "proof_semantics",
+          "reference": {
+            "id": "semantics.dx100_size_fixture_0_2#one_instance",
+            "sha256": "7995dd2a33682f45062747cb24b84760e194779520e8f923ddee0d973474d175"
+          },
+          "sentence": "All commands belong to one DX100 instance."
+        },
+        {
+          "kind": "proof_semantics",
+          "reference": {
+            "id": "semantics.dx100_size_fixture_0_2#fresh_spd_epoch",
+            "sha256": "7995dd2a33682f45062747cb24b84760e194779520e8f923ddee0d973474d175"
+          },
+          "sentence": "This synthetic fixture begins on core0 immediately after one pinned SPD constructor has completed with 32 tiles and 16,384 words per tile, and pinned 4-core MMIO-address setup has configured its globals, before commands or other accesses modify that instance. This is a conditional environment/source-model premise owned by the Probata proof-semantics maintainer, pending Yan-Ru freeze review (59); arbitrary callers and physical boot are not established. alloc_MAA/init_MAA do not establish freshness."
+        },
+        {
+          "kind": "proof_semantics",
+          "reference": {
+            "id": "semantics.dx100_size_fixture_0_2",
+            "sha256": "7995dd2a33682f45062747cb24b84760e194779520e8f923ddee0d973474d175"
+          },
+          "sentence": "Only the source-certified size getter in its explicit synthetic fresh-SPD boot epoch is admitted; no device commands, arbitrary-entry freshness or timing reduction is used."
+        }
+      ],
+      "csv": "directory\tfile\tline\tfunction\tproperty kind\tstatus\tproperty\n.\twp_input.c\t10\tget_tile_size\tprecondition\tValid\t0 \u2264 SPD_id < 32\n.\twp_input.c\t10\tget_tile_size\tpostcondition\tConsidered valid\t\\result \u2261 __swdb_dx_size_bytes[2 * \\old(SPD_id)] + 256 * __swdb_dx_size_bytes[2 * \\old(SPD_id) + 1]\n.\twp_input.c\t12\tget_tile_size\tpostcondition\tUnknown\t\\false\n.\twp_input.c\t12\tget_tile_size\ttermination clause\tUnknown\t\\true\n.\twp_input.c\t12\tget_tile_size\tassigns clause\tConsidered valid\tassigns \\nothing;\n.\twp_input.c\t17\ttrust_fixture\tassigns clause\tValid\tassigns __swdb_dx_size_bytes[0 .. 63];\n.\twp_input.c\t17\ttrust_fixture\tpostcondition\tUnknown\t\\result \u2261 1\n.\twp_input.c\t18\ttrust_fixture\tpostcondition\tValid\t\\false\n.\twp_input.c\t18\ttrust_fixture\ttermination clause\tValid\t\\true\n.\twp_input.c\t86\ttrust_fixture\tprecondition of get_tile_size\tValid\t0 \u2264 SPD_id < 32\n.\twp_input.c\t89\ttrust_fixture\tinitialization\tValid\t\\initialized(&observed)\n",
+      "failure_class": "solver_error",
+      "flags": [
+        "-wp",
+        "-wp-rte",
+        "-wp-cache",
+        "none",
+        "-wp-model",
+        "+real",
+        "-rte-initialized",
+        "@all",
+        "-wp-no-filter-init",
+        "-machdep",
+        "x86_64",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-machdep",
+        "x86_64",
+        "-wp-timeout",
+        "30",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-fct=trust_fixture"
+      ],
+      "id": "proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367",
+      "inventory": {
+        "complete": true,
+        "goals": [
+          {
+            "function": "get_tile_size",
+            "goal": "typed_real_get_tile_size_wp_smoke_dead_call_s65",
+            "line": 86,
+            "passed": true,
+            "property": "get_tile_size_wp_smoke_dead_call_s65",
+            "results": [
+              "timeout",
+              "unknown",
+              "timeout"
+            ],
+            "smoke": true,
+            "targets": []
+          },
+          {
+            "function": "trust_fixture",
+            "goal": "typed_real_trust_fixture_wp_smoke_dead_code_s68",
+            "line": 89,
+            "passed": true,
+            "property": "trust_fixture_wp_smoke_dead_code_s68",
+            "results": [
+              "timeout",
+              "unknown",
+              "timeout"
+            ],
+            "smoke": true,
+            "targets": []
+          },
+          {
+            "function": "trust_fixture",
+            "goal": "typed_real_trust_fixture_terminates",
+            "line": 18,
+            "passed": true,
+            "property": "trust_fixture_terminates",
+            "results": [
+              "valid"
+            ],
+            "smoke": false,
+            "targets": []
+          },
+          {
+            "function": "trust_fixture",
+            "goal": "typed_real_trust_fixture_ensures",
+            "line": 17,
+            "passed": false,
+            "property": "trust_fixture_ensures",
+            "results": [
+              "failed",
+              "unknown",
+              "timeout"
+            ],
+            "smoke": false,
+            "targets": []
+          },
+          {
+            "function": "trust_fixture",
+            "goal": "typed_real_trust_fixture_exits",
+            "line": 18,
+            "passed": true,
+            "property": "trust_fixture_exits",
+            "results": [
+              "valid"
+            ],
+            "smoke": false,
+            "targets": []
+          },
+          {
+            "function": "trust_fixture",
+            "goal": "typed_real_trust_fixture_assert_rte_initialization",
+            "line": 89,
+            "passed": true,
+            "property": "trust_fixture_assert_rte_initialization",
+            "results": [
+              "valid"
+            ],
+            "smoke": false,
+            "targets": []
+          },
+          {
+            "function": "trust_fixture",
+            "goal": "typed_real_trust_fixture_assigns_normal_part1",
+            "line": 17,
+            "passed": true,
+            "property": "trust_fixture_assigns",
+            "results": [
+              "valid"
+            ],
+            "smoke": false,
+            "targets": []
+          },
+          {
+            "function": "trust_fixture",
+            "goal": "typed_real_trust_fixture_assigns_normal_part2",
+            "line": 17,
+            "passed": true,
+            "property": "trust_fixture_assigns",
+            "results": [
+              "valid"
+            ],
+            "smoke": false,
+            "targets": []
+          },
+          {
+            "function": "trust_fixture",
+            "goal": "typed_real_trust_fixture_assigns_exit",
+            "line": 17,
+            "passed": true,
+            "property": "trust_fixture_assigns",
+            "results": [
+              "valid"
+            ],
+            "smoke": false,
+            "targets": []
+          },
+          {
+            "function": "trust_fixture",
+            "goal": "typed_real_trust_fixture_call_get_tile_size_requires",
+            "line": 86,
+            "passed": true,
+            "property": "get_tile_size_requires_2",
+            "results": [
+              "valid"
+            ],
+            "smoke": false,
+            "targets": []
+          }
+        ],
+        "properties": [
+          {
+            "dependencies": [
+              "get_tile_size_assigns",
+              "get_tile_size_ensures",
+              "get_tile_size_exits"
+            ],
+            "description": "default behavior",
+            "emitter": "",
+            "extern": false,
+            "function": "get_tile_size",
+            "generated_smoke_failure": false,
+            "kind": "other",
+            "line": 12,
+            "origin": null,
+            "property": "get_tile_size"
+          },
+          {
+            "dependencies": [
+              "trust_fixture_assigns",
+              "trust_fixture_ensures",
+              "trust_fixture_exits"
+            ],
+            "description": "default behavior",
+            "emitter": "",
+            "extern": false,
+            "function": "trust_fixture",
+            "generated_smoke_failure": false,
+            "kind": "other",
+            "line": 18,
+            "origin": null,
+            "property": "trust_fixture"
+          },
+          {
+            "dependencies": [],
+            "description": "assert rte: initialization: \\initialized(&observed);",
+            "emitter": "rte",
+            "extern": false,
+            "function": "trust_fixture",
+            "generated_smoke_failure": false,
+            "kind": "other",
+            "line": 89,
+            "origin": null,
+            "property": "trust_fixture_assert_rte_initialization"
+          },
+          {
+            "dependencies": [],
+            "description": "terminates\n\\true",
+            "emitter": "",
+            "extern": false,
+            "function": "get_tile_size",
+            "generated_smoke_failure": false,
+            "kind": "contract",
+            "line": 12,
+            "origin": null,
+            "property": "get_tile_size_terminates"
+          },
+          {
+            "dependencies": [
+              "get_tile_size_requires_2"
+            ],
+            "description": "requires\n0 \u2264 SPD_id < 32",
+            "emitter": "",
+            "extern": false,
+            "function": "get_tile_size",
+            "generated_smoke_failure": false,
+            "kind": "contract",
+            "line": 10,
+            "origin": null,
+            "property": "get_tile_size_requires"
+          },
+          {
+            "dependencies": [],
+            "description": "wp_smoke_dead_code",
+            "emitter": "",
+            "extern": false,
+            "function": "trust_fixture",
+            "generated_smoke_failure": false,
+            "kind": "other",
+            "line": 89,
+            "origin": null,
+            "property": "trust_fixture_wp_smoke_dead_code_s68"
+          },
+          {
+            "dependencies": [],
+            "description": "exits\n\\false",
+            "emitter": "",
+            "extern": false,
+            "function": "get_tile_size",
+            "generated_smoke_failure": false,
+            "kind": "contract",
+            "line": 12,
+            "origin": null,
+            "property": "get_tile_size_exits"
+          },
+          {
+            "dependencies": [],
+            "description": "ensures\n\\result \u2261 1",
+            "emitter": "",
+            "extern": false,
+            "function": "trust_fixture",
+            "generated_smoke_failure": false,
+            "kind": "contract",
+            "line": 17,
+            "origin": null,
+            "property": "trust_fixture_ensures"
+          },
+          {
+            "dependencies": [],
+            "description": "status of 'requires\n0 \u2264 SPD_id < 32' of get_tile_size at stmt 65",
+            "emitter": "",
+            "extern": false,
+            "function": "trust_fixture",
+            "generated_smoke_failure": false,
+            "kind": "other",
+            "line": 86,
+            "origin": "get_tile_size_requires",
+            "property": "get_tile_size_requires_2"
+          },
+          {
+            "dependencies": [],
+            "description": "assigns \\nothing;",
+            "emitter": "",
+            "extern": true,
+            "function": "get_tile_size",
+            "generated_smoke_failure": false,
+            "kind": "contract",
+            "line": 12,
+            "origin": null,
+            "property": "get_tile_size_assigns"
+          },
+          {
+            "dependencies": [],
+            "description": "assigns __swdb_dx_size_bytes[0 .. 63];",
+            "emitter": "",
+            "extern": false,
+            "function": "trust_fixture",
+            "generated_smoke_failure": false,
+            "kind": "contract",
+            "line": 17,
+            "origin": null,
+            "property": "trust_fixture_assigns"
+          },
+          {
+            "dependencies": [],
+            "description": "exits\n\\false",
+            "emitter": "",
+            "extern": false,
+            "function": "trust_fixture",
+            "generated_smoke_failure": false,
+            "kind": "contract",
+            "line": 18,
+            "origin": null,
+            "property": "trust_fixture_exits"
+          },
+          {
+            "dependencies": [],
+            "description": "wp_smoke_dead_call",
+            "emitter": "",
+            "extern": false,
+            "function": "get_tile_size",
+            "generated_smoke_failure": false,
+            "kind": "other",
+            "line": 86,
+            "origin": null,
+            "property": "get_tile_size_wp_smoke_dead_call_s65"
+          },
+          {
+            "dependencies": [],
+            "description": "terminates\n\\true",
+            "emitter": "",
+            "extern": false,
+            "function": "trust_fixture",
+            "generated_smoke_failure": false,
+            "kind": "contract",
+            "line": 18,
+            "origin": null,
+            "property": "trust_fixture_terminates"
+          },
+          {
+            "dependencies": [],
+            "description": "ensures\n\\result \u2261\n__swdb_dx_size_bytes[2 * \\old(SPD_id)] +\n256 * __swdb_dx_size_bytes[2 * \\old(SPD_id) + 1]",
+            "emitter": "",
+            "extern": true,
+            "function": "get_tile_size",
+            "generated_smoke_failure": false,
+            "kind": "contract",
+            "line": 10,
+            "origin": null,
+            "property": "get_tile_size_ensures"
+          }
+        ],
+        "version": "1"
+      },
+      "native_goals": [
+        {
+          "file": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/scratch/wp_input.c",
+          "function": "trust_fixture",
+          "goal": "typed_real_get_tile_size_wp_smoke_dead_call_s65",
+          "line": 86,
+          "passed": true,
+          "property": "get_tile_size_wp_smoke_dead_call_s65",
+          "proved": 1,
+          "provers": [
+            {
+              "prover": "qed",
+              "success": 0,
+              "time": 0.122
+            },
+            {
+              "prover": "Alt-Ergo:2.6.4",
+              "success": 1,
+              "time": 0
+            }
+          ],
+          "smoke": true,
+          "verdict": "timeout"
+        },
+        {
+          "file": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/scratch/wp_input.c",
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_wp_smoke_dead_code_s68",
+          "line": 89,
+          "passed": true,
+          "property": "trust_fixture_wp_smoke_dead_code_s68",
+          "proved": 1,
+          "provers": [
+            {
+              "prover": "qed",
+              "success": 0,
+              "time": 0.152
+            },
+            {
+              "prover": "Alt-Ergo:2.6.4",
+              "success": 1,
+              "time": 0
+            }
+          ],
+          "smoke": true,
+          "verdict": "timeout"
+        },
+        {
+          "file": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/scratch/wp_input.c",
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_terminates",
+          "line": 18,
+          "passed": true,
+          "property": "trust_fixture_terminates",
+          "proved": 1,
+          "provers": [
+            {
+              "prover": "qed",
+              "success": 1,
+              "time": 0
+            }
+          ],
+          "smoke": false,
+          "verdict": "valid"
+        },
+        {
+          "file": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/scratch/wp_input.c",
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_ensures",
+          "line": 17,
+          "passed": false,
+          "property": "trust_fixture_ensures",
+          "provers": [
+            {
+              "prover": "qed",
+              "success": 0,
+              "time": 0.164
+            },
+            {
+              "prover": "Z3:5.1.0",
+              "success": 0,
+              "time": 0
+            }
+          ],
+          "smoke": false,
+          "timeout": 1,
+          "verdict": "timeout"
+        },
+        {
+          "file": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/scratch/wp_input.c",
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_exits",
+          "line": 18,
+          "passed": true,
+          "property": "trust_fixture_exits",
+          "proved": 1,
+          "provers": [
+            {
+              "prover": "qed",
+              "success": 1,
+              "time": 0
+            }
+          ],
+          "smoke": false,
+          "verdict": "valid"
+        },
+        {
+          "file": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/scratch/wp_input.c",
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_assert_rte_initialization",
+          "line": 89,
+          "passed": true,
+          "property": "trust_fixture_assert_rte_initialization",
+          "proved": 1,
+          "provers": [
+            {
+              "prover": "qed",
+              "success": 1,
+              "time": 0
+            }
+          ],
+          "smoke": false,
+          "verdict": "valid"
+        },
+        {
+          "file": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/scratch/wp_input.c",
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_assigns_normal_part1",
+          "line": 17,
+          "passed": true,
+          "property": "trust_fixture_assigns",
+          "proved": 1,
+          "provers": [
+            {
+              "prover": "qed",
+              "success": 1,
+              "time": 0
+            }
+          ],
+          "smoke": false,
+          "verdict": "valid"
+        },
+        {
+          "file": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/scratch/wp_input.c",
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_assigns_normal_part2",
+          "line": 17,
+          "passed": true,
+          "property": "trust_fixture_assigns",
+          "proved": 1,
+          "provers": [
+            {
+              "prover": "qed",
+              "success": 1,
+              "time": 0
+            }
+          ],
+          "smoke": false,
+          "verdict": "valid"
+        },
+        {
+          "file": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/scratch/wp_input.c",
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_assigns_exit",
+          "line": 17,
+          "passed": true,
+          "property": "trust_fixture_assigns",
+          "proved": 1,
+          "provers": [
+            {
+              "prover": "qed",
+              "success": 1,
+              "time": 0
+            }
+          ],
+          "smoke": false,
+          "verdict": "valid"
+        },
+        {
+          "file": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/scratch/wp_input.c",
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_call_get_tile_size_requires",
+          "line": 86,
+          "passed": true,
+          "property": "get_tile_size_requires_2",
+          "proved": 1,
+          "provers": [
+            {
+              "prover": "qed",
+              "success": 1,
+              "time": 0
+            }
+          ],
+          "smoke": false,
+          "verdict": "valid"
+        }
+      ],
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir1/records/proofs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367.yaml",
+      "record_goals": [
+        {
+          "function": "trust_fixture",
+          "goal": "typed_real_get_tile_size_wp_smoke_dead_call_s65",
+          "property": "get_tile_size_wp_smoke_dead_call_s65",
+          "seconds": 0.0,
+          "smoke": true,
+          "solver": "alt-ergo",
+          "source": "wp_json",
+          "status": "valid"
+        },
+        {
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_wp_smoke_dead_code_s68",
+          "property": "trust_fixture_wp_smoke_dead_code_s68",
+          "seconds": 0.0,
+          "smoke": true,
+          "solver": "alt-ergo",
+          "source": "wp_json",
+          "status": "valid"
+        },
+        {
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_terminates",
+          "property": "trust_fixture_terminates",
+          "seconds": 0.0,
+          "smoke": false,
+          "solver": "qed",
+          "source": "wp_json",
+          "status": "valid"
+        },
+        {
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_ensures",
+          "property": "trust_fixture_ensures",
+          "seconds": null,
+          "smoke": false,
+          "solver": null,
+          "source": "wp_json",
+          "status": "timeout"
+        },
+        {
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_exits",
+          "property": "trust_fixture_exits",
+          "seconds": 0.0,
+          "smoke": false,
+          "solver": "qed",
+          "source": "wp_json",
+          "status": "valid"
+        },
+        {
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_assert_rte_initialization",
+          "property": "trust_fixture_assert_rte_initialization",
+          "seconds": 0.0,
+          "smoke": false,
+          "solver": "qed",
+          "source": "wp_json",
+          "status": "valid"
+        },
+        {
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_assigns_normal_part1",
+          "property": "trust_fixture_assigns",
+          "seconds": 0.0,
+          "smoke": false,
+          "solver": "qed",
+          "source": "wp_json",
+          "status": "valid"
+        },
+        {
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_assigns_normal_part2",
+          "property": "trust_fixture_assigns",
+          "seconds": 0.0,
+          "smoke": false,
+          "solver": "qed",
+          "source": "wp_json",
+          "status": "valid"
+        },
+        {
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_assigns_exit",
+          "property": "trust_fixture_assigns",
+          "seconds": 0.0,
+          "smoke": false,
+          "solver": "qed",
+          "source": "wp_json",
+          "status": "valid"
+        },
+        {
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_call_get_tile_size_requires",
+          "property": "get_tile_size_requires_2",
+          "seconds": 0.0,
+          "smoke": false,
+          "solver": "qed",
+          "source": "wp_json",
+          "status": "valid"
+        }
+      ],
+      "reports": {
+        "anchors": {
+          "name": "anchors",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/wp/trust_fixture.anchors.json",
+          "sha256": "50d2e6e72204ce75792dd87bab4d85342f6b27977214099606949238e3f3cc8d"
+        },
+        "c_lowering": {
+          "name": "c_lowering",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/wp/trust_fixture.c",
+          "sha256": "f2f4f74f6e3a74a9f63862effa82fb9fb92ceaac4f3bafb0d73428528d32d2cd"
+        },
+        "handler": {
+          "name": "handler",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/wp/handler.json",
+          "sha256": "dc7cce7db330401485b5ba54e44bc0185e73a8affd194841a32791ba0fcd186e"
+        },
+        "wp_goals": {
+          "name": "wp_goals",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/wp/wp-goals.json",
+          "sha256": "fa0caaecaec3ef9367e59da84311749f921e1ab3628a899f3cac6b504a859124"
+        },
+        "wp_input": {
+          "name": "wp_input",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/wp/wp_input.c",
+          "sha256": "ec00b1ffa5020f3f8b4bb0fb926028d812ccb6c59e60ec84f1d95b1f89c937f3"
+        },
+        "wp_inventory": {
+          "name": "wp_inventory",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/wp/wp-inventory.json",
+          "sha256": "c5e5126ad8fcc11278809c50fe4b8b7a1ff742d1036db121b0afb690f8e80549"
+        },
+        "wp_log": {
+          "name": "wp_log",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/wp/frama-c.log",
+          "sha256": "16a10833374024a66028c5bfbbe78f5983ee52b1803bb0a05843c67f94aa5d08"
+        },
+        "wp_normalized": {
+          "name": "wp_normalized",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/wp/wp-normalized.c",
+          "sha256": "ef8334b1b6810cacd223d8e997198f6f1183c8aa9a1dd5dac63364ac80632bf5"
+        },
+        "wp_properties": {
+          "name": "wp_properties",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/pytest/test_actual_wp_source_size_fir1/runs/proof.contract.dx100_trust_fixture.20261016t071400z.d7bd0367/wp/wp-properties.csv",
+          "sha256": "e0710ebc107d5e916cd2942dae39669aad7afd739210e1d77befdae911b6318a"
+        }
+      },
+      "sha256": "25f925c11a2ace80784ceee9bb6e83b226db554b585640f05b471fb4a9ced9b5",
+      "unproven_properties": [
+        {
+          "failure_class": "solver_error",
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_ensures",
+          "kind": "postcondition",
+          "line": 17,
+          "property": "\\result \u2261 1",
+          "status": "Unknown"
+        },
+        {
+          "failure_class": "solver_error",
+          "goal": "typed_real_trust_fixture_ensures",
+          "property": "trust_fixture_ensures",
+          "status": "timeout"
+        }
+      ],
+      "verdict": "not_proven"
+    }
+  ],
+  "state": {
+    "lane.json": {
+      "socket_lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "command": [
+          "timeout",
+          "--signal=TERM",
+          "--kill-after=60",
+          "1320",
+          "bash",
+          "/data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/run.sh"
+        ],
+        "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+        "ended_utc": "2026-10-16T07:15:22Z",
+        "exit_code": 0,
+        "host": "mbit10",
+        "job": "probata-reviewed-7e64298f-t28-size-v1",
+        "lease_generation": 588,
+        "lease_name": "mbit10-evaluation-node0",
+        "load1_at_start": 0.49,
+        "load1_max": 32,
+        "node": 0,
+        "numa_memory_policy": "bind:0",
+        "numactl": "--cpunodebind=0 --membind=0",
+        "preregistration_sha256": null,
+        "started_utc": "2026-10-16T07:13:08Z"
+      }
+    },
+    "outer-resources.json": {
+      "cpu_seconds": 172.001537,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 1164005376,
+      "timed_out": false,
+      "wall_seconds": 134.0106747560203
+    },
+    "resources.json": {
+      "cpu_seconds": 143.502316,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 1111162880,
+      "timed_out": false,
+      "wall_seconds": 131.44381140265614
+    },
+    "size-profile/exit-code.txt": "0\n",
+    "size-profile/pytest.log": "..                                                                       [100%]\n- generated report log file: /data/yanruj/EvolveSWDB_runs/probata-reviewed-7e64298f-t28-size-v1/size-profile/report.jsonl -\n2 passed in 125.04s (0:02:05)\n"
+  }
+}

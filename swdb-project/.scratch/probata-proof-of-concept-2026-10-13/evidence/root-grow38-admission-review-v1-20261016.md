@@ -1,0 +1,7 @@
+2026-10-16 ET. Root admits one prospective fresh full grow38 public profile at exact 37ffe407a10888ff9628c75f37ba770995a3ecd5.
+
+Read the complete entry and nonpayload bootstrap; independently rehashed all12 packet artifacts,327 frozen Git source/helper pins and33 production changes. Embedded payloads roundtrip exactly; three early hardened compiler/ambient guard ASTs match reviewed8785. Runtime/compiler composite is a prospective source/context-derived prediction and must freshly match before method/public execution. All38 targets,15 copy-invariant conjuncts under unchanged fullA, two logical groups and three nonexecuted physical references are mandatory. No old proof is reused.
+
+Normal CLI/canonical/setup/schema/persistence and complete ordinary/RTE/init/smoke/source/runtime/resource gates remain. Whole2400/outer2520/profile2200/public2100seconds,8GiB,one worker,2GiB raw; ordinary30seconds/fullthree portfolio and smoke2seconds unchanged. Use free socket1 after fresh host preflight and reviewed current lane wrapper. All raw retained. Producer success alone grants no model acceptance: complete cold source/task/hypothesis/native/CSV/DAG/Extern/smoke/support closure remains mandatory. Original-v2,C++ body,generic caller and ticket acceptance remain false.
+
+Passive admission checks: /private/tmp/probata-root-grow38-admission-checks-v1-20261016.json SHA256 3042a8a1decaece449385d6ed1f856fd642c93cde78ba9b6d6bc51bbd0659dff.

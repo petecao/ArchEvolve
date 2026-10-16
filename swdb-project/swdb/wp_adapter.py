@@ -37,10 +37,11 @@ import re
 import shlex
 import shutil
 import subprocess
+import time
 from dataclasses import replace
 from pathlib import Path
 
-from swdb import artifacts, c_lowering, cpu_memory_admission, framac, helper_windows, nested_entry_reads, hint_check, paths, proof_semantics, proof_setup, rss_watchdog, standard_model_view, standard_range_calls, standard_range_model, std_models, terminal_release, vector_ownership, vocab, wp_pointer_bounds
+from swdb import artifacts, c_lowering, cpu_memory_admission, framac, heap_model_view, helper_windows, nested_entry_reads, hint_check, paths, proof_semantics, proof_setup, rss_watchdog, standard_model_view, standard_range_calls, standard_range_model, std_models, terminal_release, vector_ownership, vocab, wp_pointer_bounds
 from swdb.proof import MODEL_PREFIX, AdapterError, Verdict
 
 NAME = "wp"
@@ -95,6 +96,7 @@ class WpAdapter:
 
     # --- the job --------------------------------------------------------------------------------
     def run(self, job):
+        started = time.monotonic()
         run_dir = Path(job.log).parent
         wp_dir = run_dir / "wp"
         wp_dir.mkdir(exist_ok=True)
@@ -102,13 +104,42 @@ class WpAdapter:
         log.line(f"adapter: wp\nunit: {job.unit.candidate} {job.unit.function}\ncontract: {self.contract}")
         tools = self._tools()                     # missing or mismatched tools: no job, no record
         context = {"job": job, "wp_dir": wp_dir, "log": log, "reports": [], "tools": tools,
-                   "functions": {job.unit.function}, "extra_flags": [], "pins": {}}
+                   "functions": {job.unit.function}, "extra_flags": [], "pins": {},
+                   "started_monotonic": started}
         if self.contract.startswith(MODEL_PREFIX):            # ticket 24: one C model against its own contract
             text = c_lowering.model_text(job.unit.function)
             if text is None:
                 raise AdapterError(f"the C lowering has no C model {job.unit.function}")
             if job.unit.function.startswith(("std_vector_", "std_pair_")):
                 context["pins"]["std_models"] = std_models.identity()
+            from swdb import vector_reallocation_model
+            if job.unit.function in vector_reallocation_model.MEMBERS:
+                domain = vector_reallocation_model.certificate(job.unit.function)
+                source_path = wp_dir / "vector-reallocation-v3.c"
+                source_path.write_text(text)
+                original_path = wp_dir / "vector-reallocation-v2.original.c"
+                original_path.write_text(std_models.model_text(domain["original_member"]))
+                domain_path = wp_dir / "vector-reallocation-v3.json"
+                domain_path.write_text(json.dumps(domain, indent=2, sort_keys=True) + "\n")
+                context["pins"]["vector_reallocation_model"] = vector_reallocation_model.identity()
+                context["settings"] = {"tool": "frama-c-wp", "flags": tools["flags"],
+                                       "verifier_launched": False, "vector_reallocation_domain": domain}
+                context["reports"] += [("vector_reallocation_model", source_path),
+                                       ("vector_reallocation_domain", domain_path),
+                                       ("vector_reallocation_original", original_path)]
+                from swdb import vector_reallocation_vcs
+                draft = wp_dir / "vector-reallocation-obligations"
+                plan = vector_reallocation_vcs.prepare(job.unit.function, draft)
+                vector_reallocation_vcs.check(job.unit.function, draft)
+                context["reports"] += [("vector_reallocation_obligations", draft / "manifest.json"),
+                    ("vector_reallocation_semantics", draft / plan["semantics"]["path"])]
+                context["reports"] += [("vector_reallocation_staged_" + name,
+                                        draft / pin["path"]) for name,pin in plan["sources"].items()]
+                context["reports"] += [("vector_reallocation_vc_" + row["id"], draft / row["path"])
+                                       for row in plan["obligations"]]
+                return heap_model_view.prove(job, self, context)
+            if job.unit.function in heap_model_view.MEMBERS:
+                return heap_model_view.prove(job, self, context)
             if re.search(r"\b(?:allocates|frees)\b|\\(?:fresh|freeable)\b", text):
                 return self._not_proven("unsupported_construct",
                     "WP 33.0 does not model allocation lifetime; this C model needs allocates/frees support", context)
@@ -174,6 +205,9 @@ class WpAdapter:
             context["extra_flags"] = ["-wp-fct=" + ",".join(sorted(context["functions"]))]
             return self._wp(job, input_path, context)
         entry = self.library.get(self.contract) or {}
+        if (entry.get('proof_unit') or {}).get('correctness_policy') is not None:
+            if job.unit.candidate is not None or job.unit.correctness_policy!=(entry.get('proof_unit') or {}).get('correctness_policy'):
+                return self._not_proven('unsupported_construct','partial source admission requires its distinct original partial summary unit',context)
         unit = entry.get("proof_unit") or {}
         summary_job = job.unit.candidate is None
         source = _unit_source(Path(job.unit.tree), job.unit.function)
@@ -277,6 +311,7 @@ class WpAdapter:
                         ("nested_view_source", nested_view.path), ("nested_entry_reads_certificate", certificate_path)]
                     context["pointer_source_plan"] = {"source": str(nested_view.path), "kwargs": effective_kwargs}
             if (unit.get("array_domains") or (lowering.pointer_bounds or {}).get("owner") or
+                    (lowering.pointer_bounds or {}).get("member_windows") or
                     any(row.get("kind") in {"call", "producer", "import", "standard_range_call"} for row in lowering.pointer_bounds.get("sites", []))):
                 context.setdefault("pointer_source_plan", {"source": str(source), "kwargs": source_kwargs})
         except (helper_windows.Refused, nested_entry_reads.Refused) as exc:
@@ -367,6 +402,31 @@ class WpAdapter:
             context["semantics_settings"] = {
                 "id": entries[0], "calls": called,
                 "probes": [{k: p[k] for k in ("id", "function", "access", "line")} for p in lowering.probes]}
+            if proof_semantics.instance_bindings(lowering):
+                context['semantics_settings']['instances'] = proof_semantics.instance_bindings(lowering)
+            from swdb import dx100_size_source
+            if dx100_size_source.bindings(lowering):
+                context['semantics_settings']['source_definitions'] = dx100_size_source.bindings(lowering)
+            from swdb import dx100_stream_source
+            if dx100_stream_source.bindings(lowering):
+                context['semantics_settings']['source_definitions'] = dx100_stream_source.bindings(lowering)
+                context['semantics_settings']['termination_policy'] = 'conditional normal return; no hardware liveness'
+                context['semantics_settings']['source_refinement'] = 'owned TCB correspondence; all-schedule refinement and contract/body agreement unverified'
+            from swdb import dx100_register_source
+            if dx100_register_source.bindings(lowering):
+                context['semantics_settings']['source_definitions'] = dx100_register_source.bindings(lowering)
+                context['semantics_settings']['termination_policy'] = 'conditional normal return; no hardware liveness'
+                context['semantics_settings']['source_refinement'] = 'owned source/model contract-body TCB duty pending59; compiler observations not a theorem'
+            from swdb import dx100_initialized_register_source
+            if dx100_initialized_register_source.bindings(lowering):
+                context['semantics_settings']['source_definitions'] = dx100_initialized_register_source.bindings(lowering)
+                context['semantics_settings']['termination_policy'] = 'conditional normal return; no hardware liveness'
+                context['semantics_settings']['source_refinement'] = 'owned initialized source/model contract-body and disjoint-address TCB duties pending59; compiler observations not a theorem'
+            from swdb import dx100_allocation_source
+            if dx100_allocation_source.bindings(lowering):
+                context['semantics_settings']['source_definitions'] = dx100_allocation_source.bindings(lowering)
+                context['semantics_settings']['correctness_scope'] = 'original total software-counter unit; no hardware progress premise'
+                context['semantics_settings']['source_refinement'] = 'checked compiler/source bindings; contract/body correspondence is an owned TCB duty'
             log.line(f"proof semantics: {entries[0]} (sha256 {sha}); calls {', '.join(called)}; "
                      f"{len(lowering.probes)} hazard probe(s)")
         refusal = cpu_memory_admission.check(lowering, covered)
@@ -418,7 +478,8 @@ class WpAdapter:
         if context.get("semantics"):
             semantics = context["semantics"]
             pin = {k: semantics[k] for k in ("id", "sha256")}
-            context["extern_contracts"].update({name: dict(pin) for name in semantics["calls"]})
+            context["extern_contracts"].update({name: dict(pin) for name in proof_semantics.contract_names(
+                self.library, semantics['id'], semantics['calls'])})
             for probe in (self.library.get(semantics["id"]).get("wp") or {}).get("probes") or []:
                 name = re.match(r".*?\b(\w+)\s*\(", probe["prototype"]).group(1)
                 context["extern_contracts"][name] = dict(pin)
@@ -724,6 +785,29 @@ class WpAdapter:
                 for clause in summary:
                     uses += [u for u in clause["acsl"].get("uses", []) if u not in uses]
         inserts["ghost.globals"] = prelude + [f"/*@\n{files[u].read_text()}\n*/" for u in uses]
+        if semantics:
+            from swdb import dx100_size_source
+            if dx100_size_source.size_layout(self.library.get(semantics['id']) or {}):
+                certificates=dx100_size_source.bindings(lowering)
+                if len(certificates)!=1:
+                    raise AdapterError('fresh-SPD entry projection needs one checked source/epoch certificate')
+                projection=dx100_size_source.constructor_projection(certificates[0]['entry'])
+                inserts[f'{lowering.function}.entry']=[
+                    '/* Conditional synthetic constructor-state projection; no source reset or wait. */',
+                    *projection['entry_assignments']]
+                semantics['entry_projection']={'kind':dx100_size_source.CERTIFICATE_KIND,
+                    'bytes':projection['metadata_bytes'],'owner':dx100_size_source.OWNER,
+                    'statement':dx100_size_source.BOOT_STATEMENT}
+            from swdb import dx100_stream_source, dx100_stream_model
+            if dx100_stream_source.stream_layout(self.library.get(semantics['id']) or {}):
+                certificates=dx100_stream_source.bindings(lowering)
+                if {c['call'] for c in certificates}!=set(dx100_stream_source.PROTOTYPES) or len(certificates)!=3:
+                    raise AdapterError('isolated stream entry projection needs all three checked source certificates')
+                inserts[f'{lowering.function}.entry']=[
+                    '/* Conditional source-constructor/RF/input epoch; no source reset or added wait. */',
+                    *dx100_stream_model.normal_return_model()['entry']]
+                semantics['entry_projection']={'kind':dx100_stream_source.ENTRY['kind'],
+                    'owner':dx100_stream_source.OWNER,'statement':dx100_stream_source.BOOT_STATEMENT}
         return inserts
 
     def _summary_clauses(self, callee):
@@ -755,6 +839,89 @@ class WpAdapter:
         entry_id = semantics["id"]
         data = self.library.get(entry_id) or {}
         wp = data.get("wp") or {}
+        from swdb.dx100_source_selector import pure_layout
+        from swdb import dx100_size_source
+        from swdb import dx100_stream_source
+        from swdb import dx100_allocation_source
+        from swdb import dx100_register_source
+        from swdb import dx100_initialized_register_source
+        if dx100_initialized_register_source.initialized_register_layout(data):
+            try:
+                policy=dx100_initialized_register_source.unit_policy(self.library,self.library.get(self.contract)or{})
+            except dx100_initialized_register_source.Refused as exc:
+                raise AdapterError('partial initialized register admission: '+str(exc)) from None
+            if {'id':semantics.get('id'),'sha256':semantics.get('sha256')}!=policy['semantics']:
+                raise AdapterError('partial initialized register selected semantics pin differs from its fixed unit policy')
+            if self.method.id!=dx100_initialized_register_source.PARTIAL_METHOD:
+                raise AdapterError('partial initialized register admission requires its original partial method')
+            frames=re.findall(r'\bassigns\s+([^;]+);','\n'.join(texts))
+            locations=[location.strip()for location in frames[0].split(',')]if len(frames)==1 else []
+            if len(locations)!=4 or {re.sub(r'\s+','',location)for location in locations}!={'SPD_count','REG_count','region_count','__swdb_dx_reg_words[0..1]'}:
+                raise AdapterError('initialized register requires its unchanged explicit three-counter and two-cell original assigns frame')
+            semantics['original_assigns_frame']=locations
+            semantics['unit_correctness_policy']=policy
+            semantics['unit_requires'],semantics['unit_ensures']=[],[]
+            from swdb.acsl_subset import tokens
+            original=tokens('\n'.join(sorted(texts,key=lambda t:0 if t.startswith('requires')else 1)))
+            at=next((i for i,t in enumerate(original)if t.kind=='id'and t.text in ('assigns','ensures')),len(original))
+            partial=[' '.join(t.text for t in original[:at])+r' terminates \false; '+' '.join(t.text for t in original[at:])]
+            return partial,[proof_semantics.wp_prelude(self.library,entry_id,semantics['calls'],self.defines)]
+        if dx100_register_source.register_layout(data):
+            try:
+                policy=dx100_register_source.unit_policy(self.library,self.library.get(self.contract)or{})
+            except dx100_register_source.Refused as exc:
+                raise AdapterError('partial register admission: '+str(exc)) from None
+            if self.method.id!=dx100_register_source.PARTIAL_METHOD:
+                raise AdapterError('partial register admission requires its original partial method')
+            frames=re.findall(r'\bassigns\s+([^;]+);','\n'.join(texts))
+            if frames!=['__swdb_dx_reg_words[0..1]']:
+                raise AdapterError('register requires its unchanged explicit original two-cell projection assigns frame')
+            semantics['original_assigns_frame']=frames
+            semantics['unit_correctness_policy']=policy
+            semantics['unit_requires'],semantics['unit_ensures']=[],[]
+            from swdb.acsl_subset import tokens
+            original=tokens('\n'.join(sorted(texts,key=lambda t:0 if t.startswith('requires')else 1)))
+            at=next((i for i,t in enumerate(original)if t.kind=='id'and t.text in ('assigns','ensures')),len(original))
+            partial=[' '.join(t.text for t in original[:at])+r' terminates \false; '+' '.join(t.text for t in original[at:])]
+            return partial,[proof_semantics.wp_prelude(self.library,entry_id,semantics['calls'],self.defines)]
+        if dx100_allocation_source.allocation_layout(data):
+            if self.contract!='contract.dx100_software_allocation_fixture.v1' or self.method.id!='method.dx100-software-allocation-fixture-v1':
+                raise AdapterError('software allocator requires its distinct original-total fixture contract and method')
+            semantics['unit_requires'],semantics['unit_ensures']=[],[]
+            semantics['correctness_scope']='original total software-counter unit; no hardware progress premise'
+            frames=re.findall(r'\bassigns\s+([^;]+);','\n'.join(texts))
+            if len(frames)!=1 or {name.strip()for name in frames[0].split(',')}!={'REG_count','SPD_count','region_count'}:
+                raise AdapterError('software allocator requires its explicit original software-counter assigns frame; it cannot widen assigns-nothing')
+            semantics['original_assigns_frame']=['REG_count','SPD_count','region_count']
+            return texts,[proof_semantics.wp_prelude(self.library,entry_id,semantics['calls'],self.defines)]
+        if dx100_stream_source.stream_layout(data):
+            try:
+                policy=dx100_stream_source.unit_policy(self.library,self.library.get(self.contract) or {})
+            except dx100_stream_source.Refused as exc:
+                raise AdapterError('partial source admission: '+str(exc)) from None
+            if self.method.id!=dx100_stream_source.PARTIAL_METHOD:
+                raise AdapterError('partial source admission requires its explicit partial fixture method version')
+            semantics['unit_correctness_policy']=policy
+            semantics['unit_requires'],semantics['unit_ensures']=[],[]
+            rewritten=[re.sub(r"\bassigns\s+\\nothing\s*;",'assigns __swdb_dx_stream_meta;',text) for text in texts]
+            # Formal halves may contain several clauses in one text. ACSL33
+            # requires requires -> terminates -> simple clauses, independently
+            # of those original text boundaries. Preserve predicate tokens;
+            # semicolon splitting would break quantified expressions.
+            from swdb.acsl_subset import tokens
+            original=tokens('\n'.join(sorted(rewritten,key=lambda t:0 if t.startswith('requires')else 1)))
+            at=next((i for i,t in enumerate(original)if t.kind=='id'and t.text in ('assigns','ensures')),len(original))
+            rewritten=[' '.join(t.text for t in original[:at])+r' terminates \false; '+
+                       ' '.join(t.text for t in original[at:])]
+            return rewritten,[proof_semantics.wp_prelude(self.library,entry_id,semantics['calls'],self.defines)]
+        if dx100_size_source.size_layout(data):
+            semantics['unit_requires'],semantics['unit_ensures']=[],[]
+            rewritten=[re.sub(r"\bassigns\s+\\nothing\s*;",
+                'assigns __swdb_dx_size_bytes[0 .. 63];',text) for text in texts]
+            return rewritten,[proof_semantics.wp_prelude(self.library,entry_id,semantics['calls'],self.defines)]
+        if pure_layout(data):
+            semantics["unit_requires"], semantics["unit_ensures"] = [], []
+            return texts, [proof_semantics.wp_prelude(self.library, entry_id, semantics["calls"], self.defines)]
         locations = proof_semantics.wp_locations(self.library, entry_id, self.defines)
         joined = ", ".join(locations)
         rewritten = []
@@ -976,31 +1143,57 @@ class WpAdapter:
         pins.update(context.get("pins") or {})                 # ticket 24: summaries and C models
         semantics = context.get("semantics")
         if semantics:                               # ticket 27: as the CBMC adapter records it
+            assumptions += proof_semantics.record_assumptions(self.library, semantics['id'], semantics['sha256'])
             pins["proof_semantics"] = {"id": semantics["id"], "sha256": semantics["sha256"]}
             fields.setdefault("settings", {})["proof_semantics"] = {
                 **context["semantics_settings"], "unit_requires": semantics.get("unit_requires", []),
-                "unit_ensures": semantics.get("unit_ensures", [])}
-            assumptions.append({"kind": "proof_semantics", "reference": {"id": semantics["id"],
-                                                                         "sha256": semantics["sha256"]},
-                                "sentence": f"The DX100 behaves as its proof semantics {semantics['id']} says: each "
-                                            "command's values as if it finished at issue, hazards as its rules state."})
-            assumptions.append({"kind": "assumed_clause", "reference": {"id": semantics["id"],
-                                                                        "sha256": semantics["sha256"]},
-                "sentence": "The WP model-domain preconditions hold: no DX100 command is outstanding at entry, "
-                            "the fixed modeled device storage is initialized (dx_state_initialized), "
-                            "and CPU pointer parameters occupy objects separate from tile data, tile sizes, and "
-                            "register values. The exact generated clauses are recorded in "
-                            "settings.proof_semantics.unit_requires; store-frame witnesses and selected-index "
-                            "bounds and initialized caller-memory reads remain checked proof obligations. "
-                            "Device-call initialization preservation is a trusted semantics contract, "
-                            "pending ticket 29's independent contract/body agreement checks."})
-            reduction = Path(self.library.root) / "rocq" / "probata" / "Reduction.v"
-            if not reduction.is_file():
-                reduction = paths.HOME / "library" / "rocq" / "probata" / "Reduction.v"
-            assumptions.append({"kind": "reduction", "reference": {"id": "rocq.probata.dx100_reduction",
-                                                                   "sha256": artifacts.file_hash(reduction)},
-                                "sentence": "The DX100 reduction lemma (Reduction.v, statement only; proof: ticket "
-                                            "43): a hazard-free at-issue run matches every timing gem5 allows."})
+                "unit_ensures": semantics.get("unit_ensures", []),
+                **({"entry_projection":semantics["entry_projection"]} if "entry_projection" in semantics else {}),
+                **({"unit_correctness_policy":semantics["unit_correctness_policy"]} if "unit_correctness_policy" in semantics else {}),
+                **({"original_assigns_frame":semantics["original_assigns_frame"]} if "original_assigns_frame" in semantics else {})}
+            from swdb.dx100_source_selector import pure_layout, PURE_STATEMENT
+            from swdb import dx100_size_source
+            from swdb import dx100_stream_source
+            from swdb import dx100_allocation_source
+            from swdb import dx100_register_source
+            from swdb import dx100_initialized_register_source
+            if dx100_initialized_register_source.initialized_register_layout(self.library.get(semantics['id'])):
+                assumptions.append({'kind':'proof_semantics','reference':{'id':semantics['id'],'sha256':semantics['sha256']},'sentence':dx100_initialized_register_source.STATEMENT})
+            elif dx100_register_source.register_layout(self.library.get(semantics['id'])):
+                assumptions.append({'kind':'proof_semantics','reference':{'id':semantics['id'],'sha256':semantics['sha256']},'sentence':dx100_register_source.STATEMENT})
+            elif dx100_allocation_source.allocation_layout(self.library.get(semantics['id'])):
+                assumptions.append({'kind':'proof_semantics','reference':{'id':semantics['id'],'sha256':semantics['sha256']},'sentence':dx100_allocation_source.STATEMENT})
+            elif dx100_stream_source.stream_layout(self.library.get(semantics['id'])):
+                assumptions.append({'kind':'proof_semantics','reference':{'id':semantics['id'],'sha256':semantics['sha256']},
+                    'sentence':'Only the source-bound closed one-u32-stream, real returned wait and metadata size observation are admitted on conditional normal return. Input mapping/coherence, exclusive epoch and all-schedule event refinement are owned TCB obligations; source refinement and contract/body agreement remain unverified. No hardware termination, payload CPU read or full-interface theorem is claimed.'})
+            elif dx100_size_source.size_layout(self.library.get(semantics['id'])):
+                assumptions.append({'kind':'proof_semantics','reference':{'id':semantics['id'],'sha256':semantics['sha256']},
+                    'sentence':'Only the source-certified size getter in its explicit synthetic fresh-SPD boot epoch is admitted; no device commands, arbitrary-entry freshness or timing reduction is used.'})
+            elif pure_layout(self.library.get(semantics['id'])):
+                assumptions.append({"kind": "proof_semantics", "reference": {"id": semantics["id"],
+                    "sha256": semantics["sha256"]}, "sentence": PURE_STATEMENT})
+            else:
+                assumptions.append({"kind": "proof_semantics", "reference": {"id": semantics["id"],
+                                                                             "sha256": semantics["sha256"]},
+                                    "sentence": f"The DX100 behaves as its proof semantics {semantics['id']} says: each "
+                                                "command's values as if it finished at issue, hazards as its rules state."})
+                assumptions.append({"kind": "assumed_clause", "reference": {"id": semantics["id"],
+                                                                            "sha256": semantics["sha256"]},
+                    "sentence": "The WP model-domain preconditions hold: no DX100 command is outstanding at entry, "
+                                "the fixed modeled device storage is initialized (dx_state_initialized), "
+                                "and CPU pointer parameters occupy objects separate from tile data, tile sizes, and "
+                                "register values. The exact generated clauses are recorded in "
+                                "settings.proof_semantics.unit_requires; store-frame witnesses and selected-index "
+                                "bounds and initialized caller-memory reads remain checked proof obligations. "
+                                "Device-call initialization preservation is a trusted semantics contract, "
+                                "pending ticket 29's independent contract/body agreement checks."})
+                reduction = Path(self.library.root) / "rocq" / "probata" / "Reduction.v"
+                if not reduction.is_file():
+                    reduction = paths.HOME / "library" / "rocq" / "probata" / "Reduction.v"
+                assumptions.append({"kind": "reduction", "reference": {"id": "rocq.probata.dx100_reduction",
+                                                                       "sha256": artifacts.file_hash(reduction)},
+                                    "sentence": "The DX100 reduction lemma (Reduction.v, statement only; proof: ticket "
+                                                "43): a hazard-free at-issue run matches every timing gem5 allows."})
         return Verdict(verdict=verdict, bounds={"threads": 1, "input_size": "unbounded"}, assumptions=assumptions,
                        failure_class=failure_class, tools=tuple(tools), peak_rss_bytes=context.get("peak"),
                        record_fields=fields, pins=pins, reports=tuple(context["reports"]))

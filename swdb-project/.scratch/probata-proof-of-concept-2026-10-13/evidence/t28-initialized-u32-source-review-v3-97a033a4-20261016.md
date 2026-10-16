@@ -1,0 +1,11 @@
+# Initialized-u32 register successor review — 2026-10-16 ET
+
+**PASS for scoped source preparation** at `97a033a4f171c6c0c4e42726947ee8e8099f0252`, relative to frozen42db. The successor changes only the new source qualifier, its WP branch, and two dedicated test files. The two production fixes close both previous review blockers; no additional blocker was found.
+
+R1 now checks original declared-root-relative components before the real resolver dereferences them. Generic `Library.resolve` is unchanged. The exact unchanged `resolve`/`_pin` AST is exercised over physical same-byte regular, file-alias and directory-alias paths. Retained RED accepts both aliases; retained GREEN refuses both and admits the regular path.
+
+R2 now requires the actual selected semantics ID/hash to equal the original partial unit policy pin before emitting its prelude. The catalog checker also requires the fixed entry ID. Retained RED admits the coherent higher-sequence current clone, wrong selected pin, and cloned catalog; GREEN refuses them while preserving the711/1107 original partial clauses and frame.
+
+All13 final Git blobs and 235 compact evidence pin instances (233 unique paths) match. Final dedicated standalone controls retain four policy and three routing passes, with no timeout/OOM/unconfirmed children. These controls and historical observations were inspected, not rerun by this reviewer. Full source/evidence pins and exact RED/GREEN observations are in the JSON companion.
+
+This is preparation acceptance only. No fresh public compiler/certifier, actual Frama parser, public proof or persisted initialized result is accepted here. Original partial subject/frame, ordinary prewrite domain0..31, real poststore counter reload/late assertion, nonvolatile MMIO/fence behavior and explicit owned source-model/disjointness TCB pending59 remain. There is no RF freshness, hardware/liveness/fullbody theorem, current production0.2 or whole ticket28 claim. Root compiler observation8c3ad61d remains scoped to its retained capture: complete used dependency pins were first collected after preprocessing, then rechecked. Intermediate source receipts and seven-request retained-output subprocess stand-in evidence are not upgraded.

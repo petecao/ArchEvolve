@@ -1,0 +1,4084 @@
+{
+  "date": "2026-10-16 ET",
+  "verdict": "PASS complete settled ten-unit generation integrity; not a proof",
+  "source_commit": "b9b96fb85573c0292d2f7171b984cd2ee4076443",
+  "errors": [],
+  "checks": [
+    {
+      "name": "all224 prior raw files and231 pins unchanged",
+      "passed": true
+    },
+    {
+      "name": "runtime passive rehash",
+      "passed": true
+    },
+    {
+      "name": "entry expected exact",
+      "passed": true
+    },
+    {
+      "name": "artifact all-ten-generation-aggregate.json",
+      "passed": true
+    },
+    {
+      "name": "artifact cases.json",
+      "passed": true
+    },
+    {
+      "name": "artifact commands.json",
+      "passed": true
+    },
+    {
+      "name": "artifact consumed-prefix.json",
+      "passed": true
+    },
+    {
+      "name": "artifact entry.py",
+      "passed": true
+    },
+    {
+      "name": "artifact expected.json",
+      "passed": true
+    },
+    {
+      "name": "artifact git-blob-0.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-blob-1.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-blob-10.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-blob-11.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-blob-12.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-blob-13.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-blob-14.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-blob-15.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-blob-16.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-blob-17.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-blob-18.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-blob-19.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-blob-2.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-blob-20.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-blob-21.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-blob-22.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-blob-23.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-blob-24.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-blob-25.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-blob-26.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-blob-27.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-blob-28.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-blob-29.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-blob-3.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-blob-30.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-blob-4.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-blob-5.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-blob-6.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-blob-7.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-blob-8.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-blob-9.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-identity-0.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-identity-1.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-identity-10.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-identity-11.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-identity-12.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-identity-13.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-identity-14.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-identity-15.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-identity-16.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-identity-17.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-identity-18.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-identity-19.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-identity-2.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-identity-20.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-identity-21.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-identity-22.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-identity-23.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-identity-24.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-identity-25.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-identity-26.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-identity-27.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-identity-28.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-identity-29.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-identity-3.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-identity-30.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-identity-4.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-identity-5.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-identity-6.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-identity-7.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-identity-8.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-identity-9.log",
+      "passed": true
+    },
+    {
+      "name": "artifact git-source/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/CANONICAL-GENERATION-20261016.md",
+      "passed": true
+    },
+    {
+      "name": "artifact git-source/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/PRIVATE-ARRAY-REENTRY-20261016.md",
+      "passed": true
+    },
+    {
+      "name": "artifact git-source/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/PRIVATE-ARRAY-REFINEMENT-20261016.md",
+      "passed": true
+    },
+    {
+      "name": "artifact git-source/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/outslot_lowering.py",
+      "passed": true
+    },
+    {
+      "name": "artifact git-source/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/private_array_lowering.py",
+      "passed": true
+    },
+    {
+      "name": "artifact git-source/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/bfs_unit.h",
+      "passed": true
+    },
+    {
+      "name": "artifact git-source/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/dxc_summaries.h",
+      "passed": true
+    },
+    {
+      "name": "artifact git-source/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/gapbs_models.h",
+      "passed": true
+    },
+    {
+      "name": "artifact git-source/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/tdstep_standin.c",
+      "passed": true
+    },
+    {
+      "name": "artifact git-source/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_outslot_canonical/abi-map.json",
+      "passed": true
+    },
+    {
+      "name": "artifact git-source/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_outslot_canonical/bfs_unit.h",
+      "passed": true
+    },
+    {
+      "name": "artifact git-source/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_outslot_canonical/dxc_summaries.h",
+      "passed": true
+    },
+    {
+      "name": "artifact git-source/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_outslot_canonical/gapbs_models.h",
+      "passed": true
+    },
+    {
+      "name": "artifact git-source/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_outslot_canonical/tdstep_standin.c",
+      "passed": true
+    },
+    {
+      "name": "artifact git-source/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/bfs_unit.h",
+      "passed": true
+    },
+    {
+      "name": "artifact git-source/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/dxc_summaries.h",
+      "passed": true
+    },
+    {
+      "name": "artifact git-source/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/gapbs_models.h",
+      "passed": true
+    },
+    {
+      "name": "artifact git-source/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/private-array-map.json",
+      "passed": true
+    },
+    {
+      "name": "artifact git-source/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/sites/copy-positive.c",
+      "passed": true
+    },
+    {
+      "name": "artifact git-source/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/sites/history-positive.c",
+      "passed": true
+    },
+    {
+      "name": "artifact git-source/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/sites/missing-store.c",
+      "passed": true
+    },
+    {
+      "name": "artifact git-source/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/sites/modular-entry-missing-store.c",
+      "passed": true
+    },
+    {
+      "name": "artifact git-source/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/sites/modular-entry-positive.c",
+      "passed": true
+    },
+    {
+      "name": "artifact git-source/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/sites/positive.c",
+      "passed": true
+    },
+    {
+      "name": "artifact git-source/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/sites/reentry-missing-store.c",
+      "passed": true
+    },
+    {
+      "name": "artifact git-source/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/sites/reentry-positive.c",
+      "passed": true
+    },
+    {
+      "name": "artifact git-source/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/sites/uninitialized-scalar.c",
+      "passed": true
+    },
+    {
+      "name": "artifact git-source/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/sites/wrong-cell.c",
+      "passed": true
+    },
+    {
+      "name": "artifact git-source/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/tdstep_standin.c",
+      "passed": true
+    },
+    {
+      "name": "artifact git-source/swdb-project/library/dx100/bfs_read_offload.inc",
+      "passed": true
+    },
+    {
+      "name": "artifact git-source/swdb-project/swdb/proof_report.ml",
+      "passed": true
+    },
+    {
+      "name": "artifact modular-entry-missing-store/bodyless-call-smoke-contexts.json",
+      "passed": true
+    },
+    {
+      "name": "artifact modular-entry-missing-store/capability-boundaries.json",
+      "passed": true
+    },
+    {
+      "name": "artifact modular-entry-missing-store/frama-generation.log",
+      "passed": true
+    },
+    {
+      "name": "artifact modular-entry-missing-store/gapbs_models.h",
+      "passed": true
+    },
+    {
+      "name": "artifact modular-entry-missing-store/goal-log-census.json",
+      "passed": true
+    },
+    {
+      "name": "artifact modular-entry-missing-store/initialization-boundaries.json",
+      "passed": true
+    },
+    {
+      "name": "artifact modular-entry-missing-store/normalized-direct-call-contexts.json",
+      "passed": true
+    },
+    {
+      "name": "artifact modular-entry-missing-store/normalized-snapshot-1.c",
+      "passed": true
+    },
+    {
+      "name": "artifact modular-entry-missing-store/normalized-snapshot-2.c",
+      "passed": true
+    },
+    {
+      "name": "artifact modular-entry-missing-store/normalized-snapshot-3.c",
+      "passed": true
+    },
+    {
+      "name": "artifact modular-entry-missing-store/normalized.c",
+      "passed": true
+    },
+    {
+      "name": "artifact modular-entry-missing-store/retained-warning-headers.json",
+      "passed": true
+    },
+    {
+      "name": "artifact modular-entry-missing-store/site_input.c",
+      "passed": true
+    },
+    {
+      "name": "artifact modular-entry-missing-store/source-direct-call-contexts.json",
+      "passed": true
+    },
+    {
+      "name": "artifact modular-entry-missing-store/wp-inventory.json",
+      "passed": true
+    },
+    {
+      "name": "artifact modular-entry-missing-store/wp-properties.csv",
+      "passed": true
+    },
+    {
+      "name": "artifact modular-entry-missing-store-frama-generation.log",
+      "passed": true
+    },
+    {
+      "name": "artifact modular-entry-positive/bodyless-call-smoke-contexts.json",
+      "passed": true
+    },
+    {
+      "name": "artifact modular-entry-positive/capability-boundaries.json",
+      "passed": true
+    },
+    {
+      "name": "artifact modular-entry-positive/frama-generation.log",
+      "passed": true
+    },
+    {
+      "name": "artifact modular-entry-positive/gapbs_models.h",
+      "passed": true
+    },
+    {
+      "name": "artifact modular-entry-positive/goal-log-census.json",
+      "passed": true
+    },
+    {
+      "name": "artifact modular-entry-positive/initialization-boundaries.json",
+      "passed": true
+    },
+    {
+      "name": "artifact modular-entry-positive/normalized-direct-call-contexts.json",
+      "passed": true
+    },
+    {
+      "name": "artifact modular-entry-positive/normalized-snapshot-1.c",
+      "passed": true
+    },
+    {
+      "name": "artifact modular-entry-positive/normalized-snapshot-2.c",
+      "passed": true
+    },
+    {
+      "name": "artifact modular-entry-positive/normalized-snapshot-3.c",
+      "passed": true
+    },
+    {
+      "name": "artifact modular-entry-positive/normalized.c",
+      "passed": true
+    },
+    {
+      "name": "artifact modular-entry-positive/retained-warning-headers.json",
+      "passed": true
+    },
+    {
+      "name": "artifact modular-entry-positive/site_input.c",
+      "passed": true
+    },
+    {
+      "name": "artifact modular-entry-positive/source-direct-call-contexts.json",
+      "passed": true
+    },
+    {
+      "name": "artifact modular-entry-positive/wp-inventory.json",
+      "passed": true
+    },
+    {
+      "name": "artifact modular-entry-positive/wp-properties.csv",
+      "passed": true
+    },
+    {
+      "name": "artifact modular-entry-positive-frama-generation.log",
+      "passed": true
+    },
+    {
+      "name": "artifact package-bindings.json",
+      "passed": true
+    },
+    {
+      "name": "artifact package-frama-c-wp.core.log",
+      "passed": true
+    },
+    {
+      "name": "artifact package-frama-c.kernel.log",
+      "passed": true
+    },
+    {
+      "name": "artifact package-yojson.log",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/copy-positive/bodyless-call-smoke-contexts.json",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/copy-positive/goal-log-census.json",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/copy-positive/initialization-properties.json",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/copy-positive/normalized-direct-call-contexts.json",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/copy-positive/normalized-snapshot-1.c",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/copy-positive/normalized-snapshot-2.c",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/copy-positive/normalized-snapshot-3.c",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/copy-positive/retained-warning-headers.json",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/history-positive/bodyless-call-smoke-contexts.json",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/history-positive/goal-log-census.json",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/history-positive/initialization-properties.json",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/history-positive/normalized-direct-call-contexts.json",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/history-positive/normalized-snapshot-1.c",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/history-positive/normalized-snapshot-2.c",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/history-positive/normalized-snapshot-3.c",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/history-positive/retained-warning-headers.json",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/missing-store/bodyless-call-smoke-contexts.json",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/missing-store/goal-log-census.json",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/missing-store/initialization-properties.json",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/missing-store/normalized-direct-call-contexts.json",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/missing-store/normalized-snapshot-1.c",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/missing-store/normalized-snapshot-2.c",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/missing-store/normalized-snapshot-3.c",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/missing-store/retained-warning-headers.json",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/positive/bodyless-call-smoke-contexts.json",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/positive/goal-log-census.json",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/positive/initialization-properties.json",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/positive/normalized-direct-call-contexts.json",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/positive/normalized-snapshot-1.c",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/positive/normalized-snapshot-2.c",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/positive/normalized-snapshot-3.c",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/positive/retained-warning-headers.json",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/reentry-missing-store/bodyless-call-smoke-contexts.json",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/reentry-missing-store/goal-log-census.json",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/reentry-missing-store/initialization-properties.json",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/reentry-missing-store/normalized-direct-call-contexts.json",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/reentry-missing-store/normalized-snapshot-1.c",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/reentry-missing-store/normalized-snapshot-2.c",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/reentry-missing-store/normalized-snapshot-3.c",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/reentry-missing-store/retained-warning-headers.json",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/uninitialized-scalar/bodyless-call-smoke-contexts.json",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/uninitialized-scalar/goal-log-census.json",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/uninitialized-scalar/initialization-properties.json",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/uninitialized-scalar/normalized-direct-call-contexts.json",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/uninitialized-scalar/normalized-snapshot-1.c",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/uninitialized-scalar/normalized-snapshot-2.c",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/uninitialized-scalar/normalized-snapshot-3.c",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/uninitialized-scalar/retained-warning-headers.json",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/wrong-cell/bodyless-call-smoke-contexts.json",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/wrong-cell/goal-log-census.json",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/wrong-cell/initialization-properties.json",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/wrong-cell/normalized-direct-call-contexts.json",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/wrong-cell/normalized-snapshot-1.c",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/wrong-cell/normalized-snapshot-2.c",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/wrong-cell/normalized-snapshot-3.c",
+      "passed": true
+    },
+    {
+      "name": "artifact prefix-derived/wrong-cell/retained-warning-headers.json",
+      "passed": true
+    },
+    {
+      "name": "artifact proof_report.cmi",
+      "passed": true
+    },
+    {
+      "name": "artifact proof_report.cmx",
+      "passed": true
+    },
+    {
+      "name": "artifact proof_report.cmxs",
+      "passed": true
+    },
+    {
+      "name": "artifact proof_report.ml",
+      "passed": true
+    },
+    {
+      "name": "artifact proof_report.o",
+      "passed": true
+    },
+    {
+      "name": "artifact reentry-positive/bodyless-call-smoke-contexts.json",
+      "passed": true
+    },
+    {
+      "name": "artifact reentry-positive/capability-boundaries.json",
+      "passed": true
+    },
+    {
+      "name": "artifact reentry-positive/frama-generation.log",
+      "passed": true
+    },
+    {
+      "name": "artifact reentry-positive/gapbs_models.h",
+      "passed": true
+    },
+    {
+      "name": "artifact reentry-positive/goal-log-census.json",
+      "passed": true
+    },
+    {
+      "name": "artifact reentry-positive/initialization-boundaries.json",
+      "passed": true
+    },
+    {
+      "name": "artifact reentry-positive/normalized-direct-call-contexts.json",
+      "passed": true
+    },
+    {
+      "name": "artifact reentry-positive/normalized-snapshot-1.c",
+      "passed": true
+    },
+    {
+      "name": "artifact reentry-positive/normalized-snapshot-2.c",
+      "passed": true
+    },
+    {
+      "name": "artifact reentry-positive/normalized-snapshot-3.c",
+      "passed": true
+    },
+    {
+      "name": "artifact reentry-positive/normalized.c",
+      "passed": true
+    },
+    {
+      "name": "artifact reentry-positive/retained-warning-headers.json",
+      "passed": true
+    },
+    {
+      "name": "artifact reentry-positive/site_input.c",
+      "passed": true
+    },
+    {
+      "name": "artifact reentry-positive/source-direct-call-contexts.json",
+      "passed": true
+    },
+    {
+      "name": "artifact reentry-positive/wp-inventory.json",
+      "passed": true
+    },
+    {
+      "name": "artifact reentry-positive/wp-properties.csv",
+      "passed": true
+    },
+    {
+      "name": "artifact reentry-positive-frama-generation.log",
+      "passed": true
+    },
+    {
+      "name": "artifact report-compile.log",
+      "passed": true
+    },
+    {
+      "name": "complete new component membership",
+      "passed": true
+    },
+    {
+      "name": "source blob swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/private-array-map.json",
+      "passed": true
+    },
+    {
+      "name": "source blob swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/gapbs_models.h",
+      "passed": true
+    },
+    {
+      "name": "source blob swdb-project/swdb/proof_report.ml",
+      "passed": true
+    },
+    {
+      "name": "source blob swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/tdstep_standin.c",
+      "passed": true
+    },
+    {
+      "name": "source blob swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/bfs_unit.h",
+      "passed": true
+    },
+    {
+      "name": "source blob swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/dxc_summaries.h",
+      "passed": true
+    },
+    {
+      "name": "source blob swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/private_array_lowering.py",
+      "passed": true
+    },
+    {
+      "name": "source blob swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/outslot_lowering.py",
+      "passed": true
+    },
+    {
+      "name": "source blob swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_outslot_canonical/abi-map.json",
+      "passed": true
+    },
+    {
+      "name": "source blob swdb-project/library/dx100/bfs_read_offload.inc",
+      "passed": true
+    },
+    {
+      "name": "source blob swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/PRIVATE-ARRAY-REFINEMENT-20261016.md",
+      "passed": true
+    },
+    {
+      "name": "source blob swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/PRIVATE-ARRAY-REENTRY-20261016.md",
+      "passed": true
+    },
+    {
+      "name": "source blob swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/CANONICAL-GENERATION-20261016.md",
+      "passed": true
+    },
+    {
+      "name": "source blob swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/gapbs_models.h",
+      "passed": true
+    },
+    {
+      "name": "source blob swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/tdstep_standin.c",
+      "passed": true
+    },
+    {
+      "name": "source blob swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/bfs_unit.h",
+      "passed": true
+    },
+    {
+      "name": "source blob swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/dxc_summaries.h",
+      "passed": true
+    },
+    {
+      "name": "source blob swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_outslot_canonical/gapbs_models.h",
+      "passed": true
+    },
+    {
+      "name": "source blob swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_outslot_canonical/tdstep_standin.c",
+      "passed": true
+    },
+    {
+      "name": "source blob swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_outslot_canonical/bfs_unit.h",
+      "passed": true
+    },
+    {
+      "name": "source blob swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_outslot_canonical/dxc_summaries.h",
+      "passed": true
+    },
+    {
+      "name": "source blob swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/sites/positive.c",
+      "passed": true
+    },
+    {
+      "name": "source blob swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/sites/missing-store.c",
+      "passed": true
+    },
+    {
+      "name": "source blob swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/sites/wrong-cell.c",
+      "passed": true
+    },
+    {
+      "name": "source blob swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/sites/uninitialized-scalar.c",
+      "passed": true
+    },
+    {
+      "name": "source blob swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/sites/copy-positive.c",
+      "passed": true
+    },
+    {
+      "name": "source blob swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/sites/history-positive.c",
+      "passed": true
+    },
+    {
+      "name": "source blob swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/sites/reentry-missing-store.c",
+      "passed": true
+    },
+    {
+      "name": "source blob swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/sites/modular-entry-missing-store.c",
+      "passed": true
+    },
+    {
+      "name": "source blob swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/sites/reentry-positive.c",
+      "passed": true
+    },
+    {
+      "name": "source blob swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array_canonical/sites/modular-entry-positive.c",
+      "passed": true
+    },
+    {
+      "name": "healthy guard exit",
+      "passed": true
+    },
+    {
+      "name": "finite settlement",
+      "passed": true
+    },
+    {
+      "name": "actual three-only completion",
+      "passed": true
+    },
+    {
+      "name": "all-ten aggregate exact membership",
+      "passed": true
+    },
+    {
+      "name": "source pins positive",
+      "passed": true
+    },
+    {
+      "name": "source direct calls positive",
+      "passed": true
+    },
+    {
+      "name": "all normalized body/labels/calls positive",
+      "passed": true
+    },
+    {
+      "name": "capability warnings exactly two positive",
+      "passed": true
+    },
+    {
+      "name": "retained/derived normalized maps positive",
+      "passed": true
+    },
+    {
+      "name": "uninitialized local array in every normalized snapshot positive",
+      "passed": true
+    },
+    {
+      "name": "aggregate measured counts positive",
+      "passed": true
+    },
+    {
+      "name": "source pins missing-store",
+      "passed": true
+    },
+    {
+      "name": "source direct calls missing-store",
+      "passed": true
+    },
+    {
+      "name": "all normalized body/labels/calls missing-store",
+      "passed": true
+    },
+    {
+      "name": "capability warnings exactly two missing-store",
+      "passed": true
+    },
+    {
+      "name": "retained/derived normalized maps missing-store",
+      "passed": true
+    },
+    {
+      "name": "uninitialized local array in every normalized snapshot missing-store",
+      "passed": true
+    },
+    {
+      "name": "aggregate measured counts missing-store",
+      "passed": true
+    },
+    {
+      "name": "source pins wrong-cell",
+      "passed": true
+    },
+    {
+      "name": "source direct calls wrong-cell",
+      "passed": true
+    },
+    {
+      "name": "all normalized body/labels/calls wrong-cell",
+      "passed": true
+    },
+    {
+      "name": "capability warnings exactly two wrong-cell",
+      "passed": true
+    },
+    {
+      "name": "retained/derived normalized maps wrong-cell",
+      "passed": true
+    },
+    {
+      "name": "uninitialized local array in every normalized snapshot wrong-cell",
+      "passed": true
+    },
+    {
+      "name": "aggregate measured counts wrong-cell",
+      "passed": true
+    },
+    {
+      "name": "source pins uninitialized-scalar",
+      "passed": true
+    },
+    {
+      "name": "source direct calls uninitialized-scalar",
+      "passed": true
+    },
+    {
+      "name": "all normalized body/labels/calls uninitialized-scalar",
+      "passed": true
+    },
+    {
+      "name": "capability warnings exactly two uninitialized-scalar",
+      "passed": true
+    },
+    {
+      "name": "retained/derived normalized maps uninitialized-scalar",
+      "passed": true
+    },
+    {
+      "name": "uninitialized local array in every normalized snapshot uninitialized-scalar",
+      "passed": true
+    },
+    {
+      "name": "aggregate measured counts uninitialized-scalar",
+      "passed": true
+    },
+    {
+      "name": "source pins copy-positive",
+      "passed": true
+    },
+    {
+      "name": "source direct calls copy-positive",
+      "passed": true
+    },
+    {
+      "name": "all normalized body/labels/calls copy-positive",
+      "passed": true
+    },
+    {
+      "name": "capability warnings exactly two copy-positive",
+      "passed": true
+    },
+    {
+      "name": "retained/derived normalized maps copy-positive",
+      "passed": true
+    },
+    {
+      "name": "uninitialized local array in every normalized snapshot copy-positive",
+      "passed": true
+    },
+    {
+      "name": "aggregate measured counts copy-positive",
+      "passed": true
+    },
+    {
+      "name": "source pins history-positive",
+      "passed": true
+    },
+    {
+      "name": "source direct calls history-positive",
+      "passed": true
+    },
+    {
+      "name": "all normalized body/labels/calls history-positive",
+      "passed": true
+    },
+    {
+      "name": "capability warnings exactly two history-positive",
+      "passed": true
+    },
+    {
+      "name": "retained/derived normalized maps history-positive",
+      "passed": true
+    },
+    {
+      "name": "uninitialized local array in every normalized snapshot history-positive",
+      "passed": true
+    },
+    {
+      "name": "aggregate measured counts history-positive",
+      "passed": true
+    },
+    {
+      "name": "source pins reentry-missing-store",
+      "passed": true
+    },
+    {
+      "name": "source direct calls reentry-missing-store",
+      "passed": true
+    },
+    {
+      "name": "all normalized body/labels/calls reentry-missing-store",
+      "passed": true
+    },
+    {
+      "name": "capability warnings exactly two reentry-missing-store",
+      "passed": true
+    },
+    {
+      "name": "retained/derived normalized maps reentry-missing-store",
+      "passed": true
+    },
+    {
+      "name": "uninitialized local array in every normalized snapshot reentry-missing-store",
+      "passed": true
+    },
+    {
+      "name": "aggregate measured counts reentry-missing-store",
+      "passed": true
+    },
+    {
+      "name": "source pins modular-entry-missing-store",
+      "passed": true
+    },
+    {
+      "name": "source direct calls modular-entry-missing-store",
+      "passed": true
+    },
+    {
+      "name": "all normalized body/labels/calls modular-entry-missing-store",
+      "passed": true
+    },
+    {
+      "name": "capability warnings exactly two modular-entry-missing-store",
+      "passed": true
+    },
+    {
+      "name": "retained/derived normalized maps modular-entry-missing-store",
+      "passed": true
+    },
+    {
+      "name": "uninitialized local array in every normalized snapshot modular-entry-missing-store",
+      "passed": true
+    },
+    {
+      "name": "aggregate measured counts modular-entry-missing-store",
+      "passed": true
+    },
+    {
+      "name": "source pins reentry-positive",
+      "passed": true
+    },
+    {
+      "name": "source direct calls reentry-positive",
+      "passed": true
+    },
+    {
+      "name": "all normalized body/labels/calls reentry-positive",
+      "passed": true
+    },
+    {
+      "name": "capability warnings exactly two reentry-positive",
+      "passed": true
+    },
+    {
+      "name": "retained/derived normalized maps reentry-positive",
+      "passed": true
+    },
+    {
+      "name": "uninitialized local array in every normalized snapshot reentry-positive",
+      "passed": true
+    },
+    {
+      "name": "aggregate measured counts reentry-positive",
+      "passed": true
+    },
+    {
+      "name": "source pins modular-entry-positive",
+      "passed": true
+    },
+    {
+      "name": "source direct calls modular-entry-positive",
+      "passed": true
+    },
+    {
+      "name": "all normalized body/labels/calls modular-entry-positive",
+      "passed": true
+    },
+    {
+      "name": "capability warnings exactly two modular-entry-positive",
+      "passed": true
+    },
+    {
+      "name": "retained/derived normalized maps modular-entry-positive",
+      "passed": true
+    },
+    {
+      "name": "uninitialized local array in every normalized snapshot modular-entry-positive",
+      "passed": true
+    },
+    {
+      "name": "aggregate measured counts modular-entry-positive",
+      "passed": true
+    },
+    {
+      "name": "aggregate measured total",
+      "passed": true
+    }
+  ],
+  "new_guard": {
+    "cmd": [
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+      "/private/tmp/probata-t07-private-array-continuation-entry-v4-20261016.py",
+      "--expected",
+      "/private/tmp/probata-t07-private-array-continuation-expected-v4-20261016.json",
+      "--output",
+      "/private/tmp/probata-t07-private-array-continuation-v4-b9b96fb8-20261016/component"
+    ],
+    "exit_code": 0,
+    "wall_s": 3.0260902083828114,
+    "peak_rss_mb": 175.109375,
+    "cap_gb": 8.0,
+    "killed_by_watchdog": false,
+    "timed_out": false,
+    "queue_timed_out": false,
+    "timeout_s": 120.0,
+    "queue_timeout_s": 30.0,
+    "lock_wait_s": 0.00026679167058318853,
+    "runner_pid": 5242,
+    "clock": "continuous_monotonic",
+    "clock_info": {
+      "kind": "continuous_monotonic",
+      "implementation": "mach_continuous_time",
+      "includes_sleep": true,
+      "numer": 125,
+      "denom": 3
+    },
+    "log": "/private/tmp/probata-t07-private-array-continuation-v4-b9b96fb8-20261016/guard.log",
+    "inspection_events": [],
+    "inspection_failure": null,
+    "primary_inspection_failure": null,
+    "cleanup_inspection_failure": null,
+    "cleanup_inspection_failures": [],
+    "inspection_retry_boundary": "AccessDenied uses a 200 ms environ retry admission window and 21-attempt cap, or three attempts for other operations; only the exact proc_environ SystemError raised by the requested environ operation shares that policy; individual OS calls are not forcibly timed; all pauses count and RSS/deadline checks remain mandatory after inspection; only independently confirmed gone/zombie or changed birth is skipped; persistent live or unknown failure fails closed",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "unconfirmed_children": [],
+    "error": null,
+    "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment",
+    "rss_scope": "live union of current ancestry, retained PID/birth identities and periodic inherited-marker matches; sampled, not a kernel quota",
+    "finished": "2026-10-16 03:45:54 EDT"
+  },
+  "settlement": {
+    "path": "/private/tmp/probata-t07-private-array-continuation-root-settlement-v4-20261016.json",
+    "sha256": "dda42697b97809b91db9cf0fffbdf8f095913fa488eceab85c097b5d9232d8ce",
+    "finite_empty_observations": 3
+  },
+  "prior_raw_files_checked": 224,
+  "prior_physical_pins_checked": 231,
+  "source_blobs_checked": 31,
+  "new_artifact_count": 216,
+  "new_artifact_manifest_sha256": "a51cd51a71cbe697d0215f763e295aa1dcde40823d296cc7a33e19968c0e076b",
+  "new_result_sha256": "fe10bb142f27a2d73cb62d7f2e8938e5e04e7381681dd570ea4b4a8d29483731",
+  "aggregate_sha256": "7e7b6c8a094a7f2c7dc65e6fdf34b32ba0c84150a018b911b16f5d1738b33063",
+  "cases": [
+    {
+      "case": "positive",
+      "origin": "retained_V2",
+      "goals": 327,
+      "properties": 454,
+      "ordinary": 284,
+      "smoke": 43,
+      "RTE_initialization_properties": 38,
+      "root_RTE_initialization_properties": 2,
+      "helper_body_count": 20,
+      "root_body_count": 1,
+      "bodyless_contexts": 3,
+      "normalized_snapshots": 3,
+      "inventory_only_implicit_trivial": 30,
+      "raw_smoke_passed_false": 0,
+      "raw_smoke_with_valid_result": 0,
+      "native_report_present": false,
+      "inventory_path": "/private/tmp/probata-t07-private-array-generation-v2-b9b96fb8-20261016/component/positive/wp-inventory.json",
+      "inventory_sha256": "cca06dad6e479d03e99368b7c5d3338281bcb280e82605e528f4720e0b3c44ff",
+      "normalized_sha256": "2b34a0f3940c09b4a23f462510760bd79b07b1f38f94e4051296cc6a09f3ccec"
+    },
+    {
+      "case": "missing-store",
+      "origin": "retained_V2",
+      "goals": 318,
+      "properties": 447,
+      "ordinary": 277,
+      "smoke": 41,
+      "RTE_initialization_properties": 38,
+      "root_RTE_initialization_properties": 2,
+      "helper_body_count": 20,
+      "root_body_count": 1,
+      "bodyless_contexts": 3,
+      "normalized_snapshots": 3,
+      "inventory_only_implicit_trivial": 30,
+      "raw_smoke_passed_false": 0,
+      "raw_smoke_with_valid_result": 0,
+      "native_report_present": false,
+      "inventory_path": "/private/tmp/probata-t07-private-array-generation-v2-b9b96fb8-20261016/component/missing-store/wp-inventory.json",
+      "inventory_sha256": "94cf695a8207ed3154442deb6a0677aacfa67891892200b9d6082e705413cabe",
+      "normalized_sha256": "8b644ada8fdf3fe0032a826450acd06267d370c87057907c8ad7af4cacfc6463"
+    },
+    {
+      "case": "wrong-cell",
+      "origin": "retained_V2",
+      "goals": 326,
+      "properties": 453,
+      "ordinary": 283,
+      "smoke": 43,
+      "RTE_initialization_properties": 38,
+      "root_RTE_initialization_properties": 2,
+      "helper_body_count": 20,
+      "root_body_count": 1,
+      "bodyless_contexts": 3,
+      "normalized_snapshots": 3,
+      "inventory_only_implicit_trivial": 30,
+      "raw_smoke_passed_false": 0,
+      "raw_smoke_with_valid_result": 0,
+      "native_report_present": false,
+      "inventory_path": "/private/tmp/probata-t07-private-array-generation-v2-b9b96fb8-20261016/component/wrong-cell/wp-inventory.json",
+      "inventory_sha256": "f90545799224e9c7af6d67e18db18f16a4caa5bd0a7fd08b0469f02a5c3dfefc",
+      "normalized_sha256": "31fb86a6d41327e5bb501f4ddc7226c5c2a25fd5e16e57da50cdd5567fbe9b17"
+    },
+    {
+      "case": "uninitialized-scalar",
+      "origin": "retained_V2",
+      "goals": 316,
+      "properties": 445,
+      "ordinary": 275,
+      "smoke": 41,
+      "RTE_initialization_properties": 37,
+      "root_RTE_initialization_properties": 1,
+      "helper_body_count": 20,
+      "root_body_count": 1,
+      "bodyless_contexts": 3,
+      "normalized_snapshots": 3,
+      "inventory_only_implicit_trivial": 30,
+      "raw_smoke_passed_false": 0,
+      "raw_smoke_with_valid_result": 0,
+      "native_report_present": false,
+      "inventory_path": "/private/tmp/probata-t07-private-array-generation-v2-b9b96fb8-20261016/component/uninitialized-scalar/wp-inventory.json",
+      "inventory_sha256": "021eaae23e5e1dba77f436acffe40da921fdc9ca2aa6d7385cc2e4ac9fa8802f",
+      "normalized_sha256": "b34730179ed09d6b737c1b763a42d8115effed95fc2de3ed193bb3a70a48fff0"
+    },
+    {
+      "case": "copy-positive",
+      "origin": "retained_V2",
+      "goals": 339,
+      "properties": 465,
+      "ordinary": 294,
+      "smoke": 45,
+      "RTE_initialization_properties": 40,
+      "root_RTE_initialization_properties": 4,
+      "helper_body_count": 20,
+      "root_body_count": 1,
+      "bodyless_contexts": 3,
+      "normalized_snapshots": 3,
+      "inventory_only_implicit_trivial": 30,
+      "raw_smoke_passed_false": 0,
+      "raw_smoke_with_valid_result": 0,
+      "native_report_present": false,
+      "inventory_path": "/private/tmp/probata-t07-private-array-generation-v2-b9b96fb8-20261016/component/copy-positive/wp-inventory.json",
+      "inventory_sha256": "95926ce3936ab5f4acede3791bd3f70218841d0c6ef11128dab71390c155a6c1",
+      "normalized_sha256": "2db4bc9d460c848980c51e537c2409dd4c543dc76751a82f48b3ea81d6f5dbba"
+    },
+    {
+      "case": "history-positive",
+      "origin": "retained_V2",
+      "goals": 335,
+      "properties": 461,
+      "ordinary": 290,
+      "smoke": 45,
+      "RTE_initialization_properties": 38,
+      "root_RTE_initialization_properties": 2,
+      "helper_body_count": 20,
+      "root_body_count": 1,
+      "bodyless_contexts": 3,
+      "normalized_snapshots": 3,
+      "inventory_only_implicit_trivial": 30,
+      "raw_smoke_passed_false": 0,
+      "raw_smoke_with_valid_result": 0,
+      "native_report_present": false,
+      "inventory_path": "/private/tmp/probata-t07-private-array-generation-v2-b9b96fb8-20261016/component/history-positive/wp-inventory.json",
+      "inventory_sha256": "ebded03492f7e9a0fc800f851136f28ecdab48a071c6c819432e90c1f6452b20",
+      "normalized_sha256": "aef68545b2aa250855be802c36f98e871a2d4932ef36e44b9c2508ea4e0625e6"
+    },
+    {
+      "case": "reentry-missing-store",
+      "origin": "retained_V2",
+      "goals": 331,
+      "properties": 459,
+      "ordinary": 285,
+      "smoke": 46,
+      "RTE_initialization_properties": 41,
+      "root_RTE_initialization_properties": 5,
+      "helper_body_count": 20,
+      "root_body_count": 1,
+      "bodyless_contexts": 3,
+      "normalized_snapshots": 3,
+      "inventory_only_implicit_trivial": 30,
+      "raw_smoke_passed_false": 0,
+      "raw_smoke_with_valid_result": 0,
+      "native_report_present": false,
+      "inventory_path": "/private/tmp/probata-t07-private-array-generation-v2-b9b96fb8-20261016/component/reentry-missing-store/wp-inventory.json",
+      "inventory_sha256": "a6be72544e891fdc1b5f64fe56478ff16c335615c45931280d2bbb2d9c64af65",
+      "normalized_sha256": "63184a68a9745cdd48277e7b0d399bacf7654ef820f133b80ddc502ff404b479"
+    },
+    {
+      "case": "modular-entry-missing-store",
+      "origin": "new_V4",
+      "goals": 341,
+      "properties": 468,
+      "ordinary": 294,
+      "smoke": 47,
+      "RTE_initialization_properties": 38,
+      "root_RTE_initialization_properties": 2,
+      "helper_body_count": 20,
+      "root_body_count": 2,
+      "bodyless_contexts": 3,
+      "normalized_snapshots": 3,
+      "inventory_only_implicit_trivial": 30,
+      "raw_smoke_passed_false": 0,
+      "raw_smoke_with_valid_result": 0,
+      "native_report_present": false,
+      "inventory_path": "/private/tmp/probata-t07-private-array-continuation-v4-b9b96fb8-20261016/component/modular-entry-missing-store/wp-inventory.json",
+      "inventory_sha256": "6422f7974c1d80aebcf7f7c32d9ac2e9a8015bc5de25d0fc9802858b6787a428",
+      "normalized_sha256": "d5db89ce0b8b3415d0221f27492a5649bf135d94b86bb7aae711210fcc147a89"
+    },
+    {
+      "case": "reentry-positive",
+      "origin": "new_V4",
+      "goals": 331,
+      "properties": 459,
+      "ordinary": 285,
+      "smoke": 46,
+      "RTE_initialization_properties": 40,
+      "root_RTE_initialization_properties": 4,
+      "helper_body_count": 20,
+      "root_body_count": 1,
+      "bodyless_contexts": 3,
+      "normalized_snapshots": 3,
+      "inventory_only_implicit_trivial": 30,
+      "raw_smoke_passed_false": 0,
+      "raw_smoke_with_valid_result": 0,
+      "native_report_present": false,
+      "inventory_path": "/private/tmp/probata-t07-private-array-continuation-v4-b9b96fb8-20261016/component/reentry-positive/wp-inventory.json",
+      "inventory_sha256": "f818c9af4779006dc48292ed6f34066f068ce79365a8d4d86dd47ae5bd1af5ab",
+      "normalized_sha256": "cbbdd138fa74db902b4a741415ab18fe41513ceb01e1d6bc73d0658845d60ba6"
+    },
+    {
+      "case": "modular-entry-positive",
+      "origin": "new_V4",
+      "goals": 342,
+      "properties": 469,
+      "ordinary": 295,
+      "smoke": 47,
+      "RTE_initialization_properties": 38,
+      "root_RTE_initialization_properties": 2,
+      "helper_body_count": 20,
+      "root_body_count": 2,
+      "bodyless_contexts": 3,
+      "normalized_snapshots": 3,
+      "inventory_only_implicit_trivial": 30,
+      "raw_smoke_passed_false": 0,
+      "raw_smoke_with_valid_result": 0,
+      "native_report_present": false,
+      "inventory_path": "/private/tmp/probata-t07-private-array-continuation-v4-b9b96fb8-20261016/component/modular-entry-positive/wp-inventory.json",
+      "inventory_sha256": "06738e08b43cd6eaab45f34cdb3f0ba0f86d37dcfc2a476181291bfb4bdf9b11",
+      "normalized_sha256": "77b26b682dc106a797d3b6a64df5b1846fd4ed3b035f4670fa0f38464c7b9a51"
+    }
+  ],
+  "total_goals": 3306,
+  "total_properties": 4580,
+  "total_ordinary": 2862,
+  "total_smoke": 444,
+  "initialization_properties": [
+    {
+      "case": "positive",
+      "property": {
+        "property": "swdb_allocation_site_assert_rte_initialization_2",
+        "function": "swdb_allocation_site",
+        "kind": "other",
+        "emitter": "rte",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 13,
+        "description": "assert rte: initialization: \\initialized(buffer.local_queue + 0);"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_allocation_site_assert_rte_initialization_2",
+          "property": "swdb_allocation_site_assert_rte_initialization_2",
+          "function": "swdb_allocation_site",
+          "line": 13,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ],
+      "source_anchor_matches": [
+        {
+          "function": "swdb_allocation_site",
+          "line": 13,
+          "source_file": "site_input.c",
+          "text": "*out = buffer.local_queue[0];",
+          "line_sha256": "92f2a5ac9cea9d8dee734dce4e3102319dc406bc40fff6b460c9e4783ef59608"
+        }
+      ]
+    },
+    {
+      "case": "positive",
+      "property": {
+        "property": "swdb_allocation_site_assert_rte_initialization",
+        "function": "swdb_allocation_site",
+        "kind": "other",
+        "emitter": "rte",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 13,
+        "description": "assert rte: initialization: \\initialized(&buffer.local_queue);"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_allocation_site_assert_rte_initialization",
+          "property": "swdb_allocation_site_assert_rte_initialization",
+          "function": "swdb_allocation_site",
+          "line": 13,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ],
+      "source_anchor_matches": [
+        {
+          "function": "swdb_allocation_site",
+          "line": 13,
+          "source_file": "site_input.c",
+          "text": "*out = buffer.local_queue[0];",
+          "line_sha256": "92f2a5ac9cea9d8dee734dce4e3102319dc406bc40fff6b460c9e4783ef59608"
+        }
+      ]
+    },
+    {
+      "case": "missing-store",
+      "property": {
+        "property": "swdb_allocation_site_assert_rte_initialization_2",
+        "function": "swdb_allocation_site",
+        "kind": "other",
+        "emitter": "rte",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 11,
+        "description": "assert rte: initialization: \\initialized(buffer.local_queue + 0);"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_allocation_site_assert_rte_initialization_2",
+          "property": "swdb_allocation_site_assert_rte_initialization_2",
+          "function": "swdb_allocation_site",
+          "line": 11,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ],
+      "source_anchor_matches": [
+        {
+          "function": "swdb_allocation_site",
+          "line": 11,
+          "source_file": "site_input.c",
+          "text": "*out = buffer.local_queue[0];",
+          "line_sha256": "92f2a5ac9cea9d8dee734dce4e3102319dc406bc40fff6b460c9e4783ef59608"
+        }
+      ]
+    },
+    {
+      "case": "missing-store",
+      "property": {
+        "property": "swdb_allocation_site_assert_rte_initialization",
+        "function": "swdb_allocation_site",
+        "kind": "other",
+        "emitter": "rte",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 11,
+        "description": "assert rte: initialization: \\initialized(&buffer.local_queue);"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_allocation_site_assert_rte_initialization",
+          "property": "swdb_allocation_site_assert_rte_initialization",
+          "function": "swdb_allocation_site",
+          "line": 11,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ],
+      "source_anchor_matches": [
+        {
+          "function": "swdb_allocation_site",
+          "line": 11,
+          "source_file": "site_input.c",
+          "text": "*out = buffer.local_queue[0];",
+          "line_sha256": "92f2a5ac9cea9d8dee734dce4e3102319dc406bc40fff6b460c9e4783ef59608"
+        }
+      ]
+    },
+    {
+      "case": "wrong-cell",
+      "property": {
+        "property": "swdb_allocation_site_assert_rte_initialization_2",
+        "function": "swdb_allocation_site",
+        "kind": "other",
+        "emitter": "rte",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 12,
+        "description": "assert rte: initialization: \\initialized(buffer.local_queue + 1);"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_allocation_site_assert_rte_initialization_2",
+          "property": "swdb_allocation_site_assert_rte_initialization_2",
+          "function": "swdb_allocation_site",
+          "line": 12,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ],
+      "source_anchor_matches": [
+        {
+          "function": "swdb_allocation_site",
+          "line": 12,
+          "source_file": "site_input.c",
+          "text": "*out = buffer.local_queue[1];",
+          "line_sha256": "9174ca7c576532f19a83ff07af93f77ab36235406130c6d1adc9ecae49dce221"
+        }
+      ]
+    },
+    {
+      "case": "wrong-cell",
+      "property": {
+        "property": "swdb_allocation_site_assert_rte_initialization",
+        "function": "swdb_allocation_site",
+        "kind": "other",
+        "emitter": "rte",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 12,
+        "description": "assert rte: initialization: \\initialized(&buffer.local_queue);"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_allocation_site_assert_rte_initialization",
+          "property": "swdb_allocation_site_assert_rte_initialization",
+          "function": "swdb_allocation_site",
+          "line": 12,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ],
+      "source_anchor_matches": [
+        {
+          "function": "swdb_allocation_site",
+          "line": 12,
+          "source_file": "site_input.c",
+          "text": "*out = buffer.local_queue[1];",
+          "line_sha256": "9174ca7c576532f19a83ff07af93f77ab36235406130c6d1adc9ecae49dce221"
+        }
+      ]
+    },
+    {
+      "case": "uninitialized-scalar",
+      "property": {
+        "property": "swdb_allocation_site_assert_rte_initialization",
+        "function": "swdb_allocation_site",
+        "kind": "other",
+        "emitter": "rte",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 12,
+        "description": "assert rte: initialization: \\initialized(&uninitialized);"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_allocation_site_assert_rte_initialization",
+          "property": "swdb_allocation_site_assert_rte_initialization",
+          "function": "swdb_allocation_site",
+          "line": 12,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ],
+      "source_anchor_matches": [
+        {
+          "function": "swdb_allocation_site",
+          "line": 12,
+          "source_file": "site_input.c",
+          "text": "*out = uninitialized;",
+          "line_sha256": "222d27fee6365b990e9216535191af79ec8f87521155efe2be056e86aa8ee15b"
+        }
+      ]
+    },
+    {
+      "case": "copy-positive",
+      "property": {
+        "property": "swdb_allocation_site_assert_rte_initialization_4",
+        "function": "swdb_allocation_site",
+        "kind": "other",
+        "emitter": "rte",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 16,
+        "description": "assert rte: initialization: \\initialized(queue->shared + prior);"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_allocation_site_assert_rte_initialization_4",
+          "property": "swdb_allocation_site_assert_rte_initialization_4",
+          "function": "swdb_allocation_site",
+          "line": 16,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ],
+      "source_anchor_matches": [
+        {
+          "function": "swdb_allocation_site",
+          "line": 16,
+          "source_file": "site_input.c",
+          "text": "*out = queue->shared[prior];",
+          "line_sha256": "7a7b46a3fc067da484011b1fe872a1cb91e2698d407f3345f4e56c5e5a1c3303"
+        }
+      ]
+    },
+    {
+      "case": "copy-positive",
+      "property": {
+        "property": "swdb_allocation_site_assert_rte_initialization_2",
+        "function": "swdb_allocation_site",
+        "kind": "other",
+        "emitter": "rte",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 16,
+        "description": "assert rte: initialization: \\initialized(&queue->shared);"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_allocation_site_assert_rte_initialization_2",
+          "property": "swdb_allocation_site_assert_rte_initialization_2",
+          "function": "swdb_allocation_site",
+          "line": 16,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ],
+      "source_anchor_matches": [
+        {
+          "function": "swdb_allocation_site",
+          "line": 16,
+          "source_file": "site_input.c",
+          "text": "*out = queue->shared[prior];",
+          "line_sha256": "7a7b46a3fc067da484011b1fe872a1cb91e2698d407f3345f4e56c5e5a1c3303"
+        }
+      ]
+    },
+    {
+      "case": "copy-positive",
+      "property": {
+        "property": "swdb_allocation_site_assert_rte_initialization_3",
+        "function": "swdb_allocation_site",
+        "kind": "other",
+        "emitter": "rte",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 16,
+        "description": "assert rte: initialization: \\initialized(&prior);"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_allocation_site_assert_rte_initialization_3",
+          "property": "swdb_allocation_site_assert_rte_initialization_3",
+          "function": "swdb_allocation_site",
+          "line": 16,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ],
+      "source_anchor_matches": [
+        {
+          "function": "swdb_allocation_site",
+          "line": 16,
+          "source_file": "site_input.c",
+          "text": "*out = queue->shared[prior];",
+          "line_sha256": "7a7b46a3fc067da484011b1fe872a1cb91e2698d407f3345f4e56c5e5a1c3303"
+        }
+      ]
+    },
+    {
+      "case": "copy-positive",
+      "property": {
+        "property": "swdb_allocation_site_assert_rte_initialization",
+        "function": "swdb_allocation_site",
+        "kind": "other",
+        "emitter": "rte",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 13,
+        "description": "assert rte: initialization: \\initialized(&queue->shared_in);"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_allocation_site_assert_rte_initialization",
+          "property": "swdb_allocation_site_assert_rte_initialization",
+          "function": "swdb_allocation_site",
+          "line": 13,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ],
+      "source_anchor_matches": []
+    },
+    {
+      "case": "history-positive",
+      "property": {
+        "property": "swdb_allocation_site_assert_rte_initialization_2",
+        "function": "swdb_allocation_site",
+        "kind": "other",
+        "emitter": "rte",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 15,
+        "description": "assert rte: initialization: \\initialized(buffer.local_queue + 0);"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_allocation_site_assert_rte_initialization_2",
+          "property": "swdb_allocation_site_assert_rte_initialization_2",
+          "function": "swdb_allocation_site",
+          "line": 15,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ],
+      "source_anchor_matches": [
+        {
+          "function": "swdb_allocation_site",
+          "line": 15,
+          "source_file": "site_input.c",
+          "text": "*out = buffer.local_queue[0];",
+          "line_sha256": "92f2a5ac9cea9d8dee734dce4e3102319dc406bc40fff6b460c9e4783ef59608"
+        }
+      ]
+    },
+    {
+      "case": "history-positive",
+      "property": {
+        "property": "swdb_allocation_site_assert_rte_initialization",
+        "function": "swdb_allocation_site",
+        "kind": "other",
+        "emitter": "rte",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 15,
+        "description": "assert rte: initialization: \\initialized(&buffer.local_queue);"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_allocation_site_assert_rte_initialization",
+          "property": "swdb_allocation_site_assert_rte_initialization",
+          "function": "swdb_allocation_site",
+          "line": 15,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ],
+      "source_anchor_matches": [
+        {
+          "function": "swdb_allocation_site",
+          "line": 15,
+          "source_file": "site_input.c",
+          "text": "*out = buffer.local_queue[0];",
+          "line_sha256": "92f2a5ac9cea9d8dee734dce4e3102319dc406bc40fff6b460c9e4783ef59608"
+        }
+      ]
+    },
+    {
+      "case": "reentry-missing-store",
+      "property": {
+        "property": "swdb_allocation_site_assert_rte_initialization_5",
+        "function": "swdb_allocation_site",
+        "kind": "other",
+        "emitter": "rte",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 8,
+        "description": "assert rte: initialization: \\initialized(&lifetime);"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_allocation_site_assert_rte_initialization_5",
+          "property": "swdb_allocation_site_assert_rte_initialization_5",
+          "function": "swdb_allocation_site",
+          "line": 8,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ],
+      "source_anchor_matches": []
+    },
+    {
+      "case": "reentry-missing-store",
+      "property": {
+        "property": "swdb_allocation_site_assert_rte_initialization_3",
+        "function": "swdb_allocation_site",
+        "kind": "other",
+        "emitter": "rte",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 13,
+        "description": "assert rte: initialization: \\initialized(&buffer.local_queue);"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_allocation_site_assert_rte_initialization_3",
+          "property": "swdb_allocation_site_assert_rte_initialization_3",
+          "function": "swdb_allocation_site",
+          "line": 13,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ],
+      "source_anchor_matches": [
+        {
+          "function": "swdb_allocation_site",
+          "line": 13,
+          "source_file": "site_input.c",
+          "text": "*out = buffer.local_queue[0];",
+          "line_sha256": "d9147042771a8f768e460b012383d131b6f767a1232f45745e5b63c7b75e8dd6"
+        }
+      ]
+    },
+    {
+      "case": "reentry-missing-store",
+      "property": {
+        "property": "swdb_allocation_site_assert_rte_initialization_4",
+        "function": "swdb_allocation_site",
+        "kind": "other",
+        "emitter": "rte",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 13,
+        "description": "assert rte: initialization: \\initialized(buffer.local_queue + 0);"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_allocation_site_assert_rte_initialization_4",
+          "property": "swdb_allocation_site_assert_rte_initialization_4",
+          "function": "swdb_allocation_site",
+          "line": 13,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ],
+      "source_anchor_matches": [
+        {
+          "function": "swdb_allocation_site",
+          "line": 13,
+          "source_file": "site_input.c",
+          "text": "*out = buffer.local_queue[0];",
+          "line_sha256": "d9147042771a8f768e460b012383d131b6f767a1232f45745e5b63c7b75e8dd6"
+        }
+      ]
+    },
+    {
+      "case": "reentry-missing-store",
+      "property": {
+        "property": "swdb_allocation_site_assert_rte_initialization_2",
+        "function": "swdb_allocation_site",
+        "kind": "other",
+        "emitter": "rte",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 12,
+        "description": "assert rte: initialization: \\initialized(&lifetime);"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_allocation_site_assert_rte_initialization_2",
+          "property": "swdb_allocation_site_assert_rte_initialization_2",
+          "function": "swdb_allocation_site",
+          "line": 12,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ],
+      "source_anchor_matches": []
+    },
+    {
+      "case": "reentry-missing-store",
+      "property": {
+        "property": "swdb_allocation_site_assert_rte_initialization",
+        "function": "swdb_allocation_site",
+        "kind": "other",
+        "emitter": "rte",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 8,
+        "description": "assert rte: initialization: \\initialized(&lifetime);"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_allocation_site_assert_rte_initialization",
+          "property": "swdb_allocation_site_assert_rte_initialization",
+          "function": "swdb_allocation_site",
+          "line": 8,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ],
+      "source_anchor_matches": []
+    },
+    {
+      "case": "modular-entry-missing-store",
+      "property": {
+        "property": "swdb_lifetime_entry_assert_rte_initialization",
+        "function": "swdb_lifetime_entry",
+        "kind": "other",
+        "emitter": "rte",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 13,
+        "description": "assert rte: initialization: \\initialized(&buffer.local_queue);"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_lifetime_entry_assert_rte_initialization",
+          "property": "swdb_lifetime_entry_assert_rte_initialization",
+          "function": "swdb_lifetime_entry",
+          "line": 13,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ],
+      "source_anchor_matches": [
+        {
+          "function": "swdb_lifetime_entry",
+          "line": 13,
+          "source_file": "site_input.c",
+          "text": "*out = buffer.local_queue[0];",
+          "line_sha256": "92f2a5ac9cea9d8dee734dce4e3102319dc406bc40fff6b460c9e4783ef59608"
+        }
+      ]
+    },
+    {
+      "case": "modular-entry-missing-store",
+      "property": {
+        "property": "swdb_lifetime_entry_assert_rte_initialization_2",
+        "function": "swdb_lifetime_entry",
+        "kind": "other",
+        "emitter": "rte",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 13,
+        "description": "assert rte: initialization: \\initialized(buffer.local_queue + 0);"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_lifetime_entry_assert_rte_initialization_2",
+          "property": "swdb_lifetime_entry_assert_rte_initialization_2",
+          "function": "swdb_lifetime_entry",
+          "line": 13,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ],
+      "source_anchor_matches": [
+        {
+          "function": "swdb_lifetime_entry",
+          "line": 13,
+          "source_file": "site_input.c",
+          "text": "*out = buffer.local_queue[0];",
+          "line_sha256": "92f2a5ac9cea9d8dee734dce4e3102319dc406bc40fff6b460c9e4783ef59608"
+        }
+      ]
+    },
+    {
+      "case": "reentry-positive",
+      "property": {
+        "property": "swdb_allocation_site_assert_rte_initialization_2",
+        "function": "swdb_allocation_site",
+        "kind": "other",
+        "emitter": "rte",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 14,
+        "description": "assert rte: initialization: \\initialized(&buffer.local_queue);"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_allocation_site_assert_rte_initialization_2",
+          "property": "swdb_allocation_site_assert_rte_initialization_2",
+          "function": "swdb_allocation_site",
+          "line": 14,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ],
+      "source_anchor_matches": [
+        {
+          "function": "swdb_allocation_site",
+          "line": 14,
+          "source_file": "site_input.c",
+          "text": "*out = buffer.local_queue[0];",
+          "line_sha256": "d9147042771a8f768e460b012383d131b6f767a1232f45745e5b63c7b75e8dd6"
+        }
+      ]
+    },
+    {
+      "case": "reentry-positive",
+      "property": {
+        "property": "swdb_allocation_site_assert_rte_initialization_3",
+        "function": "swdb_allocation_site",
+        "kind": "other",
+        "emitter": "rte",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 14,
+        "description": "assert rte: initialization: \\initialized(buffer.local_queue + 0);"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_allocation_site_assert_rte_initialization_3",
+          "property": "swdb_allocation_site_assert_rte_initialization_3",
+          "function": "swdb_allocation_site",
+          "line": 14,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ],
+      "source_anchor_matches": [
+        {
+          "function": "swdb_allocation_site",
+          "line": 14,
+          "source_file": "site_input.c",
+          "text": "*out = buffer.local_queue[0];",
+          "line_sha256": "d9147042771a8f768e460b012383d131b6f767a1232f45745e5b63c7b75e8dd6"
+        }
+      ]
+    },
+    {
+      "case": "reentry-positive",
+      "property": {
+        "property": "swdb_allocation_site_assert_rte_initialization_4",
+        "function": "swdb_allocation_site",
+        "kind": "other",
+        "emitter": "rte",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 9,
+        "description": "assert rte: initialization: \\initialized(&lifetime);"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_allocation_site_assert_rte_initialization_4",
+          "property": "swdb_allocation_site_assert_rte_initialization_4",
+          "function": "swdb_allocation_site",
+          "line": 9,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ],
+      "source_anchor_matches": []
+    },
+    {
+      "case": "reentry-positive",
+      "property": {
+        "property": "swdb_allocation_site_assert_rte_initialization",
+        "function": "swdb_allocation_site",
+        "kind": "other",
+        "emitter": "rte",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 9,
+        "description": "assert rte: initialization: \\initialized(&lifetime);"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_allocation_site_assert_rte_initialization",
+          "property": "swdb_allocation_site_assert_rte_initialization",
+          "function": "swdb_allocation_site",
+          "line": 9,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ],
+      "source_anchor_matches": []
+    },
+    {
+      "case": "modular-entry-positive",
+      "property": {
+        "property": "swdb_lifetime_entry_assert_rte_initialization",
+        "function": "swdb_lifetime_entry",
+        "kind": "other",
+        "emitter": "rte",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 13,
+        "description": "assert rte: initialization: \\initialized(&buffer.local_queue);"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_lifetime_entry_assert_rte_initialization",
+          "property": "swdb_lifetime_entry_assert_rte_initialization",
+          "function": "swdb_lifetime_entry",
+          "line": 13,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ],
+      "source_anchor_matches": [
+        {
+          "function": "swdb_lifetime_entry",
+          "line": 13,
+          "source_file": "site_input.c",
+          "text": "*out = buffer.local_queue[0];",
+          "line_sha256": "92f2a5ac9cea9d8dee734dce4e3102319dc406bc40fff6b460c9e4783ef59608"
+        }
+      ]
+    },
+    {
+      "case": "modular-entry-positive",
+      "property": {
+        "property": "swdb_lifetime_entry_assert_rte_initialization_2",
+        "function": "swdb_lifetime_entry",
+        "kind": "other",
+        "emitter": "rte",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 13,
+        "description": "assert rte: initialization: \\initialized(buffer.local_queue + 0);"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_lifetime_entry_assert_rte_initialization_2",
+          "property": "swdb_lifetime_entry_assert_rte_initialization_2",
+          "function": "swdb_lifetime_entry",
+          "line": 13,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ],
+      "source_anchor_matches": [
+        {
+          "function": "swdb_lifetime_entry",
+          "line": 13,
+          "source_file": "site_input.c",
+          "text": "*out = buffer.local_queue[0];",
+          "line_sha256": "92f2a5ac9cea9d8dee734dce4e3102319dc406bc40fff6b460c9e4783ef59608"
+        }
+      ]
+    }
+  ],
+  "constructor_and_binder_postconditions": [
+    {
+      "case": "positive",
+      "property": {
+        "property": "QueueBuffer_NodeID_QueueBuffer_ensures",
+        "function": "QueueBuffer_NodeID_QueueBuffer",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 291,
+        "description": "ensures\n\\old(self)->sq \u2261 \\old(master) \u2227 \\old(self)->local_size \u2261 \\old(given_size) \u2227\n\\old(self)->in \u2261 0"
+      },
+      "goals": [
+        {
+          "goal": "typed_QueueBuffer_NodeID_QueueBuffer_ensures",
+          "property": "QueueBuffer_NodeID_QueueBuffer_ensures",
+          "function": "QueueBuffer_NodeID_QueueBuffer",
+          "line": 291,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "positive",
+      "property": {
+        "property": "swdb_bind_private_NodeID_array_ensures",
+        "function": "swdb_bind_private_NodeID_array",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 128,
+        "description": "ensures\n*\\old(swdb_out) \u2261 &(*\\old(storage)[0])"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_bind_private_NodeID_array_ensures",
+          "property": "swdb_bind_private_NodeID_array_ensures",
+          "function": "swdb_bind_private_NodeID_array",
+          "line": 128,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "positive",
+      "property": {
+        "property": "QueueBuffer_NodeID_QueueBuffer_ensures_3",
+        "function": "QueueBuffer_NodeID_QueueBuffer",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 293,
+        "description": "ensures\ngapbs_buffer_domain(\\old(self))"
+      },
+      "goals": [
+        {
+          "goal": "typed_QueueBuffer_NodeID_QueueBuffer_ensures_3",
+          "property": "QueueBuffer_NodeID_QueueBuffer_ensures_3",
+          "function": "QueueBuffer_NodeID_QueueBuffer",
+          "line": 293,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "positive",
+      "property": {
+        "property": "QueueBuffer_NodeID_QueueBuffer_ensures_2",
+        "function": "QueueBuffer_NodeID_QueueBuffer",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 292,
+        "description": "ensures\n\\old(self)->local_queue \u2261 &(*\\old(storage)[0])"
+      },
+      "goals": [
+        {
+          "goal": "typed_QueueBuffer_NodeID_QueueBuffer_ensures_2",
+          "property": "QueueBuffer_NodeID_QueueBuffer_ensures_2",
+          "function": "QueueBuffer_NodeID_QueueBuffer",
+          "line": 292,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "positive",
+      "property": {
+        "property": "swdb_bind_private_NodeID_array_ensures_2",
+        "function": "swdb_bind_private_NodeID_array",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 129,
+        "description": "ensures\n\\initialized(\\old(swdb_out))"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_bind_private_NodeID_array_ensures_2",
+          "property": "swdb_bind_private_NodeID_array_ensures_2",
+          "function": "swdb_bind_private_NodeID_array",
+          "line": 129,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "missing-store",
+      "property": {
+        "property": "QueueBuffer_NodeID_QueueBuffer_ensures",
+        "function": "QueueBuffer_NodeID_QueueBuffer",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 291,
+        "description": "ensures\n\\old(self)->sq \u2261 \\old(master) \u2227 \\old(self)->local_size \u2261 \\old(given_size) \u2227\n\\old(self)->in \u2261 0"
+      },
+      "goals": [
+        {
+          "goal": "typed_QueueBuffer_NodeID_QueueBuffer_ensures",
+          "property": "QueueBuffer_NodeID_QueueBuffer_ensures",
+          "function": "QueueBuffer_NodeID_QueueBuffer",
+          "line": 291,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "missing-store",
+      "property": {
+        "property": "swdb_bind_private_NodeID_array_ensures",
+        "function": "swdb_bind_private_NodeID_array",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 128,
+        "description": "ensures\n*\\old(swdb_out) \u2261 &(*\\old(storage)[0])"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_bind_private_NodeID_array_ensures",
+          "property": "swdb_bind_private_NodeID_array_ensures",
+          "function": "swdb_bind_private_NodeID_array",
+          "line": 128,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "missing-store",
+      "property": {
+        "property": "QueueBuffer_NodeID_QueueBuffer_ensures_3",
+        "function": "QueueBuffer_NodeID_QueueBuffer",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 293,
+        "description": "ensures\ngapbs_buffer_domain(\\old(self))"
+      },
+      "goals": [
+        {
+          "goal": "typed_QueueBuffer_NodeID_QueueBuffer_ensures_3",
+          "property": "QueueBuffer_NodeID_QueueBuffer_ensures_3",
+          "function": "QueueBuffer_NodeID_QueueBuffer",
+          "line": 293,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "missing-store",
+      "property": {
+        "property": "QueueBuffer_NodeID_QueueBuffer_ensures_2",
+        "function": "QueueBuffer_NodeID_QueueBuffer",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 292,
+        "description": "ensures\n\\old(self)->local_queue \u2261 &(*\\old(storage)[0])"
+      },
+      "goals": [
+        {
+          "goal": "typed_QueueBuffer_NodeID_QueueBuffer_ensures_2",
+          "property": "QueueBuffer_NodeID_QueueBuffer_ensures_2",
+          "function": "QueueBuffer_NodeID_QueueBuffer",
+          "line": 292,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "missing-store",
+      "property": {
+        "property": "swdb_bind_private_NodeID_array_ensures_2",
+        "function": "swdb_bind_private_NodeID_array",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 129,
+        "description": "ensures\n\\initialized(\\old(swdb_out))"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_bind_private_NodeID_array_ensures_2",
+          "property": "swdb_bind_private_NodeID_array_ensures_2",
+          "function": "swdb_bind_private_NodeID_array",
+          "line": 129,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "wrong-cell",
+      "property": {
+        "property": "QueueBuffer_NodeID_QueueBuffer_ensures",
+        "function": "QueueBuffer_NodeID_QueueBuffer",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 291,
+        "description": "ensures\n\\old(self)->sq \u2261 \\old(master) \u2227 \\old(self)->local_size \u2261 \\old(given_size) \u2227\n\\old(self)->in \u2261 0"
+      },
+      "goals": [
+        {
+          "goal": "typed_QueueBuffer_NodeID_QueueBuffer_ensures",
+          "property": "QueueBuffer_NodeID_QueueBuffer_ensures",
+          "function": "QueueBuffer_NodeID_QueueBuffer",
+          "line": 291,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "wrong-cell",
+      "property": {
+        "property": "swdb_bind_private_NodeID_array_ensures",
+        "function": "swdb_bind_private_NodeID_array",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 128,
+        "description": "ensures\n*\\old(swdb_out) \u2261 &(*\\old(storage)[0])"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_bind_private_NodeID_array_ensures",
+          "property": "swdb_bind_private_NodeID_array_ensures",
+          "function": "swdb_bind_private_NodeID_array",
+          "line": 128,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "wrong-cell",
+      "property": {
+        "property": "QueueBuffer_NodeID_QueueBuffer_ensures_3",
+        "function": "QueueBuffer_NodeID_QueueBuffer",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 293,
+        "description": "ensures\ngapbs_buffer_domain(\\old(self))"
+      },
+      "goals": [
+        {
+          "goal": "typed_QueueBuffer_NodeID_QueueBuffer_ensures_3",
+          "property": "QueueBuffer_NodeID_QueueBuffer_ensures_3",
+          "function": "QueueBuffer_NodeID_QueueBuffer",
+          "line": 293,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "wrong-cell",
+      "property": {
+        "property": "QueueBuffer_NodeID_QueueBuffer_ensures_2",
+        "function": "QueueBuffer_NodeID_QueueBuffer",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 292,
+        "description": "ensures\n\\old(self)->local_queue \u2261 &(*\\old(storage)[0])"
+      },
+      "goals": [
+        {
+          "goal": "typed_QueueBuffer_NodeID_QueueBuffer_ensures_2",
+          "property": "QueueBuffer_NodeID_QueueBuffer_ensures_2",
+          "function": "QueueBuffer_NodeID_QueueBuffer",
+          "line": 292,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "wrong-cell",
+      "property": {
+        "property": "swdb_bind_private_NodeID_array_ensures_2",
+        "function": "swdb_bind_private_NodeID_array",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 129,
+        "description": "ensures\n\\initialized(\\old(swdb_out))"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_bind_private_NodeID_array_ensures_2",
+          "property": "swdb_bind_private_NodeID_array_ensures_2",
+          "function": "swdb_bind_private_NodeID_array",
+          "line": 129,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "uninitialized-scalar",
+      "property": {
+        "property": "QueueBuffer_NodeID_QueueBuffer_ensures",
+        "function": "QueueBuffer_NodeID_QueueBuffer",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 291,
+        "description": "ensures\n\\old(self)->sq \u2261 \\old(master) \u2227 \\old(self)->local_size \u2261 \\old(given_size) \u2227\n\\old(self)->in \u2261 0"
+      },
+      "goals": [
+        {
+          "goal": "typed_QueueBuffer_NodeID_QueueBuffer_ensures",
+          "property": "QueueBuffer_NodeID_QueueBuffer_ensures",
+          "function": "QueueBuffer_NodeID_QueueBuffer",
+          "line": 291,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "uninitialized-scalar",
+      "property": {
+        "property": "swdb_bind_private_NodeID_array_ensures",
+        "function": "swdb_bind_private_NodeID_array",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 128,
+        "description": "ensures\n*\\old(swdb_out) \u2261 &(*\\old(storage)[0])"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_bind_private_NodeID_array_ensures",
+          "property": "swdb_bind_private_NodeID_array_ensures",
+          "function": "swdb_bind_private_NodeID_array",
+          "line": 128,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "uninitialized-scalar",
+      "property": {
+        "property": "QueueBuffer_NodeID_QueueBuffer_ensures_3",
+        "function": "QueueBuffer_NodeID_QueueBuffer",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 293,
+        "description": "ensures\ngapbs_buffer_domain(\\old(self))"
+      },
+      "goals": [
+        {
+          "goal": "typed_QueueBuffer_NodeID_QueueBuffer_ensures_3",
+          "property": "QueueBuffer_NodeID_QueueBuffer_ensures_3",
+          "function": "QueueBuffer_NodeID_QueueBuffer",
+          "line": 293,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "uninitialized-scalar",
+      "property": {
+        "property": "QueueBuffer_NodeID_QueueBuffer_ensures_2",
+        "function": "QueueBuffer_NodeID_QueueBuffer",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 292,
+        "description": "ensures\n\\old(self)->local_queue \u2261 &(*\\old(storage)[0])"
+      },
+      "goals": [
+        {
+          "goal": "typed_QueueBuffer_NodeID_QueueBuffer_ensures_2",
+          "property": "QueueBuffer_NodeID_QueueBuffer_ensures_2",
+          "function": "QueueBuffer_NodeID_QueueBuffer",
+          "line": 292,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "uninitialized-scalar",
+      "property": {
+        "property": "swdb_bind_private_NodeID_array_ensures_2",
+        "function": "swdb_bind_private_NodeID_array",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 129,
+        "description": "ensures\n\\initialized(\\old(swdb_out))"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_bind_private_NodeID_array_ensures_2",
+          "property": "swdb_bind_private_NodeID_array_ensures_2",
+          "function": "swdb_bind_private_NodeID_array",
+          "line": 129,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "copy-positive",
+      "property": {
+        "property": "QueueBuffer_NodeID_QueueBuffer_ensures",
+        "function": "QueueBuffer_NodeID_QueueBuffer",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 291,
+        "description": "ensures\n\\old(self)->sq \u2261 \\old(master) \u2227 \\old(self)->local_size \u2261 \\old(given_size) \u2227\n\\old(self)->in \u2261 0"
+      },
+      "goals": [
+        {
+          "goal": "typed_QueueBuffer_NodeID_QueueBuffer_ensures",
+          "property": "QueueBuffer_NodeID_QueueBuffer_ensures",
+          "function": "QueueBuffer_NodeID_QueueBuffer",
+          "line": 291,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "copy-positive",
+      "property": {
+        "property": "swdb_bind_private_NodeID_array_ensures",
+        "function": "swdb_bind_private_NodeID_array",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 128,
+        "description": "ensures\n*\\old(swdb_out) \u2261 &(*\\old(storage)[0])"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_bind_private_NodeID_array_ensures",
+          "property": "swdb_bind_private_NodeID_array_ensures",
+          "function": "swdb_bind_private_NodeID_array",
+          "line": 128,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "copy-positive",
+      "property": {
+        "property": "QueueBuffer_NodeID_QueueBuffer_ensures_3",
+        "function": "QueueBuffer_NodeID_QueueBuffer",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 293,
+        "description": "ensures\ngapbs_buffer_domain(\\old(self))"
+      },
+      "goals": [
+        {
+          "goal": "typed_QueueBuffer_NodeID_QueueBuffer_ensures_3",
+          "property": "QueueBuffer_NodeID_QueueBuffer_ensures_3",
+          "function": "QueueBuffer_NodeID_QueueBuffer",
+          "line": 293,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "copy-positive",
+      "property": {
+        "property": "QueueBuffer_NodeID_QueueBuffer_ensures_2",
+        "function": "QueueBuffer_NodeID_QueueBuffer",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 292,
+        "description": "ensures\n\\old(self)->local_queue \u2261 &(*\\old(storage)[0])"
+      },
+      "goals": [
+        {
+          "goal": "typed_QueueBuffer_NodeID_QueueBuffer_ensures_2",
+          "property": "QueueBuffer_NodeID_QueueBuffer_ensures_2",
+          "function": "QueueBuffer_NodeID_QueueBuffer",
+          "line": 292,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "copy-positive",
+      "property": {
+        "property": "swdb_bind_private_NodeID_array_ensures_2",
+        "function": "swdb_bind_private_NodeID_array",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 129,
+        "description": "ensures\n\\initialized(\\old(swdb_out))"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_bind_private_NodeID_array_ensures_2",
+          "property": "swdb_bind_private_NodeID_array_ensures_2",
+          "function": "swdb_bind_private_NodeID_array",
+          "line": 129,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "history-positive",
+      "property": {
+        "property": "QueueBuffer_NodeID_QueueBuffer_ensures",
+        "function": "QueueBuffer_NodeID_QueueBuffer",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 291,
+        "description": "ensures\n\\old(self)->sq \u2261 \\old(master) \u2227 \\old(self)->local_size \u2261 \\old(given_size) \u2227\n\\old(self)->in \u2261 0"
+      },
+      "goals": [
+        {
+          "goal": "typed_QueueBuffer_NodeID_QueueBuffer_ensures",
+          "property": "QueueBuffer_NodeID_QueueBuffer_ensures",
+          "function": "QueueBuffer_NodeID_QueueBuffer",
+          "line": 291,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "history-positive",
+      "property": {
+        "property": "swdb_bind_private_NodeID_array_ensures",
+        "function": "swdb_bind_private_NodeID_array",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 128,
+        "description": "ensures\n*\\old(swdb_out) \u2261 &(*\\old(storage)[0])"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_bind_private_NodeID_array_ensures",
+          "property": "swdb_bind_private_NodeID_array_ensures",
+          "function": "swdb_bind_private_NodeID_array",
+          "line": 128,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "history-positive",
+      "property": {
+        "property": "QueueBuffer_NodeID_QueueBuffer_ensures_3",
+        "function": "QueueBuffer_NodeID_QueueBuffer",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 293,
+        "description": "ensures\ngapbs_buffer_domain(\\old(self))"
+      },
+      "goals": [
+        {
+          "goal": "typed_QueueBuffer_NodeID_QueueBuffer_ensures_3",
+          "property": "QueueBuffer_NodeID_QueueBuffer_ensures_3",
+          "function": "QueueBuffer_NodeID_QueueBuffer",
+          "line": 293,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "history-positive",
+      "property": {
+        "property": "QueueBuffer_NodeID_QueueBuffer_ensures_2",
+        "function": "QueueBuffer_NodeID_QueueBuffer",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 292,
+        "description": "ensures\n\\old(self)->local_queue \u2261 &(*\\old(storage)[0])"
+      },
+      "goals": [
+        {
+          "goal": "typed_QueueBuffer_NodeID_QueueBuffer_ensures_2",
+          "property": "QueueBuffer_NodeID_QueueBuffer_ensures_2",
+          "function": "QueueBuffer_NodeID_QueueBuffer",
+          "line": 292,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "history-positive",
+      "property": {
+        "property": "swdb_bind_private_NodeID_array_ensures_2",
+        "function": "swdb_bind_private_NodeID_array",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 129,
+        "description": "ensures\n\\initialized(\\old(swdb_out))"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_bind_private_NodeID_array_ensures_2",
+          "property": "swdb_bind_private_NodeID_array_ensures_2",
+          "function": "swdb_bind_private_NodeID_array",
+          "line": 129,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "reentry-missing-store",
+      "property": {
+        "property": "QueueBuffer_NodeID_QueueBuffer_ensures",
+        "function": "QueueBuffer_NodeID_QueueBuffer",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 291,
+        "description": "ensures\n\\old(self)->sq \u2261 \\old(master) \u2227 \\old(self)->local_size \u2261 \\old(given_size) \u2227\n\\old(self)->in \u2261 0"
+      },
+      "goals": [
+        {
+          "goal": "typed_QueueBuffer_NodeID_QueueBuffer_ensures",
+          "property": "QueueBuffer_NodeID_QueueBuffer_ensures",
+          "function": "QueueBuffer_NodeID_QueueBuffer",
+          "line": 291,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "reentry-missing-store",
+      "property": {
+        "property": "swdb_bind_private_NodeID_array_ensures",
+        "function": "swdb_bind_private_NodeID_array",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 128,
+        "description": "ensures\n*\\old(swdb_out) \u2261 &(*\\old(storage)[0])"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_bind_private_NodeID_array_ensures",
+          "property": "swdb_bind_private_NodeID_array_ensures",
+          "function": "swdb_bind_private_NodeID_array",
+          "line": 128,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "reentry-missing-store",
+      "property": {
+        "property": "QueueBuffer_NodeID_QueueBuffer_ensures_3",
+        "function": "QueueBuffer_NodeID_QueueBuffer",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 293,
+        "description": "ensures\ngapbs_buffer_domain(\\old(self))"
+      },
+      "goals": [
+        {
+          "goal": "typed_QueueBuffer_NodeID_QueueBuffer_ensures_3",
+          "property": "QueueBuffer_NodeID_QueueBuffer_ensures_3",
+          "function": "QueueBuffer_NodeID_QueueBuffer",
+          "line": 293,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "reentry-missing-store",
+      "property": {
+        "property": "QueueBuffer_NodeID_QueueBuffer_ensures_2",
+        "function": "QueueBuffer_NodeID_QueueBuffer",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 292,
+        "description": "ensures\n\\old(self)->local_queue \u2261 &(*\\old(storage)[0])"
+      },
+      "goals": [
+        {
+          "goal": "typed_QueueBuffer_NodeID_QueueBuffer_ensures_2",
+          "property": "QueueBuffer_NodeID_QueueBuffer_ensures_2",
+          "function": "QueueBuffer_NodeID_QueueBuffer",
+          "line": 292,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "reentry-missing-store",
+      "property": {
+        "property": "swdb_bind_private_NodeID_array_ensures_2",
+        "function": "swdb_bind_private_NodeID_array",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 129,
+        "description": "ensures\n\\initialized(\\old(swdb_out))"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_bind_private_NodeID_array_ensures_2",
+          "property": "swdb_bind_private_NodeID_array_ensures_2",
+          "function": "swdb_bind_private_NodeID_array",
+          "line": 129,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "modular-entry-missing-store",
+      "property": {
+        "property": "QueueBuffer_NodeID_QueueBuffer_ensures",
+        "function": "QueueBuffer_NodeID_QueueBuffer",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 291,
+        "description": "ensures\n\\old(self)->sq \u2261 \\old(master) \u2227 \\old(self)->local_size \u2261 \\old(given_size) \u2227\n\\old(self)->in \u2261 0"
+      },
+      "goals": [
+        {
+          "goal": "typed_QueueBuffer_NodeID_QueueBuffer_ensures",
+          "property": "QueueBuffer_NodeID_QueueBuffer_ensures",
+          "function": "QueueBuffer_NodeID_QueueBuffer",
+          "line": 291,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "modular-entry-missing-store",
+      "property": {
+        "property": "swdb_bind_private_NodeID_array_ensures",
+        "function": "swdb_bind_private_NodeID_array",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 128,
+        "description": "ensures\n*\\old(swdb_out) \u2261 &(*\\old(storage)[0])"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_bind_private_NodeID_array_ensures",
+          "property": "swdb_bind_private_NodeID_array_ensures",
+          "function": "swdb_bind_private_NodeID_array",
+          "line": 128,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "modular-entry-missing-store",
+      "property": {
+        "property": "QueueBuffer_NodeID_QueueBuffer_ensures_3",
+        "function": "QueueBuffer_NodeID_QueueBuffer",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 293,
+        "description": "ensures\ngapbs_buffer_domain(\\old(self))"
+      },
+      "goals": [
+        {
+          "goal": "typed_QueueBuffer_NodeID_QueueBuffer_ensures_3",
+          "property": "QueueBuffer_NodeID_QueueBuffer_ensures_3",
+          "function": "QueueBuffer_NodeID_QueueBuffer",
+          "line": 293,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "modular-entry-missing-store",
+      "property": {
+        "property": "QueueBuffer_NodeID_QueueBuffer_ensures_2",
+        "function": "QueueBuffer_NodeID_QueueBuffer",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 292,
+        "description": "ensures\n\\old(self)->local_queue \u2261 &(*\\old(storage)[0])"
+      },
+      "goals": [
+        {
+          "goal": "typed_QueueBuffer_NodeID_QueueBuffer_ensures_2",
+          "property": "QueueBuffer_NodeID_QueueBuffer_ensures_2",
+          "function": "QueueBuffer_NodeID_QueueBuffer",
+          "line": 292,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "modular-entry-missing-store",
+      "property": {
+        "property": "swdb_bind_private_NodeID_array_ensures_2",
+        "function": "swdb_bind_private_NodeID_array",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 129,
+        "description": "ensures\n\\initialized(\\old(swdb_out))"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_bind_private_NodeID_array_ensures_2",
+          "property": "swdb_bind_private_NodeID_array_ensures_2",
+          "function": "swdb_bind_private_NodeID_array",
+          "line": 129,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "reentry-positive",
+      "property": {
+        "property": "QueueBuffer_NodeID_QueueBuffer_ensures",
+        "function": "QueueBuffer_NodeID_QueueBuffer",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 291,
+        "description": "ensures\n\\old(self)->sq \u2261 \\old(master) \u2227 \\old(self)->local_size \u2261 \\old(given_size) \u2227\n\\old(self)->in \u2261 0"
+      },
+      "goals": [
+        {
+          "goal": "typed_QueueBuffer_NodeID_QueueBuffer_ensures",
+          "property": "QueueBuffer_NodeID_QueueBuffer_ensures",
+          "function": "QueueBuffer_NodeID_QueueBuffer",
+          "line": 291,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "reentry-positive",
+      "property": {
+        "property": "swdb_bind_private_NodeID_array_ensures",
+        "function": "swdb_bind_private_NodeID_array",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 128,
+        "description": "ensures\n*\\old(swdb_out) \u2261 &(*\\old(storage)[0])"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_bind_private_NodeID_array_ensures",
+          "property": "swdb_bind_private_NodeID_array_ensures",
+          "function": "swdb_bind_private_NodeID_array",
+          "line": 128,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "reentry-positive",
+      "property": {
+        "property": "QueueBuffer_NodeID_QueueBuffer_ensures_3",
+        "function": "QueueBuffer_NodeID_QueueBuffer",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 293,
+        "description": "ensures\ngapbs_buffer_domain(\\old(self))"
+      },
+      "goals": [
+        {
+          "goal": "typed_QueueBuffer_NodeID_QueueBuffer_ensures_3",
+          "property": "QueueBuffer_NodeID_QueueBuffer_ensures_3",
+          "function": "QueueBuffer_NodeID_QueueBuffer",
+          "line": 293,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "reentry-positive",
+      "property": {
+        "property": "QueueBuffer_NodeID_QueueBuffer_ensures_2",
+        "function": "QueueBuffer_NodeID_QueueBuffer",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 292,
+        "description": "ensures\n\\old(self)->local_queue \u2261 &(*\\old(storage)[0])"
+      },
+      "goals": [
+        {
+          "goal": "typed_QueueBuffer_NodeID_QueueBuffer_ensures_2",
+          "property": "QueueBuffer_NodeID_QueueBuffer_ensures_2",
+          "function": "QueueBuffer_NodeID_QueueBuffer",
+          "line": 292,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "reentry-positive",
+      "property": {
+        "property": "swdb_bind_private_NodeID_array_ensures_2",
+        "function": "swdb_bind_private_NodeID_array",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 129,
+        "description": "ensures\n\\initialized(\\old(swdb_out))"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_bind_private_NodeID_array_ensures_2",
+          "property": "swdb_bind_private_NodeID_array_ensures_2",
+          "function": "swdb_bind_private_NodeID_array",
+          "line": 129,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "modular-entry-positive",
+      "property": {
+        "property": "QueueBuffer_NodeID_QueueBuffer_ensures",
+        "function": "QueueBuffer_NodeID_QueueBuffer",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 291,
+        "description": "ensures\n\\old(self)->sq \u2261 \\old(master) \u2227 \\old(self)->local_size \u2261 \\old(given_size) \u2227\n\\old(self)->in \u2261 0"
+      },
+      "goals": [
+        {
+          "goal": "typed_QueueBuffer_NodeID_QueueBuffer_ensures",
+          "property": "QueueBuffer_NodeID_QueueBuffer_ensures",
+          "function": "QueueBuffer_NodeID_QueueBuffer",
+          "line": 291,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "modular-entry-positive",
+      "property": {
+        "property": "swdb_bind_private_NodeID_array_ensures",
+        "function": "swdb_bind_private_NodeID_array",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 128,
+        "description": "ensures\n*\\old(swdb_out) \u2261 &(*\\old(storage)[0])"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_bind_private_NodeID_array_ensures",
+          "property": "swdb_bind_private_NodeID_array_ensures",
+          "function": "swdb_bind_private_NodeID_array",
+          "line": 128,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "modular-entry-positive",
+      "property": {
+        "property": "QueueBuffer_NodeID_QueueBuffer_ensures_3",
+        "function": "QueueBuffer_NodeID_QueueBuffer",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 293,
+        "description": "ensures\ngapbs_buffer_domain(\\old(self))"
+      },
+      "goals": [
+        {
+          "goal": "typed_QueueBuffer_NodeID_QueueBuffer_ensures_3",
+          "property": "QueueBuffer_NodeID_QueueBuffer_ensures_3",
+          "function": "QueueBuffer_NodeID_QueueBuffer",
+          "line": 293,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "modular-entry-positive",
+      "property": {
+        "property": "QueueBuffer_NodeID_QueueBuffer_ensures_2",
+        "function": "QueueBuffer_NodeID_QueueBuffer",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 292,
+        "description": "ensures\n\\old(self)->local_queue \u2261 &(*\\old(storage)[0])"
+      },
+      "goals": [
+        {
+          "goal": "typed_QueueBuffer_NodeID_QueueBuffer_ensures_2",
+          "property": "QueueBuffer_NodeID_QueueBuffer_ensures_2",
+          "function": "QueueBuffer_NodeID_QueueBuffer",
+          "line": 292,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    },
+    {
+      "case": "modular-entry-positive",
+      "property": {
+        "property": "swdb_bind_private_NodeID_array_ensures_2",
+        "function": "swdb_bind_private_NodeID_array",
+        "kind": "contract",
+        "emitter": "",
+        "origin": null,
+        "dependencies": [],
+        "extern": false,
+        "generated_smoke_failure": false,
+        "line": 129,
+        "description": "ensures\n\\initialized(\\old(swdb_out))"
+      },
+      "goals": [
+        {
+          "goal": "typed_swdb_bind_private_NodeID_array_ensures_2",
+          "property": "swdb_bind_private_NodeID_array_ensures_2",
+          "function": "swdb_bind_private_NodeID_array",
+          "line": 129,
+          "smoke": false,
+          "passed": false,
+          "targets": [],
+          "results": []
+        }
+      ]
+    }
+  ],
+  "warning_metadata": [
+    {
+      "case": "positive",
+      "pedantic": [
+        "[wp:pedantic-assigns] gapbs_models.h:127: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:144: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:211: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:217: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:223: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:230: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:239: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:245: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:251: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:258: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:267: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:272: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:290: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:290: Warning: "
+      ],
+      "unclassified": [],
+      "conservative_loop_frames": [],
+      "continuations": "full original log retained; no warning suppression or proof acceptance"
+    },
+    {
+      "case": "missing-store",
+      "pedantic": [
+        "[wp:pedantic-assigns] gapbs_models.h:127: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:144: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:211: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:217: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:223: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:230: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:239: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:245: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:251: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:258: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:267: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:272: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:290: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:290: Warning: "
+      ],
+      "unclassified": [],
+      "conservative_loop_frames": [],
+      "continuations": "full original log retained; no warning suppression or proof acceptance"
+    },
+    {
+      "case": "wrong-cell",
+      "pedantic": [
+        "[wp:pedantic-assigns] gapbs_models.h:127: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:144: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:211: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:217: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:223: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:230: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:239: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:245: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:251: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:258: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:267: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:272: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:290: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:290: Warning: "
+      ],
+      "unclassified": [],
+      "conservative_loop_frames": [],
+      "continuations": "full original log retained; no warning suppression or proof acceptance"
+    },
+    {
+      "case": "uninitialized-scalar",
+      "pedantic": [
+        "[wp:pedantic-assigns] gapbs_models.h:127: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:144: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:211: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:217: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:223: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:230: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:239: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:245: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:251: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:258: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:267: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:272: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:290: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:290: Warning: "
+      ],
+      "unclassified": [],
+      "conservative_loop_frames": [],
+      "continuations": "full original log retained; no warning suppression or proof acceptance"
+    },
+    {
+      "case": "copy-positive",
+      "pedantic": [
+        "[wp:pedantic-assigns] gapbs_models.h:127: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:144: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:211: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:217: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:223: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:230: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:239: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:245: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:251: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:258: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:267: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:272: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:290: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:290: Warning: "
+      ],
+      "unclassified": [],
+      "conservative_loop_frames": [],
+      "continuations": "full original log retained; no warning suppression or proof acceptance"
+    },
+    {
+      "case": "history-positive",
+      "pedantic": [
+        "[wp:pedantic-assigns] gapbs_models.h:127: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:144: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:211: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:217: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:223: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:230: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:239: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:245: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:251: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:258: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:267: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:272: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:290: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:290: Warning: "
+      ],
+      "unclassified": [],
+      "conservative_loop_frames": [],
+      "continuations": "full original log retained; no warning suppression or proof acceptance"
+    },
+    {
+      "case": "reentry-missing-store",
+      "pedantic": [
+        "[wp:pedantic-assigns] gapbs_models.h:127: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:144: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:211: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:217: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:223: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:230: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:239: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:245: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:251: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:258: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:267: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:272: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:290: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:290: Warning: "
+      ],
+      "unclassified": [],
+      "conservative_loop_frames": [
+        {
+          "context": {
+            "source_file": "site_input.c",
+            "function": "swdb_allocation_site",
+            "line": 8,
+            "line_sha256": "9a0d772449701528a42498f77ba570b78322dc8be72756c09d4a25fa26a31d5f",
+            "site_sha256": "2e7652e52ce6c650d1f4373dc25bb52932cef26f098fa94088d206f2833d6617",
+            "residual": "conservative missing loop assigns; no frame/initializedness/proof acceptance"
+          },
+          "occurrences": 1,
+          "classification": "conservative_loop_frame_imprecision_residual",
+          "proof_acceptance": false,
+          "frame_discharged": false
+        }
+      ],
+      "continuations": "full original log retained; no warning suppression or proof acceptance"
+    },
+    {
+      "case": "modular-entry-missing-store",
+      "pedantic": [
+        "[wp:pedantic-assigns] gapbs_models.h:127: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:144: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:211: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:217: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:223: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:230: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:239: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:245: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:251: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:258: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:267: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:272: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:290: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:290: Warning: "
+      ],
+      "unclassified": [],
+      "conservative_loop_frames": [],
+      "continuations": "full original log retained; no warning suppression or proof acceptance"
+    },
+    {
+      "case": "reentry-positive",
+      "pedantic": [
+        "[wp:pedantic-assigns] gapbs_models.h:127: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:144: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:211: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:217: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:223: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:230: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:239: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:245: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:251: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:258: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:267: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:272: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:290: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:290: Warning: "
+      ],
+      "unclassified": [],
+      "conservative_loop_frames": [
+        {
+          "context": {
+            "source_file": "site_input.c",
+            "function": "swdb_allocation_site",
+            "line": 9,
+            "line_sha256": "9a0d772449701528a42498f77ba570b78322dc8be72756c09d4a25fa26a31d5f",
+            "site_sha256": "64d366a7c9d2a9e2ff691ad2499f6fe873fdad4a08415198b4ee00ecf8b9e1d0",
+            "residual": "conservative missing loop assigns; no frame/initializedness/proof acceptance"
+          },
+          "occurrences": 1,
+          "classification": "conservative_loop_frame_imprecision_residual",
+          "proof_acceptance": false,
+          "frame_discharged": false
+        }
+      ],
+      "continuations": "full original log retained; no warning suppression or proof acceptance"
+    },
+    {
+      "case": "modular-entry-positive",
+      "pedantic": [
+        "[wp:pedantic-assigns] gapbs_models.h:127: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:144: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:211: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:217: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:223: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:230: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:239: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:245: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:251: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:258: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:267: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:272: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:290: Warning: ",
+        "[wp:pedantic-assigns] gapbs_models.h:290: Warning: "
+      ],
+      "unclassified": [],
+      "conservative_loop_frames": [],
+      "continuations": "full original log retained; no warning suppression or proof acceptance"
+    }
+  ],
+  "actual_backend_tasks_retained": false,
+  "T_init_SINIT_mapping_qualified": false,
+  "proof_accepted": false,
+  "healthy_negative_qualified": false,
+  "loop_frame_or_reentry_qualified": false,
+  "source_or_allocator_refinement_qualified": false,
+  "TD_or_counted_admissible": false,
+  "next_gate": "New purpose-specific backend task compilation/export on exact original C positive/missing-store/wrong-cell trio; no actual solver, init facts, havoc/reset, source invariants or goal filtering."
+}

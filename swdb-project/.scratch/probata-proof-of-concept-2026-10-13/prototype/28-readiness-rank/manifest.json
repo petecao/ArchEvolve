@@ -1,0 +1,68 @@
+{
+  "created": "2026-10-16 ET",
+  "scope": "inert prototype-only sources and command plans; no production semantics or current method mapping change",
+  "files_sha256": {
+    "readiness_rank.mlw": "44eb843146e57495579fed4a118df67bcc3858560dd381db62498a65055b150c",
+    "delay_family.mlw": "d99660f76ad8469960f81491c7df4bfa974abc1133a61d32e9081fe0f60895f6",
+    "no_progress.mlw": "b80c777054a450f781351130baf91e9c0fdb37a4a59e5453e857921b9b85f465",
+    "type_only_commands.json": "8072d0e592fd99ed96bf447b43441332851c457397bd970f0e85e28280ca9e74",
+    "fresh_vc_commands.json": "aee82ac8a24345f125de8cabf258293cb40366299354ca395681e4af20fa43c2",
+    "README.md": "2449ba89d6377a62784a0d045e9051361e44e00be0192dbfbd229ff0aa6d42e0"
+  },
+  "primary_installed_syntax_sources": [
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/int.mlw",
+      "sha256": "eb5bc9d4a46e1b6a298d24fd36dcf9dfb8f35cbc75b2f44007cfe1a24550ce8d",
+      "lines": "374-378;443-444;694-698",
+      "used_for": "mathematical Int, higher-order function arguments, recursive ghost lemma and variant syntax"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/witness.mlw",
+      "sha256": "74098a4e80908fb5719b04e741a36cac977f180d837b6ffc0238fe1d915d609a",
+      "lines": "49-57",
+      "used_for": "source syntax example for lemma recursion and fixed predicate branching only; this module is not imported"
+    }
+  ],
+  "installed_mac_candidate_only": {
+    "why3_binary": {
+      "path": "/Users/yanrujhou/.opam/framac-33/bin/why3",
+      "sha256": "e90d62b3883a4c2f90c5260ff410ef019803eb08b5f72f3d3ade77d4ce6f0555"
+    },
+    "config": {
+      "path": "/Users/yanrujhou/.why3.conf",
+      "sha256": "5f82bccca4b275b60979f8eabba62c3f8af1a9178913dbd31efd350a030817c8"
+    },
+    "stdlib": {
+      "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib",
+      "files": 57,
+      "relative_path_to_sha256_json_digest": "67693c6489950a4c55c62fde1a8951d8af53e390a5dd2b3137ba94a2fc117212"
+    },
+    "not_actual_admission": "Only file bytes were read/hashed. No binary/config command was executed; these Mac pins are not Linux expectations."
+  },
+  "static_author_checks": {
+    "only_core_branch": "if ready start",
+    "rank_used_for_readiness": false,
+    "core_source_has_no_axiom_admit_assume_any_val": true,
+    "core_only_import": "int.Int",
+    "syntax_or_type_validation": false,
+    "VC_generation": false,
+    "solver_attempts": 0
+  },
+  "semantic_map": {
+    "observable": "one fixed immutable ready:int->bool sequence indexed by mathematical poll count",
+    "prophecy": "separate rank:int->int witness, nonnegative at every future index, strictly decreases only required at false observations",
+    "goal": "exists future index with true ready; conditional only",
+    "consistency": "arbitrary n>=0, ready_n(k)=(n<=k), rank_n(k)=max(0,n-k), false until n; no machine bound",
+    "negative": "constant-false trace without progress premise, explicit no-future-ready theorem plus separate deliberately false target",
+    "outstanding": "environment premise, source/trace simulation, hardware fairness, dependency closure/visibility, method freeze and public composition proof remain open"
+  },
+  "official_primary_links": [
+    "https://why3.org/doc/syntaxref.html",
+    "https://why3.org/doc/manpages.html"
+  ],
+  "promoted_from": {
+    "path": "/private/tmp/probata-t28-unbounded-rank-prototype-20261016",
+    "manifest_sha256": "fc3583bc91c8c12858fb8260a52c5ef8baccef2a95142e0908c0a4dc1997e3f0",
+    "date_et": "2026-10-16"
+  }
+}

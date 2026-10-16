@@ -1,0 +1,7 @@
+PASS for the explicitly separate device-only successor `bd2610b6b7cff511c046206a78088cf693cee874`. Relative to preserved65f, each C TU deletes exactly one26-byte unused `#include "gapbs_models.h"` line; every root body/contract and both dxc headers are otherwise byte-identical. The delta has only these two C files, map/README and new evidence.
+
+The dxc header is self-contained with its own stdint include; all root calls name its declared device interfaces. The new source census is5normal/1weak, compared with preserved65f25/21 including20helper bodies. This is an explicit TU/component change, not a WP function/property filter. The full20 helper certificate remains separate with no proof/result reuse or whole-TD/count claim. All six original diagnostic relationships, the weak single-clause delta and its unconstrained outcome remain unchanged.
+
+Five source rows and17 external retained instances rehash correctly. Six compiler-only structure/syntax checks are retained evidence (0.573079s,63.28125MiB); no reviewer rerun or fixture execution occurred. Generation/ACSL parsing and every unfiltered ordinary/RTE/init/smoke/Extern/native-DAG/formula closure remain root-owned future gates. No proof or generation admission is granted by this source review.
+
+JSON: `/private/tmp/probata-t07-device-only-sites-independent-source-review-v1-bd2610b6-20261016.json`, SHA256 `2d215b50d4930d8a6a0143ced78d68684a86e32e96d08c42aa1e658272d9bed5`.

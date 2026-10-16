@@ -1,0 +1,180 @@
+{
+  "created": "2026-10-15 ET",
+  "upstream_commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+  "declarations": [
+    {
+      "file": "MAA.hpp",
+      "line": 57,
+      "name": "get_cacheable_tile_pointer",
+      "declaration": "inline T1 *get_cacheable_tile_pointer(int SPD_id)"
+    },
+    {
+      "file": "MAA.hpp",
+      "line": 61,
+      "name": "get_noncacheable_tile_pointer",
+      "declaration": "inline volatile T1 *get_noncacheable_tile_pointer(int SPD_id)"
+    },
+    {
+      "file": "MAA_gem5.hpp",
+      "line": 56,
+      "name": "add_mem_region",
+      "declaration": "void add_mem_region(void *start, void *end)"
+    },
+    {
+      "file": "MAA_gem5.hpp",
+      "line": 60,
+      "name": "clear_mem_region",
+      "declaration": "void clear_mem_region()"
+    },
+    {
+      "file": "MAA_gem5.hpp",
+      "line": 71,
+      "name": "alloc_MAA",
+      "declaration": "void alloc_MAA()"
+    },
+    {
+      "file": "MAA_gem5.hpp",
+      "line": 93,
+      "name": "init_MAA",
+      "declaration": "inline void init_MAA()"
+    },
+    {
+      "file": "MAA_gem5.hpp",
+      "line": 98,
+      "name": "wait_ready",
+      "declaration": "void wait_ready(int SPD_id)"
+    },
+    {
+      "file": "MAA_gem5.hpp",
+      "line": 102,
+      "name": "get_tile_size",
+      "declaration": "inline volatile uint16_t get_tile_size(int SPD_id)"
+    },
+    {
+      "file": "MAA_gem5.hpp",
+      "line": 108,
+      "name": "get_reg",
+      "declaration": "inline volatile T1 get_reg(int reg_id)"
+    },
+    {
+      "file": "MAA_gem5.hpp",
+      "line": 114,
+      "name": "set_reg",
+      "declaration": "inline void set_reg(int reg_id, T1 data)"
+    },
+    {
+      "file": "MAA_gem5.hpp",
+      "line": 119,
+      "name": "get_new_reg",
+      "declaration": "inline int get_new_reg(T1 data)"
+    },
+    {
+      "file": "MAA_gem5.hpp",
+      "line": 129,
+      "name": "get_new_reg",
+      "declaration": "inline int get_new_reg()"
+    },
+    {
+      "file": "MAA_gem5.hpp",
+      "line": 138,
+      "name": "get_new_tile",
+      "declaration": "inline int get_new_tile()"
+    },
+    {
+      "file": "MAA_gem5.hpp",
+      "line": 147,
+      "name": "maa_const",
+      "declaration": "void maa_const(T1 data, int dst_reg)"
+    },
+    {
+      "file": "MAA_gem5.hpp",
+      "line": 152,
+      "name": "print_tile",
+      "declaration": "void print_tile(int SPD_id)"
+    },
+    {
+      "file": "MAA_gem5.hpp",
+      "line": 165,
+      "name": "get_data_type",
+      "declaration": "DataType get_data_type()"
+    },
+    {
+      "file": "MAA_gem5.hpp",
+      "line": 175,
+      "name": "maa_alu_scalar",
+      "declaration": "inline void maa_alu_scalar(int src1_tile, int src2_reg, int dst_tile, Operation_t op, int cond_tile = -1)"
+    },
+    {
+      "file": "MAA_gem5.hpp",
+      "line": 194,
+      "name": "maa_alu_vector",
+      "declaration": "inline void maa_alu_vector(int src1_tile, int src2_tile, int dst_tile, Operation_t op, int cond_tile = -1)"
+    },
+    {
+      "file": "MAA_gem5.hpp",
+      "line": 213,
+      "name": "maa_alu_reduce",
+      "declaration": "inline void maa_alu_reduce(int src1_tile, int dst_reg, Operation_t op, int cond_tile = -1)"
+    },
+    {
+      "file": "MAA_gem5.hpp",
+      "line": 232,
+      "name": "maa_stream_load",
+      "declaration": "inline void maa_stream_load(T1 *data, int min_reg, int max_reg, int stride_reg, int dst_tile, int cond_tile = -1)"
+    },
+    {
+      "file": "MAA_gem5.hpp",
+      "line": 251,
+      "name": "maa_stream_store",
+      "declaration": "inline void maa_stream_store(T1 *data, int min_reg, int max_reg, int stride_reg, int src_tile, int cond_tile = -1)"
+    },
+    {
+      "file": "MAA_gem5.hpp",
+      "line": 270,
+      "name": "maa_indirect_load",
+      "declaration": "inline void maa_indirect_load(T1 *data, int idx_tile, int dst_tile, int cond_tile = -1)"
+    },
+    {
+      "file": "MAA_gem5.hpp",
+      "line": 289,
+      "name": "maa_indirect_store_vector",
+      "declaration": "inline void maa_indirect_store_vector(T1 *data, int idx_tile, int src_tile, int cond_tile = -1, int dst_tile = -1)"
+    },
+    {
+      "file": "MAA_gem5.hpp",
+      "line": 308,
+      "name": "maa_indirect_store_scalar",
+      "declaration": "inline void maa_indirect_store_scalar(T1 *data, int idx_tile, int src_reg, int cond_tile = -1, int dst_tile = -1)"
+    },
+    {
+      "file": "MAA_gem5.hpp",
+      "line": 327,
+      "name": "maa_indirect_rmw_vector",
+      "declaration": "inline void maa_indirect_rmw_vector(T1 *data, int idx_tile, int src_tile, Operation_t o_type, int cond_tile = -1, int dst_tile = -1)"
+    },
+    {
+      "file": "MAA_gem5.hpp",
+      "line": 346,
+      "name": "maa_indirect_rmw_scalar",
+      "declaration": "inline void maa_indirect_rmw_scalar(T1 *data, int idx_tile, int src_reg, Operation_t o_type, int cond_tile = -1, int dst_tile = -1)"
+    },
+    {
+      "file": "MAA_gem5.hpp",
+      "line": 366,
+      "name": "maa_range_loop",
+      "declaration": "inline void maa_range_loop(int last_i_reg, int last_j_reg, int min_tile, int max_tile, int stride_reg, int dst_i_tile, int dst_j_tile, int cond_tile = -1)"
+    }
+  ],
+  "sources": [
+    {
+      "root": "project",
+      "path": "apps/dx100/benchmarks/API/MAA.hpp",
+      "sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd"
+    },
+    {
+      "root": "project",
+      "path": "apps/dx100/benchmarks/API/MAA_gem5.hpp",
+      "sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174"
+    }
+  ]
+}

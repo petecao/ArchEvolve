@@ -1,0 +1,122 @@
+{
+  "started": "2026-10-15T22:21:59.661939-04:00",
+  "finished": "2026-10-15T22:22:00.203063-04:00",
+  "verdict": "PASS actual first-provider input integrity",
+  "source_commit": "ac6bb42ead0beb38da954c3528a1821c6d9f78eb",
+  "source_pins": 42,
+  "independently_reviewed_runtime_protocol_files": 32,
+  "source_pin_errors": 0,
+  "exact_prompt_reconstruction": true,
+  "initial_hints": [],
+  "mechanical_hint_generation": false,
+  "prompt_characters": 68252,
+  "prompt_reconstruction_inputs": "frozen approved METHOD23 foundation, frozen source/contracts, own fresh baseline pass set and exact baseline-initial projection only; rendered rounded clock fields",
+  "argv_exact_match": true,
+  "model": {
+    "model": "gpt-5.6-sol",
+    "effort": "xhigh"
+  },
+  "scoped_approval_modes": [
+    "record_design",
+    "focused_probe"
+  ],
+  "workspace_files": [
+    "PROMPT.txt"
+  ],
+  "pre_candidate_audit_certified": true,
+  "candidate_metadata_before": {
+    "origin_trace_nonempty": false,
+    "attempt_directories": [],
+    "edit_request_seen": false,
+    "final_artifact_exists": false
+  },
+  "candidate_metadata_after": {
+    "origin_trace_nonempty": false,
+    "attempt_directories": [],
+    "edit_request_seen": false,
+    "final_artifact_exists": false
+  },
+  "baseline_checked": {
+    "n_goals": 393,
+    "n_unit_goals": 272,
+    "n_properties": 493
+  },
+  "fresh_baseline_initial_projection_checked": {
+    "n_goals": 393,
+    "n_unit_goals": 272,
+    "n_properties": 493,
+    "initial_kind": "fresh-full-baseline-subset"
+  },
+  "no_historical_payload_or_examples_or_control_input": true,
+  "no_active_hint_payload_inspection": true,
+  "no_provider_solver_or_tool_launched": true,
+  "source_output_mutation": false,
+  "audit_finish_boundary": "after required source/input/argv/schema/config checks and artifact hashes; final candidate metadata observation, before audit receipt persistence",
+  "artifacts": [
+    {
+      "path": "/private/tmp/probata-t07-20261015-run26/source-manifest.json",
+      "sha256": "cbeedb00525ef526bc3a86e93d7f29cdb6182787f3f14e56259649e1f385d246",
+      "bytes": 24042
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run26/launch.json",
+      "sha256": "1d76e2e22455fa78eb2ecb2b2c5d84a4ee56296f3711c3bb5e6059df79720362",
+      "bytes": 1304
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-method23/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t07-method23-final-independent-review-manifest-20261015.json",
+      "sha256": "71d53230c655126d105e7eb63acc2844c1d1977639682896135a4a935e6586a3",
+      "bytes": 26569
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run26/counted-26/meta.json",
+      "sha256": "45e1fff8d2992fb0b9e3bd6a884506cdf9ceae2568fc46ce7fa6c0a43ce6c02f",
+      "bytes": 7810
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run26/counted-26/tool-r1/config.json",
+      "sha256": "8e7a6ad1550dfafd6990ad3eb7f01a8f4e64e022cec5e7612bb05e941b2d18c3",
+      "bytes": 8859
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run26/counted-26/codex-r1/argv.json",
+      "sha256": "461297e26dc0f288c827d0e705e28c59de0844a0921abcbd8292f1ecbe035d4a",
+      "bytes": 1837
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run26/counted-26/codex-r1/schema.json",
+      "sha256": "09ae29e2c2e116e96a4a139e1e4b64f14d8af7bd9d72e1a1d92f6dc4350b6fda",
+      "bytes": 487
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run26/counted-26/codex-r1/workspace/PROMPT.txt",
+      "sha256": "18bf1c6a4fc2f880055e71917497358ea073e18dbd021e2d92ac4fb304ba8cb7",
+      "bytes": 68254
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run26/counted-26/round-0/goals.json",
+      "sha256": "f666bb815d98fd41abbce3d2c31c4ed951dc78c1da6843f1c02b58b84e2eba31",
+      "bytes": 172488
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run26/counted-26/round-0/baseline-smoke10.log",
+      "sha256": "9b487516275db02856a9389bf767c40ec0891e4aaf02199378a8a97793baef52",
+      "bytes": 81320
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run26/counted-26/round-0/baseline-smoke10.log.summary.json",
+      "sha256": "646d31933555f910ce5ad6067b7af5b6667ea1c5315fb839fc13fb5083426676",
+      "bytes": 6835
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run26/counted-26/baseline-initial.json",
+      "sha256": "7d22fe57c86f0acc516da191e27910e5f1fe58e825c7fe7c2d0daaec3b660f43",
+      "bytes": 8823
+    },
+    {
+      "path": "/private/tmp/probata-t07-run26-first-provider-audit.py",
+      "sha256": "3554cc375f1538f8e8c7d8a6fa15cbc214052430b3daaa8412c4d87b807a52ac",
+      "bytes": 11441
+    }
+  ]
+}

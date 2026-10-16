@@ -1,0 +1,81 @@
+{
+  "date": "2026-10-16 ET",
+  "verdict": "PASS_PASSIVE_COLD_READER_PREPARATION_ONLY",
+  "packet": {
+    "path": "/private/tmp/probata-t28-register-cold-packet-v4-a3a8db54-20261016.json",
+    "sha256": "70bc1120e7e4da5e736fe947ccda3b49851c7458d3f23642546e41869b443780"
+  },
+  "reader": {
+    "bytes": 62198,
+    "path": "/private/tmp/probata-t28-register-cold-reader-v4-a3a8db54-20261016.py",
+    "sha256": "3068138a2608828b82ff8f3f41ae8db6e96775b44acfa51619f2d279febcbd34"
+  },
+  "policy": {
+    "bytes": 1354238,
+    "path": "/private/tmp/probata-t28-register-cold-policy-v2-a3a8db54-20261016.json",
+    "sha256": "40b4431fa420eac49996d1debc8535347ac8edff83d4636a50d8c0ea3d2a6e3d"
+  },
+  "command": {
+    "bytes": 246,
+    "path": "/private/tmp/probata-t28-register-cold-command-v4-a3a8db54-20261016.json",
+    "sha256": "ca32f7307bc55671cd21107840254717b20c98a3fcdfc9aca88ae528ce30021d"
+  },
+  "source_commit": "a3a8db5411680f227f5cf0fe3f0ca473d9accae4",
+  "findings": [],
+  "independent_checks": {
+    "packet_artifact_pins": 29,
+    "selected_source_Gitblob_hashes": 486,
+    "consumer_root_OIDs": 11,
+    "query_reference_Gitbyte_and_object_pins": 2,
+    "local_primary_reference_hashes": 17,
+    "copied_pure_primitives_AST_verified": {
+      "_bodies": "dx100_register_source.py",
+      "_probe": "dx100_register_source.py",
+      "_operations": "dx100_register_source.py",
+      "_clean": "dx100_stream_source.py",
+      "_body": "dx100_stream_source.py",
+      "_parse_dump": "dx100_stream_source.py",
+      "_selected_frozen_body": "dx100_stream_source.py",
+      "_function_ir": "dx100_size_source.py"
+    },
+    "actual_metadata_shapes_read": {
+      "records": 2,
+      "each_goals": 21,
+      "each_properties": 29,
+      "each_ordinary": 13,
+      "each_smokes": 8,
+      "each_Extern": 6,
+      "negative_ensures_results": [
+        "timeout",
+        "unknown",
+        "timeout"
+      ]
+    },
+    "reader_main_or_controls_rerun": false
+  },
+  "reviewed_gates": [
+    "Full166raw/37,051,897B membership+pre/post hashes; source/runtime/config/import/header/consumer physicalGit and two compiler-context identity reconstructions;217module count distinct from doubledphysicalGit count.",
+    "Normal fixture method complete replay includingbothtranslators/legacyhintchecker, exactsource canonicalcontractdigest/job1/1vsrecord1/unbounded/runplan and ephemeral scratch/module source/prelaunchTCB boundaries.",
+    "Complete propertyorigin/dependency/Extern/native/ordinary/RTE/init/smoke/CSV attribution; directordinaryValid distinct healthyrawnonvalid normalizedsmokes; Unknownunselectedimplicitexits remain unverified.",
+    "Full originalWP query comparison retains ACSL; onlyordinarycomments+whitespace normalized. No addedrequires/erasedframe accepted.",
+    "CSV same-displayed-site multiplicity only with distinct retained exact inventory/native/source context IDs; capturedsource shape binds actualIDs4/5. No claimed individualrowcolumnidentity.",
+    "Originalpartial711vs1107/2cellframe/noaddedunitpremise;cert source/probe/body/LLVM effects plus explicit nonvolatileMMIO/fenceno-clobber/RFstorage/runtime contract-bodyTCB.",
+    "Error output exposes fixed assertion-source location only, not raw exception/data/source/SMT payload. No write/process/network/project imports in reader;main prints metadata only."
+  ],
+  "retained_controls": {
+    "pure_cases": 32,
+    "seconds": 16.903483250003774,
+    "peak_rss_bytes": 147767296,
+    "exit_code": 0,
+    "reviewer_reran": false,
+    "earlier_predicate_and_fixture_failures_preserved": true
+  },
+  "limits": [
+    "Only exactreader/policy staticPASS; root must separately pin isolatedPython/PyYAML/staging/disjointout60s8GiB+120sSSH and execute passive audit. This review did not remotely rehash raw/source/runtime or callreader main.",
+    "NoSMT/task bytes survived cleanup; no solver-submittedtask/foundationaltranslation reconstruction or ephemeralbinaryposthash is granted.",
+    "Only prospective exactpartialsourceExtern/ownedTCB fixturepair; no sourcebody/eventrefinement/hardwarefreshness/liveness/current0.2/full28/ticket acceptance before actualcoldPASS/rootdecision."
+  ],
+  "actual_cold_audit_executed_by_reviewer": false,
+  "pair_accepted_by_reviewer": false,
+  "ticket_closure": false
+}

@@ -1,0 +1,119 @@
+{
+  "assumptions": [
+    "Existing five current actual model records must pass ordinary public eligibility in exact launch environment. No proof IDs are trusted specially.",
+    "Original failed contract remains a named negative; any qualified success will have a distinct contract ID/hash.",
+    "Zero-size live allocations remain unsupported by the readable-neighbor proxy, without a UB classification."
+  ],
+  "base_commit": "82064d3a",
+  "compiler_controls": {
+    "artifacts": [
+      {
+        "path": "/private/tmp/probata-t24-std-domain-readonly-final-green/checks.log",
+        "sha256": "afe59ccd6bd66b7cb16220d3233fd44be05a4add0d37278755f0f8189326f9fb"
+      },
+      {
+        "path": "/private/tmp/probata-t24-std-domain-readonly-final-green/resources.json",
+        "sha256": "1032ec8a2bd2c02a72739ea353f9e7ed1b5f7674d17c764b864f4f8d5038567d"
+      },
+      {
+        "path": "/private/tmp/probata-t24-std-domain-readonly-final-green/command.json",
+        "sha256": "f35ed21d79c8e2eb8118c2e77d597eb7e76ad722ba75fef93e91471ce9164925"
+      },
+      {
+        "path": "/private/tmp/probata-t24-std-domain-readonly-final-green/guard.py",
+        "sha256": "d3fe2130ef053c2accb248db512846498479e1a14cbb8355c2a3357e48ac501e"
+      },
+      {
+        "path": "/private/tmp/probata-t24-std-domain-readonly-final-green/junit.xml",
+        "sha256": "230518797ea2f8c025574c1390bc8f5f05cd3ea1bb6f9ee775d2dbd496de98d1"
+      }
+    ],
+    "passed": 11,
+    "pytest_seconds": 8.92,
+    "resources": {
+      "cpu_seconds": 7.754727999999999,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 296370176,
+      "timed_out": false,
+      "wall_seconds": 9.292439125012606
+    },
+    "skipped": 0
+  },
+  "created": "2026-10-15 ET",
+  "design_review": {
+    "path": "/private/tmp/probata-resume-t24/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t24-std-object-domain-design-review-20261015.md",
+    "sha256": "f1a448c8a40d1fcee098298e4e3e714f4076c430e199092984a8b9e088f98a65"
+  },
+  "native": {
+    "path": "/private/tmp/probata-resume-t24/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t24-std-empty-domain-native-20261015.json",
+    "sha256": "8be8b346f448e1978d8cfb97e5d26c36656a08fd8b2bbea7210f94c97729970b"
+  },
+  "original_contract_sha256": "13fd0509e48eb0d9f45e8e6edc9a0fd5a4fec66d45f3e3cc525ee072b09c57d9",
+  "previous_green": {
+    "passed": 8,
+    "path": "/private/tmp/probata-t24-std-domain-final-green",
+    "seconds": 5.13
+  },
+  "production_diff_from_runtime_freeze": [],
+  "qualified_contract_sha256": "762deba8e2d8dc8961500d26209a6857553993225eadb0da6a12a8ba3b0c341a",
+  "readonly_guard_mutation_red": {
+    "artifacts": [
+      {
+        "path": "/private/tmp/probata-t24-std-domain-readonly-mutation-red/result.json",
+        "sha256": "d099907f1e10e8e2caa8f9345846e3feda9107012e22871be5bbeeec97b9b91b"
+      },
+      {
+        "path": "/private/tmp/probata-t24-std-domain-readonly-mutation-red/checks.log",
+        "sha256": "631b38b2e26c60f52f6fea780f588a689632dffc904d130bf2f41fc7a3966afa"
+      },
+      {
+        "path": "/private/tmp/probata-t24-std-domain-readonly-mutation-red/junit.xml",
+        "sha256": "ae6db676e8419ed60bf05328ac0c4865d72cafe2c0186c884f287bbe07aa4afd"
+      }
+    ],
+    "deselected": 8,
+    "failed": 3,
+    "mutation": "Removed output-disjointness guard; three controls fail before input/output mutation; source restored byte-for-byte in finally.",
+    "pytest_seconds": 1.74
+  },
+  "red_controls": {
+    "actual_original_contract_failure": {
+      "path": "/private/tmp/probata-resume-t24/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t24-current-std-frontier-0e7f2327-20261015.json",
+      "sha256": "faf684b643563fae216e2a4ae85b4070f1dc70a34bc6687f8a43808de4102f67"
+    },
+    "initial_helper_missing_and_acsl_requires_ordering": "Observed failed controls in tool transcript before helper implementation/order correction; no standalone raw log claimed."
+  },
+  "review_28a36212": {
+    "path": "/private/tmp/probata-t24-std-object-domain-final-review-28a36212.md",
+    "sha256": "971053c9973206cd147e94c6c8672e916bcdfdfbfdcda005700b8c5182600a22"
+  },
+  "runtime_freeze": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+  "sandbox_watchdog_attempt": {
+    "path": "/private/tmp/probata-t24-std-domain-profile-green",
+    "result": "RSS process-tree monitoring denied sysctl; no successful guarded result claimed; retried under authorized escalation with fresh output."
+  },
+  "source_boundary": "Test/helper/profile/evidence additions only. Actual WP records are frozen 0e7; qualified WP acceptance pending.",
+  "sources": [
+    {
+      "path": "/private/tmp/probata-resume-t24/swdb-project/tests/t24_std_object_domain.py",
+      "sha256": "98c37c8c0a765074a0321148d6134ac7db06cfaa1bf0b0737962b5c5e9283285"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t24/swdb-project/tests/test_t24_std_object_domain.py",
+      "sha256": "8f515662ca8b7f972a29d6a39f1eb3f5ef67f37a69a34f62ab38490a7e3d29de"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t24/swdb-project/tests/fixtures/proof/regression_corpus/wp-std-empty-contract-gap.yaml",
+      "sha256": "d63c528d7c66ac0bf464ac5e9693dc98498784372f84f382a9c4d8b4272410de"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t24/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/t24-std-object-domain.py",
+      "sha256": "88ea50247fe6cafee49b1daaedb807eca085defffb5af65f826ad10165ea00e2"
+    }
+  ],
+  "wrong_cwd_guard_attempt": {
+    "path": "/private/tmp/probata-t24-std-domain-readonly-green",
+    "result": "No tests found from repository root; no verification result claimed; fresh correctly rooted11-test run passed."
+  }
+}

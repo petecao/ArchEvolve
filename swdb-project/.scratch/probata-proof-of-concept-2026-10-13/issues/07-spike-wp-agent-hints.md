@@ -1,12 +1,34 @@
 # 07 — Spike (c): WP with agent hints
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-15 ET (method19 ended unproven; method20 preserved as unlaunched prospective work); 2026-10-14 22:50 ET (continuation 3: runs 10-12 fail, verdict fail so far, effort paused); 2026-10-14 17:10 ET (continuation 2: runs 7-9 fail, verdict fail so far); 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-15 ET (prospective method23 independently reviewed; run25 remains unproven and no new counted launch is implied); 2026-10-14 22:50 ET (continuation 3: runs 10-12 fail, verdict fail so far, effort paused); 2026-10-14 17:10 ET (continuation 2: runs 7-9 fail, verdict fail so far); 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
 **Status:** ready-for-agent
 **Blocked by:** 03
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Proof-of-concept plan", A1 row (c); "Proof-hint loop"; "Verifier lineup and order", unbounded verifier; "Providers and machines"); decisions: [07](../../formal-verification-2026-10-09/issues/07-install-verifiers.md), [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md), [12](../../formal-verification-2026-10-09/issues/12-dx100-proof-semantics.md), [13](../../formal-verification-2026-10-09/issues/13-proof-hint-loop.md), [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md), [19](../../formal-verification-2026-10-09/issues/19-bounded-verdict-bounds.md), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md), [27](../../formal-verification-2026-10-09/issues/27-proof-of-concept-stages.md)
 **Time estimate:** about 3 days, inside the 2-week box
+
+## Current resume checkpoint — user stop 2026-10-16 11:36 ET
+
+Status is **ready-for-agent**; the active claim is released at the user's request.
+Do not resume implementation/evaluation until the user resumes. Root owns the final
+merge/sync. [Full handoff](../prototype/07-wp-hints/stop-20261016-1136/README.md) and
+[exact copied-text/preserved-path manifest](../prototype/07-wp-hints/stop-20261016-1136/checkpoint-manifest.json).
+
+Source9a59528d prepares exact index_safe/missing_index whole-root TUs and a separate
+flushed first-formula observer, with23 final compiler-free producer controls. Source
+independent/API/actual gates remain pending. Published3ed7291f merged cleanly into
+the source branch; no original model/header/raw or functional postcondition changed.
+New generation/proof recipes are not authored and remain INCOMPLETE/UNREVIEWED/
+NOT EXECUTED. Original807.67746625s is consumed; the conditionally approved NEW
+120s generation/360s proof budget is separate, unused and requires fresh root gates.
+
+Original normal proof TimeoutExpired/weak unexecuted and no proof promotion remain.
+The passive journal has328 IDs/107 property-only suffix differences/707 events;
+no aliases are admitted. Separate index-root work addresses completed-result gaps,
+not a repeat of the old blended positive. FullTD/count acceptance remains open.
+All later historical claimed/active statements below are dated snapshots.
+
 
 **What to build:** The spike's test of the unbounded half. WP must prove one read-offload proof
 unit at threads = 1 against the BFS unit postcondition, with proof hints written by Codex, within 60
@@ -1141,3 +1163,625 @@ Remaining: a fresh reviewed counted run meeting every goal, final smoke and
 covering-wait negative criteria, with the required source/method freeze.
 See [method19 audit](../evidence/t07-method19-negative-20261015.json) and
 [prospective method20](../evidence/t07-method20-prospective-20261015.json).
+
+### Resumed independent method20 review — 2026-10-15 ET
+
+The current user instruction resumes the ticket within its existing shared box.
+Independent review first refused launch after reproducing a process cleanup race:
+a previously sampled root could spawn an unseen new-session child and exit before
+the next poll, leaving that child alive while its verifier lease was released.
+The public CLI regression reproduced the failure before implementation changed.
+
+The scoped runner now retains a fresh inherited run marker across every frozen
+WP `env -i` mode and inspects matching recent same-user process identities during
+cleanup. Persistent live inspection denial quarantines the lease; bounded retries
+handle transient Darwin inspection refusal. No unrelated environment values are
+printed or retained. Assumption: the trusted toolchain preserves this marker;
+hostile environment scrubbing is outside this resource guard. The original proof
+criteria, exact four historical source/model pins and provider pin are unchanged.
+The fresh provider argv omits `--examples` as well as all historical hints,
+counterstates, local controls and evaluator artifacts. Review controls alone are
+not a BFS proof. A clean prospective freeze and fresh counted run remain required.
+
+Independent re-review passed **163 controls** (162 repository controls plus an
+independently authored CLI regression), and all 11 WP mode values preserved the
+marker while scrubbing unrelated environment. [Reviewed source and artifact pins](../evidence/t07-method20-prelaunch-review-20261015.json)
+retain RED/GREEN, review and exact source hashes. No provider or real verifier
+was called by those controls.
+
+### Method20 run20 aborted before provider — 2026-10-15 ET
+
+Fresh baseline started15:05:50ET on clean `418a48d7`; a separate Spec review then
+found two resource-lifecycle gaps: reparented/marked descendants were absent from
+active RSS accounting, and a parent could fork/exit during the final marker
+sweep before lease release. Run20 was stopped at15:15:49ET, before any Codex call.
+No complete baseline or scientific hint-loop result is claimed. Exact source,
+logs, process/lease cleanup and hashes are retained in
+[aborted-run evidence](../evidence/t07-method20-aborted-20261015.json).
+
+Both defects now have deterministic public CLI regressions that failed before
+their fixes. Prospective active RSS uses current ancestry plus live retained
+PID/birth identities and periodic marker discovery. Cleanup requires repeated
+empty discovery across a settlement interval and quarantines nonsettling or
+unconfirmed cleanup. All13 runner controls pass; independent composed re-review
+is pending. These controls establish no BFS theorem. The fresh all-goal,
+cache-none, smoke and covering-wait-negative criteria remain mandatory; ticket07
+stays claimed within the existing shared box.
+
+The composed resource revision independently passes **165 controls** (164
+repository plus one separate CLI control); [exact source/review/RED/GREEN pins](../evidence/t07-method20-resource-review-20261015.json)
+are retained under a distinct prospective `method20-resource-discovery-settle-v2`
+revision. A second Spec re-review, new clean freeze and preflight still precede
+any fresh run. The interrupted run20 clock is not reset or reused.
+
+### Run21 harness-aborted; scoped MCP approval correction — 2026-10-15 ET
+
+Fresh run21 at `7408be92` completed its no-hint baseline (103/254ordinary goals
+open, all timeout;139/139baseline smoke checks passed) and five-seed round
+(39/209open). The provider then encountered the CLI's approval refusal on
+`record_design`; no design record or promoted agent hint exists. Existing
+read-only diagnostics executed, and their time remains in this interrupted run.
+The stopped driver/provider and source/tool evidence, including the pre-seed
+AppleClang21 syntactic-parser receipt, are retained in
+[run21 aborted evidence](../evidence/t07-method20-approval-aborted-20261015.json).
+No final proof/smoke replay or negative-control success is claimed.
+
+The prospective fix grants explicit per-tool approval only to method20's
+`record_design` and `focused_probe`. A neutral actual CLI probe executed both toy
+tools without BFS source/hints/verifiers. Four external-CLI argv controls pass
+after RED: new/resumed method20 calls receive exactly those two overrides; legacy
+calls remain unchanged. Read-only sandbox, disabled shell and final proof criteria
+are preserved. Independent review and a wholly fresh counted run remain required;
+the prior baseline, hints, conversation and clock will not be reused.
+
+Independent composed review passes **169 controls** (168 repository plus one
+separate CLI control). [Approval revision/source/probe evidence](../evidence/t07-method20-tool-approval-review-20261015.json)
+pins the distinct prospective `method20-scoped-tool-approvals-v3` revision, the
+actual neutral routing check and unchanged proof/resource boundaries. Root review
+of the six-line runtime change found no additional issue. Fresh source/tool freeze,
+baseline and conversation remain required; no qualifying proof is claimed.
+
+
+### Run22 harness-aborted on process inspection — 2026-10-15 ET
+
+Clean `703ff3d7` completed its no-hint baseline and failed closed18seconds into
+seed-stage proving on `AccessDenied(pid44755)`, before any provider. The exact
+historical operation is unavailable; no cause is inferred. [Source/process/stop
+receipt](../evidence/t07-method20-inspection-aborted-20261015.json) preserves27
+source checks with zero mismatches and no remaining tools/shared leases.
+No baseline/output reuse, proof, final replay or negative-control success is claimed.
+
+Prospective observation retries now retain sanitized stage/operation/PID/birth/time
+metadata and independently recheck identity after denial. Only confirmed departed
+or replaced identities are skipped; persistent live or unknown denial fails closed.
+Four external process-boundary controls show RED/GREEN for transient and persistent
+ancestry/RSS denial;173 composed controls pass. Independent review and an actual
+fresh mechanical-seed verifier pipeline precede any fresh counted freeze. Scientific
+criteria and the existing claimed/shared-box status remain unchanged.
+
+
+Independent review then caught a transient-retry PID ownership regression before
+any actual verifier launch. Focused ancestry/marker snapshot and cleanup-leader
+replacement controls failed before the identity-preserving fix and now pass.
+The complete20 runner controls pass; the interim retry commit is superseded.
+No scientific conclusion or new counted run follows from these controls alone.
+
+
+### Inspection/identity revision reviewed; actual resource pipeline passes — 2026-10-15 ET
+
+Final independent review passes **183 controls**. Birth mismatch precedes departed
+status; fresh marker discovery renews only independently checked exact-marker
+nonroot child identities. Original root identity cannot be renewed. Persistent
+live or unknown inspection denial still fails closed. The corrected real seed
+pipeline on `79d6f338` completed at16:36:59ET in150.48seconds, with all three
+processes exited0, cleanup confirmed, source unchanged and no remaining tools or
+leases. An independent script verified27 source pins and all process/log hashes
+with zero errors. It used only five fresh mechanical frames (209goals/39open),
+called no provider and makes no scientific success claim.
+
+[Combined exact review/control/component receipts](../evidence/t07-method20-inspection-review-20261015.json)
+retain both actual resource components and all RED/GREEN ownership controls.
+Their outputs, prior baselines and conversations will not be reused. The ticket
+remains claimed in the existing shared box; a fresh counted full-baseline run
+and unchanged final positive/smoke/negative acceptance are still required.
+
+
+### Run23 completed; method20 unproven — 2026-10-15 ET
+
+**Fail / not proven for this run.** Fresh clean freeze
+`df19ff8a6342d24ca853624f1e97a6c6833cabcb` ran16:41:25–17:33:26EDT,
+52.02counted minutes. Full baseline:254ordinary goals/103timeouts and139/139smoke
+checks passed,14.97minutes. Five fresh frames:39/209ordinary goals open at17.50minutes.
+The final incumbent has36hints and26/254round-mode goals open (15unit +11hint),
+all timeout; all nine postconditions remain open. Different modes produce
+different inventories, so the coincident254ordinary totals are not equal sets.
+
+Two provider calls share one fresh same-run conversation; no historical hints,
+examples, counterstates or control fragments were exported. Exact vocabulary,
+merge, erase and unchanged-header checks pass. Twelve legacy proposal requests
+include one edit-rule refusal;11candidate round-s attempts ran (10complete,
+one deadline-censored), separately from the baseline and seed jobs. The second
+provider turn has no `turn.completed`, so recorded token totals are lower bounds
+and its usage is unknown. No final proof/smoke replay or covering-wait negative
+was reached. The eight-minute final reserve was unused; `within_budget:false`
+means no qualifying success, not a60-minute overrun.
+
+[Compact completed evidence](../evidence/t07-counted-23-20261015.json) retains
+27matching source pins,55guarded process/log reports, launch/provider checks
+and the clean poststop audit. All cleanup confirmed, binaries stayed pinned,
+no tools or shared leases remain. Best JSON SHA256:
+`967300badab8e307c007bea3298d0e85030e46d83cf48c92776fa08066fe3d6b`.
+The source checkout and raw output remain frozen outside the repo. Ticket07 stays
+claimed within its existing shared box; acceptance remains incomplete.
+
+**Prospective decision:** map13 item11 permits tuning starting values through a
+new run plan; these Notes explicitly adopted30seconds. A baseline-only10second
+diagnostic plan therefore needs its own name, recorded departure, tests/review
+and fresh freeze. Every original final obligation, final30second cache-none
+all-function smoke replay and same-hints covering-wait negative remain mandatory.
+No baseline, seed, hint or conversation reuse is permitted. A projected9–10minutes
+of recovered search time is unmeasured; baseline statuses and regression pass sets
+may change with the timeout. See the separate method21 plan when reviewed.
+
+
+### Run24 completed; method21 unproven — 2026-10-15 ET
+
+**Fail / not proven for this run.** Fresh clean freeze
+`14c2a298f5692e273db8cf8c127f8248dc54714c` ran17:52:17–18:44:19EDT,
+52.03counted minutes with reported0.0seconds excluded lock wait (rounded;
+retained per-job waits total0.021875seconds). The full10second diagnostic
+baseline took6.11minutes:254ordinary goals/103timeouts and139/139smoke checks
+passed. This is8.86minutes shorter than run23's14.97minutes; fresh statuses,
+portfolio scheduling and pass-set differences prevent attributing proof-rate
+improvement to that single observation. Five fresh mechanical frames left39/209
+ordinary round goals open at8.64minutes.
+
+The final authoritative incumbent has41records (five mechanical,36Codex) and
+29/259round-mode ordinary goals open:14unit +15hint;25unknown +4timeout.
+Six of nine postconditions remain open. Passing downstream goals can depend on
+unproved hints, so these counts do not imply a complete proof. One provider call
+made15proposal requests:15candidate WP reports,14complete and one censored at
+the52minute search deadline. Baseline/seed jobs are separate. There was no fresh
+final replay or covering-wait negative; about7.97minutes of reserve went unused.
+`within_budget:false` means no qualifying success, not a60minute overrun.
+
+[Completed compact evidence](../evidence/t07-counted-24-20261015.json) binds30source
+pins,34review pins, six tools and63guarded reports. All cleanup confirmed; the
+poststop audit found no owned jobs, verifiers or leases. Peak sampled RSS was
+3552.90625MiB;44transient inspection events recovered without a terminal error.
+Source/workspace/raw output remain frozen outside the repo. Best JSON SHA256:
+`13b6af2f2b8ca8e63bfdf3b76e374974b8d0af001403b434ac3aae8cf63b41d3`.
+The CLI has no `turn.completed` usage receipt; its raw `tokens:{}` means unknown,
+not zero. The [scoped token addendum](../evidence/t07-token-accounting-acceptance-addendum-20261015.md)
+records136persisted snapshots; the latest cumulative observed counts are
+13,386,648input +27,238output =13,413,886total at22:44:18.019Z. Cached input
+13,099,904 and reasoning output12,010 are subsets, not extra tokens. These
+partial observations do not establish complete interrupted-turn accounting. The ticket remains claimed in its existing shared box.
+
+### Mechanical-seed assumption superseded prospectively — 2026-10-15 ET
+
+The earlier undecided assumption that deterministic frame seeds are method rather
+than hints is retained verbatim as historical context. It does **not** override
+Acceptance's requirement that every counted-run hint come from Codex. The dated
+[independent criterion review](../evidence/t07-seed-provenance-acceptance-review-20261015.md)
+finds that seeded runs cannot literally close07 even if otherwise all goals pass.
+Their actual mechanical/Codex origins and proof outcomes remain unchanged.
+
+A future method must start with no hints, never insert generated frames or filter
+seeds, allow Codex to author `loop_assigns` independently from frozen source, and
+trace every attempted record to raw scoped provider operations. No supplied old
+frames, copied/relabelled seeds, historical hints or seed-goal exemptions are
+allowed. Independently authored coincident text needs no artificial novelty rule.
+Complete natural provider usage receipts and the unchanged all-goal/smoke plus
+identical-hints covering-wait negative must fit the same60minute clock. The
+separate posthoc full30 replay is diagnosis only: it cannot upgrade run24 or feed
+concrete hints/history to a future provider. No new counted launch is implied.
+
+
+### Uncounted run24 full30 diagnostic censored — 2026-10-15 ET
+
+One independently reviewed replay of the authoritative incumbent on unchanged
+14c2a298 source ran18:52:52–19:04:43EDT,710.42seconds. The guard reached710seconds
+and exited137, with497goals scheduled and no final goals JSON/property closure.
+The partial log already emits24Unknown and two Timeout statuses; these are retained
+censored observations, not a complete final verdict. The497all-function/smoke
+schedule differs from259completed diagnostic ordinary goals; without the missing
+inventory, its238extra scheduled goals cannot be partitioned into smoke, additional
+ordinary goals or splits. The earlier139baseline smoke count is not assumed stable
+after adding41annotations. No proof, smoke pass or negative result is inferred.
+
+[Posthoc evidence](../evidence/t07-run24-posthoc-full30-20261015.json) records the
+710second lower bound,5616.21875MiB sampled peak and unchanged source/tool/origin
+hashes. Cleanup failed closed after three process-environment inspection denials
+for root9354, captured birth1792104772.581082; the resource report remains
+`unconfirmed_children`, not retroactively clean. Independent fresh poststop scans
+found the root absent and no recent owned markers, group/session members, run-path
+matches or inspection denials. At19:07:14 the exact owner/inode quarantine directory
+was atomically archived outside the repo; the manual recovery receipt preserves
+its original bytes. No process was signalled during that recovery.
+
+This uncounted experiment cannot upgrade run24 or supply concrete hints/history to
+a future provider. The allotted diagnostic did not complete even the positive replay; no evidence
+establishes that a complete positive plus same-strength negative fits12minutes. Scheduling alone has no
+evidence of all-goal success; a future zero-seed structural method needs separate
+prospective budget, provenance, accounting tests/review and launch authorization.
+
+
+### Prospective method22 protocol — 2026-10-15 ET
+
+[Method22](../prototype/07-wp-hints/METHOD22.md) is a separately named, zero-seed
+Codex-only plan with bounded pages of fresh active WP tasks and raw-operation to
+record/edit-parent provenance. A natural complete usage receipt for every scoped
+provider call is required. The proposed allocation stops proof tools at33minutes,
+allows natural return through hard36, and reserves the remaining total60minute
+budget for full30positive plus identical-hints full30negative (at least8minutes
+reserved for negative). Its sufficiency is unproven. No historical hint, baseline,
+conversation or telemetry is supplied to the new provider. At this prelaunch
+checkpoint, independent composed review, clean freeze, live preflight and
+coordinator launch were still required; no counted method22 run or qualifying
+success had occurred.
+
+### Method22 run25 terminal inspection refusal — 2026-10-15 ET
+
+The fresh zero-seed run on frozen `798e9bb3` ran 19:59:01–20:38:30 EDT and
+remains **unproven**. Its continuous counted clock reached 2369.004711 seconds
+(39.48 minutes). The raw `within_budget=false` flag means scientific publication
+was not admitted; it does not mean 60 minutes elapsed. Matching summary,
+completion and publication-log hashes plus clean driver exit 0 were independently
+verified. The producer checkout and all 34 source pins remain unchanged.
+
+The fresh 10-second all-function baseline completed in 6.09 counted minutes:
+254 ordinary goals (151 passed, 103 open) and all 139 smoke checks passed. A second,
+empty-hint diagnostic completed at 10.49 minutes with 103 of 155 round goals open.
+These inventories have different scopes. No mechanical frame or filter seed was
+inserted. The complete checked incumbent contains 12 Codex-authored records and
+101 open of 168 diagnostic goals (95 unit and six hint goals). Raw-operation,
+materialization and edit-parent ancestry were independently verified for all
+11 scoped edit requests. Six proposal requests produced five complete checked
+rounds and one search-deadline-censored round; their outcomes were three accepted,
+one staged and two reverted. The censored candidate was not promoted.
+
+The single fresh Codex conversation returned naturally at 33.09 counted minutes,
+before its hard stop, with complete observed usage: 2,979,289 input and 16,972
+output tokens. Cached input 2,875,264 and reasoning output 7,951 are subsets;
+cache-write was zero. This records complete CLI usage, without a billing claim.
+The exact prompt, source-only workspace, argv and model/effort were audited before
+any candidate request. No historical hint, seed payload, conversation or telemetry
+was supplied to the provider.
+
+The same-clock fresh full30 all-function/smoke replay scheduled 406 goals but
+stopped after 383.615460 seconds on an environment-inspection error. Its guard
+exited 1; deadline, queue-timeout and RSS-watchdog flags were false. The retained
+failure identifies live PID 39659, birth 1792111109.33101, denied on all three
+inspection attempts spanning 32.239667 milliseconds. Its executable, ownership,
+parent lineage and underlying OS or exec cause are not established. This is a
+refusal within the current bounded retry window, not evidence of a long-lived
+denial. The partial log contains 31 Timeout lines and no complete goals JSON;
+neither a completed full30 failing verdict nor a final smoke result is inferred.
+The negative was correctly not run because the positive did not qualify; the
+original positive-plus-negative acceptance gate remains unsatisfied.
+
+All 30 resource reports and log hashes were audited: 28 exit 0, one search-deadline
+censor and the terminal inspection error. The sampled peak was 3916.671875 MiB;
+all report cleanup inventories were empty. Three independent fresh poststop scans
+found no matching live identities, markers, run paths or verifier names and no
+inspection denials; both shared leases were absent. The coordinator then released
+the reserved actual slot. These are finite, non-atomic observations under the
+trusted marker boundary, with no hard quota or hostile-process containment claim.
+
+[Compact run25 evidence](../evidence/t07-counted-run25-20261015.json) pins the full
+outside-repository manifest of 1,265 raw files and the independent receipts.
+The [final independent review](../evidence/t07-run25-final-independent-review-20261015.md)
+distinguishes intact source/accounting/origin/cleanup from absent scientific
+acceptance. Four early task-page requests were conservatively refused because
+the reader did not support unsuffixed call preconditions and multiline callee
+headers; two later scoped page requests succeeded. Future work must separately
+test a bounded inspection retry policy, exact real-format task mapping and any
+same-run baseline-subset initialization. No current-run result reuse, criterion
+waiver or new actual launch is implied. The ticket remains claimed.
+
+
+## 2026-10-15 — Prospective method23 reviewed, acceptance still open
+
+The [method23 protocol](../prototype/07-wp-hints/METHOD23.md) combines the separately
+reviewed bounded environment-inspection retry with exact machine-ID task paging
+and a fresh-own-baseline empty diagnostic initialization. The baseline remains
+full all-function/smoke at10seconds inside the original continuous clock. Its
+retained TDStep/global-lemma subset supplies only diagnostic observations; no
+second round is fabricated, no cross-mode formula equivalence is asserted, and
+every final obligation remains mandatory. All counted hints must still come from
+Codex, with no mechanical seed insertion or historical input reuse.
+
+The tiny generic no-external-prover API component independently matched15unique
+goal IDs and printed tasks, including five nontrivial contextual obligations,
+with clean resource completion. Both exporters observe the same Wpo database;
+this checks exporter agreement/context and does not establish an independently
+derived obligation universe or proof. Native solver-session JSON absence and
+finite metadata-only poststop scope remain explicit in the
+[component audit](../evidence/t07-method23-component-api-independent-20261015.json).
+Earlier trivial-output and parser-refused components remain retained outside Git.
+
+Independent review found and the public regressions reproduced four refusal gaps:
+old-root baseline retargeting, late-generated task disclosure, missing actual
+source/header/exporter revalidation, and expired temporary-candidate disclosure
+after rollback. All four are repaired. Validation passed264composed controls,
+then26affected controls after the final localized fix; other29reviewed files are
+byte-identical to the composed snapshot. The
+[exact independent review](../evidence/t07-method23-final-independent-review-20261015.md)
+and [32-file manifest](../evidence/t07-method23-final-independent-review-manifest-20261015.json)
+retain the precise source and evidence boundaries.
+
+The [compact preparation receipt](../evidence/t07-method23-preparation-20261015.json)
+records source pins, raw receipt hashes and unchanged33/36/60minute scheduling,
+full30positive/smoke and identical-hint covering-wait negative, complete origin,
+natural usage and publication gates. Timing sufficiency is unproven. A clean
+published freeze, exact tool/input pins, live preflight, fresh pre-provider audit
+and coordinator admission still precede any new counted run. No new scientific
+success or actual launch is claimed here. Run25 and its producer remain immutable;
+ticket07 remains claimed with acceptance unsatisfied.
+
+### Method23 run26 native inspection exception — 2026-10-15 ET
+
+The fresh zero-seed run on clean frozen `ac6bb42e` ran 22:15:49–22:58:02 EDT
+and remains **unproven**. Its continuous counted clock reached 2532.9919285 seconds
+(42.22 minutes); the summary reports 0.0 excluded queue seconds. The retained `within_budget=false`
+and publication `not admitted` mean strict admission failed after an execution
+error; they do not mean 60 minutes elapsed. The driver exited 0, the matching
+summary/completion hashes were retained, and all 42 source pins remain unchanged.
+The producer and raw artifacts remain immutable.
+
+The fresh full 10-second baseline completed in 6.17 counted minutes: 254 ordinary
+goals (151 passed, 103 open) and all 139 smoke checks passed. Its retained
+155-goal diagnostic subset initialized the empty incumbent directly; no second
+empty-hint round was launched, no prior-run pass was reused, and no cross-mode
+formula equivalence is claimed. The all-function inventory remains distinct from
+the narrower diagnostic inventory and every final obligation remains mandatory.
+
+The actual scoped task reader returned four pages covering two complete
+machine-ID tasks, including the text after the 14,000-character boundary. Full task,
+index, log, generated source/header/exporter inputs and local exporter-binary
+hashes match the retained receipts. The provider received no mechanical seed or
+historical hint, baseline result, conversation or telemetry. Its authoritative
+incumbent has four Codex-authored records and 102 open of 159 diagnostic goals
+(102 unit and zero hint goals). Exact raw-operation/materialization/edit-parent
+provenance and the fresh scoped conversation were audited.
+
+There were 18 raw tool requests: four design requests (one recorded and three
+refused), four task-page requests, three edit checks and seven proposals. The
+separate final-response operations supplied the eighth candidate check. All
+eight candidate WP checks completed, with no deadline censor; these counters
+exclude the baseline, task generation and terminal replay. The final-response
+candidate regressed to 105 open goals and was reverted. The single Codex call
+returned naturally before the 33-minute search stop with complete observed usage:
+6,483,554 input and 22,729 output tokens. Cached input 6,350,976 and reasoning output
+11,728 are subsets; cache-write was zero. Complete CLI usage is recorded without
+a backend billing claim.
+
+The same-clock full 30-second all-function/smoke replay scheduled 397 goals but stopped
+after 569.1460498 seconds on `SystemError: <built-in function proc_environ>
+returned a result with an exception set`. The guard exited 1; RSS watchdog,
+timeout and queue-timeout flags were false. Its nullable `inspection_failure`
+field does not mean there was no error. The retained summary does not identify
+the original failing PID, phase, ownership or OS cause; the last cleanup denial
+cannot supply that missing attribution. The partial final log contains 58 Timeout
+lines, but no complete goals JSON or full smoke verdict. These censored outcomes
+do not establish a completed final verdict, and an availability repair alone has
+no evidence of proof sufficiency. The positive did not qualify, so the required
+identical-hints covering-wait negative was correctly not run.
+
+All 30 resource reports were audited: 29 exit 0 and the terminal native exception.
+The sampled peak was 4046.3125 MiB under the 8 GiB guard; all retained cleanup
+inventories were empty. Three independent fresh poststop metadata scans found
+the known driver, launcher, runner and root absent, no recent matching run paths,
+groups, sessions or verifier names, no inspection denials, and both shared leases
+absent. No exact marker identity was archived for that scan, so no environment
+token absence is claimed. These are finite, non-atomic observations under the
+trusted-tool boundary, with no hard-quota or hostile-containment claim.
+
+[Compact run26 evidence](../evidence/t07-counted-run26-20261015.json) and the
+[independent final review](../evidence/t07-run26-final-independent-review-20261015.md)
+retain the exact source, raw manifest, task, accounting, origin and cleanup
+receipts. The native exception requires a separately tested contextual diagnosis
+before any newly reviewed method or actual launch. Old hints and results must
+remain outside every future fresh provider. Ticket07 remains claimed, with the
+original positive-plus-negative acceptance unsatisfied.
+
+### Narrow native-inspection repair reviewed — 2026-10-15 ET
+
+The runner now admits the existing 200 ms / 21-attempt environment retry policy
+for the exact retained `proc_environ` SystemError only when the actual requested
+operation is `environ`. Unknown signatures, other exception classes and native
+identity/status failures receive sanitized context and fail closed. Immutable
+PID/birth checks, continuous retry-admission expiry, counted pauses and subsequent
+RSS/deadline enforcement remain unchanged. Individual OS calls have no forced
+timeout; this is still sampled, finite, non-atomic trusted-marker supervision.
+
+Diagnostics retain operation, stage, PID/birth, bounded exception/cause/context
+types, numeric IDs and code path/function/line. They omit argument and cause
+messages, source lines, locals and process-environment values. Primary and cleanup
+contexts are separate. Cleanup discovery errors preserve unconfirmed status and
+quarantine while continuing only independently verified owned-group cleanup.
+An unknown root identity is not signaled.
+
+Independent review found and a public CLI regression reproduced an additional
+secondary identity error incorrectly recovering to exit 0, plus a secondary
+exception escaping without safe context. Eight expanded controls failed before
+the correction and passed afterward. Non-AccessDenied secondary validation
+exceptions now fail immediately with the original environment failure and actual
+secondary operation recorded separately. Existing independently confirmed-gone
+and AccessDenied handling is retained.
+
+The [independent final review](../evidence/t07-native-inspection-final-independent-review-20261015.md)
+passed 60 controls in 25.28 seconds: 58 repository controls and two independent
+regressions. Its [seven-file manifest](../evidence/t07-native-inspection-final-independent-review-20261015-manifest.json)
+and [control evidence](../evidence/t07-native-inspection-controls-20261015.json)
+pin the final runner, tests, policy and retained RED/GREEN artifacts. No actual
+formal tool, compiler, provider or solver ran for these controls. No production
+code, real C++ unit, stand-in algorithm, proof hints or acceptance criterion changed.
+
+This repair does not establish recovery from run26's original OS event, identify
+its lost PID/phase/cause, or upgrade that unproven run. Separately identified queue
+capacity/caller-domain, unsigned arithmetic and helper-domain defects still block
+a new actual admission. They require their own source-faithful repair, counterstate
+controls, helper/RTE verification plan and independent review. Ticket07 remains
+claimed with the original scientific acceptance unsatisfied.
+
+
+## Source-domain prerequisite — 2026-10-16 00:22 ET
+
+The independently reviewed two-file repair preserves all executable C tokens and
+TDStep postconditions. Exact modified DX100 beginp/endp expose full allocation;
+the earlier active-window native oracle is excluded. Atomic addition specifies
+unsigned modular arithmetic, queue-capacity credit follows occupied distinct
+visited vertices, and pointer/init/read/write domains are explicit. One thread-zero
+fixed-buffer lifetime is a declared restricted stand-in boundary, not a general
+allocator theorem. Six native API/queue boundary controls meet their expectations
+under the repaired8GiB guard; the historical out-of-domain copy remains a sanitizer
+negative, not an admitted-state failure. All raw checks and hashes are retained.
+[Independent static review and finite helper/RTE plan](../evidence/probata-t07-source-domain-successor-independent-review-20261016.md),
+[native receipt](../evidence/t07-source-domain-native-correct-api-20261016.json).
+
+No actual component or new counted run follows from these checks. Next: fresh
+all19helper no-hint/RTE component, with no function/property filters and complete
+ordinary/init/smoke inventory. Run26 remains UNPROVEN and ticket stays claimed.
+
+
+## Supported helper domains — 2026-10-16 00:44 ET
+
+Actual no-prover generation at frozen c9 produced245goals/352properties, including
+31initialization properties, but refused an undefined pointer_comparable builtin.
+The new exact-byte-reviewed freeze removes only eight redundant conjuncts while
+retaining live endpoints, same-base, array/range/init domains, ordering and
+pre-subtraction byte bounds. Executable C and TDStep postconditions are unchanged.
+[Review](../evidence/probata-t07-supported-domains-freeze-independent-review-20261016.md),
+[scope and residual alignment boundary](../prototype/07-wp-hints/SUPPORTED-DOMAINS-20261016.md).
+
+WP omits alignment/indirect-call RTE classes. The helper TU has direct named calls
+only; alignment remains an explicit source/caller correspondence limit. No full
+C RTE, helper proof or counted acceptance is claimed. The next separately reviewed
+generation must retain all19ordinary helper functions, every contextual bodyless
+call smoke and the exact capability warnings. No historical hints are imported.
+
+
+Supported-domain helper generation — 2026-10-16 01:05 ET: exact7930f3a1 completed all19 helpers,245 goals/352 properties,212 ordinary/33 smoke/31 initialization properties, five source-bound bodyless-call smokes and all three normalized snapshots. Independent cold audit rehashed1,005 selected pins and29 artifacts without mismatch. Prover-none output contains186 untried ordinary goals,26 implicit trivial contracts and empty-result smoke rows; none is solver proof. Whole3.521s/172.78125MiB, source unchanged, no guard failure. Alignment remains unresolved/full C RTE false. A separate900s complete helper-proof packet is being prepared with one prover worker; no counted provider run is admitted. [Actual](../evidence/t07-helper-stage1-v4-actual-20261016.json), [cold review](../evidence/probata-t07-stage1-v4-independent-cold-review-20261016.md).
+
+
+Separate helper proof admitted — 2026-10-16 01:23 ET: frozen7930f3a1 runs under900s whole/880s internal/8GiB,wp-par1/fullthree-prover30s portfolio after v2 staticPASS. Both fresh OCaml modules compiled and219 active goals were scheduled. Full245goal/352property universe remains mandatory. Early report files and journal rows are provisional; no proof or counted-provider acceptance. V1 was never launched and its three review findings remain retained. [Admission](../evidence/t07-helper-stage2-v2-admission-20261016.json), [staticPASS](../evidence/probata-t07-helper-stage2-independent-static-review-v2-20261016.md).
+
+
+## Separate helper v2 settled closeout — 2026-10-16 01:49 ET
+
+Exact `7930f3a1f8d59cb7b338f54844dea7728bc8864c` completed the all19-body proof gate with245 goals/352 properties,212 ordinary/33 smoke and31 initialization properties. Independent settled audit finds209 ordinary Valid and three open: constructor domain initializedness, flush copy_start initializedness and std_copy byte-offset representability. Every open goal received the full three-prover portfolio. All33 smoke rows retain fresh external nonvalid outcomes and raw passed=true; no detected contradiction is not a satisfiability theorem. [Actual/receipts](../evidence/t07-helper-stage2-v2-settled-actual-20261016.json), [independent cold review](../evidence/t07-helper-stage2-v2-independent-cold-review-20261016.md).
+
+Whole383.135438792s, peak1,322,909,696B, component/guard exit1 from open obligations; no watchdog/OOM/whole timeout/unconfirmed children. Four transient AccessDenied observations remain retained, final inspection_failure null. Three finite poststop sweeps and absent leases support sampled settlement, not universal process absence. Frozen source and old actuals remain unchanged.
+
+[Source triage](../evidence/t07-helper-three-open-source-triage-20261016.md) identifies a call-return initializedness transfer hypothesis and concrete Typed cell-to-byte abstraction gap; no full simplified VC tasks or solver countermodel were retained. [Repair options](../evidence/t07-helper-sound-repair-options-20261016.md) prefer separately qualified fresh output-slot lowering and source-array element-span correspondence, retaining all old functional/init/RTE/frame obligations. That separate worktree repair is underway, with no acceptance yet. [Alignment/caller note](../evidence/t07-source-model-alignment-caller-domain-20261016.md) does not certify arbitrary Graph states, in-place storage reuse or omitted WP alignment guards. Helper proof, TD, full C RTE and full C++/caller correspondence remain incomplete; run26 stays UNPROVEN and ticket07 stays claimed.
+
+
+## Prospective output-slot preparation — 2026-10-16 02:15 ET
+
+Exact971ad6324299ebe40a5146eed0de5172a9384137 prepares15 returning helper bodies,5 standard/builtin and2 device interfaces as typed private output stores, retaining19 helper bodies and53 lexical occurrences. This is a finite hand-model transform, not a C++ compiler or admitted proof. Stronger source-array/element-span qualifications, fresh-slot validity/separation/lifetime/frame proof, opaque normal-return/store trust and TD loop-anchor/source correspondence remain mandatory. Allocator/fullTD/source/count admission remains REFUSED_PENDING_SEPARATE_REPAIR; original7930 actuals and all source/TD postconditions remain immutable.
+
+[Initial review](../evidence/t07-outslot-independent-review-1c018f11-20261016.md) requested a physical-byte admission correction: read_text normalized CRLF before hashing. The minimal successor reads each raw buffer once, verifies SHA first and strictly decodes UTF-8; genuine old-CLI CRLF RED becomes44GREEN. [Follow-up PASS](../evidence/t07-outslot-byte-repair-independent-review-971ad632-20261016.md) closes only that admission defect. All4 original and5 generated/map blobs remain byte-identical;82 initial/128 repair manifest instances rehash without mismatch. Native/compiler/pure observations grant no formal initializedness or helper acceptance. [Integration review](../evidence/t07-outslot-preparation-integration-review-20261016.md) explicitly preserves24 trailing-space warnings in pinned generated ACSL rather than reformatting reviewed bytes; final integration quality/maintainability remains pending.
+
+[Corrected private-array design v2](../evidence/t07-fresh-array-domain-design-v2-20261016.md) supersedes the old upstream-tree allocation citations with exact DX100 fork e4fc4af provenance and the project offload unit. It proposes uninitialized lexical typed storage only for the one default16384 local QueueBuffer lifetime; incoming SlidingQueue capacity stays symbolic. It is passive design, not allocation semantics, a source refinement or a same-path positive/negative formal result. The separate private-arena implementation/refinement is underway; lifetime/nonescape/init-map/source/caller/alignment qualification remains open. Status stays claimed, old three helper goals stay open, run26 UNPROVEN, no full C RTE/TD/count acceptance.
+
+
+## Private-array and reentry static preparation — 2026-10-16 02:45 ET
+
+Prospective e97fb191ec789859f4c5c700860203ea53c9b01c includes the frozen3940 private-array preparation plus four lexical/modular reentry fixtures, ten sites total with20 header bodies perTU. [Independent3940 review](../evidence/t07-private-array-independent-review-3940afd0-20261016.md) remains bound to the original six-site/43-control freeze; it is not relabeled as the later run. The new ten-site56-control native/analyzer packet preserves the four generated C/header files and original six sites. [Reentry scope](../prototype/07-wp-hints/PRIVATE-ARRAY-REENTRY-20261016.md), [integration review](../evidence/t07-t25-preparation-integration-review-20261016.md). The90 initial/97 successor manifest instances rehash without mismatch. Unsafe negatives are not executed natively; no formal gate was run by integration.
+
+The later-lifetime missing-store controls introduce no mask/reset/havoc assumption. Both roots in each modular-entry TU and all20 helper bodies must be retained by a future generation/proof census, with exact intended initializedness obligations distinguished from unrelated loop/frame failures. The source header/macro/include closure is explicitly REFUSED_NOT_IMPLEMENTED; the researched fork hash and pinned project unit do not qualify a selected C++ build. Incoming queue capacity stays symbolic. Allocator, actual init-map/reentry/lifetime, physical alignment/array provenance, full TD/source/count and ticket completion remain refused. Private generated headers add23 trailing-space warnings to the separately pinned24 output-slot warnings;47 total remain exact and documented for a future quality/refinement gate. Status remains claimed; original7930 helper three-open result/run26 UNPROVEN remain immutable.
+
+## Canonical preparation published — 2026-10-16 03:32 ET
+
+Exactb9b96fb85573c0292d2f7171b984cd2ee4076443 is published through43d652b5 with [independent v2 review](../evidence/t07-canonical-generation-independent-review-v2-b9b96fb8-20261016.md) and [inert v2 packet](../evidence/t07-private-array-generation-packet-v2-20261016.json).18 canonical C/header/site payloads equal the old outputs after only line-end space/tab trimming; all20 historical files and their47 whitespace warnings remain unchanged. The canonicalizer refuses introducing a line splice. Retained110 checks are records across generator stages, not110 proofs;31 recipe/15 label controls are pure. Integration independently rechecked31 Git blobs,18 payload comparisons,20 historical files and1009 runtime file-pin instances; the prior reviewer separately enumerated1008 runtime pin instances. Both counts retain their own scope.
+
+The prospective recipe keeps ten TUs/20 helpers each/all roots, complete ordinary/init/RTE/smoke/property/call inventories, no external prover request and120s outer/110s inner/8GiB single-worker limits. Normalized snapshot source-label v1 defect is fixed in v2 without changing31-blob source/flags. No actual entry/generation or proof acceptance follows. Root owns fresh admission and full cold export review. T_init/SINIT payload/reentry, allocator/alignment/source/same-array/span/fullTD/counted-provider gates remain open. Selected-source successor9ef0603a is excluded pending review; status stays claimed.
+
+2026-10-16 03:34 ET actual generation update: the [root-reported partial attempt](../evidence/t07-canonical-generation-partial-root-report-20261016.json) at exactb9 settled03:29:13 ET exit1/4.663919s/183.406MiB. Six cases were processed and seventh raw reentry-missing-store exists, but conservative warning classification refused “Missing assigns clause (assigns everything instead)” at a loop; three cases are unexecuted. Prefix/seventh-raw cold classification is pending. Two transient AccessDenied events recovered; final inspection/unconfirmed-child failures absent and three finite empty sweeps/leases absent are root-reported bounded settlement, not universal absence/zero events. No external proof solver requested and no generation PASS or payload/lifetime/reentry/source proof follows. Any continuation must be independently reviewed for the unexecuted three only, without rerunning settled raw for reader repair.
+
+## Selected source preparation and generation checkpoint — 2026-10-16 03:51 ET
+
+Exact9ef0603a70f32a30f3556080891457355ad7a5b3 and [independent review](../evidence/t07-selected-source-independent-review-9ef0603a-20261016.md) are integrated. Four source/review pins and passive audit receipts match. The prior reviewer independently reconstructed the main TU and checked495 artifacts/901 include files/22 staged pairs/44 unchanged hand-model files; integration verifies those receipts, not a new compiler run.35 compiler/pure controls support only finite Mac source-selection/QueueBuffer<int>/16384/default constructor/new[]/delete[]/same-declaration captures. They do not prove allocator success, model source correspondence, threads=1, initializedness/lifetime/same-array/alignment/Graph producer/TD/count gates.
+
+Root reports generation continuation v4 completed only the remaining3 TUs at03:45:54 ET exit0/3.02609s/175.109MiB/no events/timeout/children. Aggregate3306 goals/4580 properties with7 retained raw cases is reported, independent cold classification pending. The original v2 entry exit1 on the seventh raw warning and its2 recovered AccessDenied events remain immutable. No actual compiler/formal/probe/native/SSH job ran in integration, no accepted payload/source/count theorem, and no ticket resolution.
+
+## All-ten diagnostic generation cold closeout — 2026-10-16 04:06 ET
+
+[Independent cold review](../evidence/t07-independent-all-ten-cold-audit-v4-20261016.md) accepts diagnostic-generation integrity only at exactb9b96fb85573c0292d2f7171b984cd2ee4076443:6709 checks/1466 distinct retained physical files, zero mismatch. Integration separately rehashed those1466 files with zero mismatch. The [326-check preparer audit](../evidence/t07-private-array-all-ten-cold-v4-20261016.md) agrees. Seven original cases are retained without rerun; only the three previously unexecuted TUs ran in v4. The original v2 entry exit1 and its two recovered AccessDenied events remain unchanged. Continuation ended03:45:54 ET, exit0/3.026090s/175.109375MiB,120s/8GiB continuous guard, no recorded continuation inspection/resource/child failure. Root's three finite empty settlement sweeps and absent leases are historical observations, not universal/current process absence.
+
+All ten contain3306 goals=2862ordinary+444smokes,4580properties,386 RTE-init properties and30 normalized snapshots. Precisely300 ordinary rows contain results=[valid];564 ordinary passed flags include264 with empty results. All444 smoke rows have passed=true/results=[] without external smoke execution or native proof report. Do not label all goals untried or treat passed flags as consistency/proof evidence. Complete source/helper/root/call/property/dependency/origin/Extern inventories remain bound. Exact conservative missing-loop-assigns warnings in reentry-missing-store and reentry-positive remain frame_discharged=false/proof_acceptance=false, with both global capability warnings per TU. No negative is qualified from conservative all-memory loop-frame imprecision.
+
+Actual backend T_init/SINIT sequents were not exported; payload masks, lifetime/reentry, allocation, alignment, source correspondence, full C RTE, TD and counted-provider gates remain open. The selected-source9ef preparation is separate. New ML observer work is excluded until an independent frozen-packet review; no further job is admitted by this closeout. Run26 remains UNPROVEN; ticket stays claimed. [Root receipt](../evidence/t07-private-array-continuation-root-receipt-v4-20261016.json), [preservation manifest](../evidence/t07-t25-generation-cold-preservation-20261016.json).
+
+## Structural reporter review and native compile checkpoint — 2026-10-16 04:58 ET
+
+[Initial split review](../evidence/t07-report-property-closure-independent-review-2fa269a9-20261016.md) accepts exactML22919544 API readiness, then [strict47 review](../evidence/t07-report-property-closure-final-independent-review-47b310df-20261016.md) closes missing dependencies/origin/targets defaults after3 real public REDs→32pureGREEN. ReporterML b5/2fa/47 is identical;31 other prior actual source/C/header/observer blobs remain unchanged. Root's [native compilation](../evidence/root-t07-native-report-compile-v2-20261016.json) succeeds through the exact2fa Gitarchive helper:0.582028s/123.1875MiB/exit0, no recorded inspection/child/resource failure. This is native OCaml/API/type/module compilation only, no WP/solver or complete output validation. Original nativeV1 stopped before compiler on Gitarchive staging-parent assertion; [stderr](../evidence/root-t07-native-report-compile-v1-precompiler-refusal-20261016.txt) remains unchanged.
+
+Strict47 is held from integration pending the separately authorized ordinary/smoke attempt-policy repair. Installed Wpo.all_not_valid on an empty result list is vacuously true; passed=true/results=[] is not an attempted consistency check. Empty/Failed/untried/contradictory Valid smoke results must not justify new proof promotion. Synthetic closure fixtures establish metadata graph behavior only. Original positive327/411 incomplete output and all source/exit/raw evidence remain immutable; no positive rerun for reader repair. Init/SINIT/reentry/lifetime/source/alignment/fullRTE/TD/count gates and ticket remain open.
+
+## Reviewed reporter and smoke-policy preparation — 2026-10-16 ET
+
+Reporter/smoke successor1395 is now integrated as reviewed preparation: explicit property-reference closure plus nonempty healthy smoke observations refuse empty/Failed/untried/contradictory results. The final65-case composed controls pass; one recovered AccessDenied event and the separate broad-profile timeout remain retained. ML229 is unchanged from the native compile. Fresh actual output/property/backend qualification and all Init/SINIT/source/lifetime/TD/count proof gates remain open; no historical record is promoted. [Final source review](../evidence/t07-smoke-policy-final-independent-review-1395f70c-20261016.md).
+
+Status remains claimed. Prior2fa and47 partial reviews remain unchanged; source1395 supersedes only their pending source-reader findings, without upgrading retained actuals.
+
+## First1395 continuation partial settlement — 2026-10-16 05:17 ET
+
+The separately admitted T07 continuation settled05:17:58 ET: missing-store Frama125, entry/guard1; wrong-cell remains unexecuted. Generation is incomplete and no output/proof is accepted. Guard28.962518s/323.734375MiB, noOOM/timeout/unconfirmed children; one AccessDenied was confirmed gone, final inspection null. Three finite empty name/PID/birth sweeps and absent leases are historical root settlement, not universal absence. Reporter unregistered-reference classification and complete cold artifact audit remain pending. [Result](../evidence/t07-backend-export-continuation-v2-result-20261016.json), [guard](../evidence/t07-backend-export-continuation-v2-guard-summary-20261016.json), [settlement](../evidence/root-t07-backend-export-continuation-v3-settlement-20261016.json).
+
+Only missing-store was attempted; no positive replay or immediate formal rerun. Root reports an unclassified unregistered-property reference; exact property/API investigation is pending. Original actual exits and source1395 stay immutable. Status stays claimed; structural/Init/SINIT/source/lifetime/TD/count qualification remains refused.
+
+## Reporter refresh native readiness — 2026-10-16 05:52 ET
+
+Exact0cfa/ML8b84 is reviewed and integrated, with root native compileCMXSdc0757/86320B passing0.744767s/100.90625MiB; one recoveredAccessDenied/finalnull/nochildren retained. Actual directc6 argv takes precedence over inherited B label, raw unchanged. This establishes native compilation only. Original1395missing-store refusal and unconfirmed firstunknown variant remain; no replay/output/Init/source/TD/count promotion. Future wrong-cell-only packet needs separate strict source/structural/property/native/backend and fresh root admission review. Status stays claimed. [Review](../evidence/t07-registration-refresh-independent-review-0cfaad70-20261016.md), [compile](../evidence/t07-native-report-compile-v3-result-20261016.json).
+
+### 2026-10-16 06:06 ET — wrong-cell V3 inert packet reviewed
+
+[Independent static review](../evidence/t07-backend-export-v3-independent-static-review-20261016.md) passes the frozen source0cfa/entry87e865/expecteded7d20 packet for the sole previously unexecuted wrong-cell TU:326goals453properties,32Gitblobs,1,241runtime regular-file references/nine selected tree memberships and complete old224+136+133raw membership pins. All57 retained pure reader/source-bijection controls remain synthetic/passive, not fresh output. Root outer recipe and fresh admission are still required. No positive/missing-store replay; source/GID bijection preserves raw IDs and explicitly records changed status dependencies. Printed per-goal slices require full raw generated-cluster/runtime context and are not standalone solver submissions. No proof, Init/SINIT, alignment/lifetime/source/TD/count acceptance or resolution.
+
+### 2026-10-16 06:25 ET — wrong-cell complete export integrity
+
+Root ACCEPTS [complete wrong-cell export integrity](../evidence/t07-wrong-cell-passive-cold-v3-20261016.md) only at exact0cfa/b9canonicalC:326goals453properties(283ordinary43smoke38init),140actualtasks(97ordinary43smoke)+186internal shortcuts(156Qed30CFG),296native+30exactCFG omissions,3normalizedsnapshots. [Independent decision](../evidence/t07-wrong-cell-independent-cold-decision-20261016.md) rehashed all426settled localraw+4external pins; root independently reproduced the same coldJSON. All32source/runtime and old224+136+133raw prefixes remain unchanged. Actual guard0/30.889813375s363.859375MiB/8GiB noinspectionevents/OOMtimeout/children; root06:09:12settlement has3finiteempty scans0denials/leasesabsent, notuniversalabsence.
+
+Cell1payload initializedness has nontrivial first/final snapshots, emptyresults/passedfalse and a real task; cell0store does not silently initialize cell1. Generated smoke emptyresults are not healthy attempts. Fullraw generated-cluster/runtime context remains required, not standalone pergoal SMT. Oldpositive/missingstore reports/refusals are immutable and unpromoted. No proof/initnegative/heapSINIT/lifetime/reset/sourceallocator/TD/count gate is discharged. A selected-single-activation sourcegate successor is separate preparation.
+
+### 2026-10-16 06:39 ET — single-activation source preparation integrated
+
+[Independent review](../evidence/t07-single-activation-independent-source-review-0137631c-20261016.md) PASS exact0137631c sourcegate:material lqueue declaration first/direct in one captured parallel body, outside loops/conditionals; direct terminal flush on exact same object.393physicalrefs/3newsourceblobs/44unchangedmodelGitblobs verified. Real selected-TU repeated-allocation and conditional-flush REDs are distinct from compiler-excluded earlyreturn and initial launcher-path error. Retained35public/5AST controls pass; no rerun by integration. Runtime threads1/reentrancy/allocator/lifetime/InitSINIT/source/TD/count all remain unqualified; no actual source/prooffacts or hints added.
+
+
+## 2026-10-16 08:05 ET scoped cold checkpoint
+
+Root accepts complete changed-source20Typed-helper discharge only:260ordinaryValid/37healthy nonvalid smokes, exact297/428graph. See [root decision](../evidence/t07-full20-helper-scoped-root-decision-v1-20261016.md) and [independent cold reconciliation](../evidence/t07-full20-merger-independent-cold-review-v1-20261016.md). Constructor-domain/copy-start/span obligations have new source-bound Valid results; old7930partial and interrupted socket attempt remain immutable. Declared27Extern/fourfamilies and unsupportedalignment stay explicit. Source/privatearrayallocation/Init/lifetime/thread1/Graph/fullTD/count remain open; ticket stays claimed. [Combined evidence](../evidence/probata-frontier-cold-checkpoint-20261016-0805.md).
+
+
+2026-10-16 08:47 ET — [Settled local OMP installation/profile checkpoint](../evidence/t07-omp-profile-settled-checkpoint-20261016.md): positive inside-team1 and exact negative2/refused reconcile1,117 pins/952 unique physical files/20raw; root native1.020710542s292.0625MiB/event0. Source/private-frame/serialized-dispatch application remains explicit compiler/library/runtime TCB. No exactTD/count, allocator/lifetime/Init or foreign-runtime qualification; ticket stays claimed. V2 unknown-header/pre-native and passive66-character hash refusals preserved without native replay.
+
+
+2026-10-16 — Reviewed exact649b8cd2 device-init source is integrated as preparation only. [Independent review](../evidence/t07-device-init-independent-source-review-v1-649b8cd2-20261016.md) rehashes331 physical pins/44 historical Gitfiles; three read/write initializedness contract insertions preserve all C tokens and previous clauses, no output-tail/initreset premise. New same-path fixtures and parser/formal controls are unadopted/pending; no TD/count qualification.
+
+
+2026-10-16 — Exact bd2610b6 device-only diagnostic fixture preparation is integrated after independent65f/bd source reviews and inert-entry static PASS. [Preparation checkpoint](../evidence/t07-device-generation-preparation-checkpoint-20261016.md) preserves5/1unfiltered roots/36+10calls, weak-output unconstrained outcome and the corrected13common-AST-function count. Actual generation/cold/any later proof remain separate root gates; no fullTD/count/source qualification or status change.
+
+
+2026-10-16 09:40 ET — Actual bd normal-TU generation artifacts were produced, then unclassified Typed memory-model hypotheses warnings caused entry/guard1; weak TU unexecuted/no external solver. Complete two-TU generation/proof/Init/source/TD/count acceptance remains false. [Current scoped checkpoint](../evidence/frontier-current-dispatch-and-caller-preparation-checkpoint-20261016-0940.md). Ticket stays claimed; frontier counts35/25/3 unchanged.
+
+## Active checkpoint — 2026-10-16 10:06 ET
+
+See [settled producers and passive evidence](../evidence/frontier-settled-producers-checkpoint-20261016-1006.md) and its exact-pin ledger. Ticket remains claimed; existing acceptance criteria and dependencies are unchanged. Original exits, pending proof/cold/source gates and historical trust boundaries are preserved.
+
+
+## Active scoped checkpoint — 2026-10-16 10:36 ET
+
+Weak generation cold is independently reconciled only:85/176,50 exports+35 internal; line39 pointer-slot internalValid differs from the empty-result nontrivial payload goal. All21 smokes remain unattempted; conditional Typed/From/alignment residuals are not discharged. Root reports exactbd two-TU/six-root proof diagnostic started about10:34 ET/session25220,780s active/760s internal/8GiB, no accepted result. [Static review](../evidence/t07-device-diagnostic-proof-independent-static-review-v2-20261016.md), [weak review](../evidence/t07-device-weak-independent-cold-review-v1-20261016.md), [root admission](../evidence/t07-device-diagnostic-proof-root-admission-v1-20261016.md). Originalnormal exit1 remains. No source/Init/lifetime/allocator/TD/count or ticket acceptance.
+
+[Current checkpoint](../evidence/frontier-scoped-checkpoint-20261016-1036.md). Counts35resolved/25ready/3claimed; lastfulltable10:30 ET, next11:00 ET.
+
+
+## 2026-10-16 11:17 ET — scoped settled checkpoint
+
+The settled device proof diagnostic remains partial. The [independent cold reconciliation](../evidence/t07-device-proof-independent-cold-reconciliation-v2-20261016.md) passes697 local checks with0 mismatches, including317 raw regular files/10,752,569B and16 directories. Exact707 journal events produce328 latest IDs;107 retain source/property identity differences. The final normal inventory is0goals/152properties, so no complete proof inventory is accepted. Weak is unexecuted. Original normal TimeoutExpired/entry+guard1,760.559556s, six recovered inspection events and original lease-present snapshot remain unchanged. The [later clearance](../evidence/root-t07-device-proof-post-handoff-clearance-v1-20261016.json) is separate. Reader V1 REQUEST_CHANGES and41 retained pure V2 controls are preserved; no actual rerun or Typed/source/Init/lifetime/TD/count qualification follows.
+
+Ticket remains claimed; dependency/status counts are unchanged. [Compact checkpoint](../evidence/frontier-scoped-checkpoint-20261016-1117.md).

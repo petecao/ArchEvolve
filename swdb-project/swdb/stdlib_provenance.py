@@ -480,19 +480,22 @@ def _certify_in_process(tool, source, *, includes=(), defines=(), models=(),
 
 
 def runtime_identity(tool):
-    """Transitive tool identity: checker source and matching native parser binary."""
+    """Pin the frontend even when optional standard-parser provenance is absent."""
     parser = None
+    report = {"check": identity(), "command": list(tool.command)}
     try:
-        parser = _Clang(tool)
         _, effective = _effective(tool, [*tool.command, "-x", "c++", "-fsyntax-only", "-"], ())
-        return {"check": identity(), "parser": {"id": "libclang-" + tool.version, "sha256": _sha(parser.path)},
-                "driver": effective["driver"], "command_executable": effective["command_executable"],
-                "headers": _headers_identity(parser)}
+        report.update(driver=effective["driver"], command_executable=effective["command_executable"],
+                      frontend=effective["frontend"])
+        parser = _Clang(tool)
+        report["parser"] = {"id": "libclang-" + tool.version, "sha256": _sha(parser.path)}
+        report["headers"] = _headers_identity(parser)
     except (Refused, OSError, ValueError, AttributeError, subprocess.SubprocessError) as exc:
-        return {"check": identity(), "unavailable": str(exc)}
+        report["unavailable"] = str(exc)
     finally:
         if parser:
             parser.destroy_index(parser.index)
+    return report
 
 
 def needed(models, allocation=False):

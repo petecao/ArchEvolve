@@ -23,22 +23,36 @@ Ticket 20's fields (`formal_frame: 1`, `version`, `rules`, empty `clauses`) plus
 | `hardware_interface` | `{id, version, gem5_commit}`: `dx100-mmio`, `1.0-e4fc4af`, the full commit. Every `rules[].cites.gem5_commit` must be a prefix (7+ digits) of it. |
 | `constants` | Default build constants of the model: `DX_K` (command slots, K = 32), `DX_NT` tiles, `DX_NR` registers, `DX_NM` regions, `DX_TS` tile size. `--define NAME=VALUE` overrides one. |
 | `inventory` | `{read, sources, calls}`: the pinned sources the call list was read from (roles `lowerings`, `offload`, `setup`, `function`) and the calls found. A changed source fails its pin: reopen the inventory. |
+| `declaration_inventory` | Optional complete interface surface, independent of kernel uses: the two immutable upstream header pins and all 26 names / 27 exact declarations. Missing, added or duplicated declarations and missing call contracts are refused. This describes declarations, not typed behavioral agreement. |
 | `ghost.acsl` | Pinned ACSL file: the ghost state, declared once (`ghost <type> <name>[...];` lines). |
 | `model` | Pinned `state` (device state, C), `c` (the C model, the CBMC form) and `logic` (ACSL logic for the contracts). |
 | `calls` | One row per covered call: `call`, `prototype` (core-subset C), `contract` (ACSL), `rules` (rule IDs), `lowerings`, `used_by`. |
+| `calls[].overloads` | For a name with multiple header declarations, each overload has its exact source `declaration`, a distinct C `prototype` and its own ACSL `contract`. These contracts are included in type-checking; no initialized allocation overload may silently reuse the zero-argument behavior. |
+| `calls[].instances` | Optional concrete template contracts, replacing the family contract and exclusive with `overloads`. Each has canonical source `arguments` (type spellings, not device codes), nonnegative integer `arity`, C `prototype`, ACSL `contract` and, for overloaded headers, exact `declaration`. Selectors and C symbols are unique. Source calls must match their actual same-TU template arguments, arity, deterministic emitted symbol and C signature. Missing instances refuse; unpinned body-bearing implementations refuse pending an effective-header audit. |
 | `queries` | Ghost queries a fixture may call (not hardware calls): `query`, `prototype`, `contract`. |
+| `rules[].record_assumption` | Optional boolean. A true value lists that rule's statement on every verdict using this exact version, as kind `proof_semantics`, reference `<entry>#<rule>` and the entry's SHA-256. The rule still requires its normal citation or owner. These entries never cap a level. |
 
 ### What `swdb validate` refuses
 
 - a rule with neither `cites` nor `assumed: {owner}` (ticket 20), or a citation at another gem5 commit;
 - a listed call with no contract or no prototype; a call naming a rule the entry does not hold;
 - an inventory call with no call row; a moved or edited inventory source (pin);
+- a complete declaration inventory that differs from the immutable upstream headers, an uncovered helper/overload, or malformed overload or assumption-marker metadata;
 - a ghost array declared again in `state.h` or `model.h` (declared once, in `ghost.acsl`);
 - a contract, logic or ghost declaration Frama-C 33.0 refuses (parse and type check, no WP). Without
   Frama-C the contracts are reported `UNCHECKED`, never valid.
 
 Proof-semantics contracts are type-checked, not held to the formal-half subset: they use ghost state and bitwise
 operators, and they are trusted (an assumption entry), never executed by check mode.
+
+Ticket28's declaration, typed-call routing and trust-record extensions are implementation prerequisites.
+No production semantics0.2 version is current yet. Structural/scripted/compiler controls do not establish
+whole-interface behavior, history/overlap/ownership/pair rules or actual formal acceptance. Semantics0.1's
+library bytes remain unchanged. Rule trust references bind the entry's original file hash; changing its
+bytes during a job is refused rather than attaching new trust text to an older pinned version.
+Selected template instances are retained in `settings.proof_semantics.instances`.
+The setup/checker identity includes `dx100_interface.py`; changing its bytes invalidates
+an execution method that pins the earlier identity. Historical proof freezes keep their earlier identity.
 
 ## Version 0.1 (`semantics.dx100_bfs_0_1`)
 
@@ -173,3 +187,41 @@ indices to these rows; the table is immutable, and only row contents appear in t
 The entry type checker uses the same representation and build constants as WP. Caller and store
 separation clauses quantify over every tile row. This changes the generated representation without
 adding an allocation-success premise or altering the operational C model body.
+
+### Pure source selector fixture — 2026-10-16 ET
+
+A call row may state `supported: false`. The public lowering then refuses that
+call before selecting a source declaration or model instance. The field must be
+a boolean; omission retains the earlier behavior. A complete declaration
+inventory can therefore describe an explicitly partial fixture without granting
+semantics to an unsupported call. Its placeholder C prototype is inventory
+bookkeeping, not an admitted ABI for that call.
+
+An instance may use `definition: {kind: dx100-get-data-type-u32-v1, value: 0,
+sources: [...]}` only for `get_data_type<unsigned int>()`. Both immutable interface
+headers are required. This closed policy requires the exact concrete prototype
+`unsigned char get_data_type_unsigned_int(void)` and the contract
+`assigns \nothing; ensures \result == 0;`. It accepts a body only from the pinned
+header and a unique global template specialization with the actual canonical
+source argument. Other bodies retain the ordinary summary-body refusal.
+
+The compiler certificate preprocesses the original main translation unit with
+the original lowering parser flags. It records those frozen tokens, their hash,
+the command, dependency hashes, and compiler/runtime identity. It appends a pure
+probe to the preprocessed token stream and compiles it as `c++-cpp-output`, so
+include depth and optimization macros cannot reinterpret the original source.
+The selected probe's LLVM body must be exactly `ret i32 0`. This is a trusted
+compiler transformation certificate, not a Frama-C proof or a device theorem.
+Frozen evidence and all physical compiler inputs are rehashed before the formal
+invocation. The checker module belongs to the frozen setup dependency closure.
+
+`model.layout: dx100-pure-selector-u32-v1` is a closed, stateless fixture layout.
+It requires the complete 26-name/27-declaration inventory, precisely that one
+active selector instance, and explicit refusal of all remaining calls. It has
+no device constants, queries, ghost state, logic axioms, or WP entry premises;
+its C model is the exact constant selector body. Its record includes the five
+explicit trust-rule entries but no at-issue timing statement, device-storage
+initialization assumption, or timing reduction. It does not establish any
+stateful interface behavior. The retained 0.1 entry and its default layout are
+unchanged. The fixture is built only in an isolated test library; no current
+production 0.2 entry is installed by this slice.

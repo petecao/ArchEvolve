@@ -1,0 +1,237 @@
+{
+  "acceptance.log_tail": "unique retained original failed source required\n",
+  "at_utc": "2026-10-16T12:06:00.010011+00:00",
+  "dispatch.log_tail": "hostlock: acquired lease=mbit10-evaluation-node1 mode=measure generation=622 pid=3867853 by probata-reviewed-2e2dc451-t28-allocation-ast-v1 at 2026-10-16T12:04:54Z\nsocket_lane: node 1, cpus 1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63, policy bind:1, lease generation 622, aligned to no_gapbs_batch_running, load1 0.42, starting at 2026-10-16T12:04:54Z\n{\"aligned_cell_age_s\": \"\", \"aligned_to\": \"no_gapbs_batch_running\", \"command\": [\"timeout\", \"--signal=TERM\", \"--kill-after=60\", \"720\", \"bash\", \"/data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-allocation-ast-v1/run.sh\"], \"cpus_allowed_list\": \"1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63\", \"ended_utc\": \"\", \"exit_code\": -1, \"host\": \"mbit10\", \"job\": \"probata-reviewed-2e2dc451-t28-allocation-ast-v1\", \"lease_generation\": 622, \"lease_name\": \"mbit10-evaluation-node1\", \"load1_at_start\": 0.42, \"load1_max\": 32, \"node\": 1, \"numa_memory_policy\": \"bind:1\", \"numactl\": \"--cpunodebind=1 --membind=1\", \"preregistration_sha256\": null, \"started_utc\": \"2026-10-16T12:04:54Z\"}\n{\"aligned_cell_age_s\": \"\", \"aligned_to\": \"no_gapbs_batch_running\", \"command\": [\"timeout\", \"--signal=TERM\", \"--kill-after=60\", \"720\", \"bash\", \"/data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-allocation-ast-v1/run.sh\"], \"cpus_allowed_list\": \"1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63\", \"ended_utc\": \"2026-10-16T12:04:58Z\", \"exit_code\": 1, \"host\": \"mbit10\", \"job\": \"probata-reviewed-2e2dc451-t28-allocation-ast-v1\", \"lease_generation\": 622, \"lease_name\": \"mbit10-evaluation-node1\", \"load1_at_start\": 0.42, \"load1_max\": 32, \"node\": 1, \"numa_memory_policy\": \"bind:1\", \"numactl\": \"--cpunodebind=1 --membind=1\", \"preregistration_sha256\": null, \"started_utc\": \"2026-10-16T12:04:54Z\"}\nhostlock: released lease=mbit10-evaluation-node1 generation=622 pid=3867853 at 2026-10-16T12:04:58Z\n",
+  "leases": {
+    "mbit10-evaluation-node0.meta.json": {
+      "active_session": null,
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "heartbeat_at": "2026-10-16T12:01:18Z",
+      "lease": {
+        "acquired_at": "2026-10-16T12:00:41Z",
+        "daemon_pid": 3866800,
+        "daemon_start_token": "sh3866800-1792152041",
+        "generation": 598,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node0",
+        "mode": "measure",
+        "session_id": null
+      },
+      "recovered_from_generation": null,
+      "released_at": "2026-10-16T12:01:18Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation-node1.meta.json": {
+      "active_session": null,
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "heartbeat_at": "2026-10-16T12:04:58Z",
+      "lease": {
+        "acquired_at": "2026-10-16T12:04:54Z",
+        "daemon_pid": 3867853,
+        "daemon_start_token": "sh3867853-1792152294",
+        "generation": 622,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node1",
+        "mode": "measure",
+        "session_id": null
+      },
+      "recovered_from_generation": null,
+      "released_at": "2026-10-16T12:04:58Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation.meta.json": {
+      "active_session": null,
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "heartbeat_at": "2026-09-12T04:49:11Z",
+      "lease": {
+        "acquired_at": "2026-09-12T01:35:42Z",
+        "daemon_pid": 209457,
+        "daemon_start_token": "sh209457-1789176942",
+        "generation": 77,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation",
+        "mode": "measure",
+        "session_id": null
+      },
+      "recovered_from_generation": null,
+      "released_at": "2026-09-12T04:49:11Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    }
+  },
+  "metadata": {
+    "ast-storage-guard.json": {
+      "bytes": 190,
+      "content": {
+        "cap_bytes": 67108864,
+        "exit_code": 1,
+        "failure_type": null,
+        "kernel_quota": false,
+        "peak_sampled_capture_bytes": 0,
+        "poll_seconds": 0.1,
+        "wall_seconds": 1.311691515147686
+      },
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-allocation-ast-v1/ast-storage-guard.json",
+      "sha256": "bb2d4913f4f2b91150a94b1ac1192e1aea37c7950e3c98e2ac1c757d3e77f812"
+    },
+    "lane.json": {
+      "bytes": 815,
+      "content": {
+        "socket_lane": {
+          "aligned_cell_age_s": "",
+          "aligned_to": "no_gapbs_batch_running",
+          "command": [
+            "timeout",
+            "--signal=TERM",
+            "--kill-after=60",
+            "720",
+            "bash",
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-allocation-ast-v1/run.sh"
+          ],
+          "cpus_allowed_list": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63",
+          "ended_utc": "2026-10-16T12:04:58Z",
+          "exit_code": 1,
+          "host": "mbit10",
+          "job": "probata-reviewed-2e2dc451-t28-allocation-ast-v1",
+          "lease_generation": 622,
+          "lease_name": "mbit10-evaluation-node1",
+          "load1_at_start": 0.42,
+          "load1_max": 32,
+          "node": 1,
+          "numa_memory_policy": "bind:1",
+          "numactl": "--cpunodebind=1 --membind=1",
+          "preregistration_sha256": null,
+          "started_utc": "2026-10-16T12:04:54Z"
+        }
+      },
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-allocation-ast-v1/lane.json",
+      "sha256": "6ab55d41873668c1ee2e505d320baa041e6eb094f4e27786512e1a22aec11ee2"
+    },
+    "outer-resources.json": {
+      "bytes": 164,
+      "content": {
+        "cpu_seconds": 3.861815,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 361758720,
+        "timed_out": false,
+        "wall_seconds": 3.470920358784497
+      },
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-allocation-ast-v1/outer-resources.json",
+      "sha256": "4013ad1db590097cf2a6e2b85d57fe6a91139d880ad41f610e88de18b276615a"
+    },
+    "resources.json": {
+      "bytes": 164,
+      "content": {
+        "cpu_seconds": 1.379913,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 307757056,
+        "timed_out": false,
+        "wall_seconds": 1.409824031405151
+      },
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-allocation-ast-v1/resources.json",
+      "sha256": "688ee8a942a09f31ec57ae673d44c5a8404088a8bd824799a7390947fc573e70"
+    },
+    "source-after.json": {
+      "bytes": 112,
+      "content": {
+        "commit": "2e2dc451ca457bfc5a7a7cb977d672bd1de0983b",
+        "source_unchanged": true,
+        "tracked_changes": ""
+      },
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-allocation-ast-v1/source-after.json",
+      "sha256": "b945e5e2302adf004d5d7fca3c3beb24b75be4d80fdeba2d61d08c17b300ab67"
+    }
+  },
+  "raw": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-allocation-ast-v1",
+  "raw_bytes": 187440,
+  "raw_file_count": 17,
+  "raw_manifest": {
+    "acceptance.log": {
+      "bytes": 48,
+      "sha256": "839c4afa8f560c10b9946e14da7145a663ae4f5bf8f36ec7102d5785c5390fb5"
+    },
+    "assertion-ast-entry.py": {
+      "bytes": 58608,
+      "sha256": "dbd9282a4c229d06845346c534fcc649833e1554bb2e2fea06ee968b7338dd5a"
+    },
+    "ast-storage-guard.json": {
+      "bytes": 190,
+      "sha256": "bb2d4913f4f2b91150a94b1ac1192e1aea37c7950e3c98e2ac1c757d3e77f812"
+    },
+    "dispatch-argv.json": {
+      "bytes": 433,
+      "sha256": "461335b4766e676df698cc561eb34a576e03f18d665d59bcc02e9dc8217b00f2"
+    },
+    "dispatch.log": {
+      "bytes": 1952,
+      "sha256": "ea82028899878f8c5b233db13b891df71aef5924134a38c79d5e616ae3d3674a"
+    },
+    "execute.py": {
+      "bytes": 1603,
+      "sha256": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612"
+    },
+    "lane.json": {
+      "bytes": 815,
+      "sha256": "6ab55d41873668c1ee2e505d320baa041e6eb094f4e27786512e1a22aec11ee2"
+    },
+    "launch.json": {
+      "bytes": 81287,
+      "sha256": "111e58d1cb67103c6a2a7484989c6fb6572b40fd8523e5af790c4ce2ec60de40"
+    },
+    "outer-resources.json": {
+      "bytes": 164,
+      "sha256": "4013ad1db590097cf2a6e2b85d57fe6a91139d880ad41f610e88de18b276615a"
+    },
+    "preflight.json": {
+      "bytes": 13210,
+      "sha256": "585aa91ec6ebc0d4a579e747dd2b32ec47d4c54ffa7fb3b724b5e06d98ef7c68"
+    },
+    "resources.json": {
+      "bytes": 164,
+      "sha256": "688ee8a942a09f31ec57ae673d44c5a8404088a8bd824799a7390947fc573e70"
+    },
+    "run.sh": {
+      "bytes": 1092,
+      "sha256": "0272bc9c8349b87c2203f19c9f3d24dfa7ee8e34a7f43d0ac729f038826ae919"
+    },
+    "runtime-provenance.json": {
+      "bytes": 3354,
+      "sha256": "800e90f97e34e797e8cc84e94a2158ce990a6f0d726a1dd968932e77baf2535c"
+    },
+    "source-after.json": {
+      "bytes": 112,
+      "sha256": "b945e5e2302adf004d5d7fca3c3beb24b75be4d80fdeba2d61d08c17b300ab67"
+    },
+    "source-manifest.json": {
+      "bytes": 23938,
+      "sha256": "dca55777a76d78d2fd57a473d409db2975e6d5afd5a7974ca31943aa1ba69507"
+    },
+    "watch.py": {
+      "bytes": 470,
+      "sha256": "4485ae66aa50c65f2b579f84836576aa67b54431978da71cac6eea6a68ecd07c"
+    },
+    "worker.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "settled": true,
+  "source": {
+    "branch": "HEAD",
+    "commit": "2e2dc451ca457bfc5a7a7cb977d672bd1de0983b",
+    "status": ""
+  }
+}

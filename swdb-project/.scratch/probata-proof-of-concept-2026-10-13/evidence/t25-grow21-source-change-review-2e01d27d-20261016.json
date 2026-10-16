@@ -1,0 +1,86 @@
+{
+  "baseline": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+  "command": {
+    "bytes": 63616,
+    "path": "/private/tmp/probata-t25-qualified-grow21-public-command-v1-2e01d27d-20261016.json",
+    "sha256": "e015166b76e70f7b20e8d69611f61bf31ef80a28093343c0927ccf2962a1ec72"
+  },
+  "date_et": "2026-10-16",
+  "entry": {
+    "bytes": 22642,
+    "path": "/private/tmp/probata-t25-qualified-grow21-public-entry-v1-2e01d27d-20261016.py",
+    "sha256": "c53fd3a5ff725a2a9639bb822cfa1b1900c0b9b103fd46dbee1480fad9d4a852"
+  },
+  "expected": {
+    "bytes": 119334,
+    "path": "/private/tmp/probata-t25-qualified-grow21-public-expected-v1-2e01d27d-20261016.json",
+    "sha256": "408999e6276bb66233e575bfc7b5826143cb55553c16a311a8b3531d58a0f275"
+  },
+  "files_after": {
+    "swdb-project/swdb/bounded_std_initialization.py": "480bf38b3333639c62d8f89aff129208abccdc63351d63cfa6b23d7cb3d84607",
+    "swdb-project/swdb/c_lowering.py": "e0f080dc2887ffcc9a2b57b3dc804ff64e56a5df82e545c047bac7aa7761d0dc",
+    "swdb-project/swdb/cbmc_adapter.py": "d63b7f6547fa3b7655a59db0f26f1e0a957c7916bf8d9b7d77ef4142ef3e9a27",
+    "swdb-project/swdb/dx100_interface.py": "6e88200412cada2678d3f65f442d0cf11e39fecdb744fa490e6397e0e0d37cdf",
+    "swdb-project/swdb/dx100_size_source.py": "fe070713b91257d73a77112a7114c3ec049d2dc3ca8dbe0c1dfa6404c35a70f3",
+    "swdb-project/swdb/dx100_source_selector.py": "4c788c11a80c1478323229bba12997995dcad30699dc78d7085b52a14fc09190",
+    "swdb-project/swdb/dx100_stream_model.py": "00ebfa24a9380896dde0b4b744f93f54ccfa3ea4d08a8e077fd21ecaa3327044",
+    "swdb-project/swdb/dx100_stream_source.py": "28715eb5b7171244ca18027412db4e119d858812638ad32ce06dfe213c229e62",
+    "swdb-project/swdb/formal_frame.py": "62bcbbdba7e9858bbfe59e83f59077c1a21dcfbc0e03ddd7ef0f2cf90cde4254",
+    "swdb-project/swdb/heap_bridge.mlw": "5186c27f5a7a339352e3f62dc3a0d3efb1c7bd12f8a456cc61b0d7a52566638d",
+    "swdb-project/swdb/heap_model_environment.ml": "ba52941e7ab96a8ebbe4efdb8fde0c1b19daa3d6ccb8804efc87b027a68caf7b",
+    "swdb-project/swdb/heap_model_packets.py": "805b00fe78373102b600506833f86c28fce2cf494baef7a68afd63641c1de185",
+    "swdb-project/swdb/heap_model_vcs.py": "f20e0ec130222aeda96b4fbb8e72eef8d922d3f33e84077777203f7e6d159092",
+    "swdb-project/swdb/heap_model_view.py": "52b41faefd37d585fb2c8ff15c82e74fb602c6063848ec7808cbea816ea44451",
+    "swdb-project/swdb/heap_reallocation.mlw": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+    "swdb-project/swdb/proof.py": "69980f5899cac87cb19f4044d3358372db3c16f8a5202773be816252aaa526cb",
+    "swdb-project/swdb/proof_report.ml": "22919544d02fc3fdc628ee44984852787043e61f82ed8613074e21751e9d1d6d",
+    "swdb-project/swdb/proof_semantics.py": "a91a321c820eda4e7620226d4e59a63135161cb0f79650f6671e68daac44a67f",
+    "swdb-project/swdb/proof_setup.py": "256dd13eb4129403a18552e25dfd1ef7eef6c3fba306bb7066f62ce1e3d0b563",
+    "swdb-project/swdb/stdlib_provenance.py": "4a7ca7d9b05a992e8172125fcbbfd175bb7ade2aec47cfb349126c9739b6e8e4",
+    "swdb-project/swdb/vector_reallocation_caller_packets.py": "6992058e5974738d56d1a98f87cbd012784420a85272b96f2fad113aff03a7d9",
+    "swdb-project/swdb/vector_reallocation_caller_vcs.py": "e8e514a1208d6653e8ae424b37309a3ce299690050ecac2710aed580b9ab397a",
+    "swdb-project/swdb/vector_reallocation_calls.py": "d1d7ea169a50b82d5545ab0a3fa02910849d944b9104a5839e0955dd5a283a95",
+    "swdb-project/swdb/vector_reallocation_capacity.py": "e4aa221acb78151895fa5c5d3cbdab6050b151b42a7096521a90fcdf3c95f617",
+    "swdb-project/swdb/vector_reallocation_inventory.py": "543e5523d6f05fad7f336ede476b85aa30e068dee8d07489f3a4351da54c75cf",
+    "swdb-project/swdb/vector_reallocation_lifetime.py": "d20ac49e7896ed47632ad05f6f0610caee805649da81d3f469da2b6237051159",
+    "swdb-project/swdb/vector_reallocation_model.py": "92ad23030531650924a51b0a3bd1abb479afa373a7d1dd2a543b9ae225ab8b89",
+    "swdb-project/swdb/vector_reallocation_vcs.py": "0ec4e168754b6f2ad1b6e659c4988855c89d2ae18fe8863eed39a290c1c706b1",
+    "swdb-project/swdb/vector_reallocation_view.py": "05eaa7414580b11a54b7f6ebf63db20b28fd6aea0c5de4da00fc70a3bd0c57d4",
+    "swdb-project/swdb/wp_adapter.py": "59f0abe852f0882c46a0012e148f6e09ce1576d720f14cd5a377a7c2ec339394"
+  },
+  "readers": [
+    "root",
+    "merger"
+  ],
+  "review_evidence": {
+    "path": "/private/tmp/probata-t25-grow21-root-source-change-review-2e01d27d-20261016.md",
+    "sha256": "c12e4f84d43a2b9bef63554a533ec7378f98811d9830ed875e31e5530db25758"
+  },
+  "root_plan": {
+    "path": "/private/tmp/probata-t25-qualified-grow21-public-plan-v1-2e01d27d-20261016.json",
+    "sha256": "9b5289b94cec1546c1d060a530be2f791196b6812db79802c81f2e68238b032d"
+  },
+  "source_commit": "2e01d27d0aea7f3c2056d3abb06600b4cefa29be",
+  "supporting_reviews": [
+    {
+      "path": "/private/tmp/probata-t28-stream-source-change-review-e4cd1a6e-20261016.json",
+      "sha256": "557317c9f591ce011d97c576df9cbfca4056b03a42880c9621f964a850d644e5"
+    },
+    {
+      "path": "/private/tmp/probata-t25-merged-projection-independent-review-2e01d27d-20261016.md",
+      "sha256": "7e1fa450b796918bb3395b2567479c149c05ee98166b07471131b1852825afd4"
+    },
+    {
+      "path": "/private/tmp/probata-t25-grow21-packet-independent-review-v1-2e01d27d-20261016.md",
+      "sha256": "c9ec6b86a5f2d1e3eb5ad5ad43c7e1f5129452fbc836d2918a7eb452c25a0061"
+    },
+    {
+      "path": "/private/tmp/probata-t25-root-grow21-public-controls-v1-20261016/result.json",
+      "sha256": "72d13b3341660baebfde8147b1d42f8499a0984ddc1aff619d7cb97806151f16"
+    },
+    {
+      "path": "/private/tmp/probata-t25-root-grow21-public-controls-v1-20261016/inner.log.summary.json",
+      "sha256": "f922a3e31f801a60fad0a010a9d3f970d4adfbbf1efecfb36118180186a5951e"
+    }
+  ]
+}

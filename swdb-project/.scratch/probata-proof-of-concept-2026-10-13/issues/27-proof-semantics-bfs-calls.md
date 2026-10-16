@@ -1,9 +1,9 @@
 # 27 — Proof semantics for the BFS read-offload calls
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-15 ET (qualified transitive/stall acceptance; full matrix incomplete); 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-15 ET (current 62-case matrix complete; scoped acceptance resolved); 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** resolved
 **Blocked by:** 22
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("DX100 proof semantics", "Formal-half language and the C++ subset", "Modules" (library content), "Testing Decisions", S1, S2, S3); decisions: [12](../../formal-verification-2026-10-09/issues/12-dx100-proof-semantics.md), [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md), [14](../../formal-verification-2026-10-09/issues/14-dx100-wait-rule.md)
 **Time estimate:** about 1 week
@@ -12,15 +12,39 @@ Updated: 2026-10-15 ET (qualified transitive/stall acceptance; full matrix incom
 
 ## Acceptance
 
-- [ ] **Coverage and citations.** The proof-semantics entry has a version and a content hash. It lists the calls it covers: every `dx100-mmio 1.0-e4fc4af` call that the BFS read offload's lowerings or `TDStepMAA` make, one ACSL contract each. Every rule, values included, cites gem5 DX100 source at `e4fc4af` or is assumed with an owner. `swdb validate` accepts the entry. Negative controls: `swdb validate` refuses a rule with neither `cites:` (gem5 commit, path, lines) nor `assumed: {owner}`, a citation at any other commit, and a listed call with no contract.
-- [ ] **Unready read is a hazard** (map 12 item 3). Through `swdb prove` with the real bounded-verifier adapter, a fixture unit that reads a tile through a tile pointer before its covering wait is refuted, and the counterexample names the hazard probe. The same unit with the wait proves. `get_tile_size` before the covering wait is refuted the same way. A CPU write into a tile that an unfinished command reads is refuted; a CPU read of that tile is not flagged.
-- [ ] **A probe at every tile-pointer read.** On a fixture with three tile-pointer reads, moving any one read before its wait is refuted at that read's probe, on the C++ path and on the C lowering, with agreeing verdicts. WP proves the safe unit and leaves each unsafe one "not proven", never refuted.
-- [ ] **Wait rule as gem5 runs it** (map 14). These fixtures prove: a wait on a store's source tile covers the store and its result tile; a wait covers a command transitively through the tile and register producers it reads; issuing a command whose destination is tile t first covers every uncovered command that names t in any role, condition included (the tile dispatch stall); writing a constant into a register first covers every uncovered command that names that register (the device holds the write). These are refuted: reading an input producer's tile after waiting only on a range loop that filled its output tile (the range-loop exception); reading a command's output after a wait on a tile it names only as its condition; reading after a wait on an unrelated tile.
-- [ ] **Values at issue.** A gather, stream-load or range-loop fixture whose read after the covering wait equals the call's computed value proves. The same fixture asserting a wrong value is refuted.
-- [ ] **Footprints.** Each unfinished command's footprint is a logic predicate over ghost state and the current index-tile contents (indirect: the addresses its index tile names; stream: its range), with no per-element copy. A fixture asserting that an address in an uncovered gather's footprint is a member proves; asserting membership of an address outside it is refuted. (Overlap verdicts are ticket 28.)
-- [ ] **Ghost capacity** (S3). A safe fixture with 32 uncovered commands in one thread proves. With 33 it ends "not proven", failure class ghost capacity, never refuted.
-- [ ] **One ghost state, declared once** (map 16 item 10). The ghost arrays are declared once, in the ACSL source: per tile {owner, uncovered writer, uncovered readers as a bitmask over command slots}; per register {owner, writer}; per thread K = 32 command slots {kind, tiles, region, base, range or index tile, dependencies}. SAW (generated SAWScript) and WP (the ACSL as written) agree on every fixture above: both prove the safe ones, and WP leaves "not proven" each one SAW refutes. (The C-stub form is ticket 29's three-form check.)
-- [ ] **Versioned.** Every proof record `swdb prove` writes with these contracts pins the proof-semantics version and lists the proof semantics in its assumption set. Through `swdb candidate-level`, a fixture record that pins an older version stops counting.
+- [x] **Coverage and citations.** The proof-semantics entry has a version and a content hash. It lists the calls it covers: every `dx100-mmio 1.0-e4fc4af` call that the BFS read offload's lowerings or `TDStepMAA` make, one ACSL contract each. Every rule, values included, cites gem5 DX100 source at `e4fc4af` or is assumed with an owner. `swdb validate` accepts the entry. Negative controls: `swdb validate` refuses a rule with neither `cites:` (gem5 commit, path, lines) nor `assumed: {owner}`, a citation at any other commit, and a listed call with no contract.
+- [x] **Unready read is a hazard** (map 12 item 3). Through `swdb prove` with the real bounded-verifier adapter, a fixture unit that reads a tile through a tile pointer before its covering wait is refuted, and the counterexample names the hazard probe. The same unit with the wait proves. `get_tile_size` before the covering wait is refuted the same way. A CPU write into a tile that an unfinished command reads is refuted; a CPU read of that tile is not flagged.
+- [x] **A probe at every tile-pointer read.** On a fixture with three tile-pointer reads, moving any one read before its wait is refuted at that read's probe, on the C++ path and on the C lowering, with agreeing verdicts. WP proves the safe unit and leaves each unsafe one "not proven", never refuted.
+- [x] **Wait rule as gem5 runs it** (map 14). These fixtures prove: a wait on a store's source tile covers the store and its result tile; a wait covers a command transitively through the tile producers it reads (adopted F6 makes register overlap a hazard); issuing a command whose destination is tile t first covers every uncovered command that names t in any role, condition included (the tile dispatch stall); writing a constant into a register first covers every uncovered command that names that register (the device holds the write). These are refuted: reading an input producer's tile after waiting only on a range loop that filled its output tile (the range-loop exception); reading a command's output after a wait on a tile it names only as its condition; reading after a wait on an unrelated tile.
+- [x] **Values at issue.** A gather, stream-load or range-loop fixture whose read after the covering wait equals the call's computed value proves. The same fixture asserting a wrong value is refuted.
+- [x] **Footprints.** Each unfinished command's footprint is a logic predicate over ghost state and the current index-tile contents (indirect: the addresses its index tile names; stream: its range), with no per-element copy. A fixture asserting that an address in an uncovered gather's footprint is a member proves; asserting membership of an address outside it is refuted. (Overlap verdicts are ticket 28.)
+- [x] **Ghost capacity** (S3). A safe fixture with 32 uncovered commands in one thread proves. With 33 it ends "not proven", failure class ghost capacity, never refuted.
+- [x] **One ghost state, declared once** (map 16 item 10). The ghost arrays are declared once, in the ACSL source: per tile {owner, uncovered writer, uncovered readers as a bitmask over command slots}; per register {owner, writer}; per thread K = 32 command slots {kind, tiles, region, base, range or index tile, dependencies}. The approved CBMC bounded-verifier replacement (with C++ replay) and WP (the ACSL as written) agree on the fixture outcomes above: both prove the safe ones, and WP leaves "not proven" each one CBMC refutes. (The C-stub form is ticket 29's three-form check.)
+- [x] **Versioned.** Every proof record `swdb prove` writes with these contracts pins the proof-semantics version and lists the proof semantics in its assumption set. Through `swdb candidate-level`, a fixture record that pins an older version stops counting.
+
+## Current acceptance — 2026-10-15 ET
+
+**Resolved within the approved CBMC/WP fixture scope.** The fresh disjoint matrix
+completed 62/62 cases with 52 unique actual records: 25 proven, 12 bounded
+refutations with C++ replay, and 15 not proven. All 11 safe WP units prove
+792/792 ordinary goals and pass 252/252 smoke checks, including
+143 initialization and 141 RTE obligations. Current passed setup, exact
+provenance, mandatory initializedness/RTE and all original assertions remain.
+
+The approved CBMC-for-SAW substitution and F6 register-hazard decision govern the
+checked acceptance wording. All 13 unsafe WP records remain not proven; their
+35 failed smoke checks are retained, including outside-footprint's vacuous_pass
+with independent ensures timeout. Capacity 32 proves in WP/CBMC; capacity 33 is
+not_proven/ghost_capacity with no source counterexample. The reviewed ordinary
+capacity hint changes no source premise or contract. Source `0e7f2327` and the
+test-only capacity source `b9a34bbb` share the same pinned production/runtime identity.
+
+[Final matrix and evidence boundaries](../evidence/t27-current-matrix-completed-independent-20261015.md),
+[exact 62-case/52-record inventory](../evidence/t27-current-matrix-completed-independent-20261015.json).
+Typed entry windows, ordinary/ghost separation, trusted contracts and reduction
+assumptions remain explicit. This closure does not discharge tickets 28/29/43/59.
+All chronological answers/checkpoints below are historical; their pending and
+failed outcomes are preserved without upgrading them to current evidence.
 
 ## Notes
 
@@ -36,7 +60,7 @@ Updated: 2026-10-15 ET (qualified transitive/stall acceptance; full matrix incom
 - Risk: splitting values from hazards rests on the reduction lemma. It is an assumption entry of kind reduction until Rocq checks it (ticket 43; map 12 item 2). Ticket 29 adds its written proof and bounded check, which do not remove the entry.
 - Fixture proof records carry `contract_fixture` evidence. Mac: one real verifier job at a time under the ~8 GB RSS watchdog; tests skip cleanly when a verifier is missing.
 
-## Answer
+## Historical answer — 2026-10-14 ET
 
 2026-10-14 18:10 ET. **Resolved with the bounded verifier CBMC (Yan-Ru's 13:19 ET decision); the WP half of
 two boxes is not met** (below). Branch `probata-poc/t27`. Interface doc:
@@ -524,3 +548,218 @@ The full qualified safe/negative, values/register/range/footprint and capacity
 matrix, plus required verifier agreement, remains incomplete. No current partial
 result closes the ticket. See [accepted stall](../evidence/t27-stall-qualified-accepted-20261015.json)
 and [query evidence](../evidence/wp-footprint-query-20261015.json).
+
+
+## Resumed acceptance — 2026-10-15 ET
+
+Status remains `claimed`. The approved resumed integration is
+`codex/probata-resume-20261015`; ticket work stays isolated on
+`codex/probata-resume-t27` and is published only through the integration ref.
+
+The first original qualified three-read diagnostic at frozen `159d912e` passed:
+**112 ordinary goals Valid + 31 smoke checks passed**, including 18 explicitly
+named initializedness goals and 27 RTE goals. The actual public CLI case took
+595.41 seconds. Setup passed for its single launch. A producer-side readback
+verified 1,719 physical hash references to 868 producer files plus the immutable
+record, with no mismatch. Its proof record has no physical reference into the
+mutable producer checkout. This source precedes the resumed setup hardening;
+it does not close the current-source acceptance matrix.
+
+The coordinator stopped the owned process tree after that complete case while
+the next size case was preparing source. That is a controlled suite cancellation,
+not a suite pass. Raw records and outputs remain on mbit10; the exact outcome,
+source and pins are in
+[`t27-resumed-diagnostic-accepted-20261015.json`](../evidence/t27-resumed-diagnostic-accepted-20261015.json).
+
+The committed runner now defines an exact 62-case `matrix` and four disjoint
+final profiles: `wp-safe` (11), `wp-negative` (13, including the shortened store
+frame), `capacity` (3) and `bounded` (35). Its `first` profile stops naturally
+after the original qualified three-read case. Actual WP acceptance requires a
+launched verifier, passed setup, required RTE/initializedness/filter/cache/smoke
+flags, the semantics pin and rehashed reports. Each unsafe hazard must leave its
+named ordinary probe/call goal open; wrong-value cases must independently leave
+their original ensures open. The outside footprint query may also retain its
+historical failed generated-branch smoke; no negative record is upgraded.
+
+Eleven local citation/inventory/native compiler controls passed in 2.87 seconds.
+The public footprint-query stand-in passed in 202.47 seconds with watchdog
+process-tree access; a preceding sandbox-only sysctl refusal remains retained.
+Those are compiler/admission checks, not new theorem evidence. The revised safe
+and outside-query assertions also pass offline against both immutable historical
+query records, preserving the outside `not_proven/vacuous_pass` outcome.
+
+Assumption: the final matrix uses the composed compiler/setup source and the
+existing 30-second serial solver portfolio. The explicit `q:n`, `base:n` and
+other advertised WP entry windows remain conditional input-contract premises;
+no validity or initializedness fact invents one. General native/ACSL agreement
+and CPU/device memory overlap remain tickets 29 and 28 respectively.
+
+Next acceptance: run all four final profiles on the same frozen composed
+source, retain every ordinary and smoke outcome, audit the producer artifacts,
+then resolve only if every required positive/negative/capacity result is met.
+
+
+### Completed frozen safe checkpoint and independent review — 2026-10-15 ET
+
+Status remains `claimed`. The exact `wp-safe` profile at frozen `71771f09`
+completed **11/11 cases**, exit 0, in 6,015.03 seconds. All 11 qualified records
+are `proven`: **792 ordinary goals Valid and 252 smoke checks passed**, with
+143 named initializedness and 141 RTE goals. The producer-side audit verified
+15,495 physical hash references across 1,039 unique files with no mismatch.
+The whole-run guard peaked at 4,503,920,640 bytes without OOM or timeout;
+the source stayed clean. Exact records, flags, setup identities and producer
+audit hash are retained in
+[`t27-717-safe-completed-20261015.json`](../evidence/t27-717-safe-completed-20261015.json).
+This is historical source-qualified evidence; final composed-source acceptance
+still requires fresh safe, negative, capacity and bounded profiles.
+
+The separate clang tool pin names the retained wrapper. The aggregate lowering
+identity incorporates runtime compiler/parser/header provenance, but these
+records do not decompose its full-components versus explicit-unavailable branch.
+The exact read-only boundary, physical driver/parser hashes and live wrapper
+retention requirement are recorded in
+[`t27-717-compiler-provenance-20261015.json`](../evidence/t27-717-compiler-provenance-20261015.json).
+
+Independent compiler review of atomic fix `220ef337` found a concrete blocker:
+an earlier local enum in an uncalled function can collide with a global enum
+name and cause actual `weak=true` to be read as zero by the existing enum lookup.
+The resulting C incorrectly uses the strong CAS model. The exact defined C++
+probe, source/output hashes, C model, guarded resource receipt and required
+repair are retained in
+[`t27-atomic-enum-review-20261015.json`](../evidence/t27-atomic-enum-review-20261015.json).
+The owner received the reproducer. The 40-variant comparison was controlled-stopped
+after 11 old-source rows at a completed-row boundary; the new-source phase never
+started, so it establishes no old/new equality. Its compiler slot was released
+to the coordinator's next diagnosis. Root retains dispatch ownership for both
+remote lanes and will compose the reviewed repairs before final acceptance.
+
+### Current capacity diagnosis checkpoint — 2026-10-15 ET
+
+Status remains `claimed`. The first exact `0e7f2327` capacity case (WP32) naturally
+failed: 45/47 ordinary goals Valid, 11/11 smoke checks passed; old memory-clear
+preservation and stream memory-domain precondition timed out. WP33 and the
+CBMC32/33 pair remain unrun. All required RTE/initialization/setup checks remain
+in force; no counterexample or source refutation is claimed.
+
+The test-only repair adds an ordinary invariant exposing that every valid tile
+writer comes from this loop's stream loads, with explicit agent provenance.
+Existing hints, source, contracts, preconditions, assertions and semantics are
+preserved. The RED/GREEN compiler/merge replay verifies placement and C erasure;
+it does not establish the new invariant or close capacity acceptance. Independent
+review and a real 32/33 rerun are still required. Exact retained failure,
+diagnosis and controls are in
+[`t27-capacity-hint-repair-20261015.json`](../evidence/t27-capacity-hint-repair-20261015.json).
+
+### Current bounded completion — 2026-10-15 ET
+
+The frozen `0e7f2327` bounded profile completed naturally: 35/35 passed, exit 0,
+with 12 positive CBMC records and 12 replayed source-property counterexamples.
+Independent read-only audit verified 180 physical references / 204 unique files,
+current pins, source cleanliness and guard exits with no mismatch. The expected
+failed completion sentinel is kept separate from semantic property failures.
+Exact bounds and records are retained in
+[`t27-composed-bounded-completed-independent-20261015.json`](../evidence/t27-composed-bounded-completed-independent-20261015.json).
+
+The separately running negative profile had 5/13 completed cases at 22:06:35 UTC;
+each retains its named ordinary timed-out hazard and explicit smoke outcome.
+This is an incremental checkpoint only. Ticket remains `claimed`: final safe,
+remaining negatives and reviewed capacity repair acceptance are still required.
+
+### Independent capacity-hint admission — 2026-10-15 ET
+
+The exact test-only repair `0e71d962` passes independent source/retained-control
+review. Old hint and acceptance ASTs remain identical apart from the helper
+extraction and new ordinary invariant. All 15 local artifact pins rehash without
+error. Production runtime, library and original fixture bytes remain at `0e7f2327`;
+no new premise, assumption or capacity success is claimed. The reviewer did not
+rehash remote raw failure artifacts or launch any job.
+[Independent review and boundaries](../evidence/t27-capacity-hint-independent-review-20261015.md),
+[exact compact receipt](../evidence/t27-capacity-hint-independent-review-20261015.json).
+Actual WP32 establishment/preservation, WP33 ghost-capacity failure and original
+CBMC32/33 agreement remain pending; status stays **claimed**.
+
+### Reviewed capacity completion — 2026-10-15 ET
+
+The reviewed `b9a34bbb` capacity profile completed naturally: 3/3 passed with four
+actual records. WP32 proves all 49 ordinary / 11 smoke goals; WP33 remains
+`not_proven/ghost_capacity` with 47/49 ordinary Valid and 11/11 smoke checks passed.
+Its two open ordinary obligations are named capacity and `dx_issuable`, which
+includes the same count bound. Both establishment/preservation goals for the
+new invariant are Valid in both runs. CBMC agrees at explicit n=32/33, with the
+33-command ghost-capacity result carrying no source counterexample/refutation.
+
+Independent read-only closure checked 40 physical references / 44 files without
+mismatch, exact unchanged source/pins, original RTE/initialization/setup policy,
+and natural guard exits. The old failed 32-command record remains preserved. Exact
+outcomes and resources are in
+[`t27-reviewed-capacity-completed-independent-20261015.json`](../evidence/t27-reviewed-capacity-completed-independent-20261015.json).
+Ticket remains `claimed`: fresh safe and remaining negatives are still required.
+The separately retained historical-weight two-lane safe plan is prospective only.
+
+### Current negative checkpoint: 12/13 — 2026-10-15 ET
+
+The exact `0e7f2327` negative profile has 12 completed passes; final shortened
+store-frame case remains active. Independent audit rehashed 16,368 references /
+1,062 files without mismatch. All three wrong-value cases retain their original
+ordinary ensures timeout. The outside-footprint result explicitly remains
+`not_proven/vacuous_pass`: 51/52 ordinary Valid with independent ensures timeout,
+17/18 smoke checks passed and `wp_smoke_dead_code_s20` failed. This preserves the
+existing generated-branch smoke failure and does not upgrade any theorem claim.
+Exact completed records are retained in
+[`t27-composed-negative-twelve-records-independent-20261015.json`](../evidence/t27-composed-negative-twelve-records-independent-20261015.json).
+Ticket remains `claimed`, pending natural negative closure and fresh safe shards.
+
+### Current negative completion: 13/13 — 2026-10-15 ET
+
+The exact `0e7f2327` negative profile completed naturally: 13/13 tests passed,
+exit 0. All 13 actual WP records remain `not_proven`, with one intended ordinary
+timeout each (1,008/1,021 ordinary Valid). Smoke results remain explicit:
+283/318 passed and 35 failed checks, including the outside query's failed s20
+branch alongside its independent ensures timeout. No WP refutation, source
+counterexample or theorem upgrade is claimed.
+
+The final shortened store-frame case retains the named store-indices timeout,
+90/91 ordinary Valid and 29/29 smoke passed. Independent strict closure verified
+18,091 physical references / 1,084 files without mismatch, current setup/policy/
+method/lowerer/semantics, clean unchanged source and natural guard exits.
+[Exact completed negative evidence](../evidence/t27-composed-negative-completed-independent-20261015.md).
+The bounded 35 and reviewed capacity 3 profiles are accepted separately; status
+remains `claimed` until all 11 fresh safe units complete under the selected
+nonoverlapping source-qualified subsets.
+
+### Fresh safe CPU admission: 1/11 — 2026-10-15 ET
+
+The chosen CPU-only safe profile at exact `0e7f2327` completed naturally 1/1,
+exit 0, with actual `proven` record: 58/58 ordinary Valid, 19/19 smoke passed,
+11 initializedness and 9 RTE goals. Independent strict read-only admission checked
+864 physical references / 865 files without mismatch, exact collector/source/pins,
+required setup/policy and natural guard exits. The record retains its explicit
+entry-contract/unit-requires premises; it does not close general CPU/device
+overlap or source-language/ACSL agreement.
+[Exact fresh safe CPU evidence](../evidence/t27-composed-safe-cpu-completed-independent-20261015.md).
+Status remains `claimed`: ten fresh safe units remain in the selected disjoint
+Arest4/B1three/B2three subsets; original A5/B6 remain unlaunched.
+
+### Fresh Arest safe completion: 5/11 total — 2026-10-15 ET
+
+The exact `0e7f2327` Arest profile completed naturally 4/4, exit 0: store,
+conditional-stall, transitive and register units are all actual `proven` records,
+with 316/316 ordinary goals Valid, 100/100 smoke checks passed, 58 initializedness
+and 55 RTE goals. Independent strict read-only closure verified 6,027 physical
+references / 925 files without mismatch, exact collectors, current policy/pins,
+explicit entry premises, clean source and natural guard exits.
+[Exact Arest closure](../evidence/t27-composed-safe-a-rest-completed-independent-20261015.md).
+Including the completed CPU case, fresh safe acceptance is 5/11. B1/B2's six
+remaining units are still required; status remains `claimed`.
+
+### Fresh B1 safe completion: 8/11 total — 2026-10-15 ET
+
+The exact `0e7f2327` B1 profile completed naturally 3/3, exit 0: size, stream-value
+and range-value units are all actual `proven` records, with 189/189 ordinary
+goals Valid, 67/67 smoke checks passed, 37 initializedness and 29 RTE goals.
+Independent strict closure verified 3,447 physical references / 897 files without
+mismatch, exact collectors/current policy/pins/entry premises, clean source and
+natural guard exits.
+[Exact B1 closure](../evidence/t27-composed-safe-b1-completed-independent-20261015.md).
+Fresh safe acceptance is 8/11. Only B2's three_reads, value_gather and footprint
+remain; status stays `claimed` pending that final disjoint subset.

@@ -1,0 +1,151 @@
+{
+  "created_et": "2026-10-16 01:03 ET",
+  "source_commit": "9704c54b838863dd838d18a20dd0ade1633d5027",
+  "raw_root": "/private/tmp/probata-t28-rank-type-v1-9704c54b-20261016",
+  "scope": "Three syntax/type checks only; no proof, VC, termination or device correspondence accepted.",
+  "result": {
+    "all_three_typechecks_pass": true,
+    "elapsed_seconds": 0.3143666669493541,
+    "external_provers_selected": [],
+    "proof_claim": false,
+    "rows": [
+      {
+        "argv": [
+          "/Users/yanrujhou/.opam/framac-33/bin/why3",
+          "prove",
+          "--no-stdlib",
+          "--no-load-default-plugins",
+          "--config",
+          "/Users/yanrujhou/.why3.conf",
+          "-L",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib",
+          "--type-only",
+          "/private/tmp/probata-t28-rank-type-v1-9704c54b-20261016/component/readiness_rank.mlw"
+        ],
+        "returncode": 0,
+        "source": "readiness_rank.mlw",
+        "source_sha256": "44eb843146e57495579fed4a118df67bcc3858560dd381db62498a65055b150c",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "argv": [
+          "/Users/yanrujhou/.opam/framac-33/bin/why3",
+          "prove",
+          "--no-stdlib",
+          "--no-load-default-plugins",
+          "--config",
+          "/Users/yanrujhou/.why3.conf",
+          "-L",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib",
+          "--type-only",
+          "/private/tmp/probata-t28-rank-type-v1-9704c54b-20261016/component/delay_family.mlw"
+        ],
+        "returncode": 0,
+        "source": "delay_family.mlw",
+        "source_sha256": "d99660f76ad8469960f81491c7df4bfa974abc1133a61d32e9081fe0f60895f6",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "argv": [
+          "/Users/yanrujhou/.opam/framac-33/bin/why3",
+          "prove",
+          "--no-stdlib",
+          "--no-load-default-plugins",
+          "--config",
+          "/Users/yanrujhou/.why3.conf",
+          "-L",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib",
+          "--type-only",
+          "/private/tmp/probata-t28-rank-type-v1-9704c54b-20261016/component/no_progress.mlw"
+        ],
+        "returncode": 0,
+        "source": "no_progress.mlw",
+        "source_sha256": "b80c777054a450f781351130baf91e9c0fdb37a4a59e5453e857921b9b85f465",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "source_commit": "9704c54b838863dd838d18a20dd0ade1633d5027",
+    "source_unchanged": true,
+    "stage": "type_only"
+  },
+  "guard": {
+    "cmd": [
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+      "/private/tmp/probata-t28-rank-type-entry-v1-20261016.py",
+      "/private/tmp/probata-t28-rank-type-v1-9704c54b-20261016/component"
+    ],
+    "exit_code": 0,
+    "wall_s": 0.6690187084022909,
+    "peak_rss_mb": 46.3125,
+    "cap_gb": 8.0,
+    "killed_by_watchdog": false,
+    "timed_out": false,
+    "queue_timed_out": false,
+    "timeout_s": 60.0,
+    "queue_timeout_s": 30.0,
+    "lock_wait_s": 0.0006469166837632656,
+    "runner_pid": 22604,
+    "clock": "continuous_monotonic",
+    "clock_info": {
+      "kind": "continuous_monotonic",
+      "implementation": "mach_continuous_time",
+      "includes_sleep": true,
+      "numer": 125,
+      "denom": 3
+    },
+    "log": "/private/tmp/probata-t28-rank-type-v1-9704c54b-20261016/guard.log",
+    "inspection_events": [],
+    "inspection_failure": null,
+    "primary_inspection_failure": null,
+    "cleanup_inspection_failure": null,
+    "cleanup_inspection_failures": [],
+    "inspection_retry_boundary": "AccessDenied uses a 200 ms environ retry admission window and 21-attempt cap, or three attempts for other operations; only the exact proc_environ SystemError raised by the requested environ operation shares that policy; individual OS calls are not forcibly timed; all pauses count and RSS/deadline checks remain mandatory after inspection; only independently confirmed gone/zombie or changed birth is skipped; persistent live or unknown failure fails closed",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "unconfirmed_children": [],
+    "error": null,
+    "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment",
+    "rss_scope": "live union of current ancestry, retained PID/birth identities and periodic inherited-marker matches; sampled, not a kernel quota",
+    "finished": "2026-10-16 00:51:21 EDT"
+  },
+  "recipe": [
+    {
+      "path": "/private/tmp/probata-t28-rank-type-command-v1-20261016.json",
+      "sha256": "4101f54f1d05106006dcdcd41820ed54d6a0fefbb67aee4242ef616f363cd094"
+    },
+    {
+      "path": "/private/tmp/probata-t28-rank-type-entry-v1-20261016.py",
+      "sha256": "34ec12d97c8abb33218ef4df7bb476ecf0924bdbd784aaa662269990544b426d"
+    },
+    {
+      "path": "/private/tmp/probata-t28-rank-type-expected-v1-20261016.json",
+      "sha256": "ce9ef02e2c4821602333c1d28706ff89e45f0310ff45ab53d60eda196bcc1234"
+    },
+    {
+      "path": "/private/tmp/probata-t28-rank-type-cold-review-v2-20261016.md",
+      "sha256": "94b83d1ed14d2d399f363d292d3b0f11d5a39dd878d95d7fd7b5844ba4e7fc38"
+    },
+    {
+      "path": "/private/tmp/probata-t28-rank-type-cold-review-v2-20261016.json",
+      "sha256": "7176ffe5f8b266d391c9967d27fc059b51c3760b1588409f3d36da84b769aba1"
+    },
+    {
+      "path": "/private/tmp/probata-t28-rank-type-static-review-v1-20261016.md",
+      "sha256": "d30054eb8380e8430fc89467b1167d1839ec9356719d3807b2b5f1e9da8780d8"
+    },
+    {
+      "path": "/private/tmp/probata-t28-rank-type-static-review-v1-20261016.json",
+      "sha256": "dfe5b97563fc80f7e220db8c899d3dddb9d2783a3556dd1dad51869b4103c672"
+    },
+    {
+      "path": "/private/tmp/probata-t28-rank-type-root-preflight-v1-20261016.json",
+      "sha256": "2ca60e184d84f849062e2c39025fd7ce26a217dd20bd8ecf9c30e217f489fe57"
+    },
+    {
+      "path": "/private/tmp/probata-t28-rank-type-root-exit-v1-20261016.json",
+      "sha256": "1790310518d034bc10955b5ef1572261d0d6c4147f2c3e3a146af6434ea7287d"
+    }
+  ]
+}

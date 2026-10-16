@@ -1,10 +1,10 @@
-# All-ticket status at controlled pause
+# Current Probata ticket status
 
-Updated: 2026-10-15 14:24 ET.
+Updated: 2026-10-16 ET — user-requested PAUSE11:35 ET.
 
-32 resolved / 31 ready-for-agent / 0 claimed. Ready frontier: **07, 24, 27**.
-Status comes from ticket frontmatter; a ready label never overrides unresolved dependencies.
-No new ticket is resolved by this closeout. [Resume](HANDOFF.md).
+35 resolved / 28 ready-for-agent / 0 claimed. **PAUSED**; claims07,25,28 released. No scheduled next status. Read [paused handoff](PAUSED-HANDOFF-20261016.md) before resuming.
+Derived from authoritative ticket frontmatter; unresolved dependencies still gate later work.
+[Current resume](resume.md). Historical proof evidence retains its exact source pins.
 
 | Ticket | Status | Unresolved blockers |
 |---|---|---|
@@ -31,11 +31,11 @@ No new ticket is resolved by this closeout. [Resume](HANDOFF.md).
 | [21 — C lowering and WP adapter (A2 tracer)](issues/21-c-lowering-wp-tracer.md) | resolved | none |
 | [22 — SAW adapter and SAWScript translator](issues/22-saw-adapter-and-translator.md) | resolved | none |
 | [23 — C-stub translator, fallbacks and check mode](issues/23-stub-translator-fallbacks-check-mode.md) | resolved | none |
-| [24 — C++ subset widening](issues/24-cpp-subset-widening.md) | ready-for-agent | none |
-| [25 — std::vector and std::pair models](issues/25-vector-and-pair-models.md) | ready-for-agent | 24 |
+| [24 — C++ subset widening](issues/24-cpp-subset-widening.md) | resolved | none |
+| [25 — std::vector and std::pair models](issues/25-vector-and-pair-models.md) | ready-for-agent | none |
 | [26 — Logic and sum libraries](issues/26-logic-and-sum-libraries.md) | resolved | none |
-| [27 — Proof semantics for the BFS read-offload calls](issues/27-proof-semantics-bfs-calls.md) | ready-for-agent | none |
-| [28 — Proof semantics for the remaining maa_* calls](issues/28-proof-semantics-remaining-calls.md) | ready-for-agent | 27 |
+| [27 — Proof semantics for the BFS read-offload calls](issues/27-proof-semantics-bfs-calls.md) | resolved | none |
+| [28 — Proof semantics for the remaining maa_* calls](issues/28-proof-semantics-remaining-calls.md) | ready-for-agent | none |
 | [29 — Proof-semantics checks](issues/29-proof-semantics-checks.md) | ready-for-agent | 28 |
 | [30 — Reference definitions, per-call summaries and new intrinsic versions](issues/30-reference-definitions-and-summaries.md) | ready-for-agent | 25, 28 |
 | [31 — Five-gate drafting and the new bfs_read_offload version](issues/31-five-gate-drafting-and-read-offload-version.md) | ready-for-agent | 30 |
@@ -43,8 +43,8 @@ No new ticket is resolved by this closeout. [Resume](HANDOFF.md).
 | [33 — Minimum-bounds script and A2 exit](issues/33-minimum-bounds-and-a2-exit.md) | ready-for-agent | 29, 32 |
 | [34 — proof_hinting role and workspace](issues/34-proof-hinting-role.md) | resolved | none |
 | [35 — Hint records, merger and proof hint check](issues/35-hint-records-and-proof-hint-check.md) | resolved | none |
-| [36 — Proof setup check and verdict reading](issues/36-proof-setup-check-and-verdict-reading.md) | ready-for-agent | 27 |
-| [37 — The proof-hint loop](issues/37-proof-hint-loop.md) | ready-for-agent | 33, 36 |
+| [36 — Proof setup check and verdict reading](issues/36-proof-setup-check-and-verdict-reading.md) | resolved | none |
+| [37 — The proof-hint loop](issues/37-proof-hint-loop.md) | ready-for-agent | 33 |
 | [38 — Calibration on the public C suites](issues/38-calibration-public-suites.md) | ready-for-agent | 37 |
 | [39 — BFS unit proven unbounded at one thread; A3 exit](issues/39-bfs-unit-unbounded-and-a3-exit.md) | ready-for-agent | 33, 37, 38, 40 |
 | [40 — Bucketed-relaxation fixture](issues/40-bucketed-relaxation-fixture.md) | ready-for-agent | 37 |
@@ -52,7 +52,7 @@ No new ticket is resolved by this closeout. [Resume](HANDOFF.md).
 | [42 — Rocq: composition theorem proof](issues/42-rocq-composition-theorem.md) | resolved | none |
 | [43 — Rocq: DX100 reduction lemma](issues/43-rocq-reduction-lemma.md) | ready-for-agent | 29 |
 | [44 — Shared-action kinds and commutativity lemmas](issues/44-shared-action-kinds.md) | ready-for-agent | 31 |
-| [45 — Per-thread lowering](issues/45-per-thread-lowering.md) | ready-for-agent | 24, 44 |
+| [45 — Per-thread lowering](issues/45-per-thread-lowering.md) | ready-for-agent | 44 |
 | [46 — CIVL adapter](issues/46-civl-adapter.md) | ready-for-agent | 25, 45, 60 |
 | [47 — GenMC adapter and agreement](issues/47-genmc-adapter-and-agreement.md) | ready-for-agent | 46 |
 | [48 — Concurrency negative controls](issues/48-concurrency-controls.md) | ready-for-agent | 33, 47, 60 |

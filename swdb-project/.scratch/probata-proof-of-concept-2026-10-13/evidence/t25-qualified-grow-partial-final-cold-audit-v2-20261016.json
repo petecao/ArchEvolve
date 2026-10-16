@@ -1,0 +1,256 @@
+{
+  "V1_inert_delta": {
+    "V1_never_remotely_dispatched": true,
+    "V1_reader": {
+      "bytes": 31826,
+      "path": "/private/tmp/probata-t25-qualified-grow-partial-cold-reader-v1-20261016.py",
+      "sha256": "5031e4bbf82c5591b1298b8b89bb38839201e76b65563302c5f3d186698b5b75"
+    },
+    "V2_narrow_fix": "208files and416checks separately validated/reported",
+    "defect": "208module files were incorrectly asserted to be416;416counts physical+Git comparisons",
+    "policy_byte_identical": true,
+    "pure_controls_passed": 68
+  },
+  "acceptance": {
+    "CVC5_direct_valid_lemmas": 2,
+    "C_smokes_generated": 0,
+    "all20_complete": false,
+    "caller_acceptance": false,
+    "model_acceptance": false,
+    "new_formal_evaluation_by_author": false,
+    "original_v2_acceptance": false,
+    "partial_classification_only": true,
+    "projection_not_proven": true,
+    "refuted": false,
+    "ticket25_resolved": false,
+    "unexecuted_targets": 17
+  },
+  "audit_md": {
+    "bytes": 4047,
+    "path": "/private/tmp/probata-t25-qualified-grow-partial-final-cold-audit-v2-20261016.md",
+    "sha256": "d0d77e4ac451fd88529507a8aa0560dcef8dccb5cc0ee6a549a3bc37b73dfb5c"
+  },
+  "check_count": 43,
+  "checks": [
+    "frozen V2 reader exact",
+    "frozen policy exact and V1byteidentical",
+    "source exact017",
+    "passive resources healthy",
+    "complete physical counters",
+    "correct separate module208/check416 counters",
+    "1553 source consumer stream complete",
+    "whole new378/old49 preserved",
+    "classification strictly partial",
+    "no promotion all20_complete",
+    "no promotion caller_acceptance",
+    "no promotion model_acceptance",
+    "no promotion original_v2_acceptance",
+    "no promotion refuted",
+    "target0 complete native property/CSV census",
+    "target0 exact portfolio outcomes",
+    "target1 complete native property/CSV census",
+    "target1 exact portfolio outcomes",
+    "target2 complete native property/CSV census",
+    "target2 exact portfolio outcomes",
+    "no fake project result axioms",
+    "actual3 queries and14candidateSMT only",
+    "explicit standard trust boundary",
+    "actual retained WP block control.grow.premises_feasible",
+    "actual retained WP block grow.entry.reads",
+    "actual retained WP block grow.entry.int_projection",
+    "all14 captured candidate identities equal",
+    "negative query and no submission label check_lemma_t25v3_control_grow_premises_feasible_Why3_Alt_Ergo_2_6_4.psmt2",
+    "negative query and no submission label check_lemma_t25v3_control_grow_premises_feasible_Why3_CVC5_1_2_1.smt2",
+    "negative query and no submission label zilch-typed_real_check_lemma_t25v3_control_grow_premises_feasible_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+    "negative query and no submission label zilch-typed_real_check_lemma_t25v3_control_grow_premises_feasible_CVC5_1dt2dt1-wp_goal.smt2",
+    "negative query and no submission label check_lemma_t25v3_grow_entry_int_projection_Why3_Alt_Ergo_2_6_4.psmt2",
+    "negative query and no submission label check_lemma_t25v3_grow_entry_int_projection_Why3_CVC5_1_2_1.smt2",
+    "negative query and no submission label check_lemma_t25v3_grow_entry_int_projection_Why3_Z3_5_1_0.smt2",
+    "negative query and no submission label zilch-typed_real_check_lemma_t25v3_grow_entry_int_projection_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+    "negative query and no submission label zilch-typed_real_check_lemma_t25v3_grow_entry_int_projection_CVC5_1dt2dt1-wp_goal.smt2",
+    "negative query and no submission label zilch-typed_real_check_lemma_t25v3_grow_entry_int_projection_Z3_5dt1dt0-wp_goal.smt2",
+    "negative query and no submission label check_lemma_t25v3_grow_entry_reads_Why3_Alt_Ergo_2_6_4.psmt2",
+    "negative query and no submission label check_lemma_t25v3_grow_entry_reads_Why3_CVC5_1_2_1.smt2",
+    "negative query and no submission label zilch-typed_real_check_lemma_t25v3_grow_entry_reads_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+    "negative query and no submission label zilch-typed_real_check_lemma_t25v3_grow_entry_reads_CVC5_1dt2dt1-wp_goal.smt2",
+    "original V1 remains unchanged",
+    "root helper staged reviewed V2packet"
+  ],
+  "classification_detail": {
+    "attempted": 3,
+    "caller_acceptance": false,
+    "direct_valid": 2,
+    "model_acceptance": false,
+    "original_v2_acceptance": false,
+    "timeout_target": "grow.entry.int_projection",
+    "unexecuted": [
+      "grow.alloc.identity",
+      "grow.alloc.output",
+      "grow.alloc.frame",
+      "grow.copy.establish",
+      "grow.copy.read",
+      "grow.copy.write",
+      "grow.copy.step",
+      "grow.copy.exit",
+      "grow.free.argument",
+      "grow.free.survival",
+      "grow.free.aliases",
+      "grow.store.capacity",
+      "grow.post.eligibility",
+      "grow.post.values",
+      "grow.post.old_invalid",
+      "grow.post.frame",
+      "grow.numeric"
+    ]
+  },
+  "context_summary": {
+    "actual_submission_count": null,
+    "flattened_standard_axioms_independently_proven": false,
+    "materialized_SMT_files": 14,
+    "printed_query_hashes": [
+      {
+        "printed_block_sha256": "968f546b5b9b815601d411e65990102bcbea76e5c4abe763faecdaaf926b3553",
+        "query_sha256": "a24ea8eec7b41622e7e436dc94c1a4af178f7b434fd4efe2479219b1a0762b7c",
+        "target": "control.grow.premises_feasible"
+      },
+      {
+        "printed_block_sha256": "51d73e1b5de0c188e999ab42cfac125f37efe4e5bf3297ed572d910ba85ed6c8",
+        "query_sha256": "5552bdec0fa94aa70e947e36b238f15609fb79256ea84eefdbae62aa1668691b",
+        "target": "grow.entry.reads"
+      },
+      {
+        "printed_block_sha256": "c4a1d9071061d193256423265ebecfab58caceb26cf3d9cc803c377fd5776cb3",
+        "query_sha256": "17b65830137f5580859a970426a4a338f57b319ffec725b098c1d7047d414567",
+        "target": "grow.entry.int_projection"
+      }
+    ],
+    "project_desired_axioms_or_lemmas": 0,
+    "standard_foundations_explicitly_trusted": true,
+    "submitted_bytes_identity_qualified": false,
+    "transitive_source_modules": 30
+  },
+  "date": "2026-10-16 ET",
+  "errors": [],
+  "physical_counters": {
+    "module_physical_git_checks": 416,
+    "module_source_files": 208,
+    "old49_unchanged": true,
+    "physical_checks": 5267,
+    "physical_files": 2919,
+    "source_consumer_bytes": 1337447798,
+    "source_consumer_files": 1553,
+    "whole_raw_bytes": 23369201,
+    "whole_raw_files": 378
+  },
+  "policy_sha256": "1fbde2d34e8929796811088799a2fa84ac8ba3eb5fd60ecaa11e266ca984c88b",
+  "publication_pointers": [
+    {
+      "bytes": 3552,
+      "path": "/private/tmp/probata-t25-qualified-grow-partial-cold-packet-v2-20261016.json",
+      "sha256": "14e8771e6774845ccaa2bd0d63f24044bc421ad6526f8549f59684aaa888c87b"
+    },
+    {
+      "bytes": 2647,
+      "path": "/private/tmp/probata-t25-qualified-grow-partial-metadata-review-v1-20261016.json",
+      "sha256": "2f7181e7857b67a5395706492a47fb042354bac16a8421422e75988058feffd8"
+    },
+    {
+      "bytes": 108300,
+      "path": "/private/tmp/probata-t25-task-metadata-root-execution-v1-20261016.json",
+      "sha256": "ac614d4c557c52e8ae2d25b2f99a8e4c23591a94e18286034aa9d9d5b47c425b"
+    }
+  ],
+  "reader_sha256": "5119623b6fb3685c1000be0803b929abbc6ac00a72d52a1fb36a328ef45374ec",
+  "remote_artifact_manifest": {
+    "audit.json": {
+      "bytes": 130351,
+      "sha256": "9d2428cc0c9c13fd272aa8c9a164b5e3801de3886ce83b6bc07d74ba3f552de2"
+    },
+    "command.json": {
+      "bytes": 533,
+      "sha256": "55ba6ed7f45f346e7007a4f672b0067f29fc846d9313496069d67acce24fb320"
+    },
+    "preflight.json": {
+      "bytes": 2524,
+      "sha256": "07db1f39271d95a14158a437c433f1d1c4a7fed0856544457896a492dfc13b24"
+    },
+    "resources.json": {
+      "bytes": 298,
+      "sha256": "7e9f7874f088a35a9ba344dc6e42d2c9aca6a00408ae2139be4643dbbbc7263c"
+    },
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "remote_audit_directory": "/data/yanruj/EvolveSWDB_runs/probata-root-t25-partial-cold-v2-20261016",
+  "resources": {
+    "address_space_cap_bytes": 8589934592,
+    "exit_code": 0,
+    "inspection_denials": [],
+    "out_of_memory": false,
+    "peak_rss_bytes": 36397056,
+    "scope": "passive reader only; no formal tools",
+    "timed_out": false,
+    "timeout_seconds": 60,
+    "wall_seconds": 3.8899787329137325,
+    "workers": 1
+  },
+  "root_execution_receipt": {
+    "bytes": 138852,
+    "path": "/private/tmp/probata-t25-partial-cold-root-execution-v2-20261016.json",
+    "sha256": "b87a30f2da01c9af53be69b6db9e17db0ba55c169a4f1d338db4d1de8dc48d24"
+  },
+  "root_helper_provenance": {
+    "bytes": 4570,
+    "path": "/private/tmp/probata-root-t25-partial-cold-dispatch-v2-20261016.py",
+    "sha256": "d1d10b3bb706d0507a9277709c9ca349ea81556cf6d690e15c5f1bace764622a"
+  },
+  "source_commit": "01771a839893975bba389ee0adcbec2aecdb88ac",
+  "status": "PASS_PARTIAL_COLD_CLASSIFICATION_ONLY",
+  "target_censuses": [
+    {
+      "CSV_rows": 0,
+      "direct_valid": true,
+      "goal": "typed_real_check_lemma_t25v3_control_grow_premises_feasible",
+      "native_best": "valid",
+      "ordinary": 1,
+      "portfolio_results": [
+        "timeout",
+        "valid"
+      ],
+      "properties": 2,
+      "scope": "Isolated check lemma, no C body or generated smoke attempt in this target.",
+      "smokes": 0
+    },
+    {
+      "CSV_rows": 0,
+      "direct_valid": true,
+      "goal": "typed_real_check_lemma_t25v3_grow_entry_reads",
+      "native_best": "valid",
+      "ordinary": 1,
+      "portfolio_results": [
+        "timeout",
+        "valid"
+      ],
+      "properties": 2,
+      "scope": "Isolated check lemma, no C body or generated smoke attempt in this target.",
+      "smokes": 0
+    },
+    {
+      "CSV_rows": 0,
+      "direct_valid": false,
+      "goal": "typed_real_check_lemma_t25v3_grow_entry_int_projection",
+      "native_best": "timeout",
+      "ordinary": 1,
+      "portfolio_results": [
+        "timeout",
+        "unknown",
+        "unknown"
+      ],
+      "properties": 2,
+      "scope": "Isolated check lemma, no C body or generated smoke attempt in this target.",
+      "smokes": 0
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+# Ticket25 standalone theory typecheck entry v1 independent review
+
+Date: 2026-10-15 ET. Verdict: PASS for the coordinator's bounded standalone type-only admission using the exact entry/JSON below; no blocking static finding. Actual typecheck outcome remains pending. No WP/import/VC proof acceptance follows from this gate.
+
+Reviewed Python AST/text, command JSON and byte digests without invoking the entry, compiler, Why3/WP/prover, tests or any remote operation. Also read the official Why3 1.8.2 command reference to confirm option semantics. Only external immutable review receipts were created.
+
+Exact inputs:
+
+- /private/tmp/probata-t25-theory-typecheck-entry-v1-9d8ca764-20261015.py; SHA-256 ef6d6fdce6e316066a94fa5306929bf82dface72de1667aa7227f4412a30aca4.
+- /private/tmp/probata-t25-theory-typecheck-command-v1-9d8ca764-20261015.json; SHA-256 ccbbb79bf61ea67f99e3b44072a4ed0f87f29477b1a17cd39083466ef948eade.
+
+The nine-element command array embeds the complete entry byte for byte with the same pinned absolute opam switch/Python prefix. Initial opam environment bootstrap precedes entry checks, as in prior admission. The entry requires a clean c5216796dde05680acd237a97d4f0c7b3788e605 bootstrap, while separately extracting the theory from9d8ca7645546ce3b282b2a51005392ceb78ff609. Git object queries use --no-replace-objects, verify blob8b3c2bf3f4c831b1e28499ffafad78c196819ec5 and content SHA5186c27f5a7a339352e3f62dc3a0d3efb1c7bd12f8a456cc61b0d7a52566638d before staging. The old bootstrap supplies the reviewed watchdog only, not the theory under test. Raw root must already exist outside its checkout; the new theory directory must not already exist.
+
+All9 physical tool path/digest and2 unique WP artifact pins equal the earlier selected-tool metadata snapshot. No WP/compiler/prover binary is invoked by the entry. It verifies the declared57-file stdlib tree digest520d9875983b41da80b89d7809cff4c76370e8445f8b49147f1423cfb7404c31 and explicit configuration digest50061c22ad10615b4cd0103721869646155b681e0317a679682aed719f0967c9 at runtime. These additional remote config/tree bytes were not independently fetched by this reviewer; mismatch refuses before Why3 version/typecheck. Ambient FRAMAC_WP* key presence is refused, including empty values.
+
+After retaining the input/tool/config profile, the only selected tool invocations are pinned Why3 --version (30-second timeout, exact1.8.2 stdout required) and pinned Why3 prove --type-only. The latter disables automatic standard-library loadpath and default plugin loading, then supplies the hashed config and explicit declared stdlib loadpath. No prover, driver, transformation or extraction flag appears. The official reference documents that --type-only stops after type checking, --no-stdlib suppresses the default stdlib loadpath, --no-load-default-plugins suppresses standard-path plugins, --config selects configuration and -L adds a theory search directory. [Why3 1.8.2 command reference](https://why3.org/doc/manpages.html).
+
+The watchdog receives exactly60 seconds and8GiB for the typecheck, records exit/time/OOM/RSS and log, and accepts only zero exit without timeout/OOM followed by clean unchanged bootstrap verification. Root's proposed300-second whole-command guard and420-second wrapper/process-tree8GiB/one-worker admission are external coordinator obligations, not implemented by this command JSON. Git subprocesses each have30-second limits. This entry does not acquire the production shared verifier lock; the coordinator must serialize this short admitted gate through its reserved lane/admission, as planned.
+
+The receipt explicitly distinguishes bootstrap and theory identity and records no solver/WP launch or model-body proof record. This is a grammar/type feasibility result only. It does not audit every actually resolved import/config plugin or prove the source-to-VC relation, mapped logical goals, task hypotheses, smoke/nonvacuity or full ticket25 body. A passing typecheck would license progress to separately reviewed WP import/task validation; it would not close those obligations.

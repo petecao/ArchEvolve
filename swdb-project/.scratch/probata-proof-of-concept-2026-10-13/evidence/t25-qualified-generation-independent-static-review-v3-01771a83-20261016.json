@@ -1,0 +1,99 @@
+{
+  "date_et": "2026-10-16",
+  "disposition": "PASS_INERT_GENERATION_ONLY_V3",
+  "blockers": [],
+  "review_md_sha256": "20d033d5724b77b611ff2a1f504ba2bb8859322dd4de2913461ccaeb6525cda5",
+  "pins_and_checks": {
+    "date_et": "2026-10-16",
+    "source_commit": "01771a839893975bba389ee0adcbec2aecdb88ac",
+    "entry_and_command_expected": {
+      "probata-t25-qualified-generation-command-v1-01771a83-20261016.json": "09d8bd5d96c529306eae2e01f9c625c8947a93dcb54aa16769dbcc05b7a75487",
+      "probata-t25-qualified-generation-entry-v3-01771a83-20261016.py": "ce792616c5b5cba4ce84e0f385251155211609b86547b9bb1420eae38e9417fc",
+      "probata-t25-qualified-generation-expected-v3-01771a83-20261016.json": "866a8a3900722d86ae390e7f0e91cdb6e6b9d02524303e51777f7bc9008e7493"
+    },
+    "source_blobs_checked": 310,
+    "runtime_file_pin_instances_checked": 1222,
+    "full_import_tree_membership_checked": {
+      "why3_stdlib": 57,
+      "wp_why3_support": 30,
+      "why3_drivers": 93,
+      "standard_headers": 194
+    },
+    "compiled_package_membership_checked": 4,
+    "pure_control_artifact_pins_checked": 6,
+    "canonical_targets": 20,
+    "selected": {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_entry_int_projection",
+      "id": "grow.entry.int_projection",
+      "kind": "check_lemma",
+      "path": "002-t25v3_grow_entry_int_projection.c",
+      "sha256": "b5dbe9939b460efa5503b1cbba8a891f5cdb940a8d44835f3fd04da307a74b3f",
+      "source_groups": [
+        "G1"
+      ],
+      "source_spans": [
+        {
+          "begin": 2706,
+          "end": 2752,
+          "sha256": "a3831136732ed8896207cc9c38fbc863ed0ac2071e2f830712d7c0501fe0c042"
+        }
+      ],
+      "statement": "\\forall Heap::heap h; \\forall Heap::int_values values; \\forall integer r,o,b,bo,s,c; t25_repr(h,r,o,b,bo,s,c) && (s == 0 || r != b) && Heap::bounded_int_values(values,bo,s) ==> t25v3_repr(Heap::project_int_region(h,values,b,bo,s),r,o,b,bo,s,c)",
+      "status": "pending"
+    },
+    "canonical_manifest_sha256": "dc180f92e08c94b4aa40e48040e72f6851d034153c92273be99942ad198bb411",
+    "selected_packet_sha256": "b5dbe9939b460efa5503b1cbba8a891f5cdb940a8d44835f3fd04da307a74b3f",
+    "pure_controls_result": "...................                                                      [100%]\n19 passed in 0.28s\n",
+    "reviewer_actual_invocations": 0,
+    "errors": []
+  },
+  "command": {
+    "path": "/private/tmp/probata-t25-qualified-generation-command-v1-01771a83-20261016.json",
+    "sha256": "09d8bd5d96c529306eae2e01f9c625c8947a93dcb54aa16769dbcc05b7a75487"
+  },
+  "primary_source_findings": {
+    "ProverWhy3.ml:1567-1574": "task_of_wpo then Generate no_result before prover_task/automated runner",
+    "ProverWhy3.ml:1151-1192": "prints theory and creates common task; no driver-prepared or submitted SMT claim",
+    "Why3Provers.ml:17-21,48-55": "explicit config, autodetection gated",
+    "Wp_parameters.ml:931-951": "explicit config and no-autodetection options"
+  },
+  "runtime_control_boundary": {
+    "fresh_config_lexically_checked_not_executed": true,
+    "sole_selector": "cvc5",
+    "sentinel_is_forbidden_not_allowed_child": true,
+    "driver_hash_prepost": true,
+    "no_external_solver_requested": true,
+    "trusted_control_flow_required": true,
+    "OS_dyld_shared_cache_unhashed": true
+  },
+  "root_required_limits": {
+    "cap_bytes": 8589934592,
+    "counted_verifier_token_required": true,
+    "outer_seconds": 720,
+    "whole_seconds": 600,
+    "workers": 1
+  },
+  "internal_deadline_seconds": 300,
+  "output_bytes": 268435456,
+  "output_budget_continuous_quota": false,
+  "actual_invocations_by_reviewer": 0,
+  "repository_mutation_or_merge": false,
+  "pure_controls_only": {
+    "passed": 19,
+    "pytest_seconds": 0.28,
+    "wall_seconds": 0.4323835839750245,
+    "peak_rss_bytes": 49790976
+  },
+  "actual_generation_completed": false,
+  "actual_config_parser_compatibility_observed": false,
+  "import_hypothesis_cold_closure_complete": false,
+  "physical_submitted_task_file_claim": false,
+  "proof_or_fullbody_or_caller_acceptance": false,
+  "pending": [
+    "fresh root shared-slot/host/resource/source/entry/expected admission",
+    "actual native config/import/task generation",
+    "complete settled source/runtime/import/axiom/property/goal/CSV/log/artifact cold audit"
+  ]
+}

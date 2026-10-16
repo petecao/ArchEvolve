@@ -1,0 +1,57 @@
+{
+  "actual_results": false,
+  "all240_record_and_report_refs_checked": true,
+  "cold_reader_history": "Passivev1 assumed optional failure_class key was present and raised KeyError; v2 uses get. Producer unchanged and all persisted records retain normal schema. Both passive script files are retained outside repository.",
+  "copied_receipts": [
+    {
+      "path": "evidence/t25-grow21-scripted-public-cold-v2-20261016.json",
+      "sha256": "5fe25e18b4bd0752ce25b0f73088924167d788c1a86fbd85548c76b635a69028"
+    },
+    {
+      "path": "evidence/t25-grow21-scripted-public-result-20261016.json",
+      "sha256": "72d13b3341660baebfde8147b1d42f8499a0984ddc1aff619d7cb97806151f16"
+    },
+    {
+      "path": "evidence/t25-grow21-scripted-public-outer-receipt-20261016.json",
+      "sha256": "ea650635af0600ad1b5555d53f8ee52ed590499887a33904d847a7496e2d9dd4"
+    },
+    {
+      "path": "evidence/t25-grow21-scripted-public-inner.log.summary-20261016.json",
+      "sha256": "f922a3e31f801a60fad0a010a9d3f970d4adfbbf1efecfb36118180186a5951e"
+    },
+    {
+      "path": "evidence/t25-grow21-scripted-public-junit-20261016.xml",
+      "sha256": "e4de0aa806cfc5ebb1893f7c8dcbce3e7a7bd7a6b0cdd7c5d882c68aaaefbc3e"
+    },
+    {
+      "path": "evidence/t25-grow21-scripted-public-preflight-20261016.json",
+      "sha256": "59b4169c1bda06d9c07c505198cbfac378089253cae73f3bfdccdec26bc7344e"
+    },
+    {
+      "path": "evidence/t25-grow21-public-controls-helper-independent-review-v1-0f10e088-20261016.md",
+      "sha256": "359759d471b0e59a57cb02d458e90b233f55fb758de0f77b08f7b588473bd414"
+    },
+    {
+      "path": "evidence/t25-grow21-public-controls-helper-independent-review-v1-0f10e088-20261016.json",
+      "sha256": "3c346e9ae158588ccf87fa41b58a5f555fb78b38cfdaf0d4384c561292c45aaa"
+    }
+  ],
+  "created": "2026-10-16 ET",
+  "negative_controls": [
+    "named parse-error stand-in after setup",
+    "self-consistent axiom injection refused before launch/no record"
+  ],
+  "producer_retained": "/private/tmp/probata-t25-root-grow21-public-controls-v1-20261016",
+  "root_author": "0f10e08877e351b940a465fb2ece45e8e1591ab2",
+  "runtime_candidate": "2e01d27d0aea7f3c2056d3abb06600b4cefa29be",
+  "scope": "Root-owned3scripted public/native controls and passive source/report/schema audit; no actual formal proof.",
+  "scripted_success": {
+    "healthy_smoke": 1,
+    "ordinary_goals": 30,
+    "schema_valid": true,
+    "targets": 21
+  },
+  "source_prepost_identical": true,
+  "source_refs": 1898,
+  "ticket_resolved": false
+}

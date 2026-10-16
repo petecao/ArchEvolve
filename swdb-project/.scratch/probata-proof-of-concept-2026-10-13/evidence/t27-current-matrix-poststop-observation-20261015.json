@@ -1,0 +1,320 @@
+{
+  "date_et": "2026-10-15",
+  "scope": "Independent read-only natural resource/lane/source closure plus three exact run/source prefix absence scans in readable same-UID cmdline, cwd and environment. No signals. Prefix absence is bounded observation, not a universal cleanup theorem.",
+  "run": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t27-safe-b2",
+  "connection_check": {
+    "uptime": "21:22:15 up 76 days, 13:41, 11 users,  load average: 0.15, 0.33, 1.28",
+    "disk": "Filesystem      Size  Used Avail Use% Mounted on\n/dev/sdd1       1.8T  1.7T   12G 100% /data1\n/dev/sdb1       1.8T  1.7T   94G  95% /data",
+    "users": "",
+    "leases": {
+      "mbit10-evaluation.meta.json": {
+        "active_session": null,
+        "heartbeat_at": "2026-09-12T04:49:11Z",
+        "lease": {
+          "acquired_at": "2026-09-12T01:35:42Z",
+          "daemon_pid": 209457,
+          "daemon_start_token": "sh209457-1789176942",
+          "generation": 77,
+          "host": "mbit10",
+          "lease_name": "mbit10-evaluation",
+          "mode": "measure",
+          "session_id": null
+        },
+        "attempt_pid": null,
+        "attempt_start_token": null,
+        "recovered_from_generation": null,
+        "released_at": "2026-09-12T04:49:11Z",
+        "session_note": null,
+        "session_state": "none",
+        "state": "released",
+        "writer": "hostlock.sh"
+      },
+      "mbit10-evaluation-node1.meta.json": {
+        "active_session": null,
+        "heartbeat_at": "2026-10-16T01:10:17Z",
+        "lease": {
+          "acquired_at": "2026-10-16T00:44:49Z",
+          "daemon_pid": 3780270,
+          "daemon_start_token": "sh3780270-1792111489",
+          "generation": 606,
+          "host": "mbit10",
+          "lease_name": "mbit10-evaluation-node1",
+          "mode": "measure",
+          "session_id": null
+        },
+        "attempt_pid": null,
+        "attempt_start_token": null,
+        "recovered_from_generation": null,
+        "released_at": "2026-10-16T01:10:17Z",
+        "session_note": null,
+        "session_state": "none",
+        "state": "released",
+        "writer": "hostlock.sh"
+      },
+      "mbit10-evaluation-node0.meta.json": {
+        "active_session": null,
+        "heartbeat_at": "2026-10-16T00:58:07Z",
+        "lease": {
+          "acquired_at": "2026-10-15T23:31:53Z",
+          "daemon_pid": 3751560,
+          "daemon_start_token": "sh3751560-1792107113",
+          "generation": 580,
+          "host": "mbit10",
+          "lease_name": "mbit10-evaluation-node0",
+          "mode": "measure",
+          "session_id": null
+        },
+        "attempt_pid": null,
+        "attempt_start_token": null,
+        "recovered_from_generation": null,
+        "released_at": "2026-10-16T00:58:07Z",
+        "session_note": null,
+        "session_state": "none",
+        "state": "released",
+        "writer": "hostlock.sh"
+      }
+    },
+    "source": {
+      "branch": "HEAD",
+      "commit": "0e7f232762e4555aa9435a3a3622923fad8ee928"
+    }
+  },
+  "scans": [
+    {
+      "utc": "2026-10-16T01:22:15.236428+00:00",
+      "same_uid_processes_seen": 19,
+      "prefix_matches": [],
+      "inspection_denials": [
+        {
+          "pid": 3261267,
+          "birth": 1791950177.88,
+          "field": "cwd"
+        },
+        {
+          "pid": 3261267,
+          "birth": 1791950177.88,
+          "field": "environment"
+        },
+        {
+          "pid": 3790884,
+          "birth": 1792113734.94,
+          "field": "cwd"
+        },
+        {
+          "pid": 3790884,
+          "birth": 1792113734.94,
+          "field": "environment"
+        }
+      ]
+    },
+    {
+      "utc": "2026-10-16T01:22:16.282558+00:00",
+      "same_uid_processes_seen": 18,
+      "prefix_matches": [],
+      "inspection_denials": [
+        {
+          "pid": 3261267,
+          "birth": 1791950177.88,
+          "field": "cwd"
+        },
+        {
+          "pid": 3261267,
+          "birth": 1791950177.88,
+          "field": "environment"
+        },
+        {
+          "pid": 3790884,
+          "birth": 1792113734.94,
+          "field": "cwd"
+        },
+        {
+          "pid": 3790884,
+          "birth": 1792113734.94,
+          "field": "environment"
+        }
+      ]
+    },
+    {
+      "utc": "2026-10-16T01:22:17.326526+00:00",
+      "same_uid_processes_seen": 19,
+      "prefix_matches": [],
+      "inspection_denials": [
+        {
+          "pid": 3261267,
+          "birth": 1791950177.88,
+          "field": "cwd"
+        },
+        {
+          "pid": 3261267,
+          "birth": 1791950177.88,
+          "field": "environment"
+        },
+        {
+          "pid": 3790884,
+          "birth": 1792113734.94,
+          "field": "cwd"
+        },
+        {
+          "pid": 3790884,
+          "birth": 1792113734.94,
+          "field": "environment"
+        }
+      ]
+    }
+  ],
+  "observability_limits": {
+    "same_uid_cwd_or_environment_denials": true,
+    "denied_process_followup": [
+      {
+        "pid": 3261267,
+        "birth": 1791950177.88,
+        "name": "(sd-pam)",
+        "status": "sleeping"
+      },
+      {
+        "pid": 3790884,
+        "birth": 1792113734.94,
+        "name": "sshd",
+        "status": "sleeping"
+      }
+    ],
+    "interpretation": "Absence is limited to readable process fields; unrelated denials are retained and no universal process cleanup claim is made."
+  },
+  "files": {
+    "lane.json": {
+      "sha256": "dadbf367a7954afc8dfb26124fb2de1e45fd16c56b8e239844f19ae38077a5b8",
+      "content": {
+        "socket_lane": {
+          "aligned_cell_age_s": "",
+          "aligned_to": "no_gapbs_batch_running",
+          "command": [
+            "timeout",
+            "--signal=TERM",
+            "--kill-after=60",
+            "7320",
+            "bash",
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t27-safe-b2/run.sh"
+          ],
+          "cpus_allowed_list": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63",
+          "ended_utc": "2026-10-16T01:10:17Z",
+          "exit_code": 0,
+          "host": "mbit10",
+          "job": "probata-reviewed-0e7f2327-t27-safe-b2",
+          "lease_generation": 606,
+          "lease_name": "mbit10-evaluation-node1",
+          "load1_at_start": 2.05,
+          "load1_max": 32,
+          "node": 1,
+          "numa_memory_policy": "bind:1",
+          "numactl": "--cpunodebind=1 --membind=1",
+          "preregistration_sha256": null,
+          "started_utc": "2026-10-16T00:44:49Z"
+        }
+      }
+    },
+    "resources.json": {
+      "sha256": "c1fec13a44fa5cbb3378f003bca33b965eae0994df5054779fa598770d019c68",
+      "content": {
+        "cpu_seconds": 1609.9389239999998,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 4513902592,
+        "timed_out": false,
+        "wall_seconds": 1525.72199293226
+      }
+    },
+    "outer-resources.json": {
+      "sha256": "1e20998f6e288a02a0d3a90cce49b9163464cf74f46114d80af9dba5f6fd6faf",
+      "content": {
+        "exit_code": 0,
+        "peak_rss_bytes": 4565168128,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 1527.7136064730585,
+        "cpu_seconds": 1915.019613
+      }
+    },
+    "source-after.json": {
+      "sha256": "53a46be3c357337f05b0ffa45a1ddcedbb313414550758526ba87c2104ea2ad7",
+      "content": {
+        "commit": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+        "source_unchanged": true,
+        "tracked_changes": ""
+      }
+    }
+  },
+  "leases": {
+    "mbit10-evaluation.meta.json": {
+      "active_session": null,
+      "heartbeat_at": "2026-09-12T04:49:11Z",
+      "lease": {
+        "acquired_at": "2026-09-12T01:35:42Z",
+        "daemon_pid": 209457,
+        "daemon_start_token": "sh209457-1789176942",
+        "generation": 77,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation",
+        "mode": "measure",
+        "session_id": null
+      },
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "recovered_from_generation": null,
+      "released_at": "2026-09-12T04:49:11Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation-node1.meta.json": {
+      "active_session": null,
+      "heartbeat_at": "2026-10-16T01:10:17Z",
+      "lease": {
+        "acquired_at": "2026-10-16T00:44:49Z",
+        "daemon_pid": 3780270,
+        "daemon_start_token": "sh3780270-1792111489",
+        "generation": 606,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node1",
+        "mode": "measure",
+        "session_id": null
+      },
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "recovered_from_generation": null,
+      "released_at": "2026-10-16T01:10:17Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation-node0.meta.json": {
+      "active_session": null,
+      "heartbeat_at": "2026-10-16T00:58:07Z",
+      "lease": {
+        "acquired_at": "2026-10-15T23:31:53Z",
+        "daemon_pid": 3751560,
+        "daemon_start_token": "sh3751560-1792107113",
+        "generation": 580,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node0",
+        "mode": "measure",
+        "session_id": null
+      },
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "recovered_from_generation": null,
+      "released_at": "2026-10-16T00:58:07Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    }
+  },
+  "source": {
+    "branch": "HEAD",
+    "commit": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+    "changes": ""
+  },
+  "errors": []
+}

@@ -1,0 +1,130 @@
+{
+  "created_et": "2026-10-16 01:05 ET",
+  "source_commit": "7930f3a1f8d59cb7b338f54844dea7728bc8864c",
+  "raw_root": "/private/tmp/probata-t07-helper-stage1-v4-7930f3a1-20261016",
+  "scope": "Complete diagnostic generation only. No helper/TD proof or full C RTE accepted.",
+  "result": {
+    "stage": "generation_only",
+    "proof_acceptance": false,
+    "external_provers_requested": [],
+    "marker_inherited_and_preserved": true,
+    "source_commit": "7930f3a1f8d59cb7b338f54844dea7728bc8864c",
+    "capability_boundaries": {
+      "warnings": [
+        {
+          "message": "[wp] Warning: Skipped RTE guards: unaligned pointers (\\aligned not supported)",
+          "classification": "unresolved_alignment_source_caller_correspondence",
+          "full_RTE_claim": false,
+          "occurrences": 1,
+          "source_commit": "7930f3a1f8d59cb7b338f54844dea7728bc8864c"
+        },
+        {
+          "message": "[wp] Warning: Skipped RTE guards: invalid function pointer calls (\\valid_function not supported)",
+          "classification": "inapplicable_only_for_exact_direct_call_only_helper_source_and_census",
+          "full_RTE_claim": false,
+          "occurrences": 1,
+          "source_commit": "7930f3a1f8d59cb7b338f54844dea7728bc8864c"
+        }
+      ],
+      "alignment_qualified": false,
+      "direct_call_scope": "exact staged and every normalized snapshot direct-call maps match this finite helper TU",
+      "direct_call_applicability_verified": true,
+      "full_C_RTE_claim": false,
+      "proof_acceptance": false,
+      "status": "diagnostic generation; independent cold scope review required",
+      "staged_header_sha256": "eccc1c111f32698043682509be8effad02e8cec82957a889f7a4fb6c54ff490c",
+      "normalized_c_sha256": "47fd353459d0ec187d5ff8cf672f02767d6ca226ae4835d7d07c2fc48ff590ce",
+      "normalized_snapshots": 3
+    },
+    "generation_completed": true,
+    "proof_accepted": false,
+    "goals": 245,
+    "properties": 352,
+    "helper_bodies": 19,
+    "ordinary_goals": 212,
+    "bodyless_call_smoke_contexts": 5,
+    "generated_initialization_properties": 31,
+    "smoke_goals": 33,
+    "source_unchanged": true,
+    "native_report_present": false,
+    "boundary": "Diagnostic generation only; alignment remains unresolved. Qed simplification may occur. No full C RTE/proof acceptance.",
+    "elapsed_seconds": 3.1369082080200315,
+    "within_internal110s": true
+  },
+  "guard": {
+    "cmd": [
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+      "/private/tmp/probata-t07-helper-stage1-entry-v4-20261016.py",
+      "--expected",
+      "/private/tmp/probata-t07-helper-stage1-v4-expected-20261016.json",
+      "--output",
+      "/private/tmp/probata-t07-helper-stage1-v4-7930f3a1-20261016/component"
+    ],
+    "exit_code": 0,
+    "wall_s": 3.5205526250065304,
+    "peak_rss_mb": 172.78125,
+    "cap_gb": 8.0,
+    "killed_by_watchdog": false,
+    "timed_out": false,
+    "queue_timed_out": false,
+    "timeout_s": 120.0,
+    "queue_timeout_s": 30.0,
+    "lock_wait_s": 0.005056541645899415,
+    "runner_pid": 32689,
+    "clock": "continuous_monotonic",
+    "clock_info": {
+      "kind": "continuous_monotonic",
+      "implementation": "mach_continuous_time",
+      "includes_sleep": true,
+      "numer": 125,
+      "denom": 3
+    },
+    "log": "/private/tmp/probata-t07-helper-stage1-v4-7930f3a1-20261016/guard.log",
+    "inspection_events": [],
+    "inspection_failure": null,
+    "primary_inspection_failure": null,
+    "cleanup_inspection_failure": null,
+    "cleanup_inspection_failures": [],
+    "inspection_retry_boundary": "AccessDenied uses a 200 ms environ retry admission window and 21-attempt cap, or three attempts for other operations; only the exact proc_environ SystemError raised by the requested environ operation shares that policy; individual OS calls are not forcibly timed; all pauses count and RSS/deadline checks remain mandatory after inspection; only independently confirmed gone/zombie or changed birth is skipped; persistent live or unknown failure fails closed",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "unconfirmed_children": [],
+    "error": null,
+    "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment",
+    "rss_scope": "live union of current ancestry, retained PID/birth identities and periodic inherited-marker matches; sampled, not a kernel quota",
+    "finished": "2026-10-16 01:01:02 EDT"
+  },
+  "pins": [
+    {
+      "path": "/private/tmp/probata-t07-helper-stage1-entry-v4-20261016.py",
+      "sha256": "b4e14bb8c66463dac85a4426d4caba3b2ba36c83fc1367b5e23c0403db979129"
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-stage1-command-v4-20261016.json",
+      "sha256": "0af0f8139a08588e8667b34f4295f4c23854801e58183dc5b7e19dbb8f5decd9"
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-stage1-v4-expected-20261016.json",
+      "sha256": "2b78ba3ae7eb83c64a460aeb17f509ec0396f23fb4f82725355102ab305183cd"
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-stage1-v4-static-control-receipt-20261016.json",
+      "sha256": "3cf24e44db4fd0daddc530adb1adbd01481c2b28ad99a4d7335bd85d5793dd35"
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-stage1-root-preflight-v4-20261016.json",
+      "sha256": "abdf2f3ec5cebbaaa5703a70bf44aeb7bdedd4f1c909f5a6fc9ea1628ad72e91"
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-stage1-root-exit-v4-20261016.json",
+      "sha256": "212d6ec6006c6e125dda65b2c0949dcf60a52b8538bba45cc51ef4504d10e1aa"
+    },
+    {
+      "path": "/private/tmp/probata-t07-stage1-v4-independent-cold-review-20261016.md",
+      "sha256": "be86697bf54ac37136495f42ed63bf57fa3aa933d878702cfb979610d24f5369"
+    },
+    {
+      "path": "/private/tmp/probata-t07-stage1-v4-independent-cold-review-20261016.json",
+      "sha256": "6b4b095b560739ebf35aba6879e4b8586e3bcd3dd6eab70383097086db0839bc"
+    }
+  ]
+}

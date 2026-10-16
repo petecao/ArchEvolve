@@ -217,3 +217,64 @@ view before launch. A source registry alone grants no waiver. Generic modeled fi
 standalone domain-qualified model jobs, additional allocation sites and wider member protocols
 remain refused. Current prelaunch fault controls exercise public proof records; they do not supply
 real-WP acceptance for the combined origin method.
+
+### Original-model heap proof view (2026-10-16 ET)
+
+The exact int count/value constructor and destructor have a separately checked
+unbounded heap VC translation. Their original C bodies, contracts and model
+version remain unchanged. The accepted first-pair capability experiment is
+distinct from the public `swdb prove --model` integration; no prototype result
+is loaded as a model proof record.
+
+The public view reconstructs the original source/event/clause/RTE/init/frame/
+lifetime map and selects every positive obligation associated with that member
+(27 for construction, 11 for destruction). Each input contains one isolated
+`check lemma`, or the complete arithmetic/layout C kernel. WP uses its default
+complete property selection: there is no property selector or warning-policy
+exception. Every target must pass the ordinary fresh generated-goal reader;
+global targets must be owned by their sole mapped lemma with no imported project
+dependency. The numeric kernel retains all ordinary and smoke obligations and
+its separately discharged local assertion dependencies. Timeout, missing goals,
+unclassified reports or a failed smoke cannot establish a model proof.
+
+`heap_model_view_check` pins the translator, checker, heap definitions and linked
+metadata helper. `heap_model_view_certificate` pins the original-source mapping
+and complete selected target inventory. `heap_model_foundations` pins the exact
+standard Why3 and Frama-C Qed/Cint support sources. A metadata-only native helper
+reads the actual Why3 load path; it must be the selected switch's standard
+library. The Frama-C share path must match the reader's WP package, foreign
+shadow roots are refused, and source/configuration bindings are rechecked before
+each launch. No project desired theorem is imported as an axiom.
+
+All targets share the remaining public wall budget and the process-tree RSS
+watchdog. Each has a fresh report set, and the record retains its command,
+resources and complete reports. No caller premise is added: incoming heaps are
+arbitrary, allocation identities are unbounded, old allocations and escaped
+aliases persist, and receiver/buffer overlap remains in the destructor domain.
+Successful allocation is an explicit constructor assumption; the destructor
+does not acquire that assumption. Generic caller composition, other members or
+element types, byte/partial-store semantics, source hints and build defines are
+outside this exact view.
+
+The coordinator-admitted public profile at exact `cea5652b` completed on
+2026-10-16 ET. Both fresh fixture records pass schema and independent cold review:
+the constructor's 27 targets contain 36 Valid ordinary goals and one passing
+numeric smoke; the destructor's 11 targets contain 11 Valid ordinary goals.
+Every one of the 108 fresh emitted tasks has the same formula body as its
+previously audited same-input task; proof results were obtained afresh. Current
+Linux runtime, method, setup/reader identities, all source and standard-support
+bindings, and the numeric local dependency DAG were checked. This establishes
+these two original member bodies under the declared translation, allocation and
+tool TCB. It does not adopt the records into the production store, compose a
+generic caller, establish other members or prove formal C++ equivalence.
+See the [independent actual review](../../.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-heap-cold-review-cea5652b-20261016.md).
+
+The original `std_vector_int_ctor_count` now has a separately prepared mapping:
+its exact source fill `(int)0` explicitly instantiates the universal value
+semantics at zero. Its full original source/contract and eleven source events
+are independently reconstructed, and all 27 positive targets, including the
+complete numeric kernel, require fresh execution. Checker policy 2 admits this
+additional member; the original model version and heap definitions are unchanged.
+Its public preparation controls and synthetic successful record persistence pass;
+actual proof acceptance remains pending. The first-pair acceptance above stays
+bound to exact CEA, without promoting those records across new checker pins.

@@ -1,0 +1,91 @@
+{
+  "created": "2026-10-16 00:02 ET",
+  "reviewed_packet_tip": "592891abf6d679e895756a226169b371f45141ef",
+  "reviewed_runtime_tip": "a1ee0cf1836bf31bd6508457434d0615fefce696",
+  "integrated_published_tip": "13225a825aa1be9882d9031787ebf939991c0cb0",
+  "merged_tip_before_crosswalk": "aeddcced48e07eb777998d2e3eae7cd4e6681d77",
+  "source_pin_checks": [
+    {
+      "path": "scripts/probata_pair_profile.py",
+      "expected_sha256": "c80c0566fde1f0925c3332d09b75a87d6723990a5a6c4696fa653e8acd180ded",
+      "actual_sha256": "c80c0566fde1f0925c3332d09b75a87d6723990a5a6c4696fa653e8acd180ded",
+      "matches": true
+    },
+    {
+      "path": "tests/test_pair_workflow.py",
+      "expected_sha256": "baa2882950feb9ccd5da6bbec973dc6735e66120ad5b6e835bf79b0680dacb24",
+      "actual_sha256": "baa2882950feb9ccd5da6bbec973dc6735e66120ad5b6e835bf79b0680dacb24",
+      "matches": true
+    },
+    {
+      "path": "tests/fixtures/proof/lowering/pair_only.cc",
+      "expected_sha256": "60452123141c7603c633c1128536ec1397173b459045bedeceb63fb0d4801569",
+      "actual_sha256": "60452123141c7603c633c1128536ec1397173b459045bedeceb63fb0d4801569",
+      "matches": true
+    },
+    {
+      "path": "swdb/bounded_std_initialization.py",
+      "expected_sha256": "480bf38b3333639c62d8f89aff129208abccdc63351d63cfa6b23d7cb3d84607",
+      "actual_sha256": "480bf38b3333639c62d8f89aff129208abccdc63351d63cfa6b23d7cb3d84607",
+      "matches": true
+    },
+    {
+      "path": "swdb/bounded_initialization.py",
+      "expected_sha256": "12885e27dc1cb62b6c89ed4c2b5728c350dc6b0a5781b09ab70ff058e83b287d",
+      "actual_sha256": "12885e27dc1cb62b6c89ed4c2b5728c350dc6b0a5781b09ab70ff058e83b287d",
+      "matches": true
+    },
+    {
+      "path": "swdb/std_models.py",
+      "expected_sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2",
+      "actual_sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2",
+      "matches": true
+    },
+    {
+      "path": "swdb/c_lowering.py",
+      "expected_sha256": "e10b33f4d310e3097eb84b34ed53e03daf4df690dcf0c8c160f38d907c91e08c",
+      "actual_sha256": "e10b33f4d310e3097eb84b34ed53e03daf4df690dcf0c8c160f38d907c91e08c",
+      "matches": true
+    },
+    {
+      "path": "swdb/wp_adapter.py",
+      "expected_sha256": "aa03842938a19d22fe6c3fb466007cfa57544c55fddc3c19b1784b047271ee43",
+      "actual_sha256": "aa03842938a19d22fe6c3fb466007cfa57544c55fddc3c19b1784b047271ee43",
+      "matches": true
+    },
+    {
+      "path": "swdb/proof_setup.py",
+      "expected_sha256": "dad41c8714cd3bfa3cbc472c82e2130f639a04ece008d641eec47512d7098e11",
+      "actual_sha256": "dad41c8714cd3bfa3cbc472c82e2130f639a04ece008d641eec47512d7098e11",
+      "matches": true
+    },
+    {
+      "path": "library/methods/probata-draft-1.yaml",
+      "expected_sha256": "497aa683887094e3217945132134112469e028c2a50a7966838bbebf902d3ae5",
+      "actual_sha256": "497aa683887094e3217945132134112469e028c2a50a7966838bbebf902d3ae5",
+      "matches": true
+    },
+    {
+      "path": "tests/fixtures/proof/methods/contract-fixture-1.yaml",
+      "expected_sha256": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29",
+      "actual_sha256": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29",
+      "matches": true
+    }
+  ],
+  "matched_source_pins": 11,
+  "review_sha256": {
+    "md": "194ed03b3b31204a8cd4c40f652364926881ca7245a7bad868931b0f8f781f3a",
+    "json": "f6b7b2430d03f33972dad71910544397116eb5ffc3ea3092a51758dca7d85f34"
+  },
+  "preserved_controls": {
+    "raw": "/private/tmp/probata-t25-pair-review-fixed-green",
+    "passed": 13,
+    "actual_only_skipped": 1,
+    "pytest_seconds": 47.13,
+    "guard_seconds": 47.542960999999195,
+    "peak_rss_bytes": 319684608,
+    "source_unchanged": true
+  },
+  "verification": "Independent byte hash replay of all11 scoped profile files after merging the unrelated ticket28 region prototype. No compiler, verifier, tool-version probe or broad test rerun. Original control and review identities are retained; this is not fresh actual proof acceptance.",
+  "actual_pair_status": "not run; root owns prospective admission and cold audit"
+}

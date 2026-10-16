@@ -211,7 +211,7 @@ def test_prelaunch_rebuild_cannot_omit_domain_or_checked_numeric_obligations(tmp
     elif mutation=='canonical_changed':
         monkeypatch.setattr(c_lowering,'model_text',lambda name:original.replace('i < n;', 'i <= n;'))
     path=scratch/'wp_input.c';path.write_text(text)
-    flags=['-wp-cache','none','-machdep','x86_64','-wp-model','+real','-wp-no-filter-init']
+    flags=['-wp-cache','none','-machdep','x86_64','-wp-model','+real','-wp-rte','-wp-no-filter-init']
     if mutation=='none':
         proof_setup.check_generated(job,adapter,context,[(path,text)],flags)
     else:

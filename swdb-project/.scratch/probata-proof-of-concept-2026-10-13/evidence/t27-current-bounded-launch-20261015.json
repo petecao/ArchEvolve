@@ -1,0 +1,155 @@
+{
+  "at_utc": "2026-10-15T21:57:40.945154+00:00",
+  "date_et": "2026-10-15",
+  "errors": [],
+  "files": {
+    "dispatch-argv.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/dispatch-argv.json",
+      "sha256": "60d01b49c94af51eaf621975a69361bb80ac8a3c3fa3fcd86f556fec224c82a5"
+    },
+    "execute.py": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/execute.py",
+      "sha256": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612"
+    },
+    "lane.json": {
+      "mutable_until_exit": true,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/lane.json",
+      "sha256_at_snapshot": "84650b041da36f55be03a967bded4565575ed8ddf5087e00d8f07dd9a1efbcaf"
+    },
+    "launch.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/launch.json",
+      "sha256": "59b1e19a2eef4d89a50cda92c8fb4d30226aa46640609b43a4e4d5037c839861"
+    },
+    "preflight.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/preflight.json",
+      "sha256": "0efb429fa1dc2360ccd76b96180699cc2bbd97b784f02200cf4593a91dc6b206"
+    },
+    "run.sh": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/run.sh",
+      "sha256": "67f0eba61793e549c0ad90ed0e34b5a29cde7afd918b8685817b49ea07627635"
+    },
+    "runtime-provenance.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/runtime-provenance.json",
+      "sha256": "42d8992de63d5fe69c5a35a3d819c5889ccac81aaf38aef7a5d95ed7e4eb4ef0"
+    },
+    "source-manifest.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/source-manifest.json",
+      "sha256": "2f4e30d04a99eaddd7cff2361f591ac065491dbe01b52e7025ba82e1c9d06f1d"
+    },
+    "watch.py": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/watch.py",
+      "sha256": "4485ae66aa50c65f2b579f84836576aa67b54431978da71cac6eea6a68ecd07c"
+    }
+  },
+  "lane": {
+    "socket_lane": {
+      "aligned_cell_age_s": "",
+      "aligned_to": "no_gapbs_batch_running",
+      "command": [
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=60",
+        "7320",
+        "bash",
+        "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/run.sh"
+      ],
+      "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+      "ended_utc": "",
+      "exit_code": -1,
+      "host": "mbit10",
+      "job": "probata-composed-0e7f2327-t27-bounded",
+      "lease_generation": 574,
+      "lease_name": "mbit10-evaluation-node0",
+      "load1_at_start": 1.71,
+      "load1_max": 32,
+      "node": 0,
+      "numa_memory_policy": "bind:0",
+      "numactl": "--cpunodebind=0 --membind=0",
+      "preregistration_sha256": null,
+      "started_utc": "2026-10-15T21:57:19Z"
+    }
+  },
+  "launch": {
+    "command": [
+      "bash",
+      "/data1/yanruj/probata-composed-0e7f2327/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/27-proof-semantics/run_acceptance.sh",
+      "0e7f232762e4555aa9435a3a3622923fad8ee928",
+      "bounded",
+      "--maxfail=1",
+      "--junitxml=/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-bounded/junit.xml"
+    ],
+    "created_utc": "2026-10-15T21:57:19.576639+00:00",
+    "log_name": "acceptance.log",
+    "node": 0,
+    "planned_raw_budget_bytes": 8589934592,
+    "raw_budget_enforcement": "coordinator monitors; not a filesystem quota",
+    "readers": [
+      "root",
+      "ticket27"
+    ],
+    "reviewed_wrapper_reuse": {
+      "execute.py": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612",
+      "watch.py": "4485ae66aa50c65f2b579f84836576aa67b54431978da71cac6eea6a68ecd07c"
+    },
+    "rss_cap_bytes": 8589934592,
+    "rss_scope": "outer watchdog covers worker bootstrap, compiler provenance probes, inner monitor and proof process tree; trusted outer monitor excluded",
+    "source": "/data1/yanruj/probata-composed-0e7f2327",
+    "source_commit": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+    "timeout_seconds": 7200,
+    "workers": 1
+  },
+  "launcher": {
+    "boundary": "Operational single-profile reuse of independently reviewed composed execute/watch wrappers; only source-preserving profile, output path and whole time limit vary.",
+    "path": "/private/tmp/probata-launch-single-profile.py",
+    "sha256": "d6aa6599e589012a952ecea375faa2b5e9404e32acb979e615573799dfd77091"
+  },
+  "module_physical_and_git_checks": 197,
+  "runtime": {
+    "lowering_identity": {
+      "c_lowering": {
+        "id": "swdb-c-lowering-9",
+        "sha256": "b1ddaa111bec5d19843b69fd7571530859acb1382947d96692894bfc29b0b993"
+      },
+      "clang": {
+        "id": "clang-22.1.8",
+        "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+      },
+      "naming_rules": {
+        "id": "kept-names.3",
+        "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+      }
+    },
+    "runtime": {
+      "check": {
+        "id": "swdb-stdlib-provenance-1",
+        "sha256": "4aee5a271a2f92fced7a94c04807cd2d94d36da24ea3d163f2364048bc79d937"
+      },
+      "command_executable": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+        "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+      },
+      "driver": {
+        "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang-22",
+        "sha256": "31a40dc31f3c15a47aa119aa148f339bf363d8f61202ddbdacbd3f24b71ba113"
+      },
+      "headers": {
+        "files": 1983,
+        "id": "llvm-standard-resource-headers",
+        "sha256": "d37aec646b1e6e1748d40690c60436f905f55852ee578e79c43a3199c4a16e23"
+      },
+      "parser": {
+        "id": "libclang-22.1.8",
+        "sha256": "8b03ee2c60f0699651869fea5135cb5a144777a10c6e4b9b7835283ac9ca3f7d"
+      }
+    },
+    "tool": {
+      "command": [
+        "clang++"
+      ],
+      "missing": "",
+      "version": "22.1.8"
+    }
+  },
+  "source_commit": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+  "tracked_changes": ""
+}

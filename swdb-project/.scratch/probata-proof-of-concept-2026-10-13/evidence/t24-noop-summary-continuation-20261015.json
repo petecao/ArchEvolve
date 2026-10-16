@@ -1,0 +1,133 @@
+{
+  "actual_boundary": {
+    "atomic_each_initialization": 11,
+    "atomic_each_smoke_valid": 19,
+    "atomic_models": 9,
+    "atomic_safe_ordinary_valid": 86,
+    "atomic_seed_ordinary_valid": 85,
+    "maa_const_generated_smoke": 0,
+    "maa_const_historical_policy": "rejected; preserved",
+    "maa_const_new_policy": "provisional until actual original caller witness; not yet accepted",
+    "maa_const_ordinary_valid": 3,
+    "seed_open": "typed_real_swdb_atomics_unit_ensures"
+  },
+  "assumptions": [
+    "Only exact precondition-free no-op maa_const qualifies; indirect-load remains under strict ordinary/smoke policy.",
+    "Generated smoke is not applicable only to exact no-op; actual original caller reachability remains mandatory for each call.",
+    "No change to original source/contracts, production checker, mandatory flags, public dependency eligibility or historical records.",
+    "Historical coordinator logs/matrix advanced after incremental snapshots; final immutable stopped snapshot is separately pinned. Earlier snapshots are not rewritten.",
+    "Ended lease/resource receipts are not an independent process-cleanup audit; coordinator owns cleanup."
+  ],
+  "created": "2026-10-15 ET",
+  "final_metadata": {
+    "path": "/private/tmp/probata-resume-t24/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t24-current-atomic-stopped-matrix-0e7-20261015.json",
+    "sha256": "60eaef830ec401446f97e0585a0a5381279a83ae02ebc901d9b68c7a5cecb620"
+  },
+  "green": {
+    "resources": {
+      "cpu_seconds": 0.607738,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 81182720,
+      "timed_out": false,
+      "wall_seconds": 0.9063462500344031
+    },
+    "skipped": 0,
+    "tests_passed": 24
+  },
+  "planned_continuation": {
+    "deliberate_no_launch_lifetime_refusals": 9,
+    "dispatcher": "root only; no launch by ticket worker",
+    "groups": [
+      "maa_summary",
+      "dxc_summary",
+      "templates",
+      "classes",
+      "omp",
+      "new_array"
+    ],
+    "new_actual_wp_rows": 15,
+    "new_rows": 24,
+    "public_timeout_seconds": 1800,
+    "reused_rows": 12,
+    "rss_cap_bytes": 8589934592,
+    "suggested_raw_budget_bytes": 8589934592,
+    "suggested_whole_seconds": 14400,
+    "workers": 1
+  },
+  "production_freeze": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+  "red": {
+    "reason": "unchanged strict audit rejects exact3VC/zero-smoke summary",
+    "resources": {
+      "cpu_seconds": 0.398665,
+      "exit_code": 1,
+      "out_of_memory": false,
+      "peak_rss_bytes": 65126400,
+      "timed_out": false,
+      "wall_seconds": 0.6152067499933764
+    },
+    "tests_failed": 1
+  },
+  "references": [
+    {
+      "path": "/private/tmp/probata-resume-t24/swdb-project/tests/t24_noop_summary.py",
+      "sha256": "cf011367b0f7ef60e505cf6de0c3492caf437c349f851abe6f156dece2eea726"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t24/swdb-project/tests/test_t24_noop_summary.py",
+      "sha256": "e5c087809e5bd6923c2b60691b96b277fc63ae83bc0bf66a99b54adf4deed903"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t24/swdb-project/tests/fixtures/proof/regression_corpus/fixture-noop-summary-has-no-generated-smoke.yaml",
+      "sha256": "7a8d05eebd51f0e42e8f9aed3d4c288a0945fcaca246ab4ca74531c8c4ad6ce3"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t24/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/t24-remaining-continuation.py",
+      "sha256": "741d14aa985b3500972ed15423af285081c5170433ad9f082f93ca32fc79e621"
+    },
+    {
+      "path": "/private/tmp/probata-t24-noop-red/guard.py",
+      "sha256": "c257b938024071fda9027ba5f6e45f34f0d116f29d5a93ea529fcc35206f537f"
+    },
+    {
+      "path": "/private/tmp/probata-t24-noop-red/command.json",
+      "sha256": "91a0c936ee375a59291ea30a7996031fa32b745db60bef4243c0b96ef8bfaaca"
+    },
+    {
+      "path": "/private/tmp/probata-t24-noop-red/checks.log",
+      "sha256": "b01e5eefdf4a366ca77f70adffd3c28d4499dc311c0c097393c0bc30cfabf58a"
+    },
+    {
+      "path": "/private/tmp/probata-t24-noop-red/resources.json",
+      "sha256": "5e8dd3b27bfb8b18821c7e0d9d1cb9e5ab5148396936d17722c0f6c3aacb48ba"
+    },
+    {
+      "path": "/private/tmp/probata-t24-noop-red/junit.xml",
+      "sha256": "287438dd59f01e7acdcb076d61c2bfce4a8c1caf3062947eba37326a819eedee"
+    },
+    {
+      "path": "/private/tmp/probata-t24-noop-corpus-green/guard.py",
+      "sha256": "8158b1ce986721a6dbeabdb44176a42706acb1e693a6089f13f2dc3ea2313351"
+    },
+    {
+      "path": "/private/tmp/probata-t24-noop-corpus-green/command.json",
+      "sha256": "a250fdd910047d9ee5bd8a74e4fec8c142d101b797d4ddd6fbdcbf1e2758350b"
+    },
+    {
+      "path": "/private/tmp/probata-t24-noop-corpus-green/checks.log",
+      "sha256": "bfbebf0119d44b45f4678a7c2eeabb518480632632702bcc10a48303af9bb345"
+    },
+    {
+      "path": "/private/tmp/probata-t24-noop-corpus-green/resources.json",
+      "sha256": "05ef798fdebee0e2a9fd8e61b77371168a8267e572277cf0373d2144dd932cfb"
+    },
+    {
+      "path": "/private/tmp/probata-t24-noop-corpus-green/junit.xml",
+      "sha256": "cf69e335f540003415efbc631bba69d9ea679ee30e0d40ff14be2e052cb160b1"
+    }
+  ],
+  "scope": "test/profile/corpus only; production swdb bytes unchanged from0e7",
+  "source_base": "3e1b8a34",
+  "status": "compiler-free controls GREEN; independent source review and actual unchanged caller witness pending",
+  "stopped_matrix_sha256": "946176dcb5fcf7caa4e0e2e4bed8fe5ada363eaa7d5bb2514e339de914a22c49"
+}

@@ -1,0 +1,2915 @@
+{
+  "date_et": "2026-10-16",
+  "disposition": "PASS_SCOPED_CONDITIONAL_MATHEMATICAL_COLD_AUDIT",
+  "source_commit": "9704c54b838863dd838d18a20dd0ade1633d5027",
+  "raw_root": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016",
+  "review_md": {
+    "path": "/private/tmp/probata-t28-rank-whole-independent-cold-review-20261016.md",
+    "bytes": 6372,
+    "sha256": "54f7af0255b8fd80930b6835fd2ef2669ec47bcd6c25b9b5a14806842e04087b"
+  },
+  "original_entry_exit_code": 1,
+  "original_guard_exit_code": 1,
+  "original_complete": false,
+  "original_negative_submitted_receipt_missing": true,
+  "negative_binding_independently_reconstructed_from_retained_actual_bytes": true,
+  "conditional_mathematical_theorem_only": true,
+  "counts": {
+    "core_valid": 5,
+    "family_valid": 4,
+    "all_false_valid": 1,
+    "negative_non_valid": 1,
+    "calls": 8,
+    "reference_checks": 363,
+    "unique_reference_paths": 261,
+    "mismatches": 0,
+    "settled_raw_files": 61,
+    "settled_raw_bytes": 136449
+  },
+  "mathematical_obligations": [
+    "Core assertion",
+    "Core well-founded integer variant decrease",
+    "Core successor nonnegative-rank recursive precondition",
+    "Core successor strict-decrease recursive precondition",
+    "Core existential postcondition using justified recursive contract",
+    "Family rank nonnegative for all mathematical nonnegative n",
+    "Family not-ready strict decrease",
+    "Family no readiness before n",
+    "Family readiness at n",
+    "Independent all-false no future readiness",
+    "Independent absent-premise negative remains non-Valid"
+  ],
+  "not_claimed": [
+    "Hardware/MMIO readiness or fairness",
+    "Source-to-trace simulation/refinement",
+    "C-counter unboundedness",
+    "Production current0.2",
+    "Public composition",
+    "Ticket28 closure",
+    "Original entry/guard success",
+    "Reviewer actual proof/tool execution"
+  ],
+  "references": [
+    {
+      "path": "/private/tmp/probata-t28-rank-whole-vc-root-preflight-v2-20261016.json",
+      "bytes": 1290,
+      "sha256": "84b78c77a56627a5725844ca7c972706623c53e48052f73aa25f82abe74a9f4d"
+    },
+    {
+      "path": "/private/tmp/probata-t28-rank-whole-vc-root-exit-v2-20261016.json",
+      "bytes": 128,
+      "sha256": "c2df992d4a78d689e7145b87a2538c72153dc0191ba58d8e238559e9dd53e791"
+    },
+    {
+      "path": "/private/tmp/probata-t28-rank-whole-vc-root-settlement-v2-20261016.json",
+      "bytes": 606,
+      "sha256": "dda42697b97809b91db9cf0fffbdf8f095913fa488eceab85c097b5d9232d8ce"
+    },
+    {
+      "path": "/private/tmp/probata-t28-rank-whole-vc-manifest-v2-20261016.json",
+      "bytes": 3081,
+      "sha256": "8ab61e45ac0c5d3e4b18ea86549737a6c8affded8534bd905f42dd5aaafaa3a8"
+    },
+    {
+      "path": "/private/tmp/probata-t28-rank-whole-vc-expected-v2-20261016.json",
+      "bytes": 35003,
+      "sha256": "ba8da5991c4c14583f25af037350e23c324ab09944864be50db23771b747167c"
+    },
+    {
+      "path": "/private/tmp/probata-t28-rank-whole-vc-recipe-v2-20261016.json",
+      "bytes": 15658,
+      "sha256": "71aa324dc28e869012f79323ea27c73f9bf0e7d858a04d264504c04a442cc2d8"
+    },
+    {
+      "path": "/private/tmp/probata-t28-rank-whole-vc-command-v2-20261016.json",
+      "bytes": 3263,
+      "sha256": "f76a0a19361fce7bffcd0d023012a648b236118101e82bccff4744fb6bd8ce89"
+    }
+  ],
+  "metadata_audit": {
+    "raw_root": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016",
+    "source_commit": "9704c54b838863dd838d18a20dd0ade1633d5027",
+    "checks": 363,
+    "unique_paths": 261,
+    "mismatches": [],
+    "source_pins": [
+      {
+        "path": "/private/tmp/probata-resume-t25-pair/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-readiness-rank/delay_family.mlw",
+        "staged_path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/sources/delay_family.mlw",
+        "sha256": "d99660f76ad8469960f81491c7df4bfa974abc1133a61d32e9081fe0f60895f6",
+        "git_blob_matches": true
+      },
+      {
+        "path": "/private/tmp/probata-resume-t25-pair/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-readiness-rank/no_progress.mlw",
+        "staged_path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/sources/no_progress.mlw",
+        "sha256": "b80c777054a450f781351130baf91e9c0fdb37a4a59e5453e857921b9b85f465",
+        "git_blob_matches": true
+      },
+      {
+        "path": "/private/tmp/probata-resume-t25-pair/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-readiness-rank/readiness_rank.mlw",
+        "staged_path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/sources/readiness_rank.mlw",
+        "sha256": "44eb843146e57495579fed4a118df67bcc3858560dd381db62498a65055b150c",
+        "git_blob_matches": true
+      }
+    ],
+    "modules": [
+      {
+        "module": "ConditionalReadiness",
+        "tasks": 5,
+        "submitted_matches_emitted": true,
+        "native_output_multiset_matches_debug": true
+      },
+      {
+        "module": "ArbitraryFiniteDelay",
+        "tasks": 4,
+        "submitted_matches_emitted": true,
+        "native_output_multiset_matches_debug": true
+      },
+      {
+        "module": "AllFalseCounterexample",
+        "tasks": 1,
+        "submitted_matches_emitted": true,
+        "native_output_multiset_matches_debug": true
+      },
+      {
+        "module": "AbsentPremiseNegative",
+        "tasks": 1,
+        "submitted_matches_emitted": true,
+        "native_output_multiset_matches_debug": true
+      }
+    ],
+    "tasks": [
+      {
+        "module": "ConditionalReadiness",
+        "emitted_path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tasks/readiness_rank-ConditionalReadiness-eventual_readyqtvc.smt2",
+        "submitted_path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why_6130fa_readiness_rank-T-eventual_readyqtvc.smt2",
+        "sha256": "5a577a9d82d9f07e774c47710fc851a6ae3240d3bab57669b18763bdd89c0d13",
+        "bytes": 910,
+        "actual_argv": [
+          "/opt/homebrew/bin/z3",
+          "-smt2",
+          "-T:30",
+          "sat.random_seed=42",
+          "nlsat.randomize=false",
+          "smt.random_seed=42",
+          "-st",
+          "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why_6130fa_readiness_rank-T-eventual_readyqtvc.smt2"
+        ],
+        "native_answer": "Valid",
+        "native_solver_output_first_line": "unsat",
+        "native_solver_status": "exited with status 0"
+      },
+      {
+        "module": "ConditionalReadiness",
+        "emitted_path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tasks/readiness_rank-ConditionalReadiness-eventual_readyqtvc1.smt2",
+        "submitted_path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why_e54062_readiness_rank-T-eventual_readyqtvc.smt2",
+        "sha256": "71bbcf83d755b83ae8dac10aadecfed19023a7cced349a9949301e203dd53990",
+        "bytes": 1025,
+        "actual_argv": [
+          "/opt/homebrew/bin/z3",
+          "-smt2",
+          "-T:30",
+          "sat.random_seed=42",
+          "nlsat.randomize=false",
+          "smt.random_seed=42",
+          "-st",
+          "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why_e54062_readiness_rank-T-eventual_readyqtvc.smt2"
+        ],
+        "native_answer": "Valid",
+        "native_solver_output_first_line": "unsat",
+        "native_solver_status": "exited with status 0"
+      },
+      {
+        "module": "ConditionalReadiness",
+        "emitted_path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tasks/readiness_rank-ConditionalReadiness-eventual_readyqtvc2.smt2",
+        "submitted_path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why_f6a3ab_readiness_rank-T-eventual_readyqtvc.smt2",
+        "sha256": "20d6c284463b5c3303a6aa3bf06383c0adbb434af0979d88acd200b9bcc5698a",
+        "bytes": 1034,
+        "actual_argv": [
+          "/opt/homebrew/bin/z3",
+          "-smt2",
+          "-T:30",
+          "sat.random_seed=42",
+          "nlsat.randomize=false",
+          "smt.random_seed=42",
+          "-st",
+          "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why_f6a3ab_readiness_rank-T-eventual_readyqtvc.smt2"
+        ],
+        "native_answer": "Valid",
+        "native_solver_output_first_line": "unsat",
+        "native_solver_status": "exited with status 0"
+      },
+      {
+        "module": "ConditionalReadiness",
+        "emitted_path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tasks/readiness_rank-ConditionalReadiness-eventual_readyqtvc3.smt2",
+        "submitted_path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why_9e995f_readiness_rank-T-eventual_readyqtvc.smt2",
+        "sha256": "27a191e3fe8a366a7445974ee622d9fdc5b3bdf8f58c1ebe7c27fae931690421",
+        "bytes": 1209,
+        "actual_argv": [
+          "/opt/homebrew/bin/z3",
+          "-smt2",
+          "-T:30",
+          "sat.random_seed=42",
+          "nlsat.randomize=false",
+          "smt.random_seed=42",
+          "-st",
+          "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why_9e995f_readiness_rank-T-eventual_readyqtvc.smt2"
+        ],
+        "native_answer": "Valid",
+        "native_solver_output_first_line": "unsat",
+        "native_solver_status": "exited with status 0"
+      },
+      {
+        "module": "ConditionalReadiness",
+        "emitted_path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tasks/readiness_rank-ConditionalReadiness-eventual_readyqtvc4.smt2",
+        "submitted_path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why_4cb41d_readiness_rank-T-eventual_readyqtvc.smt2",
+        "sha256": "7beafa419f21e7f28b338f6da7f5c1beb8d69d3c4ddd5333622625fac12172f2",
+        "bytes": 1164,
+        "actual_argv": [
+          "/opt/homebrew/bin/z3",
+          "-smt2",
+          "-T:30",
+          "sat.random_seed=42",
+          "nlsat.randomize=false",
+          "smt.random_seed=42",
+          "-st",
+          "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why_4cb41d_readiness_rank-T-eventual_readyqtvc.smt2"
+        ],
+        "native_answer": "Valid",
+        "native_solver_output_first_line": "unsat",
+        "native_solver_status": "exited with status 0"
+      },
+      {
+        "module": "ArbitraryFiniteDelay",
+        "emitted_path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tasks/delay_family-ArbitraryFiniteDelay-consistency_for_every_nonnegative_delayqtvc.smt2",
+        "submitted_path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why_9cc1b1_delay_family-T-consistency_for_every_nonnegative_delayqtvc.smt2",
+        "sha256": "8364ee1b34e96da7682c21a4b90c7313fba80a01a756853204c37b26c0577a30",
+        "bytes": 615,
+        "actual_argv": [
+          "/opt/homebrew/bin/z3",
+          "-smt2",
+          "-T:30",
+          "sat.random_seed=42",
+          "nlsat.randomize=false",
+          "smt.random_seed=42",
+          "-st",
+          "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why_9cc1b1_delay_family-T-consistency_for_every_nonnegative_delayqtvc.smt2"
+        ],
+        "native_answer": "Valid",
+        "native_solver_output_first_line": "unsat",
+        "native_solver_status": "exited with status 0"
+      },
+      {
+        "module": "ArbitraryFiniteDelay",
+        "emitted_path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tasks/delay_family-ArbitraryFiniteDelay-consistency_for_every_nonnegative_delayqtvc1.smt2",
+        "submitted_path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why_ba6034_delay_family-T-consistency_for_every_nonnegative_delayqtvc.smt2",
+        "sha256": "4436a254c1e92c2fa261218474679e62407fef161d2559f9032e320f22e60277",
+        "bytes": 880,
+        "actual_argv": [
+          "/opt/homebrew/bin/z3",
+          "-smt2",
+          "-T:30",
+          "sat.random_seed=42",
+          "nlsat.randomize=false",
+          "smt.random_seed=42",
+          "-st",
+          "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why_ba6034_delay_family-T-consistency_for_every_nonnegative_delayqtvc.smt2"
+        ],
+        "native_answer": "Valid",
+        "native_solver_output_first_line": "unsat",
+        "native_solver_status": "exited with status 0"
+      },
+      {
+        "module": "ArbitraryFiniteDelay",
+        "emitted_path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tasks/delay_family-ArbitraryFiniteDelay-consistency_for_every_nonnegative_delayqtvc2.smt2",
+        "submitted_path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why_28e896_delay_family-T-consistency_for_every_nonnegative_delayqtvc.smt2",
+        "sha256": "022e0480d12b3d9b74fb548cd35b0e9d1d8ff9980a43b7cba0e672c65330be4a",
+        "bytes": 1028,
+        "actual_argv": [
+          "/opt/homebrew/bin/z3",
+          "-smt2",
+          "-T:30",
+          "sat.random_seed=42",
+          "nlsat.randomize=false",
+          "smt.random_seed=42",
+          "-st",
+          "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why_28e896_delay_family-T-consistency_for_every_nonnegative_delayqtvc.smt2"
+        ],
+        "native_answer": "Valid",
+        "native_solver_output_first_line": "unsat",
+        "native_solver_status": "exited with status 0"
+      },
+      {
+        "module": "ArbitraryFiniteDelay",
+        "emitted_path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tasks/delay_family-ArbitraryFiniteDelay-consistency_for_every_nonnegative_delayqtvc3.smt2",
+        "submitted_path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why_3f5e2f_delay_family-T-consistency_for_every_nonnegative_delayqtvc.smt2",
+        "sha256": "ef26195de2f4f59951774d45c2bcfb0b627efc2f12e7a67da163dfe774f7f0a4",
+        "bytes": 1046,
+        "actual_argv": [
+          "/opt/homebrew/bin/z3",
+          "-smt2",
+          "-T:30",
+          "sat.random_seed=42",
+          "nlsat.randomize=false",
+          "smt.random_seed=42",
+          "-st",
+          "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why_3f5e2f_delay_family-T-consistency_for_every_nonnegative_delayqtvc.smt2"
+        ],
+        "native_answer": "Valid",
+        "native_solver_output_first_line": "unsat",
+        "native_solver_status": "exited with status 0"
+      },
+      {
+        "module": "AllFalseCounterexample",
+        "emitted_path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AllFalseCounterexample/tasks/no_progress-AllFalseCounterexample-all_false_has_no_future_readyqtvc.smt2",
+        "submitted_path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AllFalseCounterexample/tmp/why_f4ff51_no_progress-T-all_false_has_no_future_readyqtvc.smt2",
+        "sha256": "07eb9383df42c6f43421a7afaa56797d04e3265e200e6f71c08497a4705c580e",
+        "bytes": 452,
+        "actual_argv": [
+          "/opt/homebrew/bin/z3",
+          "-smt2",
+          "-T:30",
+          "sat.random_seed=42",
+          "nlsat.randomize=false",
+          "smt.random_seed=42",
+          "-st",
+          "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AllFalseCounterexample/tmp/why_f4ff51_no_progress-T-all_false_has_no_future_readyqtvc.smt2"
+        ],
+        "native_answer": "Valid",
+        "native_solver_output_first_line": "unsat",
+        "native_solver_status": "exited with status 0"
+      },
+      {
+        "module": "AbsentPremiseNegative",
+        "emitted_path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AbsentPremiseNegative/tasks/no_progress-AbsentPremiseNegative-eventual_ready_without_progress.smt2",
+        "submitted_path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AbsentPremiseNegative/tmp/why_11a8d9_no_progress-T-eventual_ready_without_progress.smt2",
+        "sha256": "0c235270130b63bc9a28cdb53d1787bdb96cce0d99f51f76eeaec845f8ae1b55",
+        "bytes": 445,
+        "actual_argv": [
+          "/opt/homebrew/bin/z3",
+          "-smt2",
+          "-T:10",
+          "sat.random_seed=42",
+          "nlsat.randomize=false",
+          "smt.random_seed=42",
+          "-st",
+          "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AbsentPremiseNegative/tmp/why_11a8d9_no_progress-T-eventual_ready_without_progress.smt2"
+        ],
+        "native_answer": "Unknown\n(sat)",
+        "native_solver_output_first_line": "sat",
+        "native_solver_status": "exited with status 0"
+      }
+    ],
+    "call_count": 8,
+    "call_exit_codes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2
+    ],
+    "source_clean_observations": 9,
+    "guard": {
+      "cmd": [
+        "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+        "/private/tmp/probata-t28-rank-whole-vc-entry-v2-20261016.py",
+        "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component"
+      ],
+      "exit_code": 1,
+      "wall_s": 2.4229361666948535,
+      "peak_rss_mb": 147.25,
+      "cap_gb": 8.0,
+      "killed_by_watchdog": false,
+      "timed_out": false,
+      "queue_timed_out": false,
+      "timeout_s": 900.0,
+      "queue_timeout_s": 30.0,
+      "lock_wait_s": 0.0006648749695159495,
+      "runner_pid": 57561,
+      "clock": "continuous_monotonic",
+      "clock_info": {
+        "kind": "continuous_monotonic",
+        "implementation": "mach_continuous_time",
+        "includes_sleep": true,
+        "numer": 125,
+        "denom": 3
+      },
+      "log": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/guard.log",
+      "inspection_events": [],
+      "inspection_failure": null,
+      "primary_inspection_failure": null,
+      "cleanup_inspection_failure": null,
+      "cleanup_inspection_failures": [],
+      "inspection_retry_boundary": "AccessDenied uses a 200 ms environ retry admission window and 21-attempt cap, or three attempts for other operations; only the exact proc_environ SystemError raised by the requested environ operation shares that policy; individual OS calls are not forcibly timed; all pauses count and RSS/deadline checks remain mandatory after inspection; only independently confirmed gone/zombie or changed birth is skipped; persistent live or unknown failure fails closed",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unconfirmed_children": [],
+      "error": null,
+      "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment",
+      "rss_scope": "live union of current ancestry, retained PID/birth identities and periodic inherited-marker matches; sampled, not a kernel quota",
+      "finished": "2026-10-16 01:36:36 EDT"
+    },
+    "entry_failure": {
+      "class": "AssertionError",
+      "message": "negative has unexpected answer"
+    },
+    "entry_complete": false,
+    "negative_original_submitted_receipt_absent": true,
+    "no_actual_tool_execution_by_reviewer": true,
+    "pin_checks": [
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-command-v2-20261016.json",
+        "sha256": "f76a0a19361fce7bffcd0d023012a648b236118101e82bccff4744fb6bd8ce89",
+        "bytes": 3263,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-entry-v2-20261016.py",
+        "sha256": "11c23d57b7b15fe2a98dacf66197c3477799ab53d4de1dba890ef7348f3f80d0",
+        "bytes": 12402,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-expected-v2-20261016.json",
+        "sha256": "ba8da5991c4c14583f25af037350e23c324ab09944864be50db23771b747167c",
+        "bytes": 35003,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-recipe-v2-20261016.json",
+        "sha256": "71aa324dc28e869012f79323ea27c73f9bf0e7d858a04d264504c04a442cc2d8",
+        "bytes": 15658,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-reader-v2-20261016.py",
+        "sha256": "0604fcddc3e26a8bd4cf544e0d799d32c6f159538d80d43ba4f674417d44c266",
+        "bytes": 6603,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-reader-controls-v2-20261016.py",
+        "sha256": "29f1988ecc55b35cd618aa08569cc33f3be2e7cd4c92d314220c5ba69f83bb41",
+        "bytes": 5219,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-reader-controls-v2-20261016.json",
+        "sha256": "b50668eba65f6d446da77ec0c3dfb95d07a36066d63c0de3bef01ca15030cf4a",
+        "bytes": 2706,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-entry-controls-v2-20261016.py",
+        "sha256": "b287e265497db8bdba5b67725c4adfaf73bca88018c43577e24a2efcbd48ab9b",
+        "bytes": 10072,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-entry-controls-v2-20261016.json",
+        "sha256": "7e24c30a730d9cb1ea7488625699d6f9614794e3a28b6179dc634c1207520edb",
+        "bytes": 4888,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-packet-v2-20261016.md",
+        "sha256": "6a6dc5c38c506c76bf5c1b13d4b5adb1d55598cf84ab2cac11d0411b16133aad",
+        "bytes": 7512,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-config-expected-v2-20261016.json",
+        "sha256": "b86ac077c0fdb08e978e2fe618dc5bc85bd8cca9c1bee03cfb461b522e3afa1b",
+        "bytes": 20209,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-config-cold-audit-v1-20261016.json",
+        "sha256": "1d520973db524f90fd8099ff533247905b04271aafeecb0cc60630d31695c2dd",
+        "bytes": 135569,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-resume-t07-source-domains/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py",
+        "sha256": "c6f0d4b8c60fab912dd768c4c8c7e7737d8feca3a110d0de02dec4d38785db57",
+        "bytes": 28501,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-resume-t07-source-domains/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/staged_search.py",
+        "sha256": "125e2562342e6ba684d1189ca29fb48476b73bee30d0fd368f7f7c6b4c6b2419",
+        "bytes": 8284,
+        "scope": "reference"
+      },
+      {
+        "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+        "sha256": "08fa4dbadc420090dfee2acf433b827ae05541f728d1478d96879122f53b4328",
+        "bytes": 33816,
+        "scope": "reference"
+      },
+      {
+        "path": "/Users/yanrujhou/.why3.conf",
+        "sha256": "5f82bccca4b275b60979f8eabba62c3f8af1a9178913dbd31efd350a030817c8",
+        "bytes": 375,
+        "scope": "reference"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/lib/why3/commands/why3config.cmxs",
+        "sha256": "8cf638d84dc30ee074097286e6bddec0b78b702bf7c0c8258e146e977e3bc122",
+        "bytes": 62272,
+        "scope": "reference"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/provers-detection-data.conf",
+        "sha256": "1e3a4b966465872b7ebe73084ff1bfdf224ed5ce635b2b163ca3a73eae8c022c",
+        "bytes": 26180,
+        "scope": "reference"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo.drv",
+        "sha256": "5d36cb0a0be0f4054b3e6e52735b0e993ef084aa76160b902a1e4e845feaf8fe",
+        "bytes": 859,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_26.drv",
+        "sha256": "7fd78be6af0d3255123559825cf8d7aea87c0754b41b118dadd1092a4bae0578",
+        "bytes": 1200,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_26_bv.drv",
+        "sha256": "b36b457b25e0f9ee49000b4888cd0fb5b4ca384c37ddaaeb2cad8d2116bca276",
+        "bytes": 52,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_26_ce.drv",
+        "sha256": "befc378b5951c535af7c167c62f88fcbdf7ac421c4078055fdeec1072a932adf",
+        "bytes": 215,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_2_2_0.drv",
+        "sha256": "fc0ff5ff812fb8ac77502e4666b7f5991589100f946fb2c39daaa4eb2be67f7a",
+        "bytes": 1082,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_2_3.drv",
+        "sha256": "c0a339c6ce1509aca007e4348fd989497a6390eb05d6e0007ce98a4fa763539c",
+        "bytes": 1036,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_common.drv",
+        "sha256": "a026efb81eb419ec4fe034a6d677504ba0f729827745338c71da77b52e1b7044",
+        "bytes": 4688,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_counterexamples.drv",
+        "sha256": "a5f32b105f6b25c7073b8c7b3ab71ee3e153f577b5bb7636f5502576a167eec1",
+        "bytes": 225,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_fp.drv",
+        "sha256": "d4539e1dab72186ec44eb90e696fab6b49009d216e6f577b61355a95aed6af2b",
+        "bytes": 1897,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_model.drv",
+        "sha256": "96de72dceb97c40b6b0500e5623b060a503b6a634ae1bcb1084fc67115f5e764",
+        "bytes": 142,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_smt.drv",
+        "sha256": "be223063d1189d55fbce1da0c09750e73cf3aa012cde5649dc53c43ea59569c7",
+        "bytes": 1725,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/beagle.drv",
+        "sha256": "0ef9dfe1280ec86a5d88a98c50fd4987ca37cdf59a59209565ffdadbdbf43266",
+        "bytes": 8176,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/colibri.drv",
+        "sha256": "f675c2ea024e35365b99b902e5e2bae2c709cd10f96f45ebf21ffbafcf1cad57",
+        "bytes": 3058,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/colibri2.drv",
+        "sha256": "0f2224738614ed5ab1c1256ae6e4fea48423f825dcf1ad490203b1e78c87bb07",
+        "bytes": 4200,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/common-transformations.gen",
+        "sha256": "d5057cadb456f06c246a00283cf6b41fd57db834063bd7acb42734da0dd893f7",
+        "bytes": 150,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/coq-common.gen",
+        "sha256": "5f346b0edd8ffe49a68103f9d6ddfe0aed48059fe643846822ac64283a1a0b74",
+        "bytes": 7375,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/coq-realizations.aux",
+        "sha256": "eaeb1e7a83fdc7974a48c7777c50dce450cc3a59423228da517fdbb13a6e830e",
+        "bytes": 4258,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/coq-realize.drv",
+        "sha256": "3bed3cfd6e35cde441216057ca3b79b72c08d4bef540d041e5c5c246e91380e6",
+        "bytes": 610,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/coq-ssreflect.drv",
+        "sha256": "de8580955f5b216402c53741aaad5117661db98261fc263ca540e33c149e1d8d",
+        "bytes": 3303,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/coq.drv",
+        "sha256": "ac28a83238736897d3711c81fc921001bd875d1e128f771c46d7e8edc692857f",
+        "bytes": 635,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc3.drv",
+        "sha256": "5b66ee60d1327ab9a544812a5de97bbbc5609e0beeae17e281312f69d1438301",
+        "bytes": 4110,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4-realize.drv",
+        "sha256": "4584feff40ac1b57555ced95ff93495728636fec4aca92c6085ee4ee9d691c26",
+        "bytes": 2273,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4.drv",
+        "sha256": "6ae341d65872da7bab1e178b00648b194301d20ad6d244fbd9599e4a3b9b3f31",
+        "bytes": 1680,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_14.drv",
+        "sha256": "82116670aee89df7ca933da6f09bc28bd0f44fa798c84ab5501f50f50aa9ade7",
+        "bytes": 2234,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_15.drv",
+        "sha256": "d458db3d953ba862cea9f03fd5d3861517087f572e1b68af47a2c89a38f9ee50",
+        "bytes": 2155,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_15_counterexample.drv",
+        "sha256": "c54c8e6a3452b4ec47b0582f567c0052a35404f490c9e445ce8cc55822c56d27",
+        "bytes": 163,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_16.drv",
+        "sha256": "b736788e4eb56b16acfdc344d837b06386a9faea0d1cf3dc6ffe2e54ac0b9611",
+        "bytes": 302,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_16.gen",
+        "sha256": "37b58a311a855f70488bfa61a29467f8ebd9ec0381ad309277a2210289c0573a",
+        "bytes": 2292,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_16_counterexample.drv",
+        "sha256": "4a6962d17575e060c4bec1d2443078936a96ff4449405b2117eb358a6d9fc00c",
+        "bytes": 163,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_17.drv",
+        "sha256": "faa0ca05e059839688c0583722eeb0a4c70d89394f07080c73be21d3ccb9c3b2",
+        "bytes": 312,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_17_counterexample.drv",
+        "sha256": "473524e2a45d3789dda5fcf7985169aedaf311bbb43c9a9aab921137d47cc163",
+        "bytes": 219,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_18_strings.drv",
+        "sha256": "c0d922160e27c56751f4827466a081ecf37be98a657e9fa9eb4ff66c148810d7",
+        "bytes": 1135,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_18_strings_counterexample.drv",
+        "sha256": "50b5143e6fedde0b0166348183810defc76fd173cdfd1161d95893f1acdd13c9",
+        "bytes": 234,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_bv.gen",
+        "sha256": "caf11b0d78b1c9bc9dff7943422fe636fbe1a315ea0d10b4f925e2edc914e3d9",
+        "bytes": 1044,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv",
+        "sha256": "ba50713ad3d438933602e3edbfa79e847e5c05a4e14bbed519dee42f515c127f",
+        "bytes": 2715,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5_counterexample.drv",
+        "sha256": "089296fc0af9d7ed050bbb6fe51a7192048554325352aca36e4c5f342360620a",
+        "bytes": 213,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5_strings.drv",
+        "sha256": "80b0cb32543275e8512ae3593a4b532ca0f252944c61917aaad6eb8bd1375eb6",
+        "bytes": 1132,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5_strings_counterexample.drv",
+        "sha256": "3c6d27a080eb26bc0a29e5bb9518c2ac2d98711904c9571d470a4255aef17f28",
+        "bytes": 229,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/discrimination.gen",
+        "sha256": "a68d1b651bf9649d0b12dc137b7b364742e71841a5e7ca56a34d076e14e58671",
+        "bytes": 169,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/dreal.drv",
+        "sha256": "e82a1849aad19f1de24b9bd2affcdb6090365e54696703e6c451f8b5a9a5bbd3",
+        "bytes": 3875,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/eprover.drv",
+        "sha256": "421d412ebf209dd359e543d921136b5951689cea4024ec34b39b0ea136cef8c9",
+        "bytes": 322,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/gappa.drv",
+        "sha256": "0e503e4d831a26ab42e707a0dd0342a98a0e0e395cfe2693e83c951ea3286e2b",
+        "bytes": 5316,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/iprover.drv",
+        "sha256": "71dd93e07b1122f5a19e27b9aa759335c610bcc069e21596eb80f5081a599f83",
+        "bytes": 121,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/isabelle-common.gen",
+        "sha256": "d2fe3cff06b87748e3aa3dfd27364ae21cc8ac2ec4295d85f6fc1e1ea44bb0c3",
+        "bytes": 8134,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/isabelle-realizations.aux",
+        "sha256": "dedb3daec62615ff21fbcf7aecf5facbbe790cfb15cfdb22784ab199ce53dafa",
+        "bytes": 3236,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/isabelle-realize.drv",
+        "sha256": "f6cad14dacb85319375f55192306a54505f293f5a0e338aa3739c9728f268ccb",
+        "bytes": 590,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/isabelle.drv",
+        "sha256": "0bb2386ac5dc828ac437a444ce1f65f05763a333f9bdd057c98521dd1126e6a4",
+        "bytes": 682,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/mathematica.drv",
+        "sha256": "05ce99669b7e7b3982d24e4e0de91ed2d55a8b5ebf5e4036a152fb8b255c1bae",
+        "bytes": 5765,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/mathsat.drv",
+        "sha256": "58db91307e2de4919ca613ab5ca8380710d427e046cd159ab3627965e99d4c39",
+        "bytes": 4467,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/metis.drv",
+        "sha256": "3cb4989eb8ab0a55e1ff1bb76a8c8993f76b12244e8968c6b7f046103930bfff",
+        "bytes": 340,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/metitarski.drv",
+        "sha256": "29bd227b6f31429993ec1089c279276b392fad03769c8736c32999c56cbe1c86",
+        "bytes": 6693,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/no-bv.gen",
+        "sha256": "467a607acaded1226e06ace149be1717e7a048a24ade22da93e7aaf1a6859d3c",
+        "bytes": 243,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/polypaver.drv",
+        "sha256": "e2462ed9ed8abbef73c3554ca0d4c6bea4976748519d1684a029ecbaac1e9e79",
+        "bytes": 2501,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/princess.drv",
+        "sha256": "90644308379c1a1cd056a6c35e148d6c0124cec42ea00f7ba18c848a422d306d",
+        "bytes": 8062,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/psyche.drv",
+        "sha256": "d49ab2d68882171932281fedc54e340891fac1c3c6b432b01bea16692fb3252b",
+        "bytes": 2584,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/pvs-common.gen",
+        "sha256": "9fe3b465ed10d7c96740471b7373aac3b7ba9b386848bb837383ae677f377cc4",
+        "bytes": 7941,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/pvs-realizations.aux",
+        "sha256": "f9d13257414b7462e482e6043a4c3eec7264954b8461b7448b6123638506b6a8",
+        "bytes": 1358,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/pvs-realize.drv",
+        "sha256": "5f9bdc05e534cf252c8265686b5af68e350ca75c99a28c189f2d8179a584c21c",
+        "bytes": 186,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/pvs.drv",
+        "sha256": "5f1d4f37df373c33ddca12f6fab8163a25ed98bf50fd4a0853e41e4234583ab3",
+        "bytes": 183,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/safeprover.drv",
+        "sha256": "f6c4cef98ee2c5a8dd5bea214944f530b08570f1b54364c57200fb94d17f1788",
+        "bytes": 327,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/simplify.drv",
+        "sha256": "ba9d33890784323ae913cde6a5a5eb885e3f28b7d17f747f0a1ddd76f242aa2b",
+        "bytes": 2358,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-bv-realization.gen",
+        "sha256": "f7ec41e4369622ab007e4937cc2741e73502362a71c01a04d42ec1f20f5b3b65",
+        "bytes": 7936,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-bv.gen",
+        "sha256": "b57f8da4891100fef2a498b5022424e837b10d7412eb391a90b7ba2025ebb425",
+        "bytes": 10242,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-floats.gen",
+        "sha256": "0a920898ee2dc742538bfa47cdd06aa0abb68541591a6bc2bc3b502ab0540317",
+        "bytes": 6279,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2.gen",
+        "sha256": "73687a2e3626e569f4a2bf5cb74dfd6c33c7019f8d816150538840cb4fca878a",
+        "bytes": 4869,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smtlib-strings.gen",
+        "sha256": "87ed000e23c79f5347649836fbd0fd06c18af3e32e87677124abe4616679de05",
+        "bytes": 3205,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/spass.drv",
+        "sha256": "9aaf4e08695d2d6b7823e2bf7e0e9cd929822a1e2c4cffebf6ce255929fa4247",
+        "bytes": 270,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/spass_types.drv",
+        "sha256": "fb004c5674f4737a4e30719c875b9cc079c0e639764ec38f5b02e0bb64cfde3b",
+        "bytes": 1193,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/tptp-tff0.drv",
+        "sha256": "a0cdda1a2f20c89984452a58878d20e37f54a2fd50f1bd8eb60ad9ff7da7210e",
+        "bytes": 7818,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/tptp-tff1.drv",
+        "sha256": "5c33bea6b572e82dff2823db19e25c6a91a2aedb954f7af9964af36483595569",
+        "bytes": 7595,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/tptp.gen",
+        "sha256": "c90fb04b8b63d45bab8c5fa5078a180481df075bfb11cab8ed86b00ffc550e21",
+        "bytes": 1450,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/vampire.drv",
+        "sha256": "af52e3f3d46a14da1a49b372b6563a523f5eab9cdbb6cedbdbd78694cca87910",
+        "bytes": 214,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/vampire_4_2_2.drv",
+        "sha256": "53632e34de8afbf31efc9ee25b4f53fc425d060f8c45b090c3be6c54455e4ba3",
+        "bytes": 1067,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/vampire_4_5_1.drv",
+        "sha256": "2631fa0eda5c726e69cd3cd0ffaf1f4ed4848c0e5f4a38e338f625dac9f0f216",
+        "bytes": 1212,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/verit.drv",
+        "sha256": "beaa7de08f02c46b48af0da691c051f928f3ef373316222aab73c76849836705",
+        "bytes": 1546,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/why3.drv",
+        "sha256": "9ac85a936a0526112fec236f1b32a0d1315422071a83f7ab52010168c0eadaed",
+        "bytes": 237,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/why3_smt.drv",
+        "sha256": "66101f2eea98ca0e772b29bcbec9f84896524e56c9bf8223044470b65ed9472a",
+        "bytes": 2060,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/why3_tptp.drv",
+        "sha256": "b3de382c2c4949e6f02037c79930721b1e0c90f0c8493c646f25ff238ae371ac",
+        "bytes": 887,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/yices-smt2.drv",
+        "sha256": "5e3f43f6a0a61979c586889b94f105c75f28367cd62970daddabeb2a89bc6030",
+        "bytes": 1201,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/yices.drv",
+        "sha256": "e00e1cf0f1cb2747212248418b8afbe28360c5a8e5072b40bd5abf8e1eb3bad5",
+        "bytes": 4040,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3.drv",
+        "sha256": "059e7b77e7139c1e76cee2ed88d6a8c2b0eb0d8d4e95c32f9c6f30ca13a9f853",
+        "bytes": 2200,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_432.drv",
+        "sha256": "989dcb0ee710c773f29b716bb731d46d127b67de2c117627becd33e139aa1d6a",
+        "bytes": 2484,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_440.drv",
+        "sha256": "70ab1e60ccb46c4bed20a1aba27374b7f10c01d49db8ee9a9accb0359639c41e",
+        "bytes": 3303,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_440_counterexample.drv",
+        "sha256": "28ad2d28d3a1475b37ade1c704926def2165d057ad1074347dc1c40a7a53824c",
+        "bytes": 100,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_471.drv",
+        "sha256": "31f918c37dbc33e554ebf9e38f97b4d6ad3b4cfd8f4a219a66df458b250bef6b",
+        "bytes": 753,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_471_counterexample.drv",
+        "sha256": "bb074ae37458bdb7fd8f67b904a15828d13b500edba890adc5605594d7a0d80a",
+        "bytes": 100,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_471_nobv.drv",
+        "sha256": "4f525a8973fb9f1f8ee06898b1ad3131aa11b72d77784d626216a459ec605c17",
+        "bytes": 48,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_487.drv",
+        "sha256": "597e853cdee99896af59f14a30b7e02dcb0089a0c7f4b34ad193777eb39d79a1",
+        "bytes": 4400,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_487_counterexample.drv",
+        "sha256": "384fd67c107133d3e16481e9b664f3f038a04835b348ef14c07cc684d2a86100",
+        "bytes": 137,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_bv.gen",
+        "sha256": "a3607c94ce344ca28b85925ac3ede6df1970d5eaea8cee6e0987dc0e7409b4d8",
+        "bytes": 1311,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_smtv1.drv",
+        "sha256": "8d298155229e9ddfbc66a4f194670c5926b792f8357970aca9d0d5c899a47ecb",
+        "bytes": 3335,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/zenon.drv",
+        "sha256": "b0f4c6b3a422b4c965cbb71c2788b6556fc77154685aeb4501c5bb112d99f947",
+        "bytes": 1231,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/zenon_modulo.drv",
+        "sha256": "f0fa2a559aef383004faf5682d618a6d4838b85d324038f29ae898d7e4a3a1d6",
+        "bytes": 7366,
+        "scope": "drivers_files"
+      },
+      {
+        "path": "/private/tmp/probata-why3-1.8.2-config-source-20261016/why3-1.8.2.tar.gz",
+        "sha256": "b7d112edd5bcce6bcce0023d2bc834eb2ae1a1c42d7aea44ffa124d649b50bea",
+        "bytes": 7360550,
+        "scope": "reference"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/.opam-switch/packages/why3.1.8.2/opam",
+        "sha256": "c899e972eee06f64ac34451589003a9a87616c4ae1ea4460283ba4f472e6cdf3",
+        "bytes": 3102,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-why3-1.8.2-config-source-20261016/src/tools/why3config.ml",
+        "sha256": "368f3413ad2c6c95af1a0308d761bc111fdeee83d684ce877266c94415bc0b15",
+        "bytes": 6598,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-why3-1.8.2-config-source-20261016/src/tools/main.ml",
+        "sha256": "f07975c12d7ae53e4bc1c0bebfada1b90e44456bcee2b490477b641db0dfc24f",
+        "bytes": 4037,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-why3-1.8.2-config-source-20261016/src/driver/whyconf.ml",
+        "sha256": "7f4ce66ffe696da09c128739b74f7a90a844dce978b5b877da8bd01a874d5546",
+        "bytes": 42359,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-why3-1.8.2-config-source-20261016/src/driver/autodetection.ml",
+        "sha256": "10b13749ebed696380ba2500464e5d130a70b23b0f86d1367d93ce4ad9553666",
+        "bytes": 28130,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-why3-1.8.2-config-source-20261016/src/driver/driver.ml",
+        "sha256": "77775978b29cc51bb53deebc904c97f5d03681e3fd13e3af5f76f92789701ce5",
+        "bytes": 18399,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-why3-1.8.2-config-source-20261016/src/driver/driver_lexer.mll",
+        "sha256": "17418b63c08696ca259d5f5a840d9a03ecbf1cf4d596a62c41b02df24e48d21c",
+        "bytes": 4255,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-why3-1.8.2-config-source-20261016/src/util/lexlib.mll",
+        "sha256": "f7e5acf02b1aadfdaa3478bee724f2063f83e7c8c11ac3a1458b2eb022d6ad20",
+        "bytes": 6587,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-type-command-v1-20261016.json",
+        "sha256": "4101f54f1d05106006dcdcd41820ed54d6a0fefbb67aee4242ef616f363cd094",
+        "bytes": 1550,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-type-entry-v1-20261016.py",
+        "sha256": "34ec12d97c8abb33218ef4df7bb476ecf0924bdbd784aaa662269990544b426d",
+        "bytes": 3808,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-type-expected-v1-20261016.json",
+        "sha256": "ce9ef02e2c4821602333c1d28706ff89e45f0310ff45ab53d60eda196bcc1234",
+        "bytes": 5577,
+        "scope": "reference"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/bin/alt-ergo",
+        "sha256": "0845fc162c1c8081841e38e45966854a3c72cde075cebd149bdf3d58be12f7ae",
+        "bytes": 14986640,
+        "scope": "reference"
+      },
+      {
+        "path": "/opt/homebrew/bin/cvc5",
+        "sha256": "28dd5e5d8b8828ec6eea7fdf2e1544a218551382ca19e6ec8c2967fd6230cf5f",
+        "bytes": 19129416,
+        "scope": "reference"
+      },
+      {
+        "path": "/opt/homebrew/bin/z3",
+        "sha256": "b9a2c3a7dc833da652955116ad743cc733aa7938dbe64f528f71cb09066e2512",
+        "bytes": 16244496,
+        "scope": "reference"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/algebra.mlw",
+        "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4",
+        "bytes": 4910,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/array.mlw",
+        "sha256": "5e1abb583bb14cc1821612859b94568a586419d0dbe0d6752f8835ac098362b6",
+        "bytes": 15332,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/bag.mlw",
+        "sha256": "b5e8f1b8b7a6d4de57571d26ad356a161197fedc7cfd3e104a877a1e12c1bca5",
+        "bytes": 3389,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/bintree.mlw",
+        "sha256": "b651b0989affbee0364a58daa48d77f94ec5a7acaff86f09cd4536d0472dcaf9",
+        "bytes": 4302,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/bool.mlw",
+        "sha256": "b7072fdd8dd5004d0627b82a66b054518ee54eb4dd66f0883988e363bed251fa",
+        "bytes": 819,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/bv.mlw",
+        "sha256": "1c62539b31bfb75042a0b31559ffca9f87429fcfdccc8ed1772b65f0f4131110",
+        "bytes": 35789,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/byte_string.mlw",
+        "sha256": "75480d65a76ed317e88be7d50f593a314b6b94f8eac9f39a1af73adc0a49178f",
+        "bytes": 1832,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/cursor.mlw",
+        "sha256": "5e6554c0e39cba91c92c59d6b7318364f032a6adbb17ca98bdcb2c08d16de701",
+        "bytes": 2105,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/debug.mlw",
+        "sha256": "c79c4fa42774dd4c92000c2fb40f2c66029630f65cd8a3262fa9881579167cdb",
+        "bytes": 97,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/exn.mlw",
+        "sha256": "5aa489183cfcc45d081c9cf0af98b3636ebdde5860fd5a6d9222aa8bbb9d63f1",
+        "bytes": 97,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/floating_point.mlw",
+        "sha256": "0fc1c5bcdb2812e9fd173199de8f767b8a27f5dbcc8072ca4fd543b04071aa8f",
+        "bytes": 21961,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/fmap.mlw",
+        "sha256": "fbda0657de5bb9813aa279daed748fb384d8ba827cd8987fb130f25c703faa15",
+        "bytes": 8855,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/for_drivers.mlw",
+        "sha256": "e892ad394b50de0da1a2ed0e514d82632f3d79e57ac61294ad2d586b68883179",
+        "bytes": 704,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/function.mlw",
+        "sha256": "f1ddf9c3ce7b8fcda55d05f7b4b41612afd739256ccf131a6dce444a80f5a87f",
+        "bytes": 638,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/graph.mlw",
+        "sha256": "c9fdd8de698c4899486056d37999a819d9258fd6b3782a23dbf0eb32f9a5ccb4",
+        "bytes": 2531,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/hashtbl.mlw",
+        "sha256": "348c2084411cfb5fa5bf4babaa90ee34ee55f9303487141d7f30856aa3720b20",
+        "bytes": 2006,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/ieee_float.mlw",
+        "sha256": "57a096bcb20309ab323405fabfeb67699037289dc0223368526adab32fa9d6a7",
+        "bytes": 35187,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/int.mlw",
+        "sha256": "eb5bc9d4a46e1b6a298d24fd36dcf9dfb8f35cbc75b2f44007cfe1a24550ce8d",
+        "bytes": 18553,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/io.mlw",
+        "sha256": "e46fde974c5cc062222fad6f2f9813fc2f1e0d1c09bdcb6d701fe41d0ea1d6ae",
+        "bytes": 2066,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/list.mlw",
+        "sha256": "29b8f5925862ce3c4fb47bae171247b247b450cfcd56f6fc49db3c5b4b162ee9",
+        "bytes": 12337,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/array.mlw",
+        "sha256": "b27c51c8cc0e4de11f0b4acbec05e4ea17de77dfc3af789bd5237f504b1c9861",
+        "bytes": 15954,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/bv.mlw",
+        "sha256": "5e5c6bc76cbc55aec6d6ed5588fcc047dcce74c88e0394b3aa94ac1fa3ef0b94",
+        "bytes": 14311,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/c.mlw",
+        "sha256": "7c847a149a2759820689b6e8229f4399698c14b2f850691c3d8f343d05ad08f4",
+        "bytes": 14054,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/float.mlw",
+        "sha256": "f83ca3bedf58a5064b8947400248d79997e83e202fac0bc6796699442888bb44",
+        "bytes": 6246,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/fxp.mlw",
+        "sha256": "43c4ab90b6ebcf835194e50d2a18cef6864281e32c71d3a446cf9a48a74c5ea1",
+        "bytes": 4043,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/int.mlw",
+        "sha256": "8b15e61d54e9fa0e86e28ba552a13a50afdc752c75c183b5fec483b2f0ae20de",
+        "bytes": 18228,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/java/io.mlw",
+        "sha256": "3f15f978b231cbbfbcac8708d082b7b5be486f50d4c10666a14f28152bd11416",
+        "bytes": 219,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/java/lang.mlw",
+        "sha256": "355faf72f66a6ab0effc7d178f28fe78b69731add875a42975fbc4e837f5a0ca",
+        "bytes": 5499,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/java/util.mlw",
+        "sha256": "407c1895c9b5a1311ac601c179dadf39c0f8343840b09823cfb72b579d437797",
+        "bytes": 10009,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/list.mlw",
+        "sha256": "6618c9c030120189006f2a48b14d14b0baa9ffb6e6446e07e2f1997b27b25e2c",
+        "bytes": 1138,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/matrix.mlw",
+        "sha256": "3a72bf9c0dc6751943ebdd647a362719f9cd360af2d954c714acd639510f1950",
+        "bytes": 2633,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/onetime.mlw",
+        "sha256": "8e45739bcfc995055086a57d4fcfbb836252334c65a855c9dcd299a59801a6d1",
+        "bytes": 2570,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/peano.mlw",
+        "sha256": "210c67ce2ab36aff9764537f4e884db02ae4b0d8463b92460848d8183bf6d0aa",
+        "bytes": 2734,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/tagset.mlw",
+        "sha256": "58a641b42a874f8e63228a4d0be57d6ee8b6340508d31746dde339a7da574c5b",
+        "bytes": 10253,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/map.mlw",
+        "sha256": "c4cd7b90e39f8407fd714d0e46ce4c6496a98afd32bd69c71237b35a4b7c08a0",
+        "bytes": 5517,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/matrix.mlw",
+        "sha256": "0ceeed3e742e47de3ef4bf01042a69dcf501b119010b1de6b0fc2b0d2266efde",
+        "bytes": 2202,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/microc.mlw",
+        "sha256": "d7322664cc4d419d6d7101fcdab0587896353eca9df3aa41be1effb0c3891eed",
+        "bytes": 3869,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/number.mlw",
+        "sha256": "4d0d83a9718774a342234ff8ef67e4545840629ffb0ee508f900d8fd67f83911",
+        "bytes": 5466,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/ocaml.mlw",
+        "sha256": "1777a1f306b54d3cd73afb45d9330eccbcb673d0287c7ee8a6ba0c282578db51",
+        "bytes": 1090,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/option.mlw",
+        "sha256": "ba5607ebfa8fb060cede3798d21241b43de090046724084a3efc1f90a308a6df",
+        "bytes": 351,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/pigeon.mlw",
+        "sha256": "584baeb86de6831ac02d2a379aaa9a16fde47495603acb78c5796b334cdcd0e3",
+        "bytes": 1931,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/pqueue.mlw",
+        "sha256": "edad87a86e411409aa8b5be43993022066f05e951217b12b37ed7b0b45888420",
+        "bytes": 5445,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/python.mlw",
+        "sha256": "5e44344331a4deb815b92bf800bef051be2764b18e5ed889d2e7f77613f951f7",
+        "bytes": 5465,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/queue.mlw",
+        "sha256": "28c577b16c6ddb2be23273f764c70936164842e7f7b2ef3b4125e2fcfc7a0463",
+        "bytes": 1527,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/random.mlw",
+        "sha256": "39371d90d75a70bde82c2a0a8340d414d22eab8197983e77b27ff8bf75f5dd9b",
+        "bytes": 1452,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/real.mlw",
+        "sha256": "50940038bba54f6bd57501e5af6439af8c4f081274eb79a19d888a4cd419b8a2",
+        "bytes": 11047,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/ref.mlw",
+        "sha256": "f54413bf62b69bbfb996bd7d6a8098c18e4663f95f788623f729dd8eb5a60bea",
+        "bytes": 908,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/regexp.mlw",
+        "sha256": "0eaf9277c63569edf20606d3de5fc96522348b5a4c37e9b83fdfca2b011ec8c0",
+        "bytes": 1616,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/relations.mlw",
+        "sha256": "0a367aecd2cd627de87d5f4011ddbf930bf49283e0b94b792a338faf921b2cae",
+        "bytes": 4033,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/seq.mlw",
+        "sha256": "9acfebda1e49dd3b6090f77e6c9ac518e05a3e61a25c4efaaa63cd9090444eb8",
+        "bytes": 18059,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/set.mlw",
+        "sha256": "c5dca5e35ca7198ed7c732b22ec5686cb40c0a7edc9f4ecde783f4ebef744498",
+        "bytes": 18245,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/stack.mlw",
+        "sha256": "ef10f41813802ad069ab1bf7444a4e271570439f568c6f24fb0ec119588b1f30",
+        "bytes": 1333,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/string.mlw",
+        "sha256": "ea9e41823b857ebbe08fe5ba71687f3894946efd21748703d89a83df6b99e3ec",
+        "bytes": 17684,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/tptp.mlw",
+        "sha256": "b095a34e17d52bd10837aec0cd5db3090cbb6f86918707402eebadafab4dc97d",
+        "bytes": 3949,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/tree.mlw",
+        "sha256": "9871c40b442266715678814a1f80298f99af054e8be70abc58826e04e91cefd7",
+        "bytes": 1181,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/ufloat.mlw",
+        "sha256": "cd4a4f4c0d73b895f6735a8d5501be56b0cb9db19ccc80715b792c5e001dc7c3",
+        "bytes": 38794,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/witness.mlw",
+        "sha256": "74098a4e80908fb5719b04e741a36cac977f180d837b6ffc0238fe1d915d609a",
+        "bytes": 1812,
+        "scope": "stdlib_files"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/bin/why3",
+        "sha256": "e90d62b3883a4c2f90c5260ff410ef019803eb08b5f72f3d3ade77d4ce6f0555",
+        "bytes": 13204488,
+        "scope": "reference"
+      },
+      {
+        "path": "/usr/bin/git",
+        "sha256": "34129c71a01a74f7f3b2443521519b2e5447553fa187f5fcafaaf8c42cc192e2",
+        "bytes": 200560,
+        "scope": "reference"
+      },
+      {
+        "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/__init__.py",
+        "sha256": "d138a5786b163b56ba86ea0b2d5589dfca37e1bcdf8de1057fe1e933d6ab808a",
+        "bytes": 89878,
+        "scope": "reference"
+      },
+      {
+        "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/_common.py",
+        "sha256": "1bbce9fd97e6f5439a0d385f28401f527c5a9d978d9d062593d7ef6fe215fc75",
+        "bytes": 25254,
+        "scope": "reference"
+      },
+      {
+        "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/_ntuples.py",
+        "sha256": "9b8e8b938abae2786a515f686f4d8132218be897eb6b459b9324ed17d88a31c7",
+        "bytes": 10970,
+        "scope": "reference"
+      },
+      {
+        "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/_psaix.py",
+        "sha256": "afe4038d5e1454559f17dac9e6c2c56ad8cf873d43880f6503e8549cc06a18ec",
+        "bytes": 17616,
+        "scope": "reference"
+      },
+      {
+        "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/_psbsd.py",
+        "sha256": "c1a8314a9640649c99197ff261dbeec1f0080175e4a3f6b5cb370a39332deb94",
+        "bytes": 29263,
+        "scope": "reference"
+      },
+      {
+        "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/_pslinux.py",
+        "sha256": "a8a09bab87848075b691c46112b00692745785a8c9d5a2c87037ae124b469749",
+        "bytes": 84787,
+        "scope": "reference"
+      },
+      {
+        "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/_psosx.py",
+        "sha256": "89f0ea0e9c1fe38f224b612792bf31d07c8880d79281806e5379c00514f6b3f2",
+        "bytes": 15913,
+        "scope": "reference"
+      },
+      {
+        "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/_psposix.py",
+        "sha256": "288887b58f5939e3b00e021f6e7b490c2f7f4852804a359918ab7d9c6fb39839",
+        "bytes": 11575,
+        "scope": "reference"
+      },
+      {
+        "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/_pssunos.py",
+        "sha256": "cc348442008a54cb6054299b2ecae0d9a123c07bb4ba1f8e14b319487f83cee5",
+        "bytes": 23934,
+        "scope": "reference"
+      },
+      {
+        "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/_psutil_osx.abi3.so",
+        "sha256": "ff4568b9187ca7b37c5134aaf614ffb061e7fedccebd84158343afb05991b8e2",
+        "bytes": 105920,
+        "scope": "reference"
+      },
+      {
+        "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/_pswindows.py",
+        "sha256": "580ad391de734c113682200ee9f4245e34737f5e26af0a73a4e8c9b4458de220",
+        "bytes": 35370,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-why3-1.8.2-config-source-20261016/src/tools/why3prove.ml",
+        "sha256": "6306b0a29205371cc12112e83b81f18c013acc26de58d3adeb85b7a3327fa0bb",
+        "bytes": 20496,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-why3-1.8.2-config-source-20261016/src/driver/call_provers.ml",
+        "sha256": "2c090733b90b8112600ed4d8d0909c26861a4d754f4ae5e39a3f6f31b9c2ead3",
+        "bytes": 22987,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-why3-1.8.2-config-source-20261016/src/driver/prove_client.ml",
+        "sha256": "75de07b3566646ff1507fff694b6faa90caf4fb3bcdece2088cf364cc023d8ca",
+        "bytes": 8922,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-why3-1.8.2-config-source-20261016/src/printer/smtv2.ml",
+        "sha256": "080347b41e9b91e1cb6958bdbcb478132f5dd9a70c6504c546180f2c7230f2e8",
+        "bytes": 39104,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-why3-1.8.2-config-source-20261016/src/driver/whyconf.ml",
+        "sha256": "7f4ce66ffe696da09c128739b74f7a90a844dce978b5b877da8bd01a874d5546",
+        "bytes": 42359,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-why3-1.8.2-config-source-20261016/src/util/debug.ml",
+        "sha256": "6a1fdb384d5c3bfdb17a2e9f0dece61f5dbf10ad44708fe1995be1aede09fdeb",
+        "bytes": 6730,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-why3-1.8.2-config-source-20261016/src/server/server-unix.c",
+        "sha256": "d555a8c6cb6b3dfca40f61be987f1630782b8e380341a28b8840b43f31236d14",
+        "bytes": 18431,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-why3-1.8.2-config-source-20261016/src/driver/driver.ml",
+        "sha256": "77775978b29cc51bb53deebc904c97f5d03681e3fd13e3af5f76f92789701ce5",
+        "bytes": 18399,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-recipe-v1-20261016.json",
+        "sha256": "eea007c5dd8bba50f8253c0b10728925823c707999996d350dc8bb9892d99c4b",
+        "bytes": 15062,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-reader-v2-20261016.py",
+        "sha256": "0604fcddc3e26a8bd4cf544e0d799d32c6f159538d80d43ba4f674417d44c266",
+        "bytes": 6603,
+        "scope": "reference"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/lib/why3/commands/why3prove.cmxs",
+        "sha256": "549ced803ab38269f2b05b80a610d1a480b8b5b5478382bbccdd70598c842c02",
+        "bytes": 129280,
+        "scope": "reference"
+      },
+      {
+        "path": "/Users/yanrujhou/.opam/framac-33/lib/why3/why3server",
+        "sha256": "0af210356425da2bf5c97d8bede776299f5ddcec595b6474f4994aa539ebc612",
+        "bytes": 66904,
+        "scope": "reference"
+      },
+      {
+        "path": "/opt/homebrew/bin/z3",
+        "sha256": "b9a2c3a7dc833da652955116ad743cc733aa7938dbe64f528f71cb09066e2512",
+        "bytes": 16244496,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tasks/readiness_rank-ConditionalReadiness-eventual_readyqtvc.smt2",
+        "sha256": "5a577a9d82d9f07e774c47710fc851a6ae3240d3bab57669b18763bdd89c0d13",
+        "bytes": 910,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tasks/readiness_rank-ConditionalReadiness-eventual_readyqtvc1.smt2",
+        "sha256": "71bbcf83d755b83ae8dac10aadecfed19023a7cced349a9949301e203dd53990",
+        "bytes": 1025,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tasks/readiness_rank-ConditionalReadiness-eventual_readyqtvc2.smt2",
+        "sha256": "20d6c284463b5c3303a6aa3bf06383c0adbb434af0979d88acd200b9bcc5698a",
+        "bytes": 1034,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tasks/readiness_rank-ConditionalReadiness-eventual_readyqtvc3.smt2",
+        "sha256": "27a191e3fe8a366a7445974ee622d9fdc5b3bdf8f58c1ebe7c27fae931690421",
+        "bytes": 1209,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tasks/readiness_rank-ConditionalReadiness-eventual_readyqtvc4.smt2",
+        "sha256": "7beafa419f21e7f28b338f6da7f5c1beb8d69d3c4ddd5333622625fac12172f2",
+        "bytes": 1164,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tasks/readiness_rank-ConditionalReadiness-eventual_readyqtvc.smt2",
+        "sha256": "5a577a9d82d9f07e774c47710fc851a6ae3240d3bab57669b18763bdd89c0d13",
+        "bytes": 910,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tasks/readiness_rank-ConditionalReadiness-eventual_readyqtvc1.smt2",
+        "sha256": "71bbcf83d755b83ae8dac10aadecfed19023a7cced349a9949301e203dd53990",
+        "bytes": 1025,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tasks/readiness_rank-ConditionalReadiness-eventual_readyqtvc2.smt2",
+        "sha256": "20d6c284463b5c3303a6aa3bf06383c0adbb434af0979d88acd200b9bcc5698a",
+        "bytes": 1034,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tasks/readiness_rank-ConditionalReadiness-eventual_readyqtvc3.smt2",
+        "sha256": "27a191e3fe8a366a7445974ee622d9fdc5b3bdf8f58c1ebe7c27fae931690421",
+        "bytes": 1209,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tasks/readiness_rank-ConditionalReadiness-eventual_readyqtvc4.smt2",
+        "sha256": "7beafa419f21e7f28b338f6da7f5c1beb8d69d3c4ddd5333622625fac12172f2",
+        "bytes": 1164,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why_6130fa_readiness_rank-T-eventual_readyqtvc.smt2",
+        "sha256": "5a577a9d82d9f07e774c47710fc851a6ae3240d3bab57669b18763bdd89c0d13",
+        "bytes": 910,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why_e54062_readiness_rank-T-eventual_readyqtvc.smt2",
+        "sha256": "71bbcf83d755b83ae8dac10aadecfed19023a7cced349a9949301e203dd53990",
+        "bytes": 1025,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why_f6a3ab_readiness_rank-T-eventual_readyqtvc.smt2",
+        "sha256": "20d6c284463b5c3303a6aa3bf06383c0adbb434af0979d88acd200b9bcc5698a",
+        "bytes": 1034,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why_9e995f_readiness_rank-T-eventual_readyqtvc.smt2",
+        "sha256": "27a191e3fe8a366a7445974ee622d9fdc5b3bdf8f58c1ebe7c27fae931690421",
+        "bytes": 1209,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why_4cb41d_readiness_rank-T-eventual_readyqtvc.smt2",
+        "sha256": "7beafa419f21e7f28b338f6da7f5c1beb8d69d3c4ddd5333622625fac12172f2",
+        "bytes": 1164,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why31xtWmZ",
+        "sha256": "1d750d14322cf9bd1789c0affdcb7650e995c915e8db0709141bdf0787d9656f",
+        "bytes": 656,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why3Q3wSfO",
+        "sha256": "78b624a01d1b9398d6da9fdc8ec5e30dea2bc3ae142ee8aef2128174796390de",
+        "bytes": 529,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why3R1GYUg",
+        "sha256": "5f2b8f9d0a5930ca613c9b4a865e41ef4b4b93953cbd06acbbb33b99cbd08d7c",
+        "bytes": 481,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why3WdbFZK",
+        "sha256": "734f18982b8f2b2a12d46a4f1805107eb7885526ab873a9809a33a7c649ee681",
+        "bytes": 482,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why3qG2VLX",
+        "sha256": "a9794b0b615b3110878bfa0a3b0fd3ac4e34b6ecc282043160d64ef94dfb43f5",
+        "bytes": 413,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tasks/delay_family-ArbitraryFiniteDelay-consistency_for_every_nonnegative_delayqtvc.smt2",
+        "sha256": "8364ee1b34e96da7682c21a4b90c7313fba80a01a756853204c37b26c0577a30",
+        "bytes": 615,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tasks/delay_family-ArbitraryFiniteDelay-consistency_for_every_nonnegative_delayqtvc1.smt2",
+        "sha256": "4436a254c1e92c2fa261218474679e62407fef161d2559f9032e320f22e60277",
+        "bytes": 880,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tasks/delay_family-ArbitraryFiniteDelay-consistency_for_every_nonnegative_delayqtvc2.smt2",
+        "sha256": "022e0480d12b3d9b74fb548cd35b0e9d1d8ff9980a43b7cba0e672c65330be4a",
+        "bytes": 1028,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tasks/delay_family-ArbitraryFiniteDelay-consistency_for_every_nonnegative_delayqtvc3.smt2",
+        "sha256": "ef26195de2f4f59951774d45c2bcfb0b627efc2f12e7a67da163dfe774f7f0a4",
+        "bytes": 1046,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tasks/delay_family-ArbitraryFiniteDelay-consistency_for_every_nonnegative_delayqtvc.smt2",
+        "sha256": "8364ee1b34e96da7682c21a4b90c7313fba80a01a756853204c37b26c0577a30",
+        "bytes": 615,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tasks/delay_family-ArbitraryFiniteDelay-consistency_for_every_nonnegative_delayqtvc1.smt2",
+        "sha256": "4436a254c1e92c2fa261218474679e62407fef161d2559f9032e320f22e60277",
+        "bytes": 880,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tasks/delay_family-ArbitraryFiniteDelay-consistency_for_every_nonnegative_delayqtvc2.smt2",
+        "sha256": "022e0480d12b3d9b74fb548cd35b0e9d1d8ff9980a43b7cba0e672c65330be4a",
+        "bytes": 1028,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tasks/delay_family-ArbitraryFiniteDelay-consistency_for_every_nonnegative_delayqtvc3.smt2",
+        "sha256": "ef26195de2f4f59951774d45c2bcfb0b627efc2f12e7a67da163dfe774f7f0a4",
+        "bytes": 1046,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why_9cc1b1_delay_family-T-consistency_for_every_nonnegative_delayqtvc.smt2",
+        "sha256": "8364ee1b34e96da7682c21a4b90c7313fba80a01a756853204c37b26c0577a30",
+        "bytes": 615,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why_ba6034_delay_family-T-consistency_for_every_nonnegative_delayqtvc.smt2",
+        "sha256": "4436a254c1e92c2fa261218474679e62407fef161d2559f9032e320f22e60277",
+        "bytes": 880,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why_28e896_delay_family-T-consistency_for_every_nonnegative_delayqtvc.smt2",
+        "sha256": "022e0480d12b3d9b74fb548cd35b0e9d1d8ff9980a43b7cba0e672c65330be4a",
+        "bytes": 1028,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why_3f5e2f_delay_family-T-consistency_for_every_nonnegative_delayqtvc.smt2",
+        "sha256": "ef26195de2f4f59951774d45c2bcfb0b627efc2f12e7a67da163dfe774f7f0a4",
+        "bytes": 1046,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why35eWUir",
+        "sha256": "79e29ff55bb906e32103092d0517176f307e147faf7f833ecee8f72abae8f937",
+        "bytes": 508,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why35tL2ZT",
+        "sha256": "191f39bdf9bbb92c03e1d2aa2881c979aef3b33c48dbe60ef1403b67685e8c24",
+        "bytes": 127,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why3YPOiur",
+        "sha256": "e8f762d16a82f733553a991f7987c24fcea49cdce0db2483954a915398d7dec1",
+        "bytes": 127,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why3ZY04TH",
+        "sha256": "9cf50c72ad6e3c49cd681a97b248c39b00c3ab01225daaf928e0a3b88f95afd5",
+        "bytes": 708,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AllFalseCounterexample/tasks/no_progress-AllFalseCounterexample-all_false_has_no_future_readyqtvc.smt2",
+        "sha256": "07eb9383df42c6f43421a7afaa56797d04e3265e200e6f71c08497a4705c580e",
+        "bytes": 452,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AllFalseCounterexample/tasks/no_progress-AllFalseCounterexample-all_false_has_no_future_readyqtvc.smt2",
+        "sha256": "07eb9383df42c6f43421a7afaa56797d04e3265e200e6f71c08497a4705c580e",
+        "bytes": 452,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AllFalseCounterexample/tmp/why_f4ff51_no_progress-T-all_false_has_no_future_readyqtvc.smt2",
+        "sha256": "07eb9383df42c6f43421a7afaa56797d04e3265e200e6f71c08497a4705c580e",
+        "bytes": 452,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AllFalseCounterexample/tmp/why3yS0NBz",
+        "sha256": "2cfd40893a6085335cfd52d75699ae2a0bc58a32bfeb4204d7bf7d9301bbef07",
+        "bytes": 126,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AbsentPremiseNegative/tasks/no_progress-AbsentPremiseNegative-eventual_ready_without_progress.smt2",
+        "sha256": "0c235270130b63bc9a28cdb53d1787bdb96cce0d99f51f76eeaec845f8ae1b55",
+        "bytes": 445,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tasks/readiness_rank-ConditionalReadiness-eventual_readyqtvc.smt2",
+        "sha256": "5a577a9d82d9f07e774c47710fc851a6ae3240d3bab57669b18763bdd89c0d13",
+        "bytes": 910,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tasks/readiness_rank-ConditionalReadiness-eventual_readyqtvc1.smt2",
+        "sha256": "71bbcf83d755b83ae8dac10aadecfed19023a7cced349a9949301e203dd53990",
+        "bytes": 1025,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tasks/readiness_rank-ConditionalReadiness-eventual_readyqtvc2.smt2",
+        "sha256": "20d6c284463b5c3303a6aa3bf06383c0adbb434af0979d88acd200b9bcc5698a",
+        "bytes": 1034,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tasks/readiness_rank-ConditionalReadiness-eventual_readyqtvc3.smt2",
+        "sha256": "27a191e3fe8a366a7445974ee622d9fdc5b3bdf8f58c1ebe7c27fae931690421",
+        "bytes": 1209,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tasks/readiness_rank-ConditionalReadiness-eventual_readyqtvc4.smt2",
+        "sha256": "7beafa419f21e7f28b338f6da7f5c1beb8d69d3c4ddd5333622625fac12172f2",
+        "bytes": 1164,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tasks/readiness_rank-ConditionalReadiness-eventual_readyqtvc.smt2",
+        "sha256": "5a577a9d82d9f07e774c47710fc851a6ae3240d3bab57669b18763bdd89c0d13",
+        "bytes": 910,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tasks/readiness_rank-ConditionalReadiness-eventual_readyqtvc1.smt2",
+        "sha256": "71bbcf83d755b83ae8dac10aadecfed19023a7cced349a9949301e203dd53990",
+        "bytes": 1025,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tasks/readiness_rank-ConditionalReadiness-eventual_readyqtvc2.smt2",
+        "sha256": "20d6c284463b5c3303a6aa3bf06383c0adbb434af0979d88acd200b9bcc5698a",
+        "bytes": 1034,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tasks/readiness_rank-ConditionalReadiness-eventual_readyqtvc3.smt2",
+        "sha256": "27a191e3fe8a366a7445974ee622d9fdc5b3bdf8f58c1ebe7c27fae931690421",
+        "bytes": 1209,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tasks/readiness_rank-ConditionalReadiness-eventual_readyqtvc4.smt2",
+        "sha256": "7beafa419f21e7f28b338f6da7f5c1beb8d69d3c4ddd5333622625fac12172f2",
+        "bytes": 1164,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why_6130fa_readiness_rank-T-eventual_readyqtvc.smt2",
+        "sha256": "5a577a9d82d9f07e774c47710fc851a6ae3240d3bab57669b18763bdd89c0d13",
+        "bytes": 910,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why_e54062_readiness_rank-T-eventual_readyqtvc.smt2",
+        "sha256": "71bbcf83d755b83ae8dac10aadecfed19023a7cced349a9949301e203dd53990",
+        "bytes": 1025,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why_f6a3ab_readiness_rank-T-eventual_readyqtvc.smt2",
+        "sha256": "20d6c284463b5c3303a6aa3bf06383c0adbb434af0979d88acd200b9bcc5698a",
+        "bytes": 1034,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why_9e995f_readiness_rank-T-eventual_readyqtvc.smt2",
+        "sha256": "27a191e3fe8a366a7445974ee622d9fdc5b3bdf8f58c1ebe7c27fae931690421",
+        "bytes": 1209,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why_4cb41d_readiness_rank-T-eventual_readyqtvc.smt2",
+        "sha256": "7beafa419f21e7f28b338f6da7f5c1beb8d69d3c4ddd5333622625fac12172f2",
+        "bytes": 1164,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why31xtWmZ",
+        "sha256": "1d750d14322cf9bd1789c0affdcb7650e995c915e8db0709141bdf0787d9656f",
+        "bytes": 656,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why3Q3wSfO",
+        "sha256": "78b624a01d1b9398d6da9fdc8ec5e30dea2bc3ae142ee8aef2128174796390de",
+        "bytes": 529,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why3R1GYUg",
+        "sha256": "5f2b8f9d0a5930ca613c9b4a865e41ef4b4b93953cbd06acbbb33b99cbd08d7c",
+        "bytes": 481,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why3WdbFZK",
+        "sha256": "734f18982b8f2b2a12d46a4f1805107eb7885526ab873a9809a33a7c649ee681",
+        "bytes": 482,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why3qG2VLX",
+        "sha256": "a9794b0b615b3110878bfa0a3b0fd3ac4e34b6ecc282043160d64ef94dfb43f5",
+        "bytes": 413,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tasks/delay_family-ArbitraryFiniteDelay-consistency_for_every_nonnegative_delayqtvc.smt2",
+        "sha256": "8364ee1b34e96da7682c21a4b90c7313fba80a01a756853204c37b26c0577a30",
+        "bytes": 615,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tasks/delay_family-ArbitraryFiniteDelay-consistency_for_every_nonnegative_delayqtvc1.smt2",
+        "sha256": "4436a254c1e92c2fa261218474679e62407fef161d2559f9032e320f22e60277",
+        "bytes": 880,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tasks/delay_family-ArbitraryFiniteDelay-consistency_for_every_nonnegative_delayqtvc2.smt2",
+        "sha256": "022e0480d12b3d9b74fb548cd35b0e9d1d8ff9980a43b7cba0e672c65330be4a",
+        "bytes": 1028,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tasks/delay_family-ArbitraryFiniteDelay-consistency_for_every_nonnegative_delayqtvc3.smt2",
+        "sha256": "ef26195de2f4f59951774d45c2bcfb0b627efc2f12e7a67da163dfe774f7f0a4",
+        "bytes": 1046,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tasks/delay_family-ArbitraryFiniteDelay-consistency_for_every_nonnegative_delayqtvc.smt2",
+        "sha256": "8364ee1b34e96da7682c21a4b90c7313fba80a01a756853204c37b26c0577a30",
+        "bytes": 615,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tasks/delay_family-ArbitraryFiniteDelay-consistency_for_every_nonnegative_delayqtvc1.smt2",
+        "sha256": "4436a254c1e92c2fa261218474679e62407fef161d2559f9032e320f22e60277",
+        "bytes": 880,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tasks/delay_family-ArbitraryFiniteDelay-consistency_for_every_nonnegative_delayqtvc2.smt2",
+        "sha256": "022e0480d12b3d9b74fb548cd35b0e9d1d8ff9980a43b7cba0e672c65330be4a",
+        "bytes": 1028,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tasks/delay_family-ArbitraryFiniteDelay-consistency_for_every_nonnegative_delayqtvc3.smt2",
+        "sha256": "ef26195de2f4f59951774d45c2bcfb0b627efc2f12e7a67da163dfe774f7f0a4",
+        "bytes": 1046,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why_9cc1b1_delay_family-T-consistency_for_every_nonnegative_delayqtvc.smt2",
+        "sha256": "8364ee1b34e96da7682c21a4b90c7313fba80a01a756853204c37b26c0577a30",
+        "bytes": 615,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why_ba6034_delay_family-T-consistency_for_every_nonnegative_delayqtvc.smt2",
+        "sha256": "4436a254c1e92c2fa261218474679e62407fef161d2559f9032e320f22e60277",
+        "bytes": 880,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why_28e896_delay_family-T-consistency_for_every_nonnegative_delayqtvc.smt2",
+        "sha256": "022e0480d12b3d9b74fb548cd35b0e9d1d8ff9980a43b7cba0e672c65330be4a",
+        "bytes": 1028,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why_3f5e2f_delay_family-T-consistency_for_every_nonnegative_delayqtvc.smt2",
+        "sha256": "ef26195de2f4f59951774d45c2bcfb0b627efc2f12e7a67da163dfe774f7f0a4",
+        "bytes": 1046,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why35eWUir",
+        "sha256": "79e29ff55bb906e32103092d0517176f307e147faf7f833ecee8f72abae8f937",
+        "bytes": 508,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why35tL2ZT",
+        "sha256": "191f39bdf9bbb92c03e1d2aa2881c979aef3b33c48dbe60ef1403b67685e8c24",
+        "bytes": 127,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why3YPOiur",
+        "sha256": "e8f762d16a82f733553a991f7987c24fcea49cdce0db2483954a915398d7dec1",
+        "bytes": 127,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why3ZY04TH",
+        "sha256": "9cf50c72ad6e3c49cd681a97b248c39b00c3ab01225daaf928e0a3b88f95afd5",
+        "bytes": 708,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AllFalseCounterexample/tasks/no_progress-AllFalseCounterexample-all_false_has_no_future_readyqtvc.smt2",
+        "sha256": "07eb9383df42c6f43421a7afaa56797d04e3265e200e6f71c08497a4705c580e",
+        "bytes": 452,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AllFalseCounterexample/tasks/no_progress-AllFalseCounterexample-all_false_has_no_future_readyqtvc.smt2",
+        "sha256": "07eb9383df42c6f43421a7afaa56797d04e3265e200e6f71c08497a4705c580e",
+        "bytes": 452,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AllFalseCounterexample/tmp/why_f4ff51_no_progress-T-all_false_has_no_future_readyqtvc.smt2",
+        "sha256": "07eb9383df42c6f43421a7afaa56797d04e3265e200e6f71c08497a4705c580e",
+        "bytes": 452,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AllFalseCounterexample/tmp/why3yS0NBz",
+        "sha256": "2cfd40893a6085335cfd52d75699ae2a0bc58a32bfeb4204d7bf7d9301bbef07",
+        "bytes": 126,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AbsentPremiseNegative/tasks/no_progress-AbsentPremiseNegative-eventual_ready_without_progress.smt2",
+        "sha256": "0c235270130b63bc9a28cdb53d1787bdb96cce0d99f51f76eeaec845f8ae1b55",
+        "bytes": 445,
+        "scope": "reference"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AbsentPremiseNegative/emission.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AbsentPremiseNegative/emission.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AbsentPremiseNegative/results.stderr",
+        "sha256": "a850e0db08889dbd4f618acb314a27602dca0fc298c22807c0073fcc335b9eae",
+        "bytes": 910,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AbsentPremiseNegative/results.stdout",
+        "sha256": "d0f2c2acf5a2dd0d5ad44c14dc1ab7c813081b9d191af297942e455ed64ad07c",
+        "bytes": 447,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AbsentPremiseNegative/tasks/no_progress-AbsentPremiseNegative-eventual_ready_without_progress.smt2",
+        "sha256": "0c235270130b63bc9a28cdb53d1787bdb96cce0d99f51f76eeaec845f8ae1b55",
+        "bytes": 445,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AbsentPremiseNegative/tmp/why3hu52A8",
+        "sha256": "c16e83bfe03790b301112b8d2cd8995e38aa3d0437910ee4234f1c4987f039d8",
+        "bytes": 124,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AbsentPremiseNegative/tmp/why_11a8d9_no_progress-T-eventual_ready_without_progress.smt2",
+        "sha256": "0c235270130b63bc9a28cdb53d1787bdb96cce0d99f51f76eeaec845f8ae1b55",
+        "bytes": 445,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AllFalseCounterexample/emission.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AllFalseCounterexample/emission.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AllFalseCounterexample/results.stderr",
+        "sha256": "a4a4effe1580de188332b7655bbf955ceb767b850540c07680718039401e8fac",
+        "bytes": 919,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AllFalseCounterexample/results.stdout",
+        "sha256": "636f2753029f98c5377cecbc908792f0084fa3e0beadeebe56231cf1e59799bd",
+        "bytes": 452,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AllFalseCounterexample/tasks/no_progress-AllFalseCounterexample-all_false_has_no_future_readyqtvc.smt2",
+        "sha256": "07eb9383df42c6f43421a7afaa56797d04e3265e200e6f71c08497a4705c580e",
+        "bytes": 452,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AllFalseCounterexample/tmp/why3yS0NBz",
+        "sha256": "2cfd40893a6085335cfd52d75699ae2a0bc58a32bfeb4204d7bf7d9301bbef07",
+        "bytes": 126,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AllFalseCounterexample/tmp/why_f4ff51_no_progress-T-all_false_has_no_future_readyqtvc.smt2",
+        "sha256": "07eb9383df42c6f43421a7afaa56797d04e3265e200e6f71c08497a4705c580e",
+        "bytes": 452,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/emission.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/emission.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/results.stderr",
+        "sha256": "52bbc5e5e49acb8eb74709b55402039f40172cecd7ae56d3bf0f4a461212fc52",
+        "bytes": 4714,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/results.stdout",
+        "sha256": "024fae4eb9410cfc0429a5e8234fe9073a10387acd0ea534e38cc573b8cfa8dd",
+        "bytes": 1863,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tasks/delay_family-ArbitraryFiniteDelay-consistency_for_every_nonnegative_delayqtvc.smt2",
+        "sha256": "8364ee1b34e96da7682c21a4b90c7313fba80a01a756853204c37b26c0577a30",
+        "bytes": 615,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tasks/delay_family-ArbitraryFiniteDelay-consistency_for_every_nonnegative_delayqtvc1.smt2",
+        "sha256": "4436a254c1e92c2fa261218474679e62407fef161d2559f9032e320f22e60277",
+        "bytes": 880,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tasks/delay_family-ArbitraryFiniteDelay-consistency_for_every_nonnegative_delayqtvc2.smt2",
+        "sha256": "022e0480d12b3d9b74fb548cd35b0e9d1d8ff9980a43b7cba0e672c65330be4a",
+        "bytes": 1028,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tasks/delay_family-ArbitraryFiniteDelay-consistency_for_every_nonnegative_delayqtvc3.smt2",
+        "sha256": "ef26195de2f4f59951774d45c2bcfb0b627efc2f12e7a67da163dfe774f7f0a4",
+        "bytes": 1046,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why35eWUir",
+        "sha256": "79e29ff55bb906e32103092d0517176f307e147faf7f833ecee8f72abae8f937",
+        "bytes": 508,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why35tL2ZT",
+        "sha256": "191f39bdf9bbb92c03e1d2aa2881c979aef3b33c48dbe60ef1403b67685e8c24",
+        "bytes": 127,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why3YPOiur",
+        "sha256": "e8f762d16a82f733553a991f7987c24fcea49cdce0db2483954a915398d7dec1",
+        "bytes": 127,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why3ZY04TH",
+        "sha256": "9cf50c72ad6e3c49cd681a97b248c39b00c3ab01225daaf928e0a3b88f95afd5",
+        "bytes": 708,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why_28e896_delay_family-T-consistency_for_every_nonnegative_delayqtvc.smt2",
+        "sha256": "022e0480d12b3d9b74fb548cd35b0e9d1d8ff9980a43b7cba0e672c65330be4a",
+        "bytes": 1028,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why_3f5e2f_delay_family-T-consistency_for_every_nonnegative_delayqtvc.smt2",
+        "sha256": "ef26195de2f4f59951774d45c2bcfb0b627efc2f12e7a67da163dfe774f7f0a4",
+        "bytes": 1046,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why_9cc1b1_delay_family-T-consistency_for_every_nonnegative_delayqtvc.smt2",
+        "sha256": "8364ee1b34e96da7682c21a4b90c7313fba80a01a756853204c37b26c0577a30",
+        "bytes": 615,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why_ba6034_delay_family-T-consistency_for_every_nonnegative_delayqtvc.smt2",
+        "sha256": "4436a254c1e92c2fa261218474679e62407fef161d2559f9032e320f22e60277",
+        "bytes": 880,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/emission.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/emission.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/results.stderr",
+        "sha256": "507ef4f31a7b56fc8671c477a77026d1385fc29ef7cf02407511048b24752068",
+        "bytes": 6386,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/results.stdout",
+        "sha256": "98d5b75c1ab62e4a5ca1295a81841db4d59b71b63ef27b4f790943cfd1b17745",
+        "bytes": 2214,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tasks/readiness_rank-ConditionalReadiness-eventual_readyqtvc.smt2",
+        "sha256": "5a577a9d82d9f07e774c47710fc851a6ae3240d3bab57669b18763bdd89c0d13",
+        "bytes": 910,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tasks/readiness_rank-ConditionalReadiness-eventual_readyqtvc1.smt2",
+        "sha256": "71bbcf83d755b83ae8dac10aadecfed19023a7cced349a9949301e203dd53990",
+        "bytes": 1025,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tasks/readiness_rank-ConditionalReadiness-eventual_readyqtvc2.smt2",
+        "sha256": "20d6c284463b5c3303a6aa3bf06383c0adbb434af0979d88acd200b9bcc5698a",
+        "bytes": 1034,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tasks/readiness_rank-ConditionalReadiness-eventual_readyqtvc3.smt2",
+        "sha256": "27a191e3fe8a366a7445974ee622d9fdc5b3bdf8f58c1ebe7c27fae931690421",
+        "bytes": 1209,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tasks/readiness_rank-ConditionalReadiness-eventual_readyqtvc4.smt2",
+        "sha256": "7beafa419f21e7f28b338f6da7f5c1beb8d69d3c4ddd5333622625fac12172f2",
+        "bytes": 1164,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why31xtWmZ",
+        "sha256": "1d750d14322cf9bd1789c0affdcb7650e995c915e8db0709141bdf0787d9656f",
+        "bytes": 656,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why3Q3wSfO",
+        "sha256": "78b624a01d1b9398d6da9fdc8ec5e30dea2bc3ae142ee8aef2128174796390de",
+        "bytes": 529,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why3R1GYUg",
+        "sha256": "5f2b8f9d0a5930ca613c9b4a865e41ef4b4b93953cbd06acbbb33b99cbd08d7c",
+        "bytes": 481,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why3WdbFZK",
+        "sha256": "734f18982b8f2b2a12d46a4f1805107eb7885526ab873a9809a33a7c649ee681",
+        "bytes": 482,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why3qG2VLX",
+        "sha256": "a9794b0b615b3110878bfa0a3b0fd3ac4e34b6ecc282043160d64ef94dfb43f5",
+        "bytes": 413,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why_4cb41d_readiness_rank-T-eventual_readyqtvc.smt2",
+        "sha256": "7beafa419f21e7f28b338f6da7f5c1beb8d69d3c4ddd5333622625fac12172f2",
+        "bytes": 1164,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why_6130fa_readiness_rank-T-eventual_readyqtvc.smt2",
+        "sha256": "5a577a9d82d9f07e774c47710fc851a6ae3240d3bab57669b18763bdd89c0d13",
+        "bytes": 910,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why_9e995f_readiness_rank-T-eventual_readyqtvc.smt2",
+        "sha256": "27a191e3fe8a366a7445974ee622d9fdc5b3bdf8f58c1ebe7c27fae931690421",
+        "bytes": 1209,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why_e54062_readiness_rank-T-eventual_readyqtvc.smt2",
+        "sha256": "71bbcf83d755b83ae8dac10aadecfed19023a7cced349a9949301e203dd53990",
+        "bytes": 1025,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why_f6a3ab_readiness_rank-T-eventual_readyqtvc.smt2",
+        "sha256": "20d6c284463b5c3303a6aa3bf06383c0adbb434af0979d88acd200b9bcc5698a",
+        "bytes": 1034,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/modules.json",
+        "sha256": "d16db47b423ec4ad5aa3fd7d4b8ef97701e49c33d4cf6f450fa06167edb52a8f",
+        "bytes": 26290,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/progress.json",
+        "sha256": "d6bb5aca072dc6d1be45bed4cd9cc49cfaa57a81f225cf740b715b0caef6d7b1",
+        "bytes": 9444,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/result.json",
+        "sha256": "b33181c16b46beba3bcbc80135a8b7fd84485abdcb947372e4c2f12ce7c287d7",
+        "bytes": 39729,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/source-checks.json",
+        "sha256": "4186bf069a868dce0a0c1ec02d142b76ba9d1d198b9dbb796ac56a4335221dd9",
+        "bytes": 1642,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/sources/delay_family.mlw",
+        "sha256": "d99660f76ad8469960f81491c7df4bfa974abc1133a61d32e9081fe0f60895f6",
+        "bytes": 809,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/sources/no_progress.mlw",
+        "sha256": "b80c777054a450f781351130baf91e9c0fdb37a4a59e5453e857921b9b85f465",
+        "bytes": 686,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/sources/readiness_rank.mlw",
+        "sha256": "44eb843146e57495579fed4a118df67bcc3858560dd381db62498a65055b150c",
+        "bytes": 752,
+        "scope": "entry artifacts"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/emission.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "scope": "call output"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/emission.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "scope": "call output"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/results.stdout",
+        "sha256": "98d5b75c1ab62e4a5ca1295a81841db4d59b71b63ef27b4f790943cfd1b17745",
+        "bytes": 2214,
+        "scope": "call output"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/results.stderr",
+        "sha256": "507ef4f31a7b56fc8671c477a77026d1385fc29ef7cf02407511048b24752068",
+        "bytes": 6386,
+        "scope": "call output"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/emission.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "scope": "call output"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/emission.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "scope": "call output"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/results.stdout",
+        "sha256": "024fae4eb9410cfc0429a5e8234fe9073a10387acd0ea534e38cc573b8cfa8dd",
+        "bytes": 1863,
+        "scope": "call output"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/results.stderr",
+        "sha256": "52bbc5e5e49acb8eb74709b55402039f40172cecd7ae56d3bf0f4a461212fc52",
+        "bytes": 4714,
+        "scope": "call output"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AllFalseCounterexample/emission.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "scope": "call output"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AllFalseCounterexample/emission.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "scope": "call output"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AllFalseCounterexample/results.stdout",
+        "sha256": "636f2753029f98c5377cecbc908792f0084fa3e0beadeebe56231cf1e59799bd",
+        "bytes": 452,
+        "scope": "call output"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AllFalseCounterexample/results.stderr",
+        "sha256": "a4a4effe1580de188332b7655bbf955ceb767b850540c07680718039401e8fac",
+        "bytes": 919,
+        "scope": "call output"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AbsentPremiseNegative/emission.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "scope": "call output"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AbsentPremiseNegative/emission.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "scope": "call output"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AbsentPremiseNegative/results.stdout",
+        "sha256": "d0f2c2acf5a2dd0d5ad44c14dc1ab7c813081b9d191af297942e455ed64ad07c",
+        "bytes": 447,
+        "scope": "call output"
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AbsentPremiseNegative/results.stderr",
+        "sha256": "a850e0db08889dbd4f618acb314a27602dca0fc298c22807c0073fcc335b9eae",
+        "bytes": 910,
+        "scope": "call output"
+      }
+    ],
+    "stdlib_tree_count": 57,
+    "drivers_tree_count": 93,
+    "guard_psutil_tree_count": 11,
+    "settled_raw_files": 61,
+    "settled_raw_bytes": 136449,
+    "settled_raw_inventory": [
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AbsentPremiseNegative/emission.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AbsentPremiseNegative/emission.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AbsentPremiseNegative/results.stderr",
+        "sha256": "a850e0db08889dbd4f618acb314a27602dca0fc298c22807c0073fcc335b9eae",
+        "bytes": 910
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AbsentPremiseNegative/results.stdout",
+        "sha256": "d0f2c2acf5a2dd0d5ad44c14dc1ab7c813081b9d191af297942e455ed64ad07c",
+        "bytes": 447
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AbsentPremiseNegative/tasks/no_progress-AbsentPremiseNegative-eventual_ready_without_progress.smt2",
+        "sha256": "0c235270130b63bc9a28cdb53d1787bdb96cce0d99f51f76eeaec845f8ae1b55",
+        "bytes": 445
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AbsentPremiseNegative/tmp/why3hu52A8",
+        "sha256": "c16e83bfe03790b301112b8d2cd8995e38aa3d0437910ee4234f1c4987f039d8",
+        "bytes": 124
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AbsentPremiseNegative/tmp/why_11a8d9_no_progress-T-eventual_ready_without_progress.smt2",
+        "sha256": "0c235270130b63bc9a28cdb53d1787bdb96cce0d99f51f76eeaec845f8ae1b55",
+        "bytes": 445
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AllFalseCounterexample/emission.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AllFalseCounterexample/emission.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AllFalseCounterexample/results.stderr",
+        "sha256": "a4a4effe1580de188332b7655bbf955ceb767b850540c07680718039401e8fac",
+        "bytes": 919
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AllFalseCounterexample/results.stdout",
+        "sha256": "636f2753029f98c5377cecbc908792f0084fa3e0beadeebe56231cf1e59799bd",
+        "bytes": 452
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AllFalseCounterexample/tasks/no_progress-AllFalseCounterexample-all_false_has_no_future_readyqtvc.smt2",
+        "sha256": "07eb9383df42c6f43421a7afaa56797d04e3265e200e6f71c08497a4705c580e",
+        "bytes": 452
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AllFalseCounterexample/tmp/why3yS0NBz",
+        "sha256": "2cfd40893a6085335cfd52d75699ae2a0bc58a32bfeb4204d7bf7d9301bbef07",
+        "bytes": 126
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/AllFalseCounterexample/tmp/why_f4ff51_no_progress-T-all_false_has_no_future_readyqtvc.smt2",
+        "sha256": "07eb9383df42c6f43421a7afaa56797d04e3265e200e6f71c08497a4705c580e",
+        "bytes": 452
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/emission.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/emission.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/results.stderr",
+        "sha256": "52bbc5e5e49acb8eb74709b55402039f40172cecd7ae56d3bf0f4a461212fc52",
+        "bytes": 4714
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/results.stdout",
+        "sha256": "024fae4eb9410cfc0429a5e8234fe9073a10387acd0ea534e38cc573b8cfa8dd",
+        "bytes": 1863
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tasks/delay_family-ArbitraryFiniteDelay-consistency_for_every_nonnegative_delayqtvc.smt2",
+        "sha256": "8364ee1b34e96da7682c21a4b90c7313fba80a01a756853204c37b26c0577a30",
+        "bytes": 615
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tasks/delay_family-ArbitraryFiniteDelay-consistency_for_every_nonnegative_delayqtvc1.smt2",
+        "sha256": "4436a254c1e92c2fa261218474679e62407fef161d2559f9032e320f22e60277",
+        "bytes": 880
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tasks/delay_family-ArbitraryFiniteDelay-consistency_for_every_nonnegative_delayqtvc2.smt2",
+        "sha256": "022e0480d12b3d9b74fb548cd35b0e9d1d8ff9980a43b7cba0e672c65330be4a",
+        "bytes": 1028
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tasks/delay_family-ArbitraryFiniteDelay-consistency_for_every_nonnegative_delayqtvc3.smt2",
+        "sha256": "ef26195de2f4f59951774d45c2bcfb0b627efc2f12e7a67da163dfe774f7f0a4",
+        "bytes": 1046
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why35eWUir",
+        "sha256": "79e29ff55bb906e32103092d0517176f307e147faf7f833ecee8f72abae8f937",
+        "bytes": 508
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why35tL2ZT",
+        "sha256": "191f39bdf9bbb92c03e1d2aa2881c979aef3b33c48dbe60ef1403b67685e8c24",
+        "bytes": 127
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why3YPOiur",
+        "sha256": "e8f762d16a82f733553a991f7987c24fcea49cdce0db2483954a915398d7dec1",
+        "bytes": 127
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why3ZY04TH",
+        "sha256": "9cf50c72ad6e3c49cd681a97b248c39b00c3ab01225daaf928e0a3b88f95afd5",
+        "bytes": 708
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why_28e896_delay_family-T-consistency_for_every_nonnegative_delayqtvc.smt2",
+        "sha256": "022e0480d12b3d9b74fb548cd35b0e9d1d8ff9980a43b7cba0e672c65330be4a",
+        "bytes": 1028
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why_3f5e2f_delay_family-T-consistency_for_every_nonnegative_delayqtvc.smt2",
+        "sha256": "ef26195de2f4f59951774d45c2bcfb0b627efc2f12e7a67da163dfe774f7f0a4",
+        "bytes": 1046
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why_9cc1b1_delay_family-T-consistency_for_every_nonnegative_delayqtvc.smt2",
+        "sha256": "8364ee1b34e96da7682c21a4b90c7313fba80a01a756853204c37b26c0577a30",
+        "bytes": 615
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ArbitraryFiniteDelay/tmp/why_ba6034_delay_family-T-consistency_for_every_nonnegative_delayqtvc.smt2",
+        "sha256": "4436a254c1e92c2fa261218474679e62407fef161d2559f9032e320f22e60277",
+        "bytes": 880
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/emission.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/emission.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/results.stderr",
+        "sha256": "507ef4f31a7b56fc8671c477a77026d1385fc29ef7cf02407511048b24752068",
+        "bytes": 6386
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/results.stdout",
+        "sha256": "98d5b75c1ab62e4a5ca1295a81841db4d59b71b63ef27b4f790943cfd1b17745",
+        "bytes": 2214
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tasks/readiness_rank-ConditionalReadiness-eventual_readyqtvc.smt2",
+        "sha256": "5a577a9d82d9f07e774c47710fc851a6ae3240d3bab57669b18763bdd89c0d13",
+        "bytes": 910
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tasks/readiness_rank-ConditionalReadiness-eventual_readyqtvc1.smt2",
+        "sha256": "71bbcf83d755b83ae8dac10aadecfed19023a7cced349a9949301e203dd53990",
+        "bytes": 1025
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tasks/readiness_rank-ConditionalReadiness-eventual_readyqtvc2.smt2",
+        "sha256": "20d6c284463b5c3303a6aa3bf06383c0adbb434af0979d88acd200b9bcc5698a",
+        "bytes": 1034
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tasks/readiness_rank-ConditionalReadiness-eventual_readyqtvc3.smt2",
+        "sha256": "27a191e3fe8a366a7445974ee622d9fdc5b3bdf8f58c1ebe7c27fae931690421",
+        "bytes": 1209
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tasks/readiness_rank-ConditionalReadiness-eventual_readyqtvc4.smt2",
+        "sha256": "7beafa419f21e7f28b338f6da7f5c1beb8d69d3c4ddd5333622625fac12172f2",
+        "bytes": 1164
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why31xtWmZ",
+        "sha256": "1d750d14322cf9bd1789c0affdcb7650e995c915e8db0709141bdf0787d9656f",
+        "bytes": 656
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why3Q3wSfO",
+        "sha256": "78b624a01d1b9398d6da9fdc8ec5e30dea2bc3ae142ee8aef2128174796390de",
+        "bytes": 529
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why3R1GYUg",
+        "sha256": "5f2b8f9d0a5930ca613c9b4a865e41ef4b4b93953cbd06acbbb33b99cbd08d7c",
+        "bytes": 481
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why3WdbFZK",
+        "sha256": "734f18982b8f2b2a12d46a4f1805107eb7885526ab873a9809a33a7c649ee681",
+        "bytes": 482
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why3qG2VLX",
+        "sha256": "a9794b0b615b3110878bfa0a3b0fd3ac4e34b6ecc282043160d64ef94dfb43f5",
+        "bytes": 413
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why_4cb41d_readiness_rank-T-eventual_readyqtvc.smt2",
+        "sha256": "7beafa419f21e7f28b338f6da7f5c1beb8d69d3c4ddd5333622625fac12172f2",
+        "bytes": 1164
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why_6130fa_readiness_rank-T-eventual_readyqtvc.smt2",
+        "sha256": "5a577a9d82d9f07e774c47710fc851a6ae3240d3bab57669b18763bdd89c0d13",
+        "bytes": 910
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why_9e995f_readiness_rank-T-eventual_readyqtvc.smt2",
+        "sha256": "27a191e3fe8a366a7445974ee622d9fdc5b3bdf8f58c1ebe7c27fae931690421",
+        "bytes": 1209
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why_e54062_readiness_rank-T-eventual_readyqtvc.smt2",
+        "sha256": "71bbcf83d755b83ae8dac10aadecfed19023a7cced349a9949301e203dd53990",
+        "bytes": 1025
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/ConditionalReadiness/tmp/why_f6a3ab_readiness_rank-T-eventual_readyqtvc.smt2",
+        "sha256": "20d6c284463b5c3303a6aa3bf06383c0adbb434af0979d88acd200b9bcc5698a",
+        "bytes": 1034
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/artifacts.json",
+        "sha256": "e2ce73b1bb1ba6596c04e8ad068909d7f178693d2420633797f734a0d208821d",
+        "bytes": 11194
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/modules.json",
+        "sha256": "d16db47b423ec4ad5aa3fd7d4b8ef97701e49c33d4cf6f450fa06167edb52a8f",
+        "bytes": 26290
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/progress.json",
+        "sha256": "d6bb5aca072dc6d1be45bed4cd9cc49cfaa57a81f225cf740b715b0caef6d7b1",
+        "bytes": 9444
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/result.json",
+        "sha256": "b33181c16b46beba3bcbc80135a8b7fd84485abdcb947372e4c2f12ce7c287d7",
+        "bytes": 39729
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/source-checks.json",
+        "sha256": "4186bf069a868dce0a0c1ec02d142b76ba9d1d198b9dbb796ac56a4335221dd9",
+        "bytes": 1642
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/sources/delay_family.mlw",
+        "sha256": "d99660f76ad8469960f81491c7df4bfa974abc1133a61d32e9081fe0f60895f6",
+        "bytes": 809
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/sources/no_progress.mlw",
+        "sha256": "b80c777054a450f781351130baf91e9c0fdb37a4a59e5453e857921b9b85f465",
+        "bytes": 686
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component/sources/readiness_rank.mlw",
+        "sha256": "44eb843146e57495579fed4a118df67bcc3858560dd381db62498a65055b150c",
+        "bytes": 752
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/guard.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/guard.log.summary.json",
+        "sha256": "18dfa0158ee47e847dfeb0e7debb2d460f0b9347f3cd62edfecb979b3d83927a",
+        "bytes": 1939
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/guard.log.wait.json",
+        "sha256": "9ddcf43691a9c14c15125ec90e57f2b85ea4da19aed3fd85a326ff1960cbec54",
+        "bytes": 273
+      },
+      {
+        "path": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/root-driver.log",
+        "sha256": "24aa0da3e43451a7260c6882a04afe15bcf2f9d7b003e211bff4e7e605631815",
+        "bytes": 1889
+      }
+    ]
+  },
+  "reviewer_no_actual_tool_or_ssh_calls": true
+}

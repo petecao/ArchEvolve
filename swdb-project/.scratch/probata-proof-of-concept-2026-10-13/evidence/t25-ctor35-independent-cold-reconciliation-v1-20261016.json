@@ -1,0 +1,871 @@
+{
+  "acceptance": {
+    "body_promotion": false,
+    "caller": false,
+    "model": false,
+    "original_v2": false,
+    "ticket": false
+  },
+  "actual_submission_count": null,
+  "census": {
+    "actual_record_goal_multiset_equal": true,
+    "inventory_only_ordinary": 2,
+    "math_targets": 34,
+    "native_report_rows": 43,
+    "native_report_verdicts": {
+      "timeout": 1,
+      "valid": 42
+    },
+    "normalized_ordinary": 44,
+    "normalized_smoke": 1,
+    "numeric_targets": 1,
+    "producer_derived_census_reconciled": true,
+    "scope": "Raw native reports, complete generated inventory and persisted normalized goals are reconciled as distinct observations. No claim that all normalized goals are directly listed Valid in the native JSON; no project reader execution, smoke satisfiability theorem, task-closure or model acceptance.",
+    "targets": 35
+  },
+  "executed": {
+    "compiler_native_formal_prover_or_SSH": false,
+    "controls_or_tests": false,
+    "project_import": false,
+    "reader_or_helpers": false
+  },
+  "hypothesis_metadata": {
+    "distinct_support_hashes": 131,
+    "materialized_tasks": 102,
+    "new_Cint_source_hashes": 77,
+    "non_goal_assertion_instances": 4502,
+    "primary_family_instances": {
+      "generated datatype encoding": 544,
+      "generic constant-map definition": 82,
+      "trusted selected standard C integer conversion/Boolean support": 724,
+      "trusted standard arithmetic": 3152
+    }
+  },
+  "limits": [
+    "Local retained JSON/hash/source inspection only; no remote physical rehash or reader replay.",
+    "Exact qualifiedv3 constructor source-VC evidence only, arbitrary well-formed incoming heap and explicit typed-int image. Six independent full-A postcondition leaves, no sibling assumptions; original whole reference not launched.",
+    "42 direct nativeValid plus1 rawTimeout smoke differs from44 normalized ordinary+1smoke; two CFG ordinary rows are inventory-only. Smoke healthy nonvalid attempts are not directValid or consistency theorem.",
+    "Materialized102 files are not submissions; actual typed AST/translation/solver submission correspondence remains explicit selected TCB.",
+    "No fullmodel/C++body/caller/original-v2/ticket promotion; root scoped decision remains separate."
+  ],
+  "local_standard_import_source_pins": [
+    {
+      "local_path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/algebra.mlw",
+      "module": "algebra.Assoc",
+      "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4",
+      "source_propositions": [
+        {
+          "kind": "axiom",
+          "name": "Assoc"
+        }
+      ]
+    },
+    {
+      "local_path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/algebra.mlw",
+      "module": "algebra.Comm",
+      "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4",
+      "source_propositions": [
+        {
+          "kind": "axiom",
+          "name": "Comm"
+        }
+      ]
+    },
+    {
+      "local_path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/algebra.mlw",
+      "module": "algebra.CommutativeGroup",
+      "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4",
+      "source_propositions": []
+    },
+    {
+      "local_path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/algebra.mlw",
+      "module": "algebra.CommutativeRing",
+      "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4",
+      "source_propositions": []
+    },
+    {
+      "local_path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/algebra.mlw",
+      "module": "algebra.Field",
+      "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4",
+      "source_propositions": [
+        {
+          "kind": "axiom",
+          "name": "Inverse"
+        },
+        {
+          "kind": "lemma",
+          "name": "add_div"
+        },
+        {
+          "kind": "lemma",
+          "name": "sub_div"
+        },
+        {
+          "kind": "lemma",
+          "name": "neg_div"
+        },
+        {
+          "kind": "lemma",
+          "name": "assoc_mul_div"
+        },
+        {
+          "kind": "lemma",
+          "name": "assoc_div_mul"
+        },
+        {
+          "kind": "lemma",
+          "name": "assoc_div_div"
+        }
+      ]
+    },
+    {
+      "local_path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/algebra.mlw",
+      "module": "algebra.Group",
+      "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4",
+      "source_propositions": [
+        {
+          "kind": "axiom",
+          "name": "Inv_def_l"
+        },
+        {
+          "kind": "axiom",
+          "name": "Inv_def_r"
+        }
+      ]
+    },
+    {
+      "local_path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/algebra.mlw",
+      "module": "algebra.Monoid",
+      "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4",
+      "source_propositions": [
+        {
+          "kind": "axiom",
+          "name": "Unit_def_l"
+        },
+        {
+          "kind": "axiom",
+          "name": "Unit_def_r"
+        }
+      ]
+    },
+    {
+      "local_path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/algebra.mlw",
+      "module": "algebra.OrderedField",
+      "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4",
+      "source_propositions": [
+        {
+          "kind": "axiom",
+          "name": "ZeroLessOne"
+        },
+        {
+          "kind": "axiom",
+          "name": "CompatOrderAdd"
+        },
+        {
+          "kind": "axiom",
+          "name": "CompatOrderMult"
+        }
+      ]
+    },
+    {
+      "local_path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/algebra.mlw",
+      "module": "algebra.OrderedUnitaryCommutativeRing",
+      "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4",
+      "source_propositions": [
+        {
+          "kind": "axiom",
+          "name": "ZeroLessOne"
+        },
+        {
+          "kind": "axiom",
+          "name": "CompatOrderAdd"
+        },
+        {
+          "kind": "axiom",
+          "name": "CompatOrderMult"
+        }
+      ]
+    },
+    {
+      "local_path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/algebra.mlw",
+      "module": "algebra.Ring",
+      "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4",
+      "source_propositions": [
+        {
+          "kind": "axiom",
+          "name": "Mul_distr_l"
+        },
+        {
+          "kind": "axiom",
+          "name": "Mul_distr_r"
+        }
+      ]
+    },
+    {
+      "local_path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/algebra.mlw",
+      "module": "algebra.UnitaryCommutativeRing",
+      "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4",
+      "source_propositions": [
+        {
+          "kind": "axiom",
+          "name": "Unitary"
+        },
+        {
+          "kind": "axiom",
+          "name": "NonTrivialRing"
+        }
+      ]
+    },
+    {
+      "local_path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/bool.mlw",
+      "module": "bool.Bool",
+      "sha256": "b7072fdd8dd5004d0627b82a66b054518ee54eb4dd66f0883988e363bed251fa",
+      "source_propositions": []
+    },
+    {
+      "local_path": "/Users/yanrujhou/.opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/cint.mlw",
+      "module": "frama_c_wp.cint.Cint",
+      "sha256": "34165df36963929dc7fc2d06e7609434fddc43924af5a9979e78d89b9c5b989e",
+      "source_propositions": [
+        {
+          "kind": "lemma",
+          "name": "is_bool0"
+        },
+        {
+          "kind": "lemma",
+          "name": "is_bool1"
+        },
+        {
+          "kind": "lemma",
+          "name": "is_to_uint8"
+        },
+        {
+          "kind": "lemma",
+          "name": "is_to_sint8"
+        },
+        {
+          "kind": "lemma",
+          "name": "is_to_uint16"
+        },
+        {
+          "kind": "lemma",
+          "name": "is_to_sint16"
+        },
+        {
+          "kind": "lemma",
+          "name": "is_to_uint32"
+        },
+        {
+          "kind": "lemma",
+          "name": "is_to_sint32"
+        },
+        {
+          "kind": "lemma",
+          "name": "is_to_uint64"
+        },
+        {
+          "kind": "lemma",
+          "name": "is_to_sint64"
+        },
+        {
+          "kind": "lemma",
+          "name": "is_to_uint128"
+        },
+        {
+          "kind": "lemma",
+          "name": "is_to_sint128"
+        },
+        {
+          "kind": "lemma",
+          "name": "id_uint8"
+        },
+        {
+          "kind": "lemma",
+          "name": "id_sint8"
+        },
+        {
+          "kind": "lemma",
+          "name": "id_uint16"
+        },
+        {
+          "kind": "lemma",
+          "name": "id_sint16"
+        },
+        {
+          "kind": "lemma",
+          "name": "id_uint32"
+        },
+        {
+          "kind": "lemma",
+          "name": "id_sint32"
+        },
+        {
+          "kind": "lemma",
+          "name": "id_uint64"
+        },
+        {
+          "kind": "lemma",
+          "name": "id_sint64"
+        },
+        {
+          "kind": "lemma",
+          "name": "id_uint128"
+        },
+        {
+          "kind": "lemma",
+          "name": "id_sint128"
+        },
+        {
+          "kind": "lemma",
+          "name": "id_uint8_inl"
+        },
+        {
+          "kind": "lemma",
+          "name": "id_sint8_inl"
+        },
+        {
+          "kind": "lemma",
+          "name": "id_uint16_inl"
+        },
+        {
+          "kind": "lemma",
+          "name": "id_sint16_inl"
+        },
+        {
+          "kind": "lemma",
+          "name": "id_uint32_inl"
+        },
+        {
+          "kind": "lemma",
+          "name": "id_sint32_inl"
+        },
+        {
+          "kind": "lemma",
+          "name": "id_uint64_inl"
+        },
+        {
+          "kind": "lemma",
+          "name": "id_sint64_inl"
+        },
+        {
+          "kind": "lemma",
+          "name": "id_uint128_inl"
+        },
+        {
+          "kind": "lemma",
+          "name": "id_sint128_inl"
+        },
+        {
+          "kind": "lemma",
+          "name": "proj_int8"
+        },
+        {
+          "kind": "lemma",
+          "name": "proj_int16"
+        },
+        {
+          "kind": "lemma",
+          "name": "proj_int32"
+        },
+        {
+          "kind": "lemma",
+          "name": "proj_int64"
+        },
+        {
+          "kind": "lemma",
+          "name": "proj_int128"
+        }
+      ]
+    },
+    {
+      "local_path": "/Users/yanrujhou/.opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/qed.mlw",
+      "module": "frama_c_wp.qed.Qed",
+      "sha256": "54d50c3e40ea87b2bb0fd7195341c6c8bfc5ebcf300cb7b18752fae28e622efe",
+      "source_propositions": [
+        {
+          "kind": "lemma",
+          "name": "c_euclidian"
+        },
+        {
+          "kind": "lemma",
+          "name": "cmod_remainder"
+        },
+        {
+          "kind": "lemma",
+          "name": "cdiv_neutral"
+        },
+        {
+          "kind": "lemma",
+          "name": "cdiv_inv"
+        },
+        {
+          "kind": "lemma",
+          "name": "cdiv_closed_remainder"
+        }
+      ]
+    },
+    {
+      "local_path": "/private/tmp/probata-t25-ctor35-preparer-only-v2-6216fc94-20261016/canonical/theory/heap_reallocation.mlw",
+      "module": "heap_reallocation.Heap",
+      "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+      "source_propositions": []
+    },
+    {
+      "local_path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/int.mlw",
+      "module": "int.Abs",
+      "sha256": "eb5bc9d4a46e1b6a298d24fd36dcf9dfb8f35cbc75b2f44007cfe1a24550ce8d",
+      "source_propositions": [
+        {
+          "kind": "lemma",
+          "name": "Abs_le"
+        },
+        {
+          "kind": "lemma",
+          "name": "Abs_pos"
+        }
+      ]
+    },
+    {
+      "local_path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/int.mlw",
+      "module": "int.ComputerDivision",
+      "sha256": "eb5bc9d4a46e1b6a298d24fd36dcf9dfb8f35cbc75b2f44007cfe1a24550ce8d",
+      "source_propositions": [
+        {
+          "kind": "axiom",
+          "name": "Div_mod"
+        },
+        {
+          "kind": "axiom",
+          "name": "Div_bound"
+        },
+        {
+          "kind": "axiom",
+          "name": "Mod_bound"
+        },
+        {
+          "kind": "axiom",
+          "name": "Div_sign_pos"
+        },
+        {
+          "kind": "axiom",
+          "name": "Div_sign_neg"
+        },
+        {
+          "kind": "axiom",
+          "name": "Mod_sign_pos"
+        },
+        {
+          "kind": "axiom",
+          "name": "Mod_sign_neg"
+        },
+        {
+          "kind": "lemma",
+          "name": "Rounds_toward_zero"
+        },
+        {
+          "kind": "lemma",
+          "name": "Div_1"
+        },
+        {
+          "kind": "lemma",
+          "name": "Mod_1"
+        },
+        {
+          "kind": "lemma",
+          "name": "Div_inf"
+        },
+        {
+          "kind": "lemma",
+          "name": "Mod_inf"
+        },
+        {
+          "kind": "lemma",
+          "name": "Div_mult"
+        },
+        {
+          "kind": "lemma",
+          "name": "Mod_mult"
+        }
+      ]
+    },
+    {
+      "local_path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/int.mlw",
+      "module": "int.Int",
+      "sha256": "eb5bc9d4a46e1b6a298d24fd36dcf9dfb8f35cbc75b2f44007cfe1a24550ce8d",
+      "source_propositions": []
+    },
+    {
+      "local_path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/map.mlw",
+      "module": "map.Map",
+      "sha256": "c4cd7b90e39f8407fd714d0e46ce4c6496a98afd32bd69c71237b35a4b7c08a0",
+      "source_propositions": []
+    },
+    {
+      "local_path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/real.mlw",
+      "module": "real.FromInt",
+      "sha256": "50940038bba54f6bd57501e5af6439af8c4f081274eb79a19d888a4cd419b8a2",
+      "source_propositions": [
+        {
+          "kind": "axiom",
+          "name": "Zero"
+        },
+        {
+          "kind": "axiom",
+          "name": "One"
+        },
+        {
+          "kind": "axiom",
+          "name": "Add"
+        },
+        {
+          "kind": "axiom",
+          "name": "Sub"
+        },
+        {
+          "kind": "axiom",
+          "name": "Mul"
+        },
+        {
+          "kind": "axiom",
+          "name": "Neg"
+        },
+        {
+          "kind": "lemma",
+          "name": "Injective"
+        },
+        {
+          "kind": "axiom",
+          "name": "Monotonic"
+        }
+      ]
+    },
+    {
+      "local_path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/real.mlw",
+      "module": "real.Real",
+      "sha256": "50940038bba54f6bd57501e5af6439af8c4f081274eb79a19d888a4cd419b8a2",
+      "source_propositions": []
+    },
+    {
+      "local_path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/real.mlw",
+      "module": "real.RealInfix",
+      "sha256": "50940038bba54f6bd57501e5af6439af8c4f081274eb79a19d888a4cd419b8a2",
+      "source_propositions": []
+    },
+    {
+      "local_path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/relations.mlw",
+      "module": "relations.Antisymmetric",
+      "sha256": "0a367aecd2cd627de87d5f4011ddbf930bf49283e0b94b792a338faf921b2cae",
+      "source_propositions": [
+        {
+          "kind": "axiom",
+          "name": "Antisymm"
+        }
+      ]
+    },
+    {
+      "local_path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/relations.mlw",
+      "module": "relations.EndoRelation",
+      "sha256": "0a367aecd2cd627de87d5f4011ddbf930bf49283e0b94b792a338faf921b2cae",
+      "source_propositions": []
+    },
+    {
+      "local_path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/relations.mlw",
+      "module": "relations.PartialOrder",
+      "sha256": "0a367aecd2cd627de87d5f4011ddbf930bf49283e0b94b792a338faf921b2cae",
+      "source_propositions": []
+    },
+    {
+      "local_path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/relations.mlw",
+      "module": "relations.PreOrder",
+      "sha256": "0a367aecd2cd627de87d5f4011ddbf930bf49283e0b94b792a338faf921b2cae",
+      "source_propositions": []
+    },
+    {
+      "local_path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/relations.mlw",
+      "module": "relations.Reflexive",
+      "sha256": "0a367aecd2cd627de87d5f4011ddbf930bf49283e0b94b792a338faf921b2cae",
+      "source_propositions": [
+        {
+          "kind": "axiom",
+          "name": "Refl"
+        }
+      ]
+    },
+    {
+      "local_path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/relations.mlw",
+      "module": "relations.Total",
+      "sha256": "0a367aecd2cd627de87d5f4011ddbf930bf49283e0b94b792a338faf921b2cae",
+      "source_propositions": [
+        {
+          "kind": "axiom",
+          "name": "Total"
+        }
+      ]
+    },
+    {
+      "local_path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/relations.mlw",
+      "module": "relations.TotalOrder",
+      "sha256": "0a367aecd2cd627de87d5f4011ddbf930bf49283e0b94b792a338faf921b2cae",
+      "source_propositions": []
+    },
+    {
+      "local_path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/relations.mlw",
+      "module": "relations.Transitive",
+      "sha256": "0a367aecd2cd627de87d5f4011ddbf930bf49283e0b94b792a338faf921b2cae",
+      "source_propositions": [
+        {
+          "kind": "axiom",
+          "name": "Trans"
+        }
+      ]
+    }
+  ],
+  "matched_inputs": [
+    {
+      "bytes": 48158,
+      "path": "/private/tmp/probata-t25-ctor35-cold-reader-v5-20261016.py",
+      "sha256": "99ddec8aa60f661082378e39fa55bd0200924d3d79252267ee0665ea6d44ea1f"
+    },
+    {
+      "bytes": 466530,
+      "path": "/private/tmp/probata-t25-ctor35-cold-policy-v1-20261016.json",
+      "sha256": "6ba4a6308b82352dab30f6a4083707789da2fd4b481bf867dd94e176642f6cd2"
+    },
+    {
+      "bytes": 5079265,
+      "path": "/private/tmp/probata-root-ctor35-metadata-execution-v2-20261016.json",
+      "sha256": "75c6a8ed4c3864ecaf4eb3ccb935a1be4f3d5ea210a6b6f8b0cf777bd98cab3f"
+    },
+    {
+      "bytes": 6978,
+      "path": "/private/tmp/probata-t25-ctor35-cold-plan-v1-20261016.json",
+      "sha256": "2112ee40fd21152f3f54eb303ebe46238301338e6fe24fcfe4eab2a6a9479164"
+    }
+  ],
+  "numeric": {
+    "CSV_rows": 11,
+    "dependency_edges": 24,
+    "id": "ctor.numeric",
+    "properties": 13,
+    "reconciliation": {
+      "generated_goals": 11,
+      "goals": [
+        {
+          "function": "t25v3_ctor_numeric",
+          "goal": "typed_real_t25v3_ctor_numeric_wp_smoke_default_requires",
+          "inventory_passed": true,
+          "inventory_results": [
+            "timeout",
+            "unknown",
+            "timeout"
+          ],
+          "native_passed": true,
+          "native_report_present": true,
+          "native_verdict": "timeout",
+          "normalized_source": "wp_json",
+          "normalized_status": "valid",
+          "property": "t25v3_ctor_numeric_wp_smoke_default_requires",
+          "provenance": "passed_healthy_nonvalid_smoke",
+          "smoke": true
+        },
+        {
+          "function": "t25v3_ctor_numeric",
+          "goal": "typed_real_t25v3_ctor_numeric_terminates",
+          "inventory_passed": true,
+          "inventory_results": [
+            "valid"
+          ],
+          "native_passed": null,
+          "native_report_present": false,
+          "native_verdict": null,
+          "normalized_source": "wp_inventory",
+          "normalized_status": "valid",
+          "property": "t25v3_ctor_numeric_terminates",
+          "provenance": "passed_native_inventory_only",
+          "smoke": false
+        },
+        {
+          "function": "t25v3_ctor_numeric",
+          "goal": "typed_real_t25v3_ctor_numeric_ensures",
+          "inventory_passed": true,
+          "inventory_results": [
+            "valid"
+          ],
+          "native_passed": true,
+          "native_report_present": true,
+          "native_verdict": "valid",
+          "normalized_source": "wp_json",
+          "normalized_status": "valid",
+          "property": "t25v3_ctor_numeric_ensures",
+          "provenance": "direct_native_valid",
+          "smoke": false
+        },
+        {
+          "function": "t25v3_ctor_numeric",
+          "goal": "typed_real_t25v3_ctor_numeric_exits",
+          "inventory_passed": true,
+          "inventory_results": [
+            "valid"
+          ],
+          "native_passed": null,
+          "native_report_present": false,
+          "native_verdict": null,
+          "normalized_source": "wp_inventory",
+          "normalized_status": "valid",
+          "property": "t25v3_ctor_numeric_exits",
+          "provenance": "passed_native_inventory_only",
+          "smoke": false
+        },
+        {
+          "function": "t25v3_ctor_numeric",
+          "goal": "typed_real_t25v3_ctor_numeric_assert_allocation_size_no_wrap",
+          "inventory_passed": true,
+          "inventory_results": [
+            "valid"
+          ],
+          "native_passed": true,
+          "native_report_present": true,
+          "native_verdict": "valid",
+          "normalized_source": "wp_json",
+          "normalized_status": "valid",
+          "property": "t25v3_ctor_numeric_assert_allocation_size_no_wrap",
+          "provenance": "direct_native_valid",
+          "smoke": false
+        },
+        {
+          "function": "t25v3_ctor_numeric",
+          "goal": "typed_real_t25v3_ctor_numeric_assert_allocation_size_exact",
+          "inventory_passed": true,
+          "inventory_results": [
+            "valid"
+          ],
+          "native_passed": true,
+          "native_report_present": true,
+          "native_verdict": "valid",
+          "normalized_source": "wp_json",
+          "normalized_status": "valid",
+          "property": "t25v3_ctor_numeric_assert_allocation_size_exact",
+          "provenance": "direct_native_valid",
+          "smoke": false
+        },
+        {
+          "function": "t25v3_ctor_numeric",
+          "goal": "typed_real_t25v3_ctor_numeric_assert_scaled_index_in_range",
+          "inventory_passed": true,
+          "inventory_results": [
+            "valid"
+          ],
+          "native_passed": true,
+          "native_report_present": true,
+          "native_verdict": "valid",
+          "normalized_source": "wp_json",
+          "normalized_status": "valid",
+          "property": "t25v3_ctor_numeric_assert_scaled_index_in_range",
+          "provenance": "direct_native_valid",
+          "smoke": false
+        },
+        {
+          "function": "t25v3_ctor_numeric",
+          "goal": "typed_real_t25v3_ctor_numeric_assert_variant_nonnegative",
+          "inventory_passed": true,
+          "inventory_results": [
+            "valid"
+          ],
+          "native_passed": true,
+          "native_report_present": true,
+          "native_verdict": "valid",
+          "normalized_source": "wp_json",
+          "normalized_status": "valid",
+          "property": "t25v3_ctor_numeric_assert_variant_nonnegative",
+          "provenance": "direct_native_valid",
+          "smoke": false
+        },
+        {
+          "function": "t25v3_ctor_numeric",
+          "goal": "typed_real_t25v3_ctor_numeric_assert_variant_decreases",
+          "inventory_passed": true,
+          "inventory_results": [
+            "valid"
+          ],
+          "native_passed": true,
+          "native_report_present": true,
+          "native_verdict": "valid",
+          "normalized_source": "wp_json",
+          "normalized_status": "valid",
+          "property": "t25v3_ctor_numeric_assert_variant_decreases",
+          "provenance": "direct_native_valid",
+          "smoke": false
+        },
+        {
+          "function": "t25v3_ctor_numeric",
+          "goal": "typed_real_t25v3_ctor_numeric_assert_rte_initialization",
+          "inventory_passed": true,
+          "inventory_results": [
+            "valid"
+          ],
+          "native_passed": true,
+          "native_report_present": true,
+          "native_verdict": "valid",
+          "normalized_source": "wp_json",
+          "normalized_status": "valid",
+          "property": "t25v3_ctor_numeric_assert_rte_initialization",
+          "provenance": "direct_native_valid",
+          "smoke": false
+        },
+        {
+          "function": "t25v3_ctor_numeric",
+          "goal": "typed_real_t25v3_ctor_numeric_assigns",
+          "inventory_passed": true,
+          "inventory_results": [
+            "valid"
+          ],
+          "native_passed": true,
+          "native_report_present": true,
+          "native_verdict": "valid",
+          "normalized_source": "wp_json",
+          "normalized_status": "valid",
+          "property": "t25v3_ctor_numeric_assigns",
+          "provenance": "direct_native_valid",
+          "smoke": false
+        }
+      ],
+      "id": "ctor.numeric",
+      "inventory_only_ordinary": 2,
+      "kind": "c_kernel",
+      "native_report_rows": 9,
+      "native_report_verdicts": {
+        "timeout": 1,
+        "valid": 8
+      },
+      "normalized_ordinary": 10,
+      "normalized_smoke": 1,
+      "ordinary_Valid_and_smoke_operational_observations_separated": true,
+      "proof_acceptance": false,
+      "reader_executed": false
+    }
+  },
+  "raw_metadata": {
+    "bytes": 27711405,
+    "files": 740
+  },
+  "reviewer": "/root/merger",
+  "root_actual": {
+    "bytes": 24359,
+    "path": "/private/tmp/probata-root-ctor35-cold-execution-v1-20261016.json",
+    "sha256": "d8949b550a015a1c921c105c5c9a700628b6f73c1160414fdc864f1208d77790"
+  },
+  "root_guard": {
+    "cpu_seconds": 2.14055,
+    "exit_code": 0,
+    "out_of_memory": false,
+    "peak_rss_bytes": 70455296,
+    "timed_out": false,
+    "wall_seconds": 2.1591466944664717
+  },
+  "root_scoped_decision_pending": true,
+  "source_commit": "6216fc9440897bebc16a09eeb124ce76f202f185",
+  "source_to_VC_and_WP_translation_trusted": true,
+  "submitted_byte_identity_attested": false,
+  "typed_Why3_AST_equivalence_proved": false,
+  "verdict": "PASS_LOCAL_SCOPED_COLD_RECONCILIATION"
+}

@@ -1,0 +1,1107 @@
+"""2026-10-15 ET. Synthetic executable model API; no actual verifier evidence."""
+import importlib.util
+import functools
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+import shlex
+
+import pytest
+
+from swdb import c_lowering
+
+
+ROOT = Path(__file__).parents[1] / '.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics'
+
+
+def file_pin(path):
+    path = Path(path)
+    return {'path': str(path.resolve()), 'bytes': path.stat().st_size,
+            'sha256': hashlib.sha256(path.read_bytes()).hexdigest()}
+
+
+@functools.lru_cache
+def compiler_context(tool):
+    from swdb.stdlib_provenance import runtime_identity
+    return runtime_identity(tool)
+
+
+def run_model(tmp_path, body, *, exit_code=0, prelude='', commands=False, numeric=False, actions=False, regions=False, image=False, cpp=False, registers=False,
+              setup=False, source_tile_words=8, value_bound=6, register_words=8):
+    spec = importlib.util.spec_from_file_location('dx_deferred_state', ROOT / 'deferred_state.py')
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    header = module.render_header()
+    if numeric:
+        spec = importlib.util.spec_from_file_location('dx_numeric_values', ROOT / 'numeric_values.py')
+        numeric_module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(numeric_module)
+        spec = importlib.util.spec_from_file_location('dx_typed_state', ROOT / 'typed_state.py')
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        header = module.render_header(header, numeric_module.render_header())
+    if commands:
+        spec = importlib.util.spec_from_file_location('dx_command_state', ROOT / 'command_state.py')
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        header = module.render_header(header)
+    if actions:
+        spec = importlib.util.spec_from_file_location('dx_action_state', ROOT / 'action_state.py')
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        header = module.render_header(header)
+    if regions:
+        spec = importlib.util.spec_from_file_location('dx_region_state', ROOT / 'region_state.py')
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        header = module.render_header(header)
+    if image:
+        spec = importlib.util.spec_from_file_location('dx_tile_image', ROOT / 'tile_image.py')
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        header = module.render_header(header, source_tile_words=source_tile_words, value_bound=value_bound, byte_order='little')
+        spec = importlib.util.spec_from_file_location('dx_size_state', ROOT / 'size_state.py')
+        size_module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(size_module)
+        header = size_module.render_header(header)
+    if registers:
+        spec = importlib.util.spec_from_file_location('dx_register_state', ROOT / 'register_state.py')
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        header = module.render_header(header, register_words=register_words, alignment_by_dtype=[4,4,4,8,8,8])
+    if setup:
+        spec = importlib.util.spec_from_file_location('dx_setup_state', ROOT / 'setup_state.py')
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        header = module.render_header(header, source_tile_words=source_tile_words, source_cores=4)
+    unit = tmp_path / 'model.c'
+    unit.write_text('#include <assert.h>\n#include <stdint.h>\n#include <stdlib.h>\n#include <stdio.h>\n'
+                    '#define DXM_CHECK(c,r) do { if (!(c)) { fputs(r,stderr); exit(42); } } while (0)\n'
+                    'static unsigned chosen;\n'
+                    'static unsigned choose_value(unsigned n) { assert(chosen < n); return chosen; }\n'
+                    '#define DXM_CHOOSE(n) choose_value(n)\n'
+                    + prelude + '\n' + header + '\n' + body)
+    compiler = c_lowering.locate()
+    assert not compiler.missing, compiler.missing
+    exe = tmp_path / 'model.bin'
+    command = [*compiler.command, '-x', 'c++' if cpp else 'c', '-std=c++17' if cpp else '-std=c11', '-O1', '-Wall', '-Werror',
+               '-Wno-unused-function', '-fsanitize=address,undefined', '-MD', '-MF', str(tmp_path / 'model.d'),
+               str(unit), '-o', str(exe)]
+    built = subprocess.run(command,
+                           capture_output=True, text=True, timeout=60)
+    assert built.returncode == 0, built.stderr
+    sanitizer_environment = {'ASAN_OPTIONS': 'detect_leaks=0:abort_on_error=0',
+                             'UBSAN_OPTIONS': 'halt_on_error=1:abort_on_error=0:exitcode=1'}
+    ran = subprocess.run([str(exe)], capture_output=True, text=True, timeout=30,
+                         env={**os.environ, **sanitizer_environment})
+    dependencies = (tmp_path / 'model.d').read_text().replace('\\\n', '').split(':', 1)[1]
+    (tmp_path / 'native-receipt.json').write_text(json.dumps({
+        'compile_command': command, 'compiler_version': compiler.version, 'runtime_context': compiler_context(compiler),
+        'compile_returncode': built.returncode, 'compile_stdout': built.stdout, 'compile_stderr': built.stderr,
+        'native_command': [str(exe)], 'native_returncode': ran.returncode,
+        'native_environment_overrides': sanitizer_environment,
+        'native_stdout': ran.stdout, 'native_stderr': ran.stderr,
+        'expected_exit_code': exit_code, 'unit': file_pin(unit), 'executable': file_pin(exe),
+        'headers': [file_pin(path) for path in sorted(set(shlex.split(dependencies)))]}, indent=2) + '\n')
+    assert ran.returncode == exit_code, ran.stdout + ran.stderr
+    return ran
+
+
+def test_gather_interval_values_freeze_once_at_cover_and_never_include_preissue_values(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  for (unsigned pick=0; pick<2; ++pick) {
+    dxm_reset(); chosen=pick;
+    dxm_cpu_write(1, 7, 99);
+    dxm_cpu_write(1, 7, 11);
+    unsigned read=dxm_issue_read(0, 7);
+    dxm_cpu_write(1, 7, 12);
+    dxm_cover(read);
+    uint64_t observed=dxm_value(read);
+    assert(observed == (pick == 0 ? 11 : 12));
+    dxm_cpu_write(1, 7, 13);
+    assert(dxm_value(read) == observed);
+  }
+  return 0;
+}
+''')
+
+
+def test_global_tile_ownership_rejects_another_thread_and_requires_both_8byte_halves(tmp_path):
+    result = run_model(tmp_path, r'''
+int main(void) {
+  dxm_reset();
+  dxm_claim_tile(0,2,4);
+  dxm_use_tile(0,2,4);
+  dxm_claim_tile(1,3,4);
+  dxm_use_tile(1,3,4);
+  dxm_use_tile(0,2,8);
+  return 0;
+}
+''', exit_code=42)
+    assert result.stderr == 'tile-ownership'
+
+
+def test_pending_8byte_destination_blocks_cpu_read_of_its_second_half(tmp_path):
+    result = run_model(tmp_path, r'''
+int main(void) {
+  dxc_reset(); dxm_claim_tile(0,2,8);
+  unsigned root=dxm_constant(1);
+  unsigned command=dxc_prepare(0,-1,0,0,4,0,dxc_tile_mask(2,8),0,0);
+  dxc_bind(command,root);
+  dxc_cpu_tile_access(0,3,4,0);
+  return 0;
+}
+''', exit_code=42, commands=True)
+    assert result.stderr == 'pending-tile-write'
+
+
+@pytest.mark.parametrize('bytes,wait_tile,exit_code', [(8,2,0), (8,3,0), (4,3,0)])
+def test_ready_counter_wait_covers_both_halves_of_8byte_roles_and_only_one_for_4byte_roles(tmp_path, bytes, wait_tile, exit_code):
+    result = run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset(); dxm_claim_tile(0,2,8);
+  unsigned root=dxm_constant(1);
+  unsigned command=dxc_prepare(0,-1,0,0,4,0,dxc_tile_mask(2,{bytes}),0,0);
+  dxc_bind(command,root);
+  dxc_wait_tile({wait_tile});
+  dxc_cpu_tile_access(0,3,4,0);
+  return 0;
+}}
+''', exit_code=exit_code, commands=True)
+    assert result.stderr == ('pending-tile-write' if exit_code else '')
+
+
+@pytest.mark.parametrize('target,exit_code', [(2,0),(3,42)])
+def test_new_explicit_destination_stalls_prior_start_ids_but_never_aliases_an_8byte_half(tmp_path, target, exit_code):
+    result = run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset(); dxm_claim_tile(0,2,8);
+  unsigned root=dxm_constant(1);
+  unsigned first=dxc_prepare(0,-1,0,0,4,0,dxc_tile_mask(2,8),0,0);
+  dxc_bind(first,root);
+  unsigned next=dxm_constant(7);
+  unsigned second=dxc_prepare(0,-1,0,0,((uint64_t)1<<{target}),0,dxc_tile_mask({target},4),0,0);
+  dxc_bind(second,next);
+  dxc_cpu_tile_access(0,3,4,0);
+  return 0;
+}}
+''', exit_code=exit_code, commands=True)
+    assert result.stderr == ('pending-tile-write' if exit_code else '')
+
+
+@pytest.mark.parametrize('access,region,exit_code', [(2,0,0), (1,0,42), (2,1,42)])
+def test_region_stall_covers_cross_thread_conflicts_only_on_the_same_assigned_region(tmp_path, access, region, exit_code):
+    result = run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset(); chosen=0;
+  dxm_claim_tile(0,2,4); dxm_claim_tile(1,3,4);
+  dxm_cpu_write(1,7,11);
+  unsigned first=dxc_prepare(0,0,1,0,4,0,4,28,32);
+  unsigned read=dxm_issue_read(0,7);
+  dxc_bind(first,read);
+  unsigned root=dxm_constant(1);
+  unsigned second=dxc_prepare(1,{region},{access},8,0,8,0,36,40);
+  dxc_bind(second,root);
+  assert(dxm_value(read) == 11);
+  return 0;
+}}
+''', exit_code=exit_code, commands=True)
+    assert result.stderr == ('value-before-cover' if exit_code else '')
+
+
+@pytest.mark.parametrize('thread', [0,1])
+def test_store_hazards_cover_the_full_physical_line_for_cpu_reads_from_either_thread(tmp_path, thread):
+    result = run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset();
+  struct dxc_span line=dxc_store_span(64,4,64);
+  assert(line.begin == 64 && line.end == 128);
+  unsigned root=dxm_constant(9);
+  unsigned command=dxc_prepare(0,0,2,0,0,0,0,line.begin,line.end);
+  dxc_bind(command,root);
+  dxc_cpu_memory_access({thread},96,100,0);
+  return 0;
+}}
+''', exit_code=42, commands=True)
+    assert result.stderr == 'store-footprint-cpu-access'
+
+
+def test_read_read_overlap_and_other_thread_cas_keep_the_actual_interval_values(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  for (unsigned pick=0; pick<2; ++pick) {
+    dxc_reset(); chosen=pick; dxm_claim_tile(0,2,4);
+    dxm_cpu_write(1,7,1);
+    unsigned command=dxc_prepare(0,0,1,0,4,0,4,28,32);
+    unsigned read=dxm_issue_read(0,7);
+    dxc_bind(command,read);
+    assert(dxc_cpu_read(0,7,28,32) == 1);
+    uint64_t expected=1;
+    assert(dxc_cpu_cas(1,7,28,32,&expected,2) == 1);
+    dxc_wait_tile(2);
+    assert(dxm_value(read) == (pick == 0 ? 1 : 2));
+  }
+  return 0;
+}
+''', commands=True)
+
+
+@pytest.mark.parametrize('answer,exit_code', [(0,42),(1,0)])
+def test_ready_query_can_return_either_answer_and_only_one_covers(tmp_path, answer, exit_code):
+    result = run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset(); chosen={answer}; dxm_claim_tile(0,2,4);
+  unsigned root=dxm_constant(1);
+  unsigned command=dxc_prepare(0,-1,0,0,4,0,4,0,0);
+  dxc_bind(command,root);
+  assert(dxc_get_tile_ready(2) == {answer});
+  dxc_cpu_tile_access(0,2,4,0);
+  return 0;
+}}
+''', exit_code=exit_code, commands=True)
+    assert result.stderr == ('pending-tile-write' if exit_code else '')
+
+
+def test_the_issuing_thread_cannot_write_an_unfinished_gather_cell(tmp_path):
+    result = run_model(tmp_path, r'''
+int main(void) {
+  dxm_reset(); dxm_cpu_write(0,7,11);
+  dxm_issue_read(0,7);
+  dxm_cpu_write(0,7,12);
+  return 0;
+}
+''', exit_code=42)
+    assert result.stderr == 'same-thread-read-footprint-write'
+
+
+def test_a_dependent_command_captures_the_producer_version_without_settling_it(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  for (unsigned pick=0; pick<2; ++pick) {
+    dxm_reset(); chosen=pick;
+    dxm_cpu_write(1,7,1);
+    unsigned producer=dxm_issue_read(0,7);
+    unsigned ten=dxm_constant(10);
+    unsigned consumer=dxm_issue_binary(0,0,0,producer,ten);
+    dxm_cpu_write(1,7,2);
+    dxm_cover(consumer);
+    uint64_t saved=dxm_value(consumer);
+    assert(saved == (pick == 0 ? 11 : 12));
+    dxm_cpu_write(1,7,3);
+    dxm_cover(consumer);
+    assert(dxm_value(consumer) == saved);
+    assert(dxm_value(producer) == (pick == 0 ? 1 : 2));
+  }
+  return 0;
+}
+''', prelude=r'''
+static uint64_t test_add(unsigned dtype, unsigned op, uint64_t a, uint64_t b) {
+  assert(dtype == 0 && op == 0); return (uint32_t)a + (uint32_t)b;
+}
+#define DXM_EVAL(dtype,op,a,b) test_add(dtype,op,a,b)
+''')
+
+
+def test_consumer_completion_covers_its_producer_command_without_early_history_settlement(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  for (unsigned pick=0; pick<2; ++pick) {
+    dxc_reset(); chosen=pick;
+    dxm_claim_tile(0,2,4); dxm_claim_tile(0,3,4);
+    dxm_cpu_write(1,7,1);
+    unsigned producer=dxc_prepare(0,0,1,0,4,0,4,28,32);
+    unsigned read=dxm_issue_read(0,7); dxc_bind(producer,read);
+    unsigned consumer=dxc_prepare(0,-1,0,4,8,4,8,0,0);
+    unsigned ten=dxm_constant(10);
+    unsigned sum=dxm_issue_binary(0,0,0,read,ten); dxc_bind(consumer,sum);
+    uint64_t expected=1; assert(dxc_cpu_cas(1,7,28,32,&expected,2));
+    dxc_wait_tile(3);
+    assert(dxm_value(sum) == (pick == 0 ? 11 : 12));
+    dxc_cpu_tile_access(0,2,4,0); dxc_cpu_tile_access(0,3,4,0);
+  }
+  return 0;
+}
+''', commands=True, prelude=r'''
+static uint64_t test_add(unsigned dtype, unsigned op, uint64_t a, uint64_t b) {
+  assert(dtype == 0 && op == 0); return (uint32_t)a + (uint32_t)b;
+}
+#define DXM_EVAL(dtype,op,a,b) test_add(dtype,op,a,b)
+''')
+
+
+def test_unresolved_indices_capture_issue_memory_and_real_writes_without_placeholder_dereferences(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  for (unsigned index_pick=0; index_pick<2; ++index_pick) {
+    for (unsigned data_pick=0; data_pick<2; ++data_pick) {
+      dxm_reset(); choice_cursor=0; choices[0]=index_pick; choices[1]=data_pick;
+      dxm_cpu_write(1,5,0);
+      dxm_cpu_write(1,0,11); dxm_cpu_write(1,1,21);
+      unsigned index=dxm_issue_read(0,5);
+      unsigned gathered=dxm_issue_indexed_read(0,index,0,2);
+      dxm_cpu_write(1,5,1);
+      dxm_cpu_write(1,0,12); dxm_cpu_write(1,1,22);
+      dxm_cover(gathered);
+      uint64_t expected=index_pick == 0 ? (data_pick == 0 ? 11 : 12) : (data_pick == 0 ? 21 : 22);
+      assert(dxm_value(gathered) == expected);
+      dxm_cpu_write(1,0,99); dxm_cpu_write(1,1,99);
+      assert(dxm_value(gathered) == expected);
+    }
+  }
+  return 0;
+}
+''', prelude=r'''
+static unsigned choices[2],choice_cursor;
+static unsigned sequence_choice(unsigned n) {
+  assert(choice_cursor < 2); unsigned pick=choices[choice_cursor++]; assert(pick<n); return pick;
+}
+#undef DXM_CHOOSE
+#define DXM_CHOOSE(n) sequence_choice(n)
+''')
+
+
+@pytest.mark.parametrize('condition', [0,1])
+def test_deferred_conditions_do_not_read_or_check_inactive_memory_operands(tmp_path, condition):
+    run_model(tmp_path, f'''
+int main(void) {{
+  dxm_reset(); chosen=0;
+  dxm_cpu_write(1,0,9);
+  unsigned condition=dxm_constant({condition});
+  unsigned index=dxm_constant({0 if condition else 99});
+  unsigned loaded=dxm_issue_indexed_read(0,index,0,2);
+  unsigned preserved=dxm_constant(44);
+  unsigned result=dxm_select(0,condition,loaded,preserved);
+  dxm_cover(result);
+  assert(dxm_value(result) == {9 if condition else 44});
+  return 0;
+}}
+''')
+
+
+@pytest.mark.parametrize('dtype,lhs,rhs,result', [
+    (0,'0xffffffff','2','1'), (1,'0xfffffffd','5','2'),
+    (2,'0x3fc00000','0x40100000','0x40700000'),
+    (3,'0xffffffffffffffff','2','1'), (4,'0xfffffffffffffffd','5','2'),
+    (5,'0x3ff8000000000000','0x4002000000000000','0x400e000000000000')])
+def test_deferred_numeric_values_keep_each_device_types_raw_representation(tmp_path, dtype, lhs, rhs, result):
+    run_model(tmp_path, f'''
+int main(void) {{
+  dxm_reset();
+  struct dx_num_runtime native_profile={{0,1,0}};
+  dxt_set_runtime(native_profile);
+  unsigned left=dxm_constant(UINT64_C({lhs})), right=dxm_constant(UINT64_C({rhs}));
+  unsigned sum=dxt_binary(0,{dtype},0,left,right);
+  dxm_cover(sum);
+  assert(dxm_value(sum) == UINT64_C({result}));
+  return 0;
+}}
+''', numeric=True)
+
+
+@pytest.mark.parametrize('opcode,exit_code', [(0,0),(16,42)])
+def test_inactive_arithmetic_skips_rte_but_cannot_hide_an_unsupported_source_opcode(tmp_path, opcode, exit_code):
+    result = run_model(tmp_path, f'''
+int main(void) {{
+  dxm_reset();
+  unsigned condition=dxm_constant(0), preserved=dxm_constant(7);
+  unsigned left=dxm_constant(INT32_MAX), right=dxm_constant(1);
+  unsigned operation=dxt_binary(0,1,{opcode},left,right);
+  unsigned selected=dxm_select(0,condition,operation,preserved);
+  dxm_cover(selected);
+  assert(dxm_value(selected) == 7);
+  return 0;
+}}
+''', numeric=True, exit_code=exit_code)
+    assert result.stderr == ('numeric-opcode-domain' if exit_code else '')
+
+
+def test_store_effect_waits_for_captured_producer_versions_and_preserves_history_choices(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  for (unsigned pick=0; pick<2; ++pick) {
+    dxc_reset(); chosen=pick;
+    dxm_claim_tile(0,2,4); dxm_claim_tile(0,3,4);
+    dxm_cpu_write(1,7,1); dxm_cpu_write(1,0,99);
+    unsigned producer=dxc_prepare(0,0,1,0,4,0,4,28,32);
+    unsigned read=dxm_issue_read(0,7); dxc_bind(producer,read);
+    unsigned alu=dxc_prepare(0,-1,0,4,8,4,8,0,0);
+    unsigned ten=dxm_constant(10), sum=dxt_binary(0,0,0,read,ten); dxc_bind(alu,sum);
+    unsigned store=dxc_prepare(0,1,2,8,0,8,0,64,128);
+    unsigned index=dxm_constant(0), active=dxm_constant(1);
+    unsigned effect=dxa_store(store,0,0,1,index,sum,active); dxc_bind(store,effect);
+    uint64_t expected=1; assert(dxc_cpu_cas(1,7,28,32,&expected,2));
+    dxc_wait_tile(3);
+    assert(dxc_cpu_read(1,0,64,68) == (pick == 0 ? 11 : 12));
+  }
+  return 0;
+}
+''', commands=True, numeric=True, actions=True)
+
+
+@pytest.mark.parametrize('active,old,updated', [(1,10,13),(0,77,10)])
+def test_rmw_publishes_old_value_once_and_inactive_lanes_preserve_the_old_tile_payload(tmp_path, active, old, updated):
+    run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset(); chosen=0;
+  dxm_claim_tile(0,2,4); dxm_claim_tile(0,3,4);
+  dxm_cpu_write(1,0,10);
+  unsigned command=dxc_prepare(0,0,2,4,8,4,8,64,128);
+  unsigned index=dxm_constant(0), value=dxm_constant(3), condition=dxm_constant({active});
+  unsigned preserved=dxm_constant(77), old=dxm_result();
+  unsigned root=dxa_rmw(command,0,0,0,1,index,value,condition,old,preserved); dxc_bind(command,root);
+  dxc_wait_tile(3);
+  assert(dxm_value(old) == {old});
+  assert(dxc_cpu_read(1,0,64,68) == {updated});
+  dxc_wait_tile(3);
+  assert(dxm_value(old) == {old});
+  assert(dxc_cpu_read(1,0,64,68) == {updated});
+  return 0;
+}}
+''', commands=True, numeric=True, actions=True)
+
+
+def test_different_regions_do_not_hide_device_conflicts_on_one_physical_store_line(tmp_path):
+    result = run_model(tmp_path, r'''
+int main(void) {
+  dxc_reset(); dxm_claim_tile(0,2,4); dxm_claim_tile(1,3,4);
+  unsigned first=dxc_prepare(0,0,2,4,0,4,0,64,128);
+  dxc_bind(first,dxm_constant(1));
+  unsigned second=dxc_prepare(1,1,1,0,8,0,8,96,100);
+  dxc_bind(second,dxm_constant(2));
+  return 0;
+}
+''', commands=True, exit_code=42)
+    assert result.stderr == 'device-memory-footprint-conflict'
+
+
+def test_duplicate_rmw_old_results_follow_progressive_copied_values_without_global_lane_order(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  for (unsigned first=0; first<2; ++first) {
+    dxc_reset(); chosen=first; dxm_claim_tile(0,2,4); dxm_claim_tile(0,3,4);
+    dxm_cpu_write(1,0,0);
+    unsigned command=dxc_prepare(0,0,2,4,8,4,8,64,128);
+    unsigned index=dxm_constant(0), one=dxm_constant(1), two=dxm_constant(2), active=dxm_constant(1);
+    unsigned preserved=dxm_constant(77), old_a=dxm_result(), old_b=dxm_result();
+    unsigned a=dxa_rmw(command,0,0,0,1,index,one,active,old_a,preserved);
+    unsigned b=dxa_rmw(command,0,0,0,1,index,two,active,old_b,preserved);
+    dxc_bind(command,dxm_join(a,b)); dxc_wait_tile(3);
+    assert(dxc_cpu_read(1,0,64,68) == 3);
+    assert(dxm_value(old_a) == (first == 0 ? 0 : 2));
+    assert(dxm_value(old_b) == (first == 0 ? 1 : 0));
+  }
+  return 0;
+}
+''', commands=True, numeric=True, actions=True)
+
+
+@pytest.mark.parametrize('end,exit_code', [(180,0),(230,42)])
+def test_region_assignment_uses_first_matching_id_and_f2_checks_the_complete_logical_span(tmp_path, end, exit_code):
+    result = run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset();
+  dxr_add(0,100,200); dxr_add(1,120,180); dxr_add(2,220,300);
+  assert(dxr_find(150) == 0); assert(dxr_find(250) == 2);
+  int assigned=dxr_assign(121);
+  assert(assigned == 0);
+  dxr_check_span(assigned,120,{end});
+  return 0;
+}}
+''', commands=True, regions=True, exit_code=exit_code)
+    assert result.stderr == ('region-footprint-correspondence' if exit_code else '')
+
+
+@pytest.mark.parametrize('base,index,bytes,address,exit_code', [
+    ('64','1073741824',4,'64',42), ('64','3',8,'88',0),
+    ('0xfffffffffffffffc','1',8,'4',0)])
+def test_raw_device_offset_wrap_is_defined_and_array_correspondence_is_a_separate_checked_domain(tmp_path, base, index, bytes, address, exit_code):
+    result = run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset();
+  assert(dxr_device_address(UINT64_C({base}),UINT32_C({index}),{bytes}) == UINT64_C({address}));
+  dxr_array_offset_correspondence(UINT32_C({index}),{bytes});
+  return 0;
+}}
+''', commands=True, regions=True, exit_code=exit_code)
+    assert result.stderr == ('index-offset-correspondence' if exit_code else '')
+
+
+@pytest.mark.parametrize('separate,exit_code', [(0,0),(1,42)])
+def test_logical_region_assignment_never_shrinks_the_full_physical_store_line(tmp_path, separate, exit_code):
+    result = run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset(); dxm_claim_tile(0,2,4); dxm_claim_tile(1,3,4);
+  if ({separate}) {{ dxr_add(0,64,68); dxr_add(1,96,100); }}
+  else {{ dxr_add(0,64,128); }}
+  unsigned store=dxr_prepare(0,2,64,64,68,4,0,4,0,64,128);
+  dxc_bind(store,dxm_constant(1));
+  unsigned read=dxr_prepare(1,1,96,96,100,0,8,0,8,96,100);
+  dxc_bind(read,dxm_constant(2));
+  dxc_cpu_memory_access(1,96,100,0);
+  return 0;
+}}
+''', commands=True, regions=True, exit_code=exit_code)
+    assert result.stderr == ('device-memory-footprint-conflict' if exit_code else '')
+
+
+def test_typed_tile_views_share_physical_bytes_with_source_stride_and_freeze_captured_versions(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  dxc_reset(); dxm_claim_tile(0,1,8);
+  dxp_cpu_write_bits(0,1,0,0,UINT64_C(0x55667788));
+  dxp_cpu_write_bits(0,1,1,0,UINT64_C(0x11223344));
+  assert(dxp_cpu_read_bits(0,1,0,3) == UINT64_C(0x1122334455667788));
+  unsigned saved=dxp_capture_bits(1,0,3); dxm_cover(saved);
+  dxp_cpu_write_bits(0,1,1,0,UINT64_C(0xaabbccdd));
+  assert(dxm_value(saved) == UINT64_C(0x1122334455667788));
+  assert(dxp_cpu_read_bits(0,1,0,3) == UINT64_C(0xaabbccdd55667788));
+  /* Source stride8 words, model prefix6 values: lane4 crosses to physical t+1. */
+  dxp_cpu_write_bits(0,1,4,3,UINT64_C(0x0102030405060708));
+  assert(dxp_cpu_read_bits(0,2,0,0) == UINT64_C(0x05060708));
+  assert(dxp_cpu_read_bits(0,2,1,0) == UINT64_C(0x01020304));
+  return 0;
+}
+''', commands=True, image=True)
+
+
+def test_all_six_typed_cpu_views_copy_bits_through_legal_scalar_objects(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  dxc_reset(); dxm_claim_tile(0,1,8);
+  dxp_store_f32(0,1,0,1.5f);
+  assert(dxp_load_u32(0,1,0) == UINT32_C(0x3fc00000));
+  dxp_store_u32(0,1,0,UINT32_C(0xc0000000));
+  assert(dxp_load_f32(0,1,0) == -2.0f);
+  dxp_store_i32(0,1,0,-3);
+  assert(dxp_load_u32(0,1,0) == UINT32_C(0xfffffffd));
+  dxp_store_f64(0,1,0,1.5);
+  assert(dxp_load_u64(0,1,0) == UINT64_C(0x3ff8000000000000));
+  dxp_store_u64(0,1,0,UINT64_C(0xc000000000000000));
+  assert(dxp_load_f64(0,1,0) == -2.0);
+  dxp_store_i64(0,1,0,-3);
+  assert(dxp_load_u64(0,1,0) == UINT64_C(0xfffffffffffffffd));
+  return 0;
+}
+''', commands=True, image=True)
+
+
+@pytest.mark.parametrize('bytes,exit_code', [(4,0),(8,42)])
+def test_one_commands_distinct_start_ids_still_require_disjoint_physical_read_write_halves(tmp_path, bytes, exit_code):
+    result = run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset(); dxm_claim_tile(0,1,8);
+  unsigned command=dxc_prepare(0,-1,0,4,2,4,dxc_tile_mask(1,{bytes}),0,0);
+  dxc_bind(command,dxm_constant(1));
+  return 0;
+}}
+''', commands=True, exit_code=exit_code)
+    assert result.stderr == ('intra-command-physical-alias' if exit_code else '')
+
+
+def test_device_output_bytes_capture_unsettled_versions_across_64_to_32bit_consumers(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  for (unsigned pick=0; pick<2; ++pick) {
+    dxc_reset(); chosen=pick;
+    dxm_claim_tile(0,1,8); dxm_claim_tile(0,3,4);
+    dxm_cpu_write(1,7,UINT64_C(0x1122334455667788));
+    unsigned producer=dxc_prepare(0,0,1,0,2,0,dxc_tile_mask(1,8),56,64);
+    unsigned read=dxm_issue_read(0,7);
+    dxp_bind_output(producer,1,0,3,read); dxc_bind(producer,read);
+    unsigned consumer=dxc_prepare(0,-1,0,2,8,2,8,0,0);
+    unsigned input=dxp_capture_bits(1,0,0), one=dxm_constant(1);
+    unsigned sum=dxt_binary(0,0,0,input,one);
+    dxp_bind_output(consumer,3,0,0,sum); dxc_bind(consumer,sum);
+    uint64_t expected=UINT64_C(0x1122334455667788);
+    assert(dxc_cpu_cas(1,7,56,64,&expected,UINT64_C(0xaabbccdd01020304)));
+    dxc_wait_tile(3);
+    uint32_t result=pick == 0 ? UINT32_C(0x55667789) : UINT32_C(0x01020305);
+    assert(dxp_load_u32(0,3,0) == result);
+    dxp_store_u64(0,1,0,0);
+    assert(dxp_load_u32(0,3,0) == result);
+  }
+  return 0;
+}
+''', commands=True, numeric=True, image=True)
+
+
+def test_typed_image_does_not_invent_initial_values(tmp_path):
+    result = run_model(tmp_path, r'''
+int main(void) {
+  dxc_reset(); dxm_claim_tile(0,1,8);
+  dxp_store_u32(0,1,0,7);
+  (void)dxp_load_u64(0,1,0);
+  return 0;
+}
+''', commands=True, image=True, exit_code=42)
+    assert result.stderr == 'tile-value-initialized'
+
+
+@pytest.mark.parametrize('wide_output,expected', [(True, 'image-command-output-domain'), (False, 'pending-tile-write')])
+def test_output_binding_and_cpu_views_enforce_the_same_physical_pair(tmp_path, wide_output, expected):
+    result = run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset(); dxm_claim_tile(0,1,8);
+  unsigned root=dxm_constant(UINT64_C(0x1122334455667788));
+  unsigned command=dxc_prepare(0,-1,0,0,2,0,{2 if wide_output else 6},0,0);
+  dxp_bind_output(command,1,0,3,root);
+  dxc_bind(command,root);
+  (void)dxp_load_u32(0,2,0);
+  return 0;
+}}
+''', commands=True, image=True, exit_code=42)
+    assert result.stderr == expected
+
+
+def test_sparse_image_capacity_refuses_before_partial_wide_installation(tmp_path):
+    result = run_model(tmp_path, r'''
+int main(void) {
+  dxc_reset(); dxm_claim_tile(0,1,8);
+  dxp_store_u64(0,1,0,7);
+  return 0;
+}
+''', commands=True, image=True, prelude='#define DXP_IMAGE_BYTES 4\n', exit_code=42)
+    assert result.stderr == 'tile-image-capacity'
+
+
+def test_typed_image_scalar_memcpy_views_also_compile_as_cpp17(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  dxc_reset(); dxm_claim_tile(0,1,8);
+  dxp_store_f64(0,1,0,-0.0);
+  assert(dxp_load_u64(0,1,0) == UINT64_C(0x8000000000000000));
+  dxp_store_i64(0,1,0,INT64_MIN);
+  assert(dxp_load_i64(0,1,0) == INT64_MIN);
+  dxp_store_f32(0,1,0,-0.0f);
+  assert(dxp_load_u32(0,1,0) == UINT32_C(0x80000000));
+  return 0;
+}
+''', commands=True, image=True, cpp=True)
+
+
+@pytest.mark.parametrize('observe,exit_code', [(False, 0), (True, 42)])
+def test_inactive_rmw_preserves_undefined_tile_bytes_without_reading_them_at_completion(tmp_path, observe, exit_code):
+    result = run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset(); chosen=0;
+  dxm_claim_tile(0,1,4); dxm_claim_tile(0,2,4);
+  dxm_cpu_write(1,0,10);
+  unsigned command=dxc_prepare(0,0,2,2,4,2,4,64,128);
+  unsigned inactive=dxm_constant(0), unused=dxm_result();
+  unsigned preserved=dxp_capture_bits(2,0,0), old=dxm_result();
+  unsigned root=dxa_rmw(command,0,0,0,1,unused,unused,inactive,old,preserved);
+  dxp_bind_output(command,2,0,0,old); dxc_bind(command,root);
+  dxc_wait_tile(2);
+  assert(dxc_cpu_read(1,0,64,68) == 10);
+  puts("COVERED");
+  {'(void)dxp_load_u32(0,2,0);' if observe else ''}
+  return 0;
+}}
+''', commands=True, numeric=True, actions=True, image=True, exit_code=exit_code)
+    assert result.stdout == 'COVERED\n'
+    assert result.stderr == ('tile-value-initialized' if observe else '')
+
+
+@pytest.mark.parametrize('active,wide_read,exit_code', [(0,False,0),(0,True,42),(1,True,0)])
+def test_conditional_output_preserves_initializedness_independently_for_each_physical_byte(tmp_path, active, wide_read, exit_code):
+    result = run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset(); dxm_claim_tile(0,1,8);
+  dxp_store_u32(0,1,0,UINT32_C(0x12345678));
+  unsigned command=dxc_prepare(0,-1,0,0,2,0,6,0,0);
+  unsigned condition=dxm_constant({active});
+  unsigned payload={f'dxm_constant(UINT64_C(0xaabbccdd55667788))' if active else 'dxm_result()'};
+  unsigned root=dxm_select(0,condition,payload,dxm_constant(0));
+  dxp_bind_conditional_output(command,1,0,3,condition,payload); dxc_bind(command,root);
+  dxc_wait_tile(1); puts("COVERED");
+  assert(dxp_load_u32(0,1,0) == UINT32_C({0x55667788 if active else 0x12345678}));
+  {'assert(dxp_load_u64(0,1,0) == UINT64_C(0xaabbccdd55667788));' if wide_read else ''}
+  return 0;
+}}
+''', commands=True, image=True, exit_code=exit_code)
+    assert result.stdout == 'COVERED\n'
+    assert result.stderr == ('tile-value-initialized' if exit_code else '')
+
+
+def test_register_allocation_does_not_clear_values_or_invent_an_even_start_id(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  dxc_reset();
+  assert(dxg_new(0,0) == 0);
+  assert(dxg_new(0,3) == 1);
+  dxg_cpu_write_bits(0,2,0,UINT32_C(0xaabbccdd));
+  dxg_cpu_write_bits(0,1,0,UINT32_C(0x11223344));
+  assert(dxg_cpu_read_bits(0,1,0) == UINT32_C(0x11223344));
+  dxg_init_counters();
+  assert(dxg_new(0,0) == 0);
+  assert(dxg_cpu_read_bits(0,2,0) == UINT32_C(0xaabbccdd));
+  return 0;
+}
+''', commands=True, registers=True)
+
+
+def test_register_pair_views_share_bytes_but_odd_64bit_dereference_retains_source_alignment_rte(tmp_path):
+    result = run_model(tmp_path, r'''
+int main(void) {
+  dxc_reset();
+  (void)dxg_new(0,3); (void)dxg_new(0,3);
+  dxg_cpu_write_bits(0,2,3,UINT64_C(0x1122334455667788));
+  assert(dxg_cpu_read_bits(0,2,0) == UINT32_C(0x55667788));
+  assert(dxg_cpu_read_bits(0,3,0) == UINT32_C(0x11223344));
+  puts("PAIR");
+  (void)dxg_cpu_read_bits(0,3,3);
+  return 0;
+}
+''', commands=True, registers=True, exit_code=42)
+    assert result.stdout == 'PAIR\n'
+    assert result.stderr == 'register-source-alignment'
+
+
+def test_register_write_covers_a_pending_explicit_start_id_before_replacing_the_value(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  dxc_reset(); dxm_claim_tile(0,1,4);
+  (void)dxg_new(0,3); (void)dxg_new(0,3);
+  dxg_cpu_write_bits(0,2,0,7);
+  unsigned command=dxc_prepare(0,-1,0,0,2,0,2,0,0);
+  dxg_bind_roles(command,4,0,4,0);
+  unsigned captured=dxg_capture_bits(2,0); dxc_bind(command,captured);
+  dxg_cpu_write_bits(0,2,0,99);
+  assert(!dxc_commands[command].pending && dxm_value(captured) == 7);
+  assert(dxg_cpu_read_bits(0,2,0) == 99);
+  return 0;
+}
+''', commands=True, registers=True)
+
+
+@pytest.mark.parametrize('read_dtype,read_reg,write_dtype,write_reg', [(3,2,0,3),(0,3,3,2)])
+def test_register_second_half_conflict_is_a_software_refusal_not_a_hardware_start_id_stall(tmp_path, read_dtype, read_reg, write_dtype, write_reg):
+    result = run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset(); dxm_claim_tile(0,1,4);
+  (void)dxg_new(0,3); (void)dxg_new(0,3);
+  dxg_cpu_write_bits(0,2,3,7);
+  unsigned command=dxc_prepare(0,-1,0,0,2,0,2,0,0);
+  dxg_bind_roles(command,UINT64_C(1)<<{read_reg},0,dxg_mask({read_reg},{read_dtype}),0);
+  unsigned captured=dxg_capture_bits({read_reg},{read_dtype}); dxc_bind(command,captured);
+  dxg_cpu_write_bits(0,{write_reg},{write_dtype},99);
+  return 0;
+}}
+''', commands=True, registers=True, exit_code=42)
+    assert result.stderr == 'pending-register-pair'
+
+
+@pytest.mark.parametrize('dtype,read_reg', [(0,0),(3,1)])
+def test_register_cpu_read_of_pending_reduction_output_does_not_invent_a_covering_wait(tmp_path, dtype, read_reg):
+    result = run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset(); dxm_claim_tile(0,1,4);
+  (void)dxg_new(0,{dtype});
+  dxg_cpu_write_bits(0,0,{dtype},7);
+  unsigned command=dxc_prepare(0,-1,0,2,0,2,0,0,0);
+  dxg_bind_roles(command,0,1,0,dxg_mask(0,{dtype}));
+  unsigned output=dxm_constant(99);
+  dxg_bind_output(command,0,{dtype},output); dxc_bind(command,output);
+  (void)dxg_cpu_read_bits(0,{read_reg},0);
+  return 0;
+}}
+''', commands=True, registers=True, exit_code=42)
+    assert result.stderr == 'pending-register-write'
+
+
+@pytest.mark.parametrize('dtype,bits', [(0,0xffffffff),(1,0x80000000),(2,0x80000000),
+                                      (3,0xffffffffffffffff),(4,0x8000000000000000),(5,0x8000000000000000)])
+def test_initialized_register_allocation_preserves_each_raw_type_and_overload_effect(tmp_path, dtype, bits):
+    run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset();
+  unsigned reg=dxg_new_initialized(0,{dtype},UINT64_C({bits}));
+  assert(reg == 0 && dxg_next == {1 if dtype < 3 else 2});
+  assert(dxg_cpu_read_bits(0,reg,{dtype}) == UINT64_C({bits}));
+  return 0;
+}}
+''', commands=True, registers=True)
+
+
+@pytest.mark.parametrize('body,expected', [
+    ('(void)dxg_new(0,0); (void)dxg_cpu_read_bits(0,0,0);','register-value-initialized'),
+    ('(void)dxg_new_initialized(0,0,7); (void)dxg_cpu_read_bits(1,0,0);','register-ownership'),
+    ('for(unsigned i=0;i<4;++i) (void)dxg_new(0,3); (void)dxg_new_initialized(0,0,7);','register-pair-domain'),
+])
+def test_register_allocation_retains_initializedness_ownership_and_prewrite_capacity_guards(tmp_path, body, expected):
+    result = run_model(tmp_path, 'int main(void) { dxc_reset(); '+body+' return 0; }',
+                       commands=True, registers=True, exit_code=42)
+    assert result.stderr == expected
+
+
+def test_exact_rf_source_excerpt_reproduces_configured_abi_alignment_ub_for_odd_64bit_access(tmp_path):
+    excerpt = ROOT / 'checks/rf-source-excerpt.hpp'
+    record = json.loads(excerpt.with_suffix('.json').read_text())
+    assert hashlib.sha256(excerpt.read_bytes()).hexdigest() == record['fixture']['sha256']
+    result = run_model(tmp_path, excerpt.read_text()+r'''
+int main(void) {
+  gem5::RF rf(8);
+  (void)rf.getData<uint64_t>(1);
+  return 0;
+}
+''', cpp=True, exit_code=1)
+    assert 'runtime error: load of misaligned address' in result.stderr
+    assert "type 'unsigned long long'" in result.stderr or "type 'unsigned long'" in result.stderr
+
+
+def test_setup_registers_six_real_geometry_mmio_ranges_and_user_regions_start_at_six(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  dxc_reset(); dxs_alloc();
+  assert(dxs_region_next == 6);
+  assert(dxs_mmio[0] == UINT64_C(0x400000000));
+  assert(dxs_mmio[1]-dxs_mmio[0] == UINT64_C(32)*16384*4);
+  assert(dxs_mmio[2]-dxs_mmio[1] == UINT64_C(32)*16384*4);
+  for (unsigned i=0;i<6;++i) {
+    assert(dxr_regions[i].begin == dxs_mmio[i]);
+    assert(dxr_regions[i].end == dxs_mmio[i+1]);
+    assert(dxr_find(dxs_mmio[i]) == (int)i);
+  }
+  dxs_add_region(64,128); assert(dxr_find(64) == 6);
+  dxs_clear_regions(); assert(dxs_region_next == 6 && dxr_find(64) == -1);
+  return 0;
+}
+''', commands=True, regions=True, image=True, registers=True, setup=True,
+              source_tile_words=16384, value_bound=2, register_words=32,
+              prelude='#define DXM_TILES 32\n#define DXC_REGIONS 256\n')
+
+
+def test_source_init_resets_counters_but_preserves_payload_pending_commands_and_registered_ranges(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  dxc_reset(); dxs_alloc();
+  unsigned tile=dxs_new_tile(0,0), reg=dxg_new_initialized(0,0,7);
+  dxp_store_u32(0,tile,0,9); dxs_add_region(64,128);
+  unsigned command=dxc_prepare(0,-1,0,0,1,0,1,0,0);
+  unsigned root=dxm_constant(11); dxp_bind_output(command,tile,0,0,root); dxc_bind(command,root);
+  dxs_init();
+  assert(dxs_tile_next == 0 && dxg_next == 0 && dxs_region_next == 6);
+  assert(dxc_commands[command].pending && dxr_find(64) == 6);
+  assert(dxg_cpu_read_bits(0,reg,0) == 7);
+  assert(dxs_new_tile(0,0) == tile);
+  dxc_wait_tile(tile); assert(dxp_load_u32(0,tile,0) == 11);
+  dxs_alloc();
+  assert(dxs_tile_next == 1 && dxg_next == 0 && dxs_region_next == 6);
+  assert(dxp_load_u32(0,tile,0) == 11 && dxg_cpu_read_bits(0,reg,0) == 7);
+  assert(dxr_find(64) == -1);
+  return 0;
+}
+''', commands=True, regions=True, image=True, registers=True, setup=True,
+              source_tile_words=16384, value_bound=2, register_words=32,
+              prelude='#define DXM_TILES 32\n#define DXC_REGIONS 256\n')
+
+
+def test_setup_preserves_source_int8_region_narrowing_then_refuses_negative_hardware_id(tmp_path):
+    result = run_model(tmp_path, r'''
+int main(void) {
+  dxc_reset(); dxs_alloc();
+  for (unsigned i=0;i<122;++i) dxs_add_region(UINT64_C(4096)+16*i,UINT64_C(4104)+16*i);
+  assert(dxs_region_next == -128);
+  assert(dxr_find(UINT64_C(4096)+16*121) == 127);
+  puts("WRAPPED");
+  dxs_add_region(64,128);
+  return 0;
+}
+''', commands=True, regions=True, image=True, registers=True, setup=True, exit_code=42,
+              source_tile_words=16384, value_bound=2, register_words=32,
+              prelude='#define DXM_TILES 32\n#define DXC_REGIONS 256\n')
+    assert result.stdout == 'WRAPPED\n'
+    assert result.stderr == 'region-capacity'
+
+
+def test_source_tile_allocation_uses_all_six_widths_and_keeps_odd_pair_start_legal(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  for (unsigned dtype=0;dtype<6;++dtype) {
+    dxc_reset(); dxs_alloc();
+    assert(dxs_new_tile(0,dtype) == 0);
+    assert(dxs_tile_next == (dtype<3 ? 1u : 2u));
+  }
+  dxc_reset(); dxs_alloc();
+  assert(dxs_new_tile(0,0) == 0);
+  assert(dxs_new_tile(0,3) == 1 && dxs_tile_next == 3);
+  dxp_store_u64(0,1,0,UINT64_C(0x1122334455667788));
+  assert(dxp_load_u64(0,1,0) == UINT64_C(0x1122334455667788));
+  return 0;
+}
+''', commands=True, regions=True, image=True, registers=True, setup=True,
+              source_tile_words=16384, value_bound=2, register_words=32,
+              prelude='#define DXM_TILES 32\n#define DXC_REGIONS 256\n')
+
+
+@pytest.mark.parametrize('body,expected', [
+    ('for(unsigned i=0;i<31;++i) (void)dxs_new_tile(0,0); (void)dxs_new_tile(0,3);','tile-pair-domain'),
+    ('(void)dxs_new_tile(0,0); dxs_init(); (void)dxs_new_tile(1,0);','tile-ownership'),
+])
+def test_source_counter_reset_and_last_pair_do_not_bypass_global_tile_obligations(tmp_path, body, expected):
+    result = run_model(tmp_path, 'int main(void) { dxc_reset(); dxs_alloc(); '+body+' return 0; }',
+                       commands=True, regions=True, image=True, registers=True, setup=True, exit_code=42,
+                       source_tile_words=16384, value_bound=2, register_words=32,
+                       prelude='#define DXM_TILES 32\n#define DXC_REGIONS 256\n')
+    assert result.stderr == expected
+
+
+def test_tile_size_is_an_independent_version_not_changed_by_cpu_payload_writes_or_copied_to_second_half(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  dxc_reset(); chosen=1; dxm_claim_tile(0,1,8);
+  assert(dxz_get_size(1) == 1 && dxz_get_size(2) == 1);
+  dxp_store_u32(0,1,0,9); assert(dxz_get_size(1) == 1);
+  unsigned command=dxc_prepare(0,-1,0,0,2,0,6,0,0);
+  unsigned length=dxm_constant(2); dxz_bind_size(command,1,length); dxc_bind(command,length);
+  dxc_wait_tile(1);
+  assert(dxz_get_size(1) == 2 && dxz_get_size(2) == 1);
+  return 0;
+}
+''', commands=True, image=True)
+
+
+@pytest.mark.parametrize('wait,exit_code', [(False,42),(True,0)])
+def test_get_tile_size_never_supplies_a_covering_wait_for_pending_output_status(tmp_path, wait, exit_code):
+    result = run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset(); dxm_claim_tile(0,1,4);
+  unsigned command=dxc_prepare(0,-1,0,0,2,0,2,0,0);
+  unsigned length=dxm_constant(2); dxz_bind_size(command,1,length); dxc_bind(command,length);
+  {'dxc_wait_tile(1);' if wait else ''}
+  assert(dxz_get_size(1) == 2);
+  return 0;
+}}
+''', commands=True, image=True, exit_code=exit_code)
+    assert result.stderr == ('' if wait else 'tile-size-before-finish')
+
+
+def test_dependent_size_versions_settle_once_and_survive_later_source_tile_reuse(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  for (unsigned pick=0;pick<2;++pick) {
+    dxc_reset(); chosen=pick; dxm_claim_tile(0,1,4); dxm_claim_tile(0,3,4);
+    dxm_cpu_write(1,7,2);
+    unsigned producer=dxc_prepare(0,-1,0,0,2,0,2,0,0);
+    unsigned length=dxm_issue_read(0,7);
+    dxz_bind_size(producer,1,length); dxc_bind(producer,length);
+    unsigned consumer=dxc_prepare(0,-1,0,2,8,2,8,0,0);
+    unsigned captured=dxz_capture_size(1); assert(captured == length);
+    dxz_bind_size(consumer,3,captured); dxc_bind(consumer,captured);
+    assert(!dxm_nodes[length].settled && dxc_commands[producer].pending);
+    dxm_cpu_write(1,7,1); dxc_wait_tile(3);
+    unsigned result=pick == 0 ? 2 : 1;
+    assert(dxz_get_size(3) == result);
+    unsigned reuse=dxc_prepare(0,-1,0,0,2,0,2,0,0);
+    unsigned new_size=dxm_constant(5); dxz_bind_size(reuse,1,new_size); dxc_bind(reuse,new_size);
+    dxc_wait_tile(1);
+    assert(dxz_get_size(1) == 5 && dxz_get_size(3) == result);
+  }
+  return 0;
+}
+''', commands=True, image=True)
+
+
+def test_size_metadata_is_not_limited_by_value_prefix_and_pending_readers_do_not_cover(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  dxc_reset(); chosen=7; dxm_claim_tile(0,1,4); dxm_claim_tile(0,3,4);
+  assert(dxz_get_size(1) == 7); /* physical8words; value prefix6 */
+  unsigned reader=dxc_prepare(0,-1,0,2,8,2,8,0,0);
+  dxc_bind(reader,dxm_constant(0));
+  assert(dxz_get_size(1) == 7 && dxc_commands[reader].pending);
+  return 0;
+}
+''', commands=True, image=True)
+
+
+def test_failed_cas_expected_and_desired_values_do_not_enter_gather_history(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  for (unsigned pick=0; pick<2; ++pick) {
+    dxm_reset(); chosen=pick;
+    dxm_cpu_write(1,7,1);
+    unsigned read=dxm_issue_read(0,7);
+    uint64_t expected=99;
+    assert(dxm_cpu_cas(1,7,&expected,77) == 0);
+    assert(expected == 1);
+    assert(dxm_cpu_cas(1,7,&expected,2) == 1);
+    dxm_cover(read);
+    assert(dxm_value(read) == (pick == 0 ? 1 : 2));
+  }
+  return 0;
+}
+''')
+
+
+@pytest.mark.parametrize('answer',[0,1])
+def test_8byte_second_half_readiness_is_demonic_and_one_covers_the_counted_command(tmp_path,answer):
+    result=run_model(tmp_path,f'''
+int main(void) {{
+  dxc_reset(); dxm_claim_tile(0,2,8); chosen={answer};
+  unsigned c=dxc_prepare(0,-1,0,0,4,0,dxc_tile_mask(2,8),0,0);
+  dxc_bind(c,dxm_constant(9));
+  assert(dxc_get_tile_ready(3)=={answer});
+  if ({answer}) dxc_cpu_tile_access(0,3,4,0);
+  else assert(dxc_commands[c].pending);
+  return 0;
+}}
+''',commands=True)
+    assert result.stderr==''
+
+
+@pytest.mark.parametrize('cover_kind',['wait','query','dispatch'])
+def test_condition_only_role_does_not_count_ready_but_dispatch_start_still_covers(tmp_path,cover_kind):
+    cover={'wait':'dxc_wait_tile(1); assert(dxc_commands[c].pending);',
+           'query':'assert(dxc_get_tile_ready(1)==1); assert(dxc_commands[c].pending);',
+           'dispatch':'unsigned next=dxc_prepare(0,-1,0,0,2,0,2,0,0); dxc_bind(next,dxm_constant(1)); assert(!dxc_commands[c].pending);'}[cover_kind]
+    run_model(tmp_path,r'''
+int main(void) {
+  dxc_reset(); dxm_claim_tile(0,1,4); dxm_claim_tile(0,3,4);
+  /* Tile1 is condition only; tile3 destination is counted. */
+  unsigned c=dxc_prepare_counted(0,-1,0,2,8,2,8,0,0,8);
+  dxc_bind(c,dxm_constant(7));
+'''+cover+r'''
+  return 0;
+}
+''',commands=True)
+
+
+@pytest.mark.parametrize('ready_mask',[0,2,24])
+def test_counted_role_mask_cannot_omit_destination_or_add_unaccessed_tiles(tmp_path,ready_mask):
+    run_model(tmp_path,f'''
+int main(void) {{
+  dxc_reset(); dxm_claim_tile(0,1,4); dxm_claim_tile(0,3,4);
+  unsigned c=dxc_prepare_counted(0,-1,0,2,8,2,8,0,0,{ready_mask});
+  dxc_bind(c,dxm_constant(0)); return 0;
+}}
+''',commands=True,exit_code=42)
+
+
+def test_comparison_ready_roles_use_64bit_input_halves_and_only_32bit_output(tmp_path):
+    run_model(tmp_path,r'''
+int main(void) {
+  dxc_reset(); dxm_claim_tile(0,0,8); dxm_claim_tile(0,2,4);
+  unsigned c=dxc_prepare(0,-1,0,1,4,dxc_tile_mask(0,8),4,0,0);
+  dxc_bind(c,dxm_constant(1));
+  assert(dxc_get_tile_ready(3)==1 && dxc_commands[c].pending);
+  dxc_wait_tile(1); assert(!dxc_commands[c].pending);
+  return 0;
+}
+''',commands=True)
+
+
+def test_4byte_neighbor_ready_query_does_not_cover_pending_command(tmp_path):
+    run_model(tmp_path,r'''
+int main(void) {
+  dxc_reset(); dxm_claim_tile(0,2,4);
+  unsigned c=dxc_prepare(0,-1,0,0,4,0,4,0,0);
+  dxc_bind(c,dxm_constant(1));
+  assert(dxc_get_tile_ready(3)==1 && dxc_commands[c].pending);
+  dxc_wait_tile(3); assert(dxc_commands[c].pending);
+  return 0;
+}
+''',commands=True)

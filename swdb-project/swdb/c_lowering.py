@@ -202,6 +202,7 @@ class Lowering:
     terminal_release: dict | None = None  # checked ownership certificate; native lowering retains delete[]
     stdlib_provenance: dict = field(default_factory=dict)  # original full-TU declarations and header closure
     stdlib_substitutions: tuple = ()  # printer-requested free std calls, independently bound in the original TU
+    vector_reallocation_candidate: dict = field(default_factory=dict)  # pending obligations; grants no origin
 
     @property
     def sha256(self):
@@ -227,6 +228,8 @@ class Lowering:
         if self.stdlib_provenance:
             data["stdlib_provenance"] = self.stdlib_provenance
             data["stdlib_substitutions"] = list(self.stdlib_substitutions)
+        if self.vector_reallocation_candidate:
+            data["vector_reallocation_candidate"] = self.vector_reallocation_candidate
         return json.dumps(data, indent=1, sort_keys=True) + "\n"
 
     @property
@@ -292,6 +295,15 @@ def identity():
                             + wp_pointer_bounds.identity()["sha256"].encode()
                             + here.with_name("array_domains.py").read_bytes()
                             + here.with_name("vector_ownership.py").read_bytes()
+                            + here.with_name("vector_reallocation_model.py").read_bytes()
+                            + here.with_name("vector_reallocation_calls.py").read_bytes()
+                            + here.with_name("vector_reallocation_vcs.py").read_bytes()
+                            + here.with_name("vector_reallocation_inventory.py").read_bytes()
+                            + here.with_name("vector_reallocation_view.py").read_bytes()
+                            + here.with_name("vector_reallocation_lifetime.py").read_bytes()
+                            + here.with_name("vector_reallocation_capacity.py").read_bytes()
+                            + here.with_name("vector_reallocation_caller_vcs.py").read_bytes()
+                            + here.with_name("heap_reallocation.mlw").read_bytes()
                             + here.with_name("vector_pipeline.py").read_bytes()
                             + here.with_name("model_domains.py").read_bytes()
                             + here.with_name("standard_model_view.py").read_bytes()
@@ -301,6 +313,15 @@ def identity():
                             + here.with_name("standard_range_calls.py").read_bytes()
                             + here.with_name("member_windows.py").read_bytes()
                             + here.with_name("stdlib_source_admission.py").read_bytes()
+                            + here.with_name("dx100_source_selector.py").read_bytes()
+                            + here.with_name("dx100_size_source.py").read_bytes()
+                            + here.with_name("dx100_stream_source.py").read_bytes()
+                            + here.with_name("dx100_stream_model.py").read_bytes()
+                            + here.with_name("dx100_allocation_source.py").read_bytes()
+                            + here.with_name("dx100_register_source.py").read_bytes()
+                            + here.with_name("dx100_register_model.py").read_bytes()
+                            + here.with_name("dx100_initialized_register_source.py").read_bytes()
+                            + here.with_name("dx100_initialized_register_model.py").read_bytes()
                             + json.dumps(stdlib_provenance.runtime_identity(tool), sort_keys=True).encode()).hexdigest()
     found = {"c_lowering": {"id": f"{TOOL_ID}-{TOOL_VERSION}", "sha256": digest},
              "naming_rules": naming_rules()}
@@ -597,6 +618,7 @@ class _Unit:
 
     def __init__(self, tool, source, includes, defines, summaries, semantics=None):
         self.tool, self.source, self.includes, self.defines = tool, source, tuple(includes), defines
+        self.source_digest = _file_sha256(source)
         self.summaries = dict(summaries or {})
         self.semantics = dict(semantics or {})      # ticket 27: {tile_pointer: names}; probes at tile accesses
         self.probes = []
@@ -643,9 +665,13 @@ class _Unit:
             if not desugared:                     # ticket 25: `std::vector<int>::iterator` reads through its sugar
                 raise
             parsed = _parse_type(desugared, line)
-        sugared_ok = _c_known(parsed.base) and not parsed.args
-        if not sugared_ok and desugared:
+        # A spelling such as uint64_t is an ordinary C++ typedef and may be
+        # shadowed. The source-node type is authoritative even when its name
+        # also occurs in the C prelude's fixed-width vocabulary.
+        if desugared:
             parsed = _parse_type(desugared, line)
+        if parsed.ref and not qual.rstrip().endswith('&'):
+            raise Unsupported('reference typedef needs an explicit source reference binding', line)
         return self._declarator(parsed, name, line, qual)
 
     def _declarator(self, parsed, name, line, shown):
@@ -666,6 +692,17 @@ class _Unit:
 
     def base_type(self, base, args, line, shown=""):
         plain = re.sub(r"^std::", "", base)
+        if not args and plain in (INTEGER_TYPES | set(INTERNAL_TYPES)) and '_' in plain:
+            # Function types do not always carry desugaredQualType. Resolve
+            # their typedef from the source, refusing shadowed contexts rather
+            # than substituting the C prelude's unrelated same-spelled alias.
+            nodes = [n for n in self.dump(plain) if n.get('name') == plain and not n.get('isImplicit')]
+            target = self.typedef_target(nodes, base, line)
+            parsed = _parse_type(target, line)
+            if (parsed.base == plain or parsed.args or parsed.pointers or parsed.ref or parsed.dims
+                    or not _c_known(parsed.base)):
+                raise Unsupported(f'nonprimitive source typedef identity for {base}', line)
+            return self.ctype(target, line=line)
         if not args and (plain in INTEGER_TYPES or base == "void"):
             return plain
         if not args and plain in INTERNAL_TYPES:
@@ -694,15 +731,32 @@ class _Unit:
         nodes = [n for n in self.dump(base) if n.get("name") == base and not n.get("isImplicit")]
         kinds = {n.get("kind") for n in nodes}
         if "EnumDecl" in kinds:
-            enum = [n for n in nodes if n.get("kind") == "EnumDecl"][0]
+            enums = [n for n in nodes if n.get("kind") == "EnumDecl"]
+            if len(enums) != 1 or kinds != {"EnumDecl"}:
+                raise Unsupported(f"ambiguous enum type {base}", line)
+            enum = enums[0]
             fixed = (enum.get("fixedUnderlyingType") or {})
             return self.ctype(fixed.get("qualType", "int"), fixed.get("desugaredQualType"), line=line) \
                 if fixed else "int"
         if kinds & {"TypedefDecl", "TypeAliasDecl"} and not args:
-            alias = [n for n in nodes if n.get("kind") in ("TypedefDecl", "TypeAliasDecl")][0]
-            qual, desugared = _types(alias)
-            return self.ctype(qual, desugared, line=line)
+            return self.ctype(self.typedef_target(nodes, base, line), line=line)
         return self.struct(base, args, line)
+
+    def typedef_target(self, nodes, name, line):
+        """A type spelling with no node-local binding needs a unique target.
+
+        Filtered dumps can contain unrelated class/local/namespace aliases.
+        Equal underlying targets are harmless; different targets or mixed
+        declaration kinds must not choose the first result's type.
+        """
+        aliases = [n for n in nodes if n.get('kind') in {'TypedefDecl', 'TypeAliasDecl'}]
+        targets = {desugared or qual for qual, desugared in map(_types, aliases)}
+        if not aliases or len(aliases) != len(nodes) or len(targets) != 1:
+            raise Unsupported(f'ambiguous source typedef identity for {name}', line)
+        target = next(iter(targets))
+        if _parse_type(target, line).ref:
+            raise Unsupported('reference typedef needs an explicit source reference binding', line)
+        return target
 
     def canonical(self, arg, line, desugared=None):
         """A template argument in one spelling: an integer, true/false, or a C type with every typedef resolved
@@ -721,12 +775,8 @@ class _Unit:
             return word
         key = ("typedef", word)
         if key not in self._cache:
-            aliases = [n for n in self.dump(word) if n.get("kind") in ("TypedefDecl", "TypeAliasDecl")
-                       and n.get("name") == word]
-            if not aliases:
-                raise Unsupported(f"type {word} (no typedef)", line)
-            qual, desugared = _types(aliases[0])
-            target = desugared or qual
+            nodes = [n for n in self.dump(word) if n.get('name') == word and not n.get('isImplicit')]
+            target = self.typedef_target(nodes, word, line)
             if not re.fullmatch(r"[a-z ]+", target):
                 target = re.sub(r"[A-Za-z_]\w*", lambda m: self._builtin(m.group(0), line), target)
             self._cache[key] = target
@@ -853,11 +903,10 @@ class _Unit:
     def enum_value(self, ref, line):
         name, qual = ref.get("name"), (ref.get("type") or {}).get("qualType", "")
         key = (name, qual)
-        if key in self._cache:
-            return self._cache[key]
         enum_name = re.sub(r"^(enum\s+)", "", qual).strip()
         if enum_name.startswith("(") or "unnamed" in enum_name:
-            nodes = [n for n in self.dump(name) if n.get("kind") == "EnumConstantDecl" and n.get("name") == name]
+            nodes = [n for n in self.dump(name) if n.get("kind") == "EnumConstantDecl" and n.get("name") == name
+                     and _qual(n) == qual]
             values = [_explicit_enum_value(n) for n in nodes]
             if len(values) != 1 or values[0] is None:
                 raise Unsupported(f"enumerator {name} of an unnamed enum without an explicit value", line)
@@ -868,6 +917,10 @@ class _Unit:
         enums = [n for n in self.dump(enum_name) if n.get("kind") == "EnumDecl" and n.get("name") == enum_name]
         if not enums:
             raise Unsupported(f"enumerator {name} (no enum {enum_name})", line)
+        if len(enums) != 1:
+            raise Unsupported(f"enumerator {name} of ambiguous enum {enum_name}", line)
+        if key in self._cache:
+            return self._cache[key]
         value = -1
         for constant in [c for c in _children(enums[0]) if c.get("kind") == "EnumConstantDecl"]:
             explicit = _explicit_enum_value(constant)
@@ -904,6 +957,72 @@ class _Unit:
             raise Unsupported(f"overloaded function {name}", line)
         return defined[0] if defined else (candidates[0] if candidates else None)
 
+    def call_declaration(self, name, qual_type, call, caller, line):
+        """Resolve template calls through one TU, never filtered-dump IDs.
+
+        Equal function types do not identify template specializations (for
+        example get_data_type<int>() and get_data_type<double>()). Source spans
+        and the enclosing stable mangled name locate the actual call; only then
+        can its declaration ID be followed inside the SAME full-TU dump.
+        """
+        if not any(n.get("kind") == "FunctionTemplateDecl" and n.get("name") == name
+                   for n in self.dump(name)):
+            return self.function_node(name, qual_type, line)
+
+        def span(node):
+            points = [(node.get("range") or {}).get(k) or {} for k in ("begin", "end")]
+            if any("offset" not in p or not p.get("_file", p.get("file")) or
+                   "spellingLoc" in p or "expansionLoc" in p for p in points):
+                raise Unsupported(f"template call {name} without direct unique source coordinates", line)
+            return tuple((str(Path(p.get("_file", p.get("file"))).resolve()), p["offset"], p.get("tokLen", 0))
+                         for p in points)
+
+        if not caller or not caller.get("mangledName"):
+            raise Unsupported(f"template call {name} without an enclosing source function", line)
+        wanted = span(call)
+        declarations, templates, owners = {}, {}, []
+
+        def visit(part):
+            if part.get("kind") in {"FunctionDecl", "CXXMethodDecl", "CXXConstructorDecl", "CXXDestructorDecl"}:
+                declarations[part.get("id")] = part
+                if part.get("mangledName") == caller["mangledName"] and _has_body(part):
+                    owners.append(part)
+            if part.get("kind") == "FunctionTemplateDecl":
+                for child in _children(part):
+                    if child.get("kind") == "FunctionDecl":
+                        templates[child.get("id")] = part
+            for child in _children(part):
+                visit(child)
+
+        for root in self.dump(""):
+            visit(root)
+        if len(owners) != 1:
+            raise Unsupported(f"template call {name} has no unique enclosing full-TU function", line)
+        references = []
+
+        def calls(part):
+            if part.get("kind") == "CallExpr":
+                try:
+                    same = span(part) == wanted
+                except Unsupported:
+                    same = False
+                if same:
+                    callee = _children(part)[0]
+                    while callee.get("kind") in {"ImplicitCastExpr", "ParenExpr"} and len(_children(callee)) == 1:
+                        callee = _children(callee)[0]
+                    ref = callee.get("referencedDecl") or {}
+                    if callee.get("kind") == "DeclRefExpr" and ref.get("name") == name and _qual(ref) == qual_type:
+                        references.append(ref)
+            for child in _children(part):
+                calls(child)
+
+        calls(owners[0])
+        target = declarations.get(references[0].get("id")) if len(references) == 1 else None
+        if not target or target.get("name") != name or _qual(target) != qual_type:
+            raise Unsupported(f"template call {name} has no unique full-TU specialization binding", line)
+        parent = templates.get(target.get("id"))
+        return _with_params(parent, [target])[0] if parent else target
+
     def lower_function(self, node, cname, owner=None, line=None):
         """Queue a function (or member function of struct `owner`) for lowering; returns its C name."""
         key = ("function", owner, node.get("mangledName") or node.get("name"), _qual(node))
@@ -926,6 +1045,24 @@ class _Unit:
             texts = [self.ctype(p, name=names[i], line=line) for i, p in enumerate(params)]
             self.prototypes_only[cname] = f"{_join(self.ctype(returns, line=line), cname)}({', '.join(texts) or 'void'})"
             self.summaries_used.append({"name": name, "c_name": cname, "summary": self.summaries[name]})
+        return cname
+
+    def summary_c_name(self, name, declaration, line):
+        """Keep template overloads with different arities at distinct C ABIs.
+
+        Inspect the whole source family, rather than whichever call appeared
+        first. A single-arity family retains its existing emitted bytes. Same
+        arity/type collisions still fail through claim; no overload is guessed.
+        """
+        if declaration is None or not _children_kind(declaration, "TemplateArgument"):
+            return name
+        cname = f"{name}_{'_'.join(_mangle_text(a) for a in self._spec_args(declaration, line))}"
+        arities = {sum(child.get("kind") == "ParmVarDecl" for child in _children(function))
+                   for template in self.dump(name)
+                   if template.get("kind") == "FunctionTemplateDecl" and template.get("name") == name
+                   for function in _children(template) if function.get("kind") == "FunctionDecl"}
+        if len(arities) > 1:
+            cname += f"_args{sum(child.get('kind') == 'ParmVarDecl' for child in _children(declaration))}"
         return cname
 
     def model(self, cname, text, line):
@@ -1065,6 +1202,7 @@ def _explicit_enum_value(node):
 class _Printer:
     def __init__(self, function, unit):
         self.function = function
+        self.source_declaration = None
         self.unit = unit
         self.lines = []
         self.anchors = []
@@ -1469,7 +1607,45 @@ class _Printer:
 
     def initializer(self, node, style):
         if node.get("kind") == "InitListExpr":
-            return "{" + ", ".join(self.initializer(e, "list") for e in node.get("inner", [])) + "}"
+            elements=node.get("inner", [])
+            if "array_filler" in node:
+                # Clang22 serializes the default filler FIRST, followed by the
+                # explicit prefix. Discarding that field loses every supplied
+                # value. C itself zero-fills the remaining scalar elements.
+                filler=node["array_filler"]
+                shape=re.fullmatch(r"(.+?)\s*\[(\d+)\]",_qual(node))
+                scalar=re.sub(r"\b(?:const|volatile)\b\s*","",shape[1]).strip() if shape else ""
+                if (elements or not shape or scalar not in INTEGER_TYPES | FLOAT_TYPES
+                        or int(shape[2])<1 or not isinstance(filler,list) or not filler
+                        or filler[0].get("kind")!="ImplicitValueInitExpr"
+                        or len(filler)-1>int(shape[2])
+                        or any(e.get("kind") in {"ImplicitValueInitExpr","InitListExpr","DesignatedInitExpr"} for e in filler[1:])):
+                    raise Unsupported("ambiguous, nested or nonscalar array_filler initializer",self.line)
+                points=[node.get("range",{}).get(k,{}) for k in ("begin","end")]
+                if any("offset" not in p or p.get("spellingLoc") or p.get("expansionLoc") for p in points):
+                    raise Unsupported("indirect array_filler initializer",self.line)
+                files=[Path(p.get("_file",p.get("file",str(self.unit.source)))).resolve() for p in points]
+                if files[0]!=files[1]:raise Unsupported("cross-source array_filler initializer",self.line)
+                spelled=files[0].read_bytes()[points[0]["offset"]:points[1]["offset"]+points[1]["tokLen"]].decode()
+                if re.search(r"\[[^]]*\]\s*=",re.sub(r"/\*.*?\*/|//[^\n]*","",spelled,flags=re.S)):
+                    raise Unsupported("designated array_filler initializer",self.line)
+                elements=filler[1:]
+                # C++ list initialization sequences elements; C initializer
+                # evaluation does not preserve that order. Admit only this
+                # closed literal-constant syntax, never reads/calls/effects.
+                def constant_prefix(e):
+                    children=_children(e)
+                    kind=e.get("kind")
+                    if kind in {"IntegerLiteral","FloatingLiteral","CXXBoolLiteralExpr","CharacterLiteral"}:
+                        return not children
+                    if (kind in {"ParenExpr","ConstantExpr","ImplicitCastExpr","CStyleCastExpr","CXXStaticCastExpr"}
+                            or kind=="UnaryOperator" and e.get("opcode") in {"+","-","!","~"}):
+                        return len(children)==1 and constant_prefix(children[0])
+                    return False
+                if not all(constant_prefix(e) for e in elements):
+                    raise Unsupported("source-proven constant array_filler prefix required to preserve initialization sequencing",self.line)
+                if not elements:return "{0}"
+            return "{" + ", ".join(self.initializer(e, "list") for e in elements) + "}"
         if style not in ("c", "call", "list", None):
             raise Unsupported(f"initialization style {style}", self.line)
         return self.expr(node, top=True)
@@ -1890,6 +2066,9 @@ class _Printer:
         if name.startswith("__sync_"):
             return self._sync(name, args)
         if name in ("__atomic_thread_fence", "__atomic_signal_fence"):
+            if len(args) != 1:
+                raise Unsupported(f"atomic fence {name} operand shape", self.line)
+            self._atomic_order(args[0], set(range(6)))
             return "(void)0", False
         if name.startswith("__builtin"):
             raise Unsupported(f"builtin call {name}", self.line)
@@ -1900,8 +2079,11 @@ class _Printer:
             if name not in unit.summaries:
                 raise Unsupported(f"call to {name} with no summary (__dxc_* and maa_* calls go through summaries)",
                                   self.line)
+            if name in self.semantics.get("refused_calls", set()):
+                raise Unsupported(f"proof-semantics explicitly refuses {name}", self.line)
             cname = name
-            node_found = unit.function_node(name, qual_type, self.line) if "<" not in name else None
+            node_found = unit.call_declaration(name, qual_type, node, self.source_declaration, self.line) \
+                if "<" not in name else None
             if node_found is not None:
                 _function_attributes(node_found, self.line)
             policy = self.semantics.get("array_call_policies", {}).get(name)
@@ -1929,16 +2111,73 @@ class _Printer:
                 except wp_pointer_bounds.Refused as exc:
                     site["reason"] = str(exc)
                 unit.pointer_calls.append(site)
-            if node_found is not None and _children_kind(node_found, "TemplateArgument"):
-                cname = f"{name}_{'_'.join(_mangle_text(a) for a in unit._spec_args(node_found, self.line))}"
+            cname = unit.summary_c_name(name, node_found, self.line)
+            instance = None
+            source_definition = None
+            source_policy = self.semantics.get('source_definitions', {}).get(name)
+            if source_policy is not None:
+                if node_found is None or not _has_body(node_found):
+                    raise Unsupported('fresh-SPD size policy requires the real pinned source definition', self.line)
+                from swdb import dx100_size_source, dx100_stream_source, dx100_allocation_source, dx100_initialized_register_source
+                if not isinstance(source_policy,dict)or source_policy.get('kind')not in (dx100_size_source.KIND,dx100_stream_source.KIND,dx100_allocation_source.KIND,dx100_initialized_register_source.KIND):
+                    raise Unsupported('unrecognized or refused DX100 source-definition policy',self.line)
+                source_module=dx100_initialized_register_source if source_policy.get('kind')==dx100_initialized_register_source.KIND else dx100_allocation_source if source_policy.get('kind')==dx100_allocation_source.KIND else dx100_stream_source if source_policy.get('kind')==dx100_stream_source.KIND else dx100_size_source
+                try:
+                    source_definition = source_module.certify(unit,node_found,source_policy,self.source_declaration,
+                                                                  standard=STD,timeout=TIMEOUT_SECONDS)
+                except source_module.Refused as exc:
+                    raise Unsupported('DX100 source size definition: '+str(exc),self.line) from None
+            variants = self.semantics.get('template_instances', {}).get(name)
+            if variants is not None:
+                arguments = list(unit._spec_args(node_found or {}, self.line))
+                returns, params, variadic = _return_and_params(qual_type, self.line)
+                matches = [v for v in variants if [' '.join(a.split()) for a in v['arguments']] == arguments
+                           and v['arity'] == len(params)]
+                if len(matches) != 1 or variadic:
+                    raise Unsupported(f"no proof-semantics template instance for {name}<{', '.join(arguments)}> "
+                                      f"with arity {len(params)}", self.line)
+                instance = matches[0]
+                definition = None
+                if _has_body(node_found or {}):
+                    if 'definition' not in instance:
+                        raise Unsupported('template instance needs a pinned interface definition; '
+                                          'source-defined implementations cannot inherit a device contract', self.line)
+                    from swdb import dx100_source_selector, dx100_stream_source, dx100_allocation_source, dx100_register_source, dx100_initialized_register_source
+                    if not isinstance(instance['definition'],dict)or instance['definition'].get('kind')not in (dx100_source_selector.KIND,dx100_stream_source.KIND,dx100_allocation_source.KIND,dx100_register_source.KIND,dx100_initialized_register_source.KIND):
+                        raise Unsupported('unrecognized or refused DX100 template source-definition policy',self.line)
+                    source_module=dx100_initialized_register_source if instance['definition'].get('kind')==dx100_initialized_register_source.KIND else dx100_register_source if instance['definition'].get('kind')==dx100_register_source.KIND else dx100_allocation_source if instance['definition'].get('kind')==dx100_allocation_source.KIND else dx100_stream_source if instance['definition'].get('kind')==dx100_stream_source.KIND else dx100_source_selector
+                    try:
+                        if source_module in (dx100_stream_source,dx100_allocation_source,dx100_register_source,dx100_initialized_register_source):
+                            source_definition = source_module.certify(unit,node_found,instance['definition'],self.source_declaration,standard=STD,timeout=TIMEOUT_SECONDS)
+                        else:
+                            definition = source_module.certify(unit, node_found, arguments, instance['definition'],standard=STD, timeout=TIMEOUT_SECONDS)
+                    except source_module.Refused as exc:
+                        raise Unsupported('DX100 source selector definition: '+str(exc), self.line) from None
+                elif 'definition' in instance:
+                    raise Unsupported('DX100 source selector requires the real pinned definition', self.line)
+                signature = unit.ctype(returns, line=self.line) + '(' + ','.join(
+                    unit.ctype(p, line=self.line) for p in params) + ')'
+                try:
+                    wp_pointer_bounds.check_import_signature({'signature': signature},
+                        {'prototype': instance['prototype'], 'call': cname})
+                except wp_pointer_bounds.Refused as exc:
+                    raise Unsupported(f'template instance C signature differs: {exc}', self.line) from None
             names = [p.get("name") for p in _children(node_found or {}) if p.get("kind") == "ParmVarDecl"]
             unit.summary(name, cname, qual_type, self.line, names)
+            if source_definition is not None:
+                next(row for row in unit.summaries_used if row['c_name']==cname)['semantic_source']=source_definition
+            if instance is not None:
+                used = next(row for row in unit.summaries_used if row['c_name'] == cname)
+                used['semantic_instance'] = {'arguments': arguments, 'arity': len(params)}
+                if definition is not None:
+                    used['semantic_instance']['definition'] = definition
             returns, params, _ = _return_and_params(qual_type, self.line)
             texts = [self.address(a) if i < len(params) and params[i].rstrip().endswith("&") else self.expr(a, top=True)
                      for i, a in enumerate(args)]
             call = f"{cname}({', '.join(texts)})"
             if (name == "get_cacheable_tile_pointer" and name in self.semantics.get("tile_pointer", ())) or \
-                    (name in self.semantics.get("calls", ()) and returns in INTEGER_TYPES):
+                    (name in self.semantics.get("calls", ()) and
+                     ((source_definition is not None and re.sub(r'\b(?:const|volatile)\b\s*','',unit.ctype(returns,line=self.line)).strip() in INTEGER_TYPES) or returns in INTEGER_TYPES or (instance is not None and unit.ctype(returns, line=self.line) in INTEGER_TYPES))):
                 # 2026-10-15 ET: WP33 does not initialize a receiving local slot
                 # for a modular call. An identity expression forces its ordinary
                 # assignment path. Imported integer results have an exact identity;
@@ -1950,7 +2189,7 @@ class _Printer:
             target = unit.function_node(name, qual_type, self.line)
             if target is not None and _is_std(target):
                 return self._std(name, target, args, node)
-        target = unit.function_node(name, qual_type, self.line)
+        target = unit.call_declaration(name, qual_type, node, self.source_declaration, self.line)
         if target is None or not _has_body(target):
             if name in OMP_RUNTIME and not args:
                 return self._omp_runtime(name), True
@@ -2135,6 +2374,18 @@ class _Printer:
         if op not in ATOMIC_OPS:
             raise Unsupported(f"atomic builtin {name}", self.line)
         children = _children(node)
+        if len(children) != (2 if op == "load_n" else 6 if op == "compare_exchange_n" else 3):
+            raise Unsupported(f"atomic builtin {name} operand shape", self.line)
+        order = self._atomic_order(children[1], {0, 1, 2, 5} if op == "load_n" else
+                                   {0, 3, 5} if op == "store_n" else set(range(6)))
+        if op == "compare_exchange_n":
+            # Failure has load semantics: release is incomparable with acquire,
+            # so a numeric failure <= success comparison would admit invalid pairs.
+            failure_orders = {0: {0}, 1: {0, 1}, 2: {0, 1, 2}, 3: {0}, 4: {0, 1, 2}, 5: {0, 1, 2, 5}}
+            self._atomic_order(children[3], failure_orders[order])
+            if self._atomic_constant(children[5], "weak flag") != 0:
+                raise Unsupported("atomic weak compare-exchange may fail spuriously; only constant false is supported",
+                                  self.line)
         ptr = children[0]
         ctype = self._pointee(ptr, name)
         if op == "load_n":
@@ -2148,6 +2399,36 @@ class _Printer:
         text = f"{model}({', '.join(texts)})"
         return self._initialized_model_result(text, ctype, boolean=op == "compare_exchange_n",
                                               void=op == "store_n"), True
+
+    def _atomic_constant(self, node, label):
+        """Atomic operand admission v1: no runtime reads/effects or folded-away RTE."""
+        kind, children = node.get("kind"), _children(node)
+        wrappers = {"ParenExpr", "ConstantExpr", "ImplicitCastExpr", "CStyleCastExpr", "CXXStaticCastExpr"}
+        if kind in wrappers and len(children) == 1:
+            if kind in {"ParenExpr", "ConstantExpr"}:
+                return self._atomic_constant(children[0], label)
+            if (node.get("castKind") in {"NoOp", "IntegralCast", "IntegralToBoolean"}
+                    and _qual(node) in INTEGER_TYPES | {"bool"}):
+                value = self._atomic_constant(children[0], label)
+                if not 0 <= value <= 5:
+                    raise Unsupported(f"atomic {label} cast is outside the closed constant domain", self.line)
+                return int(value != 0) if node.get("castKind") == "IntegralToBoolean" else value
+        if kind == "IntegerLiteral" and not children:
+            return int(node["value"])
+        if kind == "CXXBoolLiteralExpr" and not children:
+            return int(node["value"])
+        if kind == "DeclRefExpr" and not children and node.get("referencedDecl", {}).get("kind") == "EnumConstantDecl":
+            try:
+                return self.unit.enum_value(node["referencedDecl"], self.line)
+            except Unsupported as exc:
+                raise Unsupported(f"atomic {label}: {exc.construct}", self.line) from None
+        raise Unsupported(f"atomic {label} requires a literal or enum constant with safe integer wrappers", self.line)
+
+    def _atomic_order(self, node, allowed):
+        value = self._atomic_constant(node, "memory order")
+        if value not in allowed:
+            raise Unsupported("atomic memory order is invalid for this operation", self.line)
+        return value
 
     def _sync(self, name, args):
         if name == "__sync_synchronize":
@@ -2379,6 +2660,10 @@ def model_definition(family, op, ctype):
 
 def model_text(name):
     """The C text of the C model a lowering calls `name`, or None: what `swdb prove --model NAME` proves."""
+    from swdb import vector_reallocation_model
+    qualified = vector_reallocation_model.model_text(name)
+    if qualified is not None:
+        return qualified
     modeled = std_models.model_text(name)
     if modeled is not None:
         return modeled
@@ -2520,6 +2805,9 @@ def lower(source, function, includes=(), defines=(), summaries=None, semantics=N
     provenance = (stdlib_provenance.certify(tool, source, includes=includes, defines=defines,
                                           models=provenance_models, substitutions=unit.stdlib_substitutions)
                   if stdlib_provenance.needed(provenance_models, allocation) else {})
+    from swdb import vector_reallocation_calls
+    candidate = vector_reallocation_calls.certify(node, source=source.read_bytes().decode('utf-8'), text=text,
+                    defines=defines, models=models, provenance=provenance)
     return Lowering(function=function, text=text, anchors=tuple(anchors), declaration=declaration,
                     parameters=tuple(unit_params), source_sha256=_file_sha256(source), defines=defines,
                     tool={"id": TOOL_ID, "version": TOOL_VERSION, "naming_rules": NAMING_RULES,
@@ -2527,6 +2815,7 @@ def lower(source, function, includes=(), defines=(), summaries=None, semantics=N
                     summaries=tuple(unit.summaries_used), models=models, probes=tuple(unit.probes),
                     std_models=tuple(sorted(unit.std_types)), allocation=allocation, stdlib_provenance=provenance,
                     stdlib_substitutions=tuple(unit.stdlib_substitutions),
+                    vector_reallocation_candidate=candidate,
                     cpu_effects=cpu_effects.collect(definition_nodes, unit.probe_nodes, unit.models,
                                                     unit.summaries_used, INTEGER_TYPES | FLOAT_TYPES),
                     bounded_initialization=bounded_initialization.analyze(definition_nodes,
@@ -2566,6 +2855,7 @@ def _callees_first(function, definitions):
 def _define(unit, cname, node, owner):
     """(prototype, printer, parameters, callees) of one lowered function, method, constructor or destructor."""
     printer = _Printer(cname, unit)
+    printer.source_declaration = node
     printer._at(node)
     line = printer.line
     kind = node.get("kind")
@@ -2588,7 +2878,8 @@ def _define(unit, cname, node, owner):
         if qual.rstrip().endswith("&"):
             printer.ref_ids.add(param.get("id"))
         texts.append(unit.ctype(qual, desugared, name, line))
-        params.append((name, unit.ctype(qual, desugared, "", line), "*" in qual or qual.rstrip().endswith("&")))
+        parameter_type = unit.ctype(qual, desugared, "", line)
+        params.append((name, parameter_type, '*' in parameter_type))
     printer.local_ids.update(p.get("id") for p in _children(node) if p.get("kind") == "ParmVarDecl")
     if kind in ("CXXConstructorDecl", "CXXDestructorDecl"):
         returns = "void"
@@ -2731,4 +3022,6 @@ def _cli(args):
     out["pointer_bounds"] = lowering.pointer_bounds
     if lowering.terminal_release:
         out["terminal_release"] = lowering.terminal_release
+    if lowering.vector_reallocation_candidate:
+        out["vector_reallocation_candidate"] = lowering.vector_reallocation_candidate
     return out

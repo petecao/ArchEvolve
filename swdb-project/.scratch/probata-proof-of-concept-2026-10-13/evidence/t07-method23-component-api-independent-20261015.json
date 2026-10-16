@@ -1,0 +1,189 @@
+{
+  "created": "2026-10-15T21:42:09.151526-04:00",
+  "verdict": "PASS: retained component3 API/exporter agreement/runtime context/resource checks only",
+  "plan_sha256": "9606304ffc0a17a8d224a243e4af96483248543c52daa8c3b6047197ca7466ab",
+  "input_pin_count": 14,
+  "all_input_pins_current": true,
+  "root_admission_launch_exit_chain": "PASS",
+  "task_checks": {
+    "duplicate_safe_JSON": true,
+    "complete_inventory_flag": true,
+    "goal_rows": 15,
+    "unique_IDs": 15,
+    "index_tasks": 15,
+    "whole_ID_sets_equal": true,
+    "printed_goal_headers": 15,
+    "all_full_rendered_tasks_present_in_print_log": true,
+    "nontrivial_contextual_tasks": [
+      "typed_TDStep_call_callee_requires",
+      "typed_TDStep_call_callee_requires_2",
+      "typed_TDStep_ensures",
+      "typed_another_call_only_one_requires",
+      "typed_another_ensures"
+    ],
+    "contexts": [
+      {
+        "goal": "typed_TDStep_call_callee_requires",
+        "property": "callee_requires",
+        "call_line": 16,
+        "origin_property": "callee_requires_4",
+        "origin_line": 2,
+        "origin_description": "requires\nx \u2265 1"
+      },
+      {
+        "goal": "typed_TDStep_call_callee_requires_2",
+        "property": "callee_requires_2",
+        "call_line": 16,
+        "origin_property": "callee_requires_3",
+        "origin_line": 3,
+        "origin_description": "requires\nx \u2264 99"
+      },
+      {
+        "goal": "typed_another_call_only_one_requires",
+        "property": "only_one_requires",
+        "call_line": 21,
+        "origin_property": "only_one_requires_2",
+        "origin_line": 17,
+        "origin_description": "requires\nx \u2265 1"
+      },
+      {
+        "goal": "typed_TDStep_ensures",
+        "property": "TDStep_ensures",
+        "source_line": 14,
+        "description": "ensures\n\\result \u2265 \\old(x)"
+      },
+      {
+        "goal": "typed_another_ensures",
+        "property": "another_ensures",
+        "source_line": 20,
+        "description": "ensures\n\\result \u2265 \\old(x)"
+      }
+    ],
+    "native_goals_json_present": false,
+    "all_generated_results_lists_empty": true
+  },
+  "resources": {
+    "cmd": [
+      "/bin/sh",
+      "/private/tmp/probata-t07-method23-task-component3/generate.sh"
+    ],
+    "exit_code": 0,
+    "wall_s": 0.5912541249999776,
+    "peak_rss_mb": 101.265625,
+    "cap_gb": 8.0,
+    "killed_by_watchdog": false,
+    "timed_out": false,
+    "queue_timed_out": false,
+    "timeout_s": 45.0,
+    "queue_timeout_s": 5.0,
+    "lock_wait_s": 0.0003965833457186818,
+    "runner_pid": 70522,
+    "clock": "continuous_monotonic",
+    "clock_info": {
+      "kind": "continuous_monotonic",
+      "implementation": "mach_continuous_time",
+      "includes_sleep": true,
+      "numer": 125,
+      "denom": 3
+    },
+    "log": "/private/tmp/probata-t07-method23-task-component3/component.log",
+    "inspection_events": [],
+    "inspection_failure": null,
+    "inspection_retry_boundary": "environ retries bounded by200ms and21attempts; other operations three attempts separated by10ms; all pauses count and RSS/deadline checks remain mandatory after inspection; only independently confirmed gone/zombie or changed birth is skipped; persistent live or unknown denial fails closed",
+    "log_sha256": "ca985555733aa6c872c8a7edaf4eb69ca4f312114d10da3390382b3caf84cbab",
+    "unconfirmed_children": [],
+    "error": null,
+    "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment",
+    "rss_scope": "live union of current ancestry, retained PID/birth identities and periodic inherited-marker matches; sampled, not a kernel quota",
+    "finished": "2026-10-15 21:39:11 EDT"
+  },
+  "poststop": {
+    "three_metadata_scans": "PASS; exact runner identity absent, component-path/cwd matches0, denials0, shared leases absent each",
+    "scope": "Finite recent same-UID metadata-only PID/birth/name/cmdline/cwd observations; own auditor ancestry excluded. No environment reads; random run marker unavailable in retained receipts, so no exact-token absence certification. No signals or lease modifications. Parent fake worker may have noncomponent processes.",
+    "exact_marker_absence_certified": false
+  },
+  "artifacts": [
+    {
+      "path": "/private/tmp/probata-t07-method23-task-component3/component.c",
+      "sha256": "5a54e54dff0e79f46b9eb1a834cfc87b186a4e3a11c4419b588ed53567922561",
+      "bytes": 595
+    },
+    {
+      "path": "/private/tmp/probata-t07-method23-task-component3/component.log",
+      "sha256": "ca985555733aa6c872c8a7edaf4eb69ca4f312114d10da3390382b3caf84cbab",
+      "bytes": 3328
+    },
+    {
+      "path": "/private/tmp/probata-t07-method23-task-component3/component.log.summary.json",
+      "sha256": "2733858f49945d41982d0bff196aee4fce2a12b5bee17403afee1304119cee41",
+      "bytes": 1537
+    },
+    {
+      "path": "/private/tmp/probata-t07-method23-task-component3/component.log.wait.json",
+      "sha256": "65c57adaff580a905d8d94b0a778b73ab88001e0d68e57aa729455b8093c6146",
+      "bytes": 273
+    },
+    {
+      "path": "/private/tmp/probata-t07-method23-task-component3/generate.sh",
+      "sha256": "18ee200e8b2613cb76b193001d84c047289c2d338bb361358b45fc0760500056",
+      "bytes": 546
+    },
+    {
+      "path": "/private/tmp/probata-t07-method23-task-component3/generated-inventory.json",
+      "sha256": "3620d247cd220dc5f6509631f844623d082834c9c78fc701224fe79f0972331c",
+      "bytes": 8705
+    },
+    {
+      "path": "/private/tmp/probata-t07-method23-task-component3/plan.json",
+      "sha256": "9606304ffc0a17a8d224a243e4af96483248543c52daa8c3b6047197ca7466ab",
+      "bytes": 5366
+    },
+    {
+      "path": "/private/tmp/probata-t07-method23-task-component3/wp-task-index.json",
+      "sha256": "82d7d0326cc2e6ae7ae3cf81bb0a033ae775a2eaada7c9c334828c6ee0ac664e",
+      "bytes": 2635
+    }
+  ],
+  "external_receipts": [
+    {
+      "path": "/private/tmp/probata-t07-method23-task-component3-admission-20261015.json",
+      "sha256": "912523931a2a1351f834376103556ed04280113fbfa67bf4be12c7e9db7773ba",
+      "bytes": 1322
+    },
+    {
+      "path": "/private/tmp/probata-t07-method23-task-component3-launch-20261015.json",
+      "sha256": "3eea8c25f41085a9c8d7eb0d329023323ffbd44296c196675fc86475455ae3dc",
+      "bytes": 812
+    },
+    {
+      "path": "/private/tmp/probata-t07-method23-task-component3-exit-20261015.json",
+      "sha256": "fc39eff828bdd5cc0ac4b632c5a0f822d2e064dfc185975343bf0cc854b42555",
+      "bytes": 283
+    },
+    {
+      "path": "/private/tmp/probata-t07-method23-task-component3-runner-20261015.stdout",
+      "sha256": "72d4dfec74c7fd2eeb0e7c106c7a1742397ebeb05e0c799b4f0288a37f81a55b",
+      "bytes": 1492
+    },
+    {
+      "path": "/private/tmp/probata-t07-method23-component3-poststop-independent.json",
+      "sha256": "fde0ae7335f1f331634a2adb1e9bb00594dc3ad679f5f884727dfeed557016d5",
+      "bytes": 1400
+    },
+    {
+      "path": "/private/tmp/probata-t07-method23-task-component3-static-review.json",
+      "sha256": "d2a7b103d87f31086b37348a0b688aa60f916f69a502ce85e39feba5679a707e",
+      "bytes": 6671
+    }
+  ],
+  "limitations": [
+    "Both read-only hooks observe the same Wpo store; exact equality checks independent serializers and hook ordering, not an independent mathematical derivation of all Frama obligations.",
+    "Native solver-session report is absent and not upgraded into completeness/proof evidence. Verdict-only generated results do not identify prover origin; exact script none argv and log support no external prover configured/evidenced, not an exhaustive kernel execution trace.",
+    "No full reader/compiler public path, production LLVM lowering, baseline-subset formula equivalence, final proof, timing sufficiency, future provider payload or actual METHOD23 acceptance is certified.",
+    "Finite poststop metadata scans read no environments. Random guard marker unavailable in retained receipts; no exact-token absence claim. Trusted-marker/non-atomic/sampled guard boundary retained.",
+    "Components1/2 limitations preserved; this PASS does not rewrite their results."
+  ],
+  "actual_tools_executed_by_reviewer": false,
+  "source_or_shared_process_lease_mutation_by_reviewer": false,
+  "full_METHOD23_approval": false
+}

@@ -23,7 +23,9 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
-from swdb import artifacts
+import yaml
+
+from swdb import artifacts, yamlio
 
 FOLDER = "proof_semantics"
 GHOST_LINE = re.compile(r"^\s*ghost\s+(?P<decl>[^;]+);\s*(//.*)?$")
@@ -155,17 +157,26 @@ def check(library, entry_id, data, error):
     if not isinstance(calls, list) or not calls:
         error("calls", "an entry that covers calls lists them: call, prototype, contract (ACSL), rules")
         return []
-    names = []
+    names, malformed_overloads = [], False
     for i, row in enumerate(calls):
         where = f"calls[{i}]"
         if not isinstance(row, dict) or not isinstance(row.get("call"), str):
             error(where, "a call row names its call")
             continue
         names.append(row["call"])
-        if not isinstance(row.get("contract"), str) or not row["contract"].strip():
+        if "supported" in row and type(row["supported"]) is not bool:
+            error(f"{where}.supported", "supported must be a boolean; false explicitly refuses this call")
+        if "overloads" in row and (not isinstance(row["overloads"], list) or not row["overloads"] or
+                any(not isinstance(variant, dict) or
+                    not isinstance(variant.get("prototype"), str) or not variant["prototype"].strip() or
+                    not isinstance(variant.get("contract"), str) or not variant["contract"].strip()
+                    for variant in row["overloads"])):
+            error(f"{where}.overloads", "overloads must list a C prototype and contract for each declaration")
+            malformed_overloads = True
+        if 'instances' not in row and (not isinstance(row.get("contract"), str) or not row["contract"].strip()):
             error(f"{where}.contract", f"call {row['call']} has no ACSL contract (one contract per covered call)")
-        if not isinstance(row.get("prototype"), str) or not re.search(rf"\b{re.escape(row['call'])}\s*\(",
-                                                                       row.get("prototype") or ""):
+        if 'instances' not in row and (not isinstance(row.get("prototype"), str) or not re.search(
+                rf"\b{re.escape(row['call'])}\s*\(", row.get("prototype") or "")):
             error(f"{where}.prototype", f"call {row['call']} needs its C prototype (core-subset spelling)")
         listed = row.get("rules")
         if not isinstance(listed, list) or not listed:
@@ -181,6 +192,12 @@ def check(library, entry_id, data, error):
                                             f"{interface['id']} {interface['version']}")
     if len(set(names)) != len(names):
         error("calls", "each call is listed once")
+    from swdb import dx100_interface
+    malformed_instances = not dx100_interface.check_instances(data, error)
+    from swdb import dx100_source_selector, dx100_stream_source, dx100_allocation_source, dx100_register_source, dx100_initialized_register_source
+    if not dx100_stream_source.stream_layout(data) and not dx100_allocation_source.allocation_layout(data) and not dx100_register_source.register_layout(data) and not dx100_initialized_register_source.initialized_register_layout(data):
+        malformed_instances = not dx100_source_selector.check(library, data, error) or malformed_instances
+    dx100_interface.check(library, data, error)
     found = data.get("inventory")
     if not isinstance(found, dict) or not isinstance(found.get("sources"), list) or \
             not isinstance(found.get("calls"), list):
@@ -196,7 +213,16 @@ def check(library, entry_id, data, error):
                 error("calls", f"inventory call {name} has no call row (every call the inventory found needs a "
                                "contract)")
     texts = _files(library, data, error)
-    if len(texts) < 4:
+    from swdb import dx100_size_source
+    malformed_layout = not dx100_stream_source.check(library, data, texts, error)
+    malformed_layout = not dx100_allocation_source.check(library, data, texts, error) or malformed_layout
+    malformed_layout = not dx100_register_source.check(library, data, texts, error) or malformed_layout
+    malformed_layout = not dx100_initialized_register_source.check(library, data, texts, error) or malformed_layout
+    if not dx100_stream_source.stream_layout(data) and not dx100_allocation_source.allocation_layout(data) and not dx100_register_source.register_layout(data) and not dx100_initialized_register_source.initialized_register_layout(data):
+        malformed_layout = not dx100_size_source.check(library, data, texts, error) or malformed_layout
+        if not dx100_size_source.size_layout(data):
+            malformed_layout = not dx100_source_selector.check_layout(data, texts, error) or malformed_layout
+    if len(texts) < 4 or malformed_overloads or malformed_instances or malformed_layout:
         return []
     return _typecheck(library, entry_id, data, texts, error)
 
@@ -205,14 +231,26 @@ def acsl_source(data, texts, rows=None, *, constants=None):
     """The C file Frama-C type-checks: constants, the ghost block, the device state, the logic definitions, then each
     call's (and query's) contract on its prototype. `rows` limits it to some call or query rows."""
     parts = [f"#define {name} {value}" for name, value in (data.get("constants") or {}).items()]
-    parts += ["#include <stdint.h>", "/*@ ghost"]
-    parts += [f"  {decl};" for _name, decl in ghost_declarations(texts["ghost.acsl"])]
-    state, _objects = _bounded_state(texts["model.state"], constants or data.get("constants") or {},
-                                     constant_table=True)
-    parts += ["*/", state, "/*@", texts["model.logic"], "*/"]
+    from swdb.dx100_source_selector import pure_layout
+    from swdb.dx100_size_source import size_layout
+    from swdb.dx100_stream_source import stream_layout
+    from swdb.dx100_allocation_source import allocation_layout
+    from swdb.dx100_register_source import register_layout
+    from swdb.dx100_initialized_register_source import initialized_register_layout
+    parts.append("#include <stdint.h>")
+    state, _objects = _model_state(data, texts["model.state"], constants or data.get("constants") or {},
+                                   constant_table=True)
+    if pure_layout(data) or size_layout(data) or stream_layout(data) or allocation_layout(data) or register_layout(data) or initialized_register_layout(data):
+        parts.append(state)  # Closed plain C state; no empty/nested ACSL ghost or logic block.
+    else:
+        parts += ["/*@ ghost"]
+        parts += [f"  {decl};" for _name, decl in ghost_declarations(texts["ghost.acsl"])]
+        parts += ["*/", state, "/*@", texts["model.logic"], "*/"]
+    from swdb.dx100_interface import contract_rows
     for row in rows if rows is not None else [*(data.get("calls") or []), *(data.get("queries") or []),
                                               *((data.get("wp") or {}).get("probes") or [])]:
-        parts += ["/*@", row.get("contract") or "", "*/", f"{row.get('prototype')};"]
+        for variant in contract_rows(row):
+            parts += ["/*@", variant.get("contract") or "", "*/", f"{variant.get('prototype')};"]
     return "\n".join(parts) + "\n"
 
 
@@ -233,7 +271,7 @@ def wp_prelude(library, entry_id, called, defines=()):
     for probe in probes:
         name = re.match(r".*?\b(\w+)\s*\(", probe["prototype"]).group(1)
         parts.append(f"#define {probe['macro']}(addr, id) {name}(addr)")
-    body = acsl_source({"constants": {}}, texts, rows=rows, constants=constants)
+    body = acsl_source({"constants": {}, "model": data.get("model", {})}, texts, rows=rows, constants=constants)
     parts.append(body.replace("#include <stdint.h>\n", ""))
     return "\n".join(parts) + "\n"
 
@@ -280,8 +318,10 @@ def _constants(data, defines):
 def _typecheck(library, entry_id, data, texts, error):
     """Frama-C type-checks the ghost state, the logic and every contract; missing Frama-C: each contract unchecked."""
     from swdb import framac
+    from swdb.dx100_interface import contract_rows
     from swdb.problems import Problem
-    rows = [*(data.get("calls") or []), *(data.get("queries") or [])]
+    rows = [variant for row in [*(data.get("calls") or []), *(data.get("queries") or [])]
+            for variant in contract_rows(row)]
     tool = framac.locate()
     path = str(library.files[entry_id])
     if tool.missing:
@@ -318,7 +358,13 @@ def _files(library, data, error):
     if "ghost.acsl" not in texts:
         return texts
     ghost = ghost_declarations(texts["ghost.acsl"])
-    if not ghost:
+    from swdb.dx100_source_selector import pure_layout
+    from swdb.dx100_size_source import size_layout
+    from swdb.dx100_stream_source import stream_layout
+    from swdb.dx100_allocation_source import allocation_layout
+    from swdb.dx100_register_source import register_layout
+    from swdb.dx100_initialized_register_source import initialized_register_layout
+    if not ghost and not pure_layout(data) and not size_layout(data) and not stream_layout(data) and not allocation_layout(data) and not register_layout(data) and not initialized_register_layout(data):
         error("ghost.acsl", "the ghost file declares no ghost array")
     for key in ("model.state", "model.c"):
         for name, _decl in ghost:
@@ -367,18 +413,93 @@ def covered_names(library):
     return found
 
 
+def record_assumptions(library, entry_id, sha256):
+    """Trust rules recorded on EVERY verdict using this exact semantics version.
+
+    Rule statements and their cited/owned evidence live in the pinned entry.
+    References use its content hash plus a distinct rule fragment; a mutation
+    cannot silently attach new trust text to a verdict for older bytes.
+    """
+    from swdb.proof import AdapterError
+    path = library.files[entry_id]
+    try:
+        unchanged = (artifacts.file_hash(path) == sha256
+                     and yamlio.load(path) == library.get(entry_id)
+                     and artifacts.file_hash(path) == sha256)
+    except (OSError, UnicodeError, yaml.YAMLError):
+        unchanged = False
+    if not unchanged:
+        raise AdapterError('proof-semantics trust entry changed during the job')
+    return [{'kind': 'proof_semantics', 'reference': {'id': f'{entry_id}#{rule["id"]}', 'sha256': sha256},
+             'sentence': rule['statement']}
+            for rule in library.get(entry_id).get('rules', []) if rule.get('record_assumption') is True]
+
+
 def lowering_options(library):
     """The keyword arguments of `c_lowering.lower` for a unit that may call into a current proof semantics: its
     calls and queries as summaries (calls kept, prototype only) and the tile-pointer calls (hazard probes)."""
     covered = covered_names(library)
     if not covered:
         return {}
-    return {"summaries": dict(covered), "semantics": {"tile_pointer": {TILE_POINTER}, "calls": set(covered)}}
+    instances = {row['call']: row['instances'] for data in current(library).values()
+                 for row in data.get('calls', []) if 'instances' in row}
+    semantics = {"tile_pointer": {TILE_POINTER}, "calls": set(covered),
+                 "refused_calls": {row["call"] for data in current(library).values()
+                                   for row in data.get("calls", []) if row.get("supported") is False}}
+    if instances:
+        from swdb import dx100_source_selector, dx100_stream_source, dx100_allocation_source, dx100_register_source, dx100_initialized_register_source
+        instances = {name: [{**v, 'definition': (dx100_initialized_register_source.policy if isinstance(v['definition'],dict) and v['definition'].get('kind')==dx100_initialized_register_source.KIND else dx100_register_source.policy if isinstance(v['definition'],dict) and v['definition'].get('kind')==dx100_register_source.KIND else dx100_allocation_source.policy if isinstance(v['definition'],dict) and v['definition'].get('kind')==dx100_allocation_source.KIND else dx100_stream_source.policy if isinstance(v['definition'],dict) and v['definition'].get('kind')==dx100_stream_source.KIND else dx100_source_selector.policy)(library, v['definition'])}
+                            if 'definition' in v else v for v in variants]
+                     for name, variants in instances.items()}
+        semantics['template_instances'] = instances
+    from swdb import dx100_size_source
+    semantics['source_definitions'] = {r['call']: dx100_size_source.policy(library,r['definition'])
+        for data in current(library).values() if dx100_size_source.size_layout(data)
+        for r in data.get('calls',[]) if r.get('supported') is True}
+    from swdb import dx100_stream_source
+    semantics['source_definitions'].update({r['call']: dx100_stream_source.policy(library,r['definition'])
+        for data in current(library).values() if dx100_stream_source.stream_layout(data)
+        for r in data.get('calls',[]) if r.get('supported') is True and 'definition' in r})
+    from swdb import dx100_allocation_source
+    semantics['source_definitions'].update({r['call']:dx100_allocation_source.policy(library,r['definition'])
+        for data in current(library).values() if dx100_allocation_source.allocation_layout(data)
+        for r in data.get('calls',[]) if r.get('supported') is True and 'definition' in r})
+    from swdb import dx100_initialized_register_source
+    semantics['source_definitions'].update({r['call']:dx100_initialized_register_source.policy(library,r['definition'])
+        for data in current(library).values() if dx100_initialized_register_source.initialized_register_layout(data)
+        for r in data.get('calls',[]) if r.get('supported') is True and 'definition' in r})
+    return {"summaries": dict(covered), "semantics": semantics}
 
 
 def called(lowering, covered):
     """The proof-semantics calls and queries a C lowering makes (sorted)."""
     return sorted({row["name"] for row in lowering.summaries if row.get("name") in covered})
+
+
+def instance_bindings(lowering):
+    """Persistent source-instantiation identities, independently of family names."""
+    return [{'name': row['name'], 'c_name': row['c_name'], **row['semantic_instance']}
+            for row in lowering.summaries if 'semantic_instance' in row]
+
+
+def contract_names(library, entry_id, called):
+    from swdb.dx100_interface import contract_rows
+    data = library.get(entry_id)
+    return [re.match(r'.*?\b(\w+)\s*\(', variant['prototype'])[1]
+            for row in [*data.get('calls', []), *data.get('queries', [])]
+            if row.get('call', row.get('query')) in called for variant in contract_rows(row)]
+
+
+def _model_state(data, text, constants, *, constant_table=False):
+    from swdb.dx100_source_selector import pure_layout
+    from swdb.dx100_size_source import size_layout
+    from swdb.dx100_stream_source import stream_layout
+    from swdb.dx100_allocation_source import allocation_layout
+    from swdb.dx100_register_source import register_layout
+    from swdb.dx100_initialized_register_source import initialized_register_layout
+    if pure_layout(data) or size_layout(data) or stream_layout(data) or allocation_layout(data) or register_layout(data) or initialized_register_layout(data):
+        return text, ()
+    return _bounded_state(text, constants, constant_table=constant_table)
 
 
 def _bounded_state(text, constants, *, constant_table=False):
@@ -412,7 +533,7 @@ def model_for(library, entry_id, defines=()):
     ghost = ghost_declarations(library.resolve(data["ghost"]["acsl"]).read_text())
     parts.append("/* ghost state, generated from ghost.acsl (declared once there) */")
     parts += [f"{decl};" for _name, decl in ghost]
-    state, tile_objects = _bounded_state(library.resolve(data["model"]["state"]).read_text(), constants)
+    state, tile_objects = _model_state(data, library.resolve(data["model"]["state"]).read_text(), constants)
     parts.append(state)
     model = library.resolve(data["model"]["c"]).read_text()
     parts.append(model)
@@ -470,5 +591,13 @@ def imported_call_policies(library, defines=()):
 def state_draws(library, entry_id, defines=()):
     """The device-state elements the harness draws from the oracle at the start (havoc): tile elements."""
     data = library.get(entry_id)
+    from swdb.dx100_source_selector import pure_layout
+    from swdb.dx100_size_source import size_layout
+    from swdb.dx100_stream_source import stream_layout
+    from swdb.dx100_allocation_source import allocation_layout
+    from swdb.dx100_register_source import register_layout
+    from swdb.dx100_initialized_register_source import initialized_register_layout
+    if pure_layout(data) or size_layout(data) or stream_layout(data) or allocation_layout(data) or register_layout(data) or initialized_register_layout(data):
+        return []
     constants = _constants(data, defines)
     return [f"dx_tile_data[{t}][{k}]" for t in range(int(constants["DX_NT"])) for k in range(int(constants["DX_TS"]))]

@@ -1,0 +1,312 @@
+{
+  "artifact_ledger": {
+    "bytes": 164614,
+    "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-allocator-linux-assert-artifact-ledger-20261016.json",
+    "sha256": "16cbde082bde4a87eb86bf3afb569ed35fa97f38c865757a0754d0c5ed5bc899"
+  },
+  "created": "2026-10-16 ET",
+  "declaration_boundary": "Exact captured referencedDecl and expression type include noreturn and noexcept(true); retained independent declaration AST places the actual Linux declaration in /usr/include/assert.h, itself a pinned compiler input. Existing canonical source/compiler-input/runtime closure remains responsible for source provenance; no cross-process IDs or general declaration-name exemption added.",
+  "exporter": {
+    "bytes": 10569,
+    "path": "/private/tmp/probata-t28-allocator-linux-assert-evidence-export-20261016.py",
+    "sha256": "e6c15fa1cd2b1f3073f9fb76a539e7a6644fd9d86e7839956b57fb3d3e3ec9a3"
+  },
+  "implementation_commit": "6d5a5b57",
+  "integration_ancestor": "a3a8db54",
+  "kind": "scoped-allocator-linux-assertion-qualification-repair",
+  "profiles": {
+    "final_host_public": {
+      "command": {
+        "bytes": 362,
+        "path": "/private/tmp/probata-t28-allocator-linux-assert-final-host/command.json",
+        "sha256": "edb83967457cdb2f92fceff6c13627445b3d8ecf174845a7f11323d93527bf50"
+      },
+      "deselected": 5,
+      "failed": 0,
+      "file_count": 67,
+      "folder": "probata-t28-allocator-linux-assert-final-host",
+      "junit": {
+        "bytes": 421,
+        "path": "/private/tmp/probata-t28-allocator-linux-assert-final-host/junit.xml",
+        "sha256": "cddd5e8b317e714324b02ad4dd401dceba8e33a52b3b8b074e32756b040f06ac"
+      },
+      "log": {
+        "bytes": 113,
+        "path": "/private/tmp/probata-t28-allocator-linux-assert-final-host/control.log",
+        "sha256": "0b6915abe7aae39d92db3a7a224126f72b48fbe1cdac31331a9f57b129226739"
+      },
+      "passed": 1,
+      "path": "/private/tmp/probata-t28-allocator-linux-assert-final-host",
+      "qualification": "Original host assertion shape public CLI to exit99 after composed integration merge. No native program.",
+      "raw_bytes": 50583386,
+      "resources": {
+        "cpu_seconds": 27.642498,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 2361999360,
+        "timed_out": false,
+        "wall_seconds": 27.27788770798361
+      }
+    },
+    "final_linux_public": {
+      "command": {
+        "bytes": 370,
+        "path": "/private/tmp/probata-t28-allocator-linux-assert-final-public/command.json",
+        "sha256": "0cdbfc56277f06331986962630fc31f6e88eb3148a7429ad511040a0a1ee0414"
+      },
+      "deselected": 1,
+      "failed": 0,
+      "file_count": 271,
+      "folder": "probata-t28-allocator-linux-assert-final-public",
+      "junit": {
+        "bytes": 1117,
+        "path": "/private/tmp/probata-t28-allocator-linux-assert-final-public/junit.xml",
+        "sha256": "0b5be052c0ef4f81f28cee2d2c336f15f095eb62ec5a1a59ac019a60d0e63fcf"
+      },
+      "log": {
+        "bytes": 113,
+        "path": "/private/tmp/probata-t28-allocator-linux-assert-final-public/control.log",
+        "sha256": "c91c6b9ab9b2074c5b37dc52c7aa705a8d0a812cd685f63827e3ac08fa042426"
+      },
+      "passed": 5,
+      "path": "/private/tmp/probata-t28-allocator-linux-assert-final-public",
+      "qualification": "One source-bound Linux macro public positive to exit99; increment/call/condition-marker/wrong-signature four pre-adapter refusals. No native program.",
+      "raw_bytes": 49196077,
+      "resources": {
+        "cpu_seconds": 35.633373,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 2355511296,
+        "timed_out": false,
+        "wall_seconds": 35.46109479101142
+      }
+    },
+    "final_pure": {
+      "command": {
+        "bytes": 337,
+        "path": "/private/tmp/probata-t28-allocator-linux-assert-final-pure/command.json",
+        "sha256": "fcb66b40ca49c3735b8f3410a481e6b832bd2ee0bf7a19f9d6cecaa4c9fc3c52"
+      },
+      "failed": 0,
+      "file_count": 4,
+      "folder": "probata-t28-allocator-linux-assert-final-pure",
+      "junit": {
+        "bytes": 3539,
+        "path": "/private/tmp/probata-t28-allocator-linux-assert-final-pure/junit.xml",
+        "sha256": "0ce23c66a627c011a2f91b93a129b4bb59deec9b3d74a8e08e9eb7bc4c8db2be"
+      },
+      "log": {
+        "bytes": 99,
+        "path": "/private/tmp/probata-t28-allocator-linux-assert-final-pure/control.log",
+        "sha256": "f3cc59d8e91f5bef7ad0018e4a482efcb7f865eb26b26cda35dd6e9faf382a1d"
+      },
+      "passed": 18,
+      "path": "/private/tmp/probata-t28-allocator-linux-assert-final-pure",
+      "qualification": "Eight actual source assertion traces plus ten targeted mutations.",
+      "raw_bytes": 4149,
+      "resources": {
+        "cpu_seconds": 0.5741729999999999,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 70090752,
+        "timed_out": false,
+        "wall_seconds": 0.6725808340124786
+      }
+    },
+    "initial_red": {
+      "command": {
+        "bytes": 372,
+        "path": "/private/tmp/probata-t28-allocator-linux-assert-red/command.json",
+        "sha256": "21f1c001c1b836509a2a021aacb1b9b55fc5fdda182110d79d9202323113c579"
+      },
+      "failed": 9,
+      "file_count": 55,
+      "folder": "probata-t28-allocator-linux-assert-red",
+      "junit": {
+        "bytes": 23546,
+        "path": "/private/tmp/probata-t28-allocator-linux-assert-red/junit.xml",
+        "sha256": "092605aa57e8953eb0e61d6a42aa2a05b0a84e89f2578e69672145fed0bce384"
+      },
+      "log": {
+        "bytes": 22301,
+        "path": "/private/tmp/probata-t28-allocator-linux-assert-red/control.log",
+        "sha256": "99ea7cd0f5263e445152dd6324199b7a6836deabe66a32761e3ec5a4388b2ebe"
+      },
+      "passed": 0,
+      "path": "/private/tmp/probata-t28-allocator-linux-assert-red",
+      "qualification": "Eight exact actual AST traces and public macro fixture refuse with original unbound-effects error; public fixture GNU nothrow spelling omitted exact noexcept(true), corrected in successor.",
+      "raw_bytes": 293212,
+      "resources": {
+        "cpu_seconds": 2.973677,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 305790976,
+        "timed_out": false,
+        "wall_seconds": 3.4996840420062654
+      }
+    },
+    "intermediate_signature_refusal": {
+      "command": {
+        "bytes": 376,
+        "path": "/private/tmp/probata-t28-allocator-linux-assert-green/command.json",
+        "sha256": "7d2cb762a88377b9dafebf7f054d50ca09b39e1576f975b69f8a43a151944048"
+      },
+      "failed": 1,
+      "file_count": 55,
+      "folder": "probata-t28-allocator-linux-assert-green",
+      "junit": {
+        "bytes": 3734,
+        "path": "/private/tmp/probata-t28-allocator-linux-assert-green/junit.xml",
+        "sha256": "f19ac7815c68f68ae876fc975789fa6f8b528a796e7ec6536e07b30a5dc6da14"
+      },
+      "log": {
+        "bytes": 1609,
+        "path": "/private/tmp/probata-t28-allocator-linux-assert-green/control.log",
+        "sha256": "4a15b44e19c8749e24e1e2f73cc2b7d11341df63e37132725ab8547e5be22c00"
+      },
+      "passed": 8,
+      "path": "/private/tmp/probata-t28-allocator-linux-assert-green",
+      "qualification": "Pure Linux traces pass; public test declaration still lacks captured exact noexcept(true), intentionally not generalized by checker.",
+      "raw_bytes": 252716,
+      "resources": {
+        "cpu_seconds": 2.871043,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 311312384,
+        "timed_out": false,
+        "wall_seconds": 2.8947871250566095
+      }
+    },
+    "intermediate_test_import_error": {
+      "command": {
+        "bytes": 412,
+        "path": "/private/tmp/probata-t28-allocator-linux-assert-green-exact-declaration/command.json",
+        "sha256": "9b411ad08c16b3330fa09516cf1a0b37da9b5f33caa92702767fc937163aceed"
+      },
+      "failed": 1,
+      "file_count": 67,
+      "folder": "probata-t28-allocator-linux-assert-green-exact-declaration",
+      "junit": {
+        "bytes": 3261,
+        "path": "/private/tmp/probata-t28-allocator-linux-assert-green-exact-declaration/junit.xml",
+        "sha256": "b93a1f4b67c207356d2d120dff12a9c88f9f5693bd50c55ac224f96dcf1a0685"
+      },
+      "log": {
+        "bytes": 1790,
+        "path": "/private/tmp/probata-t28-allocator-linux-assert-green-exact-declaration/control.log",
+        "sha256": "bdeb56faf96c21733219fcdb74cc467738c0aaba0f268ef82b85cace2ed6f0d4"
+      },
+      "passed": 8,
+      "path": "/private/tmp/probata-t28-allocator-linux-assert-green-exact-declaration",
+      "qualification": "Exact declaration passes public CLI to exit99; test missing Path import then fails. Retained incomplete test result, not GREEN.",
+      "raw_bytes": 48320149,
+      "resources": {
+        "cpu_seconds": 27.496937000000003,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 2361180160,
+        "timed_out": false,
+        "wall_seconds": 27.214085999992676
+      }
+    }
+  },
+  "qualifying_green_unique": 24,
+  "repair": "Only a direct exact-signature FunctionDecl __assert_fail fourth argument qualifies: ArrayToPointerDecay -> nonpostfix/nonoverflow __extension__ -> __PRETTY_FUNCTION__ -> one pure StringLiteral for the selected builtin allocator specialization. Only that same Python subtree object is excluded from operator census; no Clang IDs compared. Existing executable predicates, operator/binary census, unique failure call, polarity and canonical bodies/LLVM equality remain checked.",
+  "retained_root_captures": [
+    {
+      "bytes": 526776,
+      "path": "/private/tmp/probata-root-t28-allocation-linux-ast-settlement-v2-20261016.json",
+      "sha256": "9494af31a1211b514afd22662521bbabb6e6d18d89914d7ef00191aef3bd8470"
+    },
+    {
+      "bytes": 16561,
+      "path": "/private/tmp/probata-root-t28-allocation-assert-declarations-v1-20261016.json",
+      "sha256": "e9a4b78064fbc39d4ef62dfc49444620ce5eedce2cd7ac19b85b177b3cf128c1"
+    }
+  ],
+  "scripted_records": [
+    {
+      "failure_class": "tool_crash",
+      "profile": "final_linux_public",
+      "record": {
+        "bytes": 25066538,
+        "path": "/private/tmp/probata-t28-allocator-linux-assert-final-public/pytest/test_public_original_total_all0/records/proofs/proof.contract.dx100_software_allocation_fixture.v1.20261016t121835z.931af538.yaml",
+        "sha256": "3d4f6516f1f2b876a413283c470a9cb8896f56287e553b0dcb96933e91db6fe6"
+      },
+      "subject": {
+        "id": "contract.dx100_software_allocation_fixture.v1",
+        "kind": "library_summary"
+      },
+      "verdict": "not_proven"
+    },
+    {
+      "failure_class": "tool_crash",
+      "profile": "final_host_public",
+      "record": {
+        "bytes": 26309647,
+        "path": "/private/tmp/probata-t28-allocator-linux-assert-final-host/pytest/test_public_host_assertion_sha0/records/proofs/proof.contract.dx100_software_allocation_fixture.v1.20261016t121955z.e713dc21.yaml",
+        "sha256": "4245d08168ec8417a771f99af0bdfe10a454649539e671b3aca9d13f329d7e67"
+      },
+      "subject": {
+        "id": "contract.dx100_software_allocation_fixture.v1",
+        "kind": "library_summary"
+      },
+      "verdict": "not_proven"
+    }
+  ],
+  "source_commit": "48465cafb441965ebea5a127d726ecb1c34447c1",
+  "source_diagnosis": "The Linux glibc macro passes __extension__ __PRETTY_FUNCTION__ only as the fourth __assert_fail diagnostic argument. The prior whole-tree operator census rejected this pure diagnostic GNU wrapper.",
+  "source_pins": [
+    {
+      "bytes": 21991,
+      "git_blob": "e56fe7546694a43b6792f0b5081c6aa3e9a485d0",
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/swdb/dx100_allocation_source.py",
+      "relative": "swdb/dx100_allocation_source.py",
+      "sha256": "229a47016d1c239927fca0420c0d2be7cf8cd8a37e30b3d5f0d3ecbed8c53681"
+    },
+    {
+      "bytes": 75650,
+      "git_blob": "3a1c2a5bf8b66588b7f638ad441fe30ab3e47258",
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/tests/fixtures/dx100_allocator_linux_assertions.json",
+      "relative": "tests/fixtures/dx100_allocator_linux_assertions.json",
+      "sha256": "00ad79efcccbef558a41b163e09ffa6969488ff0d1a9853bbb72d0bca5dae6fa"
+    },
+    {
+      "bytes": 2604,
+      "git_blob": "5d062312cfce9fcda2346dc1dfe36b074026a5de",
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/tests/test_dx100_allocation_assertion_trace.py",
+      "relative": "tests/test_dx100_allocation_assertion_trace.py",
+      "sha256": "6955201766f1dbdd5bebc627374b831d7906466178a71d749badfd9f77794311"
+    },
+    {
+      "bytes": 3227,
+      "git_blob": "28a4896f1ef2a9e27560c12e4cc981def9f75318",
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/tests/test_dx100_allocation_linux_assert.py",
+      "relative": "tests/test_dx100_allocation_linux_assert.py",
+      "sha256": "6228b3c05ada1c7f3f7a4546448f681c9394a03b3be520dc41448d20e45387b0"
+    }
+  ],
+  "trace_fixture_normalization": {
+    "actual_raw_pin": {
+      "bytes": 261867,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-allocation-ast-v2/ast-capture/selected-assertions.json",
+      "sha256": "2901caa417705df0c607c16711a5b9844ed7429f83f3ddd7d26b472c5bff30a3"
+    },
+    "all_other_fields_equal_to_actual_capture": true,
+    "removed_keys": [
+      "id",
+      "loc",
+      "range"
+    ],
+    "rows": 8
+  },
+  "unchanged_boundaries": [
+    "Original total allocator caller returns102, negative101 unchanged.",
+    "Original REG_count/SPD_count/region_count frame, source assertions and all signed bounds unchanged.",
+    "No unit requires/ensures insertion, partial correctness or hardware entry premise added.",
+    "No model/library/API0.1 changes.",
+    "No author native-program/formal/SSH/proof-provider execution; exit99 stand-ins cannot establish theorem.",
+    "Actual Linux repaired qualification and pair acceptance remain root-only and pending independent review.",
+    "Compiler/source body agreement remains existing owned TCB pending59; no whole28/current0.2 acceptance."
+  ]
+}

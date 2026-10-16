@@ -11,6 +11,180 @@ import pytest
 from test_proof_records import proof_seed, seed  # public CLI seed
 
 
+@pytest.mark.parametrize("flags", [
+    [], ["-wp-no-rte"], ["-wp-rte", "-wp-no-rte"], ["-wp-rte", "-wp-rte"],
+    ["-wp-rte=false"], ["-wp-rte", "-wp-no-rte=false"],
+])
+def test_wp_rte_cannot_be_missing_disabled_duplicated_or_boolean_overridden(seed, flags):
+    marker = seed.root / "must-not-run"
+    frozen = ["-wp-cache", "none", "-wp-model", "+real", "-machdep", "x86_64", "-wp-no-filter-init"]
+    failed = seed.prove(seed.script(setup={"tool": "wp", "flags": frozen + flags},
+                                   run=["/usr/bin/touch", str(marker)]), ok=False)
+    assert "frozen_switches" in failed.stderr and "-wp-rte" in failed.stderr
+    assert not marker.exists() and not seed.proof_files()
+
+
+@pytest.fixture
+def wp_setup(tmp_path):
+    """Production WP adapter with external tool stand-ins; never scientific proof evidence.
+
+    The report-compiler stand-in mutates library bytes after planning and after
+    dependency admission, before the real setup checker at the launch boundary.
+    No SWDB collaborator is replaced or mocked.
+    """
+    import shutil
+    import sys
+    from types import SimpleNamespace
+    import yaml
+    from conftest import FIXTURES, make_records, run_swdb
+    from test_wp_adapter import method_version
+    from test_wp_subset import _entry
+    from swdb import c_lowering, proof_setup
+
+    if c_lowering.locate().missing:
+        pytest.skip("Clang 22.1.8 required for production setup controls")
+    records = make_records(tmp_path)
+    library = tmp_path / "library"
+    methods = library / "methods"
+    methods.mkdir(parents=True)
+    shutil.copy(FIXTURES / "proof/methods/contract-fixture-1.yaml", methods)
+    method = method_version(c_lowering.identity())
+    method.update(evidence_kind="execution")
+    method["checks"].update(proof_setup.identity())
+    method_path = methods / "wp-tracer-fixture.yaml"
+    method_path.write_text(yaml.safe_dump(method, sort_keys=False))
+    source = "int summary_helper(int n) { return n; }\nint setup_unit(int n) { return summary_helper(n); }\n"
+    (library / "proof_units").mkdir()
+    (library / "proof_units/setup.cc").write_text(source)
+    contracts = library / "rewrite_contracts"
+    contracts.mkdir()
+    entries = {}
+    for name, function in (("helper", "summary_helper"), ("unit", "setup_unit")):
+        entry = _entry("contract.setup_" + name, function, "setup.cc", source,
+                       [("post", "postcondition", r"assigns \nothing; ensures \result == n;")], [], {"once": "self"})
+        path = contracts / (name + ".yaml")
+        path.write_text(yaml.safe_dump(entry, sort_keys=False))
+        entries[name] = path
+    marker, compiled = tmp_path / "wp-launched.json", tmp_path / "reader-compiled"
+    input_mutated = tmp_path / "generated-input-mutated"
+    frama = tmp_path / "frama.py"
+    frama.write_text('''import json, os, sys
+from pathlib import Path
+args = sys.argv[1:]
+if "-version" in args:
+    print("33.0"); sys.exit(0)
+if "-wp" not in args:
+    sys.exit(0)
+Path(os.environ["SETUP_WP_MARKER"]).write_text(json.dumps(args))
+function = next(a.split("=", 1)[1] for a in args if a.startswith("-wp-fct="))
+goal = {"goal": "typed_" + function + "_ensures", "property": function + "_ensures",
+        "function": function, "smoke": False, "passed": True, "verdict": "valid",
+        "provers": [{"prover": "Z3:5.1.0", "time": 0.01, "success": 1}]}
+Path(args[args.index("-wp-report-json") + 1]).write_text(json.dumps([goal]))
+Path(os.environ["SWDB_PROOF_REPORT_OUT"]).write_text(json.dumps(
+    {"version": "1", "complete": True, "goals": [{**goal, "targets": [], "results": ["valid"]}],
+     "properties": [{"property": goal["property"], "function": function,
+                     "kind": "contract", "extern": False,
+                     "dependencies": [], "origin": None}]}))
+Path(args[args.index("-report-csv") + 1]).write_text(
+    "directory\\tfile\\tline\\tfunction\\tproperty kind\\tstatus\\tproperty\\n"
+    + ".\\twp_input.c\\t1\\t" + function + "\\tpostcondition\\tValid\\t" + function + "_ensures\\n")
+''')
+    compiler = tmp_path / "ocamlfind.py"
+    compiler.write_text('''import os, sys
+from pathlib import Path
+target = os.environ.get("SETUP_MUTATE")
+if target:
+    import yaml
+    path = Path(target)
+    data = yaml.safe_load(path.read_text())
+    data["clauses"][0]["acsl"]["text"] = "assigns \\\\nothing; ensures \\\\result == n + 1;"
+    path.write_text(yaml.safe_dump(data, sort_keys=False))
+module = Path(sys.argv[sys.argv.index("-o") + 1])
+if os.environ.get("SETUP_MUTATE_INPUT"):
+    generated = module.parent / "wp_input.c"
+    before = generated.read_text()
+    assert "return n;" in before
+    generated.write_text(before.replace("return n;", "return n + 1;"))
+    Path(os.environ["SETUP_MUTATE_INPUT"]).write_text(generated.read_text())
+module.write_bytes(b"stand-in reader module; no OCaml/verifier")
+Path(os.environ["SETUP_COMPILED_MARKER"]).touch()
+''')
+    why3 = tmp_path / "why3.conf"
+    names = {"alt-ergo": "Alt-Ergo", "z3": "Z3", "cvc5": "CVC5"}
+    why3.write_text("".join(f'[prover]\nname = "{names[row["tool"]]}"\nversion = "{row["version"]}"\n'
+                           'command = "/usr/bin/false"\n' for row in method["lineup"] if row["tool"] in names))
+
+    def prove(subject="unit", *, mutate=None, mutate_input=False, prefix=()):
+        return run_swdb("prove", "--records", records.path, "--summary", "contract.setup_" + subject,
+                        "--adapter", "wp", "--method-version", method["id"], "--runs-dir", tmp_path / "runs",
+                        "--format", "json", env={
+                            "SWDB_FRAMA_C": " ".join([sys.executable, str(frama), *prefix]),
+                            "SWDB_OCAMLFIND": f"{sys.executable} {compiler}", "WHY3CONFIG": str(why3),
+                            "SWDB_VERIFIER_LOCK": str(tmp_path / "standin-only.lock"),
+                            "SETUP_WP_MARKER": str(marker), "SETUP_COMPILED_MARKER": str(compiled),
+                            "SETUP_MUTATE": str(entries[mutate]) if mutate else "",
+                            "SETUP_MUTATE_INPUT": str(input_mutated) if mutate_input else ""})
+
+    def record(result):
+        assert result.returncode == 0, result.stderr + result.stdout
+        return yaml.safe_load((records.path / json.loads(result.stdout)["path"]).read_text())
+
+    return SimpleNamespace(prove=prove, record=record, method=method, method_path=method_path,
+                           marker=marker, compiled=compiled, input_mutated=input_mutated, records=records.path, entries=entries)
+
+
+@pytest.mark.parametrize("flags", [[], ["-wp-no-rte"], ["-wp-rte", "-wp-no-rte"]])
+def test_production_wp_refuses_weak_frozen_rte_method_before_launch(wp_setup, flags):
+    import yaml
+    row = next(r for r in wp_setup.method["lineup"] if r["tool"] == "frama-c-wp")
+    row["flags"] = [f for f in row["flags"] if f != "-wp-rte"] + flags
+    wp_setup.method_path.write_text(yaml.safe_dump(wp_setup.method, sort_keys=False))
+    done = wp_setup.prove("helper")
+    assert done.returncode == 1 and "requires exactly -wp-rte" in done.stderr, done.stderr + done.stdout
+    assert not wp_setup.marker.exists() and not list(wp_setup.records.glob("proofs/*.yaml"))
+
+
+@pytest.mark.parametrize("prefix", [["-wp-no-rte"], ["-wp-rte=false"], ["-wp-rte"]])
+def test_production_wp_checks_rte_in_complete_command_including_tool_prefix(wp_setup, prefix):
+    done = wp_setup.prove("helper", prefix=prefix)
+    assert done.returncode == 1 and "frozen_switches" in done.stderr, done.stderr + done.stdout
+    assert "requires exactly -wp-rte" in done.stderr
+    assert wp_setup.compiled.exists() and not wp_setup.marker.exists()
+    assert not list(wp_setup.records.glob("proofs/*.yaml"))
+
+
+def test_production_wp_preserves_one_rte_switch_in_the_executed_command(wp_setup):
+    row = wp_setup.record(wp_setup.prove("helper"))
+    command = json.loads(wp_setup.marker.read_text())
+    assert command.count("-wp-rte") == 1 and "-wp-no-rte" not in command
+    assert row["proof_setup_check"]["runs"][-1]["verdict"] == "passed"
+
+
+@pytest.mark.parametrize("changed,rule", [("unit", "contract_hash"), ("helper", "summary_hash")])
+def test_post_plan_contract_or_used_summary_mutation_refuses_before_wp(wp_setup, changed, rule):
+    helper = wp_setup.record(wp_setup.prove("helper"))
+    assert helper["verdict"] == "proven"  # Deliberately synthetic dependency admission, never proof evidence.
+    existing = set(wp_setup.records.glob("proofs/*.yaml"))
+    wp_setup.marker.unlink()
+    wp_setup.compiled.unlink()
+    before = wp_setup.entries[changed].read_bytes()
+    done = wp_setup.prove(mutate=changed)
+    assert done.returncode == 1 and f"[{rule}]" in done.stderr, done.stderr + done.stdout
+    assert wp_setup.entries[changed].read_bytes() != before and wp_setup.compiled.exists()
+    assert not wp_setup.marker.exists() and set(wp_setup.records.glob("proofs/*.yaml")) == existing
+
+
+def test_production_wp_refuses_changed_generated_input_at_the_final_prelaunch_check(wp_setup):
+    # 2026-10-15 ET: external reader compiler changes bytes after planning/copy.
+    done = wp_setup.prove("helper", mutate_input=True)
+    assert done.returncode == 1 and "[input_hash]" in done.stderr, done.stderr + done.stdout
+    assert "generated input wp_input.c differs from its planned bytes" in done.stderr
+    assert wp_setup.compiled.exists() and wp_setup.input_mutated.exists()
+    assert "return n + 1;" in wp_setup.input_mutated.read_text()
+    assert not wp_setup.marker.exists() and not list(wp_setup.records.glob("proofs/*.yaml"))
+
+
 @pytest.mark.parametrize("flags", [[], ["--unwinding-assertions"],
     ["--unwinding-assertions", "--pointer-overflow-check", "--no-pointer-check"],
     ["--unwinding-assertions", "--pointer-overflow-check", "--no-standard-checks"],
@@ -56,14 +230,22 @@ def _reports(seed, goals, inventory=None, properties=None):
     goalfile.write_text(json.dumps(goals))
     propfile.write_text("directory\tfile\tline\tfunction\tproperty kind\tstatus\tproperty\n" +
                         "\n".join(f".\twp_input.c\t1\tf\tpostcondition\t{s}\t{p}" for p, s in properties or [("f_ensures", "Valid")]))
-    invfile.write_text(json.dumps(inventory or {"version": "1", "complete": True,
-        "goals": [{**g, "results": [g.get("verdict", "valid")]} for g in goals], "properties": []}))
+    inventory = inventory or {"version": "1", "complete": True,
+        "goals": [{**g, "results": [g.get("verdict", "valid")]} for g in goals], "properties": []}
+    # Scripted report stand-ins still need the same closed property references
+    # as the real producer; no formal evidence is supplied by these rows.
+    if not inventory["properties"]:
+        inventory = {**inventory, "properties": [
+            {"property": name, "function": next(g.get("function") for g in inventory["goals"] if g["property"] == name),
+             "kind": "other", "extern": False, "dependencies": [], "origin": None}
+            for name in sorted({g["property"] for g in inventory["goals"]})]}
+    invfile.write_text(json.dumps(inventory))
     return {"goals": str(goalfile), "properties": str(propfile), "inventory": str(invfile), "functions": ["f"]}
 
 
 def _valid(name="typed_f_ensures", **kw):
     return {"goal": name, "property": name.removeprefix("typed_"), "function": "f", "smoke": False,
-            "passed": True, "verdict": "valid", **kw}
+            "passed": True, "verdict": "valid", "targets": [], **kw}
 
 
 def test_fresh_reader_accepts_directly_proved_automatic_goals_omitted_by_wp_json(seed):
@@ -129,7 +311,7 @@ def test_failed_smoke_goal_voids_locally_valid_proof(seed, kind):
 ])
 def test_wp_setup_refuses_overrides_before_any_verifier_runs(seed, flags, rule):
     marker = seed.root / "must-not-run"
-    frozen = ["-wp-cache", "none", "-wp-model", "+real", "-machdep", "x86_64", "-wp-no-filter-init"]
+    frozen = ["-wp-cache", "none", "-wp-model", "+real", "-machdep", "x86_64", "-wp-no-filter-init", "-wp-rte"]
     script = seed.script(setup={"tool": "wp", "flags": frozen + flags}, run=["/usr/bin/touch", str(marker)])
     failed = seed.prove(script, ok=False)
     assert rule in failed.stderr
@@ -201,7 +383,7 @@ def test_an_unclassified_property_cannot_hide_behind_an_unrelated_timeout(seed):
 
 def test_existing_wp_session_stops_before_invoking_verifier(seed):
     marker = seed.root / "must-not-run"
-    plan = {"tool": "wp", "flags": ["-wp-cache", "none", "-wp-model", "+real", "-machdep", "x86_64", "-wp-no-filter-init"],
+    plan = {"tool": "wp", "flags": ["-wp-cache", "none", "-wp-model", "+real", "-machdep", "x86_64", "-wp-no-filter-init", "-wp-rte"],
             "work_files": {".frama-c/session.json": "{\"verdict\":\"valid\"}"}}
     failed = seed.prove(seed.script(setup=plan, run=["/usr/bin/touch", str(marker)]), ok=False)
     assert "fresh_session" in failed.stderr
@@ -224,7 +406,7 @@ def test_job_plan_pin_cannot_be_replaced_with_different_run_settings(seed):
 
 
 def test_solver_portfolio_reordering_is_refused_even_with_the_same_solver_set(seed):
-    frozen = ["-wp-cache", "none", "-wp-model", "+real", "-machdep", "x86_64", "-wp-no-filter-init"]
+    frozen = ["-wp-cache", "none", "-wp-model", "+real", "-machdep", "x86_64", "-wp-no-filter-init", "-wp-rte"]
     failed = seed.prove(seed.script(setup={"tool": "wp", "flags": frozen + ["-wp-prover", "z3,alt-ergo,cvc5"]}), ok=False)
     assert "solver order differs" in failed.stderr
 
@@ -248,9 +430,10 @@ def test_execution_method_must_pin_the_running_checks_version_and_content(seed, 
     "swdb/crux_adapter.py", "swdb/rocq_adapter.py", "swdb/proof.py", "vocab/proof_failure_classes.yaml",
     "swdb/cbmc_product.py", "swdb/rss_watchdog.py", "swdb/vocab.py", "swdb/formal_frame.py", "swdb/acsl_subset.py",
     "swdb/framac.py", "swdb/hint_check.py", "swdb/hint_tree.ml",
-    "swdb/wp_pointer_bounds.py", "swdb/proof_semantics.py", "swdb/vector_ownership.py", "swdb/standard_model_view.py",
+    "swdb/wp_pointer_bounds.py", "swdb/proof_semantics.py", "swdb/dx100_interface.py", "swdb/dx100_source_selector.py", "swdb/dx100_size_source.py", "swdb/vector_ownership.py", "swdb/standard_model_view.py",
     "swdb/array_domains.py", "swdb/model_domains.py", "swdb/dx_array_domains.py", "swdb/bounded_entry_windows.py",
-    "swdb/bounded_chain.py", "swdb/summary_bindings.py", "swdb/helper_windows.py"])
+    "swdb/bounded_chain.py", "swdb/summary_bindings.py", "swdb/helper_windows.py",
+    "swdb/dx100_stream_source.py", "swdb/dx100_stream_model.py", "swdb/dx100_allocation_source.py", "swdb/dx100_register_source.py", "swdb/dx100_register_model.py", "vocab/proof_subject_kinds.yaml"])
 def test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation(seed, changed):
     import os
     import shutil
@@ -295,7 +478,7 @@ def test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_
 ])
 def test_wp_initialization_facts_cannot_be_filtered_or_boolean_override_hidden(seed, flags):
     marker = seed.root / "must-not-run"
-    frozen = ["-wp-cache", "none", "-wp-model", "+real", "-machdep", "x86_64"]
+    frozen = ["-wp-cache", "none", "-wp-model", "+real", "-machdep", "x86_64", "-wp-rte"]
     script = seed.script(setup={"tool": "wp", "flags": frozen + flags}, run=["/usr/bin/touch", str(marker)])
     failed = seed.prove(script, ok=False)
     assert "frozen_switches" in failed.stderr

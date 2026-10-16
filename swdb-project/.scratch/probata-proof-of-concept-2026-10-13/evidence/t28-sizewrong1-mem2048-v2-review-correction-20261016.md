@@ -1,0 +1,3 @@
+# Correction to inert size2048 V2 static review
+
+2026-10-16 ET. Prior PASS fc62004b is withdrawn for dispatch. A later passive finding identifies a concrete postcheck mismatch: record pins.c_lowering is the generated C artifact digest, whereas project_lowerer_sha256 is a source/compiler-context translator composite. Comparing them would refuse after the run, even with correct output. The prior reviewer missed this distinction. Preserve V2 and its review; do not execute it. A new separately pinned V3 must bind generatedC to actual lowering evidence/setup hash and translator identity to method/runtime independently, with mutation-sensitive pure controls. No actual run was performed by this reviewer or inferred by this correction.

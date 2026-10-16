@@ -1,0 +1,156 @@
+{
+  "base": "3808f6dcbf3cb5fac0e59aa0e4f0fcef9759bdf9",
+  "controls": [
+    {
+      "classification": "Real missing positive-path application RED",
+      "files": [
+        {
+          "bytes": 339,
+          "path": "/private/tmp/probata-t25-caller-positive-allocation-red-20261016/command.json",
+          "sha256": "a90e56e3d0286e52e99d7fcbb16285b6afeaac964d4f7d608b2375c9c53b96b6"
+        },
+        {
+          "bytes": 164,
+          "path": "/private/tmp/probata-t25-caller-positive-allocation-red-20261016/resources.json",
+          "sha256": "19d36a40ba4b98d4ccb9f9f3d463c0c43a65c49f131ba236356dadf21bc31f3e"
+        },
+        {
+          "bytes": 1367,
+          "path": "/private/tmp/probata-t25-caller-positive-allocation-red-20261016/controls.log",
+          "sha256": "ebd9d9ef3b8a76cae1594bf2453226cc7e2113106940ae4399c2a0bac4649ea2"
+        }
+      ],
+      "root": "/private/tmp/probata-t25-caller-positive-allocation-red-20261016"
+    },
+    {
+      "classification": "Initial Python syntax failure; superseded, preserved",
+      "files": [
+        {
+          "bytes": 341,
+          "path": "/private/tmp/probata-t25-caller-positive-allocation-green-20261016/command.json",
+          "sha256": "6b52ceab7f54b035eaaf70e3fee13b88f1a5eca2536d51cdceff2a169ca98a06"
+        },
+        {
+          "bytes": 164,
+          "path": "/private/tmp/probata-t25-caller-positive-allocation-green-20261016/resources.json",
+          "sha256": "e0288be90403e5c31c5c39110fcf39360898812afee891d62c58283eed0f9c86"
+        },
+        {
+          "bytes": 4326,
+          "path": "/private/tmp/probata-t25-caller-positive-allocation-green-20261016/controls.log",
+          "sha256": "1e2af3b8210be348c1507cabdd9c2af905c5a18b02dabfd0a5fc4f8419b4df7e"
+        }
+      ],
+      "root": "/private/tmp/probata-t25-caller-positive-allocation-green-20261016"
+    },
+    {
+      "classification": "Focused application GREEN",
+      "files": [
+        {
+          "bytes": 344,
+          "path": "/private/tmp/probata-t25-caller-positive-allocation-green-v2-20261016/command.json",
+          "sha256": "791d653ce4c269606dd1628f0c7a9d946e42dae96fee2ec5c99222d47e994a9d"
+        },
+        {
+          "bytes": 173,
+          "path": "/private/tmp/probata-t25-caller-positive-allocation-green-v2-20261016/resources.json",
+          "sha256": "fdee667eb57ed1c0e11d3e4b84288be00143160d5c80abd049262983e919ef23"
+        },
+        {
+          "bytes": 98,
+          "path": "/private/tmp/probata-t25-caller-positive-allocation-green-v2-20261016/controls.log",
+          "sha256": "2b887969563b8d5efd0e9e825c93a8d41ce13b359807d97ade5790c10afa2369"
+        }
+      ],
+      "root": "/private/tmp/probata-t25-caller-positive-allocation-green-v2-20261016"
+    },
+    {
+      "classification": "Initial nonexistent selector collection failure; superseded, preserved",
+      "files": [
+        {
+          "bytes": 319,
+          "path": "/private/tmp/probata-t25-caller-positive-allocation-composed-green-20261016/command.json",
+          "sha256": "d32b8c079a555d9266c61fbcb979b2215bce79567bc90ac5e462741555811ac1"
+        },
+        {
+          "bytes": 174,
+          "path": "/private/tmp/probata-t25-caller-positive-allocation-composed-green-20261016/resources.json",
+          "sha256": "3ef02e5f0e4641e8df333c6175062bb25c8923c498db60ee146fed00bbeffd00"
+        },
+        {
+          "bytes": 103,
+          "path": "/private/tmp/probata-t25-caller-positive-allocation-composed-green-20261016/controls.log",
+          "sha256": "3ab3bb7660a94629d9ee48ece01109805269ac799badf5d54a344a7d031e8928"
+        }
+      ],
+      "root": "/private/tmp/probata-t25-caller-positive-allocation-composed-green-20261016"
+    },
+    {
+      "classification": "Final50 compiler/control GREEN",
+      "files": [
+        {
+          "bytes": 319,
+          "path": "/private/tmp/probata-t25-caller-positive-allocation-composed-green-v2-20261016/command.json",
+          "sha256": "f88e2371bb8e0cb44a9a2e464013f1b6d056251b683035e4f204f2b246a1f1fd"
+        },
+        {
+          "bytes": 166,
+          "path": "/private/tmp/probata-t25-caller-positive-allocation-composed-green-v2-20261016/resources.json",
+          "sha256": "95aa8e35dbbf38e6c494860d84515d7c208029e53ffd10883b8f78d8f1a4e4b7"
+        },
+        {
+          "bytes": 111,
+          "path": "/private/tmp/probata-t25-caller-positive-allocation-composed-green-v2-20261016/controls.log",
+          "sha256": "dccffa00dd95572b0ed6b2c37af48e8aa04a831f56b93afe97512f8ebcf4c594"
+        }
+      ],
+      "root": "/private/tmp/probata-t25-caller-positive-allocation-composed-green-v2-20261016"
+    }
+  ],
+  "created": "2026-10-16 ET",
+  "final": {
+    "exit_code": 0,
+    "guard_wall_seconds": 161.52034829201875,
+    "out_of_memory": false,
+    "passed": 50,
+    "peak_rss_bytes": 354877440,
+    "timed_out": false,
+    "wall_pytest_seconds": 161.11
+  },
+  "pending_target_census": {
+    "constructor": 30,
+    "destructor": 11,
+    "local_lifetime": 10,
+    "numeric": 1,
+    "reserve": 30,
+    "source_applications": 3,
+    "total": 85
+  },
+  "remaining": [
+    "allocator and automatic-storage source-runtime embedding",
+    "fill establishment/step/exit",
+    "postcondition and frame",
+    "current actual body-record ordinary eligibility",
+    "public caller route and complete safe/no-growth/stale outcomes"
+  ],
+  "scope": "Preparation-only source-local positive allocation-to-loop-entry application. Source count>0 and allocation normal return are a path condition/output relation, never new caller-entry premises. No desired callee postcondition or initialized buffer imported; zero prefix only. All85 duties remain pending; no dispatcher/public proof/body/model/caller/ticket acceptance. Earlier046 diagnostic/full24 identities and raw producers unchanged.",
+  "source_application": "apply.ctor.positive_entry",
+  "source_files": [
+    {
+      "bytes": 8943,
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/vector_reallocation_composition.py",
+      "sha256": "321663ae5caaeeeb62149447bab8c6b2bbb9469b67807145f1dc59c0ce332c43"
+    },
+    {
+      "bytes": 10302,
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/vector_reallocation_caller_packets.py",
+      "sha256": "3571f944aca9a44a8f6ed7cce2853c92fee3271a71fd75d7c1095e1da46d6f7a"
+    },
+    {
+      "bytes": 15258,
+      "path": "/private/tmp/probata-resume-t25/swdb-project/tests/test_vector_reallocation_caller_packets.py",
+      "sha256": "b0cac3d7b55f43f78b7d8d1b79c74cdf3f7c2480293339d3017e8d73b700683d"
+    }
+  ],
+  "source_timing": "Current source hashes recorded after settled controls, with no later source mutation; this is not a contemporaneous guard source-before/source-after attestation. Controls used the existing serialized B compiler/RSS-time guard."
+}

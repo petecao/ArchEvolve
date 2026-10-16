@@ -1,0 +1,48 @@
+{
+  "date": "2026-10-16 ET",
+  "verdict": "PASS source and inert five-input parser recipe only; root actual parser gate pending",
+  "packet": "24fd59cc8458633562b6a86388b49d2ff8caba09",
+  "code_freeze": "723378ff844455b5488c9932bf0962c67210915b",
+  "reviewer_execution": "Passive frozen Git/ASTliteral/text/hash/retained JSON only; no project generator, compiler/native/tool/probe/SSH/test",
+  "verified": {
+    "source_bundle_primary_profile_origin_pin_references": 57,
+    "manifest_input_rows": 5,
+    "input_bytes": 19949,
+    "mismatches": 0,
+    "literal_model_C_entry_state_equal_old": true,
+    "contract_nontermination_token_streams_equal_old": true,
+    "production_delta_paths": [
+      "swdb/dx100_stream_model.py",
+      "swdb/wp_adapter.py"
+    ]
+  },
+  "source_analysis": [
+    "Three model helper contracts move existing terminates false after allrequires and before assigns/ensures; exactotherpredicate tokens preserved",
+    "Unitcontract flattens already validated ACSL tokens and inserts terminates before first simpleclause; quantifiedsemicolon tokens not split",
+    "Closed current source/control bundles retain full actual callorder/16elementinitializer/threecontractedprototypes+unitcontract",
+    "All27declarationcontracts plusnormal ordinaryCmodel remain separate parser inputs"
+  ],
+  "parser_recipe": {
+    "seconds": 120,
+    "rss_bytes": 8589934592,
+    "workers": 1,
+    "flags": [
+      "-machdep",
+      "x86_64",
+      "-kernel-warn-key",
+      "annot-error=abort"
+    ],
+    "WP": false,
+    "solver": false,
+    "actual_executable_bound": false,
+    "root_required": "pin actualFrama33/runtime/headerclosure, exactfiveinputpre/posthashes, freshoutput/lease/wholeguard, allargv/stdout/stderr/status and rejectIgnoring/nonzero/resourcefailure"
+  },
+  "controls_attributed": "15pass/3actualskip scripted final;4nativeCsyntax controls, noFramaGREEN by author; retained matcher-only failed profile excluded from semanticRED",
+  "scientific_acceptance": false,
+  "boundaries": [
+    "No clauseexpression/condition/assignment/frame/state/Cbody/sourcealgorithm/partialpolicy change",
+    "No actualparser/typeGREEN untilroot; success is syntax/typefeasibility only",
+    "Olde4actual/refusal/source preserved; wrongcaseunexecuted",
+    "NoWP/modelbody/source-refinement/totality/hardware-liveness/current0.2/full28 claim"
+  ]
+}

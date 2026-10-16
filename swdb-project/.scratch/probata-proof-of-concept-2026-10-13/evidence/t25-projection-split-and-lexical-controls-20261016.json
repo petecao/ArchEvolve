@@ -1,0 +1,815 @@
+{
+  "date": "2026-10-16 ET",
+  "final_controls": {
+    "oom": false,
+    "passed": 42,
+    "peak_rss_bytes": 308838400,
+    "scope": "pure canonical/group/import controls plus selected Clang source reparses; no Frama/Why3/OCaml/prover/CBMC/remote execution",
+    "skipped": 0,
+    "timeout": false,
+    "wall_seconds": 40.770108917029575
+  },
+  "lexical": {
+    "historical_review": "REQUEST_CHANGES at frozen e348; preserved with no proof dispatcher enabled",
+    "public_contract_identity": "still pending; matching prospective text does not provide a library contract identity or proof result",
+    "red": "public prepare accepted malformed requires0 instead of rejecting; actual failed DID NOT RAISE control retained",
+    "repair": "whole clause boundaries plus anchored token-preserving patterns before source reparse, then physical source parameter-name equality; no whitespace deletion or cross-list token joining"
+  },
+  "original_actual_boundary": "017partial remains2producer-reported proven, projection timeout (AE timeout; CVC5/Z3 Unknown),17unexecuted; actual cold hypothesis audit separately coordinated. No prior record is promoted into this new source.",
+  "projection": {
+    "C_model_body_or_contract_changed": false,
+    "added_premises": [],
+    "counts": {
+      "grow": 21,
+      "prospective_caller": 79,
+      "reserve_including_grow": 27
+    },
+    "definitions": "exact existing t25v3_repr and Heap.int32_region spans/digests; both pieces required jointly; freshj absent from original quantifiers/antecedent/result",
+    "dependencies_imported": [],
+    "equivalence": "forallx A=>(R and forallj B=>I) iff (forallx A=>R) and forallx,freshj (A and B)=>I",
+    "new_labels": [
+      "002a",
+      "002b"
+    ],
+    "old_reference_sha256": "b5dbe9939b460efa5503b1cbba8a891f5cdb940a8d44835f3fd04da307a74b3f",
+    "other_target_bytes_unchanged": 19,
+    "red": "canonical grow still had20 targets; new exact decomposition fixture expected21",
+    "theory_changed": false
+  },
+  "references": [
+    {
+      "bytes": 328,
+      "path": "/private/tmp/probata-t25-projection-split-red-20261016/command.json",
+      "sha256": "1a2365cc44f2b6a5b84c2b0217e3fe4d1988b7eea67e6e2281dca438f850aacc"
+    },
+    {
+      "bytes": 164,
+      "path": "/private/tmp/probata-t25-projection-split-red-20261016/resources.json",
+      "sha256": "2cd6a3e53da433fcd5ff86b8931307e83d751e98575c3402a43429fa46c053af"
+    },
+    {
+      "bytes": 1356,
+      "path": "/private/tmp/probata-t25-projection-split-red-20261016/controls.log",
+      "sha256": "f7674142d695ba832fd94ea1d611c8e84d06d35c6eec9c41a9004da213e66307"
+    },
+    {
+      "bytes": 330,
+      "path": "/private/tmp/probata-t25-projection-split-green-20261016/command.json",
+      "sha256": "40bcb23df48587b3a215512837ceac34e0c50a58d2e4f6ba3f82faaf1be7367a"
+    },
+    {
+      "bytes": 164,
+      "path": "/private/tmp/probata-t25-projection-split-green-20261016/resources.json",
+      "sha256": "ed9c93fb55c7329f06f044de068d6348d5b8e2a3f6c3961bc4644b481629e7a7"
+    },
+    {
+      "bytes": 98,
+      "path": "/private/tmp/probata-t25-projection-split-green-20261016/controls.log",
+      "sha256": "99a24796443a1d07f66a424f8116a06a2079063af758e7d3c87801c191ad2ecd"
+    },
+    {
+      "bytes": 254,
+      "path": "/private/tmp/probata-t25-projection-split-composed-green-20261016/command.json",
+      "sha256": "f6321bc39de4700a614ef7f2dc65645746b30eebe17faf195c345f04075d0ea5"
+    },
+    {
+      "bytes": 174,
+      "path": "/private/tmp/probata-t25-projection-split-composed-green-20261016/resources.json",
+      "sha256": "7e22b911de67c68151869cc2069c5c668f61189f41178a13048137b5a735d6d8"
+    },
+    {
+      "bytes": 99,
+      "path": "/private/tmp/probata-t25-projection-split-composed-green-20261016/controls.log",
+      "sha256": "ab89e958e1ecc7ad927bb44f4b5037afac209ee0ff3774a615cc870abe43cef8"
+    },
+    {
+      "bytes": 318,
+      "path": "/private/tmp/probata-t25-caller-contract-lexical-red-20261016/command.json",
+      "sha256": "494e8325e005b0d31c3e58c9fd14fc94ee5b96fc7b9c69f1c2f17fa374fca5ae"
+    },
+    {
+      "bytes": 163,
+      "path": "/private/tmp/probata-t25-caller-contract-lexical-red-20261016/resources.json",
+      "sha256": "6c5bab40b02b635d45f9c29536f1eb0c9d7d7902e647ae98c666a5d2f0d5ddff"
+    },
+    {
+      "bytes": 1023,
+      "path": "/private/tmp/probata-t25-caller-contract-lexical-red-20261016/controls.log",
+      "sha256": "58f5e20b2da0fc1f109825b5a3d13b04cac2d88d4b521d5eaed942ffa7d82b35"
+    },
+    {
+      "bytes": 320,
+      "path": "/private/tmp/probata-t25-caller-contract-lexical-green-20261016/command.json",
+      "sha256": "566654f344da0ac7b929af53b52720c9b4d6d9f767c9a56e4b36b98628b09a1b"
+    },
+    {
+      "bytes": 164,
+      "path": "/private/tmp/probata-t25-caller-contract-lexical-green-20261016/resources.json",
+      "sha256": "386f6056e1bf2ed8e7b7c393390397b2d8da11d9e843eccaa6992e5e6d071805"
+    },
+    {
+      "bytes": 98,
+      "path": "/private/tmp/probata-t25-caller-contract-lexical-green-20261016/controls.log",
+      "sha256": "e8c2ebdecc6c68bd31c948de0b0c1dd4c57dd47d093194a6c1d241c65727824d"
+    },
+    {
+      "bytes": 310,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/command.json",
+      "sha256": "31485ed8c347d80c0890fa20586d36e239477a12649f35608d15fb3fd02449e8"
+    },
+    {
+      "bytes": 165,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/resources.json",
+      "sha256": "d340925547c7e6d524762ec89fb213dd10ecdd300b7e632f81596bc459af949e"
+    },
+    {
+      "bytes": 100,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/controls.log",
+      "sha256": "b453e0b4c148ae926d27f59557987ca14175b19a7c4af3de7e4f4fc1e103f628"
+    },
+    {
+      "bytes": 4821,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_projection_conjunction_is0/split/000-t25v3_control_grow_premises_feasible.c",
+      "sha256": "e9912022fad11f1fe2ea45e80ba9909673c287ce41d0114d707ca8e6d1d19579"
+    },
+    {
+      "bytes": 4885,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_projection_conjunction_is0/split/001-t25v3_grow_entry_reads.c",
+      "sha256": "18263b731752f297cedcaf3b0a64564b689992dac89a0b382b7acfb70ef4b492"
+    },
+    {
+      "bytes": 4858,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_projection_conjunction_is0/split/002a-t25v3_grow_entry_int_projection_repr.c",
+      "sha256": "1e895aec561e8840764b43c3056ff3eae7e26f4a370cb18b67e08a43437b562d"
+    },
+    {
+      "bytes": 4894,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_projection_conjunction_is0/split/002b-t25v3_grow_entry_int_projection_cells.c",
+      "sha256": "47e26763183659b00923090094d8a0ae658972e9f64c17c30f2c772309dfdb35"
+    },
+    {
+      "bytes": 4818,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_projection_conjunction_is0/split/003-t25v3_grow_alloc_identity.c",
+      "sha256": "ea3a5a1296e046da142f68541fed405c673537448d46a6324d755285aad21099"
+    },
+    {
+      "bytes": 4960,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_projection_conjunction_is0/split/004-t25v3_grow_alloc_output.c",
+      "sha256": "1198c24918718565409f8e995a25eb92e9f870a893f901393efbed990f1537cc"
+    },
+    {
+      "bytes": 4734,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_projection_conjunction_is0/split/005-t25v3_grow_alloc_frame.c",
+      "sha256": "ac824da28573588e41ac18d4eac8926d40963cc655a06279e6bc9fba80dabf14"
+    },
+    {
+      "bytes": 4891,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_projection_conjunction_is0/split/006-t25v3_grow_copy_establish.c",
+      "sha256": "cac2722ab4199a0862b64192b5e91e43fd3a6260593cb32f7cc2312e06e5e435"
+    },
+    {
+      "bytes": 4850,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_projection_conjunction_is0/split/007-t25v3_grow_copy_read.c",
+      "sha256": "7c90efa88d04fe2ebd52f63b2d03d26f9fab1028499546b4b8f9079b7e19a359"
+    },
+    {
+      "bytes": 4789,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_projection_conjunction_is0/split/008-t25v3_grow_copy_write.c",
+      "sha256": "8cb31cb0ca397d1af45989a20b86daf800f4917d85f7e7629cbfe20ca5b7643c"
+    },
+    {
+      "bytes": 4802,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_projection_conjunction_is0/split/009-t25v3_grow_copy_step.c",
+      "sha256": "5e46d1eee055960726f99ab13a172f1f4963270617255d7797c5ae5c79920a0e"
+    },
+    {
+      "bytes": 4775,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_projection_conjunction_is0/split/010-t25v3_grow_copy_exit.c",
+      "sha256": "a82e1a2d18ce960a19f522f8501d387e3426ef93361101aa84a8c20ae8b64a56"
+    },
+    {
+      "bytes": 4765,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_projection_conjunction_is0/split/011-t25v3_grow_free_argument.c",
+      "sha256": "e34e62929b1883a7e331d607891e0867f67255aa76f13144aa3599db4ce4fcb6"
+    },
+    {
+      "bytes": 4873,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_projection_conjunction_is0/split/012-t25v3_grow_free_survival.c",
+      "sha256": "379322038e0f7d2464b40d9d9ecc31820b667ffc535b789d6072ef83fbeba2ab"
+    },
+    {
+      "bytes": 4830,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_projection_conjunction_is0/split/013-t25v3_grow_free_aliases.c",
+      "sha256": "c8af180b05b93f59898c1c9f70a1d66669a532470e7c1ddf8439ec566cb72fe3"
+    },
+    {
+      "bytes": 4797,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_projection_conjunction_is0/split/014-t25v3_grow_store_capacity.c",
+      "sha256": "58205ae5015b20dfe0ed078b910139e4c02c520fbcdf3890a43d4608d13bce55"
+    },
+    {
+      "bytes": 4779,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_projection_conjunction_is0/split/015-t25v3_grow_post_eligibility.c",
+      "sha256": "385c5a3abc142bd86609143250fbf1d5c915180a807b714047f1a57b9a3bcb3a"
+    },
+    {
+      "bytes": 4780,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_projection_conjunction_is0/split/016-t25v3_grow_post_values.c",
+      "sha256": "54bfb0689114aaee966679853bf9315a1efb4a09c9e234bdf3b9ca6693fe662a"
+    },
+    {
+      "bytes": 4782,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_projection_conjunction_is0/split/017-t25v3_grow_post_old_invalid.c",
+      "sha256": "c837d4ba9dfc151533c52b3bc2c62009aaa414160141fc1708bad65a505412ff"
+    },
+    {
+      "bytes": 4773,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_projection_conjunction_is0/split/018-t25v3_grow_post_frame.c",
+      "sha256": "f893974f292f317c49e2c5b10b8d636e68b53be843e3e3b39ae60115e0042209"
+    },
+    {
+      "bytes": 1780,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_projection_conjunction_is0/split/019-t25v3_grow_numeric.c",
+      "sha256": "59d1e899773f54e3bc3b1087bef201b298c52703fcbf5506b3a4f9443b086b70"
+    },
+    {
+      "bytes": 40302,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_projection_conjunction_is0/split/manifest.json",
+      "sha256": "9d7ede3734422b75acfc9d4151837c833f48e57705a8267f48f3405087a81d70"
+    },
+    {
+      "bytes": 2983,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_projection_conjunction_is0/split/original.c",
+      "sha256": "dc2049fa6f88a958fb88aee1e0a401f584630e8c302ad2e60b069ced2b587b1b"
+    },
+    {
+      "bytes": 3868,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_projection_conjunction_is0/split/qualified.c",
+      "sha256": "abbc59a1e71c9597c00379706f917de26b2ad0edd25d0aa19c8c52f2414e81ba"
+    },
+    {
+      "bytes": 4855,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_projection_conjunction_is0/split/references/002-t25v3_grow_entry_int_projection.c",
+      "sha256": "b5dbe9939b460efa5503b1cbba8a891f5cdb940a8d44835f3fd04da307a74b3f"
+    },
+    {
+      "bytes": 8386,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_projection_conjunction_is0/split/theory/heap_reallocation.mlw",
+      "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5"
+    },
+    {
+      "bytes": 355695,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/anchors.json",
+      "sha256": "2d1cebe003c19fe287849b703c5d6645a6bfa765f8a57444aae98228a6ce8492"
+    },
+    {
+      "bytes": 4797,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/ctor_count_value/000-t25v3_control_ctor_premises_feasible.c",
+      "sha256": "b5e411200cea2b718f6d7464d67b16c9704f13da40fb4b5c3d15f8ccc424dad5"
+    },
+    {
+      "bytes": 4712,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/ctor_count_value/001-t25v3_ctor_rte_zero_data.c",
+      "sha256": "3a64ef32dc04c28baf29bf0432e000405db7e5923e5ee7c40d15a3afd162edee"
+    },
+    {
+      "bytes": 4741,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/ctor_count_value/002-t25v3_ctor_rte_zero_size.c",
+      "sha256": "524665df08d6df290bc3fa479ba7de698c4929ecb9307065e909c815cea8e651"
+    },
+    {
+      "bytes": 4773,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/ctor_count_value/003-t25v3_ctor_rte_zero_capacity.c",
+      "sha256": "1b503dcb3e5d9ad0c02e7f05c4b961c4e344d05b027d2c922445495b030dd44e"
+    },
+    {
+      "bytes": 4730,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/ctor_count_value/004-t25v3_ctor_fields_initialized.c",
+      "sha256": "7457a3fb08737a445abd553c0b18ecf41782b92e468bbd8a6fc641c64b412080"
+    },
+    {
+      "bytes": 4719,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/ctor_count_value/005-t25v3_ctor_zero_post.c",
+      "sha256": "67a767b853c35aa675dc2a038b8ce511f72c3b5d283c4b456ed3b9b537504cc0"
+    },
+    {
+      "bytes": 4680,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/ctor_count_value/006-t25v3_ctor_zero_frame.c",
+      "sha256": "246cb3285d23c64743a49e27ea7fddca8b0370800f447852782eb09f1dc8490a"
+    },
+    {
+      "bytes": 4827,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/ctor_count_value/007-t25v3_ctor_alloc_identity.c",
+      "sha256": "2c4039918468f64d6186788d62229926ec3de5ed7733deb3f1a37d626e1d3e7f"
+    },
+    {
+      "bytes": 4743,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/ctor_count_value/008-t25v3_ctor_alloc_well_formed.c",
+      "sha256": "37fb36cddfa7c04a94b82a42170d5c2e5ca38e32c79bb164d24cdc9de7e37f55"
+    },
+    {
+      "bytes": 4781,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/ctor_count_value/009-t25v3_ctor_alloc_separation.c",
+      "sha256": "15b3e29c013f359fd41166886cf8c87349871c4d6be2f3acf2a42fa2faeef5d7"
+    },
+    {
+      "bytes": 4837,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/ctor_count_value/010-t25v3_ctor_alloc_extent.c",
+      "sha256": "19ba37f46cad8d3c1fb1540232498f75f033e3462e8bd333ef29f6ef5b0d6ebb"
+    },
+    {
+      "bytes": 4720,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/ctor_count_value/011-t25v3_ctor_alloc_uninitialized.c",
+      "sha256": "7e829d37db0bd00afc9da274a2bb64f670f95d8877a85cca91e9968f956b6797"
+    },
+    {
+      "bytes": 4874,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/ctor_count_value/012-t25v3_ctor_capacity_entry.c",
+      "sha256": "7a0e99453d6cbc09801fce66d2387a93175e593cf4152c99f36d21cd50adba42"
+    },
+    {
+      "bytes": 4782,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/ctor_count_value/013-t25v3_ctor_rte_allocated_data.c",
+      "sha256": "02ba89b283c54cc344aad9897d86365fc227c0c2b2bc0efcb67f6e49ad0bb96a"
+    },
+    {
+      "bytes": 4832,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/ctor_count_value/014-t25v3_ctor_rte_allocated_capacity.c",
+      "sha256": "0991127933d1a77bd56ec6c71aa78a2c00754d88fadba9dd91c109a4fa4bf2ec"
+    },
+    {
+      "bytes": 4679,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/ctor_count_value/015-t25v3_ctor_prefix_establish.c",
+      "sha256": "50fb5df4e141d3263dc802457dbd7935be3b0286b17ec43c21bac0e37fc97218"
+    },
+    {
+      "bytes": 4792,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/ctor_count_value/016-t25v3_ctor_store_access.c",
+      "sha256": "83c4d2ad7c3351e04007cfc3a8b4b9ace11774feab2e0eb678e7cb7a663af2ad"
+    },
+    {
+      "bytes": 4755,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/ctor_count_value/017-t25v3_ctor_prefix_step.c",
+      "sha256": "aa084a3b18ca0a7abd158071d20b91efb631d797ea0789f8e24c4fb35ccba598"
+    },
+    {
+      "bytes": 4738,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/ctor_count_value/018-t25v3_ctor_prefix_exit.c",
+      "sha256": "63e1d91b2abddf2959a3ed8d35fbccd0f3c4c1679a17e61d5f364e0b9135d123"
+    },
+    {
+      "bytes": 4794,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/ctor_count_value/019-t25v3_ctor_final_post.c",
+      "sha256": "7bdbb392a07ba3d6cf4e6a38d8cb84253a7ffc2f801a29c456a4039c4859f42e"
+    },
+    {
+      "bytes": 4720,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/ctor_count_value/020-t25v3_ctor_rte_final_size.c",
+      "sha256": "2f55d2e1f387cc1e191db7169b89969582c6684a320930868d364d2bd8ddfd3e"
+    },
+    {
+      "bytes": 4722,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/ctor_count_value/021-t25v3_ctor_frame_preexisting.c",
+      "sha256": "f944af412b583f4a9a60871dd616b8188e64a27fb7cd75eb94a372c4454c2835"
+    },
+    {
+      "bytes": 4754,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/ctor_count_value/022-t25v3_ctor_frame_loop_step.c",
+      "sha256": "b73c3d72d71d00b1a3db42157634a66fcc2caa20a5a803f12189ee864a0ef98a"
+    },
+    {
+      "bytes": 4724,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/ctor_count_value/023-t25v3_ctor_frame_final.c",
+      "sha256": "524a1813b0938ef54b0f013c015bf74448488031a6398d934f5ea84f632bcf28"
+    },
+    {
+      "bytes": 1559,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/ctor_count_value/024-t25v3_ctor_numeric.c",
+      "sha256": "95efe1cba1bbc55c5f08d538cd4424ff93a4d3adf6bd5d169ad17664377d5600"
+    },
+    {
+      "bytes": 4902,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/ctor_count_value/025-t25v3_control_zero_size_formation.c",
+      "sha256": "20e39f968e9d59dc0d4fd901a6758e976969a3824c3509d3ad5cd21e482cb1dc"
+    },
+    {
+      "bytes": 4757,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/ctor_count_value/026-t25v3_control_live_zero_base_not_fresh.c",
+      "sha256": "986b457661e64986482e9959757025ca082a0826018dbd372529d0722656b112"
+    },
+    {
+      "bytes": 4704,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/ctor_count_value/027-t25v3_control_ctor_qualified_feasible.c",
+      "sha256": "a60560cd42ab38003711f2bc0815fb0f39a4757888d19bb038bc4c4b4525770d"
+    },
+    {
+      "bytes": 4735,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/ctor_count_value/028-t25v3_ctor_qualified_zero_post.c",
+      "sha256": "efbc464b79789d41ce4c4cbbc507e6bd66440c7455291412f6cbe6a2bb3d4871"
+    },
+    {
+      "bytes": 4754,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/ctor_count_value/029-t25v3_ctor_qualified_positive_post.c",
+      "sha256": "2967ac1174f2c7a1f9ade34c8f1f2c16eb0b8c166b354763bdf45eb7db53ea60"
+    },
+    {
+      "bytes": 47426,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/ctor_count_value/manifest.json",
+      "sha256": "9a99a80b7afbaf1cbf31c094a15b04e48c134caed5da52e48f34709aebb275e7"
+    },
+    {
+      "bytes": 2724,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/ctor_count_value/original.c",
+      "sha256": "57cf2a6f3f9049f8edf41633f9ef60d0bb7c804e5ee937af796217a2a018c594"
+    },
+    {
+      "bytes": 3631,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/ctor_count_value/qualified.c",
+      "sha256": "a20cb8431cc975b034954666967398d8466745cd0bab9a92f45f60c19a837a1a"
+    },
+    {
+      "bytes": 8386,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/ctor_count_value/theory/heap_reallocation.mlw",
+      "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5"
+    },
+    {
+      "bytes": 4725,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/dtor/000-t25v3_control_dtor_premises_feasible.c",
+      "sha256": "0563754418f4a12a41995478c6a829c73114b4c967df221220a3b08fba410c4f"
+    },
+    {
+      "bytes": 4773,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/dtor/001-t25v3_dtor_data_read.c",
+      "sha256": "004833d8949bb5d4400a219ef2b9368ae7ca4914d15fc69062f761c63b29827b"
+    },
+    {
+      "bytes": 4769,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/dtor/002-t25v3_dtor_free_argument.c",
+      "sha256": "462a7744e8f7a5137bdca30bbd498f6a38e2272e93a5922cfca31bfb5e05e949"
+    },
+    {
+      "bytes": 4647,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/dtor/003-t25v3_dtor_null_no_op.c",
+      "sha256": "96b0e5c9536694714afec32d21cf52517e871f2225ff074cc043746c5a15a9b4"
+    },
+    {
+      "bytes": 4777,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/dtor/004-t25v3_dtor_alias_invalidated.c",
+      "sha256": "40bed47f0ae13d768e077e6ea7789dcd190194e1522810310250ad1278a698a1"
+    },
+    {
+      "bytes": 4802,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/dtor/005-t25v3_dtor_post_old_invalid.c",
+      "sha256": "5062df7f6ed1315b67e6e1a0d323dcff7cb53a6b6df4639034cbd45ca415034f"
+    },
+    {
+      "bytes": 4840,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/dtor/006-t25v3_dtor_frame_surviving.c",
+      "sha256": "3012485de6f563339f99f6c8b38d270fb6d04429367c20836d8e8a6465b5aa67"
+    },
+    {
+      "bytes": 4712,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/dtor/007-t25v3_dtor_frame_other_live.c",
+      "sha256": "e0fb664a9c258708be364a9017d9806ae01ec81eb905f4a572943f29abaedc1a"
+    },
+    {
+      "bytes": 4704,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/dtor/008-t25v3_dtor_receiver_overlap.c",
+      "sha256": "8c53c08ddc54ebb60d69fce168fff27c4c0dd52c8d80741d99eabd5475202096"
+    },
+    {
+      "bytes": 5183,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/dtor/009-t25v3_control_reused_address_stale.c",
+      "sha256": "59f1c15f17ed5a1cddb2658e07f6af4f9e0877ed902d84c444ff93d2a824c0d8"
+    },
+    {
+      "bytes": 4731,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/dtor/010-t25v3_control_before_release_read.c",
+      "sha256": "5f2c091c9d006b7aca4fa6143450b0b38a480f9380771bb9a0bf6399e6d1702f"
+    },
+    {
+      "bytes": 17996,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/dtor/manifest.json",
+      "sha256": "0f33c5c9121768a33e3dfba241b10dab78cb7b71aa6eaafd395b3b4f35828b14"
+    },
+    {
+      "bytes": 2124,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/dtor/original.c",
+      "sha256": "1056f4f83c59a30941ec9417c36aada8eab4b62160087ae10315cd2ac9778317"
+    },
+    {
+      "bytes": 2987,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/dtor/qualified.c",
+      "sha256": "9ca9409923f9d39b4e35a0690c70256af56bfd1c37f1e389e406f615b0164e7f"
+    },
+    {
+      "bytes": 8386,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/dtor/theory/heap_reallocation.mlw",
+      "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5"
+    },
+    {
+      "bytes": 4821,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/reserve/000-t25v3_control_grow_premises_feasible.c",
+      "sha256": "e9912022fad11f1fe2ea45e80ba9909673c287ce41d0114d707ca8e6d1d19579"
+    },
+    {
+      "bytes": 4885,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/reserve/001-t25v3_grow_entry_reads.c",
+      "sha256": "18263b731752f297cedcaf3b0a64564b689992dac89a0b382b7acfb70ef4b492"
+    },
+    {
+      "bytes": 4858,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/reserve/002a-t25v3_grow_entry_int_projection_repr.c",
+      "sha256": "1e895aec561e8840764b43c3056ff3eae7e26f4a370cb18b67e08a43437b562d"
+    },
+    {
+      "bytes": 4894,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/reserve/002b-t25v3_grow_entry_int_projection_cells.c",
+      "sha256": "47e26763183659b00923090094d8a0ae658972e9f64c17c30f2c772309dfdb35"
+    },
+    {
+      "bytes": 4818,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/reserve/003-t25v3_grow_alloc_identity.c",
+      "sha256": "ea3a5a1296e046da142f68541fed405c673537448d46a6324d755285aad21099"
+    },
+    {
+      "bytes": 4960,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/reserve/004-t25v3_grow_alloc_output.c",
+      "sha256": "1198c24918718565409f8e995a25eb92e9f870a893f901393efbed990f1537cc"
+    },
+    {
+      "bytes": 4734,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/reserve/005-t25v3_grow_alloc_frame.c",
+      "sha256": "ac824da28573588e41ac18d4eac8926d40963cc655a06279e6bc9fba80dabf14"
+    },
+    {
+      "bytes": 4891,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/reserve/006-t25v3_grow_copy_establish.c",
+      "sha256": "cac2722ab4199a0862b64192b5e91e43fd3a6260593cb32f7cc2312e06e5e435"
+    },
+    {
+      "bytes": 4850,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/reserve/007-t25v3_grow_copy_read.c",
+      "sha256": "7c90efa88d04fe2ebd52f63b2d03d26f9fab1028499546b4b8f9079b7e19a359"
+    },
+    {
+      "bytes": 4789,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/reserve/008-t25v3_grow_copy_write.c",
+      "sha256": "8cb31cb0ca397d1af45989a20b86daf800f4917d85f7e7629cbfe20ca5b7643c"
+    },
+    {
+      "bytes": 4802,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/reserve/009-t25v3_grow_copy_step.c",
+      "sha256": "5e46d1eee055960726f99ab13a172f1f4963270617255d7797c5ae5c79920a0e"
+    },
+    {
+      "bytes": 4775,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/reserve/010-t25v3_grow_copy_exit.c",
+      "sha256": "a82e1a2d18ce960a19f522f8501d387e3426ef93361101aa84a8c20ae8b64a56"
+    },
+    {
+      "bytes": 4765,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/reserve/011-t25v3_grow_free_argument.c",
+      "sha256": "e34e62929b1883a7e331d607891e0867f67255aa76f13144aa3599db4ce4fcb6"
+    },
+    {
+      "bytes": 4873,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/reserve/012-t25v3_grow_free_survival.c",
+      "sha256": "379322038e0f7d2464b40d9d9ecc31820b667ffc535b789d6072ef83fbeba2ab"
+    },
+    {
+      "bytes": 4830,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/reserve/013-t25v3_grow_free_aliases.c",
+      "sha256": "c8af180b05b93f59898c1c9f70a1d66669a532470e7c1ddf8439ec566cb72fe3"
+    },
+    {
+      "bytes": 4797,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/reserve/014-t25v3_grow_store_capacity.c",
+      "sha256": "58205ae5015b20dfe0ed078b910139e4c02c520fbcdf3890a43d4608d13bce55"
+    },
+    {
+      "bytes": 4779,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/reserve/015-t25v3_grow_post_eligibility.c",
+      "sha256": "385c5a3abc142bd86609143250fbf1d5c915180a807b714047f1a57b9a3bcb3a"
+    },
+    {
+      "bytes": 4780,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/reserve/016-t25v3_grow_post_values.c",
+      "sha256": "54bfb0689114aaee966679853bf9315a1efb4a09c9e234bdf3b9ca6693fe662a"
+    },
+    {
+      "bytes": 4782,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/reserve/017-t25v3_grow_post_old_invalid.c",
+      "sha256": "c837d4ba9dfc151533c52b3bc2c62009aaa414160141fc1708bad65a505412ff"
+    },
+    {
+      "bytes": 4773,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/reserve/018-t25v3_grow_post_frame.c",
+      "sha256": "f893974f292f317c49e2c5b10b8d636e68b53be843e3e3b39ae60115e0042209"
+    },
+    {
+      "bytes": 1780,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/reserve/019-t25v3_grow_numeric.c",
+      "sha256": "59d1e899773f54e3bc3b1087bef201b298c52703fcbf5506b3a4f9443b086b70"
+    },
+    {
+      "bytes": 4791,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/reserve/020-t25v3_reserve_entry_capacity.c",
+      "sha256": "64d54393d5c3aa745978fa6e1094c59a488ceddf233128c31701c997dab75cec"
+    },
+    {
+      "bytes": 4837,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/reserve/021-t25v3_reserve_no_growth.c",
+      "sha256": "592c8e5b0e9aab344fe2fda9e9b919ce96fb88616f7172965c039f4bb7e3c797"
+    },
+    {
+      "bytes": 4797,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/reserve/022-t25v3_reserve_growing_pre.c",
+      "sha256": "148f1ec66d922f596f1b6e73f2c1771c11e8e2730260cb3b96d43b8937519f98"
+    },
+    {
+      "bytes": 4832,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/reserve/023-t25v3_reserve_growing_post.c",
+      "sha256": "836b1b556abc2afcf60cc6538c1c536b1af644666eec700c6aca5faaafbe30b7"
+    },
+    {
+      "bytes": 4780,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/reserve/024-t25v3_reserve_growing_old_invalid.c",
+      "sha256": "44f8f3fd0cbd9119b9bd46c72877b734a1206511247eaa27a0f11375c1bc77c6"
+    },
+    {
+      "bytes": 4771,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/reserve/025-t25v3_reserve_growing_frame.c",
+      "sha256": "fe1c74e71d8de8d95d5c5cf4b09c1512028900e1cf357d51926651d570cffea8"
+    },
+    {
+      "bytes": 49814,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/reserve/manifest.json",
+      "sha256": "c410b55aa99476b1fc47d2e032d8f32a40018a4a0042a7eeac87f1638936b36b"
+    },
+    {
+      "bytes": 3891,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/reserve/original.c",
+      "sha256": "bbb1ea332771898dba5a3b7e4e5e23fe0b916f325b22f213095c36285321421f"
+    },
+    {
+      "bytes": 4820,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/reserve/qualified.c",
+      "sha256": "0ec01e3ca00e01d32a7a173da4cbee3083ca67daeedf037c0738af59377f8dc7"
+    },
+    {
+      "bytes": 4855,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/reserve/references/002-t25v3_grow_entry_int_projection.c",
+      "sha256": "b5dbe9939b460efa5503b1cbba8a891f5cdb940a8d44835f3fd04da307a74b3f"
+    },
+    {
+      "bytes": 8386,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/bodies/reserve/theory/heap_reallocation.mlw",
+      "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5"
+    },
+    {
+      "bytes": 415,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/contract.json",
+      "sha256": "fd159983f6138c6e202cae1d55f29a1ffc83173fd4e54516ae8bab19b2f86138"
+    },
+    {
+      "bytes": 4841,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/local/000-t25v3_caller_local_begin_feasible.c",
+      "sha256": "b491ff62f4267441d9d0df50838612624b36a5beeeca5a9fdc3d2b736d036df8"
+    },
+    {
+      "bytes": 5010,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/local/001-t25v3_caller_local_begin_storage.c",
+      "sha256": "d1df6eaccdcaf47c44effe9e2ed2d3230654612c1a7d24c2fbd41847ca3d9411"
+    },
+    {
+      "bytes": 4722,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/local/002-t25v3_caller_local_begin_history.c",
+      "sha256": "cbcfe73556202cc4374dba9a95fca0fe888323a9cfcc6e2ce681e0cdac785016"
+    },
+    {
+      "bytes": 4924,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/local/003-t25v3_caller_local_begin_frame.c",
+      "sha256": "c80b939aff67689c47e26eb4ae66aa7b80d18fa671bc67ecfa61933c71889d50"
+    },
+    {
+      "bytes": 4832,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/local/004-t25v3_caller_local_begin_dead_aliases.c",
+      "sha256": "d42ea4e6e20e824f437454c7087d28570ed06c009f0a23df2698cee3dcb83d94"
+    },
+    {
+      "bytes": 4767,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/local/005-t25v3_caller_local_end_aliases.c",
+      "sha256": "720b9543926e8921456d57a5c889d491870b734571122197e7c621fb9bd1c54a"
+    },
+    {
+      "bytes": 4874,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/local/006-t25v3_caller_local_end_frame.c",
+      "sha256": "4022ada4cedc75d28d0b3bd9b4967c2fc8e215d15078b0a4bccca88c0ed9d1a9"
+    },
+    {
+      "bytes": 4784,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/local/007-t25v3_caller_caller_data_read.c",
+      "sha256": "a9747746378eb58ad01df19a79a39576cbc0b8695ebd66c934ee80d5ecb3f0ba"
+    },
+    {
+      "bytes": 4650,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/local/008-t25v3_caller_caller_guard_empty.c",
+      "sha256": "9167621b9f8737e7b099a8f50d94d8102b0dc92615719d453866e195a49a45d7"
+    },
+    {
+      "bytes": 4760,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/local/009-t25v3_caller_caller_guard_nonempty.c",
+      "sha256": "45aa5d2b661caa7ea81db346894038da137d3d9a94c40908f776644039f52552"
+    },
+    {
+      "bytes": 1026,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/local/caller-count-numeric.c",
+      "sha256": "3c93be600c5a8eec5ba70ea1381f0174c4fbf04289eb886ae11df564e250c0f6"
+    },
+    {
+      "bytes": 7304,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/lowering.c",
+      "sha256": "e03ffea7ca47dd8f6196972ca93682886c67fb5ab1a9e3451b1b1babd0642afe"
+    },
+    {
+      "bytes": 132550,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/manifest.json",
+      "sha256": "74e48f4fbdd8623e31130a66023c160bc19b40cd0dbbda82d6730022b8fedc94"
+    },
+    {
+      "bytes": 1354,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/observations/data.c",
+      "sha256": "ee4f867911135688f5b76932243b38aaff73a56d85ffeb24229725c7d4ec6f3f"
+    },
+    {
+      "bytes": 1512,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/observations/operator_index.c",
+      "sha256": "7b3548b6db64e22cd6b39bd968b4bface472f01f0477731f82187e35e347718f"
+    },
+    {
+      "bytes": 757,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/original.cc",
+      "sha256": "1172e62dbff5076d25471285afcfa17927707dbe6fae121d9570109d39e62b57"
+    },
+    {
+      "bytes": 8386,
+      "path": "/private/tmp/probata-t25-projection-and-caller-final-green-20261016/pytest/test_canonical_caller_preparat0/caller/theory/heap_reallocation.mlw",
+      "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5"
+    },
+    {
+      "bytes": 4513,
+      "path": "/private/tmp/probata-t25-caller-canonical-independent-review-e3481773-20261016.md",
+      "sha256": "f155d174682a6052fb11df03d226aa85129f31e03a533cfc0026f3efe6d3b070"
+    },
+    {
+      "bytes": 4120,
+      "path": "/private/tmp/probata-t25-caller-canonical-independent-review-e3481773-20261016.json",
+      "sha256": "1aad1b437f48b28932d2b66471c219a6e39c02a465c50d66bfa8a126bf97fdf1"
+    }
+  ],
+  "remaining": [
+    "independent final source/equivalence/lexical repair review",
+    "root-admitted affected diagnostic and fresh complete21-target public proof",
+    "ordinary public caller contract/dependency/state/frame/lifetime integration and all ticket member/type breadth"
+  ],
+  "scope": "prospective canonical projection decomposition and lexical caller-preparation repair; no actual formal execution or acceptance",
+  "source_parent": "e3481773",
+  "sources": [
+    {
+      "bytes": 21588,
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/vector_reallocation_vcs.py",
+      "sha256": "0ec4e168754b6f2ad1b6e659c4988855c89d2ae18fe8863eed39a290c1c706b1"
+    },
+    {
+      "bytes": 5207,
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/vector_reallocation_view.py",
+      "sha256": "05eaa7414580b11a54b7f6ebf63db20b28fd6aea0c5de4da00fc70a3bd0c57d4"
+    },
+    {
+      "bytes": 8418,
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/vector_reallocation_caller_packets.py",
+      "sha256": "6992058e5974738d56d1a98f87cbd012784420a85272b96f2fad113aff03a7d9"
+    },
+    {
+      "bytes": 6133,
+      "path": "/private/tmp/probata-resume-t25/swdb-project/tests/test_vector_reallocation_packets.py",
+      "sha256": "457eba04e5a7fbe076c5d987f71d0a41963a9f15c4dbafb4b437d2b1bfd2b088"
+    },
+    {
+      "bytes": 6629,
+      "path": "/private/tmp/probata-resume-t25/swdb-project/tests/test_vector_reallocation_view.py",
+      "sha256": "50aa2c44a6b9fd49d819829642e33533d968386f5904f4df168f2f946f93563a"
+    },
+    {
+      "bytes": 6718,
+      "path": "/private/tmp/probata-resume-t25/swdb-project/tests/test_vector_reallocation_caller_packets.py",
+      "sha256": "0e750ecb97af0477461c7f2d7473f9f2a22ae980202bc86224df297fbb73dd79"
+    },
+    {
+      "bytes": 4277,
+      "path": "/private/tmp/probata-resume-t25/swdb-project/tests/fixtures/proof/vector-reallocation-projection-017.json",
+      "sha256": "c0c33697796ab0b9dbc41751d0916281ce632bfe21244c4dde74bcca58fbc156"
+    }
+  ]
+}

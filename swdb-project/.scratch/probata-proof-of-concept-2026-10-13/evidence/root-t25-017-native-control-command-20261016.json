@@ -1,0 +1,16 @@
+[
+  "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+  "-m",
+  "pytest",
+  "-q",
+  "-p",
+  "no:cacheprovider",
+  "tests/test_vector_reallocation_view.py",
+  "tests/test_vector_reallocation_packets.py",
+  "tests/test_vector_reallocation_domain.py",
+  "tests/test_vector_reallocation_calls.py",
+  "tests/test_heap_model_view.py::test_complete_synthetic_heap_success_serializes_a_schema_valid_public_record",
+  "tests/test_heap_model_view.py::test_public_original_model_reaches_checked_heap_packet_before_scripted_parse_error",
+  "tests/test_heap_model_view.py::test_public_original_count_constructor_maps_zero_fill_before_standin",
+  "--basetemp=/private/tmp/probata-root-t25-017-native-controls-20261016/pytest"
+]

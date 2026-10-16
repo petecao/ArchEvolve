@@ -1,0 +1,46 @@
+{
+  "date": "2026-10-16 ET",
+  "decision_owner": "root project coordinator",
+  "decision": "ACCEPT exact2e01 qualified destructor D1-D7 source-VC evidence only under declaredTCB",
+  "source_commit": "2e01d27d0aea7f3c2056d3abb06600b4cefa29be",
+  "reporter_sha256": "22919544d02fc3fdc628ee44984852787043e61f82ed8613074e21751e9d1d6d",
+  "ordinary_direct_valid": 11,
+  "AltErgo_direct_valid": 10,
+  "CVC5_direct_valid": 1,
+  "source_groups": [
+    "D1",
+    "D2",
+    "D3",
+    "D4",
+    "D5",
+    "D6",
+    "D7"
+  ],
+  "scope": "Source-bound qualified destructor eligibility may be supplied only after normal current-code/canonical checks; original reader model_acceptance=false stays immutable. No original-v2/C++ body,caller,fullT25,numeric-waiver promotion.",
+  "TCB": [
+    "explicit source-to-heap VC translation",
+    "Frama-C/WP",
+    "Why3",
+    "selected solvers",
+    "selected arithmetic/maps/Qed standard support"
+  ],
+  "root_cold_physical_checks": 6097,
+  "root_cold_indexed_refs": 3303,
+  "opaque_consumer_files": 1582,
+  "integrity_errors": 0,
+  "caller_acceptance": false,
+  "original_v2_acceptance": false,
+  "full_ticket_acceptance": false,
+  "generic_zero_smoke_waiver": false,
+  "original_root_reader_model_acceptance": false,
+  "no_original_record_rewritten": true,
+  "root_cold_receipt": {
+    "path": "t25-dtor11-cold-root-execution-v1-20261016.json",
+    "sha256": "adc094a21ed920420db24894fbc9755495de5cf9fb2ab2d0aa65015a749c2568"
+  },
+  "independent_review": {
+    "md": "t25-dtor11-independent-cold-decision-20261016.md",
+    "sha256": "739f367f447bfb46f3ecde1781e91ac73b929f1ff1a42740dcf171eeeacffad3",
+    "json_sha256": "65ec7d8ddda57e142f3bdb9c8f5d9a3588ae2a5a0103696cef3575fa16a30c70"
+  }
+}
