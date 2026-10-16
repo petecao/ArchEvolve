@@ -170,3 +170,11 @@ later observations still check initializedness. Byte-wise conditional versions
 retain initialized32-bit subviews of a partially initialized64-bit output.
 [Exact RED/GREEN and physical pins](../../evidence/t28-inactive-byte-preservation-controls-20261016.json).
 Whole-call/source/public proof acceptance remains open.
+
+Register successor — 2026-10-16 ET:75/75 native controls cover six raw type widths,
+both allocation effects, byte aliasing, source explicit-ID write stalls and
+conservative second-half/ownership/initializedness refusals. One deliberate exact
+RF excerpt control expects native alignment UB; odd64allocation itself remains
+allowed. No source ABI/public proof admission follows from these finite controls.
+[Exact evidence](../../evidence/t28-register-state-controls-20261016.json).
+[Read-only installed IEEE/progress source map](../../evidence/t28-wp-ieee-progress-source-map-20261016.md).

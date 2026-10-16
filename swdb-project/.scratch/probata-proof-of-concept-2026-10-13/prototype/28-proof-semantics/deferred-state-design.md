@@ -177,3 +177,34 @@ Two genuine RED profiles precede final58/58 native controls under ASan/UBSan,
 workerB and the8GiB cap (22.06s,222150656B peak), with all raw source/executable/
 header references pinned in
 [the preservation receipt](../../evidence/t28-inactive-byte-preservation-controls-20261016.json).
+
+## Register byte state and source write stalls — 2026-10-16 ET
+
+`register_state.py` supplies dense raw-byte versions, the global source allocation
+counter, initialized/uninitialized allocation and six dtype widths. The explicit
+source scalar alignment vector is checked against the compiling C/C++ types.
+Allocation can return an odd8-byte starting ID; only the later typed MMIO/RF access
+checks alignment. Exact unchanged RF class/constructor excerpts at the pinned
+revision reproduce the misaligned64-bit read under the retained native8-byte ABI.
+This is source C++ undefined behavior on that ABI, not a hardware allocation rule.
+
+`IF::canPushRegister` blocks a CPU register write whose starting ID matches any
+explicit register operand of a pending command. The backend performs those covers
+before replacing bytes. Conflicts visible only through an8-byte second half
+refuse as conservative software obligations; neither hardware pair expansion nor
+a covering CPU register read is invented. Command register roles similarly
+refuse unresolved cross-command RF races. Software ownership here is a declared
+caller isolation domain, not a claim that hardware enforces register ownership.
+Counter reinitialization preserves values, pending commands and ownership; the
+same owner may reuse an allocated ID, while another owner cannot silently take it.
+
+Final75/75 native controls pass with C11/C++17 ASan/UBSan, workerB and8GiB cap
+(26.44s,222347264B peak). One case deliberately expects the pinned RF source's
+UBSan misalignment failure; it is not clean-source agreement. Its initial Mac
+abort/exit harness mismatch is retained and explicitly excluded from final
+acceptance. Final per-case receipts record deterministic sanitizer options.
+[Exact source/RED/native/resource pins](../../evidence/t28-register-state-controls-20261016.json).
+Source-bound wrappers/setup, full pointer admission, formal IEEE bit-image
+coherence and unbounded progress/public proofs remain active work. The read-only
+[installed-tool source map](../../evidence/t28-wp-ieee-progress-source-map-20261016.md)
+records supported IEEE operations and the unsupported ACSL model-field rank route.

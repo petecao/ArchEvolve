@@ -212,12 +212,14 @@ static unsigned dxm_result(void) {
   dxm_nodes[id].kind=6; dxm_nodes[id].settled=0;
   return id;
 }
-static unsigned dxm_uninitialized(void) {
+static unsigned dxm_uninitialized_with_rule(unsigned is_register) {
+  DXM_CHECK(is_register <= 1, "initializedness-rule-domain");
   DXM_CHECK(dxm_count < DXM_NODES, "node-capacity");
   unsigned id=dxm_count++;
-  dxm_nodes[id].kind=8; dxm_nodes[id].settled=0;
+  dxm_nodes[id].kind=8; dxm_nodes[id].settled=0; dxm_nodes[id].op=is_register;
   return id;
 }
+static unsigned dxm_uninitialized(void) { return dxm_uninitialized_with_rule(0); }
 static void dxm_publish(unsigned id,uint64_t value) {
   DXM_CHECK(id < dxm_count && dxm_nodes[id].kind == 6, "action-result-domain");
   DXM_CHECK(!dxm_nodes[id].settled, "immutable-action-result");
@@ -267,7 +269,7 @@ static void dxm_cover(unsigned id) {
     struct dxm_node *n=&dxm_nodes[i];
     if (n->settled) { --depth; continue; }
     if (n->kind == 6) { DXM_CHECK(0, "action-result-before-completion"); return; }
-    if (n->kind == 8) { DXM_CHECK(0, "tile-value-initialized"); return; }
+    if (n->kind == 8) { DXM_CHECK(0, n->op ? "register-value-initialized" : "tile-value-initialized"); return; }
     unsigned parent=0, visit=0;
     if ((n->kind == 2 || n->kind == 5) && phase[frame] < 2) {
       parent=phase[frame] == 0 ? n->left : n->right;
