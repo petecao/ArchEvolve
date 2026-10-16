@@ -66,6 +66,7 @@ def wp_setup(tmp_path):
         path.write_text(yaml.safe_dump(entry, sort_keys=False))
         entries[name] = path
     marker, compiled = tmp_path / "wp-launched.json", tmp_path / "reader-compiled"
+    input_mutated = tmp_path / "generated-input-mutated"
     frama = tmp_path / "frama.py"
     frama.write_text('''import json, os, sys
 from pathlib import Path
@@ -96,7 +97,14 @@ if target:
     data = yaml.safe_load(path.read_text())
     data["clauses"][0]["acsl"]["text"] = "assigns \\\\nothing; ensures \\\\result == n + 1;"
     path.write_text(yaml.safe_dump(data, sort_keys=False))
-Path(sys.argv[sys.argv.index("-o") + 1]).write_bytes(b"stand-in reader module; no OCaml/verifier")
+module = Path(sys.argv[sys.argv.index("-o") + 1])
+if os.environ.get("SETUP_MUTATE_INPUT"):
+    generated = module.parent / "wp_input.c"
+    before = generated.read_text()
+    assert "return n;" in before
+    generated.write_text(before.replace("return n;", "return n + 1;"))
+    Path(os.environ["SETUP_MUTATE_INPUT"]).write_text(generated.read_text())
+module.write_bytes(b"stand-in reader module; no OCaml/verifier")
 Path(os.environ["SETUP_COMPILED_MARKER"]).touch()
 ''')
     why3 = tmp_path / "why3.conf"
@@ -104,7 +112,7 @@ Path(os.environ["SETUP_COMPILED_MARKER"]).touch()
     why3.write_text("".join(f'[prover]\nname = "{names[row["tool"]]}"\nversion = "{row["version"]}"\n'
                            'command = "/usr/bin/false"\n' for row in method["lineup"] if row["tool"] in names))
 
-    def prove(subject="unit", *, mutate=None, prefix=()):
+    def prove(subject="unit", *, mutate=None, mutate_input=False, prefix=()):
         return run_swdb("prove", "--records", records.path, "--summary", "contract.setup_" + subject,
                         "--adapter", "wp", "--method-version", method["id"], "--runs-dir", tmp_path / "runs",
                         "--format", "json", env={
@@ -112,14 +120,15 @@ Path(os.environ["SETUP_COMPILED_MARKER"]).touch()
                             "SWDB_OCAMLFIND": f"{sys.executable} {compiler}", "WHY3CONFIG": str(why3),
                             "SWDB_VERIFIER_LOCK": str(tmp_path / "standin-only.lock"),
                             "SETUP_WP_MARKER": str(marker), "SETUP_COMPILED_MARKER": str(compiled),
-                            "SETUP_MUTATE": str(entries[mutate]) if mutate else ""})
+                            "SETUP_MUTATE": str(entries[mutate]) if mutate else "",
+                            "SETUP_MUTATE_INPUT": str(input_mutated) if mutate_input else ""})
 
     def record(result):
         assert result.returncode == 0, result.stderr + result.stdout
         return yaml.safe_load((records.path / json.loads(result.stdout)["path"]).read_text())
 
     return SimpleNamespace(prove=prove, record=record, method=method, method_path=method_path,
-                           marker=marker, compiled=compiled, records=records.path, entries=entries)
+                           marker=marker, compiled=compiled, input_mutated=input_mutated, records=records.path, entries=entries)
 
 
 @pytest.mark.parametrize("flags", [[], ["-wp-no-rte"], ["-wp-rte", "-wp-no-rte"]])
@@ -161,6 +170,16 @@ def test_post_plan_contract_or_used_summary_mutation_refuses_before_wp(wp_setup,
     assert done.returncode == 1 and f"[{rule}]" in done.stderr, done.stderr + done.stdout
     assert wp_setup.entries[changed].read_bytes() != before and wp_setup.compiled.exists()
     assert not wp_setup.marker.exists() and set(wp_setup.records.glob("proofs/*.yaml")) == existing
+
+
+def test_production_wp_refuses_changed_generated_input_at_the_final_prelaunch_check(wp_setup):
+    # 2026-10-15 ET: external reader compiler changes bytes after planning/copy.
+    done = wp_setup.prove("helper", mutate_input=True)
+    assert done.returncode == 1 and "[input_hash]" in done.stderr, done.stderr + done.stdout
+    assert "generated input wp_input.c differs from its planned bytes" in done.stderr
+    assert wp_setup.compiled.exists() and wp_setup.input_mutated.exists()
+    assert "return n + 1;" in wp_setup.input_mutated.read_text()
+    assert not wp_setup.marker.exists() and not list(wp_setup.records.glob("proofs/*.yaml"))
 
 
 @pytest.mark.parametrize("flags", [[], ["--unwinding-assertions"],
