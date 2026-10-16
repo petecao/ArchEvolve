@@ -811,3 +811,47 @@ See [scoped evidence](../evidence/setup-rte-postplan-controls-20261015.json) for
 the red/green controls, compiler/tool boundary and regression command. Validation:
 **86 passed, 13 real-WP cases deselected in 189.24 s**, serial on the Mac. No
 verifier was run. This includes 15 new controls at the authorized public CLI seam.
+
+### Runtime identity hardening — 2026-10-15 ET
+
+Ticket 27's independently reviewed completion releases this ticket's implementation
+gate. The runtime identity now resolves and retains the selected command, exact
+frontend arguments, frontend binary and wrapper before optional parser/header
+discovery. Optional discovery failures retain the resolved identities. The final
+generated-input check refuses an unresolvable frontend and replays the current
+lowering/runtime against the method's translator pin. Its digest joins the setup
+hashes; the full runtime is retained in record settings. Standard substitutions and
+allocation still require their complete original-TU certificate.
+
+Public controls reproduced stale admission after a same-version driver replacement,
+an opaque frontend, a driver change after planning, and changed compiler semantic
+arguments/context with unchanged executable bytes. Each is red before its repair.
+All 13 focused compiler/report-stand-in controls pass. Their pytest collection can
+probe the real Frama-C version; their synthetic proof reports are admission
+controls, never scientific proof evidence. Scoped independent review
+found and then confirmed the repair of the command/context omission. Actual fact,
+production WP and bounded acceptance runs remain coordinator-gated and pending.
+
+The original fill fixture now declares the exact `a:n` incoming-array window
+already represented by its contract. Source, contract and preconditions are
+unchanged. A prepared actual scalar control forwards the real driver's trace and
+compilation while making only optional libclang discovery unavailable; it retains
+`contract_fixture` evidence classification.
+
+Assumption: this ticket closes on a reviewed ticket-local source/checker/runtime
+freeze and fresh pinned acceptance runs. Requiring production freeze 59 first
+would create a dependency cycle through 37, 38 and 58. Drafts 1/2 stay immutable;
+ticket 59 owns final production-method review/freeze. No draft 3 is created here.
+
+The earlier broad 126-pass validation is compiler + real formal-half parser +
+stand-in evidence; excluding actual WP fact cases did not exclude real Frama-C
+typechecks during library validation. It predates the final command/context pin.
+A subsequent affected profile was explicitly stopped by this implementer after
+that scheduling mistake was discovered: guard exit `-15`, 155.66 s, no OOM or
+timeout. The coordinator's let-finish instruction arrived after the stop.
+Three fresh scans find the five known stopped identities and matching commands
+absent; unrelated process visibility remains incomplete. The vanished process
+65785 observed separately by the coordinator cannot be attributed retrospectively.
+No exhaustive historical exec inventory exists. Current-source parser integration
+and all actual verifier acceptance require the coordinator's reviewed admission;
+this checkpoint does not retroactively admit earlier parser calls.

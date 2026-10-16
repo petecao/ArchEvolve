@@ -71,7 +71,9 @@ def _contract(cid, function, clauses, frame):
     return {
         "kind": "rewrite_contract", "id": cid, "formal_frame": 1, "version": "1.0",
         "provenance": {"origin": {"intrinsic_specification": "fixture-21"}},
-        "proof_unit": {"source": unit, "function": function},
+        "proof_unit": {"source": unit, "function": function,
+                       **({"array_domains": {"a": {"extent": "n"}}}
+                          if function == "swdb_fixture_fill" else {})},
         "concurrency_frame": frame,
         "clauses": [{"id": name, "role": role, "statement": f"Fixture clause {name}.", "discharge_mode": "runtime_guard",
                      "negative_control": {"id": f"{name}-control", "check": name},
