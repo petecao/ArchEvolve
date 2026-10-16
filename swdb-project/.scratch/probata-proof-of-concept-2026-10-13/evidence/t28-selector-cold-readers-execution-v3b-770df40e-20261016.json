@@ -1,0 +1,69 @@
+{
+  "at_utc": "2026-10-16T06:28:16.552562+00:00",
+  "connection": {
+    "disk": "Filesystem      Size  Used Avail Use% Mounted on\n/dev/sdd1       1.8T  1.7T   25G  99% /data1\n/dev/sdb1       1.8T  1.7T   69G  97% /data",
+    "uptime": "02:28:12 up 76 days, 18:47,  8 users,  load average: 0.00, 0.03, 0.12",
+    "users": ""
+  },
+  "exit_code": 1,
+  "leases": {
+    "mbit10-evaluation-node0.meta.json": "released",
+    "mbit10-evaluation-node1.meta.json": "released",
+    "mbit10-evaluation.meta.json": "released"
+  },
+  "limits": "Passive single-process reader60s+5s timeout,8GiB hard address-space cap. Actual proof and raw artifacts untouched.",
+  "reader_sha256": "cae6d52e1a125e77774dd8db8d95f40c3d84945c0017728f71d68f83127ffae7",
+  "records": [],
+  "source_commit": "770df40eeb5e3034862f61b79b6bcaad5fa620a7",
+  "stderr": {
+    "bytes": 0,
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-selector-cold-readers-770df40e-20261016/v3/supplement.stderr.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stderr_tail": "",
+  "stdout": {
+    "bytes": 970,
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-selector-cold-readers-770df40e-20261016/v3/supplement.stdout.json",
+    "sha256": "fd93fda0f135100441bf4c57a006fb448a023235123f175c9573e8335ecf23ef"
+  },
+  "summary": {
+    "integrity_errors": [
+      {
+        "class": "AssertionError",
+        "locations": [
+          {
+            "assertion": null,
+            "file": "supplement.py",
+            "function": "<module>",
+            "line": 299
+          },
+          {
+            "assertion": null,
+            "file": "supplement.py",
+            "function": "audit",
+            "line": 291
+          },
+          {
+            "assertion": null,
+            "file": "supplement.py",
+            "function": "check_goals",
+            "line": 123
+          },
+          {
+            "assertion": "n['provers'] and all(p['success']==0 for p in n['provers'])",
+            "file": "supplement.py",
+            "function": "check_passed_smoke",
+            "line": 70
+          }
+        ],
+        "message": "Passive audit refused; inspect the pinned source locations."
+      }
+    ]
+  },
+  "vcs_primary_source": {
+    "matches_mac": true,
+    "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/VCS.ml",
+    "sha256": "95688db279e59b61f7e5068beb07b460778d91c5adf72be06a8e1e19e520b821"
+  },
+  "wall_seconds": 4.131096354685724
+}

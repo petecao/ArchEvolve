@@ -1,0 +1,185 @@
+{
+  "baseline_commit": "21edecf2d8a06234290e06861b6724dc76dd346e",
+  "date": "2026-10-16 ET",
+  "fixture_commit": "770df40eeb5e3034862f61b79b6bcaad5fa620a7",
+  "production_files": {
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/run_selector_acceptance.sh": "15fcc86b95429c5fefaef9622859848fcf79db7bfe606a8a306a0f5ddc6a67c8",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/selector-first-gate.md": "a2dc458ee5d3d847ba4886f9822a64f66d4ebb328ee7658d288793fb40e3f0c3",
+    "docs/reference/format-v0.4-proof-semantics.md": "6fc2534841999bac409baf985ab1fd85960bce872488df29b7bf3fbf899b0450",
+    "library/methods/probata-draft-1.yaml": "497aa683887094e3217945132134112469e028c2a50a7966838bbebf902d3ae5",
+    "library/proof_semantics/dx100_bfs_0_1.yaml": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f",
+    "pyproject.toml": "049d720132df2d1091bca29e2705d4552e5fc3ea55e9963cf8faa3133501d7b5",
+    "schemas/proof.schema.json": "c8255f763fc1968c64aff4af53aac04a0dadc5193303f87fcd6c86f530100bfa",
+    "scripts/probata_heap_model_profile.py": "2abc5fe12e0eac1c04f9b3634df5303f37547cea5a960ef6c813db3110ff9c14",
+    "swdb/acsl_subset.py": "59c1cb99afc9f5d10349e9ec53875da5962379c39365b2c38252388858b6efe8",
+    "swdb/array_domains.py": "4ce7f64892b3e63c8dba65ef3c4f532e47842a287c38e0f5cc5f69d27e7780bd",
+    "swdb/artifacts.py": "6368cc18061ee3ddc6256b96a76bf2cfaad3fae283104291723939b725c2dccd",
+    "swdb/bounded_chain.py": "b63f7eb03e32c27ab8f27eaefbe9fe5fdc0e3b2aa5bcbfd998bb6022204bdf26",
+    "swdb/bounded_entry_windows.py": "39354107afc0c96e075dbc8e0c321b1caad3086887254f5bb404dd6eb875fa58",
+    "swdb/c_lowering.py": "c4f5ca2ac29d452f94498bd01098665739bebeb4d89073227ae83e8264ba421b",
+    "swdb/cbmc_adapter.py": "d63b7f6547fa3b7655a59db0f26f1e0a957c7916bf8d9b7d77ef4142ef3e9a27",
+    "swdb/cbmc_equivalence.py": "07edb9685ec3cfa222c30800f80ea781d46816d5db797dfaf6e8b1e0dcd017dd",
+    "swdb/cbmc_product.py": "df4af62add9747a5c107d314b9235d08de2d22d04265d6aedf30726516891fee",
+    "swdb/crux_adapter.py": "29f212e6d0a79ac43864fa8684edaf0b12e2f555eebe381c12bd72e2af711768",
+    "swdb/dx100_interface.py": "6e88200412cada2678d3f65f442d0cf11e39fecdb744fa490e6397e0e0d37cdf",
+    "swdb/dx100_source_selector.py": "4c788c11a80c1478323229bba12997995dcad30699dc78d7085b52a14fc09190",
+    "swdb/dx_array_domains.py": "ec8b1585fc64bb0a672f352a79cbfc1ed6e4ec03150bd438be93445855a5c5fe",
+    "swdb/formal_frame.py": "b89aaffb60217db66ba09630fced8f8c547304a2d12ca125a6174def02ff70f1",
+    "swdb/framac.py": "94db2a360fb0d29bf6f35f90b12f53b04e1a9a768139c88bbe8f7605fd8c2889",
+    "swdb/heap_bridge.mlw": "5186c27f5a7a339352e3f62dc3a0d3efb1c7bd12f8a456cc61b0d7a52566638d",
+    "swdb/heap_model_environment.ml": "ba52941e7ab96a8ebbe4efdb8fde0c1b19daa3d6ccb8804efc87b027a68caf7b",
+    "swdb/heap_model_packets.py": "805b00fe78373102b600506833f86c28fce2cf494baef7a68afd63641c1de185",
+    "swdb/heap_model_vcs.py": "f20e0ec130222aeda96b4fbb8e72eef8d922d3f33e84077777203f7e6d159092",
+    "swdb/heap_model_view.py": "ecb6e1476accaee2b275c9bf078bb14fc4b3c8ad81ed17d97d98b1699d2c1e22",
+    "swdb/helper_windows.py": "6ab445ad4ac32a1b72899f6debcf445c8afb7cd29d21503f21a2ab4a4bc145d5",
+    "swdb/hint_check.py": "9d3f3fc90219723ab9e4fca280dec773f1c954827f632cfc13087cfbd22d13aa",
+    "swdb/hint_tree.ml": "b9ce42a7a7ae6f6ba896b563d0d1559802482cbcf6dcd77faa1a85cd75ce59e6",
+    "swdb/member_windows.py": "e0966df226e758e588bc3f78e45def32bf0221dfdba9ff153a22f7e74cdc048d",
+    "swdb/method_version.py": "115b4f56f7e77c8c7dfa6522cc446244d54f032c2d71f0463cecc8ba0d2d1b17",
+    "swdb/model_domains.py": "0abeb81edf3a7c92b0465d9a617ef272f85f9263cc50427e3e46a1743d51e17a",
+    "swdb/nested_entry_reads.py": "f194cc302cb20b2a4c5881699d756e0a7c301ad937098e0f244d0b6048cfbc11",
+    "swdb/proof.py": "c1f0bb937ff43c6db9c20d04f79079d1568dc90e5faf121c45722ff735e45808",
+    "swdb/proof_report.ml": "0c00ed3567f3803f16735dbf95daa0f997c2f6bddefcf6fb2133fff7a862cc0d",
+    "swdb/proof_semantics.py": "648950b102863a492747a3a3eb9e59037fa63bb84bd1494d9eb9c9792e078e50",
+    "swdb/proof_setup.py": "70e37d49f5627e845ba7ba298bb180f82cc4353f06e3598edbaf35eca5836b83",
+    "swdb/rocq_adapter.py": "833c886a5b359d34e0a71489556403249c0ca8c0d15fa3c4a95940700729b45b",
+    "swdb/rss_watchdog.py": "8cbe4f803951cee080581862b69a0b7bf21e35c554dc5cfde4db7d9f2779e5b6",
+    "swdb/standard_model_view.py": "a9b0ac93e830fa966114f0a853b638d93a2274f64cf48a0cd5fe14c1bd2774b1",
+    "swdb/standard_range_calls.py": "c6e6d076a7e0337736b0f84a2d1537f99db2b16c0e1ab50b35911c6eca384f4b",
+    "swdb/standard_range_model.py": "5c8d385b2e506c77db69cfc664b5d33dc2514cd14d09ef79a8a1810f4c16084f",
+    "swdb/std_models.py": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2",
+    "swdb/stdlib_provenance.py": "4a7ca7d9b05a992e8172125fcbbfd175bb7ade2aec47cfb349126c9739b6e8e4",
+    "swdb/stdlib_source_admission.py": "151d41a22f68fc07613657f6484a408444f49a519d612f792e053a2bb0b9d1b4",
+    "swdb/summary_bindings.py": "1c5d99b99753eb8c92f039722c15ece12b488af99003047b7cc9b2a81b2a6100",
+    "swdb/vector_ownership.py": "58bf8bbd370cd735bb5eceb6e6c49a6f08e97d97b4c73207ca7fe8727c6c6595",
+    "swdb/vector_pipeline.py": "fc7c06e21b10b71a2b6ac89dca409f0fe6237b530286ace110f791b8d330e382",
+    "swdb/vocab.py": "c554826daf3cdcf215dee0ebfb71b09f52774c5c42ab3b61cbec0b3cf6679e43",
+    "swdb/wp_adapter.py": "c2c84aae333c955ed8a6d329d90365e082bc5a6eb32bdf944108389d373a6e44",
+    "swdb/wp_pointer_bounds.py": "7033e8e8338d0fc39a5359fd5ceff304842d9df7c8223cffef967246c5f530a0",
+    "tests/fixtures/proof/dx100/interface-declarations-e4fc4af.json": "d48a3971f2e9421e736d72ff160074f22e9cbbb7c9c756ef52457a5c4314b3b6",
+    "tests/fixtures/proof/methods/contract-fixture-1.yaml": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29",
+    "tests/test_dx100_selector_actual.py": "d6f85ea30130e35827ad901eaec94017a481d202e70b06dee5b80c0b1c637967",
+    "tests/test_dx100_selector_lineup.py": "5794a0f09463d96415b22c90f7ba60a73c68f6c73543a60c99b7552d22063081",
+    "tests/test_dx100_source_selector.py": "bd2310b1f8afbd871c5666ce35dc2f8e301a157c50e0e4c63cc687a42bfdd8d4",
+    "tests/test_dx100_trust_entries.py": "aed399cc7869553beadb3ff14307dacadb25ffb448f3015c298ec374298b4232",
+    "tests/test_heap_model_view.py": "5e31c9a125ef3b2386ea175dd0199818b04e2515e313dc6dfa7458892771be39",
+    "tests/test_proof_setup.py": "304806f4a9e37d36326aad91e6849adbd421ea33548f45eb1875e3f6387583cd",
+    "tests/test_standard_member_contracts.py": "dc62241267367f02f972c64eef397e9513962ee176bd9657df4104aec74b808a",
+    "tests/test_wp_adapter.py": "576ae5c70c6fa48b88b7cc9b18122b23a4574b4559acbf4f3dcfbcd053c61e0e",
+    "tests/testkit/dx100_selector.py": "f101abed89976d651958bf9071d7ca00252d90cb6de4ae45ec0fca5b2c3ee120",
+    "tests/testkit/dx100_trust.py": "a5da4f079d300d2da9a4928c51c2d9713c03810706b8189ba213d8308a041d67",
+    "vocab/proof_failure_classes.yaml": "77d89f4528bcefb5dfc56184c1f7a4504402942b3beb84167fa15ebf0ec432ac"
+  },
+  "reviewed_fixture_transition": {
+    "tests/testkit/dx100_trust.py": {
+      "new": "a5da4f079d300d2da9a4928c51c2d9713c03810706b8189ba213d8308a041d67",
+      "old": "896809b490635d0d6e3240c4878123f7110e4b14e40eeb631e5af1c6ffb92083"
+    }
+  },
+  "root_entry": {
+    "path": "/private/tmp/probata-t28-selector-entry-v3-770df40e-20261016.py",
+    "sha256": "7833d751b57d81b877211cc0759099721e9fcf8a9b711eb43612288e320c3925"
+  },
+  "scope": "Future settled pair-profile cold reader only; never failed 21ed acceptance. No actual outcome inferred. Production schema frozen21ed, explicit lineup fixture frozen770df40e. Any production drift requires reviewed successor policy.",
+  "selected_admission": {
+    "actual_selector_lineup": {
+      "alt-ergo": "2.6.4",
+      "cvc5": "1.2.1",
+      "frama-c-wp": "33.0",
+      "z3": "5.1.0"
+    },
+    "config": {
+      "path": "/data1/yanruj/probata-verifiers/home/.why3.conf",
+      "sha256": "50061c22ad10615b4cd0103721869646155b681e0317a679682aed719f0967c9"
+    },
+    "naming": {
+      "id": "kept-names.3",
+      "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+    },
+    "source_commit": "770df40eeb5e3034862f61b79b6bcaad5fa620a7",
+    "source_files": {
+      ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/run_selector_acceptance.sh": "15fcc86b95429c5fefaef9622859848fcf79db7bfe606a8a306a0f5ddc6a67c8",
+      ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/selector-first-gate.md": "a2dc458ee5d3d847ba4886f9822a64f66d4ebb328ee7658d288793fb40e3f0c3",
+      "docs/reference/format-v0.4-proof-semantics.md": "6fc2534841999bac409baf985ab1fd85960bce872488df29b7bf3fbf899b0450",
+      "library/methods/probata-draft-1.yaml": "497aa683887094e3217945132134112469e028c2a50a7966838bbebf902d3ae5",
+      "pyproject.toml": "049d720132df2d1091bca29e2705d4552e5fc3ea55e9963cf8faa3133501d7b5",
+      "schemas/proof.schema.json": "c8255f763fc1968c64aff4af53aac04a0dadc5193303f87fcd6c86f530100bfa",
+      "scripts/probata_heap_model_profile.py": "2abc5fe12e0eac1c04f9b3634df5303f37547cea5a960ef6c813db3110ff9c14",
+      "swdb/c_lowering.py": "c4f5ca2ac29d452f94498bd01098665739bebeb4d89073227ae83e8264ba421b",
+      "swdb/dx100_interface.py": "6e88200412cada2678d3f65f442d0cf11e39fecdb744fa490e6397e0e0d37cdf",
+      "swdb/dx100_source_selector.py": "4c788c11a80c1478323229bba12997995dcad30699dc78d7085b52a14fc09190",
+      "swdb/heap_bridge.mlw": "5186c27f5a7a339352e3f62dc3a0d3efb1c7bd12f8a456cc61b0d7a52566638d",
+      "swdb/heap_model_environment.ml": "ba52941e7ab96a8ebbe4efdb8fde0c1b19daa3d6ccb8804efc87b027a68caf7b",
+      "swdb/heap_model_packets.py": "805b00fe78373102b600506833f86c28fce2cf494baef7a68afd63641c1de185",
+      "swdb/heap_model_vcs.py": "f20e0ec130222aeda96b4fbb8e72eef8d922d3f33e84077777203f7e6d159092",
+      "swdb/heap_model_view.py": "ecb6e1476accaee2b275c9bf078bb14fc4b3c8ad81ed17d97d98b1699d2c1e22",
+      "swdb/proof_semantics.py": "648950b102863a492747a3a3eb9e59037fa63bb84bd1494d9eb9c9792e078e50",
+      "swdb/proof_setup.py": "70e37d49f5627e845ba7ba298bb180f82cc4353f06e3598edbaf35eca5836b83",
+      "swdb/std_models.py": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2",
+      "swdb/wp_adapter.py": "c2c84aae333c955ed8a6d329d90365e082bc5a6eb32bdf944108389d373a6e44",
+      "tests/fixtures/proof/methods/contract-fixture-1.yaml": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29",
+      "tests/test_dx100_selector_actual.py": "d6f85ea30130e35827ad901eaec94017a481d202e70b06dee5b80c0b1c637967",
+      "tests/test_dx100_selector_lineup.py": "5794a0f09463d96415b22c90f7ba60a73c68f6c73543a60c99b7552d22063081",
+      "tests/test_dx100_source_selector.py": "bd2310b1f8afbd871c5666ce35dc2f8e301a157c50e0e4c63cc687a42bfdd8d4",
+      "tests/test_dx100_trust_entries.py": "aed399cc7869553beadb3ff14307dacadb25ffb448f3015c298ec374298b4232",
+      "tests/test_heap_model_view.py": "5e31c9a125ef3b2386ea175dd0199818b04e2515e313dc6dfa7458892771be39",
+      "tests/test_proof_setup.py": "304806f4a9e37d36326aad91e6849adbd421ea33548f45eb1875e3f6387583cd",
+      "tests/test_standard_member_contracts.py": "dc62241267367f02f972c64eef397e9513962ee176bd9657df4104aec74b808a",
+      "tests/test_wp_adapter.py": "576ae5c70c6fa48b88b7cc9b18122b23a4574b4559acbf4f3dcfbcd053c61e0e",
+      "tests/testkit/dx100_selector.py": "f101abed89976d651958bf9071d7ca00252d90cb6de4ae45ec0fca5b2c3ee120",
+      "tests/testkit/dx100_trust.py": "a5da4f079d300d2da9a4928c51c2d9713c03810706b8189ba213d8308a041d67"
+    },
+    "stdlib_count": 57,
+    "stdlib_sha256": "520d9875983b41da80b89d7809cff4c76370e8445f8b49147f1423cfb7404c31",
+    "tools": {
+      "alt-ergo": {
+        "path": "/data1/yanruj/probata-verifiers/opam/framac-33/bin/alt-ergo",
+        "sha256": "ef5b893597fedd2bc5b215a40118b6a2297e1d9293d3a5296f4fe5bf7e43b6af"
+      },
+      "cvc5": {
+        "path": "/data1/yanruj/probata-verifiers/cvc5-1.2.1/cvc5-Linux-x86_64-static/bin/cvc5",
+        "sha256": "ee4c6787a95218a571080a599bdf579aca5b0f1e4f27687f70f46d4d12148974"
+      },
+      "frama-c": {
+        "path": "/data1/yanruj/probata-verifiers/opam/framac-33/bin/frama-c",
+        "sha256": "39368e41f6a0edbd3902fa0e7b119689a7281fd25965c74b53abd88adeca9ea7"
+      },
+      "gcc": {
+        "path": "/usr/bin/x86_64-linux-gnu-gcc-13",
+        "sha256": "1b99826121ae6682a634e5efe09bd3e3df58ce58e0b28f849114ab5b89139c26"
+      },
+      "ocamlfind": {
+        "path": "/data1/yanruj/probata-verifiers/opam/framac-33/bin/ocamlfind",
+        "sha256": "285b6b308c7dd042bd87d918a67fecbb3346435c86d9da49c06c8b815f8beddc"
+      },
+      "ocamlopt": {
+        "path": "/data1/yanruj/probata-verifiers/opam/framac-33/bin/ocamlopt.opt",
+        "sha256": "f8976bb7b53ca30ec4bda901dda00ca354abf571ab292aea70cf29f984e06d0d"
+      },
+      "opam": {
+        "path": "/data1/yanruj/probata-verifiers/opam-2.6.1/opam",
+        "sha256": "b533d393a6967150d6ef41cb3d71e147e93ecbabeb59e921aa412c0ae79ebe3d"
+      },
+      "why3": {
+        "path": "/data1/yanruj/probata-verifiers/opam/framac-33/bin/why3",
+        "sha256": "98c58e874b1e3ac0baef8d288f4ce93f1333907995f1db2844116521fd3ce858"
+      },
+      "z3": {
+        "path": "/data1/yanruj/probata-verifiers/z3-5.1.0/z3-5.1.0-x64-glibc-2.39/bin/z3",
+        "sha256": "b4e0b3483ce37817230b20d6cad48390eb6a3aefde1d93342ad6dc763f24bc23"
+      }
+    },
+    "why3_stdlib": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib",
+    "wp_artifacts": {
+      "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/META": "625b065287acb2a364e9579e11ab0b9716e30265fa4c8bfc5f8be9dce7063873",
+      "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/wp.cmxs": "223ac46a1fb7cf6ce142d9621c5e9a06cc328d241f9a82309be4b8d64215c86d"
+    }
+  },
+  "trust_metadata": {
+    "cross_core_filter": "A DX100 store remains visible if the snoop filter drops its line before the write reaches L3.",
+    "cross_core_write_buffer": "A DX100 store remains visible when L3 passes a write below it because no block can be allocated.",
+    "mmio_ordering": "The pinned MMIO implements call semantics including ordering; its wait fence lacks a memory clobber, a portability note independent of candidate artifacts.",
+    "no_stale_cpu_copy": "No stale CPU copy survives a DX100 store (owner Eric).",
+    "one_instance": "All commands belong to one DX100 instance."
+  }
+}

@@ -1,0 +1,154 @@
+{
+  "actual_executables_probed": false,
+  "actual_result": false,
+  "blockers": [],
+  "closed_findings": [
+    "B1_nonmlw_root_membership",
+    "B2_root_python_psutil_metadata_binding"
+  ],
+  "command_json": {
+    "path": "/private/tmp/probata-t25-mac-typecheck-command-v2-304e03ac-20261016.json",
+    "sha256": "5d86934d396dc786a7e0b817c8e41c12fc5eaefa3c214584a71f2ff0555c0afb"
+  },
+  "config": {
+    "bytes_utf8": "[main]\nmagic = 14\n",
+    "sha256": "25ddc07c274efd06de243a94fd0bc259f55d7bcb687f184c6ef89b94ed13bf48"
+  },
+  "current_non_mlw_files": [],
+  "entry": {
+    "path": "/private/tmp/probata-t25-mac-typecheck-entry-v2-304e03ac-20261016.py",
+    "sha256": "e3e948cb8e8821584a58a185f8ca1e7572f359270f3c2874dd0867c45b646835"
+  },
+  "entry_or_launcher_executed_by_reviewer": false,
+  "hash_errors": [],
+  "model_or_caller_proof_acceptance": false,
+  "native_closure_checked": [
+    {
+      "load_commands": {
+        "cpu_type": 16777228,
+        "dependencies": [
+          "/usr/lib/libz.1.dylib",
+          "/opt/homebrew/opt/gmp/lib/libgmp.10.dylib",
+          "/usr/lib/libSystem.B.dylib"
+        ],
+        "rpaths": []
+      },
+      "path": "/Users/yanrujhou/.opam/framac-33/bin/why3",
+      "sha256": "e90d62b3883a4c2f90c5260ff410ef019803eb08b5f72f3d3ade77d4ce6f0555"
+    },
+    {
+      "load_commands": {
+        "cpu_type": 16777228,
+        "dependencies": [
+          "/usr/lib/libSystem.B.dylib"
+        ],
+        "rpaths": []
+      },
+      "path": "/opt/homebrew/Cellar/gmp/6.3.0/lib/libgmp.10.dylib",
+      "sha256": "bc6145edbeca608b4fecd4440dbbd7b27cacd55cbfd2b552b8bc333febe43b35"
+    }
+  ],
+  "prior_request_changes_review": "/private/tmp/probata-t25-mac-typegate-static-review-v1-304e03ac-20261016.md",
+  "project_axioms_lemmas_goals": 0,
+  "project_imports": [
+    "int.Int",
+    "map.Map"
+  ],
+  "pure_control_receipts": [
+    {
+      "files": [
+        {
+          "path": "/private/tmp/probata-t25-mac-typecheck-runtime-controls-v1-red-20261016/command.json",
+          "sha256": "37ee01b5705157bd4eb39308184a609f0a90f61cb3e154db696be30d21ae7760"
+        },
+        {
+          "path": "/private/tmp/probata-t25-mac-typecheck-runtime-controls-v1-red-20261016/controls.log",
+          "sha256": "f474f87c454b07978510765b983fcc3ab3339fc320a7dd465aef3027932d27df"
+        },
+        {
+          "path": "/private/tmp/probata-t25-mac-typecheck-runtime-controls-v1-red-20261016/resources.json",
+          "sha256": "37ea47a837b80f0c7e2071f7608baaa67f1f399ad29e9dc4f809a24f326f119d"
+        }
+      ],
+      "label": "v1-red",
+      "resources": {
+        "cpu_seconds": 0.279846,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 46366720,
+        "timed_out": false,
+        "wall_seconds": 0.3026371250161901
+      }
+    },
+    {
+      "files": [
+        {
+          "path": "/private/tmp/probata-t25-mac-typecheck-runtime-controls-v2-final-green-20261016/command.json",
+          "sha256": "81c17c009c95849b051d7976b2c84392d16f6d68b5ad0e28887b21b35b5153ec"
+        },
+        {
+          "path": "/private/tmp/probata-t25-mac-typecheck-runtime-controls-v2-final-green-20261016/controls.log",
+          "sha256": "c16e476727b44651fa5f7dfdcafb51f1ac3060244911f7766ff0b1b89f467249"
+        },
+        {
+          "path": "/private/tmp/probata-t25-mac-typecheck-runtime-controls-v2-final-green-20261016/resources.json",
+          "sha256": "7412a0e49a8488f9abb401dd4b3a3613067fcd79e7e5bc1d0e044f4db0e06c20"
+        }
+      ],
+      "label": "v2-final-green",
+      "resources": {
+        "cpu_seconds": 0.267169,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 45498368,
+        "timed_out": false,
+        "wall_seconds": 0.2727521250490099
+      }
+    }
+  ],
+  "repository_edits": false,
+  "required_root_guard": {
+    "cap_bytes": 8589934592,
+    "outer_seconds": 720,
+    "whole_seconds": 600,
+    "why3_leaf_seconds": 60,
+    "worker_count": 1
+  },
+  "review_md_sha256": "e62d011a07186b18b1c43d1a945605852a106b9db703e8825bb3ef195ca3ed2a",
+  "reviewed_files": {
+    "command_v2": {
+      "path": "/private/tmp/probata-t25-mac-typecheck-command-v2-304e03ac-20261016.json",
+      "sha256": "5d86934d396dc786a7e0b817c8e41c12fc5eaefa3c214584a71f2ff0555c0afb"
+    },
+    "entry_v2": {
+      "path": "/private/tmp/probata-t25-mac-typecheck-entry-v2-304e03ac-20261016.py",
+      "sha256": "e3e948cb8e8821584a58a185f8ca1e7572f359270f3c2874dd0867c45b646835"
+    },
+    "root_command_v3": {
+      "path": "/private/tmp/probata-t25-mac-typecheck-root-command-v3-304e03ac-20261016.json",
+      "sha256": "9408d89b8e5c798a9fdff60923616a82e5fb613365640fff5dda33699faa6a9d"
+    },
+    "root_launcher_v1": {
+      "path": "/private/tmp/probata-root-gitblob-type-launch-v1-20261016.py",
+      "sha256": "d8bb5001e100140dd19a8d76d66b1a584ae8f644f6fff4cb5256acd6b48dab19"
+    },
+    "root_python_psutil_metadata": {
+      "path": "/private/tmp/probata-t07-helper-stage1-expected-20261016.json",
+      "sha256": "505513e1f5850626a50b88063522bbaf1889ff19edf638e3c95ee97aa84dc196"
+    }
+  },
+  "root_published_ancestry_preflight_pending": true,
+  "runtime_metadata": {
+    "path": "/private/tmp/probata-t25-mac-why3-type-runtime-v1-20261016.json",
+    "sha256": "cd29ea964b4b50c6ead2090a265ee30c6e147a2728152d885edcffec85767028"
+  },
+  "source": "304e03ac097352e78c3d3a637e13e951bef51dd0",
+  "standard_library_files_checked": 57,
+  "stdlib_sha256": "520d9875983b41da80b89d7809cff4c76370e8445f8b49147f1423cfb7404c31",
+  "theory_git_blob": "af3f31aefa824f6f407a5124b9acf5a21e4d0b09",
+  "theory_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+  "verdict": "PASS_INERT_TYPE_ONLY_RECIPE",
+  "warnings_allowlist": [
+    "Warning: unused variable dummy"
+  ]
+}
