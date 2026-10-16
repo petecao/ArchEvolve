@@ -119,6 +119,27 @@ def inspect_ast(td_raw, queue_raw, main):
     if len(declarations) != 1:
         raise Refused("TDStep local buffer origin is ambiguous")
     local = next(iter(declarations.values()))
+    local_paths = [parents for node, parents in walk(td[0])
+                   if node.get("kind") == "VarDecl" and node.get("id") == local["id"]]
+    control_kinds = {"ForStmt", "WhileStmt", "DoStmt", "CXXForRangeStmt",
+                     "IfStmt", "SwitchStmt"}
+    if any(any(parent.get("kind") in control_kinds for parent in parents)
+           for parents in local_paths):
+        raise Refused("single activation: local buffer has a loop ancestor or conditional declaration")
+    # Clang also repeats the same declaration under CapturedDecl. Bind the
+    # material source declaration, rather than counting capture copies as new
+    # lifetimes or reusing declaration IDs across dumps.
+    material_paths = [parents for parents in local_paths
+                      if parents and parents[-1].get("kind") == "DeclStmt"]
+    if len(material_paths) != 1:
+        raise Refused("single activation: material buffer declaration is ambiguous")
+    parents = material_paths[0]
+    if ([p.get("kind") for p in parents] != ["FunctionDecl", "CompoundStmt",
+            "OMPParallelDirective", "CapturedStmt", "CapturedDecl", "CompoundStmt", "DeclStmt"]):
+        raise Refused("single activation: buffer is not directly in the one parallel body")
+    parallel_body = parents[-2]
+    if not parallel_body.get("inner") or parallel_body["inner"][0].get("id") != parents[-1].get("id"):
+        raise Refused("single activation: buffer does not precede the parallel work")
     if local.get("type", {}).get("desugaredQualType") != "QueueBuffer<int>":
         raise Refused("TDStep local buffer is not the exact NodeID specialization")
     constructions = [n for n, _ in walk(local) if n.get("kind") == "CXXConstructExpr"]
@@ -145,6 +166,13 @@ def inspect_ast(td_raw, queue_raw, main):
         raise Refused("OpenMP capture lacks an exact same-variable/source-range member use")
     if sorted(references.values()) != ["flush", "push_back", "push_back"]:
         raise Refused("local buffer source uses differ from two pushes and final flush")
+    terminal = parallel_body["inner"][-1]
+    terminal_members = [n for n, _ in walk(terminal) if n.get("kind") == "MemberExpr"]
+    terminal_origins = [n for n, _ in walk(terminal) if n.get("kind") == "DeclRefExpr"]
+    if (terminal.get("kind") != "CXXMemberCallExpr" or len(terminal_members) != 1 or
+            terminal_members[0].get("name") != "flush" or len(terminal_origins) != 1 or
+            terminal_origins[0].get("referencedDecl", {}).get("id") != local["id"]):
+        raise Refused("single activation: final flush is not the parallel body's direct terminal statement")
     specializations = {n["id"]: n for root in json_roots(queue_raw)
                        for n, _ in walk(root) if n.get("kind") == "ClassTemplateSpecializationDecl" and n.get("completeDefinition")
                        and any(c.get("kind") == "TemplateArgument" and c.get("type", {}).get("qualType") == "int" for c in n.get("inner", []))}
@@ -164,6 +192,15 @@ def inspect_ast(td_raw, queue_raw, main):
     span = local["range"]
     return {"field_map": fields, "actual_default": 16384,
             "new_array_has_payload_initializer": False,
+            "single_activation_source_observation": {
+                "declaration_outside_loops_and_conditionals": True,
+                "declaration_first_in_parallel_body": True,
+                "final_flush_direct_terminal_statement": True,
+                "parallel_body_byte_range": [parallel_body["range"]["begin"]["offset"],
+                    parallel_body["range"]["end"]["offset"] + parallel_body["range"]["end"]["tokLen"]],
+                "runtime_threads_one_qualified": False,
+                "interprocedural_reentrancy_qualified": False,
+                "allocator_or_lifetime_refinement_accepted": False},
             "stable_source_binding": {"main_sha256": sha(main.read_bytes()), "function": "TDStep",
                 "declaration_kind": "VarDecl", "declaration_name": "lqueue",
                 "declaration_byte_range": [span["begin"]["offset"], span["end"]["offset"] + span["end"]["tokLen"]],
