@@ -1,0 +1,188 @@
+{
+  "cases": 6,
+  "correct_named_api": "DX100 fullstoragebeginp/endp, not activewindowbegin/end; previous window RED/GREEN excluded invalidoracle",
+  "date_et": "2026-10-16",
+  "filename_boundary": "Driver retained compact20261015 output basename; actualcreated/guard/date are2026-10-16. No rawrenaming or timestampclaimfrombasename.",
+  "pins": [
+    {
+      "path": "/private/tmp/probata-t07-source-native-correct-api-plan-20261016.json",
+      "sha256": "d69113774e02dfd9e4b3093e55d793ef611e748cc8f79071af660dcdaedf8fdb"
+    },
+    {
+      "path": "/private/tmp/probata-t07-source-native-correct-api-20261015/results.json",
+      "sha256": "c6937bdd6a63efea626b335b35871ebc9c487a1c9f2b70d82132f178c6092639"
+    },
+    {
+      "path": "/private/tmp/probata-t07-source-native-correct-api-20261016.guard.log.summary.json",
+      "sha256": "b651bc097eeb704408688d401a151fedfc94c70a582653bb97d128a4bbc0b5b8"
+    },
+    {
+      "path": "/private/tmp/probata-t07-source-native-correct-api-20261015/admitted-old-overflow.log",
+      "sha256": "a862631b55a9e35ae6718378221c864eb928e34a8117d1cb4313944ac8a592ac"
+    },
+    {
+      "path": "/private/tmp/probata-t07-source-native-correct-api-20261015/nonzero-end.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/probata-t07-source-native-correct-api-20261015/flush-and-push.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/probata-t07-source-native-correct-api-20261015/fetch-wrap.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/probata-t07-source-native-correct-api-20261015/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/probata-t07-source-native-correct-api-20261015/empty-flush.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/probata-t07-source-native-correct-api-20261015/nonzero-begin.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/probata-t07-source-native-correct-api-20261016.c",
+      "sha256": "5cefb2d9e6304ea555a17b300494d7846ed4b3ee6fc6cef1362bc00c6604188a"
+    },
+    {
+      "path": "/private/tmp/probata-t07-source-native-correct-api-driver.py",
+      "sha256": "17d7a8ca5db425fec76bdc82016c958621d44e078c7f870bad142021cd4616ba"
+    }
+  ],
+  "raw": "/private/tmp/probata-t07-source-native-correct-api-20261015",
+  "resource": {
+    "cap_gb": 8.0,
+    "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment",
+    "cleanup_inspection_failure": null,
+    "cleanup_inspection_failures": [],
+    "clock": "continuous_monotonic",
+    "clock_info": {
+      "denom": 3,
+      "implementation": "mach_continuous_time",
+      "includes_sleep": true,
+      "kind": "continuous_monotonic",
+      "numer": 125
+    },
+    "cmd": [
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+      "-B",
+      "/private/tmp/probata-t07-source-native-correct-api-driver.py"
+    ],
+    "error": null,
+    "exit_code": 0,
+    "finished": "2026-10-16 00:21:09 EDT",
+    "inspection_events": [],
+    "inspection_failure": null,
+    "inspection_retry_boundary": "AccessDenied uses a 200 ms environ retry admission window and 21-attempt cap, or three attempts for other operations; only the exact proc_environ SystemError raised by the requested environ operation shares that policy; individual OS calls are not forcibly timed; all pauses count and RSS/deadline checks remain mandatory after inspection; only independently confirmed gone/zombie or changed birth is skipped; persistent live or unknown failure fails closed",
+    "killed_by_watchdog": false,
+    "lock_wait_s": 0.0006135416915640235,
+    "log": "/private/tmp/probata-t07-source-native-correct-api-20261016.guard.log",
+    "log_sha256": "a2eeedf572cf874c007c0faf767c45ce4ab9fd9bf4418315c3d3a1cdf9c65362",
+    "peak_rss_mb": 75.6875,
+    "primary_inspection_failure": null,
+    "queue_timed_out": false,
+    "queue_timeout_s": 5.0,
+    "rss_scope": "live union of current ancestry, retained PID/birth identities and periodic inherited-marker matches; sampled, not a kernel quota",
+    "runner_pid": 93105,
+    "timed_out": false,
+    "timeout_s": 45.0,
+    "unconfirmed_children": [],
+    "wall_s": 0.6690350833814591
+  },
+  "results": {
+    "boundary": "native single-thread hand-model controls; no ACSL enforcement or caller proof",
+    "correct_named_API": "pinned DX100 beginp/endp expose full allocated storage; prior active-window oracle excluded",
+    "date": "2026-10-16 ET",
+    "expected_old_domain_failure": [
+      "admitted-old-overflow"
+    ],
+    "results": [
+      {
+        "argv": [
+          "/Library/Developer/CommandLineTools/usr/bin/clang",
+          "-isysroot",
+          "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk",
+          "-std=c11",
+          "-O1",
+          "-g",
+          "-fno-omit-frame-pointer",
+          "-fsanitize=address,undefined",
+          "-I",
+          "/private/tmp/probata-resume-t07-source-domains/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin",
+          "/private/tmp/probata-t07-source-native-correct-api-20261016.c",
+          "-o",
+          "/private/tmp/probata-t07-source-native-correct-api-20261015/controls"
+        ],
+        "elapsed_s": 0.14704162499401718,
+        "exit": 0,
+        "label": "compile",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "argv": [
+          "/private/tmp/probata-t07-source-native-correct-api-20261015/controls",
+          "nonzero-begin"
+        ],
+        "elapsed_s": 0.10857583396136761,
+        "exit": 0,
+        "label": "nonzero-begin",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "argv": [
+          "/private/tmp/probata-t07-source-native-correct-api-20261015/controls",
+          "nonzero-end"
+        ],
+        "elapsed_s": 0.010138084006030113,
+        "exit": 0,
+        "label": "nonzero-end",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "argv": [
+          "/private/tmp/probata-t07-source-native-correct-api-20261015/controls",
+          "fetch-wrap"
+        ],
+        "elapsed_s": 0.010379541025031358,
+        "exit": 0,
+        "label": "fetch-wrap",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "argv": [
+          "/private/tmp/probata-t07-source-native-correct-api-20261015/controls",
+          "empty-flush"
+        ],
+        "elapsed_s": 0.009774583973921835,
+        "exit": 0,
+        "label": "empty-flush",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "argv": [
+          "/private/tmp/probata-t07-source-native-correct-api-20261015/controls",
+          "flush-and-push"
+        ],
+        "elapsed_s": 0.00902095896890387,
+        "exit": 0,
+        "label": "flush-and-push",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "argv": [
+          "/private/tmp/probata-t07-source-native-correct-api-20261015/controls",
+          "admitted-old-overflow"
+        ],
+        "elapsed_s": 0.10708899999735877,
+        "exit": -6,
+        "label": "admitted-old-overflow",
+        "log_sha256": "a862631b55a9e35ae6718378221c864eb928e34a8117d1cb4313944ac8a592ac"
+      }
+    ]
+  },
+  "scope": "source-domain repair native API and queue controls; not symbolic/TDStep/C++ proof"
+}
