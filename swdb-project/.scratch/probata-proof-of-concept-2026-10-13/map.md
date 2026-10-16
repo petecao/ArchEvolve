@@ -5,7 +5,7 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-re
 
 ## Current state (resume here)
 
-Updated: 2026-10-15 20:49 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
+Updated: 2026-10-15 20:53 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
 Integration: `codex/probata-resume-20261015`; audited run 23 is published at
 `6dc94905`; method21 prototype merged at `14c2a298`. Remote actual jobs retain
 exact `0e7f2327` and `23933f8a` source freezes; production lowerer SHA256
@@ -20,9 +20,9 @@ remains `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
   unchanged MAA caller witness (6 ordinary + 5 smoke Valid); seed remains not_proven.
   Continuation at `23933f8a` runs on node 0
   generation 580: 12 retained rows + 24 fresh rows (15 WP / 9 deliberate refusals).
-  All36 actual target rows independently pass their criteria: nine caller pairs,
-  14models,3summaries,1dedicated bounds negative. Five of nine deliberate lifetime
-  refusals are accepted; four remain, then ended resources/source-after and
+  All 36 actual target rows independently pass their criteria: nine caller pairs,
+  14 models, 3 summaries, 1 dedicated bounds negative. Six of nine deliberate lifetime
+  refusals are accepted; three remain, then ended resources/source-after and
   combined eleven-item closure review. Full continuation remains pending.
   Finite evidence stays finite.
   [Qualified std](evidence/t24-std-object-domain-v2-20261015.json),
@@ -32,47 +32,25 @@ remains `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
   bounded/native 35/35 and repaired capacity 3/3 remain accepted. First current
   safe CPU case proves 58 ordinary + 19 smoke goals; store-source proves 90 ordinary
   + 29 smoke; A-rest4 is independently accepted with 316 ordinary + 100 smoke
-  goals, all Valid, 6,027-reference / 925-file audit clean. B1three also accepted:
-  189ordinary+67smoke Valid,3,447references/897files clean, naturalrelease20:43:22 ET.
-  Three safe units remain. FinalB2 runs on node1 generation606 from20:44:49 ET.
-  These are balanced 3 + 3
-  partitions. Original A5/B6 jobs are unlaunched; selected disjoint union is
+  goals, all Valid, 6,027-reference / 925-file audit clean. B1's three cases also pass:
+  189 ordinary + 67 smoke Valid, 3,447 references / 897 files clean, natural
+  release at 20:43:22 ET. Final B2 runs on node 1 generation 606 from 20:44:49 ET.
+  Its three safe units remain pending. Original A5/B6 jobs are unlaunched; selected union is
   1 + 4 + 3 + 3 = 11. Historical `717` safe evidence is separate.
   [Final negatives](evidence/t27-composed-negative-completed-independent-20261015.json),
   [selected schedule](evidence/t27-selected-safe-shard-schedule-20261015.json).
-- **07:** Run 24 at `14c2a298` ended unproven at 18:44:19 ET after 52.03
-  counted minutes: 29 open (14 unit / 15 hint), 259 ordinary entries, 41 hint records
-  (5 mechanical / 36 Codex). No final replay or wait-negative ran. All 15 proposal
-  requests reached candidate WP; 14 completed and 1 was deadline-censored.
-  The interrupted provider turn has unknown complete usage; observed partial
-  counters are retained separately. Actual Mac slot released;
-  reviewed closeout is published at `f79dfc7a`. The separate posthoc full-30-second diagnosis
-  timed out after 710.42s without a complete report; no new verdict. Its temporary
-  process-inspection quarantine was independently checked and released at 19:07 ET.
-  Prospective method 22 changes the final-replay schedule and omits mechanical
-  seeds to meet the literal every-hint-Codex criterion, only after TDD/review;
-  the revised 33/36-minute search/return limits reserve up to 24 minutes for
-  positive and identical-hints wait-negative verification within the same 60 minutes.
-  Method 22 passes independent review (221 controls + 17 final affected checks,
-  34 exact source pins); integrated at `7c6b11b8`. Run 25 started 19:59:01 ET
-  at clean published ancestor `798e9bb3`, zero initial hints and fresh baseline.
-  Proof stop is about 20:32, provider hard stop about 20:35, total endpoint about
-  20:59 ET, subject only to valid matched queue exclusions. Allocation sufficiency
-  is unmeasured; no success is claimed.
-  Fresh baseline completed in 6.09 counted minutes: 254 ordinary (103 open) and
-  all 139 smoke passed; empty diagnostic finished at 10.49 minutes. Independent
-  first-provider input audit passes before any candidate. At 20:19 ET the first
-  accepted Codex candidate has 102 open / 5 records; second proposal active.
-  Four goal pages safely refused on real call-header formats; two later pages
-  succeeded. This availability gap is retained; frozen method/source unchanged.
-  **Run25 ended20:38:30 ET /39.48counted minutes, UNPROVEN.** Complete natural
-  provider usage and all12Codex-origin records pass independent audit. Full30
-  positive resource-aborted after383.62s on a recent same-UID candidate's
-  environAccessDenied (ownership/cause unknown), no complete goal report; negative
-  not run. This was not a60minuteoverrun. Independent poststop scans pass and
-  Macslot is released. Frozen798/source34 unchanged; compact closeout pending.
-  Controlled prospective guard/reader work only; no fresh actual admission.
-  [Launch identity and preflight](evidence/t07-run25-launch-20261015.json).
+- **07:** Run 25 ended **UNPROVEN** at 20:38:30 ET / 39.48 counted minutes.
+  Complete natural provider usage and all 12 Codex-origin records pass independent
+  audit. Full30 positive was aborted after 383.62s on a recent same-UID candidate's
+  environment-inspection denial; ownership, executable and cause remain unknown.
+  No complete goal report or wait-negative exists. This was not a 60-minute overrun.
+  Independent poststop scans pass; the Mac slot is free. Frozen `798e9bb3` and
+  all 34 source pins remain unchanged. Closeout is published at `07e9c08f`.
+  Controlled method23 guard/reader diagnosis only; no fresh actual admission.
+  Earlier run24 remains unproven; its censored posthoc replay is not upgraded.
+  [Run25 closeout](evidence/t07-counted-run25-20261015.json),
+  [independent review](evidence/t07-run25-final-independent-review-20261015.md),
+  [earlier run24](evidence/t07-counted-24-20261015.json).
 - **36:** Dependency-gated by 27. Its 122 focused controls exclude 13 actual-WP
   cases. Drafts 1/2 remain immutable; final method freeze and held-out gates remain.
 

@@ -4,7 +4,7 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 20:49 ET. **Implementation is active under the user's ongoing approval.**
+Updated: 2026-10-15 20:53 ET. **Implementation is active under the user's ongoing approval.**
 Integration `codex/probata-resume-20261015` is based on `yanrujhou_main` at `d94d629b`.
 Audited run23 documentation is published at `6dc94905`; reviewed method21 prototype
 is published at `14c2a298`. Only `swdb/c_lowering.py`
@@ -18,9 +18,9 @@ Drafts 1/2 remain immutable. No draft 3 or final production freeze exists.
 
 | Ticket / owner | Verified checkpoint | Active work |
 |---|---|---|
-| 07 / `ticket07` | Run 25 ended UNPROVEN at 20:38:30 ET / 39.48 counted minutes. Complete provider usage and exact 12-record Codex origin pass. Full30 positive aborted on an environment-inspection denial, no complete goal report; negative not run. | Frozen `798e9bb3`; all 34 source pins retained. Independent three-scan poststop audit passes; both leases absent, Mac slot released. Separate closeout packet ready; only controlled guard/reader diagnosis, no fresh actual admission. |
-| 24 / `ticket24` | Nine caller pairs, 14 models, 3 fixture summaries and dedicated bounds negative independently accepted: 36/36 actual WP rows. All 5 published lifetime refusals have no verifier launch/goals. Original std gap and qualified representative domains remain explicit. | Node 0 generation 580 continues at `23933f8a`: 12 reused + 20 fresh rows accepted. Four lifetime refusals remain, then ended resources/source-after and combined 36-actual/9-refusal/11-item review. Ticket remains claimed. |
-| 27 / `ticket27` | Current negative 13/13, bounded/native 35/35 and repaired capacity 3/3 accepted. CPU + A-rest4 + B1three accepted: 8/11 fresh safe units. B1 proves 189 ordinary + 67 smoke, retaining 37 init/29 RTE; full audit clean. | Node 1 generation 606 runs final B2 group, started 20:44:49 ET: three_reads/value_gather/footprint. Exact disjoint union 1 + 4 + 3 + 3 = 11; original A5/B6 unlaunched. Three safe units pending. |
+| 07 / `ticket07` | Run 25 ended UNPROVEN at 20:38:30 ET / 39.48 counted minutes. Complete usage and exact 12-record Codex origin pass. Full30 positive aborted on an inspection denial, no complete report; negative not run. Closeout published at `07e9c08f`. | Frozen `798e9bb3`; all 34 source pins retained. Independent three-scan poststop audit passes; both leases absent, Mac slot free. Controlled method23 guard/reader diagnosis only; no fresh actual admission. |
+| 24 / `ticket24` | Nine caller pairs, 14 models, 3 summaries and dedicated bounds negative independently accepted: 36/36 actual WP rows. Six published lifetime refusals have no verifier launch/goals. Original std gap and qualified domains remain explicit. | Node 0 generation 580 continues at `23933f8a`: 12 reused + 21 fresh rows accepted. Three lifetime refusals remain, then ended resources/source-after and combined 36-actual/9-refusal/11-item review. Ticket remains claimed. |
+| 27 / `ticket27` | Negative 13/13, bounded/native 35/35 and repaired capacity 3/3 accepted. CPU + A-rest4 + B1's three cases accepted: 8/11 fresh safe units. B1 proves 189 ordinary + 67 smoke, retaining 37 init/29 RTE; full audit clean. | Node 1 generation 606 runs final B2, started 20:44:49 ET: three_reads/value_gather/footprint. Disjoint union 1 + 4 + 3 + 3 = 11; original A5/B6 unlaunched. Three safe units pending. |
 | 36 / dependency-gated | 122 compiler/scripted controls pass; 13 actual-WP cases excluded. | Waits on 27; runtime fallback research remains prospective. |
 
 At17:43:14 ET node0 generation572 released after the standard caller safe timeout;
@@ -154,25 +154,28 @@ historical hints; fixed Codex provider, full positive/identical-hints wait-negat
 complete usage and post-persistence publication gates remain mandatory.
 [Exact launch and artifact hashes](evidence/t07-run25-launch-20261015.json).
 
-Run 25 ended20:38:30 ET /2369.004711 counted seconds: **UNPROVEN**, not a
+Run 25 ended at 20:38:30 ET / 2369.004711 counted seconds: **UNPROVEN**, not a
 60-minute overrun. One fresh provider returned naturally with complete usage:
 2,979,289 input (2,875,264 cached subset), 16,972 output (7,951 reasoning subset).
 Independent exact raw-request/CLI/attempt transformation and ancestry checks pass
-for all12 retained Codex records. Diagnostic incumbent has101open/168ordinary
-(95unit/6hint); six proposals gave3accepted/1staged/2reverted outcomes.
-Final full30 scheduled406goals but guard aborted after383.615460s on
-supervision/environ AccessDenied for candidatePID39659/birth1792111109.33101.
-Three retries span32.240ms; its executable, ownership and denial cause were not
-retained and remain unknown. No timeout/OOM; peak3916.671875MiB. Partial31Timeout
+for all 12 retained Codex records. Diagnostic incumbent has 101 open / 168 ordinary
+(95 unit / 6 hint); six proposals gave 3 accepted / 1 staged / 2 reverted outcomes.
+Final full30 scheduled 406 goals but the guard aborted after 383.615460s on
+supervision/environ AccessDenied for candidate PID 39659, birth 1792111109.33101.
+Three retries span 32.240ms; its executable, ownership and denial cause were not
+retained and remain unknown. No timeout/OOM; peak 3916.671875MiB. Partial 31 Timeout
 lines and absent goals.json establish no full verdict. Negative correctly did
 not run because the positive never qualified; its acceptance criterion is not waived.
-`within_budget=false` means unsuccessful admission here, not elapsed60minutes.
-All30guard reports audited:28exit0, one search-deadline censor, one terminal
+`within_budget=false` means unsuccessful admission here, not elapsed 60 minutes.
+All 30 guard reports audited: 28 exit0, one search-deadline censor, one terminal
 inspection error. Cleanup inventories empty; three independent fresh poststop
-scans found0matches/0denials and both leases absent. Root released the Macslot.
-Final independent manifest`c80e7bb7ae1aa346ac37e298839aaff826fd68c510104dd175b8d6d203fc3f98`
-pins1,265rawfiles/20external audit artifacts; source798 remains frozen. Compact
-closeout publication is pending. Prospective bounded-retry/real-format goal-reader
+scans found 0 matches / 0 denials and both leases absent. Root released the Mac slot.
+Final independent manifest `c80e7bb7ae1aa346ac37e298839aaff826fd68c510104dd175b8d6d203fc3f98`
+pins 1,265 raw files / 20 external audit artifacts; source `798` remains frozen.
+Compact closeout is published at `07e9c08f`:
+[run evidence](evidence/t07-counted-run25-20261015.json),
+[independent review](evidence/t07-run25-final-independent-review-20261015.md).
+Prospective bounded-retry/real-format goal-reader
 and same-run baseline optimization work is controlled only; no blind rerun.
 
 Qualified std at6221 stopped before WP: public formal-half vocabulary excludes
