@@ -48,8 +48,19 @@ source_files:
   benchmarks/gapbs/src/timer.h: 3337a59a57341585d296ed01b3eb64ca7f5e02d8c0871f4920ab9d1cd7e63bcb
 tile_elements: 16384
 tool_sha256:
-  archevolve/dx100_validation.py: 4f1861d577318d291a1f53f12edaa24eed6c03d44b781c5406233f1fbb4a4f7f
-  archevolve/dx100_validation_cli.py: e33cb7e7c610c412377e83161c9ce08d5abcbb6a3c803df7f5c6faa27685b327
+  archevolve/dx100_validation.py: 31aeb397a6e57cdc27d6aee1caed212f09c7e59aa65d2d36423e7974a55aa5f9
+  archevolve/dx100_validation_cli.py: 80ae7fd9c075e8f2a81802a2cdd8d7341526fba03d94eb76040ee2a99aa2d899
+  archevolve/dx100_launch_contract.py: ddeaf8b77c5fa7f2bac5b535cf09ba5108cbfbed54512fda5aec7eb5461e60e4
+launcher_contract:
+  launcher:
+    repository_path: docs/designs/dx100-reference-validation/eric-handoff/launch_16k.sh
+    sha256: ca411c0adecc1f6966217df39b02100a55b2c0070756b01328d5572081febe86
+  wrapper:
+    repository_path: docs/designs/dx100-reference-validation/eric-handoff/continue_to_verifier.py
+    sha256: 3cc4fe210c2294974c700d5855ef1038f6ce9587009af45df4fd359f98739bd5
+  ramulator_config:
+    repository_path: docs/designs/dx100-reference-validation/eric-handoff/ramulator.yaml
+    sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
 scope: Pinned authors standalone TDStepMAA and TDStep control; not the hybrid or proposed
   CPU-CAS read-offload rewrite.
 declared_model_defaults:
@@ -178,9 +189,10 @@ stats_policy: Select one complete ROI stats block explicitly; never silently use
 verifier_exit_issue: Both GEM5 kernels call m5_exit before returning to BenchmarkKernel/BFSVerifier.
   Stock benchCheckpoints stops on non-checkpoint exit. A separately reviewed continuation/verification
   method is required for target correctness.
-baseline_issue: Stock DOBFS also allocates/initializes MAA before ROI. Target CPU
-  control needs the same MAA memory mapping, with read/range instruction counters
-  zero inside ROI; a no-MAA baseline requires a separately reviewed source change.
+baseline_issue: Stock DOBFS also allocates/initializes MAA before ROI. Use the agreed
+  MAA-enabled idle control with zero read/range counters. These calls alone do not
+  prove a no-MAA baseline impossible; that alternative requires separate configuration
+  and correctness review.
 timing_validation: Independent timing/model validation remains outstanding even if
   correctness and intended-path checks pass.
 execution_performed: false

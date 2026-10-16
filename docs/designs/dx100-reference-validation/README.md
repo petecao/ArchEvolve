@@ -34,8 +34,9 @@ The [example bundle](../../../examples/dx100-reference-validation) contains:
 - `environment.template.yaml`: null server/toolchain/resource/platform bindings.
 - `build-recipes.yaml`: argv templates for Ramulator2, m5ops, gem5, converter,
   fresh m5op object and four separate BFS binaries.
-- `run-plan.yaml`: staged execution requirements; the actual gem5 command remains
-  null until the complete platform/launcher is reviewed.
+- `run-plan.yaml`: checkpoint/restore argv templates for four graph/variant pairs,
+  using Eric’s pinned launcher. Actual site paths and verification tick budgets
+  remain unbound; `target_argv` stays null until those bindings exist.
 - `guest.env`: explicit four-worker OpenMP settings for the guest.
 - Run/build/graph/exit-event receipt templates and an unbound preflight result.
 
@@ -60,15 +61,17 @@ provisional tuple that still specified 512.
 The pinned `Simulation.py::benchCheckpoints` continues checkpoint events but
 returns on the non-checkpoint exit. Therefore a stock run may end at the ROI
 without ever printing verification. `exit_code: 0` and `ROI End!!!` are insufficient.
-A separately reviewed launcher continuation or target verification method must
-finish verification while preserving the ROI stats separately. This preparation
-does not patch the simulator/source or assume that method already exists.
+Eric’s pinned continuation wrapper now supplies this method without changing the
+simulator/source. The collector binds its hash, two-event completion chain and
+frozen ROI evidence. The wrapper still requires its first real target smoke run.
 
 **The stock CPU control initializes MAA too.** `DOBFS` calls `alloc_MAA/init_MAA`
 before the ROI. Keep the same MAA memory mapping present for the target control;
-expect zero indirect-read/range instructions inside its ROI. Disabling MAA while
-using that binary is not a supported shortcut. A baseline with no accelerator
-mapping would require a separately reviewed source/binary variant.
+expect zero indirect-read/range instructions inside its ROI. The initialization
+calls alone do not prove a no-MAA baseline impossible: pointer setup and guarded
+region pseudo-ops do not necessarily access a device. A no-MAA comparison needs
+separate configuration/correctness review. This comparison retains MAA enabled
+but idle and identical 8MB L3 caches, not the paper’s area-compensated baseline.
 
 **Host environment is not guest evidence.** The pinned `se.py` sets `process.env`
 from `--env`. Bind the supplied `guest.env` explicitly in the reviewed system argv.
@@ -76,9 +79,10 @@ The printed `ROI started: 1 threads` is outside an OpenMP parallel region and mu
 not be used as the worker-count measurement. The simulated four cores/workers are
 also distinct from the host Slurm CPU allocation.
 
-**Do not infer DRAM geometry from the filename or preset alone.** Bind the actual
-organization reported to MAA, including channel/rank/bankgroup/bank dimensions and
-runtime controller arrangement. The preflight checks the necessary slice family
+**Eric’s reviewed topology is 2 channels × 1 rank × 4 bankgroups × 4 banks.**
+Keep the supplied YAML at channel1/rank1 with gem5 `--mem-channels 2`; two
+controller systems produce the effective two-channel organization. The template
+records this expectation; confirm the actual runtime organization at the site. The preflight checks the necessary slice family
 and divisibility/coverage for the reference initial slice count 32; it does not
 prove DRAM timing, topology binding or the complete address mapping.
 
@@ -109,10 +113,64 @@ prove DRAM timing, topology binding or the complete address mapping.
    and target DX100 separately, retaining `config.ini`, raw stdout/stderr, complete
    `stats.txt`, exact launcher/simulator/Ramulator hashes and the exit-event chain.
 
-The build/run manifests are **unexecuted templates**, not a complete launch command
-or automatic Slurm script. The target argv deliberately stays null rather than
-inventing cache settings, resource allocations or an exit handler. No command in
-this tool submits jobs or executes a recipe.
+The build/run manifests are **unexecuted templates**, not an automatic Slurm
+script. Eric’s CPU/cache/memory settings and exit handler are now pinned. Site
+paths, allocation and an explicit positive `verify_max_ticks` still need binding.
+No command in the preparation/collection tool submits jobs or executes a recipe.
+
+## Integrated launcher and evidence bindings
+
+`workflow.yaml` pins the original `launch_16k.sh`, `continue_to_verifier.py` and
+`ramulator.yaml` hashes. Preparation refuses changed handoff artifacts until their
+contract is deliberately reviewed. Regenerate preparation bundles and use their
+new workflow identities; do not reuse receipts bound to the earlier preparation.
+Keep all three files together under their
+original filenames on Great Lakes. The historical 2GB/instrumented execution is
+context only, not validation of this stock 16GB configuration.
+
+Bind the environment’s `launcher`, `wrapper`, `ramulator_config`, `guest_env_file`
+and tool paths to absolute site paths. Keep the supplied hashes. Set a reviewed
+positive integer `verify_max_ticks`; the launcher receives the same value through
+`VERIFY_MAX_TICKS`. Record continuation and address/resource reviews using the
+existing review fields. The known topology is an expectation, not an observed run.
+
+The four `target_cases` in `run-plan.yaml` give separate checkpoint and restore
+commands for each graph/binary pair. Bind `{graph_root}` to the directory holding
+the generated graph files. Use fresh directories, never a DX100 checkpoint for
+the CPU binary. Record `checkpoint_directory` in each run receipt. The existing
+`system_argv` field uses `run-plan.yaml`’s `system_argv_template`: bind the Ramulator
+and guest-file paths but keep the literal `{checkpoint_directory}` slot. This
+keeps one environment identity for all four cases. Each run receipt binds its own
+checkpoint path; the collector checks the full actual restore command separately.
+`se.py` splits workload options on whitespace, so graph paths must not contain
+whitespace with this launcher. Dependency/library search paths and checkpoint
+provenance still require site review.
+
+For each restore, bind these artifacts with their actual hashes:
+
+| Receipt artifact | Run output or input |
+|---|---|
+| `stdout` | `run.log` (launcher combines stdout and stderr) |
+| `stderr` | An empty file explicitly documenting merged output; do not duplicate `run.log` |
+| `command_json` | `command.json`; copy its array to `command_argv` |
+| `stats` | `roi.stats.explicit-counters.txt` |
+| `raw_roi_stats` | `roi.stats.txt` |
+| `counter_snapshot` | `roi-counter-values.json` |
+| `exit_events` | `exit-events.json` |
+| `final_stats` | Full final `stats.txt`, archived for review |
+| `wrapper`, `launcher`, `ramulator_config` | The actual pinned sibling files used at execution |
+
+Also retain the existing build/graph/macro/configuration/simulator/library/guest
+artifacts. Record the real process exit code from `exit-code.txt`; completion is
+not inferred from exit code zero. Preserve original directory layouts for
+collection: wrapper-relative ROI filenames must resolve to the bound artifacts.
+Collection archives all text companions byte-for-byte. It independently replays
+only the addition of absent, registered **zero** counters; nonzero additions,
+changed raw values, changed unrelated stats, inconsistent hashes and a different
+ROI window reject the receipt. Missing artifacts or incomplete continuation
+remain inconclusive. A normal guest exit still needs one `BFSVerifier` PASS and
+correct intended-path activity. These are consistency checks, not authentication
+of receipt authors or target-performance certification.
 
 ## Checks and their limits
 
@@ -126,7 +184,12 @@ The collector checks:
 - Per-level `Starting TDStep` / `Starting TDStepMAA` frontier sizes. Parent arrays
   need not match byte-for-byte between correct parallel runs.
 - The 26 effective MAA scalar settings in an unambiguous `config.ini` section.
-- Exactly identified ROI markers and a caller-selected complete stats block.
+- Exactly identified ROI markers and frozen explicit ROI block **0**; the final
+  `stats.txt` is archived separately and is never substituted for the ROI.
+- Raw ROI and projected-stats hashes, registered-counter sidecar, zero-only
+  projection, snapshot/event ticks and wrapper identity.
+- Recorded restore argv against the pinned launcher settings, binary, graph,
+  guest environment, checkpoint directory and verification budget.
 - Positive `system.maa.numInst_INDRD` and `system.maa.numInst_RANGE` for DX100;
   zero for the CPU control. A function-entry log alone does not prove offload:
   `TDStepMAA` can take its CPU fallback.
@@ -171,9 +234,9 @@ Reviews use `{reviewer, description, evidence_refs}`. The checker's best status 
 After actual execution, fill one run receipt per mode/variant/workload. Artifacts
 use `{path, sha256}`; relative paths resolve against the receipt directory. Build
 and graph receipt templates describe their JSON fields. `generator_options` records
-actual options such as `[-g, 18, -k, 16, -b, /path/to/graph.sg]` as strings. Capture
-exit events with causes/ticks/actions and whether the guest truly completed. Choose
-`stats_block_index` explicitly (zero-based); do not assume the last dump is the ROI.
+actual options such as `[-g, 18, -k, 16, -b, /path/to/graph.sg]` as strings. Use the wrapper-produced
+exit-event receipt and `stats_block_index: 0`; do not reconstruct completion claims
+manually or use the final dump as the ROI.
 
 ```sh
 .venv/bin/python -m archevolve.dx100_validation_cli collect \
@@ -197,6 +260,6 @@ successfully as reports: command exit code zero does not mean validation passed.
 .venv/bin/python -m unittest discover -s tests -p 'test_dx100_validation.py' -v
 ```
 
-The current deliverable is preparation plus tested evidence handling. The next
+The current deliverable is integrated launcher templates plus tested evidence handling. The next
 external step is confirming the Great Lakes environment and reviewing the target
 launcher/verification continuation, then executing and retaining real receipts.

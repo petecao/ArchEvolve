@@ -1,5 +1,5 @@
 format: dx100-reference-run-plan-v0.1
-workflow_sha256: 4a7cec231102d795015e85da7ddc8434f3819b689f1967d289771babee8850f8
+workflow_sha256: 0a3a384d9111d0674a82b589d22381ccd208129b71644745a6e285c2af838fec
 execute: false
 sequence:
 - Bind environment/source/build provenance
@@ -64,8 +64,210 @@ workloads:
   input_binding: Generate once, hash the serialized .sg, and use the identical file
     in baseline and DX100 runs.
 target_argv: null
-target_argv_status: Requires reviewed complete CPU/cache/clock/Ramulator/MAA and exit/checkpoint
-  launcher settings.
+target_argv_status: Pinned Eric launcher templates supplied; actual site paths and
+  verification budget remain unbound.
+launcher_contract:
+  launcher:
+    repository_path: docs/designs/dx100-reference-validation/eric-handoff/launch_16k.sh
+    sha256: ca411c0adecc1f6966217df39b02100a55b2c0070756b01328d5572081febe86
+  wrapper:
+    repository_path: docs/designs/dx100-reference-validation/eric-handoff/continue_to_verifier.py
+    sha256: 3cc4fe210c2294974c700d5855ef1038f6ce9587009af45df4fd359f98739bd5
+  ramulator_config:
+    repository_path: docs/designs/dx100-reference-validation/eric-handoff/ramulator.yaml
+    sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+target_cases:
+- id: kronecker18-root0-baseline
+  workload_id: kronecker18-root0
+  variant: baseline
+  checkpoint_argv:
+  - bash
+  - '{launcher}'
+  - checkpoint
+  - '{source_root}'
+  - '{gem5}'
+  - '{build_root}/bfs-gem5-baseline'
+  - '{graph_root}/kronecker18-root0.sg'
+  - '{run_root}/kronecker18-root0-baseline-checkpoint'
+  - '{run_root}/kronecker18-root0-baseline-checkpoint'
+  - '{guest_env_file}'
+  restore_argv:
+  - bash
+  - '{launcher}'
+  - restore
+  - '{source_root}'
+  - '{gem5}'
+  - '{build_root}/bfs-gem5-baseline'
+  - '{graph_root}/kronecker18-root0.sg'
+  - '{run_root}/kronecker18-root0-baseline-restore'
+  - '{run_root}/kronecker18-root0-baseline-checkpoint'
+  - '{guest_env_file}'
+  restore_environment:
+    VERIFY_MAX_TICKS: null
+  checkpoint_policy: Fresh checkpoint specific to this binary and graph; never share
+    between variants.
+  output_directory: '{run_root}/kronecker18-root0-baseline-restore'
+  checkpoint_directory: '{run_root}/kronecker18-root0-baseline-checkpoint'
+- id: kronecker18-root0-dx100
+  workload_id: kronecker18-root0
+  variant: dx100
+  checkpoint_argv:
+  - bash
+  - '{launcher}'
+  - checkpoint
+  - '{source_root}'
+  - '{gem5}'
+  - '{build_root}/bfs-gem5-dx100'
+  - '{graph_root}/kronecker18-root0.sg'
+  - '{run_root}/kronecker18-root0-dx100-checkpoint'
+  - '{run_root}/kronecker18-root0-dx100-checkpoint'
+  - '{guest_env_file}'
+  restore_argv:
+  - bash
+  - '{launcher}'
+  - restore
+  - '{source_root}'
+  - '{gem5}'
+  - '{build_root}/bfs-gem5-dx100'
+  - '{graph_root}/kronecker18-root0.sg'
+  - '{run_root}/kronecker18-root0-dx100-restore'
+  - '{run_root}/kronecker18-root0-dx100-checkpoint'
+  - '{guest_env_file}'
+  restore_environment:
+    VERIFY_MAX_TICKS: null
+  checkpoint_policy: Fresh checkpoint specific to this binary and graph; never share
+    between variants.
+  output_directory: '{run_root}/kronecker18-root0-dx100-restore'
+  checkpoint_directory: '{run_root}/kronecker18-root0-dx100-checkpoint'
+- id: uniform18-root0-baseline
+  workload_id: uniform18-root0
+  variant: baseline
+  checkpoint_argv:
+  - bash
+  - '{launcher}'
+  - checkpoint
+  - '{source_root}'
+  - '{gem5}'
+  - '{build_root}/bfs-gem5-baseline'
+  - '{graph_root}/uniform18-root0.sg'
+  - '{run_root}/uniform18-root0-baseline-checkpoint'
+  - '{run_root}/uniform18-root0-baseline-checkpoint'
+  - '{guest_env_file}'
+  restore_argv:
+  - bash
+  - '{launcher}'
+  - restore
+  - '{source_root}'
+  - '{gem5}'
+  - '{build_root}/bfs-gem5-baseline'
+  - '{graph_root}/uniform18-root0.sg'
+  - '{run_root}/uniform18-root0-baseline-restore'
+  - '{run_root}/uniform18-root0-baseline-checkpoint'
+  - '{guest_env_file}'
+  restore_environment:
+    VERIFY_MAX_TICKS: null
+  checkpoint_policy: Fresh checkpoint specific to this binary and graph; never share
+    between variants.
+  output_directory: '{run_root}/uniform18-root0-baseline-restore'
+  checkpoint_directory: '{run_root}/uniform18-root0-baseline-checkpoint'
+- id: uniform18-root0-dx100
+  workload_id: uniform18-root0
+  variant: dx100
+  checkpoint_argv:
+  - bash
+  - '{launcher}'
+  - checkpoint
+  - '{source_root}'
+  - '{gem5}'
+  - '{build_root}/bfs-gem5-dx100'
+  - '{graph_root}/uniform18-root0.sg'
+  - '{run_root}/uniform18-root0-dx100-checkpoint'
+  - '{run_root}/uniform18-root0-dx100-checkpoint'
+  - '{guest_env_file}'
+  restore_argv:
+  - bash
+  - '{launcher}'
+  - restore
+  - '{source_root}'
+  - '{gem5}'
+  - '{build_root}/bfs-gem5-dx100'
+  - '{graph_root}/uniform18-root0.sg'
+  - '{run_root}/uniform18-root0-dx100-restore'
+  - '{run_root}/uniform18-root0-dx100-checkpoint'
+  - '{guest_env_file}'
+  restore_environment:
+    VERIFY_MAX_TICKS: null
+  checkpoint_policy: Fresh checkpoint specific to this binary and graph; never share
+    between variants.
+  output_directory: '{run_root}/uniform18-root0-dx100-restore'
+  checkpoint_directory: '{run_root}/uniform18-root0-dx100-checkpoint'
+system_argv_template:
+- --cpu-type
+- X86O3CPU
+- -r
+- '1'
+- --checkpoint-dir
+- '{checkpoint_directory}'
+- -n
+- '4'
+- --mem-size
+- 16GB
+- --sys-clock
+- 3.2GHz
+- --cpu-clock
+- 3.2GHz
+- --caches
+- --l1d_size=32kB
+- --l1d_assoc=8
+- --l1d-hwp-type=StridePrefetcher
+- --l1d_mshrs=16
+- --l1d_write_buffers=8
+- --l1i_size=32kB
+- --l1i_assoc=8
+- --l1i-hwp-type=StridePrefetcher
+- --l1i_mshrs=16
+- --l1i_write_buffers=8
+- --l2cache
+- --l2_size=256kB
+- --l2_assoc=4
+- --l2-hwp-type=StridePrefetcher
+- --l2_mshrs=32
+- --l2_write_buffers=16
+- --l3cache
+- --l3_size=8MB
+- --l3_assoc=16
+- --l3_mshrs=256
+- --l3_write_buffers=128
+- --l3_ports
+- '4'
+- --cacheline_size=64
+- --mem-type
+- Ramulator2
+- --ramulator-config
+- '{ramulator_config}'
+- --mem-channels
+- '2'
+- --maa_ncbus_width
+- '32'
+- --maa
+- --maa_num_maas
+- '1'
+- --maa_num_tile_elements
+- '16384'
+- --maa_l2_uncacheable
+- --maa_l3_uncacheable
+- --maa_num_initial_row_table_slices
+- '32'
+- --env
+- '{guest_env_file}'
+stats_artifact: roi.stats.explicit-counters.txt
+stats_block_index: 0
+required_roi_companions:
+- roi.stats.txt
+- roi-counter-values.json
+- exit-events.json
+- command.json
+- stats.txt
 required_target_settings:
   maa_enabled_for_both_variants: true
   num_cpus: 4

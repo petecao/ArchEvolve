@@ -13,6 +13,8 @@ import subprocess
 
 from archevolve.dx100_parameter_adapter import SOURCE,read_handoff
 from archevolve.evolution_store import digest
+from archevolve.dx100_launch_contract import (ARTIFACTS, TOPOLOGY, TARGET_ARTIFACTS, manifest,
+    launch_templates, system_args, check_roi_evidence, check_launch_evidence)
 from tools.render_mermaid import RequestError
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -62,7 +64,8 @@ def prepare(source_root):
             'input_binding':'Generate once, hash the serialized .sg, and use the identical file in baseline and DX100 runs.'})
     plan={'format':'dx100-reference-validation-v0.1','source_commit':SOURCE,'domain_contract_sha256':ch,
         'published_evidence_sha256':ph,'source_files':files,'tile_elements':16384,
-        'tool_sha256':{n:file_hash(ROOT/n) for n in ('archevolve/dx100_validation.py','archevolve/dx100_validation_cli.py')},
+        'tool_sha256':{n:file_hash(ROOT/n) for n in ('archevolve/dx100_validation.py','archevolve/dx100_validation_cli.py','archevolve/dx100_launch_contract.py')},
+        'launcher_contract':manifest(ROOT),
         'scope':'Pinned authors standalone TDStepMAA and TDStep control; not the hybrid or proposed CPU-CAS read-offload rewrite.',
         'declared_model_defaults':defaults,'expected_effective_model_parameters':effective,
         'effective_override_basis':{'source':'configs/common/MAAConfig.py:143-156',
@@ -74,7 +77,7 @@ def prepare(source_root):
         'required_target_counters':['system.maa.numInst_INDRD','system.maa.numInst_RANGE'],
         'stats_policy':'Select one complete ROI stats block explicitly; never silently use the final block or divide ticks by 313.',
         'verifier_exit_issue':'Both GEM5 kernels call m5_exit before returning to BenchmarkKernel/BFSVerifier. Stock benchCheckpoints stops on non-checkpoint exit. A separately reviewed continuation/verification method is required for target correctness.',
-        'baseline_issue':'Stock DOBFS also allocates/initializes MAA before ROI. Target CPU control needs the same MAA memory mapping, with read/range instruction counters zero inside ROI; a no-MAA baseline requires a separately reviewed source change.',
+        'baseline_issue':'Stock DOBFS also allocates/initializes MAA before ROI. Use the agreed MAA-enabled idle control with zero read/range counters. These calls alone do not prove a no-MAA baseline impossible; that alternative requires separate configuration and correctness review.',
         'timing_validation':'Independent timing/model validation remains outstanding even if correctness and intended-path checks pass.',
         'execution_performed':False,'target_validated':False,'speedup':None}
     env={'format':'dx100-validation-environment-v0.1','workflow_sha256':digest(plan),
@@ -82,10 +85,11 @@ def prepare(source_root):
         'tools':{'cxx':None,'cc':None,'cmake':None,'make':None,'scons':None,'gem5':None},
         'build_root':None,'run_root':None,'build_jobs':None,
         'great_lakes':{'account':None,'partition':None,'cpus_per_task':None,'memory':None,'walltime':None},
-        'target':{'memory_size_bytes':None,'cpu_model':None,'cpu_clock':None,'cache_configuration':None,
-                  'ramulator_config':None,'ramulator_config_sha256':None,'dram_topology':None,
+        'target':{'memory_size_bytes':0x400000000,'cpu_model':'X86O3CPU','cpu_clock':'3.2GHz','cache_configuration':'Eric launcher: L1I/D 32kB, L2 256kB, L3 8MB; identical for both variants',
+                  'ramulator_config':None,'ramulator_config_sha256':ARTIFACTS['ramulator_config'][1],'dram_topology':deepcopy(TOPOLOGY),
+                  'wrapper':None,'wrapper_sha256':ARTIFACTS['wrapper'][1],'verify_max_ticks':None,
                   'guest_env_file':None,'guest_env_sha256':sha256(guest_env_text(plan).encode()).hexdigest(),
-                  'system_argv':None,'launcher':None,'launcher_sha256':None,'checkpoint_policy':None,
+                  'system_argv':None,'launcher':None,'launcher_sha256':ARTIFACTS['launcher'][1],'checkpoint_policy':'Separate fresh checkpoint per graph and binary; checkpoint AtomicSimpleCPU, restore X86O3CPU',
                   'verifier_continuation_review':None,'resource_address_review':None},
         'note':'Unbound site/target settings are blockers, not inferred defaults. No job submission is implemented.'}
     common=['-std=c++11','-O3','-Wall','-g3','-fopenmp','-DNUM_CORES=4','-DTILE_SIZE=16384','-I{source}/benchmarks/API']
@@ -116,7 +120,11 @@ def prepare(source_root):
                     'Resolve target topology/config and verifier exit handling','Run target baseline and target DX100 separately',
                     'Collect raw evidence and compare frontiers','Request independent timing review before performance claims'],
         'guest_environment':plan['guest_environment'],'workloads':workflows,
-        'target_argv':None,'target_argv_status':'Requires reviewed complete CPU/cache/clock/Ramulator/MAA and exit/checkpoint launcher settings.',
+        'target_argv':None,'target_argv_status':'Pinned Eric launcher templates supplied; actual site paths and verification budget remain unbound.',
+        'launcher_contract':plan['launcher_contract'],'target_cases':launch_templates(workflows),
+        'system_argv_template':system_args('{ramulator_config}','{guest_env_file}','{checkpoint_directory}'),
+        'stats_artifact':'roi.stats.explicit-counters.txt','stats_block_index':0,
+        'required_roi_companions':['roi.stats.txt','roi-counter-values.json','exit-events.json','command.json','stats.txt'],
         'required_target_settings':{'maa_enabled_for_both_variants':True,'num_cpus':4,'mem_channels':2,'mem_size_bytes':0x400000000,
             'maa_num_maas':1,'maa_num_tile_elements':16384,'maa_num_initial_row_table_slices':32,
             'maa_reconfigure_row_table':False,'maa_no_reorder':False,'maa_force_cache_access':False,
@@ -124,8 +132,8 @@ def prepare(source_root):
         'note':'Simulated cores/workers are not a Slurm CPU allocation. Resource requests stay unbound.'}
     receipt={'format':'dx100-validation-receipt-v0.1','workflow_sha256':digest(plan),'environment_sha256':None,
         'workload_id':None,'mode':None,'variant':None,'completion':'not_run','exit_code':None,
-        'benchmark_argv':None,'command_argv':None,'guest_environment':None,'stats_block_index':None,
-        'artifacts':{k:None for k in ('stdout','stderr','binary','graph','graph_receipt','build_receipt','macro_dump','config_ini','stats','launcher','exit_events','simulator','ramulator_config','ramulator_library','guest_env_file')},
+        'checkpoint_directory':None,'benchmark_argv':None,'command_argv':None,'guest_environment':None,'stats_block_index':None,
+        'artifacts':{k:None for k in ('stdout','stderr','binary','graph','graph_receipt','build_receipt','macro_dump','config_ini','stats','launcher','exit_events','simulator','ramulator_config','ramulator_library','guest_env_file','wrapper','raw_roi_stats','counter_snapshot','command_json','final_stats')},
         'note':'Each artifact is {path, sha256}; use absolute paths or paths relative to this receipt. Native and gem5 runs use separate receipts.'}
     return plan,env,build,run,receipt
 
@@ -187,7 +195,7 @@ def preflight(plan,env):
     if platform.get('architecture') not in (None,'x86_64'):failures.append('requires_x86_64_target_toolchain_environment')
     for key in ('memory_size_bytes','cpu_model','cpu_clock','cache_configuration','ramulator_config',
                 'ramulator_config_sha256','dram_topology','system_argv','launcher','launcher_sha256',
-                'checkpoint_policy','verifier_continuation_review','resource_address_review','guest_env_file','guest_env_sha256'):
+                'checkpoint_policy','verifier_continuation_review','resource_address_review','guest_env_file','guest_env_sha256','wrapper','wrapper_sha256','verify_max_ticks'):
         if env.get('target',{}).get(key) is None:missing.append('target.'+key)
     target=env.get('target',{})
     if target.get('memory_size_bytes') not in (None,0x400000000):failures.append('memory_size_must_match_compiled_16GiB_API')
@@ -199,7 +207,18 @@ def preflight(plan,env):
         failures.append('system_argv_requires_explicit_argument_list')
     geo=geometry(target.get('dram_topology'))
     if geo['status']=='rejected':failures.append('dram_slice_geometry')
-    for key in ('ramulator_config','launcher'):
+    for key,expected in (('cpu_model','X86O3CPU'),('cpu_clock','3.2GHz')):
+        if target.get(key) not in (None,expected):failures.append('reviewed_launcher_'+key+'_mismatch')
+    if target.get('system_argv') is not None and target.get('ramulator_config') and target.get('guest_env_file'):
+        if target['system_argv']!=system_args(target['ramulator_config'],target['guest_env_file'],'{checkpoint_directory}'):
+            failures.append('reviewed_system_argv_mismatch')
+    budget=target.get('verify_max_ticks')
+    if budget is not None and (type(budget) is not int or budget<=0):failures.append('verify_max_ticks_must_be_positive_integer')
+    if target.get('dram_topology') is not None and target['dram_topology']!=TOPOLOGY:failures.append('reviewed_launcher_topology_mismatch')
+    for key,(name,expected) in ARTIFACTS.items():
+        if target.get(key+'_sha256') not in (None,expected):failures.append(key+'_reviewed_hash_mismatch')
+        if plan.get('launcher_contract',{}).get(key)!={'repository_path':'docs/designs/dx100-reference-validation/eric-handoff/'+name,'sha256':expected}:failures.append(key+'_workflow_contract_mismatch')
+    for key in ('ramulator_config','launcher','wrapper'):
         path=target.get(key);expected=target.get(key+'_sha256')
         if path and expected:
             if not Path(path).is_file() or file_hash(path)!=expected:failures.append(key+'_hash')
@@ -318,7 +337,7 @@ def collect(plan,env,receipt,base):
     if receipt.get('environment_sha256') is None:missing.append('environment_hash_unbound')
     mode,variant=receipt.get('mode'),receipt.get('variant')
     common={'stdout','stderr','binary','graph','graph_receipt','build_receipt','macro_dump'}
-    required=common|({'config_ini','stats','launcher','exit_events','simulator','ramulator_config','ramulator_library','guest_env_file'} if mode=='gem5' else set())
+    required=common|({'config_ini','stats','launcher','exit_events','simulator','ramulator_config','ramulator_library','guest_env_file'}|TARGET_ARTIFACTS if mode=='gem5' else set())
     for name in sorted(required):
         entry=receipt.get('artifacts',{}).get(name)
         if entry is None:missing.append('artifact:'+name);continue
@@ -331,7 +350,7 @@ def collect(plan,env,receipt,base):
         evidence[name]={'path':str(path.resolve()),'sha256':actual,'bytes':path.stat().st_size}
         if name not in {'binary','graph','simulator','ramulator_library'}:
             if path.stat().st_size>64*1024*1024:missing.append('text_artifact_exceeds_reader_budget:'+name);continue
-            loaded[name]=path.read_text(errors='replace')
+            loaded[name]=path.read_bytes().decode(errors='replace')
     workloads={w['id']:w for w in plan['workloads']}
     workload=workloads.get(receipt.get('workload_id'))
     if workload is None:missing.append('workload_id_unbound')
@@ -382,9 +401,13 @@ def collect(plan,env,receipt,base):
     if config and config['status']=='rejected':errors.append('effective_model_parameters_mismatch')
     if config and config['status']=='unresolved':missing.append('effective_model_parameters_unbound')
     if mode=='gem5':
-        if loaded.get('guest_env_file')!=guest_env_text(plan):errors.append('guest_environment_file_binding')
-        for name in ('launcher','ramulator_config'):
-            if evidence.get(name,{}).get('sha256')!=env.get('target',{}).get(name+'_sha256'):errors.append(name+'_environment_binding')
+        if 'guest_env_file' in loaded and loaded['guest_env_file']!=guest_env_text(plan):errors.append('guest_environment_file_binding')
+        for name in ('launcher','ramulator_config','wrapper'):
+            if name in evidence and env.get('target',{}).get(name+'_sha256') is not None and evidence[name]['sha256']!=env['target'][name+'_sha256']:errors.append(name+'_environment_binding')
+        roi_errors,roi_missing=check_roi_evidence(loaded,evidence,receipt,env.get('target',{}))
+        errors+=roi_errors;missing+=roi_missing
+        launch_errors,launch_missing=check_launch_evidence(loaded,evidence,receipt,env)
+        errors+=launch_errors;missing+=launch_missing
         exits=document('exit_events')
         if exits is not None and (not isinstance(exits,dict) or exits.get('guest_completed') is not True or not exits.get('events')):
             missing.append('guest_completion_or_exit_event_chain')

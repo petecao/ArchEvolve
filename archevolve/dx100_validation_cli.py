@@ -35,7 +35,11 @@ def main(argv=None):
                     'cwd':None,'compiler_version':None,'exit_code':None,'binary_sha256':None,'macro_dump_sha256':None},
                 'graph-receipt.template.json':{'format':'dx100-graph-receipt-v0.1','source_commit':workflow['source_commit'],
                     'workload_id':None,'generator_seed':27491095,'generator_options':None,'converter_sha256':None,'graph_sha256':None},
-                'exit-events.template.json':{'format':'dx100-exit-events-v0.1','guest_completed':None,'events':[]}}
+                'exit-events.template.json':{'format':'dx100-exit-events-v0.1','guest_completed':None,'events':[],
+                    'roi_stats':'roi.stats.explicit-counters.txt','raw_roi_stats':'roi.stats.txt',
+                    'counter_snapshot':'roi-counter-values.json','stats_block_index':0,
+                    'wrapper_sha256':workflow['launcher_contract']['wrapper']['sha256'],
+                    'note':'Use the wrapper-generated exit-events.json from the real run; this template is not execution evidence.'}}
             for name,value in templates.items():files[name]=json.dumps(value,indent=2)+'\n'
             files['README.md']='# DX100 16K reference validation preparation\n\nNo builds, benchmark runs, simulations or cluster submissions have occurred.\n\nBind environment.template.yaml on the confirmed Linux/x86-64 environment. See the repository guide at docs/designs/dx100-reference-validation/README.md before executing any recipe.\n\n[Workflow](workflow.yaml) · [Build recipes](build-recipes.yaml) · [Run plan](run-plan.yaml) · [Unbound preflight](preflight.yaml)\n'
         elif args.command in ('preflight','collect'):
