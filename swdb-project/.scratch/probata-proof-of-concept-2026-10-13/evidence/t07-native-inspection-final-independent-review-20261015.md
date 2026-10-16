@@ -1,0 +1,23 @@
+# Native inspection guard independent review — 2026-10-15 ET
+
+**PASS for the exact narrow guard repair and controlled evidence.** No remaining material finding was identified within the reviewed scope. This does not authorize a formal run or change run26's UNPROVEN result. Separate source-model soundness defects remain blockers to a future experiment.
+
+Reviewed worktree `/private/tmp/probata-resume-t07-method24`, comparison base `648924d707396ef4f083e506beacb0f8c999e976`. The seven exact source/test/doc pins and immutable snapshots in the v2 manifest match disk. Runtime change is confined to counted_verifier.py, SHA256 `c6f0d4b8c60fab912dd768c4c8c7e7737d8feca3a110d0de02dec4d38785db57`. All661 retained owner control artifacts (2,062,724bytes) and the pinned Python/psutil runtime files rehashed without errors.
+
+Only the exact retained proc_environ SystemError signature raised by the actual requested environ operation shares the existing200ms/21-attempt admission policy. Other native signatures, exception classes and identity/status failures fail closed. Existing AccessDenied behavior remains bounded. Immutable PID/birth checks precede and follow admitted reads; confirmed disappearance/reuse stays distinct from uncertain discovery. A stale identity grants no authority over its replacement; independent fresh exact-marker discovery of a nonroot identity remains the unchanged trusted-toolchain boundary.
+
+The initial composition passed50checks in19.97seconds, but an additional public-CLI regression reproduced a secondary native identity-validation error recovering into exit0. Source inspection also found a different secondary exception escaping without context and potentially exposing its raw message. The repair preserves the original environment failure, records the actual secondary birth/status operation, and immediately fails for every non-AccessDenied secondary exception without another OS lookup. Both findings are resolved.
+
+Final independent validation passed **60checks in25.28seconds**:58current repository controls plus the two independent secondary regressions. The controls exercise the real runner CLI with private inert Python children and injected OS/clock boundaries. They cover exact transient recovery, persistent/unknown refusal, PID reuse/foreign-process protection, RSS/deadline enforcement, overshoot refusal, direct and secondary native/class errors, sanitized causes/contexts and cleanup uncertainty. The existing shell lifecycle case uses a complete fake opam. No compiler, Frama-C version/parser, solver, provider or proof workload ran.
+
+Diagnostics retain operation/stage, numeric identifiers, captured/observed birth, bounded class/module/cause relations and code frame locations. Argument/cause/context messages, source lines, locals and environment values are excluded; only the fixed known signature may appear as inspection error message text. Primary and cleanup contexts are separate. Handled cleanup discovery failures remain unconfirmed and quarantine the lease; independently verified owned-group cleanup may proceed, while an unvalidated leader grants no group-signaling authority.
+
+All waits remain counted and post-inspection sampled RSS/deadline checks stay mandatory. Synchronous OS calls are not forcibly timed; retry admission is a source-level observation, not an atomic kernel deadline. Trusted descendants must preserve the marker. No hard quota, hostile-process containment, root-cause diagnosis, availability-frequency bound, run26 recovery counterfactual, proof success or timing-sufficiency claim follows from these controls. Frozen run26/ac6 evidence remains historical and unchanged.
+
+Exact final command (cwd `/private/tmp/probata-resume-t07-method24/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints`; process-inspection permission used):
+
+```sh
+PYTHONDONTWRITEBYTECODE=1 /Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -B -m pytest -q -p no:cacheprovider test_counted_verifier.py test_inspection_retry.py test_native_inspection_error.py /private/tmp/test_probata_method24_secondary_identity_independent.py /private/tmp/test_probata_method24_secondary_runtime_independent.py --basetemp=/private/tmp/probata-t07-method24-v2-independent-controls-20261015 --junitxml=/private/tmp/probata-t07-method24-v2-independent-controls-20261015.xml > /private/tmp/probata-t07-method24-v2-independent-controls-20261015.txt 2>&1
+```
+
+`git diff --check` passed. This reviewer changed no repository source, formal output or shared experiment lease/process. Controlled tests managed their private fixtures only.

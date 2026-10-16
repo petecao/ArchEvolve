@@ -1563,3 +1563,43 @@ receipts. The native exception requires a separately tested contextual diagnosis
 before any newly reviewed method or actual launch. Old hints and results must
 remain outside every future fresh provider. Ticket07 remains claimed, with the
 original positive-plus-negative acceptance unsatisfied.
+
+### Narrow native-inspection repair reviewed — 2026-10-15 ET
+
+The runner now admits the existing 200 ms / 21-attempt environment retry policy
+for the exact retained `proc_environ` SystemError only when the actual requested
+operation is `environ`. Unknown signatures, other exception classes and native
+identity/status failures receive sanitized context and fail closed. Immutable
+PID/birth checks, continuous retry-admission expiry, counted pauses and subsequent
+RSS/deadline enforcement remain unchanged. Individual OS calls have no forced
+timeout; this is still sampled, finite, non-atomic trusted-marker supervision.
+
+Diagnostics retain operation, stage, PID/birth, bounded exception/cause/context
+types, numeric IDs and code path/function/line. They omit argument and cause
+messages, source lines, locals and process-environment values. Primary and cleanup
+contexts are separate. Cleanup discovery errors preserve unconfirmed status and
+quarantine while continuing only independently verified owned-group cleanup.
+An unknown root identity is not signaled.
+
+Independent review found and a public CLI regression reproduced an additional
+secondary identity error incorrectly recovering to exit 0, plus a secondary
+exception escaping without safe context. Eight expanded controls failed before
+the correction and passed afterward. Non-AccessDenied secondary validation
+exceptions now fail immediately with the original environment failure and actual
+secondary operation recorded separately. Existing independently confirmed-gone
+and AccessDenied handling is retained.
+
+The [independent final review](../evidence/t07-native-inspection-final-independent-review-20261015.md)
+passed 60 controls in 25.28 seconds: 58 repository controls and two independent
+regressions. Its [seven-file manifest](../evidence/t07-native-inspection-final-independent-review-20261015-manifest.json)
+and [control evidence](../evidence/t07-native-inspection-controls-20261015.json)
+pin the final runner, tests, policy and retained RED/GREEN artifacts. No actual
+formal tool, compiler, provider or solver ran for these controls. No production
+code, real C++ unit, stand-in algorithm, proof hints or acceptance criterion changed.
+
+This repair does not establish recovery from run26's original OS event, identify
+its lost PID/phase/cause, or upgrade that unproven run. Separately identified queue
+capacity/caller-domain, unsigned arithmetic and helper-domain defects still block
+a new actual admission. They require their own source-faithful repair, counterstate
+controls, helper/RTE verification plan and independent review. Ticket07 remains
+claimed with the original scientific acceptance unsatisfied.

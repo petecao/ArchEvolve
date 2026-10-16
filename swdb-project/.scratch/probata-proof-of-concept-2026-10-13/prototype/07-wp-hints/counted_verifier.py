@@ -66,7 +66,58 @@ def _tickets(queue):
 
 # Only sanitized inspection metadata is retained; never environment values.
 _INSPECTION_EVENTS = []
+_CLEANUP_INSPECTION_FAILURES = []
 _INSPECTION_STAGE = 'supervision'
+_NATIVE_ENVIRON_ERROR = '<built-in function proc_environ> returned a result with an exception set'
+
+
+def _exception_metadata(exc):
+    """Record types, numeric identifiers and code locations, never args or locals."""
+    chain, seen, current, relation = [], set(), exc, 'raised'
+    while current is not None and id(current) not in seen and len(chain) < 6:
+        seen.add(id(current))
+        row = {'type':type(current).__name__, 'module':type(current).__module__, 'relation':relation}
+        for key in ('errno', 'pid'):
+            value = getattr(current, key, None)
+            if isinstance(value, int) and not isinstance(value, bool):
+                row[key] = value
+        chain.append(row)
+        if current.__cause__ is not None:
+            current, relation = current.__cause__, 'cause'
+        elif current.__context__ is not None and not current.__suppress_context__:
+            current, relation = current.__context__, 'context'
+        else:
+            current = None
+    frames, tb = [], exc.__traceback__
+    while tb is not None and len(frames) < 8:
+        frames.append({'path':tb.tb_frame.f_code.co_filename,
+                       'function':tb.tb_frame.f_code.co_name, 'line':tb.tb_lineno})
+        tb = tb.tb_next
+    return {'exception':chain[0], 'exception_chain':chain, 'traceback':frames,
+            'known_native_environ_signature':isinstance(exc, SystemError) and str(exc) == _NATIVE_ENVIRON_ERROR}
+
+
+def _inspection_context(process, operation, observing, born, snapshot_birth, exc):
+    return {'stage':_INSPECTION_STAGE, 'operation':observing, 'requested_operation':operation,
+            'pid':process.pid, 'expected_birth':born if born is not None else snapshot_birth,
+            'snapshot_birth':snapshot_birth, **_exception_metadata(exc)}
+
+
+def _error_text(exc):
+    detail = getattr(exc, 'inspection_detail', None)
+    if detail is not None:
+        # Even cause messages may contain unrelated process-environment values.
+        # Only this fixed native signature is admitted as diagnostic message text.
+        text = _NATIVE_ENVIRON_ERROR if detail.get('known_native_environ_signature') else 'process inspection failed'
+        return f'{type(exc).__name__}: {text}'
+    return f'{type(exc).__name__}: {exc}'
+
+
+def _cleanup_inspection_failure(exc):
+    detail = getattr(exc, 'inspection_detail', None)
+    if detail is not None:
+        _CLEANUP_INSPECTION_FAILURES.append(detail)
+        del _CLEANUP_INSPECTION_FAILURES[:-16]
 
 
 class _IdentityChanged(psutil.NoSuchProcess):
@@ -74,7 +125,7 @@ class _IdentityChanged(psutil.NoSuchProcess):
 
 
 def _inspect(process, operation, born=None, **kwargs):
-    """Retry transient OS inspection denial; persistent live/unknown denial fails closed."""
+    """Bound inspection retries; persistent live/unknown failure fails closed."""
     snapshot_birth = None
     # The environment observation may be briefly unavailable on a fresh process.
     # This bounded availability policy does not establish the cause of a denial.
@@ -84,7 +135,7 @@ def _inspect(process, operation, born=None, **kwargs):
     retry_window = .2 if operation == 'environ' else None
     retry_limit = 21 if retry_window is not None else 3
     retry_started = S.clock()
-    last_denial = last_denial_event = None
+    last_failure = last_failure_event = None
     for attempt in range(1, retry_limit + 1):
         if attempt > 1 and retry_window is not None and S.clock()-retry_started >= retry_window:
             break
@@ -106,32 +157,68 @@ def _inspect(process, operation, born=None, **kwargs):
             observing = 'identity_after.create_time'
             if psutil.Process(process.pid).create_time() != expected:
                 raise _IdentityChanged(process.pid)
-        except psutil.AccessDenied as exc:
+        except (psutil.AccessDenied, SystemError) as exc:
+            context = _inspection_context(process, operation, observing, born, snapshot_birth, exc)
+            if isinstance(exc, SystemError) and not (
+                    operation == observing == 'environ' and context['known_native_environ_signature']):
+                # A native error in identity checks, or an unknown native message,
+                # must not acquire the environment retry policy by coincidence.
+                event = {**context, 'identity_state':'unknown', 'observed_birth':None,
+                         'attempt':attempt, 'clock_s':S.clock(), 'wall_unix_s':time.time(),
+                         'outcome':'inspection-failed'}
+                _INSPECTION_EVENTS.append(event)
+                del _INSPECTION_EVENTS[:-128]
+                exc.inspection_detail = dict(event)
+                raise
             observed = None
             state = 'unknown'
+            identity_error = None
             try:
                 # Fresh objects avoid psutil's cached create_time during revalidation.
+                identity_observing = 'identity_validation.create_time'
                 observed = psutil.Process(process.pid).create_time()
                 expected = snapshot_birth if born is None else born
                 state = 'reused' if expected is not None and observed != expected else 'live'
                 if state != 'reused':
+                    identity_observing = 'identity_validation.status'
                     status = psutil.Process(process.pid).status()
                     if status in {psutil.STATUS_ZOMBIE, psutil.STATUS_DEAD}:
                         state = 'gone'
             except psutil.NoSuchProcess:
                 state = 'gone'
-            except psutil.AccessDenied:
-                pass
+            except psutil.AccessDenied as identity_exc:
+                identity_error = {'operation':identity_observing,
+                                  **_exception_metadata(identity_exc)}
+            except Exception as identity_exc:
+                # A failure in the independent identity validation is not an
+                # environ failure. Do not grant it that operation's retry policy
+                # or let it escape without sanitized primary/secondary context.
+                identity_error = {'operation':identity_observing,
+                                  **_exception_metadata(identity_exc)}
+                event = {**_inspection_context(process, operation, identity_observing,
+                                               born, snapshot_birth, identity_exc),
+                         'environment_failure':context, 'identity_exception':identity_error,
+                         'observed_birth':observed, 'identity_state':'unknown',
+                         'attempt':attempt, 'retry_elapsed_s':S.clock()-retry_started,
+                         'clock_s':S.clock(), 'wall_unix_s':time.time(),
+                         'outcome':'inspection-failed'}
+                _INSPECTION_EVENTS.append(event)
+                del _INSPECTION_EVENTS[:-128]
+                identity_exc.inspection_detail = dict(event)
+                raise
             retry_elapsed = S.clock() - retry_started
-            event = {'stage':_INSPECTION_STAGE, 'operation':observing, 'requested_operation':operation, 'pid':process.pid,
+            event = {**context,
                      'exception_pid':getattr(exc, 'pid', None),
-                     'expected_birth':born if born is not None else snapshot_birth, 'observed_birth':observed, 'identity_state':state,
+                     'observed_birth':observed, 'identity_state':state,
                      'attempt':attempt, 'retry_elapsed_s':retry_elapsed, 'retry_window_s':retry_window,
                      'retry_limit_attempts':retry_limit,
-                     'clock_s':S.clock(), 'wall_unix_s':time.time(), 'outcome':'denied'}
+                     'clock_s':S.clock(), 'wall_unix_s':time.time(),
+                     'outcome':'denied' if isinstance(exc, psutil.AccessDenied) else 'inspection-error'}
+            if identity_error is not None:
+                event['identity_exception'] = identity_error
             _INSPECTION_EVENTS.append(event)
             del _INSPECTION_EVENTS[:-128]
-            last_denial, last_denial_event = exc, dict(event)
+            last_failure, last_failure_event = exc, dict(event)
             if state in {'gone', 'reused'}:
                 event['outcome'] = 'confirmed-'+state
                 if state == 'reused':
@@ -141,6 +228,15 @@ def _inspect(process, operation, born=None, **kwargs):
                 exc.inspection_detail = dict(event)
                 raise
             time.sleep(.01 if retry_window is None else min(.01, max(0, retry_window-retry_elapsed)))
+        except Exception as exc:
+            if not isinstance(exc, psutil.NoSuchProcess):
+                event = {**_inspection_context(process, operation, observing, born, snapshot_birth, exc),
+                         'identity_state':'unknown', 'observed_birth':None, 'attempt':attempt,
+                         'clock_s':S.clock(), 'wall_unix_s':time.time(), 'outcome':'inspection-failed'}
+                _INSPECTION_EVENTS.append(event)
+                del _INSPECTION_EVENTS[:-128]
+                exc.inspection_detail = dict(event)
+            raise
         else:
             if attempt > 1:
                 _INSPECTION_EVENTS.append({'stage':_INSPECTION_STAGE, 'operation':operation,
@@ -148,21 +244,23 @@ def _inspect(process, operation, born=None, **kwargs):
                     'clock_s':S.clock(), 'wall_unix_s':time.time(), 'outcome':'recovered'})
                 del _INSPECTION_EVENTS[:-128]
             return result
-    # A delayed retry was never started. Retain the original denial observation
-    # separately from this later admission decision; do not invent a fresh denial
+    # A delayed retry was never started. Retain the original failure observation
+    # separately from this later admission decision; do not invent a fresh failure
     # or claim its old live/gone state was observed at the expiry timestamp.
     decision = S.clock()
     expiry = {'stage':_INSPECTION_STAGE, 'operation':operation, 'pid':process.pid,
-              'expected_birth':last_denial_event['expected_birth'],
+              'expected_birth':last_failure_event['expected_birth'],
               'clock_s':decision, 'wall_unix_s':time.time(),
               'retry_elapsed_s':decision-retry_started, 'retry_window_s':retry_window,
               'retry_expired_before_attempt':attempt,
-              'last_denial_clock_s':last_denial_event['clock_s'],
+              'last_error_clock_s':last_failure_event['clock_s'],
               'outcome':'retry-window-expired'}
+    if isinstance(last_failure, psutil.AccessDenied):
+        expiry['last_denial_clock_s'] = last_failure_event['clock_s']
     _INSPECTION_EVENTS.append(expiry)
     del _INSPECTION_EVENTS[:-128]
-    last_denial.inspection_detail = {**last_denial_event, 'retry_expiry':dict(expiry)}
-    raise last_denial
+    last_failure.inspection_detail = {**last_failure_event, 'retry_expiry':dict(expiry)}
+    raise last_failure
 
 
 def _tree(root, known):
@@ -259,7 +357,8 @@ def _stop(process, known, *, token=None, born_after=None):
         return ['root-pid-reused-or-unobserved']
     except (psutil.NoSuchProcess, ProcessLookupError):
         pass  # descendants may retain the original session/group after root exit
-    except (psutil.Error, PermissionError):
+    except (psutil.Error, PermissionError, SystemError) as exc:
+        _cleanup_inspection_failure(exc)
         return ["group-leader-inspection-unconfirmed"]
     if not root_alive and process.pid not in known and token is None:
         # An unsampled child might already have changed session and been
@@ -270,7 +369,8 @@ def _stop(process, known, *, token=None, born_after=None):
         _group(process.pid, known)
         if token is not None:
             _token_tree(token, born_after, known, root_pid=process.pid)
-    except (psutil.Error, PermissionError) as exc:
+    except (psutil.Error, PermissionError, SystemError) as exc:
+        _cleanup_inspection_failure(exc)
         unconfirmed.append(f"tree-inspection-unconfirmed:{type(exc).__name__}:pid={getattr(exc, 'pid', None)}")
     try:
         os.killpg(process.pid, signal.SIGKILL)
@@ -284,7 +384,8 @@ def _stop(process, known, *, token=None, born_after=None):
             _group(process.pid, known)
             if token is not None:
                 _token_tree(token, born_after, known, root_pid=process.pid)
-        except (psutil.Error, PermissionError) as exc:
+        except (psutil.Error, PermissionError, SystemError) as exc:
+            _cleanup_inspection_failure(exc)
             unconfirmed.append(f"group-inspection-unconfirmed:{type(exc).__name__}:pid={getattr(exc, 'pid', None)}")
         active = _running(known)
         for child in active:
@@ -311,6 +412,7 @@ def _stop(process, known, *, token=None, born_after=None):
 def main():
     global _INSPECTION_STAGE
     _INSPECTION_EVENTS.clear()
+    _CLEANUP_INSPECTION_FAILURES.clear()
     _INSPECTION_STAGE = 'supervision'
     ap = argparse.ArgumentParser()
     ap.add_argument('--log', required=True)
@@ -354,6 +456,8 @@ def main():
     rc = 1
     error = None
     inspection_failure = None
+    primary_inspection_failure = None
+    cleanup_inspection_failure = None
     cleanup_failed = []
     try:
         while taken is None and not stopped[0]:
@@ -425,8 +529,9 @@ def main():
                     elif killed or timed_out:
                         rc = 137
     except Exception as exc:
-        error = f'{type(exc).__name__}: {exc}'
-        inspection_failure = getattr(exc, 'inspection_detail', None)
+        error = _error_text(exc)
+        primary_inspection_failure = getattr(exc, 'inspection_detail', None)
+        inspection_failure = primary_inspection_failure
         rc = 1
     finally:
         ticket.unlink(missing_ok=True)
@@ -436,8 +541,12 @@ def main():
             cleanup_failed = _stop(process, known, token=token, born_after=born_after)
         except Exception as exc:
             cleanup_failed = ['cleanup-unconfirmed']
-            error = error or f'{type(exc).__name__}: {exc}'
-            inspection_failure = inspection_failure or getattr(exc, 'inspection_detail', None)
+            error = error or _error_text(exc)
+            cleanup_inspection_failure = getattr(exc, 'inspection_detail', None)
+            inspection_failure = inspection_failure or cleanup_inspection_failure
+        if cleanup_inspection_failure is None and _CLEANUP_INSPECTION_FAILURES:
+            cleanup_inspection_failure = _CLEANUP_INSPECTION_FAILURES[0]
+            inspection_failure = inspection_failure or cleanup_inspection_failure
         if taken is not None and _owner(taken) == os.getpid():
             if cleanup_failed:
                 # Reserve the slot with a permanently live sentinel until an
@@ -457,7 +566,10 @@ def main():
         'timeout_s':a.timeout,'queue_timeout_s':a.queue_timeout,'lock_wait_s':wait_s,
         'runner_pid':os.getpid(),'clock':clock_info['kind'],'clock_info':clock_info,'log':str(log),
         'inspection_events':_INSPECTION_EVENTS, 'inspection_failure':inspection_failure,
-        'inspection_retry_boundary':'environ retries bounded by200ms and21attempts; other operations three attempts separated by10ms; all pauses count and RSS/deadline checks remain mandatory after inspection; only independently confirmed gone/zombie or changed birth is skipped; persistent live or unknown denial fails closed',
+        'primary_inspection_failure':primary_inspection_failure,
+        'cleanup_inspection_failure':cleanup_inspection_failure,
+        'cleanup_inspection_failures':_CLEANUP_INSPECTION_FAILURES,
+        'inspection_retry_boundary':'AccessDenied uses a 200 ms environ retry admission window and 21-attempt cap, or three attempts for other operations; only the exact proc_environ SystemError raised by the requested environ operation shares that policy; individual OS calls are not forcibly timed; all pauses count and RSS/deadline checks remain mandatory after inspection; only independently confirmed gone/zombie or changed birth is skipped; persistent live or unknown failure fails closed',
         'log_sha256':hashlib.sha256(log.read_bytes()).hexdigest(),'unconfirmed_children':cleanup_failed,'error':error,
         'cleanup_boundary':'owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment',
         'rss_scope':'live union of current ancestry, retained PID/birth identities and periodic inherited-marker matches; sampled, not a kernel quota',
