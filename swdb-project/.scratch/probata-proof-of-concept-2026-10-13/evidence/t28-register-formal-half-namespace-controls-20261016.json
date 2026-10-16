@@ -1,0 +1,197 @@
+{
+  "actual_register_success": false,
+  "base_commit": "2e2dc451ca457bfc5a7a7cb977d672bd1de0983b",
+  "control_boundary": "Explicit exit99 verifier and scripted one-rule visibility parser; no actual Frama-C, solver, hardware execution or correctness acceptance. Public fixture uses compiler on serialized B under RSS/time watchdog.",
+  "controls": [
+    {
+      "artifacts": [
+        {
+          "bytes": 333,
+          "path": "/private/tmp/probata-t28-register-formalhalf-red-20261016/command.json",
+          "sha256": "da997ee869008efdfcfb9585ef84440b61e56639a9cbd560e885a2e59eadd12c"
+        },
+        {
+          "bytes": 3084,
+          "path": "/private/tmp/probata-t28-register-formalhalf-red-20261016/control.log",
+          "sha256": "f181c428c8189bdd392dabf4587d690e47f8813096b4d0d1a828edb6c0e2260a"
+        },
+        {
+          "bytes": 175,
+          "path": "/private/tmp/probata-t28-register-formalhalf-red-20261016/resources.json",
+          "sha256": "b5f14972ad8c7665fed8334596c8ea5e4a6a59e78750737526ea91204c382fdf"
+        },
+        {
+          "bytes": 3778,
+          "path": "/private/tmp/probata-t28-register-formalhalf-red-20261016/junit.xml",
+          "sha256": "3929f1c1ba57ee358c5b484ce2e420702b6244d194b0209803021c46c74ed5ca"
+        }
+      ],
+      "failures": 1,
+      "resources": {
+        "cpu_seconds": 30.130018999999997,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 2385068032,
+        "timed_out": false,
+        "wall_seconds": 30.40169358300045
+      },
+      "scope": "red",
+      "test_count": 1
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 337,
+          "path": "/private/tmp/probata-t28-register-formalhalf-green-20261016/command.json",
+          "sha256": "6b729c62db15788effc3c31341b9a9fbd447e81c7f4e7f9311963bf13aea845c"
+        },
+        {
+          "bytes": 99,
+          "path": "/private/tmp/probata-t28-register-formalhalf-green-20261016/control.log",
+          "sha256": "45dd93417afcdd196e84618c175bb78be9b4d8ec9c9860452f69b2189bdb49ec"
+        },
+        {
+          "bytes": 166,
+          "path": "/private/tmp/probata-t28-register-formalhalf-green-20261016/resources.json",
+          "sha256": "0ee33f71e817a014a5276a49b6f0f1e2c6d3cbe2b367ca0c306e9089bb94daa8"
+        },
+        {
+          "bytes": 415,
+          "path": "/private/tmp/probata-t28-register-formalhalf-green-20261016/junit.xml",
+          "sha256": "bcf7f75a760582f061643738a28a6c10491fa42312e3755341c95360c010fd7f"
+        }
+      ],
+      "failures": 0,
+      "resources": {
+        "cpu_seconds": 24.988804,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 2397913088,
+        "timed_out": false,
+        "wall_seconds": 24.40494108304847
+      },
+      "scope": "targeted_green",
+      "test_count": 1
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 575,
+          "path": "/private/tmp/probata-t28-register-formalhalf-final-20261016/command.json",
+          "sha256": "303f485ac3bdd627f5de47d6dd7b02a01096e2f054d858578643b483798dc337"
+        },
+        {
+          "bytes": 111,
+          "path": "/private/tmp/probata-t28-register-formalhalf-final-20261016/control.log",
+          "sha256": "cc242292635f1b760fa063b7b20008b65b63287b44eceb03ca682af565c90653"
+        },
+        {
+          "bytes": 168,
+          "path": "/private/tmp/probata-t28-register-formalhalf-final-20261016/resources.json",
+          "sha256": "aeb1a6ec76642b3d14e0018b2c1ff3043c2c618221430d1e616599b36dd8d863"
+        },
+        {
+          "bytes": 2717,
+          "path": "/private/tmp/probata-t28-register-formalhalf-final-20261016/junit.xml",
+          "sha256": "db3c92965b41c3beaa0ed0bb470abc50d9b21c7df9e938f213eecb7a23bf8e29"
+        }
+      ],
+      "failures": 0,
+      "resources": {
+        "cpu_seconds": 172.484905,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 2389458944,
+        "timed_out": false,
+        "wall_seconds": 167.75311774999136
+      },
+      "scope": "final_15",
+      "test_count": 15
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 425,
+          "path": "/private/tmp/probata-t28-register-formalhalf-unknown-semantics-20261016/command.json",
+          "sha256": "2eec2b5a8934e6e52c113465c3386ff84eb66a3a650d421fd153bed0f9c0ab33"
+        },
+        {
+          "bytes": 98,
+          "path": "/private/tmp/probata-t28-register-formalhalf-unknown-semantics-20261016/control.log",
+          "sha256": "1d4a11fc90a7086c182cc06bc43bebeb59a36928082944ef103c86041aa4cf49"
+        },
+        {
+          "bytes": 165,
+          "path": "/private/tmp/probata-t28-register-formalhalf-unknown-semantics-20261016/resources.json",
+          "sha256": "ecf0dc5d830884dae3e2ae4d4b0c4c405b02d89c208589d3aec8db353f72cfa2"
+        },
+        {
+          "bytes": 405,
+          "path": "/private/tmp/probata-t28-register-formalhalf-unknown-semantics-20261016/junit.xml",
+          "sha256": "0cfa7acedb9f9d12963c9ad79c8fa8db09b57467df9642d1a9d353e58daa8c05"
+        }
+      ],
+      "failures": 0,
+      "resources": {
+        "cpu_seconds": 1.172866,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 170590208,
+        "timed_out": false,
+        "wall_seconds": 1.2160734169883654
+      },
+      "scope": "unknown_semantics",
+      "test_count": 1
+    }
+  ],
+  "corrected_formal_half": {
+    "bytes": 303,
+    "path": "/private/tmp/probata-t28-register-corrected-formal-half-v1-20261016.c",
+    "sha256": "3f1e0a90ccc29dbde18ce131bfcc460dd91a10dd573d742b8586ccb8c94a0907"
+  },
+  "created": "2026-10-16 ET",
+  "diagnosis": "Formal-frame typechecking used only source lowering declaration, missing register model state named by unchanged assigns clause. Exact scripted declaration-visibility RED reproduced missing bank.",
+  "external_independence_report": {
+    "bytes": 8511,
+    "path": "/private/tmp/probata-t28-register-allocation-independence-v1-20261016.json",
+    "sha256": "680a4a9ebcb2601947adecd3d15425864f482795d823608d64b95e30af0b6b84"
+  },
+  "final_control_split": "15-case source-unchanged production batch plus one appended unknown-semantics case; no repeated full-batch claim after appended test",
+  "final_controls_passed": 16,
+  "fix": "For already validated exact register correctness_policy only, materialize admitted semantics wp_prelude with called=[] before declaration; no helper contracts or original clause changes. _entry validates exact unit_policy before enqueueing. Unknown policy/semantics remains refused.",
+  "guard": {
+    "bytes": 879,
+    "path": "/private/tmp/probata-t25-pair-control-guard.py",
+    "sha256": "816deb7bdb976ba2b9184a601676d289e179ba4a61ac27a8f0cafabd14c48fa3"
+  },
+  "namespace_negative_controls": [
+    "unadmitted bank remains unbound",
+    "absent register policy gains no state",
+    "unknown semantics refuses before verifier marker"
+  ],
+  "observed_actual_failure": {
+    "classification": "pre-solver correct-case CLIvalidation failure: unbound logic variable __swdb_dx_reg_words; no proof record, negative unexecuted",
+    "provenance": "Coordinator report of original immutable G598, not a reviewer remote read",
+    "raw": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-register-pair-v1"
+  },
+  "prior_production_sha256": "0a6a7018e8b07f5206dba3d2658fd2d4adb1b1bab185417428bd797a1deeaece",
+  "production": {
+    "bytes": 24982,
+    "path": "/private/tmp/probata-resume-t25-pair/swdb-project/swdb/formal_frame.py",
+    "sha256": "9b9762b9d83a54be56f46f2f71ad1acdd57241116021eec373b1511abb4b5499"
+  },
+  "scientific_acceptance": false,
+  "scope": "Narrow register formal-half declaration namespace repair; compiler/scripted prelaunch controls only",
+  "serialized_worker": {
+    "bytes": 695,
+    "path": "/private/tmp/probata-mac-compiler-worker-b.py",
+    "sha256": "873ac0b65eaa7edd4e0f624a86e68141c0e340f9ab1ca6816a07598538548a0e"
+  },
+  "source_changes_outside_scope": false,
+  "test": {
+    "bytes": 4015,
+    "path": "/private/tmp/probata-resume-t25-pair/swdb-project/tests/test_dx100_register_formal_frame.py",
+    "sha256": "ec14934933f4dfecb7bf71d0d301a8f72e8c67fd7698b671eddc817c2722a81c"
+  },
+  "ticket28_complete": false
+}
