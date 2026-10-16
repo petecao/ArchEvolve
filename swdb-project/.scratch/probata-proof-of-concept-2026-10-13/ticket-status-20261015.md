@@ -1,8 +1,8 @@
 # Current Probata ticket status
 
-Updated: 2026-10-15 23:17 ET.
+Updated: 2026-10-16 ET — user-requested PAUSE11:35 ET.
 
-35 resolved / 25 ready-for-agent / 3 claimed. Active frontier: **07, 25, 28**.
+35 resolved / 28 ready-for-agent / 0 claimed. **PAUSED**; claims07,25,28 released. No scheduled next status. Read [paused handoff](PAUSED-HANDOFF-20261016.md) before resuming.
 Derived from authoritative ticket frontmatter; unresolved dependencies still gate later work.
 [Current resume](resume.md). Historical proof evidence retains its exact source pins.
 
@@ -14,7 +14,7 @@ Derived from authoritative ticket frontmatter; unresolved dependencies still gat
 | [04 — Proof record tracer](issues/04-proof-record-tracer.md) | resolved | none |
 | [05 — Spike (a): SAW on clang 22 bitcode](issues/05-spike-saw-clang22.md) | resolved | none |
 | [06 — Spike (b): 2 lanes under 15 minutes](issues/06-spike-two-lanes.md) | resolved | none |
-| [07 — Spike (c): WP with agent hints](issues/07-spike-wp-agent-hints.md) | claimed | none |
+| [07 — Spike (c): WP with agent hints](issues/07-spike-wp-agent-hints.md) | ready-for-agent | none |
 | [08 — Spike (d): sums over reals](issues/08-spike-sums-over-reals.md) | resolved | none |
 | [09 — Spike verdict](issues/09-spike-verdict.md) | resolved | 07 |
 | [10 — Level rule](issues/10-level-rule.md) | resolved | none |
@@ -32,10 +32,10 @@ Derived from authoritative ticket frontmatter; unresolved dependencies still gat
 | [22 — SAW adapter and SAWScript translator](issues/22-saw-adapter-and-translator.md) | resolved | none |
 | [23 — C-stub translator, fallbacks and check mode](issues/23-stub-translator-fallbacks-check-mode.md) | resolved | none |
 | [24 — C++ subset widening](issues/24-cpp-subset-widening.md) | resolved | none |
-| [25 — std::vector and std::pair models](issues/25-vector-and-pair-models.md) | claimed | none |
+| [25 — std::vector and std::pair models](issues/25-vector-and-pair-models.md) | ready-for-agent | none |
 | [26 — Logic and sum libraries](issues/26-logic-and-sum-libraries.md) | resolved | none |
 | [27 — Proof semantics for the BFS read-offload calls](issues/27-proof-semantics-bfs-calls.md) | resolved | none |
-| [28 — Proof semantics for the remaining maa_* calls](issues/28-proof-semantics-remaining-calls.md) | claimed | none |
+| [28 — Proof semantics for the remaining maa_* calls](issues/28-proof-semantics-remaining-calls.md) | ready-for-agent | none |
 | [29 — Proof-semantics checks](issues/29-proof-semantics-checks.md) | ready-for-agent | 28 |
 | [30 — Reference definitions, per-call summaries and new intrinsic versions](issues/30-reference-definitions-and-summaries.md) | ready-for-agent | 25, 28 |
 | [31 — Five-gate drafting and the new bfs_read_offload version](issues/31-five-gate-drafting-and-read-offload-version.md) | ready-for-agent | 30 |

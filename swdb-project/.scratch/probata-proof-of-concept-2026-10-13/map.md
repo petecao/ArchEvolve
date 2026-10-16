@@ -5,18 +5,18 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-re
 
 ## Current state (resume here)
 
-Updated: 2026-10-16 11:34 ET. **35 resolved / 25 ready-for-agent / 3 claimed.**
-Implementation remains active on `codex/probata-resume-20261015`, based on `yanrujhou_main`. Eligible frontier: **07,25,28**; other unresolved tickets retain their dependencies. [All63statuses](ticket-status-20261015.md).
+Updated: 2026-10-16 ET. **PAUSED by user request at 11:35 ET.**
+**35 resolved / 28 ready-for-agent / 0 claimed.** All three active claims07,25,28 are released. No next status is scheduled; progress automations are PAUSED.
 
-Last root full table11:30 ET; next12:00 ET. [Combined preparation checkpoint](evidence/combined-prefix-initialized-checkpoint-20261016-1134.md) and [compact ledger](evidence/combined-prefix-initialized-checkpoint-20261016-1134.json) preserve the failed V1 and supersede current preparation state only. [Prior settled evidence](evidence/frontier-scoped-checkpoint-20261016-1117.md) remains unchanged.
+**Next session: read [PAUSED handoff](PAUSED-HANDOFF-20261016.md) first. Do not restart work until the user resumes it.** The saved effort is being synchronized into `yanrujhou_main`; integration history includes all47 Probata heads and the three pause checkpoints. [Current ticket status](ticket-status-20261015.md).
 
-| Ticket | Current evidence | Next gate |
+| Ticket | Paused state | Resume boundary |
 | --- | --- | --- |
-| **07 claimed** | Device proof remains partial: normal TimeoutExpired/exit1, final inventory0/152 and328 journal IDs with107 unresolved identity differences; weak unexecuted. Independent reconciliation697checks/0errors. | Separate exact-root source/capture design under review; no new proof admission or Typed/source/Init/lifetime/TD/count qualification. |
-| **25 claimed** | Reviewed prefix ten-case source e0e8 is integrated through combined e99. Both exhaustive cases retain full original premises and all five conclusions;35 retained pure controls pass. Constructor35 scoped mathematical/numeric acceptance remains separate. | Fresh focused10, public61/67 and caller127 pending; no new proof/model/body/caller acceptance. |
-| **28 claimed** | Initialized production97 unchanged. Public V1 failed one whitespace frame assertion after named stand-in persistence; original exit1 retained. Token-aware test-only repair ece76 reviewed and integrated with e99. Existing TOTAL allocator102/101 scoped decision unchanged. | Fresh public V2 and formal pair inert pending root admission. No negative refutation/hardware/body/current0.2/full28 acceptance. |
+| 07 ready-for-agent | Device proof partial timeout; weak unexecuted; original identity differences/events retained. New index-source9a is UNREVIEWED and observer UNCOMPILED/UNEXECUTED. | Index generation/proof recipes NOT AUTHORED/NOT EXECUTED; read exact source/triage handoff first. No source/Init/TD/count qualification. |
+| 25 ready-for-agent | Constructor35 narrow scoped result retained; focused15 has sole advanced-prefix Timeout. Ten-case source preparation reviewed; focused10 draft packet UNREVIEWED/NOT EXECUTED. | Full61/67/caller127 still pending; fresh shared-source admission only after resume. |
+| 28 ready-for-agent | Initialized public V1 FAILED; token-aware test repair reviewed. V2 workflow UNREVIEWED/NOT ADMITTED/NOT EXECUTED and formal pair incomplete. | Preserve all old scoped decisions/failures; no current0.2/full28/hardware/body acceptance. |
 
-Only preparation is adopted here. Retained host/lease observations are historical; root owns fresh admission and all actual execution. No new tool, compiler, native, formal or SSH job is run by this integration. Original failures/raw and unrelated files remain unchanged.
+Root's finite pause closure records Mac/mbit10 empty selected-tool scans, released leases/available locks at that observation. Raw, required source paths, recovery refs and unrelated settings/scratch are preserved. This STOP checkpoint performs only Git/docs synchronization; no new experiments, tests or evaluations. Historical sections below retain their original dates and exits.
 
 Root owns actual admissions: at most two remote measurements, one per socket,
 and one actual Mac verifier. Count-only node0 generation587 naturally released
