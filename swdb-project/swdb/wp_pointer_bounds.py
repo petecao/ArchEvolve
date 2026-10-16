@@ -858,14 +858,24 @@ def check_input(lowering, base, report, text):
             raise Refused("a checked pointer formation obligation is missing or duplicated")
 
 
-def model_view(text, scratch, *, qualified=None):
+def model_view(text, scratch, *, qualified=None, vector_qualified=None):
     """Check actual generated C bodies too, without assigning them C++ null rules.
 
     Clang inventories every generated function definition. The view adds only
     assertions; it never normalizes away a C operation. In particular an actual
     C null+zero operation must fail, while a guarded C++ emulation can skip it.
     """
-    from swdb import c_lowering, standard_range_model
+    from swdb import c_lowering, standard_range_model, standard_vector_member_view
+    if qualified is not None and vector_qualified is not None:
+        raise Refused("one exact generated-C model qualification is required")
+    if vector_qualified is not None:
+        try:
+            standard_vector_member_view.check_view(getattr(vector_qualified, 'name', None), vector_qualified)
+        except standard_vector_member_view.Refused as exc:
+            raise Refused(str(exc)) from None
+        expected = "\n".join([*c_lowering.HEADERS, vector_qualified.text]) + "\n"
+        if text != expected:
+            raise Refused("qualified vector member input differs from the complete checked source/view")
     if qualified is not None:
         try:
             standard_range_model.check_view(standard_range_model.NAME, qualified, scratch)
@@ -965,6 +975,9 @@ def model_view(text, scratch, *, qualified=None):
             origin = model_origins.get(base, function) if base is not None else None
             if origin is None and qualified is not None and base is not None:
                 origin = standard_range_model.qualified_origin(qualified, function, _strip_origin(base), model_definitions)
+            if origin is None and vector_qualified is not None and base is not None:
+                origin = standard_vector_member_view.qualified_origin(
+                    vector_qualified, function, _strip_origin(base), model_definitions)
             if origin is None:
                 raise Refused("generated C model pointer arithmetic/indexing needs a certified array-object origin; opaque parameter domains are unsupported")
         if mutation:
@@ -1018,5 +1031,7 @@ def model_view(text, scratch, *, qualified=None):
               "functions": sorted(names), "sites": sites}
     if qualified is not None:
         report["qualified_standard_range"] = qualified.certificate
+    if vector_qualified is not None:
+        report["qualified_standard_vector_member"] = vector_qualified.certificate
     report["certificate_sha256"] = _hash(report)
     return raw.decode(), report

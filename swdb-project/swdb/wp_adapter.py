@@ -143,7 +143,32 @@ class WpAdapter:
             if re.search(r"\b(?:allocates|frees)\b|\\(?:fresh|freeable)\b", text):
                 return self._not_proven("unsupported_construct",
                     "WP 33.0 does not model allocation lifetime; this C model needs allocates/frees support", context)
-            if job.unit.function == "std_vector_int_at":
+            from swdb import standard_vector_member_view
+            try:
+                vector_member_selected = standard_vector_member_view.selected(self.method)
+                if vector_member_selected:
+                    member_view = standard_vector_member_view.wp_view(job.unit.function, text)
+                    original = wp_dir / "standard_vector_member_original.c"
+                    original.write_text("\n".join([*c_lowering.HEADERS, text]) + "\n")
+                    certificate = wp_dir / "standard_vector_member_view.json"
+                    certificate_text = json.dumps(member_view.certificate, indent=2, sort_keys=True) + "\n"
+                    certificate.write_text(certificate_text)
+                    context["standard_vector_member_view"] = {"view": member_view,
+                        "original_path": original, "original_text": original.read_text(),
+                        "certificate_path": certificate, "certificate_text": certificate_text}
+                    context["pins"].update(member_view.pins)
+                    context.setdefault("assumed", []).append({"kind": "trusted_tool",
+                        "reference": standard_vector_member_view.identity(),
+                        "sentence": "The exact nonallocating vector C member body is checked under its explicit "
+                                    "typed contiguous storage domain. Actual source callers must discharge that "
+                                    "domain separately. A defensive at abort is projected only behind its named "
+                                    "negated-guard obligation; original contracts, native and CBMC bodies remain unchanged."})
+                    context["reports"] += [("standard_vector_member_original", original),
+                        ("standard_vector_member_view_certificate", certificate)]
+                    text = member_view.text
+            except standard_vector_member_view.Refused as exc:
+                return self._not_proven("unsupported_construct", str(exc), context)
+            if job.unit.function == "std_vector_int_at" and not vector_member_selected:
                 try:
                     view = standard_model_view.wp_view(job.unit.function, text, wp_dir)
                     standard_model_view.check_view(job.unit.function, view, wp_dir)
@@ -194,7 +219,8 @@ class WpAdapter:
             try:
                 context["wp_expected_text"], context["pointer_bounds_report"] = wp_pointer_bounds.model_view(
                     context["pointer_bounds_model_source"], job.scratch,
-                    qualified=(context.get("standard_range_model") or {}).get("view"))
+                    qualified=(context.get("standard_range_model") or {}).get("view"),
+                    vector_qualified=(context.get("standard_vector_member_view") or {}).get("view"))
             except wp_pointer_bounds.Refused as exc:
                 context["settings"] = {"tool": "frama-c-wp", "flags": [], "verifier_launched": False,
                     "pointer_bounds": {"verdict": "refused", "reason": str(exc), "check": wp_pointer_bounds.identity()}}
@@ -802,6 +828,14 @@ class WpAdapter:
             if record is None:
                 raise AdapterError(f"the C lowering calls the C model {name}, which has no proven record at its current "
                                    f"text: run `swdb prove --model {name} --adapter wp` first")
+            from swdb import standard_vector_member_view
+            if name in standard_vector_member_view.NAMES:
+                try:
+                    if standard_vector_member_view.selected(self.method):
+                        from swdb.store import Store
+                        standard_vector_member_view.require_caller_discharge(name, Store(self.records).get(record, 'proof'))
+                except standard_vector_member_view.Refused as exc:
+                    raise AdapterError(str(exc)) from None
             if name == standard_range_model.NAME:
                 try:
                     dependency = standard_range_calls.bind_dependency(self,record,context["job"].scratch)
@@ -1143,6 +1177,21 @@ class WpAdapter:
             inputs += [(range_model["original_path"], range_model["original_text"]),
                        (range_model["certificate_path"], range_model["certificate_text"])]
             context["settings"]["standard_range_model"] = view.certificate
+        vector_member = context.get("standard_vector_member_view")
+        if vector_member:
+            from swdb import standard_vector_member_view
+            view = vector_member["view"]
+            try:
+                standard_vector_member_view.check_view(job.unit.function, view)
+                if not standard_vector_member_view.selected(self.method):
+                    raise standard_vector_member_view.Refused("explicit vector member method is no longer selected")
+            except standard_vector_member_view.Refused as exc:
+                raise AdapterError(f"standard vector member prelaunch check: {exc}") from None
+            if any(context["pins"].get(name) != pin for name, pin in view.pins.items()):
+                raise AdapterError("standard vector member checker/certificate pins changed before launch")
+            inputs += [(vector_member["original_path"], vector_member["original_text"]),
+                (vector_member["certificate_path"], vector_member["certificate_text"])]
+            context["settings"]["standard_vector_member_view"] = view.certificate
         proof_setup.check_generated(job, self, context, inputs, settings_flags, command=command, scratch=scratch)
         context["settings"]["verifier_launched"] = True
         result = rss_watchdog.run(command, log=wp_log, cap_bytes=cap, timeout=wall, cwd=scratch, env=env)

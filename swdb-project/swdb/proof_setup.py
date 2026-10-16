@@ -33,6 +33,7 @@ CHECK_SOURCES += ("heap_model_view.py", "heap_model_packets.py", "heap_model_vcs
                   "vector_reallocation_calls.py", "vector_reallocation_vcs.py", "heap_reallocation.mlw",
                   "vector_reallocation_caller_vcs.py")
 CHECK_SOURCES += ("vector_reallocation_inventory.py",)
+CHECK_SOURCES += ("standard_vector_member_view.py",)  # 2026-10-16 ET: explicit typed vector-member domain.
 CHECK_SOURCES += ("vector_reallocation_view.py",)
 CHECK_SOURCES += ("vector_reallocation_lifetime.py",)
 CHECK_SOURCES += ("vector_reallocation_capacity.py",)
@@ -390,7 +391,7 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
             _fail("semantics_ghost_ownership", "semantics invocation has no pinned hint-free base")
         check_semantics_hints(base, getattr(adapter, "hints", []))
     if adapter.name == "wp":
-        from swdb import standard_model_view, standard_range_model, standard_range_calls, wp_pointer_bounds
+        from swdb import standard_model_view, standard_range_model, standard_range_calls, standard_vector_member_view, wp_pointer_bounds
         try:
             if context.get('vector_closed_source'):
                 from swdb import vector_reallocation_closed_route
@@ -421,10 +422,20 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
                         _fail("pointer_bounds", "qualified standard range model changed after planning")
                     model = qualified.text
                     hashes["standard_range_model"] = qualified.pins["standard_range_model_certificate"]["sha256"]
+                vector_qualified = None
+                if context.get("standard_vector_member_view"):
+                    if not standard_vector_member_view.selected(adapter.method):
+                        _fail("pointer_bounds", "explicit vector member method is no longer selected")
+                    vector_qualified = standard_vector_member_view.wp_view(job.unit.function, model)
+                    if vector_qualified != context["standard_vector_member_view"]["view"]:
+                        _fail("pointer_bounds", "qualified vector member source/type/domain changed after planning")
+                    model = vector_qualified.text
+                    hashes["standard_vector_member_view"] = vector_qualified.pins["standard_vector_member_view_certificate"]["sha256"]
                 fresh = "\n".join([*c_lowering.HEADERS, model]) + "\n" if model is not None else None
                 if fresh != context["pointer_bounds_model_source"]:
                     _fail("pointer_bounds", "generated C model changed after planning")
-                generated, report = wp_pointer_bounds.model_view(fresh, scratch or job.scratch, qualified=qualified)
+                generated, report = wp_pointer_bounds.model_view(fresh, scratch or job.scratch,
+                    qualified=qualified, vector_qualified=vector_qualified)
                 if generated != context["wp_expected_text"] or report != context["pointer_bounds_report"]:
                     _fail("pointer_bounds", "generated C model pointer checks changed after planning")
             else:
@@ -458,7 +469,8 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
                 wp_pointer_bounds.check_semantic_origins(lowering, adapter.library, adapter.defines)
                 wp_pointer_bounds.check_input(lowering, context["pointer_bounds_base"], context["pointer_bounds_report"],
                     "\n".join(Path(path).read_text() for path, _expected in inputs))
-        except (KeyError, standard_model_view.Refused, standard_range_model.Refused, standard_range_calls.Refused, wp_pointer_bounds.Refused) as exc:
+        except (KeyError, standard_model_view.Refused, standard_range_model.Refused, standard_range_calls.Refused,
+                standard_vector_member_view.Refused, wp_pointer_bounds.Refused) as exc:
             _fail("pointer_bounds", str(exc))
         if not context.get('vector_closed_source') and lowering is not None and (lowering.pointer_bounds or {}).get("member_windows"):
             from swdb import member_windows

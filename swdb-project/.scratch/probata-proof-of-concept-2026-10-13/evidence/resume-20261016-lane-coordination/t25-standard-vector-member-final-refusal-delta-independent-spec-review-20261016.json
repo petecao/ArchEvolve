@@ -1,0 +1,90 @@
+{
+  "admission_boundary": {
+    "actual_proof_or_caller_acceptance_inferred": false,
+    "caller_discharge_required_and_generic_dependency_refused": true,
+    "conditional_member_body_domain_only": true,
+    "generic_pointer_rules_preserved": true
+  },
+  "classification": "PASS_FINAL_STRUCTURED_REFUSAL_DELTA_INDEPENDENT_SPEC",
+  "date": "2026-10-16 ET",
+  "exact_inverse": {
+    "all_eight_previous_file_identities_recovered": true,
+    "changed_files": [
+      "swdb/standard_vector_member_view.py",
+      "swdb/wp_pointer_bounds.py",
+      "tests/test_standard_vector_member_view.py"
+    ],
+    "identity_domains": "Exact physical byte length and SHA-256, not AST-only or canonical text hashes.",
+    "unchanged_other_files": [
+      "schemas/proof.schema.json",
+      "swdb/proof_setup.py",
+      "swdb/wp_adapter.py",
+      "tests/test_standard_member_contracts.py",
+      "tests/test_standard_range_model.py"
+    ]
+  },
+  "final_physical_inputs": [
+    {
+      "bytes": 10126,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/standard_vector_member_view.py",
+      "sha256": "6636e5857616e8b93e26c1f0b9c0fed26ef5e9ec565e116586c683625c6fe966"
+    },
+    {
+      "bytes": 104308,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/wp_adapter.py",
+      "sha256": "56231cad5a34d866c274086ffb16cd004966e5c1cf5c3224b145144b8a91c229"
+    },
+    {
+      "bytes": 64171,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/wp_pointer_bounds.py",
+      "sha256": "62215cc74768061aff3ded4b449b0f4ec776c0243c15194bfefcf064dc737241"
+    },
+    {
+      "bytes": 53397,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/proof_setup.py",
+      "sha256": "e65f083540d0c4aafca8c2a2183f71dad644fd314aff02ff04cd2331fabcc79d"
+    },
+    {
+      "bytes": 36527,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/schemas/proof.schema.json",
+      "sha256": "e803f92837d52035f09d1281aa43ce334fcea81942d3f0bd4a16959383a487f8"
+    },
+    {
+      "bytes": 10576,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_standard_vector_member_view.py",
+      "sha256": "66c7bbc252021b94e8c9d6e7b52aefaa76d6ecd874ebf5285896564b241a4879"
+    },
+    {
+      "bytes": 8597,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_standard_member_contracts.py",
+      "sha256": "b3ef0fedebcdba67e7c2f8800bc3f2a770c2207b6299cc241281f8702656547a"
+    },
+    {
+      "bytes": 11887,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_standard_range_model.py",
+      "sha256": "62609a231e8393e87d96521133d90299e76af487b336970edc6341dd83f92ca5"
+    }
+  ],
+  "findings": [],
+  "prior_review": {
+    "bytes": 7036,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t25-standard-vector-member-integration-independent-spec-review-20261016.json",
+    "sha256": "a90537befabf3d1db5bbf738f9ee40e4c2602b185e5de7b6fff4839077a25b91"
+  },
+  "reasoning": [
+    "selected now checks truthy nested c_lowering and translators container types before member access/iteration. Dedicated qualification still requires its exact method/evidence/checker pin; malformed or empty selected metadata cannot grant a view. Nonselected valid methods retain their prior behavior.",
+    "check_record now checks pins/settings object types before member lookup. The full verdict/subject/code/contract/std_models/current checker/certificate equality checks remain exact; malformed nested values refuse, and missing/falsey fields still fail the existing exact pin/certificate requirements.",
+    "model_view now passes getattr(vector_qualified,name,None) into check_view. check_view first requires the exact View type, so missing-name/malformed qualifications become the declared Refused result before any expected-text construction or Clang inventory. Valid View source/domain/formation behavior is byte-identical after the one-expression inverse.",
+    "The test delta adds malformed lowering/translators and pins/settings cases to existing public helper controls. The public parser-error/prelaunch/formation/domain controls remain unchanged.",
+    "The complete inverse restores all eight physical file identities from prior a90537be. No qualified domain, model formula, source body, generic pointer rule, method pin, caller refusal, schema or launch criterion is weakened."
+  ],
+  "reviewer": "lane_coordination",
+  "validation": {
+    "compiler_native_verifier_solver_or_SSH_by_reviewer": false,
+    "root_final_targeted_repeat": "Root owns the active final13 repeat and its result; no outcome inferred by reviewer.",
+    "root_reported_prior_targeted_result": "13 actual public/prelaunch checks passed in9.47s before this narrow delta.",
+    "shared_files_changed_by_reviewer": false,
+    "source_AST_parse_only": true,
+    "tests_or_project_imports_by_reviewer": false
+  }
+}

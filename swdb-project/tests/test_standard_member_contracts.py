@@ -1,8 +1,8 @@
 """Public once-per-member WP contracts; created 2026-10-15 ET (ticket25).
 
-These records check the original C model contracts. at() uses the separately certified pure
-defensive-guard view; other members use their original bodies. Allocation-bearing members and
-the broader same-array-object provenance domain are outside this contract-proof batch.
+These records check the original C model contracts. The default pointer-forming
+members retain their unsupported incoming-origin gate. The separately selected
+vector-member method tests that explicit typed-storage domain. Updated 2026-10-16 ET.
 """
 import json
 import os
@@ -35,7 +35,8 @@ def test_checked_at_view_preserves_the_origin_gate_and_prelaunch_tamper_check(tm
     name = "std_vector_int_at"
     unit = proof.ProofUnit(None, name, str(tmp_path), "0" * 64, "c_model." + name, "0" * 64)
     job = proof.Job(unit, (), scratch, tmp_path / "adapter.log", bounds={}, budget_seconds=30)
-    adapter = SimpleNamespace(name="wp", library=None)
+    method = SimpleNamespace(data={'c_lowering': {'translators': [c_lowering.identity()['c_lowering']]}})
+    adapter = SimpleNamespace(name="wp", library=None, method=method)
     proof_setup.begin(job, adapter, {"method_version": {"not_applicable": "Static launch-boundary control."}}, None)
     view = standard_model_view.wp_view(name, c_lowering.model_text(name), scratch)
     source = "\n".join([*c_lowering.HEADERS, view.text]) + "\n"
@@ -76,6 +77,11 @@ def member_subset(tmp_path_factory):
 @pytest.mark.parametrize("member", MEMBERS)
 def test_each_nonallocating_standard_member_satisfies_its_actual_model_contract(member_subset, member):
     record = member_subset.prove("--model", member, "--method-version", "method.wp-tracer-fixture")
+    if member in {'std_vector_int_operator_index', 'std_vector_int_at', 'std_vector_int_end'}:
+        assert record['verdict'] == 'not_proven' and record['failure_class'] == 'unsupported_construct'
+        assert 'certified array-object origin' in record['settings']['pointer_bounds']['reason']
+        assert record['settings']['verifier_launched'] is False
+        return
     assert record["verdict"] == "proven", (member, record)
     assert record["subject"] == {"kind": "c_model", "id": member}
     assert record["evidence_kind"] == "contract_fixture"

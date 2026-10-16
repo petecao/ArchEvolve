@@ -1,0 +1,105 @@
+{
+  "boundaries": {
+    "SSH_native_compiler_verifier_solver_by_reviewer": false,
+    "actual_body_verification_inferred": false,
+    "full_catalog_or_scientific_acceptance_inferred": false,
+    "project_imports_tests_or_clang_runs_by_reviewer": false,
+    "qualified_body_domain": "Conditional exact typed capacity-element array and live receiver/element array; source callers must independently discharge this domain.",
+    "retained_root_focused_result": "22 passed in23.04s; root owns any final targeted repeat and source binding. This review did not rerun it.",
+    "shared_files_modified_by_reviewer": false,
+    "source_review_only": true,
+    "unrestricted_caller_admission": false
+  },
+  "classification": "PASS_INTEGRATED_EXPLICIT_VECTOR_MEMBER_BODY_DOMAIN_SOURCE_SPEC",
+  "date": "2026-10-16 ET",
+  "definition_delta": {
+    "swdb/proof_setup.py": {
+      "changed_function_bodies": [
+        "check_generated"
+      ],
+      "new_functions": [],
+      "removed_functions": []
+    },
+    "swdb/wp_adapter.py": {
+      "changed_function_bodies": [
+        "run",
+        "_dependencies",
+        "_wp"
+      ],
+      "new_functions": [],
+      "removed_functions": []
+    },
+    "swdb/wp_pointer_bounds.py": {
+      "changed_function_bodies": [
+        "model_view"
+      ],
+      "new_functions": [],
+      "removed_functions": []
+    }
+  },
+  "evidence_and_reasoning": [
+    "The explicit method gate requires method.wp-vector-member-source-v1, contract_fixture and one exact current helper identity. The domain is limited to 32 exact nonallocating C member bodies across int/float/double/int-pointer; allocation-bearing and unlisted members refuse. Ordinary methods retain existing behavior and origin refusal.",
+    "WpAdapter.run validates exact original model text before emitting the view, original source and full certificate reports/pins/settings. at replaces only the exact defensive abort branch with a named negated-guard assertion justified by the preserved n<size input contract. All other selected bodies and all payload types are unchanged; native and CBMC models are not rewritten.",
+    "wp_pointer_bounds.model_view requires complete HEADERS+qualified.text equality and check_view before Clang inventory. It rejects simultaneous qualifications. The fallback origin is tied to the selected function, actual this ParmVarDecl ID/type, arrow data field and exact element-pointer type. No generic incoming pointer obtains that origin.",
+    "The added origin is only a prerequisite to the existing formation analysis. The original cast, embedded-array, mutation, volatile/side-effect, placement, conditional-path, null/object/one-past and pointer-difference checks remain. No generic formation obligation is removed.",
+    "The _wp prelaunch route validates the current view/method/pins and adds original source plus certificate to the checked inputs. proof_setup.check_generated independently regenerates the current model, qualification, complete source, generated pointer assertions and report, and compares them against the plan. Missing/changing qualification or formation metadata cannot rely on the prior plan.",
+    "The helper joins proof_setup.CHECK_SOURCES. Its exact checker/certificate have explicit schema pin properties. Qualification settings and reports retain the typed contiguous capacity-element array/lifetime domain and required source caller discharge; that metadata does not prove arbitrary byte storage is a live typed array.",
+    "The unchanged _proven implementation requires the caller exact method pin/evidence boundary, current setup/verdict readers and unbounded dependency closure. For this selected method, _dependencies invokes require_caller_discharge for every qualified member; it unconditionally refuses generic caller reuse. The selected body record cannot become an unrestricted caller dependency.",
+    "The public preparation tests assert not_proven/parse_error for the deliberate parser-error stand-in, marker execution, current certificates/pins, named pointer assertions and initializedness/smoke flags. The prelaunch controls cover omitted qualification, hidden function input, changed domain and removed formation assertions. Default contract tests now assert the already required unsupported incoming-origin outcome for end/at/index. No stand-in result is represented as a proof."
+  ],
+  "findings": [],
+  "physical_inputs": [
+    {
+      "bytes": 9713,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/standard_vector_member_view.py",
+      "sha256": "c374b2ba715622e3b783892b8ab4ffcd4f52f1f41c33296ba06de9aa11617dc9"
+    },
+    {
+      "bytes": 104308,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/wp_adapter.py",
+      "sha256": "56231cad5a34d866c274086ffb16cd004966e5c1cf5c3224b145144b8a91c229"
+    },
+    {
+      "bytes": 64153,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/wp_pointer_bounds.py",
+      "sha256": "63ff541c90c75177290c19417b52ec9789ea9b234645a5f98c0db576e3548585"
+    },
+    {
+      "bytes": 53397,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/proof_setup.py",
+      "sha256": "e65f083540d0c4aafca8c2a2183f71dad644fd314aff02ff04cd2331fabcc79d"
+    },
+    {
+      "bytes": 36527,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/schemas/proof.schema.json",
+      "sha256": "e803f92837d52035f09d1281aa43ce334fcea81942d3f0bd4a16959383a487f8"
+    },
+    {
+      "bytes": 10219,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_standard_vector_member_view.py",
+      "sha256": "8c31f2dbeaf743382dccc3ab5933c6d2774679438dc839da892acdafb1911073"
+    },
+    {
+      "bytes": 8597,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_standard_member_contracts.py",
+      "sha256": "b3ef0fedebcdba67e7c2f8800bc3f2a770c2207b6299cc241281f8702656547a"
+    },
+    {
+      "bytes": 11887,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_standard_range_model.py",
+      "sha256": "62609a231e8393e87d96521133d90299e76af487b336970edc6341dd83f92ca5"
+    }
+  ],
+  "prior_isolated_review": {
+    "bytes": 4726,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t25-standard-vector-member-view-independent-spec-review-20261016.json",
+    "sha256": "1a370daf4001d80d731cc4657a4e3574145b955f81efe0de0adf3c80912f36b6"
+  },
+  "retained_focused_log": {
+    "bytes": 100,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-standard-vector-member-focused-v1-stdout-20261016.txt",
+    "sha256": "1bb48a36605bd9836c0a0930737a59acfd036941ce3cd71b3b746e2f3b65596a"
+  },
+  "reviewer": "lane_coordination independent read-only source/Spec review",
+  "schema_delta": "Exactly two optional typed pin properties; complete remaining schema equality to HEAD checked."
+}

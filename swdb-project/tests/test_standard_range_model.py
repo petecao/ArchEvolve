@@ -1,6 +1,7 @@
 """Exact std::copy range-model relation; created 2026-10-15 ET.
 
 These public preparation/replay API controls run Clang only, never a verifier.
+Updated 2026-10-16 ET: prelaunch controls supply the required current compiler pin.
 The relation supplies explicit library domain metadata; it is not a body proof.
 """
 import copy
@@ -11,6 +12,7 @@ from pathlib import Path
 import pytest
 
 from swdb import c_lowering
+from testkit.standard_library import public_parser_standin_seed
 
 pytestmark = pytest.mark.skipif(bool(c_lowering.locate().missing), reason='Clang 22.1.8 is required')
 
@@ -108,45 +110,9 @@ def test_generated_model_keeps_opaque_default_closed_and_accepts_only_exact_qual
         wp_pointer_bounds.model_view(source + '\nint hidden(int*p){return p[4];}\n', tmp_path, qualified=view)
 
 
-def _public_seed(tmp_path):
-    import json
-    import shutil
-    import sys
-    import yaml
-    from conftest import FIXTURES, make_records, run_swdb
-    from test_wp_adapter import method_version
-    records = make_records(tmp_path)
-    library = tmp_path / 'library'
-    methods = library / 'methods'; methods.mkdir(parents=True)
-    shutil.copy(FIXTURES / 'proof/methods/contract-fixture-1.yaml', methods)
-    method = method_version(c_lowering.identity())
-    (methods/'wp-tracer-fixture.yaml').write_text(yaml.safe_dump(method,sort_keys=False))
-    marker = tmp_path/'wp-launched'
-    frama = tmp_path/'frama.py'
-    frama.write_text('import sys\nfrom pathlib import Path\n'
-        'if "-version" in sys.argv: print("33.0");sys.exit(0)\n'
-        'if "-wp" in sys.argv:\n'
-        f' Path({str(marker)!r}).write_text("parser-error stand-in; no solver")\n'
-        ' print("[kernel] wp_input.c:3: User Error: scripted fault\\nFrama-C aborted: invalid user input.");sys.exit(1)\n')
-    why3 = tmp_path/'why3.conf'
-    names = {'alt-ergo':'Alt-Ergo','z3':'Z3','cvc5':'CVC5'}
-    why3.write_text(''.join(f'[prover]\nname = "{names[row["tool"]]}"\nversion = "{row["version"]}"\n'
-                           'command = "/usr/bin/false"\n' for row in method['lineup'] if row['tool'] in names))
-    def prove(*args, ok=True):
-        done = run_swdb('prove','--records',records.path,'--adapter','wp','--method-version',method['id'],
-            '--runs-dir',tmp_path/'runs','--format','json',*args,env={
-                'SWDB_FRAMA_C':f'{sys.executable} {frama}','WHY3CONFIG':str(why3),
-                'SWDB_VERIFIER_LOCK':str(tmp_path/'standin-only.lock')})
-        if not ok:
-            return done
-        assert done.returncode == 0, done.stdout + done.stderr
-        return yaml.safe_load((records.path/json.loads(done.stdout)['path']).read_text())
-    return library, prove, marker
-
-
 def test_public_copy_model_records_typed_qualification_and_preserves_checks_before_standin(tmp_path):
     from pathlib import Path
-    library, prove, marker = _public_seed(tmp_path)
+    library, prove, marker = public_parser_standin_seed(tmp_path)
     record = prove('--model','std_copy_int')
     assert record['verdict'] == 'not_proven' and record['failure_class'] == 'parse_error',record
     assert marker.exists()  # version/parse-error stand-in only; never a proof result
@@ -170,7 +136,7 @@ def test_public_typed_caller_still_requires_a_current_qualified_model_proof(tmp_
     import hashlib
     import json
     from test_formal_frame import frame_contract, write_library
-    library, prove, marker = _public_seed(tmp_path)
+    library, prove, marker = public_parser_standin_seed(tmp_path)
     source = ('#include <algorithm>\nint unit(int n) { int a[1]={7}; int b[1]={0}; '
               'std::copy(a,a+1,b); return b[0]; }\n')
     entry = frame_contract('contract.fixture_copy_domain', role='enabling', concurrency_frame=[], clauses=[
@@ -199,7 +165,8 @@ def test_prelaunch_rebuild_cannot_omit_domain_or_checked_numeric_obligations(tmp
     text,report=wp_pointer_bounds.model_view(source,scratch,qualified=view)
     unit=proof.ProofUnit(None,'std_copy_int',str(tmp_path),'0'*64,'c_model.std_copy_int','0'*64)
     job=proof.Job(unit,(),scratch,tmp_path/'adapter.log',bounds={},budget_seconds=30)
-    adapter=SimpleNamespace(name='wp',library=None)
+    method=SimpleNamespace(data={'c_lowering':{'translators':[c_lowering.identity()['c_lowering']]}})
+    adapter=SimpleNamespace(name='wp',library=None,method=method)
     proof_setup.begin(job,adapter,{'method_version':{'not_applicable':'Static prelaunch control.'}},None)
     context={'pointer_bounds_model_source':source,'wp_expected_text':text,'pointer_bounds_report':report,
              'standard_range_model':{'view':view}}
