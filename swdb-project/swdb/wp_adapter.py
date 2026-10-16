@@ -127,6 +127,13 @@ class WpAdapter:
                 context["reports"] += [("vector_reallocation_model", source_path),
                                        ("vector_reallocation_domain", domain_path),
                                        ("vector_reallocation_original", original_path)]
+                from swdb import vector_reallocation_vcs
+                draft = wp_dir / "vector-reallocation-obligations"
+                plan = vector_reallocation_vcs.prepare(job.unit.function, draft)
+                context["reports"] += [("vector_reallocation_obligations", draft / "manifest.json"),
+                    ("vector_reallocation_semantics", draft / plan["semantics"]["path"])]
+                context["reports"] += [("vector_reallocation_vc_" + row["id"], draft / row["path"])
+                                       for row in plan["obligations"]]
                 return self._not_proven("unsupported_construct",
                     "The explicit v3 domain requires a fresh unbounded body proof and caller discharge; "
                     "the original v2 contract is not proved by this preparation.", context)

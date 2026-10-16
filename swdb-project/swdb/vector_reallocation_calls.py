@@ -17,7 +17,8 @@ class Refused(ValueError):
 
 def identity():
     return {'id': 'vector-reallocation-caller-check-1',
-            'sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}
+            'sha256': hashlib.sha256(Path(__file__).read_bytes() +
+                Path(__file__).with_name('vector_reallocation_caller_vcs.py').read_bytes()).hexdigest()}
 
 
 def children(node):
@@ -185,6 +186,8 @@ def certify(node, *, source, text, defines, models, provenance):
                     scalar_read_obligation={'status': 'pending', 'path': 'count>0', 'observed': observation,
                                             'source': span(observed, source)},
                     stdlib_binding_sha256=hashlib.sha256(json.dumps(provenance, sort_keys=True).encode()).hexdigest())
+        from swdb import vector_reallocation_caller_vcs
+        base['heap_lifetime_plan'] = vector_reallocation_caller_vcs.prepare(base)
         return base
     except (Refused, KeyError, ValueError) as exc:
         return {**base, 'verdict': 'refused', 'reason': str(exc)}

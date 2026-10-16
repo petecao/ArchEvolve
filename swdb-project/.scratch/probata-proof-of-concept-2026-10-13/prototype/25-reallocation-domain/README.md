@@ -74,3 +74,34 @@ frame, branch, observation, lifetime and binding duties. Before actual handoff,
 the translation still needs a source-derived typed-int load embedding and an
 automatic receiver's fresh non-dynamic identity/lifetime mapping. Neither is
 supplied by initialized bits or by a concrete empty-heap witness.
+
+## Pending heap map and typed-source boundary
+
+The current public preparation emits isolated pending targets for the qualified
+constructor (30), grow (20), reserve including its complete grow helper (26), and
+the broad-domain destructor (11). The new definitional theory preserves the old
+heap components, adds arbitrary entry-snapshot integer loading/copying, and
+separates fresh non-dynamic automatic storage from dynamic allocation. Caller
+receipts include ten pending placement, history, frame, data and guard duties.
+Concrete feasibility targets are separate controls; arbitrary incoming heaps
+remain quantified. No project desired-result axiom or helper lemma is imported.
+
+An independent [type-boundary review](../../evidence/t25-int32-embedding-boundary-review-20261016.md)
+found that the old representation's initialized bits do not imply integer cells
+or raw-C effective-type safety. The v3 proof domain now explicitly requires a
+source-image argument from the selected WP Typed/Machine integer chunk. The
+logical region projection constructs Integer cells from that bounded chunk; it
+does not assert that old Pointer-tag cells were integers. Actual caller source
+constructions/stores must discharge the domain. Opaque raw storage/type-punning
+remains unsupported, and the selected runtime source binding is pending.
+Destruction loads no buffer element and retains its original broad domain.
+
+Nineteen compiler/native preparation controls pass in 51.65 seconds. Original
+C++ and lowered C agree on 34 defined caller inputs across safe growth and
+no-growth (`n=0..16`); this is finite control evidence, with no stale/undefined
+branch execution or universal agreement claim. The actual proof route remains
+closed. Full source/clause/frame completeness, local cleanup, ordinary model
+dependencies, typed-source admission, import/task closure and fresh normal-reader
+proofs are still required. A coordinator-admitted exact-Git-blob type-only gate
+is being prepared; grammar/types alone will not discharge those requirements.
+Evidence: [pending map controls](../../evidence/t25-reallocation-pending-heap-map-controls-v2-20261016.json).

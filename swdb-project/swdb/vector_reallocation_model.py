@@ -14,7 +14,13 @@ PARENT = {'id': 'swdb-std-models-2',
 MEMBERS = {'std_vector_int_realloc_v3_' + member: 'std_vector_int_' + member
            for member in ('ctor_count_value', 'grow', 'reserve', 'dtor')}
 DOMAIN = r'''/* Explicit v3 unary reallocation domain. It does not grant exclusive ownership.
-   Distinct allocation bases are required: byte-disjoint ranges can share a free. */
+   Distinct allocation bases are required: byte-disjoint ranges can share a free.
+   This predicate's qualified proof scope also requires the source image of initialized int
+   objects in the selected WP Typed integer chunk. Raw address validity and
+   initialized bytes alone do not establish effective-type safety. Callers must
+   discharge the typed-object image from admitted source constructions/stores;
+   opaque raw storage and type-punning remain unsupported. Destruction does not
+   use this predicate or load buffer elements, and retains its broad domain. */
 /*@ predicate std_vector_int_reallocatable_v3(std_vector_int *v) =
       std_vector_int_valid(v) &&
       (v->capacity == 0 || (\freeable(v->data) &&
@@ -22,14 +28,34 @@ DOMAIN = r'''/* Explicit v3 unary reallocation domain. It does not grant exclusi
 */
 '''
 
+TYPE_IMAGE = {
+    'applicable': True,
+    'id': 'wp-typed-int32-source-image-1',
+    'raw_effective_type_safety_proved': False,
+    'caller_discharge': 'source-derived typed int objects; opaque raw storage unsupported',
+    'runtime_source_binding': 'pending selected-tool verification; not assumed',
+    'required_wp_integer_model': 'Machine; Natural/NAT is outside this bounded-int projection',
+    'projection': 'selected WP Typed bounded integer chunk -> Integer(value); pointer chunks are not integer cells',
+    'required_source_files': [
+        {'name': 'MemTyped.ml', 'sha256': 'ad0d3c4e8e568a09d47bb658767e5ba476cc9e957f16b14981370642c5e235b5'},
+        {'name': 'Cint.ml', 'sha256': '3b2a00bb65f4c785265c2295c323459e3dce66bb6c82e3d70ff3a659a3660156'},
+        {'name': 'Factory.ml', 'sha256': 'd2f4da6cb7b2f4a674880f4760680e84fe0a1c58ece95d0f2ff889b7902efcc5'},
+    ],
+    'boundary': 'old heap repr does not imply int32_region; actual typed-source correspondence is mandatory',
+}
+
 
 def digest(text):
     return hashlib.sha256(text.encode()).hexdigest()
 
 
 def identity():
+    here = Path(__file__).parent
+    components = ('vector_reallocation_model.py', 'vector_reallocation_vcs.py',
+                  'heap_reallocation.mlw', 'heap_model_vcs.py')
     return {'id': 'vector-reallocation-domain-3',
-            'sha256': hashlib.sha256(Path(__file__).read_bytes() + PARENT['sha256'].encode()).hexdigest()}
+            'sha256': hashlib.sha256(b''.join((here/p).read_bytes() for p in components) +
+                                     PARENT['sha256'].encode()).hexdigest()}
 
 
 def _qualify(source, original):
@@ -109,6 +135,11 @@ def certificate(name):
             'caller_discharge': 'required; not assumed', 'original_contract_proved': False,
             'allocation_identity_condition': 'capacity>0 implies receiver and backing allocation bases differ',
             'alias_policy': 'escaped raw aliases remain legal before release and stale afterward',
+            'typed_source_image': ({**TYPE_IMAGE, 'required_source_files':
+                [dict(pin) for pin in TYPE_IMAGE['required_source_files']]}
+                if MEMBERS[name] != 'std_vector_int_dtor' else {
+                    'applicable': False, 'raw_effective_type_safety_proved': False,
+                    'role': 'no buffer element load; original pointer/free domain retained'}),
             'pending': ['complete original source/clause/RTE/init/frame/lifetime map under the new contract',
                         'fresh unbounded body proof', 'source-derived caller eligibility and cross-view liveness accounting'],
             'proof_status': 'unsupported preparation; no verifier launch or model-body proof'}

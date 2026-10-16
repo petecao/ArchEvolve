@@ -4,7 +4,9 @@ These certificates prepare explicit obligations. They grant no ownership fact,
 initialization origin or model proof, and never launch a formal verifier.
 """
 import hashlib
+import json
 from pathlib import Path
+import subprocess
 
 import pytest
 
@@ -80,3 +82,46 @@ def test_public_caller_retains_crlf_source_identity_and_spans(tmp_path):
     for row in candidate['call_obligations']:
         area = row['source']
         assert area['sha256'] == hashlib.sha256(raw[area['begin']:area['end']]).hexdigest()
+
+
+def test_public_caller_lifetime_plan_derives_local_history_without_global_pointer_premises(tmp_path):
+    candidate = lower(SOURCE, 'vector_realloc_v3_safe', tmp_path)['vector_reallocation_candidate']
+    plan = candidate['heap_lifetime_plan']
+    assert plan['preparation_only'] is True and plan['caller_premises_added'] == []
+    assert plan['incoming_pointer_maps_restricted'] is False
+    rows = {row['id']: row for row in plan['obligations']}
+    assert {'local.begin.feasible', 'local.begin.storage', 'local.begin.history', 'local.end.aliases', 'local.end.frame',
+            'caller.data.read', 'caller.guard.empty'} <= rows.keys()
+    assert 'Heap::begin_automatic' in rows['local.begin.storage']['statement']
+    assert '!Heap::freeable' in rows['local.begin.storage']['statement']
+    assert 'Heap::issued(h,b)' in rows['local.begin.history']['statement']
+    assert 'Heap::end_automatic' in rows['local.end.aliases']['statement']
+    assert all(row['status'] == 'pending' and not row['dependencies'] for row in rows.values())
+
+
+@pytest.mark.parametrize('function', ['vector_realloc_v3_safe', 'vector_realloc_v3_no_growth'])
+def test_defined_native_caller_observations_match_original_cpp_after_public_lower(tmp_path, function):
+    """Finite source controls only; the stale branch is never executed."""
+    from swdb import c_lowering
+    result = lower(SOURCE, function, tmp_path / 'lower')
+    outputs = []
+    for label, standard, path in [('c', 'c11', Path(result['c_lowering']['path'])),
+                                   ('cpp', 'c++17', SOURCE)]:
+        unit = tmp_path / (label + '.cc')
+        unit.write_text('#include <stdlib.h>\n#include <stdio.h>\n' + f'#include "{path}"\n' +
+                        'int main(void) { for(int n=0;n<=16;n++) printf("%d\\n",' + function + '(n)); return 0; }\n')
+        executable = tmp_path / label
+        command = [*c_lowering.locate().command, '-x', 'c' if label == 'c' else 'c++',
+                   '-std=' + standard, str(unit), '-o', str(executable)]
+        (tmp_path / (label + '.compile.command.json')).write_text(json.dumps(command, indent=2) + '\n')
+        built = subprocess.run(command, capture_output=True, text=True, timeout=30)
+        (tmp_path / (label + '.compile.stdout')).write_text(built.stdout)
+        (tmp_path / (label + '.compile.stderr')).write_text(built.stderr)
+        assert built.returncode == 0, built.stdout + built.stderr
+        (tmp_path / (label + '.run.command.json')).write_text(json.dumps([str(executable)]) + '\n')
+        run = subprocess.run([str(executable)], capture_output=True, text=True, timeout=10)
+        (tmp_path / (label + '.run.stdout')).write_text(run.stdout)
+        (tmp_path / (label + '.run.stderr')).write_text(run.stderr)
+        assert run.returncode == 0, run.stdout + run.stderr
+        outputs.append(run.stdout)
+    assert outputs[0] == outputs[1] == '0\n' + '7\n' * 16

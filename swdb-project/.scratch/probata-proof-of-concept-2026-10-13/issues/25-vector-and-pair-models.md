@@ -1071,3 +1071,24 @@ all new copy/frame/qualification/caller/lifetime duties. Typed source-int loads
 and automatic receiver lifetime mapping remain necessary before fresh public
 proof. No original growth contract, qualified body, caller domain, exclusive
 ownership or wider type/member acceptance is claimed. Ticket25 remains claimed.
+
+### Qualified typed-source and lifetime draft — 2026-10-16 ET
+
+Public preparation now emits 30 constructor, 20 grow, 26 reserve/helper and 11
+destructor pending targets, plus ten source-local caller lifetime/data/guard
+duties. Copying uses arbitrary entry-snapshot integer values; concrete feasibility
+controls remain separate from quantified incoming-heap obligations. The route
+still returns unsupported before any verifier. Nineteen compiler/native controls
+pass (51.65 s); 34 defined caller inputs agree between original C++ and lowered C.
+No stale or effective-type-undefined source was executed.
+
+Independent review identified that initialized bytes/old representation do not
+entail integer cells or effective-type safety. The explicitly qualified v3 domain
+now requires a source image from the selected WP Typed/Machine integer chunk,
+with caller discharge from admitted typed constructions/stores. Its runtime
+binding is pending. The destructor's broad element-free domain is preserved.
+No global pointer-map premise, exclusive owner token, desired-result axiom,
+original raw-growth proof or complete caller acceptance is claimed. Source,
+clause/frame/cleanup/dependency closure and fresh normal-reader proof remain open.
+The coordinator owns the prospective minimal theory type gate and all actual
+jobs. Evidence: `../evidence/t25-reallocation-pending-heap-map-controls-v2-20261016.json`.
