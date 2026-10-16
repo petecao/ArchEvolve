@@ -315,6 +315,8 @@ def identity():
                             + here.with_name("stdlib_source_admission.py").read_bytes()
                             + here.with_name("dx100_source_selector.py").read_bytes()
                             + here.with_name("dx100_size_source.py").read_bytes()
+                            + here.with_name("dx100_stream_source.py").read_bytes()
+                            + here.with_name("dx100_stream_model.py").read_bytes()
                             + json.dumps(stdlib_provenance.runtime_identity(tool), sort_keys=True).encode()).hexdigest()
     found = {"c_lowering": {"id": f"{TOOL_ID}-{TOOL_VERSION}", "sha256": digest},
              "naming_rules": naming_rules()}
@@ -1600,7 +1602,31 @@ class _Printer:
 
     def initializer(self, node, style):
         if node.get("kind") == "InitListExpr":
-            return "{" + ", ".join(self.initializer(e, "list") for e in node.get("inner", [])) + "}"
+            elements=node.get("inner", [])
+            if "array_filler" in node:
+                # Clang22 serializes the default filler FIRST, followed by the
+                # explicit prefix. Discarding that field loses every supplied
+                # value. C itself zero-fills the remaining scalar elements.
+                filler=node["array_filler"]
+                shape=re.fullmatch(r"(.+?)\s*\[(\d+)\]",_qual(node))
+                scalar=re.sub(r"\b(?:const|volatile)\b\s*","",shape[1]).strip() if shape else ""
+                if (elements or not shape or scalar not in INTEGER_TYPES | FLOAT_TYPES
+                        or int(shape[2])<1 or not isinstance(filler,list) or not filler
+                        or filler[0].get("kind")!="ImplicitValueInitExpr"
+                        or len(filler)-1>int(shape[2])
+                        or any(e.get("kind") in {"ImplicitValueInitExpr","InitListExpr","DesignatedInitExpr"} for e in filler[1:])):
+                    raise Unsupported("ambiguous, nested or nonscalar array_filler initializer",self.line)
+                points=[node.get("range",{}).get(k,{}) for k in ("begin","end")]
+                if any("offset" not in p or p.get("spellingLoc") or p.get("expansionLoc") for p in points):
+                    raise Unsupported("indirect array_filler initializer",self.line)
+                files=[Path(p.get("_file",p.get("file",str(self.unit.source)))).resolve() for p in points]
+                if files[0]!=files[1]:raise Unsupported("cross-source array_filler initializer",self.line)
+                spelled=files[0].read_bytes()[points[0]["offset"]:points[1]["offset"]+points[1]["tokLen"]].decode()
+                if re.search(r"\[[^]]*\]\s*=",re.sub(r"/\*.*?\*/|//[^\n]*","",spelled,flags=re.S)):
+                    raise Unsupported("designated array_filler initializer",self.line)
+                elements=filler[1:]
+                if not elements:return "{0}"
+            return "{" + ", ".join(self.initializer(e, "list") for e in elements) + "}"
         if style not in ("c", "call", "list", None):
             raise Unsupported(f"initialization style {style}", self.line)
         return self.expr(node, top=True)
@@ -2073,11 +2099,12 @@ class _Printer:
             if source_policy is not None:
                 if node_found is None or not _has_body(node_found):
                     raise Unsupported('fresh-SPD size policy requires the real pinned source definition', self.line)
-                from swdb import dx100_size_source
+                from swdb import dx100_size_source, dx100_stream_source
+                source_module=dx100_stream_source if source_policy.get('kind')==dx100_stream_source.KIND else dx100_size_source
                 try:
-                    source_definition = dx100_size_source.certify(unit,node_found,source_policy,self.source_declaration,
+                    source_definition = source_module.certify(unit,node_found,source_policy,self.source_declaration,
                                                                   standard=STD,timeout=TIMEOUT_SECONDS)
-                except dx100_size_source.Refused as exc:
+                except source_module.Refused as exc:
                     raise Unsupported('DX100 source size definition: '+str(exc),self.line) from None
             variants = self.semantics.get('template_instances', {}).get(name)
             if variants is not None:
@@ -2094,11 +2121,14 @@ class _Printer:
                     if 'definition' not in instance:
                         raise Unsupported('template instance needs a pinned interface definition; '
                                           'source-defined implementations cannot inherit a device contract', self.line)
-                    from swdb import dx100_source_selector
+                    from swdb import dx100_source_selector, dx100_stream_source
+                    source_module=dx100_stream_source if instance['definition'].get('kind')==dx100_stream_source.KIND else dx100_source_selector
                     try:
-                        definition = dx100_source_selector.certify(unit, node_found, arguments, instance['definition'],
-                                                                  standard=STD, timeout=TIMEOUT_SECONDS)
-                    except dx100_source_selector.Refused as exc:
+                        if source_module is dx100_stream_source:
+                            source_definition = source_module.certify(unit,node_found,instance['definition'],self.source_declaration,standard=STD,timeout=TIMEOUT_SECONDS)
+                        else:
+                            definition = source_module.certify(unit, node_found, arguments, instance['definition'],standard=STD, timeout=TIMEOUT_SECONDS)
+                    except source_module.Refused as exc:
                         raise Unsupported('DX100 source selector definition: '+str(exc), self.line) from None
                 elif 'definition' in instance:
                     raise Unsupported('DX100 source selector requires the real pinned definition', self.line)
@@ -2124,7 +2154,7 @@ class _Printer:
             call = f"{cname}({', '.join(texts)})"
             if (name == "get_cacheable_tile_pointer" and name in self.semantics.get("tile_pointer", ())) or \
                     (name in self.semantics.get("calls", ()) and
-                     (source_definition is not None or returns in INTEGER_TYPES or (instance is not None and unit.ctype(returns, line=self.line) in INTEGER_TYPES))):
+                     ((source_definition is not None and re.sub(r'\b(?:const|volatile)\b\s*','',unit.ctype(returns,line=self.line)).strip() in INTEGER_TYPES) or returns in INTEGER_TYPES or (instance is not None and unit.ctype(returns, line=self.line) in INTEGER_TYPES))):
                 # 2026-10-15 ET: WP33 does not initialize a receiving local slot
                 # for a modular call. An identity expression forces its ordinary
                 # assignment path. Imported integer results have an exact identity;

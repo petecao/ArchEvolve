@@ -140,7 +140,7 @@ def _entry(library, entry_id, data, error, vocabs, logic, rules, pending):
             error('proof_unit.prototype', 'a hand-written prototype is replaced by the C lowering of the baseline proof '
                                           'unit (ticket 21): give proof_unit.source (path, sha256) and function')
             unit, with_acsl = None, []
-        elif (not isinstance(unit, dict) or set(unit) - {'source', 'function', 'types', 'array_domains'}
+        elif (not isinstance(unit, dict) or set(unit) - {'source', 'function', 'types', 'array_domains', 'correctness_policy'}
                 or not isinstance(unit.get('function'), str) or not re.fullmatch(r'[A-Za-z_]\w*', unit['function'])):
             error('proof_unit', 'formal halves need proof_unit: {source: {path, sha256}, function}, the baseline proof '
                                 'unit whose C lowering they are type-checked against (kept C++ names)')
@@ -153,6 +153,13 @@ def _entry(library, entry_id, data, error, vocabs, logic, rules, pending):
                     error(f'proof_unit.{key}', str(exc))
                     unit, with_acsl = None, []
                     break
+    if unit is not None and 'correctness_policy' in unit:
+        from swdb import dx100_stream_source
+        try:
+            dx100_stream_source.unit_policy(library,data)
+        except dx100_stream_source.Refused as exc:
+            error('proof_unit.correctness_policy',str(exc))
+            unit,with_acsl=None,[]
     if unit is not None and 'array_domains' in unit:
         findings = array_domains.problems(unit['array_domains'])
         for where, reason in findings:

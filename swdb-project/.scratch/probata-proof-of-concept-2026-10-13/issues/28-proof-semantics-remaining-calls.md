@@ -311,3 +311,27 @@ Root's [pinned actual passive receipt](../evidence/t28-size-supplemental-actual-
 Each record has10goals/15properties/11CSV rows. Helper requires is non-Extern with its exact call-site dependency/directly Valid obligation. Only source-certified ensures/assigns are Extern; helper exits/terminates stay Unknown/unselected/implementation-unverified. All4 smokes have healthy raw nonvalid outcomes/best timeout/passed=true; native smoke-normalized proved/success/time values are not ordinary Valid or external runtime. No verified MMIO body, physical boot guarantee, arbitrary entry freshness, hardware progress/full interface/current0.2/full28 claim follows. Status stays claimed;35 resolved/25 ready-for-agent/3 claimed.
 
 Preservation detail (2026-10-16 ET): the copied actually executed reader`evidence/t28-size-supplement-v1-20261016.py` retains two trailing-space warnings at308/322 to preserve exact audited SHA3b5faa69e77933542a074312e66b0d54f37a952151a4ae1e664af6c3597e0a15. It is an evidence artifact, not a production change or new execution. Other staged docs pass diff --check; no whole-tree clean claim or historical byte rewrite.
+
+## Closed partial stream preparation — 2026-10-16 ET
+
+Executable freeze13d782b1 composes the nonempty u32 stream→real blocking wait→size
+public fixture with exact source/ABI/preprocessed-body/MMIO certificates and an
+explicit owned constructor/RF/full-line translation/coherence/no-interference
+entry epoch. Virtual base0 and empty source ranges are outside the declared
+source domain. Ack is dispatch, not an assertion of physical unfinished state.
+The exact event-compression refinement and contract/body agreement remain
+unverified owned TCB duties; no native prefix or17-state projected graph is
+called an all-schedule gem5 theorem.
+
+An original total summary request is refused. The original partial fixture
+contract, exact unit policy, semantics pin and method produce a separate
+`partial_library_summary` subject; generic summary dependencies cannot consume
+it. All3helpers and the unit declare `terminates \false`. Compiler REDs for void
+result arithmetic and lost explicit array prefixes are repaired through narrow
+type/scalar-shape checks, with native C++/C and generated-C syntax controls.
+Final40/40controls pass with3actual cases skipped under the B/8GiB guard;
+20,774 producer pin checks over1,156files report no mismatch. No actual stream
+verifier ran, no production0.2version is current and no acceptance box is checked.
+The source13d782, older29c0 preparation and original7e642 actual producers remain
+separate. Coordinator review/admission and full ticket28 work remain active.
+[Source/native/scripted evidence](../evidence/t28-stream-first-vertical-controls-20261016.md).

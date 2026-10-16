@@ -205,6 +205,9 @@ class WpAdapter:
             context["extra_flags"] = ["-wp-fct=" + ",".join(sorted(context["functions"]))]
             return self._wp(job, input_path, context)
         entry = self.library.get(self.contract) or {}
+        if (entry.get('proof_unit') or {}).get('correctness_policy') is not None:
+            if job.unit.candidate is not None or job.unit.correctness_policy!=(entry.get('proof_unit') or {}).get('correctness_policy'):
+                return self._not_proven('unsupported_construct','partial source admission requires its distinct original partial summary unit',context)
         unit = entry.get("proof_unit") or {}
         summary_job = job.unit.candidate is None
         source = _unit_source(Path(job.unit.tree), job.unit.function)
@@ -404,6 +407,11 @@ class WpAdapter:
             from swdb import dx100_size_source
             if dx100_size_source.bindings(lowering):
                 context['semantics_settings']['source_definitions'] = dx100_size_source.bindings(lowering)
+            from swdb import dx100_stream_source
+            if dx100_stream_source.bindings(lowering):
+                context['semantics_settings']['source_definitions'] = dx100_stream_source.bindings(lowering)
+                context['semantics_settings']['termination_policy'] = 'conditional normal return; no hardware liveness'
+                context['semantics_settings']['source_refinement'] = 'owned TCB correspondence; all-schedule refinement and contract/body agreement unverified'
             log.line(f"proof semantics: {entries[0]} (sha256 {sha}); calls {', '.join(called)}; "
                      f"{len(lowering.probes)} hazard probe(s)")
         refusal = cpu_memory_admission.check(lowering, covered)
@@ -775,6 +783,16 @@ class WpAdapter:
                 semantics['entry_projection']={'kind':dx100_size_source.CERTIFICATE_KIND,
                     'bytes':projection['metadata_bytes'],'owner':dx100_size_source.OWNER,
                     'statement':dx100_size_source.BOOT_STATEMENT}
+            from swdb import dx100_stream_source, dx100_stream_model
+            if dx100_stream_source.stream_layout(self.library.get(semantics['id']) or {}):
+                certificates=dx100_stream_source.bindings(lowering)
+                if {c['call'] for c in certificates}!=set(dx100_stream_source.PROTOTYPES) or len(certificates)!=3:
+                    raise AdapterError('isolated stream entry projection needs all three checked source certificates')
+                inserts[f'{lowering.function}.entry']=[
+                    '/* Conditional source-constructor/RF/input epoch; no source reset or added wait. */',
+                    *dx100_stream_model.normal_return_model()['entry']]
+                semantics['entry_projection']={'kind':dx100_stream_source.ENTRY['kind'],
+                    'owner':dx100_stream_source.OWNER,'statement':dx100_stream_source.BOOT_STATEMENT}
         return inserts
 
     def _summary_clauses(self, callee):
@@ -808,6 +826,19 @@ class WpAdapter:
         wp = data.get("wp") or {}
         from swdb.dx100_source_selector import pure_layout
         from swdb import dx100_size_source
+        from swdb import dx100_stream_source
+        if dx100_stream_source.stream_layout(data):
+            try:
+                policy=dx100_stream_source.unit_policy(self.library,self.library.get(self.contract) or {})
+            except dx100_stream_source.Refused as exc:
+                raise AdapterError('partial source admission: '+str(exc)) from None
+            if self.method.id!=dx100_stream_source.PARTIAL_METHOD:
+                raise AdapterError('partial source admission requires its explicit partial fixture method version')
+            semantics['unit_correctness_policy']=policy
+            semantics['unit_requires'],semantics['unit_ensures']=[],[]
+            rewritten=[re.sub(r"\bassigns\s+\\nothing\s*;",'assigns __swdb_dx_stream_meta;',text) for text in texts]
+            rewritten.append(r'terminates \false;')
+            return rewritten,[proof_semantics.wp_prelude(self.library,entry_id,semantics['calls'],self.defines)]
         if dx100_size_source.size_layout(data):
             semantics['unit_requires'],semantics['unit_ensures']=[],[]
             rewritten=[re.sub(r"\bassigns\s+\\nothing\s*;",
@@ -1042,10 +1073,15 @@ class WpAdapter:
             fields.setdefault("settings", {})["proof_semantics"] = {
                 **context["semantics_settings"], "unit_requires": semantics.get("unit_requires", []),
                 "unit_ensures": semantics.get("unit_ensures", []),
-                **({"entry_projection":semantics["entry_projection"]} if "entry_projection" in semantics else {})}
+                **({"entry_projection":semantics["entry_projection"]} if "entry_projection" in semantics else {}),
+                **({"unit_correctness_policy":semantics["unit_correctness_policy"]} if "unit_correctness_policy" in semantics else {})}
             from swdb.dx100_source_selector import pure_layout, PURE_STATEMENT
             from swdb import dx100_size_source
-            if dx100_size_source.size_layout(self.library.get(semantics['id'])):
+            from swdb import dx100_stream_source
+            if dx100_stream_source.stream_layout(self.library.get(semantics['id'])):
+                assumptions.append({'kind':'proof_semantics','reference':{'id':semantics['id'],'sha256':semantics['sha256']},
+                    'sentence':'Only the source-bound closed one-u32-stream, real returned wait and metadata size observation are admitted on conditional normal return. Input mapping/coherence, exclusive epoch and all-schedule event refinement are owned TCB obligations; source refinement and contract/body agreement remain unverified. No hardware termination, payload CPU read or full-interface theorem is claimed.'})
+            elif dx100_size_source.size_layout(self.library.get(semantics['id'])):
                 assumptions.append({'kind':'proof_semantics','reference':{'id':semantics['id'],'sha256':semantics['sha256']},
                     'sentence':'Only the source-certified size getter in its explicit synthetic fresh-SPD boot epoch is admitted; no device commands, arbitrary-entry freshness or timing reduction is used.'})
             elif pure_layout(self.library.get(semantics['id'])):
