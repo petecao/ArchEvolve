@@ -1736,3 +1736,6 @@ Root accepts complete changed-source20Typed-helper discharge only:260ordinaryVal
 
 
 2026-10-16 08:47 ET — [Settled local OMP installation/profile checkpoint](../evidence/t07-omp-profile-settled-checkpoint-20261016.md): positive inside-team1 and exact negative2/refused reconcile1,117 pins/952 unique physical files/20raw; root native1.020710542s292.0625MiB/event0. Source/private-frame/serialized-dispatch application remains explicit compiler/library/runtime TCB. No exactTD/count, allocator/lifetime/Init or foreign-runtime qualification; ticket stays claimed. V2 unknown-header/pre-native and passive66-character hash refusals preserved without native replay.
+
+
+2026-10-16 — Reviewed exact649b8cd2 device-init source is integrated as preparation only. [Independent review](../evidence/t07-device-init-independent-source-review-v1-649b8cd2-20261016.md) rehashes331 physical pins/44 historical Gitfiles; three read/write initializedness contract insertions preserve all C tokens and previous clauses, no output-tail/initreset premise. New same-path fixtures and parser/formal controls are unadopted/pending; no TD/count qualification.

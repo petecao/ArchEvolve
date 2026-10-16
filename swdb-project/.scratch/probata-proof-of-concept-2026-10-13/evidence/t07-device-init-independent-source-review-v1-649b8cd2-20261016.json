@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-16 ET",
+  "verdict": "PASS_PROSPECTIVE_CONTRACT_DOMAIN_PREPARATION_ONLY",
+  "source_commit": "649b8cd222ad5a82ae60c0de9d6bba8b28a2020d",
+  "base_commit": "37ffe407a10888ff9628c75f37ba770995a3ecd5",
+  "changed_paths": 9,
+  "new_paths_only": true,
+  "independent_checks": {
+    "physical_pins_rehashed": 331,
+    "historical_files_Git_and_bytes_unchanged": 44,
+    "contract_insertions_only": 3,
+    "old_clauses_preserved": true,
+    "all_C_tokens_unchanged": true,
+    "gapbs_TD_BFS_outputbytes_identical": true,
+    "all4raw_input_and_output_pins_match": true,
+    "source_stores_and_unconditional_wrapper_defaults_read": true
+  },
+  "retained_controls": {
+    "pure_checks": 28,
+    "seconds": 0.5331767082680017,
+    "peak_MiB": 32.40625,
+    "events": [],
+    "reviewer_reran": false,
+    "three_family_structural_RED_GREEN_retained": true
+  },
+  "findings": [],
+  "domain": "Adds successful produced-prefix initializedness and actual read-valid/init+destination-capacity domains to stream/gather/range only; no output-tail or TD-entry/initreset premise. Source wrapper defaultcond=-1 supports unconditional produced stores; command normalreturn/completion-at-issue values and separate hazard semantics remain explicitTCB.",
+  "limits": [
+    "Generator is exact-input adapter with rawSHA before strictUTF8; structural checklist is not ACSL parser/logical proof.",
+    "No compiler/formal/source adoption or same-path initializedness negative/positive control has run by reviewer. Root must separately admit fresh parser/complete goal-property-Extern graph and meaningful input/output/wrongcell controls before counted qualification.",
+    "Functional source stores do not prove async hardware visibility, complete range continuation equivalence, originaltargetphysicalmapping/liveness/sourcewholeTD/count.",
+    "No helper proof promoted to device contracts; oldhelper/headerbytes unchanged, opaque commands remain declared library/sourceTCB."
+  ],
+  "proof_acceptance": false,
+  "TD_or_counted_admissible": false,
+  "ticket_closure": false
+}
