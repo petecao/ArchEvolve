@@ -28,6 +28,7 @@ Ticket 20's fields (`formal_frame: 1`, `version`, `rules`, empty `clauses`) plus
 | `model` | Pinned `state` (device state, C), `c` (the C model, the CBMC form) and `logic` (ACSL logic for the contracts). |
 | `calls` | One row per covered call: `call`, `prototype` (core-subset C), `contract` (ACSL), `rules` (rule IDs), `lowerings`, `used_by`. |
 | `calls[].overloads` | For a name with multiple header declarations, each overload has its exact source `declaration`, a distinct C `prototype` and its own ACSL `contract`. These contracts are included in type-checking; no initialized allocation overload may silently reuse the zero-argument behavior. |
+| `calls[].instances` | Optional concrete template contracts, replacing the family contract and exclusive with `overloads`. Each has canonical source `arguments` (type spellings, not device codes), nonnegative integer `arity`, C `prototype`, ACSL `contract` and, for overloaded headers, exact `declaration`. Selectors and C symbols are unique. Source calls must match their actual same-TU template arguments, arity, deterministic emitted symbol and C signature. Missing instances refuse; unpinned body-bearing implementations refuse pending an effective-header audit. |
 | `queries` | Ghost queries a fixture may call (not hardware calls): `query`, `prototype`, `contract`. |
 | `rules[].record_assumption` | Optional boolean. A true value lists that rule's statement on every verdict using this exact version, as kind `proof_semantics`, reference `<entry>#<rule>` and the entry's SHA-256. The rule still requires its normal citation or owner. These entries never cap a level. |
 
@@ -49,6 +50,9 @@ No production semantics0.2 version is current yet. Structural/scripted/compiler 
 whole-interface behavior, history/overlap/ownership/pair rules or actual formal acceptance. Semantics0.1's
 library bytes remain unchanged. Rule trust references bind the entry's original file hash; changing its
 bytes during a job is refused rather than attaching new trust text to an older pinned version.
+Selected template instances are retained in `settings.proof_semantics.instances`.
+The setup/checker identity includes `dx100_interface.py`; changing its bytes invalidates
+an execution method that pins the earlier identity. Historical proof freezes keep their earlier identity.
 
 ## Version 0.1 (`semantics.dx100_bfs_0_1`)
 

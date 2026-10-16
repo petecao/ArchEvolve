@@ -368,6 +368,8 @@ class WpAdapter:
             context["semantics_settings"] = {
                 "id": entries[0], "calls": called,
                 "probes": [{k: p[k] for k in ("id", "function", "access", "line")} for p in lowering.probes]}
+            if proof_semantics.instance_bindings(lowering):
+                context['semantics_settings']['instances'] = proof_semantics.instance_bindings(lowering)
             log.line(f"proof semantics: {entries[0]} (sha256 {sha}); calls {', '.join(called)}; "
                      f"{len(lowering.probes)} hazard probe(s)")
         refusal = cpu_memory_admission.check(lowering, covered)
@@ -419,7 +421,8 @@ class WpAdapter:
         if context.get("semantics"):
             semantics = context["semantics"]
             pin = {k: semantics[k] for k in ("id", "sha256")}
-            context["extern_contracts"].update({name: dict(pin) for name in semantics["calls"]})
+            context["extern_contracts"].update({name: dict(pin) for name in proof_semantics.contract_names(
+                self.library, semantics['id'], semantics['calls'])})
             for probe in (self.library.get(semantics["id"]).get("wp") or {}).get("probes") or []:
                 name = re.match(r".*?\b(\w+)\s*\(", probe["prototype"]).group(1)
                 context["extern_contracts"][name] = dict(pin)

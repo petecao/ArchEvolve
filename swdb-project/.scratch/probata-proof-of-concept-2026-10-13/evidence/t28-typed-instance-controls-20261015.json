@@ -1,0 +1,537 @@
+{
+  "created": "2026-10-15 ET",
+  "base": "6a54351f88dfa30dbf7cbe2bd4c23afb86b7201e",
+  "scope": "Typed template instance contract selection and setup dependency prerequisite only. No production semantics0.2, no actual Frama-C/WP/CBMC/prover/hardware result. Structural added-call fixtures use unreachable contracts except synthetic pure helper contracts.",
+  "refusals": [
+    "missing or ambiguous canonical template arguments/arity",
+    "missing instance contract/prototype or duplicate C symbol",
+    "mismatched C signature/emitted deterministic symbol",
+    "source-defined template without a pinned effective-interface definition audit",
+    "missing exact overloaded header declaration",
+    "changed contract-routing/checker dependency"
+  ],
+  "partial_boundary": "Body-bearing actual MMIO header templates still refuse. Supporting immutable raw header hashes alone is insufficient: candidate preprocessor context and external typedef/trait bindings can change effective semantics. No raw-header hash-only exemption was added. Actual six device type codes, typed storage/initializedness/import audit, complete values/opcodes/history/memory/ownership/physical-line hazards and actual formal acceptance remain pending.",
+  "checker_identity": {
+    "proof_setup_check": {
+      "version": "1",
+      "sha256": "76e1a83ace53083ab1f1cb01dde39700ea3bbd59a4783cc997149321413e2eb2"
+    },
+    "verdict_reading": {
+      "version": "1",
+      "sha256": "76e1a83ace53083ab1f1cb01dde39700ea3bbd59a4783cc997149321413e2eb2"
+    }
+  },
+  "historical_boundary": "New composite checker includes dx100_interface.py. Historical2033/74 setup/fact evidence retains its old checker and is never upgraded.",
+  "profiles": {
+    "schema_red": {
+      "note": "Missing instance contract was silently ignored by old validation.",
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-typed-instance-red/command.json",
+          "sha256": "4d19d27c6fb7a9c760462b9f6a82651f40e0d80f3ec936188373b4439f67f059",
+          "bytes": 304
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-instance-red/control.log",
+          "sha256": "2478a17892759f3e517bbeb1ef10837b161a7be2903bf995d0b6b71955be7eb3",
+          "bytes": 2959
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-instance-red/junit.xml",
+          "sha256": "4012d242bd2929d159c36775cd7e929a73a3f563b7c830a9f089de4a5dc2bfd6",
+          "bytes": 3583
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-instance-red/resources.json",
+          "sha256": "b623f9c52b0a3b8408a0a22fab088420f0bc9fd0d9fe3304f38a478a30241e44",
+          "bytes": 175
+        }
+      ]
+    },
+    "schema_green": {
+      "note": "18 passed: initial7 typed schema controls + retained11 inventory controls.",
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-typed-instance-green/command.json",
+          "sha256": "887c176cd4e70a0965842959e1d47e164f11f50aa793d40a2a745653ee5b70e7",
+          "bytes": 345
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-instance-green/control.log",
+          "sha256": "18bb865488331eecc18e16ce664f5c7859794e788a627809f640fe1c9d9e45f6",
+          "bytes": 100
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-instance-green/junit.xml",
+          "sha256": "f0f24d9c665325df582247ec61ebc9f7a2a3042c71b7a8e4f4edb8e7d030a859",
+          "bytes": 3733
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-instance-green/resources.json",
+          "sha256": "49d6c068f7f8066d7af13c9dab6aada3d61af1a34616348b54bfc31d1ddf22fc",
+          "bytes": 174
+        }
+      ]
+    },
+    "binding_red": {
+      "note": "Missing type instance was ignored; public path reached CPU-write refusal instead.",
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-red/command.json",
+          "sha256": "a8454485b06a8c403c45b55e6994f0d1c526a9546708747bc72ade4cab1fcb09",
+          "bytes": 328
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-red/control.log",
+          "sha256": "05a67167f413972ddc066ac1ba4500c7b9628468eb415e00d5839cc96e7fb3d1",
+          "bytes": 2581
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-red/junit.xml",
+          "sha256": "c274fc83828b29e3c039795deef1abdcbdfe18c165bb963d700e15654fa9b96b",
+          "bytes": 2855
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-red/pytest/test_public_prove_binds_a_temp0/records/proofs/proof.contract.dx100_trust_fixture.20261016t021824z.4cbfa375.yaml",
+          "sha256": "79810c11754fbdd84b849fc52b3c848d1c6bcba867fe557960a7ba38f268900a",
+          "bytes": 7930
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-red/pytest/test_public_prove_binds_a_temp0/runs/proof.contract.dx100_trust_fixture.20261016t021824z.4cbfa375/adapter.log",
+          "sha256": "933295e566f090ed05d4c50aac4fc62518dd8047c4dc853968e6963a1cb2e16e",
+          "bytes": 409
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-red/resources.json",
+          "sha256": "4d06e852ae730470f7b99b333739e7a3b0fd9d935fea15dc85cc45c45e585e59",
+          "bytes": 164
+        }
+      ]
+    },
+    "binding_intermediate": {
+      "note": "5 assertion failures: binding refusal correctly occurs earlier at baseline validation, CBMC prelaunch does not retain anchors. Fixtures were corrected to assert that boundary and persistent settings.",
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-green/command.json",
+          "sha256": "1fbcfc49e7a95b4ae2d350bfeff5c41ddef327da97785e448e37843c54e1a805",
+          "bytes": 324
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-green/control.log",
+          "sha256": "822ec2b6cfdbe58b736d0ff458b6fc667b615fe83c77739de01abfe71e1db235",
+          "bytes": 11402
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-green/junit.xml",
+          "sha256": "0a68934583b31985597b2f64a4a902d1d293000725db44a675eb96b23796b2ec",
+          "bytes": 14312
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-green/pytest/test_public_prove_binds_a_temp4/records/proofs/proof.contract.dx100_trust_fixture.20261016t021915z.0fa9ae0a.yaml",
+          "sha256": "adca06de017a7bd9a0c6c5b6979e39f98842be49f109c7dd9c01905751f86425",
+          "bytes": 7934
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-green/pytest/test_public_prove_binds_a_temp4/runs/proof.contract.dx100_trust_fixture.20261016t021915z.0fa9ae0a/adapter.log",
+          "sha256": "d76d3b001c8391b0f754cdc39f26b51fcb6bfd41834b09ca6e141eca4d9cf3f2",
+          "bytes": 409
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-green/pytest/test_public_prove_binds_a_temp5/records/proofs/proof.contract.dx100_trust_fixture.20261016t021917z.20c4b399.yaml",
+          "sha256": "b2f91f41874d16f4eeb96bedbf8e4041bee6a11d85753a11980a7f63aa7284d3",
+          "bytes": 8484
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-green/pytest/test_public_prove_binds_a_temp5/runs/proof.contract.dx100_trust_fixture.20261016t021917z.20c4b399/adapter.log",
+          "sha256": "a65e5cdf99cc88de2c107abf5b3ce5cc187a9fa4f20c719241bb1e66452cd4c8",
+          "bytes": 367
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-green/resources.json",
+          "sha256": "4f594d5b365eca596cc09eda48f506c5964b92231f41337bce0acd0a296b0322",
+          "bytes": 165
+        }
+      ]
+    },
+    "definition_red": {
+      "note": "Unpinned template body return42 was allowed to inherit pure helper contract; no solver launched (CPU-write refusal).",
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-typed-definition-red/command.json",
+          "sha256": "57ba4959f004423ec810ec5bec6a6f58a38b0fcd58bb9077d06ce47466f74765",
+          "bytes": 337
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-definition-red/control.log",
+          "sha256": "908c1ce2101817d5099abd4f5d5eb635d397776fed1f85a9c4113427e01e29eb",
+          "bytes": 16648
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-definition-red/junit.xml",
+          "sha256": "b0a45b8a9b5ac401041852c444932804638060f384915f8839cab50abb9102c6",
+          "bytes": 31904
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-definition-red/pytest/test_public_prove_binds_a_temp0/records/proofs/proof.contract.dx100_trust_fixture.20261016t022011z.b440d9bc.yaml",
+          "sha256": "ae5b17e9c85f9cf9dc40d3680baf2b0e981d3bc002b9342b68fb797a60dc0661",
+          "bytes": 7937
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-definition-red/pytest/test_public_prove_binds_a_temp0/runs/proof.contract.dx100_trust_fixture.20261016t022011z.b440d9bc/adapter.log",
+          "sha256": "d76d3b001c8391b0f754cdc39f26b51fcb6bfd41834b09ca6e141eca4d9cf3f2",
+          "bytes": 409
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-definition-red/resources.json",
+          "sha256": "cf64fe99130c8d27efe19e3cf57d56b0925f91cbaf76e126e98fdd620d1fc01e",
+          "bytes": 165
+        }
+      ]
+    },
+    "binding_green": {
+      "note": "39 passed: typed schema/binding15 + trust13 + completeinventory11. Before the one-line checker list addition.",
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-final-green/command.json",
+          "sha256": "da39bdc5b2cf35e207a5b31625a157b3ad64d9d15410e2062ad9dd3ec4ea6a1f",
+          "bytes": 394
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-final-green/control.log",
+          "sha256": "2647cab74567a732b6821cba027f3c40bf431adcde5c121bebac50be10e3dab7",
+          "bytes": 100
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-final-green/junit.xml",
+          "sha256": "1ef8199c06e36880541b8aab2948bf8590ceb0c4fc78eba2b842a8f23b96a77e",
+          "bytes": 7236
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-final-green/pytest/level-template0/records/proofs/proof.test-proposal.candidate-1.20261016t022139z.e62499de.yaml",
+          "sha256": "8eb69719e5fede6d5e97b64c8285fbcd1666f6d21323fe35d3a14a3478ae95e3",
+          "bytes": 2651
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-final-green/pytest/level-template0/runs/proof.test-proposal.candidate-1.20261016t022139z.e62499de/adapter.log",
+          "sha256": "f2770f8cac75156863564600b243fa4d1aeb8839a0a635e5474f74792b1a4230",
+          "bytes": 426
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-final-green/pytest/test_a_prelaunch_semantics_ver0/records/proofs/proof.contract.dx100_trust_fixture.20261016t022111z.5dae8712.yaml",
+          "sha256": "c7807aaa52e697adf4dc73b13c4189a7d8358e8b6920b96c911bc2ac8e2524e5",
+          "bytes": 7941
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-final-green/pytest/test_a_prelaunch_semantics_ver0/runs/proof.contract.dx100_trust_fixture.20261016t022111z.5dae8712/adapter.log",
+          "sha256": "77385b23ca0bf33579a79ec31e6cfa602a1c87c4a7a80c677dcc514468dd9c3c",
+          "bytes": 405
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-final-green/pytest/test_a_prelaunch_semantics_ver1/records/proofs/proof.contract.dx100_trust_fixture.20261016t022113z.04a3bb4c.yaml",
+          "sha256": "ee0d3852dd16c83d1026fa11fde0986a46a988e66a1e8793fde45e96abe89d9f",
+          "bytes": 8505
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-final-green/pytest/test_a_prelaunch_semantics_ver1/runs/proof.contract.dx100_trust_fixture.20261016t022113z.04a3bb4c/adapter.log",
+          "sha256": "c3c6e8c6b9b9d83d84d7e4e8ffdcd653dd4d125c3b913fe26c4bba8983d1a2a4",
+          "bytes": 363
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-final-green/pytest/test_a_prelaunch_semantics_ver2/records/proofs/proof.contract.dx100_trust_fixture.20261016t022115z.4fe632eb.yaml",
+          "sha256": "be6e36d6347c7abaca40a1762ef4fc426593b4f539ecd75d24936f054f803600",
+          "bytes": 6581
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-final-green/pytest/test_a_prelaunch_semantics_ver2/runs/proof.contract.dx100_trust_fixture.20261016t022115z.4fe632eb/adapter.log",
+          "sha256": "c1fe21f91cae5b7480974f809f47ddc52500d03a38aec66974235d2c11995ade",
+          "bytes": 405
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-final-green/pytest/test_a_prelaunch_semantics_ver3/records/proofs/proof.contract.dx100_trust_fixture.20261016t022116z.86fe7332.yaml",
+          "sha256": "8459b36baf1f65d8decf3d71fff3138599076ea85269c1931eafa0a894f33954",
+          "bytes": 7145
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-final-green/pytest/test_a_prelaunch_semantics_ver3/runs/proof.contract.dx100_trust_fixture.20261016t022116z.86fe7332/adapter.log",
+          "sha256": "5da1f66846c456ce78ddfdc0645b5529e5294c7046b1414e91432d3c05d2e91d",
+          "bytes": 363
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-final-green/pytest/test_a_prelaunch_semantics_ver6/runs/proof.contract.dx100_trust_fixture.20261016t022121z.5b196255/adapter.log",
+          "sha256": "4a118db742be5b8ce49899e588611fee159c8bcfb40d2c9bc0e5a79a778f0282",
+          "bytes": 405
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-final-green/pytest/test_a_prelaunch_semantics_ver7/records/proofs/proof.contract.dx100_trust_fixture.20261016t022122z.37db69f4.yaml",
+          "sha256": "fa3fe8840649da39f7f5621c5fe0e7bcc9d1885b120a9954edcb636be1029d11",
+          "bytes": 8488
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-final-green/pytest/test_a_prelaunch_semantics_ver7/runs/proof.contract.dx100_trust_fixture.20261016t022122z.37db69f4/adapter.log",
+          "sha256": "57268ffdb52d79c21c535a871727b6aa96750bdb2405dc27d098aeef8c4d75e6",
+          "bytes": 363
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-final-green/pytest/test_a_prelaunch_semantics_ver8/runs/proof.contract.dx100_trust_fixture.20261016t022125z.c71d5152/adapter.log",
+          "sha256": "08fb1b5d9b849837e22b2329ad35ffb75131dc14ad9dd55770dcebc664f1aa8e",
+          "bytes": 405
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-final-green/pytest/test_a_prelaunch_semantics_ver9/records/proofs/proof.contract.dx100_trust_fixture.20261016t022126z.c5769498.yaml",
+          "sha256": "a10ce2397e8986d80462a3672920b7ffd6bfb8bdd8561af0199b41089f40928b",
+          "bytes": 7145
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-final-green/pytest/test_a_prelaunch_semantics_ver9/runs/proof.contract.dx100_trust_fixture.20261016t022126z.c5769498/adapter.log",
+          "sha256": "85325e4a865f024619ef2e5735ca806038dad26d747b74ff2bf8b08d25767745",
+          "bytes": 363
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-final-green/pytest/test_public_prove_binds_a_temp6/records/proofs/proof.contract.dx100_trust_fixture.20261016t022107z.b6fc8ec2.yaml",
+          "sha256": "bebee0e976e10a397e4337f6c313165e5ecf3f94e321264e3b2db81e2098593e",
+          "bytes": 8057
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-final-green/pytest/test_public_prove_binds_a_temp6/runs/proof.contract.dx100_trust_fixture.20261016t022107z.b6fc8ec2/adapter.log",
+          "sha256": "d76d3b001c8391b0f754cdc39f26b51fcb6bfd41834b09ca6e141eca4d9cf3f2",
+          "bytes": 409
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-final-green/pytest/test_public_prove_binds_a_temp7/records/proofs/proof.contract.dx100_trust_fixture.20261016t022109z.f760f958.yaml",
+          "sha256": "7c06605332a2c10dfbbf0627319e81fe121b911758b18fcfdd93e6ce1cdc85d5",
+          "bytes": 8621
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-final-green/pytest/test_public_prove_binds_a_temp7/runs/proof.contract.dx100_trust_fixture.20261016t022109z.f760f958/adapter.log",
+          "sha256": "a65e5cdf99cc88de2c107abf5b3ce5cc187a9fa4f20c719241bb1e66452cd4c8",
+          "bytes": 367
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-final-green/pytest/test_the_five_explicit_semanti0/records/proofs/proof.t10.t28_trust.yaml",
+          "sha256": "34d1d2cd754c23c7aaff9af54c5c6be0be0ce6233ff243eb7622bef8027b1106",
+          "bytes": 3963
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-binding-final-green/resources.json",
+          "sha256": "80b984e0a0649091539944bad2bd3d4ff5caa6f40e99be3ebbe2c0ce372c7cf9",
+          "bytes": 165
+        }
+      ]
+    },
+    "checker_red": {
+      "note": "Mutated copied dx100_interface module was absent from dependency closure; scripted command ran with old method. A fixture, never theorem evidence.",
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-checker-closure-red/command.json",
+          "sha256": "825f8781a90a5057b66cef12ad22bc1e1292549f2ac76ea4343d66e4b46f3bad",
+          "bytes": 325
+        },
+        {
+          "path": "/private/tmp/probata-t28-checker-closure-red/control.log",
+          "sha256": "ef165d399b0d9d56724d83a854878fcdb8d893f55c9df3655dab0968909ec202",
+          "bytes": 8626
+        },
+        {
+          "path": "/private/tmp/probata-t28-checker-closure-red/junit.xml",
+          "sha256": "64369ab6fcfaf0c0cf38524c16d8cc38eb01f3131a6c82666c7a7b5b2c0732e0",
+          "bytes": 14483
+        },
+        {
+          "path": "/private/tmp/probata-t28-checker-closure-red/pytest/test_changed_verdict_reader_or0/changed-runtime/swdb/dx100_interface.py",
+          "sha256": "174b3543d9473f517d94e986b4cf0aa5afe16414995b5179a6f0ca150c993511",
+          "bytes": 8114
+        },
+        {
+          "path": "/private/tmp/probata-t28-checker-closure-red/pytest/test_changed_verdict_reader_or0/records/proofs/proof.test-proposal.candidate-1.20261016t022411z.fe78a5dd.yaml",
+          "sha256": "256d714432fc7248481a2f2848b979ba4474be50dd3781b5054f92bbffada55f",
+          "bytes": 2665
+        },
+        {
+          "path": "/private/tmp/probata-t28-checker-closure-red/pytest/test_changed_verdict_reader_or0/runs-outside-repo/proof.test-proposal.candidate-1.20261016t022411z.fe78a5dd/adapter.log",
+          "sha256": "9fef1a38a1b52397bef1f2399056859deb3781d4328965ed4703a82e1d7aa135",
+          "bytes": 466
+        },
+        {
+          "path": "/private/tmp/probata-t28-checker-closure-red/resources.json",
+          "sha256": "7bf8b0f9f49616d1e46b53f988b2a6c2afdab88a3ebefff994c75cd2195bd0ea",
+          "bytes": 164
+        }
+      ]
+    },
+    "checker_green": {
+      "note": "Exact same mutation now refuses frozen method before command or proof record.",
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-checker-closure-green/command.json",
+          "sha256": "7247ccd4201851a97c539d28159596bcb98a954b1b1003b716482d1883cc82ad",
+          "bytes": 321
+        },
+        {
+          "path": "/private/tmp/probata-t28-checker-closure-green/control.log",
+          "sha256": "f958a9ed480c91845551be4ff9a542934bb901c7098ace85ab1aea471d522a4e",
+          "bytes": 113
+        },
+        {
+          "path": "/private/tmp/probata-t28-checker-closure-green/junit.xml",
+          "sha256": "7cfae99ccf865044a45e6b14aa7c405b88c555a334d56b66375643506ca6892d",
+          "bytes": 445
+        },
+        {
+          "path": "/private/tmp/probata-t28-checker-closure-green/pytest/test_changed_verdict_reader_or0/changed-runtime/swdb/dx100_interface.py",
+          "sha256": "174b3543d9473f517d94e986b4cf0aa5afe16414995b5179a6f0ca150c993511",
+          "bytes": 8114
+        },
+        {
+          "path": "/private/tmp/probata-t28-checker-closure-green/resources.json",
+          "sha256": "f229c7ab564056adc1aa0db4a0ee109e84e15b748a6694b89bfa7af6d791c02f",
+          "bytes": 163
+        }
+      ]
+    },
+    "fresh_method_green": {
+      "note": "Fresh identity-bound execution method admits scripted fixture command.",
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-checker-fresh-method-green/command.json",
+          "sha256": "9739d55a3e08f43ffb3c158a8b7f0dcf8fd765a6a9b90af78f55ba2402a2ef3b",
+          "bytes": 386
+        },
+        {
+          "path": "/private/tmp/probata-t28-checker-fresh-method-green/control.log",
+          "sha256": "e6ce24532f0ff4df9a085bad48206e2f6f8e3db793f63851e02979637a1659f7",
+          "bytes": 98
+        },
+        {
+          "path": "/private/tmp/probata-t28-checker-fresh-method-green/junit.xml",
+          "sha256": "be3d0dcd9735f6b72cb775d41b296953204f84ce6ad9d7c153faba722ca43d3b",
+          "bytes": 409
+        },
+        {
+          "path": "/private/tmp/probata-t28-checker-fresh-method-green/pytest/test_a_fresh_execution_method_0/records/proofs/proof.test-proposal.candidate-1.20261016t022518z.ae7cb525.yaml",
+          "sha256": "dd8348c3f1587d117e4459283b4bf7544caf2caa0402db582444eb6ba00f6322",
+          "bytes": 2690
+        },
+        {
+          "path": "/private/tmp/probata-t28-checker-fresh-method-green/pytest/test_a_fresh_execution_method_0/runs-outside-repo/proof.test-proposal.candidate-1.20261016t022518z.ae7cb525/adapter.log",
+          "sha256": "798da5ed0360148466ec6688805c7f73b1246cc38daf41ab0264a6f994318dd7",
+          "bytes": 480
+        },
+        {
+          "path": "/private/tmp/probata-t28-checker-fresh-method-green/resources.json",
+          "sha256": "c40847df47b16b1e331270e55c9661a3fc2fdc064d6eae274ae1a15bcca75a58",
+          "bytes": 164
+        }
+      ]
+    },
+    "final_green": {
+      "note": "29 passed: typed schema/sourcebinding19 incl new header-overload controls and fresh method +10 existing compiler/native/template controls. Whole source has checker closure tuple addition.",
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-typed-instance-complete-green/command.json",
+          "sha256": "bb51fbbcc1472570b8bd360e95a98efbc94b59fa82f92f0d1ed3f44f617431a4",
+          "bytes": 689
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-instance-complete-green/control.log",
+          "sha256": "577b08090482e8066b71650b4bbc5711a0b214f40ac6332fc1af3e190e08acca",
+          "bytes": 100
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-instance-complete-green/junit.xml",
+          "sha256": "eb7e9f8308e892d295a2862266c3d147aebde4ac50a48c9a71509d4478cc7715",
+          "bytes": 5191
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-instance-complete-green/pytest/test_a_fresh_execution_method_0/records/proofs/proof.test-proposal.candidate-1.20261016t022657z.3874b14c.yaml",
+          "sha256": "b1fce08196fdc11fa05ef586282a50ccbf9e2bd8cad65d8a2f7e06405d7d3c87",
+          "bytes": 2693
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-instance-complete-green/pytest/test_a_fresh_execution_method_0/runs-outside-repo/proof.test-proposal.candidate-1.20261016t022657z.3874b14c/adapter.log",
+          "sha256": "8f8f4baa5e501c50b38c0023db18eb63b054276b3d24dcdf8cd4dde1cf651acf",
+          "bytes": 486
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-instance-complete-green/pytest/test_public_prove_binds_a_temp6/records/proofs/proof.contract.dx100_trust_fixture.20261016t022646z.f9825ec9.yaml",
+          "sha256": "243904b522e5bb384efff5435c3f21d37b80e70c4db46f45a42c5ce4d9cbe0ff",
+          "bytes": 8063
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-instance-complete-green/pytest/test_public_prove_binds_a_temp6/runs/proof.contract.dx100_trust_fixture.20261016t022646z.f9825ec9/adapter.log",
+          "sha256": "d76d3b001c8391b0f754cdc39f26b51fcb6bfd41834b09ca6e141eca4d9cf3f2",
+          "bytes": 409
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-instance-complete-green/pytest/test_public_prove_binds_a_temp7/records/proofs/proof.contract.dx100_trust_fixture.20261016t022648z.dc88bb23.yaml",
+          "sha256": "b358bb431353c0c0e5da161eb4fa9f6140d4fb5f1f57025d6515829c1ce2195c",
+          "bytes": 8635
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-instance-complete-green/pytest/test_public_prove_binds_a_temp7/runs/proof.contract.dx100_trust_fixture.20261016t022648z.dc88bb23/adapter.log",
+          "sha256": "a65e5cdf99cc88de2c107abf5b3ce5cc187a9fa4f20c719241bb1e66452cd4c8",
+          "bytes": 367
+        },
+        {
+          "path": "/private/tmp/probata-t28-typed-instance-complete-green/resources.json",
+          "sha256": "a89f42871736980743bbccb58e07c99f03970aeab2dc8db872081fe31b675901",
+          "bytes": 165
+        }
+      ]
+    }
+  },
+  "source": [
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/swdb/c_lowering.py",
+      "sha256": "e8a427bcafec10d6299f57236bfcb949c554931ea77b3cd01615ed972ffdf152",
+      "bytes": 159255
+    },
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/swdb/proof_semantics.py",
+      "sha256": "2354b1be662a4a9fe4985110ce657c9a432b27f288639f661e13aa5bad5ea5b6",
+      "bytes": 28008
+    },
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/swdb/dx100_interface.py",
+      "sha256": "9a50ad98a26169b2ff60766e351a3be28e2b511901edd09701489720c8e9a451",
+      "bytes": 8084
+    },
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/swdb/proof_setup.py",
+      "sha256": "dad41c8714cd3bfa3cbc472c82e2130f639a04ece008d641eec47512d7098e11",
+      "bytes": 41963
+    },
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/swdb/wp_adapter.py",
+      "sha256": "aa03842938a19d22fe6c3fb466007cfa57544c55fddc3c19b1784b047271ee43",
+      "bytes": 78609
+    },
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/swdb/cbmc_adapter.py",
+      "sha256": "d63b7f6547fa3b7655a59db0f26f1e0a957c7916bf8d9b7d77ef4142ef3e9a27",
+      "bytes": 67775
+    },
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/tests/test_proof_setup.py",
+      "sha256": "5c9f8b62e0746124e6dfe5e54c12aa2b806b7d00a67acecb14e301b3d1c13c27",
+      "bytes": 24314
+    },
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/tests/test_dx100_trust_entries.py",
+      "sha256": "a5ecf3a9d15efef85e3fa640aa8cf9609ab9271b768b3d32326c6be7ea47b84a",
+      "bytes": 9571
+    },
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/tests/test_dx100_typed_semantics.py",
+      "sha256": "dfb226a08ab74cf123def591b21a1900334ee2b35de904afb8eed5b0bbb63cad",
+      "bytes": 7434
+    }
+  ],
+  "final_resources": {
+    "exit_code": 0,
+    "peak_rss_bytes": 207929344,
+    "out_of_memory": false,
+    "timed_out": false,
+    "wall_seconds": 35.22789858299075,
+    "cpu_seconds": 31.882782
+  }
+}

@@ -24,10 +24,8 @@ TRUST = {
 }
 
 
-@pytest.mark.parametrize('adapter', ['cbmc', 'wp'])
-@pytest.mark.parametrize('mark', [True, False, 'true'])
-@pytest.mark.parametrize('mutate', [False, True])
-def test_a_prelaunch_semantics_verdict_lists_each_pinned_rule_marked_as_trusted(tmp_path, adapter, mark, mutate):
+def run_semantics_fixture(tmp_path, adapter, mark=True, mutate=False, *, source=None, extra_calls=()):
+    """Public prove fixture with explicit external stand-ins and no solver launch."""
     from swdb import c_lowering, cbmc_adapter, cbmc_translator
     library = tmp_path / 'library'
     for folder in ('proof_semantics', 'dx100'):
@@ -35,6 +33,7 @@ def test_a_prelaunch_semantics_verdict_lists_each_pinned_rule_marked_as_trusted(
     old = library / 'proof_semantics/dx100_bfs_0_1.yaml'
     data = yaml.safe_load(old.read_text())
     data.update(id='semantics.dx100_trust_fixture', version='0.2', sequence=2)
+    data['calls'] += list(extra_calls)
     data['rules'] += [{'id': name, 'statement': sentence, 'assumed': {'owner': 'Eric'}, 'record_assumption': mark}
                      for name, sentence in TRUST.items()]
     old.unlink()
@@ -42,7 +41,7 @@ def test_a_prelaunch_semantics_verdict_lists_each_pinned_rule_marked_as_trusted(
     semantics.write_text(yaml.safe_dump(data, sort_keys=False))
     units = library / 'proof_units'
     units.mkdir()
-    source = 'void maa_const(int value, int reg);\nint trust_fixture(int *p) { maa_const(7, 0); p[0] = 7; return 7; }\n'
+    source = source or 'void maa_const(int value, int reg);\nint trust_fixture(int *p) { maa_const(7, 0); p[0] = 7; return 7; }\n'
     (units / 'trust.cc').write_text(source)
     contracts = library / 'rewrite_contracts'
     contracts.mkdir()
@@ -102,6 +101,14 @@ def test_a_prelaunch_semantics_verdict_lists_each_pinned_rule_marked_as_trusted(
                                               'SWDB_FRAMA_C': f'{sys.executable} {frama}' if adapter == 'wp' else 'none',
                                               'WHY3CONFIG': str(why3),
                                               'SWDB_VERIFIER_LOCK': str(tmp_path / 'standin-only.lock')})
+    return result, records, semantics, marker
+
+
+@pytest.mark.parametrize('adapter', ['cbmc', 'wp'])
+@pytest.mark.parametrize('mark', [True, False, 'true'])
+@pytest.mark.parametrize('mutate', [False, True])
+def test_a_prelaunch_semantics_verdict_lists_each_pinned_rule_marked_as_trusted(tmp_path, adapter, mark, mutate):
+    result, records, semantics, marker = run_semantics_fixture(tmp_path, adapter, mark, mutate)
     if isinstance(mark, str):
         assert result.returncode == 1 and 'record_assumption must be a boolean' in result.stderr
         assert not marker.exists() and not list(records.path.glob('proofs/*.yaml'))

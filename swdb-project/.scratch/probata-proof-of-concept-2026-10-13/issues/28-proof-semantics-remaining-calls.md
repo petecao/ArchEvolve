@@ -80,3 +80,15 @@ from receiving a new file hash. WP's earlier validation-time probe consistently
 records the subsequently loaded version. No actual verifier ran, no new
 production semantics version is current and the substantive acceptance boxes
 remain open. [Exact evidence](../evidence/t28-trust-record-controls-20261015.json).
+
+Typed-instance prerequisite — 2026-10-15 ET: concrete type/arity contracts now
+replace a template family's generic fallback; baseline validation/source binding
+refuses missing/ambiguous selectors, C ABI mismatches and unpinned source bodies.
+Both allocation declarations remain mandatory and selected instances appear in
+adapter settings. Focused39/39 and overlapping final29/29 compiler/native/
+stand-in controls pass. A separate genuine changed-module RED/GREEN closes the
+checker identity over the imported contract-routing module; a fresh identity-bound
+scripted method accepts. No actual formal tool ran. Actual header-body/ABI
+bindings and all substantive new call/state/value/history/memory acceptance
+remain active, so no box is checked and status stays **claimed**.
+[Exact evidence and partial-domain boundaries](../evidence/t28-typed-instance-controls-20261015.json).
