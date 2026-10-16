@@ -1,0 +1,147 @@
+{
+  "date_et": "2026-10-16",
+  "disposition": "PASS_SCOPED_FIXTURE_LINEUP_REPAIR",
+  "source_freeze": "770df40eeb5e3034862f61b79b6bcaad5fa620a7",
+  "docs_freeze": "b618b44cb8c6f9c94d3d1ea70f861849aa4fcb31",
+  "review_md": {
+    "path": "/private/tmp/probata-t28-selector-lineup-independent-review-20261016.md",
+    "bytes": 3678,
+    "sha256": "9f62017c5a57b304e7b6dabde207aaaa29559e79052a93ca5a2eeb30e57bbb71"
+  },
+  "cold_source_control_audit": {
+    "freeze": "b618b44cb8c6f9c94d3d1ea70f861849aa4fcb31",
+    "runnable_source": "770df40eeb5e3034862f61b79b6bcaad5fa620a7",
+    "reference_instances": 957,
+    "unique_paths": 957,
+    "producer_physical_refs": 919,
+    "mismatches": [],
+    "profiles": [
+      {
+        "raw": "/private/tmp/probata-t28-selector-explicit-lineup-red",
+        "passes": 1,
+        "failures": 19,
+        "skips": 0,
+        "resources": {
+          "exit_code": 1,
+          "peak_rss_bytes": 69533696,
+          "out_of_memory": false,
+          "timed_out": false,
+          "wall_seconds": 0.5776169589953497,
+          "cpu_seconds": 0.564888
+        }
+      },
+      {
+        "raw": "/private/tmp/probata-t28-selector-explicit-lineup-green",
+        "passes": 24,
+        "failures": 0,
+        "skips": 2,
+        "resources": {
+          "exit_code": 0,
+          "peak_rss_bytes": 69566464,
+          "out_of_memory": false,
+          "timed_out": false,
+          "wall_seconds": 0.6206314589944668,
+          "cpu_seconds": 0.587216
+        }
+      },
+      {
+        "raw": "/private/tmp/probata-t28-selector-explicit-lineup-final-green",
+        "passes": 27,
+        "failures": 0,
+        "skips": 2,
+        "resources": {
+          "exit_code": 0,
+          "peak_rss_bytes": 69844992,
+          "out_of_memory": false,
+          "timed_out": false,
+          "wall_seconds": 0.6621447919751517,
+          "cpu_seconds": 0.62037
+        }
+      },
+      {
+        "raw": "/private/tmp/probata-t28-selector-lineup-standin-regression",
+        "passes": 3,
+        "failures": 0,
+        "skips": 0,
+        "resources": {
+          "exit_code": 0,
+          "peak_rss_bytes": 3481108480,
+          "out_of_memory": false,
+          "timed_out": false,
+          "wall_seconds": 53.801593541982584,
+          "cpu_seconds": 55.232959
+        }
+      },
+      {
+        "raw": "/private/tmp/probata-t28-selector-lineup-public-pins-green",
+        "passes": 28,
+        "failures": 0,
+        "skips": 2,
+        "resources": {
+          "exit_code": 0,
+          "peak_rss_bytes": 2336456704,
+          "out_of_memory": false,
+          "timed_out": false,
+          "wall_seconds": 15.745408334012609,
+          "cpu_seconds": 16.201671
+        }
+      }
+    ],
+    "changed_git_pins": [
+      {
+        "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-selector-explicit-lineup-controls-20261016.json",
+        "sha256": "817d65dfacf968525e7e882a9feac28dd55e11fa4e584affde47d5172d2147be",
+        "bytes": 218948
+      },
+      {
+        "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-selector-explicit-lineup-controls-20261016.md",
+        "sha256": "7e63c9c768e0146d9f3987c6aaab39db4d744105d7cf2951ed644832a27deb1f",
+        "bytes": 1051
+      },
+      {
+        "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/issues/28-proof-semantics-remaining-calls.md",
+        "sha256": "5ba509634181cc3c5ba847ae0116fb010170fdaa341f138c5329237f501141c4",
+        "bytes": 25977
+      },
+      {
+        "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/run_selector_acceptance.sh",
+        "sha256": "15fcc86b95429c5fefaef9622859848fcf79db7bfe606a8a306a0f5ddc6a67c8",
+        "bytes": 3821
+      },
+      {
+        "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/selector-first-gate.md",
+        "sha256": "a2dc458ee5d3d847ba4886f9822a64f66d4ebb328ee7658d288793fb40e3f0c3",
+        "bytes": 4822
+      },
+      {
+        "path": "swdb-project/tests/test_dx100_selector_lineup.py",
+        "sha256": "5794a0f09463d96415b22c90f7ba60a73c68f6c73543a60c99b7552d22063081",
+        "bytes": 6234
+      },
+      {
+        "path": "swdb-project/tests/testkit/dx100_selector.py",
+        "sha256": "f101abed89976d651958bf9071d7ca00252d90cb6de4ae45ec0fca5b2c3ee120",
+        "bytes": 7370
+      },
+      {
+        "path": "swdb-project/tests/testkit/dx100_trust.py",
+        "sha256": "a5da4f079d300d2da9a4928c51c2d9713c03810706b8189ba213d8308a041d67",
+        "bytes": 7619
+      }
+    ],
+    "production_library_actual_test_equal21ed": true,
+    "diffcheck_pass": true,
+    "external_static_review_source_pins_rechecked": 30,
+    "no_actual_calls_by_reviewer": true
+  },
+  "old_failure_receipt": {
+    "path": "/private/tmp/probata-t28-selector-failure-cold-audit-v2-20261016.json",
+    "bytes": 17595,
+    "sha256": "21cb801684573157eb4c7c226c184ed17c5a686400b941fff4eedb1bfd9edceb",
+    "checks_reported": 495,
+    "errors": [],
+    "no_reviewer_remote_rehash": true
+  },
+  "new_actual_calls_by_reviewer": 0,
+  "no_historical_upgrade": true
+}

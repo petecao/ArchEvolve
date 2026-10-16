@@ -5,16 +5,17 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-re
 
 ## Current state (resume here)
 
-Updated: 2026-10-16 01:49 ET. **35 resolved / 25 ready-for-agent / 3 claimed.**
-Implementation remains active on `codex/probata-resume-20261015`, published
-`4bb53cd7`, based on `yanrujhou_main`. The eligible frontier is **07, 25, 28**;
+Updated: 2026-10-16 02:00 ET. **35 resolved / 25 ready-for-agent / 3 claimed.**
+Implementation remains active on `codex/probata-resume-20261015`, based on
+`yanrujhou_main`. Last published checkpoint:`e1656b72`; this checkpoint adds the
+reviewed selector fixture-lineup source`770df40e`. The eligible frontier is **07, 25, 28**;
 other unresolved tickets retain their dependencies. [All 63 statuses](ticket-status-20261015.md).
 
 | Ticket | Current evidence | Next gate |
 | --- | --- | --- |
 | **07 claimed** | Run26 remains UNPROVEN. The separate exact7930 helper run completed: 209/212 ordinary goals Valid, three open; all33 smoke rows have fresh external nonvalid outcomes and raw passed=true. All19 bodies/245 goals/352 properties/31 init properties remain inventoried. Whole383.135s/1261.625MiB sampled RSS, exit1 from open goals; four transient AccessDenied events recovered, final inspection failure null. | Review the separate fresh out-slot/source-domain repair and its source-equivalence map before any new admission. Alignment, caller/allocator correspondence, TD and full C RTE remain open. [Settled actual](evidence/t07-helper-stage2-v2-settled-actual-20261016.json), [independent cold review](evidence/t07-helper-stage2-v2-independent-cold-review-20261016.md). |
 | **25 claimed** | Pair `1278f2d9` and public heap CEA are accepted in scope. Fresh original count constructor at exact `bb7170ac` also passes independent cold review: one record, 27 targets, 36 ordinary Valid plus one smoke; 1,031 checks/342 references with zero mismatch. All84 tasks are identical universal-value streams or exact zero specialization. | Continue separate growth/receiver/storage ownership and caller work. No generic caller, production-store, formal C++ or whole-ticket acceptance follows. [Count cold review](evidence/t25-count-ctor-cold-review-bb7170ac-20261016.md), [heap cold review](evidence/t25-public-heap-cold-review-cea5652b-20261016.md). |
-| **28 claimed** | Exact9704 mathematical rank gate has core5/family4/all-false1 directly Valid and an independent negative with native sat/Why3 Unknown LF(sat). All11 submitted tasks match emitted bytes; independent complete context/variant audit accepts only the conditional mathematical theorem. Original entry/guard exit1 remains unchanged; pure v3 reader correction needs no rerun. Source-bound selector21ed is published through4bb; root reports node1G615 ended01:52:23 ET, refusing before WP launch because fixture method tool-version pins mismatch Linux; no proof result. | Review the separate fixture metadata repair and fresh entry/source freeze; retain the original pre-WP refusal. No hardware fairness, source-to-trace/public composition, current0.2 or whole28 claim. [Rank actual and reviews](evidence/t28-rank-whole-actual-and-cold-acceptance-20261016.json), [selector review](evidence/t28-selector-first-vertical-independent-review-20261016.md). |
+| **28 claimed** | Exact9704 mathematical rank gate has core5/family4/all-false1 directly Valid and an independent negative with native sat/Why3 Unknown LF(sat). All11 submitted tasks match emitted bytes; independent complete context/variant audit accepts only the conditional mathematical theorem. Original entry/guard exit1 remains unchanged; pure v3 reader correction needs no rerun. Source-bound selector21ed is published through4bb; node1G615 ended01:52:23 ET before WP from fixture-version mismatch; the495-check cold audit preserves that failure. New fixture-only source770 requires an explicit four-tool map; no fresh actual run yet. | Root may freshly admit exact770 after live preflight; entryv3 static review passes. Retain old21ed pre-WP refusal; no new result or historical upgrade. No hardware fairness, source-to-trace/public composition, current0.2 or whole28 claim. [Rank actual and reviews](evidence/t28-rank-whole-actual-and-cold-acceptance-20261016.json), [selector review](evidence/t28-selector-first-vertical-independent-review-20261016.md). |
 | **24 / 27 / 36 resolved** | Published29709232/af10a946/8b0c2e27 with scoped acceptance; ticket36 retains its historical checker identity. | Preserve exact evidence for final integration review. |
 
 Root owns actual admissions: at most two remote measurements, one per socket,
@@ -28,8 +29,16 @@ mismatched admitted Linux5.1.0/2.6.4. The separate admission audit reports202
 physical/Git module checks with zero errors; source remained clean and root
 reports all leases released. These are admission/refusal observations, not a
 selector proof result. The local pretty-print wrapper's separate exit1 came from
-worktree-add text prefixed before launcher JSON; no relaunch occurred. A separate
-fixture metadata repair is pending. Recheck live state before another dispatch.
+worktree-add text prefixed before launcher JSON; no relaunch occurred. The
+[495-check cold audit](evidence/t28-selector-prelaunch-failure-21edecf2-20261016.md)
+retains77 remote raw files/375,635 bytes, zero records and wrong-enum unexecuted.
+The [fixture-lineup repair](evidence/t28-selector-lineup-independent-review-20261016.md)
+requires explicit Frama33.0/Z35.1.0/Alt-Ergo2.6.4/CVC51.2.1 and changes only four
+copied method version fields; production matching/flags and actual assertions
+stay unchanged. Final28 pure/compiler/stand-in controls pass with2 actual skips,
+plus3 legacy controls. [Entryv3 static review](evidence/t28-selector-entry-v3-independent-review-20261016.md)
+passes for prospective exact770; root has not admitted a fresh run at this checkpoint.
+Recheck live state before another dispatch.
 
 The helper v2 run and short mathematical rank run have both settled under their
 own exact source/runtime identities. Helper guard383.135s retained four transient
