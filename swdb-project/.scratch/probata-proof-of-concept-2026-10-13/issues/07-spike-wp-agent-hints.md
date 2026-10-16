@@ -1,7 +1,7 @@
 # 07 — Spike (c): WP with agent hints
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-15 ET (method22 run25 unproven after terminal inspection refusal; complete Codex origin/usage and cleanup audited); 2026-10-14 22:50 ET (continuation 3: runs 10-12 fail, verdict fail so far, effort paused); 2026-10-14 17:10 ET (continuation 2: runs 7-9 fail, verdict fail so far); 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-15 ET (prospective method23 independently reviewed; run25 remains unproven and no new counted launch is implied); 2026-10-14 22:50 ET (continuation 3: runs 10-12 fail, verdict fail so far, effort paused); 2026-10-14 17:10 ET (continuation 2: runs 7-9 fail, verdict fail so far); 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 03
@@ -1457,3 +1457,43 @@ headers; two later scoped page requests succeeded. Future work must separately
 test a bounded inspection retry policy, exact real-format task mapping and any
 same-run baseline-subset initialization. No current-run result reuse, criterion
 waiver or new actual launch is implied. The ticket remains claimed.
+
+
+## 2026-10-15 — Prospective method23 reviewed, acceptance still open
+
+The [method23 protocol](../prototype/07-wp-hints/METHOD23.md) combines the separately
+reviewed bounded environment-inspection retry with exact machine-ID task paging
+and a fresh-own-baseline empty diagnostic initialization. The baseline remains
+full all-function/smoke at10seconds inside the original continuous clock. Its
+retained TDStep/global-lemma subset supplies only diagnostic observations; no
+second round is fabricated, no cross-mode formula equivalence is asserted, and
+every final obligation remains mandatory. All counted hints must still come from
+Codex, with no mechanical seed insertion or historical input reuse.
+
+The tiny generic no-external-prover API component independently matched15unique
+goal IDs and printed tasks, including five nontrivial contextual obligations,
+with clean resource completion. Both exporters observe the same Wpo database;
+this checks exporter agreement/context and does not establish an independently
+derived obligation universe or proof. Native solver-session JSON absence and
+finite metadata-only poststop scope remain explicit in the
+[component audit](../evidence/t07-method23-component-api-independent-20261015.json).
+Earlier trivial-output and parser-refused components remain retained outside Git.
+
+Independent review found and the public regressions reproduced four refusal gaps:
+old-root baseline retargeting, late-generated task disclosure, missing actual
+source/header/exporter revalidation, and expired temporary-candidate disclosure
+after rollback. All four are repaired. Validation passed264composed controls,
+then26affected controls after the final localized fix; other29reviewed files are
+byte-identical to the composed snapshot. The
+[exact independent review](../evidence/t07-method23-final-independent-review-20261015.md)
+and [32-file manifest](../evidence/t07-method23-final-independent-review-manifest-20261015.json)
+retain the precise source and evidence boundaries.
+
+The [compact preparation receipt](../evidence/t07-method23-preparation-20261015.json)
+records source pins, raw receipt hashes and unchanged33/36/60minute scheduling,
+full30positive/smoke and identical-hint covering-wait negative, complete origin,
+natural usage and publication gates. Timing sufficiency is unproven. A clean
+published freeze, exact tool/input pins, live preflight, fresh pre-provider audit
+and coordinator admission still precede any new counted run. No new scientific
+success or actual launch is claimed here. Run25 and its producer remain immutable;
+ticket07 remains claimed with acceptance unsatisfied.

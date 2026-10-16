@@ -4,13 +4,14 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 21:19 ET. **Implementation is active under the user's ongoing approval.**
+Updated: 2026-10-15 21:57 ET. **Implementation is active under the user's ongoing approval.**
 Integration `codex/probata-resume-20261015` is based on `yanrujhou_main` at `d94d629b`.
-Audited run23 documentation is published at `6dc94905`; reviewed method21 prototype
-is published at `14c2a298`. Only `swdb/c_lowering.py`
-differs in production from `71771f09`; its reviewed SHA256 remains
+The lowerer file SHA256 remains
 `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
-Every evaluation retains its own source identity.
+Reviewed setup/compiler-identity candidate `2033c174` is published at `465fd069`;
+its changed production files are `proof_setup.py` and `stdlib_provenance.py`.
+Each evaluation retains its exact source/runtime. Historical `0e7` evidence is
+not upgraded by this merge.
 
 **34 resolved / 25 ready-for-agent / 4 claimed**, derived from ticket frontmatter.
 The active frontier is **07, 25, 28, 36**. Tickets 24 and 27 are resolved and published.
@@ -19,10 +20,10 @@ Drafts 1/2 remain immutable. No draft 3 or final production freeze exists.
 | Ticket / owner | Verified checkpoint | Active work |
 |---|---|---|
 | 24 + 27 / resolved | Published `29709232` and `af10a946`. Ticket24: 36 actual records + nine no-launch refusals, all eleven scoped items; ticket27: 62 cases / 52 records, safe11 has 792 ordinary + 252 smoke Valid. Both independently reviewed. | Raw/producers/history and scientific limits retained. Both evaluation lanes are free. [24 closure](evidence/t24-combined-current-independent-review-20261015.md), [27 review](evidence/t27-ticket-closure-independent-review-20261015.md). |
-| 07 / `ticket07` | Run25 remains UNPROVEN. Narrow supervision guard repair integrated `7a66d146`, 37 independent controls pass. Installed machine-goal API compiles; same-run baseline duplication identified. | Machine-ID task reader and exact same-run baseline reuse under development; no new actual admission. Frozen798/34 source pins/raw preserved; Mac actual slot free. |
+| 07 / `ticket07` | Run25 remains UNPROVEN. Narrow guard repair integrated `7a66d146`, 37 controls pass. Component3 independently matches15 exact goal IDs and5 nontrivial contextual tasks; no proof claim. | Freshness gaps have public RED/GREEN controls; exact final review/package pending. No new counted admission. Frozen798/34 source pins/raw preserved; Mac actual slot free. |
 | 25 / `ticket24` | Claimed at `e3e91b8e`; own worktree `/private/tmp/probata-resume-t25`. Prior bounded maximum/stale/at controls retain their own pins. | TDD for original count-value/dtor source-to-VC capability using immutable unbounded heap definitions; no formal execution admitted yet. |
 | 28 / `ticket27` | Ticket27 gate released. Complete upstream header inventory verified: 26 names / 27 declarations; old0.1 remains preserved. | New own worktree/TDD; complete per-call semantics and synthetic controls, with verified opcode/type/width limits and explicit trust. No actual admission yet. |
-| 36 / `ticket36` | Ticket27 gate released. Read-only ten-item gap plan complete; historical122 controls exclude13 actual WP facts. | Own worktree/TDD for driver-identity fallback and current setup/reader acceptance. Ticket-local freeze, drafts1/2 immutable, final freeze remains59. No actual admission yet. |
+| 36 / `ticket36` | Runtime repair published `465fd069`,13 compiler/stand-in controls pass. Earlier126 batch included real Frama parsing; later affected batch stopped with -15 and no full pass. | First setup581/facts607 dispatches exited4 before collection because of relative nodes. Exact source2033/runtime/raws retained. Corrected explicit project cwd plus collection-count/runtime precheck under review; no fresh test acceptance. |
 
 At17:43:14 ET node0 generation572 released after the standard caller safe timeout;
 whole guard exit1,1805.69s,peak1,010,438,144B,noOOM/whole timeout. Its five standard
@@ -244,7 +245,7 @@ lanes after the active jobs; every launch still needs fresh all-lease/resource
 admission. Historical weights are not a fresh ETA or success guarantee.
 [Selected schedule and exact commands](evidence/t27-selected-safe-shard-schedule-20261015.json).
 No full ticket or method success is claimed from these checkpoints. This chat's
-30-minute heartbeat stays active; last full table 21:19 ET, next due 21:49 ET.
+30-minute heartbeat stays active; last full table 21:49 ET, next due 22:19 ET.
 Root live readback at 19:50 ET: both lanes held (580/604), exact detached source
 identities unchanged, active solver processes on both profiles, load 2.81 and
 12 GiB free on `/data1` / 94 GiB on `/data`. No third evaluation job.

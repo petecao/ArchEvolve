@@ -1,0 +1,75 @@
+{
+  "created": "2026-10-15 ET",
+  "scope": "Test-only portability repair; no production source, checker, method or actual producer mutation.",
+  "baseline_commit": "2033c1746eeab02b1d59d4d910a4e31b3e726da8",
+  "seam": "Public swdb lower, scalar C++ input, selected compiler command available only through PATH.",
+  "defect": "External compiler stand-in used execv with bare clang++, which does not search PATH.",
+  "repair": "Use execvp, preserving the selected executable and exact arguments; update multiple-trace control text accordingly.",
+  "no_frama_boundary": "Both exact guarded commands set SWDB_FRAMA_C=none; no wp_setup fixture is requested and only public scalar lowering is invoked. No real Frama/WP/solver/provider/remote work.",
+  "expected_setup_cases": 129,
+  "count_boundary": "Prospective129=previous128+one new portability case; root-admitted collection must confirm.",
+  "source": {
+    "path": "/private/tmp/probata-resume-t36/swdb-project/tests/test_proof_compiler_identity.py",
+    "sha256": "000dccaac3c2976c39d948e07945484c512572323f8d2c3cab719bf8b62b66f4"
+  },
+  "steps": [
+    {
+      "phase": "red",
+      "resources": {
+        "exit_code": 1,
+        "peak_rss_bytes": 137805824,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 1.5176828329567797,
+        "cpu_seconds": 0.9748819999999999
+      },
+      "files": [
+        {
+          "path": "/private/tmp/probata-t36-bare-compiler-red/command.json",
+          "sha256": "e9c6ca2e74c499ecb755e032ba7580014f0e187cbc40aa3c615c8d106b22dbb5"
+        },
+        {
+          "path": "/private/tmp/probata-t36-bare-compiler-red/controls.log",
+          "sha256": "372fb05767707209c052fabeb9f1bbcb1b927474d0fd33584a717b7293436b11"
+        },
+        {
+          "path": "/private/tmp/probata-t36-bare-compiler-red/resources.json",
+          "sha256": "d566de0edaa82b4e836605bcfd46f54a87ad85601f5c908e4579cb363f8a809d"
+        },
+        {
+          "path": "/private/tmp/probata-t36-bare-compiler-red/junit.xml",
+          "sha256": "13721116aea405b96921c43ecc429272947138e52d45b692535e72f75a0108ab"
+        }
+      ]
+    },
+    {
+      "phase": "green",
+      "resources": {
+        "exit_code": 0,
+        "peak_rss_bytes": 139542528,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 1.6194706670357846,
+        "cpu_seconds": 1.0683289999999999
+      },
+      "files": [
+        {
+          "path": "/private/tmp/probata-t36-bare-compiler-green/command.json",
+          "sha256": "a42a6df4391ae22d7235a40b6e318df44f660eb464081a7d9f6ae1717d50a952"
+        },
+        {
+          "path": "/private/tmp/probata-t36-bare-compiler-green/controls.log",
+          "sha256": "2ab5bf1c418c4b50a82bb6d168950ab377ab0a377e4d5187213d9b176905f856"
+        },
+        {
+          "path": "/private/tmp/probata-t36-bare-compiler-green/resources.json",
+          "sha256": "d1a9f664b5dcac04b498d38c9ab6d94a497d63caf19c10fedaa440d1f49c5db6"
+        },
+        {
+          "path": "/private/tmp/probata-t36-bare-compiler-green/junit.xml",
+          "sha256": "05478d688e14846991ca2bc57e03b1543bc2f0db962be4763ae7ead4f6162bf7"
+        }
+      ]
+    }
+  ]
+}
