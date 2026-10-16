@@ -605,14 +605,14 @@ def read_wp_reports(goals_json, properties_csv, inventory_path, extern_contracts
         if not name and not (row.get("kind") == "other" and row.get("function") is None and
                              row.get("line") == 0 and str(row.get("description", "")).startswith("module\n")):
             return outcome("not_proven", UNCLASSIFIED, "empty property identity lacks source module context")
-        dependencies = row.get("dependencies", [])
+        dependencies = row.get("dependencies")
         origin = row.get("origin")
-        if (not isinstance(dependencies, list) or
+        if ("origin" not in row or not isinstance(dependencies, list) or
                 any(not isinstance(dep, str) or not dep or dep not in property_set for dep in dependencies) or
                 (origin is not None and (not isinstance(origin, str) or not origin or origin not in property_set))):
             return outcome("not_proven", UNCLASSIFIED, "incomplete property dependency or origin closure")
     for row in generated.values():
-        targets = row.get("targets", [])
+        targets = row.get("targets")
         if (not isinstance(row.get("property"), str) or not row["property"] or row["property"] not in property_set or
                 not isinstance(targets, list) or
                 any(not isinstance(target, str) or not target or target not in property_set for target in targets)):

@@ -33,18 +33,21 @@ a proof. An empty module ID remains supported only with the exact source module
 shape observed in actual WP output: kind other, global function, line zero and
 module description. That empty row cannot substitute for an empty goal, target,
 dependency or origin reference; all proof references must be nonempty. Property
-cycles are retained as graph data; graph closure
-alone proves nothing. Existing unexpected Extern behavior still stops the batch.
+reference fields (dependencies, origin and goal targets) must be present rather
+than silently defaulting to empty. Property cycles are retained as graph data;
+graph closure alone proves nothing. Existing unexpected Extern behavior still stops the batch.
 Scripted report fixtures now include their referenced property rows.
 
 The agreed test interface is the existing public read_wp_reports boundary and
 the scripted public CLI report path. Eleven mutation cases genuinely returned
 proven before the consumer repair; the RED receipt is retained. After repair,
-18 dedicated closure cases and 11 existing report/CLI regressions pass (29 total)
+21 dedicated closure cases and 11 existing report/CLI regressions pass (32 total)
 under the shared B/time/RSS guard with real formal tools disabled. One intermediate
 check failed only because the test used the wrong public failure-class spelling;
 that receipt is also retained. Four additional empty-reference cases exposed and
-closed a boundary in the preserved b5e6350f source checkpoint. The exact retained
+closed a boundary in the preserved b5e6350f source checkpoint. Three
+missing-reference-field cases then exposed a defaulting gap in the preserved
+2fa269a9 checkpoint and are also closed in the strict successor. The exact retained
 positive actual report is now rejected by the public consumer for its dangling
 property references, without changing that raw report. Its updated checker hash
 is recorded; both modified production files participate in the existing framed

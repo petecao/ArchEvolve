@@ -82,9 +82,10 @@ goal = {"goal": "typed_" + function + "_ensures", "property": function + "_ensur
         "provers": [{"prover": "Z3:5.1.0", "time": 0.01, "success": 1}]}
 Path(args[args.index("-wp-report-json") + 1]).write_text(json.dumps([goal]))
 Path(os.environ["SWDB_PROOF_REPORT_OUT"]).write_text(json.dumps(
-    {"version": "1", "complete": True, "goals": [{**goal, "results": ["valid"]}],
+    {"version": "1", "complete": True, "goals": [{**goal, "targets": [], "results": ["valid"]}],
      "properties": [{"property": goal["property"], "function": function,
-                     "kind": "contract", "extern": False}]}))
+                     "kind": "contract", "extern": False,
+                     "dependencies": [], "origin": None}]}))
 Path(args[args.index("-report-csv") + 1]).write_text(
     "directory\\tfile\\tline\\tfunction\\tproperty kind\\tstatus\\tproperty\\n"
     + ".\\twp_input.c\\t1\\t" + function + "\\tpostcondition\\tValid\\t" + function + "_ensures\\n")
@@ -236,7 +237,7 @@ def _reports(seed, goals, inventory=None, properties=None):
     if not inventory["properties"]:
         inventory = {**inventory, "properties": [
             {"property": name, "function": next(g.get("function") for g in inventory["goals"] if g["property"] == name),
-             "kind": "other", "extern": False}
+             "kind": "other", "extern": False, "dependencies": [], "origin": None}
             for name in sorted({g["property"] for g in inventory["goals"]})]}
     invfile.write_text(json.dumps(inventory))
     return {"goals": str(goalfile), "properties": str(propfile), "inventory": str(invfile), "functions": ["f"]}
@@ -244,7 +245,7 @@ def _reports(seed, goals, inventory=None, properties=None):
 
 def _valid(name="typed_f_ensures", **kw):
     return {"goal": name, "property": name.removeprefix("typed_"), "function": "f", "smoke": False,
-            "passed": True, "verdict": "valid", **kw}
+            "passed": True, "verdict": "valid", "targets": [], **kw}
 
 
 def test_fresh_reader_accepts_directly_proved_automatic_goals_omitted_by_wp_json(seed):

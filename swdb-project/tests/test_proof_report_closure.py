@@ -55,6 +55,9 @@ def test_complete_property_reference_closure_can_be_read(tmp_path):
     lambda d: d["properties"][0].update(dependencies="f_ensures"),
     lambda d: d["properties"][0].update(origin="missing-origin"),
     lambda d: d["properties"][0].update(property=None),
+    lambda d: d["properties"][0].pop("dependencies"),
+    lambda d: d["properties"][0].pop("origin"),
+    lambda d: d["goals"][0].pop("targets"),
 ])
 def test_incomplete_or_ambiguous_property_closure_refuses_proof(tmp_path, mutation):
     result = reports(tmp_path, mutation)
