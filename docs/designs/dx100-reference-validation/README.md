@@ -1,5 +1,8 @@
 # Standalone DX100 reference validation — local preparation
 
+Eric’s [launcher/topology/ROI/baseline follow-up](eric-handoff/README.md) includes a historical execution witness, complete16K launch template, and a new source-preserving verification continuation adapter. Its local regression checks and pending target validation are explicit.
+
+
 This workflow prepares the **16,384-element, four-core, one-instance** reference
 for the authors' standalone `TDStepMAA`, alongside the pinned `TDStep` CPU control.
 It is not our proposed CPU-CAS read-offload implementation or MAPLE hybrid.

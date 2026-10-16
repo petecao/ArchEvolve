@@ -1,0 +1,35 @@
+{
+  "status": "local_checks_passed_target_execution_pending",
+  "source_commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+  "source_file_hashes_verified": 20,
+  "tests": {
+    "command": "python -m unittest discover -s tests -p 'test_dx100*.py' -v",
+    "total": 43,
+    "passed": 42,
+    "skipped": 1,
+    "skip_reason": "Optional test expects sources/DX100 checkout; direct pinned-source preparation audit was run separately against /data1/nier/DX100.",
+    "log_sha256": "2a19309a7c5e967ba5984f6ea28b29f1d2286900547c9e870e9bb7c50db1404b"
+  },
+  "direct_source_audit": {
+    "command": "python -m archevolve.dx100_validation_cli prepare --source-root /data1/nier/DX100 --output-dir .cache/dx100-eric-source-audit-20261016",
+    "process_exit_code": 0,
+    "result": {
+      "status": "blocked_unbound_environment",
+      "output": ".cache/dx100-eric-source-audit-20261016",
+      "target_validated": false
+    },
+    "scope": "Pinned source preparation ran; execution-site environment remains intentionally unbound."
+  },
+  "shell_syntax_check": "bash -n launch_16k.sh passed",
+  "artifacts_sha256": {
+    "README.md": "6207027d94ea698043ed5ab8b1d7c6af84a68888d4feec7e68435becf7221d30",
+    "continue_to_verifier.py": "3cc4fe210c2294974c700d5855ef1038f6ce9587009af45df4fd359f98739bd5",
+    "historical-command.txt": "977b72dfb0fd98cff121df73ad3acaf5077ce428130252f88e1d11fb371d459f",
+    "historical-witness.json": "90cd7706f1e60172513372baeab2eb8214bb3303ce9cb16cec3da249f63aeb38",
+    "launch_16k.sh": "ca411c0adecc1f6966217df39b02100a55b2c0070756b01328d5572081febe86",
+    "ramulator.yaml": "aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b",
+    "source-receipt.json": "1093bef53aa89dc2af7f7050c276b567bcb54a8e50d26147a95d01723f9eba0b"
+  },
+  "target_validation": "Pending real gem5/Great Lakes smoke, actual environment/build/graph/config receipts and one BFSVerifier PASS plus intended-path evidence per variant.",
+  "whitespace_check": "Changed files pass git diff --check excluding the byte-identical upstream ramulator.yaml, which retains two original trailing-whitespace lines; its exact source SHA-256 is verified."
+}
