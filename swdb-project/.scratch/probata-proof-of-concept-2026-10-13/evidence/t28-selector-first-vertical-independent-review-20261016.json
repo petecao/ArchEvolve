@@ -1,0 +1,208 @@
+{
+  "created": "2026-10-16 ET",
+  "disposition": "PASS",
+  "scope": "Passive source/retained-evidence review for scoped publication only; no actual selector proof/admission or ticket closure.",
+  "base": "b145b433a71536e421f164be1a42bae6afd78ffb",
+  "reviewed_original": "fcf6aca533e8a339d825c584833c4012a50bf0a9",
+  "reviewed_acceptance_repair": "ae969911d9097c7fe3fefed19081e1855e5d702a",
+  "final_freeze": "21edecf2d8a06234290e06861b6724dc76dd346e",
+  "review_md": {
+    "path": "/private/tmp/probata-t28-selector-first-vertical-independent-review-20261016.md",
+    "bytes": 5509,
+    "sha256": "30de2df9e78cf6d28384565444cbe56333d93f26be9446807d8f0fab28d7c6bb"
+  },
+  "final_git_pins": [
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-selector-actual-guard-controls-20261016.json",
+      "bytes": 4660,
+      "sha256": "96f194e56af481870367a3f8b3377925b855084c3234d2b908f6dff03ed3d37f"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-selector-actual-guard-controls-20261016.md",
+      "bytes": 1699,
+      "sha256": "0db3680ca1dc018fe7a219d68bc83063765d7acd6bb8dacc0401777953b46a95"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-selector-eof-correction-20261016.json",
+      "bytes": 607,
+      "sha256": "7cd9df84bacc67522b18a233a63fb35485737a583948b6cb6a092f63d7ea08f0"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-selector-first-vertical-controls-20261016.json",
+      "bytes": 233968,
+      "sha256": "c2ceacf7a61263d135a1bf431cac16fc38b12e3a0d2949f097d0952c19915302"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-selector-first-vertical-controls-20261016.md",
+      "bytes": 4693,
+      "sha256": "0e356a2297d8c0107f6b2b5e88f279ad8265c3df97adfc12ab50927312b0f2f8"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/issues/28-proof-semantics-remaining-calls.md",
+      "bytes": 21290,
+      "sha256": "41d9b166ea995fae8d8ead9e08e201abbf6ca2e740fdd55d33e96dc0262f6df2"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/run_selector_acceptance.sh",
+      "bytes": 3535,
+      "sha256": "cf39bebe386c595ba2e99c21224b2ade8069115e378fbaa04eda3175ad813c65"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/selector-first-gate.md",
+      "bytes": 3357,
+      "sha256": "ee5015cbc2153f69df30a5912306b634e8251a622fd606c07c4077759858fe3b"
+    },
+    {
+      "path": "swdb-project/docs/reference/format-v0.4-proof-semantics.md",
+      "bytes": 19886,
+      "sha256": "6fc2534841999bac409baf985ab1fd85960bce872488df29b7bf3fbf899b0450"
+    },
+    {
+      "path": "swdb-project/swdb/c_lowering.py",
+      "bytes": 162244,
+      "sha256": "c4f5ca2ac29d452f94498bd01098665739bebeb4d89073227ae83e8264ba421b"
+    },
+    {
+      "path": "swdb-project/swdb/dx100_interface.py",
+      "bytes": 8098,
+      "sha256": "6e88200412cada2678d3f65f442d0cf11e39fecdb744fa490e6397e0e0d37cdf"
+    },
+    {
+      "path": "swdb-project/swdb/dx100_source_selector.py",
+      "bytes": 13018,
+      "sha256": "4c788c11a80c1478323229bba12997995dcad30699dc78d7085b52a14fc09190"
+    },
+    {
+      "path": "swdb-project/swdb/proof_semantics.py",
+      "bytes": 29594,
+      "sha256": "648950b102863a492747a3a3eb9e59037fa63bb84bd1494d9eb9c9792e078e50"
+    },
+    {
+      "path": "swdb-project/swdb/proof_setup.py",
+      "bytes": 42866,
+      "sha256": "70e37d49f5627e845ba7ba298bb180f82cc4353f06e3598edbaf35eca5836b83"
+    },
+    {
+      "path": "swdb-project/swdb/wp_adapter.py",
+      "bytes": 79550,
+      "sha256": "c2c84aae333c955ed8a6d329d90365e082bc5a6eb32bdf944108389d373a6e44"
+    },
+    {
+      "path": "swdb-project/tests/test_dx100_selector_actual.py",
+      "bytes": 3632,
+      "sha256": "d6f85ea30130e35827ad901eaec94017a481d202e70b06dee5b80c0b1c637967"
+    },
+    {
+      "path": "swdb-project/tests/test_dx100_source_selector.py",
+      "bytes": 10212,
+      "sha256": "bd2310b1f8afbd871c5666ce35dc2f8e301a157c50e0e4c63cc687a42bfdd8d4"
+    },
+    {
+      "path": "swdb-project/tests/test_dx100_trust_entries.py",
+      "bytes": 3241,
+      "sha256": "aed399cc7869553beadb3ff14307dacadb25ffb448f3015c298ec374298b4232"
+    },
+    {
+      "path": "swdb-project/tests/test_proof_setup.py",
+      "bytes": 25509,
+      "sha256": "304806f4a9e37d36326aad91e6849adbd421ea33548f45eb1875e3f6387583cd"
+    },
+    {
+      "path": "swdb-project/tests/testkit/dx100_selector.py",
+      "bytes": 5129,
+      "sha256": "7cef35b6fb11d4688ab7912ebc3f1b1ff56bb3d3921d14a1d383f817d00770d6"
+    },
+    {
+      "path": "swdb-project/tests/testkit/dx100_trust.py",
+      "bytes": 7526,
+      "sha256": "896809b490635d0d6e3240c4878123f7110e4b14e40eeb631e5af1c6ffb92083"
+    }
+  ],
+  "metadata_audits": [
+    {
+      "path": "/private/tmp/probata-t28-selector-review-metadata-fcf6aca5-20261016.json",
+      "bytes": 315,
+      "sha256": "0813f0a238f6d5f80dd6a8c7fda67de1c3a9e1d294426b18a845cca51986b236",
+      "result": {
+        "source_commit": "fcf6aca533e8a339d825c584833c4012a50bf0a9",
+        "receipt_sha256": "c2ceacf7a61263d135a1bf431cac16fc38b12e3a0d2949f097d0952c19915302",
+        "declared_source_pins": 15,
+        "traversed_reference_instances": 1019,
+        "unique_reference_paths": 1019,
+        "mismatches": [],
+        "no_actual_tool_execution": true
+      }
+    },
+    {
+      "path": "/private/tmp/probata-t28-selector-review-metadata-ae969911-20261016.json",
+      "bytes": 1041,
+      "sha256": "a6ec72eee734158ca9ff31ac146e2b5d03b80ccaf0392c7bb85938cec628f216",
+      "result": {
+        "tip": "ae969911d9097c7fe3fefed19081e1855e5d702a",
+        "parent": "fcf6aca533e8a339d825c584833c4012a50bf0a9",
+        "repair_receipt_sha256": "96f194e56af481870367a3f8b3377925b855084c3234d2b908f6dff03ed3d37f",
+        "checked_repair_pin_instances": 15,
+        "mismatches": [],
+        "profiles": {
+          "red": {
+            "cases": 2,
+            "failures": 2,
+            "skipped": 0,
+            "resources": {
+              "exit_code": 1,
+              "peak_rss_bytes": 69959680,
+              "out_of_memory": false,
+              "timed_out": false,
+              "wall_seconds": 0.49556879204465076,
+              "cpu_seconds": 0.46241899999999997
+            }
+          },
+          "green": {
+            "cases": 6,
+            "failures": 0,
+            "skipped": 2,
+            "resources": {
+              "exit_code": 0,
+              "peak_rss_bytes": 68943872,
+              "out_of_memory": false,
+              "timed_out": false,
+              "wall_seconds": 0.4376917500048876,
+              "cpu_seconds": 0.412655
+            }
+          }
+        },
+        "production_blobs_unchanged": 6,
+        "old_receipt_unchanged": true,
+        "library_diff_empty": true,
+        "no_actual_tool_execution": true
+      }
+    }
+  ],
+  "resolved_findings": [
+    {
+      "issue": "Wrong-enum actual test accepted vacuity or a failed smoke.",
+      "resolution": "Shared predicate now requires every smoke valid, rejects vacuous_pass, and requires all positive ordinary goals valid. Retained RED2 then GREEN4+2actualSKIP reviewed."
+    },
+    {
+      "issue": "Surplus EOF blank line failed diffcheck.",
+      "resolution": "Verified exact one-LF deletion and clean final diffcheck; no executable change or rerun."
+    }
+  ],
+  "external_actual_admission_requirements": [
+    "Exact final frozen clean detached Git source and reviewed production/source pins.",
+    "Resolved output disjointness and fresh raw/selector-profile beneath actual raw root; preserve bootstrap root manifests.",
+    "Exact two actual-node collection; actual selected compiler/tools/config/stdlib/runtime identity capture and cold equality checks.",
+    "Fresh verifier lease, full-process 8GiB/one-worker whole-deadline guard and retained complete source/artifact/verdict audits."
+  ],
+  "no_actual_tool_execution": true,
+  "no_ssh": true,
+  "no_git_mutation": true,
+  "production_library_diff_empty": true,
+  "diffcheck_pass": true,
+  "actual_cases_unrun": 2,
+  "remaining_boundaries": [
+    "Five explicit trust entries stay assumptions with pending owner approval.",
+    "No full C++ compiler equivalence or hardware/device theorem from LLVM certificate.",
+    "No current production 0.2, full wrappers/stateful IEEE/readiness/history/ownership/registration closure."
+  ]
+}
