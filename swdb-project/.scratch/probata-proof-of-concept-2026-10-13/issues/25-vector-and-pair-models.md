@@ -1306,3 +1306,37 @@ and the old 017/2e01 partial producers remain unchanged.
 [Final grow21 cold closeout](../evidence/t25-grow21-partial-final-cold-audit-v1-20261016.md) at exact2e01 accepts partial classification only:two CVC5 Valid leaves and Z3 representation Valid; cells retains Alt-Ergo Timeout/CVC5 Unknown/Z3 Unknown,17targets unexecuted,0Csmokes. Root5653checks3272indexed refs plus1582opaque consumers0errors;397current raw and378prior017files retained. The20materialized SMTs do not certify submissions. Full model/caller/original-v2/refutation and the representation/cells AND group remain false. [Integration reconciliation](../evidence/grow21-e4-independent-integration-review-20261016.md) rehashes15local artifact references without remote repetition.
 
 Separate exact2e01/node1G619 dtor11 settled05:48:41 ET:producer11/11nativeValid,0Csmokes,guard95.784901578s971689984B/outer97.817638761s1025167360B,exit0/noOOMtimeout. [Metadata](../evidence/t25-dtor11-actual-metadata-v1-20261016.json) and [admission only](../evidence/reviewed-t25-qualified-dtor11-public-v1-launch-2e01d27d-20261016.json) remain distinct; independent complete cold/model acceptance is pending. All417rawfiles24,183,685B and exact2e01/oldML229 source remain unchanged. No full25 closure.
+
+
+### Reviewed cell components and scripted public persistence (2026-10-16 ET)
+
+The exact four-way projected-cell definition expansion is independently reviewed
+at merged source `046f6b9e64d45777a8032951ced04f942fc9c3c2`. All four duties
+retain the full original antecedent and fresh index; the representation duty is
+also mandatory. Twenty other current canonical inputs and both reference inputs
+remain unchanged. The independent review records no added premise, axiom or
+sibling theorem dependency. The merged affected profile passes 51 controls.
+
+Root separately executed all three native OCaml/helper/report and scripted
+public workflow controls at this exact source: 24 persisted child runs and
+setup checks, 34 synthetic goals (33 ordinary and one smoke), parser-error
+handling and prelaunch axiom-tamper refusal. The retained artifacts are stand-ins,
+not scientific proof. Passive rereading checks 451 artifact-manifest entries and
+268 proof-report references with zero mismatches. The source snapshots are
+identical before and after; outer guard 23.89702525 seconds / 432,586,752 bytes
+and inner guard 20.279271375 seconds / 334.578125 MiB report no resource events.
+
+The separately versioned four-leaf diagnostic v4 now copies the normal engine's
+sole-source-lemma ownership census. A real pure RED on v3 and 12 GREEN controls
+cover that repair. Its entry review passes, but root-native lifecycle checks,
+actual diagnostic admission and independent task/hypothesis closure remain
+pending. The full current 24-target public model remains unproved; the 20
+nonselected diagnostic targets remain unexecuted. The prior exact-2e01 partial
+(three ordinary producer successes, cell timeout, 17 unexecuted, no C smoke),
+original-017 partial, and unmerged caller checkpoint remain separate. No original
+v2, generic caller, full member/type coverage or ticket acceptance is claimed.
+
+Evidence: `evidence/t25-cell-components-independent-source-review-046f6b9e-20261016.{md,json}`,
+`evidence/t25-cell-components-merged-controls-v1-046f6b9e-20261016.json`,
+`evidence/t25-grow24-scripted-public-cold-v1-20261016.json` and
+`evidence/t25-cell4-diagnostic-independent-review-v4-046f6b9e-20261016.{md,json}`.
