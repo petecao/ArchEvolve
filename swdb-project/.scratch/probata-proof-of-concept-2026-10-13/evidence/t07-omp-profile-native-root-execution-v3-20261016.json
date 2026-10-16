@@ -1,0 +1,259 @@
+{
+  "commands": [
+    {
+      "argv": [
+        "/opt/homebrew/opt/llvm/bin/clang++",
+        "--no-default-config",
+        "-isysroot",
+        "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk",
+        "-x",
+        "c++",
+        "-std=c++11",
+        "-D_DARWIN_C_SOURCE",
+        "-fopenmp",
+        "-fno-modules",
+        "-fno-implicit-modules",
+        "-I/opt/homebrew/opt/libomp/include",
+        "-L/opt/homebrew/opt/libomp/lib",
+        "-Wl,-rpath,/opt/homebrew/opt/libomp/lib",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-MD",
+        "-MF",
+        "/private/tmp/probata-t07-omp-profile-native-v3-20261016/component/includes.d",
+        "/private/tmp/probata-t07-omp-profile-native-v3-20261016/component/profile.cc",
+        "-o",
+        "/private/tmp/probata-t07-omp-profile-native-v3-20261016/component/profile"
+      ],
+      "label": "compile",
+      "remaining_seconds": 49.99955708399648
+    },
+    {
+      "argv": [
+        "/private/tmp/probata-t07-omp-profile-native-v3-20261016/component/profile"
+      ],
+      "label": "profile-one",
+      "remaining_seconds": 49.847226959012914
+    },
+    {
+      "argv": [
+        "/private/tmp/probata-t07-omp-profile-native-v3-20261016/component/profile"
+      ],
+      "label": "profile-two_negative",
+      "remaining_seconds": 49.65154962503584
+    }
+  ],
+  "created": "2026-10-16 ET",
+  "guard": {
+    "cap_gb": 8.0,
+    "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment",
+    "cleanup_inspection_failure": null,
+    "cleanup_inspection_failures": [],
+    "clock": "continuous_monotonic",
+    "clock_info": {
+      "denom": 3,
+      "implementation": "mach_continuous_time",
+      "includes_sleep": true,
+      "kind": "continuous_monotonic",
+      "numer": 125
+    },
+    "cmd": [
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+      "-I",
+      "-B",
+      "/private/tmp/probata-t07-omp-profile-native-v3-20261016-entry.py",
+      "--expected",
+      "/private/tmp/probata-t07-omp-profile-native-v3-20261016-expected.json"
+    ],
+    "error": null,
+    "exit_code": 0,
+    "finished": "2026-10-16 08:32:52 EDT",
+    "inspection_events": [],
+    "inspection_failure": null,
+    "inspection_retry_boundary": "AccessDenied uses a 200 ms environ retry admission window and 21-attempt cap, or three attempts for other operations; only the exact proc_environ SystemError raised by the requested environ operation shares that policy; individual OS calls are not forcibly timed; all pauses count and RSS/deadline checks remain mandatory after inspection; only independently confirmed gone/zombie or changed birth is skipped; persistent live or unknown failure fails closed",
+    "killed_by_watchdog": false,
+    "lock_wait_s": 0.00028012500843033195,
+    "log": "/private/tmp/probata-t07-omp-profile-native-v3-20261016/root-native.guard.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "peak_rss_mb": 292.0625,
+    "primary_inspection_failure": null,
+    "queue_timed_out": false,
+    "queue_timeout_s": 30.0,
+    "rss_scope": "live union of current ancestry, retained PID/birth identities and periodic inherited-marker matches; sampled, not a kernel quota",
+    "runner_pid": 88104,
+    "timed_out": false,
+    "timeout_s": 60.0,
+    "unconfirmed_children": [],
+    "wall_s": 1.0207105416920967
+  },
+  "observations": {
+    "one": {
+      "environment": {
+        "OMP_DYNAMIC": "FALSE",
+        "OMP_NUM_THREADS": "1",
+        "OMP_THREAD_LIMIT": "1"
+      },
+      "observation": {
+        "dynamic": 0,
+        "entries": 1,
+        "id_max": 0,
+        "id_min": 0,
+        "int_bytes": 4,
+        "level_max": 1,
+        "level_min": 1,
+        "libomp_path": "/opt/homebrew/Cellar/libomp/22.1.8/lib/libomp.dylib",
+        "max_threads": 1,
+        "openmp_macro": 202011,
+        "outside_threads": 1,
+        "size_t_bytes": 8,
+        "team_max": 1,
+        "team_min": 1,
+        "thread_limit": 1,
+        "zero_ids": 1
+      }
+    },
+    "two_negative": {
+      "environment": {
+        "OMP_DYNAMIC": "FALSE",
+        "OMP_NUM_THREADS": "2",
+        "OMP_THREAD_LIMIT": "2"
+      },
+      "exact_two_thread_observation_validated": true,
+      "observation": {
+        "dynamic": 0,
+        "entries": 2,
+        "id_max": 1,
+        "id_min": 0,
+        "int_bytes": 4,
+        "level_max": 1,
+        "level_min": 1,
+        "libomp_path": "/opt/homebrew/Cellar/libomp/22.1.8/lib/libomp.dylib",
+        "max_threads": 2,
+        "openmp_macro": 202011,
+        "outside_threads": 1,
+        "size_t_bytes": 8,
+        "team_max": 2,
+        "team_min": 2,
+        "thread_limit": 2,
+        "zero_ids": 1
+      },
+      "selected_profile_refused": true
+    }
+  },
+  "physical_files": [
+    {
+      "bytes": 26355,
+      "path": "/private/tmp/probata-t07-omp-profile-native-v3-20261016/component/actual-physical-include-closure.json",
+      "sha256": "7d548f78d101c2682459920dcdeb3cdc4aed08856081785b71375a44578b4cb9"
+    },
+    {
+      "bytes": 1251,
+      "path": "/private/tmp/probata-t07-omp-profile-native-v3-20261016/component/commands.json",
+      "sha256": "5b04d78925e342b157dd0ae6492a82458485eacb5075377e6591ac057ea25446"
+    },
+    {
+      "bytes": 0,
+      "path": "/private/tmp/probata-t07-omp-profile-native-v3-20261016/component/compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "/private/tmp/probata-t07-omp-profile-native-v3-20261016/component/compile.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 7851,
+      "path": "/private/tmp/probata-t07-omp-profile-native-v3-20261016/component/entry.py",
+      "sha256": "9ba1cb80977657f397a48bbec4f98ee8066abe03ccace7c65543d6411863146c"
+    },
+    {
+      "bytes": 297365,
+      "path": "/private/tmp/probata-t07-omp-profile-native-v3-20261016/component/expected.json",
+      "sha256": "79f09a71b31d46f613ecf34bf64ea519539affbe2375e085e9068ffde82c0afb"
+    },
+    {
+      "bytes": 11122,
+      "path": "/private/tmp/probata-t07-omp-profile-native-v3-20261016/component/includes.d",
+      "sha256": "9a6c2673fe82cee6a994f6dad0e2c7cbc9c361b892dceb18d8512c34ddd4d036"
+    },
+    {
+      "bytes": 1976,
+      "path": "/private/tmp/probata-t07-omp-profile-native-v3-20261016/component/manifest.json",
+      "sha256": "172d12cf727bb8908ffb41c271da0b1d51176ad7fa32e35ff8c84b66604bbdd4"
+    },
+    {
+      "bytes": 1252,
+      "path": "/private/tmp/probata-t07-omp-profile-native-v3-20261016/component/observations.json",
+      "sha256": "d855688d423446e0af4d489d2f7da31bd1d3c072b139d387c8bd59d35798d36e"
+    },
+    {
+      "bytes": 34616,
+      "path": "/private/tmp/probata-t07-omp-profile-native-v3-20261016/component/profile",
+      "sha256": "102d8de0f41bb1c248739a6357c29abfb98e24afb9b8cebedab13f1f375ad323"
+    },
+    {
+      "bytes": 0,
+      "path": "/private/tmp/probata-t07-omp-profile-native-v3-20261016/component/profile-one.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 289,
+      "path": "/private/tmp/probata-t07-omp-profile-native-v3-20261016/component/profile-one.stdout",
+      "sha256": "8a1d7f91b75ac77123cebf19c1f2b1a47c25686c44951da31a70dc76f28ec88b"
+    },
+    {
+      "bytes": 0,
+      "path": "/private/tmp/probata-t07-omp-profile-native-v3-20261016/component/profile-two_negative.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 289,
+      "path": "/private/tmp/probata-t07-omp-profile-native-v3-20261016/component/profile-two_negative.stdout",
+      "sha256": "503042fa93ae9e32883346eb5720a8d2fae54aadb0837d7f9fef153ff353bdcc"
+    },
+    {
+      "bytes": 1951,
+      "path": "/private/tmp/probata-t07-omp-profile-native-v3-20261016/component/profile.cc",
+      "sha256": "4e7bc31c836b9589b7026433a8c2527b573d08aa05bd727b91f892b43746ba39"
+    },
+    {
+      "bytes": 441,
+      "path": "/private/tmp/probata-t07-omp-profile-native-v3-20261016/component/result.json",
+      "sha256": "18c8bfb31c98ca7c6697723d3843087d115bed8608c3aba658edeb7be6a391d2"
+    },
+    {
+      "bytes": 614,
+      "path": "/private/tmp/probata-t07-omp-profile-native-v3-20261016/root-admission.json",
+      "sha256": "ef1b77eb9bb5e126e6334f1f750e90f395fc1eba14ce90c4ecfd567fdce9066f"
+    },
+    {
+      "bytes": 0,
+      "path": "/private/tmp/probata-t07-omp-profile-native-v3-20261016/root-native.guard.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1986,
+      "path": "/private/tmp/probata-t07-omp-profile-native-v3-20261016/root-native.guard.log.summary.json",
+      "sha256": "eb6bf089d820c985154945d291e2dc875706e96293a9c76131390c2a3ccdcd5b"
+    },
+    {
+      "bytes": 274,
+      "path": "/private/tmp/probata-t07-omp-profile-native-v3-20261016/root-native.guard.log.wait.json",
+      "sha256": "bf673a8e6206777e5b1d80f5394ddc471d4153fc16acf98b6fab1023b4314312"
+    }
+  ],
+  "previous_v2_include_refusal_preserved": true,
+  "result": {
+    "actual_TD_execution_observed": false,
+    "compiler_implementation_load_context_pinned": true,
+    "no_formal_or_source_model_change": true,
+    "outside_printf_not_team_evidence_demonstrated": true,
+    "runtime_installation_one_thread_observed": true,
+    "selected_source_profile_review_candidate": true,
+    "source_allocator_lifetime_TD_count_accepted": false,
+    "source_runtime_retained_unchanged": true,
+    "within_internal_deadline": true
+  },
+  "scope": "Native installation/profile qualification only. Exact23source/compiler/library/SDK/image closure unchanged; all129actualincludeswithin903admitted. No exactTD execution, fullTD/source/allocator/lifetime/count/ticket acceptance. Private-frame/source-runtime applicability remains explicit compiler/library TCB and future exact domain gate."
+}
