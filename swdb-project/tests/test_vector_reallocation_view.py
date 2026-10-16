@@ -21,7 +21,7 @@ def test_public_qualified_grow_reaches_exact_checked_packet_with_typed_runtime_b
     assert view['qualification']['original_contract_proved'] is False
     assert view['qualification']['unary_role']=='reallocation eligibility; not exclusive ownership'
     assert view['generic_caller_composition']=='unsupported'
-    assert len(view['obligations'])==20
+    assert len(view['obligations'])==21
     runtime=record['settings']['vector_reallocation_typed_runtime']
     assert runtime['integer_model']=='Machine' and runtime['heap_model']=='Typed'
     assert {Path(row['path']).name for row in runtime['sources']}=={'MemTyped.ml','Cint.ml','Factory.ml'}
@@ -67,9 +67,9 @@ def test_complete_synthetic_qualified_success_persists_schema_and_all_current_ta
     record=prove('--model','std_vector_int_realloc_v3_grow')
     assert record['verdict']=='proven'  # labeled synthetic reader/persistence control only
     assert set(record['verdict_reading'])=={'check','verdict'}
-    assert len(record['settings']['heap_model_runs'])==20
-    assert len(record['proof_setup_check']['runs'])==20
-    assert len(record['goals'])==30 and sum(bool(g.get('smoke')) for g in record['goals'])==1
+    assert len(record['settings']['heap_model_runs'])==21
+    assert len(record['proof_setup_check']['runs'])==21
+    assert len(record['goals'])==31 and sum(bool(g.get('smoke')) for g in record['goals'])==1
     assert all((Path(r['cwd'])/'SYNTHETIC-ONLY.txt').is_file() for r in record['settings']['heap_model_runs'])
     assert any('does not prove the original v2 raw contract' in a['sentence'] for a in record['assumptions'])
 

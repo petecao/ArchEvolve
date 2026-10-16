@@ -1,0 +1,198 @@
+{
+  "all21payloads_verified": true,
+  "ancestry_verified": [
+    "c0d50642dc0fda72757298ca876ae125835ae8ff",
+    "d821bfa7"
+  ],
+  "blocking_findings": [],
+  "caller_acceptance": false,
+  "caller_targets_pending": 79,
+  "canonical": {
+    "manifest_sha256": "9d7ede3734422b75acfc9d4151837c833f48e57705a8267f48f3405087a81d70",
+    "model": {
+      "id": "vector-reallocation-domain-3",
+      "sha256": "665710f1738349505ee438374f7e6055bb3862103f710199b1717caa782ea640"
+    },
+    "source_commit": "2e01d27d0aea7f3c2056d3abb06600b4cefa29be",
+    "source_pins": {
+      "swdb/heap_model_view.py": "52b41faefd37d585fb2c8ff15c82e74fb602c6063848ec7808cbea816ea44451",
+      "swdb/proof_report.ml": "22919544d02fc3fdc628ee44984852787043e61f82ed8613074e21751e9d1d6d",
+      "swdb/proof_setup.py": "256dd13eb4129403a18552e25dfd1ef7eef6c3fba306bb7066f62ce1e3d0b563",
+      "swdb/vector_reallocation_vcs.py": "0ec4e168754b6f2ad1b6e659c4988855c89d2ae18fe8863eed39a290c1c706b1",
+      "swdb/vector_reallocation_view.py": "05eaa7414580b11a54b7f6ebf63db20b28fd6aea0c5de4da00fc70a3bd0c57d4",
+      "tests/test_vector_reallocation_view.py": "cf4068c75265ad8d0614dce77aa10cc14ac9eb01ee1fcd501ae9182944b4d00e"
+    },
+    "target_count": 21,
+    "target_ids": [
+      "control.grow.premises_feasible",
+      "grow.entry.reads",
+      "grow.entry.int_projection.repr",
+      "grow.entry.int_projection.cells",
+      "grow.alloc.identity",
+      "grow.alloc.output",
+      "grow.alloc.frame",
+      "grow.copy.establish",
+      "grow.copy.read",
+      "grow.copy.write",
+      "grow.copy.step",
+      "grow.copy.exit",
+      "grow.free.argument",
+      "grow.free.survival",
+      "grow.free.aliases",
+      "grow.store.capacity",
+      "grow.post.eligibility",
+      "grow.post.values",
+      "grow.post.old_invalid",
+      "grow.post.frame",
+      "grow.numeric"
+    ],
+    "theory_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+    "unchanged_017_targets": 19
+  },
+  "control_pins": [
+    {
+      "bytes": 311,
+      "path": "/private/tmp/probata-t25-projection-and-caller-merged-green-20261016/command.json",
+      "sha256": "1be1e801b25fa6297f4e13d2c08a5275f752d11c492f1ef1a849332ec229bc58"
+    },
+    {
+      "bytes": 100,
+      "path": "/private/tmp/probata-t25-projection-and-caller-merged-green-20261016/controls.log",
+      "sha256": "3047da9fa3463e2736a23e208c1b7c88464166d520e895954639be2d6bb10240"
+    },
+    {
+      "bytes": 165,
+      "path": "/private/tmp/probata-t25-projection-and-caller-merged-green-20261016/resources.json",
+      "sha256": "29800d5aa65e9a66fe47b4f1dc3c5e469b90f0a352e4bc24d72098869c5d88e8"
+    }
+  ],
+  "date": "2026-10-16 ET",
+  "definition_spans_and_container_hashes_verified": true,
+  "historical_record_promotion": false,
+  "inherited_policy_review": {
+    "proof_setup_sha256": "256dd13eb4129403a18552e25dfd1ef7eef6c3fba306bb7066f62ce1e3d0b563",
+    "relative": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t07-smoke-policy-final-independent-review-1395f70c-20261016.json",
+    "reporter_sha256": "22919544d02fc3fdc628ee44984852787043e61f82ed8613074e21751e9d1d6d",
+    "sha256": "31778406deffd9ee81556a33c0662550f36a4a07954543976973c09f2fd3f8c9"
+  },
+  "merged_controls": {
+    "passed": 42,
+    "reported_pytest_seconds": 40.88,
+    "resources": {
+      "cpu_seconds": 41.238227,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 307118080,
+      "timed_out": false,
+      "wall_seconds": 41.30367979203584
+    },
+    "reviewer_executed": false
+  },
+  "merged_source_metadata": {
+    "bytes": 1660,
+    "path": "/private/tmp/probata-t25-merged-projection-source-2e01d27d-20261016.json",
+    "sha256": "3765be0fd3ece43d36df5d638927b0fc3e423065b7868063c1444739f520e773"
+  },
+  "notes_sha256": "7e1fa450b796918bb3395b2567479c149c05ee98166b07471131b1852825afd4",
+  "original_v2_acceptance": false,
+  "other19target_paths_bytes_verified": true,
+  "prior_review": {
+    "bytes": 6031,
+    "path": "/private/tmp/probata-t25-projection-lexical-independent-review-c0d50642-20261016.json",
+    "sha256": "635d49365b977165d3272dcc01108ea0dec13dd0ba0b17d2da4faec9b24ff518"
+  },
+  "proof_admission": false,
+  "remaining": [
+    "root-owned three public/schema controls at exact new source",
+    "reviewed fresh diagnostic/full21 command/runtime/source pins and actual admission",
+    "complete fresh proofs and task/import/hypothesis/ownership/smoke/schema/resource cold audit",
+    "current public caller contract/dependency/state/lifetime/frame composition"
+  ],
+  "required_unadmitted_models": 5,
+  "reviewer": "/root/ticket24/std_contract_review",
+  "reviewer_project_generators_main_tests_compilers_formal_provers_native_probes_SSH": false,
+  "reviewer_repo_edits": false,
+  "root_three_public21_schema_native_controls": {
+    "executed_at_review_time": false,
+    "result_claimed": false
+  },
+  "source_commit": "2e01d27d0aea7f3c2056d3abb06600b4cefa29be",
+  "source_pins": [
+    {
+      "bytes": 21588,
+      "relative": "swdb-project/swdb/vector_reallocation_vcs.py",
+      "sha256": "0ec4e168754b6f2ad1b6e659c4988855c89d2ae18fe8863eed39a290c1c706b1"
+    },
+    {
+      "bytes": 5207,
+      "relative": "swdb-project/swdb/vector_reallocation_view.py",
+      "sha256": "05eaa7414580b11a54b7f6ebf63db20b28fd6aea0c5de4da00fc70a3bd0c57d4"
+    },
+    {
+      "bytes": 8418,
+      "relative": "swdb-project/swdb/vector_reallocation_caller_packets.py",
+      "sha256": "6992058e5974738d56d1a98f87cbd012784420a85272b96f2fad113aff03a7d9"
+    },
+    {
+      "bytes": 8185,
+      "relative": "swdb-project/swdb/vector_reallocation_model.py",
+      "sha256": "92ad23030531650924a51b0a3bd1abb479afa373a7d1dd2a543b9ae225ab8b89"
+    },
+    {
+      "bytes": 7323,
+      "relative": "swdb-project/swdb/vector_reallocation_inventory.py",
+      "sha256": "543e5523d6f05fad7f336ede476b85aa30e068dee8d07489f3a4351da54c75cf"
+    },
+    {
+      "bytes": 8386,
+      "relative": "swdb-project/swdb/heap_reallocation.mlw",
+      "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5"
+    },
+    {
+      "bytes": 14470,
+      "relative": "swdb-project/swdb/heap_model_vcs.py",
+      "sha256": "f20e0ec130222aeda96b4fbb8e72eef8d922d3f33e84077777203f7e6d159092"
+    },
+    {
+      "bytes": 23986,
+      "relative": "swdb-project/swdb/heap_model_view.py",
+      "sha256": "52b41faefd37d585fb2c8ff15c82e74fb602c6063848ec7808cbea816ea44451"
+    },
+    {
+      "bytes": 168704,
+      "relative": "swdb-project/swdb/c_lowering.py",
+      "sha256": "e0f080dc2887ffcc9a2b57b3dc804ff64e56a5df82e545c047bac7aa7761d0dc"
+    },
+    {
+      "bytes": 47687,
+      "relative": "swdb-project/swdb/proof_setup.py",
+      "sha256": "256dd13eb4129403a18552e25dfd1ef7eef6c3fba306bb7066f62ce1e3d0b563"
+    },
+    {
+      "bytes": 7873,
+      "relative": "swdb-project/swdb/proof_report.ml",
+      "sha256": "22919544d02fc3fdc628ee44984852787043e61f82ed8613074e21751e9d1d6d"
+    },
+    {
+      "bytes": 6133,
+      "relative": "swdb-project/tests/test_vector_reallocation_packets.py",
+      "sha256": "457eba04e5a7fbe076c5d987f71d0a41963a9f15c4dbafb4b437d2b1bfd2b088"
+    },
+    {
+      "bytes": 6718,
+      "relative": "swdb-project/tests/test_vector_reallocation_caller_packets.py",
+      "sha256": "0e750ecb97af0477461c7f2d7473f9f2a22ae980202bc86224df297fbb73dd79"
+    },
+    {
+      "bytes": 6677,
+      "relative": "swdb-project/tests/test_vector_reallocation_view.py",
+      "sha256": "cf4068c75265ad8d0614dce77aa10cc14ac9eb01ee1fcd501ae9182944b4d00e"
+    },
+    {
+      "bytes": 4277,
+      "relative": "swdb-project/tests/fixtures/proof/vector-reallocation-projection-017.json",
+      "sha256": "c0c33697796ab0b9dbc41751d0916281ce632bfe21244c4dde74bcca58fbc156"
+    }
+  ],
+  "verdict": "PASS_MERGED_PROSPECTIVE_SOURCE_ONLY"
+}
