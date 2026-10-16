@@ -1,0 +1,108 @@
+{
+  "date_et": "2026-10-16 02:15 ET",
+  "disposition": "PASS_PROSPECTIVE_PREPARATION_ONLY",
+  "freeze": "971ad6324299ebe40a5146eed0de5172a9384137",
+  "review_md": {
+    "path": "/private/tmp/probata-t07-outslot-preparation-integration-review-20261016.md",
+    "sha256": "13272f00024059b8906cfe0c6a8b79d0d7905f49d3d564faabc992026dcf964f"
+  },
+  "changed_git_pins": [
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t07-outslot-native-20261016.json",
+      "sha256": "152d41c46e01829b00678fb235485d62d102c67b80a84db88f3e5900f465c4dc",
+      "bytes": 4025
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t07-outslot-physical-byte-repair-20261016.json",
+      "sha256": "3cd2c72c5935ef217d4ad2eeb356d7eba1e1f7557a6e1645e5bd9ad75bf23c5a",
+      "bytes": 2910
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/OUTSLOT-ABI-20261016.md",
+      "sha256": "484b3a225108b9f1b49c814fd20d75ceb07817501703a7f2cb64f59238da5f89",
+      "bytes": 11562
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/OUTSLOT-BYTE-PINS-20261016.md",
+      "sha256": "36f40c5b79fcd40c1896dc51894fd7a738762a72ff67fbae82b3bf7f93b5ab9f",
+      "bytes": 2786
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/checks/outslot/control.c",
+      "sha256": "aa3d79d3a214a5406aa2d4829816a0082193bcd094c5d55ce98dbfe49b5fe5b6",
+      "bytes": 2884
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/checks/outslot/run_controls.py",
+      "sha256": "d5b6e8df720c822f0b11afc854abc771171168855c21d6d3f98ead823404d0c2",
+      "bytes": 8599
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/checks/outslot/td_behavior.c",
+      "sha256": "050fb8dead1b8a31e6b5ba4e9ef5ff02e07f411b9c059ef6d136f50675c9250f",
+      "bytes": 5593
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/outslot_lowering.py",
+      "sha256": "72b4c02c544f2a3c49239b52c0086a14f44a172434731cf03f71b80b36825212",
+      "bytes": 20473
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_outslot/abi-map.json",
+      "sha256": "5c280a18d4efdeb8fbf3b7b833c7f550bc74121a54838a9b02a78556254ad578",
+      "bytes": 32210
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_outslot/bfs_unit.h",
+      "sha256": "52d40d00b0a7462eed164deec3a8958a855de5763e7f20fefb8e2f257f09bd34",
+      "bytes": 2013
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_outslot/dxc_summaries.h",
+      "sha256": "6b109e09239be71e252ee25e4cfa720c1cf37b651a8f586423f0c8d43f2b37e5",
+      "bytes": 11350
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_outslot/gapbs_models.h",
+      "sha256": "7fcafa5498481b4ecce20c36ba167a00b9c5f9231b460c162268b814f14f19ec",
+      "bytes": 18022
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_outslot/tdstep_standin.c",
+      "sha256": "3af025040802b2c018a7a192738c276863f7c489e4c3ce238443b9f2a3f6bcfa",
+      "bytes": 16044
+    }
+  ],
+  "historical_manifest_instances": 82,
+  "repair_manifest_instances": 128,
+  "hash_mismatches": 0,
+  "controls_retained": 44,
+  "original_sources_unchanged": 4,
+  "generated_blobs_unchanged": 5,
+  "return_interface_count": 22,
+  "helper_bodies": 19,
+  "lexical_occurrences": 53,
+  "allocator_TD_source_count_admission": false,
+  "full_diffcheck_pass": false,
+  "generated_trailing_whitespace_warnings": 24,
+  "whitespace_boundary": "Preserve reviewed pinned bytes; root defers canonical formatting to separately reviewed refinement/final integration quality gate.",
+  "fork_pins": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/gapbs/src/sliding_queue.h",
+      "sha256": "3d5a1d3cff924737c2fc7c6b4fcbb859270f1fcc626c25aac4c780b7b6f4c02c",
+      "git_blob_sha1": "fed319ea556423c55db8d995a97ea21a0f950da8"
+    },
+    {
+      "path": "/private/tmp/probata-t07-alignment-source-20261016/bfs.cc",
+      "sha256": "6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465",
+      "git_blob_sha1": "3f6d91b29dca5c2a42e918795f3f59e0f1bc630f"
+    },
+    {
+      "path": "/private/tmp/probata-t07-alignment-source-20261016/benchmark.h",
+      "sha256": "87c20752c8437dd5152d00e7c995bedfab15b8929219f85846f47e0f9a4b339f",
+      "git_blob_sha1": "1e305e5e7a6297ae5d96f5a50dc72fe8e3e1c651"
+    }
+  ],
+  "no_actual_tools_by_reviewer": true,
+  "production_library_changed": false
+}

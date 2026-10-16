@@ -1,0 +1,21 @@
+{
+  "date_et": "2026-10-16",
+  "no_execution": "Source/text/hash and primary documentation read only; no repository edits, compiler/formal/prover/tests/SSH or actual diagnostic.",
+  "note": {
+    "path": "/private/tmp/probata-t25-owned-domain-prospective-review-20261016.md",
+    "sha256": "511ca888da6fde080889d6d0d1822cf0fd1d1507f47647d3a1bc88aa28258670"
+  },
+  "primary_reference": "https://www.frama-c.com/download/acsl-1.22.pdf",
+  "required_refinements": [
+    "Use allocation-identity separation for receiver survival across free; disjoint advertised-capacity bytes are insufficient in a larger allocation",
+    "Distinguish unary freeability from unique deallocation rights; public multi-vector composition must prove owner/resource uniqueness or invalidate other shared views",
+    "Guard capacity-zero/null and retain size-only prefix initialization, arbitrary escaped aliases and identity history",
+    "Complete per-body frame/allocates/frees and wrapper-precondition audit plus owned postcondition proof; no isolated-helper adoption",
+    "Cross receiver/source-backing allocation constraints for move and composable copy; cross constraints for swap; source freeability is not needed by deep copy itself",
+    "Named qualified new source/version/model/method/caller path; preserve original v2 gaps/accepted records and no changed-original theorem claim"
+  ],
+  "smallest_vertical": "One int vector qualified count/value construction -> reserve/grow -> destructor, with source-derived caller ownership, growing preservation/stale-alias negative and no-growth alias preservation. Broader copy/move/swap closure before general promotion.",
+  "source": "swdb/std_models.py",
+  "source_sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2",
+  "verdict": "CONDITIONALLY_SOUND_QUALIFIED_V3_DIRECTION_WITH_REQUIRED_REFINEMENTS"
+}

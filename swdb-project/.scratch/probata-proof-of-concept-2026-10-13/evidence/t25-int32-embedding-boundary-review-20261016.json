@@ -1,0 +1,47 @@
+{
+  "actual_tools_or_tests_executed": false,
+  "broad_pointer_history_premise_allowed": false,
+  "date_et": "2026-10-16",
+  "exclusive_ownership_inferred": false,
+  "old_repr_implies_int32_region": false,
+  "raw_v3_contract_proves_external_effective_type_safety": false,
+  "repository_edits": false,
+  "review_md_sha256": "ae9af424224fffb3bb3bc87e87e281e64c2069dded417a53572f0d068c4868ee",
+  "scope": "uncommitted source-domain semantic boundary, not full patch review",
+  "source_pins": [
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/heap_reallocation.mlw",
+      "sha256": "9b1b5fd19ed33a937c7ee4da7b49d5ef2ad6843cf06d0cbf3844bad8377e7543"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/vector_reallocation_vcs.py",
+      "sha256": "fcf9066712dddb0c8d37a3057f9e4712abe9c883ab15dc44bd2f0a566c2046b1"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/heap_bridge.mlw",
+      "sha256": "5186c27f5a7a339352e3f62dc3a0d3efb1c7bd12f8a456cc61b0d7a52566638d"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/heap_model_vcs.py",
+      "sha256": "f20e0ec130222aeda96b4fbb8e72eef8d922d3f33e84077777203f7e6d159092"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/vector_reallocation_model.py",
+      "sha256": "c75cca5d558b9321a389b0d298b4650c007aa3308bf0822a682f0b2bba8e0931"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/std_models.py",
+      "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/MemTyped.ml",
+      "sha256": "ad0d3c4e8e568a09d47bb658767e5ba476cc9e957f16b14981370642c5e235b5"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/Cint.ml",
+      "sha256": "3b2a00bb65f4c785265c2295c323459e3dce66bb6c82e3d70ff3a659a3660156"
+    }
+  ],
+  "typed_projection_can_supply_integer_cells_without_new_C_requires": true,
+  "verdict": "PREPARATION_MAY_CONTINUE_EXPLICIT_TYPED_DOMAIN_REQUIRED_FOR_ACTUAL_ADMISSION"
+}

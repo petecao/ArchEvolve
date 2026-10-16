@@ -316,6 +316,34 @@ composition remain separate. See
 [preparation evidence](../evidence/t25-count-ctor-preparation-controls-20261016.json)
 and [preserved packet hashes](../evidence/t25-count-ctor-canonical-comparison-20261016.json).
 
+### Qualified reallocation-domain preparation — 2026-10-16 ET
+
+A separately named `vector-reallocation-domain-3` candidate now prepares public
+count/value constructor, grow, reserve and destructor model sources. The original
+v2 catalog, contracts and accepted freezes remain unchanged. Every candidate
+currently returns not proven before verifier launch; this is preparation toward
+a complete public caller composition, not acceptance of a repaired body.
+
+Nonempty backing must be freeable and have a distinct allocation base from the
+receiver. Byte-range separation alone does not prevent a free from killing a
+receiver in the same larger allocation. This is unary reallocation eligibility,
+not exclusive ownership. Cross-view rights and liveness remain caller
+obligations, and raw escaped aliases remain legal until release. Construction
+keeps its original precondition and adds eligibility/exact-capacity results;
+grow/reserve require and preserve eligibility. Destruction retains its original
+broader overlap domain. No source premise is silently added to an old contract.
+
+Public RED/GREEN controls retain missing-model, record-schema, original-source
+binding and exact-capacity failures. The final preparation envelope passes seven
+controls, including two unchanged original heap paths. Four defined native
+growth states per original/qualified C body preserve behavior; no invalid-growth,
+ASan or actual formal diagnostic ran. Complete unbounded source/VC mapping, fresh
+body proofs and source-backed caller discharge are still pending. The full
+source fixture includes safe, growth-stale and no-growth alias paths with guarded
+empty behavior. See [coverage matrix](../prototype/25-acceptance-coverage-20261016.md),
+[candidate/caller plan](../prototype/25-reallocation-domain/README.md) and
+[preparation evidence](../evidence/t25-reallocation-domain-preparation-controls-20261016.json).
+
 ## Acceptance
 
 - [ ] Each modeled member has a C function and an ACSL contract citing the standard's clause for it (`[vector]` for vector members). `swdb prove` proves every contract against its C function once, recorded with subject "a library entry's summary".
@@ -1024,3 +1052,50 @@ remain open, and the owner's separate ownership/domain work is excluded.
 [Independent review](../evidence/t25-count-ctor-cold-review-bb7170ac-20261016.md),
 [exact review metadata](../evidence/t25-count-ctor-cold-review-bb7170ac-20261016.json),
 [compact final snapshot](../evidence/t25-count-ctor-cold-snapshot-final-bb7170ac-20261016.json).
+
+### Qualified reallocation source/caller preparation — 2026-10-16 ET
+
+The explicit v3 preparation now binds every emitted executable helper and
+inverse-restores the complete original v2 source after the disclosed domain/name
+edits. Public lowering separately records exact physical source/C/header pins
+and pending constructor, data, reserve, index/read and destructor obligations
+for the three original qualified-vertical caller fixtures. It grants no origins,
+adds no caller premise and never selects v3 models or launches a verifier.
+Eleven serial compiler/native controls pass; the real source-byte, signed-count
+and missing-call REDs remain retained. The independent f32 preparation review
+passed 78 physical references; its scope remains unsupported preparation.
+Evidence: `../evidence/t25-reallocation-caller-source-preparation-20261016.json`.
+
+The independent `../evidence/t25-v3-vertical-domain-review-20261016.md` inventories
+all new copy/frame/qualification/caller/lifetime duties. Typed source-int loads
+and automatic receiver lifetime mapping remain necessary before fresh public
+proof. No original growth contract, qualified body, caller domain, exclusive
+ownership or wider type/member acceptance is claimed. Ticket25 remains claimed.
+
+### Qualified typed-source and lifetime draft — 2026-10-16 ET
+
+Public preparation now emits 30 constructor, 20 grow, 26 reserve/helper and 11
+destructor pending targets, plus ten source-local caller lifetime/data/guard
+duties. Copying uses arbitrary entry-snapshot integer values; concrete feasibility
+controls remain separate from quantified incoming-heap obligations. The route
+still returns unsupported before any verifier. Nineteen compiler/native controls
+pass (51.65 s); 34 defined caller inputs agree between original C++ and lowered C.
+No stale or effective-type-undefined source was executed.
+
+Independent review identified that initialized bytes/old representation do not
+entail integer cells or effective-type safety. The explicitly qualified v3 domain
+now requires a source image from the selected WP Typed/Machine integer chunk,
+with caller discharge from admitted typed constructions/stores. Its runtime
+binding is pending. The destructor's broad element-free domain is preserved.
+No global pointer-map premise, exclusive owner token, desired-result axiom,
+original raw-growth proof or complete caller acceptance is claimed. Source,
+clause/frame/cleanup/dependency closure and fresh normal-reader proof remain open.
+The coordinator owns the prospective minimal theory type gate and all actual
+jobs. Evidence: `../evidence/t25-reallocation-pending-heap-map-controls-v2-20261016.json`.
+
+
+## Qualified-v3 pending-source integration — 2026-10-16 02:45 ET
+
+Exact304e03ac097352e78c3d3a637e13e951bef51dd0 is published as prospective source for the separately planned exact-Git-blob type-only gate. The original v2 catalog and accepted heap bridge/VC/packet/view remain unchanged. New explicit qualified constructor/grow/reserve/dtor lookup records the candidate model/domain/theory and emits30/20/26/11 pending targets, but always returns not_proven/unsupported_construct before verifier launch. Caller AST receipts retain original v2 calls, no known origins and no added premises; ten source-local placement/history/frame/data/guard duties are pending. [Preparation README](../prototype/25-reallocation-domain/README.md), [integration review](../evidence/t07-t25-preparation-integration-review-20261016.md).
+
+Typed WP integer-source embedding and non-dynamic automatic-object lifetime definitions are drafts, with selected-runtime/source binding and full source/clause/frame/type/import/task/body/caller completeness unproved. Arbitrary entry-snapshot copying is not uniform-fill reuse; constructor capacity/eligibility are qualified postconditions to prove and destructor overlap scope stays broad. The latest preparation packet's407 references rehash without mismatch. Retained19 compiler/native controls and34 defined C/C++ caller comparisons are finite evidence, not a universal or stale-alias/UB proof. No formal/compiler job was run by integration; no type/proof result follows merely from publication. Status remains claimed and no dependency/default/current-catalog record is upgraded. Selector770's separate final cold record audit remains pending.

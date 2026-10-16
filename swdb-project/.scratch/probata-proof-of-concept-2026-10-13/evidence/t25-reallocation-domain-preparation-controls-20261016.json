@@ -1,0 +1,600 @@
+{
+  "caller_permission_boundary": "Cross-view deallocation rights and post-release liveness remain obligations, never assumptions. Escaped raw aliases remain legal before release.",
+  "capacity_primary_source": {
+    "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-v3-constructor-capacity-primary-source-20261016.json",
+    "sha256": "5c8c39ceae8134cedce418b632743d76be95672faa078ac67a3ce2a3edde2bcd"
+  },
+  "contract_changes": [
+    "qualified constructor promises reallocation eligibility and exact capacity n with original precondition retained",
+    "grow/reserve require and preserve reallocation eligibility",
+    "qualified destructor retains original broad overlap domain"
+  ],
+  "created": "2026-10-16 ET",
+  "final_result": "7 passed in10.69s, guarded11.1986s/272809984B; includes two existing original heap preparation controls, noOOM/timeout",
+  "formal_boundary": "SWDB_FRAMA_C=none and SWDB_CBMC=none in parent; explicit child metadata/parse-error stand-in. Every qualified model refuses before verifier launch. No actual formal job, SSH, invalid-growth or sanitizer diagnostic.",
+  "key_domain": "nonzero-capacity backing must be freeable and have a different allocation base than receiver; this is unary reallocation eligibility, not exclusive ownership",
+  "native_boundary": "Four defined C growth cases run for original and qualified bodies (8 observations); no C++ equivalence claim, no negative UB execution. Commands/sources/stdout/stderr retained.",
+  "native_refs": [
+    {
+      "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_candidate_retains_0/original.command.json",
+      "sha256": "91eea2ad8316aa4f4a2d5c5690aaaa44b1d1b6c575d408414a240a646ee74762"
+    },
+    {
+      "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_candidate_retains_0/qualified.command.json",
+      "sha256": "a646954d8684cde5e4c21592a28454cb83011b557de85cb9225375973555720c"
+    },
+    {
+      "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_candidate_retains_0/original.compile.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_candidate_retains_0/qualified.compile.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_candidate_retains_0/original.compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_candidate_retains_0/qualified.compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_candidate_retains_0/original.run.stdout",
+      "sha256": "f2873f0f55fa83ff26d5ad5d706c5bd8d37dc14dacee2ad3267a82d0fd1ffbba"
+    },
+    {
+      "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_candidate_retains_0/qualified.run.stdout",
+      "sha256": "f2873f0f55fa83ff26d5ad5d706c5bd8d37dc14dacee2ad3267a82d0fd1ffbba"
+    },
+    {
+      "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_candidate_retains_0/original.run.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_candidate_retains_0/qualified.run.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_candidate_retains_0/original.c",
+      "sha256": "20bac4283cba2becfb0f34851fc0218ac39addd79690780a592a232ccaacea0c"
+    },
+    {
+      "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_candidate_retains_0/qualified.c",
+      "sha256": "3981457ca345b3a192042643334d22b1463b8e003ebcd11addfa7cd55b5b6c0e"
+    }
+  ],
+  "public_candidate_records": [
+    {
+      "domain": {
+        "alias_policy": "escaped raw aliases remain legal before release and stale afterward",
+        "allocation_identity_condition": "capacity>0 implies receiver and backing allocation bases differ",
+        "body_sha256": "b2eca9461bf9a92c03bbd4d9e891ad1fbc26b85c67443417e38e1d04886614c3",
+        "caller_discharge": "required; not assumed",
+        "original_contract_proved": false,
+        "original_member": "std_vector_int_reserve",
+        "original_source_sha256": "bbb1ea332771898dba5a3b7e4e5e23fe0b916f325b22f213095c36285321421f",
+        "parent_model": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        },
+        "pending": [
+          "complete original source/clause/RTE/init/frame/lifetime map under the new contract",
+          "fresh unbounded body proof",
+          "source-derived caller eligibility and cross-view liveness accounting"
+        ],
+        "proof_status": "unsupported preparation; no verifier launch or model-body proof",
+        "qualified_member": "std_vector_int_realloc_v3_reserve",
+        "qualified_source_sha256": "1c77c118f67e35f605dde19f41a01b521d91295d1f429019dd4df9a22a0b4a4a",
+        "unary_role": "reallocation eligibility; not exclusive ownership",
+        "version": 3
+      },
+      "failure_class": "unsupported_construct",
+      "record": {
+        "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_minimal_qualified_1/records/proofs/proof.model.std_vector_int_realloc_v3_reserve.20261016t052819z.0119a25e.yaml",
+        "sha256": "338c965d94615deb1b48293888b9ec10678e84a19db53f6b3e88f05fdb58ab68"
+      },
+      "reports": [
+        {
+          "name": "vector_reallocation_model",
+          "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_minimal_qualified_1/runs/proof.model.std_vector_int_realloc_v3_reserve.20261016t052819z.0119a25e/wp/vector-reallocation-v3.c",
+          "sha256": "1c77c118f67e35f605dde19f41a01b521d91295d1f429019dd4df9a22a0b4a4a"
+        },
+        {
+          "name": "vector_reallocation_domain",
+          "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_minimal_qualified_1/runs/proof.model.std_vector_int_realloc_v3_reserve.20261016t052819z.0119a25e/wp/vector-reallocation-v3.json",
+          "sha256": "206635256741fce9d285ee86d3b20000b2c38575f4ff36a01bd96ac0916f70cb"
+        },
+        {
+          "name": "vector_reallocation_original",
+          "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_minimal_qualified_1/runs/proof.model.std_vector_int_realloc_v3_reserve.20261016t052819z.0119a25e/wp/vector-reallocation-v2.original.c",
+          "sha256": "bbb1ea332771898dba5a3b7e4e5e23fe0b916f325b22f213095c36285321421f"
+        },
+        {
+          "name": "handler",
+          "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_minimal_qualified_1/runs/proof.model.std_vector_int_realloc_v3_reserve.20261016t052819z.0119a25e/wp/handler.json",
+          "sha256": "e0462a9bb7dbb9208c6b026effe2fc77dd82262945bcea86bd2119df953a27b3"
+        }
+      ],
+      "verdict": "not_proven",
+      "verifier_launched": false
+    },
+    {
+      "domain": {
+        "alias_policy": "escaped raw aliases remain legal before release and stale afterward",
+        "allocation_identity_condition": "capacity>0 implies receiver and backing allocation bases differ",
+        "body_sha256": "b2a65ba2e721e87eda94ded1bd37e05ba0d5f8b9a405f97a46d3da977965623e",
+        "caller_discharge": "required; not assumed",
+        "original_contract_proved": false,
+        "original_member": "std_vector_int_ctor_count_value",
+        "original_source_sha256": "57cf2a6f3f9049f8edf41633f9ef60d0bb7c804e5ee937af796217a2a018c594",
+        "parent_model": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        },
+        "pending": [
+          "complete original source/clause/RTE/init/frame/lifetime map under the new contract",
+          "fresh unbounded body proof",
+          "source-derived caller eligibility and cross-view liveness accounting"
+        ],
+        "proof_status": "unsupported preparation; no verifier launch or model-body proof",
+        "qualified_member": "std_vector_int_realloc_v3_ctor_count_value",
+        "qualified_source_sha256": "e59c0f2658a3adc94112e7852ccda6b1d7302c1300a2e84f0121f4d726e090e3",
+        "unary_role": "reallocation eligibility; not exclusive ownership",
+        "version": 3
+      },
+      "failure_class": "unsupported_construct",
+      "record": {
+        "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_minimal_qualified_0/records/proofs/proof.model.std_vector_int_realloc_v3_ctor_count_value.20261016t052818z.c04d2a32.yaml",
+        "sha256": "eafeefc7044e232ace3e7f33e01474976df83fc3ab728e101252d9d9768a1651"
+      },
+      "reports": [
+        {
+          "name": "vector_reallocation_model",
+          "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_minimal_qualified_0/runs/proof.model.std_vector_int_realloc_v3_ctor_count_value.20261016t052818z.c04d2a32/wp/vector-reallocation-v3.c",
+          "sha256": "e59c0f2658a3adc94112e7852ccda6b1d7302c1300a2e84f0121f4d726e090e3"
+        },
+        {
+          "name": "vector_reallocation_domain",
+          "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_minimal_qualified_0/runs/proof.model.std_vector_int_realloc_v3_ctor_count_value.20261016t052818z.c04d2a32/wp/vector-reallocation-v3.json",
+          "sha256": "3aff9fa85de89470adae54057eb852df4d3c1bca7aece047d8a68d18d72a36f6"
+        },
+        {
+          "name": "vector_reallocation_original",
+          "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_minimal_qualified_0/runs/proof.model.std_vector_int_realloc_v3_ctor_count_value.20261016t052818z.c04d2a32/wp/vector-reallocation-v2.original.c",
+          "sha256": "57cf2a6f3f9049f8edf41633f9ef60d0bb7c804e5ee937af796217a2a018c594"
+        },
+        {
+          "name": "handler",
+          "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_minimal_qualified_0/runs/proof.model.std_vector_int_realloc_v3_ctor_count_value.20261016t052818z.c04d2a32/wp/handler.json",
+          "sha256": "e0462a9bb7dbb9208c6b026effe2fc77dd82262945bcea86bd2119df953a27b3"
+        }
+      ],
+      "verdict": "not_proven",
+      "verifier_launched": false
+    },
+    {
+      "domain": {
+        "alias_policy": "escaped raw aliases remain legal before release and stale afterward",
+        "allocation_identity_condition": "capacity>0 implies receiver and backing allocation bases differ",
+        "body_sha256": "8541a40590f0233500f7fe06ea69221a5b884ab07aa033988ec109a7383b2c7f",
+        "caller_discharge": "required; not assumed",
+        "original_contract_proved": false,
+        "original_member": "std_vector_int_grow",
+        "original_source_sha256": "dc2049fa6f88a958fb88aee1e0a401f584630e8c302ad2e60b069ced2b587b1b",
+        "parent_model": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        },
+        "pending": [
+          "complete original source/clause/RTE/init/frame/lifetime map under the new contract",
+          "fresh unbounded body proof",
+          "source-derived caller eligibility and cross-view liveness accounting"
+        ],
+        "proof_status": "unsupported preparation; no verifier launch or model-body proof",
+        "qualified_member": "std_vector_int_realloc_v3_grow",
+        "qualified_source_sha256": "371281207e3a40a56755043e866e8af016b6c23e7f7dd163336a57a08a0528dd",
+        "unary_role": "reallocation eligibility; not exclusive ownership",
+        "version": 3
+      },
+      "failure_class": "unsupported_construct",
+      "record": {
+        "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_candidate_retains_0/records/proofs/proof.model.std_vector_int_realloc_v3_grow.20261016t052816z.29799d5f.yaml",
+        "sha256": "99487f98c1f690546716db20c4799667d37f9699dffac1a8dfe4d9abfd8c32b4"
+      },
+      "reports": [
+        {
+          "name": "vector_reallocation_model",
+          "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_candidate_retains_0/runs/proof.model.std_vector_int_realloc_v3_grow.20261016t052816z.29799d5f/wp/vector-reallocation-v3.c",
+          "sha256": "371281207e3a40a56755043e866e8af016b6c23e7f7dd163336a57a08a0528dd"
+        },
+        {
+          "name": "vector_reallocation_domain",
+          "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_candidate_retains_0/runs/proof.model.std_vector_int_realloc_v3_grow.20261016t052816z.29799d5f/wp/vector-reallocation-v3.json",
+          "sha256": "00d81109f97e5ce3bd1d50eb5f0cfb1d75aa56178194ba1e1576c8fe8d930f35"
+        },
+        {
+          "name": "vector_reallocation_original",
+          "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_candidate_retains_0/runs/proof.model.std_vector_int_realloc_v3_grow.20261016t052816z.29799d5f/wp/vector-reallocation-v2.original.c",
+          "sha256": "dc2049fa6f88a958fb88aee1e0a401f584630e8c302ad2e60b069ced2b587b1b"
+        },
+        {
+          "name": "handler",
+          "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_candidate_retains_0/runs/proof.model.std_vector_int_realloc_v3_grow.20261016t052816z.29799d5f/wp/handler.json",
+          "sha256": "e0462a9bb7dbb9208c6b026effe2fc77dd82262945bcea86bd2119df953a27b3"
+        }
+      ],
+      "verdict": "not_proven",
+      "verifier_launched": false
+    },
+    {
+      "domain": {
+        "alias_policy": "escaped raw aliases remain legal before release and stale afterward",
+        "allocation_identity_condition": "capacity>0 implies receiver and backing allocation bases differ",
+        "body_sha256": "ff60f7bb4cfc6d2bfcfe1e898b75a6c685da6d711e5da0d6afb9920fc756b263",
+        "caller_discharge": "required; not assumed",
+        "original_contract_proved": false,
+        "original_member": "std_vector_int_dtor",
+        "original_source_sha256": "1056f4f83c59a30941ec9417c36aada8eab4b62160087ae10315cd2ac9778317",
+        "parent_model": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        },
+        "pending": [
+          "complete original source/clause/RTE/init/frame/lifetime map under the new contract",
+          "fresh unbounded body proof",
+          "source-derived caller eligibility and cross-view liveness accounting"
+        ],
+        "proof_status": "unsupported preparation; no verifier launch or model-body proof",
+        "qualified_member": "std_vector_int_realloc_v3_dtor",
+        "qualified_source_sha256": "3534212640de4ea9b7fdb85a66ea1d39df77a8e532c55f75ef55a9940de21dd1",
+        "unary_role": "reallocation eligibility; not exclusive ownership",
+        "version": 3
+      },
+      "failure_class": "unsupported_construct",
+      "record": {
+        "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_minimal_qualified_2/records/proofs/proof.model.std_vector_int_realloc_v3_dtor.20261016t052820z.e457c724.yaml",
+        "sha256": "b2f489d69e863cdbbe4635c8315f9ffa1e92e94f60b10e94c85aeefba915eab4"
+      },
+      "reports": [
+        {
+          "name": "vector_reallocation_model",
+          "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_minimal_qualified_2/runs/proof.model.std_vector_int_realloc_v3_dtor.20261016t052820z.e457c724/wp/vector-reallocation-v3.c",
+          "sha256": "3534212640de4ea9b7fdb85a66ea1d39df77a8e532c55f75ef55a9940de21dd1"
+        },
+        {
+          "name": "vector_reallocation_domain",
+          "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_minimal_qualified_2/runs/proof.model.std_vector_int_realloc_v3_dtor.20261016t052820z.e457c724/wp/vector-reallocation-v3.json",
+          "sha256": "0f563f63978c62d77a904aa845078d07249c098d1082f717e1e8eadbc32b6bc9"
+        },
+        {
+          "name": "vector_reallocation_original",
+          "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_minimal_qualified_2/runs/proof.model.std_vector_int_realloc_v3_dtor.20261016t052820z.e457c724/wp/vector-reallocation-v2.original.c",
+          "sha256": "1056f4f83c59a30941ec9417c36aada8eab4b62160087ae10315cd2ac9778317"
+        },
+        {
+          "name": "handler",
+          "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_minimal_qualified_2/runs/proof.model.std_vector_int_realloc_v3_dtor.20261016t052820z.e457c724/wp/handler.json",
+          "sha256": "e0462a9bb7dbb9208c6b026effe2fc77dd82262945bcea86bd2119df953a27b3"
+        }
+      ],
+      "verdict": "not_proven",
+      "verifier_launched": false
+    },
+    {
+      "domain": {
+        "alias_policy": "escaped raw aliases remain legal before release and stale afterward",
+        "allocation_identity_condition": "capacity>0 implies receiver and backing allocation bases differ",
+        "body_sha256": "8541a40590f0233500f7fe06ea69221a5b884ab07aa033988ec109a7383b2c7f",
+        "caller_discharge": "required; not assumed",
+        "original_contract_proved": false,
+        "original_member": "std_vector_int_grow",
+        "original_source_sha256": "dc2049fa6f88a958fb88aee1e0a401f584630e8c302ad2e60b069ced2b587b1b",
+        "parent_model": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        },
+        "pending": [
+          "complete original source/clause/RTE/init/frame/lifetime map under the new contract",
+          "fresh unbounded body proof",
+          "source-derived caller eligibility and cross-view liveness accounting"
+        ],
+        "proof_status": "unsupported preparation; no verifier launch or model-body proof",
+        "qualified_member": "std_vector_int_realloc_v3_grow",
+        "qualified_source_sha256": "371281207e3a40a56755043e866e8af016b6c23e7f7dd163336a57a08a0528dd",
+        "unary_role": "reallocation eligibility; not exclusive ownership",
+        "version": 3
+      },
+      "failure_class": "unsupported_construct",
+      "record": {
+        "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_qualified_grow_rec0/records/proofs/proof.model.std_vector_int_realloc_v3_grow.20261016t052815z.51c159d4.yaml",
+        "sha256": "7e0f1f2c82a0f7776986e09f396cb34d1380a6760ef30617c6c42943079d7ada"
+      },
+      "reports": [
+        {
+          "name": "vector_reallocation_model",
+          "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_qualified_grow_rec0/runs/proof.model.std_vector_int_realloc_v3_grow.20261016t052815z.51c159d4/wp/vector-reallocation-v3.c",
+          "sha256": "371281207e3a40a56755043e866e8af016b6c23e7f7dd163336a57a08a0528dd"
+        },
+        {
+          "name": "vector_reallocation_domain",
+          "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_qualified_grow_rec0/runs/proof.model.std_vector_int_realloc_v3_grow.20261016t052815z.51c159d4/wp/vector-reallocation-v3.json",
+          "sha256": "00d81109f97e5ce3bd1d50eb5f0cfb1d75aa56178194ba1e1576c8fe8d930f35"
+        },
+        {
+          "name": "vector_reallocation_original",
+          "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_qualified_grow_rec0/runs/proof.model.std_vector_int_realloc_v3_grow.20261016t052815z.51c159d4/wp/vector-reallocation-v2.original.c",
+          "sha256": "dc2049fa6f88a958fb88aee1e0a401f584630e8c302ad2e60b069ced2b587b1b"
+        },
+        {
+          "name": "handler",
+          "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/pytest/test_public_qualified_grow_rec0/runs/proof.model.std_vector_int_realloc_v3_grow.20261016t052815z.51c159d4/wp/handler.json",
+          "sha256": "e0462a9bb7dbb9208c6b026effe2fc77dd82262945bcea86bd2119df953a27b3"
+        }
+      ],
+      "verdict": "not_proven",
+      "verifier_launched": false
+    }
+  ],
+  "runs": {
+    "capacity_green": {
+      "command": {
+        "path": "/private/tmp/probata-t25-reallocation-constructor-capacity-green-20261016/command.json",
+        "sha256": "155cde6a4d6e67d397e7a2102b8644e974c6f095ef26aee28f70b796f81d805c"
+      },
+      "log": {
+        "path": "/private/tmp/probata-t25-reallocation-constructor-capacity-green-20261016/controls.log",
+        "sha256": "b632ba3b5d75d336650a26fbf5403abf707ec37cfb411ae61bc5620f7427d6ca"
+      },
+      "resource_values": {
+        "cpu_seconds": 1.700053,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 197246976,
+        "timed_out": false,
+        "wall_seconds": 1.7215579999610782
+      },
+      "resources": {
+        "path": "/private/tmp/probata-t25-reallocation-constructor-capacity-green-20261016/resources.json",
+        "sha256": "6d08c09f97eaa4cd0f2dd20dc9901c244cf1c2c446f3b171550bde072115a057"
+      }
+    },
+    "capacity_red": {
+      "command": {
+        "path": "/private/tmp/probata-t25-reallocation-constructor-capacity-red-20261016/command.json",
+        "sha256": "7b6df5e09ae77be903f783734fe7b9d35e0b12cadb90c917c5e0ca3dd12f1f13"
+      },
+      "log": {
+        "path": "/private/tmp/probata-t25-reallocation-constructor-capacity-red-20261016/controls.log",
+        "sha256": "8c1b9b26ca07b835c9587c3baf7c7c3c688434a57dffd2563082a2a622558d56"
+      },
+      "resource_values": {
+        "cpu_seconds": 1.74418,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 198639616,
+        "timed_out": false,
+        "wall_seconds": 1.818743292009458
+      },
+      "resources": {
+        "path": "/private/tmp/probata-t25-reallocation-constructor-capacity-red-20261016/resources.json",
+        "sha256": "fbf9b09f4f26416f99c92d7e4111be7f6b8e368afdaa57d50bfbfef1a7187a7a"
+      }
+    },
+    "composition_green": {
+      "command": {
+        "path": "/private/tmp/probata-t25-reallocation-composition-contract-green-20261016/command.json",
+        "sha256": "d2e53909cb0b9404da25a72a08cd9e84d137d3a5f0d05b4921d6fb41a913b529"
+      },
+      "log": {
+        "path": "/private/tmp/probata-t25-reallocation-composition-contract-green-20261016/controls.log",
+        "sha256": "68171e6048407e26c454a3208c5e050cbd01c175dd8dc88c09a179933a31372f"
+      },
+      "resource_values": {
+        "cpu_seconds": 6.171303,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 197328896,
+        "timed_out": false,
+        "wall_seconds": 6.8676132499822415
+      },
+      "resources": {
+        "path": "/private/tmp/probata-t25-reallocation-composition-contract-green-20261016/resources.json",
+        "sha256": "3cdd6d34d0e0bcd20fc21b2d4acd831d4c7452429d13f7eff402c69abdcecca9"
+      }
+    },
+    "composition_red": {
+      "command": {
+        "path": "/private/tmp/probata-t25-reallocation-composition-contract-red-20261016/command.json",
+        "sha256": "f002b4bf295b8807bd84845233e5c1dd3b6b615383bd3270064d41f643a36148"
+      },
+      "log": {
+        "path": "/private/tmp/probata-t25-reallocation-composition-contract-red-20261016/controls.log",
+        "sha256": "79bbe6ee7c21f2c7f7522372e788695b8b7368d50a2e80bf3cd55918cb3a84c0"
+      },
+      "resource_values": {
+        "cpu_seconds": 2.242882,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 168116224,
+        "timed_out": false,
+        "wall_seconds": 2.5490882080048323
+      },
+      "resources": {
+        "path": "/private/tmp/probata-t25-reallocation-composition-contract-red-20261016/resources.json",
+        "sha256": "555874ed29de694cf7f6dfa298d9e3d5431ad2b3f9cabc961c3dd87839356517"
+      }
+    },
+    "final": {
+      "command": {
+        "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/command.json",
+        "sha256": "0f8a86f5bb50deabba33afb68ef6470bffdfffbf487e55326a4c1f05052e7a38"
+      },
+      "log": {
+        "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/controls.log",
+        "sha256": "b93c165d77c8e27f9dcee325d5be84032daecb3a74a32eef8ca6ed64181876bb"
+      },
+      "resource_values": {
+        "cpu_seconds": 10.308668,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 272809984,
+        "timed_out": false,
+        "wall_seconds": 11.198622249998152
+      },
+      "resources": {
+        "path": "/private/tmp/probata-t25-reallocation-preparation-envelope-final-20261016/resources.json",
+        "sha256": "9dfb08d12933616b0b1fa2420cdcca46013d6e090d7293536a3dd5c13af85533"
+      }
+    },
+    "native_green": {
+      "command": {
+        "path": "/private/tmp/probata-t25-reallocation-original-binding-green-20261016/command.json",
+        "sha256": "788abd85d2bad5f9dfa54066f7ac83cca7c339f7cea61ad5277d89aa54e101e5"
+      },
+      "log": {
+        "path": "/private/tmp/probata-t25-reallocation-original-binding-green-20261016/controls.log",
+        "sha256": "7fde11f01db9bdcb9c135d2949567d4df9f0bc705ed0f66f159e9d431e4c5040"
+      },
+      "resource_values": {
+        "cpu_seconds": 2.8473040000000003,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 196575232,
+        "timed_out": false,
+        "wall_seconds": 3.277705915970728
+      },
+      "resources": {
+        "path": "/private/tmp/probata-t25-reallocation-original-binding-green-20261016/resources.json",
+        "sha256": "e4b476526d5633f9f237787114c9117a3461d6e93ac9d0ba1a3ec9ebe447d196"
+      }
+    },
+    "original_binding_red": {
+      "command": {
+        "path": "/private/tmp/probata-t25-reallocation-original-binding-red-20261016/command.json",
+        "sha256": "fd169a899e72415a6860a88b9767a481aad7aa299451ea217c00d6bd835eb324"
+      },
+      "log": {
+        "path": "/private/tmp/probata-t25-reallocation-original-binding-red-20261016/controls.log",
+        "sha256": "0cb4294070f17821ad3543388da756a179fb2c38de1579334212d513915318c5"
+      },
+      "resource_values": {
+        "cpu_seconds": 1.593801,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 199671808,
+        "timed_out": false,
+        "wall_seconds": 1.629416375013534
+      },
+      "resources": {
+        "path": "/private/tmp/probata-t25-reallocation-original-binding-red-20261016/resources.json",
+        "sha256": "df1e2235f09e2c5aa8123a33fc10e0ee60e175c219299de2c0be4b37f66b8c64"
+      }
+    },
+    "public_green": {
+      "command": {
+        "path": "/private/tmp/probata-t25-reallocation-domain-public-green-v2-20261016/command.json",
+        "sha256": "2611c0de152066e54984148349c709679688972f02c2911869deb8a6798fff51"
+      },
+      "log": {
+        "path": "/private/tmp/probata-t25-reallocation-domain-public-green-v2-20261016/controls.log",
+        "sha256": "93c088ea44701d55ee105654a6587cad21d503ab26286ad5169a7ee0b2eb4f13"
+      },
+      "resource_values": {
+        "cpu_seconds": 1.568949,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 194363392,
+        "timed_out": false,
+        "wall_seconds": 1.6531239169999026
+      },
+      "resources": {
+        "path": "/private/tmp/probata-t25-reallocation-domain-public-green-v2-20261016/resources.json",
+        "sha256": "44ae1695ebfbbd282537750bc52a982e94a14d0c0ba27e21fe6871a9535afdf5"
+      }
+    },
+    "public_red": {
+      "command": {
+        "path": "/private/tmp/probata-t25-reallocation-domain-public-red-20261016/command.json",
+        "sha256": "7f62b4b1b05daebe0f68fa1c2f404971d526908fac207b791492859ca1d1c092"
+      },
+      "log": {
+        "path": "/private/tmp/probata-t25-reallocation-domain-public-red-20261016/controls.log",
+        "sha256": "54a6c9447c8ecebfee24769153a36c23479c4d8a11d5dade84c1f0f2c31364b8"
+      },
+      "resource_values": {
+        "cpu_seconds": 1.114747,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 156663808,
+        "timed_out": false,
+        "wall_seconds": 1.495333999977447
+      },
+      "resources": {
+        "path": "/private/tmp/probata-t25-reallocation-domain-public-red-20261016/resources.json",
+        "sha256": "21c77f4e3294ed9f4a34f786ebfc2269061dbce8456977eaaedc400e36caee55"
+      }
+    },
+    "schema_red": {
+      "command": {
+        "path": "/private/tmp/probata-t25-reallocation-domain-public-green-20261016/command.json",
+        "sha256": "429dccaa4d45733cc761fac3fd0860c52bd820b01f3c4db95602dbcaf568fb09"
+      },
+      "log": {
+        "path": "/private/tmp/probata-t25-reallocation-domain-public-green-20261016/controls.log",
+        "sha256": "0ba517aea0b90b95ad1a7b0063a4eed5a3c09e395b17754f5712f6f697b2d4e7"
+      },
+      "resource_values": {
+        "cpu_seconds": 1.5757320000000001,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 193773568,
+        "timed_out": false,
+        "wall_seconds": 1.6893832909991033
+      },
+      "resources": {
+        "path": "/private/tmp/probata-t25-reallocation-domain-public-green-20261016/resources.json",
+        "sha256": "b8bfe9cf4eda175666b1d2599ecf8373ccf4268319cd6aa75596bfd715bd0e1d"
+      }
+    }
+  },
+  "scope": [
+    "count/value construction",
+    "grow",
+    "reserve",
+    "destruction"
+  ],
+  "shell_preflight_note": "First capacity node attempt hit zsh bracket glob before process start; quoted command then reproduced real assertion RED. No producer directory was created by shell failure.",
+  "source_pins": {
+    "schemas/proof.schema.json": {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/schemas/proof.schema.json",
+      "sha256": "05bccdafa723c253fe8e3faf251992e2862b5451ad89907a155d2c251dbab871"
+    },
+    "swdb/c_lowering.py": {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/c_lowering.py",
+      "sha256": "9dda44a4f2868138da3c302a313719e25d226246ea8931185c4f35ab03f12dd4"
+    },
+    "swdb/proof_setup.py": {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/proof_setup.py",
+      "sha256": "82c13e70831a10515caea2211468ba3463c07e898decde4078fa1e6a44c571c6"
+    },
+    "swdb/vector_reallocation_model.py": {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/vector_reallocation_model.py",
+      "sha256": "f73ff7fc76ea4a06a91e93b9f945827bfef1e510ec40b3825a4841b7a8430b16"
+    },
+    "swdb/wp_adapter.py": {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/wp_adapter.py",
+      "sha256": "a34d639338c129a09e56adae844642d398438f3c8d68db52e4119f6d0642341c"
+    },
+    "tests/fixtures/proof/vector_reallocation_v3.cc": {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/tests/fixtures/proof/vector_reallocation_v3.cc",
+      "sha256": "1172e62dbff5076d25471285afcfa17927707dbe6fae121d9570109d39e62b57"
+    },
+    "tests/test_vector_reallocation_domain.py": {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/tests/test_vector_reallocation_domain.py",
+      "sha256": "14d25359b473ee84e9f27ae111e9dff922a894fdca154ced832585071b0a2501"
+    }
+  },
+  "status": "PREPARATION ONLY; complete source-to-heap mapping/body proof/caller discharge are pending",
+  "variant": "vector-reallocation-domain-3; qualified names, original v2 catalog unchanged"
+}
