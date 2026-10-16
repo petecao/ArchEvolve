@@ -246,3 +246,41 @@ The final495-check [cold failure audit](../evidence/t28-selector-prelaunch-failu
 [Reviewed fixture repair](../evidence/t28-selector-lineup-independent-review-20261016.md) at executable source`770df40eeb5e3034862f61b79b6bcaad5fa620a7`, packaged in`b618b44c`, requires an explicit strict four-tool actual map before fixture/compiler provenance work. It changes only the copied method's four version fields, keeping normal production runtime matching, budgets, flags, source/contract and smoke/nonvacuity assertions unchanged. Missing/duplicate/partial/unknown/malformed input refuses; stand-in mode retains its old versions. Retained RED19fail/1pass becomes final28pass/2actualSKIP, with3 additional legacy controls;957 local reference pins including all919 producer physical references rehash without mismatch. These are pure/compiler/named-stand-in controls, not a new actual proof.
 
 [External entryv3 static review](../evidence/t28-selector-entry-v3-independent-review-20261016.md) passes with30 exact770 source pins, reviewed Linux map and unchanged nested output/collection/runtime/guard checks. Exact770 remains the prospective actual producer; no new run is admitted by this checkpoint and no old21ed result is relabeled. Root owns fresh preflight, dispatch and independent settled actual audit. Status remains claimed; no installed current0.2, stateful-source or whole-ticket acceptance.
+
+## Scoped selector770 actual closeout — 2026-10-16 03:02 ET
+
+[Independent cold review](../evidence/t28-selector-770-independent-cold-review-20261016.md) accepts the exact public selector fixture caller workflow at source`770df40eeb5e3034862f61b79b6bcaad5fa620a7`, node1G616. [Compact acceptance](../evidence/t28-selector-770-scoped-actual-acceptance-20261016.json) binds both record hashes; [full metadata](../evidence/t28-selector-supplemental-actual-v5-770df40e-20261016.json) retains source/runtime/certificates/goal/property/CSV/TRUST closure. Positive record9cc082e7 is proven with7/7 ordinary Valid. Wrong-enum42d1da40 is not_proven/timeout:6/7 ordinary Valid and one open ensures, **not refuted**. Each record has9 goals/13 properties/9 CSV rows. All4 smoke rows are raw timeout/nonvalid with passed=true, normalized by native smoke Stats to proved1/external success1/time0; do not call them direct Valid, zero solver runtime, or a satisfiability proof.
+
+Helper ensures/assigns remain explicit source-certified Extern assumptions, not body proofs. Its implicit exits false/terminates true remain Unknown, unselected, non-Extern with no generated goals/targets/dependencies/origins: implementation_verified=false. The narrow helper-owner/native-caller dead-call bridge is source-backed, not a general exemption. Full26-name/27-declaration interface support, stateful/current0.2 implementation, physical source mapping, hardware fairness and whole28 remain open. No checkbox or ticket status changes.
+
+Root's pinned [v5 passive reader execution](../evidence/t28-selector-cold-readers-execution-v5-770df40e-20261016.json) reports6005 pin checks/2589 files/zero errors; [settlement](../evidence/t28-selector-root-settlement-v1-770df40e-20261016.json) reports471 checks and all146 raw files/17,364,662B stable twice. The independent reviewer locally checked171 manifest pins,66 exact770 source-policy blobs,11 primary sources and complete two-record CSV/property/goal attribution, without remote rehash, compiler/formal/native/probe/SSH calls. Nine primary sources are reported equal on Linux/Mac; two additional source references are local only. Raw remains remote. Guard exit0/156.995s/1,811,578,880B; outer159.017s/1,864,515,584B, no recorded OOM/timeout. Three finite settlement sweeps and absent leases do not establish universal current process absence.
+
+All failed attempts remain unchanged: original21edG615 pre-WP method mismatch (launcher0/local pretty-printer1/actual guard1); passive reader v1 owner-context refusal, v3b wrong smoke-normalization demand, v4b CSV implicit-property/predicate-payload refusal. Local zero-byte v3/v4 JSON receipts and stderr are pre-SSH wrapper failures, distinct from v3b/v4b. V5's unchanged-policy pure correction has100 retained controls and needs no formal rerun. [Preservation manifest](../evidence/t28-selector-770-closeout-preservation-manifest-20261016.json) binds byte-identical archived readers/reviews/metadata. Later integration source changes do not upgrade the immutable770 producer. Status stays claimed;35 resolved/25 ready-for-agent/3 claimed overall.
+
+
+## First stateful fresh-SPD size preparation — 2026-10-16 ET
+
+Source7e64298fd1d81359e8db586883243b31d57bef3b binds one unchanged
+`get_tile_size(0)` caller to actual header/ABI/original AST/frozen preprocessing,
+volatile-load/fence/MMIO operations and pinned SPD constructor byte projection.
+Its explicit synthetic core0/configured boot epoch is a recorded maintainer-owned
+environment/source-model premise pending Yan-Ru59, never arbitrary-caller or
+physical-boot freshness. All64 read bytes derive ordinary constructor assignments;
+no desired-result original-unit precondition/axiom is inserted. Other25 names
+remain explicitly refused in the complete26-name/27-declaration fixture;0.1 is
+unchanged. Same-AST caller and getter gates reject macro/string lures, including
+source UB hidden by optimization; a coherently rehashed getter-fence mutation is
+rechecked before launch.
+
+Final compiler/native/scripted controls pass34 with3actualSKIP (75.57s/341MB),
+then4 post-integration controls pass (26.88s/345MB). Named exit99 records stay
+not_proven/tool_crash, with no actual stateful verifier execution. See
+[evidence packet](../evidence/t28-size-first-vertical-controls-20261016.md) and
+[obligation map](../prototype/28-proof-semantics/size-first-gate.md). An inert
+Linux correct0/wrong1 entry,353-source allowlist and explicit method/runtime
+closure are prepared; pure runtime refusal controls retain RED6fail/4pass and
+GREEN10pass. Root owns independent review/publication/fresh preflight/actual
+admission. Actual source-model agreement, remaining interface/state transitions,
+production current0.2 and all whole-ticket acceptance boxes remain open.
+
+2026-10-16 03:10 ET integration checkpoint: [root static review](../evidence/t28-size-root-static-review-v2-7e64298f-20261016.md) and [composition review](../evidence/t28-t25-source-preparation-integration-review-20261016.md) accept size7e642 publication/preparation only, with353 exact Git pins and1400 physical preparation references rechecked here. The explicit conditional fresh-SPD premise/private64-byte representation remains visible; no actual WP result yet. Root alone may admit exact7e642 after fresh preflight. Current integration also composes independent T25 canonical preparation; historical selector770 records retain their exact older checker/runtime. Full interface/current0.2/hardware/source composition and ticket28 remain open.

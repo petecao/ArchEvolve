@@ -1099,3 +1099,27 @@ jobs. Evidence: `../evidence/t25-reallocation-pending-heap-map-controls-v2-20261
 Exact304e03ac097352e78c3d3a637e13e951bef51dd0 is published as prospective source for the separately planned exact-Git-blob type-only gate. The original v2 catalog and accepted heap bridge/VC/packet/view remain unchanged. New explicit qualified constructor/grow/reserve/dtor lookup records the candidate model/domain/theory and emits30/20/26/11 pending targets, but always returns not_proven/unsupported_construct before verifier launch. Caller AST receipts retain original v2 calls, no known origins and no added premises; ten source-local placement/history/frame/data/guard duties are pending. [Preparation README](../prototype/25-reallocation-domain/README.md), [integration review](../evidence/t07-t25-preparation-integration-review-20261016.md).
 
 Typed WP integer-source embedding and non-dynamic automatic-object lifetime definitions are drafts, with selected-runtime/source binding and full source/clause/frame/type/import/task/body/caller completeness unproved. Arbitrary entry-snapshot copying is not uniform-fill reuse; constructor capacity/eligibility are qualified postconditions to prove and destructor overlap scope stays broad. The latest preparation packet's407 references rehash without mismatch. Retained19 compiler/native controls and34 defined C/C++ caller comparisons are finite evidence, not a universal or stale-alias/UB proof. No formal/compiler job was run by integration; no type/proof result follows merely from publication. Status remains claimed and no dependency/default/current-catalog record is upgraded. Selector770's separate final cold record audit remains pending.
+
+## Qualified-v3 grammar/type-only cold acceptance — 2026-10-16 03:02 ET
+
+[Independent cold review](../evidence/t25-typecheck-independent-cold-review-304e03ac-20261016.md) accepts only Why3 grammar/types for exact source`304e03ac097352e78c3d3a637e13e951bef51dd0` and Git blob`af3f31aefa824f6f407a5124b9acf5a21e4d0b09`.153 local reference instances/86 unique files and all9 raw files/33,685B match with zero errors. Actual guard exit0/0.377270875s/50.53125MiB,600s whole/8GiB, no recorded timeout/inspection failure/unconfirmed child. Finite post-exit scans/absent leases are historical bounded observations only.
+
+Exactly one known unused-variable dummy warning is present at line25. The immutable [original receipt](../evidence/t25-mac-typecheck-original-receipt-v2-304e03ac-20261016.json) SHA f458c60a83e184ab015b6ac7f4ab81ceac1d12356a5183fa3832129e708c00e8 incorrectly says warnings=[] because its parser missed comma/location-form diagnostics. Independent complete retained-output comparison classifies that warning; the old receipt is not rewritten and no actual rerun occurred. Future parser/canonical rebuild successors remain separate and are not adopted by this closeout.
+
+No solver, imported WP task/hypothesis, source-image,87 model/10 caller duties, model/body/caller composition, public model dependency or whole-ticket acceptance follows. Qualified-v3 public models still return not_proven/unsupported_construct before verifier launch. Existing pair/heap/count accepted records retain their own identities. Ticket25 stays claimed; no frontier resolves.
+
+<!-- 2026-10-16 ET scoped preparation addendum; no acceptance checkbox change. -->
+
+The qualified v3 reallocation preparation now reconstructs the exact source,
+event/clause/helper map, packets and import directory independently of staged
+hash claims. Eight tamper controls and the composed 28-control compiler/native
+profile pass; the public route remains unsupported before launch. The root's
+exact-304e03ac Why3 type-only run exited zero with one known unused-parameter
+warning, classified in a separate passive addendum after the original regex
+missed its format. This is grammar/type evidence only. Full WP import/task,
+selected typed-source image, model bodies, caller cleanup/dependencies and wider
+member/type coverage remain open. See
+[canonical reconstruction](../evidence/t25-reallocation-canonical-rebuild-controls-20261016.json)
+and [passive warning addendum](../evidence/t25-mac-typecheck-passive-warning-audit-v1-304e03ac-20261016.json).
+
+2026-10-16 03:10 ET canonical preparation publication: exactd22bc6c5 (packetd1d3b3e0) passes the [independent canonical review](../evidence/t25-canonical-rebuild-independent-review-d22bc6c5-20261016.md). Complete canonical reconstruction rejects staged-source/statement/theory hash forgery, dropped coverage rows, extra import files and symlinks; it retains the trusted finite source-owner map boundary. The changed compound model identity does not promote old records. Public routes remain unsupported/no-launch, all source-image/import/task/body/caller duties open. Backend01771 remains separate/unreviewed and excluded. The earlier03:02 note's future canonical source is now published only as preparation; its old actual304 warning-parser defect/result remain immutable. Ticket25 stays claimed.

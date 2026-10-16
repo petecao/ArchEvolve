@@ -1,0 +1,93 @@
+{
+  "date_et": "2026-10-16 03:00 ET",
+  "disposition": "PASS_SCOPED_CALLER_WORKFLOW",
+  "source_commit": "770df40eeb5e3034862f61b79b6bcaad5fa620a7",
+  "review_md_sha256": "eb36fa0a1a5c7f240f7d0a2e34542a93cfe65fc296c8153bbdc5fc0aba1d206f",
+  "local_crosscheck": {
+    "local_manifest_pins_checked": 171,
+    "local_primary_files_checked": 11,
+    "linux_mac_primary_equal_reported": 9,
+    "frozen_source_policy_pins_checked": 66,
+    "pure_retained_controls": 100,
+    "census": [
+      {
+        "id": "proof.contract.dx100_trust_fixture.20261016t060824z.9cc082e7",
+        "ordinary": 7,
+        "ordinary_valid": 7,
+        "smokes": 2,
+        "smoke_raw_best": "timeout",
+        "properties": 13,
+        "csv_rows": 9,
+        "helper_implicit_unknown": 2
+      },
+      {
+        "id": "proof.contract.dx100_trust_fixture.20261016t060909z.42d1da40",
+        "ordinary": 7,
+        "ordinary_valid": 6,
+        "smokes": 2,
+        "smoke_raw_best": "timeout",
+        "properties": 13,
+        "csv_rows": 9,
+        "helper_implicit_unknown": 2
+      }
+    ],
+    "coarse_raw_files": 146,
+    "coarse_raw_bytes": 17364662,
+    "remote_physical_checks_reported": 6005,
+    "remote_physical_files_reported": 2589,
+    "independent_remote_rehash_performed": false,
+    "no_actual_tool_or_ssh_calls": true
+  },
+  "artifact_hashes": {
+    "probata-t28-selector-root-settlement-v1-770df40e-20261016.json": "cc02a0221e710bcbba289b8dfdc7dcdb079dc5f783393e48357846815a7eace0",
+    "probata-t28-selector-supplemental-actual-v5-770df40e-20261016.json": "a015147776a94f79a1208ef393e8f5d5cbd7ba5e57b78fd5ac3ff4a64ac64e94",
+    "probata-t28-selector-cold-readers-execution-v5-770df40e-20261016.json": "ffcdbf0c801ef746fd68b8de0d079023199517a3059ae15f2ab86fb0b3531683",
+    "probata-t28-selector-supplement-v5-20261016.py": "04c777729fd08a25239c2baf98a3990fb1916d299c7c0f76cf5a2a67a97936bb",
+    "probata-t25-typecheck-independent-cold-review-304e03ac-20261016.md": "be63324925a13a55544b2c60b7bb1c94f60408d0d831cd27c9fb928c614b2174",
+    "probata-t25-typecheck-independent-cold-review-304e03ac-20261016.json": "2cf97475c44ea42a4a065124eab9fc8e262b9bb32d299f513dfc0ad1c2004986"
+  },
+  "no_actual_or_ssh_calls": true,
+  "fresh_remote_rehash_performed": false,
+  "root_executed_passive_reader": {
+    "physical_checks": 6005,
+    "unique_files": 2589,
+    "errors": 0,
+    "reader_sha256": "04c777729fd08a25239c2baf98a3990fb1916d299c7c0f76cf5a2a67a97936bb"
+  },
+  "positive_record": {
+    "id": "proof.contract.dx100_trust_fixture.20261016t060824z.9cc082e7",
+    "sha256": "5ed8c1c4fc0efd21989ae53f19038fd8f5681111511a2df47b29cee09f3a64b2",
+    "ordinary_valid": 7,
+    "ordinary_total": 7,
+    "verdict": "proven"
+  },
+  "wrong_enum_record": {
+    "id": "proof.contract.dx100_trust_fixture.20261016t060909z.42d1da40",
+    "sha256": "e6824f87ab209d343e52bbc31b4e6dc3523430588644a903b522b633dfee89a7",
+    "ordinary_valid": 6,
+    "ordinary_total": 7,
+    "verdict": "not_proven",
+    "failure_class": "timeout",
+    "refuted": false
+  },
+  "smoke": {
+    "count": 4,
+    "raw_best": "timeout",
+    "raw_passed": true,
+    "direct_valid_claim": false,
+    "native_stats_smoke_normalization": true,
+    "satisfiability_theorem": false
+  },
+  "helper_implicit_clauses": {
+    "exits_false": "Unknown",
+    "terminates_true": "Unknown",
+    "extern": false,
+    "selected": false,
+    "generated_goals": 0,
+    "implementation_verified": false
+  },
+  "full_ticket_acceptance": false,
+  "current_0_2_acceptance": false,
+  "source_hardware_fairness_acceptance": false,
+  "historical_actual_failure_preserved": true
+}

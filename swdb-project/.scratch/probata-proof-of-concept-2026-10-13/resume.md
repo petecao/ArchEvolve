@@ -1,20 +1,20 @@
 # Probata implementation resumption
 
-Updated: 2026-10-16 02:45 ET.
+Updated: 2026-10-16 03:10 ET.
 
 ## Current state
 
-Updated: 2026-10-16 02:45 ET. **35 resolved / 25 ready-for-agent / 3 claimed.**
+Updated: 2026-10-16 03:10 ET. **35 resolved / 25 ready-for-agent / 3 claimed.**
 Implementation remains active on `codex/probata-resume-20261015`, based on
-`yanrujhou_main`. Last published checkpoint:`77fb404c`; this checkpoint integrates prospective
-qualified-v3 source`304e03ac` and private-array/reentry source`e97fb191`. The eligible frontier is **07, 25, 28**;
+`yanrujhou_main`. Last published checkpoint:`7a7a220d`; this source-preparation checkpoint composes reviewed
+qualified-v3 canonical source`d22bc6c5`, private-array/reentry source`e97fb191` and conditional fresh-SPD size producer`7e64298f`. The eligible frontier is **07, 25, 28**;
 other unresolved tickets retain their dependencies. [All 63 statuses](ticket-status-20261015.md).
 
 | Ticket | Current evidence | Next gate |
 | --- | --- | --- |
 | **07 claimed** | Run26 remains UNPROVEN. The separate exact7930 helper run completed: 209/212 ordinary goals Valid, three open; all33 smoke rows have fresh external nonvalid outcomes and raw passed=true. All19 bodies/245 goals/352 properties/31 init properties remain inventoried. Whole383.135s/1261.625MiB sampled RSS, exit1 from open goals; four transient AccessDenied events recovered, final inspection failure null. | Private-array3940/reentrye97 preparation is integrated:ten sites/20 header bodies,56 retained controls; actual init-map/reentry, selected source closure and allocator/source qualification stay refused. Alignment, caller/allocator correspondence, TD and full C RTE remain open. [Settled actual](evidence/t07-helper-stage2-v2-settled-actual-20261016.json), [independent cold review](evidence/t07-helper-stage2-v2-independent-cold-review-20261016.md). |
-| **25 claimed** | Pair `1278f2d9` and public heap CEA are accepted in scope. Fresh original count constructor at exact `bb7170ac` also passes independent cold review: one record, 27 targets, 36 ordinary Valid plus one smoke; 1,031 checks/342 references with zero mismatch. All84 tasks are identical universal-value streams or exact zero specialization. | Qualified-v3 constructor/grow/reserve/dtor and caller source304 are unsupported preparation only; type/import/body/caller gates are pending. No generic/default catalog or whole-ticket acceptance follows. [Count cold review](evidence/t25-count-ctor-cold-review-bb7170ac-20261016.md), [heap cold review](evidence/t25-public-heap-cold-review-cea5652b-20261016.md). |
-| **28 claimed** | Exact9704 mathematical rank gate has core5/family4/all-false1 directly Valid and an independent negative with native sat/Why3 Unknown LF(sat). All11 submitted tasks match emitted bytes; independent complete context/variant audit accepts only the conditional mathematical theorem. Original entry/guard exit1 remains unchanged; pure v3 reader correction needs no rerun. Source-bound selector21ed is published through4bb; node1G615 pre-WP refusal remains immutable. Root reports fresh exact770 node1G616 completed02:10:40 ET with2 pytest passes/guard0, but independent settled record audit is pending; no selector acceptance yet. | Await independent exact770 record/source/runtime/goal/smoke/resource closure before scoped acceptance. Retain old21ed failure and distinguish admission from final result. No hardware fairness, source-to-trace/public composition, current0.2 or whole28 claim. [Rank actual and reviews](evidence/t28-rank-whole-actual-and-cold-acceptance-20261016.json), [selector review](evidence/t28-selector-first-vertical-independent-review-20261016.md). |
+| **25 claimed** | Pair `1278f2d9` and public heap CEA are accepted in scope. Fresh original count constructor at exact `bb7170ac` also passes independent cold review: one record, 27 targets, 36 ordinary Valid plus one smoke; 1,031 checks/342 references with zero mismatch. All84 tasks are identical universal-value streams or exact zero specialization. | Qualified-v3 canonical source d22 rebuilds exact source/VC/theory membership independently of staged hash claims; public models still refuse before launch. Grammar/type-only304 passes with one known unused-dummy warning; import/task/body/caller gates remain pending. No generic/default catalog or whole-ticket acceptance follows. [Count cold review](evidence/t25-count-ctor-cold-review-bb7170ac-20261016.md), [heap cold review](evidence/t25-public-heap-cold-review-cea5652b-20261016.md). |
+| **28 claimed** | Conditional mathematical rank acceptance is unchanged. Exact770 node1G616 completed02:10:40 ET; settled selector caller workflow is accepted under its source-certificate/Extern helper-contract TCB. Positive7/7 ordinary Valid; wrong-enum6/7 plus one ensures timeout, not refuted. All4 smokes have raw timeout/passed=true and native smoke normalization, not direct Valid. Root pinned reader reports6005 checks/2589 files/zero errors;146 raw files stay remote. | Conditional fresh-SPD size source7e642 is reviewed preparation only: explicit owned boot epoch/private64-byte projection, no actual WP yet. Helper exits/terminates remain unselected Unknown and implementation-unverified. Full interface/stateful wrappers, source-to-MMIO, hardware fairness, installed current0.2 and whole28 stay open. Preserve old21ed failure and passive reader refusals. [Scoped cold acceptance](evidence/t28-selector-770-independent-cold-review-20261016.md), [rank actual](evidence/t28-rank-whole-actual-and-cold-acceptance-20261016.json). |
 | **24 / 27 / 36 resolved** | Published29709232/af10a946/8b0c2e27 with scoped acceptance; ticket36 retains its historical checker identity. | Preserve exact evidence for final integration review. |
 
 Root owns actual admissions: at most two remote measurements, one per socket,
@@ -39,8 +39,7 @@ plus3 legacy controls. [Entryv3 static review](evidence/t28-selector-entry-v3-in
 passes for exact770. Root reports its node1G616 run ended02:10:40 ET:2pytest
 passes, guard0/156.995s/1.812GB, outer159.017s/1.865GB, noOOM/timeout and leases
 released. [Admission snapshot](evidence/reviewed-t28-selector-v2-launch-770df40e-20261015.json)
-is not final proof evidence; independent settled record audit remains pending.
-Recheck live state before another dispatch.
+is admission evidence only. The [settled cold review](evidence/t28-selector-770-independent-cold-review-20261016.md) now accepts only the exact caller workflow: positive7/7 ordinary Valid; negative6/7 and an ensures timeout, not a refutation. Four smokes are raw timeout/passed=true; native Stats normalization is not direct Valid or a measured zero-time solver result. Helper ensures/assigns remain declared source-certified Extern assumptions; implicit exits/terminates remain unselected Unknown, not helper-body proofs. Root's pinned v5 passive reader reports6005 physical checks/2589 files/zero errors; the independent local review checks171 artifact pins,66 source-policy blobs,11 primary files and complete CSV/property/goal attribution. No new actual run or reviewer remote rehash occurred. All146 remote raw files/17,364,662B remain on the producer host. Historical v1/v3b/v4b reader refusals and local v3/v4 pre-SSH wrapper failures are retained separately. Recheck live state before another dispatch; recorded finite empty sweeps are not universal host absence.
 
 The helper v2 run and short mathematical rank run have both settled under their
 own exact source/runtime identities. Helper guard383.135s retained four transient
@@ -71,13 +70,15 @@ closure is REFUSED_NOT_IMPLEMENTED. Fresh payload/init/lifetime/source correspon
 remains unproved and no old helper/TD/count record is promoted.
 No new helper formal or source proof acceptance is included here.
 
+Reviewed [size preparation](evidence/t28-size-root-static-review-v2-7e64298f-20261016.md) publishes exact7e642 as an ancestor for root-only future admission. It binds the original parameter-free literal0 caller/getter AST, source macros/ABI, volatile16 load/fence/address SSA and pinned constructor. Ordinary assignment initializes only64 private metadata bytes under the explicit owned synthetic boot/configuration premise pending59. No physical boot, payload initialization, hardware progress, arbitrary caller or actual stateful proof follows. Root entryv2 and353 exact source pins match;1400 unique retained preparation references match here. No actual entry or verifier ran during integration.
+
+The [canonical rebuild review](evidence/t25-canonical-rebuild-independent-review-d22bc6c5-20261016.md) accepts preparation only: current source reconstructs exact original/qualified C, target payloads, trusted event/clause/helper inventory and sole theory directory, refusing self-consistent staged tampering, symlinks, extra files/directories or changed bytes. Public qualified models still return unsupported before launch. Retained8 tamper/28 composed controls and612 reviewed report/file references establish no model/body/caller proof. Separate new public-backend01771 and T07 canonical successors are held pending independent review. [Composition review](evidence/t28-t25-source-preparation-integration-review-20261016.md).
+
 The [qualified-v3 preparation](prototype/25-reallocation-domain/README.md) at exact304
 retains the original v2 catalog and accepted heap components while adding explicit
 conditional eligibility, arbitrary integer-snapshot copy and automatic-lifetime
 VC drafts. Public qualified models return not_proven/unsupported_construct before
-verifier launch; caller certificates grant no origins or premises. A separate
-exact-Git-blob type-only gate is prospective, with no syntax/type/proof acceptance
-yet. Selected WP Typed/Machine source-image, complete import/task/body/caller
+verifier launch; caller certificates grant no origins or premises. The separate exact-Git-blob [type-only cold review](evidence/t25-typecheck-independent-cold-review-304e03ac-20261016.md) now accepts grammar/types only:153 local reference instances/86 unique files and all9 raw files/33,685B match, guard0/0.377s/50.531MiB. Exactly one known unused-dummy warning is present. The original receipt still incorrectly records warnings=[]; its incomplete parser is preserved, not retroactively corrected. No solver, imported-WP-task, model/body or caller proof acceptance follows. Selected WP Typed/Machine source-image, complete import/task/body/caller
 composition and ordinary dependencies remain open.
 [Integration review](evidence/t07-t25-preparation-integration-review-20261016.md). Unknown/timeout smoke
 outcomes with passed=true mean no detected contradiction, not proved satisfiability.
@@ -96,7 +97,7 @@ layouts. Every result retains its exact source/checker/runtime; runtime-dependen
 translator composites are not source-only identities. No sparse proposal, draft3,
 final ticket59 freeze or held-out campaign is admitted. No frontier ticket resolves.
 
-[Current resume](resume.md). Last full status table:02:45 ET; next:**03:15 ET**.
+[Current resume](resume.md). Last root full status table:02:49 ET; source preparation updated03:10 ET; next:**03:19 ET**.
 
 ## Historical actual checkpoints
 

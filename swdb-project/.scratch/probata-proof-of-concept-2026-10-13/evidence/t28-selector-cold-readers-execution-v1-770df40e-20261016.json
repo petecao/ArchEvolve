@@ -1,0 +1,86 @@
+{
+  "at_utc": "2026-10-16T06:14:00.227569+00:00",
+  "connection": {
+    "disk": "Filesystem      Size  Used Avail Use% Mounted on\n/dev/sdd1       1.8T  1.7T   25G  99% /data1\n/dev/sdb1       1.8T  1.7T   69G  97% /data",
+    "uptime": "02:13:52 up 76 days, 18:32,  8 users,  load average: 0.07, 0.45, 0.29",
+    "users": ""
+  },
+  "leases": {
+    "mbit10-evaluation-node0.meta.json": "released",
+    "mbit10-evaluation-node1.meta.json": "released",
+    "mbit10-evaluation.meta.json": "released"
+  },
+  "limits": "Each passive single-process reader:60s wall timeout+5s kill grace,8GiB Linux address-space hard limit. No proof/compiler tools or production imports. Raw source/proof artifacts untouched.",
+  "output": "/data/yanruj/EvolveSWDB_runs/probata-selector-cold-readers-770df40e-20261016",
+  "readers": [
+    {
+      "exit_code": 0,
+      "name": "parent",
+      "reader_sha256": "1dd64c67b557a8e567a8498b3ef415744c7f7fc5443b147623ad4181171b0f9b",
+      "records": [
+        {
+          "failure_class": null,
+          "ordinary_goals": 7,
+          "smoke_goals": 2,
+          "verdict": "proven"
+        },
+        {
+          "failure_class": "timeout",
+          "ordinary_goals": 7,
+          "smoke_goals": 2,
+          "verdict": "not_proven"
+        }
+      ],
+      "stderr": {
+        "bytes": 0,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-selector-cold-readers-770df40e-20261016/parent.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr_tail": "",
+      "stdout": {
+        "bytes": 2399,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-selector-cold-readers-770df40e-20261016/parent.stdout.json",
+        "sha256": "a8858663857f1a9588e255b0cabc91d56d687252e72359683bf19e00472f762f"
+      },
+      "summary": {
+        "counts": {
+          "errors": 0,
+          "failures": 0,
+          "skipped": 0,
+          "tests": 2
+        },
+        "integrity_errors": [],
+        "source_commit": "770df40eeb5e3034862f61b79b6bcaad5fa620a7"
+      },
+      "wall_seconds": 4.166568693704903
+    },
+    {
+      "exit_code": 1,
+      "name": "supplement",
+      "reader_sha256": "b5e42147fdde826eaf71acbfbe4f43d6b3c8a161064eb726c9ea649f2a7e575a",
+      "records": [],
+      "stderr": {
+        "bytes": 0,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-selector-cold-readers-770df40e-20261016/supplement.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr_tail": "",
+      "stdout": {
+        "bytes": 252,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-selector-cold-readers-770df40e-20261016/supplement.stdout.json",
+        "sha256": "d543d9a2823341be2a15d5c97e6ca0795e05af39e13982d14cde11720a70ad90"
+      },
+      "summary": {
+        "integrity_errors": [
+          {
+            "class": "AssertionError",
+            "message": ""
+          }
+        ]
+      },
+      "wall_seconds": 3.7292375965043902
+    }
+  ],
+  "scope": "Passive cold reader execution only; root separately audits complete raw membership/source/resources/lease settlement.",
+  "source_commit": "770df40eeb5e3034862f61b79b6bcaad5fa620a7"
+}
