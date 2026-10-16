@@ -193,3 +193,7 @@ costed generalizations, parameter search and hybrid simulator work are separate.
 ## Bounded parameter exploration
 
 Each new candidate handoff now includes an unresolved parameter-space template. The [bounded explorer](designs/bounded-parameters/README.md) enumerates only explicitly reviewed domains and joint constraints, emits configuration-specific handoffs, and accepts content-bound evaluator records. Reference values are not selected configurations or inferred tuning ranges. Costs remain null until independently supplied; this does not implement live evaluation or automatic deployment.
+
+## October 16: saved-proposal integration
+
+The [planning-loop bridge](designs/planning-loop-integration/README.md) connects saved, pinned block selections to the real catalog and handoff generators through `OfflineEvolution`. Structural failures and unresolved requirements enter experiment memory and saved reflection contexts. Performance evidence stays null and cannot promote a strategy. Source, capability and parameter contracts remain unchanged.

@@ -133,7 +133,7 @@ def interface_view(design, options):
             "view_notice":"Independent catalog operation interfaces. No physical port widths, component composition or unlisted connections are established by this drawing."}
 
 
-def select_evidence_candidates(case, catalog, catalog_ref, catalog_digest, max_candidates=4, focus_design_ids=None):
+def select_evidence_candidates(case, catalog, catalog_ref, catalog_digest, max_candidates=4, focus_design_ids=None, block_choices=None):
     validate_catalog(catalog)
     if type(max_candidates) is not int or max_candidates < 1:
         raise RequestError("max_candidates must be at least 1, including the CPU comparison.")
@@ -198,17 +198,38 @@ def select_evidence_candidates(case, catalog, catalog_ref, catalog_digest, max_c
             if lanes[block["id"]]:
                 eligible.append(lanes[block["id"]].pop(0))
     selected = eligible[:max_candidates-1]
+    if block_choices is not None:
+        if not isinstance(block_choices, list) or not all(isinstance(c, dict) for c in block_choices):
+            raise RequestError("Block choices must be a list of mappings.")
+        ids = [c.get("block_id") for c in block_choices]
+        if len(ids) != len(set(ids)) or set(ids) != {b["id"] for b in plan["blocks"]}:
+            raise RequestError("Choose each planned block exactly once, including explicitly retained CPU blocks.")
+        selected = []
+        for choice in block_choices:
+            if choice.get("action") == "retain_cpu" and set(choice) == {"block_id", "action"}:
+                continue
+            if set(choice) != {"block_id", "action", "design_id", "execution_role"} or choice.get("action") != "catalog_option":
+                raise RequestError("Only explicit CPU retention or one catalog design/role per block is accepted.")
+            matches = [g for g in eligible if g["block"]["id"] == choice["block_id"] and
+                       g["design"]["id"] == choice["design_id"] and g["role"] == choice["execution_role"]]
+            if len(matches) != 1:
+                raise RequestError("Selected design/role does not cover the complete block: " + str(choice))
+            selected.append(matches[0])
+        if len(selected) > max_candidates-1:
+            raise RequestError("Explicit block choices exceed the candidate budget.")
+        selected.sort(key=lambda g: [b["id"] for b in plan["blocks"]].index(g["block"]["id"]))
     selection = []
     for group in ordered:
         selection.append({"block_id":group["block"]["id"], "execution_role": group["role"], "design_id":group["design"]["id"], "scope":group["bucket"],
                           "operation_ids":sorted(group["options"]),
                           "decision":"selected_for_exploration" if any(group is g for g in selected) else
+                                     "not_chosen_in_saved_proposal" if block_choices is not None else
                                      "outside_requested_design_focus" if focus_design_ids is not None and group["design"]["id"] not in focus_design_ids else "eligible_outside_candidate_budget"})
 
     for result in block_results:
         chosen = [g for g in selected if g["block"]["id"] == result["block_id"]]
         result["selected_for_handoff"] = [{"design_id":g["design"]["id"], "scope":g["bucket"], "execution_role":g["role"]} for g in chosen]
-        result["handoff_status"] = "options_selected" if chosen else "none_within_focus_and_global_budget"
+        result["handoff_status"] = "options_selected" if chosen else "retained_on_cpu_by_proposal" if block_choices is not None else "none_within_focus_and_global_budget"
 
     baseline = {"id":case["case_id"]+"--cpu-baseline", "catalog_entry":"cpu-baseline", "status":"comparison_unmeasured",
                 "rationale":"Keep unchanged TDStep as the comparison. This does not assert that an accelerator is better.",
@@ -254,7 +275,7 @@ def select_evidence_candidates(case, catalog, catalog_ref, catalog_digest, max_c
         "representation":"source_scoped_operation_interface_views", "input_ref":case["input_ref"], "input_sha256":case["input_sha256"],
         "input_revision":case["source_binding"]["reported_revision"], "catalog_ref":catalog_ref, "catalog_revision":catalog["revision"], "catalog_sha256":catalog_digest,
         "kernel_id":case["case_id"], "capability_requests":requests,
-        "hardware_plan":plan,
+        "hardware_plan":plan, "proposal_block_choices":deepcopy(block_choices),
         "request_groups":workload_groups,
         "workload_summary":{key:deepcopy(case.get(key)) for key in ("kernel", "source_binding", "source_context", "evidence_status", "rmw", "profiling_provenance", "frontier_evolution_profile", "profiling_context", "reported_counters", "methodology")},
         "interpretation_notes":["Offline evidence retrieval and explicit exploration ordering; no LLM or evaluator calls.",

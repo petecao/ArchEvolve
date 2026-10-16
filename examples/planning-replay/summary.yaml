@@ -1,0 +1,42 @@
+format: planning-loop-integration-summary-v0.1
+llm_calls: 0
+hardware_evaluations: 0
+saved_proposals_sha256: 78d1d502e8122b8a1561f2d9c80685ffb063e9ce33b1bbf0f91376ea25a02075
+observations:
+- proposal_ref: 8e87bf3dd1dfb225783bd8ebda2ce2efc585f55abec5ff9791d7cf09005bda45
+  status: needs_information
+  handoff_generated: true
+  artifact_bundle_ref: 4c42c5d3a00e85c31f9eafb7d238f9ff58e4bc69336aecf88bcf8826318d115c
+  issue_categories:
+  - mapping_review_required
+  - parameter_exploration_blocked
+  eligible_for_performance_ranking: false
+- proposal_ref: ff35547fab78bc4362650352317004947df39a971e2377074024ecf972f3cdd9
+  status: needs_information
+  handoff_generated: true
+  artifact_bundle_ref: 3dc7eb4c2a11cd8e68ceb7bd3a4a5a39d520e9a4866d707e8071a98c2fe5c6d0
+  issue_categories:
+  - missing_capability_evidence
+  - mapping_review_required
+  - parameter_exploration_blocked
+  eligible_for_performance_ranking: false
+- proposal_ref: 1bca8ee75b71b0e3fd6bb468cadce3ed8a85926b27861ddcea42d447df94ca11
+  status: rejected
+  handoff_generated: false
+  artifact_bundle_ref: null
+  issue_categories:
+  - invalid_or_unsupported_proposal
+  eligible_for_performance_ranking: false
+pending_revisions:
+- ref: a07b3c27309a426b17b9c0fb702f00b9add87cc106b693c0877d3516fda3b108
+  kind: strategy
+  active: false
+  feedback_count: 3
+performance_ranking_performed: false
+active_strategy_ref: 978611b6e450d6bca193b74cd0b165b798d9f70af760ae82818edd3b88d947ae
+usage:
+  calls: 4
+  tokens: 0
+  evaluations: 3
+usage_note: Calls are saved-response replays; evaluations are structural pipeline
+  callbacks. No live model or hardware evaluator ran.

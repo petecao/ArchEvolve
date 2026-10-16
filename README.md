@@ -21,6 +21,8 @@ The default catalog is `catalog/hardware-v0.1.yaml` (format v0.1, data revision 
 
 ## Results and handoff
 
+- **[Saved proposals through the planning loop](docs/designs/planning-loop-integration/README.md)**: real BFS/catalog handoffs, structural feedback in experiment memory, and context-bound saved reflection. No live model calls or performance ranking.
+
 - **[Bounded parameter exploration](docs/designs/bounded-parameters/README.md)**: reviewed finite domains, coupled constraints, configuration handoffs and evaluator-record comparison. Unknown ranges block enumeration; unknown costs remain null.
 
 - **[Pre-lookup hardware planning](docs/designs/prelookup-planning/README.md)**: BFS before/after diagrams, a mixed-access grouping example, conjunctive per-block queries, and source-preserving handoffs.

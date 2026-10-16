@@ -57,10 +57,12 @@ class OfflineEvolution:
         expected = {"mode", "max_calls", "max_tokens", "max_evaluations", "tokens_per_call",
                     "proposals_per_task", "area_limit_mm2", "min_relative_gain", "tasks"}
         require(set(policy) == expected, "Unexpected frozen policy fields.")
-        require(policy["mode"] in {"synthetic_demo", "offline_evidence"}, "Offline modes only.")
+        require(policy["mode"] in {"synthetic_demo", "offline_evidence", "offline_planning"}, "Offline modes only.")
         for key in ("max_calls", "max_tokens", "max_evaluations", "tokens_per_call", "proposals_per_task"):
             require(type(policy[key]) is int and policy[key] > 0, "Budgets must be positive integers.")
-        require(finite_number(policy["area_limit_mm2"], positive=True), "Positive area limit required.")
+        planning = policy["mode"] == "offline_planning"
+        require(policy["area_limit_mm2"] is None if planning else finite_number(policy["area_limit_mm2"], positive=True),
+                "Planning mode leaves area limit null; evidence campaigns require a positive limit.")
         require(finite_number(policy["min_relative_gain"]) and policy["min_relative_gain"] < 1, "Invalid gain threshold.")
         require(text(core) and isinstance(catalog, dict), "Snapshot the core and catalog.")
         require(isinstance(policy["tasks"], list) and policy["tasks"], "Tasks required.")
@@ -71,10 +73,15 @@ class OfflineEvolution:
             ids.add(task["id"])
             require(task["split"] in {"development", "validation", "holdout"}, "Unknown task split.")
             splits.add(task["split"])
-            validate_cohort(task["cohort"])
-            require(task["cohort"]["catalog_sha256"] == digest(catalog), "Task must bind this catalog snapshot.")
-            require(finite_number(task["baseline_latency_ms"], positive=True), "Baseline latency required.")
-        require({"development", "validation"} <= splits, "Separate development and validation tasks required.")
+            if planning:
+                require(task["cohort"] is None and task["baseline_latency_ms"] is None,
+                        "Planning mode must not manufacture a cohort or baseline timing.")
+            else:
+                validate_cohort(task["cohort"])
+                require(task["cohort"]["catalog_sha256"] == digest(catalog), "Task must bind this catalog snapshot.")
+                require(finite_number(task["baseline_latency_ms"], positive=True), "Baseline latency required.")
+        require("development" in splits if planning else {"development", "validation"} <= splits,
+                "Development tasks required; evidence campaigns also need separate validation tasks.")
         validate_strategy(strategy)
         validate_reflector(reflector)
         campaign = {"catalog_ref": store.put(catalog), "core_ref": store.put(core), "policy": policy}
@@ -215,6 +222,20 @@ class OfflineEvolution:
                     require(isinstance(evaluation, dict), "Bad evaluation record.")
                     require(evaluation.get("candidate_sha256") == candidate_ref, "Evaluation candidate mismatch.")
                     require(evaluation.get("synthetic") is (self.policy["mode"] == "synthetic_demo"), "Evidence mode mismatch.")
+                    if self.policy["mode"] == "offline_planning":
+                        require(evaluation.get("evidence_kind") == "planning_feedback" and
+                                evaluation.get("planning_status") in {"handoff_generated", "needs_information", "rejected"},
+                                "Planning callback must return structural feedback.")
+                        require(all(k in evaluation and evaluation[k] is None for k in ("cohort", "latency_ms", "area_mm2", "power_w")),
+                                "Structural feedback cannot carry timing/cost/cohort claims.")
+                        require(evaluation.get("performance_evaluated") is False, "Planning feedback cannot claim performance evaluation.")
+                        require(isinstance(evaluation.get("evidence_refs"), list) and evaluation["evidence_refs"], "Planning feedback needs saved evidence.")
+                        for ref in evaluation["evidence_refs"]:
+                            self.store.get(ref)
+                        record["planning_status"] = evaluation["planning_status"]
+                        record["reasons"] = ["structural_feedback_only_no_performance_ranking"]
+                        observations.append(self.store.append("observation", record))
+                        continue
                     record["reasons"] = exclusion_reasons(evaluation, task["cohort"])
                     if not record["reasons"]:
                         for ref in evaluation["evidence_refs"]:
@@ -245,6 +266,7 @@ class OfflineEvolution:
         return scores, sum(o["eligible"] for o in observations)
 
     def trial(self, revision_ref):
+        require(self.policy["mode"] != "offline_planning", "Performance trials require a separate evidence campaign with a real cohort and baseline.")
         revision = self.store.get(revision_ref)
         kind = revision.get("kind")
         require(kind in {"strategy", "reflector"}, "Not a revision.")
@@ -294,6 +316,7 @@ class OfflineEvolution:
             raise
 
     def promote(self, trial_ref, review):
+        require(self.policy["mode"] != "offline_planning", "Structural planning feedback cannot promote a strategy or reflector.")
         result = self.store.get(trial_ref)
         require(trial_ref in {e["ref"] for e in self.store.events("trial_end")}, "Completed trial required.")
         require(result["eligible_for_review"], "Trial does not qualify for promotion.")
