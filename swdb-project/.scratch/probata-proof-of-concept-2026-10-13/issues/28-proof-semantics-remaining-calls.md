@@ -169,3 +169,11 @@ One expected RF source alignmentUB case remains explicit. Complete source-call/
 CPU routing, formal IEEE/raw-image and unbounded progress/source simulation,
 new-version public acceptance remain open; all boxes unchecked, status **claimed**.
 [Exact evidence](../evidence/t28-setup-state-controls-20261016.json).
+
+Size-version successor — 2026-10-16 ET:86/86 native controls pass for separate
+immutable size metadata, deferred capture, later source reuse, starting-tile-only
+updates and noncovering CPU queries. Unknown entry metadata is an explicit
+valid/quiescent prototype domain, not an established source-entry certificate.
+Full source-call/CPU admission, IEEE/raw-image and progress/source simulation,
+new-version public actual acceptance remain open. All boxes stay unchecked,
+status **claimed**. [Exact evidence](../evidence/t28-size-state-controls-20261016.json).

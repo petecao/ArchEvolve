@@ -34,6 +34,9 @@ def render_header(values_header):
 #ifndef DXS_ON_RESET
 #define DXS_ON_RESET() ((void)0)
 #endif
+#ifndef DXZ_ON_RESET
+#define DXZ_ON_RESET() ((void)0)
+#endif
 struct dxc_command {
   unsigned thread, pending, bound, root, access;
   int region;
@@ -64,6 +67,7 @@ static void dxc_reset(void) {
   DXP_ON_RESET();
   DXG_ON_RESET();
   DXS_ON_RESET();
+  DXZ_ON_RESET();
 }
 static uint64_t dxc_tile_mask(unsigned tile, unsigned bytes) {
   unsigned halves=dxm_tile_halves(tile,bytes);

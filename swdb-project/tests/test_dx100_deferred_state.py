@@ -62,6 +62,10 @@ def run_model(tmp_path, body, *, exit_code=0, prelude='', commands=False, numeri
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         header = module.render_header(header, source_tile_words=source_tile_words, value_bound=value_bound, byte_order='little')
+        spec = importlib.util.spec_from_file_location('dx_size_state', ROOT / 'size_state.py')
+        size_module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(size_module)
+        header = size_module.render_header(header)
     if registers:
         spec = importlib.util.spec_from_file_location('dx_register_state', ROOT / 'register_state.py')
         module = importlib.util.module_from_spec(spec)
@@ -943,6 +947,75 @@ def test_source_counter_reset_and_last_pair_do_not_bypass_global_tile_obligation
                        source_tile_words=16384, value_bound=2, register_words=32,
                        prelude='#define DXM_TILES 32\n#define DXC_REGIONS 256\n')
     assert result.stderr == expected
+
+
+def test_tile_size_is_an_independent_version_not_changed_by_cpu_payload_writes_or_copied_to_second_half(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  dxc_reset(); chosen=1; dxm_claim_tile(0,1,8);
+  assert(dxz_get_size(1) == 1 && dxz_get_size(2) == 1);
+  dxp_store_u32(0,1,0,9); assert(dxz_get_size(1) == 1);
+  unsigned command=dxc_prepare(0,-1,0,0,2,0,6,0,0);
+  unsigned length=dxm_constant(2); dxz_bind_size(command,1,length); dxc_bind(command,length);
+  dxc_wait_tile(1);
+  assert(dxz_get_size(1) == 2 && dxz_get_size(2) == 1);
+  return 0;
+}
+''', commands=True, image=True)
+
+
+@pytest.mark.parametrize('wait,exit_code', [(False,42),(True,0)])
+def test_get_tile_size_never_supplies_a_covering_wait_for_pending_output_status(tmp_path, wait, exit_code):
+    result = run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset(); dxm_claim_tile(0,1,4);
+  unsigned command=dxc_prepare(0,-1,0,0,2,0,2,0,0);
+  unsigned length=dxm_constant(2); dxz_bind_size(command,1,length); dxc_bind(command,length);
+  {'dxc_wait_tile(1);' if wait else ''}
+  assert(dxz_get_size(1) == 2);
+  return 0;
+}}
+''', commands=True, image=True, exit_code=exit_code)
+    assert result.stderr == ('' if wait else 'tile-size-before-finish')
+
+
+def test_dependent_size_versions_settle_once_and_survive_later_source_tile_reuse(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  for (unsigned pick=0;pick<2;++pick) {
+    dxc_reset(); chosen=pick; dxm_claim_tile(0,1,4); dxm_claim_tile(0,3,4);
+    dxm_cpu_write(1,7,2);
+    unsigned producer=dxc_prepare(0,-1,0,0,2,0,2,0,0);
+    unsigned length=dxm_issue_read(0,7);
+    dxz_bind_size(producer,1,length); dxc_bind(producer,length);
+    unsigned consumer=dxc_prepare(0,-1,0,2,8,2,8,0,0);
+    unsigned captured=dxz_capture_size(1); assert(captured == length);
+    dxz_bind_size(consumer,3,captured); dxc_bind(consumer,captured);
+    assert(!dxm_nodes[length].settled && dxc_commands[producer].pending);
+    dxm_cpu_write(1,7,1); dxc_wait_tile(3);
+    unsigned result=pick == 0 ? 2 : 1;
+    assert(dxz_get_size(3) == result);
+    unsigned reuse=dxc_prepare(0,-1,0,0,2,0,2,0,0);
+    unsigned new_size=dxm_constant(5); dxz_bind_size(reuse,1,new_size); dxc_bind(reuse,new_size);
+    dxc_wait_tile(1);
+    assert(dxz_get_size(1) == 5 && dxz_get_size(3) == result);
+  }
+  return 0;
+}
+''', commands=True, image=True)
+
+
+def test_size_metadata_is_not_limited_by_value_prefix_and_pending_readers_do_not_cover(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  dxc_reset(); chosen=7; dxm_claim_tile(0,1,4); dxm_claim_tile(0,3,4);
+  assert(dxz_get_size(1) == 7); /* physical8words; value prefix6 */
+  unsigned reader=dxc_prepare(0,-1,0,2,8,2,8,0,0);
+  dxc_bind(reader,dxm_constant(0));
+  assert(dxz_get_size(1) == 7 && dxc_commands[reader].pending);
+  return 0;
+}
+''', commands=True, image=True)
 
 
 def test_failed_cas_expected_and_desired_values_do_not_enter_gather_history(tmp_path):

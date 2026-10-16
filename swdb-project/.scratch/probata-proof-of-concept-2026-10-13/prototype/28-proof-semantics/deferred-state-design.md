@@ -245,3 +245,28 @@ UB case, under the recorded sanitizer options/workerB/8GiB guard
 [Exact source/RED/native/resource pins](../../evidence/t28-setup-state-controls-20261016.json).
 The API/source CPU wrappers, typed IEEE coherence, separate unbounded rank/source
 simulation and public actual acceptance remain incomplete; no current0.2 exists.
+
+## Immutable tile size versions — 2026-10-16 ET
+
+`size_state.py` separates starting-tile size from payload bytes and readiness.
+CPU payload writes do not set size. A device consumer captures the pending
+producer's immutable size root without settling it; cover settles it once and
+later reuse of the source tile cannot rewrite the consumer's size. Source
+`SPD::setSize` updates only the explicitly named tile, so8-byte data completion
+does not overwrite a second-half size. CPU `get_tile_size` is not a covering wait;
+the prototype conservatively refuses unfinished physical writers to preserve the
+source Finished-status obligation. Pending readers neither block nor cover.
+
+Metadata may range over the physical source TILE_SIZE, independently of the
+smaller value prefix. Unknown initial sizes are overapproximated0..TILE_SIZE in
+an explicit valid/quiescent prototype entry domain; this is not a proof of a
+general source entry invariant or a fresh constructor zero certificate. Complete
+source-call contracts must establish that entry correspondence. Byte values and
+their conservative initializedness domain remain separate.
+
+Final86/86 native controls pass (including the explicit expected RF alignmentUB
+case),32.05s/223215616B peak, after the new RED profile. No actual formal tool or
+public-prove acceptance is inferred.
+[Exact sources/RED/native/resource pins](../../evidence/t28-size-state-controls-20261016.json).
+Full call bodies/source CPU routing, IEEE bit-image coherence and separate
+unbounded progress/source simulation remain active; no current0.2 is installed.
