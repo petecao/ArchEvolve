@@ -53,7 +53,10 @@ def usage(history):
 
 
 
-def verify_incumbent(best):
+def verify_incumbent(best, *, expected_out=None):
+    if 'baseline_initial_sha256' in best:
+        import baseline_start
+        return baseline_start.verify(best, expected_out=expected_out)
     source = (L.STANDIN_DIR / L.UNIT).read_text()
     directory = Path(best['dir'])
     merged = H.merge(source, best['hints'])

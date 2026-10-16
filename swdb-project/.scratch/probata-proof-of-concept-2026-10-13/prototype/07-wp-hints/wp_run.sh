@@ -6,6 +6,7 @@
 # Usage: wp_run.sh parse|wp-gen|wp|wp-smoke <run_dir> <file.c>  |  wp_run.sh round <run_dir> <file.c> <cache_dir> [timeout_s]
 #   <run_dir> must already hold <file.c> and the stand-in headers; it must not hold .frama-c/.
 # Run it through /tmp/claude/probata-tools/verifier_run.py, with the agent sandbox off (Why3 socket).
+script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd) || exit 2
 mode="$1"; dir="$2"; file="$3"
 cd "$dir" || exit 2
 [ -e .frama-c ] && { echo "refusing: $dir/.frama-c exists (stale session)"; exit 2; }
@@ -60,7 +61,15 @@ case "$mode" in
       -wp-script dry -wp-timeout "$tmo_arg" -wp-par 12 -wp-report-json goals.json -then -report -report-untried ;;
   # t07e method change (c1): print one goal class after Qed (no prover, nothing proven, never a verdict),
   # for the in-call show_goal tool. $4 = WP selection, e.g. "-wp-fct TDStep -wp-prop=@invariant".
-  print) rm -rf session && mkdir session
+  print|print-exact) rm -rf session && mkdir session
+    if [ "$mode" = print-exact ]; then
+      # METHOD23: compile the pinned read-only exporter in this fresh task scope.
+      # No local ARM build artifact is transferred or reused by another host.
+      cp "$script_dir/Probata_task_export.ml" ./Probata_task_export.ml || exit 2
+      env -i HOME="$HOME" PATH="$PATH" TMPDIR="${TMPDIR:-/tmp}" SWDB_VERIFIER_RUN_TOKEN="${SWDB_VERIFIER_RUN_TOKEN-}" opam exec --switch=framac-33 -- \
+        ocamlfind ocamlopt -package frama-c-wp.core,yojson -shared -o task-export.cmxs Probata_task_export.ml || exit 2
+      set -- "$@" -load-module ./task-export.cmxs
+    fi
     exec env -i HOME="$HOME" PATH="$PATH" TMPDIR="${TMPDIR:-/tmp}" SWDB_VERIFIER_RUN_TOKEN="${SWDB_VERIFIER_RUN_TOKEN-}" opam exec --switch=framac-33 -- frama-c "$@" \
       -wp $cache_arg -wp-cache none -wp-session session -wp-prover none -wp-print ;;
   wp) smoke="" ;;
