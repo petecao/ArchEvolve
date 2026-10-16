@@ -92,3 +92,29 @@ def test_actual_lineup_binding_refuses_ambiguous_method_without_partial_mutation
     with pytest.raises(ValueError,match='actual selector lineup'):
         selector.bind_actual_lineup(method,LINUX)
     assert method==before
+
+
+def test_actual_lineup_is_pinned_in_public_record_using_explicit_external_standin_only(tmp_path,monkeypatch):
+    """Exercise actual fixture selection, substituting named exit99 tools, never WP."""
+    import hashlib
+    from testkit import dx100_trust
+    original=dx100_trust.run_semantics_fixture
+    monkeypatch.setenv(KEY,json.dumps(LINUX))
+    def external_standin(*args,**kwargs):
+        assert kwargs['tool_environment']=={}
+        kwargs['tool_environment']=None
+        return original(*args,**kwargs)
+    monkeypatch.setattr(dx100_trust,'run_semantics_fixture',external_standin)
+    result,records,entry,marker=selector.prove_selector(tmp_path,0,actual=True)
+    assert result.returncode==0,result.stdout+result.stderr
+    assert marker.exists(), 'only explicitly named external stand-ins may execute here'
+    record=yaml.safe_load((records.path/json.loads(result.stdout)['path']).read_text())
+    assert record['verdict']=='not_proven' and record['failure_class']=='tool_crash'
+    methods=list((tmp_path/'library/methods').glob('*.yaml'));assert len(methods)==1
+    method=yaml.safe_load(methods[0].read_text())
+    assert {r['tool']:r['version'] for r in method['lineup'] if r['tool'] in LINUX}==LINUX
+    assert record['pins']['method_version']['sha256']==hashlib.sha256(methods[0].read_bytes()).hexdigest()
+    flags=next(r['flags'] for r in method['lineup'] if r['tool']=='frama-c-wp')
+    assert all(flag in flags for flag in ('-wp-rte','-rte-initialized','-wp-no-filter-init'))
+    assert flags[flags.index('-wp-prover')+1]=='z3,cvc5,alt-ergo'
+    assert method['budgets']['wp_seconds_per_solver']==30
