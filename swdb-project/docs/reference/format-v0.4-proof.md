@@ -259,3 +259,15 @@ written before ticket 12 carry none of these fields and stay valid.
 
 Ticket 10 replaced the tracer rule with the versioned level rule: see
 [format-v0.4-level-rule.md](format-v0.4-level-rule.md). Nothing writes a level to any record.
+
+## Explicit partial library unit — 2026-10-16 ET
+
+`subject: {kind: partial_library_summary, id: <entry>}` names an explicitly
+partial original library unit, with its separately versioned contract content
+hash and an exact source/semantics policy. The currently admitted preparation
+route is the closed synthetic one-u32-stream WP fixture. A successful verdict
+would assert its postcondition on normal return under the recorded premises;
+it would assert no termination, total correctness or hardware liveness result.
+This subject kind cannot satisfy the existing generic `library_summary` reader.
+A total unit cannot acquire this qualification through a post-validation overlay.
+The subject-kind vocabulary participates in proof checker identity.
