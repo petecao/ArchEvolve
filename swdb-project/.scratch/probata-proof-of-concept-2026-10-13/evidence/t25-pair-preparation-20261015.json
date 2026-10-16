@@ -5,8 +5,8 @@
   "changed_source_sha256": {
     "swdb/bounded_std_initialization.py": "480bf38b3333639c62d8f89aff129208abccdc63351d63cfa6b23d7cb3d84607",
     "tests/fixtures/proof/lowering/pair_only.cc": "60452123141c7603c633c1128536ec1397173b459045bedeceb63fb0d4801569",
-    "tests/test_pair_workflow.py": "d4668fa66067aea032a8eb26da3d696474a1c51e7a5f00632b64d375afa7b703",
-    "scripts/probata_pair_profile.py": "befd90fc7ba31ea851a36aed2ec3c6dc9f6fcb44592ef086ee35c3d176ac52a2"
+    "tests/test_pair_workflow.py": "7094a748c5a02d043a2b2c99831acef33c6ec787c26ffe0e9ec1f711fd0862f9",
+    "scripts/probata_pair_profile.py": "8f10b5246edddded11187251b602861a34fe8c014325f775f73ccfb739229f89"
   },
   "red": {
     "raw": "/private/tmp/probata-t25-pair-first-red",
@@ -56,5 +56,89 @@
       "retained reports and independent cold audit"
     ],
     "status": "not run"
-  }
+  },
+  "runtime_source_commit": "6980c63edf2508d33a71cd095ae6e09cc649c263",
+  "final_profile_controls": {
+    "raw": "/private/tmp/probata-t25-pair-profile-frozen-green",
+    "passed": 12,
+    "actual_only_skipped": 1,
+    "pytest_seconds": 45.1,
+    "resources": {
+      "exit_code": 0,
+      "peak_rss_bytes": 328826880,
+      "out_of_memory": false,
+      "timed_out": false,
+      "wall_seconds": 45.55429225001717,
+      "cpu_seconds": 44.234493
+    },
+    "result": {
+      "pytest_exit_code": 0,
+      "source_unchanged": true,
+      "elapsed_seconds": 45.50075808400288,
+      "within_prospective_wall_budget": true,
+      "actual_proof_claim": "requires retained records and independent cold audit"
+    },
+    "scoped_profile": {
+      "created": "2026-10-16T03:55:02.331930+00:00",
+      "mode": "controls",
+      "source_sha256": {
+        "scripts/probata_pair_profile.py": "8f10b5246edddded11187251b602861a34fe8c014325f775f73ccfb739229f89",
+        "tests/test_pair_workflow.py": "7094a748c5a02d043a2b2c99831acef33c6ec787c26ffe0e9ec1f711fd0862f9",
+        "tests/fixtures/proof/lowering/pair_only.cc": "60452123141c7603c633c1128536ec1397173b459045bedeceb63fb0d4801569",
+        "swdb/bounded_std_initialization.py": "480bf38b3333639c62d8f89aff129208abccdc63351d63cfa6b23d7cb3d84607",
+        "swdb/bounded_initialization.py": "12885e27dc1cb62b6c89ed4c2b5728c350dc6b0a5781b09ab70ff058e83b287d",
+        "swdb/std_models.py": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2",
+        "swdb/c_lowering.py": "e10b33f4d310e3097eb84b34ed53e03daf4df690dcf0c8c160f38d907c91e08c",
+        "swdb/wp_adapter.py": "aa03842938a19d22fe6c3fb466007cfa57544c55fddc3c19b1784b047271ee43",
+        "swdb/proof_setup.py": "dad41c8714cd3bfa3cbc472c82e2130f639a04ece008d641eec47512d7098e11",
+        "library/methods/probata-draft-1.yaml": "497aa683887094e3217945132134112469e028c2a50a7966838bbebf902d3ae5",
+        "tests/fixtures/proof/methods/contract-fixture-1.yaml": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29"
+      },
+      "command": [
+        "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+        "-m",
+        "pytest",
+        "-q",
+        "-x",
+        "-p",
+        "no:cacheprovider",
+        "tests/test_pair_workflow.py",
+        "--basetemp=/private/tmp/probata-t25-pair-profile-frozen-green/profile/pytest",
+        "--junitxml=/private/tmp/probata-t25-pair-profile-frozen-green/profile/junit.xml"
+      ],
+      "prospective_wall_seconds": 7200,
+      "actual_expected_records": 0,
+      "scope": "four original int/int pair bodies, safe caller and wrong-field negative; contract_fixture"
+    },
+    "retained_artifacts_sha256": {
+      "/private/tmp/probata-t25-pair-profile-frozen-green/resources.json": "a34be12e9173cb5aa0a2f6643689de09e6250dd037d24593289cdaaa4f8c3659",
+      "/private/tmp/probata-t25-pair-profile-frozen-green/command.json": "e10d430ce8d439f031abcfe7fbfecf269ce36ee3ca833d516093b0586d2371a7",
+      "/private/tmp/probata-t25-pair-profile-frozen-green/profile/profile.json": "10e4a5f81d958084a97ab9c54a5fd721160e6b713b159909549f72c46bf588fc",
+      "/private/tmp/probata-t25-pair-profile-frozen-green/profile/result.json": "85d36ef90190d580853dbd149437683dbe8c9173eea1a70669096d3f3b191003",
+      "/private/tmp/probata-t25-pair-profile-frozen-green/profile/pytest.log": "124665d48d1a36e23037784c5afc31eb011e70989968b428cc0db745542f2ea0",
+      "/private/tmp/probata-t25-pair-profile-frozen-green/profile/junit.xml": "a3a123f8e8304cdaae4940b238c1b28b0f283a3c0dc5a03952bd52f3de529c86"
+    }
+  },
+  "source_mutation_control": {
+    "raw": "/private/tmp/probata-t25-pair-source-mutation2",
+    "result": "changed-runtime policy bytes invalidate frozen translator before parser-error stand-in",
+    "resources": {
+      "exit_code": 0,
+      "peak_rss_bytes": 273088512,
+      "out_of_memory": false,
+      "timed_out": false,
+      "wall_seconds": 5.339440083014779,
+      "cpu_seconds": 4.865019
+    }
+  },
+  "excluded_diagnostics": [
+    {
+      "raw": "/private/tmp/probata-t25-pair-source-mutation",
+      "reason": "test initially used original checkout cwd and therefore loaded original runtime despite PYTHONPATH; corrected before accepted control"
+    },
+    {
+      "raw": "/private/tmp/probata-t25-pair-profile-final",
+      "reason": "12 controls passed, but concurrent source edit correctly caused source_unchanged=false/profile exit2; excluded from accepted immutable replay"
+    }
+  ]
 }
