@@ -142,6 +142,10 @@ class CbmcAdapter:
     def from_args(cls, args, script, *, library, contract, method):
         # This fixture binds original software-counter source and a WP-only
         # contract route. The legacy CBMC model/assumptions are not admitted.
+        from swdb import dx100_initialized_register_source
+        if library is not None and any(dx100_initialized_register_source.initialized_register_layout(data)
+                                       for data in proof_semantics.current(library).values()):
+            raise AdapterError("the partial initialized register fixture is admitted only through its WP route")
         from swdb import dx100_register_source
         if library is not None and any(dx100_register_source.register_layout(data)
                                        for data in proof_semantics.current(library).values()):

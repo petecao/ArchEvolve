@@ -36,6 +36,7 @@ CHECK_SOURCES += ("vector_reallocation_inventory.py",)
 CHECK_SOURCES += ("vector_reallocation_view.py",)
 CHECK_SOURCES += ("vector_reallocation_lifetime.py",)
 CHECK_SOURCES += ("vector_reallocation_capacity.py",)
+CHECK_SOURCES += ("dx100_initialized_register_source.py", "dx100_initialized_register_model.py")
 REQUIRED_WP_SWITCHES = (("-wp-no-filter-init", "-wp-filter-init"), ("-wp-rte", "-wp-no-rte"))
 _COMPILED_MODULES = {}
 _ASSUME = re.compile(r"\b(?:llvm_assume|crucible_assume|__VERIFIER_assume)\b|\b(?:__CPROVER_assume|SWDB_ASSUME|assume)\s*\(")
@@ -308,9 +309,9 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
             hashes['dx100_source_selector'] = _digest(dx100_source_selector.recheck(lowering or context.get("lowering")))
         except dx100_source_selector.Refused as exc:
             _fail('dx100_source_selector', str(exc))
-        from swdb import dx100_size_source, dx100_stream_source, dx100_allocation_source, dx100_register_source
+        from swdb import dx100_size_source, dx100_stream_source, dx100_allocation_source, dx100_register_source, dx100_initialized_register_source
         for row in getattr(lowering or context.get('lowering'),'summaries',()):
-            if 'semantic_source' in row and row['semantic_source'].get('kind') not in {dx100_size_source.KIND,dx100_stream_source.KIND,dx100_allocation_source.KIND,dx100_register_source.KIND}:
+            if 'semantic_source' in row and (not isinstance(row['semantic_source'],dict)or row['semantic_source'].get('kind') not in (dx100_size_source.KIND,dx100_stream_source.KIND,dx100_allocation_source.KIND,dx100_register_source.KIND,dx100_initialized_register_source.KIND)):
                 _fail('dx100_source', 'unrecognized source-definition certificate kind')
         try:
             hashes['dx100_size_source'] = _digest(dx100_size_source.recheck(lowering or context.get('lowering')))
@@ -329,6 +330,10 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
             hashes['dx100_register_source'] = _digest(dx100_register_source.recheck(lowering or context.get('lowering')))
         except dx100_register_source.Refused as exc:
             _fail('dx100_register_source', str(exc))
+        try:
+            hashes['dx100_initialized_register_source'] = _digest(dx100_initialized_register_source.recheck(lowering or context.get('lowering')))
+        except dx100_initialized_register_source.Refused as exc:
+            _fail('dx100_initialized_register_source', str(exc))
     for path, expected in inputs:
         path = Path(path)
         actual = path.read_bytes()

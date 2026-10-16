@@ -320,6 +320,8 @@ def identity():
                             + here.with_name("dx100_allocation_source.py").read_bytes()
                             + here.with_name("dx100_register_source.py").read_bytes()
                             + here.with_name("dx100_register_model.py").read_bytes()
+                            + here.with_name("dx100_initialized_register_source.py").read_bytes()
+                            + here.with_name("dx100_initialized_register_model.py").read_bytes()
                             + json.dumps(stdlib_provenance.runtime_identity(tool), sort_keys=True).encode()).hexdigest()
     found = {"c_lowering": {"id": f"{TOOL_ID}-{TOOL_VERSION}", "sha256": digest},
              "naming_rules": naming_rules()}
@@ -2116,8 +2118,10 @@ class _Printer:
             if source_policy is not None:
                 if node_found is None or not _has_body(node_found):
                     raise Unsupported('fresh-SPD size policy requires the real pinned source definition', self.line)
-                from swdb import dx100_size_source, dx100_stream_source, dx100_allocation_source
-                source_module=dx100_allocation_source if source_policy.get('kind')==dx100_allocation_source.KIND else dx100_stream_source if source_policy.get('kind')==dx100_stream_source.KIND else dx100_size_source
+                from swdb import dx100_size_source, dx100_stream_source, dx100_allocation_source, dx100_initialized_register_source
+                if not isinstance(source_policy,dict)or source_policy.get('kind')not in (dx100_size_source.KIND,dx100_stream_source.KIND,dx100_allocation_source.KIND,dx100_initialized_register_source.KIND):
+                    raise Unsupported('unrecognized or refused DX100 source-definition policy',self.line)
+                source_module=dx100_initialized_register_source if source_policy.get('kind')==dx100_initialized_register_source.KIND else dx100_allocation_source if source_policy.get('kind')==dx100_allocation_source.KIND else dx100_stream_source if source_policy.get('kind')==dx100_stream_source.KIND else dx100_size_source
                 try:
                     source_definition = source_module.certify(unit,node_found,source_policy,self.source_declaration,
                                                                   standard=STD,timeout=TIMEOUT_SECONDS)
@@ -2138,10 +2142,12 @@ class _Printer:
                     if 'definition' not in instance:
                         raise Unsupported('template instance needs a pinned interface definition; '
                                           'source-defined implementations cannot inherit a device contract', self.line)
-                    from swdb import dx100_source_selector, dx100_stream_source, dx100_allocation_source, dx100_register_source
-                    source_module=dx100_register_source if instance['definition'].get('kind')==dx100_register_source.KIND else dx100_allocation_source if instance['definition'].get('kind')==dx100_allocation_source.KIND else dx100_stream_source if instance['definition'].get('kind')==dx100_stream_source.KIND else dx100_source_selector
+                    from swdb import dx100_source_selector, dx100_stream_source, dx100_allocation_source, dx100_register_source, dx100_initialized_register_source
+                    if not isinstance(instance['definition'],dict)or instance['definition'].get('kind')not in (dx100_source_selector.KIND,dx100_stream_source.KIND,dx100_allocation_source.KIND,dx100_register_source.KIND,dx100_initialized_register_source.KIND):
+                        raise Unsupported('unrecognized or refused DX100 template source-definition policy',self.line)
+                    source_module=dx100_initialized_register_source if instance['definition'].get('kind')==dx100_initialized_register_source.KIND else dx100_register_source if instance['definition'].get('kind')==dx100_register_source.KIND else dx100_allocation_source if instance['definition'].get('kind')==dx100_allocation_source.KIND else dx100_stream_source if instance['definition'].get('kind')==dx100_stream_source.KIND else dx100_source_selector
                     try:
-                        if source_module in (dx100_stream_source,dx100_allocation_source,dx100_register_source):
+                        if source_module in (dx100_stream_source,dx100_allocation_source,dx100_register_source,dx100_initialized_register_source):
                             source_definition = source_module.certify(unit,node_found,instance['definition'],self.source_declaration,standard=STD,timeout=TIMEOUT_SECONDS)
                         else:
                             definition = source_module.certify(unit, node_found, arguments, instance['definition'],standard=STD, timeout=TIMEOUT_SECONDS)

@@ -154,12 +154,14 @@ def _entry(library, entry_id, data, error, vocabs, logic, rules, pending):
                     unit, with_acsl = None, []
                     break
     if unit is not None and 'correctness_policy' in unit:
-        from swdb import dx100_stream_source, dx100_register_source
+        from swdb import dx100_stream_source, dx100_register_source, dx100_initialized_register_source
         try:
             declared=(data.get('proof_unit')or{}).get('correctness_policy')
-            module=dx100_register_source if isinstance(declared,dict)and declared.get('source_policy')==dx100_register_source.KIND else dx100_stream_source
+            if not isinstance(declared,dict)or declared.get('source_policy')not in (dx100_stream_source.KIND,dx100_register_source.KIND,dx100_initialized_register_source.KIND):
+                raise dx100_stream_source.Refused('unknown partial-normal-return source policy')
+            module=dx100_initialized_register_source if declared.get('source_policy')==dx100_initialized_register_source.KIND else dx100_register_source if declared.get('source_policy')==dx100_register_source.KIND else dx100_stream_source
             module.unit_policy(library,data)
-        except (dx100_stream_source.Refused,dx100_register_source.Refused) as exc:
+        except (dx100_stream_source.Refused,dx100_register_source.Refused,dx100_initialized_register_source.Refused) as exc:
             error('proof_unit.correctness_policy',str(exc))
             unit,with_acsl=None,[]
     if unit is not None and 'array_domains' in unit:
@@ -412,9 +414,9 @@ def _typecheck(library, logic, files, pending, report):
         # 2026-10-16 ET: the original register assigns frame names model state,
         # which is absent from the source caller's declaration-only lowering.
         # Use its exact admitted semantics namespace, without helper contracts.
-        from swdb import dx100_register_source, dx100_allocation_source, proof_semantics
+        from swdb import dx100_register_source, dx100_initialized_register_source, dx100_allocation_source, proof_semantics
         policy = unit.get('correctness_policy')
-        if isinstance(policy, dict) and policy.get('source_policy') == dx100_register_source.KIND:
+        if isinstance(policy, dict) and policy.get('source_policy') in (dx100_register_source.KIND,dx100_initialized_register_source.KIND):
             declaration = proof_semantics.wp_prelude(library, policy['semantics']['id'], []) + declaration
         # The original TOTAL allocator also names ordinary model counters in
         # its frame. Import only its exact current namespace, not call contracts.
