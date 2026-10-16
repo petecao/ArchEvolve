@@ -50,8 +50,7 @@ struct QueueBuffer_NodeID {
 /*@
   predicate gapbs_nodeid_span{L}(NodeID *base, integer count) =
     0 <= count <= PTRDIFF_MAX && \object_pointer(base) &&
-    \object_pointer(base + count) && \base_addr(base) == \base_addr(base + count) &&
-    \pointer_comparable(base, base + count);
+    \object_pointer(base + count) && \base_addr(base) == \base_addr(base + count);
 
   predicate gapbs_queue_domain{L}(struct SlidingQueue_NodeID *self) =
     \valid(self) &&
@@ -131,7 +130,7 @@ void swdb_delete_NodeID_array(NodeID *p);
 
 /*@ requires \object_pointer(first) && \object_pointer(last);
     requires \base_addr(first) == \base_addr(last);
-    requires \pointer_comparable(first, last) && first <= last;
+    requires first <= last;
     requires \offset(last) - \offset(first) <= (integer)PTRDIFF_MAX * sizeof(NodeID);
     requires \valid_read(first + (0 .. last - first - 1));
     requires \initialized(first + (0 .. last - first - 1));
@@ -191,7 +190,7 @@ int omp_get_thread_num(void) { return 0; }
     requires \initialized(&self->start_) && \initialized(&self->end_size_);
     requires \object_pointer(self->start_) && \object_pointer(self->end_size_);
     requires \base_addr(self->start_) == \base_addr(self->end_size_);
-    requires \pointer_comparable(self->start_, self->end_size_) && self->start_ <= self->end_size_;
+    requires self->start_ <= self->end_size_;
     requires \offset(self->end_size_) - \offset(self->start_) <= (integer)PTRDIFF_MAX * sizeof(*self->start_);
     requires 0 <= n < self->end_size_ - self->start_;
     requires \valid(self->start_ + n);
@@ -209,7 +208,7 @@ NodeID *pvector_NodeID_beginp(struct pvector_NodeID *self) { return self->start_
     requires \initialized(&self->start_) && \initialized(&self->end_size_);
     requires \object_pointer(self->start_) && \object_pointer(self->end_size_);
     requires \base_addr(self->start_) == \base_addr(self->end_size_);
-    requires \pointer_comparable(self->start_, self->end_size_) && self->start_ <= self->end_size_;
+    requires self->start_ <= self->end_size_;
     requires \offset(self->end_size_) - \offset(self->start_) <= (integer)PTRDIFF_MAX * sizeof(*self->start_);
     assigns \nothing; ensures \result == self->end_size_; */
 NodeID *pvector_NodeID_endp(struct pvector_NodeID *self) { return self->end_size_; }
@@ -217,7 +216,7 @@ NodeID *pvector_NodeID_endp(struct pvector_NodeID *self) { return self->end_size
     requires \initialized(&self->start_) && \initialized(&self->end_size_);
     requires \object_pointer(self->start_) && \object_pointer(self->end_size_);
     requires \base_addr(self->start_) == \base_addr(self->end_size_);
-    requires \pointer_comparable(self->start_, self->end_size_) && self->start_ <= self->end_size_;
+    requires self->start_ <= self->end_size_;
     requires \offset(self->end_size_) - \offset(self->start_) <= (integer)PTRDIFF_MAX * sizeof(*self->start_);
     requires 0 <= n < self->end_size_ - self->start_;
     requires \valid(self->start_ + n);
@@ -235,7 +234,7 @@ SGOffset *pvector_SGOffset_beginp(struct pvector_SGOffset *self) { return self->
     requires \initialized(&self->start_) && \initialized(&self->end_size_);
     requires \object_pointer(self->start_) && \object_pointer(self->end_size_);
     requires \base_addr(self->start_) == \base_addr(self->end_size_);
-    requires \pointer_comparable(self->start_, self->end_size_) && self->start_ <= self->end_size_;
+    requires self->start_ <= self->end_size_;
     requires \offset(self->end_size_) - \offset(self->start_) <= (integer)PTRDIFF_MAX * sizeof(*self->start_);
     assigns \nothing; ensures \result == self->end_size_; */
 SGOffset *pvector_SGOffset_endp(struct pvector_SGOffset *self) { return self->end_size_; }

@@ -1,0 +1,13 @@
+# Ticket07 supported-domain freeze independent review
+
+Created: 2026-10-16 00:43 ET. **PASS STATIC EXACT-BYTE REVIEW**. Base `52d89469fc876f70e23de0f9e4972782b7229e34` in `/private/tmp/probata-resume-t07-supported-domains`. Root owns commit/publication and future admission.
+
+Both physical source hashes match the requested freeze. The new header/TD text equals exactly the reviewed eight-conjunct transformation of the retained old c9 source: six header predicate occurrences and two TD endpoint occurrences removed, with every other source byte unchanged. After comment/whitespace removal, executable C text is identical in both files. The old worktree was not changed. No model axiom, helper body, hint, source-result premise or warning suppression was added.
+
+Live object endpoints, same-base allocation membership, valid/init array spans, order and pre-subtraction offset representability remain. Within the explicitly restricted same-array source domain these supply the pointer provenance independently of the unsupported redundant predicate. This is a source-domain justification, not a general C++ subobject/iterator theorem or an actual WP proof.
+
+The new SUPPORTED-DOMAINS document correctly states the global warning boundaries: indirect-call coverage is inapplicable only for the exact inspected direct-call-only helper source/census; alignment remains an unresolved caller/source correspondence limit and valid alone does not prove it. It claims neither full C RTE coverage nor a generic public-helper guarantee. Future generation must preserve the exact capability warnings in structured metadata, retain every generated row, distinguish contextual bodyless-call smoke checks from Extern assumptions, and refuse new undefined builtins/casts or unclassified omissions. The copied boundary report and JSON are byte-identical to the reviewed external originals.
+
+No additional blocker was found in this minimal freeze. New normalized source, helper/property census and absence of the undefined-predicate/cast warnings remain unverified until a separately admitted generation. This PASS permits source integration review; it provides no actual admission, solver result, stage2 authorization or ticket07 acceptance.
+
+Header SHA-256 `eccc1c111f32698043682509be8effad02e8cec82957a889f7a4fb6c54ff490c`. TDStep `f24d4fbac9646f3eb28637c591c8cef83a529d96907b1d3071bfadccc3a24de7`. Exact comparison/pin JSON `/private/tmp/probata-t07-supported-domains-freeze-independent-review-20261016.json` SHA-256 `f830b93308a53c58153808d2a6830d445084e2b27ae3f3aa52de7d811fb3fd8d`. Metadata errors: []. Only passive source/Git metadata/hashing were used; no compiler, native, Frama-C, solver, provider, version probe or SSH execution.
