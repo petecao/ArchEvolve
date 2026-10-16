@@ -1,0 +1,66 @@
+format: bounded-parameter-space-v0.1
+synthetic: true
+candidate_sha256: ab37873e2fea77f09dca0900fcb74a5ee1a0fb8e9bba0f0beb95f53635a11978
+bindings:
+  input_sha256: 4728116ad6a1fda89a85509fa9990c6c0fe4b1a39af29027857336450839e6fd
+  catalog_sha256: f8b4a3998ddc1cd89740cdecb907b7e6f6211182b0c6d716ad20b36ecbf8119b
+budget:
+  max_configurations: 64
+  max_combinations_checked: 4096
+parameters:
+- id: lanes
+  unit: lanes
+  state: unknown
+  value: null
+  domain: null
+  claim_refs: []
+  notes: Synthetic knob, not DX100/MAPLE.
+  role: enumerate
+  legal_domain:
+    kind: enum
+    values:
+    - 1
+    - 2
+    - 4
+  review: &id001
+    reviewer: synthetic-fixture
+    rationale: Exercise enumeration; no real hardware legality claim.
+    evidence_refs:
+    - fixture
+  software_impact: null
+- id: depth
+  unit: entries_per_lane
+  state: unknown
+  value: null
+  domain: null
+  claim_refs: []
+  notes: Synthetic knob, not DX100/MAPLE.
+  role: enumerate
+  legal_domain:
+    kind: integer_range
+    min: 4
+    max: 12
+    step: 4
+  review: *id001
+  software_impact: null
+coupled_constraints:
+- id: pow2-depth
+  kind: power_of_two
+  parameters:
+  - depth
+- id: capacity
+  kind: product_at_most
+  parameters:
+  - lanes
+  - depth
+  limit: 16
+legality_review: *id001
+cost_model: null
+cost_limits:
+  area_mm2: null
+  power_w: null
+evidence:
+  fixture: Synthetic fixture rules only; not a hardware specification or a review
+    by Eric.
+notice: Reference values/domains are context, not selected values. Fill explicit reviewed
+  domains and coupling information before enumeration.

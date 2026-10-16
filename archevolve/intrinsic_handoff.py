@@ -201,6 +201,10 @@ def build_handoff_artifacts(request, request_digest):
             "context.mmd": render_workload_context(request, candidate),
             "mechanisms.mmd": render_mechanisms(candidate),
         }
+        from archevolve.parameter_exploration import template as parameter_template
+        files["parameter-space.template.yaml"] = yaml.safe_dump(
+            parameter_template(candidate, request["input_sha256"], request["catalog_sha256"]), sort_keys=False)
+        files["README.md"] += "\n[Bounded parameter exploration template](parameter-space.template.yaml): reference values are not legal tuning domains; reviews, ranges, coupling and costs remain unresolved.\n"
         from archevolve.hardware_behavior import build_behavior_artifacts
         files.update(build_behavior_artifacts(request, candidate))
         files["README.md"] += "\n[How the accelerator works and its observable semantics](hardware-behavior.md) · [Behavior YAML](hardware-behavior.yaml)\n"

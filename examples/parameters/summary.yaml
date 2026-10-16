@@ -1,0 +1,64 @@
+synthetic_fixture:
+  space_sha256: 16b063a2dec6e6c76d6cae472adac11b917e3e3c2f32e5c29169c464f33f54ea
+  total_combinations: 9
+  checked: 9
+  admitted_values:
+  - depth: 4
+    lanes: 1
+  - depth: 4
+    lanes: 2
+  - depth: 4
+    lanes: 4
+  - depth: 8
+    lanes: 1
+  - depth: 8
+    lanes: 2
+  rejected:
+  - values:
+      depth: 8
+      lanes: 4
+    failed_constraints:
+    - capacity
+  - values:
+      depth: 12
+      lanes: 1
+    failed_constraints:
+    - pow2-depth
+  - values:
+      depth: 12
+      lanes: 2
+    failed_constraints:
+    - pow2-depth
+    - capacity
+  - values:
+      depth: 12
+      lanes: 4
+    failed_constraints:
+    - pow2-depth
+    - capacity
+  cost_model: null
+  evaluation_performed: false
+real_dx100_template:
+  candidate_id: gapbs_bfs_top_down_step--dx100-artifact-e4fc4af--read_execute--block-indexed-read-5d48e03303--execute
+  candidate_sha256: f0ead5e9c25fa3e9d0a7aced1b21217a372cecf175835404bb42752c899dd831
+  catalog_sha256: 7adeb7f901b546955bd8fd9327ea55c373958a4998aa949317d37b5145d2b85d
+  status: blocked_unresolved_legality
+  configuration_count: 0
+  unknowns:
+  - 'tile_elements: role unresolved'
+  - 'tile_elements: parameter binding/domain review missing'
+  - 'tile_elements: legal domain unresolved'
+  - 'row_table_rows_per_slice: role unresolved'
+  - 'row_table_rows_per_slice: parameter binding/domain review missing'
+  - 'row_table_rows_per_slice: legal domain unresolved'
+  - 'row_table_entries_per_subslice_row: role unresolved'
+  - 'row_table_entries_per_subslice_row: parameter binding/domain review missing'
+  - 'row_table_entries_per_subslice_row: legal domain unresolved'
+  - 'effective_tile_elements: role unresolved'
+  - 'effective_tile_elements: parameter binding/domain review missing'
+  - 'effective_tile_elements: legal domain unresolved'
+  - coupled constraints unresolved (null is not an empty reviewed set)
+  - joint legality review missing
+  cost_model: null
+note: Synthetic values test mechanics only. Real catalog ranges/costs remain unresolved.
+  No hardware runs or selected winner.

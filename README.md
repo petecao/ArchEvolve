@@ -21,6 +21,8 @@ The default catalog is `catalog/hardware-v0.1.yaml` (format v0.1, data revision 
 
 ## Results and handoff
 
+- **[Bounded parameter exploration](docs/designs/bounded-parameters/README.md)**: reviewed finite domains, coupled constraints, configuration handoffs and evaluator-record comparison. Unknown ranges block enumeration; unknown costs remain null.
+
 - **[Pre-lookup hardware planning](docs/designs/prelookup-planning/README.md)**: BFS before/after diagrams, a mixed-access grouping example, conjunctive per-block queries, and source-preserving handoffs.
 
 - **[Architecture evolution and adaptive prompts](docs/designs/evolution-loop/README.md)**: two-loop design and [runnable offline memory/reflector prototype](docs/designs/evolution-loop/offline-runtime.md), including learned rules, paired trials and rollback. The demo is scripted and synthetic; live models and hardware evaluation remain unconnected.
