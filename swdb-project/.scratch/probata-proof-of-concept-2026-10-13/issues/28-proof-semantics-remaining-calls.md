@@ -246,3 +246,29 @@ The final495-check [cold failure audit](../evidence/t28-selector-prelaunch-failu
 [Reviewed fixture repair](../evidence/t28-selector-lineup-independent-review-20261016.md) at executable source`770df40eeb5e3034862f61b79b6bcaad5fa620a7`, packaged in`b618b44c`, requires an explicit strict four-tool actual map before fixture/compiler provenance work. It changes only the copied method's four version fields, keeping normal production runtime matching, budgets, flags, source/contract and smoke/nonvacuity assertions unchanged. Missing/duplicate/partial/unknown/malformed input refuses; stand-in mode retains its old versions. Retained RED19fail/1pass becomes final28pass/2actualSKIP, with3 additional legacy controls;957 local reference pins including all919 producer physical references rehash without mismatch. These are pure/compiler/named-stand-in controls, not a new actual proof.
 
 [External entryv3 static review](../evidence/t28-selector-entry-v3-independent-review-20261016.md) passes with30 exact770 source pins, reviewed Linux map and unchanged nested output/collection/runtime/guard checks. Exact770 remains the prospective actual producer; no new run is admitted by this checkpoint and no old21ed result is relabeled. Root owns fresh preflight, dispatch and independent settled actual audit. Status remains claimed; no installed current0.2, stateful-source or whole-ticket acceptance.
+
+
+## First stateful fresh-SPD size preparation — 2026-10-16 ET
+
+Source7e64298fd1d81359e8db586883243b31d57bef3b binds one unchanged
+`get_tile_size(0)` caller to actual header/ABI/original AST/frozen preprocessing,
+volatile-load/fence/MMIO operations and pinned SPD constructor byte projection.
+Its explicit synthetic core0/configured boot epoch is a recorded maintainer-owned
+environment/source-model premise pending Yan-Ru59, never arbitrary-caller or
+physical-boot freshness. All64 read bytes derive ordinary constructor assignments;
+no desired-result original-unit precondition/axiom is inserted. Other25 names
+remain explicitly refused in the complete26-name/27-declaration fixture;0.1 is
+unchanged. Same-AST caller and getter gates reject macro/string lures, including
+source UB hidden by optimization; a coherently rehashed getter-fence mutation is
+rechecked before launch.
+
+Final compiler/native/scripted controls pass34 with3actualSKIP (75.57s/341MB),
+then4 post-integration controls pass (26.88s/345MB). Named exit99 records stay
+not_proven/tool_crash, with no actual stateful verifier execution. See
+[evidence packet](../evidence/t28-size-first-vertical-controls-20261016.md) and
+[obligation map](../prototype/28-proof-semantics/size-first-gate.md). An inert
+Linux correct0/wrong1 entry,353-source allowlist and explicit method/runtime
+closure are prepared; pure runtime refusal controls retain RED6fail/4pass and
+GREEN10pass. Root owns independent review/publication/fresh preflight/actual
+admission. Actual source-model agreement, remaining interface/state transitions,
+production current0.2 and all whole-ticket acceptance boxes remain open.
