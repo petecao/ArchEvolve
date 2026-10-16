@@ -268,3 +268,13 @@ these two original member bodies under the declared translation, allocation and
 tool TCB. It does not adopt the records into the production store, compose a
 generic caller, establish other members or prove formal C++ equivalence.
 See the [independent actual review](../../.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-heap-cold-review-cea5652b-20261016.md).
+
+The original `std_vector_int_ctor_count` now has a separately prepared mapping:
+its exact source fill `(int)0` explicitly instantiates the universal value
+semantics at zero. Its full original source/contract and eleven source events
+are independently reconstructed, and all 27 positive targets, including the
+complete numeric kernel, require fresh execution. Checker policy 2 admits this
+additional member; the original model version and heap definitions are unchanged.
+Its public preparation controls and synthetic successful record persistence pass;
+actual proof acceptance remains pending. The first-pair acceptance above stays
+bound to exact CEA, without promoting those records across new checker pins.

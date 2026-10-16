@@ -290,6 +290,32 @@ declared model/domain repair and caller discharge. See
 [snapshot](../evidence/t25-public-heap-cold-snapshot-final-cea5652b-20261016.json)
 and [next slice/domain plan](../prototype/25-remaining-int-model-plan.md).
 
+### Original zero-initializing count constructor prepared — 2026-10-16 ET
+
+The next public slice maps exact `std_vector_int_ctor_count` source and contract,
+with no model-version change or extra caller premise. It explicitly specializes
+the reviewed universal-value transition at source literal `(int)0`, reconstructs
+all eleven source events and C1-C9 obligations, and selects 27 positive targets
+including the complete numeric kernel. All 42 existing canonical packet bytes
+remain unchanged; 28 distinct count packets append (27 positive and one
+omitted-store translator control). The heap definitions are unchanged and the
+checker policy becomes 2; old accepted records retain their exact frozen pins.
+
+The public RED preserves the prior allocation refusal, then GREEN reaches the
+checked parse-error stand-in. Final controls pass 39 cases with two actual-only
+targets skipped. Nonzero fill/postcondition, extra-write and omitted-prefix
+tampering refuse before launch; the full 27-target synthetic record passes
+normal reading and schema persistence with numeric/smoke reports. These are
+preparation controls, never actual proof evidence. Independent source/mapping review passes at clean `bb7170ac`: all 70 canonical
+payloads were reconstructed independently, all 51 retained references match,
+and the literal-zero specialization, complete source mapping and public
+record/deadline checks have no blocker. A coordinator-admitted fresh one-record
+profile and actual cold audit remain required; no successful first-pair formal
+run is repeated. Review: [source review](../evidence/t25-count-ctor-source-review-bb7170ac-20261016.md). Growth-domain repair and caller
+composition remain separate. See
+[preparation evidence](../evidence/t25-count-ctor-preparation-controls-20261016.json)
+and [preserved packet hashes](../evidence/t25-count-ctor-canonical-comparison-20261016.json).
+
 ## Acceptance
 
 - [ ] Each modeled member has a C function and an ACSL contract citing the standard's clause for it (`[vector]` for vector members). `swdb prove` proves every contract against its C function once, recorded with subject "a library entry's summary".
