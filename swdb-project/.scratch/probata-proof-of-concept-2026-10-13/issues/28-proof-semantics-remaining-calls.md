@@ -282,3 +282,5 @@ closure are prepared; pure runtime refusal controls retain RED6fail/4pass and
 GREEN10pass. Root owns independent review/publication/fresh preflight/actual
 admission. Actual source-model agreement, remaining interface/state transitions,
 production current0.2 and all whole-ticket acceptance boxes remain open.
+
+2026-10-16 03:10 ET integration checkpoint: [root static review](../evidence/t28-size-root-static-review-v2-7e64298f-20261016.md) and [composition review](../evidence/t28-t25-source-preparation-integration-review-20261016.md) accept size7e642 publication/preparation only, with353 exact Git pins and1400 physical preparation references rechecked here. The explicit conditional fresh-SPD premise/private64-byte representation remains visible; no actual WP result yet. Root alone may admit exact7e642 after fresh preflight. Current integration also composes independent T25 canonical preparation; historical selector770 records retain their exact older checker/runtime. Full interface/current0.2/hardware/source composition and ticket28 remain open.

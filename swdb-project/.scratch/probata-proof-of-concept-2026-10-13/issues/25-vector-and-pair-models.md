@@ -1121,3 +1121,5 @@ selected typed-source image, model bodies, caller cleanup/dependencies and wider
 member/type coverage remain open. See
 [canonical reconstruction](../evidence/t25-reallocation-canonical-rebuild-controls-20261016.json)
 and [passive warning addendum](../evidence/t25-mac-typecheck-passive-warning-audit-v1-304e03ac-20261016.json).
+
+2026-10-16 03:10 ET canonical preparation publication: exactd22bc6c5 (packetd1d3b3e0) passes the [independent canonical review](../evidence/t25-canonical-rebuild-independent-review-d22bc6c5-20261016.md). Complete canonical reconstruction rejects staged-source/statement/theory hash forgery, dropped coverage rows, extra import files and symlinks; it retains the trusted finite source-owner map boundary. The changed compound model identity does not promote old records. Public routes remain unsupported/no-launch, all source-image/import/task/body/caller duties open. Backend01771 remains separate/unreviewed and excluded. The earlier03:02 note's future canonical source is now published only as preparation; its old actual304 warning-parser defect/result remain immutable. Ticket25 stays claimed.
