@@ -85,3 +85,10 @@ def test_report_reader_keeps_unexpected_statuses():
     props = H.read_report(rep)
     assert [p["status"] for p in props] == ["Bug", "Valid"]
     assert [p["status"] for p in H.verdict_problems(props, set())] == ["Bug"]
+
+
+def test_strategy_hints_are_refused(server):
+    args = {"hints": [{"anchor": "global", "kind": "strategy", "text": "\\wp::strategy S: \\prover(\"z3\");"}]}
+    r = rpc(server, {"jsonrpc": "2.0", "id": 9, "method": "tools/call",
+                     "params": {"name": "check_hints", "arguments": args}})
+    assert "strategies are not applied" in r[0]["result"]["content"][0]["text"]

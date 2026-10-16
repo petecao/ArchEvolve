@@ -52,6 +52,13 @@ TOOLS = [
 ]
 
 
+def no_strategies(hs):
+    """Method26: strategy hints are inert without the `tip` prover, so they are refused up front."""
+    return [{"id": h["id"], "rule": "strategy_not_used",
+             "detail": "WP strategies are not applied in this run (no tip prover); remove this hint"}
+            for h in hs if h.get("kind") in ("strategy", "proof")]
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--state", required=True)
@@ -97,7 +104,7 @@ class Server:
 
     # ---- tools ----
     def falsify(self, hs):
-        bad = H.check(self.standin, hs)
+        bad = no_strategies(hs) or H.check(self.standin, hs)
         if bad:
             return None, "Rejected by the vocabulary check:\n" + "\n".join(
                 f"- {x['id']}: {x['rule']} {x.get('detail', '')}" for x in bad)
@@ -107,6 +114,9 @@ class Server:
                      "No hint refuted on the 2000 bounded executions.\n") + F.report_text(hs, res)
 
     def check(self, hs, name):
+        bad = no_strategies(hs)
+        if bad:
+            return None, "check FAILED: " + "; ".join(f"{x['id']}: {x['detail']}" for x in bad)
         rec = {}
         d = L.precheck(self.out, name, self.standin, hs, rec)
         if d is not None:

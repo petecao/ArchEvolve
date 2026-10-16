@@ -18,7 +18,7 @@ sys.path.insert(0, str(HERE))
 import hints as H  # noqa: E402
 import loop as L  # noqa: E402
 
-METHOD = "method25"  # method24 plus the parallel round (round24p) and falsifier construct support
+METHOD = "method26"  # method25 without strategy hints (no `tip` prover in rounds or verdict, so they are inert)
 LADDER = [3, 10]
 # The 10 s rung runs only when few goals stay open: a measured no-hint 10 s rerun took 483 s and closed
 # none of 171 goals (s2-ladder, 2026-10-16), while 98% of past Valid proofs took <= 3 s.
@@ -37,8 +37,9 @@ Final answer: JSON {{"hints": [{{"anchor", "kind", "text"}}...], "notes": "..."}
   loop_invariant ("loop invariant P;"), loop_assigns ("loop assigns L;"), loop_variant ("loop variant <integer
   term>;"), all three only at "loop:*" anchors (merged into one annotation right before that loop);
   assert ("assert P;") at "stmt:*" anchors; ghost ("ghost <declaration or statement>") at "stmt:*" or "global";
-  predicate / logic (NON-recursive definitions) and lemma ("lemma name: P;", proven in the same run) at "global";
-  strategy ("\\wp::strategy ...") with its attachment kind proof ("\\wp::proof S: targets;") at "global".
+  predicate / logic (NON-recursive definitions) and lemma ("lemma name: P;", proven in the same run) at "global".
+  WP strategies (`\\wp::strategy`, `\\wp::proof`) are NOT used: this run's WP settings never apply them, so
+  the tools refuse them.
 - Rejected (the set is refused): any admit form, axiom, axiomatic, recursive or inductive definitions,
   contracts (requires/ensures/assumes/behavior/terminates/decreases/exits), ghost functions, body-less
   declarations, `loop variant ... for R`, import, \\from, global invariants, volatile, statement contracts,

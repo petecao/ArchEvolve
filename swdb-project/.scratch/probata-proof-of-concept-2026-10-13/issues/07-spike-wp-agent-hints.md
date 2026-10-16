@@ -97,6 +97,23 @@ rounds as three concurrent WP processes over an exact partition of TDStep's goal
 local-struct addresses (`&lqueue`) and nested slices in loop assigns (every run 27 hint is now checked).
 In run 27 it refuted 3 false hints in seconds, each of which would have cost a WP pass.
 
+### Counted run 28 (method25 run 1) — 2026-10-16 15:10–16:01 ET: FAIL
+
+No set reached zero open goals; no final replay. 50.5 counted minutes, 3 Codex calls, 63 tool calls,
+39.70M input tokens (39.11M cached), 67.3k output. Baseline 171 of 314 open at 3 s in 302 s (slower than
+run 27's 180 s; Zoom and a git process were using CPU). Best set: 94 hints, **81 of 658 goals open**
+(33 unit, 48 hint; all timeout). Parallel `prove_hints` took about 4 min. 35 of 63 tool calls were failed
+checks: 24 WP goal-generation aborts from undefined `\wp::strategy` names and 10 parse errors, mostly
+strategy syntax. [Compact evidence](../evidence/t07-counted-28-20261016.json).
+
+### Method26 — 2026-10-16 ET (prospective)
+
+Finding: `\wp::strategy` hints only act through the `tip` prover, which neither the method24/25 rounds nor
+`final24` run, so every strategy hint was inert, and strategy syntax caused 31 of run 28's 35 failed checks.
+Method26 = method25 with strategy and proof-attachment hints refused by the tools (a subset of the map 13
+vocabulary) and the prompt saying so. Verdict path unchanged. This delta (prompt text plus an up-front
+refusal) was reviewed by the main session only, since it touches neither the verdict path nor the falsifier.
+
 ## Historical checkpoint — user stop 2026-10-16 11:36 ET
 
 Status is **ready-for-agent**; the active claim is released at the user's request.
