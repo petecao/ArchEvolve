@@ -424,3 +424,6 @@ Shared2e2 allocator/register [entry review](../evidence/t28-shared-2e2-pairs-ind
 ## 2026-10-16 08:29 ET allocator repair publication
 
 [Independent source review](../evidence/t28-allocator-linux-assert-independent-source-review-v1-20261016.md) accepts029e50e5 only as narrow pure assertion-diagnostic qualification. RootG623eight ASTs/declaration evidence and24pure/compiler-exit99 controls are retained; originaltotal/frame/predicate/LLVM remain unchanged. [Current checkpoint](../evidence/t28-allocator-repair-integration-checkpoint-20261016.md) records separatea3a8registerG599twoactualpytest passes with complete cold pending. No pair/model/source-body/current0.2/fullticket acceptance; historical failures unchanged.
+
+
+2026-10-16 — [Allocator37 actual namespace refusal](../evidence/t28-allocation37-pre-solver-checkpoint-20261016.md) preserves G600 pre-WP unbound REG_count, zero records and negative unexecuted. Two V5 admission audits each retain217module physical/Gitchecks/zeroerrors; no pair acceptance. Separate allocator namespace repair and registerG599 complete cold remain pending.

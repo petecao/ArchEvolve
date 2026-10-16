@@ -1,0 +1,56 @@
+{
+  "date": "2026-10-16 ET",
+  "verdict": "PASS_LOCAL_NATIVE_INSTALLATION_PROFILE_ONLY",
+  "packet": {
+    "path": "/private/tmp/probata-t07-omp-profile-cold-packet-v3b-20261016.json",
+    "sha256": "93c1651f0e4f178f974f77b569bcc959f068c0c624706890290f478e91f1f086"
+  },
+  "root_native": {
+    "path": "/private/tmp/probata-root-t07-omp-profile-native-execution-v3-20261016.json",
+    "sha256": "b867d8ac9fe19687ee82a5088629e080802e0c12f185447db62d81d6f719089f"
+  },
+  "author_cold": {
+    "path": "/private/tmp/probata-t07-omp-profile-cold-v3b-20261016.json",
+    "sha256": "1b31d005592fb6ee69c55d6fdc1e1626ad5bee911a47d77531be1a9f47ba6c03"
+  },
+  "independent_reconciliation": {
+    "packet_artifacts": 11,
+    "author_checks_reconciled": 2095,
+    "pin_instances_rehashed": 1117,
+    "unique_physical_files_rehashed": 952,
+    "complete_native_raw_files": 20,
+    "actual_include_files": 129,
+    "admitted_whitelist": 903,
+    "selected_source_files": 23,
+    "compiler_implementation_images": 5,
+    "mismatches": 0,
+    "raw_membership_and_observation_guard_root_equal": true,
+    "source_dispatch_note_and3primary_sources_receipt_rehashed": true
+  },
+  "observations": {
+    "positive": "inside1/team1/id0/level1/limit1/max1/dynamicfalse",
+    "negative": "inside2/team2/ids0..1/level1/limit2/max2/dynamicfalse; exacttwo validated and selectedone-profile refused",
+    "outside": "1 in both; notactive-team evidence",
+    "types": "int4,size_t8,_OPENMP202011",
+    "runtime": "exact pinned local Mac libomp22.1.8"
+  },
+  "resources": {
+    "native_seconds": 1.0207105416920967,
+    "native_peak_MiB": 292.0625,
+    "native_exit": 0,
+    "native_events": [],
+    "passive_cold_seconds": 0.724198958,
+    "passive_cold_peak_MiB": 24.875,
+    "no_OOM_timeout_unconfirmed_or_final_inspection_failure": true
+  },
+  "historical_boundaries": [
+    "V2 compiled then refused unknown stdbool header before native; V3 explicitly adds only exact prospective1172-byte header and fresh output.",
+    "First passivecold reader used66-characterrootSHA literal; V3b only corrects that literal and fresh output, no native replay.",
+    "General dynamic1 OpenMP schedule neednotmonotonic. Exact pinnedllvmorg22.1.8 source supports increasing serialized one-thread traversal; binding installedbinary/compiler/runtime to that source remains explicitTCB.",
+    "Privateframe bridge is conditional standardtypedstorage/lifetime + selectedsource/compiler/library projection, notmachinecheckedC++\u2192C/allocator/reset/Initfact or exactTD/count theorem."
+  ],
+  "reviewer_actions": "Passive local byte/hash/JSON/source/AST reads only; no entry/coldreader/project/test/compiler/native/formal/version/config/SSH executed.",
+  "proof_acceptance": false,
+  "exact_TD_or_counted_acceptance": false,
+  "ticket_closure": false
+}

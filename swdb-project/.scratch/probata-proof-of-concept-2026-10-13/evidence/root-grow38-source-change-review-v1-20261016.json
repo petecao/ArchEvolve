@@ -1,0 +1,102 @@
+{
+  "actual_native_setup": {
+    "reference": {
+      "bytes": 198677,
+      "path": "/private/tmp/probata-t25-cell4-setup-only-metadata-v1-20261016.json",
+      "sha256": "4161bd70151a4d49ddb8ac282466bfec2311d81c55163932c441d4c141f661aa"
+    },
+    "scope": "Prior actual046 runtime physical components retained as template; no current37 runtime or proof acceptance inferred"
+  },
+  "baseline": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+  "command": {
+    "bytes": 77613,
+    "path": "/private/tmp/probata-t25-qualified-grow38-public-root-command-v2-37ffe407-20261016.json",
+    "sha256": "3afe36fde1e39763530fbace7418fc197a5ce5477d4b1c95bcfa30e58b8f0fc5"
+  },
+  "entry": {
+    "bytes": 25902,
+    "path": "/private/tmp/probata-t25-qualified-grow38-public-entry-v2-37ffe407-20261016.py",
+    "sha256": "91b79d37c3a47704e60fd355eabf10207cc073383512ef8872cd322467099e50"
+  },
+  "expected": {
+    "bytes": 148790,
+    "path": "/private/tmp/probata-t25-qualified-grow38-public-expected-v2-37ffe407-20261016.json",
+    "sha256": "388dc1f630583812eed6e925697049bb8963879ded88a2198dc9d993b61493de"
+  },
+  "files_after": {
+    "swdb-project/swdb/bounded_std_initialization.py": "480bf38b3333639c62d8f89aff129208abccdc63351d63cfa6b23d7cb3d84607",
+    "swdb-project/swdb/c_lowering.py": "a391d4d9939645b629a10427f075c535709adc7925eeb0ae8c4581f23eef77e5",
+    "swdb-project/swdb/cbmc_adapter.py": "8ac1fa02d45d5ec4a5607e61c4287ac36a9d8bd235b9b1dbff3923b1f837b831",
+    "swdb-project/swdb/dx100_allocation_source.py": "229a47016d1c239927fca0420c0d2be7cf8cd8a37e30b3d5f0d3ecbed8c53681",
+    "swdb-project/swdb/dx100_interface.py": "6e88200412cada2678d3f65f442d0cf11e39fecdb744fa490e6397e0e0d37cdf",
+    "swdb-project/swdb/dx100_register_model.py": "1ca71b6f3661ce5544277bec1bb8f20c8db72461cd40b99f11a2a08e7381fb76",
+    "swdb-project/swdb/dx100_register_source.py": "8ab73239527717eb5b904ef42ed98ca95819be646f4c2b4016bb19dc2e0d925a",
+    "swdb-project/swdb/dx100_size_source.py": "fe070713b91257d73a77112a7114c3ec049d2dc3ca8dbe0c1dfa6404c35a70f3",
+    "swdb-project/swdb/dx100_source_selector.py": "4c788c11a80c1478323229bba12997995dcad30699dc78d7085b52a14fc09190",
+    "swdb-project/swdb/dx100_stream_model.py": "4f512d0c51dbc4f72a7ed0cdf34e4b6ea850d736ca4ae1e35efe72ae850ab2ba",
+    "swdb-project/swdb/dx100_stream_source.py": "28715eb5b7171244ca18027412db4e119d858812638ad32ce06dfe213c229e62",
+    "swdb-project/swdb/formal_frame.py": "9b9762b9d83a54be56f46f2f71ad1acdd57241116021eec373b1511abb4b5499",
+    "swdb-project/swdb/heap_bridge.mlw": "5186c27f5a7a339352e3f62dc3a0d3efb1c7bd12f8a456cc61b0d7a52566638d",
+    "swdb-project/swdb/heap_model_environment.ml": "ba52941e7ab96a8ebbe4efdb8fde0c1b19daa3d6ccb8804efc87b027a68caf7b",
+    "swdb-project/swdb/heap_model_packets.py": "805b00fe78373102b600506833f86c28fce2cf494baef7a68afd63641c1de185",
+    "swdb-project/swdb/heap_model_vcs.py": "f20e0ec130222aeda96b4fbb8e72eef8d922d3f33e84077777203f7e6d159092",
+    "swdb-project/swdb/heap_model_view.py": "52b41faefd37d585fb2c8ff15c82e74fb602c6063848ec7808cbea816ea44451",
+    "swdb-project/swdb/heap_reallocation.mlw": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+    "swdb-project/swdb/proof.py": "a234a21bff917291a188363a9e0eb7b9a3c6b4530576fd3021f7f2cc981cc839",
+    "swdb-project/swdb/proof_report.ml": "8b84bec6a12669d877205ec60d46d149f41fa921d08b6640161b4896b9c4df16",
+    "swdb-project/swdb/proof_semantics.py": "e74aa8d33eff7a0c77097c8e6693678a068a2533cd3c46b3339fd04dd15f0fa4",
+    "swdb-project/swdb/proof_setup.py": "7a247dc0243a84d4657ba2fe36726a657c307e2fcb191935e10863c510151daf",
+    "swdb-project/swdb/stdlib_provenance.py": "4a7ca7d9b05a992e8172125fcbbfd175bb7ade2aec47cfb349126c9739b6e8e4",
+    "swdb-project/swdb/vector_reallocation_caller_packets.py": "6992058e5974738d56d1a98f87cbd012784420a85272b96f2fad113aff03a7d9",
+    "swdb-project/swdb/vector_reallocation_caller_vcs.py": "e8e514a1208d6653e8ae424b37309a3ce299690050ecac2710aed580b9ab397a",
+    "swdb-project/swdb/vector_reallocation_calls.py": "d1d7ea169a50b82d5545ab0a3fa02910849d944b9104a5839e0955dd5a283a95",
+    "swdb-project/swdb/vector_reallocation_capacity.py": "e4aa221acb78151895fa5c5d3cbdab6050b151b42a7096521a90fcdf3c95f617",
+    "swdb-project/swdb/vector_reallocation_inventory.py": "0a0474084a17b84788585a62a9e0b63b88eb43efd858101769db267579af5f07",
+    "swdb-project/swdb/vector_reallocation_lifetime.py": "d20ac49e7896ed47632ad05f6f0610caee805649da81d3f469da2b6237051159",
+    "swdb-project/swdb/vector_reallocation_model.py": "92ad23030531650924a51b0a3bd1abb479afa373a7d1dd2a543b9ae225ab8b89",
+    "swdb-project/swdb/vector_reallocation_vcs.py": "4bba8a7885570b6228d383e9abcd1e40c85dbd0dbff75e24f170dd4556493340",
+    "swdb-project/swdb/vector_reallocation_view.py": "05eaa7414580b11a54b7f6ebf63db20b28fd6aea0c5de4da00fc70a3bd0c57d4",
+    "swdb-project/swdb/wp_adapter.py": "9bf9e20cfa33450903d9f2c139febdcac6c81557fabb434f6c68d8f1c24617ac"
+  },
+  "helper_checks": 8,
+  "inner_independent_review": {
+    "bytes": 3250,
+    "path": "/private/tmp/probata-t25-copy-establish-and15-independent-source-review-a20f7a98-20261016.md",
+    "sha256": "1eefcfbba5c6c057b0f5cd388a2ff38fcb2eac96384bc28b5a493ec1596a70da"
+  },
+  "opaque_consumer_roots": 6,
+  "proof_acceptance": false,
+  "readers": [
+    "root",
+    "merger",
+    "ticket24/std_contract_review"
+  ],
+  "resource_policy": {
+    "cap_bytes": 8589934592,
+    "output_budget_bytes": 2147483648,
+    "profile_seconds": 2200,
+    "public_timeout_seconds": 2100,
+    "root_outer_seconds": 2520,
+    "root_whole_seconds": 2400,
+    "workers": 1
+  },
+  "review_evidence": {
+    "path": "/private/tmp/probata-root-grow38-admission-review-v1-20261016.md",
+    "sha256": "0cc2d654614213217421c44927fd9dacbfc6fb9866fac695f655df7b136654d7",
+    "bytes": 1440
+  },
+  "scope": "One complete qualified v3 grow mathematical C-body profile, all38 fresh targets including fifteen exact copy-invariant conjuncts and numeric C kernel. Two top-level logical groups and three physical reference C files retained. Normal public CLI, canonical/source/setup, ordinary/RTE/init/smoke/dependency/schema/persistence checks. Original-v2, generic caller and ticket acceptance remain false.",
+  "scripted_public_controls": {
+    "bytes": 1680,
+    "path": "/private/tmp/probata-t25-root-grow38-public-controls-v1-20261016/result.json",
+    "sha256": "3e143dc7fb4572434044e38e8adb6fae923563b87364ed458224f5ae5694004c"
+  },
+  "source_commit": "37ffe407a10888ff9628c75f37ba770995a3ecd5",
+  "source_package_checks": 319,
+  "status": "Root prospectively admitted full grow38 only; independent static review required before dispatch; cold acceptance remains pending",
+  "root_admission_checks": {
+    "path": "/private/tmp/probata-root-grow38-admission-checks-v1-20261016.json",
+    "sha256": "3042a8a1decaece449385d6ed1f856fd642c93cde78ba9b6d6bc51bbd0659dff",
+    "bytes": 3728
+  }
+}
