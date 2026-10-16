@@ -485,6 +485,35 @@ def copy_establish_parts(statement):
         'reference_role': 'original logical target only; never imported or launched as a proved result'}
 
 
+def copy_step_parts(statement):
+    """Expand only the exact source step conclusion, retaining its whole guard."""
+    quantifiers = r'\forall Heap::heap entry,h; \forall integer r,o,b,bo,s,c,f,cap,k; '
+    antecedent = 't25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s'
+    arguments = ['entry', 'Heap::copy_int(h,b,bo+4*k,f,4*k)', 'r', 'o', 'b', 'bo',
+                 's', 'c', 'f', 'cap', 'k+1']
+    original = quantifiers + antecedent + ' ==> t25v3_copy_inv(' + ','.join(arguments) + ')'
+    if statement != original:
+        raise ValueError('copy step expansion requires the exact original full premise and transition')
+    definition, source = _source_definition('t25v3_copy_inv', '    logic Heap::heap t25v3_grown')
+    conjuncts, binding = predicate_conjuncts(definition, arguments)
+    labels = ['entry_well_formed', 'updated_well_formed', 'entry_eligible', 'updated_eligible',
+              'advanced_index_size_capacity_bounds', 'fresh_identity', 'unissued_identity',
+              'receiver_distinct', 'old_buffer_distinct', 'destination_write_domain',
+              'destination_freeability', 'destination_extent', 'allocation_frame',
+              'advanced_copied_prefix', 'uninitialized_tail']
+    if len(conjuncts) != len(labels):
+        raise ValueError('the complete copy step invariant conjunction census changed')
+    parts = [('grow.copy.step.' + label, quantifiers + antecedent + ' ==> ' + formula)
+             for label, formula in zip(labels, conjuncts, strict=True)]
+    return parts, {**binding, 'id': 'grow.copy.step', 'original_statement': original,
+        'quantifiers': quantifiers, 'antecedent': antecedent, 'substituted_conjuncts': conjuncts,
+        'parts': [name for name, _formula in parts], 'premises_added': [], 'dependencies': [],
+        'definition_source': source,
+        'combination': 'AND: all fifteen independent step definition conjuncts are required',
+        'equivalence': 'A implies AND(conjuncts) iff AND(each A implies conjunct); simultaneous capture-free predicate substitution',
+        'reference_role': 'original logical target only; never imported or launched as a proved result'}
+
+
 def _source_definition(name, following):
     start = PRELUDE.index('predicate ' + name + '(')
     end = PRELUDE.index(following, start)
@@ -637,6 +666,14 @@ def declaration(member):
                 receipt['reference'] = {'path': reference, 'sha256': hashlib.sha256(files[reference]).hexdigest()}
                 logical.append(receipt)
                 parts = [(part, formula, f'{index:03d}c{component:02d}')
+                         for component, (part, formula) in enumerate(expanded, 1)]
+            elif name == 'grow.copy.step':
+                expanded, receipt = copy_step_parts(statement)
+                reference = 'references/' + f'{index:03d}-t25v3_grow_copy_step.c'
+                files[reference] = lemma_source(name, statement).encode()
+                receipt['reference'] = {'path': reference, 'sha256': hashlib.sha256(files[reference]).hexdigest()}
+                logical.append(receipt)
+                parts = [(part, formula, f'{index:03d}s{component:02d}')
                          for component, (part, formula) in enumerate(expanded, 1)]
             elif name == 'ctor.qualified.positive_post':
                 expanded, receipt = constructor_positive_parts(statement)
