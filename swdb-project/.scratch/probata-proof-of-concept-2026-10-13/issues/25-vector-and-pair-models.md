@@ -211,6 +211,54 @@ acceptance boxes remain open. The next vertical slice is fresh public
 `swdb prove --model` evidence; this capability profile is never promoted from a
 cache into such a record.
 
+### Public first-pair heap proof integration prepared — 2026-10-16 ET
+
+The new production heap-view module reconstructs the accepted exact original
+mapping and executes each member's positive targets afresh through ordinary
+`swdb prove --model`: 27 constructor targets and 11 destructor targets. Default
+complete property selection, `+real`, RTE/init/smoke/cache/machdep/portfolio
+checks and the normal report reader remain mandatory. Each launch independently
+rebuilds all source/VC inputs and checks its sole target ownership. A native
+metadata-only helper binds actual Why3 import roots and exact standard support
+sources to the selected WP package; shadow roots refuse. Three explicit record
+pins retain checker, source certificate and standard foundations. All targets
+consume one remaining public wall budget.
+
+Real public RED controls preserve the old allocation refusal and the ignored
+build-define admission gap. The final focused native/compiler/stand-in suite
+passes 40 cases; the actual-only target skips. It covers both source models,
+self-consistent original-source/obligation/theory tampering, shadow imports,
+unmapped defines, remaining-budget forwarding, canonical math promotion and
+existing ordinary WP launch guards. Final parent formal tools are explicitly
+disabled. No actual WP/prover or model-body proof is inferred from these
+controls. Evidence: `../evidence/t25-public-heap-preparation-controls-20261016.json`.
+
+The opt-in `scripts/probata_heap_model_profile.py` prepares a fresh two-record
+public profile. It requires exact clean source and separate coordinator admission
+under one worker/8 GiB guards, with two 1800-second public budgets and a
+4200-second whole budget plus wrapper margin. Public actual acceptance, remaining
+vector members and generic caller composition are still open.
+
+### Successful public-record writer review correction — 2026-10-16 ET
+
+Independent review blocked the first public-route freeze `31798b27`: after all
+successful targets, the aggregate receipt added a key forbidden by the closed
+proof schema. A new eleven-target synthetic destructor control reproduces the
+public writer refusal; the minimal fix keeps the standard two-key attestation
+and retains every child reading in settings. The control then persists a
+schema-valid record. The affected public suite passes nine controls with the
+actual-only target skipped. Synthetic results are orchestration controls, never
+actual proof evidence; the original failure and all producer receipts remain.
+
+Final independent review passes at clean `cea5652b`, after merging integration
+`20764a3e`: 25 evidence references and 11 source pins match. Theory, source
+mapping, obligations, schema and proof policy are unchanged. The exact CEA
+source is the prospective coordinator-owned actual profile input; no actual
+public heap proof has run and no acceptance checkbox closes here. See
+[writer RED/GREEN](../evidence/t25-public-heap-aggregate-schema-controls-20261016.json),
+[blocked review](../evidence/t25-public-heap-source-review-31798b27-20261016.md)
+and [final addendum](../evidence/t25-public-heap-source-addendum-cea5652b-20261016.md).
+
 ## Acceptance
 
 - [ ] Each modeled member has a C function and an ACSL contract citing the standard's clause for it (`[vector]` for vector members). `swdb prove` proves every contract against its C function once, recorded with subject "a library entry's summary".

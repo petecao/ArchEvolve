@@ -28,6 +28,8 @@ CHECK_SOURCES = ("proof_setup.py", "proof_report.ml", "proof.py", "cbmc_adapter.
                  "array_domains.py", "model_domains.py", "dx_array_domains.py", "bounded_entry_windows.py",
                  "bounded_chain.py", "summary_bindings.py", "helper_windows.py", "standard_range_model.py",
                  "nested_entry_reads.py", "standard_range_calls.py", "member_windows.py", "stdlib_provenance.py", "stdlib_source_admission.py")
+CHECK_SOURCES += ("heap_model_view.py", "heap_model_packets.py", "heap_model_vcs.py",
+                  "heap_bridge.mlw", "heap_model_environment.ml")
 REQUIRED_WP_SWITCHES = (("-wp-no-filter-init", "-wp-filter-init"), ("-wp-rte", "-wp-no-rte"))
 _COMPILED_MODULES = {}
 _ASSUME = re.compile(r"\b(?:llvm_assume|crucible_assume|__VERIFIER_assume)\b|\b(?:__CPROVER_assume|SWDB_ASSUME|assume)\s*\(")
@@ -347,7 +349,14 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
     if adapter.name == "wp":
         from swdb import standard_model_view, standard_range_model, standard_range_calls, wp_pointer_bounds
         try:
-            if "pointer_bounds_model_source" in context:
+            if context.get("heap_model_view"):
+                from swdb import heap_model_view
+                try:
+                    hashes['heap_model_view'] = heap_model_view.check_launch(
+                        job, adapter, context, command, flags, scratch or job.scratch)
+                except (heap_model_view.Refused, KeyError, OSError) as exc:
+                    _fail('heap_model_view', str(exc))
+            elif "pointer_bounds_model_source" in context:
                 from swdb import c_lowering
                 model = c_lowering.model_text(job.unit.function)
                 if context.get("standard_model_view"):
@@ -666,7 +675,7 @@ def read_wp_reports(goals_json, properties_csv, inventory_path, extern_contracts
                    goals, assumptions=assumptions)
 
 
-def compile_report_module(workdir):
+def compile_report_module(workdir, *, timeout=120):
     """Compile the inventory reader against this host's Frama-C/WP API."""
     import shlex
     import shutil
@@ -675,7 +684,7 @@ def compile_report_module(workdir):
     shutil.copyfile(REPORT_MODULE, source)
     command = shlex.split(os.environ.get("SWDB_OCAMLFIND") or "opam exec --switch=framac-33 -- ocamlfind")
     done = subprocess.run([*command, "ocamlopt", "-shared", "-linkall", "-package", "frama-c.kernel,frama-c-wp.core",
-                           "-o", str(out), str(source)], capture_output=True, text=True, timeout=120)
+                           "-o", str(out), str(source)], capture_output=True, text=True, timeout=timeout)
     if done.returncode:
         _fail("report_reader", f"cannot compile fresh inventory reader: {(done.stderr or done.stdout)[:800]}")
     _COMPILED_MODULES[str(out.resolve())] = (_sha(out.read_bytes()), _sha(REPORT_MODULE.read_bytes()))

@@ -1,0 +1,114 @@
+{
+  "admission_boundary": {
+    "acceptance": "Fresh actual two-record run and its cold import/task/dependency/tool/resource audit remain pending. No synthetic record promotion, generic caller adoption or ticket closure.",
+    "actual_records_pending": 2,
+    "fresh_positive_target_counts": {
+      "std_vector_int_ctor_count_value": 27,
+      "std_vector_int_dtor": 11
+    },
+    "outer_seconds": 4320,
+    "public_seconds_each": 1800,
+    "rss_cap_bytes": 8589934592,
+    "selected_tool_physical_entry_audit": "Owned independently by root; this receipt verifies requirements metadata and its 11 source pins only.",
+    "whole_seconds": 4200,
+    "worker_count": 1
+  },
+  "closed_findings": [
+    "B1: closed-schema successful aggregate persistence"
+  ],
+  "correction": "Remove only duplicate readings accumulator and non-schema verdict_reading.heap_model_runs. All per-target normal-reader outcomes remain settings.heap_model_runs. No schema, mathematical theory, source VC map, packet selection, eligibility, deadline, ordinary/smoke or reader policy change.",
+  "created": "2026-10-16 ET",
+  "evidence": {
+    "hash_errors": [],
+    "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-heap-aggregate-schema-controls-20261016.json",
+    "physical_reference_instances": 25,
+    "sha256": "eee14db42727303538af0c5e19857535d9a4297a8ad75f2219b630d81d44b58d"
+  },
+  "open_source_review_blockers": [],
+  "prior_review": {
+    "json": {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-heap-source-review-31798b27-20261016.json",
+      "sha256": "6e03ffd589371eff76200f4434d5ab8e157050be637460986faa3ba103025c9a"
+    },
+    "md": {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-heap-source-review-31798b27-20261016.md",
+      "sha256": "7dfe20345d7ea93200a8bfe146bcbc9d9610a5b4fadd7279a7b1dc2dbb53b487"
+    }
+  },
+  "requirements": {
+    "path": "/private/tmp/probata-t25-public-heap-requirements-v2-cea5652b-20261016.json",
+    "sha256": "05f6ba9442600d6a24986b58dcf3d81cf56d069aa13e4dbd178f84264546e007",
+    "source_pin_errors": [],
+    "verified_source_pins": 11
+  },
+  "retained_controls": {
+    "green": {
+      "cpu_seconds": 7.167782,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 392036352,
+      "timed_out": false,
+      "wall_seconds": 7.3942145420005545
+    },
+    "public_final": {
+      "cpu_seconds": 23.203622,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 383221760,
+      "timed_out": false,
+      "wall_seconds": 27.570472833001986
+    },
+    "red": {
+      "cpu_seconds": 7.193585,
+      "exit_code": 1,
+      "out_of_memory": false,
+      "peak_rss_bytes": 383827968,
+      "timed_out": false,
+      "wall_seconds": 7.752618666971102
+    }
+  },
+  "retained_results": {
+    "environment": {
+      "SWDB_CBMC": "none",
+      "SWDB_FRAMA_C": "none",
+      "child": "explicit stand-in command; actual test opt-in absent"
+    },
+    "green": "Complete synthetic public writer/schema control: 1 passed in 7.02s.",
+    "public_final": "9 passed, 1 actual-only skipped in 27.19s.",
+    "red": "All 11 synthetic targets read proven, then prior public writer rejected unknown verdict_reading.heap_model_runs; nothing written. 1 expected failure in 7.24s.",
+    "source_boundary_note": "Test module descriptive docstring updated during final batch; executable test/adapter bytes were unchanged during that batch. Earlier40pass1skip receipt retained separately; no successful formal runs duplicated."
+  },
+  "scope": "Independent read-only source diff, retained evidence, hash and data audit; no tests, compiler, formal tools, SSH or remote jobs launched by this reviewer.",
+  "source_commit": "cea5652b06a20696b59b643527c951ccc13122d3",
+  "source_sha256": {
+    "pyproject.toml": "049d720132df2d1091bca29e2705d4552e5fc3ea55e9963cf8faa3133501d7b5",
+    "schemas/proof.schema.json": "c8255f763fc1968c64aff4af53aac04a0dadc5193303f87fcd6c86f530100bfa",
+    "scripts/probata_heap_model_profile.py": "36bb3bbe2a180ba149f41a1163306305cb814d9cadee9b9fc1ebfcefdae88f77",
+    "swdb/heap_bridge.mlw": "5186c27f5a7a339352e3f62dc3a0d3efb1c7bd12f8a456cc61b0d7a52566638d",
+    "swdb/heap_model_environment.ml": "ba52941e7ab96a8ebbe4efdb8fde0c1b19daa3d6ccb8804efc87b027a68caf7b",
+    "swdb/heap_model_packets.py": "93a07782af0ae152f2cff2a6178b9745c922c42f8b73eeec3affe12567e0e93d",
+    "swdb/heap_model_vcs.py": "f20e0ec130222aeda96b4fbb8e72eef8d922d3f33e84077777203f7e6d159092",
+    "swdb/heap_model_view.py": "53f680c24644ebec7a1d1071a9bd8d0b559ec310e4148e516e26c015e343b2d8",
+    "swdb/proof_setup.py": "b9b5b1eef444be7e6656cbd5d5ce76b7393f28eae1f55a8c47b5e4028154f7ee",
+    "swdb/wp_adapter.py": "fe4590b5b9eeaa41701fb4b48d17a0c1d6ade176783f46918de99151cda2faa5",
+    "tests/test_heap_model_view.py": "133021dd66fa3cdf30ee404d7a7510c584f641ca0edb191bf6a570e02f451dbc"
+  },
+  "synthetic_public_success": {
+    "actual_proof_evidence": false,
+    "explicit_synthetic_markers": 11,
+    "goals": 11,
+    "record": {
+      "path": "/private/tmp/probata-t25-aggregate-schema-public-final-20261016/pytest/test_complete_synthetic_heap_s0/records/proofs/proof.model.std_vector_int_dtor.20261016t042620z.71b9cc57.yaml",
+      "sha256": "b4cd6b8cdafea3ef76706f0e51d8084219f52f477e4570db7361bfc641cac4a2"
+    },
+    "retained_child_readings": 11,
+    "setup_checks": 11,
+    "targets": 11,
+    "top_level_attestation_keys": [
+      "check",
+      "verdict"
+    ]
+  },
+  "verdict": "PASS FOR COORDINATOR ACTUAL PROFILE ADMISSION",
+  "worktree_clean": true
+}
