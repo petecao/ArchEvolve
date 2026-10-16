@@ -259,6 +259,37 @@ public heap proof has run and no acceptance checkbox closes here. See
 [blocked review](../evidence/t25-public-heap-source-review-31798b27-20261016.md)
 and [final addendum](../evidence/t25-public-heap-source-addendum-cea5652b-20261016.md).
 
+### Fresh original count/value constructor and destructor accepted — 2026-10-16 ET
+
+The reviewed public profile completed at exact clean `cea5652b`. Two fresh
+schema-valid `c_model` fixture records are accepted under the explicit
+source-to-unbounded-heap translation, allocation, tool and standard-support TCB.
+Construction proves all 27 mapped targets (36 ordinary Valid plus one passing
+numeric smoke); destruction proves all 11 targets (11 ordinary Valid). All 38
+targets retain fresh normal reports and current setup/reader bindings. No
+synthetic or prototype proof result is promoted. The original source/contracts
+and arbitrary-heap/alias/lifetime domains are unchanged, with no new caller
+premise or finite identity bound.
+
+Independent cold review checked all 108 emitted task bodies against the prior
+semantic closure, the numeric closed acyclic dependency graph, exact current
+Linux runtime/method/source/configuration/foundation bindings, and both persisted
+records. All 1,514 checks pass; 482 physical references have zero mismatch. All 749
+raw files (43,289,454 bytes) remain remote. Whole/outer guards exited 0 in
+446.397/448.044s, peak 1.09/1.14 GB, with no OOM or watchdog timeout. Source stayed
+clean; node 1 generation 614 released naturally at 2026-10-16T04:40:57Z. Finite
+process visibility limits and unavailable GPU metadata remain explicit.
+
+This closes this two-member public-body limb only. No production-store adoption,
+generic caller composition, unchanged growth-body proof or formal C++ equivalence
+is claimed, and ticket25 remains claimed with its acceptance boxes open. The
+next approved slice is the original int count constructor with explicit zero
+initialization; source-domain ownership gaps in growth require a separately
+declared model/domain repair and caller discharge. See
+[actual review](../evidence/t25-public-heap-cold-review-cea5652b-20261016.md),
+[snapshot](../evidence/t25-public-heap-cold-snapshot-final-cea5652b-20261016.json)
+and [next slice/domain plan](../prototype/25-remaining-int-model-plan.md).
+
 ## Acceptance
 
 - [ ] Each modeled member has a C function and an ACSL contract citing the standard's clause for it (`[vector]` for vector members). `swdb prove` proves every contract against its C function once, recorded with subject "a library entry's summary".
