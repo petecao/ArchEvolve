@@ -335,3 +335,7 @@ verifier ran, no production0.2version is current and no acceptance box is checke
 The source13d782, older29c0 preparation and original7e642 actual producers remain
 separate. Coordinator review/admission and full ticket28 work remain active.
 [Source/native/scripted evidence](../evidence/t28-stream-first-vertical-controls-20261016.md).
+
+### 2026-10-16 ET — scalar prefix sequencing repair
+
+The new `array_filler` route now requires a closed literal-constant prefix, refusing calls, modifications and reads including earlier same-array elements. Public lowering RED3 reproduced the previous admissions; stationary composed GREEN9 includes two native initialized-prefix comparisons and two explicit stream stand-ins, with no actual proof. Evidence: `../evidence/t28-array-prefix-sequencing-controls-20261016.{md,json}`; executable `e4cd1a6e`. Frozen901 stays immutable; root holds actual dispatch pending successor review and full input-closure admission. Whole28 remains claimed/open.
