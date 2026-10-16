@@ -1401,3 +1401,6 @@ Independent source-equivalence review at merged6802 now passes. Forty merged com
 
 
 2026-10-16 — [Root grow38 coarse settled state](../evidence/t25-grow38-settled-root-progress-state-v2-20261016.json) preserves exact37/G624 normalpublicCLI0/not_proven and entry/guard1:27nativeValid, grow.copy.stepTimeout,10unexecuted inclnumeric. NoOOM/whole-timeout/sourcechange. Fullraw/task/ordinary/smoke/hypothesiscoldpending; no targetproofrepair/model/caller/ticket acceptance from progress counts.
+
+
+2026-10-16 09:40 ET — Reviewed6a755 caller preparation is integrated:104pending duties/emptydependencies/no admitted body records/publiccallerunsupported; historical85prose is not current104 qualification. Corrected241c/passive/source reviews preserve5nativecases/7ARM64executables/one recovered event/no retroactive admission. Fresh constructor35G625 exact6216 launched09:38:11ET,217moduleadmission0errors; proof result/cold decision pending. [Current scoped checkpoint](../evidence/frontier-current-dispatch-and-caller-preparation-checkpoint-20261016-0940.md). Ticket stays claimed; frontier counts35/25/3 unchanged.

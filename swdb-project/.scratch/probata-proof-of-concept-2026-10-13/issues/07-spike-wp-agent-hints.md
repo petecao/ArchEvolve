@@ -1742,3 +1742,6 @@ Root accepts complete changed-source20Typed-helper discharge only:260ordinaryVal
 
 
 2026-10-16 — Exact bd2610b6 device-only diagnostic fixture preparation is integrated after independent65f/bd source reviews and inert-entry static PASS. [Preparation checkpoint](../evidence/t07-device-generation-preparation-checkpoint-20261016.md) preserves5/1unfiltered roots/36+10calls, weak-output unconstrained outcome and the corrected13common-AST-function count. Actual generation/cold/any later proof remain separate root gates; no fullTD/count/source qualification or status change.
+
+
+2026-10-16 09:40 ET — Actual bd normal-TU generation artifacts were produced, then unclassified Typed memory-model hypotheses warnings caused entry/guard1; weak TU unexecuted/no external solver. Complete two-TU generation/proof/Init/source/TD/count acceptance remains false. [Current scoped checkpoint](../evidence/frontier-current-dispatch-and-caller-preparation-checkpoint-20261016-0940.md). Ticket stays claimed; frontier counts35/25/3 unchanged.

@@ -1,0 +1,1254 @@
+{
+  "admission_boundary": "The original author mislabeled and self-launched native cases in a compiler-only plan. This review validates retained observations and corrected scope, never retroactively approves original scheduling. No new tests/compiler/native/prover/SSH/replay ran during review.",
+  "artifact_pins_rehashed_prepost": 2279,
+  "caller_acceptance": false,
+  "canonical_pending": {
+    "applications": 3,
+    "ctor": 35,
+    "dtor": 11,
+    "local": 10,
+    "manifest": {
+      "bytes": 175406,
+      "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_canonical_caller_preparat0/caller/manifest.json",
+      "sha256": "c7f1e4c970a24aea328630cef93578421f48ef59d2947f9d94d69ca0de264a42"
+    },
+    "numeric": 1,
+    "public_caller_supported": false,
+    "records_admitted": [],
+    "reserve": 44,
+    "total": 104
+  },
+  "case_census": {
+    "caller_module": 17,
+    "native_cases": 5,
+    "other_compiler_source_packet_cases": 45,
+    "packet_module": 33,
+    "total": 50
+  },
+  "cases": [
+    {
+      "case": "test_canonical_caller_preparation_binds_existing_contract_without_enabling_proof",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "b918700268e0a7bee3bc4ac44cee241e8de8b72b4a91eb9b05ba86655bd911bc",
+      "function_lines": [
+        11,
+        32
+      ],
+      "module": "test_vector_reallocation_caller_packets.py"
+    },
+    {
+      "case": "test_caller_contract_is_explicit_and_never_completed_from_source_samples[contract0]",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "2189797a8df354e770db16d1666bcbebab2ca47a1ec09faf26e410c3aea35a07",
+      "function_lines": [
+        49,
+        54
+      ],
+      "module": "test_vector_reallocation_caller_packets.py"
+    },
+    {
+      "case": "test_caller_contract_is_explicit_and_never_completed_from_source_samples[contract1]",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "2189797a8df354e770db16d1666bcbebab2ca47a1ec09faf26e410c3aea35a07",
+      "function_lines": [
+        49,
+        54
+      ],
+      "module": "test_vector_reallocation_caller_packets.py"
+    },
+    {
+      "case": "test_caller_contract_is_explicit_and_never_completed_from_source_samples[contract2]",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "2189797a8df354e770db16d1666bcbebab2ca47a1ec09faf26e410c3aea35a07",
+      "function_lines": [
+        49,
+        54
+      ],
+      "module": "test_vector_reallocation_caller_packets.py"
+    },
+    {
+      "case": "test_caller_contract_is_explicit_and_never_completed_from_source_samples[contract3]",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "2189797a8df354e770db16d1666bcbebab2ca47a1ec09faf26e410c3aea35a07",
+      "function_lines": [
+        49,
+        54
+      ],
+      "module": "test_vector_reallocation_caller_packets.py"
+    },
+    {
+      "case": "test_caller_contract_is_explicit_and_never_completed_from_source_samples[contract4]",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "2189797a8df354e770db16d1666bcbebab2ca47a1ec09faf26e410c3aea35a07",
+      "function_lines": [
+        49,
+        54
+      ],
+      "module": "test_vector_reallocation_caller_packets.py"
+    },
+    {
+      "case": "test_caller_contract_is_explicit_and_never_completed_from_source_samples[contract5]",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "2189797a8df354e770db16d1666bcbebab2ca47a1ec09faf26e410c3aea35a07",
+      "function_lines": [
+        49,
+        54
+      ],
+      "module": "test_vector_reallocation_caller_packets.py"
+    },
+    {
+      "case": "test_caller_contract_is_explicit_and_never_completed_from_source_samples[contract6]",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "2189797a8df354e770db16d1666bcbebab2ca47a1ec09faf26e410c3aea35a07",
+      "function_lines": [
+        49,
+        54
+      ],
+      "module": "test_vector_reallocation_caller_packets.py"
+    },
+    {
+      "case": "test_caller_contract_is_explicit_and_never_completed_from_source_samples[contract7]",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "2189797a8df354e770db16d1666bcbebab2ca47a1ec09faf26e410c3aea35a07",
+      "function_lines": [
+        49,
+        54
+      ],
+      "module": "test_vector_reallocation_caller_packets.py"
+    },
+    {
+      "case": "test_caller_packet_check_reconstructs_source_and_contract_after_self_consistent_tampering[target]",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "1ad5f81d99e35993e61b4c6366594c34621ecda880924491544f94988d886f0a",
+      "function_lines": [
+        69,
+        95
+      ],
+      "module": "test_vector_reallocation_caller_packets.py"
+    },
+    {
+      "case": "test_caller_packet_check_reconstructs_source_and_contract_after_self_consistent_tampering[body_step]",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "1ad5f81d99e35993e61b4c6366594c34621ecda880924491544f94988d886f0a",
+      "function_lines": [
+        69,
+        95
+      ],
+      "module": "test_vector_reallocation_caller_packets.py"
+    },
+    {
+      "case": "test_caller_packet_check_reconstructs_source_and_contract_after_self_consistent_tampering[contract]",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "1ad5f81d99e35993e61b4c6366594c34621ecda880924491544f94988d886f0a",
+      "function_lines": [
+        69,
+        95
+      ],
+      "module": "test_vector_reallocation_caller_packets.py"
+    },
+    {
+      "case": "test_caller_packet_check_reconstructs_source_and_contract_after_self_consistent_tampering[original]",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "1ad5f81d99e35993e61b4c6366594c34621ecda880924491544f94988d886f0a",
+      "function_lines": [
+        69,
+        95
+      ],
+      "module": "test_vector_reallocation_caller_packets.py"
+    },
+    {
+      "case": "test_caller_packet_check_reconstructs_source_and_contract_after_self_consistent_tampering[extra_import]",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "1ad5f81d99e35993e61b4c6366594c34621ecda880924491544f94988d886f0a",
+      "function_lines": [
+        69,
+        95
+      ],
+      "module": "test_vector_reallocation_caller_packets.py"
+    },
+    {
+      "case": "test_caller_packet_check_reconstructs_source_and_contract_after_self_consistent_tampering[symlink]",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "1ad5f81d99e35993e61b4c6366594c34621ecda880924491544f94988d886f0a",
+      "function_lines": [
+        69,
+        95
+      ],
+      "module": "test_vector_reallocation_caller_packets.py"
+    },
+    {
+      "case": "test_caller_contract_does_not_join_malformed_keyword_tokens",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "8e1c095db4191ebb5f654758a8f993ee516aa7efcbdf90c8dda1c01be95ec0b3",
+      "function_lines": [
+        98,
+        103
+      ],
+      "module": "test_vector_reallocation_caller_packets.py"
+    },
+    {
+      "case": "test_whitespace_and_annotation_boundaries_never_create_different_clause_tokens[contract0]",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "6cdf13c65f6111fbc8f79105d75587ad22020ef2eaa0a1a56671ebfd95ea643d",
+      "function_lines": [
+        116,
+        120
+      ],
+      "module": "test_vector_reallocation_caller_packets.py"
+    },
+    {
+      "case": "test_whitespace_and_annotation_boundaries_never_create_different_clause_tokens[contract1]",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "6cdf13c65f6111fbc8f79105d75587ad22020ef2eaa0a1a56671ebfd95ea643d",
+      "function_lines": [
+        116,
+        120
+      ],
+      "module": "test_vector_reallocation_caller_packets.py"
+    },
+    {
+      "case": "test_whitespace_and_annotation_boundaries_never_create_different_clause_tokens[contract2]",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "6cdf13c65f6111fbc8f79105d75587ad22020ef2eaa0a1a56671ebfd95ea643d",
+      "function_lines": [
+        116,
+        120
+      ],
+      "module": "test_vector_reallocation_caller_packets.py"
+    },
+    {
+      "case": "test_whitespace_and_annotation_boundaries_never_create_different_clause_tokens[contract3]",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "6cdf13c65f6111fbc8f79105d75587ad22020ef2eaa0a1a56671ebfd95ea643d",
+      "function_lines": [
+        116,
+        120
+      ],
+      "module": "test_vector_reallocation_caller_packets.py"
+    },
+    {
+      "case": "test_whitespace_and_annotation_boundaries_never_create_different_clause_tokens[contract4]",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "6cdf13c65f6111fbc8f79105d75587ad22020ef2eaa0a1a56671ebfd95ea643d",
+      "function_lines": [
+        116,
+        120
+      ],
+      "module": "test_vector_reallocation_caller_packets.py"
+    },
+    {
+      "case": "test_whitespace_and_annotation_boundaries_never_create_different_clause_tokens[contract5]",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "6cdf13c65f6111fbc8f79105d75587ad22020ef2eaa0a1a56671ebfd95ea643d",
+      "function_lines": [
+        116,
+        120
+      ],
+      "module": "test_vector_reallocation_caller_packets.py"
+    },
+    {
+      "case": "test_whitespace_and_annotation_boundaries_never_create_different_clause_tokens[contract6]",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "6cdf13c65f6111fbc8f79105d75587ad22020ef2eaa0a1a56671ebfd95ea643d",
+      "function_lines": [
+        116,
+        120
+      ],
+      "module": "test_vector_reallocation_caller_packets.py"
+    },
+    {
+      "case": "test_whitespace_and_annotation_boundaries_never_create_different_clause_tokens[contract7]",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "6cdf13c65f6111fbc8f79105d75587ad22020ef2eaa0a1a56671ebfd95ea643d",
+      "function_lines": [
+        116,
+        120
+      ],
+      "module": "test_vector_reallocation_caller_packets.py"
+    },
+    {
+      "case": "test_whole_clauses_may_share_one_actual_annotation_without_splitting_tokens",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "389d23ef9f4272823bbd0852361376abb5f117e79739d896700620a176b39cbc",
+      "function_lines": [
+        123,
+        129
+      ],
+      "module": "test_vector_reallocation_caller_packets.py"
+    },
+    {
+      "case": "test_constructor_entry_application_maps_source_storage_and_existing_count_clause",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "e187a8eafa49260f704a39419f7dcf408d12105a4532c1838943eedc61a9a4b7",
+      "function_lines": [
+        132,
+        154
+      ],
+      "module": "test_vector_reallocation_caller_packets.py"
+    },
+    {
+      "case": "test_zero_constructor_application_retains_empty_buffer_and_actual_store_path",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "2948bdb0f820e32ecc10e6c1ecea900cd66ee5b5ccb6e16cb460c8c7b9b0f87b",
+      "function_lines": [
+        157,
+        181
+      ],
+      "module": "test_vector_reallocation_caller_packets.py"
+    },
+    {
+      "case": "test_positive_constructor_application_binds_actual_allocation_and_zero_prefix",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "35bd84704770e5360e5f8f5a88eb22cf2f90d52de54425c766d4d32765960aef",
+      "function_lines": [
+        184,
+        221
+      ],
+      "module": "test_vector_reallocation_caller_packets.py"
+    },
+    {
+      "case": "test_positive_constructor_application_cannot_launder_normal_return_or_source_state[entry_premise]",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "d4e0a9d2d893f29e3cf120f4dfc248e8502284a6105aa7ed57b73da2a9087d02",
+      "function_lines": [
+        225,
+        246
+      ],
+      "module": "test_vector_reallocation_caller_packets.py"
+    },
+    {
+      "case": "test_positive_constructor_application_cannot_launder_normal_return_or_source_state[initialized_buffer]",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "d4e0a9d2d893f29e3cf120f4dfc248e8502284a6105aa7ed57b73da2a9087d02",
+      "function_lines": [
+        225,
+        246
+      ],
+      "module": "test_vector_reallocation_caller_packets.py"
+    },
+    {
+      "case": "test_positive_constructor_application_cannot_launder_normal_return_or_source_state[receiver_alias]",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "d4e0a9d2d893f29e3cf120f4dfc248e8502284a6105aa7ed57b73da2a9087d02",
+      "function_lines": [
+        225,
+        246
+      ],
+      "module": "test_vector_reallocation_caller_packets.py"
+    },
+    {
+      "case": "test_positive_constructor_application_cannot_launder_normal_return_or_source_state[sibling_result]",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "d4e0a9d2d893f29e3cf120f4dfc248e8502284a6105aa7ed57b73da2a9087d02",
+      "function_lines": [
+        225,
+        246
+      ],
+      "module": "test_vector_reallocation_caller_packets.py"
+    },
+    {
+      "case": "test_positive_constructor_application_cannot_launder_normal_return_or_source_state[prefix_rebinding]",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "d4e0a9d2d893f29e3cf120f4dfc248e8502284a6105aa7ed57b73da2a9087d02",
+      "function_lines": [
+        225,
+        246
+      ],
+      "module": "test_vector_reallocation_caller_packets.py"
+    },
+    {
+      "case": "test_public_reserve_caller_records_source_obligations_without_assuming_the_domain",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "6c0e344bfa65a22b96534d420908377a45d9f2e2ade3f20ae706606573342109",
+      "function_lines": [
+        20,
+        39
+      ],
+      "module": "test_vector_reallocation_calls.py"
+    },
+    {
+      "case": "test_public_alias_controls_keep_the_observed_alias_and_growth_request_explicit[vector_realloc_v3_stale-count+1]",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "5fc0fae8dcd43487817deec517787b4168e8baba83f155b5fdd2965899c80127",
+      "function_lines": [
+        46,
+        53
+      ],
+      "module": "test_vector_reallocation_calls.py"
+    },
+    {
+      "case": "test_public_alias_controls_keep_the_observed_alias_and_growth_request_explicit[vector_realloc_v3_no_growth-count]",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "5fc0fae8dcd43487817deec517787b4168e8baba83f155b5fdd2965899c80127",
+      "function_lines": [
+        46,
+        53
+      ],
+      "module": "test_vector_reallocation_calls.py"
+    },
+    {
+      "case": "test_public_caller_refuses_signed_count_increment_before_size_conversion",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "2284291992b9da759c730094ea55447ef21a4b0ea1d547f943f00d1778f1f7cb",
+      "function_lines": [
+        56,
+        61
+      ],
+      "module": "test_vector_reallocation_calls.py"
+    },
+    {
+      "case": "test_public_caller_source_spans_pin_physical_utf8_bytes",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "f1ef8609f538ea00a588601074382a8506175898227ba2a2b1d2a0c9e674484d",
+      "function_lines": [
+        64,
+        72
+      ],
+      "module": "test_vector_reallocation_calls.py"
+    },
+    {
+      "case": "test_public_caller_retains_crlf_source_identity_and_spans",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "6dae383777d037f23f2292e427d81463433052e6770ed0759dd529c6c49fc566",
+      "function_lines": [
+        75,
+        84
+      ],
+      "module": "test_vector_reallocation_calls.py"
+    },
+    {
+      "case": "test_public_caller_lifetime_plan_derives_local_history_without_global_pointer_premises",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "0e0e5305531b8dc0822a39bce1ee169b9f4c25143d467fb67b2c21dbc72a4756",
+      "function_lines": [
+        87,
+        99
+      ],
+      "module": "test_vector_reallocation_calls.py"
+    },
+    {
+      "case": "test_public_lower_binds_scalar_capture_cleanup_and_unreachable_fallthrough",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "3627c0a0b1f89bc6484c2c91676780e10131569fde9c85c0d670f9c32a985142",
+      "function_lines": [
+        102,
+        117
+      ],
+      "module": "test_vector_reallocation_calls.py"
+    },
+    {
+      "case": "test_public_caller_lifetime_duties_bind_the_actual_lowered_scope_events",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "328a7020a975b1a9a70d41b8a91a387ea5a450baf2842a9b3a54da0a38cd83dc",
+      "function_lines": [
+        120,
+        129
+      ],
+      "module": "test_vector_reallocation_calls.py"
+    },
+    {
+      "case": "test_public_caller_exact_capacity_is_qualified_by_the_actual_cpp17_headers",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "0e8188299cfd41bcfd904ea07b02a2b4c06ee21aef099ad2e0cfa43ff7ad6b62",
+      "function_lines": [
+        132,
+        142
+      ],
+      "module": "test_vector_reallocation_calls.py"
+    },
+    {
+      "case": "test_defined_native_caller_observations_match_original_cpp_after_public_lower[vector_realloc_v3_safe]",
+      "category": "native finite observation",
+      "function_ast_sha256": "e550166a6178490f9bc3b3df1bc8f9510eb15ac24c6f449fc872845c581b4646",
+      "function_lines": [
+        146,
+        170
+      ],
+      "module": "test_vector_reallocation_calls.py"
+    },
+    {
+      "case": "test_defined_native_caller_observations_match_original_cpp_after_public_lower[vector_realloc_v3_no_growth]",
+      "category": "native finite observation",
+      "function_ast_sha256": "e550166a6178490f9bc3b3df1bc8f9510eb15ac24c6f449fc872845c581b4646",
+      "function_lines": [
+        146,
+        170
+      ],
+      "module": "test_vector_reallocation_calls.py"
+    },
+    {
+      "case": "test_public_capacity_qualification_refuses_changed_language_macros_or_header_evidence",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "4c7d7939497495c709e9d6671f200ccf99bb5d2e5384b7eeaee727fee27e1f78",
+      "function_lines": [
+        173,
+        197
+      ],
+      "module": "test_vector_reallocation_calls.py"
+    },
+    {
+      "case": "test_public_caller_numeric_target_preserves_source_conversion_and_pending_entry_discharge",
+      "category": "compiler/source/packet preparation or refusal",
+      "function_ast_sha256": "709a047d361dc45cb561661db67cfeb31dd45f5e9ba5a1274c6afcad76cadf24",
+      "function_lines": [
+        200,
+        215
+      ],
+      "module": "test_vector_reallocation_calls.py"
+    },
+    {
+      "case": "test_source_mapped_numeric_kernel_replays_defined_boundary_counts[vector_realloc_v3_safe-n + 1-1\\n8\\n2147483648\\n]",
+      "category": "native finite observation",
+      "function_ast_sha256": "4d21334f6d75c86f9d7bb6b1f3c8b1c813044ca2f97fb54cb66db38f2c8ff772",
+      "function_lines": [
+        223,
+        249
+      ],
+      "module": "test_vector_reallocation_calls.py"
+    },
+    {
+      "case": "test_source_mapped_numeric_kernel_replays_defined_boundary_counts[vector_realloc_v3_stale-n + 1-1\\n8\\n2147483648\\n]",
+      "category": "native finite observation",
+      "function_ast_sha256": "4d21334f6d75c86f9d7bb6b1f3c8b1c813044ca2f97fb54cb66db38f2c8ff772",
+      "function_lines": [
+        223,
+        249
+      ],
+      "module": "test_vector_reallocation_calls.py"
+    },
+    {
+      "case": "test_source_mapped_numeric_kernel_replays_defined_boundary_counts[vector_realloc_v3_no_growth-n-0\\n7\\n2147483647\\n]",
+      "category": "native finite observation",
+      "function_ast_sha256": "4d21334f6d75c86f9d7bb6b1f3c8b1c813044ca2f97fb54cb66db38f2c8ff772",
+      "function_lines": [
+        223,
+        249
+      ],
+      "module": "test_vector_reallocation_calls.py"
+    }
+  ],
+  "checks": 5963,
+  "compiler_lowering_context": [
+    {
+      "command_executable": {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/bin/clang-22",
+        "sha256": "305697d3868243dca6e4aabf4f628df7de135d701eb4fd78f6a5d7528fef4395"
+      },
+      "context": {
+        "command": [
+          "/opt/homebrew/opt/llvm/bin/clang++",
+          "-x",
+          "c++",
+          "-std=c++17",
+          "-fopenmp",
+          "-fsyntax-only",
+          "-I/private/tmp/probata-resume-t25/swdb-project/tests/fixtures/proof",
+          "/private/tmp/probata-resume-t25/swdb-project/tests/fixtures/proof/vector_reallocation_v3.cc"
+        ],
+        "environment": {}
+      },
+      "driver": {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/bin/clang-22",
+        "sha256": "305697d3868243dca6e4aabf4f628df7de135d701eb4fd78f6a5d7528fef4395"
+      },
+      "frontend_sha256": "07c2fb8d963dacc02ae1b7f764e995ab547c14b1609f2477a564b3d6e685a758",
+      "function": "vector_realloc_v3_safe",
+      "parser": {
+        "id": "libclang-22.1.8",
+        "sha256": "6418cb410462a1c2ae9b9321a8874f0ca03db740eeb31497a151ce33e1cfff1b"
+      },
+      "provenance_hash": "0a8ff64d91725b9247ee28b2e73b8be0d0e91fd3654b02f36855d47f0220bf57",
+      "triple": "arm64-apple-macosx27.0.0"
+    },
+    {
+      "command_executable": {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/bin/clang-22",
+        "sha256": "305697d3868243dca6e4aabf4f628df7de135d701eb4fd78f6a5d7528fef4395"
+      },
+      "context": {
+        "command": [
+          "/opt/homebrew/opt/llvm/bin/clang++",
+          "-x",
+          "c++",
+          "-std=c++17",
+          "-fopenmp",
+          "-fsyntax-only",
+          "-I/private/tmp/probata-resume-t25/swdb-project/tests/fixtures/proof",
+          "/private/tmp/probata-resume-t25/swdb-project/tests/fixtures/proof/vector_reallocation_v3.cc"
+        ],
+        "environment": {}
+      },
+      "driver": {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/bin/clang-22",
+        "sha256": "305697d3868243dca6e4aabf4f628df7de135d701eb4fd78f6a5d7528fef4395"
+      },
+      "frontend_sha256": "07c2fb8d963dacc02ae1b7f764e995ab547c14b1609f2477a564b3d6e685a758",
+      "function": "vector_realloc_v3_no_growth",
+      "parser": {
+        "id": "libclang-22.1.8",
+        "sha256": "6418cb410462a1c2ae9b9321a8874f0ca03db740eeb31497a151ce33e1cfff1b"
+      },
+      "provenance_hash": "14b76d3d764e041678d8545c386554fa7d493c3519d1d9c906a62edd5b2623f3",
+      "triple": "arm64-apple-macosx27.0.0"
+    }
+  ],
+  "created": "2026-10-16 ET",
+  "errors": [],
+  "evidence_limits": [
+    "Native return codes are established through pinned test assertions plus50passed JUnit, not separately retained per-native returncode JSON.",
+    "Numerics have compile argv retained; run argv is source-backed [executable], with no separately retained run-command receipt.",
+    "Lowering receipts bind exact recorded Clang/libclang/header context; direct compile calls retain argv/input/output/binary, not an independent invocation-time compiler/runtime receipt. Current driver hash matches the retained lowering context; do not infer a stronger past compile attestation.",
+    "Mach-O metadata shows ARM64 host executables. Finite Mac observations do not establish Linux/source-runtime correspondence or universal caller safety.",
+    "Four differential executables are unsanitized; three arithmetic executables link UBSan. Callback symbols are inventoried without demanding any: unsigned size_t arithmetic may generate no undefined-behavior callbacks, and undefined sanitizer does not promise unsigned-overflow diagnostics. Zero diagnostics covers only retained0,7,INT_MAX scalar arithmetic, no pointer/lifetime theorem or stale alias execution.",
+    "No Frama/Why3/prover/CBMC/OCaml job is selected by the50 bodies; retained mathematical .mlw/.c files are inert preparation artifacts.",
+    "The original one transient environ AccessDenied remains an inspection event; final failure null and no unsettled children is not zero events."
+  ],
+  "fixture": {
+    "bytes": 757,
+    "path": "/private/tmp/probata-resume-t25/swdb-project/tests/fixtures/proof/vector_reallocation_v3.cc",
+    "sha256": "1172e62dbff5076d25471285afcfa17927707dbe6fae121d9570109d39e62b57"
+  },
+  "guard": {
+    "inspection_events": [
+      {
+        "attempt": 1,
+        "clock_s": 398280.0411982083,
+        "exception": {
+          "module": "psutil",
+          "pid": 2162,
+          "relation": "raised",
+          "type": "AccessDenied"
+        },
+        "exception_chain": [
+          {
+            "module": "psutil",
+            "pid": 2162,
+            "relation": "raised",
+            "type": "AccessDenied"
+          },
+          {
+            "errno": 13,
+            "module": "builtins",
+            "relation": "cause",
+            "type": "PermissionError"
+          }
+        ],
+        "exception_pid": 2162,
+        "expected_birth": 1792156141.702628,
+        "identity_state": "live",
+        "known_native_environ_signature": false,
+        "observed_birth": 1792156141.702628,
+        "operation": "environ",
+        "outcome": "denied",
+        "pid": 2162,
+        "requested_operation": "environ",
+        "retry_elapsed_s": 0.00045175000559538603,
+        "retry_limit_attempts": 21,
+        "retry_window_s": 0.2,
+        "snapshot_birth": 1792156141.702628,
+        "stage": "supervision",
+        "traceback": [
+          {
+            "function": "_inspect",
+            "line": 156,
+            "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py"
+          },
+          {
+            "function": "environ",
+            "line": 921,
+            "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/__init__.py"
+          },
+          {
+            "function": "wrapper",
+            "line": 353,
+            "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/_psosx.py"
+          }
+        ],
+        "wall_unix_s": 1792156141.7620091
+      }
+    ],
+    "inspection_failure": null,
+    "peak_rss_mb": 356.96875,
+    "unconfirmed_children": [],
+    "wall_s": 168.57191137503833
+  },
+  "intentional_negative_file_symlinks": [
+    {
+      "kind": "deliberate rejected negative fixture; never a regular accepted proof input",
+      "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_caller_packet_check_recon5/changed/local/caller-count-numeric.c",
+      "target": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_caller_packet_check_recon5/same-bytes.c",
+      "target_pin": {
+        "bytes": 1026,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_caller_packet_check_recon5/changed/local/caller-count-numeric.c",
+        "sha256": "3c93be600c5a8eec5ba70ea1381f0174c4fbf04289eb886ae11df564e250c0f6"
+      }
+    }
+  ],
+  "mathematical_body_acceptance": false,
+  "native_executable_files": 7,
+  "native_observations": [
+    {
+      "compile_argv": [
+        "/opt/homebrew/opt/llvm/bin/clang++",
+        "-x",
+        "c",
+        "-std=c11",
+        "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs0/c.cc",
+        "-o",
+        "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs0/c"
+      ],
+      "compile_stderr": {
+        "bytes": 0,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs0/c.compile.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "compile_stdout": {
+        "bytes": 0,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs0/c.compile.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "function": "vector_realloc_v3_safe",
+      "included_input": {
+        "bytes": 7304,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs0/lower/vector_realloc_v3_safe.c",
+        "sha256": "e03ffea7ca47dd8f6196972ca93682886c67fb5ab1a9e3451b1b1babd0642afe"
+      },
+      "inputs": "n=0..16",
+      "kind": "finite C/C++ differential",
+      "mach_o": {
+        "binary": {
+          "bytes": 33888,
+          "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs0/c",
+          "sha256": "48148a77117249087799d3784f2ea058de130bb1c08b86943ceb982dff1a48f3"
+        },
+        "cpu": "arm64",
+        "dylibs": [
+          "/usr/lib/libc++.1.dylib",
+          "/usr/lib/libSystem.B.dylib"
+        ],
+        "format": "Mach-O64 MH_EXECUTE",
+        "ubsan_symbols": []
+      },
+      "run_argv": [
+        "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs0/c"
+      ],
+      "sanitizer_flags": [],
+      "stderr": {
+        "bytes": 0,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs0/c.run.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 34,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs0/c.run.stdout",
+        "sha256": "efe49fd3d87a083a2f277ee6f5f0c9ab56a723e81d8b6c2f99a518ce24794b7f"
+      },
+      "wrapper": {
+        "bytes": 279,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs0/c.cc",
+        "sha256": "9a93234626d419ecf8e7d6aa64748d76bca7c82a1a60deab23610ea8b0d35e4d"
+      }
+    },
+    {
+      "compile_argv": [
+        "/opt/homebrew/opt/llvm/bin/clang++",
+        "-x",
+        "c++",
+        "-std=c++17",
+        "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs0/cpp.cc",
+        "-o",
+        "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs0/cpp"
+      ],
+      "compile_stderr": {
+        "bytes": 0,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs0/cpp.compile.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "compile_stdout": {
+        "bytes": 0,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs0/cpp.compile.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "function": "vector_realloc_v3_safe",
+      "included_input": {
+        "bytes": 757,
+        "path": "/private/tmp/probata-resume-t25/swdb-project/tests/fixtures/proof/vector_reallocation_v3.cc",
+        "sha256": "1172e62dbff5076d25471285afcfa17927707dbe6fae121d9570109d39e62b57"
+      },
+      "inputs": "n=0..16",
+      "kind": "finite C/C++ differential",
+      "mach_o": {
+        "binary": {
+          "bytes": 44800,
+          "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs0/cpp",
+          "sha256": "28300c2490e314b53073f08187177225351ddd7d3cca4b86c4e0ee1b34d78eb9"
+        },
+        "cpu": "arm64",
+        "dylibs": [
+          "/usr/lib/libc++.1.dylib",
+          "/usr/lib/libSystem.B.dylib"
+        ],
+        "format": "Mach-O64 MH_EXECUTE",
+        "ubsan_symbols": []
+      },
+      "run_argv": [
+        "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs0/cpp"
+      ],
+      "sanitizer_flags": [],
+      "stderr": {
+        "bytes": 0,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs0/cpp.run.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 34,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs0/cpp.run.stdout",
+        "sha256": "efe49fd3d87a083a2f277ee6f5f0c9ab56a723e81d8b6c2f99a518ce24794b7f"
+      },
+      "wrapper": {
+        "bytes": 236,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs0/cpp.cc",
+        "sha256": "ce38134dbc0e87d519dfd04bbb697fd7e97d9c92483c233f6aabdaa47c0b45e1"
+      }
+    },
+    {
+      "compile_argv": [
+        "/opt/homebrew/opt/llvm/bin/clang++",
+        "-x",
+        "c",
+        "-std=c11",
+        "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs1/c.cc",
+        "-o",
+        "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs1/c"
+      ],
+      "compile_stderr": {
+        "bytes": 0,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs1/c.compile.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "compile_stdout": {
+        "bytes": 0,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs1/c.compile.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "function": "vector_realloc_v3_no_growth",
+      "included_input": {
+        "bytes": 6929,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs1/lower/vector_realloc_v3_no_growth.c",
+        "sha256": "7082d6fc081e23547bf792f8029277695b83d933913545f290f66353ee5841ec"
+      },
+      "inputs": "n=0..16",
+      "kind": "finite C/C++ differential",
+      "mach_o": {
+        "binary": {
+          "bytes": 33856,
+          "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs1/c",
+          "sha256": "382177709ef66e191a25c2b1ea2a7a042b127bb79d4ea3a2503a4bd84f3d7fd3"
+        },
+        "cpu": "arm64",
+        "dylibs": [
+          "/usr/lib/libc++.1.dylib",
+          "/usr/lib/libSystem.B.dylib"
+        ],
+        "format": "Mach-O64 MH_EXECUTE",
+        "ubsan_symbols": []
+      },
+      "run_argv": [
+        "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs1/c"
+      ],
+      "sanitizer_flags": [],
+      "stderr": {
+        "bytes": 0,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs1/c.run.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 34,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs1/c.run.stdout",
+        "sha256": "efe49fd3d87a083a2f277ee6f5f0c9ab56a723e81d8b6c2f99a518ce24794b7f"
+      },
+      "wrapper": {
+        "bytes": 289,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs1/c.cc",
+        "sha256": "85895819ce23448d1dd99b3c4bb3b07f17606990067d96fce592bb6e9ab27ad6"
+      }
+    },
+    {
+      "compile_argv": [
+        "/opt/homebrew/opt/llvm/bin/clang++",
+        "-x",
+        "c++",
+        "-std=c++17",
+        "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs1/cpp.cc",
+        "-o",
+        "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs1/cpp"
+      ],
+      "compile_stderr": {
+        "bytes": 0,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs1/cpp.compile.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "compile_stdout": {
+        "bytes": 0,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs1/cpp.compile.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "function": "vector_realloc_v3_no_growth",
+      "included_input": {
+        "bytes": 757,
+        "path": "/private/tmp/probata-resume-t25/swdb-project/tests/fixtures/proof/vector_reallocation_v3.cc",
+        "sha256": "1172e62dbff5076d25471285afcfa17927707dbe6fae121d9570109d39e62b57"
+      },
+      "inputs": "n=0..16",
+      "kind": "finite C/C++ differential",
+      "mach_o": {
+        "binary": {
+          "bytes": 44800,
+          "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs1/cpp",
+          "sha256": "994ab47038c817c9d8d67e8e30addd9dafa8fb04ef6b244c6a7e50161013d265"
+        },
+        "cpu": "arm64",
+        "dylibs": [
+          "/usr/lib/libc++.1.dylib",
+          "/usr/lib/libSystem.B.dylib"
+        ],
+        "format": "Mach-O64 MH_EXECUTE",
+        "ubsan_symbols": []
+      },
+      "run_argv": [
+        "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs1/cpp"
+      ],
+      "sanitizer_flags": [],
+      "stderr": {
+        "bytes": 0,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs1/cpp.run.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 34,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs1/cpp.run.stdout",
+        "sha256": "efe49fd3d87a083a2f277ee6f5f0c9ab56a723e81d8b6c2f99a518ce24794b7f"
+      },
+      "wrapper": {
+        "bytes": 241,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs1/cpp.cc",
+        "sha256": "dcde54b50ac688b07ae374dc2cafbee6e0de3197f5b524b4f12118995743fd2c"
+      }
+    },
+    {
+      "compile_argv": [
+        "/opt/homebrew/opt/llvm/bin/clang++",
+        "-x",
+        "c",
+        "-std=c11",
+        "-fsanitize=undefined",
+        "-fno-sanitize-recover=all",
+        "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_source_mapped_numeric_ker0/numeric.c",
+        "-o",
+        "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_source_mapped_numeric_ker0/numeric"
+      ],
+      "compile_stderr": {
+        "bytes": 0,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_source_mapped_numeric_ker0/compile.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "compile_stdout": {
+        "bytes": 0,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_source_mapped_numeric_ker0/compile.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "function_name_for_source_mapping": "vector_realloc_v3_safe",
+      "inputs": [
+        0,
+        7,
+        2147483647
+      ],
+      "kind": "finite count-only UBSan arithmetic",
+      "mach_o": {
+        "binary": {
+          "bytes": 33496,
+          "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_source_mapped_numeric_ker0/numeric",
+          "sha256": "76e6269c5885e87327749a86da009a01896215cffcf3a3522cb9b97f4610adeb"
+        },
+        "cpu": "arm64",
+        "dylibs": [
+          "/usr/lib/libc++.1.dylib",
+          "/opt/homebrew/opt/llvm/lib/clang/22/lib/darwin/libclang_rt.ubsan_osx_dynamic.dylib",
+          "/usr/lib/libSystem.B.dylib"
+        ],
+        "format": "Mach-O64 MH_EXECUTE",
+        "ubsan_symbols": []
+      },
+      "run_argv_file_retained": false,
+      "run_argv_from_pinned_test_source": [
+        "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_source_mapped_numeric_ker0/numeric"
+      ],
+      "source": {
+        "bytes": 1195,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_source_mapped_numeric_ker0/numeric.c",
+        "sha256": "bdbbbabbbfb8dda900d8241103341bc03204fa8d4d8f86b57d55c981f055bff7"
+      },
+      "source_numeric_sha256": "3c93be600c5a8eec5ba70ea1381f0174c4fbf04289eb886ae11df564e250c0f6",
+      "stderr": {
+        "bytes": 0,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_source_mapped_numeric_ker0/native.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 15,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_source_mapped_numeric_ker0/native.stdout",
+        "sha256": "92358085784700aacc7849a1c7bfe1c2d57bb8573722d2e8de5e681e6800689e"
+      }
+    },
+    {
+      "compile_argv": [
+        "/opt/homebrew/opt/llvm/bin/clang++",
+        "-x",
+        "c",
+        "-std=c11",
+        "-fsanitize=undefined",
+        "-fno-sanitize-recover=all",
+        "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_source_mapped_numeric_ker1/numeric.c",
+        "-o",
+        "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_source_mapped_numeric_ker1/numeric"
+      ],
+      "compile_stderr": {
+        "bytes": 0,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_source_mapped_numeric_ker1/compile.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "compile_stdout": {
+        "bytes": 0,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_source_mapped_numeric_ker1/compile.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "function_name_for_source_mapping": "vector_realloc_v3_stale",
+      "inputs": [
+        0,
+        7,
+        2147483647
+      ],
+      "kind": "finite count-only UBSan arithmetic",
+      "mach_o": {
+        "binary": {
+          "bytes": 33496,
+          "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_source_mapped_numeric_ker1/numeric",
+          "sha256": "76e6269c5885e87327749a86da009a01896215cffcf3a3522cb9b97f4610adeb"
+        },
+        "cpu": "arm64",
+        "dylibs": [
+          "/usr/lib/libc++.1.dylib",
+          "/opt/homebrew/opt/llvm/lib/clang/22/lib/darwin/libclang_rt.ubsan_osx_dynamic.dylib",
+          "/usr/lib/libSystem.B.dylib"
+        ],
+        "format": "Mach-O64 MH_EXECUTE",
+        "ubsan_symbols": []
+      },
+      "run_argv_file_retained": false,
+      "run_argv_from_pinned_test_source": [
+        "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_source_mapped_numeric_ker1/numeric"
+      ],
+      "source": {
+        "bytes": 1195,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_source_mapped_numeric_ker1/numeric.c",
+        "sha256": "bdbbbabbbfb8dda900d8241103341bc03204fa8d4d8f86b57d55c981f055bff7"
+      },
+      "source_numeric_sha256": "3c93be600c5a8eec5ba70ea1381f0174c4fbf04289eb886ae11df564e250c0f6",
+      "stderr": {
+        "bytes": 0,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_source_mapped_numeric_ker1/native.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 15,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_source_mapped_numeric_ker1/native.stdout",
+        "sha256": "92358085784700aacc7849a1c7bfe1c2d57bb8573722d2e8de5e681e6800689e"
+      }
+    },
+    {
+      "compile_argv": [
+        "/opt/homebrew/opt/llvm/bin/clang++",
+        "-x",
+        "c",
+        "-std=c11",
+        "-fsanitize=undefined",
+        "-fno-sanitize-recover=all",
+        "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_source_mapped_numeric_ker2/numeric.c",
+        "-o",
+        "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_source_mapped_numeric_ker2/numeric"
+      ],
+      "compile_stderr": {
+        "bytes": 0,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_source_mapped_numeric_ker2/compile.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "compile_stdout": {
+        "bytes": 0,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_source_mapped_numeric_ker2/compile.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "function_name_for_source_mapping": "vector_realloc_v3_no_growth",
+      "inputs": [
+        0,
+        7,
+        2147483647
+      ],
+      "kind": "finite count-only UBSan arithmetic",
+      "mach_o": {
+        "binary": {
+          "bytes": 33496,
+          "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_source_mapped_numeric_ker2/numeric",
+          "sha256": "a6a4189c70509ab2b8a5718c638febca3f2f8f64acafbf3edcff1689ff0249d1"
+        },
+        "cpu": "arm64",
+        "dylibs": [
+          "/usr/lib/libc++.1.dylib",
+          "/opt/homebrew/opt/llvm/lib/clang/22/lib/darwin/libclang_rt.ubsan_osx_dynamic.dylib",
+          "/usr/lib/libSystem.B.dylib"
+        ],
+        "format": "Mach-O64 MH_EXECUTE",
+        "ubsan_symbols": []
+      },
+      "run_argv_file_retained": false,
+      "run_argv_from_pinned_test_source": [
+        "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_source_mapped_numeric_ker2/numeric"
+      ],
+      "source": {
+        "bytes": 1183,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_source_mapped_numeric_ker2/numeric.c",
+        "sha256": "71ccd9c265fd14b8f9a8dba883c7b0080786c47a237746ad9799d0f050402e5c"
+      },
+      "source_numeric_sha256": "0bfbeae13d8e7b4b85a6ca65aa5cc5d8b91296dbc78c4ef6618bd14f9a542113",
+      "stderr": {
+        "bytes": 0,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_source_mapped_numeric_ker2/native.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 15,
+        "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_source_mapped_numeric_ker2/native.stdout",
+        "sha256": "0e312decbb43cf3d264882dc30b7767f0a8448a3c6e513385a0bf66989d88257"
+      }
+    }
+  ],
+  "proof_acceptance": false,
+  "pytest_directory_aliases": [
+    {
+      "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_whole_clauses_may_share_ocurrent",
+      "target": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_whole_clauses_may_share_o0"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_caller_contract_does_not_current",
+      "target": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_caller_contract_does_not_0"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_public_capacity_qualificacurrent",
+      "target": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_public_capacity_qualifica0"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_whitespace_and_annotationcurrent",
+      "target": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_whitespace_and_annotation7"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_public_caller_numeric_tarcurrent",
+      "target": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_public_caller_numeric_tar0"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/caller-packetscurrent",
+      "target": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/caller-packets0"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_public_caller_exact_capaccurrent",
+      "target": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_public_caller_exact_capac0"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_public_caller_retains_crlcurrent",
+      "target": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_public_caller_retains_crl0"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_public_lower_binds_scalarcurrent",
+      "target": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_public_lower_binds_scalar0"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_source_mapped_numeric_kercurrent",
+      "target": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_source_mapped_numeric_ker2"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_public_caller_lifetime_ducurrent",
+      "target": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_public_caller_lifetime_du0"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_zero_constructor_applicatcurrent",
+      "target": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_zero_constructor_applicat0"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_public_caller_source_spancurrent",
+      "target": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_public_caller_source_span0"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_public_caller_refuses_sigcurrent",
+      "target": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_public_caller_refuses_sig0"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_public_alias_controls_keecurrent",
+      "target": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_public_alias_controls_kee1"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_constructor_entry_applicacurrent",
+      "target": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_constructor_entry_applica0"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_positive_constructor_applcurrent",
+      "target": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_positive_constructor_appl5"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_public_reserve_caller_reccurrent",
+      "target": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_public_reserve_caller_rec0"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_caller_contract_is_expliccurrent",
+      "target": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_caller_contract_is_explic7"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_public_caller_lifetime_plcurrent",
+      "target": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_public_caller_lifetime_pl0"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_canonical_caller_preparatcurrent",
+      "target": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_canonical_caller_preparat0"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obscurrent",
+      "target": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_defined_native_caller_obs1"
+    },
+    {
+      "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_caller_packet_check_reconcurrent",
+      "target": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_caller_packet_check_recon5"
+    }
+  ],
+  "rerun": false,
+  "resources": {
+    "cpu_seconds": 258.056276,
+    "exit_code": 0,
+    "out_of_memory": false,
+    "peak_rss_bytes": 417054720,
+    "timed_out": false,
+    "wall_seconds": 168.64649241697043
+  },
+  "retroactive_admission": false,
+  "reviewer_script": {
+    "bytes": 19320,
+    "path": "/private/tmp/probata-t25-caller104-independent-passive-reader-v1-20261016.py",
+    "sha256": "41e9bb7e721e3b2964caf715a2913b8bd8fce60409518175b25162336b9d70d4"
+  },
+  "source_before_after_and_current_physical_pins": 890,
+  "source_commit": "6a755742f0c210d2316134b2e5862d0608870144",
+  "source_edits": false,
+  "status": "PASS corrected passive source/control scope only; no retrospective admission",
+  "summary": {
+    "bytes": 18596,
+    "path": "/private/tmp/probata-t25-caller104-passive-controls-summary-v3-20261016.json",
+    "sha256": "241cd4016a995129d8cd9bd691becbd4b7733c2b7366e56e63d0911e8d813e8f"
+  },
+  "unique_native_binary_hashes": 6
+}
