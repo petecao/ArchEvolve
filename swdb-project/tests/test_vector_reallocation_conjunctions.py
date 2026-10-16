@@ -14,7 +14,7 @@ from swdb import vector_reallocation_vcs as packets
 def test_empty_copy_prefix_requires_all_fifteen_original_definition_conjuncts(tmp_path):
     baseline=json.loads((Path(__file__).parent/'fixtures/proof/vector-reallocation-copy-establish-046f.json').read_bytes())
     plan=packets.prepare('std_vector_int_realloc_v3_grow',tmp_path/'copy')
-    assert len(plan['obligations'])==52
+    assert len(plan['obligations'])==61
     group=next(g for g in plan['logical_obligations']if g['id']=='grow.copy.establish')
     assert group['original_statement']==baseline['original_establish']['statement']
     assert len(group['parts'])==15 and len(set(group['parts']))==15

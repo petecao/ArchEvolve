@@ -1,0 +1,255 @@
+{
+  "actual_binding_and_equivalence": [
+    {
+      "copy": {
+        "bytes": 3061,
+        "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-prefix-refinement-design-v1-3a48da2f-20261016.md",
+        "sha256": "8587195051551464f82eb4c961cb57c7e77a0bb19984a1d009795db64081cccf"
+      },
+      "original": {
+        "bytes": 3061,
+        "path": "/private/tmp/probata-t25-prefix-refinement-design-v1-3a48da2f-20261016.md",
+        "sha256": "8587195051551464f82eb4c961cb57c7e77a0bb19984a1d009795db64081cccf"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 14260,
+        "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-prefix-refinement-design-v1-3a48da2f-20261016.json",
+        "sha256": "6fd12a7b72da93e76a8cb0f05c0907d13009119e1d09844e016b3be1d9a0364f"
+      },
+      "original": {
+        "bytes": 14260,
+        "path": "/private/tmp/probata-t25-prefix-refinement-design-v1-3a48da2f-20261016.json",
+        "sha256": "6fd12a7b72da93e76a8cb0f05c0907d13009119e1d09844e016b3be1d9a0364f"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 3232,
+        "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-prefix-actual-binding-and-equivalence-review-v1-20261016.md",
+        "sha256": "8993e755b5c6fc94213b9c4c71f6f025b32bcad1fb65c118985fa1958f0f3a27"
+      },
+      "original": {
+        "bytes": 3232,
+        "path": "/private/tmp/probata-t25-prefix-actual-binding-and-equivalence-review-v1-20261016.md",
+        "sha256": "8993e755b5c6fc94213b9c4c71f6f025b32bcad1fb65c118985fa1958f0f3a27"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 112017,
+        "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-prefix-actual-binding-and-equivalence-review-v1-20261016.json",
+        "sha256": "49891c30e5a26dd9121caab7185189fba2a01be67444df117379b51f223bcf04"
+      },
+      "original": {
+        "bytes": 112017,
+        "path": "/private/tmp/probata-t25-prefix-actual-binding-and-equivalence-review-v1-20261016.json",
+        "sha256": "49891c30e5a26dd9121caab7185189fba2a01be67444df117379b51f223bcf04"
+      }
+    }
+  ],
+  "base_integration": "188a478eaf29089050b70adfbc4a546d20440cb4",
+  "case_partition": [
+    "j < k",
+    "j == k"
+  ],
+  "conclusions_per_case": [
+    "access",
+    "initialization",
+    "Integer_tag_and_load",
+    "signed32_bounds",
+    "entry_source_value_equality"
+  ],
+  "control_boundary": "Direct pure functions only, AST-literal preparer-only type sets; audit rejects subprocess/os.system/posix_spawn/exec/fork/ctypes. No pytest.main/fixtures/hooks/project-native/compiler/formal/SSH execution. Native/public61 and caller127 controls are not executed.",
+  "controls": [
+    {
+      "cap_gb": 1.0,
+      "external_native_attempts": [],
+      "failed": 5,
+      "guard_peak_rss_mb": 44.421875,
+      "guard_seconds": 0.4117021249840036,
+      "inspection_events": [],
+      "inspection_failure": null,
+      "killed": false,
+      "label": "genuine before-code RED",
+      "passed": 0,
+      "refs": [
+        {
+          "bytes": 3137,
+          "path": "/private/tmp/probata-t25-copy-prefix-red-v1-20261016/control/result.json",
+          "sha256": "6fca83fafd22246bd8abba0693ab3e23b58a85e13890198cb15d4703274e551c"
+        },
+        {
+          "bytes": 520,
+          "path": "/private/tmp/probata-t25-copy-prefix-red-v1-20261016/control/controls.log",
+          "sha256": "1c0b6a72b68bf0e7206e7eec65f681c1810669e8402df3f3095321099f422d1f"
+        },
+        {
+          "bytes": 114,
+          "path": "/private/tmp/probata-t25-copy-prefix-red-v1-20261016/guard.log",
+          "sha256": "ed27b5b0c9cd9eba90575c5b5f953ccf0195346e9ab9d0b0f6368fe208172554"
+        },
+        {
+          "bytes": 1973,
+          "path": "/private/tmp/probata-t25-copy-prefix-red-v1-20261016/guard.log.summary.json",
+          "sha256": "2b64fd7461d3dc0460f5f8e106cc3487ec85a446f89507480cfe3a8c00761105"
+        }
+      ],
+      "source_pins_before_after_equal": true,
+      "timeout": false,
+      "unconfirmed_children": []
+    },
+    {
+      "cap_gb": 1.0,
+      "external_native_attempts": [],
+      "failed": 1,
+      "guard_peak_rss_mb": 44.5,
+      "guard_seconds": 0.6986000000033528,
+      "inspection_events": [],
+      "inspection_failure": null,
+      "killed": false,
+      "label": "first GREEN attempt: span mismatch retained",
+      "passed": 4,
+      "refs": [
+        {
+          "bytes": 2666,
+          "path": "/private/tmp/probata-t25-copy-prefix-green-v1-20261016/control/result.json",
+          "sha256": "b7116fd012b176e35cbe90752693c8038cded677e9db396259a9974c08f8f3b3"
+        },
+        {
+          "bytes": 470,
+          "path": "/private/tmp/probata-t25-copy-prefix-green-v1-20261016/control/controls.log",
+          "sha256": "2ceb164c4c3d555a27c57735fbb83d092b9c453280e9fc2ea5e3a188fb23811e"
+        },
+        {
+          "bytes": 113,
+          "path": "/private/tmp/probata-t25-copy-prefix-green-v1-20261016/guard.log",
+          "sha256": "55a3b338d8fdb52d6231386cb2e503ea88d3f8fc519acc188e4cd1865cab258e"
+        },
+        {
+          "bytes": 1975,
+          "path": "/private/tmp/probata-t25-copy-prefix-green-v1-20261016/guard.log.summary.json",
+          "sha256": "7775f609ca133eae31e16c0caf9741563162af0d7236ab8f4e8e2b2082224bb1"
+        }
+      ],
+      "source_pins_before_after_equal": true,
+      "timeout": false,
+      "unconfirmed_children": []
+    },
+    {
+      "cap_gb": 1.0,
+      "external_native_attempts": [],
+      "failed": 0,
+      "guard_peak_rss_mb": 44.4375,
+      "guard_seconds": 0.7090176666970365,
+      "inspection_events": [],
+      "inspection_failure": null,
+      "killed": false,
+      "label": "corrected GREEN",
+      "passed": 5,
+      "refs": [
+        {
+          "bytes": 2610,
+          "path": "/private/tmp/probata-t25-copy-prefix-green-v2-20261016/control/result.json",
+          "sha256": "511423cdcbf64be47e9f2040a3d2e4ae3be2951b0229766a807ba8ec23a9cf13"
+        },
+        {
+          "bytes": 456,
+          "path": "/private/tmp/probata-t25-copy-prefix-green-v2-20261016/control/controls.log",
+          "sha256": "4fda87f8b7829ec42a17d4fecac1b43e24abdc29e2129aa3c0ebfb2c3f372eff"
+        },
+        {
+          "bytes": 115,
+          "path": "/private/tmp/probata-t25-copy-prefix-green-v2-20261016/guard.log",
+          "sha256": "080e446d3aed807d78bddf835d45944e6a1c9b3521b463613da4047c4fbbffa0"
+        },
+        {
+          "bytes": 1978,
+          "path": "/private/tmp/probata-t25-copy-prefix-green-v2-20261016/guard.log.summary.json",
+          "sha256": "a455aefa4ece10ae634562bfabadca394aa9340d7f02dd684cf887ce0dc8fc30"
+        }
+      ],
+      "source_pins_before_after_equal": true,
+      "timeout": false,
+      "unconfirmed_children": []
+    },
+    {
+      "cap_gb": 1.0,
+      "external_native_attempts": [],
+      "failed": 0,
+      "guard_peak_rss_mb": 50.203125,
+      "guard_seconds": 1.7059268333250657,
+      "inspection_events": [],
+      "inspection_failure": null,
+      "killed": false,
+      "label": "affected pure GREEN",
+      "passed": 34,
+      "refs": [
+        {
+          "bytes": 9591,
+          "path": "/private/tmp/probata-t25-copy-prefix-regression-v1-20261016/control/result.json",
+          "sha256": "760aa1e759128b89a200f484798d83354a5842a11fd7318b28331a74dd86548f"
+        },
+        {
+          "bytes": 4349,
+          "path": "/private/tmp/probata-t25-copy-prefix-regression-v1-20261016/control/controls.log",
+          "sha256": "053c36fc4e70c663f8952d02234e76cbb4b3b6cd91c50d17b43a8a0484284db2"
+        },
+        {
+          "bytes": 114,
+          "path": "/private/tmp/probata-t25-copy-prefix-regression-v1-20261016/guard.log",
+          "sha256": "fc91565a9ed7c0e9218b2cdfcefc6ab05e0dce15a344c8dfcf6a7bdd12dc6e6e"
+        },
+        {
+          "bytes": 1991,
+          "path": "/private/tmp/probata-t25-copy-prefix-regression-v1-20261016/guard.log.summary.json",
+          "sha256": "e5d63fa5cede87ab65b282b86a0718d2b7267c54616705d7f85b839361c37cc8"
+        }
+      ],
+      "source_pins_before_after_equal": true,
+      "timeout": false,
+      "unconfirmed_children": []
+    }
+  ],
+  "created_et": "2026-10-16",
+  "first_green_correction": "The expected physical source-span digest includes leading two spaces. Implementation first bound an otherwise identical shorter slice; test4pass1fail retained. The implementation span was corrected to exact reviewed source bytes; test fixture/original expected definitions unchanged.",
+  "full_original_A": "t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s",
+  "future_pending_counts": {
+    "caller": 127,
+    "ctor": 35,
+    "dtor": 11,
+    "grow": 61,
+    "reserve": 67
+  },
+  "harnesses": [
+    {
+      "bytes": 4480,
+      "path": "/private/tmp/probata-t25-copy-prefix-pure-controls-v1-20261016.py",
+      "sha256": "f0c3e9894cede2c5f125803fb562163a962d58a8c0db1f9a4d502b31c7e40ce5"
+    },
+    {
+      "bytes": 5426,
+      "path": "/private/tmp/probata-t25-copy-prefix-pure-regression-v1-20261016.py",
+      "sha256": "7ab12b69ad0869ccf306572f87b2fd5c741782b7140f4cd42e781155d061c4c1"
+    }
+  ],
+  "inherited_range": "0 <= j < (k+1)",
+  "new_case_count": 10,
+  "next_required": [
+    "independent source review27",
+    "merge newest integration before handoff",
+    "root-admitted focused10 current-source diagnostic and independent cold audit",
+    "fresh complete61 public and67reserve profiles with all current numeric/RTE/init/smoke/schema/persistence obligations"
+  ],
+  "original_prefix_reference_sha256": "1839dda1ae013bc884c1fc6492c8839609f9df07769ced542d72330739d63aed",
+  "original_source": "3a48da2f44dd2066c2ac0bf42c4d873490044a99",
+  "other_grow_inputs_byte_identical": 51,
+  "premises_added": [],
+  "production_boundary": "Only vector_reallocation_vcs.py; original heap theory/model bodies/contracts and other51grow C inputs unchanged. Original prefix target is reference-only, ten child duties flatten through both original source events with no dependencies.",
+  "proof_claim": false,
+  "retained_actual_boundary": "G602attempted15:14proven,advanced_copied_prefixTimeout; no fullmodel or publicrecord; nativeobservations/materializedtasks not submittedbytes or typedtranslationtheorem",
+  "scope": "Source-equivalent ten-case copied-prefix preparation; no formal/model/caller acceptance",
+  "sibling_dependencies": [],
+  "ticket_closure": false
+}

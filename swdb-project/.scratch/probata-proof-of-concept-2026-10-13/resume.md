@@ -1,21 +1,21 @@
 # Probata implementation resumption
 
-Updated: 2026-10-16 10:36 ET.
+Updated: 2026-10-16 11:17 ET.
 
 ## Current state
 
-Updated: 2026-10-16 10:36 ET. **35 resolved / 25 ready-for-agent / 3 claimed.**
+Updated: 2026-10-16 11:17 ET. **35 resolved / 25 ready-for-agent / 3 claimed.**
 Implementation remains active on `codex/probata-resume-20261015`, based on `yanrujhou_main`. The eligible frontier is **07,25,28**; other unresolved tickets retain their dependencies. [All63statuses](ticket-status-20261015.md).
 
-Last root full table10:30 ET; next11:00 ET. Root owns actual jobs. [Current scoped checkpoint](evidence/frontier-scoped-checkpoint-20261016-1036.md) and [exact compact receipt ledger](evidence/frontier-scoped-checkpoint-20261016-1036.json) supersede earlier current snapshots while preserving their historical exits.
+Last root full table11:00 ET; next11:30 ET. [Current scoped checkpoint](evidence/frontier-scoped-checkpoint-20261016-1117.md) and [exact compact ledger](evidence/frontier-scoped-checkpoint-20261016-1117.json) supersede earlier current snapshots and preserve historical exits.
 
 | Ticket | Current evidence | Next gate |
 | --- | --- | --- |
-| **07 claimed** | Weak85-goal/176-property generation independently reconciled; slot and pointed-to payload init remain distinct,21 smokes unattempted. Root reports full two-TU/six-root proof diagnostic running from about10:34 ET, exactbd,780/760s8GiB; no accepted result. | Retain complete or partial proof/native/journal/observer/source context, then cold review. No Typed/source/Init/lifetime/TD/count qualification. |
-| **25 claimed** | Copy-step full-A AND15 source3a48 published ancestor ofc251; root3 workflow tests pass52scripted runs/62synthetic goals. Constructor35 original producer unchanged; passive collector refused cross-leaf duplicate short goal, narrow repair pending. | Fresh focused15 diagnostics and full52 public/current-source cold gates; complete constructor leaf-scoped cold review. No old prefix or synthetic control promoted. |
-| **28 claimed** | Root accepts exact6216 originalTOTAL allocator102/101 scoped pair after13,303-check audit and independent reconciliation:33/32ordinaryValid, negative ensuresT/U/T, ten healthy raw nonvalid smokes each. | Source/body/implicit-helper totality TCB remains; negative not refuted. Initialized-u32/current0.2/full28/hardware gates stay open. |
+| **07 claimed** | Device proof diagnostic settled partial: normal TimeoutExpired/exit1; final inventory0/152,328 journal IDs with107 unresolved identity differences; weak unexecuted. Independent cold reconciliation697checks/0errors. Six recovered events and original lease-present remain; later clearance separate. | No complete proof inventory or Typed/source/Init/lifetime/TD/count qualification. Review future continuation independently. |
+| **25 claimed** | Root accepts standalone constructor35 qualified mathematical/numeric profile under explicit TCB:44 normalized ordinary+1smoke versus42 direct nativeValid+1Timeoutsmoke+2inventory-only ordinary. Focused15 retains14successful/1advanced-prefix Timeout;37others unexecuted, metadata capture only. | No C++ body/original-v2/current caller dependency/full25 acceptance. Sole open query/hypothesis reconciliation and full52 public gate remain. |
+| **28 claimed** | Initialized-u32 source97 published through188 as preparation only. Exact6216 originalTOTAL allocator102/101 scoped pair remains accepted:33/32ordinaryValid, negative ensuresT/U/T, ten healthy raw nonvalid smokes each. | Initialized fresh workflow not admitted here; no negative refutation/hardware/source refinement/current0.2/full28 acceptance. |
 
-Active T07 status is parent root's dispatch report, not an integration host/process observation. Root owns settlement and fresh capacity/lease/process/source admission. Existing recovery manifests, historical raw and frozen producers stay unchanged; no unrelated files are staged.
+These are retained root artifacts and local passive reconciliations, not live host/process observations. Root owns fresh admission and settlement. Obsolete37 source is reconstructable via retained ref/manifests/restoration; all raw preserved. No actual jobs or runtime changes are introduced by this checkpoint.
 
 Root owns actual admissions: at most two remote measurements, one per socket,
 and one actual Mac verifier. Count-only node0 generation587 naturally released

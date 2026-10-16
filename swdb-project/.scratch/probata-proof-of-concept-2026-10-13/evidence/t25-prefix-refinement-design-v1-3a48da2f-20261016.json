@@ -1,0 +1,231 @@
+{
+  "actual_query_binding": "PENDING root-owned retainedmetadata capture by ticket27; this source-only design executes no collector/tool/formal query",
+  "conditional_future_counts_if_root_selects_five": {
+    "caller_pending": 122,
+    "grow": 56,
+    "reserve": 62
+  },
+  "conditional_future_counts_if_root_selects_ten": {
+    "caller_pending": 127,
+    "ctor": 35,
+    "dtor": 11,
+    "grow": 61,
+    "reserve": 67
+  },
+  "do_not_do": [
+    "claim14diagnostic successes as premises",
+    "drop any access/init/tag/value/bounds conclusion",
+    "replace originalA by derived pointer/range/disjointness/freeability assumptions",
+    "change source theory, body or contract",
+    "change per-goal solver policy or rerun known-openfull52",
+    "implement before actualquery binding/source-design root review"
+  ],
+  "first_equivalent_expansion": {
+    "count": 5,
+    "parts": [
+      {
+        "dependencies": [],
+        "full_A": "t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s",
+        "id": "grow.copy.step.advanced_copied_prefix.access",
+        "range": "0 <= j < (k+1)",
+        "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; \\forall integer j; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s && 0 <= j < (k+1) ==> Heap::typed_reads(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j,4,4)",
+        "status": "prospective source-only design"
+      },
+      {
+        "dependencies": [],
+        "full_A": "t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s",
+        "id": "grow.copy.step.advanced_copied_prefix.initialization",
+        "range": "0 <= j < (k+1)",
+        "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; \\forall integer j; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s && 0 <= j < (k+1) ==> Heap::initialized_at(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j)",
+        "status": "prospective source-only design"
+      },
+      {
+        "dependencies": [],
+        "full_A": "t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s",
+        "id": "grow.copy.step.advanced_copied_prefix.integer",
+        "range": "0 <= j < (k+1)",
+        "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; \\forall integer j; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s && 0 <= j < (k+1) ==> Heap::integer_at(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j,Heap::load_int(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j))",
+        "status": "prospective source-only design"
+      },
+      {
+        "dependencies": [],
+        "full_A": "t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s",
+        "id": "grow.copy.step.advanced_copied_prefix.bounds",
+        "range": "0 <= j < (k+1)",
+        "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; \\forall integer j; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s && 0 <= j < (k+1) ==> -2147483648 <= Heap::load_int(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j) <= 2147483647",
+        "status": "prospective source-only design"
+      },
+      {
+        "dependencies": [],
+        "full_A": "t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s",
+        "id": "grow.copy.step.advanced_copied_prefix.value",
+        "range": "0 <= j < (k+1)",
+        "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; \\forall integer j; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s && 0 <= j < (k+1) ==> Heap::load_int(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j) == Heap::load_int(entry,b,bo+4*j)",
+        "status": "prospective source-only design"
+      }
+    ],
+    "source_definition_chain": "copied_prefix forallj(range -> int32_at && value_equal); int32_at expands to access/init/integer/bounds"
+  },
+  "fresh_index": "j",
+  "full_A": "t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s",
+  "implementation_changed": false,
+  "j_free_in_original_A_or_Q": false,
+  "no_premises_added_to_original_entry": true,
+  "no_sibling_theorem_assumed": true,
+  "no_theory_body_contract_changes": true,
+  "original_canonical_input": {
+    "path": "/private/tmp/probata-t25-copy-step15-canonical-v3-3a48da2f-20261016/009s14-t25v3_grow_copy_step_advanced_copied_prefix.c",
+    "sha256": "1839dda1ae013bc884c1fc6492c8839609f9df07769ced542d72330739d63aed",
+    "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s ==> Heap::copied_prefix(entry,Heap::copy_int(h,b,bo+4*k,f,4*k),b,bo,f,(k+1))"
+  },
+  "original_target_retained_as_reference_only": true,
+  "other_current_grow_C_payloads_to_preserve": 51,
+  "physical_definition_spans": [
+    {
+      "begin": 7104,
+      "container_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+      "end": 7335,
+      "relative": "swdb/heap_reallocation.mlw",
+      "sha256": "ccab9af0570f7363c265230cebdac38a9e33f3a01f56ff5204af1c6031cff371",
+      "text": "  predicate copied_prefix (entry now:heap) (source source_offset target count:int) =\n    forall j:int. 0 <= j < count ->\n      int32_at now target (4*j) /\\\n      load_int now target (4*j) = load_int entry source (source_offset+4*j)"
+    },
+    {
+      "begin": 5623,
+      "container_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+      "end": 5806,
+      "relative": "swdb/heap_reallocation.mlw",
+      "sha256": "b659f9be16c81c149591d83d852b03a1c411b0b4444a7818822e36ae9bc69301",
+      "text": "  predicate int32_at (h:heap) (b o:int) =\n    typed_reads h b o 4 4 /\\ initialized_at h b o /\\\n    integer_at h b o (load_int h b o) /\\\n    -2147483648 <= load_int h b o <= 2147483647"
+    },
+    {
+      "begin": 6945,
+      "container_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+      "end": 7103,
+      "relative": "swdb/heap_reallocation.mlw",
+      "sha256": "f36185721459640491e6e417609fc1714621223369e5817814b1a8942732106c",
+      "text": "  function copy_int (h:heap) (source source_offset target target_offset:int) : heap =\n    put_integer h target target_offset (load_int h source source_offset)"
+    },
+    {
+      "begin": 4451,
+      "container_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+      "end": 4645,
+      "relative": "swdb/heap_reallocation.mlw",
+      "sha256": "1dbf1371e9074def8ea5998150636e778755c3a83d9f816b92a1706b0afaecab",
+      "text": "  function put_integer (h:heap) (b o v:int) : heap =\n    { h with memory = set h.memory b (set h.memory[b] o (Integer v));\n      initialized = set h.initialized b (set h.initialized[b] o True) }"
+    }
+  ],
+  "planned_pure_TDD": [
+    "original fullA and range retained in everypart",
+    "source definitions and simultaneous substitution reconstruct exactfiveconclusions",
+    "freshj capture refusal",
+    "both exact integercases required; duplicated/dropped/weakenedcases refused",
+    "oldk source/destination write versusnewk+1 prefix is exact",
+    "allother51payloads/theory/body/contracts unchanged",
+    "fullsourceevent/manifest coverage expands everynewleaf with emptydependencies"
+  ],
+  "producer": "G602focused15:14proven/oneadvancedprefixopen/all15attempted; no fullmodel acceptance",
+  "proof_claim": false,
+  "recommended_direct_case_refinement": {
+    "count": 10,
+    "destination_count_uses_k_plus_one": true,
+    "equivalence": "Q A -> forallj(range -> AND_i Pi) iff AND_branch,i Q forallj((A && range && branch) -> Pi), because the branches exhaust that exact integer range. No extra external entry/domain premise or desired theorem is assumed.",
+    "integer_exhaustiveness": "For mathematical integers, j < k+1 iff j <= k; j <= k iff j < k or j == k. Both cases retain complete original range and A.",
+    "parts": [
+      {
+        "case_guard": "j < k",
+        "dependencies": [],
+        "full_A": "t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s",
+        "id": "grow.copy.step.advanced_copied_prefix.prior.access",
+        "original_range": "0 <= j < (k+1)",
+        "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; \\forall integer j; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s && 0 <= j < (k+1) && j < k ==> Heap::typed_reads(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j,4,4)",
+        "status": "prospective source-only design"
+      },
+      {
+        "case_guard": "j < k",
+        "dependencies": [],
+        "full_A": "t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s",
+        "id": "grow.copy.step.advanced_copied_prefix.prior.initialization",
+        "original_range": "0 <= j < (k+1)",
+        "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; \\forall integer j; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s && 0 <= j < (k+1) && j < k ==> Heap::initialized_at(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j)",
+        "status": "prospective source-only design"
+      },
+      {
+        "case_guard": "j < k",
+        "dependencies": [],
+        "full_A": "t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s",
+        "id": "grow.copy.step.advanced_copied_prefix.prior.integer",
+        "original_range": "0 <= j < (k+1)",
+        "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; \\forall integer j; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s && 0 <= j < (k+1) && j < k ==> Heap::integer_at(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j,Heap::load_int(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j))",
+        "status": "prospective source-only design"
+      },
+      {
+        "case_guard": "j < k",
+        "dependencies": [],
+        "full_A": "t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s",
+        "id": "grow.copy.step.advanced_copied_prefix.prior.bounds",
+        "original_range": "0 <= j < (k+1)",
+        "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; \\forall integer j; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s && 0 <= j < (k+1) && j < k ==> -2147483648 <= Heap::load_int(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j) <= 2147483647",
+        "status": "prospective source-only design"
+      },
+      {
+        "case_guard": "j < k",
+        "dependencies": [],
+        "full_A": "t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s",
+        "id": "grow.copy.step.advanced_copied_prefix.prior.value",
+        "original_range": "0 <= j < (k+1)",
+        "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; \\forall integer j; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s && 0 <= j < (k+1) && j < k ==> Heap::load_int(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j) == Heap::load_int(entry,b,bo+4*j)",
+        "status": "prospective source-only design"
+      },
+      {
+        "case_guard": "j == k",
+        "dependencies": [],
+        "full_A": "t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s",
+        "id": "grow.copy.step.advanced_copied_prefix.written.access",
+        "original_range": "0 <= j < (k+1)",
+        "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; \\forall integer j; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s && 0 <= j < (k+1) && j == k ==> Heap::typed_reads(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j,4,4)",
+        "status": "prospective source-only design"
+      },
+      {
+        "case_guard": "j == k",
+        "dependencies": [],
+        "full_A": "t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s",
+        "id": "grow.copy.step.advanced_copied_prefix.written.initialization",
+        "original_range": "0 <= j < (k+1)",
+        "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; \\forall integer j; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s && 0 <= j < (k+1) && j == k ==> Heap::initialized_at(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j)",
+        "status": "prospective source-only design"
+      },
+      {
+        "case_guard": "j == k",
+        "dependencies": [],
+        "full_A": "t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s",
+        "id": "grow.copy.step.advanced_copied_prefix.written.integer",
+        "original_range": "0 <= j < (k+1)",
+        "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; \\forall integer j; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s && 0 <= j < (k+1) && j == k ==> Heap::integer_at(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j,Heap::load_int(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j))",
+        "status": "prospective source-only design"
+      },
+      {
+        "case_guard": "j == k",
+        "dependencies": [],
+        "full_A": "t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s",
+        "id": "grow.copy.step.advanced_copied_prefix.written.bounds",
+        "original_range": "0 <= j < (k+1)",
+        "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; \\forall integer j; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s && 0 <= j < (k+1) && j == k ==> -2147483648 <= Heap::load_int(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j) <= 2147483647",
+        "status": "prospective source-only design"
+      },
+      {
+        "case_guard": "j == k",
+        "dependencies": [],
+        "full_A": "t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s",
+        "id": "grow.copy.step.advanced_copied_prefix.written.value",
+        "original_range": "0 <= j < (k+1)",
+        "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; \\forall integer j; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s && 0 <= j < (k+1) && j == k ==> Heap::load_int(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j) == Heap::load_int(entry,b,bo+4*j)",
+        "status": "prospective source-only design"
+      }
+    ],
+    "reason": "The source loop writes precisely destination offset4*k. Splitting priorj<k vswrittenj=k exposes read-over-write preservation versus current write, avoiding a solver-trigger/case-discovery step. This is a design, not an explanation of actual solver unknown.",
+    "source_copy_uses_old_k": true
+  },
+  "source_commit": "3a48da2f44dd2066c2ac0bf42c4d873490044a99",
+  "status": "INERT source-bound design only; retainedactualquery/hypothesis binding and root review required BEFORE implementation",
+  "updated_heap": "Heap::copy_int(h,b,bo+4*k,f,4*k)"
+}

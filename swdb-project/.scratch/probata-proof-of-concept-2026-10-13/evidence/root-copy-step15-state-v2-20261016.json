@@ -1,0 +1,994 @@
+{
+  "at_utc": "2026-10-16T14:41:46.932135+00:00",
+  "raw": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1",
+  "uptime": "10:41:46 up 77 days,  3:00,  8 users,  load average: 1.39, 0.75, 0.32",
+  "disk": "Filesystem      Size  Used Avail Use% Mounted on\n/dev/sdd1       1.8T  1.7T   22G  99% /data1\n/dev/sdb1       1.8T  1.7T   69G  97% /data\n",
+  "source_branch": "HEAD",
+  "source_commit": "3a48da2f44dd2066c2ac0bf42c4d873490044a99",
+  "source_status": "",
+  "leases": {
+    "mbit10-evaluation.meta.json": {
+      "active_session": null,
+      "heartbeat_at": "2026-09-12T04:49:11Z",
+      "lease": {
+        "acquired_at": "2026-09-12T01:35:42Z",
+        "daemon_pid": 209457,
+        "daemon_start_token": "sh209457-1789176942",
+        "generation": 77,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation",
+        "mode": "measure",
+        "session_id": null
+      },
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "recovered_from_generation": null,
+      "released_at": "2026-09-12T04:49:11Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation-node1.meta.json": {
+      "active_session": null,
+      "heartbeat_at": "2026-10-16T13:45:40Z",
+      "lease": {
+        "acquired_at": "2026-10-16T13:38:11Z",
+        "daemon_pid": 3877321,
+        "daemon_start_token": "sh3877321-1792157891",
+        "generation": 625,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node1",
+        "mode": "measure",
+        "session_id": null
+      },
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "recovered_from_generation": null,
+      "released_at": "2026-10-16T13:45:40Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation-node0.meta.json": {
+      "active_session": null,
+      "heartbeat_at": "2026-10-16T14:41:30Z",
+      "lease": {
+        "acquired_at": "2026-10-16T14:38:49Z",
+        "daemon_pid": 3881516,
+        "daemon_start_token": "sh3881516-1792161529",
+        "generation": 602,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node0",
+        "mode": "measure",
+        "session_id": null
+      },
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "recovered_from_generation": null,
+      "released_at": "2026-10-16T14:41:30Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    }
+  },
+  "free_bytes": {
+    "/data1": 22974631936,
+    "/data": 73067978752
+  },
+  "lane.json": {
+    "socket_lane": {
+      "aligned_cell_age_s": "",
+      "aligned_to": "no_gapbs_batch_running",
+      "command": [
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=60",
+        "2220",
+        "bash",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/run.sh"
+      ],
+      "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+      "ended_utc": "2026-10-16T14:41:30Z",
+      "exit_code": 0,
+      "host": "mbit10",
+      "job": "probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1",
+      "lease_generation": 602,
+      "lease_name": "mbit10-evaluation-node0",
+      "load1_at_start": 0.09,
+      "load1_max": 32,
+      "node": 0,
+      "numa_memory_policy": "bind:0",
+      "numactl": "--cpunodebind=0 --membind=0",
+      "preregistration_sha256": null,
+      "started_utc": "2026-10-16T14:38:49Z"
+    }
+  },
+  "resources.json": {
+    "cpu_seconds": 175.756803,
+    "exit_code": 0,
+    "out_of_memory": false,
+    "peak_rss_bytes": 779886592,
+    "timed_out": false,
+    "wall_seconds": 158.44264102634043
+  },
+  "outer-resources.json": {
+    "exit_code": 0,
+    "peak_rss_bytes": 834412544,
+    "out_of_memory": false,
+    "timed_out": false,
+    "wall_seconds": 160.50727720186114,
+    "cpu_seconds": 209.368711
+  },
+  "copy-step15-diagnostic-profile/result.json": {
+    "all_fifteen_producer_proven": false,
+    "ambient_wp_names": [],
+    "caller_acceptance": false,
+    "classification": "Complete fifteen-leaf producer diagnostics; independent task/hypothesis cold review pending. No full52 model, original-v2, caller or ticket acceptance.",
+    "complete_model_verdict": "not_attempted",
+    "diagnostic_complete": true,
+    "elapsed_seconds": 157.26412727031857,
+    "linux_launch": {
+      "Mac_counted_token_required": false,
+      "command_sha256": "1a693165fb8bcac7b73e8c88cfb31576b1180095b8e07b03fabc24a7e7424ed4",
+      "launch": {
+        "bytes": 76078,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/launch.json",
+        "sha256": "cb5e6ef015432909a6e41e0a8f54f0925b60aa051d75df5cef4351e8217435c2"
+      },
+      "lock_path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/verifier.lock",
+      "marker_path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1",
+      "rss_cap_bytes": 8589934592,
+      "scope": "Linux root socket-lane + reviewed watch/execute ownership, not a Mac c6 token or lock claim",
+      "source_commit": "3a48da2f44dd2066c2ac0bf42c4d873490044a99",
+      "whole_seconds": 2100
+    },
+    "model_acceptance": false,
+    "model_target_count": 52,
+    "original_v2_acceptance": false,
+    "public_proof_record_created": false,
+    "raw_bytes": 24092355,
+    "runs": [
+      {
+        "cwd": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.entry_well_formed",
+        "id": "grow.copy.step.entry_well_formed",
+        "input": {
+          "bytes": 4767,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.entry_well_formed/wp_input.c",
+          "sha256": "12eb0863d3fc37174ed67c9ab63abaac4a21710276740137b3d05f8e1ebf24c9"
+        },
+        "outcome": {
+          "assumptions": [],
+          "failure_class": null,
+          "goals": [
+            {
+              "function": null,
+              "goal": "typed_real_check_lemma_t25v3_grow_copy_step_entry_well_formed",
+              "property": "check_lemma_t25v3_grow_copy_step_entry_well_formed",
+              "seconds": 0.0225,
+              "smoke": false,
+              "solver": "alt-ergo",
+              "source": "wp_json",
+              "status": "valid"
+            }
+          ],
+          "reading": {
+            "check": {
+              "sha256": "fc5d365cf9ed8125c76b40150187a27ef1265a8e7232c4100f69f747beeac48f",
+              "version": "1"
+            },
+            "verdict": "proven"
+          },
+          "unproven": [],
+          "verdict": "proven",
+          "why": "every generated goal passed; every Extern belongs to a pinned contract"
+        },
+        "resources": {
+          "cpu_seconds": 0.752081,
+          "exit_code": 0,
+          "out_of_memory": false,
+          "peak_rss_bytes": 136818688,
+          "timed_out": false,
+          "wall_seconds": 0.9725221488624811
+        }
+      },
+      {
+        "cwd": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.updated_well_formed",
+        "id": "grow.copy.step.updated_well_formed",
+        "input": {
+          "bytes": 4796,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.updated_well_formed/wp_input.c",
+          "sha256": "8b1b238b28c4d00ebf16c321c8f30d4a41a686dbaefbf89a8a7868f8a0a9cbde"
+        },
+        "outcome": {
+          "assumptions": [],
+          "failure_class": null,
+          "goals": [
+            {
+              "function": null,
+              "goal": "typed_real_check_lemma_t25v3_grow_copy_step_updated_well_formed",
+              "property": "check_lemma_t25v3_grow_copy_step_updated_well_formed",
+              "seconds": 25.0,
+              "smoke": false,
+              "solver": "alt-ergo",
+              "source": "wp_json",
+              "status": "valid"
+            }
+          ],
+          "reading": {
+            "check": {
+              "sha256": "fc5d365cf9ed8125c76b40150187a27ef1265a8e7232c4100f69f747beeac48f",
+              "version": "1"
+            },
+            "verdict": "proven"
+          },
+          "unproven": [],
+          "verdict": "proven",
+          "why": "every generated goal passed; every Extern belongs to a pinned contract"
+        },
+        "resources": {
+          "cpu_seconds": 25.918782,
+          "exit_code": 0,
+          "out_of_memory": false,
+          "peak_rss_bytes": 414556160,
+          "timed_out": false,
+          "wall_seconds": 26.13122425135225
+        }
+      },
+      {
+        "cwd": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.entry_eligible",
+        "id": "grow.copy.step.entry_eligible",
+        "input": {
+          "bytes": 4774,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.entry_eligible/wp_input.c",
+          "sha256": "ec6be998ea102346619e471900faba833872d9b358b2c4529fdac437246cb9a8"
+        },
+        "outcome": {
+          "assumptions": [],
+          "failure_class": null,
+          "goals": [
+            {
+              "function": null,
+              "goal": "typed_real_check_lemma_t25v3_grow_copy_step_entry_eligible",
+              "property": "check_lemma_t25v3_grow_copy_step_entry_eligible",
+              "seconds": 0.0163,
+              "smoke": false,
+              "solver": "alt-ergo",
+              "source": "wp_json",
+              "status": "valid"
+            }
+          ],
+          "reading": {
+            "check": {
+              "sha256": "fc5d365cf9ed8125c76b40150187a27ef1265a8e7232c4100f69f747beeac48f",
+              "version": "1"
+            },
+            "verdict": "proven"
+          },
+          "unproven": [],
+          "verdict": "proven",
+          "why": "every generated goal passed; every Extern belongs to a pinned contract"
+        },
+        "resources": {
+          "cpu_seconds": 0.774509,
+          "exit_code": 0,
+          "out_of_memory": false,
+          "peak_rss_bytes": 160415744,
+          "timed_out": false,
+          "wall_seconds": 0.9967730501666665
+        }
+      },
+      {
+        "cwd": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.updated_eligible",
+        "id": "grow.copy.step.updated_eligible",
+        "input": {
+          "bytes": 4803,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.updated_eligible/wp_input.c",
+          "sha256": "f78a4afe9eb7c68bc990a5f522b648ed92647b04e9b1068618e6ce8b66b41412"
+        },
+        "outcome": {
+          "assumptions": [],
+          "failure_class": null,
+          "goals": [
+            {
+              "function": null,
+              "goal": "typed_real_check_lemma_t25v3_grow_copy_step_updated_eligible",
+              "property": "check_lemma_t25v3_grow_copy_step_updated_eligible",
+              "seconds": 0.452,
+              "smoke": false,
+              "solver": "alt-ergo",
+              "source": "wp_json",
+              "status": "valid"
+            }
+          ],
+          "reading": {
+            "check": {
+              "sha256": "fc5d365cf9ed8125c76b40150187a27ef1265a8e7232c4100f69f747beeac48f",
+              "version": "1"
+            },
+            "verdict": "proven"
+          },
+          "unproven": [],
+          "verdict": "proven",
+          "why": "every generated goal passed; every Extern belongs to a pinned contract"
+        },
+        "resources": {
+          "cpu_seconds": 1.192969,
+          "exit_code": 0,
+          "out_of_memory": false,
+          "peak_rss_bytes": 176140288,
+          "timed_out": false,
+          "wall_seconds": 1.435713728889823
+        }
+      },
+      {
+        "cwd": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.advanced_index_size_capacity_bounds",
+        "id": "grow.copy.step.advanced_index_size_capacity_bounds",
+        "input": {
+          "bytes": 4810,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.advanced_index_size_capacity_bounds/wp_input.c",
+          "sha256": "f45d9eb8f8c87c62151a73ea36926c5b2589daa69e81311ab8b56e67b981b6f7"
+        },
+        "outcome": {
+          "assumptions": [],
+          "failure_class": null,
+          "goals": [
+            {
+              "function": null,
+              "goal": "typed_real_check_lemma_t25v3_grow_copy_step_advanced_index_size",
+              "property": "check_lemma_t25v3_grow_copy_step_advanced_index_size_capacity_bounds",
+              "seconds": 0.0229,
+              "smoke": false,
+              "solver": "alt-ergo",
+              "source": "wp_json",
+              "status": "valid"
+            }
+          ],
+          "reading": {
+            "check": {
+              "sha256": "fc5d365cf9ed8125c76b40150187a27ef1265a8e7232c4100f69f747beeac48f",
+              "version": "1"
+            },
+            "verdict": "proven"
+          },
+          "unproven": [],
+          "verdict": "proven",
+          "why": "every generated goal passed; every Extern belongs to a pinned contract"
+        },
+        "resources": {
+          "cpu_seconds": 0.7486999999999999,
+          "exit_code": 0,
+          "out_of_memory": false,
+          "peak_rss_bytes": 136818688,
+          "timed_out": false,
+          "wall_seconds": 0.9722618265077472
+        }
+      },
+      {
+        "cwd": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.fresh_identity",
+        "id": "grow.copy.step.fresh_identity",
+        "input": {
+          "bytes": 4766,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.fresh_identity/wp_input.c",
+          "sha256": "d2f46a3b6cc83ae4b034c3adbea352f6752b7de9684fb7deb1180f3c6357a12d"
+        },
+        "outcome": {
+          "assumptions": [],
+          "failure_class": null,
+          "goals": [
+            {
+              "function": null,
+              "goal": "typed_real_check_lemma_t25v3_grow_copy_step_fresh_identity",
+              "property": "check_lemma_t25v3_grow_copy_step_fresh_identity",
+              "seconds": 0.0259,
+              "smoke": false,
+              "solver": "alt-ergo",
+              "source": "wp_json",
+              "status": "valid"
+            }
+          ],
+          "reading": {
+            "check": {
+              "sha256": "fc5d365cf9ed8125c76b40150187a27ef1265a8e7232c4100f69f747beeac48f",
+              "version": "1"
+            },
+            "verdict": "proven"
+          },
+          "unproven": [],
+          "verdict": "proven",
+          "why": "every generated goal passed; every Extern belongs to a pinned contract"
+        },
+        "resources": {
+          "cpu_seconds": 0.6858169999999999,
+          "exit_code": 0,
+          "out_of_memory": false,
+          "peak_rss_bytes": 136241152,
+          "timed_out": false,
+          "wall_seconds": 0.9114426597952843
+        }
+      },
+      {
+        "cwd": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.unissued_identity",
+        "id": "grow.copy.step.unissued_identity",
+        "input": {
+          "bytes": 4765,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.unissued_identity/wp_input.c",
+          "sha256": "16ec9b37e3e5b8cfab01f07582e7e29201cc4effd027864e9f350ff92ffd109f"
+        },
+        "outcome": {
+          "assumptions": [],
+          "failure_class": null,
+          "goals": [
+            {
+              "function": null,
+              "goal": "typed_real_check_lemma_t25v3_grow_copy_step_unissued_identity",
+              "property": "check_lemma_t25v3_grow_copy_step_unissued_identity",
+              "seconds": 0.0229,
+              "smoke": false,
+              "solver": "alt-ergo",
+              "source": "wp_json",
+              "status": "valid"
+            }
+          ],
+          "reading": {
+            "check": {
+              "sha256": "fc5d365cf9ed8125c76b40150187a27ef1265a8e7232c4100f69f747beeac48f",
+              "version": "1"
+            },
+            "verdict": "proven"
+          },
+          "unproven": [],
+          "verdict": "proven",
+          "why": "every generated goal passed; every Extern belongs to a pinned contract"
+        },
+        "resources": {
+          "cpu_seconds": 0.7840389999999999,
+          "exit_code": 0,
+          "out_of_memory": false,
+          "peak_rss_bytes": 137342976,
+          "timed_out": false,
+          "wall_seconds": 1.0365067068487406
+        }
+      },
+      {
+        "cwd": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.receiver_distinct",
+        "id": "grow.copy.step.receiver_distinct",
+        "input": {
+          "bytes": 4749,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.receiver_distinct/wp_input.c",
+          "sha256": "4082c9adfde78d3ea435d7d1cb546bf0f2ac21db502f3540245bdb91da82efe3"
+        },
+        "outcome": {
+          "assumptions": [],
+          "failure_class": null,
+          "goals": [
+            {
+              "function": null,
+              "goal": "typed_real_check_lemma_t25v3_grow_copy_step_receiver_distinct",
+              "property": "check_lemma_t25v3_grow_copy_step_receiver_distinct",
+              "seconds": 0.021,
+              "smoke": false,
+              "solver": "alt-ergo",
+              "source": "wp_json",
+              "status": "valid"
+            }
+          ],
+          "reading": {
+            "check": {
+              "sha256": "fc5d365cf9ed8125c76b40150187a27ef1265a8e7232c4100f69f747beeac48f",
+              "version": "1"
+            },
+            "verdict": "proven"
+          },
+          "unproven": [],
+          "verdict": "proven",
+          "why": "every generated goal passed; every Extern belongs to a pinned contract"
+        },
+        "resources": {
+          "cpu_seconds": 0.7799649999999999,
+          "exit_code": 0,
+          "out_of_memory": false,
+          "peak_rss_bytes": 136818688,
+          "timed_out": false,
+          "wall_seconds": 0.9976292420178652
+        }
+      },
+      {
+        "cwd": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.old_buffer_distinct",
+        "id": "grow.copy.step.old_buffer_distinct",
+        "input": {
+          "bytes": 4751,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.old_buffer_distinct/wp_input.c",
+          "sha256": "e3befcdda0ecbc028c925145f57e458854f12717b46a4a2238b664cdadc572e9"
+        },
+        "outcome": {
+          "assumptions": [],
+          "failure_class": null,
+          "goals": [
+            {
+              "function": null,
+              "goal": "typed_real_check_lemma_t25v3_grow_copy_step_old_buffer_distinct",
+              "property": "check_lemma_t25v3_grow_copy_step_old_buffer_distinct",
+              "seconds": 0.0211,
+              "smoke": false,
+              "solver": "alt-ergo",
+              "source": "wp_json",
+              "status": "valid"
+            }
+          ],
+          "reading": {
+            "check": {
+              "sha256": "fc5d365cf9ed8125c76b40150187a27ef1265a8e7232c4100f69f747beeac48f",
+              "version": "1"
+            },
+            "verdict": "proven"
+          },
+          "unproven": [],
+          "verdict": "proven",
+          "why": "every generated goal passed; every Extern belongs to a pinned contract"
+        },
+        "resources": {
+          "cpu_seconds": 0.782473,
+          "exit_code": 0,
+          "out_of_memory": false,
+          "peak_rss_bytes": 136818688,
+          "timed_out": false,
+          "wall_seconds": 1.015263476409018
+        }
+      },
+      {
+        "cwd": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.destination_write_domain",
+        "id": "grow.copy.step.destination_write_domain",
+        "input": {
+          "bytes": 4814,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.destination_write_domain/wp_input.c",
+          "sha256": "e43050763308b2aec31f63361dca664cf71b7cfa6fb80e08468fb5ae937a9717"
+        },
+        "outcome": {
+          "assumptions": [],
+          "failure_class": null,
+          "goals": [
+            {
+              "function": null,
+              "goal": "typed_real_check_lemma_t25v3_grow_copy_step_destination_write_domain",
+              "property": "check_lemma_t25v3_grow_copy_step_destination_write_domain",
+              "seconds": 0.0483,
+              "smoke": false,
+              "solver": "alt-ergo",
+              "source": "wp_json",
+              "status": "valid"
+            }
+          ],
+          "reading": {
+            "check": {
+              "sha256": "fc5d365cf9ed8125c76b40150187a27ef1265a8e7232c4100f69f747beeac48f",
+              "version": "1"
+            },
+            "verdict": "proven"
+          },
+          "unproven": [],
+          "verdict": "proven",
+          "why": "every generated goal passed; every Extern belongs to a pinned contract"
+        },
+        "resources": {
+          "cpu_seconds": 0.81136,
+          "exit_code": 0,
+          "out_of_memory": false,
+          "peak_rss_bytes": 160673792,
+          "timed_out": false,
+          "wall_seconds": 1.0591135630384088
+        }
+      },
+      {
+        "cwd": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.destination_freeability",
+        "id": "grow.copy.step.destination_freeability",
+        "input": {
+          "bytes": 4801,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.destination_freeability/wp_input.c",
+          "sha256": "cbd40231a7fd77a24f4144e148d4437a4deb7ce21125a4d0acedacb7cc536419"
+        },
+        "outcome": {
+          "assumptions": [],
+          "failure_class": null,
+          "goals": [
+            {
+              "function": null,
+              "goal": "typed_real_check_lemma_t25v3_grow_copy_step_destination_freeability",
+              "property": "check_lemma_t25v3_grow_copy_step_destination_freeability",
+              "seconds": 0.0389,
+              "smoke": false,
+              "solver": "alt-ergo",
+              "source": "wp_json",
+              "status": "valid"
+            }
+          ],
+          "reading": {
+            "check": {
+              "sha256": "fc5d365cf9ed8125c76b40150187a27ef1265a8e7232c4100f69f747beeac48f",
+              "version": "1"
+            },
+            "verdict": "proven"
+          },
+          "unproven": [],
+          "verdict": "proven",
+          "why": "every generated goal passed; every Extern belongs to a pinned contract"
+        },
+        "resources": {
+          "cpu_seconds": 0.8043549999999999,
+          "exit_code": 0,
+          "out_of_memory": false,
+          "peak_rss_bytes": 160411648,
+          "timed_out": false,
+          "wall_seconds": 1.0551689909771085
+        }
+      },
+      {
+        "cwd": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.destination_extent",
+        "id": "grow.copy.step.destination_extent",
+        "input": {
+          "bytes": 4800,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.destination_extent/wp_input.c",
+          "sha256": "f7ca7039d489eb38094c504987c97dd71077385fd4a20ee97b6eab49c89410f9"
+        },
+        "outcome": {
+          "assumptions": [],
+          "failure_class": null,
+          "goals": [
+            {
+              "function": null,
+              "goal": "typed_real_check_lemma_t25v3_grow_copy_step_destination_extent",
+              "property": "check_lemma_t25v3_grow_copy_step_destination_extent",
+              "seconds": 0.027,
+              "smoke": false,
+              "solver": "alt-ergo",
+              "source": "wp_json",
+              "status": "valid"
+            }
+          ],
+          "reading": {
+            "check": {
+              "sha256": "fc5d365cf9ed8125c76b40150187a27ef1265a8e7232c4100f69f747beeac48f",
+              "version": "1"
+            },
+            "verdict": "proven"
+          },
+          "unproven": [],
+          "verdict": "proven",
+          "why": "every generated goal passed; every Extern belongs to a pinned contract"
+        },
+        "resources": {
+          "cpu_seconds": 0.795856,
+          "exit_code": 0,
+          "out_of_memory": false,
+          "peak_rss_bytes": 136818688,
+          "timed_out": false,
+          "wall_seconds": 1.0232984144240618
+        }
+      },
+      {
+        "cwd": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.allocation_frame",
+        "id": "grow.copy.step.allocation_frame",
+        "input": {
+          "bytes": 4800,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.allocation_frame/wp_input.c",
+          "sha256": "11aac92ac4019ab9b9ce8524706ca22ca49b1d309818ed65a8ef0657939d462c"
+        },
+        "outcome": {
+          "assumptions": [],
+          "failure_class": null,
+          "goals": [
+            {
+              "function": null,
+              "goal": "typed_real_check_lemma_t25v3_grow_copy_step_allocation_frame",
+              "property": "check_lemma_t25v3_grow_copy_step_allocation_frame",
+              "seconds": 3.24,
+              "smoke": false,
+              "solver": "alt-ergo",
+              "source": "wp_json",
+              "status": "valid"
+            }
+          ],
+          "reading": {
+            "check": {
+              "sha256": "fc5d365cf9ed8125c76b40150187a27ef1265a8e7232c4100f69f747beeac48f",
+              "version": "1"
+            },
+            "verdict": "proven"
+          },
+          "unproven": [],
+          "verdict": "proven",
+          "why": "every generated goal passed; every Extern belongs to a pinned contract"
+        },
+        "resources": {
+          "cpu_seconds": 4.069707999999999,
+          "exit_code": 0,
+          "out_of_memory": false,
+          "peak_rss_bytes": 274182144,
+          "timed_out": false,
+          "wall_seconds": 4.318263361230493
+        }
+      },
+      {
+        "cwd": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.advanced_copied_prefix",
+        "id": "grow.copy.step.advanced_copied_prefix",
+        "input": {
+          "bytes": 4820,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.advanced_copied_prefix/wp_input.c",
+          "sha256": "1839dda1ae013bc884c1fc6492c8839609f9df07769ced542d72330739d63aed"
+        },
+        "outcome": {
+          "assumptions": [],
+          "failure_class": "timeout",
+          "goals": [
+            {
+              "function": null,
+              "goal": "typed_real_check_lemma_t25v3_grow_copy_step_advanced_copied_prefix",
+              "property": "check_lemma_t25v3_grow_copy_step_advanced_copied_prefix",
+              "seconds": null,
+              "smoke": false,
+              "solver": null,
+              "source": "wp_json",
+              "status": "timeout"
+            }
+          ],
+          "reading": {
+            "check": {
+              "sha256": "fc5d365cf9ed8125c76b40150187a27ef1265a8e7232c4100f69f747beeac48f",
+              "version": "1"
+            },
+            "verdict": "not_proven"
+          },
+          "unproven": [
+            {
+              "failure_class": "timeout",
+              "goal": "typed_real_check_lemma_t25v3_grow_copy_step_advanced_copied_prefix",
+              "property": "check_lemma_t25v3_grow_copy_step_advanced_copied_prefix",
+              "status": "timeout"
+            }
+          ],
+          "verdict": "not_proven",
+          "why": "one or more generated properties are not Valid"
+        },
+        "resources": {
+          "cpu_seconds": 62.037504,
+          "exit_code": 0,
+          "out_of_memory": false,
+          "peak_rss_bytes": 682168320,
+          "timed_out": false,
+          "wall_seconds": 62.439715227112174
+        }
+      },
+      {
+        "cwd": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.uninitialized_tail",
+        "id": "grow.copy.step.uninitialized_tail",
+        "input": {
+          "bytes": 4847,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/leaf-grow.copy.step.uninitialized_tail/wp_input.c",
+          "sha256": "9a653929b0ffd462a61c2f38e1f1102260c125660769e49f9dacbe9104e281ee"
+        },
+        "outcome": {
+          "assumptions": [],
+          "failure_class": null,
+          "goals": [
+            {
+              "function": null,
+              "goal": "typed_real_check_lemma_t25v3_grow_copy_step_uninitialized_tail",
+              "property": "check_lemma_t25v3_grow_copy_step_uninitialized_tail",
+              "seconds": 0.0405,
+              "smoke": false,
+              "solver": "alt-ergo",
+              "source": "wp_json",
+              "status": "valid"
+            }
+          ],
+          "reading": {
+            "check": {
+              "sha256": "fc5d365cf9ed8125c76b40150187a27ef1265a8e7232c4100f69f747beeac48f",
+              "version": "1"
+            },
+            "verdict": "proven"
+          },
+          "unproven": [],
+          "verdict": "proven",
+          "why": "every generated goal passed; every Extern belongs to a pinned contract"
+        },
+        "resources": {
+          "cpu_seconds": 0.818676,
+          "exit_code": 0,
+          "out_of_memory": false,
+          "peak_rss_bytes": 160018432,
+          "timed_out": false,
+          "wall_seconds": 1.0789179848507047
+        }
+      }
+    ],
+    "scope": "Fifteen isolated original full-antecedent copy-step conclusion diagnostics. Complete52 canonical precheck; no proof-prefix reuse, public record, complete-model/caller/original-v2 or ticket acceptance.",
+    "selected_ids": [
+      "grow.copy.step.entry_well_formed",
+      "grow.copy.step.updated_well_formed",
+      "grow.copy.step.entry_eligible",
+      "grow.copy.step.updated_eligible",
+      "grow.copy.step.advanced_index_size_capacity_bounds",
+      "grow.copy.step.fresh_identity",
+      "grow.copy.step.unissued_identity",
+      "grow.copy.step.receiver_distinct",
+      "grow.copy.step.old_buffer_distinct",
+      "grow.copy.step.destination_write_domain",
+      "grow.copy.step.destination_freeability",
+      "grow.copy.step.destination_extent",
+      "grow.copy.step.allocation_frame",
+      "grow.copy.step.advanced_copied_prefix",
+      "grow.copy.step.uninitialized_tail"
+    ],
+    "source_after_clean": true,
+    "source_commit": "3a48da2f44dd2066c2ac0bf42c4d873490044a99",
+    "source_receipts": [
+      {
+        "bytes": 623809,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/source-consumers-0.json",
+        "sha256": "9402d7cf121e9bb05450d2d31359d8f9287399af4676504be5065a12297dc670"
+      },
+      {
+        "bytes": 623809,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1/copy-step15-diagnostic-profile/source-consumers-1.json",
+        "sha256": "9402d7cf121e9bb05450d2d31359d8f9287399af4676504be5065a12297dc670"
+      }
+    ],
+    "ticket_closure": false,
+    "unexecuted": [],
+    "unexecuted_model_targets": [
+      "control.grow.premises_feasible",
+      "grow.entry.reads",
+      "grow.entry.int_projection.repr",
+      "grow.entry.int_projection.cells.access",
+      "grow.entry.int_projection.cells.initialization",
+      "grow.entry.int_projection.cells.integer",
+      "grow.entry.int_projection.cells.bounds",
+      "grow.alloc.identity",
+      "grow.alloc.output",
+      "grow.alloc.frame",
+      "grow.copy.establish.entry_well_formed",
+      "grow.copy.establish.allocated_well_formed",
+      "grow.copy.establish.entry_eligible",
+      "grow.copy.establish.allocated_eligible",
+      "grow.copy.establish.index_size_capacity_bounds",
+      "grow.copy.establish.fresh_identity",
+      "grow.copy.establish.unissued_identity",
+      "grow.copy.establish.receiver_distinct",
+      "grow.copy.establish.old_buffer_distinct",
+      "grow.copy.establish.destination_write_domain",
+      "grow.copy.establish.destination_freeability",
+      "grow.copy.establish.destination_extent",
+      "grow.copy.establish.allocation_frame",
+      "grow.copy.establish.empty_copied_prefix",
+      "grow.copy.establish.uninitialized_tail",
+      "grow.copy.read",
+      "grow.copy.write",
+      "grow.copy.exit",
+      "grow.free.argument",
+      "grow.free.survival",
+      "grow.free.aliases",
+      "grow.store.capacity",
+      "grow.post.eligibility",
+      "grow.post.values",
+      "grow.post.old_invalid",
+      "grow.post.frame",
+      "grow.numeric"
+    ],
+    "within_profile_budget": true
+  },
+  "live_native_goal_reports": [
+    {
+      "path": "copy-step15-diagnostic-profile/leaf-grow.copy.step.advanced_copied_prefix/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "timeout": 1
+      }
+    },
+    {
+      "path": "copy-step15-diagnostic-profile/leaf-grow.copy.step.advanced_index_size_capacity_bounds/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "copy-step15-diagnostic-profile/leaf-grow.copy.step.allocation_frame/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "copy-step15-diagnostic-profile/leaf-grow.copy.step.destination_extent/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "copy-step15-diagnostic-profile/leaf-grow.copy.step.destination_freeability/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "copy-step15-diagnostic-profile/leaf-grow.copy.step.destination_write_domain/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "copy-step15-diagnostic-profile/leaf-grow.copy.step.entry_eligible/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "copy-step15-diagnostic-profile/leaf-grow.copy.step.entry_well_formed/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "copy-step15-diagnostic-profile/leaf-grow.copy.step.fresh_identity/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "copy-step15-diagnostic-profile/leaf-grow.copy.step.old_buffer_distinct/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "copy-step15-diagnostic-profile/leaf-grow.copy.step.receiver_distinct/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "copy-step15-diagnostic-profile/leaf-grow.copy.step.uninitialized_tail/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "copy-step15-diagnostic-profile/leaf-grow.copy.step.unissued_identity/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "copy-step15-diagnostic-profile/leaf-grow.copy.step.updated_eligible/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    },
+    {
+      "path": "copy-step15-diagnostic-profile/leaf-grow.copy.step.updated_well_formed/wp-goals.json",
+      "native_goal_rows": 1,
+      "raw_verdicts": {
+        "valid": 1
+      }
+    }
+  ],
+  "record_paths": [],
+  "acceptance.log_tail": "",
+  "finite_selected_processes": [],
+  "inspection_denials": [],
+  "scope": "Mutable progress snapshot only; no scientific result or task acceptance"
+}
