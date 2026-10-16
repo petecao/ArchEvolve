@@ -1,0 +1,195 @@
+{
+  "packet_sha256": "ed3e47f834c7d2c2db01b1093995626890ccb9fdbb354db7d7b4d3684a0715fb",
+  "scope": "Passive AST/JSON/Git blob byte verification only; no project code/probe/compiler/test/main execution",
+  "findings": [],
+  "refs": [
+    {
+      "path": "/private/tmp/probata-t28-allocation-entry-v1-9c30233e-20261016.py",
+      "sha256": "7fd193a5acbc5b5304d4bf07b7004a5a95922b707051637c7474816bcafe7f67",
+      "bytes": 87428
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-entry-independent-static-review-v1-20261016.md",
+      "sha256": "4a33d28fc13334a06305ab824667bda984d7c0491d4034fda1ce150f6db4b15e",
+      "bytes": 2840
+    },
+    {
+      "path": "/private/tmp/probata-t28-register-independent-source-review-5b21cdf6-20261016.md",
+      "sha256": "0f0fb1d9c01285698bc1fdd555d8fb1519f438dded36adc827f6f716713ee124",
+      "bytes": 4916
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-entry-v2-2e2dc451-20261016.py",
+      "sha256": "1c46896f8220f75deaff4571da5d9449f387bee9590843e4d1ab6b154cdb346a",
+      "bytes": 87691
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-command-v2-2e2dc451-20261016.json",
+      "sha256": "f90f225058115faed39f38dad6851c3d4ad0b4b25f2b97245acc168dfabc4943",
+      "bytes": 88092
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-source-allowlist-v2-2e2dc451-20261016.json",
+      "sha256": "d880a84eff683b2a2dd25c60e548c1dcd8e9bd18677218443ae5ba2a9c43e4b8",
+      "bytes": 51848
+    },
+    {
+      "path": "/private/tmp/probata-t28-allocation-root-plan-v2-2e2dc451-20261016.json",
+      "sha256": "a7c94abf26c5da18dd134eaed6184f6101a7ff446cf052d35943e4b5866e431a",
+      "bytes": 9084
+    },
+    {
+      "path": "/private/tmp/probata-t28-register-entry-v1-2e2dc451-20261016.py",
+      "sha256": "c11c0bc1410d3c42f34edca471bf7cd80f8ffd11eaa81e5db0192f565beb1b2d",
+      "bytes": 88529
+    },
+    {
+      "path": "/private/tmp/probata-t28-register-command-v1-2e2dc451-20261016.json",
+      "sha256": "35c2309c89e694bdaa6f2230ee43c53a4aedfb72b19f0dfa4922dc5edfffce70",
+      "bytes": 88930
+    },
+    {
+      "path": "/private/tmp/probata-t28-register-source-allowlist-v1-2e2dc451-20261016.json",
+      "sha256": "340528162b8516f4544848c4d35a7c9cc368e92cacdf957505098dfc55c2cefb",
+      "bytes": 52754
+    },
+    {
+      "path": "/private/tmp/probata-t28-register-root-plan-v1-2e2dc451-20261016.json",
+      "sha256": "66808a0f3d6687f6dcb4a44c35ecd00e84bff307477b9a0b48b678ec20b82dad",
+      "bytes": 9567
+    }
+  ],
+  "checks": [
+    {
+      "kind": "allocation",
+      "source_pins_verified": 478,
+      "tree_pins_verified": [
+        {
+          "path": "records",
+          "oid": "f2158ba461f694c93f39b782b76981b52de08471"
+        },
+        {
+          "path": "library",
+          "oid": "2a499122a756b457333d6619d28f8893a38e839d"
+        },
+        {
+          "path": "schemas",
+          "oid": "ae703dc49a3cb939fbe493b1b991b7bc0d52a731"
+        },
+        {
+          "path": "vocab",
+          "oid": "4534a8a7d09e9b500caad1e6a13a3fe17823ce41"
+        },
+        {
+          "path": "swdb",
+          "oid": "915e342b21fcab021969bfbfcc2e3ea0c496b3a7"
+        },
+        {
+          "path": "tests/testkit",
+          "oid": "f6a609c43ba53e61a2fe28d05f4759d623fa13cd"
+        },
+        {
+          "path": "tests/fixtures",
+          "oid": "8799ad9f6b01b9f33834aad4f0158052d4662c28"
+        },
+        {
+          "path": "tests/conftest.py",
+          "oid": "78e60cb652f52d2a14433c645f7c89d92d85ca32"
+        },
+        {
+          "path": "pyproject.toml",
+          "oid": "b8cacc5b150c2364224e0168e149cd0bc1791f99"
+        },
+        {
+          "path": "apps/dx100/benchmarks/API",
+          "oid": "737ac6eaf0a51804715f0a26b3aa73a74689fb44"
+        },
+        {
+          "path": "tests/test_dx100_allocation_actual.py",
+          "oid": "bc08dac8523301cf22c78a2c068f6cdd2fe3c869"
+        }
+      ],
+      "guard_functions_ast_identical": [
+        "consumer_closure",
+        "pin",
+        "ambient_check",
+        "import_surface",
+        "compiler_preflight",
+        "compiler_components",
+        "source_check",
+        "stdlib_check"
+      ],
+      "non_source_runtime_expected_equal_baseline": true,
+      "reporter_scope_wording_profile_specific": true,
+      "command_embedded_entry_equal": true,
+      "allowlist_equal_expected": true
+    },
+    {
+      "kind": "register",
+      "source_pins_verified": 485,
+      "tree_pins_verified": [
+        {
+          "path": "records",
+          "oid": "f2158ba461f694c93f39b782b76981b52de08471"
+        },
+        {
+          "path": "library",
+          "oid": "2a499122a756b457333d6619d28f8893a38e839d"
+        },
+        {
+          "path": "schemas",
+          "oid": "ae703dc49a3cb939fbe493b1b991b7bc0d52a731"
+        },
+        {
+          "path": "vocab",
+          "oid": "4534a8a7d09e9b500caad1e6a13a3fe17823ce41"
+        },
+        {
+          "path": "swdb",
+          "oid": "915e342b21fcab021969bfbfcc2e3ea0c496b3a7"
+        },
+        {
+          "path": "tests/testkit",
+          "oid": "f6a609c43ba53e61a2fe28d05f4759d623fa13cd"
+        },
+        {
+          "path": "tests/fixtures",
+          "oid": "8799ad9f6b01b9f33834aad4f0158052d4662c28"
+        },
+        {
+          "path": "tests/conftest.py",
+          "oid": "78e60cb652f52d2a14433c645f7c89d92d85ca32"
+        },
+        {
+          "path": "pyproject.toml",
+          "oid": "b8cacc5b150c2364224e0168e149cd0bc1791f99"
+        },
+        {
+          "path": "apps/dx100/benchmarks/API",
+          "oid": "737ac6eaf0a51804715f0a26b3aa73a74689fb44"
+        },
+        {
+          "path": "tests/test_dx100_register_actual.py",
+          "oid": "0bf3f089c2f0a58a7dab0d4c15b4db01b3326435"
+        }
+      ],
+      "guard_functions_ast_identical": [
+        "consumer_closure",
+        "pin",
+        "ambient_check",
+        "import_surface",
+        "compiler_preflight",
+        "compiler_components",
+        "source_check",
+        "stdlib_check"
+      ],
+      "non_source_runtime_expected_equal_baseline": true,
+      "reporter_scope_wording_profile_specific": true,
+      "command_embedded_entry_equal": true,
+      "allowlist_equal_expected": true
+    }
+  ],
+  "production_equals_reviewed_register5b21": true,
+  "allocator_inputs_identical_since9c": true,
+  "inspection_correction": "Initial reviewer equality assertion compared profile-specific reporter scope prose literally. Corrected to require exact source/path/preparation identity while retaining explicit total-allocation versus partial-register scope wording; no source or packet changed."
+}

@@ -1372,3 +1372,8 @@ Root subsequently dispatched [full24 normalpublicG596 admission](../evidence/rev
 ### 2026-10-16 07:36 ET — full24 G596 partial producer checkpoint
 
 Root reports fresh normalpublicG596 at exact046 settled with10targetsproven then grow.copy.establishTimeout;13targets remainunexecuted, including numericC. Guardexit1/266.526063s867,831,808B,outerexit1/268.625474s921,309,184B,sourceclean/naturalrelease. This is a partial producer handoff, not independently accepted task/hypothesis/native evidence; owner passiveauditpending. [Original admission](../evidence/reviewed-t25-qualified-grow24-public-v1-launch-046f6b9e-20261016.json) stays unchanged. No full24model/caller/originalv2/full25 acceptance or earlier4leafreuse.
+
+
+## 2026-10-16 08:05 ET scoped cold checkpoint
+
+Root accepts only [four math diagnostics](../evidence/t25-cell4-scoped-root-decision-v1-20261016.md), with [independent support/goal reconciliation](../evidence/t25-cell4-merger-independent-cold-review-v1-20261016.md). ZeroCsmokes/publicrecordfalse/legacychecker0 versus fresh8c42 remain explicit. Separate full24G596 remains10producer-proven/copy.establishTimeout/13unexecuted including numeric; ctor30G621reports29producer-proven/one positive-posttimeout/0unexecuted, final cold pending. No fullmodel/caller/originalv2/body/ticket acceptance. [Combined evidence](../evidence/probata-frontier-cold-checkpoint-20261016-0805.md).

@@ -1,0 +1,13 @@
+# Shared2e2 allocation/register entries — independent static review
+
+PASS for aggregate packet `ed3e47f834c7d2c2db01b1093995626890ccb9fdbb354db7d7b4d3684a0715fb`, exact source `2e2dc451ca457bfc5a7a7cb977d672bd1de0983b`. This is static entry/source-delta approval; root live admission and outer watchdog remain separate.
+
+The allocator entry `1c46896f...cdb346a` and register entry `c11c0bc1...beb1b2d` retain all eight reviewed guard functions AST-identically. All non-source runtime expectations match the previously reviewed allocator entry: early Clang command/wrapper/driver binding precedes project imports, ambient selectors fail closed, Why3 configurations agree, and full accepted stdlib57/WP30/drivers93 and compiler components remain checked. Register-specific reporter prose correctly describes its partial scope; reporter source identity remains exact8b84.
+
+Independently verified 478 allocator and 485 register source SHA256s against exact Git blobs, all 11 consumer tree OIDs per profile, the immediate packet references, allowlist equality and exact entry embedding in each command. Production equals reviewed5b21. The allocator's nine listed source/test/runner inputs remain byte-identical to9c. Full physical consumer hashing is enforced by the entry and remains a root admission duty; this review verified Git pins rather than claiming a new1.339GB physical read.
+
+Exact two-node collections select only their respective pair. Each profile gets a distinct fresh output/profile directory and separate lease/watchdog, even when the immutable checkout is shared. Per-profile budgets remain1200s whole/1320s outer,8GiB,one worker,full three30s provers,one WP worker,cache none,full RTE/init and smokes. Root must recheck live lanes/processes/capacity/clean source and capture actual Linux project-context identities; no Mac composite is used as the expected Linux digest.
+
+Allocation keeps the original total software-counter unit,102 versus101, three-counter frame and no extra unit premise. Register keeps the original partial711 versus1107 unit and two-cell frame, without fresh RF values or a totality overlay. Its nonvolatile pointed accesses, fence without memory clobber, exclusive-core epoch and RF object/alias/transport mapping remain explicit TCB obligations pending59. Both require complete current reporter/native/property/dependency/smoke cold closure; failed/resource/solver-error/vacuous negatives refuse.
+
+No actual entry, collection, project reader, test, compiler, tool/version probe, prover, SSH or job ran in this review. No healthy-pair result, hardware/source-body refinement, current0.2 or full-ticket acceptance follows from this PASS.

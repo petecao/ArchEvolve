@@ -1,0 +1,11 @@
+# Root scoped decision: changed-source twenty-helper discharge
+
+2026-10-16 ET. Accept complete changed-source Typed-helper discharge at exact9c30233e, under the declared direct-call library/atomic summary and compiler/WP/Why3/solver TCB. Root reviewed cold packet29a92a51, author report98b0b7f4, detailed native/journal/source report e87acca7 and independent merger review d3a3e06f, and freshly checked all final packet reference digests.
+
+All260 ordinary goals are Valid over all20 defined helpers:36 initializedness,20 termination and20 exit obligations included. All37 smoke goals have three healthy nonvalid external outcomes and passed=true. The297-goal428-property source universe reconciles267native rows plus30exact source-bound CFG rows with670journal events and backend sequent bindings. The ordinary Valid partition is30CFG/144Qed/85Alt-Ergo/1Z3. No old proof replay or added desired-result premise is accepted. Smokes detect no contradiction but are not a consistency theorem; native smoke timeout2s remains distinct from ordinary30s.
+
+The old constructor buffer-domain, flush copy_start initializedness and source/destination span duties now have explicit changed-source Valid results. Historical old-source partials remain unchanged. Exact27Extern flags/four declared summary families remain in the proof domain; three families have live direct-call smoke contexts. Source domains retain alignment/capability limits and pedantic assigns diagnostics; this is not blanket C++ RTE coverage.
+
+The actual c6 run exited0 in284.702395958s with1127.578125MiB peak live tree RSS. Exactly two recovered AccessDenied environ events remain retained; final inspection failure is null, no unsettled children/OOM/timeout, all12rootfinalgates true. Root and cold readers preserved complete new and old raw membership. Finite process/lease observations do not establish universal absence or a kernel quota.
+
+This accepts the conditional helper obligations only. Caller private array allocation/lifetime/Init versus SINIT, source-to-model relation, physical alignment, selected runtime threads1/nonreentrancy, Graph/device domains, fullTD functional proof and counted-run admission remain open. The outside-parallel omp_get_num_threads print and max_threads<=NUM_CORES bound do not prove an actual one-thread TD team. No whole07 or ticket closure follows.

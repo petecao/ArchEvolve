@@ -1,0 +1,7 @@
+# Settled profiles and diagnostic refusal — 2026-10-16 ET
+
+The [root three-profile receipt](root-three-profile-settlement-v1-20261016.json), SHA509dba2904df93a867241dfe1cd92177acf3d2d7bda6ea5bd51306bdf5050f87, supplies actual final lane/resources/source snapshots for ctor30G621, allocatorG597 and registerG598. All three endedexit1 without OOM/timeout and with clean exact source; the three lease snapshots were released at the finite observation. This does not assert current host idleness or promote the incomplete/refused attempts. G621 remains29producer-proven/one open/zero unexecuted, independentcold pending. G597/G598 remain pre-record refusals and both wrong cases unexecuted.
+
+The [allocator AST attemptG622](t28-allocation-linux-ast-settlement-v1-20261016.json), SHAb07cec101888bfad8e4af4335273cd461591341b3bd3a5cf5c16ed231ff1f908, also refused before compiler execution: the retained-source glob matched pytest alias paths and therefore failed its uniqueness assertion. The exact originalentry/guard failure is preserved;17raw files187,440B remain. This is not AST-capture PASS and no assertion-tree diagnosis or production fix follows. A separate path-selection-only recipe successor and controls are pending review.
+
+The [08:05cold checkpoint](probata-frontier-cold-checkpoint-20261016-0805.md) and its scoped helper/cell4 decisions remain unchanged. Status35resolved/25ready-for-agent/3claimed and next full user table08:27ET remain. Root alone performs any subsequent actual admission; no reviewer job or source change occurred.
