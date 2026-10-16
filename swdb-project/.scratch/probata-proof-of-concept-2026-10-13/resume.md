@@ -1,20 +1,20 @@
 # Probata implementation resumption
 
-Updated: 2026-10-16 02:00 ET.
+Updated: 2026-10-16 02:15 ET.
 
 ## Current state
 
-Updated: 2026-10-16 02:00 ET. **35 resolved / 25 ready-for-agent / 3 claimed.**
+Updated: 2026-10-16 02:15 ET. **35 resolved / 25 ready-for-agent / 3 claimed.**
 Implementation remains active on `codex/probata-resume-20261015`, based on
-`yanrujhou_main`. Last published checkpoint:`e1656b72`; this checkpoint adds the
-reviewed selector fixture-lineup source`770df40e`. The eligible frontier is **07, 25, 28**;
+`yanrujhou_main`. Last published checkpoint:`4b2f07bd`; this checkpoint adds prospective
+private out-slot source`971ad632` and preserves separate selector770 admission metadata. The eligible frontier is **07, 25, 28**;
 other unresolved tickets retain their dependencies. [All 63 statuses](ticket-status-20261015.md).
 
 | Ticket | Current evidence | Next gate |
 | --- | --- | --- |
-| **07 claimed** | Run26 remains UNPROVEN. The separate exact7930 helper run completed: 209/212 ordinary goals Valid, three open; all33 smoke rows have fresh external nonvalid outcomes and raw passed=true. All19 bodies/245 goals/352 properties/31 init properties remain inventoried. Whole383.135s/1261.625MiB sampled RSS, exit1 from open goals; four transient AccessDenied events recovered, final inspection failure null. | Review the separate fresh out-slot/source-domain repair and its source-equivalence map before any new admission. Alignment, caller/allocator correspondence, TD and full C RTE remain open. [Settled actual](evidence/t07-helper-stage2-v2-settled-actual-20261016.json), [independent cold review](evidence/t07-helper-stage2-v2-independent-cold-review-20261016.md). |
+| **07 claimed** | Run26 remains UNPROVEN. The separate exact7930 helper run completed: 209/212 ordinary goals Valid, three open; all33 smoke rows have fresh external nonvalid outcomes and raw passed=true. All19 bodies/245 goals/352 properties/31 init properties remain inventoried. Whole383.135s/1261.625MiB sampled RSS, exit1 from open goals; four transient AccessDenied events recovered, final inspection failure null. | Prospective out-slot971 passes the narrow byte-repair review; private-arena refinement and fresh helper/source-domain qualification remain pending. Alignment, caller/allocator correspondence, TD and full C RTE remain open. [Settled actual](evidence/t07-helper-stage2-v2-settled-actual-20261016.json), [independent cold review](evidence/t07-helper-stage2-v2-independent-cold-review-20261016.md). |
 | **25 claimed** | Pair `1278f2d9` and public heap CEA are accepted in scope. Fresh original count constructor at exact `bb7170ac` also passes independent cold review: one record, 27 targets, 36 ordinary Valid plus one smoke; 1,031 checks/342 references with zero mismatch. All84 tasks are identical universal-value streams or exact zero specialization. | Continue separate growth/receiver/storage ownership and caller work. No generic caller, production-store, formal C++ or whole-ticket acceptance follows. [Count cold review](evidence/t25-count-ctor-cold-review-bb7170ac-20261016.md), [heap cold review](evidence/t25-public-heap-cold-review-cea5652b-20261016.md). |
-| **28 claimed** | Exact9704 mathematical rank gate has core5/family4/all-false1 directly Valid and an independent negative with native sat/Why3 Unknown LF(sat). All11 submitted tasks match emitted bytes; independent complete context/variant audit accepts only the conditional mathematical theorem. Original entry/guard exit1 remains unchanged; pure v3 reader correction needs no rerun. Source-bound selector21ed is published through4bb; node1G615 ended01:52:23 ET before WP from fixture-version mismatch; the495-check cold audit preserves that failure. New fixture-only source770 requires an explicit four-tool map; no fresh actual run yet. | Root may freshly admit exact770 after live preflight; entryv3 static review passes. Retain old21ed pre-WP refusal; no new result or historical upgrade. No hardware fairness, source-to-trace/public composition, current0.2 or whole28 claim. [Rank actual and reviews](evidence/t28-rank-whole-actual-and-cold-acceptance-20261016.json), [selector review](evidence/t28-selector-first-vertical-independent-review-20261016.md). |
+| **28 claimed** | Exact9704 mathematical rank gate has core5/family4/all-false1 directly Valid and an independent negative with native sat/Why3 Unknown LF(sat). All11 submitted tasks match emitted bytes; independent complete context/variant audit accepts only the conditional mathematical theorem. Original entry/guard exit1 remains unchanged; pure v3 reader correction needs no rerun. Source-bound selector21ed is published through4bb; node1G615 pre-WP refusal remains immutable. Root reports fresh exact770 node1G616 completed02:10:40 ET with2 pytest passes/guard0, but independent settled record audit is pending; no selector acceptance yet. | Await independent exact770 record/source/runtime/goal/smoke/resource closure before scoped acceptance. Retain old21ed failure and distinguish admission from final result. No hardware fairness, source-to-trace/public composition, current0.2 or whole28 claim. [Rank actual and reviews](evidence/t28-rank-whole-actual-and-cold-acceptance-20261016.json), [selector review](evidence/t28-selector-first-vertical-independent-review-20261016.md). |
 | **24 / 27 / 36 resolved** | Published29709232/af10a946/8b0c2e27 with scoped acceptance; ticket36 retains its historical checker identity. | Preserve exact evidence for final integration review. |
 
 Root owns actual admissions: at most two remote measurements, one per socket,
@@ -36,7 +36,10 @@ requires explicit Frama33.0/Z35.1.0/Alt-Ergo2.6.4/CVC51.2.1 and changes only fou
 copied method version fields; production matching/flags and actual assertions
 stay unchanged. Final28 pure/compiler/stand-in controls pass with2 actual skips,
 plus3 legacy controls. [Entryv3 static review](evidence/t28-selector-entry-v3-independent-review-20261016.md)
-passes for prospective exact770; root has not admitted a fresh run at this checkpoint.
+passes for exact770. Root reports its node1G616 run ended02:10:40 ET:2pytest
+passes, guard0/156.995s/1.812GB, outer159.017s/1.865GB, noOOM/timeout and leases
+released. [Admission snapshot](evidence/reviewed-t28-selector-v2-launch-770df40e-20261015.json)
+is not final proof evidence; independent settled record audit remains pending.
 Recheck live state before another dispatch.
 
 The helper v2 run and short mathematical rank run have both settled under their
@@ -50,8 +53,18 @@ flush copy_start initializedness and the std_copy byte-offset bound. Passive
 [triage](evidence/t07-helper-three-open-source-triage-20261016.md),
 [sound repair design](evidence/t07-helper-sound-repair-options-20261016.md) and
 [alignment/caller scope](evidence/t07-source-model-alignment-caller-domain-20261016.md)
-retain the missing full VC-task boundary. A separate output-slot repair is underway;
-no new implementation/proof acceptance is included here. Unknown/timeout smoke
+retain the missing full VC-task boundary. The prospective out-slot package971 is
+now reviewed for partial preparation:22 returning interfaces/19 helper bodies,
+raw physical pins before UTF-8 decode, unchanged old sources and generated blobs.
+[Initial REQUEST_CHANGES](evidence/t07-outslot-independent-review-1c018f11-20261016.md)
+and [narrow follow-up PASS](evidence/t07-outslot-byte-repair-independent-review-971ad632-20261016.md)
+remain separate; genuine CRLF RED→44GREEN are native/compiler/pure controls only.
+Allocator/fullTD/source/count admission stays refused. Generated pinned artifacts
+retain24 trailing-space warnings, deferred to a later formatting/refinement gate.
+[Corrected fork-source private-array design](evidence/t07-fresh-array-domain-design-v2-20261016.md)
+is passive only: a separate arena refinement is underway, incoming queue extent
+stays symbolic, and fresh payload/init/lifetime/source correspondence is unproved.
+No new helper formal or source proof acceptance is included here. Unknown/timeout smoke
 outcomes with passed=true mean no detected contradiction, not proved satisfiability.
 
 Rank acceptance is conditional on a fixed trace admitting a nonnegative,
