@@ -72,6 +72,24 @@ case "$mode" in
     fi
     exec env -i HOME="$HOME" PATH="$PATH" TMPDIR="${TMPDIR:-/tmp}" SWDB_VERIFIER_RUN_TOKEN="${SWDB_VERIFIER_RUN_TOKEN-}" opam exec --switch=framac-33 -- frama-c "$@" \
       -wp $cache_arg -wp-cache none -wp-session session -wp-prover none -wp-print ;;
+  # Method24 (2026-10-16 ET): search rounds use a timeout ladder (the driver passes 3 s, then 10 s for
+  # goals still open) and -wp-split-conj (sound: every conjunct is its own goal, so feedback names the
+  # failing part). Never a verdict. The verdict is final24: the frozen full replay (all functions, 30 s,
+  # -wp-cache none, fresh session, smoke tests) plus the same -wp-split-conj the rounds used.
+  round24) [ -n "$cache_arg" ] || { echo "round24 needs <cache_dir>"; exit 2; }; rm -rf session && mkdir session
+    exec env -i HOME="$HOME" PATH="$PATH" TMPDIR="${TMPDIR:-/tmp}" SWDB_VERIFIER_RUN_TOKEN="${SWDB_VERIFIER_RUN_TOKEN-}" opam exec --switch=framac-33 -- frama-c "$@" \
+      -wp -wp-fct TDStep -wp-split-conj -wp-cache update -wp-cache-dir "$cache_arg" -wp-session session \
+      -wp-prover alt-ergo,z3,cvc5 -wp-timeout "$tmo_arg" -wp-par 12 -wp-report-json goals.json \
+      -then -wp-fct= -wp-prop=@lemma -wp-report-json lemmas.json -then -report -report-untried ;;
+  final24) rm -rf session && mkdir session
+    exec env -i HOME="$HOME" PATH="$PATH" TMPDIR="${TMPDIR:-/tmp}" SWDB_VERIFIER_RUN_TOKEN="${SWDB_VERIFIER_RUN_TOKEN-}" opam exec --switch=framac-33 -- frama-c "$@" \
+      -wp -wp-split-conj -wp-cache none -wp-session session -wp-prover alt-ergo,z3,cvc5 -wp-timeout 30 -wp-par 12 \
+      -wp-smoke-tests -wp-report-json goals.json -then -report -report-untried ;;
+  # Negative control (covering wait removed): the hazard checks only, same flags as final24.
+  negctl24) rm -rf session && mkdir session
+    exec env -i HOME="$HOME" PATH="$PATH" TMPDIR="${TMPDIR:-/tmp}" SWDB_VERIFIER_RUN_TOKEN="${SWDB_VERIFIER_RUN_TOKEN-}" opam exec --switch=framac-33 -- frama-c "$@" \
+      -wp -wp-fct TDStep -wp-prop=@check -wp-split-conj -wp-cache none -wp-session session -wp-prover alt-ergo,z3,cvc5 \
+      -wp-timeout 30 -wp-par 12 -wp-report-json goals.json -then -report -report-untried ;;
   wp) smoke="" ;;
   wp-smoke) smoke="-wp-smoke-tests" ;;
   wp-rte) smoke="-wp-rte" ;;
