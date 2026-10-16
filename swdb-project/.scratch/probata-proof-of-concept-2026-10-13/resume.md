@@ -4,7 +4,7 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 20:09 ET. **Implementation is active under the user's ongoing approval.**
+Updated: 2026-10-15 20:19 ET. **Implementation is active under the user's ongoing approval.**
 Integration `codex/probata-resume-20261015` is based on `yanrujhou_main` at `d94d629b`.
 Audited run23 documentation is published at `6dc94905`; reviewed method21 prototype
 is published at `14c2a298`. Only `swdb/c_lowering.py`
@@ -18,9 +18,9 @@ Drafts 1/2 remain immutable. No draft 3 or final production freeze exists.
 
 | Ticket / owner | Verified checkpoint | Active work |
 |---|---|---|
-| 07 / `ticket07` | Run 24 remains unproven; posthoc replay remains censored. Method 22 independent review passes 221 controls + 17 final affected checks; all 34 source pins match. Run 25 baseline completed in 6.09 counted minutes: 254 ordinary (103 open), 139 smoke passed. | Run 25 started 19:59:01 ET at clean published ancestor `798e9bb3`. Empty-hint diagnostic active, provider not yet launched. Proof stop about 20:32, provider hard stop about 20:35, total endpoint about 20:59, subject only to valid matched queue exclusions. |
-| 24 / `ticket24` | Seven caller pairs, 14 models and all 3 fixture summaries independently accepted: 31/36 qualifying actual WP rows. Ring safe 89 ordinary + 1 smoke; class safe 146 ordinary + 11 smoke, all Valid. Their seeds each retain one attributable ordinary timeout. Original std gap is retained. | Node 0 generation 580 continues at `23933f8a`: 12 reused + 10 fresh rows independently accepted. OMP/allocation pairs, dedicated bounds negative and 9 lifetime refusals remain. Full continuation and ticket remain open. |
-| 27 / `ticket27` | Current negative 13/13, bounded/native 35/35 and repaired capacity 3/3 accepted. Fresh CPU/store-source/stall cases accepted, 3/11 safe units; stall proves 111 ordinary + 35 smoke goals. Historical `717` evidence remains separate. | Node 1 generation 604 continues A-rest, transitive next. B1/B2 groups of 3 are queued. Exact disjoint safe union 1 + 4 + 3 + 3 = 11; original A5/B6 unlaunched. Eight safe units pending. |
+| 07 / `ticket07` | Run 25 fresh baseline 6.09 minutes; empty diagnostic 10.49 minutes. Independent first-provider input/argv/scope audit passes before any candidate. First accepted candidate has 102 open goals and 5 Codex-authored records; second proposal active. | Clean frozen `798e9bb3`, one fresh provider. Six goal-view requests: first 4 safely refused on real header formats, then 2 pages succeeded; availability gap retained. All 16 completed guards have clean cleanup. Proof stop about 20:32, hard return about 20:35, total endpoint about 20:59 ET. |
+| 24 / `ticket24` | Eight caller pairs, 14 models and all 3 fixture summaries independently accepted: 33/36 qualifying actual WP rows. OMP safe 67 ordinary + 8 smoke Valid; seed has one invariant timeout, both retain 18 init goals. Original std gap is retained. | Node 0 generation 580 continues at `23933f8a`: 12 reused + 12 fresh rows independently accepted. Allocation pair, dedicated bounds negative and 9 lifetime refusals remain. Combined 36-actual/9-refusal closure audit is prepared, not yet run. |
+| 27 / `ticket27` | Current negative 13/13, bounded/native 35/35 and repaired capacity 3/3 accepted. Fresh CPU + A-rest4 accepted, 5/11 safe units. A-rest proves 316 ordinary + 100 smoke goals, retaining 58 init/55 RTE. | Node 1 generation 605 runs B1 three-case group, started 20:17:15 ET; B2 three-case group queued. Exact disjoint safe union 1 + 4 + 3 + 3 = 11; original A5/B6 unlaunched. Six safe units pending. |
 | 36 / dependency-gated | 122 compiler/scripted controls pass; 13 actual-WP cases excluded. | Waits on 27; runtime fallback research remains prospective. |
 
 At17:43:14 ET node0 generation572 released after the standard caller safe timeout;
@@ -219,10 +219,25 @@ lanes after the active jobs; every launch still needs fresh all-lease/resource
 admission. Historical weights are not a fresh ETA or success guarantee.
 [Selected schedule and exact commands](evidence/t27-selected-safe-shard-schedule-20261015.json).
 No full ticket or method success is claimed from these checkpoints. This chat's
-30-minute heartbeat stays active; last full table 19:49 ET, next due 20:19 ET.
+30-minute heartbeat stays active; last full table 20:19 ET, next due 20:49 ET.
 Root live readback at 19:50 ET: both lanes held (580/604), exact detached source
 identities unchanged, active solver processes on both profiles, load 2.81 and
 12 GiB free on `/data1` / 94 GiB on `/data`. No third evaluation job.
+
+A-rest generation 604 released naturally at 20:14:49 ET, 4/4 tests passed.
+Independent whole-subset audit: 6,027 references / 925 files, zero mismatches;
+inner guard 2704.695s / 4,510,117,888 B peak, outer 2706.671s /
+4,560,449,536 B peak, no OOM/timeout. Exact current source, setup, methods,
+collector set and ordinary/smoke policy pass. Historical safe evidence stays separate.
+Root direct preflight at 20:17 ET found node 0 held580, node 1 released604,
+legacy released77; clean detached `0e7`, no residual A-rest evaluation,
+load1.78 and 12/94 GiB free. B1 started20:17:15 ET on node1 generation605:
+size/value_stream/value_range, whole7200s/outer7320s, one worker, sampled8GiB
+process tree and planned8GiB raw output. Source reuses exact composed`0e7`;
+raw `/data/yanruj/EvolveSWDB_runs/probata-reviewed-0e7f2327-t27-safe-b1`.
+197 physical/Git module checks pass; full runtime equals prior accepted`0e7`.
+[B1 actual admission](evidence/reviewed-t27-safe-b1-launch-0e7f2327-20261015.json).
+The remaining B2 group is prospective until a fresh naturally free lane admission.
 Research-only notes remain `/private/tmp/probata-ticket25-resume-exploration.md`,
 `/private/tmp/probata-ticket25-lifetime-capabilities.md`,
 `/private/tmp/probata-ticket25-heap-bridge-tcb-addendum.md`,
