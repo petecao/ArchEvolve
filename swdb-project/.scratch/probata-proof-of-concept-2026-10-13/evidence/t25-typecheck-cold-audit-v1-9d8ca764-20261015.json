@@ -1,0 +1,129 @@
+{
+  "bootstrap_commit": "c5216796dde05680acd237a97d4f0c7b3788e605",
+  "command": [
+    "/data1/yanruj/probata-verifiers/opam/framac-33/bin/why3",
+    "prove",
+    "--type-only",
+    "--no-stdlib",
+    "--no-load-default-plugins",
+    "--config",
+    "/data1/yanruj/probata-verifiers/home/.why3.conf",
+    "-L",
+    "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib",
+    "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c5216796-t25-theory-typecheck-alpha-v1/theory/heap_bridge.mlw"
+  ],
+  "created": "2026-10-15 ET",
+  "diagnostic_excerpt": "Warning, file \"/data/yanruj/EvolveSWDB_runs/probata-reviewed-c5216796-t25-theory-typecheck-alpha-v1/theory/heap_bridge.mlw\", line 25, characters 18-23: unused variable dummy\n",
+  "expected_git_blob_match": true,
+  "expected_stdlib_tree_match": true,
+  "expected_theory_sha256_match": true,
+  "git_blob": "8b3c2bf3f4c831b1e28499ffafad78c196819ec5",
+  "git_theory_sha256": "5186c27f5a7a339352e3f62dc3a0d3efb1c7bd12f8a456cc61b0d7a52566638d",
+  "hash_errors": [],
+  "lane": {
+    "socket_lane": {
+      "aligned_cell_age_s": "",
+      "aligned_to": "no_gapbs_batch_running",
+      "command": [
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=60",
+        "720",
+        "bash",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c5216796-t25-theory-typecheck-alpha-v1/run.sh"
+      ],
+      "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+      "ended_utc": "2026-10-16T02:51:21Z",
+      "exit_code": 0,
+      "host": "mbit10",
+      "job": "probata-reviewed-c5216796-t25-theory-typecheck-alpha-v1",
+      "lease_generation": 584,
+      "lease_name": "mbit10-evaluation-node0",
+      "load1_at_start": 0.06,
+      "load1_max": 32,
+      "node": 0,
+      "numa_memory_policy": "bind:0",
+      "numactl": "--cpunodebind=0 --membind=0",
+      "preregistration_sha256": null,
+      "started_utc": "2026-10-16T02:51:18Z"
+    }
+  },
+  "model_body_proof_records_created": 0,
+  "physical_refs": 70,
+  "pins": [
+    {
+      "bytes": 11725,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c5216796-t25-theory-typecheck-alpha-v1/typecheck-profile.json",
+      "sha256": "c30da9aba323fa6e3f442377dd4582f2c70aab4e0b1979c70c1d57cd80b91612"
+    },
+    {
+      "bytes": 174,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c5216796-t25-theory-typecheck-alpha-v1/typecheck.log",
+      "sha256": "96743e4966b0e2475bb3f7487f52d1e5bf53eacd1fd79a10c7da54338b51d40e"
+    },
+    {
+      "bytes": 174,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c5216796-t25-theory-typecheck-alpha-v1/resources.json",
+      "sha256": "a14cffd9920641b3857e8fde46c957aa622d0fa85fcff4cdcd1dba3921c0b0ad"
+    },
+    {
+      "bytes": 112,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c5216796-t25-theory-typecheck-alpha-v1/source-after.json",
+      "sha256": "b72ebca4e7240563b1f259618606c3ffe97a237329468e386afe0f943e5ee2cb"
+    },
+    {
+      "bytes": 831,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c5216796-t25-theory-typecheck-alpha-v1/lane.json",
+      "sha256": "08fc21933d24a5bf9806bb05f70993d52c78611f45a2d277f6ce100beea359ea"
+    },
+    {
+      "bytes": 457,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c5216796-t25-theory-typecheck-alpha-v1/dispatch-argv.json",
+      "sha256": "4cba767630b7aabe9de6b0b5dfd0262b3d19f96da48c75aac94914f378bb6bd2"
+    },
+    {
+      "bytes": 8601,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c5216796-t25-theory-typecheck-alpha-v1/launch.json",
+      "sha256": "b14099d7689e1fc681e2e608851c1eafff3b6ec8a28f32119997b582445f21d4"
+    },
+    {
+      "bytes": 5192,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c5216796-t25-theory-typecheck-alpha-v1/theory/heap_bridge.mlw",
+      "sha256": "5186c27f5a7a339352e3f62dc3a0d3efb1c7bd12f8a456cc61b0d7a52566638d"
+    }
+  ],
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c5216796-t25-theory-typecheck-alpha-v1",
+  "scope": "Cold read-only syntax/type gate audit only; no WP,solver,body proof or imported-theorem closure acceptance.",
+  "solver_launched": false,
+  "source_after": {
+    "commit": "c5216796dde05680acd237a97d4f0c7b3788e605",
+    "source_unchanged": true,
+    "tracked_changes": ""
+  },
+  "staged_matches_git": true,
+  "stdlib_tree_sha256": "520d9875983b41da80b89d7809cff4c76370e8445f8b49147f1423cfb7404c31",
+  "syntax_typecheck_passed": true,
+  "theory_input_commit": "9d8ca7645546ce3b282b2a51005392ceb78ff609",
+  "type_resources": {
+    "cpu_seconds": 0.057171,
+    "exit_code": 0,
+    "out_of_memory": false,
+    "peak_rss_bytes": 32890880,
+    "timed_out": false,
+    "wall_seconds": 0.06766580045223236
+  },
+  "whole_resources": {
+    "cpu_seconds": 0.7745549999999999,
+    "exit_code": 0,
+    "out_of_memory": false,
+    "peak_rss_bytes": 62087168,
+    "timed_out": false,
+    "wall_seconds": 0.6518777767196298
+  },
+  "why3_version": {
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "Why3 platform, version 1.8.2\n"
+  },
+  "wp_launched": false
+}

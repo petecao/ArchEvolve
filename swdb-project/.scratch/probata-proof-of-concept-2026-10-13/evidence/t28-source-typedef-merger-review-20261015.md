@@ -1,0 +1,9 @@
+# Ticket28 source typedef integration review — 2026-10-15 ET
+
+PASS for exact92dcda7103e6e3a9ff03d7641539bae7441a503d compiler prerequisite. Static committed-source, tests and retained local artifacts only; no tests/compiler/formal/provider/remote jobs by reviewer.
+
+Source-node desugared types now override familiar fixed-width spellings. A spelling such as uint64_t can denote double locally and must not inherit the generated C prelude alias. Where function types omit node-local desugaring, the repair requires a unique source alias target rather than choosing the first filtered result. Mixed declarations or conflicting local/member/namespace targets refuse. Reference typedefs conservatively refuse until all use sites can bind reference identity; explicit references retain their existing path. Parameter pointer metadata derives from emitted C type rather than the original alias spelling.
+
+The retained native RED observes defined C++1 versus emitted C0 for a shadowed double alias under sanitizer checks, with no UB diagnostic used as the witness. Focused controls cover local/return/field/cast/summary positions, two fixed-width spellings, unresolved ambiguity/member scope, pointer typedef metadata and reference-typedef refusals. The exact existing constant-atomic golden output is retained. All426committed/local pins in the composed evidence match;49focused controls passed in55.53guard seconds, peak346636288bytes, no timeout/OOM. These are compiler/native controls, not actual formal evidence.
+
+Semantics0.1/library bytes and old source/checker evidence remain unchanged. Other typedef-bearing generated C can intentionally change to reflect actual C++types. No semantics0.2version, actual header-body agreement, typed device-code mapping or ticket28closure is claimed. Full-source compiler equivalence and subsequent producer admission remain separate.

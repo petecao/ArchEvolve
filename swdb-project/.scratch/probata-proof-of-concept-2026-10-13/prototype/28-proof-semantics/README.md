@@ -106,3 +106,22 @@ execution method admitted and ran the scripted command. Adding this imported
 validator/contract generator to `proof_setup.CHECK_SOURCES` makes the same
 mutation refuse before command/record. A fresh identity-bound method admits its
 scripted fixture command. Historical2033/74 setup/facts are not upgraded.
+
+Source typedef identity — 2026-10-15 ET: exact device types cannot be inferred
+from a familiar alias name. A real native C++/C mismatch showed local `uint64_t`
+meaning double becoming an integer in emitted C; a second RED covered function
+returns without desugared type metadata. The lowerer now honors clang's source-node
+type and requires unique source targets for unresolved alias names, including
+class/global collisions. Parameter pointer metadata follows the actual lowered
+type, so a pointer typedef retains its explicit primitive array domain. Reference
+typedefs conservatively refuse until reference-use binding is implemented; ordinary
+literal references retain their behavior.
+
+Final49/49 compiler/native/stand-in controls pass (55.53s guard,346,636,288B peak),
+including local/return/field/cast/summary paths under ASan/UBSan, both adapter
+domain controls, and exact original constant atomic C/anchors/models/names.
+[Source, genuine REDs, intermediate fixture misfire and final evidence](../../evidence/t28-source-typedef-identity-controls-20261015.json).
+No actual formal tool ran. Existing typedef-bearing C may change to preserve its
+source type; historical producer records stay scoped to their original freeze.
+Semantics0.1 library bytes remain unchanged. This does not implement the new
+typed DX100 state/value/history model or close ticket28.

@@ -131,3 +131,14 @@ def test_a_fresh_execution_method_accepts_the_current_typed_contract_checker(see
                         '--method-version', method['id'])['record']
     assert marker.exists() and record['evidence_kind'] == 'contract_fixture'
     assert record['proof_setup_check']['check'] == method['checks']['proof_setup_check']
+
+
+@pytest.mark.parametrize('adapter', ['cbmc', 'wp'])
+def test_a_pointer_typedef_retains_the_actual_primitive_array_parameter_domain(tmp_path, adapter):
+    source = ('typedef int *Pointer;\nvoid maa_const(int value, int reg);\n'
+              'int trust_fixture(Pointer p) { maa_const(7, 0); p[0] = 7; return 7; }\n')
+    result, records, _entry, marker = run_semantics_fixture(tmp_path, adapter, source=source)
+    assert result.returncode == 0, result.stdout + result.stderr
+    record = yaml.safe_load((records.path / json.loads(result.stdout)['path']).read_text())
+    assert record['verdict'] == 'not_proven' and record['failure_class'] == 'unsupported_construct'
+    assert record['settings']['verifier_launched'] is False and not marker.exists()

@@ -92,3 +92,13 @@ scripted method accepts. No actual formal tool ran. Actual header-body/ABI
 bindings and all substantive new call/state/value/history/memory acceptance
 remain active, so no box is checked and status stays **claimed**.
 [Exact evidence and partial-domain boundaries](../evidence/t28-typed-instance-controls-20261015.json).
+
+Source-type prerequisite — 2026-10-15 ET: native REDs exposed familiar typedef
+spellings hiding different local/return types and a class/global alias collision.
+Source desugaring/unique unresolved targets now prevent that reinterpretation.
+Pointer typedef parameters retain explicit array domains; unsupported reference
+typedefs refuse before partial C output. Final49/49 focused compiler/native/
+stand-in controls pass, including exact constant atomic golden output. No actual
+formal tool ran; no old producer result is upgraded. The numeric per-call,
+memory/history/ownership/pair implementation and new-version actual acceptance
+remain incomplete. [Exact evidence](../evidence/t28-source-typedef-identity-controls-20261015.json).

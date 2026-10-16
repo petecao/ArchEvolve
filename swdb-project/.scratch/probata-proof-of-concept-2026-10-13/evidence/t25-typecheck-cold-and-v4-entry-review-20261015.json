@@ -1,0 +1,33 @@
+{
+  "actual_lane_wrapper_seconds": 720,
+  "actual_outer_timeout_seconds": 600,
+  "actual_typecheck_passed": true,
+  "blockers": [],
+  "created": "2026-10-15 ET",
+  "formal_tools_tests_or_launches_by_reviewer": false,
+  "full_wp_capability_outcome": "pending",
+  "independently_checked_raw_pins": 8,
+  "independently_rehashed_physical_refs": 70,
+  "inputs": [
+    {
+      "path": "/private/tmp/probata-t25-typecheck-cold-audit-v1-9d8ca764-20261015.json",
+      "sha256": "1d59130b53ff4fe71cf208feb0db988e897fa302cfcaf10debb2431de256bfdf"
+    },
+    {
+      "path": "/private/tmp/probata-t25-capability-entry-v4-20261015.py",
+      "sha256": "862d3844a4768902b920d66e51889b2d019ca54f2924faf3d0b274cfc314b434"
+    },
+    {
+      "path": "/private/tmp/probata-t25-capability-command-v4-9d8ca764-20261015.json",
+      "sha256": "12062ef5a25e422dbb8eacbc264e4ad51f79d7f6ee831dc09005bfa2bd3a12dc"
+    }
+  ],
+  "launch_command_canonical_sha256": "0558ae67d233ab8e3aef7e40ec304c0e62bb431f69dc4ab30d0f41a61ff46c35",
+  "physical_hash_errors": 0,
+  "read_only_remote_audit_performed": true,
+  "review_markdown": {
+    "path": "/private/tmp/probata-t25-typecheck-cold-and-v4-entry-review-20261015.md",
+    "sha256": "08dcd465247b8d5a896fe67b870ecbd648e95cd19c037b39e94a8d92b4eb2225"
+  },
+  "verdict": "PASS_COLD_TYPECHECK_AND_STATIC_V4_ADMISSION"
+}
