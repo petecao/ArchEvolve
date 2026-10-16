@@ -318,6 +318,8 @@ def identity():
                             + here.with_name("dx100_stream_source.py").read_bytes()
                             + here.with_name("dx100_stream_model.py").read_bytes()
                             + here.with_name("dx100_allocation_source.py").read_bytes()
+                            + here.with_name("dx100_register_source.py").read_bytes()
+                            + here.with_name("dx100_register_model.py").read_bytes()
                             + json.dumps(stdlib_provenance.runtime_identity(tool), sort_keys=True).encode()).hexdigest()
     found = {"c_lowering": {"id": f"{TOOL_ID}-{TOOL_VERSION}", "sha256": digest},
              "naming_rules": naming_rules()}
@@ -2136,10 +2138,10 @@ class _Printer:
                     if 'definition' not in instance:
                         raise Unsupported('template instance needs a pinned interface definition; '
                                           'source-defined implementations cannot inherit a device contract', self.line)
-                    from swdb import dx100_source_selector, dx100_stream_source, dx100_allocation_source
-                    source_module=dx100_allocation_source if instance['definition'].get('kind')==dx100_allocation_source.KIND else dx100_stream_source if instance['definition'].get('kind')==dx100_stream_source.KIND else dx100_source_selector
+                    from swdb import dx100_source_selector, dx100_stream_source, dx100_allocation_source, dx100_register_source
+                    source_module=dx100_register_source if instance['definition'].get('kind')==dx100_register_source.KIND else dx100_allocation_source if instance['definition'].get('kind')==dx100_allocation_source.KIND else dx100_stream_source if instance['definition'].get('kind')==dx100_stream_source.KIND else dx100_source_selector
                     try:
-                        if source_module in (dx100_stream_source,dx100_allocation_source):
+                        if source_module in (dx100_stream_source,dx100_allocation_source,dx100_register_source):
                             source_definition = source_module.certify(unit,node_found,instance['definition'],self.source_declaration,standard=STD,timeout=TIMEOUT_SECONDS)
                         else:
                             definition = source_module.certify(unit, node_found, arguments, instance['definition'],standard=STD, timeout=TIMEOUT_SECONDS)

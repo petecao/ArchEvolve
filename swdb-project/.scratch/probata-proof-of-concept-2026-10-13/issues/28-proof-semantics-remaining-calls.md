@@ -377,3 +377,26 @@ The inert size2048V2 prior staticPASS is [withdrawn for dispatch](../evidence/t2
 Root reports correctedsize2048V3 dispatched06:38:40ET node1G620. This is the new innerV3/outerV3 profile, not withdrawnV2; [Root admission audit](../evidence/reviewed-t28-sizewrong1-mem2048-outer-v3-launch-7e64298f-20261016.json) passes207modulechecks0errors/cleandetachedsource; actual outcome remains pending. No cleannegative/pair/refutation claim.
 
 Root now reports G620 settled about06:40:39ET after actualpublicproof, then [externalV3 postcheck rejection](../evidence/t28-sizewrong1-mem2048-v3-postcheck-correction-20261016.md):inheritedmethod has WP+CBMCtranslatorlist, notsingletonWP. Preserveguard/outerexit1 and publicnot_proven/timeout recordb3d8da2c; fullnative/prover/cold outcome not accepted. Noformalrerunforreader; passive full-list correction pending. Rootfinite06:42leasesreleased, notuniversalcurrentidle.
+
+## Isolated u32 register source preparation — 2026-10-16 ET
+
+New original-partial711/wrong1107 register fixture uses only actual
+`set_reg<unsigned int>`/`get_reg<unsigned int>` with exact source/ABI/scalar
+mapping/fence/compiler bindings and an unchanged explicit two-cell projection
+frame. Exclusive configured core0/no-command/no-interference entry and RF
+runtime/source-model correspondence are explicit owned pending59 boundaries;
+initial RF values are unconstrained and both observed cells are overwritten.
+Nonvolatile pointed source access and no-memory-clobber fence are disclosed.
+No existing total contract is weakened and no hardware termination is claimed.
+
+Exactc9b4 source passes21 compiler/native/scripted controls with2actual skips;
+separate5b21 earlyCBMC guard passes its compiler-free three-route control after
+a missing-refusal RED. All4 intentional stand-in verdicts stay
+not_proven/tool_crash.7,216 nested physical references/2,608 output files have
+zero mismatches; four tiny5,738B parser inputs pass Clang syntax only.
+[Evidence](../evidence/t28-register-first-vertical-controls-20261016.md) and
+[obligation map](../prototype/28-proof-semantics/register-first-gate.md) keep
+source/model TCB, RF raw-storage lifetime/alias and actual parser/proof gates
+explicit. Root owns independent review/publication/admission. No actual register
+pair, production0.2, other24call support or whole28 closure follows; every
+whole-ticket acceptance box remains open and status stays claimed.

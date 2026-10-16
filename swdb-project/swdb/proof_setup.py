@@ -24,7 +24,7 @@ REPORT_MODULE = Path(__file__).with_name("proof_report.ml")
 CHECK_SOURCES = ("proof_setup.py", "proof_report.ml", "proof.py", "cbmc_adapter.py", "cbmc_equivalence.py",
                  "cbmc_product.py", "wp_adapter.py", "crux_adapter.py", "rocq_adapter.py", "rss_watchdog.py",
                  "vocab.py", "formal_frame.py", "acsl_subset.py", "framac.py", "hint_check.py", "hint_tree.ml",
-                 "wp_pointer_bounds.py", "proof_semantics.py", "dx100_interface.py", "dx100_source_selector.py", "dx100_size_source.py", "dx100_stream_source.py", "dx100_stream_model.py", "dx100_allocation_source.py", "vector_ownership.py", "vector_pipeline.py", "standard_model_view.py",
+                 "wp_pointer_bounds.py", "proof_semantics.py", "dx100_interface.py", "dx100_source_selector.py", "dx100_size_source.py", "dx100_stream_source.py", "dx100_stream_model.py", "dx100_allocation_source.py", "dx100_register_source.py", "dx100_register_model.py", "vector_ownership.py", "vector_pipeline.py", "standard_model_view.py",
                  "array_domains.py", "model_domains.py", "dx_array_domains.py", "bounded_entry_windows.py",
                  "bounded_chain.py", "summary_bindings.py", "helper_windows.py", "standard_range_model.py",
                  "nested_entry_reads.py", "standard_range_calls.py", "member_windows.py", "stdlib_provenance.py", "stdlib_source_admission.py")
@@ -308,9 +308,9 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
             hashes['dx100_source_selector'] = _digest(dx100_source_selector.recheck(lowering or context.get("lowering")))
         except dx100_source_selector.Refused as exc:
             _fail('dx100_source_selector', str(exc))
-        from swdb import dx100_size_source, dx100_stream_source, dx100_allocation_source
+        from swdb import dx100_size_source, dx100_stream_source, dx100_allocation_source, dx100_register_source
         for row in getattr(lowering or context.get('lowering'),'summaries',()):
-            if 'semantic_source' in row and row['semantic_source'].get('kind') not in {dx100_size_source.KIND,dx100_stream_source.KIND,dx100_allocation_source.KIND}:
+            if 'semantic_source' in row and row['semantic_source'].get('kind') not in {dx100_size_source.KIND,dx100_stream_source.KIND,dx100_allocation_source.KIND,dx100_register_source.KIND}:
                 _fail('dx100_source', 'unrecognized source-definition certificate kind')
         try:
             hashes['dx100_size_source'] = _digest(dx100_size_source.recheck(lowering or context.get('lowering')))
@@ -325,6 +325,10 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
             hashes['dx100_allocation_source'] = _digest(dx100_allocation_source.recheck(lowering or context.get('lowering')))
         except dx100_allocation_source.Refused as exc:
             _fail('dx100_allocation_source', str(exc))
+        try:
+            hashes['dx100_register_source'] = _digest(dx100_register_source.recheck(lowering or context.get('lowering')))
+        except dx100_register_source.Refused as exc:
+            _fail('dx100_register_source', str(exc))
     for path, expected in inputs:
         path = Path(path)
         actual = path.read_bytes()
