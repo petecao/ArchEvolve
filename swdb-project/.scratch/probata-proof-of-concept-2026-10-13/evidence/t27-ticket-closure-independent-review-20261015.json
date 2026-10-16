@@ -1,0 +1,142 @@
+{
+  "created": "2026-10-15 ET",
+  "reviewed_commit": "2b4cc6e7fddb522437d4dc5f8de2fd5591a62264",
+  "scope": "Independent read-only exact commit closure packet and local receipt pin/aggregate/coverage review; no remote raw rehash or execution",
+  "checks": {
+    "unique_cases": true,
+    "unique_records": true,
+    "record_verdicts": true,
+    "all_receipt_records_match_inventory": true,
+    "safe_11_aggregates": true,
+    "safe_launch_setup_flags": true,
+    "bounded_12_replayed": true,
+    "negative_13_ordinary_open": true,
+    "negative_smoke35_retained": true,
+    "safe_11_exact_cases": true,
+    "all_profiles_natural_clean": true,
+    "production_runtime_no_diff": true,
+    "inventory_raw_local_receipt_matches": true,
+    "B2_raw_local_receipt_matches": true,
+    "all_local_pins_match": true
+  },
+  "safe_aggregates": {
+    "initialized_goals": 143,
+    "rte_goals": 141,
+    "ordinary_valid": 792,
+    "ordinary_total": 792,
+    "smoke_valid": 252,
+    "smoke_total": 252
+  },
+  "local_pins": [
+    {
+      "path": "/private/tmp/probata-resume-t27/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t27-current-matrix-completed-independent-20261015.json",
+      "sha256": "42f7b05cf8648c17ea735aa1375f67f2435ef8e68b84e99d7858164e271e2493",
+      "matches_commit": true
+    },
+    {
+      "path": "/private/tmp/probata-resume-t27/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t27-current-matrix-completed-independent-20261015.md",
+      "sha256": "07f54a31e67f13c2a5d007029e302d9892cb36594ca55cf077c1ea1fecf6f710",
+      "matches_commit": true
+    },
+    {
+      "path": "/private/tmp/probata-resume-t27/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t27-composed-safe-b2-completed-independent-20261015.json",
+      "sha256": "394034cf8b6782deaaf51673fa03f646e908486b907c17b61b63ec0118b6f1da",
+      "matches_commit": true
+    },
+    {
+      "path": "/private/tmp/probata-resume-t27/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t27-composed-safe-b2-completed-independent-20261015.md",
+      "sha256": "868852fda1d6f34875f4d42a8a5662f14ee93995b6fffc2b2c53016008ab21ca",
+      "matches_commit": true
+    },
+    {
+      "path": "/private/tmp/probata-resume-t27/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/issues/27-proof-semantics-bfs-calls.md",
+      "sha256": "46ebd3f7d5c083f1d9c6722cb6d077d14b282ee23ee71a27d0616eaa23b7f3a8",
+      "matches_commit": true
+    },
+    {
+      "path": "/private/tmp/probata-t27-audit-whole-inventory.py",
+      "sha256": "4be6e535202ad97caafded1bce2c310fa27089ff5098cf9badecab78298b8ba7",
+      "matches": true
+    },
+    {
+      "path": "/private/tmp/probata-resume-t27/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t27-composed-bounded-completed-independent-20261015.json",
+      "sha256": "54be08cd99570766a3f7b6c757dee33d9cb442931bc49c3dce804640a8e7f23c",
+      "matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t27-audit-bounded.py",
+      "sha256": "3f651d913f0e3201858a536ea866da534601fd7629322a959130f2c706edfed4",
+      "matches": true
+    },
+    {
+      "path": "/private/tmp/probata-resume-t27/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t27-reviewed-capacity-completed-independent-20261015.json",
+      "sha256": "64e8e1e20cad584999906b0dd695e0911336b15779eac0f4d63eb53a8da46d4f",
+      "matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t27-audit-reviewed-capacity.py",
+      "sha256": "de69a1b8cdbb988a78dcd107787f052427d547e8d87310491a9a5caacb44a596",
+      "matches": true
+    },
+    {
+      "path": "/private/tmp/probata-resume-t27/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t27-composed-negative-completed-independent-20261015.json",
+      "sha256": "435e94db0754ddbcbc3ab554fd197b0443cf2df49f0a49b5c13889304426496e",
+      "matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t27-audit-negative-final.py",
+      "sha256": "d2fc22d951f1b7bcf3a401327596a7774ca1b7adbd8cc6c05f25352f87b22334",
+      "matches": true
+    },
+    {
+      "path": "/private/tmp/probata-resume-t27/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t27-composed-safe-cpu-completed-independent-20261015.json",
+      "sha256": "2699e1509078baf51cd6e45e2478a837397229751867c96f043559b3dfbe13e2",
+      "matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t27-audit-safe-profile.py",
+      "sha256": "c60278014087814ac26b05ca5a2bfddaf49dc06a54b2deb4f8606ed1af53e6f7",
+      "matches": true
+    },
+    {
+      "path": "/private/tmp/probata-resume-t27/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t27-composed-safe-a-rest-completed-independent-20261015.json",
+      "sha256": "6b947d32d7cc2d3ff2ae09415e872e84b29e77b7fb9f6e8a9483ccda8f29de55",
+      "matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t27-audit-safe-profile.py",
+      "sha256": "c60278014087814ac26b05ca5a2bfddaf49dc06a54b2deb4f8606ed1af53e6f7",
+      "matches": true
+    },
+    {
+      "path": "/private/tmp/probata-resume-t27/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t27-composed-safe-b1-completed-independent-20261015.json",
+      "sha256": "0666fe270ba2608c0f1eec15ae5afe804dc9d9b32fc8800ba650c2c54a7e5851",
+      "matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t27-audit-safe-profile.py",
+      "sha256": "c60278014087814ac26b05ca5a2bfddaf49dc06a54b2deb4f8606ed1af53e6f7",
+      "matches": true
+    },
+    {
+      "path": "/private/tmp/probata-resume-t27/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t27-composed-safe-b2-completed-independent-20261015.json",
+      "sha256": "394034cf8b6782deaaf51673fa03f646e908486b907c17b61b63ec0118b6f1da",
+      "matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t27-audit-safe-profile.py",
+      "sha256": "c60278014087814ac26b05ca5a2bfddaf49dc06a54b2deb4f8606ed1af53e6f7",
+      "matches": true
+    },
+    {
+      "path": "/private/tmp/probata-t27-whole-final-inventory.json",
+      "sha256": "5886312138859c009b47269b8b54277553cf6c7b03da0b1ec22658cad40384d7"
+    },
+    {
+      "path": "/private/tmp/probata-t27-safe-b2-final-audit.json",
+      "sha256": "4f8d8946625a66116415f53131021933edeb5b1b792a2283892275b4ba95a777"
+    }
+  ],
+  "errors": [],
+  "verdict": "PASS"
+}
