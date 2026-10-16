@@ -1,0 +1,324 @@
+{
+  "actual_compiler_or_verifier_execution": false,
+  "created": "2026-10-16 ET",
+  "earlier_preparation_refusals": {
+    "red-v1": "wrong project cwd/import path; no cases executed",
+    "red-v2": "shared builder requires explicit fixture lineup; no observer child executed",
+    "red-v3": "observer used a wrong class spelling; no CLI selection executed",
+    "red-v4": "observer settings lacked schema-required flags; public schema safely refused writes"
+  },
+  "implementation_and_tests": [
+    {
+      "bytes": 51186,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/proof.py",
+      "sha256": "6223247f6d9ee6a806ee32f2a4f5630e5fa41555488a70c3c4646b73f6892802"
+    },
+    {
+      "bytes": 3131,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_summary_model_method_selection.py",
+      "sha256": "3abf75ac2d7a31b928ba4ffb27229a0dc607f0b8992feb0926175a759147a711"
+    },
+    {
+      "bytes": 1353,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/fixtures/proof/method_selection_observer.py",
+      "sha256": "8b0e505c12f13f7aadccf41fb3dc14388eb38ad194522e6ac77671b499a95048"
+    }
+  ],
+  "inverse": {
+    "after": {
+      "bytes": 51186,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-explicit-method-selection-20261016/proof.after.py",
+      "sha256": "6223247f6d9ee6a806ee32f2a4f5630e5fa41555488a70c3c4646b73f6892802"
+    },
+    "before": {
+      "bytes": 51108,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-explicit-method-selection-20261016/proof.before.py",
+      "sha256": "d03f89ab3dac0987d011552aeb1edcc212a8589a401ba5bface7102301c48fa2"
+    },
+    "changed_functions": [
+      "_prove_summary",
+      "_prove_model"
+    ],
+    "restores_complete_original_bytes": true,
+    "unchanged_other_function_AST_count": 29
+  },
+  "logs": [
+    {
+      "bytes": 241,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-explicit-method-selection-20261016/red-v1.log",
+      "sha256": "1017bcd7cb547a3e24ba3d68d613b5cb57bd182388c16ad09d2a5784d2b1b5d9"
+    },
+    {
+      "bytes": 20816,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-explicit-method-selection-20261016/red-v2.log",
+      "sha256": "b5f93a674a6ae26724308444a8b1ff41a6c31a9df8cf79d2d07dfbec872ab470"
+    },
+    {
+      "bytes": 21738,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-explicit-method-selection-20261016/red-v3.log",
+      "sha256": "1f6cd1ac2897cba6d2ec67bfbd25c9cbd9f05045884dc85d8f7330d5ee21415e"
+    },
+    {
+      "bytes": 20033,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-explicit-method-selection-20261016/red-v4.log",
+      "sha256": "b52def230dd1c669635681f458472b759358f65c100707195cabd9fb770c94b5"
+    },
+    {
+      "bytes": 22392,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-explicit-method-selection-20261016/red-v5.log",
+      "sha256": "5423281329e4f22d45f11bf29448697ac3328f5a8e72ee62ae8bb14bf812a7d3"
+    },
+    {
+      "bytes": 98,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-explicit-method-selection-20261016/green-v1.log",
+      "sha256": "842644a2a49cb6de137c5c9be066057be6acbe00643fd26f156f33b2963a6000"
+    }
+  ],
+  "metadata_refinement": {
+    "change": "Removed one duplicate path through pytest-current from the record observation census; all ten physical regular records remain, RED six and GREEN four. Actual test outcomes and source bytes unchanged.",
+    "predecessor": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-explicit-method-selection-repair-preparation-v1-20261016.json",
+    "sha256": "0ceae0c2531e370eb9242287b7b8116a53b7ad7626d320b71a98199d2cb13fef"
+  },
+  "original_public_V2_failure_preserved": true,
+  "parent_source": "dcdecf317a0e9b34f3ce12d5b914eb823c439fbc",
+  "problem": "Summary and model prove routes ignored --method-version; both selected the current frozen fixture despite a requested draft or missing name.",
+  "public_controls": {
+    "GREEN": {
+      "failed": 0,
+      "passed": 6,
+      "seconds": 3.57,
+      "stage": "green-v1"
+    },
+    "RED": {
+      "failed": 4,
+      "passed": 2,
+      "reason": "named/dangling requested method ignored in both routes; unchanged defaults pass",
+      "stage": "red-v5"
+    },
+    "adapter": "Explicit compiler-free terminal WpAdapter test double; real CLI/registry/setup/record writer. Only not_proven fixture metadata, never a scientific proof.",
+    "selections": [
+      "summary named",
+      "summary default",
+      "summary missing",
+      "model named",
+      "model default",
+      "model missing"
+    ],
+    "tool_child_audit": "Each observer Python refuses every subprocess/os.system/fork/posix_spawn/exec/socket child operation; all native compiler/verifier selectors explicitly none."
+  },
+  "repair": "Forward args.method_version to _current_method in exactly _prove_summary and _prove_model; ordinary candidate route and default selection unchanged.",
+  "retained_record_observations": [
+    {
+      "adapter_observed_method": "method.contract-fixture-1",
+      "evidence_kind": "contract_fixture",
+      "method": {
+        "id": "method.contract-fixture-1",
+        "sha256": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29"
+      },
+      "path": "/private/tmp/probata-t25-explicit-method-selection-red-v5/test_public_summary_and_model_0/records/proofs/proof.contract.fixture_vector_closed_no_growth.20261016t205701z.d8ff18d1.yaml",
+      "setup_method": {
+        "id": "method.contract-fixture-1",
+        "sha256": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29"
+      },
+      "sha256": "0c969e6ab75844b5e78009f4c60da609911703cd069641abcfc276b60bf10338",
+      "stage": "red-v5",
+      "subject": {
+        "id": "contract.fixture_vector_closed_no_growth",
+        "kind": "library_summary"
+      },
+      "verdict": "not_proven",
+      "verifier_launched": false
+    },
+    {
+      "adapter_observed_method": "method.contract-fixture-1",
+      "evidence_kind": "contract_fixture",
+      "method": {
+        "id": "method.contract-fixture-1",
+        "sha256": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29"
+      },
+      "path": "/private/tmp/probata-t25-explicit-method-selection-red-v5/test_public_summary_and_model_1/records/proofs/proof.contract.fixture_vector_closed_no_growth.20261016t205702z.f8572d67.yaml",
+      "setup_method": {
+        "id": "method.contract-fixture-1",
+        "sha256": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29"
+      },
+      "sha256": "47731f06b08ce480d5f99ace86167164b20905bbbd2d2fb2747b90ff2d724434",
+      "stage": "red-v5",
+      "subject": {
+        "id": "contract.fixture_vector_closed_no_growth",
+        "kind": "library_summary"
+      },
+      "verdict": "not_proven",
+      "verifier_launched": false
+    },
+    {
+      "adapter_observed_method": "method.contract-fixture-1",
+      "evidence_kind": "contract_fixture",
+      "method": {
+        "id": "method.contract-fixture-1",
+        "sha256": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29"
+      },
+      "path": "/private/tmp/probata-t25-explicit-method-selection-red-v5/test_public_summary_and_model_2/records/proofs/proof.contract.fixture_vector_closed_no_growth.20261016t205702z.5b367ce3.yaml",
+      "setup_method": {
+        "id": "method.contract-fixture-1",
+        "sha256": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29"
+      },
+      "sha256": "8ba95c73fbb72276fe84c41aae3bd4eaa5bed3c7ff8109234df26ae3101611f6",
+      "stage": "red-v5",
+      "subject": {
+        "id": "contract.fixture_vector_closed_no_growth",
+        "kind": "library_summary"
+      },
+      "verdict": "not_proven",
+      "verifier_launched": false
+    },
+    {
+      "adapter_observed_method": "method.contract-fixture-1",
+      "evidence_kind": "contract_fixture",
+      "method": {
+        "id": "method.contract-fixture-1",
+        "sha256": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29"
+      },
+      "path": "/private/tmp/probata-t25-explicit-method-selection-red-v5/test_public_summary_and_model_3/records/proofs/proof.model.std_vector_int_size.20261016t205703z.46291af5.yaml",
+      "setup_method": {
+        "id": "method.contract-fixture-1",
+        "sha256": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29"
+      },
+      "sha256": "449a64d3d7857209cb2d866f2b112a488e6b473c94ffccbbb6244e2f0c31f9f9",
+      "stage": "red-v5",
+      "subject": {
+        "id": "std_vector_int_size",
+        "kind": "c_model"
+      },
+      "verdict": "not_proven",
+      "verifier_launched": false
+    },
+    {
+      "adapter_observed_method": "method.contract-fixture-1",
+      "evidence_kind": "contract_fixture",
+      "method": {
+        "id": "method.contract-fixture-1",
+        "sha256": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29"
+      },
+      "path": "/private/tmp/probata-t25-explicit-method-selection-red-v5/test_public_summary_and_model_4/records/proofs/proof.model.std_vector_int_size.20261016t205704z.9a2a652d.yaml",
+      "setup_method": {
+        "id": "method.contract-fixture-1",
+        "sha256": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29"
+      },
+      "sha256": "ec06afa171d72b28eed8fb1d1ea117b0a8616ff8f0dc70a80f8d0c93a0853e60",
+      "stage": "red-v5",
+      "subject": {
+        "id": "std_vector_int_size",
+        "kind": "c_model"
+      },
+      "verdict": "not_proven",
+      "verifier_launched": false
+    },
+    {
+      "adapter_observed_method": "method.contract-fixture-1",
+      "evidence_kind": "contract_fixture",
+      "method": {
+        "id": "method.contract-fixture-1",
+        "sha256": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29"
+      },
+      "path": "/private/tmp/probata-t25-explicit-method-selection-red-v5/test_public_summary_and_model_5/records/proofs/proof.model.std_vector_int_size.20261016t205704z.00cb309a.yaml",
+      "setup_method": {
+        "id": "method.contract-fixture-1",
+        "sha256": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29"
+      },
+      "sha256": "8e9e99792f722267f696fdc07dacb4cb169d616c61153c9eccd69bbdc79af4ef",
+      "stage": "red-v5",
+      "subject": {
+        "id": "std_vector_int_size",
+        "kind": "c_model"
+      },
+      "verdict": "not_proven",
+      "verifier_launched": false
+    },
+    {
+      "adapter_observed_method": "method.wp-vector-closed-source-v1",
+      "evidence_kind": "contract_fixture",
+      "method": {
+        "id": "method.wp-vector-closed-source-v1",
+        "sha256": "492fa25116cb31d62e1ae934c3b313a172c4b70505750692fa96625d7de95d3b"
+      },
+      "path": "/private/tmp/probata-t25-explicit-method-selection-green-v1/test_public_summary_and_model_0/records/proofs/proof.contract.fixture_vector_closed_no_growth.20261016t205714z.eca56434.yaml",
+      "setup_method": {
+        "id": "method.wp-vector-closed-source-v1",
+        "sha256": "492fa25116cb31d62e1ae934c3b313a172c4b70505750692fa96625d7de95d3b"
+      },
+      "sha256": "4bd15b98d46e08a3a7b0fe305a51828ae33fd49972fb2cac2a77b4cd4493a8eb",
+      "stage": "green-v1",
+      "subject": {
+        "id": "contract.fixture_vector_closed_no_growth",
+        "kind": "library_summary"
+      },
+      "verdict": "not_proven",
+      "verifier_launched": false
+    },
+    {
+      "adapter_observed_method": "method.contract-fixture-1",
+      "evidence_kind": "contract_fixture",
+      "method": {
+        "id": "method.contract-fixture-1",
+        "sha256": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29"
+      },
+      "path": "/private/tmp/probata-t25-explicit-method-selection-green-v1/test_public_summary_and_model_1/records/proofs/proof.contract.fixture_vector_closed_no_growth.20261016t205714z.e7d84843.yaml",
+      "setup_method": {
+        "id": "method.contract-fixture-1",
+        "sha256": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29"
+      },
+      "sha256": "16dfaf88914e1b04d360eb4b9239eccad56b8c5e1525d6bebac06a782a73f3f9",
+      "stage": "green-v1",
+      "subject": {
+        "id": "contract.fixture_vector_closed_no_growth",
+        "kind": "library_summary"
+      },
+      "verdict": "not_proven",
+      "verifier_launched": false
+    },
+    {
+      "adapter_observed_method": "method.wp-vector-closed-source-v1",
+      "evidence_kind": "contract_fixture",
+      "method": {
+        "id": "method.wp-vector-closed-source-v1",
+        "sha256": "492fa25116cb31d62e1ae934c3b313a172c4b70505750692fa96625d7de95d3b"
+      },
+      "path": "/private/tmp/probata-t25-explicit-method-selection-green-v1/test_public_summary_and_model_3/records/proofs/proof.model.std_vector_int_size.20261016t205716z.40d226b3.yaml",
+      "setup_method": {
+        "id": "method.wp-vector-closed-source-v1",
+        "sha256": "492fa25116cb31d62e1ae934c3b313a172c4b70505750692fa96625d7de95d3b"
+      },
+      "sha256": "3ddf59b92412e02f9ecd38e2f1fbd919bbe3bad179a8097cd2aee9cb17fb88bd",
+      "stage": "green-v1",
+      "subject": {
+        "id": "std_vector_int_size",
+        "kind": "c_model"
+      },
+      "verdict": "not_proven",
+      "verifier_launched": false
+    },
+    {
+      "adapter_observed_method": "method.contract-fixture-1",
+      "evidence_kind": "contract_fixture",
+      "method": {
+        "id": "method.contract-fixture-1",
+        "sha256": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29"
+      },
+      "path": "/private/tmp/probata-t25-explicit-method-selection-green-v1/test_public_summary_and_model_4/records/proofs/proof.model.std_vector_int_size.20261016t205716z.b4918028.yaml",
+      "setup_method": {
+        "id": "method.contract-fixture-1",
+        "sha256": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29"
+      },
+      "sha256": "0c50b564ecff4035b1bfb322c4f592b19018d52b1fb35506db2943c95bb67ca1",
+      "stage": "green-v1",
+      "subject": {
+        "id": "std_vector_int_size",
+        "kind": "c_model"
+      },
+      "verdict": "not_proven",
+      "verifier_launched": false
+    }
+  ],
+  "source_public_five_case_actual_success": false,
+  "status": "REPAIRED_PUBLIC_RED_GREEN_PENDING_BOTH_REVIEW_AXES"
+}

@@ -391,7 +391,7 @@ def _prove_summary(args, store):
         if args.adapter!='wp':
             raise UsageError('the closed partial-normal-return unit is admitted only through its WP fixture route')
     unit = ProofUnit(None, function, str(Path(source).parent), _sha256(source), entry_id, content, policy)
-    method = _current_method(args.records)
+    method = _current_method(args.records, getattr(args, "method_version", None))
     pins = {"code": {"id": entry_id, "sha256": content}, "contract": {"id": entry_id, "sha256": content},
             "baseline_function": {"not_applicable": "A library summary is proven on the entry's own code."},
             "reference_semantics": {"not_applicable": "No reference-semantics definition is pinned before ticket 30."},
@@ -426,7 +426,7 @@ def _prove_model(args, store):
         raise UsageError("--model runs one wp job on a C model: --adapter wp, no --candidate, --summary, --skip or --script")
     sha = hashlib.sha256(text.encode()).hexdigest()
     unit = ProofUnit(None, name, "", sha, f"{MODEL_PREFIX}{name}", sha)
-    method = _current_method(args.records)
+    method = _current_method(args.records, getattr(args, "method_version", None))
     pins = {"code": {"id": name, "sha256": sha}, "contract": {"id": name, "sha256": sha},
             "baseline_function": {"not_applicable": "A C model is proven on its own text."},
             "reference_semantics": {"not_applicable": "No reference-semantics definition is pinned before ticket 30."},
