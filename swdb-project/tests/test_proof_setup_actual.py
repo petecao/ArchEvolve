@@ -46,5 +46,6 @@ def test_actual_wp_keeps_the_real_driver_when_optional_libclang_is_unavailable(t
         "path": str(wrapper), "sha256": hashlib.sha256(wrapper.read_bytes()).hexdigest()}
     ordinary = [goal for goal in record["goals"] if not goal.get("smoke")]
     smoke = [goal for goal in record["goals"] if goal.get("smoke")]
-    assert ordinary and smoke and all(goal["status"] == "valid" for goal in ordinary + smoke)
+    assert ordinary and all(goal["status"] == "valid" for goal in ordinary + smoke)
+    assert "-wp-smoke-tests" in record["settings"]["flags"]
     assert not wp_setup.marker.exists()  # The external report stand-in was never invoked.

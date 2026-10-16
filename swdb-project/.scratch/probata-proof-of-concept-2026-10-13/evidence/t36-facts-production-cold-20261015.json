@@ -1,0 +1,665 @@
+{
+  "created": "2026-10-15 ET",
+  "status": "partial; setup129 and bounded2 acceptance pending",
+  "scope": "Exact2033 fresh actual reader facts13 and production WP3, independently launched by root. Original production pytest1failure/2passes retained; scalar test-only assertion is cold-replayed against immutable record, not a new WP result. No provider or held-out workload.",
+  "reports": [
+    {
+      "kind": "facts",
+      "cold_audit": {
+        "path": "/private/tmp/probata-t36-facts-v3-cold-audit-20261015.json",
+        "sha256": "6aa5ef6ed94e8ea4b35150b2b88ec72b6c85e2e91daa10ac00520063a85f9027",
+        "artifact_references": 40,
+        "physical_files": 126,
+        "errors": []
+      },
+      "source": {
+        "path": "/data1/yanruj/probata-reviewed-2033c174",
+        "commit": "2033c1746eeab02b1d59d4d910a4e31b3e726da8",
+        "branch": "HEAD"
+      },
+      "checks": {
+        "proof_setup_check": {
+          "version": "1",
+          "sha256": "b493fec5c0c7f5e43ea7f0d45426e73f689c696ea16d35f5abc34b7476d28104"
+        },
+        "verdict_reading": {
+          "version": "1",
+          "sha256": "b493fec5c0c7f5e43ea7f0d45426e73f689c696ea16d35f5abc34b7476d28104"
+        }
+      },
+      "raw": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3",
+      "collection": {
+        "cwd": "/data1/yanruj/probata-reviewed-2033c174/swdb-project",
+        "expected": 13,
+        "selected": 13,
+        "exit_code": 0
+      },
+      "resources": {
+        "cpu_seconds": 119.371687,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 434716672,
+        "timed_out": false,
+        "wall_seconds": 118.00788840278983
+      },
+      "outer_resources": {
+        "exit_code": 0,
+        "peak_rss_bytes": 486096896,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 120.05460512731224,
+        "cpu_seconds": 145.218004
+      },
+      "source_after": {
+        "commit": "2033c1746eeab02b1d59d4d910a4e31b3e726da8",
+        "source_unchanged": true,
+        "tracked_changes": ""
+      },
+      "project_runtime_sha256": "2a00a126f1b14c4e2eef2c4eef0e02ba0270ac30083389343c5ff94094c03f95",
+      "records": [
+        {
+          "case": 0,
+          "reports": [
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_0/runs-outside-repo/proof.test-proposal.candidate-1.20261016t015923z.fa54268f/scripted-wp/goals.json",
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_0/runs-outside-repo/proof.test-proposal.candidate-1.20261016t015923z.fa54268f/scripted-wp/properties.csv",
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_0/runs-outside-repo/proof.test-proposal.candidate-1.20261016t015923z.fa54268f/scripted-wp/inventory.json"
+          ],
+          "records": [
+            {
+              "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_0/records/proofs/proof.test-proposal.candidate-1.20261016t015923z.fa54268f.yaml",
+              "sha256": "7c64532995fab053160c751ccd66ff483a40e875b0c45b9173d9e4fb5d300953",
+              "verdict": "proven",
+              "failure_class": null
+            }
+          ],
+          "verdict": "proven",
+          "failure_class": null,
+          "ordinary": 4,
+          "smoke": 0,
+          "failed": []
+        },
+        {
+          "case": 1,
+          "reports": [
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_1/runs-outside-repo/proof.test-proposal.candidate-1.20261016t015929z.9bd4ea37/scripted-wp/goals.json",
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_1/runs-outside-repo/proof.test-proposal.candidate-1.20261016t015929z.9bd4ea37/scripted-wp/properties.csv",
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_1/runs-outside-repo/proof.test-proposal.candidate-1.20261016t015929z.9bd4ea37/scripted-wp/inventory.json"
+          ],
+          "records": [
+            {
+              "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_1/records/proofs/proof.test-proposal.candidate-1.20261016t015929z.9bd4ea37.yaml",
+              "sha256": "f8be278b7eaf57ce0dfb266314219e7fbfef0414cb0743113d1c818118e7e5c3",
+              "verdict": "not_proven",
+              "failure_class": "timeout"
+            }
+          ],
+          "verdict": "not_proven",
+          "failure_class": "timeout",
+          "ordinary": 5,
+          "smoke": 0,
+          "failed": [
+            {
+              "goal": "typed_real_lemma_hidden",
+              "failure_class": "timeout"
+            }
+          ]
+        },
+        {
+          "case": 2,
+          "reports": [
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_2/runs-outside-repo/proof.test-proposal.candidate-1.20261016t015936z.ae6dea7f/scripted-wp/goals.json",
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_2/runs-outside-repo/proof.test-proposal.candidate-1.20261016t015936z.ae6dea7f/scripted-wp/properties.csv",
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_2/runs-outside-repo/proof.test-proposal.candidate-1.20261016t015936z.ae6dea7f/scripted-wp/inventory.json"
+          ],
+          "records": [
+            {
+              "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_2/records/proofs/proof.test-proposal.candidate-1.20261016t015936z.ae6dea7f.yaml",
+              "sha256": "d9d73d7810744ea43f5dae0fb365b14c3947fde6510b03a2721bf87da247226e",
+              "verdict": "not_proven",
+              "failure_class": "vacuous_pass"
+            }
+          ],
+          "verdict": "not_proven",
+          "failure_class": "vacuous_pass",
+          "ordinary": 11,
+          "smoke": 3,
+          "failed": [
+            {
+              "goal": "typed_real_f_call_g_requires",
+              "failure_class": "timeout"
+            },
+            {
+              "goal": null,
+              "failure_class": "vacuous_pass"
+            },
+            {
+              "goal": null,
+              "failure_class": "vacuous_pass"
+            },
+            {
+              "goal": null,
+              "failure_class": "vacuous_pass"
+            },
+            {
+              "goal": "typed_real_g_wp_smoke_dead_call_s4",
+              "failure_class": "vacuous_pass"
+            },
+            {
+              "goal": "typed_real_f_wp_smoke_dead_code_s5",
+              "failure_class": "vacuous_pass"
+            },
+            {
+              "goal": "typed_real_f_call_g_requires",
+              "failure_class": "timeout"
+            }
+          ]
+        },
+        {
+          "case": 3,
+          "reports": [
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_3/runs-outside-repo/proof.test-proposal.candidate-1.20261016t015946z.a36fbfd4/scripted-wp/goals.json",
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_3/runs-outside-repo/proof.test-proposal.candidate-1.20261016t015946z.a36fbfd4/scripted-wp/properties.csv",
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_3/runs-outside-repo/proof.test-proposal.candidate-1.20261016t015946z.a36fbfd4/scripted-wp/inventory.json"
+          ],
+          "records": [
+            {
+              "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_3/records/proofs/proof.test-proposal.candidate-1.20261016t015946z.a36fbfd4.yaml",
+              "sha256": "cbca6e8c0e8bde04386d308c2edb2791ac507386d6ff6983cde0eb7631853dbf",
+              "verdict": "not_proven",
+              "failure_class": "vacuous_pass"
+            }
+          ],
+          "verdict": "not_proven",
+          "failure_class": "vacuous_pass",
+          "ordinary": 10,
+          "smoke": 3,
+          "failed": [
+            {
+              "goal": null,
+              "failure_class": "vacuous_pass"
+            },
+            {
+              "goal": "typed_real_f_terminates",
+              "failure_class": "timeout"
+            },
+            {
+              "goal": "typed_real_f_terminates",
+              "failure_class": "timeout"
+            }
+          ]
+        },
+        {
+          "case": 4,
+          "reports": [
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_4/runs-outside-repo/proof.test-proposal.candidate-1.20261016t015959z.c1b3884f/scripted-wp/goals.json",
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_4/runs-outside-repo/proof.test-proposal.candidate-1.20261016t015959z.c1b3884f/scripted-wp/properties.csv",
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_4/runs-outside-repo/proof.test-proposal.candidate-1.20261016t015959z.c1b3884f/scripted-wp/inventory.json"
+          ],
+          "records": [],
+          "exception": "verdict reading [unexpected_extern]: admit dishonest: \\false; in f is not a pinned summary or maa contract; batch stops"
+        },
+        {
+          "case": 5,
+          "reports": [
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_5/runs-outside-repo/proof.test-proposal.candidate-1.20261016t020004z.1068dd55/scripted-wp/goals.json",
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_5/runs-outside-repo/proof.test-proposal.candidate-1.20261016t020004z.1068dd55/scripted-wp/properties.csv",
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_5/runs-outside-repo/proof.test-proposal.candidate-1.20261016t020004z.1068dd55/scripted-wp/inventory.json"
+          ],
+          "records": [],
+          "exception": "verdict reading [unexpected_extern]: axiom\ndishonest in global scope is not a pinned summary or maa contract; batch stops"
+        },
+        {
+          "case": 6,
+          "reports": [
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_6/runs-outside-repo/proof.test-proposal.candidate-1.20261016t020010z.fbcbffe9/scripted-wp/goals.json",
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_6/runs-outside-repo/proof.test-proposal.candidate-1.20261016t020010z.fbcbffe9/scripted-wp/properties.csv",
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_6/runs-outside-repo/proof.test-proposal.candidate-1.20261016t020010z.fbcbffe9/scripted-wp/inventory.json"
+          ],
+          "records": [
+            {
+              "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_6/records/proofs/proof.test-proposal.candidate-1.20261016t020010z.fbcbffe9.yaml",
+              "sha256": "5cc213e4ac54665335673dcc338cb2465b84ac5d48d4124b821e92bb44a1186a",
+              "verdict": "not_proven",
+              "failure_class": "vacuous_pass"
+            }
+          ],
+          "verdict": "not_proven",
+          "failure_class": "vacuous_pass",
+          "ordinary": 4,
+          "smoke": 1,
+          "failed": [
+            {
+              "goal": "typed_real_f_wp_smoke_default_requires",
+              "failure_class": "vacuous_pass"
+            },
+            {
+              "goal": "typed_real_f_wp_smoke_default_requires",
+              "failure_class": "vacuous_pass"
+            },
+            {
+              "goal": "typed_real_f_wp_smoke_default_requires",
+              "failure_class": "vacuous_pass"
+            }
+          ]
+        },
+        {
+          "case": 7,
+          "reports": [
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_7/runs-outside-repo/proof.test-proposal.candidate-1.20261016t020015z.32985b8f/scripted-wp/goals.json",
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_7/runs-outside-repo/proof.test-proposal.candidate-1.20261016t020015z.32985b8f/scripted-wp/properties.csv",
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_7/runs-outside-repo/proof.test-proposal.candidate-1.20261016t020015z.32985b8f/scripted-wp/inventory.json"
+          ],
+          "records": [
+            {
+              "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_7/records/proofs/proof.test-proposal.candidate-1.20261016t020015z.32985b8f.yaml",
+              "sha256": "879fdab7569d0514e978c6e878826dbb8cfea3b98898d75764793ea1284e9500",
+              "verdict": "not_proven",
+              "failure_class": "vacuous_pass"
+            }
+          ],
+          "verdict": "not_proven",
+          "failure_class": "vacuous_pass",
+          "ordinary": 12,
+          "smoke": 4,
+          "failed": [
+            {
+              "goal": "typed_real_f_loop_invariant_2_established",
+              "failure_class": "timeout"
+            },
+            {
+              "goal": "typed_real_f_loop_invariant_2_established",
+              "failure_class": "timeout"
+            },
+            {
+              "goal": "typed_real_f_loop_invariant_2_established",
+              "failure_class": "timeout"
+            },
+            {
+              "goal": "typed_real_f_loop_invariant_2_established",
+              "failure_class": "timeout"
+            },
+            {
+              "goal": "typed_real_f_loop_invariant_2_established",
+              "failure_class": "timeout"
+            },
+            {
+              "goal": "typed_real_f_loop_invariant_2_established",
+              "failure_class": "timeout"
+            },
+            {
+              "goal": null,
+              "failure_class": "vacuous_pass"
+            },
+            {
+              "goal": null,
+              "failure_class": "vacuous_pass"
+            },
+            {
+              "goal": null,
+              "failure_class": "vacuous_pass"
+            },
+            {
+              "goal": null,
+              "failure_class": "vacuous_pass"
+            },
+            {
+              "goal": "typed_real_f_wp_smoke_dead_loop_s2",
+              "failure_class": "vacuous_pass"
+            },
+            {
+              "goal": "typed_real_f_wp_smoke_dead_code_s6",
+              "failure_class": "vacuous_pass"
+            },
+            {
+              "goal": "typed_real_f_wp_smoke_dead_code_s8",
+              "failure_class": "vacuous_pass"
+            },
+            {
+              "goal": "typed_real_f_loop_invariant_2_established",
+              "failure_class": "timeout"
+            }
+          ]
+        },
+        {
+          "case": 8,
+          "reports": [
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_8/runs-outside-repo/proof.test-proposal.candidate-1.20261016t020024z.d4245241/scripted-wp/goals.json",
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_8/runs-outside-repo/proof.test-proposal.candidate-1.20261016t020024z.d4245241/scripted-wp/properties.csv",
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_8/runs-outside-repo/proof.test-proposal.candidate-1.20261016t020024z.d4245241/scripted-wp/inventory.json"
+          ],
+          "records": [
+            {
+              "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_8/records/proofs/proof.test-proposal.candidate-1.20261016t020024z.d4245241.yaml",
+              "sha256": "5038e16357d6c2adc13687d1efbb582939a6a2b39586772438a158f8ee472a89",
+              "verdict": "proven",
+              "failure_class": null
+            }
+          ],
+          "verdict": "proven",
+          "failure_class": null,
+          "ordinary": 6,
+          "smoke": 2,
+          "failed": []
+        },
+        {
+          "case": 9,
+          "reports": [
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_9/runs-outside-repo/proof.test-proposal.candidate-1.20261016t020034z.8749e3e1/scripted-wp/goals.json",
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_9/runs-outside-repo/proof.test-proposal.candidate-1.20261016t020034z.8749e3e1/scripted-wp/properties.csv",
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_9/runs-outside-repo/proof.test-proposal.candidate-1.20261016t020034z.8749e3e1/scripted-wp/inventory.json"
+          ],
+          "records": [
+            {
+              "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_9/records/proofs/proof.test-proposal.candidate-1.20261016t020034z.8749e3e1.yaml",
+              "sha256": "dfb06ef566b4af65d7466c6e9ba10f2e95d0d00bcc6956aaf0effd8cf622764c",
+              "verdict": "not_proven",
+              "failure_class": "timeout"
+            }
+          ],
+          "verdict": "not_proven",
+          "failure_class": "timeout",
+          "ordinary": 4,
+          "smoke": 0,
+          "failed": [
+            {
+              "goal": "typed_real_f_ensures_target",
+              "failure_class": "timeout"
+            },
+            {
+              "goal": "typed_real_f_ensures_target",
+              "failure_class": "timeout"
+            }
+          ]
+        },
+        {
+          "case": 10,
+          "reports": [
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_10/runs-outside-repo/proof.test-proposal.candidate-1.20261016t020041z.fc4af1ee/scripted-wp/goals.json",
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_10/runs-outside-repo/proof.test-proposal.candidate-1.20261016t020041z.fc4af1ee/scripted-wp/properties.csv",
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_10/runs-outside-repo/proof.test-proposal.candidate-1.20261016t020041z.fc4af1ee/scripted-wp/inventory.json"
+          ],
+          "records": [
+            {
+              "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_10/records/proofs/proof.test-proposal.candidate-1.20261016t020041z.fc4af1ee.yaml",
+              "sha256": "f756c174e41a1b47dbb32f1194fa0cb33bfe1c04f7488568dd57b4ad19cd4f1b",
+              "verdict": "not_proven",
+              "failure_class": "unknown"
+            }
+          ],
+          "verdict": "not_proven",
+          "failure_class": "unknown",
+          "ordinary": 4,
+          "smoke": 0,
+          "failed": [
+            {
+              "goal": "typed_real_f_ensures_target",
+              "failure_class": "unknown"
+            },
+            {
+              "goal": "typed_real_f_ensures_target",
+              "failure_class": "unknown"
+            },
+            {
+              "goal": "typed_real_f_ensures_target",
+              "failure_class": "unknown"
+            },
+            {
+              "goal": "typed_real_f_assigns",
+              "failure_class": "unknown"
+            }
+          ]
+        },
+        {
+          "case": 11,
+          "reports": [
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_11/runs-outside-repo/proof.test-proposal.candidate-1.20261016t020046z.0835ed26/scripted-wp/goals.json",
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_11/runs-outside-repo/proof.test-proposal.candidate-1.20261016t020046z.0835ed26/scripted-wp/properties.csv",
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_11/runs-outside-repo/proof.test-proposal.candidate-1.20261016t020046z.0835ed26/scripted-wp/inventory.json"
+          ],
+          "records": [
+            {
+              "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_11/records/proofs/proof.test-proposal.candidate-1.20261016t020046z.0835ed26.yaml",
+              "sha256": "4d8e0234f28a6ea59e5fa62a31497c675b9268b271c6ef7000217f041b0ff6c7",
+              "verdict": "not_proven",
+              "failure_class": "timeout"
+            }
+          ],
+          "verdict": "not_proven",
+          "failure_class": "timeout",
+          "ordinary": 4,
+          "smoke": 0,
+          "failed": [
+            {
+              "goal": "typed_real_f_ensures_target",
+              "failure_class": "timeout"
+            },
+            {
+              "goal": "typed_real_f_ensures_target",
+              "failure_class": "timeout"
+            }
+          ]
+        },
+        {
+          "case": 12,
+          "reports": [
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_12/runs-outside-repo/proof.test-proposal.candidate-1.20261016t020056z.ffc21576/scripted-wp/goals.json",
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_12/runs-outside-repo/proof.test-proposal.candidate-1.20261016t020056z.ffc21576/scripted-wp/properties.csv",
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest/test_real_wp_facts_read_fresh_12/runs-outside-repo/proof.test-proposal.candidate-1.20261016t020056z.ffc21576/scripted-wp/inventory.json"
+          ],
+          "records": [],
+          "exception": "verdict reading [unexpected_extern]: axiom\nhidden_header_axiom in global scope is not a pinned summary or maa contract; batch stops"
+        }
+      ],
+      "closure_files": {
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/launch.json": "01d82e7a305af1dc24817132f2bba6621f8b4229e32c73bf79f2ade0f67a64b3",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/collection.json": "3927df95e33505a4c61e58efa30472d4c98fedb48b964a0c1739fec277c5ca08",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/project-runtime-provenance.json": "2a00a126f1b14c4e2eef2c4eef0e02ba0270ac30083389343c5ff94094c03f95",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/resources.json": "39d9354c17bac74be17a4f79b5d1afa49a37029e995e72f8007e5ddf266bae34",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/outer-resources.json": "f3b0da3f0f0a12787527aadd651f77e269631dcfb3b9bb4f249f7a2e2a495ed0",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/source-after.json": "c4ece1e4848855313a40312e3d7f2261ea0a0dd05d462aaa3a15bd04a6955a8f",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/junit.xml": "de8507a86bb380bbe0c6991421fb44264dc9c75f6c4a974c831a986487f79fb1",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/acceptance.log": "9f7720fc930febb520327aa08fa95c28e11d189c873bc4a407a31b0689f123b5"
+      }
+    },
+    {
+      "kind": "production",
+      "cold_audit": {
+        "path": "/private/tmp/probata-t36-production-v3-cold-audit-20261015.json",
+        "sha256": "1250b3c6abff6b38c20e4fd1e56d007d1ad73b7eb26e3aeed63cfd2924bf9ef8",
+        "artifact_references": 34,
+        "physical_files": 94,
+        "errors": []
+      },
+      "source": {
+        "path": "/data1/yanruj/probata-reviewed-2033c174",
+        "commit": "2033c1746eeab02b1d59d4d910a4e31b3e726da8",
+        "branch": "HEAD"
+      },
+      "checks": {
+        "proof_setup_check": {
+          "version": "1",
+          "sha256": "b493fec5c0c7f5e43ea7f0d45426e73f689c696ea16d35f5abc34b7476d28104"
+        },
+        "verdict_reading": {
+          "version": "1",
+          "sha256": "b493fec5c0c7f5e43ea7f0d45426e73f689c696ea16d35f5abc34b7476d28104"
+        }
+      },
+      "raw": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-production-v3",
+      "collection": {
+        "cwd": "/data1/yanruj/probata-reviewed-2033c174/swdb-project",
+        "expected": 5,
+        "selected": 5,
+        "exit_code": 0
+      },
+      "resources": {
+        "cpu_seconds": 153.95897100000002,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 620118016,
+        "timed_out": false,
+        "wall_seconds": 148.01489590853453
+      },
+      "outer_resources": {
+        "exit_code": 1,
+        "peak_rss_bytes": 671498240,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 150.06014647427946,
+        "cpu_seconds": 186.218163
+      },
+      "source_after": {
+        "commit": "2033c1746eeab02b1d59d4d910a4e31b3e726da8",
+        "source_unchanged": true,
+        "tracked_changes": ""
+      },
+      "project_runtime_sha256": "2a00a126f1b14c4e2eef2c4eef0e02ba0270ac30083389343c5ff94094c03f95",
+      "records": [
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-production-v3/pytest/test_actual_wp_keeps_the_real_0/records/proofs/proof.contract.setup_helper.20261016t020311z.a360ea54.yaml",
+          "sha256": "f483e5b97d8fa217245fa5019e25d190f9cc945d870aab327defa716250d7c3f",
+          "verdict": "proven",
+          "failure_class": null,
+          "ordinary": 4,
+          "smoke": 0,
+          "rte": 0,
+          "initialization": 0,
+          "flags": [
+            "-wp",
+            "-wp-rte",
+            "-wp-cache",
+            "none",
+            "-wp-model",
+            "+real",
+            "-wp-par",
+            "1",
+            "-machdep",
+            "x86_64",
+            "-rte-initialized",
+            "@all",
+            "-wp-no-filter-init",
+            "-machdep",
+            "x86_64",
+            "-wp-prover",
+            "alt-ergo,z3,cvc5",
+            "-wp-timeout",
+            "30",
+            "-wp-par",
+            "1",
+            "-wp-smoke-tests",
+            "-wp-fct=summary_helper"
+          ],
+          "unproven": [],
+          "evidence_kind": "contract_fixture",
+          "corrected_assertions_pass": true
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-production-v3/pytest/test_the_safe_fixture_is_prove0/records/proofs/proof.wp-safe.candidate-1.20261016t020125z.31844b81.yaml",
+          "sha256": "0f021945ff4f1c14635fc4c6df6b7b134222a62636d907a3828d1609dc855b26",
+          "verdict": "proven",
+          "failure_class": null,
+          "ordinary": 20,
+          "smoke": 3,
+          "rte": 5,
+          "initialization": 3,
+          "flags": [
+            "-wp",
+            "-wp-rte",
+            "-wp-cache",
+            "none",
+            "-wp-model",
+            "+real",
+            "-wp-par",
+            "1",
+            "-machdep",
+            "x86_64",
+            "-rte-initialized",
+            "@all",
+            "-wp-no-filter-init",
+            "-machdep",
+            "x86_64",
+            "-wp-prover",
+            "alt-ergo,z3,cvc5",
+            "-wp-timeout",
+            "30",
+            "-wp-par",
+            "1",
+            "-wp-smoke-tests",
+            "-wp-fct=swdb_fixture_fill"
+          ],
+          "unproven": [],
+          "evidence_kind": "contract_fixture"
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-production-v3/pytest/test_the_seeded_bug_is_not_pro0/records/proofs/proof.wp-bug.candidate-1.20261016t020207z.d296be26.yaml",
+          "sha256": "cd270e7d67c1a2c8a5d27f26428c69e80dd6892f297b2f61b073f92ba6d06d4a",
+          "verdict": "not_proven",
+          "failure_class": "timeout",
+          "ordinary": 21,
+          "smoke": 3,
+          "rte": 6,
+          "initialization": 3,
+          "flags": [
+            "-wp",
+            "-wp-rte",
+            "-wp-cache",
+            "none",
+            "-wp-model",
+            "+real",
+            "-wp-par",
+            "1",
+            "-machdep",
+            "x86_64",
+            "-rte-initialized",
+            "@all",
+            "-wp-no-filter-init",
+            "-machdep",
+            "x86_64",
+            "-wp-prover",
+            "alt-ergo,z3,cvc5",
+            "-wp-timeout",
+            "30",
+            "-wp-par",
+            "1",
+            "-wp-smoke-tests",
+            "-wp-fct=swdb_fixture_fill"
+          ],
+          "unproven": [
+            {
+              "property": "\u2200 \u2124 k; 0 \u2264 k < \\old(n) \u21d2 *(\\old(a) + k) \u2261 \\old(v)",
+              "kind": "postcondition",
+              "function": "swdb_fixture_fill",
+              "line": 10,
+              "status": "Unknown",
+              "goal": "typed_real_swdb_fixture_fill_ensures",
+              "failure_class": "timeout"
+            },
+            {
+              "property": "swdb_fixture_fill_ensures",
+              "goal": "typed_real_swdb_fixture_fill_ensures",
+              "status": "timeout",
+              "failure_class": "timeout"
+            }
+          ],
+          "evidence_kind": "contract_fixture"
+        }
+      ],
+      "closure_files": {
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-production-v3/launch.json": "33c7028cc3098727b02cfd38c93cd37875b8a9efa7bea9f23d2ca7367e48ce6e",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-production-v3/collection.json": "4111196e8a7d463fcf77c7013b4c5db8c56d7d6fe2aa86e023c124361a9cb521",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-production-v3/project-runtime-provenance.json": "2a00a126f1b14c4e2eef2c4eef0e02ba0270ac30083389343c5ff94094c03f95",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-production-v3/resources.json": "d0be7afac3e8bfaaa95ab1353b4d6c4e5c40b08053f0763395dc96820567d538",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-production-v3/outer-resources.json": "87f1d46352c35d60aa3f69d515eec6ad4d680153fc7b801424d9b02d69f9a6c6",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-production-v3/source-after.json": "c4ece1e4848855313a40312e3d7f2261ea0a0dd05d462aaa3a15bd04a6955a8f",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-production-v3/junit.xml": "32f5e518f18b0f9f3ade6cabc7dd83be38cc9ed6bcb4eb9535833af5a59931ea",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-production-v3/acceptance.log": "1466dce17d6a6245ad19c71417ec5fc33350c683b6a520d176fb9b7add486804"
+      }
+    }
+  ],
+  "scalar_assertion_disposition": {
+    "original": "assert ordinary and smoke and all(goal[status] == valid for goal in ordinary + smoke)",
+    "corrected": "require nonempty ordinary and every generated ordinary/smoke goal Valid, and retained -wp-smoke-tests flag",
+    "justification": "Unconditional scalar identity has no requires; exact original formal input assigns nothing and ensures result == n. Actual inventory contains4ordinary/0smoke and0RTE/0initialization obligations. Other smoke/vacuity controls remain mandatory; no general reachability waiver. Original failed pytest and proven record remain immutable.",
+    "solver_rerun": false
+  }
+}
