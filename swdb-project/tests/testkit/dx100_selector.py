@@ -1,6 +1,8 @@
 """2026-10-16 ET. Fixture-only partial interface, never installed as current0.2."""
 import hashlib
 import json
+import os
+import re
 
 from conftest import FIXTURES
 from testkit.dx100_trust import TRUST
@@ -60,8 +62,53 @@ def pure_selector(data, library):
 
 
 
+ACTUAL_LINEUP_ENV = 'SWDB_DX100_SELECTOR_ACTUAL_LINEUP'
+ACTUAL_LINEUP_TOOLS = frozenset(('frama-c-wp', 'z3', 'alt-ergo', 'cvc5'))
+
+
+def _validate_actual_lineup(value):
+    if not isinstance(value, dict) or value.keys() != ACTUAL_LINEUP_TOOLS:
+        raise ValueError('actual selector lineup requires exactly frama-c-wp, z3, alt-ergo and cvc5')
+    if value['frama-c-wp'] != '33.0' or any(
+            not isinstance(value[name], str) or
+            re.fullmatch(r'[0-9]+\.[0-9]+\.[0-9]+', value[name]) is None
+            for name in ('z3', 'alt-ergo', 'cvc5')):
+        raise ValueError('actual selector lineup requires Frama33.0 and full numeric solver versions')
+    return dict(value)
+
+
+def read_actual_lineup(environment=None):
+    """Only explicit coordinator input: no discovery, probes or default actual pins."""
+    environment = os.environ if environment is None else environment
+    def unique(pairs):
+        value = {}
+        for name, version in pairs:
+            if name in value:
+                raise ValueError('actual selector lineup contains duplicate keys')
+            value[name] = version
+        return value
+    try:
+        value = json.loads(environment[ACTUAL_LINEUP_ENV], object_pairs_hook=unique)
+    except (KeyError, TypeError, json.JSONDecodeError) as error:
+        raise ValueError('actual selector lineup must be explicit JSON') from error
+    return _validate_actual_lineup(value)
+
+
+def bind_actual_lineup(method, lineup):
+    """Change four fixture version fields only; backend runtime matching stays strict."""
+    lineup = _validate_actual_lineup(lineup)
+    selected = [row for row in method['lineup'] if row['tool'] in ACTUAL_LINEUP_TOOLS]
+    if len(selected) != 4 or {row['tool'] for row in selected} != ACTUAL_LINEUP_TOOLS or any(
+            row['role'] != ('unbounded_verifier' if row['tool'] == 'frama-c-wp' else 'solver')
+            for row in selected):
+        raise ValueError('actual selector lineup method rows are missing or ambiguous')
+    for row in selected:
+        row['version'] = lineup[row['tool']]
+
+
 def prove_selector(tmp_path, expected, *, actual=False):
     """Same unchanged source for the true and deliberately false result contracts."""
+    lineup = read_actual_lineup() if actual else None
     from conftest import REPO
     from testkit.dx100_trust import run_semantics_fixture
     source = ('#include '+json.dumps(str(REPO/'apps/dx100/benchmarks/API/MAA_gem5.hpp'))+
@@ -73,6 +120,7 @@ def prove_selector(tmp_path, expected, *, actual=False):
         contract['clauses'][0]['statement'] = 'Synthetic u32 selector result '+str(expected)+'.'
     return run_semantics_fixture(tmp_path, 'wp', source=source, semantics_transform=pure_selector,
         contract_transform=contract_only, tool_environment={} if actual else None,
+        method_transform=(lambda method: bind_actual_lineup(method, lineup)) if actual else None,
         source_files={'gem5/m5ops.h': '#pragma once\n#include <stdint.h>\n'
                       'extern "C" void m5_add_mem_region(void*,void*,uint64_t);\n'
                       'extern "C" void m5_clear_mem_region(void);\n'},

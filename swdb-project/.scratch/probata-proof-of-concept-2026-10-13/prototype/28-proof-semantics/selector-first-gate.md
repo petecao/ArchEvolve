@@ -48,3 +48,25 @@ the public record/assumption path. A stateful size/readiness vertical follows;
 full ticket 28 still requires all interface behaviors, typed storage/source
 correspondence, CPU overlap, interthread history, ownership, region ordering,
 visibility and progress premises, and the complete positive/negative matrix.
+
+
+Actual fixture lineup — 2026-10-16 ET: the initial21ed Linux attempt stopped
+before WP because the copied Mac fixture pinned Z3/Alt-Ergo4.8.14/2.6.0 rather
+than admitted5.1.0/2.6.4. Its raw exit1 remains historical evidence; no actual
+proof result is claimed. The successor requires an explicit coordinator input:
+`SWDB_DX100_SELECTOR_ACTUAL_LINEUP` is a JSON object with exactly `frama-c-wp`,
+`z3`, `alt-ergo` and `cvc5` version strings. The reviewed Linux binding is
+`{"frama-c-wp":"33.0","z3":"5.1.0","alt-ergo":"2.6.4","cvc5":"1.2.1"}`.
+There is no discovery/default in actual mode. Missing, partial, duplicate,
+unknown-key, malformed-version or non33Frama input refuses before fixture work;
+the runner validates before its compiler-provenance bootstrap. A separately
+admitted Mac run can supply its exact solver versions explicitly.
+
+Only four version fields in the copied synthetic method change. Production
+backend method/runtime comparisons, source/model contracts, original caller,
+mandatory flags and30-second portfolio budgets remain unchanged. The generated
+method YAML and its proof-record pin bind those versions; runner runtime metadata
+also records the explicit map. Stand-in mode ignores this actual-only setting
+and retains its prior fixture versions. Root must bind the same map to its
+reviewed binary/config metadata and admit a fresh clean-source run; this repair
+and its pure/compiler/stand-in controls do not establish actual acceptance.
