@@ -44,9 +44,33 @@ def assert_size_outcome(record,expected):
         assert record['verdict']=='proven'
         assert all(g.get('status')=='valid' for g in ordinary),ordinary
     else:
-        assert record['verdict']=='not_proven' and record.get('failure_class') not in ('tool_crash','parse_error','unsupported_construct')
+        # A healthy ordinary nonproof is distinct from a tool/resource failure.
+        # The record's best status alone can hide another prover's Failed result.
+        assert record['verdict']=='not_proven' and record.get('failure_class') in ('unknown','timeout')
         failed=[g for g in ordinary if g.get('status')!='valid']
         assert failed and all('ensures' in str(g.get('goal','')) for g in failed),failed
+        reports=[p for p in record.get('evidence',{}).get('reports',[]) if p.get('name')=='wp_inventory']
+        assert len(reports)==1,'negative acceptance needs the complete pinned native inventory'
+        data=Path(reports[0]['path']).read_bytes()
+        assert hashlib.sha256(data).hexdigest()==reports[0]['sha256']
+        inventory=json.loads(data)
+        assert inventory.get('version')=='1' and inventory.get('complete') is True
+        rows=inventory.get('goals')
+        assert isinstance(rows,list) and rows and all(isinstance(r,dict) for r in rows)
+        generated={r.get('goal'):r for r in rows}
+        recorded={g.get('goal'):g for g in record['goals']}
+        assert None not in generated and len(generated)==len(rows)
+        assert None not in recorded and len(recorded)==len(record['goals'])
+        assert set(generated)==set(recorded),'unread or missing native goals'
+        healthy={'valid','unknown','timeout','stepout','untried'}
+        for name,row in generated.items():
+            results=row.get('results')
+            assert isinstance(results,list) and all(isinstance(r,str) and r in healthy for r in results),row
+            assert type(row.get('passed')) is bool and type(row.get('smoke')) is bool
+            assert row['smoke']==bool(recorded[name].get('smoke'))
+            assert row['passed']==(recorded[name].get('status')=='valid')
+            if not row['passed']:
+                assert any(r in ('unknown','timeout','stepout') for r in results),'unattempted ordinary goal'
 
 
 @pytest.mark.skipif(os.environ.get('SWDB_DX100_SIZE_ACTUAL')!='1',reason='requires coordinated root admission')
