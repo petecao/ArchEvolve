@@ -20,11 +20,14 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--seconds', type=int, default=4200)
     parser.add_argument('--public-timeout-seconds', type=int, default=1800)
+    parser.add_argument('--member', choices=('std_vector_int_ctor_count',),
+                        help='run only the separately reviewed original zero-initializing count model')
     args = parser.parse_args()
     if not 1 <= args.public_timeout_seconds <= 3600 or not 1 <= args.seconds <= 21600:
         parser.error('unsupported profile budget')
-    if args.mode == 'actual-wp' and args.seconds < 2 * args.public_timeout_seconds + 120:
-        parser.error('whole profile must cover both public commands plus setup/cleanup margin')
+    expected_records = 1 if args.member else 2
+    if args.mode == 'actual-wp' and args.seconds < expected_records * args.public_timeout_seconds + 120:
+        parser.error('whole profile must cover every selected public command plus setup/cleanup margin')
     project = Path(__file__).resolve().parents[1]
     repo = project.parent
     def source_check():
@@ -44,15 +47,17 @@ def main():
     pins = {name: hashlib.sha256((project / name).read_bytes()).hexdigest() for name in names}
     selection = 'tests/test_heap_model_view.py'
     if args.mode == 'actual-wp':
-        selection += '::test_actual_public_first_pair_heap_models'
+        selection += ('::test_actual_public_original_count_model' if args.member
+                      else '::test_actual_public_first_pair_heap_models')
     command = [sys.executable, '-m', 'pytest', '-q', '-x', '-p', 'no:cacheprovider', selection,
                '--basetemp=' + str(output / 'pytest'), '--junitxml=' + str(output / 'junit.xml')]
     profile = {'source_commit': args.expected_commit, 'mode': args.mode, 'source_sha256': pins,
                'command': command, 'public_timeout_seconds': args.public_timeout_seconds,
                'prospective_whole_seconds': args.seconds, 'required_external_rss_cap_bytes': 8589934592,
-               'actual_expected_records': 2 if args.mode == 'actual-wp' else 0,
-               'positive_target_counts': {'std_vector_int_ctor_count_value': 27, 'std_vector_int_dtor': 11},
-               'scope': 'fresh original first-pair public c_model proofs only; no generic caller adoption'}
+               'actual_expected_records': expected_records if args.mode == 'actual-wp' else 0,
+               'positive_target_counts': ({args.member: 27} if args.member else
+                   {'std_vector_int_ctor_count_value': 27, 'std_vector_int_dtor': 11}),
+               'scope': 'fresh selected original public c_model proofs only; no generic caller adoption'}
     (output / 'profile.json').write_text(json.dumps(profile, indent=2) + '\n')
     started = time.monotonic()
     env = {**os.environ, 'PYTHONDONTWRITEBYTECODE': '1', 'SWDB_VERIFIER_RSS_CAP_BYTES': '8589934592',

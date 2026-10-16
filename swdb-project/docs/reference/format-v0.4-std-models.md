@@ -223,8 +223,8 @@ real-WP acceptance for the combined origin method.
 The exact int count/value constructor and destructor have a separately checked
 unbounded heap VC translation. Their original C bodies, contracts and model
 version remain unchanged. The accepted first-pair capability experiment is
-distinct from the prospective public `swdb prove --model` integration; no
-prototype result is loaded as a model proof record.
+distinct from the public `swdb prove --model` integration; no prototype result
+is loaded as a model proof record.
 
 The public view reconstructs the original source/event/clause/RTE/init/frame/
 lifetime map and selects every positive obligation associated with that member
@@ -254,4 +254,27 @@ aliases persist, and receiver/buffer overlap remains in the destructor domain.
 Successful allocation is an explicit constructor assumption; the destructor
 does not acquire that assumption. Generic caller composition, other members or
 element types, byte/partial-store semantics, source hints and build defines are
-outside this exact view. Public actual-proof acceptance is still pending.
+outside this exact view.
+
+The coordinator-admitted public profile at exact `cea5652b` completed on
+2026-10-16 ET. Both fresh fixture records pass schema and independent cold review:
+the constructor's 27 targets contain 36 Valid ordinary goals and one passing
+numeric smoke; the destructor's 11 targets contain 11 Valid ordinary goals.
+Every one of the 108 fresh emitted tasks has the same formula body as its
+previously audited same-input task; proof results were obtained afresh. Current
+Linux runtime, method, setup/reader identities, all source and standard-support
+bindings, and the numeric local dependency DAG were checked. This establishes
+these two original member bodies under the declared translation, allocation and
+tool TCB. It does not adopt the records into the production store, compose a
+generic caller, establish other members or prove formal C++ equivalence.
+See the [independent actual review](../../.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-heap-cold-review-cea5652b-20261016.md).
+
+The original `std_vector_int_ctor_count` now has a separately prepared mapping:
+its exact source fill `(int)0` explicitly instantiates the universal value
+semantics at zero. Its full original source/contract and eleven source events
+are independently reconstructed, and all 27 positive targets, including the
+complete numeric kernel, require fresh execution. Checker policy 2 admits this
+additional member; the original model version and heap definitions are unchanged.
+Its public preparation controls and synthetic successful record persistence pass;
+actual proof acceptance remains pending. The first-pair acceptance above stays
+bound to exact CEA, without promoting those records across new checker pins.

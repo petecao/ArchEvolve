@@ -1,38 +1,44 @@
 # Probata implementation resumption
 
-Updated: 2026-10-16 00:40 ET.
+Updated: 2026-10-16 01:17 ET.
 
 ## Current state
 
-Updated: 2026-10-16 00:40 ET. **35 resolved / 25 ready-for-agent / 3 claimed.**
+Updated: 2026-10-16 01:17 ET. **35 resolved / 25 ready-for-agent / 3 claimed.**
 Implementation remains active on `codex/probata-resume-20261015`, published
-`52d89469`, based on `yanrujhou_main`. The eligible frontier is **07, 25, 28**;
+`f8dcb102`, based on `yanrujhou_main`. The eligible frontier is **07, 25, 28**;
 other unresolved tickets retain their dependencies. [All 63 statuses](ticket-status-20261015.md).
 
 | Ticket | Current evidence | Next gate |
 | --- | --- | --- |
-| **07 claimed** | Run 26 remains **UNPROVEN** after 42.22 counted minutes; its final replay stopped on a native process-inspection error. Guard repair passed 60 controls. The source-domain successor is published at `20764a3e`; executable C is unchanged and six corrected native checks passed. Helper generation v2 produced 245 goals / 352 properties, then refused undefined `pointer_comparable` and retained unsupported RTE limits. | Replace the unsupported redundant domain predicate soundly, audit alignment/function-pointer coverage, then repeat the finite no-prover component. No new counted run or helper proof is admitted. [Source review](evidence/probata-t07-source-domain-successor-independent-review-20261016.md), [retained generation](evidence/t07-helper-stage1-v2-retained-20261016.json). |
-| **25 claimed** | Pair profile at exact `1278f2d9` passed: four original bodies and safe caller prove; wrong-field caller retains one ordinary timeout with passing smoke. Independent audit: 2,359 checks, zero errors; six records and exact dependencies/runtime match. Full heap capability at `e56c62dd` is independently audited. The corrected public heap route is published at `66e49ae6`; actual two-model evaluation runs at exact `cea5652b` on node 1, generation 614. | Complete and cold-audit 27 constructor + 11 destructor targets and two persisted records. Constructor record persisted and schema-valid: all 27 targets, 36 ordinary goals and one smoke check pass. Destructor is active; the cold audit continues. Generic callers, other members/types and whole-ticket acceptance remain open. [Pair acceptance](evidence/probata-t25-pair-actual-audit-20261016.md), [heap admission](evidence/reviewed-t25-public-heap-v1-launch-cea5652b-20261015.json). |
-| **28 claimed** | Interface/typed routing/trust/checker prerequisites are published. Numeric, command history, deferred actions, region mapping, byte-image, inactive preservation and register prototypes have scoped reviews; latest register slice has 75 native controls. Setup successor has 81 controls and is published after review; its negative-ID refusal is a software guard before invalid source indexing. No current 0.2 or public formal acceptance. | Finish source call/ABI mapping and wrappers, IEEE relation, and explicit conditional progress composition. A separate mathematical-rank artifact is being prepared without actual tool execution. [Register review](evidence/t28-register-merger-review-20261016.md), [progress premise](evidence/t28-finite-progress-decision-20261016.md). |
-| **24 / 27 / 36 resolved** | Published `29709232` / `af10a946` / `8b0c2e27`, with scoped independent acceptance and immutable source/raw records retained. Ticket 36 acceptance remains tied to its historical checker. | Preserve evidence for final integration review; no broad rerun required now. |
+| **07 claimed** | Run 26 remains UNPROVEN. Exact `7930f3a1` preserves executable C. Helper generation v4 passed independent cold review: 245 goals/352 properties, 212 ordinary/33 smoke, 31 initialization properties, all 19 helper bodies and three normalized snapshots; 1,005 selected pins and 29 artifacts match. These are generation results, not solver proofs. | Review the separate 900-second complete helper-proof packet before admission. Alignment remains unresolved, with no full C RTE, helper or TD proof acceptance. [Actual generation](evidence/t07-helper-stage1-v4-actual-20261016.json), [cold review](evidence/probata-t07-stage1-v4-independent-cold-review-20261016.md). |
+| **25 claimed** | Pair `1278f2d9` and public heap CEA are accepted in scope. Fresh original count constructor at exact `bb7170ac` also passes independent cold review: one record, 27 targets, 36 ordinary Valid plus one smoke; 1,031 checks/342 references with zero mismatch. All 84 tasks are identical universal-value streams or exact zero specialization. | Continue separate growth/receiver/storage ownership and caller work. No generic caller, production-store, formal C++ or whole-ticket acceptance follows. [Count cold review](evidence/t25-count-ctor-cold-review-bb7170ac-20261016.md), [heap cold review](evidence/t25-public-heap-cold-review-cea5652b-20261016.md). |
+| **28 claimed** | Setup81 and size86 native controls are reviewed/published. Mathematical-rank artifact9704c54b passed3/3 actual syntax/type checks;83 physical pins independently match. First public real-header enum selector is under implementation with scripted compiler controls only. | Read-only expanded-config metadata, then separately reviewed complete rank VCs and independent absent-premise negative. Public interface/state/IEEE/source correspondence remain open; no current0.2 or full-ticket formal acceptance. [Rank type gate](evidence/t28-rank-type-actual-20261016.json), [progress premise](evidence/t28-finite-progress-decision-20261016.md). |
+| **24 / 27 / 36 resolved** | Published29709232/af10a946/8b0c2e27 with scoped acceptance; ticket36 retains its historical checker identity. | Preserve exact evidence for final integration review. |
 
 Root owns actual admissions: at most two remote measurements, one per socket,
-and one actual Mac verifier job. Node 1 runs the public heap profile under a
-4,500-second whole guard, 4,620-second outer cap and one 8 GiB worker; public
-profile 4,200 seconds, at most 1,800 seconds per model. Its 201 physical/Git module
-checks pass. Node 0 pair generation 586 naturally released at 00:22:33 ET.
-The two Mac generation attempts ended without external provers; no Mac actual job
-is currently admitted. Recheck leases, processes and resources before every dispatch.
+and one actual Mac verifier. Count-only node 0 generation 587 naturally released
+at 01:10:04 ET after 371.990 seconds under the whole guard; source remained exact
+and clean. Its final finite observation also records node 1 and legacy leases
+released, with process-inspection limits retained. Pair generation 586 and heap
+generation 614 remain completed. No new remote job is admitted by this checkpoint.
+The count run used one 8 GiB-RSS worker and an actual monitored 8 GiB raw-output
+allowance, not a filesystem quota. The [budget clarification](evidence/t25-count-ctor-admission-budget-clarification-20261016.md)
+retains the earlier 1 GiB proposal; all 614 raw files remain remote for readers.
 
-At 00:32 ET, before the new CEA checkout, all three remote leases were released,
-no selected verifier/compiler process was observed, CPU was 99.98% idle, and
-free space was 30.6 GiB on `/data1`, 68.7 GiB on `/data`. Raw remains on `/data`;
-source moves by Git. Full protocol v3 layouts are required. No sparse proposal,
-draft 3, final ticket 59 freeze or held-out campaign is admitted. Every actual
-record keeps its exact source, checker and runtime; runtime-dependent translator
-digests must not be treated as source-only identities.
+Mac helper generation v4 completed under a 120s/8 GiB guard in 3.521s/172.78125 MiB,
+with no OOM/timeout/inspection/cleanup failure; independent cold review passed
+for diagnostic generation only. The rank type gate completed in 0.669s with no
+VC/proof acceptance. No new Mac helper proof or counted run is admitted here.
+Recheck live leases, processes, memory and storage before every dispatch.
 
-[Current resume](resume.md). Last full status table: 00:19 ET; next: **00:49 ET**.
+Raw remote evidence stays on `/data`; source moves by Git with full protocolv3
+layouts. No sparse proposal, draft3, final ticket59 freeze or held-out campaign is
+admitted. Every result keeps its exact source/checker/runtime; runtime-dependent
+translator composites are not source-only identities. No completed checkpoint
+resolves the three frontier tickets.
+
+[Current resume](resume.md). Last full status table:00:49 ET; next:**01:19 ET**.
 
 ## Historical actual checkpoints
 

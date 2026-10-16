@@ -67,6 +67,53 @@ def test_unmapped_model_build_defines_do_not_silently_enter_the_original_heap_vi
     assert not marker.exists()
 
 
+def test_public_original_count_constructor_maps_zero_fill_before_standin(tmp_path):
+    _library, prove, marker = _heap_public_seed(tmp_path)
+    record = prove('--model', 'std_vector_int_ctor_count')
+    assert record['failure_class'] == 'parse_error', record
+    assert marker.exists()
+    view = record['settings']['heap_model_view']
+    assert view['member'] == 'std_vector_int_ctor_count'
+    assert view['original_caller_premises_added'] == []
+    assert view['value_instantiation'] == {'source_expression': '(int)0', 'mathematical_value': 0}
+    assert len(view['obligations']) == 27
+    assert set(view['required_source_groups']) == {f'C{i}' for i in range(1, 10)}
+    events = {e['id']: e for e in view['source_events']}
+    assert {'count.fill', 'count.loop.init', 'count.loop.test', 'count.loop.increment',
+            'count.final.size'} <= events.keys()
+    reports = {r['name']: r for r in record['evidence']['reports']}
+    original = Path(reports['heap_model_original']['path']).read_text()
+    assert 'this->data[k] = (int)0;' in original
+    assert 'this->data[k] == 0;' in original
+    assert record['proof_setup_check']['verdict'] == 'passed'
+    assert any(a['sentence'].startswith('Allocation succeeds') for a in record['assumptions'])
+    targets = {row['id']: row for row in view['obligations']}
+    assert 'Heap::put_integer(h,b,4*k,0)' in targets['count.prefix.step']['statement']
+    assert 'filled_prefix' in targets['count.final.post']['statement']
+    assert targets['count.numeric']['kind'] == 'c_kernel'
+    assert not any(row['dependencies'] for row in targets.values())
+
+
+@pytest.mark.parametrize('attack', ['fill', 'postcondition', 'extra_write', 'prefix'])
+def test_public_count_source_and_zero_fill_inventory_cannot_be_laundered(tmp_path, attack):
+    actions = {
+        'fill': "p.write_text(p.read_text().replace('this->data[k] = (int)0;', 'this->data[k] = (int)1;'))",
+        'postcondition': "p.write_text(p.read_text().replace('this->data[k] == 0;', 'this->data[k] == 1;'))",
+        'extra_write': "p.write_text(p.read_text().replace('this->size = n;', 'this->size = n; this->capacity = 0;'))",
+        'prefix': "m['obligations']=[r for r in m['obligations'] if r['id']!='count.prefix.step']",
+    }
+    action = 'import json,hashlib\n'
+    action += f'stage,=Path({str(tmp_path / "runs")!r}).rglob("heap-inputs")\n'
+    action += 'manifest=stage/"manifest.json"\nm=json.loads(manifest.read_text())\n'
+    action += 'p=stage/"std_vector_int_ctor_count.original.c"\n' + actions[attack] + '\n'
+    action += 'm["sources"]["std_vector_int_ctor_count"]["sha256"]=hashlib.sha256(p.read_bytes()).hexdigest()\n'
+    action += 'manifest.write_text(json.dumps(m))'
+    _library, prove, marker = _heap_public_seed(tmp_path, action)
+    done = prove('--model', 'std_vector_int_ctor_count', ok=False)
+    assert done.returncode != 0 and 'heap_model_view' in done.stderr
+    assert not marker.exists()
+
+
 def test_configured_why3_roots_cannot_shadow_the_canonical_heap_or_standard_foundations(tmp_path):
     _library, prove, marker = _heap_public_seed(tmp_path)
     shadow = tmp_path / 'shadow'
@@ -142,41 +189,51 @@ def test_public_serial_heap_targets_share_one_remaining_budget(tmp_path):
     assert record['settings']['whole_public_budget_seconds'] == 6
 
 
-def test_complete_synthetic_heap_success_serializes_a_schema_valid_public_record(tmp_path):
+@pytest.mark.parametrize('member,count', [('std_vector_int_dtor', 11), ('std_vector_int_ctor_count', 27)])
+def test_complete_synthetic_heap_success_serializes_a_schema_valid_public_record(tmp_path, member, count):
     """Exercise aggregation only; every formal result is a labeled external stand-in."""
     _library, prove, _marker = _heap_public_seed(tmp_path)
     frama = tmp_path / 'frama.py'
     metadata_prefix = frama.read_text().split('if "-wp" in sys.argv:')[0]
     frama.write_text(metadata_prefix + '''if "-wp" in sys.argv:
  import json,os,re
- name=re.search(r"check lemma (\\w+)",Path("wp_input.c").read_text()).group(1)
- prop="check_lemma_"+name
- goal="typed_"+prop
- row={"goal":goal,"property":prop,"function":None,"line":34,"smoke":False,
+ match=re.search(r"check lemma (\\w+)",Path("wp_input.c").read_text())
+ if match:
+  specs=[("check_lemma_"+match.group(1),"lemma",False)]
+ else:
+  assert "size_t t25_ctor_numeric(size_t n, size_t k)" in Path("wp_input.c").read_text()
+  specs=[("synthetic_numeric_"+str(i),"assertion",False) for i in range(10)]
+  specs.append(("synthetic_numeric_smoke","assertion",True))
+ rows=[];generated=[];properties=[]
+ for prop,kind,smoke in specs:
+  goal="typed_"+prop
+  function=None if match else "t25_ctor_numeric"
+  rows.append({"goal":goal,"property":prop,"function":function,"line":34,"smoke":smoke,
       "passed":True,"verdict":"valid","proved":1,
-      "provers":[{"prover":"CVC5:1.2.1","time":0,"success":1}]}
+      "provers":[{"prover":"CVC5:1.2.1","time":0,"success":1}]})
+  generated.append({"goal":goal,"property":prop,"function":function,"line":34,"smoke":smoke,
+                    "passed":True,"targets":[],"results":["valid"]})
+  properties.append({"property":prop,"function":function,"kind":kind,"line":34,
+                     "extern":False,"dependencies":[],"origin":None,
+                     "generated_smoke_failure":False,"description":"synthetic control"})
  Path("SYNTHETIC-ONLY.txt").write_text("External stand-in; no actual proof or solver execution")
- Path("wp-goals.json").write_text(json.dumps([row]))
+ Path("wp-goals.json").write_text(json.dumps(rows))
  Path("wp-normalized.c").write_text(Path("wp_input.c").read_text())
  Path("wp-properties.csv").write_text("directory\\tfile\\tline\\tfunction\\tproperty kind\\tstatus\\tproperty\\n")
- inv={"version":"1","complete":True,
-      "goals":[{"goal":goal,"property":prop,"function":None,"line":34,"smoke":False,
-                "passed":True,"targets":[],"results":["valid"]}],
-      "properties":[{"property":prop,"function":None,"kind":"lemma","line":34,
-                     "extern":False,"dependencies":[],"origin":None,
-                     "generated_smoke_failure":False,"description":"synthetic check lemma"}]}
+ inv={"version":"1","complete":True,"goals":generated,"properties":properties}
  Path(os.environ["SWDB_PROOF_REPORT_OUT"]).write_text(json.dumps(inv))
  sys.exit(0)
 ''')
     # The public command validates the complete record against proof.schema.json.
-    record = prove('--model', 'std_vector_int_dtor')
+    record = prove('--model', member)
     assert record['verdict'] == 'proven', record
     assert set(record['verdict_reading']) == {'check', 'verdict'}
     assert record['verdict_reading']['verdict'] == 'proven'
     runs = record['settings']['heap_model_runs']
-    assert len(runs) == 11 and all(r['reading']['verdict'] == 'proven' for r in runs)
-    assert len(record['proof_setup_check']['runs']) == 11
-    assert len(record['goals']) == 11
+    assert len(runs) == count and all(r['reading']['verdict'] == 'proven' for r in runs)
+    assert len(record['proof_setup_check']['runs']) == count
+    assert len(record['goals']) == (11 if count == 11 else 37)
+    assert len([g for g in record['goals'] if g.get('smoke')]) == (0 if count == 11 else 1)
     assert all((Path(r['cwd']) / 'SYNTHETIC-ONLY.txt').is_file() for r in runs)
 
 
@@ -184,6 +241,17 @@ def test_complete_synthetic_heap_success_serializes_a_schema_valid_public_record
                     reason='requires separate coordinator admission of exact clean source and formal command')
 def test_actual_public_first_pair_heap_models(tmp_path):
     """Actual-only target; ordinary controls never execute this function."""
+    _actual_public_models(tmp_path, [('std_vector_int_ctor_count_value', 27), ('std_vector_int_dtor', 11)])
+
+
+@pytest.mark.skipif(os.environ.get('SWDB_HEAP_MODEL_ACTUAL') != '1',
+                    reason='requires separate coordinator admission of exact clean source and formal command')
+def test_actual_public_original_count_model(tmp_path):
+    """One new original model only; no successful first-pair proofs are repeated."""
+    _actual_public_models(tmp_path, [('std_vector_int_ctor_count', 27)])
+
+
+def _actual_public_models(tmp_path, members):
     import json
     import time
     import yaml
@@ -194,7 +262,7 @@ def test_actual_public_first_pair_heap_models(tmp_path):
     public = int(os.environ.get('SWDB_HEAP_MODEL_PUBLIC_TIMEOUT_SECONDS', '1800'))
     assert 1 <= public <= 3600
     deadline = float(os.environ.get('SWDB_HEAP_MODEL_PROFILE_DEADLINE_MONOTONIC', time.monotonic() + 4200))
-    for member, count in [('std_vector_int_ctor_count_value', 27), ('std_vector_int_dtor', 11)]:
+    for member, count in members:
         remaining = min(public, deadline - time.monotonic() - 60)
         assert remaining > 0, 'the admitted whole profile budget is spent'
         argv = ['prove', '--records', str(seed.records), '--adapter', 'wp',
@@ -214,5 +282,9 @@ def test_actual_public_first_pair_heap_models(tmp_path):
         assert len(record['proof_setup_check']['runs']) == count
         assert record['verdict_reading']['check'] == proof_setup.identity()['verdict_reading']
         assert all(g['status'] == 'valid' for g in record['goals'])
-        assert bool([g for g in record['goals'] if g.get('smoke')]) == member.endswith('ctor_count_value')
+        constructor = member != 'std_vector_int_dtor'
+        assert len([g for g in record['goals'] if g.get('smoke')]) == (1 if constructor else 0)
+        assert len([g for g in record['goals'] if not g.get('smoke')]) == (36 if constructor else 11)
+        numeric = [r for r in record['settings']['heap_model_runs'] if r['id'].endswith('.numeric')]
+        assert len(numeric) == (1 if constructor else 0)
         assert record['pins']['code']['sha256'] == record['settings']['heap_model_view']['original_source']['sha256']

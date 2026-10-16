@@ -1,0 +1,79 @@
+{
+  "created": "2026-10-16 ET",
+  "stage": "type-only, no prover selection",
+  "executed": false,
+  "requires_separate_root_admission": true,
+  "not_a_launch_script": true,
+  "source_sha256": {
+    "readiness_rank.mlw": "44eb843146e57495579fed4a118df67bcc3858560dd381db62498a65055b150c",
+    "delay_family.mlw": "d99660f76ad8469960f81491c7df4bfa974abc1133a61d32e9081fe0f60895f6",
+    "no_progress.mlw": "b80c777054a450f781351130baf91e9c0fdb37a4a59e5453e857921b9b85f465"
+  },
+  "proposed_whole_wall_seconds": 600,
+  "proposed_per_call_wall_seconds": 60,
+  "rss_cap_bytes": 8589934592,
+  "workers": 1,
+  "requirements": [
+    "Root-only separate prospective formal-tool admission; this plan is inert.",
+    "Rehash exact sources and command plan; bind actual architecture/context tool/config/stdlib/prover/driver pins before use.",
+    "Reject unreviewed config plugins and ambient WHY3LIB/WHY3DATA/library overrides; do not run config detect or version commands from this plan.",
+    "One worker; outer 8GiB process-tree RSS and wall watchdog, slot/lane coordination, remaining-budget application and poststop checks.",
+    "Keep stdout/stderr/raw VC tasks outside source checkout; no session/replay/extract/execute command."
+  ],
+  "calls": [
+    {
+      "name": "readiness_rank.mlw",
+      "argv": [
+        "<WHY3>",
+        "prove",
+        "--no-stdlib",
+        "--no-load-default-plugins",
+        "--config",
+        "<REVIEWED_CONFIG>",
+        "-L",
+        "<PINNED_STDLIB>",
+        "--type-only",
+        "<ARTIFACT_DIR>/readiness_rank.mlw"
+      ],
+      "stdout": "<RAW>/type-readiness_rank.mlw.stdout",
+      "stderr": "<RAW>/type-readiness_rank.mlw.stderr",
+      "acceptance": "natural exit0, exact unchanged sources/runtime, no prover invocation; this establishes type support only"
+    },
+    {
+      "name": "delay_family.mlw",
+      "argv": [
+        "<WHY3>",
+        "prove",
+        "--no-stdlib",
+        "--no-load-default-plugins",
+        "--config",
+        "<REVIEWED_CONFIG>",
+        "-L",
+        "<PINNED_STDLIB>",
+        "--type-only",
+        "<ARTIFACT_DIR>/delay_family.mlw"
+      ],
+      "stdout": "<RAW>/type-delay_family.mlw.stdout",
+      "stderr": "<RAW>/type-delay_family.mlw.stderr",
+      "acceptance": "natural exit0, exact unchanged sources/runtime, no prover invocation; this establishes type support only"
+    },
+    {
+      "name": "no_progress.mlw",
+      "argv": [
+        "<WHY3>",
+        "prove",
+        "--no-stdlib",
+        "--no-load-default-plugins",
+        "--config",
+        "<REVIEWED_CONFIG>",
+        "-L",
+        "<PINNED_STDLIB>",
+        "--type-only",
+        "<ARTIFACT_DIR>/no_progress.mlw"
+      ],
+      "stdout": "<RAW>/type-no_progress.mlw.stdout",
+      "stderr": "<RAW>/type-no_progress.mlw.stderr",
+      "acceptance": "natural exit0, exact unchanged sources/runtime, no prover invocation; this establishes type support only"
+    }
+  ]
+}

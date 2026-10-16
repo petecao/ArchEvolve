@@ -1,0 +1,535 @@
+{
+  "actual_result": {
+    "all_three_typechecks_pass": true,
+    "elapsed_seconds": 0.3143666669493541,
+    "external_provers_selected": [],
+    "proof_claim": false,
+    "rows": [
+      {
+        "argv": [
+          "/Users/yanrujhou/.opam/framac-33/bin/why3",
+          "prove",
+          "--no-stdlib",
+          "--no-load-default-plugins",
+          "--config",
+          "/Users/yanrujhou/.why3.conf",
+          "-L",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib",
+          "--type-only",
+          "/private/tmp/probata-t28-rank-type-v1-9704c54b-20261016/component/readiness_rank.mlw"
+        ],
+        "returncode": 0,
+        "source": "readiness_rank.mlw",
+        "source_sha256": "44eb843146e57495579fed4a118df67bcc3858560dd381db62498a65055b150c",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "argv": [
+          "/Users/yanrujhou/.opam/framac-33/bin/why3",
+          "prove",
+          "--no-stdlib",
+          "--no-load-default-plugins",
+          "--config",
+          "/Users/yanrujhou/.why3.conf",
+          "-L",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib",
+          "--type-only",
+          "/private/tmp/probata-t28-rank-type-v1-9704c54b-20261016/component/delay_family.mlw"
+        ],
+        "returncode": 0,
+        "source": "delay_family.mlw",
+        "source_sha256": "d99660f76ad8469960f81491c7df4bfa974abc1133a61d32e9081fe0f60895f6",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "argv": [
+          "/Users/yanrujhou/.opam/framac-33/bin/why3",
+          "prove",
+          "--no-stdlib",
+          "--no-load-default-plugins",
+          "--config",
+          "/Users/yanrujhou/.why3.conf",
+          "-L",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib",
+          "--type-only",
+          "/private/tmp/probata-t28-rank-type-v1-9704c54b-20261016/component/no_progress.mlw"
+        ],
+        "returncode": 0,
+        "source": "no_progress.mlw",
+        "source_sha256": "b80c777054a450f781351130baf91e9c0fdb37a4a59e5453e857921b9b85f465",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "source_commit": "9704c54b838863dd838d18a20dd0ade1633d5027",
+    "source_unchanged": true,
+    "stage": "type_only"
+  },
+  "correction": "Only the next-VC configuration interpretation is corrected; all cold type results,83physicalpins,verdict and resources are unchanged. v1 preserved.",
+  "date_et": "2026-10-16",
+  "errors": [],
+  "guard": {
+    "cap_gb": 8.0,
+    "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment",
+    "cleanup_inspection_failure": null,
+    "cleanup_inspection_failures": [],
+    "clock": "continuous_monotonic",
+    "clock_info": {
+      "denom": 3,
+      "implementation": "mach_continuous_time",
+      "includes_sleep": true,
+      "kind": "continuous_monotonic",
+      "numer": 125
+    },
+    "cmd": [
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+      "/private/tmp/probata-t28-rank-type-entry-v1-20261016.py",
+      "/private/tmp/probata-t28-rank-type-v1-9704c54b-20261016/component"
+    ],
+    "error": null,
+    "exit_code": 0,
+    "finished": "2026-10-16 00:51:21 EDT",
+    "inspection_events": [],
+    "inspection_failure": null,
+    "inspection_retry_boundary": "AccessDenied uses a 200 ms environ retry admission window and 21-attempt cap, or three attempts for other operations; only the exact proc_environ SystemError raised by the requested environ operation shares that policy; individual OS calls are not forcibly timed; all pauses count and RSS/deadline checks remain mandatory after inspection; only independently confirmed gone/zombie or changed birth is skipped; persistent live or unknown failure fails closed",
+    "killed_by_watchdog": false,
+    "lock_wait_s": 0.0006469166837632656,
+    "log": "/private/tmp/probata-t28-rank-type-v1-9704c54b-20261016/guard.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "peak_rss_mb": 46.3125,
+    "primary_inspection_failure": null,
+    "queue_timed_out": false,
+    "queue_timeout_s": 30.0,
+    "rss_scope": "live union of current ancestry, retained PID/birth identities and periodic inherited-marker matches; sampled, not a kernel quota",
+    "runner_pid": 22604,
+    "timed_out": false,
+    "timeout_s": 60.0,
+    "unconfirmed_children": [],
+    "wall_s": 0.6690187084022909
+  },
+  "next_vc_config_finding": "Correction to preserved v1: Why3 1.8.2 expands partial_prover metadata into complete commands/drivers at startup. Absence of explicit prover sections is not evidence of an unavailable portfolio. A separately admitted read-only config show/list-provers metadata prelude should bind the actual expanded command/driver closure before solver use. No alternate config or config-detect mutation is proposed.",
+  "physical_files_hashed": 83,
+  "physical_pins": {
+    "/Users/yanrujhou/.opam/framac-33/bin/why3": {
+      "bytes": 13204488,
+      "sha256": "e90d62b3883a4c2f90c5260ff410ef019803eb08b5f72f3d3ade77d4ce6f0555"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/algebra.mlw": {
+      "bytes": 4910,
+      "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/array.mlw": {
+      "bytes": 15332,
+      "sha256": "5e1abb583bb14cc1821612859b94568a586419d0dbe0d6752f8835ac098362b6"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/bag.mlw": {
+      "bytes": 3389,
+      "sha256": "b5e8f1b8b7a6d4de57571d26ad356a161197fedc7cfd3e104a877a1e12c1bca5"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/bintree.mlw": {
+      "bytes": 4302,
+      "sha256": "b651b0989affbee0364a58daa48d77f94ec5a7acaff86f09cd4536d0472dcaf9"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/bool.mlw": {
+      "bytes": 819,
+      "sha256": "b7072fdd8dd5004d0627b82a66b054518ee54eb4dd66f0883988e363bed251fa"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/bv.mlw": {
+      "bytes": 35789,
+      "sha256": "1c62539b31bfb75042a0b31559ffca9f87429fcfdccc8ed1772b65f0f4131110"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/byte_string.mlw": {
+      "bytes": 1832,
+      "sha256": "75480d65a76ed317e88be7d50f593a314b6b94f8eac9f39a1af73adc0a49178f"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/cursor.mlw": {
+      "bytes": 2105,
+      "sha256": "5e6554c0e39cba91c92c59d6b7318364f032a6adbb17ca98bdcb2c08d16de701"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/debug.mlw": {
+      "bytes": 97,
+      "sha256": "c79c4fa42774dd4c92000c2fb40f2c66029630f65cd8a3262fa9881579167cdb"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/exn.mlw": {
+      "bytes": 97,
+      "sha256": "5aa489183cfcc45d081c9cf0af98b3636ebdde5860fd5a6d9222aa8bbb9d63f1"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/floating_point.mlw": {
+      "bytes": 21961,
+      "sha256": "0fc1c5bcdb2812e9fd173199de8f767b8a27f5dbcc8072ca4fd543b04071aa8f"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/fmap.mlw": {
+      "bytes": 8855,
+      "sha256": "fbda0657de5bb9813aa279daed748fb384d8ba827cd8987fb130f25c703faa15"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/for_drivers.mlw": {
+      "bytes": 704,
+      "sha256": "e892ad394b50de0da1a2ed0e514d82632f3d79e57ac61294ad2d586b68883179"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/function.mlw": {
+      "bytes": 638,
+      "sha256": "f1ddf9c3ce7b8fcda55d05f7b4b41612afd739256ccf131a6dce444a80f5a87f"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/graph.mlw": {
+      "bytes": 2531,
+      "sha256": "c9fdd8de698c4899486056d37999a819d9258fd6b3782a23dbf0eb32f9a5ccb4"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/hashtbl.mlw": {
+      "bytes": 2006,
+      "sha256": "348c2084411cfb5fa5bf4babaa90ee34ee55f9303487141d7f30856aa3720b20"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/ieee_float.mlw": {
+      "bytes": 35187,
+      "sha256": "57a096bcb20309ab323405fabfeb67699037289dc0223368526adab32fa9d6a7"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/int.mlw": {
+      "bytes": 18553,
+      "sha256": "eb5bc9d4a46e1b6a298d24fd36dcf9dfb8f35cbc75b2f44007cfe1a24550ce8d"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/io.mlw": {
+      "bytes": 2066,
+      "sha256": "e46fde974c5cc062222fad6f2f9813fc2f1e0d1c09bdcb6d701fe41d0ea1d6ae"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/list.mlw": {
+      "bytes": 12337,
+      "sha256": "29b8f5925862ce3c4fb47bae171247b247b450cfcd56f6fc49db3c5b4b162ee9"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/array.mlw": {
+      "bytes": 15954,
+      "sha256": "b27c51c8cc0e4de11f0b4acbec05e4ea17de77dfc3af789bd5237f504b1c9861"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/bv.mlw": {
+      "bytes": 14311,
+      "sha256": "5e5c6bc76cbc55aec6d6ed5588fcc047dcce74c88e0394b3aa94ac1fa3ef0b94"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/c.mlw": {
+      "bytes": 14054,
+      "sha256": "7c847a149a2759820689b6e8229f4399698c14b2f850691c3d8f343d05ad08f4"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/float.mlw": {
+      "bytes": 6246,
+      "sha256": "f83ca3bedf58a5064b8947400248d79997e83e202fac0bc6796699442888bb44"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/fxp.mlw": {
+      "bytes": 4043,
+      "sha256": "43c4ab90b6ebcf835194e50d2a18cef6864281e32c71d3a446cf9a48a74c5ea1"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/int.mlw": {
+      "bytes": 18228,
+      "sha256": "8b15e61d54e9fa0e86e28ba552a13a50afdc752c75c183b5fec483b2f0ae20de"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/java/io.mlw": {
+      "bytes": 219,
+      "sha256": "3f15f978b231cbbfbcac8708d082b7b5be486f50d4c10666a14f28152bd11416"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/java/lang.mlw": {
+      "bytes": 5499,
+      "sha256": "355faf72f66a6ab0effc7d178f28fe78b69731add875a42975fbc4e837f5a0ca"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/java/util.mlw": {
+      "bytes": 10009,
+      "sha256": "407c1895c9b5a1311ac601c179dadf39c0f8343840b09823cfb72b579d437797"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/list.mlw": {
+      "bytes": 1138,
+      "sha256": "6618c9c030120189006f2a48b14d14b0baa9ffb6e6446e07e2f1997b27b25e2c"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/matrix.mlw": {
+      "bytes": 2633,
+      "sha256": "3a72bf9c0dc6751943ebdd647a362719f9cd360af2d954c714acd639510f1950"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/onetime.mlw": {
+      "bytes": 2570,
+      "sha256": "8e45739bcfc995055086a57d4fcfbb836252334c65a855c9dcd299a59801a6d1"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/peano.mlw": {
+      "bytes": 2734,
+      "sha256": "210c67ce2ab36aff9764537f4e884db02ae4b0d8463b92460848d8183bf6d0aa"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/tagset.mlw": {
+      "bytes": 10253,
+      "sha256": "58a641b42a874f8e63228a4d0be57d6ee8b6340508d31746dde339a7da574c5b"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/map.mlw": {
+      "bytes": 5517,
+      "sha256": "c4cd7b90e39f8407fd714d0e46ce4c6496a98afd32bd69c71237b35a4b7c08a0"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/matrix.mlw": {
+      "bytes": 2202,
+      "sha256": "0ceeed3e742e47de3ef4bf01042a69dcf501b119010b1de6b0fc2b0d2266efde"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/microc.mlw": {
+      "bytes": 3869,
+      "sha256": "d7322664cc4d419d6d7101fcdab0587896353eca9df3aa41be1effb0c3891eed"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/number.mlw": {
+      "bytes": 5466,
+      "sha256": "4d0d83a9718774a342234ff8ef67e4545840629ffb0ee508f900d8fd67f83911"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/ocaml.mlw": {
+      "bytes": 1090,
+      "sha256": "1777a1f306b54d3cd73afb45d9330eccbcb673d0287c7ee8a6ba0c282578db51"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/option.mlw": {
+      "bytes": 351,
+      "sha256": "ba5607ebfa8fb060cede3798d21241b43de090046724084a3efc1f90a308a6df"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/pigeon.mlw": {
+      "bytes": 1931,
+      "sha256": "584baeb86de6831ac02d2a379aaa9a16fde47495603acb78c5796b334cdcd0e3"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/pqueue.mlw": {
+      "bytes": 5445,
+      "sha256": "edad87a86e411409aa8b5be43993022066f05e951217b12b37ed7b0b45888420"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/python.mlw": {
+      "bytes": 5465,
+      "sha256": "5e44344331a4deb815b92bf800bef051be2764b18e5ed889d2e7f77613f951f7"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/queue.mlw": {
+      "bytes": 1527,
+      "sha256": "28c577b16c6ddb2be23273f764c70936164842e7f7b2ef3b4125e2fcfc7a0463"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/random.mlw": {
+      "bytes": 1452,
+      "sha256": "39371d90d75a70bde82c2a0a8340d414d22eab8197983e77b27ff8bf75f5dd9b"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/real.mlw": {
+      "bytes": 11047,
+      "sha256": "50940038bba54f6bd57501e5af6439af8c4f081274eb79a19d888a4cd419b8a2"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/ref.mlw": {
+      "bytes": 908,
+      "sha256": "f54413bf62b69bbfb996bd7d6a8098c18e4663f95f788623f729dd8eb5a60bea"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/regexp.mlw": {
+      "bytes": 1616,
+      "sha256": "0eaf9277c63569edf20606d3de5fc96522348b5a4c37e9b83fdfca2b011ec8c0"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/relations.mlw": {
+      "bytes": 4033,
+      "sha256": "0a367aecd2cd627de87d5f4011ddbf930bf49283e0b94b792a338faf921b2cae"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/seq.mlw": {
+      "bytes": 18059,
+      "sha256": "9acfebda1e49dd3b6090f77e6c9ac518e05a3e61a25c4efaaa63cd9090444eb8"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/set.mlw": {
+      "bytes": 18245,
+      "sha256": "c5dca5e35ca7198ed7c732b22ec5686cb40c0a7edc9f4ecde783f4ebef744498"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/stack.mlw": {
+      "bytes": 1333,
+      "sha256": "ef10f41813802ad069ab1bf7444a4e271570439f568c6f24fb0ec119588b1f30"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/string.mlw": {
+      "bytes": 17684,
+      "sha256": "ea9e41823b857ebbe08fe5ba71687f3894946efd21748703d89a83df6b99e3ec"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/tptp.mlw": {
+      "bytes": 3949,
+      "sha256": "b095a34e17d52bd10837aec0cd5db3090cbb6f86918707402eebadafab4dc97d"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/tree.mlw": {
+      "bytes": 1181,
+      "sha256": "9871c40b442266715678814a1f80298f99af054e8be70abc58826e04e91cefd7"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/ufloat.mlw": {
+      "bytes": 38794,
+      "sha256": "cd4a4f4c0d73b895f6735a8d5501be56b0cb9db19ccc80715b792c5e001dc7c3"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/witness.mlw": {
+      "bytes": 1812,
+      "sha256": "74098a4e80908fb5719b04e741a36cac977f180d837b6ffc0238fe1d915d609a"
+    },
+    "/Users/yanrujhou/.why3.conf": {
+      "bytes": 375,
+      "sha256": "5f82bccca4b275b60979f8eabba62c3f8af1a9178913dbd31efd350a030817c8"
+    },
+    "/private/tmp/probata-resume-t07-source-domains/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py": {
+      "bytes": 28501,
+      "sha256": "c6f0d4b8c60fab912dd768c4c8c7e7737d8feca3a110d0de02dec4d38785db57"
+    },
+    "/private/tmp/probata-resume-t25-pair/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-readiness-rank/delay_family.mlw": {
+      "bytes": 809,
+      "sha256": "d99660f76ad8469960f81491c7df4bfa974abc1133a61d32e9081fe0f60895f6"
+    },
+    "/private/tmp/probata-resume-t25-pair/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-readiness-rank/no_progress.mlw": {
+      "bytes": 686,
+      "sha256": "b80c777054a450f781351130baf91e9c0fdb37a4a59e5453e857921b9b85f465"
+    },
+    "/private/tmp/probata-resume-t25-pair/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-readiness-rank/readiness_rank.mlw": {
+      "bytes": 752,
+      "sha256": "44eb843146e57495579fed4a118df67bcc3858560dd381db62498a65055b150c"
+    },
+    "/private/tmp/probata-t28-rank-type-command-v1-20261016.json": {
+      "bytes": 1550,
+      "sha256": "4101f54f1d05106006dcdcd41820ed54d6a0fefbb67aee4242ef616f363cd094"
+    },
+    "/private/tmp/probata-t28-rank-type-entry-v1-20261016.py": {
+      "bytes": 3808,
+      "sha256": "34ec12d97c8abb33218ef4df7bb476ecf0924bdbd784aaa662269990544b426d"
+    },
+    "/private/tmp/probata-t28-rank-type-expected-v1-20261016.json": {
+      "bytes": 5577,
+      "sha256": "ce9ef02e2c4821602333c1d28706ff89e45f0310ff45ab53d60eda196bcc1234"
+    },
+    "/private/tmp/probata-t28-rank-type-root-preflight-v1-20261016.json": {
+      "bytes": 1125,
+      "sha256": "2ca60e184d84f849062e2c39025fd7ce26a217dd20bd8ecf9c30e217f489fe57"
+    },
+    "/private/tmp/probata-t28-rank-type-v1-9704c54b-20261016/component/artifacts.json": {
+      "bytes": 1570,
+      "sha256": "99a702b23d1668dedeaaead7b0d99c01e98c16bb1bd61e27658858bb889bf8a4"
+    },
+    "/private/tmp/probata-t28-rank-type-v1-9704c54b-20261016/component/delay_family.mlw": {
+      "bytes": 809,
+      "sha256": "d99660f76ad8469960f81491c7df4bfa974abc1133a61d32e9081fe0f60895f6"
+    },
+    "/private/tmp/probata-t28-rank-type-v1-9704c54b-20261016/component/delay_family.mlw.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/private/tmp/probata-t28-rank-type-v1-9704c54b-20261016/component/delay_family.mlw.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/private/tmp/probata-t28-rank-type-v1-9704c54b-20261016/component/no_progress.mlw": {
+      "bytes": 686,
+      "sha256": "b80c777054a450f781351130baf91e9c0fdb37a4a59e5453e857921b9b85f465"
+    },
+    "/private/tmp/probata-t28-rank-type-v1-9704c54b-20261016/component/no_progress.mlw.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/private/tmp/probata-t28-rank-type-v1-9704c54b-20261016/component/no_progress.mlw.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/private/tmp/probata-t28-rank-type-v1-9704c54b-20261016/component/progress.json": {
+      "bytes": 2141,
+      "sha256": "ca0bcabeb9af8952cf33996401e97ae84982eafeea527452f7f268392238086e"
+    },
+    "/private/tmp/probata-t28-rank-type-v1-9704c54b-20261016/component/readiness_rank.mlw": {
+      "bytes": 752,
+      "sha256": "44eb843146e57495579fed4a118df67bcc3858560dd381db62498a65055b150c"
+    },
+    "/private/tmp/probata-t28-rank-type-v1-9704c54b-20261016/component/readiness_rank.mlw.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/private/tmp/probata-t28-rank-type-v1-9704c54b-20261016/component/readiness_rank.mlw.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/private/tmp/probata-t28-rank-type-v1-9704c54b-20261016/component/result.json": {
+      "bytes": 2523,
+      "sha256": "5f6c9bd78e5e10e8afed39c12fc997e35970d9b06ed0e49ba295145dfcad5f9e"
+    },
+    "/private/tmp/probata-t28-rank-type-v1-9704c54b-20261016/guard.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/private/tmp/probata-t28-rank-type-v1-9704c54b-20261016/guard.log.summary.json": {
+      "bytes": 1927,
+      "sha256": "eb05695064f0f45efbf3a2bfc028fa304c94b21bd9ce0780fdd726abe0352b12"
+    },
+    "/private/tmp/probata-t28-rank-type-v1-9704c54b-20261016/guard.log.wait.json": {
+      "bytes": 273,
+      "sha256": "9e561b14940244afd2115a55e399f8c36f655e3409386f76c2fa41fc245ff0ed"
+    },
+    "/private/tmp/probata-t28-rank-type-v1-9704c54b-20261016/root-driver.log": {
+      "bytes": 1877,
+      "sha256": "a3de3d5aac8d664fdde3a152e6f4d02cebfe25371591b67ba4815f24a5136d38"
+    }
+  },
+  "primary_reference": "https://why3.org/doc/manpages.html#the-config-command",
+  "proof_claim": false,
+  "raw_root": "/private/tmp/probata-t28-rank-type-v1-9704c54b-20261016",
+  "reviewer_execution": "File/JSON/AST/hash/Git reads only. No entry/guard/Why3/prover/compiler/test/config detect/SSH execution.",
+  "root_preflight": {
+    "active_selected_verifiers": [],
+    "at_et": "2026-10-16T00:51:20.763658-04:00",
+    "command_sha256": "4101f54f1d05106006dcdcd41820ed54d6a0fefbb67aee4242ef616f363cd094",
+    "free_bytes": 70662541312,
+    "guard_dependency_origin": "/private/tmp/probata-resume-t07-source-domains/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/staged_search.py",
+    "inspection_denial_pids": [],
+    "lease_wait_seconds": 0.021256209001876414,
+    "memory_pressure": "The system has 38654705664 (2359296 pages with a page size of 16384).\nSystem-wide memory free percentage: 75%\n",
+    "output_budget_bytes": 16777216,
+    "psutil_origin": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/__init__.py",
+    "published_ancestor": true,
+    "raw_root": "/private/tmp/probata-t28-rank-type-v1-9704c54b-20261016",
+    "same_uid_metadata_count": 586,
+    "scope": "Finite UID/name/PID/birth metadata, no environment/token absence claim; one actual type-only job authorized by root.",
+    "shared_leases_absent": true,
+    "source_clean": true,
+    "source_commit": "9704c54b838863dd838d18a20dd0ade1633d5027"
+  },
+  "rows": [
+    {
+      "argv": [
+        "/Users/yanrujhou/.opam/framac-33/bin/why3",
+        "prove",
+        "--no-stdlib",
+        "--no-load-default-plugins",
+        "--config",
+        "/Users/yanrujhou/.why3.conf",
+        "-L",
+        "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib",
+        "--type-only",
+        "/private/tmp/probata-t28-rank-type-v1-9704c54b-20261016/component/readiness_rank.mlw"
+      ],
+      "returncode": 0,
+      "source": "readiness_rank.mlw",
+      "source_sha256": "44eb843146e57495579fed4a118df67bcc3858560dd381db62498a65055b150c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "/Users/yanrujhou/.opam/framac-33/bin/why3",
+        "prove",
+        "--no-stdlib",
+        "--no-load-default-plugins",
+        "--config",
+        "/Users/yanrujhou/.why3.conf",
+        "-L",
+        "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib",
+        "--type-only",
+        "/private/tmp/probata-t28-rank-type-v1-9704c54b-20261016/component/delay_family.mlw"
+      ],
+      "returncode": 0,
+      "source": "delay_family.mlw",
+      "source_sha256": "d99660f76ad8469960f81491c7df4bfa974abc1133a61d32e9081fe0f60895f6",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "/Users/yanrujhou/.opam/framac-33/bin/why3",
+        "prove",
+        "--no-stdlib",
+        "--no-load-default-plugins",
+        "--config",
+        "/Users/yanrujhou/.why3.conf",
+        "-L",
+        "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib",
+        "--type-only",
+        "/private/tmp/probata-t28-rank-type-v1-9704c54b-20261016/component/no_progress.mlw"
+      ],
+      "returncode": 0,
+      "source": "no_progress.mlw",
+      "source_sha256": "b80c777054a450f781351130baf91e9c0fdb37a4a59e5453e857921b9b85f465",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "scope": "Three typed WhyML inputs only; no theorem/VC/recursion progress/device fairness/source mapping/negative-goal proof accepted.",
+  "source_after_clean_independently_verified": true,
+  "source_commit": "9704c54b838863dd838d18a20dd0ade1633d5027",
+  "standard_library_files_verified": 57,
+  "verdict": "PASS_THREE_SYNTAX_TYPE_CHECKS_ONLY"
+}

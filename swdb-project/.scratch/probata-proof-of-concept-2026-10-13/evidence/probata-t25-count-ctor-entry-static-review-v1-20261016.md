@@ -1,0 +1,11 @@
+# Ticket25 count-only external entry — static review
+
+Date: 2026-10-16 ET. PASS for the exact prospective v1 entry and command; no blocker.
+
+Entry SHAda35f072b08cf884bcdd42d0b93ec1360ed1fcddd6cdef6db2aca2b5d7a1119f; command SHA1dfc74546d03a6c4b059cd5214487973e03358a2f64ba2173dded93b617c4ce6; source allowlist SHAb9ae224dd7b62fac93d7afcced899340225908b456c09d4f0ddf007869773498. Command embedding is byte-exact and preserves the selected opam/switch/Python prefix and SOURCE/OUTPUT placeholders. All16 entry source pins match frozenbb7170ac09081cd02562b747d7cccb17ba8c6ced Git blobs. The allowlist exactly covers all14 runtime files changed from its declared baseline and their pinned after-bytes; its root-review reference rehashes correctly.
+
+Compared with the audited CEA recipe, admission policy is unchanged: nine exact physical tools, two WP artifacts,57-file stdlib tree/configuration, selected same-switch package/core bindings, ambient FRAMAC_WP refusal, outside-repository output, exact clean source checks, original model hash and naming checks. Actual Linux project-context runtime provenance is freshly captured for every resulting record; no Mac composite is used as its expected Linux identity.
+
+The deliberate narrow changes are the source commit/four updated file pins, original count-only modelbc6c76c9fe74a568bd81973eafba48e24b9f2f42604ad3c9994f742572c11358, exact one-node collection and `--member std_vector_int_ctor_count` profile. The new selected actual test produces one fresh record across27 positive targets; no old first-pair proof is selected. Public1800s/profile2100s budgets are coherent and the inherited8GiB cap/serial execution remain. Root must supply the reviewed external whole-process-tree bootstrap/profile/native-build watchdog and finite whole/outer guard; this entry is not a standalone watchdog.
+
+Static review clears this entry for root's separate live physical/source/tool/lane admission. Actual complete record/task/import/ownership/runtime/source/resource cold acceptance is still required. No generic caller, growth, production-store adoption or ticket closure is implied. Reviewer performed only text/AST/hash/frozen-Git reads, with no entry/project import, collection, actual probe, compiler, formal tool, test, SSH or launch.

@@ -259,6 +259,63 @@ public heap proof has run and no acceptance checkbox closes here. See
 [blocked review](../evidence/t25-public-heap-source-review-31798b27-20261016.md)
 and [final addendum](../evidence/t25-public-heap-source-addendum-cea5652b-20261016.md).
 
+### Fresh original count/value constructor and destructor accepted — 2026-10-16 ET
+
+The reviewed public profile completed at exact clean `cea5652b`. Two fresh
+schema-valid `c_model` fixture records are accepted under the explicit
+source-to-unbounded-heap translation, allocation, tool and standard-support TCB.
+Construction proves all 27 mapped targets (36 ordinary Valid plus one passing
+numeric smoke); destruction proves all 11 targets (11 ordinary Valid). All 38
+targets retain fresh normal reports and current setup/reader bindings. No
+synthetic or prototype proof result is promoted. The original source/contracts
+and arbitrary-heap/alias/lifetime domains are unchanged, with no new caller
+premise or finite identity bound.
+
+Independent cold review checked all 108 emitted task bodies against the prior
+semantic closure, the numeric closed acyclic dependency graph, exact current
+Linux runtime/method/source/configuration/foundation bindings, and both persisted
+records. All 1,514 checks pass; 482 physical references have zero mismatch. All 749
+raw files (43,289,454 bytes) remain remote. Whole/outer guards exited 0 in
+446.397/448.044s, peak 1.09/1.14 GB, with no OOM or watchdog timeout. Source stayed
+clean; node 1 generation 614 released naturally at 2026-10-16T04:40:57Z. Finite
+process visibility limits and unavailable GPU metadata remain explicit.
+
+This closes this two-member public-body limb only. No production-store adoption,
+generic caller composition, unchanged growth-body proof or formal C++ equivalence
+is claimed, and ticket25 remains claimed with its acceptance boxes open. The
+next approved slice is the original int count constructor with explicit zero
+initialization; source-domain ownership gaps in growth require a separately
+declared model/domain repair and caller discharge. See
+[actual review](../evidence/t25-public-heap-cold-review-cea5652b-20261016.md),
+[snapshot](../evidence/t25-public-heap-cold-snapshot-final-cea5652b-20261016.json)
+and [next slice/domain plan](../prototype/25-remaining-int-model-plan.md).
+
+### Original zero-initializing count constructor prepared — 2026-10-16 ET
+
+The next public slice maps exact `std_vector_int_ctor_count` source and contract,
+with no model-version change or extra caller premise. It explicitly specializes
+the reviewed universal-value transition at source literal `(int)0`, reconstructs
+all eleven source events and C1-C9 obligations, and selects 27 positive targets
+including the complete numeric kernel. All 42 existing canonical packet bytes
+remain unchanged; 28 distinct count packets append (27 positive and one
+omitted-store translator control). The heap definitions are unchanged and the
+checker policy becomes 2; old accepted records retain their exact frozen pins.
+
+The public RED preserves the prior allocation refusal, then GREEN reaches the
+checked parse-error stand-in. Final controls pass 39 cases with two actual-only
+targets skipped. Nonzero fill/postcondition, extra-write and omitted-prefix
+tampering refuse before launch; the full 27-target synthetic record passes
+normal reading and schema persistence with numeric/smoke reports. These are
+preparation controls, never actual proof evidence. Independent source/mapping review passes at clean `bb7170ac`: all 70 canonical
+payloads were reconstructed independently, all 51 retained references match,
+and the literal-zero specialization, complete source mapping and public
+record/deadline checks have no blocker. A coordinator-admitted fresh one-record
+profile and actual cold audit remain required; no successful first-pair formal
+run is repeated. Review: [source review](../evidence/t25-count-ctor-source-review-bb7170ac-20261016.md). Growth-domain repair and caller
+composition remain separate. See
+[preparation evidence](../evidence/t25-count-ctor-preparation-controls-20261016.json)
+and [preserved packet hashes](../evidence/t25-count-ctor-canonical-comparison-20261016.json).
+
 ## Acceptance
 
 - [ ] Each modeled member has a C function and an ACSL contract citing the standard's clause for it (`[vector]` for vector members). `swdb prove` proves every contract against its C function once, recorded with subject "a library entry's summary".
@@ -930,3 +987,40 @@ No environment/token scan, universal process-absence or cleanup claim is made.
 Raw reports remain remote for the coordinator, ticket acceptance and independent
 review. Ticket 25 stays **claimed**: wider standard-model/member types, heap and
 lifetime integration, and eventual combined-method acceptance remain open.
+
+
+### Fresh original count constructor accepted — 2026-10-16 01:17 ET
+
+One fresh public `std_vector_int_ctor_count` fixture record is accepted at exact
+`bb7170ac09081cd02562b747d7cccb17ba8c6ced` under the declared source-translation,
+allocator, tool and standard-support TCB. Record SHA256
+`b8e999897786e46ce516ddbad952ae4ab130fa42b81569cbc71263732e3be687`
+is schema-valid and proven: all 27 fresh targets, 36 ordinary Valid goals and
+one passing numeric smoke, with complete current setup/normal-reader bindings.
+Original body/contract, caller domain and model version remain unchanged.
+
+Independent cold review passes all 1,031 checks and 342 physical reference
+instances with zero mismatch. All 84 parsed task streams match the previously
+audited universal-value tasks: 58 identical and 26 differ only by capture-free
+specialization of the quantified value to zero. No other logical command,
+heap definition or support assertion differs. Linux project runtime, method,
+source, foundation/import bindings and the closed numeric dependency DAG match.
+No cached or synthetic result is promoted, and no original caller premise or
+finite heap identity bound is added.
+
+All 614 raw files (23,021,394 bytes) remain remote. Whole/outer guards exit 0 in
+371.990/374.078 seconds, peak 1,067,044,864/1,118,425,088 bytes, with one 8 GiB
+worker and no OOM/watchdog timeout. Exact source stays clean. Node 0 generation
+587 naturally releases at 2026-10-16T05:10:04Z = 01:10:04 ET; node 1 and legacy
+leases are released at the final finite observation. Process cwd permission and
+vanished-read limits remain explicit; no universal absence or new GPU state is
+claimed. The actual monitored raw budget remains 8 GiB, with its earlier 1 GiB
+proposal preserved in the separate clarification.
+
+This accepts only the original count-constructor public-body limb under its TCB.
+No production-store adoption, generic caller/growth proof, formal C++ equivalence
+or ticket closure follows. Ticket25 remains **claimed**, all acceptance boxes
+remain open, and the owner's separate ownership/domain work is excluded.
+[Independent review](../evidence/t25-count-ctor-cold-review-bb7170ac-20261016.md),
+[exact review metadata](../evidence/t25-count-ctor-cold-review-bb7170ac-20261016.json),
+[compact final snapshot](../evidence/t25-count-ctor-cold-snapshot-final-bb7170ac-20261016.json).

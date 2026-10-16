@@ -1,0 +1,59 @@
+{
+  "created_et": "2026-10-16 01:03 ET",
+  "scope": "Retained failed v3; pure scanner rejected return keyword before package/compiler/Frama invocation. No proof acceptance.",
+  "raw_root": "/private/tmp/probata-t07-helper-stage1-v3-7930f3a1-20261016",
+  "result": {
+    "stage": "generation_only",
+    "proof_acceptance": false,
+    "external_provers_requested": [],
+    "marker_inherited_and_preserved": true,
+    "source_commit": "7930f3a1f8d59cb7b338f54844dea7728bc8864c",
+    "generation_completed": false,
+    "error_type": "RuntimeError",
+    "error": "unclassified direct/indirect call target: return",
+    "elapsed_seconds": 0.3204463330330327,
+    "within_internal110s": true
+  },
+  "guard": {
+    "cmd": [
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+      "/private/tmp/probata-t07-helper-stage1-entry-v3-20261016.py",
+      "--expected",
+      "/private/tmp/probata-t07-helper-stage1-v3-expected-20261016.json",
+      "--output",
+      "/private/tmp/probata-t07-helper-stage1-v3-7930f3a1-20261016/component"
+    ],
+    "exit_code": 1,
+    "wall_s": 0.7034744166885503,
+    "peak_rss_mb": 79.59375,
+    "cap_gb": 8.0,
+    "killed_by_watchdog": false,
+    "timed_out": false,
+    "queue_timed_out": false,
+    "timeout_s": 120.0,
+    "queue_timeout_s": 30.0,
+    "lock_wait_s": 0.0004954166361130774,
+    "runner_pid": 24052,
+    "clock": "continuous_monotonic",
+    "clock_info": {
+      "kind": "continuous_monotonic",
+      "implementation": "mach_continuous_time",
+      "includes_sleep": true,
+      "numer": 125,
+      "denom": 3
+    },
+    "log": "/private/tmp/probata-t07-helper-stage1-v3-7930f3a1-20261016/guard.log",
+    "inspection_events": [],
+    "inspection_failure": null,
+    "primary_inspection_failure": null,
+    "cleanup_inspection_failure": null,
+    "cleanup_inspection_failures": [],
+    "inspection_retry_boundary": "AccessDenied uses a 200 ms environ retry admission window and 21-attempt cap, or three attempts for other operations; only the exact proc_environ SystemError raised by the requested environ operation shares that policy; individual OS calls are not forcibly timed; all pauses count and RSS/deadline checks remain mandatory after inspection; only independently confirmed gone/zombie or changed birth is skipped; persistent live or unknown failure fails closed",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "unconfirmed_children": [],
+    "error": null,
+    "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment",
+    "rss_scope": "live union of current ancestry, retained PID/birth identities and periodic inherited-marker matches; sampled, not a kernel quota",
+    "finished": "2026-10-16 00:52:51 EDT"
+  }
+}

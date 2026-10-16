@@ -177,3 +177,6 @@ valid/quiescent prototype domain, not an established source-entry certificate.
 Full source-call/CPU admission, IEEE/raw-image and progress/source simulation,
 new-version public actual acceptance remain open. All boxes stay unchecked,
 status **claimed**. [Exact evidence](../evidence/t28-size-state-controls-20261016.json).
+
+
+Mathematical rank type gate — 2026-10-16 01:03 ET: exact9704c54b passed all three admitted syntax/type checks; independent cold review rehashed83 physical files with zero mismatches. Guard0.669s/46.3125MiB, no resource/cleanup failure, source clean. This accepts syntax/types only, with no VC, recursive termination, positive/negative proof, hardware fairness or source correspondence claim. Next admission is read-only expanded Why3 configuration metadata before a separately reviewed complete VC portfolio; existing partial_prover sections expand automatically, so no alternate configuration is proposed. [Actual receipt](../evidence/t28-rank-type-actual-20261016.json), [cold review](../evidence/probata-t28-rank-type-cold-review-v2-20261016.md).

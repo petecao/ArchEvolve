@@ -38,7 +38,7 @@ def _digest(value):
 
 
 def identity():
-    return {'id': 'heap-model-view-check-1', 'sha256': _digest([
+    return {'id': 'heap-model-view-check-2', 'sha256': _digest([
         {'path': name, 'sha256': _sha((HERE / name).read_bytes())} for name in COMPONENTS])}
 
 
@@ -51,7 +51,7 @@ class View:
 
 def _view(member, manifest):
     if member not in MEMBERS:
-        raise Refused('the original heap view supports only the audited int count/value constructor and destructor')
+        raise Refused('the original heap view supports only the audited int count constructors and destructor')
     targets = [row for row in manifest['obligations']
                if row['member'] == member and row['expected'] == 'proven']
     events = [row for row in manifest['source_events'] if row['member'] == member]
@@ -59,10 +59,11 @@ def _view(member, manifest):
     if not targets or not events or any(not set(e['obligations']) <= ids for e in events):
         raise Refused('the original source event inventory is not covered by positive proof obligations')
     groups = {g for row in targets for g in row['source_groups']}
-    required = {f'C{i}' for i in range(1, 10)} if member == MEMBERS[0] else {f'D{i}' for i in range(1, 8)}
+    constructor = member != MEMBERS[1]
+    required = {f'C{i}' for i in range(1, 10)} if constructor else {f'D{i}' for i in range(1, 8)}
     # The constructor-associated address-reuse control additionally checks D7;
     # retain it as audited lifetime support rather than dropping that target.
-    expected_groups = required | ({'D7'} if member == MEMBERS[0] else set())
+    expected_groups = required | ({'D7'} if constructor else set())
     if groups != expected_groups:
         raise Refused('the original clause/RTE/init/frame/lifetime inventory is incomplete')
     cert = {'version': 1, 'member': member, 'original_source': manifest['sources'][member],
@@ -76,6 +77,8 @@ def _view(member, manifest):
             'typed_memory': manifest['semantic_relations']['typed_memory'],
             'proof_rule': 'all selected original-source obligations require fresh normal-reader proof; no cached prototype promotion',
             'negative_controls': 'translator regression controls, not desired model-body obligations'}
+    if member == MEMBERS[2]:
+        cert['value_instantiation'] = {'source_expression': '(int)0', 'mathematical_value': 0}
     return View(member, cert, {'heap_model_view_check': identity(),
         'heap_model_view_certificate': {'id': 'heap-model-view-certificate-1', 'sha256': _digest(cert)}})
 
@@ -251,7 +254,7 @@ def prove(job, adapter, context):
             'sentence': 'The checked source-mapped unbounded typed heap VC translation preserves the exact '
                         'original model clauses, accesses, initialization, frame and allocation lifetime. '
                         'No original caller premise is added; generic caller composition remains unsupported.'})
-        if view.member == MEMBERS[0]:
+        if view.member != MEMBERS[1]:
             context['assumed'].append({'kind': 'trusted_tool', 'reference': view.certificate['model'],
                 'sentence': 'Allocation succeeds under the existing fresh-allocation/available-address/frame policy; '
                             'new typed cells are uninitialized until written.'})

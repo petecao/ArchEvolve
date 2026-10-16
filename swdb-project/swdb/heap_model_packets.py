@@ -1,6 +1,8 @@
 """Canonical original-source heap VC preparation. Created: 2026-10-15 ET.
 
 Promoted from the independently accepted exact first-pair capability mapping.
+The original count constructor uses an explicit universal-value specialization
+at zero, with separately pinned source, events and isolated target names.
 Preparing/checking packets executes no tool and is never a proof verdict.
 """
 from __future__ import annotations
@@ -13,13 +15,14 @@ from swdb import c_lowering, std_models
 from swdb.heap_model_vcs import PRELUDE, NUMERIC, specs
 
 HERE = Path(__file__).resolve().parent
-MEMBERS = ('std_vector_int_ctor_count_value', 'std_vector_int_dtor')
+MEMBERS = ('std_vector_int_ctor_count_value', 'std_vector_int_dtor', 'std_vector_int_ctor_count')
 sha = lambda data: hashlib.sha256(data).hexdigest()
 REVIEWED_MODEL = {'id': 'swdb-std-models-2',
                  'sha256': 'cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2'}
 REVIEWED_SOURCES = {
     'std_vector_int_ctor_count_value': '57cf2a6f3f9049f8edf41633f9ef60d0bb7c804e5ee937af796217a2a018c594',
     'std_vector_int_dtor': '1056f4f83c59a30941ec9417c36aada8eab4b62160087ae10315cd2ac9778317',
+    'std_vector_int_ctor_count': 'bc6c76c9fe74a568bd81973eafba48e24b9f2f42604ad3c9994f742572c11358',
 }
 
 
@@ -44,6 +47,10 @@ def store_transition(source):
         return 'Heap::put_integer(h,b,4*k,v)'
     if re.search(r'for \(size_t k = 0; k < n; \+\+k\) \(void\)value;', source):
         return 'h'
+    if re.search(r'for \(size_t k = 0; k < n; \+\+k\) this->data\[k\] = \(int\)0;', source):
+        return 'Heap::put_integer(h,b,4*k,0)'
+    if re.search(r'for \(size_t k = 0; k < n; \+\+k\) \(void\)0;', source):
+        return 'h'
     raise ValueError('unmapped source loop transition')
 
 
@@ -54,21 +61,46 @@ def release_transition(source):
     return 'Heap::release(h,' + ('b' if calls[0] == 'this->data' else '0') + ')'
 
 
+def count_id(name):
+    """Distinct source targets; existing first-pair packet names stay unchanged."""
+    return name.replace('ctor.', 'count.', 1) if 'ctor.' in name else 'control.count.' + name.removeprefix('control.')
+
+
+def mapped_specs():
+    original = specs()
+    # Universal value theorems specialize to the source's literal zero. Remove
+    # the bound value variable before token substitution; never substitute an
+    # identifier substring or introduce a desired-result premise.
+    count = []
+    for name, member, needle, groups, statement in original:
+        if member != MEMBERS[0]:
+            continue
+        if statement is not None:
+            statement = re.sub(r'\bv\b', '0', statement.replace(',v;', ';'))
+        count.append((count_id(name), MEMBERS[2], needle.replace('= value;', '= (int)0;'),
+                      groups, statement))
+    return original + count
+
+
 def obligations(sources):
     result = []
-    for name, member, needle, groups, statement in specs():
+    for name, member, needle, groups, statement in mapped_specs():
         goal = {'id': name, 'member': member, 'statement': statement,
                 'source_spans': [span(sources[member], needle)], 'source_groups': groups,
                 'dependencies': [], 'kind': 'c_kernel' if statement is None else 'check_lemma',
-                'expected': 'not_proven' if name in {'control.omitted_store','control.wrong_release',
+                'expected': 'not_proven' if name in {'control.omitted_store','control.count.omitted_store','control.wrong_release',
                                                      'control.stale_read','control.double_release'} else 'proven'}
-        if name == 'control.omitted_store':
-            goal['source_mutation'] = {'before': 'this->data[k] = value;', 'after': '(void)value;'}
-            mutant = sources[member].replace('this->data[k] = value;', '(void)value;')
+        zero = member == MEMBERS[2]
+        if name in {'control.omitted_store', 'control.count.omitted_store'}:
+            goal['source_mutation'] = {'before': 'this->data[k] = (int)0;' if zero else 'this->data[k] = value;',
+                                       'after': '(void)0;' if zero else '(void)value;'}
+            mutant = sources[member].replace(goal['source_mutation']['before'], goal['source_mutation']['after'])
             transition = store_transition(mutant)
-            goal['statement'] = (r'\forall Heap::heap h; \forall integer r,o,b,n,k,v; '
-                                 r't25_inv(h,r,o,b,n,k,v) && k < n ==> '
-                                 f't25_inv({transition},r,o,b,n,k+1,v)')
+            value = '0' if zero else 'v'
+            variables = 'r,o,b,n,k' if zero else 'r,o,b,n,k,v'
+            goal['statement'] = (r'\forall Heap::heap h; \forall integer ' + variables + '; '
+                                 f't25_inv(h,r,o,b,n,k,{value}) && k < n ==> '
+                                 f't25_inv({transition},r,o,b,n,k+1,{value})')
             goal['source_transition'] = transition
         elif name == 'control.wrong_release':
             goal['source_mutation'] = {'before': 'swdb_free(this->data);', 'after': 'swdb_free(NULL);'}
@@ -79,11 +111,13 @@ def obligations(sources):
                                  r'(c == 0 || Heap::freeable(h,b,bo)) && c > 0 ==> '
                                  f'!Heap::can_read({transition},b,bo,4)')
             goal['source_transition'] = transition
-        elif name == 'ctor.prefix.step':
+        elif name in {'ctor.prefix.step', 'count.prefix.step'}:
             transition = store_transition(sources[member])
-            goal['statement'] = (r'\forall Heap::heap h; \forall integer r,o,b,n,k,v; '
-                                 r't25_inv(h,r,o,b,n,k,v) && k < n ==> '
-                                 f't25_inv({transition},r,o,b,n,k+1,v)')
+            value = '0' if zero else 'v'
+            variables = 'r,o,b,n,k' if zero else 'r,o,b,n,k,v'
+            goal['statement'] = (r'\forall Heap::heap h; \forall integer ' + variables + '; '
+                                 f't25_inv(h,r,o,b,n,k,{value}) && k < n ==> '
+                                 f't25_inv({transition},r,o,b,n,k+1,{value})')
             goal['source_transition'] = transition
         elif name == 'dtor.post.old_invalid':
             transition = release_transition(sources[member])
@@ -93,7 +127,7 @@ def obligations(sources):
 
 
 def source_events(sources):
-    ctor, dtor = MEMBERS
+    ctor, dtor, count = MEMBERS
     rows = [
         ('ctor.zero.data', ctor, 'this->data = NULL;', ['ctor.rte.zero_data','ctor.fields.initialized']),
         ('ctor.zero.size', ctor, 'this->size = 0;', ['ctor.rte.zero_size','ctor.fields.initialized']),
@@ -111,6 +145,9 @@ def source_events(sources):
          ['dtor.data.read','dtor.free.argument','dtor.null.no_op','dtor.alias.invalidated',
           'dtor.post.old_invalid','dtor.frame.surviving','dtor.frame.other_live','dtor.receiver.overlap']),
     ]
+    rows += [(count_id(name), count, needle.replace('= value;', '= (int)0;'),
+              [count_id(goal) for goal in goals])
+             for name, member, needle, goals in rows if member == ctor]
     return [{'id': name, 'member': member, 'source_spans': [span(sources[member], needle)],
              'obligations': goals} for name, member, needle, goals in rows]
 
