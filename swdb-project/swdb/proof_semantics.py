@@ -164,6 +164,8 @@ def check(library, entry_id, data, error):
             error(where, "a call row names its call")
             continue
         names.append(row["call"])
+        if "supported" in row and type(row["supported"]) is not bool:
+            error(f"{where}.supported", "supported must be a boolean; false explicitly refuses this call")
         if "overloads" in row and (not isinstance(row["overloads"], list) or not row["overloads"] or
                 any(not isinstance(variant, dict) or
                     not isinstance(variant.get("prototype"), str) or not variant["prototype"].strip() or
@@ -192,6 +194,8 @@ def check(library, entry_id, data, error):
         error("calls", "each call is listed once")
     from swdb import dx100_interface
     malformed_instances = not dx100_interface.check_instances(data, error)
+    from swdb import dx100_source_selector
+    malformed_instances = not dx100_source_selector.check(library, data, error) or malformed_instances
     dx100_interface.check(library, data, error)
     found = data.get("inventory")
     if not isinstance(found, dict) or not isinstance(found.get("sources"), list) or \
@@ -208,7 +212,8 @@ def check(library, entry_id, data, error):
                 error("calls", f"inventory call {name} has no call row (every call the inventory found needs a "
                                "contract)")
     texts = _files(library, data, error)
-    if len(texts) < 4 or malformed_overloads or malformed_instances:
+    malformed_layout = not dx100_source_selector.check_layout(data, texts, error)
+    if len(texts) < 4 or malformed_overloads or malformed_instances or malformed_layout:
         return []
     return _typecheck(library, entry_id, data, texts, error)
 
@@ -217,11 +222,16 @@ def acsl_source(data, texts, rows=None, *, constants=None):
     """The C file Frama-C type-checks: constants, the ghost block, the device state, the logic definitions, then each
     call's (and query's) contract on its prototype. `rows` limits it to some call or query rows."""
     parts = [f"#define {name} {value}" for name, value in (data.get("constants") or {}).items()]
-    parts += ["#include <stdint.h>", "/*@ ghost"]
-    parts += [f"  {decl};" for _name, decl in ghost_declarations(texts["ghost.acsl"])]
-    state, _objects = _bounded_state(texts["model.state"], constants or data.get("constants") or {},
-                                     constant_table=True)
-    parts += ["*/", state, "/*@", texts["model.logic"], "*/"]
+    from swdb.dx100_source_selector import pure_layout
+    parts.append("#include <stdint.h>")
+    state, _objects = _model_state(data, texts["model.state"], constants or data.get("constants") or {},
+                                   constant_table=True)
+    if pure_layout(data):
+        parts.append(state)  # Empty comment-only state; no empty/nested ACSL ghost or logic block.
+    else:
+        parts += ["/*@ ghost"]
+        parts += [f"  {decl};" for _name, decl in ghost_declarations(texts["ghost.acsl"])]
+        parts += ["*/", state, "/*@", texts["model.logic"], "*/"]
     from swdb.dx100_interface import contract_rows
     for row in rows if rows is not None else [*(data.get("calls") or []), *(data.get("queries") or []),
                                               *((data.get("wp") or {}).get("probes") or [])]:
@@ -247,7 +257,7 @@ def wp_prelude(library, entry_id, called, defines=()):
     for probe in probes:
         name = re.match(r".*?\b(\w+)\s*\(", probe["prototype"]).group(1)
         parts.append(f"#define {probe['macro']}(addr, id) {name}(addr)")
-    body = acsl_source({"constants": {}}, texts, rows=rows, constants=constants)
+    body = acsl_source({"constants": {}, "model": data.get("model", {})}, texts, rows=rows, constants=constants)
     parts.append(body.replace("#include <stdint.h>\n", ""))
     return "\n".join(parts) + "\n"
 
@@ -334,7 +344,8 @@ def _files(library, data, error):
     if "ghost.acsl" not in texts:
         return texts
     ghost = ghost_declarations(texts["ghost.acsl"])
-    if not ghost:
+    from swdb.dx100_source_selector import pure_layout
+    if not ghost and not pure_layout(data):
         error("ghost.acsl", "the ghost file declares no ghost array")
     for key in ("model.state", "model.c"):
         for name, _decl in ghost:
@@ -413,8 +424,14 @@ def lowering_options(library):
         return {}
     instances = {row['call']: row['instances'] for data in current(library).values()
                  for row in data.get('calls', []) if 'instances' in row}
-    semantics = {"tile_pointer": {TILE_POINTER}, "calls": set(covered)}
+    semantics = {"tile_pointer": {TILE_POINTER}, "calls": set(covered),
+                 "refused_calls": {row["call"] for data in current(library).values()
+                                   for row in data.get("calls", []) if row.get("supported") is False}}
     if instances:
+        from swdb import dx100_source_selector
+        instances = {name: [{**v, 'definition': dx100_source_selector.policy(library, v['definition'])}
+                            if 'definition' in v else v for v in variants]
+                     for name, variants in instances.items()}
         semantics['template_instances'] = instances
     return {"summaries": dict(covered), "semantics": semantics}
 
@@ -436,6 +453,13 @@ def contract_names(library, entry_id, called):
     return [re.match(r'.*?\b(\w+)\s*\(', variant['prototype'])[1]
             for row in [*data.get('calls', []), *data.get('queries', [])]
             if row.get('call', row.get('query')) in called for variant in contract_rows(row)]
+
+
+def _model_state(data, text, constants, *, constant_table=False):
+    from swdb.dx100_source_selector import pure_layout
+    if pure_layout(data):
+        return text, ()
+    return _bounded_state(text, constants, constant_table=constant_table)
 
 
 def _bounded_state(text, constants, *, constant_table=False):
@@ -469,7 +493,7 @@ def model_for(library, entry_id, defines=()):
     ghost = ghost_declarations(library.resolve(data["ghost"]["acsl"]).read_text())
     parts.append("/* ghost state, generated from ghost.acsl (declared once there) */")
     parts += [f"{decl};" for _name, decl in ghost]
-    state, tile_objects = _bounded_state(library.resolve(data["model"]["state"]).read_text(), constants)
+    state, tile_objects = _model_state(data, library.resolve(data["model"]["state"]).read_text(), constants)
     parts.append(state)
     model = library.resolve(data["model"]["c"]).read_text()
     parts.append(model)
@@ -527,5 +551,8 @@ def imported_call_policies(library, defines=()):
 def state_draws(library, entry_id, defines=()):
     """The device-state elements the harness draws from the oracle at the start (havoc): tile elements."""
     data = library.get(entry_id)
+    from swdb.dx100_source_selector import pure_layout
+    if pure_layout(data):
+        return []
     constants = _constants(data, defines)
     return [f"dx_tile_data[{t}][{k}]" for t in range(int(constants["DX_NT"])) for k in range(int(constants["DX_TS"]))]

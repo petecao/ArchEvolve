@@ -53,7 +53,7 @@ def check_instances(data, error):
             if not isinstance(instance, dict):
                 refuse('instance needs its own C prototype and contract')
                 continue
-            if set(instance) - {'arguments', 'arity', 'prototype', 'contract', 'declaration'}:
+            if set(instance) - {'arguments', 'arity', 'prototype', 'contract', 'declaration', 'definition'}:
                 refuse('unknown template instance fields')
             arguments, arity = instance.get('arguments'), instance.get('arity')
             if not isinstance(arguments, list) or not arguments or any(
