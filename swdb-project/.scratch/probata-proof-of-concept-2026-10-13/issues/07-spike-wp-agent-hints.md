@@ -3,10 +3,32 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-15 ET (prospective method23 independently reviewed; run25 remains unproven and no new counted launch is implied); 2026-10-14 22:50 ET (continuation 3: runs 10-12 fail, verdict fail so far, effort paused); 2026-10-14 17:10 ET (continuation 2: runs 7-9 fail, verdict fail so far); 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** claimed
+**Status:** ready-for-agent
 **Blocked by:** 03
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Proof-of-concept plan", A1 row (c); "Proof-hint loop"; "Verifier lineup and order", unbounded verifier; "Providers and machines"); decisions: [07](../../formal-verification-2026-10-09/issues/07-install-verifiers.md), [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md), [12](../../formal-verification-2026-10-09/issues/12-dx100-proof-semantics.md), [13](../../formal-verification-2026-10-09/issues/13-proof-hint-loop.md), [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md), [19](../../formal-verification-2026-10-09/issues/19-bounded-verdict-bounds.md), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md), [27](../../formal-verification-2026-10-09/issues/27-proof-of-concept-stages.md)
 **Time estimate:** about 3 days, inside the 2-week box
+
+## Current resume checkpoint — user stop 2026-10-16 11:36 ET
+
+Status is **ready-for-agent**; the active claim is released at the user's request.
+Do not resume implementation/evaluation until the user resumes. Root owns the final
+merge/sync. [Full handoff](../prototype/07-wp-hints/stop-20261016-1136/README.md) and
+[exact copied-text/preserved-path manifest](../prototype/07-wp-hints/stop-20261016-1136/checkpoint-manifest.json).
+
+Source9a59528d prepares exact index_safe/missing_index whole-root TUs and a separate
+flushed first-formula observer, with23 final compiler-free producer controls. Source
+independent/API/actual gates remain pending. Published3ed7291f merged cleanly into
+the source branch; no original model/header/raw or functional postcondition changed.
+New generation/proof recipes are not authored and remain INCOMPLETE/UNREVIEWED/
+NOT EXECUTED. Original807.67746625s is consumed; the conditionally approved NEW
+120s generation/360s proof budget is separate, unused and requires fresh root gates.
+
+Original normal proof TimeoutExpired/weak unexecuted and no proof promotion remain.
+The passive journal has328 IDs/107 property-only suffix differences/707 events;
+no aliases are admitted. Separate index-root work addresses completed-result gaps,
+not a repeat of the old blended positive. FullTD/count acceptance remains open.
+All later historical claimed/active statements below are dated snapshots.
+
 
 **What to build:** The spike's test of the unbounded half. WP must prove one read-offload proof
 unit at threads = 1 against the BFS unit postcondition, with proof hints written by Codex, within 60
