@@ -9,7 +9,7 @@ contracts and exact-content model pin. Unknown pair pointer inputs and
 uninitialized scalar/field writes still refuse. Direct `first`/`second` accesses
 remain fields, with no invented model proof dependencies.
 
-Twelve compiler/native/parser-error controls pass; the actual-only test is
+Thirteen compiler/native/parser-error controls pass; the actual-only test is
 skipped. ASan/UBSan C/C++ runs agree on 75 defined cases covering default values,
 independent copied values, field writes and self-assignment. The wrong-field
 negative has the defined witness `x=2,y=5`: the required result is 11 and its
@@ -26,7 +26,10 @@ the external 8 GiB RSS/time watchdog and the actual adapter's verifier lease.
 The entry supplies a prospective wall deadline; each actual call receives the
 remaining budget minus 15 seconds of setup/record-writing headroom. The CLI
 timeout also uses the remaining budget, and late whole-profile completion fails.
-The profile entry is not a resource guard. It first proves each original
+The profile entry is not a resource guard. All six records must retain the
+fixture method identity, fixture evidence kind and the explicit 8 GiB job cap.
+Its output must be outside the entire source checkout, including the monorepo
+root and all descendants. It first proves each original
 `std_pair_int_int_{ctor_default,ctor,copy_ctor,operator_assign}` body, then proves
 the pair-only caller and checks all four dependency IDs/text hashes. Finally it
 requires the wrong-field caller to retain an ordinary unknown/timeout obligation
@@ -36,7 +39,8 @@ are a scoped supplement to the coordinator's full source/runtime manifest.
 
 The default `--mode controls` runs public lowering, native sanitizer checks,
 missing-dependency refusal, a genuine changed-policy frozen-translator refusal
-and four explicit parser-error stand-ins. Collection
+four explicit parser-error stand-ins, and full-checkout output refusal before
+creation. Five existing vector initializedness controls also pass. Collection
 does not probe actual verifier versions. Stand-ins cannot supply proven model
 records or satisfy the actual profile. Retain raw output outside the checkout
 for record/reference and independent cold auditing before an acceptance claim.
