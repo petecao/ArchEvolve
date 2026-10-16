@@ -132,6 +132,48 @@ Source review: `../evidence/t25-message-category-review-9881fff2-20261015.md`.
 Evidence: `../evidence/t25-diagnostic-option-failure-v2-20261015.json` and
 `../evidence/t25-message-category-repair-controls-20261015.json`.
 
+### Representative genuine WP import and task path — 2026-10-15 ET
+
+The coordinator admitted a single source-entry feasibility lemma using immutable
+`9d8ca764` theory/packets and the separately reviewed external v2 entry. The
+prospective repaired `9881fff2` runner was not executed by this gate. Actual WP
+help recognized every selected option; normal Frama-C import, fresh reader,
+report inventory and prepared prover-task generation completed. The sole owned
+ordinary goal is Valid by CVC5 (0.0359s); Alt-Ergo timed out at its 10-second
+solver limit. No project Extern or lemma dependency appears. The generated CSV
+contains its header only; the module container remains present in the complete
+inventory and was processed by the unchanged production reader.
+
+The whole guarded command exited 0 in 12.836s, peak 436,568,064 bytes, without
+whole-command timeout or OOM; the source remained exact and clean. Four prover
+task files survive. A cold physical audit checked 30 retained references
+(including four repeated task references) with zero hash mismatches. Static
+entry review is retained separately from the actual result. Evidence:
+`../evidence/t25-representative-entry-review-v2-9881fff2-20261015.md` and
+`../evidence/t25-representative-cold-physical-v1-9d8ca764-20261015.json`.
+
+This one constructive feasibility witness is not the arbitrary-heap member-body
+proof. Actual task hypotheses include standard Why3 absolute-value/division and
+Frama-C Qed arithmetic support in addition to `int.Int`; that closure must be
+explicitly inventoried, rather than reading the theory comment as exhaustive.
+Independent cold review now accepts this representative's task/import closure:
+the CVC5 task has 22 explicitly inventoried standard arithmetic support
+assertions, nine constant-map definitional equations and one negated exact
+target; there is no imported project desired/current/future lemma. The Alt-Ergo
+task adds standard real-arithmetic, split and datatype support. Four task files
+comprise two actual
+solver tasks and their header-only diagnostic copies. The reviewer checked 26
+profile pin instances and 57 standard-library files with zero mismatches, and
+pinned the additional Frama-C Qed source. Receipt:
+`../evidence/t25-representative-task-closure-and-v5-review-v2-20261015.md`.
+The prior receipt is retained; v2 clarifies the Alt-Ergo real-typed order axiom.
+
+The full 42 obligations, all negative controls, numeric RTE/init/smoke goals and
+each later task's closure still require actual validation. The prospective v5
+entry at published `e56c62dd` changes only its expected commit and passes static
+review; it has not run. No acceptance box closes and no `c_model` record is
+created by this representative result.
+
 ## Acceptance
 
 - [ ] Each modeled member has a C function and an ACSL contract citing the standard's clause for it (`[vector]` for vector members). `swdb prove` proves every contract against its C function once, recorded with subject "a library entry's summary".
