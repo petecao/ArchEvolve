@@ -1,0 +1,313 @@
+{
+  "created": "2026-10-16 ET",
+  "source_commit": "1278f2d9f24015c62b13d5da48a8a7f45600570f",
+  "scope": "four original int/int pair C bodies, exact-dependency safe caller, wrong-field ordinary nonproof; contract_fixture only",
+  "cold_audit": {
+    "path": "/private/tmp/probata-t25-pair-cold-audit-v3-1278f2d9-20261016.json",
+    "sha256": "7cfc39a6dd182f89d9d107b82d2d8e47c9b4564e75cdceb458ecafd2bdc29084",
+    "physical_reference_count": 2023,
+    "unique_physical_files": 1005,
+    "source_manifest_files": 198,
+    "profile_source_files": 11,
+    "checks_count": 2359,
+    "errors": []
+  },
+  "project_lowering_identity": {
+    "c_lowering": {
+      "id": "swdb-c-lowering-9",
+      "sha256": "0c14b3a1ff208deb26c40c2782bd445dda61a29a42a918c9a92bf08e94eb8a47"
+    },
+    "clang": {
+      "id": "clang-22.1.8",
+      "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+    },
+    "naming_rules": {
+      "id": "kept-names.3",
+      "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+    }
+  },
+  "checker_sha256": "76e1a83ace53083ab1f1cb01dde39700ea3bbd59a4783cc997149321413e2eb2",
+  "records": [
+    {
+      "id": "proof.contract.fixture_pair_values.20261016t041921z.963eade4",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.fixture_pair_values"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "record_sha256": "fea94f257e73004d9c1ac1a7f3a8875e651ba5a8499d337c11828dce6e17ad5e",
+      "goal_counts": {
+        "smoke:valid": 9,
+        "ordinary:valid": 24
+      },
+      "model_dependencies": [
+        {
+          "id": "std_pair_int_int_ctor_default",
+          "sha256": "2d6cacca8d32276da7d48cffd24c5efde0f95838ded3086364045a2327ab93e8",
+          "proof_record": "proof.model.std_pair_int_int_ctor_default.20261016t041806z.2bfe04ce"
+        },
+        {
+          "id": "std_pair_int_int_ctor",
+          "sha256": "7f000ab6ce06710ec0054bed42f16b045d4ef6b237c8d16b3feaa80b922ed335",
+          "proof_record": "proof.model.std_pair_int_int_ctor.20261016t041826z.ff7a734f"
+        },
+        {
+          "id": "std_pair_int_int_copy_ctor",
+          "sha256": "1f1f9ebf452c7d86ee02c3f6c496bde748c0cc2f3efea1cc7275f57370ca92d2",
+          "proof_record": "proof.model.std_pair_int_int_copy_ctor.20261016t041845z.9969ba48"
+        },
+        {
+          "id": "std_pair_int_int_operator_assign",
+          "sha256": "2405af576ec5aea5f043f42b01adaa1193a3ef1cfd846c2fecd09fa7cd10c2e9",
+          "proof_record": "proof.model.std_pair_int_int_operator_assign.20261016t041903z.162d6174"
+        }
+      ],
+      "cold_verdict": "proven",
+      "cold_failure_class": null,
+      "nonvalid_goals": []
+    },
+    {
+      "id": "proof.contract.fixture_pair_wrong_field.20261016t042030z.2a826dd3",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.fixture_pair_wrong_field"
+      },
+      "verdict": "not_proven",
+      "failure_class": "timeout",
+      "record_sha256": "9b3a7db19a2a0e7643497a3a9b554cf2dc4fde90e78031ce4b0de370a5230c25",
+      "goal_counts": {
+        "smoke:valid": 9,
+        "ordinary:valid": 23,
+        "ordinary:timeout": 1
+      },
+      "model_dependencies": [
+        {
+          "id": "std_pair_int_int_ctor_default",
+          "sha256": "2d6cacca8d32276da7d48cffd24c5efde0f95838ded3086364045a2327ab93e8",
+          "proof_record": "proof.model.std_pair_int_int_ctor_default.20261016t041806z.2bfe04ce"
+        },
+        {
+          "id": "std_pair_int_int_ctor",
+          "sha256": "7f000ab6ce06710ec0054bed42f16b045d4ef6b237c8d16b3feaa80b922ed335",
+          "proof_record": "proof.model.std_pair_int_int_ctor.20261016t041826z.ff7a734f"
+        },
+        {
+          "id": "std_pair_int_int_copy_ctor",
+          "sha256": "1f1f9ebf452c7d86ee02c3f6c496bde748c0cc2f3efea1cc7275f57370ca92d2",
+          "proof_record": "proof.model.std_pair_int_int_copy_ctor.20261016t041845z.9969ba48"
+        },
+        {
+          "id": "std_pair_int_int_operator_assign",
+          "sha256": "2405af576ec5aea5f043f42b01adaa1193a3ef1cfd846c2fecd09fa7cd10c2e9",
+          "proof_record": "proof.model.std_pair_int_int_operator_assign.20261016t041903z.162d6174"
+        }
+      ],
+      "cold_verdict": "not_proven",
+      "cold_failure_class": "timeout",
+      "nonvalid_goals": [
+        {
+          "goal": "typed_real_swdb_pair_wrong_field_ensures",
+          "property": "swdb_pair_wrong_field_ensures",
+          "function": "swdb_pair_wrong_field",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ]
+    },
+    {
+      "id": "proof.model.std_pair_int_int_copy_ctor.20261016t041845z.9969ba48",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_pair_int_int_copy_ctor"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "record_sha256": "8e6d53a4e799cbdd67d4c1a20f7fa43267561ded419840c8a4b7cbe57190202b",
+      "goal_counts": {
+        "smoke:valid": 1,
+        "ordinary:valid": 7
+      },
+      "model_dependencies": [],
+      "cold_verdict": "proven",
+      "cold_failure_class": null,
+      "nonvalid_goals": []
+    },
+    {
+      "id": "proof.model.std_pair_int_int_ctor.20261016t041826z.ff7a734f",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_pair_int_int_ctor"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "record_sha256": "22e3383fcfd853c66804ae192c50a1c2163eae81d7648bfe3f0b8195c8b47ae3",
+      "goal_counts": {
+        "smoke:valid": 1,
+        "ordinary:valid": 8
+      },
+      "model_dependencies": [],
+      "cold_verdict": "proven",
+      "cold_failure_class": null,
+      "nonvalid_goals": []
+    },
+    {
+      "id": "proof.model.std_pair_int_int_ctor_default.20261016t041806z.2bfe04ce",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_pair_int_int_ctor_default"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "record_sha256": "ffd5413656ff677393b261f0c94bf7d03c34e1b756557cd8c5f7d1881187425e",
+      "goal_counts": {
+        "smoke:valid": 1,
+        "ordinary:valid": 8
+      },
+      "model_dependencies": [],
+      "cold_verdict": "proven",
+      "cold_failure_class": null,
+      "nonvalid_goals": []
+    },
+    {
+      "id": "proof.model.std_pair_int_int_operator_assign.20261016t041903z.162d6174",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_pair_int_int_operator_assign"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "record_sha256": "4a3870ba8ebeae682add0252cb41ecc41be8e5ff602cf9d01bb4f8d2879c4e63",
+      "goal_counts": {
+        "smoke:valid": 1,
+        "ordinary:valid": 8
+      },
+      "model_dependencies": [],
+      "cold_verdict": "proven",
+      "cold_failure_class": null,
+      "nonvalid_goals": []
+    }
+  ],
+  "resources": {
+    "resources.json": {
+      "cpu_seconds": 302.822288,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 733483008,
+      "timed_out": false,
+      "wall_seconds": 282.60533718019724
+    },
+    "outer-resources.json": {
+      "exit_code": 0,
+      "peak_rss_bytes": 784863232,
+      "out_of_memory": false,
+      "timed_out": false,
+      "wall_seconds": 284.69534612074494,
+      "cpu_seconds": 361.04285000000004
+    }
+  },
+  "profile_result": {
+    "pytest_exit_code": 0,
+    "source_unchanged": true,
+    "elapsed_seconds": 279.25247069913894,
+    "within_prospective_wall_budget": true,
+    "actual_proof_claim": "requires retained records and independent cold audit"
+  },
+  "source_after": {
+    "commit": "1278f2d9f24015c62b13d5da48a8a7f45600570f",
+    "source_unchanged": true,
+    "tracked_changes": ""
+  },
+  "leases": {
+    "mbit10-evaluation.meta.json": {
+      "released_at": "2026-09-12T04:49:11Z",
+      "state": "released"
+    },
+    "mbit10-evaluation-node1.meta.json": {
+      "released_at": "2026-10-16T03:42:11Z",
+      "state": "released"
+    },
+    "mbit10-evaluation-node0.meta.json": {
+      "released_at": "2026-10-16T04:22:33Z",
+      "state": "released"
+    }
+  },
+  "poststop": {
+    "scans": [
+      {
+        "created": "2026-10-16T04:25:56.805977+00:00",
+        "uid_processes": 12,
+        "matches": [],
+        "inspection_errors": [
+          {
+            "pid": 3261267,
+            "comm": "(sd-pam)",
+            "operation": "cwd",
+            "exception": "PermissionError",
+            "errno": 13
+          },
+          {
+            "pid": 3821596,
+            "comm": "sshd",
+            "operation": "cwd",
+            "exception": "PermissionError",
+            "errno": 13
+          }
+        ]
+      },
+      {
+        "created": "2026-10-16T04:25:56.863519+00:00",
+        "uid_processes": 12,
+        "matches": [],
+        "inspection_errors": [
+          {
+            "pid": 3261267,
+            "comm": "(sd-pam)",
+            "operation": "cwd",
+            "exception": "PermissionError",
+            "errno": 13
+          },
+          {
+            "pid": 3821596,
+            "comm": "sshd",
+            "operation": "cwd",
+            "exception": "PermissionError",
+            "errno": 13
+          }
+        ]
+      },
+      {
+        "created": "2026-10-16T04:25:56.925925+00:00",
+        "uid_processes": 12,
+        "matches": [],
+        "inspection_errors": [
+          {
+            "pid": 3261267,
+            "comm": "(sd-pam)",
+            "operation": "cwd",
+            "exception": "PermissionError",
+            "errno": 13
+          },
+          {
+            "pid": 3821596,
+            "comm": "sshd",
+            "operation": "cwd",
+            "exception": "PermissionError",
+            "errno": 13
+          }
+        ]
+      }
+    ],
+    "scope": "Three finite same-UID cmdline/cwd prefix scans only; no environment/token scan or universal process absence claim. Inspection errors remain explicit. No signals."
+  },
+  "raw_tree": {
+    "files": 85,
+    "bytes": 1701621
+  },
+  "raw_retention": "Retain on mbit10 for root, ticket25 acceptance and independent review; no raw report/source payload copied to Mac.",
+  "collector_sha256": "6a747297b5320f82c4d4a782d7975970d1ed086f0d1f8cc21e2a4bdd475b9c82",
+  "strict_reader_scope": "AST-extracted pinned _property_rows/read_wp_reports/_goal; only local helper import removed; original classifier unchanged; checker identity independently rebuilt; no swdb import, compiler/version/verifier execution."
+}

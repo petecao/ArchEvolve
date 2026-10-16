@@ -1,5 +1,7 @@
 # Pair-only workflow — 2026-10-15 ET
 
+Updated: 2026-10-16 ET (scoped actual body and caller acceptance).
+
 The public pair fixture now admits initialized local same-type copies and
 assignments in the bounded initializedness source protocol. Previously the
 valid copy constructor was treated as a scalar constructor argument and refused.
@@ -46,3 +48,25 @@ records or satisfy the actual profile. Retain raw output outside the checkout
 for record/reference and independent cold auditing before an acceptance claim.
 
 [Preparation evidence](../evidence/t25-pair-preparation-20261015.json).
+
+## Scoped actual acceptance — 2026-10-16 ET
+
+Frozen `1278f2d9` passed the six-record actual profile on mbit10. The four
+original int/int pair bodies prove 31 ordinary and four smoke goals. The safe
+pair caller proves 24 ordinary and nine smoke goals while pinning those four
+exact current model proof records. The wrong-field caller retains one ordinary
+ensures timeout, with 23 other ordinary goals Valid and all nine smoke goals
+passing. Its verdict remains `not_proven`, not a refutation.
+
+The read-only cold audit matches all six strict report-reader outcomes and
+dependencies, 2,023 physical-file references across 1,005 unique hashed files,
+198 source modules and eleven profile source pins. Records bind the retained
+Linux project runtime/composite rather than the historical Mac composite.
+Both guards exit 0 without OOM or timeout; the outer guard uses 284.70 seconds
+and peaks at 784,863,232 bytes. Source stays clean and unchanged, and the lane
+naturally releases. All six records remain fixture evidence. Ticket 25 remains
+open for its wider standard-model and integration criteria.
+
+[Actual audit](../evidence/probata-t25-pair-actual-audit-20261016.md),
+[summary and exact record IDs](../evidence/probata-t25-pair-actual-summary-20261016.json),
+[complete compact cold metadata](../evidence/probata-t25-pair-cold-audit-v3-1278f2d9-20261016.json).
