@@ -1,30 +1,61 @@
-# Ticket24 prospective acceptance audit, 2026-10-15 ET
+# Ticket24 final acceptance audit, 2026-10-15 ET
 
-This is a closure checklist, **not a declaration that pending actual jobs passed**. The stopped remaining matrix uses exact production source0e7; the distinct qualified stdv2 pair is independently accepted. A reviewed continuation is pending for the six other original groups. Historical717/9b75 results cannot fill missing current-runtime rows. The original std contract remains not proven; the separately qualified representative succeeds only under its disclosed narrower domain.
+**Accepted under the recorded representative-fixture interpretation.** The final
+join contains **36 actual WP records (26 proven, 10 attributable not-proven)**
+and **nine deliberate prelaunch lifetime refusals**. The independent metadata
+and cold readers pass with no mismatches. Production runtime bytes remain those
+of `0e7f2327`; the test/profile-only qualified std producer is `bf7a404c`, and
+the completed continuation producer is `23933f8a`. Historical717/9b75 proofs do
+not fill any current row. [Full independent review and 45-record inventory](t24-combined-current-independent-review-20261015.md).
 
-| Issue24 acceptance item | Current evidence and required completion |
+| Issue24 acceptance item | Accepted evidence and scope |
 |---|---|
-| One fixture per group; deterministic C/anchors, ACSL, safe/seed WP | Final-runtime compiler controls lower all nine groups twice and typecheck kept names. Current float and atomic pairs and the distinct qualified stdv2 pair are independently accepted. Require both actual rows of each remaining six original groups, with source/contract/method/setup/report pins and attributable ordinary seeded failures. The stdv2 success is a narrower representative witness, never unchanged-original std success. |
-| Kept class/field/reference/operator/member/ctor/dtor names | Existing current compiler/real-Frama positive and wrong-field negative cover the literal names and explicit calls. Fresh class actual pair remains pending in the matrix. No renamed formal half or declaration substitution is permitted. |
-| Templates at two types; enum class | Existing deterministic controls retain both instantiations and enum lowering. Fresh Ring pair must preserve exact embedded-array subobject origins, initializedness and lifetimes; normalized selected entry must contain no residual certified member/template calls. Ambiguous enum scopes remain refused. |
-| In-range allocation proves; overrun/use-after-delete not proven | Require current allocation pair, dedicated `new_out_of_range` actual RTE failure, and all nine deliberate lifetime refusals: after_delete, escape_owner_address, alias_write, escape_scalar_address, conditional_delete, double_delete, later_callback, ignored_uninitialized_read, reassigned_owner. Refusal rows must have no verifier launch/goals. Safe/seed actuals retain allocation-success disclosure and exact terminal-release/source certificates, without assuming bounds or initializedness. No general deallocation theorem is claimed. |
-| std min/max/copy/swap model proof and caller pins | Five actual current0e7 model records are accepted. The actual stdv2 public resolver ordinarily selected exactly those five IDs with unchanged model text/contract/method/checker/qualification pins; independent metadata and cold reading pass for all seven records. Copy is the checked range-qualified body theorem; callers still discharge same typed root, live lifetime, order and capacity. No trusted-ID bypass or unrestricted opaque-pointer claim. |
-| OpenMP and atomics at one thread | The fresh atomic pair and all nine actual atomic model proofs are independently accepted with exact dependency pins. The fresh OMP pair remains pending. Current compiler controls retain original constant-operand C bytes. Dynamic/effectful/invalid order expressions and weak CAS remain refused; no symbolic-thread or spurious-failure semantics are claimed. |
-| DXC/maa fixture calls and summaries | Require all three actual fixture-summary proofs and both caller pairs with their exact selected summary IDs/source binding receipts. Corrected DXC+4 is the concrete bug; frozen+2 was only summary-precision behavior. These stand-ins are not production DX100 semantics. |
-| Seven unsupported constructs | Current public lower/prove controls cover inheritance, virtual, exception, lambda, RTTI, std::map and stream, each with construct/location, no WP input/goals/launch. Already independently reviewed. |
-| Accepted ticket22 agreement | Current0e7 full nine-group finite native agreement is independently accepted: 112,589 defined comparisons, explicit precondition/UB exclusions, planted disagreement stop control. Allocation seed is UB-only, not an agreeing row. Identical C++ source makes this source-relevant to stdv2, but its original contract metadata is not relabeled as a v2 domain theorem. Existing harness uses live writable arrays; special null/one-past controls remain separate finite native observations. No formal C++ equivalence theorem is claimed. |
-| Naming version and pins | Keep `kept-names.3` and version-bump hash control. Every generated C++ proof product needs its explicit naming pin. Pure original C model subjects and prelaunch refusals retain the hash-covered translator provenance rather than an invented generated-name receipt; preserve that already agreed scope clarification. |
-| Diagnosed failures/corpus, no held-out kernels, tool skips | Ring/member origins, conditional return, <=n overrun, float initialization, atomic operands/weak CAS, enum scopes, original std gap and first qualification public vocabulary failure have corpus links to real controls. The DXC false-seed corpus link added here closes the remaining identified fixture diagnosis gap. Keep fixtures restricted to standalone construct sources/BFS testbed, without BC/PR/SSSP fixtures, and retain existing missing-tool skips. |
+| One fixture per group; deterministic C/anchors, ACSL, safe/seed WP | All nine representative safe/seeded pairs are accepted with exact source/contract/method/setup/report pins. Compiler controls retain deterministic C/anchors and kept-name typechecking. Stdv2 is the approved narrower representative, never unchanged-original std success. |
+| Kept class/field/reference/operator/member/ctor/dtor names | Reviewed positive ACSL and wrong-field controls plus the current class pair preserve literal fields and explicit named calls, without renamed formal halves. |
+| Templates at two types; enum class | Current original Ring int[3]/long[2] pair retains exact live fixed-subobject origins, 25 initialization goals per row, no added premises and no residual certified member/template calls in the normalized selected entry. Unique enums lower; ambiguous scopes refuse. |
+| In-range allocation proves; overrun/use-after-delete not proven | Original allocation pair, dedicated original out-of-range actual RTE negative and all nine deliberate lifetime refusals pass. The negative retains i<=n and empty hints, with ordinary memory-access goals open. Refusals launch no verifier and contain no goals. Allocation success and exact terminal-release/source certificates remain explicit; no general deallocation theorem. |
+| std min/max/copy/swap model proof and caller pins | Five actual current standard model records are accepted and ordinarily selected by both qualified std callers, with exact current source/method/checker/qualification pins. The adopted shared ticket25 interface is c_model/--model/pins.models. Copy remains a range-qualified body theorem; callers discharge typed-root, lifetime, order and capacity requirements. |
+| OpenMP and atomics at one thread | Current original pairs and nine atomic model records pass. Constant-fixture C/anchors/names remain unchanged. Dynamic/effectful/invalid order operands and weak CAS refuse; no symbolic-thread or spurious-failure semantics. |
+| DXC/maa fixture calls and summaries | All three fixture-summary records and both caller pairs pass with exact selected dependency/source bindings. Corrected DXC+4 is the concrete seed; old+2 remains historical precision evidence. Exact no-op maa_const retains 3 ordinary Valid/0 own smoke, with mandatory actual unchanged MAA caller precondition and both per-call smoke witnesses. No arbitrary zero-smoke exception or production device theorem. |
+| Seven unsupported constructs | Reviewed current public lower/prove controls name inheritance, virtual, exception, lambda, RTTI, std::map and stream with source locations and no WP input/goals/launch. |
+| Accepted ticket22 agreement | Current0e7 finite profile has 112,589 defined comparisons, 17 agreeing classifications plus allocation-seed UB-only, 47,164 precondition and 2,207 known-UB exclusions, with planted disagreement stop control. Original contract metadata is not relabeled as a stdv2 domain theorem. No formal C++ equivalence or WP-view theorem. |
+| Naming version and pins | kept-names.3 and hash-bump control pass. All 22 generated C++ actual proof products pin naming explicitly; pure original C models and prelaunch refusals retain hash-covered translator/checker provenance. |
+| Diagnosed failures/corpus, no held-out kernels, tool skips | Reviewed corpus links cover member windows, conditional returns, <=n overrun, float initialization, atomic operands/weak CAS, enum scopes, std contract/qualification failures, false DXC seed and no-op smoke policy. Standalone construct fixtures/BFS testbed only, without BC/PR/SSSP; missing-tool skips retained. |
 
-The model subject wording in the old checklist says “library entry's summary.” The accepted shared ticket25 interface uses `subject.kind: c_model`, `--model`, and `pins.models`; record that adoption explicitly instead of inventing a library-summary subject. Similarly, the naming-row clarification above must remain visible rather than claiming every record has a direct naming field.
+The model-subject and naming rows are explicit approved clarifications of the
+old checklist wording. They do not claim library_summary subjects for C models
+or direct generated-name pins for products that never generated C++ names.
+Original std contract 13fd and its failed record e03a remain unchanged; distinct
+contract d586 supplies the narrower writable-neighbor empty-domain witness.
+Read-only/live-zero-size empty cases are excluded conservatively, not called UB.
 
-After successful actual jobs, these scientific limits still remain: the original std caller contract is unproved; stdv2 covers an explicitly narrower writable-neighbor empty domain; read-only and live zero-size empty inputs are conservatively outside that qualification without a UB classification; copy is range-qualified; allocation/lifetime handling is a closed certified shape plus refusals; atomics/OpenMP are single-thread; the existing float +real method retains its rounding/model assumption rather than establishing an IEEE rounding theorem; summary stand-ins and finite source agreement retain their stated scopes. These are explicit boundaries, not missing successes to hide. Under the representative-fixture acceptance interpretation approved for this work, no additional general-language theorem is requested.
+All current actuals retain mandatory RTE/init/smoke/cache-none/x86_64 settings,
+physical source/report/artifact bindings, current setup/reader/method pins and
+ordinary dependency eligibility. Safe means all retained goals Valid. All ten
+actual negatives retain attributable ordinary open goals; timeouts are not
+counterexamples. The nine deliberate no-launch refusals never substitute for
+actual seeded callers. The exact no-op summary exception requires its original
+source/contract/three-goal inventory and actual unchanged caller reachability.
 
-Before checking completion, collect every current record's ordinary and smoke inventory, mandatory RTE/init/cache/machdep flags, source/method/tool/contract/dependency/certificate/setup hashes and resources/ended-lease/source-after receipts; independently review the combined current evidence and update the issue's fixture inventory and exceptions. Safe means all retained goals Valid. Seeded acceptance needs actual launch plus an attributable ordinary open goal; an unsupported prelaunch refusal cannot stand in for a seeded caller. A partial matrix, historical result or caller model alone never closes the box.
+The continuation ended exit0 in 5,173.653 s with peak 3,226,492,928 B under 8 GiB,
+no OOM/whole timeout and unchanged 23933 source. Ended resources/source-after
+receipts for all four producers and the root's limited-observability cleanup
+audit are retained in the combined review packet. Old stopped exit1 results
+remain stopped outcomes. Absent ephemeral member-context JSON is reserialized
+and checked against recorded setup hashes. Terminal WP views remain physically
+retained; independent in-memory reconstruction is compared with those bytes
+and retained source/certificate bindings. Prior auditor REDs and fresh corrected
+producer paths remain preserved.
 
+Scientific limits remain: range-qualified copy; allocation-success assumption
+and closed lifetime shapes; one-thread atomics/OpenMP; float +real rounding
+assumption; fixture DXC/MAA semantics; finite source agreement with explicit
+exclusions. No general-language, IEEE rounding, device or WP-view-equivalence
+theorem is claimed. Under the approved representative-fixture interpretation,
+all eleven ticket24 acceptance items are met.
 
-## Current stdv2 and no-op continuation frontier — 2026-10-15 ET
+## Historical stdv2 and pending-continuation checkpoint — 2026-10-15 ET
 
-The actual distinct qualified stdv2 pair at bf7a is accepted: safe47 ordinary+13 smoke Valid; seed44 ordinary Valid+4 ordinary timeouts,11 smoke Valid+2 failed; both retain5 initialization goals. Exact five old current model IDs, checked copy qualification, method/checker/source/tool/report pins and independent cold full-goal reading pass. The original caller contract13fd and failed recorde03a remain retained. The caller qualification d586 is the explicit writable-neighbor empty-domain representative; read-only/live-zero-size boundaries are unchanged. [Independent actual stdv2 review](t24-qualified-std-v2-actual-independent-review-20261015.md).
+The actual distinct qualified stdv2 pair at bf7a is accepted: safe47 ordinary+13 smoke Valid; seed44 ordinary Valid+4 ordinary timeouts,11 smoke Valid+2 failed; both retain5 initialization goals. Exact five old current model IDs, checked copy qualification, method/checker/source/tool/report pins and independent cold full-goal reading pass. The original caller contract 13fd and failed record e03a remain retained. The caller qualification d586 is the explicit writable-neighbor empty-domain representative; read-only/live-zero-size boundaries are unchanged. [Independent actual stdv2 review](t24-qualified-std-v2-actual-independent-review-20261015.md).
 
 The stopped second original matrix has the atomic pair+9model successes and an original no-op summary with3 ordinary Valid/0 generated smoke. Its strict policy rejection is preserved. The independently reviewed fixture-only no-op continuation permits that exact summary provisionally; unchanged original MAA caller precondition and both per-call smoke witnesses remain mandatory before final no-op acceptance. It reuses12 rows and requests24 fresh rows (15 actual WP+9 lifetime refusals), covering all remaining6 groups and complete allocation/lifetime controls. No active or historical result fills those pending rows. [No-op scope and exact controls](t24-noop-summary-continuation-20261015.md).
