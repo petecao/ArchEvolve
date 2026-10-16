@@ -55,3 +55,12 @@ pending.
 Source correction: [indirect old-value alias](indirect-old-value-correction-20261015.md).
 Optional old-result reads alias the progressively modified `new_data` buffer,
 not the untouched response payload. Global lane/packet order remains unproven.
+
+Composed verification — 2026-10-15 ET: after merging ticket36's configured-runtime
+identity change, the combined focused profile passes28/28 (13.45s guard,
+172,359,680B peak, no timeout/OOM). Exact source is `ac3301837fa16e6011c9eebf1921631064deeaec`.
+[Composed sources/output/resources](../../evidence/t28-prerequisites-composed-20261015.json).
+The six literal builtin types in the compiler control do not establish device
+encoding: source `get_data_type` recognizes exact `int64_t`/`uint64_t` identities,
+which differ between Apple and Linux headers. Semantics0.2 must bind the pinned
+source/header ABI instead of treating every same-width long/long-long as one type.
