@@ -1,0 +1,89 @@
+{
+  "actual_public_run": "not admitted pending correction",
+  "blocking_findings": [
+    {
+      "file": "swdb-project/swdb/heap_model_view.py",
+      "id": "B1",
+      "line": 342,
+      "minimal_fix": "Keep standard check/verdict attestation; child readings already live under settings.heap_model_runs; add full-success writer/schema control",
+      "priority": 1,
+      "reason": "Final verdict_reading includes heap_model_runs forbidden by additionalProperties:false; success path cannot persist schema-valid proof",
+      "schema": "swdb-project/schemas/proof.schema.json:74"
+    }
+  ],
+  "created": "2026-10-16 ET",
+  "foundation_hashes_equal_accepted": 8,
+  "math_theory_equal_accepted_e56": true,
+  "member_positive_target_counts": {
+    "std_vector_int_ctor_count_value": 27,
+    "std_vector_int_dtor": 11
+  },
+  "packet_pure_functions_ast_equal": 7,
+  "retained_pin_mismatches": 0,
+  "retained_pins_verified": 26,
+  "review_markdown": {
+    "path": "/private/tmp/probata-t25-public-heap-source-review-31798b27-20261016.md",
+    "sha256": "7dfe20345d7ea93200a8bfe146bcbc9d9610a5b4fadd7279a7b1dc2dbb53b487"
+  },
+  "reviewer_tests_compilers_formal_tools_ssh_or_launches": false,
+  "source_commit": "31798b274f896fb98d95547de0528697417fbe2e",
+  "source_pins": [
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-heap-preparation-controls-20261016.json",
+      "sha256": "e56f2676107fa908f8094d425abb078265ce64f191108109a965e914d4dd30ed"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/issues/25-vector-and-pair-models.md",
+      "sha256": "324aca8f0db195c9618506deca68e6976e6928d553b85d90f5c5d496d82728b3"
+    },
+    {
+      "path": "swdb-project/docs/reference/format-v0.4-std-models.md",
+      "sha256": "e9854db4ebf79eb1073a5df413af7144d1bf8ad2d9815f54bfac75e600a6b2ad"
+    },
+    {
+      "path": "swdb-project/pyproject.toml",
+      "sha256": "049d720132df2d1091bca29e2705d4552e5fc3ea55e9963cf8faa3133501d7b5"
+    },
+    {
+      "path": "swdb-project/schemas/proof.schema.json",
+      "sha256": "c8255f763fc1968c64aff4af53aac04a0dadc5193303f87fcd6c86f530100bfa"
+    },
+    {
+      "path": "swdb-project/scripts/probata_heap_model_profile.py",
+      "sha256": "36bb3bbe2a180ba149f41a1163306305cb814d9cadee9b9fc1ebfcefdae88f77"
+    },
+    {
+      "path": "swdb-project/swdb/heap_bridge.mlw",
+      "sha256": "5186c27f5a7a339352e3f62dc3a0d3efb1c7bd12f8a456cc61b0d7a52566638d"
+    },
+    {
+      "path": "swdb-project/swdb/heap_model_environment.ml",
+      "sha256": "ba52941e7ab96a8ebbe4efdb8fde0c1b19daa3d6ccb8804efc87b027a68caf7b"
+    },
+    {
+      "path": "swdb-project/swdb/heap_model_packets.py",
+      "sha256": "93a07782af0ae152f2cff2a6178b9745c922c42f8b73eeec3affe12567e0e93d"
+    },
+    {
+      "path": "swdb-project/swdb/heap_model_vcs.py",
+      "sha256": "f20e0ec130222aeda96b4fbb8e72eef8d922d3f33e84077777203f7e6d159092"
+    },
+    {
+      "path": "swdb-project/swdb/heap_model_view.py",
+      "sha256": "b4fbe523f58246ba63303101cff258cb95255df323371d990267ea257bd6e3fe"
+    },
+    {
+      "path": "swdb-project/swdb/proof_setup.py",
+      "sha256": "b9b5b1eef444be7e6656cbd5d5ce76b7393f28eae1f55a8c47b5e4028154f7ee"
+    },
+    {
+      "path": "swdb-project/swdb/wp_adapter.py",
+      "sha256": "fe4590b5b9eeaa41701fb4b48d17a0c1d6ade176783f46918de99151cda2faa5"
+    },
+    {
+      "path": "swdb-project/tests/test_heap_model_view.py",
+      "sha256": "4876f118a91e82ee63f71767b46f52a22cb18497d0812d3d3729bc0817450ef0"
+    }
+  ],
+  "verdict": "REQUEST_CHANGES"
+}

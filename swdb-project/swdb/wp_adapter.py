@@ -37,10 +37,11 @@ import re
 import shlex
 import shutil
 import subprocess
+import time
 from dataclasses import replace
 from pathlib import Path
 
-from swdb import artifacts, c_lowering, cpu_memory_admission, framac, helper_windows, nested_entry_reads, hint_check, paths, proof_semantics, proof_setup, rss_watchdog, standard_model_view, standard_range_calls, standard_range_model, std_models, terminal_release, vector_ownership, vocab, wp_pointer_bounds
+from swdb import artifacts, c_lowering, cpu_memory_admission, framac, heap_model_view, helper_windows, nested_entry_reads, hint_check, paths, proof_semantics, proof_setup, rss_watchdog, standard_model_view, standard_range_calls, standard_range_model, std_models, terminal_release, vector_ownership, vocab, wp_pointer_bounds
 from swdb.proof import MODEL_PREFIX, AdapterError, Verdict
 
 NAME = "wp"
@@ -95,6 +96,7 @@ class WpAdapter:
 
     # --- the job --------------------------------------------------------------------------------
     def run(self, job):
+        started = time.monotonic()
         run_dir = Path(job.log).parent
         wp_dir = run_dir / "wp"
         wp_dir.mkdir(exist_ok=True)
@@ -102,13 +104,16 @@ class WpAdapter:
         log.line(f"adapter: wp\nunit: {job.unit.candidate} {job.unit.function}\ncontract: {self.contract}")
         tools = self._tools()                     # missing or mismatched tools: no job, no record
         context = {"job": job, "wp_dir": wp_dir, "log": log, "reports": [], "tools": tools,
-                   "functions": {job.unit.function}, "extra_flags": [], "pins": {}}
+                   "functions": {job.unit.function}, "extra_flags": [], "pins": {},
+                   "started_monotonic": started}
         if self.contract.startswith(MODEL_PREFIX):            # ticket 24: one C model against its own contract
             text = c_lowering.model_text(job.unit.function)
             if text is None:
                 raise AdapterError(f"the C lowering has no C model {job.unit.function}")
             if job.unit.function.startswith(("std_vector_", "std_pair_")):
                 context["pins"]["std_models"] = std_models.identity()
+            if job.unit.function in heap_model_view.MEMBERS:
+                return heap_model_view.prove(job, self, context)
             if re.search(r"\b(?:allocates|frees)\b|\\(?:fresh|freeable)\b", text):
                 return self._not_proven("unsupported_construct",
                     "WP 33.0 does not model allocation lifetime; this C model needs allocates/frees support", context)
