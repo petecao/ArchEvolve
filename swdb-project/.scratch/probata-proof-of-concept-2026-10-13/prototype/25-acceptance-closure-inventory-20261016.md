@@ -1,6 +1,6 @@
 # Ticket25 acceptance closure inventory
 
-2026-10-16 ET. Published conjunction source `04af74c1`; compact implementation/evidence inventory,
+2026-10-16 ET. Published public source route `dcdecf31`; compact implementation/evidence inventory,
 not ticket acceptance. The coordinator owns admission and tracker updates.
 Historical accepted results retain their source, model, method, domain and TCB.
 An unrelated Git commit change does not invalidate an identical scientific
@@ -11,7 +11,7 @@ reuse eligibility. Reuse is recorded as historical evidence, never a fresh run.
 | --- | --- | --- |
 | Original int count/value constructor and destructor | Accepted public `c_model` fixtures at `cea5652b`, 38 targets; original count constructor at `bb7170ac`, 27 targets. No general caller adoption follows. | Compare complete current scientific targets/source inverses/theory/dependency closure to retained inputs; reuse exact matches under explicit TCB. |
 | Qualified int constructor/grow/reserve/destructor | Scoped constructor35, destructor11, grow61 and reserve67 cold/root decisions exist. Grow/reserve have complete arbitrary initialized signed32-source image and fresh-buffer domains; original-v2/default catalog remains outside that claim. | Reuse unchanged scientific components; discharge source-local qualification and ownership, then declare a reviewed new default model/domain version rather than attempting to prove the unsound old growth contract. |
-| Closed no-growth caller bridge | Math9 cold/root PASS; four of six `fb197c5d` gluing duties have cold/root scoped acceptance and both positive timeouts remain unproved. Their exact 23-leaf conjunction replacement at `04af74c1` reports all producer outcomes proven; independent cold attribution is active. Projected C at `615ddf50` has complete conditional attribution of 17 native Valid ordinary goals and four nonproof smokes. Its original reader remains `not_proven`. The repaired source-rule seam is still unadmitted. | Finish23 cold attribution; independently review source effects, live storage/dead-history observer and all private automatic components; validate exact historical constructor/destructor/math/gluing evidence without relabeling identities; integrate the scoped public source route and full original24/9/13 obligation accounting. Retain full allocator/frame/release TCB. No generic route or native `freeable` proof may be inferred. |
+| Closed no-growth caller bridge | Math9 cold/root PASS; four of six `fb197c5d` gluing duties have cold/root scoped acceptance and both positive timeouts remain unproved. Their exact 23-leaf conjunction replacement at `04af74c1` has complete independent cold/root scoped acceptance and checked conjunction reconstruction. Projected C at `615ddf50` has complete conditional attribution of 17 native Valid ordinary goals and four nonproof smokes. Its original reader remains `not_proven`. The corrected source rule, historical82-target binder and opt-in shared public route have both independent review axes passed and are published at `dcdecf31`. Actual public V2 failed all five before record creation on ignored explicit method selection. The two-call repair is independently reviewed/published at1433b8f5; public V3 is actively running on node0 under root admission, without an outcome claim. | Complete the active exact1433b8f5/node0 public V3 evaluation, then independently reconcile final records, source/compiler/runtime/setup checks and full82-target historical binding. The source effect/observer rule and full original24/9/13 accounting are implemented; retain every historical identity. Retain full allocator/frame/release TCB. No generic route or native `freeable` proof may be inferred. |
 | Other original int member bodies | Earlier 14 nonallocating vector/pair results and checked `at` precede the current incoming-array-object provenance gate. They cannot silently supply current broad-domain evidence. Current code contains all 18 vector member models and internal helpers. | Source-to-heap maps for remaining constructors, accessors, copy/move, clear/swap and wrappers; full source/RTE/init/frame and source-origin checks. Reuse earlier exact-domain pieces only where their closure still matches. |
 | Original vector/pair maximum workflow | Public WP original fixture at `0cc88ffc`: 77 ordinary Valid, 12 smoke passed; wrong comparison remains unproved. Checked private-storage projection explicitly does not prove every allocating model body. Original bounded maximum accepted at its separate exact freeze. | Reuse exact source/view/model/assumption evidence where compatible with final method; verify final default-domain/model adoption and bounded C/C++ agreement, rather than adding another diagnostic workflow. |
 | Pair members and caller | Four original `pair<int,int>` bodies plus exact-dependency safe caller accepted at `1278f2d9`; wrong-field caller remains unproved. | Content-addressed current dependency adoption; generic scalar/pointer field/layout/conversion coverage for other admitted pair combinations. |
@@ -30,12 +30,12 @@ not a viable path. A new declared domain/version and source-derived eligibility
 are implementation work, not missing test coverage.
 
 The current mathematical evidence already resolves the expensive int copy/grow
-core. The 23-leaf run now covers the two new positive gluing conjunctions while
-the four unchanged successful duties retain their own accepted identities. Original
+core. The accepted23-leaf result reconstructs the two positive gluing conjunctions
+while the four unchanged successful duties retain their own accepted identities. Original
 projected-C reports remain sufficient observations of those unchanged native
-terms; the metadata observer repair does not justify rerunning WP. Source/Typed
-and dependency admission still require implementation and review before any
-original caller record can be accepted.
+terms; the metadata observer repair does not justify rerunning WP. The distinct checked source-rule public route is now implemented and reviewed;
+its repaired1433b8f5/node0 public V3 evaluation is active and final records/cold audit are pending; the earlier V2 five-case pre-record failure remains unchanged. Native Typed lifetime
+proofs and generic member/caller adoption remain outside its scoped claim.
 
 The next production route and the remaining default/member/type/pair/A2 work are
 recorded in `25-owned-domain-production-plan-20261016.md`. The closed caller is
@@ -49,3 +49,17 @@ counterstate; `../../../tests/test_std_models.py`,
 `../../../tests/test_standard_member_contracts.py`, and
 `../../../tests/test_pair_workflow.py`. Current scoped decisions and complete
 raw references are retained under `../evidence/`.
+
+Owned move/swap transfer V2 under `25-owned-transfer-20261016/` has final
+GREEN4 (zero child/native attempts) and both source review axes PASS after the
+literal type-registry identity/manifest repair. Original V1 RED/GREEN and review
+finding remain retained. Ten unbounded registry duties and eight exact original
+source units are prepared, with no formal outcome or source/default member admission.
+The field/Heap/layout/history transition rule is the next implementation gate;
+registry freshness and retirement do not establish Heap allocation or release.
+
+The Why3server helper discovered in the mixed-pair runtime was absent from older
+physical inventory scopes. Those historical conditional mathematics retain an
+explicit original producer/Why3 runtime TCB, with no retroactive helper
+before/after pin or complete runtime claim. New ownership10 admission must use
+the fresh reviewed package/ELF pins and live Unix socket quota rule.

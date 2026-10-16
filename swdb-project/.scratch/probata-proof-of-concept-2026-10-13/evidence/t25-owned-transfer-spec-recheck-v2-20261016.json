@@ -1,0 +1,78 @@
+{
+  "actual_formal_execution": false,
+  "checked": {
+    "canonical_nonmanifest_unchanged": 20,
+    "component_identity": "Reconstructed new checker digest exactly from module bytes, unchanged theory bytes, pinned parent hash and JSON-framed declaration pins plus canonical value digest. The registry snapshot passed to _elements and _identity is the same one retained in the manifest.",
+    "function_preservation": "_sha/_json/_source/prepare/check/check_launch are AST-identical. identity delegates to new _type_registry/_identity; _elements consumes their normalized values and declaration binds the registry. No formula, original contract/source or launch policy changes.",
+    "input_validation": "Duplicate registry declarations, missing declarations, wrong set/dict shapes and non-string entries refuse. Accepted element computation preserves V1 scalar/internal/pointer membership and direct bool exclusion; the earlier distinct nonempty canonical tuple guard still precedes membership. No lowering/compiler stack import is introduced.",
+    "physical_pin_occurrences": 31,
+    "public_regression_seam": "The fourth public control copies source/theory/type-registry files into its own runtime, changes only the copied FLOAT_TYPES declaration, loads the isolated component, requires identity inequality and refusal of the old int packet, then verifies a freshly prepared packet retains unsupported source admission. Original source files remain untouched.",
+    "registry_reconstruction": "Independently parsed the physical c_lowering source AST without imports, reconstructed exactly the three assignment source slices/names/bytes/SHA-256 values, sorted scalar sets and internal aliases, canonical JSON SHA and full observed module SHA; all equal preparation and manifest.",
+    "semantic_vs_container": "Both exact literal declaration pins and canonical values define the accepted type domain. The complete c_lowering container SHA remains separately retained in manifest; unrelated container edits are not relabeled as a new type-domain theorem identity, while canonical packet checking still detects that observed-container change.",
+    "source_and_theory": "All ten canonical C lemma inputs, eight complete original move/swap sources, the prelude and exact Why3 theory are byte-identical to reviewed V1. New manifest equals V1 after removing only type_registry and restoring its prior checker identity. All V1 scope and mathematical reasoning therefore remain applicable."
+  },
+  "current_model_records_admitted": [],
+  "date": "2026-10-16 ET",
+  "decision": "PASS for exact type-registry identity/manifest repair; all mathematical/source admission gates remain pending",
+  "findings": [],
+  "full_ticket25": false,
+  "pins": {
+    "canonical_manifest": {
+      "bytes": 19545,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/inert-v2/manifest.json",
+      "sha256": "c215caf129a9221adaecf1cff970cf24e1a911c0d65c15261194be4e1f587ee2"
+    },
+    "legacy_regression": {
+      "bytes": 1977,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/development/pin-regression-v1/result.json",
+      "sha256": "580b6850348ec3487b68da34d16ff24877dce44d03a57aee20690dde9500f297"
+    },
+    "module": {
+      "bytes": 14594,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_owned_transfer.py",
+      "sha256": "6fa50d3b0ff6610c541bfa787179b37c6c8b50e4155fb2b0605d00e1eaffd085"
+    },
+    "predecessor_spec": {
+      "bytes": 9328,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer-spec-review-v1-20261016.json",
+      "sha256": "1cbf1fc305aa6a7400e5bf3e347befaca03724881b5c18e8e8fac2d79f1510e9"
+    },
+    "preparation": {
+      "bytes": 13371,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer-preparation-v2-20261016.json",
+      "sha256": "a417b4e3921df8957ffb2c2ef4afab212827ef921d892f91e25850ab81ab4855"
+    },
+    "retained_green": {
+      "bytes": 1258,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/development/green-v4/result.json",
+      "sha256": "dd25fcb364d5aebc7ca583bf7dd5d438e8374859704419576a2e559562db608e"
+    },
+    "tests": {
+      "bytes": 6036,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_owned_transfer.py",
+      "sha256": "65c73181c4bb61d2837eb0ddb7728f9164681e211a9695296ac676bfe5bdd971"
+    },
+    "theory": {
+      "bytes": 2389,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_owned_state.mlw",
+      "sha256": "a2c295d2c6720a9c8c522f05e19723c2d2d2a32b63f9b198aab03f195269e4b6"
+    }
+  },
+  "preserved_limits": [
+    "Registry freshness covers absence from current active receiver/backing keys. Source/Heap issuance history must tie frontier to never-issued Heap.next and actual fresh construction.",
+    "Abstract move needs a distinct active empty destination; this does not establish source construction eligibility. Swap-self registry equality does not relax original separated C contracts.",
+    "Original size/capacity/field safety, source/temporary layout/padding/initializedness/effects, complete owners and actual physical release/end lifetime relation remain pending; retire is not Heap.release.",
+    "Normal complete mathematical task/hypothesis/import closure and an independently checked full source-to-registry/Heap rule are still required. No current/default member or caller adoption follows from content-addressed type registration."
+  ],
+  "retained_control_history": {
+    "legacy": "Preserved V1 against the new fourth control: three pass and only the registry control fails with KeyError type_registry. This is honestly recorded as a post-repair regression, not a test-first RED.",
+    "original": "Original missing-module RED3 and prior GREEN snapshots, V1 Spec receipt and Standards P2 remain historical and unmodified.",
+    "provenance": "Read exact pinned outcomes; no reviewer reruns.",
+    "successor": "GREEN v4: four public controls pass, zero external/native attempts."
+  },
+  "reviewer": "caller_assess",
+  "schema": "t25-owned-transfer-type-registry-independent-spec-recheck-2",
+  "scope": "Read-only source/AST/hash/JSON and retained artifact inspection only; no project imports, tests, compiler/native/verifier/solver, SSH or scientific execution.",
+  "source_or_default_admission": false,
+  "source_to_heap_rule_established": false
+}

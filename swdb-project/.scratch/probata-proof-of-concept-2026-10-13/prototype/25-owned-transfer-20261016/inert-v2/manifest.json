@@ -1,0 +1,432 @@
+{
+  "caller_premises_added": [],
+  "checker": {
+    "id": "vector-owned-transfer-1",
+    "sha256": "53c06e10f6d175ccfd98fbf3e087a76283a8b2a36db4bf5634835d5997a6e559"
+  },
+  "created": "2026-10-16 ET",
+  "current_model_records_admitted": [],
+  "domain": {
+    "cross_owner_receiver_backing_overlap": "forbidden in the source-established ownership relation",
+    "exclusive_backing": true,
+    "frontier": "arbitrary positive integer; active receivers/backings predate fresh allocation identities",
+    "id": "source-owned-vector-registry-1",
+    "identities": "unbounded mathematical allocation identities; zero is no backing",
+    "physical_heap_relation_established": false,
+    "raw_aliases_are_owners": false
+  },
+  "elements": [
+    "int",
+    "float",
+    "double",
+    "int *"
+  ],
+  "obligations": [
+    {
+      "dependencies": [],
+      "goal": "t25_owned_empty_valid",
+      "id": "empty.valid",
+      "kind": "check_lemma",
+      "path": "obligations/000-t25_owned_empty_valid.c",
+      "sha256": "2f932b1c2e440868a99855facc5bc5d712613ff1cd913ef7e8db190f4f2e7454",
+      "statement": "\\forall integer frontier; 0 < frontier ==> Owners::valid(Owners::empty(0),frontier)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_owned_receiver_fresh",
+      "id": "receiver.fresh",
+      "kind": "check_lemma",
+      "path": "obligations/001-t25_owned_receiver_fresh.c",
+      "sha256": "2e39715831e0957a00f8514a0afc5a2b2cf8cd20beb10d1680a3bb96f80fe8f4",
+      "statement": "\\forall Owners::state s; \\forall integer frontier; Owners::valid(s,frontier) ==> Owners::valid(Owners::begin_owner(s,frontier),frontier+1) && Owners::active_owner(Owners::begin_owner(s,frontier),frontier) && Owners::buffer(Owners::begin_owner(s,frontier),frontier) == 0",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_owned_buffer_fresh",
+      "id": "buffer.fresh",
+      "kind": "check_lemma",
+      "path": "obligations/002-t25_owned_buffer_fresh.c",
+      "sha256": "218588203ab45da98caa77977e6f19f732997de4b0467f958413627d9e29c85a",
+      "statement": "\\forall Owners::state s; \\forall integer frontier,r; Owners::valid(s,frontier) && Owners::active_owner(s,r) && Owners::buffer(s,r) == 0 ==> Owners::valid(Owners::bind(s,r,frontier),frontier+1) && Owners::buffer(Owners::bind(s,r,frontier),r) == frontier",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_owned_move_transfer",
+      "id": "move.transfer",
+      "kind": "check_lemma",
+      "path": "obligations/003-t25_owned_move_transfer.c",
+      "sha256": "5781901acb6cbb3490e8103cb3785fdcfebf1f20adf8093869018e0be9b59784",
+      "statement": "\\forall Owners::state s; \\forall integer frontier,destination,source; Owners::valid(s,frontier) && Owners::active_owner(s,destination) && Owners::active_owner(s,source) && destination != source && Owners::buffer(s,destination) == 0 ==> Owners::valid(Owners::move(s,destination,source),frontier) && Owners::buffer(Owners::move(s,destination,source),destination) == Owners::buffer(s,source) && Owners::buffer(Owners::move(s,destination,source),source) == 0",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_owned_move_frame",
+      "id": "move.frame",
+      "kind": "check_lemma",
+      "path": "obligations/004-t25_owned_move_frame.c",
+      "sha256": "2c65c4c77cd28ca323cb26cf3d7ce78d8f1fe5714da0747af8e211ab54366fc6",
+      "statement": "\\forall Owners::state s; \\forall integer destination,source,q; q != destination && q != source ==> (Owners::active_owner(Owners::move(s,destination,source),q) <==> Owners::active_owner(s,q)) && Owners::buffer(Owners::move(s,destination,source),q) == Owners::buffer(s,q)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_owned_swap_exchange",
+      "id": "swap.exchange",
+      "kind": "check_lemma",
+      "path": "obligations/005-t25_owned_swap_exchange.c",
+      "sha256": "cecc24b68ec710b9634bc619cb0572621133aad9de397d3842a149a596f19737",
+      "statement": "\\forall Owners::state s; \\forall integer frontier,left,right; Owners::valid(s,frontier) && Owners::active_owner(s,left) && Owners::active_owner(s,right) ==> Owners::valid(Owners::swap(s,left,right),frontier) && Owners::buffer(Owners::swap(s,left,right),left) == Owners::buffer(s,right) && Owners::buffer(Owners::swap(s,left,right),right) == Owners::buffer(s,left)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_owned_swap_frame",
+      "id": "swap.frame",
+      "kind": "check_lemma",
+      "path": "obligations/006-t25_owned_swap_frame.c",
+      "sha256": "784bdeefd2c1c8666c78cb3c756dab60b61dcb00db6662674b151c3145d81fc2",
+      "statement": "\\forall Owners::state s; \\forall integer left,right,q; q != left && q != right ==> (Owners::active_owner(Owners::swap(s,left,right),q) <==> Owners::active_owner(s,q)) && Owners::buffer(Owners::swap(s,left,right),q) == Owners::buffer(s,q)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_owned_swap_self",
+      "id": "swap.self",
+      "kind": "check_lemma",
+      "path": "obligations/007-t25_owned_swap_self.c",
+      "sha256": "f46c310371abf23a040c90594e0d8b5a65344ea267dc82e2188b22d68cb86b1c",
+      "statement": "\\forall Owners::state s; \\forall integer r; Owners::swap(s,r,r) == s",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_owned_retire_frame",
+      "id": "retire.frame",
+      "kind": "check_lemma",
+      "path": "obligations/008-t25_owned_retire_frame.c",
+      "sha256": "67486202d94c68ae60a73e3e37d4b39294a27f239195a7e9abf750e54e07ca3b",
+      "statement": "\\forall Owners::state s; \\forall integer frontier,r,q; Owners::valid(s,frontier) && Owners::active_owner(s,r) && q != r ==> Owners::valid(Owners::retire(s,r),frontier) && !Owners::active_owner(Owners::retire(s,r),r) && Owners::buffer(Owners::retire(s,r),r) == 0 && (Owners::active_owner(Owners::retire(s,r),q) <==> Owners::active_owner(s,q)) && Owners::buffer(Owners::retire(s,r),q) == Owners::buffer(s,q) && (Owners::active_owner(s,q) && Owners::buffer(s,r) != 0 ==> Owners::buffer(s,q) != Owners::buffer(s,r) && q != Owners::buffer(s,r))",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_owned_shared_backing_rejected",
+      "id": "shared_backing.rejected",
+      "kind": "check_lemma",
+      "path": "obligations/009-t25_owned_shared_backing_rejected.c",
+      "sha256": "b00cad6ee857e25645cea3e926c47a89b6bb46656ad0a1bbd2c98795708712a7",
+      "statement": "\\forall Owners::state s; \\forall integer r,q; Owners::active_owner(s,r) && Owners::active_owner(s,q) && r != q && Owners::buffer(s,r) != 0 && Owners::buffer(s,r) == Owners::buffer(s,q) ==> !Owners::exclusive(s)",
+      "status": "pending"
+    }
+  ],
+  "parent_model": {
+    "id": "swdb-std-models-2",
+    "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+  },
+  "pending_source_duties": [
+    "fresh complete unbounded proof and full task/hypothesis/import closure",
+    "source-derived ownership registration and complete existing owner set",
+    "actual original field reads/writes, layout and initializedness",
+    "source-to-registry move/swap update and fresh automatic temporary correspondence",
+    "physical receiver/backing allocation identity, separation, validity, type and lifetime correspondence",
+    "all original contracts/RTE/init/assigns and incoming live observation duties",
+    "actual release and automatic lifetime end: retire is not Heap.release",
+    "library/allocator correspondence including freshness, freeability, frame, release and permitted replacement effects"
+  ],
+  "source_admission": "unsupported: ownership protocol requires fresh mathematical proofs and a complete checked source/Heap transition rule",
+  "source_members": [
+    {
+      "body_changed": false,
+      "element": "int",
+      "element_memory_accessed": false,
+      "function": "std_vector_int_move_ctor",
+      "member": "move_ctor",
+      "old_contract_proved": false,
+      "original_body": "{\n  *this = *other;\n  other->data = NULL; other->size = 0; other->capacity = 0;\n}",
+      "original_body_sha256": "87cc56223ff37c6d47784fed03b310fb4c7645fa9c7ede45c5badd78991117e7",
+      "original_fragment_sha256": "1983b78caabd455cb70b1ae71a4bb55c66c38185cabb68b468e42f39ec56c856",
+      "path": "source/std_vector_int_move_ctor.c",
+      "physical_padding_observation": "not established by the registry; full source layout/effect rule required",
+      "self_swap_registry_identity": false,
+      "sha256": "2275b2a0533c16643f1ea7ae324aae852c9e2509e4e05085107636e172e3e676",
+      "source_read_effects": [
+        "source/destination vector struct values; no buffer element load"
+      ],
+      "source_relation_requires": [
+        "distinct source/destination receiver identities",
+        "source established active owners",
+        "fresh empty destination ownership binding"
+      ],
+      "source_write_effects": [
+        "destination receiver fields",
+        "source receiver fields"
+      ]
+    },
+    {
+      "body_changed": false,
+      "element": "int",
+      "element_memory_accessed": false,
+      "function": "std_vector_int_swap",
+      "member": "swap",
+      "old_contract_proved": false,
+      "original_body": "{ std_vector_int t = *this; *this = *other; *other = t; }",
+      "original_body_sha256": "386f081a4c601dd03b94038db1924edab625561cb8719c8044348f565a4d8609",
+      "original_fragment_sha256": "838d74e732a416b040cf367111786616824d843a211092d8fbbd105d0b61186e",
+      "path": "source/std_vector_int_swap.c",
+      "physical_padding_observation": "not established by the registry; full source layout/effect rule required",
+      "self_swap_registry_identity": true,
+      "sha256": "0bb1a1ee04c3643ff68edac876d827c1429326f24bdd01890bf35b4a2b64d83d",
+      "source_read_effects": [
+        "source/destination vector struct values; no buffer element load"
+      ],
+      "source_relation_requires": [
+        "source established active owners"
+      ],
+      "source_write_effects": [
+        "destination receiver fields",
+        "source receiver fields"
+      ]
+    },
+    {
+      "body_changed": false,
+      "element": "float",
+      "element_memory_accessed": false,
+      "function": "std_vector_float_move_ctor",
+      "member": "move_ctor",
+      "old_contract_proved": false,
+      "original_body": "{\n  *this = *other;\n  other->data = NULL; other->size = 0; other->capacity = 0;\n}",
+      "original_body_sha256": "87cc56223ff37c6d47784fed03b310fb4c7645fa9c7ede45c5badd78991117e7",
+      "original_fragment_sha256": "020c3cb64b93674e7346c132e96345ca0ef5205c0f598f5b9429d328d5ebcb5f",
+      "path": "source/std_vector_float_move_ctor.c",
+      "physical_padding_observation": "not established by the registry; full source layout/effect rule required",
+      "self_swap_registry_identity": false,
+      "sha256": "1299df3bee8f039786fb55413f26c4b11209ce610cbf7e38b2bb6dbee8a247d0",
+      "source_read_effects": [
+        "source/destination vector struct values; no buffer element load"
+      ],
+      "source_relation_requires": [
+        "distinct source/destination receiver identities",
+        "source established active owners",
+        "fresh empty destination ownership binding"
+      ],
+      "source_write_effects": [
+        "destination receiver fields",
+        "source receiver fields"
+      ]
+    },
+    {
+      "body_changed": false,
+      "element": "float",
+      "element_memory_accessed": false,
+      "function": "std_vector_float_swap",
+      "member": "swap",
+      "old_contract_proved": false,
+      "original_body": "{ std_vector_float t = *this; *this = *other; *other = t; }",
+      "original_body_sha256": "922afc6c66b2c9e146706992c07efccf27728d0ce104198487de32c839dcad52",
+      "original_fragment_sha256": "35c834619111645915b1ade46b9a138014e1ed502fa7dd45e7841e2bcbc29b4b",
+      "path": "source/std_vector_float_swap.c",
+      "physical_padding_observation": "not established by the registry; full source layout/effect rule required",
+      "self_swap_registry_identity": true,
+      "sha256": "7dcb086471a30e8cea6fe36e108a80f1f0e04506500b0f1687474f6064a220f3",
+      "source_read_effects": [
+        "source/destination vector struct values; no buffer element load"
+      ],
+      "source_relation_requires": [
+        "source established active owners"
+      ],
+      "source_write_effects": [
+        "destination receiver fields",
+        "source receiver fields"
+      ]
+    },
+    {
+      "body_changed": false,
+      "element": "double",
+      "element_memory_accessed": false,
+      "function": "std_vector_double_move_ctor",
+      "member": "move_ctor",
+      "old_contract_proved": false,
+      "original_body": "{\n  *this = *other;\n  other->data = NULL; other->size = 0; other->capacity = 0;\n}",
+      "original_body_sha256": "87cc56223ff37c6d47784fed03b310fb4c7645fa9c7ede45c5badd78991117e7",
+      "original_fragment_sha256": "c48a72d1c5c82707a7d3039161661a8334834ef3604c8f6477c08e3b7794c62a",
+      "path": "source/std_vector_double_move_ctor.c",
+      "physical_padding_observation": "not established by the registry; full source layout/effect rule required",
+      "self_swap_registry_identity": false,
+      "sha256": "977e6275f008c2469b59efc0f72b79d4ba39d7f7c8919cbd9e7151f4a9291b24",
+      "source_read_effects": [
+        "source/destination vector struct values; no buffer element load"
+      ],
+      "source_relation_requires": [
+        "distinct source/destination receiver identities",
+        "source established active owners",
+        "fresh empty destination ownership binding"
+      ],
+      "source_write_effects": [
+        "destination receiver fields",
+        "source receiver fields"
+      ]
+    },
+    {
+      "body_changed": false,
+      "element": "double",
+      "element_memory_accessed": false,
+      "function": "std_vector_double_swap",
+      "member": "swap",
+      "old_contract_proved": false,
+      "original_body": "{ std_vector_double t = *this; *this = *other; *other = t; }",
+      "original_body_sha256": "58d3a681a819c3359e9099f507d92d8e49bb0ed9eb61dbd1ec8cbfe9210979c5",
+      "original_fragment_sha256": "ebc82e895c9214bc8be57cf4550158c6c254d4ee975ef687a986e4fb32aa96db",
+      "path": "source/std_vector_double_swap.c",
+      "physical_padding_observation": "not established by the registry; full source layout/effect rule required",
+      "self_swap_registry_identity": true,
+      "sha256": "4a8527cbf4937fd2b47823b9d22c9274b7c2319a1af088d50f32a5d7e743a4eb",
+      "source_read_effects": [
+        "source/destination vector struct values; no buffer element load"
+      ],
+      "source_relation_requires": [
+        "source established active owners"
+      ],
+      "source_write_effects": [
+        "destination receiver fields",
+        "source receiver fields"
+      ]
+    },
+    {
+      "body_changed": false,
+      "element": "int *",
+      "element_memory_accessed": false,
+      "function": "std_vector_int_ptr_move_ctor",
+      "member": "move_ctor",
+      "old_contract_proved": false,
+      "original_body": "{\n  *this = *other;\n  other->data = NULL; other->size = 0; other->capacity = 0;\n}",
+      "original_body_sha256": "87cc56223ff37c6d47784fed03b310fb4c7645fa9c7ede45c5badd78991117e7",
+      "original_fragment_sha256": "4f6b8d445120020b53c3120165bb9a737c419230901c2123dd3c6c81dc4f42be",
+      "path": "source/std_vector_int_ptr_move_ctor.c",
+      "physical_padding_observation": "not established by the registry; full source layout/effect rule required",
+      "self_swap_registry_identity": false,
+      "sha256": "0fe29734b41543041a896eb9483add235ae0c37c97e34f389fca7823a16268af",
+      "source_read_effects": [
+        "source/destination vector struct values; no buffer element load"
+      ],
+      "source_relation_requires": [
+        "distinct source/destination receiver identities",
+        "source established active owners",
+        "fresh empty destination ownership binding"
+      ],
+      "source_write_effects": [
+        "destination receiver fields",
+        "source receiver fields"
+      ]
+    },
+    {
+      "body_changed": false,
+      "element": "int *",
+      "element_memory_accessed": false,
+      "function": "std_vector_int_ptr_swap",
+      "member": "swap",
+      "old_contract_proved": false,
+      "original_body": "{ std_vector_int_ptr t = *this; *this = *other; *other = t; }",
+      "original_body_sha256": "57f7f984d96ac4dc48e7a719b0901617b95489f263baeb468ac7cfa75108a93f",
+      "original_fragment_sha256": "3d5e1262e1478042d9dade741d240aa893dfb88df93cafec736fefb96c1984b2",
+      "path": "source/std_vector_int_ptr_swap.c",
+      "physical_padding_observation": "not established by the registry; full source layout/effect rule required",
+      "self_swap_registry_identity": true,
+      "sha256": "01f06406a2b174bbe84db6c7c1232d80f1ef0c51aae52fbfd1aed1c9237b7931",
+      "source_read_effects": [
+        "source/destination vector struct values; no buffer element load"
+      ],
+      "source_relation_requires": [
+        "source established active owners"
+      ],
+      "source_write_effects": [
+        "destination receiver fields",
+        "source receiver fields"
+      ]
+    }
+  ],
+  "source_typed_bridge_established": false,
+  "theory": {
+    "path": "theory/vector_owned_state.mlw",
+    "sha256": "a2c295d2c6720a9c8c522f05e19723c2d2d2a32b63f9b198aab03f195269e4b6"
+  },
+  "type_registry": {
+    "canonical_sha256": "b1486dbee9273423bdf17af34339ca17b1111b7e2ec31f71c2aafdf4515ec1f6",
+    "canonical_values": {
+      "FLOAT_TYPES": [
+        "double",
+        "float"
+      ],
+      "INTEGER_TYPES": [
+        "bool",
+        "char",
+        "int",
+        "int16_t",
+        "int32_t",
+        "int64_t",
+        "int8_t",
+        "intptr_t",
+        "long",
+        "long int",
+        "long long",
+        "long long int",
+        "ptrdiff_t",
+        "short",
+        "short int",
+        "signed",
+        "signed char",
+        "signed int",
+        "size_t",
+        "uint16_t",
+        "uint32_t",
+        "uint64_t",
+        "uint8_t",
+        "uintptr_t",
+        "unsigned",
+        "unsigned char",
+        "unsigned int",
+        "unsigned long",
+        "unsigned long int",
+        "unsigned long long",
+        "unsigned long long int",
+        "unsigned short",
+        "unsigned short int"
+      ],
+      "INTERNAL_TYPES": {
+        "__ptrdiff_t": "ptrdiff_t",
+        "__size_t": "size_t"
+      }
+    },
+    "container_sha256": "37201a198250021e3d9912a7fbaafa2b8dd9377db8d87027e51045897a246243",
+    "declarations": [
+      {
+        "bytes": 33,
+        "name": "FLOAT_TYPES",
+        "sha256": "2fdad9ce385d4872e749009de43d16dc405d04b484edf398198a92f1fd268e17"
+      },
+      {
+        "bytes": 527,
+        "name": "INTEGER_TYPES",
+        "sha256": "6da62218bbcfb5e1019f3995d31ac06a2d91419fe487a4e05ba9f242272ea810"
+      },
+      {
+        "bytes": 67,
+        "name": "INTERNAL_TYPES",
+        "sha256": "ba13f1dadd03b49ffdc0cd29fdba10a1f1bb653b064cda2b0c413e3823b6cf70"
+      }
+    ],
+    "source_module": "c_lowering.py"
+  },
+  "unsupported": [
+    "generic incoming ownership from unary validity/freeability",
+    "shared backing owners",
+    "overlapping receiver/backing identities",
+    "move construction into a nonfresh owned destination",
+    "self move construction",
+    "source proof or default model adoption based on registry evidence alone"
+  ],
+  "version": 1
+}

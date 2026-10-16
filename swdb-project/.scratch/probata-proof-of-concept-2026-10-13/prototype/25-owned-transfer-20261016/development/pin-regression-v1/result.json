@@ -1,0 +1,48 @@
+{
+  "actual_formal_run": false,
+  "created": "2026-10-16 ET",
+  "external_native_attempts": [],
+  "failed": 1,
+  "outcomes": [
+    {
+      "name": "test_owned_transfer_packet_binds_original_bodies_and_retains_source_duties",
+      "passed": true
+    },
+    {
+      "name": "test_owned_transfer_packet_refuses_source_domain_and_claim_tampering",
+      "passed": true
+    },
+    {
+      "name": "test_owned_transfer_rejects_bool_class_and_noncanonical_or_repeated_types",
+      "passed": true
+    },
+    {
+      "error": "KeyError: 'type_registry'",
+      "name": "test_owned_transfer_type_registry_is_a_content_addressed_input",
+      "passed": false,
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-prefix10-resume-20261016/run_pure_owned_transfer.py\", line 40, in main\n    function(directory);outcomes.append({'name':name,'passed':True})\n    ~~~~~~~~^^^^^^^^^^^\n  File \"/private/tmp/probata-resume-20261016-t25-owned-transfer-pin-regression-v1/test_owned_transfer.py\", line 90, in test_owned_transfer_type_registry_is_a_content_addressed_input\n    assert plan['type_registry']['source_module'] == 'c_lowering.py'\n           ~~~~^^^^^^^^^^^^^^^^^\nKeyError: 'type_registry'\n"
+    }
+  ],
+  "passed": 3,
+  "raw_bytes": 397587,
+  "source_pins": [
+    {
+      "path": "std_models.py",
+      "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+    },
+    {
+      "path": "c_lowering.py",
+      "sha256": "37201a198250021e3d9912a7fbaafa2b8dd9377db8d87027e51045897a246243"
+    },
+    {
+      "path": "vector_owned_transfer.py",
+      "sha256": "2e21e35693b2a91e6bcc3aafab24a53bb1bf949455f4e6255e02a3282d3fee7d"
+    },
+    {
+      "path": "vector_owned_state.mlw",
+      "sha256": "a2c295d2c6720a9c8c522f05e19723c2d2d2a32b63f9b198aab03f195269e4b6"
+    }
+  ],
+  "stage": "pin-regression-v1",
+  "whole_alarm_seconds": 30
+}

@@ -1,0 +1,40 @@
+{
+  "actual_formal_run": false,
+  "created": "2026-10-16 ET",
+  "external_native_attempts": [],
+  "failed": 3,
+  "outcomes": [
+    {
+      "error": "ImportError: cannot import name 'vector_owned_transfer' from 'swdb' (unknown location)",
+      "name": "test_owned_transfer_packet_binds_original_bodies_and_retains_source_duties",
+      "passed": false,
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-prefix10-resume-20261016/run_pure_owned_transfer.py\", line 37, in main\n    function(directory);outcomes.append({'name':name,'passed':True})\n    ~~~~~~~~^^^^^^^^^^^\n  File \"/private/tmp/probata-resume-20261016-t25-owned-transfer-red/test_owned_transfer.py\", line 8, in test_owned_transfer_packet_binds_original_bodies_and_retains_source_duties\n    from swdb import vector_owned_transfer as transfer\nImportError: cannot import name 'vector_owned_transfer' from 'swdb' (unknown location)\n"
+    },
+    {
+      "error": "ImportError: cannot import name 'vector_owned_transfer' from 'swdb' (unknown location)",
+      "name": "test_owned_transfer_packet_refuses_source_domain_and_claim_tampering",
+      "passed": false,
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-prefix10-resume-20261016/run_pure_owned_transfer.py\", line 37, in main\n    function(directory);outcomes.append({'name':name,'passed':True})\n    ~~~~~~~~^^^^^^^^^^^\n  File \"/private/tmp/probata-resume-20261016-t25-owned-transfer-red/test_owned_transfer.py\", line 47, in test_owned_transfer_packet_refuses_source_domain_and_claim_tampering\n    from swdb import vector_owned_transfer as transfer\nImportError: cannot import name 'vector_owned_transfer' from 'swdb' (unknown location)\n"
+    },
+    {
+      "error": "ImportError: cannot import name 'vector_owned_transfer' from 'swdb' (unknown location)",
+      "name": "test_owned_transfer_rejects_bool_class_and_noncanonical_or_repeated_types",
+      "passed": false,
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-prefix10-resume-20261016/run_pure_owned_transfer.py\", line 37, in main\n    function(directory);outcomes.append({'name':name,'passed':True})\n    ~~~~~~~~^^^^^^^^^^^\n  File \"/private/tmp/probata-resume-20261016-t25-owned-transfer-red/test_owned_transfer.py\", line 71, in test_owned_transfer_rejects_bool_class_and_noncanonical_or_repeated_types\n    from swdb import vector_owned_transfer as transfer\nImportError: cannot import name 'vector_owned_transfer' from 'swdb' (unknown location)\n"
+    }
+  ],
+  "passed": 0,
+  "raw_bytes": 204024,
+  "source_pins": [
+    {
+      "path": "std_models.py",
+      "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+    },
+    {
+      "path": "c_lowering.py",
+      "sha256": "37201a198250021e3d9912a7fbaafa2b8dd9377db8d87027e51045897a246243"
+    }
+  ],
+  "stage": "red",
+  "whole_alarm_seconds": 30
+}

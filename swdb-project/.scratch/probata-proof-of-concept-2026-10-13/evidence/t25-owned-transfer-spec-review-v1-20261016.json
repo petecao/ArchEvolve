@@ -1,0 +1,128 @@
+{
+  "current_model_records_admitted": [],
+  "date": "2026-10-16 ET",
+  "decision": "PASS for exact pending registry/source preparation only",
+  "explicit_scope_limits": [
+    "Registry fresh means absence from currently active receiver/backing keys. valid says nothing about issuance history of inactive keys; the source/Heap history rule must tie frontier to never-issued Heap.next and actual fresh construction.",
+    "The abstract move theorem admits any distinct active empty destination. It does not establish source construction eligibility; source fresh registration/initialization and original separated receiver preconditions must still be proved.",
+    "swap.self establishes registry equality only. It does not relax the original separated C contract or prove physical self-assignment safety, padding behavior, RTE, or automatic temporary lifetime/effects.",
+    "The registry observes only owner activity and backing identity. Source size/capacity/field initializedness, all receiver struct reads/writes, swap temporary t stores/reads, full layout/padding and incoming byte observations remain in the explicit source transition duties. The descriptive receiver effect lists are not a complete checked automatic-storage effect ledger.",
+    "retire removes a registry binding; it does not release a physical allocation, establish freeability, invalidate aliases or end an automatic lifetime. Actual release/end and allocator replacement/frame effects remain separate.",
+    "Per-element memory is not read/written by these two bodies; retaining float/double/pointer source types grants no element arithmetic, pointee initializedness or pointer ownership fact.",
+    "Complete source-established owner registration, complete existing owner set, source/Heap identity/lifetime/separation, all original contract/RTE/init/assigns facts and full mathematical task/hypothesis/import closure remain pending."
+  ],
+  "findings": [],
+  "formal_parser_success_claimed": false,
+  "full_ticket25": false,
+  "independent_checks": {
+    "artifact_identity": "All preparation canonical/implementation/development rows rehash. Exact 21-file canonical membership, no redirected entries, theory equality and all ten source formulas/input SHA values were independently reconstructed using AST literals only.",
+    "canonical_files": 21,
+    "context": "All ten emitted duties retain their full quantifier/antecedent and dependencies=[]; the Why3 support defines registry functions/predicates rather than importing sibling lemmas. Only standard integer/map modules are used. There is no new ownership/source axiom or caller premise in this preparation.",
+    "obligations": 10,
+    "physical_pin_occurrences": 39,
+    "source_correspondence": "Both complete original member fragments for each int/float/double/int* member reconstruct exactly from the pinned std_models branch f-string AST, including original contracts/comments and body; all fragment/body hashes and typed struct declarations match. No model body was called/imported. The original whole std_models source SHA equals PARENT cf708cf2.",
+    "source_members": 8,
+    "unbounded_domain": "State is two total mathematical integer-keyed maps with no bounded owner enumeration. valid requires positive frontier, positive bounded active receiver IDs, nonnegative bounded current backing IDs, nonzero backing exclusivity and disjointness from every active receiver. Raw pointer aliases are never owner registrations."
+  },
+  "mathematical_proofs_completed": false,
+  "mathematical_review": [
+    {
+      "id": "empty.valid",
+      "reason": "Every active-owner implication and exclusivity condition is vacuous for the everywhere-false active map, for arbitrary positive frontier."
+    },
+    {
+      "id": "receiver.fresh",
+      "reason": "Every old active receiver/backing is strictly below frontier, so activating frontier with backing zero adds neither a shared nonzero backing nor receiver/backing collision; all ranges fit frontier+1."
+    },
+    {
+      "id": "buffer.fresh",
+      "reason": "An active empty owner can receive backing frontier: all old active receivers/backings are below it, and the updated ranges fit frontier+1. Its active map is unchanged."
+    },
+    {
+      "id": "move.transfer",
+      "reason": "Distinct active destination/source and empty destination allow copying the source binding then clearing the source. Every other binding and every active bit stays fixed; the one nonzero backing remains unique and disjoint from active receivers."
+    },
+    {
+      "id": "move.frame",
+      "reason": "Both backing-map writes miss q when q differs from destination and source; active is unchanged, without any extra validity premise."
+    },
+    {
+      "id": "swap.exchange",
+      "reason": "Distinct active keys exchange existing bindings, preserving ranges/exclusivity/receiver separation. The equal-key branch returns the original state and satisfies the same exchange conclusions."
+    },
+    {
+      "id": "swap.frame",
+      "reason": "Both potential backing writes miss every q outside the two keys; active is unchanged."
+    },
+    {
+      "id": "swap.self",
+      "reason": "The explicit equal-key branch returns exactly s, including all map observations."
+    },
+    {
+      "id": "retire.frame",
+      "reason": "Clearing r active/backing preserves every active invariant for surviving q. Prior exclusivity separates a surviving active q backing from a nonzero retired backing, and prior receiver/backing separation gives q unequal to that backing."
+    },
+    {
+      "id": "shared_backing.rejected",
+      "reason": "Two distinct active owners with the same nonzero backing directly contradict the definition of exclusive."
+    }
+  ],
+  "pins": {
+    "manifest": {
+      "bytes": 17864,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/inert-v1/manifest.json",
+      "sha256": "0f8e97d0b7922b5d77611f7346980b5a9e3d84a9f032d64ff7cb64c54258f7c4"
+    },
+    "module": {
+      "bytes": 13000,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_owned_transfer.py",
+      "sha256": "2e21e35693b2a91e6bcc3aafab24a53bb1bf949455f4e6255e02a3282d3fee7d"
+    },
+    "parent_model_source": {
+      "bytes": 29179,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/std_models.py",
+      "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+    },
+    "preparation": {
+      "bytes": 13314,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer-preparation-v1-20261016.json",
+      "sha256": "d3f7f30976dda5d505912a2055ebfdbb42dcef278884d71ce328b6e93154e7d4"
+    },
+    "retained_green_v3": {
+      "bytes": 1144,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/development/green-v3/result.json",
+      "sha256": "129b2c874310ce9895ec62f75ec8445d63f7fd56a0317f74589fe71f7bf68d1f"
+    },
+    "retained_red": {
+      "bytes": 3203,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/development/red/result.json",
+      "sha256": "b0abe16aa1536e1312bdd8956679d89e9a31e1d926b76799062fa55b0988eb23"
+    },
+    "tests": {
+      "bytes": 4520,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_owned_transfer.py",
+      "sha256": "f9fb4f8b7a57ce0532641309fb1e69acd3e711adb064109f02cdf900bf2d1799"
+    },
+    "theory": {
+      "bytes": 2389,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_owned_state.mlw",
+      "sha256": "a2c295d2c6720a9c8c522f05e19723c2d2d2a32b63f9b198aab03f195269e4b6"
+    },
+    "type_registry_source": {
+      "bytes": 170578,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/c_lowering.py",
+      "sha256": "37201a198250021e3d9912a7fbaafa2b8dd9377db8d87027e51045897a246243"
+    }
+  },
+  "public_seam_review": {
+    "canonical_check": "Public prepare/check bind every exact source/theory/formula/manifest byte and directory membership. check_launch always refuses after canonical check.",
+    "retained_tdd": "RED reports three failures on the missing module; final GREEN v3 reports three passes, zero failures and zero external/native attempts. Prior GREEN snapshots and the pre-solver retire formula repair remain retained. Reviewer did not rerun any control.",
+    "test_scope": "Three retained public artifact/domain cases, five tamper modes and eight unsupported/noncanonical/repeated element inputs; they are not theorem, compiler, source-memory correspondence or native-contract tests."
+  },
+  "reviewer": "caller_assess",
+  "schema": "t25-owned-transfer-independent-spec-review-1",
+  "scope": "Static source, Why3 definitions, ACSL formulas, AST literal reconstruction, canonical files and retained pure-control metadata. No project imports, tests, compiler/parser/native/verifier/solver execution, SSH or scientific run.",
+  "source_or_default_admission": false,
+  "source_to_heap_rule_established": false,
+  "source_typed_bridge_established": false
+}
