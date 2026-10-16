@@ -5,7 +5,7 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-re
 
 ## Current state (resume here)
 
-Updated: 2026-10-15 19:50 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
+Updated: 2026-10-15 19:59 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
 Integration: `codex/probata-resume-20261015`; audited run 23 is published at
 `6dc94905`; method21 prototype merged at `14c2a298`. Remote actual jobs retain
 exact `0e7f2327` and `23933f8a` source freezes; production lowerer SHA256
@@ -47,9 +47,13 @@ remains `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
   seeds to meet the literal every-hint-Codex criterion, only after TDD/review;
   the revised 33/36-minute search/return limits reserve up to 24 minutes for
   positive and identical-hints wait-negative verification within the same 60 minutes.
-  Repaired method 22 at `c603c2ec` passes 216 controls; independent exact-byte
-  rereview is pending. Allocation sufficiency is unmeasured; no fresh counted run
-  or success is claimed.
+  Method 22 passes independent review (221 controls + 17 final affected checks,
+  34 exact source pins); integrated at `7c6b11b8`. Run 25 started 19:59:01 ET
+  at clean published ancestor `798e9bb3`, zero initial hints and fresh baseline.
+  Proof stop is about 20:32, provider hard stop about 20:35, total endpoint about
+  20:59 ET, subject only to valid matched queue exclusions. Allocation sufficiency
+  is unmeasured; no success is claimed.
+  [Launch identity and preflight](evidence/t07-run25-launch-20261015.json).
 - **36:** Dependency-gated by 27. Its 122 focused controls exclude 13 actual-WP
   cases. Drafts 1/2 remain immutable; final method freeze and held-out gates remain.
 

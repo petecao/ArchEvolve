@@ -4,7 +4,7 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 19:50 ET. **Implementation is active under the user's ongoing approval.**
+Updated: 2026-10-15 19:59 ET. **Implementation is active under the user's ongoing approval.**
 Integration `codex/probata-resume-20261015` is based on `yanrujhou_main` at `d94d629b`.
 Audited run23 documentation is published at `6dc94905`; reviewed method21 prototype
 is published at `14c2a298`. Only `swdb/c_lowering.py`
@@ -18,7 +18,7 @@ Drafts 1/2 remain immutable. No draft 3 or final production freeze exists.
 
 | Ticket / owner | Verified checkpoint | Active work |
 |---|---|---|
-| 07 / `ticket07` | Run 24 remains unproven: 29 open, 52.03 counted minutes, 5 mechanical / 36 Codex records. Posthoc full-30-second replay timed out after 710.42s without a complete report; no verdict upgrade. | Repaired method 22 at `c603c2ec` passes 216 controls; independent exact-byte rereview remains pending. Zero seeds, paged VC inspection, reverse whole-attempt provenance and post-persistence completion accounting; no fresh actual. |
+| 07 / `ticket07` | Run 24 remains unproven; posthoc replay remains censored. Method 22 independent review passes 221 controls + 17 final affected checks; all 34 source pins match. Integrated at `7c6b11b8`. | Run 25 started 19:59:01 ET at clean published ancestor `798e9bb3`. Fresh baseline, zero hints; proof stop about 20:32, provider hard stop about 20:35, original 60-minute endpoint about 20:59, subject only to valid matched queue exclusions. |
 | 24 / `ticket24` | Current float, atomic and qualified std pairs accepted; 14 models accepted. Original MAA safe now proves 6 ordinary + 5 smoke goals, including both per-callee reachability witnesses; seed remains not_proven. Original std gap is retained. | Node 0 generation 580 continues at `23933f8a`: 12 reused + 5 fresh rows observed. The first 3 fresh MAA rows are independently audited; latest DXC summary/safe rows await the next batch audit. DXC seed active. |
 | 27 / `ticket27` | Current negative 13/13, bounded/native 35/35 and repaired capacity 3/3 accepted. Fresh CPU and store-source safe cases accepted, 2/11 safe units; historical `717` evidence remains separate. | Node 1 generation 604 runs remaining A-rest cases; stall-condition active. B1/B2 groups of 3 are queued. Exact disjoint safe union 1 + 4 + 3 + 3 = 11; original A5/B6 unlaunched. Nine safe units pending. |
 | 36 / dependency-gated | 122 compiler/scripted controls pass; 13 actual-WP cases excluded. | Waits on 27; runtime fallback research remains prospective. |
@@ -122,7 +122,8 @@ remains recorded. Independent fresh absence scans supported exact-owner archival
 and slot release at 19:07:14 ET; no process was signaled. These old concrete hints
 and results cannot seed another fresh provider. Scheduling alone is not supported
 as a remedy by this censored result.
-Method 22 design/TDD/review proceeds separately; no blind method 21 rerun.
+Method 22 design/TDD/review were performed separately; no blind method 21 rerun.
+The historical run 24 outcome is unchanged.
 Independent literal acceptance review found the five mechanical frame hints cannot
 satisfy ticket 07's every-hint-Codex criterion. The explicitly undecided seed
 assumption does not override that criterion. Method 22 must start without mechanical
@@ -132,7 +133,26 @@ The next plan also adds bounded paging for previously truncated active-goal prem
 natural provider completion/accounting, and 33/36-minute search/return limits.
 The remaining 24 minutes cover full-30-second positive and identical-hints negative
 verification (at least 8 minutes reserved for the negative). This is an explicit
-prospective allocation, not a measured sufficiency guarantee. No fresh run is launched.
+prospective allocation, not a measured sufficiency guarantee. The separately
+reviewed fresh launch is recorded below.
+
+Method 22 was independently reviewed at `6ba8a771`: 221 controls at `c603c2ec`
+and 17 affected controls after exact task-name/unit repair. All 34 reviewed files
+match disk and Git; copied review evidence is published with the protocol at
+`7c6b11b862266e62b83d11e40b0577838edeffab`. Frozen producer remains clean at
+published ancestor `798e9bb3bf95118e7eb6d4688227f6014fdffd60`.
+Fresh run 25 started 19:59:01 ET, driver PID 29946/birth 1792108741.223215;
+raw `/private/tmp/probata-t07-20261015-run25`, log `driver.log`.
+Final preflight manifest SHA256
+`a2e5fa88d148bfee60e3a7daf6a4973a005a6df3b4382686e7177f2b97819012`
+binds actual sanitized opam-selected Frama-C/provers, Codex, Python and separate
+C preprocessing identity. Both leases were absent, no verifiers were active,
+inspection had zero denials, disk free 89.43 GiB. The earlier preflight is retained;
+the final one strengthens runtime-selection binding without changing argv/source.
+Root authorized one actual run; no outcome is asserted. Zero generated frames or
+historical hints; fixed Codex provider, full positive/identical-hints wait-negative,
+complete usage and post-persistence publication gates remain mandatory.
+[Exact launch and artifact hashes](evidence/t07-run25-launch-20261015.json).
 
 Qualified std at6221 stopped before WP: public formal-half vocabulary excludes
 valid_read/base_addr. Its zero-row failure and unchanged inputs remain retained;
