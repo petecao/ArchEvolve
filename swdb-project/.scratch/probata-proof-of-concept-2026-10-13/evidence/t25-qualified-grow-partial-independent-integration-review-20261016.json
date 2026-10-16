@@ -1,0 +1,110 @@
+{
+  "date": "2026-10-16 ET",
+  "verdict": "PASS partial cold classification only",
+  "review_scope": "Local retained metadata/source/reader/hash reconciliation only; no reviewer remote raw rehash, SSH, compiler/tool/probe/test/formal execution",
+  "pointers_checked": 19,
+  "root_claimed_checks": 5267,
+  "root_claimed_indexed_references": 2919,
+  "separate_root_streamed_consumer_files": 1553,
+  "root_resources": {
+    "address_space_cap_bytes": 8589934592,
+    "exit_code": 0,
+    "inspection_denials": [],
+    "out_of_memory": false,
+    "peak_rss_bytes": 36397056,
+    "scope": "passive reader only; no formal tools",
+    "timed_out": false,
+    "timeout_seconds": 60,
+    "wall_seconds": 3.8899787329137325,
+    "workers": 1
+  },
+  "source_commit": "01771a839893975bba389ee0adcbec2aecdb88ac",
+  "root_receipt": {
+    "bytes": 138852,
+    "path": "/private/tmp/probata-t25-partial-cold-root-execution-v2-20261016.json",
+    "sha256": "b87a30f2da01c9af53be69b6db9e17db0ba55c169a4f1d338db4d1de8dc48d24"
+  },
+  "compact_MD": {
+    "bytes": 4047,
+    "path": "/private/tmp/probata-t25-qualified-grow-partial-final-cold-audit-v2-20261016.md",
+    "sha256": "d0d77e4ac451fd88529507a8aa0560dcef8dccb5cc0ee6a549a3bc37b73dfb5c"
+  },
+  "compact_JSON": {
+    "path": "/private/tmp/probata-t25-qualified-grow-partial-final-cold-audit-v2-20261016.json",
+    "sha256": "fe2f6d295ec09e6fb702b9e7bff711bb2b59db3035905896fe7a1bec2f086609"
+  },
+  "exact_reconciliations": [
+    "compact/root manifest/resources/source/reader/policy/classification/targetcensuses",
+    "11packet+7external publication/helper/historical pointer hashes and sizes plus final compact JSON identity",
+    "three printed query canonical strings/hashes match canonical source statements under explicit heap/t/i4/i3/i/i1/i5/i2 mapping",
+    "ordinary/native/record/CSV/portfolio census and17unexecuted rows",
+    "project source predicate definitions no desired-result axioms; selected30module foundation trust explicit",
+    "14materialized SMT identity receipts with final-negated query; no submission attestation",
+    "V1countbug retained/unexecuted;208files416checks fix only and identical policy"
+  ],
+  "target_censuses": [
+    {
+      "CSV_rows": 0,
+      "direct_valid": true,
+      "goal": "typed_real_check_lemma_t25v3_control_grow_premises_feasible",
+      "native_best": "valid",
+      "ordinary": 1,
+      "portfolio_results": [
+        "timeout",
+        "valid"
+      ],
+      "properties": 2,
+      "scope": "Isolated check lemma, no C body or generated smoke attempt in this target.",
+      "smokes": 0
+    },
+    {
+      "CSV_rows": 0,
+      "direct_valid": true,
+      "goal": "typed_real_check_lemma_t25v3_grow_entry_reads",
+      "native_best": "valid",
+      "ordinary": 1,
+      "portfolio_results": [
+        "timeout",
+        "valid"
+      ],
+      "properties": 2,
+      "scope": "Isolated check lemma, no C body or generated smoke attempt in this target.",
+      "smokes": 0
+    },
+    {
+      "CSV_rows": 0,
+      "direct_valid": false,
+      "goal": "typed_real_check_lemma_t25v3_grow_entry_int_projection",
+      "native_best": "timeout",
+      "ordinary": 1,
+      "portfolio_results": [
+        "timeout",
+        "unknown",
+        "unknown"
+      ],
+      "properties": 2,
+      "scope": "Isolated check lemma, no C body or generated smoke attempt in this target.",
+      "smokes": 0
+    }
+  ],
+  "acceptance": {
+    "CVC5_direct_valid_lemmas": 2,
+    "C_smokes_generated": 0,
+    "all20_complete": false,
+    "caller_acceptance": false,
+    "model_acceptance": false,
+    "new_formal_evaluation_by_author": false,
+    "original_v2_acceptance": false,
+    "partial_classification_only": true,
+    "projection_not_proven": true,
+    "refuted": false,
+    "ticket25_resolved": false,
+    "unexecuted_targets": 17
+  },
+  "caveats": [
+    "Root performed remote byte hashing; reviewer only retained local metadata reconciliation",
+    "No exhaustive independently flattened instantiated foundation theorem or desired-task submission-byte proof",
+    "No C body/full20/smoke/model/original-v2/caller/refutation/ticket25 acceptance",
+    "Historical guard/profile1 and publicCLI0 draft not_proven/timeout remain unchanged; no actual rerun"
+  ]
+}

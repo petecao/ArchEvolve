@@ -1,0 +1,98 @@
+{
+  "artifacts": [
+    {
+      "bytes": 32639,
+      "path": "/private/tmp/probata-t25-qualified-grow-partial-cold-reader-v2-20261016.py",
+      "sha256": "5119623b6fb3685c1000be0803b929abbc6ac00a72d52a1fb36a328ef45374ec"
+    },
+    {
+      "bytes": 705961,
+      "path": "/private/tmp/probata-t25-qualified-grow-partial-cold-policy-v2-20261016.json",
+      "sha256": "1fbde2d34e8929796811088799a2fa84ac8ba3eb5fd60ecaa11e266ca984c88b"
+    },
+    {
+      "bytes": 1645,
+      "path": "/private/tmp/probata-t25-qualified-grow-partial-cold-command-v2-20261016.json",
+      "sha256": "4e3c813edf219a1f872eebfed4152aec1392de3327da4a8878d1cd02dc6548d5"
+    },
+    {
+      "bytes": 6229,
+      "path": "/private/tmp/probata-t25-qualified-grow-partial-cold-plan-v2-20261016.md",
+      "sha256": "110fee1d3654f2e52b74a04684fb093fda958bce09116b8a114e94b59c70a0be"
+    },
+    {
+      "bytes": 9165,
+      "path": "/private/tmp/probata-t25-qualified-grow-partial-cold-controls-v2-20261016.py",
+      "sha256": "04dd64cb99d087d2f73c62811aa365d8f68d72442e962ff0e2b39f0044e1eb0d"
+    },
+    {
+      "bytes": 164,
+      "path": "/private/tmp/probata-t25-qualified-grow-partial-cold-controls-v2-run-20261016/resources.json",
+      "sha256": "2b8bf0f7b90d87e78993c8839053f7f8d2025d6438e9f5607dfbb13d6c477899"
+    },
+    {
+      "bytes": 10848,
+      "path": "/private/tmp/probata-t25-qualified-grow-partial-cold-controls-v2-run-20261016/junit.xml",
+      "sha256": "5e3bcaeaddb15418bf9358c414133e8a71fa5569e207483c81e1b3f289f87f8d"
+    },
+    {
+      "bytes": 99,
+      "path": "/private/tmp/probata-t25-qualified-grow-partial-cold-controls-v2-run-20261016/control.log",
+      "sha256": "2eaec603de38cc56adf1d276cff2601cf82244a620fbd94a6a315607e427daf2"
+    },
+    {
+      "bytes": 3633,
+      "path": "/private/tmp/probata-t25-qualified-grow-partial-cold-packet-v1-20261016.json",
+      "sha256": "27c930658bfef348dda421734ecceaf3cecc03ac19c7dd4a51b14c3221dbab95"
+    },
+    {
+      "bytes": 31826,
+      "path": "/private/tmp/probata-t25-qualified-grow-partial-cold-reader-v1-20261016.py",
+      "sha256": "5031e4bbf82c5591b1298b8b89bb38839201e76b65563302c5f3d186698b5b75"
+    },
+    {
+      "bytes": 705961,
+      "path": "/private/tmp/probata-t25-qualified-grow-partial-cold-policy-v1-20261016.json",
+      "sha256": "1fbde2d34e8929796811088799a2fa84ac8ba3eb5fd60ecaa11e266ca984c88b"
+    }
+  ],
+  "controls": {
+    "genuine_regression": "exact V1 assertion evaluatesFalse on real captured source manifest; V2 accepts208files416checks; all208physical017localhashes match",
+    "mutations_refused": [
+      "missing actualmodule",
+      "extra module",
+      "checks415",
+      "checks208",
+      "invaliddigest"
+    ],
+    "passed": 68,
+    "resources": {
+      "cpu_seconds": 0.429963,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 54001664,
+      "timed_out": false,
+      "wall_seconds": 0.5127210419741459
+    }
+  },
+  "date": "2026-10-16 ET",
+  "narrow_change": {
+    "V1_fault": "asserted416files instead of208files/416checks",
+    "V1_preserved_unexecuted": true,
+    "module_files": 208,
+    "module_physical_Git_checks": 416,
+    "other_reviewed_logic_unchanged": true,
+    "policy_byte_identical_to_V1": true
+  },
+  "scope": {
+    "actual_submission_count": null,
+    "actual_targets": 3,
+    "caller_acceptance": false,
+    "model_acceptance": false,
+    "no_remote_or_actual_by_author": true,
+    "not_proven": 1,
+    "producer_valid": 2,
+    "unexecuted": 17
+  },
+  "status": "INERT_V2_READY_FOR_ROOT_REVIEW_NOT_EXECUTED"
+}
