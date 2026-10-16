@@ -1,7 +1,7 @@
 # 25 — std::vector and std::pair models
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-15 ET (original vector/pair maximum workflow WP view accepted; member/bounded frontier remains open); 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-16 ET (four original int/int pair bodies and exact-dependency caller profile accepted; wider ticket remains open); 2026-10-15 ET (original vector/pair maximum workflow WP view accepted; member/bounded frontier remains open); 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 22, 24
@@ -849,3 +849,36 @@ receiver-domain admission and complete WP/bounded agreement remain incomplete;
 the receiver-domain design is prospective. Ticket 24 still blocks this ticket.
 See [accepted controls](../evidence/t25-next-controls-accepted-20261015.json) and
 [deferred design](../evidence/t25-vector-receiver-domain-deferred-20261015.json).
+
+
+### Scoped pair member-body and caller acceptance — 2026-10-16 ET
+
+The six-record pair-only actual profile passed at frozen `1278f2d9` on mbit10
+socket 0 generation 586. The original int/int default/value/copy/assignment C
+bodies prove **31 ordinary goals and four smoke goals**. The safe copied-value,
+field-access and assignment caller proves **24 ordinary goals and nine smoke
+goals**, with exact dependencies on those four proven model records. The
+wrong-field caller keeps the same postcondition and retains one ordinary ensures
+timeout, **23 other ordinary Valid goals and nine passing smoke goals**. It is
+`not_proven`, not a refutation. Original model text/contracts are unchanged.
+
+The read-only cold audit matches all six strict fresh-report verdicts, goal lists,
+Linux project-context runtime identities, fixture-method pins and model dependency
+IDs. It checks 2,023 declared physical-file references across 1,005 unique hashed
+files, 198 source modules and eleven profile source pins with no errors. The Mac
+composite is not used as a Linux expectation. RTE, initializedness and smoke
+remain enabled; all six records retain `contract_fixture` evidence.
+
+The whole guard exits 0 in 282.61 seconds, peak 733,483,008 bytes; the outer guard
+exits 0 in 284.70 seconds, peak 784,863,232 bytes. Neither reports OOM or timeout.
+Source remains clean and unchanged; the lane naturally releases at 00:22:33 ET.
+Three finite poststop command-line/cwd metadata scans find no matching run/source
+process and explicitly retain cwd access denials for `(sd-pam)` and `sshd`.
+No environment/token scan, universal process-absence or cleanup claim is made.
+
+[Scoped actual audit](../evidence/probata-t25-pair-actual-audit-20261016.md),
+[exact record/dependency summary](../evidence/probata-t25-pair-actual-summary-20261016.json),
+[compact complete cold metadata](../evidence/probata-t25-pair-cold-audit-v3-1278f2d9-20261016.json).
+Raw reports remain remote for the coordinator, ticket acceptance and independent
+review. Ticket 25 stays **claimed**: wider standard-model/member types, heap and
+lifetime integration, and eventual combined-method acceptance remain open.
