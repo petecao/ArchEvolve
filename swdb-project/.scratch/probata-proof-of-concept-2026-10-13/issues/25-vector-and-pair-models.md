@@ -109,6 +109,26 @@ Frama-C import, source contract, or imported-task hypothesis result. The reviewe
 full 42-packet replay is next under coordinator admission; all acceptance boxes
 remain open.
 
+### Actual import admitted; diagnostic option failure — 2026-10-15 ET
+
+The v4 full 42 replay at `9d8ca764` passed initial Frama-C parsing/import and
+retained normalized C. It then stopped on the unsupported option `-wp-dkey`,
+before generating any WP goal. The fresh inventory has zero goals, an unproved
+`check_lemma_t25_control_ctor_premises_feasible` property and a module container;
+it is not a missing inventory or proof acceptance. The whole run naturally
+exited 1 in 1.960s, peak 169,758,720 bytes, without OOM/timeout; source stayed unchanged.
+
+Installed Frama-C33 source identifies `-wp-msg-key` as the actual category option.
+The repair uses it in both parsing and WP phases, retaining `print-generated`,
+`why3:compile`, `prover:pp_task` and adding `why3:import` to retain the import
+inventory. A public plan RED catches the bad flag; all 24 compiler-free controls
+pass after the repair. No original formula, target, precondition, heap semantics
+or required proof flag changes. Before another full 42 replay, the coordinator
+will admit one genuine lemma with actual option-help recognition and complete
+import/task/report evidence. Existing input producers remain immutable.
+Evidence: `../evidence/t25-diagnostic-option-failure-v2-20261015.json` and
+`../evidence/t25-message-category-repair-controls-20261015.json`.
+
 ## Acceptance
 
 - [ ] Each modeled member has a C function and an ACSL contract citing the standard's clause for it (`[vector]` for vector members). `swdb prove` proves every contract against its C function once, recorded with subject "a library entry's summary".
