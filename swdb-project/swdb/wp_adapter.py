@@ -375,6 +375,9 @@ class WpAdapter:
                 "probes": [{k: p[k] for k in ("id", "function", "access", "line")} for p in lowering.probes]}
             if proof_semantics.instance_bindings(lowering):
                 context['semantics_settings']['instances'] = proof_semantics.instance_bindings(lowering)
+            from swdb import dx100_size_source
+            if dx100_size_source.bindings(lowering):
+                context['semantics_settings']['source_definitions'] = dx100_size_source.bindings(lowering)
             log.line(f"proof semantics: {entries[0]} (sha256 {sha}); calls {', '.join(called)}; "
                      f"{len(lowering.probes)} hazard probe(s)")
         refusal = cpu_memory_admission.check(lowering, covered)
@@ -733,6 +736,19 @@ class WpAdapter:
                 for clause in summary:
                     uses += [u for u in clause["acsl"].get("uses", []) if u not in uses]
         inserts["ghost.globals"] = prelude + [f"/*@\n{files[u].read_text()}\n*/" for u in uses]
+        if semantics:
+            from swdb import dx100_size_source
+            if dx100_size_source.size_layout(self.library.get(semantics['id']) or {}):
+                certificates=dx100_size_source.bindings(lowering)
+                if len(certificates)!=1:
+                    raise AdapterError('fresh-SPD entry projection needs one checked source/epoch certificate')
+                projection=dx100_size_source.constructor_projection(certificates[0]['entry'])
+                inserts[f'{lowering.function}.entry']=[
+                    '/* Conditional synthetic constructor-state projection; no source reset or wait. */',
+                    *projection['entry_assignments']]
+                semantics['entry_projection']={'kind':dx100_size_source.CERTIFICATE_KIND,
+                    'bytes':projection['metadata_bytes'],'owner':dx100_size_source.OWNER,
+                    'statement':dx100_size_source.BOOT_STATEMENT}
         return inserts
 
     def _summary_clauses(self, callee):
@@ -765,6 +781,12 @@ class WpAdapter:
         data = self.library.get(entry_id) or {}
         wp = data.get("wp") or {}
         from swdb.dx100_source_selector import pure_layout
+        from swdb import dx100_size_source
+        if dx100_size_source.size_layout(data):
+            semantics['unit_requires'],semantics['unit_ensures']=[],[]
+            rewritten=[re.sub(r"\bassigns\s+\\nothing\s*;",
+                'assigns __swdb_dx_size_bytes[0 .. 63];',text) for text in texts]
+            return rewritten,[proof_semantics.wp_prelude(self.library,entry_id,semantics['calls'],self.defines)]
         if pure_layout(data):
             semantics["unit_requires"], semantics["unit_ensures"] = [], []
             return texts, [proof_semantics.wp_prelude(self.library, entry_id, semantics["calls"], self.defines)]
@@ -993,9 +1015,14 @@ class WpAdapter:
             pins["proof_semantics"] = {"id": semantics["id"], "sha256": semantics["sha256"]}
             fields.setdefault("settings", {})["proof_semantics"] = {
                 **context["semantics_settings"], "unit_requires": semantics.get("unit_requires", []),
-                "unit_ensures": semantics.get("unit_ensures", [])}
+                "unit_ensures": semantics.get("unit_ensures", []),
+                **({"entry_projection":semantics["entry_projection"]} if "entry_projection" in semantics else {})}
             from swdb.dx100_source_selector import pure_layout, PURE_STATEMENT
-            if pure_layout(self.library.get(semantics['id'])):
+            from swdb import dx100_size_source
+            if dx100_size_source.size_layout(self.library.get(semantics['id'])):
+                assumptions.append({'kind':'proof_semantics','reference':{'id':semantics['id'],'sha256':semantics['sha256']},
+                    'sentence':'Only the source-certified size getter in its explicit synthetic fresh-SPD boot epoch is admitted; no device commands, arbitrary-entry freshness or timing reduction is used.'})
+            elif pure_layout(self.library.get(semantics['id'])):
                 assumptions.append({"kind": "proof_semantics", "reference": {"id": semantics["id"],
                     "sha256": semantics["sha256"]}, "sentence": PURE_STATEMENT})
             else:

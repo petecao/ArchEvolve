@@ -302,6 +302,7 @@ def identity():
                             + here.with_name("member_windows.py").read_bytes()
                             + here.with_name("stdlib_source_admission.py").read_bytes()
                             + here.with_name("dx100_source_selector.py").read_bytes()
+                            + here.with_name("dx100_size_source.py").read_bytes()
                             + json.dumps(stdlib_provenance.runtime_identity(tool), sort_keys=True).encode()).hexdigest()
     found = {"c_lowering": {"id": f"{TOOL_ID}-{TOOL_VERSION}", "sha256": digest},
              "naming_rules": naming_rules()}
@@ -2055,6 +2056,17 @@ class _Printer:
                 unit.pointer_calls.append(site)
             cname = unit.summary_c_name(name, node_found, self.line)
             instance = None
+            source_definition = None
+            source_policy = self.semantics.get('source_definitions', {}).get(name)
+            if source_policy is not None:
+                if node_found is None or not _has_body(node_found):
+                    raise Unsupported('fresh-SPD size policy requires the real pinned source definition', self.line)
+                from swdb import dx100_size_source
+                try:
+                    source_definition = dx100_size_source.certify(unit,node_found,source_policy,self.source_declaration,
+                                                                  standard=STD,timeout=TIMEOUT_SECONDS)
+                except dx100_size_source.Refused as exc:
+                    raise Unsupported('DX100 source size definition: '+str(exc),self.line) from None
             variants = self.semantics.get('template_instances', {}).get(name)
             if variants is not None:
                 arguments = list(unit._spec_args(node_found or {}, self.line))
@@ -2087,6 +2099,8 @@ class _Printer:
                     raise Unsupported(f'template instance C signature differs: {exc}', self.line) from None
             names = [p.get("name") for p in _children(node_found or {}) if p.get("kind") == "ParmVarDecl"]
             unit.summary(name, cname, qual_type, self.line, names)
+            if source_definition is not None:
+                next(row for row in unit.summaries_used if row['c_name']==cname)['semantic_source']=source_definition
             if instance is not None:
                 used = next(row for row in unit.summaries_used if row['c_name'] == cname)
                 used['semantic_instance'] = {'arguments': arguments, 'arity': len(params)}
@@ -2098,7 +2112,7 @@ class _Printer:
             call = f"{cname}({', '.join(texts)})"
             if (name == "get_cacheable_tile_pointer" and name in self.semantics.get("tile_pointer", ())) or \
                     (name in self.semantics.get("calls", ()) and
-                     (returns in INTEGER_TYPES or (instance is not None and unit.ctype(returns, line=self.line) in INTEGER_TYPES))):
+                     (source_definition is not None or returns in INTEGER_TYPES or (instance is not None and unit.ctype(returns, line=self.line) in INTEGER_TYPES))):
                 # 2026-10-15 ET: WP33 does not initialize a receiving local slot
                 # for a modular call. An identity expression forces its ordinary
                 # assignment path. Imported integer results have an exact identity;
