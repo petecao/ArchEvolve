@@ -1404,3 +1404,7 @@ Independent source-equivalence review at merged6802 now passes. Forty merged com
 
 
 2026-10-16 09:40 ET — Reviewed6a755 caller preparation is integrated:104pending duties/emptydependencies/no admitted body records/publiccallerunsupported; historical85prose is not current104 qualification. Corrected241c/passive/source reviews preserve5nativecases/7ARM64executables/one recovered event/no retroactive admission. Fresh constructor35G625 exact6216 launched09:38:11ET,217moduleadmission0errors; proof result/cold decision pending. [Current scoped checkpoint](../evidence/frontier-current-dispatch-and-caller-preparation-checkpoint-20261016-0940.md). Ticket stays claimed; frontier counts35/25/3 unchanged.
+
+## Active checkpoint — 2026-10-16 10:06 ET
+
+See [settled producers and passive evidence](../evidence/frontier-settled-producers-checkpoint-20261016-1006.md) and its exact-pin ledger. Ticket remains claimed; existing acceptance criteria and dependencies are unchanged. Original exits, pending proof/cold/source gates and historical trust boundaries are preserved.

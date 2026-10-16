@@ -436,3 +436,7 @@ Shared2e2 allocator/register [entry review](../evidence/t28-shared-2e2-pairs-ind
 
 
 2026-10-16 09:40 ET — AllocatorG601 exact6216 settled09:25:54ET:2pytestPASS/guard0/296.641s1,869,955,072B noOOMtimeout; fullcold pending/no full28 acceptance. a3obsolete clean source retirement retains Gitref/fullmanifests/fsyncedrestore and236entries/3rawroots unchanged; no active source removed. [Current scoped checkpoint](../evidence/frontier-current-dispatch-and-caller-preparation-checkpoint-20261016-0940.md). Ticket stays claimed; frontier counts35/25/3 unchanged.
+
+## Active checkpoint — 2026-10-16 10:06 ET
+
+See [settled producers and passive evidence](../evidence/frontier-settled-producers-checkpoint-20261016-1006.md) and its exact-pin ledger. Ticket remains claimed; existing acceptance criteria and dependencies are unchanged. Original exits, pending proof/cold/source gates and historical trust boundaries are preserved.
