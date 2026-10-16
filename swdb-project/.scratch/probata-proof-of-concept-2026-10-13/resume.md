@@ -1,42 +1,38 @@
 # Probata implementation resumption
 
-Updated: 2026-10-15 ET.
+Updated: 2026-10-15 23:17 ET.
 
 ## Current state
 
-Updated: 2026-10-15 22:37 ET. **Implementation is active under the user's ongoing approval.**
-Integration `codex/probata-resume-20261015` is based on `yanrujhou_main` at `d94d629b`.
-The current lowerer file SHA256 is
-`e8a427bcafec10d6299f57236bfcb949c554931ea77b3cd01615ed972ffdf152`
-after reviewed28 template ABI/typed-instance repairs. Historical actual source freezes keep their
-own `0e185b...` lowerer; merging does not upgrade their evidence.
-Reviewed setup/compiler-identity candidate `2033c174` is published at `465fd069`;
-its changed production files are `proof_setup.py` and `stdlib_provenance.py`.
-Each evaluation retains its exact source/runtime. Historical `0e7` evidence is
-not upgraded by this merge.
+**35 resolved / 25 ready-for-agent / 3 claimed. Implementation remains active.**
+Integration `codex/probata-resume-20261015`, published0b315646, is based on
+`yanrujhou_main` atd94d629b. Active frontier: **07,25,28**; all other unresolved
+tickets retain their blockers. [Current map](map.md), [all63 statuses](ticket-status-20261015.md).
+Drafts1/2 remain immutable; no draft3/final freeze or held-out campaign is admitted.
+Current lowerer SHA256 `e10b33f4d310e3097eb84b34ed53e03daf4df690dcf0c8c160f38d907c91e08c`;
+old actual records keep their exact source/runtime/checker identities.
 
-**35 resolved / 25 ready-for-agent / 3 claimed**, derived from ticket frontmatter.
-The active frontier is **07, 25, 28**. Tickets 24,27 and36 are resolved and published.
-Drafts 1/2 remain immutable. No draft 3 or final production freeze exists.
-
-| Ticket / owner | Verified checkpoint | Active work |
+| Owner / item | Evidence and state | Next action |
 |---|---|---|
-| 24 + 27 / resolved | Published `29709232` and `af10a946`. Ticket24: 36 actual records + nine no-launch refusals, all eleven scoped items; ticket27: 62 cases / 52 records, safe11 has 792 ordinary + 252 smoke Valid. Both independently reviewed. | Raw/producers/history and scientific limits retained. Their completed lanes have been reused for ticket36. [24 closure](evidence/t24-combined-current-independent-review-20261015.md), [27 review](evidence/t27-ticket-closure-independent-review-20261015.md). |
-| 07 / `ticket07` | Run25 remains UNPROVEN. Narrow guard repair integrated `7a66d146`, 37 controls pass. Component3 independently matches15 exact goal IDs and5 nontrivial contextual tasks; no proof claim. | METHOD23 final independent review and264+26 controls published atf439edf0. Fresh run26 started22:15:49ET atcleanac6/42 pins after repeated source/tool/environment/OCaml/lease preflight; baseline completed6.17min (254ordinary/103open;139smoke pass), provider started22:21:59; nominal60-minute end23:15:49. Historical798/run25 retained; sole Mac actual slot is07. |
-| 25 / `ticket24` | Claimed at `e3e91b8e`; own worktree `/private/tmp/probata-resume-t25`. Prior bounded maximum/stale/at controls retain their own pins. | Reviewed024db66c first-pair capability published27353c32:42 packets,21 preparation controls. Actualv2 G610 exact024 passed canonical42/tool precheck, then first parse refused missingHeap/no goals; naturalexit1/noOOM/timeout. Single initial-parse library-path fix published45334518; c521/v3 G611 loaded theory then refused reserved reads/writes names, no goals. Alpha-renaming is reviewed; exact Git-blob typecheck next, no new source clone. No body certification/import acceptance. |
-| 28 / `ticket27` | Ticket27 gate released. Complete upstream header inventory verified: 26 names / 27 declarations; old0.1 remains preserved. | Prerequisite inventory/ABI repairs published atf439edf0 after independent review;28 composed controls pass. Trust recording/mutation guard published27353c32. Typed-instance/schema/refusal and dx100_interface CHECK_SOURCES pin published8b0c2e27 after39+29 controls; futurechecker76e1. Synthetic typed contracts/history remain open; old0.1 unchanged/no0.2 actual admission. |
-| 36 / resolved | All ten criteria independently reviewed; closure published8b0c2e27, exact2033/74+B493. Historical parser/no-test/scalar failures retained. | Corrected facts13 accepted by cold audit (40refs/126files/0errors). Production3 WP records cold-audit34refs/94files/0errors; scalar4ordinary/0smoke assertion correction published2f1ab7ce, original pytest failure retained. Separate bounded2/G609 passes,4records/29refs/88files/0errors. Setup129 passes129/702.19s; G583 released22:21:17, cold audit55files/129JUnit nodes/0errors. Extra generated-input stand-in control passes; final36 acceptance resolved/published8b0c2e27. Later28 checker changes are not retroactive actual acceptance. |
+| 07 / ticket07 | Run26 UNPROVEN42.22min; complete single provider turn/eight candidate checks. Final397scheduled goals stopped on native proc_environ SystemError,58partial Timeout lines/no final verdict or negative. Original failing PID/phase/cause unknown. Immutable three-file closeout published0b315646. | Isolated method24 public controlled diagnostics/retry safety and structural proof-quality diagnosis; no actual readmission. [Run26](evidence/t07-counted-run26-20261015.json). |
+| 25 / ticket24 | 9d theory actual Why3 typecheck PASS,70refs/eight raw pins exact. Full42v4 G61223:13:41–45ET passes198module/runtime checks and imports theory, then unknown -wp-dkey stops before goals. | Narrow supported diagnosticflag repair and representative actual WP/task-import gate before full42. No proof/body certification. [Type review](evidence/t25-typecheck-cold-and-v4-entry-review-20261015.md), [admission](evidence/reviewed-t25-heap-capability-v4-launch-9d8ca764-20261015.json). |
+| 28 / ticket27 + numeric helper | Published complete interface/typed routing/trust recording/checker guard;49focused source-typedef controls reviewed atbb6e7fed. Old0.1 unchanged. State/history/ownership and raw-bit numeric prototypes progressing under compiler/native controls. | Review prototypes, compose command/ownership contracts, then exact current0.2 admission. No actual0.2 result yet. [Typedef review](evidence/t28-source-typedef-merger-review-20261015.md). |
+| 24 / 27 / 36 resolved | Published29709232 / af10a946 / 8b0c2e27; independent scoped acceptance. Ticket36 actuals remain2033/74+B493 despite future76e1 checker changes. | Preserve raw/source/history for final review; no broad rerun required now. [36 review](evidence/t36-final-acceptance-independent-review-20261015.md). |
 
-Current admission receipts: [facts13](evidence/reviewed-t36-facts-v3-launch-2033c174-20261015.json),
-[production5](evidence/reviewed-t36-production-v3-launch-2033c174-20261015.json),
-[setup129](evidence/reviewed-t36-setup129-v3-launch-74edefd0-20261015.json).
-Each confirms197 physical/Git module checks and its own exact source/runtime/lane;
-admission does not establish proof acceptance. The corrected entry checks selected
-count and captures project-context runtime under the existing lane/RSS/time guards.
-Bootstrap monorepo-context and actual project-context frontend identities remain
-separate, without normalizing away cwd-sensitive flags.
-[Entry review](evidence/t36-profile-entry-independent-review-20261015.md),
-[run26 prospective metadata](evidence/t07-run26-prospective-manifest-20261015.json).
+Root owns actual dispatch and tracker updates; merger owns integration Git while assigned.
+Mac actual slot is free after three finite poststop metadata scans; no environment-marker
+absence claim. At most two remote measurements, one per socket; G612 released after
+natural failure, but every admission requires fresh lease/process/load/disk checks.
+Use unchanged full-layout protocolv3; no positive/sparse proposal is deployed. Source
+moves by Git; raw remains remote. The23:05:51ET pre-replay observation had36GiB/data1,
+69GiB/data; root did no cleanup and does not infer its cause. Retained/data output
+reserves/data1 for source/toolchain, two-lane planning and20GiB floor. Next full
+status table23:19ET. [Full42 source review](evidence/t25-source-allowlist-9d8ca764-root-review-20261015.md).
+
+## Historical actual checkpoints
+
+The following entries retain their original times, sources and outcomes. They do not
+supersede the current state above.
 
 At17:43:14 ET node0 generation572 released after the standard caller safe timeout;
 whole guard exit1,1805.69s,peak1,010,438,144B,noOOM/whole timeout. Its five standard

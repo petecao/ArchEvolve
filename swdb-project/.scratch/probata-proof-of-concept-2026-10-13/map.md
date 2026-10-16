@@ -5,61 +5,56 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-re
 
 ## Current state (resume here)
 
-Updated: 2026-10-15 22:37 ET. **Active: 35 resolved / 25 ready-for-agent / 3 claimed.**
-Integration: `codex/probata-resume-20261015`, published `45334518`; base `yanrujhou_main`.
-Active frontier: **07, 25, 28**. Each actual evaluation retains its own exact source,
-checker and runtime. Current lowerer file SHA256 is `e8a427bcafec10d6299f57236bfcb949c554931ea77b3cd01615ed972ffdf152`;
-new ticket28 typed/checker changes do not upgrade earlier actual records.
+Updated: 2026-10-15 23:17 ET. **Active: 35 resolved / 25 ready-for-agent / 3 claimed.**
+Integration: `codex/probata-resume-20261015`, published `0b315646`; base `yanrujhou_main`.
+Active frontier: **07, 25, 28**. Each actual evaluation retains its exact source,
+checker and runtime. Current lowerer file SHA256 is `e10b33f4d310e3097eb84b34ed53e03daf4df690dcf0c8c160f38d907c91e08c`;
+new ticket28 repairs do not upgrade earlier actual records.
 [Current resume](resume.md). [All63 ticket statuses and dependency graph](ticket-status-20261015.md).
 
-- **24 / 27 / 36 resolved:** Ticket24 published29709232:36 actual records plus nine
-  no-launch refusals, all eleven scoped criteria independently reviewed. Ticket27
-  publishedaf10a946:62cases/52records across seven profiles; safe11 has792 ordinary+
-  252 smoke Valid. Ticket36 published8b0c2e27:all ten setup/reader criteria reviewed,
-  actual facts13, setup129, bounded2, scalar cold correction and generated-input
-  mutation control accepted. Original no-test dispatches and scalar pytest failure
-  remain immutable. Ticket36 closure is scoped2033/74+B493; futurechecker76e1 and
-  final source/reproduction freeze remain separate.
-  [24](evidence/t24-combined-current-independent-review-20261015.md),
+- **24 / 27 / 36 resolved:** Published29709232 / af10a946 / 8b0c2e27. Their independently
+  reviewed scoped acceptance, exact sources, immutable failures and raw evidence remain retained.
+  Ticket36 closure is scoped2033/74+B493; later checker76e1 and final source/reproduction
+  freeze are separate. [24](evidence/t24-combined-current-independent-review-20261015.md),
   [27](evidence/t27-ticket-closure-independent-review-20261015.md),
   [36](evidence/t36-final-acceptance-independent-review-20261015.md).
-- **07 claimed:** Fresh run26 started22:15:49ET atcleanac6/42source pins, zero seeds,
-  original33/36/60 clocks and full30positive+identical-hintwait-negative requirements.
-  Baseline completed6.17min:254 ordinary (151pass/103open),139smoke pass; fresh own
-  diagnostic projection155goals/103open. Provider started22:21:59, exact input/argv
-  integrity checked. Latest22:35 observation:one admitted hint,103open/156diagnostic
-  goals; provider active, complete usage still unknown. No result is accepted from
-  partial candidates. Prior run25 remainsUNPROVEN; narrow guard/METHOD23 reviews,
-  component boundaries and historical raw/producers are retained.
-  [Run26 launch](evidence/t07-run26-launch-20261015.json),
-  [input review](evidence/t07-run26-first-provider-root-review-20261015.json).
-- **25 claimed:** Reviewed first original count-value constructor/destructor capability
-  has42 packets (37positive check lemmas,4negative,1numeric) and22 preparation controls.
-  Initial024/G610 passed canonical/tool admission but refused missingHeap before any
-  goal. Single preparse-librarypath repair is reviewed and published45334518, with
-  math/map bytes unchanged. Fresh exactc521/v3 G611 passed198 source/runtime checks and loaded the theory,
-  then refused reserved Why3 predicate names reads/writes before any goals.
-  A reviewed uniform alpha-renaming preserves all42 formulas/mappings. Next gate
-  is exact Git-blob Why3 syntax/typechecking, reusing c521 bootstrap without a new
-  source clone. Actual import/task/hypothesis acceptance remains pending;
-  no c_model body record or whole-ticket claim. Existing bounded controls stay separate.
-  [Preparation](evidence/t25-capability-final-review-v5-024db66c.md),
-  [repair](evidence/t25-import-stage-review-c5216796-v3-20261015.md).
-- **28 claimed:** Complete pinned interface26names/27declarations, template ABI fixes,
-  exact trust-rule recording/mutation refusal and typed-instance routing/refusal are
-  reviewed and published. Typed39+29controls include genuine checker-dependency
-  mutation RED/GREEN and fresh scripted-method acceptance; no actual proof claim.
-  The new dx100_interface checker dependency changes futureidentity76e1; old actual
-  records retainB493. Old0.1 library and drafts1/2 stay immutable; synthetic typed
-  contracts, memory/history/ownership semantics and actual0.2 acceptance remain open.
-  [Typed prerequisite review](evidence/t28-typed-instance-merger-review-20261015.md).
+- **07 claimed:** Run26 ended **UNPROVEN**22:58:02ET after42.22counted minutes.
+  One natural Codex turn completed before33min with full observed usage; all eight
+  candidate checks completed. The incumbent has four Codex-authored hints/102open
+  diagnostic goals. Final all-function replay scheduled397goals, then stopped on native
+  `proc_environ` SystemError after569.146s. Partial log58Timeout lines, no complete final
+  goals/smoke verdict and no negative run. PID/phase/ownership/OS cause unknown.
+  All42 source pins unchanged; three finite poststop metadata scans pass, Mac actual
+  slot released. Closeout published0b315646; separate control-only method24 diagnostics
+  are in progress. No actual readmission or proof-sufficiency claim.
+  [Run26](evidence/t07-counted-run26-20261015.json),
+  [review](evidence/t07-run26-final-independent-review-20261015.md).
+- **25 claimed:** The exact9d heap theory passed actual Why3 syntax/types; cold audit
+  verifies70physical references/eight raw pins. Full42 replayv4 ran23:13:41–23:13:45ET
+  at9d8ca764/node1G612. All198 source/runtime checks pass; theory imported, then unsupported
+  `-wp-dkey` stopped option parsing before goals. No proof accepted. Owner is isolating
+  supported diagnostic flags and preparing a representative genuine WP/task-import gate
+  before another full replay. Original37positive/4negative check lemmas+one numeric
+  packet and mathematical premises remain fixed. No body certification/whole25 claim.
+  [Type/entry review](evidence/t25-typecheck-cold-and-v4-entry-review-20261015.md),
+  [actual admission](evidence/reviewed-t25-heap-capability-v4-launch-9d8ca764-20261015.json).
+- **28 claimed:** Complete26name/27declaration interface, ABI/typed routing, trust-rule
+  recording and checker-dependency guards are published. Latest source-typedef repair
+  has49 focused compiler/native controls and independent review; old0.1 unchanged.
+  Command/history/ownership and separate raw-bit numeric prototypes are in progress,
+  with native/compiler controls only. No current0.2 entry or actual formal admission.
+  [Typed review](evidence/t28-typed-instance-merger-review-20261015.md),
+  [typedef repair](evidence/t28-source-typedef-merger-review-20261015.md).
 
-Raw outputs and actual frozen producers remain retained. New full source snapshots
-use about1.5GiB each; latest pre-replay disk check had6.8GiB free/data1 and93GiB/data.
-A future sparse capability-only layout is being qualified, with no deployment or
-cleanup yet. Root owns actual admissions; at most two remote measurements, one per
-socket, and one actual Mac verifier job. The Mac actual slot is run26.
-No draft3/final source59 or held-out campaign is admitted. Next full status table22:49ET.
+Root owns actual admissions: at most two remote measurements, one per socket, and
+one actual Mac verifier job. No actual job remains assigned at this checkpoint;
+recheck all leases/resources before dispatch. Pre-replay23:05:51ET disk observation
+was36GiB/data1 and69GiB/data. Root performed no cleanup and does not attribute that
+external capacity change. The reviewed/data raw target reserves/data1 for source,
+toolchain and a potential two-lane budget above its20GiB floor. Full layouts remain
+required; sparse/positive-layout proposals are inert. Raw/producers stay retained
+for acceptance, independent audit and resumption. No draft3/final source59 or held-out
+campaign is admitted. Next full status table23:19ET.
 
 ## Historical remote checkpoints
 
