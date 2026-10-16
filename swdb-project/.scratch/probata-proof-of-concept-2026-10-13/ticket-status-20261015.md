@@ -1,8 +1,8 @@
 # Current Probata ticket status
 
-Updated: 2026-10-15 21:14 ET.
+Updated: 2026-10-15 21:19 ET.
 
-33 resolved / 27 ready-for-agent / 3 claimed. Active frontier: **07, 25, 27**.
+34 resolved / 25 ready-for-agent / 4 claimed. Active frontier: **07, 25, 28, 36**.
 Derived from authoritative ticket frontmatter; unresolved dependencies still gate later work.
 [Current resume](resume.md). Historical proof evidence retains its exact source pins.
 
@@ -34,8 +34,8 @@ Derived from authoritative ticket frontmatter; unresolved dependencies still gat
 | [24 — C++ subset widening](issues/24-cpp-subset-widening.md) | resolved | none |
 | [25 — std::vector and std::pair models](issues/25-vector-and-pair-models.md) | claimed | none |
 | [26 — Logic and sum libraries](issues/26-logic-and-sum-libraries.md) | resolved | none |
-| [27 — Proof semantics for the BFS read-offload calls](issues/27-proof-semantics-bfs-calls.md) | claimed | none |
-| [28 — Proof semantics for the remaining maa_* calls](issues/28-proof-semantics-remaining-calls.md) | ready-for-agent | 27 |
+| [27 — Proof semantics for the BFS read-offload calls](issues/27-proof-semantics-bfs-calls.md) | resolved | none |
+| [28 — Proof semantics for the remaining maa_* calls](issues/28-proof-semantics-remaining-calls.md) | claimed | none |
 | [29 — Proof-semantics checks](issues/29-proof-semantics-checks.md) | ready-for-agent | 28 |
 | [30 — Reference definitions, per-call summaries and new intrinsic versions](issues/30-reference-definitions-and-summaries.md) | ready-for-agent | 25, 28 |
 | [31 — Five-gate drafting and the new bfs_read_offload version](issues/31-five-gate-drafting-and-read-offload-version.md) | ready-for-agent | 30 |
@@ -43,7 +43,7 @@ Derived from authoritative ticket frontmatter; unresolved dependencies still gat
 | [33 — Minimum-bounds script and A2 exit](issues/33-minimum-bounds-and-a2-exit.md) | ready-for-agent | 29, 32 |
 | [34 — proof_hinting role and workspace](issues/34-proof-hinting-role.md) | resolved | none |
 | [35 — Hint records, merger and proof hint check](issues/35-hint-records-and-proof-hint-check.md) | resolved | none |
-| [36 — Proof setup check and verdict reading](issues/36-proof-setup-check-and-verdict-reading.md) | ready-for-agent | 27 |
+| [36 — Proof setup check and verdict reading](issues/36-proof-setup-check-and-verdict-reading.md) | claimed | none |
 | [37 — The proof-hint loop](issues/37-proof-hint-loop.md) | ready-for-agent | 33, 36 |
 | [38 — Calibration on the public C suites](issues/38-calibration-public-suites.md) | ready-for-agent | 37 |
 | [39 — BFS unit proven unbounded at one thread; A3 exit](issues/39-bfs-unit-unbounded-and-a3-exit.md) | ready-for-agent | 33, 37, 38, 40 |

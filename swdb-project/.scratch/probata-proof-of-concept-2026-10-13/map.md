@@ -5,7 +5,7 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-re
 
 ## Current state (resume here)
 
-Updated: 2026-10-15 21:14 ET. **Active: 33 resolved / 27 ready-for-agent / 3 claimed.**
+Updated: 2026-10-15 21:19 ET. **Active: 34 resolved / 25 ready-for-agent / 4 claimed.**
 Integration: `codex/probata-resume-20261015`; audited run 23 is published at
 `6dc94905`; method21 prototype merged at `14c2a298`. Remote actual jobs retain
 exact `0e7f2327` and `23933f8a` source freezes; production lowerer SHA256
@@ -23,13 +23,13 @@ remains `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
   with explicit trusted definitions, complete source obligations and dependency
   closure. Existing bounded controls stay separate. Own worktree/TDD; no new
   actual verifier admission yet.
-- **27:** All 62 cases / 52 actual records meet their criteria across seven closed
-  profiles: 25 proven, 12 replayed refuted, 15 not_proven. All eleven safe units
-  prove 792 ordinary + 252 smoke goals, retaining 143 init / 141 RTE. Final B2
-  naturally released at 21:10:17 ET, with clean source/resources. Final five-file
-  packet `2b4cc6e7` awaits independent review and publication; ticket remains
-  claimed until then. Historical `717` evidence remains separate.
-  [Selected schedule](evidence/t27-selected-safe-shard-schedule-20261015.json).
+- **27 resolved:** Published `af10a946` after independent review. All62 cases /
+  52 actual records meet their criteria across seven closed profiles:25 proven,
+  12 replayed refuted,15 not_proven. Safe11 proves792 ordinary+252 smoke, retaining
+  143 init/141 RTE. B2 naturally released at21:10:17 ET; both remote lanes are free.
+  Ticket28 and36 dependency gates are now released.
+  [Closure](evidence/t27-current-matrix-completed-independent-20261015.md),
+  [independent review](evidence/t27-ticket-closure-independent-review-20261015.md).
 - **07:** Run 25 ended **UNPROVEN** at 20:38:30 ET / 39.48 counted minutes.
   Complete natural provider usage and all 12 Codex-origin records pass independent
   audit. Full30 positive was aborted after 383.62s on a recent same-UID candidate's
@@ -37,13 +37,16 @@ remains `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
   No complete goal report or wait-negative exists. This was not a 60-minute overrun.
   Independent poststop scans pass; the Mac slot is free. Frozen `798e9bb3` and
   all 34 source pins remain unchanged. Closeout is published at `07e9c08f`.
-  Controlled method23 guard/reader diagnosis only; no fresh actual admission.
+  Narrow guard repair is integrated at `7a66d146` (37 controls); machine-ID task
+  reader and same-run baseline optimization remain under development. No fresh actual admission.
   Earlier run24 remains unproven; its censored posthoc replay is not upgraded.
   [Run25 closeout](evidence/t07-counted-run25-20261015.json),
   [independent review](evidence/t07-run25-final-independent-review-20261015.md),
   [earlier run24](evidence/t07-counted-24-20261015.json).
-- **36:** Dependency-gated by 27. Its 122 focused controls exclude 13 actual-WP
-  cases. Drafts 1/2 remain immutable; final method freeze and held-out gates remain.
+- **28 / 36 claimed:** New complete-interface semantics and setup/reader closure
+  proceed in separate own worktrees after27. The verified interface has26 names /
+  27 declarations. Historical122 setup controls exclude13 actual-WP facts; fresh
+  acceptance remains required. Drafts1/2, final freeze59 and held-out gates remain.
 
 Node 0 generation 572 released after the caller timeout at 17:43:14 ET.
 Node0 generation573 capacity profile released at17:53:38 ET after its first failure.

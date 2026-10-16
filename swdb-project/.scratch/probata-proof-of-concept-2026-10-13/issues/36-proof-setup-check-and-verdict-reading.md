@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-15 ET (partial mandatory-RTE admission and post-plan mutation controls)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 11, 21, 27
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Proof-hint loop": Three checks; "Verifier lineup and order": one summary source, failure classes; "What a proven verdict asserts": harness `assume`s; "Records and levels": method-version file; "Testing Decisions", seam 1; user stories 15, 21, 30, 31, 33; S1, S3, S7); decisions: [13](../../formal-verification-2026-10-09/issues/13-proof-hint-loop.md) (items 7, 10), [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md) (item 4), [09](../../formal-verification-2026-10-09/issues/09-what-proven-asserts.md) (item 10), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md) (items 3, 10)
 **Time estimate:** about 3 days
@@ -19,6 +19,15 @@ precondition and termination goal must be Valid, every smoke test must pass, and
 appear outside the contracts of summaries and `maa_*` calls (both readings are design S7). It
 never trusts the consolidated `[ Valid ]` or a cache. Smoke tests void a vacuous proof. Each check
 is tested with its negative controls.
+
+## Active implementation — 2026-10-15 21:19 ET
+
+Ticket 27's independently reviewed closure is published at `af10a946`, releasing
+this dependency gate. Work resumes with the driver-identity fallback repair and
+fresh setup/reader acceptance. A reviewed ticket-local source/checker/runtime
+freeze is required here; final production freeze remains ticket 59. Requiring
+59 before 36 would create a cycle through 37/38/58. Drafts 1/2 stay immutable.
+The coordinator owns actual verifier admission and remote scheduling.
 
 ## Acceptance
 
