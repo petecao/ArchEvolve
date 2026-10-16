@@ -414,3 +414,8 @@ Authorfinalcompact preserves allV2/V3/V5actualreaderrefusals and heldV4. Fullmet
 ## 2026-10-16 08:05 ET scoped cold checkpoint
 
 Shared2e2 allocator/register [entry review](../evidence/t28-shared-2e2-pairs-independent-static-review-v1-20261016.md) remains preparation. G597allocator refused unbound assertion effects before solver/records; G598register refused unbound __swdb_dx_reg_words trust_fixtureframe before records; both negatives unexecuted. Their217module admission audits do not accept proof results. [Linux AST recipe review](../evidence/t28-allocation-linux-ast-independent-static-review-v1-20261016.md) permits diagnostic capture only; separate namespace/source fixes remain unreviewed. Previously accepted conditionalstream pair unchanged; current0.2/full28/sourcehardware/refinement/liveness remain open. [Combined evidence](../evidence/probata-frontier-cold-checkpoint-20261016-0805.md).
+
+
+### Allocator AST attempt G622 preservation
+
+[Root settlement](../evidence/root-three-profile-and-ast-refusal-checkpoint-20261016.md) records precompiler unique-retained-source refusal caused by pytest aliases. Originalentry/guardexit1 and17raw187,440B remain; no AST capture or source repair accepted. G597/G598 underlying pre-record failures remain separate. Path-selection-only successor pending review; no ticket closure.

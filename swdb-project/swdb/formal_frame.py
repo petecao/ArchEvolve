@@ -409,6 +409,13 @@ def _typecheck(library, logic, files, pending, report):
             continue
         includes = [('proof_unit_types.h', library.resolve(unit['types']))] if 'types' in unit else []
         declaration = unit_lowering.declaration
+        # 2026-10-16 ET: the original register assigns frame names model state,
+        # which is absent from the source caller's declaration-only lowering.
+        # Use its exact admitted semantics namespace, without helper contracts.
+        from swdb import dx100_register_source, proof_semantics
+        policy = unit.get('correctness_policy')
+        if isinstance(policy, dict) and policy.get('source_policy') == dx100_register_source.KIND:
+            declaration = proof_semantics.wp_prelude(library, policy['semantics']['id'], []) + declaration
         if framac.typecheck(tool, _source(unit, logic, clauses, declaration), includes) is None:
             report.checked += len(clauses)
             continue

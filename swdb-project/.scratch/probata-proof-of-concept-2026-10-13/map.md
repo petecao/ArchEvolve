@@ -19,6 +19,8 @@ Current dispatch checkpoint: 2026-10-16 08:05 ET. Last user full table07:57 ET; 
 | **28 claimed** | [Current-stream decision](evidence/t28-stream-current-independent-cold-decision-20261016.md) remains accepted partial-normal-return pair only. Exact2e2 allocatorG597 refused unbound assertion effects; registerG598 refused unbound __swdb_dx_reg_words frame, both pre-record with negative unexecuted. | Reviewed shared2e2 entries/admission audits are not proof acceptance. Linux assertion-AST capture and separate namespace repair remain prospective; sizeG620 cold pending. No hardware/source/body/current0.2/full28 promotion. |
 | **24 / 27 / 36 resolved** | Scoped accepted evidence remains pinned; ticket36 retains historical checker identity. | Preserve exact receipts and boundaries for final integration review. |
 
+[Final profile snapshots and G622 precompiler refusal](evidence/root-three-profile-and-ast-refusal-checkpoint-20261016.md) preserve settled G621/G597/G598 resources and the separate alias-glob AST failure; no fresh AST capture succeeded.
+
 [Latest scoped cold checkpoint](evidence/probata-frontier-cold-checkpoint-20261016-0805.md) preserves accepted helper/cell4 boundaries and partial/refused public attempts. No ticket status changes.
 
 [Mac controls017 retention](evidence/mac-controls017-retention-preservation-20261016.md) preserves the obsolete clean root-owned checkout as reachable Git/ref/full manifest/restoration before no-force removal; raw and active worktrees remain unchanged. Its historical free-space snapshot is not a current admission check.

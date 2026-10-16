@@ -1,0 +1,7 @@
+# Root independent review: register formal-half namespace
+
+2026-10-16 ET. PASS for ab53cf5208c07c057773eb943138d594208b916a against integrationa633c05a: exactly formal_frame.py+7lines, one public test and two evidence files. Root read the entire production delta, public regression/refusal tests, _entry policy-validation/enqueue ordering, register unit_policy and proof_semantics.wp_prelude. All other source/model/frame/API/library bytes remain unchanged.
+
+The admitted exact register source-policy route now supplies its existing semantics prelude before declaration-only formal-half parsing. called=[] imports no selected get/set helper contracts; the exact existing fixture namespace is static unsigned int bank[32]. Original two-cell assigns and711/1107 clauses remain verbatim. unit_policy validates exact semantics ID/hash and canonical source policy before enqueue; absent policy, unknown bank and missing semantics continue to refuse. Generic unrelated units follow the previous declaration path.
+
+The meaningful public visibility RED→GREEN plus15finalcontrols/one unknown-semantics refusal are compiler/scripted prelaunch evidence, not real Frama/ACSL/solver success. The303-byte corrected formal-half input3f1e0a90 is separately eligible for a tiny root-owned actual parser gate. Historical G598 pre-solver refusal remains immutable. No partial-normal-return/domain/frame relaxation, new helper premise, actual record or ticket acceptance follows.
