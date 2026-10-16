@@ -1,0 +1,227 @@
+{
+  "audit_errors": [],
+  "body_scope": "Original count/value constructor and destructor only. Original body/contract hashes unchanged; arbitrary incoming heap and identity history, old-buffer retention, initialization/prefix establishment-step-exit, receiver accesses, frame/lifetime/reuse and receiver-buffer overlap remain the reviewed source-mapped obligations. No added original caller premise or finite heap/pool/epoch restriction. Generic caller composition unsupported.",
+  "checks_count": 1514,
+  "checks_sha256": "dec2adb2d7bd4964d77ab1c51baaed62df94ad1b349d8ec798923b334d320211",
+  "collector": {
+    "path": "/private/tmp/probata-t25-public-heap-cold-collector-cea5652b-20261016.py",
+    "sha256": "5b450135c7b0b678eae3d052f7b24b5c2ecc05f6ea3183b9e2717df07e71b148"
+  },
+  "collector_corrections": "Inert audit-only corrections: pytest current symlink deduplicated by resolved path; diagnostic typed_real filenames matched by full task body rather than basename; certificate-relative packet paths resolved under heap-inputs rather than library. Earlier snapshots preserved; no producer rerun or mutation.",
+  "created": "2026-10-16 ET",
+  "current_checker_sha256": "da9e1120e5dfc4ddf52c17e2e5f88a7f598627e8ce2fbe92f50d0e2242863d69",
+  "foundation": "All 57 selected Why3 .mlw files/tree digest independently rehashed; each record binds exactly eight reviewed Why3/Frama-C support files through actual same-switch package/share/config/loadpath/helper metadata; no .why/heap shadow.",
+  "fresh_original_targets": 38,
+  "generic_caller_adopted": false,
+  "lease_observation": {
+    "mbit10-evaluation-node0.meta.json": {
+      "generation": 586,
+      "released_at": "2026-10-16T04:22:33Z",
+      "state": "released"
+    },
+    "mbit10-evaluation-node1.meta.json": {
+      "generation": 614,
+      "released_at": "2026-10-16T04:40:57Z",
+      "state": "released"
+    },
+    "mbit10-evaluation.meta.json": {
+      "generation": 77,
+      "released_at": "2026-09-12T04:49:11Z",
+      "state": "released"
+    }
+  },
+  "linux_project_lowering_identity": {
+    "c_lowering": {
+      "id": "swdb-c-lowering-9",
+      "sha256": "be445324ec139d51668c284bda4de156596ac52dedd1e0c8e29c45157523b4c1"
+    },
+    "clang": {
+      "id": "clang-22.1.8",
+      "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+    },
+    "naming_rules": {
+      "id": "kept-names.3",
+      "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+    }
+  },
+  "numeric": {
+    "cold_verdict": "proven",
+    "dependency_property_nodes": 7,
+    "id": "ctor.numeric",
+    "input_sha256": "f545ad0de4eb25926e8ea8f0b341c9763f61d9f15290a640487ba7586179e986",
+    "kind": "c_kernel",
+    "member": "std_vector_int_ctor_count_value",
+    "ordinary": 10,
+    "properties": 13,
+    "resources": {
+      "cpu_seconds": 5.138838,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 277200896,
+      "timed_out": false,
+      "wall_seconds": 6.294317311607301
+    },
+    "smoke": 1
+  },
+  "observation_limits": "Three finite same-UID cmdline/cwd prefix observations had no visible run-prefix match. Cwd permission-denied and vanished-process reads are preserved; this is not universal process absence. GPU metadata query initially failed with NVML driver/library mismatch (library595.99); no GPU state or remediation claimed.",
+  "ordinary_valid": 47,
+  "ownership": "Fresh unfiltered normal reports re-read with AST-extracted byte-pinned current pure reader functions; no Extern allowlist/functions filtering. Every global ordinary goal belongs to its sole check lemma, with no dependencies or Extern; numeric graph has 13 property nodes, seven with nonempty dependencies, closed acyclic and all ten ordinary goals directly Valid, plus one passing smoke.",
+  "passing_numeric_smoke": 1,
+  "persistence": "Both actual c_model fixture records pass the closed proof JSON schema, current setup/reader identities, exact per-target reading/setup counts, exact Linux runtime/method binding and aggregate goals. No synthetic marker exists in the run. No production-store adoption or caller dependency is inferred.",
+  "physical_hash_mismatches": 0,
+  "physical_reference_instances_verified": 482,
+  "positive_global_lemmas": 37,
+  "poststop_process_observations": [
+    {
+      "created_utc": "2026-10-16T04:41:52.916582+00:00",
+      "denials": [
+        {
+          "errno": 13,
+          "operation": "cwd",
+          "pid": "3261267"
+        },
+        {
+          "errno": 2,
+          "operation": "cwd",
+          "pid": "3821880"
+        },
+        {
+          "errno": 13,
+          "operation": "cwd",
+          "pid": "3824386"
+        }
+      ],
+      "matches": [],
+      "same_uid_inspected": 12
+    },
+    {
+      "created_utc": "2026-10-16T04:41:53.024191+00:00",
+      "denials": [
+        {
+          "errno": 13,
+          "operation": "cwd",
+          "pid": "3261267"
+        },
+        {
+          "errno": 2,
+          "operation": "cwd",
+          "pid": "3821880"
+        },
+        {
+          "errno": 13,
+          "operation": "cwd",
+          "pid": "3824386"
+        }
+      ],
+      "matches": [],
+      "same_uid_inspected": 12
+    },
+    {
+      "created_utc": "2026-10-16T04:41:53.137430+00:00",
+      "denials": [
+        {
+          "errno": 13,
+          "operation": "cwd",
+          "pid": "3261267"
+        },
+        {
+          "errno": 2,
+          "operation": "cwd",
+          "pid": "3821880"
+        },
+        {
+          "errno": 13,
+          "operation": "cwd",
+          "pid": "3824386"
+        }
+      ],
+      "matches": [],
+      "same_uid_inspected": 12
+    }
+  ],
+  "prior_semantic_task_closure": {
+    "path": "/private/tmp/probata-t25-full42-cold-closure-review-e56c62dd-20261015.md",
+    "sha256": "54702c3291a66a14da2e1a74245bd185cf2d3cf0c75693feeb2da97769d1da02"
+  },
+  "production_record_adopted": false,
+  "profile_result": {
+    "actual_proof_claim": "requires retained records and independent cold audit",
+    "elapsed_seconds": 443.7938720677048,
+    "pytest_exit_code": 0,
+    "source_unchanged": true,
+    "within_whole_budget": true
+  },
+  "profile_source_pins_verified": 12,
+  "raw_bytes": 43289454,
+  "raw_file_count": 749,
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-cea5652b-t25-public-heap-v1",
+  "records": [
+    {
+      "goal_counts": {
+        "ordinary:valid": 36,
+        "smoke:valid": 1
+      },
+      "goals": 37,
+      "record_path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-cea5652b-t25-public-heap-v1/heap-profile/pytest/test_actual_public_first_pair_0/records/proofs/proof.model.std_vector_int_ctor_count_value.20261016t043339z.25bf54b9.yaml",
+      "schema_errors": [],
+      "sha256": "d4b3a5c436c794cb067fee6ca43746d16f4baf214a0f4e5fd9e810a92b91ca0a",
+      "subject": "std_vector_int_ctor_count_value",
+      "targets": 27,
+      "verdict": "proven"
+    },
+    {
+      "goal_counts": {
+        "ordinary:valid": 11
+      },
+      "goals": 11,
+      "record_path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-cea5652b-t25-public-heap-v1/heap-profile/pytest/test_actual_public_first_pair_0/records/proofs/proof.model.std_vector_int_dtor.20261016t043944z.83bce571.yaml",
+      "schema_errors": [],
+      "sha256": "c77da9963782719452b87f3d56ca1579c9bb413e64e58949a9599ab8dcab9d0f",
+      "subject": "std_vector_int_dtor",
+      "targets": 11,
+      "verdict": "proven"
+    }
+  ],
+  "resources": {
+    "outer-resources.json": {
+      "cpu_seconds": 596.9599499999999,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 1143898112,
+      "timed_out": false,
+      "wall_seconds": 448.0443770075217
+    },
+    "resources.json": {
+      "cpu_seconds": 506.885484,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 1092517888,
+      "timed_out": false,
+      "wall_seconds": 446.39659649319947
+    }
+  },
+  "reviewer_actions": "Read-only SSH host/Git/file/hash inspection and pure JSON/YAML/schema/report-reader data interpretation; no formal tools, tool-version probes, compilers, tests, launches, signals or producer changes.",
+  "runtime_snapshot_used": "heap-project-runtime-provenance.json (actual Linux project context), not Mac composite or root bootstrap context",
+  "snapshot": {
+    "bytes": 542078,
+    "path": "/private/tmp/probata-t25-public-heap-cold-snapshot-final-cea5652b-20261016.json",
+    "sha256": "b62003a7a28567460e7906c5ab36283c802ee1129e01b551c1632326e7c97893"
+  },
+  "source_after": {
+    "commit": "cea5652b06a20696b59b643527c951ccc13122d3",
+    "source_unchanged": true,
+    "tracked_changes": ""
+  },
+  "source_commit": "cea5652b06a20696b59b643527c951ccc13122d3",
+  "source_manifest_pins_verified": 201,
+  "source_review": {
+    "path": "/private/tmp/probata-t25-public-heap-source-addendum-cea5652b-20261016.md",
+    "sha256": "f1a8851a8dc2a2f3673ff437ad40c562ed85cc962fbbb0c9670f9ce83d6f33cd"
+  },
+  "task_closure": "Every fresh actual/debug task matches an already semantically audited e56 same-input task byte-for-byte after excluding only a first-line diagnostic comment. No new hypothesis or support formula. All packet hashes match; no old proof result promoted.",
+  "task_files_checked": 108,
+  "tcb": "Exact-source-to-unbounded-typed-heap VC translation, existing allocator-success/freshness/availability/frame policy, compiler/runtime and selected Frama-C/Why3/provers, standard Boolean/map/datatype/integer/real ordered arithmetic, Abs/ComputerDivision and Qed/Cint support. No project desired/current/future theorem imported as an axiom.",
+  "ticket25_closed": false,
+  "unique_physical_files_hashed": 1178,
+  "verdict": "PASS_FRESH_PUBLIC_FIRST_PAIR_C_MODEL_RECORDS_UNDER_DECLARED_TCB"
+}

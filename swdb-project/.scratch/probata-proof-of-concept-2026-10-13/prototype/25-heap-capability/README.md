@@ -65,7 +65,9 @@ audits. The full run is frozen at `e56c62dd`; it contains 37 Valid positive
 global claims, one numeric kernel (ten Valid ordinary goals and one normal-reader
 passing smoke), and four timeout-only negative controls. The numeric kernel's
 local dependency DAG is closed and acyclic; global check lemmas remain isolated.
-Production model records and the remaining ticket25 work remain open.
+The capability run itself creates no production model record; the separate
+fresh public first-pair route is accepted below. Remaining ticket25 work stays
+open.
 A zero command exit or
 all expected statuses cannot close this gate: independently inspect the actual
 resolved import closure, all imported propositions, emitted task hypotheses and
@@ -87,5 +89,29 @@ Independent intermediate reviews are retained in `reviews/`; the runner review's
 four findings are addressed by the current controls and final independent
 source/runner review passed. Subsequent admitted syntax/option failures and
 repairs remain recorded in issue25 rather than being counted as proof results.
-Further public adapter integration and every remaining ticket25 acceptance item
-remain open after this first capability gate.
+### Separate fresh public first-pair route accepted — 2026-10-16 ET
+
+The public production adapter was separately admitted at exact `cea5652b`, with
+two schema-valid fixture records created through ordinary `swdb prove --model`.
+All 38 mapped positive targets proved afresh: 36 ordinary plus one passing smoke
+for count/value construction, and 11 ordinary for destruction. Global check
+lemmas have no fabricated smoke; their constructive source-entry feasibility
+controls remain among the selected targets. No prototype proof result or
+synthetic orchestration record was promoted.
+
+Independent review checked the complete source correspondence, current Linux
+runtime/method/setup/reader bindings, exact support imports and all 108 emitted
+task bodies against the prior semantic closure. It rehashed 482 declared
+physical references and all 749 raw files (43,289,454 bytes), with zero mismatch.
+The whole guard exited 0 in 446.397 s, peak 1,092,517,888 bytes; the outer guard
+exited 0 in 448.044 s, peak 1,143,898,112 bytes. Neither hit OOM or its watchdog
+timeout. Exact source stayed clean and node 1 generation 614 naturally released
+at2026-10-16T04:40:57Z. Finite process-observation denials and unavailable GPU
+metadata remain explicit; universal process absence is not claimed.
+
+This accepts the two original bodies under the declared translation/allocator/
+tool/standard-support TCB. Production-store adoption, generic caller composition,
+remaining members and complete ticket25 acceptance stay open. See
+[actual cold review](../../evidence/t25-public-heap-cold-review-cea5652b-20261016.md),
+[compact result](../../evidence/t25-public-heap-cold-review-cea5652b-20261016.json)
+and [next member/domain plan](../25-remaining-int-model-plan.md).
