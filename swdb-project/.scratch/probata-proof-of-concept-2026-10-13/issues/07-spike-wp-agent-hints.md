@@ -1,7 +1,7 @@
 # 07 — Spike (c): WP with agent hints
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-15 ET (method21 run24 unproven; seed provenance criterion reviewed); 2026-10-14 22:50 ET (continuation 3: runs 10-12 fail, verdict fail so far, effort paused); 2026-10-14 17:10 ET (continuation 2: runs 7-9 fail, verdict fail so far); 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-15 ET (method22 run25 unproven after terminal inspection refusal; complete Codex origin/usage and cleanup audited); 2026-10-14 22:50 ET (continuation 3: runs 10-12 fail, verdict fail so far, effort paused); 2026-10-14 17:10 ET (continuation 2: runs 7-9 fail, verdict fail so far); 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 03
@@ -1394,6 +1394,66 @@ provider call is required. The proposed allocation stops proof tools at33minutes
 allows natural return through hard36, and reserves the remaining total60minute
 budget for full30positive plus identical-hints full30negative (at least8minutes
 reserved for negative). Its sufficiency is unproven. No historical hint, baseline,
-conversation or telemetry is supplied to the new provider. Independent composed
-review, clean freeze, live preflight and coordinator launch are still required;
-no counted method22 run or qualifying success has occurred.
+conversation or telemetry is supplied to the new provider. At this prelaunch
+checkpoint, independent composed review, clean freeze, live preflight and
+coordinator launch were still required; no counted method22 run or qualifying
+success had occurred.
+
+### Method22 run25 terminal inspection refusal — 2026-10-15 ET
+
+The fresh zero-seed run on frozen `798e9bb3` ran 19:59:01–20:38:30 EDT and
+remains **unproven**. Its continuous counted clock reached 2369.004711 seconds
+(39.48 minutes). The raw `within_budget=false` flag means scientific publication
+was not admitted; it does not mean 60 minutes elapsed. Matching summary,
+completion and publication-log hashes plus clean driver exit 0 were independently
+verified. The producer checkout and all 34 source pins remain unchanged.
+
+The fresh 10-second all-function baseline completed in 6.09 counted minutes:
+254 ordinary goals (151 passed, 103 open) and all 139 smoke checks passed. A second,
+empty-hint diagnostic completed at 10.49 minutes with 103 of 155 round goals open.
+These inventories have different scopes. No mechanical frame or filter seed was
+inserted. The complete checked incumbent contains 12 Codex-authored records and
+101 open of 168 diagnostic goals (95 unit and six hint goals). Raw-operation,
+materialization and edit-parent ancestry were independently verified for all
+11 scoped edit requests. Six proposal requests produced five complete checked
+rounds and one search-deadline-censored round; their outcomes were three accepted,
+one staged and two reverted. The censored candidate was not promoted.
+
+The single fresh Codex conversation returned naturally at 33.09 counted minutes,
+before its hard stop, with complete observed usage: 2,979,289 input and 16,972
+output tokens. Cached input 2,875,264 and reasoning output 7,951 are subsets;
+cache-write was zero. This records complete CLI usage, without a billing claim.
+The exact prompt, source-only workspace, argv and model/effort were audited before
+any candidate request. No historical hint, seed payload, conversation or telemetry
+was supplied to the provider.
+
+The same-clock fresh full30 all-function/smoke replay scheduled 406 goals but
+stopped after 383.615460 seconds on an environment-inspection error. Its guard
+exited 1; deadline, queue-timeout and RSS-watchdog flags were false. The retained
+failure identifies live PID 39659, birth 1792111109.33101, denied on all three
+inspection attempts spanning 32.239667 milliseconds. Its executable, ownership,
+parent lineage and underlying OS or exec cause are not established. This is a
+refusal within the current bounded retry window, not evidence of a long-lived
+denial. The partial log contains 31 Timeout lines and no complete goals JSON;
+neither a completed full30 failing verdict nor a final smoke result is inferred.
+The negative was correctly not run because the positive did not qualify; the
+original positive-plus-negative acceptance gate remains unsatisfied.
+
+All 30 resource reports and log hashes were audited: 28 exit 0, one search-deadline
+censor and the terminal inspection error. The sampled peak was 3916.671875 MiB;
+all report cleanup inventories were empty. Three independent fresh poststop scans
+found no matching live identities, markers, run paths or verifier names and no
+inspection denials; both shared leases were absent. The coordinator then released
+the reserved actual slot. These are finite, non-atomic observations under the
+trusted marker boundary, with no hard quota or hostile-process containment claim.
+
+[Compact run25 evidence](../evidence/t07-counted-run25-20261015.json) pins the full
+outside-repository manifest of 1,265 raw files and the independent receipts.
+The [final independent review](../evidence/t07-run25-final-independent-review-20261015.md)
+distinguishes intact source/accounting/origin/cleanup from absent scientific
+acceptance. Four early task-page requests were conservatively refused because
+the reader did not support unsuffixed call preconditions and multiline callee
+headers; two later scoped page requests succeeded. Future work must separately
+test a bounded inspection retry policy, exact real-format task mapping and any
+same-run baseline-subset initialization. No current-run result reuse, criterion
+waiver or new actual launch is implied. The ticket remains claimed.
