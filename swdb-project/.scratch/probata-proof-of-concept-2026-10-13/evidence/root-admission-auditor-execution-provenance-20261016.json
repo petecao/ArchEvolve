@@ -1,0 +1,26 @@
+{
+  "actual_executed_auditor": "/private/tmp/probata-reviewed-launch-audit-v4-20261016.py",
+  "actual_v4_sha256_expected": "6a568766ffcb3a621d821cef4cb115ae75501b71d3bfd4218a3e5003e04c322e",
+  "date_et": "2026-10-16",
+  "files": {
+    "/private/tmp/probata-reviewed-launch-audit-v3.py": {
+      "bytes": 4165,
+      "sha256": "59bf1d40f27be316d98fc8acc39fa0339207c94bda9a9954ec145513025100ef"
+    },
+    "/private/tmp/probata-reviewed-launch-audit-v4-20261016.py": {
+      "bytes": 4724,
+      "sha256": "6a568766ffcb3a621d821cef4cb115ae75501b71d3bfd4218a3e5003e04c322e"
+    },
+    "/private/tmp/probata-reviewed-launch-audit-v5-20261016.py": {
+      "bytes": 4773,
+      "sha256": "d4447eea942cbbf953888e87568625f33eb67977f3727e1aff19b5d2c7f5fbfa"
+    },
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/reviewed-t28-sizewrong1-debug-v2-launch-7e64298f-20261016.json": {
+      "bytes": 114967,
+      "sha256": "444ed56bca6aed2df0a801e6239f0cacdb27acee09933f4a99f282df028f8b88"
+    }
+  },
+  "historical_receipt": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/reviewed-t28-sizewrong1-debug-v2-launch-7e64298f-20261016.json",
+  "original_recorded_audit_script": "V3 base helper, not the actual V4 executor",
+  "retrospective_boundary": "V4 was run; original receipt remains byte unchanged. This is execution attribution repair, no proof or cold replay. V5 prospective writer records actual __file__ plus separate V3 base."
+}
