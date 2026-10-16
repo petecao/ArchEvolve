@@ -1,0 +1,46 @@
+{
+  "created": "2026-10-16 ET",
+  "status": "PASS_ADMITTED_ONCE_PASSIVE_180S_AFTER_FRESH_PREFLIGHT",
+  "packet": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-admission-04af74c1-v4/trace-cold-projection-source-packet-v4.json",
+    "bytes": 4782,
+    "sha256": "9b9b81f9ed19e0b3faad1c2fc492d5142c327242f2e5dad0a404740a74a1f7a9"
+  },
+  "reader": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-admission-04af74c1-v4/trace_cold_audit_v4.py",
+    "bytes": 43942,
+    "sha256": "3c7e4445fd6b12fe37f294843eb386f1189e567ad15a8904db541cffe71d50e3"
+  },
+  "policy": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-admission-04af74c1-v4/trace-cold-policy-04af74c1-v4.json",
+    "bytes": 356857,
+    "sha256": "71168a009a546c8aed54a141145f8472c7bbfe0a2791f20c2355993b1872f89f"
+  },
+  "command": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-admission-04af74c1-v4/trace-cold-command-04af74c1-v4.json",
+    "bytes": 13217,
+    "sha256": "5464a729ba53aaf6b37607ccdc10a2962d012de9636fa67dc749912e87eb00a0"
+  },
+  "exact_environment": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-admission-04af74c1-v4/trace-cold-env-command-v4.json",
+    "bytes": 1803,
+    "sha256": "3c54f38fc8305eb173106c50dcd953feb402b3e7a87d8d602253cf3bb70d90ff"
+  },
+  "independent_review": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-admission-04af74c1-v4/independent-trace-cold-v4-review-20261016.json",
+    "bytes": 3835,
+    "sha256": "becfa1b07bb1f2bd716fbea2e537c24d778b38f556fb2f5f5b8bcf1ef57efe2d"
+  },
+  "pin_rows_checked": 30,
+  "checks": [
+    "Every existing audit function unchanged except one flags assignment; AST inverse exactly restores prior audit_record.",
+    "Exact ordered35 loop IDs, model function membership and source-derived bound5 mandatory; old native outcome/replay/source/runtime/command/unwinding checks unchanged.",
+    "Exact env-i replacement invocation reviewed; reader cache must stay absent, originalraw/source unchanged, finite original process/lease settlement rechecked."
+  ],
+  "TCB": [
+    "Original --show-loops stdout absent; original producer/CBMC loop discovery and selection remain trusted observation, not reconstructed raw output.",
+    "Deleted original replay executables are not reconstructed or borrowed from native86.",
+    "Historical runtime inventory binds declared members; no retroactive Why3server pin or universal dynamic helper closure."
+  ],
+  "scope": "One passive audit of original25abstracttracecases only, no compiler/native/proof rerun or fullticket28 acceptance."
+}

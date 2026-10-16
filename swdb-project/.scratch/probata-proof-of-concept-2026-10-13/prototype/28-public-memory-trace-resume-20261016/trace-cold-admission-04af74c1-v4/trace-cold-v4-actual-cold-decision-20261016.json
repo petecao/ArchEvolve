@@ -1,0 +1,71 @@
+{
+  "classification": "PASS_SCOPED_ORIGINAL_ABSTRACT_TRACE25",
+  "cold_local_wall_seconds": 23.877522945404053,
+  "cold_reader_exit": 0,
+  "current_0_2": false,
+  "date": "2026-10-16 ET",
+  "evidence": {
+    "independent-trace-cold-v4-review-20261016.json": {
+      "bytes": 3835,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-admission-04af74c1-v4/independent-trace-cold-v4-review-20261016.json",
+      "sha256": "becfa1b07bb1f2bd716fbea2e537c24d778b38f556fb2f5f5b8bcf1ef57efe2d"
+    },
+    "preflight-v4-actual-20261016.json": {
+      "bytes": 422415,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-admission-04af74c1-v4/preflight-v4-actual-20261016.json",
+      "sha256": "a550feba4a3d81f146394325b8c164a20dc3cf2d94578b9ff574b53050a29c3a"
+    },
+    "trace-cold-env-command-v4.json": {
+      "bytes": 1803,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-admission-04af74c1-v4/trace-cold-env-command-v4.json",
+      "sha256": "3c54f38fc8305eb173106c50dcd953feb402b3e7a87d8d602253cf3bb70d90ff"
+    },
+    "trace-cold-projection-source-packet-v4.json": {
+      "bytes": 4782,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-admission-04af74c1-v4/trace-cold-projection-source-packet-v4.json",
+      "sha256": "9b9b81f9ed19e0b3faad1c2fc492d5142c327242f2e5dad0a404740a74a1f7a9"
+    },
+    "trace-cold-v4-actual-invocation-20261016.json": {
+      "bytes": 1853,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-admission-04af74c1-v4/trace-cold-v4-actual-invocation-20261016.json",
+      "sha256": "55129e15058ed5a0d60c87bbffbe48342d2a076ce2118d923dc2bf3e895c2358"
+    },
+    "trace-cold-v4-actual-stdout-20261016.json": {
+      "bytes": 9165,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-admission-04af74c1-v4/trace-cold-v4-actual-stdout-20261016.json",
+      "sha256": "b130aa6ce2568627a480d155612d3dab86f28421a421eccfc9101c6511dd690b"
+    }
+  },
+  "full_ticket28": false,
+  "hardware_counterexamples": false,
+  "opaque_source_consumer_files": 1678,
+  "ordinary_goals_per_record": 154,
+  "original_measurement": "node1 generation635; 2026-10-16T19:50:35Z\u201319:54:40Z",
+  "persisted_abstract_cpp_refutations": 13,
+  "persisted_native_agreement_runs": 15625,
+  "physical_checks": 13455,
+  "raw_bytes": 42682114,
+  "raw_files": 1409,
+  "records": 25,
+  "retained_boundaries": [
+    "The original CBMC --show-loops stdout was not archived; the exact pinned producer/CBMC loop-selector remains an explicit trusted premise. The reader binds the exact 35-loop ID set/order and source-derived bound5, not arbitrary --unwindset flags.",
+    "Original native/replay executables were deleted by the producer. Persisted generated inputs, outputs, original producer logs, witness/oracle and replay sources remain the original replay evidence; private native86 adds no executable or sanitizer attestation to this run.",
+    "Finite selected-process and target/legacy lease observations are separate receipts; no continuing process absence or invented final-null watchdog is asserted.",
+    "Declared runtime inventories were checked as recorded. This CBMC/native trace run makes no observation of a WP helper; the historical omission of Why3server from the common inventory is not retroactively repaired."
+  ],
+  "scientific_reexecution": false,
+  "source_call_refinement": false,
+  "source_commit": "04af74c121a733589fbe1a2087ad602deaef598b",
+  "verdict_census": {
+    "proven": 12,
+    "refuted": 13
+  },
+  "whole_interface": false,
+  "workflow": {
+    "complete_case_phase_reports": 75,
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 25
+  }
+}

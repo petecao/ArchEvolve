@@ -10,16 +10,18 @@ Updated: 2026-10-16 ET (active implementation under renewed user approval)
 
 **What to build:** The proof semantics grows to the whole DX100 interface, so DX100 code of any kernel can be proven against it, not only BFS. Every remaining `maa_*` call of `dx100-mmio 1.0-e4fc4af` gets its contract, written per call from the interface and the gem5 source, never from a kernel. The new version adds the memory rules ticket 27 left out: a CPU access that overlaps an unfinished command's footprint (split by thread and by what DX100 does), device-against-device ordering by gem5's region stall, tile ownership as a proof obligation, the 8-byte tile pair, and a `get_tile_ready` that may answer either way. It also writes down what proofs trust at the call boundary and across cores: the MMIO code and the visibility entries of map 12 item 7. End to end: `swdb prove` on synthetic fixtures gives the verdict each rule predicts, and every verdict lists the matching assumption entries.
 
-## Current resumed checkpoint — 2026-10-16 16:21 ET
+## Current resumed checkpoint — 2026-10-16 17:21 ET
 
-Initialized V5 retains correct result proven/false result not_proven; its cold
-V3 reader refused on a metadata-shape mismatch and is being repaired without a
-scientific rerun. Trace V4 completed25 cases:12 proven/13 refuted and all13 C++
-replays succeeded; complete cold audit remains pending. Native86 now has complete
-independent cold review and root scoped private sanitizer-control adoption.
-The132-route whole-interface source/model/new0.2 integration and bounded compiler
-capture remain under review. Old0.1 stays intact; no whole-interface/public or
-final acceptance is claimed. See active execution for current lanes and evidence.
+Trace25 has complete independent passive cold/root scoped acceptance:12proven,
+13refuted with all13 original C++ replays,3850goals and15625native-agreement runs.
+Absent original loop-discovery stdout and deleted executables remain explicit
+producer/runtime premises. No source/new0.2/full-interface claim follows.
+Initialized711/1107 remain provisional pending independently reviewed exact
+unused-arity0 classificationV8. Native86 retains private scoped adoption.
+CaptureV7 hit128MiB at callerAST; frozen losslessV8 has18passing controls and an
+explicit512MiB expanded-memory bound, unchanged retained/resource caps and
+selectedPython built-in zlib binding. Independent review, actual capture and
+source/receiver/CPU/new0.2 integration remain. All final acceptance boxes open.
 
 ## Active implementation — 2026-10-15 21:19 ET
 

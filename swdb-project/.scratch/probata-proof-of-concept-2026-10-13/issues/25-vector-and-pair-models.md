@@ -10,18 +10,18 @@ Updated: 2026-10-16 ET (active implementation under renewed user approval)
 
 **What to build:** Candidate artifacts that use `std::vector<T>` (not `bool`) or `std::pair` can be proven, and no verifier ever runs libc++ internals. Each type is modeled: a C struct (for the vector: data, size, capacity) plus one C function per member, each with an ACSL contract citing the standard's clauses (`[vector]` for the vector). Vector members: construction by count, by count and value, copy, move; destruction; `operator[]`, `at`, `data`, `size`, `empty`; `begin`, `end` and range-for; `push_back`, `resize`, `reserve`, `clear`, `swap`. The C lowering tool lowers each use to a model call; WP reads the ACSL; 22's translator turns the same contracts into SAW overrides. The model catches what tests miss. Growth frees the old buffer, so a stale pointer or iterator fails the proof. `at` out of range is a proof obligation. Growing a shared vector outside `critical` is stated here as a sharing-class obligation of the model. Its tests live elsewhere: the WP obligation in 45 — Per-thread lowering (it reads not proven, since WP never refutes), and the refutation at threads ≥ 2 in 46 — CIVL adapter. Proof records gain two assumption entries: "the pinned standard library implements the modeled members as the standard says" (trusted tool) and "allocation succeeds".
 
-## Current resumed checkpoint — 2026-10-16 16:21 ET
+## Current resumed checkpoint — 2026-10-16 17:21 ET
 
-The82-target scientific binder passed independent Standards and Spec. Opt-in
-source-rule route shared setup/adapter/schema integration is authored and under
-review; no public source record is admitted yet. All23 positive lifetime leaves
-and four unchanged gluing duties retain scoped acceptance; old compound timeouts
-and supplemental native not_proven remain unchanged. Mixed-pair actual controls
-were18 passed/1 initializedness refusal. The narrow initialized pointer-value
-repair now passes11 child-free tests and awaits independent review and a fresh
-actual compiler/native run. Full member/type/ownership/version/caller breadth
-still prevents completion. A2 continues to mean CBMC plus bounded C/C++ agreement
-and C++ counterexample replay. No acceptance box is closed by this checkpoint.
+Published1433b8f5 fixes explicit summary/model method selection (six CLI
+controls, both reviews); d7f685c6 publishes reviewed ownership preparation V2
+(four pure controls). Its fresh ten mathematical duties and complete original
+move/swap source/Heap transitions remain pending. PublicV3 produced expected
+safe/missing/stale records, then an ordinary verifier.lock disappearance
+interrupted its fourth case; no full5/JUnit acceptance follows. FrozenV4 has23
+passing no-child controls and awaits independent review. Mixed-pair30controls
+passed; formalV5 first-job Why3 IPC refusal remains, with prospective lifecycle
+and helper/runtime closure repair underway. Historical WP helper identity stays
+within the explicit original producer/runtime TCB. Full ticket acceptance open.
 
 ## Active implementation — 2026-10-15 21:14 ET
 

@@ -9,30 +9,47 @@ authorization. External Claude Code owns ticket 7. Root coordinates actual
 tool admission, mbit10 lanes, publication, and final tracker synchronization.
 See [active execution](execution-20261016.md) for the current checklist.
 
-At 16:21 ET, all 23 positive lifetime conjunction leaves and four unchanged
-gluing duties retain scoped adoption. The exact 82-target scientific binder
-passed both review axes; opt-in source-rule setup/adapter/schema integration is
-being reviewed. Original compound timeouts and supplemental native not_proven
-results remain unchanged. Mixed-pair controls finished 18 passed / 1 refused at
-initializedness. A precise pointer-value policy repair has 11 child-free controls
-passing and awaits independent review before a fresh compiler/native run.
+At 17:21 ET, source checkpoint `d7f685c6fdbd7ff776eb1eaccc40099a2c48dc08`
+is pushed and independently read back. It adds the reviewed ownership-transfer
+preparation to the published method-forwarding fix1433b8f5. Six real CLI
+selection controls pass; ownership preparation V2 has four pure controls and
+both review axes. Fresh ten-duty mathematics and complete original move/swap
+source/Heap transitions remain required. Original compound timeouts stay intact.
 
-Initialized V5 retains the proven correct result and not_proven false result.
-Its first complete cold V3 invocation refused on a runtime metadata-shape mismatch;
-the refusal is preserved and a narrow reviewed reader repair is next. Trace V4
-completed 25 cases: 12 proven, 13 refuted, all 13 C++ replays succeeded; independent
-cold review remains pending. Native86 has complete independent cold review and
-scoped root adoption of both private C11/C++17 sanitizer censuses. Whole-interface
-source/new 0.2 integration and its bounded compiler capture remain in preparation.
-Focused regression: 80 passed. Full defaults, final reviews and both tickets'
-final acceptance remain open; census 35 resolved / 26 ready / 2 claimed.
+Public source-route V3 completed three expected cases (safe source-rule proven,
+missing-bundle and stale-method not_proven), then its active output walker raced
+the ordinary removal of verifier.lock. The interrupted run has no complete
+five-case/JUnit acceptance. Frozen V4 has23 no-child controls and awaits review.
+Mixed-pair30 controls passed; its first formal WP job was interrupted when the
+walker refused a legitimate Why3 IPC socket. A lifecycle-aware successor and
+prospective Why3server package/runtime binding are under review. The earlier
+common runtime inventory did not pin this helper; historical WP results retain
+the original producer/Why3 runtime TCB, without retroactive byte-identity claims.
 
-Published source18f04e56 is verified on GitHub; primary mbit10 synchronization
-remains pending. Only the obsolete clean detached615ddf50 source checkout was
-retired after reader checks; its exact published source/restoration recipe and
-all raw evidence remain retained. At 16:20 ET both socket and legacy leases
-were released; /data1 had 11.7 GiB and /data 67.6 GiB free. These are finite
-observations and must be refreshed before dispatch. External ticket7 is untouched.
+Trace25 now has complete independent passive cold/root scoped acceptance:
+12proven /13refuted, all13 original C++ replays,3850 goals and15625 retained
+native-agreement runs. Original --show-loops stdout and deleted replay
+executables remain explicit producer/runtime premises; no hardware, source-call,
+new0.2 or whole-interface claim follows. Initialized711/1107 outcomes remain
+provisional while the exact unreachable arity0 property classification V8 is
+independently reviewed. Native86 retains private scoped cold adoption.
+
+Whole-interface capture V7 reached the caller AST and hit the exact128MiB file
+limit. Its partial AST and failure remain remote. Frozen lossless same-TU V8 has
+18passing no-child controls, an explicit512MiB expanded-memory limit, unchanged
+128MiB retained-file/256MiB total/4GiB/180s guards, and exact selected built-in
+zlib/interpreter/libz binding. Independent review and actual capture remain;
+source/receiver/CPU/new0.2 integration advances independently.
+
+Both tickets remain claimed and every final acceptance item stays open. Census
+is35resolved /26ready-for-agent /2claimed. Full defaults, final whole-change
+reviews and primary mbit10 Git-only synchronization remain pending. At17:19 ET,
+both socket and legacy leases were released, finite selected-tool scan empty,
+data1 free13.2GiB and data free67.3GiB. Fresh checks remain mandatory before any
+run. Obsolete18f and57c source freezes were retired after reader/recovery checks;
+all raw, exact Git restoration commits and required2baf/04af sources remain.
+External Claude Code owns ticket7; its code, tracker and resources are untouched.
+Next required progress table:17:51 ET.
 
 The 11:35 ET pause and all snapshots below are historical. Their evidence and
 runtime boundaries remain intact; their stop instruction is superseded for

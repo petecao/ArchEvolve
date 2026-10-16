@@ -38,22 +38,59 @@ Baseline: `c978393b119a3614229a37f0f2c8ca2a097c750b` on `yanrujhou_main`.
 - Preserve uncommitted ticket 7 and unrelated cleanup scratch. Do not resurrect
   the retired integration branch or blindly execute historical tmp commands.
 
-## Current checkpoint — 2026-10-16 16:21 ET
+## Current checkpoint — 2026-10-16 17:21 ET
 
 | Item | Progress and change | Health | ETA / next action |
 | --- | --- | --- | --- |
-| Vector source proof | 82-target binder passes both reviews; source-rule public integration authored | Original mathematics and timeouts retained | Unknown; review setup/adapter/schema and actual public route |
-| Mixed pair | Actual controls 18/19; initializedness repair passes 11 child-free tests | One known policy gap; no formal run admitted | Unknown; independent review, fresh native controls, then eight-record profile |
-| Initialized u32 | Two actual records completed; cold V3 metadata reader refused | Original proven/not_proven outcomes intact | Unknown; narrow runtime-shape reader successor |
-| Public trace25 | V4 completed 12 proven / 13 refuted; all13 C++ replays succeeded | No timeout/OOM; complete cold review pending | Unknown; admit reviewed passive audit |
-| Whole interface | Native86 cold audit and private scoped adoption complete; source compiler capture under review | Source/current0.2/public integration still open | Unknown; bounded capture, source/model integration and public fixtures |
-| Tests/resources | Focused80 passed; full defaults wait for final changes | Both leases released at16:20; data1 11.7GiB/data67.6GiB | Refresh before dispatch; next full status16:51 ET |
+| Publication | d7f685c6 pushed/read back; method and ownership preparations reviewed | Six CLI/four ownership controls pass | Final integration/full suite pending |
+| Vector public route | V3 first3 cases expected; lock-file race interrupted fourth | V4 has23 passing controls | Independent review then full5 workflow |
+| Mixed pair | 30controls pass; formal first model interrupted on Why3 IPC | Runtime/lifecycle repair active | Unknown; reviewed successor |
+| Initialized u32 | 711/1107 outcomes retained | Unused-arity0 cold classification under review | Complete exact passive audit |
+| Trace25 | Cold/root accepts12proven/13refuted/all13replays | Abstract trace scope only | Source/current0.2 integration remains |
+| Whole interface | Lossless same-TU V8 has18 passing controls | New512MiB expanded bound; retained/resource caps unchanged | Review/capture/source-new0.2 integration |
+| Resources | 17:19bothsocket/legacyreleased;13.2GiBdata1/67.3GiBdata | Finite selected-tool scan empty; recovery/raw preserved | Fresh check every dispatch; next table17:51 ET |
 
-Both tickets remain claimed; final acceptance boxes remain open. Census is
-35 resolved / 26 ready-for-agent / 2 claimed. Source18f is published/read back;
-primary mbit10 Git-only synchronization remains pending. Obsolete615 source was
-retired recovery-safely; every raw directory and exact restore commit remains.
-External Claude Code owns ticket7 and its state is preserved.
+At 17:21 ET, source checkpoint `d7f685c6fdbd7ff776eb1eaccc40099a2c48dc08`
+is pushed and independently read back. It adds the reviewed ownership-transfer
+preparation to the published method-forwarding fix1433b8f5. Six real CLI
+selection controls pass; ownership preparation V2 has four pure controls and
+both review axes. Fresh ten-duty mathematics and complete original move/swap
+source/Heap transitions remain required. Original compound timeouts stay intact.
+
+Public source-route V3 completed three expected cases (safe source-rule proven,
+missing-bundle and stale-method not_proven), then its active output walker raced
+the ordinary removal of verifier.lock. The interrupted run has no complete
+five-case/JUnit acceptance. Frozen V4 has23 no-child controls and awaits review.
+Mixed-pair30 controls passed; its first formal WP job was interrupted when the
+walker refused a legitimate Why3 IPC socket. A lifecycle-aware successor and
+prospective Why3server package/runtime binding are under review. The earlier
+common runtime inventory did not pin this helper; historical WP results retain
+the original producer/Why3 runtime TCB, without retroactive byte-identity claims.
+
+Trace25 now has complete independent passive cold/root scoped acceptance:
+12proven /13refuted, all13 original C++ replays,3850 goals and15625 retained
+native-agreement runs. Original --show-loops stdout and deleted replay
+executables remain explicit producer/runtime premises; no hardware, source-call,
+new0.2 or whole-interface claim follows. Initialized711/1107 outcomes remain
+provisional while the exact unreachable arity0 property classification V8 is
+independently reviewed. Native86 retains private scoped cold adoption.
+
+Whole-interface capture V7 reached the caller AST and hit the exact128MiB file
+limit. Its partial AST and failure remain remote. Frozen lossless same-TU V8 has
+18passing no-child controls, an explicit512MiB expanded-memory limit, unchanged
+128MiB retained-file/256MiB total/4GiB/180s guards, and exact selected built-in
+zlib/interpreter/libz binding. Independent review and actual capture remain;
+source/receiver/CPU/new0.2 integration advances independently.
+
+Both tickets remain claimed and every final acceptance item stays open. Census
+is35resolved /26ready-for-agent /2claimed. Full defaults, final whole-change
+reviews and primary mbit10 Git-only synchronization remain pending. At17:19 ET,
+both socket and legacy leases were released, finite selected-tool scan empty,
+data1 free13.2GiB and data free67.3GiB. Fresh checks remain mandatory before any
+run. Obsolete18f and57c source freezes were retired after reader/recovery checks;
+all raw, exact Git restoration commits and required2baf/04af sources remain.
+External Claude Code owns ticket7; its code, tracker and resources are untouched.
+Next required progress table:17:51 ET.
 
 ## Historical admission checkpoints
 
