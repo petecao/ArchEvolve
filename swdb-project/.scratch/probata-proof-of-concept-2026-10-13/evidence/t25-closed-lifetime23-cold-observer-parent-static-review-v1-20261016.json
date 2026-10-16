@@ -1,0 +1,29 @@
+{
+  "SSH_calls": 0,
+  "actual_auditor_executions": 0,
+  "auditor_sha256": "d9cee2627a08bb08341ea0702c8e4003acc4194914327c56a976182446bc0161",
+  "caller_acceptance": false,
+  "compiler_solver_verifier_runs": 0,
+  "created": "2026-10-16 ET",
+  "external_attempts": [],
+  "parent_control_note": "Initial stdlib control on system Python3.9 stopped before assertions because zip(strict=True) is unavailable; these same pure controls pass on project Python3.13. Remote target is the already pinned Python3.11.",
+  "preparation_sha256": "b3ceab198401ae765bc3c641c7d601686c1c575d5defbd107a5cf836cfb0d356",
+  "pure_reference_controls": {
+    "all_scoped_formulas_rechecked": true,
+    "cleanup": 9,
+    "exit": 14,
+    "leaves": 23
+  },
+  "review": [
+    "All23 complete SMT/ACSL transcriptions, exact full common antecedent and fresh observer/range scopes independently inspected. Pure controls recheck every source statement, both original references,14+9 coverage and exact final/scalar witnesses.",
+    "Complete frame/identity/int-cell/fill source expansions retain every conjunct. Cleanup contains actual release/end_automatic; no desired/sibling theorem is a premise.",
+    "Twelve parser/Git/policy/source-lifting helpers are AST-identical to successful sixV6. Existing order normalization, source-definition unfolding and defining-equality substitution stay restricted to the checked source schema. New +0 normalization is exact integer additive identity only.",
+    "Internal-Qed-only goals require complete source/native ownership, one ordinary goal, native valid/passed and Qed success, exact internal census and no printed/exported/materialized SMT task; no task is invented.",
+    "All external goals/supports/imported definitions require complete attribution. Unknown supports and missing/extra source definitions fail closed.",
+    "Full canonical/fresh certificate, exact Git source and consumer closure, compiler use-time lineage and later physical header observation, selected runtime/support/import/config, actual argv/guards/settled lane and whole raw before/after checks remain required.",
+    "All scientific/source/Typed/body/caller/current-record/universal/ticket admission limits remain false. Original six-profile timeouts are preserved."
+  ],
+  "source_admission": false,
+  "source_commit": "04af74c121a733589fbe1a2087ad602deaef598b",
+  "status": "PASS_FOR_SCOPED_PASSIVE_23_COLD_INSPECTION"
+}

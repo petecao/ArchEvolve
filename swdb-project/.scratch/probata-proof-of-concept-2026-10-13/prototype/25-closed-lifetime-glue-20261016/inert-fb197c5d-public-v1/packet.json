@@ -1,0 +1,96 @@
+{
+  "actual_generations": 0,
+  "actual_proofs": 0,
+  "author": {
+    "bytes": 13855,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-lifetime-glue-20261016/author-public-v1.py",
+    "sha256": "884fdd2a7ba6d7a4c3282ae986c2400163228d501fe31bf0a35deffe6c374555"
+  },
+  "body_acceptance": false,
+  "bootstrap_bytes": 90456,
+  "bootstrap_inverse_predecessor_equal": true,
+  "caller_acceptance": false,
+  "canonical_files": 16,
+  "canonical_manifest_sha256": "54bb92af5068634433af157a9fc3391b839060461683f33ada8ab20ff2911b0e",
+  "check_lemmas": 6,
+  "compiler_or_native_or_verifier_calls": 0,
+  "compiler_recipe_predecessor_equal": true,
+  "complete_targets": 6,
+  "created": "2026-10-16 ET",
+  "embedded_roundtrip_exact": true,
+  "entry": {
+    "bytes": 34712,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-lifetime-glue-20261016/inert-fb197c5d-public-v1/entry.py",
+    "sha256": "76a687229c3d28e504102aad1bdd2c3efc47b1992cf1703c94a2291ec6f7c263"
+  },
+  "expected": {
+    "bytes": 188656,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-lifetime-glue-20261016/inert-fb197c5d-public-v1/expected.json",
+    "sha256": "a10f2ee5864b8c39c22e72b29f34e3195b59839e0fdc9a6ae9e5c6c5f7ecd4b2"
+  },
+  "independent_entry_review_pending": true,
+  "predecessor_packets": [
+    {
+      "bytes": 3284,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-prefix10-resume-20261016/inert-c978393b/packet.json",
+      "sha256": "fed0e1ff46d33afbf38f032e2ef39481fb23378b7ebef711301582d38fad61c1"
+    },
+    {
+      "bytes": 7874,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-original-no-growth-generation-20261016/inert-c978393b-v3/packet.json",
+      "sha256": "13a0996a3bd3d9f079ee743d81014dd170ea54c75e07ff028ea4e42612900ae5"
+    }
+  ],
+  "project_runtime_imports": 0,
+  "proof_acceptance": false,
+  "public_proof_records_created": 0,
+  "pure_preparation_receipt": {
+    "bytes": 8456,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-closed-lifetime-glue-preparation-20261016.json",
+    "sha256": "63eaafaec86dd9fa60db8483df5988648504e5c802cd3632c5eebb959fb10ef3"
+  },
+  "remote_project": "/data1/yanruj/probata-resume-20261016-fb197c5d/swdb-project",
+  "resource_policy": {
+    "cap_bytes": 8589934592,
+    "leaf_timeout_seconds": 180,
+    "metadata_reserve_bytes": 4194304,
+    "output_budget_bytes": 2147483648,
+    "profile_seconds": 1300,
+    "root_outer_seconds": 1620,
+    "root_whole_seconds": 1500,
+    "workers": 1
+  },
+  "reviewed_guard_helpers_exact": [
+    "guarded_generation",
+    "raw_bytes",
+    "bounded_bytes",
+    "bounded_json"
+  ],
+  "reviewed_helpers_exact": [
+    "sha",
+    "pin",
+    "write",
+    "surface",
+    "linux_admission",
+    "consumer_closure",
+    "initialize_workspace"
+  ],
+  "root_admission_pending": true,
+  "root_command": {
+    "bytes": 90722,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-lifetime-glue-20261016/inert-fb197c5d-public-v1/root-command.json",
+    "sha256": "bcc571f2916e00b2ca3cdbec4b8fdd837e1ad405f2b032491119cb5a84231080"
+  },
+  "root_kind": "t25-closed-lifetime6-public-v1",
+  "source_commit": "fb197c5ddd173065ca781766886c6a797684a838",
+  "source_package_count": 326,
+  "source_typed_bridge_established": false,
+  "status": "INERT / UNREVIEWED / NOT EXECUTED",
+  "template": {
+    "bytes": 21677,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-lifetime-glue-20261016/entry-template-public-v1.py",
+    "sha256": "e40388f50903233cdec7562ce5934645808816a18755beb6a5918f555ac9a5f0"
+  },
+  "ticket_closure": false,
+  "universal_proof_setup_attested": false
+}

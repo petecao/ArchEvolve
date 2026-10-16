@@ -1,0 +1,111 @@
+{
+  "caller_acceptance": false,
+  "canonical_files": [
+    {
+      "bytes": 109027,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/inert-reviewed-working-source-v3/manifest.json",
+      "relative": "manifest.json",
+      "sha256": "60e1465bcb46e93733af4cf4173d8ce67e6379784c1b6814763d47701e7262e2"
+    },
+    {
+      "bytes": 6929,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/inert-reviewed-working-source-v3/sources/original-caller.c",
+      "relative": "sources/original-caller.c",
+      "sha256": "7082d6fc081e23547bf792f8029277695b83d933913545f290f66353ee5841ec"
+    },
+    {
+      "bytes": 2724,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/inert-reviewed-working-source-v3/sources/original-constructor.c",
+      "relative": "sources/original-constructor.c",
+      "sha256": "57cf2a6f3f9049f8edf41633f9ef60d0bb7c804e5ee937af796217a2a018c594"
+    },
+    {
+      "bytes": 2124,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/inert-reviewed-working-source-v3/sources/original-destructor.c",
+      "relative": "sources/original-destructor.c",
+      "sha256": "1056f4f83c59a30941ec9417c36aada8eab4b62160087ae10315cd2ac9778317"
+    },
+    {
+      "bytes": 757,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/inert-reviewed-working-source-v3/sources/original.cc",
+      "relative": "sources/original.cc",
+      "sha256": "1172e62dbff5076d25471285afcfa17927707dbe6fae121d9570109d39e62b57"
+    },
+    {
+      "bytes": 3631,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/inert-reviewed-working-source-v3/sources/qualified-constructor.c",
+      "relative": "sources/qualified-constructor.c",
+      "sha256": "a20cb8431cc975b034954666967398d8466745cd0bab9a92f45f60c19a837a1a"
+    },
+    {
+      "bytes": 2987,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/inert-reviewed-working-source-v3/sources/qualified-destructor.c",
+      "relative": "sources/qualified-destructor.c",
+      "sha256": "9ca9409923f9d39b4e35a0690c70256af56bfd1c37f1e389e406f615b0164e7f"
+    },
+    {
+      "bytes": 8386,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/inert-reviewed-working-source-v3/theory/heap_reallocation.mlw",
+      "relative": "theory/heap_reallocation.mlw",
+      "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5"
+    }
+  ],
+  "classification": "UNADMITTED_SOURCE_RULE_SPEC_CORRECTION",
+  "compiler_solver_verifier_runs": 0,
+  "corrections": [
+    "All original24 ordinary/nine smoke goals and13 frame partitions are explicitly retained with direct source discharges; original native failures/refusal unchanged.",
+    "Saved local pointer initialization from pure data return is separate from pointee initializedness and captured scalar initialization.",
+    "All constructor/data/reserve/destructor parameter copies, positive loop counter k, local saved pointer and captured scalar have fresh automatic entry/store/end effects. Caller count is read-only entry storage. A separate private administrative store is explicitly hidden and does not silently consume selected Heap.next.",
+    "Live physical allocation byte observations are distinguished from dead allocation-identity ghost snapshots; reused physical addresses may change bytes and dead physical byte preservation is explicitly false."
+  ],
+  "created": "2026-10-16 ET",
+  "module": {
+    "bytes": 27207,
+    "path": "swdb-project/swdb/vector_reallocation_closed_evidence.py",
+    "sha256": "5d997dfbb1f2bef48ca07126d3a98697756254af1fc26d8f18a94aef009fc77f"
+  },
+  "original_spec_findings": {
+    "bytes": 2519,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-closed-source-evidence-c707-spec-findings-20261016.json",
+    "sha256": "ae9fb47004b2b62d232dd74de6ce0def74af633dbe1b0d8d747522dabae74761"
+  },
+  "public_tests": {
+    "bytes": 6684,
+    "path": "swdb-project/tests/test_vector_reallocation_closed_evidence.py",
+    "sha256": "c9e38d3b63362e74426700c70a9e6469e02d35aa3e5081fe5005c3a70fd0c9a3"
+  },
+  "pure_controls": [
+    {
+      "bytes": 3262,
+      "failed": 0,
+      "passed": 2,
+      "path": "/private/tmp/probata-resume-20261016-t25-closed-source-evidence-green-v6/result.json",
+      "sha256": "e6334ffa4082fca0012cec588952fd23dd6815e9fc2acac8893f231a004be563",
+      "stage": "green-v6"
+    },
+    {
+      "bytes": 3262,
+      "failed": 0,
+      "passed": 2,
+      "path": "/private/tmp/probata-resume-20261016-t25-closed-source-evidence-green-v7/result.json",
+      "sha256": "6d876bc0782f79203d1fc4035304798b7654ca6cbf2371d1a9aa2003ec37cbcc",
+      "stage": "green-v7"
+    },
+    {
+      "bytes": 3263,
+      "failed": 0,
+      "passed": 2,
+      "path": "/private/tmp/probata-resume-20261016-t25-closed-source-evidence-green-v8/result.json",
+      "sha256": "02bfe04354435d5fe9fec323788dc471cd2f0a2bbf178e89c79ee73453ee116b",
+      "stage": "green-v8"
+    }
+  ],
+  "pure_harness": {
+    "bytes": 5132,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-prefix10-resume-20261016/run_pure_closed_evidence.py",
+    "sha256": "3b0a1be2357562c19f6494f117f0730142a5863f698f031b425377a312d0db2d"
+  },
+  "scientific_dependency_evidence_validated": false,
+  "source_admission": false,
+  "source_rule_review_required": true
+}

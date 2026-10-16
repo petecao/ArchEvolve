@@ -1,0 +1,102 @@
+{
+  "created": "2026-10-16 ET",
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v3",
+  "classification": "PRE_TEST_CONTROLLER_NAMESPACE_REFUSAL",
+  "actual": {
+    "lane.json": {
+      "socket_lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "command": [
+          "timeout",
+          "--signal=TERM",
+          "--kill-after=60",
+          "1320",
+          "bash",
+          "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v3/run.sh"
+        ],
+        "cpus_allowed_list": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63",
+        "ended_utc": "2026-10-16T19:43:09Z",
+        "exit_code": 1,
+        "host": "mbit10",
+        "job": "probata-resume-20261016-04af74c1-t28-memory-trace-v3",
+        "lease_generation": 634,
+        "lease_name": "mbit10-evaluation-node1",
+        "load1_at_start": 0.71,
+        "load1_max": 32,
+        "node": 1,
+        "numa_memory_policy": "bind:1",
+        "numactl": "--cpunodebind=1 --membind=1",
+        "preregistration_sha256": null,
+        "started_utc": "2026-10-16T19:43:07Z"
+      }
+    },
+    "outer-resources.json": {
+      "exit_code": 1,
+      "peak_rss_bytes": 82837504,
+      "out_of_memory": false,
+      "timed_out": false,
+      "wall_seconds": 2.1282893465831876,
+      "cpu_seconds": 2.28802
+    },
+    "resources.json": {
+      "cpu_seconds": 0.149732,
+      "exit_code": 1,
+      "out_of_memory": false,
+      "peak_rss_bytes": 33030144,
+      "timed_out": false,
+      "wall_seconds": 0.16669420711696148
+    },
+    "source-after.json": {
+      "commit": "04af74c121a733589fbe1a2087ad602deaef598b",
+      "source_unchanged": true,
+      "tracked_changes": ""
+    },
+    "launch.json": {
+      "created_utc": "2026-10-16T19:43:06.853550+00:00",
+      "source": "/data1/yanruj/probata-resume-20261016-04af74c1",
+      "source_commit": "04af74c121a733589fbe1a2087ad602deaef598b",
+      "node": 1,
+      "command": [
+        "/data1/yanruj/probata-verifiers/opam-2.6.1/opam",
+        "exec",
+        "--switch=framac-33",
+        "--",
+        "/data1/yanruj/venvs/swdb-test/bin/python",
+        "-I",
+        "-B",
+        "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v3/control/linux_trace_entry_v2.py",
+        "/data1/yanruj/probata-resume-20261016-04af74c1/swdb-project",
+        "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v3",
+        "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v3/control/linux_trace_policy_04af74c1_v3.json",
+        "47629d9c974d9352f208764a2c93186da119b810b8750980461ac6de1600e214"
+      ],
+      "timeout_seconds": 1200,
+      "rss_cap_bytes": 8589934592,
+      "workers": 1,
+      "rss_scope": "outer watchdog covers worker bootstrap, compiler provenance probes, inner monitor and proof process tree; trusted outer monitor excluded",
+      "planned_raw_budget_bytes": 268435456,
+      "raw_budget_enforcement": "coordinator monitors; not a filesystem quota",
+      "readers": [
+        "root",
+        "ticket28",
+        "memory_public_trace"
+      ],
+      "log_name": "acceptance.log",
+      "reviewed_wrapper_reuse": {
+        "execute.py": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612",
+        "watch.py": "4485ae66aa50c65f2b579f84836576aa67b54431978da71cac6eea6a68ecd07c"
+      }
+    }
+  },
+  "log": {
+    "pin": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v3/acceptance.log",
+      "bytes": 805,
+      "sha256": "c57e74e516236b0f301770ac46c32cd67570b60e5cc3ec54e394540a9254aef4"
+    },
+    "text": "Traceback (most recent call last):\n  File \"/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v3/control/linux_trace_entry_v2.py\", line 490, in <module>\n    raise SystemExit(main_v2(sys.argv))\n                     ^^^^^^^^^^^^^^^^^\n  File \"/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v3/control/linux_trace_entry_v2.py\", line 331, in main_v2\n    expected = validate_policy_v2(json.loads(policy_bytes))\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v3/control/linux_trace_entry_v2.py\", line 192, in validate_policy_v2\n    raise ValueError('fresh V2 memory-trace raw namespace differs')\nValueError: fresh V2 memory-trace raw namespace differs\n"
+  },
+  "scientific_tool_or_test_execution": false,
+  "scope": "Controller validation failed before runtime preflight/test child/CBMC launch. Root bootstrap compiler/runtime metadata probes did execute and remain separate. Original failure retained; no formal verdict or acceptance."
+}

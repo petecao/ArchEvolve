@@ -1,0 +1,37 @@
+{
+  "created": "2026-10-16 ET",
+  "classification": "UNEXECUTED_MIXED_PAIR_SHARED_BUILDER_CORRECTION",
+  "files": {
+    "tests/fixtures/proof/lowering/pair_pointer.cc": {
+      "bytes": 1165,
+      "sha256": "c5f539209979d01270dfa48c35b7b5475d58b3899dbcef31a13afb65e8c14184"
+    },
+    "tests/test_pair_pointer_workflow.py": {
+      "bytes": 8325,
+      "sha256": "a8e82648979479ca664cabbe1b4de4335bd678c66a6f4c5407e1b93943aeecfd"
+    },
+    "scripts/probata_pair_pointer_profile.py": {
+      "bytes": 3689,
+      "sha256": "7737a5747664cff167a05615721941f3c7189f50a0436716d46693a4748851f6"
+    },
+    "tests/testkit/pair_workflow.py": {
+      "bytes": 6348,
+      "sha256": "4a95e7e2b5b9492f554f5bf686fa2ea9036dce461c75d4949265318ca77c12af"
+    },
+    "tests/test_pair_workflow.py": {
+      "bytes": 9620,
+      "sha256": "42a09e64d521ac0d2aa8e3daf9be74839ef230348b52543e6c51345febe4c6d4"
+    },
+    "scripts/probata_pair_profile.py": {
+      "bytes": 3819,
+      "sha256": "9bdc8b852ce0bbefff5ed75ba044e9edcc9d1f65bf12b992fad3643308aecc01"
+    }
+  },
+  "extracted_helpers_AST_equal": [
+    "_lower",
+    "_seed"
+  ],
+  "original_other_test_ASTs_equal": true,
+  "original_profile_delta": "One explicit source pin for the newly shared helper only; mode/resource/selection/acceptance behavior unchanged.",
+  "scope": "Fixture/tests/profile only; no production model/adapter/translator edit or scientific execution."
+}

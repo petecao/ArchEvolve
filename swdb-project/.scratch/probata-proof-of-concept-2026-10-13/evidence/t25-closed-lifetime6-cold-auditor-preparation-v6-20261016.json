@@ -1,0 +1,36 @@
+{
+  "SMT_only_unused_definition_omitted_after_complete_goal_match": "L_t25_closed_positive",
+  "acceptance": false,
+  "auditor": {
+    "bytes": 46419,
+    "path": "prototype/25-closed-lifetime-glue-20261016/cold-auditor-v6.py",
+    "sha256": "9a373fe5a32bd11c36149d65f1470c98def984dec10c35465ac7d198f7f8651b"
+  },
+  "author_remote_execution": false,
+  "classification": "INERT_PASSIVE_EXPANDED_POSITIVE_DEFINITION_CENSUS",
+  "common_export_full_definition_census_unchanged": true,
+  "controls_external_processes_executed": 0,
+  "created": "2026-10-16 ET",
+  "exact_inverse_to_v5": true,
+  "previous_actual_refusal": {
+    "bytes": 195,
+    "checks_before_refusal": 95625,
+    "sha256": "93bb0e0f23314bacb0cf940cce5e0f897545fe659877da2487ed21e690df524a"
+  },
+  "previous_auditor_sha256": "121761cf8e8298417a38271662262e2ab1fc155152c5ddc4d23e1805d8dfd17d",
+  "pure_controls": [
+    "positive.exit_image: exact expanded-goal source closure accepted",
+    "positive.exit_image: each other missing definition refused",
+    "positive.exit_image: referenced positive definition cannot be omitted",
+    "positive.exit_image: extra source definition refused",
+    "positive.cleanup: exact expanded-goal source closure accepted",
+    "positive.cleanup: each other missing definition refused",
+    "positive.cleanup: referenced positive definition cannot be omitted",
+    "positive.cleanup: extra source definition refused"
+  ],
+  "scope": "Only exact SMT definition census after the previously checked source definition is fully expanded in the matched goal. Every remaining source definition is still required and body checked.",
+  "source_definitions_kept": {
+    "positive.cleanup": 6,
+    "positive.exit_image": 7
+  }
+}

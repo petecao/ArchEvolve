@@ -10,17 +10,16 @@ Updated: 2026-10-16 ET (active implementation under renewed user approval)
 
 **What to build:** The proof semantics grows to the whole DX100 interface, so DX100 code of any kernel can be proven against it, not only BFS. Every remaining `maa_*` call of `dx100-mmio 1.0-e4fc4af` gets its contract, written per call from the interface and the gem5 source, never from a kernel. The new version adds the memory rules ticket 27 left out: a CPU access that overlaps an unfinished command's footprint (split by thread and by what DX100 does), device-against-device ordering by gem5's region stall, tile ownership as a proof obligation, the 8-byte tile pair, and a `get_tile_ready` that may answer either way. It also writes down what proofs trust at the call boundary and across cores: the MMIO code and the visibility entries of map 12 item 7. End to end: `swdb prove` on synthetic fixtures gives the verdict each rule predicts, and every verdict lists the matching assumption entries.
 
-## Current resumed checkpoint — 2026-10-16 14:40 ET
+## Current resumed checkpoint — 2026-10-16 15:52 ET
 
-Memory53 private preparations passed C11/C++17 ASan/UBSan runs and independent
-cold audit. The initialized-u32 V4 run passed complete startup/runtime/postchecks
-but source validation refused an unchecked AST effect before WP; its original
-positive failed and negative was unexecuted under `-x`. Exact retained AST repair
-and deterministic regression are in progress. The final source-57c abstract
-25-case public trace packet is under independent review, with whole-interface
-typed/value bindings in parallel. No current 0.2/full-interface acceptance is
-claimed; version 0.1 and every substantive acceptance criterion remain intact.
-See [active execution](../execution-20261016.md) for current coordination.
+Initialized V5 source 04af completed both actual fixtures: correct result proven,
+false result not_proven; complete independent cold audit remains pending. Native86
+V4 passed exact86-control C11/C++17 sanitizer censuses under actual 4 GiB guards;
+cold review is pending. Trace V3's pretest namespace refusal is retained; reviewed
+namespace-only V4 is active on node1. Reviewed 132-route whole-interface dispatch
+and source/new 0.2 integration continue. No whole-interface/current 0.2 or final
+acceptance is claimed; old 0.1 and every substantive criterion remain intact.
+See active execution for source/runtime/scientific boundaries and next actions.
 
 ## Active implementation — 2026-10-15 21:19 ET
 

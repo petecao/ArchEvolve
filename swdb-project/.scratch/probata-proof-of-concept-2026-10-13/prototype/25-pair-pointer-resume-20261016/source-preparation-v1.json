@@ -1,0 +1,22 @@
+{
+  "created": "2026-10-16 ET",
+  "classification": "UNEXECUTED_MIXED_PAIR_PUBLIC_WORKFLOW_PREPARATION",
+  "files": {
+    "tests/fixtures/proof/lowering/pair_pointer.cc": {
+      "bytes": 1165,
+      "sha256": "c5f539209979d01270dfa48c35b7b5475d58b3899dbcef31a13afb65e8c14184"
+    },
+    "tests/test_pair_pointer_workflow.py": {
+      "bytes": 8347,
+      "sha256": "b1869db9dc234f877782b84a8e48312356033ccd06895b48ca13120578077968"
+    },
+    "scripts/probata_pair_pointer_profile.py": {
+      "bytes": 3655,
+      "sha256": "636d2b2e79e8a5d4fa898789394002b7213655c26cf5208d81257a900a6e6aee"
+    }
+  },
+  "scope": "New fixtures/tests/profile only; original model/translator/adapter bytes unchanged. No compiler/native/verifier/solver execution or success claimed. Exact runtime/admission and independent review pending.",
+  "actual_expected_records": 8,
+  "native_expected_defined_cases": 75,
+  "source_pointer_scope": "Fresh local pointee identities only; no dereference or pointer escape."
+}

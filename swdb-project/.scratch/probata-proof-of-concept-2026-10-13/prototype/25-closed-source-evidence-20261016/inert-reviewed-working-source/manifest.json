@@ -1,0 +1,1380 @@
+{
+  "all_scientific_dependencies_admitted": false,
+  "branch_derivations": {
+    "positive": {
+      "buffer_read_evaluated": true,
+      "caller_visible_writes": [],
+      "condition": "0 < n <= INT_MAX",
+      "constructor_effects": [
+        {
+          "field": "data",
+          "operation": "store",
+          "source": {
+            "begin": 2219,
+            "end": 2237,
+            "sha256": "549fd3408c9aedf0e7e8d89b05456be1f4a09dfffcf40c501d2ab7b0667f929f"
+          },
+          "target": "receiver",
+          "value": "null"
+        },
+        {
+          "field": "size",
+          "operation": "store",
+          "source": {
+            "begin": 2238,
+            "end": 2253,
+            "sha256": "07a46bb08842a04ded6e55d66c9b1077645969f4e9533d6b8eac31ecaca07106"
+          },
+          "target": "receiver",
+          "value": 0
+        },
+        {
+          "field": "capacity",
+          "operation": "store",
+          "source": {
+            "begin": 2254,
+            "end": 2273,
+            "sha256": "aa02513ea19893d3ac5f03dca6ceb0cab7d2f3e372b8e925e5f570c90642f47f"
+          },
+          "target": "receiver",
+          "value": 0
+        },
+        {
+          "count": "n",
+          "external_effects": "pinned allocator fresh/valid/freeable/normal-return/frame TCB",
+          "operation": "allocate",
+          "source": {
+            "begin": 2298,
+            "end": 2329,
+            "sha256": "8af5e1eacd759735d291cbb90c35e7149cda8ee942a21330bd2399bef9f792aa"
+          },
+          "target": "buffer"
+        },
+        {
+          "field": "data",
+          "operation": "store",
+          "source": {
+            "begin": 2298,
+            "end": 2329,
+            "sha256": "8af5e1eacd759735d291cbb90c35e7149cda8ee942a21330bd2399bef9f792aa"
+          },
+          "target": "receiver",
+          "value": "buffer"
+        },
+        {
+          "field": "capacity",
+          "operation": "store",
+          "source": {
+            "begin": 2379,
+            "end": 2398,
+            "sha256": "370511bba627b4227d83fcbaf20276c7773363240b524cc043b24e0c19048873"
+          },
+          "target": "receiver",
+          "value": "n"
+        },
+        {
+          "body": [
+            {
+              "byte_offset": "4*k",
+              "operation": "store",
+              "source": {
+                "begin": 2682,
+                "end": 2704,
+                "sha256": "a4ddf10a0f59d4ae897cc75ef65aca5a4785f338b7f4b806f9f1cee3c0e7a0e5"
+              },
+              "target": "buffer",
+              "value": 7
+            }
+          ],
+          "operation": "loop",
+          "range": "0 <= k < n",
+          "safety_and_termination": "complete exact constructor35 prefix/access/numeric/variant obligations",
+          "source": {
+            "begin": 2651,
+            "end": 2704,
+            "sha256": "8371fcd138d0c70a75536d7b1ba353d78d41a579a2e4fcce9b39f4231de76b71"
+          }
+        },
+        {
+          "field": "size",
+          "operation": "store",
+          "source": {
+            "begin": 2707,
+            "end": 2722,
+            "sha256": "ce0555043b0ed0c37ada58b34440ee609bb19168242fb646b94428987f9705e0"
+          },
+          "target": "receiver",
+          "value": "n"
+        }
+      ],
+      "count_capacity_relation": "count == capacity",
+      "data_capture": "the actual fresh buffer identity at offset zero",
+      "incoming_frame_induction": {
+        "all_steps_checked": true,
+        "fresh_private_targets": [
+          "buffer",
+          "receiver"
+        ],
+        "induction_rule": "composition and arbitrary-count iteration of pointwise identity on the protected allocation set",
+        "protected": "all incoming allocated objects",
+        "steps": [
+          {
+            "operation": "begin_automatic",
+            "pointwise_frame": "incoming object differs from this target by source freshness",
+            "target": "receiver"
+          },
+          {
+            "operation": "store",
+            "pointwise_frame": "incoming object differs from this target by source freshness",
+            "target": "receiver"
+          },
+          {
+            "operation": "store",
+            "pointwise_frame": "incoming object differs from this target by source freshness",
+            "target": "receiver"
+          },
+          {
+            "operation": "store",
+            "pointwise_frame": "incoming object differs from this target by source freshness",
+            "target": "receiver"
+          },
+          {
+            "operation": "allocate",
+            "pointwise_frame": "incoming object differs from this target by source freshness",
+            "target": "buffer"
+          },
+          {
+            "operation": "store",
+            "pointwise_frame": "incoming object differs from this target by source freshness",
+            "target": "receiver"
+          },
+          {
+            "operation": "store",
+            "pointwise_frame": "incoming object differs from this target by source freshness",
+            "target": "receiver"
+          },
+          {
+            "arbitrary_iteration": true,
+            "inductive_body": {
+              "all_steps_checked": true,
+              "fresh_private_targets": [
+                "buffer",
+                "receiver"
+              ],
+              "induction_rule": "composition and arbitrary-count iteration of pointwise identity on the protected allocation set",
+              "protected": "all incoming allocated objects",
+              "steps": [
+                {
+                  "operation": "store",
+                  "pointwise_frame": "incoming object differs from this target by source freshness",
+                  "target": "buffer"
+                }
+              ]
+            },
+            "operation": "loop",
+            "range": "0 <= k < n"
+          },
+          {
+            "operation": "store",
+            "pointwise_frame": "incoming object differs from this target by source freshness",
+            "target": "receiver"
+          },
+          {
+            "operation": "release",
+            "pointwise_frame": "incoming object differs from this target by source freshness",
+            "target": "buffer"
+          },
+          {
+            "operation": "end_automatic",
+            "pointwise_frame": "incoming object differs from this target by source freshness",
+            "target": "receiver"
+          }
+        ]
+      },
+      "later_private_pointer_observation": false,
+      "reserve_growth_branch": false,
+      "result": 7,
+      "returned_pointer": false,
+      "scalar_captured_before_release": true,
+      "terminal_cleanup": {
+        "dynamic_buffer_released": true,
+        "null_release_is_inert": false,
+        "receiver_scope_ended": true,
+        "transition": "end_automatic(release(post,buffer),receiver)"
+      }
+    },
+    "zero": {
+      "buffer_read_evaluated": false,
+      "caller_visible_writes": [],
+      "condition": "n == 0",
+      "constructor_effects": [
+        {
+          "field": "data",
+          "operation": "store",
+          "source": {
+            "begin": 2219,
+            "end": 2237,
+            "sha256": "549fd3408c9aedf0e7e8d89b05456be1f4a09dfffcf40c501d2ab7b0667f929f"
+          },
+          "target": "receiver",
+          "value": "null"
+        },
+        {
+          "field": "size",
+          "operation": "store",
+          "source": {
+            "begin": 2238,
+            "end": 2253,
+            "sha256": "07a46bb08842a04ded6e55d66c9b1077645969f4e9533d6b8eac31ecaca07106"
+          },
+          "target": "receiver",
+          "value": 0
+        },
+        {
+          "field": "capacity",
+          "operation": "store",
+          "source": {
+            "begin": 2254,
+            "end": 2273,
+            "sha256": "aa02513ea19893d3ac5f03dca6ceb0cab7d2f3e372b8e925e5f570c90642f47f"
+          },
+          "target": "receiver",
+          "value": 0
+        }
+      ],
+      "count_capacity_relation": "count == capacity",
+      "data_capture": "null",
+      "incoming_frame_induction": {
+        "all_steps_checked": true,
+        "fresh_private_targets": [
+          "receiver"
+        ],
+        "induction_rule": "composition and arbitrary-count iteration of pointwise identity on the protected allocation set",
+        "protected": "all incoming allocated objects",
+        "steps": [
+          {
+            "operation": "begin_automatic",
+            "pointwise_frame": "incoming object differs from this target by source freshness",
+            "target": "receiver"
+          },
+          {
+            "operation": "store",
+            "pointwise_frame": "incoming object differs from this target by source freshness",
+            "target": "receiver"
+          },
+          {
+            "operation": "store",
+            "pointwise_frame": "incoming object differs from this target by source freshness",
+            "target": "receiver"
+          },
+          {
+            "operation": "store",
+            "pointwise_frame": "incoming object differs from this target by source freshness",
+            "target": "receiver"
+          },
+          {
+            "operation": "release",
+            "pointwise_frame": "the actual null-release transition is identity under the pinned deallocator model",
+            "target": "null"
+          },
+          {
+            "operation": "end_automatic",
+            "pointwise_frame": "incoming object differs from this target by source freshness",
+            "target": "receiver"
+          }
+        ]
+      },
+      "later_private_pointer_observation": false,
+      "reserve_growth_branch": false,
+      "result": 0,
+      "returned_pointer": false,
+      "scalar_captured_before_release": true,
+      "terminal_cleanup": {
+        "dynamic_buffer_released": false,
+        "null_release_is_inert": true,
+        "receiver_scope_ended": true,
+        "transition": "end_automatic(release(post,0),receiver)"
+      }
+    }
+  },
+  "caller_acceptance": false,
+  "caller_premises_added": [],
+  "checker": {
+    "id": "vector-closed-source-observation-1",
+    "sha256": "7690c16d02c2ae442ed356ba88cf0c5739a5a5ba6c3434c8f36b26b0a42f76b3"
+  },
+  "created": "2026-10-16 ET",
+  "explicit_allocator_library_TCB": {
+    "allocation": "normal allocation succeeds with a fresh, valid, freeable result and preserves incoming caller memory, as specified by the pinned allocator model",
+    "environment": "full-TU screening and default allocator spelling do not establish absence of separately linked global allocation replacements or interposition; their effects are covered only by the explicit model TCB",
+    "future_record_policy": "any admitted source-facing method/record must name and pin allocator freshness, validity, framing and release correspondence explicitly; allocation success alone is insufficient",
+    "library": "the pinned standard-library members correspond to their complete pinned model contracts and executable bodies",
+    "release": "null release is inert; valid dynamic release ends only the specified allocation and preserves all other incoming memory, as specified by the pinned deallocator model"
+  },
+  "function": "vector_realloc_v3_no_growth",
+  "native_projected_C": {
+    "constructor_premise_discharged_by_native": false,
+    "lifetime_facts_from_Typed": false,
+    "original_entry_refusal_and_reader_not_proven_preserved": true,
+    "required_complete_census": {
+      "external_query_goals": 7,
+      "internal_Qed": 10,
+      "ordinary": 17,
+      "smokes": 4
+    },
+    "role": "supplemental conditional evidence only",
+    "smoke_timeout_implies_satisfiable": false
+  },
+  "observation": {
+    "allocator_internal_effects": "covered by the explicit pinned model framing/observation TCB, not inferred absent from standard conformance or full-TU screening",
+    "incoming_type_restriction": null,
+    "preserves": [
+      "allocation identity",
+      "liveness",
+      "extent",
+      "address",
+      "writability",
+      "contents of every byte",
+      "initialization of every byte"
+    ],
+    "protected_objects": "every incoming allocated program object, live or dead",
+    "source_rule": "all source stores and lifetime effects target identities not issued at entry; pointwise identity outside that private footprint composes and is invariant under the exact unbounded fill loop",
+    "total_Typed_to_Heap_encoding_claimed": false
+  },
+  "original_contract": [
+    "requires 0 <= n;",
+    "assigns \\nothing;",
+    "ensures \\result == (n > 0 ? 7 : 0);"
+  ],
+  "proof_admission": "unsupported: complete exact scientific evidence and independent source-effect interpretation review are required; report hashes or acceptance strings alone are insufficient",
+  "scientific_dependencies": {
+    "constructor": {
+      "alias_policy": "escaped raw aliases remain legal before release and stale afterward",
+      "allocation_identity_condition": "capacity>0 implies receiver and backing allocation bases differ",
+      "body_sha256": "b2a65ba2e721e87eda94ded1bd37e05ba0d5f8b9a405f97a46d3da977965623e",
+      "caller_discharge": "required; not assumed",
+      "current_body_record_admitted": false,
+      "executable_bodies": [
+        {
+          "body_sha256": "86fd9f8970bed2f1ffc305762055e0aeea6f3d3f91623b2bf35ce9506762a292",
+          "inverse_qualified_body_sha256": "86fd9f8970bed2f1ffc305762055e0aeea6f3d3f91623b2bf35ce9506762a292",
+          "original_fragment_sha256": "eb1f5833017762a8d83cc477b6d35e604be6906ebe70b7c0ba56abf032fa03b0",
+          "original_function": "swdb_alloc_int",
+          "qualified_fragment_sha256": "eb1f5833017762a8d83cc477b6d35e604be6906ebe70b7c0ba56abf032fa03b0",
+          "qualified_function": "swdb_alloc_int"
+        },
+        {
+          "body_sha256": "90f92e95d590f5c59653ed53a9ec73f7a1561364d39092dcd5911b92afc4cdfc",
+          "inverse_qualified_body_sha256": "90f92e95d590f5c59653ed53a9ec73f7a1561364d39092dcd5911b92afc4cdfc",
+          "original_fragment_sha256": "e301a232920b9439f2db75cccc278276c1e74ba760cbd9ca2ae7958210b401d4",
+          "original_function": "swdb_free",
+          "qualified_fragment_sha256": "e301a232920b9439f2db75cccc278276c1e74ba760cbd9ca2ae7958210b401d4",
+          "qualified_function": "swdb_free"
+        },
+        {
+          "body_sha256": "b2a65ba2e721e87eda94ded1bd37e05ba0d5f8b9a405f97a46d3da977965623e",
+          "inverse_qualified_body_sha256": "b2a65ba2e721e87eda94ded1bd37e05ba0d5f8b9a405f97a46d3da977965623e",
+          "original_fragment_sha256": "3cd8afffdc132e49f623b56149a1621603ea1314c030515f0320fd5b912b000c",
+          "original_function": "std_vector_int_ctor_count_value",
+          "qualified_fragment_sha256": "a4963a177811339c6e5f44377c2a793de7ab830103987ba68e68b68048ab5bfe",
+          "qualified_function": "std_vector_int_realloc_v3_ctor_count_value"
+        }
+      ],
+      "inverse_qualified_source_sha256": "57cf2a6f3f9049f8edf41633f9ef60d0bb7c804e5ee937af796217a2a018c594",
+      "member": "std_vector_int_realloc_v3_ctor_count_value",
+      "original_contract_proved": false,
+      "original_member": "std_vector_int_ctor_count_value",
+      "original_source_sha256": "57cf2a6f3f9049f8edf41633f9ef60d0bb7c804e5ee937af796217a2a018c594",
+      "parent_model": {
+        "id": "swdb-std-models-2",
+        "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+      },
+      "pending": [
+        "complete original source/clause/RTE/init/frame/lifetime map under the new contract",
+        "fresh unbounded body proof",
+        "source-derived caller eligibility and cross-view liveness accounting"
+      ],
+      "proof_status": "qualification certificate only; a proof verdict requires fresh checked execution",
+      "qualified_member": "std_vector_int_realloc_v3_ctor_count_value",
+      "qualified_source_sha256": "a20cb8431cc975b034954666967398d8466745cd0bab9a92f45f60c19a837a1a",
+      "required_targets": [
+        {
+          "id": "control.ctor.premises_feasible",
+          "sha256": "b5e411200cea2b718f6d7464d67b16c9704f13da40fb4b5c3d15f8ccc424dad5"
+        },
+        {
+          "id": "ctor.rte.zero_data",
+          "sha256": "3a64ef32dc04c28baf29bf0432e000405db7e5923e5ee7c40d15a3afd162edee"
+        },
+        {
+          "id": "ctor.rte.zero_size",
+          "sha256": "524665df08d6df290bc3fa479ba7de698c4929ecb9307065e909c815cea8e651"
+        },
+        {
+          "id": "ctor.rte.zero_capacity",
+          "sha256": "1b503dcb3e5d9ad0c02e7f05c4b961c4e344d05b027d2c922445495b030dd44e"
+        },
+        {
+          "id": "ctor.fields.initialized",
+          "sha256": "7457a3fb08737a445abd553c0b18ecf41782b92e468bbd8a6fc641c64b412080"
+        },
+        {
+          "id": "ctor.zero.post",
+          "sha256": "67a767b853c35aa675dc2a038b8ce511f72c3b5d283c4b456ed3b9b537504cc0"
+        },
+        {
+          "id": "ctor.zero.frame",
+          "sha256": "246cb3285d23c64743a49e27ea7fddca8b0370800f447852782eb09f1dc8490a"
+        },
+        {
+          "id": "ctor.alloc.identity",
+          "sha256": "2c4039918468f64d6186788d62229926ec3de5ed7733deb3f1a37d626e1d3e7f"
+        },
+        {
+          "id": "ctor.alloc.well_formed",
+          "sha256": "37fb36cddfa7c04a94b82a42170d5c2e5ca38e32c79bb164d24cdc9de7e37f55"
+        },
+        {
+          "id": "ctor.alloc.separation",
+          "sha256": "15b3e29c013f359fd41166886cf8c87349871c4d6be2f3acf2a42fa2faeef5d7"
+        },
+        {
+          "id": "ctor.alloc.extent",
+          "sha256": "19ba37f46cad8d3c1fb1540232498f75f033e3462e8bd333ef29f6ef5b0d6ebb"
+        },
+        {
+          "id": "ctor.alloc.uninitialized",
+          "sha256": "7e829d37db0bd00afc9da274a2bb64f670f95d8877a85cca91e9968f956b6797"
+        },
+        {
+          "id": "ctor.capacity.entry",
+          "sha256": "7a0e99453d6cbc09801fce66d2387a93175e593cf4152c99f36d21cd50adba42"
+        },
+        {
+          "id": "ctor.rte.allocated_data",
+          "sha256": "02ba89b283c54cc344aad9897d86365fc227c0c2b2bc0efcb67f6e49ad0bb96a"
+        },
+        {
+          "id": "ctor.rte.allocated_capacity",
+          "sha256": "0991127933d1a77bd56ec6c71aa78a2c00754d88fadba9dd91c109a4fa4bf2ec"
+        },
+        {
+          "id": "ctor.prefix.establish",
+          "sha256": "50fb5df4e141d3263dc802457dbd7935be3b0286b17ec43c21bac0e37fc97218"
+        },
+        {
+          "id": "ctor.store.access",
+          "sha256": "83c4d2ad7c3351e04007cfc3a8b4b9ace11774feab2e0eb678e7cb7a663af2ad"
+        },
+        {
+          "id": "ctor.prefix.step",
+          "sha256": "aa084a3b18ca0a7abd158071d20b91efb631d797ea0789f8e24c4fb35ccba598"
+        },
+        {
+          "id": "ctor.prefix.exit",
+          "sha256": "63e1d91b2abddf2959a3ed8d35fbccd0f3c4c1679a17e61d5f364e0b9135d123"
+        },
+        {
+          "id": "ctor.final.post",
+          "sha256": "7bdbb392a07ba3d6cf4e6a38d8cb84253a7ffc2f801a29c456a4039c4859f42e"
+        },
+        {
+          "id": "ctor.rte.final_size",
+          "sha256": "2f55d2e1f387cc1e191db7169b89969582c6684a320930868d364d2bd8ddfd3e"
+        },
+        {
+          "id": "ctor.frame.preexisting",
+          "sha256": "f944af412b583f4a9a60871dd616b8188e64a27fb7cd75eb94a372c4454c2835"
+        },
+        {
+          "id": "ctor.frame.loop_step",
+          "sha256": "b73c3d72d71d00b1a3db42157634a66fcc2caa20a5a803f12189ee864a0ef98a"
+        },
+        {
+          "id": "ctor.frame.final",
+          "sha256": "524a1813b0938ef54b0f013c015bf74448488031a6398d934f5ea84f632bcf28"
+        },
+        {
+          "id": "ctor.numeric",
+          "sha256": "95efe1cba1bbc55c5f08d538cd4424ff93a4d3adf6bd5d169ad17664377d5600"
+        },
+        {
+          "id": "control.zero_size.formation",
+          "sha256": "20e39f968e9d59dc0d4fd901a6758e976969a3824c3509d3ad5cd21e482cb1dc"
+        },
+        {
+          "id": "control.live_zero_base.not_fresh",
+          "sha256": "986b457661e64986482e9959757025ca082a0826018dbd372529d0722656b112"
+        },
+        {
+          "id": "control.ctor.qualified_feasible",
+          "sha256": "a60560cd42ab38003711f2bc0815fb0f39a4757888d19bb038bc4c4b4525770d"
+        },
+        {
+          "id": "ctor.qualified.zero_post",
+          "sha256": "efbc464b79789d41ce4c4cbbc507e6bd66440c7455291412f6cbe6a2bb3d4871"
+        },
+        {
+          "id": "ctor.qualified.positive_post.repr",
+          "sha256": "a2f0879c57876cd1c0a655d514723f028939794f07faf50f3b0559fdd669500d"
+        },
+        {
+          "id": "ctor.qualified.positive_post.cells.access",
+          "sha256": "2281cad8ea18001a5e5397b71f48d74ee6a7f5f447a7581ebf15c36d042f7d1c"
+        },
+        {
+          "id": "ctor.qualified.positive_post.cells.initialization",
+          "sha256": "c84a63dc42bb61eee15381e5c265a743e4e95acfe630019303cfd6f1e933bebe"
+        },
+        {
+          "id": "ctor.qualified.positive_post.cells.integer",
+          "sha256": "c61359f03125569a6d84b788c010664bde01021446716d7dc7525359a0e8714a"
+        },
+        {
+          "id": "ctor.qualified.positive_post.cells.bounds",
+          "sha256": "867a0e3070efe2c84395fd0dda1c438306169583e8e71b8abdd4b267c6694cdc"
+        },
+        {
+          "id": "ctor.qualified.positive_post.eligibility",
+          "sha256": "91a7d5520173fb81907e40a5d4b6e187dffdebddd4373b291b7a0c0c923220bf"
+        }
+      ],
+      "typed_source_image": {
+        "applicable": true,
+        "boundary": "old heap repr does not imply int32_region; actual typed-source correspondence is mandatory",
+        "caller_discharge": "source-derived typed int objects; opaque raw storage unsupported",
+        "id": "wp-typed-int32-source-image-1",
+        "projection": "selected WP Typed bounded integer chunk -> Integer(value); pointer chunks are not integer cells",
+        "raw_effective_type_safety_proved": false,
+        "required_source_files": [
+          {
+            "name": "MemTyped.ml",
+            "sha256": "ad0d3c4e8e568a09d47bb658767e5ba476cc9e957f16b14981370642c5e235b5"
+          },
+          {
+            "name": "Cint.ml",
+            "sha256": "3b2a00bb65f4c785265c2295c323459e3dce66bb6c82e3d70ff3a659a3660156"
+          },
+          {
+            "name": "Factory.ml",
+            "sha256": "d2f4da6cb7b2f4a674880f4760680e84fe0a1c58ece95d0f2ff889b7902efcc5"
+          }
+        ],
+        "required_wp_integer_model": "Machine; Natural/NAT is outside this bounded-int projection",
+        "runtime_source_binding": "required selected-tool verification before every launch; not assumed"
+      },
+      "unary_role": "reallocation eligibility; not exclusive ownership",
+      "version": 3
+    },
+    "destructor": {
+      "alias_policy": "escaped raw aliases remain legal before release and stale afterward",
+      "allocation_identity_condition": "capacity>0 implies receiver and backing allocation bases differ",
+      "body_sha256": "ff60f7bb4cfc6d2bfcfe1e898b75a6c685da6d711e5da0d6afb9920fc756b263",
+      "caller_discharge": "required; not assumed",
+      "current_body_record_admitted": false,
+      "executable_bodies": [
+        {
+          "body_sha256": "86fd9f8970bed2f1ffc305762055e0aeea6f3d3f91623b2bf35ce9506762a292",
+          "inverse_qualified_body_sha256": "86fd9f8970bed2f1ffc305762055e0aeea6f3d3f91623b2bf35ce9506762a292",
+          "original_fragment_sha256": "eb1f5833017762a8d83cc477b6d35e604be6906ebe70b7c0ba56abf032fa03b0",
+          "original_function": "swdb_alloc_int",
+          "qualified_fragment_sha256": "eb1f5833017762a8d83cc477b6d35e604be6906ebe70b7c0ba56abf032fa03b0",
+          "qualified_function": "swdb_alloc_int"
+        },
+        {
+          "body_sha256": "90f92e95d590f5c59653ed53a9ec73f7a1561364d39092dcd5911b92afc4cdfc",
+          "inverse_qualified_body_sha256": "90f92e95d590f5c59653ed53a9ec73f7a1561364d39092dcd5911b92afc4cdfc",
+          "original_fragment_sha256": "e301a232920b9439f2db75cccc278276c1e74ba760cbd9ca2ae7958210b401d4",
+          "original_function": "swdb_free",
+          "qualified_fragment_sha256": "e301a232920b9439f2db75cccc278276c1e74ba760cbd9ca2ae7958210b401d4",
+          "qualified_function": "swdb_free"
+        },
+        {
+          "body_sha256": "ff60f7bb4cfc6d2bfcfe1e898b75a6c685da6d711e5da0d6afb9920fc756b263",
+          "inverse_qualified_body_sha256": "ff60f7bb4cfc6d2bfcfe1e898b75a6c685da6d711e5da0d6afb9920fc756b263",
+          "original_fragment_sha256": "7779eb945593c441b99b36115d35a24a8347bee1fb9d91db1db14879458ef38a",
+          "original_function": "std_vector_int_dtor",
+          "qualified_fragment_sha256": "9870371fd3541cf977563c759b0205704642c7324837c8695c51c6903cdfd8e0",
+          "qualified_function": "std_vector_int_realloc_v3_dtor"
+        }
+      ],
+      "inverse_qualified_source_sha256": "1056f4f83c59a30941ec9417c36aada8eab4b62160087ae10315cd2ac9778317",
+      "member": "std_vector_int_realloc_v3_dtor",
+      "original_contract_proved": false,
+      "original_member": "std_vector_int_dtor",
+      "original_source_sha256": "1056f4f83c59a30941ec9417c36aada8eab4b62160087ae10315cd2ac9778317",
+      "parent_model": {
+        "id": "swdb-std-models-2",
+        "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+      },
+      "pending": [
+        "complete original source/clause/RTE/init/frame/lifetime map under the new contract",
+        "fresh unbounded body proof",
+        "source-derived caller eligibility and cross-view liveness accounting"
+      ],
+      "proof_status": "qualification certificate only; a proof verdict requires fresh checked execution",
+      "qualified_member": "std_vector_int_realloc_v3_dtor",
+      "qualified_source_sha256": "9ca9409923f9d39b4e35a0690c70256af56bfd1c37f1e389e406f615b0164e7f",
+      "required_targets": [
+        {
+          "id": "control.dtor.premises_feasible",
+          "sha256": "0563754418f4a12a41995478c6a829c73114b4c967df221220a3b08fba410c4f"
+        },
+        {
+          "id": "dtor.data.read",
+          "sha256": "004833d8949bb5d4400a219ef2b9368ae7ca4914d15fc69062f761c63b29827b"
+        },
+        {
+          "id": "dtor.free.argument",
+          "sha256": "462a7744e8f7a5137bdca30bbd498f6a38e2272e93a5922cfca31bfb5e05e949"
+        },
+        {
+          "id": "dtor.null.no_op",
+          "sha256": "96b0e5c9536694714afec32d21cf52517e871f2225ff074cc043746c5a15a9b4"
+        },
+        {
+          "id": "dtor.alias.invalidated",
+          "sha256": "40bed47f0ae13d768e077e6ea7789dcd190194e1522810310250ad1278a698a1"
+        },
+        {
+          "id": "dtor.post.old_invalid",
+          "sha256": "5062df7f6ed1315b67e6e1a0d323dcff7cb53a6b6df4639034cbd45ca415034f"
+        },
+        {
+          "id": "dtor.frame.surviving",
+          "sha256": "3012485de6f563339f99f6c8b38d270fb6d04429367c20836d8e8a6465b5aa67"
+        },
+        {
+          "id": "dtor.frame.other_live",
+          "sha256": "e0fb664a9c258708be364a9017d9806ae01ec81eb905f4a572943f29abaedc1a"
+        },
+        {
+          "id": "dtor.receiver.overlap",
+          "sha256": "8c53c08ddc54ebb60d69fce168fff27c4c0dd52c8d80741d99eabd5475202096"
+        },
+        {
+          "id": "control.reused_address.stale",
+          "sha256": "59f1c15f17ed5a1cddb2658e07f6af4f9e0877ed902d84c444ff93d2a824c0d8"
+        },
+        {
+          "id": "control.before_release.read",
+          "sha256": "5f2c091c9d006b7aca4fa6143450b0b38a480f9380771bb9a0bf6399e6d1702f"
+        }
+      ],
+      "typed_source_image": {
+        "applicable": false,
+        "raw_effective_type_safety_proved": false,
+        "role": "no buffer element load; original pointer/free domain retained"
+      },
+      "unary_role": "reallocation eligibility; not exclusive ownership",
+      "version": 3
+    },
+    "historical_identity_policy": "content-identical scientific components may be reused with their complete retained hypotheses/source/runtime/solver closure and actual historical method/checker/compiler identities; no old record is relabeled current",
+    "positive_conjunctions": [
+      {
+        "id": "positive.exit_image.frame.objects",
+        "sha256": "ab0c5241ed9efe02acc86596e7b57da7495a8203adc2fcc38d3461219cc34ce9"
+      },
+      {
+        "id": "positive.exit_image.frame.contents",
+        "sha256": "d681d6e8364730b3d0c8a2b3c8722d65740353276b7ef6f1227320bd379b48de"
+      },
+      {
+        "id": "positive.exit_image.frame.initialization",
+        "sha256": "394b5d26ddb156cafc0f835cf0b7a63dd0348ca43d3bc4e5bdee11a8e9746ea7"
+      },
+      {
+        "id": "positive.exit_image.private.receiver",
+        "sha256": "e4064ff2c8cde9d493292580fd0cfd60c4f9b6084735fa161f68082b8ffd19ad"
+      },
+      {
+        "id": "positive.exit_image.private.buffer",
+        "sha256": "fb2ca4612e753c7734245249802801c315ebab926e29e1f8285886a42d7cfca9"
+      },
+      {
+        "id": "positive.exit_image.receiver_access",
+        "sha256": "4bd35383359dde8dd3643f3ccfa7468a7625aec385e908e4036cb61bdbf680c3"
+      },
+      {
+        "id": "positive.exit_image.receiver_nonfreeable",
+        "sha256": "04857d00730e73eca6ba8026511c5be6e0812407648b66467d066682c35b55cd"
+      },
+      {
+        "id": "positive.exit_image.buffer_freeable",
+        "sha256": "d922364281d4d6f6fee82a648ba749aa1ed6aed870ba2ca2fc71a272dcb61875"
+      },
+      {
+        "id": "positive.exit_image.integer.access",
+        "sha256": "bdb42493194522f53d81247715ecfb82a1330a8cd25b3dc9a77ccf5b661faaf0"
+      },
+      {
+        "id": "positive.exit_image.integer.initialization",
+        "sha256": "539e236b6e3a5e3d5053a58ace5db9dcf3a7b49c4383514d1bcd14fd314030d6"
+      },
+      {
+        "id": "positive.exit_image.integer.integer",
+        "sha256": "b837b83f3f96e0965d17a38eb55e1fe14c20c69f8ef8e2cd114375776abe55dc"
+      },
+      {
+        "id": "positive.exit_image.integer.bounds",
+        "sha256": "df99fae7264eea78e8a4c75a8e6051670aa42505d4bf7306d3ed776c00dd9ddd"
+      },
+      {
+        "id": "positive.exit_image.filled.initialization",
+        "sha256": "4f2470b3e415f5c579d9a42bea67c7f15d48c9048f3125ae0617dbef03e51f59"
+      },
+      {
+        "id": "positive.exit_image.filled.value",
+        "sha256": "b7b097be4c51d86c0a1a8923fe189da9c94a3a79c714544159a0c4816ba2988a"
+      },
+      {
+        "id": "positive.cleanup.scalar",
+        "sha256": "79551c09dd1c62c5e6b3b330e047c095ecaaaa3e1e44259e34ca07687fae38ce"
+      },
+      {
+        "id": "positive.cleanup.frame.objects",
+        "sha256": "0f43153902e308df2731892d97298ea722d45f19925174417ac387cfa6fb5c73"
+      },
+      {
+        "id": "positive.cleanup.frame.contents",
+        "sha256": "002cf014ffa3e223f6b249d1222be4755facced102eb0928b3966a97d343516a"
+      },
+      {
+        "id": "positive.cleanup.frame.initialization",
+        "sha256": "fcf2ee68fe4b08223286e9842f4626969fa217a1134ec09977d54a8e74ffadd3"
+      },
+      {
+        "id": "positive.cleanup.observes.objects",
+        "sha256": "6a567722b3e35d637f60c4c5d0b930c5e03e979284fdf8cef7f3fdf5eae33138"
+      },
+      {
+        "id": "positive.cleanup.observes.contents",
+        "sha256": "8d31b8ecb18fa8e33fac9d64e806864644eb6964f0265cf3b80732dd3ece327c"
+      },
+      {
+        "id": "positive.cleanup.observes.initialization",
+        "sha256": "dca94410e7694d4fad7c87194a586ef15f01c9bea8bd6d3cf3dfd1ed45030a4e"
+      },
+      {
+        "id": "positive.cleanup.receiver_dead",
+        "sha256": "01079234e1e307d6dc7418586e30689b665cf5ef5bc8c00fc26feb631f80fdf0"
+      },
+      {
+        "id": "positive.cleanup.buffer_dead",
+        "sha256": "fc0fdfc4de619109c1583e6d8926a08589d70f88e1b4231e31cd317025baf7ea"
+      }
+    ],
+    "private_frame": {
+      "checker": {
+        "id": "vector-private-lifetime-frame-1",
+        "sha256": "d821607eba3ac35dbbc212f141c372faf0ed947d56805a612bcc4270e3ab844d"
+      },
+      "current_proof_record_admitted": false,
+      "required_targets": [
+        {
+          "id": "entry.reflexive",
+          "sha256": "5998b73632c81c97aeaa2cf383315be526a94570f248dca029fb79447e871f78"
+        },
+        {
+          "id": "automatic.frame",
+          "sha256": "6324aed8153be9f5a7dda9b66a5d72a78c53b0228a9ed40a68327acdef8b0571"
+        },
+        {
+          "id": "allocation.frame",
+          "sha256": "dadf3cf983f34461dcb084c0bf88de22cb7bf3409ba7e0cbb8b50febcdc7e489"
+        },
+        {
+          "id": "integer_store.frame",
+          "sha256": "8b22188dcff983758ad4a738bd95638623454e5c9cf777babaa3f931fcc558e0"
+        },
+        {
+          "id": "pointer_store.frame",
+          "sha256": "be07d38896958af227b41eda58cf677fa4da599aab3b7a7c13de423be98b481a"
+        },
+        {
+          "id": "release.frame",
+          "sha256": "dd64ff3d4f99544ed3e206e48a426a468757239f5c8a44d1800cdc642652e810"
+        },
+        {
+          "id": "automatic_end.frame",
+          "sha256": "aede762faf9c388a1525d9bfef95a69814908ca5ce2e81101a34c6922d29e703"
+        },
+        {
+          "id": "cleanup.observation",
+          "sha256": "8b0041e29c2a2cff5cfccea2c0ff47d9c705f6d6a21801f5c7e2c1ffcf45bdb6"
+        },
+        {
+          "id": "cleanup.exists_scalar",
+          "sha256": "3862ad897bdaa760a0a78e97cf2752daaba13e747d134c5cd8aad4395fa5bebb"
+        }
+      ]
+    },
+    "unchanged_gluing": [
+      {
+        "goal": "t25_closed_receiver_entry",
+        "id": "receiver.entry",
+        "role": "unchanged complete source duty; exact accepted evidence required before composition",
+        "sha256": "e2a209ecae6c0e6f0ee148a6f698ad4a89b117486042d3a775a0179da5bb84da"
+      },
+      {
+        "goal": "t25_closed_constructor_frame",
+        "id": "constructor.frame",
+        "role": "unchanged complete source duty; exact accepted evidence required before composition",
+        "sha256": "11e25f8df22cb8fb36e9cb86f37c62bcb72ae8022a23a5cd57c4d68d49cdbd6e"
+      },
+      {
+        "goal": "t25_closed_buffer_identity",
+        "id": "buffer.identity",
+        "role": "unchanged complete source duty; exact accepted evidence required before composition",
+        "sha256": "1fdf5472d4fa6c932a19cdd8aa0f872588bb849137b7530987a526d4d8070338"
+      },
+      {
+        "goal": "t25_closed_zero_cleanup",
+        "id": "zero.cleanup",
+        "role": "unchanged complete source duty; exact accepted evidence required before composition",
+        "sha256": "fc17fbcb8761d8d4c67cde988cba3e0af0528d6cf5fda679adbde5f0e56835a5"
+      }
+    ]
+  },
+  "source_admission": false,
+  "source_events": [
+    {
+      "event": "automatic declaration",
+      "lowered_source": {
+        "begin": 6110,
+        "end": 6127,
+        "sha256": "19963b79f76424a490ac2c7bd56e88b8160dd4982baf734fba692aecc06d0d74"
+      },
+      "reachable_on_normal_return": true
+    },
+    {
+      "event": "constructor",
+      "lowered_source": {
+        "begin": 6130,
+        "end": 6187,
+        "sha256": "0777bd96121df46a7bf7ed4f89b1b95d8464d3708645647760cc871e90946859"
+      },
+      "reachable_on_normal_return": true
+    },
+    {
+      "event": "data capture",
+      "lowered_source": {
+        "begin": 6305,
+        "end": 6342,
+        "sha256": "bd32da59e0ef92b8160ca40482de49fc06b2dddb2a8739acf1498b3218f4fced"
+      },
+      "reachable_on_normal_return": true
+    },
+    {
+      "event": "reserve",
+      "lowered_source": {
+        "begin": 6460,
+        "end": 6505,
+        "sha256": "553f51115f35ff2ebbd887b96730d48fd50d9b4319318fd9a6af0a8d7c0c6f57"
+      },
+      "reachable_on_normal_return": true
+    },
+    {
+      "event": "guarded scalar capture",
+      "lowered_source": {
+        "begin": 6629,
+        "end": 6670,
+        "sha256": "4999cb071d27f755d77aa68977a9cb5e748cd194e088f2a59241556bb3b5fe87"
+      },
+      "reachable_on_normal_return": true
+    },
+    {
+      "event": "destructor",
+      "lowered_source": {
+        "begin": 6675,
+        "end": 6699,
+        "sha256": "4a5c7f3c22e99bacc8e73c10bb620f2a38b438d160dc8e602d6ba8e6f42cf56f"
+      },
+      "reachable_on_normal_return": true
+    },
+    {
+      "event": "return scalar",
+      "lowered_source": {
+        "begin": 6704,
+        "end": 6723,
+        "sha256": "371e7d00d3084b2fa5a6bc202c45e840ba72080cc72fa4a1a9572af7b7bbe354"
+      },
+      "reachable_on_normal_return": true
+    },
+    {
+      "event": "automatic lifetime end",
+      "lowered_source": {
+        "begin": 6927,
+        "end": 6928,
+        "sha256": "d10b36aa74a59bcf4a88185837f658afaf3646eff2bb16c3928d0e9335e945d2"
+      },
+      "reachable_on_normal_return": true,
+      "role": "source scope-end event to map; no dynamic-free permission or proof granted"
+    },
+    {
+      "event": "unreachable fallthrough destructor",
+      "lowered_source": {
+        "begin": 6845,
+        "end": 6869,
+        "sha256": "4a5c7f3c22e99bacc8e73c10bb620f2a38b438d160dc8e602d6ba8e6f42cf56f"
+      },
+      "reachable_on_normal_return": false
+    }
+  ],
+  "source_history": {
+    "basis": "exact begin_automatic prefix, unchanged initialization stores preserving next, actual allocator identity, and buffer.identity source duty",
+    "ownership_from_Typed_maps": false,
+    "positive_buffer": "not issued at caller entry and distinct from receiver",
+    "receiver": "not issued at caller entry"
+  },
+  "source_safety": {
+    "automatic_storage_availability": "normal source automatic-object entry provides a fresh aligned receiver extent; this is the checked source storage interpretation, not an extra caller requires clause",
+    "constructor_and_dtor_original_preconditions": "derived from source-created storage, complete constructor output and original allocator/freeable TCB; no caller premise is added",
+    "count_conversion": "nonnegative int to 64-bit unsigned is exact; byte multiplication and loop increment do not wrap",
+    "model_maximum_count": 4611686018427387903,
+    "null_plus_zero_used": false,
+    "positive_branch": "0 < n makes element zero in bounds; exact int-cell initialization/access/range and fill7 duties discharge the read",
+    "positive_count_bound": 2147483647,
+    "signed_count_from_original_requires": "0 <= n <= INT_MAX",
+    "zero_branch": "guard is false and no buffer pointer arithmetic or read is evaluated"
+  },
+  "source_typed_bridge_established": false,
+  "source_view": {
+    "caller_premises_added": [],
+    "cfg": {
+      "complete_lowered_body": {
+        "begin": 5995,
+        "end": 6927,
+        "sha256": "03c82b43f998c1205343bf05826158768f333d7d41ddc1996a24caa2a5d2238d"
+      },
+      "fallback": {
+        "event": "unreachable fallthrough destructor",
+        "lowered_source": {
+          "begin": 6845,
+          "end": 6869,
+          "sha256": "4a5c7f3c22e99bacc8e73c10bb620f2a38b438d160dc8e602d6ba8e6f42cf56f"
+        },
+        "reachable_on_normal_return": false
+      },
+      "fallback_reachable": false,
+      "reason": "exact canonical compound ends in unconditional scalar return",
+      "return": {
+        "event": "return scalar",
+        "lowered_source": {
+          "begin": 6704,
+          "end": 6723,
+          "sha256": "371e7d00d3084b2fa5a6bc202c45e840ba72080cc72fa4a1a9572af7b7bbe354"
+        },
+        "reachable_on_normal_return": true
+      },
+      "scalar_capture": {
+        "event": "guarded scalar capture",
+        "lowered_source": {
+          "begin": 6629,
+          "end": 6670,
+          "sha256": "4999cb071d27f755d77aa68977a9cb5e748cd194e088f2a59241556bb3b5fe87"
+        },
+        "reachable_on_normal_return": true
+      },
+      "terminal_destructor": {
+        "event": "destructor",
+        "lowered_source": {
+          "begin": 6675,
+          "end": 6699,
+          "sha256": "4a5c7f3c22e99bacc8e73c10bb620f2a38b438d160dc8e602d6ba8e6f42cf56f"
+        },
+        "reachable_on_normal_return": true
+      }
+    },
+    "checker": {
+      "id": "vector-closed-no-growth-view-1",
+      "sha256": "168f1634f18fc2833955fc292dea987f91ad0d4ed8a71a21e5fdca386a6612ba"
+    },
+    "constructor": {
+      "call_retained": true,
+      "current_body_proof_dependency_required": true,
+      "fresh_private_output": "pending source-defined allocation/fill/frame correspondence under the existing allocator TCB",
+      "model_sha256": "57cf2a6f3f9049f8edf41633f9ef60d0bb7c804e5ee937af796217a2a018c594",
+      "source_call": {
+        "event": "constructor",
+        "lowered_source": {
+          "begin": 6130,
+          "end": 6187,
+          "sha256": "0777bd96121df46a7bf7ed4f89b1b95d8464d3708645647760cc871e90946859"
+        },
+        "reachable_on_normal_return": true
+      }
+    },
+    "created": "2026-10-16 ET",
+    "current_proof_records_admitted": [],
+    "data": {
+      "body": "static int *std_vector_int_data(const std_vector_int *this) { return this->data; }",
+      "model_sha256": "ee4f867911135688f5b76932243b38aaff73a56d85ffeb24229725c7d4ec6f3f",
+      "original_precondition_retained_as_assertion": true,
+      "source_call": {
+        "event": "data capture",
+        "lowered_source": {
+          "begin": 6305,
+          "end": 6342,
+          "sha256": "bd32da59e0ef92b8160ca40482de49fc06b2dddb2a8739acf1498b3218f4fced"
+        },
+        "reachable_on_normal_return": true
+      }
+    },
+    "edits": [
+      {
+        "new": "/*@ assert swdb_closed_data_requires: std_vector_int_readable(&v); */\n  int *saved = v.data;",
+        "offset_in_preceding_view": 6981,
+        "old": "int *saved = std_vector_int_data(&v);"
+      },
+      {
+        "new": "/*@ assert swdb_closed_reserve_requires: std_vector_int_valid(&v) && (unsigned long)n <= ((size_t)PTRDIFF_MAX < SIZE_MAX / sizeof(int) ? (size_t)PTRDIFF_MAX : SIZE_MAX / sizeof(int)); */\n  /*@ assert swdb_reserve_no_growth: (unsigned long)n <= v.capacity; */\n  /* checked false reserve branch: the preceding ordinary assertion must be proved */",
+        "offset_in_preceding_view": 7191,
+        "old": "/*@ assert swdb_reserve_no_growth: (unsigned long)n <= v.capacity; */\n  if ((unsigned long)n > v.capacity) std_vector_int_grow(&v, (unsigned long)n);"
+      },
+      {
+        "new": "/*@ assert swdb_closed_dtor_repr_requires: std_vector_int_valid(&v); */\n    /* checked private terminal cleanup: release/freeable/frame duties remain in the source bridge */",
+        "offset_in_preceding_view": 7705,
+        "old": "std_vector_int_dtor(&v);"
+      },
+      {
+        "new": "/* certified unreachable fallback cleanup after unconditional scalar return */",
+        "offset_in_preceding_view": 8024,
+        "old": "std_vector_int_dtor(&v);"
+      }
+    ],
+    "formal_texts_sha256": "b81513aa3436dc35faf913700274bec17427b8ab88b05356b24c6c50501f3cdd",
+    "function": "vector_realloc_v3_no_growth",
+    "library_allocator_binding": {
+      "certificate_sha256": "6671573d49e88ac7d292f5c8e60c19d43149e84cc359faaf2d64a0a7e535057a",
+      "default_allocator": "source checker accepts only std::vector<int[,std::allocator<int>]>; canonical full-TU bindings",
+      "environment_boundary": "TU provenance does not attest a linked replacement-free allocator environment; no new absence-of-effects premise is inferred",
+      "existing_trusted_policy": [
+        "pinned standard library implements the modeled members as stated by the pinned model",
+        "allocation succeeds; existing allocator/deallocator fresh/freeable and frame contracts are trusted"
+      ],
+      "model": {
+        "id": "swdb-std-models-2",
+        "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+      },
+      "original_substitutions": [],
+      "required_before_launch": "fresh original-TU/header/compiler recheck and explicit existing allocator/library TCB scope"
+    },
+    "original_assigns": "assigns \\nothing;",
+    "original_lowering_inverse_equal": true,
+    "original_lowering_sha256": "7082d6fc081e23547bf792f8029277695b83d933913545f290f66353ee5841ec",
+    "proof_admission": "unsupported: source allocation/Typed/lifetime bridge, current constructor dependency and fresh complete ordinary proofs required",
+    "reserve": {
+      "branch_elimination_requires_fresh_valid_assertion": true,
+      "model_sha256": "bbb1ea332771898dba5a3b7e4e5e23fe0b916f325b22f213095c36285321421f",
+      "ordinary_false_branch_assertion": "swdb_reserve_no_growth",
+      "source_call": {
+        "event": "reserve",
+        "lowered_source": {
+          "begin": 6460,
+          "end": 6505,
+          "sha256": "553f51115f35ff2ebbd887b96730d48fd50d9b4319318fd9a6af0a8d7c0c6f57"
+        },
+        "reachable_on_normal_return": true
+      }
+    },
+    "source_typed_bridge_established": false,
+    "source_view": {
+      "address_coordinates": {
+        "address_identity_mapping": "pending injective source-local identity relation; no address-to-integer observation",
+        "buffer": {
+          "byte_alignment": 4,
+          "byte_stride": 4,
+          "element": "int32",
+          "typed_cell_stride": 1
+        },
+        "receiver": {
+          "byte_alignment": 8,
+          "byte_extent": 24,
+          "fields": [
+            {
+              "byte_offset": 0,
+              "field": "data",
+              "typed_cell_offset": 0
+            },
+            {
+              "byte_offset": 8,
+              "field": "size",
+              "typed_cell_offset": 1
+            },
+            {
+              "byte_offset": 16,
+              "field": "capacity",
+              "typed_cell_offset": 2
+            }
+          ],
+          "type": "std_vector_int",
+          "typed_cell_extent": 3
+        }
+      },
+      "caller_premises_added": [],
+      "check": {
+        "id": "vector-reallocation-source-view-1",
+        "sha256": "37aceab703350e4a25a3788afa88a35fa8f00d159ba409534cf2d1c387b9470b"
+      },
+      "current_proof_records_admitted": [],
+      "dependency_replacement_performed": false,
+      "formal_texts_sha256": "b81513aa3436dc35faf913700274bec17427b8ab88b05356b24c6c50501f3cdd",
+      "function": "vector_realloc_v3_no_growth",
+      "inverse_original_lowering_equal": true,
+      "original_lowering_sha256": "7082d6fc081e23547bf792f8029277695b83d933913545f290f66353ee5841ec",
+      "original_reserve_summary_imported": false,
+      "original_source_sha256": "1172e62dbff5076d25471285afcfa17927707dbe6fae121d9570109d39e62b57",
+      "pending": [
+        "actual generated Typed+Var task-term correspondence",
+        "type-directed address identity/layout, value and separate initialization relation",
+        "constructor fill, captured alias, cleanup and final incoming-frame proof",
+        "current qualified body dependency admission and complete public ordinary/smoke proof"
+      ],
+      "proof_admission": "unsupported: actual Typed+Var source/lifetime correspondence and current dependencies pending",
+      "reserve_inline": {
+        "model_branch": {
+          "begin": 3836,
+          "end": 3889,
+          "sha256": "d6c04b54d20453951cb18699013ea5ba9f06173de646f0524bb13154782041c5"
+        },
+        "model_source_sha256": "bbb1ea332771898dba5a3b7e4e5e23fe0b916f325b22f213095c36285321421f",
+        "original_call": "std_vector_int_reserve(&v, (unsigned long)n);",
+        "replacement": "/*@ assert swdb_reserve_no_growth: (unsigned long)n <= v.capacity; */\n  if ((unsigned long)n > v.capacity) std_vector_int_grow(&v, (unsigned long)n);",
+        "source_call": {
+          "begin": 6460,
+          "end": 6505,
+          "sha256": "553f51115f35ff2ebbd887b96730d48fd50d9b4319318fd9a6af0a8d7c0c6f57"
+        }
+      },
+      "runtime_bridge_proved": false,
+      "selected_runtime_requirements": {
+        "integer_model": "Machine",
+        "memory_model": "Typed",
+        "source_pins": [
+          {
+            "name": "MemTyped.ml",
+            "sha256": "ad0d3c4e8e568a09d47bb658767e5ba476cc9e957f16b14981370642c5e235b5"
+          },
+          {
+            "name": "MemVar.ml",
+            "sha256": "43b8979a169ccfb7c6e7183970a8d3022d27d410487f139b397073f06a7476f6"
+          },
+          {
+            "name": "MemLoader.ml",
+            "sha256": "b59407d1220f7c0871bc556aaebf4748e9229053463881467ca6a3da851c9fe8"
+          },
+          {
+            "name": "Ctypes.ml",
+            "sha256": "a9f2a2f05e9e4e7ecabfd1324bff52ebd74f382e0db0989dba246a5ebfee8bec"
+          },
+          {
+            "name": "Cint.ml",
+            "sha256": "3b2a00bb65f4c785265c2295c323459e3dce66bb6c82e3d70ff3a659a3660156"
+          },
+          {
+            "name": "Factory.ml",
+            "sha256": "d2f4da6cb7b2f4a674880f4760680e84fe0a1c58ece95d0f2ff889b7902efcc5"
+          }
+        ],
+        "status": "prospective requirement; actual selected runtime/task binding pending",
+        "variable_model": "Var"
+      },
+      "source_calls": [
+        {
+          "call": "ctor_count_value",
+          "source": {
+            "begin": 633,
+            "end": 671,
+            "sha256": "35c372980c4e014be8e2e74698a443c9b89b45d8ab9b9e89a5ed10fff9167f39"
+          },
+          "status": "pending"
+        },
+        {
+          "call": "data",
+          "source": {
+            "begin": 687,
+            "end": 695,
+            "sha256": "64409fe0d34fecc1b6d50a8de34b95455d9d55f125b00dc4da11c9a380f0abee"
+          },
+          "status": "pending"
+        },
+        {
+          "call": "reserve",
+          "source": {
+            "begin": 699,
+            "end": 724,
+            "sha256": "fc500967de42663e894dae58d9bfcc1a267e2b0e1dea9124516ec7503099b618"
+          },
+          "status": "pending"
+        },
+        {
+          "call": "dtor",
+          "source": {
+            "begin": 590,
+            "end": 756,
+            "sha256": "b28aedb24cec67cf7dfb2d6e9e0e8b79dcae1df29275d8d06d9d9a78dce0cf32"
+          },
+          "status": "pending"
+        }
+      ],
+      "source_lifetime": {
+        "allocation_origins_granted": [],
+        "domain_facts_assumed": [],
+        "events": [
+          {
+            "event": "automatic declaration",
+            "lowered_source": {
+              "begin": 6110,
+              "end": 6127,
+              "sha256": "19963b79f76424a490ac2c7bd56e88b8160dd4982baf734fba692aecc06d0d74"
+            },
+            "reachable_on_normal_return": true
+          },
+          {
+            "event": "constructor",
+            "lowered_source": {
+              "begin": 6130,
+              "end": 6187,
+              "sha256": "0777bd96121df46a7bf7ed4f89b1b95d8464d3708645647760cc871e90946859"
+            },
+            "reachable_on_normal_return": true
+          },
+          {
+            "event": "data capture",
+            "lowered_source": {
+              "begin": 6305,
+              "end": 6342,
+              "sha256": "bd32da59e0ef92b8160ca40482de49fc06b2dddb2a8739acf1498b3218f4fced"
+            },
+            "reachable_on_normal_return": true
+          },
+          {
+            "event": "reserve",
+            "lowered_source": {
+              "begin": 6460,
+              "end": 6505,
+              "sha256": "553f51115f35ff2ebbd887b96730d48fd50d9b4319318fd9a6af0a8d7c0c6f57"
+            },
+            "reachable_on_normal_return": true
+          },
+          {
+            "event": "guarded scalar capture",
+            "lowered_source": {
+              "begin": 6629,
+              "end": 6670,
+              "sha256": "4999cb071d27f755d77aa68977a9cb5e748cd194e088f2a59241556bb3b5fe87"
+            },
+            "reachable_on_normal_return": true
+          },
+          {
+            "event": "destructor",
+            "lowered_source": {
+              "begin": 6675,
+              "end": 6699,
+              "sha256": "4a5c7f3c22e99bacc8e73c10bb620f2a38b438d160dc8e602d6ba8e6f42cf56f"
+            },
+            "reachable_on_normal_return": true
+          },
+          {
+            "event": "return scalar",
+            "lowered_source": {
+              "begin": 6704,
+              "end": 6723,
+              "sha256": "371e7d00d3084b2fa5a6bc202c45e840ba72080cc72fa4a1a9572af7b7bbe354"
+            },
+            "reachable_on_normal_return": true
+          },
+          {
+            "event": "automatic lifetime end",
+            "lowered_source": {
+              "begin": 6927,
+              "end": 6928,
+              "sha256": "d10b36aa74a59bcf4a88185837f658afaf3646eff2bb16c3928d0e9335e945d2"
+            },
+            "reachable_on_normal_return": true,
+            "role": "source scope-end event to map; no dynamic-free permission or proof granted"
+          },
+          {
+            "event": "unreachable fallthrough destructor",
+            "lowered_source": {
+              "begin": 6845,
+              "end": 6869,
+              "sha256": "4a5c7f3c22e99bacc8e73c10bb620f2a38b438d160dc8e602d6ba8e6f42cf56f"
+            },
+            "reachable_on_normal_return": false
+          }
+        ],
+        "lowered_function": "vector_realloc_v3_no_growth",
+        "lowered_function_body": {
+          "begin": 5995,
+          "end": 6927,
+          "sha256": "03c82b43f998c1205343bf05826158768f333d7d41ddc1996a24caa2a5d2238d"
+        },
+        "normal_return_cleanup_count": 1,
+        "order": [
+          "automatic declaration",
+          "constructor",
+          "data capture",
+          "reserve",
+          "guarded scalar capture",
+          "destructor",
+          "return scalar",
+          "automatic lifetime end"
+        ],
+        "pending": [
+          "source-local storage/image and layout embedding",
+          "all caller/model/cleanup obligations",
+          "current dependency eligibility and actual proof/task closure"
+        ],
+        "raw_alias_rewritten": false,
+        "return_scalar_before_destruction": true,
+        "unreachable_fallthrough_cleanup_count": 1,
+        "verdict": "checked source order; semantic proof pending"
+      },
+      "unreachable_fallthrough_cleanup_retained": true,
+      "version": 1,
+      "view_sha256": "b69a72c9ff7be43de41825d474ca0558d43b779c175c736a8eb35a783056b9e8"
+    },
+    "terminal_cleanup": {
+      "body": "static void std_vector_int_dtor(std_vector_int *this) { swdb_free(this->data); }",
+      "freeable_duty": {
+        "native_wp_status": "WP33 does not implement freeable/fresh/dangling; no native proof claimed",
+        "origin": "existing successful fresh allocator; automatic receiver is not dynamically freeable",
+        "status": "pending source-allocation/lifetime bridge"
+      },
+      "incoming_observation": "complete identity, contents and initialization of every incoming live object",
+      "model_sha256": "1056f4f83c59a30941ec9417c36aada8eab4b62160087ae10315cd2ac9778317",
+      "noescape_duty": "closed source AST and complete lowering order; source-created identities still require the model/allocator bridge",
+      "original_precondition": "requires std_vector_int_valid(this) && (this->capacity == 0 || \\freeable(this->data));",
+      "private_frame": {
+        "id": "vector-private-lifetime-frame-1",
+        "sha256": "d821607eba3ac35dbbc212f141c372faf0ed947d56805a612bcc4270e3ab844d"
+      },
+      "required_mathematical_goals": [
+        "t25_private_entry_reflexive",
+        "t25_private_automatic_frame",
+        "t25_private_allocation_frame",
+        "t25_private_integer_store_frame",
+        "t25_private_pointer_store_frame",
+        "t25_private_release_frame",
+        "t25_private_automatic_end_frame",
+        "t25_private_cleanup_observation",
+        "t25_private_cleanup_exists_scalar"
+      ],
+      "scalar_capture_before_cleanup": true,
+      "source_call": {
+        "event": "destructor",
+        "lowered_source": {
+          "begin": 6675,
+          "end": 6699,
+          "sha256": "4a5c7f3c22e99bacc8e73c10bb620f2a38b438d160dc8e602d6ba8e6f42cf56f"
+        },
+        "reachable_on_normal_return": true
+      },
+      "transition": "Heap.end_automatic(Heap.release(now,buffer),receiver)"
+    },
+    "version": 1,
+    "view_sha256": "e97874959eaf6d9596e0ff32e25a55099c5c7f0c22f09ddda7b70723e69e03c8"
+  }
+}

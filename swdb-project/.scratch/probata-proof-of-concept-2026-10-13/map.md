@@ -11,18 +11,17 @@ source publication, guarded actual admissions, mbit10 lane coordination, and
 final synchronization. [Active execution](execution-20261016.md),
 [current ticket status](ticket-status-20261015.md), [resume](resume.md).
 
-Ticket 25 retains scoped acceptance for focused10, qualified grow61, reserve67
-and private-lifetime9. The six-duty producer has four Valid and two positive
-timeouts; complete cold audit preserves those outcomes. A reviewed 23-leaf
-conjunction decomposition is ready for publication/evaluation. Projected-C's
-17 native Valid goals retain the unadmitted constructor premise and original
-not-proven verdict; direct source effect/frame evidence remains in review.
+At 15:52 ET, ticket25 has scoped adoption of all 23 positive lifetime conjunction
+leaves plus four unchanged duties and prior mathematical profiles. Original
+compound timeout outcomes are preserved. Corrected source observation v3 passed
+both review axes; exact scientific binding/public integration remain pending.
+A mixed int/pointer pair workflow is reviewed, with actual evaluation pending.
 
-Ticket 28 has reviewed initialized SourceLoc/IR and trace fixture-bound fixes;
-complete retained-observer replay passes. Fresh formal runs remain pending.
-Eleven whole-interface value families and binder V3 are reviewed; native86 awaits
-matching actual guards and lane admission. Focused regressions completed 80
-passed. No current 0.2/full-interface or full-ticket acceptance is claimed.
+Ticket28 initialized V5 completed with correct result proven and false result
+not_proven, pending complete cold audit. Reviewed trace V4 is active after the
+retained V3 pretest namespace refusal. Native86 passed both exact sanitizer
+censuses; cold audit and whole-interface new-version integration continue.
+Focused: 80 passed; full defaults/final reviews and all final acceptance remain open.
 
 Read the [saved pause handoff](PAUSED-HANDOFF-20261016.md) for recovery evidence.
 Its stop instruction is superseded for these assigned tickets. All historical

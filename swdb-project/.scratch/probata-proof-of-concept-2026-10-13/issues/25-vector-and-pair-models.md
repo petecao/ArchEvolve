@@ -10,22 +10,19 @@ Updated: 2026-10-16 ET (active implementation under renewed user approval)
 
 **What to build:** Candidate artifacts that use `std::vector<T>` (not `bool`) or `std::pair` can be proven, and no verifier ever runs libc++ internals. Each type is modeled: a C struct (for the vector: data, size, capacity) plus one C function per member, each with an ACSL contract citing the standard's clauses (`[vector]` for the vector). Vector members: construction by count, by count and value, copy, move; destruction; `operator[]`, `at`, `data`, `size`, `empty`; `begin`, `end` and range-for; `push_back`, `resize`, `reserve`, `clear`, `swap`. The C lowering tool lowers each use to a model call; WP reads the ACSL; 22's translator turns the same contracts into SAW overrides. The model catches what tests miss. Growth frees the old buffer, so a stale pointer or iterator fails the proof. `at` out of range is a proof obligation. Growing a shared vector outside `critical` is stated here as a sharing-class obligation of the model. Its tests live elsewhere: the WP obligation in 45 — Per-thread lowering (it reads not proven, since WP never refutes), and the refutation at threads ≥ 2 in 46 — CIVL adapter. Proof records gain two assumption entries: "the pinned standard library implements the modeled members as the standard says" (trusted tool) and "allocation succeeds".
 
-## Current resumed checkpoint — 2026-10-16 14:40 ET
+## Current resumed checkpoint — 2026-10-16 15:52 ET
 
-Qualified grow61/reserve67 and nine private-lifetime mathematical duties have
-independent cold audits and scoped root decisions. They do not establish the
-original/default member bodies or a C++ caller. Closed-view source `615ddf50`
-and six source-bound constructor/cleanup gluing duties at `fb197c5d` are reviewed,
-pushed and independently read back. The projected-C diagnostic produced 17
-ordinary native Valid goals; its registered constructor-smoke metadata is being
-reconciled passively while the original not-proven outcome remains unchanged.
-Current constructor/destructor dependencies, explicit allocator/model TCB and
-source/Typed correspondence remain pending; caller admission still refuses.
-Full ticket acceptance and default/other-type/pair/bounded breadth remain active.
-Ticket 22 records the user-accepted A2 replacement of SAW by CBMC on the C lowering,
-bounded native C/C++ agreement and C++ counterexample replay; the historical SAW
-wording below is interpreted through that accepted translation, not new SAW work.
-See [active execution](../execution-20261016.md) for current coordination.
+All 23 positive lifetime conjunction leaves passed full independent cold audit
+and scoped adoption, together with four unchanged gluing duties; the two old
+compound native timeouts remain unchanged. Corrected private source observation
+v3 passed Standards and Spec, retaining original24 ordinary / 9 smoke / 13 frame duties,
+all private administrative state and live-memory/dead-history distinctions.
+The exact 82-target scientific binder and source/public admission are next.
+A mixed int/pointer pair workflow and shared builders passed source readiness;
+actual compiler/native/WP/CBMC runs remain pending. Full model-version/ownership,
+remaining-member/type and caller breadth still prevent ticket completion.
+Ticket22's user-accepted A2 replaces SAW with CBMC C lowering plus bounded C/C++
+agreement and C++ counterexample replay. See active execution for current lanes.
 
 ## Active implementation — 2026-10-15 21:14 ET
 

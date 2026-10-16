@@ -1,0 +1,109 @@
+{
+  "boundary": "Concrete exact-source operational footprint/frame derivation with both branches and actual release/scope end. Complete constructor/destructor/private-frame/gluing/scalar scientific duties and independent interpretation review remain required. Native17 is supplemental; no Typed global encoding, ownership or satisfiability claim.",
+  "caller_acceptance": false,
+  "canonical_files": [
+    {
+      "bytes": 55474,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/inert-reviewed-working-source/manifest.json",
+      "relative": "manifest.json",
+      "sha256": "9024cad90c086249d07f522b8fea2c2f243bcb9bfe8a8799acca0861bc0ed7a3"
+    },
+    {
+      "bytes": 6929,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/inert-reviewed-working-source/sources/original-caller.c",
+      "relative": "sources/original-caller.c",
+      "sha256": "7082d6fc081e23547bf792f8029277695b83d933913545f290f66353ee5841ec"
+    },
+    {
+      "bytes": 2724,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/inert-reviewed-working-source/sources/original-constructor.c",
+      "relative": "sources/original-constructor.c",
+      "sha256": "57cf2a6f3f9049f8edf41633f9ef60d0bb7c804e5ee937af796217a2a018c594"
+    },
+    {
+      "bytes": 2124,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/inert-reviewed-working-source/sources/original-destructor.c",
+      "relative": "sources/original-destructor.c",
+      "sha256": "1056f4f83c59a30941ec9417c36aada8eab4b62160087ae10315cd2ac9778317"
+    },
+    {
+      "bytes": 757,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/inert-reviewed-working-source/sources/original.cc",
+      "relative": "sources/original.cc",
+      "sha256": "1172e62dbff5076d25471285afcfa17927707dbe6fae121d9570109d39e62b57"
+    },
+    {
+      "bytes": 3631,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/inert-reviewed-working-source/sources/qualified-constructor.c",
+      "relative": "sources/qualified-constructor.c",
+      "sha256": "a20cb8431cc975b034954666967398d8466745cd0bab9a92f45f60c19a837a1a"
+    },
+    {
+      "bytes": 2987,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/inert-reviewed-working-source/sources/qualified-destructor.c",
+      "relative": "sources/qualified-destructor.c",
+      "sha256": "9ca9409923f9d39b4e35a0690c70256af56bfd1c37f1e389e406f615b0164e7f"
+    },
+    {
+      "bytes": 8386,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/inert-reviewed-working-source/theory/heap_reallocation.mlw",
+      "relative": "theory/heap_reallocation.mlw",
+      "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5"
+    }
+  ],
+  "classification": "UNADMITTED_EXACT_SOURCE_EFFECT_OBSERVATION_DERIVATION",
+  "compiler_solver_verifier_runs": 0,
+  "created": "2026-10-16 ET",
+  "module": {
+    "bytes": 14251,
+    "path": "swdb-project/swdb/vector_reallocation_closed_evidence.py",
+    "sha256": "02f843b1670f5c7d1d07aa32cf2d26357d3b7b60765efc56d26273353c9fca61"
+  },
+  "public_tests": {
+    "bytes": 4344,
+    "path": "swdb-project/tests/test_vector_reallocation_closed_evidence.py",
+    "sha256": "eeb7e27a3715e96f389afeaa6711704e32ea47389d9dfb321e0166e3e3897380"
+  },
+  "pure_controls": [
+    {
+      "bytes": 5090,
+      "failed": 2,
+      "passed": 0,
+      "path": "/private/tmp/probata-resume-20261016-t25-closed-source-evidence-red/result.json",
+      "sha256": "3bf6831836bf57601dd7d43e6670b4297d403224eb3810cceeff5b2db6484b31",
+      "stage": "red"
+    },
+    {
+      "bytes": 3262,
+      "failed": 0,
+      "passed": 2,
+      "path": "/private/tmp/probata-resume-20261016-t25-closed-source-evidence-green-v1/result.json",
+      "sha256": "ca0d461ce6cd6672ab105308523dc32558ae5a9e7ad1d79d2622ca9234ea0afe",
+      "stage": "green-v1"
+    },
+    {
+      "bytes": 3262,
+      "failed": 0,
+      "passed": 2,
+      "path": "/private/tmp/probata-resume-20261016-t25-closed-source-evidence-green-v2/result.json",
+      "sha256": "f50c8a54b39d99b97afb37099cf9b4cb42deb2b9e087f8e2c8f4e0df7bae77eb",
+      "stage": "green-v2"
+    },
+    {
+      "bytes": 3262,
+      "failed": 0,
+      "passed": 2,
+      "path": "/private/tmp/probata-resume-20261016-t25-closed-source-evidence-green-v3/result.json",
+      "sha256": "02c4d5bdd06b3fe39d3f5fe265dfdcfac6083db190af63be3d4297837c5b7a85",
+      "stage": "green-v3"
+    }
+  ],
+  "pure_harness": {
+    "bytes": 5077,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-prefix10-resume-20261016/run_pure_closed_evidence.py",
+    "sha256": "2d0e2bf882389ac4a4594d4e241423cc0dc1339518424382c5b973f3ad905100"
+  },
+  "scientific_dependency_evidence_validated": false,
+  "source_admission": false,
+  "source_rule_review_required": true
+}

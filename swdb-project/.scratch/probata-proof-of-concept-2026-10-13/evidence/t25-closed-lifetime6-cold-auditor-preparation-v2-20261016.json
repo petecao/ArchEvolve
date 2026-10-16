@@ -1,0 +1,43 @@
+{
+  "acceptance": false,
+  "auditor": {
+    "bytes": 43198,
+    "path": "prototype/25-closed-lifetime-glue-20261016/cold-auditor-v2.py",
+    "sha256": "348033757aeb332b50f3efcf0b65d58364206eae76e5c56aa20a1aa660cbdeb5"
+  },
+  "author_remote_execution": false,
+  "classification": "INERT_PASSIVE_GIT_PIPE_GUARD_CORRECTION",
+  "controls_external_processes_executed": 0,
+  "created": "2026-10-16 ET",
+  "exact_inverse_to_v1": true,
+  "local_read_only_reproduction": {
+    "classification": "Python subprocess stdin pipe wrapper; no filesystem write",
+    "event": "open",
+    "filename": 4,
+    "filename_type": "int",
+    "flags": 16778753,
+    "is_fifo": true,
+    "mode": "w"
+  },
+  "previous_actual_refusal": {
+    "bytes": 164,
+    "checks_before_refusal": 814,
+    "error": "remote writes forbidden",
+    "sha256": "2b45e56f5c661ff0125e2a28a003772c2138c749d3b9968fcd241130d4428ceb"
+  },
+  "previous_auditor_sha256": "4a4182d08fc7d72e2aec7f201c0e8ef89219c534eeebe44ed89c0389ac4bd418",
+  "scope": "Only omit unused Git stdin and permit an integer FIFO descriptor during fixed read-only Git; all pathname/regular-file writes remain refused. No scientific/source/formula/proof policy changes.",
+  "scripted_boundary_controls": [
+    "inactive_fifo_write_refused",
+    "active_git_fifo_write_allowed",
+    "active_git_regular_fd_write_refused",
+    "active_git_path_write_refused",
+    "outside_path_write_refused",
+    "integer_flags_write_refused",
+    "ordinary_read_allowed",
+    "descriptor_failure_preserved",
+    "unused_git_stdin_not_opened",
+    "required_git_stdin_only_scoped",
+    "git_scope_reset_preserves_exception"
+  ]
+}

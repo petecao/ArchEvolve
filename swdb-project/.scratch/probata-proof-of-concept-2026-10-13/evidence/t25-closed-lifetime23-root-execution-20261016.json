@@ -1,0 +1,1174 @@
+{
+  "created": "2026-10-16 ET",
+  "created_utc": "2026-10-16T19:38:30.937766+00:00",
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1",
+  "source_commit": "04af74c121a733589fbe1a2087ad602deaef598b",
+  "actual": {
+    "lane.json": {
+      "socket_lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "command": [
+          "timeout",
+          "--signal=TERM",
+          "--kill-after=60",
+          "4620",
+          "bash",
+          "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/run.sh"
+        ],
+        "cpus_allowed_list": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63",
+        "ended_utc": "2026-10-16T19:37:33Z",
+        "exit_code": 0,
+        "host": "mbit10",
+        "job": "probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1",
+        "lease_generation": 633,
+        "lease_name": "mbit10-evaluation-node1",
+        "load1_at_start": 0.08,
+        "load1_max": 32,
+        "node": 1,
+        "numa_memory_policy": "bind:1",
+        "numactl": "--cpunodebind=1 --membind=1",
+        "preregistration_sha256": null,
+        "started_utc": "2026-10-16T19:34:44Z"
+      }
+    },
+    "outer-resources.json": {
+      "exit_code": 0,
+      "peak_rss_bytes": 556703744,
+      "out_of_memory": false,
+      "timed_out": false,
+      "wall_seconds": 168.33522147126496,
+      "cpu_seconds": 245.91616299999998
+    },
+    "resources.json": {
+      "cpu_seconds": 211.860772,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 503226368,
+      "timed_out": false,
+      "wall_seconds": 166.28572520520538
+    },
+    "source-after.json": {
+      "commit": "04af74c121a733589fbe1a2087ad602deaef598b",
+      "source_unchanged": true,
+      "tracked_changes": ""
+    }
+  },
+  "producer": {
+    "all_23_producer_proven": true,
+    "body_acceptance": false,
+    "caller_acceptance": false,
+    "classification": "23 fresh mathematical producer outcomes retained. Independent complete source/runtime/resource/task/hypothesis review required; no constructor/destructor dependency, source/Typed/body/caller/public-record acceptance.",
+    "created": "2026-10-16 ET",
+    "elapsed_seconds": 165.10174051020294,
+    "independent_task_hypothesis_review_pending": true,
+    "producer_complete": true,
+    "proof_acceptance": false,
+    "public_proof_record_created": false,
+    "raw_bytes": 25354927,
+    "scope": "Standalone 23 same-antecedent source-bound constructor/private-frame/lifetime gluing mathematical duties. Actual fresh original caller lowering/provenance and public prepare/check, normal complete WP flags/portfolio/native reports. No imported body/private-frame theorem, model/View or source/Typed/caller admission, universal setup attestation or public record.",
+    "source_after_clean": true,
+    "source_commit": "04af74c121a733589fbe1a2087ad602deaef598b",
+    "source_typed_bridge_established": false,
+    "unexecuted": [],
+    "universal_proof_setup_attested": false,
+    "within_profile_budget": true
+  },
+  "runs": [
+    {
+      "id": "positive.exit_image.frame.objects",
+      "input": {
+        "bytes": 6021,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.exit_image.frame.objects/wp_input.c",
+        "sha256": "ab0c5241ed9efe02acc86596e7b57da7495a8203adc2fcc38d3461219cc34ce9"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 163553280,
+        "timed_out": false,
+        "wall_seconds": 1.0642598131671548
+      },
+      "outcome": {
+        "assumptions": [],
+        "failure_class": null,
+        "goals": [
+          {
+            "function": null,
+            "goal": "typed_real_check_lemma_t25_closed_parts_positive_exit_image_frame",
+            "property": "check_lemma_t25_closed_parts_positive_exit_image_frame_objects",
+            "seconds": 0.101,
+            "smoke": false,
+            "solver": "alt-ergo",
+            "source": "wp_json",
+            "status": "valid"
+          }
+        ],
+        "reading": {
+          "check": {
+            "sha256": "9c298b4be09eb13d48beef3716dff1b9ed27cf3101c3667b1412c82b9e4e3d39",
+            "version": "1"
+          },
+          "verdict": "proven"
+        },
+        "unproven": [],
+        "verdict": "proven",
+        "why": "every generated goal passed; every Extern belongs to a pinned contract"
+      },
+      "census": {
+        "bytes": 3476,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.exit_image.frame.objects/task-census.json",
+        "sha256": "5e96c5fe9361f31fdba3174eed983c57ab0737b2a6af1cf1a927c58c4a8c266b"
+      }
+    },
+    {
+      "id": "positive.exit_image.frame.contents",
+      "input": {
+        "bytes": 6080,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.exit_image.frame.contents/wp_input.c",
+        "sha256": "d681d6e8364730b3d0c8a2b3c8722d65740353276b7ef6f1227320bd379b48de"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 163557376,
+        "timed_out": false,
+        "wall_seconds": 1.0702549563720822
+      },
+      "outcome": {
+        "assumptions": [],
+        "failure_class": null,
+        "goals": [
+          {
+            "function": null,
+            "goal": "typed_real_check_lemma_t25_closed_parts_positive_exit_image_frame",
+            "property": "check_lemma_t25_closed_parts_positive_exit_image_frame_contents",
+            "seconds": 0.11,
+            "smoke": false,
+            "solver": "alt-ergo",
+            "source": "wp_json",
+            "status": "valid"
+          }
+        ],
+        "reading": {
+          "check": {
+            "sha256": "9c298b4be09eb13d48beef3716dff1b9ed27cf3101c3667b1412c82b9e4e3d39",
+            "version": "1"
+          },
+          "verdict": "proven"
+        },
+        "unproven": [],
+        "verdict": "proven",
+        "why": "every generated goal passed; every Extern belongs to a pinned contract"
+      },
+      "census": {
+        "bytes": 3479,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.exit_image.frame.contents/task-census.json",
+        "sha256": "7d1163782e012644955bf5c5390c0be9f57768f8e4d52b578645d7b503ba0a2f"
+      }
+    },
+    {
+      "id": "positive.exit_image.frame.initialization",
+      "input": {
+        "bytes": 6102,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.exit_image.frame.initialization/wp_input.c",
+        "sha256": "394b5d26ddb156cafc0f835cf0b7a63dd0348ca43d3bc4e5bdee11a8e9746ea7"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 163561472,
+        "timed_out": false,
+        "wall_seconds": 1.065050478093326
+      },
+      "outcome": {
+        "assumptions": [],
+        "failure_class": null,
+        "goals": [
+          {
+            "function": null,
+            "goal": "typed_real_check_lemma_t25_closed_parts_positive_exit_image_frame",
+            "property": "check_lemma_t25_closed_parts_positive_exit_image_frame_initialization",
+            "seconds": 0.0908,
+            "smoke": false,
+            "solver": "alt-ergo",
+            "source": "wp_json",
+            "status": "valid"
+          }
+        ],
+        "reading": {
+          "check": {
+            "sha256": "9c298b4be09eb13d48beef3716dff1b9ed27cf3101c3667b1412c82b9e4e3d39",
+            "version": "1"
+          },
+          "verdict": "proven"
+        },
+        "unproven": [],
+        "verdict": "proven",
+        "why": "every generated goal passed; every Extern belongs to a pinned contract"
+      },
+      "census": {
+        "bytes": 3497,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.exit_image.frame.initialization/task-census.json",
+        "sha256": "18f4c8e5e1ee94b7d50c6e7bee9c2b2a6b4559a009e41f420cf0ec909975cef3"
+      }
+    },
+    {
+      "id": "positive.exit_image.private.receiver",
+      "input": {
+        "bytes": 5931,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.exit_image.private.receiver/wp_input.c",
+        "sha256": "e4064ff2c8cde9d493292580fd0cfd60c4f9b6084735fa161f68082b8ffd19ad"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 118382592,
+        "timed_out": false,
+        "wall_seconds": 0.6416148105636239
+      },
+      "outcome": {
+        "assumptions": [],
+        "failure_class": null,
+        "goals": [
+          {
+            "function": null,
+            "goal": "typed_real_check_lemma_t25_closed_parts_positive_exit_image_private",
+            "property": "check_lemma_t25_closed_parts_positive_exit_image_private_receiver",
+            "seconds": 0.0,
+            "smoke": false,
+            "solver": "qed",
+            "source": "wp_json",
+            "status": "valid"
+          }
+        ],
+        "reading": {
+          "check": {
+            "sha256": "9c298b4be09eb13d48beef3716dff1b9ed27cf3101c3667b1412c82b9e4e3d39",
+            "version": "1"
+          },
+          "verdict": "proven"
+        },
+        "unproven": [],
+        "verdict": "proven",
+        "why": "every generated goal passed; every Extern belongs to a pinned contract"
+      },
+      "census": {
+        "bytes": 1309,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.exit_image.private.receiver/task-census.json",
+        "sha256": "b0d8c3a8149780cfea5f1172da0977190a92cd5ef67d1159b971a8928746290b"
+      }
+    },
+    {
+      "id": "positive.exit_image.private.buffer",
+      "input": {
+        "bytes": 5953,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.exit_image.private.buffer/wp_input.c",
+        "sha256": "fb2ca4612e753c7734245249802801c315ebab926e29e1f8285886a42d7cfca9"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 136818688,
+        "timed_out": false,
+        "wall_seconds": 0.9192900527268648
+      },
+      "outcome": {
+        "assumptions": [],
+        "failure_class": null,
+        "goals": [
+          {
+            "function": null,
+            "goal": "typed_real_check_lemma_t25_closed_parts_positive_exit_image_private",
+            "property": "check_lemma_t25_closed_parts_positive_exit_image_private_buffer",
+            "seconds": 0.0428,
+            "smoke": false,
+            "solver": "alt-ergo",
+            "source": "wp_json",
+            "status": "valid"
+          }
+        ],
+        "reading": {
+          "check": {
+            "sha256": "9c298b4be09eb13d48beef3716dff1b9ed27cf3101c3667b1412c82b9e4e3d39",
+            "version": "1"
+          },
+          "verdict": "proven"
+        },
+        "unproven": [],
+        "verdict": "proven",
+        "why": "every generated goal passed; every Extern belongs to a pinned contract"
+      },
+      "census": {
+        "bytes": 3274,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.exit_image.private.buffer/task-census.json",
+        "sha256": "ec1be04f42b4c8464a00cd097dc93fdd976b84a8d98059aa6d47c2b9bca27178"
+      }
+    },
+    {
+      "id": "positive.exit_image.receiver_access",
+      "input": {
+        "bytes": 5968,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.exit_image.receiver_access/wp_input.c",
+        "sha256": "4bd35383359dde8dd3643f3ccfa7468a7625aec385e908e4036cb61bdbf680c3"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 136916992,
+        "timed_out": false,
+        "wall_seconds": 0.9217438362538815
+      },
+      "outcome": {
+        "assumptions": [],
+        "failure_class": null,
+        "goals": [
+          {
+            "function": null,
+            "goal": "typed_real_check_lemma_t25_closed_parts_positive_exit_image_receiver",
+            "property": "check_lemma_t25_closed_parts_positive_exit_image_receiver_access",
+            "seconds": 0.0593,
+            "smoke": false,
+            "solver": "alt-ergo",
+            "source": "wp_json",
+            "status": "valid"
+          }
+        ],
+        "reading": {
+          "check": {
+            "sha256": "9c298b4be09eb13d48beef3716dff1b9ed27cf3101c3667b1412c82b9e4e3d39",
+            "version": "1"
+          },
+          "verdict": "proven"
+        },
+        "unproven": [],
+        "verdict": "proven",
+        "why": "every generated goal passed; every Extern belongs to a pinned contract"
+      },
+      "census": {
+        "bytes": 3488,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.exit_image.receiver_access/task-census.json",
+        "sha256": "b929e495a04c3026d9d406b2669802ac9a209181ee68405d203469474bab040f"
+      }
+    },
+    {
+      "id": "positive.exit_image.receiver_nonfreeable",
+      "input": {
+        "bytes": 5965,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.exit_image.receiver_nonfreeable/wp_input.c",
+        "sha256": "04857d00730e73eca6ba8026511c5be6e0812407648b66467d066682c35b55cd"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 136818688,
+        "timed_out": false,
+        "wall_seconds": 1.0903962664306164
+      },
+      "outcome": {
+        "assumptions": [],
+        "failure_class": null,
+        "goals": [
+          {
+            "function": null,
+            "goal": "typed_real_check_lemma_t25_closed_parts_positive_exit_image_receiver",
+            "property": "check_lemma_t25_closed_parts_positive_exit_image_receiver_nonfreeable",
+            "seconds": 0.0478,
+            "smoke": false,
+            "solver": "alt-ergo",
+            "source": "wp_json",
+            "status": "valid"
+          }
+        ],
+        "reading": {
+          "check": {
+            "sha256": "9c298b4be09eb13d48beef3716dff1b9ed27cf3101c3667b1412c82b9e4e3d39",
+            "version": "1"
+          },
+          "verdict": "proven"
+        },
+        "unproven": [],
+        "verdict": "proven",
+        "why": "every generated goal passed; every Extern belongs to a pinned contract"
+      },
+      "census": {
+        "bytes": 3503,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.exit_image.receiver_nonfreeable/task-census.json",
+        "sha256": "cba19d1e5d6a06ce43fb0594efd952d6f39a06deea2068f690c186aa4c6403db"
+      }
+    },
+    {
+      "id": "positive.exit_image.buffer_freeable",
+      "input": {
+        "bytes": 5959,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.exit_image.buffer_freeable/wp_input.c",
+        "sha256": "d922364281d4d6f6fee82a648ba749aa1ed6aed870ba2ca2fc71a272dcb61875"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 135999488,
+        "timed_out": false,
+        "wall_seconds": 1.1263032257556915
+      },
+      "outcome": {
+        "assumptions": [],
+        "failure_class": null,
+        "goals": [
+          {
+            "function": null,
+            "goal": "typed_real_check_lemma_t25_closed_parts_positive_exit_image_buffer",
+            "property": "check_lemma_t25_closed_parts_positive_exit_image_buffer_freeable",
+            "seconds": 0.0311,
+            "smoke": false,
+            "solver": "alt-ergo",
+            "source": "wp_json",
+            "status": "valid"
+          }
+        ],
+        "reading": {
+          "check": {
+            "sha256": "9c298b4be09eb13d48beef3716dff1b9ed27cf3101c3667b1412c82b9e4e3d39",
+            "version": "1"
+          },
+          "verdict": "proven"
+        },
+        "unproven": [],
+        "verdict": "proven",
+        "why": "every generated goal passed; every Extern belongs to a pinned contract"
+      },
+      "census": {
+        "bytes": 3484,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.exit_image.buffer_freeable/task-census.json",
+        "sha256": "e4671c4dededb37574cd5685beff9efb27e805cbe5ba298422cd20d1e0274bac"
+      }
+    },
+    {
+      "id": "positive.exit_image.integer.access",
+      "input": {
+        "bytes": 6004,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.exit_image.integer.access/wp_input.c",
+        "sha256": "bdb42493194522f53d81247715ecfb82a1330a8cd25b3dc9a77ccf5b661faaf0"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 402993152,
+        "timed_out": false,
+        "wall_seconds": 31.45967539958656
+      },
+      "outcome": {
+        "assumptions": [],
+        "failure_class": null,
+        "goals": [
+          {
+            "function": null,
+            "goal": "typed_real_check_lemma_t25_closed_parts_positive_exit_image_integer",
+            "property": "check_lemma_t25_closed_parts_positive_exit_image_integer_access",
+            "seconds": 0.0811,
+            "smoke": false,
+            "solver": "cvc5",
+            "source": "wp_json",
+            "status": "valid"
+          }
+        ],
+        "reading": {
+          "check": {
+            "sha256": "9c298b4be09eb13d48beef3716dff1b9ed27cf3101c3667b1412c82b9e4e3d39",
+            "version": "1"
+          },
+          "verdict": "proven"
+        },
+        "unproven": [],
+        "verdict": "proven",
+        "why": "every generated goal passed; every Extern belongs to a pinned contract"
+      },
+      "census": {
+        "bytes": 5756,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.exit_image.integer.access/task-census.json",
+        "sha256": "dcaff79522bcfccccc78c48aa19fc92498cf7301b7b21e995e40c33f21b8afe0"
+      }
+    },
+    {
+      "id": "positive.exit_image.integer.initialization",
+      "input": {
+        "bytes": 6011,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.exit_image.integer.initialization/wp_input.c",
+        "sha256": "539e236b6e3a5e3d5053a58ace5db9dcf3a7b49c4383514d1bcd14fd314030d6"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 136818688,
+        "timed_out": false,
+        "wall_seconds": 1.1283483989536762
+      },
+      "outcome": {
+        "assumptions": [],
+        "failure_class": null,
+        "goals": [
+          {
+            "function": null,
+            "goal": "typed_real_check_lemma_t25_closed_parts_positive_exit_image_integer",
+            "property": "check_lemma_t25_closed_parts_positive_exit_image_integer_initialization",
+            "seconds": 0.0409,
+            "smoke": false,
+            "solver": "alt-ergo",
+            "source": "wp_json",
+            "status": "valid"
+          }
+        ],
+        "reading": {
+          "check": {
+            "sha256": "9c298b4be09eb13d48beef3716dff1b9ed27cf3101c3667b1412c82b9e4e3d39",
+            "version": "1"
+          },
+          "verdict": "proven"
+        },
+        "unproven": [],
+        "verdict": "proven",
+        "why": "every generated goal passed; every Extern belongs to a pinned contract"
+      },
+      "census": {
+        "bytes": 3507,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.exit_image.integer.initialization/task-census.json",
+        "sha256": "b47e319b34f3a9691dc592d7be5a53aee66c8b1cab89f65e52798ebf50ee7b20"
+      }
+    },
+    {
+      "id": "positive.exit_image.integer.integer",
+      "input": {
+        "bytes": 6056,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.exit_image.integer.integer/wp_input.c",
+        "sha256": "b837b83f3f96e0965d17a38eb55e1fe14c20c69f8ef8e2cd114375776abe55dc"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 137342976,
+        "timed_out": false,
+        "wall_seconds": 1.0307441307231784
+      },
+      "outcome": {
+        "assumptions": [],
+        "failure_class": null,
+        "goals": [
+          {
+            "function": null,
+            "goal": "typed_real_check_lemma_t25_closed_parts_positive_exit_image_integer",
+            "property": "check_lemma_t25_closed_parts_positive_exit_image_integer_integer",
+            "seconds": 0.0791,
+            "smoke": false,
+            "solver": "alt-ergo",
+            "source": "wp_json",
+            "status": "valid"
+          }
+        ],
+        "reading": {
+          "check": {
+            "sha256": "9c298b4be09eb13d48beef3716dff1b9ed27cf3101c3667b1412c82b9e4e3d39",
+            "version": "1"
+          },
+          "verdict": "proven"
+        },
+        "unproven": [],
+        "verdict": "proven",
+        "why": "every generated goal passed; every Extern belongs to a pinned contract"
+      },
+      "census": {
+        "bytes": 3486,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.exit_image.integer.integer/task-census.json",
+        "sha256": "9c74081646cfaef6cf1e34d745b9d0ec6da25e656ba33afc078bd060cb31c0ea"
+      }
+    },
+    {
+      "id": "positive.exit_image.integer.bounds",
+      "input": {
+        "bytes": 6026,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.exit_image.integer.bounds/wp_input.c",
+        "sha256": "df99fae7264eea78e8a4c75a8e6051670aa42505d4bf7306d3ed776c00dd9ddd"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 137179136,
+        "timed_out": false,
+        "wall_seconds": 1.0308408979326487
+      },
+      "outcome": {
+        "assumptions": [],
+        "failure_class": null,
+        "goals": [
+          {
+            "function": null,
+            "goal": "typed_real_check_lemma_t25_closed_parts_positive_exit_image_integer",
+            "property": "check_lemma_t25_closed_parts_positive_exit_image_integer_bounds",
+            "seconds": 0.0746,
+            "smoke": false,
+            "solver": "alt-ergo",
+            "source": "wp_json",
+            "status": "valid"
+          }
+        ],
+        "reading": {
+          "check": {
+            "sha256": "9c298b4be09eb13d48beef3716dff1b9ed27cf3101c3667b1412c82b9e4e3d39",
+            "version": "1"
+          },
+          "verdict": "proven"
+        },
+        "unproven": [],
+        "verdict": "proven",
+        "why": "every generated goal passed; every Extern belongs to a pinned contract"
+      },
+      "census": {
+        "bytes": 3483,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.exit_image.integer.bounds/task-census.json",
+        "sha256": "769e6ea957d0f9f5f900142ee5a161948e095d4747bd5b5bd4db770954133c8d"
+      }
+    },
+    {
+      "id": "positive.exit_image.filled.initialization",
+      "input": {
+        "bytes": 6006,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.exit_image.filled.initialization/wp_input.c",
+        "sha256": "4f2470b3e415f5c579d9a42bea67c7f15d48c9048f3125ae0617dbef03e51f59"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 136818688,
+        "timed_out": false,
+        "wall_seconds": 1.0382753545418382
+      },
+      "outcome": {
+        "assumptions": [],
+        "failure_class": null,
+        "goals": [
+          {
+            "function": null,
+            "goal": "typed_real_check_lemma_t25_closed_parts_positive_exit_image_filled",
+            "property": "check_lemma_t25_closed_parts_positive_exit_image_filled_initialization",
+            "seconds": 0.0431,
+            "smoke": false,
+            "solver": "alt-ergo",
+            "source": "wp_json",
+            "status": "valid"
+          }
+        ],
+        "reading": {
+          "check": {
+            "sha256": "9c298b4be09eb13d48beef3716dff1b9ed27cf3101c3667b1412c82b9e4e3d39",
+            "version": "1"
+          },
+          "verdict": "proven"
+        },
+        "unproven": [],
+        "verdict": "proven",
+        "why": "every generated goal passed; every Extern belongs to a pinned contract"
+      },
+      "census": {
+        "bytes": 3502,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.exit_image.filled.initialization/task-census.json",
+        "sha256": "9daa3fc1120e55fbae9c299eb7830bf67a3a042508b4bf524629124801e02d41"
+      }
+    },
+    {
+      "id": "positive.exit_image.filled.value",
+      "input": {
+        "bytes": 5995,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.exit_image.filled.value/wp_input.c",
+        "sha256": "b7b097be4c51d86c0a1a8923fe189da9c94a3a79c714544159a0c4816ba2988a"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 136822784,
+        "timed_out": false,
+        "wall_seconds": 1.0182810565456748
+      },
+      "outcome": {
+        "assumptions": [],
+        "failure_class": null,
+        "goals": [
+          {
+            "function": null,
+            "goal": "typed_real_check_lemma_t25_closed_parts_positive_exit_image_filled",
+            "property": "check_lemma_t25_closed_parts_positive_exit_image_filled_value",
+            "seconds": 0.0644,
+            "smoke": false,
+            "solver": "alt-ergo",
+            "source": "wp_json",
+            "status": "valid"
+          }
+        ],
+        "reading": {
+          "check": {
+            "sha256": "9c298b4be09eb13d48beef3716dff1b9ed27cf3101c3667b1412c82b9e4e3d39",
+            "version": "1"
+          },
+          "verdict": "proven"
+        },
+        "unproven": [],
+        "verdict": "proven",
+        "why": "every generated goal passed; every Extern belongs to a pinned contract"
+      },
+      "census": {
+        "bytes": 3475,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.exit_image.filled.value/task-census.json",
+        "sha256": "0e04a03baa3ad06fbb0cf2fc9c02ba642ccc5ff962667051c02db08ef97d489d"
+      }
+    },
+    {
+      "id": "positive.cleanup.scalar",
+      "input": {
+        "bytes": 5980,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.cleanup.scalar/wp_input.c",
+        "sha256": "79551c09dd1c62c5e6b3b330e047c095ecaaaa3e1e44259e34ca07687fae38ce"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 402108416,
+        "timed_out": false,
+        "wall_seconds": 59.73085850849748
+      },
+      "outcome": {
+        "assumptions": [],
+        "failure_class": null,
+        "goals": [
+          {
+            "function": null,
+            "goal": "typed_real_check_lemma_t25_closed_parts_positive_cleanup_scalar",
+            "property": "check_lemma_t25_closed_parts_positive_cleanup_scalar",
+            "seconds": 27.6,
+            "smoke": false,
+            "solver": "z3",
+            "source": "wp_json",
+            "status": "valid"
+          }
+        ],
+        "reading": {
+          "check": {
+            "sha256": "9c298b4be09eb13d48beef3716dff1b9ed27cf3101c3667b1412c82b9e4e3d39",
+            "version": "1"
+          },
+          "verdict": "proven"
+        },
+        "unproven": [],
+        "verdict": "proven",
+        "why": "every generated goal passed; every Extern belongs to a pinned contract"
+      },
+      "census": {
+        "bytes": 7973,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.cleanup.scalar/task-census.json",
+        "sha256": "494876403d4cad90d5fd19bd88efec98154f65baa99c78b7806497c4b22c6039"
+      }
+    },
+    {
+      "id": "positive.cleanup.frame.objects",
+      "input": {
+        "bytes": 6058,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.cleanup.frame.objects/wp_input.c",
+        "sha256": "0f43153902e308df2731892d97298ea722d45f19925174417ac387cfa6fb5c73"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 170897408,
+        "timed_out": false,
+        "wall_seconds": 1.2184388637542725
+      },
+      "outcome": {
+        "assumptions": [],
+        "failure_class": null,
+        "goals": [
+          {
+            "function": null,
+            "goal": "typed_real_check_lemma_t25_closed_parts_positive_cleanup_frame_objects",
+            "property": "check_lemma_t25_closed_parts_positive_cleanup_frame_objects",
+            "seconds": 0.201,
+            "smoke": false,
+            "solver": "alt-ergo",
+            "source": "wp_json",
+            "status": "valid"
+          }
+        ],
+        "reading": {
+          "check": {
+            "sha256": "9c298b4be09eb13d48beef3716dff1b9ed27cf3101c3667b1412c82b9e4e3d39",
+            "version": "1"
+          },
+          "verdict": "proven"
+        },
+        "unproven": [],
+        "verdict": "proven",
+        "why": "every generated goal passed; every Extern belongs to a pinned contract"
+      },
+      "census": {
+        "bytes": 3477,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.cleanup.frame.objects/task-census.json",
+        "sha256": "a0a3938c6ce68d9a34ad36a10f5668d8571908bd134530fbcd2a2fb0d0946cc2"
+      }
+    },
+    {
+      "id": "positive.cleanup.frame.contents",
+      "input": {
+        "bytes": 6117,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.cleanup.frame.contents/wp_input.c",
+        "sha256": "002cf014ffa3e223f6b249d1222be4755facced102eb0928b3966a97d343516a"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 164601856,
+        "timed_out": false,
+        "wall_seconds": 1.2169700022786856
+      },
+      "outcome": {
+        "assumptions": [],
+        "failure_class": null,
+        "goals": [
+          {
+            "function": null,
+            "goal": "typed_real_check_lemma_t25_closed_parts_positive_cleanup_frame",
+            "property": "check_lemma_t25_closed_parts_positive_cleanup_frame_contents",
+            "seconds": 0.138,
+            "smoke": false,
+            "solver": "alt-ergo",
+            "source": "wp_json",
+            "status": "valid"
+          }
+        ],
+        "reading": {
+          "check": {
+            "sha256": "9c298b4be09eb13d48beef3716dff1b9ed27cf3101c3667b1412c82b9e4e3d39",
+            "version": "1"
+          },
+          "verdict": "proven"
+        },
+        "unproven": [],
+        "verdict": "proven",
+        "why": "every generated goal passed; every Extern belongs to a pinned contract"
+      },
+      "census": {
+        "bytes": 3464,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.cleanup.frame.contents/task-census.json",
+        "sha256": "d44881edae2120c34d56edc915a0189d939160f685829023bdb9cb2085d4debf"
+      }
+    },
+    {
+      "id": "positive.cleanup.frame.initialization",
+      "input": {
+        "bytes": 6139,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.cleanup.frame.initialization/wp_input.c",
+        "sha256": "fcf2ee68fe4b08223286e9842f4626969fa217a1134ec09977d54a8e74ffadd3"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 163557376,
+        "timed_out": false,
+        "wall_seconds": 1.2091517876833677
+      },
+      "outcome": {
+        "assumptions": [],
+        "failure_class": null,
+        "goals": [
+          {
+            "function": null,
+            "goal": "typed_real_check_lemma_t25_closed_parts_positive_cleanup_frame",
+            "property": "check_lemma_t25_closed_parts_positive_cleanup_frame_initialization",
+            "seconds": 0.147,
+            "smoke": false,
+            "solver": "alt-ergo",
+            "source": "wp_json",
+            "status": "valid"
+          }
+        ],
+        "reading": {
+          "check": {
+            "sha256": "9c298b4be09eb13d48beef3716dff1b9ed27cf3101c3667b1412c82b9e4e3d39",
+            "version": "1"
+          },
+          "verdict": "proven"
+        },
+        "unproven": [],
+        "verdict": "proven",
+        "why": "every generated goal passed; every Extern belongs to a pinned contract"
+      },
+      "census": {
+        "bytes": 3482,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.cleanup.frame.initialization/task-census.json",
+        "sha256": "d5f3af1f93f3ca0d8c4b3221606559bed15575f5c3ac715f2ac679ff0d048260"
+      }
+    },
+    {
+      "id": "positive.cleanup.observes.objects",
+      "input": {
+        "bytes": 6085,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.cleanup.observes.objects/wp_input.c",
+        "sha256": "6a567722b3e35d637f60c4c5d0b930c5e03e979284fdf8cef7f3fdf5eae33138"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 161464320,
+        "timed_out": false,
+        "wall_seconds": 1.1999769415706396
+      },
+      "outcome": {
+        "assumptions": [],
+        "failure_class": null,
+        "goals": [
+          {
+            "function": null,
+            "goal": "typed_real_check_lemma_t25_closed_parts_positive_cleanup_observes",
+            "property": "check_lemma_t25_closed_parts_positive_cleanup_observes_objects",
+            "seconds": 0.108,
+            "smoke": false,
+            "solver": "alt-ergo",
+            "source": "wp_json",
+            "status": "valid"
+          }
+        ],
+        "reading": {
+          "check": {
+            "sha256": "9c298b4be09eb13d48beef3716dff1b9ed27cf3101c3667b1412c82b9e4e3d39",
+            "version": "1"
+          },
+          "verdict": "proven"
+        },
+        "unproven": [],
+        "verdict": "proven",
+        "why": "every generated goal passed; every Extern belongs to a pinned contract"
+      },
+      "census": {
+        "bytes": 3476,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.cleanup.observes.objects/task-census.json",
+        "sha256": "1ba588a18c98112e2a24711670e8de69ab7c7ffb822b2f8dc07411a76ad8207d"
+      }
+    },
+    {
+      "id": "positive.cleanup.observes.contents",
+      "input": {
+        "bytes": 6144,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.cleanup.observes.contents/wp_input.c",
+        "sha256": "8d31b8ecb18fa8e33fac9d64e806864644eb6964f0265cf3b80732dd3ece327c"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 137342976,
+        "timed_out": false,
+        "wall_seconds": 1.0628976970911026
+      },
+      "outcome": {
+        "assumptions": [],
+        "failure_class": null,
+        "goals": [
+          {
+            "function": null,
+            "goal": "typed_real_check_lemma_t25_closed_parts_positive_cleanup_observes",
+            "property": "check_lemma_t25_closed_parts_positive_cleanup_observes_contents",
+            "seconds": 0.0331,
+            "smoke": false,
+            "solver": "alt-ergo",
+            "source": "wp_json",
+            "status": "valid"
+          }
+        ],
+        "reading": {
+          "check": {
+            "sha256": "9c298b4be09eb13d48beef3716dff1b9ed27cf3101c3667b1412c82b9e4e3d39",
+            "version": "1"
+          },
+          "verdict": "proven"
+        },
+        "unproven": [],
+        "verdict": "proven",
+        "why": "every generated goal passed; every Extern belongs to a pinned contract"
+      },
+      "census": {
+        "bytes": 3479,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.cleanup.observes.contents/task-census.json",
+        "sha256": "3f51ff247220fdb526a978a4c809eab50804e7e4e986d43617e198f09d98e915"
+      }
+    },
+    {
+      "id": "positive.cleanup.observes.initialization",
+      "input": {
+        "bytes": 6166,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.cleanup.observes.initialization/wp_input.c",
+        "sha256": "dca94410e7694d4fad7c87194a586ef15f01c9bea8bd6d3cf3dfd1ed45030a4e"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 161988608,
+        "timed_out": false,
+        "wall_seconds": 1.0654430761933327
+      },
+      "outcome": {
+        "assumptions": [],
+        "failure_class": null,
+        "goals": [
+          {
+            "function": null,
+            "goal": "typed_real_check_lemma_t25_closed_parts_positive_cleanup_observes",
+            "property": "check_lemma_t25_closed_parts_positive_cleanup_observes_initialization",
+            "seconds": 0.0351,
+            "smoke": false,
+            "solver": "alt-ergo",
+            "source": "wp_json",
+            "status": "valid"
+          }
+        ],
+        "reading": {
+          "check": {
+            "sha256": "9c298b4be09eb13d48beef3716dff1b9ed27cf3101c3667b1412c82b9e4e3d39",
+            "version": "1"
+          },
+          "verdict": "proven"
+        },
+        "unproven": [],
+        "verdict": "proven",
+        "why": "every generated goal passed; every Extern belongs to a pinned contract"
+      },
+      "census": {
+        "bytes": 3497,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.cleanup.observes.initialization/task-census.json",
+        "sha256": "8bcb583e686723e177b2276f682dec98bc000c77b437a0cd4ff3eaaf7079a56d"
+      }
+    },
+    {
+      "id": "positive.cleanup.receiver_dead",
+      "input": {
+        "bytes": 5992,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.cleanup.receiver_dead/wp_input.c",
+        "sha256": "01079234e1e307d6dc7418586e30689b665cf5ef5bc8c00fc26feb631f80fdf0"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 159756288,
+        "timed_out": false,
+        "wall_seconds": 1.0690654320642352
+      },
+      "outcome": {
+        "assumptions": [],
+        "failure_class": null,
+        "goals": [
+          {
+            "function": null,
+            "goal": "typed_real_check_lemma_t25_closed_parts_positive_cleanup_receiver_dead",
+            "property": "check_lemma_t25_closed_parts_positive_cleanup_receiver_dead",
+            "seconds": 0.0302,
+            "smoke": false,
+            "solver": "alt-ergo",
+            "source": "wp_json",
+            "status": "valid"
+          }
+        ],
+        "reading": {
+          "check": {
+            "sha256": "9c298b4be09eb13d48beef3716dff1b9ed27cf3101c3667b1412c82b9e4e3d39",
+            "version": "1"
+          },
+          "verdict": "proven"
+        },
+        "unproven": [],
+        "verdict": "proven",
+        "why": "every generated goal passed; every Extern belongs to a pinned contract"
+      },
+      "census": {
+        "bytes": 3477,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.cleanup.receiver_dead/task-census.json",
+        "sha256": "b6d11278676b6c0b76cb157e4b0eace08d08835f218b93b07afb1ce6ce3e6be3"
+      }
+    },
+    {
+      "id": "positive.cleanup.buffer_dead",
+      "input": {
+        "bytes": 5990,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.cleanup.buffer_dead/wp_input.c",
+        "sha256": "fc0fdfc4de619109c1583e6d8926a08589d70f88e1b4231e31cd317025baf7ea"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 160935936,
+        "timed_out": false,
+        "wall_seconds": 1.0715813329443336
+      },
+      "outcome": {
+        "assumptions": [],
+        "failure_class": null,
+        "goals": [
+          {
+            "function": null,
+            "goal": "typed_real_check_lemma_t25_closed_parts_positive_cleanup_buffer_dead",
+            "property": "check_lemma_t25_closed_parts_positive_cleanup_buffer_dead",
+            "seconds": 0.039,
+            "smoke": false,
+            "solver": "alt-ergo",
+            "source": "wp_json",
+            "status": "valid"
+          }
+        ],
+        "reading": {
+          "check": {
+            "sha256": "9c298b4be09eb13d48beef3716dff1b9ed27cf3101c3667b1412c82b9e4e3d39",
+            "version": "1"
+          },
+          "verdict": "proven"
+        },
+        "unproven": [],
+        "verdict": "proven",
+        "why": "every generated goal passed; every Extern belongs to a pinned contract"
+      },
+      "census": {
+        "bytes": 3467,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/leaf-positive.cleanup.buffer_dead/task-census.json",
+        "sha256": "b37ecd2df4ccdf2bf640904045c69ec07365195b843ca838ada4d7c637ca08d0"
+      }
+    }
+  ],
+  "result_pin": {
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/result.json",
+    "bytes": 50097,
+    "sha256": "157c1e2fd93165f51986d4a5bd2929923dc2b3f62925b8206fdce4fa0cdcbd0f"
+  },
+  "manifest": {
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-04af74c1-t25-closed-lifetime23-public-v1/closed-lifetime23-public-v1-profile/artifact-manifest.json",
+    "bytes": 226716,
+    "sha256": "73cb1919f2c162ebd57aa7c243c7e74db11a64e81308de0284f74016f246f783"
+  },
+  "manifest_rows_verified": 559,
+  "raw_files": 579,
+  "raw_bytes": 26032027,
+  "scope": "All23 fresh independent mathematical producer outcomes proven. Complete cold task/source/runtime/support/import and conjunction reassembly review pending. Original positive six-profile timeouts preserved. No source/body/caller/public record or ticket acceptance."
+}

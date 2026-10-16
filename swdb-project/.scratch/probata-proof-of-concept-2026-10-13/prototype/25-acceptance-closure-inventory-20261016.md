@@ -1,6 +1,6 @@
 # Ticket25 acceptance closure inventory
 
-2026-10-16 ET. Current source `fb197c5d`; compact implementation/evidence inventory,
+2026-10-16 ET. Published conjunction source `04af74c1`; compact implementation/evidence inventory,
 not ticket acceptance. The coordinator owns admission and tracker updates.
 Historical accepted results retain their source, model, method, domain and TCB.
 An unrelated Git commit change does not invalidate an identical scientific
@@ -11,7 +11,7 @@ reuse eligibility. Reuse is recorded as historical evidence, never a fresh run.
 | --- | --- | --- |
 | Original int count/value constructor and destructor | Accepted public `c_model` fixtures at `cea5652b`, 38 targets; original count constructor at `bb7170ac`, 27 targets. No general caller adoption follows. | Compare complete current scientific targets/source inverses/theory/dependency closure to retained inputs; reuse exact matches under explicit TCB. |
 | Qualified int constructor/grow/reserve/destructor | Scoped constructor35, destructor11, grow61 and reserve67 cold/root decisions exist. Grow/reserve have complete arbitrary initialized signed32-source image and fresh-buffer domains; original-v2/default catalog remains outside that claim. | Reuse unchanged scientific components; discharge source-local qualification and ownership, then declare a reviewed new default model/domain version rather than attempting to prove the unsound old growth contract. |
-| Closed no-growth caller bridge | Math9 cold PASS; six constructor/frame/history/cleanup gluing duties prepared and reviewed at `fb197c5d`. Projected C at `615ddf50` has 17 native Valid ordinary goals and four healthy nonproof smokes. Ordinary reader remains `not_proven` because constructor `assigns *this` has no admitted dependency. | Prove the six new duties; bind source-created automatic and allocation identities plus scalar/field/value/init observations; connect exact eligible constructor/destructor evidence through the public dependency seam. Retain full allocator/frame/release TCB. No generic route or native `freeable` proof may be inferred. |
+| Closed no-growth caller bridge | Math9 cold/root PASS; four of six `fb197c5d` gluing duties have cold/root scoped acceptance and both positive timeouts remain unproved. Their exact 23-leaf conjunction replacement at `04af74c1` reports all producer outcomes proven; independent cold attribution is active. Projected C at `615ddf50` has complete conditional attribution of 17 native Valid ordinary goals and four nonproof smokes. Its original reader remains `not_proven`. The repaired source-rule seam is still unadmitted. | Finish23 cold attribution; independently review source effects, live storage/dead-history observer and all private automatic components; validate exact historical constructor/destructor/math/gluing evidence without relabeling identities; integrate the scoped public source route and full original24/9/13 obligation accounting. Retain full allocator/frame/release TCB. No generic route or native `freeable` proof may be inferred. |
 | Other original int member bodies | Earlier 14 nonallocating vector/pair results and checked `at` precede the current incoming-array-object provenance gate. They cannot silently supply current broad-domain evidence. Current code contains all 18 vector member models and internal helpers. | Source-to-heap maps for remaining constructors, accessors, copy/move, clear/swap and wrappers; full source/RTE/init/frame and source-origin checks. Reuse earlier exact-domain pieces only where their closure still matches. |
 | Original vector/pair maximum workflow | Public WP original fixture at `0cc88ffc`: 77 ordinary Valid, 12 smoke passed; wrong comparison remains unproved. Checked private-storage projection explicitly does not prove every allocating model body. Original bounded maximum accepted at its separate exact freeze. | Reuse exact source/view/model/assumption evidence where compatible with final method; verify final default-domain/model adoption and bounded C/C++ agreement, rather than adding another diagnostic workflow. |
 | Pair members and caller | Four original `pair<int,int>` bodies plus exact-dependency safe caller accepted at `1278f2d9`; wrong-field caller remains unproved. | Content-addressed current dependency adoption; generic scalar/pointer field/layout/conversion coverage for other admitted pair combinations. |
@@ -30,12 +30,16 @@ not a viable path. A new declared domain/version and source-derived eligibility
 are implementation work, not missing test coverage.
 
 The current mathematical evidence already resolves the expensive int copy/grow
-core. The immediate prospective run should contain the six genuinely new gluing
-targets and only dependencies whose scientific closure differs. Original
+core. The 23-leaf run now covers the two new positive gluing conjunctions while
+the four unchanged successful duties retain their own accepted identities. Original
 projected-C reports remain sufficient observations of those unchanged native
 terms; the metadata observer repair does not justify rerunning WP. Source/Typed
 and dependency admission still require implementation and review before any
 original caller record can be accepted.
+
+The next production route and the remaining default/member/type/pair/A2 work are
+recorded in `25-owned-domain-production-plan-20261016.md`. The closed caller is
+one vertical; it does not close the wider ticket.
 
 Primary local references: `../issues/25-vector-and-pair-models.md` acceptance and
 dated actual sections; `../issues/22-saw-adapter-and-translator.md` accepted A2

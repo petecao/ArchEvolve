@@ -1,0 +1,35 @@
+{
+  "acceptance": false,
+  "auditor": {
+    "bytes": 44363,
+    "path": "prototype/25-closed-lifetime-glue-20261016/cold-auditor-v4.py",
+    "sha256": "aed8c5402047f13f4a02aa371eef80499accef8b490ae4feadc1883b2bc1d3dc"
+  },
+  "author_remote_execution": false,
+  "classification": "INERT_PASSIVE_EXACT_SOURCE_FRAME_NORMALIZATION",
+  "controls_external_processes_executed": 0,
+  "created": "2026-10-16 ET",
+  "exact_inverse_to_v3": true,
+  "previous_actual_refusal": {
+    "bytes": 200,
+    "checks_before_refusal": 42039,
+    "error": "independent source definition constructor.frame P_t25_frame",
+    "sha256": "ab798f4d3303c68c5dcabbc7c048880f16d0547fa2b478c752fd86985e59e51e"
+  },
+  "previous_auditor_sha256": "22694c7e41f64f1cf173b07fdad49b1e20954dda04c52e42df38a304f0e073f3",
+  "pure_controls": [
+    "full_source_excluded_interval_equivalent",
+    "receiver_disjunct_missing_refused",
+    "lower_bound_disjunct_missing_refused",
+    "upper_bound_disjunct_missing_refused",
+    "lower_bound_reversed_refused",
+    "upper_extent_changed_refused"
+  ],
+  "scope": "Only P_t25_frame source-definition comparison admits exact De Morgan and order negation; all complete source goal antecedents and other definitions remain unchanged. No theorem is imported.",
+  "source_definition_discovery": {
+    "instances": 106,
+    "literal_source_equivalent": 90,
+    "sha256": "ab92b741d4bf3d79cd98b9be9373750a812ea912f7e4946f7cf85fe2c4e1bce8",
+    "source_frame_boolean_order_equivalent": 16
+  }
+}

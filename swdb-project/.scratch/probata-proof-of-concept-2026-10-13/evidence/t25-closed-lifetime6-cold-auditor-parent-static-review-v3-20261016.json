@@ -1,0 +1,18 @@
+{
+  "SSH_calls": 0,
+  "actual_auditor_executions": 0,
+  "auditor_sha256": "22694c7e41f64f1cf173b07fdad49b1e20954dda04c52e42df38a304f0e073f3",
+  "caller_acceptance": false,
+  "compiler_solver_runs": 0,
+  "created": "2026-10-16 ET",
+  "prior_scientific_review_sha256": "de0cf0a2e7bb67828d367cb64619c4f92f500bb25ff8862d6b4b798afaea2cfa",
+  "review": [
+    "V2 changes only stdlib os/stat imports, fixed read-only Git scoped stdin pipe and write hook; no scientific formula/census/import/source/runtime change.",
+    "V3 exact inverse adds only O_CREAT/O_TRUNC/O_APPEND flags to writable detection.",
+    "Integer FIFO writes are allowed only while the fixed read-only Git helper executes; all pathname and regular-file writes, including O_RDONLY mutation combinations, remain denied.",
+    "Unused Git stdin is omitted; scope resets in finally after exceptions. Fourteen scripted boundary controls are retained, with no child execution.",
+    "Original V1 actual refusal and unexecuted V2 remain preserved; complete conditional integrity remains separate from any proof/source/caller acceptance."
+  ],
+  "source_typed_bridge_established": false,
+  "status": "PASS_FOR_SCOPED_PASSIVE_COLD_INSPECTION"
+}

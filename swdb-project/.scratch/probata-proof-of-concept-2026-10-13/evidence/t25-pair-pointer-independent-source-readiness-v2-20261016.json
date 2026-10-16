@@ -1,0 +1,44 @@
+{
+  "SSH_calls": 0,
+  "actual_scientific_acceptance": false,
+  "checks": [
+    "Mixed int/pointer source creates distinct live local pointee identities and never dereferences or returns a pointer. Safe result x+3, wrong result x+9, default/self-assignment behavior and uninitialized input boundary match the intended fixture.",
+    "Inherited input bounds [-1000,1000] avoid signed result overflow; the75 sanitizer-defined native comparisons are finite agreement, not a universal C++ theorem.",
+    "Public actual path requires four fresh C model body records, exact dependency ids/code hashes, safe WP, ordinary not-proven wrong WP with healthy smokes, CBMC safe agreement and refuted wrong with actual C++ replay. All eight records remain contract_fixture.",
+    "Both unchanged old builders are AST-identical in shared testkit; every other old test AST is unchanged. The new test no longer imports a test module. Both profile pin lists include the shared helper.",
+    "Source collection contains no tool discovery. Actual mode remains explicitly coordinator-gated; controls use parser stand-ins and disabled formal tools. Output is outside the entire checkout, source pins before/after and profile deadline remain checked; the external root time/RSS guard remains mandatory."
+  ],
+  "compiler_native_verifier_solver_runs": 0,
+  "created": "2026-10-16 ET",
+  "files": {
+    "scripts/probata_pair_pointer_profile.py": {
+      "bytes": 3689,
+      "sha256": "7737a5747664cff167a05615721941f3c7189f50a0436716d46693a4748851f6"
+    },
+    "scripts/probata_pair_profile.py": {
+      "bytes": 3819,
+      "sha256": "9bdc8b852ce0bbefff5ed75ba044e9edcc9d1f65bf12b992fad3643308aecc01"
+    },
+    "tests/fixtures/proof/lowering/pair_pointer.cc": {
+      "bytes": 1165,
+      "sha256": "c5f539209979d01270dfa48c35b7b5475d58b3899dbcef31a13afb65e8c14184"
+    },
+    "tests/test_pair_pointer_workflow.py": {
+      "bytes": 8325,
+      "sha256": "a8e82648979479ca664cabbe1b4de4335bd678c66a6f4c5407e1b93943aeecfd"
+    },
+    "tests/test_pair_workflow.py": {
+      "bytes": 9620,
+      "sha256": "42a09e64d521ac0d2aa8e3daf9be74839ef230348b52543e6c51345febe4c6d4"
+    },
+    "tests/testkit/pair_workflow.py": {
+      "bytes": 6348,
+      "sha256": "4a95e7e2b5b9492f554f5bf686fa2ea9036dce461c75d4949265318ca77c12af"
+    }
+  },
+  "preparation_sha256": "3f3152ab0c06150c79802af1d977b36f328e5ed60c1a42e22e5653b6cc558a30",
+  "reviewer": "ticket25 parent independent review of root-authored pair limb",
+  "scope": "Independent static readiness only. Actual compiler/native/public/formal/replay evidence and complete cold review remain required.",
+  "status": "PASS_SOURCE_SPEC_AND_STANDARDS_READINESS",
+  "test_cases_executed": 0
+}

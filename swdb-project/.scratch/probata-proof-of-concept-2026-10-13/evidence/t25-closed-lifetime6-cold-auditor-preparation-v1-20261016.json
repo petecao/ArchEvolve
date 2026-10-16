@@ -1,0 +1,160 @@
+{
+  "SSH_calls": 0,
+  "actual_auditor_executions": 0,
+  "actual_command_sha256": "be7379c4e99be42f88ef965517af8bf4e42e778041602ac3a8d288ba2dc573a8",
+  "actual_project_compiler_native_verifier_solver_runs": 0,
+  "auditor": {
+    "bytes": 42360,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-lifetime-glue-20261016/cold-auditor-v1.py",
+    "sha256": "4a4182d08fc7d72e2aec7f201c0e8ef89219c534eeebe44ed89c0389ac4bd418"
+  },
+  "author": {
+    "bytes": 5302,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-lifetime-glue-20261016/prepare-cold-auditor-v1.py",
+    "sha256": "dcdcd5e42c07b1c9c6311445667008ddd00073e9b2c5cf9a2fa4cf132095b4b3"
+  },
+  "caller_acceptance": false,
+  "created": "2026-10-16 ET",
+  "exact_reused_helpers": [
+    "require",
+    "digest",
+    "pin",
+    "read",
+    "snapshot",
+    "forms",
+    "expand",
+    "strip_comments",
+    "canon"
+  ],
+  "frozen_profile_inputs": {
+    "entry.py": {
+      "bytes": 34712,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-lifetime-glue-20261016/inert-fb197c5d-public-v1/entry.py",
+      "sha256": "76a687229c3d28e504102aad1bdd2c3efc47b1992cf1703c94a2291ec6f7c263"
+    },
+    "expected.json": {
+      "bytes": 188656,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-lifetime-glue-20261016/inert-fb197c5d-public-v1/expected.json",
+      "sha256": "a10f2ee5864b8c39c22e72b29f34e3195b59839e0fdc9a6ae9e5c6c5f7ecd4b2"
+    },
+    "packet.json": {
+      "bytes": 4159,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-lifetime-glue-20261016/inert-fb197c5d-public-v1/packet.json",
+      "sha256": "853a2f425917e49ba5beed3c3f13ac3856e5c0abf061b0c042b457442b348bc0"
+    },
+    "root-command.json": {
+      "bytes": 90722,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-lifetime-glue-20261016/inert-fb197c5d-public-v1/root-command.json",
+      "sha256": "bcc571f2916e00b2ca3cdbec4b8fdd837e1ad405f2b032491119cb5a84231080"
+    }
+  },
+  "independent_source_transcription": {
+    "bytes": 6748,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-lifetime-glue-20261016/cold-goals-v1.py",
+    "sha256": "1ea7a3410f952d5d7111fb092d49a81a0536c23f1751f9c2610fe8a378333e0e"
+  },
+  "known_support_assertion_hashes": 46,
+  "prior_reviewed_parser": {
+    "bytes": 29672,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-private-frame9-passive-cold-audit-20261016.py",
+    "sha256": "12cd78dcbdda5d7d8a1c7a2a60ef99992a6214ea1d22426b382a663771133250"
+  },
+  "prior_source_attribution_inputs": [
+    {
+      "bytes": 325852,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-private-frame9-passive-cold-metadata-v3-20261016.json",
+      "sha256": "6b83bc96c026bbb0bd40db81475f666172ac89e3187ff5f6cf215ac46f93ad28"
+    },
+    {
+      "bytes": 43043,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-private-frame9-independent-cold-decision-20261016.json",
+      "sha256": "8c8764bcdc2d6939251cc3966eb9032220b69040f24560c2fb03d7b3eb4e201f"
+    },
+    {
+      "bytes": 4094,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-private-frame9-passive-cold-support-supplement-20261016.json",
+      "sha256": "00a8f14bbac8b98405735053270a33158280d0dfd9a19d70cd10bae37c05add3"
+    }
+  ],
+  "required_settlement_arguments": [
+    "--node ROOT_CONFIRMED_NODE",
+    "--generation ROOT_CONFIRMED_GENERATION",
+    "--ended-utc ROOT_CONFIRMED_END_UTC"
+  ],
+  "scope": "Stdlib AST/helper extraction, independent six source-goal/definition transcriptions and syntax/closure controls only. No actual native/task proof observation or acceptance. Root confirms settlement before any exact-root cold run.",
+  "source_transcription_controls": [
+    {
+      "canonical_goal_digest": "80a889fa4a4b86770071d7e75e031a5099fbf7e0e678f20b41617d47bdc594d5",
+      "id": "receiver.entry",
+      "required_source_definitions": [
+        "P_t25_private_frame",
+        "P_t25_private_observes"
+      ],
+      "source_form_parses": true
+    },
+    {
+      "canonical_goal_digest": "1d6c9075fcb12b2249fed5d20c8a4837542275f4d76e711b6c132cb7dcfecce1",
+      "id": "constructor.frame",
+      "required_source_definitions": [
+        "P_t25_frame",
+        "P_t25_private_frame",
+        "P_t25_private_observes"
+      ],
+      "source_form_parses": true
+    },
+    {
+      "canonical_goal_digest": "154208870e13e3d30f54e560400f1c4284c3cba7ea6901b0b90e64fd510e367d",
+      "id": "buffer.identity",
+      "required_source_definitions": [
+        "L_t25_initial"
+      ],
+      "source_form_parses": true
+    },
+    {
+      "canonical_goal_digest": "beaf7d6613861b1bbf19328ca8878b332d70c633d594c0d0388aa356fda0e97a",
+      "id": "zero.cleanup",
+      "required_source_definitions": [
+        "L_t25_initial",
+        "P_t25_private_frame",
+        "P_t25_private_observes"
+      ],
+      "source_form_parses": true
+    },
+    {
+      "canonical_goal_digest": "9780bd11bb9cfa46206a66b4a9cbd7d1ab68eb34d3cd60a58507bda3b469d0c5",
+      "id": "positive.exit_image",
+      "required_source_definitions": [
+        "L_t25_closed_positive",
+        "P_t25_fields",
+        "P_t25_frame",
+        "P_t25_inv",
+        "P_t25_private_frame",
+        "P_t25_private_ids",
+        "P_t25_private_observes",
+        "P_t25v3_ctor_inv"
+      ],
+      "source_form_parses": true
+    },
+    {
+      "canonical_goal_digest": "37059c0743da45c157add9f87e3f02e271e57002515eaedb51664044bf7c60c9",
+      "id": "positive.cleanup",
+      "required_source_definitions": [
+        "L_t25_closed_positive",
+        "P_t25_fields",
+        "P_t25_frame",
+        "P_t25_inv",
+        "P_t25_private_frame",
+        "P_t25_private_observes",
+        "P_t25v3_ctor_inv"
+      ],
+      "source_form_parses": true
+    }
+  ],
+  "source_typed_bridge_established": false,
+  "status": "INERT / NOT EXECUTED / COLD INSPECTION ONLY AFTER ROOT SETTLEMENT",
+  "template": {
+    "bytes": 25934,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-lifetime-glue-20261016/cold-main-template-v1.py",
+    "sha256": "b7f7bb24e6e1bfdef02ae89b0d110ec9b00d659ac56fd58495fc7709ca74c752"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "acceptance": false,
+  "classification": "PASSIVE_GOAL_SYMBOL_COUNT_METADATA",
+  "raw_terms_transferred": false,
+  "rows": [
+    {
+      "actual_goal_sha256": "8b05c13540a1ce5b3fdaaf42d4538a15174c40689bace3e66ffeb4ca27de9b03",
+      "id": "positive.exit_image",
+      "only_actual_symbol_counts": {
+        "8": 6,
+        "next": 4,
+        "put_integer": 6
+      },
+      "only_source_symbol_counts": {
+        "=": 1,
+        "L_t25_closed_positive": 6
+      },
+      "same_symbol_count_inventory": false,
+      "task": {
+        "bytes": 14259,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-fb197c5d-t25-closed-lifetime6-public-v1/closed-lifetime6-public-v1-profile/leaf-positive.exit_image/prover-files/typed_real/check_lemma_t25_closed_positive_exit_image_Why3_Alt_Ergo_2_6_4.psmt2",
+        "sha256": "c5e99d624b30e67411945f8f489fd4d461454075792b0154b6a9d7258ac42287"
+      }
+    },
+    {
+      "actual_goal_sha256": "a825de5ee14d778a852cf3ec68655e0e7fdafdcaa46cd2bd5461083b628b8a15",
+      "id": "positive.cleanup",
+      "only_actual_symbol_counts": {
+        "8": 6,
+        "next": 6,
+        "put_integer": 6
+      },
+      "only_source_symbol_counts": {
+        "0": 4,
+        "<": 2,
+        "=": 1,
+        "L_t25_closed_positive": 6,
+        "ite": 2
+      },
+      "same_symbol_count_inventory": false,
+      "task": {
+        "bytes": 13693,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-fb197c5d-t25-closed-lifetime6-public-v1/closed-lifetime6-public-v1-profile/leaf-positive.cleanup/prover-files/typed_real/check_lemma_t25_closed_positive_cleanup_Why3_Alt_Ergo_2_6_4.psmt2",
+        "sha256": "56e2de978cbdcdfd15d87686368ab10ede9a0f6b6f3fe1e8720b0c3947206635"
+      }
+    }
+  ],
+  "scientific_execution": false
+}

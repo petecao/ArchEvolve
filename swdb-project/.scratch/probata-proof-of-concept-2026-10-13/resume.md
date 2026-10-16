@@ -9,19 +9,20 @@ authorization. External Claude Code owns ticket 7. Root coordinates actual
 tool admission, mbit10 lanes, publication, and final tracker synchronization.
 See [active execution](execution-20261016.md) for the current checklist.
 
-At 15:34 ET, scoped vector math profiles remain accepted. The actual six-duty
-lifetime run has four Valid and two positive timeouts, independently cold-audited.
-A reviewed 23-leaf equivalent decomposition is ready for fresh evaluation. The
-projected-C 17 native Valid goals retain the unadmitted constructor premise and
-original not-proven result. A separate source effect/frame rule is in review.
+At 15:52 ET, all 23 lifetime conjunction leaves have passed complete independent
+cold review and scoped root adoption, alongside the unchanged four duties and
+prior mathematical profiles. Original compound timeouts remain unchanged.
+Corrected source observation v3 passed both review axes; its exact 82-target
+scientific binder and source/public integration are next. The mixed int/pointer
+pair fixture/profile and shared builders are reviewed; actual runs are pending.
 
-Ticket 28 has reviewed source fixes for actual initialized AST/LLVM forms and
-trace fixture bounds. Complete retained-observer replay passes; fresh formal
-runs remain pending. Whole-interface value families and binder V3 are reviewed;
-private native86 awaits exact guard/lane admission. Focused regressions completed
-80 passed; full defaults and final whole-change reviews remain pending. Neither
-ticket is complete. Tracker census is 35 resolved / 26 ready-for-agent / 2 claimed;
-external ticket 7 is untouched. See active execution for current evidence.
+Initialized-register V5 completed its actual two-record profile with the correct
+result proven and false result not_proven; complete cold review is next. Trace
+V3's pretest namespace refusal is retained; reviewed V4 is active. Native86 passed
+both exact C11/C++17 sanitizer censuses, with cold review pending. Whole-interface
+source/model/new-version integration continues. Focused: 80 passed; full defaults
+and final whole-change reviews remain pending. Neither ticket is complete.
+Census35 resolved / 26 ready / 2 claimed; external ticket 7 is untouched.
 
 The 11:35 ET pause and all snapshots below are historical. Their evidence and
 runtime boundaries remain intact; their stop instruction is superseded for

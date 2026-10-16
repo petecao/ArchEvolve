@@ -29,7 +29,7 @@ def main():
     if output == checkout or checkout in output.parents:
         parser.error("output must be outside the source checkout")
     output.mkdir(parents=True, exist_ok=False)
-    names = ("scripts/probata_pair_profile.py", "tests/test_pair_workflow.py",
+    names = ("scripts/probata_pair_profile.py", "tests/test_pair_workflow.py", "tests/testkit/pair_workflow.py",
              "tests/fixtures/proof/lowering/pair_only.cc", "swdb/bounded_std_initialization.py",
              "swdb/bounded_initialization.py", "swdb/std_models.py", "swdb/c_lowering.py", "swdb/wp_adapter.py",
              "swdb/proof_setup.py", "library/methods/probata-draft-1.yaml",

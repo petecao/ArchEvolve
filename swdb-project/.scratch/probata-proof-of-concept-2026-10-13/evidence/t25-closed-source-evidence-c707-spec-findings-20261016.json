@@ -1,0 +1,56 @@
+{
+  "SSH_executions_for_this_review": 0,
+  "caller_acceptance": false,
+  "classification": "CHANGES_REQUIRED_FOR_SOURCE_RULE_ACCEPTANCE_INERT_PREPARATION_SAFE",
+  "compiler_native_verifier_solver_runs": 0,
+  "created": "2026-10-16 ET",
+  "evidence_bundle_binding_unimplemented": true,
+  "findings": [
+    "Integrate original full census and direct data/dtor/frame source discharges.",
+    "Separate saved-pointer initialization from payload/return-scalar initialization.",
+    "Account for all fresh automatic administrative storage and writes/lifetimes.",
+    "Separate entry-live physical memory from dead allocation ghost history; define the observer interpretation."
+  ],
+  "launch_unconditionally_refuses": true,
+  "original_frame_partitions": 13,
+  "original_ordinary": 24,
+  "original_smoke": 9,
+  "pins": [
+    {
+      "bytes": 19454,
+      "path": "swdb-project/swdb/vector_reallocation_closed_evidence.py",
+      "sha256": "c7076f36515f1c9a6fe57d62820bf2eac9b3dfd076e2ddf380bca9172fc1da5e"
+    },
+    {
+      "bytes": 4657,
+      "path": "swdb-project/tests/test_vector_reallocation_closed_evidence.py",
+      "sha256": "07833eb184bf5e9b85dc07b43face80f477eb4d7d567a3b46852592179b99f9e"
+    },
+    {
+      "bytes": 5979,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-closed-source-evidence-preparation-v2-20261016.json",
+      "sha256": "dd004f359d853ff97ef64d4489cf64dac69b4142dfb75b538b0a8f909d589a86"
+    },
+    {
+      "bytes": 5322,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/README.md",
+      "sha256": "679d06271b4f688a83b4a72d702641ff951ecc8e02d15073c94d9cbaf10164c3"
+    },
+    {
+      "bytes": 19996,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/original-obligation-ledger-v1.json",
+      "sha256": "fc8513198ca681ba22cf5f782f5f5b15f4ccc8e229c7c94b952b940148b88937"
+    }
+  ],
+  "project_imports": 0,
+  "projected_ordinary": 17,
+  "projected_ordinary_goal_ids_exact": true,
+  "review": {
+    "bytes": 7321,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-closed-source-evidence-c707-spec-findings-20261016.md",
+    "sha256": "dcdffbbf4bef84fa2d87b66f540515984b25465c7ab07c2a8c139732dc75473a"
+  },
+  "scope": "Static independent Spec/semantic review of frozen c707 bytes; not proof acceptance or an evidence bundle validator.",
+  "source_admission": false,
+  "test_runs": 0
+}
