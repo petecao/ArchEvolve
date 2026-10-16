@@ -24,8 +24,9 @@ def main():
     if not 1 <= args.seconds <= 21600:
         parser.error("seconds must be in 1..21600")
     project = Path(__file__).resolve().parents[1]
+    checkout = project.parent
     output = args.output.resolve()
-    if output == project or project in output.parents:
+    if output == checkout or checkout in output.parents:
         parser.error("output must be outside the source checkout")
     output.mkdir(parents=True, exist_ok=False)
     names = ("scripts/probata_pair_profile.py", "tests/test_pair_workflow.py",
@@ -41,11 +42,13 @@ def main():
                "--basetemp=" + str(output / "pytest"), "--junitxml=" + str(output / "junit.xml")]
     manifest = {"created": datetime.now(timezone.utc).isoformat(), "mode": args.mode,
                 "source_sha256": pins, "command": command, "prospective_wall_seconds": args.seconds,
+                "required_external_rss_cap_bytes": 8589934592,
                 "actual_expected_records": 6 if args.mode == "actual-wp" else 0,
                 "scope": "four original int/int pair bodies, safe caller and wrong-field negative; contract_fixture"}
     (output / "profile.json").write_text(json.dumps(manifest, indent=2) + "\n")
     started = time.monotonic()
     env = {**os.environ, "PYTHONDONTWRITEBYTECODE": "1",
+           "SWDB_VERIFIER_RSS_CAP_BYTES": "8589934592",
            "SWDB_PAIR_ACTUAL": "1" if args.mode == "actual-wp" else "0",
            "SWDB_PAIR_DEADLINE_MONOTONIC": str(started + args.seconds)}
     if args.mode == "controls":

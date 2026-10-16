@@ -207,6 +207,19 @@ def test_changed_initializedness_source_invalidates_frozen_translator_before_sta
     assert not marker.exists()
 
 
+def test_profile_refuses_output_anywhere_inside_full_checkout_before_creation(tmp_path):
+    checkout = tmp_path / "checkout"
+    scripts = checkout / "swdb-project/scripts"
+    scripts.mkdir(parents=True)
+    script = scripts / "probata_pair_profile.py"
+    shutil.copy(REPO / "scripts/probata_pair_profile.py", script)
+    output = checkout / "outside-project-but-inside-checkout"
+    done = subprocess.run([sys.executable, script, "--mode", "controls", "--output", output],
+                          capture_output=True, text=True)
+    assert done.returncode != 0 and "outside the source checkout" in done.stderr
+    assert not output.exists()
+
+
 @pytest.mark.parametrize("member", MEMBERS)
 def test_each_original_pair_body_reaches_public_parser_with_initialization_rte_and_smoke(tmp_path, member):
     from swdb import c_lowering
@@ -229,6 +242,9 @@ def test_actual_four_pair_bodies_then_unchanged_caller_pin_current_proof_depende
 
     def retain(*args):
         record = prove(*args)
+        assert record["evidence_kind"] == "contract_fixture", record
+        assert record["pins"]["method_version"]["id"] == "method.pair-workflow-fixture", record
+        assert record["settings"]["rss_cap_bytes"] == 8589934592, record
         retained.append(record)
         # Completed records remain inspectable after a later profile failure.
         (tmp_path / "actual-pair-progress.json").write_text(json.dumps([
@@ -243,6 +259,7 @@ def test_actual_four_pair_bodies_then_unchanged_caller_pin_current_proof_depende
         assert record["pins"]["code"]["sha256"] == hashlib.sha256(c_lowering.model_text(member).encode()).hexdigest()
         assert record["goals"] and all(goal["status"] == "valid" for goal in record["goals"])
     caller = retain("--summary", CONTRACT)
+    assert caller["subject"] == {"kind": "library_summary", "id": CONTRACT}, caller
     assert caller["verdict"] == "proven", caller
     pinned = {row["id"]: row for row in caller["pins"]["models"]}
     assert set(pinned) == set(MEMBERS)
@@ -250,6 +267,7 @@ def test_actual_four_pair_bodies_then_unchanged_caller_pin_current_proof_depende
         assert pinned[member]["proof_record"] == record["id"]
         assert pinned[member]["sha256"] == record["pins"]["code"]["sha256"]
     wrong = retain("--summary", "contract.fixture_pair_wrong_field")
+    assert wrong["subject"] == {"kind": "library_summary", "id": "contract.fixture_pair_wrong_field"}, wrong
     assert wrong["verdict"] == "not_proven" and wrong["failure_class"] in {"unknown", "timeout"}, wrong
     assert any(not goal.get("smoke") and goal["status"] != "valid" for goal in wrong["goals"])
     assert not any(goal.get("smoke") and goal["status"] != "valid" for goal in wrong["goals"])
