@@ -1,6 +1,5 @@
 // 2026-10-16 ET. Formal-only device initializedness diagnostics.
 // No unsafe negative may be executed natively. No Init/reset/havoc premise.
-#include "gapbs_models.h"
 #include "dxc_summaries.h"
 
 /*@ requires TILE_SIZE == 2;
