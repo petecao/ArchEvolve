@@ -28,13 +28,26 @@ def compiler_context(tool):
     return runtime_identity(tool)
 
 
-def run_model(tmp_path, body, *, exit_code=0, prelude='', commands=False):
+def run_model(tmp_path, body, *, exit_code=0, prelude='', commands=False, numeric=False, actions=False):
     spec = importlib.util.spec_from_file_location('dx_deferred_state', ROOT / 'deferred_state.py')
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     header = module.render_header()
+    if numeric:
+        spec = importlib.util.spec_from_file_location('dx_numeric_values', ROOT / 'numeric_values.py')
+        numeric_module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(numeric_module)
+        spec = importlib.util.spec_from_file_location('dx_typed_state', ROOT / 'typed_state.py')
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        header = module.render_header(header, numeric_module.render_header())
     if commands:
         spec = importlib.util.spec_from_file_location('dx_command_state', ROOT / 'command_state.py')
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        header = module.render_header(header)
+    if actions:
+        spec = importlib.util.spec_from_file_location('dx_action_state', ROOT / 'action_state.py')
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         header = module.render_header(header)
@@ -264,6 +277,33 @@ static uint64_t test_add(unsigned dtype, unsigned op, uint64_t a, uint64_t b) {
 ''')
 
 
+def test_consumer_completion_covers_its_producer_command_without_early_history_settlement(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  for (unsigned pick=0; pick<2; ++pick) {
+    dxc_reset(); chosen=pick;
+    dxm_claim_tile(0,2,4); dxm_claim_tile(0,3,4);
+    dxm_cpu_write(1,7,1);
+    unsigned producer=dxc_prepare(0,0,1,0,4,0,4,28,32);
+    unsigned read=dxm_issue_read(0,7); dxc_bind(producer,read);
+    unsigned consumer=dxc_prepare(0,-1,0,4,8,4,8,0,0);
+    unsigned ten=dxm_constant(10);
+    unsigned sum=dxm_issue_binary(0,0,0,read,ten); dxc_bind(consumer,sum);
+    uint64_t expected=1; assert(dxc_cpu_cas(1,7,28,32,&expected,2));
+    dxc_wait_tile(3);
+    assert(dxm_value(sum) == (pick == 0 ? 11 : 12));
+    dxc_cpu_tile_access(0,2,4,0); dxc_cpu_tile_access(0,3,4,0);
+  }
+  return 0;
+}
+''', commands=True, prelude=r'''
+static uint64_t test_add(unsigned dtype, unsigned op, uint64_t a, uint64_t b) {
+  assert(dtype == 0 && op == 0); return (uint32_t)a + (uint32_t)b;
+}
+#define DXM_EVAL(dtype,op,a,b) test_add(dtype,op,a,b)
+''')
+
+
 def test_unresolved_indices_capture_issue_memory_and_real_writes_without_placeholder_dereferences(tmp_path):
     run_model(tmp_path, r'''
 int main(void) {
@@ -311,6 +351,123 @@ int main(void) {{
   return 0;
 }}
 ''')
+
+
+@pytest.mark.parametrize('dtype,lhs,rhs,result', [
+    (0,'0xffffffff','2','1'), (1,'0xfffffffd','5','2'),
+    (2,'0x3fc00000','0x40100000','0x40700000'),
+    (3,'0xffffffffffffffff','2','1'), (4,'0xfffffffffffffffd','5','2'),
+    (5,'0x3ff8000000000000','0x4002000000000000','0x400e000000000000')])
+def test_deferred_numeric_values_keep_each_device_types_raw_representation(tmp_path, dtype, lhs, rhs, result):
+    run_model(tmp_path, f'''
+int main(void) {{
+  dxm_reset();
+  struct dx_num_runtime native_profile={{0,1,0}};
+  dxt_set_runtime(native_profile);
+  unsigned left=dxm_constant(UINT64_C({lhs})), right=dxm_constant(UINT64_C({rhs}));
+  unsigned sum=dxt_binary(0,{dtype},0,left,right);
+  dxm_cover(sum);
+  assert(dxm_value(sum) == UINT64_C({result}));
+  return 0;
+}}
+''', numeric=True)
+
+
+@pytest.mark.parametrize('opcode,exit_code', [(0,0),(16,42)])
+def test_inactive_arithmetic_skips_rte_but_cannot_hide_an_unsupported_source_opcode(tmp_path, opcode, exit_code):
+    result = run_model(tmp_path, f'''
+int main(void) {{
+  dxm_reset();
+  unsigned condition=dxm_constant(0), preserved=dxm_constant(7);
+  unsigned left=dxm_constant(INT32_MAX), right=dxm_constant(1);
+  unsigned operation=dxt_binary(0,1,{opcode},left,right);
+  unsigned selected=dxm_select(0,condition,operation,preserved);
+  dxm_cover(selected);
+  assert(dxm_value(selected) == 7);
+  return 0;
+}}
+''', numeric=True, exit_code=exit_code)
+    assert result.stderr == ('numeric-opcode-domain' if exit_code else '')
+
+
+def test_store_effect_waits_for_captured_producer_versions_and_preserves_history_choices(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  for (unsigned pick=0; pick<2; ++pick) {
+    dxc_reset(); chosen=pick;
+    dxm_claim_tile(0,2,4); dxm_claim_tile(0,3,4);
+    dxm_cpu_write(1,7,1); dxm_cpu_write(1,0,99);
+    unsigned producer=dxc_prepare(0,0,1,0,4,0,4,28,32);
+    unsigned read=dxm_issue_read(0,7); dxc_bind(producer,read);
+    unsigned alu=dxc_prepare(0,-1,0,4,8,4,8,0,0);
+    unsigned ten=dxm_constant(10), sum=dxt_binary(0,0,0,read,ten); dxc_bind(alu,sum);
+    unsigned store=dxc_prepare(0,1,2,8,0,8,0,64,128);
+    unsigned index=dxm_constant(0), active=dxm_constant(1);
+    unsigned effect=dxa_store(store,0,0,1,index,sum,active); dxc_bind(store,effect);
+    uint64_t expected=1; assert(dxc_cpu_cas(1,7,28,32,&expected,2));
+    dxc_wait_tile(3);
+    assert(dxc_cpu_read(1,0,64,68) == (pick == 0 ? 11 : 12));
+  }
+  return 0;
+}
+''', commands=True, numeric=True, actions=True)
+
+
+@pytest.mark.parametrize('active,old,updated', [(1,10,13),(0,77,10)])
+def test_rmw_publishes_old_value_once_and_inactive_lanes_preserve_the_old_tile_payload(tmp_path, active, old, updated):
+    run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset(); chosen=0;
+  dxm_claim_tile(0,2,4); dxm_claim_tile(0,3,4);
+  dxm_cpu_write(1,0,10);
+  unsigned command=dxc_prepare(0,0,2,4,8,4,8,64,128);
+  unsigned index=dxm_constant(0), value=dxm_constant(3), condition=dxm_constant({active});
+  unsigned preserved=dxm_constant(77), old=dxm_result();
+  unsigned root=dxa_rmw(command,0,0,0,1,index,value,condition,old,preserved); dxc_bind(command,root);
+  dxc_wait_tile(3);
+  assert(dxm_value(old) == {old});
+  assert(dxc_cpu_read(1,0,64,68) == {updated});
+  dxc_wait_tile(3);
+  assert(dxm_value(old) == {old});
+  assert(dxc_cpu_read(1,0,64,68) == {updated});
+  return 0;
+}}
+''', commands=True, numeric=True, actions=True)
+
+
+def test_different_regions_do_not_hide_device_conflicts_on_one_physical_store_line(tmp_path):
+    result = run_model(tmp_path, r'''
+int main(void) {
+  dxc_reset(); dxm_claim_tile(0,2,4); dxm_claim_tile(1,3,4);
+  unsigned first=dxc_prepare(0,0,2,4,0,4,0,64,128);
+  dxc_bind(first,dxm_constant(1));
+  unsigned second=dxc_prepare(1,1,1,0,8,0,8,96,100);
+  dxc_bind(second,dxm_constant(2));
+  return 0;
+}
+''', commands=True, exit_code=42)
+    assert result.stderr == 'device-memory-footprint-conflict'
+
+
+def test_duplicate_rmw_old_results_follow_progressive_copied_values_without_global_lane_order(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  for (unsigned first=0; first<2; ++first) {
+    dxc_reset(); chosen=first; dxm_claim_tile(0,2,4); dxm_claim_tile(0,3,4);
+    dxm_cpu_write(1,0,0);
+    unsigned command=dxc_prepare(0,0,2,4,8,4,8,64,128);
+    unsigned index=dxm_constant(0), one=dxm_constant(1), two=dxm_constant(2), active=dxm_constant(1);
+    unsigned preserved=dxm_constant(77), old_a=dxm_result(), old_b=dxm_result();
+    unsigned a=dxa_rmw(command,0,0,0,1,index,one,active,old_a,preserved);
+    unsigned b=dxa_rmw(command,0,0,0,1,index,two,active,old_b,preserved);
+    dxc_bind(command,dxm_join(a,b)); dxc_wait_tile(3);
+    assert(dxc_cpu_read(1,0,64,68) == 3);
+    assert(dxm_value(old_a) == (first == 0 ? 0 : 2));
+    assert(dxm_value(old_b) == (first == 0 ? 1 : 0));
+  }
+  return 0;
+}
+''', commands=True, numeric=True, actions=True)
 
 
 def test_failed_cas_expected_and_desired_values_do_not_enter_gather_history(tmp_path):
