@@ -275,7 +275,15 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
                 _fail("summary_hash", f"summary {summary['id']} differs from its pinned content")
     hashes = {"summaries": _digest(summary_pins)}
     if adapter.name in {'cbmc', 'wp', 'crux-llvm-c', 'crux-llvm-cxx'}:
-        from swdb import stdlib_source_admission
+        from swdb import c_lowering, stdlib_provenance, stdlib_source_admission
+        runtime = stdlib_provenance.runtime_identity(c_lowering.locate())
+        if not runtime.get('driver') or not runtime.get('command_executable'):
+            _fail('compiler_runtime', runtime.get('unavailable', 'the compiler frontend cannot be pinned'))
+        translators = (adapter.method.data.get('c_lowering') or {}).get('translators') or []
+        if c_lowering.identity()['c_lowering'] not in translators:
+            _fail('compiler_runtime', 'the compiler runtime or lowering changed after method admission')
+        hashes['compiler_runtime'] = _digest(runtime)
+        context.setdefault('settings', {})['compiler_runtime'] = runtime
         try:
             hashes['stdlib_provenance'] = _digest(stdlib_source_admission.recheck(context, lowering))
         except stdlib_source_admission.Refused as exc:
