@@ -284,3 +284,16 @@ admission. Actual source-model agreement, remaining interface/state transitions,
 production current0.2 and all whole-ticket acceptance boxes remain open.
 
 2026-10-16 03:10 ET integration checkpoint: [root static review](../evidence/t28-size-root-static-review-v2-7e64298f-20261016.md) and [composition review](../evidence/t28-t25-source-preparation-integration-review-20261016.md) accept size7e642 publication/preparation only, with353 exact Git pins and1400 physical preparation references rechecked here. The explicit conditional fresh-SPD premise/private64-byte representation remains visible; no actual WP result yet. Root alone may admit exact7e642 after fresh preflight. Current integration also composes independent T25 canonical preparation; historical selector770 records retain their exact older checker/runtime. Full interface/current0.2/hardware/source composition and ticket28 remain open.
+
+
+2026-10-16 strict stateful negative acceptance successor: root reports original
+7e642 actual positive8/8ordinary+2smoke, but the negative is solver_error with
+failed/unknown/timeout native ensures results despite pytest exit0. Preserve that
+historical result; it is not healthy negative acceptance. Separate test-only
+successor2b25ee6c now rejects solver/resource failures and every unhealthy native
+result, requires complete pinned matching goal inventory and actual attempted
+ordinary nonproof, while retaining ensures-only-open/smoke/RTE/nonvacuity and
+positive criteria. Pure RED13fail/5pass becomes24pass/3actualSKIP; no production,
+method/source/model changes or formal rerun. See
+[evidence](../evidence/t28-size-negative-health-controls-20261016.md). Root owns
+remote cold audit, error diagnosis, independent review and future actual admission.
