@@ -115,3 +115,14 @@ wrappers and formal IEEE relations remain active. No current semantics0.2entry
 exists; status stays **claimed** and every acceptance box remains unchecked.
 [Design](../prototype/28-proof-semantics/deferred-state-design.md),
 [exact source/native/RED pins](../evidence/t28-deferred-state-initial-controls-20261015.json).
+
+Numeric/action successor — 2026-10-15 ET:36/36 native prototype controls cover
+the six raw-bit numeric types, consumer completion dependencies, deferred stores,
+immutable RMW old values and inactive preservation, duplicate-entry order and
+cross-region full-line device hazards. These are logical completion effects
+qualified by no-interference and future checked source/address/F2 mappings;
+no exact packet schedule or public/actual proof is claimed. Readiness still
+allows zero forever, so mandatory polling termination remains unproven until a
+source/trust-bound progress domain is established. No extra wait or desired
+postcondition is assumed. All acceptance boxes stay open and status stays
+**claimed**. [Exact successor evidence](../evidence/t28-deferred-actions-numeric-controls-20261015.json).

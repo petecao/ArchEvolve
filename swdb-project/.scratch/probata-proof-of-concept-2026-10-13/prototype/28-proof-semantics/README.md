@@ -137,3 +137,14 @@ receipts; no actual formal tool or public proof acceptance is claimed.
 [RED/GREEN evidence](../../evidence/t28-deferred-state-initial-controls-20261015.json).
 Deferred stores/RMW, complete call/type wrappers and checked source mappings
 remain incomplete. No new current version is installed; ticket28 stays claimed.
+
+Numeric/action successor — 2026-10-15 ET:36/36 native controls now include all
+six scalar raw-bit types, producer-command dependencies, deferred stores,
+single-publication RMW old results, inactive payload preservation and
+conservative duplicate-entry ordering. Full physical-line device conflicts
+also refuse across distinct regions. The logical effects rely on checked
+no-interference and address/F2 correspondence, not an exact packet schedule.
+No public proof or new current version is claimed. Readiness termination remains
+open pending a distinct source/trust-bound progress domain.
+[Design](deferred-state-design.md),
+[successor RED/GREEN evidence](../../evidence/t28-deferred-actions-numeric-controls-20261015.json).

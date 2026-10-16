@@ -107,6 +107,24 @@ static void dxm_cpu_write(unsigned thread, unsigned cell, uint64_t value) {
     }
   }
 }
+/* Actual device event, after command-level physical conflicts are discharged.
+   It extends other unfinished read intervals without pretending to be a CPU. */
+static void dxm_device_write(unsigned cell, uint64_t value) {
+  DXM_CHECK(cell < DXM_CELLS, "cell-domain");
+  DXM_CHECK(dxm_event_count < DXM_EVENTS, "memory-event-capacity");
+  for (unsigned i=0; i<dxm_count; ++i) {
+    struct dxm_node *n=&dxm_nodes[i];
+    if (!n->settled && n->kind == 0 && n->cell == cell)
+      DXM_CHECK(n->count < DXM_HISTORY, "history-capacity");
+  }
+  dxm_memory[cell]=value; dxm_initialized[cell]=1;
+  dxm_events[dxm_event_count].cell=cell;
+  dxm_events[dxm_event_count++].value=value;
+  for (unsigned i=0; i<dxm_count; ++i) {
+    struct dxm_node *n=&dxm_nodes[i];
+    if (!n->settled && n->kind == 0 && n->cell == cell) n->history[n->count++]=value;
+  }
+}
 static uint64_t dxm_cpu_read(unsigned thread, unsigned cell) {
   DXM_CHECK(thread < 2, "thread-domain");
   DXM_CHECK(cell < DXM_CELLS, "cell-domain");
@@ -179,6 +197,25 @@ static unsigned dxm_select(unsigned thread, unsigned condition, unsigned yes, un
   n->kind=4; n->issuer=thread; n->left=condition; n->right=yes; n->otherwise=no; n->settled=0;
   return id;
 }
+static unsigned dxm_join(unsigned left,unsigned right) {
+  DXM_CHECK(left < dxm_count && right < dxm_count, "producer-version-domain");
+  DXM_CHECK(dxm_count < DXM_NODES, "node-capacity");
+  unsigned id=dxm_count++;
+  struct dxm_node *n=&dxm_nodes[id];
+  n->kind=5; n->left=left; n->right=right; n->settled=0;
+  return id;
+}
+static unsigned dxm_result(void) {
+  DXM_CHECK(dxm_count < DXM_NODES, "node-capacity");
+  unsigned id=dxm_count++;
+  dxm_nodes[id].kind=6; dxm_nodes[id].settled=0;
+  return id;
+}
+static void dxm_publish(unsigned id,uint64_t value) {
+  DXM_CHECK(id < dxm_count && dxm_nodes[id].kind == 6, "action-result-domain");
+  DXM_CHECK(!dxm_nodes[id].settled, "immutable-action-result");
+  dxm_nodes[id].value=value; dxm_nodes[id].settled=1;
+}
 static void dxm_cover(unsigned id) {
   DXM_CHECK(id < dxm_count, "node-domain");
   DXM_CHECK(DXM_NODES > 0 && DXM_NODES <= UINT_MAX/8, "node-capacity-domain");
@@ -191,8 +228,9 @@ static void dxm_cover(unsigned id) {
     unsigned frame=depth-1, i=stack[frame];
     struct dxm_node *n=&dxm_nodes[i];
     if (n->settled) { --depth; continue; }
+    if (n->kind == 6) { DXM_CHECK(0, "action-result-before-completion"); return; }
     unsigned parent=0, visit=0;
-    if (n->kind == 2 && phase[frame] < 2) {
+    if ((n->kind == 2 || n->kind == 5) && phase[frame] < 2) {
       parent=phase[frame] == 0 ? n->left : n->right;
       ++phase[frame]; visit=1;
     } else if (n->kind == 3 && phase[frame] == 0) {
@@ -229,6 +267,8 @@ static void dxm_cover(unsigned id) {
         unsigned pick=DXM_CHOOSE(count);
         DXM_CHECK(pick < count, "nondeterministic-choice-domain");
         n->value=candidates[pick];
+      } else if (n->kind == 5) {
+        n->value=0;
       } else {
         DXM_CHECK(n->kind == 4, "value-node-kind-domain");
         n->value=dxm_nodes[dxm_nodes[n->left].value ? n->right : n->otherwise].value;

@@ -16,10 +16,16 @@ def render_header(values_header):
 #ifndef DXC_REGIONS
 #define DXC_REGIONS 8
 #endif
+#ifndef DXC_ON_RESET
+#define DXC_ON_RESET() ((void)0)
+#endif
+#ifndef DXC_ON_COMPLETE
+#define DXC_ON_COMPLETE(id) ((void)(id))
+#endif
 struct dxc_command {
   unsigned thread, pending, bound, root, access;
   int region;
-  uint64_t explicit_read, explicit_write, physical_read, physical_write, begin, end;
+  uint64_t explicit_read, explicit_write, physical_read, physical_write, begin, end, dependencies;
 };
 static struct dxc_command dxc_commands[DXC_COMMANDS];
 static unsigned dxc_count, dxc_constructing;
@@ -39,7 +45,9 @@ static struct dxc_span dxc_store_span(uint64_t address, uint64_t bytes, uint64_t
 }
 static void dxc_reset(void) {
   DXM_CHECK(DXM_TILES <= 64, "tile-mask-capacity");
+  DXM_CHECK(DXC_COMMANDS <= 64, "command-mask-capacity");
   dxm_reset(); dxc_count=0; dxc_constructing=0;
+  DXC_ON_RESET();
 }
 static uint64_t dxc_tile_mask(unsigned tile, unsigned bytes) {
   unsigned halves=dxm_tile_halves(tile,bytes);
@@ -64,6 +72,7 @@ static unsigned dxc_prepare(unsigned thread, int region, unsigned access,
     uint64_t explicit_read, uint64_t explicit_write,
     uint64_t physical_read, uint64_t physical_write, uint64_t begin, uint64_t end) {
   DXM_CHECK(!dxc_constructing, "unbound-command");
+  DXM_CHECK(DXC_COMMANDS <= 64, "command-mask-capacity");
   DXM_CHECK(access <= 2, "access-kind-domain");
   if (access == 0) {
     DXM_CHECK(region == -1 && begin == 0 && end == 0, "compute-memory-footprint");
@@ -82,11 +91,16 @@ static unsigned dxc_prepare(unsigned thread, int region, unsigned access,
         || (access != 0 && old->access != 0 && old->region == region
             && (access == 2 || old->access == 2)))) dxc_cover(i);
   }
+  uint64_t dependencies=0;
   for (unsigned i=0; i<dxc_count; ++i) {
     struct dxc_command *old=&dxc_commands[i];
     if (old->pending) {
-      DXM_CHECK(!(old->physical_write & (physical_read | physical_write))
-                && !(old->physical_read & physical_write), "pending-tile-write");
+      if (access != 0 && old->access != 0 && begin < old->end && old->begin < end)
+        DXM_CHECK(access != 2 && old->access != 2, "device-memory-footprint-conflict");
+      unsigned dependent=(explicit_read & old->explicit_write) != 0;
+      DXM_CHECK(!(old->physical_write & physical_write) && !(old->physical_read & physical_write)
+                && (!(old->physical_write & physical_read) || dependent), "pending-tile-write");
+      if (dependent) dependencies |= UINT64_C(1) << i;
     }
   }
   DXM_CHECK(dxc_count < DXC_COMMANDS, "command-history-capacity");
@@ -94,6 +108,7 @@ static unsigned dxc_prepare(unsigned thread, int region, unsigned access,
   struct dxc_command *c=&dxc_commands[id];
   c->thread=thread; c->pending=1; c->bound=0;
   c->region=region; c->access=access; c->begin=begin; c->end=end;
+  c->dependencies=dependencies;
   c->explicit_read=explicit_read; c->physical_read=physical_read;
   c->explicit_write=explicit_write; c->physical_write=physical_write;
   dxc_constructing=id+1;
@@ -109,9 +124,21 @@ static void dxc_cover(unsigned id) {
   DXM_CHECK(!dxc_constructing, "unbound-command");
   DXM_CHECK(DXM_TILES <= 64, "tile-mask-capacity");
   DXM_CHECK(id < dxc_count && dxc_commands[id].bound, "command-domain");
-  if (dxc_commands[id].pending) {
-    dxm_cover(dxc_commands[id].root);
-    dxc_commands[id].pending=0;
+  unsigned needed[DXC_COMMANDS]={0}; needed[id]=1;
+  for (unsigned cursor=id+1; cursor>0; --cursor) {
+    unsigned i=cursor-1;
+    if (needed[i]) {
+      for (unsigned parent=0; parent<i; ++parent)
+        if ((dxc_commands[i].dependencies >> parent) & 1) needed[parent]=1;
+    }
+  }
+  for (unsigned i=0; i<=id; ++i) {
+    if (needed[i] && dxc_commands[i].pending) {
+      DXM_CHECK(dxc_commands[i].bound, "command-binding");
+      dxm_cover(dxc_commands[i].root);
+      DXC_ON_COMPLETE(i);
+      dxc_commands[i].pending=0;
+    }
   }
 }
 /* gem5 compares explicit starting IDs. No thread-owner check: this is one
