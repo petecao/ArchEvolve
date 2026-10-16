@@ -27,7 +27,7 @@ def test_public_qualified_grow_records_allocation_identity_domain_without_claimi
     assert image['id'] == 'wp-typed-int32-source-image-1'
     assert image['raw_effective_type_safety_proved'] is False
     assert image['caller_discharge'] == 'source-derived typed int objects; opaque raw storage unsupported'
-    assert image['runtime_source_binding'] == 'pending selected-tool verification; not assumed'
+    assert image['runtime_source_binding'] == 'required selected-tool verification before every launch; not assumed'
     assert record['pins']['vector_reallocation_model']['id'] == 'vector-reallocation-domain-3'
     reports = {r['name']: r for r in record['evidence']['reports']}
     source = Path(reports['vector_reallocation_model']['path']).read_text()

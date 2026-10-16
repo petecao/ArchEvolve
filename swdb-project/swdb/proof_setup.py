@@ -33,6 +33,7 @@ CHECK_SOURCES += ("heap_model_view.py", "heap_model_packets.py", "heap_model_vcs
                   "vector_reallocation_calls.py", "vector_reallocation_vcs.py", "heap_reallocation.mlw",
                   "vector_reallocation_caller_vcs.py")
 CHECK_SOURCES += ("vector_reallocation_inventory.py",)
+CHECK_SOURCES += ("vector_reallocation_view.py",)
 REQUIRED_WP_SWITCHES = (("-wp-no-filter-init", "-wp-filter-init"), ("-wp-rte", "-wp-no-rte"))
 _COMPILED_MODULES = {}
 _ASSUME = re.compile(r"\b(?:llvm_assume|crucible_assume|__VERIFIER_assume)\b|\b(?:__CPROVER_assume|SWDB_ASSUME|assume)\s*\(")

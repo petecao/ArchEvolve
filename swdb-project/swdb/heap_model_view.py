@@ -84,6 +84,9 @@ def _view(member, manifest):
 
 
 def prepare(member, directory):
+    from swdb import vector_reallocation_view as qualified
+    if member in qualified.MEMBERS:
+        return qualified.prepare(member, directory)
     try:
         manifest = packets.prepare(Path(directory))
         return _view(member, manifest)
@@ -92,6 +95,9 @@ def prepare(member, directory):
 
 
 def check(member, view, directory):
+    from swdb import vector_reallocation_view as qualified
+    if member in qualified.MEMBERS:
+        return qualified.check(member, view, directory)
     try:
         fresh = _view(member, packets.check(Path(directory)))
     except (ValueError, KeyError) as exc:
@@ -173,6 +179,8 @@ def foundations(tool, directory, deadline):
         pins.append({'path': str(path), 'sha256': digest})
     if (stdlib / 'heap_bridge.mlw').exists() or (stdlib / 'heap_bridge.why').exists():
         raise Refused('the selected Why3 load path shadows the canonical heap import')
+    if (stdlib / 'heap_reallocation.mlw').exists() or (stdlib / 'heap_reallocation.why').exists():
+        raise Refused('the selected Why3 load path shadows the qualified heap import')
     return {'frama_share': str(share), 'why3_loadpath': [str(stdlib)], 'sources': pins,
             'ocamlfind_command': find, 'ocaml_package_paths': {'wp_core': str(core), 'why3': str(why3)},
             'metadata_source_sha256': _sha(source.read_bytes()),
@@ -205,6 +213,11 @@ def check_launch(job, adapter, context, command_line, settings_flags, directory)
     if list(settings_flags) != expected_flags or list(command_line) != expected:
         raise Refused('the complete original-source heap proof command changed before launch')
     foundation = state['foundation']
+    from swdb import vector_reallocation_view as qualified
+    if job.unit.function in qualified.MEMBERS and not job.unit.function.endswith('_dtor'):
+        binding=qualified.typed_runtime(foundation,settings_flags)
+        if context['settings'].get('vector_reallocation_typed_runtime')!=binding:
+            raise Refused('the qualified typed-int runtime binding changed before launch')
     if context['settings'].get('heap_model_foundations') != foundation or \
             context['pins'].get('heap_model_foundations') != {
                 'id': 'heap-model-standard-foundations-1', 'sha256': _digest(foundation['sources'])}:
@@ -232,7 +245,7 @@ def prove(job, adapter, context):
     log, root = context['log'], context['wp_dir']
     deadline = context['started_monotonic'] + (job.budget_seconds or wp_adapter.DEFAULT_WALL_SECONDS)
     context['goals'], context['unproven'] = [], []
-    context['settings'] = {'tool': 'frama-c-wp', 'session': 'fresh', 'verifier_launched': False,
+    context['settings'] = {**context.get('settings',{}),'tool': 'frama-c-wp', 'session': 'fresh', 'verifier_launched': False,
                            'machdep': 'x86_64', 'flags': flags(context['tools']),
                            'build_constants': list(adapter.defines), 'hint_count': len(adapter.hints),
                            'heap_model_runs': [], 'whole_public_budget_seconds':
@@ -246,21 +259,39 @@ def prove(job, adapter, context):
         cert_path.write_text(certificate_text(view))
         context['pins'].update(view.pins)
         context['settings']['heap_model_view'] = view.certificate
-        context['reports'] += [('heap_model_original', inputs / (view.member + '.original.c')),
+        context['reports'] += [('heap_model_original', inputs / view.certificate['original_source']['path']),
                                ('heap_model_certificate', cert_path),
-                               ('heap_model_theory', inputs / 'theory/heap_bridge.mlw'),
+                               ('heap_model_theory', inputs / view.certificate['semantics']['path']),
                                ('heap_model_manifest', inputs / 'manifest.json')]
-        context.setdefault('assumed', []).append({'kind': 'trusted_tool', 'reference': identity(),
-            'sentence': 'The checked source-mapped unbounded typed heap VC translation preserves the exact '
+        translation_sentence=('The checked source-mapped unbounded typed heap VC translation preserves the exact '
                         'original model clauses, accesses, initialization, frame and allocation lifetime. '
-                        'No original caller premise is added; generic caller composition remains unsupported.'})
-        if view.member != MEMBERS[1]:
+                        'No original caller premise is added; generic caller composition remains unsupported.')
+        if 'qualification' in view.certificate:
+            translation_sentence=(
+                'The checked source-mapped unbounded heap VC translation certifies only the explicit v3 '
+                'qualified source/type-image domain, accesses, initialization, frame and allocation lifetime. '
+                'This does not prove the original v2 raw contract or raw effective-type safety. '
+                'Source-derived caller type/eligibility and cross-view liveness discharge remain required; '
+                'generic caller composition is unsupported.')
+            if view.member.endswith('_dtor'):
+                translation_sentence=(
+                    'The checked qualified destructor uses its original broad pointer/free domain, '
+                    'including receiver/backing overlap. It performs no buffer element load and adds '
+                    'no typed-int image restriction. It certifies this exact qualified subject only; '
+                    'generic caller composition and cross-view liveness discharge remain unsupported.')
+        context.setdefault('assumed', []).append({'kind': 'trusted_tool',
+            'reference': view.pins['heap_model_view_check'],'sentence':translation_sentence})
+        if view.certificate.get('has_allocation',view.member != MEMBERS[1]):
             context['assumed'].append({'kind': 'trusted_tool', 'reference': view.certificate['model'],
                 'sentence': 'Allocation succeeds under the existing fresh-allocation/available-address/frame policy; '
                             'new typed cells are uninitialized until written.'})
         tool = framac.locate().command
         foundation = foundations(tool, root / 'heap-environment', deadline)
         context['settings']['heap_model_foundations'] = foundation
+        from swdb import vector_reallocation_view as qualified
+        if job.unit.function in qualified.MEMBERS and not job.unit.function.endswith('_dtor'):
+            context['settings']['vector_reallocation_typed_runtime']=qualified.typed_runtime(
+                foundation,context['settings']['flags'])
         context['pins']['heap_model_foundations'] = {'id': 'heap-model-standard-foundations-1',
                                                     'sha256': _digest(foundation['sources'])}
         context['assumed'].append({'kind': 'trusted_tool', 'reference': context['pins']['heap_model_foundations'],

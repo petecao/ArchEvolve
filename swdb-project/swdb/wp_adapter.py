@@ -137,9 +137,7 @@ class WpAdapter:
                                         draft / pin["path"]) for name,pin in plan["sources"].items()]
                 context["reports"] += [("vector_reallocation_vc_" + row["id"], draft / row["path"])
                                        for row in plan["obligations"]]
-                return self._not_proven("unsupported_construct",
-                    "The explicit v3 domain requires a fresh unbounded body proof and caller discharge; "
-                    "the original v2 contract is not proved by this preparation.", context)
+                return heap_model_view.prove(job, self, context)
             if job.unit.function in heap_model_view.MEMBERS:
                 return heap_model_view.prove(job, self, context)
             if re.search(r"\b(?:allocates|frees)\b|\\(?:fresh|freeable)\b", text):
