@@ -1092,3 +1092,10 @@ original raw-growth proof or complete caller acceptance is claimed. Source,
 clause/frame/cleanup/dependency closure and fresh normal-reader proof remain open.
 The coordinator owns the prospective minimal theory type gate and all actual
 jobs. Evidence: `../evidence/t25-reallocation-pending-heap-map-controls-v2-20261016.json`.
+
+
+## Qualified-v3 pending-source integration — 2026-10-16 02:45 ET
+
+Exact304e03ac097352e78c3d3a637e13e951bef51dd0 is published as prospective source for the separately planned exact-Git-blob type-only gate. The original v2 catalog and accepted heap bridge/VC/packet/view remain unchanged. New explicit qualified constructor/grow/reserve/dtor lookup records the candidate model/domain/theory and emits30/20/26/11 pending targets, but always returns not_proven/unsupported_construct before verifier launch. Caller AST receipts retain original v2 calls, no known origins and no added premises; ten source-local placement/history/frame/data/guard duties are pending. [Preparation README](../prototype/25-reallocation-domain/README.md), [integration review](../evidence/t07-t25-preparation-integration-review-20261016.md).
+
+Typed WP integer-source embedding and non-dynamic automatic-object lifetime definitions are drafts, with selected-runtime/source binding and full source/clause/frame/type/import/task/body/caller completeness unproved. Arbitrary entry-snapshot copying is not uniform-fill reuse; constructor capacity/eligibility are qualified postconditions to prove and destructor overlap scope stays broad. The latest preparation packet's407 references rehash without mismatch. Retained19 compiler/native controls and34 defined C/C++ caller comparisons are finite evidence, not a universal or stale-alias/UB proof. No formal/compiler job was run by integration; no type/proof result follows merely from publication. Status remains claimed and no dependency/default/current-catalog record is upgraded. Selector770's separate final cold record audit remains pending.
