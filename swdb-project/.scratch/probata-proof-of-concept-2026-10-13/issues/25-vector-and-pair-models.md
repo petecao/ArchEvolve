@@ -98,7 +98,10 @@ command), configuration, staged theory and 57 standard-library files. Fresh Git
 extraction matches the staged bytes; the declared library tree digest matches
 `520d9875...`. Evidence: `../evidence/t25-typecheck-cold-audit-v1-9d8ca764-20261015.json`.
 The separately retained entry review records the old-bootstrap/new-input boundary.
-Independent cold-result review is pending.
+Independent cold-result/v4-entry review passed: all 70 physical references and
+eight raw metadata pins were freshly rehashed, including launched entry/argv
+bindings. Actual whole/wrapper budgets were 600/720 seconds. Receipt:
+`../evidence/t25-typecheck-cold-and-v4-entry-review-20261015.md`.
 
 This accepts grammar/types only, following [Why3's type-only option](https://why3.org/doc/manpages.html).
 It runs no WP or solver, creates no model-body proof record, and establishes no
