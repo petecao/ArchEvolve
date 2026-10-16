@@ -52,7 +52,7 @@ def prepared_caller(tmp_path_factory):
     from swdb import vector_reallocation_caller_packets as packets
     stage=tmp_path_factory.mktemp('caller-packets')/'source'
     plan=packets.prepare(SOURCE,'vector_realloc_v3_safe',CONTRACT,stage)
-    assert len(plan['obligations'])==82 # 30ctor +30reserve(with four cell conjuncts) +11dtor +10local +1numeric
+    assert len(plan['obligations'])==84 # 30ctor +30reserve(with four cell conjuncts) +11dtor +10local +1numeric +2applications
     assert len(plan['required_models'])==5
     assert all(row['proof_record'] is None for row in plan['required_models'])
     return stage
@@ -119,4 +119,56 @@ def test_whole_clauses_may_share_one_actual_annotation_without_splitting_tokens(
     plan=packets.prepare(SOURCE,'vector_realloc_v3_safe',clauses,tmp_path/'whole')
     assert plan['contract']['clauses']==clauses
     assert plan['contract']['ordinary_contract_identity'].startswith('pending:')
-    assert plan['current_proof_records_admitted']==[] and len(plan['obligations'])==82
+    assert plan['current_proof_records_admitted']==[] and len(plan['obligations'])==84
+
+
+def test_constructor_entry_application_maps_source_storage_and_existing_count_clause(tmp_path):
+    from swdb import vector_reallocation_caller_packets as packets
+    plan=packets.prepare(SOURCE,'vector_realloc_v3_safe',CONTRACT,tmp_path/'entry')
+    row=next((r for r in plan['obligations'] if r['id']=='apply.ctor.entry'),None)
+    assert row is not None, 'the caller needs its constructor precondition application, not only isolated body laws'
+    assert row['statement']==(
+        r'\forall Heap::heap h; \forall integer a,n; Heap::well_formed(h) && '
+        r'Heap::automatic_available(h,24,8,a) && 0 <= n <= 2147483647 ==> '
+        r'Heap::typed_writes(Heap::begin_automatic(h,24,a),Heap::fresh_id(h),0,24,8) && '
+        r'!Heap::freeable(Heap::begin_automatic(h,24,a),Heap::fresh_id(h),0) && '
+        r'0 <= n <= 4611686018427387903')
+    application=plan['composition']['constructor_entry']
+    assert application['callee']=='std_vector_int_realloc_v3_ctor_count_value'
+    assert application['source_parameter']==plan['candidate']['count']
+    assert application['source_call']==next(r['source']for r in plan['candidate']['call_obligations']if r['call']=='ctor_count_value')
+    assert application['contract_clause']==CONTRACT[0]
+    assert application['model_arguments']=={'this':'Heap::fresh_id(h), offset0','n':'source signed int converted to size_t','value':7}
+    assert application['automatic_storage_embedding']=='pending source-runtime discharge; not a caller assumption'
+    assert application['source_type_range']=='pending signed32 source image; separate numeric kernel asserts actual C ABI'
+    assert row['dependencies']==[] and row['status']=='pending'
+    assert plan['proof_admission'].startswith('unsupported:') and plan['current_proof_records_admitted']==[]
+    assert plan['caller_premises_added']==[] and plan['incoming_pointer_maps_restricted'] is False
+    assert packets.check(SOURCE,'vector_realloc_v3_safe',CONTRACT,tmp_path/'entry')==plan
+
+
+def test_zero_constructor_application_retains_empty_buffer_and_actual_store_path(tmp_path):
+    from swdb import vector_reallocation_caller_packets as packets
+    plan=packets.prepare(SOURCE,'vector_realloc_v3_safe',CONTRACT,tmp_path/'zero')
+    row=next((r for r in plan['obligations']if r['id']=='apply.ctor.zero'),None)
+    assert row is not None, 'the source zero branch needs its own constructed state, without an initialized buffer premise'
+    entry='Heap::begin_automatic(h,24,a)'
+    state='t25_initial('+entry+',Heap::fresh_id(h),0)'
+    assert row['statement']==(
+        r'\forall Heap::heap h; \forall integer a; Heap::well_formed(h) && '
+        r'Heap::automatic_available(h,24,8,a) ==> '
+        't25v3_eligible('+state+',Heap::fresh_id(h),0,0,0,0,0) && '
+        'Heap::pointer_at('+state+',Heap::fresh_id(h),0,0,0)')
+    application=plan['composition']['zero_constructor']
+    assert application['source_path_condition']=='source count == 0; the zero branch does not restrict caller entry'
+    assert application['state_before']==entry and application['state_after']==state
+    body=(tmp_path/'zero/bodies/ctor_count_value/qualified.c').read_bytes()
+    for key,expected in [('initial_stores',b'this->data = NULL; this->size = 0; this->capacity = 0;'),
+                         ('zero_return',b'if (n == 0) return;')]:
+        span=application[key]
+        assert body[span['begin']:span['end']]==expected
+        assert hashlib.sha256(expected).hexdigest()==span['sha256']
+    assert application['buffer_loads']==0 and application['allocation_executed'] is False
+    assert plan['caller_premises_added']==[] and plan['current_proof_records_admitted']==[]
+    assert plan['proof_admission'].startswith('unsupported:')
+    assert packets.check(SOURCE,'vector_realloc_v3_safe',CONTRACT,tmp_path/'zero')==plan
