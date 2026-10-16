@@ -514,6 +514,60 @@ def copy_step_parts(statement):
         'reference_role': 'original logical target only; never imported or launched as a proved result'}
 
 
+
+def copy_prefix_parts(statement):
+    """Expand the exact next prefix over exhaustive old-cell/new-cell cases."""
+    quantifiers = r'\forall Heap::heap entry,h; \forall integer r,o,b,bo,s,c,f,cap,k; '
+    antecedent = 't25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s'
+    heap = 'Heap::copy_int(h,b,bo+4*k,f,4*k)'
+    original = quantifiers + antecedent + ' ==> Heap::copied_prefix(entry,' + heap + ',b,bo,f,(k+1))'
+    if statement != original or re.search(r'\bj\b', quantifiers + antecedent + heap):
+        raise ValueError('prefix cases require the exact full original premise and a fresh index')
+    prefix_definition = r'''  predicate copied_prefix (entry now:heap) (source source_offset target count:int) =
+    forall j:int. 0 <= j < count ->
+      int32_at now target (4*j) /\
+      load_int now target (4*j) = load_int entry source (source_offset+4*j)'''
+    cell_definition = r'''  predicate int32_at (h:heap) (b o:int) =
+    typed_reads h b o 4 4 /\ initialized_at h b o /\
+    integer_at h b o (load_int h b o) /\
+    -2147483648 <= load_int h b o <= 2147483647'''
+    raw = (HERE/'heap_reallocation.mlw').read_bytes()
+    definitions = []
+    for definition in (prefix_definition, cell_definition):
+        encoded = definition.encode()
+        if raw.count(encoded) != 1:
+            raise ValueError('the exact prefix/cell source definition changed')
+        begin = raw.index(encoded)
+        definitions.append({'path':'heap_reallocation.mlw', 'begin':begin, 'end':begin+len(encoded),
+            'sha256':hashlib.sha256(encoded).hexdigest(), 'container_sha256':hashlib.sha256(raw).hexdigest()})
+    load = 'Heap::load_int(' + heap + ',f,4*j)'
+    conclusions = [
+        ('access', 'Heap::typed_reads(' + heap + ',f,4*j,4,4)'),
+        ('initialization', 'Heap::initialized_at(' + heap + ',f,4*j)'),
+        ('integer', 'Heap::integer_at(' + heap + ',f,4*j,' + load + ')'),
+        ('bounds', '-2147483648 <= ' + load + ' <= 2147483647'),
+        ('value', load + ' == Heap::load_int(entry,b,bo+4*j)'),
+    ]
+    cases = [{'id':'prior', 'guard':'j < k'}, {'id':'written', 'guard':'j == k'}]
+    prefix_quantifiers = quantifiers + r'\forall integer j; '
+    index_range = '0 <= j < (k+1)'
+    parts = [('grow.copy.step.advanced_copied_prefix.' + case['id'] + '.' + label,
+              prefix_quantifiers + antecedent + ' && ' + index_range + ' && ' + case['guard'] + ' ==> ' + formula)
+             for case in cases for label, formula in conclusions]
+    return parts, {'id':'grow.copy.step.advanced_copied_prefix', 'original_statement':original,
+        'quantifiers':prefix_quantifiers, 'outer_antecedent':antecedent, 'range':index_range,
+        'fresh_index':'j', 'fresh_index_free_in_antecedent':False,
+        'case_partition':cases, 'conclusions':dict(conclusions),
+        'parts':[name for name, _formula in parts], 'definition_sources':definitions,
+        'definition_substitution':{'copied_prefix':{'entry':'entry', 'now':heap, 'source':'b',
+            'source_offset':'bo', 'target':'f', 'count':'(k+1)'},
+            'int32_at':{'h':heap, 'b':'f', 'o':'4*j'}},
+        'premises_added':[], 'dependencies':[],
+        'combination':'AND: both exhaustive integer cases require all five prefix definition conclusions',
+        'equivalence':'Under the original integer range j < k+1, j < k or j == k exhausts all cases; forall and full-A implication distribute over every definition conjunct',
+        'reference_role':'original logical prefix target only; never imported or launched as a proved result'}
+
+
 def _source_definition(name, following):
     start = PRELUDE.index('predicate ' + name + '(')
     end = PRELUDE.index(following, start)
@@ -673,8 +727,22 @@ def declaration(member):
                 files[reference] = lemma_source(name, statement).encode()
                 receipt['reference'] = {'path': reference, 'sha256': hashlib.sha256(files[reference]).hexdigest()}
                 logical.append(receipt)
-                parts = [(part, formula, f'{index:03d}s{component:02d}')
-                         for component, (part, formula) in enumerate(expanded, 1)]
+                parts = []
+                receipt['original_definition_parts'] = list(receipt['parts'])
+                for component, (part, formula) in enumerate(expanded, 1):
+                    if part == 'grow.copy.step.advanced_copied_prefix':
+                        prefix_parts, prefix_receipt = copy_prefix_parts(formula)
+                        prefix_reference = 'references/' + f'{index:03d}s{component:02d}-t25v3_grow_copy_step_advanced_copied_prefix.c'
+                        files[prefix_reference] = lemma_source(part, formula).encode()
+                        prefix_receipt['reference'] = {'path':prefix_reference,
+                            'sha256':hashlib.sha256(files[prefix_reference]).hexdigest()}
+                        receipt['component_expansions'] = [prefix_receipt]
+                        parts.extend((leaf, conclusion, f'{index:03d}s{component:02d}p{number:02d}')
+                                     for number, (leaf, conclusion) in enumerate(prefix_parts, 1))
+                    else:
+                        parts.append((part, formula, f'{index:03d}s{component:02d}'))
+                receipt['parts'] = [part for part, _formula, _label in parts]
+                receipt['combination'] = 'AND: fourteen direct definition conjuncts and all ten equivalent prefix case/conjunct duties'
             elif name == 'ctor.qualified.positive_post':
                 expanded, receipt = constructor_positive_parts(statement)
                 reference = 'references/' + f'{index:03d}-t25v3_ctor_qualified_positive_post.c'
