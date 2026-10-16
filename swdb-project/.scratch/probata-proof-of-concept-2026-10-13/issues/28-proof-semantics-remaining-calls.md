@@ -137,3 +137,18 @@ environment assumption has explicit maintainer ownership and pending59freeze
 review; current demonic readiness remains without a termination claim. All boxes
 stay open and status stays **claimed**.
 [Exact evidence and intermediate-run exclusion](../evidence/t28-region-address-controls-20261015.json).
+
+Typed byte-image successor — 2026-10-16 ET:53/53 native C11/C++17 controls pass
+for shared physical bytes, six scalar views, separate source stride/prefix,
+deferred producer outputs and paired CPU/command hazards. Missing bytes,
+insufficient physical output masks and sparse capacity refuse. This supplies no
+source pointer/ABI or formal IEEE certificate; full-call wrappers and public
+actual acceptance remain incomplete. All boxes stay open and status stays
+**claimed**. [Exact RED/GREEN and physical pins](../evidence/t28-tile-byte-image-controls-20261016.json).
+
+Inactive byte preservation — 2026-10-16 ET:58/58 native controls pass after two
+RED profiles. Inactive completion preserves undefined payload without observing
+it; later reads still fail as appropriate. Byte-wise conditional versions retain
+initialized32-bit subviews without inventing upper64-bit initializedness. No
+public/actual proof or whole-interface closure is claimed; all boxes remain open.
+[Exact evidence](../evidence/t28-inactive-byte-preservation-controls-20261016.json).
