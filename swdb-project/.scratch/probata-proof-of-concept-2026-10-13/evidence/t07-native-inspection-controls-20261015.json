@@ -1,0 +1,126 @@
+{
+  "date": "2026-10-15 ET",
+  "created": "2026-10-15T23:31:12.766821-04:00",
+  "scope": "narrow counted_verifier native environment exception handling and safe diagnostics; no actual formal/provider jobs",
+  "worktree": "/private/tmp/probata-resume-t07-method24",
+  "base_integration": "648924d707396ef4f083e506beacb0f8c999e976",
+  "source_pins": [
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py",
+      "sha256": "c6f0d4b8c60fab912dd768c4c8c7e7737d8feca3a110d0de02dec4d38785db57",
+      "snapshot": "/private/tmp/probata-t07-method24-guard-review-v2-snapshot-20261015/counted_verifier.py"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/staged_search.py",
+      "sha256": "125e2562342e6ba684d1189ca29fb48476b73bee30d0fd368f7f7c6b4c6b2419",
+      "snapshot": "/private/tmp/probata-t07-method24-guard-review-v2-snapshot-20261015/staged_search.py"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/wp_run.sh",
+      "sha256": "97130fcc3d087961484cddaad7b4ab798f7cf00920eab8b94ecdb64a285f9f1f",
+      "snapshot": "/private/tmp/probata-t07-method24-guard-review-v2-snapshot-20261015/wp_run.sh"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_counted_verifier.py",
+      "sha256": "b5dbd068d40320738fe6f9b4a7a76e013ba402cb42376f3f1483f2aa8d1e676a",
+      "snapshot": "/private/tmp/probata-t07-method24-guard-review-v2-snapshot-20261015/test_counted_verifier.py"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_inspection_retry.py",
+      "sha256": "e013f72e6ce3504dee8870ceb39b5b9cec7f8e5868b5d2966637e7b3b3a9c60b",
+      "snapshot": "/private/tmp/probata-t07-method24-guard-review-v2-snapshot-20261015/test_inspection_retry.py"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_native_inspection_error.py",
+      "sha256": "adb5e048670de75be695e20a3b6a0a3c409add97ff1fef975c02fb01061736b9",
+      "snapshot": "/private/tmp/probata-t07-method24-guard-review-v2-snapshot-20261015/test_native_inspection_error.py"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/native-inspection-errors-20261015.md",
+      "sha256": "c21c65ee1f15294061da9c6f8d4be00f0521e0df1887a380491eb4a090d2c2f6",
+      "snapshot": "/private/tmp/probata-t07-method24-guard-review-v2-snapshot-20261015/native-inspection-errors-20261015.md"
+    }
+  ],
+  "runtime": {
+    "python": "3.12.6 (main, Jun 13 2025, 13:08:55) [Clang 17.0.0 (clang-1700.0.13.5)]",
+    "psutil": "7.2.2",
+    "artifacts_sha256": {
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12": "08fa4dbadc420090dfee2acf433b827ae05541f728d1478d96879122f53b4328",
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/__init__.py": "d138a5786b163b56ba86ea0b2d5589dfca37e1bcdf8de1057fe1e933d6ab808a",
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/_psosx.py": "89f0ea0e9c1fe38f224b612792bf31d07c8880d79281806e5379c00514f6b3f2",
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/_common.py": "1bbce9fd97e6f5439a0d385f28401f527c5a9d978d9d062593d7ef6fe215fc75",
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/_psutil_osx.abi3.so": "ff4568b9187ca7b37c5134aaf614ffb061e7fedccebd84158343afb05991b8e2"
+    }
+  },
+  "red": {
+    "frozen_original_commit": "ac6bb42ead0beb38da954c3528a1821c6d9f78eb",
+    "frozen_original_guard_sha256": "e3c9215b96bc8d3618169d9e04db7f9a71d2a54dcd8ab28906b3b6b7ecbcba4f",
+    "final_test_bytes_frozen_original_result": "3 failed, 4 deselected in 0.38s",
+    "expected_error": "SystemError: <built-in function proc_environ> returned a result with an exception set",
+    "initial_sandbox_sysctl_refusal_is_not_native_reproduction": true
+  },
+  "green": [
+    {
+      "profile": "native transient with/without explicit cause",
+      "result": "2 passed in 1.99s"
+    },
+    {
+      "profile": "both exception families, persistent/unknown/reuse/foreign/RSS/deadline/expiry",
+      "result": "18 passed in 11.64s"
+    },
+    {
+      "profile": "native wrong-signature/class/identity/status",
+      "result": "6 passed in 2.64s"
+    },
+    {
+      "profile": "guard composition before implicit-context test",
+      "result": "49 passed in 20.80s"
+    },
+    {
+      "profile": "added implicit context and numeric errno",
+      "result": "7 passed in 3.70s"
+    },
+    {
+      "profile": "secondary identity diagnostic refinement",
+      "result": "9 passed, 14 deselected in 4.33s"
+    },
+    {
+      "profile": "secondary-validation correction after independent findings",
+      "result": "8 passed, 7 deselected in 3.34s"
+    }
+  ],
+  "controlled_findings": {
+    "last_failure_timestamp_is_not_later_expiry_decision": true,
+    "native_error_cleanup_must_retain_unconfirmed_discovery_and_continue_only_verified_owned_cleanup": true
+  },
+  "raw_manifest": {
+    "path": "/private/tmp/probata-t07-method24-controls-v2-raw-manifest-20261015.json",
+    "sha256": "164621d7c5bfb9758c132ff7aee219a0afe1bcb0d34d461f04ab6042cd014ca5",
+    "files": 661,
+    "bytes": 2062724
+  },
+  "boundaries": {
+    "exact_signature_and_requested_actual_environ_only_retry": true,
+    "same_200ms_admission_window_21_attempt_cap": true,
+    "no_forced_individual_OS_call_timeout": true,
+    "immutable_PID_birth_and_reuse_protection": true,
+    "RSS_and_deadline_checks_after_counted_pause": true,
+    "persistent_or_unknown_discovery_stays_fail_closed": true,
+    "exception_cause_text_args_source_lines_locals_and_env_values_not_recorded": true,
+    "primary_and_cleanup_contexts_separate": true,
+    "no_actual_Framac_parser_version_provider_solver_or_compiler_called": true,
+    "complete_fake_opam_in_shell_lifecycle_control": true,
+    "finite_sampled_nonatomic_trusted_marker_not_hard_quota_or_hostile_containment": true,
+    "original_run26_PID_phase_ownership_cause_still_unknown": true,
+    "no_scientific_upgrade_or_actual_readmission": true,
+    "separate_source_model_soundness_repair_required": true,
+    "non_AccessDenied_secondary_identity_exceptions_fail_closed_without_retry": true
+  },
+  "independent_review": "pending exact-byte re-review after retained secondary-identity/sanitization findings",
+  "independent_initial_findings": {
+    "initial_composition": "50 passed in 19.97s",
+    "secondary_identity_native_retry": "independent public RED 1 failed in 1.48s",
+    "expanded_secondary_matrix": "8 failed, 7 deselected in 5.88s",
+    "arbitrary_secondary_exception_context_and_raw_message_leak": "corrected fail-closed branch; original plus secondary sanitized context"
+  }
+}

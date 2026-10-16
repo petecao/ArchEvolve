@@ -9,7 +9,18 @@ import pytest
 RUNNER = Path(__file__).with_name('counted_verifier.py')
 
 
-def test_live_environment_denial_can_recover_after_the_old_short_window(tmp_path):
+@pytest.fixture(params=['AccessDenied', 'SystemError'])
+def environment_error(request):
+    return request.param
+
+
+def _environment_failure(kind):
+    if kind == 'AccessDenied':
+        return 'raise V.psutil.AccessDenied(self.pid)'
+    return 'raise SystemError("<built-in function proc_environ> returned a result with an exception set")'
+
+
+def test_live_environment_denial_can_recover_after_the_old_short_window(tmp_path, environment_error):
     """A150ms denial on one real live identity must not become a permanent refusal."""
     lock = tmp_path/'private.lock'
     output = tmp_path/'inspection.log'
@@ -23,7 +34,7 @@ def test_live_environment_denial_can_recover_after_the_old_short_window(tmp_path
         + f' p=Path({str(pid_file)!r})\n'
         + ' if p.exists() and self.pid==int(p.read_text()):\n'
         + '  first[0]=time.monotonic() if first[0] is None else first[0]\n'
-        + '  if time.monotonic()-first[0]<.15: raise V.psutil.AccessDenied(self.pid)\n'
+        + f'  if time.monotonic()-first[0]<.15: {_environment_failure(environment_error)}\n'
         + ' return original(self)\n'
         + 'V.psutil.Process.environ=environ\nraise SystemExit(V.main())\n')
     child = ('import os,time;from pathlib import Path;'
@@ -36,7 +47,7 @@ def test_live_environment_denial_can_recover_after_the_old_short_window(tmp_path
     assert result.returncode == 0, result.stderr+result.stdout+str(report.get('inspection_failure'))
     assert report['error'] is None and report['unconfirmed_children'] == []
     assert not lock.exists()
-    denied = [e for e in report['inspection_events'] if e['outcome']=='denied']
+    denied = [e for e in report['inspection_events'] if e['outcome']==('denied' if environment_error=='AccessDenied' else 'inspection-error')]
     recovered = [e for e in report['inspection_events'] if e['outcome']=='recovered']
     assert denied and recovered
     assert denied[0]['expected_birth'] == denied[-1]['expected_birth']
@@ -44,7 +55,7 @@ def test_live_environment_denial_can_recover_after_the_old_short_window(tmp_path
     assert not report['timed_out'] and not report['killed_by_watchdog']
 
 
-def test_persistent_live_environment_denial_still_refuses_and_quarantines(tmp_path):
+def test_persistent_live_environment_denial_still_refuses_and_quarantines(tmp_path, environment_error):
     lock = tmp_path/'private.lock'
     output = tmp_path/'inspection.log'
     pid_file = tmp_path/'owned.pid'
@@ -55,7 +66,7 @@ def test_persistent_live_environment_denial_still_refuses_and_quarantines(tmp_pa
         + 'import counted_verifier as V\noriginal=V.psutil.Process.environ\n'
         + 'def environ(self):\n'
         + f' p=Path({str(pid_file)!r})\n'
-        + ' if p.exists() and self.pid==int(p.read_text()): raise V.psutil.AccessDenied(self.pid)\n'
+        + f' if p.exists() and self.pid==int(p.read_text()): {_environment_failure(environment_error)}\n'
         + ' return original(self)\n'
         + 'V.psutil.Process.environ=environ\nraise SystemExit(V.main())\n')
     child = ('import os,time;from pathlib import Path;'
@@ -68,12 +79,17 @@ def test_persistent_live_environment_denial_still_refuses_and_quarantines(tmp_pa
         capture_output=True,text=True,timeout=8)
     text = Path(str(output)+'.summary.json').read_text()
     report = json.loads(text)
-    assert result.returncode != 0 and report['error'].startswith('AccessDenied')
+    assert result.returncode != 0 and report['error'].startswith(environment_error)
     failure = report['inspection_failure']
     assert failure['identity_state'] == 'live' and failure['requested_operation'] == 'environ'
     assert failure['expected_birth'] == failure['observed_birth']
-    assert failure['retry_elapsed_s'] >= .19 and failure['attempt'] <= 21
+    decision = failure.get('retry_expiry', failure)
+    assert decision['retry_elapsed_s'] >= .19 and failure['attempt'] <= 21
+    if 'retry_expiry' in failure:
+        assert failure['clock_s'] < decision['clock_s']
     assert report['unconfirmed_children'] and lock.exists()
+    assert report['primary_inspection_failure']['stage'] == 'supervision'
+    assert report['cleanup_inspection_failure']['stage'] == 'cleanup'
     assert secret not in text+result.stdout+result.stderr
     import psutil
     try:
@@ -82,7 +98,7 @@ def test_persistent_live_environment_denial_still_refuses_and_quarantines(tmp_pa
         pass
 
 
-def test_unknown_identity_after_denial_never_certifies_absence_or_signals(tmp_path):
+def test_unknown_identity_after_denial_never_certifies_absence_or_signals(tmp_path, environment_error):
     import psutil
     lock = tmp_path/'private.lock'
     output = tmp_path/'inspection.log'
@@ -97,7 +113,7 @@ def test_unknown_identity_after_denial_never_certifies_absence_or_signals(tmp_pa
         + ' if denied[0] and self.pid==target(): raise V.psutil.AccessDenied(self.pid)\n'
         + ' return original_birth(self)\n'
         + 'def environ(self):\n'
-        + ' if self.pid==target():\n  denied[0]=True\n  raise V.psutil.AccessDenied(self.pid)\n'
+        + f' if self.pid==target():\n  denied[0]=True\n  {_environment_failure(environment_error)}\n'
         + ' return original_env(self)\n'
         + 'V.psutil.Process.create_time=birth\nV.psutil.Process.environ=environ\nraise SystemExit(V.main())\n')
     child = ('import os,time,json,psutil;from pathlib import Path;'
@@ -109,6 +125,9 @@ def test_unknown_identity_after_denial_never_certifies_absence_or_signals(tmp_pa
             capture_output=True,text=True,timeout=8)
         report = json.loads(Path(str(output)+'.summary.json').read_text())
         assert result.returncode != 0 and report['inspection_failure']['identity_state']=='unknown'
+        identity_error = report['inspection_failure']['identity_exception']
+        assert identity_error['operation'] == 'identity_validation.create_time'
+        assert identity_error['exception']['type'] == 'AccessDenied'
         assert report['unconfirmed_children'] and lock.exists()
         identity = json.loads(identity_file.read_text())
         live = psutil.Process(identity['pid'])
@@ -126,7 +145,7 @@ def test_unknown_identity_after_denial_never_certifies_absence_or_signals(tmp_pa
                 pass
 
 
-def test_reused_pid_with_foreign_marker_is_not_adopted_or_signaled(tmp_path):
+def test_reused_pid_with_foreign_marker_is_not_adopted_or_signaled(tmp_path, environment_error):
     """Model PID reuse at the OS boundary; never force kernel PID allocation."""
     import psutil
     lock = tmp_path/'private.lock'
@@ -141,7 +160,7 @@ def test_reused_pid_with_foreign_marker_is_not_adopted_or_signaled(tmp_path):
         + 'def birth(self):\n value=original_birth(self)\n return value+1 if reused[0] and self.pid==target() else value\n'
         + 'def environ(self):\n'
         + ' if self.pid==target():\n'
-        + '  if not reused[0]:\n   reused[0]=True\n   raise V.psutil.AccessDenied(self.pid)\n'
+        + f'  if not reused[0]:\n   reused[0]=True\n   {_environment_failure(environment_error)}\n'
         + '  return {V.RUN_TOKEN_ENV:"foreign-marker-fixture"}\n'
         + ' return original_env(self)\n'
         + 'V.psutil.Process.create_time=birth\nV.psutil.Process.environ=environ\nraise SystemExit(V.main())\n')
@@ -173,7 +192,7 @@ def test_reused_pid_with_foreign_marker_is_not_adopted_or_signaled(tmp_path):
                 pass
 
 
-def test_foreign_unmarked_process_survives_recovered_inspection_and_is_not_charged(tmp_path):
+def test_foreign_unmarked_process_survives_recovered_inspection_and_is_not_charged(tmp_path, environment_error):
     import time
     import psutil
     lock = tmp_path/'private.lock'
@@ -202,7 +221,7 @@ def test_foreign_unmarked_process_survives_recovered_inspection_and_is_not_charg
             + 'def environ(self):\n'
             + f' if self.pid=={foreign.pid}:\n'
             + '  first[0]=time.monotonic() if first[0] is None else first[0]\n'
-            + '  if time.monotonic()-first[0]<.15: raise V.psutil.AccessDenied(self.pid)\n'
+            + f'  if time.monotonic()-first[0]<.15: {_environment_failure(environment_error)}\n'
             + ' return original(self)\n'
             + 'V.psutil.Process.environ=environ\nraise SystemExit(V.main())\n')
         result = subprocess.run(
@@ -229,7 +248,7 @@ def test_foreign_unmarked_process_survives_recovered_inspection_and_is_not_charg
 
 
 @pytest.mark.parametrize('limit',['rss','deadline'])
-def test_recovered_denial_does_not_waive_rss_or_counted_deadline(tmp_path,limit):
+def test_recovered_denial_does_not_waive_rss_or_counted_deadline(tmp_path,limit,environment_error):
     lock = tmp_path/'private.lock'
     output = tmp_path/'inspection.log'
     wrapper = tmp_path/'runner.py'
@@ -240,7 +259,7 @@ def test_recovered_denial_does_not_waive_rss_or_counted_deadline(tmp_path,limit)
         + 'def environ(self):\n data=original(self)\n'
         + ' if data.get(V.RUN_TOKEN_ENV):\n'
         + '  first[0]=time.monotonic() if first[0] is None else first[0]\n'
-        + '  if time.monotonic()-first[0]<.15: raise V.psutil.AccessDenied(self.pid)\n'
+        + f'  if time.monotonic()-first[0]<.15: {_environment_failure(environment_error)}\n'
         + ' return data\n'
         + 'V.psutil.Process.environ=environ\nraise SystemExit(V.main())\n')
     child = ('import time;time.sleep(.05);data=bytearray(64*1024*1024);'
@@ -265,13 +284,13 @@ def test_recovered_denial_does_not_waive_rss_or_counted_deadline(tmp_path,limit)
         assert report['wall_s'] > report['timeout_s']
 
 
-def test_environ_retry_cannot_start_after_its_continuous_retry_deadline(tmp_path):
+def test_environ_retry_cannot_start_after_its_continuous_retry_deadline(tmp_path,environment_error):
     lock=tmp_path/'private.lock';log=tmp_path/'inspection.log';pid=tmp_path/'owned.pid';elapsed=tmp_path/'next-environ-time';wrapper=tmp_path/'runner.py'
     wrapper.write_text('import sys,time\nfrom pathlib import Path\n'+f'sys.path.insert(0,{str(RUNNER.parent)!r})\n'+
       'import counted_verifier as V\noriginal_env=V.psutil.Process.environ\noriginal_sleep=V.time.sleep\nfirst=[None]\npaused=[False]\n'+
       'def environ(self):\n'+f' p=Path({str(pid)!r})\n'+
       ' if p.exists() and self.pid==int(p.read_text()):\n'+
-      '  if first[0] is None:\n   first[0]=time.monotonic()\n   raise V.psutil.AccessDenied(self.pid)\n'+
+      f'  if first[0] is None:\n   first[0]=time.monotonic()\n   {_environment_failure(environment_error)}\n'+
       f'  q=Path({str(elapsed)!r})\n'+
       '  if not q.exists():q.write_text(str(time.monotonic()-first[0]))\n'+
       ' return original_env(self)\n'+
@@ -283,10 +302,12 @@ def test_environ_retry_cannot_start_after_its_continuous_retry_deadline(tmp_path
     result=subprocess.run([sys.executable,str(wrapper),'--lock',str(lock),'--log',str(log),'--timeout','2','--',sys.executable,'-c',child],capture_output=True,text=True,timeout=8)
     report=json.loads(Path(str(log)+'.summary.json').read_text())
     assert result.returncode!=0, 'retry began and recovered after continuous retry deadline: '+json.dumps({'next_environ_elapsed_s':float(elapsed.read_text()),'recovered':[e for e in report['inspection_events']if e['outcome']=='recovered']})
-    assert report['error'].startswith('AccessDenied')
+    assert report['error'].startswith(environment_error)
     assert not report['timed_out'] and not report['killed_by_watchdog']
     failure=report['inspection_failure'];expiry=failure['retry_expiry']
     assert failure['attempt']==1 and failure['identity_state']=='live'
     assert expiry['retry_expired_before_attempt']==2 and expiry['retry_elapsed_s']>=.2
-    assert expiry['last_denial_clock_s']==failure['clock_s']<expiry['clock_s']
+    assert expiry['last_error_clock_s']==failure['clock_s']<expiry['clock_s']
+    if environment_error=='AccessDenied':
+        assert expiry['last_denial_clock_s']==failure['clock_s']
     assert report['unconfirmed_children']==[] and not lock.exists()
