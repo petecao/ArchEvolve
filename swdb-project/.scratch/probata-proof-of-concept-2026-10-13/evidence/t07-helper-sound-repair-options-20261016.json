@@ -1,0 +1,143 @@
+{
+  "date": "2026-10-16 ET",
+  "kind": "PASSIVE_PREIMPLEMENTATION_SOUND_REPAIR_DESIGN",
+  "source_commit": "7930f3a1f8d59cb7b338f54844dea7728bc8864c",
+  "source_and_prior_actuals_unchanged": true,
+  "actual_probe_or_source_edit": false,
+  "ranking": [
+    {
+      "rank": 1,
+      "option": "B deterministic fresh out-slot ABI lowering",
+      "status": "preferred prospective source/model repair if no supported direct return-init route is established",
+      "reason": "expresses the missing return-destination store using existing explicit memory-write initialization semantics; no installed verifier patch",
+      "gates": [
+        "restricted source-to-C-model equivalence for normal defined scalar/pointer returns",
+        "uniform return-interface/call-site conversion with fresh nonescaping aligned slots",
+        "all old functional/frame/initialization/RTE obligations mapped and retained",
+        "separate new source/method identity and finite component before TD admission"
+      ]
+    },
+    {
+      "rank": 2,
+      "option": "A supported existing return-init API/contract/option",
+      "status": "prefer if independently established, but none identified in the pinned inspected sources/manual",
+      "reason": "address-of-result R_var unsupported; from regions do not establish initialized return store; no-filter-init is filtering control, not call transfer repair"
+    },
+    {
+      "rank": 3,
+      "option": "C narrowly justified verifier call-return transfer repair",
+      "status": "higher-TCB alternative only after modular defined-return semantics are established",
+      "reason": "must prove initializedness of the destination scalar object, never referenced pointer payload or struct padding; both call calculi and alias/frame cases require review"
+    }
+  ],
+  "offset_assessment": {
+    "physical_equivalence": "For first=A+i,last=A+j in one live aligned contiguous NodeID array object, ordered endpoints and n=j-i>=0: byteOffset(last)-byteOffset(first)=sizeof(NodeID)*n, so old mathematical byte bound is equivalent to n<=PTRDIFF_MAX. Same allocation alone does not establish one array-object identity.",
+    "supported_domain_translation": "Use a source-backed bounded element-span endpoint witness before using pointer subtraction, preserving live/one-past formation, same array, readable/initialized source, writable destination and separation. Caller count comes from actual self.in/local_size/storage and original symbolic dimensions; no desired byte-offset premise.",
+    "scope": "prospective correspondence-preserving domain translation, not a proven in-model equivalence of abstract Typed offset tables; no clause removed or source edited here",
+    "not_allowed": [
+      "add an arbitrary table_to_offset scaling axiom",
+      "assume the failing call precondition at caller",
+      "use pointer subtraction to justify its own representability",
+      "blanket replace arbitrary same-block objects with an array domain",
+      "assume changing to Bytes solves the issue: pinned MemBytes.base_offset also uses table conversion"
+    ]
+  },
+  "preservation_requirements": [
+    "all15 returning helper bodies and5 returning bodyless interfaces covered uniformly if ABI option selected;4 void helpers and delete summary remain ordinary void interfaces",
+    "fresh return slot is a compiler-introduced aligned live object with no source aliases/escape; its validity/separation is discharged by lowering, not a stronger original caller premise",
+    "evaluate operands once and preserve source side-effect/short-circuit order; pointer-return getter calls remain observationally pure modulo the private slot",
+    "explicitly transform standard/builtin return value and normal-return initializedness into output-store semantics; do not mark returned pointer pointees initialized",
+    "new counts expected from added ABI/RTE obligations; retain mapping to every old obligation, preserve full TD postconditions and real C++ algorithm"
+  ],
+  "primary_references": [
+    {
+      "url": "https://timsong-cpp.github.io/cppwp/n3337/expr.add",
+      "role": "N3337 draft text, same-array pointer addition/subtraction and representable ptrdiff domain"
+    },
+    {
+      "url": "https://frama-c.com/download/frama-c-wp-manual.pdf",
+      "role": "official Frama-C33 WP manual; overall model/annotation scope; no established direct call-return initialization repair found"
+    },
+    {
+      "url": "https://www.frama-c.com/html/changelog.html",
+      "role": "official precise from/out-pointer model-hypothesis context; not evidence of return-initialization transfer"
+    }
+  ],
+  "input_pins": [
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/CfgWP.ml",
+      "sha256": "490ab8a263f85e50e304d6cd4ee9ff7a5137f1c7f00e4ec7cd7555b68483256c",
+      "bytes": 63415
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/StmtSemantics.ml",
+      "sha256": "d50cf31df033feb041be61eb5025945890cbf7c193fdbb8ba6c417200cf87118",
+      "bytes": 29239
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/LogicSemantics.ml",
+      "sha256": "7612c77530d4fe9bb89ec0b28460685f801b10e9b32fc9bfa479548d1b6e9e03",
+      "bytes": 41615
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/MemLoader.ml",
+      "sha256": "b59407d1220f7c0871bc556aaebf4748e9229053463881467ca6a3da851c9fe8",
+      "bytes": 23414
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/MemVar.ml",
+      "sha256": "43b8979a169ccfb7c6e7183970a8d3022d27d410487f139b397073f06a7476f6",
+      "bytes": 48928
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/MemTyped.ml",
+      "sha256": "ad0d3c4e8e568a09d47bb658767e5ba476cc9e957f16b14981370642c5e235b5",
+      "bytes": 40201
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/MemAddr.ml",
+      "sha256": "49ea01babc875c9a35f6c42506551bde0e8094f3e40e21325813986da81975e3",
+      "bytes": 15171
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/MemBytes.ml",
+      "sha256": "0a0cc11febb13fc297fb5608ab4de466e53079ffecf3c56b90a5230cb007f781",
+      "bytes": 35715
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/MemoryContext.ml",
+      "sha256": "720c46c8d43d8edb12f6cc49ed30b0993f3e5199180aab99269413b083e11ba6",
+      "bytes": 17144
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/Cvalues.ml",
+      "sha256": "c04b39f6a15932715d694b9679a4fcae88c4b8ae45979ee60977efebf9fb6b80",
+      "bytes": 31893
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/CodeSemantics.ml",
+      "sha256": "433e507b252ce54eaded3f801b5fdd9aa21d8c781aff7eb4ecf6275d6d8ba728",
+      "bytes": 25072
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/wp_parameters.ml",
+      "sha256": "a4ace79d1262461ea14f73275db17eb332f76b265059fc238a6bc9538a81df2b",
+      "bytes": 39279
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+      "sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f",
+      "bytes": 5187
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-three-open-source-triage-20261016.md",
+      "sha256": "b7a5d1930366067cbabbdba97b7290f22b95f0397675bfa9f18fd58a462f0650",
+      "bytes": 7265
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-stage2-v2-independent-cold-review-20261016.json",
+      "sha256": "f7e02f3a248e162e9b6fe9918240ff11e24140ce0ecd62b6dfe2d3c4180d51cb",
+      "bytes": 450762
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "date_et": "2026-10-16 01:49 ET",
+  "source_commit": "7930f3a1f8d59cb7b338f54844dea7728bc8864c",
+  "execution_completed": true,
+  "proof_acceptance": false,
+  "full_C_RTE_claim": false,
+  "bodies": 19,
+  "baseline_goals": 245,
+  "baseline_properties": 352,
+  "ordinary_valid": 209,
+  "ordinary_total": 212,
+  "ordinary_open": 3,
+  "smokes": 33,
+  "smoke_raw_passed_all_true": true,
+  "smoke_scope": "All fresh external nonvalid outcomes; no detected contradiction, not proof of satisfiability.",
+  "init_properties": 31,
+  "selected_pin_entries_verified_by_independent_reviewer": 1301,
+  "open_machine_goals": [
+    "typed_QueueBuffer_NodeID_QueueBuffer_ensures_3",
+    "typed_QueueBuffer_NodeID_flush_assert_rte_initialization_9",
+    "typed_QueueBuffer_NodeID_flush_call_std_copy_NodeID_requires_4"
+  ],
+  "guard": {
+    "exit_code": 1,
+    "wall_seconds": 383.135438791709,
+    "peak_rss_bytes": 1322909696,
+    "cap_gib": 8,
+    "transient_AccessDenied_events": 4,
+    "final_inspection_failure": null,
+    "watchdog_timeout_unconfirmed_child_failure": false
+  },
+  "triage_scope": "Source-grounded call-return initializedness hypothesis and Typed cell-to-byte abstraction gap; full VC tasks unavailable, no solver countermodel claim.",
+  "next_gate": "Fresh out-slot/source-domain repair under separate source/method review; no implementation or proof acceptance in this checkpoint.",
+  "alignment_scope": "Typed source producers support a restricted physical argument, not arbitrary caller/Graph states, in-place reuse, omitted WP alignment guards or full C++/TD correspondence.",
+  "alignment_local_rehash": {
+    "pins_checked": 17,
+    "historical_reference_not_locally_available": "benchmarks/gapbs/README.md"
+  },
+  "cleanup_boundary": "Finite retained poststop metadata; four transient inspection events remain explicit.",
+  "receipts": [
+    {
+      "path": "t07-helper-stage2-v2-independent-cold-review-20261016.md",
+      "sha256": "bcba9170bfcb566c0d71b4fca72b4dc4b8ff863c6f186c29d5b8173b84fa76ba",
+      "bytes": 3213,
+      "original_path": "/private/tmp/probata-t07-helper-stage2-v2-independent-cold-review-20261016.md"
+    },
+    {
+      "path": "t07-helper-stage2-v2-independent-cold-review-20261016.json",
+      "sha256": "f7e02f3a248e162e9b6fe9918240ff11e24140ce0ecd62b6dfe2d3c4180d51cb",
+      "bytes": 450762,
+      "original_path": "/private/tmp/probata-t07-helper-stage2-v2-independent-cold-review-20261016.json"
+    },
+    {
+      "path": "t07-helper-three-open-source-triage-20261016.md",
+      "sha256": "b7a5d1930366067cbabbdba97b7290f22b95f0397675bfa9f18fd58a462f0650",
+      "bytes": 7265,
+      "original_path": "/private/tmp/probata-t07-helper-three-open-source-triage-20261016.md"
+    },
+    {
+      "path": "t07-helper-three-open-source-triage-20261016.json",
+      "sha256": "2b008af5194f49d087c2e7b4717736194aeaa74b32248898188aaeff74eaef87",
+      "bytes": 7662,
+      "original_path": "/private/tmp/probata-t07-helper-three-open-source-triage-20261016.json"
+    },
+    {
+      "path": "t07-helper-sound-repair-options-20261016.md",
+      "sha256": "d55056e087e029afef00e90d9b2a103215b72180a94f3f9a0e5818a45c42912e",
+      "bytes": 13953,
+      "original_path": "/private/tmp/probata-t07-helper-sound-repair-options-20261016.md"
+    },
+    {
+      "path": "t07-helper-sound-repair-options-20261016.json",
+      "sha256": "55b3d5ae6423c3ce337ad9bc58fc782b889530e8f41eccdfb6e0887f08b2a61e",
+      "bytes": 7695,
+      "original_path": "/private/tmp/probata-t07-helper-sound-repair-options-20261016.json"
+    },
+    {
+      "path": "t07-source-model-alignment-caller-domain-20261016.md",
+      "sha256": "2a0b62fb58ebf626826b15cbef86b69c719a3c5b2621613484dede4186a56124",
+      "bytes": 10103,
+      "original_path": "/private/tmp/probata-t07-source-model-alignment-caller-domain-20261016.md"
+    },
+    {
+      "path": "t07-source-model-alignment-caller-domain-20261016.json",
+      "sha256": "6c17f38cec8a42101daa7c16418c5d94bb48324f20ac5c43a4cae5defad67638",
+      "bytes": 13136,
+      "original_path": "/private/tmp/probata-t07-source-model-alignment-caller-domain-20261016.json"
+    },
+    {
+      "path": "t07-helper-stage2-root-preflight-v2-20261016.json",
+      "sha256": "d3810366233d52cc4a2fb6b799ea051019b98aa0dca92d0b7fad74bfb4cc7bf1",
+      "bytes": 1237,
+      "original_path": "/private/tmp/probata-t07-helper-stage2-root-preflight-v2-20261016.json"
+    },
+    {
+      "path": "t07-helper-stage2-root-exit-v2-20261016.json",
+      "sha256": "55d7cc6c4c7908179391a6b0fbf69d6c5c3973b1d16f7140fdb2cbf2369dbbed",
+      "bytes": 128,
+      "original_path": "/private/tmp/probata-t07-helper-stage2-root-exit-v2-20261016.json"
+    },
+    {
+      "path": "t07-helper-stage2-root-settlement-v2-20261016.json",
+      "sha256": "dda42697b97809b91db9cf0fffbdf8f095913fa488eceab85c097b5d9232d8ce",
+      "bytes": 606,
+      "original_path": "/private/tmp/probata-t07-helper-stage2-root-settlement-v2-20261016.json"
+    },
+    {
+      "path": "t07-helper-stage2-v2-guard-20261016.json",
+      "sha256": "fad9d0bad380b311a034732cabd274e5b6fcac18d25e2e3e8844aad1ab09f4d3",
+      "bytes": 8017,
+      "original_path": "/private/tmp/probata-t07-helper-stage2-v2-7930f3a1-20261016/guard.log.summary.json"
+    }
+  ]
+}

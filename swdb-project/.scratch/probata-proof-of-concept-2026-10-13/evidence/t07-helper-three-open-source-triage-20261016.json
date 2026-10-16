@@ -1,0 +1,146 @@
+{
+  "date": "2026-10-16 ET",
+  "scope": "PASSIVE_SOURCE_AND_RETAINED_PROPERTY_TRIAGE; NO ACTUAL RERUN",
+  "source_commit": "7930f3a1f8d59cb7b338f54844dea7728bc8864c",
+  "complete_helper_proof_accepted": false,
+  "actual_ordinary_valid": 209,
+  "actual_ordinary_total": 212,
+  "actual_smokes_no_detected_contradiction": 33,
+  "retained_full_simplified_VC_tasks_present": false,
+  "exact_open_properties": [
+    {
+      "goal": "typed_QueueBuffer_NodeID_QueueBuffer_ensures_3",
+      "property": "QueueBuffer_NodeID_QueueBuffer_ensures",
+      "description": "ensures\ngapbs_buffer_domain(\\old(self))",
+      "source_function": "QueueBuffer_NodeID_QueueBuffer",
+      "line": 266
+    },
+    {
+      "goal": "typed_QueueBuffer_NodeID_flush_assert_rte_initialization_9",
+      "property": "QueueBuffer_NodeID_flush_assert_rte_initialization_9",
+      "description": "assert rte: initialization: \\initialized(&copy_start);",
+      "source_function": "QueueBuffer_NodeID_flush",
+      "line": 298
+    },
+    {
+      "goal": "typed_QueueBuffer_NodeID_flush_call_std_copy_NodeID_requires_4",
+      "property": "std_copy_NodeID_requires_13",
+      "description": "status of 'requires\n\\offset(last) - \\offset(first) \u2264 9223372036854775807L * sizeof(NodeID)' of std_copy_NodeID at stmt 59",
+      "source_function": "QueueBuffer_NodeID_flush",
+      "line": 298
+    }
+  ],
+  "findings": [
+    {
+      "goal": "typed_QueueBuffer_NodeID_QueueBuffer_ensures_3",
+      "classification": "strong call-result initializedness transfer hypothesis; not a demonstrated false C-source contract",
+      "retained_property": "ensures\ngapbs_buffer_domain(\\old(self))",
+      "facts": [
+        "constructor writes sq/local_size/in explicitly and obtains local_queue as an opaque call result",
+        "domain includes initialized local_queue field; pointer value postcondition separately discharged",
+        "CfgWP call return destination domain includes initializedness; return binding only constrains value in inspected path"
+      ],
+      "full_VC_hypotheses_unavailable": true,
+      "property_id": "QueueBuffer_NodeID_QueueBuffer_ensures"
+    },
+    {
+      "goal": "typed_QueueBuffer_NodeID_flush_assert_rte_initialization_9",
+      "classification": "strong source-grounded backend call-result initialization gap; no incoming caller premise justified",
+      "retained_property": "assert rte: initialization: \\initialized(&copy_start);",
+      "facts": [
+        "copy_start is immediately assigned the wrapper return before first use",
+        "CfgWP.cc_callenv havocs return destination domain; MemLoader.domain is value/init union",
+        "CfgWP.cc_result produces value equality without stored_init; assignment rule cc_stored explicitly stores initializedness",
+        "LogicSemantics address-of-result R_var path aborts; arbitrary initialized(&result) contract is not a supported repair"
+      ],
+      "property_id": "QueueBuffer_NodeID_flush_assert_rte_initialization_9"
+    },
+    {
+      "goal": "typed_QueueBuffer_NodeID_flush_call_std_copy_NodeID_requires_4",
+      "classification": "concrete Typed byte-offset abstraction limitation; mathematical helper range is source-backed but byte conversion scale unavailable",
+      "retained_property": "status of 'requires\n\\offset(last) - \\offset(first) \u2264 9223372036854775807L * sizeof(NodeID)' of std_copy_NodeID at stmt 59",
+      "facts": [
+        "local_queue is static NodeID array and in<=local_size<=16384",
+        "Typed logical offsets are cells; base_offset converts through abstract table_to_offset",
+        "pinned memaddr theory supplies zero and strict-monotonic order only, no sizeof scale/bound"
+      ],
+      "restricted_theory_counterinterpretation": "for positive integer K, table_to_offset(t,i)=K*i satisfies zero/order axioms; K>PTRDIFF_MAX*sizeof(NodeID) defeats requested byte bound even for one logical cell",
+      "is_physical_C_source_counterstate": false,
+      "property_id": "std_copy_NodeID_requires_13"
+    }
+  ],
+  "from_boundary": "Inspected LogicSemantics.assigned_of_froms ignores _deps when building call regions and assigns TResult to no location. Accurate result/from declarations may document dependence but have no established initialized-return transfer here; do not assert they repair the goals.",
+  "recommended_next_correctness_gate": [
+    "inspect/qualify pinned call-result initializedness transfer and the Typed cell-to-byte abstraction before another proof attempt",
+    "any backend/model correction needs independent semantic justification and retained tests; preserve existing C/body/postconditions and all goal scopes",
+    "do not add initialized caller premises, assumed byte-offset axioms, property filtering, or body rewrites solely to close these goals",
+    "full unsimplified VC/task export was not retained; distinguish this passive causal analysis from a solver countermodel or completed repair"
+  ],
+  "inputs": [
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/CfgWP.ml",
+      "sha256": "490ab8a263f85e50e304d6cd4ee9ff7a5137f1c7f00e4ec7cd7555b68483256c",
+      "bytes": 63415
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/StmtSemantics.ml",
+      "sha256": "d50cf31df033feb041be61eb5025945890cbf7c193fdbb8ba6c417200cf87118",
+      "bytes": 29239
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/LogicSemantics.ml",
+      "sha256": "7612c77530d4fe9bb89ec0b28460685f801b10e9b32fc9bfa479548d1b6e9e03",
+      "bytes": 41615
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/MemLoader.ml",
+      "sha256": "b59407d1220f7c0871bc556aaebf4748e9229053463881467ca6a3da851c9fe8",
+      "bytes": 23414
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/MemVar.ml",
+      "sha256": "43b8979a169ccfb7c6e7183970a8d3022d27d410487f139b397073f06a7476f6",
+      "bytes": 48928
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/MemTyped.ml",
+      "sha256": "ad0d3c4e8e568a09d47bb658767e5ba476cc9e957f16b14981370642c5e235b5",
+      "bytes": 40201
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/MemAddr.ml",
+      "sha256": "49ea01babc875c9a35f6c42506551bde0e8094f3e40e21325813986da81975e3",
+      "bytes": 15171
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/Cvalues.ml",
+      "sha256": "c04b39f6a15932715d694b9679a4fcae88c4b8ae45979ee60977efebf9fb6b80",
+      "bytes": 31893
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+      "sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f",
+      "bytes": 5187
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-stage2-v2-7930f3a1-20261016/component/gapbs_models.h",
+      "sha256": "eccc1c111f32698043682509be8effad02e8cec82957a889f7a4fb6c54ff490c",
+      "bytes": 15802
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-stage2-v2-7930f3a1-20261016/component/normalized.c",
+      "sha256": "47fd353459d0ec187d5ff8cf672f02767d6ca226ae4835d7d07c2fc48ff590ce",
+      "bytes": 56336
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-stage2-v2-7930f3a1-20261016/component/wp-inventory.json",
+      "sha256": "9460d2fe078e36e037cbe885c0da99353d44b555669e960c57ada377499bfb92",
+      "bytes": 202925
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-stage2-v2-7930f3a1-20261016/component/per-prover-final.json",
+      "sha256": "afe936872a9e848ddcce9895bd3babbf67e493442696aeb56192124a5dc3a286",
+      "bytes": 112207
+    }
+  ]
+}

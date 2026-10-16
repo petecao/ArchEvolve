@@ -204,3 +204,23 @@ interface acceptance is claimed. The unchanged-source positive/wrong-enum
 coordinator-only actual runner is committed, awaiting independent review and
 root admission. A stateful size/readiness vertical follows this first gate.
 All whole-ticket acceptance boxes remain open.
+
+
+2026-10-16 readiness correction checkpoint (prototype only): the prior86-native
+packet incorrectly expected an8-byte role's second-half wait not to cover. That
+expectation is retracted; historical raw files and receipts remain unchanged.
+Pinned MAA dispatch/finish and SPD counter code count both halves of src/dst
+roles, excluding condition-only roles. The successor separates counted masks
+from condition-inclusive hazards and starting-ID dispatch stalls. Source-backed
+RED3fail/2pass becomes96native GREEN under ASan/UBSan. A checked source-role
+wrapper, actual stateful proof and full interface acceptance are still open.
+The real header supplies a blocking ready-range read returning1, not the logical
+demonic query used by this prototype. All acceptance boxes remain unchecked.
+
+## Conditional mathematical rank gate and selector publication — 2026-10-16 01:49 ET
+
+The whole-module rank gate at exact `9704c54b838863dd838d18a20dd0ade1633d5027` completed all eight actual Why3 calls. Core5, arbitrary-finite-delay family4 and all-false1 are directly Valid; the separate absent-premise negative retains native sat, healthy solver exit0, Why3 `Unknown` + LF + `(sat)` and expected proof-command exit2. Original actual entry/guard/root exit1 and complete=false remain immutable: the original offline reader rejected that formatting before recording its negative submission receipt. Independent cold reconstruction binds all11 actual submitted SMT inputs to complete emitted bytes and native outputs. [Actual and complete reviews](../evidence/t28-rank-whole-actual-and-cold-acceptance-20261016.json), [independent mathematical/context audit](../evidence/t28-rank-whole-independent-cold-review-20261016.md), [supplemental v3 cold audit](../evidence/t28-rank-whole-cold-audit-v3-20261016.md).
+
+The conditional result assumes a fixed trace and a mathematical rank nonnegative on future polls, strictly decreasing whenever not ready. All core assertion/variant/recursive-precondition/postcondition tasks and the acyclic four-post family were independently reviewed; no desired-result axiom or imported unconditional progress theorem is admitted. The family supports every mathematical n>=0, without a finite C-counter bound. It does not prove a device/environment supplies the rank or fairness premise. Separate pure formatting controls/cold audit repair only retained-output interpretation; no rerun or historical exit upgrade. Whole2.423s/147.25MiB, no resource/inspection/child failure; finite settlement limits retained. No MMIO/source-to-trace/public-composition/current0.2/full-ticket claim follows.
+
+Final source-selector freeze `21edecf2d8a06234290e06861b6724dc76dd346e` is published as an ancestor of integration `4bb53cd7`. [Independent review](../evidence/t28-selector-first-vertical-independent-review-20261016.md) accepted the original-main-TU certificate, exact ABI/callee/source pins, partial26-name/27-declaration fixture and refusal boundaries. Wrong-enum acceptance now rejects vacuous_pass and requires all smoke statuses valid (retained RED2/GREEN4 plus2 actual skips). The original68-pass/2-skip compiler/scripted receipt remains historical and unchanged. At this01:49 checkpoint external entry/admission remained pending; root subsequently reports node1G615 exact21ed launched01:51 ET and ended01:52:23 ET with actual guard exit1 before WP invocation: fixture method Z3/Alt-Ergo pins4.8.14/2.6.0 mismatch admitted Linux5.1.0/2.6.4. Source stayed clean and leases released; separate fixture metadata repair is pending. Launcher exit0 and the independent local JSON pretty-printer exit1 remain distinct. No actual selector proof result follows. No production current0.2 acceptance follows. Ticket28 remains claimed with whole-ticket boxes open.

@@ -4,7 +4,7 @@ Created: 2026-10-15 ET. Ticket28 remains claimed and incomplete.
 
 `deferred_state.py::render_header()` emits a bounded C value engine.
 `command_state.py::render_header(value_header)` adds command completion,
-ownership, explicit tile-ID waits, region stalls and CPU footprint checks.
+ownership, physical ready-counter waits, region stalls and CPU footprint checks.
 These are prototype APIs, exercised by native synthetic C11 callers. They are
 not imported by the production proof path and do not constitute semantics0.2.
 
@@ -26,9 +26,11 @@ pending hazards until covered.
 Tile numbers belong to one global pool. Software ownership checks every physical
 half of a four- or eight-byte operand. Hardware comparisons use separate explicit
 starting-ID masks, following `IF.cc:193-218` at
-`e4fc4afdf894f295442cef3604667a469fab8e62`. Waiting on the second physical half
-does not cover a command whose explicit ID is the first half. Waits have no
-thread-owner filter. Same-region read/write conflicts cover prior commands from
+`e4fc4afdf894f295442cef3604667a469fab8e62`. Ready-counter waits are different: `MAA.cc:563-580,605-620` counts the
+resolved src1/src2/dst1/dst2 roles and `SPD.cc:120-137` includes both physical
+halves of an8-byte role. A wait on either counted half covers that command.
+Condition-only roles are excluded from these counters, while remaining explicit
+dispatch operands and physical hazards. Waits have no thread-owner filter. Same-region read/write conflicts cover prior commands from
 either thread; read/read and another assigned region do not. A readiness query
 can return zero or one while matching commands are pending; only one covers.
 There is no polling fairness or termination premise.
@@ -270,3 +272,34 @@ public-prove acceptance is inferred.
 [Exact sources/RED/native/resource pins](../../evidence/t28-size-state-controls-20261016.json).
 Full call bodies/source CPU routing, IEEE bit-image coherence and separate
 unbounded progress/source simulation remain active; no current0.2 is installed.
+
+
+### Ready-role correction — 2026-10-16 ET
+
+The historical86-control packet included the wrong expectation that waiting on
+an8-byte role's second half leaves its command pending. That expectation and the
+previous prose above are retracted. Its raw files/hashes remain unchanged as
+historical prototype evidence; the native86 pass never established this source
+rule. This successor records a genuine source-backed RED (3fail/2pass) and a
+96-control native GREEN, including the unchanged explicit-start dispatch control.
+
+`dxc_prepare_counted` separates physical counted roles from the condition-inclusive
+hazard and dispatch masks. A future checked source wrapper must derive those
+roles using `Instruction::getWordSize` (`IF.cc:66-151`), including four-byte
+conditions/indices/comparison destinations and data-width sources/destinations.
+The generic subset checks cannot establish that mapping by themselves. The old
+`dxc_prepare` entry is a condition-free native convenience which counts all its
+physical operands; it is not admitted as a production source wrapper.
+
+Both halves of an8-byte source count even when its comparison destination is
+only four bytes. A condition-only wait/query does not cover its consumer, but
+issuing a destination at that same explicit condition ID stalls/covers the prior
+command (`IF.cc:193-218`). The software pair-disjointness checks remain separate
+from hardware dispatch behavior. No even-ID condition was added.
+
+`dxc_get_tile_ready` remains a logical prototype query, absent from the pinned
+header. The source's ready-range MMIO read blocks until the counter is ready and
+then returns literal1 (`CpuSidePort.cc:295-314`); this packet supplies no new
+header query or liveness theorem. No installed0.2 semantics, public actual
+stateful proof, source-wrapper correspondence or whole ticket28 closure follows
+from these finite native controls.
