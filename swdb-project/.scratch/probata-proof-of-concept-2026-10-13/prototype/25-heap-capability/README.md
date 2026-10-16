@@ -59,16 +59,24 @@ margin, an 8 GiB process-tree RSS cap and one worker. Expected raw output is und
 1 GiB but has not been measured; coordinator disk monitoring remains required.
 The run stops at the first unmatched result and retains all partial evidence.
 
-Actual import syntax and capability remain unvalidated. A zero command exit or
+Actual import syntax and one source-entry feasibility lemma have passed the
+coordinator's representative gate. Full 42-packet capability remains unvalidated.
+A zero command exit or
 all expected statuses cannot close this gate: independently inspect the actual
 resolved import closure, all imported propositions, emitted task hypotheses and
 full original clause/RTE/init/frame/lifetime correspondence. Declared physical
 Why3 standard-library hashes are separate from the actual resolved import audit.
-`int.Int` standard arithmetic is part of the explicit trusted foundation; no
-additional external compiler-correctness theorem is required by this TCB.
+The actual representative task includes Why3 integer/absolute-value/computer
+division support and Frama-C Qed arithmetic lemmas, beyond the `int.Int`
+shorthand in the theory comment. These standard arithmetic foundations require
+an explicit source and emitted-proposition inventory; the definitional heap
+does not import any project-specific desired theorem. No additional external
+compiler-correctness theorem is required by this TCB.
 
 The preparation evidence is `../../evidence/t25-heap-capability-preparation-20261015.json`.
 Independent intermediate reviews are retained in `reviews/`; the runner review's
-four findings are addressed by the current controls and await final review.
+four findings are addressed by the current controls and final independent
+source/runner review passed. Subsequent admitted syntax/option failures and
+repairs remain recorded in issue25 rather than being counted as proof results.
 Further public adapter integration and every remaining ticket25 acceptance item
 remain open after this first capability gate.
