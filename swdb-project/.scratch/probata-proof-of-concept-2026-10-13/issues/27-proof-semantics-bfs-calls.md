@@ -715,3 +715,15 @@ overlap or source-language/ACSL agreement.
 [Exact fresh safe CPU evidence](../evidence/t27-composed-safe-cpu-completed-independent-20261015.md).
 Status remains `claimed`: ten fresh safe units remain in the selected disjoint
 Arest4/B1three/B2three subsets; original A5/B6 remain unlaunched.
+
+### Fresh Arest safe completion: 5/11 total — 2026-10-15 ET
+
+The exact `0e7f2327` Arest profile completed naturally 4/4, exit 0: store,
+conditional-stall, transitive and register units are all actual `proven` records,
+with 316/316 ordinary goals Valid, 100/100 smoke checks passed, 58 initializedness
+and 55 RTE goals. Independent strict read-only closure verified 6,027 physical
+references / 925 files without mismatch, exact collectors, current policy/pins,
+explicit entry premises, clean source and natural guard exits.
+[Exact Arest closure](../evidence/t27-composed-safe-a-rest-completed-independent-20261015.md).
+Including the completed CPU case, fresh safe acceptance is 5/11. B1/B2's six
+remaining units are still required; status remains `claimed`.
