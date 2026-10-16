@@ -109,3 +109,21 @@ preparation only; no public library contract identity is supplied by a clause
 list, and no dispatcher admits these packets. Exact source-local composition,
 automatic placement, observation applications, final frame and all fresh proof
 records remain required. See `evidence/t25-caller-contract-packet-controls-20261016.json`.
+
+Prospective projection decomposition preserves the original whole formula as an
+unexecuted reference and requires two isolated pieces jointly: represented heap,
+and every bounded projected int cell. Both retain the complete original premise;
+the index is fresh. The exact existing predicate definitions justify the
+conjunction/forall expansion. No theorem axiom is imported and the other 19
+canonical target inputs are unchanged. Counts become 21 grow, 27 reserve and
+79 prospective caller targets. These replace the earlier preparation counts;
+they do not promote any historical proof record. Original 017's partial run
+(two producer-reported successes, projection timeout, 17 unexecuted) stays
+separate pending its cold audit.
+
+The initial caller packet matcher also received a concrete lexical review
+blocker: deleting whitespace could join malformed keywords/operators and split
+annotation tokens. That frozen review is retained. The successor matches whole
+clauses with explicit token boundaries before source reparse. All 42 combined
+controls pass; no public contract identity, caller dispatcher or proof opens.
+See `evidence/t25-projection-split-and-lexical-controls-20261016.json`.

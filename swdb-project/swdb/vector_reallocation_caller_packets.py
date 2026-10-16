@@ -11,6 +11,8 @@ import re
 from swdb import vector_reallocation_vcs as bodies
 
 HERE=Path(__file__).parent
+CONTRACT_ERROR=('the closed caller contract clause tokens require its explicit nonnegative count, '
+                'scalar result and incoming frame; no premise is inferred or added')
 
 
 def _sha(data):
@@ -31,25 +33,38 @@ def identity():
         {'path':name,'sha256':_sha((HERE/name).read_bytes())}for name in names]))}
 
 
+def _contract_count(formal_texts):
+    if not isinstance(formal_texts,(list,tuple)) or not formal_texts or \
+            not all(isinstance(text,str) and text.strip() and text.rstrip().endswith(';') for text in formal_texts):
+        raise ValueError(CONTRACT_ERROR)
+    # Each supplied annotation must contain whole clauses. Concatenating blocks
+    # or deleting whitespace could turn malformed tokens into a different clause.
+    clauses=[part for text in formal_texts for part in text.rstrip().split(';')[:-1]]
+    if len(clauses)!=3:raise ValueError(CONTRACT_ERROR)
+    first=re.fullmatch(r'\s*requires\s+0\s*<=\s*([A-Za-z_]\w*)\s*',clauses[0])
+    if first is None:raise ValueError(CONTRACT_ERROR)
+    count=first.group(1)
+    if re.fullmatch(r'\s*assigns\s+\\nothing\s*',clauses[1]) is None or \
+            re.fullmatch(r'\s*ensures\s+\\result\s*==\s*\(\s*'+re.escape(count)+
+                         r'\s*>\s*0\s*\?\s*7\s*:\s*0\s*\)\s*',clauses[2]) is None:
+        raise ValueError(CONTRACT_ERROR)
+    return count
+
+
 def declaration(source,function,formal_texts):
     """Reparse physical source and regenerate every payload, never trust a manifest."""
     from swdb import c_lowering, vector_reallocation_model as model
     source=Path(source)
     if source.is_symlink() or not source.is_file():
         raise ValueError('one regular physical C++ caller source is required')
+    count=_contract_count(formal_texts)
     lowering=c_lowering.lower(source,function)
     candidate=lowering.vector_reallocation_candidate
     if candidate.get('verdict')!='pending' or not candidate.get('candidate_only'):
         raise ValueError('the source has no checked closed caller candidate')
     if candidate['source_sha256']!=_sha(source.read_bytes()) or candidate['lowered_sha256']!=lowering.sha256:
         raise ValueError('the source/candidate/lowering identity differs')
-    if not isinstance(formal_texts,(list,tuple)) or not all(isinstance(s,str) for s in formal_texts):
-        raise ValueError('a prospective caller contract clause list is required')
-    count=candidate['count']['name']
-    expected=['requires0<='+count,r'assigns\nothing',r'ensures\result==('+count+'>0?7:0)']
-    clauses=[re.sub(r'\s+','',part)for part in ''.join(formal_texts).split(';') if part.strip()]
-    if clauses!=expected:
-        raise ValueError('the closed caller contract requires its explicit nonnegative count, scalar result and incoming frame; no premise is inferred or added')
+    if count!=candidate['count']['name']:raise ValueError(CONTRACT_ERROR)
     contract={'clauses':list(formal_texts),'sha256':_sha(_json(list(formal_texts))),
               'entry_discharge':'matching prospective nonnegative-count clause; public contract binding pending',
               'ordinary_contract_identity':'pending: bind original library entry/content and proof placement at public setup'}

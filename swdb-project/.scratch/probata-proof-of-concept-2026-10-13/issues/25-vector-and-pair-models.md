@@ -1186,3 +1186,29 @@ Frozen 017 standalone source and every existing actual producer remain untouched
 Full caller state/frame/typed-image/cleanup composition, current ordinary model
 dependency eligibility and actual ordinary/smoke proof records remain open. All
 original acceptance boxes stay open.
+
+### Prospective projection split and caller lexical repair — 2026-10-16 ET
+
+The original 017 full-grow attempt remains partial: two producer-reported
+successes, the integer projection target unproved, and 17 targets unexecuted.
+The coordinator preserves that run and owns its independent cold audit. A
+prospective source successor decomposes only the projection conjunction into
+two isolated obligations with the same complete premise, one for represented
+heap and one for every bounded projected int cell. Exact existing predicate
+spans, fresh-index checks and explicit AND ownership bind the expansion. The
+original whole target remains reference-only; no desired theorem is assumed.
+All other 19 target C inputs and their indices are byte-identical. The new
+inventory is 21 grow and 27 reserve targets; complete fresh proof is required.
+No old record is promoted and no model body, contract or heap definition changes.
+
+Caller preparation regenerates 79 pending targets under this successor and
+still admits no current model records or actual public contract identity. A
+concrete review blocker in the earlier lexical matcher is fixed: whole-clause
+patterns preserve keyword/operator boundaries and cannot concatenate annotation
+fragments into different tokens. Public RED reproduced the malformed-token
+acceptance; the final 42-control compiler/pure batch passes in 40.40s (guard
+40.7701s, 308,838,400-byte peak, no OOM/timeout). No formal tool executes in this
+profile. Exact sources, old review, reference target and controls are pinned in
+`evidence/t25-projection-split-and-lexical-controls-20261016.json`. Independent
+source review, affected actual diagnostics, full public model and caller proofs,
+and all remaining member/type acceptance remain open.

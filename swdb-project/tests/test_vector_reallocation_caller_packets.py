@@ -52,7 +52,7 @@ def prepared_caller(tmp_path_factory):
     from swdb import vector_reallocation_caller_packets as packets
     stage=tmp_path_factory.mktemp('caller-packets')/'source'
     plan=packets.prepare(SOURCE,'vector_realloc_v3_safe',CONTRACT,stage)
-    assert len(plan['obligations'])==78 # 30ctor + 26reserve(with grow) +11dtor +10local +1numeric
+    assert len(plan['obligations'])==79 # 30ctor +27reserve(with split grow) +11dtor +10local +1numeric
     assert len(plan['required_models'])==5
     assert all(row['proof_record'] is None for row in plan['required_models'])
     return stage
@@ -86,3 +86,37 @@ def test_caller_packet_check_reconstructs_source_and_contract_after_self_consist
         other=tmp_path/'same-bytes.c';other.write_bytes(data);path.unlink();path.symlink_to(other)
     (stage/'manifest.json').write_text(json.dumps(plan,sort_keys=True,indent=2)+'\n')
     with pytest.raises(ValueError):packets.check(SOURCE,'vector_realloc_v3_safe',CONTRACT,stage)
+
+
+def test_caller_contract_does_not_join_malformed_keyword_tokens(tmp_path):
+    from swdb import vector_reallocation_caller_packets as packets
+    malformed=[r'requires0 <= n;',*CONTRACT[1:]]
+    with pytest.raises(ValueError,match='clause tokens'):
+        packets.prepare(SOURCE,'vector_realloc_v3_safe',malformed,tmp_path/'invalid')
+    assert not(tmp_path/'invalid').exists()
+
+
+@pytest.mark.parametrize('contract',[
+    [r're quires 0 <= n;',*CONTRACT[1:]],
+    [r'requires 0 < = n;',*CONTRACT[1:]],
+    ['requ','ires 0 <= n;',*CONTRACT[1:]],
+    [CONTRACT[0],r'as signs \nothing;',CONTRACT[2]],
+    [*CONTRACT[:2],r'ensu res \result == (n > 0 ? 7 : 0);'],
+    [*CONTRACT[:2],r'ensures \ result == (n > 0 ? 7 : 0);'],
+    [*CONTRACT[:2],r'ensures \result = = (n > 0 ? 7 : 0);'],
+    [r'requires 0 <= co unt;',r'assigns \nothing;',r'ensures \result == (co unt > 0 ? 7 : 0);'],
+])
+def test_whitespace_and_annotation_boundaries_never_create_different_clause_tokens(tmp_path,contract):
+    from swdb import vector_reallocation_caller_packets as packets
+    with pytest.raises(ValueError,match='clause tokens'):
+        packets.prepare(SOURCE,'vector_realloc_v3_safe',contract,tmp_path/'invalid')
+    assert not(tmp_path/'invalid').exists()
+
+
+def test_whole_clauses_may_share_one_actual_annotation_without_splitting_tokens(tmp_path):
+    from swdb import vector_reallocation_caller_packets as packets
+    clauses=['requires\t0 <= n;\n','assigns \\nothing;\nensures \\result ==\n(n > 0 ? 7 : 0);']
+    plan=packets.prepare(SOURCE,'vector_realloc_v3_safe',clauses,tmp_path/'whole')
+    assert plan['contract']['clauses']==clauses
+    assert plan['contract']['ordinary_contract_identity'].startswith('pending:')
+    assert plan['current_proof_records_admitted']==[] and len(plan['obligations'])==79

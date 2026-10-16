@@ -42,6 +42,7 @@ def view(member,manifest):
           'qualification':qualification,'source_events':inventory['events'],
           'source_inventory':inventory,'source_groups':sorted(groups),
           'required_source_groups':sorted(required),'obligations':rows,
+          'logical_obligations':manifest['logical_obligations'],
           'semantics':manifest['semantics'],'translation_components':manifest['translation_components'],
           'original_caller_premises_added':[],'generic_caller_composition':'unsupported',
           'has_allocation':not member.endswith('_dtor'),
