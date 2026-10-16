@@ -8,7 +8,7 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-re
 Updated: 2026-10-16 ET. **PAUSED by user request at 11:35 ET.**
 **35 resolved / 28 ready-for-agent / 0 claimed.** All three active claims07,25,28 are released. No next status is scheduled; progress automations are PAUSED.
 
-**Next session: read [PAUSED handoff](PAUSED-HANDOFF-20261016.md) first. Do not restart work until the user resumes it.** The saved effort is being synchronized into `yanrujhou_main`; integration history includes all47 Probata heads and the three pause checkpoints. [Current ticket status](ticket-status-20261015.md).
+**Next session: read [PAUSED handoff](PAUSED-HANDOFF-20261016.md) first. Do not restart work until the user resumes it.** The primary checkout is now `yanrujhou_main`; main contains the paused integration, all47 Probata heads and the three pause checkpoints. Publication/read-back and remote-primary fast-forward are separately verified Git steps. [Current ticket status](ticket-status-20261015.md).
 
 | Ticket | Paused state | Resume boundary |
 | --- | --- | --- |
