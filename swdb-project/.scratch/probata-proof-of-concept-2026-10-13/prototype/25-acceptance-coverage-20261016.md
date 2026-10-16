@@ -98,3 +98,14 @@ remains a pending discharge from the eventual caller contract, and the target
 has no formal proof result. The candidate adds no caller premise or origin.
 See `evidence/t25-caller-numeric-controls-20261016.json`. Full state composition,
 current dependency eligibility and all ordinary/smoke proofs remain required.
+
+A separate canonical caller packet now reparses physical source and preserves an
+explicit prospective contract. It regenerates the 30 constructor, 26 reserve
+(including grow), 11 destructor, ten local lifetime and one numeric targets:
+78 pending targets, with all five required model records still unadmitted.
+Fifteen controls pass, including refusal of missing/altered entry/frame/result
+clauses and self-consistent source/target/body-step/import tampering. This is
+preparation only; no public library contract identity is supplied by a clause
+list, and no dispatcher admits these packets. Exact source-local composition,
+automatic placement, observation applications, final frame and all fresh proof
+records remain required. See `evidence/t25-caller-contract-packet-controls-20261016.json`.
