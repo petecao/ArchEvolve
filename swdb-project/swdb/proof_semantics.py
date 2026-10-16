@@ -171,10 +171,10 @@ def check(library, entry_id, data, error):
                     for variant in row["overloads"])):
             error(f"{where}.overloads", "overloads must list a C prototype and contract for each declaration")
             malformed_overloads = True
-        if not isinstance(row.get("contract"), str) or not row["contract"].strip():
+        if 'instances' not in row and (not isinstance(row.get("contract"), str) or not row["contract"].strip()):
             error(f"{where}.contract", f"call {row['call']} has no ACSL contract (one contract per covered call)")
-        if not isinstance(row.get("prototype"), str) or not re.search(rf"\b{re.escape(row['call'])}\s*\(",
-                                                                       row.get("prototype") or ""):
+        if 'instances' not in row and (not isinstance(row.get("prototype"), str) or not re.search(
+                rf"\b{re.escape(row['call'])}\s*\(", row.get("prototype") or "")):
             error(f"{where}.prototype", f"call {row['call']} needs its C prototype (core-subset spelling)")
         listed = row.get("rules")
         if not isinstance(listed, list) or not listed:
@@ -191,6 +191,7 @@ def check(library, entry_id, data, error):
     if len(set(names)) != len(names):
         error("calls", "each call is listed once")
     from swdb import dx100_interface
+    malformed_instances = not dx100_interface.check_instances(data, error)
     dx100_interface.check(library, data, error)
     found = data.get("inventory")
     if not isinstance(found, dict) or not isinstance(found.get("sources"), list) or \
@@ -207,7 +208,7 @@ def check(library, entry_id, data, error):
                 error("calls", f"inventory call {name} has no call row (every call the inventory found needs a "
                                "contract)")
     texts = _files(library, data, error)
-    if len(texts) < 4 or malformed_overloads:
+    if len(texts) < 4 or malformed_overloads or malformed_instances:
         return []
     return _typecheck(library, entry_id, data, texts, error)
 
@@ -221,9 +222,10 @@ def acsl_source(data, texts, rows=None, *, constants=None):
     state, _objects = _bounded_state(texts["model.state"], constants or data.get("constants") or {},
                                      constant_table=True)
     parts += ["*/", state, "/*@", texts["model.logic"], "*/"]
+    from swdb.dx100_interface import contract_rows
     for row in rows if rows is not None else [*(data.get("calls") or []), *(data.get("queries") or []),
                                               *((data.get("wp") or {}).get("probes") or [])]:
-        for variant in row.get("overloads") or [row]:
+        for variant in contract_rows(row):
             parts += ["/*@", variant.get("contract") or "", "*/", f"{variant.get('prototype')};"]
     return "\n".join(parts) + "\n"
 
@@ -292,9 +294,10 @@ def _constants(data, defines):
 def _typecheck(library, entry_id, data, texts, error):
     """Frama-C type-checks the ghost state, the logic and every contract; missing Frama-C: each contract unchecked."""
     from swdb import framac
+    from swdb.dx100_interface import contract_rows
     from swdb.problems import Problem
     rows = [variant for row in [*(data.get("calls") or []), *(data.get("queries") or [])]
-            for variant in row.get("overloads") or [row]]
+            for variant in contract_rows(row)]
     tool = framac.locate()
     path = str(library.files[entry_id])
     if tool.missing:
@@ -408,12 +411,31 @@ def lowering_options(library):
     covered = covered_names(library)
     if not covered:
         return {}
-    return {"summaries": dict(covered), "semantics": {"tile_pointer": {TILE_POINTER}, "calls": set(covered)}}
+    instances = {row['call']: row['instances'] for data in current(library).values()
+                 for row in data.get('calls', []) if 'instances' in row}
+    semantics = {"tile_pointer": {TILE_POINTER}, "calls": set(covered)}
+    if instances:
+        semantics['template_instances'] = instances
+    return {"summaries": dict(covered), "semantics": semantics}
 
 
 def called(lowering, covered):
     """The proof-semantics calls and queries a C lowering makes (sorted)."""
     return sorted({row["name"] for row in lowering.summaries if row.get("name") in covered})
+
+
+def instance_bindings(lowering):
+    """Persistent source-instantiation identities, independently of family names."""
+    return [{'name': row['name'], 'c_name': row['c_name'], **row['semantic_instance']}
+            for row in lowering.summaries if 'semantic_instance' in row]
+
+
+def contract_names(library, entry_id, called):
+    from swdb.dx100_interface import contract_rows
+    data = library.get(entry_id)
+    return [re.match(r'.*?\b(\w+)\s*\(', variant['prototype'])[1]
+            for row in [*data.get('calls', []), *data.get('queries', [])]
+            if row.get('call', row.get('query')) in called for variant in contract_rows(row)]
 
 
 def _bounded_state(text, constants, *, constant_table=False):

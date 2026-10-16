@@ -400,7 +400,7 @@ def test_execution_method_must_pin_the_running_checks_version_and_content(seed, 
     "swdb/crux_adapter.py", "swdb/rocq_adapter.py", "swdb/proof.py", "vocab/proof_failure_classes.yaml",
     "swdb/cbmc_product.py", "swdb/rss_watchdog.py", "swdb/vocab.py", "swdb/formal_frame.py", "swdb/acsl_subset.py",
     "swdb/framac.py", "swdb/hint_check.py", "swdb/hint_tree.ml",
-    "swdb/wp_pointer_bounds.py", "swdb/proof_semantics.py", "swdb/vector_ownership.py", "swdb/standard_model_view.py",
+    "swdb/wp_pointer_bounds.py", "swdb/proof_semantics.py", "swdb/dx100_interface.py", "swdb/vector_ownership.py", "swdb/standard_model_view.py",
     "swdb/array_domains.py", "swdb/model_domains.py", "swdb/dx_array_domains.py", "swdb/bounded_entry_windows.py",
     "swdb/bounded_chain.py", "swdb/summary_bindings.py", "swdb/helper_windows.py"])
 def test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation(seed, changed):

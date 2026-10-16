@@ -2025,8 +2025,32 @@ class _Printer:
                     site["reason"] = str(exc)
                 unit.pointer_calls.append(site)
             cname = unit.summary_c_name(name, node_found, self.line)
+            instance = None
+            variants = self.semantics.get('template_instances', {}).get(name)
+            if variants is not None:
+                if _has_body(node_found or {}):
+                    raise Unsupported('template instance needs a pinned interface definition; '
+                                      'source-defined implementations cannot inherit a device contract', self.line)
+                arguments = list(unit._spec_args(node_found or {}, self.line))
+                returns, params, variadic = _return_and_params(qual_type, self.line)
+                matches = [v for v in variants if [' '.join(a.split()) for a in v['arguments']] == arguments
+                           and v['arity'] == len(params)]
+                if len(matches) != 1 or variadic:
+                    raise Unsupported(f"no proof-semantics template instance for {name}<{', '.join(arguments)}> "
+                                      f"with arity {len(params)}", self.line)
+                instance = matches[0]
+                signature = unit.ctype(returns, line=self.line) + '(' + ','.join(
+                    unit.ctype(p, line=self.line) for p in params) + ')'
+                try:
+                    wp_pointer_bounds.check_import_signature({'signature': signature},
+                        {'prototype': instance['prototype'], 'call': cname})
+                except wp_pointer_bounds.Refused as exc:
+                    raise Unsupported(f'template instance C signature differs: {exc}', self.line) from None
             names = [p.get("name") for p in _children(node_found or {}) if p.get("kind") == "ParmVarDecl"]
             unit.summary(name, cname, qual_type, self.line, names)
+            if instance is not None:
+                used = next(row for row in unit.summaries_used if row['c_name'] == cname)
+                used['semantic_instance'] = {'arguments': arguments, 'arity': len(params)}
             returns, params, _ = _return_and_params(qual_type, self.line)
             texts = [self.address(a) if i < len(params) and params[i].rstrip().endswith("&") else self.expr(a, top=True)
                      for i, a in enumerate(args)]

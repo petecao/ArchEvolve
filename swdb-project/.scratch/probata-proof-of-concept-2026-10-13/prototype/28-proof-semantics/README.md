@@ -81,3 +81,28 @@ validation before its job snapshot: that changed, freshly loaded version is
 recorded consistently. [Exact RED/GREEN and resource pins](../../evidence/t28-trust-record-controls-20261015.json).
 All production semantics0.1 library bytes are unchanged; no semantics0.2 behavior
 or whole-interface acceptance is established by this slice.
+
+Typed instance contracts — 2026-10-15 ET: explicit canonical template arguments
+and source arity select a concrete C signature and contract. Validation refuses
+missing contracts, duplicate selectors/symbols, malformed metadata and omitted
+overloaded header declarations. Source binding checks the actual same-TU
+instantiation, deterministic emitted C name and complete C signature. Selected
+instances are recorded by both adapters. No generic family contract fills a
+missing type/arity. The shared trust fixture is factored without changing its
+record-control assertions.
+
+Three public REDs reproduce ignored typed contracts, ignored type selection and
+an unpinned source definition inheriting a device contract. The composed focused
+set passes39/39; final instance/ABI/native/template controls pass29/29 after the
+checker-list update (35.23s guard,207,929,344B peak). These overlap, not68unique
+cases. [Exact source/control/resource pins](../../evidence/t28-typed-instance-controls-20261015.json).
+No actual formal tool runs. Body-bearing real MMIO templates still refuse:
+raw header identity alone cannot certify candidate macro/typedef/trait context.
+A source-bound effective-interface audit and the six device type/value domains
+remain required before claiming per-call implementation behavior.
+
+Checker closure RED: changing copied `dx100_interface.py` originally left a frozen
+execution method admitted and ran the scripted command. Adding this imported
+validator/contract generator to `proof_setup.CHECK_SOURCES` makes the same
+mutation refuse before command/record. A fresh identity-bound method admits its
+scripted fixture command. Historical2033/74 setup/facts are not upgraded.

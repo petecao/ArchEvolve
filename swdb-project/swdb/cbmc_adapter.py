@@ -207,6 +207,8 @@ class CbmcAdapter:
                 "exit_check": "no pending device store before formal poststate observations; pending reads allowed",
                 "native_address_abi": "flat 64-bit uintptr_t data addresses, 32-bit int; CBMC retains object IDs",
                 "probes": [{k: p[k] for k in ("id", "function", "access", "line")} for p in lowering.probes]}
+            if proof_semantics.instance_bindings(lowering):
+                context['settings']['proof_semantics']['instances'] = proof_semantics.instance_bindings(lowering)
             context["model"] = model
         problem = std_models.method_problem(self.method, lowering)
         if problem:

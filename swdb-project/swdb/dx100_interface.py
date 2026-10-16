@@ -18,6 +18,66 @@ _DEFINITION = re.compile(
 _COMMENT_OR_STRING = re.compile(r'//[^\n]*|/\*.*?\*/|"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'', re.S)
 
 
+def contract_rows(row):
+    """Concrete contracts of a family; no generic fallback for typed instances."""
+    if 'instances' in row:
+        return row['instances']
+    return row.get('overloads') or [row]
+
+
+def check_instances(data, error):
+    """Reject absent contracts, ambiguous selectors and duplicate concrete ABIs.
+
+    Template arguments are canonical source types, not device datatype codes.
+    Source binding separately checks the actual instantiation and C signature.
+    """
+    valid, symbols = True, set()
+    for i, row in enumerate(data.get('calls') or []):
+        if not isinstance(row, dict) or 'instances' not in row:
+            continue
+        where = f'calls[{i}].instances'
+
+        def refuse(reason):
+            nonlocal valid
+            valid = False
+            error(where, reason)
+
+        instances = row['instances']
+        if not isinstance(instances, list) or not instances:
+            refuse('instances must be a nonempty list')
+            continue
+        if 'overloads' in row:
+            refuse('instances and overloads cannot both select the call contracts')
+        selectors = set()
+        for instance in instances:
+            if not isinstance(instance, dict):
+                refuse('instance needs its own C prototype and contract')
+                continue
+            if set(instance) - {'arguments', 'arity', 'prototype', 'contract', 'declaration'}:
+                refuse('unknown template instance fields')
+            arguments, arity = instance.get('arguments'), instance.get('arity')
+            if not isinstance(arguments, list) or not arguments or any(
+                    not isinstance(a, str) or not a.strip() for a in arguments):
+                refuse('instance arguments must be a nonempty list of canonical type strings')
+            elif type(arity) is not int or arity < 0:
+                refuse('instance arity must be a nonnegative integer')
+            else:
+                selector = (tuple(' '.join(a.split()) for a in arguments), arity)
+                if selector in selectors:
+                    refuse('duplicate template arguments and arity')
+                selectors.add(selector)
+            prototype, contract = instance.get('prototype'), instance.get('contract')
+            match = re.fullmatch(r'.*?\b([A-Za-z_]\w*)\s*\([^;{}]*\)', prototype or '') \
+                if isinstance(prototype, str) else None
+            if not match or not isinstance(contract, str) or not contract.strip():
+                refuse('instance needs its own C prototype and contract')
+            elif match[1] in symbols:
+                refuse('instance C symbols must be distinct')
+            else:
+                symbols.add(match[1])
+    return valid
+
+
 def declarations(text, header):
     """Global definitions in the two pinned headers; no closed API-name regex.
 
@@ -67,6 +127,14 @@ def check(library, data, error):
             error('calls', f'call {name} has no interface declaration; ghost queries belong in queries')
         for row in data.get('calls', []):
             signatures = [d['declaration'] for d in actual if d['name'] == row['call']]
+            if 'instances' in row:
+                instances = row['instances']
+                if isinstance(instances, list) and all(isinstance(v, dict) for v in instances):
+                    declared = {v.get('declaration') for v in instances}
+                    if (len(signatures) > 1 and declared != set(signatures)) or \
+                            any(d is not None and d not in signatures for d in declared):
+                        error('calls', f'interface declaration {row["call"]} instances must cover its exact declarations')
+                continue
             if len(signatures) < 2:
                 continue
             overloads = row.get('overloads')
