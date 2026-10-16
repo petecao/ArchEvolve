@@ -69,14 +69,14 @@ module Heap
     contents h b o = Pointer target offset
   predicate forms (h:heap) (b o:int) =
     live h b /\ 0 <= o <= h.extent[b]
-  predicate reads (h:heap) (b o width:int) =
+  predicate can_read (h:heap) (b o width:int) =
     live h b /\ 0 <= o /\ 0 < width /\ o + width <= h.extent[b]
-  predicate writes (h:heap) (b o width:int) =
-    reads h b o width /\ h.writable[b] = True
+  predicate can_write (h:heap) (b o width:int) =
+    can_read h b o width /\ h.writable[b] = True
   predicate typed_reads (h:heap) (b o width alignment:int) =
-    reads h b o width /\ aligned (h.address[b]+o) alignment
+    can_read h b o width /\ aligned (h.address[b]+o) alignment
   predicate typed_writes (h:heap) (b o width alignment:int) =
-    writes h b o width /\ aligned (h.address[b]+o) alignment
+    can_write h b o width /\ aligned (h.address[b]+o) alignment
   predicate typed_forms (h:heap) (b o alignment:int) =
     forms h b o /\ aligned (h.address[b]+o) alignment
   predicate freeable (h:heap) (b o:int) =
