@@ -23,22 +23,32 @@ Ticket 20's fields (`formal_frame: 1`, `version`, `rules`, empty `clauses`) plus
 | `hardware_interface` | `{id, version, gem5_commit}`: `dx100-mmio`, `1.0-e4fc4af`, the full commit. Every `rules[].cites.gem5_commit` must be a prefix (7+ digits) of it. |
 | `constants` | Default build constants of the model: `DX_K` (command slots, K = 32), `DX_NT` tiles, `DX_NR` registers, `DX_NM` regions, `DX_TS` tile size. `--define NAME=VALUE` overrides one. |
 | `inventory` | `{read, sources, calls}`: the pinned sources the call list was read from (roles `lowerings`, `offload`, `setup`, `function`) and the calls found. A changed source fails its pin: reopen the inventory. |
+| `declaration_inventory` | Optional complete interface surface, independent of kernel uses: the two immutable upstream header pins and all 26 names / 27 exact declarations. Missing, added or duplicated declarations and missing call contracts are refused. This describes declarations, not typed behavioral agreement. |
 | `ghost.acsl` | Pinned ACSL file: the ghost state, declared once (`ghost <type> <name>[...];` lines). |
 | `model` | Pinned `state` (device state, C), `c` (the C model, the CBMC form) and `logic` (ACSL logic for the contracts). |
 | `calls` | One row per covered call: `call`, `prototype` (core-subset C), `contract` (ACSL), `rules` (rule IDs), `lowerings`, `used_by`. |
+| `calls[].overloads` | For a name with multiple header declarations, each overload has its exact source `declaration`, a distinct C `prototype` and its own ACSL `contract`. These contracts are included in type-checking; no initialized allocation overload may silently reuse the zero-argument behavior. |
 | `queries` | Ghost queries a fixture may call (not hardware calls): `query`, `prototype`, `contract`. |
+| `rules[].record_assumption` | Optional boolean. A true value lists that rule's statement on every verdict using this exact version, as kind `proof_semantics`, reference `<entry>#<rule>` and the entry's SHA-256. The rule still requires its normal citation or owner. These entries never cap a level. |
 
 ### What `swdb validate` refuses
 
 - a rule with neither `cites` nor `assumed: {owner}` (ticket 20), or a citation at another gem5 commit;
 - a listed call with no contract or no prototype; a call naming a rule the entry does not hold;
 - an inventory call with no call row; a moved or edited inventory source (pin);
+- a complete declaration inventory that differs from the immutable upstream headers, an uncovered helper/overload, or malformed overload or assumption-marker metadata;
 - a ghost array declared again in `state.h` or `model.h` (declared once, in `ghost.acsl`);
 - a contract, logic or ghost declaration Frama-C 33.0 refuses (parse and type check, no WP). Without
   Frama-C the contracts are reported `UNCHECKED`, never valid.
 
 Proof-semantics contracts are type-checked, not held to the formal-half subset: they use ghost state and bitwise
 operators, and they are trusted (an assumption entry), never executed by check mode.
+
+Ticket28's declaration, typed-call routing and trust-record extensions are implementation prerequisites.
+No production semantics0.2 version is current yet. Structural/scripted/compiler controls do not establish
+whole-interface behavior, history/overlap/ownership/pair rules or actual formal acceptance. Semantics0.1's
+library bytes remain unchanged. Rule trust references bind the entry's original file hash; changing its
+bytes during a job is refused rather than attaching new trust text to an older pinned version.
 
 ## Version 0.1 (`semantics.dx100_bfs_0_1`)
 

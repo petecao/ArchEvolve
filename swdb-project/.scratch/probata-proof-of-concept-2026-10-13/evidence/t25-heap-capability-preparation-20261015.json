@@ -1,0 +1,227 @@
+{
+  "base_after_integration": "f439edf03d9369c51c5658abe1961af75a52e45f",
+  "compiler_launched": false,
+  "created": "2026-10-15 ET",
+  "formal_admission_pending": [
+    "WP33 actual import/type syntax",
+    "exact imported proposition inventory and emitted task hypotheses",
+    "all42 mapped packet results including4 exact-target ordinary negatives",
+    "independent runtime/tool/library/source mapping audit"
+  ],
+  "later_ticket_work_pending": "Public member-body c_model integration and remaining modeled members, typed instantiations, caller/lifetime/bounded and assumption/version tests remain mandatory.",
+  "latest_controls": {
+    "failed": 0,
+    "passed": 21,
+    "skipped": 0
+  },
+  "prior_history": "Earlier incremental source-to-packet RED/GREEN producers remain under /private/tmp/probata-t25-*. Their preparation does not establish formal capability. Two unsuccessful implementation checks (earlier helper NameError; source-span needle here) are preserved and are not described as intentional RED or verifier failures.",
+  "production_runtime_changed": false,
+  "prototype_source_pins": [
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-heap-capability/README.md",
+      "sha256": "0834333bc5af8c822c82aecbbda1cb469f4c97263fdaece55c75053c59605095"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-heap-capability/experiment.py",
+      "sha256": "26486209a7618b59349021af1e48a019c31e91d9828d1e64a77439bf264e285e"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-heap-capability/heap_bridge.mlw",
+      "sha256": "44cd626d07a93d105be791bff82fa201b525e09523a8f6598b92312a6a0b1eac"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-heap-capability/packets.py",
+      "sha256": "3299b9eb5f24d37228d26c18dc8a795c812b2410384899d680657d86fbdcead5"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-heap-capability/source_vcs.py",
+      "sha256": "5b6353263114ea31bf7ee9408b81a356b10ba1206ee4f21167c67d7d96f1a362"
+    }
+  ],
+  "review_pins": [
+    {
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-heap-capability/reviews/probata-t25-capability-runner-review.md",
+      "sha256": "b32d14dbbb13f3086b487fde1633e2f78cbbb01ac968c3600053cbccaae6a75c"
+    },
+    {
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-heap-capability/reviews/probata-t25-count-dtor-obligation-review.md",
+      "sha256": "c6fea8be9d219892c786f1d90add7aa68ceadac74e13976c17069f39c8512b54"
+    },
+    {
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-heap-capability/reviews/probata-t25-first-vc-map-review-v2.md",
+      "sha256": "e677772a842d9914ced73ee763c7b96cfa8f7aab8298274d6b57aa5b213ec503"
+    },
+    {
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-heap-capability/reviews/probata-t25-first-vc-map-review-v4-final.md",
+      "sha256": "a818449fcaa197ef6bdc5ec272964d87f303c49f27c6bffa6b5dbc1349ff71cd"
+    },
+    {
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-heap-capability/reviews/probata-t25-first-vc-map-review.md",
+      "sha256": "acdc31f72f34499bedecb06318c5beb81b117380b71f9005c3ac8fd56296f301"
+    }
+  ],
+  "scope": "First original int count/value constructor/destructor heap-VC capability preparation; not a proof record or completed ticket.",
+  "test_runs": [
+    {
+      "id": "premise-witness-red",
+      "meaning": "intentional RED: missing source-entry witnesses",
+      "pins": [
+        {
+          "path": "/private/tmp/probata-t25-premise-witness-red-20261015/command.json",
+          "sha256": "56dca88d72925b9052697642adb2ddfaee4af61e2b8498fc7dbef250b74fd1db"
+        },
+        {
+          "path": "/private/tmp/probata-t25-premise-witness-red-20261015/controls.log",
+          "sha256": "c4f86c185353f7622b2b316fd7c8c1a0a0c05eabf2c6ca7a7e168c334a7392e4"
+        },
+        {
+          "path": "/private/tmp/probata-t25-premise-witness-red-20261015/resources.json",
+          "sha256": "af76cdad4468bb6a3e3f21734eb224fa5094f071832e0cb8319da219b44e8d73"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 0.499596,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 71565312,
+        "timed_out": false,
+        "wall_seconds": 0.5258599580265582
+      }
+    },
+    {
+      "id": "premise-witness-green",
+      "meaning": "unsuccessful implementation check: incorrect source-span needle; not the intentional RED",
+      "pins": [
+        {
+          "path": "/private/tmp/probata-t25-premise-witness-green-20261015/command.json",
+          "sha256": "4d1090f42c4b8b602c544084f53526f45635c8120bb4a6b34d2625e1b9b11f75"
+        },
+        {
+          "path": "/private/tmp/probata-t25-premise-witness-green-20261015/controls.log",
+          "sha256": "42cff32bdc6cf2aefa7eae2a09e6848362da0f653646bf57ff15f51e84b4375f"
+        },
+        {
+          "path": "/private/tmp/probata-t25-premise-witness-green-20261015/resources.json",
+          "sha256": "764ece2f12acb338755789c3b6940719a839e1284cca0d8f6f40ea9f0ad6db22"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 1.9554559999999999,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 124960768,
+        "timed_out": false,
+        "wall_seconds": 2.8811641670181416
+      }
+    },
+    {
+      "id": "premise-witness-green2",
+      "meaning": "GREEN13 after exact source-span correction",
+      "pins": [
+        {
+          "path": "/private/tmp/probata-t25-premise-witness-green2-20261015/command.json",
+          "sha256": "8c7d539c3befe60e39aa1e98e38ef8495bd14a18293d51c6e650b8687181f7f4"
+        },
+        {
+          "path": "/private/tmp/probata-t25-premise-witness-green2-20261015/controls.log",
+          "sha256": "ca9ce06712dab333a83daa74b35ed2a0a35018f54a3f77dffb30253085ea23fc"
+        },
+        {
+          "path": "/private/tmp/probata-t25-premise-witness-green2-20261015/resources.json",
+          "sha256": "4b2937ebcde17b578e2bdd64aac565ad7e4ae35854c73159cd6d5a44d2d7629a"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 2.619958,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 121618432,
+        "timed_out": false,
+        "wall_seconds": 3.5604554589954205
+      }
+    },
+    {
+      "id": "result-policy-red",
+      "meaning": "intentional RED: missing public policy and output-isolation checks",
+      "pins": [
+        {
+          "path": "/private/tmp/probata-t25-result-policy-red-20261015/command.json",
+          "sha256": "0ad43f8ecf32531d09e18bb04934f665ee866f135da8a4bc1423b01746cbed83"
+        },
+        {
+          "path": "/private/tmp/probata-t25-result-policy-red-20261015/controls.log",
+          "sha256": "27e799535a64ffae15d52d26499dc6708d8e9560f3623d48300a965662fe321f"
+        },
+        {
+          "path": "/private/tmp/probata-t25-result-policy-red-20261015/resources.json",
+          "sha256": "57237e7bf25f53c6623925dd1065075519837352bb2869d89809ce2ca38d1dcc"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 1.159868,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 108855296,
+        "timed_out": false,
+        "wall_seconds": 1.2065825419849716
+      }
+    },
+    {
+      "id": "result-policy-green",
+      "meaning": "GREEN21; only Python controls plus bounded sleep timeout control",
+      "pins": [
+        {
+          "path": "/private/tmp/probata-t25-result-policy-green-20261015/command.json",
+          "sha256": "3856cad72eda5c7ac260ad562f4ce80da1eb3f93fc0cb15bbe72eeb0829e7134"
+        },
+        {
+          "path": "/private/tmp/probata-t25-result-policy-green-20261015/controls.log",
+          "sha256": "54c2e2821b403612db48f85fd03ec4ae5d6d05c917c5a553e40b2b985347298b"
+        },
+        {
+          "path": "/private/tmp/probata-t25-result-policy-green-20261015/resources.json",
+          "sha256": "b900b4529a79e8929db1ec52b87177a0e6602893b792578805f514d43334027b"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 3.3426340000000003,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 121782272,
+        "timed_out": false,
+        "wall_seconds": 4.32301054202253
+      }
+    },
+    {
+      "id": "composed-preparation-green",
+      "meaning": "GREEN21 after merging current integration; no formal tools",
+      "pins": [
+        {
+          "path": "/private/tmp/probata-t25-composed-preparation-green-20261015/command.json",
+          "sha256": "542752d75e81b354938745739b9e349580df3da21abf3b2e836bd12b871ba4ef"
+        },
+        {
+          "path": "/private/tmp/probata-t25-composed-preparation-green-20261015/controls.log",
+          "sha256": "f07e926f6d62b235dc7e3e256687a6714a4f9b8a9ee8c6886ece0932bd77cc6f"
+        },
+        {
+          "path": "/private/tmp/probata-t25-composed-preparation-green-20261015/resources.json",
+          "sha256": "2715badf36f541999b880fda85756b569c156c3a0fdf1cf877962684f2f71f29"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 3.327756,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 121274368,
+        "timed_out": false,
+        "wall_seconds": 4.283265500038397
+      }
+    }
+  ],
+  "test_source_pin": {
+    "path": "swdb-project/tests/test_heap_capability_packets.py",
+    "sha256": "7807de79eeafe14ce37d060f4eb6b93da5de078275b5c24a4f3d300604d48879"
+  },
+  "verifier_launched": false
+}

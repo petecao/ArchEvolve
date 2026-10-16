@@ -657,6 +657,7 @@ class CbmcAdapter:
             tools.append(ident)
         model = context.get("model")
         if model is not None:                        # ticket 27: the proof semantics and the reduction it rests on
+            assumptions += proof_semantics.record_assumptions(self.library, model.entry, model.sha256)
             assumptions.append({"kind": "proof_semantics", "reference": {"id": model.entry, "sha256": model.sha256},
                                 "sentence": f"The DX100 behaves as its proof semantics {model.entry} says: each "
                                             "command's values as if it finished at issue, hazards as its rules state."})

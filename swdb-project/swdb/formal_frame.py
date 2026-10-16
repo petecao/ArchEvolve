@@ -285,9 +285,11 @@ def _rules(data, error):
             error(where, 'a rule has a unique id and a statement')
             continue
         seen.add(rule['id'])
-        unknown = sorted(set(rule) - {'id', 'statement', 'cites', 'assumed'})
+        unknown = sorted(set(rule) - {'id', 'statement', 'cites', 'assumed', 'record_assumption'})
         if unknown:
             error(where, f'unknown keys {", ".join(unknown)} (acsl text of rules comes with tickets 27 and 28)')
+        if 'record_assumption' in rule and type(rule['record_assumption']) is not bool:
+            error(f'{where}.record_assumption', 'record_assumption must be a boolean')
         has = [key for key in ('cites', 'assumed') if key in rule]
         if len(has) != 1:
             error(where, 'a proof-semantics rule carries exactly one of cites: {gem5_commit, path, lines} and '

@@ -1,0 +1,7 @@
+# Ticket28 trust-record prerequisite integration review — 2026-10-15 ET
+
+PASS for exact6a54351f88dfa30dbf7cbe2bd4c23afb86b7201e source618c34ce prerequisite. Static committed-source and retained local receipt review only; no compiler/test/formal/provider/remote jobs by reviewer.
+
+The boolean record_assumption marker is schema-checked. Both adapters append each selected marked rule with distinct entry#rule reference and the exact entry content hash, preserving statements on all emitted verdict kinds. The helper compares current physical hash, freshly parsed YAML and cached Library data, then physical hash again. Changed/malformed/unreadable entries refuse before a proof record; the design retains its non-atomic local-file boundary and does not claim hostile-process containment. The WP test mutation occurs before the job snapshot and is correctly treated as a newly validated version; the CBMC version callback genuinely occurs after the snapshot and exercises stale-entry refusal. Neither case is mislabeled a verifier result.
+
+All5committed source/test pins and196other retained local artifact/worker pins match. The retained13stand-in controls include true/false/nonboolean flags, five explicit trust statements, no solver launch, candidate-level assumption propagation and the genuine post-validation mutation RED-to-refuse repair. Stand-in typechecking is not ACSL evidence. Semantics0.1/library bytes are unchanged, no semantics0.2entry is selected and ticket28 remains claimed. Actual model/call semantics and future producer admission remain separate.

@@ -64,3 +64,20 @@ The six literal builtin types in the compiler control do not establish device
 encoding: source `get_data_type` recognizes exact `int64_t`/`uint64_t` identities,
 which differ between Apple and Linux headers. Semantics0.2 must bind the pinned
 source/header ABI instead of treating every same-width long/long-long as one type.
+
+Trust-record slice — 2026-10-15 ET: a rule may explicitly request an assumption
+entry on every verdict using its version, with the rule fragment ID, exact entry
+hash and literal statement. Both adapters include it on prelaunch refusals too.
+Thirteen public scripted/compiler controls pass for the five required trust
+entries, booleans/refused malformed markers, and `candidate-level` noncapping.
+Synthetic clones and level records establish record plumbing only. Version and
+WP parse stand-ins run; no actual verifier, prover or ACSL type evidence.
+
+A public CBMC mutation RED exposed cached rule text paired with newly hashed
+entry bytes. Verdict generation now requires the current file hash, a fresh
+parse equal to the job's cached entry, and another matching hash. A late change
+refuses the record. The WP probe in these controls occurs earlier, during
+validation before its job snapshot: that changed, freshly loaded version is
+recorded consistently. [Exact RED/GREEN and resource pins](../../evidence/t28-trust-record-controls-20261015.json).
+All production semantics0.1 library bytes are unchanged; no semantics0.2 behavior
+or whole-interface acceptance is established by this slice.

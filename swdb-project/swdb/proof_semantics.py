@@ -23,7 +23,9 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
-from swdb import artifacts
+import yaml
+
+from swdb import artifacts, yamlio
 
 FOLDER = "proof_semantics"
 GHOST_LINE = re.compile(r"^\s*ghost\s+(?P<decl>[^;]+);\s*(//.*)?$")
@@ -376,6 +378,28 @@ def covered_names(library):
         for row in data.get("queries") or []:
             found[row["query"]] = entry_id
     return found
+
+
+def record_assumptions(library, entry_id, sha256):
+    """Trust rules recorded on EVERY verdict using this exact semantics version.
+
+    Rule statements and their cited/owned evidence live in the pinned entry.
+    References use its content hash plus a distinct rule fragment; a mutation
+    cannot silently attach new trust text to a verdict for older bytes.
+    """
+    from swdb.proof import AdapterError
+    path = library.files[entry_id]
+    try:
+        unchanged = (artifacts.file_hash(path) == sha256
+                     and yamlio.load(path) == library.get(entry_id)
+                     and artifacts.file_hash(path) == sha256)
+    except (OSError, UnicodeError, yaml.YAMLError):
+        unchanged = False
+    if not unchanged:
+        raise AdapterError('proof-semantics trust entry changed during the job')
+    return [{'kind': 'proof_semantics', 'reference': {'id': f'{entry_id}#{rule["id"]}', 'sha256': sha256},
+             'sentence': rule['statement']}
+            for rule in library.get(entry_id).get('rules', []) if rule.get('record_assumption') is True]
 
 
 def lowering_options(library):

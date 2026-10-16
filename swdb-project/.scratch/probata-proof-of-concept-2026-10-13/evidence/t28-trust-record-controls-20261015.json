@@ -1,0 +1,1073 @@
+{
+  "created": "2026-10-15 ET",
+  "base": "c40b868a9d57f9af37921a80d11c00bdd010abd3",
+  "scope": "Ticket28 trust-record prerequisite only; no new production semantics0.2, actual WP/CBMC/prover or hardware proof. Synthetic version clones and level records are contract_fixture evidence.",
+  "assumptions": {
+    "kind": "proof_semantics",
+    "reference": "<entry>#<rule> and exact entry SHA256",
+    "rules": [
+      "mmio_ordering",
+      "cross_core_filter",
+      "cross_core_write_buffer",
+      "no_stale_cpu_copy",
+      "one_instance"
+    ],
+    "level_cap": false
+  },
+  "mutation_policy": "At verdict, compare current hash, freshly parsed entry against cached Library data, then current hash again. Refuse changed, unreadable or malformed entries with no proof record. CBMC version callback is after job snapshot; WP version callback in these controls is before the job snapshot and legitimately changes the newly loaded version.",
+  "scheduling": "Shared workerB; guarded 8GiB/300s. Explicit version/typecheck stand-ins; no actual formal tool. The WP stand-in does not establish ACSL typing.",
+  "profiles": {
+    "schema_red": {
+      "note": "Public validate rejects the new marker until the schema is implemented.",
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-trust-record-red3/command.json",
+          "sha256": "b65c4307c4786b069b0e10023480826cb0a6ee3e00938a1eda66f055943d4660",
+          "bytes": 292
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-red3/control.log",
+          "sha256": "4ec771177bda1069be39a90b23ede4b139bb6b4e51e2faeffdbcd837e2df77c5",
+          "bytes": 5603
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-red3/junit.xml",
+          "sha256": "5bdf6348076b7f31cfe1143775bb7672015968f46afc92ca85568363ec1bd27c",
+          "bytes": 6187
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-red3/pytest/test_a_prelaunch_semantics_ver0/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "bb25d3c74c7f5ea356cb62ac6b6af7824b925c30aeb1d01a21ac7fe65e94ba9b",
+          "bytes": 32307
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-red3/pytest/test_a_prelaunch_semantics_ver0/t28-version-only-adapter.py",
+          "sha256": "c9cab918526534e0de62b79b966113d9070e615cc355b103da9ee3890c3130df",
+          "bytes": 239
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-red3/resources.json",
+          "sha256": "85289558353396160f08531e5a61ea87665577e7434134b04527867b6fd2aab2",
+          "bytes": 165
+        }
+      ]
+    },
+    "mutation_red": {
+      "note": "Post-validation CBMC version probe changes entry bytes; old cached sentences were recorded against the new hash (1 failed, 1 passed).",
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-red/command.json",
+          "sha256": "d16c84efee32edffda454c6b221266353d4c00e9d1c0ca9e5ec17369c8ad3d79",
+          "bytes": 322
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-red/control.log",
+          "sha256": "baa0c0faf141b7f89613762dcf0ca263ea3ce6cb5aa128873c93dd7b58356a26",
+          "bytes": 21529
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-red/junit.xml",
+          "sha256": "1c357748e2e9566bb3d154df6c048f0e7af7a1432b7a0b321e948e6a7f7d4c65",
+          "bytes": 36925
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-red/pytest/test_a_prelaunch_semantics_ver0/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "e0e8bd6bda9460dbd4fa763dae918a46556ef60db772583b7caa708bb8aa6724",
+          "bytes": 33066
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-red/pytest/test_a_prelaunch_semantics_ver0/records/proofs/proof.contract.dx100_trust_fixture.20261016t020404z.e4eb1295.yaml",
+          "sha256": "4fc0afedcebc4634c019d3ee819dad617564d9b84ff36f35e968820237d5f5d8",
+          "bytes": 7925
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-red/pytest/test_a_prelaunch_semantics_ver0/runs/proof.contract.dx100_trust_fixture.20261016t020404z.e4eb1295/adapter.log",
+          "sha256": "4a118db742be5b8ce49899e588611fee159c8bcfb40d2c9bc0e5a79a778f0282",
+          "bytes": 405
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-red/pytest/test_a_prelaunch_semantics_ver0/t28-scripted-typechecker.py",
+          "sha256": "c3263abb06b7ea9bdba3487b88f51fe2405278ce1ef6c790c2bab7d2fb6defa9",
+          "bytes": 613
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-red/pytest/test_a_prelaunch_semantics_ver0/t28-version-only-adapter.py",
+          "sha256": "0e8e4df4b5ae5bb1343dfefd45cccf9e457eb2273328041810585e9bbafe1946",
+          "bytes": 579
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-red/pytest/test_a_prelaunch_semantics_ver1/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "5d996b9f86d00983b82fe9f616208c405895e025d30e55295947a1022578f891",
+          "bytes": 33093
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-red/pytest/test_a_prelaunch_semantics_ver1/t28-scripted-typechecker.py",
+          "sha256": "d9c7e49d8def810a3661cf69a3a172ff02a6402c64ccac5b87225efdcceb9afa",
+          "bytes": 613
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-red/pytest/test_a_prelaunch_semantics_ver1/t28-version-only-adapter.py",
+          "sha256": "8bb2d9068e0560578f602ae881abb039d8270cc724f23a889919d62dd2df509d",
+          "bytes": 579
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-red/resources.json",
+          "sha256": "09d6749815e51ab0458d12f2fb11d99b48ad88cc72be51d22886cd86f147f828",
+          "bytes": 165
+        }
+      ]
+    },
+    "mutation_intermediate": {
+      "note": "10 passed; two WP expectations were incorrect: its version probe occurs before the job Library is loaded, so a new validated snapshot is legitimate.",
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/command.json",
+          "sha256": "c1feb2bebd2fa4d928d97c3c730fa06d5625e0aed9c0dd1dcc437d4c0143d1ac",
+          "bytes": 298
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/control.log",
+          "sha256": "cac9a735917d171050954eed8bf4bfa195c6d2dc8bbf499200b45896821cee0f",
+          "bytes": 42184
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/junit.xml",
+          "sha256": "bcca1eb18fc8e18f657de90e108d88b39a165f79e671210dce1bf75467315343",
+          "bytes": 73708
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver0/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "f6625d79fe8c882198added6301a163fbdcd280a50ede6aafe53330c80b531d5",
+          "bytes": 33083
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver0/records/proofs/proof.contract.dx100_trust_fixture.20261016t020737z.e257d5fe.yaml",
+          "sha256": "fc4933aaf5ef1310f9bdd596b62e33118574fb0ff1c78910d723d8fa13842559",
+          "bytes": 7929
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver0/runs/proof.contract.dx100_trust_fixture.20261016t020737z.e257d5fe/adapter.log",
+          "sha256": "77385b23ca0bf33579a79ec31e6cfa602a1c87c4a7a80c677dcc514468dd9c3c",
+          "bytes": 405
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver0/t28-scripted-typechecker.py",
+          "sha256": "7775a33616881024d15fe48edfb052ee45b94529733451a857b46dba9a6751ee",
+          "bytes": 280
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver0/t28-version-only-adapter.py",
+          "sha256": "ed32aeec0e96817a8ebaf0eedf722820dabaaed6fbe0427337030d16b10c43f8",
+          "bytes": 246
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver1/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "f6625d79fe8c882198added6301a163fbdcd280a50ede6aafe53330c80b531d5",
+          "bytes": 33083
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver1/records/proofs/proof.contract.dx100_trust_fixture.20261016t020739z.e9a84782.yaml",
+          "sha256": "18bdef45c1167a3cd4fb81feb09cbbc39afeaffc743370ed3bc76e6636aebd19",
+          "bytes": 8483
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver1/runs/proof.contract.dx100_trust_fixture.20261016t020739z.e9a84782/adapter.log",
+          "sha256": "c3c6e8c6b9b9d83d84d7e4e8ffdcd653dd4d125c3b913fe26c4bba8983d1a2a4",
+          "bytes": 363
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver1/t28-scripted-typechecker.py",
+          "sha256": "8b2021bf9139bdfe5709c6af2c10485d136f385cadb2e62f2027f56a3e609368",
+          "bytes": 280
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver1/t28-version-only-adapter.py",
+          "sha256": "a0c9893dd3b6f85de6a31a0dc5711445e44a207133ec17ff5321ab762fb97202",
+          "bytes": 246
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver10/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "5d996b9f86d00983b82fe9f616208c405895e025d30e55295947a1022578f891",
+          "bytes": 33093
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver10/t28-scripted-typechecker.py",
+          "sha256": "62e7c8caef9340232b6bf4d0be9ea38fa0b7575ce2ff79605c39c520db81398d",
+          "bytes": 619
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver10/t28-version-only-adapter.py",
+          "sha256": "852b79bbb720099c73c6b151dadcf1088cf6aff7fcc40db3928afae5a88db519",
+          "bytes": 585
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver11/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "bb2b2f2fc862f51f3b8e03bcfaa1a6c6791af75b8b64bf50287e8571126d0e53",
+          "bytes": 33076
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver11/t28-scripted-typechecker.py",
+          "sha256": "9e5827990392bf1b4a3f5385abe2121d0d1e6f117d1f76571528168aae15a421",
+          "bytes": 619
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver11/t28-version-only-adapter.py",
+          "sha256": "d29885ff7922fe393dbbb6ce25290edb51c1ad8e85133604ad668a368a0ec7f6",
+          "bytes": 585
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver2/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "3ca45d8bdfccf6870cfed9a8a2e6f985c47dfa4625e3dee7299ce141eb801ba4",
+          "bytes": 33088
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver2/records/proofs/proof.contract.dx100_trust_fixture.20261016t020740z.9ee1b965.yaml",
+          "sha256": "e013f35c414fa9f0322b17224a8df173023666b24f07cbb302034b4fbc5e8ac2",
+          "bytes": 6569
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver2/runs/proof.contract.dx100_trust_fixture.20261016t020740z.9ee1b965/adapter.log",
+          "sha256": "c1fe21f91cae5b7480974f809f47ddc52500d03a38aec66974235d2c11995ade",
+          "bytes": 405
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver2/t28-scripted-typechecker.py",
+          "sha256": "d731f471bc3f8f15c030a22c28aa509a93f5b35e177ca912f3721f6d7d33c1aa",
+          "bytes": 280
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver2/t28-version-only-adapter.py",
+          "sha256": "8e3e7c2fd54390711b00453b89e1bdcffa60fe36ac11b85f80f56e632ba32a3c",
+          "bytes": 246
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver3/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "3ca45d8bdfccf6870cfed9a8a2e6f985c47dfa4625e3dee7299ce141eb801ba4",
+          "bytes": 33088
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver3/records/proofs/proof.contract.dx100_trust_fixture.20261016t020741z.62cfdbca.yaml",
+          "sha256": "dc0ed8aac233cbcc365ab6d98211089835a8859b60182ac96f58fe2d27725b7c",
+          "bytes": 7123
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver3/runs/proof.contract.dx100_trust_fixture.20261016t020741z.62cfdbca/adapter.log",
+          "sha256": "5da1f66846c456ce78ddfdc0645b5529e5294c7046b1414e91432d3c05d2e91d",
+          "bytes": 363
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver3/t28-scripted-typechecker.py",
+          "sha256": "8c849ffb0d9769e7c2fb31491573b170946a604a442de2b2ae7f52cd7a1b3262",
+          "bytes": 280
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver3/t28-version-only-adapter.py",
+          "sha256": "52dc115eb15598e351b44418db51cf7eb615996898c73474985e694278d71b0f",
+          "bytes": 246
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver4/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "5d996b9f86d00983b82fe9f616208c405895e025d30e55295947a1022578f891",
+          "bytes": 33093
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver4/t28-scripted-typechecker.py",
+          "sha256": "2dfc78b93c8a3210c28f117dd32ba45cdfb03efdfd739cfa3886a892aae1e893",
+          "bytes": 280
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver4/t28-version-only-adapter.py",
+          "sha256": "f9a43c1ddd79f65fc1318457523fc3fcf200548584b393b28e2e6259fc3b8765",
+          "bytes": 246
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver5/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "5d996b9f86d00983b82fe9f616208c405895e025d30e55295947a1022578f891",
+          "bytes": 33093
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver5/t28-scripted-typechecker.py",
+          "sha256": "ad91246a4e796a4e1aa6120dcaf84243d36ad716cf1afe86c2552455ef1ec04d",
+          "bytes": 280
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver5/t28-version-only-adapter.py",
+          "sha256": "c619d971aa4d4ac19d8c4a80d1c665cbddb283946f276dde3d52a719dcf34266",
+          "bytes": 246
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver6/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "e0e8bd6bda9460dbd4fa763dae918a46556ef60db772583b7caa708bb8aa6724",
+          "bytes": 33066
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver6/runs/proof.contract.dx100_trust_fixture.20261016t020744z.63acf244/adapter.log",
+          "sha256": "4a118db742be5b8ce49899e588611fee159c8bcfb40d2c9bc0e5a79a778f0282",
+          "bytes": 405
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver6/t28-scripted-typechecker.py",
+          "sha256": "b4f618b32d7b9bdde631ca55dc4267007a3f3d3d49bfdc995a6110a3462b36f2",
+          "bytes": 617
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver6/t28-version-only-adapter.py",
+          "sha256": "14b1a5eb0755710b018248421fde2e55daa0fe9105c2583df0de404153ad9315",
+          "bytes": 583
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver7/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "e0e8bd6bda9460dbd4fa763dae918a46556ef60db772583b7caa708bb8aa6724",
+          "bytes": 33066
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver7/records/proofs/proof.contract.dx100_trust_fixture.20261016t020745z.648dc9fe.yaml",
+          "sha256": "7978b710082db44381186ede3a9502067b385a0cd3847fa4d7740be9dcc3e114",
+          "bytes": 8466
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver7/runs/proof.contract.dx100_trust_fixture.20261016t020745z.648dc9fe/adapter.log",
+          "sha256": "57268ffdb52d79c21c535a871727b6aa96750bdb2405dc27d098aeef8c4d75e6",
+          "bytes": 363
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver7/t28-scripted-typechecker.py",
+          "sha256": "28a96caef0d85e8a2d8ea3a2220cab983d71c0a3fa63d440b2eee8586f8f4455",
+          "bytes": 617
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver7/t28-version-only-adapter.py",
+          "sha256": "dddbb6c4ae835adf85c426fd6837a7aed94b835947865dd3a6ca5e68e8a65b76",
+          "bytes": 583
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver8/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "bdd48f3f902e36900ce26b7fd9a06f2283162c820effe73019feaa11fdbb1162",
+          "bytes": 33071
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver8/runs/proof.contract.dx100_trust_fixture.20261016t020747z.ff7cd7fd/adapter.log",
+          "sha256": "08fb1b5d9b849837e22b2329ad35ffb75131dc14ad9dd55770dcebc664f1aa8e",
+          "bytes": 405
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver8/t28-scripted-typechecker.py",
+          "sha256": "b0f6711839df601954fae0b2e72a8fb21704173ff32aae8a511a2665f00d1e1c",
+          "bytes": 617
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver8/t28-version-only-adapter.py",
+          "sha256": "0c9874bfb9ed0488f7a7af6695c90b724152b77a9174edbccb04e213308b3e8e",
+          "bytes": 583
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver9/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "bdd48f3f902e36900ce26b7fd9a06f2283162c820effe73019feaa11fdbb1162",
+          "bytes": 33071
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver9/records/proofs/proof.contract.dx100_trust_fixture.20261016t020748z.f5841910.yaml",
+          "sha256": "45c9c2ddc2a52a497e07767f1fdf098ab62fe0a492dcef2f14b7bb639a927a58",
+          "bytes": 7123
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver9/runs/proof.contract.dx100_trust_fixture.20261016t020748z.f5841910/adapter.log",
+          "sha256": "85325e4a865f024619ef2e5735ca806038dad26d747b74ff2bf8b08d25767745",
+          "bytes": 363
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver9/t28-scripted-typechecker.py",
+          "sha256": "9c206048a81ad778f56096891e4e1eb96da6d940d6b132db6d7de88b0508cc84",
+          "bytes": 617
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/pytest/test_a_prelaunch_semantics_ver9/t28-version-only-adapter.py",
+          "sha256": "0b8b5331a6e4934230523cd02e66047f26c53a66e011b3a022e776dce74659d3",
+          "bytes": 583
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-green/resources.json",
+          "sha256": "8da5662a0edc16c08e1631f8458b8701acbc4c33e31bb88e21514b375d2e6940",
+          "bytes": 164
+        }
+      ]
+    },
+    "record_green": {
+      "note": "12 public adapter controls pass; before candidate-level fixture was added.",
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/command.json",
+          "sha256": "5d4e58440da0bb420fc213e922b481c1baf3091da8fd9668a7052478eaebf793",
+          "bytes": 306
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/control.log",
+          "sha256": "ffca7e59a362d840f594dd8e0b605ea21c7cf0636ecd0ec3bbe439c71d27d2d5",
+          "bytes": 100
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/junit.xml",
+          "sha256": "2fc031d66badf5bf26d68bb4ac8255c7b0f3dd841cf7e2aedd2506b6236bb22e",
+          "bytes": 2263
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver0/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "f6625d79fe8c882198added6301a163fbdcd280a50ede6aafe53330c80b531d5",
+          "bytes": 33083
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver0/records/proofs/proof.contract.dx100_trust_fixture.20261016t020954z.bf82b95b.yaml",
+          "sha256": "564f7089c6df1c3e740e2da36e06e0a83ca469a200c2b3aaf58555fb55931d7b",
+          "bytes": 7937
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver0/runs/proof.contract.dx100_trust_fixture.20261016t020954z.bf82b95b/adapter.log",
+          "sha256": "77385b23ca0bf33579a79ec31e6cfa602a1c87c4a7a80c677dcc514468dd9c3c",
+          "bytes": 405
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver0/t28-scripted-typechecker.py",
+          "sha256": "800f5e79c92ce4ca812a15358cfd0a894f0898d13f36ea5397617c9c793dc199",
+          "bytes": 284
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver0/t28-version-only-adapter.py",
+          "sha256": "ec6368024670b40ec555bf8cd7b9f9b573b0bbd27c9833bd8f86797eff85d351",
+          "bytes": 250
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver1/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "f6625d79fe8c882198added6301a163fbdcd280a50ede6aafe53330c80b531d5",
+          "bytes": 33083
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver1/records/proofs/proof.contract.dx100_trust_fixture.20261016t020955z.bc72342e.yaml",
+          "sha256": "4782fef2f6e40184b619552820e7c45fbd5a12a35907cd33051f51d04a3f1b57",
+          "bytes": 8499
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver1/runs/proof.contract.dx100_trust_fixture.20261016t020955z.bc72342e/adapter.log",
+          "sha256": "c3c6e8c6b9b9d83d84d7e4e8ffdcd653dd4d125c3b913fe26c4bba8983d1a2a4",
+          "bytes": 363
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver1/t28-scripted-typechecker.py",
+          "sha256": "1d9b313b1518efddf6e6895b8525e1e323e25134b58aa77c9060e233d73ee231",
+          "bytes": 284
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver1/t28-version-only-adapter.py",
+          "sha256": "ddc512f25c638dd38589cb6b99a80ef1795caac7084e07874a229c5f66195204",
+          "bytes": 250
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver10/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "5d996b9f86d00983b82fe9f616208c405895e025d30e55295947a1022578f891",
+          "bytes": 33093
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver10/t28-scripted-typechecker.py",
+          "sha256": "2f4a40efa3461e45199e910cb4f91809d0ad0c182dae47f1505ab2653824b02f",
+          "bytes": 627
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver10/t28-version-only-adapter.py",
+          "sha256": "d63f373a140ef3b18c85cc2f6df7c693c3a444a07e50b0349d7618bd6b136074",
+          "bytes": 593
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver11/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "bb2b2f2fc862f51f3b8e03bcfaa1a6c6791af75b8b64bf50287e8571126d0e53",
+          "bytes": 33076
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver11/t28-scripted-typechecker.py",
+          "sha256": "9f467b0208773ee3a19f480f57a29840fa5e83f278ce8e72fea44b7b05abf7f3",
+          "bytes": 627
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver11/t28-version-only-adapter.py",
+          "sha256": "ac0e15c752c12a99efb1f1b6a45d23f30079d579325a6814eddd5aee7898fe89",
+          "bytes": 593
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver2/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "3ca45d8bdfccf6870cfed9a8a2e6f985c47dfa4625e3dee7299ce141eb801ba4",
+          "bytes": 33088
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver2/records/proofs/proof.contract.dx100_trust_fixture.20261016t020957z.7a88618f.yaml",
+          "sha256": "9b18aab29049ba9ef8c185dc82645fa2c473b31e45c37a0b6b38c00ad1cf53f8",
+          "bytes": 6577
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver2/runs/proof.contract.dx100_trust_fixture.20261016t020957z.7a88618f/adapter.log",
+          "sha256": "c1fe21f91cae5b7480974f809f47ddc52500d03a38aec66974235d2c11995ade",
+          "bytes": 405
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver2/t28-scripted-typechecker.py",
+          "sha256": "790c1daa6a3659cd05faa0def5b02ca7226be0a3e76b855e9c24c7fbc2cc08d3",
+          "bytes": 284
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver2/t28-version-only-adapter.py",
+          "sha256": "9e0125aaf0f0e81f9be0b0dd49cbc49e4f06bb6edc66f7dafb11347b6cb65a23",
+          "bytes": 250
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver3/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "3ca45d8bdfccf6870cfed9a8a2e6f985c47dfa4625e3dee7299ce141eb801ba4",
+          "bytes": 33088
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver3/records/proofs/proof.contract.dx100_trust_fixture.20261016t020958z.05184247.yaml",
+          "sha256": "94739f47c4c7ba0d8ea57a8131f8a35e0aafd4ff28169af9725537def3f44f7d",
+          "bytes": 7139
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver3/runs/proof.contract.dx100_trust_fixture.20261016t020958z.05184247/adapter.log",
+          "sha256": "5da1f66846c456ce78ddfdc0645b5529e5294c7046b1414e91432d3c05d2e91d",
+          "bytes": 363
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver3/t28-scripted-typechecker.py",
+          "sha256": "2b14facef6a565f56a32b482a3821db2b1e2f81b9c3645e3771d3dfd2793d750",
+          "bytes": 284
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver3/t28-version-only-adapter.py",
+          "sha256": "2cf0e6701436765decab2b31a7aa38d7074ec7f064201e40b8f2bfebc9b3c9f1",
+          "bytes": 250
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver4/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "5d996b9f86d00983b82fe9f616208c405895e025d30e55295947a1022578f891",
+          "bytes": 33093
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver4/t28-scripted-typechecker.py",
+          "sha256": "2c53b9a6c7669571a9467e45c3105c89b203e0cf6abba5832f94a85256e2611e",
+          "bytes": 284
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver4/t28-version-only-adapter.py",
+          "sha256": "207adfd169df3e0f71ef2fb648cdb13ebdb43c907dc41f4c7255d40c9d5c8fc3",
+          "bytes": 250
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver5/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "5d996b9f86d00983b82fe9f616208c405895e025d30e55295947a1022578f891",
+          "bytes": 33093
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver5/t28-scripted-typechecker.py",
+          "sha256": "93a4f9fd275a3de80fb2001811e8bcae0fdcc0dd08ad2942475641427b4f97a8",
+          "bytes": 284
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver5/t28-version-only-adapter.py",
+          "sha256": "b4a8410ba83b368ab04458d5d598700f9a3ab3be8f9f4be398377347bef56822",
+          "bytes": 250
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver6/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "e0e8bd6bda9460dbd4fa763dae918a46556ef60db772583b7caa708bb8aa6724",
+          "bytes": 33066
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver6/runs/proof.contract.dx100_trust_fixture.20261016t021001z.e79a4ee5/adapter.log",
+          "sha256": "4a118db742be5b8ce49899e588611fee159c8bcfb40d2c9bc0e5a79a778f0282",
+          "bytes": 405
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver6/t28-scripted-typechecker.py",
+          "sha256": "693bba7f3e2aa2109853a5050bb5a68411418846b66a0cd66b54ea021954c52c",
+          "bytes": 625
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver6/t28-version-only-adapter.py",
+          "sha256": "0b6994ab3adc8b968b850ad92e268e978843c3d10568208c20323d53aab28ab5",
+          "bytes": 591
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver7/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "e0e8bd6bda9460dbd4fa763dae918a46556ef60db772583b7caa708bb8aa6724",
+          "bytes": 33066
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver7/records/proofs/proof.contract.dx100_trust_fixture.20261016t021002z.4bfe1c34.yaml",
+          "sha256": "af6871cae49c37bacae233ca91b7c0ac2e90712a8ca438ae9b94940b33fa1d59",
+          "bytes": 8482
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver7/runs/proof.contract.dx100_trust_fixture.20261016t021002z.4bfe1c34/adapter.log",
+          "sha256": "57268ffdb52d79c21c535a871727b6aa96750bdb2405dc27d098aeef8c4d75e6",
+          "bytes": 363
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver7/t28-scripted-typechecker.py",
+          "sha256": "ebea7514e83c485786c5c7a10f08669e12344a2bb1d88d0a423c7e1fd7e110cb",
+          "bytes": 625
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver7/t28-version-only-adapter.py",
+          "sha256": "4c7e70b169611c35cdda85747a16a891dc4c3577b85431ad953cae08bf523846",
+          "bytes": 591
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver8/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "bdd48f3f902e36900ce26b7fd9a06f2283162c820effe73019feaa11fdbb1162",
+          "bytes": 33071
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver8/runs/proof.contract.dx100_trust_fixture.20261016t021003z.ce524481/adapter.log",
+          "sha256": "08fb1b5d9b849837e22b2329ad35ffb75131dc14ad9dd55770dcebc664f1aa8e",
+          "bytes": 405
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver8/t28-scripted-typechecker.py",
+          "sha256": "7d8e916152256c3bcdf2a05190f9e705d0148c5ec9f7e679791c986348941144",
+          "bytes": 625
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver8/t28-version-only-adapter.py",
+          "sha256": "49502308e7b2e4617d256c5a73857be26dd7563b6b1345a353e7c189a2a99663",
+          "bytes": 591
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver9/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "bdd48f3f902e36900ce26b7fd9a06f2283162c820effe73019feaa11fdbb1162",
+          "bytes": 33071
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver9/records/proofs/proof.contract.dx100_trust_fixture.20261016t021004z.022cd8de.yaml",
+          "sha256": "5526ca04d117984b37a7d1aa18728b209c726d71907ebd434528c19e380d093f",
+          "bytes": 7139
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver9/runs/proof.contract.dx100_trust_fixture.20261016t021004z.022cd8de/adapter.log",
+          "sha256": "85325e4a865f024619ef2e5735ca806038dad26d747b74ff2bf8b08d25767745",
+          "bytes": 363
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver9/t28-scripted-typechecker.py",
+          "sha256": "fa658cb1018dc2d8afe50b1944d7bc589df2267a5e10fe0de6fa32b31c9d8dc7",
+          "bytes": 625
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/pytest/test_a_prelaunch_semantics_ver9/t28-version-only-adapter.py",
+          "sha256": "7f805f8c53aefc94922462e5379e292aa2a35079cc10f28d3dbc55d2cc019007",
+          "bytes": 591
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-record-final-green/resources.json",
+          "sha256": "14f57703754ce88cbe957961a82ce7469af0e92c975f222287b4b8e9506a34af",
+          "bytes": 166
+        }
+      ]
+    },
+    "legacy_green": {
+      "note": "20 passed,21 skipped,74 deselected; -k excluded parametrized adapter controls, separately run in record/final profiles; actual formal tools disabled.",
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-final-green/command.json",
+          "sha256": "8f54d9607ff8efb436dea3d298279f2cfb0a9f736c88d59372f5ad4751d8d310",
+          "bytes": 423
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-final-green/control.log",
+          "sha256": "d43c32bf7deb73776710839a2f055813bd2541b1e5b48ba52ee90c842e106433",
+          "bytes": 126
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-final-green/junit.xml",
+          "sha256": "9fbef717c905afabfcc9b8600ccabd26b624c6dc11281fee188e35852d0169bf",
+          "bytes": 11293
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-mutation-final-green/resources.json",
+          "sha256": "419e9f0fbaa004e07d69fc33afd17eb7c5af0cf27186a212bdc09afbfdf6ddc3",
+          "bytes": 173
+        }
+      ]
+    },
+    "candidate_fixture_misfire": {
+      "note": "Fixture assertion used units instead of proof_units; level already returned proven_unbounded. Not a production RED.",
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-trust-candidate-level/command.json",
+          "sha256": "ecebea143491523ef0169c621d444d68054e05cf97f927ed9477d388a64f3e68",
+          "bytes": 374
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-candidate-level/control.log",
+          "sha256": "177ef652d95cd305665ae04c1057beed59036b07fbb3cfa243e61218a06751f4",
+          "bytes": 1241
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-candidate-level/junit.xml",
+          "sha256": "17aba933e3e55711963ca2b5c3ab0d8630468da7b519cd77cae5b4e9d395d075",
+          "bytes": 1255
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-candidate-level/pytest/level-template0/records/proofs/proof.test-proposal.candidate-1.20261016t021035z.699db276.yaml",
+          "sha256": "3ea523d649fec847e6da4d897ddccd9d3622e1c86c93df9d64b38fab7028b351",
+          "bytes": 2644
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-candidate-level/pytest/level-template0/runs/proof.test-proposal.candidate-1.20261016t021035z.699db276/adapter.log",
+          "sha256": "87d32e4ce4be5344ac447368cb069a859d2a8b56acbb3428d3ba344ef82c7909",
+          "bytes": 418
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-candidate-level/pytest/test_the_five_explicit_semanti0/records/proofs/proof.t10.t28_trust.yaml",
+          "sha256": "9630ec3c6c26979c053f5d4607a2cee991e47fb00e5079477d3f1cc741609f22",
+          "bytes": 3956
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-candidate-level/resources.json",
+          "sha256": "b9d0c95af788098a22ba515c98ef43b34aba32b91836cf534b0249bdedcd523a",
+          "bytes": 164
+        }
+      ]
+    },
+    "final_green": {
+      "note": "13 passed: booleans/malformed strings, each adapter snapshot timing, no solver marker, five rule entries and candidate-level noncapping fixture.",
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/command.json",
+          "sha256": "0d1270a9b7b072c27bea1826a22914c341d290f42491ecfd96c6c989fc989c1c",
+          "bytes": 298
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/control.log",
+          "sha256": "0e4532b0f4564169d8175b15dae89f3c6060570e35f08881c8086c8e8a85b51f",
+          "bytes": 100
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/junit.xml",
+          "sha256": "a5f907a28ac58ab34b4add6a56316af3b29035c8637a89243df977c984b56500",
+          "bytes": 2411
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/level-template0/records/proofs/proof.test-proposal.candidate-1.20261016t021115z.f3bd34f4.yaml",
+          "sha256": "c68217614887018fa29584c3a7aafb6fc6017780c8e3216b3ea92af11b06fc23",
+          "bytes": 2644
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/level-template0/runs/proof.test-proposal.candidate-1.20261016t021115z.f3bd34f4/adapter.log",
+          "sha256": "ad29eadaabbdc6e9bfbac5604d880a9dd28e74c71b6314dffd76e38232757bae",
+          "bytes": 416
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver0/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "f6625d79fe8c882198added6301a163fbdcd280a50ede6aafe53330c80b531d5",
+          "bytes": 33083
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver0/records/proofs/proof.contract.dx100_trust_fixture.20261016t021056z.855a10c8.yaml",
+          "sha256": "c0820f3a9ac21217fdc789e290c24e15ab6018fc700ce283212064c0e2913f24",
+          "bytes": 7929
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver0/runs/proof.contract.dx100_trust_fixture.20261016t021056z.855a10c8/adapter.log",
+          "sha256": "77385b23ca0bf33579a79ec31e6cfa602a1c87c4a7a80c677dcc514468dd9c3c",
+          "bytes": 405
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver0/t28-scripted-typechecker.py",
+          "sha256": "f0ed51ebfabb09c08ac833d3b170a125c5c8e46fc98d25f528ea795cea3e4d63",
+          "bytes": 280
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver0/t28-version-only-adapter.py",
+          "sha256": "3b446f503c15be73fed1b17e86241f83b18cb5bf9ab761bdf48813c1feb4f43c",
+          "bytes": 246
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver1/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "f6625d79fe8c882198added6301a163fbdcd280a50ede6aafe53330c80b531d5",
+          "bytes": 33083
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver1/records/proofs/proof.contract.dx100_trust_fixture.20261016t021057z.e4f9f6a8.yaml",
+          "sha256": "4f861ae6a5b72c159680d3eda3284fa6b952deb033045ec4c97f60d04b67f3e1",
+          "bytes": 8483
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver1/runs/proof.contract.dx100_trust_fixture.20261016t021057z.e4f9f6a8/adapter.log",
+          "sha256": "c3c6e8c6b9b9d83d84d7e4e8ffdcd653dd4d125c3b913fe26c4bba8983d1a2a4",
+          "bytes": 363
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver1/t28-scripted-typechecker.py",
+          "sha256": "c40c0668e32daa3f11a455c6f4051db21278fc74aec35471d6498dfb1978b569",
+          "bytes": 280
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver1/t28-version-only-adapter.py",
+          "sha256": "849ff5290101bf5ea3df56e030569c52277bae7146b66a4ebdb4dfd40f012b01",
+          "bytes": 246
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver10/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "5d996b9f86d00983b82fe9f616208c405895e025d30e55295947a1022578f891",
+          "bytes": 33093
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver10/t28-scripted-typechecker.py",
+          "sha256": "3619c672a640c8bbf08b5fc71b3faf9a2fdcd7adeb8e89612b8617ee35ca3969",
+          "bytes": 619
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver10/t28-version-only-adapter.py",
+          "sha256": "17e77259437fa8b0c0ee8dab94d3e7d5f344874f7daa79dcbe87c7aa00735b61",
+          "bytes": 585
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver11/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "bb2b2f2fc862f51f3b8e03bcfaa1a6c6791af75b8b64bf50287e8571126d0e53",
+          "bytes": 33076
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver11/t28-scripted-typechecker.py",
+          "sha256": "14021f5af3e07b8b20e6e04792316b4e104d6e21559d98c6b66f9112d26cebdc",
+          "bytes": 619
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver11/t28-version-only-adapter.py",
+          "sha256": "986b753906e1d1ab9f2059c5e00481a245709dee556c432bb2882f627f4ff15c",
+          "bytes": 585
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver2/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "3ca45d8bdfccf6870cfed9a8a2e6f985c47dfa4625e3dee7299ce141eb801ba4",
+          "bytes": 33088
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver2/records/proofs/proof.contract.dx100_trust_fixture.20261016t021059z.656f0311.yaml",
+          "sha256": "47b75ba4acd32fb13b9f29682b3ea974c0ef163f83dfd337469c79d01e8791d9",
+          "bytes": 6568
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver2/runs/proof.contract.dx100_trust_fixture.20261016t021059z.656f0311/adapter.log",
+          "sha256": "c1fe21f91cae5b7480974f809f47ddc52500d03a38aec66974235d2c11995ade",
+          "bytes": 405
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver2/t28-scripted-typechecker.py",
+          "sha256": "642468e3af1953ba357e12d118d9ebc9b23e8cb58e1b431c1d50c6a81bc38374",
+          "bytes": 280
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver2/t28-version-only-adapter.py",
+          "sha256": "048c95e9079fb59ef6c984ae1e6ad23416867836126789d513fa2af6e9ff9f80",
+          "bytes": 246
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver3/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "3ca45d8bdfccf6870cfed9a8a2e6f985c47dfa4625e3dee7299ce141eb801ba4",
+          "bytes": 33088
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver3/records/proofs/proof.contract.dx100_trust_fixture.20261016t021100z.34156d80.yaml",
+          "sha256": "47841a152118e5e021a54c95af380004d5e737048cb7b45d052c12a648cab3f0",
+          "bytes": 7122
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver3/runs/proof.contract.dx100_trust_fixture.20261016t021100z.34156d80/adapter.log",
+          "sha256": "5da1f66846c456ce78ddfdc0645b5529e5294c7046b1414e91432d3c05d2e91d",
+          "bytes": 363
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver3/t28-scripted-typechecker.py",
+          "sha256": "0f5054f85247b566890876d7a799938bc2328ccf8d77e164f0f39f1598db1be8",
+          "bytes": 280
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver3/t28-version-only-adapter.py",
+          "sha256": "e0d1797342e904f9dc7c9019dcf6d194844e881c33d028c2e3fe8de136a28c09",
+          "bytes": 246
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver4/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "5d996b9f86d00983b82fe9f616208c405895e025d30e55295947a1022578f891",
+          "bytes": 33093
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver4/t28-scripted-typechecker.py",
+          "sha256": "d9483ecf07527adab5a60f65fb0d1862a0ecbc65a142eca5463db39b8e330a5c",
+          "bytes": 280
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver4/t28-version-only-adapter.py",
+          "sha256": "705f62481e1d8f87766ef38f5cfa55ad45b3d5ef9bc94b43e4cd60f3777d5901",
+          "bytes": 246
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver5/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "5d996b9f86d00983b82fe9f616208c405895e025d30e55295947a1022578f891",
+          "bytes": 33093
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver5/t28-scripted-typechecker.py",
+          "sha256": "5f04a50a5aafeb428236cb8b7efc82cc1067834a54c005aed70a5a4f1d8f62c8",
+          "bytes": 280
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver5/t28-version-only-adapter.py",
+          "sha256": "8ecf093befb6c14b692344fa07b53b6529a352b84f0aa8520dd08faf4c97b589",
+          "bytes": 246
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver6/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "e0e8bd6bda9460dbd4fa763dae918a46556ef60db772583b7caa708bb8aa6724",
+          "bytes": 33066
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver6/runs/proof.contract.dx100_trust_fixture.20261016t021103z.e6be1e4e/adapter.log",
+          "sha256": "4a118db742be5b8ce49899e588611fee159c8bcfb40d2c9bc0e5a79a778f0282",
+          "bytes": 405
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver6/t28-scripted-typechecker.py",
+          "sha256": "77f10ecd4a90423f4b377aa8c7bc1039315a04e87c9de7e1ef557fb04db60109",
+          "bytes": 617
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver6/t28-version-only-adapter.py",
+          "sha256": "e6a04c2ca759f32ab21c50867a52b730342a461d085d4268ec5827040ce2ef63",
+          "bytes": 583
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver7/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "e0e8bd6bda9460dbd4fa763dae918a46556ef60db772583b7caa708bb8aa6724",
+          "bytes": 33066
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver7/records/proofs/proof.contract.dx100_trust_fixture.20261016t021104z.77efb6a2.yaml",
+          "sha256": "ef1e0d969b199e75707e412c683cf27f2a9fdccab3db29ad361053f99a9bd508",
+          "bytes": 8462
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver7/runs/proof.contract.dx100_trust_fixture.20261016t021104z.77efb6a2/adapter.log",
+          "sha256": "57268ffdb52d79c21c535a871727b6aa96750bdb2405dc27d098aeef8c4d75e6",
+          "bytes": 363
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver7/t28-scripted-typechecker.py",
+          "sha256": "bfbc5fa7322441a91fb39e8a0567dd3d7adede92bb045500094ee38e22b6eb45",
+          "bytes": 617
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver7/t28-version-only-adapter.py",
+          "sha256": "0a561cd8674019b141e4a5ab52618c08344627f18a20e806e3c8bf25e2390332",
+          "bytes": 583
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver8/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "bdd48f3f902e36900ce26b7fd9a06f2283162c820effe73019feaa11fdbb1162",
+          "bytes": 33071
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver8/runs/proof.contract.dx100_trust_fixture.20261016t021105z.4bd7d872/adapter.log",
+          "sha256": "08fb1b5d9b849837e22b2329ad35ffb75131dc14ad9dd55770dcebc664f1aa8e",
+          "bytes": 405
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver8/t28-scripted-typechecker.py",
+          "sha256": "2a4e507bd539eb122e3b3614a3bd12517e619ab364548801d040119d94f1a8ce",
+          "bytes": 617
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver8/t28-version-only-adapter.py",
+          "sha256": "43e00c780a9d1c304e3b538642ec78e6909450eb9c04f90a0f3a918a0928fe98",
+          "bytes": 583
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver9/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "bdd48f3f902e36900ce26b7fd9a06f2283162c820effe73019feaa11fdbb1162",
+          "bytes": 33071
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver9/records/proofs/proof.contract.dx100_trust_fixture.20261016t021107z.8ec7b93b.yaml",
+          "sha256": "525e365290db3c9989d44315328e9d66375dcf82af44e28a774cc7c8af8ca40e",
+          "bytes": 7123
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver9/runs/proof.contract.dx100_trust_fixture.20261016t021107z.8ec7b93b/adapter.log",
+          "sha256": "85325e4a865f024619ef2e5735ca806038dad26d747b74ff2bf8b08d25767745",
+          "bytes": 363
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver9/t28-scripted-typechecker.py",
+          "sha256": "f0a92985fe73bf2d72016100b2e1f31879431d2530e30a7d8644ffe367473f31",
+          "bytes": 617
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_a_prelaunch_semantics_ver9/t28-version-only-adapter.py",
+          "sha256": "a5df6f040e6280eedd18644ca3fa3547e9355f6b04aa4dff183d761588a75063",
+          "bytes": 583
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/pytest/test_the_five_explicit_semanti0/records/proofs/proof.t10.t28_trust.yaml",
+          "sha256": "e2a7ad75b5d90b9f7e17fcaeb3aaab97da53c898bb78f832073b0199f5c4d671",
+          "bytes": 3956
+        },
+        {
+          "path": "/private/tmp/probata-t28-trust-complete-green/resources.json",
+          "sha256": "a74d6d6459293349ef45e2d155c50f659fb08ee1cf06862ff775fc8a5699aa49",
+          "bytes": 165
+        }
+      ]
+    }
+  },
+  "source": [
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/swdb/proof_semantics.py",
+      "sha256": "74fac5d56a5e471ff39742dc50a695afaa571d0ff4a8d84fcf4ef418f9542da4",
+      "bytes": 26925
+    },
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/swdb/formal_frame.py",
+      "sha256": "b89aaffb60217db66ba09630fced8f8c547304a2d12ca125a6174def02ff70f1",
+      "bytes": 23810
+    },
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/swdb/cbmc_adapter.py",
+      "sha256": "ad52b18c07e06e29a00b597dc5947e661aaa1ef5f9ca2ba7f5975d291afb2734",
+      "bytes": 67601
+    },
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/swdb/wp_adapter.py",
+      "sha256": "e06ec44a94069074ea446b61e73ea2c6e0d976ec92c8da7fbdd0851f8c33f0b9",
+      "bytes": 78364
+    },
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/tests/test_dx100_trust_entries.py",
+      "sha256": "8fa91ae237ecfec9f62aa8569a3f829e267ef3da59d540ff0568cf9036e803c8",
+      "bytes": 9189
+    }
+  ],
+  "guard": [
+    {
+      "path": "/private/tmp/probata-mac-compiler-worker-b.py",
+      "sha256": "873ac0b65eaa7edd4e0f624a86e68141c0e340f9ab1ca6816a07598538548a0e",
+      "bytes": 695
+    },
+    {
+      "path": "/private/tmp/probata-t28-compiler-guard.py",
+      "sha256": "0cdc8a9c541f6234afa99129e7e0a8d7433efba6c7a1007cce2fbe021b9edf0a",
+      "bytes": 874
+    }
+  ],
+  "final_resources": {
+    "exit_code": 0,
+    "peak_rss_bytes": 231931904,
+    "out_of_memory": false,
+    "timed_out": false,
+    "wall_seconds": 21.76186783303274,
+    "cpu_seconds": 21.470032
+  }
+}
