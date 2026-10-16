@@ -1,0 +1,38 @@
+{
+  "baseline": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+  "date_et": "2026-10-16",
+  "source_commit": "bb7170ac09081cd02562b747d7cccb17ba8c6ced",
+  "files_after": {
+    "swdb-project/swdb/bounded_std_initialization.py": "480bf38b3333639c62d8f89aff129208abccdc63351d63cfa6b23d7cb3d84607",
+    "swdb-project/swdb/c_lowering.py": "e10b33f4d310e3097eb84b34ed53e03daf4df690dcf0c8c160f38d907c91e08c",
+    "swdb-project/swdb/cbmc_adapter.py": "d63b7f6547fa3b7655a59db0f26f1e0a957c7916bf8d9b7d77ef4142ef3e9a27",
+    "swdb-project/swdb/dx100_interface.py": "9a50ad98a26169b2ff60766e351a3be28e2b511901edd09701489720c8e9a451",
+    "swdb-project/swdb/formal_frame.py": "b89aaffb60217db66ba09630fced8f8c547304a2d12ca125a6174def02ff70f1",
+    "swdb-project/swdb/heap_bridge.mlw": "5186c27f5a7a339352e3f62dc3a0d3efb1c7bd12f8a456cc61b0d7a52566638d",
+    "swdb-project/swdb/heap_model_environment.ml": "ba52941e7ab96a8ebbe4efdb8fde0c1b19daa3d6ccb8804efc87b027a68caf7b",
+    "swdb-project/swdb/heap_model_packets.py": "805b00fe78373102b600506833f86c28fce2cf494baef7a68afd63641c1de185",
+    "swdb-project/swdb/heap_model_vcs.py": "f20e0ec130222aeda96b4fbb8e72eef8d922d3f33e84077777203f7e6d159092",
+    "swdb-project/swdb/heap_model_view.py": "ecb6e1476accaee2b275c9bf078bb14fc4b3c8ad81ed17d97d98b1699d2c1e22",
+    "swdb-project/swdb/proof_semantics.py": "2354b1be662a4a9fe4985110ce657c9a432b27f288639f661e13aa5bad5ea5b6",
+    "swdb-project/swdb/proof_setup.py": "b9b5b1eef444be7e6656cbd5d5ce76b7393f28eae1f55a8c47b5e4028154f7ee",
+    "swdb-project/swdb/stdlib_provenance.py": "4a7ca7d9b05a992e8172125fcbbfd175bb7ade2aec47cfb349126c9739b6e8e4",
+    "swdb-project/swdb/wp_adapter.py": "fe4590b5b9eeaa41701fb4b48d17a0c1d6ade176783f46918de99151cda2faa5"
+  },
+  "readers": [
+    "root",
+    "ticket24",
+    "merger",
+    "independent reviewer"
+  ],
+  "review_evidence": {
+    "path": "/private/tmp/probata-t25-count-ctor-root-review-bb7170ac-20261016.md",
+    "sha256": "41b3fd35d495567bc12b1afba288cdfcdbae850aec8ebc35527c6519e99e5026"
+  },
+  "entry": {
+    "path": "/private/tmp/probata-t25-count-ctor-entry-v1-bb7170ac-20261016.py",
+    "sha256": "da35f072b08cf884bcdd42d0b93ec1360ed1fcddd6cdef6db2aca2b5d7a1119f",
+    "command_path": "/private/tmp/probata-t25-count-ctor-external-command-v1-bb7170ac-20261016.json",
+    "command_sha256": "1dfc74546d03a6c4b059cd5214487973e03358a2f64ba2173dded93b617c4ce6"
+  },
+  "scope": "One original zero-fill count constructor record,27 positive targets; independent cold audit mandatory; no generic caller/growth/full-ticket claim."
+}

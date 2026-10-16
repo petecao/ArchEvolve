@@ -1639,3 +1639,6 @@ only; alignment remains an explicit source/caller correspondence limit. No full
 C RTE, helper proof or counted acceptance is claimed. The next separately reviewed
 generation must retain all19ordinary helper functions, every contextual bodyless
 call smoke and the exact capability warnings. No historical hints are imported.
+
+
+Supported-domain helper generation — 2026-10-16 01:05 ET: exact7930f3a1 completed all19 helpers,245 goals/352 properties,212 ordinary/33 smoke/31 initialization properties, five source-bound bodyless-call smokes and all three normalized snapshots. Independent cold audit rehashed1,005 selected pins and29 artifacts without mismatch. Prover-none output contains186 untried ordinary goals,26 implicit trivial contracts and empty-result smoke rows; none is solver proof. Whole3.521s/172.78125MiB, source unchanged, no guard failure. Alignment remains unresolved/full C RTE false. A separate900s complete helper-proof packet is being prepared with one prover worker; no counted provider run is admitted. [Actual](../evidence/t07-helper-stage1-v4-actual-20261016.json), [cold review](../evidence/probata-t07-stage1-v4-independent-cold-review-20261016.md).
