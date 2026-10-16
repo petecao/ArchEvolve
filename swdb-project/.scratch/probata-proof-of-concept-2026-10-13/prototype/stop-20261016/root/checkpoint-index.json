@@ -61,8 +61,42 @@
       "copy": "prototype/stop-20261016/root/probata-stop-worktree-status-inventory-20261016.json",
       "bytes": 16708,
       "sha256": "4b98b11486aa2867e29a08440b092a0c407e5598d13d56171367e40e510d019c"
+    },
+    {
+      "original": "/private/tmp/probata-root-paused-main-mbit10-sync-20261016.json",
+      "copy": "prototype/stop-20261016/root/probata-root-paused-main-mbit10-sync-20261016.json",
+      "bytes": 9621,
+      "sha256": "2bbd3783c42c11d29382d1e9da8ec43734e675b3b594538d3ed66f35b7d2036c"
+    },
+    {
+      "original": "/private/tmp/probata-root-pause-sync-mbit10-main-20261016.py",
+      "copy": "prototype/stop-20261016/root/probata-root-pause-sync-mbit10-main-20261016.py",
+      "bytes": 5690,
+      "sha256": "b154f10992aeb9cd9729ec2a9b4e0c49816585a673787028564653ee8be99dcc"
+    },
+    {
+      "original": "/private/tmp/probata-stop-recovery-snapshot-20261016.json",
+      "copy": "prototype/stop-20261016/root/probata-stop-recovery-snapshot-20261016.json",
+      "bytes": 7227,
+      "sha256": "cd480f11ddc2bb766b3bc75f1650fbc9245cee7f2ac856fd47d0bdb245a6dcff"
+    },
+    {
+      "original": "/private/tmp/probata-stop-integration-ref-cleanup-receipt-20261016.json",
+      "copy": "prototype/stop-20261016/root/probata-stop-integration-ref-cleanup-receipt-20261016.json",
+      "bytes": 7775,
+      "sha256": "9e3d9a3a5eb9cbe3b8281744e6844039c9dfa6e2e56e8f3bc88ecb7d2924b2b5"
     }
   ],
   "no_execution": true,
-  "original_failed_workflow_preserved": true
+  "original_failed_workflow_preserved": true,
+  "final_delivery": {
+    "verified_source_main": "c278ca2a1325f55c77827e09fd77ffc7c08b3c36",
+    "source_sync_receipt_sha256": "2bbd3783c42c11d29382d1e9da8ec43734e675b3b594538d3ed66f35b7d2036c",
+    "recovery_tag": "probata-stop-20261016-1135",
+    "recovery_tag_object": "2e0f7a871fda696c19a5afbe633a1312d38afc0e",
+    "obsolete_local_remote_integration_removed": true,
+    "physical_sources_and_raw_retained": true,
+    "final_metadata_commit_source_changes": false,
+    "no_scheduled_status": true
+  }
 }

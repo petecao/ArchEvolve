@@ -7,7 +7,7 @@ Updated: 2026-10-16 ET — PAUSED at user request11:35 ET.
 Updated: 2026-10-16 ET. **PAUSED by user request at 11:35 ET.**
 **35 resolved / 28 ready-for-agent / 0 claimed.** All three active claims07,25,28 are released. No next status is scheduled; progress automations are PAUSED.
 
-**Next session: read [PAUSED handoff](PAUSED-HANDOFF-20261016.md) first. Do not restart work until the user resumes it.** The primary checkout is now `yanrujhou_main`; main contains the paused integration, all47 Probata heads and the three pause checkpoints. Publication/read-back and remote-primary fast-forward are separately verified Git steps. [Current ticket status](ticket-status-20261015.md).
+**Next session: read [PAUSED handoff](PAUSED-HANDOFF-20261016.md) first. Do not restart work until the user resumes it.** The primary checkout is now `yanrujhou_main`; main contains the paused integration, all47 Probata heads and the three pause checkpoints. Source snapshotc278 is verified on GitHub and mbit10 primary; final delivery metadata is separately published/synchronized. [Current ticket status](ticket-status-20261015.md).
 
 | Ticket | Paused state | Resume boundary |
 | --- | --- | --- |
@@ -16,6 +16,16 @@ Updated: 2026-10-16 ET. **PAUSED by user request at 11:35 ET.**
 | 28 ready-for-agent | Initialized public V1 FAILED; token-aware test repair reviewed. V2 workflow UNREVIEWED/NOT ADMITTED/NOT EXECUTED and formal pair incomplete. | Preserve all old scoped decisions/failures; no current0.2/full28/hardware/body acceptance. |
 
 Root's finite pause closure records Mac/mbit10 empty selected-tool scans, released leases/available locks at that observation. Raw, required source paths, recovery refs and unrelated settings/scratch are preserved. This STOP checkpoint performs only Git/docs synchronization; no new experiments, tests or evaluations. Historical sections below retain their original dates and exits.
+
+## Verified delivery and bounded cleanup — 2026-10-16 ET
+
+Source snapshot **`c278ca2a1325f55c77827e09fd77ffc7c08b3c36`** was verified on the Mac, GitHub `yanrujhou_main` and the mbit10 primary `yanrujhou_main`. The [root Git-only sync receipt](prototype/stop-20261016/root/probata-root-paused-main-mbit10-sync-20261016.json) records exact fast-forward, all frozen remote worktree heads/status unchanged and the preexisting `records/.retention.lock` bytes/mode preserved. All three leases were released, kernel locks available and three finite selected-tool scans empty/no denials at that observation. No compiler, tests, native/formal workload or evaluation ran; raw evidence was untouched.
+
+Recovery tag **`probata-stop-20261016-1135`**, object `2e0f7a871fda696c19a5afbe633a1312d38afc0e`, was pushed and independently read back before cleanup; it peels to verified main snapshotc278. Its annotated manifest records all47 effort heads, all three pause commits, local integration0333 and remote integration3ed. [Snapshot manifest](prototype/stop-20261016/root/probata-stop-recovery-snapshot-20261016.json). Every listed head is an ancestor of the snapshot.
+
+Only obsolete `codex/probata-resume-20261015` was removed: remote deletion used the exact3ed tip lease, then the local0333 branch was safely deleted with `-d`. Both absences were verified. [Cleanup receipt](prototype/stop-20261016/root/probata-stop-integration-ref-cleanup-receipt-20261016.json). All other46 effort branches, every physical worktree and required raw/source/cache path remain retained for audit or resumption; no mass cleanup was attempted. The local settings-recovery stash remains preserved. Unrelated cleanup scratch remains untracked and unchanged.
+
+This delivery record adds **docs/metadata only** after verified source snapshotc278; it does not predict or self-identify its eventual commit SHA. Root will Git-only fast-forward mbit10 to that final metadata commit after publication. The user-requested pause,35resolved/28ready/0claimed and no next scheduled status remain unchanged. Before any future run, adapt/review the preserved old integration-ref provenance gates against `origin/yanrujhou_main`; do not recreate the retired branch or blindly run stored commands.
 
 Root owns actual admissions: at most two remote measurements, one per socket,
 and one actual Mac verifier. Count-only node0 generation587 naturally released
