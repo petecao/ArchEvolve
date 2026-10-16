@@ -1,0 +1,64 @@
+{
+  "cold_import_hypothesis_closure_pending": true,
+  "exports": [
+    "check_lemma_t25v3_grow_entry_int_projection"
+  ],
+  "generated_smoke_applicability": "global check lemma; none generated, no caller reachability claim",
+  "generation_only": true,
+  "goals": [
+    {
+      "function": null,
+      "goal": "typed_check_lemma_t25v3_grow_entry_int_projection",
+      "line": 74,
+      "passed": false,
+      "property": "check_lemma_t25v3_grow_entry_int_projection",
+      "results": [],
+      "smoke": false,
+      "targets": []
+    }
+  ],
+  "module_properties": [
+    {
+      "dependencies": [],
+      "description": "module\nheap_reallocation::Heap",
+      "emitter": "",
+      "extern": false,
+      "function": null,
+      "generated_smoke_failure": false,
+      "kind": "other",
+      "line": 0,
+      "origin": null,
+      "property": ""
+    }
+  ],
+  "ordinary": 1,
+  "proof_acceptance": false,
+  "properties": [
+    {
+      "dependencies": [],
+      "description": "module\nheap_reallocation::Heap",
+      "emitter": "",
+      "extern": false,
+      "function": null,
+      "generated_smoke_failure": false,
+      "kind": "other",
+      "line": 0,
+      "origin": null,
+      "property": ""
+    },
+    {
+      "dependencies": [],
+      "description": "check lemma\nt25v3_grow_entry_int_projection",
+      "emitter": "",
+      "extern": false,
+      "function": null,
+      "generated_smoke_failure": false,
+      "kind": "lemma",
+      "line": 74,
+      "origin": null,
+      "property": "check_lemma_t25v3_grow_entry_int_projection"
+    }
+  ],
+  "smoke": 0,
+  "verdict_boundary": "not_proven; no solver called"
+}

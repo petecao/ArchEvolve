@@ -1,0 +1,88 @@
+{
+  "actual_executable_boundary": [
+    "opam selected-switch environment",
+    "ocamlfind package queries with exact stdout bindings",
+    "ocamlopt shared production inventory reader compilation (including selected native compiler/linker chain)",
+    "one Frama-C WP -wp-gen invocation with exactly fresh CVC5 sentinel selector and no Why3 autodetection"
+  ],
+  "canonical_packet_count": 20,
+  "child_budget": {
+    "internal_seconds": 300,
+    "output_bytes": 268435456
+  },
+  "cold_required": "Inspect complete printed task/project definitions, imported proposition inventory, source/packet/normalized binding, all production goal/property rows; generation success is not proof.",
+  "command": [
+    "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+    "-I",
+    "-B",
+    "/private/tmp/probata-t25-qualified-generation-entry-v3-01771a83-20261016.py",
+    "--expected",
+    "/private/tmp/probata-t25-qualified-generation-expected-v3-01771a83-20261016.json",
+    "--checkout",
+    "/private/tmp/probata-root-t25-controls-01771a83"
+  ],
+  "component_output": "/private/tmp/probata-t25-mac-qualified-generation-v1-01771a83-20261016/component",
+  "controls_summary": "RED10fails before validator implementation; finalGREEN19passed0.28s/49.8MB. Parser rejects external/current-future assumptions, missing/duplicate/other goals, solver Valid, missing Why3 export/task/report; full import-tree controls reject added .why/.mlw/native, missing/changed files and file/root symlinks. Config checks are lexical only, actual parser pending.",
+  "created": "2026-10-16 ET",
+  "entry": {
+    "bytes": 16877,
+    "path": "/private/tmp/probata-t25-qualified-generation-entry-v3-01771a83-20261016.py",
+    "sha256": "ce792616c5b5cba4ce84e0f385251155211609b86547b9bb1420eae38e9417fc"
+  },
+  "expected": {
+    "bytes": 553188,
+    "path": "/private/tmp/probata-t25-qualified-generation-expected-v3-01771a83-20261016.json",
+    "sha256": "866a8a3900722d86ae390e7f0e91cdb6e6b9d02524303e51777f7bc9008e7493"
+  },
+  "forbidden_executables": "No actual Why3 CLI, solver binary, config/version probe or provider is requested. Sentinel invocation is fatal and not allowed.",
+  "prior_preparation_failure_preserved": "v1 eight-file source closure failed pure preparation at std_models._element importing c_lowering; v2 stages exact full package; no formal executable was run.",
+  "publication_ref": "refs/remotes/origin/codex/probata-resume-20261015",
+  "pure_controls": [
+    {
+      "bytes": 174,
+      "path": "/private/tmp/probata-t25-qualified-generation-receipt-red2-20261016/resources.json",
+      "sha256": "3d317120dc557108b4fa64fc2f3bd9e82f696ba99f81bb08596772c3eff99f02"
+    },
+    {
+      "bytes": 23364,
+      "path": "/private/tmp/probata-t25-qualified-generation-receipt-red2-20261016/controls.log",
+      "sha256": "f705b71c2d4d6169af5bb997d216de34a0482864b2a645c2926eac47d8aa2308"
+    },
+    {
+      "bytes": 175,
+      "path": "/private/tmp/probata-t25-qualified-generation-final-safety-green-20261016/resources.json",
+      "sha256": "c27408b1c04398115b722811d470cb3c02aa04588a028962e5273c7c7abc7590"
+    },
+    {
+      "bytes": 99,
+      "path": "/private/tmp/probata-t25-qualified-generation-final-safety-green-20261016/controls.log",
+      "sha256": "b341cf4fabefe9111a99aef2eccf82c46ed2a3b8ee0e6f469f0a216cd964c060"
+    },
+    {
+      "bytes": 2324,
+      "path": "/private/tmp/test_t25_qualified_generation_entry_v3.py",
+      "sha256": "c6a90ff1a92891ec14e6a615d4374f56115a05d8175aca63fd4c48e24075b076"
+    },
+    {
+      "bytes": 2697,
+      "path": "/private/tmp/test_t25_qualified_generation_safety_v2.py",
+      "sha256": "91f4c7f44566eb2a0526f3a8f263f7f6ffb46a6ca4beb99fc67969442a155700"
+    }
+  ],
+  "raw_root": "/private/tmp/probata-t25-mac-qualified-generation-v1-01771a83-20261016",
+  "root_guard": {
+    "cap_bytes": 8589934592,
+    "counted_verifier_token_required": true,
+    "outer_seconds": 720,
+    "whole_seconds": 600,
+    "workers": 1
+  },
+  "scope": "WP import and actual Why3 internal task compilation only; not_proven. No solver/model-body/original-v2/caller acceptance.",
+  "selected_id": "grow.entry.int_projection",
+  "selected_packet_count": 1,
+  "selected_packet_sha256": "b5dbe9939b460efa5503b1cbba8a891f5cdb940a8d44835f3fd04da307a74b3f",
+  "source_commit": "01771a839893975bba389ee0adcbec2aecdb88ac",
+  "source_runtime_boundary": "Immutable017 full310 Git package; full57 Why3 stdlib,30 WP support,93 driver files; four compiled package surfaces and static Mach-O non-OS closure. OS dyld shared-cache dependencies remain explicit trusted host runtime.",
+  "status": "INERT root review/admission required; never executed",
+  "warning_policy": "Retain every Warning/Warning, header plus full multiline log; only unused variable dummy explicitly known; unknown warnings fail closed."
+}

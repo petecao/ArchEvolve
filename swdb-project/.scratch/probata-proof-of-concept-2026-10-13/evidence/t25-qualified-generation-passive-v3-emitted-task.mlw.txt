@@ -1,0 +1,48 @@
+  theory WP
+    
+    (* use why3.BuiltIn.BuiltIn *)
+    
+    (* use bool.Bool *)
+    
+    (* use int.Int *)
+    
+    (* use int.ComputerDivision *)
+    
+    (* use real.RealInfix *)
+    
+    (* use frama_c_wp.qed.Qed *)
+    
+    (* use map.Map *)
+    
+    (* use heap_reallocation.Heap *)
+    
+    predicate P_t25_fields (h:heap) (r:int) (o:int) (b:int) (bo:int) (s:int)
+      (c:int) =
+      let x = 8 + o in
+      let x1 = 16 + o in
+      (((((initialized_at h r o /\ pointer_at h r o b bo) /\
+          typed_writes h r o 24 8) /\
+         initialized_at h r x) /\
+        initialized_at h r x1) /\
+       integer_at h r x s) /\
+      integer_at h r x1 c
+    
+    predicate P_t25_repr (h:heap) (r:int) (o:int) (b:int) (bo:int) (s:int) (c:
+      int) =
+      ((((s <= c /\ 0 <= s) /\ c <= 4611686018427387903) /\
+        P_t25_fields h r o b bo s c) /\
+       (if c = 0 then b = 0 /\ bo = 0 else typed_writes h b bo (4 * c) 4)) /\
+      (forall i:int. 0 <= i -> i < s -> initialized_at h b (bo + (4 * i)))
+    
+    predicate P_t25v3_repr (h:heap) (r:int) (o:int) (b:int) (bo:int) (s:int)
+      (c:int) = int32_region h b bo s /\ P_t25_repr h r o b bo s c
+    
+    goal wp_goal :
+      forall i:int, i1:int, i2:int, heap:heap, i3:int, i4:int, i5:int, t:int ->
+       int.
+       bounded_int_values t i1 i5 ->
+       P_t25_repr heap i4 i3 i i1 i5 i2 ->
+       i5 = 0 \/ not i4 = i ->
+       P_t25v3_repr (project_int_region heap t i i1 i5) i4 i3 i i1 i5 i2
+    
+  end
