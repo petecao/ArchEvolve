@@ -15,7 +15,9 @@ static bool cas(NodeID *p, NodeID old, NodeID value) {
 }
 static size_t fetch(size_t *p, size_t n) { size_t old = *p; *p += n; return old; }
 static NodeID load(const NodeID *p, int order) { (void)order; ++load_calls; return *p; }
+#ifndef SWDB_PRIVATE_ARRAY
 static NodeID *allocate(size_t n) { assert(n <= SWDB_LQUEUE_CAPACITY); return swdb_lqueue_storage; }
+#endif
 static NodeID *copy(const NodeID *first, const NodeID *last, NodeID *dest) {
   while (first != last) *dest++ = *first++; return dest;
 }
@@ -23,7 +25,9 @@ static NodeID *copy(const NodeID *first, const NodeID *last, NodeID *dest) {
 void __sync_bool_compare_and_swap_NodeID_out(NodeID *p, NodeID old, NodeID value, bool *out) { *out = cas(p, old, value); }
 void __atomic_load_n_NodeID_out(const NodeID *p, int order, NodeID *out) { *out = load(p, order); }
 void __sync_fetch_and_add_size_t_out(size_t *p, size_t n, size_t *out) { *out = fetch(p, n); }
+#ifndef SWDB_PRIVATE_ARRAY
 void swdb_new_NodeID_array_out(size_t n, NodeID **out) { *out = allocate(n); }
+#endif
 void std_copy_NodeID_out(const NodeID *first, const NodeID *last, NodeID *dest, size_t count, NodeID **out) {
   assert(last == first + count); *out = copy(first, last, dest);
 }
@@ -38,7 +42,9 @@ NodeID *std_copy_NodeID(const NodeID *first, const NodeID *last, NodeID *dest) {
 uint16_t __dxc_tile_size(int tile) { return (uint16_t)lengths[tile]; }
 int *__dxc_tile_pointer(int tile) { return dxc_tile_data[tile]; }
 #endif
+#ifndef SWDB_PRIVATE_ARRAY
 void swdb_delete_NodeID_array(NodeID *p) { assert(p == swdb_lqueue_storage); }
+#endif
 void __dxc_const_i32(int32_t value, int reg) { regs[reg] = value; ++issues; }
 void __dxc_stream_load(const int *base, int min, int max, int stride, int dst) {
   unsigned n = 0;
