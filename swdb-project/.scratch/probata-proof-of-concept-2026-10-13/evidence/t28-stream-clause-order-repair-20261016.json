@@ -1,0 +1,369 @@
+{
+  "date_et": "2026-10-16",
+  "status": "prepared; actual parser unexecuted by author",
+  "repair_commit": "7f5a2d3d",
+  "composed_code_freeze": "723378ff844455b5488c9932bf0962c67210915b",
+  "historical_actual": {
+    "source": "e4cd1a6ed78e61394275af297c25557e14a2d228",
+    "raw": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e4cd1a6e-t28-stream-v1",
+    "classification": "coordinator-reported PREPUBLIC parser refusal; wrong-size unexecuted; no WP or proof acceptance",
+    "error": "terminates after post-condition, assigns or allocates",
+    "author_remote_rehash": false
+  },
+  "primary_grammar": {
+    "source": {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c/kernel/kernel_internals/parsing/logic_parser.ml",
+      "sha256": "835ca62a44166fb19d1dcac33d296e90cf9d92039e627b62e59260e7dc7771ce",
+      "bytes": 6060342
+    },
+    "basis": "contract -> requires terminates decreases simple_clauses; requires may not follow terminates; source read only, no tool invoked"
+  },
+  "old_model": {
+    "path": "/private/tmp/probata-t28-stream-parser-before-model-20261016.json",
+    "sha256": "7ba0017a6b294ca98b2c8181d2405dd64f364a2e2fb9d1b8bb54e4cfa0b16228",
+    "bytes": 5286
+  },
+  "unchanged": {
+    "c": true,
+    "entry": true,
+    "state": true,
+    "termination_policy": true,
+    "nontermination_contract_tokens.get_tile_size": true,
+    "nontermination_contract_tokens.maa_stream_load_unsigned_int": true,
+    "nontermination_contract_tokens.wait_ready": true
+  },
+  "profiles": [
+    {
+      "name": "clause-order-red",
+      "resources": {
+        "exit_code": 1,
+        "peak_rss_bytes": 2375024640,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 22.881978207966313,
+        "cpu_seconds": 23.142200000000003
+      },
+      "junit_counts": {
+        "tests": 4,
+        "failures": 4,
+        "errors": 0,
+        "skipped": 0
+      },
+      "retained": [
+        {
+          "path": "/private/tmp/probata-t28-stream-clause-order-red/resources.json",
+          "sha256": "8a009091dd060ed1b329cc38e5dcb9db2f1baa3d19db2e2192f1fa561a26c734",
+          "bytes": 176
+        },
+        {
+          "path": "/private/tmp/probata-t28-stream-clause-order-red/junit.xml",
+          "sha256": "6c64ef74e8c668597ab1082e3b3f21efdff576ac2d516d5e0af9651ac983a5c0",
+          "bytes": 13134
+        },
+        {
+          "path": "/private/tmp/probata-t28-stream-clause-order-red/command.json",
+          "sha256": "19d26d0c4ea333b4f68815b880d410e3ca9917b04fa2b5277bb0dd1ca967880b",
+          "bytes": 445
+        },
+        {
+          "path": "/private/tmp/probata-t28-stream-clause-order-red/control.log",
+          "sha256": "6985c0069b09f3829f1d204038f75638e578b7fd2628656e70a0eb94931b6f89",
+          "bytes": 9664
+        }
+      ],
+      "scope": "scripted preparation only; external named exit99 stand-in, real Frama/solvers disabled"
+    },
+    {
+      "name": "clause-order-green",
+      "resources": {
+        "exit_code": 0,
+        "peak_rss_bytes": 2451177472,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 61.106528542004526,
+        "cpu_seconds": 62.340415
+      },
+      "junit_counts": {
+        "tests": 17,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 3
+      },
+      "retained": [
+        {
+          "path": "/private/tmp/probata-t28-stream-clause-order-green/resources.json",
+          "sha256": "73815ae6a40200c3d8f856c4169dad47c166c8608c98606826eeceba11dac85f",
+          "bytes": 167
+        },
+        {
+          "path": "/private/tmp/probata-t28-stream-clause-order-green/junit.xml",
+          "sha256": "e2bd55274f84fb7d3402b77fbaaa143eb21bc74f3c4bd5dff00870c98952399e",
+          "bytes": 3732
+        },
+        {
+          "path": "/private/tmp/probata-t28-stream-clause-order-green/command.json",
+          "sha256": "bb524e31e0156e60c1c26c6c34c5bbe28e668433647c12261f3b52367fdcf360",
+          "bytes": 605
+        },
+        {
+          "path": "/private/tmp/probata-t28-stream-clause-order-green/control.log",
+          "sha256": "b8a04735597bb9a46adf6c1c5f1bb16dc248eb9682ee46e0fd4928aa1c4523a4",
+          "bytes": 121
+        }
+      ],
+      "scope": "scripted preparation only; external named exit99 stand-in, real Frama/solvers disabled"
+    },
+    {
+      "name": "combined-order-red",
+      "resources": {
+        "exit_code": 1,
+        "peak_rss_bytes": 2361868288,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 22.81480074999854,
+        "cpu_seconds": 23.213431
+      },
+      "junit_counts": {
+        "tests": 1,
+        "failures": 1,
+        "errors": 0,
+        "skipped": 0
+      },
+      "retained": [
+        {
+          "path": "/private/tmp/probata-t28-stream-combined-order-red/resources.json",
+          "sha256": "f91b2a628f5800e84642d039c05d65cf31c525f1b644b555376312e304f249f5",
+          "bytes": 166
+        },
+        {
+          "path": "/private/tmp/probata-t28-stream-combined-order-red/junit.xml",
+          "sha256": "7bcfdb8879449e32bc40094369d4ba4467bba38a7f67851b74c22a35913a9412",
+          "bytes": 9909
+        },
+        {
+          "path": "/private/tmp/probata-t28-stream-combined-order-red/command.json",
+          "sha256": "47b46fcde554fc1ff11d6881eafacc6255f276de8ede17a701e518e1e0fc99c0",
+          "bytes": 384
+        },
+        {
+          "path": "/private/tmp/probata-t28-stream-combined-order-red/control.log",
+          "sha256": "042a16da61c08fa1786b5f05365f1dd3faad492733dcf74c4d6bc393ee652ea6",
+          "bytes": 5648
+        }
+      ],
+      "scope": "scripted preparation only; external named exit99 stand-in, real Frama/solvers disabled"
+    },
+    {
+      "name": "parser-final-green",
+      "resources": {
+        "exit_code": 0,
+        "peak_rss_bytes": 2467971072,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 83.2507574170013,
+        "cpu_seconds": 85.021234
+      },
+      "junit_counts": {
+        "tests": 18,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 3
+      },
+      "retained": [
+        {
+          "path": "/private/tmp/probata-t28-stream-parser-final-green/resources.json",
+          "sha256": "164744d5bdc4f48d7778a150aebbce3bed5a773ca83717a3c473addddfc68fa5",
+          "bytes": 165
+        },
+        {
+          "path": "/private/tmp/probata-t28-stream-parser-final-green/junit.xml",
+          "sha256": "f65821dba5b7a6af761fe52d2ecf98ad2b610072351bf56b994d44110a374a52",
+          "bytes": 3883
+        },
+        {
+          "path": "/private/tmp/probata-t28-stream-parser-final-green/command.json",
+          "sha256": "d9134afad457db4098f5cc7637f7b39e572d344a704fef29e331a7f08b48a37b",
+          "bytes": 720
+        },
+        {
+          "path": "/private/tmp/probata-t28-stream-parser-final-green/control.log",
+          "sha256": "44219e264723abbf53d38bef8120ad3899e332823124eef5eaf4ee48c9eabab8",
+          "bytes": 121
+        }
+      ],
+      "scope": "scripted preparation only; external named exit99 stand-in, real Frama/solvers disabled"
+    },
+    {
+      "name": "parser-bundle-syntax",
+      "resources": {
+        "exit_code": 1,
+        "peak_rss_bytes": 113573888,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 0.7599548330181278,
+        "cpu_seconds": 0.718741
+      },
+      "junit_counts": {
+        "tests": 1,
+        "failures": 1,
+        "errors": 0,
+        "skipped": 0
+      },
+      "retained": [
+        {
+          "path": "/private/tmp/probata-t28-stream-parser-bundle-syntax/resources.json",
+          "sha256": "bb902ee466f0349f55ba23911311c1afa422b348b081f856311aa30f7ccdd0b9",
+          "bytes": 165
+        },
+        {
+          "path": "/private/tmp/probata-t28-stream-parser-bundle-syntax/junit.xml",
+          "sha256": "25bb84388722cd0f9b51b522a6dcf1bea3fb55befd2ccb3c28f2422468651302",
+          "bytes": 2620
+        },
+        {
+          "path": "/private/tmp/probata-t28-stream-parser-bundle-syntax/command.json",
+          "sha256": "df73bc04650f17189cbaae41c9b95d9bf3d29c68ccd8bf36fb6c2ecb3b458baa",
+          "bytes": 401
+        },
+        {
+          "path": "/private/tmp/probata-t28-stream-parser-bundle-syntax/control.log",
+          "sha256": "52cab563b87d5d81e549461df445c24914828bea13bc8e6f6dfce70b2f31647b",
+          "bytes": 2585
+        }
+      ],
+      "scope": "author test whitespace matcher error; all five C syntax checks completed; not semantic RED"
+    },
+    {
+      "name": "parser-bundle-syntax-green",
+      "resources": {
+        "exit_code": 0,
+        "peak_rss_bytes": 84312064,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 0.7019449170329608,
+        "cpu_seconds": 0.689228
+      },
+      "junit_counts": {
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "retained": [
+        {
+          "path": "/private/tmp/probata-t28-stream-parser-bundle-syntax-green/resources.json",
+          "sha256": "3907a9614360d31cbc51851020164ab5d03c23293305b34f1cc7c36688ca3203",
+          "bytes": 164
+        },
+        {
+          "path": "/private/tmp/probata-t28-stream-parser-bundle-syntax-green/junit.xml",
+          "sha256": "08526b5405da18041a59c83f90762ed2ad74985e662143ed0a6dcdbcd3074d8a",
+          "bytes": 974
+        },
+        {
+          "path": "/private/tmp/probata-t28-stream-parser-bundle-syntax-green/command.json",
+          "sha256": "c689ed7694d20d7a385b2d6ae05f584ca6367664f9cdcc2892a45bffe6abda51",
+          "bytes": 330
+        },
+        {
+          "path": "/private/tmp/probata-t28-stream-parser-bundle-syntax-green/control.log",
+          "sha256": "852b0f07d9df3d3c0087fe9db0b1431ab1ce1c3a16dcce79f358a32312370db1",
+          "bytes": 98
+        }
+      ],
+      "scope": "scripted preparation only; external named exit99 stand-in, real Frama/solvers disabled"
+    }
+  ],
+  "bundle": [
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-stream-parser/README.md",
+      "sha256": "44bd860d46ce27cefa765116feb693d2aee41410d9645e63716719ff256f1ec9",
+      "bytes": 3140
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-stream-parser/export_bundle.py",
+      "sha256": "ebd60858208925fecd18f4e38febd73bf955da88e1f0a6c84b702fdc8e4d58bd",
+      "bytes": 4168
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-stream-parser/inputs/all-contracts.c",
+      "sha256": "fa3a78996427c3e6ae1ca5834e33c3e7068079886dad126e3a18348037e01865",
+      "bytes": 4295
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-stream-parser/inputs/manifest.json",
+      "sha256": "e95dfc4a3354f98c2b4ea54e5689eeb4a2d59261233d1ff613ebc3cd40bd5f5e",
+      "bytes": 7069
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-stream-parser/inputs/ordinary-model.c",
+      "sha256": "9667e339842c3a0649b9d361bb219f1c6ce7c71c802b9b04d202ed0bdf3b5310",
+      "bytes": 2984
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-stream-parser/inputs/wp-combined.c",
+      "sha256": "b5ceab7f154a5be1f3ef90c0915d8e9cf56e2b71fc16574d705c75efbfdb3980",
+      "bytes": 4234
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-stream-parser/inputs/wp-correct.c",
+      "sha256": "d20b9109455e7b1fc4cf3b88e995a78104cb4f5e5001afb074a159db929aa23e",
+      "bytes": 4218
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-stream-parser/inputs/wp-wrong.c",
+      "sha256": "6983714329d7ba7186f602bad7ab568472beb8bbfb14523d9d9ee25e8a0d7c6a",
+      "bytes": 4218
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-stream-parser/root-recipe.json",
+      "sha256": "4186b62691d6648cc075a6f825cd18b23158ebca645ad2e1b48f2f37ff45482c",
+      "bytes": 1450
+    }
+  ],
+  "source_pins": [
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/swdb/dx100_stream_model.py",
+      "sha256": "4f512d0c51dbc4f72a7ed0cdf34e4b6ea850d736ca4ae1e35efe72ae850ab2ba",
+      "bytes": 12575
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/swdb/wp_adapter.py",
+      "sha256": "7ca02fa61138f7854f45f9d519f4cd82263a9118933edd319ed9bafd86696d27",
+      "bytes": 87959
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/swdb/acsl_subset.py",
+      "sha256": "59c1cb99afc9f5d10349e9ec53875da5962379c39365b2c38252388858b6efe8",
+      "bytes": 25477
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/swdb/framac.py",
+      "sha256": "94db2a360fb0d29bf6f35f90b12f53b04e1a9a768139c88bbe8f7605fd8c2889",
+      "bytes": 4763
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/swdb/proof_semantics.py",
+      "sha256": "a91a321c820eda4e7620226d4e59a63135161cb0f79650f6671e68daac44a67f",
+      "bytes": 31405
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/tests/test_dx100_stream_source.py",
+      "sha256": "8e8ec190dd517194fd2f979dec16e8a3110bc7e0c241fce034aa60abf800e632",
+      "bytes": 9668
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/tests/test_dx100_stream_clause_order.py",
+      "sha256": "cde47316bde3358adc2832e1226b4e69d7dd0a32ad40a61c89e56e47eab28e02",
+      "bytes": 2526
+    }
+  ],
+  "boundaries": [
+    "No actual Frama/WP/solver/remote execution by author",
+    "Only ACSL ordering repaired; partial summary subject and all existing source/environment assumptions retained",
+    "No full public pair acceptance",
+    "Source/model contract-body agreement and all-schedule source refinement remain unverified owned TCB duties",
+    "No totality/hardware liveness/full28/current0.2 acceptance",
+    "Root owns tiny120s/8GiB parser admission before any new full pair"
+  ]
+}

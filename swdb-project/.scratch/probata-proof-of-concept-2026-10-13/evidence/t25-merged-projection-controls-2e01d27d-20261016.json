@@ -1,0 +1,100 @@
+{
+  "actual_results_imported": false,
+  "controls": {
+    "passed": 42,
+    "physical_refs": [
+      {
+        "bytes": 311,
+        "path": "/private/tmp/probata-t25-projection-and-caller-merged-green-20261016/command.json",
+        "sha256": "1be1e801b25fa6297f4e13d2c08a5275f752d11c492f1ef1a849332ec229bc58"
+      },
+      {
+        "bytes": 100,
+        "path": "/private/tmp/probata-t25-projection-and-caller-merged-green-20261016/controls.log",
+        "sha256": "3047da9fa3463e2736a23e208c1b7c88464166d520e895954639be2d6bb10240"
+      },
+      {
+        "bytes": 165,
+        "path": "/private/tmp/probata-t25-projection-and-caller-merged-green-20261016/resources.json",
+        "sha256": "29800d5aa65e9a66fe47b4f1dc3c5e469b90f0a352e4bc24d72098869c5d88e8"
+      }
+    ],
+    "pytest_seconds": 40.88,
+    "resources": {
+      "cpu_seconds": 41.238227,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 307118080,
+      "timed_out": false,
+      "wall_seconds": 41.30367979203584
+    }
+  },
+  "created": "2026-10-16 ET",
+  "independent_review": [
+    {
+      "bytes": 3588,
+      "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-merged-projection-independent-review-2e01d27d-20261016.md",
+      "sha256": "7e1fa450b796918bb3395b2567479c149c05ee98166b07471131b1852825afd4"
+    },
+    {
+      "bytes": 7802,
+      "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-merged-projection-independent-review-2e01d27d-20261016.json",
+      "sha256": "611fd978f300d891caa91708476f9330af6ad666ef67d86961a2d472a17039fe"
+    }
+  ],
+  "old_017_partial": "Two Valid lemmas, unsplit projection open,17unexecuted; frozen partial remains separate. No prior result promotes the new21-target model.",
+  "pending_root_public_controls": [
+    "test_public_qualified_grow_reaches_exact_checked_packet_with_typed_runtime_binding",
+    "test_complete_synthetic_qualified_success_persists_schema_and_all_current_targets",
+    "test_public_qualified_prelaunch_rebuild_refuses_self_consistent_project_axiom"
+  ],
+  "scope": "Merged canonical packet and source/compiler controls only. No actual WP, solver, OCaml/helper public profile, model proof, or caller admission from this receipt.",
+  "source_boundary": {
+    "manifest_sha256": "9d7ede3734422b75acfc9d4151837c833f48e57705a8267f48f3405087a81d70",
+    "model": {
+      "id": "vector-reallocation-domain-3",
+      "sha256": "665710f1738349505ee438374f7e6055bb3862103f710199b1717caa782ea640"
+    },
+    "source_commit": "2e01d27d0aea7f3c2056d3abb06600b4cefa29be",
+    "source_pins": {
+      "swdb/heap_model_view.py": "52b41faefd37d585fb2c8ff15c82e74fb602c6063848ec7808cbea816ea44451",
+      "swdb/proof_report.ml": "22919544d02fc3fdc628ee44984852787043e61f82ed8613074e21751e9d1d6d",
+      "swdb/proof_setup.py": "256dd13eb4129403a18552e25dfd1ef7eef6c3fba306bb7066f62ce1e3d0b563",
+      "swdb/vector_reallocation_vcs.py": "0ec4e168754b6f2ad1b6e659c4988855c89d2ae18fe8863eed39a290c1c706b1",
+      "swdb/vector_reallocation_view.py": "05eaa7414580b11a54b7f6ebf63db20b28fd6aea0c5de4da00fc70a3bd0c57d4",
+      "tests/test_vector_reallocation_view.py": "cf4068c75265ad8d0614dce77aa10cc14ac9eb01ee1fcd501ae9182944b4d00e"
+    },
+    "target_count": 21,
+    "target_ids": [
+      "control.grow.premises_feasible",
+      "grow.entry.reads",
+      "grow.entry.int_projection.repr",
+      "grow.entry.int_projection.cells",
+      "grow.alloc.identity",
+      "grow.alloc.output",
+      "grow.alloc.frame",
+      "grow.copy.establish",
+      "grow.copy.read",
+      "grow.copy.write",
+      "grow.copy.step",
+      "grow.copy.exit",
+      "grow.free.argument",
+      "grow.free.survival",
+      "grow.free.aliases",
+      "grow.store.capacity",
+      "grow.post.eligibility",
+      "grow.post.values",
+      "grow.post.old_invalid",
+      "grow.post.frame",
+      "grow.numeric"
+    ],
+    "theory_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+    "unchanged_017_targets": 19
+  },
+  "source_commit": "2e01d27d0aea7f3c2056d3abb06600b4cefa29be",
+  "source_receipt": {
+    "bytes": 1660,
+    "path": "/private/tmp/probata-t25-merged-projection-source-2e01d27d-20261016.json",
+    "sha256": "3765be0fd3ece43d36df5d638927b0fc3e423065b7868063c1444739f520e773"
+  }
+}

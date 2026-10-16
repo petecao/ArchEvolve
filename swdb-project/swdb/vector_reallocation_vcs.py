@@ -6,6 +6,7 @@ The complete public model/caller route remains closed until all maps exist.
 from pathlib import Path
 import hashlib
 import json
+import re
 
 from swdb import vector_reallocation_model as model
 from swdb.heap_model_vcs import PRELUDE as ORIGINAL_PRELUDE
@@ -219,29 +220,82 @@ def member_specs(member):
     raise ValueError('qualified member has no mapped source inventory')
 
 
+def projection_parts(statement):
+    """Exact conjunction/forall expansion; neither piece assumes the other."""
+    quantifiers = (r'\forall Heap::heap h; \forall Heap::int_values values; '
+                   r'\forall integer r,o,b,bo,s,c; ')
+    antecedent = (r't25_repr(h,r,o,b,bo,s,c) && (s == 0 || r != b) && '
+                  r'Heap::bounded_int_values(values,bo,s)')
+    projected = 'Heap::project_int_region(h,values,b,bo,s)'
+    representation = 't25_repr(' + projected + ',r,o,b,bo,s,c)'
+    original = quantifiers + antecedent + ' ==> t25v3_repr(' + projected + ',r,o,b,bo,s,c)'
+    if statement != original or re.search(r'\bj\b', quantifiers + antecedent + representation):
+        raise ValueError('projection expansion requires the exact original formula and a fresh index')
+    repr_definition = r'''predicate t25v3_repr(Heap::heap h, integer r, integer o, integer b, integer bo,
+                         integer s, integer c) =
+      t25_repr(h,r,o,b,bo,s,c) && Heap::int32_region(h,b,bo,s);'''
+    region_definition = '''predicate int32_region (h:heap) (b offset count:int) =
+    forall j:int. 0 <= j < count -> int32_at h b (offset+4*j)'''
+    if PRELUDE.count(repr_definition) != 1:
+        raise ValueError('the represented-heap conjunction definition changed')
+    definitions = []
+    for name, text in [('vector_reallocation_vcs.py', repr_definition),
+                       ('heap_reallocation.mlw', region_definition)]:
+        raw = (HERE/name).read_bytes()
+        encoded = text.encode()
+        begin = raw.index(encoded)
+        definitions.append({'path':name, 'begin':begin, 'end':begin+len(encoded),
+                            'sha256':hashlib.sha256(encoded).hexdigest(),
+                            'container_sha256':hashlib.sha256(raw).hexdigest()})
+    parts = [('grow.entry.int_projection.repr', quantifiers + antecedent + ' ==> ' + representation),
+             ('grow.entry.int_projection.cells', quantifiers + r'\forall integer j; ' + antecedent +
+              r' && 0 <= j < s ==> Heap::int32_at(' + projected + ',b,bo+4*j)')]
+    return parts, {'id':'grow.entry.int_projection', 'original_statement':original,
+        'quantifiers':quantifiers, 'antecedent':antecedent, 'fresh_index':'j',
+        'fresh_index_free_in_antecedent':False, 'fresh_index_bound_in_outer_quantifiers':False,
+        'parts':[name for name,_ in parts], 'combination':'AND: both isolated pieces are required',
+        'equivalence':'A implies (R and forall j: B implies I) iff (A implies R) and forall fresh j: (A and B) implies I',
+        'definition_sources':definitions, 'premises_added':[], 'dependencies':[],
+        'region_substitution':{'h':projected, 'b':'b', 'offset':'bo', 'count':'s', 'j':'j'},
+        'reference_role':'original logical target only; never imported or launched as a proved result'}
+
+
+def lemma_source(name, statement):
+    return ('//@ import \\wp::why3: heap_reallocation::Heap;\n' + PRELUDE +
+            '/*@ check lemma t25v3_' + name.replace('.', '_') + ': ' + statement + ';\n*/\n')
+
+
 def declaration(member):
     """Rebuild canonical bytes without trusting a staged manifest or hash."""
     source = model.model_text(member)
     if source is None:
         raise ValueError('unknown qualified model')
     theory = HERE / 'heap_reallocation.mlw'
-    rows, files = [], {}
+    rows, files, logical = [], {}, []
     if member in model.MEMBERS:
         for index, (name, groups, needle, statement) in enumerate(member_specs(member)):
             begin = source.index(needle)
             end = begin + len(needle)
-            goal = 't25v3_' + name.replace('.', '_')
-            text = (CTOR_NUMERIC.replace('t25_ctor_numeric', 't25v3_ctor_numeric')
-                    if name == 'ctor.numeric' else GROW_NUMERIC) if statement is None else (
-                '//@ import \\wp::why3: heap_reallocation::Heap;\n' + PRELUDE +
-                '/*@ check lemma ' + goal + ': ' + statement + ';\n*/\n')
-            path = f'{index:03d}-' + goal + '.c'
-            files[path] = text.encode()
-            rows.append({'id':name,'source_groups':groups,'source_spans':[{'begin':begin,'end':end,
-                'sha256':hashlib.sha256(source[begin:end].encode()).hexdigest()}],
-                'statement':statement,'dependencies':[],'status':'pending','expected':'proven','goal':goal,
-                'kind':'c_kernel' if statement is None else 'check_lemma',
-                'path':path,'sha256':hashlib.sha256(text.encode()).hexdigest()})
+            parts = [(name, statement, f'{index:03d}')]
+            if name == 'grow.entry.int_projection':
+                expanded, receipt = projection_parts(statement)
+                reference = 'references/' + f'{index:03d}-t25v3_grow_entry_int_projection.c'
+                files[reference] = lemma_source(name, statement).encode()
+                receipt['reference'] = {'path':reference,'sha256':hashlib.sha256(files[reference]).hexdigest()}
+                logical.append(receipt)
+                parts = [(part, formula, f'{index:03d}' + suffix)
+                         for (part, formula), suffix in zip(expanded, ('a','b'), strict=True)]
+            for part, formula, label in parts:
+                goal = 't25v3_' + part.replace('.', '_')
+                text = (CTOR_NUMERIC.replace('t25_ctor_numeric', 't25v3_ctor_numeric')
+                        if part == 'ctor.numeric' else GROW_NUMERIC) if formula is None else lemma_source(part, formula)
+                path = label + '-' + goal + '.c'
+                files[path] = text.encode()
+                rows.append({'id':part,'source_groups':groups,'source_spans':[{'begin':begin,'end':end,
+                    'sha256':hashlib.sha256(source[begin:end].encode()).hexdigest()}],
+                    'statement':formula,'dependencies':[],'status':'pending','expected':'proven','goal':goal,
+                    'kind':'c_kernel' if formula is None else 'check_lemma',
+                    'path':path,'sha256':hashlib.sha256(text.encode()).hexdigest()})
     theory_name = 'theory/' + theory.name
     files[theory_name] = theory.read_bytes()
     files['qualified.c'] = source.encode()
@@ -263,7 +317,8 @@ def declaration(member):
             'source_parameter_semantics':{'int':'signed32 representation range; part of source typing, not a new requires'},
             'incoming_heap':'arbitrary well-formed incoming heap with issued dead identities and escaped aliases',
             'allocation_identities':'unbounded mathematical integers; address reuse never revives a dead ID',
-            'obligations':rows, 'missing':['complete source/clause/helper binding, frames and feasibility audit',
+            'obligations':rows, 'logical_obligations':logical,
+            'missing':['complete source/clause/helper binding, frames and feasibility audit',
                 'selected WP Typed/Machine source-image binding and caller discharge',
                 'source-local caller/lifetime and ordinary dependency composition',
                 'independent type/import/task-closure review and fresh normal-reader proof']}
@@ -276,9 +331,10 @@ def prepare(member, directory):
     plan, files = declaration(member)
     directory = Path(directory)
     directory.mkdir(exist_ok=False)
-    (directory/'theory').mkdir()
     for name, data in files.items():
-        (directory/name).write_bytes(data)
+        path = directory/name
+        path.parent.mkdir(parents=True,exist_ok=True)
+        path.write_bytes(data)
     return plan
 
 
@@ -297,7 +353,8 @@ def check(member, directory):
         raise ValueError('a qualified packet contains a special filesystem entry')
     actual = {str(p.relative_to(directory)) for p in paths if p.is_file()}
     directories = {str(p.relative_to(directory)) for p in paths if p.is_dir()}
-    if actual != set(files) or directories != {'theory'}:
+    expected_dirs = {str(parent) for name in files for parent in Path(name).parents if str(parent) != '.'}
+    if actual != set(files) or directories != expected_dirs:
         raise ValueError('the qualified source/packet/import membership changed')
     for name, data in files.items():
         if (directory/name).read_bytes() != data:

@@ -1,0 +1,16 @@
+{
+  "date_et": "2026-10-16",
+  "status": "inert; root admission and exact executable/runtime binding required",
+  "kind": "frama33-parser-only-portable-stream-inputs-v1",
+  "source_code_freeze": "723378ff844455b5488c9932bf0962c67210915b",
+  "runtime": {"tool": "Frama-C", "required_version": "33.0", "author_probed": false, "owner": "root coordinator"},
+  "whole_guard": {"seconds": 120, "rss_bytes": 8589934592, "workers": 1, "author_launch_allowed": false},
+  "coordination": "Root-admitted primary formal lease plus shared worker B/component c6; no author execution",
+  "input_manifest": "inputs/manifest.json",
+  "flags": ["-machdep", "x86_64", "-kernel-warn-key", "annot-error=abort"],
+  "argv_template": ["<root-pinned-absolute-Frama33-executable>", "-machdep", "x86_64", "-kernel-warn-key", "annot-error=abort", "<one-exact-pinned-input>"],
+  "ordered_inputs": ["wp-correct.c", "wp-wrong.c", "wp-combined.c", "all-contracts.c", "ordinary-model.c"],
+  "expected_outcome": "All five inputs parse/type-check with exit0 and no Ignoring text; no proof claim",
+  "must_retain": ["all argv", "all stdout/stderr", "all exit statuses", "input pre/post hashes", "source freeze", "physical runtime identity and standard headers", "whole-tree resources", "actual lease receipt"],
+  "not_requested": ["WP", "solvers", "model execution", "termination", "full public pair acceptance", "hardware liveness", "source refinement", "whole ticket28 acceptance"]
+}

@@ -1,0 +1,104 @@
+{
+  "accepted": true,
+  "headers_unchanged": true,
+  "inputs_checked": 5,
+  "runs": [
+    {
+      "Ignoring": false,
+      "argv": [
+        "/Users/yanrujhou/.opam/framac-33/bin/frama-c",
+        "-machdep",
+        "x86_64",
+        "-kernel-warn-key",
+        "annot-error=abort",
+        "/private/tmp/probata-t28-parser-five-v2-20261016/inputs/wp-correct.c"
+      ],
+      "elapsed_seconds": 0.46457524999277666,
+      "exit_code": 0,
+      "input": {
+        "bytes": 4218,
+        "name": "wp-correct.c",
+        "role": "exact public WP input; parser only",
+        "sha256": "d20b9109455e7b1fc4cf3b88e995a78104cb4f5e5001afb074a159db929aa23e"
+      }
+    },
+    {
+      "Ignoring": false,
+      "argv": [
+        "/Users/yanrujhou/.opam/framac-33/bin/frama-c",
+        "-machdep",
+        "x86_64",
+        "-kernel-warn-key",
+        "annot-error=abort",
+        "/private/tmp/probata-t28-parser-five-v2-20261016/inputs/wp-wrong.c"
+      ],
+      "elapsed_seconds": 0.17328508297214285,
+      "exit_code": 0,
+      "input": {
+        "bytes": 4218,
+        "name": "wp-wrong.c",
+        "role": "exact public WP input; parser only",
+        "sha256": "6983714329d7ba7186f602bad7ab568472beb8bbfb14523d9d9ee25e8a0d7c6a"
+      }
+    },
+    {
+      "Ignoring": false,
+      "argv": [
+        "/Users/yanrujhou/.opam/framac-33/bin/frama-c",
+        "-machdep",
+        "x86_64",
+        "-kernel-warn-key",
+        "annot-error=abort",
+        "/private/tmp/probata-t28-parser-five-v2-20261016/inputs/wp-combined.c"
+      ],
+      "elapsed_seconds": 0.17086187499808148,
+      "exit_code": 0,
+      "input": {
+        "bytes": 4234,
+        "name": "wp-combined.c",
+        "role": "exact public WP input; parser only",
+        "sha256": "b5ceab7f154a5be1f3ef90c0915d8e9cf56e2b71fc16574d705c75efbfdb3980"
+      }
+    },
+    {
+      "Ignoring": false,
+      "argv": [
+        "/Users/yanrujhou/.opam/framac-33/bin/frama-c",
+        "-machdep",
+        "x86_64",
+        "-kernel-warn-key",
+        "annot-error=abort",
+        "/private/tmp/probata-t28-parser-five-v2-20261016/inputs/all-contracts.c"
+      ],
+      "elapsed_seconds": 0.18585875001735985,
+      "exit_code": 0,
+      "input": {
+        "bytes": 4295,
+        "name": "all-contracts.c",
+        "role": "normal all-contract validation input",
+        "sha256": "fa3a78996427c3e6ae1ca5834e33c3e7068079886dad126e3a18348037e01865"
+      }
+    },
+    {
+      "Ignoring": false,
+      "argv": [
+        "/Users/yanrujhou/.opam/framac-33/bin/frama-c",
+        "-machdep",
+        "x86_64",
+        "-kernel-warn-key",
+        "annot-error=abort",
+        "/private/tmp/probata-t28-parser-five-v2-20261016/inputs/ordinary-model.c"
+      ],
+      "elapsed_seconds": 0.16002954100258648,
+      "exit_code": 0,
+      "input": {
+        "bytes": 2984,
+        "name": "ordinary-model.c",
+        "role": "normal ordinary C model with explicitly parse-only assertion declaration",
+        "sha256": "9667e339842c3a0649b9d361bb219f1c6ce7c71c802b9b04d202ed0bdf3b5310"
+      }
+    }
+  ],
+  "scope": "Parser/type checking only; no WP/solver/model/source-refinement/termination/hardware acceptance",
+  "source_commit": "24fd59cc8458633562b6a86388b49d2ff8caba09"
+}

@@ -1,0 +1,130 @@
+{
+  "date": "2026-10-16 ET",
+  "verdict": "PASS parser/type-feasibility only",
+  "source_commit": "24fd59cc8458633562b6a86388b49d2ff8caba09",
+  "physical_artifact_pins_verified": 31,
+  "exact_Git_input_count": 5,
+  "input_bytes": 19949,
+  "headers_prepost_equal_count": 194,
+  "native_runs": [
+    {
+      "Ignoring": false,
+      "argv": [
+        "/Users/yanrujhou/.opam/framac-33/bin/frama-c",
+        "-machdep",
+        "x86_64",
+        "-kernel-warn-key",
+        "annot-error=abort",
+        "/private/tmp/probata-t28-parser-five-v2-20261016/inputs/wp-correct.c"
+      ],
+      "elapsed_seconds": 0.46457524999277666,
+      "exit_code": 0,
+      "input": {
+        "bytes": 4218,
+        "name": "wp-correct.c",
+        "role": "exact public WP input; parser only",
+        "sha256": "d20b9109455e7b1fc4cf3b88e995a78104cb4f5e5001afb074a159db929aa23e"
+      }
+    },
+    {
+      "Ignoring": false,
+      "argv": [
+        "/Users/yanrujhou/.opam/framac-33/bin/frama-c",
+        "-machdep",
+        "x86_64",
+        "-kernel-warn-key",
+        "annot-error=abort",
+        "/private/tmp/probata-t28-parser-five-v2-20261016/inputs/wp-wrong.c"
+      ],
+      "elapsed_seconds": 0.17328508297214285,
+      "exit_code": 0,
+      "input": {
+        "bytes": 4218,
+        "name": "wp-wrong.c",
+        "role": "exact public WP input; parser only",
+        "sha256": "6983714329d7ba7186f602bad7ab568472beb8bbfb14523d9d9ee25e8a0d7c6a"
+      }
+    },
+    {
+      "Ignoring": false,
+      "argv": [
+        "/Users/yanrujhou/.opam/framac-33/bin/frama-c",
+        "-machdep",
+        "x86_64",
+        "-kernel-warn-key",
+        "annot-error=abort",
+        "/private/tmp/probata-t28-parser-five-v2-20261016/inputs/wp-combined.c"
+      ],
+      "elapsed_seconds": 0.17086187499808148,
+      "exit_code": 0,
+      "input": {
+        "bytes": 4234,
+        "name": "wp-combined.c",
+        "role": "exact public WP input; parser only",
+        "sha256": "b5ceab7f154a5be1f3ef90c0915d8e9cf56e2b71fc16574d705c75efbfdb3980"
+      }
+    },
+    {
+      "Ignoring": false,
+      "argv": [
+        "/Users/yanrujhou/.opam/framac-33/bin/frama-c",
+        "-machdep",
+        "x86_64",
+        "-kernel-warn-key",
+        "annot-error=abort",
+        "/private/tmp/probata-t28-parser-five-v2-20261016/inputs/all-contracts.c"
+      ],
+      "elapsed_seconds": 0.18585875001735985,
+      "exit_code": 0,
+      "input": {
+        "bytes": 4295,
+        "name": "all-contracts.c",
+        "role": "normal all-contract validation input",
+        "sha256": "fa3a78996427c3e6ae1ca5834e33c3e7068079886dad126e3a18348037e01865"
+      }
+    },
+    {
+      "Ignoring": false,
+      "argv": [
+        "/Users/yanrujhou/.opam/framac-33/bin/frama-c",
+        "-machdep",
+        "x86_64",
+        "-kernel-warn-key",
+        "annot-error=abort",
+        "/private/tmp/probata-t28-parser-five-v2-20261016/inputs/ordinary-model.c"
+      ],
+      "elapsed_seconds": 0.16002954100258648,
+      "exit_code": 0,
+      "input": {
+        "bytes": 2984,
+        "name": "ordinary-model.c",
+        "role": "normal ordinary C model with explicitly parse-only assertion declaration",
+        "sha256": "9667e339842c3a0649b9d361bb219f1c6ce7c71c802b9b04d202ed0bdf3b5310"
+      }
+    }
+  ],
+  "guard": {
+    "seconds": 1.5959660000517033,
+    "peak_RSS_MiB": 117.234375,
+    "finished_ET": "05:51:16",
+    "inspection_events": 1,
+    "final_failure": null,
+    "unconfirmed_children": []
+  },
+  "outer": {
+    "cpu_seconds": 1.9193409999999997,
+    "exit_code": 0,
+    "out_of_memory": false,
+    "peak_rss_bytes": 181272576,
+    "timed_out": false,
+    "wall_seconds": 1.6654608329990879
+  },
+  "helper": {
+    "path": "/private/tmp/probata-root-t28-parser-five-v2-20261016.py",
+    "sha256": "5ed4f6ab9295ad25e6750071ce2e08e6dd8b4236b955f0700f977e1e39198547"
+  },
+  "actual_execution": "RootB+c6 under180outer/120active/8GiB; selectednativeFrama33 and standardheaders only, noWP/solver",
+  "reviewer_execution": "Passive local artifact/hash/Git/JSON/text only, no compiler/test/native/probe/SSH by reviewer",
+  "history": "InertV1newlineformatbug/preparerassert/missingV2file invocation preceded actualV2; no earlier parserjob claimed. Retained outsideRepo, no actualrerunforreporting.",
+  "proof_or_body_or_source_or_liveness_or_fullticket_acceptance": false
+}

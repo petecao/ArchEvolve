@@ -1,0 +1,90 @@
+{
+  "date": "2026-10-16 ET",
+  "source_merge": "7ec9cea7ce2fed17f47cab3813524ceccfce61db",
+  "reporter_source": "0cfaad70854eaf8c836445f3bc3db1e8e0378d6d",
+  "reporter_sha256": "8b84bec6a12669d877205ec60d46d149f41fa921d08b6640161b4896b9c4df16",
+  "preserved": [
+    {
+      "relative": "evidence/t07-registration-refresh-independent-review-0cfaad70-20261016.md",
+      "sha256": "9296a92f905b89ec8777fd9458e42b040614f1081f106afeb61e463040748f81",
+      "bytes": 3759
+    },
+    {
+      "relative": "evidence/t07-registration-refresh-independent-review-0cfaad70-20261016.json",
+      "sha256": "e92172d54cd86ac4cab6211f2c75fdef2792e7cf2e706581629f178d482f12b5",
+      "bytes": 4758
+    },
+    {
+      "relative": "evidence/t28-stream-parser-order-independent-review-24fd59cc-20261016.md",
+      "sha256": "5c43ac230077d54780675944460fc8e419f0a50d0205f04b92f96473b35fd5c3",
+      "bytes": 2576
+    },
+    {
+      "relative": "evidence/t28-stream-parser-order-independent-review-24fd59cc-20261016.json",
+      "sha256": "d084052748b187fec7a2fbf038257f791bc433d65ba1029ca8b8ba13b53abe80",
+      "bytes": 2358
+    },
+    {
+      "relative": "evidence/t28-stream-refusal-final-cold-audit-v2-20261016.md",
+      "sha256": "1190a5f8068416d2917450017a97fe707d2e8cdcd14bf4d8c1ac1b3ce0b4363a",
+      "bytes": 3432
+    },
+    {
+      "relative": "evidence/t28-stream-refusal-final-cold-audit-v2-20261016.json",
+      "sha256": "842bfed48f48889bc24830b25a6796da36b8474abe891c8dfd0d6edcb271077d",
+      "bytes": 8306
+    },
+    {
+      "relative": "evidence/t28-stream-refusal-cold-root-execution-v3-20261016.json",
+      "sha256": "aee78179ad36870e6dd62b48871b3a5dde4cd07a3d76ecf08d62fb6e5ffa03f3",
+      "bytes": 787922
+    },
+    {
+      "relative": "evidence/t28-stream-refusal-independent-integration-review-20261016.md",
+      "sha256": "819a1444b3e8b5f8efc57bd80a6a72a4619616c3269462795daa7310bf2766bb",
+      "bytes": 1730
+    },
+    {
+      "relative": "evidence/t28-stream-refusal-independent-integration-review-20261016.json",
+      "sha256": "1565eb5353d3f55e5776dc93602a6c7e9f012d03caf8e9a9af6a239bfb631908",
+      "bytes": 2519
+    },
+    {
+      "relative": "evidence/t25-grow21-partial-actual-metadata-v1-20261016.json",
+      "sha256": "5d7b257361855db5308a545cf85fb6af363361ae3ef7cd262819d4d301f8d19c",
+      "bytes": 393313
+    },
+    {
+      "relative": "evidence/t07-native-report-compile-v3-result-20261016.json",
+      "sha256": "7c18af6902844c058d5c131b41fbfe842dab4a33d444643daf5d5d6cd7df8289",
+      "bytes": 685
+    },
+    {
+      "relative": "evidence/t07-native-report-compile-v3-preflight-20261016.json",
+      "sha256": "39581572f6208af7b350acfe323db1f6fab64277be2371852ec42460893c273a",
+      "bytes": 53865
+    },
+    {
+      "relative": "evidence/t07-native-report-compile-v3-guard-summary-20261016.json",
+      "sha256": "794d1e47351f515d68370f3d4eec09183843633e34134d8528087a5168fa456d",
+      "bytes": 3623
+    }
+  ],
+  "native_helper": {
+    "path": "/private/tmp/probata-root-t07-native-report-compile-v3-20261016.py",
+    "sha256": "5a91eadf66c84d839ed644fa6087122bf1c64f9940dfc3f07efca7c63ebe36f8"
+  },
+  "native_actual_scope_correction": "Source helper docstring/preflight scope inherited B/c6 wording, but actual argv is direct counted_verifier c6 on primary shared lock; no worker B invocation exists. Raw originals unchanged. 315Gitarchive/physicalpins verified;CMXSdc0757/86320B hashes match. Native compile only, not reporter output/API semantics/Init proof.",
+  "native_event_boundary": "One AccessDenied supervision event recovered; final inspection null/no unconfirmed children, not zero events.",
+  "grow21_partial": "Root metadata4attempts/3producerreportedValid(CVC5,CVC5,Z3repr)/cellsTimeout+UnknownUnknown/17unexecuted/0Csmokes; no fullmodelproof, independent fulltask/hypothesis cold pending.",
+  "stream_cold": "4582remotechecks attributed to root; local464sourceGitpins/11treeIDs/21pointerrefs reconcile, preservation/prepublicrefusal only; no reviewerSSH/rawrehash.",
+  "active_root_report": "Dtor11 exact2e01node1G619started05:47:03ET;noresult. Rootuntrackedadmission leftunstaged. Grow21 settled05:38:24ET; settlementleases are not currentuniversalabsence.",
+  "reviewer_execution": "Passive Git/hash/text/JSON only; no actualcompiler/tool/test/SSH/jobs",
+  "frozen_artifact_diffcheck_exception": {
+    "path": "prototype/28-stream-parser/inputs/ordinary-model.c",
+    "line": 58,
+    "warning": "new blank line at EOF",
+    "sha256": "9667e339842c3a0649b9d361bb219f1c6ce7c71c802b9b04d202ed0bdf3b5310",
+    "action": "Preserved exact root-parser-admitted bytes; no production whitespace warning. Known artifact-quality item remains explicit for final integration review, no blanket clean claim."
+  }
+}

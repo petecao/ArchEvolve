@@ -1,0 +1,208 @@
+{
+  "date": "2026-10-16 ET",
+  "kind": "public-consumer smoke observation policy preparation",
+  "base_freeze": "47b310df89c3de0d98339cde2433b8ce6f00804b",
+  "source_files": [
+    {
+      "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/swdb/proof_setup.py",
+      "sha256": "1bcf8d7f38c995a6e114150857d5e05c67c2d7a49cbfe97bcd73a62081d72f5f",
+      "bytes": 47009
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/swdb/proof_report.ml",
+      "sha256": "22919544d02fc3fdc628ee44984852787043e61f82ed8613074e21751e9d1d6d",
+      "bytes": 7873
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/tests/test_proof_report_closure.py",
+      "sha256": "3d38eba4a05f2e71397ad95f9d292b5d492b9b8105c68360a2c8d20efdbb3eea",
+      "bytes": 5047
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/tests/test_proof_report_smoke.py",
+      "sha256": "cb29de8941379ee2f4baa05305ec351c0549ad96e1f4e886ed554d26a1090d14",
+      "bytes": 2828
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/tests/test_heap_model_view.py",
+      "sha256": "f1c52c33306101ea97b1caa1f5afcf1003fac357005ddc9bd8002081cd41776e",
+      "bytes": 17234
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/tests/test_vector_reallocation_view.py",
+      "sha256": "c1bf9534bab352a6e81ae7e5c55abb669d63459d75584a00880d995746217526",
+      "bytes": 6677
+    }
+  ],
+  "policy_doc": {
+    "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/SMOKE-OBSERVATION-POLICY-20261016.md",
+    "sha256": "f6f7a9587d630b657c6f5cdca09c4d20ead75955dc314922f85cee2181e9cb2b",
+    "bytes": 3307
+  },
+  "installed_semantics": [
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/Wpo.ml",
+      "sha256": "37f3cdbe80caeca6de7dae787e4eb06e3b548a8c6191d81ceda5420c923869d3",
+      "bytes": 27317
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/register.ml",
+      "sha256": "e4e0b524e4364f475f33fd618c542d4ddc86c2c35f8b6ba223ea704896bc019e",
+      "bytes": 36565
+    }
+  ],
+  "healthy_states": [
+    "unknown",
+    "timeout",
+    "stepout",
+    "invalid"
+  ],
+  "runs": [
+    {
+      "name": "smoke-observation-policy-red",
+      "log": {
+        "path": "/private/tmp/probata-t07-smoke-observation-policy-red-20261016.log",
+        "sha256": "7292f79a99afb4ee82d7ca797d015ea31b086fa9d0bb41ad39f002b4b8afa74c",
+        "bytes": 18391
+      },
+      "guard": {
+        "path": "/private/tmp/probata-t07-smoke-observation-policy-red-20261016.log.summary.json",
+        "sha256": "e068120dc5647fc3c0b89daae19b978ecd8f6fa0b09e37464ce64bcf5da8557f",
+        "bytes": 1924
+      },
+      "exit_code": 1,
+      "wall_s": 0.9985610833391547,
+      "peak_rss_mb": 63.28125,
+      "timed_out": false,
+      "inspection_events": 0,
+      "inspection_failure": null,
+      "unconfirmed_children": [],
+      "final_log_lines": [
+        "FAILED tests/test_proof_report_smoke.py::test_native_smoke_verdict_must_match_a_healthy_inventory_observation[None]",
+        "FAILED tests/test_proof_report_smoke.py::test_native_smoke_identity_and_flags_must_match[<lambda>0]",
+        "19 failed, 8 passed in 0.31s"
+      ]
+    },
+    {
+      "name": "smoke-observation-policy-green",
+      "log": {
+        "path": "/private/tmp/probata-t07-smoke-observation-policy-green-20261016.log",
+        "sha256": "67f3b2b7900905d0c1841e10fb4b57641a076975b7bdf815421056bec34c13d6",
+        "bytes": 99
+      },
+      "guard": {
+        "path": "/private/tmp/probata-t07-smoke-observation-policy-green-20261016.log.summary.json",
+        "sha256": "0c3b00e9a92ea49091b763861d9c8b34c2a91d78c008fced817e8cc21b802dd8",
+        "bytes": 1968
+      },
+      "exit_code": 0,
+      "wall_s": 0.9952287083142437,
+      "peak_rss_mb": 66.328125,
+      "timed_out": false,
+      "inspection_events": 0,
+      "inspection_failure": null,
+      "unconfirmed_children": [],
+      "final_log_lines": [
+        "................................................                         [100%]",
+        "48 passed in 0.48s"
+      ]
+    },
+    {
+      "name": "smoke-observation-policy-public-regressions",
+      "log": {
+        "path": "/private/tmp/probata-t07-smoke-observation-policy-public-regressions-20261016.log",
+        "sha256": "b0f1c2d3bee6febf5bb7b39970e4f509fdf758b5c1ca649eb20e658950f2844b",
+        "bytes": 162
+      },
+      "guard": {
+        "path": "/private/tmp/probata-t07-smoke-observation-policy-public-regressions-20261016.log.summary.json",
+        "sha256": "eca28b167d4b78418026ebc518d50d857e84b5eea4e53c8db3d437251c36ee44",
+        "bytes": 3582
+      },
+      "exit_code": 137,
+      "wall_s": 90.31513254158199,
+      "peak_rss_mb": 208.9375,
+      "timed_out": true,
+      "inspection_events": 1,
+      "inspection_failure": null,
+      "unconfirmed_children": [],
+      "final_log_lines": [
+        "........................................................................ [ 41%]",
+        ".........................sssssssssssss.................................. [ 82%]",
+        ".."
+      ]
+    },
+    {
+      "name": "smoke-pass-type-red",
+      "log": {
+        "path": "/private/tmp/probata-t07-smoke-pass-type-red-20261016.log",
+        "sha256": "ad1a76d64ca1ff32b51e974d02a88b801be6c2794f2dce268fab6f481e10ab29",
+        "bytes": 2064
+      },
+      "guard": {
+        "path": "/private/tmp/probata-t07-smoke-pass-type-red-20261016.log.summary.json",
+        "sha256": "2eb68c07328a42afae3ddf77f44cd578dc21b2fb2d6bfa89bac9f6fdf1606305",
+        "bytes": 1975
+      },
+      "exit_code": 1,
+      "wall_s": 0.756358208367601,
+      "peak_rss_mb": 62.75,
+      "timed_out": false,
+      "inspection_events": 0,
+      "inspection_failure": null,
+      "unconfirmed_children": [],
+      "final_log_lines": [
+        "FAILED tests/test_proof_report_smoke.py::test_malformed_smoke_pass_flag_cannot_bypass_observation_check[1]",
+        "FAILED tests/test_proof_report_smoke.py::test_malformed_smoke_pass_flag_cannot_bypass_observation_check[true]",
+        "2 failed, 1 passed in 0.09s"
+      ]
+    },
+    {
+      "name": "smoke-observation-policy-public-final",
+      "log": {
+        "path": "/private/tmp/probata-t07-smoke-observation-policy-public-final-20261016.log",
+        "sha256": "e7eeda22cd2e4f588c49babeba362c86ada6580eec5c1d53447d5f58c47c1121",
+        "bytes": 100
+      },
+      "guard": {
+        "path": "/private/tmp/probata-t07-smoke-observation-policy-public-final-20261016.log.summary.json",
+        "sha256": "d4669b41ec5c2b9510e6dc27194059b420690b7f14cfee422fcc55c0b2a59e44",
+        "bytes": 4175
+      },
+      "exit_code": 0,
+      "wall_s": 45.49945854162797,
+      "peak_rss_mb": 364.25,
+      "timed_out": false,
+      "inspection_events": 1,
+      "inspection_failure": null,
+      "unconfirmed_children": [],
+      "final_log_lines": [
+        ".................................................................        [100%]",
+        "65 passed in 44.92s"
+      ]
+    }
+  ],
+  "reporter_byte_unchanged_from_base": true,
+  "root_native_reporter_compile": {
+    "path": "/private/tmp/probata-t07-native-report-compile-v2-20261016/result.json",
+    "sha256": "4a7693caabdba2f6fbb813a87ac1b547a2729c08f6adc64d62b33d6c6b9433c0",
+    "bytes": 685
+  },
+  "root_native_compile_is_proof": false,
+  "final_selected_controls": {
+    "passed": 65,
+    "seconds_pytest": 44.92,
+    "kind": "synthetic report/CLI persistence data plus native lowering controls; no formal proof"
+  },
+  "broad_profile": "Incomplete 90-second bounded profile preserved, no pass claim; final explicit selection is separate.",
+  "scientific_acceptance": false,
+  "formal_job_launched_by_preparer": false,
+  "old_actuals_modified": false,
+  "old_record_promotion": false,
+  "remaining": [
+    "fresh reporter output closure",
+    "two unexecuted backend exports",
+    "Init/lifetime/source refinement",
+    "full TD and counted provider acceptance"
+  ]
+}

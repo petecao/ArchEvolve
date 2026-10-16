@@ -1187,8 +1187,85 @@ Full caller state/frame/typed-image/cleanup composition, current ordinary model
 dependency eligibility and actual ordinary/smoke proof records remain open. All
 original acceptance boxes stay open.
 
+### Prospective projection split and caller lexical repair — 2026-10-16 ET
+
+The original 017 full-grow attempt remains partial: two producer-reported
+successes, the integer projection target unproved, and 17 targets unexecuted.
+The coordinator preserves that run and owns its independent cold audit. A
+prospective source successor decomposes only the projection conjunction into
+two isolated obligations with the same complete premise, one for represented
+heap and one for every bounded projected int cell. Exact existing predicate
+spans, fresh-index checks and explicit AND ownership bind the expansion. The
+original whole target remains reference-only; no desired theorem is assumed.
+All other 19 target C inputs and their indices are byte-identical. The new
+inventory is 21 grow and 27 reserve targets; complete fresh proof is required.
+No old record is promoted and no model body, contract or heap definition changes.
+
+Caller preparation regenerates 79 pending targets under this successor and
+still admits no current model records or actual public contract identity. A
+concrete review blocker in the earlier lexical matcher is fixed: whole-clause
+patterns preserve keyword/operator boundaries and cannot concatenate annotation
+fragments into different tokens. Public RED reproduced the malformed-token
+acceptance; the final 42-control compiler/pure batch passes in 40.40s (guard
+40.7701s, 308,838,400-byte peak, no OOM/timeout). No formal tool executes in this
+profile. Exact sources, old review, reference target and controls are pinned in
+`evidence/t25-projection-split-and-lexical-controls-20261016.json`. Independent
+source review, affected actual diagnostics, full public model and caller proofs,
+and all remaining member/type acceptance remain open.
+
 ## Qualified public20 partial checkpoint — 2026-10-16 04:58 ET
 
 [Original G589 pre-public failure](../evidence/t25-qualified-grow-prepublic-failure-v1-20261016.md) preserves workspace/records FileNotFoundError, no public proof command/record, original49raw files and entry/outer1.1553consumer equality was pre-seed only; final public postchecks were not reached. Root's later416module physical/Git checks are later snapshots, not executed original postchecks.
 
 Second node0G590 exact017 attempt reached the normal public CLI and stopped at target3:2producer-reported successes, grow.entry.int_projection timeout,17unexecuted. PublicCLI returned0 and persisted one not_proven/timeout record with3goals; profile/guard exit1 in121.500689s568,692,736B, outer123.580s621,645,824B, no guardOOM/whole timeout. Complete378-file/23,369,201B remote manifest and21embedded selected metadata rows reconcile locally; no remote raw rehash/copy by integration. Source-consumer1553-file pre/post equality,416module physical/Git checks and three finite empty poststop sweeps/leases released are retained root observations. [Immutable partial metadata](../evidence/t25-qualified-grow-partial-actual-metadata-v2-20261016.json). Full task/hypothesis/ordinary/smoke cold audit and diagnosis remain pending. These2success rows do not establish the complete20target/model, original-v2 or caller theorem. Numeric0e78 is pending preparation only. Ticket stays claimed.
+
+## Exact017 partial cold classification — 2026-10-16 ET
+
+The exact017 partial actual now passes independent cold classification: two isolated CVC5Valid check lemmas after Alt-ErgoTimeout; projection Alt-ErgoTimeout/CVC5Unknown/Z3Unknown;17 targets unexecuted and zero C smokes. PublicCLI0/draft not_proven-timeout and guard/profile1 remain unchanged. Root passive5267checks/2919indexed references plus1553opaque source-consumer streams have0errors; the independent integration review reconciles retained local metadata and does not repeat remote raw hashing. All378new/49prior raw files remain remote.208module files mean416physical+Git checks; V1 count defect stayed inert, V2 policy identical.14materialized SMTs are not14submissions. No full20/model/body/original-v2/caller/refutation/ticket25 acceptance. [Final cold audit](../evidence/t25-qualified-grow-partial-final-cold-audit-v2-20261016.md), [independent integration review](../evidence/t25-qualified-grow-partial-independent-integration-review-20261016.md).
+
+Status stays claimed. Prospective projection/lexical c0d has been composed with reviewed integration in the author worktree; exact merged controls/public readiness remain pending and no historical result is promoted.
+
+### Current reporter merge and projection preparation — 2026-10-16 ET
+
+The prospective source is merged with the current reporter/property-closure and
+smoke-observation policy at exact `2e01d27d`. Forty-two canonical packet and Clang
+controls pass in 40.88 seconds; the 8 GiB serial guard reports no timeout or OOM.
+Independent merged-source review confirms all 21 targets, the 19 unchanged 017
+inputs, exact original projection reference and both source-definition bindings.
+Model/theory bytes and the full projection premise stay unchanged. Evidence:
+`../evidence/t25-merged-projection-controls-2e01d27d-20261016.json`.
+
+This accepts merged preparation only. The coordinator-owned scripted public
+21-target/schema/persistence controls and any fresh actual projection/full-model
+run remain pending. No original v2 or generic caller admission follows, and the
+old 017 partial producer remains immutable. All acceptance boxes stay open.
+
+### Merged full-21 scripted persistence accepted — 2026-10-16 ET
+
+The coordinator's exact clean `0f10e088` compiler/native profile passed all three
+public controls, with production and test bytes identical to runtime candidate
+`2e01d27d`. Native OCaml setup was exercised; all Frama/WP commands targeted
+named Python stand-ins. The synthetic successful record persists all 21 runs,
+30 synthetic ordinary goals and one healthy smoke observation, with the normal
+two-key reader attestation and schema. The named parser-error and prelaunch
+self-consistent axiom-refusal controls also pass. A passive cold read checks
+both schema-valid records, all 240 record/report references and all 21 normal reader
+results; source-before/after match across 1,898 exact tracked inputs.
+
+The worker tree completed in 16.03 seconds, with no timeout, OOM, inspection
+event or unconfirmed child. Its 180-second inner and 240-second outer worker
+guards exclude source preflight/final hashing from that timing claim. Retained
+raw is 41.59 MB, within the 256 MiB planning allowance. Evidence:
+`../evidence/t25-grow21-scripted-public-controls-20261016.json`.
+
+This completes the current workflow/schema preparation gate only. The independently
+reviewed inert full-21 packet still needs coordinator admission, fresh actual
+results and complete task/import/hypothesis cold review. No old 017 partial
+record is promoted. Original v2, generic caller composition, remaining members
+and element/type breadth remain open; this ticket is still claimed.
+
+## Current source publication boundary — 2026-10-16 ET
+
+Exact evaluated-source2e01 is published through the reviewed25301741 packet; root must evaluate2e01, not the merge or receipt commit. Both projection pieces retain the full original antecedent and mandatory AND ownership; original whole projection is reference-only, other19payloads unchanged.316package Git pins and15physical reviewed source pins match. Root3named scripted public/schema/native-OCaml controls pass in16.034838s/374.53125MiB with noevents/children/OOM/timeout; all403retained control artifact pins match. This completes source/workflow readiness only, no actual proof. Caller79targets/five unadmitted model requirements, public contract identity, full21/model/original-v2/caller/ticket25 acceptance remain open. [Integration review](../evidence/t25-projection-publication-integration-review-20261016.md), [root source/entry review](../evidence/t25-grow21-root-source-change-review-2e01d27d-20261016.md), [scripted controls](../evidence/t25-grow21-scripted-public-controls-20261016.json).
+
+This supersedes dated pending-controls preparation statements only. Status stays claimed; no historical record promotion.

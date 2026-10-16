@@ -1,0 +1,236 @@
+{
+  "acceptance": {
+    "actual_WP_artifacts": 0,
+    "formal_acceptance": false,
+    "hardware_liveness": false,
+    "model_acceptance": false,
+    "new_proof_records": 0,
+    "source_refinement": false,
+    "ticket28_resolved": false,
+    "wrong_size_executed": false
+  },
+  "audit_md": {
+    "bytes": 3432,
+    "path": "/private/tmp/probata-t28-stream-refusal-final-cold-audit-v2-20261016.md",
+    "sha256": "1190a5f8068416d2917450017a97fe707d2e8cdcd14bf4d8c1ac1b3ce0b4363a"
+  },
+  "check_count": 28,
+  "collection": {
+    "cwd": "/data1/yanruj/probata-reviewed-e4cd1a6e/swdb-project",
+    "exit_code": 0,
+    "expected": [
+      "tests/test_dx100_stream_actual.py::test_actual_wp_source_partial_stream_gate[correct-size]",
+      "tests/test_dx100_stream_actual.py::test_actual_wp_source_partial_stream_gate[wrong-size]"
+    ],
+    "selected": [
+      "tests/test_dx100_stream_actual.py::test_actual_wp_source_partial_stream_gate[correct-size]",
+      "tests/test_dx100_stream_actual.py::test_actual_wp_source_partial_stream_gate[wrong-size]"
+    ]
+  },
+  "date": "2026-10-16 ET",
+  "diagnostic": {
+    "failure_stage": "catalog validation before WP",
+    "line_count": 17,
+    "reason": "terminates after post-condition, assigns or allocates",
+    "sites": [
+      {
+        "formal_half_line": 12,
+        "function": "get_tile_size",
+        "matching_log_lines": [
+          6
+        ],
+        "reason": "terminates after post-condition, assigns or allocates",
+        "site": "calls9"
+      },
+      {
+        "formal_half_line": 19,
+        "function": "maa_stream_load",
+        "matching_log_lines": [
+          7
+        ],
+        "reason": "terminates after post-condition, assigns or allocates",
+        "site": "calls21"
+      },
+      {
+        "formal_half_line": 17,
+        "function": "wait_ready",
+        "matching_log_lines": [
+          8
+        ],
+        "reason": "terminates after post-condition, assigns or allocates",
+        "site": "calls25"
+      }
+    ]
+  },
+  "errors": [],
+  "independent_checks": [
+    "exact reviewed V2reader",
+    "policy byteidentical V1V2",
+    "source e4exact",
+    "healthy passive resources",
+    "cold checks",
+    "source modules and selected scopes",
+    "92raw exactbytecount",
+    "one symlink preserved",
+    "1540consumer complete",
+    "consumer prepost hashes equal",
+    "selected464 reconstructed hashes",
+    "fixed oldreporter",
+    "runtimebothlowerers independently recomputed",
+    "collectionexact2",
+    "correctfailed wrongunexecuted",
+    "originalactual exit1 notresourcefail",
+    "diagnostic correctstage",
+    "exact refusal get_tile_size",
+    "exact refusal maa_stream_load",
+    "exact refusal wait_ready",
+    "boundary formal_acceptance",
+    "boundary model_acceptance",
+    "boundary source_refinement",
+    "boundary hardware_liveness",
+    "boundary ticket28_resolved",
+    "boundary wrong_size_executed",
+    "noactualWP/proofrecords",
+    "roothelper exact"
+  ],
+  "old_reader_refusal": {
+    "V1dispatcher_inert_argv_bug_never_executed": true,
+    "V2_fix": "typed primary dependency parser includes ordered proof_failure_classes and proof_subject_kinds; policybyteidentical",
+    "exit_code": 1,
+    "local_empty_stdout": {
+      "bytes": 0,
+      "path": "/private/tmp/probata-t28-stream-refusal-cold-root-execution-v2-20261016.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "local_stderr": {
+      "bytes": 89,
+      "path": "/private/tmp/probata-t28-stream-refusal-cold-root-execution-v2-20261016.json.stderr",
+      "sha256": "8d0dd58704be381924c71afb29af73317b801f704a898588472f11102a2c9886"
+    },
+    "peak_rss_bytes": 40239104,
+    "pure_controls_passed": 29,
+    "reader": {
+      "bytes": 17587,
+      "path": "/private/tmp/probata-t28-stream-refusal-cold-reader-v1-20261016.py",
+      "sha256": "d5a9860ecd481da74a658bbd2a1f556791cf5f695437c937dd9337a99ff190bd"
+    },
+    "remote_directory": "/data/yanruj/EvolveSWDB_runs/probata-root-t28-stream-refusal-cold-v2-20261016",
+    "root_supplied_original_remote_hashes": {
+      "audit.json": {
+        "bytes": 328,
+        "sha256": "be8a1ebc3703422477932316c5f7b5e7daa2bfa51090aafce5f267606c74ff53"
+      },
+      "command.json": {
+        "bytes": 502,
+        "sha256": "ef08b7c958152e099edc58b0323c1aec2a5cc1de260ccb3115649c4113b04986"
+      },
+      "preflight.json": {
+        "bytes": 2524,
+        "sha256": "7b3e37df63287a29ee2b7cc4de57982f9dc3119a90609776071ec3cd487f70af"
+      },
+      "resources.json": {
+        "bytes": 297,
+        "sha256": "4b4f60ebddbbfe85092168703e76ecf9196dd6ccdef4f4d24c77c4db53f5f443"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "wall_seconds": 3.487223326
+  },
+  "policy_sha256": "0e125eb5a1f129567300876bab1ddd67ff2664d97dbdd1617075f4fc08f2f4c2",
+  "preservation_manifest_location": {
+    "bytes": 787922,
+    "path": "/private/tmp/probata-t28-stream-refusal-cold-root-execution-v3-20261016.json",
+    "sha256": "aee78179ad36870e6dd62b48871b3a5dde4cd07a3d76ecf08d62fb6e5ffa03f3"
+  },
+  "preservation_summary": {
+    "consumer_Git_trees": 11,
+    "consumer_bytes": 1339016757,
+    "consumer_files": 1540,
+    "module_files": 213,
+    "raw_always_retained": true,
+    "raw_bytes": 1934253,
+    "raw_regular_files": 92,
+    "root_must_retain_source_ref_objects_before_checkout_removal": true,
+    "selected_source_inventory_sha256": "c8ec76ec890cf073f75c269a46110086fc9d7b974111ffdb60e5d855d2bf7cae",
+    "source_files": 464,
+    "symlinks": 1
+  },
+  "publication_packet": {
+    "bytes": 4916,
+    "path": "/private/tmp/probata-t28-stream-refusal-cold-packet-v2-20261016.json",
+    "sha256": "f5c72d5bfa535d6cac5c4429c28ee795e66f232e4b5d4c945b3810e8462e9802"
+  },
+  "reader_sha256": "93c847703aa49ae220238c6d7274cd325678590fe6644816969b1fcddb4d5ca9",
+  "remote_audit_directory": "/data/yanruj/EvolveSWDB_runs/probata-root-t28-stream-refusal-cold-v3-20261016",
+  "remote_audit_manifest": {
+    "audit.json": {
+      "bytes": 758111,
+      "sha256": "10526dba0a382c0cabee930265f63a892e1944a264552af8e5764d3ea1f155b3"
+    },
+    "command.json": {
+      "bytes": 502,
+      "sha256": "35de23670471afa23a3b34747a79b91d1b84207460747fca116eedc90b30cb25"
+    },
+    "preflight.json": {
+      "bytes": 2524,
+      "sha256": "ace2f46dcd439b2038e11cfe011eb61a37767ff729d61ad3959fa17ea8155038"
+    },
+    "resources.json": {
+      "bytes": 297,
+      "sha256": "7b288fa8c93e5abd8fc597c647ab637df30ee6ac4c250ed07f8a7185f029c1bd"
+    },
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "resources": {
+    "address_space_cap_bytes": 8589934592,
+    "exit_code": 0,
+    "inspection_denials": [],
+    "out_of_memory": false,
+    "peak_rss_bytes": 43806720,
+    "scope": "passive reader only; no formal tools",
+    "timed_out": false,
+    "timeout_seconds": 60,
+    "wall_seconds": 3.508544442243874,
+    "workers": 1
+  },
+  "root_dispatch_helper": {
+    "bytes": 5158,
+    "path": "/private/tmp/probata-root-t28-stream-refusal-cold-dispatch-v3-20261016.py",
+    "sha256": "5f3a1dbba4afc9ae42fdd092c4562204b7aacbf0c59f9b3d5ceced7a5a375f52"
+  },
+  "root_execution_receipt": {
+    "bytes": 787922,
+    "path": "/private/tmp/probata-t28-stream-refusal-cold-root-execution-v3-20261016.json",
+    "sha256": "aee78179ad36870e6dd62b48871b3a5dde4cd07a3d76ecf08d62fb6e5ffa03f3"
+  },
+  "source_commit": "e4cd1a6ed78e61394275af297c25557e14a2d228",
+  "status": "PASS_PREPUBLIC_REFUSAL_PRESERVATION_ONLY",
+  "test_census": {
+    "executed_calls": 1,
+    "failed_correct_size": 1,
+    "test_phases": [
+      {
+        "nodeid": "tests/test_dx100_stream_actual.py::test_actual_wp_source_partial_stream_gate[correct-size]",
+        "outcome": "passed",
+        "when": "setup"
+      },
+      {
+        "nodeid": "tests/test_dx100_stream_actual.py::test_actual_wp_source_partial_stream_gate[correct-size]",
+        "outcome": "failed",
+        "when": "call"
+      },
+      {
+        "nodeid": "tests/test_dx100_stream_actual.py::test_actual_wp_source_partial_stream_gate[correct-size]",
+        "outcome": "passed",
+        "when": "teardown"
+      }
+    ],
+    "wrong_size_executed": false
+  }
+}

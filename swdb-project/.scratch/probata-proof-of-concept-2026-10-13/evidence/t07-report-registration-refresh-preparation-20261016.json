@@ -1,0 +1,82 @@
+{
+  "date": "2026-10-16 ET",
+  "status": "prospective source-backed reporter repair; actual native/output GREEN pending root",
+  "reporter": {
+    "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/swdb/proof_report.ml",
+    "sha256": "8b84bec6a12669d877205ec60d46d149f41fa921d08b6640161b4896b9c4df16",
+    "bytes": 12925
+  },
+  "primary_sources": [
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c/kernel/kernel_services/ast_data/property.ml",
+      "sha256": "de1b4754b20782e7a372519e5cd04341594c3221bbbf29d11b9e17b161600ed9",
+      "bytes": 53089
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c/kernel/kernel_services/ast_data/property.mli",
+      "sha256": "0efc963d735bef59ab0cc2b6e75382a0c20c79e58bac87dd1e4e3eb09be6d9ed",
+      "bytes": 17642
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c/kernel/kernel_services/ast_data/property_status.ml",
+      "sha256": "b2ac8acc3644512aac671748c19a6c2e646bd19ad9a8d44e8e5f0930d580f57e",
+      "bytes": 56506
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c/kernel/kernel_services/ast_data/statuses_by_call.ml",
+      "sha256": "8e69c695b146abb8e9d68848afbf7682353c652500cc33be31144ce3640d2a90",
+      "bytes": 6109
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c/kernel/kernel_services/ast_data/cil_types.ml",
+      "sha256": "b393ac623b124dbcf79adb1725bc32f273e9e1fc1a4d61cb3cf6a68cabc6c47a",
+      "bytes": 83963
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/WpPropId.ml",
+      "sha256": "eb637a45864b07030a826d3a5657634fad3db07304bd5eb2a9d30f7dd3fcb0b5",
+      "bytes": 39344
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/WpPropId.mli",
+      "sha256": "5f0f5e89d47e946f3d8c3e94001bfe808e61e1eae45bd863bec77b652e3bd12f",
+      "bytes": 10429
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/cfgAnnot.ml",
+      "sha256": "b28d95a0f032d23b6bb56908fc30c19fecf8a265d6d0536ebfe9703d68e55602",
+      "bytes": 23525
+    }
+  ],
+  "genuine_actual_RED": {
+    "path": "/private/tmp/probata-t07-backend-export-partial-cold-checkreceipt-v2-20261016.json",
+    "sha256": "752ba66ca734f55aaa32139ea12f7ee9ce671a3874ac377f71599030e92af3c1",
+    "bytes": 876
+  },
+  "new_doc": {
+    "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/REPORT-REGISTRATION-REFRESH-20261016.md",
+    "sha256": "324e3cc3ec37547bc433e59e7f94eaaa99b4d2912844a7e90c750695c120c646",
+    "bytes": 4469
+  },
+  "exact_first_unknown_property_variant_confirmed": false,
+  "new_call_instance_support": "Only actual live Wpo instance; registered requires origin; exact same-AST direct callee/caller; existing transposed predicate; empty raw dependencies. No unregistered status lookup.",
+  "new_Git_source_replaces_1395_actual": false,
+  "actual_or_compiler_launched_by_preparer": false,
+  "proof_acceptance": false,
+  "source_Typed_init_or_lifetime_qualified": false,
+  "missing_store_rerun_for_reader_repair_permitted": false,
+  "public_controls": [
+    {
+      "path": "/private/tmp/probata-t07-report-registration-refresh-public-final-20261016.log",
+      "sha256": "01e97e7e001694366151ea862373a76ec0ed8fb365f3b30197481da2282bbe71",
+      "bytes": 99
+    },
+    {
+      "path": "/private/tmp/probata-t07-report-registration-refresh-public-final-20261016.log.summary.json",
+      "sha256": "b654c4292cca5b0aea0d72bc3a938e9e59305cd009c8580b8eba38f92e3959c0",
+      "bytes": 1977
+    }
+  ],
+  "public_controls_scope": "51 public reader-data regressions on final source; no OCaml serializer execution. Genuine actual RED retained; native compile/output GREEN pending root.",
+  "admitted_origin_refused": true
+}

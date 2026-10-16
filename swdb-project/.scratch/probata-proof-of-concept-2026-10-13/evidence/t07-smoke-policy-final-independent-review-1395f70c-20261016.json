@@ -1,0 +1,72 @@
+{
+  "date_et": "2026-10-16",
+  "source_commit": "1395f70cea7a58b5eae5984f7b238777fe7343ef",
+  "policy_commit": "dc7fc8a9",
+  "disposition": "PASS prospective source implementation only",
+  "reporter_sha256": "22919544d02fc3fdc628ee44984852787043e61f82ed8613074e21751e9d1d6d",
+  "review_md_sha256": "910dd99f79d1570ef30e527886448a382bad82a22fb5e1736122609f4aaa6f38",
+  "receipt_reference_instances": 11,
+  "pins": [
+    {
+      "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/swdb/proof_setup.py",
+      "bytes": 47687,
+      "sha256": "256dd13eb4129403a18552e25dfd1ef7eef6c3fba306bb7066f62ce1e3d0b563"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/swdb/proof_report.ml",
+      "bytes": 7873,
+      "sha256": "22919544d02fc3fdc628ee44984852787043e61f82ed8613074e21751e9d1d6d"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/tests/test_proof_report_smoke.py",
+      "bytes": 2828,
+      "sha256": "cb29de8941379ee2f4baa05305ec351c0549ad96e1f4e886ed554d26a1090d14"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/tests/test_proof_report_closure.py",
+      "bytes": 5047,
+      "sha256": "3d38eba4a05f2e71397ad95f9d292b5d492b9b8105c68360a2c8d20efdbb3eea"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/tests/test_proof_setup.py",
+      "bytes": 26386,
+      "sha256": "c9b3c52bae4a71a7b976e77a061912b948626a4a834a5b53fedae0f985505ff5"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/tests/test_heap_model_view.py",
+      "bytes": 17234,
+      "sha256": "f1c52c33306101ea97b1caa1f5afcf1003fac357005ddc9bd8002081cd41776e"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/tests/test_vector_reallocation_view.py",
+      "bytes": 6677,
+      "sha256": "c1bf9534bab352a6e81ae7e5c55abb669d63459d75584a00880d995746217526"
+    },
+    {
+      "path": "/private/tmp/probata-t07-smoke-observation-policy-merged-public-20261016.log",
+      "bytes": 100,
+      "sha256": "bf3026ff37e50b14b2c1391c61ed4c2c7115d8b8cfb67471357b5d0dba6d356c"
+    },
+    {
+      "path": "/private/tmp/probata-t07-smoke-observation-policy-merged-public-20261016.log.summary.json",
+      "bytes": 4186,
+      "sha256": "869fe2f2dd1071a0c88e463d57395b9884013478b54a22501f0c7a0f4cdc0922"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t07-smoke-observation-policy-preparation-20261016.json",
+      "bytes": 8113,
+      "sha256": "2d0a0547cc340966b328bc6b1ee8392c07d8fc89bbb2c9aca5e512b73ea2de21"
+    },
+    {
+      "path": "/private/tmp/probata-t07-native-report-compile-v2-20261016/result.json",
+      "bytes": 685,
+      "sha256": "4a7693caabdba2f6fbb813a87ac1b547a2729c08f6adc64d62b33d6c6b9433c0"
+    }
+  ],
+  "retained_actual_smoke_shape_rows_checked": 33,
+  "retained_actual_smoke_shape_disagreements": 0,
+  "native_compile_attributed_to_root": true,
+  "new_actual_jobs_or_probes_or_ssh_by_reviewer": false,
+  "historical_record_promotion": false,
+  "blockers": []
+}
