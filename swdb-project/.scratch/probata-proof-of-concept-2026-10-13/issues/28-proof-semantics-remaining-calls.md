@@ -181,5 +181,26 @@ status **claimed**. [Exact evidence](../evidence/t28-size-state-controls-2026101
 
 Mathematical rank type gate — 2026-10-16 01:03 ET: exact9704c54b passed all three admitted syntax/type checks; independent cold review rehashed83 physical files with zero mismatches. Guard0.669s/46.3125MiB, no resource/cleanup failure, source clean. This accepts syntax/types only, with no VC, recursive termination, positive/negative proof, hardware fairness or source correspondence claim. Next admission is read-only expanded Why3 configuration metadata before a separately reviewed complete VC portfolio; existing partial_prover sections expand automatically, so no alternate configuration is proposed. [Actual receipt](../evidence/t28-rank-type-actual-20261016.json), [cold review](../evidence/probata-t28-rank-type-cold-review-v2-20261016.md).
 
-
 Expanded Why3 metadata — 2026-10-16 01:23 ET: four admitted read-only calls each exited0, preserving existing configuration and all ten expanded prover variants/recursive driver closures. The original entry/guard exited1 after collection because its RC reader did not support raw multiline strategy strings. No metadata rerun: a separate pure parser with25 passing controls and483-check independent cold audit accepted the captured metadata observations, with zero errors; original failure remains immutable. No solver/version/VC/proof claim. [Actual and correction](../evidence/t28-rank-config-actual-and-reader-correction-20261016.json), [cold audit](../evidence/probata-t28-rank-config-cold-audit-v1-20261016.md). A separately reviewed whole-module rank VC recipe is next.
+
+## Pure source-selector public vertical — 2026-10-16 ET
+
+The first source-bound public workflow is implemented at source checkpoint
+`1ddedf6085078bb78f446558365fc747f2c75fc1`: the real-header
+`get_data_type<uint32_t>()` specialization is checked against canonical source
+identity, its unsigned-char return ABI, immutable header bytes, and a constant
+LLVM result after freezing the original main-TU preprocessing. A closed,
+fixture-only stateless 0.2 entry inventories all 26 names/27 declarations and
+explicitly refuses every other call. The retained 0.1 entry is unchanged.
+
+The final composed compiler/scripted batch passed 68 controls and skipped two
+actual formal cases (175.47 seconds, peak 3.26 GB, no OOM or timeout). Genuine
+RED controls and repaired source-context, model-contract, dependency-closure and
+nonempty prelaunch-witness boundaries are retained. See
+`evidence/t28-selector-first-vertical-controls-20261016.{json,md}` and
+`prototype/28-proof-semantics/selector-first-gate.md`. These controls establish
+public plumbing and compiler/refusal behavior only; no actual proof or full
+interface acceptance is claimed. The unchanged-source positive/wrong-enum
+coordinator-only actual runner is committed, awaiting independent review and
+root admission. A stateful size/readiness vertical follows this first gate.
+All whole-ticket acceptance boxes remain open.

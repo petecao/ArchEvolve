@@ -764,6 +764,10 @@ class WpAdapter:
         entry_id = semantics["id"]
         data = self.library.get(entry_id) or {}
         wp = data.get("wp") or {}
+        from swdb.dx100_source_selector import pure_layout
+        if pure_layout(data):
+            semantics["unit_requires"], semantics["unit_ensures"] = [], []
+            return texts, [proof_semantics.wp_prelude(self.library, entry_id, semantics["calls"], self.defines)]
         locations = proof_semantics.wp_locations(self.library, entry_id, self.defines)
         joined = ", ".join(locations)
         rewritten = []
@@ -990,27 +994,32 @@ class WpAdapter:
             fields.setdefault("settings", {})["proof_semantics"] = {
                 **context["semantics_settings"], "unit_requires": semantics.get("unit_requires", []),
                 "unit_ensures": semantics.get("unit_ensures", [])}
-            assumptions.append({"kind": "proof_semantics", "reference": {"id": semantics["id"],
-                                                                         "sha256": semantics["sha256"]},
-                                "sentence": f"The DX100 behaves as its proof semantics {semantics['id']} says: each "
-                                            "command's values as if it finished at issue, hazards as its rules state."})
-            assumptions.append({"kind": "assumed_clause", "reference": {"id": semantics["id"],
-                                                                        "sha256": semantics["sha256"]},
-                "sentence": "The WP model-domain preconditions hold: no DX100 command is outstanding at entry, "
-                            "the fixed modeled device storage is initialized (dx_state_initialized), "
-                            "and CPU pointer parameters occupy objects separate from tile data, tile sizes, and "
-                            "register values. The exact generated clauses are recorded in "
-                            "settings.proof_semantics.unit_requires; store-frame witnesses and selected-index "
-                            "bounds and initialized caller-memory reads remain checked proof obligations. "
-                            "Device-call initialization preservation is a trusted semantics contract, "
-                            "pending ticket 29's independent contract/body agreement checks."})
-            reduction = Path(self.library.root) / "rocq" / "probata" / "Reduction.v"
-            if not reduction.is_file():
-                reduction = paths.HOME / "library" / "rocq" / "probata" / "Reduction.v"
-            assumptions.append({"kind": "reduction", "reference": {"id": "rocq.probata.dx100_reduction",
-                                                                   "sha256": artifacts.file_hash(reduction)},
-                                "sentence": "The DX100 reduction lemma (Reduction.v, statement only; proof: ticket "
-                                            "43): a hazard-free at-issue run matches every timing gem5 allows."})
+            from swdb.dx100_source_selector import pure_layout, PURE_STATEMENT
+            if pure_layout(self.library.get(semantics['id'])):
+                assumptions.append({"kind": "proof_semantics", "reference": {"id": semantics["id"],
+                    "sha256": semantics["sha256"]}, "sentence": PURE_STATEMENT})
+            else:
+                assumptions.append({"kind": "proof_semantics", "reference": {"id": semantics["id"],
+                                                                             "sha256": semantics["sha256"]},
+                                    "sentence": f"The DX100 behaves as its proof semantics {semantics['id']} says: each "
+                                                "command's values as if it finished at issue, hazards as its rules state."})
+                assumptions.append({"kind": "assumed_clause", "reference": {"id": semantics["id"],
+                                                                            "sha256": semantics["sha256"]},
+                    "sentence": "The WP model-domain preconditions hold: no DX100 command is outstanding at entry, "
+                                "the fixed modeled device storage is initialized (dx_state_initialized), "
+                                "and CPU pointer parameters occupy objects separate from tile data, tile sizes, and "
+                                "register values. The exact generated clauses are recorded in "
+                                "settings.proof_semantics.unit_requires; store-frame witnesses and selected-index "
+                                "bounds and initialized caller-memory reads remain checked proof obligations. "
+                                "Device-call initialization preservation is a trusted semantics contract, "
+                                "pending ticket 29's independent contract/body agreement checks."})
+                reduction = Path(self.library.root) / "rocq" / "probata" / "Reduction.v"
+                if not reduction.is_file():
+                    reduction = paths.HOME / "library" / "rocq" / "probata" / "Reduction.v"
+                assumptions.append({"kind": "reduction", "reference": {"id": "rocq.probata.dx100_reduction",
+                                                                       "sha256": artifacts.file_hash(reduction)},
+                                    "sentence": "The DX100 reduction lemma (Reduction.v, statement only; proof: ticket "
+                                                "43): a hazard-free at-issue run matches every timing gem5 allows."})
         return Verdict(verdict=verdict, bounds={"threads": 1, "input_size": "unbounded"}, assumptions=assumptions,
                        failure_class=failure_class, tools=tuple(tools), peak_rss_bytes=context.get("peak"),
                        record_fields=fields, pins=pins, reports=tuple(context["reports"]))

@@ -1,0 +1,119 @@
+{
+  "created": "2026-10-16 ET",
+  "reviewed_parent": "fcf6aca533e8a339d825c584833c4012a50bf0a9",
+  "change": "Test-only actual gate predicate now requires all smoke statuses valid, rejects vacuous_pass and checks all positive ordinary goals valid.",
+  "test": {
+    "path": "/private/tmp/probata-resume-t28/swdb-project/tests/test_dx100_selector_actual.py",
+    "bytes": 3632,
+    "sha256": "d6f85ea30130e35827ad901eaec94017a481d202e70b06dee5b80c0b1c637967"
+  },
+  "unchanged_production": [
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/swdb/c_lowering.py",
+      "bytes": 162244,
+      "sha256": "c4f5ca2ac29d452f94498bd01098665739bebeb4d89073227ae83e8264ba421b"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/swdb/dx100_interface.py",
+      "bytes": 8098,
+      "sha256": "6e88200412cada2678d3f65f442d0cf11e39fecdb744fa490e6397e0e0d37cdf"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/swdb/dx100_source_selector.py",
+      "bytes": 13018,
+      "sha256": "4c788c11a80c1478323229bba12997995dcad30699dc78d7085b52a14fc09190"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/swdb/proof_semantics.py",
+      "bytes": 29594,
+      "sha256": "648950b102863a492747a3a3eb9e59037fa63bb84bd1494d9eb9c9792e078e50"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/swdb/proof_setup.py",
+      "bytes": 42866,
+      "sha256": "70e37d49f5627e845ba7ba298bb180f82cc4353f06e3598edbaf35eca5836b83"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/swdb/wp_adapter.py",
+      "bytes": 79550,
+      "sha256": "c2c84aae333c955ed8a6d329d90365e082bc5a6eb32bdf944108389d373a6e44"
+    }
+  ],
+  "profiles": {
+    "red": {
+      "resources": {
+        "exit_code": 1,
+        "peak_rss_bytes": 69959680,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 0.49556879204465076,
+        "cpu_seconds": 0.46241899999999997
+      },
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-selector-actual-acceptance-guard-red/command.json",
+          "bytes": 364,
+          "sha256": "280966293122898a21107e89e31fb150a21612eea6235740de4b6f9869d9d0e1"
+        },
+        {
+          "path": "/private/tmp/probata-t28-selector-actual-acceptance-guard-red/resources.json",
+          "bytes": 176,
+          "sha256": "778c332fe1df57e92b1d17d6ce67974ec7b24fbe40c391de723d5e1f1b45e736"
+        },
+        {
+          "path": "/private/tmp/probata-t28-selector-actual-acceptance-guard-red/junit.xml",
+          "bytes": 2229,
+          "sha256": "1a77252b9d4d2f9c2a2a6824730c70f2e9dbf52ace036b2fe349ada5be40b14b"
+        },
+        {
+          "path": "/private/tmp/probata-t28-selector-actual-acceptance-guard-red/control.log",
+          "bytes": 2152,
+          "sha256": "a13126893a02fb9d50acd933ea9cd52a50aad3a68ecafa6ffdb485702a2fe7fd"
+        }
+      ]
+    },
+    "green": {
+      "resources": {
+        "exit_code": 0,
+        "peak_rss_bytes": 68943872,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 0.4376917500048876,
+        "cpu_seconds": 0.412655
+      },
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-selector-actual-acceptance-guard-green/command.json",
+          "bytes": 336,
+          "sha256": "cb5f582b78b6fa9b0a59c02c01cec5e59321ec698df3cc42e06f4369ad376443"
+        },
+        {
+          "path": "/private/tmp/probata-t28-selector-actual-acceptance-guard-green/resources.json",
+          "bytes": 164,
+          "sha256": "b6404fc409a5de02978c775f3adda2cee2eade0458ed5b5e0ae3c12deb08e53a"
+        },
+        {
+          "path": "/private/tmp/probata-t28-selector-actual-acceptance-guard-green/junit.xml",
+          "bytes": 1601,
+          "sha256": "c051940f5dc23f39f93a68ff5f179753c6f788dcbbfb8ebad968c7a9941e261f"
+        },
+        {
+          "path": "/private/tmp/probata-t28-selector-actual-acceptance-guard-green/control.log",
+          "bytes": 109,
+          "sha256": "2d0c1f8ab4e4b2c33880b76d1865b95754b49b55776592844863a3e01624992d"
+        }
+      ]
+    }
+  },
+  "counts": {
+    "red_failed": 2,
+    "green_passed": 4,
+    "actual_skipped": 2
+  },
+  "boundaries": [
+    "Metadata-only predicate controls; no compiler or actual verifier was launched.",
+    "The original68pass/2skip compiler/stand-in packet stays immutable at its original source/test pins.",
+    "Only actual-test bytes change; installed source/checker identity remains unchanged from the reviewed parent.",
+    "A wrong-enum actual result must retain ordinary open ensures while every smoke succeeds; vacuity is never acceptance."
+  ]
+}
