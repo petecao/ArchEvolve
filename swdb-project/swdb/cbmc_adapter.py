@@ -140,6 +140,12 @@ class CbmcAdapter:
 
     @classmethod
     def from_args(cls, args, script, *, library, contract, method):
+        # This fixture binds original software-counter source and a WP-only
+        # contract route. The legacy CBMC model/assumptions are not admitted.
+        from swdb import dx100_allocation_source
+        if library is not None and any(dx100_allocation_source.allocation_layout(data)
+                                       for data in proof_semantics.current(library).values()):
+            raise AdapterError("the software allocator fixture is admitted only through its WP route")
         if getattr(args, "whole_function", None):          # ticket 61: whole-function equivalence
             from swdb.cbmc_equivalence import EquivalenceAdapter
             return EquivalenceAdapter.from_args(args, script, library=library, contract=contract, method=method)
