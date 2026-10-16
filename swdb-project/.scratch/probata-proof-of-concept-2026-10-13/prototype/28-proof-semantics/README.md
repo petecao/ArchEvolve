@@ -125,3 +125,15 @@ No actual formal tool ran. Existing typedef-bearing C may change to preserve its
 source type; historical producer records stay scoped to their original freeze.
 Semantics0.1 library bytes remain unchanged. This does not implement the new
 typed DX100 state/value/history model or close ticket28.
+
+Deferred-state prototype — 2026-10-15 ET: the first generated C model APIs now
+capture immutable history reads and producer versions, defer index selection,
+skip inactive value operands, distinguish command completion from known output
+values, and check global ownership, physical tile pairs, explicit waits, region
+stalls, nondeterministic readiness and full physical-line CPU hazards. Final22
+native controls pass with retained actual C dependencies and compiler/runtime
+receipts; no actual formal tool or public proof acceptance is claimed.
+[Design and remaining integration obligations](deferred-state-design.md),
+[RED/GREEN evidence](../../evidence/t28-deferred-state-initial-controls-20261015.json).
+Deferred stores/RMW, complete call/type wrappers and checked source mappings
+remain incomplete. No new current version is installed; ticket28 stays claimed.

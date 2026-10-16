@@ -1,0 +1,332 @@
+"""2026-10-15 ET. Synthetic executable model API; no actual verifier evidence."""
+import importlib.util
+import functools
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+import shlex
+
+import pytest
+
+from swdb import c_lowering
+
+
+ROOT = Path(__file__).parents[1] / '.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics'
+
+
+def file_pin(path):
+    path = Path(path)
+    return {'path': str(path.resolve()), 'bytes': path.stat().st_size,
+            'sha256': hashlib.sha256(path.read_bytes()).hexdigest()}
+
+
+@functools.lru_cache
+def compiler_context(tool):
+    from swdb.stdlib_provenance import runtime_identity
+    return runtime_identity(tool)
+
+
+def run_model(tmp_path, body, *, exit_code=0, prelude='', commands=False):
+    spec = importlib.util.spec_from_file_location('dx_deferred_state', ROOT / 'deferred_state.py')
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    header = module.render_header()
+    if commands:
+        spec = importlib.util.spec_from_file_location('dx_command_state', ROOT / 'command_state.py')
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        header = module.render_header(header)
+    unit = tmp_path / 'model.c'
+    unit.write_text('#include <assert.h>\n#include <stdint.h>\n#include <stdlib.h>\n#include <stdio.h>\n'
+                    '#define DXM_CHECK(c,r) do { if (!(c)) { fputs(r,stderr); exit(42); } } while (0)\n'
+                    'static unsigned chosen;\n'
+                    'static unsigned choose_value(unsigned n) { assert(chosen < n); return chosen; }\n'
+                    '#define DXM_CHOOSE(n) choose_value(n)\n'
+                    + prelude + '\n' + header + '\n' + body)
+    compiler = c_lowering.locate()
+    assert not compiler.missing, compiler.missing
+    exe = tmp_path / 'model.bin'
+    command = [*compiler.command, '-x', 'c', '-std=c11', '-O1', '-Wall', '-Werror',
+               '-Wno-unused-function', '-fsanitize=address,undefined', '-MD', '-MF', str(tmp_path / 'model.d'),
+               str(unit), '-o', str(exe)]
+    built = subprocess.run(command,
+                           capture_output=True, text=True, timeout=60)
+    assert built.returncode == 0, built.stderr
+    ran = subprocess.run([str(exe)], capture_output=True, text=True, timeout=30,
+                         env={**os.environ, 'ASAN_OPTIONS': 'detect_leaks=0', 'UBSAN_OPTIONS': 'halt_on_error=1'})
+    dependencies = (tmp_path / 'model.d').read_text().replace('\\\n', '').split(':', 1)[1]
+    (tmp_path / 'native-receipt.json').write_text(json.dumps({
+        'compile_command': command, 'compiler_version': compiler.version, 'runtime_context': compiler_context(compiler),
+        'compile_returncode': built.returncode, 'compile_stdout': built.stdout, 'compile_stderr': built.stderr,
+        'native_command': [str(exe)], 'native_returncode': ran.returncode,
+        'native_stdout': ran.stdout, 'native_stderr': ran.stderr,
+        'expected_exit_code': exit_code, 'unit': file_pin(unit), 'executable': file_pin(exe),
+        'headers': [file_pin(path) for path in sorted(set(shlex.split(dependencies)))]}, indent=2) + '\n')
+    assert ran.returncode == exit_code, ran.stdout + ran.stderr
+    return ran
+
+
+def test_gather_interval_values_freeze_once_at_cover_and_never_include_preissue_values(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  for (unsigned pick=0; pick<2; ++pick) {
+    dxm_reset(); chosen=pick;
+    dxm_cpu_write(1, 7, 99);
+    dxm_cpu_write(1, 7, 11);
+    unsigned read=dxm_issue_read(0, 7);
+    dxm_cpu_write(1, 7, 12);
+    dxm_cover(read);
+    uint64_t observed=dxm_value(read);
+    assert(observed == (pick == 0 ? 11 : 12));
+    dxm_cpu_write(1, 7, 13);
+    assert(dxm_value(read) == observed);
+  }
+  return 0;
+}
+''')
+
+
+def test_global_tile_ownership_rejects_another_thread_and_requires_both_8byte_halves(tmp_path):
+    result = run_model(tmp_path, r'''
+int main(void) {
+  dxm_reset();
+  dxm_claim_tile(0,2,4);
+  dxm_use_tile(0,2,4);
+  dxm_claim_tile(1,3,4);
+  dxm_use_tile(1,3,4);
+  dxm_use_tile(0,2,8);
+  return 0;
+}
+''', exit_code=42)
+    assert result.stderr == 'tile-ownership'
+
+
+def test_pending_8byte_destination_blocks_cpu_read_of_its_second_half(tmp_path):
+    result = run_model(tmp_path, r'''
+int main(void) {
+  dxc_reset(); dxm_claim_tile(0,2,8);
+  unsigned root=dxm_constant(1);
+  unsigned command=dxc_prepare(0,-1,0,0,4,0,dxc_tile_mask(2,8),0,0);
+  dxc_bind(command,root);
+  dxc_cpu_tile_access(0,3,4,0);
+  return 0;
+}
+''', exit_code=42, commands=True)
+    assert result.stderr == 'pending-tile-write'
+
+
+@pytest.mark.parametrize('bytes,wait_tile,exit_code', [(8,2,0), (8,3,42), (4,3,0)])
+def test_explicit_start_tile_wait_is_global_and_never_invents_a_second_half_wait(tmp_path, bytes, wait_tile, exit_code):
+    result = run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset(); dxm_claim_tile(0,2,8);
+  unsigned root=dxm_constant(1);
+  unsigned command=dxc_prepare(0,-1,0,0,4,0,dxc_tile_mask(2,{bytes}),0,0);
+  dxc_bind(command,root);
+  dxc_wait_tile({wait_tile});
+  dxc_cpu_tile_access(0,3,4,0);
+  return 0;
+}}
+''', exit_code=exit_code, commands=True)
+    assert result.stderr == ('pending-tile-write' if exit_code else '')
+
+
+@pytest.mark.parametrize('target,exit_code', [(2,0),(3,42)])
+def test_new_explicit_destination_stalls_prior_start_ids_but_never_aliases_an_8byte_half(tmp_path, target, exit_code):
+    result = run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset(); dxm_claim_tile(0,2,8);
+  unsigned root=dxm_constant(1);
+  unsigned first=dxc_prepare(0,-1,0,0,4,0,dxc_tile_mask(2,8),0,0);
+  dxc_bind(first,root);
+  unsigned next=dxm_constant(7);
+  unsigned second=dxc_prepare(0,-1,0,0,((uint64_t)1<<{target}),0,dxc_tile_mask({target},4),0,0);
+  dxc_bind(second,next);
+  dxc_cpu_tile_access(0,3,4,0);
+  return 0;
+}}
+''', exit_code=exit_code, commands=True)
+    assert result.stderr == ('pending-tile-write' if exit_code else '')
+
+
+@pytest.mark.parametrize('access,region,exit_code', [(2,0,0), (1,0,42), (2,1,42)])
+def test_region_stall_covers_cross_thread_conflicts_only_on_the_same_assigned_region(tmp_path, access, region, exit_code):
+    result = run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset(); chosen=0;
+  dxm_claim_tile(0,2,4); dxm_claim_tile(1,3,4);
+  dxm_cpu_write(1,7,11);
+  unsigned first=dxc_prepare(0,0,1,0,4,0,4,28,32);
+  unsigned read=dxm_issue_read(0,7);
+  dxc_bind(first,read);
+  unsigned root=dxm_constant(1);
+  unsigned second=dxc_prepare(1,{region},{access},8,0,8,0,36,40);
+  dxc_bind(second,root);
+  assert(dxm_value(read) == 11);
+  return 0;
+}}
+''', exit_code=exit_code, commands=True)
+    assert result.stderr == ('value-before-cover' if exit_code else '')
+
+
+@pytest.mark.parametrize('thread', [0,1])
+def test_store_hazards_cover_the_full_physical_line_for_cpu_reads_from_either_thread(tmp_path, thread):
+    result = run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset();
+  struct dxc_span line=dxc_store_span(64,4,64);
+  assert(line.begin == 64 && line.end == 128);
+  unsigned root=dxm_constant(9);
+  unsigned command=dxc_prepare(0,0,2,0,0,0,0,line.begin,line.end);
+  dxc_bind(command,root);
+  dxc_cpu_memory_access({thread},96,100,0);
+  return 0;
+}}
+''', exit_code=42, commands=True)
+    assert result.stderr == 'store-footprint-cpu-access'
+
+
+def test_read_read_overlap_and_other_thread_cas_keep_the_actual_interval_values(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  for (unsigned pick=0; pick<2; ++pick) {
+    dxc_reset(); chosen=pick; dxm_claim_tile(0,2,4);
+    dxm_cpu_write(1,7,1);
+    unsigned command=dxc_prepare(0,0,1,0,4,0,4,28,32);
+    unsigned read=dxm_issue_read(0,7);
+    dxc_bind(command,read);
+    assert(dxc_cpu_read(0,7,28,32) == 1);
+    uint64_t expected=1;
+    assert(dxc_cpu_cas(1,7,28,32,&expected,2) == 1);
+    dxc_wait_tile(2);
+    assert(dxm_value(read) == (pick == 0 ? 1 : 2));
+  }
+  return 0;
+}
+''', commands=True)
+
+
+@pytest.mark.parametrize('answer,exit_code', [(0,42),(1,0)])
+def test_ready_query_can_return_either_answer_and_only_one_covers(tmp_path, answer, exit_code):
+    result = run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset(); chosen={answer}; dxm_claim_tile(0,2,4);
+  unsigned root=dxm_constant(1);
+  unsigned command=dxc_prepare(0,-1,0,0,4,0,4,0,0);
+  dxc_bind(command,root);
+  assert(dxc_get_tile_ready(2) == {answer});
+  dxc_cpu_tile_access(0,2,4,0);
+  return 0;
+}}
+''', exit_code=exit_code, commands=True)
+    assert result.stderr == ('pending-tile-write' if exit_code else '')
+
+
+def test_the_issuing_thread_cannot_write_an_unfinished_gather_cell(tmp_path):
+    result = run_model(tmp_path, r'''
+int main(void) {
+  dxm_reset(); dxm_cpu_write(0,7,11);
+  dxm_issue_read(0,7);
+  dxm_cpu_write(0,7,12);
+  return 0;
+}
+''', exit_code=42)
+    assert result.stderr == 'same-thread-read-footprint-write'
+
+
+def test_a_dependent_command_captures_the_producer_version_without_settling_it(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  for (unsigned pick=0; pick<2; ++pick) {
+    dxm_reset(); chosen=pick;
+    dxm_cpu_write(1,7,1);
+    unsigned producer=dxm_issue_read(0,7);
+    unsigned ten=dxm_constant(10);
+    unsigned consumer=dxm_issue_binary(0,0,0,producer,ten);
+    dxm_cpu_write(1,7,2);
+    dxm_cover(consumer);
+    uint64_t saved=dxm_value(consumer);
+    assert(saved == (pick == 0 ? 11 : 12));
+    dxm_cpu_write(1,7,3);
+    dxm_cover(consumer);
+    assert(dxm_value(consumer) == saved);
+    assert(dxm_value(producer) == (pick == 0 ? 1 : 2));
+  }
+  return 0;
+}
+''', prelude=r'''
+static uint64_t test_add(unsigned dtype, unsigned op, uint64_t a, uint64_t b) {
+  assert(dtype == 0 && op == 0); return (uint32_t)a + (uint32_t)b;
+}
+#define DXM_EVAL(dtype,op,a,b) test_add(dtype,op,a,b)
+''')
+
+
+def test_unresolved_indices_capture_issue_memory_and_real_writes_without_placeholder_dereferences(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  for (unsigned index_pick=0; index_pick<2; ++index_pick) {
+    for (unsigned data_pick=0; data_pick<2; ++data_pick) {
+      dxm_reset(); choice_cursor=0; choices[0]=index_pick; choices[1]=data_pick;
+      dxm_cpu_write(1,5,0);
+      dxm_cpu_write(1,0,11); dxm_cpu_write(1,1,21);
+      unsigned index=dxm_issue_read(0,5);
+      unsigned gathered=dxm_issue_indexed_read(0,index,0,2);
+      dxm_cpu_write(1,5,1);
+      dxm_cpu_write(1,0,12); dxm_cpu_write(1,1,22);
+      dxm_cover(gathered);
+      uint64_t expected=index_pick == 0 ? (data_pick == 0 ? 11 : 12) : (data_pick == 0 ? 21 : 22);
+      assert(dxm_value(gathered) == expected);
+      dxm_cpu_write(1,0,99); dxm_cpu_write(1,1,99);
+      assert(dxm_value(gathered) == expected);
+    }
+  }
+  return 0;
+}
+''', prelude=r'''
+static unsigned choices[2],choice_cursor;
+static unsigned sequence_choice(unsigned n) {
+  assert(choice_cursor < 2); unsigned pick=choices[choice_cursor++]; assert(pick<n); return pick;
+}
+#undef DXM_CHOOSE
+#define DXM_CHOOSE(n) sequence_choice(n)
+''')
+
+
+@pytest.mark.parametrize('condition', [0,1])
+def test_deferred_conditions_do_not_read_or_check_inactive_memory_operands(tmp_path, condition):
+    run_model(tmp_path, f'''
+int main(void) {{
+  dxm_reset(); chosen=0;
+  dxm_cpu_write(1,0,9);
+  unsigned condition=dxm_constant({condition});
+  unsigned index=dxm_constant({0 if condition else 99});
+  unsigned loaded=dxm_issue_indexed_read(0,index,0,2);
+  unsigned preserved=dxm_constant(44);
+  unsigned result=dxm_select(0,condition,loaded,preserved);
+  dxm_cover(result);
+  assert(dxm_value(result) == {9 if condition else 44});
+  return 0;
+}}
+''')
+
+
+def test_failed_cas_expected_and_desired_values_do_not_enter_gather_history(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  for (unsigned pick=0; pick<2; ++pick) {
+    dxm_reset(); chosen=pick;
+    dxm_cpu_write(1,7,1);
+    unsigned read=dxm_issue_read(0,7);
+    uint64_t expected=99;
+    assert(dxm_cpu_cas(1,7,&expected,77) == 0);
+    assert(expected == 1);
+    assert(dxm_cpu_cas(1,7,&expected,2) == 1);
+    dxm_cover(read);
+    assert(dxm_value(read) == (pick == 0 ? 1 : 2));
+  }
+  return 0;
+}
+''')
