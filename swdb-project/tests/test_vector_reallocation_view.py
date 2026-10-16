@@ -49,10 +49,10 @@ def test_complete_synthetic_qualified_success_persists_schema_and_all_current_ta
  for prop,kind,smoke in specs:
   goal="typed_"+prop
   rows.append({"goal":goal,"property":prop,"function":function,"line":34,"smoke":smoke,
-    "passed":True,"verdict":"valid","proved":1,
+    "passed":True,"verdict":"unknown" if smoke else "valid","proved":1,
     "provers":[{"prover":"CVC5:1.2.1","time":0,"success":1}]})
   generated.append({"goal":goal,"property":prop,"function":function,"line":34,"smoke":smoke,
-    "passed":True,"targets":[],"results":["valid"]})
+    "passed":True,"targets":[],"results":["unknown" if smoke else "valid"]})
   properties.append({"property":prop,"function":function,"kind":kind,"line":34,
     "extern":False,"dependencies":[],"origin":None,"generated_smoke_failure":False,
     "description":"synthetic qualified workflow only"})
