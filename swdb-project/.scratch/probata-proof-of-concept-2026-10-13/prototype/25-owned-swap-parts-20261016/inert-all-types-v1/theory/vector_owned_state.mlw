@@ -1,0 +1,52 @@
+(* 2026-10-16 ET. A versioned ownership registry, never a source ownership axiom.
+   Receiver and backing keys are mathematical allocation identities. The source
+   correspondence must establish registration and a complete owner set separately.
+   A borrowed pointer is not an owner registration. No element value is observed.
+*)
+module Owners
+  use int.Int
+  use map.Map
+
+  type state = { active : map int bool; backing : map int int }
+
+  function empty (dummy:int) : state =
+    { active = (fun _ -> False); backing = (fun _ -> 0) }
+
+  predicate active_owner (s:state) (r:int) = s.active[r] = True
+  function buffer (s:state) (r:int) : int = s.backing[r]
+
+  predicate exclusive (s:state) =
+    forall r,q:int. s.active[r] = True /\ s.active[q] = True /\
+      s.backing[r] <> 0 /\ s.backing[r] = s.backing[q] -> r = q
+
+  predicate valid (s:state) (frontier:int) =
+    0 < frontier /\ exclusive s /\
+    (forall r:int. s.active[r] = True ->
+      0 < r < frontier /\ 0 <= s.backing[r] < frontier) /\
+    (forall r,q:int. s.active[r] = True /\ s.active[q] = True /\
+      s.backing[r] <> 0 -> s.backing[r] <> q)
+
+  function begin_owner (s:state) (r:int) : state =
+    { active = set s.active r True; backing = set s.backing r 0 }
+
+  function bind (s:state) (r b:int) : state =
+    { s with backing = set s.backing r b }
+
+  (* Source move construction reads the source struct before clearing it.
+     An equal receiver would clear itself, so the source route must exclude it.
+     The destination is a fresh registration with no previous owned backing. *)
+  function move (s:state) (destination source:int) : state =
+    { s with backing = set (set s.backing destination s.backing[source]) source 0 }
+
+  (* The actual three struct assignments exchange exactly these bindings.
+     The self case has the same registry observation; physical accesses and the
+     automatic temporary are still separate source safety/frame obligations. *)
+  function swap (s:state) (left right:int) : state =
+    if left = right then s else
+      { s with backing = set (set s.backing left s.backing[right]) right s.backing[left] }
+
+  (* Retirement is only a registry transition. It neither performs nor proves
+     Heap.release; that lifetime correspondence is an explicit remaining duty. *)
+  function retire (s:state) (r:int) : state =
+    { active = set s.active r False; backing = set s.backing r 0 }
+end

@@ -1,0 +1,203 @@
+{
+  "all_declared_physical_rows_verified": 62,
+  "all_original_nine_reference_files_exact": true,
+  "all_thirteen_independent_clause_checks": [
+    {
+      "artifact_sha256": "de7506a9928a31a9290695b14c6244b3758ffe5a10b8334e1799e42072c6ee37",
+      "complete_original_premise_exact": true,
+      "fresh_observers": [],
+      "id": "swap.owner_correspondence.heap.frontier",
+      "source_definition_clause": "Heap.well_formed clause1 plus fresh_id=h.next",
+      "statement_sha256": "bfdf12d7aa60dc709e50b384d38d285857cc4f69514f590996ddd61e7dabfc7a"
+    },
+    {
+      "artifact_sha256": "577021bbdc5bce95e7861daaa2d80e72bd822c4431997a101cd79cf616bb42ca",
+      "complete_original_premise_exact": true,
+      "fresh_observers": [
+        "observed"
+      ],
+      "id": "swap.owner_correspondence.heap.issued",
+      "source_definition_clause": "Heap.well_formed issued range clause2",
+      "statement_sha256": "a96d5ab5f614c5136b21f542aa204e0699a9994f3f894c6ff793eccecc9fc14e"
+    },
+    {
+      "artifact_sha256": "806766b3af5538e84ae61799caad3f42f3819104436737965a6b2687f10b1f59",
+      "complete_original_premise_exact": true,
+      "fresh_observers": [
+        "observed"
+      ],
+      "id": "swap.owner_correspondence.heap.live",
+      "source_definition_clause": "Heap.well_formed live clause3 plus extent/address aliases",
+      "statement_sha256": "71a229f14fa09d552ef4923fb466a4b4a8699f3164ac9f352b2ce54608d165d7"
+    },
+    {
+      "artifact_sha256": "0be5ee6a9366980694a0d3cb3a4c6380114a6767742bec2a4787c5d3dc36485c",
+      "complete_original_premise_exact": true,
+      "fresh_observers": [
+        "observed",
+        "other"
+      ],
+      "id": "swap.owner_correspondence.heap.separated",
+      "source_definition_clause": "Heap.well_formed distinct live clause4",
+      "statement_sha256": "b33c9b2ca5956192a9f485c5f81aa377a467272f8984aef48f3b6d51fa16d73f"
+    },
+    {
+      "artifact_sha256": "80565a0bf3742b825898da1622becf44d36d5afb4ff3f76a8a619a59f7916cfa",
+      "complete_original_premise_exact": true,
+      "fresh_observers": [],
+      "id": "swap.owner_correspondence.owners.frontier",
+      "source_definition_clause": "Owners.valid positive frontier clause",
+      "statement_sha256": "bfdf12d7aa60dc709e50b384d38d285857cc4f69514f590996ddd61e7dabfc7a"
+    },
+    {
+      "artifact_sha256": "d1d52a61951853876e90ae0f102505874762c35b37cfcdddea8c701603956e5e",
+      "complete_original_premise_exact": true,
+      "fresh_observers": [
+        "observed",
+        "other"
+      ],
+      "id": "swap.owner_correspondence.owners.exclusive",
+      "source_definition_clause": "Owners.valid exclusive expanded through active_owner/buffer definitions",
+      "statement_sha256": "982fed6804c778907b566de3e269ad06095abde22e60b41615618343b841663c"
+    },
+    {
+      "artifact_sha256": "272b0399efb6111291e45b7676bfd67a9bc59047ead196f7821a07442a5c95a2",
+      "complete_original_premise_exact": true,
+      "fresh_observers": [
+        "observed"
+      ],
+      "id": "swap.owner_correspondence.owners.ranges",
+      "source_definition_clause": "Owners.valid active receiver/backing range clause",
+      "statement_sha256": "a514bc37134aaa088ad8066fe20eef2b5f20b6a6f7f16e4f6312ce1a4ae4623b"
+    },
+    {
+      "artifact_sha256": "a574c9ce37a28084f810ff6873af317d7da540108e6e3ce759e217af02843ede",
+      "complete_original_premise_exact": true,
+      "fresh_observers": [
+        "observed",
+        "other"
+      ],
+      "id": "swap.owner_correspondence.owners.disjoint",
+      "source_definition_clause": "Owners.valid backing-vs-receiver disjoint clause",
+      "statement_sha256": "1bf29ba0f4f2dee8892d1abb41e5c28fbd5f612ead2e7d2518b118b982d59fb6"
+    },
+    {
+      "artifact_sha256": "8a067f5a46397ea59dc26e9c78b180aab6f9c42972a79d7a0fd730fc15637ea3",
+      "complete_original_premise_exact": true,
+      "fresh_observers": [
+        "observed"
+      ],
+      "id": "swap.owner_correspondence.receiver.0",
+      "source_definition_clause": "world receiver conjunct; receiver field offset0",
+      "statement_sha256": "842a98dd5f7971ea894bbf0ac8089b8f331ef92dcfebc67e6d121c86acdf23eb"
+    },
+    {
+      "artifact_sha256": "d84cf02c807d5939732a6bcb84847c32434ea426b3bc7c2d980e9d35e258b97c",
+      "complete_original_premise_exact": true,
+      "fresh_observers": [
+        "observed"
+      ],
+      "id": "swap.owner_correspondence.receiver.8",
+      "source_definition_clause": "world receiver conjunct; receiver field offset8",
+      "statement_sha256": "4fd0ee48a736032789210c020c1ebc16b67fad484c3a864481073c2b98b9180c"
+    },
+    {
+      "artifact_sha256": "517271da87f5f3baa7c105b1ae2638474583181c86d63745883c8b3364893938",
+      "complete_original_premise_exact": true,
+      "fresh_observers": [
+        "observed"
+      ],
+      "id": "swap.owner_correspondence.receiver.16",
+      "source_definition_clause": "world receiver conjunct; receiver field offset16",
+      "statement_sha256": "d3069344b356457c341bfdbc4fb60e565254938338a950fe784596bf1a549feb"
+    },
+    {
+      "artifact_sha256": "9f45f81235e57d8332a430c2256327234dbddbc2cb5dff8adabf00d385486bb3",
+      "complete_original_premise_exact": true,
+      "fresh_observers": [
+        "observed"
+      ],
+      "id": "swap.owner_correspondence.header.ready",
+      "source_definition_clause": "world active-owner header conjunct; unchanged existential and exact is_ready alias",
+      "statement_sha256": "e0868bc856eeeaeb54d75278dd575da37ebb5bc43c109f7a3417f9fa68502337"
+    },
+    {
+      "artifact_sha256": "8386dd2b7892338b5ff76efe9a4ce1ac4d3138dab13f1465efe6e4ad9b575891",
+      "complete_original_premise_exact": true,
+      "fresh_observers": [
+        "observed"
+      ],
+      "id": "swap.owner_correspondence.freeable.buffer",
+      "source_definition_clause": "world active positive backing freeability conjunct",
+      "statement_sha256": "28400a619b867b91885c0c304610855501448c120ea3562c4b3ce4c0a0533216"
+    }
+  ],
+  "base_nonmanifest_nonobligation_files_exact_original": 19,
+  "boundaries": {
+    "check_launch_remains_unsupported": true,
+    "complete_task_hypothesis_consistency_and_foundation_review_required_for_actual_evidence": true,
+    "original_three_solver_timeout_preserved": true,
+    "source_Heap_Typed_body_caller_default_or_public_record_admission": false,
+    "thirteen_native_or_mathematical_proofs": false
+  },
+  "canonical_files": 42,
+  "canonical_manifest": {
+    "bytes": 51510,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/manifest.json",
+    "sha256": "520a5da81000b2e84cede1f3d6485a0edd7e877ffeb74ae96936580ca59909b5"
+  },
+  "classification": "PASS_SWAP13_EXACT_CONCLUSION_DECOMPOSITION_SOURCE_SPEC_ONLY",
+  "complete_original_target_and_premise_exact": true,
+  "date": "2026-10-16 ET",
+  "findings": [],
+  "physical_definition_bindings_reconciled": [
+    "active_owner",
+    "buffer",
+    "bytes",
+    "exclusive",
+    "fresh_id",
+    "is_ready",
+    "numerical_address",
+    "receiver",
+    "valid",
+    "well_formed",
+    "world"
+  ],
+  "preparation": {
+    "bytes": 25723,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-swap13-source-preparation-v2-20261016.json",
+    "sha256": "bef60d97092bad75096c2ab0983e54ed537a940121afd367c9780dbbe8196a13"
+  },
+  "reconstruction_reasoning": [
+    "Write h_prime=OwnedEffects.swap(h,l,r,a) and s_prime=Owners.swap(owners,l,r). Four heap leaves are precisely all conjuncts of Heap.well_formed(h_prime), using fresh_id=h.next, bytes=extent and numerical_address=address.",
+    "Four Owners leaves are precisely Owners.valid(s_prime,Heap.fresh_id(h_prime)): positive frontier; expanded exclusive; universal active receiver/backing ranges; universal backing-vs-receiver exclusion. active_owner and buffer are exact source aliases. Duplicate positive frontier is harmless and preserves each original source conjunct.",
+    "The three receiver leaves reconstruct the exact three typed_writes fields at offsets0/8/16 under each active owner. The header leaf keeps the same existential size/capacity witnesses and full header predicate under active owner and ready; it does not assume a witness or expand away any bounds/value/initializedness conjunct.",
+    "The freeable leaf retains the exact universal active positive-backing freeable(h_prime,buffer(s_prime,observed),0) clause. Combining heap/Owners/receiver/header/freeable groups reconstructs every conjunct of the unchanged physical world definition.",
+    "All thirteen keep the exact original antecedent including world, both active/readiness/header facts and automatic_available(h,24,8,a). Only fresh universal observed/other indices are distributed; size/capacity are fresh existential names. Since none occurs in the original premise, implication/conjunction/universal distribution is valid without changing input assumptions. No quantifier is exchanged with the retained header existential.",
+    "Canonical imports contain only the pinned Heap/Owners/OwnedEffects definitions and standard Int/Map foundations; these three custom modules add no axiom/lemma/goal. Eight prior successes and the original timed-out compound target are byte-retained reference/evidence dependencies, never sibling theorem assumptions or launched targets.",
+    "The scalar payload types and original/layout C files remain byte-identical across all four registered domains. This conditional mathematical decomposition does not establish C/C++ layout, original-body effect interpretation, physical allocation freshness/lifetime, Heap/Typed embedding or caller admission."
+  ],
+  "reviewer": "lane_coordination independent Spec review",
+  "source_inputs": [
+    {
+      "bytes": 11992,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_owned_swap_parts.py",
+      "sha256": "99783303b973a29b55d9f6f9e562295a41248699062982c105ac0a97e18a4f6b"
+    },
+    {
+      "bytes": 4112,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_owned_swap_parts.py",
+      "sha256": "86722c8db91ca6fa9964f1f19c65c34c0753290c346bc2f4fe1c85cad963d235"
+    }
+  ],
+  "unchanged_eight_dependency_ids_exact": true,
+  "verification": {
+    "actual_or_remote_query_by_reviewer": false,
+    "author_retained_zero_child_attempts": true,
+    "compiler_native_verifier_solver_or_project_imports_by_reviewer": false,
+    "retained_public_pure_controls": 2,
+    "reviewer_reran_author_controls": false,
+    "shared_files_edited_by_reviewer": false,
+    "source_AST_hash_and_manual_definition_review_only": true
+  }
+}

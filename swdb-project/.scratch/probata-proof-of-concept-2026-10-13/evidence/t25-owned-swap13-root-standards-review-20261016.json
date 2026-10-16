@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-16 ET",
+  "execution_or_math_source_Typed_caller_or_ticket_acceptance": false,
+  "findings": [],
+  "preparation": {
+    "bytes": 25723,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-swap13-source-preparation-v2-20261016.json",
+    "sha256": "bef60d97092bad75096c2ab0983e54ed537a940121afd367c9780dbbe8196a13"
+  },
+  "review": {
+    "all9original_references_preserved_eight_remaining_independent_duties": true,
+    "check_launch_remains_unsupported": true,
+    "complete_original_antecedent_and_quantifiers_preserved_in_every_leaf": true,
+    "conjunction_coverage": "Heap4+Owners4+receiver3+header1+freeable1=13",
+    "desired_conclusion_axioms_or_successful_sibling_premises_added": false,
+    "exact_physical_definition_alias_slices_verified": 11,
+    "fresh_indices_no_capture_and_original_header_existential_preserved": true,
+    "read_complete11992Bmodule_and4112Btests": true,
+    "source_and_canonical_pins_verified": 53,
+    "tamper_membership_symlink_weakerpremise_source_and_missingclause_controls_pass": true,
+    "tests_passed": 2
+  },
+  "root_controls": {
+    "bytes": 98,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-swap13-root-standards-controls-20261016.txt",
+    "sha256": "b6b77ff64ca00bbcfc5e84bb13f88fd1b8111c7c655601816929747f67ce0580"
+  },
+  "source": {
+    "bytes": 11992,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_owned_swap_parts.py",
+    "sha256": "99783303b973a29b55d9f6f9e562295a41248699062982c105ac0a97e18a4f6b"
+  },
+  "tests": {
+    "bytes": 4112,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_owned_swap_parts.py",
+    "sha256": "86722c8db91ca6fa9964f1f19c65c34c0753290c346bc2f4fe1c85cad963d235"
+  },
+  "verdict": "PASS_SOURCE_ONLY"
+}
