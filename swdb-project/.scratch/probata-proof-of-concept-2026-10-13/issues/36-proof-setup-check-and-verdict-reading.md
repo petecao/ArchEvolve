@@ -855,3 +855,15 @@ absent; unrelated process visibility remains incomplete. The vanished process
 No exhaustive historical exec inventory exists. Current-source parser integration
 and all actual verifier acceptance require the coordinator's reviewed admission;
 this checkpoint does not retroactively admit earlier parser calls.
+
+### Bare compiler command control — 2026-10-15 ET
+
+Before dispatching the affected Linux setup profile, source review found a test
+stand-in portability bug: its `execv` could not find bare `clang++` through PATH.
+The stand-in now uses `execvp`; production source and checker identities are
+unchanged. A public `swdb lower` control with a compiler selected only by its
+PATH name is red before the repair and green afterward (1 passed in1.15s).
+Both guarded commands explicitly disable Frama-C and use worker B. No actual
+solver or producer is touched. Setup now expects129 selected controls; root's
+admitted collection gate must confirm the count. Exact evidence is retained in
+`evidence/t36-bare-compiler-command-20261015.json`.
