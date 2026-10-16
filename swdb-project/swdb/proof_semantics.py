@@ -194,8 +194,8 @@ def check(library, entry_id, data, error):
         error("calls", "each call is listed once")
     from swdb import dx100_interface
     malformed_instances = not dx100_interface.check_instances(data, error)
-    from swdb import dx100_source_selector, dx100_stream_source, dx100_allocation_source, dx100_register_source
-    if not dx100_stream_source.stream_layout(data) and not dx100_allocation_source.allocation_layout(data) and not dx100_register_source.register_layout(data):
+    from swdb import dx100_source_selector, dx100_stream_source, dx100_allocation_source, dx100_register_source, dx100_initialized_register_source
+    if not dx100_stream_source.stream_layout(data) and not dx100_allocation_source.allocation_layout(data) and not dx100_register_source.register_layout(data) and not dx100_initialized_register_source.initialized_register_layout(data):
         malformed_instances = not dx100_source_selector.check(library, data, error) or malformed_instances
     dx100_interface.check(library, data, error)
     found = data.get("inventory")
@@ -217,7 +217,8 @@ def check(library, entry_id, data, error):
     malformed_layout = not dx100_stream_source.check(library, data, texts, error)
     malformed_layout = not dx100_allocation_source.check(library, data, texts, error) or malformed_layout
     malformed_layout = not dx100_register_source.check(library, data, texts, error) or malformed_layout
-    if not dx100_stream_source.stream_layout(data) and not dx100_allocation_source.allocation_layout(data) and not dx100_register_source.register_layout(data):
+    malformed_layout = not dx100_initialized_register_source.check(library, data, texts, error) or malformed_layout
+    if not dx100_stream_source.stream_layout(data) and not dx100_allocation_source.allocation_layout(data) and not dx100_register_source.register_layout(data) and not dx100_initialized_register_source.initialized_register_layout(data):
         malformed_layout = not dx100_size_source.check(library, data, texts, error) or malformed_layout
         if not dx100_size_source.size_layout(data):
             malformed_layout = not dx100_source_selector.check_layout(data, texts, error) or malformed_layout
@@ -235,10 +236,11 @@ def acsl_source(data, texts, rows=None, *, constants=None):
     from swdb.dx100_stream_source import stream_layout
     from swdb.dx100_allocation_source import allocation_layout
     from swdb.dx100_register_source import register_layout
+    from swdb.dx100_initialized_register_source import initialized_register_layout
     parts.append("#include <stdint.h>")
     state, _objects = _model_state(data, texts["model.state"], constants or data.get("constants") or {},
                                    constant_table=True)
-    if pure_layout(data) or size_layout(data) or stream_layout(data) or allocation_layout(data) or register_layout(data):
+    if pure_layout(data) or size_layout(data) or stream_layout(data) or allocation_layout(data) or register_layout(data) or initialized_register_layout(data):
         parts.append(state)  # Closed plain C state; no empty/nested ACSL ghost or logic block.
     else:
         parts += ["/*@ ghost"]
@@ -361,7 +363,8 @@ def _files(library, data, error):
     from swdb.dx100_stream_source import stream_layout
     from swdb.dx100_allocation_source import allocation_layout
     from swdb.dx100_register_source import register_layout
-    if not ghost and not pure_layout(data) and not size_layout(data) and not stream_layout(data) and not allocation_layout(data) and not register_layout(data):
+    from swdb.dx100_initialized_register_source import initialized_register_layout
+    if not ghost and not pure_layout(data) and not size_layout(data) and not stream_layout(data) and not allocation_layout(data) and not register_layout(data) and not initialized_register_layout(data):
         error("ghost.acsl", "the ghost file declares no ghost array")
     for key in ("model.state", "model.c"):
         for name, _decl in ghost:
@@ -444,8 +447,8 @@ def lowering_options(library):
                  "refused_calls": {row["call"] for data in current(library).values()
                                    for row in data.get("calls", []) if row.get("supported") is False}}
     if instances:
-        from swdb import dx100_source_selector, dx100_stream_source, dx100_allocation_source, dx100_register_source
-        instances = {name: [{**v, 'definition': (dx100_register_source.policy if isinstance(v['definition'],dict) and v['definition'].get('kind')==dx100_register_source.KIND else dx100_allocation_source.policy if isinstance(v['definition'],dict) and v['definition'].get('kind')==dx100_allocation_source.KIND else dx100_stream_source.policy if isinstance(v['definition'],dict) and v['definition'].get('kind')==dx100_stream_source.KIND else dx100_source_selector.policy)(library, v['definition'])}
+        from swdb import dx100_source_selector, dx100_stream_source, dx100_allocation_source, dx100_register_source, dx100_initialized_register_source
+        instances = {name: [{**v, 'definition': (dx100_initialized_register_source.policy if isinstance(v['definition'],dict) and v['definition'].get('kind')==dx100_initialized_register_source.KIND else dx100_register_source.policy if isinstance(v['definition'],dict) and v['definition'].get('kind')==dx100_register_source.KIND else dx100_allocation_source.policy if isinstance(v['definition'],dict) and v['definition'].get('kind')==dx100_allocation_source.KIND else dx100_stream_source.policy if isinstance(v['definition'],dict) and v['definition'].get('kind')==dx100_stream_source.KIND else dx100_source_selector.policy)(library, v['definition'])}
                             if 'definition' in v else v for v in variants]
                      for name, variants in instances.items()}
         semantics['template_instances'] = instances
@@ -460,6 +463,10 @@ def lowering_options(library):
     from swdb import dx100_allocation_source
     semantics['source_definitions'].update({r['call']:dx100_allocation_source.policy(library,r['definition'])
         for data in current(library).values() if dx100_allocation_source.allocation_layout(data)
+        for r in data.get('calls',[]) if r.get('supported') is True and 'definition' in r})
+    from swdb import dx100_initialized_register_source
+    semantics['source_definitions'].update({r['call']:dx100_initialized_register_source.policy(library,r['definition'])
+        for data in current(library).values() if dx100_initialized_register_source.initialized_register_layout(data)
         for r in data.get('calls',[]) if r.get('supported') is True and 'definition' in r})
     return {"summaries": dict(covered), "semantics": semantics}
 
@@ -489,7 +496,8 @@ def _model_state(data, text, constants, *, constant_table=False):
     from swdb.dx100_stream_source import stream_layout
     from swdb.dx100_allocation_source import allocation_layout
     from swdb.dx100_register_source import register_layout
-    if pure_layout(data) or size_layout(data) or stream_layout(data) or allocation_layout(data) or register_layout(data):
+    from swdb.dx100_initialized_register_source import initialized_register_layout
+    if pure_layout(data) or size_layout(data) or stream_layout(data) or allocation_layout(data) or register_layout(data) or initialized_register_layout(data):
         return text, ()
     return _bounded_state(text, constants, constant_table=constant_table)
 
@@ -588,7 +596,8 @@ def state_draws(library, entry_id, defines=()):
     from swdb.dx100_stream_source import stream_layout
     from swdb.dx100_allocation_source import allocation_layout
     from swdb.dx100_register_source import register_layout
-    if pure_layout(data) or size_layout(data) or stream_layout(data) or allocation_layout(data) or register_layout(data):
+    from swdb.dx100_initialized_register_source import initialized_register_layout
+    if pure_layout(data) or size_layout(data) or stream_layout(data) or allocation_layout(data) or register_layout(data) or initialized_register_layout(data):
         return []
     constants = _constants(data, defines)
     return [f"dx_tile_data[{t}][{k}]" for t in range(int(constants["DX_NT"])) for k in range(int(constants["DX_TS"]))]

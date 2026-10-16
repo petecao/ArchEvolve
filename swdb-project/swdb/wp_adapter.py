@@ -417,6 +417,11 @@ class WpAdapter:
                 context['semantics_settings']['source_definitions'] = dx100_register_source.bindings(lowering)
                 context['semantics_settings']['termination_policy'] = 'conditional normal return; no hardware liveness'
                 context['semantics_settings']['source_refinement'] = 'owned source/model contract-body TCB duty pending59; compiler observations not a theorem'
+            from swdb import dx100_initialized_register_source
+            if dx100_initialized_register_source.bindings(lowering):
+                context['semantics_settings']['source_definitions'] = dx100_initialized_register_source.bindings(lowering)
+                context['semantics_settings']['termination_policy'] = 'conditional normal return; no hardware liveness'
+                context['semantics_settings']['source_refinement'] = 'owned initialized source/model contract-body and disjoint-address TCB duties pending59; compiler observations not a theorem'
             from swdb import dx100_allocation_source
             if dx100_allocation_source.bindings(lowering):
                 context['semantics_settings']['source_definitions'] = dx100_allocation_source.bindings(lowering)
@@ -839,6 +844,26 @@ class WpAdapter:
         from swdb import dx100_stream_source
         from swdb import dx100_allocation_source
         from swdb import dx100_register_source
+        from swdb import dx100_initialized_register_source
+        if dx100_initialized_register_source.initialized_register_layout(data):
+            try:
+                policy=dx100_initialized_register_source.unit_policy(self.library,self.library.get(self.contract)or{})
+            except dx100_initialized_register_source.Refused as exc:
+                raise AdapterError('partial initialized register admission: '+str(exc)) from None
+            if self.method.id!=dx100_initialized_register_source.PARTIAL_METHOD:
+                raise AdapterError('partial initialized register admission requires its original partial method')
+            frames=re.findall(r'\bassigns\s+([^;]+);','\n'.join(texts))
+            locations=[location.strip()for location in frames[0].split(',')]if len(frames)==1 else []
+            if len(locations)!=4 or {re.sub(r'\s+','',location)for location in locations}!={'SPD_count','REG_count','region_count','__swdb_dx_reg_words[0..1]'}:
+                raise AdapterError('initialized register requires its unchanged explicit three-counter and two-cell original assigns frame')
+            semantics['original_assigns_frame']=locations
+            semantics['unit_correctness_policy']=policy
+            semantics['unit_requires'],semantics['unit_ensures']=[],[]
+            from swdb.acsl_subset import tokens
+            original=tokens('\n'.join(sorted(texts,key=lambda t:0 if t.startswith('requires')else 1)))
+            at=next((i for i,t in enumerate(original)if t.kind=='id'and t.text in ('assigns','ensures')),len(original))
+            partial=[' '.join(t.text for t in original[:at])+r' terminates \false; '+' '.join(t.text for t in original[at:])]
+            return partial,[proof_semantics.wp_prelude(self.library,entry_id,semantics['calls'],self.defines)]
         if dx100_register_source.register_layout(data):
             try:
                 policy=dx100_register_source.unit_policy(self.library,self.library.get(self.contract)or{})
@@ -1129,7 +1154,10 @@ class WpAdapter:
             from swdb import dx100_stream_source
             from swdb import dx100_allocation_source
             from swdb import dx100_register_source
-            if dx100_register_source.register_layout(self.library.get(semantics['id'])):
+            from swdb import dx100_initialized_register_source
+            if dx100_initialized_register_source.initialized_register_layout(self.library.get(semantics['id'])):
+                assumptions.append({'kind':'proof_semantics','reference':{'id':semantics['id'],'sha256':semantics['sha256']},'sentence':dx100_initialized_register_source.STATEMENT})
+            elif dx100_register_source.register_layout(self.library.get(semantics['id'])):
                 assumptions.append({'kind':'proof_semantics','reference':{'id':semantics['id'],'sha256':semantics['sha256']},'sentence':dx100_register_source.STATEMENT})
             elif dx100_allocation_source.allocation_layout(self.library.get(semantics['id'])):
                 assumptions.append({'kind':'proof_semantics','reference':{'id':semantics['id'],'sha256':semantics['sha256']},'sentence':dx100_allocation_source.STATEMENT})
