@@ -1,0 +1,29 @@
+{
+  "verdict": "PASS_STATIC_AST_DIAGNOSIS_ONLY",
+  "packet": {
+    "path": "/private/tmp/probata-t28-allocation-linux-ast-packet-v1-20261016.json",
+    "sha256": "cca6a097fe630e9edcf5a61737a40fd37439bcec200448dbf25beba639300d81"
+  },
+  "entry_sha256": "dbd9282a4c229d06845346c534fcc649833e1554bb2e2fea06ee968b7338dd5a",
+  "source_commit": "2e2dc451ca457bfc5a7a7cb977d672bd1de0983b",
+  "source_pins_verified_Git_blobs": 478,
+  "compiler_preflight_and_components_AST_equal_reviewed_allocation_entry": true,
+  "expected_source_and_Linux_components_equal_reviewed_allocation_entry": true,
+  "findings": [],
+  "scope": [
+    "Exact retained canonical failed trust.cc and declaration stub; same project/compiler/includes/standard/fopenmp preprocessing and production probe.",
+    "One original preprocessor/dependency capture plus five syntax-only AST filters: init_MAA,get_new_tile,get_new_reg,trust_fixture,__assert.",
+    "Select exactly8assertion subtrees for2families*2unsignedtypes*2assertions using pinned source offsets and production parser helpers; no cross-process AST ID identity claim.",
+    "Call exact unchanged pure _bodies; require original unbound-effects refusal for successful diagnosis capture. Other refusal preserved, not silently repaired.",
+    "No LLVM emission/link/native/Frama/WP/Why3/prover or test execution in capture recipe.",
+    "All478sourcepins and clean exactGit source checked before/after, dependency/originalinput/runtime identities stable.",
+    "Fresh resolved disjoint empty output; explicit --root-execute;600swhole/720souter/8GiB/oneworker,90spercompiler;64MiBraw postcheck. Root must supply live watchdog and storage-budget enforcement."
+  ],
+  "not_claimed": [
+    "Source/model correctness or repair",
+    "Allocator pair acceptance/refutation",
+    "Cross-process AST declaration pointer equivalence",
+    "Live host/lane/disk preflight"
+  ],
+  "reviewer_execution": "Only passive local text/AST/JSON/hash/Gitblob checks; no project imports/compiler/runtime probes/controls/profile/SSH/job."
+}

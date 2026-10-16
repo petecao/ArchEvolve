@@ -1728,3 +1728,8 @@ Cell1payload initializedness has nontrivial first/final snapshots, emptyresults/
 ### 2026-10-16 06:39 ET — single-activation source preparation integrated
 
 [Independent review](../evidence/t07-single-activation-independent-source-review-0137631c-20261016.md) PASS exact0137631c sourcegate:material lqueue declaration first/direct in one captured parallel body, outside loops/conditionals; direct terminal flush on exact same object.393physicalrefs/3newsourceblobs/44unchangedmodelGitblobs verified. Real selected-TU repeated-allocation and conditional-flush REDs are distinct from compiler-excluded earlyreturn and initial launcher-path error. Retained35public/5AST controls pass; no rerun by integration. Runtime threads1/reentrancy/allocator/lifetime/InitSINIT/source/TD/count all remain unqualified; no actual source/prooffacts or hints added.
+
+
+## 2026-10-16 08:05 ET scoped cold checkpoint
+
+Root accepts complete changed-source20Typed-helper discharge only:260ordinaryValid/37healthy nonvalid smokes, exact297/428graph. See [root decision](../evidence/t07-full20-helper-scoped-root-decision-v1-20261016.md) and [independent cold reconciliation](../evidence/t07-full20-merger-independent-cold-review-v1-20261016.md). Constructor-domain/copy-start/span obligations have new source-bound Valid results; old7930partial and interrupted socket attempt remain immutable. Declared27Extern/fourfamilies and unsupportedalignment stay explicit. Source/privatearrayallocation/Init/lifetime/thread1/Graph/fullTD/count remain open; ticket stays claimed. [Combined evidence](../evidence/probata-frontier-cold-checkpoint-20261016-0805.md).

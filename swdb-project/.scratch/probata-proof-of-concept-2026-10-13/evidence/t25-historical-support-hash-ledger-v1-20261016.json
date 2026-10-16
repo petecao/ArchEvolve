@@ -1,0 +1,536 @@
+{
+  "created": "2026-10-16 ET",
+  "source_snapshot": {
+    "path": "/private/tmp/probata-t25-representative-cold-snapshot-reviewer-v2-20261015.json",
+    "sha256": "437d95eb1046a06a606e1f7ea886628d0869fbae59f96d7da4f72aa7eb58e2b9"
+  },
+  "prior_primary_review": {
+    "path": "/private/tmp/probata-t25-representative-task-closure-and-v5-review-v2-20261015.json",
+    "sha256": "d7ba6dec176d971086fe5ca4a7341f39af93fee946d6279f3d2bb959e1bd024d"
+  },
+  "tasks": [
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-wp-representative-v2/lemma/prover-files/typed/check_lemma_t25_control_ctor_premises_feasible_Why3_Alt_Ergo_2_6_4.psmt2",
+      "task_text_sha256": "15fc8a0372eec9f63e8720962f3aaa5e901abbc4b9a09cce87d83d99f8d85530",
+      "assertions": [
+        {
+          "comment_label": "CompatOrderMult",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "integer/real ordered algebra",
+          "body_sha256": "3076bc3f8d7485f553d2b0e382697d0424d26dca7ded0dea396c78f142f19463"
+        },
+        {
+          "comment_label": "Abs_le",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs",
+          "body_sha256": "0c363d3d6b94ab0460b36d16b61d2c9353fb6d2f82695bc4637d7184ac6edc34"
+        },
+        {
+          "comment_label": "Abs_le",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs",
+          "body_sha256": "ae18950f2236d5fd2e5aa1b445e800db9c86fb53dff06fbb9a60dee3a4d0e52c"
+        },
+        {
+          "comment_label": "Abs_le",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs",
+          "body_sha256": "9cf357ff89bfce98187e00c32b11c8f366a32c5fd210ea875690238c3f03b293"
+        },
+        {
+          "comment_label": "Abs_pos",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs",
+          "body_sha256": "d83d59933cb8428fc118e396ac88d4b946da1e38c8442d3d51ad2853881701c2"
+        },
+        {
+          "comment_label": "Div_mod",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision",
+          "body_sha256": "3b91d4d3fd3ee8b435876ad46c558b8170bea759937396edd9251e0e85c9d8ae"
+        },
+        {
+          "comment_label": "Div_bound",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision",
+          "body_sha256": "4ffe57766ac7158e9bf22d49c2b6912e04ebd41c33149305cd1fd23fac56611a"
+        },
+        {
+          "comment_label": "Div_bound",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision",
+          "body_sha256": "9dda58f417232ee21aa0f6eb3f2a06786a9bc76e80ae3e7a02baf300b3a74b5b"
+        },
+        {
+          "comment_label": "Mod_bound",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision",
+          "body_sha256": "230dac86f15e25f054f86acd1c634df7bfa14be5171dbf396701d518e32873b2"
+        },
+        {
+          "comment_label": "Mod_bound",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision",
+          "body_sha256": "e0fcaa13183bd7133b0a8bb910509bc040c4486ac0710a67ff365fb38a3306f5"
+        },
+        {
+          "comment_label": "Div_sign_pos",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision",
+          "body_sha256": "4ffe57766ac7158e9bf22d49c2b6912e04ebd41c33149305cd1fd23fac56611a"
+        },
+        {
+          "comment_label": "Div_sign_neg",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision",
+          "body_sha256": "a1dfed6d389be5a4dab9ecc490efbd14e26af33d143a92ba9f52ed15098e33fc"
+        },
+        {
+          "comment_label": "Mod_sign_pos",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision",
+          "body_sha256": "d2b030072e2e3631d5f96fbdec4a6a16d91053b067f82caff0c43e2434f9d75b"
+        },
+        {
+          "comment_label": "Mod_sign_neg",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision",
+          "body_sha256": "5224d38dacf79571be4ade6de5e5b401266cf89925615c14bfb48391489f70ad"
+        },
+        {
+          "comment_label": "Rounds_toward_zero",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision",
+          "body_sha256": "a2040454bce97f74d227cd239fc13ce62a686ed18398870f9e745eb3b4e69893"
+        },
+        {
+          "comment_label": "Div_1",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision",
+          "body_sha256": "3f8db6925daa96931e8403b27e09722f50246f506060f57d7f1d628e0e756419"
+        },
+        {
+          "comment_label": "Mod_1",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision",
+          "body_sha256": "e8e9d90e3921f5c2eb9080962f083d57b45ade790b114130b5d1f967823ac255"
+        },
+        {
+          "comment_label": "Div_inf",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision",
+          "body_sha256": "a5cf980bdcd3e0e9a1684f60f33fc384a03aa30fcc42463f801a6423f1dc4a64"
+        },
+        {
+          "comment_label": "Mod_inf",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision",
+          "body_sha256": "14e5a1d4743372c20da40f718aa6c59a3a29d21b29c075b161cbf7be0b525777"
+        },
+        {
+          "comment_label": "Div_mult",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision",
+          "body_sha256": "85c607d4a3ded15667c39e11ecf7f13402f7ecd70c42542c1f6072cf6dc4ea12"
+        },
+        {
+          "comment_label": "Mod_mult",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision",
+          "body_sha256": "68e28b32268321dbcc63c814cca5150ab655adf5656fc3121b93a0761bc58874"
+        },
+        {
+          "comment_label": "CompatOrderMult",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "integer/real ordered algebra",
+          "body_sha256": "9b78960d1ed583ce26a1f6cbaf956a5753dfbbff448f3e1d26a90b7e1b854db8"
+        },
+        {
+          "comment_label": "c_euclidian",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw",
+          "body_sha256": "58e1862d880068ce87e2fedb81a486f6858dd276c358e8c47045b680718794fb"
+        },
+        {
+          "comment_label": "cmod_remainder",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw",
+          "body_sha256": "4522f5d152877beda0a24ff172adcbe65457c924eae516daa054aa8bc6865b73"
+        },
+        {
+          "comment_label": "cmod_remainder",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw",
+          "body_sha256": "6caa6bc49e66c2c555aa2daf5b5455b199a88c5494a3937ac6aa31e31a6d96d6"
+        },
+        {
+          "comment_label": "cmod_remainder",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw",
+          "body_sha256": "b4fc4ac5ec69834965592f4a8a6fa40e6e8039c5249e74ee687d3a98a5e80035"
+        },
+        {
+          "comment_label": "cmod_remainder",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw",
+          "body_sha256": "e833deb13f611bf1d05aa7024d431400eae6ed2121ca9e27ebadf8616d1a189b"
+        },
+        {
+          "comment_label": "cmod_remainder",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw",
+          "body_sha256": "512da087aea287397b02298cbcb5d5f14a44d259881ff232fc4b643605977aaa"
+        },
+        {
+          "comment_label": "cmod_remainder",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw",
+          "body_sha256": "2519083ff7eae4b41036ac0ed69933cc7111ff707235caa3b76b9fb6b20295c1"
+        },
+        {
+          "comment_label": "cmod_remainder",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw",
+          "body_sha256": "dfc6a8665385ea7fc932eb7d43531861a7df141139b3bd7af3729660e6162cd2"
+        },
+        {
+          "comment_label": "cmod_remainder",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw",
+          "body_sha256": "1e788d34e70c45a93c5624e6f5499bb880bbc09f3ce78960c5a29aaf8a1ec526"
+        },
+        {
+          "comment_label": "cdiv_neutral",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw",
+          "body_sha256": "68587350e4436a612440ab8e05fc309620c421c8d2672a47407c4617fd44c563"
+        },
+        {
+          "comment_label": "cdiv_inv",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw",
+          "body_sha256": "39fdb0caf203dd0fb8bc5d392736d4596d73fc06bfbe23baf7ae38a8d4b80e2a"
+        },
+        {
+          "comment_label": "cdiv_closed_remainder",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw",
+          "body_sha256": "451777247802989db373cc5c07812ce8f33f87f54ed883fb43e9f9ea720e0749"
+        },
+        {
+          "comment_label": "match_cell_Integer",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver",
+          "body_sha256": "f76641cfe67719d9202d73ba93c813bbd56e58fad1389802f5cbadd4b363467b"
+        },
+        {
+          "comment_label": "match_cell_Pointer",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver",
+          "body_sha256": "1e12b2297921333a4b9e5662aefa61be9f32409270d4b8769dc8f3afe1e50ea9"
+        },
+        {
+          "comment_label": "index_cell_Integer",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver",
+          "body_sha256": "4fa248013de091760fd304d3ebffb6564c823dc19d9f251e3f5b364c1ba55679"
+        },
+        {
+          "comment_label": "index_cell_Pointer",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver",
+          "body_sha256": "ca7f150707a74b16829d8e2ad7724aec87a279621dcb07e94410518ef4f32966"
+        },
+        {
+          "comment_label": "Integer_proj_1'def",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver",
+          "body_sha256": "41c7af5f3553cfe5c0897a763293c8816285c40c210433c7bf4b7273a08f5a9e"
+        },
+        {
+          "comment_label": "Pointer_proj_1'def",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver",
+          "body_sha256": "8fbb971af9140aacd1d4a43c7d2bb0b40a258069e08f0870e5f3210d3aeb0817"
+        },
+        {
+          "comment_label": "Pointer_proj_2'def",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver",
+          "body_sha256": "136b1ccb44b9c4e504fc9009fae32e39f89d59628a31404e3a6a77a6392597d8"
+        },
+        {
+          "comment_label": "cell_inversion",
+          "family": "generated datatype encoding",
+          "primary_attribution": "old Heap cell datatype + driver",
+          "body_sha256": "c6d3017050fb0dd646bf55e2fc75faf59098859292506f5cf86d230a21aa08a9"
+        },
+        {
+          "comment_label": "fc'def",
+          "family": "generic constant-map definition",
+          "primary_attribution": "Why3 driver/map encoding",
+          "body_sha256": "006ed960d9b2761de712c670238ea106fe431d343a9072c25275bd1186ef43e2"
+        },
+        {
+          "comment_label": "fc'def",
+          "family": "generic constant-map definition",
+          "primary_attribution": "Why3 driver/map encoding",
+          "body_sha256": "1db87db06d959b455601fc4a1ebe07c7680e728e83693a3d42f80c67383c30fe"
+        },
+        {
+          "comment_label": "fc'def",
+          "family": "generic constant-map definition",
+          "primary_attribution": "Why3 driver/map encoding",
+          "body_sha256": "421330089f2f859d6bc27c4f6e9e05bb6f6e47e357eecfe2517e1c01f2d4e247"
+        },
+        {
+          "comment_label": "fc'def",
+          "family": "generic constant-map definition",
+          "primary_attribution": "Why3 driver/map encoding",
+          "body_sha256": "7e8458af1bb389f5ed12a00189f4dd2cd132b221669fd97131a9e63c8ccbe3ff"
+        },
+        {
+          "comment_label": "fc'def",
+          "family": "generic constant-map definition",
+          "primary_attribution": "Why3 driver/map encoding",
+          "body_sha256": "a4902a881eb5410c0a7a765af0a3823bef0ee905e5cca1fb01ec8087a27079b8"
+        },
+        {
+          "comment_label": "fc'def",
+          "family": "generic constant-map definition",
+          "primary_attribution": "Why3 driver/map encoding",
+          "body_sha256": "6b254936b5b9b8a0ae03a17d3fdf621e7283d3a02dcdb0c4c47ff459c7509d88"
+        },
+        {
+          "comment_label": "fc'def",
+          "family": "generic constant-map definition",
+          "primary_attribution": "Why3 driver/map encoding",
+          "body_sha256": "dd06c9215fbe232b90b605c46a1ebf91d124ecf4d0cd63c72ba35859bf252f6a"
+        },
+        {
+          "comment_label": "fc'def",
+          "family": "generic constant-map definition",
+          "primary_attribution": "Why3 driver/map encoding",
+          "body_sha256": "bce1288914b0a4f80b7940af97bc95b641d7c27a604a118bb1e4f1d47a31824c"
+        },
+        {
+          "comment_label": "fc'def",
+          "family": "generic constant-map definition",
+          "primary_attribution": "Why3 driver/map encoding",
+          "body_sha256": "a3125426fb11788b926140e40185d32cca5ee89508ea5eae068bb03db4af3a93"
+        },
+        {
+          "comment_label": "wp_goal",
+          "family": "negated selected goal",
+          "primary_attribution": "original representative selected goal",
+          "body_sha256": "f999d4ab1476feaf390b9ae3d879b2decd4174c4b3aef1ddb154c8430a00eb38"
+        }
+      ],
+      "standard_arithmetic_count": 34,
+      "all_assertion_count": 52,
+      "note": "Historical representative only. Compare exact current formula hashes/source/driver pins; current43/23 support cardinalities are not asserted equal."
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-wp-representative-v2/lemma/prover-files/typed/check_lemma_t25_control_ctor_premises_feasible_Why3_CVC5_1_2_1.smt2",
+      "task_text_sha256": "27a0b35b8b4140c1e5333f199751bd3154fe65ea974c59239a47d04b4be4ba88",
+      "assertions": [
+        {
+          "comment_label": "CompatOrderMult",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "integer/real ordered algebra",
+          "body_sha256": "3076bc3f8d7485f553d2b0e382697d0424d26dca7ded0dea396c78f142f19463"
+        },
+        {
+          "comment_label": "Abs_le",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs",
+          "body_sha256": "92ed3b6387a2ea7adfb0281282ed3f10092b199ffe0c64ac751db7f08385dad7"
+        },
+        {
+          "comment_label": "Abs_pos",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.Abs",
+          "body_sha256": "d83d59933cb8428fc118e396ac88d4b946da1e38c8442d3d51ad2853881701c2"
+        },
+        {
+          "comment_label": "Div_mod",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision",
+          "body_sha256": "3b91d4d3fd3ee8b435876ad46c558b8170bea759937396edd9251e0e85c9d8ae"
+        },
+        {
+          "comment_label": "Div_bound",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision",
+          "body_sha256": "b10a675182a54bd3e05baba0fae2deec3825802ec0c246d6ff6211f8f382cdf6"
+        },
+        {
+          "comment_label": "Mod_bound",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision",
+          "body_sha256": "54870e5c89b533678e220be22537d8796ab107f992c8d45a7cf79a926108d378"
+        },
+        {
+          "comment_label": "Div_sign_pos",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision",
+          "body_sha256": "4ffe57766ac7158e9bf22d49c2b6912e04ebd41c33149305cd1fd23fac56611a"
+        },
+        {
+          "comment_label": "Div_sign_neg",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision",
+          "body_sha256": "a1dfed6d389be5a4dab9ecc490efbd14e26af33d143a92ba9f52ed15098e33fc"
+        },
+        {
+          "comment_label": "Mod_sign_pos",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision",
+          "body_sha256": "d2b030072e2e3631d5f96fbdec4a6a16d91053b067f82caff0c43e2434f9d75b"
+        },
+        {
+          "comment_label": "Mod_sign_neg",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision",
+          "body_sha256": "5224d38dacf79571be4ade6de5e5b401266cf89925615c14bfb48391489f70ad"
+        },
+        {
+          "comment_label": "Rounds_toward_zero",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision",
+          "body_sha256": "a2040454bce97f74d227cd239fc13ce62a686ed18398870f9e745eb3b4e69893"
+        },
+        {
+          "comment_label": "Div_1",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision",
+          "body_sha256": "3f8db6925daa96931e8403b27e09722f50246f506060f57d7f1d628e0e756419"
+        },
+        {
+          "comment_label": "Mod_1",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision",
+          "body_sha256": "e8e9d90e3921f5c2eb9080962f083d57b45ade790b114130b5d1f967823ac255"
+        },
+        {
+          "comment_label": "Div_inf",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision",
+          "body_sha256": "a5cf980bdcd3e0e9a1684f60f33fc384a03aa30fcc42463f801a6423f1dc4a64"
+        },
+        {
+          "comment_label": "Mod_inf",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision",
+          "body_sha256": "14e5a1d4743372c20da40f718aa6c59a3a29d21b29c075b161cbf7be0b525777"
+        },
+        {
+          "comment_label": "Div_mult",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision",
+          "body_sha256": "85c607d4a3ded15667c39e11ecf7f13402f7ecd70c42542c1f6072cf6dc4ea12"
+        },
+        {
+          "comment_label": "Mod_mult",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "int.ComputerDivision",
+          "body_sha256": "68e28b32268321dbcc63c814cca5150ab655adf5656fc3121b93a0761bc58874"
+        },
+        {
+          "comment_label": "c_euclidian",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw",
+          "body_sha256": "58e1862d880068ce87e2fedb81a486f6858dd276c358e8c47045b680718794fb"
+        },
+        {
+          "comment_label": "cmod_remainder",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw",
+          "body_sha256": "f0128a61c0627c057a80014c6828d71960dea19dc00202eeb22d7fea7964bc2f"
+        },
+        {
+          "comment_label": "cdiv_neutral",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw",
+          "body_sha256": "68587350e4436a612440ab8e05fc309620c421c8d2672a47407c4617fd44c563"
+        },
+        {
+          "comment_label": "cdiv_inv",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw",
+          "body_sha256": "39fdb0caf203dd0fb8bc5d392736d4596d73fc06bfbe23baf7ae38a8d4b80e2a"
+        },
+        {
+          "comment_label": "cdiv_closed_remainder",
+          "family": "trusted standard arithmetic",
+          "primary_attribution": "Frama-C qed.mlw",
+          "body_sha256": "451777247802989db373cc5c07812ce8f33f87f54ed883fb43e9f9ea720e0749"
+        },
+        {
+          "comment_label": "fc'def",
+          "family": "generic constant-map definition",
+          "primary_attribution": "Why3 driver/map encoding",
+          "body_sha256": "006ed960d9b2761de712c670238ea106fe431d343a9072c25275bd1186ef43e2"
+        },
+        {
+          "comment_label": "fc'def",
+          "family": "generic constant-map definition",
+          "primary_attribution": "Why3 driver/map encoding",
+          "body_sha256": "1db87db06d959b455601fc4a1ebe07c7680e728e83693a3d42f80c67383c30fe"
+        },
+        {
+          "comment_label": "fc'def",
+          "family": "generic constant-map definition",
+          "primary_attribution": "Why3 driver/map encoding",
+          "body_sha256": "421330089f2f859d6bc27c4f6e9e05bb6f6e47e357eecfe2517e1c01f2d4e247"
+        },
+        {
+          "comment_label": "fc'def",
+          "family": "generic constant-map definition",
+          "primary_attribution": "Why3 driver/map encoding",
+          "body_sha256": "7e8458af1bb389f5ed12a00189f4dd2cd132b221669fd97131a9e63c8ccbe3ff"
+        },
+        {
+          "comment_label": "fc'def",
+          "family": "generic constant-map definition",
+          "primary_attribution": "Why3 driver/map encoding",
+          "body_sha256": "a4902a881eb5410c0a7a765af0a3823bef0ee905e5cca1fb01ec8087a27079b8"
+        },
+        {
+          "comment_label": "fc'def",
+          "family": "generic constant-map definition",
+          "primary_attribution": "Why3 driver/map encoding",
+          "body_sha256": "6b254936b5b9b8a0ae03a17d3fdf621e7283d3a02dcdb0c4c47ff459c7509d88"
+        },
+        {
+          "comment_label": "fc'def",
+          "family": "generic constant-map definition",
+          "primary_attribution": "Why3 driver/map encoding",
+          "body_sha256": "dd06c9215fbe232b90b605c46a1ebf91d124ecf4d0cd63c72ba35859bf252f6a"
+        },
+        {
+          "comment_label": "fc'def",
+          "family": "generic constant-map definition",
+          "primary_attribution": "Why3 driver/map encoding",
+          "body_sha256": "bce1288914b0a4f80b7940af97bc95b641d7c27a604a118bb1e4f1d47a31824c"
+        },
+        {
+          "comment_label": "fc'def",
+          "family": "generic constant-map definition",
+          "primary_attribution": "Why3 driver/map encoding",
+          "body_sha256": "a3125426fb11788b926140e40185d32cca5ee89508ea5eae068bb03db4af3a93"
+        },
+        {
+          "comment_label": "wp_goal",
+          "family": "negated selected goal",
+          "primary_attribution": "original representative selected goal",
+          "body_sha256": "2aeec838b8e21eb05fdb5eba43350e11ae994ce02cfc7a2a37ac8cbba0e25b11"
+        }
+      ],
+      "standard_arithmetic_count": 22,
+      "all_assertion_count": 32,
+      "note": "Historical representative only. Compare exact current formula hashes/source/driver pins; current43/23 support cardinalities are not asserted equal."
+    }
+  ],
+  "scope": "Passive derivation from locally retained prior reviewed representative only; assertion hash/primary attribution metadata, no C/SMT body transferred. No current proof or support coverage reuse without exact hash/source/driver comparison. Generated old datatype/constant-map equations are source-specific generic encoding, not universally classified standard theorem support. No formal/native/compiler/SSH/project tool executed."
+}

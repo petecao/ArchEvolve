@@ -1,0 +1,392 @@
+{
+  "at_utc": "2026-10-16T12:04:04.439488+00:00",
+  "leases": {
+    "mbit10-evaluation-node0.meta.json": {
+      "active_session": null,
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "heartbeat_at": "2026-10-16T12:01:18Z",
+      "lease": {
+        "acquired_at": "2026-10-16T12:00:41Z",
+        "daemon_pid": 3866800,
+        "daemon_start_token": "sh3866800-1792152041",
+        "generation": 598,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node0",
+        "mode": "measure",
+        "session_id": null
+      },
+      "recovered_from_generation": null,
+      "released_at": "2026-10-16T12:01:18Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation-node1.meta.json": {
+      "active_session": null,
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "heartbeat_at": "2026-10-16T11:46:06Z",
+      "lease": {
+        "acquired_at": "2026-10-16T11:38:27Z",
+        "daemon_pid": 3863836,
+        "daemon_start_token": "sh3863836-1792150707",
+        "generation": 621,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node1",
+        "mode": "measure",
+        "session_id": null
+      },
+      "recovered_from_generation": null,
+      "released_at": "2026-10-16T11:46:06Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation.meta.json": {
+      "active_session": null,
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "heartbeat_at": "2026-09-12T04:49:11Z",
+      "lease": {
+        "acquired_at": "2026-09-12T01:35:42Z",
+        "daemon_pid": 209457,
+        "daemon_start_token": "sh209457-1789176942",
+        "generation": 77,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation",
+        "mode": "measure",
+        "session_id": null
+      },
+      "recovered_from_generation": null,
+      "released_at": "2026-09-12T04:49:11Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    }
+  },
+  "profiles": {
+    "allocator": {
+      "metadata": {
+        "allocation-profile/exit-code.txt": {
+          "bytes": 2,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-allocation-pair-v1/allocation-profile/exit-code.txt",
+          "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+          "text": "1\n"
+        },
+        "allocation-profile/junit.xml": {
+          "bytes": 2079,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-allocation-pair-v1/allocation-profile/junit.xml",
+          "sha256": "32835d6dc6dc1cf2b855474eb4cc1dbb4303e9b6791193d1feea46bfad585b93",
+          "text": "<?xml version=\"1.0\" encoding=\"utf-8\"?><testsuites name=\"pytest tests\"><testsuite name=\"pytest\" errors=\"0\" failures=\"1\" skipped=\"0\" tests=\"1\" time=\"8.330\" timestamp=\"2026-10-16T07:48:46.872408-04:00\" hostname=\"mbit10\"><testcase classname=\"tests.test_dx100_allocation_actual\" name=\"test_actual_original_total_software_allocator_source_pair[correct-counter-result]\" time=\"8.147\"><failure message=\"AssertionError: /data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-allocation-pair-v1/allocation-profile/pytest/test_actual_original_total_sof0/library/rewrite_contracts/trust.yaml: proof_unit: the baseline proof unit trust_fixture has no C lowering: unsupported construct: DX100 source size definition: allocator source assertion contains unbound effects (trust.cc line 2)&#10;  swdb prove: 1 validation error(s); run swdb validate&#10;  &#10;assert 1 == 0&#10; +  where 1 = CompletedProcess(args=['/data1/yanruj/venvs/swdb-test/bin/python', '-m', 'swdb', 'prove', '--records', '/data/yanruj/E...r source assertion contains unbound effects (trust.cc line 2)\\nswdb prove: 1 validation error(s); run swdb validate\\n').returncode\">tests/test_dx100_allocation_actual.py:12: in test_actual_original_total_software_allocator_source_pair\n    assert result.returncode==0,result.stdout+result.stderr\nE   AssertionError: /data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-allocation-pair-v1/allocation-profile/pytest/test_actual_original_total_sof0/library/rewrite_contracts/trust.yaml: proof_unit: the baseline proof unit trust_fixture has no C lowering: unsupported construct: DX100 source size definition: allocator source assertion contains unbound effects (trust.cc line 2)\nE     swdb prove: 1 validation error(s); run swdb validate\nE     \nE   assert 1 == 0\nE    +  where 1 = CompletedProcess(args=['/data1/yanruj/venvs/swdb-test/bin/python', '-m', 'swdb', 'prove', '--records', '/data/yanruj/E...r source assertion contains unbound effects (trust.cc line 2)\\nswdb prove: 1 validation error(s); run swdb validate\\n').returncode</failure></testcase></testsuite></testsuites>"
+        },
+        "allocation-profile/pytest.log": {
+          "bytes": 1521,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-allocation-pair-v1/allocation-profile/pytest.log",
+          "sha256": "64cda61f5890067f4e27d29af7a5fc20d274e60f968b42c0a556bf0351b4e01a",
+          "tail": "F\n=================================== FAILURES ===================================\n_ test_actual_original_total_software_allocator_source_pair[correct-counter-result] _\ntests/test_dx100_allocation_actual.py:12: in test_actual_original_total_software_allocator_source_pair\n    assert result.returncode==0,result.stdout+result.stderr\nE   AssertionError: /data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-allocation-pair-v1/allocation-profile/pytest/test_actual_original_total_sof0/library/rewrite_contracts/trust.yaml: proof_unit: the baseline proof unit trust_fixture has no C lowering: unsupported construct: DX100 source size definition: allocator source assertion contains unbound effects (trust.cc line 2)\nE     swdb prove: 1 validation error(s); run swdb validate\nE     \nE   assert 1 == 0\nE    +  where 1 = CompletedProcess(args=['/data1/yanruj/venvs/swdb-test/bin/python', '-m', 'swdb', 'prove', '--records', '/data/yanruj/E...r source assertion contains unbound effects (trust.cc line 2)\\nswdb prove: 1 validation error(s); run swdb validate\\n').returncode\n- generated report log file: /data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-allocation-pair-v1/allocation-profile/report.jsonl -\n=========================== short test summary info ============================\nFAILED tests/test_dx100_allocation_actual.py::test_actual_original_total_software_allocator_source_pair[correct-counter-result]\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed in 8.33s\n"
+        },
+        "lane.json": {
+          "bytes": 818,
+          "content": {
+            "socket_lane": {
+              "aligned_cell_age_s": "",
+              "aligned_to": "no_gapbs_batch_running",
+              "command": [
+                "timeout",
+                "--signal=TERM",
+                "--kill-after=60",
+                "1320",
+                "bash",
+                "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-allocation-pair-v1/run.sh"
+              ],
+              "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+              "ended_utc": "2026-10-16T11:48:55Z",
+              "exit_code": 1,
+              "host": "mbit10",
+              "job": "probata-reviewed-2e2dc451-t28-allocation-pair-v1",
+              "lease_generation": 597,
+              "lease_name": "mbit10-evaluation-node0",
+              "load1_at_start": 0.46,
+              "load1_max": 32,
+              "node": 0,
+              "numa_memory_policy": "bind:0",
+              "numactl": "--cpunodebind=0 --membind=0",
+              "preregistration_sha256": null,
+              "started_utc": "2026-10-16T11:48:26Z"
+            }
+          },
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-allocation-pair-v1/lane.json",
+          "sha256": "0d341f497b8ef37f8eb43781acfec4b87eae2b659f80e560b0117c9a6b6c10f3"
+        },
+        "outer-resources.json": {
+          "bytes": 166,
+          "content": {
+            "cpu_seconds": 34.207698,
+            "exit_code": 1,
+            "out_of_memory": false,
+            "peak_rss_bytes": 356233216,
+            "timed_out": false,
+            "wall_seconds": 28.537994428537786
+          },
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-allocation-pair-v1/outer-resources.json",
+          "sha256": "409f341337972cf433e780c87e8e5da7ab2a322daf0c5c81ae0b6ec2c4de93ab"
+        },
+        "resources.json": {
+          "bytes": 165,
+          "content": {
+            "cpu_seconds": 26.479698,
+            "exit_code": 1,
+            "out_of_memory": false,
+            "peak_rss_bytes": 302231552,
+            "timed_out": false,
+            "wall_seconds": 26.22385953180492
+          },
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-allocation-pair-v1/resources.json",
+          "sha256": "39d2603df4f7c0597e8eff31952333798206ab42a5cf3a643fc0a7b35b19f8b1"
+        },
+        "source-after.json": {
+          "bytes": 112,
+          "content": {
+            "commit": "2e2dc451ca457bfc5a7a7cb977d672bd1de0983b",
+            "source_unchanged": true,
+            "tracked_changes": ""
+          },
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-allocation-pair-v1/source-after.json",
+          "sha256": "b945e5e2302adf004d5d7fca3c3beb24b75be4d80fdeba2d61d08c17b300ab67"
+        }
+      },
+      "profile": "allocation-profile",
+      "raw": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-allocation-pair-v1"
+    },
+    "ctor30": {
+      "metadata": {
+        "lane.json": {
+          "bytes": 834,
+          "content": {
+            "socket_lane": {
+              "aligned_cell_age_s": "",
+              "aligned_to": "no_gapbs_batch_running",
+              "command": [
+                "timeout",
+                "--signal=TERM",
+                "--kill-after=60",
+                "4320",
+                "bash",
+                "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-qualified-ctor30-public-v2/run.sh"
+              ],
+              "cpus_allowed_list": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63",
+              "ended_utc": "2026-10-16T11:46:05Z",
+              "exit_code": 1,
+              "host": "mbit10",
+              "job": "probata-reviewed-046f6b9e-t25-qualified-ctor30-public-v2",
+              "lease_generation": 621,
+              "lease_name": "mbit10-evaluation-node1",
+              "load1_at_start": 0.37,
+              "load1_max": 32,
+              "node": 1,
+              "numa_memory_policy": "bind:1",
+              "numactl": "--cpunodebind=1 --membind=1",
+              "preregistration_sha256": null,
+              "started_utc": "2026-10-16T11:38:27Z"
+            }
+          },
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-qualified-ctor30-public-v2/lane.json",
+          "sha256": "c72eb5ca72ee140730ee63a48c61ea646a89cfd2c1b6ebb861dbd5261554e62b"
+        },
+        "outer-resources.json": {
+          "bytes": 166,
+          "content": {
+            "cpu_seconds": 615.917342,
+            "exit_code": 1,
+            "out_of_memory": false,
+            "peak_rss_bytes": 1142501376,
+            "timed_out": false,
+            "wall_seconds": 458.677702925168
+          },
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-qualified-ctor30-public-v2/outer-resources.json",
+          "sha256": "5d811210affcbce7a797cbc15f02e4838471457286053b2e6e46968ac72aca22"
+        },
+        "qualified-ctor30-profile/result.json": {
+          "bytes": 2579,
+          "content": {
+            "ambient_wp_names": [],
+            "caller_acceptance": false,
+            "cold_task_hypothesis_closure_pending": true,
+            "elapsed_seconds": 455.45736119057983,
+            "error": "complete qualified public model not proven",
+            "error_type": "ValueError",
+            "external_guard_required": {
+              "cap_bytes": 8589934592,
+              "output_budget_bytes": 2147483648,
+              "profile_seconds": 3900,
+              "public_timeout_seconds": 3600,
+              "root_outer_seconds": 4320,
+              "root_whole_seconds": 4200,
+              "workers": 1
+            },
+            "linux_launch_binding": {
+              "Mac_counted_token_required": false,
+              "command_sha256": "21314347485772807e7c6f2e5f472d3bc1b7aa91a423163b7bce16a970d6dfce",
+              "launch": {
+                "bytes": 68624,
+                "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-qualified-ctor30-public-v2/launch.json",
+                "sha256": "ecac1933cd4575d6adabe44e2c99ab45f3f3bf9af8b13e7bc8c21fc3c17b6201"
+              },
+              "lock_path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-qualified-ctor30-public-v2/verifier.lock",
+              "marker_path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-qualified-ctor30-public-v2",
+              "rss_cap_bytes": 8589934592,
+              "scope": "Linux root socket-lane + reviewed watch/execute ownership, not a Mac c6 token or lock claim",
+              "source_commit": "046f6b9e64d45777a8032951ced04f942fc9c3c2",
+              "whole_seconds": 4200
+            },
+            "member": "std_vector_int_realloc_v3_ctor_count_value",
+            "model_proof_acceptance": false,
+            "original_v2_acceptance": false,
+            "public_command_launched": true,
+            "public_complete": false,
+            "public_exit_code": 0,
+            "scope": "One complete qualified v3 count/value constructor C-body mathematical model with arbitrary signed32 fill value: all30 fresh targets including numeric C/RTE/init/smoke obligations. Normal publicCLI/source/setup/reader/dependency/schema/persistence; no original-v2, genericcaller, other-type or ticket promotion.",
+            "source_commit": "046f6b9e64d45777a8032951ced04f942fc9c3c2",
+            "source_consumer_receipts": [
+              {
+                "bytes": 614463,
+                "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-qualified-ctor30-public-v2/qualified-ctor30-profile/source-consumer-closure-0.json",
+                "sha256": "021f8a2d20bf5db4733fe89bf9f85c32cef5bc05fafa51a301a87732cd25c770"
+              },
+              {
+                "bytes": 614463,
+                "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-qualified-ctor30-public-v2/qualified-ctor30-profile/source-consumer-closure-1.json",
+                "sha256": "021f8a2d20bf5db4733fe89bf9f85c32cef5bc05fafa51a301a87732cd25c770"
+              }
+            ],
+            "within_whole_budget": true
+          },
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-qualified-ctor30-public-v2/qualified-ctor30-profile/result.json",
+          "sha256": "52f11869ebc87a9cc4c37462519b4b66f875538ec7a984b8979bd813f7d1dabd"
+        },
+        "resources.json": {
+          "bytes": 168,
+          "content": {
+            "cpu_seconds": 523.559882,
+            "exit_code": 1,
+            "out_of_memory": false,
+            "peak_rss_bytes": 1089024000,
+            "timed_out": false,
+            "wall_seconds": 456.64540526643395
+          },
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-qualified-ctor30-public-v2/resources.json",
+          "sha256": "917e07a16ec80f02ae707c58d1a81978b1cc5d079b9ebc98074ea1a544519cde"
+        },
+        "source-after.json": {
+          "bytes": 112,
+          "content": {
+            "commit": "046f6b9e64d45777a8032951ced04f942fc9c3c2",
+            "source_unchanged": true,
+            "tracked_changes": ""
+          },
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-qualified-ctor30-public-v2/source-after.json",
+          "sha256": "05a6e404b4bbf39d0fb225f2ec064f3aa408e43a7b808fb4af78b2e3825def77"
+        }
+      },
+      "profile": "qualified-ctor30-profile",
+      "raw": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-qualified-ctor30-public-v2"
+    },
+    "register": {
+      "metadata": {
+        "lane.json": {
+          "bytes": 814,
+          "content": {
+            "socket_lane": {
+              "aligned_cell_age_s": "",
+              "aligned_to": "no_gapbs_batch_running",
+              "command": [
+                "timeout",
+                "--signal=TERM",
+                "--kill-after=60",
+                "1320",
+                "bash",
+                "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-register-pair-v1/run.sh"
+              ],
+              "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+              "ended_utc": "2026-10-16T12:01:18Z",
+              "exit_code": 1,
+              "host": "mbit10",
+              "job": "probata-reviewed-2e2dc451-t28-register-pair-v1",
+              "lease_generation": 598,
+              "lease_name": "mbit10-evaluation-node0",
+              "load1_at_start": 0.03,
+              "load1_max": 32,
+              "node": 0,
+              "numa_memory_policy": "bind:0",
+              "numactl": "--cpunodebind=0 --membind=0",
+              "preregistration_sha256": null,
+              "started_utc": "2026-10-16T12:00:41Z"
+            }
+          },
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-register-pair-v1/lane.json",
+          "sha256": "aeb0e8d209777cbfec0c3277cc40999f5886465886707bbf9bc9a6ebeef605ce"
+        },
+        "outer-resources.json": {
+          "bytes": 167,
+          "content": {
+            "cpu_seconds": 44.982805,
+            "exit_code": 1,
+            "out_of_memory": false,
+            "peak_rss_bytes": 1800417280,
+            "timed_out": false,
+            "wall_seconds": 36.969177559018135
+          },
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-register-pair-v1/outer-resources.json",
+          "sha256": "e69cbc871e290fa3291aefd278ad033771c88c69b4b8ca452974d511e499a4de"
+        },
+        "register-profile/exit-code.txt": {
+          "bytes": 2,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-register-pair-v1/register-profile/exit-code.txt",
+          "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+          "text": "1\n"
+        },
+        "register-profile/junit.xml": {
+          "bytes": 2066,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-register-pair-v1/register-profile/junit.xml",
+          "sha256": "98c972dc67c48023a1aa6e89691ccfe460711ea8207c5bb24e24da9f36a38ec9",
+          "text": "<?xml version=\"1.0\" encoding=\"utf-8\"?><testsuites name=\"pytest tests\"><testsuite name=\"pytest\" errors=\"0\" failures=\"1\" skipped=\"0\" tests=\"1\" time=\"17.576\" timestamp=\"2026-10-16T08:01:00.584948-04:00\" hostname=\"mbit10\"><testcase classname=\"tests.test_dx100_register_actual\" name=\"test_actual_wp_original_partial_register_source_pair[correct-register-result]\" time=\"17.449\"><failure message=\"AssertionError: /data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-register-pair-v1/register-profile/pytest/test_actual_wp_original_partia0/library/rewrite_contracts/trust.yaml: clauses[0].acsl: Frama-C 33.0 refuses the formal half: [kernel:annot-error] formal_half.c:5: Failure: unbound logic variable __swdb_dx_reg_words. Ignoring specification of function trust_fixture&#10;  swdb prove: 1 validation error(s); run swdb validate&#10;  &#10;assert 1 == 0&#10; +  where 1 = CompletedProcess(args=['/data1/yanruj/venvs/swdb-test/bin/python', '-m', 'swdb', 'prove', '--records', '/data/yanruj/E...x_reg_words. Ignoring specification of function trust_fixture\\nswdb prove: 1 validation error(s); run swdb validate\\n').returncode\">tests/test_dx100_register_actual.py:12: in test_actual_wp_original_partial_register_source_pair\n    assert result.returncode==0,result.stdout+result.stderr\nE   AssertionError: /data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-register-pair-v1/register-profile/pytest/test_actual_wp_original_partia0/library/rewrite_contracts/trust.yaml: clauses[0].acsl: Frama-C 33.0 refuses the formal half: [kernel:annot-error] formal_half.c:5: Failure: unbound logic variable __swdb_dx_reg_words. Ignoring specification of function trust_fixture\nE     swdb prove: 1 validation error(s); run swdb validate\nE     \nE   assert 1 == 0\nE    +  where 1 = CompletedProcess(args=['/data1/yanruj/venvs/swdb-test/bin/python', '-m', 'swdb', 'prove', '--records', '/data/yanruj/E...x_reg_words. Ignoring specification of function trust_fixture\\nswdb prove: 1 validation error(s); run swdb validate\\n').returncode</failure></testcase></testsuite></testsuites>"
+        },
+        "register-profile/pytest.log": {
+          "bytes": 1500,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-register-pair-v1/register-profile/pytest.log",
+          "sha256": "3f9804077458c8efaa11351c24ed3483361c99e0dee61ae7641e55d577a55d78",
+          "tail": "F\n=================================== FAILURES ===================================\n_ test_actual_wp_original_partial_register_source_pair[correct-register-result] _\ntests/test_dx100_register_actual.py:12: in test_actual_wp_original_partial_register_source_pair\n    assert result.returncode==0,result.stdout+result.stderr\nE   AssertionError: /data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-register-pair-v1/register-profile/pytest/test_actual_wp_original_partia0/library/rewrite_contracts/trust.yaml: clauses[0].acsl: Frama-C 33.0 refuses the formal half: [kernel:annot-error] formal_half.c:5: Failure: unbound logic variable __swdb_dx_reg_words. Ignoring specification of function trust_fixture\nE     swdb prove: 1 validation error(s); run swdb validate\nE     \nE   assert 1 == 0\nE    +  where 1 = CompletedProcess(args=['/data1/yanruj/venvs/swdb-test/bin/python', '-m', 'swdb', 'prove', '--records', '/data/yanruj/E...x_reg_words. Ignoring specification of function trust_fixture\\nswdb prove: 1 validation error(s); run swdb validate\\n').returncode\n- generated report log file: /data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-register-pair-v1/register-profile/report.jsonl -\n=========================== short test summary info ============================\nFAILED tests/test_dx100_register_actual.py::test_actual_wp_original_partial_register_source_pair[correct-register-result]\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed in 17.57s\n"
+        },
+        "resources.json": {
+          "bytes": 166,
+          "content": {
+            "cpu_seconds": 35.934483,
+            "exit_code": 1,
+            "out_of_memory": false,
+            "peak_rss_bytes": 1746415616,
+            "timed_out": false,
+            "wall_seconds": 34.87399459630251
+          },
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-register-pair-v1/resources.json",
+          "sha256": "8a24c152d3a36f0b64df2a596fa4d8c7f452ee3db4c1f55d19d4ea1198ae88dd"
+        },
+        "source-after.json": {
+          "bytes": 112,
+          "content": {
+            "commit": "2e2dc451ca457bfc5a7a7cb977d672bd1de0983b",
+            "source_unchanged": true,
+            "tracked_changes": ""
+          },
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-register-pair-v1/source-after.json",
+          "sha256": "b945e5e2302adf004d5d7fca3c3beb24b75be4d80fdeba2d61d08c17b300ab67"
+        }
+      },
+      "profile": "register-profile",
+      "raw": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-register-pair-v1"
+    }
+  }
+}
