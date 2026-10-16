@@ -20,6 +20,9 @@ import loop as L  # noqa: E402
 
 METHOD = "method24"
 LADDER = [3, 10]
+# The 10 s rung runs only when few goals stay open: a measured no-hint 10 s rerun took 483 s and closed
+# none of 171 goals (s2-ladder, 2026-10-16), while 98% of past Valid proofs took <= 3 s.
+SECOND_RUNG_MAX_OPEN = 40
 FINAL_RESERVE_MIN = 9.0
 NEG_WAIT = "__dxc_wait(c.tile[5]);"
 
@@ -45,8 +48,7 @@ Final answer: JSON {{"hints": [{{"anchor", "kind", "text"}}...], "notes": "..."}
 - Each text is inserted as `/*@ <text> */` right after its anchor line.
 - Hint text cannot name C locals that are not in scope at the anchor. Labels: Pre, Here, LoopEntry,
   LoopCurrent (inside predicates/lemmas use your own label parameters). `\\at(e, L)` evaluates ALL of e at L,
-  including array indices: write `\\let w = queue->shared[i]; \\at(parent->start_[w], Pre)` when the index
-  comes from the current state. Ghost variables need C types (int, unsigned, size_t); `integer`/`boolean`
+  including array indices: write `\\let w = b[i]; \\at(a[w], Pre)` when the index comes from the current state. Ghost variables need C types (int, unsigned, size_t); `integer`/`boolean`
   are logic types for predicate/logic/lemma parameters only.
 
 How to work (general proof-engineering method, not specific to this function):
@@ -55,7 +57,7 @@ How to work (general proof-engineering method, not specific to this function):
      on 2000 small concrete executions. A hint it reports FALSE is false: fix it, never try to prove it.
    - check_hints(hints): seconds. Vocabulary, Frama-C parse/type check, WP goal generation.
    - prove_hints(hints): minutes. falsify + check, then WP on TDStep's goals and your lemmas (3 s per
-     prover, then 10 s for goals still open; conjunctions are split into separate goals, so a failing goal
+     prover, then 10 s when at most 40 goals stay open; conjunctions are split into separate goals, so a failing goal
      names the failing part). It keeps the best set so far.
    - show_goal(goal): one open goal of the best set as WP sees it (hypotheses and conclusion).
    Loop: write hints -> falsify_hints until nothing is refuted -> check_hints until clean -> prove_hints ->
@@ -99,6 +101,8 @@ def baseline(out):
     d = L.run_dir(out, "baseline", standin)
     runs, ar = [], None
     for k, tmo in enumerate(LADDER):
+        if k and len(ar["failing_goals"]) > SECOND_RUNG_MAX_OPEN:
+            break
         wlog, ws = L.verifier(out, d, "round24", timeout=1200, extra=(out / "round-cache", tmo))
         if ws["exit_code"] != 0:
             raise RuntimeError(f"baseline WP failed: {wlog}")
@@ -138,6 +142,10 @@ def final_replay(out, best, tag):
 
 
 def negative_control(out, best, tag):
+    """Same hints, covering wait removed. Pass: the hazard check's consolidated report status is not Valid
+    and nothing is refuted (no Bug/Alarm/Invalid status, no `invalid` goal verdict), in a healthy run (exit 0,
+    hazard goals present with a timeout/unknown verdict or Valid only under unproven hypotheses, and at least
+    one other goal proven by a real prover)."""
     merged = H.merge((L.STANDIN_DIR / L.UNIT).read_text(), best["hints"])
     d = L.run_dir(out, f"negctl-{tag}", negctl_source(merged))
     wlog, ws = L.verifier(out, d, "negctl24", timeout=900)
@@ -147,11 +155,17 @@ def negative_control(out, best, tag):
     hazard = [p for p in props if "hazard_hints_read" in p["property"]]
     goals = json.loads((d / "goals.json").read_text()) if (d / "goals.json").exists() else []
     hz_goals = [g for g in goals if "hazard_hints_read" in str(g.get("property", "")) + str(g.get("goal", ""))]
-    not_proven = bool(hz_goals) and not all(g.get("passed") for g in hz_goals)
-    refuted = any(p["status"] == "Invalid" for p in hazard)
+    refuted = any(p["status"] in ("Bug", "Alarm", "Invalid") for p in hazard) or \
+        any(g.get("verdict") == "invalid" for g in goals)
+    not_valid = bool(hazard) and all(p["status"] != "Valid" for p in hazard)
+    healthy = (ws["exit_code"] == 0 and bool(hz_goals) and
+               all(g.get("passed") or g.get("verdict") in ("timeout", "unknown", "stepout") for g in hz_goals) and
+               any(g.get("passed") and any(p.get("success") and p.get("prover") != "qed" for p in g.get("provers", []))
+                   for g in goals if g not in hz_goals))
     return {"dir": str(d), "wall_s": ws["wall_s"], "exit": ws["exit_code"], "hazard_report": hazard,
             "hazard_goals": [{k: g.get(k) for k in ("goal", "verdict", "passed")} for g in hz_goals],
-            "ok": not_proven and not refuted, "log_sha256": ws["log_sha256"]}
+            "refuted": refuted, "not_valid": not_valid, "healthy": healthy,
+            "ok": not_valid and not refuted and healthy, "log_sha256": ws["log_sha256"]}
 
 
 def main():
@@ -167,7 +181,7 @@ def main():
     L.OWNER[0] = "t07f"
     t0 = now_s()
     meta = {"method": METHOD, "start": L.now(), "budget_min": a.budget_min, "rounds_max": a.rounds,
-            "ladder_s": LADDER, "final_reserve_min": FINAL_RESERVE_MIN, "pin": L.PIN,
+            "ladder_s": LADDER, "second_rung_max_open": SECOND_RUNG_MAX_OPEN, "final_reserve_min": FINAL_RESERVE_MIN, "pin": L.PIN,
             "codex_version": subprocess.run([L.CODEX, "--version"], capture_output=True, text=True).stdout.strip(),
             "inputs": {p.name: L.sha(p) for p in sorted(L.STANDIN_DIR.iterdir()) if p.is_file()},
             "scripts": {n: L.sha(HERE / n) for n in ("m24.py", "m24_tool.py", "hints.py", "loop.py", "wp_run.sh",
@@ -196,7 +210,7 @@ def main():
         if left <= 1.0:
             break
         write(state / "config.json", {"out": str(out), "t0": t0, "budget_min": a.budget_min,
-                                      "final_reserve_min": FINAL_RESERVE_MIN, "round": r, "ladder": LADDER,
+                                      "final_reserve_min": FINAL_RESERVE_MIN, "round": r, "ladder": LADDER, "second_rung_max_open": SECOND_RUNG_MAX_OPEN,
                                       "lockwait_before_s": L.LOCKWAIT[0], "pin": L.PIN, "owner": "t07f"})
         files = L.workspace_files((L.STANDIN_DIR / L.UNIT).read_text())
         prompt = PROMPT.format(budget=a.budget_min, reserve=FINAL_RESERVE_MIN, minutes=used(), round=r,
@@ -212,16 +226,21 @@ def main():
         res = L.codex_call(out, r, prompt, resume=thread, turn=0, keep_session=True, mcp_state=state,
                            deadline_s=max(60, left * 60))
         subs = submissions(state)[n_before:]
+        if (state / "server_errors.log").exists():
+            L.log(out, "tool server errors:\n" + (state / "server_errors.log").read_text()[-3000:])
         tool_lock = max([s.get("lockwait_total_s", 0) for s in subs] or [0])
         L.LOCKWAIT[0] = lw_before + tool_lock  # waits inside the tool process
         thread = res.get("thread") or thread
         meta["calls"] += 1
+        if not res.get("usage"):
+            meta["usage_incomplete_rounds"] = meta.get("usage_incomplete_rounds", []) + [r]  # no turn.completed
         for k, v in (res.get("usage") or {}).items():
             meta["usage"][k] = meta["usage"].get(k, 0) + v
         rec = {"round": r, "codex": {k: res.get(k) for k in ("exit", "wall_s", "usage", "error", "killed_at_deadline",
                                                              "thread")},
                "tool_calls": len(subs), "tool_results": [s["result"] for s in subs], "minutes": round(used(), 2)}
-        # Codex's final answer is one more candidate: prove it with the same tool path if it differs.
+        # Only the tool's incumbent (best.json) is used; Codex's final answer is recorded, not proven separately.
+        rec["final_answer_hints"] = len(res.get("hints") or [])
         best_f = state / "best.json"
         best = json.loads(best_f.read_text()) if best_f.exists() else None
         rec["best_open"] = best["n_open"] if best else None
@@ -235,10 +254,13 @@ def main():
             L.log(out, f"final replay: ok={fin['ok']} failing={len(fin['failing'])} problems={len(fin['problems'])} "
                        f"smoke={len(fin['smoke_failures'])} wall={fin['wall_s']}")
             if fin["ok"]:
+                # The budget is judged when the positive replay ends (review S3); the control follows.
+                minutes_at_final = round(used(), 2)
+                within = minutes_at_final <= a.budget_min
                 neg = negative_control(out, best, f"r{r}")
                 rec["negative_control"] = neg
-                within = used() <= a.budget_min
-                verdict = {"pass": within and neg["ok"], "within_budget": within, "minutes": round(used(), 2),
+                verdict = {"pass": within and neg["ok"], "within_budget": within, "minutes": minutes_at_final,
+                           "minutes_incl_negative_control": round(used(), 2),
                            "final": rec["final"], "negative_control_ok": neg["ok"], "hints": best["hints"]}
                 write(out / "meta.json", meta)
                 break

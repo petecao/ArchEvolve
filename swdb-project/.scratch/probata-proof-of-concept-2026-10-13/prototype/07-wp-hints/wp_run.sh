@@ -85,10 +85,11 @@ case "$mode" in
     exec env -i HOME="$HOME" PATH="$PATH" TMPDIR="${TMPDIR:-/tmp}" SWDB_VERIFIER_RUN_TOKEN="${SWDB_VERIFIER_RUN_TOKEN-}" opam exec --switch=framac-33 -- frama-c "$@" \
       -wp -wp-split-conj -wp-cache none -wp-session session -wp-prover alt-ergo,z3,cvc5 -wp-timeout 30 -wp-par 12 \
       -wp-smoke-tests -wp-report-json goals.json -then -report -report-untried ;;
-  # Negative control (covering wait removed): the hazard checks only, same flags as final24.
+  # Negative control (covering wait removed): all of TDStep's goals with the same flags as final24, so the
+  # hazard check's consolidated status accounts for the hints it depends on (review S2, 2026-10-16 ET).
   negctl24) rm -rf session && mkdir session
     exec env -i HOME="$HOME" PATH="$PATH" TMPDIR="${TMPDIR:-/tmp}" SWDB_VERIFIER_RUN_TOKEN="${SWDB_VERIFIER_RUN_TOKEN-}" opam exec --switch=framac-33 -- frama-c "$@" \
-      -wp -wp-fct TDStep -wp-prop=@check -wp-split-conj -wp-cache none -wp-session session -wp-prover alt-ergo,z3,cvc5 \
+      -wp -wp-fct TDStep -wp-split-conj -wp-cache none -wp-session session -wp-prover alt-ergo,z3,cvc5 \
       -wp-timeout 30 -wp-par 12 -wp-report-json goals.json -then -report -report-untried ;;
   wp) smoke="" ;;
   wp-smoke) smoke="-wp-smoke-tests" ;;

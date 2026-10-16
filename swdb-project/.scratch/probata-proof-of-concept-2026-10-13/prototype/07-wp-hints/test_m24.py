@@ -72,4 +72,16 @@ def test_prompt_formats_and_names_the_tools():
     text = m24.PROMPT.format(budget=60, reserve=9, minutes=1.0, round=1, rounds=10, feedback="fb", files="files")
     for name in ("falsify_hints", "check_hints", "prove_hints", "show_goal"):
         assert name in text
-    assert "BFS" not in text and "frontier" not in text  # generic guidance only; the workspace holds the unit
+    # Generic guidance only (review S4): no names of this unit outside the workspace section.
+    guidance = text.split("=== Workspace")[0]
+    for word in ("BFS", "frontier", "queue", "parent", "shared", "TDStep_", "dxc_reg", "chunk"):
+        assert word not in guidance, word
+
+
+def test_report_reader_keeps_unexpected_statuses():
+    rep = ("[report] Computing properties status...\n--- Properties of Function 'TDStep'\n"
+           "[    Bug    ] Assertion 'x' (file tdstep_standin.c, line 3)\n"
+           "[  Valid  ] Post-condition 'y' (file tdstep_standin.c, line 4)\n")
+    props = H.read_report(rep)
+    assert [p["status"] for p in props] == ["Bug", "Valid"]
+    assert [p["status"] for p in H.verdict_problems(props, set())] == ["Bug"]

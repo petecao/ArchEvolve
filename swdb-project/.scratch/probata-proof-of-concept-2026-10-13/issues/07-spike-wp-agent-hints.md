@@ -28,6 +28,54 @@ Process (approved): one independent review per method before launch, not one per
 Fallbacks if about five counted runs fail are Yan-Ru's call (120-minute budget; contract-proof seeds).
 Active owner: main session 11d49a0d. Raw output: `/tmp/claude/probata-runs/t07f/` (host `mac`).
 
+### Method24 progress — 2026-10-16 ET (uncounted preparation, host `mac`)
+
+- **Step 1 done: provable stand-in.** No-hint WP on the helpers left 2 goals open: the `std_copy`
+  byte-offset bound (WP 33 keeps byte offsets abstract) and the QueueBuffer constructor's
+  `gapbs_buffer_domain` (WP drops call-result initializedness). Fixes: element-count bound (C11 6.5.6p9)
+  and a store through a formal (`swdb_store_local_queue`). Result: all 125 helper goals Valid, 34.5 s.
+- **A false postcondition, found by the falsifier.** `pushed_are_new` used
+  `\old(parent->start_[queue->shared[i]])`, which reads `queue->shared[i]` in the pre-state, where
+  positions past `shared_in` are arbitrary. A concrete run refutes it (num_nodes=4, shared=[2,0,1,0],
+  shared_in=3: vertex 3 is pushed at position 3, whose pre-state entry 0 was already visited). So no hint
+  set could prove the unit postcondition as written; the 42 past `[Valid]` results for that goal all
+  rested on unproven hints. Fixed with `\let w = queue->shared[i]` (post-state entry, pre-state parent).
+  The same form appears in no other contract in the repository (grep, library/ and swdb/).
+- **No-hint full replay (before the `pushed_are_new` fix):** 359 ordinary goals, 136 open (all TDStep,
+  all timeout), 153/153 smoke tests passed, 19.8 min, 4.4 GB peak
+  (`/tmp/claude/probata-runs/t07f/s1-nohint-full/`). Smoke tests are cheap (each <= 1.5 s); the cost is
+  timeouts.
+- **Step 3: falsifier built** (`prototype/07-wp-hints/falsify/`). Deviation from the plan, recorded:
+  instead of CBMC it executes an instrumented copy of the hint-free stand-in (executable DX100 and
+  library models that follow the summaries) on 2000 seeded inputs that satisfy every named
+  precondition, and evaluates the hints on the recorded states (a bounded check by execution; E-ACSL 33
+  crashed on the stand-in's contracts and rejects labeled `\at` with logic variables). Validation: it
+  refutes run 13's false partial-chunk invariant (`r1c18h1`) and the old `pushed_are_new`; all 9 fixed
+  postconditions and all named preconditions hold on every input; a full run takes about 10 s.
+- **Process incident (repaired):** a test-comparison command ran `git stash` in the shared main
+  checkout and dropped the settings-recovery stash ref; `.claude/settings.json` never changed (29 B,
+  SHA `b3e5fbb2...`). The ref was restored from object `94250972`. Ticket 07 work now runs in worktree
+  `/tmp/claude/probata-wt/t07-m24`, local branch `probata-poc/t07-m24`.
+
+- **No-hint run on the frozen method24 stand-in (acceptance item 2):** final24 mode (all functions,
+  30 s, `-wp-cache none`, smoke tests, `-wp-split-conj`): 447 ordinary goals, **171 open, all in TDStep,
+  all timeout**; 153/153 smoke tests passed; 25.5 min, 4.6 GB (`/tmp/claude/probata-runs/t07f/s1-nohint-final24/`).
+- **Ladder measurement:** no-hint round at 3 s: 180 s, 171/314 open; the 10 s rerun took 483 s and closed
+  none. The 10 s rung therefore runs only when at most 40 goals stay open.
+- **Independent pre-launch review (2026-10-16 ET):** nothing could produce a false pass. Fixed before
+  launch: falsifier false refutations (unsigned quantifier domains, casts as C conversions, ghost storage
+  types and multi-statement ghosts, variant positivity only on back edges as WP 33 generates it, frame
+  check against the union of loop-assigns over all visits); negative control now runs all TDStep goals
+  and requires a non-Valid, non-refuted consolidated hazard status in a healthy run; budget judged when
+  the positive replay ends; unit names removed from the prompt guidance; the report reader keeps
+  unexpected statuses (Bug, Unsound, ...) as problems. One review claim was wrong and is not adopted:
+  `loop variant len - i - 1` on the range loop is not a valid variant (a full tile inside one row
+  leaves the row index unchanged), and the falsifier correctly refutes it.
+- **Assumptions (decided by the main session under Yan-Ru's delegation, 2026-10-16 ET):** the verdict
+  replay adds `-wp-split-conj` (sound: a property is Valid only when every part is); the
+  `pushed_are_new` text correction keeps the unit postcondition's intended meaning and is flagged to
+  Yan-Ru for sign-off.
+
 ## Historical checkpoint — user stop 2026-10-16 11:36 ET
 
 Status is **ready-for-agent**; the active claim is released at the user's request.

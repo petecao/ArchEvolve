@@ -7,7 +7,7 @@
 #   check_hints(hints): the proof hint check (vocabulary, anchors, erase-and-diff, Frama-C parse, WP goal
 #     generation). Seconds.
 #   prove_hints(hints): falsify, check, then WP on TDStep's goals and the lemmas with the timeout ladder
-#     (3 s, then 10 s for goals still open; -wp-split-conj; run-local cache). Minutes. The best set so far
+#     (3 s, then 10 s when at most 40 goals stay open; -wp-split-conj; run-local cache). Minutes. The best set so far
 #     is kept as the incumbent. Never a verdict: the driver's fresh final replay decides.
 #   show_goal(goal): one open goal of the incumbent as WP generates it (no prover).
 # Every call is appended to <state>/submissions.jsonl.
@@ -40,7 +40,7 @@ TOOLS = [
      "inputSchema": SCHEMA, "annotations": {"readOnlyHint": True}},
     {"name": "prove_hints",
      "description": "falsify_hints, check_hints, then WP on TDStep's goals and your lemmas (Alt-Ergo, Z3, CVC5; 3 s per "
-                    "prover, then 10 s for goals still open; conjunctions split into separate goals). Returns every goal "
+                    "prover, then 10 s when at most 40 goals stay open; conjunctions split into separate goals). Returns every goal "
                     "not proven with kind, merged-file line, source line and the hint holding it. Minutes. A set with "
                     "a refuted hint is not sent to WP.",
      "inputSchema": SCHEMA, "annotations": {"readOnlyHint": True}},
@@ -133,7 +133,8 @@ class Server:
         runs = []
         ar = None
         for k, tmo in enumerate(ladder):
-            if k and ar and not ar["failing_goals"]:
+            if k and ar and (not ar["failing_goals"] or
+                             len(ar["failing_goals"]) > self.cfg.get("second_rung_max_open", 40)):
                 break
             remaining_s = max(60, int(self.left_min() * 60))
             wlog, ws = L.verifier(self.out, d, "round24", timeout=remaining_s + 60,

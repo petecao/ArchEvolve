@@ -252,7 +252,10 @@ def check(standin, hints):
     return bad
 
 
-STATUS_RE = re.compile(r"^\[\s*(Valid|Partial|Extern|Alarm|-|Invalid|Unknown|Dead|Never tried|Inconsistent)\s*\]\s+(.*)$")
+# Method24 review S5 (2026-10-16 ET): any bracketed status of the report is read (Bug, Unsound, Reachable,
+# ... included), so an unexpected label can only become a problem, never be skipped. Report status cells
+# start with a space ("[  Valid  ]"); plugin prefixes such as "[report]" do not.
+STATUS_RE = re.compile(r"^\[\s+([^\]]*?)\s*\]\s+(.*)$")
 
 
 FUNC_RE = re.compile(r"^--- Properties of Function '([^']+)'")

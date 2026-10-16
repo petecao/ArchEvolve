@@ -108,3 +108,34 @@ def test_report_names_the_counterexample(fz):
     hints = [h("i2", "loop:k_loop", "loop_invariant", "loop invariant k < count;")]
     text = F.report_text(hints, fz.run(hints))
     assert "i2 (loop_invariant at loop:k_loop) is FALSE" in text and "input: num_nodes=" in text
+
+
+def test_review_s1_true_hints_are_not_refuted(fz):
+    # Review 2026-10-16 S1: C types of quantified variables, casts, ghost storage types, the range-loop
+    # break visit and moving loop-assigns ranges must not produce false refutations.
+    hints = [
+        h("q1", "stmt:entry", "assert", "assert \\forall unsigned x; x < 3 ==> x >= 0;"),
+        h("q2", "stmt:entry", "assert", "assert \\forall size_t p; p < queue->shared_in ==> p + 1 > 0;"),
+        h("c1", "stmt:entry", "assert", "assert (unsigned)(num_nodes - num_nodes - 1) == 4294967295;"),
+        h("g1", "stmt:k_start", "ghost", "ghost unsigned m24_m = k - 1;"),
+        h("g2", "stmt:k_start", "assert", "assert k == 0 ==> m24_m == 4294967295;"),
+        h("g3", "stmt:entry", "ghost", "ghost int m24_a = 1; m24_b = 2;"),
+        # -1 exactly at the visit that breaks out (state (n, -1)), >= 0 and decreasing on every back edge.
+        h("v1", "loop:range_loop", "loop_variant",
+          "loop variant (dxc_tile_len[c.tile[1]] - dxc_reg[c.reg[4]]) * (num_edges + 2) + (num_edges + 1 - dxc_reg[c.reg[5]]) - (num_edges + 3);"),
+        h("a1", "loop:i_loop", "loop_assigns",
+          "loop assigns i, parent->start_[0 .. num_nodes - 1], lqueue.in, lqueue.local_queue[0 .. 16384 - 1], "
+          "queue->shared_in, queue->shared[queue->shared_in .. 36893488147419103231];"),
+    ]
+    v = verdicts(fz, hints)
+    assert all(v[k] != "refuted" for k in ("q1", "q2", "c1", "g2", "v1", "a1")), v
+
+
+def test_review_s1_casts_and_types_still_refute_false_hints(fz):
+    hints = [
+        h("c2", "stmt:entry", "assert", "assert (unsigned)(num_nodes - num_nodes - 1) == -1;"),
+        # Does not decrease when one row fills a whole tile (the row index stays the same).
+        h("v2", "loop:range_loop", "loop_variant", "loop variant dxc_tile_len[c.tile[1]] - dxc_reg[c.reg[4]];"),
+    ]
+    v = verdicts(fz, hints)
+    assert v["c2"] == "refuted" and v["v2"] == "refuted"

@@ -104,7 +104,8 @@ class Falsifier:
 
     def _instance(self, inst, evs, by_anchor, parsed, defs, stats, refuted):
         pre = None
-        ghost = {}
+        ghost, gtypes = {}, {}
+        unions = {}     # (hint, loop instance) -> covered locations over all visits so far
         stack = []      # [loop, entry_state, last_state, entry_index]
         heads = {}      # (loop entry seq) -> [(state, seq)]
         for ev in evs:
@@ -137,20 +138,32 @@ class Falsifier:
                     continue
                 ctx = A.Ctx(labels, "Here", defs)
                 if kind == "ghost":
-                    name, rhs = e
-                    try:
-                        ghost[name] = A.eval_term(ctx, rhs) if rhs is not None else 0
-                    except A.Unknown:
-                        ghost.pop(name, None)
-                    st.ghost = dict(ghost)
+                    for name, ty, rhs in e:
+                        if ty is not None:
+                            gtypes[name] = ty
+                        try:
+                            val = A.eval_term(A.Ctx(labels, "Here", defs), rhs) if rhs is not None else 0
+                            ghost[name] = A.convert(gtypes.get(name, ("integer", 0)), val)
+                        except A.Unknown:
+                            ghost.pop(name, None)
+                        st.ghost = dict(ghost)
                     continue
                 if stats[hid]["checked"] + stats[hid]["unknown"] > MAX_EVENTS_PER_HINT:
                     continue
                 if kind in ("inv", "assert"):
                     r = A.check(ctx, e)
                     self._record(hid, r, inst, ev, st, e, ctx, stats, refuted)
-                elif kind == "assigns" and stack and st is not stack[-1][1]:
-                    r, why = frame_check(ctx, e, stack[-1][1], st)
+                elif kind == "assigns" and stack:
+                    acc = unions.setdefault((hid, stack[-1][3]), [set(), set(), set(), True])
+                    if acc[3]:
+                        try:
+                            for loc in e:
+                                cover(ctx, loc, acc[0], acc[1], acc[2])
+                        except A.Unknown:
+                            acc[3] = False
+                    if st is stack[-1][1]:
+                        continue
+                    r, why = frame_check(ctx, e, stack[-1][1], st, acc if acc[3] else None)
                     if r is False:
                         refuted[hid] = {"instance": I.describe(self.rows[inst]), "anchor": a,
                                         "visit": visit_no(heads, stack), "detail": why,
@@ -173,9 +186,9 @@ class Falsifier:
                 except A.Unknown:
                     v = None
                 vals.append(v if isinstance(v, int) else None)
-            # The variant must be >= 0 at each visit that enters the body and decrease to the next visit.
-            # range_loop is `for (;;)` left by `break`, so its last visit enters the body too.
-            entered = len(vals) if lp == "range_loop" else len(vals) - 1
+            # The variant must be >= 0 and decrease from each visit to the next visit of the same loop instance.
+            # WP 33 checks positivity only on the back edge (cfgAnnot.ml:441-449): visits followed by another visit.
+            entered = len(vals) - 1
             for t in range(entered):
                 v = vals[t]
                 if v is None:
@@ -248,22 +261,30 @@ def split_top(text):
 
 
 def parse_ghost(text):
-    t = strip_kw(text, "ghost")
-    if "=" in t and not any(op in t.split("=", 1)[0] for op in "<>!"):
-        lhs, rhs = t.split("=", 1)
-        name = lhs.split()[-1].strip("*")
-        return name, A.parse(rhs.strip())
-    return t.split()[-1].strip("*"), None
+    """[(name, type or None, rhs expr or None)] for each `T x = e;`, `T x;` or `x = e;` statement."""
+    t = text.strip()
+    assert t.startswith("ghost"), t
+    t = t[len("ghost"):]
+    stmts = []
+    for st in [x.strip() for x in t.split(";") if x.strip()]:
+        if "=" in st and not any(op in st.split("=", 1)[0] for op in "<>!"):
+            lhs, rhs = st.split("=", 1)
+            rhs_e = A.parse(rhs.strip())
+        else:
+            lhs, rhs_e = st, None
+        words = lhs.replace("*", " * ").split()
+        name = words[-1]
+        ty = (" ".join(w for w in words[:-1] if w != "*"), words.count("*")) if len(words) > 1 else None
+        stmts.append((name, ty, rhs_e))
+    return stmts
 
 
-def frame_check(ctx, locs, entry, here):
-    """False (with reason) if a location changed since LoopEntry is outside the loop assigns."""
-    covered_mem, covered_loc, covered_struct = set(), set(), set()
-    for e in locs:
-        try:
-            cover(ctx, e, covered_mem, covered_loc, covered_struct)
-        except A.Unknown:
-            return None, None
+def frame_check(ctx, locs, entry, here, acc=None):
+    """False (with reason) if a location changed since LoopEntry lies outside the union of the loop assigns
+    evaluated at every loop-head visit from LoopEntry to Here (sound under either reading of WP's frame)."""
+    if acc is None:
+        return None, None
+    covered_mem, covered_loc, covered_struct = acc[0], acc[1], acc[2]
     for blk, vals in here.mem.items():
         if isinstance(vals, list) and blk in entry.mem and blk not in ("dxc_tile_data", "swdb_contexts"):
             for i, (x, y) in enumerate(zip(entry.mem[blk], vals)):

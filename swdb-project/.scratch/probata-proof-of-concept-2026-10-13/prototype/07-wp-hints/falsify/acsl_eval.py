@@ -350,6 +350,52 @@ PARAM_PTRS = {"g": ("G", 0), "VertexOffsets": ("VO", 0), "parent": ("PV", 0), "q
 WINDOW = range(-4, 41)
 
 
+UNSIGNED_BITS = {"unsigned": 32, "unsigned int": 32, "uint32_t": 32, "size_t": 64, "unsigned long": 64,
+                 "uint64_t": 64, "unsigned long long": 64, "uint16_t": 16, "unsigned short": 16,
+                 "unsigned char": 8}
+SIGNED_BITS = {"int": 32, "int32_t": 32, "NodeID": 32, "SGOffset": 32, "signed": 32, "long": 64, "int64_t": 64,
+               "long long": 64, "ptrdiff_t": 64, "short": 16, "char": 8}
+
+
+def ctype(ty):
+    """('u', bits) / ('s', bits) / ('bool',) / None (integer, pointer, struct) for a parsed type."""
+    name, stars = ty
+    if stars:
+        return None
+    name = name.replace("const ", "").strip()
+    if name in UNSIGNED_BITS:
+        return ("u", UNSIGNED_BITS[name])
+    if name in SIGNED_BITS:
+        return ("s", SIGNED_BITS[name])
+    if name in ("bool", "_Bool"):
+        return ("bool",)
+    return None
+
+
+def convert(ty, v):
+    """C conversion of an integer value to type ty (modular for unsigned, wrap for signed: the x86_64 rule)."""
+    t = ctype(ty)
+    if t is None or not isinstance(v, (int, bool)) or isinstance(v, Ptr):
+        return v
+    v = int(v)
+    if t[0] == "bool":
+        return 1 if v else 0
+    m = 1 << t[1]
+    if t[0] == "u":
+        return v % m
+    v %= m
+    return v - m if v >= m // 2 else v
+
+
+def type_range(ty):
+    t = ctype(ty)
+    if t is None or t[0] == "bool":
+        return None
+    if t[0] == "u":
+        return 0, (1 << t[1]) - 1
+    return -(1 << (t[1] - 1)), (1 << (t[1] - 1)) - 1
+
+
 def to_val(x):
     if isinstance(x, dict):
         if set(x) == {"b", "i"}:
@@ -597,8 +643,18 @@ def eval_quant(ctx, kind, vars_, body):
         name = vars_[i][0]
         c = ctx.child(binds)
         lo, hi = bounds_for(name, guard, c, names - set(binds) - {name})
+        tr = type_range(vars_[i][1])
+        if tr is not None:
+            lo = tr[0] if lo is None else max(lo, tr[0])
+            hi_t = tr[1]
+        else:
+            hi_t = None
         if lo is None or hi is None:
-            dom, approx = WINDOW, True
+            w_lo = WINDOW.start if lo is None else lo
+            w_hi = WINDOW.stop - 1 if hi is None else hi
+            if hi_t is not None:
+                w_hi = min(w_hi, hi_t)
+            dom, approx = range(w_lo, max(w_lo, w_hi) + 1), True
         else:
             if hi - lo > 2000:
                 raise Unknown("quantifier range too large")
@@ -783,7 +839,7 @@ def eval_term(ctx, e):
         if op == "*":
             return read(ctx, v)
     if k == "cast":
-        return eval_term(ctx, e[2])
+        return convert(e[1], eval_term(ctx, e[2]))
     if k == "idx":
         base = eval_term(ctx, e[1])
         i = eval_term(ctx, e[2])
