@@ -1,0 +1,3446 @@
+{
+  "accepted_observations": {
+    "actual_four_serial_calls_exit0": true,
+    "compiled_paths": {
+      "data": "/Users/yanrujhou/.opam/framac-33/share/why3",
+      "lib": "/Users/yanrujhou/.opam/framac-33/lib/why3"
+    },
+    "config_bytes_unchanged": true,
+    "expanded_variant_count": 10,
+    "recorded_versions_only": true,
+    "selected_recursive_driver_closures": true
+  },
+  "actual_component_solver_or_version_calls": 0,
+  "actual_component_tool_calls": 4,
+  "actual_guard": {
+    "cap_gb": 8.0,
+    "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment",
+    "cleanup_inspection_failure": null,
+    "cleanup_inspection_failures": [],
+    "clock": "continuous_monotonic",
+    "clock_info": {
+      "denom": 3,
+      "implementation": "mach_continuous_time",
+      "includes_sleep": true,
+      "kind": "continuous_monotonic",
+      "numer": 125
+    },
+    "cmd": [
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+      "/private/tmp/probata-t28-rank-config-entry-v2-20261016.py",
+      "/private/tmp/probata-t28-rank-config-v2-9704c54b-20261016/component"
+    ],
+    "error": null,
+    "exit_code": 1,
+    "finished": "2026-10-16 01:15:29 EDT",
+    "inspection_events": [],
+    "inspection_failure": null,
+    "inspection_retry_boundary": "AccessDenied uses a 200 ms environ retry admission window and 21-attempt cap, or three attempts for other operations; only the exact proc_environ SystemError raised by the requested environ operation shares that policy; individual OS calls are not forcibly timed; all pauses count and RSS/deadline checks remain mandatory after inspection; only independently confirmed gone/zombie or changed birth is skipped; persistent live or unknown failure fails closed",
+    "killed_by_watchdog": false,
+    "lock_wait_s": 0.00058562500635162,
+    "log": "/private/tmp/probata-t28-rank-config-v2-9704c54b-20261016/guard.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "peak_rss_mb": 95.515625,
+    "primary_inspection_failure": null,
+    "queue_timed_out": false,
+    "queue_timeout_s": 30.0,
+    "rss_scope": "live union of current ancestry, retained PID/birth identities and periodic inherited-marker matches; sampled, not a kernel quota",
+    "runner_pid": 46936,
+    "timed_out": false,
+    "timeout_s": 60.0,
+    "unconfirmed_children": [],
+    "wall_s": 0.731260166678112
+  },
+  "all_pass": true,
+  "audit_source_sha256": "51f3632c52b255faf9eee4f74014bba92f25562cf77f77946410a69be4791621",
+  "audit_tool_calls": 0,
+  "check_rows": [
+    {
+      "name": "pin:/private/tmp/probata-t28-rank-config-command-v1-20261016.json",
+      "passed": true
+    },
+    {
+      "name": "pin:/private/tmp/probata-t28-rank-config-expected-v1-20261016.json",
+      "passed": true
+    },
+    {
+      "name": "pin:/private/tmp/probata-t28-rank-config-entry-v1-20261016.py",
+      "passed": true
+    },
+    {
+      "name": "pin:/private/tmp/probata-t28-rank-config-packet-v1-20261016.md",
+      "passed": true
+    },
+    {
+      "name": "pin:/private/tmp/probata-t28-rank-config-command-v2-20261016.json",
+      "passed": true
+    },
+    {
+      "name": "pin:/private/tmp/probata-t28-rank-config-expected-v2-20261016.json",
+      "passed": true
+    },
+    {
+      "name": "pin:/private/tmp/probata-t28-rank-config-entry-v2-20261016.py",
+      "passed": true
+    },
+    {
+      "name": "pin:/private/tmp/probata-t28-rank-config-packet-v2-20261016.md",
+      "passed": true
+    },
+    {
+      "name": "pin:/private/tmp/probata-t28-rank-config-reader-controls-v2-20261016.py",
+      "passed": true
+    },
+    {
+      "name": "pin:/private/tmp/probata-t28-rank-config-reader-red-v2-20261016.json",
+      "passed": true
+    },
+    {
+      "name": "pin:/private/tmp/probata-t28-rank-config-reader-green-v2-20261016.json",
+      "passed": true
+    },
+    {
+      "name": "pin:/private/tmp/probata-t28-rank-driver-imports-v2-20261016.txt",
+      "passed": true
+    },
+    {
+      "name": "pin:/private/tmp/probata-resume-t07-source-domains/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/bin/why3",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.why3.conf",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/lib/why3/commands/why3config.cmxs",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/provers-detection-data.conf",
+      "passed": true
+    },
+    {
+      "files": 57,
+      "name": "closed-tree:stdlib_files",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/algebra.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/array.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/bag.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/bintree.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/bool.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/bv.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/byte_string.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/cursor.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/debug.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/exn.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/floating_point.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/fmap.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/for_drivers.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/function.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/graph.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/hashtbl.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/ieee_float.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/int.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/io.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/list.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/array.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/bv.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/c.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/float.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/fxp.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/int.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/java/io.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/java/lang.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/java/util.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/list.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/matrix.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/onetime.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/peano.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/tagset.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/map.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/matrix.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/microc.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/number.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/ocaml.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/option.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/pigeon.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/pqueue.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/python.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/queue.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/random.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/real.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/ref.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/regexp.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/relations.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/seq.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/set.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/stack.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/string.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/tptp.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/tree.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/ufloat.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/witness.mlw",
+      "passed": true
+    },
+    {
+      "files": 93,
+      "name": "closed-tree:drivers_files",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_26.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_26_bv.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_26_ce.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_2_2_0.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_2_3.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_common.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_counterexamples.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_fp.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_model.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_smt.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/beagle.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/colibri.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/colibri2.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/common-transformations.gen",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/coq-common.gen",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/coq-realizations.aux",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/coq-realize.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/coq-ssreflect.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/coq.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc3.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4-realize.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_14.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_15.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_15_counterexample.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_16.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_16.gen",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_16_counterexample.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_17.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_17_counterexample.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_18_strings.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_18_strings_counterexample.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_bv.gen",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5_counterexample.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5_strings.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5_strings_counterexample.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/discrimination.gen",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/dreal.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/eprover.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/gappa.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/iprover.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/isabelle-common.gen",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/isabelle-realizations.aux",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/isabelle-realize.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/isabelle.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/mathematica.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/mathsat.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/metis.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/metitarski.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/no-bv.gen",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/polypaver.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/princess.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/psyche.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/pvs-common.gen",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/pvs-realizations.aux",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/pvs-realize.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/pvs.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/safeprover.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/simplify.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-bv-realization.gen",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-bv.gen",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-floats.gen",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2.gen",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smtlib-strings.gen",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/spass.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/spass_types.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/tptp-tff0.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/tptp-tff1.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/tptp.gen",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/vampire.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/vampire_4_2_2.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/vampire_4_5_1.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/verit.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/why3.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/why3_smt.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/why3_tptp.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/yices-smt2.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/yices.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_432.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_440.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_440_counterexample.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_471.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_471_counterexample.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_471_nobv.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_487.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_487_counterexample.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_bv.gen",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_smtv1.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/zenon.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/zenon_modulo.drv",
+      "passed": true
+    },
+    {
+      "name": "pin:/Users/yanrujhou/.opam/framac-33/bin/alt-ergo",
+      "passed": true
+    },
+    {
+      "name": "binary-realpath:/Users/yanrujhou/.opam/framac-33/bin/alt-ergo",
+      "passed": true
+    },
+    {
+      "name": "pin:/opt/homebrew/bin/cvc5",
+      "passed": true
+    },
+    {
+      "name": "binary-realpath:/opt/homebrew/bin/cvc5",
+      "passed": true
+    },
+    {
+      "name": "pin:/opt/homebrew/bin/z3",
+      "passed": true
+    },
+    {
+      "name": "binary-realpath:/opt/homebrew/bin/z3",
+      "passed": true
+    },
+    {
+      "name": "pin:/private/tmp/probata-resume-t25-pair/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-readiness-rank/delay_family.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/private/tmp/probata-resume-t25-pair/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-readiness-rank/no_progress.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/private/tmp/probata-resume-t25-pair/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-readiness-rank/readiness_rank.mlw",
+      "passed": true
+    },
+    {
+      "name": "pin:/private/tmp/probata-why3-1.8.2-config-source-20261016/src/tools/why3config.ml",
+      "passed": true
+    },
+    {
+      "name": "pin:/private/tmp/probata-why3-1.8.2-config-source-20261016/src/tools/main.ml",
+      "passed": true
+    },
+    {
+      "name": "pin:/private/tmp/probata-why3-1.8.2-config-source-20261016/src/driver/whyconf.ml",
+      "passed": true
+    },
+    {
+      "name": "pin:/private/tmp/probata-why3-1.8.2-config-source-20261016/src/driver/autodetection.ml",
+      "passed": true
+    },
+    {
+      "name": "pin:/private/tmp/probata-why3-1.8.2-config-source-20261016/src/driver/driver.ml",
+      "passed": true
+    },
+    {
+      "name": "pin:/private/tmp/probata-why3-1.8.2-config-source-20261016/src/driver/driver_lexer.mll",
+      "passed": true
+    },
+    {
+      "name": "pin:/private/tmp/probata-why3-1.8.2-config-source-20261016/src/util/lexlib.mll",
+      "passed": true
+    },
+    {
+      "name": "pin:/private/tmp/probata-why3-1.8.2-config-source-20261016/why3-1.8.2.tar.gz",
+      "passed": true
+    },
+    {
+      "name": "exact-component-inventory",
+      "passed": true
+    },
+    {
+      "name": "retained-artifact:datadir.stderr",
+      "passed": true
+    },
+    {
+      "name": "retained-artifact:datadir.stdout",
+      "passed": true
+    },
+    {
+      "name": "retained-artifact:libdir.stderr",
+      "passed": true
+    },
+    {
+      "name": "retained-artifact:libdir.stdout",
+      "passed": true
+    },
+    {
+      "name": "retained-artifact:list-provers.stderr",
+      "passed": true
+    },
+    {
+      "name": "retained-artifact:list-provers.stdout",
+      "passed": true
+    },
+    {
+      "name": "retained-artifact:progress.json",
+      "passed": true
+    },
+    {
+      "name": "retained-artifact:result.json",
+      "passed": true
+    },
+    {
+      "name": "retained-artifact:show.stderr",
+      "passed": true
+    },
+    {
+      "name": "retained-artifact:show.stdout",
+      "passed": true
+    },
+    {
+      "name": "admitted-command-identity",
+      "passed": true
+    },
+    {
+      "name": "source-receipts-clean-frozen",
+      "passed": true
+    },
+    {
+      "name": "root-preflight-idle-bounded",
+      "passed": true
+    },
+    {
+      "name": "actual-exit1-retained",
+      "passed": true
+    },
+    {
+      "name": "original-offline-parser-failure-retained",
+      "passed": true
+    },
+    {
+      "name": "guard-actual-command",
+      "passed": true
+    },
+    {
+      "name": "guard-resource-scope",
+      "passed": true
+    },
+    {
+      "name": "guard-no-resource-or-inspection-failure",
+      "passed": true
+    },
+    {
+      "name": "guard-log-identity",
+      "passed": true
+    },
+    {
+      "name": "four-receipts-identical",
+      "passed": true
+    },
+    {
+      "name": "actual-argv:datadir",
+      "passed": true
+    },
+    {
+      "name": "actual-stream:datadir.stdout",
+      "passed": true
+    },
+    {
+      "name": "actual-stream:datadir.stderr",
+      "passed": true
+    },
+    {
+      "name": "stderr-empty:datadir",
+      "passed": true
+    },
+    {
+      "name": "actual-argv:libdir",
+      "passed": true
+    },
+    {
+      "name": "actual-stream:libdir.stdout",
+      "passed": true
+    },
+    {
+      "name": "actual-stream:libdir.stderr",
+      "passed": true
+    },
+    {
+      "name": "stderr-empty:libdir",
+      "passed": true
+    },
+    {
+      "name": "actual-argv:show",
+      "passed": true
+    },
+    {
+      "name": "actual-stream:show.stdout",
+      "passed": true
+    },
+    {
+      "name": "actual-stream:show.stderr",
+      "passed": true
+    },
+    {
+      "name": "stderr-empty:show",
+      "passed": true
+    },
+    {
+      "name": "actual-argv:list-provers",
+      "passed": true
+    },
+    {
+      "name": "actual-stream:list-provers.stdout",
+      "passed": true
+    },
+    {
+      "name": "actual-stream:list-provers.stderr",
+      "passed": true
+    },
+    {
+      "name": "stderr-empty:list-provers",
+      "passed": true
+    },
+    {
+      "name": "compiled-datadir",
+      "passed": true
+    },
+    {
+      "name": "compiled-libdir",
+      "passed": true
+    },
+    {
+      "name": "exact-function-set:/private/tmp/probata-t28-rank-retained-rc-reader-v1-20261016.py",
+      "passed": true
+    },
+    {
+      "name": "pin:/private/tmp/probata-t28-rank-retained-rc-controls-v1-20261016.py",
+      "passed": true
+    },
+    {
+      "name": "retained-reader-controls-bound",
+      "passed": true
+    },
+    {
+      "name": "exact-function-set:/private/tmp/probata-t28-rank-config-entry-v2-20261016.py",
+      "passed": true
+    },
+    {
+      "name": "one-main",
+      "passed": true
+    },
+    {
+      "name": "effective-config-scope",
+      "passed": true
+    },
+    {
+      "name": "config-concurrency-two-is-only-metadata",
+      "passed": true
+    },
+    {
+      "name": "recorded-version-label:Z3:noBV",
+      "passed": true
+    },
+    {
+      "name": "noninteractive:Z3:noBV",
+      "passed": true
+    },
+    {
+      "name": "expanded-executable:Z3:noBV:command",
+      "passed": true
+    },
+    {
+      "name": "expanded-executable:Z3:noBV:command_steps",
+      "passed": true
+    },
+    {
+      "name": "recorded-version-label:Z3:counterexamples",
+      "passed": true
+    },
+    {
+      "name": "noninteractive:Z3:counterexamples",
+      "passed": true
+    },
+    {
+      "name": "expanded-executable:Z3:counterexamples:command",
+      "passed": true
+    },
+    {
+      "name": "expanded-executable:Z3:counterexamples:command_steps",
+      "passed": true
+    },
+    {
+      "name": "recorded-version-label:Z3:",
+      "passed": true
+    },
+    {
+      "name": "noninteractive:Z3:",
+      "passed": true
+    },
+    {
+      "name": "expanded-executable:Z3::command",
+      "passed": true
+    },
+    {
+      "name": "expanded-executable:Z3::command_steps",
+      "passed": true
+    },
+    {
+      "name": "recorded-version-label:CVC5:strings+counterexamples",
+      "passed": true
+    },
+    {
+      "name": "noninteractive:CVC5:strings+counterexamples",
+      "passed": true
+    },
+    {
+      "name": "expanded-executable:CVC5:strings+counterexamples:command",
+      "passed": true
+    },
+    {
+      "name": "expanded-executable:CVC5:strings+counterexamples:command_steps",
+      "passed": true
+    },
+    {
+      "name": "recorded-version-label:CVC5:strings",
+      "passed": true
+    },
+    {
+      "name": "noninteractive:CVC5:strings",
+      "passed": true
+    },
+    {
+      "name": "expanded-executable:CVC5:strings:command",
+      "passed": true
+    },
+    {
+      "name": "expanded-executable:CVC5:strings:command_steps",
+      "passed": true
+    },
+    {
+      "name": "recorded-version-label:CVC5:counterexamples",
+      "passed": true
+    },
+    {
+      "name": "noninteractive:CVC5:counterexamples",
+      "passed": true
+    },
+    {
+      "name": "expanded-executable:CVC5:counterexamples:command",
+      "passed": true
+    },
+    {
+      "name": "expanded-executable:CVC5:counterexamples:command_steps",
+      "passed": true
+    },
+    {
+      "name": "recorded-version-label:CVC5:",
+      "passed": true
+    },
+    {
+      "name": "noninteractive:CVC5:",
+      "passed": true
+    },
+    {
+      "name": "expanded-executable:CVC5::command",
+      "passed": true
+    },
+    {
+      "name": "expanded-executable:CVC5::command_steps",
+      "passed": true
+    },
+    {
+      "name": "recorded-version-label:Alt-Ergo:counterexamples",
+      "passed": true
+    },
+    {
+      "name": "noninteractive:Alt-Ergo:counterexamples",
+      "passed": true
+    },
+    {
+      "name": "expanded-executable:Alt-Ergo:counterexamples:command",
+      "passed": true
+    },
+    {
+      "name": "expanded-executable:Alt-Ergo:counterexamples:command_steps",
+      "passed": true
+    },
+    {
+      "name": "recorded-version-label:Alt-Ergo:BV",
+      "passed": true
+    },
+    {
+      "name": "noninteractive:Alt-Ergo:BV",
+      "passed": true
+    },
+    {
+      "name": "expanded-executable:Alt-Ergo:BV:command",
+      "passed": true
+    },
+    {
+      "name": "expanded-executable:Alt-Ergo:BV:command_steps",
+      "passed": true
+    },
+    {
+      "name": "recorded-version-label:Alt-Ergo:",
+      "passed": true
+    },
+    {
+      "name": "noninteractive:Alt-Ergo:",
+      "passed": true
+    },
+    {
+      "name": "expanded-executable:Alt-Ergo::command",
+      "passed": true
+    },
+    {
+      "name": "expanded-executable:Alt-Ergo::command_steps",
+      "passed": true
+    },
+    {
+      "name": "exact-ten-unique-expanded-variants",
+      "passed": true
+    },
+    {
+      "name": "show-list-provers-exact-cross-check",
+      "passed": true
+    },
+    {
+      "name": "only-four-metadata-paths",
+      "passed": true
+    },
+    {
+      "name": "raw-output-budget",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-t28-rank-config-packet-manifest-v1-20261016.json",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-t28-rank-config-command-v1-20261016.json",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-t28-rank-config-expected-v1-20261016.json",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-t28-rank-config-entry-v1-20261016.py",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-t28-rank-config-packet-v1-20261016.md",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-t28-rank-config-packet-manifest-v2-20261016.json",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-t28-rank-config-command-v2-20261016.json",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-t28-rank-config-expected-v2-20261016.json",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-t28-rank-config-entry-v2-20261016.py",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-t28-rank-config-packet-v2-20261016.md",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-t28-rank-config-reader-controls-v2-20261016.py",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-t28-rank-config-reader-red-v2-20261016.json",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-t28-rank-config-reader-green-v2-20261016.json",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-t28-rank-driver-imports-v2-20261016.txt",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-resume-t07-source-domains/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/bin/why3",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.why3.conf",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/lib/why3/commands/why3config.cmxs",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/provers-detection-data.conf",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/algebra.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/array.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/bag.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/bintree.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/bool.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/bv.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/byte_string.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/cursor.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/debug.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/exn.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/floating_point.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/fmap.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/for_drivers.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/function.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/graph.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/hashtbl.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/ieee_float.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/int.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/io.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/list.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/array.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/bv.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/c.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/float.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/fxp.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/int.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/java/io.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/java/lang.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/java/util.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/list.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/matrix.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/onetime.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/peano.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/tagset.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/map.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/matrix.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/microc.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/number.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/ocaml.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/option.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/pigeon.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/pqueue.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/python.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/queue.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/random.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/real.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/ref.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/regexp.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/relations.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/seq.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/set.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/stack.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/string.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/tptp.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/tree.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/ufloat.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/witness.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_26.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_26_bv.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_26_ce.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_2_2_0.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_2_3.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_common.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_counterexamples.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_fp.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_model.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_smt.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/beagle.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/colibri.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/colibri2.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/common-transformations.gen",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/coq-common.gen",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/coq-realizations.aux",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/coq-realize.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/coq-ssreflect.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/coq.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc3.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4-realize.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_14.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_15.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_15_counterexample.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_16.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_16.gen",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_16_counterexample.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_17.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_17_counterexample.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_18_strings.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_18_strings_counterexample.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_bv.gen",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5_counterexample.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5_strings.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5_strings_counterexample.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/discrimination.gen",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/dreal.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/eprover.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/gappa.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/iprover.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/isabelle-common.gen",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/isabelle-realizations.aux",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/isabelle-realize.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/isabelle.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/mathematica.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/mathsat.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/metis.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/metitarski.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/no-bv.gen",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/polypaver.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/princess.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/psyche.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/pvs-common.gen",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/pvs-realizations.aux",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/pvs-realize.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/pvs.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/safeprover.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/simplify.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-bv-realization.gen",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-bv.gen",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-floats.gen",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2.gen",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smtlib-strings.gen",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/spass.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/spass_types.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/tptp-tff0.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/tptp-tff1.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/tptp.gen",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/vampire.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/vampire_4_2_2.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/vampire_4_5_1.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/verit.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/why3.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/why3_smt.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/why3_tptp.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/yices-smt2.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/yices.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_432.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_440.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_440_counterexample.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_471.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_471_counterexample.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_471_nobv.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_487.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_487_counterexample.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_bv.gen",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_smtv1.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/zenon.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/share/why3/drivers/zenon_modulo.drv",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/Users/yanrujhou/.opam/framac-33/bin/alt-ergo",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/opt/homebrew/bin/cvc5",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/opt/homebrew/bin/z3",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-resume-t25-pair/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-readiness-rank/delay_family.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-resume-t25-pair/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-readiness-rank/no_progress.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-resume-t25-pair/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-readiness-rank/readiness_rank.mlw",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-why3-1.8.2-config-source-20261016/src/tools/why3config.ml",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-why3-1.8.2-config-source-20261016/src/tools/main.ml",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-why3-1.8.2-config-source-20261016/src/driver/whyconf.ml",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-why3-1.8.2-config-source-20261016/src/driver/autodetection.ml",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-why3-1.8.2-config-source-20261016/src/driver/driver.ml",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-why3-1.8.2-config-source-20261016/src/driver/driver_lexer.mll",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-why3-1.8.2-config-source-20261016/src/util/lexlib.mll",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-why3-1.8.2-config-source-20261016/why3-1.8.2.tar.gz",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-t28-rank-config-v2-9704c54b-20261016/root-driver.log",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-t28-rank-config-v2-9704c54b-20261016/guard.log.wait.json",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-t28-rank-config-v2-9704c54b-20261016/guard.log.summary.json",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-t28-rank-config-v2-9704c54b-20261016/guard.log",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-t28-rank-config-v2-9704c54b-20261016/component/list-provers.stdout",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-t28-rank-config-v2-9704c54b-20261016/component/show.stdout",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-t28-rank-config-v2-9704c54b-20261016/component/result.json",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-t28-rank-config-v2-9704c54b-20261016/component/libdir.stdout",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-t28-rank-config-v2-9704c54b-20261016/component/libdir.stderr",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-t28-rank-config-v2-9704c54b-20261016/component/show.stderr",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-t28-rank-config-v2-9704c54b-20261016/component/list-provers.stderr",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-t28-rank-config-v2-9704c54b-20261016/component/datadir.stdout",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-t28-rank-config-v2-9704c54b-20261016/component/progress.json",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-t28-rank-config-v2-9704c54b-20261016/component/datadir.stderr",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-t28-rank-config-v2-9704c54b-20261016/component/artifacts.json",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-t28-rank-config-root-preflight-v2-20261016.json",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-t28-rank-config-root-exit-v2-20261016.json",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-t28-rank-config-root-launch-v2-20261016.py",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-why3-1.8.2-config-source-20261016/src/util/rc.mll",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-t28-rank-retained-rc-reader-v1-20261016.py",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-t28-rank-retained-rc-controls-v1-20261016.json",
+      "passed": true
+    },
+    {
+      "name": "final-recheck:/private/tmp/probata-t28-rank-retained-rc-controls-v1-20261016.py",
+      "passed": true
+    }
+  ],
+  "checks": 483,
+  "current_source_inspection": {
+    "clean": true,
+    "head": "9704c54b838863dd838d18a20dd0ade1633d5027",
+    "method": "Separate read-only git rev-parse HEAD and git status --porcelain observed by agent before this pure audit",
+    "rank_source_bytes_independently_rehashed": true
+  },
+  "date_et": "2026-10-16",
+  "driver_reader_function_sha256": {
+    "driver_closure": "e7f38d72873acc42eac05ac6eecaf76650056b90d78ea046f892c50720fb02c3",
+    "imports": "5b086df3c5efeaefa82838522eaa075ef68ae55143a5e306b1c446fb0bdc1e57",
+    "sha": "e06729923af2c5a5b18bae5d47797a96ffa5554dd78e314c162db9de2e2e594a"
+  },
+  "expanded_provers": [
+    {
+      "alternative": "noBV",
+      "binary": {
+        "path": "/opt/homebrew/bin/z3",
+        "resolved_path": "/opt/homebrew/Cellar/z3/5.1.0/bin/z3",
+        "sha256": "b9a2c3a7dc833da652955116ad743cc733aa7938dbe64f528f71cb09066e2512"
+      },
+      "command": "'/opt/homebrew/bin/z3' -smt2 -T:%t sat.random_seed=42 nlsat.randomize=false smt.random_seed=42 %f",
+      "command_steps": "'/opt/homebrew/bin/z3' -smt2 sat.random_seed=42 nlsat.randomize=false smt.random_seed=42 rlimit=%S %f",
+      "driver": "z3_471_nobv",
+      "driver_closure": {
+        "files_sha256": {
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/discrimination.gen": "a68d1b651bf9649d0b12dc137b7b364742e71841a5e7ca56a34d076e14e58671",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/no-bv.gen": "467a607acaded1226e06ace149be1717e7a048a24ade22da93e7aaf1a6859d3c",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2.gen": "73687a2e3626e569f4a2bf5cb74dfd6c33c7019f8d816150538840cb4fca878a",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smtlib-strings.gen": "87ed000e23c79f5347649836fbd0fd06c18af3e32e87677124abe4616679de05",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_432.drv": "989dcb0ee710c773f29b716bb731d46d127b67de2c117627becd33e139aa1d6a",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_471_nobv.drv": "4f525a8973fb9f1f8ee06898b1ad3131aa11b72d77784d626216a459ec605c17"
+        },
+        "import_edges": [
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_471_nobv.drv",
+            "import": "z3_432.drv",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_432.drv"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_471_nobv.drv",
+            "import": "smtlib-strings.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smtlib-strings.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_432.drv",
+            "import": "smt-libv2.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_432.drv",
+            "import": "no-bv.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/no-bv.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_432.drv",
+            "import": "discrimination.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/discrimination.gen"
+          }
+        ],
+        "root_driver": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_471_nobv.drv"
+      },
+      "name": "Z3",
+      "recorded_version_not_probed": "5.1.0",
+      "shortcut": "z3-nobv"
+    },
+    {
+      "alternative": "counterexamples",
+      "binary": {
+        "path": "/opt/homebrew/bin/z3",
+        "resolved_path": "/opt/homebrew/Cellar/z3/5.1.0/bin/z3",
+        "sha256": "b9a2c3a7dc833da652955116ad743cc733aa7938dbe64f528f71cb09066e2512"
+      },
+      "command": "'/opt/homebrew/bin/z3' -smt2 -t:%T sat.random_seed=42 model.compact=false nlsat.randomize=false smt.random_seed=42 -st %f",
+      "command_steps": "'/opt/homebrew/bin/z3' -smt2 sat.random_seed=42 model.compact=false nlsat.randomize=false smt.random_seed=42 rlimit=%S -st %f",
+      "driver": "z3_487_counterexample",
+      "driver_closure": {
+        "files_sha256": {
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/common-transformations.gen": "d5057cadb456f06c246a00283cf6b41fd57db834063bd7acb42734da0dd893f7",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/discrimination.gen": "a68d1b651bf9649d0b12dc137b7b364742e71841a5e7ca56a34d076e14e58671",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-bv.gen": "b57f8da4891100fef2a498b5022424e837b10d7412eb391a90b7ba2025ebb425",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-floats.gen": "0a920898ee2dc742538bfa47cdd06aa0abb68541591a6bc2bc3b502ab0540317",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2.gen": "73687a2e3626e569f4a2bf5cb74dfd6c33c7019f8d816150538840cb4fca878a",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smtlib-strings.gen": "87ed000e23c79f5347649836fbd0fd06c18af3e32e87677124abe4616679de05",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_487.drv": "597e853cdee99896af59f14a30b7e02dcb0089a0c7f4b34ad193777eb39d79a1",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_487_counterexample.drv": "384fd67c107133d3e16481e9b664f3f038a04835b348ef14c07cc684d2a86100",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_bv.gen": "a3607c94ce344ca28b85925ac3ede6df1970d5eaea8cee6e0987dc0e7409b4d8"
+        },
+        "import_edges": [
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_487_counterexample.drv",
+            "import": "z3_487.drv",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_487.drv"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_487.drv",
+            "import": "smt-libv2.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_487.drv",
+            "import": "smt-libv2-bv.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-bv.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_487.drv",
+            "import": "z3_bv.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_bv.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_487.drv",
+            "import": "smt-libv2-floats.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-floats.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_487.drv",
+            "import": "discrimination.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/discrimination.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_487.drv",
+            "import": "common-transformations.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/common-transformations.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_487.drv",
+            "import": "smtlib-strings.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smtlib-strings.gen"
+          }
+        ],
+        "root_driver": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_487_counterexample.drv"
+      },
+      "name": "Z3",
+      "recorded_version_not_probed": "5.1.0",
+      "shortcut": "z3-ce"
+    },
+    {
+      "alternative": "",
+      "binary": {
+        "path": "/opt/homebrew/bin/z3",
+        "resolved_path": "/opt/homebrew/Cellar/z3/5.1.0/bin/z3",
+        "sha256": "b9a2c3a7dc833da652955116ad743cc733aa7938dbe64f528f71cb09066e2512"
+      },
+      "command": "'/opt/homebrew/bin/z3' -smt2 -T:%t sat.random_seed=42 nlsat.randomize=false smt.random_seed=42 -st %f",
+      "command_steps": "'/opt/homebrew/bin/z3' -smt2 sat.random_seed=42 nlsat.randomize=false smt.random_seed=42 -st rlimit=%S %f",
+      "driver": "z3_487",
+      "driver_closure": {
+        "files_sha256": {
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/common-transformations.gen": "d5057cadb456f06c246a00283cf6b41fd57db834063bd7acb42734da0dd893f7",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/discrimination.gen": "a68d1b651bf9649d0b12dc137b7b364742e71841a5e7ca56a34d076e14e58671",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-bv.gen": "b57f8da4891100fef2a498b5022424e837b10d7412eb391a90b7ba2025ebb425",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-floats.gen": "0a920898ee2dc742538bfa47cdd06aa0abb68541591a6bc2bc3b502ab0540317",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2.gen": "73687a2e3626e569f4a2bf5cb74dfd6c33c7019f8d816150538840cb4fca878a",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smtlib-strings.gen": "87ed000e23c79f5347649836fbd0fd06c18af3e32e87677124abe4616679de05",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_487.drv": "597e853cdee99896af59f14a30b7e02dcb0089a0c7f4b34ad193777eb39d79a1",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_bv.gen": "a3607c94ce344ca28b85925ac3ede6df1970d5eaea8cee6e0987dc0e7409b4d8"
+        },
+        "import_edges": [
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_487.drv",
+            "import": "smt-libv2.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_487.drv",
+            "import": "smt-libv2-bv.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-bv.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_487.drv",
+            "import": "z3_bv.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_bv.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_487.drv",
+            "import": "smt-libv2-floats.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-floats.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_487.drv",
+            "import": "discrimination.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/discrimination.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_487.drv",
+            "import": "common-transformations.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/common-transformations.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_487.drv",
+            "import": "smtlib-strings.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smtlib-strings.gen"
+          }
+        ],
+        "root_driver": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_487.drv"
+      },
+      "name": "Z3",
+      "recorded_version_not_probed": "5.1.0",
+      "shortcut": "z3"
+    },
+    {
+      "alternative": "strings+counterexamples",
+      "binary": {
+        "path": "/opt/homebrew/bin/cvc5",
+        "resolved_path": "/opt/homebrew/Cellar/cvc5/1.2.1/bin/cvc5",
+        "sha256": "28dd5e5d8b8828ec6eea7fdf2e1544a218551382ca19e6ec8c2967fd6230cf5f"
+      },
+      "command": "'/opt/homebrew/bin/cvc5' --stats-internal --tlimit-per=%T --strings-exp %f",
+      "command_steps": "'/opt/homebrew/bin/cvc5' --stats-internal --rlimit=%S --strings-exp %f",
+      "driver": "cvc5_strings_counterexample",
+      "driver_closure": {
+        "files_sha256": {
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/common-transformations.gen": "d5057cadb456f06c246a00283cf6b41fd57db834063bd7acb42734da0dd893f7",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_bv.gen": "caf11b0d78b1c9bc9dff7943422fe636fbe1a315ea0d10b4f925e2edc914e3d9",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv": "ba50713ad3d438933602e3edbfa79e847e5c05a4e14bbed519dee42f515c127f",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5_strings.drv": "80b0cb32543275e8512ae3593a4b532ca0f252944c61917aaad6eb8bd1375eb6",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5_strings_counterexample.drv": "3c6d27a080eb26bc0a29e5bb9518c2ac2d98711904c9571d470a4255aef17f28",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/discrimination.gen": "a68d1b651bf9649d0b12dc137b7b364742e71841a5e7ca56a34d076e14e58671",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-bv.gen": "b57f8da4891100fef2a498b5022424e837b10d7412eb391a90b7ba2025ebb425",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-floats.gen": "0a920898ee2dc742538bfa47cdd06aa0abb68541591a6bc2bc3b502ab0540317",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2.gen": "73687a2e3626e569f4a2bf5cb74dfd6c33c7019f8d816150538840cb4fca878a",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smtlib-strings.gen": "87ed000e23c79f5347649836fbd0fd06c18af3e32e87677124abe4616679de05"
+        },
+        "import_edges": [
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5_strings_counterexample.drv",
+            "import": "cvc5_strings.drv",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5_strings.drv"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5_strings.drv",
+            "import": "cvc5.drv",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5_strings.drv",
+            "import": "smtlib-strings.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smtlib-strings.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv",
+            "import": "smt-libv2.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv",
+            "import": "smt-libv2-bv.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-bv.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv",
+            "import": "cvc4_bv.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_bv.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv",
+            "import": "smt-libv2-floats.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-floats.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv",
+            "import": "discrimination.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/discrimination.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv",
+            "import": "common-transformations.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/common-transformations.gen"
+          }
+        ],
+        "root_driver": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5_strings_counterexample.drv"
+      },
+      "name": "CVC5",
+      "recorded_version_not_probed": "1.2.1",
+      "shortcut": "cvc5-strings-ce"
+    },
+    {
+      "alternative": "strings",
+      "binary": {
+        "path": "/opt/homebrew/bin/cvc5",
+        "resolved_path": "/opt/homebrew/Cellar/cvc5/1.2.1/bin/cvc5",
+        "sha256": "28dd5e5d8b8828ec6eea7fdf2e1544a218551382ca19e6ec8c2967fd6230cf5f"
+      },
+      "command": "'/opt/homebrew/bin/cvc5' --stats-internal --tlimit-per=%T --strings-exp %f",
+      "command_steps": "'/opt/homebrew/bin/cvc5' --stats-internal --rlimit=%S --strings-exp %f",
+      "driver": "cvc5_strings",
+      "driver_closure": {
+        "files_sha256": {
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/common-transformations.gen": "d5057cadb456f06c246a00283cf6b41fd57db834063bd7acb42734da0dd893f7",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_bv.gen": "caf11b0d78b1c9bc9dff7943422fe636fbe1a315ea0d10b4f925e2edc914e3d9",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv": "ba50713ad3d438933602e3edbfa79e847e5c05a4e14bbed519dee42f515c127f",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5_strings.drv": "80b0cb32543275e8512ae3593a4b532ca0f252944c61917aaad6eb8bd1375eb6",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/discrimination.gen": "a68d1b651bf9649d0b12dc137b7b364742e71841a5e7ca56a34d076e14e58671",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-bv.gen": "b57f8da4891100fef2a498b5022424e837b10d7412eb391a90b7ba2025ebb425",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-floats.gen": "0a920898ee2dc742538bfa47cdd06aa0abb68541591a6bc2bc3b502ab0540317",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2.gen": "73687a2e3626e569f4a2bf5cb74dfd6c33c7019f8d816150538840cb4fca878a",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smtlib-strings.gen": "87ed000e23c79f5347649836fbd0fd06c18af3e32e87677124abe4616679de05"
+        },
+        "import_edges": [
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5_strings.drv",
+            "import": "cvc5.drv",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5_strings.drv",
+            "import": "smtlib-strings.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smtlib-strings.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv",
+            "import": "smt-libv2.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv",
+            "import": "smt-libv2-bv.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-bv.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv",
+            "import": "cvc4_bv.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_bv.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv",
+            "import": "smt-libv2-floats.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-floats.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv",
+            "import": "discrimination.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/discrimination.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv",
+            "import": "common-transformations.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/common-transformations.gen"
+          }
+        ],
+        "root_driver": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5_strings.drv"
+      },
+      "name": "CVC5",
+      "recorded_version_not_probed": "1.2.1",
+      "shortcut": "cvc5-strings"
+    },
+    {
+      "alternative": "counterexamples",
+      "binary": {
+        "path": "/opt/homebrew/bin/cvc5",
+        "resolved_path": "/opt/homebrew/Cellar/cvc5/1.2.1/bin/cvc5",
+        "sha256": "28dd5e5d8b8828ec6eea7fdf2e1544a218551382ca19e6ec8c2967fd6230cf5f"
+      },
+      "command": "'/opt/homebrew/bin/cvc5' --stats-internal --tlimit-per=%T %f",
+      "command_steps": "'/opt/homebrew/bin/cvc5' --stats-internal --rlimit=%S %f",
+      "driver": "cvc5_counterexample",
+      "driver_closure": {
+        "files_sha256": {
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/common-transformations.gen": "d5057cadb456f06c246a00283cf6b41fd57db834063bd7acb42734da0dd893f7",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_bv.gen": "caf11b0d78b1c9bc9dff7943422fe636fbe1a315ea0d10b4f925e2edc914e3d9",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv": "ba50713ad3d438933602e3edbfa79e847e5c05a4e14bbed519dee42f515c127f",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5_counterexample.drv": "089296fc0af9d7ed050bbb6fe51a7192048554325352aca36e4c5f342360620a",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/discrimination.gen": "a68d1b651bf9649d0b12dc137b7b364742e71841a5e7ca56a34d076e14e58671",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-bv.gen": "b57f8da4891100fef2a498b5022424e837b10d7412eb391a90b7ba2025ebb425",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-floats.gen": "0a920898ee2dc742538bfa47cdd06aa0abb68541591a6bc2bc3b502ab0540317",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2.gen": "73687a2e3626e569f4a2bf5cb74dfd6c33c7019f8d816150538840cb4fca878a"
+        },
+        "import_edges": [
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5_counterexample.drv",
+            "import": "cvc5.drv",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv",
+            "import": "smt-libv2.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv",
+            "import": "smt-libv2-bv.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-bv.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv",
+            "import": "cvc4_bv.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_bv.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv",
+            "import": "smt-libv2-floats.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-floats.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv",
+            "import": "discrimination.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/discrimination.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv",
+            "import": "common-transformations.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/common-transformations.gen"
+          }
+        ],
+        "root_driver": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5_counterexample.drv"
+      },
+      "name": "CVC5",
+      "recorded_version_not_probed": "1.2.1",
+      "shortcut": "cvc5-ce"
+    },
+    {
+      "alternative": "",
+      "binary": {
+        "path": "/opt/homebrew/bin/cvc5",
+        "resolved_path": "/opt/homebrew/Cellar/cvc5/1.2.1/bin/cvc5",
+        "sha256": "28dd5e5d8b8828ec6eea7fdf2e1544a218551382ca19e6ec8c2967fd6230cf5f"
+      },
+      "command": "'/opt/homebrew/bin/cvc5' --stats-internal --tlimit=%T %f",
+      "command_steps": "'/opt/homebrew/bin/cvc5' --stats-internal --rlimit=%S %f",
+      "driver": "cvc5",
+      "driver_closure": {
+        "files_sha256": {
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/common-transformations.gen": "d5057cadb456f06c246a00283cf6b41fd57db834063bd7acb42734da0dd893f7",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_bv.gen": "caf11b0d78b1c9bc9dff7943422fe636fbe1a315ea0d10b4f925e2edc914e3d9",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv": "ba50713ad3d438933602e3edbfa79e847e5c05a4e14bbed519dee42f515c127f",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/discrimination.gen": "a68d1b651bf9649d0b12dc137b7b364742e71841a5e7ca56a34d076e14e58671",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-bv.gen": "b57f8da4891100fef2a498b5022424e837b10d7412eb391a90b7ba2025ebb425",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-floats.gen": "0a920898ee2dc742538bfa47cdd06aa0abb68541591a6bc2bc3b502ab0540317",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2.gen": "73687a2e3626e569f4a2bf5cb74dfd6c33c7019f8d816150538840cb4fca878a"
+        },
+        "import_edges": [
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv",
+            "import": "smt-libv2.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv",
+            "import": "smt-libv2-bv.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-bv.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv",
+            "import": "cvc4_bv.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_bv.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv",
+            "import": "smt-libv2-floats.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-floats.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv",
+            "import": "discrimination.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/discrimination.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv",
+            "import": "common-transformations.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/common-transformations.gen"
+          }
+        ],
+        "root_driver": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv"
+      },
+      "name": "CVC5",
+      "recorded_version_not_probed": "1.2.1",
+      "shortcut": "cvc5"
+    },
+    {
+      "alternative": "counterexamples",
+      "binary": {
+        "path": "/Users/yanrujhou/.opam/framac-33/bin/alt-ergo",
+        "resolved_path": "/Users/yanrujhou/.opam/framac-33/bin/alt-ergo",
+        "sha256": "0845fc162c1c8081841e38e45966854a3c72cde075cebd149bdf3d58be12f7ae"
+      },
+      "command": "'/Users/yanrujhou/.opam/framac-33/bin/alt-ergo' --produce-models --timelimit %.t %f",
+      "command_steps": "'/Users/yanrujhou/.opam/framac-33/bin/alt-ergo' --produce-models --steps-bound=%S %f",
+      "driver": "alt_ergo_26_ce",
+      "driver_closure": {
+        "files_sha256": {
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_26.drv": "7fd78be6af0d3255123559825cf8d7aea87c0754b41b118dadd1092a4bae0578",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_26_ce.drv": "befc378b5951c535af7c167c62f88fcbdf7ac421c4078055fdeec1072a932adf",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_smt.drv": "be223063d1189d55fbce1da0c09750e73cf3aa012cde5649dc53c43ea59569c7",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/common-transformations.gen": "d5057cadb456f06c246a00283cf6b41fd57db834063bd7acb42734da0dd893f7",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2.gen": "73687a2e3626e569f4a2bf5cb74dfd6c33c7019f8d816150538840cb4fca878a"
+        },
+        "import_edges": [
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_26_ce.drv",
+            "import": "alt_ergo_26.drv",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_26.drv"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_26.drv",
+            "import": "alt_ergo_smt.drv",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_smt.drv"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_smt.drv",
+            "import": "smt-libv2.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_smt.drv",
+            "import": "common-transformations.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/common-transformations.gen"
+          }
+        ],
+        "root_driver": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_26_ce.drv"
+      },
+      "name": "Alt-Ergo",
+      "recorded_version_not_probed": "2.6.4",
+      "shortcut": "alt-ergo-ce"
+    },
+    {
+      "alternative": "BV",
+      "binary": {
+        "path": "/Users/yanrujhou/.opam/framac-33/bin/alt-ergo",
+        "resolved_path": "/Users/yanrujhou/.opam/framac-33/bin/alt-ergo",
+        "sha256": "0845fc162c1c8081841e38e45966854a3c72cde075cebd149bdf3d58be12f7ae"
+      },
+      "command": "'/Users/yanrujhou/.opam/framac-33/bin/alt-ergo' --timelimit %.t %f",
+      "command_steps": "'/Users/yanrujhou/.opam/framac-33/bin/alt-ergo' --steps-bound=%S %f",
+      "driver": "alt_ergo_26_bv",
+      "driver_closure": {
+        "files_sha256": {
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_26.drv": "7fd78be6af0d3255123559825cf8d7aea87c0754b41b118dadd1092a4bae0578",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_26_bv.drv": "b36b457b25e0f9ee49000b4888cd0fb5b4ca384c37ddaaeb2cad8d2116bca276",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_smt.drv": "be223063d1189d55fbce1da0c09750e73cf3aa012cde5649dc53c43ea59569c7",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/common-transformations.gen": "d5057cadb456f06c246a00283cf6b41fd57db834063bd7acb42734da0dd893f7",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-bv.gen": "b57f8da4891100fef2a498b5022424e837b10d7412eb391a90b7ba2025ebb425",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2.gen": "73687a2e3626e569f4a2bf5cb74dfd6c33c7019f8d816150538840cb4fca878a"
+        },
+        "import_edges": [
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_26_bv.drv",
+            "import": "alt_ergo_26.drv",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_26.drv"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_26_bv.drv",
+            "import": "smt-libv2-bv.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-bv.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_26.drv",
+            "import": "alt_ergo_smt.drv",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_smt.drv"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_smt.drv",
+            "import": "smt-libv2.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_smt.drv",
+            "import": "common-transformations.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/common-transformations.gen"
+          }
+        ],
+        "root_driver": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_26_bv.drv"
+      },
+      "name": "Alt-Ergo",
+      "recorded_version_not_probed": "2.6.4",
+      "shortcut": "alt-ergo-bv"
+    },
+    {
+      "alternative": "",
+      "binary": {
+        "path": "/Users/yanrujhou/.opam/framac-33/bin/alt-ergo",
+        "resolved_path": "/Users/yanrujhou/.opam/framac-33/bin/alt-ergo",
+        "sha256": "0845fc162c1c8081841e38e45966854a3c72cde075cebd149bdf3d58be12f7ae"
+      },
+      "command": "'/Users/yanrujhou/.opam/framac-33/bin/alt-ergo' --timelimit %.t %f",
+      "command_steps": "'/Users/yanrujhou/.opam/framac-33/bin/alt-ergo' --steps-bound=%S %f",
+      "driver": "alt_ergo_26",
+      "driver_closure": {
+        "files_sha256": {
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_26.drv": "7fd78be6af0d3255123559825cf8d7aea87c0754b41b118dadd1092a4bae0578",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_smt.drv": "be223063d1189d55fbce1da0c09750e73cf3aa012cde5649dc53c43ea59569c7",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/common-transformations.gen": "d5057cadb456f06c246a00283cf6b41fd57db834063bd7acb42734da0dd893f7",
+          "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2.gen": "73687a2e3626e569f4a2bf5cb74dfd6c33c7019f8d816150538840cb4fca878a"
+        },
+        "import_edges": [
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_26.drv",
+            "import": "alt_ergo_smt.drv",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_smt.drv"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_smt.drv",
+            "import": "smt-libv2.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2.gen"
+          },
+          {
+            "from": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_smt.drv",
+            "import": "common-transformations.gen",
+            "resolved": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/common-transformations.gen"
+          }
+        ],
+        "root_driver": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_26.drv"
+      },
+      "name": "Alt-Ergo",
+      "recorded_version_not_probed": "2.6.4",
+      "shortcut": "alt-ergo"
+    }
+  ],
+  "limitations": [
+    "Does not turn original job exit1 into success",
+    "Recorded version labels were not executed/verified",
+    "No solver availability/VC proof/fairness/source-simulation/ticket closure claim",
+    "Guard receipt is sampled process-tree/marker cleanup evidence, not a current global process absence claim"
+  ],
+  "original_failure": {
+    "class": "AssertionError",
+    "message": "unrecognized expanded configuration syntax"
+  },
+  "original_job_exit_code": 1,
+  "pins": {
+    "/Users/yanrujhou/.opam/framac-33/bin/alt-ergo": {
+      "bytes": 14986640,
+      "sha256": "0845fc162c1c8081841e38e45966854a3c72cde075cebd149bdf3d58be12f7ae"
+    },
+    "/Users/yanrujhou/.opam/framac-33/bin/why3": {
+      "bytes": 13204488,
+      "sha256": "e90d62b3883a4c2f90c5260ff410ef019803eb08b5f72f3d3ade77d4ce6f0555"
+    },
+    "/Users/yanrujhou/.opam/framac-33/lib/why3/commands/why3config.cmxs": {
+      "bytes": 62272,
+      "sha256": "8cf638d84dc30ee074097286e6bddec0b78b702bf7c0c8258e146e977e3bc122"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo.drv": {
+      "bytes": 859,
+      "sha256": "5d36cb0a0be0f4054b3e6e52735b0e993ef084aa76160b902a1e4e845feaf8fe"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_26.drv": {
+      "bytes": 1200,
+      "sha256": "7fd78be6af0d3255123559825cf8d7aea87c0754b41b118dadd1092a4bae0578"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_26_bv.drv": {
+      "bytes": 52,
+      "sha256": "b36b457b25e0f9ee49000b4888cd0fb5b4ca384c37ddaaeb2cad8d2116bca276"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_26_ce.drv": {
+      "bytes": 215,
+      "sha256": "befc378b5951c535af7c167c62f88fcbdf7ac421c4078055fdeec1072a932adf"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_2_2_0.drv": {
+      "bytes": 1082,
+      "sha256": "fc0ff5ff812fb8ac77502e4666b7f5991589100f946fb2c39daaa4eb2be67f7a"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_2_3.drv": {
+      "bytes": 1036,
+      "sha256": "c0a339c6ce1509aca007e4348fd989497a6390eb05d6e0007ce98a4fa763539c"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_common.drv": {
+      "bytes": 4688,
+      "sha256": "a026efb81eb419ec4fe034a6d677504ba0f729827745338c71da77b52e1b7044"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_counterexamples.drv": {
+      "bytes": 225,
+      "sha256": "a5f32b105f6b25c7073b8c7b3ab71ee3e153f577b5bb7636f5502576a167eec1"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_fp.drv": {
+      "bytes": 1897,
+      "sha256": "d4539e1dab72186ec44eb90e696fab6b49009d216e6f577b61355a95aed6af2b"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_model.drv": {
+      "bytes": 142,
+      "sha256": "96de72dceb97c40b6b0500e5623b060a503b6a634ae1bcb1084fc67115f5e764"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_smt.drv": {
+      "bytes": 1725,
+      "sha256": "be223063d1189d55fbce1da0c09750e73cf3aa012cde5649dc53c43ea59569c7"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/beagle.drv": {
+      "bytes": 8176,
+      "sha256": "0ef9dfe1280ec86a5d88a98c50fd4987ca37cdf59a59209565ffdadbdbf43266"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/colibri.drv": {
+      "bytes": 3058,
+      "sha256": "f675c2ea024e35365b99b902e5e2bae2c709cd10f96f45ebf21ffbafcf1cad57"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/colibri2.drv": {
+      "bytes": 4200,
+      "sha256": "0f2224738614ed5ab1c1256ae6e4fea48423f825dcf1ad490203b1e78c87bb07"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/common-transformations.gen": {
+      "bytes": 150,
+      "sha256": "d5057cadb456f06c246a00283cf6b41fd57db834063bd7acb42734da0dd893f7"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/coq-common.gen": {
+      "bytes": 7375,
+      "sha256": "5f346b0edd8ffe49a68103f9d6ddfe0aed48059fe643846822ac64283a1a0b74"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/coq-realizations.aux": {
+      "bytes": 4258,
+      "sha256": "eaeb1e7a83fdc7974a48c7777c50dce450cc3a59423228da517fdbb13a6e830e"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/coq-realize.drv": {
+      "bytes": 610,
+      "sha256": "3bed3cfd6e35cde441216057ca3b79b72c08d4bef540d041e5c5c246e91380e6"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/coq-ssreflect.drv": {
+      "bytes": 3303,
+      "sha256": "de8580955f5b216402c53741aaad5117661db98261fc263ca540e33c149e1d8d"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/coq.drv": {
+      "bytes": 635,
+      "sha256": "ac28a83238736897d3711c81fc921001bd875d1e128f771c46d7e8edc692857f"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc3.drv": {
+      "bytes": 4110,
+      "sha256": "5b66ee60d1327ab9a544812a5de97bbbc5609e0beeae17e281312f69d1438301"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4-realize.drv": {
+      "bytes": 2273,
+      "sha256": "4584feff40ac1b57555ced95ff93495728636fec4aca92c6085ee4ee9d691c26"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4.drv": {
+      "bytes": 1680,
+      "sha256": "6ae341d65872da7bab1e178b00648b194301d20ad6d244fbd9599e4a3b9b3f31"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_14.drv": {
+      "bytes": 2234,
+      "sha256": "82116670aee89df7ca933da6f09bc28bd0f44fa798c84ab5501f50f50aa9ade7"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_15.drv": {
+      "bytes": 2155,
+      "sha256": "d458db3d953ba862cea9f03fd5d3861517087f572e1b68af47a2c89a38f9ee50"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_15_counterexample.drv": {
+      "bytes": 163,
+      "sha256": "c54c8e6a3452b4ec47b0582f567c0052a35404f490c9e445ce8cc55822c56d27"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_16.drv": {
+      "bytes": 302,
+      "sha256": "b736788e4eb56b16acfdc344d837b06386a9faea0d1cf3dc6ffe2e54ac0b9611"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_16.gen": {
+      "bytes": 2292,
+      "sha256": "37b58a311a855f70488bfa61a29467f8ebd9ec0381ad309277a2210289c0573a"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_16_counterexample.drv": {
+      "bytes": 163,
+      "sha256": "4a6962d17575e060c4bec1d2443078936a96ff4449405b2117eb358a6d9fc00c"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_17.drv": {
+      "bytes": 312,
+      "sha256": "faa0ca05e059839688c0583722eeb0a4c70d89394f07080c73be21d3ccb9c3b2"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_17_counterexample.drv": {
+      "bytes": 219,
+      "sha256": "473524e2a45d3789dda5fcf7985169aedaf311bbb43c9a9aab921137d47cc163"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_18_strings.drv": {
+      "bytes": 1135,
+      "sha256": "c0d922160e27c56751f4827466a081ecf37be98a657e9fa9eb4ff66c148810d7"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_18_strings_counterexample.drv": {
+      "bytes": 234,
+      "sha256": "50b5143e6fedde0b0166348183810defc76fd173cdfd1161d95893f1acdd13c9"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc4_bv.gen": {
+      "bytes": 1044,
+      "sha256": "caf11b0d78b1c9bc9dff7943422fe636fbe1a315ea0d10b4f925e2edc914e3d9"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv": {
+      "bytes": 2715,
+      "sha256": "ba50713ad3d438933602e3edbfa79e847e5c05a4e14bbed519dee42f515c127f"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5_counterexample.drv": {
+      "bytes": 213,
+      "sha256": "089296fc0af9d7ed050bbb6fe51a7192048554325352aca36e4c5f342360620a"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5_strings.drv": {
+      "bytes": 1132,
+      "sha256": "80b0cb32543275e8512ae3593a4b532ca0f252944c61917aaad6eb8bd1375eb6"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5_strings_counterexample.drv": {
+      "bytes": 229,
+      "sha256": "3c6d27a080eb26bc0a29e5bb9518c2ac2d98711904c9571d470a4255aef17f28"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/discrimination.gen": {
+      "bytes": 169,
+      "sha256": "a68d1b651bf9649d0b12dc137b7b364742e71841a5e7ca56a34d076e14e58671"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/dreal.drv": {
+      "bytes": 3875,
+      "sha256": "e82a1849aad19f1de24b9bd2affcdb6090365e54696703e6c451f8b5a9a5bbd3"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/eprover.drv": {
+      "bytes": 322,
+      "sha256": "421d412ebf209dd359e543d921136b5951689cea4024ec34b39b0ea136cef8c9"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/gappa.drv": {
+      "bytes": 5316,
+      "sha256": "0e503e4d831a26ab42e707a0dd0342a98a0e0e395cfe2693e83c951ea3286e2b"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/iprover.drv": {
+      "bytes": 121,
+      "sha256": "71dd93e07b1122f5a19e27b9aa759335c610bcc069e21596eb80f5081a599f83"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/isabelle-common.gen": {
+      "bytes": 8134,
+      "sha256": "d2fe3cff06b87748e3aa3dfd27364ae21cc8ac2ec4295d85f6fc1e1ea44bb0c3"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/isabelle-realizations.aux": {
+      "bytes": 3236,
+      "sha256": "dedb3daec62615ff21fbcf7aecf5facbbe790cfb15cfdb22784ab199ce53dafa"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/isabelle-realize.drv": {
+      "bytes": 590,
+      "sha256": "f6cad14dacb85319375f55192306a54505f293f5a0e338aa3739c9728f268ccb"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/isabelle.drv": {
+      "bytes": 682,
+      "sha256": "0bb2386ac5dc828ac437a444ce1f65f05763a333f9bdd057c98521dd1126e6a4"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/mathematica.drv": {
+      "bytes": 5765,
+      "sha256": "05ce99669b7e7b3982d24e4e0de91ed2d55a8b5ebf5e4036a152fb8b255c1bae"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/mathsat.drv": {
+      "bytes": 4467,
+      "sha256": "58db91307e2de4919ca613ab5ca8380710d427e046cd159ab3627965e99d4c39"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/metis.drv": {
+      "bytes": 340,
+      "sha256": "3cb4989eb8ab0a55e1ff1bb76a8c8993f76b12244e8968c6b7f046103930bfff"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/metitarski.drv": {
+      "bytes": 6693,
+      "sha256": "29bd227b6f31429993ec1089c279276b392fad03769c8736c32999c56cbe1c86"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/no-bv.gen": {
+      "bytes": 243,
+      "sha256": "467a607acaded1226e06ace149be1717e7a048a24ade22da93e7aaf1a6859d3c"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/polypaver.drv": {
+      "bytes": 2501,
+      "sha256": "e2462ed9ed8abbef73c3554ca0d4c6bea4976748519d1684a029ecbaac1e9e79"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/princess.drv": {
+      "bytes": 8062,
+      "sha256": "90644308379c1a1cd056a6c35e148d6c0124cec42ea00f7ba18c848a422d306d"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/psyche.drv": {
+      "bytes": 2584,
+      "sha256": "d49ab2d68882171932281fedc54e340891fac1c3c6b432b01bea16692fb3252b"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/pvs-common.gen": {
+      "bytes": 7941,
+      "sha256": "9fe3b465ed10d7c96740471b7373aac3b7ba9b386848bb837383ae677f377cc4"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/pvs-realizations.aux": {
+      "bytes": 1358,
+      "sha256": "f9d13257414b7462e482e6043a4c3eec7264954b8461b7448b6123638506b6a8"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/pvs-realize.drv": {
+      "bytes": 186,
+      "sha256": "5f9bdc05e534cf252c8265686b5af68e350ca75c99a28c189f2d8179a584c21c"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/pvs.drv": {
+      "bytes": 183,
+      "sha256": "5f1d4f37df373c33ddca12f6fab8163a25ed98bf50fd4a0853e41e4234583ab3"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/safeprover.drv": {
+      "bytes": 327,
+      "sha256": "f6c4cef98ee2c5a8dd5bea214944f530b08570f1b54364c57200fb94d17f1788"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/simplify.drv": {
+      "bytes": 2358,
+      "sha256": "ba9d33890784323ae913cde6a5a5eb885e3f28b7d17f747f0a1ddd76f242aa2b"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-bv-realization.gen": {
+      "bytes": 7936,
+      "sha256": "f7ec41e4369622ab007e4937cc2741e73502362a71c01a04d42ec1f20f5b3b65"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-bv.gen": {
+      "bytes": 10242,
+      "sha256": "b57f8da4891100fef2a498b5022424e837b10d7412eb391a90b7ba2025ebb425"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-floats.gen": {
+      "bytes": 6279,
+      "sha256": "0a920898ee2dc742538bfa47cdd06aa0abb68541591a6bc2bc3b502ab0540317"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2.gen": {
+      "bytes": 4869,
+      "sha256": "73687a2e3626e569f4a2bf5cb74dfd6c33c7019f8d816150538840cb4fca878a"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smtlib-strings.gen": {
+      "bytes": 3205,
+      "sha256": "87ed000e23c79f5347649836fbd0fd06c18af3e32e87677124abe4616679de05"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/spass.drv": {
+      "bytes": 270,
+      "sha256": "9aaf4e08695d2d6b7823e2bf7e0e9cd929822a1e2c4cffebf6ce255929fa4247"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/spass_types.drv": {
+      "bytes": 1193,
+      "sha256": "fb004c5674f4737a4e30719c875b9cc079c0e639764ec38f5b02e0bb64cfde3b"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/tptp-tff0.drv": {
+      "bytes": 7818,
+      "sha256": "a0cdda1a2f20c89984452a58878d20e37f54a2fd50f1bd8eb60ad9ff7da7210e"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/tptp-tff1.drv": {
+      "bytes": 7595,
+      "sha256": "5c33bea6b572e82dff2823db19e25c6a91a2aedb954f7af9964af36483595569"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/tptp.gen": {
+      "bytes": 1450,
+      "sha256": "c90fb04b8b63d45bab8c5fa5078a180481df075bfb11cab8ed86b00ffc550e21"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/vampire.drv": {
+      "bytes": 214,
+      "sha256": "af52e3f3d46a14da1a49b372b6563a523f5eab9cdbb6cedbdbd78694cca87910"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/vampire_4_2_2.drv": {
+      "bytes": 1067,
+      "sha256": "53632e34de8afbf31efc9ee25b4f53fc425d060f8c45b090c3be6c54455e4ba3"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/vampire_4_5_1.drv": {
+      "bytes": 1212,
+      "sha256": "2631fa0eda5c726e69cd3cd0ffaf1f4ed4848c0e5f4a38e338f625dac9f0f216"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/verit.drv": {
+      "bytes": 1546,
+      "sha256": "beaa7de08f02c46b48af0da691c051f928f3ef373316222aab73c76849836705"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/why3.drv": {
+      "bytes": 237,
+      "sha256": "9ac85a936a0526112fec236f1b32a0d1315422071a83f7ab52010168c0eadaed"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/why3_smt.drv": {
+      "bytes": 2060,
+      "sha256": "66101f2eea98ca0e772b29bcbec9f84896524e56c9bf8223044470b65ed9472a"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/why3_tptp.drv": {
+      "bytes": 887,
+      "sha256": "b3de382c2c4949e6f02037c79930721b1e0c90f0c8493c646f25ff238ae371ac"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/yices-smt2.drv": {
+      "bytes": 1201,
+      "sha256": "5e3f43f6a0a61979c586889b94f105c75f28367cd62970daddabeb2a89bc6030"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/yices.drv": {
+      "bytes": 4040,
+      "sha256": "e00e1cf0f1cb2747212248418b8afbe28360c5a8e5072b40bd5abf8e1eb3bad5"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3.drv": {
+      "bytes": 2200,
+      "sha256": "059e7b77e7139c1e76cee2ed88d6a8c2b0eb0d8d4e95c32f9c6f30ca13a9f853"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_432.drv": {
+      "bytes": 2484,
+      "sha256": "989dcb0ee710c773f29b716bb731d46d127b67de2c117627becd33e139aa1d6a"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_440.drv": {
+      "bytes": 3303,
+      "sha256": "70ab1e60ccb46c4bed20a1aba27374b7f10c01d49db8ee9a9accb0359639c41e"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_440_counterexample.drv": {
+      "bytes": 100,
+      "sha256": "28ad2d28d3a1475b37ade1c704926def2165d057ad1074347dc1c40a7a53824c"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_471.drv": {
+      "bytes": 753,
+      "sha256": "31f918c37dbc33e554ebf9e38f97b4d6ad3b4cfd8f4a219a66df458b250bef6b"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_471_counterexample.drv": {
+      "bytes": 100,
+      "sha256": "bb074ae37458bdb7fd8f67b904a15828d13b500edba890adc5605594d7a0d80a"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_471_nobv.drv": {
+      "bytes": 48,
+      "sha256": "4f525a8973fb9f1f8ee06898b1ad3131aa11b72d77784d626216a459ec605c17"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_487.drv": {
+      "bytes": 4400,
+      "sha256": "597e853cdee99896af59f14a30b7e02dcb0089a0c7f4b34ad193777eb39d79a1"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_487_counterexample.drv": {
+      "bytes": 137,
+      "sha256": "384fd67c107133d3e16481e9b664f3f038a04835b348ef14c07cc684d2a86100"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_bv.gen": {
+      "bytes": 1311,
+      "sha256": "a3607c94ce344ca28b85925ac3ede6df1970d5eaea8cee6e0987dc0e7409b4d8"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_smtv1.drv": {
+      "bytes": 3335,
+      "sha256": "8d298155229e9ddfbc66a4f194670c5926b792f8357970aca9d0d5c899a47ecb"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/zenon.drv": {
+      "bytes": 1231,
+      "sha256": "b0f4c6b3a422b4c965cbb71c2788b6556fc77154685aeb4501c5bb112d99f947"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/zenon_modulo.drv": {
+      "bytes": 7366,
+      "sha256": "f0fa2a559aef383004faf5682d618a6d4838b85d324038f29ae898d7e4a3a1d6"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/provers-detection-data.conf": {
+      "bytes": 26180,
+      "sha256": "1e3a4b966465872b7ebe73084ff1bfdf224ed5ce635b2b163ca3a73eae8c022c"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/algebra.mlw": {
+      "bytes": 4910,
+      "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/array.mlw": {
+      "bytes": 15332,
+      "sha256": "5e1abb583bb14cc1821612859b94568a586419d0dbe0d6752f8835ac098362b6"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/bag.mlw": {
+      "bytes": 3389,
+      "sha256": "b5e8f1b8b7a6d4de57571d26ad356a161197fedc7cfd3e104a877a1e12c1bca5"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/bintree.mlw": {
+      "bytes": 4302,
+      "sha256": "b651b0989affbee0364a58daa48d77f94ec5a7acaff86f09cd4536d0472dcaf9"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/bool.mlw": {
+      "bytes": 819,
+      "sha256": "b7072fdd8dd5004d0627b82a66b054518ee54eb4dd66f0883988e363bed251fa"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/bv.mlw": {
+      "bytes": 35789,
+      "sha256": "1c62539b31bfb75042a0b31559ffca9f87429fcfdccc8ed1772b65f0f4131110"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/byte_string.mlw": {
+      "bytes": 1832,
+      "sha256": "75480d65a76ed317e88be7d50f593a314b6b94f8eac9f39a1af73adc0a49178f"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/cursor.mlw": {
+      "bytes": 2105,
+      "sha256": "5e6554c0e39cba91c92c59d6b7318364f032a6adbb17ca98bdcb2c08d16de701"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/debug.mlw": {
+      "bytes": 97,
+      "sha256": "c79c4fa42774dd4c92000c2fb40f2c66029630f65cd8a3262fa9881579167cdb"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/exn.mlw": {
+      "bytes": 97,
+      "sha256": "5aa489183cfcc45d081c9cf0af98b3636ebdde5860fd5a6d9222aa8bbb9d63f1"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/floating_point.mlw": {
+      "bytes": 21961,
+      "sha256": "0fc1c5bcdb2812e9fd173199de8f767b8a27f5dbcc8072ca4fd543b04071aa8f"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/fmap.mlw": {
+      "bytes": 8855,
+      "sha256": "fbda0657de5bb9813aa279daed748fb384d8ba827cd8987fb130f25c703faa15"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/for_drivers.mlw": {
+      "bytes": 704,
+      "sha256": "e892ad394b50de0da1a2ed0e514d82632f3d79e57ac61294ad2d586b68883179"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/function.mlw": {
+      "bytes": 638,
+      "sha256": "f1ddf9c3ce7b8fcda55d05f7b4b41612afd739256ccf131a6dce444a80f5a87f"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/graph.mlw": {
+      "bytes": 2531,
+      "sha256": "c9fdd8de698c4899486056d37999a819d9258fd6b3782a23dbf0eb32f9a5ccb4"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/hashtbl.mlw": {
+      "bytes": 2006,
+      "sha256": "348c2084411cfb5fa5bf4babaa90ee34ee55f9303487141d7f30856aa3720b20"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/ieee_float.mlw": {
+      "bytes": 35187,
+      "sha256": "57a096bcb20309ab323405fabfeb67699037289dc0223368526adab32fa9d6a7"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/int.mlw": {
+      "bytes": 18553,
+      "sha256": "eb5bc9d4a46e1b6a298d24fd36dcf9dfb8f35cbc75b2f44007cfe1a24550ce8d"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/io.mlw": {
+      "bytes": 2066,
+      "sha256": "e46fde974c5cc062222fad6f2f9813fc2f1e0d1c09bdcb6d701fe41d0ea1d6ae"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/list.mlw": {
+      "bytes": 12337,
+      "sha256": "29b8f5925862ce3c4fb47bae171247b247b450cfcd56f6fc49db3c5b4b162ee9"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/array.mlw": {
+      "bytes": 15954,
+      "sha256": "b27c51c8cc0e4de11f0b4acbec05e4ea17de77dfc3af789bd5237f504b1c9861"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/bv.mlw": {
+      "bytes": 14311,
+      "sha256": "5e5c6bc76cbc55aec6d6ed5588fcc047dcce74c88e0394b3aa94ac1fa3ef0b94"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/c.mlw": {
+      "bytes": 14054,
+      "sha256": "7c847a149a2759820689b6e8229f4399698c14b2f850691c3d8f343d05ad08f4"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/float.mlw": {
+      "bytes": 6246,
+      "sha256": "f83ca3bedf58a5064b8947400248d79997e83e202fac0bc6796699442888bb44"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/fxp.mlw": {
+      "bytes": 4043,
+      "sha256": "43c4ab90b6ebcf835194e50d2a18cef6864281e32c71d3a446cf9a48a74c5ea1"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/int.mlw": {
+      "bytes": 18228,
+      "sha256": "8b15e61d54e9fa0e86e28ba552a13a50afdc752c75c183b5fec483b2f0ae20de"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/java/io.mlw": {
+      "bytes": 219,
+      "sha256": "3f15f978b231cbbfbcac8708d082b7b5be486f50d4c10666a14f28152bd11416"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/java/lang.mlw": {
+      "bytes": 5499,
+      "sha256": "355faf72f66a6ab0effc7d178f28fe78b69731add875a42975fbc4e837f5a0ca"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/java/util.mlw": {
+      "bytes": 10009,
+      "sha256": "407c1895c9b5a1311ac601c179dadf39c0f8343840b09823cfb72b579d437797"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/list.mlw": {
+      "bytes": 1138,
+      "sha256": "6618c9c030120189006f2a48b14d14b0baa9ffb6e6446e07e2f1997b27b25e2c"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/matrix.mlw": {
+      "bytes": 2633,
+      "sha256": "3a72bf9c0dc6751943ebdd647a362719f9cd360af2d954c714acd639510f1950"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/onetime.mlw": {
+      "bytes": 2570,
+      "sha256": "8e45739bcfc995055086a57d4fcfbb836252334c65a855c9dcd299a59801a6d1"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/peano.mlw": {
+      "bytes": 2734,
+      "sha256": "210c67ce2ab36aff9764537f4e884db02ae4b0d8463b92460848d8183bf6d0aa"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/mach/tagset.mlw": {
+      "bytes": 10253,
+      "sha256": "58a641b42a874f8e63228a4d0be57d6ee8b6340508d31746dde339a7da574c5b"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/map.mlw": {
+      "bytes": 5517,
+      "sha256": "c4cd7b90e39f8407fd714d0e46ce4c6496a98afd32bd69c71237b35a4b7c08a0"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/matrix.mlw": {
+      "bytes": 2202,
+      "sha256": "0ceeed3e742e47de3ef4bf01042a69dcf501b119010b1de6b0fc2b0d2266efde"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/microc.mlw": {
+      "bytes": 3869,
+      "sha256": "d7322664cc4d419d6d7101fcdab0587896353eca9df3aa41be1effb0c3891eed"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/number.mlw": {
+      "bytes": 5466,
+      "sha256": "4d0d83a9718774a342234ff8ef67e4545840629ffb0ee508f900d8fd67f83911"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/ocaml.mlw": {
+      "bytes": 1090,
+      "sha256": "1777a1f306b54d3cd73afb45d9330eccbcb673d0287c7ee8a6ba0c282578db51"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/option.mlw": {
+      "bytes": 351,
+      "sha256": "ba5607ebfa8fb060cede3798d21241b43de090046724084a3efc1f90a308a6df"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/pigeon.mlw": {
+      "bytes": 1931,
+      "sha256": "584baeb86de6831ac02d2a379aaa9a16fde47495603acb78c5796b334cdcd0e3"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/pqueue.mlw": {
+      "bytes": 5445,
+      "sha256": "edad87a86e411409aa8b5be43993022066f05e951217b12b37ed7b0b45888420"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/python.mlw": {
+      "bytes": 5465,
+      "sha256": "5e44344331a4deb815b92bf800bef051be2764b18e5ed889d2e7f77613f951f7"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/queue.mlw": {
+      "bytes": 1527,
+      "sha256": "28c577b16c6ddb2be23273f764c70936164842e7f7b2ef3b4125e2fcfc7a0463"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/random.mlw": {
+      "bytes": 1452,
+      "sha256": "39371d90d75a70bde82c2a0a8340d414d22eab8197983e77b27ff8bf75f5dd9b"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/real.mlw": {
+      "bytes": 11047,
+      "sha256": "50940038bba54f6bd57501e5af6439af8c4f081274eb79a19d888a4cd419b8a2"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/ref.mlw": {
+      "bytes": 908,
+      "sha256": "f54413bf62b69bbfb996bd7d6a8098c18e4663f95f788623f729dd8eb5a60bea"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/regexp.mlw": {
+      "bytes": 1616,
+      "sha256": "0eaf9277c63569edf20606d3de5fc96522348b5a4c37e9b83fdfca2b011ec8c0"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/relations.mlw": {
+      "bytes": 4033,
+      "sha256": "0a367aecd2cd627de87d5f4011ddbf930bf49283e0b94b792a338faf921b2cae"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/seq.mlw": {
+      "bytes": 18059,
+      "sha256": "9acfebda1e49dd3b6090f77e6c9ac518e05a3e61a25c4efaaa63cd9090444eb8"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/set.mlw": {
+      "bytes": 18245,
+      "sha256": "c5dca5e35ca7198ed7c732b22ec5686cb40c0a7edc9f4ecde783f4ebef744498"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/stack.mlw": {
+      "bytes": 1333,
+      "sha256": "ef10f41813802ad069ab1bf7444a4e271570439f568c6f24fb0ec119588b1f30"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/string.mlw": {
+      "bytes": 17684,
+      "sha256": "ea9e41823b857ebbe08fe5ba71687f3894946efd21748703d89a83df6b99e3ec"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/tptp.mlw": {
+      "bytes": 3949,
+      "sha256": "b095a34e17d52bd10837aec0cd5db3090cbb6f86918707402eebadafab4dc97d"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/tree.mlw": {
+      "bytes": 1181,
+      "sha256": "9871c40b442266715678814a1f80298f99af054e8be70abc58826e04e91cefd7"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/ufloat.mlw": {
+      "bytes": 38794,
+      "sha256": "cd4a4f4c0d73b895f6735a8d5501be56b0cb9db19ccc80715b792c5e001dc7c3"
+    },
+    "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/witness.mlw": {
+      "bytes": 1812,
+      "sha256": "74098a4e80908fb5719b04e741a36cac977f180d837b6ffc0238fe1d915d609a"
+    },
+    "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12": {
+      "bytes": 33816,
+      "sha256": "08fa4dbadc420090dfee2acf433b827ae05541f728d1478d96879122f53b4328"
+    },
+    "/Users/yanrujhou/.why3.conf": {
+      "bytes": 375,
+      "sha256": "5f82bccca4b275b60979f8eabba62c3f8af1a9178913dbd31efd350a030817c8"
+    },
+    "/opt/homebrew/bin/cvc5": {
+      "bytes": 19129416,
+      "sha256": "28dd5e5d8b8828ec6eea7fdf2e1544a218551382ca19e6ec8c2967fd6230cf5f"
+    },
+    "/opt/homebrew/bin/z3": {
+      "bytes": 16244496,
+      "sha256": "b9a2c3a7dc833da652955116ad743cc733aa7938dbe64f528f71cb09066e2512"
+    },
+    "/private/tmp/probata-resume-t07-source-domains/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py": {
+      "bytes": 28501,
+      "sha256": "c6f0d4b8c60fab912dd768c4c8c7e7737d8feca3a110d0de02dec4d38785db57"
+    },
+    "/private/tmp/probata-resume-t25-pair/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-readiness-rank/delay_family.mlw": {
+      "bytes": 809,
+      "sha256": "d99660f76ad8469960f81491c7df4bfa974abc1133a61d32e9081fe0f60895f6"
+    },
+    "/private/tmp/probata-resume-t25-pair/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-readiness-rank/no_progress.mlw": {
+      "bytes": 686,
+      "sha256": "b80c777054a450f781351130baf91e9c0fdb37a4a59e5453e857921b9b85f465"
+    },
+    "/private/tmp/probata-resume-t25-pair/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-readiness-rank/readiness_rank.mlw": {
+      "bytes": 752,
+      "sha256": "44eb843146e57495579fed4a118df67bcc3858560dd381db62498a65055b150c"
+    },
+    "/private/tmp/probata-t28-rank-config-command-v1-20261016.json": {
+      "bytes": 2590,
+      "sha256": "43736aecf5f84571fac023b3dbf61223bb4da2697694284462a1d3dff1886791"
+    },
+    "/private/tmp/probata-t28-rank-config-command-v2-20261016.json": {
+      "bytes": 2715,
+      "sha256": "d783072267b6ce270537501e892fc683337de9b5c5ba1fbbc3a70bd986887f77"
+    },
+    "/private/tmp/probata-t28-rank-config-entry-v1-20261016.py": {
+      "bytes": 9279,
+      "sha256": "2d48c6f96ba3b46b881665d809db5e80b8b62a20b9c9d06ae5c8de66cc988cd3"
+    },
+    "/private/tmp/probata-t28-rank-config-entry-v2-20261016.py": {
+      "bytes": 10412,
+      "sha256": "00f0e2935fda144dbebfc85496ac1c174b8c692354382d3c6df5c5874b03b529"
+    },
+    "/private/tmp/probata-t28-rank-config-expected-v1-20261016.json": {
+      "bytes": 19444,
+      "sha256": "4279e07861d7c5a157853e6c181b47df92c9c7edfe13239edb1de1bdc3ea746c"
+    },
+    "/private/tmp/probata-t28-rank-config-expected-v2-20261016.json": {
+      "bytes": 20209,
+      "sha256": "b86ac077c0fdb08e978e2fe618dc5bc85bd8cca9c1bee03cfb461b522e3afa1b"
+    },
+    "/private/tmp/probata-t28-rank-config-packet-manifest-v1-20261016.json": {
+      "bytes": 1352,
+      "sha256": "e822173a089cf3aea264ec4fa3a5644d20dc02fd9bf8f80a900fc6f5db6fc920"
+    },
+    "/private/tmp/probata-t28-rank-config-packet-manifest-v2-20261016.json": {
+      "bytes": 2425,
+      "sha256": "d9b75f8c7d67d4de491aa9ab577b6db57698a1e71c1c46b13c482859024a58bb"
+    },
+    "/private/tmp/probata-t28-rank-config-packet-v1-20261016.md": {
+      "bytes": 6441,
+      "sha256": "3c3f653b0a1f66e557eb9463787788aab90fc0c478aec8e07426f2be260eb874"
+    },
+    "/private/tmp/probata-t28-rank-config-packet-v2-20261016.md": {
+      "bytes": 8131,
+      "sha256": "f53e702476728269537fed312a46653322c34fc0d264e568f712aa9721b3549e"
+    },
+    "/private/tmp/probata-t28-rank-config-reader-controls-v2-20261016.py": {
+      "bytes": 4975,
+      "sha256": "18da3fffb1fb550d19f7b738c585028f2c3b0ab6135e6fd23dd5437fb4a8459e"
+    },
+    "/private/tmp/probata-t28-rank-config-reader-green-v2-20261016.json": {
+      "bytes": 121120,
+      "sha256": "78843db08e85cdfefac15d63e829eccf5f55a0540ef1ac1f4c5472d53befa784"
+    },
+    "/private/tmp/probata-t28-rank-config-reader-red-v2-20261016.json": {
+      "bytes": 10888,
+      "sha256": "bfc510d0ba10376cc1937ae41f797dca1130fb37fa3be376f0644649eb64058e"
+    },
+    "/private/tmp/probata-t28-rank-config-root-exit-v2-20261016.json": {
+      "bytes": 126,
+      "sha256": "f5634708d52d02d7a50016fbad758add8262ff4cbaeeaef0cd46fb4d55dedf85"
+    },
+    "/private/tmp/probata-t28-rank-config-root-launch-v2-20261016.py": {
+      "bytes": 4769,
+      "sha256": "e82e4a5737af23974308bc94c8ae3b6dbd5b69893461bd0b9dc3d4370bb8020a"
+    },
+    "/private/tmp/probata-t28-rank-config-root-preflight-v2-20261016.json": {
+      "bytes": 1227,
+      "sha256": "a2f24d84ccf9385be960294babe3c17ef84d415ac5e93e1bd9a28ee293c7e1d5"
+    },
+    "/private/tmp/probata-t28-rank-config-v2-9704c54b-20261016/component/artifacts.json": {
+      "bytes": 1374,
+      "sha256": "f3bcdd849e2f2dae691c3aecac73f4bed780ff07a77f174c3f47607b29f0f47f"
+    },
+    "/private/tmp/probata-t28-rank-config-v2-9704c54b-20261016/component/datadir.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/private/tmp/probata-t28-rank-config-v2-9704c54b-20261016/component/datadir.stdout": {
+      "bytes": 44,
+      "sha256": "a417957997253af5b4a7d2578394fc9516451f7cb77e07200c74689ff8ac9f4a"
+    },
+    "/private/tmp/probata-t28-rank-config-v2-9704c54b-20261016/component/libdir.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/private/tmp/probata-t28-rank-config-v2-9704c54b-20261016/component/libdir.stdout": {
+      "bytes": 42,
+      "sha256": "afac1516a9bf3f0316f7d612374101a768a3586bcc5764cc34f2445424b20642"
+    },
+    "/private/tmp/probata-t28-rank-config-v2-9704c54b-20261016/component/list-provers.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/private/tmp/probata-t28-rank-config-v2-9704c54b-20261016/component/list-provers.stdout": {
+      "bytes": 218,
+      "sha256": "7c3005ac0b33a3dcd71aea5db768b4d27baa69837416e90998d15e71e1880db5"
+    },
+    "/private/tmp/probata-t28-rank-config-v2-9704c54b-20261016/component/progress.json": {
+      "bytes": 1691,
+      "sha256": "508b27bb347ddd7c67143aec0074ac2a4e5a4041e2e1410e3c6d05a781379a34"
+    },
+    "/private/tmp/probata-t28-rank-config-v2-9704c54b-20261016/component/result.json": {
+      "bytes": 2223,
+      "sha256": "857ceb06dc879589542019cd782f0bdff4bbd13d5d8d89d080343863b97f9a36"
+    },
+    "/private/tmp/probata-t28-rank-config-v2-9704c54b-20261016/component/show.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/private/tmp/probata-t28-rank-config-v2-9704c54b-20261016/component/show.stdout": {
+      "bytes": 5321,
+      "sha256": "a0d7342b62cd7b6c054b9859127c3ec52dd846650ab9f5fecce9504c8647a215"
+    },
+    "/private/tmp/probata-t28-rank-config-v2-9704c54b-20261016/guard.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/private/tmp/probata-t28-rank-config-v2-9704c54b-20261016/guard.log.summary.json": {
+      "bytes": 1932,
+      "sha256": "905c09ba2d192d6e4a9db3b602fbc1402aef2a056945ffa092962521e17c5b1e"
+    },
+    "/private/tmp/probata-t28-rank-config-v2-9704c54b-20261016/guard.log.wait.json": {
+      "bytes": 271,
+      "sha256": "6482fef1037750512edf81c676bd2c6227f8dbf6289e4b210962d0d8179a0b01"
+    },
+    "/private/tmp/probata-t28-rank-config-v2-9704c54b-20261016/root-driver.log": {
+      "bytes": 1882,
+      "sha256": "4edb0b1f16670e15890db78074bf27546850e371e8945e30314217ef0a9d4189"
+    },
+    "/private/tmp/probata-t28-rank-driver-imports-v2-20261016.txt": {
+      "bytes": 2229,
+      "sha256": "de3f44c9eba56ffe1307d4183b58d000f8bb6431051e1d7bafa39dd31875114b"
+    },
+    "/private/tmp/probata-t28-rank-retained-rc-controls-v1-20261016.json": {
+      "bytes": 3203,
+      "sha256": "6cb9784ce249378c8eefe2f5315a15287e90bb7ecf7f84e8f503d5a0562671bc"
+    },
+    "/private/tmp/probata-t28-rank-retained-rc-controls-v1-20261016.py": {
+      "bytes": 4102,
+      "sha256": "af09245322f14597c66b147ff0d49faf08af10bee811c20506cba940e8ccfe0c"
+    },
+    "/private/tmp/probata-t28-rank-retained-rc-reader-v1-20261016.py": {
+      "bytes": 2485,
+      "sha256": "e34203773fb17a81c2546b3f3c1bbec101c906b717a0b537a3dba4c318a910cb"
+    },
+    "/private/tmp/probata-why3-1.8.2-config-source-20261016/src/driver/autodetection.ml": {
+      "bytes": 28130,
+      "sha256": "10b13749ebed696380ba2500464e5d130a70b23b0f86d1367d93ce4ad9553666"
+    },
+    "/private/tmp/probata-why3-1.8.2-config-source-20261016/src/driver/driver.ml": {
+      "bytes": 18399,
+      "sha256": "77775978b29cc51bb53deebc904c97f5d03681e3fd13e3af5f76f92789701ce5"
+    },
+    "/private/tmp/probata-why3-1.8.2-config-source-20261016/src/driver/driver_lexer.mll": {
+      "bytes": 4255,
+      "sha256": "17418b63c08696ca259d5f5a840d9a03ecbf1cf4d596a62c41b02df24e48d21c"
+    },
+    "/private/tmp/probata-why3-1.8.2-config-source-20261016/src/driver/whyconf.ml": {
+      "bytes": 42359,
+      "sha256": "7f4ce66ffe696da09c128739b74f7a90a844dce978b5b877da8bd01a874d5546"
+    },
+    "/private/tmp/probata-why3-1.8.2-config-source-20261016/src/tools/main.ml": {
+      "bytes": 4037,
+      "sha256": "f07975c12d7ae53e4bc1c0bebfada1b90e44456bcee2b490477b641db0dfc24f"
+    },
+    "/private/tmp/probata-why3-1.8.2-config-source-20261016/src/tools/why3config.ml": {
+      "bytes": 6598,
+      "sha256": "368f3413ad2c6c95af1a0308d761bc111fdeee83d684ce877266c94415bc0b15"
+    },
+    "/private/tmp/probata-why3-1.8.2-config-source-20261016/src/util/lexlib.mll": {
+      "bytes": 6587,
+      "sha256": "f7e5acf02b1aadfdaa3478bee724f2063f83e7c8c11ac3a1458b2eb022d6ad20"
+    },
+    "/private/tmp/probata-why3-1.8.2-config-source-20261016/src/util/rc.mll": {
+      "bytes": 12571,
+      "sha256": "4889618aea6a1bdfec16e77cc6689e27daeb5b81d31722521fcfa6e99192a0ed"
+    },
+    "/private/tmp/probata-why3-1.8.2-config-source-20261016/why3-1.8.2.tar.gz": {
+      "bytes": 7360550,
+      "sha256": "b7d112edd5bcce6bcce0023d2bc834eb2ae1a1c42d7aea44ffa124d649b50bea"
+    }
+  },
+  "proof_claim": false,
+  "raw_source_mutation": false,
+  "reader_function_sha256": {
+    "rc_sections": "46ec742d32e07bcf4fe9d06d7c29501ea472075e759895102a7b10a8aa17b2a3",
+    "singleton": "3574534dffa16c7b14bb45719e362a1e2405f15c81620a82e810456552fa4b59"
+  },
+  "root_preflight_scope": "Finite UID/name/PID/birth metadata, no environment/token absence claim; one actual read-only expanded-config metadata job authorized by root after pure75-root driver scanner checks; no solver/version/config mutation.",
+  "scope": "Supplemental cold acceptance of retained actual metadata observations only; original entry/root/guard exit1 remains failure",
+  "source_commit": "9704c54b838863dd838d18a20dd0ade1633d5027"
+}

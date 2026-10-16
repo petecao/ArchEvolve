@@ -1,0 +1,73 @@
+{
+  "created_et": "2026-10-16 01:23 ET",
+  "status": "ADMITTED_RUNNING_SNAPSHOT_ONLY",
+  "source_commit": "7930f3a1f8d59cb7b338f54844dea7728bc8864c",
+  "raw_root": "/private/tmp/probata-t07-helper-stage2-v2-7930f3a1-20261016",
+  "whole_seconds": 900,
+  "inner_seconds": 880,
+  "rss_cap_bytes": 8589934592,
+  "wp_workers": 1,
+  "per_prover_seconds": 30,
+  "portfolio": [
+    "alt-ergo",
+    "z3",
+    "cvc5"
+  ],
+  "goal_scope": "All19 helper bodies, exact stage1 full245goals/352properties and219 active/native goals, all RTE/init/frame/termination/smoke obligations retained.",
+  "proof_acceptance": false,
+  "full_C_RTE_claim": false,
+  "boundary": "Fresh compiler/API and solver attempt only. All early report snapshots and partial journals provisional until final phases/guard exit. Alignment/trusted-summary/caller correspondence unresolved. No provider/TDStep/countedadmission.",
+  "root_preflight": {
+    "at_et": "2026-10-16T01:21:12.980076-04:00",
+    "command_sha256": "fda13f987404208451bae57c47796ab9e8aa27ca0befd776f8ace7dfb6c7ca75",
+    "source_commit": "7930f3a1f8d59cb7b338f54844dea7728bc8864c",
+    "source_clean": true,
+    "published_ancestor": true,
+    "shared_leases_absent": true,
+    "lease_wait_seconds": 0.024106749973725528,
+    "active_selected_verifiers": [],
+    "same_uid_metadata_count": 600,
+    "inspection_denial_pids": [],
+    "scope": "Finite UID/name/PID/birth metadata, no environment/token absence claim; one actual complete19-helper proof job authorized by root after static review;900s8GiB/wp-par1/full3provers30s; no provider/TD/fullC_RTE acceptance.",
+    "psutil_origin": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/__init__.py",
+    "guard_dependency_origin": "/private/tmp/probata-resume-t07-supported-domains/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/staged_search.py",
+    "free_bytes": 70084489216,
+    "memory_pressure": "The system has 38654705664 (2359296 pages with a page size of 16384).\nSystem-wide memory free percentage: 74%\n",
+    "raw_root": "/private/tmp/probata-t07-helper-stage2-v2-7930f3a1-20261016",
+    "output_budget_bytes": 268435456
+  },
+  "recipe_pins": [
+    {
+      "path": "/private/tmp/probata-t07-helper-stage2-command-v2-20261016.json",
+      "sha256": "fda13f987404208451bae57c47796ab9e8aa27ca0befd776f8ace7dfb6c7ca75"
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-stage2-entry-v2-20261016.py",
+      "sha256": "5b325d748744cda010a4debdb8c7b9b62ba4878e1de2c23365cfb74ed29009d7"
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-stage2-expected-v2-20261016.json",
+      "sha256": "cdf86ab91502876047156123e146ea6b337a81075df2f76a9f380f3e15390f59"
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-result-journal-v2-20261016.ml",
+      "sha256": "6b68382ced78505c6504e8b362ad8b77574bb6b6fd77f17e4f89be667c7e6372"
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-stage2-v2-static-control-receipt-20261016.json",
+      "sha256": "bb69a833cd09ce21dabadc2646beddfeb315c2b1b75709d6460128d3f2cd519d"
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-stage2-independent-static-review-v2-20261016.md",
+      "sha256": "693beadd68f4a52796e4dfda58e6449a85f2d66049ca9b3bc7a58b8cd2594913"
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-stage2-independent-static-review-v2-20261016.json",
+      "sha256": "0431c953a20fc0ffdf0cf6af70dc79d8fcf1fabe4e11702c7b36d392f8677a77"
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-stage2-root-launch-v2-20261016.py",
+      "sha256": "14f9ac5b4e69e2b833e58865632e74c117a3e62122d4b2e943379a13396f30d3"
+    }
+  ]
+}
