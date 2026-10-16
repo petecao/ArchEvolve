@@ -729,5 +729,10 @@
     "Five inherited TRUST metadata retained; legacy at-issue/reduction route not used; this fixture refuses CBMC",
     "No actual Frama/WP/CBMC/solver execution, formal-tool version/config probe, SSH or remote evaluation by author; compiler/native metadata and controls ran under B; scripted proof records remain not_proven/tool_crash",
     "All0.1 library bytes unchanged; no current production0.2/full28 acceptance"
-  ]
+  ],
+  "diff_check_exception": {
+    "path": "prototype/28-allocation-parser/inputs/ordinary-model.c",
+    "diagnostic": "new blank line at EOF",
+    "reason": "Preserve exact normal model_for C output plus explicit parse-only prelude; no semantic source whitespace mutation"
+  }
 }

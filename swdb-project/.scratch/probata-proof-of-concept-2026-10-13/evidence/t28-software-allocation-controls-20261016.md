@@ -49,3 +49,8 @@ no current production0.2 is installed. The JSON pins17 source paths,46 retained
 native/record outputs, exact commands/resources, RED/GREEN and parser bundle.
 No actual formal tool, formal version/config probe, SSH or remote evaluation
 was launched by the author.
+
+The exact normal ordinary-model output ends with a blank line; its single
+`git diff --check` EOF warning is retained with the byte-pinned generated input,
+as in the earlier stream parser bundle. No formatting rewrite changes that
+normal model output before root's parser admission.
