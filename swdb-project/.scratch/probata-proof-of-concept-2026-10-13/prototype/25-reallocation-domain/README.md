@@ -117,3 +117,23 @@ controls pass in 52.74 seconds after a real missing-inventory RED. Independent
 completeness review, canonical prelaunch reconstruction and public composition
 remain pending, and the actual proof route is still closed. See
 [source-inventory controls](../../evidence/t25-reallocation-source-inventory-controls-20261016.json).
+
+Canonical `prepare`/`check` now rebuilds the complete declaration from current
+source, rather than trusting staged hashes. It binds original/qualified C,
+each statement and packet, source ownership, theory, translation components and
+exact file/directory membership. Changed desired statements, missing copy steps
+or clauses, altered source/theory, shadow `.why` files and symlinks refuse.
+Eight pure controls pass after RED; the composed public preparation profile is
+28 passed in 53.02 seconds. Its route still returns unsupported before launch.
+See [reconstruction controls](../../evidence/t25-reallocation-canonical-rebuild-controls-20261016.json)
+and the [independent source inventory review](../../evidence/t25-source-inventory-independent-review-32df8de7-20261016.md).
+
+The coordinator's exact-304e03ac Mac Why3 type-only run exited zero on the new
+theory in 0.377 seconds (50.53 MiB), with exactly one unused `dummy` warning.
+The retained v2 warning regex omitted Why3's comma-format warning; a separately
+pinned passive reader classifies that existing output without rerunning or
+rewriting it. A prospective v3 parser captures unknown/continued warnings and
+passes nine pure controls after the real v2 parser failed seven. This closes
+grammar/types and retained-warning classification only. WP import/task closure,
+typed-source image, model bodies and caller composition remain unproved. See
+the [passive addendum](../../evidence/t25-mac-typecheck-passive-warning-audit-v1-304e03ac-20261016.json).

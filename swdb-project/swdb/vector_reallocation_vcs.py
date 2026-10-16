@@ -219,15 +219,13 @@ def member_specs(member):
     raise ValueError('qualified member has no mapped source inventory')
 
 
-def prepare(member, directory):
-    """Emit an explicitly incomplete draft; no admission or result promotion."""
-    directory = Path(directory)
-    directory.mkdir(exist_ok=False)
+def declaration(member):
+    """Rebuild canonical bytes without trusting a staged manifest or hash."""
     source = model.model_text(member)
     if source is None:
         raise ValueError('unknown qualified model')
     theory = HERE / 'heap_reallocation.mlw'
-    rows = []
+    rows, files = [], {}
     if member in model.MEMBERS:
         for index, (name, groups, needle, statement) in enumerate(member_specs(member)):
             begin = source.index(needle)
@@ -237,22 +235,29 @@ def prepare(member, directory):
                     if name == 'ctor.numeric' else GROW_NUMERIC) if statement is None else (
                 '//@ import \\wp::why3: heap_reallocation::Heap;\n' + PRELUDE +
                 '/*@ check lemma ' + goal + ': ' + statement + ';\n*/\n')
-            path = directory / (f'{index:03d}-' + goal + '.c')
-            path.write_text(text)
+            path = f'{index:03d}-' + goal + '.c'
+            files[path] = text.encode()
             rows.append({'id':name,'source_groups':groups,'source_spans':[{'begin':begin,'end':end,
                 'sha256':hashlib.sha256(source[begin:end].encode()).hexdigest()}],
                 'statement':statement,'dependencies':[],'status':'pending','expected':'proven','goal':goal,
                 'kind':'c_kernel' if statement is None else 'check_lemma',
-                'path':path.name,'sha256':hashlib.sha256(text.encode()).hexdigest()})
-    stage = directory/'theory'
-    stage.mkdir()
-    staged_theory = stage/theory.name
-    staged_theory.write_bytes(theory.read_bytes())
+                'path':path,'sha256':hashlib.sha256(text.encode()).hexdigest()})
+    theory_name = 'theory/' + theory.name
+    files[theory_name] = theory.read_bytes()
+    files['qualified.c'] = source.encode()
+    from swdb import std_models
+    files['original.c'] = std_models.model_text(model.MEMBERS[member]).encode()
     from swdb.vector_reallocation_inventory import build
     plan = {'preparation_only':True,'coverage_complete':False,
+            'member':member, 'model':model.identity(),
+            'sources':{name:{'path':name,'sha256':hashlib.sha256(files[name]).hexdigest()}
+                       for name in ('qualified.c','original.c')},
+            'translation_components':{name:hashlib.sha256((HERE/name).read_bytes()).hexdigest()
+                for name in ('vector_reallocation_vcs.py','vector_reallocation_inventory.py',
+                             'vector_reallocation_model.py','heap_model_vcs.py')},
             'source_inventory':build(member, source, rows),
             'source_sha256':hashlib.sha256(source.encode()).hexdigest(),
-            'semantics':{'path':'theory/' + theory.name,'sha256':hashlib.sha256(staged_theory.read_bytes()).hexdigest()},
+            'semantics':{'path':theory_name,'sha256':hashlib.sha256(files[theory_name]).hexdigest()},
             'caller_premises_added':[], 'typed_memory_role':'explicit typed int source-image domain; source-derived caller discharge required',
             'typed_source_image': model.certificate(member)['typed_source_image'],
             'source_parameter_semantics':{'int':'signed32 representation range; part of source typing, not a new requires'},
@@ -262,5 +267,39 @@ def prepare(member, directory):
                 'selected WP Typed/Machine source-image binding and caller discharge',
                 'source-local caller/lifetime and ordinary dependency composition',
                 'independent type/import/task-closure review and fresh normal-reader proof']}
-    (directory/'manifest.json').write_text(json.dumps(plan,sort_keys=True,indent=2)+'\n')
+    files['manifest.json'] = (json.dumps(plan,sort_keys=True,indent=2)+'\n').encode()
+    return plan, files
+
+
+def prepare(member, directory):
+    """Emit an explicitly incomplete draft; no admission or result promotion."""
+    plan, files = declaration(member)
+    directory = Path(directory)
+    directory.mkdir(exist_ok=False)
+    (directory/'theory').mkdir()
+    for name, data in files.items():
+        (directory/name).write_bytes(data)
     return plan
+
+
+def check(member, directory):
+    """Canonical source reconstruction, including the complete import directory.
+
+    Matching self-declared hashes is insufficient. No caller can promote a
+    prepared receipt to a proof or bypass pending semantic/source admission.
+    """
+    expected, files = declaration(member)
+    directory = Path(directory)
+    paths = list(directory.rglob('*'))
+    if directory.is_symlink() or any(p.is_symlink() for p in paths):
+        raise ValueError('a qualified packet or import path is symlinked')
+    if any(not p.is_file() and not p.is_dir() for p in paths):
+        raise ValueError('a qualified packet contains a special filesystem entry')
+    actual = {str(p.relative_to(directory)) for p in paths if p.is_file()}
+    directories = {str(p.relative_to(directory)) for p in paths if p.is_dir()}
+    if actual != set(files) or directories != {'theory'}:
+        raise ValueError('the qualified source/packet/import membership changed')
+    for name, data in files.items():
+        if (directory/name).read_bytes() != data:
+            raise ValueError('the canonical qualified source/VC declaration changed: ' + name)
+    return expected

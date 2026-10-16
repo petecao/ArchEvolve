@@ -1092,3 +1092,16 @@ original raw-growth proof or complete caller acceptance is claimed. Source,
 clause/frame/cleanup/dependency closure and fresh normal-reader proof remain open.
 The coordinator owns the prospective minimal theory type gate and all actual
 jobs. Evidence: `../evidence/t25-reallocation-pending-heap-map-controls-v2-20261016.json`.
+<!-- 2026-10-16 ET scoped preparation addendum; no acceptance checkbox change. -->
+
+The qualified v3 reallocation preparation now reconstructs the exact source,
+event/clause/helper map, packets and import directory independently of staged
+hash claims. Eight tamper controls and the composed 28-control compiler/native
+profile pass; the public route remains unsupported before launch. The root's
+exact-304e03ac Why3 type-only run exited zero with one known unused-parameter
+warning, classified in a separate passive addendum after the original regex
+missed its format. This is grammar/type evidence only. Full WP import/task,
+selected typed-source image, model bodies, caller cleanup/dependencies and wider
+member/type coverage remain open. See
+[canonical reconstruction](../evidence/t25-reallocation-canonical-rebuild-controls-20261016.json)
+and [passive warning addendum](../evidence/t25-mac-typecheck-passive-warning-audit-v1-304e03ac-20261016.json).
