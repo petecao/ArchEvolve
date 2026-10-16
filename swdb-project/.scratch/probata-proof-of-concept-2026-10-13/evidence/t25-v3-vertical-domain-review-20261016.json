@@ -1,0 +1,100 @@
+{
+  "actual_handoff_semantic_gaps": [
+    "source typed initialized int-to-Heap.Integer embedding/load",
+    "automatic receiver creation and lifetime-to-heap source correspondence"
+  ],
+  "date_et": "2026-10-16",
+  "execution": {
+    "compiler": false,
+    "formal": false,
+    "prover": false,
+    "remote": false,
+    "repository_edits": false,
+    "tests": false
+  },
+  "historical_proofs_promoted": false,
+  "kind": "read_only_source_domain_design_review",
+  "new_groups": [
+    "L1",
+    "QC1",
+    "QC2",
+    "A1",
+    "R1",
+    "R2",
+    "G1",
+    "G2",
+    "G3",
+    "G4",
+    "G5",
+    "G6",
+    "G7",
+    "G8",
+    "G9",
+    "R3",
+    "U1",
+    "U2",
+    "L2",
+    "B1"
+  ],
+  "no_actual_proof_claim": true,
+  "no_additional_caller_premise": true,
+  "no_exclusive_ownership_claim": true,
+  "reinstantiated_source_groups": [
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "C6",
+    "C7",
+    "C8",
+    "C9",
+    "D1",
+    "D2",
+    "D3",
+    "D4",
+    "D5",
+    "D6",
+    "D7"
+  ],
+  "review_md_sha256": "1ada6ed6f2b7c889333eec317b3677053b3b2ecaa7c9552f0f47174dcc8298d5",
+  "source": "f32d9dcf9e3f833c45ae2815ab4b90eb06487fc8",
+  "source_pins": [
+    {
+      "git_source": "f32d9dcf9e3f833c45ae2815ab4b90eb06487fc8",
+      "path": "swdb-project/swdb/heap_bridge.mlw",
+      "sha256": "5186c27f5a7a339352e3f62dc3a0d3efb1c7bd12f8a456cc61b0d7a52566638d"
+    },
+    {
+      "git_source": "f32d9dcf9e3f833c45ae2815ab4b90eb06487fc8",
+      "path": "swdb-project/swdb/heap_model_vcs.py",
+      "sha256": "f20e0ec130222aeda96b4fbb8e72eef8d922d3f33e84077777203f7e6d159092"
+    },
+    {
+      "git_source": "f32d9dcf9e3f833c45ae2815ab4b90eb06487fc8",
+      "path": "swdb-project/swdb/heap_model_packets.py",
+      "sha256": "805b00fe78373102b600506833f86c28fce2cf494baef7a68afd63641c1de185"
+    },
+    {
+      "git_source": "f32d9dcf9e3f833c45ae2815ab4b90eb06487fc8",
+      "path": "swdb-project/swdb/heap_model_view.py",
+      "sha256": "ecb6e1476accaee2b275c9bf078bb14fc4b3c8ad81ed17d97d98b1699d2c1e22"
+    },
+    {
+      "git_source": "f32d9dcf9e3f833c45ae2815ab4b90eb06487fc8",
+      "path": "swdb-project/swdb/std_models.py",
+      "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+    },
+    {
+      "git_source": "f32d9dcf9e3f833c45ae2815ab4b90eb06487fc8",
+      "path": "swdb-project/swdb/vector_reallocation_model.py",
+      "sha256": "f73ff7fc76ea4a06a91e93b9f945827bfef1e510ec40b3825a4841b7a8430b16"
+    },
+    {
+      "git_source": "f32d9dcf9e3f833c45ae2815ab4b90eb06487fc8",
+      "path": "swdb-project/tests/fixtures/proof/vector_reallocation_v3.cc",
+      "sha256": "1172e62dbff5076d25471285afcfa17927707dbe6fae121d9570109d39e62b57"
+    }
+  ],
+  "verdict": "DESIGN_RECOMMENDATION_NOT_ACTUAL_HANDOFF"
+}

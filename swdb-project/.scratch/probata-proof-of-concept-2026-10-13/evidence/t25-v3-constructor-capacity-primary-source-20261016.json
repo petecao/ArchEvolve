@@ -1,0 +1,27 @@
+{
+  "created": "2026-10-16 ET",
+  "actions": "Read installed primary header bytes only; no tool probe/compiler/formal execution.",
+  "language": "C++17",
+  "finding": "Count/value construction calls __vallocate(n), which uses allocation.count for end capacity. Below C++23 __allocate_at_least reports exactly requested n. This supports the qualified exact-capacity postcondition for the pinned implementation, not a universal standard-library capacity guarantee.",
+  "scope": "Source support only; caller header provenance and fresh model-body proof remain required.",
+  "sources": [
+    {
+      "path": "/opt/homebrew/Cellar/llvm/22.1.8/include/c++/v1/__vector/vector.h",
+      "sha256": "7e2a0317d9ed2be3427b5e5e04f18ea8e8553da397924080855bf191e90aed0e",
+      "line_start": 166,
+      "line_end": 173
+    },
+    {
+      "path": "/opt/homebrew/Cellar/llvm/22.1.8/include/c++/v1/__vector/vector.h",
+      "sha256": "7e2a0317d9ed2be3427b5e5e04f18ea8e8553da397924080855bf191e90aed0e",
+      "line_start": 592,
+      "line_end": 600
+    },
+    {
+      "path": "/opt/homebrew/Cellar/llvm/22.1.8/include/c++/v1/__memory/allocate_at_least.h",
+      "sha256": "5279f57d0e12aa6e4e781634e11a8173f791b59992e0319647ff831ae556a570",
+      "line_start": 40,
+      "line_end": 48
+    }
+  ]
+}

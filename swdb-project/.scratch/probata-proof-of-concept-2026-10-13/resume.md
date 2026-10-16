@@ -1,19 +1,19 @@
 # Probata implementation resumption
 
-Updated: 2026-10-16 02:15 ET.
+Updated: 2026-10-16 02:45 ET.
 
 ## Current state
 
-Updated: 2026-10-16 02:15 ET. **35 resolved / 25 ready-for-agent / 3 claimed.**
+Updated: 2026-10-16 02:45 ET. **35 resolved / 25 ready-for-agent / 3 claimed.**
 Implementation remains active on `codex/probata-resume-20261015`, based on
-`yanrujhou_main`. Last published checkpoint:`4b2f07bd`; this checkpoint adds prospective
-private out-slot source`971ad632` and preserves separate selector770 admission metadata. The eligible frontier is **07, 25, 28**;
+`yanrujhou_main`. Last published checkpoint:`77fb404c`; this checkpoint integrates prospective
+qualified-v3 source`304e03ac` and private-array/reentry source`e97fb191`. The eligible frontier is **07, 25, 28**;
 other unresolved tickets retain their dependencies. [All 63 statuses](ticket-status-20261015.md).
 
 | Ticket | Current evidence | Next gate |
 | --- | --- | --- |
-| **07 claimed** | Run26 remains UNPROVEN. The separate exact7930 helper run completed: 209/212 ordinary goals Valid, three open; all33 smoke rows have fresh external nonvalid outcomes and raw passed=true. All19 bodies/245 goals/352 properties/31 init properties remain inventoried. Whole383.135s/1261.625MiB sampled RSS, exit1 from open goals; four transient AccessDenied events recovered, final inspection failure null. | Prospective out-slot971 passes the narrow byte-repair review; private-arena refinement and fresh helper/source-domain qualification remain pending. Alignment, caller/allocator correspondence, TD and full C RTE remain open. [Settled actual](evidence/t07-helper-stage2-v2-settled-actual-20261016.json), [independent cold review](evidence/t07-helper-stage2-v2-independent-cold-review-20261016.md). |
-| **25 claimed** | Pair `1278f2d9` and public heap CEA are accepted in scope. Fresh original count constructor at exact `bb7170ac` also passes independent cold review: one record, 27 targets, 36 ordinary Valid plus one smoke; 1,031 checks/342 references with zero mismatch. All84 tasks are identical universal-value streams or exact zero specialization. | Continue separate growth/receiver/storage ownership and caller work. No generic caller, production-store, formal C++ or whole-ticket acceptance follows. [Count cold review](evidence/t25-count-ctor-cold-review-bb7170ac-20261016.md), [heap cold review](evidence/t25-public-heap-cold-review-cea5652b-20261016.md). |
+| **07 claimed** | Run26 remains UNPROVEN. The separate exact7930 helper run completed: 209/212 ordinary goals Valid, three open; all33 smoke rows have fresh external nonvalid outcomes and raw passed=true. All19 bodies/245 goals/352 properties/31 init properties remain inventoried. Whole383.135s/1261.625MiB sampled RSS, exit1 from open goals; four transient AccessDenied events recovered, final inspection failure null. | Private-array3940/reentrye97 preparation is integrated:ten sites/20 header bodies,56 retained controls; actual init-map/reentry, selected source closure and allocator/source qualification stay refused. Alignment, caller/allocator correspondence, TD and full C RTE remain open. [Settled actual](evidence/t07-helper-stage2-v2-settled-actual-20261016.json), [independent cold review](evidence/t07-helper-stage2-v2-independent-cold-review-20261016.md). |
+| **25 claimed** | Pair `1278f2d9` and public heap CEA are accepted in scope. Fresh original count constructor at exact `bb7170ac` also passes independent cold review: one record, 27 targets, 36 ordinary Valid plus one smoke; 1,031 checks/342 references with zero mismatch. All84 tasks are identical universal-value streams or exact zero specialization. | Qualified-v3 constructor/grow/reserve/dtor and caller source304 are unsupported preparation only; type/import/body/caller gates are pending. No generic/default catalog or whole-ticket acceptance follows. [Count cold review](evidence/t25-count-ctor-cold-review-bb7170ac-20261016.md), [heap cold review](evidence/t25-public-heap-cold-review-cea5652b-20261016.md). |
 | **28 claimed** | Exact9704 mathematical rank gate has core5/family4/all-false1 directly Valid and an independent negative with native sat/Why3 Unknown LF(sat). All11 submitted tasks match emitted bytes; independent complete context/variant audit accepts only the conditional mathematical theorem. Original entry/guard exit1 remains unchanged; pure v3 reader correction needs no rerun. Source-bound selector21ed is published through4bb; node1G615 pre-WP refusal remains immutable. Root reports fresh exact770 node1G616 completed02:10:40 ET with2 pytest passes/guard0, but independent settled record audit is pending; no selector acceptance yet. | Await independent exact770 record/source/runtime/goal/smoke/resource closure before scoped acceptance. Retain old21ed failure and distinguish admission from final result. No hardware fairness, source-to-trace/public composition, current0.2 or whole28 claim. [Rank actual and reviews](evidence/t28-rank-whole-actual-and-cold-acceptance-20261016.json), [selector review](evidence/t28-selector-first-vertical-independent-review-20261016.md). |
 | **24 / 27 / 36 resolved** | Published29709232/af10a946/8b0c2e27 with scoped acceptance; ticket36 retains its historical checker identity. | Preserve exact evidence for final integration review. |
 
@@ -59,12 +59,27 @@ raw physical pins before UTF-8 decode, unchanged old sources and generated blobs
 [Initial REQUEST_CHANGES](evidence/t07-outslot-independent-review-1c018f11-20261016.md)
 and [narrow follow-up PASS](evidence/t07-outslot-byte-repair-independent-review-971ad632-20261016.md)
 remain separate; genuine CRLF RED→44GREEN are native/compiler/pure controls only.
-Allocator/fullTD/source/count admission stays refused. Generated pinned artifacts
-retain24 trailing-space warnings, deferred to a later formatting/refinement gate.
+Allocator/fullTD/source/count admission stays refused. Generated pinned output-slot artifacts retain24 trailing-space warnings; private-array
+copies add23, leaving47 documented generated annotation warnings and a later quality gate.
 [Corrected fork-source private-array design](evidence/t07-fresh-array-domain-design-v2-20261016.md)
-is passive only: a separate arena refinement is underway, incoming queue extent
-stays symbolic, and fresh payload/init/lifetime/source correspondence is unproved.
-No new helper formal or source proof acceptance is included here. Unknown/timeout smoke
+remains passive source design. The [3940 independent review](evidence/t07-private-array-independent-review-3940afd0-20261016.md)
+accepts only static six-site preparation; e97 adds four reentry/modular fixtures
+without relabeling that review. Ten site families retain20 header bodies perTU;
+undefined negatives are analyzer-only, and all future ordinary/init/RTE/smoke roots
+remain mandatory. Incoming queue extent stays symbolic; physical selected-source
+closure is REFUSED_NOT_IMPLEMENTED. Fresh payload/init/lifetime/source correspondence
+remains unproved and no old helper/TD/count record is promoted.
+No new helper formal or source proof acceptance is included here.
+
+The [qualified-v3 preparation](prototype/25-reallocation-domain/README.md) at exact304
+retains the original v2 catalog and accepted heap components while adding explicit
+conditional eligibility, arbitrary integer-snapshot copy and automatic-lifetime
+VC drafts. Public qualified models return not_proven/unsupported_construct before
+verifier launch; caller certificates grant no origins or premises. A separate
+exact-Git-blob type-only gate is prospective, with no syntax/type/proof acceptance
+yet. Selected WP Typed/Machine source-image, complete import/task/body/caller
+composition and ordinary dependencies remain open.
+[Integration review](evidence/t07-t25-preparation-integration-review-20261016.md). Unknown/timeout smoke
 outcomes with passed=true mean no detected contradiction, not proved satisfiability.
 
 Rank acceptance is conditional on a fixed trace admitting a nonnegative,
@@ -81,7 +96,7 @@ layouts. Every result retains its exact source/checker/runtime; runtime-dependen
 translator composites are not source-only identities. No sparse proposal, draft3,
 final ticket59 freeze or held-out campaign is admitted. No frontier ticket resolves.
 
-[Current resume](resume.md). Last full status table:01:49 ET; next:**02:19 ET**.
+[Current resume](resume.md). Last full status table:02:45 ET; next:**03:15 ET**.
 
 ## Historical actual checkpoints
 
