@@ -52,3 +52,20 @@ def test_lower_refuses_array_filler_shapes_outside_checked_scalar_prefix(tmp_pat
     assert result.returncode!=0,result.stdout+result.stderr
     assert 'array_filler' in result.stdout+result.stderr
     assert not (tmp_path/'out/observe_input.c').exists()
+
+
+@pytest.mark.parametrize('body', [
+    'int x=0; int a[3]={x++,x++}; return a[0]*10+a[1];',
+    'int a[3]={1,a[0]}; return a[1];',
+    'int a[3]={observe(),observe()}; return a[0]+a[1];',
+], ids=['side-effects','same-array-read','calls'])
+def test_lower_refuses_nonconstant_array_filler_prefix_before_c_emission(tmp_path,body):
+    source=tmp_path/'input.cc'
+    source.write_text('int observe() { return 1; }\nint observe_input() { '+body+' }\n')
+    result=run_swdb('lower','--source',source,'--function','observe_input',
+        '--out',tmp_path/'out','--format','json')
+    (tmp_path/'lower.stdout').write_text(result.stdout)
+    (tmp_path/'lower.stderr').write_text(result.stderr)
+    assert result.returncode!=0,result.stdout+result.stderr
+    assert 'constant array_filler prefix' in result.stdout+result.stderr
+    assert not (tmp_path/'out/observe_input.c').exists()
