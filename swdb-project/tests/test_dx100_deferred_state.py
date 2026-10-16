@@ -28,7 +28,8 @@ def compiler_context(tool):
     return runtime_identity(tool)
 
 
-def run_model(tmp_path, body, *, exit_code=0, prelude='', commands=False, numeric=False, actions=False, regions=False, image=False, cpp=False, registers=False):
+def run_model(tmp_path, body, *, exit_code=0, prelude='', commands=False, numeric=False, actions=False, regions=False, image=False, cpp=False, registers=False,
+              setup=False, source_tile_words=8, value_bound=6, register_words=8):
     spec = importlib.util.spec_from_file_location('dx_deferred_state', ROOT / 'deferred_state.py')
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
@@ -60,12 +61,17 @@ def run_model(tmp_path, body, *, exit_code=0, prelude='', commands=False, numeri
         spec = importlib.util.spec_from_file_location('dx_tile_image', ROOT / 'tile_image.py')
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
-        header = module.render_header(header, source_tile_words=8, value_bound=6, byte_order='little')
+        header = module.render_header(header, source_tile_words=source_tile_words, value_bound=value_bound, byte_order='little')
     if registers:
         spec = importlib.util.spec_from_file_location('dx_register_state', ROOT / 'register_state.py')
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
-        header = module.render_header(header, register_words=8, alignment_by_dtype=[4,4,4,8,8,8])
+        header = module.render_header(header, register_words=register_words, alignment_by_dtype=[4,4,4,8,8,8])
+    if setup:
+        spec = importlib.util.spec_from_file_location('dx_setup_state', ROOT / 'setup_state.py')
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        header = module.render_header(header, source_tile_words=source_tile_words, source_cores=4)
     unit = tmp_path / 'model.c'
     unit.write_text('#include <assert.h>\n#include <stdint.h>\n#include <stdlib.h>\n#include <stdio.h>\n'
                     '#define DXM_CHECK(c,r) do { if (!(c)) { fputs(r,stderr); exit(42); } } while (0)\n'
@@ -840,6 +846,103 @@ int main(void) {
 ''', cpp=True, exit_code=1)
     assert 'runtime error: load of misaligned address' in result.stderr
     assert "type 'unsigned long long'" in result.stderr or "type 'unsigned long'" in result.stderr
+
+
+def test_setup_registers_six_real_geometry_mmio_ranges_and_user_regions_start_at_six(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  dxc_reset(); dxs_alloc();
+  assert(dxs_region_next == 6);
+  assert(dxs_mmio[0] == UINT64_C(0x400000000));
+  assert(dxs_mmio[1]-dxs_mmio[0] == UINT64_C(32)*16384*4);
+  assert(dxs_mmio[2]-dxs_mmio[1] == UINT64_C(32)*16384*4);
+  for (unsigned i=0;i<6;++i) {
+    assert(dxr_regions[i].begin == dxs_mmio[i]);
+    assert(dxr_regions[i].end == dxs_mmio[i+1]);
+    assert(dxr_find(dxs_mmio[i]) == (int)i);
+  }
+  dxs_add_region(64,128); assert(dxr_find(64) == 6);
+  dxs_clear_regions(); assert(dxs_region_next == 6 && dxr_find(64) == -1);
+  return 0;
+}
+''', commands=True, regions=True, image=True, registers=True, setup=True,
+              source_tile_words=16384, value_bound=2, register_words=32,
+              prelude='#define DXM_TILES 32\n#define DXC_REGIONS 256\n')
+
+
+def test_source_init_resets_counters_but_preserves_payload_pending_commands_and_registered_ranges(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  dxc_reset(); dxs_alloc();
+  unsigned tile=dxs_new_tile(0,0), reg=dxg_new_initialized(0,0,7);
+  dxp_store_u32(0,tile,0,9); dxs_add_region(64,128);
+  unsigned command=dxc_prepare(0,-1,0,0,1,0,1,0,0);
+  unsigned root=dxm_constant(11); dxp_bind_output(command,tile,0,0,root); dxc_bind(command,root);
+  dxs_init();
+  assert(dxs_tile_next == 0 && dxg_next == 0 && dxs_region_next == 6);
+  assert(dxc_commands[command].pending && dxr_find(64) == 6);
+  assert(dxg_cpu_read_bits(0,reg,0) == 7);
+  assert(dxs_new_tile(0,0) == tile);
+  dxc_wait_tile(tile); assert(dxp_load_u32(0,tile,0) == 11);
+  dxs_alloc();
+  assert(dxs_tile_next == 1 && dxg_next == 0 && dxs_region_next == 6);
+  assert(dxp_load_u32(0,tile,0) == 11 && dxg_cpu_read_bits(0,reg,0) == 7);
+  assert(dxr_find(64) == -1);
+  return 0;
+}
+''', commands=True, regions=True, image=True, registers=True, setup=True,
+              source_tile_words=16384, value_bound=2, register_words=32,
+              prelude='#define DXM_TILES 32\n#define DXC_REGIONS 256\n')
+
+
+def test_setup_preserves_source_int8_region_narrowing_then_refuses_negative_hardware_id(tmp_path):
+    result = run_model(tmp_path, r'''
+int main(void) {
+  dxc_reset(); dxs_alloc();
+  for (unsigned i=0;i<122;++i) dxs_add_region(UINT64_C(4096)+16*i,UINT64_C(4104)+16*i);
+  assert(dxs_region_next == -128);
+  assert(dxr_find(UINT64_C(4096)+16*121) == 127);
+  puts("WRAPPED");
+  dxs_add_region(64,128);
+  return 0;
+}
+''', commands=True, regions=True, image=True, registers=True, setup=True, exit_code=42,
+              source_tile_words=16384, value_bound=2, register_words=32,
+              prelude='#define DXM_TILES 32\n#define DXC_REGIONS 256\n')
+    assert result.stdout == 'WRAPPED\n'
+    assert result.stderr == 'region-capacity'
+
+
+def test_source_tile_allocation_uses_all_six_widths_and_keeps_odd_pair_start_legal(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  for (unsigned dtype=0;dtype<6;++dtype) {
+    dxc_reset(); dxs_alloc();
+    assert(dxs_new_tile(0,dtype) == 0);
+    assert(dxs_tile_next == (dtype<3 ? 1u : 2u));
+  }
+  dxc_reset(); dxs_alloc();
+  assert(dxs_new_tile(0,0) == 0);
+  assert(dxs_new_tile(0,3) == 1 && dxs_tile_next == 3);
+  dxp_store_u64(0,1,0,UINT64_C(0x1122334455667788));
+  assert(dxp_load_u64(0,1,0) == UINT64_C(0x1122334455667788));
+  return 0;
+}
+''', commands=True, regions=True, image=True, registers=True, setup=True,
+              source_tile_words=16384, value_bound=2, register_words=32,
+              prelude='#define DXM_TILES 32\n#define DXC_REGIONS 256\n')
+
+
+@pytest.mark.parametrize('body,expected', [
+    ('for(unsigned i=0;i<31;++i) (void)dxs_new_tile(0,0); (void)dxs_new_tile(0,3);','tile-pair-domain'),
+    ('(void)dxs_new_tile(0,0); dxs_init(); (void)dxs_new_tile(1,0);','tile-ownership'),
+])
+def test_source_counter_reset_and_last_pair_do_not_bypass_global_tile_obligations(tmp_path, body, expected):
+    result = run_model(tmp_path, 'int main(void) { dxc_reset(); dxs_alloc(); '+body+' return 0; }',
+                       commands=True, regions=True, image=True, registers=True, setup=True, exit_code=42,
+                       source_tile_words=16384, value_bound=2, register_words=32,
+                       prelude='#define DXM_TILES 32\n#define DXC_REGIONS 256\n')
+    assert result.stderr == expected
 
 
 def test_failed_cas_expected_and_desired_values_do_not_enter_gather_history(tmp_path):

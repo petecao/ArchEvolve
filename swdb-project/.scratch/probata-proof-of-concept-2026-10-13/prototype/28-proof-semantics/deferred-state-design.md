@@ -208,3 +208,40 @@ Source-bound wrappers/setup, full pointer admission, formal IEEE bit-image
 coherence and unbounded progress/public proofs remain active work. The read-only
 [installed-tool source map](../../evidence/t28-wp-ieee-progress-source-map-20261016.md)
 records supported IEEE operations and the unsupported ACSL model-field rank route.
+
+## Exact setup and source geometry — 2026-10-16 ET
+
+`setup_state.py` computes the source six MMIO intervals, including both full
+physical tile mappings. Native controls use32tiles/32registers and the default
+16384-word source stride, independently of the two-element value prefix. This
+64-bit role-mask prototype supports4/8-core configurations and explicitly refuses
+the16-core128-tile geometry. Source/target configuration admission remains work.
+
+`alloc_MAA` clears/re-registers the six reserved regions and resets next-region
+ID to6; it does not reset host tile/register counters, byte payloads or pending
+commands. `init_MAA` resets only host counters/next region. Existing user range
+definitions, payloads, ownership and pending commands survive. The source int8
+region counter narrows127+1 to-128 in the explicit static-checked native
+conversion profile; it is not signed-overflow UB. The prototype rejects a subsequent negative ID as a software caller guard before
+source array access: MAA::addAddrRegion checks only the upper bound, so this is
+not a source hardware rejection/panic. Clear restores the six reserved ranges/counter. Whole-span F2
+and physical store-line domains remain separate from this registration state.
+
+Source boundary corrections for future wrappers: `CpuSidePort.cc` implements no
+`SPD_DATA_NONCACHEABLE_RANGE` case for either reads or writes. Its WriteReq comment
+says writes should use that range, but there is no corresponding branch; do not
+model an implemented operation from the comment. The getter returns a pointer;
+unsupported dereferences must refuse absent another independently established
+routing path. Cacheable writes use ReadExReq acquisition and WritebackDirty.
+`SPD::getSize` requires Finished status and is not a wait. SPD/RF constructors
+zero payloads and initial sizes, but alloc/init do not rerun those constructors.
+Our harness unestablished-byte state denotes a conservative arbitrary preexisting
+device entry, not a theorem that fresh gem5 payloads are uninitialized. A fresh
+zero entry state needs its own constructor/source certificate.
+
+Final81/81 native controls pass, including one deliberately expected RF alignment
+UB case, under the recorded sanitizer options/workerB/8GiB guard
+(29.27s,222953472B peak).
+[Exact source/RED/native/resource pins](../../evidence/t28-setup-state-controls-20261016.json).
+The API/source CPU wrappers, typed IEEE coherence, separate unbounded rank/source
+simulation and public actual acceptance remain incomplete; no current0.2 exists.

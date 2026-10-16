@@ -161,3 +161,11 @@ counterexample, not general source agreement. Setup/source wrappers, formal
 IEEE/raw-image coherence, unbounded readiness progress and public actual acceptance
 remain active. No boxes are checked; status remains **claimed**.
 [Exact evidence](../evidence/t28-register-state-controls-20261016.json).
+
+Setup successor — 2026-10-16 ET:81/81 native controls pass for exact six MMIO
+regions, source32tile/16384word physical geometry independent of prefix2,
+nonclearing alloc/init, source int8 conversion and last-pair/ownership boundaries.
+One expected RF source alignmentUB case remains explicit. Complete source-call/
+CPU routing, formal IEEE/raw-image and unbounded progress/source simulation,
+new-version public acceptance remain open; all boxes unchecked, status **claimed**.
+[Exact evidence](../evidence/t28-setup-state-controls-20261016.json).
