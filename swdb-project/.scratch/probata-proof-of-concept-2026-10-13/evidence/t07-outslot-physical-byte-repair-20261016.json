@@ -1,0 +1,43 @@
+{
+  "created": "2026-10-16 ET",
+  "supersedes_source_admission_only": "1c018f1162cdef8fa97d70908a44f1a9bd2f7d5b",
+  "source": {
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/outslot_lowering.py": "72b4c02c544f2a3c49239b52c0086a14f44a172434731cf03f71b80b36825212",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/checks/outslot/run_controls.py": "d5b6e8df720c822f0b11afc854abc771171168855c21d6d3f98ead823404d0c2",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/OUTSLOT-BYTE-PINS-20261016.md": "36f40c5b79fcd40c1896dc51894fd7a738762a72ff67fbae82b3bf7f93b5ab9f"
+  },
+  "fix": "raw physical bytes SHA verified before strict UTF-8 decode; reuse same snapshots; explicit UTF-8 output bytes",
+  "generated_artifacts_unchanged": {
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_outslot/abi-map.json": "5c280a18d4efdeb8fbf3b7b833c7f550bc74121a54838a9b02a78556254ad578",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_outslot/bfs_unit.h": "52d40d00b0a7462eed164deec3a8958a855de5763e7f20fefb8e2f257f09bd34",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_outslot/dxc_summaries.h": "6b109e09239be71e252ee25e4cfa720c1cf37b651a8f586423f0c8d43f2b37e5",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_outslot/gapbs_models.h": "7fcafa5498481b4ecce20c36ba167a00b9c5f9231b460c162268b814f14f19ec",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_outslot/tdstep_standin.c": "3af025040802b2c018a7a192738c276863f7c489e4c3ce238443b9f2a3f6bcfa"
+  },
+  "red": {
+    "path": "/private/tmp/probata-t07-outslot-physical-byte-red-20261016",
+    "control_sha256": "2f5dc3d41e3c1d2aa7a8e6079eda66be8455d335e5a9bded34e86042b6e82330",
+    "old_CLI_returncode": 0,
+    "wrong_CRLF_source_accepted": true,
+    "physical_CRLF_header_sha256": "14d5f2392f87bfde7f9bebcaa3774362f63bb7d3858503d9bc7b654166ca6c1e"
+  },
+  "green": {
+    "path": "/private/tmp/probata-t07-outslot-byte-pins-green-20261016",
+    "controls_sha256": "eb8febd0226f5dff3b634bbd37f73946dbf6cf49aa2e92c18f2c55c7035f65b4",
+    "passed": 44,
+    "guard_sha256": "510f30005a3cd5e8f9f1d9b2c427a3c2d2f53532fa0ca9d428302e410e255b5c",
+    "wall_s": 1.7120547499507666,
+    "peak_rss_mb": 68.046875,
+    "cap_gb": 8.0,
+    "timeout_s": 120.0,
+    "inspection_failure": null,
+    "unconfirmed_children": []
+  },
+  "full_artifact_manifest": {
+    "path": "/private/tmp/probata-t07-outslot-byte-pins-artifacts-20261016.json",
+    "sha256": "fc381de5dfecbe8ce238f0f2d157afd7de99077374e54d1be4c02688b6430b07"
+  },
+  "allocator_correspondence": "REFUSED_PENDING_SEPARATE_REPAIR",
+  "proof_acceptance": false,
+  "formal_provider_SSH_called": false
+}
