@@ -58,7 +58,7 @@ def test_public_stream_binds_source_entry_and_partial_return_before_scripted_ada
             dx100_stream_source.recheck(SimpleNamespace(summaries=[{'semantic_source':certificate}]))
 
 
-@pytest.mark.parametrize('change',["core_bool","rf_empty","line_element_only","owner","model"])
+@pytest.mark.parametrize('change',["core_bool","rf_empty","line_element_only","virtual_zero","owner","model"])
 def test_public_stream_refuses_changed_entry_environment_or_trusted_model_before_adapter(tmp_path,change):
     import hashlib
     from testkit.dx100_stream import prove_stream
@@ -75,6 +75,7 @@ def test_public_stream_refuses_changed_entry_environment_or_trusted_model_before
                 definition=(row['instances'][0] if 'instances' in row else row)['definition']
                 if change=='core_bool':definition['entry']['core']=False
                 elif change=='rf_empty':definition['entry']['rf_i32']['1']=0
+                elif change=='virtual_zero':definition['entry']['input']['nonzero_guest_base']=False
                 else:definition['entry']['input']['bytes']=4
     result,records,entry,marker=prove_stream(tmp_path,1,mutate=mutate)
     assert result.returncode!=0,result.stdout+result.stderr

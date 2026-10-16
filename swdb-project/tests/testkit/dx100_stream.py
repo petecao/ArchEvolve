@@ -8,12 +8,12 @@ OWNER='Probata proof-semantics maintainer; pending Yan-Ru freeze review (59)'
 ENTRY={'kind':'isolated-one-u32-stream-core0-v1','core':0,'tiles':32,'tile_words':16384,'register_words':32,
  'guest_address_bits':64,'byte_order':'little','rf_i32':{'0':0,'1':1,'2':1},
  'epoch':'after-constructor-and-configured-quiescent-RF-before-one-command',
- 'input':{'symbol':'stream_input','bytes':64,'alignment':64,'storage':'initialized C static array',
+ 'input':{'symbol':'stream_input','bytes':64,'alignment':64,'nonzero_guest_base':True,'storage':'initialized C static array',
           'region':'registered normal-memory line disjoint from MMIO','translation':'stable synchronous fault-free64-byte mapping',
           'visibility':'coherent stable full physical line; no competing CPU/device writes from any core through return'},
  'commands':'exactly one u32 stream load, no condition or competing command'}
 BOOT_STATEMENT=('This synthetic core0 unit starts with the pinned32-tile/16384-word SPD constructor state and configured4-core MMIO mapping, '
- 'quiescent initialized signed-int32 RF values0/1/1 at registers0/1/2, and one registered initialized64-byte aligned normal-memory input line '
+ 'quiescent initialized signed-int32 RF values0/1/1 at registers0/1/2, and one registered initialized64-byte aligned normal-memory input line whose virtual base is nonzero, '
  'with stable synchronous fault-free translation and coherent no-interference visibility through normal return. '
  'These are conditional environment/source-model premises owned by the Probata proof-semantics maintainer, pending Yan-Ru freeze review (59); '
  'alloc/init do not establish them and arbitrary callers or physical boot are not established.')

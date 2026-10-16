@@ -82,3 +82,9 @@ repair these paths. Native C++/C ASan+UBSan controls retain `{7}` and `{7,2}` wi
 zero-filled remainders. Ambiguous, nested-filler or designated forms refuse.
 The input's original64-byte extent/alignment is independently source-bound;
 ordinary modular function entry does not assume that its current value is7.
+
+The public input epoch explicitly requires a nonzero virtual base. StreamAccess
+uses zero as its initial last-block sentinel; a nonempty line at virtual0 is
+outside this source domain. The existing native guard already refused guest0;
+the public owned environment certificate now states that boundary directly.
+Physical0 is not declared a universal hardware error by this condition.
