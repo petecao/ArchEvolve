@@ -1,0 +1,183 @@
+{
+  "date_ET": "2026-10-16",
+  "purpose": "named complete per-root diagnostic worlds; not whole-original-TU proof",
+  "inputs": [
+    {
+      "path": "checks/device_init/normal.c",
+      "sha256": "d7ae9477c6c7bd9d090d71e6b4e4b0d01b19baa2f851300c184af090c5a96bdc"
+    },
+    {
+      "path": "checks/device_init/omitted-output.c",
+      "sha256": "31bfce4101bf7fa459af68cf09c2829fb8adbb522fd8f24cac01aaf24cf051e3"
+    },
+    {
+      "path": "standin_device_init_canonical/dxc_summaries.h",
+      "sha256": "5bd692de0323ee209304ffdc9e9ca477ae809aad88761ed1815622e1caeb9f24"
+    },
+    {
+      "path": "checks/device_init/omitted-output-dxc_summaries.h",
+      "sha256": "cadb31112edaaddf288b758696249de799bc19e9ab82387570940f00387626ca"
+    }
+  ],
+  "original_worlds": [
+    {
+      "world": "normal:swdb_device_pipeline_safe",
+      "source": "checks/device_init/normal.c",
+      "root": "swdb_device_pipeline_safe",
+      "start_byte": 171,
+      "end_byte": 1555,
+      "first_line": 5,
+      "last_line": 40,
+      "sha256": "cadde35deb91044b7b6ebe4047b98cc235889ffe56b1ee8f34b4ec8c1f132117",
+      "bytes": 1384,
+      "retained_original": true
+    },
+    {
+      "world": "normal:swdb_device_missing_source",
+      "source": "checks/device_init/normal.c",
+      "root": "swdb_device_missing_source",
+      "start_byte": 1557,
+      "end_byte": 2946,
+      "first_line": 42,
+      "last_line": 76,
+      "sha256": "2430bb75139a3b89dcd7f5099ef7d7ee0c15f884a8b1461d1ce7cb13c2ccaa43",
+      "bytes": 1389,
+      "retained_original": true
+    },
+    {
+      "world": "normal:swdb_device_wrong_prefix",
+      "source": "checks/device_init/normal.c",
+      "root": "swdb_device_wrong_prefix",
+      "start_byte": 2948,
+      "end_byte": 4308,
+      "first_line": 78,
+      "last_line": 112,
+      "sha256": "66d05915cf7b9b00ccab13b265055f0fc8d375c16227e5156c0a05a8c522ed6a",
+      "bytes": 1360,
+      "retained_original": true
+    },
+    {
+      "world": "normal:swdb_device_index_safe",
+      "source": "checks/device_init/normal.c",
+      "root": "swdb_device_index_safe",
+      "start_byte": 4310,
+      "end_byte": 5489,
+      "first_line": 114,
+      "last_line": 141,
+      "sha256": "6185c9b41e47c82b4c997cefc046a6cdbac898cda71368558fd35613cce4f41e",
+      "bytes": 1179,
+      "retained_original": true
+    },
+    {
+      "world": "normal:swdb_device_missing_index",
+      "source": "checks/device_init/normal.c",
+      "root": "swdb_device_missing_index",
+      "start_byte": 5491,
+      "end_byte": 6666,
+      "first_line": 143,
+      "last_line": 169,
+      "sha256": "333b14e7bab36f156cb3c3bc93663a69673d938441c06be286a052e6c4fa0230",
+      "bytes": 1175,
+      "retained_original": true
+    },
+    {
+      "world": "omitted-output:swdb_device_pipeline_safe",
+      "source": "checks/device_init/omitted-output.c",
+      "root": "swdb_device_pipeline_safe",
+      "start_byte": 171,
+      "end_byte": 1555,
+      "first_line": 5,
+      "last_line": 40,
+      "sha256": "cadde35deb91044b7b6ebe4047b98cc235889ffe56b1ee8f34b4ec8c1f132117",
+      "bytes": 1384,
+      "retained_original": true
+    }
+  ],
+  "generated_worlds": {
+    "index_safe": {
+      "root": "swdb_device_index_safe",
+      "original_world": "normal:swdb_device_index_safe",
+      "kept_span": {
+        "root": "swdb_device_index_safe",
+        "start_byte": 4310,
+        "end_byte": 5489,
+        "first_line": 114,
+        "last_line": 141,
+        "sha256": "6185c9b41e47c82b4c997cefc046a6cdbac898cda71368558fd35613cce4f41e",
+        "bytes": 1179
+      },
+      "generated_span": {
+        "root": "swdb_device_index_safe",
+        "start_byte": 280,
+        "end_byte": 1459,
+        "first_line": 114,
+        "last_line": 141,
+        "sha256": "6185c9b41e47c82b4c997cefc046a6cdbac898cda71368558fd35613cce4f41e",
+        "bytes": 1179
+      },
+      "source_sha256": "4bbf953c950b0f830c3897d21bc419cd140945d737986c6f72269d2510f1e1c9",
+      "complete_body_set": [
+        "swdb_device_index_safe"
+      ],
+      "helper_definition_count": 0,
+      "all_header_declarations_retained": true,
+      "other_original_worlds_remain_deferred": true,
+      "source_line_offsets_preserved": true,
+      "original_and_generated_byte_offsets_explicit": true
+    },
+    "missing_index": {
+      "root": "swdb_device_missing_index",
+      "original_world": "normal:swdb_device_missing_index",
+      "kept_span": {
+        "root": "swdb_device_missing_index",
+        "start_byte": 5491,
+        "end_byte": 6666,
+        "first_line": 143,
+        "last_line": 169,
+        "sha256": "333b14e7bab36f156cb3c3bc93663a69673d938441c06be286a052e6c4fa0230",
+        "bytes": 1175
+      },
+      "generated_span": {
+        "root": "swdb_device_missing_index",
+        "start_byte": 309,
+        "end_byte": 1484,
+        "first_line": 143,
+        "last_line": 169,
+        "sha256": "333b14e7bab36f156cb3c3bc93663a69673d938441c06be286a052e6c4fa0230",
+        "bytes": 1175
+      },
+      "source_sha256": "a1113dca63ac53ba29a92be29a704de09cb5c8d13e94b90bc825a850d2b7ba00",
+      "complete_body_set": [
+        "swdb_device_missing_index"
+      ],
+      "helper_definition_count": 0,
+      "all_header_declarations_retained": true,
+      "other_original_worlds_remain_deferred": true,
+      "source_line_offsets_preserved": true,
+      "original_and_generated_byte_offsets_explicit": true
+    }
+  },
+  "outputs": {
+    "index_safe/site_input.c": {
+      "sha256": "4bbf953c950b0f830c3897d21bc419cd140945d737986c6f72269d2510f1e1c9",
+      "bytes": 1460
+    },
+    "index_safe/dxc_summaries.h": {
+      "sha256": "5bd692de0323ee209304ffdc9e9ca477ae809aad88761ed1815622e1caeb9f24",
+      "bytes": 12694
+    },
+    "missing_index/site_input.c": {
+      "sha256": "a1113dca63ac53ba29a92be29a704de09cb5c8d13e94b90bc825a850d2b7ba00",
+      "bytes": 1485
+    },
+    "missing_index/dxc_summaries.h": {
+      "sha256": "5bd692de0323ee209304ffdc9e9ca477ae809aad88761ed1815622e1caeb9f24",
+      "bytes": 12694
+    }
+  },
+  "root_bytes_contracts_headers_unchanged": true,
+  "no_new_premise_or_proof_fact": true,
+  "no_goal_or_function_filter": true,
+  "Typed_source_Init_lifetime_TD_count_qualified": false,
+  "proof_acceptance": false
+}

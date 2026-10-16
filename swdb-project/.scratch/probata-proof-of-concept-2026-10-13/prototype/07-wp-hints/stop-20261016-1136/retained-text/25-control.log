@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/private/tmp/probata-t07-device-index-controls-v1-20261016.py", line 24, in <module>
+    inputs={r['path']:H(BASE/r['path']) for r in api['INPUTS']}
+                      ^^^^^^^^^^^^^^^^^
+  File "/private/tmp/probata-t07-device-index-controls-v1-20261016.py", line 10, in H
+    def H(p):return hashlib.sha256(P(p).read_bytes()).hexdigest()
+                                   ^^^^^^^^^^^^^^^^^
+  File "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/private/tmp/probata-t07-device-index-source/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/checks/device_init/normal.c'
