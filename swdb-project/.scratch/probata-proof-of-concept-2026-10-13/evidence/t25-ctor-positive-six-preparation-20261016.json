@@ -1,0 +1,169 @@
+{
+  "actual_query_binding": {
+    "extra_premises": [],
+    "same_full_antecedent": "t25v3_ctor_inv(h,r,o,b,n,n,v)",
+    "sha256": "3033750a579de5437b7e29b5f6fd0063d7afe60c8fdc5f87b0bf4dfc89a97785",
+    "substitution": {
+      "b": "i",
+      "h": "heap",
+      "n": "i1",
+      "o": "i2",
+      "r": "i3",
+      "v": "i4"
+    },
+    "target": "t25v3_eligible(Heap::put_integer(h,r,o+8,n),r,o,b,0,n,n)"
+  },
+  "base_runtime": "4babafd2cd30c876c7ffc3cf880e35f0396ef9a0",
+  "caller_acceptance": false,
+  "complete_model_acceptance": false,
+  "created": "2026-10-16 ET",
+  "initial_preparation_failures_preserved": [
+    "Public constructor tracer RED30not35 retained.",
+    "Compound term tracer initially refused a+1; accepted only after protected integer-term grammar extension.",
+    "Initial source helper rejected a duplicate repr spelling elsewhere in Python source; fixed by exact physical PRELUDE AST literal binding.",
+    "Initial syntax-only selector matched the split delimiter and body; corrected to exact frama.write_text AST argument. No native control executed."
+  ],
+  "old_actual_frontier": {
+    "attempted": 30,
+    "materialized_tasks": 94,
+    "open": "ctor.qualified.positive_post",
+    "ordinary_goals": 39,
+    "original_exit": 1,
+    "proven_prefix": 29,
+    "smoke_goals": 1,
+    "unexecuted": 0,
+    "upgraded": false,
+    "verdict": "not_proven"
+  },
+  "old_actual_record": "proof.model.std_vector_int_realloc_v3_ctor_count_value.20261016t113842z.a60c9f0b",
+  "old_actual_source": "046f6b9e64d45777a8032951ced04f942fc9c3c2",
+  "original_v2_acceptance": false,
+  "proof_acceptance": false,
+  "prospective_census": {
+    "caller_pending": 101,
+    "caller_records_admitted": 0,
+    "ctor": 35,
+    "dtor": 11,
+    "grow": 38,
+    "reserve": 44,
+    "separate_da2518_caller_checkpoint_excluded": true
+  },
+  "pure_controls": {
+    "abstract_ctor_boolean_cases": 128,
+    "affected_cases": 33,
+    "compiler_native_formal_execution": false,
+    "new_ctor_functions": 7,
+    "public_native_test_unexecuted": "tests/test_vector_reallocation_ctor_view.py::test_complete_synthetic_constructor_success_persists_all_thirty_five_targets",
+    "synthetic_expectations": {
+      "goals": 45,
+      "runs": 35,
+      "setup_runs": 35,
+      "smokes": 1
+    },
+    "test_cases": 40
+  },
+  "references": [
+    {
+      "bytes": 444,
+      "path": "/private/tmp/probata-t25-ctor6-preparation-red-v1-20261016/result.json",
+      "sha256": "0c3fb96c7e60b96a4e9911fff8e633049a2daa88943cd2856dd38c98f170644d"
+    },
+    {
+      "bytes": 338,
+      "path": "/private/tmp/probata-t25-ctor6-preparation-red-v1-20261016/controls.log",
+      "sha256": "fd41a461748acdc4c57019e60183eb79d91c7d8f5fdcf08be0901832d6b013e5"
+    },
+    {
+      "bytes": 6416,
+      "path": "/private/tmp/probata-t25-ctor6-final-pure-controls-v1-20261016/result.json",
+      "sha256": "6e65c4aae96bc3b9606aa45a1a0f9aba0afead9c130ce2527f6eef904a84de5f"
+    },
+    {
+      "bytes": 5388,
+      "path": "/private/tmp/probata-t25-ctor6-final-pure-controls-v1-20261016/controls.log",
+      "sha256": "12433f294b3f6acc0ef9d1b2b8107230384d41f3b1bbace06860d05dc8e3f524"
+    },
+    {
+      "bytes": 2082296,
+      "path": "/private/tmp/probata-t25-ctor30-partial-metadata-root-execution-v1-20261016.json",
+      "sha256": "4a80670357213b2a8d106d84d4690510595ecefd37665e73bff7f8d2dc13441e"
+    },
+    {
+      "bytes": 2322,
+      "path": "/private/tmp/probata-t25-ctor30-independent-query-numeric-observations-v1-20261016.md",
+      "sha256": "958f94a086054c4cc92d22e4296a3e6c684e7284b0de269944e24d77882a95f1"
+    },
+    {
+      "bytes": 17840,
+      "path": "/private/tmp/probata-t25-ctor30-independent-query-numeric-observations-v1-20261016.json",
+      "sha256": "f94c4b20f0bec112912e773c32f402ed3f2989ecf02d36e16de98c6302bc7c70"
+    },
+    {
+      "bytes": 3814,
+      "path": "/private/tmp/probata-t25-ctor-positive-definition-analysis-v1-046f6b9e-20261016.json",
+      "sha256": "6776d40914fcccd03e92aac811376be3b90be36a5ddbfc0707432f487163d99f"
+    }
+  ],
+  "source_pins": [
+    {
+      "path": "swdb-project/swdb/vector_reallocation_vcs.py",
+      "sha256": "1f7f110493a4fa291915987c53b0adbbc7f001c2d78cb901c36bbb2dc81c7209"
+    },
+    {
+      "path": "swdb-project/tests/test_vector_reallocation_ctor_conjunctions.py",
+      "sha256": "288b5b13b68437aa5ef356509720a4a7da90194834c84008a1993a6ff9f5cfe7"
+    },
+    {
+      "path": "swdb-project/tests/test_vector_reallocation_ctor_view.py",
+      "sha256": "1ed337fcff5f6b4a0a7d7f7f5d4d5403d03205296cdab84f82e54035f7ddd2f8"
+    },
+    {
+      "path": "swdb-project/tests/test_vector_reallocation_conjunctions.py",
+      "sha256": "d3acb161df7b41ca343b96c5c34813a04ce8b56b8d278696bb0ed4401e682fdc"
+    },
+    {
+      "path": "swdb-project/tests/test_vector_reallocation_caller_packets.py",
+      "sha256": "ae66144167abca813c647b0d851297a73bed2e546690ec485ca36e563777d1f9"
+    },
+    {
+      "path": "swdb-project/tests/fixtures/proof/vector-reallocation-ctor-positive-046f.json",
+      "sha256": "631e9b05ede2ff404928a312b19e6c6d901f37292f532897197490bae2ad6ca5"
+    },
+    {
+      "path": "swdb-project/tests/fixtures/proof/vector-reallocation-grow-and15-a20.json",
+      "sha256": "863a76033fa25dfcf7f337394e872dc1017803191662d0d8df13d59b01466f2a"
+    }
+  ],
+  "status": "PREPARATION ONLY; merge latest integration/independent source review/public workflow/native/actual validation pending",
+  "term_extension": {
+    "admitted": "integer +,-,* with nested parentheses, unary minus and function applications",
+    "original_AND15_leaf_C_bytes": "all38 grow inputs preserved against frozen independent reconstruction",
+    "precedence": "non-atomic substitution arguments parenthesized; simultaneous token replacement",
+    "unsupported": "Boolean/relation/division/pointer-dereference/incomplete terms; shadowing and capture still refused"
+  },
+  "ticket_closure": false,
+  "transformation": {
+    "all_reviewed_grow_C_targets_preserved": 38,
+    "fresh_index": "j",
+    "original_whole_target": "reference only; never executed/imported as theorem",
+    "other_ctor_C_targets_preserved": 29,
+    "parts": [
+      "repr",
+      "cells.access",
+      "cells.initialization",
+      "cells.integer",
+      "cells.bounds",
+      "eligibility"
+    ],
+    "range": "exact source-defined0<=j<n, lifted under fresh forall; not new entry premise",
+    "sibling_dependencies": [],
+    "source_definitions": [
+      "t25v3_eligible",
+      "t25v3_repr",
+      "Heap::int32_region",
+      "Heap::int32_at"
+    ],
+    "source_mapping": "Physical PRELUDE AST right-literal context disambiguates a legitimate duplicate repr spelling guard. Exact source Why3 region/cell schemas guard a definitional ACSL spelling bridge; bridges are never emitted/imported as new predicates.",
+    "theory_or_C_body_or_contract_changes": false
+  }
+}

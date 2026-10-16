@@ -150,3 +150,6 @@ independent source/entry reviews. The pending caller checkpoint remains separate
 
 
 Prospective AND15 empty-prefix decomposition now requires grow38/reserve44/constructor30/destructor11 and96 pending caller duties. Every copy-establishment leaf retains the complete original premise; none imports a sibling theorem. The old whole target is reference-only, other23 grow inputs and semantic theory remain unchanged. Thirty-three compiler-free cases pass; public/native/schema controls and all actual successor proofs are pending. This supersedes preparation counts only, preserves all partial046 producers and excludes the separate caller checkpoint da2518. See `25-copy-establish-and15-20261016.md`.
+
+
+The prospective constructor final-postcondition split now requires constructor35/grow38/reserve44/destructor11 and101 pending caller duties. Six exact-definition conclusions retain the same original invariant premise; all29 other constructor and all38 grow C inputs are unchanged. Forty compiler-free cases pass. The constructor35 scripted public/native control, independent source review and all fresh actual successor results remain pending. This supersedes preparation counts only. See `25-ctor-positive-six-20261016.md`.

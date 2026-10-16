@@ -69,7 +69,7 @@ def test_closed_conjunction_grammar_refuses_unsupported_or_capturing_shapes():
         ('predicate p(integer x, integer x) = x == 0 && x < 1;', ['0','0']),
         ('predicate p(integer x) = x == 0 && x < 1;', []),
         ('predicate p(integer x) = x == 0 && x < 1;', ['0(1)']),
-        ('predicate p(integer x) = x == 0 && x < 1;', ['y+1']),
+        ('predicate p(integer x) = x == 0 && x < 1;', ['y/0']),
         ('predicate p(integer x) = x == 0 && x < 1;', ['y && 0']),
         ('predicate p(integer x) = x == 0 &&;', ['0']),
         ('predicate p(integer x) = x == 0 || x == 1 && x < 2;', ['0']),

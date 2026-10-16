@@ -4,6 +4,7 @@ Definitions and isolated pending check lemmas, never desired-result axioms.
 The complete public model/caller route remains closed until all maps exist.
 """
 from pathlib import Path
+import ast
 import hashlib
 import json
 import re
@@ -331,7 +332,7 @@ def predicate_conjuncts(definition, arguments):
     """Instantiate a closed predicate's top-level AND, refusing binder capture.
 
     This is a deliberately small source transformation, not an ACSL parser.
-    Arguments are atoms or function applications; unsupported terms/scopes fail
+    Arguments are integer +,-,* terms and function applications; unsupported terms/scopes fail
     closed. Simultaneous token replacement cannot rewrite a callee or a newly
     inserted argument, and every nested bound name must be fresh in all args.
     """
@@ -348,26 +349,49 @@ def predicate_conjuncts(definition, arguments):
         raise ValueError('predicate substitution arity differs')
     def term(text):
         tokens = [row[0] for row in _logic_tokens(text)]
-        def consume(index):
+        def atom(index):
+            if index < len(tokens) and tokens[index] == '(':
+                index, _atomic = expression(index+1)
+                if index >= len(tokens) or tokens[index] != ')':
+                    raise ValueError('unbalanced substitution term')
+                return index+1, True
+            if index < len(tokens) and tokens[index] == '-':
+                index, _atomic = atom(index+1)
+                return index, False
             if index >= len(tokens) or not re.fullmatch(r'[A-Za-z_]\w*(?:::[A-Za-z_]\w*)*|[0-9]+', tokens[index]):
-                raise ValueError('substitution requires an atomic term or function application')
+                raise ValueError('unsupported substitution term atom')
             index += 1
             if index < len(tokens) and tokens[index] == '(':
                 if tokens[index-1].isdigit():
                     raise ValueError('a numeric atom cannot be a substitution callee')
                 index += 1
                 if index < len(tokens) and tokens[index] != ')':
-                    index = consume(index)
+                    index, _atomic = expression(index)
                     while index < len(tokens) and tokens[index] == ',':
-                        index = consume(index+1)
+                        index, _atomic = expression(index+1)
                 if index >= len(tokens) or tokens[index] != ')':
                     raise ValueError('malformed substitution function application')
                 index += 1
-            return index
-        if not tokens or consume(0) != len(tokens):
+            return index, True
+        def product(index):
+            index, atomic = atom(index)
+            while index < len(tokens) and tokens[index] == '*':
+                index, _atomic = atom(index+1)
+                atomic = False
+            return index, atomic
+        def expression(index):
+            index, atomic = product(index)
+            while index < len(tokens) and tokens[index] in {'+', '-'}:
+                index, _atomic = product(index+1)
+                atomic = False
+            return index, atomic
+        end, atomic = expression(0)
+        if end != len(tokens):
             raise ValueError('unsupported substitution term')
-        return {token for token in tokens if re.fullmatch(r'[A-Za-z_]\w*', token)}
-    argument_names = set().union(*(term(arg) for arg in arguments))
+        return ({token for token in tokens if re.fullmatch(r'[A-Za-z_]\w*', token)},
+                text if atomic else '('+text+')')
+    terms = [term(arg) for arg in arguments]
+    argument_names = set().union(*(names for names, _text in terms))
     body = header[3]
     conjuncts = _top_parts(body, '&&')
     tokens = _logic_tokens(body)
@@ -410,7 +434,7 @@ def predicate_conjuncts(definition, arguments):
         active = set().union(*(names for start, end, names in scopes if start < index < end))
         if not callee and token not in set(formals) | active:
             raise ValueError('unbound symbol in predicate conjunction')
-    mapping = dict(zip(formals, arguments, strict=True))
+    mapping = dict(zip(formals, [text for _names, text in terms], strict=True))
     def substitute(expression):
         result, begin = [], 0
         for token, start, end in _logic_tokens(expression):
@@ -461,6 +485,122 @@ def copy_establish_parts(statement):
         'reference_role': 'original logical target only; never imported or launched as a proved result'}
 
 
+def _source_definition(name, following):
+    start = PRELUDE.index('predicate ' + name + '(')
+    end = PRELUDE.index(following, start)
+    definition = PRELUDE[start:end].strip()
+    raw = (HERE/'vector_reallocation_vcs.py').read_bytes()
+    encoded = definition.encode()
+    assignments = [node for node in ast.parse(raw).body if isinstance(node, ast.Assign)
+                   and any(isinstance(target, ast.Name) and target.id == 'PRELUDE' for target in node.targets)]
+    if len(assignments) != 1 or not isinstance(assignments[0].value, ast.BinOp) or \
+            not isinstance(assignments[0].value.op, ast.Add) or \
+            not isinstance(assignments[0].value.right, ast.Constant):
+        raise ValueError('the physical PRELUDE literal binding changed')
+    literal = assignments[0].value.right
+    if not PRELUDE.startswith(ORIGINAL_PRELUDE) or literal.value != PRELUDE[len(ORIGINAL_PRELUDE):]:
+        raise ValueError('the runtime predicate differs from the physical PRELUDE literal')
+    lines = raw.splitlines(keepends=True)
+    lo = sum(map(len, lines[:literal.lineno-1])) + literal.col_offset
+    hi = sum(map(len, lines[:literal.end_lineno-1])) + literal.end_col_offset
+    if raw[lo:hi].count(encoded) != 1:
+        raise ValueError('predicate is not unique in its physical PRELUDE literal')
+    begin = raw.index(encoded, lo, hi)
+    return definition, {'path': 'vector_reallocation_vcs.py', 'begin': begin,
+        'end': begin+len(encoded), 'sha256': hashlib.sha256(encoded).hexdigest(),
+        'container_sha256': hashlib.sha256(raw).hexdigest()}
+
+
+def _application_arguments(text, name):
+    match = re.fullmatch(re.escape(name) + r'\((.*)\)', text, re.S)
+    if match is None:
+        raise ValueError('the expanded predicate application differs')
+    return _top_parts(match[1], ',')
+
+
+def _int_definition_bridges():
+    """Exact Why3-to-ACSL spelling bridge; no new semantic definition or axiom.
+
+    This closed schema is the same four int32_at conjuncts used by the existing
+    projection view. Both source definitions must match physically before any
+    formula is instantiated. No generated bridge predicate is imported/emitted.
+    """
+    definitions = [
+        ('''predicate int32_region (h:heap) (b offset count:int) =
+    forall j:int. 0 <= j < count -> int32_at h b (offset+4*j)''',
+         r'predicate t25_region_bridge(Heap::heap h, integer b, integer offset, integer count) = '
+         r'(\forall integer j; 0 <= j < count ==> Heap::int32_at(h,b,offset+4*j));'),
+        ('''predicate int32_at (h:heap) (b o:int) =
+    typed_reads h b o 4 4 /\\ initialized_at h b o /\\
+    integer_at h b o (load_int h b o) /\\
+    -2147483648 <= load_int h b o <= 2147483647''',
+         'predicate t25_cell_bridge(Heap::heap h, integer b, integer o) = '
+         'Heap::typed_reads(h,b,o,4,4) && Heap::initialized_at(h,b,o) && '
+         'Heap::integer_at(h,b,o,Heap::load_int(h,b,o)) && '
+         '-2147483648 <= Heap::load_int(h,b,o) <= 2147483647;'),
+    ]
+    raw = (HERE/'heap_reallocation.mlw').read_bytes()
+    bridges = []
+    for why3, acsl in definitions:
+        encoded = why3.encode()
+        if raw.count(encoded) != 1:
+            raise ValueError('the exact source integer definition changed')
+        begin = raw.index(encoded)
+        bridges.append((acsl, {'path': 'heap_reallocation.mlw', 'begin': begin,
+            'end': begin+len(encoded), 'sha256': hashlib.sha256(encoded).hexdigest(),
+            'container_sha256': hashlib.sha256(raw).hexdigest(),
+            'ACSL_spelling_bridge': acsl, 'bridge_role': 'definitional spelling only; never emitted or assumed'}))
+    return bridges
+
+
+def constructor_positive_parts(statement):
+    quantifiers = r'\forall Heap::heap h; \forall integer r,o,b,n,v; '
+    antecedent = 't25v3_ctor_inv(h,r,o,b,n,n,v)'
+    now = 'Heap::put_integer(h,r,o+8,n)'
+    arguments = [now, 'r', 'o', 'b', '0', 'n', 'n']
+    original = quantifiers + antecedent + ' ==> t25v3_eligible(' + ','.join(arguments) + ')'
+    if statement != original or any(token == 'j' for token, _a, _b in _logic_tokens(quantifiers+antecedent)):
+        raise ValueError('constructor expansion requires the exact full premise and a fresh index')
+    eligible, eligible_source = _source_definition('t25v3_eligible', '    predicate t25v3_copy_frame')
+    represented, repr_source = _source_definition('t25v3_repr', '    predicate t25v3_ctor_inv')
+    eligible_parts, eligible_binding = predicate_conjuncts(eligible, arguments)
+    if len(eligible_parts) != 2:
+        raise ValueError('the exact eligibility conjunction changed')
+    repr_parts, repr_binding = predicate_conjuncts(represented,
+        _application_arguments(eligible_parts[0], 't25v3_repr'))
+    if len(repr_parts) != 2:
+        raise ValueError('the exact represented-heap conjunction changed')
+    (region, region_source), (cell, cell_source) = _int_definition_bridges()
+    region_parts, region_binding = predicate_conjuncts(region,
+        _application_arguments(repr_parts[1], 'Heap::int32_region'))
+    if len(region_parts) != 1:
+        raise ValueError('the exact integer-region quantifier changed')
+    scoped = re.fullmatch(r'\(\\forall integer j; (.*?) ==> (.*)\)', region_parts[0], re.S)
+    if scoped is None:
+        raise ValueError('the complete source integer-region scope changed')
+    cells, cell_binding = predicate_conjuncts(cell,
+        _application_arguments(scoped[2], 'Heap::int32_at'))
+    if len(cells) != 4:
+        raise ValueError('the exact integer-cell conjunction changed')
+    components = [('repr', quantifiers, antecedent, repr_parts[0])]
+    components += [('cells.'+name, quantifiers+r'\forall integer j; ',
+                    antecedent+' && '+scoped[1], formula)
+                   for name, formula in zip(['access', 'initialization', 'integer', 'bounds'], cells, strict=True)]
+    components += [('eligibility', quantifiers, antecedent, eligible_parts[1])]
+    parts = [('ctor.qualified.positive_post.'+suffix, prefix+premise+' ==> '+formula)
+             for suffix, prefix, premise, formula in components]
+    return parts, {'id': 'ctor.qualified.positive_post', 'original_statement': original,
+        'quantifiers': quantifiers, 'antecedent': antecedent, 'fresh_index': 'j',
+        'fresh_index_free_in_antecedent': False, 'parts': [name for name, _formula in parts],
+        'premises_added': [], 'dependencies': [],
+        'definition_sources': [eligible_source, repr_source, region_source, cell_source],
+        'definition_expansions': [eligible_binding, repr_binding, region_binding, cell_binding],
+        'region_range_from_definition': scoped[1],
+        'combination': 'AND: representation, four independent integer-cell conjuncts and unary eligibility are all required',
+        'equivalence': 'A implies (R and forall-fresh-j (range implies AND(cells)) and O) iff (A implies R) and AND(forall-fresh-j (A and range implies cell)) and (A implies O)',
+        'reference_role': 'original logical target only; never imported or launched as a proved result'}
+
+
 def lemma_source(name, statement):
     return ('//@ import \\wp::why3: heap_reallocation::Heap;\n' + PRELUDE +
             '/*@ check lemma t25v3_' + name.replace('.', '_') + ': ' + statement + ';\n*/\n')
@@ -497,6 +637,14 @@ def declaration(member):
                 receipt['reference'] = {'path': reference, 'sha256': hashlib.sha256(files[reference]).hexdigest()}
                 logical.append(receipt)
                 parts = [(part, formula, f'{index:03d}c{component:02d}')
+                         for component, (part, formula) in enumerate(expanded, 1)]
+            elif name == 'ctor.qualified.positive_post':
+                expanded, receipt = constructor_positive_parts(statement)
+                reference = 'references/' + f'{index:03d}-t25v3_ctor_qualified_positive_post.c'
+                files[reference] = lemma_source(name, statement).encode()
+                receipt['reference'] = {'path': reference, 'sha256': hashlib.sha256(files[reference]).hexdigest()}
+                logical.append(receipt)
+                parts = [(part, formula, f'{index:03d}p{component}')
                          for component, (part, formula) in enumerate(expanded, 1)]
             for part, formula, label in parts:
                 goal = 't25v3_' + part.replace('.', '_')
