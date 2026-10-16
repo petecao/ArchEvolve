@@ -1,0 +1,137 @@
+{
+  "date_et": "2026-10-16",
+  "status": "prepared; actual parser unexecuted by author",
+  "parser_flags": [
+    "-machdep",
+    "x86_64",
+    "-kernel-warn-key",
+    "annot-error=abort"
+  ],
+  "inputs": [
+    {
+      "name": "wp-correct.c",
+      "sha256": "dcc1b3c97c38ebe0a39a618e449cda1f7f72a97a978b4c01c29bee3499741b0a",
+      "bytes": 2570,
+      "role": "exact public WP input; parser only"
+    },
+    {
+      "name": "wp-wrong.c",
+      "sha256": "6e184fc338e9fa0e8aace370f9d339727ddb0fdcbf601a06f8f29a23b7d9c57b",
+      "bytes": 2570,
+      "role": "exact public WP input; parser only"
+    },
+    {
+      "name": "all-contracts.c",
+      "sha256": "a7f603442764ac145852bdb05fe05ab4a081b319c5a4a81fd59b248c0a83ba5b",
+      "bytes": 2600,
+      "role": "normal all-contract validation input"
+    },
+    {
+      "name": "ordinary-model.c",
+      "sha256": "d540dd34c90dc2935ca14c6975b392c3f2b0f075b534f337672a2c8373188d23",
+      "bytes": 1146,
+      "role": "normal ordinary C model with explicitly parse-only assertion declaration"
+    }
+  ],
+  "origins": [
+    {
+      "label": "correct",
+      "record": {
+        "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_correct_and_wrong_counter0/102/records/proofs/proof.contract.dx100_software_allocation_fixture.v1.20261016t100705z.0f59e138.yaml",
+        "sha256": "de4aee5e3e5ccb7aba43b76c7a927296aeb2d79cbb0e28217ac7e6a855854eb8",
+        "bytes": 26315410
+      },
+      "wp_input": {
+        "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_correct_and_wrong_counter0/102/runs/proof.contract.dx100_software_allocation_fixture.v1.20261016t100705z.0f59e138/wp/wp_input.c",
+        "sha256": "dcc1b3c97c38ebe0a39a618e449cda1f7f72a97a978b4c01c29bee3499741b0a",
+        "bytes": 2570
+      },
+      "source": {
+        "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_correct_and_wrong_counter0/102/library/proof_units/trust.cc",
+        "sha256": "fb279d7456b643736318b87418467f9d608de8135208f7008ebb9103992ab32f",
+        "bytes": 330
+      },
+      "contract": {
+        "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_correct_and_wrong_counter0/102/library/rewrite_contracts/trust.yaml",
+        "sha256": "befb198bad30511362049f11f53f63550b025483fa1a1fd821ff3aed1e38b112",
+        "bytes": 1257
+      },
+      "semantics": {
+        "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_correct_and_wrong_counter0/102/library/proof_semantics/dx100_trust_fixture.yaml",
+        "sha256": "d612e1c356a0c24f9f2d0ebd15b068da130472bcf109c3b89077df1f0a05887a",
+        "bytes": 15693
+      }
+    },
+    {
+      "label": "wrong",
+      "record": {
+        "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_correct_and_wrong_counter0/101/records/proofs/proof.contract.dx100_software_allocation_fixture.v1.20261016t100731z.40787fbe.yaml",
+        "sha256": "0f69aea981c3b652b287c3d5b7b1b212ab771c5070029f5bb85cfd7b3c67638c",
+        "bytes": 26315412
+      },
+      "wp_input": {
+        "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_correct_and_wrong_counter0/101/runs/proof.contract.dx100_software_allocation_fixture.v1.20261016t100731z.40787fbe/wp/wp_input.c",
+        "sha256": "6e184fc338e9fa0e8aace370f9d339727ddb0fdcbf601a06f8f29a23b7d9c57b",
+        "bytes": 2570
+      },
+      "source": {
+        "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_correct_and_wrong_counter0/101/library/proof_units/trust.cc",
+        "sha256": "fb279d7456b643736318b87418467f9d608de8135208f7008ebb9103992ab32f",
+        "bytes": 330
+      },
+      "contract": {
+        "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_correct_and_wrong_counter0/101/library/rewrite_contracts/trust.yaml",
+        "sha256": "b6f1a6582189c8b0818cfbba9fe351759fd0a66c5f9067d95616b4cddf64643e",
+        "bytes": 1257
+      },
+      "semantics": {
+        "path": "/private/tmp/probata-t28-allocation-current-final-green/pytest/test_correct_and_wrong_counter0/101/library/proof_semantics/dx100_trust_fixture.yaml",
+        "sha256": "d612e1c356a0c24f9f2d0ebd15b068da130472bcf109c3b89077df1f0a05887a",
+        "bytes": 15693
+      }
+    }
+  ],
+  "stdlib_headers": [
+    "stdbool.h",
+    "stddef.h",
+    "stdint.h"
+  ],
+  "generator_sources": [
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/swdb/framac.py",
+      "sha256": "94db2a360fb0d29bf6f35f90b12f53b04e1a9a768139c88bbe8f7605fd8c2889",
+      "bytes": 4763
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/swdb/proof_semantics.py",
+      "sha256": "52df507ea1e932cd12de07b337e48d96a72f927efab74222071ca384a92148e2",
+      "bytes": 32516
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/swdb/dx100_allocation_source.py",
+      "sha256": "45b26cf29c755865d7cabffd0fa2a085d0eef77b52849bc9edfb99b4442b36d9",
+      "bytes": 20142
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/swdb/wp_adapter.py",
+      "sha256": "bb55de75e62a4389c749170f6a6c1ee41e8f28597b05321a085758e8b203e419",
+      "bytes": 90033
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/swdb/cbmc_adapter.py",
+      "sha256": "8e903980620f02b13095beaa43a00896d8b0923654a983affbcc321f3c87d4b6",
+      "bytes": 68263
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/swdb/proof_setup.py",
+      "sha256": "3d3f7ef06814955ef6b7f27cd385f223ea79da9eb76d9462a4a593e11eafdb23",
+      "bytes": 48020
+    },
+    {
+      "path": "/private/tmp/probata-t28-stream-vertical/swdb-project/swdb/c_lowering.py",
+      "sha256": "b5dc02fe3ef1a920c45f47e77faec1acda4e015197447c2be7d628c323f8eb6e",
+      "bytes": 169053
+    }
+  ],
+  "scope": "Parser/type check only. No WP, solvers, contract/body agreement, source refinement, totality, hardware liveness or full28 acceptance."
+}
