@@ -1,5 +1,7 @@
 # Hardware planning before catalog lookup
 
+**Optional generalization update:** [separate review artifacts](../optional-generalizations/README.md) now propose configurable offsets/scales without changing the minimum plan. The original examples below remain pinned historical planning outputs.
+
 **October 15 implementation.** The hardware agent now groups compatible access
 requirements **before** consulting Eric's catalog. Each group asks for a block
 with the union of its required capabilities. The catalog returns alternatives

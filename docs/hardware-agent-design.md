@@ -197,3 +197,7 @@ Each new candidate handoff now includes an unresolved parameter-space template. 
 ## October 16: saved-proposal integration
 
 The [planning-loop bridge](designs/planning-loop-integration/README.md) connects saved, pinned block selections to the real catalog and handoff generators through `OfflineEvolution`. Structural failures and unresolved requirements enter experiment memory and saved reflection contexts. Performance evidence stays null and cannot promote a strategy. Source, capability and parameter contracts remain unchanged.
+
+## Optional generalization proposals
+
+The planner now emits [separate offset/scale extension requests](designs/optional-generalizations/README.md) from explicit index annotations. Minimum capability groups and selected hardware remain unchanged. Existing catalog matches do not establish extension support; additional hardware requirements, legal domains and costs stay unresolved. Saved-proposal feedback includes the optional request IDs without treating them as performance or implementation evidence.

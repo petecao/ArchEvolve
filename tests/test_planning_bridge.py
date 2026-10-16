@@ -45,6 +45,10 @@ class PlanningBridgeTests(unittest.TestCase):
         self.assertTrue(all(self.evaluation(i)['latency_ms'] is None for i in range(3)))
         files=self.store.get(self.evaluation()['artifact_bundle_ref'])['files']
         self.assertIn('handoffs/candidate-02/parameter-space.template.yaml',files)
+        self.assertIn('generalization-proposals.yaml',files)
+        self.assertTrue(self.evaluation()['optional_generalizations']['proposal_ids'])
+        self.assertFalse(self.evaluation()['optional_generalizations']['affects_minimum_status'])
+        self.assertIsNone(self.evaluation()['optional_generalizations']['support'])
         draft=yaml.safe_load(files['handoffs/candidate-02/intrinsic-draft.yaml'])
         self.assertEqual(draft['planned_block']['member_request_ids'],['access-02-read','access-03-read','access-04-read'])
         hardware=yaml.safe_load(files['hardware-request.yaml'])

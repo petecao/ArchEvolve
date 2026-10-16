@@ -8,6 +8,7 @@ from unittest.mock import patch
 import yaml
 
 from archevolve.__main__ import ROOT, reference_context
+from archevolve.evolution_store import digest
 from archevolve.hardware_catalog import load_catalog, query_catalog
 from archevolve.intrinsic_handoff import build_handoff_artifacts
 from archevolve.normalize import load_normalized
@@ -68,6 +69,10 @@ class COBRACatalogAdmissionTests(unittest.TestCase):
         case = load_normalized(ROOT / "examples/received/bfs-sparse.features.v1.2.yaml", reference_context(ROOT))
         before = select_candidates(case, self.baseline, "bound-catalog", "fixed-review-digest", 12)
         after = select_candidates(case, self.catalog, "bound-catalog", "fixed-review-digest", 12)
+        # Provenance must track the changed catalog even when BFS matching is unchanged.
+        for output,catalog in ((before,self.baseline),(after,self.catalog)):
+            for block in output[1]['block_catalog_results']:
+                self.assertEqual(block['catalog_identity'].pop('canonical_sha256'),digest(catalog))
         self.assertEqual(before, after)
         intent = deepcopy(after[0]["capability_requests"][0])
         intent.update(operation="write", subtype="tuple_bin", purpose="update", array="tuple_bins",

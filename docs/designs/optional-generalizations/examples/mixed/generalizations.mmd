@@ -1,0 +1,8 @@
+flowchart LR
+  min["Minimum observed capability request"] --> base["Existing catalog lookup"]
+  min --> ext["Optional configurable offset / scale"]
+  ext --> query["Separate extension query"]
+  query --> unknown["Support, implementation location and legal values unresolved"]
+  base --> cost["Compare incremental cost only after evidence exists"]
+  unknown --> cost
+  cost --> review["No automatic selection or cheapness claim"]

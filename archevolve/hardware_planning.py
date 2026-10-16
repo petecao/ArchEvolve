@@ -9,6 +9,7 @@ from hashlib import sha256
 import json
 
 from tools.render_mermaid import RequestError
+from archevolve.evolution_store import digest
 
 QUERY_FIELDS = ("operation", "subtype", "address_pattern", "payload_type", "index_width_bits", "require_old_value")
 
@@ -137,6 +138,8 @@ def query_block(catalog, block):
     the typed clauses internally, then intersects evidence by design and role.
     It never unions different catalog designs into a synthesized accelerator.
     """
+    if block.get("format") == "capability-extension-query-v0.1":
+        raise RequestError("Existing catalog predicates cannot certify a capability-extension query; keep extension support unresolved.")
     from archevolve.hardware_catalog import query_catalog
     results, coverage = [], {}
     for clause in block["capability_clauses"]:
@@ -164,6 +167,7 @@ def query_block(catalog, block):
             row["status"] = "assist_alternative_not_executor" if role == "assist" else "candidate_cover_needs_evidence" if evidence_gaps or block["missing_evidence"] else "conditional_capability_cover"
             options.append(row)
     return {"block_id": block["id"], "member_request_ids": block["member_request_ids"],
+        "catalog_identity": {"catalog_id":catalog.get("catalog_id"), "revision":catalog.get("revision"), "canonical_sha256":digest(catalog)},
         "capability_results": results, "options": options, "partial_designs": partial,
         "status": "options_for_review" if options else "needs_information_or_explicit_replanning",
         "scope": "Operation evidence for every clause from one catalog record and role. Mapping, resources, mutability and composition remain unproved."}
@@ -200,7 +204,12 @@ def planning_artifacts(plan, results):
               "A catalog option must cover every typed clause using one design record and one execution role.",
               "Partial matches are retained as diagnostics, not silently combined into a new accelerator.", "",
               "[Plan](hardware-plan.yaml) · [Catalog results](block-catalog-results.yaml)", ""]
-    return {"hardware-plan.yaml": yaml.safe_dump(plan, sort_keys=False),
+    output = {"hardware-plan.yaml": yaml.safe_dump(plan, sort_keys=False),
             "block-catalog-results.yaml": yaml.safe_dump({"format": "block-catalog-results-v0.1", "results": results}, sort_keys=False),
             "planning-before.mmd": "\n".join(before)+"\n", "planning-after.mmd": "\n".join(after)+"\n",
             "planning.md": "\n".join(lines)}
+
+    from archevolve.generalizations import generalization_artifacts
+    output.update(generalization_artifacts(plan, results))
+    output["planning.md"] += "\n[Optional generalizations and unresolved support/cost queries](generalizations.md). These do not change the minimum plan or selected candidates.\n"
+    return output

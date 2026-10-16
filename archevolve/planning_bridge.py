@@ -29,7 +29,7 @@ def pipeline_hash():
     return digest({p:sha256((ROOT/p).read_bytes()).hexdigest() for p in (
         'archevolve/planning_bridge.py','archevolve/planning_replay.py','archevolve/evolution_runtime.py','archevolve/evolution_policy.py',
         'archevolve/evolution_store.py','archevolve/evidence_select.py','archevolve/hardware_planning.py',
-        'archevolve/hardware_catalog.py','archevolve/normalize.py','archevolve/measurement_methods.py',
+        'archevolve/generalizations.py','archevolve/hardware_catalog.py','archevolve/normalize.py','archevolve/measurement_methods.py',
         'archevolve/workload_context.py','archevolve/intrinsic_handoff.py','archevolve/hardware_behavior.py',
         'archevolve/mechanisms.py','archevolve/parameter_exploration.py','archevolve/__main__.py','tools/render_mermaid.py')})
 
@@ -66,7 +66,7 @@ class HardwarePlanningBridge:
                               'cohort':None,'baseline_latency_ms':None}]}}
 
     def evaluate(self, request):
-        proposal=request['candidate']; generated=False; issues=[]; bundle_ref=None
+        proposal=request['candidate']; generated=False; issues=[]; bundle_ref=None; generalization_ids=[]
         try:
             require(request['mode']=='offline_planning','Use a structural-only campaign.')
             require(request['task']['id']==self.task_id and request['task']['input']==self.task_input,
@@ -83,6 +83,8 @@ class HardwarePlanningBridge:
             files={**self.snapshots,'normalized.yaml':yaml.safe_dump(self.case,sort_keys=False),
                    'hardware-request.yaml':request_text,'selection-trace.yaml':yaml.safe_dump(trace,sort_keys=False)}
             files.update(planning_artifacts(trace['hardware_plan'],trace['block_catalog_results']))
+            generalizations=yaml.safe_load(files['generalization-proposals.yaml'])
+            generalization_ids=[p['id'] for p in generalizations['proposals']]
             for name,content in build_artifacts(hardware,'hardware-request.yaml',request_hash).items():
                 files['diagrams/'+name]=content
             for name,content in build_handoff_artifacts(hardware,request_hash).items():
@@ -111,7 +113,9 @@ class HardwarePlanningBridge:
             issues=[{'category':'invalid_or_unsupported_proposal','message':str(exc)}]
         detail={'kind':'hardware_planning_feedback','proposal_ref':request['candidate_ref'],
                 'bindings':self.bindings,'planning_status':status,'handoff_generated':generated,
-                'issues':issues,'artifact_bundle_ref':bundle_ref,'performance_evaluated':False}
+                'issues':issues,'artifact_bundle_ref':bundle_ref,'performance_evaluated':False,
+                'optional_generalizations':{'proposal_ids':generalization_ids,'support':None,'additional_cost':None,
+                                            'affects_minimum_status':False}}
         detail_ref=self.store.put(detail)
         return {**detail,'candidate_sha256':request['candidate_ref'],'synthetic':False,
                 'evidence_kind':'planning_feedback','evidence_refs':[detail_ref]+([bundle_ref] if bundle_ref else []),

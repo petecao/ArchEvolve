@@ -1,39 +1,56 @@
 format: planning-loop-integration-summary-v0.1
 llm_calls: 0
 hardware_evaluations: 0
-saved_proposals_sha256: 78d1d502e8122b8a1561f2d9c80685ffb063e9ce33b1bbf0f91376ea25a02075
+saved_proposals_sha256: d44d442f5b02bbc53843072a75e78646d4c773cf763c716aeed887eba6b13f1f
 observations:
-- proposal_ref: 8e87bf3dd1dfb225783bd8ebda2ce2efc585f55abec5ff9791d7cf09005bda45
+- proposal_ref: 26500167e3014f39936048a2d0cddd4fc0a6848342ffdc5ad678cb9602ce43ad
   status: needs_information
   handoff_generated: true
-  artifact_bundle_ref: 4c42c5d3a00e85c31f9eafb7d238f9ff58e4bc69336aecf88bcf8826318d115c
+  artifact_bundle_ref: a6ca7ea00f4634fe6e57aea9c73acc3bd59ff48694878db0b1bb676eba4fa8ab
   issue_categories:
   - mapping_review_required
   - parameter_exploration_blocked
+  optional_generalizations:
+    additional_cost: null
+    affects_minimum_status: false
+    proposal_ids:
+    - generalization-68ebc7ca7003c2759525
+    support: null
   eligible_for_performance_ranking: false
-- proposal_ref: ff35547fab78bc4362650352317004947df39a971e2377074024ecf972f3cdd9
+- proposal_ref: cd3b47aca9d73805d083b671d9851a3b94f06fe8bedff1d0d7bd6df263f606a7
   status: needs_information
   handoff_generated: true
-  artifact_bundle_ref: 3dc7eb4c2a11cd8e68ceb7bd3a4a5a39d520e9a4866d707e8071a98c2fe5c6d0
+  artifact_bundle_ref: 374d0f20ccf8e3b5a284829bc8c52c85931c428ffa0dcad4f74bc6cfed6cbe78
   issue_categories:
   - missing_capability_evidence
   - mapping_review_required
   - parameter_exploration_blocked
+  optional_generalizations:
+    additional_cost: null
+    affects_minimum_status: false
+    proposal_ids:
+    - generalization-68ebc7ca7003c2759525
+    support: null
   eligible_for_performance_ranking: false
-- proposal_ref: 1bca8ee75b71b0e3fd6bb468cadce3ed8a85926b27861ddcea42d447df94ca11
+- proposal_ref: a3467c91198b9cc89a3eeca4571aab6defb485ab0f23f92a3364192d502c58e2
   status: rejected
   handoff_generated: false
   artifact_bundle_ref: null
   issue_categories:
   - invalid_or_unsupported_proposal
+  optional_generalizations:
+    additional_cost: null
+    affects_minimum_status: false
+    proposal_ids: []
+    support: null
   eligible_for_performance_ranking: false
 pending_revisions:
-- ref: a07b3c27309a426b17b9c0fb702f00b9add87cc106b693c0877d3516fda3b108
+- ref: 83b049c421ee7879711e34d4605c2b551bc4f1823521731fb77cc5d2a376520d
   kind: strategy
   active: false
   feedback_count: 3
 performance_ranking_performed: false
-active_strategy_ref: 978611b6e450d6bca193b74cd0b165b798d9f70af760ae82818edd3b88d947ae
+active_strategy_ref: 08a2e83a33442474293e189cb7301447e16a9456f2247831d41ebb5b9b7edd46
 usage:
   calls: 4
   tokens: 0

@@ -43,7 +43,7 @@ def generate():
     identity = {'catalog_sha256':catalog_hash,'bfs_input_sha256':case['input_sha256'],
                 'source_context_sha256':context_hash,'mixed_fixture_sha256':mixed_hash,
                 'code_sha256':{p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in (
-                    'tools/demo_hardware_planning.py','archevolve/hardware_planning.py',
+                    'tools/demo_hardware_planning.py','archevolve/generalizations.py','archevolve/hardware_planning.py',
                     'archevolve/evidence_select.py','archevolve/hardware_catalog.py','archevolve/normalize.py',
                     'archevolve/workload_context.py','archevolve/__main__.py')}}
     output['manifest.json']=json.dumps({'format':'prelookup-planning-demo-v0.1','identity':identity,
