@@ -1,11 +1,11 @@
 # Probata implementation resumption
 
-Updated: 2026-10-15 23:17 ET.
+Updated: 2026-10-15 23:40 ET.
 
 ## Current state
 
 **35 resolved / 25 ready-for-agent / 3 claimed. Implementation remains active.**
-Integration `codex/probata-resume-20261015`, published0b315646, is based on
+Integration `codex/probata-resume-20261015`, publishede56c62dd, is based on
 `yanrujhou_main` atd94d629b. Active frontier: **07,25,28**; all other unresolved
 tickets retain their blockers. [Current map](map.md), [all63 statuses](ticket-status-20261015.md).
 Drafts1/2 remain immutable; no draft3/final freeze or held-out campaign is admitted.
@@ -14,20 +14,19 @@ old actual records keep their exact source/runtime/checker identities.
 
 | Owner / item | Evidence and state | Next action |
 |---|---|---|
-| 07 / ticket07 | Run26 UNPROVEN42.22min; complete single provider turn/eight candidate checks. Final397scheduled goals stopped on native proc_environ SystemError,58partial Timeout lines/no final verdict or negative. Original failing PID/phase/cause unknown. Immutable three-file closeout published0b315646. | Isolated method24 public controlled diagnostics/retry safety and structural proof-quality diagnosis; no actual readmission. [Run26](evidence/t07-counted-run26-20261015.json). |
-| 25 / ticket24 | 9d theory actual Why3 typecheck PASS,70refs/eight raw pins exact. Full42v4 G61223:13:41–45ET passes198module/runtime checks and imports theory, then unknown -wp-dkey stops before goals. | Narrow supported diagnosticflag repair and representative actual WP/task-import gate before full42. No proof/body certification. [Type review](evidence/t25-typecheck-cold-and-v4-entry-review-20261015.md), [admission](evidence/reviewed-t25-heap-capability-v4-launch-9d8ca764-20261015.json). |
-| 28 / ticket27 + numeric helper | Published complete interface/typed routing/trust recording/checker guard;49focused source-typedef controls reviewed atbb6e7fed. Old0.1 unchanged. State/history/ownership and raw-bit numeric prototypes progressing under compiler/native controls. | Review prototypes, compose command/ownership contracts, then exact current0.2 admission. No actual0.2 result yet. [Typedef review](evidence/t28-source-typedef-merger-review-20261015.md). |
+| 07 / ticket07 | Run26 UNPROVEN42.22min; complete single provider turn/eight candidate checks. Final397scheduled goals stopped on native proc_environ SystemError,58partial Timeout lines/no final verdict or negative. Original failing PID/phase/cause unknown. Immutable three-file closeout published0b315646. | Method24 prior49controls pass; independent review found secondary-identity retry/privacy edge, fail-closed repair in progress. Static source audit finds missing queue capacity and unsigned/copy domain defects; caller-backed stand-in repair required before actual readmission. [Run26](evidence/t07-counted-run26-20261015.json). |
+| 25 / ticket24 | 9d theory actual Why3 typecheck PASS,70refs/eight raw pins exact. Full42v4 G61223:13:41–45ET passes198module/runtime checks and imports theory, then unknown -wp-dkey stops before goals. | Supportedflag repair9881/e56 published. Representative ONElemma CVC5Valid/coldtaskclosure PASS. Full42v5 active node1G613/exacte56,198source/runtime checks PASS,21 owner-reported matches/noerrors with fulltask audit pending. No wholebody certification. [Type review](evidence/t25-typecheck-cold-and-v4-entry-review-20261015.md), [admission](evidence/reviewed-t25-heap-capability-v4-launch-9d8ca764-20261015.json). |
+| 28 / ticket27 + numeric helper | Published complete interface/typed routing/trust recording/checker guard;49focused source-typedef controls reviewed atbb6e7fed. Old0.1 unchanged. Numeric648924d7 merged:9native controls,128opcode cases/486signed edges,345pins exact; floatACSLrelation absent. State/history/DAG primitives739ed2bc merged:22native controls; deferredstore/RMW/command integration progressing. Physical/source mapping/fullwrappers and floatrelation still open. | Review prototypes, compose command/ownership contracts, then exact current0.2 admission. No actual0.2 result yet. [Typedef review](evidence/t28-source-typedef-merger-review-20261015.md). |
 | 24 / 27 / 36 resolved | Published29709232 / af10a946 / 8b0c2e27; independent scoped acceptance. Ticket36 actuals remain2033/74+B493 despite future76e1 checker changes. | Preserve raw/source/history for final review; no broad rerun required now. [36 review](evidence/t36-final-acceptance-independent-review-20261015.md). |
 
 Root owns actual dispatch and tracker updates; merger owns integration Git while assigned.
 Mac actual slot is free after three finite poststop metadata scans; no environment-marker
-absence claim. At most two remote measurements, one per socket; G612 released after
-natural failure, but every admission requires fresh lease/process/load/disk checks.
+absence claim. At most two remote measurements, one per socket; G613 is active for full42v5. Every admission requires fresh lease/process/load/disk checks.
 Use unchanged full-layout protocolv3; no positive/sparse proposal is deployed. Source
 moves by Git; raw remains remote. The23:05:51ET pre-replay observation had36GiB/data1,
 69GiB/data; root did no cleanup and does not infer its cause. Retained/data output
 reserves/data1 for source/toolchain, two-lane planning and20GiB floor. Next full
-status table23:19ET. [Full42 source review](evidence/t25-source-allowlist-9d8ca764-root-review-20261015.md).
+status table23:48ET (last23:17ET). [Full42 source review](evidence/t25-source-allowlist-9d8ca764-root-review-20261015.md).
 
 ## Historical actual checkpoints
 
