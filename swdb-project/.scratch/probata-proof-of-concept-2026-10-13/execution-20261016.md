@@ -38,23 +38,22 @@ Baseline: `c978393b119a3614229a37f0f2c8ca2a097c750b` on `yanrujhou_main`.
 - Preserve uncommitted ticket 7 and unrelated cleanup scratch. Do not resurrect
   the retired integration branch or blindly execute historical tmp commands.
 
-## Current checkpoint — 2026-10-16 15:52 ET
+## Current checkpoint — 2026-10-16 16:21 ET
 
-| Item | Evidence and next action |
-| --- | --- |
-| Vector mathematics | Focused10, qualified grow61/reserve67, private-lifetime9, four unchanged gluing duties and all 23 positive conjunction leaves have independently audited scoped adoption. The original two compound timeout outcomes remain unchanged. |
-| Source observation | Corrected v3 private source effect/frame rule passed independent Standards and Spec. It accounts for original24 ordinary / 9 smoke / 13 frame partitions, alias and administrative initialization, and live memory versus dead history. Exact 82-target scientific bundle binding and public admission are being implemented. |
-| Mixed pair | New local int/pointer fixture, shared testkit builders, public controls and eight-record A2 profile passed independent source readiness review. Tool-disabled collection succeeds. Compiler/native/formal evaluations remain pending. |
-| Initialized u32 | V5 source 04af node0 G613 completed: outer exit 0, 312.800 s, 1,997,959,168-byte peak, no timeout/OOM; two actual records retain proven correct result and not_proven false result. Independent full cold audit is next. |
-| Public trace25 | V3 refused its old namespace predicate before tests; actual failure retained. Reviewed namespace-only V4 is active on node1 G635 since 15:50:35 ET. All 25 scientific/runtime criteria remain unchanged. |
-| Whole interface | Native86 V4 completed both exact C11/C++17 sanitizer censuses, outer exit 0 / 20.958 s / 210,575,360 B, actual 4 GiB guard. Independent cold review pending. Reviewed 132-route dispatch and new 0.2/source-TU integration preparation continue. |
-| Tests and resources | Focused V3 completed 80 passed. Full defaults await final source changes. /data1 free 11.8 GiB, /data 67.6 GiB at 15:52 observation. Live lease checks gate every admission. |
+| Item | Progress and change | Health | ETA / next action |
+| --- | --- | --- | --- |
+| Vector source proof | 82-target binder passes both reviews; source-rule public integration authored | Original mathematics and timeouts retained | Unknown; review setup/adapter/schema and actual public route |
+| Mixed pair | Actual controls 18/19; initializedness repair passes 11 child-free tests | One known policy gap; no formal run admitted | Unknown; independent review, fresh native controls, then eight-record profile |
+| Initialized u32 | Two actual records completed; cold V3 metadata reader refused | Original proven/not_proven outcomes intact | Unknown; narrow runtime-shape reader successor |
+| Public trace25 | V4 completed 12 proven / 13 refuted; all13 C++ replays succeeded | No timeout/OOM; complete cold review pending | Unknown; admit reviewed passive audit |
+| Whole interface | Native86 cold audit and private scoped adoption complete; source compiler capture under review | Source/current0.2/public integration still open | Unknown; bounded capture, source/model integration and public fixtures |
+| Tests/resources | Focused80 passed; full defaults wait for final changes | Both leases released at16:20; data1 11.7GiB/data67.6GiB | Refresh before dispatch; next full status16:51 ET |
 
-Both tickets remain claimed; all final acceptance boxes remain open. Census is
-35 resolved / 26 ready-for-agent / 2 claimed. External Claude Code owns ticket 7; its
-tracker, source and runtime ownership remain untouched. Published source 04af74c1
-is verified on GitHub. Primary mbit10 synchronization remains pending; historical
-source freezes and required raw stay retained.
+Both tickets remain claimed; final acceptance boxes remain open. Census is
+35 resolved / 26 ready-for-agent / 2 claimed. Source18f is published/read back;
+primary mbit10 Git-only synchronization remains pending. Obsolete615 source was
+retired recovery-safely; every raw directory and exact restore commit remains.
+External Claude Code owns ticket7 and its state is preserved.
 
 ## Historical admission checkpoints
 

@@ -73,7 +73,7 @@
     },
     "verdict_reading": {
       "type": "object",
-      "description": "Ticket36 fresh-run reader version and outcome.",
+      "description": "Ticket36 current checked evaluation version and outcome. Native WP uses its fresh run reader; the explicitly pinned closed source-rule route records its separate checked source basis and preserves native diagnostic outcomes.",
       "required": [
         "check",
         "verdict"
@@ -240,6 +240,14 @@
                        "description": "Ticket 25: the std::vector and std::pair model version the C lowering used, {id: swdb-std-models-<version>, sha256 of swdb/std_models.py} (swdb.std_models.identity()). Written exactly when the proof unit uses a modeled type; changing any member's contract gives a different pin."},
         "vector_reallocation_model": {"$ref": "#/$defs/pin",
                                       "description": "Explicit qualified v3 vector reallocation contract/domain candidate. Separate from the unchanged original std_models catalog; caller discharge and body proof remain mandatory."},
+        "vector_closed_source_rule": {"$ref": "#/$defs/pin",
+          "description": "Explicit closed-source observation kernel; alternate source interpretation, not a native Typed lifetime proof."},
+        "vector_closed_scientific_binding": {"$ref": "#/$defs/pin",
+          "description": "Checker matching complete current source/domain/theory/VC inputs to exact accepted historical mathematical evidence."},
+        "vector_closed_scientific_bundle": {"$ref": "#/$defs/pin",
+          "description": "Immutable reviewed scientific catalog and its content-addressed historical task/import/runtime/outcome closure; no historical record is relabeled current."},
+        "vector_closed_source_route": {"$ref": "#/$defs/pin",
+          "description": "Explicit original closed-summary fixture route and its stated source/library/allocator TCB."},
         "logic": {
           "type": "array",
           "description": "Ticket 26: every logic-library file the proof used (the formal halves' acsl.uses, or the file a prove-logic job checked), each by ID, version and file sha256. Optional: written only when a file is used. The level rule stops counting the record when a file's sha256 changes.",
@@ -303,13 +311,13 @@
     },
     "goals": {
       "type": "array",
-      "description": "Ticket 36: every generated goal, with source wp_json or wp_inventory and a smoke marker. Automatic goals and successful smoke tests may have no proving solver/time; smoke passed means the false reachability goal was not proven.",
+      "description": "Ticket 36: every generated goal, with native source wp_json/wp_inventory or explicit source_rule origin and a smoke marker. A source_rule result is the separate pinned source observation kernel, never a native WP claim. Automatic goals and successful smoke tests may have no proving solver/time; smoke passed means the false reachability goal was not proven.",
       "items": {
         "type": "object",
         "additionalProperties": false,
         "required": ["goal", "status", "solver", "seconds"],
         "properties": {
-          "smoke": {"type": "boolean"}, "source": {"enum": ["wp_json", "wp_inventory"]},
+          "smoke": {"type": "boolean"}, "source": {"enum": ["wp_json", "wp_inventory", "source_rule"]},
           "goal": {"type": "string", "minLength": 1}, "property": {"type": ["string", "null"]},
           "function": {"type": ["string", "null"]}, "status": {"type": "string", "minLength": 1},
           "solver": {"type": ["string", "null"]}, "seconds": {"type": ["number", "null"], "minimum": 0}
@@ -462,6 +470,38 @@
   },
   "required": ["subject", "pins", "job", "evidence_kind"],
   "allOf": [
+    {
+      "if": {"required": ["goals"], "properties": {"goals": {"contains": {
+        "required": ["source"], "properties": {"source": {"const": "source_rule"}}
+      }}}},
+      "then": {
+        "required": ["verdict", "settings", "verdict_reading"],
+        "properties": {
+          "verdict": {"const": "proven"},
+          "evidence_kind": {"const": "contract_fixture"},
+          "subject": {"properties": {"kind": {"const": "library_summary"}}},
+          "pins": {
+            "required": ["vector_closed_source_rule", "vector_closed_scientific_binding",
+                         "vector_closed_scientific_bundle", "vector_closed_source_route"],
+            "properties": {"method_version": {"properties": {"id": {"const": "method.wp-vector-closed-source-v1"}}}}
+          },
+          "goals": {"items": {"required": ["source"], "properties": {"source": {"const": "source_rule"}}}},
+          "settings": {
+            "required": ["tool", "verifier_launched", "proof_basis", "framework_source_rule_evaluated",
+                         "source_typed_bridge_established", "original_diagnostic", "native_projected_diagnostic"],
+            "properties": {
+              "tool": {"const": "checked-vector-source-rule"},
+              "verifier_launched": {"const": false},
+              "proof_basis": {"const": "checked closed source observation rule and exact conditional mathematical evidence"},
+              "framework_source_rule_evaluated": {"const": true},
+              "source_typed_bridge_established": {"const": false},
+              "original_diagnostic": {"required": ["normal_verdict"], "properties": {"normal_verdict": {"const": "not_proven"}}},
+              "native_projected_diagnostic": {"required": ["normal_verdict"], "properties": {"normal_verdict": {"const": "not_proven"}}}
+            }
+          }
+        }
+      }
+    },
     {
       "if": {"required": ["method_part_status"]},
       "then": {

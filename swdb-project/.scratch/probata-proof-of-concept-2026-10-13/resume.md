@@ -9,20 +9,30 @@ authorization. External Claude Code owns ticket 7. Root coordinates actual
 tool admission, mbit10 lanes, publication, and final tracker synchronization.
 See [active execution](execution-20261016.md) for the current checklist.
 
-At 15:52 ET, all 23 lifetime conjunction leaves have passed complete independent
-cold review and scoped root adoption, alongside the unchanged four duties and
-prior mathematical profiles. Original compound timeouts remain unchanged.
-Corrected source observation v3 passed both review axes; its exact 82-target
-scientific binder and source/public integration are next. The mixed int/pointer
-pair fixture/profile and shared builders are reviewed; actual runs are pending.
+At 16:21 ET, all 23 positive lifetime conjunction leaves and four unchanged
+gluing duties retain scoped adoption. The exact 82-target scientific binder
+passed both review axes; opt-in source-rule setup/adapter/schema integration is
+being reviewed. Original compound timeouts and supplemental native not_proven
+results remain unchanged. Mixed-pair controls finished 18 passed / 1 refused at
+initializedness. A precise pointer-value policy repair has 11 child-free controls
+passing and awaits independent review before a fresh compiler/native run.
 
-Initialized-register V5 completed its actual two-record profile with the correct
-result proven and false result not_proven; complete cold review is next. Trace
-V3's pretest namespace refusal is retained; reviewed V4 is active. Native86 passed
-both exact C11/C++17 sanitizer censuses, with cold review pending. Whole-interface
-source/model/new-version integration continues. Focused: 80 passed; full defaults
-and final whole-change reviews remain pending. Neither ticket is complete.
-Census35 resolved / 26 ready / 2 claimed; external ticket 7 is untouched.
+Initialized V5 retains the proven correct result and not_proven false result.
+Its first complete cold V3 invocation refused on a runtime metadata-shape mismatch;
+the refusal is preserved and a narrow reviewed reader repair is next. Trace V4
+completed 25 cases: 12 proven, 13 refuted, all 13 C++ replays succeeded; independent
+cold review remains pending. Native86 has complete independent cold review and
+scoped root adoption of both private C11/C++17 sanitizer censuses. Whole-interface
+source/new 0.2 integration and its bounded compiler capture remain in preparation.
+Focused regression: 80 passed. Full defaults, final reviews and both tickets'
+final acceptance remain open; census 35 resolved / 26 ready / 2 claimed.
+
+Published source18f04e56 is verified on GitHub; primary mbit10 synchronization
+remains pending. Only the obsolete clean detached615ddf50 source checkout was
+retired after reader checks; its exact published source/restoration recipe and
+all raw evidence remain retained. At 16:20 ET both socket and legacy leases
+were released; /data1 had 11.7 GiB and /data 67.6 GiB free. These are finite
+observations and must be refreshed before dispatch. External ticket7 is untouched.
 
 The 11:35 ET pause and all snapshots below are historical. Their evidence and
 runtime boundaries remain intact; their stop instruction is superseded for

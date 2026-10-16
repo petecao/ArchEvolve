@@ -1,0 +1,214 @@
+{
+  "created": "2026-10-16 ET",
+  "observed_utc": "2026-10-16T20:20:09.241002+00:00",
+  "classification": "CONTROL_FAILURE_RETAINED_BEFORE_FORMAL_ADMISSION",
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-18f04e56-t25-pair-pointer-controls-v1",
+  "source_commit": "18f04e569b949f465d6732db9505e3a264805040",
+  "actual": {
+    "lane.json": {
+      "socket_lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "command": [
+          "timeout",
+          "--signal=TERM",
+          "--kill-after=60",
+          "1320",
+          "bash",
+          "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-18f04e56-t25-pair-pointer-controls-v1/run.sh"
+        ],
+        "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+        "ended_utc": "2026-10-16T20:10:33Z",
+        "exit_code": 1,
+        "host": "mbit10",
+        "job": "probata-resume-20261016-18f04e56-t25-pair-pointer-controls-v1",
+        "lease_generation": 614,
+        "lease_name": "mbit10-evaluation-node0",
+        "load1_at_start": 0.1,
+        "load1_max": 32,
+        "node": 0,
+        "numa_memory_policy": "bind:0",
+        "numactl": "--cpunodebind=0 --membind=0",
+        "preregistration_sha256": null,
+        "started_utc": "2026-10-16T20:06:52Z"
+      }
+    },
+    "outer-resources.json": {
+      "exit_code": 1,
+      "peak_rss_bytes": 353640448,
+      "out_of_memory": false,
+      "timed_out": false,
+      "wall_seconds": 220.60434478800744,
+      "cpu_seconds": 266.005557
+    },
+    "resources.json": {
+      "cpu_seconds": 220.32616299999998,
+      "exit_code": 1,
+      "out_of_memory": false,
+      "peak_rss_bytes": 300163072,
+      "timed_out": false,
+      "wall_seconds": 218.52459387574345
+    },
+    "source-after.json": {
+      "commit": "18f04e569b949f465d6732db9505e3a264805040",
+      "source_unchanged": true,
+      "tracked_changes": ""
+    },
+    "focus-result.json": {
+      "exit_code": 1,
+      "cases": 19,
+      "failures": [
+        "test_mixed_pair_lowering_and_native_identity_agree_without_pointee_access"
+      ],
+      "errors": [],
+      "skips": [],
+      "cache_absent": true,
+      "source": "/data1/yanruj/probata-resume-20261016-18f04e56/swdb-project",
+      "scope": "19 public control cases only: Clang/native sanitizers or explicit parser-error stand-ins. No actual WP/CBMC/formal acceptance."
+    }
+  },
+  "bounded_initialization": {
+    "certificate_sha256": "e7aeb2d977a3838a386c4271bc47d72dd4ce72505a9155f7a39bd9cca4f1bc0d",
+    "check": {
+      "id": "swdb-bounded-initialization-1",
+      "sha256": "7ee8292949826421773d3f76ab04933ea6e0198d7a37afc4248c9cdbd9ec1e6e"
+    },
+    "function": "swdb_pair_pointer_values",
+    "functions": [
+      "swdb_pair_pointer_values"
+    ],
+    "input_domain": "initialized scalar values; each pointer binds a distinct nonnull fully initialized primitive buffer of exactly harness_capacity elements (logical sizes do not shorten it)",
+    "lowering_sha256": "bdf2f22bae2e7ef14a46a4c9cdb6f1f7320015a9900b032d5f13ff7474124612",
+    "model_obligations": [],
+    "reason": "automatic arrays, aggregates and reference aliases need a precise initializedness check",
+    "source_line": 6,
+    "source_offset": 174,
+    "source_sha256": "c5f539209979d01270dfa48c35b7b5475d58b3899dbcef31a13afb65e8c14184",
+    "standard_policy": {
+      "id": "std-live-prefix-initialization-1",
+      "initialized": "scalar object representations and vector live elements only; spare capacity excluded",
+      "lifetime": "CBMC executes real allocation/free; growth does not add an assumed lifetime fact",
+      "models": {
+        "id": "swdb-std-models-2",
+        "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+      },
+      "pair_members": [
+        "ctor_default",
+        "ctor",
+        "copy_ctor",
+        "operator_assign",
+        "first",
+        "second"
+      ],
+      "raw_reads": "literal indices within a definite initialized live prefix captured from data/begin",
+      "types": [
+        "std_pair_int_int_ptr"
+      ],
+      "vector_members": [
+        "ctor",
+        "ctor_count",
+        "ctor_count_value",
+        "push_back",
+        "operator_index",
+        "at",
+        "size",
+        "empty",
+        "data",
+        "begin",
+        "end",
+        "dtor",
+        "scalar_range_for"
+      ]
+    },
+    "verdict": "refused"
+  },
+  "counts": {
+    "passed": 18,
+    "failed": 1,
+    "skipped": 0,
+    "total": 19
+  },
+  "raw_files": 617,
+  "raw_bytes": 31310627,
+  "anchors": {
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-18f04e56-t25-pair-pointer-controls-v1/pytest/test_mixed_pair_lowering_and_n0/swdb_pair_pointer_values/swdb_pair_pointer_values.anchors.json",
+    "sha256": "1b66ae200d790ba08936bf109c2f7a4f560b6499a8e9d70f9a11f14722a916c4"
+  },
+  "host_observation": {
+    "primary_branch": "yanrujhou_main",
+    "primary_commit": "c978393b119a3614229a37f0f2c8ca2a097c750b",
+    "uptime": "6683942.12 408569508.84",
+    "load": "0.24 0.22 0.37 3/1369 3927920",
+    "storage": "Filesystem         1B-blocks          Used   Available Use% Mounted on\n/dev/sdd1      1967300780032 1854676455424 12615446528 100% /data1\n/dev/sdb1      1967300780032 1794746257408 72545644544  97% /data\n",
+    "leases": {
+      "mbit10-evaluation.meta.json": {
+        "active_session": null,
+        "heartbeat_at": "2026-09-12T04:49:11Z",
+        "lease": {
+          "acquired_at": "2026-09-12T01:35:42Z",
+          "daemon_pid": 209457,
+          "daemon_start_token": "sh209457-1789176942",
+          "generation": 77,
+          "host": "mbit10",
+          "lease_name": "mbit10-evaluation",
+          "mode": "measure",
+          "session_id": null
+        },
+        "attempt_pid": null,
+        "attempt_start_token": null,
+        "recovered_from_generation": null,
+        "released_at": "2026-09-12T04:49:11Z",
+        "session_note": null,
+        "session_state": "none",
+        "state": "released",
+        "writer": "hostlock.sh"
+      },
+      "mbit10-evaluation-node1.meta.json": {
+        "active_session": null,
+        "heartbeat_at": "2026-10-16T19:54:40Z",
+        "lease": {
+          "acquired_at": "2026-10-16T19:50:35Z",
+          "daemon_pid": 3921443,
+          "daemon_start_token": "sh3921443-1792180235",
+          "generation": 635,
+          "host": "mbit10",
+          "lease_name": "mbit10-evaluation-node1",
+          "mode": "measure",
+          "session_id": null
+        },
+        "attempt_pid": null,
+        "attempt_start_token": null,
+        "recovered_from_generation": null,
+        "released_at": "2026-10-16T19:54:40Z",
+        "session_note": null,
+        "session_state": "none",
+        "state": "released",
+        "writer": "hostlock.sh"
+      },
+      "mbit10-evaluation-node0.meta.json": {
+        "active_session": null,
+        "heartbeat_at": "2026-10-16T20:10:33Z",
+        "lease": {
+          "acquired_at": "2026-10-16T20:06:52Z",
+          "daemon_pid": 3926022,
+          "daemon_start_token": "sh3926022-1792181212",
+          "generation": 614,
+          "host": "mbit10",
+          "lease_name": "mbit10-evaluation-node0",
+          "mode": "measure",
+          "session_id": null
+        },
+        "attempt_pid": null,
+        "attempt_start_token": null,
+        "recovered_from_generation": null,
+        "released_at": "2026-10-16T20:10:33Z",
+        "session_note": null,
+        "session_state": "none",
+        "state": "released",
+        "writer": "hostlock.sh"
+      }
+    }
+  },
+  "scope": "Clang/native public controls and explicit parser-error stand-ins only. The initializedness policy excludes mixed pointer pairs. Formal WP/CBMC is not admitted by this run. Raw source/AST/lowered C/binaries remain remote."
+}
+

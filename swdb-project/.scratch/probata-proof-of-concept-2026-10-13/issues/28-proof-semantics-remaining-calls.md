@@ -10,16 +10,16 @@ Updated: 2026-10-16 ET (active implementation under renewed user approval)
 
 **What to build:** The proof semantics grows to the whole DX100 interface, so DX100 code of any kernel can be proven against it, not only BFS. Every remaining `maa_*` call of `dx100-mmio 1.0-e4fc4af` gets its contract, written per call from the interface and the gem5 source, never from a kernel. The new version adds the memory rules ticket 27 left out: a CPU access that overlaps an unfinished command's footprint (split by thread and by what DX100 does), device-against-device ordering by gem5's region stall, tile ownership as a proof obligation, the 8-byte tile pair, and a `get_tile_ready` that may answer either way. It also writes down what proofs trust at the call boundary and across cores: the MMIO code and the visibility entries of map 12 item 7. End to end: `swdb prove` on synthetic fixtures gives the verdict each rule predicts, and every verdict lists the matching assumption entries.
 
-## Current resumed checkpoint — 2026-10-16 15:52 ET
+## Current resumed checkpoint — 2026-10-16 16:21 ET
 
-Initialized V5 source 04af completed both actual fixtures: correct result proven,
-false result not_proven; complete independent cold audit remains pending. Native86
-V4 passed exact86-control C11/C++17 sanitizer censuses under actual 4 GiB guards;
-cold review is pending. Trace V3's pretest namespace refusal is retained; reviewed
-namespace-only V4 is active on node1. Reviewed 132-route whole-interface dispatch
-and source/new 0.2 integration continue. No whole-interface/current 0.2 or final
-acceptance is claimed; old 0.1 and every substantive criterion remain intact.
-See active execution for source/runtime/scientific boundaries and next actions.
+Initialized V5 retains correct result proven/false result not_proven; its cold
+V3 reader refused on a metadata-shape mismatch and is being repaired without a
+scientific rerun. Trace V4 completed25 cases:12 proven/13 refuted and all13 C++
+replays succeeded; complete cold audit remains pending. Native86 now has complete
+independent cold review and root scoped private sanitizer-control adoption.
+The132-route whole-interface source/model/new0.2 integration and bounded compiler
+capture remain under review. Old0.1 stays intact; no whole-interface/public or
+final acceptance is claimed. See active execution for current lanes and evidence.
 
 ## Active implementation — 2026-10-15 21:19 ET
 

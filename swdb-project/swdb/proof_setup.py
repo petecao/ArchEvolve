@@ -37,6 +37,11 @@ CHECK_SOURCES += ("vector_reallocation_view.py",)
 CHECK_SOURCES += ("vector_reallocation_lifetime.py",)
 CHECK_SOURCES += ("vector_reallocation_capacity.py",)
 CHECK_SOURCES += ("dx100_initialized_register_source.py", "dx100_initialized_register_model.py")
+CHECK_SOURCES += ("vector_reallocation_composition.py", "vector_reallocation_caller_packets.py",
+                  "vector_reallocation_caller_view.py", "vector_reallocation_closed_view.py",
+                  "vector_reallocation_private_frame.py", "vector_reallocation_closed_lifetime.py",
+                  "vector_reallocation_closed_lifetime_parts.py", "vector_reallocation_closed_evidence.py",
+                  "vector_reallocation_closed_binding.py", "vector_reallocation_closed_route.py")
 REQUIRED_WP_SWITCHES = (("-wp-no-filter-init", "-wp-filter-init"), ("-wp-rte", "-wp-no-rte"))
 _COMPILED_MODULES = {}
 _ASSUME = re.compile(r"\b(?:llvm_assume|crucible_assume|__VERIFIER_assume)\b|\b(?:__CPROVER_assume|SWDB_ASSUME|assume)\s*\(")
@@ -339,7 +344,8 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
         actual = path.read_bytes()
         if actual != expected.encode():
             _fail("input_hash", f"generated input {path.name} differs from its planned bytes")
-        hashes[path.name] = _sha(actual)
+        key = str(path.resolve()) if context.get('vector_closed_source') else path.name
+        hashes[key] = _sha(actual)
     lowering = lowering or context.get("lowering")
     if lowering is not None:
         _no_assume(lowering.text, "C lowering")
@@ -386,7 +392,14 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
     if adapter.name == "wp":
         from swdb import standard_model_view, standard_range_model, standard_range_calls, wp_pointer_bounds
         try:
-            if context.get("heap_model_view"):
+            if context.get('vector_closed_source'):
+                from swdb import vector_reallocation_closed_route
+                try:
+                    checked_source = adapter.check_closed_source(job, context)
+                except (vector_reallocation_closed_route.Refused, KeyError, OSError) as exc:
+                    _fail('vector_closed_source', str(exc))
+                hashes['vector_closed_source'] = _digest(checked_source)
+            elif context.get("heap_model_view"):
                 from swdb import heap_model_view
                 try:
                     hashes['heap_model_view'] = heap_model_view.check_launch(
@@ -447,14 +460,15 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
                     "\n".join(Path(path).read_text() for path, _expected in inputs))
         except (KeyError, standard_model_view.Refused, standard_range_model.Refused, standard_range_calls.Refused, wp_pointer_bounds.Refused) as exc:
             _fail("pointer_bounds", str(exc))
-        if lowering is not None and (lowering.pointer_bounds or {}).get("member_windows"):
+        if not context.get('vector_closed_source') and lowering is not None and (lowering.pointer_bounds or {}).get("member_windows"):
             from swdb import member_windows
             try:
                 hashes["member_windows"] = _digest(member_windows.check_launch(lowering,
                     context.get("settings", {}).get("member_windows"), flags, command))
             except member_windows.Refused as exc:
                 _fail("member_windows", str(exc))
-        _wp_flags(list(command) if command else flags, scratch or job.scratch)
+        if not context.get('vector_closed_source'):
+            _wp_flags(list(command) if command else flags, scratch or job.scratch)
     elif adapter.name == "cbmc":
         check_cbmc_flags(list(command) if command else flags)
         from swdb import bounded_entry_windows, c_lowering
@@ -471,14 +485,50 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
         hashes['bounded_source_admission'] = _digest(checked)
     method = job.setup.get("method")
     tools = context.get("tools") or {}
-    if method is not None:
+    if method is not None and not context.get('vector_closed_source'):
         _lineup(method, adapter, tools, flags)
     plan = {"command": list(map(str, command)), "flags": list(flags), "inputs": hashes,
             "bounds": job.bounds, "method_version": job.setup["report"]["method_version"]}
     result = {"verdict": "passed", "hashes": hashes, "run_plan_sha256": _digest(plan), "tool": adapter.name}
+    if context.get('vector_closed_source'):
+        result.update(invocation='checked-source-rule-evaluation', native_verifier_launched=False,
+                      proof_basis=context['vector_closed_source']['result']['proof_basis'])
     job.setup["report"]["runs"].append(result)
     job.setup["report"]["hashes"].update(hashes)
     return result
+
+
+def check_source_rule_reading(job, adapter, source_result, preflight):
+    """Current reading for the distinct checked source rule, never native WP.
+
+    The full generated-input/compiler/source check must already contain this
+    exact recomputed result. Recheck the frozen job, method, source and contract
+    at evaluation time; a caller-provided admission label cannot replace it.
+    """
+    if adapter.name != 'wp' or not getattr(job, 'setup', None):
+        _fail('vector_closed_source', 'source-rule reading has no planned WP fixture job')
+    report = job.setup['report']
+    if report['check'] != identity()['proof_setup_check'] or report['verdict'] != 'passed' or \
+            preflight not in report['runs'] or preflight.get('verdict') != 'passed' or \
+            preflight.get('invocation') != 'checked-source-rule-evaluation' or \
+            preflight.get('native_verifier_launched') is not False or \
+            preflight.get('proof_basis') != source_result['proof_basis'] or \
+            preflight.get('hashes', {}).get('vector_closed_source') != _digest(source_result):
+        _fail('vector_closed_source', 'current complete source-rule generated-input check is missing or changed')
+    _method(job.setup.get('method'))
+    if _digest(_job_plan(job, adapter)) != job.setup['plan_sha256']:
+        _fail('run_plan_hash', 'source-rule bounds, method or unit changed after planning')
+    _environment()
+    for path, expected in job.setup.get('files', {}).items():
+        if _sha(Path(path).read_bytes()) != expected:
+            _fail('input_hash', 'original source changed before source-rule evaluation')
+    library_root = job.setup.get('contract_library')
+    if library_root is None:
+        _fail('contract_hash', 'source-rule evaluation has no original summary library')
+    from swdb.library import Library
+    if Library(library_root).content_sha256(job.unit.contract) != job.unit.contract_sha256:
+        _fail('contract_hash', 'original source-rule contract changed before evaluation')
+    return {'check': identity()['verdict_reading'], 'verdict': 'proven'}
 
 
 def wp_provers(method):

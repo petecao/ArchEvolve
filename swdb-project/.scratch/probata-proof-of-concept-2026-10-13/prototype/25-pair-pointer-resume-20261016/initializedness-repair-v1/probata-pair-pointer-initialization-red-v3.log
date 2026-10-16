@@ -1,0 +1,22 @@
+F........                                                                [100%]
+=================================== FAILURES ===================================
+_____ test_initialized_pointer_fields_support_identity_copy_and_assignment _____
+
+    def test_initialized_pointer_fields_support_identity_copy_and_assignment():
+        body = setup()
+        body += [local("copy", PAIR, node("CXXConstructExpr", PAIR, ref("pair", PAIR))),
+                 node("BinaryOperator", "int *", member(), node("CXXNullPtrLiteralExpr", "std::nullptr_t"), opcode="="),
+                 node("ReturnStmt", "void", node("BinaryOperator", "bool", member(),
+                      node("CXXNullPtrLiteralExpr", "std::nullptr_t"), opcode="=="))]
+        result = report(*body)
+>       assert result["verdict"] == "passed", result
+E       AssertionError: {'certificate_sha256': 'f3a6899156a7793e62e51aa84be2579cb4a3f0c3b1fe4101dc01d8f06a6e073e', 'check': {'id': 'swdb-bound...sha256': '7ee8292949826421773d3f76ab04933ea6e0198d7a37afc4248c9cdbd9ec1e6e'}, 'function': 'f', 'functions': ['f'], ...}
+E       assert 'refused' == 'passed'
+E         
+E         - passed
+E         + refused
+
+tests/test_pair_pointer_initialization.py:52: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_pair_pointer_initialization.py::test_initialized_pointer_fields_support_identity_copy_and_assignment
+1 failed, 8 passed in 0.06s

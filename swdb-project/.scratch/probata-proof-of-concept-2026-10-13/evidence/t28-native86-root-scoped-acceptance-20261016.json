@@ -1,0 +1,34 @@
+{
+  "created": "2026-10-16 ET",
+  "reviewer": "root",
+  "decision": "ACCEPT_SCOPED_PRIVATE_NATIVE86_CONTROLS",
+  "independent_cold_decision": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/native86-cold-audit-v1/native86-v4-actual-cold-decision-20261016.json",
+    "bytes": 1869,
+    "sha256": "8ad51d4460ff40b70972723c0d9f676b044bcc430501b97da502d0980afcd07b"
+  },
+  "passive_execution": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/native86-cold-audit-v1/native86-v4-passive-execution-receipt-20261016.json",
+    "bytes": 1090,
+    "sha256": "112e8ab1aff84ca09d46f0ed05351cd7047cdae88ac0a37bdc696a883d0bf962"
+  },
+  "actual_execution": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-native86-v4-root-execution-20261016.json",
+    "bytes": 26664,
+    "sha256": "67241250320da121d467688a89308db60831e6dea0c324329e7029a62373e26b"
+  },
+  "scope": "Both retained private86-control C11/C++17 ASan/UBSan censuses; five staged compilation sources and runtime/header identity under the exact reviewed4GiB guard. This is supplemental behavior, not source-body or public proof.",
+  "physical_checks": 16861,
+  "raw_files": 62,
+  "raw_bytes": 9587978,
+  "raw_unchanged": true,
+  "TCB": [
+    "Discovered compilation headers first pinned after preprocessing; capture timing remains a premise",
+    "Physical runtime pins and successful sanitizer behavior do not attest all loader/dlopen selection",
+    "No raw final-null watchdog field inferred; settlement is finite lease/process observation only"
+  ],
+  "public_source_call_admission": false,
+  "source_body_proof": false,
+  "new_0_2_admission": false,
+  "full_ticket28": false
+}

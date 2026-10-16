@@ -1,0 +1,11 @@
+{
+  "created": "2026-10-16 ET",
+  "source_retired": false,
+  "classification": "READ_ONLY_PREFLIGHT_REFUSAL",
+  "reason": "Initial process scan treated an inaccessible sd-pam session helper and an exited-process race as unreadable workload readers. No checkout removal occurred.",
+  "reported_processes": [
+    3261267,
+    3925150
+  ],
+  "followup": "Independent process metadata identifies3261267 as(sd-pam);3925150 no longer exists. A successor will record that limited service exclusion and separately count process-exit races; other unreadable owned workloads still refuse."
+}

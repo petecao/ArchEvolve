@@ -346,6 +346,12 @@ class WpAdapter:
                 return self._not_proven("unsupported_construct",
                     "the standard models require libc++ 22.1.8 (_LIBCPP_VERSION 220108); "
                     "the selected clang uses an unmatched standard library", context)
+        from swdb import vector_reallocation_closed_route
+        try:
+            if vector_reallocation_closed_route.selected(self.method):
+                return self._closed_source(job, lowering, source, entry, summary_job, context)
+        except vector_reallocation_closed_route.Refused as exc:
+            return self._not_proven('unsupported_construct', str(exc), context)
         dependency_lowering = lowering
         if any(name == "swdb_free" or name.startswith("swdb_alloc_delete_array_") for name in lowering.models):
             placement = {"once": "self"} if summary_job else "per_candidate"
@@ -503,6 +509,72 @@ class WpAdapter:
         context["reports"].append(("wp_input", input_path))
         context["hints_reaching_wp"] = len(accepted)
         return self._wp(job, input_path, context)
+
+    def _closed_source(self, job, lowering, source, entry, summary_job, context):
+        """The explicit source-rule fixture; native Typed results stay separate."""
+        from swdb import vector_reallocation_closed_route as route
+        if not summary_job or (entry.get('proof_unit') or {}).get('function') != job.unit.function or \
+                any(row.get('acsl', {}).get('uses') for row in entry.get('clauses', [])):
+            raise route.Refused('closed source admission requires the exact original summary and no logic imports')
+        formal_texts = [row['acsl']['text'].strip() for row in entry.get('clauses', [])
+                        if row.get('acsl') and row.get('proof_placement') == {'once': 'self'}]
+        directory = context['wp_dir']/'closed-source-rule'
+        scientific = Path(self.library.root)/route.EVIDENCE_DIRECTORY
+        result = route.prepare(self.method, lowering, source, formal_texts, scientific, directory,
+                               hints=self.hints, defines=self.defines, candidate=job.unit.candidate)
+        c_path, anchors_path = lowering.write(context['wp_dir'])
+        context['reports'] += [('c_lowering', c_path), ('anchors', anchors_path)]
+        context['c_lowering'] = {'id': c_path.name, 'sha256': lowering.sha256}
+        context['lowering'] = lowering
+        context['pins'].update(result['pins'])
+        context['vector_closed_source'] = {'source': source, 'formal_texts': formal_texts,
+            'scientific': scientific, 'directory': directory, 'result': result}
+        context.setdefault('settings', {}).update(tool='checked-vector-source-rule',
+            verifier_launched=False, proof_basis=result['proof_basis'],
+            correctness_scope=result['correctness_scope'],
+            source_typed_bridge_established=False, current_model_records_created=[],
+            original_diagnostic=result['original_diagnostic'],
+            native_projected_diagnostic=result['native_projected_diagnostic'],
+            historical_scientific_components=[{'id': row['id'],
+                'historical_identity': row['historical_identity'], 'targets': len(row['targets'])}
+                for row in result['scientific_binding']['components']])
+        inputs = [(c_path, lowering.text)]
+        for path in sorted(directory.rglob('*')):
+            if path.is_file():
+                context['reports'].append(('closed_source_'+str(path.relative_to(directory)), path))
+                inputs.append((path, path.read_text()))
+        # Universal source/contract/compiler/input checks precede evaluation of
+        # the separate checked rule. No command, WP goal or native outcome is
+        # manufactured by this branch.
+        preflight = proof_setup.check_generated(job, self, context, inputs, [], lowering=lowering)
+        evaluated = route.check_launch(self.method, lowering, source, formal_texts, scientific, directory,
+            job=job, adapter=self, preflight=preflight,
+            hints=self.hints, defines=self.defines, candidate=job.unit.candidate)
+        context['settings']['framework_source_rule_evaluated'] = True
+        assumptions = [*context.get('assumed', []), *result['assumptions']]
+        tools = [result['pins']['vector_closed_source_rule']['id']]
+        for name in ('c_lowering', 'clang'):
+            ident, digest, version = context['tools']['identities'][name]
+            assumptions.append({'kind': 'trusted_tool', 'reference': {'id': ident, 'sha256': digest},
+                                'sentence': SENTENCES[name].format(version=version)})
+            tools.append(ident)
+        context['log'].line('proof basis: '+result['proof_basis']+'; original and projected native outcomes remain not_proven')
+        return Verdict(verdict='proven', bounds={'threads': 1, 'input_size': 'unbounded'},
+            assumptions=assumptions, tools=tuple(tools), pins={**context['pins'],
+                'c_lowering': context['c_lowering'], 'naming_rules': c_lowering.naming_rules()},
+            record_fields={'goals': result['source_obligations'], 'settings': context['settings'],
+                'verdict_reading': evaluated['verdict_reading']},
+            reports=tuple(context['reports']))
+
+    def check_closed_source(self, job, context):
+        from swdb import vector_reallocation_closed_route as route
+        frozen = context['vector_closed_source']
+        checked = route.check(self.method, context['lowering'], frozen['source'], frozen['formal_texts'],
+            frozen['scientific'], frozen['directory'], hints=self.hints, defines=self.defines,
+            candidate=job.unit.candidate)
+        if checked != frozen['result'] or any(context['pins'].get(name) != value for name, value in checked['pins'].items()):
+            raise route.Refused('source rule, scientific evidence or selected method changed after planning')
+        return checked
 
     def check_helper_windows(self, job, context):
         """Recheck both source lowerings and the independent contextual AST relation."""

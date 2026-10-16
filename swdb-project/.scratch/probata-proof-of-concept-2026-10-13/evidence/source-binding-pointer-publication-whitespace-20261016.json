@@ -1,0 +1,23 @@
+{
+  "created": "2026-10-16 ET",
+  "classification": "EXACT_RETAINED_ARTIFACT_WHITESPACE_EXCEPTIONS",
+  "exceptions": [
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-pair-pointer-controls-v1-root-execution-20261016.json",
+      "sha256": "ee5ed8137d89691b7a6bceca65e9e520e807b36c72bca81544300284f0dbdc70",
+      "line": 214,
+      "warning": "new blank line at EOF",
+      "retention_reason": "Exact captured root JSON stdout, already bound by the pointer preparation and independent review; preserve the original capture."
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-pair-pointer-resume-20261016/initializedness-repair-v1/probata-pair-pointer-initialization-red-v3.log",
+      "sha256": "490395673934a6478469822682554ead837d3d23cdcd5e537c94d96dcdc6d19b",
+      "line": 15,
+      "warning": "trailing whitespace",
+      "retention_reason": "Exact retained pytest assertion RED output; independent review pins these original bytes."
+    }
+  ],
+  "production_source_diffcheck_clean": true,
+  "no_global_whitespace_clean_claim": true,
+  "scope": "Two pinned captured evidence files only; no production source/test/schema whitespace exception."
+}

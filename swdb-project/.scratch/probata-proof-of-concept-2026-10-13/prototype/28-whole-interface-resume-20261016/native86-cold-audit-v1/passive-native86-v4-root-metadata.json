@@ -1,0 +1,646 @@
+{
+  "dispatch-argv.json": {
+    "bytes": 454,
+    "json": [
+      "bash",
+      "/data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_lane.sh",
+      "0",
+      "probata-resume-20261016-2baf722f-t28-whole-native86-v4",
+      "--record",
+      "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/lane.json",
+      "--",
+      "timeout",
+      "--signal=TERM",
+      "--kill-after=60",
+      "300",
+      "bash",
+      "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/run.sh"
+    ],
+    "sha256": "1b270b182ead4edd76be218a5594ca8109a31bdf583695e40e1b01e5c4e36953"
+  },
+  "dispatch-environment.json": {
+    "bytes": 171,
+    "json": {
+      "HOME": "/home/yanruj",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "LOGNAME": "yanruj",
+      "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+      "SHELL": "/bin/bash",
+      "USER": "yanruj"
+    },
+    "sha256": "4a440cb713ebc7bfac4d2fb6d2036eab733130f2eb330c9f283854f1c2bc4bb0"
+  },
+  "preflight.json": {
+    "bytes": 17707,
+    "json": {
+      "cpu": "Architecture:                            x86_64\nCPU op-mode(s):                          32-bit, 64-bit\nAddress sizes:                           46 bits physical, 57 bits virtual\nByte Order:                              Little Endian\nCPU(s):                                  64\nOn-line CPU(s) list:                     0-63\nVendor ID:                               GenuineIntel\nModel name:                              Intel(R) Xeon(R) Gold 6326 CPU @ 2.90GHz\nCPU family:                              6\nModel:                                   106\nThread(s) per core:                      2\nCore(s) per socket:                      16\nSocket(s):                               2\nStepping:                                6\nBogoMIPS:                                5800.00\nFlags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid dca sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb cat_l3 intel_ppin ssbd mba ibrs ibpb stibp ibrs_enhanced tpr_shadow flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid cqm rdt_a avx512f avx512dq rdseed adx smap avx512ifma clflushopt clwb intel_pt avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local split_lock_detect wbnoinvd dtherm ida arat pln pts vnmi avx512vbmi umip pku ospke avx512_vbmi2 gfni vaes vpclmulqdq avx512_vnni avx512_bitalg tme avx512_vpopcntdq la57 rdpid fsrm md_clear pconfig flush_l1d arch_capabilities\nVirtualization:                          VT-x\nL1d cache:                               1.5 MiB (32 instances)\nL1i cache:                               1 MiB (32 instances)\nL2 cache:                                40 MiB (32 instances)\nL3 cache:                                48 MiB (2 instances)\nNUMA node(s):                            2\nNUMA node0 CPU(s):                       0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62\nNUMA node1 CPU(s):                       1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63\nVulnerability Gather data sampling:      Mitigation; Microcode\nVulnerability Indirect target selection: Mitigation; Aligned branch/return thunks\nVulnerability Itlb multihit:             Not affected\nVulnerability L1tf:                      Not affected\nVulnerability Mds:                       Not affected\nVulnerability Meltdown:                  Not affected\nVulnerability Mmio stale data:           Mitigation; Clear CPU buffers; SMT vulnerable\nVulnerability Reg file data sampling:    Not affected\nVulnerability Retbleed:                  Not affected\nVulnerability Spec rstack overflow:      Not affected\nVulnerability Spec store bypass:         Mitigation; Speculative Store Bypass disabled via prctl\nVulnerability Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization\nVulnerability Spectre v2:                Mitigation; Enhanced / Automatic IBRS; IBPB conditional; PBRSB-eIBRS SW sequence; BHI SW loop, KVM SW loop\nVulnerability Srbds:                     Not affected\nVulnerability Tsa:                       Not affected\nVulnerability Tsx async abort:           Not affected\nVulnerability Vmscape:                   Not affected",
+      "cpu_policy": {
+        "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor": "unavailable",
+        "/sys/devices/system/cpu/intel_pstate/no_turbo": "unavailable"
+      },
+      "disk": "Filesystem      Size  Used Avail Use% Mounted on\n/dev/sdd1       1.8T  1.7T   12G 100% /data1\n/dev/sdb1       1.8T  1.7T   68G  97% /data",
+      "gpu": {
+        "exit_code": 18,
+        "stderr": "",
+        "stdout": "Failed to initialize NVML: Driver/library version mismatch\nNVML library version: 595.99\n"
+      },
+      "kernel": "Linux mbit10 6.8.0-136-generic #136-Ubuntu SMP PREEMPT_DYNAMIC Wed Jul  1 21:53:05 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux",
+      "leases": {
+        "mbit10-evaluation-node0.meta.json": {
+          "active_session": null,
+          "attempt_pid": null,
+          "attempt_start_token": null,
+          "heartbeat_at": "2026-10-16T19:03:25Z",
+          "lease": {
+            "acquired_at": "2026-10-16T18:59:42Z",
+            "daemon_pid": 3914075,
+            "daemon_start_token": "sh3914075-1792177182",
+            "generation": 611,
+            "host": "mbit10",
+            "lease_name": "mbit10-evaluation-node0",
+            "mode": "measure",
+            "session_id": null
+          },
+          "recovered_from_generation": null,
+          "released_at": "2026-10-16T19:03:25Z",
+          "session_note": null,
+          "session_state": "none",
+          "state": "released",
+          "writer": "hostlock.sh"
+        },
+        "mbit10-evaluation-node1.meta.json": {
+          "active_session": null,
+          "attempt_pid": null,
+          "attempt_start_token": null,
+          "heartbeat_at": "2026-10-16T19:34:44Z",
+          "lease": {
+            "acquired_at": "2026-10-16T19:34:44Z",
+            "daemon_pid": 3918245,
+            "daemon_start_token": "sh3918245-1792179284",
+            "generation": 633,
+            "host": "mbit10",
+            "lease_name": "mbit10-evaluation-node1",
+            "mode": "measure",
+            "session_id": null
+          },
+          "recovered_from_generation": null,
+          "released_at": null,
+          "session_note": null,
+          "session_state": "none",
+          "state": "held",
+          "writer": "hostlock.sh"
+        },
+        "mbit10-evaluation.meta.json": {
+          "active_session": null,
+          "attempt_pid": null,
+          "attempt_start_token": null,
+          "heartbeat_at": "2026-09-12T04:49:11Z",
+          "lease": {
+            "acquired_at": "2026-09-12T01:35:42Z",
+            "daemon_pid": 209457,
+            "daemon_start_token": "sh209457-1789176942",
+            "generation": 77,
+            "host": "mbit10",
+            "lease_name": "mbit10-evaluation",
+            "mode": "measure",
+            "session_id": null
+          },
+          "recovered_from_generation": null,
+          "released_at": "2026-09-12T04:49:11Z",
+          "session_note": null,
+          "session_state": "none",
+          "state": "released",
+          "writer": "hostlock.sh"
+        }
+      },
+      "memory": "total        used        free      shared  buff/cache   available\nMem:           125Gi       7.7Gi        28Gi        15Mi        90Gi       117Gi\nSwap:             0B          0B          0B",
+      "numa": "available: 2 nodes (0-1)\nnode 0 cpus: 0 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62\nnode 0 size: 63849 MB\nnode 0 free: 29155 MB\nnode 1 cpus: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29 31 33 35 37 39 41 43 45 47 49 51 53 55 57 59 61 63\nnode 1 size: 64496 MB\nnode 1 free: 179 MB\nnode distances:\nnode   0   1 \n  0:  10  20 \n  1:  20  10",
+      "outer_ambient_selector_names": [
+        "PYTHONPATH"
+      ],
+      "outer_pythonpath_boundary": "ignored by isolated metadata interpreter; removed before actual lane process",
+      "primary_source": {
+        "branch": "yanrujhou_main",
+        "commit": "c978393b119a3614229a37f0f2c8ca2a097c750b"
+      },
+      "reviewed_source_changes": {
+        "content": {
+          "additional_root_guard_review": {
+            "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/resume-main-launcher-v9-independent-static-review-20261016.json",
+            "sha256": "ad31177bce794e960107439ac2080f2f1af5eb71fa83007264edc6c1a4274682"
+          },
+          "baseline": "c978393b119a3614229a37f0f2c8ca2a097c750b",
+          "control_files": [
+            {
+              "bytes": 23441,
+              "name": "linux_native86_entry_v4.py",
+              "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/linux_native86_entry_v4.py",
+              "sha256": "9f63dbe826ca70f2ceacd37b56753a5f212811a5a377c7baed59da4de60b7721"
+            },
+            {
+              "bytes": 9088,
+              "name": "whole_values_native_v1.c",
+              "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_values_native_v1.c",
+              "sha256": "8dadfd0ed8e323834bc2259473fba89db38525a09bd95b0b4c5f8093e3412fd5"
+            },
+            {
+              "bytes": 69747,
+              "name": "whole_value_backend_v1.h",
+              "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_value_backend_v1.h",
+              "sha256": "c37481e56517d29729ffc83f2eb538cc5b5cb8ce5ab831babae3287cb332956f"
+            },
+            {
+              "bytes": 15884,
+              "name": "whole_adapters.h",
+              "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_adapters.h",
+              "sha256": "e8efe60182d7fbd0d7c9f54c8fc6f70c235a91bd613cabd3be6ac893105c4a1a"
+            },
+            {
+              "bytes": 13765,
+              "name": "whole_value_builders_v1.h",
+              "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_value_builders_v1.h",
+              "sha256": "88f6bd0d310e8a2a6ad522ae15fec32b9f32b4ed6d792a314e8a365e0118824e"
+            },
+            {
+              "bytes": 3881,
+              "name": "whole_closed_routes_v1.h",
+              "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_closed_routes_v1.h",
+              "sha256": "0168b2f78e0d5a6a6d42c8955ba45304533b8a0c63b92bebcabd50fd730969c7"
+            },
+            {
+              "bytes": 18385,
+              "name": "closed_python_surface.py",
+              "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/closed_python_surface.py",
+              "sha256": "748423c27ac8c1f9810c08d3f0ffc71548da703b4b4f95cedc31d4f8bc0418af"
+            },
+            {
+              "bytes": 9610,
+              "name": "python_startup_roles_v2.py",
+              "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/python_startup_roles_v2.py",
+              "sha256": "5e9d2e6dfa2aaa7999f4670a979d3cc32736b852a612f77d4e2f7c71bc229618"
+            },
+            {
+              "bytes": 2709,
+              "name": "python_role_observer_v2.py",
+              "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/python_role_observer_v2.py",
+              "sha256": "9b100cbe2fdef3e7d429ccdf05d6489d44855a84328e2dd8532eb547beeaf43b"
+            },
+            {
+              "bytes": 116503,
+              "name": "t28-linux-runtime-observer-v2-actual-20261016.json",
+              "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-linux-runtime-observer-v2-actual-20261016.json",
+              "sha256": "092397608fe3a08c42d85e9c8e121ed139f0d94e345a12ae3aaa57ad6e93a5f0"
+            },
+            {
+              "bytes": 657687,
+              "name": "linux_native86_policy_v4.json",
+              "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/linux_native86_policy_v4.json",
+              "sha256": "14be0baf2dece709210abb6039b0ab7ede41c5e8d5d1dfbe08ed47b6f3ba9f5b"
+            }
+          ],
+          "created": "2026-10-16 ET",
+          "files_after": {
+            "swdb-project/swdb/vector_reallocation_caller_packets.py": "a30b633404723d99c84ee3473eb0a352fe6641274e036524451826940abc59f0",
+            "swdb-project/swdb/vector_reallocation_composition.py": "fbce29f010d92be33b09a0f31c440f8db97c7f0dfd0769a41a59e71bdfe6e108"
+          },
+          "planned_raw_budget_bytes": 268435456,
+          "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4",
+          "readers": [
+            "root",
+            "ticket28",
+            "memory_public_trace"
+          ],
+          "review_evidence": {
+            "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/independent-native86-review-v2/independent-native86-v4-binding-review.json",
+            "sha256": "38d035c0bfaa76f3ffe955e0ac8a296b8de747904eb725c7234ab12bca986945"
+          },
+          "rss_cap_bytes": 4294967296,
+          "run_environment_unset": [
+            "LIBRARY_PATH"
+          ],
+          "scope": "Private native86 C11/C++17 ASan/UBSan controls only; no public/formal/source-call/current0.2 or ticket acceptance.",
+          "source_commit": "2baf722fdaa6cba24b859eae3172a6f597417d72"
+        },
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/t28-native86-v4-source-review.json",
+        "sha256": "10322d4310842941193e35b07d27728a811eb871ffc940984190ea5b709f33d0"
+      },
+      "source_branch": "HEAD",
+      "staged_control_files": [
+        {
+          "bytes": 23441,
+          "name": "linux_native86_entry_v4.py",
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/linux_native86_entry_v4.py",
+          "sha256": "9f63dbe826ca70f2ceacd37b56753a5f212811a5a377c7baed59da4de60b7721"
+        },
+        {
+          "bytes": 9088,
+          "name": "whole_values_native_v1.c",
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_values_native_v1.c",
+          "sha256": "8dadfd0ed8e323834bc2259473fba89db38525a09bd95b0b4c5f8093e3412fd5"
+        },
+        {
+          "bytes": 69747,
+          "name": "whole_value_backend_v1.h",
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_value_backend_v1.h",
+          "sha256": "c37481e56517d29729ffc83f2eb538cc5b5cb8ce5ab831babae3287cb332956f"
+        },
+        {
+          "bytes": 15884,
+          "name": "whole_adapters.h",
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_adapters.h",
+          "sha256": "e8efe60182d7fbd0d7c9f54c8fc6f70c235a91bd613cabd3be6ac893105c4a1a"
+        },
+        {
+          "bytes": 13765,
+          "name": "whole_value_builders_v1.h",
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_value_builders_v1.h",
+          "sha256": "88f6bd0d310e8a2a6ad522ae15fec32b9f32b4ed6d792a314e8a365e0118824e"
+        },
+        {
+          "bytes": 3881,
+          "name": "whole_closed_routes_v1.h",
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_closed_routes_v1.h",
+          "sha256": "0168b2f78e0d5a6a6d42c8955ba45304533b8a0c63b92bebcabd50fd730969c7"
+        },
+        {
+          "bytes": 18385,
+          "name": "closed_python_surface.py",
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/closed_python_surface.py",
+          "sha256": "748423c27ac8c1f9810c08d3f0ffc71548da703b4b4f95cedc31d4f8bc0418af"
+        },
+        {
+          "bytes": 9610,
+          "name": "python_startup_roles_v2.py",
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/python_startup_roles_v2.py",
+          "sha256": "5e9d2e6dfa2aaa7999f4670a979d3cc32736b852a612f77d4e2f7c71bc229618"
+        },
+        {
+          "bytes": 2709,
+          "name": "python_role_observer_v2.py",
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/python_role_observer_v2.py",
+          "sha256": "9b100cbe2fdef3e7d429ccdf05d6489d44855a84328e2dd8532eb547beeaf43b"
+        },
+        {
+          "bytes": 116503,
+          "name": "t28-linux-runtime-observer-v2-actual-20261016.json",
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-linux-runtime-observer-v2-actual-20261016.json",
+          "sha256": "092397608fe3a08c42d85e9c8e121ed139f0d94e345a12ae3aaa57ad6e93a5f0"
+        },
+        {
+          "bytes": 657687,
+          "name": "linux_native86_policy_v4.json",
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/linux_native86_policy_v4.json",
+          "sha256": "14be0baf2dece709210abb6039b0ab7ede41c5e8d5d1dfbe08ed47b6f3ba9f5b"
+        }
+      ],
+      "uptime": "15:35:59 up 77 days,  7:54,  8 users,  load average: 1.48, 0.48, 0.32",
+      "users": "yanruj   pts/0        2026-10-16 15:34 (tmux(359742).%909)",
+      "wrapper": {
+        "fetched_commit": "41f22f0ba765adcd4f4188aca91009ea0fe5a22b",
+        "sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8"
+      }
+    },
+    "sha256": "c51b389561d475a2b18b1f997acc55f5c65e3211ae294109a6dcc2890b98ae1b"
+  },
+  "runtime-provenance.json": {
+    "bytes": 3368,
+    "json": {
+      "lowering_identity": {
+        "c_lowering": {
+          "id": "swdb-c-lowering-9",
+          "sha256": "2962392237509ec7c68a1880be6115c050c3190f98c3a47df29af45803b528c5"
+        },
+        "clang": {
+          "id": "clang-22.1.8",
+          "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        }
+      },
+      "runtime": {
+        "check": {
+          "id": "swdb-stdlib-provenance-1",
+          "sha256": "4a7ca7d9b05a992e8172125fcbbfd175bb7ade2aec47cfb349126c9739b6e8e4"
+        },
+        "command": [
+          "clang++"
+        ],
+        "command_executable": {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+          "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+        },
+        "driver": {
+          "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang-22",
+          "sha256": "31a40dc31f3c15a47aa119aa148f339bf363d8f61202ddbdacbd3f24b71ba113"
+        },
+        "frontend": [
+          "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang-22",
+          "-cc1",
+          "-triple",
+          "x86_64-unknown-linux-gnu",
+          "-fsyntax-only",
+          "-disable-free",
+          "-clear-ast-before-backend",
+          "-disable-llvm-verifier",
+          "-discard-value-names",
+          "-main-file-name",
+          "-",
+          "-mrelocation-model",
+          "pic",
+          "-pic-level",
+          "2",
+          "-pic-is-pie",
+          "-mframe-pointer=all",
+          "-fmath-errno",
+          "-ffp-contract=on",
+          "-fno-rounding-math",
+          "-mconstructor-aliases",
+          "-funwind-tables=2",
+          "-target-cpu",
+          "x86-64",
+          "-tune-cpu",
+          "generic",
+          "-debugger-tuning=gdb",
+          "-fdebug-compilation-dir=/data1/yanruj/probata-resume-20261016-2baf722f",
+          "-fcoverage-compilation-dir=/data1/yanruj/probata-resume-20261016-2baf722f",
+          "-resource-dir",
+          "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22",
+          "-internal-isystem",
+          "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/../include/x86_64-unknown-linux-gnu/c++/v1",
+          "-internal-isystem",
+          "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/../include/c++/v1",
+          "-internal-isystem",
+          "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/include",
+          "-internal-isystem",
+          "/usr/local/include",
+          "-internal-isystem",
+          "/usr/lib/gcc/x86_64-linux-gnu/13/../../../../x86_64-linux-gnu/include",
+          "-internal-externc-isystem",
+          "/usr/include/x86_64-linux-gnu",
+          "-internal-externc-isystem",
+          "/include",
+          "-internal-externc-isystem",
+          "/usr/include",
+          "-fdeprecated-macro",
+          "-ferror-limit",
+          "19",
+          "-fgnuc-version=4.2.1",
+          "-fskip-odr-check-in-gmf",
+          "-fcxx-exceptions",
+          "-fexceptions",
+          "-faddrsig",
+          "-fdwarf2-cfi-asm",
+          "-x",
+          "c++",
+          "-"
+        ],
+        "headers": {
+          "files": 1983,
+          "id": "llvm-standard-resource-headers",
+          "sha256": "d37aec646b1e6e1748d40690c60436f905f55852ee578e79c43a3199c4a16e23"
+        },
+        "parser": {
+          "id": "libclang-22.1.8",
+          "sha256": "8b03ee2c60f0699651869fea5135cb5a144777a10c6e4b9b7835283ac9ca3f7d"
+        }
+      },
+      "tool": {
+        "command": [
+          "clang++"
+        ],
+        "missing": "",
+        "version": "22.1.8"
+      }
+    },
+    "sha256": "88b89c657b024a9d2d22a7ebe2e18ee7cc9e0e23756952f3c672610bb6a4144c"
+  },
+  "source-manifest.json": {
+    "bytes": 24319,
+    "json": {
+      "swdb-project/swdb/__init__.py": "bcbd2c199a6b63c92302a8daf37c26909a76332b89452797351082ddba66b743",
+      "swdb-project/swdb/__main__.py": "e3ee21171d56ed9ce3e04e6ff22689ca43bc23cb5743fefcd69675c0484faba0",
+      "swdb-project/swdb/access.py": "b450f087947cf8fcc87ce8460140fed77511ef0b066c05cd33d8d631cc094e32",
+      "swdb-project/swdb/acsl_subset.py": "59c1cb99afc9f5d10349e9ec53875da5962379c39365b2c38252388858b6efe8",
+      "swdb-project/swdb/analytic.py": "ab4c1ea4f6271aec15b642c863350223ded85fc41e91bc4b0380e0031a16fee6",
+      "swdb-project/swdb/analytic_binding.py": "4330a177fa5faf97288137094d34a71a4da34c711bf06914a75170b169436bdb",
+      "swdb-project/swdb/analytic_composition.py": "5856253e1e7a60ddd74c2f1c4348b3040e06c1d5b73bdd88c29ecb5bdcace69f",
+      "swdb-project/swdb/analytic_count_reuse.py": "0e04887886bf19c990efbded07ff9e1ce18a705545d8accacb22554486aef7df",
+      "swdb-project/swdb/analytic_cpu_binding.py": "a8adc94988eff15b512d8ef864551a0b88ab7cd63967e101a29e4cc60708a2b5",
+      "swdb-project/swdb/analytic_cpu_openmp.py": "971fefd8e7676379076095e90523d4e5fae9e6f7d21d0c36dceb51851f815a91",
+      "swdb-project/swdb/analytic_cpu_service.py": "2cc842cae996a69ca28afd831c8c011fd831f2b57e1961f7b95c657d41418ea6",
+      "swdb-project/swdb/analytic_dx100_call.py": "e34018a367ed84e5865e5733b10134f57bbcc740db1a9195e65cf3640f57adff",
+      "swdb-project/swdb/analytic_estimate_binding.py": "9401712886e48849735692b0721901acc603fe7b4aface935ed40296db7df2fc",
+      "swdb-project/swdb/analytic_extensions.py": "cf2e22f8ee6e3e4b7f4eed9d08657d765244a79f9594b735c9c7f3dec99a5984",
+      "swdb-project/swdb/analytic_functional_binding.py": "c44efa49477495045084424294b417b03aab69659365f5d6e61f3e3bb96b8b91",
+      "swdb-project/swdb/analytic_llvm_support.py": "d2cdbae4db5c021566191605df5145923bb8f21cc072d812d0c31755a480c484",
+      "swdb-project/swdb/analytic_models.py": "db725ca338391c30e9143ea1d77b0d0861e6f746ef3d386d4a4764c0adbf5bd5",
+      "swdb-project/swdb/analytic_offload_models.py": "ad3cab5f561a94b5c67004362eb021c23298c41b8e61110386d999de51f92062",
+      "swdb-project/swdb/analytic_sensitivity.py": "1090a9a22c56567cbac493a369c3fdb46bb6b0b25384d32eb7eb0e03084c2402",
+      "swdb-project/swdb/analytic_trial_scope.py": "8debe8a29753e850dd7c0a8b6755e7e6a1d71bfb775156e79a5177b661045438",
+      "swdb-project/swdb/annotation.py": "98359ac3bf4c420f37d78540a9c1417698b4bc8163483da1258c14ac0f27cd44",
+      "swdb-project/swdb/archevolve.py": "0387a983cacd8de24771df347629213a993783f0d196530b0bfd4fcf1d7c4ba3",
+      "swdb-project/swdb/archevolve_proof.py": "ffc5ad0df5bd93c28afd6b61927e1b2dded47544c5ef086cbdbd9b0d10b9f47a",
+      "swdb-project/swdb/array_domains.py": "4ce7f64892b3e63c8dba65ef3c4f532e47842a287c38e0f5cc5f69d27e7780bd",
+      "swdb-project/swdb/artifacts.py": "6368cc18061ee3ddc6256b96a76bf2cfaad3fae283104291723939b725c2dccd",
+      "swdb-project/swdb/attribution.py": "31b24af34d186f548bc327cab6afc4b80b0aa22a0b8f02fbc3849e70c46f7805",
+      "swdb-project/swdb/bc_native.py": "765b19687a6a3af71fa1ed530184f0ee674d4e65dddd916d4043c1c8a6e39eae",
+      "swdb-project/swdb/bc_witness.py": "6c4d5b08bf93cc9250c8c9b51879ebe0ab2c546030801dcd0ec6c06a082ea6cb",
+      "swdb-project/swdb/bfs_coverage.py": "47cc5b4296303e97bdee4fefed60ded5d97c16dd283f5ea16da734b8e942a2de",
+      "swdb-project/swdb/bfs_discovery.py": "22b087249fb3929f8b79ef56542801a1b41da35becd0fe14db742218e36b5186",
+      "swdb-project/swdb/bfs_native.py": "0b0762b33cf722740af677c4ebef0966ac6090265f565dff7a63175963bb2775",
+      "swdb-project/swdb/bfs_native_pair.py": "d8288b37c532523bcc6092faf126b92799dc3122b3e97cfe188421ff5f53be0d",
+      "swdb-project/swdb/bfs_native_scalable.py": "dd3cb75a23cff731adb4d79829ab7bdb50bd2770332af3703e8aa380364d9b27",
+      "swdb-project/swdb/bfs_profiling.py": "f59f289cbf6eb3bb2b8d8b1a3aec6d7528e7a8470a418b2186e7a9bcf85b74a0",
+      "swdb-project/swdb/bfs_protocol.py": "fdf5d38c29e321dbb300a3eb681f0c9a5619a0bd05733aabb410991de3589596",
+      "swdb-project/swdb/bfs_region_comparison.py": "d5d934e2d543a2663cc7a7e0df2c0d62e1eb7695a4c67bd9a5671c02adf22a7c",
+      "swdb-project/swdb/bounded_chain.py": "b63f7eb03e32c27ab8f27eaefbe9fe5fdc0e3b2aa5bcbfd998bb6022204bdf26",
+      "swdb-project/swdb/bounded_entry_windows.py": "39354107afc0c96e075dbc8e0c321b1caad3086887254f5bb404dd6eb875fa58",
+      "swdb-project/swdb/bounded_gate.py": "54b8c07000d4ad1c651fc6720df50b242cb9b85fe2c6ad5216b018c00c8ab9af",
+      "swdb-project/swdb/bounded_initialization.py": "12885e27dc1cb62b6c89ed4c2b5728c350dc6b0a5781b09ab70ff058e83b287d",
+      "swdb-project/swdb/bounded_std_initialization.py": "480bf38b3333639c62d8f89aff129208abccdc63351d63cfa6b23d7cb3d84607",
+      "swdb-project/swdb/c_lowering.py": "37201a198250021e3d9912a7fbaafa2b8dd9377db8d87027e51045897a246243",
+      "swdb-project/swdb/callgrind_lines.py": "28a5d628aa4db2706fce54c3483332ecb7d32530bfc3aee534125580e0e74e6b",
+      "swdb-project/swdb/campaign.py": "93ae48518c8a98ef255921250bc57756315fcd2871c0e185cadc0a68c76006b2",
+      "swdb-project/swdb/campaign_export.py": "9f48b090186bc7679d5c9b3f4e937be0fdc2bcce7cc8988fcd38167a5d039953",
+      "swdb-project/swdb/campaign_fixture.py": "24e5a469d13afd7bd7394062fcb9a3efed39ccf3d3488cb409f249589bd93c69",
+      "swdb-project/swdb/campaign_targets.py": "2b2c6e228cab5f7369aa21a946d2e2c211a160636bdaeaf3c8c3f8de86efb29a",
+      "swdb-project/swdb/capabilities.py": "786d2961fdea895e68621fe980f4a2b316ef6179e2b108c9bc006d7109328d3d",
+      "swdb-project/swdb/cbmc_adapter.py": "a685bf063ce991372f68d115b7921da3b0afccea908e907bbf892f9094d191c0",
+      "swdb-project/swdb/cbmc_equivalence.py": "07edb9685ec3cfa222c30800f80ea781d46816d5db797dfaf6e8b1e0dcd017dd",
+      "swdb-project/swdb/cbmc_product.py": "df4af62add9747a5c107d314b9235d08de2d22d04265d6aedf30726516891fee",
+      "swdb-project/swdb/cbmc_translator.py": "61a25090b66a5bd86a332a600973a048d3f38936dea2c6a088c8456d53d2e4d3",
+      "swdb-project/swdb/certification.py": "d367488b77df43a7e747ad55974d1b5fc787f63c42611984dacb3c0c03a7abf6",
+      "swdb-project/swdb/certification_blinding.py": "9826cceb849230810a6108f0afec1324195a10abf26ac1fbd9db9764be3e787c",
+      "swdb-project/swdb/certification_common.py": "4474004a85541c1c1d69e51b0537aac95403ce5b53983b02ef5e5d3976768543",
+      "swdb-project/swdb/certification_faults.py": "f73fd8644f81bbdd641eb2d3f109f89d7ecfef0178dd57c2e0bb821491228e68",
+      "swdb-project/swdb/certification_feedback.py": "3c0082229e6621e8312ce32d19b86a564377504daed8e47c1589f82f6849a0c0",
+      "swdb-project/swdb/certification_isolation.py": "0d8e823b38ca9ae5492e026b274fd88d9157bc9812d40087307d47f54e84f4af",
+      "swdb-project/swdb/certification_legality.py": "9e34b60fcbebe85ca96ea8f9ae1a7f039c37c01ffd43f83250d0fb282de7b768",
+      "swdb-project/swdb/certification_native.py": "9b05d4e3df575009604949b9a277885551e05f6339d15f29100baf7e4e9f8fac",
+      "swdb-project/swdb/certification_procedures.py": "f63894774adc799d54c88eb2120af7db2d58c287e8603f76190fd1486d50fc26",
+      "swdb-project/swdb/certification_process.py": "274918c7c6ad367e5345864aa27d5ad352e62a8a70b058eee534f75ba3ea7b82",
+      "swdb-project/swdb/check_mode.py": "a96e9fda6043ea111b1336ee60a4a5588eb740c80f2b6e6bd599b8a3c52d4010",
+      "swdb-project/swdb/cli.py": "64b8016237e492db687d4a9806f6938eeb4e527b21ee394aa317894e8dc9739f",
+      "swdb-project/swdb/comparison.py": "770b159704745ee7f3a1bf70337c18605d62619c8f9253339bd7b45b8d131ad8",
+      "swdb-project/swdb/counterexample_repair.py": "97018775316b9dacdae20d7457babefecdc21ac379100b75ed64a694fdcaf5e8",
+      "swdb-project/swdb/cpp_lexical.py": "8e09cb0823b50c1e23ab269e7774c52f34c7795adfe62c53184112c72e98e4d5",
+      "swdb-project/swdb/cpu_allocator_calibration.py": "ca1a7d556a15aadb12aec9dcaf4b93bf3579d95b59aeb35d4dc270d7acea4749",
+      "swdb-project/swdb/cpu_allocator_resource.py": "77fdf6e0607e5a7ab4f189b055d4ed0103a030d741dcba08f1919f427e90f199",
+      "swdb-project/swdb/cpu_bulk_calibration.py": "cc426f5b0ffc01d417c476eaeeae28266640415bedfd0f1a03e8c39794d2a6e2",
+      "swdb-project/swdb/cpu_bulk_resource.py": "55ff6eb1ecb13c44c9baa9631169b531c4a20fe8cf2112fc68453097e02a37a8",
+      "swdb-project/swdb/cpu_bulk_total_calibration.py": "cf6b90bb3fc6a8c357acad162a8e5d61649129ff6dc8d4a71cbd1ec08743b2ea",
+      "swdb-project/swdb/cpu_calibration.py": "d5c1dc2a79a4a1c6cfb4a8fee9c69e04d7e815299f1e58b09297571f0615cf9f",
+      "swdb-project/swdb/cpu_calibration_records.py": "f25b3ac52c42383aa2499e987536046716e8db35a3a01ebae0df21655802614c",
+      "swdb-project/swdb/cpu_effects.py": "b0bc08577560dec348b7d56852265ab0b9a732462c5735bdcc5388fc88e370b7",
+      "swdb-project/swdb/cpu_error_band.py": "30669b8460f61c496ae5b3b4eb6180634515b25b45be9f8149f0610b8202837f",
+      "swdb-project/swdb/cpu_float_memory_calibration.py": "51e392248c830e81e15c8900abbb7d5be95ee8e8a7a5d73a27e359788c761e67",
+      "swdb-project/swdb/cpu_library_call_calibration.py": "5a0bf9ca8da93ba66fe095981fc38865ec0784af2ba503c95001d46d5317f36e",
+      "swdb-project/swdb/cpu_memory_admission.py": "2d8939807edd361b9962fda45dc75eb05680a2b99a87dbc97af4871b2b0d2656",
+      "swdb-project/swdb/cpu_memory_calibration.py": "6ec6c1c0af911d8f6e809398870b9222073423b4f471acb15a1721b6d3d7ce19",
+      "swdb-project/swdb/cpu_memory_resource.py": "d9011ed6ee8034c0b62d4b63530e2055ed44cac0987c079bfb60d004c52ed236",
+      "swdb-project/swdb/cpu_native_validation.py": "4d909fc950250bb47e0cc6d6f155287eea9021b78964a5f76dcabbb7b1dd1e90",
+      "swdb-project/swdb/cpu_openmp_binding.py": "525c1c76c0f0da2e9c123ba0d8c3cb23cf976552becc1f8011b8386c6aa4a25e",
+      "swdb-project/swdb/cpu_openmp_calibration.py": "5bc01b30affbd402926a056a0d85a7b82754f1bcc76a42f2d65f3f8344c90a00",
+      "swdb-project/swdb/cpu_openmp_profiles.py": "6c937be0cbe3ffaebed09eda360e425193c560adc534fdc940b3d2b21cd68273",
+      "swdb-project/swdb/cpu_pairing.py": "2414a132d222d548f8a97b8ade2df5c33c805acd467c1a85d8748a045c971793",
+      "swdb-project/swdb/cpu_service_binding.py": "88787163c7cdda43ed40931800163ac130888fa901066d2cf2773b7002be226b",
+      "swdb-project/swdb/cpu_service_calibration.py": "5ae25fc4bc4aa4c474317444953a01f72dcacfdee518da3343fa64b84b0ca69b",
+      "swdb-project/swdb/cpu_service_controls.py": "260ce9711edc3eb286ed4ad4d95d1d4daffcc0b584409ed9b4b9290a04c5cf54",
+      "swdb-project/swdb/cpu_service_counts.py": "ac541f5df1cdaed12a60fb6a05d459100586eaca13a6d531e1753967b265d766",
+      "swdb-project/swdb/cpu_service_native.py": "f3d638bac2f11d06be3e4a8badef5a483b0ef5fa9f30e5da9660e47c4664eb99",
+      "swdb-project/swdb/crosswalk.py": "eb9dd243fdfb7fddceae461e8563734a8fba71bc829b76a085ce110009447486",
+      "swdb-project/swdb/crux_adapter.py": "29f212e6d0a79ac43864fa8684edaf0b12e2f555eebe381c12bd72e2af711768",
+      "swdb-project/swdb/cxx_cut.py": "4e8d6d8b674599eb53dafb881c949ee62a2a4c2e7b8c2ee6b896f0faf1599e86",
+      "swdb-project/swdb/db.py": "6995c044eea9eff004d64af87f6879396f245e17a1b374f692d5cbbcfb1e605f",
+      "swdb-project/swdb/derived.py": "dacfbda08a00b1e70b78b36fa399780d0f09eb0e41d368fad699312b87289da1",
+      "swdb-project/swdb/dispatch_preflight.py": "f6cbd73a7d0d60a83ba18ed482672dcbac3d6d90c8f51434142c430f5680f78a",
+      "swdb-project/swdb/dx100.py": "9b7e74eb00a6a11ea844a13a672a90f5cedb402bfad229f20e6ea1c9f170aad5",
+      "swdb-project/swdb/dx100_allocation_source.py": "229a47016d1c239927fca0420c0d2be7cf8cd8a37e30b3d5f0d3ecbed8c53681",
+      "swdb-project/swdb/dx100_author.py": "acf9d66f129d22922d582fcf4f4df3b91936311ba463e951dee72913dff657a1",
+      "swdb-project/swdb/dx100_candidate.py": "7d48201fc2d87d4ed52946cab6cbe834e1772841d89aac964fa7ab172427f676",
+      "swdb-project/swdb/dx100_checkpoint.py": "006dd1bbe8c993323ad61cba0cf570f64bd5c1048af694e801ab54161ef30dd0",
+      "swdb-project/swdb/dx100_coverage.py": "3ad613c740474db7b56913fb6027f8f1fdafdcb4a6baf7fe9e1b10f4857c6895",
+      "swdb-project/swdb/dx100_diagnostic.py": "e736c8e037a4af2d8dfb7958b32382e03e9eecda5f59c09a5a4560f9ea7d202c",
+      "swdb-project/swdb/dx100_initialized_register_model.py": "a568c08f6e8d928ecb46212b7120b29740d719c65ae7ae818b540bcf6790961f",
+      "swdb-project/swdb/dx100_initialized_register_source.py": "c023a4a6298fab7a34f4213f888b6c0fb4fe5c405e5a53741942e3e2accb81cb",
+      "swdb-project/swdb/dx100_inputs.py": "3746ab94ef05e15174e4f3171c2a5e226a5304fc255f0ac585754a09547c4a58",
+      "swdb-project/swdb/dx100_interface.py": "6e88200412cada2678d3f65f442d0cf11e39fecdb744fa490e6397e0e0d37cdf",
+      "swdb-project/swdb/dx100_profile.py": "16233ffc69beef95739dcf862081fd2449480f40648d4c85dba779b25043bfd0",
+      "swdb-project/swdb/dx100_register_model.py": "1ca71b6f3661ce5544277bec1bb8f20c8db72461cd40b99f11a2a08e7381fb76",
+      "swdb-project/swdb/dx100_register_source.py": "8ab73239527717eb5b904ef42ed98ca95819be646f4c2b4016bb19dc2e0d925a",
+      "swdb-project/swdb/dx100_resources.py": "a94c8a3c5f92c520e11999ac05ff87943d9ec656f93956388bc6614ed57c0eb2",
+      "swdb-project/swdb/dx100_size_source.py": "fe070713b91257d73a77112a7114c3ec049d2dc3ca8dbe0c1dfa6404c35a70f3",
+      "swdb-project/swdb/dx100_source_selector.py": "4c788c11a80c1478323229bba12997995dcad30699dc78d7085b52a14fc09190",
+      "swdb-project/swdb/dx100_stream_model.py": "4f512d0c51dbc4f72a7ed0cdf34e4b6ea850d736ca4ae1e35efe72ae850ab2ba",
+      "swdb-project/swdb/dx100_stream_source.py": "28715eb5b7171244ca18027412db4e119d858812638ad32ce06dfe213c229e62",
+      "swdb-project/swdb/dx100_witness.py": "89a48e42389a47c0f8466093c52dea7c032bf276d8470172fbe88199767c65de",
+      "swdb-project/swdb/dx_array_domains.py": "ec8b1585fc64bb0a672f352a79cbfc1ed6e4ec03150bd438be93445855a5c5fe",
+      "swdb-project/swdb/estimate_protocol.py": "5d97eb914ddf8302a6034a043a9114c9df1f39415f67b4ce3519bea97f7e4e30",
+      "swdb-project/swdb/estimation_contract.py": "6dfd028eb52fae2c0a3c0072011a512debf4f01c433fcab580b41d656053391f",
+      "swdb-project/swdb/estimation_parameters.py": "1603428b67b7cc899d2e2ce6d42fbd2c178e93e51513800a76aee0dabca54ffc",
+      "swdb-project/swdb/experimental_contracts.py": "417f07c7a44fa559eb6980a9ba5a088de7f5d38ead11045d8a99a90e3fdb5424",
+      "swdb-project/swdb/extensa_agreement.py": "745c5cce8d19f4aeca6172359c8bb92f0da43b1c2ff3434608cdd0b6018c9a11",
+      "swdb-project/swdb/extensa_boundary.py": "7abb71e0c3b83dea1b8faf45eb354e7f9e6f68e589d7cef17c4cf0bfd4ff399e",
+      "swdb-project/swdb/extensa_pairing.py": "2231038b4c4fa05255b7c035108dac988bf66d3f78606e0ebde677c1eacf2322",
+      "swdb-project/swdb/feature_reports.py": "561462bfc97f2bd7b6e093a0e17f707374e369793fef564df82ae701505f87bc",
+      "swdb-project/swdb/formal_frame.py": "394fca77dba50ba42f1d043efd2e940a152b330a8a2e87d178f121052f53e9cf",
+      "swdb-project/swdb/formula.py": "cdeaffb72042173c1cac2f33522644bd5201082082b36705706ff0f85c652f99",
+      "swdb-project/swdb/framac.py": "94db2a360fb0d29bf6f35f90b12f53b04e1a9a768139c88bbe8f7605fd8c2889",
+      "swdb-project/swdb/functional_evaluation.py": "b4cc95ccd75178cc919f2c09fd54aea631abc8a7190c01b38c6fc3d0799582f4",
+      "swdb-project/swdb/handoff.py": "c767cf9d9b305720ac7c21370518283cc10dbafdebb6942a13a1d6a0fefd8308",
+      "swdb-project/swdb/handoff_level.py": "799fa03c9a661ca601aea1384e15ae22aa327d6e0b7c20293aa799f9e0df5111",
+      "swdb-project/swdb/heap_model_packets.py": "805b00fe78373102b600506833f86c28fce2cf494baef7a68afd63641c1de185",
+      "swdb-project/swdb/heap_model_vcs.py": "f20e0ec130222aeda96b4fbb8e72eef8d922d3f33e84077777203f7e6d159092",
+      "swdb-project/swdb/heap_model_view.py": "52b41faefd37d585fb2c8ff15c82e74fb602c6063848ec7808cbea816ea44451",
+      "swdb-project/swdb/helper_windows.py": "6ab445ad4ac32a1b72899f6debcf445c8afb7cd29d21503f21a2ab4a4bc145d5",
+      "swdb-project/swdb/hint_check.py": "9d3f3fc90219723ab9e4fca280dec773f1c954827f632cfc13087cfbd22d13aa",
+      "swdb-project/swdb/host_identity.py": "815389013ab120308ff6fbd2e51c4713bc6894c9d3ae19a76cfa319bb583c00e",
+      "swdb-project/swdb/host_observation.py": "80dc7df5bfb801c64ccd3e11494f2e88ed2b38b32f5ab440146ce5349cf96842",
+      "swdb-project/swdb/intrinsic_source_views.py": "f679650a0f03c4c6b99aaafa807a16f612d59814f91a044460a45ecbbd7db835",
+      "swdb-project/swdb/isa.py": "e6ed6002b073f722f6540fe9d17a6aab52f617b22b06e030f744703063be8444",
+      "swdb-project/swdb/iteration_ladder.py": "cd2d2f28193672d5b6d0546098e8b548518ce661d1a412bbefda41151be641ab",
+      "swdb-project/swdb/lanl.py": "0a7f51232a648a3770f3b321ae32a71b3e8f7d6312a1c6bf2f15325b43353fd1",
+      "swdb-project/swdb/lanl_contracts.py": "568a619fc80fee5b22b0490afeae685ec191d2951699604728f908c6fe98bb88",
+      "swdb-project/swdb/lanl_kernels.py": "7d063bb8ed808c0114d11857423f234842857df96defb0af96808caf8436646f",
+      "swdb-project/swdb/lanl_performance.py": "c5f9bdfd0d97404e9536684c2d6dcc012bce97dd4a5ae7b3f040d37f6173a684",
+      "swdb-project/swdb/lanl_sources.py": "2f9b6bdf69d69d2f6f1a374a3cfcdc7e9a321ed761ec858333e7f5e13f955e0e",
+      "swdb-project/swdb/lanl_validation.py": "8a5daa2dbbf7287368f3678a7131c2799868bf3c43f79bf7d42b99a27003b3b2",
+      "swdb-project/swdb/level_rule.py": "5353e6b33e1a4648c4cb77b1bd39ec2c57ef4f554ffe98cbc4e2e048a24aea7a",
+      "swdb-project/swdb/library.py": "70a22a19c7baee1a5f1562d99023d67486957f3e21c84d9f60ab491b9f3b8c3a",
+      "swdb-project/swdb/library_operation_blinding.py": "5dfea94c2a30d095001d8f835883a3ab8c336908f858db710d6c15118444f9b1",
+      "swdb-project/swdb/library_operations.py": "20cb67a0a61327510e67ba519866ef6adfcc0ecaeb30525f23452298520c3931",
+      "swdb-project/swdb/logic_library.py": "5cdafcd88e164f2ab34e5f503e57533cc1ce2d68d40fcaae04455a813a86640c",
+      "swdb-project/swdb/machine.py": "258259e5765ae18f44f327a80d71860b3dbe2921114b3ea894e84bc73426b32e",
+      "swdb-project/swdb/member_windows.py": "e0966df226e758e588bc3f78e45def32bf0221dfdba9ff153a22f7e74cdc048d",
+      "swdb-project/swdb/method_version.py": "115b4f56f7e77c8c7dfa6522cc446244d54f032c2d71f0463cecc8ba0d2d1b17",
+      "swdb-project/swdb/model_domains.py": "0abeb81edf3a7c92b0465d9a617ef272f85f9263cc50427e3e46a1743d51e17a",
+      "swdb-project/swdb/nested_entry_reads.py": "f194cc302cb20b2a4c5881699d756e0a7c301ad937098e0f244d0b6048cfbc11",
+      "swdb-project/swdb/offload_observation.py": "015cd82004627dedcc0082e10e520fc91f10afeb19041a43063f76516b95e1c3",
+      "swdb-project/swdb/paths.py": "788ec6ee5b17e77ec6ca0ab1b3034f7763a69cd71569d119af44a7c85f92b0ef",
+      "swdb-project/swdb/predicate_grammar.py": "99c1b350046c981cf5e6c2fe5f5a5c3bb35dbd22fd1cc4b5c13a30a77c1238f1",
+      "swdb-project/swdb/problems.py": "ecc53c60073324d03f975b0025221d877bf7226c07879f64ee45da2facec9c95",
+      "swdb-project/swdb/processes.py": "bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289",
+      "swdb-project/swdb/profile.py": "9ec9bd1c0cdf5cdf34b738867880216e7e659d810b28aba1793a1394d984053a",
+      "swdb-project/swdb/profile_package.py": "2fbd8fc9d68f612414373fb52bea4998114ffdb55b038f05b6645461f0593cf2",
+      "swdb-project/swdb/proof.py": "d03f89ab3dac0987d011552aeb1edcc212a8589a401ba5bface7102301c48fa2",
+      "swdb-project/swdb/proof_hint_wrapper.py": "f73fb4cb4b480216a8dbbcbf29b4177d938d668fb30a6d3c625613e5028f813e",
+      "swdb-project/swdb/proof_hinting.py": "4f2d5f51d4011578437bca361d14c985adf25bbd9103420810ccafa7a380e987",
+      "swdb-project/swdb/proof_lane.py": "f40248f4f0732b9db97aee13bb7d3b9578c32a749762ac277b55487d7c6e7831",
+      "swdb-project/swdb/proof_semantics.py": "9c3fd649fecd2162a7d8f0b416ea1e5543991bf40cc8f8a0eb115a0e24b66436",
+      "swdb-project/swdb/proof_setup.py": "069dbc55b6ca8b12ea8b524027e2ca2b0922eb9e7be449c6f5725dbddbfe733f",
+      "swdb-project/swdb/provider_adapters.py": "5bf97c5bc4170e9a36cc853147bdc9f5c1ba43b22e51f6c11b8405101d26d5b8",
+      "swdb-project/swdb/provider_audit.py": "9a3bd196c01675f104516b36c95a150405c038381a5a815db4e6dc7668c739ed",
+      "swdb-project/swdb/provider_guard.py": "6b6aaccae09e11d298ee0a59408f7be32452e33a8cbcc39ec5527a3554a73039",
+      "swdb-project/swdb/provider_login.py": "a658e5564f58158e83b60d825141b2510443f646a91d28518a746873b3ac96ba",
+      "swdb-project/swdb/provider_roles.py": "4b080f9b8e79cced28b1dfad6a155a8f8e600ffc60dc18d647a68ab60b51856b",
+      "swdb-project/swdb/provider_workspace.py": "d1aa512ae42b9985ad9f2a9b5a7b10b62c4b940c90b8c0ade4069cbaf56daf8a",
+      "swdb-project/swdb/read_only_checks.py": "b7a560ef8eae9929185740b5b1f1fd35b803966f63b44d78fc9958b85523049d",
+      "swdb-project/swdb/retention.py": "bbaa46f702e3106532227f0103ddd58db0c896b9bfda8b683bd5d225df080707",
+      "swdb-project/swdb/rewrite.py": "9647a64d0e601791a2f3b78498c53defbfb597fcaf20be45d824b7fd614879f6",
+      "swdb-project/swdb/rocq_adapter.py": "833c886a5b359d34e0a71489556403249c0ca8c0d15fa3c4a95940700729b45b",
+      "swdb-project/swdb/rss_watchdog.py": "8cbe4f803951cee080581862b69a0b7bf21e35c554dc5cfde4db7d9f2779e5b6",
+      "swdb-project/swdb/rules.py": "f55145cc68c4d28761e7473f4708c72b20185fd8549fff768a50ea07e47ac229",
+      "swdb-project/swdb/schemas.py": "8da8921ff80fa4c64a0184887238dca19a9a11fb286dca99925343e3dd41178c",
+      "swdb-project/swdb/sg_graph.py": "6580ddca362bf8bd987a0c7fc8d44e9e59ef18300ac16bbe7766884d4830a2a2",
+      "swdb-project/swdb/sg_stream.py": "f86b7e30a6edf56ca03728a86f52d11469c6504a3c8510578131100c0752ed52",
+      "swdb-project/swdb/site_finder.py": "f7b23f8f2e9f2e08a928ef0718527d3c2519c9c5cc25e10140ef2725d6d53167",
+      "swdb-project/swdb/standard_model_view.py": "a9b0ac93e830fa966114f0a853b638d93a2274f64cf48a0cd5fe14c1bd2774b1",
+      "swdb-project/swdb/standard_range_calls.py": "c6e6d076a7e0337736b0f84a2d1537f99db2b16c0e1ab50b35911c6eca384f4b",
+      "swdb-project/swdb/standard_range_model.py": "5c8d385b2e506c77db69cfc664b5d33dc2514cd14d09ef79a8a1810f4c16084f",
+      "swdb-project/swdb/std_models.py": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2",
+      "swdb-project/swdb/stdlib_provenance.py": "4a7ca7d9b05a992e8172125fcbbfd175bb7ade2aec47cfb349126c9739b6e8e4",
+      "swdb-project/swdb/stdlib_source_admission.py": "151d41a22f68fc07613657f6484a408444f49a519d612f792e053a2bb0b9d1b4",
+      "swdb-project/swdb/store.py": "60f28c237502021fe65eb512211226b5510791b532b0e7dd308293f90a12bf5a",
+      "swdb-project/swdb/strategy.py": "09bc96c5f7b7366e99211c0695ddbac5bcad56cd20b7821ae818db9f5039c8fb",
+      "swdb-project/swdb/summary_agreement.py": "9f64be85ee141dd97283667838b457be7276082a7548527df1b8219d4a1945da",
+      "swdb-project/swdb/summary_bindings.py": "1c5d99b99753eb8c92f039722c15ece12b488af99003047b7cc9b2a81b2a6100",
+      "swdb-project/swdb/terminal_release.py": "51c3bcdfe64b057642dfb2eab549fb49181d23b9ccb635ff8a193fd4ab8e09da",
+      "swdb-project/swdb/validate.py": "014b150aed2c664ce3535134b521379f4b2807c5b001902c00952ac179622869",
+      "swdb-project/swdb/vector_ownership.py": "58bf8bbd370cd735bb5eceb6e6c49a6f08e97d97b4c73207ca7fe8727c6c6595",
+      "swdb-project/swdb/vector_pipeline.py": "fc7c06e21b10b71a2b6ac89dca409f0fe6237b530286ace110f791b8d330e382",
+      "swdb-project/swdb/vector_reallocation_caller_packets.py": "a30b633404723d99c84ee3473eb0a352fe6641274e036524451826940abc59f0",
+      "swdb-project/swdb/vector_reallocation_caller_vcs.py": "e8e514a1208d6653e8ae424b37309a3ce299690050ecac2710aed580b9ab397a",
+      "swdb-project/swdb/vector_reallocation_calls.py": "d1d7ea169a50b82d5545ab0a3fa02910849d944b9104a5839e0955dd5a283a95",
+      "swdb-project/swdb/vector_reallocation_capacity.py": "e4aa221acb78151895fa5c5d3cbdab6050b151b42a7096521a90fcdf3c95f617",
+      "swdb-project/swdb/vector_reallocation_composition.py": "fbce29f010d92be33b09a0f31c440f8db97c7f0dfd0769a41a59e71bdfe6e108",
+      "swdb-project/swdb/vector_reallocation_inventory.py": "0a0474084a17b84788585a62a9e0b63b88eb43efd858101769db267579af5f07",
+      "swdb-project/swdb/vector_reallocation_lifetime.py": "d20ac49e7896ed47632ad05f6f0610caee805649da81d3f469da2b6237051159",
+      "swdb-project/swdb/vector_reallocation_model.py": "92ad23030531650924a51b0a3bd1abb479afa373a7d1dd2a543b9ae225ab8b89",
+      "swdb-project/swdb/vector_reallocation_vcs.py": "f2185ad536bca5e8845ff0b718d81fe1787f1d6fedea7e53907dbe75969861e9",
+      "swdb-project/swdb/vector_reallocation_view.py": "05eaa7414580b11a54b7f6ebf63db20b28fd6aea0c5de4da00fc70a3bd0c57d4",
+      "swdb-project/swdb/verifier_lock.py": "35329946b838d80edd842d235ad477b6727d08eeebd66f28a0adc47ecb8bbeb8",
+      "swdb-project/swdb/view.py": "534569e3b2f271fa5e6e1304d8cc3f19b959f8b986ff99d231cf9ce0e2dcc5f5",
+      "swdb-project/swdb/vocab.py": "c554826daf3cdcf215dee0ebfb71b09f52774c5c42ab3b61cbec0b3cf6679e43",
+      "swdb-project/swdb/workflow.py": "a05c722584264c910d36458717d4fe6d3554855895e50175bfab77e120c22655",
+      "swdb-project/swdb/wp_adapter.py": "dbf887bf8515e6ce59086fdc99ec0b58558d742425311b8e404b5d4437b29ebf",
+      "swdb-project/swdb/wp_phase.py": "1a2c0905138e9eb6db6ef8380f083b7d192c0a3bd694bf3b792218b4d3d3f799",
+      "swdb-project/swdb/wp_pointer_bounds.py": "7033e8e8338d0fc39a5359fd5ceff304842d9df7c8223cffef967246c5f530a0",
+      "swdb-project/swdb/writer.py": "544d9604b1f1f331f6b45ea0a574eae8b90d523faaf4c9e58a0e8023ed8af4bf",
+      "swdb-project/swdb/yamlio.py": "8c92d644f5abca0f7031ce52e1577892cf1b7c79bc730484112eedb3e39439c0"
+    },
+    "sha256": "81c6f1f98916c28818d1a7ff034acab365f45cf50bc0a486a1b76244bb3578c6"
+  }
+}

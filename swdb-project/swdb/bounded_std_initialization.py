@@ -71,8 +71,25 @@ class Policy:
     def __init__(self, types, scalars, bound, refuse):
         self.types, self.scalars, self.bound, self.refuse = types, scalars, bound, refuse
         self.names = {canonical(info["cpp"]): name for name, info in types.items()
-                      if all(element in scalars for element in info["elements"])}
+                      if all(element in scalars or info["kind"] == "pair" and self.pointer_element(element)
+                             for element in info["elements"])}
+        self.pointer_pairs = any(info["kind"] == "pair" and any(self.pointer_element(e) for e in info["elements"])
+                                 for name, info in types.items() if name in self.names.values())
         self.prefix = {}
+
+    def pointer_element(self, text):
+        text = canonical(text)
+        return text.endswith("*") and text[:-1] in {canonical(t) for t in self.scalars}
+
+    def argument(self, element, node, visit):
+        value = visit(node)
+        if not self.pointer_element(element):
+            if value != "scalar":
+                self.refuse("pair scalar field has no initialized scalar value", node)
+        elif not ((value == "pointer" and canonical(qual(node)) == canonical(element)) or
+                  is_value(value) and value.kind == "identity_pointer" and
+                  value.ctype in (canonical(element), "nullptr")):
+            self.refuse("pair pointer field has no checked initialized pointer value", node)
 
     def classify(self, node):
         return self.names.get(canonical(qual(node)))
@@ -96,6 +113,17 @@ class Policy:
             return UNHANDLED
         if not any(is_value(v) for v in values):
             return UNHANDLED
+        if len(values) == 1 and is_value(values[0]) and values[0].kind == "identity_pointer":
+            if node.get("kind") in ("ParenExpr", "ExprWithCleanups", "MaterializeTemporaryExpr"):
+                return values[0]
+            if node.get("kind") == "ImplicitCastExpr":
+                if node.get("castKind") in ("NoOp", "LValueToRValue") and \
+                        canonical(qual(node)) == values[0].ctype:
+                    return values[0]
+                if node.get("castKind") == "NullToPointer" and values[0].ctype == "nullptr" and \
+                        self.pointer_element(qual(node)):
+                    return Value("identity_pointer", canonical(qual(node)))
+            self.refuse("pointer identity cannot pass through this cast or expression", node)
         if len(values) != 1 or node.get("kind") not in ("ParenExpr", "ExprWithCleanups", "ImplicitCastExpr"):
             self.refuse("standard-object or data origin cannot pass through this expression", node)
         if node.get("kind") == "ImplicitCastExpr" and node.get("castKind") not in ("NoOp", "LValueToRValue"):
@@ -105,6 +133,39 @@ class Policy:
     def handle(self, node, visit, primitive_type):
         kind, parts = node.get("kind"), children(node)
         name = self.classify(node)
+        # 2026-10-16 ET: pointer fields carry initialized values only. Never
+        # infer an initialized pointee, live prefix or escaping ownership from
+        # an address, null value, copy, assignment or field read.
+        if self.pointer_pairs and kind == "CXXNullPtrLiteralExpr":
+            return Value("identity_pointer", "nullptr")
+        if self.pointer_pairs and kind == "UnaryOperator" and node.get("opcode") == "&" and len(parts) == 1:
+            target = strip(parts[0])
+            declaration = target.get("referencedDecl") or {}
+            if target.get("kind") != "DeclRefExpr" or self.bound.get(declaration.get("id")) != "scalar" or \
+                    qual(target) not in self.scalars or not self.pointer_element(qual(node)):
+                self.refuse("pointer identity address needs an initialized local scalar", node)
+            visit(parts[0])
+            return Value("identity_pointer", canonical(qual(node)))
+        if kind == "BinaryOperator" and node.get("opcode") == "=" and len(parts) == 2:
+            target = strip(parts[0])
+            if target.get("kind") == "MemberExpr" and target.get("name") in ("first", "second") and \
+                    self.pointer_element(qual(target)):
+                value = visit(parts[0])
+                if not is_value(value) or value.kind != "identity_pointer":
+                    self.refuse("pair pointer assignment needs a checked local field", node)
+                self.argument(qual(target), parts[1], visit)
+                return value
+        if kind == "BinaryOperator" and node.get("opcode") in ("==", "!=") and len(parts) == 2:
+            values = [visit(part) for part in parts]
+            if any(is_value(v) and v.kind == "identity_pointer" for v in values):
+                if not all(v == "pointer" or is_value(v) and v.kind == "identity_pointer" for v in values):
+                    self.refuse("pointer identity comparison needs two initialized pointer values", node)
+                return "scalar"
+            if any(is_value(v) for v in values):
+                self.refuse("standard origin cannot pass through this binary operation", node)
+            # Each operand is visited exactly once: a second visit could count
+            # a vector mutation twice and invent an initialized live prefix.
+            return primitive_type
         if self.types and kind in ("GotoStmt", "LabelStmt", "SwitchStmt", "CaseStmt", "DefaultStmt"):
             self.refuse("standard-object initialized-prefix flow excludes goto and switch", node)
         if kind == "VarDecl" and (name or "__wrap_iter<" in qual(node)):
@@ -139,19 +200,29 @@ class Policy:
                 if source.ctype != name:
                     self.refuse("pair copy has no checked same-type initialized source", node)
                 return Value("constructed_pair", name)
+            if info["kind"] == "pair" and len(args) in (0, 2):
+                for element, arg in zip(info["elements"], args):
+                    self.argument(element, arg, visit)
+                return Value("constructed_pair", name)
             for arg in args:
                 self.scalar(arg, visit)
             if info["kind"] == "vector" and len(args) in (0, 1, 2):
                 minimum = integer(args[0]) if args else 0
                 return Value("constructed_vector", name, minimum=max(minimum or 0, 0))
-            if info["kind"] == "pair" and len(args) in (0, 2):
-                return Value("constructed_pair", name)
             self.refuse("standard constructor is outside the audited initializedness protocol", node)
         if kind == "MaterializeTemporaryExpr" and primitive_type == "scalar" and len(parts) == 1:
             self.scalar(parts[0], visit)
             return "scalar"
+        if kind == "MaterializeTemporaryExpr" and primitive_type == "pointer" and len(parts) == 1:
+            value = visit(parts[0])
+            if value == "pointer" or is_value(value) and value.kind == "identity_pointer":
+                return value
+            self.refuse("temporary pointer argument has no initialized value", node)
         if kind == "MemberExpr" and node.get("name") in ("first", "second") and len(parts) == 1:
-            self.info(visit(parts[0]), "pair", node)
+            info = self.info(visit(parts[0]), "pair", node)
+            element = info["elements"][node["name"] == "second"]
+            if self.pointer_element(element):
+                return Value("identity_pointer", canonical(element))
             return "scalar"
         if kind == "CXXMemberCallExpr" and parts and parts[0].get("kind") == "MemberExpr":
             member = parts[0]
@@ -267,7 +338,7 @@ def report(types):
             "vector_members": ["ctor", "ctor_count", "ctor_count_value", "push_back", "operator_index", "at",
                                "size", "empty", "data", "begin", "end", "dtor", "scalar_range_for"],
             "pair_members": ["ctor_default", "ctor", "copy_ctor", "operator_assign", "first", "second"],
-            "initialized": "scalar object representations and vector live elements only; spare capacity excluded",
+            "initialized": "scalar representations, pair pointer values and vector live elements only; pointer values grant no pointee access or escape; spare capacity excluded",
             "raw_reads": "literal indices within a definite initialized live prefix captured from data/begin",
             "lifetime": "CBMC executes real allocation/free; growth does not add an assumed lifetime fact"}
 

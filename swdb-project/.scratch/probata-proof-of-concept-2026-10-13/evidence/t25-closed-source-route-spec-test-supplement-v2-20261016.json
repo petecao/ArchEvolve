@@ -1,0 +1,43 @@
+{
+  "SSH": 0,
+  "axis": "Spec",
+  "base_review": {
+    "bytes": 5333,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-closed-source-route-spec-review-v1-20261016.json",
+    "sha256": "7bd28b972a59c2f3fbd5152b59fc5444c03c8b59aac8711eaba365e678793ef9"
+  },
+  "change": "Only the wrong-function control changes selected.function assignment to object.__setattr__. It operates on a deep copied test Lowering and reaches the real route function guard for frozen Lowering objects; production remains unchanged.",
+  "compiler_native_verifier_solver_calls": 0,
+  "created": "2026-10-16 ET",
+  "decision": "PASS supplement: test-only immutable Lowering control repair",
+  "exact_inverse_to_prior_test_sha256": "8fc6c4fe4f3e2cb812788754a3dd930eecd4899816c66deb41ca2895d3dc1402",
+  "framework_integration_admitted": false,
+  "module": {
+    "bytes": 8126,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_reallocation_closed_route.py",
+    "sha256": "ad91c1c2dbfb1f153a64abb4f28560a2c9692aec5299b803bdfd00233048e112"
+  },
+  "preparation": {
+    "bytes": 4294,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-closed-source-route-preparation-v2-20261016.json",
+    "sha256": "c84118a7a47e38f522083ed341b688fbd136493c26e061530f65d71fe11713eb"
+  },
+  "project_imports": 0,
+  "public_tests": {
+    "bytes": 3989,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_reallocation_closed_route.py",
+    "sha256": "84af72a54fa2b326442323a84446d0a46464a4a24fe2b6b620ed3aa284e762d8"
+  },
+  "retained_GREEN_v2": {
+    "bytes": 3583,
+    "path": "/private/tmp/probata-resume-20261016-t25-closed-source-route-green-v2/result.json",
+    "sha256": "d937daaabd7af7cd4506a81d821318f0ef57536083fb3809d52a84ab0e94dd47"
+  },
+  "retained_result": {
+    "external_native_attempts": [],
+    "failed": 0,
+    "passed": 2
+  },
+  "scope": "Original isolated route Spec PASS remains valid. Shared framework changes are not covered.",
+  "tests_rerun": false
+}

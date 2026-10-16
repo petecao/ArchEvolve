@@ -1,0 +1,68 @@
+{
+  "created": "2026-10-16 ET",
+  "created_utc": "2026-10-16T20:27:36.147657+00:00",
+  "retired_source": "/data1/yanruj/probata-resume-20261016-f918f5d5",
+  "commit": "f918f5d52035fd99499280a0a8058efd0ed4ef55",
+  "tree": "cd6d95cb93499333e9ab4437796450995bc948f5",
+  "retained_remote_main": "18f04e569b949f465d6732db9505e3a264805040",
+  "ancestor_verified": true,
+  "source_clean": true,
+  "ignored_files": [],
+  "tracked_files": 10966,
+  "tracked_links": [
+    {
+      "relative": "swdb-project/weeklogs/2026-09-24/.build/node_modules",
+      "literal_target": "/Users/yanrujhou/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules",
+      "target_traversed": false,
+      "target_unchanged_by_unlink": true
+    },
+    {
+      "relative": "swdb-project/weeklogs/2026-09-30/.build/node_modules",
+      "literal_target": "../../2026-09-24/.build/node_modules",
+      "target_traversed": false,
+      "target_unchanged_by_unlink": true
+    }
+  ],
+  "physical_tracked_manifest_sha256": "c1dc2fdf95e98e678bf805205074258d51ff853a7ea212b42222ca3aec6efe2c",
+  "finite_owned_processes_scanned": 12,
+  "active_owned_readers": [],
+  "unreadable_owned_workloads": [],
+  "excluded_OS_session_helpers": [
+    {
+      "pid": 3261267,
+      "comm": "(sd-pam)",
+      "command": "(sd-pam)",
+      "boundary": "Exact OS session/SSH transport helper; inaccessible private proc details excluded"
+    },
+    {
+      "pid": 3928548,
+      "comm": "sshd",
+      "command": "sshd: yanruj@notty",
+      "boundary": "Exact OS session/SSH transport helper; inaccessible private proc details excluded"
+    }
+  ],
+  "exited_process_races": [],
+  "reader_confirmation": "ticket25 has no active or pending physical f918 reader; private9 uses retained exact context and raw",
+  "restore_argv": [
+    "git",
+    "-C",
+    "/data1/yanruj/ArchEvolve",
+    "worktree",
+    "add",
+    "--detach",
+    "/data1/yanruj/probata-resume-20261016-f918f5d5",
+    "f918f5d52035fd99499280a0a8058efd0ed4ef55"
+  ],
+  "raw_directories_retained": [
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-f918f5d5-t25-private-frame9-public-v1"
+  ],
+  "primary_branch": "yanrujhou_main",
+  "primary_commit": "c978393b119a3614229a37f0f2c8ca2a097c750b",
+  "primary_retention_lock_preserved": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mode": 33206
+  },
+  "disk_before_bytes": 12615446528,
+  "disk_after_bytes": 14274326528,
+  "scope": "Ordinary git worktree remove of this clean detached completed own source only, no force. Raw, all other sources/toolchains, external link targets and ticket7 preserved. No compiler/native/proof execution."
+}

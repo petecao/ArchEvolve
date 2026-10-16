@@ -1,0 +1,93 @@
+{
+  "SSH": 0,
+  "axis": "Spec",
+  "blocking_findings": [],
+  "caller_acceptance": false,
+  "compiler_native_verifier_solver_calls": 0,
+  "control_scope": {
+    "retained_GREEN_v6": {
+      "bytes": 3550,
+      "path": "/private/tmp/probata-resume-20261016-t25-closed-scientific-binding-green-v6/result.json",
+      "sha256": "b2b91c8e6f088dab1c7219813a8ed08cb0f771562386130b87089dbe76fdbe23"
+    },
+    "retained_summary": {
+      "controls": [
+        "source result changed",
+        "original contract changed",
+        "prepared manifest changed",
+        "missing target",
+        "foreign goal",
+        "changed statement",
+        "changed input",
+        "relabeled source history",
+        "unaccepted timeout target",
+        "missing cold evidence",
+        "altered content-addressed object",
+        "extra foreign source"
+      ],
+      "external_native_attempts": [],
+      "failed": 0,
+      "passed": 3
+    },
+    "reviewer_executed_tests": false,
+    "static_test_inspection": "Three public tests cover a genuine full fixture positive prepare/check, unconditional launch refusal, prepared manifest tamper, seven catalog registry refusals, separate object/foreign-member refusals, changed original source and changed contract. Seven registry mutations are not claimed as isolated downstream semantic branch coverage."
+  },
+  "created": "2026-10-16 ET",
+  "decision": "PASS for the scoped pure exact scientific dependency binder; no source/caller/public admission",
+  "full_ticket25_acceptance": false,
+  "preparation": {
+    "bytes": 37726,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-closed-scientific-binding-preparation-v2-20261016.json",
+    "sha256": "df181ff24a6ce6df9c534909e9f447791e85fe097b28ac354cc4ab8bca3f2752"
+  },
+  "project_imports": 0,
+  "public_proof_record_created": false,
+  "public_tests": {
+    "bytes": 5194,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_reallocation_closed_binding.py",
+    "sha256": "4719eddee199d9082b61545c367f7f4d8e5a002e82bfd2062a542f8b1e4b04d8"
+  },
+  "required_target_counts": {
+    "constructor": 35,
+    "destructor": 11,
+    "gluing": 4,
+    "positive": 23,
+    "private_frame": 9
+  },
+  "resolved_review_finding": {
+    "issue": "The original mutation loop reserialized catalog.json for object/extra-only controls, causing early registry-hash refusal before the intended guards.",
+    "production_module_changed": false,
+    "resolution": "Final test4719eddee preserves original catalog bytes for object/extra. Those controls now reach object extent/digest and foreign-membership validation. The other seven catalog mutations intentionally exercise immutable registry refusal."
+  },
+  "review_limits": [
+    "Read-only static source, AST/JSON and local file hash comparisons only; no project imports, compiler/native/verifier/solver/SSH or test rerun by this reviewer.",
+    "This is a fixed reviewed evidence registry, not a generic independently proof-checking format. Root decisions/cold observers and source-to-VC/WP/Why3/Qed/solver translation remain the declared historical TCB. Hash integrity alone is not claimed as mathematical proof.",
+    "The original source-runtime/Typed allocator/body/caller/public record and full ticket25 acceptance remain separate unresolved gates. The binder intentionally does not close them."
+  ],
+  "reviewed_catalog": {
+    "bytes": 256695,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/fixtures/proof/vector_closed_scientific_bundle/catalog.json",
+    "sha256": "42100d4ecb63de8718f6d16071f179ba3fb173cd94511730b195106426a1cb60"
+  },
+  "scientific_rerun": false,
+  "source": {
+    "bytes": 22103,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_reallocation_closed_binding.py",
+    "sha256": "075f557a22a34b03fcebe2699d3a21c4ebe44ff3b8afddf9cb585d6ff090d0b2"
+  },
+  "source_admission": false,
+  "source_typed_bridge_established": false,
+  "standards_axis": "Root-owned separate review; not performed by this Spec receipt.",
+  "static_checks": [
+    "The exact reviewed catalog registry and all91 content-addressed documents are required; complete file/directory membership, duplicate/nonfinite JSON, extent/hash and explicit RFC6901 location checks fail closed. Historical absolute paths inside evidence remain inert.",
+    "Current source_rule, constructor35, destructor11, private9, glue6 and positive23 declarations are reconstructed. All82 accepted targets must match complete goal, kind, statement, canonical full input bytes and current dependency requirements.",
+    "Complete current source-rule comparison removes only source_view.library_allocator_binding.certificate_sha256. All source grammar/order, original contract, original24ordinary/9smoke/13assigns ledger, administrator product storage, dead-identity/live-byte distinction, allocator TCB and body/domain dependencies remain compared.",
+    "Full unchanged Heap theory is checked. Original and qualified constructor/destructor source bodies, inverse/domain/source-inventory/parameter/incoming-history conditions and closed source dependencies remain exact.",
+    "Logical constructor conjunction comparison verifies current physical definition slice/hash/container, keeps historical slice position/expansion/reference/complete conjunction and strips only whole-container hashes in temporary comparison copies. Four retained slices currently match; the two vcs.py container hashes differ and remain historical evidence values.",
+    "Complete retained target normal-reader identities/outcomes and native sequences are bound to the actual historical input/id. The constructor numeric ten ordinary/one nonproof smoke/two inventory-only observations remain distinct; no smoke or passed inventory is promoted to a direct proof.",
+    "Private9 primary leaves retain the missing normal_verdict field. Its reconstructed verdict has an explicit exact reviewed-observer/assertion/outcome/result basis from the frozen catalog, with no invented directly emitted normal-verdict field.",
+    "Only four accepted original gluing IDs are bound; both original positive not_proven/timeout sequences remain exact. Positive23 remains its own conditional proof/reconstruction and preserves actual portfolio sequences and internal-Qed scope.",
+    "The portable public fixture is byte-identical to the frozen v3 prototype across92files. Prepared output preserves all82 canonical tuples, all5 historical source identities, no current model record and source/Typed/public/caller gates false.",
+    "check recomputes exact canonical membership/bytes; check_launch always raises after checking. No framework admission path, new axiom/caller premise or native/solver execution is introduced."
+  ]
+}

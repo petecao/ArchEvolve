@@ -1,0 +1,63 @@
+{
+  "created": "2026-10-16 ET",
+  "reviewer": "root",
+  "axis": "Standards",
+  "status": "PASS",
+  "preparation": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-closed-source-shared-integration-preparation-v2-20261016.json",
+    "sha256": "9032f187f722979f391743bbabefefe4985f766c1c31303d1179dfe0207b780c"
+  },
+  "reviewed_files": [
+    {
+      "bytes": 8466,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_reallocation_closed_route.py",
+      "sha256": "429895c2a7b9bedaaa14f0dc8bdd5a76cede173f6a9a5a82d33713c988881d81"
+    },
+    {
+      "bytes": 100532,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/wp_adapter.py",
+      "sha256": "e30ac5b1b05666db401bce03726f78a336926b47807d729ec1d11a080a5389af"
+    },
+    {
+      "bytes": 52371,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/proof_setup.py",
+      "sha256": "08f5e9807522cc2418e59ac9b6ecd43855a6a5ed4693c0295333abf6b8563d16"
+    },
+    {
+      "bytes": 36125,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/schemas/proof.schema.json",
+      "sha256": "404a3a512a20dc593b3874abcbf253caa9e3fda8e2c6173c4d4352743fe31265"
+    },
+    {
+      "bytes": 3989,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_reallocation_closed_route.py",
+      "sha256": "84af72a54fa2b326442323a84446d0a46464a4a24fe2b6b620ed3aa284e762d8"
+    },
+    {
+      "bytes": 4382,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_reallocation_closed_public_workflow.py",
+      "sha256": "bdc7720b3ea32379494e102dd0785332aa94a544b4367309ea39296a09bbcd2b"
+    },
+    {
+      "bytes": 4145,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/testkit/vector_closed_workflow.py",
+      "sha256": "37f109cfdda60c84c90e33458bb44999e4d01a91ccf4ee5dd799aec783e754b1"
+    }
+  ],
+  "findings": [],
+  "resolved_findings": [
+    "The source-route branch now preserves both preexisting standard-library and exact allocation-succeeds assumption entries in context.assumed; additional source/bundle/allocator TCB entries are additive. Public assertions require those two original model-referenced entries."
+  ],
+  "checks": [
+    "Exact explicit fixture method plus all four current checker/bundle identities select the isolated source route before unsupported terminal-release projection",
+    "Universal current method/job/source/contract/compiler/stdlib/summary/generated-input checks execute; canonical source result and complete scientific bundle are rechecked at evaluation time",
+    "Only this no-native-invocation branch skips native WP switches/lineup checks; generic native _wp/_verdict/_proven/_dependencies/_with_contracts/read_outcome ASTs are exact18f",
+    "Generated-input hashes use full absolute paths only for this canonical nested evidence tree, avoiding basename collisions; original route remains unchanged",
+    "Record settings state checked source basis and verifier_launched=false, preserve original/projected native not_proven and all historical identities, and create no generic member proof records",
+    "Schema restricts source_rule goals to the explicit fixture method/four pins/proven checked-source settings and honest native diagnostic fields",
+    "Source-route checker dependencies are included in proof-setup identity, new sources parse and schema parses; focused diffcheck clean",
+    "Five real public CLI controls and three schema mutations are authored and await separate actual admission; isolated pure source/binder tests are not substituted for them"
+  ],
+  "method": "Independent static complete shared diff, module/public tests/testkit review, seven physical hashes and six native-function AST comparisons; no new tool, test, project import or SSH execution",
+  "boundary": "Standards readiness only. Independent Spec review, real public CLI/compiler/source checks and complete retained-evidence audit remain required; no public proof record or full ticket acceptance."
+}

@@ -1,0 +1,50 @@
+{
+  "created_utc": "2026-10-16T20:05:39.427639+00:00",
+  "retired_source": "/data1/yanruj/probata-resume-20261016-615ddf50",
+  "commit": "615ddf504fed61b9f6c6e4663760d006ecaf255b",
+  "tree": "d8342ef3bf65ddec6dd95dfdf09a6ea891be5468",
+  "retained_remote_main": "18f04e569b949f465d6732db9505e3a264805040",
+  "ancestor_verified": true,
+  "source_clean": true,
+  "ignored_files": [],
+  "active_owned_readers": [],
+  "unreadable_owned_workloads": [],
+  "excluded_OS_session_helpers": [
+    {
+      "pid": 3261267,
+      "comm": "(sd-pam)",
+      "command": "(sd-pam)",
+      "boundary": "OS session/SSH transport helper, not a scientific reader; private proc details inaccessible"
+    },
+    {
+      "pid": 3925734,
+      "comm": "sshd",
+      "command": "sshd: yanruj@notty",
+      "boundary": "OS session/SSH transport helper, not a scientific reader; private proc details inaccessible"
+    }
+  ],
+  "exited_process_races": [],
+  "reader_confirmations": "ticket25 and ticket28 have no active615reader; principal82bundle uses retained exact source/target/context receipts",
+  "restore_argv": [
+    "git",
+    "-C",
+    "/data1/yanruj/ArchEvolve",
+    "worktree",
+    "add",
+    "--detach",
+    "/data1/yanruj/probata-resume-20261016-615ddf50",
+    "615ddf504fed61b9f6c6e4663760d006ecaf255b"
+  ],
+  "raw_directories_retained": [
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-615ddf50-focused-regressions-v2",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-615ddf50-focused-regressions-v3",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-615ddf50-t25-closed-no-growth-public-v1"
+  ],
+  "primary_retention_lock_preserved": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mode": 33206
+  },
+  "disk_before_bytes": 12629200896,
+  "disk_after_bytes": 14288793600,
+  "scope": "One completed recoverable own detached source retired. All raw, other checkouts/toolchains and ticket7 resources preserved. Finite process checks explicitly exclude OS session/SSH transport helpers."
+}
