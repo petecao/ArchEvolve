@@ -112,6 +112,31 @@ class WpAdapter:
                 raise AdapterError(f"the C lowering has no C model {job.unit.function}")
             if job.unit.function.startswith(("std_vector_", "std_pair_")):
                 context["pins"]["std_models"] = std_models.identity()
+            from swdb import vector_reallocation_model
+            if job.unit.function in vector_reallocation_model.MEMBERS:
+                domain = vector_reallocation_model.certificate(job.unit.function)
+                source_path = wp_dir / "vector-reallocation-v3.c"
+                source_path.write_text(text)
+                original_path = wp_dir / "vector-reallocation-v2.original.c"
+                original_path.write_text(std_models.model_text(domain["original_member"]))
+                domain_path = wp_dir / "vector-reallocation-v3.json"
+                domain_path.write_text(json.dumps(domain, indent=2, sort_keys=True) + "\n")
+                context["pins"]["vector_reallocation_model"] = vector_reallocation_model.identity()
+                context["settings"] = {"tool": "frama-c-wp", "flags": tools["flags"],
+                                       "verifier_launched": False, "vector_reallocation_domain": domain}
+                context["reports"] += [("vector_reallocation_model", source_path),
+                                       ("vector_reallocation_domain", domain_path),
+                                       ("vector_reallocation_original", original_path)]
+                from swdb import vector_reallocation_vcs
+                draft = wp_dir / "vector-reallocation-obligations"
+                plan = vector_reallocation_vcs.prepare(job.unit.function, draft)
+                context["reports"] += [("vector_reallocation_obligations", draft / "manifest.json"),
+                    ("vector_reallocation_semantics", draft / plan["semantics"]["path"])]
+                context["reports"] += [("vector_reallocation_vc_" + row["id"], draft / row["path"])
+                                       for row in plan["obligations"]]
+                return self._not_proven("unsupported_construct",
+                    "The explicit v3 domain requires a fresh unbounded body proof and caller discharge; "
+                    "the original v2 contract is not proved by this preparation.", context)
             if job.unit.function in heap_model_view.MEMBERS:
                 return heap_model_view.prove(job, self, context)
             if re.search(r"\b(?:allocates|frees)\b|\\(?:fresh|freeable)\b", text):

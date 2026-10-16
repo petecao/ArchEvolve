@@ -1,0 +1,292 @@
+{
+  "actual_readiness": false,
+  "blockers": [],
+  "callers": [
+    {
+      "observation": "captured alias",
+      "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_alias_controls_kee0/vector_realloc_v3_stale.anchors.json",
+      "request": "count+1",
+      "source_sha256": "1172e62dbff5076d25471285afcfa17927707dbe6fae121d9570109d39e62b57",
+      "verdict": "pending"
+    },
+    {
+      "observation": "captured alias",
+      "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_alias_controls_kee1/vector_realloc_v3_no_growth.anchors.json",
+      "request": "count",
+      "source_sha256": "1172e62dbff5076d25471285afcfa17927707dbe6fae121d9570109d39e62b57",
+      "verdict": "pending"
+    },
+    {
+      "observation": null,
+      "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_caller_refuses_sig0/lower/vector_realloc_v3_safe.anchors.json",
+      "request": null,
+      "source_sha256": "cd59c616ab128e57366a33a6a439aa77013305bc2eb40879bd117189b45c28e7",
+      "verdict": "refused"
+    },
+    {
+      "observation": "current buffer",
+      "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_caller_retains_crl0/lower/vector_realloc_v3_safe.anchors.json",
+      "request": "count+1",
+      "source_sha256": "b538dcda167d5903a6021c2fa684ad2a288b56dba26c44424ecc2be48deda286",
+      "verdict": "pending"
+    },
+    {
+      "observation": "current buffer",
+      "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_caller_source_span0/lower/vector_realloc_v3_safe.anchors.json",
+      "request": "count+1",
+      "source_sha256": "31e4003d76fbc609ae4f7e35344251fc8dbaac368cdc1fc17a12c9fd530ee67e",
+      "verdict": "pending"
+    },
+    {
+      "observation": "current buffer",
+      "path": "/private/tmp/probata-t25-reallocation-source-preparation-final-20261016/pytest/test_public_reserve_caller_rec0/vector_realloc_v3_safe.anchors.json",
+      "request": "count+1",
+      "source_sha256": "1172e62dbff5076d25471285afcfa17927707dbe6fae121d9570109d39e62b57",
+      "verdict": "pending"
+    }
+  ],
+  "composed_control_receipts": [
+    {
+      "path": "/private/tmp/probata-t25-reallocation-composed-c4c251b1-green-20261016/command.json",
+      "sha256": "d611881dd0efb0bdff9211b8f7fe15f09837ae9d4ae5d174a6b71c44dc18f246"
+    },
+    {
+      "path": "/private/tmp/probata-t25-reallocation-composed-c4c251b1-green-20261016/controls.log",
+      "sha256": "4b3b254247481beaa4ad963f04e1bdfc48afb23cf6d99d0912b7492874804e8d"
+    },
+    {
+      "path": "/private/tmp/probata-t25-reallocation-composed-c4c251b1-green-20261016/resources.json",
+      "sha256": "e393ebe983470485731dcbd4fad000404cb619d6304e5c0c12bef6fbdf579d21"
+    }
+  ],
+  "composed_control_resources": {
+    "cpu_seconds": 34.483021,
+    "exit_code": 0,
+    "out_of_memory": false,
+    "peak_rss_bytes": 377126912,
+    "timed_out": false,
+    "wall_seconds": 35.26910650002537
+  },
+  "composed_control_source_attestation": "owner-reported composed c4 run; standalone three receipts do not independently attest before/after Git source",
+  "evidence_sha256": "abf3ee93f2987153c9e53e0b288a8f4948c2d2ced66d19864aa761936b8b7d53",
+  "execution": {
+    "compiler": false,
+    "formal": false,
+    "probes": false,
+    "prover": false,
+    "repository_edits": false,
+    "ssh": false,
+    "tests": false
+  },
+  "hash_errors": [],
+  "preparation_producer": "a2eae475d2a8a08c972c53a34417d49a196059ef",
+  "qualified_identity": {
+    "id": "vector-reallocation-domain-3",
+    "sha256": "edc48be77938ae3b12ac096518778cd50315594c52443ab8dcf3cba8aa07ab53"
+  },
+  "raw_byte_spans_checked": 38,
+  "records": [
+    {
+      "executable_bodies": 3,
+      "sha256": "61c771b9461fa855e4e01697808ed0c5cb6362dafbaacbacf4e188fe53ca3619",
+      "subject": "std_vector_int_realloc_v3_grow"
+    },
+    {
+      "executable_bodies": 3,
+      "sha256": "cb5a009887242190b361ae6f79d77c65ef41154b84f287b7abd34fc350b2369f",
+      "subject": "std_vector_int_realloc_v3_ctor_count_value"
+    },
+    {
+      "executable_bodies": 4,
+      "sha256": "efbbd15be6a4e0569074c77a409ea0b8fc9bea1f994d94faa5b0df8891038ce4",
+      "subject": "std_vector_int_realloc_v3_reserve"
+    },
+    {
+      "executable_bodies": 3,
+      "sha256": "d4fe7a9e91695e86bd081e8a94538fd467b6c6685cfd1470ff964d2ebbe208cc",
+      "subject": "std_vector_int_realloc_v3_dtor"
+    },
+    {
+      "executable_bodies": 3,
+      "sha256": "a96ba9c962b8a603d8ad5d05e3e0c21ef83a2324a49663aeb8c9da5643c76eb0",
+      "subject": "std_vector_int_realloc_v3_grow"
+    }
+  ],
+  "reference_instances_checked": 74,
+  "review_md_sha256": "3a94fc37b217b31e00b33de4d14ac810211393e33b4a3086adb0974c17d587d3",
+  "runs": [
+    {
+      "label": "caller-public-red",
+      "resources": {
+        "cpu_seconds": 4.9010370000000005,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 336953344,
+        "timed_out": false,
+        "wall_seconds": 4.938412208051886
+      }
+    },
+    {
+      "label": "caller-public-green",
+      "resources": {
+        "cpu_seconds": 5.131001,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 364347392,
+        "timed_out": false,
+        "wall_seconds": 5.546632792043965
+      }
+    },
+    {
+      "label": "caller-public-green-v2",
+      "resources": {
+        "cpu_seconds": 5.0623249999999995,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 345915392,
+        "timed_out": false,
+        "wall_seconds": 5.126491124974564
+      }
+    },
+    {
+      "label": "caller-edges-red",
+      "resources": {
+        "cpu_seconds": 1.033478,
+        "exit_code": 2,
+        "out_of_memory": false,
+        "peak_rss_bytes": 101253120,
+        "timed_out": false,
+        "wall_seconds": 1.39565445802873
+      }
+    },
+    {
+      "label": "caller-edges-red-v2",
+      "resources": {
+        "cpu_seconds": 23.000192,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 354549760,
+        "timed_out": false,
+        "wall_seconds": 23.42649404099211
+      }
+    },
+    {
+      "label": "caller-edges-green",
+      "resources": {
+        "cpu_seconds": 22.977241,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 361529344,
+        "timed_out": false,
+        "wall_seconds": 23.1009878750192
+      }
+    },
+    {
+      "label": "caller-crlf-red",
+      "resources": {
+        "cpu_seconds": 5.101533,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 351485952,
+        "timed_out": false,
+        "wall_seconds": 5.172295958967879
+      }
+    },
+    {
+      "label": "caller-complete-calls-red",
+      "resources": {
+        "cpu_seconds": 27.203566000000002,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 362889216,
+        "timed_out": false,
+        "wall_seconds": 27.319342542032246
+      }
+    },
+    {
+      "label": "caller-final-green",
+      "resources": {
+        "cpu_seconds": 27.174616999999998,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 363413504,
+        "timed_out": false,
+        "wall_seconds": 27.203789833991323
+      }
+    },
+    {
+      "label": "helper-bodies-red",
+      "resources": {
+        "cpu_seconds": 3.616177,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 216465408,
+        "timed_out": false,
+        "wall_seconds": 3.6729282080195844
+      }
+    },
+    {
+      "label": "helper-bodies-green",
+      "resources": {
+        "cpu_seconds": 6.1369050000000005,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 197132288,
+        "timed_out": false,
+        "wall_seconds": 6.561824375006836
+      }
+    },
+    {
+      "label": "source-preparation-final",
+      "resources": {
+        "cpu_seconds": 34.087233,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 396279808,
+        "timed_out": false,
+        "wall_seconds": 35.11714650003705
+      }
+    }
+  ],
+  "scope": "ticket25 f32\u2192a2 delta at composed frozen c4; ticket28 integration excluded except shared-byte distinction",
+  "source": "c4c251b1385c8aafacd3168b3cad143dccdde443",
+  "source_pins": [
+    {
+      "composed_sha256": "16229a74cae6f2ac37eddca481a8d10736bf5d6c6c1104343f1701252dd3b72e",
+      "path": "swdb-project/swdb/c_lowering.py",
+      "preparation_sha256": "bb9baddbe0d1da4273577eb0a8c5e4e1eea120957c089db7bac0c5e0c48b91b8"
+    },
+    {
+      "composed_sha256": "ee5ddfc4726f4b4a0d7df94aeff1880c7f3e4e483f233cdb2ef2edffdd83a845",
+      "path": "swdb-project/swdb/proof_setup.py",
+      "preparation_sha256": "5dc2d9039ac4621bbd14f5ac3aa3965050b86d265bf5012cda41b1566f5ea7fe"
+    },
+    {
+      "composed_sha256": "14bd6e865ccc3f7baa680cdce950b4c39f8c57d9eda39696621be0d310b931da",
+      "path": "swdb-project/swdb/vector_reallocation_model.py",
+      "preparation_sha256": "14bd6e865ccc3f7baa680cdce950b4c39f8c57d9eda39696621be0d310b931da"
+    },
+    {
+      "composed_sha256": "3077cb2e9aac5c00fdb4de2d0f9e92756c7f2db8df87a0cb596c5b9384b6751f",
+      "path": "swdb-project/swdb/vector_reallocation_calls.py",
+      "preparation_sha256": "3077cb2e9aac5c00fdb4de2d0f9e92756c7f2db8df87a0cb596c5b9384b6751f"
+    },
+    {
+      "composed_sha256": "0f482a71f6f54345a29d1c07466d59fb828483b6e075cf23132579d2cc814020",
+      "path": "swdb-project/tests/test_vector_reallocation_domain.py",
+      "preparation_sha256": "0f482a71f6f54345a29d1c07466d59fb828483b6e075cf23132579d2cc814020"
+    },
+    {
+      "composed_sha256": "32707d33b005d0d325d70edaf97c6f0649a861d464e2868df747c2102080575b",
+      "path": "swdb-project/tests/test_vector_reallocation_calls.py",
+      "preparation_sha256": "32707d33b005d0d325d70edaf97c6f0649a861d464e2868df747c2102080575b"
+    },
+    {
+      "composed_sha256": "1172e62dbff5076d25471285afcfa17927707dbe6fae121d9570109d39e62b57",
+      "path": "swdb-project/tests/fixtures/proof/vector_reallocation_v3.cc",
+      "preparation_sha256": "1172e62dbff5076d25471285afcfa17927707dbe6fae121d9570109d39e62b57"
+    }
+  ],
+  "stdlib_reference_instances_checked": 9366,
+  "verdict": "PASS_UNSUPPORTED_PREPARATION_ONLY"
+}
