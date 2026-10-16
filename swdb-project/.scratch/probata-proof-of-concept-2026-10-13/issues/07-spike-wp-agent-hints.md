@@ -1497,3 +1497,69 @@ published freeze, exact tool/input pins, live preflight, fresh pre-provider audi
 and coordinator admission still precede any new counted run. No new scientific
 success or actual launch is claimed here. Run25 and its producer remain immutable;
 ticket07 remains claimed with acceptance unsatisfied.
+
+### Method23 run26 native inspection exception — 2026-10-15 ET
+
+The fresh zero-seed run on clean frozen `ac6bb42e` ran 22:15:49–22:58:02 EDT
+and remains **unproven**. Its continuous counted clock reached 2532.9919285 seconds
+(42.22 minutes); the summary reports 0.0 excluded queue seconds. The retained `within_budget=false`
+and publication `not admitted` mean strict admission failed after an execution
+error; they do not mean 60 minutes elapsed. The driver exited 0, the matching
+summary/completion hashes were retained, and all 42 source pins remain unchanged.
+The producer and raw artifacts remain immutable.
+
+The fresh full 10-second baseline completed in 6.17 counted minutes: 254 ordinary
+goals (151 passed, 103 open) and all 139 smoke checks passed. Its retained
+155-goal diagnostic subset initialized the empty incumbent directly; no second
+empty-hint round was launched, no prior-run pass was reused, and no cross-mode
+formula equivalence is claimed. The all-function inventory remains distinct from
+the narrower diagnostic inventory and every final obligation remains mandatory.
+
+The actual scoped task reader returned four pages covering two complete
+machine-ID tasks, including the text after the 14,000-character boundary. Full task,
+index, log, generated source/header/exporter inputs and local exporter-binary
+hashes match the retained receipts. The provider received no mechanical seed or
+historical hint, baseline result, conversation or telemetry. Its authoritative
+incumbent has four Codex-authored records and 102 open of 159 diagnostic goals
+(102 unit and zero hint goals). Exact raw-operation/materialization/edit-parent
+provenance and the fresh scoped conversation were audited.
+
+There were 18 raw tool requests: four design requests (one recorded and three
+refused), four task-page requests, three edit checks and seven proposals. The
+separate final-response operations supplied the eighth candidate check. All
+eight candidate WP checks completed, with no deadline censor; these counters
+exclude the baseline, task generation and terminal replay. The final-response
+candidate regressed to 105 open goals and was reverted. The single Codex call
+returned naturally before the 33-minute search stop with complete observed usage:
+6,483,554 input and 22,729 output tokens. Cached input 6,350,976 and reasoning output
+11,728 are subsets; cache-write was zero. Complete CLI usage is recorded without
+a backend billing claim.
+
+The same-clock full 30-second all-function/smoke replay scheduled 397 goals but stopped
+after 569.1460498 seconds on `SystemError: <built-in function proc_environ>
+returned a result with an exception set`. The guard exited 1; RSS watchdog,
+timeout and queue-timeout flags were false. Its nullable `inspection_failure`
+field does not mean there was no error. The retained summary does not identify
+the original failing PID, phase, ownership or OS cause; the last cleanup denial
+cannot supply that missing attribution. The partial final log contains 58 Timeout
+lines, but no complete goals JSON or full smoke verdict. These censored outcomes
+do not establish a completed final verdict, and an availability repair alone has
+no evidence of proof sufficiency. The positive did not qualify, so the required
+identical-hints covering-wait negative was correctly not run.
+
+All 30 resource reports were audited: 29 exit 0 and the terminal native exception.
+The sampled peak was 4046.3125 MiB under the 8 GiB guard; all retained cleanup
+inventories were empty. Three independent fresh poststop metadata scans found
+the known driver, launcher, runner and root absent, no recent matching run paths,
+groups, sessions or verifier names, no inspection denials, and both shared leases
+absent. No exact marker identity was archived for that scan, so no environment
+token absence is claimed. These are finite, non-atomic observations under the
+trusted-tool boundary, with no hard-quota or hostile-containment claim.
+
+[Compact run26 evidence](../evidence/t07-counted-run26-20261015.json) and the
+[independent final review](../evidence/t07-run26-final-independent-review-20261015.md)
+retain the exact source, raw manifest, task, accounting, origin and cleanup
+receipts. The native exception requires a separately tested contextual diagnosis
+before any newly reviewed method or actual launch. Old hints and results must
+remain outside every future fresh provider. Ticket07 remains claimed, with the
+original positive-plus-negative acceptance unsatisfied.
