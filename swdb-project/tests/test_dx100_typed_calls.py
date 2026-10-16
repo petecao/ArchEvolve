@@ -106,3 +106,80 @@ def test_register_overload_names_are_independent_of_first_use_order(tmp_path, fi
     assert result.returncode == 0, result.stdout + result.stderr
     assert {r['c_name'] for r in json.loads(result.stdout)['summaries']} == {
         'get_new_reg_int_args0', 'get_new_reg_int_args1'}
+
+
+@pytest.mark.parametrize('alias, outer', [('uint64_t', 'unsigned long long'), ('int32_t', 'int')])
+@pytest.mark.parametrize('placement', ['local', 'return', 'field', 'cast', 'summary'])
+def test_a_local_shadow_of_a_fixed_width_typedef_preserves_its_actual_scalar_type(tmp_path, alias, outer, placement):
+    """Same width is insufficient: local typedefs can denote floating types."""
+    from swdb import c_lowering
+    source = tmp_path / 'shadowed_device_typedef.cc'
+    source.write_text(f'typedef {outer} {alias};\n'
+                      f'int shadowed_type() {{ typedef double {alias}; {alias} x = 0.5; return x == 0.5; }}\n')
+    if placement == 'return':
+        source.write_text(f'typedef double {alias};\n'
+                          f'{alias} identity_value({alias} x) {{ return x; }}\n'
+                          'int shadowed_type() { return identity_value(0.5) == 0.5; }\n')
+    elif placement == 'field':
+        source.write_text(f'typedef double {alias};\nstruct Cell {{ {alias} x; }};\n'
+                          'int shadowed_type() { Cell c; c.x = 0.5; return c.x == 0.5; }\n')
+    elif placement == 'cast':
+        source.write_text(f'typedef double {alias};\n'
+                          f'int shadowed_type() {{ return ({alias})0.5 == 0.5; }}\n')
+    elif placement == 'summary':
+        source.write_text(f'typedef double {alias};\n{alias} identity_value({alias} x);\n'
+                          'int shadowed_type() { return identity_value(0.5) == 0.5; }\n')
+    summary = ['--summary', 'identity_value=contract.typedef_fixture'] if placement == 'summary' else []
+    result = run_swdb('lower', '--source', source, '--function', 'shadowed_type',
+                      '--out', tmp_path / 'out', '--format', 'json', *summary)
+    assert result.returncode == 0, result.stdout + result.stderr
+    compiler = c_lowering.locate()
+    for language, standard, text in [('c++', 'c++17', source.read_text()),
+                                     ('c', 'c11', (tmp_path / 'out/shadowed_type.c').read_text())]:
+        unit = tmp_path / (language + '.txt')
+        helper = '\ndouble identity_value(double x) { return x; }\n' if placement == 'summary' else ''
+        unit.write_text(text + helper + '\nint main(void) { return shadowed_type() == 1 ? 0 : 1; }\n')
+        executable = tmp_path / (language + '.bin')
+        built = subprocess.run([*compiler.command, '-x', language, '-std=' + standard, '-O1',
+                                '-fsanitize=address,undefined', str(unit), '-o', str(executable)],
+                               capture_output=True, text=True, timeout=60)
+        assert built.returncode == 0, built.stderr
+        ran = subprocess.run([str(executable)], capture_output=True, text=True, timeout=60,
+                             env={**os.environ, 'ASAN_OPTIONS': 'detect_leaks=0', 'UBSAN_OPTIONS': 'halt_on_error=1'})
+        assert ran.returncode == 0, (language, text, ran.stdout, ran.stderr)
+
+
+def test_ambiguous_unresolved_fixed_width_aliases_refuse_without_a_partial_lowering(tmp_path):
+    source = tmp_path / 'ambiguous_typedef.cc'
+    source.write_text('typedef double uint64_t;\n'
+                      'uint64_t identity_value() { typedef unsigned int uint64_t; return 0.5; }\n'
+                      'int result() { return identity_value() == 0.5; }\n')
+    result = run_swdb('lower', '--source', source, '--function', 'result',
+                      '--out', tmp_path / 'out', '--format', 'json')
+    assert result.returncode != 0 and 'source typedef identity' in result.stderr
+    assert not list((tmp_path / 'out').glob('*.c'))
+
+
+def test_a_member_return_type_cannot_choose_an_unrelated_same_named_typedef(tmp_path):
+    source = tmp_path / 'member_typedef.cc'
+    source.write_text('typedef int Alias;\nstruct Cell { int pad; typedef double Alias; Alias value() { return 0.5; } };\n'
+                      'int result() { Cell c; return c.value() == 0.5; }\n')
+    result = run_swdb('lower', '--source', source, '--function', 'result',
+                      '--out', tmp_path / 'out', '--format', 'json')
+    assert result.returncode != 0 and 'ambiguous source typedef identity' in result.stderr, result.stdout + result.stderr
+    assert not list((tmp_path / 'out').glob('*.c'))
+
+
+@pytest.mark.parametrize('placement', ['parameter', 'return', 'local'])
+def test_reference_typedefs_require_explicit_source_reference_binding(tmp_path, placement):
+    source = tmp_path / 'reference_typedef.cc'
+    body = {
+        'parameter': 'int result(Ref n) { return n == 0; }',
+        'return': 'Ref identity(int &n) { return n; } int result(int &n) { return identity(n) == 0; }',
+        'local': 'int result(int n) { Ref r = n; return r == 0; }',
+    }[placement]
+    source.write_text('typedef int &Ref;\n' + body + '\n')
+    result = run_swdb('lower', '--source', source, '--function', 'result',
+                      '--out', tmp_path / 'out', '--format', 'json')
+    assert result.returncode != 0 and 'reference typedef' in result.stderr, result.stdout + result.stderr
+    assert not list((tmp_path / 'out').glob('*.c'))
