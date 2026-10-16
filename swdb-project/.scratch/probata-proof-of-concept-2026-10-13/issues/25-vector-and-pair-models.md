@@ -20,6 +20,27 @@ it does not claim complete member-body acceptance. The prior bounded controls
 and their exact freezes remain unchanged. The coordinator owns actual verifier
 admission and both mbit10 lanes.
 
+### First original-body capability preparation — 2026-10-15 ET
+
+The isolated `prototype/25-heap-capability/` now prepares 42 mapped packets for
+unchanged int count/value construction and destruction: 41 isolated global check
+lemmas (including 4 negative controls and 2 constructive source-entry feasibility
+witnesses), plus one actual C arithmetic/layout kernel retaining all its goals.
+The incoming heap remains arbitrary and identities are unbounded mathematical
+integers. Explicit source/event/clause/RTE/init/frame/lifetime bindings, canonical
+input reconstruction and the original full-source gate are reviewed; no desired
+postcondition axioms or new original caller premises are added. Generic caller
+composition and byte/partial-store translation remain unsupported.
+
+Twenty-one compiler-free public preparation/runner controls pass after merging
+integration `f439edf0`; no formal tool has been launched. The first runner review's
+four findings are fixed and final independent review passed at `024db66c`
+(29 retained pins verified, zero mismatches). Coordinator admission is pending. Actual WP33 import syntax, imported proposition/task hypotheses and all
+mapped results remain unvalidated. This is not a model-body proof record or a
+completed acceptance item. Evidence:
+`../evidence/t25-heap-capability-preparation-20261015.json`; final review:
+`../evidence/t25-capability-final-review-v5-024db66c.md`.
+
 ## Acceptance
 
 - [ ] Each modeled member has a C function and an ACSL contract citing the standard's clause for it (`[vector]` for vector members). `swdb prove` proves every contract against its C function once, recorded with subject "a library entry's summary".

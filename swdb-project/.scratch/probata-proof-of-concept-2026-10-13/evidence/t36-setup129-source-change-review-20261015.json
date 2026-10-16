@@ -1,0 +1,30 @@
+{
+  "baseline": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+  "command_review": {
+    "entry_sha256": "09717006a0d1e078532cf9c68a64d05efb3a50cb50bbf71882df6b7d3a72df93",
+    "expected_selected": 129,
+    "path": "/private/tmp/probata-t36-setup129-cwd-v3-command-20261015.json",
+    "sha256": "5adc9d59d5b9d5f201bc8bf0d5cb77895d684915fd7f837ae2a82a0a5830f3f2"
+  },
+  "date_et": "2026-10-15",
+  "files_after": {
+    "swdb-project/swdb/proof_setup.py": "027bfec85fa6a5f10699ced20956b9ac76d7787cdb0e3033c68f9a673e47df2a",
+    "swdb-project/swdb/stdlib_provenance.py": "4a7ca7d9b05a992e8172125fcbbfd175bb7ade2aec47cfb349126c9739b6e8e4"
+  },
+  "readers": [
+    "root",
+    "ticket36",
+    "merger",
+    "independent reviewer"
+  ],
+  "review_evidence": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t36-runtime-independent-review-20261015.md",
+    "sha256": "094d04f2ae4d41679f5381ac157d76d937c34c816cc2963b2aef1d78115d0af0"
+  },
+  "scope": "Reviewed ticket36 runtime production repair unchanged from2033; test-only bare executable PATH portability fix, setup expected129. Admission only; no closure/historical-record upgrade.",
+  "source_commit": "74edefd0df0ff984b327da2e5f34cd85f82a7461",
+  "test_portability_review": {
+    "path": "/private/tmp/probata-t36-bare-command-independent-review-20261015.md",
+    "sha256": "e72db33651b41f36cf228abbf82d1c0886b2d7954e322afe0c222b2eed288c94"
+  }
+}

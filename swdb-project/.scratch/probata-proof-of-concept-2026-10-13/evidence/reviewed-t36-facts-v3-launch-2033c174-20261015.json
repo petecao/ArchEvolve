@@ -1,0 +1,260 @@
+{
+  "at_utc": "2026-10-16T01:59:41.505580+00:00",
+  "audit_script": {
+    "path": "/private/tmp/probata-reviewed-launch-audit-v3.py",
+    "sha256": "59bf1d40f27be316d98fc8acc39fa0339207c94bda9a9954ec145513025100ef"
+  },
+  "date_et": "2026-10-15",
+  "errors": [],
+  "files": {
+    "dispatch-argv.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/dispatch-argv.json",
+      "sha256": "ad01cfc9966add1830574a5eac35e90fe4f6c1b0f93c2fde809f80edcbbef1d6"
+    },
+    "execute.py": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/execute.py",
+      "sha256": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612"
+    },
+    "lane.json": {
+      "mutable_until_exit": true,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/lane.json",
+      "sha256_at_snapshot": "d7f131824d40c6a2693bda61c2da67c1db8c39adc06b44e5c772fbd59424d109"
+    },
+    "launch.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/launch.json",
+      "sha256": "01d82e7a305af1dc24817132f2bba6621f8b4229e32c73bf79f2ade0f67a64b3"
+    },
+    "preflight.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/preflight.json",
+      "sha256": "b17370c3eb592311cbf5942b17e9d01741f871ecb4b7a3b88aadb5411bd26be5"
+    },
+    "run.sh": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/run.sh",
+      "sha256": "5fd663335853feb1fecbfa2f9e4b7395a76bd957081aa4d7051d5c4ba98650f8"
+    },
+    "runtime-provenance.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/runtime-provenance.json",
+      "sha256": "7d34a0c699c5d01fdced47da2e42e702c48de66ab2c13708444714f7e0f26a46"
+    },
+    "source-manifest.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/source-manifest.json",
+      "sha256": "16b76e4f12310faf2c048c3c75cbdaf1c1047b2cb9eb1f0988d84606a8741090"
+    },
+    "watch.py": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/watch.py",
+      "sha256": "4485ae66aa50c65f2b579f84836576aa67b54431978da71cac6eea6a68ecd07c"
+    }
+  },
+  "lane": {
+    "socket_lane": {
+      "aligned_cell_age_s": "",
+      "aligned_to": "no_gapbs_batch_running",
+      "command": [
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=60",
+        "1920",
+        "bash",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/run.sh"
+      ],
+      "cpus_allowed_list": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63",
+      "ended_utc": "",
+      "exit_code": -1,
+      "host": "mbit10",
+      "job": "probata-reviewed-2033c174-t36-facts-v3",
+      "lease_generation": 608,
+      "lease_name": "mbit10-evaluation-node1",
+      "load1_at_start": 0.3,
+      "load1_max": 32,
+      "node": 1,
+      "numa_memory_policy": "bind:1",
+      "numactl": "--cpunodebind=1 --membind=1",
+      "preregistration_sha256": null,
+      "started_utc": "2026-10-16T01:58:58Z"
+    }
+  },
+  "launch": {
+    "command": [
+      "/data1/yanruj/venvs/swdb-test/bin/python",
+      "-c",
+      "\"\"\"2026-10-15 ET. In-profile collection gate and project-context fingerprint.\n\nThis exact source is embedded in a reviewed command JSON, under the existing\nsocket lane and resource watchdogs. It does not grant verifier admission.\n\"\"\"\nimport contextlib,json,os,pathlib,sys\nimport pytest\n\nproject=pathlib.Path(sys.argv[1]).resolve()\noutput=pathlib.Path(sys.argv[2]).resolve()\nexpected=int(sys.argv[3])\ncommand=sys.argv[4:]\nassert command[1:3]==['-m','pytest']\nos.chdir(project)\nclass Count:\n    selected=None\n    @pytest.hookimpl(trylast=True)\n    def pytest_collection_finish(self,session):\n        self.selected=len(session.items)\ncount=Count()\nargs=[x for x in command[3:] if not x.startswith('--junitxml=')]\nwith (output/'collection.log').open('x') as log:\n    with contextlib.redirect_stdout(log),contextlib.redirect_stderr(log):\n        result=int(pytest.main(['--collect-only',*args],plugins=[count]))\n(output/'collection.json').write_text(json.dumps({'cwd':str(project),'expected':expected,'selected':count.selected,'exit_code':result},indent=2)+'\\n')\nif result or count.selected!=expected:\n    raise SystemExit(4)\nfrom swdb import c_lowering,stdlib_provenance\ntool=c_lowering.locate()\nruntime={'cwd':str(project),'lowering_identity':c_lowering.identity(),\n         'runtime':stdlib_provenance.runtime_identity(tool),\n         'scope':'Project-context snapshot; bootstrap snapshot has monorepo cwd. Variant stand-in/optional-parser fixtures retain their own exact method and record contexts.'}\n(output/'project-runtime-provenance.json').write_text(json.dumps(runtime,indent=2,sort_keys=True)+'\\n')\nos.execv(command[0],command)\n",
+      "/data1/yanruj/probata-reviewed-2033c174/swdb-project",
+      "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3",
+      "13",
+      "/data1/yanruj/venvs/swdb-test/bin/python",
+      "-m",
+      "pytest",
+      "/data1/yanruj/probata-reviewed-2033c174/swdb-project/tests/test_proof_setup.py::test_real_wp_facts_read_fresh_goals_and_premises",
+      "-q",
+      "--tb=short",
+      "--maxfail=1",
+      "--basetemp=/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest",
+      "--junitxml=/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/junit.xml",
+      "-o",
+      "cache_dir=/data/yanruj/EvolveSWDB_runs/probata-reviewed-2033c174-t36-facts-v3/pytest-cache"
+    ],
+    "created_utc": "2026-10-16T01:58:58.154094+00:00",
+    "log_name": "acceptance.log",
+    "node": 1,
+    "planned_raw_budget_bytes": 8589934592,
+    "raw_budget_enforcement": "coordinator monitors; not a filesystem quota",
+    "readers": [
+      "root",
+      "ticket36",
+      "merger",
+      "independent reviewer"
+    ],
+    "reviewed_wrapper_reuse": {
+      "execute.py": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612",
+      "watch.py": "4485ae66aa50c65f2b579f84836576aa67b54431978da71cac6eea6a68ecd07c"
+    },
+    "rss_cap_bytes": 8589934592,
+    "rss_scope": "outer watchdog covers worker bootstrap, compiler provenance probes, inner monitor and proof process tree; trusted outer monitor excluded",
+    "source": "/data1/yanruj/probata-reviewed-2033c174",
+    "source_commit": "2033c1746eeab02b1d59d4d910a4e31b3e726da8",
+    "timeout_seconds": 1800,
+    "workers": 1
+  },
+  "launcher": {
+    "path": "/private/tmp/probata-launch-reviewed-profile-v3.py",
+    "sha256": "e3992bcd0fc508963b6535bea42ab63629f5ce83ac8bb6402ccf1589536e1457"
+  },
+  "module_physical_and_git_checks": 197,
+  "reviewed_source_changes": {
+    "content": {
+      "baseline": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+      "date_et": "2026-10-15",
+      "files_after": {
+        "swdb-project/swdb/proof_setup.py": "027bfec85fa6a5f10699ced20956b9ac76d7787cdb0e3033c68f9a673e47df2a",
+        "swdb-project/swdb/stdlib_provenance.py": "4a7ca7d9b05a992e8172125fcbbfd175bb7ade2aec47cfb349126c9739b6e8e4"
+      },
+      "readers": [
+        "root",
+        "ticket36",
+        "merger",
+        "independent reviewer"
+      ],
+      "review_evidence": {
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t36-runtime-independent-review-20261015.md",
+        "sha256": "094d04f2ae4d41679f5381ac157d76d937c34c816cc2963b2aef1d78115d0af0"
+      },
+      "scope": "Reviewed ticket36 compiler/runtime identity repair; candidate admission only. No ticket closure or historical record upgrade.",
+      "source_commit": "2033c1746eeab02b1d59d4d910a4e31b3e726da8"
+    },
+    "path": "/private/tmp/probata-t36-source-change-review-2033c174-20261015.json",
+    "sha256": "503b7f5dde2280b51d98d5871156fc5a7d9209f5896345471afd769e67d7eedf"
+  },
+  "runtime": {
+    "lowering_identity": {
+      "c_lowering": {
+        "id": "swdb-c-lowering-9",
+        "sha256": "aafb4ab764149079a3b7497c161f30e0e89c2cb5c2603c6657caffb495051af2"
+      },
+      "clang": {
+        "id": "clang-22.1.8",
+        "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+      },
+      "naming_rules": {
+        "id": "kept-names.3",
+        "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+      }
+    },
+    "runtime": {
+      "check": {
+        "id": "swdb-stdlib-provenance-1",
+        "sha256": "4a7ca7d9b05a992e8172125fcbbfd175bb7ade2aec47cfb349126c9739b6e8e4"
+      },
+      "command": [
+        "clang++"
+      ],
+      "command_executable": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+        "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+      },
+      "driver": {
+        "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang-22",
+        "sha256": "31a40dc31f3c15a47aa119aa148f339bf363d8f61202ddbdacbd3f24b71ba113"
+      },
+      "frontend": [
+        "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang-22",
+        "-cc1",
+        "-triple",
+        "x86_64-unknown-linux-gnu",
+        "-fsyntax-only",
+        "-disable-free",
+        "-clear-ast-before-backend",
+        "-disable-llvm-verifier",
+        "-discard-value-names",
+        "-main-file-name",
+        "-",
+        "-mrelocation-model",
+        "pic",
+        "-pic-level",
+        "2",
+        "-pic-is-pie",
+        "-mframe-pointer=all",
+        "-fmath-errno",
+        "-ffp-contract=on",
+        "-fno-rounding-math",
+        "-mconstructor-aliases",
+        "-funwind-tables=2",
+        "-target-cpu",
+        "x86-64",
+        "-tune-cpu",
+        "generic",
+        "-debugger-tuning=gdb",
+        "-fdebug-compilation-dir=/data1/yanruj/probata-reviewed-2033c174",
+        "-fcoverage-compilation-dir=/data1/yanruj/probata-reviewed-2033c174",
+        "-resource-dir",
+        "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22",
+        "-internal-isystem",
+        "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/../include/x86_64-unknown-linux-gnu/c++/v1",
+        "-internal-isystem",
+        "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/../include/c++/v1",
+        "-internal-isystem",
+        "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/include",
+        "-internal-isystem",
+        "/usr/local/include",
+        "-internal-isystem",
+        "/usr/lib/gcc/x86_64-linux-gnu/13/../../../../x86_64-linux-gnu/include",
+        "-internal-externc-isystem",
+        "/usr/include/x86_64-linux-gnu",
+        "-internal-externc-isystem",
+        "/include",
+        "-internal-externc-isystem",
+        "/usr/include",
+        "-fdeprecated-macro",
+        "-ferror-limit",
+        "19",
+        "-fgnuc-version=4.2.1",
+        "-fskip-odr-check-in-gmf",
+        "-fcxx-exceptions",
+        "-fexceptions",
+        "-faddrsig",
+        "-fdwarf2-cfi-asm",
+        "-x",
+        "c++",
+        "-"
+      ],
+      "headers": {
+        "files": 1983,
+        "id": "llvm-standard-resource-headers",
+        "sha256": "d37aec646b1e6e1748d40690c60436f905f55852ee578e79c43a3199c4a16e23"
+      },
+      "parser": {
+        "id": "libclang-22.1.8",
+        "sha256": "8b03ee2c60f0699651869fea5135cb5a144777a10c6e4b9b7835283ac9ca3f7d"
+      }
+    },
+    "tool": {
+      "command": [
+        "clang++"
+      ],
+      "missing": "",
+      "version": "22.1.8"
+    }
+  },
+  "source_branch": "HEAD",
+  "source_commit": "2033c1746eeab02b1d59d4d910a4e31b3e726da8",
+  "tracked_changes": ""
+}

@@ -4,7 +4,7 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 21:57 ET. **Implementation is active under the user's ongoing approval.**
+Updated: 2026-10-15 22:11 ET. **Implementation is active under the user's ongoing approval.**
 Integration `codex/probata-resume-20261015` is based on `yanrujhou_main` at `d94d629b`.
 The lowerer file SHA256 remains
 `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
@@ -19,11 +19,22 @@ Drafts 1/2 remain immutable. No draft 3 or final production freeze exists.
 
 | Ticket / owner | Verified checkpoint | Active work |
 |---|---|---|
-| 24 + 27 / resolved | Published `29709232` and `af10a946`. Ticket24: 36 actual records + nine no-launch refusals, all eleven scoped items; ticket27: 62 cases / 52 records, safe11 has 792 ordinary + 252 smoke Valid. Both independently reviewed. | Raw/producers/history and scientific limits retained. Both evaluation lanes are free. [24 closure](evidence/t24-combined-current-independent-review-20261015.md), [27 review](evidence/t27-ticket-closure-independent-review-20261015.md). |
-| 07 / `ticket07` | Run25 remains UNPROVEN. Narrow guard repair integrated `7a66d146`, 37 controls pass. Component3 independently matches15 exact goal IDs and5 nontrivial contextual tasks; no proof claim. | Freshness gaps have public RED/GREEN controls; exact final review/package pending. No new counted admission. Frozen798/34 source pins/raw preserved; Mac actual slot free. |
+| 24 + 27 / resolved | Published `29709232` and `af10a946`. Ticket24: 36 actual records + nine no-launch refusals, all eleven scoped items; ticket27: 62 cases / 52 records, safe11 has 792 ordinary + 252 smoke Valid. Both independently reviewed. | Raw/producers/history and scientific limits retained. Their completed lanes have been reused for ticket36. [24 closure](evidence/t24-combined-current-independent-review-20261015.md), [27 review](evidence/t27-ticket-closure-independent-review-20261015.md). |
+| 07 / `ticket07` | Run25 remains UNPROVEN. Narrow guard repair integrated `7a66d146`, 37 controls pass. Component3 independently matches15 exact goal IDs and5 nontrivial contextual tasks; no proof claim. | METHOD23 final independent review and264+26 controls published atf439edf0. Fresh run26 metadata preflight passes with42 source/tool pins and80GiB free; actual counted admission pending. Historical798/run25 retained; Mac actual slot reserved07. |
 | 25 / `ticket24` | Claimed at `e3e91b8e`; own worktree `/private/tmp/probata-resume-t25`. Prior bounded maximum/stale/at controls retain their own pins. | TDD for original count-value/dtor source-to-VC capability using immutable unbounded heap definitions; no formal execution admitted yet. |
-| 28 / `ticket27` | Ticket27 gate released. Complete upstream header inventory verified: 26 names / 27 declarations; old0.1 remains preserved. | New own worktree/TDD; complete per-call semantics and synthetic controls, with verified opcode/type/width limits and explicit trust. No actual admission yet. |
-| 36 / `ticket36` | Runtime repair published `465fd069`,13 compiler/stand-in controls pass. Earlier126 batch included real Frama parsing; later affected batch stopped with -15 and no full pass. | First setup581/facts607 dispatches exited4 before collection because of relative nodes. Exact source2033/runtime/raws retained. Corrected explicit project cwd plus collection-count/runtime precheck under review; no fresh test acceptance. |
+| 28 / `ticket27` | Ticket27 gate released. Complete upstream header inventory verified: 26 names / 27 declarations; old0.1 remains preserved. | Prerequisite inventory/ABI repairs published atf439edf0 after independent review;28 composed controls pass. Complete per-call/history semantics and exact trust-rule recording continue; no0.2 selection or actual admission. |
+| 36 / `ticket36` | Runtime repair published `465fd069`,13 compiler/stand-in controls pass. Earlier126 batch included real Frama parsing; later affected batch stopped with -15 and no full pass. | Corrected facts13 completed2033/G608, cold audit pending. Production5 stopped after two WP passes and a proven scalar record (4 ordinary/0 generated smoke); erroneous nonempty-smoke test assertion retained. Bounded2 not reached. Setup129 active74edef/G583 with197 admission checks passing; separate bounded continuation pending. |
+
+Current admission receipts: [facts13](evidence/reviewed-t36-facts-v3-launch-2033c174-20261015.json),
+[production5](evidence/reviewed-t36-production-v3-launch-2033c174-20261015.json),
+[setup129](evidence/reviewed-t36-setup129-v3-launch-74edefd0-20261015.json).
+Each confirms197 physical/Git module checks and its own exact source/runtime/lane;
+admission does not establish proof acceptance. The corrected entry checks selected
+count and captures project-context runtime under the existing lane/RSS/time guards.
+Bootstrap monorepo-context and actual project-context frontend identities remain
+separate, without normalizing away cwd-sensitive flags.
+[Entry review](evidence/t36-profile-entry-independent-review-20261015.md),
+[run26 prospective metadata](evidence/t07-run26-prospective-manifest-20261015.json).
 
 At17:43:14 ET node0 generation572 released after the standard caller safe timeout;
 whole guard exit1,1805.69s,peak1,010,438,144B,noOOM/whole timeout. Its five standard

@@ -867,3 +867,28 @@ Both guarded commands explicitly disable Frama-C and use worker B. No actual
 solver or producer is touched. Setup now expects129 selected controls; root's
 admitted collection gate must confirm the count. Exact evidence is retained in
 `evidence/t36-bare-compiler-command-20261015.json`.
+
+### Fresh reader and production WP acceptance checkpoint — 2026-10-15 ET
+
+Root admitted exact2033 profiles with project-context collection gates. All13
+reader cases pass; cold replay verifies13unique cases,40artifact references and
+126physical files with0errors. The records retain two proven results, eight
+not_proven results and three unexpected-Extern refusals. Hidden/untried goals,
+call-site/termination failures, vacuity and poisoned-cache controls keep their
+actual outcomes.
+
+Production collected5 cases and stopped after the first3: two passed, one failed.
+Safe fill is proven (20ordinary/3smoke;5RTE/3initialization); the seeded bug is
+not_proven/timeout (21ordinary/3smoke;6RTE/3initialization). The actual optional-
+parser scalar record is proven with4Valid ordinary goals and0generated smoke
+goals. Its unconditional identity contract has no requires; the original command
+retains -wp-smoke-tests. The test incorrectly demanded a nonempty smoke list.
+The narrow correction requires ordinary goals, all generated goals Valid and the
+smoke-generation flag. This is a test-only assertion replay, with original failed
+pytest and actual record retained unchanged; no WP rerun solely for that assertion.
+Cold production replay verifies34artifact references/94physical files with0errors.
+
+See [compact closure](../evidence/t36-facts-production-cold-20261015.json).
+Setup129 and the two bounded continuation cases remain pending; this is not
+ticket closure. Source2033/checker b493 records are never upgraded to later
+checker identities by this evidence.

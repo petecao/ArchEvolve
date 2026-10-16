@@ -1,6 +1,6 @@
 # Current Probata ticket status
 
-Updated: 2026-10-15 21:19 ET.
+Updated: 2026-10-15 22:11 ET.
 
 34 resolved / 25 ready-for-agent / 4 claimed. Active frontier: **07, 25, 28, 36**.
 Derived from authoritative ticket frontmatter; unresolved dependencies still gate later work.

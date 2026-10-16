@@ -5,7 +5,7 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-re
 
 ## Current state (resume here)
 
-Updated: 2026-10-15 21:57 ET. **Active: 34 resolved / 25 ready-for-agent / 4 claimed.**
+Updated: 2026-10-15 22:11 ET. **Active: 34 resolved / 25 ready-for-agent / 4 claimed.**
 Integration: `codex/probata-resume-20261015`; audited run 23 is published at
 `6dc94905`; method21 prototype merged at `14c2a298`. Remote actual jobs retain
 exact `0e7f2327` and `23933f8a` source freezes; production lowerer SHA256
@@ -40,7 +40,10 @@ retain their historical runtime rather than becoming current by merge.
   Independent poststop scans pass; the Mac slot is free. Frozen `798e9bb3` and
   all 34 source pins remain unchanged. Closeout is published at `07e9c08f`.
   Narrow guard repair is integrated at `7a66d146` (37 controls); machine-ID task
-  reader and same-run baseline optimization remain under final review. Component3
+  reader and same-run baseline optimization are independently reviewed and published
+  in `f439edf0` (264 composed plus26 affected controls). Fresh run26 metadata
+  preflight pins42 source files/tools,80GiB free and both Mac leases absent; actual
+  counted admission is pending. Component3
   independently matches15 task IDs/5 contextual tasks; no proof claim or counted admission.
   Earlier run24 remains unproven; its censored posthoc replay is not upgraded.
   [Run25 closeout](evidence/t07-counted-run25-20261015.json),
@@ -50,9 +53,17 @@ retain their historical runtime rather than becoming current by merge.
   proceed in separate own worktrees after27. The verified interface has26 names /
   27 declarations. Runtime candidate2033/465fd069 has13 compiler/stand-in controls;
   prior126 also used real parsing, and the later affected batch stopped-15.
-  First remote setup/facts dispatches collected no tests due to cwd; corrected
-  command/count/context preflight is pending. Fresh actual acceptance remains
-  required. Drafts1/2, final freeze59 and held-out gates remain.
+  Initial remote setup/facts dispatches collected no tests due to cwd; corrected
+  project cwd/count/runtime entry is independently reviewed. Facts13 naturally
+  completed at2033/node1 generation608; full artifact acceptance is under cold audit.
+  Production5 stopped after two WP cases and an actual proven optional-parser scalar
+  record: the scalar test incorrectly required nonempty smoke; its four ordinary
+  goals are Valid and zero smoke were generated. No bounded case was reached.
+  The failure is preserved; a test-only correction and separate bounded continuation
+  are pending. Setup129 is active at74edef/node0 generation583, with197 source/runtime
+  checks passing. Drafts1/2, final freeze59 and held-out gates remain.
+  Ticket28 prerequisite inventory/ABI repairs are independently reviewed and published
+  atf439edf0; old0.1 is unchanged. Per-call/history semantics remain in progress.
 
 Node 0 generation 572 released after the caller timeout at 17:43:14 ET.
 Node0 generation573 capacity profile released at17:53:38 ET after its first failure.
