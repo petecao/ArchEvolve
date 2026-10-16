@@ -217,3 +217,41 @@ view before launch. A source registry alone grants no waiver. Generic modeled fi
 standalone domain-qualified model jobs, additional allocation sites and wider member protocols
 remain refused. Current prelaunch fault controls exercise public proof records; they do not supply
 real-WP acceptance for the combined origin method.
+
+### Original-model heap proof view (2026-10-16 ET)
+
+The exact int count/value constructor and destructor have a separately checked
+unbounded heap VC translation. Their original C bodies, contracts and model
+version remain unchanged. The accepted first-pair capability experiment is
+distinct from the prospective public `swdb prove --model` integration; no
+prototype result is loaded as a model proof record.
+
+The public view reconstructs the original source/event/clause/RTE/init/frame/
+lifetime map and selects every positive obligation associated with that member
+(27 for construction, 11 for destruction). Each input contains one isolated
+`check lemma`, or the complete arithmetic/layout C kernel. WP uses its default
+complete property selection: there is no property selector or warning-policy
+exception. Every target must pass the ordinary fresh generated-goal reader;
+global targets must be owned by their sole mapped lemma with no imported project
+dependency. The numeric kernel retains all ordinary and smoke obligations and
+its separately discharged local assertion dependencies. Timeout, missing goals,
+unclassified reports or a failed smoke cannot establish a model proof.
+
+`heap_model_view_check` pins the translator, checker, heap definitions and linked
+metadata helper. `heap_model_view_certificate` pins the original-source mapping
+and complete selected target inventory. `heap_model_foundations` pins the exact
+standard Why3 and Frama-C Qed/Cint support sources. A metadata-only native helper
+reads the actual Why3 load path; it must be the selected switch's standard
+library. The Frama-C share path must match the reader's WP package, foreign
+shadow roots are refused, and source/configuration bindings are rechecked before
+each launch. No project desired theorem is imported as an axiom.
+
+All targets share the remaining public wall budget and the process-tree RSS
+watchdog. Each has a fresh report set, and the record retains its command,
+resources and complete reports. No caller premise is added: incoming heaps are
+arbitrary, allocation identities are unbounded, old allocations and escaped
+aliases persist, and receiver/buffer overlap remains in the destructor domain.
+Successful allocation is an explicit constructor assumption; the destructor
+does not acquire that assumption. Generic caller composition, other members or
+element types, byte/partial-store semantics, source hints and build defines are
+outside this exact view. Public actual-proof acceptance is still pending.
