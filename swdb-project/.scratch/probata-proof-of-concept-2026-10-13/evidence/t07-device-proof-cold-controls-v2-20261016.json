@@ -1,0 +1,200 @@
+{
+  "date_ET": "2026-10-16",
+  "scope": "2026-10-16 ET: compiler-free provenance API controls, never reader/entry main.\nSeams explicitly authorized by root: receipt/module/output/attempt/journal validators.\nOld RED observations use exact AST-extracted V1 boundary statements only.\n",
+  "observations": [
+    {
+      "name": "R1 genuine old hash-only boundary accepts unrelated correctly hashed settlement",
+      "passed": true
+    },
+    {
+      "name": "R1 repaired receipt validator refuses unrelated object",
+      "passed": true
+    },
+    {
+      "name": "actual timeout/source-clean/recovered-events/lease handoff classified without promotion",
+      "passed": true
+    },
+    {
+      "name": "R1 rejects launcher",
+      "passed": true
+    },
+    {
+      "name": "R1 rejects raw path",
+      "passed": true
+    },
+    {
+      "name": "R1 rejects embedded guard",
+      "passed": true
+    },
+    {
+      "name": "R1 rejects embedded producer",
+      "passed": true
+    },
+    {
+      "name": "R1 rejects missing sweeps",
+      "passed": true
+    },
+    {
+      "name": "R1 rejects unknown lease",
+      "passed": true
+    },
+    {
+      "name": "R1 rejects preflight command drift",
+      "passed": true
+    },
+    {
+      "name": "R1 rejects consistently supplied foreign guard command",
+      "passed": true
+    },
+    {
+      "name": "R1 dirty actual source stays explicit unhealthy",
+      "passed": true
+    },
+    {
+      "name": "R1 actual finite denial stays explicit unhealthy",
+      "passed": true
+    },
+    {
+      "name": "R1 final inspection failure stays unhealthy",
+      "passed": true
+    },
+    {
+      "name": "R2 source-copy API accepts exact three tiny frozen sources",
+      "passed": true
+    },
+    {
+      "name": "R2 genuine old gate accepts proof_report mutation",
+      "passed": true
+    },
+    {
+      "name": "R2 repaired verifier refuses proof_report mutation",
+      "passed": true
+    },
+    {
+      "name": "R2 genuine old gate accepts helper_backend_bindings mutation",
+      "passed": true
+    },
+    {
+      "name": "R2 repaired verifier refuses helper_backend_bindings mutation",
+      "passed": true
+    },
+    {
+      "name": "R2 missing copy remains unqualified",
+      "passed": true
+    },
+    {
+      "name": "R2 actual report/observer/journal copies and compile records match",
+      "passed": true
+    },
+    {
+      "name": "R3 genuine old scope boundary accepts child of preserved raw",
+      "passed": true
+    },
+    {
+      "name": "R3 rejects retained child",
+      "passed": true
+    },
+    {
+      "name": "R3 rejects source child",
+      "passed": true
+    },
+    {
+      "name": "R3 rejects current root",
+      "passed": true
+    },
+    {
+      "name": "R3 rejects runtime child",
+      "passed": true
+    },
+    {
+      "name": "R3 rejects retained ancestor",
+      "passed": true
+    },
+    {
+      "name": "R3 no protected output created",
+      "passed": true
+    },
+    {
+      "name": "R3 disjoint fresh child admitted without creation",
+      "passed": true
+    },
+    {
+      "name": "R4 genuine old directory boundary labels unused prepared directory executed",
+      "passed": true
+    },
+    {
+      "name": "R4 prepared directory is separate from proof attempt",
+      "passed": true
+    },
+    {
+      "name": "R4 wrong current command rejected",
+      "passed": true
+    },
+    {
+      "name": "R4 missing current journal rejected regardless prior case",
+      "passed": true
+    },
+    {
+      "name": "R4 current complete journal admitted",
+      "passed": true
+    },
+    {
+      "name": "R4 each actual case resets journal and partial journal before use",
+      "passed": true
+    },
+    {
+      "name": "partial identity drift preserved without alias or proof acceptance",
+      "passed": true
+    },
+    {
+      "name": "partial extra actual goal retained and unattributed",
+      "passed": true
+    },
+    {
+      "name": "partial removed callback retained but not latest-live",
+      "passed": true
+    },
+    {
+      "name": "partial clear callback retires latest view",
+      "passed": true
+    },
+    {
+      "name": "partial truncated final JSON disclosed",
+      "passed": true
+    },
+    {
+      "name": "partial non-object record retained as parse error",
+      "passed": true
+    }
+  ],
+  "passed": 41,
+  "old_v1": {
+    "path": "/private/tmp/probata-t07-device-proof-cold-reader-v1-20261016.py",
+    "bytes": 9942,
+    "sha256": "68bcdfa4a9fa03fbf974b298310bfc109ccabf3af16b7024a525d48600bcae69"
+  },
+  "v2": {
+    "path": "/private/tmp/probata-t07-device-proof-cold-reader-v2-20261016.py",
+    "bytes": 14353,
+    "sha256": "40b9ec010491cef0aaa7467bc6f3dc15bc2eb59f9ce3ab0ea760d0ab22fba0e7"
+  },
+  "helpers": {
+    "path": "/private/tmp/probata-t07-device-proof-cold-helpers-v2-20261016.py",
+    "bytes": 16552,
+    "sha256": "744c569a6a2b3d2e2037583c9965aa9c80272450fbde7ffe90d6c2a3670a2a37"
+  },
+  "root_receipt": {
+    "path": "/private/tmp/probata-root-t07-device-diagnostic-proof-execution-v1-20261016.json",
+    "bytes": 16662,
+    "sha256": "1a34280a210040e44a7d2b2f00659a8e69de2f003bffe7330d0f27eb06c9893a"
+  },
+  "guard": {
+    "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-bd2610b6-20261016/guard.log.summary.json",
+    "bytes": 10932,
+    "sha256": "7b348d53544abc769a78c1c280a525bfd7a595643e8701405ac32464e15050df"
+  },
+  "no_reader_or_entry_main": true,
+  "no_project_module_import": true,
+  "no_external_native_compiler_formal": true,
+  "B_or_c6_used": false
+}

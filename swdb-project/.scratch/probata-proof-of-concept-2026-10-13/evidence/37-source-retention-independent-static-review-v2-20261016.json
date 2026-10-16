@@ -1,0 +1,61 @@
+{
+  "artifacts": [
+    {
+      "bytes": 2283,
+      "path": "/private/tmp/probata-37-source-retention-preparation-v2-20261016.json",
+      "sha256": "79ee0189aa1416332182929d5fb7bf506aed7ed120cec840bed97a7ff793c866"
+    },
+    {
+      "bytes": 13734,
+      "path": "/private/tmp/probata-retain-clean-37-source-remote-v2-20261016.py",
+      "sha256": "fd27c0235f9cec328b655b1c02ff2724486c5add97e5e0f8a002f4cbe28a9bdd"
+    },
+    {
+      "bytes": 13734,
+      "path": "/private/tmp/probata-retain-clean-37-source-remote-v1-20261016.py",
+      "sha256": "5bce53ed0a1864dfdfcf96301f9a8d1b38fb6b3f43e94889a7391c6fcf03314f"
+    },
+    {
+      "bytes": 3484048,
+      "path": "/private/tmp/probata-root-grow38-metadata-execution-v1-20261016.json",
+      "sha256": "bf0407baafbab5415a2a78f3df372bec791f685aac13ccd9c74e784413e9480e"
+    },
+    {
+      "bytes": 0,
+      "path": "/private/tmp/probata-37-source-retention-root-v1-20261016.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 193,
+      "path": "/private/tmp/probata-37-source-retention-root-v1-20261016.json.stderr",
+      "sha256": "832b2a7fe76db2d7b01bc4b7b85a6af6cc635cea6d02c5ff4b035d3608091d92"
+    },
+    {
+      "bytes": 1791,
+      "path": "/private/tmp/probata-37-source-retention-independent-static-review-v1-20261016.md",
+      "sha256": "da23e49059089b69212dbc561ea6a9b3a919f2b58167e93f59a3de626249b0e2"
+    }
+  ],
+  "blockers": [],
+  "delta": [
+    "required_raw metadata suffix -v1 to actual -v2 bound to immutable root capturebf0407ba audit_directory.",
+    "Fresh recovery out namespace changes retention-v1 to retention-v2 only."
+  ],
+  "executed": false,
+  "functions_AST_unchanged": 13,
+  "guards": "All reviewed full source Git/mode/physical/object checks, no-lazy-fetch, dedicated ref/full manifests/fsynced restore before no-force removal, all3leasesreleased/six finite source/raw scans/unknown denial refusal, raw and primary preservation unchanged.",
+  "preserved_failure": {
+    "bytes": 0,
+    "root_output": "/private/tmp/probata-37-source-retention-root-v1-20261016.json",
+    "stage": "raw_snapshot before out.mkdir/ref/remove; no mutation",
+    "stderr": {
+      "path": "/private/tmp/probata-37-source-retention-root-v1-20261016.json.stderr",
+      "sha256": "832b2a7fe76db2d7b01bc4b7b85a6af6cc635cea6d02c5ff4b035d3608091d92"
+    }
+  },
+  "reviewer": "/root/merger",
+  "root_execution_precondition": "Fresh source/readers/process/lease/capacity validation mandatory; no remote observation or execution by reviewer.",
+  "scope": "Exact obsolete37 clean detached source only; all matching raw roots remain retained. Current046/6216/3a/primary protected; no proof upgrade or raw/branch/toolchain cleanup.",
+  "source_commit": "37ffe407a10888ff9628c75f37ba770995a3ecd5",
+  "verdict": "PASS_STATIC_TWO_LITERAL_REPAIR"
+}
