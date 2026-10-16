@@ -5,11 +5,13 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-re
 
 ## Current state (resume here)
 
-Updated: 2026-10-15 22:11 ET. **Active: 34 resolved / 25 ready-for-agent / 4 claimed.**
+Updated: 2026-10-15 22:28 ET. **Active: 34 resolved / 25 ready-for-agent / 4 claimed.**
 Integration: `codex/probata-resume-20261015`; audited run 23 is published at
-`6dc94905`; method21 prototype merged at `14c2a298`. Remote actual jobs retain
-exact `0e7f2327` and `23933f8a` source freezes; production lowerer SHA256
-remains `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
+`6dc94905`; method21 prototype merged at `14c2a298`. Historical actual jobs retain their exact `0e7f2327` / `23933f8a` freezes.
+Current lowerer file SHA256 is
+`741e1c24ace7c0fc8e89b56a660b0b155099170bd9d870c46617452de78e126c`
+after the reviewed ticket28 template ABI repair; old actual producers retain
+`0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
 Reviewed runtime/setup candidate2033 is published465fd069; earlier0e7 evaluations
 retain their historical runtime rather than becoming current by merge.
 [Current resume and evidence](resume.md).
@@ -23,8 +25,12 @@ retain their historical runtime rather than becoming current by merge.
 - **25 claimed:** Ticket 24 releases the dependency gate. First slice: original
   count-value constructor/destructor through a source-mapped unbounded heap view,
   with explicit trusted definitions, complete source obligations and dependency
-  closure. Existing bounded controls stay separate. Own worktree/TDD; no new
-  actual verifier admission yet.
+  closure. Clean024db66c capability is published27353c32,42 packets and21 preparation
+  controls independently reviewed. Actual tool/command admission is being prepared
+  for node1, whole9000s/one worker/8GiB. Actualv2 G610 canonical42/tool bindings
+  pass but first parse refuses missingHeap before goal generation; naturalexit1,
+  noOOM/timeout, exact024 retained. Initial-parse library-path repair is in TDD.
+  Existing bounded controls stay separate.
 - **27 resolved:** Published `af10a946` after independent review. All62 cases /
   52 actual records meet their criteria across seven closed profiles:25 proven,
   12 replayed refuted,15 not_proven. Safe11 proves792 ordinary+252 smoke, retaining
@@ -42,8 +48,13 @@ retain their historical runtime rather than becoming current by merge.
   Narrow guard repair is integrated at `7a66d146` (37 controls); machine-ID task
   reader and same-run baseline optimization are independently reviewed and published
   in `f439edf0` (264 composed plus26 affected controls). Fresh run26 metadata
-  preflight pins42 source files/tools,80GiB free and both Mac leases absent; actual
-  counted admission is pending. Component3
+  preflight pins42 source files/tools. Run26 started22:15:49 ET atcleanac6,
+  zero initial hints, with nominal60-minute end23:15:49. Baseline completed6.17min:
+  254 ordinary (151 pass/103 open),139 smoke pass. Same-run155 diagnostic projection
+  retains103 open; provider started22:21:59. Initial source/prompt/argv integrity
+  is checked; ongoing usage remains unknown until natural completed turn.
+  Exact source/tools/environment/OCaml packages and freeleases passed repeated
+  live preflight,53% memory free/80GiB disk. Component3
   independently matches15 task IDs/5 contextual tasks; no proof claim or counted admission.
   Earlier run24 remains unproven; its censored posthoc replay is not upgraded.
   [Run25 closeout](evidence/t07-counted-run25-20261015.json),
@@ -55,15 +66,23 @@ retain their historical runtime rather than becoming current by merge.
   prior126 also used real parsing, and the later affected batch stopped-15.
   Initial remote setup/facts dispatches collected no tests due to cwd; corrected
   project cwd/count/runtime entry is independently reviewed. Facts13 naturally
-  completed at2033/node1 generation608; full artifact acceptance is under cold audit.
+  completed at2033/node1 generation608; cold audit passes40 artifact references /
+  126 files,10 records (2 proven/8 not_proven) plus3 unexpected-Extern refusals.
   Production5 stopped after two WP cases and an actual proven optional-parser scalar
   record: the scalar test incorrectly required nonempty smoke; its four ordinary
   goals are Valid and zero smoke were generated. No bounded case was reached.
-  The failure is preserved; a test-only correction and separate bounded continuation
-  are pending. Setup129 is active at74edef/node0 generation583, with197 source/runtime
-  checks passing. Drafts1/2, final freeze59 and held-out gates remain.
+  The failure is preserved; reviewed test-only correction and cold scalar replay
+  are published2f1ab7ce. Separate bounded2 completed2033/node1 generation609,
+  four records (3 proven/1 replayed refuted),29 references/88 files/zero audit errors.
+  Setup129 at74edef/node0 generation583 passed129 tests/702.19s, noOOM/timeout;
+  lane released22:21:17 (distinct from later observation). Cold audit passes55
+  files/129JUnit nodes. Separate generated-input mutation stand-in control passes
+  with parentFrama disabled; final36 acceptance is independently reviewed and
+  queued for merger. No new actual36 evaluation is needed. Drafts1/2, final freeze59 and held-out gates remain.
   Ticket28 prerequisite inventory/ABI repairs are independently reviewed and published
-  atf439edf0; old0.1 is unchanged. Per-call/history semantics remain in progress.
+  atf439edf0; trust-rule recording and a postvalidation mutation refusal are published
+  27353c32 with13 stand-in controls. Old0.1 is unchanged; typed-instance routing and
+  per-call/history semantics remain in progress.
 
 Node 0 generation 572 released after the caller timeout at 17:43:14 ET.
 Node0 generation573 capacity profile released at17:53:38 ET after its first failure.

@@ -4,10 +4,12 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 22:11 ET. **Implementation is active under the user's ongoing approval.**
+Updated: 2026-10-15 22:28 ET. **Implementation is active under the user's ongoing approval.**
 Integration `codex/probata-resume-20261015` is based on `yanrujhou_main` at `d94d629b`.
-The lowerer file SHA256 remains
-`0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
+The current lowerer file SHA256 is
+`741e1c24ace7c0fc8e89b56a660b0b155099170bd9d870c46617452de78e126c`
+after reviewed28 template ABI repairs. Historical actual source freezes keep their
+own `0e185b...` lowerer; merging does not upgrade their evidence.
 Reviewed setup/compiler-identity candidate `2033c174` is published at `465fd069`;
 its changed production files are `proof_setup.py` and `stdlib_provenance.py`.
 Each evaluation retains its exact source/runtime. Historical `0e7` evidence is
@@ -20,10 +22,10 @@ Drafts 1/2 remain immutable. No draft 3 or final production freeze exists.
 | Ticket / owner | Verified checkpoint | Active work |
 |---|---|---|
 | 24 + 27 / resolved | Published `29709232` and `af10a946`. Ticket24: 36 actual records + nine no-launch refusals, all eleven scoped items; ticket27: 62 cases / 52 records, safe11 has 792 ordinary + 252 smoke Valid. Both independently reviewed. | Raw/producers/history and scientific limits retained. Their completed lanes have been reused for ticket36. [24 closure](evidence/t24-combined-current-independent-review-20261015.md), [27 review](evidence/t27-ticket-closure-independent-review-20261015.md). |
-| 07 / `ticket07` | Run25 remains UNPROVEN. Narrow guard repair integrated `7a66d146`, 37 controls pass. Component3 independently matches15 exact goal IDs and5 nontrivial contextual tasks; no proof claim. | METHOD23 final independent review and264+26 controls published atf439edf0. Fresh run26 metadata preflight passes with42 source/tool pins and80GiB free; actual counted admission pending. Historical798/run25 retained; Mac actual slot reserved07. |
-| 25 / `ticket24` | Claimed at `e3e91b8e`; own worktree `/private/tmp/probata-resume-t25`. Prior bounded maximum/stale/at controls retain their own pins. | TDD for original count-value/dtor source-to-VC capability using immutable unbounded heap definitions; no formal execution admitted yet. |
-| 28 / `ticket27` | Ticket27 gate released. Complete upstream header inventory verified: 26 names / 27 declarations; old0.1 remains preserved. | Prerequisite inventory/ABI repairs published atf439edf0 after independent review;28 composed controls pass. Complete per-call/history semantics and exact trust-rule recording continue; no0.2 selection or actual admission. |
-| 36 / `ticket36` | Runtime repair published `465fd069`,13 compiler/stand-in controls pass. Earlier126 batch included real Frama parsing; later affected batch stopped with -15 and no full pass. | Corrected facts13 completed2033/G608, cold audit pending. Production5 stopped after two WP passes and a proven scalar record (4 ordinary/0 generated smoke); erroneous nonempty-smoke test assertion retained. Bounded2 not reached. Setup129 active74edef/G583 with197 admission checks passing; separate bounded continuation pending. |
+| 07 / `ticket07` | Run25 remains UNPROVEN. Narrow guard repair integrated `7a66d146`, 37 controls pass. Component3 independently matches15 exact goal IDs and5 nontrivial contextual tasks; no proof claim. | METHOD23 final independent review and264+26 controls published atf439edf0. Fresh run26 started22:15:49ET atcleanac6/42 pins after repeated source/tool/environment/OCaml/lease preflight; baseline completed6.17min (254ordinary/103open;139smoke pass), provider started22:21:59; nominal60-minute end23:15:49. Historical798/run25 retained; sole Mac actual slot is07. |
+| 25 / `ticket24` | Claimed at `e3e91b8e`; own worktree `/private/tmp/probata-resume-t25`. Prior bounded maximum/stale/at controls retain their own pins. | Reviewed024db66c first-pair capability published27353c32:42 packets,21 preparation controls. Actualv2 G610 exact024 passed canonical42/tool precheck, then first parse refused missingHeap/no goals; naturalexit1/noOOM/timeout. Initial-parse library-path placement repair in TDD. No body certification/import acceptance. |
+| 28 / `ticket27` | Ticket27 gate released. Complete upstream header inventory verified: 26 names / 27 declarations; old0.1 remains preserved. | Prerequisite inventory/ABI repairs published atf439edf0 after independent review;28 composed controls pass. Trust recording/mutation guard published27353c32 with13 stand-in controls. Typed-instance routing and complete per-call/history semantics continue; no0.2 selection/actual admission. |
+| 36 / `ticket36` | Runtime repair published `465fd069`,13 compiler/stand-in controls pass. Earlier126 batch included real Frama parsing; later affected batch stopped with -15 and no full pass. | Corrected facts13 accepted by cold audit (40refs/126files/0errors). Production3 WP records cold-audit34refs/94files/0errors; scalar4ordinary/0smoke assertion correction published2f1ab7ce, original pytest failure retained. Separate bounded2/G609 passes,4records/29refs/88files/0errors. Setup129 passes129/702.19s; G583 released22:21:17, cold audit55files/129JUnit nodes/0errors. Extra generated-input stand-in control passes; final36 acceptance reviewed, pending merger/graph update. |
 
 Current admission receipts: [facts13](evidence/reviewed-t36-facts-v3-launch-2033c174-20261015.json),
 [production5](evidence/reviewed-t36-production-v3-launch-2033c174-20261015.json),
