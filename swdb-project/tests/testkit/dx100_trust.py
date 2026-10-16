@@ -18,7 +18,7 @@ TRUST = {
 
 
 def run_semantics_fixture(tmp_path, adapter, mark=True, mutate=False, *, source=None, extra_calls=(), source_files=None,
-                          postcondition=None, semantics_transform=None, contract_transform=None, tool_environment=None):
+                          postcondition=None, semantics_transform=None, contract_transform=None, tool_environment=None, method_transform=None):
     """Public fixture; default tools are explicit stand-ins. Root-admitted actual tests supply their environment."""
     from swdb import c_lowering, cbmc_adapter, cbmc_translator
     library = tmp_path / 'library'
@@ -82,6 +82,8 @@ def run_semantics_fixture(tmp_path, adapter, mark=True, mutate=False, *, source=
         method['c_lowering']['naming_rules'] = c_lowering.naming_rules()
         next(row for row in method['lineup'] if row['tool']=='frama-c-wp')['flags'] += [
             '-wp-prover','z3,cvc5,alt-ergo']
+    if method_transform is not None:
+        method_transform(method)
     (methods / (method['id'].removeprefix('method.')+'.yaml')).write_text(yaml.safe_dump(method, sort_keys=False))
     marker = tmp_path / 'must-not-launch-solver'
     mutation = (f'    import yaml\n    path = Path({str(semantics)!r})\n'

@@ -224,3 +224,16 @@ The whole-module rank gate at exact `9704c54b838863dd838d18a20dd0ade1633d5027` c
 The conditional result assumes a fixed trace and a mathematical rank nonnegative on future polls, strictly decreasing whenever not ready. All core assertion/variant/recursive-precondition/postcondition tasks and the acyclic four-post family were independently reviewed; no desired-result axiom or imported unconditional progress theorem is admitted. The family supports every mathematical n>=0, without a finite C-counter bound. It does not prove a device/environment supplies the rank or fairness premise. Separate pure formatting controls/cold audit repair only retained-output interpretation; no rerun or historical exit upgrade. Whole2.423s/147.25MiB, no resource/inspection/child failure; finite settlement limits retained. No MMIO/source-to-trace/public-composition/current0.2/full-ticket claim follows.
 
 Final source-selector freeze `21edecf2d8a06234290e06861b6724dc76dd346e` is published as an ancestor of integration `4bb53cd7`. [Independent review](../evidence/t28-selector-first-vertical-independent-review-20261016.md) accepted the original-main-TU certificate, exact ABI/callee/source pins, partial26-name/27-declaration fixture and refusal boundaries. Wrong-enum acceptance now rejects vacuous_pass and requires all smoke statuses valid (retained RED2/GREEN4 plus2 actual skips). The original68-pass/2-skip compiler/scripted receipt remains historical and unchanged. At this01:49 checkpoint external entry/admission remained pending; root subsequently reports node1G615 exact21ed launched01:51 ET and ended01:52:23 ET with actual guard exit1 before WP invocation: fixture method Z3/Alt-Ergo pins4.8.14/2.6.0 mismatch admitted Linux5.1.0/2.6.4. Source stayed clean and leases released; separate fixture metadata repair is pending. Launcher exit0 and the independent local JSON pretty-printer exit1 remain distinct. No actual selector proof result follows. No production current0.2 acceptance follows. Ticket28 remains claimed with whole-ticket boxes open.
+
+2026-10-16 actual-selector fixture repair checkpoint: after the historical21ed
+pre-WP version mismatch, the fixture now requires an explicit four-tool actual
+lineup from its coordinator, with missing/partial/duplicate/malformed inputs
+refused before fixture work. Only copied method version fields change; all
+production, installed0.1, source/model contracts, mandatory flags and backend
+runtime comparisons remain unchanged. The runner validates before compiler
+bootstrap and persists the map. RED19fail/1pass becomes28pass/2actualSKIP, plus
+three existing public compiler/stand-in regressions. A named exit99 public
+control pins the explicit Linux method versions and remains not_proven/tool_crash.
+No actual proof result or whole-ticket acceptance follows. See
+`evidence/t28-selector-explicit-lineup-controls-20261016.{json,md}`. Root owns a
+fresh reviewed clean-source actual gate; the old raw failure is unchanged.

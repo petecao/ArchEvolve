@@ -34,16 +34,21 @@ printf '%s\n' "${PROBATA_SELECTOR_TESTS[@]}" > "$PROBATA_OUTPUT/selected-tests.t
 "$PROBATA_PYTHON" - "$PROBATA_OUTPUT" <<'PY'
 import hashlib,json,platform,subprocess,sys
 from pathlib import Path
-from swdb import c_lowering,proof_setup,stdlib_provenance
 out=Path(sys.argv[1]);root=Path.cwd()
+# Explicit actual pins must validate before compiler/runtime provenance work.
+sys.path.insert(0,str(root/'tests'))
+from testkit.dx100_selector import read_actual_lineup
+actual_lineup=read_actual_lineup()
+from swdb import c_lowering,proof_setup,stdlib_provenance
 files=subprocess.check_output(['git','ls-files','-z','--','swdb','tests/test_dx100_source_selector.py',
-    'tests/test_dx100_selector_actual.py','tests/testkit/dx100_selector.py','tests/testkit/dx100_trust.py',
+    'tests/test_dx100_selector_actual.py','tests/test_dx100_selector_lineup.py','tests/testkit/dx100_selector.py','tests/testkit/dx100_trust.py',
     'library/proof_semantics','apps/dx100/benchmarks/API'],text=True).split('\0')
 pins=[{'path':p,'sha256':hashlib.sha256((root/p).read_bytes()).hexdigest(),
        'bytes':(root/p).stat().st_size} for p in files if p]
 (out/'source-manifest.json').write_text(json.dumps(pins,indent=2)+'\n')
 (out/'runtime-provenance.json').write_text(json.dumps({'compiler':stdlib_provenance.runtime_identity(c_lowering.locate()),
     'lowering':c_lowering.identity(),'checks':proof_setup.identity(),'platform':platform.platform(),
+    'actual_selector_lineup':actual_lineup,
     'python':sys.version,'python_executable':sys.executable},indent=2)+'\n')
 PY
 set +e
