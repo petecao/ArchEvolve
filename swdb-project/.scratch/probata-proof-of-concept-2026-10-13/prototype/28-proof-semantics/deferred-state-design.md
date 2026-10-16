@@ -63,3 +63,38 @@ The hardware's defined uint32 index-offset wrap must be preserved separately
 from ordinary typed-array correspondence checks, which callers must discharge.
 
 No library0.1 bytes have changed. No new current library version is installed.
+
+## Numeric actions successor — 2026-10-15 ET
+
+The prototype now composes the independently reviewed raw-bit numeric helper
+with deferred nodes. Source dtype/opcode checks apply even to inactive calls;
+arithmetic checks apply only when the selected expression executes. Missing
+runtime policies and arithmetic failures retain their helper status guards.
+All six scalar ADD examples retain their integer/float bit representation.
+This supplies no source ABI certificate or formal IEEE relation.
+
+Command dependencies cover producers at consumer completion, without settling
+their history when the consumer is issued. Store actions wait for captured
+producer values. RMW actions publish old-result nodes once; false conditions
+preserve supplied prior tile payload. Duplicate entries use a conservative
+arbitrary permutation, with old values taken from progressively updated copied
+values, following `IndirectAccess.cc:898-940`. There is no global ascending lane
+order claim. A later wait cannot repeat an effect or rewrite an observed value.
+
+These per-entry logical writes are observational completion effects under the
+full-line no-interference premise. They are not claims that intermediate copied
+buffer values become externally visible memory events. The command layer now
+also rejects unresolved device conflicts on overlapping physical store lines
+across distinct assigned regions. Checked source/F2/physical mapping is still
+needed to establish that an admitted pending read cannot observe an internal
+write sequence. General overlapping packet schedules remain unsupported.
+
+The final successor profile passes36/36 native controls in12.74s at208,879,616B
+peak. Its36 compiler/header/runtime/native receipts rehash without errors;
+seven new genuine RED profiles precede the added slices. See
+[the exact successor receipt](../../evidence/t28-deferred-actions-numeric-controls-20261015.json).
+This supersedes none of the original22-record source pins. Production proof
+paths and library0.1 remain unchanged. Public proof, source mapping, complete
+call/type and tile-image acceptance remain open. Readiness still permits
+unbounded polling: termination needs a separate source/trust-bound progress
+domain; no extra wait or desired-postcondition assumption has been introduced.
