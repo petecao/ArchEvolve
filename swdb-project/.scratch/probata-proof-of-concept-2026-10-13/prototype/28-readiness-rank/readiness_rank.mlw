@@ -1,0 +1,18 @@
+(* 2026-10-16 ET. Inert conditional mathematical progress VC.
+   ready is one fixed observable trace. rank is a prophecy witness only.
+   No device fairness or source-to-trace correspondence is proved here. *)
+module ConditionalReadiness
+  use int.Int
+
+  let rec lemma eventual_ready
+      (ready: int -> bool) (rank: int -> int) (start: int)
+    requires { forall poll: int. start <= poll -> 0 <= rank poll }
+    requires { forall poll: int.
+      start <= poll -> not (ready poll) -> rank (poll + 1) < rank poll }
+    ensures { exists poll: int. start <= poll /\ ready poll }
+    variant { rank start }
+  = if ready start then () else begin
+      assert { 0 <= rank (start + 1) < rank start };
+      eventual_ready ready rank (start + 1)
+    end
+end

@@ -1,0 +1,21 @@
+(* 2026-10-16 ET. Fixed all-false trace admitted without the progress premise.
+   Modules are independent: the expected-invalid goal imports no proved lemma. *)
+module AllFalseCounterexample
+  use int.Int
+
+  let function never_ready (_poll: int) : bool = false
+
+  let lemma all_false_has_no_future_ready (start: int)
+    ensures { not (exists poll: int. start <= poll /\ never_ready poll) }
+  = ()
+end
+
+module AbsentPremiseNegative
+  use int.Int
+
+  let function never_ready (_poll: int) : bool = false
+
+  (* Deliberately false. It must never be accepted as Valid. *)
+  goal eventual_ready_without_progress:
+    forall start: int. exists poll: int. start <= poll /\ never_ready poll
+end
