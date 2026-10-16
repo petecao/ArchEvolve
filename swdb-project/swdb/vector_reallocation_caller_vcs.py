@@ -3,6 +3,45 @@
 The closed AST checker binds declaration/data/return events. These formulas do
 not grant origins or assume any global pointer history/ownership invariant.
 """
+import hashlib
+
+
+def numeric_kernel(candidate, lowered, calls):
+    """Map source conversion/arithmetic without granting its entry premise."""
+    increment = candidate['reserve_request'] == 'count+1'
+    expression = 'n + 1' if increment else 'n'
+    result = '(integer)count + 1' if increment else '(integer)count'
+    source = r'''/* 2026-10-16 ET. Source count conversion and reserve request.
+   The nonnegative signed count is a pending caller-contract discharge, not
+   a fact inferred from its C++ type or from successful native observations. */
+#include <stdint.h>
+#include <stddef.h>
+#include <limits.h>
+_Static_assert(CHAR_BIT == 8 && INT_MAX == 2147483647 &&
+               INT_MIN == (-2147483647-1), "mapped signed count representation");
+_Static_assert(SIZE_MAX == 18446744073709551615ULL, "mapped size_t representation");
+/*@ requires 0 <= count;
+    assigns \nothing;
+    ensures (integer)\result == ''' + result + r''';
+    ensures \result <= 4611686018427387903;
+*/
+size_t t25v3_caller_request(int count) {
+  size_t n = (size_t)count;
+  /*@ assert constructor_count_exact: n == (integer)count; */
+  /*@ assert constructor_max_size: n <= 4611686018427387903; */
+  size_t requested = ''' + expression + r''';
+  /*@ assert request_exact: requested == ''' + result + r'''; */
+  /*@ assert reserve_max_size: requested <= 4611686018427387903; */
+  return requested;
+}
+'''
+    return {'id':'caller.count.numeric','kind':'c_kernel','status':'pending','dependencies':[],
+            'source_request':candidate['reserve_request'], 'source':calls['reserve'],
+            'lowered_events':[lowered['constructor'],lowered['reserve']],
+            'parameter_mapping':{'count':candidate['count']},
+            'caller_entry_discharge':'pending: existing caller contract must imply 0 <= ' + candidate['count']['name'],
+            'c_source':source,'sha256':hashlib.sha256(source.encode()).hexdigest(),
+            'proof_status':'unexecuted arithmetic target; no caller premise or proof is granted'}
 
 
 def prepare(candidate):
@@ -55,6 +94,7 @@ def prepare(candidate):
                   'dtor':['destructor','return scalar','automatic lifetime end'],
                   'data':['data capture'],'read':['guarded scalar capture']}
     return {'preparation_only':True, 'caller_premises_added':[], 'incoming_pointer_maps_restricted':False,
+            'numeric_kernel':numeric_kernel(candidate,lowered,calls),
             'pointer_history_scope':'only source-created local storage and the explicit data capture; no global map premise',
             'source_binding':'closed source AST and exact lowered declaration/scalar-capture/destructor/return order; semantic lifetime proof remains pending',
             'obligations':[{'id':name,'source_groups':groups,'source':sources[event],

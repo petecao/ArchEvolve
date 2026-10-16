@@ -179,7 +179,8 @@ def certify(node, *, source, text, defines, models, provenance):
         if observation == 'current buffer':
             calls.append(('operator_index', observed))
         calls.append(('dtor', node))
-        base.update(verdict='pending', receiver={'name': receiver['name'], 'storage': 'automatic local object',
+        base.update(verdict='pending', count={'name':count['name'],'type':'int','source':span(count,source)},
+                    receiver={'name': receiver['name'], 'storage': 'automatic local object',
                     'source': span(statements[0], source)}, alias={'name': alias['name'], 'source': span(statements[1], source)},
                     reserve_request=request, observation=observation, guard='count>0',
                     entry_obligations=[{'property': '0 <= ' + count['name'], 'status': 'pending'}],
