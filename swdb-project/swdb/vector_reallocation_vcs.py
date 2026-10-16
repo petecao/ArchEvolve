@@ -289,6 +289,178 @@ def projection_parts(statement):
         'reference_role':'original logical target only; never imported or launched as a proved result'}
 
 
+def _logic_tokens(text):
+    """Closed ACSL expression vocabulary; never skip an unknown character."""
+    pattern = re.compile(r'\s+|\\forall|[A-Za-z_]\w*(?:::[A-Za-z_]\w*)*|[0-9]+|<==>|==>|&&|\|\||==|!=|<=|>=|[(),;!<>+*\-/]')
+    tokens, offset = [], 0
+    while offset < len(text):
+        match = pattern.match(text, offset)
+        if match is None:
+            raise ValueError('unsupported conjunction expression token')
+        if not match[0].isspace():
+            tokens.append((match[0], match.start(), match.end()))
+        offset = match.end()
+    return tokens
+
+
+def _top_parts(text, separator):
+    tokens = _logic_tokens(text)
+    depth, begin, parts = 0, 0, []
+    for token, start, end in tokens:
+        if token == '(':
+            depth += 1
+        elif token == ')':
+            depth -= 1
+            if depth < 0:
+                raise ValueError('unbalanced conjunction expression')
+        elif depth == 0:
+            if token == separator:
+                parts.append(text[begin:start].strip())
+                begin = end
+            elif separator == '&&' and token in {'||', '==>', '<==>', r'\forall', ';'}:
+                raise ValueError('conjunction has an unparenthesized lower-precedence operator or binder')
+    if depth:
+        raise ValueError('unbalanced conjunction expression')
+    parts.append(text[begin:].strip())
+    if any(not part for part in parts):
+        raise ValueError('empty conjunction expression component')
+    return parts
+
+
+def predicate_conjuncts(definition, arguments):
+    """Instantiate a closed predicate's top-level AND, refusing binder capture.
+
+    This is a deliberately small source transformation, not an ACSL parser.
+    Arguments are atoms or function applications; unsupported terms/scopes fail
+    closed. Simultaneous token replacement cannot rewrite a callee or a newly
+    inserted argument, and every nested bound name must be fresh in all args.
+    """
+    header = re.fullmatch(r'predicate ([A-Za-z_]\w*)\((.*?)\)\s*=\s*(.*);', definition, re.S)
+    if header is None:
+        raise ValueError('one complete predicate definition required')
+    formals = []
+    for formal in header[2].split(','):
+        match = re.fullmatch(r'\s*(?:integer|Heap::heap)\s+([A-Za-z_]\w*)\s*', formal)
+        if match is None or match[1] in formals or match[1] in {'integer', 'predicate', 'logic'}:
+            raise ValueError('unsupported or duplicate predicate formal')
+        formals.append(match[1])
+    if len(formals) != len(arguments):
+        raise ValueError('predicate substitution arity differs')
+    def term(text):
+        tokens = [row[0] for row in _logic_tokens(text)]
+        def consume(index):
+            if index >= len(tokens) or not re.fullmatch(r'[A-Za-z_]\w*(?:::[A-Za-z_]\w*)*|[0-9]+', tokens[index]):
+                raise ValueError('substitution requires an atomic term or function application')
+            index += 1
+            if index < len(tokens) and tokens[index] == '(':
+                if tokens[index-1].isdigit():
+                    raise ValueError('a numeric atom cannot be a substitution callee')
+                index += 1
+                if index < len(tokens) and tokens[index] != ')':
+                    index = consume(index)
+                    while index < len(tokens) and tokens[index] == ',':
+                        index = consume(index+1)
+                if index >= len(tokens) or tokens[index] != ')':
+                    raise ValueError('malformed substitution function application')
+                index += 1
+            return index
+        if not tokens or consume(0) != len(tokens):
+            raise ValueError('unsupported substitution term')
+        return {token for token in tokens if re.fullmatch(r'[A-Za-z_]\w*', token)}
+    argument_names = set().union(*(term(arg) for arg in arguments))
+    body = header[3]
+    conjuncts = _top_parts(body, '&&')
+    tokens = _logic_tokens(body)
+    bound, scopes, declarations = set(), [], set()
+    for index, (token, _start, _end) in enumerate(tokens):
+        if token != r'\forall':
+            continue
+        if index == 0 or tokens[index-1][0] != '(':
+            raise ValueError('nested predicate binders require an explicit enclosing scope')
+        tail = [row[0] for row in tokens[index+1:]]
+        if not tail or tail[0] != 'integer' or ';' not in tail:
+            raise ValueError('unsupported nested predicate binder')
+        names = tail[1:tail.index(';')]
+        if not names or any(not re.fullmatch(r'[A-Za-z_]\w*', value) if i % 2 == 0 else value != ','
+                            for i, value in enumerate(names)) or len(names) % 2 == 0:
+            raise ValueError('malformed nested predicate binder')
+        variables = names[::2]
+        if len(set(variables)) != len(variables) or set(variables) & (bound | set(formals) | argument_names | {'integer', 'predicate', 'logic'}):
+            raise ValueError('predicate substitution would shadow or capture a bound name')
+        bound.update(variables)
+        semicolon = index+1+tail.index(';')
+        depth, close = 1, index
+        while depth:
+            close += 1
+            if close >= len(tokens):
+                raise ValueError('unterminated predicate binder scope')
+            depth += (tokens[close][0] == '(') - (tokens[close][0] == ')')
+        declarations.update(range(index+1, semicolon+1))
+        scopes.append((semicolon, close, set(variables)))
+    for index, (token, _start, _end) in enumerate(tokens):
+        if index in declarations:
+            continue
+        if token == ';':
+            raise ValueError('predicate contains an unsupported clause separator')
+        if not re.fullmatch(r'[A-Za-z_]\w*(?:::[A-Za-z_]\w*)*', token):
+            continue
+        callee = index+1 < len(tokens) and tokens[index+1][0] == '('
+        if callee and token in set(formals) | bound:
+            raise ValueError('predicate variables cannot be function symbols')
+        active = set().union(*(names for start, end, names in scopes if start < index < end))
+        if not callee and token not in set(formals) | active:
+            raise ValueError('unbound symbol in predicate conjunction')
+    mapping = dict(zip(formals, arguments, strict=True))
+    def substitute(expression):
+        result, begin = [], 0
+        for token, start, end in _logic_tokens(expression):
+            result.extend((expression[begin:start], mapping.get(token, token)))
+            begin = end
+        result.append(expression[begin:])
+        return ''.join(result)
+    return [substitute(part) for part in conjuncts], {
+        'predicate': header[1], 'formal_parameters': formals,
+        'definition_conjuncts': conjuncts, 'definition_substitution': mapping,
+        'nested_bound_variables': sorted(bound), 'capture_avoiding': True}
+
+
+def copy_establish_parts(statement):
+    quantifiers = r'\forall Heap::heap entry; \forall integer r,o,b,bo,s,c,cap,a; '
+    antecedent = (r'Heap::well_formed(entry) && t25v3_eligible(entry,r,o,b,bo,s,c) && '
+                  r'c < cap <= 4611686018427387903 && Heap::available(entry,cap,a)')
+    arguments = ['entry', 'Heap::allocate(entry,cap,a)', 'r', 'o', 'b', 'bo', 's', 'c',
+                 'Heap::fresh_id(entry)', 'cap', '0']
+    original = quantifiers + antecedent + ' ==> t25v3_copy_inv(' + ','.join(arguments) + ')'
+    if statement != original:
+        raise ValueError('copy establishment expansion requires the exact original full premise')
+    begin = PRELUDE.index('predicate t25v3_copy_inv(')
+    end = PRELUDE.index('    logic Heap::heap t25v3_grown', begin)
+    definition = PRELUDE[begin:end].strip()
+    conjuncts, binding = predicate_conjuncts(definition, arguments)
+    labels = ['entry_well_formed', 'allocated_well_formed', 'entry_eligible', 'allocated_eligible',
+              'index_size_capacity_bounds', 'fresh_identity', 'unissued_identity', 'receiver_distinct',
+              'old_buffer_distinct', 'destination_write_domain', 'destination_freeability',
+              'destination_extent', 'allocation_frame', 'empty_copied_prefix', 'uninitialized_tail']
+    if len(conjuncts) != len(labels):
+        raise ValueError('the complete copy invariant conjunction census changed')
+    raw = (HERE/'vector_reallocation_vcs.py').read_bytes()
+    encoded = definition.encode()
+    if raw.count(encoded) != 1:
+        raise ValueError('copy invariant definition is not the unique physical source definition')
+    offset = raw.index(encoded)
+    parts = [('grow.copy.establish.' + label, quantifiers + antecedent + ' ==> ' + formula)
+             for label, formula in zip(labels, conjuncts, strict=True)]
+    return parts, {**binding, 'id': 'grow.copy.establish', 'original_statement': original,
+        'quantifiers': quantifiers, 'antecedent': antecedent, 'substituted_conjuncts': conjuncts,
+        'parts': [name for name, _formula in parts], 'premises_added': [], 'dependencies': [],
+        'definition_source': {'path': 'vector_reallocation_vcs.py', 'begin': offset,
+            'end': offset+len(encoded), 'sha256': hashlib.sha256(encoded).hexdigest(),
+            'container_sha256': hashlib.sha256(raw).hexdigest()},
+        'combination': 'AND: all fifteen independent definition conjuncts are required',
+        'equivalence': 'A implies AND(conjuncts) iff AND(each A implies conjunct); simultaneous capture-free predicate substitution',
+        'reference_role': 'original logical target only; never imported or launched as a proved result'}
+
+
 def lemma_source(name, statement):
     return ('//@ import \\wp::why3: heap_reallocation::Heap;\n' + PRELUDE +
             '/*@ check lemma t25v3_' + name.replace('.', '_') + ': ' + statement + ';\n*/\n')
@@ -318,6 +490,14 @@ def declaration(member):
                 logical.append(receipt)
                 parts = [(part, formula, f'{index:03d}' + suffix)
                          for (part, formula), suffix in zip(expanded, ('a','b1','b2','b3','b4'), strict=True)]
+            elif name == 'grow.copy.establish':
+                expanded, receipt = copy_establish_parts(statement)
+                reference = 'references/' + f'{index:03d}-t25v3_grow_copy_establish.c'
+                files[reference] = lemma_source(name, statement).encode()
+                receipt['reference'] = {'path': reference, 'sha256': hashlib.sha256(files[reference]).hexdigest()}
+                logical.append(receipt)
+                parts = [(part, formula, f'{index:03d}c{component:02d}')
+                         for component, (part, formula) in enumerate(expanded, 1)]
             for part, formula, label in parts:
                 goal = 't25v3_' + part.replace('.', '_')
                 text = (CTOR_NUMERIC.replace('t25_ctor_numeric', 't25v3_ctor_numeric')
@@ -342,7 +522,7 @@ def declaration(member):
             'translation_components':{name:hashlib.sha256((HERE/name).read_bytes()).hexdigest()
                 for name in ('vector_reallocation_vcs.py','vector_reallocation_inventory.py',
                              'vector_reallocation_model.py','heap_model_vcs.py')},
-            'source_inventory':build(member, source, rows),
+            'source_inventory':build(member, source, rows, logical),
             'source_sha256':hashlib.sha256(source.encode()).hexdigest(),
             'semantics':{'path':theory_name,'sha256':hashlib.sha256(files[theory_name]).hexdigest()},
             'caller_premises_added':[], 'typed_memory_role':'explicit typed int source-image domain; source-derived caller discharge required',

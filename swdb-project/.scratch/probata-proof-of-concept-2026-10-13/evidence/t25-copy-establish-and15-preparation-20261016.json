@@ -1,0 +1,139 @@
+{
+  "actual_query_binding": {
+    "negated_final_goal_ast_sha256": "3c267828fd152c2528522d90875b12d7396c7f533f7bea16bf06dd80971e58e4",
+    "predicate_definition_digest": "a70ae02bb0821ca2fc6ab7561a6a32394febcaab9e76936207d6359fc4cf4020",
+    "query_sha256": "13f8fb1e5bacd8695f4fe70bd08a9d55c609567c80ec0344481ddccb2da72b52",
+    "same_original_A": true,
+    "solver_timeout_cause": "No unsupported solver-cause inference. This is exact definition/AND proof-structure decomposition.",
+    "source_to_actual_variables": {
+      "a": "i",
+      "b": "i1",
+      "bo": "i2",
+      "c": "i3",
+      "cap": "i4",
+      "entry": "heap",
+      "o": "i5",
+      "r": "i6",
+      "s": "i7"
+    },
+    "task_submission_bytes_attested": false
+  },
+  "base_commit": "ca1a3067f10e6110f09c1c6751411388039b0538",
+  "caller_acceptance": false,
+  "compiler_free_controls": {
+    "abstract_boolean_cases": 65536,
+    "affected_packet_cases": 26,
+    "compiler_native_formal_execution": false,
+    "malformed_capture_and_manifest_attack_controls": true,
+    "new_test_functions": 7,
+    "public_schema_controls_updated_but_not_executed": {
+      "runs": 38,
+      "synthetic_goals": 48,
+      "synthetic_smokes": 1
+    },
+    "total_test_cases": 33
+  },
+  "complete_model_acceptance": false,
+  "created": "2026-10-16 ET",
+  "current_preparation_census": {
+    "caller_checkpoint_excluded": "da2518a6c1c930eb35fb49a6d8f74691458be099",
+    "caller_pending_targets": 96,
+    "caller_proof_records_admitted": 0,
+    "count_value_constructor": 30,
+    "destructor": 11,
+    "grow": 38,
+    "reserve": 44
+  },
+  "original_actual_frontier": {
+    "failure_class": "timeout",
+    "open": "grow.copy.establish",
+    "original_exit_upgraded": false,
+    "proven_prefix": 10,
+    "unexecuted": 13,
+    "verdict": "not_proven"
+  },
+  "original_actual_record": "proof.model.std_vector_int_realloc_v3_grow.20261016t111925z.e07158e8",
+  "original_actual_source_commit": "046f6b9e64d45777a8032951ced04f942fc9c3c2",
+  "original_v2_acceptance": false,
+  "proof_acceptance": false,
+  "references": [
+    {
+      "bytes": 534,
+      "path": "/private/tmp/probata-t25-and15-preparation-red-v1-20261016/result.json",
+      "sha256": "85a407783f09e8d1cd4fb02596c37693de76cfa9d930c4056f0da3c6f9a2d57c"
+    },
+    {
+      "bytes": 356,
+      "path": "/private/tmp/probata-t25-and15-preparation-red-v1-20261016/controls.log",
+      "sha256": "12bbd8ff7a26ad1670ae623343f6eee7656dc9365671a77950fbd8d966b243ca"
+    },
+    {
+      "bytes": 2057,
+      "path": "/private/tmp/probata-t25-and15-final-pure-controls-v1-20261016.py",
+      "sha256": "f7c81bb044a4a66a15242993fbcc6ba7dc4b4364dfe8e86f48030f5ea35b84e0"
+    },
+    {
+      "bytes": 5624,
+      "path": "/private/tmp/probata-t25-and15-final-pure-controls-v1-20261016/result.json",
+      "sha256": "e0dfb0406087cdd3c9299b8ba99e90ee82d597181b39f885a049bf6787e64a29"
+    },
+    {
+      "bytes": 4499,
+      "path": "/private/tmp/probata-t25-and15-final-pure-controls-v1-20261016/controls.log",
+      "sha256": "67d440fe2c39ce3fb931452401a9a6c9d3254c5a23991344680853f87d94b504"
+    },
+    {
+      "bytes": 1037522,
+      "path": "/private/tmp/probata-t25-grow24-partial-metadata-root-execution-v2-20261016.json",
+      "sha256": "4802f8d15009dd47443652cdc2a0f3accd72419eba24dca2c17172cd22bd5376"
+    },
+    {
+      "bytes": 11924,
+      "path": "/private/tmp/probata-t25-copy-establish-definition-analysis-v1-046f6b9e-20261016.json",
+      "sha256": "a7461f3068ad656e6b268d42754f42c78589604347326066de789bbf2cdaa504"
+    }
+  ],
+  "source_pins": [
+    {
+      "path": "swdb-project/swdb/vector_reallocation_vcs.py",
+      "sha256": "4bba8a7885570b6228d383e9abcd1e40c85dbd0dbff75e24f170dd4556493340"
+    },
+    {
+      "path": "swdb-project/swdb/vector_reallocation_inventory.py",
+      "sha256": "0a0474084a17b84788585a62a9e0b63b88eb43efd858101769db267579af5f07"
+    },
+    {
+      "path": "swdb-project/tests/test_vector_reallocation_conjunctions.py",
+      "sha256": "ceb1703b57d75bd0431e73d1ea55afe70ecdcf56c30c67cadaf18a45a9e70739"
+    },
+    {
+      "path": "swdb-project/tests/test_vector_reallocation_packets.py",
+      "sha256": "2d22e067cd02cd0fbbe83b4ffa60a774d26d1d09b5cc03f463188b1867d948a3"
+    },
+    {
+      "path": "swdb-project/tests/test_vector_reallocation_view.py",
+      "sha256": "04c65ec467c4b0a46efb5b2a6dbfabb515decf59ae3a36e80e5b82e47dc4be68"
+    },
+    {
+      "path": "swdb-project/tests/test_vector_reallocation_caller_packets.py",
+      "sha256": "7f920019db4faef236801f20a53abd78ab94a9f4af0ed3f9084c524369b9a24c"
+    },
+    {
+      "path": "swdb-project/tests/fixtures/proof/vector-reallocation-copy-establish-046f.json",
+      "sha256": "8ea0623d7f1a482664e0f201b6e652d2aeff61fdc6f13bdb98bf86a1f3b009c7"
+    }
+  ],
+  "status": "PREPARATION ONLY; independent source equivalence and fresh native/public/actual admission pending",
+  "ticket_closure": false,
+  "transformation": {
+    "conjuncts": 15,
+    "model_C_and_contract_changes": false,
+    "new_premises": [],
+    "original_retained_as": "reference only; never executed or imported as a theorem",
+    "original_target": "grow.copy.establish",
+    "other_grow_C_targets_byte_identical": 23,
+    "rule": "A implies conjunction iff conjunction of all A-implies-component duties; simultaneous capture-free definition substitution",
+    "semantic_theory_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+    "sibling_theorem_dependencies": []
+  }
+}

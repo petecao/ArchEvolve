@@ -44,13 +44,14 @@ CTOR = [
 ]
 
 
-def build(member, source, obligations):
+def build(member, source, obligations, logical_obligations=()):
     # certificate() checks both the parent identity and exact inverse restoration
     # of every helper/body, rather than admitting a source with familiar needles.
     cert = model.certificate(member)
     if hashlib.sha256(source.encode()).hexdigest() != cert['qualified_source_sha256']:
         raise ValueError('the source inventory requires the exact qualified source')
     ids = {row['id'] for row in obligations}
+    expansions = {row['id']: row['parts'] for row in logical_obligations}
     def span(text, offset=0):
         return {'begin': offset, 'end': offset+len(text.encode()),
                 'sha256': hashlib.sha256(text.encode()).hexdigest()}
@@ -88,6 +89,7 @@ def build(member, source, obligations):
             raise ValueError('an executable helper has no closed event inventory')
         if not trusted:
             for name, needle, owners in table:
+                owners = [part for owner in owners for part in expansions.get(owner, [owner])]
                 if qualified.count(needle) != 1 or not set(owners) <= ids:
                     raise ValueError('an executable source event has no unique complete obligation ownership')
                 events.append({'id':name, 'function':function,
