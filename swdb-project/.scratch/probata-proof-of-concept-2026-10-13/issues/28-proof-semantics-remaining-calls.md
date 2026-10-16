@@ -204,3 +204,15 @@ interface acceptance is claimed. The unchanged-source positive/wrong-enum
 coordinator-only actual runner is committed, awaiting independent review and
 root admission. A stateful size/readiness vertical follows this first gate.
 All whole-ticket acceptance boxes remain open.
+
+
+2026-10-16 readiness correction checkpoint (prototype only): the prior86-native
+packet incorrectly expected an8-byte role's second-half wait not to cover. That
+expectation is retracted; historical raw files and receipts remain unchanged.
+Pinned MAA dispatch/finish and SPD counter code count both halves of src/dst
+roles, excluding condition-only roles. The successor separates counted masks
+from condition-inclusive hazards and starting-ID dispatch stalls. Source-backed
+RED3fail/2pass becomes96native GREEN under ASan/UBSan. A checked source-role
+wrapper, actual stateful proof and full interface acceptance are still open.
+The real header supplies a blocking ready-range read returning1, not the logical
+demonic query used by this prototype. All acceptance boxes remain unchecked.
