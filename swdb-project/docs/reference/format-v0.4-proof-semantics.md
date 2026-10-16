@@ -187,3 +187,41 @@ indices to these rows; the table is immutable, and only row contents appear in t
 The entry type checker uses the same representation and build constants as WP. Caller and store
 separation clauses quantify over every tile row. This changes the generated representation without
 adding an allocation-success premise or altering the operational C model body.
+
+### Pure source selector fixture — 2026-10-16 ET
+
+A call row may state `supported: false`. The public lowering then refuses that
+call before selecting a source declaration or model instance. The field must be
+a boolean; omission retains the earlier behavior. A complete declaration
+inventory can therefore describe an explicitly partial fixture without granting
+semantics to an unsupported call. Its placeholder C prototype is inventory
+bookkeeping, not an admitted ABI for that call.
+
+An instance may use `definition: {kind: dx100-get-data-type-u32-v1, value: 0,
+sources: [...]}` only for `get_data_type<unsigned int>()`. Both immutable interface
+headers are required. This closed policy requires the exact concrete prototype
+`unsigned char get_data_type_unsigned_int(void)` and the contract
+`assigns \nothing; ensures \result == 0;`. It accepts a body only from the pinned
+header and a unique global template specialization with the actual canonical
+source argument. Other bodies retain the ordinary summary-body refusal.
+
+The compiler certificate preprocesses the original main translation unit with
+the original lowering parser flags. It records those frozen tokens, their hash,
+the command, dependency hashes, and compiler/runtime identity. It appends a pure
+probe to the preprocessed token stream and compiles it as `c++-cpp-output`, so
+include depth and optimization macros cannot reinterpret the original source.
+The selected probe's LLVM body must be exactly `ret i32 0`. This is a trusted
+compiler transformation certificate, not a Frama-C proof or a device theorem.
+Frozen evidence and all physical compiler inputs are rehashed before the formal
+invocation. The checker module belongs to the frozen setup dependency closure.
+
+`model.layout: dx100-pure-selector-u32-v1` is a closed, stateless fixture layout.
+It requires the complete 26-name/27-declaration inventory, precisely that one
+active selector instance, and explicit refusal of all remaining calls. It has
+no device constants, queries, ghost state, logic axioms, or WP entry premises;
+its C model is the exact constant selector body. Its record includes the five
+explicit trust-rule entries but no at-issue timing statement, device-storage
+initialization assumption, or timing reduction. It does not establish any
+stateful interface behavior. The retained 0.1 entry and its default layout are
+unchanged. The fixture is built only in an isolated test library; no current
+production 0.2 entry is installed by this slice.

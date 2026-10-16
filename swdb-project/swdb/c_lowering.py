@@ -301,6 +301,7 @@ def identity():
                             + here.with_name("standard_range_calls.py").read_bytes()
                             + here.with_name("member_windows.py").read_bytes()
                             + here.with_name("stdlib_source_admission.py").read_bytes()
+                            + here.with_name("dx100_source_selector.py").read_bytes()
                             + json.dumps(stdlib_provenance.runtime_identity(tool), sort_keys=True).encode()).hexdigest()
     found = {"c_lowering": {"id": f"{TOOL_ID}-{TOOL_VERSION}", "sha256": digest},
              "naming_rules": naming_rules()}
@@ -597,6 +598,7 @@ class _Unit:
 
     def __init__(self, tool, source, includes, defines, summaries, semantics=None):
         self.tool, self.source, self.includes, self.defines = tool, source, tuple(includes), defines
+        self.source_digest = _file_sha256(source)
         self.summaries = dict(summaries or {})
         self.semantics = dict(semantics or {})      # ticket 27: {tile_pointer: names}; probes at tile accesses
         self.probes = []
@@ -2019,6 +2021,8 @@ class _Printer:
             if name not in unit.summaries:
                 raise Unsupported(f"call to {name} with no summary (__dxc_* and maa_* calls go through summaries)",
                                   self.line)
+            if name in self.semantics.get("refused_calls", set()):
+                raise Unsupported(f"proof-semantics explicitly refuses {name}", self.line)
             cname = name
             node_found = unit.call_declaration(name, qual_type, node, self.source_declaration, self.line) \
                 if "<" not in name else None
@@ -2053,9 +2057,6 @@ class _Printer:
             instance = None
             variants = self.semantics.get('template_instances', {}).get(name)
             if variants is not None:
-                if _has_body(node_found or {}):
-                    raise Unsupported('template instance needs a pinned interface definition; '
-                                      'source-defined implementations cannot inherit a device contract', self.line)
                 arguments = list(unit._spec_args(node_found or {}, self.line))
                 returns, params, variadic = _return_and_params(qual_type, self.line)
                 matches = [v for v in variants if [' '.join(a.split()) for a in v['arguments']] == arguments
@@ -2064,6 +2065,19 @@ class _Printer:
                     raise Unsupported(f"no proof-semantics template instance for {name}<{', '.join(arguments)}> "
                                       f"with arity {len(params)}", self.line)
                 instance = matches[0]
+                definition = None
+                if _has_body(node_found or {}):
+                    if 'definition' not in instance:
+                        raise Unsupported('template instance needs a pinned interface definition; '
+                                          'source-defined implementations cannot inherit a device contract', self.line)
+                    from swdb import dx100_source_selector
+                    try:
+                        definition = dx100_source_selector.certify(unit, node_found, arguments, instance['definition'],
+                                                                  standard=STD, timeout=TIMEOUT_SECONDS)
+                    except dx100_source_selector.Refused as exc:
+                        raise Unsupported('DX100 source selector definition: '+str(exc), self.line) from None
+                elif 'definition' in instance:
+                    raise Unsupported('DX100 source selector requires the real pinned definition', self.line)
                 signature = unit.ctype(returns, line=self.line) + '(' + ','.join(
                     unit.ctype(p, line=self.line) for p in params) + ')'
                 try:
@@ -2076,12 +2090,15 @@ class _Printer:
             if instance is not None:
                 used = next(row for row in unit.summaries_used if row['c_name'] == cname)
                 used['semantic_instance'] = {'arguments': arguments, 'arity': len(params)}
+                if definition is not None:
+                    used['semantic_instance']['definition'] = definition
             returns, params, _ = _return_and_params(qual_type, self.line)
             texts = [self.address(a) if i < len(params) and params[i].rstrip().endswith("&") else self.expr(a, top=True)
                      for i, a in enumerate(args)]
             call = f"{cname}({', '.join(texts)})"
             if (name == "get_cacheable_tile_pointer" and name in self.semantics.get("tile_pointer", ())) or \
-                    (name in self.semantics.get("calls", ()) and returns in INTEGER_TYPES):
+                    (name in self.semantics.get("calls", ()) and
+                     (returns in INTEGER_TYPES or (instance is not None and unit.ctype(returns, line=self.line) in INTEGER_TYPES))):
                 # 2026-10-15 ET: WP33 does not initialize a receiving local slot
                 # for a modular call. An identity expression forces its ordinary
                 # assignment path. Imported integer results have an exact identity;
