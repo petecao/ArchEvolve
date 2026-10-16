@@ -158,8 +158,8 @@ int main(void) {
     assert result.stderr == 'pending-tile-write'
 
 
-@pytest.mark.parametrize('bytes,wait_tile,exit_code', [(8,2,0), (8,3,42), (4,3,0)])
-def test_explicit_start_tile_wait_is_global_and_never_invents_a_second_half_wait(tmp_path, bytes, wait_tile, exit_code):
+@pytest.mark.parametrize('bytes,wait_tile,exit_code', [(8,2,0), (8,3,0), (4,3,0)])
+def test_ready_counter_wait_covers_both_halves_of_8byte_roles_and_only_one_for_4byte_roles(tmp_path, bytes, wait_tile, exit_code):
     result = run_model(tmp_path, f'''
 int main(void) {{
   dxc_reset(); dxm_claim_tile(0,2,8);
@@ -1035,3 +1035,73 @@ int main(void) {
   return 0;
 }
 ''')
+
+
+@pytest.mark.parametrize('answer',[0,1])
+def test_8byte_second_half_readiness_is_demonic_and_one_covers_the_counted_command(tmp_path,answer):
+    result=run_model(tmp_path,f'''
+int main(void) {{
+  dxc_reset(); dxm_claim_tile(0,2,8); chosen={answer};
+  unsigned c=dxc_prepare(0,-1,0,0,4,0,dxc_tile_mask(2,8),0,0);
+  dxc_bind(c,dxm_constant(9));
+  assert(dxc_get_tile_ready(3)=={answer});
+  if ({answer}) dxc_cpu_tile_access(0,3,4,0);
+  else assert(dxc_commands[c].pending);
+  return 0;
+}}
+''',commands=True)
+    assert result.stderr==''
+
+
+@pytest.mark.parametrize('cover_kind',['wait','query','dispatch'])
+def test_condition_only_role_does_not_count_ready_but_dispatch_start_still_covers(tmp_path,cover_kind):
+    cover={'wait':'dxc_wait_tile(1); assert(dxc_commands[c].pending);',
+           'query':'assert(dxc_get_tile_ready(1)==1); assert(dxc_commands[c].pending);',
+           'dispatch':'unsigned next=dxc_prepare(0,-1,0,0,2,0,2,0,0); dxc_bind(next,dxm_constant(1)); assert(!dxc_commands[c].pending);'}[cover_kind]
+    run_model(tmp_path,r'''
+int main(void) {
+  dxc_reset(); dxm_claim_tile(0,1,4); dxm_claim_tile(0,3,4);
+  /* Tile1 is condition only; tile3 destination is counted. */
+  unsigned c=dxc_prepare_counted(0,-1,0,2,8,2,8,0,0,8);
+  dxc_bind(c,dxm_constant(7));
+'''+cover+r'''
+  return 0;
+}
+''',commands=True)
+
+
+@pytest.mark.parametrize('ready_mask',[0,2,24])
+def test_counted_role_mask_cannot_omit_destination_or_add_unaccessed_tiles(tmp_path,ready_mask):
+    run_model(tmp_path,f'''
+int main(void) {{
+  dxc_reset(); dxm_claim_tile(0,1,4); dxm_claim_tile(0,3,4);
+  unsigned c=dxc_prepare_counted(0,-1,0,2,8,2,8,0,0,{ready_mask});
+  dxc_bind(c,dxm_constant(0)); return 0;
+}}
+''',commands=True,exit_code=42)
+
+
+def test_comparison_ready_roles_use_64bit_input_halves_and_only_32bit_output(tmp_path):
+    run_model(tmp_path,r'''
+int main(void) {
+  dxc_reset(); dxm_claim_tile(0,0,8); dxm_claim_tile(0,2,4);
+  unsigned c=dxc_prepare(0,-1,0,1,4,dxc_tile_mask(0,8),4,0,0);
+  dxc_bind(c,dxm_constant(1));
+  assert(dxc_get_tile_ready(3)==1 && dxc_commands[c].pending);
+  dxc_wait_tile(1); assert(!dxc_commands[c].pending);
+  return 0;
+}
+''',commands=True)
+
+
+def test_4byte_neighbor_ready_query_does_not_cover_pending_command(tmp_path):
+    run_model(tmp_path,r'''
+int main(void) {
+  dxc_reset(); dxm_claim_tile(0,2,4);
+  unsigned c=dxc_prepare(0,-1,0,0,4,0,4,0,0);
+  dxc_bind(c,dxm_constant(1));
+  assert(dxc_get_tile_ready(3)==1 && dxc_commands[c].pending);
+  dxc_wait_tile(3); assert(dxc_commands[c].pending);
+  return 0;
+}
+''',commands=True)
