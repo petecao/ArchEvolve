@@ -81,7 +81,7 @@ def obligations(sources):
             goal['statement'] = (r'\forall Heap::heap h; \forall integer r,o,b,bo,s,c; '
                                  r'Heap::well_formed(h) && t25_repr(h,r,o,b,bo,s,c) && '
                                  r'(c == 0 || Heap::freeable(h,b,bo)) && c > 0 ==> '
-                                 f'!Heap::reads({transition},b,bo,4)')
+                                 f'!Heap::can_read({transition},b,bo,4)')
             goal['source_transition'] = transition
         elif name == 'ctor.prefix.step':
             transition = store_transition(sources[member])

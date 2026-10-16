@@ -61,6 +61,28 @@ result policy are unchanged. Independent source/entry-v3 diff review passed at `
 actual replay remains required. Review: `../evidence/t25-import-stage-review-c5216796-v3-20261015.md`. Evidence: `../evidence/t25-first-import-failure-v1-20261015.json`
 and `../evidence/t25-import-stage-repair-controls-20261015.json`.
 
+### Second admitted import failure and lexical repair — 2026-10-15 ET
+
+The v3 replay at `c5216796` passed the exact canonical manifest comparison with
+`024db66c` (`31edfdaf...657ab`), tool/package/ambient checks, and reached the custom
+Why3 file. It stopped at `heap_bridge.mlw:72` on the predicate identifier `reads`;
+Why3 1.8.2 reserves `reads` and `writes` for effect clauses. Frama-C exited 125,
+with no generated goal inventory. The whole run naturally exited 1 in 1.899s,
+peak 169,115,648 bytes, without timeout/OOM; source remained unchanged and lane 611
+released. This is a preserved syntax failure, not a negative proof result.
+
+The repair uniformly renames these two exported predicates to `can_read` and
+`can_write`, including every mapped reference. Inverse substitution recovers all
+three changed translation files byte-for-byte. A public lexical RED catches the
+old declarations; all 23 compiler-free controls then pass. The original clauses,
+mathematical formulas, primitive meanings and 42 target identities remain intact.
+Independent alpha review passed at `9d8ca764`: all three source files and 42
+packets inverse-restore exactly. A separate coordinator-admitted Why3
+`prove --type-only` gate over the exact new Git blob is next, using the existing frozen bootstrap to avoid another full source
+clone before grammar/type feasibility is known. No solver/model-record success
+is claimed. Evidence: `../evidence/t25-reserved-name-failure-v1-20261015.json` and
+`../evidence/t25-effect-keyword-repair-controls-20261015.json`.
+
 ## Acceptance
 
 - [ ] Each modeled member has a C function and an ACSL contract citing the standard's clause for it (`[vector]` for vector members). `swdb prove` proves every contract against its C function once, recorded with subject "a library entry's summary".

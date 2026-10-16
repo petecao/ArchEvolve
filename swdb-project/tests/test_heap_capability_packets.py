@@ -308,3 +308,19 @@ def test_import_search_path_is_available_to_initial_parse_before_then(tmp_path):
         assert before_parse[before_parse.index('-wp-library')+1] == str(inputs / 'theory')
         after_then = command[command.index('-then')+1:]
         assert after_then[after_then.index('-wp-library')+1] == str(inputs / 'theory')
+
+
+def test_heap_exported_names_avoid_why3_effect_keywords_and_bind_packet_references(tmp_path):
+    import re
+    inputs = tmp_path / 'packets'
+    made = subprocess.run([sys.executable, str(CLI), 'prepare', '--output', str(inputs)],
+                          capture_output=True, text=True, timeout=30)
+    assert made.returncode == 0, made.stderr
+    theory = (inputs / 'theory/heap_bridge.mlw').read_text()
+    declared = set(re.findall(r'\b(?:predicate|function|type)\s+([A-Za-z_]\w*)', theory))
+    assert not declared & {'reads', 'writes'}  # Why3 1.8.2 effect-clause keywords.
+    manifest = json.loads((inputs / 'manifest.json').read_text())
+    used = set()
+    for goal in manifest['obligations']:
+        used.update(re.findall(r'Heap::([A-Za-z_]\w*)', (inputs / goal['path']).read_text()))
+    assert used <= declared
