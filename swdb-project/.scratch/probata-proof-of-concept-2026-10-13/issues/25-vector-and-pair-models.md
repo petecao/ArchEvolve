@@ -239,6 +239,26 @@ under one worker/8 GiB guards, with two 1800-second public budgets and a
 4200-second whole budget plus wrapper margin. Public actual acceptance, remaining
 vector members and generic caller composition are still open.
 
+### Successful public-record writer review correction — 2026-10-16 ET
+
+Independent review blocked the first public-route freeze `31798b27`: after all
+successful targets, the aggregate receipt added a key forbidden by the closed
+proof schema. A new eleven-target synthetic destructor control reproduces the
+public writer refusal; the minimal fix keeps the standard two-key attestation
+and retains every child reading in settings. The control then persists a
+schema-valid record. The affected public suite passes nine controls with the
+actual-only target skipped. Synthetic results are orchestration controls, never
+actual proof evidence; the original failure and all producer receipts remain.
+
+Final independent review passes at clean `cea5652b`, after merging integration
+`20764a3e`: 25 evidence references and 11 source pins match. Theory, source
+mapping, obligations, schema and proof policy are unchanged. The exact CEA
+source is the prospective coordinator-owned actual profile input; no actual
+public heap proof has run and no acceptance checkbox closes here. See
+[writer RED/GREEN](../evidence/t25-public-heap-aggregate-schema-controls-20261016.json),
+[blocked review](../evidence/t25-public-heap-source-review-31798b27-20261016.md)
+and [final addendum](../evidence/t25-public-heap-source-addendum-cea5652b-20261016.md).
+
 ## Acceptance
 
 - [ ] Each modeled member has a C function and an ACSL contract citing the standard's clause for it (`[vector]` for vector members). `swdb prove` proves every contract against its C function once, recorded with subject "a library entry's summary".
